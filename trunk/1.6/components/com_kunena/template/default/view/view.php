@@ -62,7 +62,7 @@ global $kunena_icons;
 		}
 		$this->displayPoll();
 		CKunenaTools::showModulePosition( 'kunena_poll' );
-		$this->displayActions();
+		$this->displayThreadActions();
 ?>
 
 <table
@@ -121,7 +121,7 @@ global $kunena_icons;
 	</tr>
 </table>
 
-<?php $this->displayActions(); ?>
+<?php $this->displayThreadActions(); ?>
 <div class = "kforum-pathway-bottom">
 	<?php echo $this->kunena_pathway1; ?>
 </div>
@@ -152,9 +152,7 @@ global $kunena_icons;
 		<!-- /Mod List -->
 		</td>
 		<td class="klist_categories">
-		<?php
-		if ($this->config->enableforumjump)
-			require (KUNENA_PATH_LIB . DS . 'kunena.forumjump.php');
+		<?php $this->displayForumJump();
 		?>
 		</td>
 	</tr>

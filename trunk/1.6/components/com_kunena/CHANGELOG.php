@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+17-Jan-2010 Matias
+^ [#19243] Make profile on left/right/top/bottom configurable - move files to their new places
+
 17-Jan-2010 @quila
 + [#19243] Make profile on left/right/top/bottom configurable - Part 2
 

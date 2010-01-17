@@ -13,7 +13,6 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-$kunena_my = &JFactory::getUser ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
 
@@ -24,27 +23,23 @@ if ($kunena_config->avposition == 'top') { ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr class="ksth">
     	<th colspan="2" class="view-th ksectiontableheader">
-    		<a name="<?php echo $msg_html->id; ?>"></a>
+    		<a name="<?php echo $this->msg_html->id; ?>"></a>
     		<?php echo CKunenaTools::getMessageId(); ?>
     	</th>
     </tr>
     <tr>
-    	<td valign="top" class="kunena-profile-top"><?php
-    		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profilebox/message.profilebox.php' )) {
-    			include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/message.profilebox.php');
-    		} else {
-    			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profilebox/message.profilebox.php');
-    		} ?>
+    	<td valign="top" class="kunena-profile-top">
+    		<?php $this->displayProfileBox() ?>
     	</td>
     </tr>
     <tr>
     	<td class="kunena-message-top">
-    		<?php include (KUNENA_PATH_VIEWS . DS . 'message.php'); ?>
+    		<?php $this->displayMessageContents() ?>
     	</td>
     </tr>
     <tr>
     	<td class="buttonbar-top">
-    		<?php include (KUNENA_PATH_VIEWS . DS . 'button.php'); ?>
+    		<?php $this->displayMessageActions() ?>
     	</td>
     </tr>
 </table>
@@ -54,27 +49,23 @@ if ($kunena_config->avposition == 'top') { ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr class="ksth">
     	<th colspan="2" class="view-th ksectiontableheader">
-    		<a name="<?php echo $msg_html->id; ?>"></a>
+    		<a name="<?php echo $this->msg_html->id; ?>"></a>
     		<?php echo CKunenaTools::getMessageId(); ?>
     	</th>
     </tr>
     <tr>
     	<td class="kunena-message-bottom">
-    		<?php include (KUNENA_PATH_VIEWS . DS . 'message.php'); ?>
+    		<?php $this->displayMessageContents() ?>
     	</td>
     </tr>
     <tr>
     	<td class="buttonbar-bottom">
-    		<?php include (KUNENA_PATH_VIEWS . DS . 'button.php'); ?>
+    		<?php $this->displayMessageActions() ?>
     	</td>
     </tr>
     <tr>
-    	<td valign="top" class="kunena-profile-bottom"><?php
-    		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profilebox/message.profilebox.php' )) {
-    			include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/message.profilebox.php');
-    		} else {
-    			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profilebox/message.profilebox.php');
-    		} ?>
+    	<td valign="top" class="kunena-profile-bottom">
+    		<?php $this->displayProfileBox() ?>
     	</td>
     </tr>
 </table>
@@ -84,25 +75,21 @@ if ($kunena_config->avposition == 'top') { ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr class="ksth">
     	<th colspan="2" class="view-th ksectiontableheader">
-    		<a name="<?php echo $msg_html->id; ?>"></a>
+    		<a name="<?php echo $this->msg_html->id; ?>"></a>
     		<?php echo CKunenaTools::getMessageId(); ?>
     	</th>
     </tr>
     <tr>
-    	<td rowspan="2" valign="top" class="kunena-profile-left"><?php
-    		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profilebox/message.profilebox.php' )) {
-    			include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/message.profilebox.php');
-    		} else {
-    			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profilebox/message.profilebox.php');
-    		} ?>
-    	</td>
+    	<td rowspan="2" valign="top" class="kunena-profile-left">
+    		<?php $this->displayProfileBox() ?>
+   	</td>
     	<td class="kunena-message-left">
-    		<?php include (KUNENA_PATH_VIEWS . DS . 'message.php'); ?>
+    		<?php $this->displayMessageContents() ?>
     	</td>
     </tr>
     <tr>
     	<td class="buttonbar-left">
-    		<?php include (KUNENA_PATH_VIEWS . DS . 'button.php'); ?>
+    		<?php $this->displayMessageActions() ?>
     	</td>
     </tr>
 </table>
@@ -112,25 +99,21 @@ if ($kunena_config->avposition == 'top') { ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr class="ksth">
     	<th colspan="2" class="view-th ksectiontableheader">
-    		<a name="<?php echo $msg_html->id; ?>"></a>
+    		<a name="<?php echo $this->msg_html->id; ?>"></a>
     		<?php echo CKunenaTools::getMessageId(); ?>
     	</th>
     </tr>
     <tr>
     	<td class="kunena-message-right">
-    		<?php include (KUNENA_PATH_VIEWS . DS . 'message.php'); ?>
+    		<?php $this->displayMessageContents() ?>
     	</td>
-    	<td rowspan="2" valign="top" class="kunena-profile-right"><?php
-    		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profilebox/message.profilebox.php' )) {
-    			include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/message.profilebox.php');
-    		} else {
-    			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profilebox/message.profilebox.php');
-    		} ?>
+    	<td rowspan="2" valign="top" class="kunena-profile-right">
+    		<?php $this->displayProfileBox() ?>
     	</td>
     </tr>
     <tr>
     	<td class="buttonbar-right">
-    		<?php include (KUNENA_PATH_VIEWS . DS . 'button.php'); ?>
+    		<?php $this->displayMessageActions() ?>
     	</td>
     </tr>
 </table>

@@ -92,32 +92,6 @@ if ($func == "showcaptcha") {
 	$kunena_app->close ();
 }
 
-// Check for JSON request
-if ($func == "json") {
-
-	$data = array();
-
-	switch ($action)
-	{
-		case 'moderate.autocomplete':
-			require_once(JPATH_ROOT . '/components/com_kunena/lib/kunena.moderation.class.php');
-
-			$moderation =& CKunenaModeration::GetInstance();
-
-			$data = $moderation->getAutoComplete();
-
-			break;
-		default:
-
-			break;
-	}
-
-	header ( "Content-type: application/json" );
-	echo json_encode($data);
-
-	$kunena_app->close ();
-}
-
 // Debug helpers
 include_once (KUNENA_PATH_LIB . DS . "kunena.debug.php");
 // get Kunenas configuration params in
@@ -133,7 +107,7 @@ global $kunena_systime;
 $kunena_my = &JFactory::getUser ();
 // Load configuration and personal settings for current user
 
-$kunena_config = & CKunenaConfig::getInstance ();
+$kunena_config = &CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
 
 // Check if we need to redirect to a different default view
@@ -177,6 +151,32 @@ if ($kn_tables->installed () === false) {
 // Class structure should be used after this and all the common task should be moved to this class
 
 require_once (KUNENA_PATH . DS . "class.kunena.php");
+
+
+// Check for JSON request
+if ($func == "json") {
+
+	// URL format for JSON requests: e.g: index.php?option=com_kunena&func=json&action=autocomplete&do=getcat
+	require_once (KUNENA_PATH_LIB . DS . "kunena.ajax.helper.php");
+
+	$ajaxHelper = &CKunenaAjaxHelper::getInstance();
+
+	// Get the document object.
+	$document =& JFactory::getDocument();
+
+	// Set the MIME type for JSON output.
+	$document->setMimeEncoding( 'application/json' );
+
+	// Change the suggested filename.
+	JResponse::setHeader( 'Content-Disposition', 'attachment; filename="kunena.json"' );
+
+	$data = JRequest::getVar ( 'data', '' );
+
+	// Generate reponse
+	echo $ajaxHelper->generateJsonResonse($action, $do, $data);
+
+	$kunena_app->close ();
+}
 
 $kunena_is_admin = CKunenaTools::isAdmin ();
 
@@ -272,6 +272,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		}
 
 		// MooTools Libraries
+		//JHTML::_('behavior.mootools');
+
+		//TODO: This is a temporary solution - we need to get Joomla updated to 1.2
 		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4-core-yc.js' );
 		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4.2-more.js' );
 

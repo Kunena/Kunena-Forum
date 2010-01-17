@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+17-Jan-2010 fxstein
++ [#19244] Ajax/json support class scaffolding; intial autocomplete on moderation page
+
 17-Jan-2010 Matias
 ^ [#19243] Make profile on left/right/top/bottom configurable - move files to their new places
 ^ [#19448] Move code out of template: showcat- subcategories
@@ -45,9 +48,6 @@ Kunena 1.6.0-DEV
 16-Jan-2010 svens LDA
 # [#19339] Incorrect implementation of links in CKunenaLink class
 - [#19455] Remove depriciated code in smile.class.php
-
-16-Jan-2010 svens LDA
-# [#19339] Incorrect implementation of links in CKunenaLink class
 
 15-Jan-2010 severdia
 # [#19356] Reworked CSS and synced colors and fonts, added palette to CSS header, minor language string fixes

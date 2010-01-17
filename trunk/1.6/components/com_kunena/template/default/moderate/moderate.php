@@ -50,6 +50,32 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 
 			?>
 &nbsp;
+<script type="text/javascript">
+	document.addEvent('domready', function() {
+
+	new Autocompleter.Request.JSON('ksource-category',
+			'index.php?option=com_kunena&Itemid=261&func=json&action=autocomplete&do=getcat', {
+		'minLength': 1,
+        'postVar': 'data'
+	});
+
+
+//	var inputWord2 = $('demo-words');
+//
+//	// An element as indicator, shown during background request
+//	var indicator = inputWord2.getPrevious().getElement('.autocompleter-loading');
+//	indicator.setStyle('display', 'none');
+//
+//	new Autocompleter.Request.JSON(inputWord2, 'script.php', {
+//		'indicator': indicator,
+//		'multiple': true,
+//		'selectFirst': true,
+//		'selectMode': false,
+//		'minLength': 2
+//	});
+
+});
+</script>
 <div class="kbt_cvr1">
 <div class="kbt_cvr2">
 <div class="kbt_cvr3">
@@ -67,23 +93,11 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 		<tr>
 			<td>
 			<div>
-			<form action="index.php?" method="get" id="ksource">
+			<form id="ksource">
 				<fieldset><legend>Source:</legend>
 					<label>
-					<span>Category:</span> <input type="text" name="ksource-category" class="text"
-					id="ksource-category" />
-					</label>
-				</fieldset>
-			</form>
-			</div>
-			</td>
-			<td>
-			<div>
-			<form action="index.php?" method="get" id="ktarget">
-				<fieldset><legend>Target:</legend>
-					<label>
-					<span>Category:</span> <input type="text" name="ktarget-category" class="text"
-					id="ktarget-category" />
+					<span>Category:</span>
+					<input type="text" name="data" class="text" id="ksource-category" />
 					</label>
 				</fieldset>
 			</form>

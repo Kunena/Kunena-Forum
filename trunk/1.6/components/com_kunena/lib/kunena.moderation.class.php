@@ -12,17 +12,16 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
 // Defines for moves
-define ( KN_MOVE_MESSAGE, 0 );
-define ( KN_MOVE_THREAD, 1 );
-define ( KN_MOVE_NEWER, 2 );
-define ( KN_MOVE_REPLIES, 3 );
+define ( 'KN_MOVE_MESSAGE', 0 );
+define ( 'KN_MOVE_THREAD', 1 );
+define ( 'KN_MOVE_NEWER', 2 );
+define ( 'KN_MOVE_REPLIES', 3 );
 
 //Defines for deletes
-define ( KN_DEL_MESSAGE, 0 );
-define ( KN_DEL_THREAD, 1 );
-define ( KN_DEL_ATTACH, 2 );
+define ( 'KN_DEL_MESSAGE', 0 );
+define ( 'KN_DEL_THREAD', 1 );
+define ( 'KN_DEL_ATTACH', 2 );
 
 class CKunenaModeration {
 	// Private data and functions
@@ -361,51 +360,5 @@ class CKunenaModeration {
 		return $this->_errormsg;
 	}
 
-	// JSON helpers
-	function getAutoComplete() {
-		$result = array();
-
-		$catid = JRequest::getInt ( 'catid', 0 );
-		$data = JRequest::getVar ( 'data', '' );
-		$do = JRequest::getCmd ( 'do', 'getcat' );
-
-		// Verify permissions
-		$is_admin = CKunenaTools::isAdmin ();
-		$is_moderator = CKunenaTools::isModerator ( $this->_my->id, $catid );
-
-		if (!$is_admin && !$is_moderator){
-			// Not an admin nor a moderator for the category
-			// nothing to return;
-			return array();
-		}
-
-		// Now we can safely continue...
-		switch ($do)
-		{
-			case 'getcat':
-				$query = "SELECT `name` FROM #__categories WHERE `name`
-							LIKE '" . $this->_db->quote($data) . "%' ORDER BY 1 LIMIT 0, 10;";
-
-				$this->_db->setQuery ( $query );
-				$result = $this->_db->loadResult ();
-				check_dberror ( "Unable to lookup categories by name." );
-
-				break;
-			case 'getmsg':
-				$query = "SELECT `subject` FROM #__messages WHERE `parent`=0 AND `subject`
-							LIKE '" . $this->_db->quote($data) . "%' ORDER BY 1 LIMIT 0, 10;";
-
-				$this->_db->setQuery ( $query );
-				$result = $this->_db->loadResult ();
-				check_dberror ( "Unable to lookup topics by subject." );
-
-				break;
-			default:
-				// Operation not supported
-
-		}
-
-		return $result;
-	}
 }
 ?>

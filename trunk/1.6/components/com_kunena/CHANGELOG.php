@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+
+18-Jan-2010 fxstein
++ [#19067] Add messages in registered only categories to jomsocial activity stream and set access control
+
 18-Jan-2010 Matias
 ^ [#19448] Move code out of template: listcat
 # [#19251] Reduce the number of SQL calls in listcat

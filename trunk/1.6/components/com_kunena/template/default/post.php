@@ -57,7 +57,9 @@ $action = JRequest::getCmd ( 'action', '' );
 
 if ($id || $parentid) {
 	// Check that message and category exists and fill some information for later use
-	$query = "SELECT m.*, (mm.locked OR c.locked) AS locked, t.message, c.name AS catname, c.parent AS catparent, c.pub_access, c.review, c.class_sfx, p.id AS poll_id
+	$query = "SELECT m.*, (mm.locked OR c.locked) AS locked, t.message,
+					c.name AS catname, c.parent AS catparent, c.pub_access,
+					c.review, c.class_sfx, p.id AS poll_id
 				FROM #__fb_messages AS m
 				INNER JOIN #__fb_messages AS mm ON mm.id=m.thread
 				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
@@ -279,8 +281,8 @@ if ($kunena_my->id) {
 
 								CuserPoints::assignPoint ( 'com_kunena.thread.new' );
 
-								// Check for permisions of the current category - activity only if public
-								if ($msg_cat->pub_access == 0) {
+								// Check for permisions of the current category - activity only if public or registered
+								if ($msg_cat->pub_access == 0 || $msg_cat->pub_access == -1) {
 									//activity stream  - new post
 									$JSPostLink = CKunenaLink::GetThreadPageURL ( $kunena_config, 'view', $catid, $pid, 1 );
 
@@ -298,6 +300,14 @@ if ($kunena_my->id) {
 									$act->app = 'wall';
 									$act->cid = 0;
 
+									// jomsocial 0 = public, 20 = registered members
+									if ($msg_cat->pub_access == 0){
+										$act->access = 0;
+									}
+									else {
+										$act->access = 20;
+									}
+
 									CFactory::load ( 'libraries', 'activities' );
 									CActivityStream::add ( $act );
 								}
@@ -310,8 +320,8 @@ if ($kunena_my->id) {
 
 								CuserPoints::assignPoint ( 'com_kunena.thread.reply' );
 
-								// Check for permisions of the current category - activity only if public
-								if ($msg_cat->pub_access == 0) {
+								// Check for permisions of the current category - activity only if public or registered
+								if ($msg_cat->pub_access == 0 || $msg_cat->pub_access == -1) {
 									//activity stream - reply post
 									$JSPostLink = CKunenaLink::GetThreadPageURL ( $kunena_config, 'view', $catid, $thread, 1 );
 
@@ -327,6 +337,14 @@ if ($kunena_my->id) {
 									$act->content = $content;
 									$act->app = 'wall';
 									$act->cid = 0;
+
+									// jomsocial 0 = public, 20 = registered members
+									if ($msg_cat->pub_access == 0){
+										$act->access = 0;
+									}
+									else {
+										$act->access = 20;
+									}
 
 									CFactory::load ( 'libraries', 'activities' );
 									CActivityStream::add ( $act );

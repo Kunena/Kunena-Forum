@@ -292,8 +292,8 @@ if (count ( $this->messages [0] ) > 0) {
 			<!-- Category --> <span class="topic_category"> <?php
 			echo _KUNENA_CATEGORY . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
 			?>
-			&nbsp;&nbsp;|&nbsp;&nbsp;</span> <!-- /Category --> 
-			
+			</span> <!-- /Category --> 
+			<span class="divider">|</span>
 			<span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
 		echo _KUNENA_POSTED_AT?>
 			<?php

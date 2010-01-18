@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+18-Jan-2010 severdia
+# [#19356] Change CSS and reorder fields on Recent Topics
+
 17-Jan-2010 fxstein
 + [#19244] Ajax/json support class scaffolding; intial autocomplete on moderation page
 + [#19244] Finished initial version of Ajax/json support class; autocomplete on moderation and search

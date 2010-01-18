@@ -83,6 +83,7 @@ a:focus {outline: none;}
 .left {text-align:left;}
 .center {text-align:center;}
 .nowrap {white-space:nowrap;}
+.divider {display:block;float:left;margin:0 5px;color:#999999;}
 
 #Kunena a {
 	text-decoration: none;

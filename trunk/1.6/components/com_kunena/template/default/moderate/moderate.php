@@ -30,11 +30,9 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 	// Sorry - but you have nothing to do here.
 	// This module is for moderators and admins only.
 
-
 	$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
 } else {
 	// Here comes the moderator functionality
-
 
 	switch ($action) {
 		case 'xxx' :
@@ -49,31 +47,14 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 		case 'view' :
 
 			?>
-&nbsp;
 <script type="text/javascript">
 	document.addEvent('domready', function() {
 
-	new Autocompleter.Request.JSON('ksource-category',
-			'index.php?option=com_kunena&Itemid=261&func=json&action=autocomplete&do=getcat', {
-		'minLength': 1,
-        'postVar': 'data'
-	});
-
-
-//	var inputWord2 = $('demo-words');
-//
-//	// An element as indicator, shown during background request
-//	var indicator = inputWord2.getPrevious().getElement('.autocompleter-loading');
-//	indicator.setStyle('display', 'none');
-//
-//	new Autocompleter.Request.JSON(inputWord2, 'script.php', {
-//		'indicator': indicator,
-//		'multiple': true,
-//		'selectFirst': true,
-//		'selectMode': false,
-//		'minLength': 2
-//	});
-
+		// Attach auto completer to the following ids:
+		new Autocompleter.Request.JSON('ksrc-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat');?>', { });
+		new Autocompleter.Request.JSON('ktrgt-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat');?>', { });
+		new Autocompleter.Request.JSON('ksrc-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic');?>', { });
+		new Autocompleter.Request.JSON('ktrgt-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic');?>', { });
 });
 </script>
 <div class="kbt_cvr1">
@@ -92,16 +73,30 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 	<tbody>
 		<tr>
 			<td>
-			<div>
-			<form id="ksource">
 				<fieldset><legend>Source:</legend>
 					<label>
 					<span>Category:</span>
-					<input type="text" name="data" class="text" id="ksource-category" />
+					<input type="text" name="ksource-category" class="text" id="ksrc-cat" />
+					</label>
+					<label>
+					<span>Topic:</span>
+					<input type="text" name="ksource-topic" class="text" id="ksrc-topic" />
+					</label>
+				</fieldset>
+			</td>
+			<td>
+			<form id="ktarget">
+				<fieldset><legend>Target:</legend>
+					<label>
+					<span>Category:</span>
+					<input type="text" name="ktarget-category" class="text" id="ktrgt-cat" />
+					</label>
+					<label>
+					<span>Topic:</span>
+					<input type="text" name="ktarget-topic" class="text" id="ktrgt-topic" />
 					</label>
 				</fieldset>
 			</form>
-			</div>
 			</td>
 		</tr>
 	</tbody>

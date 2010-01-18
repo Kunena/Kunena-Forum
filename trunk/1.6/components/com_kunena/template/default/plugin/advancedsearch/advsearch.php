@@ -33,6 +33,13 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
     $fb_advsearch_img = KUNENA_URLIMAGESPATH . 'shrink.gif';
 }
 ?>
+<script type="text/javascript">
+	document.addEvent('domready', function() {
+
+		// Attach auto completer to the following ids:
+		new Autocompleter.Request.JSON('username', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getuser');?>', { });
+});
+</script>
 
 <form action="<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=advsearch'); ?>" method="post" id="searchform" name="adminForm">
     <table id="kforumsearch" class="kblocktable" border="0" cellspacing="0" cellpadding="0">

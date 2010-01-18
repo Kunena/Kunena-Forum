@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+require_once (KUNENA_PATH_LIB . DS . 'kunena.session.class.php');
+
 /**
  * @author fxstein
  *
@@ -21,9 +23,13 @@ class CKunenaAjaxHelper {
 	 * @var JDatabase
 	 */
 	protected $_db;
+	protected $_my;
+	protected $_session;
 
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
+		$this->_my = &JFactory::getUser ();
+		$this->_session = & CKunenaSession::getInstance ();
 	}
 
 	function &getInstance() {
@@ -35,17 +41,21 @@ class CKunenaAjaxHelper {
 		return $instance;
 	}
 
-	public function generateJsonResonse($action, $do, $data) {
+	public function generateJsonResponse($action, $do, $data) {
 		$response = '';
 
-		switch ($action) {
-			case 'autocomplete' :
-				$response = $this->_getAutoComplete ( $do, $data );
+		if ($this->_my->id) {
+			// We only entertain json requests for registered and logged in users
 
-				break;
-			default :
+			switch ($action) {
+				case 'autocomplete' :
+					$response = $this->_getAutoComplete ( $do, $data );
 
-				break;
+					break;
+				default :
+
+					break;
+			}
 		}
 
 		// Output the JSON data.
@@ -56,36 +66,54 @@ class CKunenaAjaxHelper {
 	protected function _getAutoComplete($do, $data) {
 		$result = array ();
 
+		// only registered users when the board is online should endup here
+
 		// Verify permissions
-		//		$is_admin = CKunenaTools::isAdmin ();
-		//		$is_moderator = CKunenaTools::isModerator ( $this->_my->id, $catid );
+		if ($this->_session->allowed && $this->_session->allowed != 'na') {
+			$allowed = "c.id IN ({$this->_session->allowed})";
+		} else {
+			$allowed = "c.published='1' AND c.pub_access='0'";
+		}
 
+		// When we query for topics or categories we have to check against permissions
 
-		//		if (!$is_admin && !$is_moderator){
-		// Not an admin nor a moderator for the category
-		// nothing to return;
-		//			return array();
-		//		}
-
-
-		// Now we can safely continue...
 		switch ($do) {
 			case 'getcat' :
-				$query = "SELECT `name`, 'id' FROM #__fb_categories WHERE `name`
-							LIKE '" . $data . "%' ORDER BY 1 LIMIT 0, 10;";
+				$query = "SELECT c.name, c.id
+							FROM #__fb_categories AS c
+							WHERE $allowed AND name LIKE '" . $data . "%'
+							ORDER BY 1 LIMIT 0, 10;";
 
 				$this->_db->setQuery ( $query );
 				$result = $this->_db->loadResultArray ();
 				check_dberror ( "Unable to lookup categories by name." );
 
 				break;
-			case 'getmsg' :
-				$query = "SELECT `subject` FROM #__fb_messages WHERE `parent`=0 AND `subject`
-							LIKE '" . $data . "%' ORDER BY 1 LIMIT 0, 10;";
+			case 'gettopic' :
+				$query = "SELECT m.subject
+							FROM #__fb_messages AS m
+							JOIN #__fb_categories AS c ON m.catid = c.id
+							WHERE m.hold=0 AND m.parent=0 AND $allowed
+								AND m.subject LIKE '" . $data . "%'
+							ORDER BY 1 LIMIT 0, 10;";
 
 				$this->_db->setQuery ( $query );
 				$result = $this->_db->loadResultArray ();
 				check_dberror ( "Unable to lookup topics by subject." );
+
+				break;
+			case 'getuser' :
+				$kunena_config = &CKunenaConfig::getInstance ();
+
+				// User the configured display name
+				$queryname = $kunena_config->username ? 'username' : 'name';
+				// Exclude the main superadmin from the search for security purposes
+				$query = "SELECT `$queryname` FROM #__users WHERE block=0 AND `id` != 62 AND `$queryname`
+							LIKE '" . $data . "%' ORDER BY 1 LIMIT 0, 10;";
+
+				$this->_db->setQuery ( $query );
+				$result = $this->_db->loadResultArray ();
+				check_dberror ( "Unable to lookup users by $queryname." );
 
 				break;
 			default :

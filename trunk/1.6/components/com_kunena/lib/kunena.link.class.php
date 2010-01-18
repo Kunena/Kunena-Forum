@@ -397,6 +397,11 @@ class CKunenaLink
 		  return JRoute::_(KUNENA_LIVEURLREL."&amp;func=poll&amp;do={$do}{$idstring}{$catidstr}");
     }
 
+    function GetJsonURL($action, $do){
+
+    	return JRoute::_(KUNENA_LIVEURLREL."&amp;func=json;&amp;action=$action&amp;do=$do");
+    }
+
     function GetMarkThisReadLink( $catid, $name, $rel='nofollow', $title='')
     {
     	return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid , $name , $title , $rel );

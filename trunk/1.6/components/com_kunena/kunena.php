@@ -152,6 +152,7 @@ if ($kn_tables->installed () === false) {
 
 require_once (KUNENA_PATH . DS . "class.kunena.php");
 
+$kunena_is_admin = CKunenaTools::isAdmin ();
 
 // Check for JSON request
 if ($func == "json") {
@@ -170,15 +171,21 @@ if ($func == "json") {
 	// Change the suggested filename.
 	JResponse::setHeader( 'Content-Disposition', 'attachment; filename="kunena.json"' );
 
-	$data = JRequest::getVar ( 'data', '' );
+	$value = JRequest::getVar ( 'value', '' );
 
-	// Generate reponse
-	echo $ajaxHelper->generateJsonResonse($action, $do, $data);
+	JResponse::sendHeaders();
+
+	if ($kunena_config->board_offline && ! $kunena_is_admin){
+		// when the forum is offline, we don't entertain json requests
+		echo '[]';
+	}
+	else {
+		// Generate reponse
+		echo $ajaxHelper->generateJsonResponse($action, $do, $value);
+	}
 
 	$kunena_app->close ();
 }
-
-$kunena_is_admin = CKunenaTools::isAdmin ();
 
 // Check if we only allow registered users
 

@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 17-Jan-2010 fxstein
 + [#19244] Ajax/json support class scaffolding; intial autocomplete on moderation page
 + [#19244] Finished initial version of Ajax/json support class; autocomplete on moderation and search
+# [#19470] Incorrect user count in stats module - included blocked users
 
 17-Jan-2010 Matias
 ^ [#19243] Make profile on left/right/top/bottom configurable - move files to their new places

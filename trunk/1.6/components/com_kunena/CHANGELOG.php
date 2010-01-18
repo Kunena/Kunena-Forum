@@ -43,6 +43,7 @@ Kunena 1.6.0-DEV
 
 18-Jan-2010 severdia
 # [#19356] Change CSS and reorder fields on Recent Topics
+# [#19356] Cleaned up Profile page, new generic/online buttons, fixed language strings
 
 17-Jan-2010 fxstein
 + [#19244] Ajax/json support class scaffolding; intial autocomplete on moderation page

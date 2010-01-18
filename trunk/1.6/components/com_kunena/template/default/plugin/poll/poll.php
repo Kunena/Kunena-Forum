@@ -66,17 +66,25 @@ elseif ($do == 'vote')
                     <td class = "td-1 km" align="left">
                         <div class = "polldesc">
                         <div style="font-weight:bold;" id="poll_text_help"></div>
+                        <fieldset>
+                        <legend style="font-size: 14px;"><?php echo _KUNENA_POLL_OPTIONS; ?></legend>
+                        <ul>
 	<?php
-	echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</legend><ul>";
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
        echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";
     }
-       echo "</ul></fieldset>";
-       $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($dataspollresult).",".$id.",'results');\" />";
-       echo "<div class=\"poll_center\" id=\"poll_buttons\">".$button_vote;
+       ?>
+    	</ul></fieldset>
+		<div class="poll_center" id="poll_buttons">
+       <input id="k_poll_button_vote" type="button" value="<?php echo _KUNENA_POLL_BUTTON_VOTE; ?>" />
+       <input type="hidden" id="k_poll_nb_options" name="pollid" value="<?php echo sizeof($dataspollresult); ?>">
+       <input type="hidden" id="k_poll_id" name="nb_options" value="<?php echo $id; ?>">
+       <input type="hidden" id="k_poll_do" name="nb_options" value="pollvote">
+       <?php
        echo '	'.CKunenaLink::GetThreadLink('view',$catid,$id,kunena_htmlspecialchars ( stripslashes ( _KUNENA_POLL_NAME_URL_RESULT ) ), kunena_htmlspecialchars ( stripslashes ( _KUNENA_POLL_NAME_URL_RESULT ) ), 'follow');
     ?>
+    	</div>
      </div>
                 	  </td>
                  </tr>
@@ -132,8 +140,8 @@ elseif ($do == 'changevote')
                     <td class = "td-1 km" align="left">
                         <div class = "polldesc">
                         <div style="font-weight:bold;" id="poll_text_help"></div>
+                        <fieldset><legend style="font-size: 14px;"><?php _KUNENA_POLL_OPTIONS; ?></legend><ul>
 	<?php
-	echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</legend><ul>";
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
     	if($dataspollresult[$i]->id == $id_last_vote){
@@ -142,11 +150,17 @@ elseif ($do == 'changevote')
 			echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";
     	}
     }
-       echo "</ul></fieldset>";
-       $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($dataspollresult).",".$id.",'dbchangevote');\" />";
-       echo "<div class=\"poll_center\" id=\"poll_buttons\">".$button_vote;
+       ?>
+    	</ul></fieldset>
+		<div class="poll_center" id="poll_buttons">
+       <input id="k_poll_button_vote" type="button" value="<?php echo _KUNENA_POLL_BUTTON_VOTE; ?>" />
+       <input type="hidden" id="k_poll_nb_options" name="pollid" value="<?php echo sizeof($dataspollresult); ?>">
+       <input type="hidden" id="k_poll_id" name="nb_options" value="<?php echo $id; ?>">
+       <input type="hidden" id="k_poll_do" name="nb_options" value="pollchangevote">
+       <?php
 		echo '	'.CKunenaLink::GetThreadLink('view',$catid,$id,kunena_htmlspecialchars ( stripslashes ( _KUNENA_POLL_NAME_URL_RESULT ) ), kunena_htmlspecialchars ( stripslashes ( _KUNENA_POLL_NAME_URL_RESULT ) ), 'follow');
 		?>
+		</div>
        </div>
                 	  </td>
                  </tr>

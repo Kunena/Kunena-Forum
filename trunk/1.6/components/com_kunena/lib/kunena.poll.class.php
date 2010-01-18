@@ -128,7 +128,6 @@ class CKunenaPolls {
 		JApplication::addCustomHeadTag('
     <script type="text/javascript">
 	   <!--
-	   var boardclass = "fb_";
 	   var KUNENA_POLL_OPTION_NAME = "'._KUNENA_POLL_OPTION_NAME.'";
 	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'._KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW.'";
 	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
@@ -228,21 +227,31 @@ class CKunenaPolls {
    function save_results($pollid,$userid,$vote)
    {
 		$kunena_db = &JFactory::getDBO();
+		$kunena_app = JFactory::getApplication ();
     	$kunena_config =& CKunenaConfig::getInstance();
     	$pollusers = CKunenaPolls::get_data_poll_users($userid,$pollid);
     	$nonewvote = "0";
+    	$data = array();
     	if ($kunena_config->pollallowvoteone)
     	{
-      		if ($pollusers[0]->userid == $userid)
-      		{
-        		$nonewvote = "1";
+      		if(!empty($pollusers)){
+    			if ($pollusers[0]->userid == $userid)
+      			{
+        			$nonewvote = "1";
+      			}
       		}
     	}
     	if ($nonewvote == "0")
     	{
-      		if ($pollusers[0]->timediff > $kunena_config->polltimebtvotes || $pollusers[0]->timediff == null)
+    		if(empty($pollusers)){
+				$poll_timediff = false;
+				$pollusers[0]->timediff = null;
+    		} else {
+    			$poll_timediff = true;
+    		}
+      		if ($poll_timediff || $pollusers[0]->timediff == null)
       		{
-        		echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
+        		//echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
 
         		$query = "SELECT * FROM #__fb_polls_options WHERE pollid=$pollid AND id=$vote";
         		$kunena_db->setQuery($query);
@@ -268,7 +277,7 @@ class CKunenaPolls {
              		$kunena_db->query();
             		check_dberror('Unable to update poll options');
 
-            		echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
+            		$data['results'] = '1';
           		}
          		else if ($votes == $kunena_config->pollnbvotesbyuser)
          		{
@@ -282,18 +291,22 @@ class CKunenaPolls {
             		$kunena_db->query();
             		check_dberror('Unable to update poll options');
 
-            		echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
+					$data['results'] = '1';
          		}
       		}
       		elseif ($pollusers[0]->timediff <= $kunena_config->polltimebtvotes)
       		{
-         		echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"2\";</script>";
+      			$data['results'] = '2';
       		}
      	}
      	else
      	{
-        	echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"3\";</script>";
+     		$data['results'] = '3';
      	}
+     	header ( "Content-type: application/json" );
+		echo json_encode($data);
+
+		$kunena_app->close ();
    }
    /**
 	* Update poll during edit
@@ -303,6 +316,7 @@ class CKunenaPolls {
 		$kunena_db = &JFactory::getDBO();
 		$kunena_config =& CKunenaConfig::getInstance();
 		$pollusers = CKunenaPolls::get_data_poll_users($userid,$threadid);
+		$data = array();
 
 		if ($pollusers[0]->timediff > $kunena_config->polltimebtvotes)
       	{
@@ -316,12 +330,16 @@ class CKunenaPolls {
         	$kunena_db->query();
         	check_dberror('Unable to update poll users');
 
-        	echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
+        	$data['results'] = '1';
       	}
       	elseif ($pollusers[0]->timediff <= $kunena_config->polltimebtvotes)
       	{
-        	echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"2\";</script>";
+        	$data['results'] = '2';
       	}
+      	header ( "Content-type: application/json" );
+		echo json_encode($data);
+
+		$kunena_app->close ();
    }
    /**
 	* Update poll during edit

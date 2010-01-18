@@ -105,18 +105,27 @@ elseif ((strftime("%Y-%m-%d %H:%M:%S",time()) <= $dataspollresult[0]->polltimeto
 {
 	?>
 	<div style="font-weight:bold;" id="poll_text_help"></div>
+	<fieldset><legend id="poll_xd" style="font-size: 14px;"><?php echo _KUNENA_POLL_OPTIONS; ?></legend>
+	<ul>
 	<?php
-	echo "<fieldset><legend style=\"font-size: 14px;\">"._KUNENA_POLL_OPTIONS."</legend><ul>";
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
        echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";
     }
-       echo "</ul></fieldset>";
-       $button_vote = "<input type=\"button\" value=\""._KUNENA_POLL_BUTTON_VOTE."\" onClick=\"javascript:ajax(".sizeof($dataspollresult).",".$id.",'results');\" />";
-       echo "<div class=\"poll_center\" id=\"poll_buttons\">".$button_vote;
+    	?>
+    </ul>
+    </fieldset>
+		<div class="poll_center" id="poll_buttons">
+       <input id="k_poll_button_vote" type="button" value="<?php echo _KUNENA_POLL_BUTTON_VOTE; ?>" />
+       <input type="hidden" id="k_poll_nb_options" name="pollid" value="<?php echo sizeof($dataspollresult); ?>">
+       <input type="hidden" id="k_poll_id" name="nb_options" value="<?php echo $id; ?>">
+       <input type="hidden" id="k_poll_do" name="nb_options" value="pollvote">
+       <?php
        if($dataspollusers[0]->userid == $kunena_my->id) {
        ?>
-       <a href = <?php echo CKunenaLink::GetPollURL($kunena_config, 'changevote', $id, $catid); ?> /><?php echo _KUNENA_POLL_BUTTON_CHANGEVOTE; ?></a><?php
+       <a href = <?php echo CKunenaLink::GetPollURL($kunena_config, 'changevote', $id, $catid); ?> /><?php echo _KUNENA_POLL_BUTTON_CHANGEVOTE; ?></a>
+       </div>
+       <?php
        }
 }
 else

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+18-Jan-2010 Xillibit
+^ [#19358] Apply some changes on the polls - rewrite the javascript to use mootools
+
 18-Jan-2010 severdia
 # [#19356] Change CSS and reorder fields on Recent Topics
 

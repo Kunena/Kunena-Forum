@@ -358,6 +358,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				}
         		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+        		JApplication::addCustomHeadTag('
+    				<script type="text/javascript">
+	  				 <!--
+	   				var number_field = 1;
+      				//-->
+      				</script>
+					');
          ?>
             <tr class = "ksectiontableentry2">
                 <td class = "kleftcolumn">
@@ -372,8 +379,9 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
                     <?php if($this->kunena_editmode != "1"){ ?>
                     <input type="hidden" name="number_total_options" id="numbertotal">
                     <?php } ?>
-                    <input type = "button" class = "kbutton" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
-                    <input type = "button" class = "kbutton" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
+                    <input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>" >
+                    <input type = "button" id = "kbutton_poll_add" class = "kbutton" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
+                    <input type = "button" id = "kbutton_poll_rem" class = "kbutton" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
                 </td>
             </tr>
            <?php }
@@ -425,8 +433,9 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
                 	<div style="font-weight:bold;" id="poll_text_write"></div>
                     <div><input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><?php echo ' '. _KUNENA_POLL_TITLE; ?></div>
                     <div><?php echo $pollcalendar . ' '. _KUNENA_POLL_TIME_TO_LIVE; ?></div>
-                    <input type = "button" class = "kbutton" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
-                    <input type = "button" class = "kbutton" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
+                    <input type = "button" id = "kbutton_poll_add" class = "kbutton" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
+                    <input type = "button" id = "kbutton_poll_rem" class = "kbutton" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
+                    <input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>">
                     <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
             </td>
         </tr>

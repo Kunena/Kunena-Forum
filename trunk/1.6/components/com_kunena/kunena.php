@@ -612,11 +612,9 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		#########################################################################################
 
 		case 'listcat' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/listcat.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/listcat.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'listcat.php');
-			}
+			require_once (KUNENA_PATH_VIEWS . DS . 'listcat.php');
+			$page = new CKunenaListcat($catid);
+			$page->display();
 
 			break;
 

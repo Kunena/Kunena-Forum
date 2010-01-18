@@ -111,7 +111,7 @@ class CKunenaShowcat {
 					$this->last_read [$message->thread]->lastread = $this->last_reply [$message->thread] = $message;
 				}
 			}
-			include_once (KUNENA_PATH . DS . 'router.php');
+			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
 
 			$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );

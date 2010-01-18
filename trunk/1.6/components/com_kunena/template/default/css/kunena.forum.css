@@ -675,7 +675,6 @@ td.td-1  {
 #Kunena span.topic_views {
 	color:#999999;
 	text-align:center;
-	font-size: 1em;
 }
 
 #Kunena span.topic_views_number {
@@ -701,7 +700,11 @@ td.td-1  {
 	text-align:left;
 	width: 95%;
 }
-
+/*
+table#kprofilebox {
+	margin-bottom: 10px;
+}
+*/
 /* TOPMENU
 ----------------------------------------------------------------------------------------------- */
 #Kunena .kheader div#ktopmenu {
@@ -867,7 +870,6 @@ div#kheader h1 a:hover {
 
 #Kunena h1 {
 	background: #5388B4;
-	float: left;
 	text-align: left;
 	border-bottom:3px solid #D9D9D9;
 	display: block;
@@ -1751,11 +1753,9 @@ div#video {
 #Kunena a.buttoncomm.btn-left {
 	float: left;
 }
-
 #Kunena a.buttoncomm span {
 	float: left;
 }
-
 #Kunena a.buttoncomm span.reply {
 	float: left;
 	background: url("../images/buttons/btn-left-reply.gif") no-repeat left top;
@@ -1768,7 +1768,6 @@ div#video {
 	float: left;
 	background: url("../images/buttons/btn-left-newtopic.gif") no-repeat left top;
 }
-
 #Kunena a.buttoncomm span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
@@ -1793,11 +1792,9 @@ div#video {
 #Kunena a.buttonuser.btn-left {
 	float: left;
 }
-
 #Kunena a.buttonuser span {
 	float: left;
 }
-
 #Kunena a.buttonuser span.favorite {
 	float: left;
 	background: url("../images/buttons/btn-left-favorite.gif") no-repeat left top;
@@ -1859,7 +1856,6 @@ a.buttonmod span {
 	float: left;
 	background: url("../images/buttons/btn-left-move.gif") no-repeat left top;
 }
-
 #Kunena a.buttonmod span.sticky {
 	float: left;
 	background: url("../images/buttons/btn-left-sticky.gif") no-repeat left top;
@@ -1882,6 +1878,100 @@ a.buttonmod span {
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;
 }
+
+/* Generic Buttons */
+#Kunena a.buttongen {
+	color: #FFF;
+	text-transform: uppercase;
+	font-size: .917em;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	float: right;
+	cursor: pointer;
+	line-height: 145%;
+	background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;
+	border: none;
+}
+
+#Kunena a.buttongen.btn-left {
+	float: left;
+}
+a.buttongen span {
+	float: left;
+}
+#Kunena a.buttongen span.gen {
+	float: left;
+	background: url("../images/buttons/btn-left-gen.gif") no-repeat left top;
+}
+#Kunena a.buttongen span span {
+	height: 18px;
+	padding: 0 7px 0 20px;
+	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
+}
+
+
+/* Online Indicator */
+#Kunena span.buttononline-yes {
+	color: #FFF;
+	text-transform: uppercase;
+	font-size: .917em;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	float: right;
+	cursor: pointer;
+	line-height: 145%;
+	background: url("../images/buttons/btn-bg-mod.gif") repeat-x left top;
+	border: none;
+}
+
+#Kunena span.buttononline-yes.btn-left {
+	float: left;
+}
+span.buttononline-yes span {
+	float: left;
+}
+#Kunena span.buttononline-yes span.online-yes {
+	float: left;
+	background: url("../images/buttons/btn-left-modgen.gif") no-repeat left top;
+}
+#Kunena span.buttononline-yes span span {
+	height: 18px;
+	padding: 0 7px 0 7px;
+	background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;
+}
+
+#Kunena span.buttononline-no {
+	color: #FFF;
+	text-transform: uppercase;
+	font-size: .917em;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	float: right;
+	cursor: pointer;
+	line-height: 145%;
+	background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;
+	border: none;
+}
+
+#Kunena span.buttononline-no.btn-left {
+	float: left;
+}
+span.buttononline-no span {
+	float: left;
+}
+#Kunena span.buttononline-no span.online-no {
+	float: left;
+	background: url("../images/buttons/btn-left-gen.gif") no-repeat left top;
+}
+#Kunena span.buttononline-no span span {
+	height: 18px;
+	padding: 0 7px 0 7px;
+	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
+}
+
+
+
+
 
 
 /*
@@ -2340,15 +2430,29 @@ div#kprofile-container { border: 1px solid #BFC3C6; margin: 10px 0 10px 0; paddi
 
 div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
 
-div.avatar-lg { width: 200px; height: 200px; background-color: #BFC3C6; margin-bottom: 15px;}
+div.avatar-lg { width: 200px; height: 200px; background-color: #FFF; border: 1px solid #999999; margin-bottom: 15px;}
 
+div.avatar-lg img { margin: 33% auto; display:block; width: auto; height: auto;}
+	
 div#kprofile-stats ul { margin: 0 0 0 3px; padding: 0;}
 
-div#kprofile-stats ul li { list-style-type: none; padding-top: 8px; clear:both;}
+div#kprofile-stats ul li { list-style-type: none; padding-top: 5px; clear:both; font-size:.917em ;}
 
-div#kprofile-stats ul li.online-status-yes {}
+div#kprofile-stats ul li span.online-status-yes {
+	display:block; 
+	background: url("../images/english/icons/online.gif") no-repeat; 
+	height: 16px; 
+	width: 70px;
+	color: #fff;
+}
 
-div#kprofile-stats ul li.online-status-no {}	
+div#kprofile-stats ul li span.online-status-no {
+	display:block; 
+	background: url("../images/english/icons/offline.gif") no-repeat; 
+	height: 16px; 
+	width: 70px;
+	color:#fff;
+}	
 
 div#kprofile-stats ul li span.rankname {
 	display:block; 
@@ -2507,7 +2611,17 @@ dd.kprofile-modtools ul li {
 	padding-bottom: 5px;
 }
 
+li.usertype {
+	font-weight:bold;
+}
 
+li.kprofile-rank img {
+	vertical-align:middle;
+	float:right;
+	padding-bottom: 2px;
+}
+
+	
 /* Tabs
 ----------------------------------*/
 

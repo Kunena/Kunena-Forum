@@ -15,32 +15,9 @@ defined( '_JEXEC' ) or die();
 $document = & JFactory::getDocument ();
 $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new JTabs(tabs); }); });" );
 ?>
-<table class="kblocktable" cellpadding="0" cellspacing="0" border="0" width="100%">
-<thead>
-	<tr>
-		<th>
-			<div class="ktitle_cover km">
-				<span class="ktitle kl">
-				<?php echo _USER_PROFILE; ?>
-				<?php echo $this->user->name; ?>
-				</span>
 
-			</div>
-		</th>
-		<!-- B: PROFILE TOOLS -->
-		<th align="right" width="1%">
-			<?php
-			//(JJ) BEGIN: RECENT POSTS
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profiletools/profiletools.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/profiletools/profiletools.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profiletools/profiletools.php');
-			}
-			?>
-		</th>
-	</tr>
-	</thead>
-</table>
+
+<h1><?php echo _USER_PROFILE; ?> <?php echo $this->user->name; ?> (<?php echo $this->user->username; ?>)</h1>
 
 <div class="kbt_cvr1">
 <div class="kbt_cvr2">
@@ -53,11 +30,11 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 			<div class="avatar-lg"><img src="<?php echo $this->avatarurl; ?>" alt=""/></div>
 			<div id="kprofile-stats">
 				<ul>
-					<li><span class="online-status-<?php echo $this->online ? 'yes':'no'; ?>"><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></li>
+					<li><span class="buttononline-<?php echo $this->online ? 'yes':'no'; ?> btn-left"><span class="online-<?php echo $this->online ? 'yes':'no'; ?>"><span><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></span></span></li>
 					<!-- Check this: -->
-					<li><span class="usertype">User Type:</span><span><?php echo $this->user->usertype; ?></span></li>
+					<li class="usertype"><?php echo $this->user->usertype; ?></li>
 					<!-- The class on the span below should be rank then hyphen then the rank name -->
-					<li><span class="rankname">User Rank:</span><span><?php echo $this->rank->rank_title; ?><br /><img src="<?php echo $this->rank->rank_image; ?>" alt="<?php echo $this->rank->rank_title; ?>" /></span></li>
+					<li class="kprofile-rank"><strong>Rank: </strong><?php echo $this->rank->rank_title; ?><img src="<?php echo $this->rank->rank_image; ?>" alt="<?php echo $this->rank->rank_title; ?>" /></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'date_today', 'utc'); ?></span></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_TIMEZONE; ?>:</strong> GMT <?php echo CKunenaTimeformat::showTimezone($this->timezone); ?></li>
@@ -134,21 +111,21 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 						<h4><?php echo _KUNENA_MODERATE_DELETE_USER; ?>:</h4>
 						<form id="kform-ban" name="kformban" action="#" method="post">
 
-							<input type="checkbox" id="ban-ip" name="banip" value="banip" class="kcheckbox" >
-							<label for="ban-ip"><span onClick="document.kformban.banip.checked=(! document.kformban.banip.checked);"><?php echo _KUNENA_MODERATE_BANIP; ?></span></label>
+							<input type="checkbox" id="ban-ip" name="banip" value="banip" class="kcheckbox" />
+							<label for="ban-ip"><span onclick="document.kformban.banip.checked=(! document.kformban.banip.checked);"><?php echo _KUNENA_MODERATE_BANIP; ?></span></label>
 							<select>
 								<option value=""><?php echo _KUNENA_MODERATE_SELECT_IP; ?></option>
 								<option value="147.22.33.88">147.22.33.88</option>
 								<option value="144.23.33.168">144.23.33.168</option>
 								<option value="allips"><?php echo _KUNENA_MODERATE_ALLIPS; ?></option>
 							</select>
-							<input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" >
-							<label for="ban-email"><span onClick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo _KUNENA_MODERATE_BANEMAIL; ?></span></label>
-							<input type="checkbox" id="banu-sername" name="banusername" value="banusername" class="kcheckbox" >
-							<label for="ban-username"><span onClick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo _KUNENA_MODERATE_BANUSERNAME; ?></span></label>
-							<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" >
-							<label for="ban-delposts"><span onClick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo _KUNENA_MODERATE_DELETE_ALL_POSTS; ?></span></label>
-							<input class="kbutton kbutton ks" type="submit" value="<?php echo _KUNENA_MODERATE_DELETE_USER; ?>" name="Submit"/>
+							<input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
+							<label for="ban-email"><span onclick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo _KUNENA_MODERATE_BANEMAIL; ?></span></label>
+							<input type="checkbox" id="ban-username" name="banusername" value="banusername" class="kcheckbox" />
+							<label for="ban-username"><span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo _KUNENA_MODERATE_BANUSERNAME; ?></span></label>
+							<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" />
+							<label for="ban-delposts"><span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo _KUNENA_MODERATE_DELETE_ALL_POSTS; ?></span></label>
+							<input class="kbutton kbutton ks" type="submit" value="<?php echo _KUNENA_MODERATE_DELETE_USER; ?>" name="Submit" />
 						</form>
 						<div class="clr"></div>
 					</dd>

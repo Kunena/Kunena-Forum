@@ -835,6 +835,52 @@ fieldset#search-posts-start select {
 	text-align: left;
 }
 
+/*
+div#kheader {
+	background: #5388B4;
+	float: left;
+	text-align: left;
+	border-bottom:3px solid #D9D9D9;
+	display: block;
+	width:100%;
+}
+
+div#kheader h1 {
+	padding: 0;
+	margin: 8px 10px;
+	font-size:1.333em;
+	color: #FFFFFF;
+	font-weight: normal;
+}
+
+div#kheader h1 a {
+	color: #ffffff;
+	font-weight:bold;
+}
+
+div#kheader h1 a:hover {
+	text-decoration: underline;
+}
+
+*/
+
+
+#Kunena h1 {
+	background: #5388B4;
+	float: left;
+	text-align: left;
+	border-bottom:3px solid #D9D9D9;
+	display: block;
+	width:100%;
+	line-height: 1.9em;
+	font-size:1.333em;
+	text-indent: 10px;
+	padding-top: 2px;
+	color: #FFFFFF;
+}
+
+
+
 #Kunena div.ktitle_cover {
 	float: left;
 	text-align: left;
@@ -1051,7 +1097,7 @@ span.newchar {
 	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #FFFFFF;
 	border-right: 1px solid #BFC3C6;
-	padding: 8px;
+	padding: 4px 8px;
 }
 
 
@@ -2197,6 +2243,30 @@ HELP , RULES , UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena .kcredits_more {
 	padding: 10px 0 10px 20px;
 }
+
+
+/*
+MODERATOR PAGE
+-------------------------------------------------------------------- */
+
+div#kmod-container {
+	border: 1px solid #BFC3C6; 
+	margin: 10px 0 10px 0; 
+	padding: 10px 10px 30px 10px; 
+	overflow:auto; 
+	height: 1%;
+	clear:left;
+}
+div#kmod-leftcol {
+	width: 47%; 
+	float:left;
+	clear:left;
+}
+div#kmod-rightcol {
+	width: 47%;
+	float:right;
+}
+
 
 /*
 USER PROFILE

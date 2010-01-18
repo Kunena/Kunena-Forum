@@ -62,29 +62,22 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 <div class="kbt_cvr3">
 <div class="kbt_cvr4">
 <div class="kbt_cvr5">
-<table class="kblocktable" width="100%" border="0" cellspacing="0" cellpadding="0">
-	<thead>
-		<tr>
-			<th colspan="5">
-			<div class="ktitle_cover kl">Forum Moderation</div>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>
-				<fieldset><legend>Source:</legend>
-					<label>
+
+<h1>Forum Moderation</h1>
+<div id="kmod-container">
+		<div id="kmod-leftcol">
+			<fieldset><legend>Source:</legend>
+				<label>
 					<span>Category:</span>
 					<input type="text" name="ksource-category" class="text" id="ksrc-cat" />
-					</label>
-					<label>
+				</label>
+				<label>
 					<span>Topic:</span>
 					<input type="text" name="ksource-topic" class="text" id="ksrc-topic" />
-					</label>
-				</fieldset>
-			</td>
-			<td>
+				</label>
+			</fieldset>
+		</div>
+		<div id="kmod-rightcol">
 			<form id="ktarget">
 				<fieldset><legend>Target:</legend>
 					<label>
@@ -97,10 +90,17 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 					</label>
 				</fieldset>
 			</form>
-			</td>
-		</tr>
-	</tbody>
-</table>
+			
+			<div class="clr"></div>
+		</div>
+</div>
+
+
+
+
+
+
+
 </div>
 </div>
 </div>

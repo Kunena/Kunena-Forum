@@ -284,24 +284,34 @@ if (count ( $this->messages [0] ) > 0) {
 			<?php
 		}
 		?>
-			<div class="ks"><!-- By --> <span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
+			<div class="ks">
+			<!-- By --> 
+				<?php
+		if (JString::strtolower ( $this->func ) != 'showcat') {
+			?>
+			<!-- Category --> <span class="topic_category"> <?php
+			echo _KUNENA_CATEGORY . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
+			?>
+			&nbsp;&nbsp;|&nbsp;&nbsp;</span> <!-- /Category --> 
+			
+			<span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
 		echo _KUNENA_POSTED_AT?>
 			<?php
 			echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');
-		?></span> <?php
+		?></span> 
+	
+		<?php
 		if ($leaf->name) {
 			echo '<span class="topic_by">';
 			echo _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $kunena_config, $leaf->userid, $leaf->name );
 			echo '</span>';
 		}
 		?>
-			<!-- /By --> <?php
-		if (JString::strtolower ( $this->func ) != 'showcat') {
-			?>
-			<!-- Category --> <span class="topic_category"> <?php
-			echo _KUNENA_CATEGORY . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
-			?>
-			</span> <!-- /Category --> <?php
+			<!-- /By --> 
+			
+		
+		
+		<?php
 		}
 		if ($leaf->locked != 0) {
 			?> <!-- Locked --> <span class="topic_locked"> <?php

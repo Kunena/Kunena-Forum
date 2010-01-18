@@ -165,7 +165,7 @@ a:focus {outline: none;}
 #Kunena tr.ksectiontableentry1 td {
 	background: #F2F1EE;
 	color: #000000;
-	padding: 8px;
+	padding: 4px 8px;
 	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #FFFFFF;
 	border-right: 1px solid #BFC3C6;
@@ -174,7 +174,7 @@ a:focus {outline: none;}
 #Kunena tr.ksectiontableentry2 td {
 	/* background: #F2F1EE; */
 	color: #000000;
-	padding: 8px;
+	padding: 4px 8px;
 	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #FFFFFF;
 	border-right: 1px solid #BFC3C6;
@@ -661,13 +661,16 @@ td.td-1  {
 #Kunena table#kflattable div.ks {
 	margin-top: 3px;
 }
-#Kunena span.topic_posted_time,
+
+#Kunena span.topic_posted_time {
+	display: block;
+	float:left;
+}
 #Kunena span.topic_category {
 	display: block;
 	float:left;
 	clear:left;
 }
-
 #Kunena span.topic_views {
 	color:#999999;
 	text-align:center;

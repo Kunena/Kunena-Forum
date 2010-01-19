@@ -59,7 +59,7 @@ if ($id || $parentid) {
 	// Check that message and category exists and fill some information for later use
 	$query = "SELECT m.*, (mm.locked OR c.locked) AS locked, t.message,
 					c.name AS catname, c.parent AS catparent, c.pub_access,
-					c.review, c.class_sfx, p.id AS poll_id
+					c.review, c.class_sfx, p.id AS poll_id, c.allow_polls
 				FROM #__fb_messages AS m
 				INNER JOIN #__fb_messages AS mm ON mm.id=m.thread
 				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
@@ -81,7 +81,7 @@ if ($id || $parentid) {
 	}
 } else if ($catid) {
 	// Check that category exists and fill some information for later use
-	$kunena_db->setQuery ( "SELECT 0 AS id, id AS catid, name AS catname, parent AS catparent, pub_access, locked, review, class_sfx FROM #__fb_categories WHERE id='{$catid}'" );
+	$kunena_db->setQuery ( "SELECT 0 AS id, id AS catid, name AS catname, parent AS catparent, pub_access, locked, review, class_sfx, allow_polls FROM #__fb_categories WHERE id='{$catid}'" );
 	$msg_cat = $kunena_db->loadObject ();
 	check_dberror ( 'Unable to load category.' );
 	if (! $msg_cat) {

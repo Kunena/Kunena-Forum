@@ -305,6 +305,10 @@ td.fbtdtitle {
 		?></small></th>
 
 		<th><small><?php
+		echo _KUNENA_ADMIN_POLLS;
+		?></small></th>
+
+		<th><small><?php
 		echo _KUNENA_PUBLISHED;
 		?></small></th>
 
@@ -378,6 +382,11 @@ td.fbtdtitle {
 
 		<td align="center"><?php
 			echo (! $row->category ? "&nbsp;" : ($row->review == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
+			?>
+		</td>
+
+		<td align="center"><?php
+			echo ($row->allow_polls ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
 			?>
 		</td>
 
@@ -648,6 +657,20 @@ td.fbtdtitle {
 
 		<td valign="top"><?php
 		echo _KUNENA_REVDESC;
+		?></td>
+	</tr>
+
+	<tr>
+		<td nowrap="nowrap" valign="top"><?php
+		echo _KUNENA_A_POLL_CATEGORIES_ALLOWED;
+		?></td>
+
+		<td valign="top"><?php
+		echo $lists ['allow_polls'];
+		?></td>
+
+		<td valign="top"><?php
+		echo _KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC;
 		?></td>
 	</tr>
 </table>
@@ -3189,24 +3212,6 @@ td.fbtdtitle {
 		?>
 		</td>
 	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top" width="25%"><?php
-		echo _KUNENA_A_POLL_CATEGORIES_ALLOWED;
-		?>
-		</td>
-		<td align="left" valign="top" width="25%"><input type="text"
-			name="cfg_pollallowedcategories" id="cfg_pollallowedcategories"
-			value="<?php
-		echo $kunena_config->pollallowedcategories;
-		?>" /></td>
-
-		<td align="left" valign="top"><?php
-		echo _KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC;
-		?>
-		</td>
-	</tr>
-
 
 </table>
 

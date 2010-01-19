@@ -499,6 +499,7 @@ function editForum($uid, $option) {
 	$lists ['forumLocked'] = JHTML::_ ( 'select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $row->locked );
 	$lists ['forumModerated'] = JHTML::_ ( 'select.genericlist', $noyes, 'moderated', 'class="inputbox" size="1"', 'value', 'text', $row->moderated );
 	$lists ['forumReview'] = JHTML::_ ( 'select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $row->review );
+	$lists ['allow_polls'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $row->allow_polls );
 	//get a list of moderators, if forum/category is moderated
 	$moderatorList = array ();
 

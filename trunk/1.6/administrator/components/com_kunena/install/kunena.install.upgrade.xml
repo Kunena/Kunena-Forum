@@ -43,7 +43,7 @@
                     `numTopics` mediumint(8) NOT NULL default '0',
                     `numPosts` mediumint(8) NOT NULL default '0',
                     `time_last_msg` int(11) default NULL,
-                PRIMARY KEY  (`id`),
+         `allow_polls` tinyint(4) NOT NULL default '0',       PRIMARY KEY  (`id`),
                 KEY `parent` (`parent`),
                 KEY `published_pubaccess_id` (`published`,`pub_access`,`id`),
                 KEY `msg_id` (`id_last_msg`) ) DEFAULT CHARSET=utf8</query>

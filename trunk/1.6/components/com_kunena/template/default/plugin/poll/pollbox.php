@@ -18,9 +18,12 @@ $id     = intval(JRequest::getVar("id", ""));
 $catid	= JRequest::getInt('catid', 0);
 $kunena_my = &JFactory::getUser ();
 $kunena_config = & CKunenaConfig::getInstance ();
+$kunena_db = &JFactory::getDBO();
+$kunena_db->setQuery ( "SELECT allow_polls FROM #__fb_categories WHERE id='{$catid}'" );
+$kunena_db->query () or check_dberror ( 'Unable to load review flag from categories.' );
+$poll_allowed = $kunena_db->loadResult ();
 
-$catsallowed = explode(',',$kunena_config->pollallowedcategories);
-if (in_array($catid, $catsallowed))
+if ($poll_allowed)
 {
   CKunenaPolls::call_javascript_vote();
   $dataspollresult = CKunenaPolls::get_poll_data($id);

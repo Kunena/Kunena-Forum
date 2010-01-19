@@ -362,7 +362,7 @@ class CKunenaTools {
     			}
     		}
     }
-	
+
 	function parseText($txt) {
 		if (!$txt) return;
 		$txt = stripslashes ( $txt );
@@ -1217,6 +1217,7 @@ class fbForum
     var $description = null;
     var $class_sfx = null;
     var $headerdesc = null;
+    var $allow_polls = null;
     /**
     * @param database A database connector object
     */

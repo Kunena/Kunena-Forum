@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+19-Jan-2010 svens LDA
+# [#19339] Incorrect implementation of links in CKunenaLink class - Part 3
+
 19-Jan-2010 Matias
 # [#19288] Fix regression: add missing directories to manifest.xml
 # [#19288] Fix regression: missing info in showcat

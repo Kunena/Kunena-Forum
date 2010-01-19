@@ -39,15 +39,15 @@ $forumurl = 'index.php?option=com_kunena';
 
 if ($kunena_config->fb_profile == "jomsocial")
 {
-	$userlist = JRoute::_('index.php?option=com_community&amp;view=search&amp;task=browse');
+	$userlist1 = CKunenaLink::GetJomsocialUserListLink($this->totalmembers);
 }
 else if ($kunena_config->fb_profile == 'cb')
 {
-    $userlist = CKunenaCBProfile::getUserListURL();
+    $userlist1 = CKunenaLink::GetCBUserListLink($this->totalmembers);
 }
 else
 {
-    $userlist = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userlist');
+    $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
 }
 
 ?>
@@ -79,7 +79,7 @@ else
 
                 <tr class = "ksectiontableentry1">
                     <td class = "td-1" align="left">
-<?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $this->totalmembers; ?></a> </b>
+<?php echo _STAT_TOTAL_USERS; ?>:<b> <?php echo $userlist1;?></b>
                     &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember); ?></b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $this->totalmsgs; ?></b> &nbsp;
@@ -141,12 +141,11 @@ $k = 0;
 		   else {
 		   $barwidth = round(($toptitle->hits * 100) / $this->toptitlehits);
 		   }
-	  $link = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $toptitle->id . '&amp;catid=' . $toptitle->catid);
 ?>
 
     <tr class = "k<?php echo $tabclass[$k]; ?>">
       <td class="td-1" align="left">
-       <a href = "<?php echo $link;?>"><?php echo kunena_htmlspecialchars(stripslashes($toptitle->subject)); ?></a>
+       <?php echo CKunenaLink::GetThreadLink( 'view', $toptitle->catid, $toptitle->id, kunena_htmlspecialchars(stripslashes($toptitle->subject)), '' ); ?>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
@@ -203,12 +202,11 @@ $k = 0;
         }
 		    $barwidth = round(($toppoll->total * 100) / $this->toppollvotes);
 		   }
-	  $link = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;id=' . $toppoll->threadid . '&amp;catid=' . $toppoll->catid);
 ?>
 
     <tr class = "k<?php echo $tabclass[$k]; ?>">
       <td class="td-1" align="left">
-       <a href = "<?php echo $link;?>"><?php echo kunena_htmlspecialchars(stripslashes($toppoll->title)); ?></a>
+       <?php echo CKunenaLink::GetThreadLink( 'view', $toppoll->catid, $toppoll->threadid, kunena_htmlspecialchars(stripslashes($toppoll->title)), '' ); ?>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>

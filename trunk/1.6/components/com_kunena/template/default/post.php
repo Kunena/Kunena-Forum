@@ -568,11 +568,8 @@ if ($kunena_my->id) {
 				$rowid = JRequest::getInt ( 'rowid', 0 );
 				$rowItemid = JRequest::getInt ( 'rowItemid', 0 );
 
-				if ($rowItemid) {
-					$contentURL = JRoute::_ ( 'index.php?option=com_content&amp;task=view&amp;Itemid=' . $rowItemid . '&amp;id=' . $rowid );
-				} else {
-					$contentURL = JRoute::_ ( 'index.php?option=com_content&amp;task=view&amp;Itemid=1&amp;id=' . $rowid );
-				}
+				if (!$rowItemid) $rowItemid = 1;
+				$contentURL = CKunenaLink::GetContentView( $rowid, $rowItemid ) ;
 
 				$this->contentURL = _POST_DISCUSS . ': [url=' . $contentURL . ']' . $resubject . '[/url]';
 				$this->id = $id;
@@ -631,7 +628,7 @@ if ($kunena_my->id) {
 						include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
 					}
 				} else {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 			} else if ($do == "editpostnow" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$modified_reason = addslashes ( JRequest::getVar ( "modified_reason", null ) );
@@ -775,11 +772,11 @@ if ($kunena_my->id) {
 						echo _POST_INVALID;
 					}
 				} else {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 			} else if ($do == "delete") {
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 
 				$id = ( int ) $id;
@@ -792,7 +789,7 @@ if ($kunena_my->id) {
 
 		<form
 			action="<?php
-					echo JRoute::_ ( KUNENA_LIVEURLREL . "&amp;catid=$catid&amp;func=post" );
+					echo CKunenaLink::GetPostURL($catid);
 					?>"
 			method="post" name="myform"><input type="hidden" name="do"
 			value="deletepostnow" /> <input type="hidden" name="id"
@@ -821,18 +818,15 @@ if ($kunena_my->id) {
 
 		<a href="javascript:document.myform.submit();"><?php
 					echo _GEN_CONTINUE;
-					?></a> | <a
-			href="<?php
-					echo JRoute::_ ( KUNENA_LIVEURLREL . "&amp;func=view&amp;catid=$catid;&amp;id=$id" );
-					?>"><?php
-					echo _GEN_CANCEL;
-					?></a></form>
+					?></a> | <?php
+					echo CKunenaLink::GetThreadLink('view', $catid, $id, _GEN_CANCEL, _GEN_CANCEL, 'nofollow');
+					?></form>
 
 		<?php
 				}
 			} else if ($do == "deletepostnow") {
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 
 				$id = JRequest::getInt ( 'id', 0 );
@@ -884,7 +878,7 @@ if ($kunena_my->id) {
 			} //fi $do==deletepostnow
 else if ($do == "move") {
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 
 				$catid = ( int ) $catid;
@@ -900,7 +894,7 @@ else if ($do == "move") {
 
 		<form
 			action="<?php
-				echo JRoute::_ ( KUNENA_LIVEURLREL . "&amp;func=post" );
+				echo CKunenaLink::GetPostURL();
 				?>"
 			method="post" name="myform"><input type="hidden" name="do"
 			value="domovepost" /> <input type="hidden" name="id"
@@ -944,7 +938,7 @@ else if ($do == "move") {
 				check_dberror ( "Unable to load messages." );
 
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $oldRecord [0]->catid )) {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 
 				$newSubject = _MOVED_TOPIC . " " . $oldRecord [0]->subject;
@@ -1044,7 +1038,7 @@ else if ($do == "move") {
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "sticky") {
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 
 				$id = ( int ) $id;
@@ -1056,7 +1050,7 @@ else if ($do == "move") {
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "unsticky") {
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 
 				$id = ( int ) $id;
@@ -1068,7 +1062,7 @@ else if ($do == "move") {
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "lock") {
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 
 				$id = ( int ) $id;
@@ -1080,7 +1074,7 @@ else if ($do == "move") {
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "unlock") {
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
-					$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 				}
 
 				$id = ( int ) $id;

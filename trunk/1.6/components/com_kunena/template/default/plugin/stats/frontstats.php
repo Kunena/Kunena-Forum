@@ -22,27 +22,27 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-$kunena_config =& CKunenaConfig::getInstance();
-$forumurl = JRoute::_(KUNENA_LIVEURLREL);
-$statslink = JRoute::_(KUNENA_LIVEURLREL.'&amp;func=stats');
-
-if ($kunena_config->fb_profile == "jomsocial")
-{
-	$userlist = JRoute::_('index.php?option=com_community&amp;view=search&amp;task=browse');
-}
-else if ($kunena_config->fb_profile == 'cb')
-{
-    $userlist = CKunenaCBProfile::getUserListURL();
-}
-else
-{
-    $userlist = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=userlist');
-}
-
 if ($this->showgenstats > 0)
 {
 	$this->loadGenStats();
+
+	$kunena_config =& CKunenaConfig::getInstance();
+
+	if ($kunena_config->fb_profile == "jomsocial")
+	{
+		$userlist1 = CKunenaLink::GetJomsocialUserListLink($this->totalmembers);
+		$userlist2 = CKunenaLink::GetJomsocialUserListLink(_STAT_USERLIST.'&raquo;');
+	}
+	else if ($kunena_config->fb_profile == 'cb')
+	{
+	    $userlist1 = CKunenaLink::GetCBUserListLink($this->totalmembers);
+	    $userlist2 = CKunenaLink::GetCBUserListLink(_STAT_USERLIST.'&raquo;');
+	}
+	else
+	{
+	    $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
+	    $userlist2 = CKunenaLink::GetUserlistLink('', _STAT_USERLIST.'&raquo;');
+	}
 
     	?>
         <!-- BEGIN: GENERAL STATS -->
@@ -56,12 +56,12 @@ if ($this->showgenstats > 0)
                 <tr>
                     <th align="left">
                         <div class = "ktitle_cover km">
-                            <a class="ktitle kl" href = "<?php echo $statslink;?>"><?php echo stripslashes($kunena_config->board_title); ?> <?php echo _STAT_FORUMSTATS; ?></a>
+                            <?php echo CKunenaLink::GetStatsLink( stripslashes($kunena_config->board_title).' '._STAT_FORUMSTATS, 'ktitel kl'); ?>
                         </div>
                         <div class="fltrt">
 							<span id="kstats_status"><a class="ktoggler close" rel="frontstats_tbody"></a></span>
 						</div>
-                        <!-- <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> --> 
+                        <!-- <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> -->
                     </th>
                 </tr>
             </thead>
@@ -70,10 +70,10 @@ if ($this->showgenstats > 0)
                 <tr class="ksectiontableentry1">
                     <td class="td-1 km">
                     	<ul id="statslistright" class="fltrt right">
-                    		<li><?php echo _STAT_TOTAL_USERS; ?>: <strong><a href="<?php echo $userlist;?>"><?php echo $this->totalmembers; ?></a></strong> | <?php echo _STAT_LATEST_MEMBERS; ?>:<strong> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></strong></li>
+                    		<li><?php echo _STAT_TOTAL_USERS; ?>: <strong><?php echo $userlist1; ?></strong> | <?php echo _STAT_LATEST_MEMBERS; ?>:<strong> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></strong></li>
                     		<li>&nbsp;</li>
-                    		<li><a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?> &raquo;</a></li>
-                    		<li><?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo '<a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.' &raquo;</a>'; ?></li>
+                    		<li><?php echo $userlist2; ?></li>
+                    		<li><?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo CKunenaLink::GetStatsLink(_STAT_MORE_ABOUT_STATS.' &raquo;');?></li>
                     	</ul>
                     	<ul id="statslistleft" class="fltlft">
                     		<li><?php echo _STAT_TOTAL_MESSAGES; ?>: <strong> <?php echo $this->totalmsgs; ?></strong> | <?php echo _STAT_TOTAL_SUBJECTS; ?>: <strong><?php echo $this->totaltitles; ?></strong></li>

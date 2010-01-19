@@ -33,7 +33,6 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 ?>
 <!-- WHOIS ONLINE -->
 <?php
-    $whoislink = JRoute::_('index.php?option=com_kunena&amp;func=who');
     $fb_queryName = $kunena_config->username ? "username" : "name";
     $query
         = "SELECT w.userip, w.time, w.what, u.{$fb_queryName} AS username, u.id, k.moderator, k.showOnline "
@@ -65,14 +64,13 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
             <tr>
                 <th class="left">
                     <div class = "ktitle_cover km">
-                        <a class = "ktitle kl" href = "<?php echo $whoislink;?>">
-                        <strong><?php echo $totaluser; ?></strong>
-						<?php if($totaluser==1) { echo _WHO_ONLINE_MEMBER; } else { echo _WHO_ONLINE_MEMBERS; } ?>
-						<?php echo _WHO_AND; ?>
-                        <strong><?php echo $totalguests; ?></strong>
-						<?php if($totalguests==1) { echo _WHO_ONLINE_GUEST; } else { echo _WHO_ONLINE_GUESTS; } ?>
-						<?php echo _WHO_ONLINE_NOW; ?>
-                        </a>
+                        <?php $who_name = '<strong>'.$totaluser.' </strong>';
+                        if($totaluser==1) { $who_name .= _WHO_ONLINE_MEMBER.'&nbsp;'; } else { $who_name .= _WHO_ONLINE_MEMBERS.'&nbsp;'; }
+                        $who_name .= _WHO_AND;
+                        $who_name .= '<strong> '. $totalguests.' </strong>';
+                        if($totalguests==1) { $who_name .= _WHO_ONLINE_GUEST.'&nbsp;'; } else { $who_name .= _WHO_ONLINE_GUESTS.'&nbsp;'; }
+						$who_name .= _WHO_ONLINE_NOW;
+                        echo CKunenaLink::GetWhoIsOnlineLink($who_name, 'ktitle kl' );?>
                     </div>
                    <div class="fltrt">
 						<span id="kwhoisonline_status"><a class="ktoggler close" rel="whoisonline_tbody"></a></span>

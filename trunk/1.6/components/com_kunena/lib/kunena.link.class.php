@@ -61,9 +61,19 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL, $name, '', $rel);
     }
 
+    function GetKunenaURL($redirect=false)
+    {
+    	return $redirect == false ? JRoute::_(KUNENA_LIVEURLREL) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL));
+    }
+
     function GetRSSLink($name , $rel='follow')
     {
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1', $name, '', $rel, '', '', 'target="_blank"');
+    }
+
+    function GetRSSURL()
+    {
+    	return JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=fb_rss&amp;no_html=1' );
     }
 
     function GetPDFLink($catid, $id , $name, $rel='nofollow', $title='')
@@ -74,6 +84,15 @@ class CKunenaLink
     function GetCategoryLink($func, $catid, $catname, $rel='follow', $class='', $title='')
     {
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;catid='.$catid, $catname, $title, $rel, $class);
+    }
+
+	//to get & instead of &amp; for redirect and JS links set redirect to true
+    function GetCategoryURL($func, $catid='', $redirect=false)
+    {
+    	$strcatid = '';
+		if ($catid!='') $strcatid = "&amp;catid={$catid}";
+    	$c_url = JRoute::_ ( KUNENA_LIVEURLREL.'&amp;func='.$func.$strcatid );
+    	return $redirect == false ? $c_url : htmlspecialchars_decode ( $c_url);
     }
 
     function GetCategoryListLink($name, $rel='follow', $class='')
@@ -94,6 +113,11 @@ class CKunenaLink
         }
 
         return $pagelink;
+    }
+
+    function GetReviewURL($redirect=false)
+    {
+    	return $redirect == false ? JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review') : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review'));
     }
 
     function GetCategoryReviewListLink($catid, $catname, $rel='nofollow', $class='')
@@ -311,10 +335,22 @@ class CKunenaLink
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=latest&amp;do=show&amp;sel='.$period, $name, '', $rel);
     }
 
+    function GetShowLatestThreadsURL($period)
+    {
+    	return JRoute::_( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel='.$period );
+    }
+
     // Function required to support default template
     function GetLatestPageLink($func, $page, $rel='follow', $class='', $sel='')
     {
         return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func='.$func.'&amp;page='.$page.(($sel)?'&amp;sel='.$sel:''), $page, '', $rel, $class);
+    }
+
+    function GetPostURL($catid='', $redirect=false)
+    {
+    	$cat = '';
+    	if($catid!='') $cat = "&amp;catid={$catid}";
+    	return $redirect == false ? JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post'.$cat ) : htmlspecialchars_decode(JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post'.$cat ));
     }
 
     function GetPostNewTopicLink($catid, $name, $rel='nofollow', $class='', $title='')
@@ -363,7 +399,7 @@ class CKunenaLink
     	if ($limitstart > 0) $limitstr .= "&amp;limitstart=$limitstart";
 		if ($limit > 0 && $limit != $kunena_config->messages_per_page_search) $limitstr .= "&amp;limit=$limit";
 		if ($searchword) $searchword = '&amp;q=' . urlencode($searchword);
-        return JRoute::_(KUNENA_LIVEURLREL."&amp;func={$func}&amp;q={$searchword}{$params}{$limitstr}");
+        return JRoute::_(KUNENA_LIVEURLREL."&amp;func={$func}{$searchword}{$params}{$limitstr}");
     }
 
     function GetSearchLink($kunena_config, $func, $searchword, $limitstart, $limit, $name, $params='', $rel='nofollow')
@@ -405,6 +441,116 @@ class CKunenaLink
     function GetMarkThisReadLink( $catid, $name, $rel='nofollow', $title='')
     {
     	return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=markThisRead&amp;catid=' . $catid , $name , $title , $rel );
+    }
+
+    function GetWhoIsOnlineLink($name, $class, $rel='follow')
+    {
+    	return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&func=who', $name, '', $rel, $class);
+    }
+
+    function GetStatsLink($name, $class='', $rel='follow')
+    {
+    	return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=stats', $name, '', $rel, $class);
+    }
+
+    //
+    // Functions for the different pm extensions
+    //
+    function GetUddeImLink($userid, $name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=new&recip=' . $userid, $name, '', $rel);
+    }
+
+    function GetMissusLink($userid,$name,$subject,$rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=newmsg&amp;user=' . $userid . '&amp;subject=' . $subject, $name, '', $rel);
+    }
+
+    function GetJimLink($userid, $subject, $name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_jim&amp;page=new&amp;id=' . $userid . '&title=' .$subject, $name, '', $rel );
+    }
+
+    function GetPmsLink($userid, $subject, $name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_pms&amp;page=new&amp;id=' . $userid . '&title=' . $subject, $name, '', $rel);
+    }
+
+    //
+    //Some URL functions for the discuss bot
+    //
+    function GetContentView( $rowid, $rowItemid)
+    {
+    	return JRoute::_ ( 'index.php?option=com_content&amp;task=view&amp;Itemid=' . $rowItemid . '&amp;id=' . $rowid );
+    }
+
+    //
+    // Jomsocial
+    //
+    function GetJomsocialUserListLink($name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_community&view=search&task=browse', $name, '', $rel);
+    }
+
+    function GetJomsocialLoginLink($name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_community&amp;view=frontpage',$name, '', $rel);
+    }
+
+    function GetJomsocialRegisterLink($name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_community&amp;view=register', $name, '', $rel);
+    }
+
+    //
+    //CB
+    //
+    function GetCBUserListLink($name, $rel='nofollow')
+    {
+    	$cb_url = CKunenaCBProfile::getUserListURL();
+    	return CKunenaLink::GetHrefLink($cb_url, $name, '', $rel);
+    }
+
+    function GetCBLoginLink($name, $rel='nofollow')
+    {
+    	$cb_url = CKunenaCBProfile::getLoginURL();
+    	return CKunenaLink::GetHrefLink($cb_url,$name, '', $rel);
+    }
+
+    function GetCBLogoutLink($name, $rel='nofollow')
+    {
+    	$cb_url = CKunenaCBProfile::getLogoutURL();
+    	return CKunenaLink::GetHrefLink($cb_url,$name,'',$rel);
+    }
+
+    function GetCBRegisterLink($name, $rel='nofollow')
+    {
+    	$cb_url = CKunenaCBProfile::getRegisterURL();
+    	return CKunenaLink::GetHrefLink($cb_url,$name,'',$rel);
+    }
+
+    function GetCBLostPWLink($name, $rel='nofollow')
+    {
+    	$cb_url = CKunenaCBProfile::getLostPasswordURL();
+    	return CKunenaLink::GetHrefLink($cb_url,$name,'',$rel);
+    }
+
+    //
+    // Joomla links
+    //
+    function GetLoginLink($name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=login',$name, '', $rel);
+    }
+
+    function GetRegisterLink($name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=register',$name, '', $rel);
+    }
+
+    function GetLostpassLink($name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=reset',$name, '', $rel);
     }
 
     //

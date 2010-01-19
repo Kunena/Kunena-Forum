@@ -162,7 +162,6 @@ function ReportForm($id, $catid) {
 
     $redirect = CKunenaLink::GetThreadPageURL($kunena_config,'view',$catid, $id,NULL,NULL,$id,true);
 
-    //$redirect = JRoute::_($redirect);
     if (!$kunena_my->id) {
         $kunena_app->redirect($redirect);
         return;

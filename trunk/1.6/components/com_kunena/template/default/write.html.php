@@ -57,7 +57,7 @@ JHTML::_ ( 'behavior.keepalive' );
 
 <form class="postform"
 	action="<?php
-	echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post' );
+	echo CKunenaLink::GetPostURL();
 	?>"
 	method="post" name="postform" enctype="multipart/form-data">
 	<?php if (!isset($this->selectcatlist)): ?>

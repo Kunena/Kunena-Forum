@@ -364,7 +364,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		$kunena_session->save ( $kunena_session );
 
 		if ($markaction == "allread") {
-			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _GEN_ALL_MARKED );
+			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _GEN_ALL_MARKED );
 		}
 
 		$userprofile = CKunenaUserprofile::getInstance($kunena_my->id);
@@ -437,10 +437,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			check_dberror ( 'Unable to load categories.' );
 		}
 		if ($catid == 0 || $strCatParent === '0') {
-			$strcatid = '';
-			if ($catid)
-				$strcatid = "&amp;catid={$catid}";
-			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=listcat' . $strcatid ) ) );
+
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, true) );
 		}
 	}
 
@@ -731,7 +729,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			$kunena_db->query ();
 			check_dberror ( 'Unable to update readtopics in session table.' );
 
-			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid ) ), _GEN_FORUM_MARKED );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), _GEN_FORUM_MARKED );
 			break;
 
 		#########################################################################################
@@ -748,7 +746,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				}
 			}
 
-			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid ) ), $success_msg );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $success_msg );
 			break;
 
 		#########################################################################################
@@ -764,7 +762,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				}
 			}
 
-			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=showcat&amp;catid=' . $catid ) ), $success_msg );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $success_msg );
 			break;
 
 		#########################################################################################
@@ -842,7 +840,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				}
 			}
 
-			$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ) );
+			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true) );
 			break;
 
 		#########################################################################################
@@ -873,7 +871,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, _KUNENA_POWEREDBY ) . ' ' . CKunenaLink::GetCreditsLink ();
 	if ($kunena_config->enablerss) {
-		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . _LISTCAT_RSS . '" href="' . JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=fb_rss&amp;no_html=1' ) . '" />' );
+		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . _LISTCAT_RSS . '" href="' . CKunenaLink::GetRSSURL() . '" />' );
 		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />' );
 	}
 	echo '</div>';

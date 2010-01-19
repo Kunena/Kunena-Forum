@@ -45,7 +45,7 @@ $catid = JRequest::getInt ( 'catid', 0 );
 			//contruct the reply subject
 			$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $this->msg_html->subject, 0, JString::strlen ( _POST_RE ) ) ) == JString::strtolower ( _POST_RE ) ? $this->msg_html->subject : _POST_RE . ' ' . $this->msg_html->subject );
 		?>
-		<form action="<?php echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=post' ); ?>" method="post" name="postform" enctype="multipart/form-data">
+		<form action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post" name="postform" enctype="multipart/form-data">
 			<input type="hidden" name="parentid" value="<?php echo $this->msg_html->id; ?>" />
 			<input type="hidden" name="catid" value="<?php echo $catid; ?>" />
 			<input type="hidden" name="action" value="post" />

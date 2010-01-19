@@ -87,31 +87,27 @@ else
     $jr_profilelink = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile' , _PROFILEBOX_MYPROFILE, _PROFILEBOX_MYPROFILE, 'follow');
 }
 
-$jr_myposts = CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL .  '&amp;func=showauthor&amp;task=showmsg&amp;auth=' . $kunena_my->id , _PROFILEBOX_SHOW_MYPOSTS , _PROFILEBOX_SHOW_MYPOSTS, 'nofollow' );
-$jr_latestpost = JRoute::_(KUNENA_LIVEURLREL . '&amp;func=latest');
-?>
-
-<?php // AFTER LOGIN AREA
+// AFTER LOGIN AREA
 if ($kunena_config->fb_profile == 'cb')
 {
-	$loginlink = CKunenaCBProfile::getLoginURL();
-	$logoutlink = CKunenaCBProfile::getLogoutURL();
-	$registerlink = CKunenaCBProfile::getRegisterURL();
-	$lostpasslink = CKunenaCBProfile::getLostPasswordURL();
+	$loginlink = CKunenaLink::GetCBLoginLink(_PROFILEBOX_LOGIN);
+	$logoutlink = CKunenaLink::GetCBLogoutLink(_PROFILEBOX_LOGOUT);
+	$registerlink = CKunenaLink::GetCBRegisterLink(_PROFILEBOX_REGISTER);
+	$lostpasslink = CKunenaLink::GetCBLostPWLink(_PROFILEBOX_LOST_PASSWORD);
 }
 else if ($kunena_config->fb_profile == 'jomsocial')
 {
-	$loginlink = JRoute::_('index.php?option=com_community&amp;view=frontpage');
-	$logoutlink = JRoute::_('index.php?option=com_community&amp;view=frontpage');
-	$registerlink = JRoute::_('index.php?option=com_community&amp;view=register');
-	$lostpasslink = JRoute::_('index.php?option=com_community&amp;view=frontpage');
+	$loginlink = CKunenaLink::GetJomsocialLoginLink(_PROFILEBOX_LOGIN);
+	$logoutlink = CKunenaLink::GetJomsocialLoginLink(_PROFILEBOX_LOGOUT);
+	$registerlink = CKunenaLink::GetJomsocialRegisterLink(_PROFILEBOX_REGISTER);
+	$lostpasslink = CKunenaLink::GetJomsocialLoginLink(_PROFILEBOX_LOST_PASSWORD);
 }
 else
 {
-	$loginlink = JRoute::_('index.php?option=com_user&amp;view=login');
-	$logoutlink = JRoute::_('index.php?option=com_user&amp;view=login');
-	$registerlink = JRoute::_('index.php?option=com_user&amp;view=register&amp;Itemid=' . $Itemid);
-	$lostpasslink = JRoute::_('index.php?option=com_user&amp;view=reset&amp;Itemid=' . $Itemid);
+	$loginlink = CKunenaLink::GetLoginLink(_PROFILEBOX_LOGIN);
+	$logoutlink = CKunenaLink::GetLoginLink(_PROFILEBOX_LOGOUT);
+	$registerlink = CKunenaLink::GetRegisterLink(_PROFILEBOX_REGISTER);
+	$lostpasslink = CKunenaLink::GetLostpassLink(_PROFILEBOX_LOST_PASSWORD);
 }
 
 if ($kunena_my->id)
@@ -129,9 +125,7 @@ if ($kunena_my->id)
 
 			<br />
 
-			<a href="<?php echo $jr_latestpost ; ?>"><?php
-    echo _PROFILEBOX_SHOW_LATEST_POSTS; ?> </a> | <?php echo $jr_profilelink; ?> |  <a
-				href="<?php echo $logoutlink;?>"><?php echo _PROFILEBOX_LOGOUT; ?></a>
+			<?php echo CKunenaLink::GetShowLatestLink(_PROFILEBOX_SHOW_LATEST_POSTS);?> | <?php echo $jr_profilelink; ?> |  <?php echo $logoutlink.'&nbsp;';?>
 <?php
 $user_fields = @explode(',', $kunena_config->annmodid);
 
@@ -176,9 +170,9 @@ if ($is_editor) {
 			<td valign="top" class="td-1  km kprofileboxcnt" align="left">
 				<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo _PROFILEBOX_GUEST; ?></b>
 				<br /> <?php echo _PROFILEBOX_PLEASE; ?>
-                <a href="<?php echo $loginlink;?>"><?php echo _PROFILEBOX_LOGIN; ?></a> <?php echo _PROFILEBOX_OR; ?>
-                <a href="<?php echo $registerlink;?>"><?php echo _PROFILEBOX_REGISTER; ?></a>.
-				&nbsp;&nbsp; <a href="<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
+                <?php echo $loginlink;?> <?php echo _PROFILEBOX_OR; ?>
+                <?php echo $registerlink;?>.
+				&nbsp;&nbsp;<?php echo $lostpasslink;?>
 			</td>
 			<?php
 			if (JDocumentHTML::countModules ( 'kunena_profilebox' )) :

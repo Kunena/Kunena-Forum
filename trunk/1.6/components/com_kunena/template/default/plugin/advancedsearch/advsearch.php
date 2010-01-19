@@ -41,7 +41,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 });
 </script>
 
-<form action="<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=advsearch'); ?>" method="post" id="searchform" name="adminForm">
+<form action="<?php echo CKunenaLink::GetSearchURL('', 'advsearch',NULL, NULL, NULL); ?>" method="post" id="searchform" name="adminForm">
     <table id="kforumsearch" class="kblocktable" border="0" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
@@ -222,7 +222,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 		<tbody>
 			<tr>
 				<td>
-        			<input class="kbutton ks" type="reset" value="<?php echo _KUNENA_SEARCH_CANCEL; ?>" onclick="window.location='<?php echo JRoute::_(KUNENA_LIVEURLREL);?>';"/>
+        			<input class="kbutton ks" type="reset" value="<?php echo _KUNENA_SEARCH_CANCEL; ?>" onclick="window.location='<?php echo CKunenaLink::GetKunenaURL();?>';"/>
 					<input class="kbutton ks" type="submit" value="<?php echo _KUNENA_SEARCH_SEND; ?>"/>
 				</td>
 			</tr>

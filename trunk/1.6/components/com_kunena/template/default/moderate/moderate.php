@@ -30,7 +30,7 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 	// Sorry - but you have nothing to do here.
 	// This module is for moderators and admins only.
 
-	$kunena_app->redirect ( htmlspecialchars_decode ( JRoute::_ ( KUNENA_LIVEURLREL ) ), _POST_NOT_MODERATOR );
+	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
 } else {
 	// Here comes the moderator functionality
 
@@ -90,7 +90,7 @@ if (! $kunena_is_admin && ! $kunena_is_moderator) {
 					</label>
 				</fieldset>
 			</form>
-			
+
 			<div class="clr"></div>
 		</div>
 </div>

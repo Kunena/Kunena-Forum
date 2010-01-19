@@ -513,16 +513,16 @@ class CKunenaView {
 			//we should offer the user a Missus link
 			//first get the username of the user to contact
 			$PMSName = $this->userinfo->username;
-			$this->msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_missus&amp;func=newmsg&amp;user=' . $this->userinfo->userid . '&amp;subject=' . _GEN_FORUM . ': ' . urlencode ( utf8_encode ( $this->kunena_message->subject ) ) ) . "\"><img src='";
+			$img_html = "<img src='";
 
 			if ($kunena_icons ['pms']) {
-				$this->msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
+				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 			} else {
-				$this->msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
-				;
+				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 			}
 
-			$this->msg_html->pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+			$img_html .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
+			$this->msg_html->pms = CKunenaLink::GetMissusLink($this->userinfo->userid, $img_html, _GEN_FORUM . ': ' . urlencode ( utf8_encode ( $this->kunena_message->subject ) ) );
 		}
 
 		/*let's see if we should use JIM integration */
@@ -530,46 +530,50 @@ class CKunenaView {
 			//we should offer the user a JIM link
 			//first get the username of the user to contact
 			$PMSName = $this->userinfo->username;
-			$this->msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_jim&amp;page=new&amp;id=' . $PMSName . '&title=' . $this->kunena_message->subject ) . "\"><img src='";
+			$img_html = "<img src='";
 
 			if ($kunena_icons ['pms']) {
-				$this->msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
+				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 			} else {
-				$this->msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
+				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 				;
 			}
 
-			$this->msg_html->pms .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+			$img_html .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
+
+			$this->msg_html->pms = CKunenaLink::GetJimLink($PMSName, urlencode ( utf8_encode ( $this->kunena_message->subject ) ), $img_html);
 		}
 		/*let's see if we should use uddeIM integration */
 		if ($this->config->pm_component == "uddeim" && $this->userinfo->userid && $this->my->id) {
 			//we should offer the user a PMS link
 			//first get the username of the user to contact
 			$PMSName = $this->userinfo->username;
-			$this->msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_uddeim&amp;task=new&recip=' . $this->userinfo->userid ) . "\"><img src=\"";
+			$img_html = "<img src=\"";
 
 			if ($kunena_icons ['pms']) {
-				$this->msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
+				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 			} else {
-				$this->msg_html->pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
+				$img_html .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
 			}
 
-			$this->msg_html->pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+			$img_html .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
+			$this->msg_html->pms = CKunenaLink::GetUddeImLink( $this->userinfo->userid, $img_html );
 		}
 		/*let's see if we should use myPMS2 integration */
 		if ($this->config->pm_component == "pms" && $this->userinfo->userid && $this->my->id) {
 			//we should offer the user a PMS link
 			//first get the username of the user to contact
 			$PMSName = $this->userinfo->username;
-			$this->msg_html->pms = "<a href=\"" . JRoute::_ ( 'index.php?option=com_pms&amp;page=new&amp;id=' . $PMSName . '&title=' . $this->kunena_message->subject ) . "\"><img src=\"";
+			$img_html = "<img src=\"";
 
 			if ($kunena_icons ['pms']) {
-				$this->msg_html->pms .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
+				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 			} else {
-				$this->msg_html->pms .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
+				$img_html .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
 			}
 
-			$this->msg_html->pms .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" /></a>";
+			$img_html .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
+			$this->msg_html->pms = CKunenaLink::GetPmsLink($PMSName, urlencode ( utf8_encode ( $this->kunena_message->subject ) ), $img_html );
 		}
 
 		// online - ofline status
@@ -617,7 +621,6 @@ class CKunenaView {
 			}
 		} else if ($this->userinfo->gid > 0) {
 			//Kunena Profile link.
-			$this->msg_html->prflink = JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=fbprofile&amp;task=showprf&amp;userid=' . $this->userinfo->userid );
 			$this->msg_html->profileicon = "<img src=\"";
 
 			if ($kunena_icons ['userprofile']) {

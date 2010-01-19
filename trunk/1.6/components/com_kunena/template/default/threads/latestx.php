@@ -50,7 +50,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				endif;
 				?>
 				value="<?php
-				echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=0' )?>"><?php
+				echo CKunenaLink::GetShowLatestThreadsURL(0)?>"><?php
 				echo _SHOW_LASTVISIT?></option>
 
 			<?php endif;
@@ -63,7 +63,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			endif;
 			?>
 				value="<?php
-			echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=4' );
+			echo CKunenaLink::GetShowLatestThreadsURL(4);
 			?>"><?php
 			echo _SHOW_4_HOURS?></option>
 			<option <?php
@@ -74,7 +74,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			endif;
 			?>
 				value="<?php
-			echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=8' );
+			echo CKunenaLink::GetShowLatestThreadsURL(8);
 			?>"><?php
 			echo _SHOW_8_HOURS?></option>
 			<option <?php
@@ -85,7 +85,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			endif;
 			?>
 				value="<?php
-			echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=12' );
+			echo CKunenaLink::GetShowLatestThreadsURL(12);
 			?>"><?php
 			echo _SHOW_12_HOURS?></option>
 			<option <?php
@@ -96,7 +96,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			endif;
 			?>
 				value="<?php
-			echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=24' );
+			echo CKunenaLink::GetShowLatestThreadsURL(24);
 			?>"><?php
 			echo _SHOW_24_HOURS?></option>
 			<option <?php
@@ -107,7 +107,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			endif;
 			?>
 				value="<?php
-			echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=48' );
+			echo CKunenaLink::GetShowLatestThreadsURL(48);
 			?>"><?php
 			echo _SHOW_48_HOURS?></option>
 			<option <?php
@@ -118,7 +118,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			endif;
 			?>
 				value="<?php
-			echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=168' );
+			echo CKunenaLink::GetShowLatestThreadsURL(168);
 			?>"><?php
 			echo _SHOW_WEEK?></option>
 			<option <?php
@@ -129,7 +129,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			endif;
 			?>
 				value="<?php
-			echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=720' );
+			echo CKunenaLink::GetShowLatestThreadsURL(720);
 			?>"><?php
 			echo _SHOW_MONTH?></option>
 			<option <?php
@@ -140,7 +140,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			endif;
 			?>
 				value="<?php
-			echo JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=latest&amp;do=show&amp;sel=8760' )?>"><?php
+			echo CKunenaLink::GetShowLatestThreadsURL(8760)?>"><?php
 			echo _SHOW_YEAR?></option>
 		</select></td>
 

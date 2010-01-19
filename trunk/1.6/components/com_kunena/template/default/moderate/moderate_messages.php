@@ -103,7 +103,7 @@ function jbListMessages($allMes, $catid)
     $kunena_config =& CKunenaConfig::getInstance();
 ?>
 
-   <form action="<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=review'); ?>" name="moderation" method="post">
+   <form action="<?php echo CKunenaLink::GetReviewURL(); ?>" name="moderation" method="post">
     <script>
         function ConfirmDelete()
         {

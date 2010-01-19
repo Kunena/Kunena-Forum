@@ -351,7 +351,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
         //Check if it's is a new thread and show the poll
         if ($kunena_config->pollenabled == "1" && $id == "0" )
         {
-        	if ($msg_cat->allow_polls)
+        	if (!empty($msg_cat->allow_polls) || $catid == '0')
         	{
        			if (!isset($polldatasedit[0]->polltimetolive)) {
 					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
@@ -403,7 +403,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		// Finish captcha
 		if (($this->kunena_editmode == "1") && $kunena_config->pollenabled == "1")
 		{
-        	if ($msg_cat->allow_polls)
+        	if (!empty($msg_cat->allow_polls) || $catid == '0')
         	{
 		      //This query is need because, in this part i haven't access to the variable $parent
 		      //I need to determine if the post if a parent or not for display the form for the poll

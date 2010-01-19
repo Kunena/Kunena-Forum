@@ -34,6 +34,8 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+19-Jan-2010 Xillibit
+^ [#19234] Hide IP addresses from Moderators - add configuration option in backend
 
 18-Jan-2010 fxstein
 + [#19067] Add messages in registered only categories to jomsocial activity stream and set access control

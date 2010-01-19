@@ -83,7 +83,12 @@ $catid = JRequest::getInt ( 'catid', 0 );
 	if ($kunena_config->reportmsg && $this->my->id > 1) {
 	echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $this->msg_html->id, _KUNENA_REPORT ) . '</span>'; }
 	//Check that the user is an admin to display the ip in messages
-	$kunena_is_admin = CKunenaTools::isAdmin ();
-	if (isset ( $this->msg_html->ip ) && $kunena_is_admin) {
+	$check = '0';
+	if($kunena_config->hide_ip){
+		$check = CKunenaTools::isAdmin ();
+	} else {
+		$check = CKunenaTools::isModerator($this->my->id);
+	}
+	if (isset ( $this->msg_html->ip ) && $check) {
 	echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetMessageIPLink ( $this->msg_html->ip ) . '</span>'; } ?>
 </div>

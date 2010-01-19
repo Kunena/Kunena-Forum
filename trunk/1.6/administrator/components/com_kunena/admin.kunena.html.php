@@ -1510,6 +1510,20 @@ td.fbtdtitle {
 		echo _KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC?>
 		</td>
 	</tr>
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _KUNENA_COM_A_HIDE_IP?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo $lists ['hide_ip'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo _KUNENA_COM_A_HIDE_IP_DESC?>
+		</td>
+	</tr>
 </table>
 </fieldset>
 

@@ -382,6 +382,8 @@ class CKunenaConfig extends CKunenaConfigBase {
     // New for 1.6 -> dateformat
     var $post_dateformat         = 'ago'; // See CKunenaTimeformat::showDate()
     var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()
+    //New for 1.6 -> hide IP
+    var $hide_ip = 1;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

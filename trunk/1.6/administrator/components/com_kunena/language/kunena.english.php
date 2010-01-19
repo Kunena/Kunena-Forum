@@ -26,6 +26,10 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+//Hide Ip
+define('_KUNENA_COM_A_HIDE_IP', 'Hide IP in messages from moderators');
+define('_KUNENA_COM_A_HIDE_IP_DESC', 'Hide IP in messages from moderators and show IP¨only for administrators');
+
 //Trash view
 define('_KUNENA_TRASH_VIEW', 'Trash Manager');
 define('_KUNENA_TRASH_ID', 'ID');

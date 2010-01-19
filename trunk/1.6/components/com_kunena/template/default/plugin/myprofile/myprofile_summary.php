@@ -149,7 +149,7 @@ if ($signature)
 							<li><span><a href="http://ws.arin.net/whois/?queryinput=144.23.33.168" target="_blank">144.23.33.168</a></span> (<?php echo _KUNENA_MODERATE_OTHER_USERS_WITH_IP; ?>: None)</li>
 						</ul>
 						<h4><?php echo _KUNENA_MODERATE_DELETE_USER; ?>:</h4>
-						<form id="kform-ban" name="kformban" action="#" method="">
+						<form id="kform-ban" name="kformban" action="#" method="post">
 
 							<input type="checkbox" id="ban-ip" name="banip" value="banip" class="kcheckbox" >
 							<label for="ban-ip"><span onClick="document.kformban.banip.checked=(! document.kformban.banip.checked);"><?php echo _KUNENA_MODERATE_BANIP; ?></span></label>
@@ -176,7 +176,6 @@ if ($signature)
 
 </div>
 
-</div>
 </div>
 </div>
 </div>

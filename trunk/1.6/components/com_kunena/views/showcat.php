@@ -14,9 +14,10 @@ defined ( '_JEXEC' ) or die ();
 class CKunenaShowcat {
 	public $allow = 0;
 
-	function __construct($catid) {
+	function __construct($catid, $page=0) {
 		$this->func = 'showcat';
 		$this->catid = $catid;
+		$this->page = $page;
 
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
@@ -34,17 +35,11 @@ class CKunenaShowcat {
 		$this->allow = 1;
 
 		$this->prevCheck = $this->session->lasttime;
-		$this->read_topics = explode ( ',', $this->session->readtopics );
-
-		$this->page = JRequest::getInt ( 'page', 0 );
 
 		$kunena_app = & JFactory::getApplication ();
 
 		//resetting some things:
-		$moderatedForum = 0;
 		$this->kunena_forum_locked = 0;
-		$topicLocked = 0;
-		$topicSticky = 0;
 
 		$threads_per_page = $this->config->threads_per_page;
 
@@ -66,14 +61,12 @@ class CKunenaShowcat {
 		check_dberror ( "Unable to load thread list." );
 		$idstr = @join ( ",", $threadids );
 
-		$this->favthread = array ();
-		$this->thread_counts = array ();
 		$this->messages = array ();
-		$this->messages [0] = array ();
 		$routerlist = array ();
+
 		if (count ( $threadids ) > 0) {
 			$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid,
-							l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
+							l.msgcount, l.lastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 	FROM (
 		SELECT m.thread, MAX(f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
@@ -96,31 +89,26 @@ class CKunenaShowcat {
 			check_dberror ( "Unable to load messages." );
 
 			foreach ( $messagelist as $message ) {
-				$this->messages [$message->parent] [] = $message;
 				$this->messagetext [$message->id] = JString::substr ( smile::purify ( $message->messagetext ), 0, 500 );
 				if ($message->parent == 0) {
-					$this->hits [$message->id] = $message->hits;
-					$this->thread_counts [$message->id] = $message->msgcount - 1;
-					$this->last_read [$message->id]->unread = 0;
-					if ($message->favcount)
-						$this->favthread [$message->id] = $message->favcount;
-					if ($message->id == $message->lastid)
-						$this->last_read [$message->id]->lastread = $this->last_reply [$message->id] = $message;
+					$this->messages [] = $message;
+					$this->last_reply [$message->id] = $message;
 					$routerlist [$message->id] = $message->subject;
 				} else {
-					$this->last_read [$message->thread]->lastread = $this->last_reply [$message->thread] = $message;
+					$this->last_reply [$message->thread] = $message;
 				}
 			}
 			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
 
-			$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
+			$readlist = '0' . $this->session->readtopics;
+			$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 			$msgidlist = $this->db->loadObjectList ();
 			check_dberror ( "Unable to get unread messages count and first id." );
 
 			foreach ( $msgidlist as $msgid ) {
-				if (! in_array ( $msgid->thread, $this->read_topics ))
-					$this->last_read [$msgid->thread] = $msgid;
+				$this->messages[$msgid->thread]->lastread = $msgid->lastread;
+				$this->messages[$msgid->thread]->unread = $msgid->unread;
 			}
 		}
 

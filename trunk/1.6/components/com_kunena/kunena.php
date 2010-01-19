@@ -602,7 +602,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 		case 'showcat' :
 			require_once (KUNENA_PATH_VIEWS . DS . 'showcat.php');
-			$page = new CKunenaShowcat($catid);
+			$page = new CKunenaShowcat($catid, $page);
 			$page->display();
 
 			break;
@@ -686,7 +686,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		case 'mylatest' :
 		case 'noreplies' :
 			require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
-			$page = new CKunenaLatestX($func);
+			$page = new CKunenaLatestX($func, $page);
 			$page->display();
 
 			break;

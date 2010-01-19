@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 19-Jan-2010 Matias
 # [#19288] Fix regression: add missing directories to manifest.xml
 # [#19288] Fix regression: missing info in showcat
+^ [#19295] Clean up code: latestx, flat, part of showcat, fix warnings
 
 19-Jan-2010 fxstein
 # [#19358] Fix incorrect install file logic, add upgrade step and cleanup prior changes.

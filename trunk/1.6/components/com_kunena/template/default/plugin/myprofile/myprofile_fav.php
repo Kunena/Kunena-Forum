@@ -23,6 +23,7 @@ defined( '_JEXEC' ) or die();
 
 global $total, $limitstart, $limit;
 $kunena_db = &JFactory::getDBO();
+$kunena_config = CKunenaConfig::getInstance ();
 
 ?>
 <div class="k_bt_cvr1">

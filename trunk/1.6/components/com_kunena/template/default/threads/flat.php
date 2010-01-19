@@ -73,15 +73,15 @@ $tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 $st_count = 0;
 
-if (count ( $this->messages [0] ) > 0) {
-	foreach ( $this->messages [0] as $leafa ) {
+if (count ( $this->messages ) > 0) {
+	foreach ( $this->messages as $leafa ) {
 		if (($leafa->ordering > 0 && ! $funcmylatest) || ($leafa->myfavorite && $funcmylatest)) {
 			$st_count ++;
 		}
 	}
 }
 
-if (count ( $this->messages [0] ) > 0) {
+if (count ( $this->messages ) > 0) {
 	?>
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -146,7 +146,7 @@ if (count ( $this->messages [0] ) > 0) {
 	$st_c = 0;
 
 	$st_occured = 0;
-	foreach ( $this->messages [0] as $leaf ) {
+	foreach ( $this->messages as $leaf ) {
 		$k = 1 - $k; //used for alternating colours
 		$leaf->name = kunena_htmlspecialchars ( stripslashes ( $leaf->name ) );
 		$leaf->email = kunena_htmlspecialchars ( stripslashes ( $leaf->email ) );
@@ -173,20 +173,18 @@ if (count ( $this->messages [0] ) > 0) {
 		echo $tabclass [$k];
 		if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 			echo '_stickymsg';
-			$topicSticky = 1;
 		}
 
 		if ($leaf->class_sfx) {
 			echo ' k' . $tabclass [$k];
 			if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 				echo '_stickymsg';
-				$topicSticky = 1;
 			}
 			echo $leaf->class_sfx;
 		}
 		?>">
 			<td class="td-0 km" align="center"><strong> <?php
-		echo CKunenaTools::formatLargeNumber ( $this->thread_counts [$leaf->id] );
+		echo CKunenaTools::formatLargeNumber ( $leaf->msgcount-1 );
 		?>
 			</strong><?php
 		echo _GEN_REPLIES;
@@ -208,8 +206,8 @@ if (count ( $this->messages [0] ) > 0) {
 			<td class="td-3"><?php
 		if ($leaf->moved == 0) {
 			// Need to add +1 as we only have the replies in the buffer
-			$totalMessages = $this->thread_counts [$leaf->id] + 1;
-			$curMessageNo = $totalMessages - ($this->last_read [$leaf->id]->unread ? $this->last_read [$leaf->id]->unread - 1 : 0);
+			$totalMessages = $leaf->msgcount;
+			$curMessageNo = $totalMessages - ($leaf->unread ? $leaf->unread - 1 : 0);
 			$threadPages = ceil ( $totalMessages / $kunena_config->messages_per_page );
 			$unreadPage = ceil ( $curMessageNo / $kunena_config->messages_per_page );
 
@@ -223,7 +221,7 @@ if (count ( $this->messages [0] ) > 0) {
 			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $this->messagetext [$leaf->id] ) ), 'follow', 'k-topic-title km' );
 			?>
 			<!--            Favorite       --> <?php
-			if ($kunena_config->allowfavorites && array_key_exists ( $leaf->id, $this->favthread )) {
+			if ($kunena_config->allowfavorites && $leaf->favcount ) {
 				if ($leaf->myfavorite) {
 					echo isset ( $kunena_icons ['favoritestar'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
 				} else if (array_key_exists ( 'favoritestar_grey', $kunena_icons )) {
@@ -233,9 +231,9 @@ if (count ( $this->messages [0] ) > 0) {
 			?>
 			<!--            /Favorite       --> <?php
 			if ($kunena_config->shownew && $kunena_my->id != 0) {
-				if (($this->prevCheck < $this->last_reply [$leaf->id]->time) && ! in_array ( $this->last_reply [$leaf->id]->thread, $this->read_topics )) {
+				if ($leaf->unread) {
 					//new post(s) in topic
-					echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->id, $unreadPage, $kunena_config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $this->last_read [$leaf->id]->unread . ' ' . stripslashes ( $kunena_config->newchar ) . ')</span></sup>', $this->last_read [$leaf->id]->lastread );
+					echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->id, $unreadPage, $kunena_config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $kunena_config->newchar ) . ')</span></sup>', $this->last_read [$leaf->id]->lastread );
 				}
 			}
 
@@ -316,7 +314,6 @@ if (count ( $this->messages [0] ) > 0) {
 		if ($leaf->locked != 0) {
 			?> <!-- Locked --> <span class="topic_locked"> <?php
 			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
-			$topicLocked = 1;
 			?>
 			</span> <!-- /Locked --> <?php
 		}
@@ -324,7 +321,7 @@ if (count ( $this->messages [0] ) > 0) {
 			</td>
 			<td class="td-4" align="center"><!-- Views --> <span
 				class="topic_views_number"><?php
-		echo CKunenaTools::formatLargeNumber ( ( int ) $this->hits [$leaf->id] );
+		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
 		?>
 			</span> <span class="topic_views"> <?php
 		echo _GEN_HITS;
@@ -335,7 +332,6 @@ if (count ( $this->messages [0] ) > 0) {
 			?>
 			<span class="topic_sticky"> <?php
 			echo isset ( $kunena_icons ['topicsticky'] ) ? '<img  src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />' : '<img class="stickyicon" src="' . KUNENA_URLICONSPATH . 'tsticky.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
-			$topicSticky = 1;
 			?>
 			</span> <?php
 		}

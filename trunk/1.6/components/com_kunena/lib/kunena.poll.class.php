@@ -339,6 +339,7 @@ class CKunenaPolls {
       	header ( "Content-type: application/json" );
 		echo json_encode($data);
 
+		$kunena_app = & JFactory::getApplication ();
 		$kunena_app->close ();
    }
    /**

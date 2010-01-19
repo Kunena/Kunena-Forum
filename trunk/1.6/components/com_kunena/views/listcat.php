@@ -276,10 +276,10 @@ class CKunenaListcat {
 			echo '' . _GEN_NOFORUMS . '';
 			return;
 		}
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'listcat.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'listcat.php');
+		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'listcat.php' )) {
+			include (KUNENA_ABSTMPLTPATH . DS . 'categories' . DS .  'listcat.php');
 		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'listcat.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'categories' . DS .  'listcat.php');
 		}
 	}
 }

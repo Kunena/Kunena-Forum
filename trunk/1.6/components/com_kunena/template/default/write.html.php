@@ -348,23 +348,23 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<?php
 		}
-        if ($msg_cat->allow_polls)
+        //Check if it's is a new thread and show the poll
+        if ($kunena_config->pollenabled == "1" && $id == "0" )
         {
-        	//Check if it's is a new thread and show the poll
-         	if ($kunena_config->pollenabled == "1" && $id == "0" )
-         	{
-         		if (!isset($polldatasedit[0]->polltimetolive)) {
+        	if ($msg_cat->allow_polls)
+        	{
+       			if (!isset($polldatasedit[0]->polltimetolive)) {
 					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				}
-        		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
-        		JApplication::addCustomHeadTag('
-    				<script type="text/javascript">
-	  				 <!--
-	   				var number_field = 1;
-      				//-->
-      				</script>
-					');
-         ?>
+       			$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+       			JApplication::addCustomHeadTag('
+   					<script type="text/javascript">
+  				 	<!--
+   					var number_field = 1;
+   					//-->
+   					</script>
+				');
+        ?>
             <tr class = "ksectiontableentry2">
                 <td class = "kleftcolumn">
                     <strong><?php echo _KUNENA_POLL_ADD; ?></strong>

@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 19-Jan-2010 Xillibit
 ^ [#19234] Hide IP addresses from Moderators - add configuration option in backend
 ^ [#19358] Apply some changes on the polls - set the categories allowed for polls in forum administration
+^ [#19358] Apply some changes on the polls - fix a regression introduced when you post a new thread
 
 18-Jan-2010 fxstein
 + [#19067] Add messages in registered only categories to jomsocial activity stream and set access control

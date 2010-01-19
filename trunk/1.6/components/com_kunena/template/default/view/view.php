@@ -162,13 +162,7 @@ global $kunena_icons;
 <?php
 
 if ($this->config->highlightcode) {
-	echo '
-	<script type="text/javascript" src="' . KUNENA_DIRECTURL . '/template/default/plugin/chili/jquery.chili-2.2.js"></script>
-	<script id="setup" type="text/javascript">
-	ChiliBook.recipeFolder     = "' . KUNENA_DIRECTURL . '/template/default/plugin/chili/";
-	ChiliBook.stylesheetFolder     = "' . KUNENA_DIRECTURL . '/template/default/plugin/chili/";
-	</script>
-	';
+	// TODO: Implement new code hhighlighter based on mootools or similar - prior chili removed
 }
 
 ?>

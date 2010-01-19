@@ -43,6 +43,7 @@ Kunena 1.6.0-DEV
 
 19-Jan-2010 fxstein
 # [#19358] Fix incorrect install file logic, add upgrade step and cleanup prior changes.
+- [#19380] Remove Chili code high lighter as part of transition to mootools
 
 19-Jan-2010 Xillibit
 ^ [#19234] Hide IP addresses from Moderators - add configuration option in backend

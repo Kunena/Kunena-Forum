@@ -22,12 +22,14 @@
 		<filename>kunena.php</filename>
 		<filename>router.php</filename>
 		<filename>jomsocial_rule.xml</filename>
+		<folder>js</folder>
+		<folder>kunena.files.distribution</folder>
 		<folder>lib</folder>
 		<folder>template</folder>
-		<folder>kunena.files.distribution</folder>
+		<folder>views</folder>
 	</files>
 	<administration>
-        <files>
+		<files>
 			<filename>admin.kunena.html.php</filename>
 			<filename>admin.kunena.php</filename>
 			<filename>kunena.cpanel.php</filename>
@@ -38,8 +40,8 @@
 			<folder>install</folder>
 			<folder>language</folder>
 			<folder>lib</folder>
-        </files>
-    <menu>Kunena Forum</menu>
+		</files>
+	<menu>Kunena Forum</menu>
 	</administration>
 	<params />
 </install>

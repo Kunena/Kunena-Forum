@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+19-Jan-2010 fxstein
+# [#19358] Fix incorrect install file logic, add upgrade step and cleanup prior changes.
+
 19-Jan-2010 Xillibit
 ^ [#19234] Hide IP addresses from Moderators - add configuration option in backend
 ^ [#19358] Apply some changes on the polls - set the categories allowed for polls in forum administration

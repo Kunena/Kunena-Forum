@@ -170,6 +170,7 @@ class fx_Upgrade {
 		// and write a dummy version entry to force an upgrade.
 
 		$kunena_db =& JFactory::getDBO();
+
 		$kunena_db->setQuery( "SHOW TABLES LIKE ".$kunena_db->quote($kunena_db->getPrefix().'fb_messages') );
 		$kunena_db->query();
 		check_dberror("Unable to search for messages table.");
@@ -293,6 +294,17 @@ class fx_Upgrade {
 			$this->insertVersionData( $version, $versiondate, $build, $versionname);
 
 		} else {
+			// This is the upgrade section
+
+			// VERY IMPORTANT!
+			//
+			// Our upgrade process must be allowed to fail certain queries and take action within our own
+			// control. Unfortunately if Joomla is in debug mode, that does not work.
+			// So long story short - for our upgrade porcess we will take the DBO out of debug mode
+			// and return it after we are done.
+
+			$kunena_db->debug(0);
+
 			if(!$this->silent) {
 				?>
 				<div id="overDiv" style="position:absolute; visibility:hidden; z-index:10000;"></div>
@@ -354,6 +366,14 @@ class fx_Upgrade {
 				</table>
 				<?php
 			}
+			// Restore the dbo to the original debug mode when the upgrade is done.
+
+			//get the debug configuration setting
+			$conf =& JFactory::getConfig();
+			$debug = $conf->getValue('config.debug');
+
+			$kunena_db->debug($debug);
+
 		} //end main if upgrade or not
 		return $this->_return;
 	} //end doUpgrade function

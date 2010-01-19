@@ -46,91 +46,49 @@ $querytime = time() - $hours * 3600; // Limit threads to those who have been pos
 
 if ($kunena_config->rsstype == 'thread')
 {
-	$query = 		"SELECT
-						tmp.thread,
-						tmp.catid,
-						m.id,
-						m.subject,
-						tmp.lastpostid,
-						tmp.lastposttime,
-						u.name AS lastpostname,
-						t.message AS lastpostmessage,
-						tmp.numberposts
-					FROM
-						(SELECT
-	                        a.thread,
-	                        a.catid,
-	                        MAX(a.id) AS lastpostid,
-	                        MAX(a.time) AS lastposttime,
-	                        COUNT(*) AS numberposts
-	                    FROM
-	                        #__fb_messages AS a
-	                        JOIN (  SELECT aa.thread
-	                                FROM #__fb_messages AS aa
-	                                	JOIN #__fb_categories AS bb ON aa.catid = bb.id
-	                                WHERE aa.time >'{$querytime}'
-	                                AND aa.hold='0' AND aa.moved='0' AND bb.published='1' AND bb.pub_access='0'
-	                                GROUP BY 1) AS b ON b.thread = a.thread
-	                    WHERE
-	                        a.moved='0'
-	                        AND a.hold='0'
-	                    GROUP BY a.thread, a.catid) AS tmp
-	                    JOIN #__fb_messages_text AS t ON tmp.lastpostid = t.mesid
-	                    JOIN #__fb_messages AS m ON tmp.thread = m.thread
-	                    JOIN #__fb_messages AS u ON tmp.lastpostid = u.id
-	                WHERE
-	                	m.parent = 0
-                    ORDER BY lastposttime DESC";
+	$query = "SELECT
+    	*
+     FROM
+        #__fb_messages AS a
+        JOIN (  SELECT id,thread, MAX(time) AS lastposttime, name AS lastpostname
+                FROM #__fb_messages
+                WHERE time >'{$querytime}' AND hold='0' AND moved='0'
+                GROUP BY 1) AS b ON b.thread = a.thread
+        JOIN (  SELECT mesid, message AS lastpostmessage
+                FROM #__fb_messages_text
+                ) AS c ON c.mesid = b.id
+     WHERE
+        a.parent='0'
+        AND a.moved='0'
+        AND a.hold='0'
+     GROUP BY a.thread
+     ORDER BY b.lastposttime DESC";
 }
 else
 {
-	$query = 		"SELECT
-						l.id AS lastpostid,
-						l.time AS lastposttime,
-						l.thread,
-						count(m.id) AS numberposts,
-						l.subject,
-						l.userid,
-						l.name AS lastpostname,
-						l.catid,
-						l.catname,
-						l.message AS lastpostmessage
-					FROM
-						#__fb_messages AS m,
-						(SELECT
-							m.time,
-							m.thread,
-							m.id,
-							m.catid,
-							m.userid,
-							m.name,
-							m.subject,
-							c.name AS catname,
-							t.message AS message
-						FROM
-							#__fb_messages AS m,
-							#__fb_categories AS c,
-							#__fb_messages_text as t
-						WHERE
-							m.id=t.mesid
-							AND m.catid=c.id
-							AND c.published='1'
-							AND c.pub_access='0'
-							AND m.hold='0'
-							AND m.moved='0'
-							AND m.time >'{$querytime}') AS l
-					WHERE
-						l.time >= m.time
-						AND l.thread=m.thread
-						AND m.hold='0'
-						AND m.moved='0'
-					GROUP BY l.id
-					ORDER BY l.time DESC";
+	$query = "SELECT
+    	*
+     FROM
+        #__fb_messages AS a
+        JOIN (  SELECT id,thread, MAX(time) AS lastposttime, name AS lastpostname
+                FROM #__fb_messages
+                WHERE time >'{$querytime}' AND hold='0' AND moved='0'
+                GROUP BY 1) AS b ON b.thread = a.thread
+        JOIN (  SELECT mesid, message AS lastpostmessage
+                FROM #__fb_messages_text
+                ) AS c ON c.mesid = b.id
+     WHERE
+        a.parent='0'
+        AND a.moved='0'
+        AND a.hold='0'
+     ORDER BY b.lastposttime DESC";
 }
 
 $kunena_db->setQuery($query);
 $rows = $kunena_db->loadObjectList();
 	check_dberror("Unable to load messages.");
+
+//print_r($rows);
 
 header ('Content-type: application/xml');
 echo '<?xml version="1.0" encoding="utf-8"?>'."\n";
@@ -151,11 +109,18 @@ echo '        </image>';
 
         foreach ($rows as $row)
         {
+        	$kunena_db->setQuery("SELECT MAX(time) AS maxtime, COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$row->thread}'");
+            $thisThread = $kunena_db->loadObject();
+            $latestPostTime = $thisThread->maxtime;
+
+            //get the latest post itself
+            $kunena_db->setQuery("SELECT a.id, a.name, a.userid, a.catid, c.id AS catid, c.name as catname FROM #__fb_messages AS a LEFT JOIN #__fb_categories AS c ON a.catid=c.id WHERE a.time='{$latestPostTime}'");
+            $result = $kunena_db->loadObject();
             echo "        <item>\n";
             echo "            <title>" . _GEN_SUBJECT . ": " . stripslashes(kunena_htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(kunena_htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
             echo "            <link>";
             $uri =& JURI::getInstance(JURI::base());
-            $itemlink = $uri->toString(array('scheme', 'host', 'port')) . CKunenaLink::GetThreadPageURL($kunena_config, 'view', $row->catid, $row->thread, ceil($row->numberposts / $kunena_config->messages_per_page), $kunena_config->messages_per_page, $row->lastpostid);
+            $itemlink = $uri->toString(array('scheme', 'host', 'port')) . CKunenaLink::GetThreadPageURL($kunena_config, 'view', $row->catid, $row->thread, ceil($thisThread->totalmessages / $kunena_config->messages_per_page), $kunena_config->messages_per_page, $result->id);
             echo $itemlink;
             echo "</link>\n";
             $words = $row->lastpostmessage;

@@ -285,21 +285,22 @@ if (count ( $this->messages [0] ) > 0) {
 		}
 		?>
 			<div class="ks">
-			<!-- By --> 
+			<!-- By -->
 				<?php
 		if (JString::strtolower ( $this->func ) != 'showcat') {
 			?>
 			<!-- Category --> <span class="topic_category"> <?php
 			echo _KUNENA_CATEGORY . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
 			?>
-			</span> <!-- /Category --> 
+			</span> <!-- /Category -->
 			<span class="divider">|</span>
+<?php 	} ?>
 			<span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
 		echo _KUNENA_POSTED_AT?>
 			<?php
 			echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');
-		?></span> 
-	
+		?></span>
+
 		<?php
 		if ($leaf->name) {
 			echo '<span class="topic_by">';
@@ -307,12 +308,11 @@ if (count ( $this->messages [0] ) > 0) {
 			echo '</span>';
 		}
 		?>
-			<!-- /By --> 
-			
-		
-		
+			<!-- /By -->
+
+
+
 		<?php
-		}
 		if ($leaf->locked != 0) {
 			?> <!-- Locked --> <span class="topic_locked"> <?php
 			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';

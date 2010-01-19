@@ -93,11 +93,11 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					</dd>
 					<dt>Subscriptions</dt>
 					<dd>
-						<p>Add subscription listing here.</p>
+						<?php $this->displayMySubscriptions(); ?>
 					</dd>
 					<dt>Favorites</dt>
 					<dd>
-						<p>Add favorites listing here.</p>
+						<?php $this->displayMyFavorites(); ?>
 					</dd>
 
 					<!-- Only visible to moderators and admins -->

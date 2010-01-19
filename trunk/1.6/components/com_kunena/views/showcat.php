@@ -91,7 +91,7 @@ class CKunenaShowcat {
 			foreach ( $messagelist as $message ) {
 				$this->messagetext [$message->id] = JString::substr ( smile::purify ( $message->messagetext ), 0, 500 );
 				if ($message->parent == 0) {
-					$this->messages [] = $message;
+					$this->messages [$message->id] = $message;
 					$this->last_reply [$message->id] = $message;
 					$routerlist [$message->id] = $message->subject;
 				} else {

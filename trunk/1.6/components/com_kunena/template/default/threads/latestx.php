@@ -157,7 +157,7 @@ $this->displayForumJump ();
 
 <?php
 //pagination 1
-if (count ( $this->messages [0] ) > 0) :
+if (count ( $this->messages ) > 0) :
 	echo '<td class="klist_pages_all">';
 	$maxpages = 5 - 2; // odd number here (# - 2)
 	echo $pagination = $this->getPagination ( $this->func, $this->show_list_time, $this->page, $this->totalpages, $maxpages );
@@ -184,7 +184,7 @@ if (count ( $this->threadids ) > 0) :
 
 			<?php
 	//pagination 1
-	if (count ( $this->messages [0] ) > 0) :
+	if (count ( $this->messages ) > 0) :
 		echo '<td class="klist_pages_all" nowrap="nowrap">';
 		echo $pagination;
 		echo '</td>';

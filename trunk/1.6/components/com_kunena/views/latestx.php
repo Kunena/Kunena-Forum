@@ -97,7 +97,7 @@ class CKunenaLatestX {
 			foreach ( $messagelist as $message ) {
 				$this->messagetext [$message->id] = JString::substr ( smile::purify ( $message->messagetext ), 0, 500 );
 				if ($message->parent == 0) {
-					$this->messages [] = $message;
+					$this->messages [$message->id] = $message;
 					$this->last_reply [$message->id] = $message;
 					$routerlist [$message->id] = $message->subject;
 				} else {
@@ -119,14 +119,17 @@ class CKunenaLatestX {
 		}
 	}
 
-	function getMyLatest() {
+	function getMyLatest($all = true) {
+		if (isset($this->total)) return;
 		$this->document->setTitle ( _KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes ( $this->config->board_title ) );
-		$query = "SELECT COUNT(DISTINCT m.thread) FROM (
+		$query = "SELECT COUNT(DISTINCT m.thread) FROM (";
+		if ($all) $query .= "
 			SELECT thread, 0 AS fav
 			FROM #__fb_messages
 			WHERE userid='{$this->my->id}' AND moved='0' AND hold='0' AND catid IN ({$this->session->allowed})
 			GROUP BY thread
-		UNION ALL
+		UNION ALL";
+		$query .= "
 			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$this->my->id}'
 		) AS t
 		INNER JOIN #__fb_messages AS m ON m.id=t.thread
@@ -138,12 +141,14 @@ class CKunenaLatestX {
 		$offset = ($this->page - 1) * $this->threads_per_page;
 
 		$this->order = "myfavorite DESC, lastid DESC";
-		$query = "SELECT m.thread, MAX(m.id) as lastid, MAX(t.fav) AS myfavorite FROM (
+		$query = "SELECT m.thread, MAX(m.id) as lastid, MAX(t.fav) AS myfavorite FROM (";
+		if ($all) $query .= "
 			SELECT thread, 0 AS fav
 			FROM #__fb_messages
 			WHERE userid='{$this->my->id}' AND moved='0' AND hold='0' AND catid IN ({$this->session->allowed})
 			GROUP BY thread
-		UNION ALL
+		UNION ALL";
+		$query .= "
 			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$this->my->id}'
 		) AS t
 		INNER JOIN #__fb_messages AS m ON m.id=t.thread
@@ -157,7 +162,36 @@ class CKunenaLatestX {
 		$this->_common();
 	}
 
+	function getSubscriptions() {
+		if (isset($this->total)) return;
+		$this->document->setTitle ( _KUNENA_MY_DISCUSSIONS . ' - ' . stripslashes ( $this->config->board_title ) );
+		$query = "SELECT COUNT(*)
+		FROM #__fb_subscriptions AS t
+		INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		WHERE t.userid='{$this->my->id}' AND m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})";
+
+		$this->db->setQuery ( $query );
+		$this->total = ( int ) $this->db->loadResult ();
+		check_dberror ( 'Unable to count total threads' );
+		$offset = ($this->page - 1) * $this->threads_per_page;
+
+		$this->order = "lastid DESC";
+		$query = "SELECT m.thread, MAX(mm.id) as lastid
+		FROM #__fb_subscriptions AS t
+		INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		INNER JOIN #__fb_messages AS mm ON mm.thread=t.thread AND m.hold='0'
+		WHERE t.userid='{$this->my->id}' AND m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})
+		GROUP BY thread
+		ORDER BY {$this->order}";
+
+		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
+		$this->threadids = $this->db->loadResultArray ();
+		check_dberror ( "Unable to load thread list." );
+		$this->_common();
+	}
+
 	function getLatest() {
+		if (isset($this->total)) return;
 		$lookcats = explode ( ',', $this->config->latestcategory );
 		$catlist = array ();
 		$latestcats = '';
@@ -196,6 +230,7 @@ class CKunenaLatestX {
 	}
 
 	function getNoReplies() {
+		if (isset($this->total)) return;
 		$this->document->setTitle ( _KUNENA_NO_REPLIES . ' - ' . stripslashes ( $this->config->board_title ) );
 		$query = "SELECT COUNT(DISTINCT tmp.thread) FROM
 			(SELECT m.thread, count(*) AS posts
@@ -261,6 +296,10 @@ class CKunenaLatestX {
 	}
 
 	function displayFlat() {
+		if (! $this->allow) {
+			echo _KUNENA_NO_ACCESS;
+			return;
+		}
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php' )) {
 			include (KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php');
 		} else {

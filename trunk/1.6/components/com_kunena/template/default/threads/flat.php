@@ -72,7 +72,6 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 $tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 $st_count = 0;
-
 if (count ( $this->messages ) > 0) {
 	foreach ( $this->messages as $leafa ) {
 		if (($leafa->ordering > 0 && ! $funcmylatest) || ($leafa->myfavorite && $funcmylatest)) {
@@ -233,7 +232,7 @@ if (count ( $this->messages ) > 0) {
 			if ($kunena_config->shownew && $kunena_my->id != 0) {
 				if ($leaf->unread) {
 					//new post(s) in topic
-					echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->id, $unreadPage, $kunena_config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $kunena_config->newchar ) . ')</span></sup>', $this->last_read [$leaf->id]->lastread );
+					echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->id, $unreadPage, $kunena_config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $kunena_config->newchar ) . ')</span></sup>', $leaf->lastread );
 				}
 			}
 

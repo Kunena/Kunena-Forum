@@ -77,7 +77,7 @@ if ($this->objCatInfo->headerdesc) {
 		</td>
 		<td class="klist_pages_all" nowrap="nowrap"><?php
 		//pagination 1
-		if (count ( $this->messages [0] ) > 0) {
+		if (count ( $this->messages ) > 0) {
 			$maxpages = 9 - 2; // odd number here (# - 2)
 			echo $pagination = $this->getPagination ( $this->catid, $this->page, $this->totalpages, $maxpages );
 		}
@@ -131,7 +131,7 @@ if (count ( $this->messages ) > 0) {
 		</td>
 		<td class="klist_pages_all" nowrap="nowrap"><?php
 		//pagination 2
-		if (count ( $this->messages [0] ) > 0) {
+		if (count ( $this->messages ) > 0) {
 			echo $pagination;
 		}
 		?>

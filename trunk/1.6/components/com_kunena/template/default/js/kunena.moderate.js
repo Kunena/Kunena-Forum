@@ -1,5 +1,5 @@
 /**
-* @version $Id: kunena.poll.js 1659 2010-01-15 00:12:40Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

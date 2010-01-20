@@ -49,6 +49,7 @@ Kunena 1.6.0-DEV
 ^ [#19380] Hide preview section when not active - display and grow on demand
 + [#19295] Add missing index.php files
 ^ [#19295] Move bbcode editor into seperate file: editor/bbcode.php
++ [#19295] Add svn:keywords Id to all new files
 
 19-Jan-2010 svens LDA
 # [#19339] Incorrect implementation of links in CKunenaLink class - Part 3

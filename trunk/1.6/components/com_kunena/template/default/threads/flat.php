@@ -22,19 +22,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-$kunena_db = &JFactory::getDBO ();
-$kunena_config = & CKunenaConfig::getInstance ();
-
-$id = JRequest::getInt ( 'id', 0 );
-$catid = JRequest::getInt ( 'catid', 0 );
-
 global $kunena_icons;
-$kunena_my = &JFactory::getUser ();
 
 // Func Check
-
-
 $funclatest = false;
 $funcmylatest = false;
 $funcnoreplies = false;
@@ -55,7 +45,6 @@ switch (JString::strtolower ( $this->func )) {
 
 // topic emoticons
 $topic_emoticons = array ();
-
 $topic_emoticons [0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
 $topic_emoticons [1] = KUNENA_URLEMOTIONSPATH . 'exclam.gif';
 $topic_emoticons [2] = KUNENA_URLEMOTIONSPATH . 'question.gif';
@@ -68,8 +57,6 @@ $topic_emoticons [7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
-
-$tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 $st_count = 0;
 if (count ( $this->messages ) > 0) {
@@ -100,14 +87,12 @@ if (count ( $this->messages ) > 0) {
 		<tr>
 			<th
 				colspan="<?php
-	echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
+	echo (CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? "6" : "5");
 	?>">
 
-			<?php
-	if ($funclatest || $funcmylatest || $funcnoreplies) {
-		?>
-			<div class="ktitle_cover km"><span class="ktitle kl"><?php
+		<div class="ktitle_cover km"><span class="ktitle kl">
 
+	<?php
 		switch (JString::strtolower ( $this->func )) {
 			case 'mylatest' :
 				echo _KUNENA_MENU_MYLATEST_DESC;
@@ -119,25 +104,13 @@ if (count ( $this->messages ) > 0) {
 				echo _KUNENA_MENU_LATEST_DESC;
 				break;
 			default :
+				if (isset($this->objCatInfo))
+					echo _KUNENA_THREADS_IN_FORUM,': ',kunena_htmlspecialchars ( stripslashes ( $this->objCatInfo->name ) );
 				break;
 		}
 		?></span></div>
-			<?php
-	} else {
-		?>
-			<div class="ktitle_cover km"><span class="ktitle kl"><?php
-		echo _KUNENA_THREADS_IN_FORUM;
-		?>:
-			<?php
-		echo kunena_htmlspecialchars ( stripslashes ( $this->objCatInfo->name ) );
-		?></span></div>
 		</th>
-			<?php
-	}
-	?>
 		</tr>
-
-
 	</thead>
 	<tbody>
 		<?php
@@ -146,9 +119,9 @@ if (count ( $this->messages ) > 0) {
 
 	$st_occured = 0;
 	foreach ( $this->messages as $leaf ) {
-		$k = 1 - $k; //used for alternating colours
 		$leaf->name = kunena_htmlspecialchars ( stripslashes ( $leaf->name ) );
 		$leaf->email = kunena_htmlspecialchars ( stripslashes ( $leaf->email ) );
+		if ($leaf->moved == 1) $leaf->topic_emoticon = 3;
 
 		if ($st_c == $st_count && $st_occured != 1 && $st_count != 0 && $funclatest == 0) {
 			$st_occured = 1;
@@ -158,7 +131,7 @@ if (count ( $this->messages ) > 0) {
 		<tr>
 			<td class="kcontenttablespacer"
 				colspan="<?php
-			echo (CKunenaTools::isModerator ( $kunena_my->id, $catid ) ? "6" : "5");
+			echo (CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? "6" : "5");
 			?>">&nbsp;
 			</td>
 		</tr>
@@ -169,13 +142,13 @@ if (count ( $this->messages ) > 0) {
 
 		<tr
 			class="k<?php
-		echo $tabclass [$k];
+		echo $this->tabclass [$k^=1];
 		if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 			echo '_stickymsg';
 		}
 
 		if ($leaf->class_sfx) {
-			echo ' k' . $tabclass [$k];
+			echo ' k' . $this->tabclass [$k^1];
 			if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
 				echo '_stickymsg';
 			}
@@ -189,26 +162,15 @@ if (count ( $this->messages ) > 0) {
 		echo _GEN_REPLIES;
 		?></td>
 
-			<td class="td-2" align="center"><?php
-		if ($leaf->moved == 0) {
-			echo $leaf->topic_emoticon == 0 ? '<img src="' . KUNENA_URLEMOTIONSPATH . 'default.gif" border="0"  alt="" />' : "<img src=\"" . $topic_emoticons [$leaf->topic_emoticon] . "\" alt=\"emo\" border=\"0\" />";
-		} else {
-			echo CKunenaLink::GetSimpleLink ( $id );
-			?>
-			<img src="<?php
-			echo KUNENA_URLEMOTIONSPATH;
-			?>arrow.gif"
-				alt="emo" /> <?php
-		}
-		?></td>
+			<td class="td-2" align="center">
+			<img src="<?php echo $topic_emoticons [$leaf->topic_emoticon] ?>" alt="emo" border="0" />
+		</td>
 
 			<td class="td-3"><?php
 		if ($leaf->moved == 0) {
-			// Need to add +1 as we only have the replies in the buffer
-			$totalMessages = $leaf->msgcount;
-			$curMessageNo = $totalMessages - ($leaf->unread ? $leaf->unread - 1 : 0);
-			$threadPages = ceil ( $totalMessages / $kunena_config->messages_per_page );
-			$unreadPage = ceil ( $curMessageNo / $kunena_config->messages_per_page );
+			$curMessageNo = $leaf->msgcount - ($leaf->unread ? $leaf->unread - 1 : 0);
+			$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
+			$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
 
 			//(JJ) ATTACHMENTS ICON
 			if ($leaf->attachmesid > 0) {
@@ -220,7 +182,7 @@ if (count ( $this->messages ) > 0) {
 			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $this->messagetext [$leaf->id] ) ), 'follow', 'k-topic-title km' );
 			?>
 			<!--            Favorite       --> <?php
-			if ($kunena_config->allowfavorites && $leaf->favcount ) {
+			if ($leaf->favcount ) {
 				if ($leaf->myfavorite) {
 					echo isset ( $kunena_icons ['favoritestar'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
 				} else if (array_key_exists ( 'favoritestar_grey', $kunena_icons )) {
@@ -229,16 +191,14 @@ if (count ( $this->messages ) > 0) {
 			}
 			?>
 			<!--            /Favorite       --> <?php
-			if ($kunena_config->shownew && $kunena_my->id != 0) {
-				if ($leaf->unread) {
+			if ($leaf->unread) {
 					//new post(s) in topic
-					echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->id, $unreadPage, $kunena_config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $kunena_config->newchar ) . ')</span></sup>', $leaf->lastread );
-				}
+					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $leaf->lastread );
 			}
 
-			if ($totalMessages > $kunena_config->messages_per_page) {
+			if ($leaf->msgcount > $this->config->messages_per_page) {
 				echo ("<span class=\"jr-showcat-perpage\">[");
-				echo _PAGE . ' ' . CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->id, 1, $kunena_config->messages_per_page, 1 );
+				echo _PAGE . ' ' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 );
 
 				if ($threadPages > 3) {
 					echo ("...");
@@ -257,7 +217,7 @@ if (count ( $this->messages ) > 0) {
 						echo (",");
 					}
 
-					echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->thread, $hopPage, $kunena_config->messages_per_page, $hopPage );
+					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $hopPage, $this->config->messages_per_page, $hopPage );
 				}
 
 				echo ("]</span>");
@@ -269,8 +229,8 @@ if (count ( $this->messages ) > 0) {
 			$threadPages = 0;
 			$unreadPage = 0;
 			//this thread has been moved, get the new location
-			$kunena_db->setQuery ( "SELECT message FROM #__fb_messages_text WHERE mesid='{$leaf->id}'" );
-			$newURL = $kunena_db->loadResult ();
+			$this->db->setQuery ( "SELECT message FROM #__fb_messages_text WHERE mesid='{$leaf->id}'" );
+			$newURL = $this->db->loadResult ();
 			// split the string and separate catid and id for proper link assembly
 			parse_str ( $newURL, $newURLParams );
 			?>
@@ -301,7 +261,7 @@ if (count ( $this->messages ) > 0) {
 		<?php
 		if ($leaf->name) {
 			echo '<span class="topic_by">';
-			echo _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $kunena_config, $leaf->userid, $leaf->name );
+			echo _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $this->config, $leaf->userid, $leaf->name );
 			echo '</span>';
 		}
 		?>
@@ -335,31 +295,31 @@ if (count ( $this->messages ) > 0) {
 			</span> <?php
 		}
 		?> <!--  /Sticky   --> <!-- Avatar --> <?php // (JJ) AVATAR
-		if ($kunena_config->avataroncat > 0) {
+		if ($this->config->avataroncat > 0) {
 			?>
 			<span class="topic_latest_post_avatar"> <?php
-			if ($kunena_config->avatar_src == "jomsocial" && $leaf->userid) {
+			if ($this->config->avatar_src == "jomsocial" && $leaf->userid) {
 				// Get CUser object
 				$jsuser = & CFactory::getUser ( $this->last_reply [$leaf->id]->userid );
 				$useravatar = '<img class="klist_avatar" src="' . $jsuser->getThumbAvatar () . '" alt=" " />';
-				echo CKunenaLink::GetProfileLink ( $kunena_config, $this->last_reply [$leaf->id]->userid, $useravatar );
-			} else if ($kunena_config->avatar_src == "cb") {
+				echo CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, $useravatar );
+			} else if ($this->config->avatar_src == "cb") {
 				$kunenaProfile = & CkunenaCBProfile::getInstance ();
 				$useravatar = $kunenaProfile->showAvatar ( $this->last_reply [$leaf->id]->userid, 'fb_list_avatar' );
-				echo CKunenaLink::GetProfileLink ( $kunena_config, $this->last_reply [$leaf->id]->userid, $useravatar );
-			} else if ($kunena_config->avatar_src == "aup") {
+				echo CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, $useravatar );
+			} else if ($this->config->avatar_src == "aup") {
 				// integration AlphaUserPoints
 				$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
 				if (file_exists ( $api_AUP )) {
-					($kunena_config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
+					($this->config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
 					echo AlphaUserPointsHelper::getAupAvatar ( $this->last_reply [$leaf->id]->userid, $showlink, 40, 40 );
 				} // end integration AlphaUserPoints
 			} else {
 				$javatar = $this->last_reply [$leaf->id]->avatar;
 				if ($javatar != '') {
-					echo CKunenaLink::GetProfileLink ( $kunena_config, $this->last_reply [$leaf->id]->userid, '<img class="klist_avatar" src="' . (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $javatar ) ? KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $javatar : KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $javatar) . '" alt="" />' );
+					echo CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, '<img class="klist_avatar" src="' . (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $javatar ) ? KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $javatar : KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $javatar) . '" alt="" />' );
 				} else {
-					echo CKunenaLink::GetProfileLink ( $kunena_config, $this->last_reply [$leaf->id]->userid, '<img class="klist_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />' );
+					echo CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, '<img class="klist_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />' );
 				}
 			}
 			?>
@@ -367,17 +327,17 @@ if (count ( $this->messages ) > 0) {
 		}
 		?> <!-- /Avatar --> <!-- Latest Post --> <span
 				class="topic_latest_post"> <?php
-		if ($kunena_config->default_sort == 'asc') {
+		if ($this->config->default_sort == 'asc') {
 			if ($leaf->moved == 0)
-				echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->thread, $threadPages, $kunena_config->messages_per_page, _GEN_LAST_POST, $this->last_reply [$leaf->id]->id );
+				echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $threadPages, $this->config->messages_per_page, _GEN_LAST_POST, $this->last_reply [$leaf->id]->id );
 			else
 				echo _KUNENA_MOVED . ' ';
 		} else {
-			echo CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $leaf->catid, $leaf->thread, 1, $kunena_config->messages_per_page, _GEN_LAST_POST, $this->last_reply [$leaf->id]->id );
+			echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, 1, $this->config->messages_per_page, _GEN_LAST_POST, $this->last_reply [$leaf->id]->id );
 		}
 
 		if ($leaf->name)
-			echo ' ' . _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $kunena_config, $this->last_reply [$leaf->id]->userid, stripslashes ( $this->last_reply [$leaf->id]->name ), 'nofollow', 'topic_latest_post_user' );
+			echo ' ' . _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, stripslashes ( $this->last_reply [$leaf->id]->name ), 'nofollow', 'topic_latest_post_user' );
 		?>
 			</span> <!-- /Latest Post --> <br />
 			<!-- Latest Post Date --> <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($this->last_reply[$leaf->id]->time, 'config_post_dateformat_hover'); ?>"> <?php
@@ -387,7 +347,7 @@ if (count ( $this->messages ) > 0) {
 			</td>
 
 			<?php
-		if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			?>
 
 			<td class="td-7" align="center"><input type="checkbox"
@@ -404,7 +364,7 @@ if (count ( $this->messages ) > 0) {
 	}
 	// TODO: disable bulk tools durig transisiton to mootools
 	// need to rewrite the function based on mootools
-	if (false /* CKunenaTools::isModerator ( $kunena_my->id, $catid ) */) {
+	if (false /* CKunenaTools::isModerator ( $this->my->id, $this->catid ) */) {
 		?>
 		<!-- Moderator Bulk Actions -->
 		<tr class="ksectiontableentry1">

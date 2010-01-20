@@ -29,6 +29,11 @@ global $kunena_icons;
 $this->displayPathway ();
 ?>
 <!-- / Pathway -->
+
+<?php
+$this->displaySubCategories ();
+?>
+
 <?php
 if ($this->objCatInfo->headerdesc) {
 	?>
@@ -89,10 +94,6 @@ if ($this->objCatInfo->headerdesc) {
 <!-- F: List Actions -->
 
 <?php
-$this->displaySubCategories ();
-?>
-
-<?php
 
 if (count ( $this->messages ) > 0) {
 	$this->displayFlat ();
@@ -118,7 +119,7 @@ if (count ( $this->messages ) > 0) {
 		<td class="klist_actions_forum" width="100%"><?php
 		if (isset ( $this->forum_new ) || isset ( $this->forum_markread ) || isset ( $this->thread_subscribecat )) {
 			echo '<div class="kmessage_buttons_row">';
-			if (isset ( $fthis->orum_new ))
+			if (isset ( $this->forum_new ))
 				echo $this->forum_new;
 			if (isset ( $this->forum_markread ))
 				echo ' ' . $this->forum_markread;

@@ -36,12 +36,15 @@ class CKunenaListcat {
 		$kunena_app = JFactory::getApplication ();
 
 		// Start getting the categories
-		if ($this->catid)
+		if ($this->catid) {
 			$catlist = $this->catid;
-		else
+			$where = "";
+		} else {
 			$catlist = $this->session->allowed;
+			$where = "parent='0' AND";
+		}
 		$this->categories = array ();
-		$this->db->setQuery ( "SELECT * FROM #__fb_categories WHERE parent='0' AND published='1' AND id IN ({$catlist}) ORDER BY ordering" );
+		$this->db->setQuery ( "SELECT * FROM #__fb_categories WHERE {$where} published='1' AND id IN ({$catlist}) ORDER BY ordering" );
 		$this->categories [0] = $this->db->loadObjectList ();
 		check_dberror ( "Unable to load categories." );
 
@@ -195,13 +198,11 @@ class CKunenaListcat {
 				}
 			}
 		}
-	}
 
-	function displayFlat() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php');
+		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'categories.php' )) {
+			include (KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'categories.php');
 		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'threads' . DS . 'flat.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'categories' . DS . 'categories.php');
 		}
 	}
 

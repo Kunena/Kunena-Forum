@@ -34,6 +34,7 @@ class CKunenaShowcat {
 
 		$this->allow = 1;
 
+		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 		$this->prevCheck = $this->session->lasttime;
 
 		$kunena_app = & JFactory::getApplication ();
@@ -70,8 +71,10 @@ class CKunenaShowcat {
 	FROM (
 		SELECT m.thread, MAX(f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
-		FROM #__fb_messages AS m
-		LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread
+		FROM #__fb_messages AS m";
+			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
+			else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
+			$query .= "
 		LEFT JOIN #__fb_attachments AS a ON a.mesid = m.thread
 		WHERE m.hold='0' AND m.thread IN ({$idstr})
 		GROUP BY thread
@@ -101,21 +104,18 @@ class CKunenaShowcat {
 			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
 
-			$readlist = '0' . $this->session->readtopics;
-			$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
-			$msgidlist = $this->db->loadObjectList ();
-			check_dberror ( "Unable to get unread messages count and first id." );
+			if ($this->config->shownew) {
+				$readlist = '0' . $this->session->readtopics;
+				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
+				$msgidlist = $this->db->loadObjectList ();
+				check_dberror ( "Unable to get unread messages count and first id." );
 
-			foreach ( $msgidlist as $msgid ) {
-				$this->messages[$msgid->thread]->lastread = $msgid->lastread;
-				$this->messages[$msgid->thread]->unread = $msgid->unread;
+				foreach ( $msgidlist as $msgid ) {
+					$this->messages[$msgid->thread]->lastread = $msgid->lastread;
+					$this->messages[$msgid->thread]->unread = $msgid->unread;
+				}
 			}
 		}
-
-		//get number of pending messages
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE catid='{$this->catid}' AND hold='1'" );
-		$numPending = $this->db->loadResult ();
-		check_dberror ( 'Unable to get number of pending messages.' );
 
 		//Get the category information
 		$query = "SELECT c.*, s.catid AS subscribeid
@@ -207,114 +207,9 @@ class CKunenaShowcat {
 	}
 
 	function displaySubCategories() {
-		$readlist = '0' . $this->session->readtopics;
-
-		// TODO: optimize this query (just combined many queries into one)
-		$this->db->setQuery ( "SELECT c.*, m.id AS msgid, m.thread, m.catid, m.subject, m.userid, m.name AS username,
-		(SELECT COUNT(*) FROM #__fb_messages AS mm WHERE m.thread=mm.thread) AS msgcount,
-		(SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS mmm WHERE c.id=mmm.catid AND mmm.hold='0' AND mmm.time>'{$this->prevCheck}' AND mmm.thread NOT IN ({$readlist})) AS new
-			FROM #__fb_categories AS c
-			LEFT JOIN #__fb_messages AS m ON c.id_last_msg = m.id
-			WHERE c.parent='{$this->catid}' AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY c.ordering" );
-		$this->subcats = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load categories." );
-
-		global $kunena_icons;
-		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
-		$this->forumdesc = CKunenaTools::parseBBCode ( $this->objCatInfo->description );
-
-		$subcats = array ();
-		foreach ( $this->subcats as $i => $subcat ) {
-			$this->subcats [$i]->forumdesc = CKunenaTools::parseBBCode ( $subcat->description );
-
-			$subcat->page = ceil ( $subcat->msgcount / $this->config->messages_per_page );
-
-			$categoryicon = '';
-
-			if ($this->config->shownew && $this->my->id != 0) {
-
-				if ($subcat->new) {
-					// Check Unread    Cat Images
-					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_on.gif" )) {
-						$this->subcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_on.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
-					} else {
-						$this->subcats [$i]->categoryicon .= isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : stripslashes ( $this->config->newchar );
-					}
-				} else {
-					// Check Read Cat Images
-					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_off.gif" )) {
-						$this->subcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_off.gif\" border=\"0\" class='forum-cat-image' alt=\" \"  />";
-					} else {
-						$this->subcats [$i]->categoryicon .= isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes ( $this->config->newchar );
-					}
-				}
-			} else {
-				if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_notlogin.gif" )) {
-					$this->subcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_notlogin.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
-				} else {
-					$this->subcats [$i]->categoryicon .= isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes ( $this->config->newchar );
-				}
-			}
-		}
-
-		$modcats = array ();
-		foreach ( $this->subcats as $subcat ) {
-			$subcats [] = $subcat->id;
-			if ($subcat->moderated)
-				$modcats [] = $subcat->id;
-		}
-
-		// Get the forumsubparent categories
-		$this->childforums = array();
-		if (count ( $subcats )) {
-		$subcatlist = implode ( ',', $subcats );
-		$this->db->setQuery ( "SELECT id, name, parent,
-			(SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>'{$this->prevCheck}' AND m.thread NOT IN ({$readlist})) AS new
-			FROM #__fb_categories AS c
-			WHERE c.parent IN ({$subcatlist}) AND c.published='1'" );
-		$childforums = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load categories." );
-		foreach ( $childforums as $cat ) {
-			$this->childforums [$cat->parent] [] = $cat;
-		}
-		}
-
-		$this->modlist = array ();
-		$this->pending = array ();
-		if (count ( $modcats )) {
-			$modcatlist = implode ( ',', $modcats );
-			$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid IN ({$modcatlist})" );
-			$modlist = $this->db->loadObjectList ();
-			check_dberror ( "Unable to load moderators." );
-			foreach ( $modlist as $mod ) {
-				$this->modlist [$mod->catid] [] = $mod;
-			}
-
-			if (CKunenaTools::isModerator ( $this->my->id )) {
-				foreach ( $modcats as $i => $catid ) {
-					if (! CKunenaTools::isModerator ( $this->my->id, $catid ))
-						unset ( $modcats [$i] );
-				}
-				if (count ( $modcats )) {
-					$modcatlist = implode ( ',', $modcats );
-					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count FROM #__fb_messages WHERE catid IN ($modcatlist) AND hold='1'" );
-					$pending = $this->db->loadAssocList ();
-					check_dberror ( "Unable to load pending messages." );
-					foreach ( $pending as $i ) {
-						if ($i ['count'])
-							$this->pending [$i ['catid']] = $i ['count'];
-					}
-				}
-			}
-		}
-
-		if (count ( $this->subcats )) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'subcategories.php' )) {
-				include (KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'subcategories.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'threads' . DS . 'subcategories.php');
-			}
-		}
+		require_once (KUNENA_PATH_VIEWS . DS . 'listcat.php');
+		$obj = new CKunenaListCat($this->catid);
+		$obj->displayCategories();
 	}
 
 	function displayFlat() {

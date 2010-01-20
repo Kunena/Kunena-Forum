@@ -337,6 +337,16 @@ switch ($task) {
 
 		break;
 
+	case "pollpublish" :
+		pollpublish ( $option, $cid, 1 );
+
+		break;
+
+	case "pollunpublish" :
+		pollunpublish ( $option, $cid, 0 );
+
+		break;
+
 	case "createmenu" :
 		CKunenaTools::createMenu();
 
@@ -622,6 +632,58 @@ function orderForum($uid, $inc, $option) {
 	$row->load ( $uid );
 
 	$row->move ( $inc, $where );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
+}
+
+function pollpublish ( $option, $cid = null, $publish = 1 ) {
+	$kunena_db = &JFactory::getDBO ();
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_my = &JFactory::getUser ();
+	if (! is_array ( $cid ) || count ( $cid ) < 1) {
+		$action = $publish ? 'publish' : 'unpublish';
+		echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+		exit ();
+	}
+
+	$cids = implode ( ',', $cid );
+	$kunena_db->setQuery ( "UPDATE #__fb_categories SET allow_polls='$publish'" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))" );
+	$kunena_db->query () or check_dberror ( "Unable to update categories." );
+
+	if (count ( $cid ) == 1) {
+		$row = new fbForum ( $kunena_db );
+		$row->checkin ( $cid [0] );
+	}
+
+	// we must reset fbSession->allowed, when forum record was changed
+	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
+	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
+}
+
+function pollunpublish ( $option, $cid = null, $unpublish = 0 ) {
+	$kunena_db = &JFactory::getDBO ();
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_my = &JFactory::getUser ();
+	if (! is_array ( $cid ) || count ( $cid ) < 1) {
+		$action = $publish ? 'unpublish' : 'publish';
+		echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+		exit ();
+	}
+
+	$cids = implode ( ',', $cid );
+	$kunena_db->setQuery ( "UPDATE #__fb_categories SET allow_polls='$unpublish'" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))" );
+	$kunena_db->query () or check_dberror ( "Unable to update categories." );
+
+	if (count ( $cid ) == 1) {
+		$row = new fbForum ( $kunena_db );
+		$row->checkin ( $cid [0] );
+	}
+
+	// we must reset fbSession->allowed, when forum record was changed
+	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
+	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 }
 

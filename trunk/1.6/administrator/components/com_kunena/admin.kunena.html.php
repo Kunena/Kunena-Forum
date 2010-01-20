@@ -385,12 +385,8 @@ td.fbtdtitle {
 			?>
 		</td>
 
-		<td align="center"><?php
-			echo ($row->allow_polls ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
-			?>
-		</td>
-
 		<?php
+			$polltask = $row->allow_polls ? 'pollunpublish' : 'pollpublish';
 			$task = $row->published ? 'unpublish' : 'publish';
 			$img = $row->published ? 'publish_g.png' : 'publish_x.png';
 
@@ -404,6 +400,15 @@ td.fbtdtitle {
 
 			$adm_groupname = $row->admingroup == "" ? "&nbsp;" : $row->admingroup;
 			?>
+
+		<td width="10%" align="center"><a href="javascript: void(0);"
+			onclick="return listItemTask('cb<?php
+			echo $i;
+			?>','<?php echo $polltask; ?>')">
+			<?php
+			echo ($row->allow_polls == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
+			?>
+		</a></td>
 
 		<td width="10%" align="center"><a href="javascript: void(0);"
 			onclick="return listItemTask('cb<?php

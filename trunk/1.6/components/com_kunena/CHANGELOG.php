@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+20-Jan-2010 Xillibit
+^ [#19358] Apply some changes on the polls - publish or unpublish a category allowed for polls directly in forum administration
+
 20-Jan-2010 fxstein
 ^ [#19380] Drop jQuery; rewrite bbcode editor functions using mootools
 

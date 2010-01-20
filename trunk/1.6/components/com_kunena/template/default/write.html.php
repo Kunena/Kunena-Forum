@@ -39,30 +39,45 @@ include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
 //keep session alive while editing
 
-// TODO: Conflicts with new mootools 1.2 need to find a seperate solution for that
+// Can't use the Joomla 1.5.15 html behavior since it is loading mootools 1.1 which would break 1.2
 //JHTML::_ ( 'behavior.keepalive' );
+$config      =& JFactory::getConfig();
+$lifetime      = ( $config->getValue('lifetime') * 60000 );
+$refreshTime =  ( $lifetime <= 60000 ) ? 30000 : $lifetime - 60000;
+//refresh time is 1 minute less than the liftime assined in the configuration.php file
+
+$document =& JFactory::getDocument();
+$script  = '';
+$script .= 'function keepAlive( ) {';
+$script .=  '    var myAjax = new Ajax( "index.php", { method: "get" } ).request();';
+$script .=  '}';
+$script .=     ' window.addEvent("domready", function()';
+$script .=     '{ keepAlive.periodical('.$refreshTime.' ); }';
+$script .=  ');';
+
+$document->addScriptDeclaration($script);
+
+$script  = '';
+$script .= 'window.addEvent("domready", function(){';
+$script .= 'var preview = $("preview_button");';
+$script .= 'if (preview)';
+$script .= '{';
+$script .= '	preview.addEvent("click", function(){';
+$script .= '		previewRequest = new Request.JSON({url: "'.CKunenaLink::GetJsonURL('preview').'",';
+$script .= '												onSuccess: function(response){';
+$script .= '			container = $("preview_container");';
+$script .= '			if (container) {';
+$script .= '				container.set("style", "display: inline;");';
+$script .= '				container.set("html", response.preview);';
+$script .= '			}';
+$script .= '		}}).post({body: $("message").get("value")});';
+$script .= '	});';
+$script .= '}';
+$script .= '});';
+
+$document->addScriptDeclaration($script);
+
 ?>
-
-<script type="text/javascript">
-	window.addEvent('domready', function(){
-   		var preview = $('preview_button');
-	    if (preview)
-	    {
-	        preview.addEvent('click', function(){
-
-	            //This code will send a data object via a GET request and alert the retrieved data.
-	            previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview'); ?>",
-													onSuccess: function(response){
-	                container = $('preview_container');
-	                if (container) {
-	                    container.set('html', response.preview);
-	                }
-	            }}).post({body: $('message').get('value')});
-	        });
-	    }
-	});
-</script>
-
 
 <form class="postform" id="postform"
 	action="<?php
@@ -247,13 +262,6 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		} else {
 			$useRte = 1;
 		}
-
-		// Add mootools script for preview
-		//JApplication::addCustomHeadTag("
-		?>
-
-		<?php
-		//");
 
 		$fbTextArea = smile::fbWriteTextarea ( 'message', $this->message_text, $kunena_config->rtewidth, $kunena_config->rteheight, $useRte, $kunena_config->disemoticons, $this->kunena_editmode );
 		echo $fbTextArea;
@@ -484,13 +492,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				</td>
 		</tr>
 
-		<!-- preview style="display: none;" -->
+		<!-- preview  -->
 		<tr class="ksectiontableentry2" >
 			<td class="kleftcolumn"><strong><?php
 			echo _PREVIEW;
 			?></strong>:</td>
 			<td>
-			<div class="previewMsg" id="preview_container"
+			<div class="previewMsg" id="preview_container" style="display: none;"
 				style="height: <?php
 				echo $kunena_config->rteheight;
 				?>px; overflow: auto;"></div>

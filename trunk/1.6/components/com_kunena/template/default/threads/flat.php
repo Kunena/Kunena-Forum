@@ -58,15 +58,6 @@ $topic_emoticons [7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 
-$st_count = 0;
-if (count ( $this->messages ) > 0) {
-	foreach ( $this->messages as $leafa ) {
-		if (($leafa->ordering > 0 && ! $funcmylatest) || ($leafa->myfavorite && $funcmylatest)) {
-			$st_count ++;
-		}
-	}
-}
-
 if (count ( $this->messages ) > 0) {
 	?>
 <div class="k_bt_cvr1">
@@ -92,42 +83,22 @@ if (count ( $this->messages ) > 0) {
 
 		<div class="ktitle_cover km"><span class="ktitle kl">
 
-	<?php
-		switch (JString::strtolower ( $this->func )) {
-			case 'mylatest' :
-				echo _KUNENA_MENU_MYLATEST_DESC;
-				break;
-			case 'noreplies' :
-				echo _KUNENA_MENU_NOREPLIES_DESC;
-				break;
-			case 'latest' :
-				echo _KUNENA_MENU_LATEST_DESC;
-				break;
-			default :
-				if (isset($this->objCatInfo))
-					echo _KUNENA_THREADS_IN_FORUM,': ',kunena_htmlspecialchars ( stripslashes ( $this->objCatInfo->name ) );
-				break;
-		}
-		?></span></div>
+	<?php if (!empty($this->header)) echo $this->header; ?></span></div>
 		</th>
 		</tr>
 	</thead>
 	<tbody>
 		<?php
 	$k = 0;
-	$st_c = 0;
-
-	$st_occured = 0;
+	$counter = 0;
 	foreach ( $this->messages as $leaf ) {
 		$leaf->name = kunena_htmlspecialchars ( stripslashes ( $leaf->name ) );
 		$leaf->email = kunena_htmlspecialchars ( stripslashes ( $leaf->email ) );
 		if ($leaf->moved == 1) $leaf->topic_emoticon = 3;
 
-		if ($st_c == $st_count && $st_occured != 1 && $st_count != 0 && $funclatest == 0) {
-			$st_occured = 1;
+		if ($this->highlight && $counter == $this->highlight) {
 			$k = 0;
 			?>
-
 		<tr>
 			<td class="kcontenttablespacer"
 				colspan="<?php
@@ -138,6 +109,7 @@ if (count ( $this->messages ) > 0) {
 
 		<?php
 		}
+		$counter ++;
 		?>
 
 		<tr
@@ -172,16 +144,14 @@ if (count ( $this->messages ) > 0) {
 			$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
 			$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
 
-			//(JJ) ATTACHMENTS ICON
-			if ($leaf->attachmesid > 0) {
+			if ($leaf->attachments) {
 				echo isset ( $kunena_icons ['topicattach'] ) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLEMOTIONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
 			}
 			?>
-
 			<div class="k-topic-title-cover"><?php
 			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $this->messagetext [$leaf->id] ) ), 'follow', 'k-topic-title km' );
 			?>
-			<!--            Favorite       --> <?php
+			<?php
 			if ($leaf->favcount ) {
 				if ($leaf->myfavorite) {
 					echo isset ( $kunena_icons ['favoritestar'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLEMOTIONSPATH . 'favoritestar.gif"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
@@ -190,9 +160,8 @@ if (count ( $this->messages ) > 0) {
 				}
 			}
 			?>
-			<!--            /Favorite       --> <?php
+			<?php
 			if ($leaf->unread) {
-					//new post(s) in topic
 					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $leaf->lastread );
 			}
 
@@ -360,7 +329,6 @@ if (count ( $this->messages ) > 0) {
 		</tr>
 
 		<?php
-		$st_c ++;
 	}
 	// TODO: disable bulk tools durig transisiton to mootools
 	// need to rewrite the function based on mootools

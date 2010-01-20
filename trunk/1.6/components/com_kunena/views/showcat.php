@@ -63,13 +63,13 @@ class CKunenaShowcat {
 		$idstr = @join ( ",", $threadids );
 
 		$this->messages = array ();
+		$this->highlight = 0;
 		$routerlist = array ();
-
 		if (count ( $threadids ) > 0) {
-			$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid,
+			$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachments,
 							l.msgcount, l.lastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 	FROM (
-		SELECT m.thread, MAX(f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
+		SELECT m.thread, MAX(f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__fb_messages AS m";
 			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
@@ -97,6 +97,7 @@ class CKunenaShowcat {
 					$this->messages [$message->id] = $message;
 					$this->last_reply [$message->id] = $message;
 					$routerlist [$message->id] = $message->subject;
+					if ($message->ordering) $this->highlight++;
 				} else {
 					$this->last_reply [$message->thread] = $message;
 				}
@@ -104,7 +105,7 @@ class CKunenaShowcat {
 			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
 
-			if ($this->config->shownew) {
+			if ($this->config->shownew && $this->my->id) {
 				$readlist = '0' . $this->session->readtopics;
 				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
@@ -213,6 +214,7 @@ class CKunenaShowcat {
 	}
 
 	function displayFlat() {
+		$this->title = _KUNENA_THREADS_IN_FORUM.': '.kunena_htmlspecialchars ( stripslashes ( $this->objCatInfo->name ) );
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php' )) {
 			include (KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php');
 		} else {

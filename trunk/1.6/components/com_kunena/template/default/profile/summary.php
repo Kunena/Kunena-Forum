@@ -91,13 +91,13 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<dd>
 						<p>Add post listing here.</p>
 					</dd>
-					<dt>Subscriptions</dt>
+					<dt><?php echo _KUNENA_SUBSCRIPTIONS; ?></dt>
 					<dd>
-						<?php $this->displayMySubscriptions(); ?>
+						<?php $this->displaySubscriptions(); ?>
 					</dd>
-					<dt>Favorites</dt>
+					<dt><?php echo _KUNENA_FAVORITES; ?></dt>
 					<dd>
-						<?php $this->displayMyFavorites(); ?>
+						<?php $this->displayFavorites(); ?>
 					</dd>
 
 					<!-- Only visible to moderators and admins -->

@@ -92,15 +92,18 @@ class CKunenaListcat {
 		$catlist = implode ( ',', $catids );
 		$readlist = '0' . $this->session->readtopics;
 
+		if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS mmm WHERE c.id=mmm.catid AND mmm.hold='0' AND mmm.time>'{$this->prevCheck}' AND mmm.thread NOT IN ({$readlist})) AS new";
+		else $subquery = " 0 AS new";
+
 		// TODO: optimize this query (just combined many queries into one)
-		$this->db->setQuery ( "SELECT c.*, m.id AS mesid, m.thread, m.catid, t.subject AS topicsubject, m.subject, m.name AS mname, u.id AS userid, u.username, u.name AS uname,
-			(SELECT COUNT(*) FROM #__fb_messages AS mm WHERE m.thread=mm.thread) AS msgcount,
-			(SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS mmm WHERE c.id=mmm.catid AND mmm.hold='0' AND mmm.time>'{$this->prevCheck}' AND mmm.thread NOT IN ({$readlist})) AS new
+		$query = "SELECT c.*, m.id AS mesid, m.thread, m.catid, t.subject AS topicsubject, m.subject, m.name AS mname, u.id AS userid, u.username, u.name AS uname,
+			(SELECT COUNT(*) FROM #__fb_messages AS mm WHERE m.thread=mm.thread) AS msgcount, {$subquery}
 			FROM #__fb_categories AS c
 			LEFT JOIN #__fb_messages AS m ON c.id_last_msg=m.id
 			LEFT JOIN #__fb_messages AS t ON m.thread=t.id
 			LEFT JOIN #__users AS u ON u.id=m.userid
-			WHERE c.parent IN ({$catlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY ordering" );
+			WHERE c.parent IN ({$catlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY ordering";
+		$this->db->setQuery ( $query );
 		$allsubcats = $this->db->loadObjectList ();
 		check_dberror ( "Unable to load categories." );
 
@@ -108,6 +111,7 @@ class CKunenaListcat {
 		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 		$subcats = array ();
+		$routerlist = array ();
 		foreach ( $allsubcats as $i => $subcat ) {
 			if ($subcat->mesid)
 				$routerlist [$subcat->mesid] = $subcat->subject;
@@ -159,10 +163,13 @@ class CKunenaListcat {
 		$this->childforums = array ();
 		if (count ( $subcats )) {
 			$subcatlist = implode ( ',', $subcats );
-			$this->db->setQuery ( "SELECT id, name, parent, numTopics, numPosts,
-			(SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>'{$this->prevCheck}' AND m.thread NOT IN ({$readlist})) AS new
+			if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>'{$this->prevCheck}' AND m.thread NOT IN ({$readlist})) AS new";
+			else $subquery = " 0 AS new";
+
+			$query = "SELECT id, name, parent, numTopics, numPosts, {$subquery}
 			FROM #__fb_categories AS c
-			WHERE c.parent IN ({$subcatlist}) AND c.published='1'" );
+			WHERE c.parent IN ({$subcatlist}) AND c.published='1'";
+			$this->db->setQuery ($query);
 			$childforums = $this->db->loadObjectList ();
 			check_dberror ( "Unable to load categories." );
 			foreach ( $childforums as $cat ) {

@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 20-Jan-2010 Matias
 ^ [#19295] Clean up code: merge showcat subcategories code with listcat
 # [#19251] Do not query SQL for new topics when the information isn't used (latestx, showcat)
+# [#19383] Make subscriptions and favorites to work better inside Profile page
 
 20-Jan-2010 Xillibit
 ^ [#19358] Apply some changes on the polls - publish or unpublish a category allowed for polls directly in forum administration

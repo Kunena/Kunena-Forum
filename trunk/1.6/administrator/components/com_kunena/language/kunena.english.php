@@ -146,6 +146,8 @@ define('_KUNENA_VIEW_MY_POSTS', 'View My Posts');
 define('_KUNENA_VIEW_MY_SUBSCRIPTIONS', 'View My Subscriptions');
 define('_KUNENA_VIEW_MY_FAVORITES', 'View My Favorites');
 define('_KUNENA_MY_SUBSCRIPTIONS', 'My Subscriptions');
+define('_KUNENA_SUBSCRIPTIONS', 'Subscriptions');
+define('_KUNENA_FAVORITES', 'Favorites');
 define('_KUNENA_MY_POSTS', 'My Posts');
 
 // Joomla menu related strings

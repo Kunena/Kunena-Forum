@@ -70,17 +70,17 @@ class CKunenaProfile {
 		}
 	}
 
-	function displayMyFavorites()
+	function displayFavorites()
 	{
 		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('favorites', 0);
-		$obj->my = $this->user;
-		$obj->getMyLatest(false);
+		$obj->user = $this->user;
+		$obj->getFavorites();
 		$obj->displayFlat();
 		echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
-	function displayMySubscriptions()
+	function displaySubscriptions()
 	{
 		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);

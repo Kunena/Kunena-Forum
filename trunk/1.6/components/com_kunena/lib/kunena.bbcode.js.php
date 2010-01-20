@@ -108,20 +108,21 @@ function colorPalette(dir, width, height)
 	document.writeln('</table>');
 }
 
-jQuery(document).ready(function()
-{
-	jQuery('table.fb-color_table td').click( function()
-	{
-//		var color = jQuery(this).css('background-color');
-		var color = jQuery(this).attr('id');
-		bbfontstyle('[color=#' + color + ']', '[/color]'); return false;
-	} );
-	jQuery('select#fb-bbcode_size').change( function()
-	{
-		var size = jQuery(this).val();
-		bbfontstyle('[size=' + size + ']', '[/size]'); return false;
-	} );
-} );
+// TODO: Remove jQuery based logic and replace with mootools behavior
+//jQuery(document).ready(function()
+//{
+//	jQuery('table.fb-color_table td').click( function()
+//	{
+////		var color = jQuery(this).css('background-color');
+//		var color = jQuery(this).attr('id');
+//		bbfontstyle('[color=#' + color + ']', '[/color]'); return false;
+//	} );
+//	jQuery('select#fb-bbcode_size').change( function()
+//	{
+//		var size = jQuery(this).val();
+//		bbfontstyle('[size=' + size + ']', '[/size]'); return false;
+//	} );
+//} );
 
 // From http://www.massless.org/mozedit/
 
@@ -174,7 +175,6 @@ function bbfontstyle(bbopen, bbclose) {
 			document.selection.createRange().text = bbopen + theSelection + bbclose;
 			document.postform.message.focus();
 			theSelection = '';
-			if (document.postform.previewspeicher.value == "preview") {kGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
 			return;
 		}
   }
@@ -184,7 +184,6 @@ function bbfontstyle(bbopen, bbclose) {
 		mozWrap(document.postform.message, bbopen, bbclose);
 		document.postform.message.focus();
 		theSelection = '';
-			if (document.postform.previewspeicher.value == "preview") {kGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
 		return;
 	}
 	//The new position for the cursor after adding the bbcode
@@ -211,7 +210,6 @@ function bbfontstyle(bbopen, bbclose) {
 	}
 
 	txtarea.focus();
-			if (document.postform.previewspeicher.value == "preview") {kGetPreview(document.postform.message.value,<?php echo KUNENA_COMPONENT_ITEMID?>);}
 	return;
 }
 

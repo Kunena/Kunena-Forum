@@ -70,9 +70,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 	        define("KUNENA_JOMSOCIAL_ITEMID", (int)$JOMSOCIAL_Itemid);
 	        define("KUNENA_JOMSOCIAL_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_JOMSOCIAL_ITEMID);
 
-	        // Prevent JomSocial from loading their jquery library - we got one loaded already
-	        if (!defined('C_ASSET_JQUERY')) define( 'C_ASSET_JQUERY', 1 );
-
 			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php');
 			include_once(KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/messaging.php');
 			// A bug in the JomSocial 1.6 pre-release is throwing a hard php error when this include is enabled
@@ -262,26 +259,6 @@ define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 
 // url catimages path
 define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$kunena_config->catimagepath}/"); // Kunena category images direct url
-
-if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'js' .DS. 'jquery-1.3.2.min.js'))
-{
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . '/js/jquery-1.3.2.min.js');
-}
-else
-{
-    define('KUNENA_JQURL', KUNENA_DIRECTURL . 'js/jquery-1.3.2.min.js');
-}
-
-if (file_exists(KUNENA_ABSTMPLTPATH .DS. 'js' .DS. 'kunenaforum.js'))
-{
-	define('KUNENA_COREJSPATH', '/components/com_kunena/template/' . $fb_cur_template . '/js/kunenaforum.js');
-	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/js/kunenaforum.js");
-}
-else
-{
-	define('KUNENA_COREJSPATH', '/components/com_kunena/template/default/js/kunenaforum.js');
-	define('KUNENA_COREJSURL', KUNENA_DIRECTURL . 'template/default/js/kunenaforum.js');
-}
 
 function KUNENA_check_image_type(&$type) {
     switch ($type)

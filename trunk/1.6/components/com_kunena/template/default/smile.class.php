@@ -191,40 +191,39 @@ class smile
 	<table border="0" cellspacing="0" cellpadding="0"
 		class="k-postbuttonset">
 		<tr>
-			<td class="k-postbuttons"><input name="speicher" type="hidden"
-				size="30" maxlength="100" /> <input name="previewspeicher"
-				type="hidden" size="30" maxlength="100" /> <img class="k-bbcode"
+			<td class="k-postbuttons">
+			<img class="k-bbcode"
 				title="Bold" name="addbbcode0"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png"
 				alt="B" onclick="bbfontstyle('[b]', '[/b]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_BOLD));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_BOLD));?>')" />
 			<img class="k-bbcode" title="Italic" name="addbbcode2"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png"
 				alt="I" onclick="bbfontstyle('[i]', '[/i]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_ITALIC));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_ITALIC));?>')" />
 			<img class="k-bbcode" title="Underline" name="addbbcode4"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png"
 				alt="U" onclick="bbfontstyle('[u]', '[/u]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_UNDERL));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_UNDERL));?>')" />
 			<img class="k-bbcode" title="Strike through" name="addbbcode4"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_strike.png"
 				alt="S" onclick="bbfontstyle('[strike]', '[/strike]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_STRIKE));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_STRIKE));?>')" />
 			<img class="k-bbcode" title="Subscript" name="addbbcode4"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sub.png"
 				alt="Sub" onclick="bbfontstyle('[sub]', '[/sub]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_SUB));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_SUB));?>')" />
 			<img class="k-bbcode" title="Supperscript" name="addbbcode4"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_sup.png"
 				alt="Sup" onclick="bbfontstyle('[sup]', '[/sup]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_SUP));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_SUP));?>')" />
 			<img class="k-bbcode" name="addbbcode62"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_smallcaps.png"
 				alt="<?php @print(_SMILE_SIZE); ?>"
 				onclick="bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_FONTSIZE));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_FONTSIZE));?>')" />
 			<select id="k-bbcode_size" class="kslcbox" name="addbbcode22"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION));?>')">
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION));?>')">
 				<option value="1"><?php @print(_SIZE_VSMALL); ?></option>
 				<option value="2"><?php @print(_SIZE_SMALL); ?></option>
 				<option value="3" selected="selected"><?php @print(_SIZE_NORMAL); ?></option>
@@ -234,71 +233,71 @@ class smile
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>color_swatch.png"
 				alt="<?php @print(_SMILE_COLOUR); ?>"
 				onclick="javascript:change_palette();"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_COLOR));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_COLOR));?>')" />
 			<?php if ($kunena_config->showspoilertag) {?> <img class="k-bbcode"
 				name="addbbcode40"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spoiler.png"
 				alt="Spoiler" onclick="bbfontstyle('[spoiler]', '[/spoiler]')"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_SPOILER));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_SPOILER));?>')" />
 			<?php } ?> <img class="k-bbcode" name="addbbcode24"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>group_key.png"
 				alt="Hide" onclick="bbfontstyle('[hide]', '[/hide]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_HIDE));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_HIDE));?>')" />
 			<img class="k-bbcode" alt=""
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png"
 				style="cursor: auto;" /> <img class="k-bbcode" name="addbbcode10"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_bullets.png"
 				alt="ul" onclick="bbfontstyle('[ul]', '[/ul]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_UL));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_UL));?>')" />
 			<img class="k-bbcode" name="addbbcode12"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_numbers.png"
 				alt="ol" onclick="bbfontstyle('[ol]', '[/ol]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_OL));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_OL));?>')" />
 			<img class="k-bbcode" name="addbbcode18"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_none.png"
 				alt="li" onclick="bbfontstyle('[li]', '[/li]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LI));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LI));?>')" />
 			<img class="k-bbcode" name="addbbcode4"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_left.png"
 				alt="left" onclick="bbfontstyle('[left]', '[/left]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_ALIGN_LEFT));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_ALIGN_LEFT));?>')" />
 			<img class="k-bbcode" name="addbbcode4"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_center.png"
 				alt="center" onclick="bbfontstyle('[center]', '[/center]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_ALIGN_CENTER));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_ALIGN_CENTER));?>')" />
 			<img class="k-bbcode" name="addbbcode4"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_right.png"
 				alt="right" onclick="bbfontstyle('[right]', '[/right]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT));?>')" />
 			<img class="k-bbcode" alt=""
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png"
 				style="cursor: auto;" /> <img class="k-bbcode" name="addbbcode6"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>comment.png"
 				alt="Quote" onclick="bbfontstyle('[quote]', '[/quote]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_QUOTE));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_QUOTE));?>')" />
 			<img class="k-bbcode" name="addbbcode8"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>code.png"
 				alt="Code" onclick="bbfontstyle('[code]', '[/code]');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_CODE));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_CODE));?>')" />
 			<img class="k-bbcode" alt=""
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png"
 				style="cursor: auto;" /> <img class="k-bbcode" name="addbbcode14"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png"
 				alt="Img" onclick="javascript:dE('image');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_IMAGELINK));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_IMAGELINK));?>')" />
 			<img class="k-bbcode" name="addbbcode16"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png"
 				alt="URL" onclick="javascript:dE('link');"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LINK));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LINK));?>')" />
 			<?php if ($kunena_config->showebaytag) {?> <img class="k-bbcode"
 				name="addbbcode20"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>ebay.png"
 				alt="Ebay" onclick="bbfontstyle('[ebay]', '[/ebay]')"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_EBAY));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_EBAY));?>')" />
 			<?php } ?> <?php if ($kunena_config->showvideotag) {?> &nbsp;<span
 				style="white-space: nowrap;"><img class="k-bbcode" alt="video"
 				src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>film.png"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEO));?>')"
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEO));?>')"
 				onclick="javascript:dE('video');" /></span> <?php } ?></td>
 		</tr>
 		<!-- Start extendable fields -->
@@ -312,26 +311,26 @@ class smile
 
 			<div id="link" style="display: none;"><?php @print(_KUNENA_EDITOR_LINK_URL); ?><input
 				name="url" type="text" size="40" maxlength="100" value="http://"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LINKURL));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LINKURL));?>')" />
 			<?php @print(_KUNENA_EDITOR_LINK_TEXT); ?><input name="text2"
 				type="text" size="30" maxlength="100"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LINKTEXT));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LINKTEXT));?>')" />
 			<input type="button" name="Link" accesskey="w"
 				value="<?php @print(_KUNENA_EDITOR_LINK_INSERT); ?>"
 				onclick="bbfontstyle('[url=' + this.form.url.value + ']'+ this.form.text2.value,'[/url]')"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LINKAPPLY));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_LINKAPPLY));?>')" />
 			</div>
 
 			<div id="image" style="display: none;"><?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input
 				name="size" type="text" size="10" maxlength="10"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE));?>')" />
 			<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2"
 				type="text" size="40" maxlength="250" value="http://"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL));?>')" />
 			<input type="button" name="Link" accesskey="p"
 				value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>"
 				onclick="check_image()"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY));?>')" />
 			<script type="text/javascript">
 								function check_image() {
 									if (document.postform.size.value == "") {
@@ -344,17 +343,17 @@ class smile
 
 			<div id="video" style="display: none;"><?php @print(_KUNENA_EDITOR_VIDEO_SIZE); ?><input
 				name="videosize" type="text" size="5" maxlength="5"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOSIZE));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOSIZE));?>')" />
 			<?php @print(_KUNENA_EDITOR_VIDEO_WIDTH); ?><input name="videowidth"
 				type="text" size="5" maxlength="5"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH));?>')" />
 			<?php @print(_KUNENA_EDITOR_VIDEO_HEIGHT); ?><input
 				name="videoheight" type="text" size="5" maxlength="5"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT));?>')" />
 			<br />
 			<?php @print(_KUNENA_EDITOR_VIDEO_PROVIDER); ?> <select
 				name="kvid_code1" class="kbutton"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER));?>')">
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER));?>')">
 				<?php
 								$vid_provider = array('','AnimeEpisodes','Biku','Bofunk','Break','Clip.vn','Clipfish','Clipshack','Collegehumor','Current',
 									'DailyMotion','DivX,divx]http://','DownloadFestival','Flash,flash]http://','FlashVars,flashvars param=]http://','Fliptrack',
@@ -369,18 +368,18 @@ class smile
 								?>
 			</select> <?php @print(_KUNENA_EDITOR_VIDEO_ID); ?><input name="videoid"
 				type="text" size="11" maxlength="11"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOID));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOID));?>')" />
 			<input type="button" name="Video" accesskey="p"
 				value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>"
 				onclick="check_video('video1')"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1));?>')" /><br />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1));?>')" /><br />
 			<?php @print(_KUNENA_EDITOR_VIDEO_URL); ?><input name="videourl"
 				type="text" size="30" maxlength="250" value="http://"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOURL));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOURL));?>')" />
 			<input type="button" name="Video" accesskey="p"
 				value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>"
 				onclick="check_video('video2')"
-				onmouseover="javascript:kunenaShowHelp('<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2));?>')" />
+				onmouseover="javascript:$('helpbox').set('value', '<?php @print(addslashes(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2));?>')" />
 			<script type="text/javascript">
 								function check_video(art) {
 									var video;
@@ -425,7 +424,7 @@ class smile
 		</tr>
 		<!-- end of extendable fiels -->
 		<tr>
-			<td class="kposthint"><input type="text" name="helpbox"
+			<td class="kposthint"><input type="text" name="helpbox" id="helpbox"
 				size="45" class="kinputbox" maxlength="100"
 				value="<?php @print(_KUNENA_EDITOR_HELPLINE_HINT);?>" /></td>
 		</tr>

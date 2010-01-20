@@ -52,6 +52,12 @@ class CKunenaAjaxHelper {
 					$response = $this->_getAutoComplete ( $do, $data );
 
 					break;
+				case 'preview' :
+					$body = JRequest::getVar ( 'body', '' );
+
+					$response = $this->_getPreview ( $body );
+
+					break;
 				default :
 
 					break;
@@ -121,6 +127,26 @@ class CKunenaAjaxHelper {
 
 
 		}
+
+		return $result;
+	}
+
+	protected function _getPreview($data) {
+		$result = array ();
+
+		$config = & CKunenaConfig::getInstance ();
+
+		require_once(JPATH_ROOT  .DS . '/libraries/joomla/document/html/html.php');
+
+		$message = utf8_urldecode ( utf8_decode ( stripslashes ( $data ) ) );
+
+		$kunena_emoticons = smile::getEmoticons ( 1 );
+		$msgbody = smile::smileReplace ( $message, 0, $config->disemoticons, $kunena_emoticons );
+		$msgbody = nl2br ( $msgbody );
+		$msgbody = str_replace ( "__FBTAB__", "\t", $msgbody );
+		$msgbody = CKunenaTools::prepareContent ( $msgbody );
+
+		$result ['preview'] = $msgbody;
 
 		return $result;
 	}

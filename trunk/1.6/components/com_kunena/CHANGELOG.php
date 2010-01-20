@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+20-Jan-2010 fxstein
+^ [#19380] Drop jQuery; rewrite bbcode editor functions using mootools
+
 19-Jan-2010 svens LDA
 # [#19339] Incorrect implementation of links in CKunenaLink class - Part 3
 

@@ -27,18 +27,6 @@ $func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
 $catid = JRequest::getInt('catid', 0);
 $id = JRequest::getInt('id', 0);
 ?>
-
-<script type = "text/javascript">
-    jQuery(document).ready(function()
-    {
-        jQuery("#jrftsw").click(function()
-        {
-            jQuery(".forumtools_contentBox").slideToggle("fast");
-            return false;
-        });
-    });
-</script>
-
 <div id = "kft-cover">
     <div id = "forumtools_control">
         <a href = "#" id = "jrftsw" class = "forumtools"><?php echo _KUNENA_PROFILE_OPTIONS;?></a>

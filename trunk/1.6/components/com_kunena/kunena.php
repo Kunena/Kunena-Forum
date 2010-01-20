@@ -72,7 +72,6 @@ $subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
 $thread = JRequest::getInt ( 'thread', 0 );
 $topic_emoticon = JRequest::getVar ( 'topic_emoticon', '' );
 $userid = JRequest::getInt ( 'userid', 0 );
-$msgpreview = JRequest::getVar ( 'msgpreview', '' );
 $no_html = JRequest::getBool ( 'no_html', 0 );
 $value_choosed	= JRequest::getInt('radio', '');
 
@@ -111,15 +110,16 @@ $kunena_my = &JFactory::getUser ();
 $kunena_config = &CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
 
-if ($func == 'pollvote') {
-	require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-  	$poll = new CKunenaPolls();
-	$poll->save_results($id,$kunena_my->id,$value_choosed);
-} elseif ($func == 'pollchangevote') {
-	require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-  	$poll = new CKunenaPolls();
-	$poll->save_results($id,$kunena_my->id,$value_choosed);
-}
+// TODO: @xillibit Secure poll functions -> possible move into Ajax helper class
+//if ($func == 'pollvote') {
+//	require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+// 	$poll = new CKunenaPolls();
+//	$poll->save_results($id,$kunena_my->id,$value_choosed);
+//} elseif ($func == 'pollchangevote') {
+//	require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+// 	$poll = new CKunenaPolls();
+//	$poll->save_results($id,$kunena_my->id,$value_choosed);
+//}
 
 // Check if we need to redirect to a different default view
 if ($func == ''){
@@ -162,6 +162,15 @@ if ($kn_tables->installed () === false) {
 // Class structure should be used after this and all the common task should be moved to this class
 
 require_once (KUNENA_PATH . DS . "class.kunena.php");
+
+// Central Location for all internal links
+require_once (KUNENA_PATH_LIB . DS . "kunena.link.class.php");
+
+if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'smile.class.php' )) {
+	require_once (KUNENA_ABSTMPLTPATH . DS . 'smile.class.php');
+} else {
+	require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'smile.class.php');
+}
 
 $kunena_is_admin = CKunenaTools::isAdmin ();
 
@@ -210,16 +219,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	// =======================================================================================
 	// Forum is online:
 
-
-	// Central Location for all internal links
-	require_once (KUNENA_PATH_LIB . DS . "kunena.link.class.php");
-
-	if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'smile.class.php' )) {
-		require_once (KUNENA_ABSTMPLTPATH . DS . 'smile.class.php');
-	} else {
-		require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'smile.class.php');
-	}
-
 	//intercept the RSS request; we should stop afterwards
 
 	if ($func == 'fb_rss') {
@@ -245,22 +244,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	$board_title = $kunena_config->board_title;
 	$this->kunena_from_bot = 0;
 
-	// Include preview here before inclusion of other files
-
-	if ($func == "getpreview") {
-		require_once(JPATH_ROOT  .DS . '/libraries/joomla/document/html/html.php');
-		$message = utf8_urldecode ( utf8_decode ( stripslashes ( $msgpreview ) ) );
-
-		$kunena_emoticons = smile::getEmoticons ( 1 );
-		$msgbody = smile::smileReplace ( $message, 0, $kunena_config->disemoticons, $kunena_emoticons );
-		$msgbody = nl2br ( $msgbody );
-		$msgbody = str_replace ( "__FBTAB__", "\t", $msgbody );
-		$msgbody = CKunenaTools::prepareContent ( $msgbody );
-		header ( "Content-Type: text/html; charset=utf-8" );
-		echo $msgbody;
-		$kunena_app->close ();
-	}
-
 	if ($no_html == 0) {
 		$document = & JFactory::getDocument ();
 
@@ -274,22 +257,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				$_CB_framework->addJQueryPlugin ( 'kunena_tmpl', KUNENA_COREJSPATH );
 				$_CB_framework->outputCbJQuery ( '', 'kunena_tmpl' );
 			}
-		} else {
-			// Add required header tags
-
-			if (defined ( 'KUNENA_JQURL' ) && ! defined ( 'J_JQUERY_LOADED' )) {
-				define ( 'J_JQUERY_LOADED', 1 );
-				if (! defined ( 'C_ASSET_JQUERY' ))
-					define ( 'C_ASSET_JQUERY', 1 );
-				$document->addScript ( KUNENA_JQURL );
-			}
-
-			if (defined ( 'KUNENA_COREJSURL' )) {
-				$document->addScript ( KUNENA_COREJSURL );
-			}
 		}
 
 		// MooTools Libraries
+
+		// We cannot invoke the Joomla mootools behaviors until J1.5.16
+		// when Joomla gets updated to mootools 1.2
 		//JHTML::_('behavior.mootools');
 
 		//TODO: This is a temporary solution - we need to get Joomla updated to 1.2

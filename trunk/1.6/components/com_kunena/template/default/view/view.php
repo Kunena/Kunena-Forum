@@ -25,22 +25,23 @@ defined( '_JEXEC' ) or die();
 $kunena_app = & JFactory::getApplication ();
 
 global $kunena_icons;
+
+// TODO: Remove JQuery based Quick Reply logic with mootools behavior.
 ?>
-
-<script type="text/javascript">
-        jQuery(function()
-        {
-            jQuery(".kqr_fire").click(function()
-            {
-                jQuery("#sc" + (jQuery(this).attr("id").split("__")[1])).toggle();
-            });
-            jQuery(".kqm_cncl_btn").click(function()
-            {
-                jQuery("#sc" + (jQuery(this).attr("id").split("__")[1])).toggle();
-            });
-
-        });
-        </script>
+<!--<script type="text/javascript">-->
+<!--        jQuery(function()-->
+<!--        {-->
+<!--            jQuery(".kqr_fire").click(function()-->
+<!--            {-->
+<!--                jQuery("#sc" + (jQuery(this).attr("id").split("__")[1])).toggle();-->
+<!--            });-->
+<!--            jQuery(".kqm_cncl_btn").click(function()-->
+<!--            {-->
+<!--                jQuery("#sc" + (jQuery(this).attr("id").split("__")[1])).toggle();-->
+<!--            });-->
+<!---->
+<!--        });-->
+<!--        </script>-->
 
 <div><?php $this->displayPathway(); ?></div>
 <?php

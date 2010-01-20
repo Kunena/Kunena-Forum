@@ -1,12 +1,8 @@
 <?php
 /**
-
  * @version $Id$
-
  * Kunena Component
-
  * @package Kunena
-
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -14,25 +10,16 @@
  *
  * Based on FireBoard Component
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
-
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-
  * @link http://www.bestofjoomla.com
-
  *
-
  * Based on Joomlaboard Component
-
  * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
-
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-
  * @author TSMF & Jan de Graaff
-
  **/
 
 defined( '_JEXEC' ) or die();
-
 
 $catid = JRequest::getInt ( 'catid', 0 );
 $id = JRequest::getInt ( 'id', 0 );
@@ -52,10 +39,32 @@ include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
 //keep session alive while editing
 
-JHTML::_ ( 'behavior.keepalive' );
+// TODO: Conflicts with new mootools 1.2 need to find a seperate solution for that
+//JHTML::_ ( 'behavior.keepalive' );
 ?>
 
-<form class="postform"
+<script type="text/javascript">
+	window.addEvent('domready', function(){
+   		var preview = $('preview_button');
+	    if (preview)
+	    {
+	        preview.addEvent('click', function(){
+
+	            //This code will send a data object via a GET request and alert the retrieved data.
+	            previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview'); ?>",
+													onSuccess: function(response){
+	                container = $('preview_container');
+	                if (container) {
+	                    container.set('html', response.preview);
+	                }
+	            }}).post({body: $('message').get('value')});
+	        });
+	    }
+	});
+</script>
+
+
+<form class="postform" id="postform"
 	action="<?php
 	echo CKunenaLink::GetPostURL();
 	?>"
@@ -239,6 +248,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			$useRte = 1;
 		}
 
+		// Add mootools script for preview
+		//JApplication::addCustomHeadTag("
+		?>
+
+		<?php
+		//");
+
 		$fbTextArea = smile::fbWriteTextarea ( 'message', $this->message_text, $kunena_config->rtewidth, $kunena_config->rteheight, $useRte, $kunena_config->disemoticons, $this->kunena_editmode );
 		echo $fbTextArea;
 
@@ -277,16 +293,16 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			?></strong></td>
 
 			<td><input type='file' class='kinput' name='attachimage'
-				onmouseover="javascript:kunenaShowHelp('<?php
-			@print (addslashes(_IMAGE_DIMENSIONS)) . ": " . $kunena_config->imagewidth . "x" . $kunena_config->imageheight . " - " . $kunena_config->imagesize . " KB";
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+			echo (addslashes(_IMAGE_DIMENSIONS)) . ": " . $kunena_config->imagewidth . "x" . $kunena_config->imageheight . " - " . $kunena_config->imagesize . " KB";
 			?>')" /> <input type="button" class="kbutton" name="addImagePH"
 				value="<?php
-			@print (addslashes(_POST_ATTACH_IMAGE)) ;
+			echo (addslashes(_POST_ATTACH_IMAGE)) ;
 			?>"
 				style="cursor: auto; "
 				onclick="bbfontstyle(' [img/] ','');"
-				onmouseover="javascript:kunenaShowHelp('<?php
-			@print (addslashes(_KUNENA_EDITOR_HELPLINE_IMGPH)) ;
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+			echo (addslashes(_KUNENA_EDITOR_HELPLINE_IMGPH)) ;
 			?>')" /></td>
 		</tr>
 
@@ -304,17 +320,17 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			?></strong></td>
 
 			<td><input type='file' class='kinput' name='attachfile'
-				onmouseover="javascript:kunenaShowHelp('<?php
-			@print (addslashes(_FILE_TYPES)) . ": " . $kunena_config->filetypes . " - " . $kunena_config->filesize . " KB";
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+			echo (addslashes(_FILE_TYPES)) . ": " . $kunena_config->filetypes . " - " . $kunena_config->filesize . " KB";
 			?>')"
 				style="cursor: auto" /> <input type="button" class="kbutton"
 				name="addFilePH" value="<?php
-			@print (_POST_ATTACH_FILE) ;
+			echo (_POST_ATTACH_FILE) ;
 			?>"
 				style="cursor: auto;"
 				onclick="bbfontstyle(' [file/] ','');"
-				onmouseover="javascript:kunenaShowHelp('<?php
-			@print (addslashes(_KUNENA_EDITOR_HELPLINE_FILEPH)) ;
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+			echo (addslashes(_KUNENA_EDITOR_HELPLINE_FILEPH)) ;
 			?>')" /></td>
 		</tr>
 
@@ -356,7 +372,9 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
        			if (!isset($polldatasedit[0]->polltimetolive)) {
 					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				}
-       			$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+				// TODO: Need to rewrite the calendar function it breaks mootools 1.2
+       			//$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+       			$pollcalendar = '';
        			JApplication::addCustomHeadTag('
    					<script type="text/javascript">
   				 	<!--
@@ -413,7 +431,8 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
           	  	if (!isset($polldatasedit[0]->polltimetolive)) {
 					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 			 	}
-        		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+ 				// TODO: Need to rewrite the calendar function it breaks mootools 1.2
+        		//$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
           	  	$polloptionsstart = $polloptions+1;
             	JApplication::addCustomHeadTag('
       				<script type="text/javascript">
@@ -451,43 +470,27 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		?>
 		<tr id="kpost_buttons_tr" class="ksectiontableentry1">
 			<td id="kpost_buttons" colspan="2" style="text-align: center;">
-			  <input type="button" name="cancel" class="kbutton"
-				value="<?php
-				@print (' ' . _GEN_CANCEL . ' ') ;
-				?>"
+				<input type="button" name="cancel" class="kbutton"
+				value="<?php echo (' ' . _GEN_CANCEL . ' ');?>"
 				onclick="javascript:window.history.back();"
-				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
-				@print (_KUNENA_EDITOR_HELPLINE_CANCEL) ;
-				?>')" />
-				<input type="button" name="preview" class="kbutton"
-				value="<?php
-				@print (' ' . _PREVIEW . ' ') ;
-				?>"
-				onclick="kGetPreview(document.postform.message.value,<?php
-				echo KUNENA_COMPONENT_ITEMID?>);"
-				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
-				@print (_KUNENA_EDITOR_HELPLINE_PREVIEW) ;
-				?>')" />
-				<input
-				type="submit" name="submit" class="kbutton"
-				value="<?php
-				@print (' ' . _GEN_CONTINUE . ' ') ;
-				?>"
+				title="<?php echo (_KUNENA_EDITOR_HELPLINE_CANCEL);?>" />
+				<input type="button" name="preview" id="preview_button" class="kbutton"
+				value="<?php echo (' ' . _PREVIEW . ' ');?>"
+				title="<?php echo (_KUNENA_EDITOR_HELPLINE_PREVIEW);?>" />
+				<input type="submit" name="submit" class="kbutton"
+				value="<?php echo (' ' . _GEN_CONTINUE . ' ');?>"
 				onclick="return submitForm()"
-				onmouseover="javascript:jQuery('input[name=helpbox]').val('<?php
-				@print (_KUNENA_EDITOR_HELPLINE_SUBMIT) ;
-				?>')" />
+				title="<?php echo (_KUNENA_EDITOR_HELPLINE_SUBMIT);?>" />
 				</td>
 		</tr>
 
-		<!-- preview -->
-		<tr class="ksectiontableentry2"
-			id="previewContainer" style="display: none;">
+		<!-- preview style="display: none;" -->
+		<tr class="ksectiontableentry2" >
 			<td class="kleftcolumn"><strong><?php
 			echo _PREVIEW;
 			?></strong>:</td>
 			<td>
-			<div class="previewMsg" id="previewMsg"
+			<div class="previewMsg" id="preview_container"
 				style="height: <?php
 				echo $kunena_config->rteheight;
 				?>px; overflow: auto;"></div>

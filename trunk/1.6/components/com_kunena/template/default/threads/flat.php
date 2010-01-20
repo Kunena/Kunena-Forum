@@ -402,28 +402,30 @@ if (count ( $this->messages ) > 0) {
 		<?php
 		$st_c ++;
 	}
-	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+	// TODO: disable bulk tools durig transisiton to mootools
+	// need to rewrite the function based on mootools
+	if (false /* CKunenaTools::isModerator ( $kunena_my->id, $catid ) */) {
 		?>
 		<!-- Moderator Bulk Actions -->
 		<tr class="ksectiontableentry1">
 			<td colspan="7" align="right" class="td-1 ks"><script
 				type="text/javascript">
-                            jQuery(document).ready(function()
-                            {
-                                jQuery('#kBulkActions').change(function()
-                                {
-                                    var myList = jQuery(this);
-
-                                    if (jQuery(myList).val() == "bulkMove")
-                                    {
-                                        jQuery("#bulkactions").removeAttr('disabled');
-                                    }
-                                    else
-                                    {
-                                        jQuery("#bulkactions").attr('disabled', 'disabled');
-                                    }
-                                });
-                            });
+//                            jQuery(document).ready(function()
+//                            {
+//                                jQuery('#kBulkActions').change(function()
+//                                {
+//                                    var myList = jQuery(this);
+//
+//                                    if (jQuery(myList).val() == "bulkMove")
+//                                    {
+//                                        jQuery("#bulkactions").removeAttr('disabled');
+//                                    }
+//                                    else
+//                                    {
+//                                        jQuery("#bulkactions").attr('disabled', 'disabled');
+//                                    }
+//                                });
+//                            });
                         </script> <select name="do" id="kBulkActions"
 				class="inputbox ks">
 				<option value="">&nbsp;</option>

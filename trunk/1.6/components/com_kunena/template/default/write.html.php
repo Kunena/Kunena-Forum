@@ -267,8 +267,12 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			$useRte = 1;
 		}
 
-		$fbTextArea = smile::fbWriteTextarea ( 'message', $this->message_text, $kunena_config->rtewidth, $kunena_config->rteheight, $useRte, $kunena_config->disemoticons, $this->kunena_editmode );
-		echo $fbTextArea;
+		// No show bbcode editor
+		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'editor' . DS . 'bbcode.php' )) {
+			require_once (KUNENA_ABSTMPLTPATH . DS . 'editor' . DS . 'bbcode.php');
+		} else {
+			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'editor' . DS . 'bbcode.php');
+		}
 
 		if ($this->kunena_set_focus == 0) {
 			echo '<tr><td style="display:none;"><script type="text/javascript">document.postform.message.focus();</script></td></tr>';

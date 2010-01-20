@@ -14,6 +14,8 @@ defined ( '_JEXEC' ) or die ();
 class CKunenaListcat {
 	public $allow = 0;
 
+	private $_loaded = false;
+
 	function __construct($catid) {
 		$this->catid = $catid;
 
@@ -60,30 +62,9 @@ class CKunenaListcat {
 		$document->setDescription ( $metaDesc );
 	}
 
-	function displayPathway() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'pathway.php' )) {
-			require_once (KUNENA_ABSTMPLTPATH . DS . 'pathway.php');
-		} else {
-			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
-		}
-	}
-
-	function displayAnnouncement() {
-		if ($this->config->showannouncement > 0) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php' )) {
-				require_once (KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php');
-			} else {
-				require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php');
-			}
-		}
-	}
-
-	function displayForumJump() {
-		if ($this->config->enableforumjump)
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.forumjump.php');
-	}
-
-	function displayCategories() {
+	function loadCategories() {
+		if ($this->_loaded) return;
+		$this->_loaded = true;
 		$catids = array ();
 		foreach ( $this->categories [0] as $cat )
 			$catids [] = $cat->id;
@@ -205,7 +186,33 @@ class CKunenaListcat {
 				}
 			}
 		}
+	}
 
+	function displayPathway() {
+		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'pathway.php' )) {
+			require_once (KUNENA_ABSTMPLTPATH . DS . 'pathway.php');
+		} else {
+			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
+		}
+	}
+
+	function displayAnnouncement() {
+		if ($this->config->showannouncement > 0) {
+			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php' )) {
+				require_once (KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php');
+			} else {
+				require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php');
+			}
+		}
+	}
+
+	function displayForumJump() {
+		if ($this->config->enableforumjump)
+			require_once (KUNENA_PATH_LIB . DS . 'kunena.forumjump.php');
+	}
+
+	function displayCategories() {
+		$this->loadCategories();
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'categories.php' )) {
 			include (KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'categories.php');
 		} else {

@@ -210,11 +210,12 @@ class CKunenaShowcat {
 	function displaySubCategories() {
 		require_once (KUNENA_PATH_VIEWS . DS . 'listcat.php');
 		$obj = new CKunenaListCat($this->catid);
-		$obj->displayCategories();
+		$obj->loadCategories();
+		if (!empty($obj->childforums)) $obj->displayCategories();
 	}
 
 	function displayFlat() {
-		$this->title = _KUNENA_THREADS_IN_FORUM.': '.kunena_htmlspecialchars ( stripslashes ( $this->objCatInfo->name ) );
+		$this->header = $this->title = _KUNENA_THREADS_IN_FORUM.': '.kunena_htmlspecialchars ( stripslashes ( $this->objCatInfo->name ) );
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php' )) {
 			include (KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php');
 		} else {

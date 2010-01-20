@@ -666,7 +666,7 @@ function pollunpublish ( $option, $cid = null, $unpublish = 0 ) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_my = &JFactory::getUser ();
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
-		$action = $publish ? 'unpublish' : 'publish';
+		$action = $unpublish ? 'unpublish' : 'publish';
 		echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
 		exit ();
 	}

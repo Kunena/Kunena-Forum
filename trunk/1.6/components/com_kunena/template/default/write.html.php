@@ -65,10 +65,14 @@ $script .= '{';
 $script .= '	preview.addEvent("click", function(){';
 $script .= '		previewRequest = new Request.JSON({url: "'.CKunenaLink::GetJsonURL('preview').'",';
 $script .= '												onSuccess: function(response){';
+$script .= '			message = $("preview_message");';
+$script .= '			if (message) {';
+$script .= '				message.set("html", response.preview);';
+$script .= '				message.set("style", "display: inline;");';
+$script .= '			}';
 $script .= '			container = $("preview_container");';
 $script .= '			if (container) {';
-$script .= '				container.set("style", "display: inline;");';
-$script .= '				container.set("html", response.preview);';
+$script .= '				container.set("style", "display: table-row;");';
 $script .= '			}';
 $script .= '		}}).post({body: $("message").get("value")});';
 $script .= '	});';
@@ -493,12 +497,12 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		</tr>
 
 		<!-- preview  -->
-		<tr class="ksectiontableentry2" >
+		<tr class="ksectiontableentry2" id="preview_container" style="display: none;">
 			<td class="kleftcolumn"><strong><?php
 			echo _PREVIEW;
 			?></strong>:</td>
 			<td>
-			<div class="previewMsg" id="preview_container" style="display: none;"
+			<div class="previewMsg" id="preview_message"
 				style="height: <?php
 				echo $kunena_config->rteheight;
 				?>px; overflow: auto;"></div>

@@ -29,7 +29,7 @@ $id = JRequest::getInt('id');
 $catid = JRequest::getInt('catid');
 $func = JRequest::getCmd('func');
 $task = JRequest::getCmd('task');
-$replyto = intval(JRequest::getVar('replyto'));
+$replyto = JRequest::getInt('replyto');
 $do = JRequest::getCmd('do');
 
 $now = time();

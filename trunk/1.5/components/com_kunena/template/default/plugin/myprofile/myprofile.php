@@ -32,7 +32,7 @@ $document->setTitle(_GEN_MYPROFILE . ' - ' . stripslashes($fbConfig->board_title
 if ($kunena_my->id != "" && $kunena_my->id != 0)
 {
 	$do = JRequest::getCmd('do', 'show');
-	
+
 	//Get joomla userinfo needed later on, this limits the amount of queries
     $juserinfo = new JUser($kunena_my->id);
 
@@ -178,7 +178,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     // F: Avatar
                 	break;
-                    
+
                 case "showset":
                     // B: Settings
                 	if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php'))
@@ -202,7 +202,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 					(int)$newhideEmail = JRequest::getInt('newhideEmail', 1);
 					(int)$newshowOnline = JRequest::getInt('newshowOnline', 1);
 
-                    $kunena_db->setQuery("UPDATE #__fb_users SET view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline' WHERE userid='$kunena_my->id'");
+                    $kunena_db->setQuery("UPDATE #__fb_users SET view='{$kunena_db->getEscaped($newview)}', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline' WHERE userid='$kunena_my->id'");
                     setcookie("fboard_settings[current_view]", $newview);
 
                     if (!$kunena_db->query())
@@ -408,7 +408,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     {
 						$app->enqueueMessage(_USER_UNSUBSCRIBE_YES);
                     }
-                    
+
                     if ($fbConfig->fb_profile == 'cb')
                     {
 						$forumtab_url = CKunenaCBProfile::getForumTabURL();
@@ -600,7 +600,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
             ?>
 
         <!-- F:My Profile Right -->
-        
+
 <!-- Begin: Forum Jump -->
 <table class = "fb_blocktable" id = "fb_bottomarea" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
     <thead>

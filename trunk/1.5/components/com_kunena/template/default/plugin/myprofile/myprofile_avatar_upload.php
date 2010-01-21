@@ -159,7 +159,7 @@ switch ($task) {
 			$avatar = "";
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$avatar}' WHERE userid='{$kunena_my->id}'");
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{{$kunena_db->getEscaped($avatar)}' WHERE userid='{$kunena_my->id}'");
 
 		if (!$kunena_db->query())
 		{
@@ -243,7 +243,7 @@ switch ($task) {
 		}
 
 		//$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
-    
+
 		switch ($fbConfig->imageprocessor) {
 		case 'gd1' :
 			if ( !function_exists('imagecreatefromjpeg' )) {
@@ -259,13 +259,13 @@ switch ($task) {
 			}
 
 			// Create Large Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth,
 			$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
 			// Create Medium Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth,
 			$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
 			// Create Small Image
-			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
+			generateAvatarGD(1, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth,
 			$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
 			// Destroy source Image
 			imagedestroy($src_img);
@@ -290,18 +290,18 @@ switch ($task) {
 			}
 
 			// Create Large Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth, 
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarlargewidth,
 			$fbConfig->avatarlargeheight, $fbConfig->avatarquality, $fileLocation_l);
 			// Create Medium Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth, 
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarwidth,
 			$fbConfig->avatarheight, $fbConfig->avatarquality, $fileLocation);
 			// Create Small Image
-			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth, 
+			generateAvatarGD(2, $src_img, $srcWidth, $srcHeight, $fbConfig->avatarsmallwidth,
 			$fbConfig->avatarsmallheight, $fbConfig->avatarquality, $fileLocation_s);
 			// Destroy source Image
 			imagedestroy($src_img);
 			break;
-    
+
 		default:
 			if (isset($srcWidth) && ($srcWidth > $fbConfig->avatarlargewidth || $srcHeight > $fbConfig->avatarlargeheight)) {
 				$app->enqueueMessage(_UPLOAD_ERROR_SIZE . " (" . $fbConfig->avatarlargewidth . " x ". $fbConfig->avatarlargeheight .")", 'notice');
@@ -316,7 +316,7 @@ switch ($task) {
 
 		// delete original file
 		unlink($src_file);
-	
+
 		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newFileName}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or trigger_dberror("Unable to update avatar.");
 
@@ -332,7 +332,7 @@ switch ($task) {
 			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$newAvatar}' WHERE userid={$kunena_my->id}");
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{{$kunena_db->getEscaped($newAvatar)}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or trigger_dberror("Unable to update user avatar.");
 
 		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
@@ -491,7 +491,7 @@ if ($fbConfig->allowavatarupload)
     }
 
 	} // allow avatar upload
-    
+
     if ($fbConfig->allowavatargallery)
     {
 ?>

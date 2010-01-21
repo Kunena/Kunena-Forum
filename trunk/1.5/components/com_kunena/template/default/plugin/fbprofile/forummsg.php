@@ -78,8 +78,8 @@ $fbSession =& CKunenaSession::getInstance();
         //determine visitors allowable threads based on session
         //find group id
         $pageperlistlm = 15;
-        $limit = intval(trim(JRequest::getVar('limit', $pageperlistlm)));
-        $limitstart = intval(trim(JRequest::getVar('limitstart', 0)));
+        $limit = JRequest::getInt('limit', $pageperlistlm);
+        $limitstart = JRequest::getInt('limitstart', 0);
 
         $query = "SELECT gid FROM #__users WHERE id='{$kunena_my->id}'";
         $kunena_db->setQuery($query);

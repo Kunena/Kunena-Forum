@@ -29,7 +29,7 @@ $document->setTitle(_ANN_ANNOUNCEMENTS . ' - ' . stripslashes($fbConfig->board_t
 
 # Check for Editor rights  $fbConfig->annmodid
 $do = JRequest::getVar("do", "");
-$id = intval(JRequest::getVar("id", ""));
+$id = JRequest::getInt("id", "");
 $user_fields = @explode(',', $fbConfig->annmodid);
 
 if (in_array($kunena_my->id, $user_fields) || $kunena_my->usertype == 'Administrator' || $kunena_my->usertype == 'Super Administrator') {
@@ -54,7 +54,7 @@ if ($do == "read") {
 	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $fbConfig->disemoticons, $smileyList));
 	$annsdescription = nl2br($annsdescription);
 	$annsdescription = smile::htmlwrap($annsdescription, $fbConfig->wrap);
-    
+
 	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $fbConfig->disemoticons, $smileyList));
 	$anndescription = nl2br($anndescription);
 	$anndescription = smile::htmlwrap($anndescription, $fbConfig->wrap);
@@ -243,7 +243,7 @@ if ($is_editor) {
         $published = JRequest::getInt("published", 0);
         $showdate = addslashes(JRequest::getVar("showdate", ""));
         # Clear any HTML
-        $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
+        $query1 = "INSERT INTO #__fb_announcement VALUES ('', '{$kunena_db->getEscaped($title)}', '{$kunena_db->getEscaped($sdescription)}', '{$kunena_db->getEscaped($description)}', " . (($created <> '')?"'{$kunena_db->getEscaped($created)}'":"NOW()") . ", '{$kunena_db->getEscaped($published)}', '{$kunena_db->getEscaped($ordering)}','{$kunena_db->getEscaped($showdate)}')";
         $kunena_db->setQuery($query1);
 
         $kunena_db->query() or trigger_dberror("Unable to insert announcement.");
@@ -356,14 +356,14 @@ if ($is_editor) {
     // BEGIN: EDIT ANN
     if ($do == "doedit") {
         JFilterOutput::objectHTMLSafe ($_POST);
-        $title = JRequest::getVar("title", "");
-        $description = JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW);
-        $sdescription = JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW);
+        $title = addslashes(JRequest::getVar("title", ""));
+        $description = addslashes(JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW));
+        $sdescription = addslashes(JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW));
         $created = JRequest::getVar("created", "");
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");
 
-        $kunena_db->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
+        $kunena_db->setQuery("UPDATE #__fb_announcement SET title='{$kunena_db->getEscaped($title)}', description='{$kunena_db->getEscaped($description)}', sdescription='{$kunena_db->getEscaped($sdescription)}',  created=" . (($created <> '')?"'{$kunena_db->getEscaped($created)}'":"NOW()") . ", published='{$kunena_db->getEscaped($published)}', showdate='{$kunena_db->getEscaped($showdate)}' WHERE id=$id");
 
         if ($kunena_db->query()) {
             $app->redirect(CKunenaLink::GetAnnouncementURL($fbConfig, 'show'), _ANN_SUCCESS_EDIT);

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.9
 
+21-Jan-2010 Matias
+# [#19518] UTF-8 URLs are broken if there are points in the messages
+
 21-Jan-2010 fxstein
 ^ [#19515] Updated version info
 

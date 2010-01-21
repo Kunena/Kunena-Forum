@@ -37,7 +37,7 @@ class KunenaRouter
 	
 	function filterOutput($str)
 	{
-		return trim(preg_replace(array('/\s+/','/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`]/'), array('-',''), $str));
+		return trim(preg_replace(array('/\s+/','/[\$\&\+\,\/\:\;\=\?\@\'\"\<\>\#\%\{\}\|\\\^\~\[\]\`\.]/'), array('-',''), $str));
 	}
 	
 	function stringURLSafe($str)

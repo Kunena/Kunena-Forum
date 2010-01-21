@@ -39,9 +39,11 @@ function list_users()
 
     jimport('joomla.html.pagination');
 
-    $orderby = JRequest::getVar('orderby', 'registerDate');
-    $direction = JRequest::getVar('direction', 'ASC');
-    $search = JRequest::getVar('search', '');
+    // Sanitize the incoming variables
+    $orderby = $kunena_db->getEscaped(trim(JRequest::getVar('orderby', 'registerDate')));
+    $direction = $kunena_db->getEscaped(trim(JRequest::getVar('direction', 'ASC')));
+    $search = $kunena_db->getEscaped(trim(strtolower(JRequest::getVar('search', ''))));
+
     $limitstart = JRequest::getInt('limitstart', 0);
     $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
 
@@ -402,7 +404,7 @@ class HTML_userlist_content
                                 		( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
                                 		 $uslavatar = AlphaUserPointsHelper::getAupAvatar( $ulrow->id, $showlink, $fbConfig->avatarsmallwidth, $fbConfig->avatarsmallheight );
                                 	} // end integration AlphaUserPoints
-                                }           
+                                }
                                 else
                                 {
                                     $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$ulrow->id}'");

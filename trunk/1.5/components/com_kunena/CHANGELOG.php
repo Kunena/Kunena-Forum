@@ -40,6 +40,7 @@ Kunena 1.5.9
 
 21-Jan-2010 fxstein
 ^ [#19515] Updated version info
+* [#19520] Security Fix
 
 Kunena 1.5.8
 

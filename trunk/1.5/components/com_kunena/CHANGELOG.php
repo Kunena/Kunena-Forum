@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.5.8
 
+Kunena 1.5.8
+
+21-Jan-2010 fxstein
+^ [#19515] Updated version info
+
 18-Dec-2009 fxstein
 ^ [#18861] Updated credits page
 ^ [#18763] Update version info to 1.5.8 stable

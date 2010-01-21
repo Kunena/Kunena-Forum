@@ -31,12 +31,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.8
-
-Kunena 1.5.8
+Kunena 1.5.9
 
 21-Jan-2010 fxstein
 ^ [#19515] Updated version info
+
+Kunena 1.5.8
 
 18-Dec-2009 fxstein
 ^ [#18861] Updated credits page

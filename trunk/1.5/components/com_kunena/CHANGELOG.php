@@ -36,6 +36,7 @@ Kunena 1.5.9
 21-Jan-2010 Matias
 # [#19518] UTF-8 URLs are broken if there are points in the messages
 # [#19517] Constant _KUNENA_USRL_NAME defined two times in kunena.english.php
+# [#19519] PHP 5.3: Deprecated warnings
 
 21-Jan-2010 fxstein
 ^ [#19515] Updated version info

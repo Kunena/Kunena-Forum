@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+@error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());
 $tstart = $mtime[1] + $mtime[0];

@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+@error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 // Help get past php timeouts if we made it that far
 // Joomla 1.5 installer can be very slow and this helps avoid timeouts
 @set_time_limit(300);

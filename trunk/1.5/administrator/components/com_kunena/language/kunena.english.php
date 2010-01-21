@@ -25,7 +25,6 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 // 1.5.8
 
 define('_KUNENA_USRL_REALNAME', 'Real Name');
-define('_KUNENA_USRL_NAME', 'User Name');
 define('_KUNENA_SEO_SETTINGS', 'SEO Settings');
 define('_KUNENA_SEF', 'Search Engine Friendly URLs');
 define('_KUNENA_SEF_DESC', 'Select whether or not URLs are optimized for Search Engines. NOTE: Kunena accepts SEF URLs even if this feature has been turned off.');

@@ -4529,7 +4529,7 @@ echo $pane->endPane();
 	} //end function newrank
 
 	//Start trash view
-	function showtrashview($option, $trashitems, $pageNavSP) {
+	function showtrashview($option, $trashitems, $pageNavSP, $lists) {
 		?>
 <div class="fbfunctitle"><?php
 		echo _KUNENA_TRASH_VIEW;
@@ -4547,10 +4547,10 @@ echo $pane->endPane();
 		echo count ( $trashitems );
 		?>);" /></th>
 		<th align="left"><?php
-		echo JHTML::_('grid.sort', _KUNENA_TRASH_ID, 'c.id' );
+		echo  _KUNENA_TRASH_ID;
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JHTML::_('grid.sort',   _KUNENA_TRASH_TITLE, 'subject' );
+		echo JHTML::_( 'grid.sort', _KUNENA_TRASH_TITLE, 'subject', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
 		echo _KUNENA_TRASH_CATEGORY;
@@ -4601,7 +4601,11 @@ echo $pane->endPane();
 			echo $row->ip;
 			?></td>
 		<td nowrap="nowrap"><?php
-			echo $row->username;
+			if(empty($row->username)){
+				echo _VIEW_VISITOR;
+			} else {
+				echo $row->username;
+			}
 			?></td>
 		<td nowrap="nowrap"><?php
 			echo strftime('%Y-%m-%d %H:%M:%S',$row->time);
@@ -4622,6 +4626,8 @@ echo $pane->endPane();
 		?>"> <input type="hidden" name="boxchecked" value="0"> <input
 	type="hidden" name="task" value="showtrashview"> <input type="hidden"
 	name="limitstart" value="0"><input type="hidden" name="return" value="showtrashview" />
+	<input type="hidden" name="filter_order" value="<?php echo $lists['order']; ?>" />
+		<input type="hidden" name="filter_order_Dir" value="<?php echo $lists['order_Dir']; ?>" />
 	</form>
 	<?php
 	}

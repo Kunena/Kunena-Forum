@@ -1957,8 +1957,11 @@ function editRank($option, $id) {
 // Trash management
 //===============================
 function showtrashview($option) {
+	global $mainframe;
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
+	$filter_order		= $mainframe->getUserStateFromRequest( $option.'filter_order',		'filter_order',		'subject', 'cmd' );
+	$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option.'filter_order_Dir',	'filter_order_Dir',	'asc',			'word' );
 
 	$order = JRequest::getVar ( 'order', '' );
 	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
@@ -1970,16 +1973,23 @@ function showtrashview($option) {
 	if ($limit == 0 || $limit > 100)
 		$limit = 100;
 
-	$kunena_db->setQuery ( "SELECT a.*, b.name AS cats_name, c.username FROM #__fb_messages AS a
-	JOIN #__fb_categories AS b ON a.catid=b.id
-	JOIN #__users AS c ON a.userid=c.id
-	WHERE hold=2", $limitstart, $limit );
+	$orderby = ' ORDER BY '. $filter_order .' '. $filter_order_Dir;
+
+	$query = 'SELECT a.*, b.name AS cats_name, c.username FROM #__fb_messages AS a
+	INNER JOIN #__fb_categories AS b ON a.catid=b.id
+	LEFT JOIN #__users AS c ON a.userid=c.id
+	WHERE hold=2'.$orderby;
+	$kunena_db->setQuery ( $query, $limitstart, $limit );
 	$trashitems = $kunena_db->loadObjectList ();
 	check_dberror ( "Unable to load messages." );
 
+	// table ordering
+	$lists['order_Dir']	= $filter_order_Dir;
+	$lists['order']		= $filter_order;
+
 	jimport ( 'joomla.html.pagination' );
 	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
-	html_Kunena::showtrashview ( $option, $trashitems, $pageNavSP );
+	html_Kunena::showtrashview ( $option, $trashitems, $pageNavSP, $lists );
 }
 
 function trashpurge($option, $cid) {

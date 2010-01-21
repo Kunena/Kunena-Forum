@@ -383,6 +383,8 @@ class CKunenaConfig extends CKunenaConfigBase {
     var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()
     //New for 1.6 -> hide IP
     var $hide_ip = 1;
+    //New for 1.6 -> disable/enable activity stream
+    var $js_actstr_integration = 0;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

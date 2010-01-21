@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 21-Jan-2010 Xillibit
 ^ [#19332] Change Delete behavior - show in backend too the posts wrote by visitors and sortable list on the title
+^ [#19066] Make jomSocial Activity stream integration configurable
 
 20-Jan-2010 Matias
 ^ [#19295] Clean up code: merge showcat subcategories code with listcat

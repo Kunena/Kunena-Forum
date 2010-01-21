@@ -26,6 +26,10 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+//Joomsocial Activity Stream Integration disable/enable
+define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION', 'Enable the Jomsocial Activity Stream Integration');
+define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC', 'The activity stream shows in Jomsocial wall the latest messages or new topics posted into Kunena');
+
 //Hide Ip
 define('_KUNENA_COM_A_HIDE_IP', 'Hide IP in messages from moderators');
 define('_KUNENA_COM_A_HIDE_IP_DESC', 'Hide IP in messages from moderators and show IP¨only for administrators');

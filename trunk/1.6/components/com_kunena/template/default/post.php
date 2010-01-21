@@ -283,33 +283,35 @@ if ($kunena_my->id) {
 
 								// Check for permisions of the current category - activity only if public or registered
 								if ($msg_cat->pub_access == 0 || $msg_cat->pub_access == -1) {
-									//activity stream  - new post
-									$JSPostLink = CKunenaLink::GetThreadPageURL ( $kunena_config, 'view', $catid, $pid, 1 );
+									if ($kunena_config->js_actstr_integration) {
+										//activity stream  - new post
+										$JSPostLink = CKunenaLink::GetThreadPageURL ( $kunena_config, 'view', $catid, $pid, 1 );
 
-									$kunena_emoticons = smile::getEmoticons ( 1 );
-									$content = stripslashes ( $message );
-									$content = smile::smileReplace ( $content, 0, $kunena_config->disemoticons, $kunena_emoticons );
-									$content = nl2br ( $content );
+										$kunena_emoticons = smile::getEmoticons ( 1 );
+										$content = stripslashes ( $message );
+										$content = smile::smileReplace ( $content, 0, $kunena_config->disemoticons, $kunena_emoticons );
+										$content = nl2br ( $content );
 
-									$act = new stdClass ( );
-									$act->cmd = 'wall.write';
-									$act->actor = $kunena_my->id;
-									$act->target = 0; // no target
-									$act->title = JText::_ ( '{actor} ' . _KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1 . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . _KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2 );
-									$act->content = $content;
-									$act->app = 'wall';
-									$act->cid = 0;
+										$act = new stdClass ( );
+										$act->cmd = 'wall.write';
+										$act->actor = $kunena_my->id;
+										$act->target = 0; // no target
+										$act->title = JText::_ ( '{actor} ' . _KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1 . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . _KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2 );
+										$act->content = $content;
+										$act->app = 'wall';
+										$act->cid = 0;
 
-									// jomsocial 0 = public, 20 = registered members
-									if ($msg_cat->pub_access == 0){
-										$act->access = 0;
+										// jomsocial 0 = public, 20 = registered members
+										if ($msg_cat->pub_access == 0){
+											$act->access = 0;
+										}
+										else {
+											$act->access = 20;
+										}
+
+										CFactory::load ( 'libraries', 'activities' );
+										CActivityStream::add ( $act );
 									}
-									else {
-										$act->access = 20;
-									}
-
-									CFactory::load ( 'libraries', 'activities' );
-									CActivityStream::add ( $act );
 								}
 							}
 
@@ -321,33 +323,35 @@ if ($kunena_my->id) {
 								CuserPoints::assignPoint ( 'com_kunena.thread.reply' );
 
 								// Check for permisions of the current category - activity only if public or registered
-								if ($msg_cat->pub_access == 0 || $msg_cat->pub_access == -1) {
-									//activity stream - reply post
-									$JSPostLink = CKunenaLink::GetThreadPageURL ( $kunena_config, 'view', $catid, $thread, 1 );
+								if ($msg_cat->pub_access == 0 || $msg_cat->pub_access == -1 && $kunena_config->js_actstr_integration) {
+									if ($kunena_config->js_actstr_integration) {
+										//activity stream - reply post
+										$JSPostLink = CKunenaLink::GetThreadPageURL ( $kunena_config, 'view', $catid, $thread, 1 );
 
-									$content = stripslashes ( $message );
-									$content = smile::smileReplace ( $content, 0, $kunena_config->disemoticons, $kunena_emoticons );
-									$content = nl2br ( $content );
+										$content = stripslashes ( $message );
+										$content = smile::smileReplace ( $content, 0, $kunena_config->disemoticons, $kunena_emoticons );
+										$content = nl2br ( $content );
 
-									$act = new stdClass ( );
-									$act->cmd = 'wall.write';
-									$act->actor = $kunena_my->id;
-									$act->target = 0; // no target
-									$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . _KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1 . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . _KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2 );
-									$act->content = $content;
-									$act->app = 'wall';
-									$act->cid = 0;
+										$act = new stdClass ( );
+										$act->cmd = 'wall.write';
+										$act->actor = $kunena_my->id;
+										$act->target = 0; // no target
+										$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . _KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1 . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . _KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2 );
+										$act->content = $content;
+										$act->app = 'wall';
+										$act->cid = 0;
 
-									// jomsocial 0 = public, 20 = registered members
-									if ($msg_cat->pub_access == 0){
-										$act->access = 0;
+										// jomsocial 0 = public, 20 = registered members
+										if ($msg_cat->pub_access == 0){
+											$act->access = 0;
+										}
+										else {
+											$act->access = 20;
+										}
+
+										CFactory::load ( 'libraries', 'activities' );
+										CActivityStream::add ( $act );
 									}
-									else {
-										$act->access = 20;
-									}
-
-									CFactory::load ( 'libraries', 'activities' );
-									CActivityStream::add ( $act );
 								}
 							}
 						}

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+22-Jan-2010 Xillibit
+^# [#19485] Add AJAX call to check if polls are allowed if category changes
+
 21-Jan-2010 fxstein
 + [#19380] New bbcode editor (part 1)
 ^ [#19380] New Joomla 1.5.16 / 1.6 style framework bahvior; remove secondary mootools 1.2 libraries

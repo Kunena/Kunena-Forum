@@ -60,7 +60,6 @@ $thread = JRequest::getInt ( 'thread', 0 );
 $topic_emoticon = JRequest::getVar ( 'topic_emoticon', '' );
 $userid = JRequest::getInt ( 'userid', 0 );
 $no_html = JRequest::getBool ( 'no_html', 0 );
-$value_choosed	= JRequest::getInt('radio', '');
 
 $kunena_app = JFactory::getApplication ();
 
@@ -96,17 +95,6 @@ $kunena_my = &JFactory::getUser ();
 
 $kunena_config = &CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
-
-// TODO: @xillibit Secure poll functions -> possible move into Ajax helper class
-//if ($func == 'pollvote') {
-//	require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-// 	$poll = new CKunenaPolls();
-//	$poll->save_results($id,$kunena_my->id,$value_choosed);
-//} elseif ($func == 'pollchangevote') {
-//	require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-// 	$poll = new CKunenaPolls();
-//	$poll->save_results($id,$kunena_my->id,$value_choosed);
-//}
 
 // Check if we need to redirect to a different default view
 if ($func == ''){
@@ -207,7 +195,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	// Forum is online:
 
 	//intercept the RSS request; we should stop afterwards
-
 	if ($func == 'fb_rss') {
 		include (KUNENA_PATH_LIB . DS . 'kunena.rss.php');
 		$kunena_app->close ();

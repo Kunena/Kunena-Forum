@@ -778,4 +778,35 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
+		
+	if($('postcatid') != undefined) {
+		$('postcatid').getElements('option').each( function( elem ) {
+			elem.addEvent('click', function(e) {
+				//get the item selected in drop down list
+				var catid_seleted = elem.value;							
+				
+				//call a json query to check if the catid selected is allowed for polls
+				var url = "index.php?option=com_kunena&func=json&action=catspollallowed&selectedcatid="+catid_seleted;
+				var request = new Request.JSON({
+						url: url,
+						onComplete: function(jsonObj) {
+							//the result is an array so we need to test each item of the array
+							for(var j = 0; j < jsonObj.allowed_polls.length; j++){
+								var elemhide = $('kpoll_elem').getStyle('display');
+								if(jsonObj.allowed_polls[j] == catid_seleted){ //in this case the polls are allowed									
+									if(elemhide != '0'){//we check if the polls are hided, and if it's the case we show them										
+										$('kpoll_elem').removeProperty('style');										
+									} 
+								} else {	//in this case the polls aren't allowed, so we hide them								
+									$('kpoll_elem').setStyle('display','none');									
+								}
+							}							
+						},
+						onFailure: function(){
+							alert ('request failed... Please reload the page');
+						}
+				}).send();				
+			})
+		});
+	}	
 });

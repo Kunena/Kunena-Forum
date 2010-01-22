@@ -11,23 +11,11 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
 $do 			= JRequest::getVar("do", "");
 $id 			= intval(JRequest::getVar("id", ""));
 $catid 			= JRequest::getInt('catid', 0);
-$value_choosed	= JRequest::getInt('radio', '');
 CKunenaPolls::call_javascript_vote();
-if ($do == 'results')
-{
-    //Prevent spam from users
-    CKunenaPolls::save_results($id,$kunena_my->id,$value_choosed);
-}
-
-elseif( $do == 'dbchangevote')
-{
-	CKunenaPolls::save_changevote($id,$kunena_my->id,$value_choosed);
-}
-elseif ($do == 'vote')
+if ($do == 'vote')
 {
 	CKunenaPolls::call_javascript_vote();
 	$dataspollresult = CKunenaPolls::get_poll_data($id);

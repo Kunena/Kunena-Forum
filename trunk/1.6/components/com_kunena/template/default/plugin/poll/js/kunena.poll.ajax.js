@@ -29,39 +29,39 @@ window.addEvent('domready', function() {
 		newinfo.appendChild(image);
 		newinfo.appendChild(texte);
 	}
-	
-	$('k_poll_button_vote').onclick = function () {		
-		var nb = $('k_poll_nb_options').get('value');
-		var id = $('k_poll_id').get('value');
-		var funcdo = $('k_poll_do').get('value');
-		var datano = '0';
-		for(var j = 0; j < nb; j++){
-		      if((document.getElementById("radio_name"+j).checked==true)) {
-		        var data = $('radio_name'+j).get('value');               
-		        datano = "1"; 
-		      }
-		}
-		if(datano == "0") {
-	    	var nbimages = '1';
-	  	  	insert_text(KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK,nbimages);
-	    } else {    	
-	    	var url = jliveurl+"index.php?option=com_kunena&func="+funcdo+"&radio="+data+"&id="+id;	    	
-	    	var request = new Request.JSON({
-				url: url,
-				onComplete: function(jsonObj) {	    			
-	    			var nb = '0';
-					if(jsonObj.results == '1'){						
-						insert_text(KUNENA_POLL_SAVE_ALERT_OK,nb);
-					} else if(jsonObj.results == '2') {
-						nb = '1';
-						insert_text(KUNENA_POLL_CANNOT_VOTE_NEW_TIME,nb);
-					} else if(jsonObj.results == '3') {
-						nb = '1';
-						insert_text(KUNENA_POLL_WAIT_BEFORE_VOTE,nb);
-					}
+	if($('k_poll_button_vote') != undefined) {
+		$('k_poll_button_vote').onclick = function () {		
+			var nb = $('k_poll_nb_options').get('value');
+			var id = $('k_poll_id').get('value');
+			var funcdo = $('k_poll_do').get('value');
+			var datano = '0';
+			for(var j = 0; j < nb; j++){
+				if((document.getElementById("radio_name"+j).checked==true)) {
+					var data = $('radio_name'+j).get('value');               
+					datano = "1"; 
 				}
-			}).send();
-
-	    }
-	};
+			}
+			if(datano == "0") {
+				var nbimages = '1';
+	  	  		insert_text(KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK,nbimages);
+			} else {    	
+				var url = "index.php?option=com_kunena&func=json&action="+funcdo+"&radio="+data+"&id="+id;	    	
+				var request = new Request.JSON({
+					url: url,
+					onComplete: function(jsonObj) {	    			
+	    				var nb = '0';
+	    				if(jsonObj.results == '1'){						
+	    					insert_text(KUNENA_POLL_SAVE_ALERT_OK,nb);
+	    				} else if(jsonObj.results == '2') {
+	    					nb = '1';
+	    					insert_text(KUNENA_POLL_CANNOT_VOTE_NEW_TIME,nb);
+	    				} else if(jsonObj.results == '3') {
+	    					nb = '1';
+	    					insert_text(KUNENA_POLL_WAIT_BEFORE_VOTE,nb);
+	    				}
+					}
+				}).send();
+			}
+		};
+	}	
 });

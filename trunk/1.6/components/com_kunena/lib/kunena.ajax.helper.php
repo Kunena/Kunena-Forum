@@ -58,6 +58,25 @@ class CKunenaAjaxHelper {
 					$response = $this->_getPreview ( $body );
 
 					break;
+				case 'catspollallowed' :
+
+					$response = $this->_getPollsCatsAllowed ();
+
+					break;
+				case 'pollvote' :
+					$value_choosed	= JRequest::getInt('radio', '');
+					$id = JRequest::getInt ( 'id', 0 );
+
+					$response = $this->_addPollVote ($value_choosed, $id, $this->_my->id);
+
+					break;
+				case 'pollchangevote' :
+					$value_choosed	= JRequest::getInt('radio', '');
+					$id = JRequest::getInt ( 'id', 0 );
+
+					$response = $this->_addChangeVote ($value_choosed, $id, $this->_my->id);
+
+					break;
 				default :
 
 					break;
@@ -147,6 +166,42 @@ class CKunenaAjaxHelper {
 		$msgbody = CKunenaTools::prepareContent ( $msgbody );
 
 		$result ['preview'] = $msgbody;
+
+		return $result;
+	}
+
+	protected function _getPollsCatsAllowed () {
+		$result = array ();
+
+		$query = "SELECT id
+							FROM #__fb_categories
+							WHERE allow_polls=1 AND parent=1;";
+		$this->_db->setQuery ( $query );
+		$allow_polls = $this->_db->loadResultArray ();
+		check_dberror ( "Unable to lookup categories by name." );
+		if(!empty($allow_polls)) {
+			$result['allowed_polls'] = $allow_polls;
+		}
+
+		return $result;
+	}
+
+	protected function _addPollVote ($value_choosed, $id, $userid) {
+		$result = array ();
+
+		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+		$poll = new CKunenaPolls();
+		$result = $poll->save_results($id,$userid,$value_choosed);
+
+		return $result;
+	}
+
+	protected function _addChangeVote ($value_choosed, $id, $userid) {
+		$result = array ();
+
+		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+		$poll = new CKunenaPolls();
+		$result = $poll->save_changevote($id,$userid,$value_choosed);
 
 		return $result;
 	}

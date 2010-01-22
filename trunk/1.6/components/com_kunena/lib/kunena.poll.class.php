@@ -105,7 +105,6 @@ class CKunenaPolls {
 		JApplication::addCustomHeadTag('
       <script type="text/javascript">
 	   <!--
-	   var jliveurl ="'.KUNENA_JLIVEURL.'";
 	   var KUNENA_POLL_SAVE_ALERT_OK = "'._KUNENA_POLL_SAVE_ALERT_OK.'";
 	   var KUNENA_POLL_SAVE_ALERT_ERROR = "'._KUNENA_POLL_SAVE_ALERT_ERROR.'";
 	   var KUNENA_POLL_SAVE_VOTE_ALREADY = "'._KUNENA_POLL_SAVE_VOTE_ALREADY.'";
@@ -227,7 +226,6 @@ class CKunenaPolls {
    function save_results($pollid,$userid,$vote)
    {
 		$kunena_db = &JFactory::getDBO();
-		$kunena_app = JFactory::getApplication ();
     	$kunena_config =& CKunenaConfig::getInstance();
     	$pollusers = CKunenaPolls::get_data_poll_users($userid,$pollid);
     	$nonewvote = "0";
@@ -251,8 +249,6 @@ class CKunenaPolls {
     		}
       		if ($poll_timediff || $pollusers[0]->timediff == null)
       		{
-        		//echo "<script language = \"JavaScript\" type = \"text/javascript\">var infoserver=\"1\";</script>";
-
         		$query = "SELECT * FROM #__fb_polls_options WHERE pollid=$pollid AND id=$vote";
         		$kunena_db->setQuery($query);
         		$polloption = $kunena_db->loadObject();
@@ -303,10 +299,8 @@ class CKunenaPolls {
      	{
      		$data['results'] = '3';
      	}
-     	header ( "Content-type: application/json" );
-		echo json_encode($data);
 
-		$kunena_app->close ();
+     	return $data;
    }
    /**
 	* Update poll during edit
@@ -336,11 +330,7 @@ class CKunenaPolls {
       	{
         	$data['results'] = '2';
       	}
-      	header ( "Content-type: application/json" );
-		echo json_encode($data);
-
-		$kunena_app = & JFactory::getApplication ();
-		$kunena_app->close ();
+      	return $data;
    }
    /**
 	* Update poll during edit

@@ -8,98 +8,110 @@
 * @link http://www.kunena.com
 **/
 
-var number_field = "1";
-
-//This function fill the field hidden with the options number for a poll
-function valuetotaloptions(value){
-  var number = value;
-  var optiontotal = document.getElementById('numbertotal');
-  if(optiontotal != null) {
-    optiontotal.setAttribute('value',number);
-  }
-  var optiontotalet = document.getElementById('numbertotalr');
-  if(optiontotalet != null) {
-     optiontotalet.setAttribute('value',number);
-  }
-}
-
-//Function only for IE
-function regleCSS(number_field) {
-   document.getElementById('opt'+number_field).style.fontWeight = "bold";
-}
-
-function create_new_field_now(){
-  var numfield = number_field-1;
-  valuetotaloptions(number_field);
-  var tablebody =document.getElementById('kpost_message');
-  var row = document.createElement("tr");
-  row.className="ksectiontableentry2";
-  row.setAttribute('id','option'+number_field);
-  cell = document.createElement("td");
-  cell.setAttribute('id','opt'+number_field);
-  cell.className ="kleftcolumn";
-  texte = document.createTextNode(KUNENA_POLL_OPTION_NAME+" "+number_field);
-  cell.appendChild(texte);
-  row.appendChild(cell);
-  cell = document.createElement("td");
-  var field_option = document.createElement("input"); 
-  field_option.setAttribute('name','field_option'+numfield);
-  field_option.setAttribute('id','field_option'+numfield);  
-  cell.appendChild(field_option);
-  //field_option.setAttribute('type','text');    
-  row.appendChild(cell);
-  tablebody.appendChild(row);
-  document.getElementById("kpost_message").insertBefore(row,document.getElementById("kpost_buttons_tr"));
-  regleCSS(number_field);
-  number_field++;
-}
-
-//this function insert a text by modifing the DOM, for show infos given by ajax result
-function insert_text_write(textString)
-{	
-	if(document.getElementById('option_error') == undefined){
-		var tablebody = document.getElementById('kpost_message');
-		var row = document.createElement("tr");
-		row.className="ksectiontableentry2";
-		row.setAttribute('id','option_error');
-		cell = document.createElement("td");
-		cell.setAttribute('id','error');
-		cell.className ="kleftcolumn";
-		var image = document.createElement("img");			
-		image.setAttribute('src',KUNENA_ICON_ERROR);
-		cell.appendChild(image);
-		row.appendChild(cell);
-		cell = document.createElement("td");
-		texte = document.createTextNode(textString);
-		//field_option.setAttribute('type','text');    
-		row.appendChild(cell);
-		cell.appendChild(texte);
-		tablebody.appendChild(row);
-		document.getElementById("kpost_message").insertBefore(row,document.getElementById("kpost_buttons_tr"));	
+window.addEvent('domready', function() {	
+	function valuetotaloptions(number){		
+		var optiontotal = $('numbertotal');
+		if(optiontotal != null) {
+			optiontotal.set('value',number);
+		}
+		var optiontotalet = $('numbertotalr');
+		if(optiontotalet != null) {
+			optiontotalet.set('value',number);
+		}		
 	}
-}
+	function regleCSS(number_field) {
+		$('opt'+number_field).set('style', {
+		    'fontWeight': 'bold'		    
+		});
+	}
+	
+	function create_new_field_now(){			
+		  var numfield = number_field-1;
+		  var tablebody =document.getElementById('kpost_message');
+		  var buttons = $("kpost_buttons_tr");
+		  valuetotaloptions(number_field);
+		  var mytr = new Element('tr', {
+				'class':'ksectiontableentry2'				
+			});
+		  var mytd = new Element('td', {
+				'class':'kleftcolumn'
+			});
+		  var mystrong = new Element('strong');
+		  var input = new Element('input');
+		  var mytd2 = new Element('td');
+		  mytr.injectInside(tablebody).injectBefore(buttons);
+		  mytr.set('id','option'+number_field);
+		  mytd.injectInside(mytr);		    
+		  mytd.set('id','opt'+number_field);
+		  mystrong.injectInside(mytd);
+		  mystrong.set('text',KUNENA_POLL_OPTION_NAME+" "+number_field);		  
+		  mytd2.injectInside(mytr);
+		  mytd2.set('name','field_option'+numfield);
+		  mytd2.set('id','field_option'+numfield);
+		  input.inject(mytd2);
+		  input.set('name','field_option'+numfield);
+		  input.set('id','field_option'+numfield);		 
+		  regleCSS(number_field);
+		  number_field++;
+		}
 
-//Create only a new poll options, the function valueoptions get the number 1 and check the options maximu for number
-function new_field(nboptionsmax){
-  if(nboptionsmax == "0") {
-    create_new_field_now();
-  }else {
-    if(number_field <= nboptionsmax){
-      create_new_field_now();
-    } else {
-    	insert_text_write(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);
-    }
-  }
-}
+		//this function insert a text by modifing the DOM, for show infos given by ajax result
+		function insert_text_write(textString)
+		{				
+				var tablebody = $('kpost_message');
+				var buttons = $("kpost_buttons_tr");
+				var mytr = new Element('tr', {
+					'class':'ksectiontableentry2',
+					'id':'option_error'
+				});
+				
+				var mytd = new Element('td', {
+					'class':'kleftcolumn',
+					'id':'error'
+				});
+				
+				var mytd2 = new Element('td', {					
+					'id':'error'
+				});
+				
+				var myimg = new Element('img', {
+					'src':KUNENA_ICON_ERROR					
+				});
+				
+				mytr.injectInside(tablebody).injectBefore(buttons);				
+				mytd.injectInside(mytr);
+				myimg.injectInside(mytd);
+				mytd2.injectInside(mytr);
+				mytd2.set('text', textString);						
+		}
 
-//Delete a poll option
-function delete_field(){
-  var matable = document.getElementById('kpost_message');
-  if(number_field > 1) {
-      number_field = number_field - 1 ;
-      var row = document.getElementById('option'+number_field);
-      matable.removeChild(row);
-      var value = number_field - 1;
-      valuetotaloptions(value);
-  }
-}
+	
+	$('kbutton_poll_add').onclick = function () {
+		var nboptionsmax = $('nb_options_allowed').get('value');
+		if(nboptionsmax == "0") {
+		    create_new_field_now();
+		}else {
+			if(number_field <= nboptionsmax){
+		      create_new_field_now();
+		    } else {
+		    	if($('option_error')== undefined){
+		    		insert_text_write(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);
+		    	}	
+		    }
+		}
+	};
+	$('kbutton_poll_rem').onclick = function () {
+		if($('option_error')){
+			$('option_error').dispose();
+		}
+		var matable = $('kpost_message');		
+		if(number_field > 1) {
+	      number_field = number_field - 1 ;
+	      var row = $('option'+number_field);
+	      matable.removeChild(row);
+	      var value = number_field - 1;
+	      valuetotaloptions(value);
+		}
+	};
+
+});	

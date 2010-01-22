@@ -62,20 +62,22 @@ nawte.addFunction('Sup', function() {
 	this.replaceSelection('[sup]' + selection + '[/sup]');
 }, {'id': 'kbbcode-sup_button'});
 
-nawte.addFunction('Insert Link', function() {
-	var selection = this.getSelection();
-var response = prompt('Enter Link URL','');
-if(response == null)
-     return;
-this.replaceSelection('[url=' +  (response == '' ? 'http://link_url/' : response) + ']' + (selection == '' ? 'Link Text' : selection) + '[/url]');
-}, {'id': 'kbbcode-link_button'});
+nawte.addFunction('Size', function() {
+	selection = this.getSelection();
+	this.replaceSelection('[size=4]' + selection + '[/size]');
+}, {'id': 'kbbcode-size_button'});
+
+nawte.addFunction('Color', function() {
+	selection = this.getSelection();
+	this.replaceSelection('[color=#FF6600]' + selection + '[/color]');
+}, {'id': 'kbbcode-color_button'});
 
 //adding a "List" button that will create a new list if nothing is selected
 //or make each line of the selection into a list item if some text is selected...
-nawte.addFunction("list", function() {
+nawte.addFunction("uList", function() {
 	selection = this.getSelection();
 	if (selection == "") {
-		this.replaceSelection("[ul]\n   [li]Item 1[/li]\n   [li]...[/li]\n[/ul]");
+		this.replaceSelection("\n[ul]\n   [li]Item 1[/li]\n   [li]Item 2[/li]\n   [li]...[/li]\n[/ul]");
 	}
 	else {
 
@@ -90,9 +92,39 @@ nawte.addFunction("list", function() {
 		this.insertAfter("\n[/ul]", true); //now isLast is set to true, because it is the last one!
 
 	}
-}, {'id': 'kbbcode-list_button'});
-});
+}, {'id': 'kbbcode-ulist_button'});
 
+nawte.addFunction("oList", function() {
+	selection = this.getSelection();
+	if (selection == "") {
+		this.replaceSelection("\n[ol]\n   [li]Item 1[/li]\n   [li]Item 2[/li]\n   [li]...[/li]\n[/ol]");
+	}
+	else {
+
+		this.processEachLine(function(line) {
+			newline = "  [li]" + line + "[/li]";
+			return newline;
+		}, false);
+		// here you see the purpose of the isLast parameter... since we are applying
+		// more TextTransform methods to the selection, isLast must be set to false!
+
+		this.insertBefore("[ol]\n", false);
+		this.insertAfter("\n[/ol]", true); //now isLast is set to true, because it is the last one!
+
+	}
+}, {'id': 'kbbcode-olist_button'});
+
+nawte.addFunction('Link', function() {
+	var selection = this.getSelection();
+var response = prompt('Enter Link URL','');
+if(response == null)
+     return;
+this.replaceSelection('[url=' +  (response == '' ? 'http://link_url/' : response) + ']' + (selection == '' ? 'Link Text' : selection) + '[/url]');
+}, {'id': 'kbbcode-link_button'});
+
+
+
+});
 
 
 

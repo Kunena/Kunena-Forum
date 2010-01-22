@@ -2052,30 +2052,40 @@ ul#kbbcode-toolbar li a#kbbcode-italic_button {
 }
 
 ul#kbbcode-toolbar li a#kbbcode-underline_button {
-	background-position:-54px 0;
+	background-position:-36px 0;
 }
 
 ul#kbbcode-toolbar li a#kbbcode-strike_button {
-	background-position:-72px 0;
+	background-position:-54px 0;
 }
 
 ul#kbbcode-toolbar li a#kbbcode-sub_button {
-	background-position:-90px 0;
+	background-position:-72px 0;
 }
 
 ul#kbbcode-toolbar li a#kbbcode-sup_button {
+	background-position:-90px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-size_button {
 	background-position:-108px 0;
 }
-ul#kbbcode-toolbar li a#kbbcode-list_button {
+
+ul#kbbcode-toolbar li a#kbbcode-color_button {
 	background-position:-126px 0;
 }
-ul#kbbcode-toolbar li a#kbbcode-link_button {
-	background-position:-144px 0;
+
+ul#kbbcode-toolbar li a#kbbcode-ulist_button {
+	background-position:-180px 0;
 }
 
+ul#kbbcode-toolbar li a#kbbcode-olist_button {
+	background-position:-198px 0;
+}
 
-
-
+ul#kbbcode-toolbar li a#kbbcode-link_button {
+	background-position:-342px 0;
+}
 
 /*
 POST HISTORY

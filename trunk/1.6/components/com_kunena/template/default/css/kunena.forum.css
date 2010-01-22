@@ -2023,82 +2023,56 @@ img.k-bbcode:hover {
 }
 
 #kbbcode-toolbar li a {
-	background:url(/components/com_kunena/template/default/images/editor/editor_buttons.png) no-repeat;
+	background:url("../images/editor/editor_buttons.png") no-repeat;
 	display:block;
 	float:left;
 	height:18px;
 	width:18px;
+	margin-right: 5px;
 }
 
 #kbbcode-toolbar li a:hover {
 	background-color: #e4e4e4;
 	cursor: pointer;
-	margin-top: 4px;
-	margin-right: 1px;
+	/* margin-top: 4px; 
+	margin-right: 1px;*/
 	padding: 0px;
 }
+
 #kbbcode-toolbar li span {
 	display:none;
 }
 
-#kbbcode-bold_button {
+ul#kbbcode-toolbar li a#kbbcode-bold_button {
 	background-position:0 0;
 }
 
-#kbbcode-italic_button {
-	background-position:0 0 0 -18px;
+ul#kbbcode-toolbar li a#kbbcode-italic_button {
+	background-position:-18px 0;
 }
 
-#kbbcode-link_button {
-	background-position:0 0 0 -36px;
+ul#kbbcode-toolbar li a#kbbcode-underline_button {
+	background-position:-54px 0;
 }
 
+ul#kbbcode-toolbar li a#kbbcode-strike_button {
+	background-position:-72px 0;
+}
 
+ul#kbbcode-toolbar li a#kbbcode-sub_button {
+	background-position:-90px 0;
+}
 
-#toolbar {
-background-color:#222222;
-border:1px solid #555555;
-height:18px;
-list-style-position:inside;
-list-style-type:none;
-margin:0 0 6px;
-padding:0;
-position:relative;
-width:250px;
+ul#kbbcode-toolbar li a#kbbcode-sup_button {
+	background-position:-108px 0;
 }
-#toolbar li {
-float:left;
-list-style-image:none;
-list-style-position:outside;
-list-style-type:none;
-margin:0;
-padding:0;
+ul#kbbcode-toolbar li a#kbbcode-list_button {
+	background-position:-126px 0;
 }
-#toolbar li a {
-background-image:url(toolbar.gif);
-border-color:#444444 #555555 #444444 #444444;
-border-style:solid;
-border-width:1px;
-display:block;
-float:left;
-height:16px;
-width:24px;
+ul#kbbcode-toolbar li a#kbbcode-link_button {
+	background-position:-144px 0;
 }
-#toolbar li a:hover {
-border:1px solid #999999;
-}
-#toolbar li span {
-display:none;
-}
-#bold_button {
-background-position:0 0;
-}
-#italic_button {
-background-position:0 -18px;
-}
-#link_button {
-background-position:0 -36px;
-}
+
 
 
 

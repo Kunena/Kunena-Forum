@@ -34,6 +34,11 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	<table border="0" cellspacing="0" cellpadding="0"
 		class="k-postbuttonset">
 		<tr>
+			<td class="k-postbuttons">
+				<ul id="kbbcode-toolbar"></ul>
+			</td>
+		</tr>
+		<tr>
 			<td class="k-postbuttons"><img class="k-bbcode" title="Bold"
 				name="addbbcode0"
 				src="<?php
@@ -267,12 +272,12 @@ $kunena_config = & CKunenaConfig::getInstance ();
 		<!-- Start extendable fields -->
 		<tr>
 			<td class="k-postbuttons">
-			<div id="k-color_palette" style="display: none;"><script
+<!-- 			<div id="k-color_palette" style="display: none;"><script
 				type="text/javascript">
 								function change_palette() {dE('k-color_palette');}
 								colorPalette('h', '4%', '15px');
 							</script></div>
-
+ -->
 			<div id="link" style="display: none;"><?php
 			echo (_KUNENA_EDITOR_LINK_URL) ;
 			?><input
@@ -463,7 +468,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	?></td>
 
 	<td valign="top"><textarea cols="60" rows="6" class="ktxtarea"
-		name="message" id="message"><?php
+		name="kbbcode-message" id="kbbcode-message"><?php
 		echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
 		?></textarea>
 	<?php

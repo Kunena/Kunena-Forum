@@ -1,12 +1,8 @@
 <?php
 /**
-
  * @version $Id$
-
  * Kunena Component
-
  * @package Kunena
-
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -14,27 +10,18 @@
  *
  * Based on FireBoard Component
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
-
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-
  * @link http://www.bestofjoomla.com
-
  *
-
  * Based on Joomlaboard Component
-
  * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
-
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-
  * @author TSMF & Jan de Graaff
-
  **/
 
 // Dont allow direct linking
 
 defined( '_JEXEC' ) or die();
-
 
 // Kunena wide defines
 
@@ -270,6 +257,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4.2-more.js' );
 
 		// New Kunena JS for default template
+		// TODO: Need to check if selected template has an override
 		$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/default.js' );
 
 		if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum.css' )) {

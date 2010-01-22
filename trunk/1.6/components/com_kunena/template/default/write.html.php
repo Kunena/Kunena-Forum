@@ -19,7 +19,6 @@
  * @author TSMF & Jan de Graaff
  **/
 
-defined( '_JEXEC' ) or die();
 
 $catid = JRequest::getInt ( 'catid', 0 );
 $id = JRequest::getInt ( 'id', 0 );
@@ -47,6 +46,9 @@ $refreshTime =  ( $lifetime <= 60000 ) ? 30000 : $lifetime - 60000;
 //refresh time is 1 minute less than the liftime assined in the configuration.php file
 
 $document =& JFactory::getDocument();
+
+$document->addScript ( KUNENA_DIRECTURL . 'js/nawte/nawte.0.4.js' );
+
 $script  = '';
 $script .= 'function keepAlive( ) {';
 $script .=  '    var myAjax = new Ajax( "index.php", { method: "get" } ).request();';
@@ -74,7 +76,7 @@ $script .= '			container = $("preview_container");';
 $script .= '			if (container) {';
 $script .= '				container.set("style", "display: table-row;");';
 $script .= '			}';
-$script .= '		}}).post({body: $("message").get("value")});';
+$script .= '		}}).post({body: $("kbbcode-message").get("value")});';
 $script .= '	});';
 $script .= '}';
 $script .= '});';
@@ -203,7 +205,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 			<td><input type="text"
 				class="kinputbox postinput"
-				name="subject" size="35"
+				name="subject" id="subject" size="35"
 				maxlength="<?php
 				echo $kunena_config->maxsubject;
 				?>"

@@ -248,13 +248,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 		// MooTools Libraries
 
-		// We cannot invoke the Joomla mootools behaviors until J1.5.16
-		// when Joomla gets updated to mootools 1.2
+		// We cannot invoke the Joomla mootools behaviors in J1.5.15 or below
 		//JHTML::_('behavior.mootools');
 
-		//TODO: This is a temporary solution - we need to get Joomla updated to 1.2
-		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4-core-yc.js' );
-		$document->addScript ( KUNENA_DIRECTURL . 'js/mootools-1.2.4.2-more.js' );
+		// Instead we require the J1.5.16 (J1.6 based) framework
+		// On systems running J1.5.15 this requires the mootools12 system plugin
+		JHTML::_('behavior.framework');
 
 		// New Kunena JS for default template
 		// TODO: Need to check if selected template has an override

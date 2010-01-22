@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 21-Jan-2010 fxstein
 + [#19380] New bbcode editor (part 1)
+^ [#19380] New Joomla 1.5.16 / 1.6 style framework bahvior; remove secondary mootools 1.2 libraries
 
 21-Jan-2010 Xillibit
 ^ [#19332] Change Delete behavior - show in backend too the posts wrote by visitors and sortable list on the title

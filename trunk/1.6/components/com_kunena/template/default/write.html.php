@@ -38,8 +38,8 @@ include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
 //keep session alive while editing
 
-// Can't use the Joomla 1.5.15 html behavior since it is loading mootools 1.1 which would break 1.2
-//JHTML::_ ( 'behavior.keepalive' );
+JHTML::_ ( 'behavior.keepalive' );
+
 $config      =& JFactory::getConfig();
 $lifetime      = ( $config->getValue('lifetime') * 60000 );
 $refreshTime =  ( $lifetime <= 60000 ) ? 30000 : $lifetime - 60000;
@@ -48,16 +48,6 @@ $refreshTime =  ( $lifetime <= 60000 ) ? 30000 : $lifetime - 60000;
 $document =& JFactory::getDocument();
 
 $document->addScript ( KUNENA_DIRECTURL . 'js/nawte/nawte.0.4.js' );
-
-$script  = '';
-$script .= 'function keepAlive( ) {';
-$script .=  '    var myAjax = new Ajax( "index.php", { method: "get" } ).request();';
-$script .=  '}';
-$script .=     ' window.addEvent("domready", function()';
-$script .=     '{ keepAlive.periodical('.$refreshTime.' ); }';
-$script .=  ');';
-
-$document->addScriptDeclaration($script);
 
 $script  = '';
 $script .= 'window.addEvent("domready", function(){';
@@ -390,9 +380,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
        			if (!isset($polldatasedit[0]->polltimetolive)) {
 					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				}
-				// TODO: Need to rewrite the calendar function it breaks mootools 1.2
-       			//$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
-       			$pollcalendar = '';
+       			$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
        			JApplication::addCustomHeadTag('
    					<script type="text/javascript">
   				 	<!--
@@ -449,8 +437,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
           	  	if (!isset($polldatasedit[0]->polltimetolive)) {
 					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 			 	}
- 				// TODO: Need to rewrite the calendar function it breaks mootools 1.2
-        		//$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+        		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
           	  	$polloptionsstart = $polloptions+1;
             	JApplication::addCustomHeadTag('
       				<script type="text/javascript">

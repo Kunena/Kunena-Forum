@@ -219,7 +219,7 @@ switch ($task) {
 		}
 
 		//check for allowed file type (jpeg, gif, png)
-		if (!($imgtype = KUNENA_check_image_type($avatarExt)))
+		if (!($imgtype = kunena_check_image_type($avatarExt)))
 		{
 			$kunena_app->enqueueMessage(_UPLOAD_ERROR_TYPE, 'notice');
 			$kunena_app->redirect(CKunenaLink::GetMyProfileAvatarURL('',true));

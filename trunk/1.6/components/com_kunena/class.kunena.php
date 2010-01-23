@@ -260,27 +260,22 @@ define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 // url catimages path
 define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$kunena_config->catimagepath}/"); // Kunena category images direct url
 
-function KUNENA_check_image_type(&$type) {
-    switch ($type)
+function kunena_check_image_type($type) {
+    switch (strtolower($type))
     {
         case 'jpeg':
         case 'pjpeg':
         case 'jpg':
-        case 'JPEG':
-        case 'PJPEG':
-        case 'JPG':
             return '.jpg';
 
             break;
 
         case 'gif':
-        case 'GIF':
             return '.gif';
 
             break;
 
         case 'png':
-        case 'PNG':
             return '.png';
 
             break;

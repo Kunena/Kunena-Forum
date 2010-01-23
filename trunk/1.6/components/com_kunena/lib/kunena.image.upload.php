@@ -68,7 +68,7 @@ if ($GLOBALS['KUNENA_rc'])
         imageUploadError(_IMAGE_ERROR_EMPTY);
     }
     // Check for allowed file type (jpeg, gif, png)
-    else if (!($imgtype = KUNENA_check_image_type(substr($imageExt,1)))) {
+    else if (!($imgtype = kunena_check_image_type(substr($imageExt,1)))) {
         imageUploadError(_IMAGE_ERROR_TYPE);
     }
     // Check filesize

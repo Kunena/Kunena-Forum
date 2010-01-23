@@ -69,7 +69,7 @@ if ($GLOBALS['KUNENA_rc'])
         fileUploadError(_FILE_ERROR_EMPTY);
     }
     // check for allowed file types
-    else if (!in_array(substr($fileExt,1), $allowedArray)) {
+    else if (!in_array(strtolower(substr($fileExt,1)), $allowedArray)) {
         fileUploadError(_FILE_ERROR_TYPE . " " . $kunena_config->filetypes);
     }
     // Check filesize

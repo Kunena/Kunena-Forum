@@ -205,6 +205,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		$kunena_app->close ();
 	}
 
+	$format = JRequest::getCmd ( 'format', 'html' );
+	if ($format != 'html') {
+		echo "Kunena: Unsupported output format {$format}, please use only format=html or .html";
+		$kunena_app->close ();
+	}
+
 	//time format
 
 	include_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');

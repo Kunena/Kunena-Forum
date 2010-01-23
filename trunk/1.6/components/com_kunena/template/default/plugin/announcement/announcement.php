@@ -247,9 +247,6 @@ if ($is_editor) {
     }
 
     if ($do == "add") {
-        if (!$is_editor) {
-            die ("Hacking attempt");
-            }
 		$calendar = JHTML::_('calendar', '', 'created', 'addcreated');
             ?>
 <div class="k_bt_cvr1">
@@ -520,5 +517,7 @@ if ($is_editor) {
 ?>
 <!-- /announcement-->
 <?php
+    } else {
+    	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
     }
 ?>

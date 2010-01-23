@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+23-Jan-2010 Xillibit
+^# [#19486] Remove all: die ("Hacking attempt");
+
 21-Jan-2010 fxstein
 + [#19380] New bbcode editor (part 2) - All buttons added as css sprite
 

@@ -197,14 +197,14 @@ table.fbstat .col2 {
       <tr>
         <td><?php echo _STATS_TOTAL_MEMBERS; ?> </td>
         <td><strong><?php echo jbStats::get_total_members(); ?></strong></td>
-        <td><?php echo _STATS_TOTAL_CATEGORIES; ?> </td>
-        <td><strong><?php echo jbStats::get_total_categories();?></strong></td>
+        <td><?php echo _STATS_TOTAL_SECTIONS; ?> </td>
+        <td><strong><?php echo jbStats::get_total_sections();?></strong></td>
       </tr>
       <tr>
         <td><?php echo _STATS_TOTAL_REPLIES; ?></td>
         <td><strong><?php echo jbStats::get_total_messages() ;?></strong></td>
-        <td><?php echo _STATS_TOTAL_SECTIONS; ?> </td>
-        <td><strong><?php echo jbStats::get_total_sections() ;?></strong></td>
+        <td><?php echo _STATS_TOTAL_CATEGORIES; ?> </td>
+        <td><strong><?php echo jbStats::get_total_categories() ;?></strong></td>
       </tr>
       <tr>
         <td><?php echo _STATS_TOTAL_TOPICS; ?></td>

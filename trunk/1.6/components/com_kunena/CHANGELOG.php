@@ -34,14 +34,17 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+23-Jan-2010 Matias
+# [#18974] Categories and sections mixed up
+
 23-Jan-2010 Xillibit
-^# [#19486] Remove all: die ("Hacking attempt");
+# [#19486] Remove all: die ("Hacking attempt");
 
 21-Jan-2010 fxstein
 + [#19380] New bbcode editor (part 2) - All buttons added as css sprite
 
 22-Jan-2010 Xillibit
-^# [#19485] Add AJAX call to check if polls are allowed if category changes
+^ [#19485] Add AJAX call to check if polls are allowed if category changes
 
 21-Jan-2010 fxstein
 + [#19380] New bbcode editor (part 1)

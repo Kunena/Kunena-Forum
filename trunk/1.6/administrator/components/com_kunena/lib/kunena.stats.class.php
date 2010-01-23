@@ -84,10 +84,10 @@ class jbStats {
 	}
 
 	/**
-	 * Total categories in Kunena
+	 * Total sections in Kunena
 	 * @return int
 	 */
-	function get_total_categories() {
+	function get_total_sections() {
 		$kunena_db = &JFactory::getDBO();
 		$kunena_db->setQuery('SELECT COUNT(*) FROM #__fb_categories WHERE parent=0');
 		return intval($kunena_db->loadResult());
@@ -116,10 +116,10 @@ class jbStats {
 		return $results;
 	}
 	/**
-	 * Total sections in Kunena
+	 * Total categories in Kunena
 	 * @return int
 	 */
-	function get_total_sections() {
+	function get_total_categories() {
 		$kunena_db = &JFactory::getDBO();
 		$kunena_db->setQuery('SELECT COUNT(*) FROM #__fb_categories WHERE parent>0');
 		return intval($kunena_db->loadResult());

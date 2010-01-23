@@ -147,21 +147,12 @@ global $kunena_icons;
 
 				// loop over subcategories to show them under
 				if (! empty ( $this->childforums [$subcat->id] )) {
-					if ($this->config->numchildcolumn > 0) {
-						$subtopicwidth = ' style="width: 99%;"';
-						$subwidth = ' style="width: ' . floor ( 99 / $this->config->numchildcolumn ) . '%"';
-					} else {
-						$subtopicwidth = ' style="display: inline-block;"';
-						$subwidth = '';
-					}
-
 					?>
 
 			<div class="kthead-child">
 
 			<div class="kcc-table">
-			<div <?php
-					echo $subtopicwidth?> class="kcc-childcat-title"><?php
+			<div class="kcc-childcat-title"><?php
 					if (count ( $this->childforums [$subcat->id] ) == 1) {
 						echo _KUNENA_CHILD_BOARD;
 					} else {
@@ -172,7 +163,7 @@ global $kunena_icons;
 			<?php
 
 					foreach ( $this->childforums [$subcat->id] as $childforum ) {
-						echo "<div{$subwidth} class=\"kcc-subcat km\">";
+						echo "<div class=\"kcc-subcat km\">";
 
 						//Begin: parent read unread iconset
 						if ($this->config->showchildcaticon) {

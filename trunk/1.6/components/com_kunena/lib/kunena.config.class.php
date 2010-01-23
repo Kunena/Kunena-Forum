@@ -222,7 +222,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $board_offline = 0;
 	var $board_ofset = '0';
 	var $offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
-	var $default_view = 'flat';
 	var $enablerss = 1;
 	var $enablepdf = 1;
 	var $threads_per_page = 20;
@@ -239,7 +238,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $showannouncement = 1;
 	var $avataroncat = 0;
 	var $catimagepath = 'category_images/';
-	var $numchildcolumn = 0;
 	var $showchildcaticon = 1;
 	var $annmodid = '62';
 	var $rtewidth = 450;
@@ -295,7 +293,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $avatar_src = 'fb';
 	var $fb_profile = 'fb';
 	var $pm_component = 'no';
-	var $cb_profile = 0; // Depreciated legacy CB integration - Now controlled via avatar, profile and pm settings
 	var $discussbot = 0;
 	var $userlist_rows = 30;
 	var $userlist_online = 1;

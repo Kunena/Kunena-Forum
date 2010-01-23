@@ -994,6 +994,7 @@ div#kheader h1 a:hover {
 
 #Kunena div.kcc-childcat-title {
 	width: 100%;
+	display: inline-block;
 	vertical-align: top;
 }
 

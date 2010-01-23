@@ -1320,19 +1320,6 @@ td.fbtdtitle {
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo _KUNENA_SHOW_CHILD_CATEGORY_COLON?>
-		</td>
-		<td align="left" valign="top"><input type="text"
-			name="cfg_numchildcolumn"
-			value="<?php
-		echo $kunena_config->numchildcolumn;
-		?>" /></td>
-		<td align="left" valign="top"><?php
-		echo _KUNENA_SHOW_CHILD_CATEGORY_COLONDESC?>
-		</td>
-	</tr>
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
 		echo _KUNENA_SHOW_CHILD_CATEGORY_ON_LIST?>
 		</td>
 

@@ -869,7 +869,6 @@ function showConfig($option) {
 	$lists ['discussbot'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_discussbot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->discussbot );
 	$lists ['enablerss'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerss );
 	$lists ['showkarma'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showkarma );
-	$lists ['cb_profile'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_cb_profile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->cb_profile );
 	$lists ['enablepdf'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablepdf );
 	$lists ['enablerulespage'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerulespage );
 	$lists ['rules_infb'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_rules_infb', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rules_infb );

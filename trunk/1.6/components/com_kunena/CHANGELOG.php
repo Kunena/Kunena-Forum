@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 ^ [#19295] Clean up code: use always new profile, improvements on moved topics
 # [#19035] Call to undefined method JDocumentRAW::addCustomTag()
 # [#19376] attach file when the file have is extension in capital letters, exemple : myfile.JPG doesn't work
+- [#19293] Remove deprecated configuration options: default_view, numchildcolumn, cb_profile
 
 23-Jan-2010 Xillibit
 # [#19486] Remove all: die ("Hacking attempt");

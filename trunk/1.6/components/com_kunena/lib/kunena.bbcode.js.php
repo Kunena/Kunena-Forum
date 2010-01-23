@@ -92,8 +92,8 @@ nawte.addFunction("uList", function() {
 		// here you see the purpose of the isLast parameter... since we are applying
 		// more TextTransform methods to the selection, isLast must be set to false!
 
-		this.insertBefore("[ul]\n", false);
-		this.insertAfter("\n[/ul]", true); //now isLast is set to true, because it is the last one!
+		this.insert("[ul]\n", "before", false);
+		this.insert("\n[/ul]", "after", true); //now isLast is set to true, because it is the last one!
 
 	}
 }, {'id': 'kbbcode-ulist_button'});
@@ -112,8 +112,8 @@ nawte.addFunction("oList", function() {
 		// here you see the purpose of the isLast parameter... since we are applying
 		// more TextTransform methods to the selection, isLast must be set to false!
 
-		this.insertBefore("[ol]\n", false);
-		this.insertAfter("\n[/ol]", true); //now isLast is set to true, because it is the last one!
+		this.insert("[ol]\n", "before", false);
+		this.insert("\n[/ol]", "after", true); //now isLast is set to true, because it is the last one!
 
 	}
 }, {'id': 'kbbcode-olist_button'});
@@ -235,34 +235,34 @@ nawte.addFunction('Video', function() {
 ///**
 //* Color pallette. From http://www.phpbb.de
 //*/
-//function colorPalette(dir, width, height)
-//{
-//	var r = 0, g = 0, b = 0;
-//	var numberList = new Array(6);
-//	var color = '';
-//	numberList[0] = '00';
-//	numberList[1] = '40';
-//	numberList[2] = '80';
-//	numberList[3] = 'BF';
-//	numberList[4] = 'FF';
-//	document.writeln('<table class="fb-color_table" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
-//	for (r = 0; r < 5; r++)
-//	{
-//		if (dir == 'h')	{document.writeln('<tr>');}
-//		for (g = 0; g < 5; g++)	{
-//			if (dir == 'v')	{document.writeln('<tr>');}
-//			for (b = 0; b < 5; b++)	{
-//				color = String(numberList[r]) + String(numberList[g]) + String(numberList[b]);
-//				document.write('<td id="' + color + '" style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">');
-//				document.write('&nbsp;');
-//				document.writeln('</td>');
-//			  }
-//			if (dir == 'v')	{document.writeln('</tr>');}
-//		}
-//		if (dir == 'h')	{document.writeln('</tr>');}
-//	}
-//	document.writeln('</table>');
-//}
+function colorPalette(dir, width, height)
+{
+	var r = 0, g = 0, b = 0;
+	var numberList = new Array(6);
+	var color = '';
+	numberList[0] = '00';
+	numberList[1] = '40';
+	numberList[2] = '80';
+	numberList[3] = 'BF';
+	numberList[4] = 'FF';
+	document.writeln('<table class="fb-color_table" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
+	for (r = 0; r < 5; r++)
+	{
+		if (dir == 'h')	{document.writeln('<tr>');}
+		for (g = 0; g < 5; g++)	{
+			if (dir == 'v')	{document.writeln('<tr>');}
+			for (b = 0; b < 5; b++)	{
+				color = String(numberList[r]) + String(numberList[g]) + String(numberList[b]);
+				document.write('<td id="' + color + '" style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">');
+				document.write('&nbsp;');
+				document.writeln('</td>');
+			  }
+			if (dir == 'v')	{document.writeln('</tr>');}
+		}
+		if (dir == 'h')	{document.writeln('</tr>');}
+	}
+	document.writeln('</table>');
+}
 //
 //// TODO: Remove jQuery based logic and replace with mootools behavior
 ////jQuery(document).ready(function()

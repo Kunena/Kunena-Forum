@@ -143,8 +143,8 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
         define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_alphauserpoints&amp;view=account&amp;Itemid=" . KUNENA_AUP_ITEMID . "&amp;userid=");
         }
     else {
-        $profilelink = 'index.php?option=com_kunena&amp;func=fbprofile&amp;userid=';
-        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=fbprofile&amp;Itemid=" . KUNENA_COMPONENT_ITEMID . "&amp;userid=");
+        $profilelink = 'index.php?option=com_kunena&amp;func=profile&amp;userid=';
+        define("KUNENA_PROFILE_LINK_SUFFIX", "index.php?option=com_kunena&amp;func=profile&amp;Itemid=" . KUNENA_COMPONENT_ITEMID . "&amp;userid=");
         }
     }
 
@@ -1205,11 +1205,10 @@ class fbForum
 
 	// check for potential problems
 	function check() {
-		$this->_error = '';
 		if ($this->parent) {
 			if ($this->id == $this->parent):
 				$this->setError(_KUNENA_FORUM_SAME_ERR);
-			elseif ($this->isChild($this->parent)):
+				elseif ($this->isChild($this->parent)):
 				$this->setError(_KUNENA_FORUM_OWNCHILD_ERR);
 			endif;
 		}
@@ -1226,12 +1225,12 @@ class fbForum
 			$recurse = array();
 			while ($id) {
 				if (in_array($id, $recurse)) {
-					$this->setError(_KUNENA_RECURSION);
+					$this->setError(get_class( $this )._KUNENA_RECURSION);
 					return 0;
 				}
 				$recurse[] = $id;
 				if (!isset($list[$id])) {
-					$this->setError(_KUNENA_FORUM_UNKNOWN_ERR);
+					$this->setError(get_class( $this )._KUNENA_FORUM_UNKNOWN_ERR);
 					return 0;
 				}
 				$id = $list[$id]->parent;
@@ -1240,10 +1239,6 @@ class fbForum
 			};
 		}
 		return 0;
-	}
-
-	function setError($msg) {
-		$this->_error = ($msg <> '')?$msg:'error';
 	}
 
 	function store($updateNulls=false)

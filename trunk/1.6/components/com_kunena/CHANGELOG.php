@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 23-Jan-2010 Matias
 # [#18974] Categories and sections mixed up
+# [#19253] Do not allow forum parent to be it's own child
 
 23-Jan-2010 Xillibit
 # [#19486] Remove all: die ("Hacking attempt");

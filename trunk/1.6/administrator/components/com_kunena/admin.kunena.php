@@ -404,9 +404,14 @@ function showAdministration($option) {
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$levellimit = $kunena_app->getUserStateFromRequest ( "{$option}.limit", 'levellimit', 10, 'int' );
 
-	$kunena_db->setQuery ( "SELECT a.*, a.name AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup" . "\nFROM #__fb_categories AS a" . "\nLEFT JOIN #__users AS u ON u.id = a.checked_out" . "\nLEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access" . "\nLEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access" . "\n GROUP BY a.id" . "\n ORDER BY a.ordering, a.name" );
+	$kunena_db->setQuery ( "SELECT a.*, a.name AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
+		FROM #__fb_categories AS a
+		LEFT JOIN #__users AS u ON u.id = a.checked_out
+		LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
+		LEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access
+		ORDER BY a.ordering, a.name" );
 
-	$rows = $kunena_db->loadObjectList ();
+	$rows = $kunena_db->loadObjectList ('id');
 	check_dberror ( "Unable to load categories." );
 
 	// establish the hierarchy of the categories
@@ -414,11 +419,24 @@ function showAdministration($option) {
 
 	// first pass - collect children
 	foreach ( $rows as $v ) {
-		$pt = $v->parent;
-		$list = isset ( $children [$pt] ) ? $children [$pt] : array ();
-		$v->location = count ( $list );
-		array_push ( $list, $v );
-		$children [$pt] = $list;
+		$list = array();
+		$vv = $v;
+		while ($vv->parent>0 && isset($rows[$vv->parent]) && !in_array($vv->parent, $list)) {
+			$list[] = $vv->id;
+			$vv = $rows[$vv->parent];
+		}
+		if ($vv->parent) {
+			$v->parent = -1;
+			$v->published = 0;
+			$v->name = _KUNENA_CATEGORY_ORPHAN.' : '.$v->name;
+		}
+		$children [$v->parent][] = $v;
+		$v->location = count ( $children [$v->parent] )-1;
+	}
+
+	if (isset($children [-1])) {
+		$children [0] = array_merge($children [-1], $children [0]);
+		$kunena_app->enqueueMessage ( _KUNENA_CATEGORY_ORPHAN_DESC, 'notice' );
 	}
 
 	// second pass - get an indent list of the items
@@ -533,8 +551,8 @@ function saveForum($option) {
 		$row->load ( $id );
 	}
 	if (! $row->save ( $_POST, 'parent' )) {
-		echo "<script> alert('" . $row->getError () . "'); window.history.go(-1); </script>\n";
-		$kunena_app->close ();
+		$kunena_app->enqueueMessage ( $row->getError (), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 	}
 	$row->reorder ();
 

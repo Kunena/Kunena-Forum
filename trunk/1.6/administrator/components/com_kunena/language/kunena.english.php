@@ -26,6 +26,10 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+// Orphaned categories
+define('_KUNENA_CATEGORY_ORPHAN', 'ORPHAN');
+define('_KUNENA_CATEGORY_ORPHAN_DESC', 'You have orphaned or lost categories! Please change their parent to be a valid category.');
+
 //Joomsocial Activity Stream Integration disable/enable
 define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION', 'Enable the Jomsocial Activity Stream Integration');
 define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC', 'The activity stream shows in Jomsocial wall the latest messages or new topics posted into Kunena');

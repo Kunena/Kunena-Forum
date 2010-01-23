@@ -77,7 +77,7 @@ class CKunenaProfile {
 		$obj->user = $this->user;
 		$obj->getFavorites();
 		$obj->displayFlat();
-		echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
 	function displaySubscriptions()
@@ -87,7 +87,7 @@ class CKunenaProfile {
 		$obj->user = $this->user;
 		$obj->getSubscriptions();
 		$obj->displayFlat();
-		echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
 	function display() {

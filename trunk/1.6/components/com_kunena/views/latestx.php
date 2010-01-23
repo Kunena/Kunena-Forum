@@ -398,6 +398,8 @@ class CKunenaLatestX {
 		}
 		if ($this->func == 'mylatest') $this->getMyLatest();
 		else if ($this->func == 'noreplies') $this->getNoReplies();
+		else if ($this->func == 'subscriptions') $this->getSubscriptions();
+		else if ($this->func == 'favorites') $this->getFavorites();
 		else $this->getLatest();
 
 		$this->document->setTitle ( $this->title . ' - ' . stripslashes ( $this->config->board_title ) );

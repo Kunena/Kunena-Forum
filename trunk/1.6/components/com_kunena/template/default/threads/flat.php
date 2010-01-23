@@ -139,7 +139,6 @@ if (count ( $this->messages ) > 0) {
 		</td>
 
 			<td class="td-3"><?php
-		if ($leaf->moved == 0) {
 			$curMessageNo = $leaf->msgcount - ($leaf->unread ? $leaf->unread - 1 : 0);
 			$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
 			$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
@@ -191,25 +190,8 @@ if (count ( $this->messages ) > 0) {
 
 				echo ("]</span>");
 			}
-			?>
+			 ?>
 			</div>
-			<?php
-		} else {
-			$threadPages = 0;
-			$unreadPage = 0;
-			//this thread has been moved, get the new location
-			$this->db->setQuery ( "SELECT message FROM #__fb_messages_text WHERE mesid='{$leaf->id}'" );
-			$newURL = $this->db->loadResult ();
-			// split the string and separate catid and id for proper link assembly
-			parse_str ( $newURL, $newURLParams );
-			?>
-			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $newURLParams ['catid'], $newURLParams ['id'], kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), 'follow', 'k-topic-title km' );
-			?>
-			</div>
-			<?php
-		}
-		?>
 			<div class="ks">
 			<!-- By -->
 				<?php

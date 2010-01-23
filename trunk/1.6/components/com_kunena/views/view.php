@@ -33,7 +33,7 @@ class CKunenaView {
 			LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
 			LEFT JOIN #__users AS modified ON a.modified_by = modified.id
 			LEFT JOIN #__fb_polls AS p ON a.id=p.threadid
-			WHERE a.id='$this->id' AND a.hold='0' AND a.moved='0'";
+			WHERE a.id='$this->id' AND a.hold='0'";
 		$this->db->setQuery ( $query );
 		$this->first_message = $this->db->loadObject ();
 		check_dberror ( 'Unable to load current message.' );
@@ -51,10 +51,21 @@ class CKunenaView {
 
 		$kunena_app = & JFactory::getApplication ();
 		$this->config = CKunenaConfig::getInstance ();
-
 		// Test if this is a valid URL. If not, redirect browser to the right location
-		$this->thread = $this->first_message->parent == 0 ? $this->first_message->id : $this->first_message->thread;
-		if ($this->thread != $this->first_message->id || $this->catid != $this->first_message->catid) {
+		$this->thread = $this->first_message->parent == 0 ? $this->id : $this->first_message->thread;
+		if ($this->first_message->moved || $this->thread != $this->id || $this->catid != $this->first_message->catid) {
+			if ($this->first_message->moved) {
+				$newurl = array();
+				parse_str ( $this->first_message->message, $newloc );
+				$this->id = $newloc ['id'];
+				$query = "SELECT catid, thread FROM #__fb_messages AS a WHERE a.id='{$this->id}'";
+				$this->db->setQuery ( $query );
+				$newpos = $this->db->loadObject ();
+				check_dberror ( 'Unable to calculate location of current message.' );
+				$this->thread = $newpos->thread;
+				$this->catid = $newpos->catid;
+			}
+
 			// This query to calculate the page this reply is sitting on within this thread
 			$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$this->thread}' AND hold='0' AND a.id<='{$this->id}'";
 			$this->db->setQuery ( $query );
@@ -64,7 +75,7 @@ class CKunenaView {
 			$replyPage = $replyCount > $this->config->messages_per_page ? ceil ( $replyCount / $this->config->messages_per_page ) : 1;
 
 			header ( "HTTP/1.1 301 Moved Permanently" );
-			header ( "Location: " . htmlspecialchars_decode ( CKunenaLink::GetThreadPageURL ( $this->config, 'view', $this->first_message->catid, $this->thread, $replyPage, $this->config->messages_per_page, $this->first_message->id ) ) );
+			header ( "Location: " . htmlspecialchars_decode ( CKunenaLink::GetThreadPageURL ( $this->config, 'view', $this->catid, $this->thread, $replyPage, $this->config->messages_per_page, $this->first_message->id ) ) );
 
 			$kunena_app->close ();
 		}

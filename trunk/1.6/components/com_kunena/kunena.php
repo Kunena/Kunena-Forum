@@ -256,7 +256,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 
 	// WHOIS ONLINE IN FORUM
-
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php' )) {
 		include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php');
 	} else {
@@ -485,6 +484,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 		#########################################################################################
 
+		case 'myprofile' :
 		case 'fbprofile' :
 		case 'profile' :
 			require_once ( KUNENA_PATH_VIEWS .DS. 'profile.php');
@@ -584,20 +584,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 		#########################################################################################
 
-
-
 		case 'userprofile' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile.php');
-			}
-
-			break;
-
-		#########################################################################################
-
-		case 'myprofile' :
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
 			} else {
@@ -622,6 +609,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		case 'latest' :
 		case 'mylatest' :
 		case 'noreplies' :
+		case 'subscriptions' :
+		case 'favorites' :
 			require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
 			$page = new CKunenaLatestX($func, $page);
 			$page->display();
@@ -790,6 +779,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		#########################################################################################
 
 		default :
+			echo "Unknown request: $func";
+			break;
 			if (file_exists ( KUNENA_ABSTMPLTPATH . '/listcat.php' )) {
 				include (KUNENA_ABSTMPLTPATH . '/listcat.php');
 			} else {

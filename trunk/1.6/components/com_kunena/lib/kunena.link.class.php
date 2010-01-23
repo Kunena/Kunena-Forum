@@ -206,7 +206,7 @@ class CKunenaLink
     	}
     	else
     	{
-    		return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=myprofile', $name, '', $rel);
+    		return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=profile', $name, '', $rel);
     	}
     }
 
@@ -225,7 +225,7 @@ class CKunenaLink
     	else
     	{
     		$do_do = $do != '' ? '&do='.$do : '';
-    		return $redirect != true ? JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile'.$do_do, $name, '', $rel) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile'.$do_do, $name, '', $rel));
+    		return $redirect != true ? JRoute::_(KUNENA_LIVEURLREL.'&amp;func=profile'.$do_do, $name, '', $rel) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile'.$do_do, $name, '', $rel));
     	}
     }
 

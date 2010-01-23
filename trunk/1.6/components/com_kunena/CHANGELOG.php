@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+21-Jan-2010 fxstein
++ [#19380] New bbcode editor (part 2) - All buttons added as css sprite
+
 22-Jan-2010 Xillibit
 ^# [#19485] Add AJAX call to check if polls are allowed if category changes
 

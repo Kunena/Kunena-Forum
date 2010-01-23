@@ -2008,7 +2008,7 @@ img.k-bbcode:hover {
 	list-style-position:inside;
 	list-style-type:none;
 	height:18px;
-	margin:0 0 6px;
+	margin:4px 0 4px;
 	padding:0;
 	position:relative;
 }
@@ -2034,8 +2034,6 @@ img.k-bbcode:hover {
 #kbbcode-toolbar li a:hover {
 	background-color: #e4e4e4;
 	cursor: pointer;
-	/* margin-top: 4px; 
-	margin-right: 1px;*/
 	padding: 0px;
 }
 
@@ -2075,6 +2073,21 @@ ul#kbbcode-toolbar li a#kbbcode-color_button {
 	background-position:-126px 0;
 }
 
+ul#kbbcode-toolbar li a#kbbcode-spoiler_button {
+	background-position:-144px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-hide_button {
+	background-position:-162px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-separator1 {
+	background-position:-400px 0;
+	width: 8px;
+	background-color: #eeeeee;
+	cursor: default;
+}
+
 ul#kbbcode-toolbar li a#kbbcode-ulist_button {
 	background-position:-180px 0;
 }
@@ -2083,8 +2096,65 @@ ul#kbbcode-toolbar li a#kbbcode-olist_button {
 	background-position:-198px 0;
 }
 
+ul#kbbcode-toolbar li a#kbbcode-list_button {
+	background-position:-216px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-left_button {
+	background-position:-234px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-center_button {
+	background-position:-252px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-right_button {
+	background-position:-270px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-separator2 {
+	background-position:-400px 0;
+	width: 8px;
+	background-color: #eeeeee;
+	cursor: default;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-quote_button {
+	background-position:-288px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-code_button {
+	background-position:-306px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-separator3 {
+	background-position:-400px 0;
+	width: 8px;
+	background-color: #eeeeee;
+	cursor: default;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-image_button {
+	background-position:-324px 0;
+}
+
 ul#kbbcode-toolbar li a#kbbcode-link_button {
 	background-position:-342px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-separator4 {
+	background-position:-400px 0;
+	width: 8px;
+	background-color: #eeeeee;
+	cursor: default;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-ebay_button {
+	background-position:-360px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-video_button {
+	background-position:-378px 0;
 }
 
 /*

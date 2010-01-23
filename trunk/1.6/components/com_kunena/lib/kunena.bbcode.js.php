@@ -33,44 +33,48 @@ window.addEvent('domready', function() {
 nawte = new nawte('kbbcode-message', 'kbbcode-toolbar');
 
 nawte.addFunction('Bold', function() {
-	selection = this.getSelection();
-	this.replaceSelection('[b]' + selection + '[/b]');
+	this.replaceSelection('[b]' + this.getSelection() + '[/b]');
 }, {'id': 'kbbcode-bold_button'});
 
 nawte.addFunction('Italic', function() {
-	selection = this.getSelection();
-	this.replaceSelection('[i]' + selection + '[/i]');
+	this.replaceSelection('[i]' + this.getSelection() + '[/i]');
 }, {'id': 'kbbcode-italic_button'});
 
 nawte.addFunction('Underline', function() {
-	selection = this.getSelection();
-	this.replaceSelection('[u]' + selection + '[/u]');
+	this.replaceSelection('[u]' + this.getSelection() + '[/u]');
 }, {'id': 'kbbcode-underline_button'});
 
 nawte.addFunction('Strike', function() {
-	selection = this.getSelection();
-	this.replaceSelection('[strike]' + selection + '[/strike]');
+	this.replaceSelection('[strike]' + this.getSelection() + '[/strike]');
 }, {'id': 'kbbcode-strike_button'});
 
 nawte.addFunction('Sub', function() {
-	selection = this.getSelection();
-	this.replaceSelection('[sub]' + selection + '[/sub]');
+	this.replaceSelection('[sub]' + this.getSelection() + '[/sub]');
 }, {'id': 'kbbcode-sub_button'});
 
 nawte.addFunction('Sup', function() {
-	selection = this.getSelection();
-	this.replaceSelection('[sup]' + selection + '[/sup]');
+	this.replaceSelection('[sup]' + this.getSelection() + '[/sup]');
 }, {'id': 'kbbcode-sup_button'});
 
 nawte.addFunction('Size', function() {
-	selection = this.getSelection();
-	this.replaceSelection('[size=4]' + selection + '[/size]');
+	this.replaceSelection('[size=4]' + this.getSelection() + '[/size]');
 }, {'id': 'kbbcode-size_button'});
 
 nawte.addFunction('Color', function() {
 	selection = this.getSelection();
 	this.replaceSelection('[color=#FF6600]' + selection + '[/color]');
 }, {'id': 'kbbcode-color_button'});
+
+nawte.addFunction('Spoiler', function() {
+	this.replaceSelection('[spoiler]' + this.getSelection() + '[/spoiler]');
+}, {'id': 'kbbcode-spoiler_button'});
+
+nawte.addFunction('Hide', function() {
+	this.replaceSelection('[hide]' + this.getSelection() + '[/hide]');
+}, {'id': 'kbbcode-hide_button'});
+
+nawte.addFunction('#', function() {
+}, {'id': 'kbbcode-separator1'});
 
 //adding a "List" button that will create a new list if nothing is selected
 //or make each line of the selection into a list item if some text is selected...
@@ -114,6 +118,40 @@ nawte.addFunction("oList", function() {
 	}
 }, {'id': 'kbbcode-olist_button'});
 
+nawte.addFunction('List', function() {
+	this.replaceSelection('[li]' + this.getSelection() + '[/li]');
+}, {'id': 'kbbcode-list_button'});
+
+nawte.addFunction('Left', function() {
+	this.replaceSelection('[left]' + this.getSelection() + '[/left]');
+}, {'id': 'kbbcode-left_button'});
+
+nawte.addFunction('Center', function() {
+	this.replaceSelection('[center]' + this.getSelection() + '[/center]');
+}, {'id': 'kbbcode-center_button'});
+
+nawte.addFunction('Right', function() {
+	this.replaceSelection('[right]' + this.getSelection() + '[/right]');
+}, {'id': 'kbbcode-right_button'});
+
+nawte.addFunction('#', function() {
+}, {'id': 'kbbcode-separator2'});
+
+nawte.addFunction('Quote', function() {
+	this.replaceSelection('[quote]' + this.getSelection() + '[/quote]');
+}, {'id': 'kbbcode-quote_button'});
+
+nawte.addFunction('Code', function() {
+	this.replaceSelection('[code]' + this.getSelection() + '[/code]');
+}, {'id': 'kbbcode-code_button'});
+
+nawte.addFunction('#', function() {
+}, {'id': 'kbbcode-separator3'});
+
+nawte.addFunction('Image', function() {
+	this.replaceSelection('[img]' + this.getSelection() + '[/img]');
+}, {'id': 'kbbcode-image_button'});
+
 nawte.addFunction('Link', function() {
 	var selection = this.getSelection();
 var response = prompt('Enter Link URL','');
@@ -122,7 +160,16 @@ if(response == null)
 this.replaceSelection('[url=' +  (response == '' ? 'http://link_url/' : response) + ']' + (selection == '' ? 'Link Text' : selection) + '[/url]');
 }, {'id': 'kbbcode-link_button'});
 
+nawte.addFunction('#', function() {
+}, {'id': 'kbbcode-separator4'});
 
+nawte.addFunction('eBay', function() {
+	this.replaceSelection('[ebay]' + this.getSelection() + '[/ebay]');
+}, {'id': 'kbbcode-ebay_button'});
+
+nawte.addFunction('Video', function() {
+	this.replaceSelection('[video]' + this.getSelection() + '[/video]');
+}, {'id': 'kbbcode-video_button'});
 
 });
 

@@ -59,7 +59,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 			<table width="100%" cellspacing="1" cellpadding="5">
 				<tbody>
 					<tr>
-						<td class="kforum-login-box">
+						<td align="left" class="kforum-login-box">
 						<table cellspacing="1" cellpadding="4" align="center" style="width: 100%;">
 							<tbody>
 								<tr>
@@ -98,7 +98,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 						</td>
 					</tr>
 					<tr>
-			<td>
+			<td align="left">
 				<input type="submit" name="Submit" class="kbutton" value="<?php echo _PROFILEBOX_LOGIN; ?>" />
 				<input type="hidden" name="option" value="com_user" />
 				<input type="hidden" name="task" value="login" />
@@ -132,7 +132,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 			<table width="100%" cellspacing="1" cellpadding="5">
 				<tbody>
 					<tr>
-						<td>
+						<td align="left">
 						<p><?php
 						$usersConfig = &JComponentHelper::getParams ( 'com_users' );
 						if ($usersConfig->get ( 'allowUserRegistration' )) {
@@ -160,7 +160,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 							if ($usersConfig->get ( 'allowUserRegistration' )) :
 							?>
 					<tr>
-						<td>
+						<td align="left">
 							<span class = "kbutton"><?php echo CKunenaLogin::getRegisterLink (); ?></span>
 						</td>
 					</tr>

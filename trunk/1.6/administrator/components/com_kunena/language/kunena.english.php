@@ -26,6 +26,30 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+// New bbcode editor strings
+DEFINE('_KUNENA_EDITOR_BOLD', 'Bold');
+DEFINE('_KUNENA_EDITOR_ITALIC', 'Italic');
+DEFINE('_KUNENA_EDITOR_UNDERL', 'Underline');
+DEFINE('_KUNENA_EDITOR_STRIKE', 'Strikethrough');
+DEFINE('_KUNENA_EDITOR_SUB', 'Subscript');
+DEFINE('_KUNENA_EDITOR_SUP', 'Superscript');
+DEFINE('_KUNENA_EDITOR_QUOTE', 'Quote');
+DEFINE('_KUNENA_EDITOR_CODE', 'Code');
+DEFINE('_KUNENA_EDITOR_ULIST', 'Unordered List');
+DEFINE('_KUNENA_EDITOR_OLIST', 'Ordered List');
+DEFINE('_KUNENA_EDITOR_LIST', 'List Item');
+DEFINE('_KUNENA_EDITOR_LEFT', 'Align left');
+DEFINE('_KUNENA_EDITOR_CENTER', 'Align center');
+DEFINE('_KUNENA_EDITOR_RIGHT', 'Align right');
+DEFINE('_KUNENA_EDITOR_IMAGE', 'Image link');
+DEFINE('_KUNENA_EDITOR_LINK', 'Link');
+DEFINE('_KUNENA_EDITOR_HIDE','Hide text from Guests');
+DEFINE('_KUNENA_EDITOR_SPOILER', 'Spoiler');
+DEFINE('_KUNENA_EDITOR_COLOR', 'Color');
+DEFINE('_KUNENA_EDITOR_FONTSIZE', 'Fontsize');
+DEFINE('_KUNENA_EDITOR_EBAY', 'eBay Item');
+DEFINE('_KUNENA_EDITOR_VIDEO', 'Video');
+
 // Profilebox and Loginbox
 define('_PROFILEBOX_FORGOT_USERNAME', 'Forgot your username?');
 define('_PROFILEBOX_FORGOT_PASSWORD', 'Forgot your password?');
@@ -381,16 +405,16 @@ DEFINE('_KUNENA_EDITOR_HELPLINE_SUB', 'Subscript Text: [sub]Text[/sub]');
 DEFINE('_KUNENA_EDITOR_HELPLINE_SUP', 'Superscript Text: [sup]Text[/sup]');
 DEFINE('_KUNENA_EDITOR_HELPLINE_QUOTE', 'Quote text: [quote]text[/quote]');
 DEFINE('_KUNENA_EDITOR_HELPLINE_CODE', 'Code display: [code]code[/code]');
-DEFINE('_KUNENA_EDITOR_HELPLINE_UL', 'Unordered List: [ul] [li]text[/li] [/ul] - Tip: a list must contain List Items');
-DEFINE('_KUNENA_EDITOR_HELPLINE_OL', 'Ordered List: [ol] [li]text[/li] [/ol] - Tip: a list must contain List Items');
-DEFINE('_KUNENA_EDITOR_HELPLINE_LI', 'List Item: [li] list item [/li]');
-DEFINE('_KUNENA_EDITOR_HELPLINE_ALIGN_LEFT', 'Align left: [left]Text[/left]');
-DEFINE('_KUNENA_EDITOR_HELPLINE_ALIGN_CENTER', 'Align center: [center]Text[/center]');
-DEFINE('_KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT', 'Align right: [right]Text[/right]');
-DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINK', 'Image link: [img size=400]http://www.google.com/images/web_logo_left.gif[/img]');
-DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE', 'Image link: Size');
-DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINKURL', 'Image link: URL of the image link');
-DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY', 'Image link: Apply image link');
+DEFINE('_KUNENA_EDITOR_HELPLINE_ULIST', 'Unordered List: [ul] [li]text[/li] [/ul] - Tip: a list must contain List Items');
+DEFINE('_KUNENA_EDITOR_HELPLINE_OLIST', 'Ordered List: [ol] [li]text[/li] [/ol] - Tip: a list must contain List Items');
+DEFINE('_KUNENA_EDITOR_HELPLINE_LIST', 'List Item: [li] list item [/li]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_LEFT', 'Align left: [left]Text[/left]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_CENTER', 'Align center: [center]Text[/center]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_RIGHT', 'Align right: [right]Text[/right]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGE', 'Image link: [img size=400]http://www.google.com/images/web_logo_left.gif[/img]');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGESIZE', 'Image link: Size');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGEURL', 'Image link: URL of the image link');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGEAPPLY', 'Image link: Apply image link');
 DEFINE('_KUNENA_EDITOR_HELPLINE_LINK', 'Link: [url=http://www.zzz.com/]This is a link[/url]');
 DEFINE('_KUNENA_EDITOR_HELPLINE_LINKURL', 'Link: URL of the link');
 DEFINE('_KUNENA_EDITOR_HELPLINE_LINKTEXT', 'Link: Text / Description of the link');

@@ -39,55 +39,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			</td>
 		</tr>
 		<tr>
-			<td class="k-postbuttons"><img class="k-bbcode" title="Bold"
-				name="addbbcode0"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_bold.png"
-				alt="B" onclick="bbfontstyle('[b]', '[/b]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_BOLD )) ;
-				?>')" />
-			<img class="k-bbcode" title="Italic" name="addbbcode2"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_italic.png"
-				alt="I" onclick="bbfontstyle('[i]', '[/i]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_ITALIC )) ;
-				?>')" />
-			<img class="k-bbcode" title="Underline" name="addbbcode4"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_underline.png"
-				alt="U" onclick="bbfontstyle('[u]', '[/u]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_UNDERL )) ;
-				?>')" />
-			<img class="k-bbcode" title="Strike through" name="addbbcode4"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_strike.png"
-				alt="S" onclick="bbfontstyle('[strike]', '[/strike]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_STRIKE )) ;
-				?>')" />
-			<img class="k-bbcode" title="Subscript" name="addbbcode4"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_sub.png"
-				alt="Sub" onclick="bbfontstyle('[sub]', '[/sub]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_SUB )) ;
-				?>')" />
-			<img class="k-bbcode" title="Supperscript" name="addbbcode4"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_sup.png"
-				alt="Sup" onclick="bbfontstyle('[sup]', '[/sup]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_SUP )) ;
-				?>')" />
+			<td class="k-postbuttons">
 			<img class="k-bbcode" name="addbbcode62"
 				src="<?php
 				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
@@ -129,154 +81,17 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_COLOR )) ;
 				?>')" />
-			<?php
-			if ($kunena_config->showspoilertag) {
-				?> <img class="k-bbcode"
-				name="addbbcode40"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>spoiler.png"
-				alt="Spoiler" onclick="bbfontstyle('[spoiler]', '[/spoiler]')"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_SPOILER )) ;
-				?>')" />
-			<?php
-			}
-			?> <img class="k-bbcode" name="addbbcode24"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>group_key.png"
-				alt="Hide" onclick="bbfontstyle('[hide]', '[/hide]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_HIDE )) ;
-				?>')" />
-			<img class="k-bbcode" alt=""
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>spacer.png"
-				style="cursor: auto;" /> <img class="k-bbcode" name="addbbcode10"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_list_bullets.png"
-				alt="ul" onclick="bbfontstyle('[ul]', '[/ul]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_UL )) ;
-				?>')" />
-			<img class="k-bbcode" name="addbbcode12"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_list_numbers.png"
-				alt="ol" onclick="bbfontstyle('[ol]', '[/ol]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_OL )) ;
-				?>')" />
-			<img class="k-bbcode" name="addbbcode18"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_list_none.png"
-				alt="li" onclick="bbfontstyle('[li]', '[/li]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_LI )) ;
-				?>')" />
-			<img class="k-bbcode" name="addbbcode4"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_align_left.png"
-				alt="left" onclick="bbfontstyle('[left]', '[/left]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_ALIGN_LEFT )) ;
-				?>')" />
-			<img class="k-bbcode" name="addbbcode4"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_align_center.png"
-				alt="center" onclick="bbfontstyle('[center]', '[/center]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_ALIGN_CENTER )) ;
-				?>')" />
-			<img class="k-bbcode" name="addbbcode4"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_align_right.png"
-				alt="right" onclick="bbfontstyle('[right]', '[/right]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT )) ;
-				?>')" />
-			<img class="k-bbcode" alt=""
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>spacer.png"
-				style="cursor: auto;" /> <img class="k-bbcode" name="addbbcode6"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>comment.png"
-				alt="Quote" onclick="bbfontstyle('[quote]', '[/quote]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_QUOTE )) ;
-				?>')" />
-			<img class="k-bbcode" name="addbbcode8"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>code.png"
-				alt="Code" onclick="bbfontstyle('[code]', '[/code]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_CODE )) ;
-				?>')" />
-			<img class="k-bbcode" alt=""
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>spacer.png"
-				style="cursor: auto;" /> <img class="k-bbcode" name="addbbcode14"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>picture_link.png"
-				alt="Img" onclick="javascript:dE('image');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_IMAGELINK )) ;
-				?>')" />
-			<img class="k-bbcode" name="addbbcode16"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>link_url.png"
-				alt="URL" onclick="javascript:dE('link');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_LINK )) ;
-				?>')" />
-			<?php
-			if ($kunena_config->showebaytag) {
-				?> <img class="k-bbcode"
-				name="addbbcode20"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>ebay.png"
-				alt="Ebay" onclick="bbfontstyle('[ebay]', '[/ebay]')"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_EBAY )) ;
-				?>')" />
-			<?php
-			}
-			?> <?php
-			if ($kunena_config->showvideotag) {
-				?> &nbsp;<span
-				style="white-space: nowrap;"><img class="k-bbcode" alt="video"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>film.png"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEO )) ;
-				?>')"
-				onclick="javascript:dE('video');" /></span> <?php
-			}
-			?></td>
+			</td>
 		</tr>
 		<!-- Start extendable fields -->
 		<tr>
 			<td class="k-postbuttons">
- 			<div id="k-color_palette" style="display: none;"><script
-				type="text/javascript">
+<!-- 			<div id="k-color_palette" style="display: none;"><script
+ 				type="text/javascript">
 								function change_palette() {dE('k-color_palette');}
 								colorPalette('h', '4%', '15px');
 							</script></div>
+ -->
 			<div id="link" style="display: none;"><?php
 			echo (_KUNENA_EDITOR_LINK_URL) ;
 			?><input
@@ -432,7 +247,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			}
 			reset ( $this->kunena_emoticons_rowset );
 			foreach ( $this->kunena_emoticons_rowset as $data ) {
-				echo '<img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data ['location'] . '" border="0" alt="' . $data ['code'] . ' " title="' . $data ['code'] . ' " onclick="nawte.insert(\''. $data ['code'] .' \', \'after\', true);" style="cursor:pointer"/> ';
+				echo '<img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data ['location'] . '" border="0" alt="' . $data ['code'] . ' " title="' . $data ['code'] . ' " onclick="kbbcode.insert(\''. $data ['code'] .' \', \'after\', true);" style="cursor:pointer"/> ';
 			}
 			?>
 			</div>

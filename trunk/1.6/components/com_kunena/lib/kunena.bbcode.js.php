@@ -426,49 +426,61 @@ kbbcode.addFunction('Bold', function() {
 }, {'id': 'kbbcode-bold_button',
 	'title': '<?php echo _KUNENA_EDITOR_BOLD;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_BOLD;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_BOLD;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_BOLD;?>")'});
 
 kbbcode.addFunction('Italic', function() {
 	this.replaceSelection('[i]' + this.getSelection() + '[/i]');
 }, {'id': 'kbbcode-italic_button',
 	'title': '<?php echo _KUNENA_EDITOR_ITALIC;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_ITALIC;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_ITALIC;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_ITALIC;?>")'});
 
 kbbcode.addFunction('Underline', function() {
 	this.replaceSelection('[u]' + this.getSelection() + '[/u]');
 }, {'id': 'kbbcode-underline_button',
 	'title': '<?php echo _KUNENA_EDITOR_UNDERL;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_UNDERL;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_UNDERL;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_UNDERL;?>")'});
 
 kbbcode.addFunction('Strike', function() {
 	this.replaceSelection('[strike]' + this.getSelection() + '[/strike]');
 }, {'id': 'kbbcode-strike_button',
 	'title': '<?php echo _KUNENA_EDITOR_STRIKE;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_STRIKE;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_STRIKE;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_STRIKE;?>")'});
 
 kbbcode.addFunction('Sub', function() {
 	this.replaceSelection('[sub]' + this.getSelection() + '[/sub]');
 }, {'id': 'kbbcode-sub_button',
 	'title': '<?php echo _KUNENA_EDITOR_SUB;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_SUB;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_SUB;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_SUB;?>")'});
 
 kbbcode.addFunction('Sup', function() {
 	this.replaceSelection('[sup]' + this.getSelection() + '[/sup]');
 }, {'id': 'kbbcode-sup_button',
 	'title': '<?php echo _KUNENA_EDITOR_SUP;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_SUP;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_SUP;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_SUP;?>")'});
 
 kbbcode.addFunction('Size', function() {
-	this.replaceSelection('[size=4]' + this.getSelection() + '[/size]');
+
+	o = $("kbbcode-size-options");
+	if (o) {
+		o.set("style", "display: block;");
+//		o.set("style", "display: table-row;");
+
+
+
+	}
+
+
+
+//	this.replaceSelection('[size=4]' + this.getSelection() + '[/size]');
 }, {'id': 'kbbcode-size_button',
 	'title': '<?php echo _KUNENA_EDITOR_FONTSIZE;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZE;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZE;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZE;?>")'});
 
 kbbcode.addFunction('Color', function() {
 	selection = this.getSelection();
@@ -476,7 +488,7 @@ kbbcode.addFunction('Color', function() {
 }, {'id': 'kbbcode-color_button',
 	'title': '<?php echo _KUNENA_EDITOR_COLOR;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_COLOR;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_COLOR;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_COLOR;?>")'});
 
 <?php
 if ($kunena_config->showspoilertag) {
@@ -486,7 +498,7 @@ kbbcode.addFunction('Spoiler', function() {
 }, {'id': 'kbbcode-spoiler_button',
 	'title': '<?php echo _KUNENA_EDITOR_SPOILER;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_SPOILER;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_SPOILER;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_SPOILER;?>")'});
 <?php
 }
 ?>
@@ -496,7 +508,7 @@ kbbcode.addFunction('Hide', function() {
 }, {'id': 'kbbcode-hide_button',
 	'title': '<?php echo _KUNENA_EDITOR_HIDE;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_HIDE;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_HIDE;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_HIDE;?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator1'});
@@ -521,7 +533,7 @@ kbbcode.addFunction("uList", function() {
 }, {'id': 'kbbcode-ulist_button',
 	'title': '<?php echo _KUNENA_EDITOR_ULIST;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_ULIST;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_ULIST;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_ULIST;?>")'});
 
 kbbcode.addFunction("oList", function() {
 	selection = this.getSelection();
@@ -539,35 +551,35 @@ kbbcode.addFunction("oList", function() {
 }, {'id': 'kbbcode-olist_button',
 	'title': '<?php echo _KUNENA_EDITOR_OLIST;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_OLIST;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_OLIST;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_OLIST;?>")'});
 
 kbbcode.addFunction('List', function() {
 	this.replaceSelection('[li]' + this.getSelection() + '[/li]');
 }, {'id': 'kbbcode-list_button',
 	'title': '<?php echo _KUNENA_EDITOR_LIST;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_LIST;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_LIST;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_LIST;?>")'});
 
 kbbcode.addFunction('Left', function() {
 	this.replaceSelection('[left]' + this.getSelection() + '[/left]');
 }, {'id': 'kbbcode-left_button',
 	'title': '<?php echo _KUNENA_EDITOR_LEFT;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_LEFT;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_LEFT;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_LEFT;?>")'});
 
 kbbcode.addFunction('Center', function() {
 	this.replaceSelection('[center]' + this.getSelection() + '[/center]');
 }, {'id': 'kbbcode-center_button',
 	'title': '<?php echo _KUNENA_EDITOR_CENTER;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_CENTER;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_CENTER;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_CENTER;?>")'});
 
 kbbcode.addFunction('Right', function() {
 	this.replaceSelection('[right]' + this.getSelection() + '[/right]');
 }, {'id': 'kbbcode-right_button',
 	'title': '<?php echo _KUNENA_EDITOR_RIGHT;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_RIGHT;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_RIGHT;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_RIGHT;?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator2'});
@@ -577,14 +589,14 @@ kbbcode.addFunction('Quote', function() {
 }, {'id': 'kbbcode-quote_button',
 	'title': '<?php echo _KUNENA_EDITOR_QUOTE;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_QUOTE;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_QUOTE;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_QUOTE;?>")'});
 
 kbbcode.addFunction('Code', function() {
 	this.replaceSelection('[code]' + this.getSelection() + '[/code]');
 }, {'id': 'kbbcode-code_button',
 	'title': '<?php echo _KUNENA_EDITOR_CODE;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_CODE;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_CODE;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_CODE;?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator3'});
@@ -594,7 +606,7 @@ kbbcode.addFunction('Image', function() {
 }, {'id': 'kbbcode-image_button',
 	'title': '<?php echo _KUNENA_EDITOR_IMAGE;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_IMAGE;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_IMAGE;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_IMAGE;?>")'});
 
 kbbcode.addFunction('Link', function() {
 	var selection = this.getSelection();
@@ -605,7 +617,7 @@ this.replaceSelection('[url=' +  (response == '' ? 'http://link_url/' : response
 }, {'id': 'kbbcode-link_button',
 	'title': '<?php echo _KUNENA_EDITOR_LINK;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_LINK;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_LINK;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_LINK;?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator4'});
@@ -618,7 +630,7 @@ kbbcode.addFunction('eBay', function() {
 }, {'id': 'kbbcode-ebay_button',
 	'title': '<?php echo _KUNENA_EDITOR_EBAY;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_EBAY;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_EBAY;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_EBAY;?>")'});
 <?php
 }
 ?>
@@ -631,7 +643,7 @@ kbbcode.addFunction('Video', function() {
 }, {'id': 'kbbcode-video_button',
 	'title': '<?php echo _KUNENA_EDITOR_VIDEO;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_VIDEO;?>',
-	'onmouseover' : 'javascript:$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_VIDEO;?>")'});
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_VIDEO;?>")'});
 <?php
 }
 ?>

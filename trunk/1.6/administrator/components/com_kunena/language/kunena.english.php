@@ -50,6 +50,10 @@ DEFINE('_KUNENA_EDITOR_FONTSIZE', 'Font size');
 DEFINE('_KUNENA_EDITOR_FONTSIZESELECTION', 'Select font size');
 DEFINE('_KUNENA_EDITOR_EBAY', 'eBay Item');
 DEFINE('_KUNENA_EDITOR_VIDEO', 'Video');
+DEFINE('_KUNENA_EDITOR_APPLY_BUTTON', 'Apply');
+DEFINE('_KUNENA_EDITOR_HIDE_BUTTON', 'Hide');
+DEFINE('_KUNENA_EDITOR_HELPLINE_FONTSIZE_APPLY', 'Apply font size to current text selection');
+DEFINE('_KUNENA_EDITOR_HELPLINE_FONTSIZE_HIDE', 'Hide font size selection');
 
 // Profilebox and Loginbox
 define('_PROFILEBOX_FORGOT_USERNAME', 'Forgot your username?');
@@ -424,7 +428,7 @@ DEFINE('_KUNENA_EDITOR_HELPLINE_HIDE','Hidden text: [hide]any hidden text[/hide]
 DEFINE('_KUNENA_EDITOR_HELPLINE_SPOILER', 'Spoiler: Text is only shown after you click the spoiler');
 DEFINE('_KUNENA_EDITOR_HELPLINE_COLOR', 'Color: [color=#FF6600]text[/color]');
 DEFINE('_KUNENA_EDITOR_HELPLINE_FONTSIZE', 'Fontsize: [size=1]text size[/size] - Tip: sizes range from 1 to 5');
-DEFINE('_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION', 'Fontsize: Select Fontsize, mark text and press the button left from here');
+DEFINE('_KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION', 'Fontsize: Select Fontsize and Apply to current selection');
 DEFINE('_KUNENA_EDITOR_HELPLINE_EBAY', 'eBay: [ebay]ItemId[/ebay]');
 DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEO', 'Video: Select Provider or URL - modus');
 DEFINE('_KUNENA_EDITOR_HELPLINE_VIDEOSIZE', 'Video: Size of the video');

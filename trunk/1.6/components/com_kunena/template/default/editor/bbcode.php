@@ -38,38 +38,14 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				<ul id="kbbcode-toolbar"></ul>
 			</td>
 		</tr>
-		<tr>
-			<td class="k-postbuttons">
-			<img class="k-bbcode" name="addbbcode62"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>text_smallcaps.png"
-				alt="<?php
-				echo (_SMILE_SIZE) ;
-				?>"
-				onclick="bbfontstyle('[size=' + document.postform.addbbcode22.options[document.postform.addbbcode22.selectedIndex].value + ']', '[/size]');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_FONTSIZE )) ;
-				?>')" />
-			<img id="ueberschrift" class="k-bbcode" name="addbbcode20"
-				src="<?php
-				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
-				?>color_swatch.png"
-				alt="<?php
-				echo (_SMILE_COLOUR) ;
-				?>"
-				onclick="javascript:change_palette();"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_COLOR )) ;
-				?>')" />
-			</td>
-		</tr>
 		<!-- Start extendable fields -->
 		<tr>
 			<td class="k-postbuttons">
-			<select id="kbbcode-size-selector" style="display: none;" class="kslcbox" name="kbbcode-size-selector"
+			<div id="kbbcode-size-options" style="display: none;"><?php
+			echo (_KUNENA_EDITOR_FONTSIZESELECTION) ;?>&nbsp;
+			<select id="kbbcode-size-selector" name="kbbcode-size-selector"
 				title="<?php echo _KUNENA_EDITOR_FONTSIZESELECTION;?>"
-				onmouseover="javascript:$('helpbox').set('value',
+				onmouseover="$('helpbox').set('value',
 								'<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION;?>')">
 				<option value="1"><?php
 				echo (_SIZE_VSMALL) ;
@@ -86,7 +62,21 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				<option value="5"><?php
 				echo (_SIZE_VBIG) ;
 				?></option>
-			</select>
+			</select>&nbsp;
+			<input type="button" name="Apply"
+				value="<?php
+				echo (_KUNENA_EDITOR_APPLY_BUTTON) ;
+				?>"
+				onclick="kbbcode.replaceSelection('[size='+$('kbbcode-size-selector').get('value')+']'+
+						 kbbcode.getSelection()+'[/size]')"
+				onmouseover="$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_APPLY;?>')" />&nbsp;
+			<input type="button" name="Hide"
+				value="<?php
+				echo (_KUNENA_EDITOR_HIDE_BUTTON) ;
+				?>"
+				onclick="$('kbbcode-size-options').set('style', 'display: none;')"
+				onmouseover="$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_HIDE;?>')" />
+			</div>
 
 <!-- 			<div id="k-color_palette" style="display: none;"><script
  				type="text/javascript">
@@ -229,7 +219,10 @@ $kunena_config = & CKunenaConfig::getInstance ();
 									else {bbfontstyle('[video' + video + ']'+ document.postform.videourl.value,'[/video]');}
 								}
 							</script></div>
-
+			</td>
+		</tr>
+		<tr>
+			<td class="k-postbuttons">
 			<div id="smilie"><?php
 			$kunena_db = &JFactory::getDBO ();
 			$kunena_db->setQuery ( "SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id" );

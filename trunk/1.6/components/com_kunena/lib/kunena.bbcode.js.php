@@ -638,13 +638,13 @@ kbbcode.addFunction('Video', function() {
 });
 
 <?php
-// Add Ajax/JSon preview support
+// Add Ajax/Json preview support
 ?>
 window.addEvent('domready', function() {
 	var preview = $("preview_button");
 	if (preview) {
 		preview.addEvent("click", function(){
-		previewRequest = new Request.JSON({url: "<?php CKunenaLink::GetJsonURL('preview');?>",
+		previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview');?>",
 		  							onSuccess: function(response){
 			message = $("preview_message");
 			if (message) {

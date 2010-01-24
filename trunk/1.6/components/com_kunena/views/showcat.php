@@ -159,7 +159,7 @@ class CKunenaShowcat {
 
 		$this->headerdesc = CKunenaTools::parseBBCode ( $this->objCatInfo->headerdesc );
 
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0 && ($this->my->id > 0 || $this->config->pubwrite))) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0)) {
 			//this user is allowed to post a new topic:
 			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', _KUNENA_BUTTON_NEW_TOPIC ), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_NEW_TOPIC_LONG );
 		}

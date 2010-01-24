@@ -552,6 +552,11 @@ class CKunenaLink
     {
     	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=reset',$name, '', $rel);
     }
+    
+    function GetLostuserLink($name, $rel='nofollow')
+    {
+    	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=remind',$name, '', $rel);
+    }
 
     //
     // Macro functions that build more complex html output with embedded links

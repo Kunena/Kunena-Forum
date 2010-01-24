@@ -26,6 +26,16 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+// Profilebox and Loginbox
+define('_PROFILEBOX_FORGOT_USERNAME', 'Forgot your username?');
+define('_PROFILEBOX_FORGOT_PASSWORD', 'Forgot your password?');
+define('_PROFILEBOX_CREATE_ACCOUNT', 'Create an account');
+define('_PROFILEBOX_REMEMBER_ME', 'Remember Me');
+define('_KUNENA_LOGIN_MESSAGE', 'In order to login you must be registered. Registering takes only a few moments but gives you increased capabilities. The board administrator may also grant additional permissions to registered users. Before you register please ensure you are familiar with our terms of use and related policies. Please ensure you read any forum rules as you navigate around the board.');
+define('_KUNENA_LOGIN_FORUM', 'Only community members can participate in forum threads. You must register or log in to contribute.');
+define('_KUNENA_REG_NOTALLOWED', 'New registration on this site is not possible.<br />If you want to register, contact the site administrator via contact form.<br />If you are already registered enter your Username and Password in the form and click Login.');
+define('_KUNENA_FORUM_MESSAGE', 'Forum message');
+
 // Orphaned categories
 define('_KUNENA_CATEGORY_ORPHAN', 'ORPHAN');
 define('_KUNENA_CATEGORY_ORPHAN_DESC', 'You have orphaned or lost categories! Please change their parent to be a valid category.');

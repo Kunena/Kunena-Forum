@@ -94,7 +94,12 @@ if ($id || $parentid) {
 $kunena_is_admin = CKunenaTools::isAdmin ();
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
 if (($kunena_my->id==0 && !$kunena_config->pubwrite) || (empty($msg_cat->catparent) && $do != 'reply') && (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin)) {
-	echo _KUNENA_NO_ACCESS;
+	//echo _KUNENA_NO_ACCESS;
+		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'login' . DS . 'login.php')) {
+			include (KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'login' . DS . 'login.php');
+		} else {
+			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin' . DS . 'login' . DS . 'login.php');
+		}
 	return;
 }
 

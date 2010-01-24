@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+24-Jan-2010 @quila
++ [#19233]Add Kunena Login into the new default template
+
 23-Jan-2010 fxstein
 + [#19380] New bbcode editor (part 3) - All Smilies added, message name regression fixed
 

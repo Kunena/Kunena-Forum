@@ -188,7 +188,7 @@ class CKunenaView {
 		}
 
 		//data ready display now
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || (($this->kunena_forum_locked == 0 && $this->topicLocked == 0) && ($this->my->id > 0 || $this->config->pubwrite))) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0 && $this->topicLocked == 0)) {
 			//this user is allowed to reply to this topic
 			$this->thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->catid, $this->thread, CKunenaTools::showButton ( 'reply', _KUNENA_BUTTON_REPLY_TOPIC ), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_REPLY_TOPIC_LONG );
 		}
@@ -219,7 +219,7 @@ class CKunenaView {
 		// FINISH: FAVORITES
 
 
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0 && ($this->my->id > 0 || $this->config->pubwrite))) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0)) {
 			//this user is allowed to post a new topic
 			$this->thread_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', _KUNENA_BUTTON_NEW_TOPIC ), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_NEW_TOPIC_LONG );
 		}
@@ -687,7 +687,7 @@ class CKunenaView {
 		$this->msg_html->text = CKunenaTools::parseBBCode ( $this->kunena_message->message );
 		$this->msg_html->signature = CKunenaTools::parseBBCode ( $this->userinfo->signature );
 
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || (($this->kunena_forum_locked == 0 && $this->topicLocked == 0) && ($this->my->id > 0 || $this->config->pubwrite))) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0 && $this->topicLocked == 0)) {
 			//user is allowed to reply/quote
 			if ($this->my->id > 0) {
 				$this->msg_html->quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'reply', _KUNENA_BUTTON_QUICKREPLY ), 'nofollow', 'buttoncomm btn-left kqr_fire', _KUNENA_BUTTON_QUICKREPLY_LONG, ' id="kqr_sc__' . $this->msg_html->id . '" onclick="return false;"' );

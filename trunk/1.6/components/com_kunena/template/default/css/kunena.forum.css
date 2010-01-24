@@ -516,6 +516,7 @@ td.td-1  {
 #Kunena .klist_actions_goto {
 	height: 28px;
 	padding: 0px 2px 0px 2px;
+	width: 1%;
 }
 
 #Kunena .klist_actions_forum {
@@ -809,6 +810,57 @@ fieldset#search-posts-start select {
 	margin-left: 10px;
 }
 
+/* PROFILEBOX AND LOGINBOX
+----------------------------------------------------------------------------------------------- */
+
+#Kunena .kprofilebox_link {
+	background: url("../images/arrow.png") no-repeat left center;
+	padding-left: 12px;
+	display: inline;
+	padding-right:3px;
+}
+
+#Kunena table.kprofilebox {
+	border-left: 1px solid #BFC3C6;
+}
+
+#Kunena .kprofilebox-left {
+	width: 5%;
+	padding: 8px;
+	border-right: 1px solid #BFC3C6;
+	background: #EEEEEE;
+}
+
+#Kunena .kprofilebox-right {
+	border-left: 1px solid #BFC3C6;
+	padding: 8px;
+}
+
+#Kunena .klogin-box {
+	border: 1px solid #BFC3C6;
+	padding: 8px;
+}
+
+#Kunena td.klogin-box {
+	border: 1px solid #BFC3C6;
+	padding: 15px;
+}
+
+#Kunena .link_block {
+	padding-top: 5px;
+}
+
+#Kunena .kforum-login-box {
+	padding: 10px;
+	color: #000000;
+	background: transparent url("../images/lock.jpg") no-repeat center right;
+}
+
+#Kunena .kforum-login {
+	padding: 10px;
+	border: 1px solid #CCCCCC;
+	color: #000000;
+}
 
 /* CATEGORY LIST
 ----------------------------------------------------------------------------------------------- */

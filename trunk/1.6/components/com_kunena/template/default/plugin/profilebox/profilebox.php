@@ -30,7 +30,7 @@ if ($type == 'logout') {
 				<td valign="top" class="kprofileboxcnt" align="left">
 					<div style="float: left; margin-right:20px;">
 					<div>
-						<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo $this->kunena_username; ?></b>
+						<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></b>
 					</div>
 					<div>
 						<strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span>

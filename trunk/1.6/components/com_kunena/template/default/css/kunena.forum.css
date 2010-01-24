@@ -284,6 +284,18 @@ a:focus {outline: none;}
 	font-size: .833em;
 }
 
+/* COLOR ADMINISTRATOR AND MODERATOR
+----------------------------------------------------------------------------------------------- */
+
+#Kunena .admin {
+	color: #FF0000 !important;
+	font-weight: bold;
+}
+
+#Kunena .moderator {
+	color: #84618B !important;
+	font-weight: bold;
+}
 
 /* MENU
 ----------------------------------------------------------------------------------------------- */

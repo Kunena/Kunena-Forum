@@ -92,7 +92,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 
                   		 <?php if ( $user->showOnline > 0 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <?php echo CKunenaLink::GetProfileLink ( $kunena_config, $user->id, $user->username ); ;?> &nbsp;
 
                 		  <?php  } ?>
 
@@ -117,7 +117,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
 
                   		 <?php if ( $kunena_is_a_moderator && $user->showOnline < 1 ){ ?>
 
-                            <a class = "whois<?php echo $user->moderator;?>" href = "<?php echo CKunenaLink::GetProfileURL($user->id) ;?>" title = "<?php echo $time;?>"> <?php echo $user->username; ?></a> &nbsp;
+                            <?php echo CKunenaLink::GetProfileLink ( $kunena_config, $user->id, $user->username ); ;?> &nbsp;
 
                 		  <?php   } ?>
 

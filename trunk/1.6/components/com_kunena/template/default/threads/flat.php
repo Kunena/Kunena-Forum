@@ -288,7 +288,7 @@ if (count ( $this->messages ) > 0) {
 		}
 
 		if ($leaf->name)
-			echo ' ' . _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, stripslashes ( $this->last_reply [$leaf->id]->name ), 'nofollow', 'topic_latest_post_user' );
+			echo ' ' . _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, stripslashes ( $this->last_reply [$leaf->id]->name ), 'nofollow' );
 		?>
 			</span> <!-- /Latest Post --> <br />
 			<!-- Latest Post Date --> <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($this->last_reply[$leaf->id]->time, 'config_post_dateformat_hover'); ?>"> <?php

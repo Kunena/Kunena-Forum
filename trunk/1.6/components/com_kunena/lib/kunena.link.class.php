@@ -233,6 +233,8 @@ class CKunenaLink
     {
     	if ($userid > 0)
     	{
+    		$class = '';
+			if (CKunenaTools::isAdmin($userid)) { $class = 'admin'; } else if (CKunenaTools::isModerator($userid)) { $class = 'moderator'; } else { $class = ''; }
     		$link = CKunenaLink::GetProfileURL($userid);
     		if (!empty($link)) return CKunenaLink::GetHrefLink($link, $name, '', $rel, $class);
     	}

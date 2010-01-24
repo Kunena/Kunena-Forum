@@ -36,7 +36,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 	</thead>
 	<tbody>
 		<tr class="ksth">
-			<th colspan="2" class="ksectiontableheader">
+			<th colspan="2" class="ksectiontableheader" align="left">
 				<?php echo _KUNENA_LOGIN_FORUM ?>
 			</th>
 		</tr>

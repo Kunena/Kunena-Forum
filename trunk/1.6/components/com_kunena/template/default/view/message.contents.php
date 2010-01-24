@@ -52,12 +52,6 @@ $catid = JRequest::getInt ( 'catid', 0 );
 			<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo $kunena_config->maxsubject; ?>" value="<?php echo html_entity_decode ( $resubject ); ?>" />
 			<textarea class="inputbox" name="message" rows="6" cols="60" style="height: 100px; width: 100%; overflow: auto;">
 			</textarea>
-				<?php // Begin captcha . Thanks Adeptus
-					if ($kunena_config->captcha && $this->my->id < 1) { ?>
-				<?php echo _KUNENA_CAPDESC . '&nbsp;'?>
-				<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align: middle" size="10">&nbsp; <img src="?option=com_kunena&func=showcaptcha" alt="" /><br />
-				<?php } // Finish captcha
-				?>
 			<input type="submit" class="kbutton kqr_fire" name="submit" value="<?php @print (_GEN_CONTINUE) ; ?>" />
 			<input type="button" class="kbutton kqm_cncl_btn" id="cancel__<?php echo $this->msg_html->id; ?>" name="cancel" value="<?php @print (_KUNENA_CANCEL) ; ?>" />
 			<small><em><?php echo _KUNENA_QMESSAGE_NOTE?></em></small>

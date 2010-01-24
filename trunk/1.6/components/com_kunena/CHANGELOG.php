@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+24-Jan-2010 Xillibit
++ [#19395] Add better captcha support with recaptcha (http://www.joomlaez.com/joomla-plugins/joomla-captcha-solution.html)
+
 24-Jan-2010 fxstein
 + [#19380] New bbcode editor (part 4) - All alt, title and helptext strings and conditionals added
 

@@ -133,23 +133,6 @@ if ($kunena_config->floodprotection && ($action == "post" || $do == 'quote' || $
 	}
 }
 
-// Captcha
-if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
-	$number = JRequest::getVar ( 'txtNumber', '', 'POST' );
-
-	if ($message != NULL) {
-		$session = & JFactory::getSession ();
-		$rand = $session->get ( 'kimage_random_value' );
-
-		if (md5 ( $number ) != $rand) {
-			$mess = _KUNENA_CAPERR;
-			echo "<script language='javascript' type='text/javascript'>alert('" . $mess . "')</script>";
-			echo "<script language='javascript' type='text/javascript'>window.history.back()</script>";
-			return;
-		}
-	}
-}
-
 //Let's find out who we're dealing with if a registered user wants to make a post
 if ($kunena_my->id) {
 	$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;

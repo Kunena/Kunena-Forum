@@ -408,18 +408,17 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
             </tr>
            <?php }
         }
-		// Begin captcha . Thanks Adeptus
-
+        //Begin captcha
 		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 			?>
 		<tr class="ksectiontableentry1">
 			<td class="kleftcolumn">&nbsp;<strong><?php
 			echo _KUNENA_CAPDESC;
 			?></strong>&nbsp;</td>
-			<td align="left" valign="middle" height="35px">&nbsp;<input
-				name="txtNumber" type="text" id="txtNumber" value=""
-				class="kbutton" style="vertical-align: top" size="15"> <img
-				src="?option=com_kunena&func=showcaptcha" alt="" /></td>
+			<td align="left" valign="middle" height="35px">
+			<?php global $mainframe;
+$mainframe->triggerEvent('onCaptchaDisplay'); ?>
+			 </td>
 		</tr>
 		<?php
 		}

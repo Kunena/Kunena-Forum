@@ -72,12 +72,6 @@ if (isset ( $_POST ['func'] ) && $func == "showcat") {
 	$kunena_app->close ();
 }
 
-// Image does not work if there are included files (extra characters), so we will do it now:
-if ($func == "showcaptcha") {
-	include (JPATH_ROOT . '/components/com_kunena/template/default/plugin/captcha/randomImage.php');
-	$kunena_app->close ();
-}
-
 // Debug helpers
 include_once (KUNENA_PATH_LIB . DS . "kunena.debug.php");
 // get Kunenas configuration params in

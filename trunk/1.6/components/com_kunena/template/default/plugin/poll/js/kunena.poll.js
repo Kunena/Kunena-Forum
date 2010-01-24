@@ -85,33 +85,36 @@ window.addEvent('domready', function() {
 				mytd2.set('text', textString);						
 		}
 
-	
-	$('kbutton_poll_add').onclick = function () {
-		var nboptionsmax = $('nb_options_allowed').get('value');
-		if(nboptionsmax == "0") {
-		    create_new_field_now();
-		}else {
-			if(number_field <= nboptionsmax){
-		      create_new_field_now();
-		    } else {
-		    	if($('option_error')== undefined){
-		    		insert_text_write(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);
-		    	}	
-		    }
-		}
-	};
-	$('kbutton_poll_rem').onclick = function () {
-		if($('option_error')){
-			$('option_error').dispose();
-		}
-		var matable = $('kpost_message');		
-		if(number_field > 1) {
-	      number_field = number_field - 1 ;
-	      var row = $('option'+number_field);
-	      matable.removeChild(row);
-	      var value = number_field - 1;
-	      valuetotaloptions(value);
-		}
-	};
+	if($('kbutton_poll_add') != undefined) {
+		$('kbutton_poll_add').onclick = function () {
+			var nboptionsmax = $('nb_options_allowed').get('value');
+			if(nboptionsmax == "0") {
+				create_new_field_now();
+			}else {
+				if(number_field <= nboptionsmax){
+					create_new_field_now();
+				} else {
+					if($('option_error')== undefined){
+						insert_text_write(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);
+					}	
+				}
+			}
+		};
+	}
+	if($('kbutton_poll_rem') != undefined) {
+		$('kbutton_poll_rem').onclick = function () {
+			if($('option_error')){
+				$('option_error').dispose();
+			}
+			var matable = $('kpost_message');		
+			if(number_field > 1) {
+				number_field = number_field - 1 ;
+				var row = $('option'+number_field);
+				matable.removeChild(row);
+				var value = number_field - 1;
+				valuetotaloptions(value);
+			}
+		};
+	}
 
 });	

@@ -71,7 +71,16 @@ $script .= '}';
 $script .= '});';
 
 $document->addScriptDeclaration($script);
-
+$cap[0] = explode('-',$document->getLanguage());
+JApplication::addCustomHeadTag('
+      <script type="text/javascript">
+	   <!--
+var RecaptchaOptions = {
+   lang : "'.$cap[0].'"
+};
+//-->
+     </script>
+		');
 ?>
 
 <form class="postform" id="postform"

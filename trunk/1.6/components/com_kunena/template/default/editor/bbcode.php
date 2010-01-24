@@ -51,26 +51,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_FONTSIZE )) ;
 				?>')" />
-			<select id="k-bbcode_size" class="kslcbox" name="addbbcode22"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION )) ;
-				?>')">
-				<option value="1"><?php
-				echo (_SIZE_VSMALL) ;
-				?></option>
-				<option value="2"><?php
-				echo (_SIZE_SMALL) ;
-				?></option>
-				<option value="3" selected="selected"><?php
-				echo (_SIZE_NORMAL) ;
-				?></option>
-				<option value="4"><?php
-				echo (_SIZE_BIG) ;
-				?></option>
-				<option value="5"><?php
-				echo (_SIZE_VBIG) ;
-				?></option>
-			</select> <img id="ueberschrift" class="k-bbcode" name="addbbcode20"
+			<img id="ueberschrift" class="k-bbcode" name="addbbcode20"
 				src="<?php
 				echo KUNENA_LIVEUPLOADEDPATH . '/editor/';
 				?>color_swatch.png"
@@ -86,6 +67,27 @@ $kunena_config = & CKunenaConfig::getInstance ();
 		<!-- Start extendable fields -->
 		<tr>
 			<td class="k-postbuttons">
+			<select id="kbbcode-size-selector" style="display: none;" class="kslcbox" name="kbbcode-size-selector"
+				title="<?php echo _KUNENA_EDITOR_FONTSIZESELECTION;?>"
+				onmouseover="javascript:$('helpbox').set('value',
+								'<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION;?>')">
+				<option value="1"><?php
+				echo (_SIZE_VSMALL) ;
+				?></option>
+				<option value="2"><?php
+				echo (_SIZE_SMALL) ;
+				?></option>
+				<option value="3" selected="selected"><?php
+				echo (_SIZE_NORMAL) ;
+				?></option>
+				<option value="4"><?php
+				echo (_SIZE_BIG) ;
+				?></option>
+				<option value="5"><?php
+				echo (_SIZE_VBIG) ;
+				?></option>
+			</select>
+
 <!-- 			<div id="k-color_palette" style="display: none;"><script
  				type="text/javascript">
 								function change_palette() {dE('k-color_palette');}

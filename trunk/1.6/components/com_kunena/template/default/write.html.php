@@ -28,49 +28,18 @@ $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_my = &JFactory::getUser ();
 
 //Some initial thingies needed anyway:
-if (! isset ( $this->kunena_set_focus ))
-	$this->kunena_set_focus = 0;
+if (! isset ( $this->kunena_set_focus )) $this->kunena_set_focus = 0;
+
 $authorName = stripslashes ( $this->authorName );
 CKunenaPolls::call_javascript_form();
 
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
 //keep session alive while editing
-
 JHTML::_ ( 'behavior.keepalive' );
-
-$config      =& JFactory::getConfig();
-$lifetime      = ( $config->getValue('lifetime') * 60000 );
-$refreshTime =  ( $lifetime <= 60000 ) ? 30000 : $lifetime - 60000;
-//refresh time is 1 minute less than the liftime assined in the configuration.php file
 
 $document =& JFactory::getDocument();
 
-$document->addScript ( KUNENA_DIRECTURL . 'js/nawte/nawte.0.4.js' );
-
-$script  = '';
-$script .= 'window.addEvent("domready", function(){';
-$script .= 'var preview = $("preview_button");';
-$script .= 'if (preview)';
-$script .= '{';
-$script .= '	preview.addEvent("click", function(){';
-$script .= '		previewRequest = new Request.JSON({url: "'.CKunenaLink::GetJsonURL('preview').'",';
-$script .= '												onSuccess: function(response){';
-$script .= '			message = $("preview_message");';
-$script .= '			if (message) {';
-$script .= '				message.set("html", response.preview);';
-$script .= '				message.set("style", "display: inline;");';
-$script .= '			}';
-$script .= '			container = $("preview_container");';
-$script .= '			if (container) {';
-$script .= '				container.set("style", "display: table-row;");';
-$script .= '			}';
-$script .= '		}}).post({body: $("kbbcode-message").get("value")});';
-$script .= '	});';
-$script .= '}';
-$script .= '});';
-
-$document->addScriptDeclaration($script);
 $cap[0] = explode('-',$document->getLanguage());
 JApplication::addCustomHeadTag('
       <script type="text/javascript">

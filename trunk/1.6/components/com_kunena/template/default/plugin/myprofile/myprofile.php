@@ -45,6 +45,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	if ($kunena_config->avatar_src == "cb") {
 		$kunena_db->setQuery ( "SELECT avatar FROM #__comprofiler WHERE user_id='{$kunena_my->id}'" );
 		$avatar = $kunena_db->loadResult ();
+		check_dberror ( "Unable to load avatar." );
 	} else {
 		$avatar = $this->kunena_avatar;
 	}
@@ -73,6 +74,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	//Get the max# of posts for any one user
 	$kunena_db->setQuery ( "SELECT MAX(posts) FROM #__fb_users" );
 	$maxPosts = $kunena_db->loadResult ();
+	check_dberror ( "Unable to load max posts." );
 
 	//# of post for this user and ranking
 

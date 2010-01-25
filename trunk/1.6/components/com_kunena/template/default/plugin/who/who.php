@@ -65,6 +65,7 @@ if ($kunena_config->showwhoisonline > 0)
             $query = "SELECT w.*, u.id, u.username, f.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS f ON u.id=f.userid ORDER BY w.time DESC";
             $kunena_db->setQuery($query);
             $users = $kunena_db->loadObjectList();
+            check_dberror ( "Unable to load online users." );
             $k = 0; //for alternating rows
             $tabclass = array
             (

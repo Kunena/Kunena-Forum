@@ -71,6 +71,7 @@ function com_install()
 	// Determine MySQL version from phpinfo
 	$kunena_db->setQuery("SELECT VERSION() as mysql_version");
 	$mysqlversion = $kunena_db->loadResult();
+	check_dberror("Unable to load MySQL version.");
 
 	//before we do anything else we want to check for minimum system requirements
 	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">"))

@@ -66,20 +66,24 @@ class CKunenaStats {
 
 		$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0" );
 		$this->totalmembers = $this->_db->loadResult ();
+		check_dberror ( "Unable to load total users." );
 
 		$this->_db->setQuery ( "SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent='0'" );
 		$totaltmp = $this->_db->loadObject ();
+		check_dberror ( "Unable to load total total messages." );
 		$this->totaltitles = ! empty ( $totaltmp->titles ) ? $totaltmp->titles : 0;
 		$this->totalmsgs = ! empty ( $totaltmp->msgs ) ? $totaltmp->msgs + $this->totaltitles : $this->totaltitles;
 
 		$this->_db->setQuery ( "SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__fb_categories" );
 		$totaltmp = $this->_db->loadObject ();
+		check_dberror ( "Unable to load total categories." );
 		$this->totalsections = ! empty ( $totaltmp->totalsections ) ? $totaltmp->totalsections : 0;
 		$this->totalcats = ! empty ( $totaltmp->totalcats ) ? $totaltmp->totalcats : 0;
 
 		$queryName = $this->_config->username ? "username" : "name";
 		$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM #__users WHERE block='0' AND activation='' ORDER BY id DESC", 0, 1 );
 		$_lastestmember = $this->_db->loadObject ();
+		check_dberror ( "Unable to load last user." );
 		$this->lastestmember = $_lastestmember->username;
 		$this->lastestmemberid = $_lastestmember->id;
 
@@ -92,6 +96,7 @@ class CKunenaStats {
 			FROM #__fb_messages WHERE time >= '{$yesterdaystart}' AND hold='0'" );
 
 		$totaltmp = $this->_db->loadObject ();
+		check_dberror ( "Unable to load total posts today/yesterday." );
 		$this->todayopen = ! empty ( $totaltmp->todayopen ) ? $totaltmp->todayopen : 0;
 		$this->yesterdayopen = ! empty ( $totaltmp->yesterdayopen ) ? $totaltmp->yesterdayopen : 0;
 		$this->todayanswer = ! empty ( $totaltmp->todayanswer ) ? $totaltmp->todayanswer : 0;
@@ -108,6 +113,7 @@ class CKunenaStats {
 			INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' AND u.block=0 ORDER BY p.posts DESC", 0, $PopUserCount );
 
 		$this->topposters = $this->_db->loadObjectList ();
+		check_dberror ( "Unable to load top messages." );
 		$this->topmessage = ! empty ( $this->topposters [0]->posts ) ? $this->topposters [0]->posts : 0;
 
 		if ($this->_config->fb_profile == "jomsocial") {
@@ -129,6 +135,7 @@ class CKunenaStats {
 		}
 
 		$this->topprofiles = $this->_db->loadObjectList ();
+		check_dberror ( "Unable to load top profiles." );
 		$this->topprofilehits = ! empty ( $this->topprofiles [0]->hits ) ? $this->topprofiles [0]->hits : 0;
 	}
 
@@ -142,6 +149,7 @@ class CKunenaStats {
 				ORDER BY hits DESC", 0, $PopSubjectCount );
 
 		$this->toptitles = $this->_db->loadObjectList ();
+		check_dberror ( "Unable to load top topics." );
 		$this->toptitlehits = ! empty ( $this->toptitles [0]->hits ) ? $this->toptitles [0]->hits : 0;
 	}
 

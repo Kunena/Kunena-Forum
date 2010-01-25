@@ -28,6 +28,7 @@ $templatedeprecatedlist = array ('default_ex', 'default_green', 'default_red', '
 $kunena_db = & JFactory::getDBO ();
 $kunena_db->setQuery ( "SELECT template FROM #__fb_config" );
 $kactualtemplate = $kunena_db->loadResult ();
+check_dberror ( "Unable to load current template." );
 if (in_array ( $kactualtemplate, $templatedeprecatedlist )) {
 	$kunena_db->setQuery ( "UPDATE #__fb_config SET template='default',templateimagepath='default'" );
 	$kunena_db->query ();

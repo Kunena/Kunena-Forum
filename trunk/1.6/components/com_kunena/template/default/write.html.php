@@ -40,6 +40,8 @@ JHTML::_ ( 'behavior.keepalive' );
 
 $document =& JFactory::getDocument();
 
+$selected = 0;
+
 $cap[0] = explode('-',$document->getLanguage());
 JApplication::addCustomHeadTag('
       <script type="text/javascript">
@@ -219,10 +221,45 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			echo _GEN_TOPIC_ICON;
 			?></strong>:</td>
 
-			<td class="k-topicicons"><?php
-			$topicToolbar = smile::topicToolbar ( 0, $kunena_config->rtewidth );
-			echo $topicToolbar;
-			?>
+			<td class="k-topicicons">
+<table border="0" cellspacing="0" cellpadding="0" class="kflat">
+	<tr>
+		<td><input type="radio" name="topic_emoticon" value="0"
+			<?php echo $selected==0?" checked=\"checked\" ":"";?> /><?php @print(_NO_SMILIE); ?>
+
+		<input type="radio" name="topic_emoticon" value="1"
+			<?php echo $selected==1?" checked=\"checked\" ":"";?> /> <img
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>exclam.gif" alt=""
+			border="0" /> <input type="radio" name="topic_emoticon" value="2"
+			<?php echo $selected==2?" checked=\"checked\" ":"";?> /> <img
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>question.gif" alt=""
+			border="0" /> <input type="radio" name="topic_emoticon" value="3"
+			<?php echo $selected==3?" checked=\"checked\" ":"";?> /> <img
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt=""
+			border="0" />
+		<?php
+		if ($kunena_config->rtewidth <= 320) {
+			echo '</td></tr><tr><td>';
+		}
+		?>
+		<input type="radio" name="topic_emoticon" value="4"
+			<?php echo $selected==4?" checked=\"checked\" ":"";?> /> <img
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>love.gif" alt="" border="0" />
+
+		<input type="radio" name="topic_emoticon" value="5"
+			<?php echo $selected==5?" checked=\"checked\" ":"";?> /> <img
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>grin.gif" alt="" border="0" />
+
+		<input type="radio" name="topic_emoticon" value="6"
+			<?php echo $selected==6?" checked=\"checked\" ":"";?> /> <img
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>shock.gif" alt=""
+			border="0" /> <input type="radio" name="topic_emoticon" value="7"
+			<?php echo $selected==7?" checked=\"checked\" ":"";?> /> <img
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>smile.gif" alt=""
+			border="0" />
+		</td>
+	</tr>
+</table>
 			</td>
 		</tr>
 		<?php
@@ -255,10 +292,12 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			} else {
 				$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$this->id}'" );
 				$fb_thread = $kunena_db->loadResult ();
+				check_dberror ( "Unable to load thread." );
 			}
 
 			$kunena_db->setQuery ( "SELECT thread FROM #__fb_subscriptions WHERE userid='{$kunena_my->id}' AND thread='{$fb_thread}'" );
 			$fb_subscribed = $kunena_db->loadResult ();
+			check_dberror ( "Unable to load subscriptions." );
 
 			if ($fb_subscribed == "" || $this->id == 0) {
 				$fb_cansubscribe = 1;

@@ -28,6 +28,9 @@ $document = & JFactory::getDocument ();
 
 $document->setTitle ( _GEN_RULES . ' - ' . stripslashes ( $kunena_config->board_title ) );
 
+$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->rules_cid}'" );
+$j_introtext = $kunena_db->loadResult ();
+check_dberror ( "Unable to load introtext." );
 ?>
 <!-- INSERT YOUR RULES IN HTML BEGINNING HERE -->
 <div class="k_bt_cvr1">
@@ -50,11 +53,6 @@ $document->setTitle ( _GEN_RULES . ' - ' . stripslashes ( $kunena_config->board_
 	<tbody>
 		<tr>
 			<td class="krulesdesc">
-			<?php
-			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->rules_cid}'" );
-			$j_introtext = $kunena_db->loadResult ();
-			check_dberror ( "Unable to load introtext." );
-			?>
 			<?php
 			echo $j_introtext;
 			?>

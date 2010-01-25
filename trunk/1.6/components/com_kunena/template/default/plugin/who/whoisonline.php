@@ -46,12 +46,14 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
         . " ORDER BY username ASC";
     $kunena_db->setQuery($query);
     $users = $kunena_db->loadObjectList();
+    check_dberror ( "Unable to load online users." );
     $totaluser = count($users);
 
 
     $query = "SELECT COUNT(*) FROM #__fb_whoisonline WHERE user='0'";
     $kunena_db->setQuery($query);
     $totalguests = $kunena_db->loadResult();
+    check_dberror ( "Unable to load who is online." );
 ?>
 
 <div class="k_bt_cvr1">
@@ -133,6 +135,7 @@ if ($kunena_config->showstats && $kunena_config->showwhoisonline)
                     <?php
                     $kunena_db->setQuery("SELECT id, title FROM #__fb_groups");
                     $gr_row = $kunena_db->loadObjectList();
+                    check_dberror ( 'Unable to load group.' );
 
                     if (count($gr_row) > 1) {
 					?>

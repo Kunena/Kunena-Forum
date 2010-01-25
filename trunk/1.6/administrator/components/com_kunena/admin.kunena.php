@@ -557,7 +557,8 @@ function saveForum($option) {
 	$row->reorder ();
 
 	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
-	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 }
@@ -574,7 +575,8 @@ function publishForum($cid = null, $publish = 1, $option) {
 
 	$cids = implode ( ',', $cid );
 	$kunena_db->setQuery ( "UPDATE #__fb_categories SET published='$publish'" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))" );
-	$kunena_db->query () or check_dberror ( "Unable to update categories." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update categories." );
 
 	if (count ( $cid ) == 1) {
 		$row = new fbForum ( $kunena_db );
@@ -583,7 +585,8 @@ function publishForum($cid = null, $publish = 1, $option) {
 
 	// we must reset fbSession->allowed, when forum record was changed
 	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
-	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 }
@@ -600,7 +603,8 @@ function deleteForum($cid = null, $option) {
 
 	$cids = implode ( ',', $cid );
 	$kunena_db->setQuery ( "DELETE FROM #__fb_categories" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))" );
-	$kunena_db->query () or check_dberror ( "Unable to delete categories." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to delete categories." );
 
 	$kunena_db->setQuery ( "SELECT id, parent FROM #__fb_messages where catid in ($cids)" );
 	$mesList = $kunena_db->loadObjectList ();
@@ -609,21 +613,25 @@ function deleteForum($cid = null, $option) {
 	if (count ( $mesList ) > 0) {
 		foreach ( $mesList as $ml ) {
 			$kunena_db->setQuery ( "DELETE FROM #__fb_messages WHERE id = $ml->id" );
-			$kunena_db->query () or check_dberror ( "Unable to delete messages." );
+			$kunena_db->query ();
+			check_dberror ( "Unable to delete messages." );
 
 			$kunena_db->setQuery ( "DELETE FROM #__fb_messages_text WHERE mesid=$ml->id" );
-			$kunena_db->query () or check_dberror ( "Unable to delete message text." );
+			$kunena_db->query ();
+			check_dberror ( "Unable to delete message text." );
 
 			//and clear up all subscriptions as well
 			if ($ml->parent == 0) { //this was a topic message to which could have been subscribed
 				$kunena_db->setQuery ( "DELETE FROM #__fb_subscriptions WHERE thread=$ml->id" );
-				$kunena_db->query () or check_dberror ( "Unable to delete subscriptions." );
+				$kunena_db->query ();
+				check_dberror ( "Unable to delete subscriptions." );
 			}
 		}
 	}
 
 	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
-	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 }
@@ -665,7 +673,8 @@ function pollpublish ( $option, $cid = null, $publish = 1 ) {
 
 	$cids = implode ( ',', $cid );
 	$kunena_db->setQuery ( "UPDATE #__fb_categories SET allow_polls='$publish'" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))" );
-	$kunena_db->query () or check_dberror ( "Unable to update categories." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update categories." );
 
 	if (count ( $cid ) == 1) {
 		$row = new fbForum ( $kunena_db );
@@ -674,7 +683,8 @@ function pollpublish ( $option, $cid = null, $publish = 1 ) {
 
 	// we must reset fbSession->allowed, when forum record was changed
 	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
-	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 }
@@ -691,7 +701,8 @@ function pollunpublish ( $option, $cid = null, $unpublish = 0 ) {
 
 	$cids = implode ( ',', $cid );
 	$kunena_db->setQuery ( "UPDATE #__fb_categories SET allow_polls='$unpublish'" . "\nWHERE id IN ($cids) AND (checked_out=0 OR (checked_out='$kunena_my->id'))" );
-	$kunena_db->query () or check_dberror ( "Unable to update categories." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update categories." );
 
 	if (count ( $cid ) == 1) {
 		$row = new fbForum ( $kunena_db );
@@ -700,7 +711,8 @@ function pollunpublish ( $option, $cid = null, $unpublish = 0 ) {
 
 	// we must reset fbSession->allowed, when forum record was changed
 	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
-	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 }
@@ -978,7 +990,8 @@ function saveConfig($option) {
 	$kunena_config->create ();
 
 	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
-	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED );
 }
@@ -1098,12 +1111,14 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 	if ($action == 'add') {
 		for($i = 0, $n = count ( $cid ); $i < $n; $i ++) {
 			$kunena_db->setQuery ( "INSERT INTO #__fb_moderation set catid='$id', userid='$cid[$i]'" );
-			$kunena_db->query () or check_dberror ( "Unable to insert moderator." );
+			$kunena_db->query ();
+			check_dberror ( "Unable to insert moderator." );
 		}
 	} else {
 		for($i = 0, $n = count ( $cid ); $i < $n; $i ++) {
 			$kunena_db->setQuery ( "DELETE FROM #__fb_moderation WHERE catid='$id' and userid='$cid[$i]'" );
-			$kunena_db->query () or check_dberror ( "Unable to delete moderator." );
+			$kunena_db->query ();
+			check_dberror ( "Unable to delete moderator." );
 		}
 	}
 
@@ -1111,7 +1126,8 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 	$row->checkin ( $id );
 
 	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
-	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=edit2&uid=" . $id );
 }
@@ -1188,6 +1204,7 @@ function editUserProfile($option, $uid) {
 	$result = '';
 	//$kunena_db->setQuery("select usertype from #__users where id=$uid[0]");
 	//$result=$kunena_db->loadResult();
+	//check_dberror ( 'Unable to load user type.' );
 	$result = $kunena_acl->getAroGroup ( $uid [0] );
 
 	//grab all special ranks
@@ -1265,24 +1282,28 @@ function saveUserProfile($option) {
 	}
 
 	$kunena_db->setQuery ( "UPDATE #__fb_users SET signature='$signature', view='$newview',moderator='$moderator', ordering='$neworder', rank='$newrank' $avatar where userid=$uid" );
-	$kunena_db->query () or check_dberror ( "Unable to update signature." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update signature." );
 
 	//delete all moderator traces before anyway
 	$kunena_db->setQuery ( "DELETE FROM #__fb_moderation WHERE userid=$uid" );
-	$kunena_db->query () or check_dberror ( "Unable to delete moderator." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to delete moderator." );
 
 	//if there are moderatored forums, add them all
 	if ($moderator == 1) {
 		if (count ( $modCatids ) > 0) {
 			foreach ( $modCatids as $c ) {
 				$kunena_db->setQuery ( "INSERT INTO #__fb_moderation SET catid='$c', userid='$uid'" );
-				$kunena_db->query () or check_dberror ( "Unable to insert moderator." );
+				$kunena_db->query ();
+				check_dberror ( "Unable to insert moderator." );
 			}
 		}
 	}
 
 	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na' WHERE userid='$uid'" );
-	$kunena_db->query () or check_dberror ( "Unable to update sessions." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=showprofiles" );
 }
@@ -1334,10 +1355,12 @@ function doprune($kunena_db, $option) {
 					foreach ( $idlist as $id ) {
 						//prune all messages belonging to the thread
 						$kunena_db->setQuery ( "DELETE FROM #__fb_messages WHERE id=$id->id" );
-						$kunena_db->query () or check_dberror ( "Unable to delete messages." );
+						$kunena_db->query ();
+						check_dberror ( "Unable to delete messages." );
 
 						$kunena_db->setQuery ( "DELETE FROM #__fb_messages_text WHERE mesid=$id->id" );
-						$kunena_db->query () or check_dberror ( "Unable to delete message texts." );
+						$kunena_db->query ();
+						check_dberror ( "Unable to delete message texts." );
 
 						//delete all attachments
 						$kunena_db->setQuery ( "SELECT filelocation FROM #__fb_attachments WHERE mesid=$id->id" );
@@ -1350,7 +1373,8 @@ function doprune($kunena_db, $option) {
 							}
 
 							$kunena_db->setQuery ( "DELETE FROM #__fb_attachments WHERE mesid=$id->id" );
-							$kunena_db->query () or check_dberror ( "Unable to delete attachments." );
+							$kunena_db->query ();
+							check_dberror ( "Unable to delete attachments." );
 						}
 
 						$deleted ++;
@@ -1360,7 +1384,8 @@ function doprune($kunena_db, $option) {
 
 			//clean all subscriptions to these deleted threads
 			$kunena_db->setQuery ( "DELETE FROM #__fb_subscriptions WHERE thread=$tl->thread" );
-			$kunena_db->query () or check_dberror ( "Unable to delete subscriptions." );
+			$kunena_db->query ();
+			check_dberror ( "Unable to delete subscriptions." );
 		}
 	}
 
@@ -1468,7 +1493,8 @@ function replaceImage($kunena_db, $option, $imageName, $OxP) {
 		//remove the database link as well
 		if ($ret) {
 			$kunena_db->setQuery ( "DELETE FROM #__fb_attachments where filelocation='%/images/" . $imageName . "'" );
-			$kunena_db->query () or check_dberror ( "Unable to delete attachment." );
+			$kunena_db->query ();
+			check_dberror ( "Unable to delete attachment." );
 		}
 	}
 	if ($ret)
@@ -1492,7 +1518,8 @@ function deleteFile($kunena_db, $option, $fileName) {
 	//step 2: remove the database link to the file
 	if ($ret) {
 		$kunena_db->setQuery ( "DELETE FROM #__fb_attachments where filelocation='%/files/" . $fileName . "'" );
-		$kunena_db->query () or check_dberror ( "Unable to delete attachment." );
+		$kunena_db->query ();
+		check_dberror ( "Unable to delete attachment." );
 	}
 	if ($ret)
 		$kunena_app->enqueueMessage ( _KUNENA_FILEDELETED );
@@ -1673,6 +1700,7 @@ function showsmilies($option) {
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_smileys" );
 	$total = $kunena_db->loadResult ();
+	check_dberror ( "Unable to count smileys." );
 	if ($limitstart >= $total)
 		$limitstart = 0;
 	if ($limit == 0 || $limit > 100)
@@ -1695,6 +1723,7 @@ function editsmiley($option, $id) {
 	$kunena_db->setQuery ( "SELECT * FROM #__fb_smileys WHERE id = $id" );
 
 	$smileytmp = $kunena_db->loadAssocList ();
+	check_dberror ( "Unable to load smileys." );
 	$smileycfg = $smileytmp [0];
 
 	$smileypath = smileypath ();
@@ -1753,6 +1782,7 @@ function savesmiley($option, $id = NULL) {
 	$kunena_db->setQuery ( "SELECT * FROM #__fb_smileys" );
 
 	$smilies = $kunena_db->loadAssocList ();
+	check_dberror ( "Unable to load smileys." );
 	foreach ( $smilies as $value ) {
 		if (in_array ( $smiley_code, $value ) && ! ($value ['id'] == $id)) {
 			$task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id=' . $id;
@@ -1768,7 +1798,8 @@ function savesmiley($option, $id = NULL) {
 		$kunena_db->setQuery ( "UPDATE #__fb_smileys SET code = '$smiley_code', location = '$smiley_location', emoticonbar = '$smiley_emoticonbar' WHERE id = $id" );
 	}
 
-	$kunena_db->query () or check_dberror ( "Unable to save smiley." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to save smiley." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED );
 }
@@ -1781,7 +1812,8 @@ function deletesmiley($option, $cid) {
 
 	if ($cids) {
 		$kunena_db->setQuery ( "DELETE FROM #__fb_smileys WHERE id IN ($cids)" );
-		$kunena_db->query () or check_dberror ( "Unable to delete smiley." );
+		$kunena_db->query ();
+		check_dberror ( "Unable to delete smiley." );
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED );
@@ -1823,6 +1855,7 @@ function showRanks($option) {
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_ranks" );
 	$total = $kunena_db->loadResult ();
+	check_dberror ( "Unable to count ranks." );
 	if ($limitstart >= $total)
 		$limitstart = 0;
 	if ($limit == 0 || $limit > 100)
@@ -1888,7 +1921,8 @@ function deleteRank($option, $cid = null) {
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		$kunena_db->setQuery ( "DELETE FROM #__fb_ranks WHERE rank_id IN ($cids)" );
-		$kunena_db->query () or check_dberror ( "Unable to delete rank." );
+		$kunena_db->query ();
+		check_dberror ( "Unable to delete rank." );
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks", _KUNENA_RANK_DELETED );
@@ -1925,7 +1959,8 @@ function saveRank($option, $id = NULL) {
 	} else {
 		$kunena_db->setQuery ( "UPDATE #__fb_ranks SET rank_title = '$rank_title', rank_image = '$rank_image', rank_special = '$rank_special', rank_min = '$rank_min' WHERE rank_id = $id" );
 	}
-	$kunena_db->query () or check_dberror ( "Unable to save ranks." );
+	$kunena_db->query ();
+	check_dberror ( "Unable to save ranks." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks", _KUNENA_RANK_SAVED );
 }
@@ -1987,6 +2022,7 @@ function showtrashview($option) {
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE hold=2" );
 	$total = $kunena_db->loadResult ();
+	check_dberror ( "Unable to count deleted messages." );
 	if ($limitstart >= $total)
 		$limitstart = 0;
 	if ($limit == 0 || $limit > 100)
@@ -2043,7 +2079,7 @@ function deleteitemsnow ( $option, $cid ) {
 		$userids = $kunena_db->loadObjectList ();
 		check_dberror ( "Unable to load userids in message." );
 
-		foreach ( $kunena_db->loadObjectList () as $line ) {
+		foreach ( $userids as $line ) {
 			if ($line->userid > 0) {
 				$userid_array [] = $line->userid;
 			}
@@ -2083,7 +2119,8 @@ function trashrestore($option, $cid) {
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		$kunena_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE id IN ($cids)" );
-		$kunena_db->query () or check_dberror ( "Unable to restore message(s)." );
+		$kunena_db->query ();
+		check_dberror ( "Unable to restore message(s)." );
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", _KUNENA_TRASH_RESTORE_DONE );

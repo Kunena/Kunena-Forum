@@ -4011,9 +4011,11 @@ echo $pane->endPane();
 			$query = "SELECT mesid FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED . "/" . ($type ? 'images' : 'files') . "/$uploaded[$i]'";
 			$kunena_db->setQuery ( $query );
 			$mesid = $kunena_db->loadResult ();
+			check_dberror ( "Unable to load attachments." );
 			//get the catid for the posting
 			$kunena_db->setQuery ( "SELECT catid FROM #__fb_messages where id='$mesid'" );
 			$catid = $kunena_db->loadResult ();
+			check_dberror ( "Unable to load category id." );
 			echo $mesid == '' ? '<td>' : '<td>';
 			echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
 			echo $type ? '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded [$i] . '" target="_blank" title="' . _COM_A_IMGB_ENLARGE . '" alt="' . _COM_A_IMGB_ENLARGE . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded [$i] . '" width="80" heigth="80" border="0"></a>' : '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/files/' . $uploaded [$i] . '" title="' . _COM_A_IMGB_DOWNLOAD . '" alt="' . _COM_A_IMGB_DOWNLOAD . '"><img src="../administrator/components/com_kunena/images/fbfile.png"   border="0"></a>';

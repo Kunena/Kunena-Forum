@@ -49,6 +49,7 @@ function list_users()
     // Total
     $kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block =0");
     $total_results = $kunena_db->loadResult();
+    check_dberror ( "Unable to load user count." );
 
     // Search total
     $query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
@@ -59,6 +60,7 @@ function list_users()
 
     $kunena_db->setQuery($query);
     $total = $kunena_db->loadResult();
+    check_dberror ( "Unable to load search user count." );
 
     if ($limit > $total) {
         $limitstart = 0;
@@ -89,6 +91,7 @@ function list_users()
 
     $kunena_db->setQuery($query);
     $ulrows = $kunena_db->loadObjectList();
+    check_dberror ( "Unable to load search result." );
 
     $pageNav = new JPagination($total, $limitstart, $limit);
     HTML_userlist_content::showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search);
@@ -371,6 +374,7 @@ class HTML_userlist_content
                                 {
                                     $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$ulrow->id}'");
                                     $avatar = $kunena_db->loadResult();
+                                    check_dberror ( "Unable to load avatar." );
 
                                     if ($avatar != '') {
 
@@ -400,8 +404,7 @@ class HTML_userlist_content
                                             $sql = "SELECT COUNT(userid) FROM #__session WHERE userid='{$ulrow->id}'";
                                             $kunena_db->setQuery($sql);
                                             $isonline = $kunena_db->loadResult();
-
-
+											check_dberror ( "Unable to load online status." );
 
                                             if ($isonline && $ulrow->showOnline ==1 ) {
                                                 echo isset($kunena_icons['onlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';

@@ -52,10 +52,12 @@ check_dberror ( "Unable to delete users from whoisonline." );
 
 $kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='{$myip}' AND userid='{$kunena_my->id}'");
 $online = $kunena_db->loadResult();
+check_dberror ( "Unable to load online count." );
 
 if ($task == 'listcat' || $func == 'showcat') {
     $kunena_db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
     $what = $kunena_db->loadResult();
+    check_dberror ( "Unable to load category name." );
     }
 else if ($func == 'latest') {
     $what = _KUNENA_ALL_DISCUSSIONS;
@@ -63,10 +65,12 @@ else if ($func == 'latest') {
 else if ($id) {
     $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$id}'");
     $what = $kunena_db->loadResult();
+    check_dberror ( "Unable to load message subject." );
     }
 else if ($replyto) {
     $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$replyto}'");
     $what = $kunena_db->loadResult();
+    check_dberror ( "Unable to load message subject." );
     }
 else if ($do == 'reply') {
     $kunena_db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
@@ -75,6 +79,7 @@ else if ($do == 'reply') {
 else if ($func == 'post' && $do == 'edit') {
     $kunena_db->setQuery("SELECT name FROM #__fb_messages WHERE id='{$id}'");
     $what = $kunena_db->loadResult();
+    check_dberror ( "Unable to load user name." );
     }
 else if ($func == 'who') {
     $what = _KUNENA_WHO_LATEST_POSTS;

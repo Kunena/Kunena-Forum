@@ -46,6 +46,8 @@ if ($func != "") {
 		$query = "SELECT * FROM #__fb_categories WHERE id='{$catids}' AND published='1'";
 		$kunena_db->setQuery ( $query );
 		$results = $kunena_db->loadObject ();
+		check_dberror ( "Unable to load categories." );
+
 		if (! $results)
 			break;
 		$parent_ids = $results->parent;
@@ -72,6 +74,7 @@ if ($func != "") {
 		$sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
 		$kunena_db->setQuery ( $sql );
 		$this->kunena_topic_title = stripslashes ( html_entity_decode_utf8 ( $kunena_db->loadResult () ) );
+		check_dberror ( "Unable to load subject." );
 		$jr_path_menu [] = $this->kunena_topic_title;
 	}
 

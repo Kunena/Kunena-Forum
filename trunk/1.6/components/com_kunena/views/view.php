@@ -151,9 +151,11 @@ class CKunenaView {
 		//Get the category name for breadcrumb
 		$this->db->setQuery ( "SELECT * FROM #__fb_categories WHERE id='{$this->catid}'" );
 		$this->catinfo = $this->db->loadObject ();
+		check_dberror ( 'Unable to load category info' );
 		//Get Parent's cat.name for breadcrumb
 		$this->db->setQuery ( "SELECT id, name FROM #__fb_categories WHERE id='{$this->catinfo->parent}'" );
 		$objCatParentInfo = $this->db->loadObject ();
+		check_dberror ( 'Unable to load parent category info' );
 
 		$this->kunena_forum_locked = $this->catinfo->locked;
 
@@ -172,6 +174,7 @@ class CKunenaView {
 		if ($this->config->allowsubscriptions && ("" != $this->my->id || 0 != $this->my->id)) {
 			$this->db->setQuery ( "SELECT thread FROM #__fb_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->thread}'" );
 			$fb_subscribed = $this->db->loadResult ();
+			check_dberror ( 'Unable to load subscription' );
 
 			if ($fb_subscribed == "") {
 				$fb_cansubscribe = 1;
@@ -181,6 +184,7 @@ class CKunenaView {
 		$fb_canfavorite = 0;
 		$this->db->setQuery ( "SELECT MAX(userid={$this->my->id}) AS favorited, COUNT(*) AS totalfavorited FROM #__fb_favorites WHERE thread='{$this->thread}'" );
 		list ( $this->favorited, $this->totalfavorited ) = $this->db->loadRow ();
+		check_dberror ( 'Unable to load favorite' );
 		if ($this->config->allowfavorites && ("" != $this->my->id || 0 != $this->my->id)) {
 			if (! $this->favorited) {
 				$fb_canfavorite = 1;
@@ -258,6 +262,7 @@ class CKunenaView {
 		// Set up a list of moderators for this category (limits amount of queries)
 		$this->db->setQuery ( "SELECT a.userid FROM #__fb_users AS a LEFT JOIN #__fb_moderation AS b ON b.userid=a.userid WHERE b.catid='{$this->catid}'" );
 		$this->catModerators = $this->db->loadResultArray ();
+		check_dberror ( 'Unable to load moderators' );
 
 		//check if topic is locked
 		$this->topicLocked = $this->first_message->locked;
@@ -265,6 +270,7 @@ class CKunenaView {
 			//topic not locked; check if forum is locked
 			$this->db->setQuery ( "SELECT locked FROM #__fb_categories WHERE id='{$this->first_message->catid}'" );
 			$this->topicLocked = $this->db->loadResult ();
+			check_dberror ( 'Unable to load locked info' );
 		}
 	}
 
@@ -349,6 +355,7 @@ class CKunenaView {
 		if (! isset ( $uinfocache [$this->kunena_message->userid] )) {
 			$this->db->setQuery ( "SELECT  a.*, b.id, b.name, b.username, b.gid FROM #__fb_users AS a INNER JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$this->kunena_message->userid}'" );
 			$userinfo = $this->db->loadObject ();
+			check_dberror ( 'Unable to load user info' );
 			if ($userinfo == NULL) {
 				$userinfo = new stdClass ( );
 				$userinfo->userid = 0;
@@ -599,6 +606,7 @@ class CKunenaView {
 				$sql = "SELECT COUNT(userid) FROM #__session WHERE userid='{$this->userinfo->userid}'";
 				$this->db->setQuery ( $sql );
 				$onlinecache [$this->userinfo->userid] = $this->db->loadResult ();
+				check_dberror ( 'Unable to load online status' );
 			}
 			$isonline = $onlinecache [$this->userinfo->userid];
 

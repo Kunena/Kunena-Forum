@@ -33,6 +33,7 @@ class KunenaRouter
 		$query = 'SELECT id, name FROM #__fb_categories WHERE published=1';
 		$db->setQuery($query);
 		self::$catidcache = $db->loadAssocList('id');
+		check_dberror ( "Unable to load categories." );
 	}
 
 	/**
@@ -112,6 +113,7 @@ function BuildRoute(&$query)
 			$quesql = 'SELECT subject, id FROM #__fb_messages WHERE id='.(int) $id;
 			$db->setQuery($quesql);
 			self::$msgidcache[$id] = $db->loadResult();
+			check_dberror ( "Unable to load subject." );
 		}
 		$suf = self::stringURLSafe(self::$msgidcache[$id]);
 		if (empty($suf)) $segments[] = $query['id'];
@@ -218,6 +220,7 @@ function ParseRoute($segments)
 			$quesql = 'SELECT parent FROM #__fb_categories WHERE id='.(int) $vars['catid'];
 			$db->setQuery($quesql);
 			$parent = $db->loadResult();
+			check_dberror ( "Unable to load category parent." );
 		}
 		if (!$parent) $vars['func'] = 'listcat';
 	}

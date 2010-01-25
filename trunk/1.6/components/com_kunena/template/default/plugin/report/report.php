@@ -63,12 +63,15 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
     . " WHERE a.id='{$id}'");
 
     $row = $kunena_db->loadObject();
+    check_dberror ( "Unable to load message." );
 
     $kunena_db->setQuery("SELECT username FROM #__users WHERE id={$row->userid}");
     $baduser = $kunena_db->loadResult();
+    check_dberror ( "Unable to load username." );
 
     $kunena_db->setQuery("SELECT username FROM #__users WHERE id={$reporter}");
     $sender = $kunena_db->loadResult();
+	check_dberror ( "Unable to load username." );
 
     if ($reason) {
         $subject = "[".stripslashes($kunena_config->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . $reason;
@@ -142,6 +145,7 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
         foreach ($mods as $mod) {
             $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$mod->userid}");
             $email = $kunena_db->loadResult();
+            check_dberror ( "Unable to load email." );
 
             JUtility::sendMail($kunena_config->email, $kunena_config->board_title, $email, $subject, $message);
             }
@@ -151,6 +155,7 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
     foreach ($admins as $admin) {
         $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
         $email = $kunena_db->loadResult();
+        check_dberror ( "Unable to load email." );
         JUtility::sendMail($kunena_config->email, stripslashes($kunena_config->board_title)." ".JString::trim(_GEN_FORUM), $email, $subject, $message);
         }
     }

@@ -674,6 +674,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				if (@$kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
 					$success_msg = _GEN_CATEGORY_SUBCRIBED;
 				}
+				check_dberror ( "Unable to subscribe to category." );
 			}
 
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $success_msg );
@@ -690,6 +691,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 				if ($kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
 					$success_msg = _GEN_CATEGORY_UNSUBCRIBED;
 				}
+				check_dberror ( "Unable to unsubscribe from category." );
 			}
 
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $success_msg );

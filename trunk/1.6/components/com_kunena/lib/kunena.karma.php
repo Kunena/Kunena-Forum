@@ -73,9 +73,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             if ($do == "increase")
                             {
                                 $kunena_db->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
-							    $kunena_db->query() or check_dberror("Unable to update karma.");
+							    $kunena_db->query();
+							    check_dberror("Unable to update karma.");
 							    $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma+1 WHERE userid=' . $userid . '');
-							    $kunena_db->query() or check_dberror("Unable to update karma.");
+							    $kunena_db->query();
+							    check_dberror("Unable to update karma.");
 							    echo _KARMA_INCREASED . '<br />';
 								if ($pid) {
 									echo CKunenaLink::GetThreadLink('view', $catid, $pid, _POST_CLICK, _POST_CLICK);
@@ -88,9 +90,11 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             else if ($do == "decrease")
                             {
                                 $kunena_db->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
-                                $kunena_db->query() or check_dberror("Unable to update karma.");
+                                $kunena_db->query();
+                                check_dberror("Unable to update karma.");
                                 $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma-1 WHERE userid=' . $userid . '');
-                                $kunena_db->query() or check_dberror("Unable to update karma.");
+                                $kunena_db->query();
+                                check_dberror("Unable to update karma.");
                                 echo _KARMA_DECREASED . '<br />';
 								if ($pid) {
 									echo CKunenaLink::GetThreadLink('view', $catid, $pid, _POST_CLICK, _POST_CLICK);
@@ -119,7 +123,8 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         if ($do == "increase")   // Seriously decrease his karma if he tries to increase it
                         {
                             $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma-10, karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
-                            $kunena_db->query() or check_dberror("Unable to update karma.");
+                            $kunena_db->query();
+                            check_dberror("Unable to update karma.");
                             if ($pid) {
                             	echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , _POST_CLICK , _POST_CLICK , 'nofollow');
                             } else {
@@ -130,7 +135,8 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         if ($do == "decrease") // Stop him from decreasing his karma but still update karma_time
                         {
                             $kunena_db->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
-                            $kunena_db->query() or check_dberror("Unable to update karma.");
+                            $kunena_db->query();
+                            check_dberror("Unable to update karma.");
                             if ($pid) {
                             	echo _KARMA_SELF_DECREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , _POST_CLICK , _POST_CLICK, 'nofollow' );
                             } else {

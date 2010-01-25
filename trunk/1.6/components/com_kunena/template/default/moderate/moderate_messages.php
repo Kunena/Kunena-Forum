@@ -201,6 +201,7 @@ function jbDeletePosts($kunena_db, $cid)
         else
             return -1;
     }
+    check_dberror ( "Unable to delete post." );
 
     return 0;
 }
@@ -222,6 +223,7 @@ function jbApprovePosts($kunena_db, $cid)
         $kunena_db->setQuery($newQuery, 0, 1);
         $msg = null;
         $msg = $kunena_db->loadObject();
+        check_dberror ( "Unable to load message." );
         if(!$msg) { continue; }
         // continue stats
         $kunena_db->setQuery("UPDATE `#__fb_messages` SET hold='0' WHERE id='{$id}'");

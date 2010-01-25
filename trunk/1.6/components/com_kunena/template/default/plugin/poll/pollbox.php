@@ -20,8 +20,8 @@ $kunena_my = &JFactory::getUser ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO();
 $kunena_db->setQuery ( "SELECT allow_polls FROM #__fb_categories WHERE id='{$catid}'" );
-$kunena_db->query () or check_dberror ( 'Unable to load review flag from categories.' );
 $poll_allowed = $kunena_db->loadResult ();
+check_dberror ( 'Unable to load review flag from categories.' );
 
 if ($poll_allowed)
 {

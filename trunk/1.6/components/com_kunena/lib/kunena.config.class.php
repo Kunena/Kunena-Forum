@@ -33,10 +33,10 @@ class CKunenaTables {
 		$kunena_db = &JFactory::getDBO ();
 		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () . "fb_%'" );
 		$tables = $kunena_db->loadResultArray ();
+		check_dberror ( 'Unable to check for existing tables.' );
 		$prelen = strlen ( $kunena_db->getPrefix () );
 		foreach ( $tables as $table )
 			$this->tables ['#__' . JString::substr ( $table, $prelen )] = 1;
-		check_dberror ( 'Unable to check for existing tables.' );
 	}
 
 	function &getInstance() {

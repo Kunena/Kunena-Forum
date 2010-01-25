@@ -28,6 +28,9 @@ $document = & JFactory::getDocument ();
 
 $document->setTitle ( _GEN_HELP . ' - ' . stripslashes ( $kunena_config->board_title ) );
 
+$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'" );
+$j_introtext = $kunena_db->loadResult ();
+check_dberror ( "Unable to load introtext." );
 ?>
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -51,8 +54,6 @@ $document->setTitle ( _GEN_HELP . ' - ' . stripslashes ( $kunena_config->board_t
 		<tr>
 			<td class="khelpdesc" valign="top">
 			<?php
-			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'" );
-			$j_introtext = $kunena_db->loadResult ();
 			echo $j_introtext;
 			?>
 			</td>

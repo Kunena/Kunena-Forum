@@ -56,6 +56,8 @@ class CKunenaVersion {
 			$versionTable = '#__fb_version';
 			$kunena_db->setQuery("SELECT version, versiondate, installdate, build, versionname FROM `{$versionTable}` ORDER BY id DESC", 0, 1);
 			$kunenaversion = $kunena_db->loadObject();
+			check_dberror ( 'Unable to load version.' );
+
 			if(!$kunenaversion) {
 				$kunenaversion = new StdClass();
 				$kunenaversion->version = CKunenaVersion::versionXML();
@@ -116,6 +118,8 @@ class CKunenaVersion {
 			$kunena_db = &JFactory::getDBO();
 			$kunena_db->setQuery("SELECT VERSION() AS mysql_version");
 			$mysqlversion = $kunena_db->loadResult();
+			check_dberror ( 'Unable to load MySQL version.' );
+
 			if (!$mysqlversion) $mysqlversion = 'unknown';
 		}
 		return $mysqlversion;

@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 25-Jan-2010 Xillibit
 ^ [#19395] Add better captcha support with recaptcha - don't show the html tables if the puglin is unpublished, rewrite of language strings
+^ [#19288] Fix regression - remove one extra query added in kunena.login.php
 
 25-Jan-2010 fxstein
 + [#19380] New bbcode editor (part 5) - New font size selector, refactor color selector

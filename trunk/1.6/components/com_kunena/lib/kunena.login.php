@@ -38,20 +38,19 @@ class CKunenaLogin {
 	function getMyAvatar() {
 		$this->config = & CKunenaConfig::getInstance ();
 		$this->my = &JFactory::getUser ();
-		$this->db = &JFactory::getDBO ();
 		//first we gather some information about this person
-		$this->db->setQuery ( "SELECT su.view, u.name, u.username, su.avatar FROM #__fb_users AS su" . " LEFT JOIN #__users AS u on u.id=su.userid WHERE su.userid={$this->my->id}", 0, 1 );
+		$juserinfo = JUser::getInstance ( $this->my->id );
+		$userinfo = CKunenaUserprofile::getInstance ( );
 
-		$_user = $this->db->loadObject ();
 		$Itemid = JRequest::getInt ( 'Itemid' );
 		$this->kunena_avatar = NULL;
-		if ($_user != NULL) {
-			$prefview = $_user->view;
+		if ($userinfo != NULL) {
+			$prefview = $userinfo->view;
 			if ($this->config->username)
-				$this->kunena_username = $_user->username; // externally used  by pathway, myprofile_menu
+				$this->kunena_username = $juserinfo->username; // externally used  by pathway, myprofile_menu
 			else
-				$this->kunena_username = $_user->name;
-			$this->kunena_avatar = $_user->avatar;
+				$this->kunena_username = $juserinfo->name;
+			$this->kunena_avatar = $userinfo->avatar;
 		}
 
 		$this->jr_avatar = '';

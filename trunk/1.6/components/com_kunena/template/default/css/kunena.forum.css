@@ -2069,7 +2069,13 @@ img.k-bbcode:hover {
 }
 
 div#kbbcode-size-options {
-	margin:6px 0 -4px;
+	margin:2px 0 0;
+}
+
+div#kbbcode-size-options span {
+	vertical-align: middle;
+	display: inline-block;
+	line-height: 24px;
 }
 
 div#kbbcode-size-options span:hover {

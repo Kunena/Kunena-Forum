@@ -543,26 +543,6 @@ kbbcode.addFunction('Color', function() {
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_COLOR;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_COLOR;?>")'});
 
-<?php
-if ($kunena_config->showspoilertag) {
-?>
-kbbcode.addFunction('Spoiler', function() {
-	this.replaceSelection('[spoiler]' + this.getSelection() + '[/spoiler]');
-}, {'id': 'kbbcode-spoiler_button',
-	'title': '<?php echo _KUNENA_EDITOR_SPOILER;?>',
-	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_SPOILER;?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_SPOILER;?>")'});
-<?php
-}
-?>
-
-kbbcode.addFunction('Hide', function() {
-	this.replaceSelection('[hide]' + this.getSelection() + '[/hide]');
-}, {'id': 'kbbcode-hide_button',
-	'title': '<?php echo _KUNENA_EDITOR_HIDE;?>',
-	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_HIDE;?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_HIDE;?>")'});
-
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator1'});
 
@@ -669,6 +649,26 @@ kbbcode.addFunction("Table", function() {
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_TABLE;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_TABLE;?>")'});
 
+<?php
+if ($kunena_config->showspoilertag) {
+?>
+kbbcode.addFunction('Spoiler', function() {
+	this.replaceSelection('[spoiler]' + this.getSelection() + '[/spoiler]');
+}, {'id': 'kbbcode-spoiler_button',
+	'title': '<?php echo _KUNENA_EDITOR_SPOILER;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_SPOILER;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_SPOILER;?>")'});
+<?php
+}
+?>
+
+kbbcode.addFunction('Hide', function() {
+	this.replaceSelection('[hide]' + this.getSelection() + '[/hide]');
+}, {'id': 'kbbcode-hide_button',
+	'title': '<?php echo _KUNENA_EDITOR_HIDE;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_HIDE;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_HIDE;?>")'});
+
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator3'});
 
@@ -692,6 +692,23 @@ this.replaceSelection('[url=' +  (response == '' ? 'http://link_url/' : response
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator4'});
+
+kbbcode.addFunction('Attachement', function() {
+	kToggleOrSwap("kbbcode-attachment-options");
+}, {'id': 'kbbcode-attach_button',
+	'title': '<?php echo _KUNENA_EDITOR_ATTACH;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_ATTACH;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_ATTACH;?>")'});
+
+kbbcode.addFunction('Gallery', function() {
+	kToggleOrSwap("kbbcode-gallery-options");
+}, {'id': 'kbbcode-gallery_button',
+	'title': '<?php echo _KUNENA_EDITOR_GALLERY;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_GALLERY;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_GALLERY;?>")'});
+
+kbbcode.addFunction('#', function() {
+}, {'id': 'kbbcode-separator5'});
 
 <?php
 if ($kunena_config->showebaytag) {
@@ -732,23 +749,6 @@ kbbcode.addFunction('Module', function() {
 	'title': '<?php echo _KUNENA_EDITOR_MODULE;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_MODULE;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_MODULE;?>")'});
-
-kbbcode.addFunction('#', function() {
-}, {'id': 'kbbcode-separator5'});
-
-kbbcode.addFunction('Attachement', function() {
-	kToggleOrSwap("kbbcode-attachment-options");
-}, {'id': 'kbbcode-attach_button',
-	'title': '<?php echo _KUNENA_EDITOR_ATTACH;?>',
-	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_ATTACH;?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_ATTACH;?>")'});
-
-kbbcode.addFunction('Gallery', function() {
-	kToggleOrSwap("kbbcode-gallery-options");
-}, {'id': 'kbbcode-gallery_button',
-	'title': '<?php echo _KUNENA_EDITOR_GALLERY;?>',
-	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_GALLERY;?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_GALLERY;?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator6'});

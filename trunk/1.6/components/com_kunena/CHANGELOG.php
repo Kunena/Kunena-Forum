@@ -42,6 +42,7 @@ Kunena 1.6.0-DEV
 + [#19380] New bbcode editor (part 5) - New font size selector, refactor color selector
 ^ [#19380] Modified text alignment and line heights for text size selector
 + [#19539] Add image sources to svn
++ [#19380] Additional bbcode editor toolbar icons
 
 25-Jan-2010 Matias
 # [#19448] Move most of the html from lib/ to default template

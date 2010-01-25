@@ -578,7 +578,11 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		#########################################################################################
 
 		case 'rules' :
-			include (KUNENA_PATH_LIB . DS . 'kunena.rules.php');
+			if (file_exists ( KUNENA_ABSTMPLTPATH . 'rules.php' )) {
+				include (KUNENA_ABSTMPLTPATH . 'rules.php');
+			} else {
+				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'rules.php');
+			}
 
 			break;
 

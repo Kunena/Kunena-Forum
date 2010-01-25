@@ -26,33 +26,36 @@ $kunena_db = &JFactory::getDBO ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $document = & JFactory::getDocument ();
 
-$document->setTitle ( _GEN_HELP . ' - ' . stripslashes ( $kunena_config->board_title ) );
+$document->setTitle ( _GEN_RULES . ' - ' . stripslashes ( $kunena_config->board_title ) );
 
 ?>
+<!-- INSERT YOUR RULES IN HTML BEGINNING HERE -->
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-<table class="kblocktable" id="kforumhelp" border="0" cellspacing="0"
+<table class="kblocktable" id="kforumrules" border="0" cellspacing="0"
 	cellpadding="0" width="100%">
 	<thead>
 		<tr>
 			<th>
-			<div class="ktitle_cover km"><span class="ktitle kl">
-			<?php
-			echo _COM_FORUM_HELP;
-			?>
-			</span></div>
+			<div class="ktitle_cover"><span class="ktitle kl"><?php
+			echo _COM_FORUM_RULES;
+			?></span></div>
 			</th>
 		</tr>
 	</thead>
+
 	<tbody>
 		<tr>
-			<td class="khelpdesc" valign="top">
+			<td class="krulesdesc">
 			<?php
-			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'" );
+			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->rules_cid}'" );
 			$j_introtext = $kunena_db->loadResult ();
+			check_dberror ( "Unable to load introtext." );
+			?>
+			<?php
 			echo $j_introtext;
 			?>
 			</td>
@@ -64,6 +67,7 @@ $document->setTitle ( _GEN_HELP . ' - ' . stripslashes ( $kunena_config->board_t
 </div>
 </div>
 </div>
+<!-- THIS IS WHERE YOUR RULES FINISH -->
 <!-- Begin: Forum Jump -->
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -71,7 +75,7 @@ $document->setTitle ( _GEN_HELP . ' - ' . stripslashes ( $kunena_config->board_t
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
 <table class="kblocktable" id="kbottomarea" border="0" cellspacing="0"
-	cellpadding="0" width="100%">
+	cellpadding="0">
 	<tr>
 		<th class="th-right">
 		<?php

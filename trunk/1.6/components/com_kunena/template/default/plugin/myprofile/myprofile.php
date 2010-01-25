@@ -115,21 +115,20 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	<tr>
 		<!-- Temporarily disabled left nav until profile changes complete -->
 		<!-- Links relocated in menu -->
-		<!--   <td class="kmyprofile_left" valign="top" width="20%"> -->
+		<td class="kmyprofile_left" valign="top" width="20%">
 		<!-- B:My Profile Left -->
 		<?php
-	//if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php' )) {
-	//	include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php');
-	// } else {
-	//	include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_menu.php');
-	// }
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php' )) {
+		include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php');
+	 } else {
+		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_menu.php');
+	 }
 	?>
 
 		<!-- F:My Profile Left -->
-		<!--  </td>
+		</td>
 
 		<td class="kmyprofile_mid" valign="top" width="5">&nbsp;</td>
-		 -->
 
 		<td class="kmyprofile_right" valign="top"><!-- B:My Profile Right -->
 
@@ -540,7 +539,11 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 					<th class="th-right"><?php
 	//(JJ) FINISH: CAT LIST BOTTOM
 	if ($kunena_config->enableforumjump) {
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.forumjump.php');
+		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
+			include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
+		} else {
+			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
+		}
 	}
 	?>
 					</th>

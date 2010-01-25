@@ -580,9 +580,13 @@ class HTML_userlist_content
                     <th  class = "th-right">
                         <?php
                         //(JJ) FINISH: CAT LIST BOTTOM
-                        if ($kunena_config->enableforumjump) {
-                            require_once(KUNENA_PATH_LIB .DS. 'kunena.forumjump.php');
-                        }
+						if ($kunena_config->enableforumjump) {
+							if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
+								include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
+							} else {
+								include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
+							}
+						}
                         ?>
                     </th>
                 </tr>

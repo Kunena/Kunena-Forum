@@ -319,8 +319,13 @@ class CKunenaView {
 	}
 
 	function displayForumJump() {
-		if ($this->config->enableforumjump)
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.forumjump.php');
+		if ($this->config->enableforumjump) {
+			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
+				include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
+			} else {
+				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
+			}
+		}
 	}
 
 	function displayMessage($message) {

@@ -111,11 +111,13 @@ echo '        </image>';
         {
         	$kunena_db->setQuery("SELECT MAX(time) AS maxtime, COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$row->thread}'");
             $thisThread = $kunena_db->loadObject();
+            check_dberror("Unable to load last post time.");
             $latestPostTime = $thisThread->maxtime;
 
             //get the latest post itself
             $kunena_db->setQuery("SELECT a.id, a.name, a.userid, a.catid, c.id AS catid, c.name as catname FROM #__fb_messages AS a LEFT JOIN #__fb_categories AS c ON a.catid=c.id WHERE a.time='{$latestPostTime}'");
             $result = $kunena_db->loadObject();
+            check_dberror("Unable to load last post.");
             echo "        <item>\n";
             echo "            <title>" . _GEN_SUBJECT . ": " . stripslashes(kunena_htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(kunena_htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
             echo "            <link>";

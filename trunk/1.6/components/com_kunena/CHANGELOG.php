@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+25-Jan-2010 Matias
+# [#19448] Move most of the html from lib/ to default template
+
 25-Jan-2010 @quila
 + [#19359] Color Code moderator and admin username - different css classes to moderator and admin usernames.
 

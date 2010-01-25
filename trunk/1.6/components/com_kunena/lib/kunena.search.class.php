@@ -19,8 +19,7 @@
  * @author TSMF & Jan de Graaff
  **/
 // Dont allow direct linking
-defined( '_JEXEC' ) or die();
-
+defined ( '_JEXEC' ) or die ();
 
 DEFINE ( 'KUNENA_URL_LIST_SEPARATOR', ' ' );
 
@@ -55,10 +54,11 @@ class CKunenaSearch {
 	 * @param limit Limit
 	 */
 	function CKunenaSearch() {
-		$kunena_my = &JFactory::getUser ();
-		$kunena_app = & JFactory::getApplication ();
-		$kunena_db = &JFactory::getDBO ();
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$this->my = &JFactory::getUser ();
+		$this->app = & JFactory::getApplication ();
+		$this->db = &JFactory::getDBO ();
+		$this->config = & CKunenaConfig::getInstance ();
+		$this->session = & CKunenaSession::getInstance ();
 
 		// TODO: started_by
 		// TODO: active_in
@@ -77,7 +77,7 @@ class CKunenaSearch {
 		if (empty ( $q ) && isset ( $_REQUEST ['searchword'] )) {
 			$q = JRequest::getVar ( 'searchword', '' );
 		}
-		$q = stripslashes ( $q );
+		$q = stripslashes ( JString::trim ( $q ) );
 		$this->params ['titleonly'] = JRequest::getInt ( 'titleonly', $this->defaults ['titleonly'] );
 		$this->params ['searchuser'] = stripslashes ( JRequest::getVar ( 'searchuser', $this->defaults ['searchuser'] ) );
 		$this->params ['starteronly'] = JRequest::getInt ( 'starteronly', $this->defaults ['starteronly'] );
@@ -90,19 +90,19 @@ class CKunenaSearch {
 		$this->params ['order'] = JRequest::getVar ( 'order', $this->defaults ['order'] );
 		$this->params ['childforums'] = JRequest::getInt ( 'childforums', $this->defaults ['childforums'] );
 		$this->params ['catids'] = strtr ( JRequest::getVar ( 'catids', '0', 'get' ), KUNENA_URL_LIST_SEPARATOR, ',' );
-		$limitstart = $this->limitstart = JRequest::getInt ( 'limitstart', 0 );
-		$limit = $this->limit = JRequest::getInt ( 'limit', $kunena_config->messages_per_page_search );
+		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
+		$this->limit = JRequest::getInt ( 'limit', $this->config->messages_per_page_search );
 		extract ( $this->params );
 
-		if ($limit < 1 || $limit > 40)
-			$limit = $this->limit = $kunena_config->messages_per_page_search;
+		if ($this->limit < 1 || $this->limit > 40)
+			$this->limit = $this->limit = $this->config->messages_per_page_search;
 
 		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
 			$this->params ['catids'] = implode ( ',', JRequest::getVar ( 'catids', array (0 ), 'post', 'array' ) );
-			$url = CKunenaLink::GetSearchURL ( $kunena_config, $this->func, $q, $limitstart, $limit, $this->getUrlParams () );
+			$url = CKunenaLink::GetSearchURL ( $this->config, $this->func, $q, $this->limitstart, $this->limit, $this->getUrlParams () );
 			header ( "HTTP/1.1 303 See Other" );
 			header ( "Location: " . htmlspecialchars_decode ( $url ) );
-			$kunena_app->close ();
+			$this->app->close ();
 		}
 
 		if ($q == _GEN_SEARCH_BOX)
@@ -138,7 +138,7 @@ class CKunenaSearch {
 
 		for($x = 0; $x < count ( $arr_searchwords ); $x ++) {
 			$searchword = $arr_searchwords [$x];
-			$searchword = $kunena_db->getEscaped ( addslashes ( JString::trim ( $searchword ) ) );
+			$searchword = $this->db->getEscaped ( addslashes ( JString::trim ( $searchword ) ) );
 			if (empty ( $searchword ))
 				continue;
 			$matches = array ();
@@ -161,17 +161,17 @@ class CKunenaSearch {
 		//User searching
 		if (JString::strlen ( $this->params ['searchuser'] ) > 0) {
 			if ($this->params ['exactname'] == '1') {
-				$querystrings [] = "m.name LIKE '" . $kunena_db->getEscaped ( addslashes ( $this->params ['searchuser'] ) ) . "'";
+				$querystrings [] = "m.name LIKE '" . $this->db->getEscaped ( addslashes ( $this->params ['searchuser'] ) ) . "'";
 			} else {
-				$querystrings [] = "m.name LIKE '%" . $kunena_db->getEscaped ( addslashes ( $this->params ['searchuser'] ) ) . "%'";
+				$querystrings [] = "m.name LIKE '%" . $this->db->getEscaped ( addslashes ( $this->params ['searchuser'] ) ) . "%'";
 			}
 		}
 
 		$time = 0;
 		switch ($this->params ['searchdate']) {
 			case 'lastvisit' :
-				$kunena_db->setQuery ( "SELECT lasttime FROM #__fb_sessions WHERE userid='{$kunena_my->id}'" );
-				$time = $kunena_db->loadResult ();
+				$this->db->setQuery ( "SELECT lasttime FROM #__fb_sessions WHERE userid='{$this->my->id}'" );
+				$time = $this->db->loadResult ();
 				break;
 			case 'all' :
 				break;
@@ -238,8 +238,8 @@ class CKunenaSearch {
 			$groupby = '';
 
 		/* get total */
-		$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}" );
-		$this->total = $kunena_db->loadResult ();
+		$this->db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}" );
+		$this->total = $this->db->loadResult ();
 		check_dberror ( "Unable to count messages." );
 
 		/* if there are no forums to search in, set error and return */
@@ -249,7 +249,7 @@ class CKunenaSearch {
 			return;
 		}
 		if ($this->total < $this->limitstart)
-			$this->limitstart = $limitstart = ( int ) ($this->total / $this->limit);
+			$this->limitstart = ( int ) ($this->total / $this->limit);
 
 		/* get results */
 		$sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, t.mesid, t.message,
@@ -257,11 +257,11 @@ class CKunenaSearch {
         		FROM #__fb_messages_text AS t JOIN #__fb_messages AS m ON m.id=t.mesid
         		JOIN #__fb_categories AS c ON m.catid = c.id
         		WHERE {$where} {$groupby} ORDER BY {$orderby}";
-		$kunena_db->setQuery ( $sql, $limitstart, $limit );
-		$rows = $kunena_db->loadObjectList ();
+		$this->db->setQuery ( $sql, $this->limitstart, $this->limit );
+		$rows = $this->db->loadObjectList ();
 		check_dberror ( "Unable to load messages." );
 
-		$this->str_kunena_errormsg = $sql . '<br />' . $kunena_db->getErrorMsg ();
+		$this->str_kunena_errormsg = $sql . '<br />' . $this->db->getErrorMsg ();
 
 		if (count ( $rows ) > 0)
 			$this->arr_kunena_results = $rows;
@@ -276,14 +276,6 @@ class CKunenaSearch {
 	}
 	function get_searchusername() {
 		return $this->str_kunena_username;
-	}
-	/** get limit (int) **/
-	function get_limit() {
-		return $this->limit;
-	}
-	/** get start (int) **/
-	function get_limitstart() {
-		return $this->limitstart;
 	}
 	/** get results (array) **/
 	function get_results() {
@@ -300,19 +292,15 @@ class CKunenaSearch {
 		return $url_params;
 	}
 	function get_search_forums($catids, $childforums = 1) {
-		$kunena_session = & CKunenaSession::getInstance ();
-		$kunena_db = &JFactory::getDBO ();
-		$kunena_my = &JFactory::getUser ();
-
 		/* get allowed forums */
 		$allowed_string = '';
-		if ($kunena_session->allowed && $kunena_session->allowed != 'na') {
-			$allowed_string = "id IN ({$kunena_session->allowed})";
+		if ($this->session->allowed && $this->session->allowed != 'na') {
+			$allowed_string = "id IN ({$this->session->allowed})";
 		} else {
 			$allowed_string = "published='1' AND pub_access='0'";
 		}
-		$kunena_db->setQuery ( "SELECT id, parent FROM #__fb_categories WHERE {$allowed_string}" );
-		$allowed_forums = $kunena_db->loadAssocList ( 'id' );
+		$this->db->setQuery ( "SELECT id, parent FROM #__fb_categories WHERE {$allowed_string}" );
+		$allowed_forums = $this->db->loadAssocList ( 'id' );
 		check_dberror ( "Unable to get public categories." );
 
 		$allow_list = array ();
@@ -349,106 +337,40 @@ class CKunenaSearch {
 	 * @param string actionstring
 	 */
 	function show() {
-		$kunena_config = & CKunenaConfig::getInstance ();
-
 		extract ( $this->params );
-		$q = implode ( " ", $this->get_searchstrings () );
-		$searchuser = $this->get_searchusername ();
-		$limitstart = $this->get_limitstart ();
-		$limit = $this->get_limit ();
+		$this->q = implode ( " ", $this->get_searchstrings () );
+		$this->quser = $this->get_searchusername ();
 
 		$this->selected = ' selected="selected"';
 		$this->checked = ' checked="checked"';
 		$this->advsearch_hide = 1;
 		if ($this->int_kunena_errornr) {
-			$q = $this->searchword;
+			$this->q = $this->searchword;
 			$this->advsearch_hide = 0;
 		}
-		$this->q = $q;
+
+		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 		//category select list
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', _KUNENA_SEARCH_SEARCHIN_ALLCATS );
 		$this->categorylist = CKunenaTools::forumSelectList ( 'searchlist', explode ( ',', $this->params ['catids'] ), $options, 'class="inputbox" size="8" multiple="multiple"', true );
 
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php' )) {
-			include (KUNENA_ABSTMPLTPATH . '/plugin/advancedsearch/advsearch.php');
+		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'advsearch.php' )) {
+			include (KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'advsearch.php');
 		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/advancedsearch/advsearch.php');
+			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'search' . DS . 'advsearch.php');
 		}
 
-		$results = $this->get_results ();
-		$totalRows = $this->total;
+		$this->results = $this->get_results ();
 
-		$pagination = KunenaSearchPagination ( $this->func, $q, $this->getUrlParams (), floor ( $limitstart / $limit ) + 1, $limit, floor ( $totalRows / $limit ) + 1, 7 );
+		$this->pagination = $this->getPagination ( $this->func, $this->q, $this->getUrlParams (), floor ( $this->limitstart / $this->limit ) + 1, $this->limit, floor ( $this->total / $this->limit ) + 1, 7 );
 
 		if (defined ( 'KUNENA_DEBUG' ))
 			echo '<p style="background-color:#FFFFCC;border:1px solid red;">' . $this->str_kunena_errormsg . '</p>';
-		?>
 
-<?php
-		if (empty ( $q ) && empty ( $searchuser )) {
-			return;
-		}
-		?>
-<div class="k_bt_cvr1">
-<div class="kbt_cvr2">
-<div class="k_bt_cvr3">
-<div class="k_bt_cvr4">
-<div class="k_bt_cvr5">
-<table class="kblocktable" id="kforumsearch" border="0"
-	cellspacing="0" cellpadding="0" width="100%">
-	<thead>
-		<tr>
-			<th colspan="3">
-			<div class="ktitle_cover"><span class="ktitle fbl"><?php
-		echo _KUNENA_SEARCH_RESULTS;
-		?></span>
-			<b><?php
-		printf ( _FORUM_SEARCH, $q );
-		?></b></div>
-			</th>
-		</tr>
-	</thead>
-
-	<tbody>
-		<tr class="ksth">
-			<th class="th-1 ksectiontableheader">
-			<?php
-		echo _GEN_SUBJECT;
-		?></th>
-
-			<th class="th-2 ksectiontableheader">
-			<?php
-		echo _GEN_AUTHOR;
-		?></th>
-
-			<th class="th-3 ksectiontableheader">
-			<?php
-		echo _GEN_DATE;
-		?></th>
-		</tr>
-
-		<?php
-		$tabclass = array ("sectiontableentry1", "sectiontableentry2" );
-
-		$k = 0;
-
-		if ($totalRows == 0 && $this->int_kunena_errornr) {
-			echo '<tr class="k' . $tabclass [$k] .
-				'" ><td colspan="3"  style="text-align:center;font-weight:bold">' .
-				$this->str_kunena_errormsg . '</td></tr>';
-		}
-
-		// Cleanup incoming searchword; international chars can cause garbage at the end
-		// real problem might lie with search box form and how we post and receive the data
-		// However, this works for now
-		$q = JString::trim ( $q );
-
-		// JJ Add different color
 		$searchlist = $this->get_searchstrings ();
-		foreach ( $results as $result ) {
-			$k = 1 - $k;
+		foreach ( $this->results as $i => $result ) {
 			$ressubject = $result->subject;
 			// Clean up subject
 			$ressubject = stripslashes ( smile::purify ( $ressubject ) );
@@ -457,105 +379,63 @@ class CKunenaSearch {
 			$resmessage = CKunenaTools::prepareContent ( $resmessage );
 			$resmessage = smile::purify ( $resmessage );
 			$resmessage = JString::substr ( kunena_htmlspecialchars ( $resmessage ), 0, 300 );
-			$utf8 = (KUNENA_CHARSET == 'UTF-8') ? "u" : "";
 
 			foreach ( $searchlist as $searchword ) {
 				if (empty ( $searchword ))
 					continue;
-				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/i" . $utf8, '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
-				$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/i" . $utf8, '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
+				$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
-			echo '<tr class="k' . $tabclass [$k] . (isset($result->class_sfx) ? ' k' . $tabclass [$k] . $result->class_sfx : ''  ) . '">';
-			echo '<td  class = "td-1" >' . CKunenaLink::GetThreadPageLink( $kunena_config,'view', $result->catid , $result->id ,NULL,NULL, $ressubject ,  $result->id). '<br />' . $resmessage . '<br /><span style="font-size: x-small;
-			">' ._KUNENA_CATEGORY.' '.CKunenaLink::GetCategoryLink('showcat', $result->catid, $result->catname, $rel='follow', $class='', $title=''). '</span><br /><br /></td>';
-			echo '<td class = "td-2" >' . kunena_htmlspecialchars ( stripslashes ( $result->name ) ) . '</td>';
-			echo '<td class = "td-3" >' . date ( _DATETIME, $result->time ) . '</td></tr>';
-			echo "\n";
+			$this->results [$i]->subject = $ressubject;
+			$this->results [$i]->message = $resmessage;
 		}
-		?>
 
-		<?php
-		if ($totalRows > $limit) {
-			?>
-
-		<tr class="ksth">
-			<th colspan="3" style="text-align: center"
-				class="th-1 ksectiontableheader">
-			<?php
-			echo $pagination;
-			?>
-			</th>
-		</tr>
-
-		<?php
-		}
-		?>
-
-		<tr class="ksth">
-			<th colspan="3" style="text-align: center"
-				class="th-1 ksectiontableheader">
-			<?php
-		$resStart = $limitstart + 1;
-		$resStop = $limitstart + count ( $results );
-		if ($resStart < $resStop)
-			$resStartStop = ( string ) ($resStart) . ' - ' . ( string ) ($resStop);
-		else
-			$resStartStop = '0';
-		printf ( _FORUM_SEARCHRESULTS, $resStartStop, $totalRows );
-		?>
-			</th>
-		</tr>
-	</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<?php
-	}
-}
-
-function KunenaSearchPagination($function, $q, $urlparams, $page, $limit, $totalpages, $maxpages) {
-	$kunena_config = & CKunenaConfig::getInstance ();
-	if ($page == 0)
-		$page ++;
-	$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
-	$endpage = $startpage + $maxpages;
-	if ($endpage > $totalpages) {
-		$startpage = ($totalpages - $maxpages) < 1 ? 1 : $totalpages - $maxpages;
-		$endpage = $totalpages;
-	}
-
-	$output = '<div class="kpagination">' . _PAGE;
-	if ($startpage > 1) {
-		if ($endpage < $totalpages)
-			$endpage --;
-		$output .= CKunenaLink::GetSearchLink ( $kunena_config, $function, $q, 0, $limit, 1, $urlparams, $rel = 'nofollow' );
-
-		if ($startpage > 2) {
-			$output .= "...";
-		}
-	}
-
-	for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
-		if ($page == $i) {
-			$output .= "<strong>$i</strong>";
+		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'search.php' )) {
+			include (KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'search.php');
 		} else {
-			$output .= CKunenaLink::GetSearchLink ( $kunena_config, $function, $q, ($i - 1) * $limit, $limit, $i, $urlparams, $rel = 'nofollow' );
+			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'search' . DS . 'search.php');
 		}
 	}
 
-	if ($endpage < $totalpages) {
-		if ($endpage < $totalpages - 1) {
-			$output .= "...";
+	function getPagination($function, $q, $urlparams, $page, $limit, $totalpages, $maxpages) {
+		if ($page == 0)
+			$page ++;
+		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
+		$endpage = $startpage + $maxpages;
+		if ($endpage > $totalpages) {
+			$startpage = ($totalpages - $maxpages) < 1 ? 1 : $totalpages - $maxpages;
+			$endpage = $totalpages;
 		}
 
-		$output .= CKunenaLink::GetSearchLink ( $kunena_config, $function, $q, ($totalpages - 1) * $limit, $limit, $totalpages, $urlparams, $rel = 'nofollow' );
-	}
+		$output = '<div class="kpagination">' . _PAGE;
+		if ($startpage > 1) {
+			if ($endpage < $totalpages)
+				$endpage --;
+			$output .= CKunenaLink::GetSearchLink ( $this->config, $function, $q, 0, $limit, 1, $urlparams, $rel = 'nofollow' );
 
-	$output .= '</div>';
-	return $output;
+			if ($startpage > 2) {
+				$output .= "...";
+			}
+		}
+
+		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
+			if ($page == $i) {
+				$output .= "<strong>$i</strong>";
+			} else {
+				$output .= CKunenaLink::GetSearchLink ( $this->config, $function, $q, ($i - 1) * $limit, $limit, $i, $urlparams, $rel = 'nofollow' );
+			}
+		}
+
+		if ($endpage < $totalpages) {
+			if ($endpage < $totalpages - 1) {
+				$output .= "...";
+			}
+
+			$output .= CKunenaLink::GetSearchLink ( $this->config, $function, $q, ($totalpages - 1) * $limit, $limit, $totalpages, $urlparams, $rel = 'nofollow' );
+		}
+
+		$output .= '</div>';
+		return $output;
+	}
 }
 
-?>

@@ -98,8 +98,7 @@ if (! empty ( $this->kunena_editmode )) :
 <table class="kblocktable<?php
 echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 ?>"
-	id="kpostmessage" border="0" cellspacing="0" cellpadding="0"
-	width="100%">
+	id="kpostmessage" border="0" cellspacing="0" cellpadding="0" width="100%">
 	<thead>
 		<tr>
 			<th colspan="2">
@@ -314,24 +313,6 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		if (($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
 			?>
 
-		<tr class="ksectiontableentry1">
-			<td class="kleftcolumn"><strong><?php
-			echo _IMAGE_SELECT_FILE;
-			?></strong></td>
-
-			<td><input type='file' class='kinput' name='attachimage'
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-			echo (addslashes(_IMAGE_DIMENSIONS)) . ": " . $kunena_config->imagewidth . "x" . $kunena_config->imageheight . " - " . $kunena_config->imagesize . " KB";
-			?>')" /> <input type="button" class="kbutton" name="addImagePH"
-				value="<?php
-			echo (addslashes(_POST_ATTACH_IMAGE)) ;
-			?>"
-				style="cursor: auto; "
-				onclick="bbfontstyle(' [img/] ','');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-			echo (addslashes(_KUNENA_EDITOR_HELPLINE_IMGPH)) ;
-			?>')" /></td>
-		</tr>
 
 		<?php
 		}
@@ -341,25 +322,6 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		if (($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
 			?>
 
-		<tr class="ksectiontableentry2">
-			<td class="kleftcolumn"><strong><?php
-			echo _FILE_SELECT_FILE;
-			?></strong></td>
-
-			<td><input type='file' class='kinput' name='attachfile'
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-			echo (addslashes(_FILE_TYPES)) . ": " . $kunena_config->filetypes . " - " . $kunena_config->filesize . " KB";
-			?>')"
-				style="cursor: auto" /> <input type="button" class="kbutton"
-				name="addFilePH" value="<?php
-			echo (_POST_ATTACH_FILE) ;
-			?>"
-				style="cursor: auto;"
-				onclick="bbfontstyle(' [file/] ','');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-			echo (addslashes(_KUNENA_EDITOR_HELPLINE_FILEPH)) ;
-			?>')" /></td>
-		</tr>
 
 		<?php
 		}

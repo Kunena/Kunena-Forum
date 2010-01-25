@@ -1771,7 +1771,7 @@ POST PAGE
 }
 
 #Kunena #kpost_message td.kleftcolumn {
-	width: 160px;
+	width: 15%;
 	text-align: right;
 	vertical-align: middle;
 }

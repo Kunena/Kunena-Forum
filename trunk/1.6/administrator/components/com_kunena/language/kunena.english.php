@@ -69,12 +69,12 @@ DEFINE('_KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM', 'Display a live message preview 
 DEFINE('_KUNENA_EDITOR_PREVIEWRIGHT', 'Preview Pane Right');
 DEFINE('_KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT', 'Display a live message preview pane to the rigth of the edit area');
 DEFINE('_KUNENA_EDITOR_APPLY_BUTTON', 'Apply');
-DEFINE('_KUNENA_EDITOR_SIZE_XS', 'EXTRA SMALL');
-DEFINE('_KUNENA_EDITOR_SIZE_S', 'SMALL');
-DEFINE('_KUNENA_EDITOR_SIZE_M', 'MEDIUM');
-DEFINE('_KUNENA_EDITOR_SIZE_L', 'LARGE');
-DEFINE('_KUNENA_EDITOR_SIZE_XL', 'XLARGE');
-DEFINE('_KUNENA_EDITOR_SIZE_XXL', 'XXLARGE');
+DEFINE('_KUNENA_EDITOR_SIZE_XS', 'Sample Text');
+DEFINE('_KUNENA_EDITOR_SIZE_S', 'Sample Text');
+DEFINE('_KUNENA_EDITOR_SIZE_M', 'Sample Text');
+DEFINE('_KUNENA_EDITOR_SIZE_L', 'Sample Text');
+DEFINE('_KUNENA_EDITOR_SIZE_XL', 'Sample Text');
+DEFINE('_KUNENA_EDITOR_SIZE_XXL', 'Sample Text');
 
 // Profilebox and Loginbox
 define('_PROFILEBOX_FORGOT_USERNAME', 'Forgot your username?');
@@ -153,7 +153,7 @@ define('_COM_A_PESONNALTEXT_DESC', 'Maximum number of characters allowed for the
 define('_KUNENA_POST_NEW_TOPIC', 'New Topic');
 define('_KUNENA_POST_REPLY_TOPIC', 'Reply Topic:');
 define('_KUNENA_POST_EDIT', 'Edit Post:');
-define('_KUNENA_POST_IN_CATEGORY', 'Post New Message In');
+define('_KUNENA_POST_IN_CATEGORY', 'Category');
 
 // Action buttons
 define('_KUNENA_BUTTON_MARKFORUMREAD', 'Mark Forum Read');

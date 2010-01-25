@@ -1314,24 +1314,28 @@ span.newchar {
 	min-height: 180px;
 }
 
+#Kunena span.kmsgtext_xs {
+	font-size: 0.5em;
+}
+
 #Kunena span.kmsgtext_s {
-	font-size: 1em;
+	font-size: 0.75em;
 }
 
 #Kunena span.kmsgtext_m {
-	font-size: 1.273em;
+	font-size: 1em;
 }
 
 #Kunena span.kmsgtext_l {
-	font-size: 1.455em;
+	font-size: 1.25em;
 }
 
 #Kunena span.kmsgtext_xl {
-	font-size: 1.636em;
+	font-size: 1.50em;
 }
 
 #Kunena span.kmsgtext_xxl {
-	font-size: 1.667em;
+	font-size: 2em;
 }
 
 #Kunena div.kmsgtext_code {
@@ -2057,11 +2061,21 @@ img.k-bbcode:hover {
 	padding: 0px;
 }
 
-.k-color_table {
+.kbbcode-colortable {
 	cursor: pointer;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+div#kbbcode-size-options {
+	margin:6px 0 -4px;
+}
+
+div#kbbcode-size-options span:hover {
+	background-color: #e4e4e4;
+	cursor: pointer;
+	padding: 0px;
 }
 
 #Kunena table.k-postbuttonset tr td.k-postbuttons select.kslcbox {

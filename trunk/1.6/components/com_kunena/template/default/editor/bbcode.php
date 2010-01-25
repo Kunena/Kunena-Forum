@@ -41,49 +41,41 @@ $kunena_config = & CKunenaConfig::getInstance ();
 		<!-- Start extendable fields -->
 		<tr>
 			<td class="k-postbuttons">
-			<div id="kbbcode-size-options" style="display: none;"><?php
-			echo (_KUNENA_EDITOR_FONTSIZESELECTION) ;?>&nbsp;
-			<select id="kbbcode-size-selector" name="kbbcode-size-selector"
-				title="<?php echo _KUNENA_EDITOR_FONTSIZESELECTION;?>"
-				onmouseover="$('helpbox').set('value',
-								'<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZESELECTION;?>')">
-				<option value="1"><?php
-				echo (_SIZE_VSMALL) ;
-				?></option>
-				<option value="2"><?php
-				echo (_SIZE_SMALL) ;
-				?></option>
-				<option value="3" selected="selected"><?php
-				echo (_SIZE_NORMAL) ;
-				?></option>
-				<option value="4"><?php
-				echo (_SIZE_BIG) ;
-				?></option>
-				<option value="5"><?php
-				echo (_SIZE_VBIG) ;
-				?></option>
-			</select>&nbsp;
-			<input type="button" name="Apply"
-				value="<?php
-				echo (_KUNENA_EDITOR_APPLY_BUTTON) ;
-				?>"
-				onclick="kbbcode.replaceSelection('[size='+$('kbbcode-size-selector').get('value')+']'+
-						 kbbcode.getSelection()+'[/size]')"
-				onmouseover="$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_APPLY;?>')" />&nbsp;
-			<input type="button" name="Hide"
-				value="<?php
-				echo (_KUNENA_EDITOR_HIDE_BUTTON) ;
-				?>"
-				onclick="$('kbbcode-size-options').set('style', 'display: none;')"
-				onmouseover="$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_HIDE;?>')" />
+			<div id="kbbcode-size-options" style="display: none;">
+				<span class="kmsgtext_xs" title='[size=1]'
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XS;?>')">&nbsp;<?php
+				echo _KUNENA_EDITOR_SIZE_XS;
+				?>&nbsp;</span>
+				<span class="kmsgtext_s" title='[size=2]'
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_S;?>')">&nbsp;<?php
+				echo _KUNENA_EDITOR_SIZE_S;
+				?>&nbsp;</span>
+				<span class="kmsgtext_m" title='[size=3]'
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_M;?>')">&nbsp;<?php
+				echo _KUNENA_EDITOR_SIZE_M;
+				?>&nbsp;</span>
+				<span class="kmsgtext_l" title='[size=4]'
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_L;?>')">&nbsp;<?php
+				echo _KUNENA_EDITOR_SIZE_L;
+				?>&nbsp;</span>
+				<span class="kmsgtext_xl" title='[size=5]'
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XL;?>')">&nbsp;<?php
+				echo _KUNENA_EDITOR_SIZE_XL;
+				?>&nbsp;</span>
+				<span class="kmsgtext_xxl" title='[size=6]'
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XXL;?>')">&nbsp;<?php
+				echo _KUNENA_EDITOR_SIZE_XXL;
+				?>&nbsp;</span>
 			</div>
-
-<!-- 			<div id="k-color_palette" style="display: none;"><script
- 				type="text/javascript">
-								function change_palette() {dE('k-color_palette');}
-								colorPalette('h', '4%', '15px');
-							</script></div>
- -->
+			<div id="kbbcode-colorpalette" style="display: none;">
+				<script type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
+ 			</div>
 			<div id="link" style="display: none;"><?php
 			echo (_KUNENA_EDITOR_LINK_URL) ;
 			?><input

@@ -118,7 +118,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			<tr class="ksectiontableentry2">
 			<td class="kleftcolumn"><strong><?php
 			echo _KUNENA_POST_IN_CATEGORY;
-			?></strong>:</td>
+			?></strong></td>
 
 			<td class="k-topicicons"><?php
 			echo $this->selectcatlist;
@@ -130,7 +130,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		<tr class="ksectiontableentry1">
 			<td class="kleftcolumn"><strong><?php
 			echo _GEN_NAME;
-			?></strong>:</td>
+			?></strong></td>
 
 			<?php
 			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
@@ -157,9 +157,12 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<?php
 		if (($kunena_config->askemail && !$kunena_my->id) || $kunena_config->changename == 1 || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
-			echo '<tr class = "ksectiontableentry2"><td class = "kleftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-			echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"kinputbox postinput\" maxlength=\"35\" value=\"$this->email\" /></td>";
-			echo '</tr>';
+		?>
+		<tr class = "ksectiontableentry2">
+			<td class = "kleftcolumn"><strong><?php echo _GEN_EMAIL;?></strong></td>
+			<td><input type="text" name="email"  size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->email;?>" /></td>
+		</tr>
+		<?php
 		}
 		?>
 
@@ -170,7 +173,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 			<td class="kleftcolumn"><strong><?php
 				echo _GEN_SUBJECT;
-				?></strong>:</td>
+				?></strong></td>
 
 			<td><input type="text"
 				class="kinputbox postinput"
@@ -219,7 +222,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		<tr class="ksectiontableentry2">
 			<td class="kleftcolumn"><strong><?php
 			echo _GEN_TOPIC_ICON;
-			?></strong>:</td>
+			?></strong></td>
 
 			<td class="k-topicicons">
 <table border="0" cellspacing="0" cellpadding="0" class="kflat">
@@ -367,7 +370,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		<tr class="ksectiontableentry1">
 			<td class="kleftcolumn"><strong><?php
 			echo _POST_SUBSCRIBE;
-			?></strong>:</td>
+			?></strong></td>
 
 			<td><?php
 			if ($kunena_config->subscriptionschecked == 1) {

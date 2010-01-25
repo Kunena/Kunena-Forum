@@ -1773,7 +1773,7 @@ POST PAGE
 #Kunena #kpost_message td.kleftcolumn {
 	width: 160px;
 	text-align: right;
-	vertical-align: top;
+	vertical-align: middle;
 }
 
 #Kunena #Kunena_post_result div {
@@ -2234,12 +2234,54 @@ ul#kbbcode-toolbar li a#kbbcode-separator4 {
 	cursor: default;
 }
 
+ul#kbbcode-toolbar li a#kbbcode-table_button {
+	background-position:0 -18px;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-module_button {
+	background-position:-18px -18px;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-separator5 {
+	background-position:-400px 0;
+	width: 8px;
+	background-color: #eeeeee;
+	cursor: default;
+}
+
 ul#kbbcode-toolbar li a#kbbcode-ebay_button {
 	background-position:-360px 0;
 }
 
 ul#kbbcode-toolbar li a#kbbcode-video_button {
 	background-position:-378px 0;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-map_button {
+	background-position:-72px -18px;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-attach_button {
+	background-position:-36px -18px;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-gallery_button {
+	background-position:-54px -18px;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-separator6 {
+	background-position:-400px 0;
+	width: 8px;
+	background-color: #eeeeee;
+	cursor: default;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-previewbottom_button {
+	background-position:-252px -18px;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-previewright_button {
+	background-position:-270px -18px;
 }
 
 /*

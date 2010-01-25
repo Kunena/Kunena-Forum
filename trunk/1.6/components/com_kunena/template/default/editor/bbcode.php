@@ -27,7 +27,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	<?php //}else { 	?>
 	<td class="kleftcolumn" valign="top"><strong><?php
 	echo _COM_BOARDCODE;
-	?></strong>:
+	?></strong>
 	</td>
 	<?php //} 	?>
 	<td>
@@ -38,7 +38,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				<ul id="kbbcode-toolbar"></ul>
 			</td>
 		</tr>
-		<!-- Start extendable fields -->
+		<!-- Start extendable secondary toolbar -->
 		<tr>
 			<td class="k-postbuttons">
 			<div id="kbbcode-size-options" style="display: none;">
@@ -241,7 +241,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 
 			</td>
 		</tr>
-		<!-- end of extendable fiels -->
+		<!-- end of extendable secondary toolbar -->
 		<tr>
 			<td class="kposthint"><input type="text" name="helpbox" id="helpbox"
 				size="45" class="kinputbox" maxlength="100"
@@ -256,9 +256,11 @@ $kunena_config = & CKunenaConfig::getInstance ();
 <tr class="ksectiontableentry2">
 	<td valign="top" class="kleftcolumn"><strong><?php
 	echo (_MESSAGE) ;
-	?></strong>:<br />
-	<b onclick="size_messagebox(100);" style="cursor: pointer">(+)</b><b> /
-	</b><b onclick="size_messagebox(-100);" style="cursor: pointer">(-)</b> <?php
+	// TODO: Replace Enlarge and Shrink with icons
+	?></strong><br />
+	<span class="ksmalltext" onclick="size_messagebox(100);" style="cursor: pointer">Enlarge</span>&nbsp;/&nbsp;
+	<span class="ksmalltext" onclick="size_messagebox(-100);" style="cursor: pointer">Shrink</span>
+	<?php
 	if ($kunena_config->disemoticons != 1) {
 		?>
 

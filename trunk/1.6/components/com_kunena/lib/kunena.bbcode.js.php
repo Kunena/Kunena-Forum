@@ -100,6 +100,8 @@ function kToggleOrSwap(id)
 // Helper function to generate the color palette for the bbcode color picker
 //
 ?>
+
+<!--   -->
 function kGenerateColorPalette(width, height)
 {
 	var r = 0, g = 0, b = 0;
@@ -110,6 +112,7 @@ function kGenerateColorPalette(width, height)
 	numberList[2] = '80';
 	numberList[3] = 'BF';
 	numberList[4] = 'FF';
+
 	document.writeln('<table id="kbbcode-colortable" class="kbbcode-colortable" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
 
 	for (r = 0; r < 5; r++)
@@ -186,7 +189,7 @@ var kbbcode = new Class({
 
 	options: {
 		displatchChangeEvent: false,
-		changeEventDelay: 200,
+		changeEventDelay: 1000,
 		interceptTabs: true
 	},
 <?php
@@ -648,6 +651,24 @@ kbbcode.addFunction('Code', function() {
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_CODE;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_CODE;?>")'});
 
+kbbcode.addFunction("Table", function() {
+	selection = this.getSelection();
+	if (selection == "") {
+		this.replaceSelection("\n[table]\n  [tr]\n    [td]Line 1[/td]\n    [td]Column 2[/td]\n  [/tr]\n  [tr]\n    [td]Line 2[/td]\n    [td]...[/td]\n  [/tr]\n[/table]");
+	}
+	else {
+		this.processEachLine(function(line) {
+			newline = "  [tr][td]" + line + "[/td][/tr]";
+			return newline;
+		}, false);
+		this.insert("[table]\n", "before", false);
+		this.insert("\n[/table]", "after", true); //now isLast is set to true, because it is the last one!
+	}
+}, {'id': 'kbbcode-table_button',
+	'title': '<?php echo _KUNENA_EDITOR_TABLE;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_TABLE;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_TABLE;?>")'});
+
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator3'});
 
@@ -697,7 +718,58 @@ kbbcode.addFunction('Video', function() {
 <?php
 }
 ?>
+
+kbbcode.addFunction('Map', function() {
+	this.replaceSelection('[map]' + this.getSelection() + '[/map]');
+}, {'id': 'kbbcode-map_button',
+	'title': '<?php echo _KUNENA_EDITOR_MAP;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_MAP;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_MAP;?>")'});
+
+kbbcode.addFunction('Module', function() {
+	this.replaceSelection('[module]' + this.getSelection() + '[/module]');
+}, {'id': 'kbbcode-module_button',
+	'title': '<?php echo _KUNENA_EDITOR_MODULE;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_MODULE;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_MODULE;?>")'});
+
+kbbcode.addFunction('#', function() {
+}, {'id': 'kbbcode-separator5'});
+
+kbbcode.addFunction('Attachement', function() {
+	kToggleOrSwap("kbbcode-attachment-options");
+}, {'id': 'kbbcode-attach_button',
+	'title': '<?php echo _KUNENA_EDITOR_ATTACH;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_ATTACH;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_ATTACH;?>")'});
+
+kbbcode.addFunction('Gallery', function() {
+	kToggleOrSwap("kbbcode-gallery-options");
+}, {'id': 'kbbcode-gallery_button',
+	'title': '<?php echo _KUNENA_EDITOR_GALLERY;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_GALLERY;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_GALLERY;?>")'});
+
+kbbcode.addFunction('#', function() {
+}, {'id': 'kbbcode-separator6'});
+
+kbbcode.addFunction('PreviewBottom', function() {
+
+}, {'id': 'kbbcode-previewbottom_button',
+	'title': '<?php echo _KUNENA_EDITOR_PREVIEWBOTTOM;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>")'});
+
+kbbcode.addFunction('PreviewRight', function() {
+
+}, {'id': 'kbbcode-previewright_button',
+	'title': '<?php echo _KUNENA_EDITOR_PREVIEWRIGHT;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT;?>")'});
+
+
 });
+
 
 <?php
 // Add Ajax/Json preview support

@@ -386,8 +386,12 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
             </tr>
            <?php }
         }
+
+
         //Begin captcha
 		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
+			$enabled = JPluginHelper::isEnabled('system', 'jezReCaptcha');
+			if($enabled){
 			?>
 		<tr class="ksectiontableentry1">
 			<td class="kleftcolumn">&nbsp;<strong><?php
@@ -399,6 +403,7 @@ $mainframe->triggerEvent('onCaptchaDisplay'); ?>
 			 </td>
 		</tr>
 		<?php
+			}
 		}
 		// Finish captcha
 		if (($this->kunena_editmode == "1") && $kunena_config->pollenabled == "1")

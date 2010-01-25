@@ -26,6 +26,10 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+//change captcha strings
+DEFINE('_KUNENA_CAPTCHA_ON','Enable anti-spam system with reCaptcha');
+DEFINE('_KUNENA_CAPTCHA_DESC','Captcha system On/Off, before enable this you need to have installed the plugin reCaptcha, look into the wiki for more information');
+
 // New bbcode editor strings
 DEFINE('_KUNENA_EDITOR_BOLD', 'Bold');
 DEFINE('_KUNENA_EDITOR_ITALIC', 'Italic');
@@ -876,8 +880,6 @@ DEFINE('_KUNENA_FILEATTACH','File Attachment:');
 DEFINE('_KUNENA_FILENAME','File Name:');
 DEFINE('_KUNENA_FILESIZE','File Size:');
 DEFINE('_KUNENA_MSG_CODE','Code:');
-DEFINE('_KUNENA_CAPTCHA_ON','Enable spam protection system with reCaptcha plugin');
-DEFINE('_KUNENA_CAPTCHA_DESC','Captcha system On/Off, before enable this you need to have installed the plugin reCaptcha (http://www.joomlaez.com/joomla-plugins/joomla-captcha-solution.html)');
 DEFINE('_KUNENA_CAPDESC','Enter code here');
 DEFINE('_KUNENA_CAPERR','Code not correct!');
 DEFINE('_KUNENA_COM_A_REPORT', 'Message Reporting');

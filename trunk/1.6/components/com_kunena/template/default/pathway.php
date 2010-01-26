@@ -73,7 +73,7 @@ if ($func != "") {
 	if ($sfunc == "view" and $id) {
 		$sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
 		$kunena_db->setQuery ( $sql );
-		$this->kunena_topic_title = stripslashes ( html_entity_decode_utf8 ( $kunena_db->loadResult () ) );
+		$this->kunena_topic_title = CKunenaTools::parseText ( html_entity_decode_utf8 ( $kunena_db->loadResult () ) );
 		check_dberror ( "Unable to load subject." );
 		$jr_path_menu [] = $this->kunena_topic_title;
 	}

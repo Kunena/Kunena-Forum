@@ -61,7 +61,7 @@ if ($poll_allowed)
             <tr>
                 <th align="left">
                     <div class = "ktitle_cover km">
-                        <span class = "ktitle kl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo $dataspollresult[0]->title; ?></span>
+                        <span class = "ktitle kl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo CKunenaTools::parseText ($dataspollresult[0]->title); ?></span>
                     </div>
 
                     <img id = "BoxSwitch_polls__polls_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -78,7 +78,7 @@ if ( $dataspollusers[0]->userid == $kunena_my->id || $kunena_my->id == "0")//if 
                           <table border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                           <?php foreach ($dataspollresult as $row)
                           { ?>
-                            <tr><td><?php echo $row->text; ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if($row->votes != "0") { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
+                            <tr><td><?php echo CKunenaTools::parseText ( $row->text ); ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if($row->votes != "0") { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
                           <?php
                           }?>
                             <tr><td colspan="4"><?php if(empty($nbvoters)){$nbvoters = "0";} echo _KUNENA_POLL_VOTERS_TOTAL."<b>".$nbvoters."</b> "; if($kunena_config->pollresultsuserslist){ if(!empty($pollusersvoted)){ echo " ( "; foreach($pollusersvoted as $row){ echo CKunenaLink::GetProfileLink($kunena_config, $row->userid, ($kunena_config->username ? $row->username : $row->name))." "; } echo " ) "; } } ?></td></tr>
@@ -113,7 +113,7 @@ elseif ((strftime("%Y-%m-%d %H:%M:%S",time()) <= $dataspollresult[0]->polltimeto
 	<?php
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
-       echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";
+       echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".CKunenaTools::parseText ($dataspollresult[$i]->text )."</li>";
     }
     	?>
     </ul>
@@ -139,7 +139,7 @@ else
 	 foreach ($dataspollresult as $row)
 	 {
 	 ?>
-     	<tr><td><?php echo $row->text; ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if($row->votes != "0") { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
+     	<tr><td><?php echo CKunenaTools::parseText ($row->text); ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default_ex/images/bar.gif"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo _KUNENA_POLL_NO_VOTE; } ?></td><td><?php if($row->votes != "0") { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td></tr>
      <?php
 	 }?>
      <tr><td colspan="4"><?php if(empty($nbvoters)){$nbvoters = "0";} echo _KUNENA_POLL_VOTERS_TOTAL."<b>".$nbvoters."</b> "; if($kunena_config->pollresultsuserslist){ if(!empty($pollusersvoted)){ echo " ( "; foreach($pollusersvoted as $row){ echo CKunenaLink::GetProfileLink($kunena_config, $row->userid, ($kunena_config->username ? $row->username : $row->name))." "; } echo " ) "; } } ?></td></tr>

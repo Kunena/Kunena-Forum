@@ -371,14 +371,10 @@ class CKunenaSearch {
 
 		$searchlist = $this->get_searchstrings ();
 		foreach ( $this->results as $i => $result ) {
-			$ressubject = $result->subject;
 			// Clean up subject
-			$ressubject = stripslashes ( smile::purify ( $ressubject ) );
-			$resmessage = stripslashes ( $result->message );
+			$ressubject = CKunenaTools::parseText ( smile::purify ( $result->subject ) );
 			// Strip smiles and bbcode out of search results; they look ugly
-			$resmessage = CKunenaTools::prepareContent ( $resmessage );
-			$resmessage = smile::purify ( $resmessage );
-			$resmessage = JString::substr ( kunena_htmlspecialchars ( $resmessage ), 0, 300 );
+			$resmessage = CKunenaTools::parseBBCode ( $result->message );
 
 			foreach ( $searchlist as $searchword ) {
 				if (empty ( $searchword ))

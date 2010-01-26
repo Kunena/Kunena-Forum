@@ -42,7 +42,7 @@ if ($do == 'vote')
             <tr>
                 <th align="left">
                     <div class = "ktitle_cover km">
-                        <span class = "ktitle kl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo $dataspollresult[0]->title; ?></span>
+                        <span class = "ktitle kl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo CKunenaTools::parseText ( $dataspollresult[0]->title ); ?></span>
                     </div>
 
                     <img id = "BoxSwitch_polls__polls_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -60,7 +60,7 @@ if ($do == 'vote')
 	<?php
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
-       echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";
+       echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
     }
        ?>
     	</ul></fieldset>
@@ -116,7 +116,7 @@ elseif ($do == 'changevote')
             <tr>
                 <th align="left">
                     <div class = "ktitle_cover km">
-                        <span class = "ktitle kl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo $dataspollresult[0]->title; ?></span>
+                        <span class = "ktitle kl"><?php echo _KUNENA_POLL_NAME; ?> <?php echo CKunenaTools::parseText ( $dataspollresult[0]->title ); ?></span>
                     </div>
 
                     <img id = "BoxSwitch_polls__polls_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
@@ -133,9 +133,9 @@ elseif ($do == 'changevote')
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
     	if($dataspollresult[$i]->id == $id_last_vote){
-       		echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" checked />".$dataspollresult[$i]->text."</li>";
+       		echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" checked />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
     	}else {
-			echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".$dataspollresult[$i]->text."</li>";
+			echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
     	}
     }
        ?>

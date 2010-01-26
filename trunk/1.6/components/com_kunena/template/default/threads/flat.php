@@ -148,7 +148,7 @@ if (count ( $this->messages ) > 0) {
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( stripslashes ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $this->messagetext [$leaf->id] ) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $this->messagetext [$leaf->id] ) ), 'follow', 'k-topic-title km' );
 			?>
 			<?php
 			if ($leaf->favcount ) {

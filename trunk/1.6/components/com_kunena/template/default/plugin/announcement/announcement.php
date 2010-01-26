@@ -49,13 +49,10 @@ if ($do == "read") {
 
     $ann = $anns_[0];
     $annID = $ann->id;
-    $anntitle = stripslashes($ann->title);
-    $kunena_emoticons = smile::getEmoticons(0);
-	$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $kunena_config->disemoticons, $kunena_emoticons));
-	$annsdescription = nl2br($annsdescription);
+    $anntitle = CKunenaTools::parseText ($ann->title);
+	$annsdescription = CKunenaTools::parseBBCode ($ann->sdescription);
 
-	$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
-	$anndescription = nl2br($anndescription);
+	$anndescription = CKunenaTools::parseBBCode ($ann->description);
 
     $annpublished = $ann->published;
     $annshowdate = $ann->showdate;
@@ -190,7 +187,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'read', $row->id, stripslashes($row->title), stripslashes($row->title), 'follow'); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'read', $row->id, CKunenaTools::parseText ($row->title), CKunenaTools::parseText ($row->title), 'follow'); ?>
                                 </td>
 
                                 <td class = "td-4"  align="center">
@@ -357,7 +354,7 @@ if ($is_editor) {
         $published = JRequest::getVar("published", 0);
         $showdate = JRequest::getVar("showdate", "");
 
-        $kunena_db->setQuery("UPDATE #__fb_announcement SET title='$title', description='$description', sdescription='$sdescription',  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
+        $kunena_db->setQuery("UPDATE #__fb_announcement SET title=". $kunena_db->Quote ( $title ) .", description=". $kunena_db->Quote ( $description ) .", sdescription=". $kunena_db->Quote ( $sdescription ) .",  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
         if ($kunena_db->query()) {
             $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), _ANN_SUCCESS_EDIT);

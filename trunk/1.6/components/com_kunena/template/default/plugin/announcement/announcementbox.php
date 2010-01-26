@@ -46,14 +46,10 @@ check_dberror("Unable to load announcements.");
 if (count($anns) == 0) return;
 $ann = $anns[0];
 $annID = $ann->id;
-$anntitle = stripslashes($ann->title);
+$anntitle = CKunenaTools::parseText ($ann->title);
+$annsdescription = CKunenaTools::parseBBCode ($ann->sdescription);
 
-$kunena_emoticons = smile::getEmoticons(0);
-$annsdescription = stripslashes(smile::smileReplace($ann->sdescription, 0, $kunena_config->disemoticons, $kunena_emoticons));
-$annsdescription = nl2br($annsdescription);
-
-$anndescription = stripslashes(smile::smileReplace($ann->description, 0, $kunena_config->disemoticons, $kunena_emoticons));
-$anndescription = nl2br($anndescription);
+$anndescription = CKunenaTools::parseBBCode ($ann->description);
 
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;

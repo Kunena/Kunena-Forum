@@ -34,12 +34,14 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+26-Jan-2010 Xillibit
+^ [#19023] Text filtering not working for title, done in every places
+
 26-Jan-2010 @quila
 ^ [#19288] Fix regression - remove js folder from manifest.xml
 
 25-Jan-2010 severdia
 # [#19356] New icons, removed English folder in images (moved images up one level), refined forum colors
-
 
 25-Jan-2010 Xillibit
 ^ [#19395] Add better captcha support with recaptcha - don't show the html tables if the puglin is unpublished, rewrite of language strings

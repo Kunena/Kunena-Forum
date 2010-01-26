@@ -672,7 +672,7 @@ class CKunenaView {
 
 		}
 		if ($this->userinfo->personalText != '') {
-			$this->msg_html->personal = kunena_htmlspecialchars ( stripslashes ( $this->userinfo->personalText ) );
+			$this->msg_html->personal = kunena_htmlspecialchars ( CKunenaTools::parseText ( $this->userinfo->personalText ) );
 		}
 		if ($this->userinfo->ICQ != '') {
 			$this->msg_html->icq = '<a href="http://www.icq.com/people/cmd.php?uin=' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->ICQ ) ) . '&action=message"><img src="http://status.icq.com/online.gif?icq=' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->ICQ ) ) . '&img=26" title="ICQ#: ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->ICQ ) ) . '" alt="ICQ#: ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->ICQ ) ) . '" /></a>';

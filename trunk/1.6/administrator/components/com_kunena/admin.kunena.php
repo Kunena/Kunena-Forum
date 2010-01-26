@@ -798,6 +798,8 @@ function showConfig($option) {
 	//function get_dirs($directory, $select_name, $selected = "") {
 	$listitems [] = JHTML::_ ( 'select.option', '1', _KUNENA_SELECTTEMPLATE );
 
+	$templatelist = array();
+	$imagesetlist = array();
 	$dir = @opendir ( KUNENA_PATH_TEMPLATE );
 	if ($dir) {
 		while ( ($file = readdir ( $dir )) !== false ) {
@@ -806,7 +808,7 @@ function showConfig($option) {
 					if (! ($file [0] == '.') && is_file ( KUNENA_PATH_TEMPLATE . DS. $file . DS . 'css' . DS . 'kunena.forum.css' )) {
 						$templatelist [] = $file;
 					}
-					if (! ($file [0] == '.') && is_dir ( KUNENA_PATH_TEMPLATE . DS . $file . DS . 'images' . DS . 'english' )) {
+					if (! ($file [0] == '.') && is_dir ( KUNENA_PATH_TEMPLATE . DS . $file . DS . 'images' )) {
 						$imagesetlist [] = $file;
 					}
 				}

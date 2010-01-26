@@ -16,7 +16,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 $catid = JRequest::getInt ( 'catid', 0 );
 ?>
 <div align="left" class="kunena-msgtitle"><?php
-					if ($this->prevCheck < $this->kunena_message->time && ! in_array ( $this->kunena_message->thread, $this->read_topics )) {
+					if ($this->my->id && $this->prevCheck < $this->kunena_message->time && ! in_array ( $this->kunena_message->thread, $this->read_topics )) {
 						$msgtitle = 'msgtitle_new';
 					} else {
 						$msgtitle = 'msgtitle';

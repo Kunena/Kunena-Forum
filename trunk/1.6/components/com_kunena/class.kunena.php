@@ -218,14 +218,6 @@ else
 define('KUNENA_ABSTMPLTPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_template);
 define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_img_template);
 
-// Commented out the below conditional because image path changed. Added new line with correct path.
-// IMAGES ABSOLUTE PATH
-//if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. KUNENA_LANGUAGE) .DS) {
-//    define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. KUNENA_LANGUAGE  .DS);
-//    }
-//else {
-//    define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images' .DS. 'english' .DS);
- //   }
 define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images/');
 
 // absolute icons path
@@ -246,13 +238,6 @@ define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$fb_cur_img_templ
 // IMAGES URL PATH
 define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum.css');
 
-// Commented out the below conditional because image path changed. Added new line with correct path.
-//if (is_dir(KUNENA_ABSTMPLTMAINIMGPATH . '/images/' . KUNENA_LANGUAGE)) {
-//    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . 'images/' .KUNENA_LANGUAGE. '/');
-//    }
-//else {
-//    define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . 'images/english/');
- //   }
 define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . 'images/');
 
 // url icons path

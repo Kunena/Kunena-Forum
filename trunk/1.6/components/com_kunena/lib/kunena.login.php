@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: profilebox.php 897 2009-06-27 22:13:52Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: frontstats.php 792 2009-05-25 11:56:22Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

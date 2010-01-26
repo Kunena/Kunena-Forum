@@ -680,11 +680,11 @@ kbbcode.addFunction('Image', function() {
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_IMAGE;?>")'});
 
 kbbcode.addFunction('Link', function() {
-	var selection = this.getSelection();
-var response = prompt('Enter Link URL','');
-if(response == null)
-     return;
-this.replaceSelection('[url=' +  (response == '' ? 'http://link_url/' : response) + ']' + (selection == '' ? 'Link Text' : selection) + '[/url]');
+	sel = this.getSelection();
+	if (sel != "") {
+		$('kbbcode-link_text').set('value', sel);
+	}
+	kToggleOrSwap("kbbcode-link-options");
 }, {'id': 'kbbcode-link_button',
 	'title': '<?php echo _KUNENA_EDITOR_LINK;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_LINK;?>',
@@ -706,6 +706,13 @@ kbbcode.addFunction('Gallery', function() {
 	'title': '<?php echo _KUNENA_EDITOR_GALLERY;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_GALLERY;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_GALLERY;?>")'});
+
+kbbcode.addFunction('Poll', function() {
+	kToggleOrSwap("kbbcode-poll-options");
+}, {'id': 'kbbcode-poll_button',
+	'title': '<?php echo _KUNENA_EDITOR_POLL;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_POLL;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_POLL;?>")'});
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator5'});

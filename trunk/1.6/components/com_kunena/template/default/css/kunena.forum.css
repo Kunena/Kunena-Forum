@@ -2435,6 +2435,10 @@ ul#kbbcode-toolbar li a#kbbcode-gallery_button {
 	background-position:-54px -18px;
 }
 
+ul#kbbcode-toolbar li a#kbbcode-poll_button {
+	background-position:-90px -18px;
+}
+
 ul#kbbcode-toolbar li a#kbbcode-separator6 {
 	background-position:-400px 0;
 	width: 8px;

@@ -76,27 +76,27 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<div id="kbbcode-colorpalette" style="display: none;">
 				<script type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
  			</div>
-			<div id="link" style="display: none;"><?php
-			echo (_KUNENA_EDITOR_LINK_URL) ;
-			?><input
-				name="url" type="text" size="40" maxlength="100" value="http://"
+			<div id="kbbcode-link-options" style="display: none;"><?php
+			echo _KUNENA_EDITOR_LINK_URL;
+			?>&nbsp;<input
+				id="kbbcode-link_url" name="url" type="text" size="40" maxlength="255" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_LINKURL )) ;
+				echo _KUNENA_EDITOR_HELPLINE_LINKURL;
 				?>')" />
 			<?php
-			echo (_KUNENA_EDITOR_LINK_TEXT) ;
-			?><input name="text2"
-				type="text" size="30" maxlength="100"
+			echo _KUNENA_EDITOR_LINK_TEXT;
+			?>&nbsp;<input name="text2"
+				id="kbbcode-link_text" type="text" size="30" maxlength="100"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_LINKTEXT )) ;
+				echo _KUNENA_EDITOR_HELPLINE_LINKTEXT;
 				?>')" />
-			<input type="button" name="Link" accesskey="w"
+			<input type="button" name="insterLink"
 				value="<?php
 				echo (_KUNENA_EDITOR_LINK_INSERT) ;
 				?>"
-				onclick="bbfontstyle('[url=' + this.form.url.value + ']'+ this.form.text2.value,'[/url]')"
+				onclick="kbbcode.replaceSelection('[url=' + $('kbbcode-link_url').get('value') + ']' + $('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_LINKAPPLY )) ;
+				echo _KUNENA_EDITOR_HELPLINE_LINKAPPLY;
 				?>')" />
 			</div>
 

@@ -26,16 +26,9 @@ jimport ( 'joomla.utilities.date' );
 
 class CKunenaTimeformat {
 
-	function internalTime($time = null) {
+	function internalTime() {
 		$kunena_config = CKunenaConfig::getInstance ();
-		if ($time === 0) {
-			return 0;
-		}
-		if ($time === null) {
-			$now = new JDate();
-			$time = $now->toUnix();
-		}
-		return $time + ($kunena_config->board_ofset * 3600);
+		return time() + ($kunena_config->board_ofset * 3600);
 	}
 
 	function showTimeSince($older_date, $newer_date = false) {
@@ -94,8 +87,13 @@ class CKunenaTimeformat {
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 
+	function diffToJoomla() {
+		$kunena_config = & CKunenaConfig::getInstance ();
+		return (float) (date('Z')/3600) + (float) $kunena_config->board_ofset;
+	}
+
 	// Format a time to make it look purdy.
-	function showDate($time, $mode = 'datetime_today', $tz = 'internal', $offset=false) {
+	function showDate($time, $mode = 'datetime_today', $tz = 'kunena', $offset=false) {
 		$app = & JFactory::getApplication ();
 		$kunena_config = & CKunenaConfig::getInstance ();
 
@@ -103,15 +101,12 @@ class CKunenaTimeformat {
 			case 'utc' :
 				$date = new JDate ( $time, 0 );
 				break;
-			case 'internal' :
-				$date = new JDate ( $time );
-				break;
 			default :
-				// FIXME: offset doesn't work for us, bug in Joomla!
-				$date = new JDate ( $time, $app->getCfg ( 'offset', 0 ) - ( float ) $tz + (float) $kunena_config->board_ofset );
+				if ($time == 'now') $time = self::internalTime();
+				$date = new JDate ( $time, ( float ) $offset + self::diffToJoomla() );
 				break;
 		}
-		if ($date->toFormat('%Y')<1800) return _KUNENA_DT_DATETIME_UNDEFINED;
+		if ($date->toFormat('%Y')<1902) return _KUNENA_DT_DATETIME_UNDEFINED;
 		if (preg_match ( '/^config_/', $mode ) == 1) {
 			$option = substr ( $mode, 7 );
 			$mode = $kunena_config->$option;
@@ -140,8 +135,11 @@ class CKunenaTimeformat {
 				break;
 		}
 
-		$my = JFactory::getUser();
-		if ($offset === false) $offset = $my->getParam('timezone', 0);
+		if ($offset === false) {
+			$my = JFactory::getUser();
+			if ($my->id) $offset = $my->getParam('timezone', 0);
+			else $offset = $app->getCfg ( 'offset', 0 );
+		}
 		$date->setOffset($offset);
 		// Today and Yesterday?
 		if ($mode [count ( $mode ) - 1] == 'today') {

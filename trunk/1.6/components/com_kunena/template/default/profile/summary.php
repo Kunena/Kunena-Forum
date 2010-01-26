@@ -38,7 +38,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<li><strong><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'date_today', 'utc'); ?></span></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_TIMEZONE; ?>:</strong> GMT <?php echo CKunenaTimeformat::showTimezone($this->timezone); ?></li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_LOCAL_TIME; ?>:</strong> <?php echo CKunenaTimeformat::showDate('now', 'time', 0, $this->timezone); ?></li>
+					<li><strong><?php echo _KUNENA_MYPROFILE_LOCAL_TIME; ?>:</strong> <?php echo CKunenaTimeformat::showDate('now', 'time', 'utc', $this->timezone); ?></li>
 					<li><strong><?php echo _KUNENA_MYPROFILE_POSTS; ?>:</strong> <?php echo $this->profile->posts; ?></li>
 					<!-- Profile view*s*? -->
 					<li><strong><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?>:</strong> <?php echo $this->profile->uhits; ?></li>

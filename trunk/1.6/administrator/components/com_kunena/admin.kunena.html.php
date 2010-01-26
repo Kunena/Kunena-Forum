@@ -512,6 +512,10 @@ td.fbtdtitle {
 		?></div>
 
 <form action="index.php" method="POST" name="adminForm">
+<input type="hidden" name="cfg_board_ofset" value="<?php
+		echo $kunena_config->board_ofset;
+		?>" />
+
 <div class="fbfuncsubtitle"><?php
 		echo _KUNENA_BASICSFORUM;
 		?></div>
@@ -895,21 +899,6 @@ td.fbtdtitle {
 
 		<td align="left" valign="top"><?php
 		echo _COM_A_BOARD_OFFLINE_DESC?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo _COM_A_BOARD_OFSET?></td>
-
-		<td align="left" valign="top"><input type="text"
-			name="cfg_board_ofset"
-			value="<?php
-		echo $kunena_config->board_ofset;
-		?>" /></td>
-
-		<td align="left" valign="top"><?php
-		echo _COM_A_BOARD_OFSET_DESC?>
 		</td>
 	</tr>
 

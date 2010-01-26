@@ -265,15 +265,14 @@ var kbbcode = new Class({
 			interceptTabs - a boolean, set to true if you want the tab key to insert a tab in the text area, set to false for default tab behavior. default: true
 
 		Additional Info:
-			As you might've noticed, there is a new options parameter in kbbcode 0.3. It is now possible to watch the
-			"change" event of your textarea . This event will notify you when the content of your textarea has been
-			changed, eighter by typing in it, or by pressing on one of the toolbar buttons.
+			It is possible to watch the "change" event of your textarea . This event will notify you when the content
+			of your textarea has been changed, eighter by typing in it, or by pressing on one of the toolbar buttons.
 
-			The purpose of this is that normally, the textarea would not fire a "change" event when kbbcode inserts text in it (or when you copy/paste
-			some text in there too). By setting dispatchChangeEvent to true, a periodical function will watch the textarea
-			for any changes and fire the "change" event whenever the content of the textarea has been changed, no matter how
-			it was changed. You can change the delay of this periodical function with the changeEventDelay option. The default
-			delay is 200ms.
+			The purpose of this is that normally, the textarea would not fire a "change" event when kbbcode inserts
+			text in it (or when you copy/paste some text in there too). By setting dispatchChangeEvent to true, a
+			periodical function will watch the textarea for any changes and fire the "change" event whenever the
+			content of the textarea has been changed, no matter how it was changed. You can change the delay of this
+			periodical function with the changeEventDelay option. The default delay is 1000ms.
 
 		Example:
 			(start code)
@@ -542,7 +541,11 @@ window.addEvent('domready', function() {
 <?php
 //creating a kbbcode object
 ?>
-kbbcode = new kbbcode('kbbcode-message', 'kbbcode-toolbar');
+kbbcode = new kbbcode('kbbcode-message', 'kbbcode-toolbar', {
+				dispatchChangeEvent: true,
+				changeEventDelay: 1000,
+				interceptTab: true
+			});
 
 kbbcode.addFunction('Bold', function() {
 	this.replaceSelection('[b]' + this.getSelection() + '[/b]');
@@ -840,6 +843,12 @@ kbbcode.addFunction('Help', function() {
 	'title': '<?php echo _KUNENA_EDITOR_HELP;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_HELP;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_HELP;?>")'});
+
+
+$('kbbcode-message').addEvent('change', function(){
+	console.log("My content was changed!");
+	kPreviewHelper();
+});
 
 });
 

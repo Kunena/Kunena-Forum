@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 26-Jan-2010 fxstein
 + [#19380] New insert link function, added poll icon to toolbar
 + [#19380] New insert image link function, new help button and function pointing at our wiki
++ [#19380] Basic split screen preview support added to bbcode editor
 
 26-Jan-2010 severdia
 # [#19356] Reworked profile area on posts

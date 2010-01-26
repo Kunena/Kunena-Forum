@@ -75,21 +75,78 @@ Element.implement({
 // the new option.
 //
 ?>
-var _priorElement="";
+var _currentElement="";
 
 function kToggleOrSwap(id)
 {
 	e = $(id);
 	if (e) {
 		if (e.getStyle('display') == "none"){
-	    	if (_priorElement != "") {_priorElement.setStyle('display', 'none');}
+	    	if (_currentElement != "") {_currentElement.setStyle('display', 'none');}
 	    	e.setStyle('display', 'block');
-	    	_priorElement=e;
+	    	_currentElement=e;
 		}
 		else
 		{
 	    	e.setStyle('display', 'none');
-			_priorElement = "";
+			_currentElement = "";
+		}
+	}
+}
+<?php
+//
+// function kPreviewHelper (elementId)
+//
+// Helper function for to perform JSON request for preview
+//
+?>
+var _currentPreview="";
+
+function kPreviewHelper()
+{
+	if (_currentPreview != ""){
+		previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview');?>",
+				  							onSuccess: function(response){
+			message = $(_currentPreview);
+			if (message) {
+				message.set("html", response.preview);
+				message.set("style", "display: inline;");
+			}
+			container = $("preview_container");
+			if (container) {
+				container.set("style", "display: table-row;");
+			}
+			}}).post({body: $("kbbcode-message").get("value")
+		});
+	}
+}
+<?php
+//
+// function kToggleOrSwapPreview (elementId)
+//
+// Helper function for bbeditor optional/detailed toolbar
+//
+// Toogles the visibility of the preview element passed by ID. If another preview
+// is already visible and active, it hides the prior one before displaying
+// the new preview.
+// That way we can not only turn preview on and off, but also switch between horizontal
+// (preview to the right) and vertical (preview at the bottom) modes
+//
+?>
+function kToggleOrSwapPreview(id)
+{
+	e = $(id);
+	if (e) {
+		if (e.getStyle('display') == "none"){
+	    	if (_currentPreview != "") {_currentPreview.setStyle('display', 'none');}
+	    	e.setStyle('display', 'block');
+	    	_currentPreview=e;
+	    	kPreviewHelper();
+		}
+		else
+		{
+	    	e.setStyle('display', 'none');
+			_currentPreview = "";
 		}
 	}
 }
@@ -761,14 +818,14 @@ kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator6'});
 
 kbbcode.addFunction('PreviewBottom', function() {
-
+	kToggleOrSwapPreview("kbbcode-preview_container_bottom");
 }, {'id': 'kbbcode-previewbottom_button',
 	'title': '<?php echo _KUNENA_EDITOR_PREVIEWBOTTOM;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>")'});
 
 kbbcode.addFunction('PreviewRight', function() {
-
+	kToggleOrSwapPreview("kbbcode-preview_container_right");
 }, {'id': 'kbbcode-previewright_button',
 	'title': '<?php echo _KUNENA_EDITOR_PREVIEWRIGHT;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT;?>',

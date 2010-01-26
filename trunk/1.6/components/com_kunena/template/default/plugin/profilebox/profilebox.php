@@ -21,7 +21,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 if ($type == 'logout') {
 ?>
 <form action="index.php" method="post" name="login">
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kprofilebox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">
 				<td class="kprofilebox-left" class="center" width="1%">
@@ -38,16 +38,16 @@ if ($type == 'logout') {
 						if ($is_editor) { ?>
 							<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( $this->config, 'show' ); ?>"><?php echo _ANN_ANNOUNCEMENTS; ?></a></li>
 						<?php } ?>
-					</ul>	
+					</ul>
 					<ul>
 						<li><?php echo _PROFILEBOX_WELCOME; ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></strong></li>
 						<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 						<li>
-							<input type="submit" name="Submit" class="kbutton" value="<?php echo _PROFILEBOX_LOGOUT; ?>" /> <input type="hidden" name="option" value="com_user" /> 
+							<input type="submit" name="Submit" class="kbutton" value="<?php echo _PROFILEBOX_LOGOUT; ?>" /> <input type="hidden" name="option" value="com_user" />
 							<input type="hidden" name="task" value="logout" />
 							<input type="hidden" name="return" value="<?php echo $return; ?>" />
 						</li>
-					</ul>					
+					</ul>
 				</td>
 					<?php if (JDocumentHTML::countModules ( 'kunena_profilebox' )) { ?>
 				<td class = "kprofilebox-right">

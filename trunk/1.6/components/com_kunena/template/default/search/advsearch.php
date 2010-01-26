@@ -24,13 +24,11 @@ defined( '_JEXEC' ) or die();
 
 if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 {
-    $fb_advsearch_class = ' class="k-hidden"';
+    $fb_advsearch_class = ' open';
     $fb_advsearch_style = ' style="display: none;"';
-    $fb_advsearch_img = KUNENA_URLIMAGESPATH . 'expand.gif';
 } else {
-    $fb_advsearch_class = ' class="k-visible"';
+    $fb_advsearch_class = ' close';
     $fb_advsearch_style = '';
-    $fb_advsearch_img = KUNENA_URLIMAGESPATH . 'shrink.gif';
 }
 ?>
 <script type="text/javascript">
@@ -49,12 +47,12 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                     <div class="ktitle_cover km">
                         <span class="ktitle kl"><?php echo _KUNENA_SEARCH_ADVSEARCH; ?></span>
                     </div>
-                    <img id="BoxSwitch__advsearch_main" class="hideshow" src="<?php echo $fb_advsearch_img ?>" alt=""/>
+                    <div class="fltrt"><span id="search_status"><a class="ktoggler <?php echo $fb_advsearch_class; ?>" rel="advsearch"></a></span></div>
                 </th>
             </tr>
         </thead>
 
-        <tbody id="advsearch_main"<?php echo $fb_advsearch_class.$fb_advsearch_style; ?>>
+        <tbody id="advsearch"<?php echo $fb_advsearch_style; ?>>
             <tr class="ksectiontableentry1">
                 <td class="td-1" width="50%">
                     <fieldset class="fieldset">
@@ -105,7 +103,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 				    <div class="ktitle_cover">
 					    <span class="ktitle"><?php echo _KUNENA_SEARCH_OPTIONS; ?></span>
                     </div>
-                    <img id="BoxSwitch__advsearch_options" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt=""/>
+                    <div class="fltrt"><span id="search_opt_status"><a class="ktoggler close" rel="advsearch_options"></a></span></div>
                 </th>
             </tr>
         </thead>

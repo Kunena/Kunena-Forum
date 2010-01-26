@@ -69,13 +69,12 @@ if ($annID > 0) {
                     <div class = "ktitle_cover km">
                         <span class = "ktitle kl"><?php echo $anntitle; ?></span>
                     </div>
-
-                    <img id = "BoxSwitch_announcements__announcements_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+					<div class="fltrt"><span id="ann_status"><a class="ktoggler close" rel="announcement"></a></span></div>
                 </th>
             </tr>
         </thead>
 
-        <tbody id = "announcements_tbody">
+        <tbody id = "announcement">
             <?php
             if ($is_editor) {
             ?>

@@ -16,18 +16,18 @@ global $kunena_icons;
 $catid = JRequest::getInt ( 'catid', 0 );
 ?>
 <div class="kmessage_buttons_cover">
-<div class="kmessage_buttons_row">
-		<?php if (! isset ( $this->msg_html->closed )) {
-			if (isset ( $this->msg_html->quickreply )) echo " " . $this->msg_html->quickreply;
-			echo " " . $this->msg_html->reply;
-			echo " " . $this->msg_html->quote;
-			if (CKunenaTools::isModerator ( $this->my->id, $catid ))
-				//echo ' </div><div class="kmessage_buttons_row">';
-			if (isset ( $this->msg_html->merge )) { echo " " . $this->msg_html->merge; }
-			if (isset ( $this->msg_html->split )) { echo " " . $this->msg_html->split; }
-			if (isset ( $this->msg_html->delete )) { echo " " . $this->msg_html->delete; }
-			if (isset ( $this->msg_html->edit )) { echo " " . $this->msg_html->edit; }
-		} else { echo $this->msg_html->closed; }
-		?>
-</div>
+	<div class="kmessage_buttons_row">
+			<?php if (! isset ( $this->msg_html->closed )) {
+				if (isset ( $this->msg_html->quickreply )) echo " " . $this->msg_html->quickreply;
+				echo " " . $this->msg_html->reply;
+				echo " " . $this->msg_html->quote;
+				if (CKunenaTools::isModerator ( $this->my->id, $catid ))
+					//echo ' </div><div class="kmessage_buttons_row">';
+				if (isset ( $this->msg_html->merge )) { echo " " . $this->msg_html->merge; }
+				if (isset ( $this->msg_html->split )) { echo " " . $this->msg_html->split; }
+				if (isset ( $this->msg_html->delete )) { echo " " . $this->msg_html->delete; }
+				if (isset ( $this->msg_html->edit )) { echo " " . $this->msg_html->edit; }
+			} else { echo $this->msg_html->closed; }
+			?>
+	</div>
 </div>

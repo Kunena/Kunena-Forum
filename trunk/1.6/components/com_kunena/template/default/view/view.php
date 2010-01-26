@@ -109,15 +109,16 @@ global $kunena_icons;
 		?></th>
 		</tr>
 	</thead>
-
-	<tr>
-		<td><?php
-		foreach ( $this->flat_messages as $message ) {
-			$this->displayMessage($message);
-		}
-		?>
-		</td>
-	</tr>
+	<tbody>
+		<tr>
+			<td><?php
+			foreach ( $this->flat_messages as $message ) {
+				$this->displayMessage($message);
+			}
+			?>
+			</td>
+		</tr>
+	</tbody>
 </table>
 
 <?php $this->displayThreadActions(); ?>

@@ -28,8 +28,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 $this->displayPathway ();
 ?>
 <!-- B: Cat list Top -->
-<table class="klist_top" border="0" cellspacing="0" cellpadding="0"
-	width="100%">
+<table class="klist_top">
 	<tr>
 		<td class="klist_markallcatsread"><?php
 		if ($this->my->id != 0) {

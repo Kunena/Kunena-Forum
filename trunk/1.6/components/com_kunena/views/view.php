@@ -502,7 +502,7 @@ class CKunenaView {
 					$this->msg_html->userrank = $rank->rank_title;
 				}
 
-				$this->msg_html->posts = "<strong>" . _POSTS . " $numPosts" . "</strong>";
+				$this->msg_html->posts = "" . _POSTS . " $numPosts" . "";
 			}
 		}
 		// Start Integration AlphaUserPoints
@@ -513,7 +513,7 @@ class CKunenaView {
 			$numPoints = $this->db->loadResult ();
 			check_dberror ( "Unable to load AUP points." );
 
-			$this->msg_html->points = '<strong>' . _KUNENA_AUP_POINTS . '</strong> ' . $numPoints;
+			$this->msg_html->points = '' . _KUNENA_AUP_POINTS . ' ' . $numPoints;
 		}
 		// End Integration AlphaUserPoints
 

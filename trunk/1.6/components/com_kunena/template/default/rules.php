@@ -38,27 +38,26 @@ check_dberror ( "Unable to load introtext." );
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-<table class="kblocktable" id="kforumrules">
-	<thead>
-		<tr>
-			<th>
-			<div class="ktitle_cover"><span class="ktitle kl"><?php
-			echo _COM_FORUM_RULES;
-			?></span></div>
-			</th>
-		</tr>
-	</thead>
-
-	<tbody>
-		<tr>
-			<td class="krulesdesc">
-			<?php
-			echo $j_introtext;
-			?>
-			</td>
-		</tr>
-	</tbody>
-</table>
+	<table class="kblocktable" id="kforumrules">
+		<thead>
+			<tr>
+				<th>
+					<div class="ktitle_cover"><span class="ktitle kl"><?php
+					echo _COM_FORUM_RULES;
+					?></span></div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="krulesdesc">
+					<?php
+					echo $j_introtext;
+					?>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 </div>
 </div>
@@ -71,22 +70,21 @@ check_dberror ( "Unable to load introtext." );
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-<table class="kblocktable" id="kbottomarea" border="0" cellspacing="0"
-	cellpadding="0">
-	<tr>
-		<th class="th-right">
-		<?php
-		if ($kunena_config->enableforumjump) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
-				include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
-			}
-		}
-		?>
-		</th>
-	</tr>
-</table>
+	<table class="kblocktable" id="kbottomarea">
+		<tr>
+			<th class="th-right">
+				<?php
+				if ($kunena_config->enableforumjump) {
+					if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
+						include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
+					} else {
+						include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
+					}
+				}
+				?>
+			</th>
+		</tr>
+	</table>
 </div>
 </div>
 </div>

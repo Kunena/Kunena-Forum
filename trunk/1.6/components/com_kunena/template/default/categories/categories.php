@@ -37,11 +37,9 @@ global $kunena_icons;
 <table
 	class="kblocktable<?php
 		echo isset ( $cat->class_sfx ) ? ' kblocktable' . $cat->class_sfx : '';
-		?>"
-	width="100%" id="kcat<?php
+		?>" id="kcat<?php
 		echo $cat->id;
-		?>" border="0"
-	cellspacing="0" cellpadding="0">
+		?>" >
 	<thead>
 		<tr>
 			<th colspan="5">
@@ -85,7 +83,7 @@ global $kunena_icons;
 				?>"
 			id="kcat<?php
 				echo $subcat->id?>">
-			<td class="td-1" align="center" width="1%"><?php
+			<td class="td-1" class="center" width="1%"><?php
 				$tmpIcon = '';
 				if ($this->config->shownew && $this->my->id != 0) {
 					if ($subcat->new) {
@@ -115,7 +113,7 @@ global $kunena_icons;
 				?>
 			</td>
 
-			<td class="td-2" align="left">
+			<td class="td-2" class="left">
 			<div class="kthead-title kl"><?php
 				//new posts available
 				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( stripslashes ( $subcat->name ) ) );
@@ -234,7 +232,7 @@ else {
 				?>
 			</td>
 
-			<td class="td-3 km" align="center" width="5%"><!-- Number of Topics -->
+			<td class="td-3 km" class="center" width="5%"><!-- Number of Topics -->
 			<span class="cat_topics_number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numTopics );
 				?>
@@ -242,7 +240,7 @@ else {
 				echo _GEN_TOPICS;
 				?> </span> <!-- /Number of Replies --></td>
 
-			<td class="td-4 km" align="center" width="5%"><!-- Number of Topics -->
+			<td class="td-4 km" class="center" width="5%"><!-- Number of Topics -->
 			<span class="cat_replies_number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numPosts );
 				?>
@@ -254,7 +252,7 @@ else {
 				if ($subcat->numTopics != 0) {
 					?>
 
-			<td class="td-5" align="left" width="25%">
+			<td class="td-5" class="left" width="25%">
 			<div class="klatest-subject km">
 			<?php
 					echo _GEN_LAST_POST;
@@ -280,7 +278,7 @@ else {
 				} else {
 					?>
 
-			<td class="td-5" align="left"><?php
+			<td class="td-5" class="left"><?php
 					echo _NO_POSTS;
 					?></td>
 

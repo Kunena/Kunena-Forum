@@ -39,4 +39,5 @@ $lists ['parent'] = CKunenaTools::forumSelectList ( 'forumjump', $catid, $option
 	<input type="submit" name="Go" class="kbutton ks"
 	value="<?php
 	echo _KUNENA_GO;
-	?>" /> </span></form>
+	?>" /> </span>
+</form>

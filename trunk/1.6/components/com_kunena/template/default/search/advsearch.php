@@ -43,7 +43,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
     <table id="kforumsearch" class="kblocktable">
         <thead>
             <tr>
-                <th align="left" colspan="2">
+                <th class="left" colspan="2">
                     <div class="ktitle_cover km">
                         <span class="ktitle kl"><?php echo _KUNENA_SEARCH_ADVSEARCH; ?></span>
                     </div>

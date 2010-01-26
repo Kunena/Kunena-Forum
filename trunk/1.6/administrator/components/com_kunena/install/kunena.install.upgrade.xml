@@ -257,8 +257,8 @@
 			`userid` int(11) default NULL,
 			`votes` int(11) default NULL,
 			`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-			 `lastvote` int(11) default NULL,                                                     
-       UNIQUE KEY `pollid` (`pollid`,`userid`)
+			`lastvote` int(11) default NULL,
+			UNIQUE KEY `pollid` (`pollid`,`userid`)
 		) DEFAULT CHARSET=utf8;</query>
 		<phpfile name="kunena.special.install.php" />
 	</install>
@@ -413,7 +413,7 @@
 					`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 					UNIQUE KEY `pollid` (`pollid`,`userid`)
 				) DEFAULT CHARSET=utf8;</query>
-			<query mode="silenterror">ALTER TABLE `jos_fb_users` 
+			<query mode="silenterror">ALTER TABLE `#__fb_users` 
 				ADD `TWITTER` VARCHAR( 50 ) NULL AFTER `SKYPE` ,
 				ADD `FACEBOOK` VARCHAR( 50 ) NULL AFTER `TWITTER` ,
 				ADD `MYSPACE` VARCHAR( 50 ) NULL AFTER `GTALK` ,
@@ -424,9 +424,11 @@
 				ADD `BLOGSPOT` VARCHAR( 50 )  NULL AFTER `DIGG` ,
 				ADD `FLICKR` VARCHAR( 50 )  NULL AFTER `BLOGSPOT` ,
 				ADD `BEBO` VARCHAR( 50 )  NULL AFTER `FLICKR` ;</query>
-			<query mode="silenterror">ALTER TABLE `jos_fb_categories` 
+			<query mode="silenterror">ALTER TABLE `#__fb_categories` 
 				ADD `allow_polls` tinyint(4) NOT NULL default '0' AFTER `class_sfx` ;</query>
-		    <phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
+			<query mode="silenterror">ALTER TABLE `#__fb_polls_users` 
+				ADD `lastvote` int(11) default NULL AFTER `lasttime` ;</query>
+			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
 		</version>
 	</upgrade>
 </comupgrade>

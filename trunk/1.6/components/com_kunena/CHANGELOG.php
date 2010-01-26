@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+26-Jan-2010 Matias
+# [#19288] Fix regression: Broken/missing queries during upgrade
+
 26-Jan-2010 Xillibit
 ^ [#19023] Text filtering not working for title, done in every places
 

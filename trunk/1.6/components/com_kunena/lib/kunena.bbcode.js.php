@@ -673,11 +673,11 @@ kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator3'});
 
 kbbcode.addFunction('Image', function() {
-	this.replaceSelection('[img]' + this.getSelection() + '[/img]');
+	kToggleOrSwap("kbbcode-image-options");
 }, {'id': 'kbbcode-image_button',
-	'title': '<?php echo _KUNENA_EDITOR_IMAGE;?>',
-	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_IMAGE;?>',
-	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_IMAGE;?>")'});
+	'title': '<?php echo _KUNENA_EDITOR_IMAGELINK;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_IMAGELINK;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_IMAGELINK;?>")'});
 
 kbbcode.addFunction('Link', function() {
 	sel = this.getSelection();
@@ -774,9 +774,17 @@ kbbcode.addFunction('PreviewRight', function() {
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT;?>")'});
 
+kbbcode.addFunction('#', function() {
+}, {'id': 'kbbcode-separator7'});
+
+kbbcode.addFunction('Help', function() {
+	window.open('http://docs.kunena.com/index.php/bbcode');
+}, {'id': 'kbbcode-help_button',
+	'title': '<?php echo _KUNENA_EDITOR_HELP;?>',
+	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_HELP;?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_HELP;?>")'});
 
 });
-
 
 <?php
 // Add Ajax/Json preview support
@@ -818,22 +826,26 @@ window.addEvent('domready', function() {
 			var tag = this.get( "title" );
 			selection = kbbcode.getSelection();
 			kbbcode.replaceSelection(tag + selection + '[/size]');
-
 		});
 	}
 });
 
-////	jQuery('table.fb-color_table td').click( function()
-////	{
-//////		var color = jQuery(this).css('background-color');
-////		var color = jQuery(this).attr('id');
-////		bbfontstyle('[color=#' + color + ']', '[/color]'); return false;
-////	} );
-
-
-
-
-
+<?php
+//
+// kInsertImageLink()
+//
+// Helper function to insert the img tag (image link) bbcode into the message
+//
+?>
+function kInsertImageLink() {
+	var size = $("kbbcode-image_size").get("value");
+	if (size == "") {
+		kbbcode.replaceSelection('[img]'+ $("kbbcode-image_url").get("value") +'[/img]');
+	} else {
+		kbbcode.replaceSelection('[img size='+size+']'+ $("kbbcode-image_url").get("value") +'[/img]');
+	}
+	kToggleOrSwap("kbbcode-image-options");
+}
 
 //function size_messagebox(change)
 //{

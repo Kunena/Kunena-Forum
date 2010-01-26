@@ -45,32 +45,32 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				<span class="kmsgtext_xs" title='[size=1]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XS;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_XS;
+				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
 				?>&nbsp;</span>
 				<span class="kmsgtext_s" title='[size=2]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_S;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_S;
+				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
 				?>&nbsp;</span>
 				<span class="kmsgtext_m" title='[size=3]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_M;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_M;
+				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
 				?>&nbsp;</span>
 				<span class="kmsgtext_l" title='[size=4]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_L;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_L;
+				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
 				?>&nbsp;</span>
 				<span class="kmsgtext_xl" title='[size=5]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XL;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_XL;
+				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
 				?>&nbsp;</span>
 				<span class="kmsgtext_xxl" title='[size=6]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XXL;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_XXL;
+				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
 				?>&nbsp;</span>
 			</div>
 			<div id="kbbcode-colorpalette" style="display: none;">
@@ -92,7 +92,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				?>')" />
 			<input type="button" name="insterLink"
 				value="<?php
-				echo (_KUNENA_EDITOR_LINK_INSERT) ;
+				echo _KUNENA_EDITOR_LINK_INSERT;
 				?>"
 				onclick="kbbcode.replaceSelection('[url=' + $('kbbcode-link_url').get('value') + ']' + $('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
@@ -100,37 +100,29 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				?>')" />
 			</div>
 
-			<div id="image" style="display: none;"><?php
-			echo (_KUNENA_EDITOR_IMAGE_SIZE) ;
-			?><input
-				name="size" type="text" size="10" maxlength="10"
+			<div id="kbbcode-image-options" style="display: none;"><?php
+			echo _KUNENA_EDITOR_IMAGELINK_SIZE;
+			?>&nbsp;<input
+				id="kbbcode-image_size" name="size" type="text" size="10" maxlength="10"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE )) ;
 				?>')" />
 			<?php
-			echo (_KUNENA_EDITOR_IMAGE_URL) ;
-			?><input name="url2"
-				type="text" size="40" maxlength="250" value="http://"
+			echo _KUNENA_EDITOR_IMAGELINK_URL;
+			?>&nbsp;<input name="url2"
+				id="kbbcode-image_url" type="text" size="40" maxlength="250" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_IMAGELINKURL )) ;
-				?>')" />
-			<input type="button" name="Link" accesskey="p"
+				echo _KUNENA_EDITOR_HELPLINE_IMAGELINKURL;
+				?>')" />&nbsp;
+			<input type="button" name="Link"
 				value="<?php
-				echo (_KUNENA_EDITOR_IMAGE_INSERT) ;
+				echo _KUNENA_EDITOR_IMAGELINK_INSERT;
 				?>"
-				onclick="check_image()"
+				onclick="kInsertImageLink()"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY )) ;
+				echo _KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY;
 				?>')" />
-			<script type="text/javascript">
-								function check_image() {
-									if (document.postform.size.value == "") {
-										bbfontstyle('[img]'+ document.postform.url2.value,'[/img]');
-									} else {
-										bbfontstyle('[img size=' + document.postform.size.value + ']'+ document.postform.url2.value,'[/img]');
-									}
-								}
-							</script></div>
+			</div>
 
 			<div id="video" style="display: none;"><?php
 			echo (_KUNENA_EDITOR_VIDEO_SIZE) ;

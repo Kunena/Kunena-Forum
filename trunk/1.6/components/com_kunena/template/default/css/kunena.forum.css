@@ -2444,6 +2444,17 @@ ul#kbbcode-toolbar li a#kbbcode-previewright_button {
 	background-position:-270px -18px;
 }
 
+ul#kbbcode-toolbar li a#kbbcode-separator7 {
+	background-position:-400px 0;
+	width: 8px;
+	background-color: #eeeeee;
+	cursor: default;
+}
+
+ul#kbbcode-toolbar li a#kbbcode-help_button {
+	background-position:-396px -18px;
+}
+
 /*
 POST HISTORY
 -------------------------------------------------------------------- */

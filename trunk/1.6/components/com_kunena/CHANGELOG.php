@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+26-Jan-2010 severdia
+# [#19356] Reworked profile area on posts
+
 26-Jan-2010 Matias
 # [#19288] Fix regression: Broken/missing queries during upgrade
 # [#19288] Fix regression: undefined variables, minor bugs

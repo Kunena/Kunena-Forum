@@ -135,11 +135,7 @@ require_once (KUNENA_PATH . DS . "class.kunena.php");
 // Central Location for all internal links
 require_once (KUNENA_PATH_LIB . DS . "kunena.link.class.php");
 
-if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'smile.class.php' )) {
-	require_once (KUNENA_ABSTMPLTPATH . DS . 'smile.class.php');
-} else {
-	require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'smile.class.php');
-}
+require_once (KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
 
 $kunena_is_admin = CKunenaTools::isAdmin ();
 

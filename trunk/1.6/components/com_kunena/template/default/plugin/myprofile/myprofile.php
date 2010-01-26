@@ -98,17 +98,6 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 
 			</div>
 		</th>
-		<!-- B: PROFILE TOOLS -->
-		<th align="right" width="1%">
-			<?php
-			//(JJ) BEGIN: RECENT POSTS
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profiletools/profiletools.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/profiletools/profiletools.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profiletools/profiletools.php');
-			}
-			?>
-		</th>
 	</tr>
 	</thead>
 </table>

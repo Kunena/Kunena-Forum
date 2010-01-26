@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 + [#19380] New insert image link function, new help button and function pointing at our wiki
 + [#19380] Basic split screen preview support added to bbcode editor
 + [#19380] Automatic preview update on change (every 1000ms) added
+^ [#19380] Redo preview layout to use a simple div - not table
 
 26-Jan-2010 severdia
 # [#19356] Reworked profile area on posts

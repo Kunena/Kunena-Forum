@@ -100,21 +100,17 @@ function kToggleOrSwap(id)
 // Helper function for to perform JSON request for preview
 //
 ?>
-var _currentPreview="";
+var _previewActive=false;
 
 function kPreviewHelper()
 {
-	if (_currentPreview != ""){
+	if (_previewActive == true){
 		previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview');?>",
 				  							onSuccess: function(response){
-			message = $(_currentPreview);
+			message = $("kbbcode-preview");
 			if (message) {
 				message.set("html", response.preview);
 				message.set("style", "display: inline;");
-			}
-			container = $("preview_container");
-			if (container) {
-				container.set("style", "display: table-row;");
 			}
 			}}).post({body: $("kbbcode-message").get("value")
 		});
@@ -122,7 +118,7 @@ function kPreviewHelper()
 }
 <?php
 //
-// function kToggleOrSwapPreview (elementId)
+// function kToggleOrSwapPreview (className)
 //
 // Helper function for bbeditor optional/detailed toolbar
 //
@@ -133,21 +129,21 @@ function kPreviewHelper()
 // (preview to the right) and vertical (preview at the bottom) modes
 //
 ?>
-function kToggleOrSwapPreview(id)
+function kToggleOrSwapPreview(class)
 {
-	e = $(id);
+	e = $("kbbcode-preview");
 	if (e) {
 		if (e.getStyle('display') == "none"){
-	    	if (_currentPreview != "") {_currentPreview.setStyle('display', 'none');}
 	    	e.setStyle('display', 'block');
-	    	_currentPreview=e;
+	    	_previewActive=true;
 	    	kPreviewHelper();
 		}
 		else
 		{
 	    	e.setStyle('display', 'none');
-			_currentPreview = "";
+	    	_previewActive=false;
 		}
+		e.setProperty('class', class);
 	}
 }
 <?php
@@ -821,14 +817,14 @@ kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator6'});
 
 kbbcode.addFunction('PreviewBottom', function() {
-	kToggleOrSwapPreview("kbbcode-preview_container_bottom");
+	kToggleOrSwapPreview("kbbcode-preview_bottom");
 }, {'id': 'kbbcode-previewbottom_button',
 	'title': '<?php echo _KUNENA_EDITOR_PREVIEWBOTTOM;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>")'});
 
 kbbcode.addFunction('PreviewRight', function() {
-	kToggleOrSwapPreview("kbbcode-preview_container_right");
+	kToggleOrSwapPreview("kbbcode-preview_right");
 }, {'id': 'kbbcode-previewright_button',
 	'title': '<?php echo _KUNENA_EDITOR_PREVIEWRIGHT;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT;?>',
@@ -852,28 +848,6 @@ $('kbbcode-message').addEvent('change', function(){
 
 });
 
-<?php
-// Add Ajax/Json preview support
-?>
-window.addEvent('domready', function() {
-	var preview = $("preview_button");
-	if (preview) {
-		preview.addEvent("click", function(){
-		previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview');?>",
-		  							onSuccess: function(response){
-			message = $("preview_message");
-			if (message) {
-				message.set("html", response.preview);
-				message.set("style", "display: inline;");
-			}
-			container = $("preview_container");
-			if (container) {
-				container.set("style", "display: table-row;");
-			}
-			}}).post({body: $("kbbcode-message").get("value")});
-		});
-	}
-});
 <?php
 // Add the click behaviors for our bbcode options
 ?>

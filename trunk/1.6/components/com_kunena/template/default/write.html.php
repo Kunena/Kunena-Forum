@@ -466,29 +466,12 @@ $mainframe->triggerEvent('onCaptchaDisplay'); ?>
 				value="<?php echo (' ' . _GEN_CANCEL . ' ');?>"
 				onclick="javascript:window.history.back();"
 				title="<?php echo (_KUNENA_EDITOR_HELPLINE_CANCEL);?>" />
-				<input type="button" name="preview" id="preview_button" class="kbutton"
-				value="<?php echo (' ' . _PREVIEW . ' ');?>"
-				title="<?php echo (_KUNENA_EDITOR_HELPLINE_PREVIEW);?>" />
 				<input type="submit" name="submit" class="kbutton"
 				value="<?php echo (' ' . _GEN_CONTINUE . ' ');?>"
 				onclick="return submitForm()"
 				title="<?php echo (_KUNENA_EDITOR_HELPLINE_SUBMIT);?>" />
 				</td>
 		</tr>
-
-		<!-- preview  -->
-		<tr class="ksectiontableentry2" id="preview_container" style="display: none;">
-			<td class="kleftcolumn"><strong><?php
-			echo _PREVIEW;
-			?></strong>:</td>
-			<td>
-			<div class="previewMsg" id="preview_message"
-				style="height: <?php
-				echo $kunena_config->rteheight;
-				?>px; overflow: auto;"></div>
-			</td>
-		</tr>
-		<!-- /preview -->
 
 		<tr class="ksectiontableentry1">
 			<td colspan="2"><?php

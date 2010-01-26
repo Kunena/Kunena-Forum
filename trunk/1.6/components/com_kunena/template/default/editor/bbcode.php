@@ -262,41 +262,28 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	}
 	?></td>
 
-	<td>
-		<table>
-		<tr>
-			<td valign="top"><textarea cols="60" rows="6" class="ktxtarea"
-				name="message" id="kbbcode-message"><?php
-				echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
-				?></textarea>
-			<?php
-			if ($this->kunena_editmode) {
-				// Moderator edit area
-				?>
-			<fieldset><legend><?php
-				echo (_KUNENA_EDITING_REASON) ?></legend> <input
-				name="modified_reason" size="40" maxlength="200" type="text" /><br />
+	<td valign="top"><textarea cols="60" rows="6" class="ktxtarea"
+		name="message" id="kbbcode-message"><?php
+		echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
+		?></textarea>
+	<?php
+	if ($this->kunena_editmode) {
+		// Moderator edit area
+		?>
+	<fieldset><legend><?php
+		echo (_KUNENA_EDITING_REASON) ?></legend> <input
+		name="modified_reason" size="40" maxlength="200" type="text" /><br />
 
-			</fieldset>
-			<?php
-			}
-			?>
-			</td>
-			<td id="kbbcode-preview_container_right" style="display: none;">
-				<!-- Right pane preview -->
-				<div class="previewMsg" id="kbbcode-preview_right"
-				style="overflow: auto;">
-				</div>
-			</td>
-		</tr>
-		<tr id="kbbcode-preview_container_bottom" style="display: none;">
-			<td>
-				<!-- Bottom pane preview -->
-				<div class="previewMsg" id="kbbcode-preview_bottom"
-				style="overflow: auto;">
-				</div>
-			</td>
-		</tr>
-		</table>
+	</fieldset>
+	<?php
+	}
+//
+// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
+//
+	?>
+		<!-- Hidden preview placeholder -->
+		<div id="kbbcode-preview"
+		style="display: none;">
+		</div>
 	</td>
 </tr>

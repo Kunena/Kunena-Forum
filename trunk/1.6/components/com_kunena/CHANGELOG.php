@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 26-Jan-2010 Matias
 # [#19288] Fix regression: Broken/missing queries during upgrade
 # [#19288] Fix regression: undefined variables, minor bugs
+# [#19251] Reduce the number of SQL calls in view
 
 26-Jan-2010 Xillibit
 ^ [#19023] Text filtering not working for title, done in every places

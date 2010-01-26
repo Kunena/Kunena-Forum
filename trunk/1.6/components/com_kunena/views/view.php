@@ -191,6 +191,15 @@ class CKunenaView {
 			}
 		}
 
+		//get the Moderator list for display
+		$this->db->setQuery ( "SELECT m.*, u.* FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->catid}" );
+		$this->modslist = $this->db->loadObjectList ();
+		check_dberror ( "Unable to load moderators." );
+		$this->catModerators = array();
+		foreach ($this->modslist as $mod) {
+			$this->catModerators[] = $mod->userid;
+		}
+
 		//data ready display now
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0 && $this->topicLocked == 0)) {
 			//this user is allowed to reply to this topic
@@ -249,28 +258,17 @@ class CKunenaView {
 			$this->thread_merge = CKunenaLink::GetTopicPostLink ( 'merge', $this->catid, $this->id, CKunenaTools::showButton ( 'merge', _KUNENA_BUTTON_MERGE_TOPIC ), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_MERGE_TOPIC_LONG );
 		}
 
-		//get the Moderator list for display
-		$this->db->setQuery ( "SELECT m.*, u.* FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->catid}" );
-		$this->modslist = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load moderators." );
-
 		$this->headerdesc = nl2br ( stripslashes ( smile::smileReplace ( $this->catinfo->headerdesc, 0, $this->config->disemoticons, $this->emoticons ) ) );
 
 		$tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 		$this->mmm = 0;
-		// Set up a list of moderators for this category (limits amount of queries)
-		$this->db->setQuery ( "SELECT a.userid FROM #__fb_users AS a LEFT JOIN #__fb_moderation AS b ON b.userid=a.userid WHERE b.catid='{$this->catid}'" );
-		$this->catModerators = $this->db->loadResultArray ();
-		check_dberror ( 'Unable to load moderators' );
 
 		//check if topic is locked
 		$this->topicLocked = $this->first_message->locked;
 		if (! $this->topicLocked) {
 			//topic not locked; check if forum is locked
-			$this->db->setQuery ( "SELECT locked FROM #__fb_categories WHERE id='{$this->first_message->catid}'" );
-			$this->topicLocked = $this->db->loadResult ();
-			check_dberror ( 'Unable to load locked info' );
+			$this->topicLocked = $this->catinfo->locked;
 		}
 	}
 

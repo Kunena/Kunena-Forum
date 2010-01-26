@@ -27,13 +27,17 @@ Yellow highlight:			#FFFFCC 		RGB: 255/255/204
 Grey text color:			#999999 		RGB: 153/153/153
 Red hover color:			#FF0000 		RGB: 255/0/0
 
-Forum highlight colors
-Green forum highlight:		#FF0000 		RGB: 204/204/204
-Red forum highlight:		#FF0000 		RGB: 204/204/204
-Orange forum highlight:		#FF0000 		RGB: 204/204/204
-Blue forum highlight:		#FF0000 		RGB: 204/204/204
-Grey forum highlight:		#FF0000 		RGB: 204/204/204
-Pink forum highlight:		#FF0000 		RGB: 204/204/204
+Forum highlight/dark colors
+Green forum highlight:		#d2f8db 		RGB: 210/248/219
+Green forum dark:			#bfe5c7 		RGB: 191/229/199
+Orange forum highlight:		#ffeb8c 		RGB: 255/235/140
+Orange forum dark:			#ffd475 		RGB: 255/212/117
+Blue forum highlight:		#c3f0ff 		RGB: 195/240/255
+Blue forum dark:			#b1e3ff 		RGB: 177/227/255
+Grey forum highlight:		#e5e5e5 		RGB: 229/229/229
+Grey forum dark:			#d5d5d5 		RGB: 213/213/213
+Pink forum highlight:		#ffddff 		RGB: 255/221/255
+Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 
 ----------------------------------------------------------*/
 
@@ -165,7 +169,7 @@ a:focus {outline: none;}
 
 #Kunena tr.ksectiontableentry1 td {
 	background: #F2F1EE;
-	color: #000000;
+	color: #333333;
 	padding: 4px 8px;
 	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #FFFFFF;
@@ -174,7 +178,7 @@ a:focus {outline: none;}
 
 #Kunena tr.ksectiontableentry2 td {
 	/* background: #F2F1EE; */
-	color: #000000;
+	color: #333333;
 	padding: 4px 8px;
 	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #FFFFFF;
@@ -270,7 +274,7 @@ a:focus {outline: none;}
 
 #Kunena .topic_sticky {
 	position: absolute;
-	top: -5px;
+	/* top: -5px; */
 	right: -3px;
 }
 
@@ -713,11 +717,28 @@ td.td-1  {
 	text-align:left;
 	width: 95%;
 }
+
+#Kunena td.kprofileboxcnt ul {
+	margin: 5px 0 5px -38px;
+}
+
+#Kunena td.kprofileboxcnt ul li {
+	list-style-type:none;
+	display:block;
+}
+
+#Kunena td.kprofileboxcnt ul li input.kbutton {
+	margin-left: 0;
+}
+
+
+
 /*
 table#kprofilebox {
 	margin-bottom: 10px;
 }
 */
+
 /* TOPMENU
 ----------------------------------------------------------------------------------------------- */
 #Kunena .kheader div#ktopmenu {
@@ -752,7 +773,7 @@ table#kprofilebox {
 	width: auto;
 	margin: 0 0 0 5px;
 	border: 1px solid #999999;
-	background: #FFFFFF url("../images/search_icon.gif") no-repeat 5px center;
+	background: #FFFFFF url("../images/icons/search_icon.gif") no-repeat 5px center;
 	font-weight: normal;
 	padding: 1px 5px 1px 20px;
 }
@@ -762,7 +783,7 @@ table#kprofilebox {
 	width: auto;
 	margin: 0 0 0 5px;
 	border: 1px solid #999999;
-	background: #FFFFFF url("../images/search_icon.gif") no-repeat 5px center;
+	background: #FFFFFF url("../images/icons/search_icon.gif") no-repeat 5px center;
 	font-weight: normal;
 	color: #000000;
 	padding: 1px 5px 1px 20px;
@@ -825,11 +846,16 @@ fieldset#search-posts-start select {
 /* PROFILEBOX AND LOGINBOX
 ----------------------------------------------------------------------------------------------- */
 
-#Kunena .kprofilebox_link {
-	background: url("../images/arrow.png") no-repeat left center;
+#Kunena ul.kprofilebox_link {
+	float:right;
+}
+
+#Kunena ul.kprofilebox_link li {
+	background: url("../images/arrow.png") no-repeat left 2px;
 	padding-left: 12px;
 	display: inline;
-	padding-right:3px;
+	padding-right:10px;
+	margin-top: 3px;
 }
 
 #Kunena table.kprofilebox {
@@ -2720,7 +2746,7 @@ div#kprofile-stats ul li { list-style-type: none; padding-top: 5px; clear:both; 
 
 div#kprofile-stats ul li span.online-status-yes {
 	display:block; 
-	background: url("../images/english/icons/online.gif") no-repeat; 
+	background: url("../images/icons/online.gif") no-repeat; 
 	height: 16px; 
 	width: 70px;
 	color: #fff;
@@ -2728,7 +2754,7 @@ div#kprofile-stats ul li span.online-status-yes {
 
 div#kprofile-stats ul li span.online-status-no {
 	display:block; 
-	background: url("../images/english/icons/offline.gif") no-repeat; 
+	background: url("../images/icons/offline.gif") no-repeat; 
 	height: 16px; 
 	width: 70px;
 	color:#fff;
@@ -2742,7 +2768,7 @@ div#kprofile-stats ul li span.rankname {
 }
 div#kprofile-stats ul li span.rank-admin {
 	display:block; 
-	background: url("../images/english/ranks/rankadmin.gif") no-repeat; 
+	background: url("../images/ranks/rankadmin.gif") no-repeat; 
 	height: 16px; 
 	width: 70px;
 	margin-right: 5px;
@@ -2769,7 +2795,7 @@ div.kprofile-rightcol1 ul li { list-style-type: none; padding-bottom: 8px; }
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
 	float:left;
 	display:block; 
-	background: url("../images/english/icons/msglocation.gif") no-repeat; 
+	background: url("../images/icons/location.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 10px;
@@ -2778,7 +2804,7 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location {
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male { 
 	float:left;
 	display:block; 
-	background: url("../images/english/icons/msgmale.gif") no-repeat; 
+	background: url("../images/icons/male.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 10px;
@@ -2787,7 +2813,7 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male {
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female { 
 	float:left;
 	display:block; 
-	background: url("../images/english/icons/msgfemale.gif") no-repeat; 
+	background: url("../images/icons/female.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 10px;
@@ -2796,7 +2822,7 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female {
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate { 
 	float:left;
 	display:block; 
-	background: url("../images/english/icons/msgbirthdate.gif") no-repeat; 
+	background: url("../images/icons/birthday.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 10px;
@@ -2806,7 +2832,7 @@ div.kprofile-rightcol1 ul li span.bday-remind {
 	display:inline-block; 
 	height: 16px; 
 	width: 16px;
-	background: url("../images/remind.png") no-repeat; 
+	background: url("../images/icons/remind.png") no-repeat; 
 	vertical-align:middle;
 }
 li.bd a {
@@ -2865,7 +2891,7 @@ div.kprofile-rightcol2 ul li {list-style-type: none; padding-bottom: 8px;}
 div.kprofile-rightcol2 ul li span.email {
 	float:left;
 	display:block; 
-	background: url("../images/social/email.png") no-repeat; 
+	background: url("../images/icons/email.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 5px;
@@ -2874,7 +2900,7 @@ div.kprofile-rightcol2 ul li span.email {
 div.kprofile-rightcol2 ul li span.website {
 	float:left;
 	display:block; 
-	background: url("../images/english/icons/msgwebsite.gif") no-repeat; 
+	background: url("../images/icons/website.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 	margin-right: 5px;
@@ -2996,13 +3022,13 @@ input.kbutton {
 }
 span.close, a.close {
 	display:block; 
-	background: url("../images/english/shrink.gif") no-repeat; 
+	background: url("../images/shrink.gif") no-repeat; 
 	height: 15px; 
 	width: 15px;
 }
 span.open, a.open {
 	display:block; 
-	background: url("../images/english/expand.gif") no-repeat; 
+	background: url("../images/expand.gif") no-repeat; 
 	height: 15px; 
 	width: 15px;
 }
@@ -3103,7 +3129,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .kforum-headerdesc-green {
-	background: #c3e4ca;
+	background: #d2f8db;
 }
 
 #Kunena tr.ksectiontableentry1-green td {
@@ -3111,7 +3137,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 }
 
 #Kunena tr.ksectiontableentry2-green td {
-	background: #c3e4ca;
+	background: #bfe5c7;
 }
 
 #Kunena tr.ksectiontableentry1-green td.td-0,
@@ -3126,47 +3152,21 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 	color: #999999;
 }
 
-/* -red category suffix
------------------------------------------------------------------------------------------------ */
-
-#Kunena .kforum-headerdesc-red {
-	background: #FFCFCF;
-}
-
-#Kunena tr.ksectiontableentry1-red td {
-	background: #FFCFCF;
-}
-
-#Kunena tr.ksectiontableentry2-red td {
-	background: #FFCFCF;
-}
-
-#Kunena tr.ksectiontableentry1-red td.td-0,
-#Kunena tr.ksectiontableentry2-red td.td-0	{
-	background: #EEEEEE;
-	color: #999999;
-}
-
-#Kunena tr.ksectiontableentry1-red td.td-1,
-#Kunena tr.ksectiontableentry2-red td.td-1	{
-	background: #EEEEEE;
-	color: #999999;
-}
 
 /* -orange category suffix
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .kforum-headerdesc-orange {
 	color: #000000;
-	background: #FFFFCC;
+	background: #ffeb8c;
 }
 
 #Kunena tr.ksectiontableentry1-orange td {
-	background: #FFFFCC;
+	background: #ffeb8c;
 }
 
 #Kunena tr.ksectiontableentry2-orange td {
-	background: #FFFFAA;
+	background: #ffd475;
 }
 
 #Kunena tr.ksectiontableentry1-orange td.td-0,
@@ -3186,15 +3186,15 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 
 #Kunena .kforum-headerdesc-blue {
 	color: #000000;
-	background: #CFCFFF;
+	background: #c3f0ff;
 }
 
 #Kunena tr.ksectiontableentry1-blue td {
-	background: #CFCFFF;
+	background: #c3f0ff;
 }
 
 #Kunena tr.ksectiontableentry2-blue td {
-	background: #CFCFFF;
+	background: #b1e3ff;
 }
 
 #Kunena tr.ksectiontableentry1-blue td.td-0,
@@ -3214,15 +3214,15 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 
 #Kunena .kforum-headerdesc-grey {
 	color: #000000;
-	background: #BFC3C6;
+	background: #e5e5e5;
 }
 
 #Kunena tr.ksectiontableentry1-grey td {
-	background: #BFC3C6;
+	background: #e5e5e5;
 }
 
 #Kunena tr.ksectiontableentry2-grey td {
-	background: #BFC3C6;
+	background: #d5d5d5;
 }
 
 #Kunena tr.ksectiontableentry1-grey td.td-0,
@@ -3242,15 +3242,15 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 
 #Kunena .kforum-headerdesc-pink {
 	color: #000000;
-	background: #FFDDFF;
+	background: #ffddff;
 }
 
 #Kunena tr.ksectiontableentry1-pink td {
-	background: #FFDDFF;
+	background: #ffddff;
 }
 
 #Kunena tr.ksectiontableentry2-pink td {
-	background: #FFCFFF;
+	background: #ffd0ff;
 }
 
 #Kunena tr.ksectiontableentry1-pink td.td-0,

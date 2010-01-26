@@ -24,43 +24,30 @@ if ($type == 'logout') {
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">
-				<td class="kprofilebox-left" align="center" width="1%">
+				<td class="kprofilebox-left" class="center" width="1%">
 					<?php echo CKunenaLogin::getMyAvatar(); ?>
 				</td>
-				<td valign="top" class="kprofileboxcnt" align="left">
-					<div style="float: left; margin-right:20px;">
-					<div>
-						<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></b>
-					</div>
-					<div>
-						<strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span>
-					</div>
-					<div>
-						<input type="submit" name="Submit" class="kbutton" value="<?php echo _PROFILEBOX_LOGOUT; ?>" /> <input type="hidden" name="option" value="com_user" /> 
-						<input type="hidden" name="task" value="logout" />
-						<input type="hidden" name="return" value="<?php echo $return; ?>" />
-					</div>
-					</div>
-					<div>
-					<div class="kprofilebox_link">
-						<?php echo CKunenaLink::GetShowLatestLink(_PROFILEBOX_SHOW_LATEST_POSTS); ?>
-					</div>
-						<br />
-					<div class="kprofilebox_link">
-						<?php echo CKunenaLink::GetSearchLink ( $this->config, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH ); ?>
-					</div>
-					<br />
+				<td class="kprofileboxcnt left">
+					<ul class="kprofilebox_link">
+						<li><?php echo CKunenaLink::GetShowLatestLink(_PROFILEBOX_SHOW_LATEST_POSTS); ?></li>
+						<li><?php echo CKunenaLink::GetSearchLink ( $this->config, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH ); ?></li>
 						<?php
 						$user_fields = @explode ( ',', $this->config->annmodid );
 						if (in_array ( $this->my->id, $user_fields ) || $this->my->usertype == 'Administrator' || $this->my->usertype == 'Super Administrator') {
 							$is_editor = true; } else { $is_editor = false; }
 						if ($is_editor) { ?>
-					<div class="kprofilebox_link">
-						<a href="<?php echo CKunenaLink::GetAnnouncementURL ( $this->config, 'show' ); ?>"><?php echo _ANN_ANNOUNCEMENTS; ?>
-						</a>
-					</div>
+							<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( $this->config, 'show' ); ?>"><?php echo _ANN_ANNOUNCEMENTS; ?></a></li>
 						<?php } ?>
-					</div>
+					</ul>	
+					<ul>
+						<li><?php echo _PROFILEBOX_WELCOME; ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></strong></li>
+						<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
+						<li>
+							<input type="submit" name="Submit" class="kbutton" value="<?php echo _PROFILEBOX_LOGOUT; ?>" /> <input type="hidden" name="option" value="com_user" /> 
+							<input type="hidden" name="task" value="logout" />
+							<input type="hidden" name="return" value="<?php echo $return; ?>" />
+						</li>
+					</ul>					
 				</td>
 					<?php if (JDocumentHTML::countModules ( 'kunena_profilebox' )) { ?>
 				<td class = "kprofilebox-right">

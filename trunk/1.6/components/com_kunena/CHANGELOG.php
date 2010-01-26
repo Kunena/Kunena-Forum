@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+25-Jan-2010 severdia
+# [#19356] New icons, removed English folder in images (moved images up one level), refined forum colors
+
+
 25-Jan-2010 Xillibit
 ^ [#19395] Add better captcha support with recaptcha - don't show the html tables if the puglin is unpublished, rewrite of language strings
 ^ [#19288] Fix regression - remove one extra query added in kunena.login.php

@@ -47,6 +47,8 @@ Kunena 1.6.0-DEV
 # [#19448] Move code out of template: smile.class.php
 - [#19295] Clean up code: remove unused code (plugins/profiletools, plugins/emoticons)
 # [#19397] Fix date format in Kunena: use user/site timezone, keep saving with internal time
+^ [#19345] Restyle Default template (view): remove viewcovers, change logic from online status
++ [#19303] Add new social icons to profile: ICQ, MSN
 
 26-Jan-2010 Xillibit
 ^ [#19023] Text filtering not working for title, done in every places

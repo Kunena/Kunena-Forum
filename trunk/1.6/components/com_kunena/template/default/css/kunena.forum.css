@@ -1288,11 +1288,6 @@ span.newchar {
 	max-height: 150px;
 }
 
-#Kunena div.viewcover {
-	color: #737373;
-	text-align: center;
-	margin: 2px 5px;
-}
 #Kunena div.smallicons {
 	color: #737373;
 	text-align: center;
@@ -1709,16 +1704,6 @@ ul#kpost-profiletop li.kpost-personal{
 	width: 40%;
 	padding-top: 5px;
 }
-
-/* Remove this when markup removed from profile */
-ul#kpost-profiletop div.viewcover {
-	color:#737373;
-	margin:0;
-	float:left;
-	padding-right: 10px;
-	
-}
-
 
 
 /* top

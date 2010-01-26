@@ -49,7 +49,7 @@ class CKunenaView {
 			return;
 		}
 
-		$kunena_app = & JFactory::getApplication ();
+		$this->app = & JFactory::getApplication ();
 		$this->config = CKunenaConfig::getInstance ();
 		// Test if this is a valid URL. If not, redirect browser to the right location
 		$this->thread = $this->first_message->parent == 0 ? $this->id : $this->first_message->thread;
@@ -77,7 +77,7 @@ class CKunenaView {
 			header ( "HTTP/1.1 301 Moved Permanently" );
 			header ( "Location: " . htmlspecialchars_decode ( CKunenaLink::GetThreadPageURL ( $this->config, 'view', $this->catid, $this->thread, $replyPage, $this->config->messages_per_page, $this->first_message->id ) ) );
 
-			$kunena_app->close ();
+			$this->app->close ();
 		}
 
 		// START
@@ -160,7 +160,7 @@ class CKunenaView {
 		$this->kunena_forum_locked = $this->catinfo->locked;
 
 		//meta description and keywords
-		$metaKeys = kunena_htmlspecialchars ( stripslashes ( "{$this->first_message->subject}, {$objCatParentInfo->name}, {$this->config->board_title}, " . _GEN_FORUM . ', ' . $kunena_app->getCfg ( 'sitename' ) ) );
+		$metaKeys = kunena_htmlspecialchars ( stripslashes ( "{$this->first_message->subject}, {$objCatParentInfo->name}, {$this->config->board_title}, " . _GEN_FORUM . ', ' . $this->app->getCfg ( 'sitename' ) ) );
 		$metaDesc = kunena_htmlspecialchars ( stripslashes ( "{$this->first_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$this->catinfo->name} - {$this->config->board_title} " . _GEN_FORUM ) );
 
 		$document = & JFactory::getDocument ();
@@ -502,7 +502,7 @@ class CKunenaView {
 					$this->msg_html->userrank = $rank->rank_title;
 				}
 
-				$this->msg_html->posts = '<div class="viewcover">' . "<strong>" . _POSTS . " $numPosts" . "</strong>" . "</div>";
+				$this->msg_html->posts = "<strong>" . _POSTS . " $numPosts" . "</strong>";
 			}
 		}
 		// Start Integration AlphaUserPoints
@@ -513,7 +513,7 @@ class CKunenaView {
 			$numPoints = $this->db->loadResult ();
 			check_dberror ( "Unable to load AUP points." );
 
-			$this->msg_html->points = '</strong>' . _KUNENA_AUP_POINTS . '</strong> ' . $numPoints;
+			$this->msg_html->points = '<strong>' . _KUNENA_AUP_POINTS . '</strong> ' . $numPoints;
 		}
 		// End Integration AlphaUserPoints
 
@@ -525,8 +525,8 @@ class CKunenaView {
 			$this->msg_html->karma = "<strong>" . _KARMA . ":</strong> $karmaPoints";
 
 			if ($this->my->id != '0' && $this->my->id != $this->userinfo->userid) {
-				$this->msg_html->karmaminus = CKunenaLink::GetKarmaLink ( 'decrease', $this->catid, $this->kunena_message->id, $this->userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaminus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaminus']) : (KUNENA_URLEMOTIONSPATH . "karmaminus.gif")) . '" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" align="absmiddle" />' );
-				$this->msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $this->catid, $this->kunena_message->id, $this->userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" align="absmiddle" />' );
+				$this->msg_html->karmaminus = CKunenaLink::GetKarmaLink ( 'decrease', $this->catid, $this->kunena_message->id, $this->userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaminus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaminus']) : (KUNENA_URLEMOTIONSPATH . "karmaminus.gif")) . '" alt="Karma-" border="0" title="' . _KARMA_SMITE . '" />' );
+				$this->msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $this->catid, $this->kunena_message->id, $this->userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" />' );
 			}
 		}
 		/*let's see if we should use Missus integration */
@@ -598,22 +598,20 @@ class CKunenaView {
 		}
 
 		// online - ofline status
-		if ($this->userinfo->userid > 0) {
+		$this->msg_html->online = 0;
+		if ($this->userinfo->userid > 0 && $this->userinfo->showOnline == 1) {
 			static $onlinecache = array ();
 			if (! isset ( $onlinecache [$this->userinfo->userid] )) {
-				$sql = "SELECT COUNT(userid) FROM #__session WHERE userid='{$this->userinfo->userid}'";
-				$this->db->setQuery ( $sql );
-				$onlinecache [$this->userinfo->userid] = $this->db->loadResult ();
-				check_dberror ( 'Unable to load online status' );
+				$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->userinfo->userid . ' AND s.client_id = 0 GROUP BY s.userid';
+				$this->db->setQuery ( $query );
+				$lastseen = $this->db->loadResult ();
+				check_dberror ( "Unable get user online information." );
+				$timeout = $this->app->getCfg ( 'lifetime', 15 ) * 60;
+				$onlinecache [$this->userinfo->userid] = ($lastseen + $timeout) > time ();
 			}
-			$isonline = $onlinecache [$this->userinfo->userid];
-
-			if ($isonline && $this->userinfo->showOnline == 1) {
-				$this->msg_html->online = isset ( $kunena_icons ['onlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['onlineicon'] . '" border="0" alt="' . _MODLIST_ONLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . _MODLIST_ONLINE . '" />';
-			} else {
-				$this->msg_html->online = isset ( $kunena_icons ['offlineicon'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['offlineicon'] . '" border="0" alt="' . _MODLIST_OFFLINE . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . _MODLIST_OFFLINE . '" />';
-			}
+			$this->msg_html->online = $onlinecache [$this->userinfo->userid];
 		}
+
 		/* PM integration */
 		if ($this->config->pm_component == "jomsocial" && $this->userinfo->userid && $this->my->id) {
 			$onclick = CMessaging::getPopup ( $this->userinfo->userid );
@@ -631,7 +629,7 @@ class CKunenaView {
 		if ($this->config->fb_profile == "cb") {
 			if ($this->config->fb_profile == 'cb' && $this->userinfo->userid > 0) {
 				$this->msg_html->prflink = CKunenaCBProfile::getProfileURL ( $this->userinfo->userid );
-				$this->msg_html->profile = "<a href=\"" . $this->msg_html->prflink . "\">                                              <img src=\"";
+				$this->msg_html->profile = "<a href=\"" . $this->msg_html->prflink . "\"><img src=\"";
 
 				if ($kunena_icons ['userprofile']) {
 					$this->msg_html->profile .= KUNENA_URLICONSPATH . $kunena_icons ['userprofile'];
@@ -671,9 +669,6 @@ class CKunenaView {
 		}
 		if ($this->userinfo->personalText != '') {
 			$this->msg_html->personal = kunena_htmlspecialchars ( CKunenaTools::parseText ( $this->userinfo->personalText ) );
-		}
-		if ($this->userinfo->ICQ != '') {
-			$this->msg_html->icq = '<a href="http://www.icq.com/people/cmd.php?uin=' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->ICQ ) ) . '&action=message"><img src="http://status.icq.com/online.gif?icq=' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->ICQ ) ) . '&img=26" title="ICQ#: ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->ICQ ) ) . '" alt="ICQ#: ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->ICQ ) ) . '" /></a>';
 		}
 		if ($this->userinfo->location != '') {
 			$this->msg_html->location = isset ( $kunena_icons ['msglocation'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msglocation'] . '" border="0" alt="' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->location ) ) . '" title="' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->location ) ) . '" />' : ' ' . _KUNENA_MYPROFILE_LOCATION . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->location ) ) . '';

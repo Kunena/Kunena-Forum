@@ -107,7 +107,7 @@ if ($kunena_config->avposition == 'top') { ?>
     	<td class="kunena-message-right">
     		<?php $this->displayMessageContents() ?>
     	</td>
-    	<td rowspan="2" valign="top" class="kunena-profile-right">
+    	<td rowspan="2" class="kunena-profile-right">
     		<?php $this->displayProfileBox() ?>
     	</td>
     </tr>

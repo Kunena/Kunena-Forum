@@ -1206,6 +1206,10 @@ span.newchar {
 	color: #000000;
 }
 
+#Kunena table#kviews table {
+	/* table-layout: fixed; */
+}
+
 #Kunena th.view-th {
 	text-align: right;
 	padding-right: 10px;
@@ -1333,7 +1337,7 @@ span.newchar {
 #Kunena div.msgtext {
 	width: 100%;
 	overflow: hidden;
-	/* word-wrap: break-word;  Internet Explorer 5.5+ */
+	word-wrap: break-word; /*  Internet Explorer 5.5+ */
 	/*border-top: 1px solid #BFC3C6;*/
 	padding: 10px 0 0 0;
 	margin-top: 5px;
@@ -1537,6 +1541,7 @@ span.newchar {
 	border-bottom: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 	border-left: 1px solid #DDDDDD;
+	vertical-align:top;
 }
 
 #Kunena td.kunena-message-right {
@@ -1898,16 +1903,43 @@ POST PAGE
 }
 
 #Kunena table#kpostmessage .ktxtarea {
-	width: 95%;
 	overflow: auto;
 	height: 300px;
 	border: 1px solid #BFC3C6;
 }
 
-#Kunena .ktxtarea {
-	height: 300px;
+/* ---- Post Previews ---- */
+
+textarea#kbbcode-message {
 	width: 95%;
+	float: left;
 }
+div.kbbcode-preview_right,
+div.kbbcode-preview_bottom {
+	border: 1px solid #BFC3C6;
+	height:300px;
+}
+div.kbbcode-preview_bottom {
+	float:left;
+	clear:left;
+	width: 95%;
+	margin-top: 10px;
+}
+div.kbbcode-preview_right {
+	float:right;
+	width: 45%;
+	display:inline;
+	margin-right: 40px;
+}
+
+
+
+
+
+
+
+
+
 
 #Kunena #kpostmessage tr.ksectiontableentry1 .k-postbuttonset td,
 #Kunena #kpostmessage tr.ksectiontableentry2 .k-postbuttonset td	{

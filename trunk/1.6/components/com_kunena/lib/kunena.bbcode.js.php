@@ -129,23 +129,51 @@ function kPreviewHelper()
 // (preview to the right) and vertical (preview at the bottom) modes
 //
 ?>
-function kToggleOrSwapPreview(class)
+function kToggleOrSwapPreviewRt(class)
 {
 	e = $("kbbcode-preview");
+	f = $("kbbcode-message");
 	if (e) {
 		if (e.getStyle('display') == "none"){
 	    	e.setStyle('display', 'block');
+	    	
+	    	f.setStyle('width', '47%');
 	    	_previewActive=true;
 	    	kPreviewHelper();
 		}
 		else
 		{
 	    	e.setStyle('display', 'none');
+	    	f.setStyle('width', '95%');
 	    	_previewActive=false;
 		}
 		e.setProperty('class', class);
 	}
 }
+function kToggleOrSwapPreviewBot(class)
+{
+	e = $("kbbcode-preview");
+	f = $("kbbcode-message");
+	if (e) {
+		if (e.getStyle('display') == "none"){
+	    	e.setStyle('display', 'block');
+	    	
+	    	f.setStyle('width', '95%');
+	    	_previewActive=true;
+	    	kPreviewHelper();
+		}
+		else
+		{
+	    	e.setStyle('display', 'none');
+	    	f.setStyle('width', '95%');
+	    	_previewActive=false;
+		}
+		e.setProperty('class', class);
+	}
+}
+
+
+
 <?php
 //
 // kGenColorPalette(width, height)
@@ -817,14 +845,14 @@ kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator6'});
 
 kbbcode.addFunction('PreviewBottom', function() {
-	kToggleOrSwapPreview("kbbcode-preview_bottom");
+	kToggleOrSwapPreviewBot("kbbcode-preview_bottom");
 }, {'id': 'kbbcode-previewbottom_button',
 	'title': '<?php echo _KUNENA_EDITOR_PREVIEWBOTTOM;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>")'});
 
 kbbcode.addFunction('PreviewRight', function() {
-	kToggleOrSwapPreview("kbbcode-preview_right");
+	kToggleOrSwapPreviewRt("kbbcode-preview_right");
 }, {'id': 'kbbcode-previewright_button',
 	'title': '<?php echo _KUNENA_EDITOR_PREVIEWRIGHT;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT;?>',

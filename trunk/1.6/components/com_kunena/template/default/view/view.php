@@ -48,7 +48,7 @@ global $kunena_icons;
 		if ($this->headerdesc) {
 			?>
 <table
-	class="kforum-headerdesc<?php
+	class="<?php
 			echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->catinfo->class_sfx : '';
 			?>">
 	<tr>
@@ -66,7 +66,7 @@ global $kunena_icons;
 ?>
 
 <table
-	class="kblocktable<?php
+	class="<?php
 		echo isset ( $this->catinfo->class_sfx ) ? ' kblocktable' . $this->catinfo->class_sfx : '';
 		?>" id="kviews">
 	<thead>

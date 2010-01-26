@@ -31,8 +31,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	</td>
 	<?php //} 	?>
 	<td>
-	<table border="0" cellspacing="0" cellpadding="0"
-		class="k-postbuttonset">
+	<table class="k-postbuttonset">
 		<tr>
 			<td class="k-postbuttons">
 				<ul id="kbbcode-toolbar"></ul>
@@ -262,10 +261,12 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	}
 	?></td>
 
-	<td valign="top"><textarea cols="60" rows="6" class="ktxtarea"
-		name="message" id="kbbcode-message"><?php
-		echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
-		?></textarea>
+	<td valign="top">
+		<textarea class="ktxtarea" name="message" id="kbbcode-message" >
+			<?php
+			echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
+			?>
+		</textarea>
 	<?php
 	if ($this->kunena_editmode) {
 		// Moderator edit area
@@ -282,8 +283,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 //
 	?>
 		<!-- Hidden preview placeholder -->
-		<div id="kbbcode-preview"
-		style="display: none;">
+		<div id="kbbcode-preview" style="display: none;">
 		</div>
 	</td>
 </tr>

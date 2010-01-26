@@ -1918,6 +1918,7 @@ div.kbbcode-preview_right,
 div.kbbcode-preview_bottom {
 	border: 1px solid #BFC3C6;
 	height:300px;
+	overflow: scroll;
 }
 div.kbbcode-preview_bottom {
 	float:left;

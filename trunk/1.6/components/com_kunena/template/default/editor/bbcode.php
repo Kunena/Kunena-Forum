@@ -262,11 +262,9 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	?></td>
 
 	<td valign="top">
-		<textarea class="ktxtarea" name="message" id="kbbcode-message" >
-			<?php
+		<textarea class="ktxtarea" name="message" id="kbbcode-message" ><?php
 			echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
-			?>
-		</textarea>
+			?></textarea>
 	<?php
 	if ($this->kunena_editmode) {
 		// Moderator edit area

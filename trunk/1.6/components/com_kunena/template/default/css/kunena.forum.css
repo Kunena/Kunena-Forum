@@ -1588,6 +1588,134 @@ span.newchar {
 	padding: 5px;
 }
 
+#Kunena table#kviews tr td table tr td.kunena-profile-right div.iconrow {
+	text-align: center;
+	padding-bottom: 0px;
+}
+
+
+/* User info on posts
+----------------------------------------*/
+
+/* Left and right layouts */
+ul#kpost-profile {
+	margin:15px 0 0 0;
+	padding: 0;
+	text-align:center;
+}
+
+ul#kpost-profile li {
+	list-style-type: none;
+	display:block;
+	padding-bottom: 3px;
+}
+
+ul#kpost-profile li.kpost-username {}
+
+ul#kpost-profile li.kpost-usertype {}
+			
+ul#kpost-profile li.kpost-avatar{}
+		
+ul#kpost-profile li.kpost-userrank{}
+			
+ul#kpost-profile li.kpost-userrank-img {}
+		
+ul#kpost-profile li.kpost-online-img{}
+		
+ul#kpost-profile li.kpost-smallicons{
+	margin:20px auto;
+	width: 80px;
+}
+ul#kpost-profile li.kpost-personal{
+	text-align: center;
+	font-style:italic;
+	line-height: 32px;
+}
+li.kpost-online-status-yes {
+	margin:10px auto;
+	display:block; 
+	background: url("../images/icons/online.gif") no-repeat; 
+	height: 15px; 
+	width: 74px;
+}
+
+li.kpost-online-status-no {
+	margin:10px auto;
+	display:block; 
+	background: url("../images/icons/offline.gif") no-repeat; 
+	height: 15px; 
+	width: 74px;
+}
+
+/* Top and bottom layouts */
+ul#kpost-profiletop {
+	margin:0;
+	padding: 0;
+}
+
+ul#kpost-profiletop li {
+	list-style-type: none;
+	display:block;
+	margin:0;
+	padding: 0;
+}
+
+ul#kpost-profiletop li.kpost-username {
+	padding-top: 5px;
+}
+
+ul#kpost-profiletop li.kpost-usertype {
+}
+			
+ul#kpost-profiletop li.kpost-avatar{
+	float:left;
+	clear:left;
+	margin-right: 5px;
+}
+		
+ul#kpost-profiletop li.kpost-userrank{
+	float:left;
+	padding-right: 5px;
+}
+			
+ul#kpost-profiletop li.kpost-userrank-img {
+	
+	
+}
+		
+ul#kpost-profiletop li.kpost-online-img{
+}
+		
+ul#kpost-profiletop li.kpost-smallicons{
+	float:right;
+	width: auto;
+	padding-top: 5px;
+}
+
+ul#kpost-profiletop li.kpost-smallicons div.iconrow{
+	width: auto;
+	padding-right: 0;
+}
+
+ul#kpost-profiletop li.kpost-personal{
+	text-align: center;
+	font-style:italic;
+	float:right;
+	width: 40%;
+	padding-top: 5px;
+}
+
+/* Remove this when markup removed from profile */
+ul#kpost-profiletop div.viewcover {
+	color:#737373;
+	margin:0;
+	float:left;
+	padding-right: 10px;
+	
+}
+
+
+
 /* top
 ----------------------------------------*/
 
@@ -1868,6 +1996,9 @@ div#video {
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
 }
+#Kunena a.buttoncomm span span:hover {
+	text-decoration: underline;
+}
 
 /* User Action buttons */
 
@@ -1910,6 +2041,12 @@ div#video {
 	height: 18px;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-user.gif") no-repeat right top;
+}
+#Kunena a.buttonuser span span:hover {
+	text-decoration: underline;
+}
+#Kunena a.buttonuser span span:hover {
+	text-decoration: underline;
 }
 
 /* Moderator Action buttons */
@@ -1972,6 +2109,9 @@ a.buttonmod span {
 	height: 18px;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;
+}
+#Kunena a.buttonmod span span:hover {
+	text-decoration: underline;
 }
 
 /* Generic Buttons */

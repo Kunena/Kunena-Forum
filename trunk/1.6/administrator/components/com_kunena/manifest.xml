@@ -22,7 +22,6 @@
 		<filename>kunena.php</filename>
 		<filename>router.php</filename>
 		<filename>jomsocial_rule.xml</filename>
-		<folder>js</folder>
 		<folder>kunena.files.distribution</folder>
 		<folder>lib</folder>
 		<folder>template</folder>

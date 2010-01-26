@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+26-Jan-2010 @quila
+^ [#19288] Fix regression - remove js folder from manifest.xml
+
 25-Jan-2010 severdia
 # [#19356] New icons, removed English folder in images (moved images up one level), refined forum colors
 

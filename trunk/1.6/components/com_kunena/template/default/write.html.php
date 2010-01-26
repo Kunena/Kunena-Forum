@@ -98,7 +98,7 @@ if (! empty ( $this->kunena_editmode )) :
 <table class="kblocktable<?php
 echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 ?>"
-	id="kpostmessage" border="0" cellspacing="0" cellpadding="0" width="100%">
+	id="kpostmessage">
 	<thead>
 		<tr>
 			<th colspan="2">
@@ -224,7 +224,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			?></strong></td>
 
 			<td class="k-topicicons">
-<table border="0" cellspacing="0" cellpadding="0" class="kflat">
+<table class="kflat">
 	<tr>
 		<td><input type="radio" name="topic_emoticon" value="0"
 			<?php echo $selected==0?" checked=\"checked\" ":"";?> /><?php @print(_NO_SMILIE); ?>

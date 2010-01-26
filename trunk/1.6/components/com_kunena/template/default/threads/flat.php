@@ -70,10 +70,7 @@ if (count ( $this->messages ) > 0) {
 <table
 	class="kblocktable<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
-	?>"
-	id="kflattable" border="0" cellspacing="0" cellpadding="0"
-	width="100%">
-
+	?>" id="kflattable">
 	<thead>
 		<tr>
 			<th
@@ -127,14 +124,14 @@ if (count ( $this->messages ) > 0) {
 			echo $leaf->class_sfx;
 		}
 		?>">
-			<td class="td-0 km" align="center"><strong> <?php
+			<td class="td-0 km center"><strong> <?php
 		echo CKunenaTools::formatLargeNumber ( $leaf->msgcount-1 );
 		?>
 			</strong><?php
 		echo _GEN_REPLIES;
 		?></td>
 
-			<td class="td-2" align="center">
+			<td class="td-2 center">
 			<img src="<?php echo $topic_emoticons [$leaf->topic_emoticon] ?>" alt="emo" border="0" />
 		</td>
 
@@ -217,9 +214,6 @@ if (count ( $this->messages ) > 0) {
 		}
 		?>
 			<!-- /By -->
-
-
-
 		<?php
 		if ($leaf->locked != 0) {
 			?> <!-- Locked --> <span class="topic_locked"> <?php
@@ -229,8 +223,9 @@ if (count ( $this->messages ) > 0) {
 		}
 		?></div>
 			</td>
-			<td class="td-4" align="center"><!-- Views --> <span
-				class="topic_views_number"><?php
+			<td class="td-4 center">
+			<!-- Views --> 
+			<span class="topic_views_number"><?php
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
 		?>
 			</span> <span class="topic_views"> <?php
@@ -301,7 +296,7 @@ if (count ( $this->messages ) > 0) {
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			?>
 
-			<td class="td-7" align="center"><input type="checkbox"
+			<td class="td-7 center"><input type="checkbox"
 				name="kDelete[<?php
 			echo $leaf->id?>]" value="1" /></td>
 

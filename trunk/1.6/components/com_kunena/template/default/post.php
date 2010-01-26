@@ -1246,8 +1246,7 @@ function listThreadHistory($id, $kunena_config, $kunena_db) {
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-<table class="kblocktable" id="kbottomarea" border="0"
-	cellspacing="0" cellpadding="0" width="100%">
+<table class="kblocktable" id="kbottomarea">
 	<thead>
 		<tr>
 			<th class="th-right"><?php

@@ -42,7 +42,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 </script>
 
 <form action="<?php echo CKunenaLink::GetSearchURL('', 'advsearch',NULL, NULL, NULL); ?>" method="post" id="searchform" name="adminForm">
-    <table id="kforumsearch" class="kblocktable" border="0" cellspacing="0" cellpadding="0">
+    <table id="kforumsearch" class="kblocktable">
         <thead>
             <tr>
                 <th align="left" colspan="2">
@@ -98,10 +98,10 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 	<tr>
 	<td colspan="2">
 
-    <table id="kforumsearch_adv" class="kblocktable" border="0" cellspacing="0" cellpadding="0">
+    <table id="kforumsearch_adv" class="kblocktable">
         <thead>
             <tr>
-                <th align="left" colspan="2">
+                <th class="left" colspan="2">
 				    <div class="ktitle_cover">
 					    <span class="ktitle"><?php echo _KUNENA_SEARCH_OPTIONS; ?></span>
                     </div>
@@ -112,7 +112,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 
         <tbody id="advsearch_options">
             <tr class="ksectiontableentry1">
-                <td class="td-1" width="50%" style="vertical-align:top;">
+                <td class="td-1" width="50%">
 <?php /*
                     <fieldset class="fieldset">
                         <legend style="padding:0px">
@@ -218,7 +218,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
         </tbody>
     </table>
 
-    <table class="klist_bottom" width="100%" cellspacing="0" cellpadding="0" border="0">
+    <table class="klist_bottom">
 		<tbody>
 			<tr>
 				<td>

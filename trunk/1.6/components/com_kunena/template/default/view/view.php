@@ -50,8 +50,7 @@ global $kunena_icons;
 <table
 	class="kforum-headerdesc<?php
 			echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->catinfo->class_sfx : '';
-			?>"
-	border="0" cellpadding="0" cellspacing="0" width="100%">
+			?>">
 	<tr>
 		<td><?php
 			echo $this->headerdesc;
@@ -69,16 +68,15 @@ global $kunena_icons;
 <table
 	class="kblocktable<?php
 		echo isset ( $this->catinfo->class_sfx ) ? ' kblocktable' . $this->catinfo->class_sfx : '';
-		?>"
-	id="kviews" cellpadding="0" cellspacing="0" border="0" width="100%">
+		?>" id="kviews">
 	<thead>
 		<tr>
-			<th align="left">
-			<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<th class="left">
+			<table>
 				<tr>
 					<td>
 
-					<div class="ktitle_cover  km"><span class="ktitle kl"><?php
+					<div class="ktitle_cover km"><span class="ktitle kl"><?php
 		echo _KUNENA_TOPIC;
 		?>
 		<?php
@@ -129,8 +127,7 @@ global $kunena_icons;
 <!-- F: List Actions Bottom -->
 
 <!-- B: Category List Bottom -->
-<table class="klist_bottom" border="0" cellspacing="0" cellpadding="0"
-	width="100%">
+<table class="klist_bottom">
 	<tr>
 		<td class="klist_moderators">
 		<!-- Mod List -->

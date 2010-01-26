@@ -41,7 +41,7 @@ if ($this->objCatInfo->headerdesc) {
 	class="kforum-headerdesc<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kforum-headerdesc' . $this->objCatInfo->class_sfx : '';
 	?>"
-	border="0" cellpadding="0" cellspacing="0" width="100%">
+	>
 	<tr>
 		<td><?php
 	echo $this->headerdesc;
@@ -55,18 +55,16 @@ if ($this->objCatInfo->headerdesc) {
 
 <!-- B: List Actions -->
 
-<table class="klist_actions" border="0" cellpadding="0" cellspacing="0"
-	width="100%">
+<table class="klist_actions">
 	<tr>
 		<td class="klist_actions_goto"><?php
 		//go to bottom
 		echo '<a name="forumtop" /> ';
 		echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . _GEN_GOTOBOTTOM . '" title="' . _GEN_GOTOBOTTOM . '"/>' : _GEN_GOTOBOTTOM );
 		?>
-
 		</td>
-		<td class="klist_actions_forum" width="100%"><?php
-
+		<td class="klist_actions_forum" width="100%">
+		<?php
 		if (isset ( $this->forum_new ) || isset ( $this->forum_markread ) || isset ( $this->thread_subscribecat )) {
 			echo '<div class="kmessage_buttons_row">';
 			if (isset ( $this->forum_new ))
@@ -78,9 +76,9 @@ if ($this->objCatInfo->headerdesc) {
 			echo '</div>';
 		}
 		?>
-
 		</td>
-		<td class="klist_pages_all" nowrap="nowrap"><?php
+		<td class="klist_pages_all" nowrap="nowrap">
+		<?php
 		//pagination 1
 		if (count ( $this->messages ) > 0) {
 			$maxpages = 9 - 2; // odd number here (# - 2)
@@ -98,7 +96,7 @@ if ($this->objCatInfo->headerdesc) {
 if (count ( $this->messages ) > 0) {
 	$this->displayFlat ();
 } else {
-	echo "<p align=\"center\">";
+	echo "<p class=\"center\">";
 	echo '<br /><br />' . _SHOWCAT_NO_TOPICS;
 	echo "</p>";
 }
@@ -106,8 +104,7 @@ if (count ( $this->messages ) > 0) {
 
 <!-- B: List Actions Bottom -->
 
-<table class="klist_actions_bottom" border="0" cellpadding="0"
-	cellspacing="0" width="100%">
+<table class="klist_actions_bottom" >
 	<tr>
 		<td class="klist_actions_goto"><?php
 		//go to top
@@ -149,8 +146,7 @@ echo '</div>';
 
 <!-- B: Category List Bottom -->
 
-<table class="klist_bottom" border="0" cellspacing="0" cellpadding="0"
-	width="100%">
+<table class="klist_bottom">
 	<tr>
 		<td class="klist_moderators"><!-- Mod List --> <?php
 

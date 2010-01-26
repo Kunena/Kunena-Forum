@@ -27,7 +27,7 @@ $this->displayAnnouncement ();
 CKunenaTools::showModulePosition ( 'kunena_announcement' );
 ?>
 <!-- B: List Actions -->
-<table class="klist_actions" border="0" cellpadding="0" cellspacing="0">
+<table class="klist_actions">
 	<tr>
 		<td class="klist_actions_info_all"><strong><?php
 		echo $this->total?></strong> <?php
@@ -174,10 +174,9 @@ if (count ( $this->threadids ) > 0) :
 	$this->displayFlat ();
 	?>
 <!-- B: List Actions -->
-<table class="klist_actions" border="0" cellpadding="0" cellspacing="0"
-	width="100%">
+<table class="klist_actions">
 	<tr>
-		<td class="klist_actions_info_all" width="100%"><strong><?php
+		<td class="klist_actions_info_all"><strong><?php
 	echo $this->total?></strong> <?php
 	echo _KUNENA_DISCUSSIONS?>
 			</td>
@@ -185,7 +184,7 @@ if (count ( $this->threadids ) > 0) :
 			<?php
 	//pagination 1
 	if (count ( $this->messages ) > 0) :
-		echo '<td class="klist_pages_all" nowrap="nowrap">';
+		echo '<td class="klist_pages_all nowrap">';
 		echo $pagination;
 		echo '</td>';
 

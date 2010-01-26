@@ -54,13 +54,13 @@ PX		EM			PCT			PT
 13px	1.083em		108.3%		10pt
 14px	1.167em		116.7%		11pt
 15px	1.25em		125%		11pt
-16px	1.25em		133.3%		12pt
+16px	1.333em		133.3%		12pt
 17px	1.417em		141.7%		13pt
 18px	1.5em		150%		14pt
 19px	1.583em		158.3%		14pt
 20px	1.667em		166.7%		15pt
 21px	1.75em		175%		16pt
-22px	1.667em		183.3%		17pt
+22px	1.833em		183.3%		17pt
 23px	1.917em		191.7%		17pt
 24px	2em			200%		18pt
 
@@ -134,7 +134,12 @@ a:focus {outline: none;}
 	/* 20px */
 	font-size: 1.667em;
 }
-
+#Kunena table {
+	width :100%;
+	border-collapse:collapse;
+	padding:0;
+	margin:0;
+}
 
 #Kunena .kheader {
 	background: #3B3B3B url("../images/cat_title_bg.gif") repeat-x top left;
@@ -172,7 +177,7 @@ a:focus {outline: none;}
 	color: #333333;
 	padding: 4px 8px;
 	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #FFFFFF;
+	/* border-left: 1px solid #FFFFFF; */
 	border-right: 1px solid #BFC3C6;
 }
 
@@ -232,14 +237,14 @@ a:focus {outline: none;}
 #Kunena span.cat_topics_number,
 #Kunena span.cat_replies_number {
 	display:block;
-	font-size: 1.455em;
+	font-size: 1.417em;
 	line-height: 21px;
 	margin:5px 0;
 	color: #999999;
 }
 
 #Kunena .topic_latest_post{
-	font-size: 1.167em;
+	font-size: 1.083em;
 }
 #Kunena .topic_date {
 	font-size: 1em;
@@ -247,7 +252,7 @@ a:focus {outline: none;}
 
 #Kunena a.k-topic-title {
 	font-weight: bold;
-	font-size: 1.273em;
+	font-size: 1.25em;
 }
 
 #Kunena .topic_latest_post_avatar {

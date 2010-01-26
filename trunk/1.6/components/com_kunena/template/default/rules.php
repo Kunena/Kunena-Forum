@@ -38,8 +38,7 @@ check_dberror ( "Unable to load introtext." );
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-<table class="kblocktable" id="kforumrules" border="0" cellspacing="0"
-	cellpadding="0" width="100%">
+<table class="kblocktable" id="kforumrules">
 	<thead>
 		<tr>
 			<th>

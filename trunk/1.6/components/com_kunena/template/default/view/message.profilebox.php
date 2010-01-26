@@ -36,12 +36,13 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 		<li class="kpost-userrank-img">
 			<?php if (isset ( $this->msg_html->userrankimg )) { echo $this->msg_html->userrankimg; } ?>
 		</li>
-		<!-- This CSS class needs to by dymanic like on profile page. -->
-		<li class="kpost-online-status-yes"> </li>
+		
 		<!--  The markup needs to be removed from these tags and each enclosed as a list item. --> 
 		<?php if (isset ( $this->msg_html->posts )) { echo $this->msg_html->posts; }
 				if (isset ( $this->msg_html->points )) { echo $this->msg_html->points; }
 				if (isset ( $this->msg_html->online )) { echo $this->msg_html->online; } ?>
+		<!-- This CSS class needs to by dymanic like on profile page. -->
+		<li class="kpost-online-status-yes"> </li>
 			<?php if (isset ( $this->msg_html->pms )) { echo $this->msg_html->pms; } ?>
 		<li class="kpost-smallicons">
 			<?php 	if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php')) {

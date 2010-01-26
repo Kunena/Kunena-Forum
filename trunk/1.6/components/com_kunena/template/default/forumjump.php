@@ -31,12 +31,12 @@ $lists ['parent'] = CKunenaTools::forumSelectList ( 'forumjump', $catid, $option
 <form id="jumpto" name="jumpto" method="post" target="_self"
 	action="<?php
 	echo CKunenaLink::GetKunenaURL ();
-	?>"><span style="width: 100%; text-align: right;"> <input type="hidden"
+	?>"><span class="right"> <input type="hidden"
 	name="func" value="showcat" />
 		<?php
 		echo $lists ['parent'];
 		?>
-	<input type="submit" name="Go" class="fb_button fbs"
+	<input type="submit" name="Go" class="kbutton ks"
 	value="<?php
 	echo _KUNENA_GO;
 	?>" /> </span></form>

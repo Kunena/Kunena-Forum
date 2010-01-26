@@ -16,8 +16,7 @@ global $kunena_icons;
 ?>
 
 <!-- B: List Actions -->
-<table class="klist_actions" border="0" cellspacing="0" cellpadding="0"
-	width="100%">
+<table class="klist_actions">
 	<tr>
 		<td class="klist_actions_goto"><a name="forumtop"></a>
 			<?php

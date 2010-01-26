@@ -30,8 +30,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-<table class="kblocktable" id="kforumsearch" border="0" cellspacing="0"
-	cellpadding="0" width="100%">
+<table class="kblocktable" id="kforumsearch" >
 	<thead>
 		<tr>
 			<th colspan="3">
@@ -93,8 +92,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 			?>
 
 		<tr class="ksth">
-			<th colspan="3" style="text-align: center"
-				class="th-1 ksectiontableheader">
+			<th colspan="3" class="th-1 ksectiontableheader center">
 			<?php
 			echo $this->pagination;
 			?>
@@ -106,8 +104,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 		?>
 
 		<tr class="ksth">
-			<th colspan="3" style="text-align: center"
-				class="th-1 ksectiontableheader">
+			<th colspan="3" class="th-1 ksectiontableheader center">
 			<?php
 			$resStart = $this->limitstart + 1;
 			$resStop = $this->limitstart + count ( $this->results );

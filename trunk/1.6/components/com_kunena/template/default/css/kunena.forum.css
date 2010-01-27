@@ -190,6 +190,13 @@ a:focus {outline: none;}
 	border-right: 1px solid #BFC3C6;
 }
 
+#Kunena tr.ksectiontableentry1 td.td-3,
+#Kunena tr.ksectiontableentry2 td.td-3,
+#Kunena tr.ksectiontableentry1 td.td-4,
+#Kunena tr.ksectiontableentry2 td.td-4 {
+	text-align:center;
+}
+
 #Kunena tr.ksectiontableentry1 td.td-1,
 #Kunena tr.ksectiontableentry2 td.td-1	{
 	/* background: #F2F1EE; */

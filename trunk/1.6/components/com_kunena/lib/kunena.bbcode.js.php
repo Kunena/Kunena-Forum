@@ -129,15 +129,20 @@ function kPreviewHelper()
 // (preview to the right) and vertical (preview at the bottom) modes
 //
 ?>
-function kToggleOrSwapPreviewRt(class)
+function kToggleOrSwapPreview(class)
 {
 	e = $("kbbcode-preview");
 	f = $("kbbcode-message");
 	if (e) {
-		if (e.getStyle('display') == "none"){
+		if (e.getStyle('display') == "none" || e.getProperty('class') != class){
 	    	e.setStyle('display', 'block');
-	    	
-	    	f.setStyle('width', '47%');
+
+			if (class=="kbbcode-preview_right"){
+	    		f.setStyle('width', '47%');
+	    	} else {
+		    	f.setStyle('width', '95%');
+			}
+
 	    	_previewActive=true;
 	    	kPreviewHelper();
 		}
@@ -150,29 +155,6 @@ function kToggleOrSwapPreviewRt(class)
 		e.setProperty('class', class);
 	}
 }
-function kToggleOrSwapPreviewBot(class)
-{
-	e = $("kbbcode-preview");
-	f = $("kbbcode-message");
-	if (e) {
-		if (e.getStyle('display') == "none"){
-	    	e.setStyle('display', 'block');
-	    	
-	    	f.setStyle('width', '95%');
-	    	_previewActive=true;
-	    	kPreviewHelper();
-		}
-		else
-		{
-	    	e.setStyle('display', 'none');
-	    	f.setStyle('width', '95%');
-	    	_previewActive=false;
-		}
-		e.setProperty('class', class);
-	}
-}
-
-
 
 <?php
 //
@@ -181,8 +163,6 @@ function kToggleOrSwapPreviewBot(class)
 // Helper function to generate the color palette for the bbcode color picker
 //
 ?>
-
-<!--   -->
 function kGenerateColorPalette(width, height)
 {
 	var r = 0, g = 0, b = 0;
@@ -845,14 +825,14 @@ kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator6'});
 
 kbbcode.addFunction('PreviewBottom', function() {
-	kToggleOrSwapPreviewBot("kbbcode-preview_bottom");
+	kToggleOrSwapPreview("kbbcode-preview_bottom");
 }, {'id': 'kbbcode-previewbottom_button',
 	'title': '<?php echo _KUNENA_EDITOR_PREVIEWBOTTOM;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM;?>")'});
 
 kbbcode.addFunction('PreviewRight', function() {
-	kToggleOrSwapPreviewRt("kbbcode-preview_right");
+	kToggleOrSwapPreview("kbbcode-preview_right");
 }, {'id': 'kbbcode-previewright_button',
 	'title': '<?php echo _KUNENA_EDITOR_PREVIEWRIGHT;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT;?>',
@@ -868,9 +848,7 @@ kbbcode.addFunction('Help', function() {
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_HELP;?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo _KUNENA_EDITOR_HELPLINE_HELP;?>")'});
 
-
 $('kbbcode-message').addEvent('change', function(){
-	console.log("My content was changed!");
 	kPreviewHelper();
 });
 
@@ -886,6 +864,7 @@ window.addEvent('domready', function() {
 			var bg = this.getStyle( "background-color" );
 			selection = kbbcode.getSelection();
 			kbbcode.replaceSelection('[color='+ bg +']' + selection + '[/color]');
+			kToggleOrSwap("kbbcode-colorpalette");
 		});
 	}
 	var size = $$("div#kbbcode-size-options span");
@@ -894,6 +873,7 @@ window.addEvent('domready', function() {
 			var tag = this.get( "title" );
 			selection = kbbcode.getSelection();
 			kbbcode.replaceSelection(tag + selection + '[/size]');
+			kToggleOrSwap("kbbcode-size-options");
 		});
 	}
 });

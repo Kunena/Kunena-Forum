@@ -1926,6 +1926,7 @@ div.kbbcode-preview_bottom {
 	border: 1px solid #BFC3C6;
 	height:300px;
 	overflow: scroll;
+	background: #F2F1EE
 }
 div.kbbcode-preview_bottom {
 	float:left;
@@ -1939,15 +1940,6 @@ div.kbbcode-preview_right {
 	display:inline;
 	margin-right: 40px;
 }
-
-
-
-
-
-
-
-
-
 
 #Kunena #kpostmessage tr.ksectiontableentry1 .k-postbuttonset td,
 #Kunena #kpostmessage tr.ksectiontableentry2 .k-postbuttonset td	{

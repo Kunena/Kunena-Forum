@@ -31,6 +31,12 @@ DEFINE('_KUNENA_CAPTCHA_ON','Enable anti-spam system with reCaptcha');
 DEFINE('_KUNENA_CAPTCHA_DESC','Captcha system On/Off, before enable this you need to have installed the plugin reCaptcha, look into the wiki for more information');
 
 // New bbcode editor strings
+DEFINE('_KUNENA_EDITOR_HELPLINE_OPTION', 'Poll: Option for the poll');
+DEFINE('_KUNENA_EDITOR_HELPLINE_POLLTITLE', 'Poll: Set a title for the poll');
+DEFINE('_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN', 'Poll: Set a life time for the poll(optional)');
+DEFINE('_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION', 'Poll: Add an option');
+DEFINE('_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION', 'Poll: Remove an option');
+DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY', 'Image link: Apply link');
 DEFINE('_KUNENA_EDITOR_BOLD', 'Bold');
 DEFINE('_KUNENA_EDITOR_ITALIC', 'Italic');
 DEFINE('_KUNENA_EDITOR_UNDERL', 'Underline');

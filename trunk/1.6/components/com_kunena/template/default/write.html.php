@@ -352,46 +352,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		</tr>
 		<?php
 		}
-        //Check if it's is a new thread and show the poll
-        if ($kunena_config->pollenabled == "1" && $id == "0" )
-        {
-        	if (!empty($msg_cat->allow_polls) || $catid == '0')
-        	{
-       			if (!isset($polldatasedit[0]->polltimetolive)) {
-					$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-				}
-
-       			$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
-       			JApplication::addCustomHeadTag('
-   					<script type="text/javascript">
-  				 	<!--
-   					var number_field = 1;
-   					//-->
-   					</script>
-				');
-        ?>
-            <tr class = "ksectiontableentry2" id="kpoll_elem">
-                <td class = "kleftcolumn">
-                    <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
-                </td>
-                <td>
-                	<div style="font-weight:bold;" id="poll_text_write"></div>
-                	<div><input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><?php echo ' '. _KUNENA_POLL_TITLE; ?></div>
-                    <div><?php echo $pollcalendar .' '. _KUNENA_POLL_TIME_TO_LIVE; ?></div>
-                    <!-- The field hidden allow to know the options number chooses by the user -->
-                    <?php if($this->kunena_editmode != "1"){ ?>
-                    <input type="hidden" name="number_total_options" id="numbertotal">
-                    <?php } ?>
-                    <input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>" >
-                    <input type = "button" id = "kbutton_poll_add" class = "kbutton" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
-                    <input type = "button" id = "kbutton_poll_rem" class = "kbutton" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
-      	         </td>
-            </tr>
-           <?php }
-        }
-
-
-        //Begin captcha
+		//Begin captcha
 		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 			$enabled = JPluginHelper::isEnabled('system', 'jezReCaptcha');
 			if($enabled){
@@ -409,55 +370,6 @@ $mainframe->triggerEvent('onCaptchaDisplay'); ?>
 			}
 		}
 		// Finish captcha
-		if (($this->kunena_editmode == "1") && $kunena_config->pollenabled == "1")
-		{
-        	if (!empty($msg_cat->allow_polls) || $catid == '0')
-        	{
-		      //This query is need because, in this part i haven't access to the variable $parent
-		      //I need to determine if the post if a parent or not for display the form for the poll
-          	  $mesparent 	= CKunenaPolls::get_parent($id);
-              $polloptions  = CKunenaPolls::get_total_options($id);
-          	  if ($mesparent->parent == "0"){
-					if (!isset($polldatasedit[0]->polltimetolive)) {
-						$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-			 	}
-
-        		$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
-
-          	  	$polloptionsstart = $polloptions+1;
-            	JApplication::addCustomHeadTag('
-      				<script type="text/javascript">
-	   				<!--
-	   				var number_field = "'.$polloptionsstart.'";
-	   				//-->
-    				 </script>
-				  ');
-		?>
-		<tr class = "ksectiontableentry2" id="kpoll_elem">
-			<td class = "kleftcolumn">
-                    <strong><?php echo _KUNENA_POLL_ADD; ?></strong>
-            </td>
-            <td>
-                	<div style="font-weight:bold;" id="poll_text_write"></div>
-                    <div><input type = "text" id = "poll_title" name = "poll_title" value="<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>" /><?php echo ' '. _KUNENA_POLL_TITLE; ?></div>
-                    <div><?php echo $pollcalendar .' '. _KUNENA_POLL_TIME_TO_LIVE; ?></div>
-                    <input type = "button" id = "kbutton_poll_add" class = "kbutton" value = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onclick = "javascript:new_field(<?php echo $kunena_config->pollnboptions; ?>);">
-                    <input type = "button" id = "kbutton_poll_rem" class = "kbutton" value = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onclick = "javascript:delete_field();">
-                    <input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>">
-                    <input type="hidden" name="number_total_options" id="numbertotalr" value="<?php echo $polloptions; ?>">
-            </td>
-        </tr>
-                <?php
-                  if (isset($polloptions)) {
-                  	$nboptions = "1";
-                    for ($i=0;$i < $polloptions;$i++) {
-                    	echo "<tr class=\"ksectiontableentry2\" id=\"option".$nboptions."\"><td style=\"font-weight: bold\" class=\"kleftcolumn\">Option ".$nboptions."</td><td><input type=\"text\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" /></td></tr>";
-                      	$nboptions++;
-                    }
-                  }
-          	  }
-        	}
-		}
 		?>
 		<tr id="kpost_buttons_tr" class="ksectiontableentry1">
 			<td id="kpost_buttons" colspan="2" style="text-align: center;">

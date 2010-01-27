@@ -13,81 +13,58 @@ window.addEvent('domready', function() {
 		var optiontotal = $('numbertotal');
 		if(optiontotal != null) {
 			optiontotal.set('value',number);
-		}
-		var optiontotalet = $('numbertotalr');
-		if(optiontotalet != null) {
-			optiontotalet.set('value',number);
-		}		
+		}				
 	}
 	function regleCSS(number_field) {
 		$('opt'+number_field).set('style', {
 		    'fontWeight': 'bold'		    
 		});
-	}
+	}	
 	
-	function create_new_field_now(){			
-		  var numfield = number_field-1;
-		  var tablebody =document.getElementById('kpost_message');
-		  var buttons = $("kpost_buttons_tr");
-		  valuetotaloptions(number_field);
-		  var mytr = new Element('tr', {
-				'class':'ksectiontableentry2'				
-			});
-		  var mytd = new Element('td', {
-				'class':'kleftcolumn'
-			});
-		  var mystrong = new Element('strong');
-		  var input = new Element('input');
-		  var mytd2 = new Element('td');
-		  mytr.injectInside(tablebody).injectBefore(buttons);
-		  mytr.set('id','option'+number_field);
-		  mytd.injectInside(mytr);		    
-		  mytd.set('id','opt'+number_field);
-		  mystrong.injectInside(mytd);
-		  mystrong.set('text',KUNENA_POLL_OPTION_NAME+" "+number_field);		  
-		  mytd2.injectInside(mytr);
-		  mytd2.set('name','field_option'+numfield);
-		  mytd2.set('id','field_option'+numfield);
-		  input.inject(mytd2);
-		  input.set('name','field_option'+numfield);
-		  input.set('id','field_option'+numfield);		 
-		  regleCSS(number_field);
+	function create_new_field_now(){		
+		  var numfield = number_field-1;		  
+		  var polldiv = $('kbbcode-poll-options');
+		  var hide_input = $('nb_options_allowed');
+		  valuetotaloptions(number_field);		  
+		  var mydiv = new Element('div');		  
+		  $('helpbox').set('value',KUNENA_EDITOR_HELPLINE_OPTION );
+		  var input = new Element('input', {
+			  name:'field_option'+numfield,
+			  id:'field_option'+numfield,
+			  maxlength:'25',
+			  onmouseover: '$("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
+				  });		  
+		  mydiv.injectInside(polldiv).injectBefore(hide_input);
+		  mydiv.set('id','option'+number_field);		  
+		  mydiv.set('text',KUNENA_POLL_OPTION_NAME+" "+number_field);		  
+		  input.inject(mydiv);		  
+		  //regleCSS(number_field); //need to test this on IE
 		  number_field++;
 		}
 
 		//this function insert a text by modifing the DOM, for show infos given by ajax result
 		function insert_text_write(textString)
 		{				
-				var tablebody = $('kpost_message');
-				var buttons = $("kpost_buttons_tr");
-				var mytr = new Element('tr', {
-					'class':'ksectiontableentry2',
-					'id':'option_error'
-				});
-				
-				var mytd = new Element('td', {
-					'class':'kleftcolumn',
-					'id':'error'
-				});
-				
-				var mytd2 = new Element('td', {					
-					'id':'error'
-				});
-				
-				var myimg = new Element('img', {
-					'src':KUNENA_ICON_ERROR					
-				});
-				
-				mytr.injectInside(tablebody).injectBefore(buttons);				
-				mytd.injectInside(mytr);
-				myimg.injectInside(mytd);
-				mytd2.injectInside(mytr);
-				mytd2.set('text', textString);						
+			var polldiv = $('kbbcode-poll-options');
+			var hide_input = $('nb_options_allowed');
+			var mydiv = new Element('div');
+			
+			var span = new Element('span');
+			
+			var myimg = new Element('img', {
+				'src':KUNENA_ICON_ERROR					
+			});				
+			mydiv.injectInside(polldiv).injectBefore(hide_input);
+			mydiv.set('id','option_error');
+			myimg.injectInside(mydiv);				
+
+			span.injectInside(mydiv);
+			span.set('text', textString);
 		}
 
 	if($('kbutton_poll_add') != undefined) {
 		$('kbutton_poll_add').onclick = function () {
-			var nboptionsmax = $('nb_options_allowed').get('value');
+			var nboptionsmax = $('nb_options_allowed').get('value');			
 			if(nboptionsmax == "0") {
 				create_new_field_now();
 			}else {
@@ -106,7 +83,7 @@ window.addEvent('domready', function() {
 			if($('option_error')){
 				$('option_error').dispose();
 			}
-			var matable = $('kpost_message');		
+			var matable = $('kbbcode-poll-options');		
 			if(number_field > 1) {
 				number_field = number_field - 1 ;
 				var row = $('option'+number_field);

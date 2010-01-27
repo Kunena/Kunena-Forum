@@ -122,13 +122,50 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				echo _KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY;
 				?>')" />
 			</div>
+			<!--  Placeholder for Poll Code -->
+			<?php
+			//Check if the poll is allowed and check if the polls is enabled
+			if ($kunena_config->pollenabled) {
+				$display_poll = CKunenaPolls::get_message_parent($id, $this->kunena_editmode);
+				if($display_poll) {
+        			if (!empty($msg_cat->allow_polls) || $catid == '0')	{
+       					if (!isset($polldatasedit[0]->polltimetolive)) {
+							$polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+						}
+						CKunenaPolls::call_js_poll_edit($this->kunena_editmode, $id);
+						$html_poll_edit = CKunenaPolls::get_input_poll($this->kunena_editmode, $id, $polldatasedit);
+			?>
 
 			<div id="kbbcode-poll-options" style="display: none;">
-			Placeholder for Poll Code
-<?php
-// Poll code goes here
-?>
+			<?php
+			$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+			echo _KUNENA_POLL_TITLE;
+			?>&nbsp;<input
+				type = "text" id = "poll_title" name = "poll_title" maxlength = "25" value =
+				"<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>"
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_POLLTITLE; ?>')"/>
+			<?php echo _KUNENA_POLL_TIME_TO_LIVE; ?>&nbsp;<?php echo $pollcalendar; ?>
+			<input type = "button" id = "kbutton_poll_add" class = "kbutton" value
+			 = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION; ?>')" />
+            <input type = "button" id = "kbutton_poll_rem" class = "kbutton" value
+            = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo _KUNENA_EDITOR_HELPLINE_REMPOLLOPTION; ?>')" />
+            <?php
+            if(!empty($html_poll_edit)) {
+            	echo $html_poll_edit;
+            }
+            ?>
+            <input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>">
+            <input type="hidden" name="number_total_options" id="numbertotal">
 			</div>
+
+			<?php
+        			}
+				}
+			}
+			?>
 
 			<div id="video" style="display: none;"><?php
 			echo (_KUNENA_EDITOR_VIDEO_SIZE) ;
@@ -174,9 +211,6 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOID )) ;
 				?>')" />
 			<input type="button" name="Video" accesskey="p"
-				value="<?php
-				echo (_KUNENA_EDITOR_IMAGE_INSERT) ;
-				?>"
 				onclick="check_video('video1')"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1 )) ;
@@ -189,9 +223,6 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOURL )) ;
 				?>')" />
 			<input type="button" name="Video" accesskey="p"
-				value="<?php
-				echo (_KUNENA_EDITOR_IMAGE_INSERT) ;
-				?>"
 				onclick="check_video('video2')"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2 )) ;

@@ -12,11 +12,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
 /**
-* Kunena poll class
-* @package com_kunena
-*/
+ * @author Xillibit
+ *
+ */
 class CKunenaPolls {
 	/**
 	 * Get the datas for a poll
@@ -95,6 +94,23 @@ class CKunenaPolls {
 
     	return $numoptions;
 	}
+	/**
+	* Get message parent to display the poll
+	*/
+	function get_message_parent($id, $kunena_editmode) {
+		$display_poll = '';
+		if($kunena_editmode) {
+			$mesparent 	= CKunenaPolls::get_parent($id);
+			if ($mesparent->parent == "0") {
+					$display_poll = '1';
+			}
+		} else {
+			if ($id == "0") {
+				$display_poll = '1';
+			}
+		}
+		return $display_poll;
+	}
    /**
 	* Insert javascript and ajax for vote
 	*/
@@ -117,6 +133,56 @@ class CKunenaPolls {
      </script>
 		');
    }
+	/**
+	* Get poll input when you are in editmode
+	*/
+	function get_input_poll($kunena_editmode, $id, $polldatasedit) {
+		$html_poll_edit = '';
+		if ($kunena_editmode) {
+			$polloptions  = CKunenaPolls::get_total_options($id);
+			if (isset($polloptions)) {
+        		$nboptions = '1';
+
+        		for ($i=0;$i < $polloptions;$i++) {
+        			if(empty($html_poll_edit)) {
+						$html_poll_edit = "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
+						javascript:$('helpbox').set('value', '"
+				. _KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION. "')\" /></div>";
+        			} else {
+						$html_poll_edit .= "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
+						javascript:$('helpbox').set('value', '"
+				. _KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION. "')\" /></div>";
+        			}
+        			$nboptions++;
+        		}
+			}
+		}
+		return $html_poll_edit;
+	}
+	/**
+	* Insert javascript for form for editing a poll
+	*/
+	function call_js_poll_edit($kunena_editmode, $id) {
+		$polloptions  = CKunenaPolls::get_total_options($id);
+		$polloptionsstart = $polloptions+1;
+		if ($kunena_editmode) {
+			JApplication::addCustomHeadTag('
+      	 	<script type="text/javascript">
+	   		<!--
+	   		var number_field = "'.$polloptionsstart.'";
+	   		//-->
+    		</script>
+			');
+		} else {
+			JApplication::addCustomHeadTag('
+   			<script type="text/javascript">
+  			<!--
+   			var number_field = 1;
+   			//-->
+   			</script>
+			');
+		}
+	}
    /**
 	* Insert javascript for form of new post
 	*/
@@ -127,6 +193,7 @@ class CKunenaPolls {
 		JApplication::addCustomHeadTag('
     <script type="text/javascript">
 	   <!--
+	   var KUNENA_EDITOR_HELPLINE_OPTION = "'._KUNENA_EDITOR_HELPLINE_OPTION.'";
 	   var KUNENA_POLL_OPTION_NAME = "'._KUNENA_POLL_OPTION_NAME.'";
 	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'._KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW.'";
 	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
@@ -134,14 +201,6 @@ class CKunenaPolls {
       </script>
 		');
    }
-	/**
-	* Fill input field by javascript in kunena configuration panel
-	*/
-	function AdminFillCategoriesAllowed()
-	{
-		$document =& JFactory::getDocument();
-		$document->addScript(KUNENA_DIRECTURL . '/template/default/plugin/poll/js/kunena.poll.admin.js');
-	}
    /**
 	* Save a new poll
 	*/

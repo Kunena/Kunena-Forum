@@ -792,13 +792,13 @@ window.addEvent('domready', function(){
 						onComplete: function(jsonObj) {
 							//the result is an array so we need to test each item of the array
 							for(var j = 0; j < jsonObj.allowed_polls.length; j++){
-								var elemhide = $('kpoll_elem').getStyle('display');
+								var elemhide = $('kbbcode-poll_button').getStyle('display');
 								if(jsonObj.allowed_polls[j] == catid_seleted){ //in this case the polls are allowed									
 									if(elemhide != '0'){//we check if the polls are hided, and if it's the case we show them										
-										$('kpoll_elem').removeProperty('style');										
+										$('kbbcode-poll_button').removeProperty('style');										
 									} 
-								} else {	//in this case the polls aren't allowed, so we hide them								
-									$('kpoll_elem').setStyle('display','none');									
+								} else {	//in this case the polls aren't allowed, so we hide them									
+									$('kbbcode-poll_button').setStyle('display','none');									
 								}
 							}							
 						},

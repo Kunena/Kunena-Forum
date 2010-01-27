@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+27-Jan-2010 Xillibit
+^ [#19561] Put the poll form into the new editor
+
 27-Jan-2010 fxstein
 # [#19356] Fix html regression in message.php
 

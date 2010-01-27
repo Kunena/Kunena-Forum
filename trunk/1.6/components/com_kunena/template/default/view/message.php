@@ -131,7 +131,7 @@ if ($kunena_config->avposition == 'top') { ?>
 	    		<?php $this->displayMessageActions() ?>
 	    	</td>
 	    </tr>
-    <tbody>
+    </tbody>
 </table>
 
 <?php } ?>

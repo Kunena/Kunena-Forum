@@ -855,6 +855,10 @@ fieldset#search-posts-start select {
 	margin-left: 10px;
 }
 
+form#searchform {
+	margin-top: 5px;
+}
+
 /* PROFILEBOX AND LOGINBOX
 ----------------------------------------------------------------------------------------------- */
 
@@ -981,6 +985,8 @@ div#kheader h1 a:hover {
 	text-indent: 10px;
 	padding-top: 2px;
 	color: #FFFFFF;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 
@@ -1217,13 +1223,14 @@ span.newchar {
 	/* table-layout: fixed; */
 }
 
-#Kunena th.view-th {
+#Kunena tr.ksth th.view-th {
 	text-align: right;
 	padding-right: 10px;
+	background: #737373;
 }
 
 #Kunena th.ksectiontableheader {
-	
+
 }
 
 #Kunena td.k-msgview-left {
@@ -2909,7 +2916,7 @@ MY PROFILE
 /*
 NEW PROFILE
 -------------------------------------------------------------------- */
-div#kprofile-container { border: 1px solid #BFC3C6; margin: 10px 0 10px 0; padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
+div#kprofile-container { border: 1px solid #BFC3C6; padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
 
 div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
 
@@ -3176,6 +3183,9 @@ input.kbutton {
 	margin: 10px 0 0 5px;
 }
 
+form#jumpto input.kbutton {
+	margin: 5px;
+}
 	
 /* SLIDERS
 ----------------------------------------------------------------------------------------------- */

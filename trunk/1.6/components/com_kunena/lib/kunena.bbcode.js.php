@@ -65,6 +65,12 @@ Element.implement({
 	}
 });
 <?php
+// A few variable we use in some of the functions
+?>
+var _currentElement="";
+var _previewActive=false;
+
+<?php
 //
 // function kToggleOrSwap (elementId)
 //
@@ -75,8 +81,6 @@ Element.implement({
 // the new option.
 //
 ?>
-var _currentElement="";
-
 function kToggleOrSwap(id)
 {
 	e = $(id);
@@ -100,8 +104,6 @@ function kToggleOrSwap(id)
 // Helper function for to perform JSON request for preview
 //
 ?>
-var _previewActive=false;
-
 function kPreviewHelper()
 {
 	if (_previewActive == true){
@@ -110,7 +112,6 @@ function kPreviewHelper()
 			message = $("kbbcode-preview");
 			if (message) {
 				message.set("html", response.preview);
-				message.set("style", "display: inline;");
 			}
 			}}).post({body: $("kbbcode-message").get("value")
 		});
@@ -153,6 +154,8 @@ function kToggleOrSwapPreview(class)
 	    	_previewActive=false;
 		}
 		e.setProperty('class', class);
+		var height = f.getStyle('height');
+		e.setStyle('height', f.getStyle('height'));
 	}
 }
 
@@ -798,7 +801,7 @@ kbbcode.addFunction('eBay', function() {
 if ($kunena_config->showvideotag) {
 ?>
 kbbcode.addFunction('Video', function() {
-	this.replaceSelection('[video]' + this.getSelection() + '[/video]');
+	kToggleOrSwap("kbbcode-video-options");
 }, {'id': 'kbbcode-video_button',
 	'title': '<?php echo _KUNENA_EDITOR_VIDEO;?>',
 	'alt': '<?php echo _KUNENA_EDITOR_HELPLINE_VIDEO;?>',
@@ -895,31 +898,20 @@ function kInsertImageLink() {
 	kToggleOrSwap("kbbcode-image-options");
 }
 
-//function size_messagebox(change)
-//{
-//    newheight = newheight + change;
-//    if (newheight > 150) {document.postform.message.style.height = newheight + "px";}
-//    else {
-//      document.postform.message.style.height = "150px";
-//      newheight = 150;}
-//}
-//
-//
-//// TODO: Remove jQuery based logic and replace with mootools behavior
-////jQuery(document).ready(function()
-////{
-////	jQuery('table.fb-color_table td').click( function()
-////	{
-//////		var color = jQuery(this).css('background-color');
-////		var color = jQuery(this).attr('id');
-////		bbfontstyle('[color=#' + color + ']', '[/color]'); return false;
-////	} );
-////	jQuery('select#fb-bbcode_size').change( function()
-////	{
-////		var size = jQuery(this).val();
-////		bbfontstyle('[size=' + size + ']', '[/size]'); return false;
-////	} );
-////} );
+function kGrowShrinkMessage(change){
+	var m = $('kbbcode-message');
+	var p = $('kbbcode-preview');
+	var currentheight = parseInt(m.getStyle('height'));
+	var newheight = currentheight + change;
+
+	if (newheight > 100) {
+		m.setStyle( 'height', newheight + 'px');
+		p.setStyle( 'height', newheight + 'px');
+	} else {
+		m.setStyle( 'height', '100px');
+		p.setStyle( 'height', '100px');
+	}
+}
 
 function submitForm() {
  submitme=1;
@@ -957,6 +949,7 @@ if ($kunena_config->askemail) {
     return false;
   }
 }
+
 function cancelForm() {
    document.forms['postform'].action.value = "cancel";
    return true;

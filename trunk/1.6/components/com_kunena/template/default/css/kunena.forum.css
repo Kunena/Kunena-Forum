@@ -1918,7 +1918,8 @@ POST PAGE
 
 #Kunena table#kpostmessage .ktxtarea {
 	overflow: auto;
-	height: 300px;
+	/* IMPORTANT: height must be set in px */
+	height: 200px;
 	border: 1px solid #BFC3C6;
 }
 
@@ -1930,18 +1931,20 @@ textarea#kbbcode-message {
 }
 div.kbbcode-preview_right,
 div.kbbcode-preview_bottom {
+	/* IMPORTANT: do not set height - controlled by js */
 	border: 1px solid #BFC3C6;
-	height:300px;
 	overflow: scroll;
 	background: #F2F1EE
 }
 div.kbbcode-preview_bottom {
+	/* IMPORTANT: do not set height - controlled by js */
 	float:left;
 	clear:left;
 	width: 95%;
 	margin-top: 10px;
 }
 div.kbbcode-preview_right {
+	/* IMPORTANT: do not set height - controlled by js */
 	float:right;
 	width: 45%;
 	display:inline;

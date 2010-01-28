@@ -284,20 +284,12 @@ $kunena_config = & CKunenaConfig::getInstance ();
 
 <tr class="ksectiontableentry2">
 	<td valign="top" class="kleftcolumn"><strong><?php
-	echo (_MESSAGE) ;
+		echo (_MESSAGE) ;
 	// TODO: Replace Enlarge and Shrink with icons
 	?></strong><br />
-	<span class="ksmalltext" onclick="size_messagebox(100);" style="cursor: pointer">Enlarge</span>&nbsp;/&nbsp;
-	<span class="ksmalltext" onclick="size_messagebox(-100);" style="cursor: pointer">Shrink</span>
-	<?php
-	if ($kunena_config->disemoticons != 1) {
-		?>
-
-
-
-	<?php
-	}
-	?></td>
+		<span class="ksmalltext" onclick="kGrowShrinkMessage(100);" style="cursor: pointer">Enlarge</span>&nbsp;/&nbsp;
+		<span class="ksmalltext" onclick="kGrowShrinkMessage(-100);" style="cursor: pointer">Shrink</span>
+	</td>
 
 	<td valign="top">
 		<textarea class="ktxtarea" name="message" id="kbbcode-message" ><?php
@@ -310,7 +302,6 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	<fieldset><legend><?php
 		echo (_KUNENA_EDITING_REASON) ?></legend> <input
 		name="modified_reason" size="40" maxlength="200" type="text" /><br />
-
 	</fieldset>
 	<?php
 	}

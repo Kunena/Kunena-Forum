@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 
 27-Jan-2010 fxstein
 # [#19356] Fix html regression in message.php
+# [#19380] Implement new resize function and modify preview css
 
 26-Jan-2010 severdia
 # [#19380] Fixed preview splitter

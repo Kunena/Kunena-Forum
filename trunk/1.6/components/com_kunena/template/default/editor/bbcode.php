@@ -167,7 +167,7 @@ Attachment Placeholder
             }
             ?>
             <input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>">
-            <input type="hidden" name="number_total_options" id="numbertotal">
+            <input type="hidden" name="number_total_options" id="numbertotal" value = "<?php if(!empty($polloptionstotal)) { echo $polloptionstotal;} ?>">
 
 			<?php
         			}

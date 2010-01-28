@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+28-Jan-2010 Xillibit
+# [#19561] Put the poll form into the new editor - poll options doesn't saved when you edit a post
+
 28-Jan-2010 fxstein
 # [#19380] Preliminary video option submenu
 + [#19380] Include fancyupload libraries in project

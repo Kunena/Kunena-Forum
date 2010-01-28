@@ -75,6 +75,17 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<div id="kbbcode-colorpalette" style="display: none;">
 				<script type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
  			</div>
+
+ 			<div id="kbbcode-attachment-options" style="display: none;">
+Attachment Placeholder
+
+
+
+
+
+
+ 			</div>
+
 			<div id="kbbcode-link-options" style="display: none;"><?php
 			echo _KUNENA_EDITOR_LINK_URL;
 			?>&nbsp;<input

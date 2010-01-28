@@ -122,7 +122,8 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				echo _KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY;
 				?>')" />
 			</div>
-			<!--  Placeholder for Poll Code -->
+
+			<div id="kbbcode-poll-options" style="display: none;">
 			<?php
 			//Check if the poll is allowed and check if the polls is enabled
 			if ($kunena_config->pollenabled) {
@@ -134,11 +135,8 @@ $kunena_config = & CKunenaConfig::getInstance ();
 						}
 						CKunenaPolls::call_js_poll_edit($this->kunena_editmode, $id);
 						$html_poll_edit = CKunenaPolls::get_input_poll($this->kunena_editmode, $id, $polldatasedit);
-			?>
 
-			<div id="kbbcode-poll-options" style="display: none;">
-			<?php
-			$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
+						$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
 			echo _KUNENA_POLL_TITLE;
 			?>&nbsp;<input
 				type = "text" id = "poll_title" name = "poll_title" maxlength = "25" value =
@@ -159,42 +157,42 @@ $kunena_config = & CKunenaConfig::getInstance ();
             ?>
             <input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>">
             <input type="hidden" name="number_total_options" id="numbertotal">
-			</div>
 
 			<?php
         			}
 				}
 			}
 			?>
+			</div>
 
-			<div id="video" style="display: none;"><?php
-			echo (_KUNENA_EDITOR_VIDEO_SIZE) ;
+			<div id="kbbcode-video-options" style="display: none;"><?php
+			echo _KUNENA_EDITOR_VIDEO_SIZE;
 			?><input
 				name="videosize" type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOSIZE )) ;
+				echo _KUNENA_EDITOR_HELPLINE_VIDEOSIZE;
 				?>')" />
 			<?php
-			echo (_KUNENA_EDITOR_VIDEO_WIDTH) ;
+			echo _KUNENA_EDITOR_VIDEO_WIDTH;
 			?><input name="videowidth"
 				type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOWIDTH )) ;
+				echo _KUNENA_EDITOR_HELPLINE_VIDEOWIDTH;
 				?>')" />
 			<?php
-			echo (_KUNENA_EDITOR_VIDEO_HEIGHT) ;
+			echo _KUNENA_EDITOR_VIDEO_HEIGHT;
 			?><input
 				name="videoheight" type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT )) ;
+				echo _KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT;
 				?>')" />
 			<br />
 			<?php
-			echo (_KUNENA_EDITOR_VIDEO_PROVIDER) ;
+			echo _KUNENA_EDITOR_VIDEO_PROVIDER;
 			?> <select
 				name="kvid_code1" class="kbutton"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER )) ;
+				echo _KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER;
 				?>')">
 				<?php
 				$vid_provider = array ('', 'AnimeEpisodes', 'Biku', 'Bofunk', 'Break', 'Clip.vn', 'Clipfish', 'Clipshack', 'Collegehumor', 'Current', 'DailyMotion', 'DivX,divx]http://', 'DownloadFestival', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'Fliptrack', 'Fliqz', 'Gametrailers', 'Gamevideos', 'Glumbert', 'GMX', 'Google', 'GooglyFoogly', 'iFilm', 'Jumpcut', 'Kewego', 'LiveLeak', 'LiveVideo', 'MediaPlayer,mediaplayer]http://', 'MegaVideo', 'Metacafe', 'Mofile', 'Multiply', 'MySpace', 'MyVideo', 'QuickTime,quicktime]http://', 'Quxiu', 'RealPlayer,realplayer]http://', 'Revver', 'RuTube', 'Sapo', 'Sevenload', 'Sharkle', 'Spikedhumor', 'Stickam', 'Streetfire', 'StupidVideos', 'Toufee', 'Tudou', 'Unf-Unf', 'Uume', 'Veoh', 'VideoclipsDump', 'Videojug', 'VideoTube', 'Vidiac', 'VidiLife', 'Vimeo', 'WangYou', 'WEB.DE', 'Wideo.fr', 'YouKu', 'YouTube' );
@@ -204,28 +202,28 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				}
 				?>
 			</select> <?php
-			echo (_KUNENA_EDITOR_VIDEO_ID) ;
+			echo _KUNENA_EDITOR_VIDEO_ID;
 			?><input
 				name="videoid" type="text" size="11" maxlength="11"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOID )) ;
+				echo _KUNENA_EDITOR_HELPLINE_VIDEOID;
 				?>')" />
 			<input type="button" name="Video" accesskey="p"
 				onclick="check_video('video1')"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1 )) ;
+				echo _KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1;
 				?>')" /><br />
 			<?php
-			echo (_KUNENA_EDITOR_VIDEO_URL) ;
+			echo _KUNENA_EDITOR_VIDEO_URL;
 			?><input name="videourl"
 				type="text" size="30" maxlength="250" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOURL )) ;
+				echo _KUNENA_EDITOR_HELPLINE_VIDEOURL;
 				?>')" />
 			<input type="button" name="Video" accesskey="p"
 				onclick="check_video('video2')"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2 )) ;
+				echo _KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2;
 				?>')" />
 			<script type="text/javascript">
 								function check_video(art) {

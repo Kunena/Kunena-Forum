@@ -32,69 +32,69 @@ list_users();
 
 function list_users()
 {
-    global $lang;
-
-    $kunena_config =& CKunenaConfig::getInstance();
-
-    $kunena_db = &JFactory::getDBO();
-
-    jimport('joomla.html.pagination');
-
-    $orderby = JRequest::getVar('orderby', 'registerDate');
-    $direction = JRequest::getVar('direction', 'ASC');
-    $search = JRequest::getVar('search', '');
-    $limitstart = JRequest::getInt('limitstart', 0);
-    $limit = JRequest::getInt('limit', $kunena_config->userlist_rows);
-
-    // Total
-    $kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block =0");
-    $total_results = $kunena_db->loadResult();
-    check_dberror ( "Unable to load user count." );
-
-    // Search total
-    $query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
-
-    if ($search != "") {
-        $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";
-    }
-
-    $kunena_db->setQuery($query);
-    $total = $kunena_db->loadResult();
-    check_dberror ( "Unable to load search user count." );
-
-    if ($limit > $total) {
-        $limitstart = 0;
-    }
-
-    $query_ext = "";
-    // Select query
-    $query
-        = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits, g.id AS gid, g.title "
-        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id WHERE block=0";
-
-    if ($search != "")
-    {
-        $query .= " AND (name LIKE '%$search%' OR username LIKE
-'%$search%') AND u.id NOT IN (62)";
-        $query_ext .= "&amp;search=" . $search;
-    } else {
-        $query .= " AND u.id NOT IN (62)";
-    }
-
-    $query .= " ORDER BY $orderby $direction, id $direction";
-
-    if ($orderby != "id") {
-        $query_ext .= "&amp;orderby=" . $orderby . "&amp;direction=" . $direction;
-    }
-
-    $query .= " LIMIT $limitstart, $limit";
-
-    $kunena_db->setQuery($query);
-    $ulrows = $kunena_db->loadObjectList();
-    check_dberror ( "Unable to load search result." );
-
-    $pageNav = new JPagination($total, $limitstart, $limit);
-    HTML_userlist_content::showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search);
+//    global $lang;
+//
+//    $kunena_config =& CKunenaConfig::getInstance();
+//
+//    $kunena_db = &JFactory::getDBO();
+//
+//    jimport('joomla.html.pagination');
+//
+//    $orderby = JRequest::getVar('orderby', 'registerDate');
+//    $direction = JRequest::getVar('direction', 'ASC');
+//    $search = JRequest::getVar('search', '');
+//    $limitstart = JRequest::getInt('limitstart', 0);
+//    $limit = JRequest::getInt('limit', $kunena_config->userlist_rows);
+//
+//    // Total
+//    $kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block =0");
+//    $total_results = $kunena_db->loadResult();
+//    check_dberror ( "Unable to load user count." );
+//
+//    // Search total
+//    $query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
+//
+//    if ($search != "") {
+//        $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";
+//    }
+//
+//    $kunena_db->setQuery($query);
+//    $total = $kunena_db->loadResult();
+//    check_dberror ( "Unable to load search user count." );
+//
+//    if ($limit > $total) {
+//        $limitstart = 0;
+//    }
+//
+//    $query_ext = "";
+//    // Select query
+//    $query
+//        = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits, g.id AS gid, g.title "
+//        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id WHERE block=0";
+//
+//    if ($search != "")
+//    {
+//        $query .= " AND (name LIKE '%$search%' OR username LIKE
+//'%$search%') AND u.id NOT IN (62)";
+//        $query_ext .= "&amp;search=" . $search;
+//    } else {
+//        $query .= " AND u.id NOT IN (62)";
+//    }
+//
+//    $query .= " ORDER BY $orderby $direction, id $direction";
+//
+//    if ($orderby != "id") {
+//        $query_ext .= "&amp;orderby=" . $orderby . "&amp;direction=" . $direction;
+//    }
+//
+//    $query .= " LIMIT $limitstart, $limit";
+//
+//    $kunena_db->setQuery($query);
+//    $ulrows = $kunena_db->loadObjectList();
+//    check_dberror ( "Unable to load search result." );
+//
+//    $pageNav = new JPagination($total, $limitstart, $limit);
+//    HTML_userlist_content::showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search);
 }
 
 ?>

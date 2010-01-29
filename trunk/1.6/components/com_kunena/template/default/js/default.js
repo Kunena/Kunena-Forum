@@ -786,7 +786,7 @@ window.addEvent('domready', function(){
 				var catid_seleted = elem.value;							
 				
 				//call a json query to check if the catid selected is allowed for polls
-				var url = "index.php?option=com_kunena&func=json&action=catspollallowed&selectedcatid="+catid_seleted;
+				var url = "index.php?option=com_kunena&func=json&action=pollcatsallowed&selectedcatid="+catid_seleted;
 				var request = new Request.JSON({
 						url: url,
 						onComplete: function(jsonObj) {

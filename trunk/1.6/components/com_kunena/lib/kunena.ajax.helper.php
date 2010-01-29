@@ -58,9 +58,9 @@ class CKunenaAjaxHelper {
 					$response = $this->_getPreview ( $body );
 
 					break;
-				case 'catspollallowed' :
+				case 'pollcatsallowed' :
 
-					$response = $this->_getPollsCatsAllowed ();
+					$response = $this->_getPollCatsAllowed ();
 
 					break;
 				case 'pollvote' :
@@ -74,7 +74,7 @@ class CKunenaAjaxHelper {
 					$value_choosed	= JRequest::getInt('radio', '');
 					$id = JRequest::getInt ( 'id', 0 );
 
-					$response = $this->_addChangeVote ($value_choosed, $id, $this->_my->id);
+					$response = $this->_changePollVote ($value_choosed, $id, $this->_my->id);
 
 					break;
 				default :
@@ -196,7 +196,7 @@ class CKunenaAjaxHelper {
 		return $result;
 	}
 
-	protected function _addChangeVote ($value_choosed, $id, $userid) {
+	protected function _changePollVote ($value_choosed, $id, $userid) {
 		$result = array ();
 
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');

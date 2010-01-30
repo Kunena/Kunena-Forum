@@ -2,7 +2,7 @@
 <!--
   Kunena ant build file
 
-  @version      $Id: mykunenatoolbar.build.xml 1293 2009-12-16 02:29:20Z fxstein $
+  @version      $Id$
   @package		Kunena
   @subpackage	plg_mykunena
   @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.

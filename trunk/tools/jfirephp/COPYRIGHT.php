@@ -1,24 +1,19 @@
 <?php
 /**
-* @version $Id: COPYRIGHT.php 1293 2009-12-16 02:29:20Z fxstein $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *
 * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
-*
-* Based on FireBoard Component
-* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
 */
 
 // no direct access
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
 ?>
 
-<!-- 
+<!--
 Kunena derives from copyrighted works licensed under the GNU General
 Public License.  This version has been modified pursuant to the
 GNU General Public License as of September 15, 2005, and as distributed,
@@ -53,5 +48,5 @@ jQuery
 ----
 Copyright:    John Resig
 License:    Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
- 
+
 -->

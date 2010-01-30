@@ -33,7 +33,7 @@ DEFINE('_KUNENA_CAPTCHA_DESC','Captcha system On/Off, before enable this you nee
 // New bbcode editor strings
 DEFINE('_KUNENA_EDITOR_HELPLINE_OPTION', 'Poll: Option for the poll');
 DEFINE('_KUNENA_EDITOR_HELPLINE_POLLTITLE', 'Poll: Set a title for the poll');
-DEFINE('_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN', 'Poll: Set a life time for the poll(optional)');
+DEFINE('_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN', 'Poll: Add a life time for the poll (optional)');
 DEFINE('_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION', 'Poll: Add an option');
 DEFINE('_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION', 'Poll: Remove an option');
 DEFINE('_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY', 'Image link: Apply link');
@@ -280,6 +280,7 @@ define('_GEN_CATEGORY_UNSUBCRIBED', 'You have been unsubscribed from this catego
 define('_KUNENA_SVN_INSTALL', 'SVN Install');
 
 //Poll
+define('_KUNENA_POLL_CATS_NOT_ALLOWED', 'The polls are not allowed in this category');
 define('_KUNENA_A_POLL_SHOW_USER_LIST', 'Show list of users who voted');
 define('_KUNENA_A_POLL_SHOW_USER_LIST_DESC', 'Display a list of all the voters for a particular poll maintaining confidentiallity on the votes themselves.');
 define('_KUNENA_POLL_CANNOT_VOTE_NEW_TIME', 'You have already voted.');

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+30-Jan-2010 Xillibit
+# [#19561] Put the poll form into the new editor - little changes
+
 29-Jan-2010 fxstein
 ^ [#19561] Poll ajax interface naming changes
 

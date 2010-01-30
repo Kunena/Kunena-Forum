@@ -146,21 +146,25 @@ Attachment Placeholder
 						}
 						CKunenaPolls::call_js_poll_edit($this->kunena_editmode, $id);
 						$html_poll_edit = CKunenaPolls::get_input_poll($this->kunena_editmode, $id, $polldatasedit);
-
-						$pollcalendar = JHTML::_('calendar', $polldatasedit[0]->polltimetolive, 'poll_time_to_live', 'poll_time_to_live');
-			echo _KUNENA_POLL_TITLE;
+						JHTML::_('behavior.calendar');
+			?><span id = "kpoll_not_allowed"></span><div id = "kpoll_hide_not_allowed">
+			<?php echo _KUNENA_POLL_TITLE;
 			?>&nbsp;<input
 				type = "text" id = "poll_title" name = "poll_title" maxlength = "25" value =
 				"<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo _KUNENA_EDITOR_HELPLINE_POLLTITLE; ?>')"/>
-			<?php echo _KUNENA_POLL_TIME_TO_LIVE; ?>&nbsp;<?php echo $pollcalendar; ?>
-			<input type = "button" id = "kbutton_poll_add" class = "kbutton" value
-			 = "<?php echo _KUNENA_POLL_ADD_OPTION; ?>" onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION; ?>')" />
-            <input type = "button" id = "kbutton_poll_rem" class = "kbutton" value
-            = "<?php echo _KUNENA_POLL_REM_OPTION; ?>" onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_REMPOLLOPTION; ?>')" />
+			<?php echo _KUNENA_POLL_TIME_TO_LIVE; ?>&nbsp;
+			<input class="inputbox" type="text" maxlength="15" name="poll_time_to_live" id="poll_time_to_live"
+			style="display: none" value="<?php echo $polldatasedit[0]->polltimetolive; ?>" />
+			<img src="templates/system/images/calendar.png" alt="Calendar"
+			onclick="showCalendar('poll_time_to_live','%Y-%m-%d');$('poll_time_to_live').removeProperty('style');"
+			onmouseover="javascript:$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_POLLLIFESPAN; ?>')" />
+			<img id = "kbutton_poll_add" src = "<?php echo JURI::root(); ?>/administrator/images/tick.png"
+			onmouseover="javascript:$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION; ?>')" />
+			<img id = "kbutton_poll_rem" src = "<?php echo JURI::root(); ?>/administrator/images/publish_x.png"
+			onmouseover="javascript:$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_REMPOLLOPTION; ?>')" />
+			</div>
             <?php
             if(!empty($html_poll_edit)) {
             	echo $html_poll_edit;

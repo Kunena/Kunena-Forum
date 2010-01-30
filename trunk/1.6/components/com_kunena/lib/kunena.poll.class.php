@@ -117,7 +117,7 @@ class CKunenaPolls {
    function call_javascript_vote()
    {
     	$document =& JFactory::getDocument();
-    	$document->addScript(KUNENA_DIRECTURL . '/template/default/plugin/poll/js/kunena.poll.ajax.js');
+    	$document->addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll.ajax.js');
 		JApplication::addCustomHeadTag('
       <script type="text/javascript">
 	   <!--
@@ -189,10 +189,11 @@ class CKunenaPolls {
    function call_javascript_form()
    {
     	$document =& JFactory::getDocument();
-    	$document->addScript(KUNENA_DIRECTURL . '/template/default/plugin/poll/js/kunena.poll.js');
+    	$document->addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll.js');
 		JApplication::addCustomHeadTag('
     <script type="text/javascript">
 	   <!--
+	   var KUNENA_POLL_CATS_NOT_ALLOWED = "'._KUNENA_POLL_CATS_NOT_ALLOWED.'";
 	   var KUNENA_EDITOR_HELPLINE_OPTION = "'._KUNENA_EDITOR_HELPLINE_OPTION.'";
 	   var KUNENA_POLL_OPTION_NAME = "'._KUNENA_POLL_OPTION_NAME.'";
 	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'._KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW.'";

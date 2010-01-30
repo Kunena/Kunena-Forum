@@ -60,7 +60,7 @@ class CKunenaAjaxHelper {
 					break;
 				case 'pollcatsallowed' :
 
-					$response = $this->_getPollCatsAllowed ();
+					$response = $this->_getPollsCatsAllowed ();
 
 					break;
 				case 'pollvote' :

@@ -26,18 +26,19 @@ window.addEvent('domready', function() {
 		  var polldiv = $('kbbcode-poll-options');
 		  var hide_input = $('nb_options_allowed');
 		  valuetotaloptions(number_field);		  
-		  var mydiv = new Element('div');		  
+		  var mydiv = new Element('div', {
+			  id:'option'+number_field,
+			  text:KUNENA_POLL_OPTION_NAME+" "+number_field
+		  });		  
 		  $('helpbox').set('value',KUNENA_EDITOR_HELPLINE_OPTION );
 		  var input = new Element('input', {
 			  name:'field_option'+numfield,
 			  id:'field_option'+numfield,
 			  maxlength:'25',
 			  onmouseover: '$("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
-				  });		  
-		  mydiv.injectInside(polldiv).injectBefore(hide_input);
-		  mydiv.set('id','option'+number_field);		  
-		  mydiv.set('text',KUNENA_POLL_OPTION_NAME+" "+number_field);		  
-		  input.inject(mydiv);		  
+		  });		  
+		  mydiv.injectInside(polldiv).injectBefore(hide_input);		  		  
+		  input.inject(mydiv);		   
 		  //regleCSS(number_field); //need to test this on IE
 		  number_field++;
 		}
@@ -60,16 +61,26 @@ window.addEvent('domready', function() {
 
 			span.injectInside(mydiv);
 			span.set('text', textString);
-		}
-
+		}		
+			
 	if($('kbutton_poll_add') != undefined) {
 		$('kbutton_poll_add').onclick = function () {
 			var nboptionsmax = $('nb_options_allowed').get('value');			
-			if(nboptionsmax == "0") {
-				create_new_field_now();
+			if(nboptionsmax == "0") {				
+				if(number_field == '1') {
+					create_new_field_now();
+					create_new_field_now();
+				} else {
+					create_new_field_now();
+				}
 			}else {
 				if(number_field <= nboptionsmax){
-					create_new_field_now();
+					if(number_field == '1') {
+						create_new_field_now();
+						create_new_field_now();
+					} else {
+						create_new_field_now();
+					}
 				} else {
 					if($('option_error')== undefined){
 						insert_text_write(KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW);

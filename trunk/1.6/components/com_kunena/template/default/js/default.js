@@ -792,13 +792,15 @@ window.addEvent('domready', function(){
 						onComplete: function(jsonObj) {
 							//the result is an array so we need to test each item of the array
 							for(var j = 0; j < jsonObj.allowed_polls.length; j++){
-								var elemhide = $('kbbcode-poll_button').getStyle('display');
+								var elemhide = $('kpoll_hide_not_allowed').getStyle('display');
 								if(jsonObj.allowed_polls[j] == catid_seleted){ //in this case the polls are allowed									
 									if(elemhide != '0'){//we check if the polls are hided, and if it's the case we show them										
-										$('kbbcode-poll_button').removeProperty('style');										
+										$('kpoll_hide_not_allowed').removeProperty('style');
+										$('kpoll_not_allowed').set('text', ' ');
 									} 
 								} else {	//in this case the polls aren't allowed, so we hide them									
-									$('kbbcode-poll_button').setStyle('display','none');									
+									$('kpoll_hide_not_allowed').setStyle('display','none');
+									$('kpoll_not_allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
 								}
 							}							
 						},

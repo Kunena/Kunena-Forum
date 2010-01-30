@@ -8,61 +8,48 @@
  * @link		http://www.kunena.com
  */
 
-defined('_JEXEC') or die('Restricted access');
+// no direct access
+defined('_JEXEC') or die();
 
-require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php');
+jimport( 'joomla.plugin.plugin' );
 
-if(!class_exists('plgCommunityMyKunenaToolbar'))
+if(!class_exists('plgJFirePHP'))
 {
-	class plgCommunityMyKunenaToolbar extends CApplications
+	class plgJFirePHP extends JPlugin
 	{
-		var $name 		= "My Kunena Toolbar";
-		var $_name		= 'mykunenatoolbar';
-	
-	    function plgCommunityMyKunenaToolbar(& $subject, $config)
-	    {
-			parent::__construct($subject, $config);
-	    }
-		
-		function onSystemStart()
+
+		/**
+		 * Constructor
+		 *
+		 * For php4 compatability we must not use the __constructor as a constructor for plugins
+		 * because func_get_args ( void ) returns a copy of all passed arguments NOT references.
+		 * This causes problems with cross-referencing necessary for the observer design pattern.
+		 *
+		 * @access	protected
+		 * @param	object	$subject The object to observe
+		 * @param 	array   $config  An array that holds the plugin configuration
+		 * @since	1.0
+		 */
+		function plgJFirePHP(& $subject, $config)
 		{
-			//Load Language file.
-			JPlugin::loadLanguage( 'plg_mykunenatoolbar', JPATH_ADMINISTRATOR );
-			
-			if( !file_exists( JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'class.kunena.php' ) )
-			{
-				trigger_error (JText::_('PLG_MYKUNENA TOOLBAR ERROR'),E_USER_WARNING);
-				return;
-			}
-			
-			if( !class_exists('CFactory'))
-			{
-				require_once( JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php');
-			}
-			
-			//initialize the toolbar object	
-			$toolbar = CFactory::getToolbar();		
-			
-			$db = &JFactory::getDBO();
-			// Get Kunena item id
-			if (!defined("KUNENA_COMPONENT_ITEMID")) 
-			{
-        		$db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_kunena' AND published='1'");
-        		$kunenaItemId = $db->loadResult();
+			$this->_db = JFactory::getDBO();
+			parent :: __construct($subject, $config);
+		}
 
-        		if ($kunenaItemId < 1) {
-            		$kunenaItemId = 0;
-            	}
-			}			
+		/**
+		 * onAfterInitialise handler
+		 *
+		 * Register FirePHP libraries
+		 *
+		 * @access	public
+		 * @return null
+		 */
 
-			//adding new 'tab' 'Forum Settings' to JomSocial toolbar
-			$toolbar->addGroup('MYKUNENA', JText::_('PLG_MYKUNENA TOOLBAR FORUM'), JRoute::_('index.php?option=com_kunena&amp;Itemid='.$kunenaItemId.'&amp;func=myprofile'));
-			$toolbar->addItem('MYKUNENA', 'MYKUNENA_PROFILE_INFO', JText::_('PLG_MYKUNENA TOOLBAR MY PROFILE INFO'), JRoute::_('index.php?option=com_kunena&amp;Itemid='.$kunenaItemId.'&amp;func=myprofile&amp;do=profileinfo'));		 
-			$toolbar->addItem('MYKUNENA', 'MYKUNENA_MY_POSTS', JText::_('PLG_MYKUNENA TOOLBAR MY POSTS'), JRoute::_('index.php?option=com_kunena&amp;Itemid='.$kunenaItemId.'&amp;func=myprofile&amp;do=showmsg'));		 
-			$toolbar->addItem('MYKUNENA', 'MYKUNENA_MY_SUBSCRIBES', JText::_('PLG_MYKUNENA TOOLBAR MY SUBSCRIBES'), JRoute::_('index.php?option=com_kunena&amp;Itemid='.$kunenaItemId.'&amp;func=myprofile&amp;do=showsub'));		 
-			$toolbar->addItem('MYKUNENA', 'MYKUNENA_MY_FAVORITES', JText::_('PLG_MYKUNENA TOOLBAR MY FAVORITES'), JRoute::_('index.php?option=com_kunena&amp;Itemid='.$kunenaItemId.'&amp;func=myprofile&amp;do=showfav'));		 
-			$toolbar->addItem('MYKUNENA', 'MYKUNENA_LOOK_AND_LAYOUT', JText::_('PLG_MYKUNENA TOOLBAR LOOK AND LAYOUT'), JRoute::_('index.php?option=com_kunena&amp;Itemid='.$kunenaItemId.'&amp;func=myprofile&amp;do=showset'));		 
-		}	
-	}	
+		function onAfterInitialise()
+		{
+			// Sample: JHTML::addIncludePath(JPATH_PLUGINS.DS.'system'.DS.'mootools12');
+		}
+
+	}
 }
 

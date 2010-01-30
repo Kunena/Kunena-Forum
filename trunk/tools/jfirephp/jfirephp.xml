@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install version="1.5" type="plugin" group="community" method="upgrade">
-	<name>My Kunena Forum Menu</name>
+	<name>JFirePHP</name>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<author>Kunena Team</author>
-	<authorEmail>kunena@kunena.com</authorEmail>
+	<authorEmail>oliver@kunena.com</authorEmail>
 	<authorUrl>http://www.kunena.com</authorUrl>
-	<copyright>(c) 2009, 2010 Kunena Team, All rights reserved</copyright>
+	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
 	<license>GNU/GPL</license>
-	<version>1.5.0</version>
-	<versionname>Chit Chat</versionname>
+	<version>1.0.0</version>
+	<versionname>Squash Bug</versionname>
 	<build>@kunenaversionbuild@</build>
-	<isapplication>true</isapplication>
+	<isapplication>false</isapplication>
 	<isbrowseable>true</isbrowseable>
 	<description>
-	Kunena menu plugin for JomSocial
+	Joomla 1.5 system plugin to extend JError through FirePHP
+	Output Joomla Errors, Warnings and Notices to FireBug console when in debug mode
 	</description>
 	<languages>
-	    <language tag="en-GB">en-GB.plg_mykunenatoolbar.ini</language>
+	    <language tag="en-GB">en-GB.plg_jfirephp.ini</language>
 	</languages>
 	<files>
-		<file plugin="mykunenatoolbar">mykunenatoolbar.php</file>
-		<folder>mykunenatoolbar</folder>
+		<file plugin="jfirephp">jfirephp.php</file>
+		<folder>jfirephp</folder>
 	</files>
-	
 	<params>
-		<param name="coreapp" type="list" default="0" label="Core Application" description="Causes this application to not appearin the users applications list but it will allow this application to appear in the user profile automatically if selected.">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
 	</params>
 </install>

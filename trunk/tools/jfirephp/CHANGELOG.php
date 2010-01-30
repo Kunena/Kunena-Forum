@@ -12,6 +12,7 @@
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 ?>
+<!--
 
 Changelog
 ------------
@@ -32,3 +33,5 @@ JFirePHP 1.0.0
 
 30-January-2010 fxstein
 + [#19590] Initial version
+
+-->

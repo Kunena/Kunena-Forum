@@ -106,7 +106,7 @@ class CKunenaTimeformat {
 				$date = new JDate ( $time, ( float ) $offset + self::diffToJoomla() );
 				break;
 		}
-		if ($date->toFormat('%Y')<1902) return _KUNENA_DT_DATETIME_UNDEFINED;
+		if ($date->toFormat('%Y')<1902) return _KUNENA_DT_DATETIME_UNKNOWN;
 		if (preg_match ( '/^config_/', $mode ) == 1) {
 			$option = substr ( $mode, 7 );
 			$mode = $kunena_config->$option;

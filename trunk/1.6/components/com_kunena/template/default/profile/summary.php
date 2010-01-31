@@ -60,9 +60,9 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 				</div>
 				<div class="kprofile-rightcol1">
 					<ul>
-						<li><span class="location"></span><strong><?php echo _KUNENA_MYPROFILE_LOCATION; ?>:</strong> <a href="http://maps.google.com?q=<?php echo kunena_htmlspecialchars(stripslashes($this->profile->location)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($this->profile->location)); ?></a></li>
+						<li><span class="location"></span><strong><?php echo _KUNENA_MYPROFILE_LOCATION; ?>:</strong> <?php echo $this->location; ?></li>
 						<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
-						<li><span class="gender-<?php if( $this->profile->gender == 1 ) { echo _KUNENA_MYPROFILE_MALEC; } else if ( $this->profile->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALEC; }?>"></span><strong><?php echo _KUNENA_MYPROFILE_GENDER; ?>:</strong> <?php if( $this->profile->gender == 1 ) { echo _KUNENA_MYPROFILE_MALE; } else if ( $this->profile->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALE; }?></li>
+						<li><span class="gender-<?php echo $this->genderclass; ?>"></span><strong><?php echo _KUNENA_MYPROFILE_GENDER; ?>:</strong> <?php echo $this->gender; ?></li>
 						<li class="bd"><span class="birthdate"></span><strong><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'ago'); ?>"><?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'date'); ?></span> <a href="#" title="<?php echo _KUNENA_MYPROFILE_BIRTHDAYREMIND; ?>"><span class="bday-remind"></span></a></li>
 					</ul>
 				</div>

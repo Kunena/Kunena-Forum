@@ -47,6 +47,23 @@ class CKunenaProfile {
 		$this->moderator = CKunenaTools::isModerator($this->user->id);
 		$this->admin = CKunenaTools::isAdmin($this->user->id);
 		$this->rank = CKunenaTools::getRank($this->profile);
+		switch ($this->profile->gender) {
+			case 1:
+				$this->genderclass = 'male';
+				$this->gender = _KUNENA_MYPROFILE_MALE;
+				break;
+			case 2:
+				$this->genderclass = 'female';
+				$this->gender = _KUNENA_MYPROFILE_FEMALE;
+				break;
+			default:
+				$this->genderclass = 'unknown';
+				$this->gender = _KUNENA_MYPROFILE_GENDER_UNKNOWN;
+		}
+		if ($this->profile->location)
+			$this->location = '<a href="http://maps.google.com?q='.kunena_htmlspecialchars(stripslashes($this->profile->location)).'" target="_blank">'.kunena_htmlspecialchars(stripslashes($this->profile->location)).'</a>';
+		else
+			$this->location = _KUNENA_LOCATION_UNKNOWN;
 
 		$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->user->id . ' AND s.client_id = 0 GROUP BY s.userid';
 		$this->_db->setQuery ( $query );

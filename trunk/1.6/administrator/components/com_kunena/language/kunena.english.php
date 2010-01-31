@@ -129,7 +129,7 @@ DEFINE('_KUNENA_DT_DATE_TODAY_FMT','Today');
 DEFINE('_KUNENA_DT_DATETIME_TODAY_FMT','Today %H:%M');
 DEFINE('_KUNENA_DT_DATE_YESTERDAY_FMT','Yesterday');
 DEFINE('_KUNENA_DT_DATETIME_YESTERDAY_FMT','Yesterday %H:%M');
-DEFINE('_KUNENA_DT_DATETIME_UNDEFINED','Undefined');
+DEFINE('_KUNENA_DT_DATETIME_UNKNOWN','Unknown');
 
 //Ordering system
 define('_KUNENA_COM_A_ORDERING_SYSTEM', 'Choose the way to ordering the messages in view');
@@ -224,6 +224,7 @@ define('_KUNENA_OWNTOPICS', 'Started Topics');
 define('_KUNENA_USERTOPICS', 'Posted Topics');
 define('_KUNENA_FAVORITES', 'Favorites');
 define('_KUNENA_MY_POSTS', 'Posts');
+define('_KUNENA_LOCATION_UNKNOWN', 'Unknown');
 
 // Joomla menu related strings
 define('_KUNENA_CREATE_MENU', 'Create Menu');
@@ -1004,9 +1005,8 @@ DEFINE('_KUNENA_MYPROFILE_MSN', 'MSN');
 DEFINE('_KUNENA_MYPROFILE_MSN_DESC', 'Your MSN messenger e-mail address.');
 DEFINE('_KUNENA_MYPROFILE_SIGNATURE', 'Signature');
 DEFINE('_KUNENA_MYPROFILE_MALE', 'Male');
-DEFINE('_KUNENA_MYPROFILE_MALEC', 'male');
 DEFINE('_KUNENA_MYPROFILE_FEMALE', 'Female');
-DEFINE('_KUNENA_MYPROFILE_FEMALEC', 'female');
+DEFINE('_KUNENA_MYPROFILE_GENDER_UNKNOWN', 'Unknown');
 DEFINE('_KUNENA_BULKMSG_DELETED', 'Posts were deleted successfully');
 DEFINE('_KUNENA_DATE_YEAR', 'year');
 DEFINE('_KUNENA_DATE_MONTH', 'month');

@@ -53,7 +53,7 @@ class plgSystemJFirePHP extends JPlugin
 		}
 
 		// JFirePHP is installed and loaed
-		define(JFIREPHP, 1);
+		define('JFIREPHP', 1);
 
 		$firephp = FirePHP::getInstance(true);
 

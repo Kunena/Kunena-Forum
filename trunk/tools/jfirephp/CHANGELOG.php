@@ -33,6 +33,7 @@ JFirePHP 1.0.0
 
 31-January-2010 fxstein
 # [#19590] Missing language file removed from manifest
+# [#19590] Missing quotes on JFIREPHP define
 
 30-January-2010 fxstein
 + [#19590] Initial version

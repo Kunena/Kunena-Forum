@@ -21,26 +21,30 @@ class CKunenaView {
 
 		$this->db = JFactory::getDBO ();
 		$this->session = CKunenaSession::getInstance ();
-		$allow = 0;
+
+		$this->allow_forum = ($this->session->allowed != '') ? explode ( ',', $this->session->allowed ) : array ();
 
 		$this->getView();
 	}
 
 	function getView() {
-		$allow_forum = ($this->session->allowed != '') ? explode ( ',', $this->session->allowed ) : array ();
-
 		// Is user allowed to see the forum specified in URL?
-		if (! in_array ( $this->catid, $allow_forum )) {
+		if (! in_array ( $this->catid, $this->allow_forum )) {
 			return;
 		}
 		$this->allow = 1;
+
+		$this->my = JFactory::getUser ();
+		if (!CKunenaTools::isModerator ( $this->my->id, $this->catid )) $where[] = "a.hold=0";
+		else $where[] = "a.hold<=1";
+		$where = implode(' AND ',$where); // always contains at least 1 item
 
 		$query = "SELECT a.*, b.*, p.id AS poll_id, modified.name AS modified_name, modified.username AS modified_username
 			FROM #__fb_messages AS a
 			LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
 			LEFT JOIN #__users AS modified ON a.modified_by = modified.id
 			LEFT JOIN #__fb_polls AS p ON a.id=p.threadid
-			WHERE a.id='$this->id' AND a.hold='0'";
+			WHERE a.id='{$this->id}' AND {$where}";
 		$this->db->setQuery ( $query );
 		$this->first_message = $this->db->loadObject ();
 		check_dberror ( 'Unable to load current message.' );
@@ -51,7 +55,7 @@ class CKunenaView {
 
 		// Is user allowed to see the forum specified in the message?
 		$this->catid = $this->first_message->catid;
-		if (! in_array ( $this->catid, $allow_forum )) {
+		if (! in_array ( $this->catid, $this->allow_forum )) {
 			$this->allow = 0;
 			return;
 		}
@@ -74,7 +78,7 @@ class CKunenaView {
 			}
 
 			// This query to calculate the page this reply is sitting on within this thread
-			$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$this->thread}' AND hold='0' AND a.id<='{$this->id}'";
+			$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$this->thread}' AND {$where} AND a.id<='{$this->id}'";
 			$this->db->setQuery ( $query );
 			$replyCount = $this->db->loadResult ();
 			check_dberror ( 'Unable to calculate location of current message.' );
@@ -87,18 +91,30 @@ class CKunenaView {
 			$this->app->close ();
 		}
 
-		// START
-		$this->my = JFactory::getUser ();
+		//Get the category name for breadcrumb
+		$this->db->setQuery ( "SELECT * FROM #__fb_categories WHERE id='{$this->catid}'" );
+		$this->catinfo = $this->db->loadObject ();
+		check_dberror ( 'Unable to load category info' );
+		//Get Parent's cat.name for breadcrumb
+		$this->db->setQuery ( "SELECT id, name FROM #__fb_categories WHERE id='{$this->catinfo->parent}'" );
+		$objCatParentInfo = $this->db->loadObject ();
+		check_dberror ( 'Unable to load parent category info' );
 
+		// START
 		$this->emoticons = smile::getEmoticons ( 0 );
 		$this->prevCheck = $this->session->lasttime;
 		$this->read_topics = explode ( ',', $this->session->readtopics );
 
 		$showedEdit = 0;
-		$this->kunena_forum_locked = 0;
+		$this->kunena_forum_locked = $this->catinfo->locked;
 
+		//check if topic is locked
 		$this->topicLocked = $this->first_message->locked;
-		$topicSticky = $this->first_message->ordering;
+		if (! $this->topicLocked) {
+			//topic not locked; check if forum is locked
+			$this->topicLocked = $this->catinfo->locked;
+		}
+		$this->topicSticky = $this->first_message->ordering;
 
 		CKunenaTools::markTopicRead ( $this->thread, $this->my->id );
 
@@ -109,7 +125,7 @@ class CKunenaView {
 			check_dberror ( 'Unable to update message hits.' );
 		}
 
-		$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$this->thread}' AND hold='0'";
+		$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$this->thread}' AND {$where}";
 		$this->db->setQuery ( $query );
 		$this->total_messages = $this->db->loadResult ();
 		check_dberror ( 'Unable to calculate message count.' );
@@ -138,8 +154,8 @@ class CKunenaView {
 					FROM #__fb_messages AS a
 					LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
 					LEFT JOIN #__users AS modified ON a.modified_by = modified.id
-					WHERE a.thread='$this->thread' AND a.id!='$this->id' AND a.hold='0'
-					AND a.catid='$this->catid' ORDER BY id $ordering";
+					WHERE a.thread='{$this->thread}' AND a.id!='{$this->id}' AND {$where}
+					ORDER BY id {$ordering}";
 		$this->db->setQuery ( $query, $replystart, $replylimit );
 		$replies = $this->db->loadObjectList ();
 		check_dberror ( 'Unable to load replies' );
@@ -155,17 +171,6 @@ class CKunenaView {
 
 		$this->pagination = $this->getPagination ( $this->catid, $this->thread, $page, $totalpages, $maxpages );
 
-		//Get the category name for breadcrumb
-		$this->db->setQuery ( "SELECT * FROM #__fb_categories WHERE id='{$this->catid}'" );
-		$this->catinfo = $this->db->loadObject ();
-		check_dberror ( 'Unable to load category info' );
-		//Get Parent's cat.name for breadcrumb
-		$this->db->setQuery ( "SELECT id, name FROM #__fb_categories WHERE id='{$this->catinfo->parent}'" );
-		$objCatParentInfo = $this->db->loadObject ();
-		check_dberror ( 'Unable to load parent category info' );
-
-		$this->kunena_forum_locked = $this->catinfo->locked;
-
 		//meta description and keywords
 		$metaKeys = kunena_htmlspecialchars ( stripslashes ( "{$this->first_message->subject}, {$objCatParentInfo->name}, {$this->config->board_title}, " . _GEN_FORUM . ', ' . $this->app->getCfg ( 'sitename' ) ) );
 		$metaDesc = kunena_htmlspecialchars ( stripslashes ( "{$this->first_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$this->catinfo->name} - {$this->config->board_title} " . _GEN_FORUM ) );
@@ -178,7 +183,7 @@ class CKunenaView {
 
 		//Perform subscriptions check only once
 		$fb_cansubscribe = 0;
-		if ($this->config->allowsubscriptions && ("" != $this->my->id || 0 != $this->my->id)) {
+		if ($this->config->allowsubscriptions && $this->my->id) {
 			$this->db->setQuery ( "SELECT thread FROM #__fb_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->thread}'" );
 			$fb_subscribed = $this->db->loadResult ();
 			check_dberror ( 'Unable to load subscription' );
@@ -192,7 +197,7 @@ class CKunenaView {
 		$this->db->setQuery ( "SELECT MAX(userid={$this->my->id}) AS favorited, COUNT(*) AS totalfavorited FROM #__fb_favorites WHERE thread='{$this->thread}'" );
 		list ( $this->favorited, $this->totalfavorited ) = $this->db->loadRow ();
 		check_dberror ( 'Unable to load favorite' );
-		if ($this->config->allowfavorites && ("" != $this->my->id || 0 != $this->my->id)) {
+		if ($this->config->allowfavorites && $this->my->id) {
 			if (! $this->favorited) {
 				$fb_canfavorite = 1;
 			}
@@ -208,7 +213,7 @@ class CKunenaView {
 		}
 
 		//data ready display now
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0 && $this->topicLocked == 0)) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0)) {
 			//this user is allowed to reply to this topic
 			$this->thread_reply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->catid, $this->thread, CKunenaTools::showButton ( 'reply', _KUNENA_BUTTON_REPLY_TOPIC ), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_REPLY_TOPIC_LONG );
 		}
@@ -239,7 +244,7 @@ class CKunenaView {
 		// FINISH: FAVORITES
 
 
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0)) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
 			//this user is allowed to post a new topic
 			$this->thread_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', _KUNENA_BUTTON_NEW_TOPIC ), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_NEW_TOPIC_LONG );
 		}
@@ -250,7 +255,7 @@ class CKunenaView {
 			// and the (un)lock links
 			$this->thread_move = CKunenaLink::GetTopicPostLink ( 'move', $this->catid, $this->id, CKunenaTools::showButton ( 'move', _KUNENA_BUTTON_MOVE_TOPIC ), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_MOVE_TOPIC_LONG );
 
-			if ($topicSticky == 0) {
+			if ($this->topicSticky == 0) {
 				$this->thread_sticky = CKunenaLink::GetTopicPostLink ( 'sticky', $this->catid, $this->id, CKunenaTools::showButton ( 'sticky', _KUNENA_BUTTON_STICKY_TOPIC ), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_STICKY_TOPIC_LONG );
 			} else {
 				$this->thread_sticky = CKunenaLink::GetTopicPostLink ( 'unsticky', $this->catid, $this->id, CKunenaTools::showButton ( 'sticky', _KUNENA_BUTTON_UNSTICKY_TOPIC ), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_UNSTICKY_TOPIC_LONG );
@@ -270,13 +275,6 @@ class CKunenaView {
 		$tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 		$this->mmm = 0;
-
-		//check if topic is locked
-		$this->topicLocked = $this->first_message->locked;
-		if (! $this->topicLocked) {
-			//topic not locked; check if forum is locked
-			$this->topicLocked = $this->catinfo->locked;
-		}
 	}
 
 	function displayPathway() {
@@ -700,7 +698,7 @@ class CKunenaView {
 		$this->msg_html->text = CKunenaTools::parseBBCode ( $this->kunena_message->message );
 		$this->msg_html->signature = CKunenaTools::parseBBCode ( $this->userinfo->signature );
 
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0 && $this->topicLocked == 0)) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0)) {
 			//user is allowed to reply/quote
 			if ($this->my->id > 0) {
 				$this->msg_html->quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'reply', _KUNENA_BUTTON_QUICKREPLY ), 'nofollow', 'buttoncomm btn-left kqr_fire', _KUNENA_BUTTON_QUICKREPLY_LONG, ' id="kqr_sc__' . $this->msg_html->id . '" onclick="return false;"' );
@@ -709,7 +707,7 @@ class CKunenaView {
 			$this->msg_html->quote = CKunenaLink::GetTopicPostReplyLink ( 'quote', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'quote', _KUNENA_BUTTON_QUOTE ), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_QUOTE_LONG );
 		} else {
 			//user is not allowed to write a post
-			if ($this->topicLocked == 1 || $this->kunena_forum_locked) {
+			if ($this->topicLocked) {
 				$this->msg_html->closed = _POST_LOCK_SET;
 			} else {
 				$this->msg_html->closed = _VIEW_DISABLED;
@@ -717,10 +715,16 @@ class CKunenaView {
 		}
 
 		$showedEdit = 0; //reset this value
+		$this->msg_html->class = 'class="kmsg"';
+
 		//Offer an moderator the delete link
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', _KUNENA_BUTTON_DELETE ), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_DELETE_LONG );
 			$this->msg_html->merge = CKunenaLink::GetTopicPostLink ( 'merge', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'merge', _KUNENA_BUTTON_MERGE ), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_MERGE_LONG );
+			if ($this->kunena_message->hold == 1) {
+				$this->msg_html->publish = CKunenaLink::GetTopicPostReplyLink ( 'approve', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'approve', _KUNENA_BUTTON_APPROVE ), 'nofollow', 'buttonmod btn-left', _KUNENA_BUTTON_APPROVE_LONG );
+				$this->msg_html->class = 'class="kmsg kunapproved"';
+			}
 		}
 
 		if ($this->config->useredit && $this->my->id != "") {

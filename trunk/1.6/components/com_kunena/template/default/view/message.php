@@ -20,7 +20,7 @@ global $kunena_icons;
 
 if ($kunena_config->avposition == 'top') { ?>
 
-<table>
+<table <?php echo $this->msg_html->class; ?>>
 	<thead>
 	    <tr class="ksth">
 	    	<th colspan="2" class="view-th ksectiontableheader">
@@ -50,7 +50,7 @@ if ($kunena_config->avposition == 'top') { ?>
 
 <?php } else if ($kunena_config->avposition == 'bottom') { ?>
 
-<table>
+<table <?php echo $this->msg_html->class; ?>>
 	<thead>
 	    <tr class="ksth">
 	    	<th colspan="2" class="view-th ksectiontableheader">
@@ -80,7 +80,7 @@ if ($kunena_config->avposition == 'top') { ?>
 
 <?php } else if ($kunena_config->avposition == 'left') { ?>
 
-<table>
+<table <?php echo $this->msg_html->class; ?>>
 	<thead>
 	    <tr class="ksth">
 	    	<th colspan="2" class="view-th ksectiontableheader">
@@ -108,7 +108,7 @@ if ($kunena_config->avposition == 'top') { ?>
 
 <?php } else { ?>
 
-<table>
+<table <?php echo $this->msg_html->class; ?>>
 	<thead>
 	    <tr class="ksth">
 	    	<th colspan="2" class="view-th ksectiontableheader">

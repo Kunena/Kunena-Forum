@@ -39,8 +39,25 @@ class CKunenaShowcat {
 
 		$kunena_app = & JFactory::getApplication ();
 
-		//resetting some things:
-		$this->kunena_forum_locked = 0;
+		//Get the category information
+		$query = "SELECT c.*, s.catid AS subscribeid
+				FROM #__fb_categories AS c
+				LEFT JOIN #__fb_subscriptions_categories AS s ON c.id = s.catid
+				AND s.userid = '{$this->my->id}'
+				WHERE c.id='{$this->catid}'";
+
+		$this->db->setQuery ( $query );
+		$this->objCatInfo = $this->db->loadObject ();
+		check_dberror ( 'Unable to get categories.' );
+		//Get the Category's parent category name for breadcrumb
+		$this->db->setQuery ( "SELECT name, id FROM #__fb_categories WHERE id='{$this->objCatInfo->parent}'" );
+		$objCatParentInfo = $this->db->loadObject ();
+		check_dberror ( 'Unable to get parent category.' );
+
+		//check if this forum is locked
+		$this->kunena_forum_locked = $this->objCatInfo->locked;
+		//check if this forum is subject to review
+		$this->kunena_forum_reviewed = $this->objCatInfo->review;
 
 		$threads_per_page = $this->config->threads_per_page;
 
@@ -118,26 +135,6 @@ class CKunenaShowcat {
 			}
 		}
 
-		//Get the category information
-		$query = "SELECT c.*, s.catid AS subscribeid
-				FROM #__fb_categories AS c
-				LEFT JOIN #__fb_subscriptions_categories AS s ON c.id = s.catid
-				AND s.userid = '{$this->my->id}'
-				WHERE c.id='{$this->catid}'";
-
-		$this->db->setQuery ( $query );
-		$this->objCatInfo = $this->db->loadObject ();
-		check_dberror ( 'Unable to get categories.' );
-		//Get the Category's parent category name for breadcrumb
-		$this->db->setQuery ( "SELECT name, id FROM #__fb_categories WHERE id='{$this->objCatInfo->parent}'" );
-		$objCatParentInfo = $this->db->loadObject ();
-		check_dberror ( 'Unable to get parent category.' );
-
-		//check if this forum is locked
-		$this->kunena_forum_locked = $this->objCatInfo->locked;
-		//check if this forum is subject to review
-		$this->kunena_forum_reviewed = $this->objCatInfo->review;
-
 		//Perform subscriptions check
 		$kunena_cansubscribecat = 0;
 		if ($this->config->allowsubscriptions && ("" != $this->my->id || 0 != $this->my->id)) {
@@ -159,7 +156,7 @@ class CKunenaShowcat {
 
 		$this->headerdesc = CKunenaTools::parseBBCode ( $this->objCatInfo->headerdesc );
 
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->kunena_forum_locked == 0)) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
 			//this user is allowed to post a new topic:
 			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', _KUNENA_BUTTON_NEW_TOPIC ), 'nofollow', 'buttoncomm btn-left', _KUNENA_BUTTON_NEW_TOPIC_LONG );
 		}

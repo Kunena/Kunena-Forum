@@ -149,6 +149,8 @@ define('_KUNENA_MODERATE_OTHER_USERS_WITH_IP', 'Other users with this IP');
 define('_KUNENA_MODERATE_THIS_USER', 'Moderate this User');
 define('_KUNENA_MODERATE_ALLIPS', 'All IPs');
 define('_KUNENA_MODERATE_SELECT_IP', 'Select IP...');
+DEFINE('_KUNENA_MODERATE_1APPROVE_SUCCESS', 'The post has been approved.');
+
 
 //Personnal text maxlength
 define('_COM_A_PESONNALTEXT', 'Max. Personal text Length');
@@ -182,6 +184,7 @@ define('_KUNENA_BUTTON_REPLY', 'Reply');
 define('_KUNENA_BUTTON_QUOTE', 'Quote');
 define('_KUNENA_BUTTON_EDIT', 'Edit');
 define('_KUNENA_BUTTON_DELETE', 'Delete');
+define('_KUNENA_BUTTON_APPROVE', 'Approve');
 define('_KUNENA_BUTTON_MERGE', 'Merge');
 
 // TODO: add good descriptions
@@ -206,6 +209,7 @@ define('_KUNENA_BUTTON_REPLY_LONG', 'Reply');
 define('_KUNENA_BUTTON_QUOTE_LONG', 'Quote');
 define('_KUNENA_BUTTON_EDIT_LONG', 'Edit');
 define('_KUNENA_BUTTON_DELETE_LONG', 'Delete');
+define('_KUNENA_BUTTON_APPROVE_LONG', 'Approve');
 define('_KUNENA_BUTTON_MERGE_LONG', 'Merge');
 
 // Profile strings

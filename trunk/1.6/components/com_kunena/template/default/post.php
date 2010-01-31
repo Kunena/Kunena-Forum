@@ -1078,6 +1078,18 @@ else if ($do == "move") {
 					$success_msg = _POST_LOCK_UNSET;
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
+			} else if ($do == "approve") {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );
+				}
+
+				$id = ( int ) $id;
+				$success_msg = _POST_LOCK_NOT_UNSET;
+				$kunena_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE id=$id" );
+				if ($id && $kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
+					$success_msg = _KUNENA_MODERATE_1APPROVE_SUCCESS;
+				}
+				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			}
 		}
 		?>

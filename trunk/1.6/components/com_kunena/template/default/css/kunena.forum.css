@@ -1608,6 +1608,10 @@ span.newchar {
 	padding: 3px 10px;
 }
 
+#Kunena .kmsg.kunapproved {
+	background: #EFF0F4;
+}
+
 #Kunena div.kunena-profile {
 	text-align: center;
 	padding: 5px;
@@ -2137,6 +2141,10 @@ a.buttonmod span {
 #Kunena a.buttonmod span.split {
 	float: left;
 	background: url("../images/buttons/btn-left-split.gif") no-repeat left top;
+}
+#Kunena a.buttonmod span.approve {
+	float: left;
+	background: url("../images/buttons/btn-left-moderate.gif") no-repeat left top;
 }
 
 #Kunena a.buttonmod span.moderate {

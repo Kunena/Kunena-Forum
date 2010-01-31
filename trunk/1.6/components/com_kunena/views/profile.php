@@ -23,6 +23,7 @@ class CKunenaProfile {
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = CKunenaConfig::getInstance ();
+		$this->my = JFactory::getUser ();
 
 		if (!$userid) {
 			$this->user = JFactory::getUser();

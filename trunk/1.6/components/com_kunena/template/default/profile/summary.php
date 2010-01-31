@@ -104,6 +104,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 						<?php $this->displayFavorites(); ?>
 					</dd>
 
+					<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id): ?>
 					<!-- Only visible to moderators and admins -->
 					<dt class="kprofile-modbtn"><?php echo _KUNENA_MODERATE_THIS_USER; ?></dt>
 					<dd class="kprofile-modtools">
@@ -133,6 +134,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 						</form>
 						<div class="clr"></div>
 					</dd>
+					<?php endif; ?>
 				</dl>
 			</div>
 		</div>

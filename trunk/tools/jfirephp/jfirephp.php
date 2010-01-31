@@ -36,7 +36,7 @@ class plgSystemJFirePHP extends JPlugin
 	/**
 	 * onAfterInitialise handler
 	 *
-	 * Register FirePHP libraries
+	 * Register FirePHP libraries and set options according to paramters
 	 *
 	 * @access	public
 	 * @return null
@@ -44,24 +44,34 @@ class plgSystemJFirePHP extends JPlugin
 
 	function onAfterInitialise()
 	{
+		// php version check to allow usage in php 4.x
+		$phpver = explode(".",phpversion());
+		if (intval($phpver[0])==4) {
+			require_once(JPATH_PLUGINS.DS.'system'.DS.'jfirephp'.DS.'firephpcore'.DS.'fb.php4');
+		} else {
+			require_once(JPATH_PLUGINS.DS.'system'.DS.'jfirephp'.DS.'firephpcore'.DS.'fb.php');
+		}
+
+		// JFirePHP is installed and loaed
+		define(JFIREPHP, 1);
+
+		$firephp = FirePHP::getInstance(true);
+
+		// Before doing any checks lets disable logging
+		$firephp->setEnabled(false);
+
+		// Check if the integration is set to enabled
 		$enable = $this->params->get('enable', 0);
 
-		// Only integrate if enabled
+		// Only turn on if enabled
 		if($enable){
 			// if limited to debug mode, check JDEBUG
 			$limittodebug = $this->params->get('limittodebug', 1);
 			if(!$limittodebug || JDEBUG){
-				// php version check to allow usage in php 4.x
-				$phpver = explode(".",phpversion());
-				if (intval($phpver[0])==4) {
-					require_once(JPATH_PLUGINS.DS.'system'.DS.'jfirephp'.DS.'firephpcore'.DS.'FirePHP.class.php4');
-				} else {
-					require_once(JPATH_PLUGINS.DS.'system'.DS.'jfirephp'.DS.'firephpcore'.DS.'FirePHP.class.php');
-				}
+				// We are enabled and either in Debug mode, or it does not matter
+				$firephp->setEnabled(true);
 
 				$verbose = $this->params->get('verbose', 0);
-
-				$firephp = FirePHP::getInstance(true);
 
 				if($verbose){
 					$firephp->group('JFirePHP Startup',array('Collapsed' => true,'Color' => '#FF4000'));

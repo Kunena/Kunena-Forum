@@ -261,7 +261,7 @@ table.fbstat .col2 {
 	?>
             <tr>
               <td><?php echo $KUNENA_poster->username;?> </td>
-              <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+              <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/backgrounds/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
               <td ><?php echo $KUNENA_poster->posts;?></td>
             </tr>
             <?php
@@ -298,7 +298,7 @@ table.fbstat .col2 {
 	?>
             <tr>
               <td><?php echo $fb_profile->username; ?></td>
-              <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+              <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/backgrounds/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
               <td ><?php echo $fb_profile->uhits;?></td>
             </tr>
             <?php
@@ -340,7 +340,7 @@ table.fbstat .col2 {
 	?>
       <tr>
         <td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
-        <td ><img src="<?php echo KUNENA_DIRECTURL.'/template/default/images/bar.gif'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
+        <td ><img src="<?php echo KUNENA_DIRECTURL.'/template/default/images/backgrounds/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
         <td ><?php echo $KUNENA_post->hits;?></td>
       </tr>
       <?php } ?>

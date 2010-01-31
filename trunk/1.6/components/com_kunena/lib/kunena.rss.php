@@ -99,7 +99,7 @@ echo '        <link>' . JURI::root() . '</link>';
 echo '        <lastBuildDate>' . date("r") . '</lastBuildDate>';
 echo '        <generator>Kunena ' . KUNENA_VERSION . '</generator>';
 echo '        <image>';
-echo '	        <url>' . KUNENA_URLEMOTIONSPATH . 'rss.gif</url>';
+echo '	        <url>' . KUNENA_URLICONSPATH . 'rss.gif</url>';
 echo '	        <title>Powered by Kunena</title>';
 echo '	        <link>' . JURI::root() . '</link>';
 echo '	        <description>Kunena Site Syndication</description>';

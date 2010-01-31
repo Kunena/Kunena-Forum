@@ -148,7 +148,7 @@ $k = 0;
        <?php echo CKunenaLink::GetThreadLink( 'view', $toptitle->catid, $toptitle->id, kunena_htmlspecialchars(stripslashes($toptitle->subject)), '' ); ?>
       </td>
       <td  class="td-2">
-       <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+       <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
       </td>
       <td  class="td-3">
 	  <?php echo $toptitle->hits; ?> <?php echo _KUNENA_USRL_HITS ;?>
@@ -209,7 +209,7 @@ $k = 0;
        <?php echo CKunenaLink::GetThreadLink( 'view', $toppoll->catid, $toppoll->threadid, kunena_htmlspecialchars(stripslashes($toppoll->title)), '' ); ?>
       </td>
       <td  class="td-2">
-       <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+       <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
       </td>
       <td  class="td-3">
 	  <?php echo $toppoll->total; ?> <?php echo _KUNENA_USRL_VOTES ;?>
@@ -272,7 +272,7 @@ $k = 0;
 
 </td>
       <td  class="td-2">
-         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
                                     </td>
       <td  class="td-3">
 	  <?php echo $poster->posts; ?> <?php echo _KUNENA_USRL_POSTS ;?>
@@ -330,7 +330,7 @@ $barwidth = round(($topprofile->hits * 100) / $this->topprofilehits);
         <?php echo CKunenaLink::GetProfileLink($kunena_config, $topprofile->user_id, $topprofile->user); ?>
 </td>
       <td  class="td-2">
-         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
                                     </td>
       <td  class="td-3">
 	  <?php echo $topprofile->hits; ?> <?php echo _KUNENA_USRL_HITS ;?>

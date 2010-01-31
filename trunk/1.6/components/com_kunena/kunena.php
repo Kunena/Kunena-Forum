@@ -803,7 +803,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, _KUNENA_POWEREDBY ) . ' ' . CKunenaLink::GetCreditsLink ();
 	if ($kunena_config->enablerss) {
 		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . _LISTCAT_RSS . '" href="' . CKunenaLink::GetRSSURL() . '" />' );
-		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLEMOTIONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />' );
+		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />' );
 	}
 	echo '</div>';
 

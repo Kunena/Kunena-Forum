@@ -28,10 +28,10 @@
  * // $kunena_icons['delete']='delete.gif';
  *
  * If icon wasn't found from your template, Kunena tries to find alternate icon
- * from detault template. If no icon is found, text will be used instead.
+ * from default template. If no icon is found, text will be used instead.
  */
 $kunena_icons['favoritestar'] = 'favoritestar.png';
-$kunena_icons['favoritestar_grey'] = 'favoritestar-grey.gif';
+$kunena_icons['favoritestar_grey'] = 'favoritestar-grey.png';
 $kunena_icons['forumlocked'] = 'tlock.gif';
 $kunena_icons['forummoderated'] = 'tmoder.gif';
 $kunena_icons['unreadforum'] = 'folder.gif';
@@ -54,15 +54,12 @@ $kunena_icons['pms'] ='pm.gif';
 $kunena_icons['onlineicon'] ='online.gif';
 $kunena_icons['offlineicon'] ='offline.gif';
 $kunena_icons['msgip'] ='ip.gif';
-$kunena_icons['msgwebsite'] ='msgwebsite.gif';
-$kunena_icons['msgmale'] ='msgmale.gif';
-$kunena_icons['msgfemale'] ='msgfemale.gif';
-$kunena_icons['msglocation'] ='msglocation.gif';
-$kunena_icons['msgbirthdate'] ='msgbirthdate.gif';
+$kunena_icons['website'] ='website.png';
+$kunena_icons['male'] ='male.png';
+$kunena_icons['female'] ='female.png';
+$kunena_icons['location'] ='location.png';
+$kunena_icons['birthdate'] ='birthday.png';
 $kunena_icons['email'] ='email.png';
-$kunena_icons['msgicq'] ='msgicq.gif';
-$kunena_icons['msgmsn'] ='msgmsn.gif';
-$kunena_icons['msgaim'] ='msgaim.gif';
 $kunena_icons['aim'] ='aim.png';
 $kunena_icons['bebo'] ='bebo.png';
 $kunena_icons['blogger'] ='blogger.png';
@@ -77,14 +74,16 @@ $kunena_icons['myspace'] ='myspace.png';
 $kunena_icons['skype'] ='skype.png';
 $kunena_icons['twitter'] ='twitter.png';
 $kunena_icons['yahoo'] ='yahoo.png';
+$kunena_icons['twitter'] ='msn.png';
+$kunena_icons['yahoo'] ='icq.png';
 
-// topic emoticons
+// Topic icons
 $topic_emoticons = array ();
-$topic_emoticons [0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
-$topic_emoticons [1] = KUNENA_URLEMOTIONSPATH . 'exclamation.png';
-$topic_emoticons [2] = KUNENA_URLEMOTIONSPATH . 'question.png';
-$topic_emoticons [3] = KUNENA_URLEMOTIONSPATH . 'arrow.png';
-$topic_emoticons [4] = KUNENA_URLEMOTIONSPATH . 'love.png';
-$topic_emoticons [5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
-$topic_emoticons [6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
-$topic_emoticons [7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
+$topic_emoticons [0] = KUNENA_URLICONSPATH . 'topic-default.gif';
+$topic_emoticons [1] = KUNENA_URLICONSPATH . 'topic-exclamation.png';
+$topic_emoticons [2] = KUNENA_URLICONSPATH . 'topic-question.png';
+$topic_emoticons [3] = KUNENA_URLICONSPATH . 'topic-arrow.png';
+$topic_emoticons [4] = KUNENA_URLICONSPATH . 'topic-love.png';
+$topic_emoticons [5] = KUNENA_URLICONSPATH . 'topic-grin.gif';
+$topic_emoticons [6] = KUNENA_URLICONSPATH . 'topic-shock.gif';
+$topic_emoticons [7] = KUNENA_URLICONSPATH . 'topic-smile.gif';

@@ -142,14 +142,14 @@ a:focus {outline: none;}
 }
 
 #Kunena .kheader {
-	background: #3B3B3B url("../images/cat_title_bg.gif") repeat-x top left;
+	background: #3B3B3B url("../images/backgrounds/cat_title_bg.gif") repeat-x top left;
 	height: 30px;
 }
 
 #Kunena table.kblocktable thead tr th,
 #Kunena table.kblocktablehalf thead tr th  {
 	background: #5388b4;
-	/* background: #3B3B3B url("../images/cat_title_bg.gif") repeat-x top left; */
+	/* background: #3B3B3B url("../images/backgrounds/cat_title_bg.gif") repeat-x top left; */
 	color: #ffffff;
 	padding: 2px;
 	font-weight: normal;
@@ -159,7 +159,7 @@ a:focus {outline: none;}
 
 #Kunena tr.ksth {
 	background: #737373;
-	/* background: #8CABC8 url("../images/cat_title_head_bg.gif") repeat-x top left; */
+	/* background: #8CABC8 url("../images/backgrounds/cat_title_head_bg.gif") repeat-x top left; */
 	color: #fff;
 	font-size: 1em;
 	font-family: Arial, Helvetica, sans-serif;
@@ -370,7 +370,7 @@ a:focus {outline: none;}
 }
 
 #Kunena #Kunena_tab a {
-	/* background: url("../images/tabmenuright.gif") no-repeat right top; */
+	/* background: url("../images/backgrounds/tabmenuright.gif") no-repeat right top; */
 	background-color: #737373;
 	margin: 0;
 	padding: 0;
@@ -382,7 +382,7 @@ a:focus {outline: none;}
 
 #Kunena #Kunena_tab a span {
 	display: block;
-	/* background: url("../images/tabmenuleft.gif") no-repeat left top; */
+	/* background: url("../images/backgrounds/tabmenuleft.gif") no-repeat left top; */
 	padding: 0 15px 0 15px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em;
@@ -869,7 +869,7 @@ form#searchform {
 }
 
 #Kunena ul.kprofilebox_link li {
-	background: url("../images/arrow.png") no-repeat left 2px;
+	background: url("../images/icons/arrow.png") no-repeat left 2px;
 	padding-left: 12px;
 	display: inline;
 	padding-right:10px;
@@ -2580,7 +2580,7 @@ POST HISTORY
 
 #Kunena .kforum-pathway .path-element,
 #Kunena .kforum-pathway-bottom .path-element	{
-	background: url("../images/arrow.png") no-repeat left center;
+	background: url("../images/icons/arrow.png") no-repeat left center;
 	padding-left: 12px;
 	display: inline;
 	font-weight: normal;
@@ -3132,6 +3132,7 @@ li.kprofile-rank img {
 
 #kprofile-tabs {
 	width: 100%;
+	margin-top: 15px;
 }
 
 dl.tabs {

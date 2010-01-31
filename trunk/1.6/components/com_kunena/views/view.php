@@ -14,12 +14,19 @@ defined ( '_JEXEC' ) or die ();
 class CKunenaView {
 	public $allow = 0;
 
-	function __construct($catid, $id) {
-		$this->id = $id;
+	function __construct($func, $catid, $id) {
+		$this->func = $func;
 		$this->catid = $catid;
+		$this->id = $id;
 
 		$this->db = JFactory::getDBO ();
 		$this->session = CKunenaSession::getInstance ();
+		$allow = 0;
+
+		$this->getView();
+	}
+
+	function getView() {
 		$allow_forum = ($this->session->allowed != '') ? explode ( ',', $this->session->allowed ) : array ();
 
 		// Is user allowed to see the forum specified in URL?

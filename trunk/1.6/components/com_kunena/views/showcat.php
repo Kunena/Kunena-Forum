@@ -184,6 +184,7 @@ class CKunenaShowcat {
 		check_dberror ( "Unable to load moderators." );
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
+		$this->showposts = 0;
 	}
 
 	function displayPathway() {

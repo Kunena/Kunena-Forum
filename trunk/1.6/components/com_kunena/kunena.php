@@ -82,7 +82,7 @@ include_once (KUNENA_PATH_LIB . DS . "kunena.debug.php");
 require_once (KUNENA_PATH_LIB . DS . "kunena.config.class.php");
 
 global $kunenaProfile;
-global $lang, $kunena_icons;
+global $lang, $kunena_icons, $topic_emoticons;
 global $board_title;
 global $kunena_systime;
 
@@ -516,7 +516,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 		case 'view' :
 			require_once (KUNENA_PATH_VIEWS . DS . 'view.php');
-			$page = new CKunenaView($catid, $id);
+			$page = new CKunenaView($func, $catid, $id);
 			$page->display();
 
 			break;

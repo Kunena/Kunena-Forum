@@ -77,3 +77,14 @@ $kunena_icons['myspace'] ='myspace.png';
 $kunena_icons['skype'] ='skype.png';
 $kunena_icons['twitter'] ='twitter.png';
 $kunena_icons['yahoo'] ='yahoo.png';
+
+// topic emoticons
+$topic_emoticons = array ();
+$topic_emoticons [0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
+$topic_emoticons [1] = KUNENA_URLEMOTIONSPATH . 'exclamation.png';
+$topic_emoticons [2] = KUNENA_URLEMOTIONSPATH . 'question.png';
+$topic_emoticons [3] = KUNENA_URLEMOTIONSPATH . 'arrow.png';
+$topic_emoticons [4] = KUNENA_URLEMOTIONSPATH . 'love.png';
+$topic_emoticons [5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
+$topic_emoticons [6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
+$topic_emoticons [7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';

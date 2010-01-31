@@ -19,6 +19,7 @@
  * @author TSMF & Jan de Graaff
  **/
 
+global $topic_emoticons;
 
 $catid = JRequest::getInt ( 'catid', 0 );
 $id = JRequest::getInt ( 'id', 0 );
@@ -229,39 +230,15 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			<td class="k-topicicons">
 <table class="kflat">
 	<tr>
-		<td><input type="radio" name="topic_emoticon" value="0"
-			<?php echo $selected==0?" checked=\"checked\" ":"";?> /><?php @print(_NO_SMILIE); ?>
-
-		<input type="radio" name="topic_emoticon" value="1"
-			<?php echo $selected==1?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>exclamation.png" alt=""
-			border="0" /> <input type="radio" name="topic_emoticon" value="2"
-			<?php echo $selected==2?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>question.png" alt=""
-			border="0" /> <input type="radio" name="topic_emoticon" value="3"
-			<?php echo $selected==3?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.png" alt=""
-			border="0" />
+		<td>
 		<?php
-		if ($kunena_config->rtewidth <= 320) {
-			echo '</td></tr><tr><td>';
-		}
+		foreach ($topic_emoticons as $emoid=>$emoimg):
 		?>
-		<input type="radio" name="topic_emoticon" value="4"
-			<?php echo $selected==4?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>love.png" alt="" border="0" />
-
-		<input type="radio" name="topic_emoticon" value="5"
-			<?php echo $selected==5?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>grin.gif" alt="" border="0" />
-
-		<input type="radio" name="topic_emoticon" value="6"
-			<?php echo $selected==6?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>shock.gif" alt=""
-			border="0" /> <input type="radio" name="topic_emoticon" value="7"
-			<?php echo $selected==7?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>smile.gif" alt=""
+		<input type="radio" name="topic_emoticon" value="<?php echo $emoid; ?>"
+			<?php echo $selected==$emoid?" checked=\"checked\" ":"";?> /> <img
+			src="<?php echo $emoimg;?>" alt=""
 			border="0" />
+		<?php endforeach; ?>
 		</td>
 	</tr>
 </table>

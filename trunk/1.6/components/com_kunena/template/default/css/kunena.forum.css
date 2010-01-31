@@ -3007,6 +3007,15 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female {
 	margin-right: 10px;
 }
 
+div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-unknown { 
+	float:left;
+	display:block; 
+	background: url("../images/icons/gender-unknown.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 10px;
+}
+
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate { 
 	float:left;
 	display:block; 

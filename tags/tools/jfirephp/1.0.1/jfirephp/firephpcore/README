@@ -1,0 +1,32 @@
+
+Version: 0.3.1
+
+------------------------------------------------------
+	Requirements
+------------------------------------------------------
+
+Client Side:
+
+	- Firefox - http://www.getfirefox.com/
+	- Firebug - http://www.getfirebug.com/
+	- FirePHP - http://www.firephp.org/
+
+Server Side:
+	
+	- PHP 5 (complete functionality)
+	- PHP 4 (most functionality)
+
+
+------------------------------------------------------
+	Install Tutorial
+------------------------------------------------------
+	
+	http://www.firephp.org/HQ/Install.htm
+	
+	
+------------------------------------------------------
+	Support
+------------------------------------------------------
+	
+	http://forum.firephp.org/
+	

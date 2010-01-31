@@ -19,7 +19,7 @@ Joomla 1.5 native system plugin that adds FirePHP debugging capabilities to your
 It allows developers to leverage the power of FirePHP inside of Joomla 1.5, configuring 
 the level of integration in the Joomla backend for JFirePHP. 
 
-Simple install the system plugin via the Joomla Extension Manager, make sure it is published.
+Simply install the system plugin via the Joomla Extension Manager, make sure it is published.
 Pick the user group level that should be able to see the console messages, set the various 
 plugin options to your individual needs including the FirePHP setup options.
 
@@ -31,7 +31,7 @@ your code (e.g. a global defines file) or copy the file into your project. Make 
 included in your distribution. It ensures that all the FirePHP calls can stay in your code
 without creating errors on systems without FirePHP.
 Make sure you use the fb() or FB::* syntax on all FirePHP calls you place into your code.
-DO NOT include and FirePHP files and classes directly. All of that is performed for you
+DO NOT include any FirePHP files and classes directly. All of that is performed for you
 as part of JFirePHP.
 
 USE

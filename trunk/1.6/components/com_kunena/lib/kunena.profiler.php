@@ -98,4 +98,15 @@ class KProfiler extends JProfiler {
 		$this->_buffer[] = $mark;
 		return $mark;
 	}
+
+	/**
+	 * Get total of Kunena queries to this point
+	 *	 *
+	 * @access public
+	 * @return integer Number of queries since start of KProfiler
+	 */
+	function getQueryCount() {
+		return $this->_db->getTicker() - $this->_tickerstart;
+	}
+
 }

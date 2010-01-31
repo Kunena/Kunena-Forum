@@ -71,7 +71,7 @@ $kunena_app = JFactory::getApplication ();
 
 // If JFirePHP is installed and enabled, leave a trace of the Kunena startup
 if(JDEBUG == 1 && defined('JFIREPHP')){
-	FB::trace("Kunena Startup");
+	// FB::trace("Kunena Startup");
 }
 
 // Redirect Forum Jump
@@ -829,8 +829,15 @@ if (is_object ( $kunenaProfile ))
 
 if(JDEBUG == 1){
 	$__profiler->mark('Done');
-
+	$__queries = $__profiler->getQueryCount();
 	if(defined('JFIREPHP')){
 		FB::log($__profiler->getBuffer(), 'Kunena Profiler');
+		if($__queries>50){
+			FB::error($__queries, 'Kunena Queries');
+		} else if($__queries>35){
+			FB::warn($__queries, 'Kunena Queries');
+		} else {
+			FB::log($__queries, 'Kunena Queries');
+		}
 	}
 }

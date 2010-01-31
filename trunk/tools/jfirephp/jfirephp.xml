@@ -30,7 +30,7 @@
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</param>
-		<param name="redirectphp" type="radio" default="1" label="Redirect PHP Errors, Warnings and Notices" description="Redirect PHP Errors, Warnings and Notices to FirePHP console (Firebug and FirePHP inside of Firefox 3.x+ are required)">
+		<param name="redirectphp" type="radio" default="0" label="Redirect PHP Errors, Warnings and Notices" description="Redirect PHP Errors, Warnings and Notices to FirePHP console. CAUTION: This will convert Warnings and Notices to exceptions, which can lead to Joomla white screens. Use with caution and make sure you do not have Notices and Warnings in your code.">
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</param>

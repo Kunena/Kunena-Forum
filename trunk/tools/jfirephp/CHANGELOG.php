@@ -29,6 +29,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+JFirePHP 1.0.2
+
+31-January-2010 fxstein
+# [#19590] Change default for PHP Warning, Notices and Error redirect; Add caution statement to setting.
+
 JFirePHP 1.0.1
 
 31-January-2010 fxstein

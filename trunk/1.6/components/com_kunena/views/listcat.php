@@ -176,7 +176,7 @@ class CKunenaListcat {
 				}
 				if (count ( $modcats )) {
 					$modcatlist = implode ( ',', $modcats );
-					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count FROM #__fb_messages WHERE catid IN ($modcatlist) AND hold='1'" );
+					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count FROM #__fb_messages WHERE catid IN ($modcatlist) AND hold='1' GROUP BY catid" );
 					$pending = $this->db->loadAssocList ();
 					check_dberror ( "Unable to load pending messages." );
 					foreach ( $pending as $i ) {

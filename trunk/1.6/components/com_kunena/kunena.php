@@ -24,9 +24,10 @@
 defined( '_JEXEC' ) or die();
 
 // First of all take a profiling information snapshot for JFirePHP
-if(JDEBUG == 1 && defined('JFIREPHP')){
-	$profiler = JProfiler::GetInstance('Kunena');
-	$profiler->mark('Start');
+if(JDEBUG == 1){
+	require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.profiler.php');
+	$__profiler = KProfiler::GetInstance();
+	$__profiler->mark('Start');
 }
 
 // Kunena wide defines
@@ -826,7 +827,10 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 if (is_object ( $kunenaProfile ))
 	$kunenaProfile->close ();
 
-if(JDEBUG == 1 && defined('JFIREPHP')){
-	$profiler->mark('Done');
-	FB::log($profiler->getBuffer(), 'Kunena Profiler');
+if(JDEBUG == 1){
+	$__profiler->mark('Done');
+
+	if(defined('JFIREPHP')){
+		FB::log($__profiler->getBuffer(), 'Kunena Profiler');
+	}
 }

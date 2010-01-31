@@ -16,7 +16,6 @@
 	For more information about FirePHP see: http://www.firephp.org/HQ/Use.html - FirePHP Headquarters.
 	</description>
 	<languages>
-	    <language tag="en-GB">en-GB.plg_jfirephp.ini</language>
 	</languages>
 	<files>
 		<file plugin="jfirephp">jfirephp.php</file>

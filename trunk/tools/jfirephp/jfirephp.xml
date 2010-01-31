@@ -7,7 +7,7 @@
 	<authorUrl>http://www.kunena.com</authorUrl>
 	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
 	<license>GNU/GPL</license>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<versionname>Squash Bug</versionname>
 	<build>@kunenaversionbuild@</build>
 	<description>JFirePHP

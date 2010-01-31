@@ -10,7 +10,7 @@
 */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+defined('_JEXEC') or die();
 ?>
 <!--
 
@@ -29,11 +29,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JFirePHP 1.0.0
+JFirePHP 1.0.1
 
 31-January-2010 fxstein
 # [#19590] Missing language file removed from manifest
 # [#19590] Missing quotes on JFIREPHP define
+
+JFirePHP 1.0.0
 
 30-January-2010 fxstein
 + [#19590] Initial version

@@ -23,8 +23,11 @@
 
 defined( '_JEXEC' ) or die();
 
-// Kunena wide defines
+// First of all take a profiling information snapshot for JFirePHP
+$profiler = JProfiler::GetInstance('Kunena');
+$profiler->mark('Start');
 
+// Kunena wide defines
 require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
 
 global $message;
@@ -816,7 +819,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 <?php
 } //else
 
-
-
 if (is_object ( $kunenaProfile ))
 	$kunenaProfile->close ();
+
+$profiler->mark('Done');
+FB::log($profiler->getBuffer(), 'Kunena Profiler');

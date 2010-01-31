@@ -51,6 +51,7 @@ Kunena 1.6.0-DEV
 
 31-Jan-2010 fxstein
 + [#19592] Add JFirePHP support
++ [#19592] Add initial profiling info via JFirePHP
 
 31-Jan-2010 severdia
 # [#19356] Added missing social icons, new topic icons

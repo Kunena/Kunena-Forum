@@ -13,43 +13,89 @@ defined('_JEXEC') or die();
 
 jimport( 'joomla.plugin.plugin' );
 
-if(!class_exists('plgJFirePHP'))
+class plgSystemJFirePHP extends JPlugin
 {
-	class plgJFirePHP extends JPlugin
+	/**
+	 * Constructor
+	 *
+	 * For php4 compatability we must not use the __constructor as a constructor for plugins
+	 * because func_get_args ( void ) returns a copy of all passed arguments NOT references.
+	 * This causes problems with cross-referencing necessary for the observer design pattern.
+	 *
+	 * @access	protected
+	 * @param	object	$subject The object to observe
+	 * @param 	array   $config  An array that holds the plugin configuration
+	 * @since	1.0
+	 */
+	function plgSystemJFirePHP(& $subject, $config)
 	{
-
-		/**
-		 * Constructor
-		 *
-		 * For php4 compatability we must not use the __constructor as a constructor for plugins
-		 * because func_get_args ( void ) returns a copy of all passed arguments NOT references.
-		 * This causes problems with cross-referencing necessary for the observer design pattern.
-		 *
-		 * @access	protected
-		 * @param	object	$subject The object to observe
-		 * @param 	array   $config  An array that holds the plugin configuration
-		 * @since	1.0
-		 */
-		function plgJFirePHP(& $subject, $config)
-		{
-			$this->_db = JFactory::getDBO();
-			parent :: __construct($subject, $config);
-		}
-
-		/**
-		 * onAfterInitialise handler
-		 *
-		 * Register FirePHP libraries
-		 *
-		 * @access	public
-		 * @return null
-		 */
-
-		function onAfterInitialise()
-		{
-			// Sample: JHTML::addIncludePath(JPATH_PLUGINS.DS.'system'.DS.'mootools12');
-		}
-
+		$this->_db = JFactory::getDBO();
+		parent :: __construct($subject, $config);
 	}
+
+	/**
+	 * onAfterInitialise handler
+	 *
+	 * Register FirePHP libraries
+	 *
+	 * @access	public
+	 * @return null
+	 */
+
+	function onAfterInitialise()
+	{
+		$enable = $this->params->get('enable', 0);
+
+		// Only integrate if enabled
+		if($enable){
+			// if limited to debug mode, check JDEBUG
+			$limittodebug = $this->params->get('limittodebug', 1);
+			if(!$limittodebug || JDEBUG){
+				// php version check to allow usage in php 4.x
+				$phpver = explode(".",phpversion());
+				if (intval($phpver[0])==4) {
+					require_once(JPATH_PLUGINS.DS.'system'.DS.'jfirephp'.DS.'firephpcore'.DS.'FirePHP.class.php4');
+				} else {
+					require_once(JPATH_PLUGINS.DS.'system'.DS.'jfirephp'.DS.'firephpcore'.DS.'FirePHP.class.php');
+				}
+
+				$verbose = $this->params->get('verbose', 0);
+
+				$firephp = FirePHP::getInstance(true);
+
+				if($verbose){
+					$firephp->group('JFirePHP Startup',array('Collapsed' => true,'Color' => '#FF4000'));
+					$firephp->log('JFirePHP enabled! - Verbose Output Mode: ON');
+				}
+
+				$options = array('maxObjectDepth' => intval($this->params->get('maxObjectDepth', 10)),
+				                 'maxArrayDepth' => intval($this->params->get('maxArrayDepth', 20)),
+				                 'useNativeJsonEncode' => intval($this->params->get('useNativeJsonEncode', 1)),
+				                 'includeLineNumbers' => intval($this->params->get('includeLineNumbers', 1)));
+
+				$firephp->setOptions($options); // Alternate call syntax: FB::setOptions($options);
+
+				if($verbose) $firephp->log('JFirePHP: Options Set - maxObjectDepth:'.$options['maxObjectDepth'].
+														 ' maxArrayDepth:'.$options['maxArrayDepth'].
+														 ' useNativeJsonEncode:'.$options['useNativeJsonEncode'].
+														 ' includeLineNumbers:'.$options['includeLineNumbers']);
+
+				$redirectphp = $this->params->get('redirectphp', 0);
+
+				if($redirectphp){
+					// Convert E_WARNING, E_NOTICE, E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE and
+					// E_RECOVERABLE_ERROR errors to ErrorExceptions and send all Exceptions to Firebug automatically
+					$firephp->registerErrorHandler(true);
+					$firephp->registerExceptionHandler();
+					$firephp->registerAssertionHandler(true, false);
+
+					if($verbose) $firephp->log('JFirePHP: E_WARNING, E_NOTICE, E_USER_ERROR, E_USER_WARNING, E_USER_NOTICE and E_RECOVERABLE_ERROR redirected.');
+				}
+
+				if($verbose) $firephp->groupEnd();
+			}
+		}
+	}
+
 }
 

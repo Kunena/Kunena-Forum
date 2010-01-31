@@ -24,8 +24,10 @@
 defined( '_JEXEC' ) or die();
 
 // First of all take a profiling information snapshot for JFirePHP
-$profiler = JProfiler::GetInstance('Kunena');
-$profiler->mark('Start');
+if(defined('JDEBUG') && defined('JFIREPHP')){
+	$profiler = JProfiler::GetInstance('Kunena');
+	$profiler->mark('Start');
+}
 
 // Kunena wide defines
 require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
@@ -67,7 +69,9 @@ $no_html = JRequest::getBool ( 'no_html', 0 );
 $kunena_app = JFactory::getApplication ();
 
 // If JFirePHP is installed and enabled, leave a trace of the Kunena startup
-FB::trace("Kunena Startup");
+if(defined('JDEBUG') && defined('JFIREPHP')){
+	FB::trace("Kunena Startup");
+}
 
 // Redirect Forum Jump
 
@@ -822,5 +826,7 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 if (is_object ( $kunenaProfile ))
 	$kunenaProfile->close ();
 
-$profiler->mark('Done');
-FB::log($profiler->getBuffer(), 'Kunena Profiler');
+if(defined('JDEBUG') && defined('JFIREPHP')){
+	$profiler->mark('Done');
+	FB::log($profiler->getBuffer(), 'Kunena Profiler');
+}

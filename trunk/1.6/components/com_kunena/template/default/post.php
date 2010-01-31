@@ -26,7 +26,7 @@ $kunena_app = & JFactory::getApplication ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
 
-global $imageLocation, $fileLocation, $board_title;
+global $imageLocation, $fileLocation, $board_title, $topic_emoticons;
 
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
@@ -211,7 +211,7 @@ if ($kunena_my->id) {
 				$subject = addslashes ( JString::trim ( $subject ) );
 				$message = addslashes ( JString::trim ( $message ) );
 				$email = addslashes ( JString::trim ( $this->email ) );
-				$topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
+				$topic_emoticon = (!isset($topic_emoticons[$topic_emoticon])) ? 0 : $topic_emoticon;
 				$posttime = CKunenaTimeformat::internalTime();
 				if ($contentURL) {
 					$message = $contentURL . "\n\n" . $message;
@@ -607,6 +607,7 @@ if ($kunena_my->id) {
 					$this->id = $message->id;
 					$this->catid = $message->catid;
 					$this->parentid = 0;
+					$this->emoid = $message->topic_emoticon;
 
 					//save the options for query after and load the text options, the number options is for create the fields in the form after
                 	if ($message->poll_id) {
@@ -728,10 +729,6 @@ if ($kunena_my->id) {
                               }
                           }
 
-                         if ($mes->topic_emoticon == '0') {
-							$topic_emoticon = $mes->topic_emoticon;
-                         }
-
 						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
 
 						$dbr_nameset = $kunena_db->query ();
@@ -744,7 +741,7 @@ if ($kunena_my->id) {
 								$kunena_db->setQuery ( "INSERT INTO #__fb_attachments (mesid, filelocation) VALUES ('$id'," . $kunena_db->quote ( $imageLocation ) . ")" );
 
 								if (! $kunena_db->query ()) {
-									echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg () . "'); </script>\n";
+									$kunena_app->enqueueMessage ( 'Storing image failed: " . $kunena_db->getErrorMsg () . "', 'error' );
 								}
 							}
 
@@ -754,17 +751,17 @@ if ($kunena_my->id) {
 								$kunena_db->setQuery ( "INSERT INTO #__fb_attachments (mesid, filelocation) VALUES ('$id'," . $kunena_db->quote ( $fileLocation ) . ")" );
 
 								if (! $kunena_db->query ()) {
-									echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg () . "'); </script>\n";
+									$kunena_app->enqueueMessage ( 'Storing file failed: " . $kunena_db->getErrorMsg () . "', 'error' );
 								}
 							}
-
-							echo '<br /><br /><div align="center">' . _POST_SUCCESS_EDIT . "</div><br />";
-							echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $id, $kunena_config->messages_per_page, $catid );
+							$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page, $catid), _POST_SUCCESS_EDIT );
 						} else {
-							echo _POST_ERROR_MESSAGE_OCCURED;
+							$kunena_app->enqueueMessage ( _POST_ERROR_MESSAGE_OCCURED, 'error' );
+							$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true));
 						}
 					} else {
-						echo _POST_INVALID;
+						$kunena_app->enqueueMessage ( _POST_INVALID, 'error' );
+						$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true));
 					}
 				} else {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), _POST_NOT_MODERATOR );

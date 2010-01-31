@@ -41,8 +41,6 @@ JHTML::_ ( 'behavior.keepalive' );
 
 $document =& JFactory::getDocument();
 
-$selected = 0;
-
 if ($this->kunena_editmode) $this->title = _KUNENA_POST_EDIT . ' ' . $this->resubject;
 else if ($this->parentid) $this->title = _KUNENA_POST_REPLY_TOPIC . ' ' . $this->subject;
 else $this->title = _KUNENA_POST_NEW_TOPIC;
@@ -235,7 +233,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		foreach ($topic_emoticons as $emoid=>$emoimg):
 		?>
 		<input type="radio" name="topic_emoticon" value="<?php echo $emoid; ?>"
-			<?php echo $selected==$emoid?" checked=\"checked\" ":"";?> /> <img
+			<?php echo $this->emoid==$emoid?" checked=\"checked\" ":"";?> /> <img
 			src="<?php echo $emoimg;?>" alt=""
 			border="0" />
 		<?php endforeach; ?>

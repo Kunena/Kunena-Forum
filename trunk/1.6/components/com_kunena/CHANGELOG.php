@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 + [#19383] Revise Profile Page: added Started Topics and Posted Topics tabs
 + [#19383] Revise Profile Page: show users post count
 ^ [#19598] Make topic icons configurable in icons.php
+# [#19278] Keep topic icon after editing message (make it better)
 
 31-Jan-2010 fxstein
 + [#19592] Add JFirePHP support

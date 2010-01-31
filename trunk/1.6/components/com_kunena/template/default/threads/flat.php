@@ -24,25 +24,6 @@ defined( '_JEXEC' ) or die();
 
 global $kunena_icons;
 
-// Func Check
-$funclatest = false;
-$funcmylatest = false;
-$funcnoreplies = false;
-
-switch (JString::strtolower ( $this->func )) {
-	case 'mylatest' :
-		$funcmylatest = true;
-		break;
-	case 'noreplies' :
-		$funcnoreplies = true;
-		break;
-	case 'latest' :
-		$funclatest = true;
-		break;
-	default :
-		break;
-}
-
 // topic emoticons
 $topic_emoticons = array ();
 $topic_emoticons [0] = KUNENA_URLEMOTIONSPATH . 'default.gif';
@@ -58,7 +39,6 @@ $topic_emoticons [7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
 $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 
-if (count ( $this->messages ) > 0) {
 	?>
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -88,6 +68,9 @@ if (count ( $this->messages ) > 0) {
 		<?php
 	$k = 0;
 	$counter = 0;
+	if (empty ( $this->messages )) {
+		echo '<tr class="ksectiontableentry2"><td class="td-0 km center">' . ($this->func=='showcat'?_VIEW_NO_POSTS:_NO_POSTS) . '</td></tr>';
+	} else
 	foreach ( $this->messages as $leaf ) {
 		$leaf->name = kunena_htmlspecialchars ( stripslashes ( $leaf->name ) );
 		$leaf->email = kunena_htmlspecialchars ( stripslashes ( $leaf->email ) );
@@ -112,13 +95,13 @@ if (count ( $this->messages ) > 0) {
 		<tr
 			class="k<?php
 		echo $this->tabclass [$k^=1];
-		if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
+		if ($leaf->ordering != 0 || ($leaf->myfavorite && $this->func == 'mylatest')) {
 			echo '_stickymsg';
 		}
 
 		if ($leaf->class_sfx) {
 			echo ' k' . $this->tabclass [$k^1];
-			if ($leaf->ordering != 0 || ($leaf->myfavorite && $funcmylatest)) {
+			if ($leaf->ordering != 0 || ($leaf->myfavorite && $this->func == 'mylatest')) {
 				echo '_stickymsg';
 			}
 			echo $leaf->class_sfx;
@@ -192,7 +175,7 @@ if (count ( $this->messages ) > 0) {
 			<div class="ks">
 			<!-- By -->
 				<?php
-		if (JString::strtolower ( $this->func ) != 'showcat') {
+		if ($this->func != 'showcat') {
 			?>
 			<!-- Category --> <span class="topic_category"> <?php
 			echo _KUNENA_CATEGORY . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
@@ -224,12 +207,14 @@ if (count ( $this->messages ) > 0) {
 		?></div>
 			</td>
 			<td class="td-4 center">
-			<!-- Views --> 
+			<!-- Views -->
 			<span class="topic_views_number"><?php
-		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
+		if ($this->func == 'usertopics') echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->mycount );
+		else echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
 		?>
 			</span> <span class="topic_views"> <?php
-		echo _GEN_HITS;
+		if ($this->func == 'usertopics') echo _KUNENA_MY_POSTS;
+		else echo _GEN_HITS;
 		?> </span> <!-- /Views --></td>
 			<td class="td-6 ks">
 			<div style="position: relative"><!--  Sticky   --> <?php
@@ -367,8 +352,3 @@ if (count ( $this->messages ) > 0) {
 </div>
 </div>
 </div>
-<?php
-} else {
-	echo "<p align=\"center\">" . _VIEW_NO_POSTS . "</p>";
-}
-?>

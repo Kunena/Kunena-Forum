@@ -15,7 +15,7 @@ class CKunenaLatestX {
 	public $allow = 0;
 
 	function __construct($func, $page = 0) {
-		$this->func = $func;
+		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
 		$this->page = $page < 1 ? 1 : $page;
 
@@ -77,10 +77,10 @@ class CKunenaLatestX {
 
 		if (count ( $this->threadids ) > 0) {
 			$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachments,
-			l.msgcount, l.lastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
+			l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 		FROM (
 			SELECT m.thread, MAX(f.userid IS NOT null AND f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
-				COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
+				COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->my->id}, m.id, NULL)) AS mycount, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
 			FROM #__fb_messages AS m";
 			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
 			else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
@@ -128,22 +128,27 @@ class CKunenaLatestX {
 		}
 	}
 
-	function getMyLatest($all = true) {
+	function getMyLatest($posts = true, $fav = true, $sub = false) {
 		if (isset($this->total)) return;
-		if ($all === true) {
+		if ($posts === true && $fav === true) {
 			$this->header = _KUNENA_MENU_MYLATEST_DESC;
 			$this->title = _KUNENA_MY_DISCUSSIONS;
 		}
-		$query = "SELECT COUNT(DISTINCT m.thread) FROM (";
-		if ($all) $query .= "
-			SELECT thread, 0 AS fav
+
+		$subquery = array();
+		if (!$posts && !$fav && !$sub) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
+			FROM #__fb_messages
+			WHERE userid='{$this->user->id}' AND parent='0' AND moved='0' AND hold='0' AND catid IN ({$this->session->allowed})";
+		if ($posts) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
 			FROM #__fb_messages
 			WHERE userid='{$this->user->id}' AND moved='0' AND hold='0' AND catid IN ({$this->session->allowed})
-			GROUP BY thread
-		UNION ALL";
-		$query .= "
-			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$this->user->id}'
-		) AS t
+			GROUP BY thread";
+		if ($fav) $subquery[] = "SELECT thread, 1 AS fav, 0 AS sub FROM #__fb_favorites WHERE userid='{$this->user->id}'";
+		if ($sub)  $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__fb_subscriptions WHERE userid='{$this->user->id}'";
+		if (empty($subquery)) return;
+		$subqueries = implode("\n	UNION ALL \n", $subquery);
+
+		$query = "SELECT COUNT(DISTINCT m.thread) FROM ({$subqueries}) AS t
 		INNER JOIN #__fb_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})";
 
@@ -152,18 +157,11 @@ class CKunenaLatestX {
 		check_dberror ( 'Unable to count total threads' );
 		$offset = ($this->page - 1) * $this->threads_per_page;
 
-		if ($all) $this->order = "myfavorite DESC, lastid DESC";
+		if ($this->func == 'mylatest') $this->order = "myfavorite DESC, lastid DESC";
+		else if ($this->func == 'usertopics') $this->order = "mylastid DESC";
 		else $this->order = "lastid DESC";
-		$query = "SELECT m.thread, MAX(m.id) as lastid, MAX(t.fav) AS myfavorite FROM (";
-		if ($all) $query .= "
-			SELECT thread, 0 AS fav
-			FROM #__fb_messages
-			WHERE userid='{$this->user->id}' AND moved='0' AND hold='0' AND catid IN ({$this->session->allowed})
-			GROUP BY thread
-		UNION ALL";
-		$query .= "
-			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$this->user->id}'
-		) AS t
+
+		$query = "SELECT m.thread, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(t.fav) AS myfavorite, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
 		INNER JOIN #__fb_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})
 		GROUP BY thread
@@ -176,38 +174,28 @@ class CKunenaLatestX {
 		$this->_common();
 	}
 
+	function getOwnTopics() {
+		if (isset($this->total)) return;
+		$this->header = $this->title = _KUNENA_OWNTOPICS;
+		$this->getMyLatest(false, false, false);
+	}
+
+	function getUserTopics() {
+		if (isset($this->total)) return;
+		$this->header = $this->title = _KUNENA_USERTOPICS;
+		$this->getMyLatest(true, false, false);
+	}
+
 	function getFavorites() {
 		if (isset($this->total)) return;
 		$this->header = $this->title = _KUNENA_FAVORITES;
-		$this->getMyLatest(false);
+		$this->getMyLatest(false, true, false);
 	}
 
 	function getSubscriptions() {
 		if (isset($this->total)) return;
 		$this->header = $this->title = _KUNENA_SUBSCRIPTIONS;
-		$query = "SELECT COUNT(*)
-		FROM #__fb_subscriptions AS t
-		INNER JOIN #__fb_messages AS m ON m.id=t.thread
-		WHERE t.userid='{$this->user->id}' AND m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})";
-
-		$this->db->setQuery ( $query );
-		$this->total = ( int ) $this->db->loadResult ();
-		check_dberror ( 'Unable to count total threads' );
-		$offset = ($this->page - 1) * $this->threads_per_page;
-
-		$this->order = "lastid DESC";
-		$query = "SELECT m.thread, MAX(mm.id) as lastid
-		FROM #__fb_subscriptions AS t
-		INNER JOIN #__fb_messages AS m ON m.id=t.thread
-		INNER JOIN #__fb_messages AS mm ON mm.thread=t.thread AND m.hold='0'
-		WHERE t.userid='{$this->user->id}' AND m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})
-		GROUP BY thread
-		ORDER BY {$this->order}";
-
-		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
-		$this->threadids = $this->db->loadResultArray ();
-		check_dberror ( "Unable to load thread list." );
-		$this->_common();
+		$this->getMyLatest(false, false, true);
 	}
 
 	function getLatest() {

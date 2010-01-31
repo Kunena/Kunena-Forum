@@ -42,6 +42,11 @@ $document =& JFactory::getDocument();
 
 $selected = 0;
 
+if ($this->kunena_editmode) $this->title = _KUNENA_POST_EDIT . ' ' . $this->resubject;
+else if ($this->parentid) $this->title = _KUNENA_POST_REPLY_TOPIC . ' ' . $this->subject;
+else $this->title = _KUNENA_POST_NEW_TOPIC;
+$document->setTitle ( $this->title . ' - ' . stripslashes ( $kunena_config->board_title ) );
+
 $cap[0] = explode('-',$document->getLanguage());
 JApplication::addCustomHeadTag('
       <script type="text/javascript">
@@ -104,9 +109,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			<th colspan="2">
 			<div class="ktitle_cover km"><span class="ktitle kl">
 			<?php
-			if ($this->kunena_editmode) echo _KUNENA_POST_EDIT, ' ', $this->resubject;
-			else if ($this->parentid) echo _KUNENA_POST_REPLY_TOPIC, ' ', $this->subject;
-			else echo _KUNENA_POST_NEW_TOPIC;
+			echo $this->title;
 			?></span></div>
 			</th>
 		</tr>

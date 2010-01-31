@@ -70,6 +70,26 @@ class CKunenaProfile {
 		}
 	}
 
+	function displayOwnTopics()
+	{
+		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('owntopics', 0);
+		$obj->user = $this->user;
+		$obj->getOwnTopics();
+		$obj->displayFlat();
+		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	}
+
+	function displayUserTopics()
+	{
+		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('usertopics', 0);
+		$obj->user = $this->user;
+		$obj->getUserTopics();
+		$obj->displayFlat();
+		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	}
+
 	function displayFavorites()
 	{
 		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');

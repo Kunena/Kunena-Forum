@@ -220,8 +220,10 @@ define('_KUNENA_VIEW_MY_SUBSCRIPTIONS', 'View My Subscriptions');
 define('_KUNENA_VIEW_MY_FAVORITES', 'View My Favorites');
 define('_KUNENA_MY_SUBSCRIPTIONS', 'My Subscriptions');
 define('_KUNENA_SUBSCRIPTIONS', 'Subscriptions');
+define('_KUNENA_OWNTOPICS', 'Started Topics');
+define('_KUNENA_USERTOPICS', 'Posted Topics');
 define('_KUNENA_FAVORITES', 'Favorites');
-define('_KUNENA_MY_POSTS', 'My Posts');
+define('_KUNENA_MY_POSTS', 'Posts');
 
 // Joomla menu related strings
 define('_KUNENA_CREATE_MENU', 'Create Menu');

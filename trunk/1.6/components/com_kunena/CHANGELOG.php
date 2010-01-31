@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+31-Jan-2010 Matias
++ [#19383] Revise Profile Page: added Started Topics and Posted Topics tabs
+
 31-Jan-2010 fxstein
 + [#19592] Add JFirePHP support
 

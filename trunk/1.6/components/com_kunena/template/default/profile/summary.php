@@ -87,9 +87,13 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 
 			<div id="kprofile-tabs">
 				<dl class="tabs">
-					<dt>Posts</dt>
+					<dt><?php echo _KUNENA_OWNTOPICS; ?></dt>
 					<dd>
-						<p>Add post listing here.</p>
+						<?php $this->displayOwnTopics(); ?>
+					</dd>
+					<dt><?php echo _KUNENA_USERTOPICS; ?></dt>
+					<dd>
+						<?php $this->displayUserTopics(); ?>
 					</dd>
 					<dt><?php echo _KUNENA_SUBSCRIPTIONS; ?></dt>
 					<dd>

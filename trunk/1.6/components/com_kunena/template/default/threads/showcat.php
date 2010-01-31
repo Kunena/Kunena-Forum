@@ -92,14 +92,7 @@ if ($this->objCatInfo->headerdesc) {
 <!-- F: List Actions -->
 
 <?php
-
-if (count ( $this->messages ) > 0) {
 	$this->displayFlat ();
-} else {
-	echo "<p class=\"center\">";
-	echo '<br /><br />' . _SHOWCAT_NO_TOPICS;
-	echo "</p>";
-}
 ?>
 
 <!-- B: List Actions Bottom -->

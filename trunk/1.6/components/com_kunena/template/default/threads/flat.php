@@ -55,7 +55,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		<tr>
 			<th
 				colspan="<?php
-	echo (CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? "6" : "5");
+	echo $this->columns;
 	?>">
 
 		<div class="ktitle_cover km"><span class="ktitle kl">
@@ -82,7 +82,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		<tr>
 			<td class="kcontenttablespacer"
 				colspan="<?php
-			echo (CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? "6" : "5");
+			echo $this->columns;
 			?>">&nbsp;
 			</td>
 		</tr>
@@ -209,13 +209,21 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 			<td class="td-4 center">
 			<!-- Views -->
 			<span class="topic_views_number"><?php
-		if ($this->func == 'usertopics') echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->mycount );
-		else echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
+		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
 		?>
 			</span> <span class="topic_views"> <?php
-		if ($this->func == 'usertopics') echo _KUNENA_MY_POSTS;
-		else echo _GEN_HITS;
+		echo _GEN_HITS;
 		?> </span> <!-- /Views --></td>
+		<?php if ($this->showposts):?>
+			<td class="td-4 center">
+			<!-- Posts -->
+			<span class="topic_views_number"><?php
+		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->mycount );
+		?>
+			</span> <span class="topic_views"> <?php
+		echo _KUNENA_MY_POSTS;
+		?> </span> <!-- /Posts --></td>
+		<?php endif; ?>
 			<td class="td-6 ks">
 			<div style="position: relative"><!--  Sticky   --> <?php
 		if ($leaf->ordering != 0) {

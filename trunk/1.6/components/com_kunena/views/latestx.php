@@ -55,6 +55,9 @@ class CKunenaLatestX {
 		}
 
 		$this->threads_per_page = $this->config->threads_per_page;
+
+		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
+		$this->showposts = 0;
 	}
 
 	function _common() {
@@ -80,7 +83,7 @@ class CKunenaLatestX {
 			l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 		FROM (
 			SELECT m.thread, MAX(f.userid IS NOT null AND f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
-				COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->my->id}, m.id, NULL)) AS mycount, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
+				COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->user->id}, m.id, NULL)) AS mycount, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
 			FROM #__fb_messages AS m";
 			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
 			else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
@@ -176,24 +179,32 @@ class CKunenaLatestX {
 
 	function getOwnTopics() {
 		if (isset($this->total)) return;
+		$this->columns++;
+		$this->showposts = 1;
 		$this->header = $this->title = _KUNENA_OWNTOPICS;
 		$this->getMyLatest(false, false, false);
 	}
 
 	function getUserTopics() {
 		if (isset($this->total)) return;
+		$this->columns++;
+		$this->showposts = 1;
 		$this->header = $this->title = _KUNENA_USERTOPICS;
 		$this->getMyLatest(true, false, false);
 	}
 
 	function getFavorites() {
 		if (isset($this->total)) return;
+		$this->columns++;
+		$this->showposts = 1;
 		$this->header = $this->title = _KUNENA_FAVORITES;
 		$this->getMyLatest(false, true, false);
 	}
 
 	function getSubscriptions() {
 		if (isset($this->total)) return;
+		$this->columns++;
+		$this->showposts = 1;
 		$this->header = $this->title = _KUNENA_SUBSCRIPTIONS;
 		$this->getMyLatest(false, false, true);
 	}

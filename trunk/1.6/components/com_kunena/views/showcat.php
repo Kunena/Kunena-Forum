@@ -182,6 +182,8 @@ class CKunenaShowcat {
 		$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$this->catid}'" );
 		$this->modslist = $this->db->loadObjectList ();
 		check_dberror ( "Unable to load moderators." );
+
+		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 	}
 
 	function displayPathway() {

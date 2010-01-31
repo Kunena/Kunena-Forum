@@ -33,7 +33,7 @@ Legend:
 
 Kunena 1.5.10
 
-21-Jan-2010 fxstein
+31-Jan-2010 fxstein
 ^ [#19600] Updated version info
 
 Kunena 1.5.9

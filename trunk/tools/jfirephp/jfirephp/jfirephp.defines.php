@@ -21,7 +21,7 @@
  */
 
 // Only setup dummies if JFirePHP system plugin has not been loaded
-if (!defined(JFIREPHP)){
+if (!defined('JFIREPHP')){
 	if (!function_exists('fb')) {
 		// Dummy function for older procedural style
 		function fb(){}

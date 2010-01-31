@@ -63,6 +63,9 @@ $no_html = JRequest::getBool ( 'no_html', 0 );
 
 $kunena_app = JFactory::getApplication ();
 
+// If JFirePHP is installed and enabled, leave a trace of the Kunena startup
+FB::trace("Kunena Startup");
+
 // Redirect Forum Jump
 
 if (isset ( $_POST ['func'] ) && $func == "showcat") {
@@ -248,8 +251,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
 		}
 	} // no_html == 0
-
-
 
 	// WHOIS ONLINE IN FORUM
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php' )) {

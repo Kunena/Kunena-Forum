@@ -76,4 +76,6 @@ define ('KUNENA_SECONDS_IN_YEAR', 31536000);
 // Database defines
 define ('KUNENA_DB_MISSING_COLUMN', 1054);
 
+// Include JFirePHP function and class defines for system that don't have JFirePHP installed
+require_once(dirname(__FILE__).DS.'jfirephp.defines.php');
 ?>

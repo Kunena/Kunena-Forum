@@ -46,6 +46,7 @@ Kunena 1.6.0-DEV
 + [#19383] Revise Profile Page: hide moderation from myself, regular users
 ^ [#19383] Revise Profile Page: fix unknown location, gender
 # [#19288] Fix regression: Pending messages query
+# [#19288] Fix regression: undefined variable during posting
 
 31-Jan-2010 fxstein
 + [#19592] Add JFirePHP support

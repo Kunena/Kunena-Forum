@@ -538,6 +538,7 @@ if ($kunena_my->id) {
 				$this->id = $id;
 				$this->parentid = $parentid;
 				$this->catid = $catid;
+				$this->emoid = 0;
 
 				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
 					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
@@ -567,6 +568,7 @@ if ($kunena_my->id) {
 				$this->id = $id;
 				$this->parentid = $parentid;
 				$this->catid = $catid;
+				$this->emoid = 0;
 
 				//get the writing stuff in:
 				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {

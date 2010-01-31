@@ -231,13 +231,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<input type="radio" name="topic_emoticon" value="1"
 			<?php echo $selected==1?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>exclam.gif" alt=""
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>exclamation.png" alt=""
 			border="0" /> <input type="radio" name="topic_emoticon" value="2"
 			<?php echo $selected==2?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>question.gif" alt=""
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>question.png" alt=""
 			border="0" /> <input type="radio" name="topic_emoticon" value="3"
 			<?php echo $selected==3?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.gif" alt=""
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>arrow.png" alt=""
 			border="0" />
 		<?php
 		if ($kunena_config->rtewidth <= 320) {
@@ -246,7 +246,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		?>
 		<input type="radio" name="topic_emoticon" value="4"
 			<?php echo $selected==4?" checked=\"checked\" ":"";?> /> <img
-			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>love.gif" alt="" border="0" />
+			src="<?php echo KUNENA_URLEMOTIONSPATH ;?>love.png" alt="" border="0" />
 
 		<input type="radio" name="topic_emoticon" value="5"
 			<?php echo $selected==5?" checked=\"checked\" ":"";?> /> <img

@@ -31,17 +31,17 @@ if ($this->showgenstats > 0)
 	if ($kunena_config->fb_profile == "jomsocial")
 	{
 		$userlist1 = CKunenaLink::GetJomsocialUserListLink($this->totalmembers);
-		$userlist2 = CKunenaLink::GetJomsocialUserListLink(_STAT_USERLIST.'&raquo;');
+		$userlist2 = CKunenaLink::GetJomsocialUserListLink(_STAT_USERLIST.' &raquo;');
 	}
 	else if ($kunena_config->fb_profile == 'cb')
 	{
 	    $userlist1 = CKunenaLink::GetCBUserListLink($this->totalmembers);
-	    $userlist2 = CKunenaLink::GetCBUserListLink(_STAT_USERLIST.'&raquo;');
+	    $userlist2 = CKunenaLink::GetCBUserListLink(_STAT_USERLIST.' &raquo;');
 	}
 	else
 	{
 	    $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
-	    $userlist2 = CKunenaLink::GetUserlistLink('', _STAT_USERLIST.'&raquo;');
+	    $userlist2 = CKunenaLink::GetUserlistLink('', _STAT_USERLIST.' &raquo;');
 	}
 
     	?>
@@ -51,7 +51,7 @@ if ($this->showgenstats > 0)
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-        <table  class = "kblocktable" id ="kfrontstats" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+        <table class = "kblocktable" id ="kfrontstats">
             <thead>
                 <tr>
                     <th align="left">

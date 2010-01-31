@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+31-Jan-2010 severdia
+# [#19356] Added missing social icons, new topic icons
+# [#19356] Added CSS for red forum suffix
+
 30-Jan-2010 Xillibit
 # [#19561] Put the poll form into the new editor - little changes
 

@@ -47,7 +47,7 @@ global $kunena_icons;
 <?php
 		if ($this->headerdesc) {
 			?>
-<table
+<table id="kforum-head"
 	class="<?php
 			echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->catinfo->class_sfx : '';
 			?>">

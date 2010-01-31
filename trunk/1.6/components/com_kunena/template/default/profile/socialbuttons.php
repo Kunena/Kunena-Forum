@@ -17,6 +17,7 @@ defined( '_JEXEC' ) or die();
 	<?php echo $this->profile->socialButton('facebook'); ?>
 	<?php echo $this->profile->socialButton('myspace'); ?>
 	<?php echo $this->profile->socialButton('linkedin'); ?>
+	<?php echo $this->profile->socialButton('skype'); ?>
 </div>
 <div class="iconrow">
 	<?php echo $this->profile->socialButton('delicious'); ?>
@@ -25,10 +26,12 @@ defined( '_JEXEC' ) or die();
 </div>
 <div class="clr"></div>
 <div class="iconrow">
-	<?php echo $this->profile->socialButton('skype'); ?>
+	
 	<?php echo $this->profile->socialButton('yim'); ?>
 	<?php echo $this->profile->socialButton('aim'); ?>
 	<?php echo $this->profile->socialButton('gtalk'); ?>
+	<?php echo $this->profile->socialButton('icq'); ?>
+	<?php echo $this->profile->socialButton('msn'); ?>
 </div>
 <div class="iconrow">
 	<?php echo $this->profile->socialButton('blogspot'); ?>

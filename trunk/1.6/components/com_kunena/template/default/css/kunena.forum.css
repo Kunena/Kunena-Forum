@@ -742,7 +742,9 @@ td.td-1  {
 #Kunena td.kprofileboxcnt ul li input.kbutton {
 	margin-left: 0;
 }
-
+table#kforum-head td {
+	padding: 5px 10px;
+}
 
 
 /*
@@ -1231,6 +1233,10 @@ span.newchar {
 
 #Kunena th.ksectiontableheader {
 
+}
+
+#Kunena #kviews th.left {
+	background:#5388B4;
 }
 
 #Kunena td.k-msgview-left {
@@ -2236,11 +2242,6 @@ span.buttononline-no span {
 	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
 }
 
-
-
-
-
-
 /*
 BBCODE BUTTONS
 -------------------------------------------------------------------- */
@@ -3027,7 +3028,7 @@ li.bd a {
 }
 	
 div.iconrow {
-	width: 100px;
+	width: 121px;
 	padding-right: 10px;
 	padding-bottom: 5px;
 	float:left;
@@ -3055,6 +3056,8 @@ span.gtalk 		{ background: url("../images/social/googletalk.png") no-repeat; }
 span.blogspot 	{ background: url("../images/social/blogger.png") no-repeat; }
 span.flickr 	{ background: url("../images/social/flickr.png") no-repeat; }
 span.bebo 		{ background: url("../images/social/bebo.png") no-repeat; }
+span.msn 		{ background: url("../images/social/msn.png") no-repeat; }
+span.icq 		{ background: url("../images/social/icq.png") no-repeat; }
 	
 div.clrline {
 	clear:both; 
@@ -3343,30 +3346,30 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 }
 
 
-/* -orange category suffix
+/* -yellow category suffix
 ----------------------------------------------------------------------------------------------- */
 
-#Kunena .kforum-headerdesc-orange {
+#Kunena .kforum-headerdesc-yellow {
 	color: #000000;
 	background: #ffeb8c;
 }
 
-#Kunena tr.ksectiontableentry1-orange td {
+#Kunena tr.ksectiontableentry1-yellow td {
 	background: #ffeb8c;
 }
 
-#Kunena tr.ksectiontableentry2-orange td {
+#Kunena tr.ksectiontableentry2-yellow td {
 	background: #ffd475;
 }
 
-#Kunena tr.ksectiontableentry1-orange td.td-0,
-#Kunena tr.ksectiontableentry2-orange td.td-0	{
+#Kunena tr.ksectiontableentry1-yellow td.td-0,
+#Kunena tr.ksectiontableentry2-yellow td.td-0	{
 	background: #EEEEEE;
 	color: #999999;
 }
 
-#Kunena tr.ksectiontableentry1-orange td.td-1,
-#Kunena tr.ksectiontableentry2-orange td.td-1	{
+#Kunena tr.ksectiontableentry1-yellow td.td-1,
+#Kunena tr.ksectiontableentry2-yellow td.td-1	{
 	background: #EEEEEE;
 	color: #999999;
 }
@@ -3451,6 +3454,34 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 
 #Kunena tr.ksectiontableentry1-pink td.td-1,
 #Kunena tr.ksectiontableentry2-pink td.td-1	{
+	background: #EEEEEE;
+	color: #999999;
+}
+
+/* -red category suffix
+----------------------------------------------------------------------------------------------- */
+
+#Kunena .kforum-headerdesc-red {
+	color: #000000;
+	background: #fcd2c9;
+}
+
+#Kunena tr.ksectiontableentry1-red td {
+	background: #fcd2c9;
+}
+
+#Kunena tr.ksectiontableentry2-red td {
+	background: #fc967e;
+}
+
+#Kunena tr.ksectiontableentry1-red td.td-0,
+#Kunena tr.ksectiontableentry2-red td.td-0	{
+	background: #EEEEEE;
+	color: #999999;
+}
+
+#Kunena tr.ksectiontableentry1-red td.td-1,
+#Kunena tr.ksectiontableentry2-red td.td-1	{
 	background: #EEEEEE;
 	color: #999999;
 }

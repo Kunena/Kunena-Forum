@@ -35,6 +35,7 @@ Kunena 1.5.10
 
 31-Jan-2010 fxstein
 ^ [#19600] Updated version info
++ [#19601] Add KProfiler and JFirePHP support
 
 Kunena 1.5.9
 

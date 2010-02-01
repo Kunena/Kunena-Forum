@@ -24,6 +24,13 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 @error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
+// First of all take a profiling information snapshot for JFirePHP
+if(JDEBUG == 1){
+	require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.profiler.php');
+	$__profiler = KProfiler::GetInstance();
+	$__profiler->mark('Start');
+}
+
 // Just for debugging and performance analysis
 $mtime = explode(" ", microtime());
 $tstart = $mtime[1] + $mtime[0];
@@ -405,12 +412,12 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 	// no access to categories?
 	if (!$fbSession->allowed) $fbSession->allowed = '0';
-	
+
 	// Integration with GroupJive, Jomsocial:
 	$params = array($kunena_my->id, &$fbSession->allowed);
 	if (is_object($kunenaProfile))
 		$kunenaProfile->trigger('getAllowedForumsRead', $params);
-	
+
 //Disabled threaded view option for Kunena
 //    //Initial:: determining what kind of view to use... from profile, cookie or default settings.
 //    //pseudo: if (no view is set and the cookie_view is not set)
@@ -857,9 +864,17 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.session.class.php');
 
 if (is_object($kunenaProfile)) $kunenaProfile->close();
 
-// Just for debugging and performance analysis
-$mtime = explode(" ", microtime());
-$tend = $mtime[1] + $mtime[0];
-$tpassed = ($tend - $tstart);
-//echo $tpassed;
-?>
+if(JDEBUG == 1){
+	$__profiler->mark('Done');
+	$__queries = $__profiler->getQueryCount();
+	if(defined('JFIREPHP')){
+		FB::log($__profiler->getBuffer(), 'Kunena Profiler');
+		if($__queries>50){
+			FB::error($__queries, 'Kunena Queries');
+		} else if($__queries>35){
+			FB::warn($__queries, 'Kunena Queries');
+		} else {
+			FB::log($__queries, 'Kunena Queries');
+		}
+	}
+}

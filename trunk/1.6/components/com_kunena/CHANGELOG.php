@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+01-Feb-2010 severdia
+# [#19356] Random CSS fixes for UI
+
 31-Jan-2010 severdia
 + [#19383] Added uknown gender icon/option
 + [#19356] Moved icons to proper folders, new icons

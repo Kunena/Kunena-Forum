@@ -293,6 +293,7 @@ a:focus {outline: none;}
 	position: absolute;
 	/* top: -5px; */
 	right: -3px;
+	margin-left: 5px;
 }
 
 #Kunena .kcredits {
@@ -372,6 +373,7 @@ a:focus {outline: none;}
 #Kunena_tab div.moduletable ul.menu li a,
 #Kunena_tab div.moduletable ul.menu li a span {
 	background-image:none!important;
+	font-size: 1em;
 }
 
 #Kunena #Kunena_tab a {
@@ -434,6 +436,10 @@ td.td-1  {
 
 /* Using a Joomla menu module */
 
+#Kunena div.moduletable {
+	margin: 0;
+	padding: 0;
+}
 #Kunena_tab ul.menu li#current.active a {
 	background-color:#5388B4;
 }
@@ -704,6 +710,7 @@ td.td-1  {
 #Kunena span.topic_posted_time {
 	display: block;
 	float:left;
+	text-align:left;
 }
 #Kunena span.topic_category {
 	display: block;
@@ -1093,6 +1100,10 @@ div#kheader h1 a:hover {
 	clear: left;
 }
 
+#Kunena div.kthead-moderators  {
+	margin-top: 5px;
+}
+
 #Kunena div.kthead-desc a {
 	font-weight:bold;
 }
@@ -1131,12 +1142,12 @@ div#kheader h1 a:hover {
 }
 
 #Kunena span.kchildcount {
-	margin-left: 4px;
-	margin-right: 4px;
+	margin-left: 2px;
+	margin-right: 6px;
 	display: inline;
+	/* position: relative;
 	bottom: 2px;
-	position: relative;
-	letter-spacing: 1px;
+	letter-spacing: 1px; */
 }
 
 #Kunena div.klatest-subject a {
@@ -1162,7 +1173,7 @@ span.newchar {
 }
 
 #Kunena div.kcc-subcat a {
-	font-size: 95%;
+	font-size: .917em;
 }
 
 
@@ -2524,6 +2535,15 @@ ul#kbbcode-toolbar li a#kbbcode-help_button {
 	background-position:-396px -18px;
 }
 
+
+/*
+POLLS
+-------------------------------------------------------------------- */
+
+div#poll_text_help {
+	font-weight:bold;
+}
+	
 
 /*
 Multi file upload for bbcode editor

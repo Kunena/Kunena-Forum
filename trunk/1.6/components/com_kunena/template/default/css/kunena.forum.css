@@ -373,7 +373,7 @@ a:focus {outline: none;}
 #Kunena_tab div.moduletable ul.menu li a,
 #Kunena_tab div.moduletable ul.menu li a span {
 	background-image:none!important;
-	font-size: 1em;
+	/* font-size: 1em; */
 }
 
 #Kunena #Kunena_tab a {
@@ -390,13 +390,14 @@ a:focus {outline: none;}
 #Kunena #Kunena_tab a span {
 	display: block;
 	/* background: url("../images/backgrounds/tabmenuleft.gif") no-repeat left top; */
-	padding: 0 15px 0 15px;
+	padding: 0 1.2em;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 1em;
+	/* font-size: 1em; */
 	color: #FFFFFF;
-	font-weight: bold;
-	line-height: 25px;
+	/* font-weight: bold; */
+	line-height: 2em;
 	/* line-height: 35px; */
+	text-indent: 0;
 }
 
 #Kunena #Kunena_tab a:hover,
@@ -409,7 +410,6 @@ a:focus {outline: none;}
 #Kunena #Kunena_tab li.Kunena_item_active a span	{
 	background-position: left bottom;
 	color: #FFFFFF;
-	font-weight: bold;
 	font-style: normal;
 	text-decoration: none;
 }

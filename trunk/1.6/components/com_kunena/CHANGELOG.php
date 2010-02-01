@@ -35,6 +35,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 01-Feb-2010 severdia
+^ [#19236] Revert category overlay colors
+
+01-Feb-2010 severdia
 # [#19356] Random CSS fixes for UI
 
 31-Jan-2010 severdia

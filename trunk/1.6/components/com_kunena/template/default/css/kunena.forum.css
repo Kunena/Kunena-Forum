@@ -2526,6 +2526,55 @@ ul#kbbcode-toolbar li a#kbbcode-help_button {
 
 
 /*
+Multi file upload for bbcode editor
+-------------------------------------------------------------------- */
+
+#kbbcode-filelist {
+	padding: 0;
+	list-style: none;
+	margin: 0;
+}
+ 
+#kbbcode-filelist .file-invalid {
+	cursor: pointer;
+	color: #514721;
+	padding-left: 48px;
+	line-height: 24px;
+	background: url(assets/error.png) no-repeat 24px 5px;
+	margin-bottom: 1px;
+}
+#kbbcode-filelist .file-invalid span {
+	background-color: #fff6bf;
+	padding: 1px;
+}
+ 
+#kbbcode-filelist .file {
+	line-height: 2em;
+	padding-left: 22px;
+	background: url(assets/attach.png) no-repeat 1px 50%;
+}
+ 
+#kbbcode-filelist .file span,
+#kbbcode-filelist .file a {
+	padding: 0 4px;
+}
+ 
+#kbbcode-filelist .file .file-size {
+	color: #666;
+}
+ 
+#kbbcode-filelist .file .file-error {
+	color: #8a1f11;
+}
+ 
+#kbbcode-filelist .file .file-progress {
+	width: 125px;
+	height: 12px;
+	vertical-align: middle;
+	background-image: url(../../assets/progress-bar/progress.gif);
+}
+
+/*
 POLLS
 -------------------------------------------------------------------- */
 
@@ -3368,6 +3417,34 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 /* CSS Suffix support for category specific styling (Leave this section at the bottom)
 ----------------------------------------------------------------------------------------------- */
 
+/* -red category suffix
+----------------------------------------------------------------------------------------------- */
+
+#Kunena .kforum-headerdesc-red {
+	color: #000000;
+	background: #FFDDDD;
+}
+
+#Kunena tr.ksectiontableentry1-red td {
+	background: #FFDDDD;
+}
+
+#Kunena tr.ksectiontableentry2-red td {
+	background: #FFCFCF;
+}
+
+#Kunena tr.ksectiontableentry1-red td.td-0,
+#Kunena tr.ksectiontableentry2-red td.td-0	{
+	background: #EEEEEE;
+	color: #999999;
+}
+
+#Kunena tr.ksectiontableentry1-red td.td-1,
+#Kunena tr.ksectiontableentry2-red td.td-1	{
+	background: #EEEEEE;
+	color: #999999;
+}
+
 /* -green category suffix
 ----------------------------------------------------------------------------------------------- */
 
@@ -3401,15 +3478,15 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 
 #Kunena .kforum-headerdesc-yellow {
 	color: #000000;
-	background: #ffeb8c;
+	background: #FFFFCC;
 }
 
 #Kunena tr.ksectiontableentry1-yellow td {
-	background: #ffeb8c;
+	background: #FFFFCC;
 }
 
 #Kunena tr.ksectiontableentry2-yellow td {
-	background: #ffd475;
+	background: #FFFFAA;
 }
 
 #Kunena tr.ksectiontableentry1-yellow td.td-0,
@@ -3508,30 +3585,3 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 	color: #999999;
 }
 
-/* -red category suffix
------------------------------------------------------------------------------------------------ */
-
-#Kunena .kforum-headerdesc-red {
-	color: #000000;
-	background: #fcd2c9;
-}
-
-#Kunena tr.ksectiontableentry1-red td {
-	background: #fcd2c9;
-}
-
-#Kunena tr.ksectiontableentry2-red td {
-	background: #fc967e;
-}
-
-#Kunena tr.ksectiontableentry1-red td.td-0,
-#Kunena tr.ksectiontableentry2-red td.td-0	{
-	background: #EEEEEE;
-	color: #999999;
-}
-
-#Kunena tr.ksectiontableentry1-red td.td-1,
-#Kunena tr.ksectiontableentry2-red td.td-1	{
-	background: #EEEEEE;
-	color: #999999;
-}

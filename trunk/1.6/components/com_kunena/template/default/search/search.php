@@ -64,7 +64,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 		<?php
 		$k = 0;
 		if ($this->total == 0 && $this->int_kunena_errornr) {
-			echo '<tr class="k' . $this->tabclass [$k] . '" ><td colspan="3"  style="text-align:center;font-weight:bold">' . $this->str_kunena_errormsg . '</td></tr>';
+			echo '<tr class="k' . $this->tabclass [$k] . '" ><td colspan="3" style="text-align:center;font-weight:bold">' . $this->str_kunena_errormsg . '</td></tr>';
 		}
 
 		foreach ( $this->results as $result ) {

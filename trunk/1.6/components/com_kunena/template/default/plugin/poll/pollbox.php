@@ -107,7 +107,7 @@ if ( $dataspollusers[0]->userid == $kunena_my->id || $kunena_my->id == "0")//if 
 elseif ((strftime("%Y-%m-%d %H:%M:%S",time()) <= $dataspollresult[0]->polltimetolive) || $dataspollresult[0]->polltimetolive == "0000-00-00 00:00:00")
 {
 	?>
-	<div style="font-weight:bold;" id="poll_text_help"></div>
+	<div id="poll_text_help"></div>
 	<fieldset><legend id="poll_xd" style="font-size: 14px;"><?php echo _KUNENA_POLL_OPTIONS; ?></legend>
 	<ul>
 	<?php

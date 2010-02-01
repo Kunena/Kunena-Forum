@@ -53,7 +53,7 @@ if ($do == 'vote')
                 <tr class = "ksectiontableentry2">
                     <td class = "td-1 km" align="left">
                         <div class = "polldesc">
-                        <div style="font-weight:bold;" id="poll_text_help"></div>
+                        <div id="poll_text_help"></div>
                         <fieldset>
                         <legend style="font-size: 14px;"><?php echo _KUNENA_POLL_OPTIONS; ?></legend>
                         <ul>
@@ -127,7 +127,7 @@ elseif ($do == 'changevote')
                 <tr class = "ksectiontableentry2">
                     <td class = "td-1 km" align="left">
                         <div class = "polldesc">
-                        <div style="font-weight:bold;" id="poll_text_help"></div>
+                        <div id="poll_text_help"></div>
                         <fieldset><legend style="font-size: 14px;"><?php _KUNENA_POLL_OPTIONS; ?></legend><ul>
 	<?php
     for ($i=0; $i < sizeof($dataspollresult);$i++)

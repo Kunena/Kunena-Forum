@@ -161,7 +161,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 
 					<br/>
 
-					<i><?php echo $kunena_config->maxsig; ?> <?php echo _CHARS; ?></i>
+					<em><?php echo $kunena_config->maxsig; ?> <?php echo _CHARS; ?></em>
 
 					<br/>
 
@@ -230,7 +230,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 					<br />
 
 					<input type = "checkbox" value = "1" name = "deleteSig"/>
-					<i> <?php echo _USER_DELETE; ?></i>
+					<em> <?php echo _USER_DELETE; ?></em>
 				</td>
 			</tr>
 

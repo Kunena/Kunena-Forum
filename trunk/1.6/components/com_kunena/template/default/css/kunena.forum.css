@@ -231,7 +231,7 @@ a:focus {outline: none;}
 	font-size: 2.091em;
 	font-weight: normal;
 	margin: 5px 0;
-	line-height: 21px;
+	/* line-height: 21px; */
 }
 
 #Kunena span.cat_topics,
@@ -245,7 +245,7 @@ a:focus {outline: none;}
 #Kunena span.cat_replies_number {
 	display:block;
 	font-size: 1.417em;
-	line-height: 21px;
+	/* line-height: 21px; */
 	margin:5px 0;
 	color: #999999;
 }
@@ -262,12 +262,17 @@ a:focus {outline: none;}
 	font-size: 1.25em;
 }
 
+#Kunena div.k-topic-title-cover {
+	text-align:left;
+}
+	
+	
 #Kunena .topic_latest_post_avatar {
 	display: block;
 	height: auto;
 	width: 40px;
 	padding: 1px;
-	margin-right: 5px;
+	margin-right: 10px;
 	border: 1px solid #BFC3C6;
 	float: left;
 }
@@ -688,6 +693,10 @@ td.td-1  {
 	color: #F2F1EE;
 }
 
+#Kunena table#kflattable th {
+	background: #5388B4;
+}
+
 #Kunena table#kflattable div.ks {
 	margin-top: 3px;
 }
@@ -709,7 +718,7 @@ td.td-1  {
 #Kunena span.topic_views_number {
 	display:block;
 	font-size: 1.455em;
-	line-height:21px;
+	/* line-height:21px; */
 	margin:5px 0;
 	color: #999999;
 }
@@ -1106,6 +1115,7 @@ div#kheader h1 a:hover {
 	width: 100%;
 	display: inline-block;
 	vertical-align: top;
+	padding-top: 4px;
 }
 
 #Kunena div.kcc-table {
@@ -1154,6 +1164,8 @@ span.newchar {
 #Kunena div.kcc-subcat a {
 	font-size: 95%;
 }
+
+
 
 /* SHOW CATEGORY 
 ----------------------------------------------------------------------------------------------- */
@@ -1853,7 +1865,7 @@ ul#statslistright li	 {
 	list-style-type:none;
 	display:block;
 	margin-left: 0;
-	padding: 1px 10px 1px 0;
+	padding: 1px 0px 1px 0;
 }
 ul#statslistright li strong a {
 	font-weight:bold;
@@ -1931,6 +1943,12 @@ POST PAGE
 	/* IMPORTANT: height must be set in px */
 	height: 200px;
 	border: 1px solid #BFC3C6;
+}
+
+td.kcaptcha {
+	text-align: left;
+	vertical-align:middle;
+	height: 35px;
 }
 
 /* ---- Post Previews ---- */
@@ -2506,6 +2524,16 @@ ul#kbbcode-toolbar li a#kbbcode-help_button {
 	background-position:-396px -18px;
 }
 
+
+/*
+POLLS
+-------------------------------------------------------------------- */
+
+div#poll_text_help {
+	font-weight:bold;
+}
+	
+	
 /*
 POST HISTORY
 -------------------------------------------------------------------- */
@@ -3209,6 +3237,10 @@ input.kbutton {
 
 form#jumpto input.kbutton {
 	margin: 5px;
+}
+
+#Kunena table.klist_top td.klist_markallcatsread input.kbutton {
+	margin-top: 0;
 }
 	
 /* SLIDERS

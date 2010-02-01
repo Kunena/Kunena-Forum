@@ -392,7 +392,7 @@ if ($task == 'default')
 
                                 <br />
 
-                                <input type = "checkbox" value = "1" name = "deleteAvatar"/><i> <?php echo _USER_DELETEAV; ?></i>
+                                <input type = "checkbox" value = "1" name = "deleteAvatar"/><em> <?php echo _USER_DELETEAV; ?></em>
 
                     <?php
                             }

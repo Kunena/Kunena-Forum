@@ -3779,16 +3779,16 @@ echo $pane->endPane();
 	</tr>
 	<tr>
 		<td colspan="2" class="contentpane"><input type="checkbox" value="1"
-			name="deleteSig"> <i><?php
+			name="deleteSig"> <em><?php
 		echo _KUNENA_DELSIG;
-		?></i></td>
+		?></em></td>
 		<?php
 		if ($kunena_config->allowavatar) {
 			?>
 		<td class="contentpane"><input type="checkbox" value="1"
-			name="deleteAvatar"> <i><?php
+			name="deleteAvatar"> <em><?php
 			echo _KUNENA_DELAV;
-			?></i></td>
+			?></em></td>
 		<?php
 		} else {
 			echo "<td>&nbsp;</td>";

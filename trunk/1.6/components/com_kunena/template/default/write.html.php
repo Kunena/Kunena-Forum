@@ -44,12 +44,6 @@ $document =& JFactory::getDocument();
 // Load mootool more as it is currently not included in Joomla or the mootools12 plugin
 $document->addScript ( KUNENA_DIRECTURL . '/js/mootools/mootools-1.2.4.2-more.js' );
 
-// Load fancy upload java scripts
-$document->addScript ( KUNENA_DIRECTURL . '/js/fancyupload/Swiff.Uploader.js' );
-$document->addScript ( KUNENA_DIRECTURL . '/js/fancyupload/Fx.ProgressBar.js' );
-$document->addScript ( KUNENA_DIRECTURL . '/js/fancyupload/FancyUpload2.js' );
-$document->addScript ( KUNENA_DIRECTURL . '/js/fancyupload/FancyUpload3.Attach.js' );
-
 $selected = 0;
 
 if ($this->kunena_editmode) $this->title = _KUNENA_POST_EDIT . ' ' . $this->resubject;

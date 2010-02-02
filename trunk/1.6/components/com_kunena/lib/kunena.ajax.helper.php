@@ -230,7 +230,7 @@ class CKunenaAjaxHelper {
 		}
 
 		$fileid = 'attachment';
-		$file = $_FILES[$fileid];
+		$file = JRequest::getVar('attachment', NULL, 'FILES', 'array');
 		//any errors the server registered on uploading
 		$fileError = $file['error'];
 		if ($fileError > 0)

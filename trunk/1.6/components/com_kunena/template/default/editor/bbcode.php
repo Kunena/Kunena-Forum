@@ -77,10 +77,19 @@ $kunena_config = & CKunenaConfig::getInstance ();
  			</div>
 
  			<div id="kbbcode-attachment-options" style="display: none;">
-				<a href="#" id="kbbcode-attach">Attach a file</a>
-				<ul id="kbbcode-filelist"></ul>
-				<a href="#" id="kbbcode-attach-more" style="display: none;">Attach another file</a>
- 			</div>
+
+				<ul id="kbbcode-filelist">
+				<li id="kattachment" style="display: none;">
+					<span class="kfile"></span>
+					<span class="kstat"></span>
+					<a href="#">Remove</a>
+				</li>
+				<li id="knewfile">
+					<input name="attachment" type="file" />
+				</li>
+				</ul>
+
+			</div>
 
 			<div id="kbbcode-link-options" style="display: none;"><?php
 			echo _KUNENA_EDITOR_LINK_URL;

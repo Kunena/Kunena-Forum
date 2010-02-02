@@ -376,7 +376,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				value="<?php echo (' ' . _GEN_CANCEL . ' ');?>"
 				onclick="javascript:window.history.back();"
 				title="<?php echo (_KUNENA_EDITOR_HELPLINE_CANCEL);?>" />
-				<input type="submit" name="submit" class="kbutton"
+				<input type="submit" name="ksubmit" class="kbutton"
 				value="<?php echo (' ' . _GEN_CONTINUE . ' ');?>"
 				onclick="return submitForm()"
 				title="<?php echo (_KUNENA_EDITOR_HELPLINE_SUBMIT);?>" />

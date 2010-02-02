@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+02-Feb-2010 Matias
++ [#19380] Multifile upload: upload files to server by using iframe (part 2)
+
 01-Feb-2010 fxstein
 ^ [#19236] Revert category overlay colors
 # [#19356] Center menu tabs and make spacing font size relative

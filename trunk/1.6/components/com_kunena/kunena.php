@@ -169,7 +169,7 @@ if ($func == "json") {
 	$document->setMimeEncoding( 'application/json' );
 
 	// Change the suggested filename.
-	JResponse::setHeader( 'Content-Disposition', 'attachment; filename="kunena.json"' );
+	if ($action!='uploadfile') JResponse::setHeader( 'Content-Disposition', 'attachment; filename="kunena.json"' );
 
 	$value = JRequest::getVar ( 'value', '' );
 

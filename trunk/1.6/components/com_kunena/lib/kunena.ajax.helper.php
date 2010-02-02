@@ -83,7 +83,7 @@ class CKunenaAjaxHelper {
 					break;
 				case 'uploadfile' :
 
-					//$response = $this->_uploadFile ();
+					$response = $this->_uploadFile ($do);
 
 					break;
 				default :
@@ -91,7 +91,6 @@ class CKunenaAjaxHelper {
 					break;
 			}
 		}
-
 		// Output the JSON data.
 		return json_encode ( $response );
 	}
@@ -215,9 +214,9 @@ class CKunenaAjaxHelper {
 		return $result;
 	}
 
-	protected function _uploadFile () {
+	protected function _uploadFile ($do) {
 
-		$return = array();
+		$result = array();
 		$error = false;
 
 		//import joomlas filesystem functions, we will do all the filewriting with joomlas functions,
@@ -226,16 +225,14 @@ class CKunenaAjaxHelper {
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 
-		//this is the name of the field in the html form, filedata is the default name for swfupload
-		//so we will leave it as that
-		$fieldName = 'Filedata';
-
 		if(JDEBUG == 1 && defined('JFIREPHP')){
 			FB::log("Kunena JSON: _uploadFile");
 		}
 
+		$fileid = 'attachment';
+		$file = $_FILES[$fileid];
 		//any errors the server registered on uploading
-		$fileError = $_FILES[$fieldName]['error'];
+		$fileError = $file['error'];
 		if ($fileError > 0)
 		{
 	        switch ($fileError)
@@ -264,23 +261,27 @@ class CKunenaAjaxHelper {
 		// Terminate early if we already hit an error
 		if ($error){
 			return array(
+				'id' => $fileid,
 				'status' => '0',
+				'name' => $file['name'],
 				'error' => $error
 			);
 		}
 
 		//check for filesize
-		$fileSize = $_FILES[$fieldName]['size'];
+		$fileSize = $file['size'];
 		if($fileSize > 2 * 1024 * 1024)
 		{
 			return array(
+				'id' => $fileid,
 				'status' => '0',
+				'name' => $file['name'],
 				'error' => JText::_( 'FILE BIGGER THAN 2MB' )
 			);
 		}
 
 		//check the file extension is ok
-		$fileName = $_FILES[$fieldName]['name'];
+		$fileName = $file['name'];
 		$uploadedFileNameParts = explode('.',$fileName);
 		$uploadedFileExtension = array_pop($uploadedFileNameParts);
 
@@ -302,13 +303,15 @@ class CKunenaAjaxHelper {
 		if ($extOk == false)
 		{
 			return array(
+				'id' => $fileid,
 				'status' => '0',
+				'name' => $file['name'],
 				'error' => JText::_( 'INVALID EXTENSION' )
 			);
 		}
 
 		//the name of the file in PHP's temp directory that we are going to move to our folder
-		$fileTemp = $_FILES[$fieldName]['tmp_name'];
+		$fileTemp = $file['tmp_name'];
 
 		//for security purposes, we will also do a getimagesize on the temp file (before we have moved it
 		//to the folder) to check the MIME type of the file, and whether it has a width and height
@@ -323,43 +326,50 @@ class CKunenaAjaxHelper {
 		if( !is_int($imageinfo[0]) || !is_int($imageinfo[1]) ||  !in_array($imageinfo['mime'], $validFileTypes) )
 		{
 			return array(
+				'id' => $fileid,
 				'status' => '0',
+				'name' => $file['name'],
 				'error' => JText::_( 'INVALID FILETYPE' )
 			);
 		}
 
 		//lose any special characters in the filename
-		$fileName = ereg_replace("[^A-Za-z0-9.]", "-", $fileName);
+		$fileName = preg_replace("[^A-Za-z0-9.]", "-", $fileName);
 
 		//always use constants when making file paths, to avoid the possibilty of remote file inclusion
 		$uploadPath = KUNENA_PATH_UPLOADED.DS.'images'.DS.$fileName;
 
+		// Our processing, we get a hash value from the file
+		$hash = md5_file($file['tmp_name']);
+
+		// ... and if available, we get image data
+		$info = @getimagesize($file['tmp_name']);
+
 		if(!JFile::upload($fileTemp, $uploadPath))
 		{
 			return array(
+				'id' => $fileid,
 				'status' => '0',
+				'name' => $file['name'],
 				'error' => JText::_( 'ERROR MOVING FILE' )
 			);
 		}
 
-		$return = array(
+		$result = array(
+			'id' => $fileid,
 			'status' => '1',
-			'name' => $_FILES['Filedata']['name']
+			'name' => $file['name']
 		);
 
-		// Our processing, we get a hash value from the file
-		$return['hash'] = md5_file($fileName);
-
-		// ... and if available, we get image data
-		$info = @getimagesize($_FILES['Filedata']['tmp_name']);
-
+		$result['hash'] = $hash;
 		if ($info) {
-			$return['width'] = $info[0];
-			$return['height'] = $info[1];
-			$return['mime'] = $info['mime'];
+			$result['width'] = $info[0];
+			$result['height'] = $info[1];
+			$result['mime'] = $info['mime'];
+			$result['size'] = $file['size'];
 		}
 
-		return $return;
+		return $result;
 	}
 
 }

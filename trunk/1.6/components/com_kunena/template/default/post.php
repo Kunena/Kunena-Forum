@@ -169,11 +169,13 @@ if ($kunena_my->id) {
 			<tr>
 				<td><?php
 			$parent = ( int ) $parentid;
-
+			if ($kunena_config->askemail) jimport( 'joomla.mail.helper' );
 			if (empty ( $my_name )) {
 				echo _POST_FORGOT_NAME;
 			} else if ($kunena_config->askemail && empty ( $this->email )) {
 				echo _POST_FORGOT_EMAIL;
+			} else if ($kunena_config->askemail && ! JMailHelper::isEmailAddress($this->email)) {
+				echo _KUNENA_MY_EMAIL_INVALID;
 			} else if (empty ( $subject )) {
 				echo _POST_FORGOT_SUBJECT;
 			} else if (empty ( $message )) {
@@ -437,10 +439,18 @@ if ($kunena_my->id) {
 							$kunena_config->mailmod, $kunena_config->mailadmin, $kunena_my->id);
 
 						if (count($emailToList)) {
+							if (! $kunena_config->email  || ! JMailHelper::isEmailAddress($kunena_config->email)) {
+								$kunena_app->enqueueMessage (_KUNENA_EMAIL_INVALID, 'error' );
+							} else {
 							// clean up the message for review
 							$mailmessage = smile::purify ( stripslashes ( $message ) );
 
+							$mailsender = JMailHelper::cleanAddress( stripslashes ( $board_title ) . " " . _GEN_FORUM );
+							$mailsubject = JMailHelper::cleanSubject("[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")");
+
 							foreach ( $emailToList as $emailTo ) {
+								if (! $emailTo->email || ! JMailHelper::isEmailAddress($emailTo->email)) continue;
+
 								if ($emailTo->subscription) {
 									$msg1 = _KUNENA_POST_EMAIL_NOTIFICATION1;
 									$msg2 = _KUNENA_POST_EMAIL_NOTIFICATION2;
@@ -448,9 +458,6 @@ if ($kunena_my->id) {
 									$msg1 = _KUNENA_POST_EMAIL_MOD1;
 									$msg2 = _KUNENA_POST_EMAIL_MOD2;
 								}
-
-								$mailsender = stripslashes ( $board_title ) . " " . _GEN_FORUM;
-								$mailsubject = "[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")";
 
 								$msg = "$emailTo->name,\n\n";
 								$msg .=  $msg1 . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
@@ -468,11 +475,13 @@ if ($kunena_my->id) {
 								$msg .= _KUNENA_POST_EMAIL_NOTIFICATION3 . "\n";
 								$msg .= "\n\n\n\n";
 								$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+								$msg = JMailHelper::cleanBody($msg);
 
 								if ($ip != "127.0.0.1") {
 									JUtility::sendMail ( $kunena_config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
 								}
 							}
+						}
 						}
 
 						$redirectmsg = '';
@@ -726,10 +735,11 @@ if ($kunena_my->id) {
                         }
 
 						if (!$kunena_config->askemail){
-                        	   if (empty($email)) {
-                                $email = $mes->email;
-                              }
-                          }
+							jimport( 'joomla.mail.helper' );
+							if (empty($email) || ! JMailHelper::isEmailAddress($kunena_config->email)) {
+								$email = $mes->email;
+							}
+						}
 
 						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
 

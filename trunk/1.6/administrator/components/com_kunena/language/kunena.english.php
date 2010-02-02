@@ -164,6 +164,10 @@ define('_KUNENA_POST_REPLY_TOPIC', 'Reply Topic:');
 define('_KUNENA_POST_EDIT', 'Edit Post:');
 define('_KUNENA_POST_IN_CATEGORY', 'Category');
 
+// EMail
+define('_KUNENA_EMAIL_INVALID', 'Forum tried to send email from invalid address. Please contact site administrator!');
+define('_KUNENA_MY_EMAIL_INVALID', 'Your EMail address is invalid. Valid EMail address is required to post into this forum!');
+
 // Action buttons
 define('_KUNENA_BUTTON_MARKFORUMREAD', 'Mark Forum Read');
 define('_KUNENA_BUTTON_SUBSCRIBE_CATEGORY', 'Subscribe');

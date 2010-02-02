@@ -100,21 +100,14 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
     $message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
     $message = strtr($message, array('&#32;'=>''));
 
-    //get category moderators
-    $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid={$row->catid}");
-    $mods = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load moderators.");
-
-    //get admins
-    $kunena_db->setQuery("SELECT id FROM #__users WHERE gid IN (24, 25)");
-    $admins = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load admin.");
+	$emailToList = CKunenaTools::getEMailToList($row->catid, $row->thread, false,
+		$kunena_config->mailmod, $kunena_config->mailadmin, $kunena_my->id);
 
     switch ($type)
     {
         default:
         case '0':
-            SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins);
+            SendReportToMail($sender, $subject, $message, $emailToList);
 
             break;
     }
@@ -136,29 +129,25 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
     echo '</div>';
 }
 
-function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
-    $kunena_config =& CKunenaConfig::getInstance();
-    $kunena_db =& JFactory::getDBO();
+function SendReportToMail($sender, $subject, $message, $emailToList) {
+	$kunena_config =& CKunenaConfig::getInstance();
+	$kunena_db =& JFactory::getDBO();
+	$kunena_app = & JFactory::getApplication ();
 
-    //send report to category moderators
-    if (count($mods)>0) {
-        foreach ($mods as $mod) {
-            $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$mod->userid}");
-            $email = $kunena_db->loadResult();
-            check_dberror ( "Unable to load email." );
+	jimport( 'joomla.mail.helper' );
+	if (! $kunena_config->email  || ! JMailHelper::isEmailAddress($kunena_config->email)) {
+		$kunena_app->enqueueMessage (_KUNENA_EMAIL_INVALID, 'error' );
+		return;
+	}
+	$sender = JMailHelper::cleanAddress(stripslashes($kunena_config->board_title).' '._GEN_FORUM.': '.$sender);
+	$subject = JMailHelper::cleanSubject( $subject );
+	$message = JMailHelper::cleanBody($message);
 
-            JUtility::sendMail($kunena_config->email, $kunena_config->board_title, $email, $subject, $message);
-            }
-    }
-
-    //send report to site admins
-    foreach ($admins as $admin) {
-        $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
-        $email = $kunena_db->loadResult();
-        check_dberror ( "Unable to load email." );
-        JUtility::sendMail($kunena_config->email, stripslashes($kunena_config->board_title)." ".JString::trim(_GEN_FORUM), $email, $subject, $message);
-        }
-    }
+	foreach ( $emailToList as $emailTo ) {
+		if (! $emailTo->email || ! JMailHelper::isEmailAddress($emailTo->email)) continue;
+		JUtility::sendMail($kunena_config->email, $sender, $emailTo->email, $subject, $message);
+	}
+}
 
 function ReportForm($id, $catid) {
     $kunena_app =& JFactory::getApplication();

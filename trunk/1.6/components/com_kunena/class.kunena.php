@@ -672,29 +672,47 @@ class CKunenaTools {
             $kunena_app->redirect($return, _KUNENA_BULKMSG_DELETED);
         }
 
-    function isAdmin($user = null) {
-		if ($user === 0) return false;
-    	if (!is_object($user)) $user = JUser::getInstance((int)$user);
-		if($user->usertype == "Super Administrator" || $user->usertype == "Administrator")
-			return true;
+    function isAdmin($uid = null) {
+		static $instances = null;
+
+		if ($uid === 0) return false;
+		if ($uid === null){
+			$user =& JFactory::getUser();
+			$uid = $user->id;
+		}
+		if (is_object($uid)){
+			$uid = $uid->id;
+		}
+
+    	if (!$instances) {
+			$kunena_db = &JFactory::getDBO();
+			$kunena_db->setQuery ("SELECT u.id AS uid FROM #__users AS u"
+				." WHERE u.block='0' "
+				." AND u.usertype IN ('Administrator', 'Super Administrator')");
+			$instances = $kunena_db->loadResultArray();
+			check_dberror("Unable to load administrators.");
+		}
+
+		if (in_array($uid, $instances)) return true;
 		return false;
     }
 
 	function isModerator($uid, $catid=0) {
-		static $instances = array();
+		static $instances = null;
+
 		$uid = (int)$uid;
 		$catid = (int)$catid;
 		if ($uid == 0) return false; // Anonymous never has moderator permission
 		if (self::isAdmin($uid)) return true;
-		if (!isset($instances[$uid])) {
+		if (!$instances) {
 			$kunena_db = &JFactory::getDBO();
-			$kunena_db->setQuery ("SELECT m.catid FROM #__users AS u"
+			$kunena_db->setQuery ("SELECT u.id AS uid, m.catid FROM #__users AS u"
 				." LEFT JOIN #__fb_users AS p ON u.id=p.userid"
 				." LEFT JOIN #__fb_moderation AS m ON u.id=m.userid"
 				." LEFT JOIN #__fb_categories AS c ON m.catid=c.id"
-				." WHERE u.id='{$uid}' AND u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
-			$instances[$uid] = $kunena_db->loadResultArray();
-			check_dberror("Unable to load moderation info for user $uid.");
+				." WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
+			$instances = $kunena_db->loadObjectList('uid');
+			check_dberror("Unable to load moderators.");
 		}
 		// Is user a global moderator?
 		if (in_array(null, $instances[$uid], true)) return true;

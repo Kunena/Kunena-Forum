@@ -153,6 +153,10 @@ $kunena_is_admin = CKunenaTools::isAdmin ();
 // Check for JSON request
 if ($func == "json") {
 
+	if(JDEBUG == 1 && defined('JFIREPHP')){
+		FB::log("Kunena JSON request");
+	}
+
 	// URL format for JSON requests: e.g: index.php?option=com_kunena&func=json&action=autocomplete&do=getcat
 	require_once (KUNENA_PATH_LIB . DS . "kunena.ajax.helper.php");
 

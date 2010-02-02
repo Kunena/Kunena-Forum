@@ -81,6 +81,8 @@ DEFINE('_KUNENA_EDITOR_SIZE_SAMPLETEXT', 'Sample Text');
 DEFINE('_KUNENA_EDITOR_HELP', 'Help');
 DEFINE('_KUNENA_EDITOR_HELPLINE_HELP', 'Get Help on how to use the bbcode editor');
 
+DEFINE('_POST_FORGOT_MESSAGE_ALERT', 'You forgot to enter a message.');
+
 // Profilebox and Loginbox
 define('_PROFILEBOX_FORGOT_USERNAME', 'Forgot your username?');
 define('_PROFILEBOX_FORGOT_PASSWORD', 'Forgot your password?');

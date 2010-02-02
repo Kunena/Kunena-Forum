@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 01-Feb-2010 fxstein
 ^ [#19236] Revert category overlay colors
 # [#19356] Center menu tabs and make spacing font size relative
++ [#19380] Multifile upload (part 1)
 
 01-Feb-2010 severdia
 # [#19356] Random CSS fixes for UI

@@ -77,13 +77,9 @@ $kunena_config = & CKunenaConfig::getInstance ();
  			</div>
 
  			<div id="kbbcode-attachment-options" style="display: none;">
-Attachment Placeholder
-
-
-
-
-
-
+				<a href="#" id="kbbcode-attach">Attach a file</a>
+				<ul id="kbbcode-filelist"></ul>
+				<a href="#" id="kbbcode-attach-more" style="display: none;">Attach another file</a>
  			</div>
 
 			<div id="kbbcode-link-options" style="display: none;"><?php
@@ -150,7 +146,7 @@ Attachment Placeholder
 			?><span id = "kpoll_not_allowed"></span><div id = "kpoll_hide_not_allowed">
 			<?php echo _KUNENA_POLL_TITLE;
 			?>&nbsp;<input
-				type = "text" id = "poll_title" name = "poll_title" maxlength = "25" value =
+				type = "text" id = "kpolltitle" name = "poll_title" maxlength = "25" value =
 				"<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo _KUNENA_EDITOR_HELPLINE_POLLTITLE; ?>')"/>

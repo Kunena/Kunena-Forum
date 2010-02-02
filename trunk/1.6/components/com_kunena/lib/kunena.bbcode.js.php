@@ -979,7 +979,7 @@ window.addEvent('domready', function() {
 	 */
 	var up = new FancyUpload3.Attach('kbbcode-filelist', '#kbbcode-attach, #kbbcode-attach-more', {
 		path: '/components/com_kunena/js/fancyupload/Swiff.Uploader.swf',
-		url: '<?php echo CKunenaLink::GetJsonURL('uploadfile');?>',
+		url: 'abc<?php echo CKunenaLink::GetJsonURL('uploadfile');?>',
 		fileSizeMax: 2 * 1024 * 1024,
 
 		verbose: true,
@@ -1032,6 +1032,64 @@ window.addEvent('domready', function() {
 });
 
 //-->
+
+function newAttachment() {
+	var newfile = $('knewfile');
+	var id = newfile.retrieve('nextid',1);
+	newfile.store('nextid',id+1);
+	var input = newfile.getElement('input');
+	input.addEvent('change', function() {
+		this.removeEvents('change');
+		var attachment = $('kattachment');
+		var file = attachment.clone().inject(newfile,'before').set('id','attachment'+id);
+		var filename = file.getElement('.kfile').set('text',input.get('value')).removeProperty('style');
+		var status = file.getElement('.kstat').set('text','Uploading..').removeProperty('style');
+		var remove = file.removeProperty('style').getElement('a').addEvent('click', function() {file.dispose(); return false; });
+
+		var iframe = new IFrame({
+		id: 'upload_target'+id,
+		name: 'upload_target'+id,
+		styles: {
+			display: 'none'
+		},
+		events: {
+			load: function(){
+				var item = $H(JSON.decode(window.frames['upload_target'+id].document.body.innerHTML));
+				if (!item.error) {
+					if (!item.width)
+						status.set('text', '('+item.mime+', '+item.size+' bytes)');
+					else
+						status.set('text', '('+item.mime+', '+item.width+'x'+item.height+'px, '+item.size+' bytes)');
+				}
+				else {
+					status.set('text', item.error);
+				}
+				//this.dispose();
+			}
+		}
+		});
+		iframe.inject(status, 'after');
+
+		var form = $('postform');
+		var action = form.getElement('input[name=action]');
+
+		var properties = form.getProperties('target', 'action');
+		var actionprop =  action.getProperties('value');
+		form.set('target','upload_target'+id);
+		form.set('action','<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>');
+		action.set('value', 'uploadfile');
+		form.submit();
+		form.setProperties(properties);
+		action.setProperties(actionprop);
+		input.setProperty('value', '');
+		newAttachment();
+	});
+}
+
+window.addEvent('domready', function() {
+	newAttachment();
+});
+
 <?php
 $script = ob_get_contents();
 ob_end_clean();

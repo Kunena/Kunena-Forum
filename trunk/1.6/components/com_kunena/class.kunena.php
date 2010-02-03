@@ -711,8 +711,9 @@ class CKunenaTools {
 				." LEFT JOIN #__fb_moderation AS m ON u.id=m.userid"
 				." LEFT JOIN #__fb_categories AS c ON m.catid=c.id"
 				." WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
-			$instances = $kunena_db->loadObjectList('uid');
+			$list = $kunena_db->loadObjectList();
 			check_dberror("Unable to load moderators.");
+			foreach ($list as $item) $instances[$item->uid][] = $item->catid;
 		}
 
 		if (isset($instances[$uid])) {

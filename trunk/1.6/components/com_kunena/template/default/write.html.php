@@ -73,6 +73,7 @@ var RecaptchaOptions = {
 	type="hidden" name="catid" value="<?php
 	echo $this->catid;
 	?>" />
+	<input type="hidden" name="action" value="<?php echo $this->action; ?>" />
 	<?php endif; ?>
 <?php
 if (! empty ( $this->kunena_editmode )) :
@@ -82,7 +83,7 @@ if (! empty ( $this->kunena_editmode )) :
 	echo $this->id;
 	?>" />
 <?php else: ?>
-<input type="hidden" name="action" value="post" /> <input type="hidden"
+<input type="hidden"
 	name="parentid" value="<?php
 	echo $this->parentid;
 	?>" />

@@ -548,6 +548,7 @@ if ($kunena_my->id) {
 				$this->parentid = $parentid;
 				$this->catid = $catid;
 				$this->emoid = 0;
+				$this->action = 'post';
 
 				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
 					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
@@ -578,6 +579,7 @@ if ($kunena_my->id) {
 				$this->parentid = $parentid;
 				$this->catid = $catid;
 				$this->emoid = 0;
+				$this->action = 'bot';
 
 				//get the writing stuff in:
 				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
@@ -619,6 +621,7 @@ if ($kunena_my->id) {
 					$this->catid = $message->catid;
 					$this->parentid = 0;
 					$this->emoid = $message->topic_emoticon;
+					$this->action = 'edit';
 
 					//save the options for query after and load the text options, the number options is for create the fields in the form after
                 	if ($message->poll_id) {

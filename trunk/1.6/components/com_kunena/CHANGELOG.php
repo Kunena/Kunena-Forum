@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 03-Feb-2010 Matias
 # [#19251] Advanced special user prefetch: bugfix
+# [#19380] Multifile upload: didn't work while editing a post
 
 03-Feb-2010 fxstein
 + [#19251] Jomsocial user prefecth caching to reduce query counts

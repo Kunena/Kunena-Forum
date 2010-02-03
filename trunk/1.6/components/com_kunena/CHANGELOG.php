@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Feb-2010 fxstein
++ [#19251] Jomsocial user prefecth caching to reduce query counts
+
 02-Feb-2010 fxstein
 + [#19251] Advanced special user prefetch caching to reduce query counts
 

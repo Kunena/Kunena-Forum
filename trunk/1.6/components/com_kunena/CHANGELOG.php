@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 # [#19380] Multifile upload: didn't work while editing a post
 - [#19293] Remove deprecated PM Systems: mypms, missus, jim
 - [#19295] Clean up code: remove unused code in kunena.php + PMS options
+# [#19288] Fix regression: Installer does not work
 
 03-Feb-2010 fxstein
 + [#19251] Jomsocial user prefecth caching to reduce query counts

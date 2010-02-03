@@ -23,6 +23,8 @@ jimport('joomla.utilities.string');
 // Joomla absolute path
 define('KUNENA_JLIVEURL', JURI::root());
 
+require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
+
 $kunena_app =& JFactory::getApplication();
 $document =& JFactory::getDocument();
 $kunena_config =& CKunenaConfig::getInstance();
@@ -32,8 +34,6 @@ $kunena_my = &JFactory::getUser();
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $kunena_app->getTemplate());
 define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$kunena_app->getTemplate());
-
-require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
 //check if we have all the itemid sets. if so, then no need for DB call
 if (!defined("KUNENA_COMPONENT_ITEMID"))
@@ -133,14 +133,10 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 
 // Kunena live url
 define('KUNENA_LIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
-define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 
 // Kunena souces absolute path
 define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena/');
-
-// Kunena direct url
-define('KUNENA_URLSOURCESPATH', KUNENA_DIRECTURL . 'lib/');
 
 if (!defined("KUNENA_JCSSURL")) {
     $kunena_db->setQuery("SELECT template FROM #__templates_menu WHERE client_id='0'");

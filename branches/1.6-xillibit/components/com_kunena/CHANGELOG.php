@@ -32,6 +32,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-Special-Dev
+
+03-Feb-2010 Xillibit
++ [#19631] Re-implement quick reply by using mootools
+
 Kunena 1.6.0-DEV
 
 03-Feb-2010 Matias

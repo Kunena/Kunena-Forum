@@ -778,7 +778,8 @@ window.addEvent('domready', function(){
 			}
 		});
 	});
-		
+	
+	//for hide or show polls if category is allowed
 	if($('postcatid') != undefined) {
 		$('postcatid').getElements('option').each( function( elem ) {
 			elem.addEvent('click', function(e) {
@@ -810,5 +811,31 @@ window.addEvent('domready', function(){
 				}).send();				
 			})
 		});
-	}	
+	}
+	//For manage quick reply
+	//this function to remove blanc space in the subject
+	function trim(str) {
+        return str.replace(/^\s+|\s+$/g,"");
+    }
+	$$('.kqr_fire').each(function(el){
+		el.addEvent('click', function(e){
+			//prevent to load the page when click is detected on a button
+			e.stop();
+			var itemslected = el.getProperty('id');
+			var itemlength = itemslected.length-1;
+			var lastchar = itemslected.charAt(itemlength);
+			var itemtoslide = 'k_quick_reply'+lastchar;			
+			var myVerticalSlide = new Fx.Slide(itemtoslide).toggle();
+			myVerticalSlide.addEvent('complete', function() {
+				//show the quick reply
+				$(itemtoslide).removeProperty('style');
+				//put the subject into the quick reply input
+				$('kqr_subject'+lastchar).set('value',trim($('kmes_title'+lastchar).get('text')));
+			});
+			$('kbut_can').addEvent('click', function(e){
+				//hide the quick reply
+				$(itemtoslide).setStyle('display','none');
+			});
+		});
+	});
 });

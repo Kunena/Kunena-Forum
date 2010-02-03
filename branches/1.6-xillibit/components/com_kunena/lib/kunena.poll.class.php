@@ -388,7 +388,7 @@ class CKunenaPolls {
       	}
       	elseif ($pollusers[0]->timediff <= $kunena_config->polltimebtvotes)
       	{
-        	$data['results'] = '2';
+        	$data['results'] = '3';
       	}
       	return $data;
    }

@@ -183,7 +183,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<tr class="ksectiontableentry1">
 			<?php
-			if (! $this->kunena_from_bot) {
+			if (empty($this->kunena_from_bot)) {
 				?>
 
 			<td class="kleftcolumn"><strong><?php
@@ -224,7 +224,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			?>
 
 			<?php
-			if ($this->kunena_set_focus == 0 && $this->id == 0 && ! $this->kunena_from_bot) {
+			if ($this->kunena_set_focus == 0 && $this->id == 0 && empty($this->kunena_from_bot)) {
 				echo "<script type=\"text/javascript\">document.postform.subject.focus();</script>";
 				$this->kunena_set_focus = 1;
 			}

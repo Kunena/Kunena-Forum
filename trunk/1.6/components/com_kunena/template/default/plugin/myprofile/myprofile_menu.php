@@ -92,42 +92,6 @@ $kunena_config =& CKunenaConfig::getInstance();
 <?php
     }
 
-    // MISSUS
-    if ($kunena_config->pm_component == 'missus')
-    {
-
-?>
-       <tr>
-            <td class = "kmyprofile_menu_staff">
-                <span class = "kmyprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showinbox&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_INBOX, _KUNENA_MYPROFILE_INBOX, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=newmsg&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_NEW_MESSAGE, _KUNENA_MYPROFILE_NEW_MESSAGE, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showsent&amp;Itemid=' . KUNENA_MISSUS_ITEMID ,  _KUNENA_MYPROFILE_OUTBOX,  _KUNENA_MYPROFILE_OUTBOX, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showtrash&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_TRASH, _KUNENA_MYPROFILE_TRASH, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showcontacts&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_CONTACTS, _KUNENA_MYPROFILE_CONTACTS, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=showconfig&amp;Itemid=' . KUNENA_MISSUS_ITEMID , _KUNENA_MYPROFILE_SETTINGS, _KUNENA_MYPROFILE_SETTINGS, 'follow'); ?>
-            </td>
-        </tr>
-<?php
-    }
-
-    // JIM
-    if ($kunena_config->pm_component == 'jim')
-    {
-
-?>
-       <tr>
-            <td class = "kmyprofile_menu_staff">
-                <span class = "kmyprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_jim&amp;task=inbox', _KUNENA_MYPROFILE_INBOX, _KUNENA_MYPROFILE_INBOX, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_jim&amp;task=new' , _KUNENA_MYPROFILE_NEW_MESSAGE, _KUNENA_MYPROFILE_NEW_MESSAGE, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_jim&amp;task=outbox' , _KUNENA_MYPROFILE_OUTBOX, _KUNENA_MYPROFILE_OUTBOX, 'follow'); ?>
-            </td>
-        </tr>
-<?php
-
-    }
-
 ?>
 
 

@@ -65,7 +65,6 @@ function dofreePDF()
 	$kunena_db  = &JFactory::getDBO();
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
-    $kunena_is_admin = CKunenaTools::isAdmin();
     $kunena_config =& CKunenaConfig::getInstance();
 
     $catid = JRequest::getInt('catid', 0);

@@ -22,11 +22,10 @@ $kunena_app = & JFactory::getApplication ();
 $kunena_my = &JFactory::getUser ();
 
 // perform admin and moderator check
-$kunena_is_admin = CKunenaTools::isAdmin ();
 $kunena_is_moderator = CKunenaTools::isModerator ( $kunena_my->id, $catid );
 
 // make sure only admins and valid moderators can proceed
-if (! $kunena_is_admin && ! $kunena_is_moderator) {
+if (! CKunenaTools::isAdmin () && ! $kunena_is_moderator) {
 	// Sorry - but you have nothing to do here.
 	// This module is for moderators and admins only.
 

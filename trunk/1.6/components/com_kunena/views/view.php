@@ -534,41 +534,7 @@ class CKunenaView {
 				$this->msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $this->catid, $this->kunena_message->id, $this->userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . _KARMA_APPLAUD . '" />' );
 			}
 		}
-		/*let's see if we should use Missus integration */
-		if ($this->config->pm_component == "missus" && $this->userinfo->userid && $this->my->id) {
-			//we should offer the user a Missus link
-			//first get the username of the user to contact
-			$PMSName = $this->userinfo->username;
-			$img_html = "<img src='";
 
-			if ($kunena_icons ['pms']) {
-				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
-			} else {
-				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
-			}
-
-			$img_html .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
-			$this->msg_html->pms = CKunenaLink::GetMissusLink($this->userinfo->userid, $img_html, _GEN_FORUM . ': ' . urlencode ( utf8_encode ( $this->kunena_message->subject ) ) );
-		}
-
-		/*let's see if we should use JIM integration */
-		if ($this->config->pm_component == "jim" && $this->userinfo->userid && $this->my->id) {
-			//we should offer the user a JIM link
-			//first get the username of the user to contact
-			$PMSName = $this->userinfo->username;
-			$img_html = "<img src='";
-
-			if ($kunena_icons ['pms']) {
-				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
-			} else {
-				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
-				;
-			}
-
-			$img_html .= "' alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
-
-			$this->msg_html->pms = CKunenaLink::GetJimLink($PMSName, urlencode ( utf8_encode ( $this->kunena_message->subject ) ), $img_html);
-		}
 		/*let's see if we should use uddeIM integration */
 		if ($this->config->pm_component == "uddeim" && $this->userinfo->userid && $this->my->id) {
 			//we should offer the user a PMS link
@@ -585,23 +551,6 @@ class CKunenaView {
 			$img_html .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
 			$this->msg_html->pms = CKunenaLink::GetUddeImLink( $this->userinfo->userid, $img_html );
 		}
-		/*let's see if we should use myPMS2 integration */
-		if ($this->config->pm_component == "pms" && $this->userinfo->userid && $this->my->id) {
-			//we should offer the user a PMS link
-			//first get the username of the user to contact
-			$PMSName = $this->userinfo->username;
-			$img_html = "<img src=\"";
-
-			if ($kunena_icons ['pms']) {
-				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
-			} else {
-				$img_html .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
-			}
-
-			$img_html .= "\" alt=\"" . _VIEW_PMS . "\" border=\"0\" title=\"" . _VIEW_PMS . "\" />";
-			$this->msg_html->pms = CKunenaLink::GetPmsLink($PMSName, urlencode ( utf8_encode ( $this->kunena_message->subject ) ), $img_html );
-		}
-
 		// online - ofline status
 		$this->msg_html->online = 0;
 		if ($this->userinfo->userid > 0 && $this->userinfo->showOnline == 1) {

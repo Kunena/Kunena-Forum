@@ -463,21 +463,6 @@ class CKunenaLink
     	return CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=new&recip=' . $userid, $name, '', $rel);
     }
 
-    function GetMissusLink($userid,$name,$subject,$rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_missus&amp;func=newmsg&amp;user=' . $userid . '&amp;subject=' . $subject, $name, '', $rel);
-    }
-
-    function GetJimLink($userid, $subject, $name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_jim&amp;page=new&amp;id=' . $userid . '&title=' .$subject, $name, '', $rel );
-    }
-
-    function GetPmsLink($userid, $subject, $name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_pms&amp;page=new&amp;id=' . $userid . '&title=' . $subject, $name, '', $rel);
-    }
-
     //
     //Some URL functions for the discuss bot
     //
@@ -554,7 +539,7 @@ class CKunenaLink
     {
     	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=reset',$name, '', $rel);
     }
-    
+
     function GetLostuserLink($name, $rel='nofollow')
     {
     	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=remind',$name, '', $rel);

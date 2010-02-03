@@ -91,13 +91,8 @@ require_once (KUNENA_PATH_LIB . DS . "kunena.config.class.php");
 
 global $kunenaProfile;
 global $lang, $kunena_icons, $topic_emoticons;
-global $board_title;
-global $kunena_systime;
 
-// Get data about the current user - its ok to not have a userid = guest
 $kunena_my = &JFactory::getUser ();
-// Load configuration and personal settings for current user
-
 $kunena_config = &CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
 
@@ -140,15 +135,12 @@ if ($kn_tables->installed () === false) {
 }
 
 // Class structure should be used after this and all the common task should be moved to this class
-
 require_once (KUNENA_PATH . DS . "class.kunena.php");
 
 // Central Location for all internal links
 require_once (KUNENA_PATH_LIB . DS . "kunena.link.class.php");
 
 require_once (KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
-
-$kunena_is_admin = CKunenaTools::isAdmin ();
 
 // Check for JSON request
 if ($func == "json") {
@@ -175,7 +167,7 @@ if ($func == "json") {
 
 	JResponse::sendHeaders();
 
-	if ($kunena_config->board_offline && ! $kunena_is_admin){
+	if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()){
 		// when the forum is offline, we don't entertain json requests
 		echo '[]';
 	}
@@ -193,7 +185,7 @@ if ($kunena_config->regonly && ! $kunena_my->id) {
 	$kunena_app->enqueueMessage ( _COM_A_REGISTERED_ONLY . '<br/>' . _FORUM_UNAUTHORIZIED . '<br/>' . _FORUM_UNAUTHORIZIED2, 'error' );
 } // or if the board is offline
 
-else if ($kunena_config->board_offline && ! $kunena_is_admin) {
+else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	echo stripslashes ( $kunena_config->offline_message );
 } else {
 	// =======================================================================================
@@ -217,52 +209,23 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	//time format
-
 	include_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 
-	$kunena_systime = time () + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
+	$document = & JFactory::getDocument ();
 
-	// Retrieve current cookie data for session handling
+	// We require Mootools 1.2 framework
+	// On systems running < J1.5.16 this requires the mootools12 system plugin
+	JHTML::_ ( 'behavior.framework' );
 
-	$this->kunena_cookie_settings = ! empty ( $_COOKIE ['fboard_settings'] ) ? $_COOKIE ['fboard_settings'] : '';
+	// New Kunena JS for default template
+	// TODO: Need to check if selected template has an override
+	$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/default.js' );
 
-	$board_title = $kunena_config->board_title;
-	$this->kunena_from_bot = 0;
-
-	if ($no_html == 0) {
-		$document = & JFactory::getDocument ();
-
-		// inline jscript with image location
-
-		$document->addScriptDeclaration ( 'jr_expandImg_url = "' . KUNENA_URLIMAGESPATH . '";' );
-
-		if (is_object ( $kunenaProfile ) && $kunenaProfile->useProfileIntegration ()) {
-			if (defined ( 'KUNENA_COREJSURL' )) {
-				global $_CB_framework;
-				$_CB_framework->addJQueryPlugin ( 'kunena_tmpl', KUNENA_COREJSPATH );
-				$_CB_framework->outputCbJQuery ( '', 'kunena_tmpl' );
-			}
-		}
-
-		// MooTools Libraries
-
-		// We cannot invoke the Joomla mootools behaviors in J1.5.15 or below
-		//JHTML::_('behavior.mootools');
-
-		// Instead we require the J1.5.16 (J1.6 based) framework
-		// On systems running J1.5.15 this requires the mootools12 system plugin
-		JHTML::_('behavior.framework');
-
-		// New Kunena JS for default template
-		// TODO: Need to check if selected template has an override
-		$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/default.js' );
-
-		if (file_exists ( KUNENA_JTEMPLATEPATH . '/css/kunena.forum.css' )) {
-			$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
-		} else {
-			$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
-		}
-	} // no_html == 0
+	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
+		$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
+	} else {
+		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
+	}
 
 	// WHOIS ONLINE IN FORUM
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php' )) {
@@ -272,20 +235,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 	}
 
 	// include required libraries
-
-	require_once (JPATH_BASE . '/libraries/joomla/template/template.php');
+	jimport('joomla.template.template');
 
 	// Kunena Current Template Icons Pack
-
-	// See if there's an icon pack installed
-
-	$useIcons = 0; //init
-
 	$kunena_icons = array ();
-
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/icons.php' )) {
 		include_once (KUNENA_ABSTMPLTPATH . '/icons.php');
-		$useIcons = 1;
 	} else {
 		include_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'icons.php');
 	}
@@ -298,24 +253,12 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 
 	$kunena_session = & CKunenaSession::getInstance ( true );
 	if ($kunena_my->id > 0) {
-		// First we drop an updated cookie, good for 1 year
-
-		// We have consolidated multiple instances of cookie management into this single location
-
-		// NOT SURE IF WE STILL NEED THIS ONE after session management got dbtized
-
-		setcookie ( "fboard_settings[member_id]", $kunena_my->id, time () + KUNENA_SECONDS_IN_YEAR, '/' );
-
 		// new indicator handling
-
 		if ($markaction == "allread") {
 			$kunena_session->markAllCategoriesRead ();
 		}
 
 		$kunena_session->updateAllowedForums ( $kunena_my->id );
-
-		// save fbsession
-
 		$kunena_session->save ( $kunena_session );
 
 		if ($markaction == "allread") {
@@ -332,39 +275,30 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		}
 
 		// Assign previous visit without user offset to variable for templates to decide
-
-		// whether or not to use the NEW indicator on forums and posts
-
-		$this->prevCheck = $kunena_session->lasttime; // - KUNENA_OFFSET_USER; Don't use the user offset - it throws the NEW indicator off
+		$this->prevCheck = $kunena_session->lasttime;
 
 	} else {
-		// collect accessaible categories for guest user
-
+		// collect accessaable categories for guest user
 		$kunena_db->setQuery ( "SELECT id FROM #__fb_categories WHERE pub_access='0' AND published='1'" );
 		$kunena_session->allowed = ($arr_pubcats = $kunena_db->loadResultArray ()) ? implode ( ',', $arr_pubcats ) : '';
 		check_dberror ( 'Unable load accessible categories for user.' );
 
 		// For guests we don't show new posts
-
-		$this->prevCheck = $kunena_systime;
+		$this->prevCheck = CKunenaTimeformat::internalTime()+60;
 		$kunena_session->readtopics = '';
 	}
 
 	// no access to categories?
-
 	if (! $kunena_session->allowed)
 		$kunena_session->allowed = '0';
 
 	// Integration with GroupJive, Jomsocial:
-
 	$params = array ($kunena_my->id, &$kunena_session->allowed );
 	if (is_object ( $kunenaProfile ))
 		$kunenaProfile->trigger ( 'getAllowedForumsRead', $params );
 
 	//Get the topics this user has already read this session from #__fb_sessions
-
-	$readTopics = $kunena_session->readtopics;
-	$this->read_topics = explode ( ',', $readTopics );
+	$this->read_topics = explode ( ',', $kunena_session->readtopics );
 
 	//Call the call for polls
 	if($kunena_config->pollenabled){
@@ -382,7 +316,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
      +----------------------------------------------*/
 
 	//Check if the catid requested is a parent category, because if it is
-
 	//the only thing we can do with it is 'listcat' and nothing else
 
 	if ($func == "showcat" || $func == "view") {
@@ -396,9 +329,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, true) );
 		}
 	}
-
-	// display header
-
 	?>
 <!-- Kunena Header -->
 <div id="Kunena"><?php
@@ -408,7 +338,8 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		echo _FORUM_IS_OFFLINE?></span> <?php
 	}
 	?>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" id="Kunena_top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	id="Kunena_top">
 	<tr>
 		<td align="left"><?php
 	// display Kunena menu if present
@@ -429,16 +360,13 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 		<?php
 	}
 	?></td>
-		<td align="right" width="1%">
-			<span id="kprofilebox_status"><a class="ktoggler close" rel="kprofilebox"></a></span>
-
-			<!-- <img id="BoxSwitch_topprofilebox__topprofilebox_tbody" class="hideshow" src="<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif'?>" alt="" /> -->
+		<td align="right" width="1%"><span id="kprofilebox_status"><a
+			class="ktoggler close" rel="kprofilebox"></a></span>
 		</td>
 	</tr>
 </table>
 <!-- /Kunena Header --> <?php
 	//BEGIN: PROFILEBOX
-
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php' )) {
 		include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php');
 	} else {
@@ -730,8 +658,6 @@ else if ($kunena_config->board_offline && ! $kunena_is_admin) {
 			break;
 
 		######################
-
-
 
 		/*    template chooser    */
 		case "templatechooser" :

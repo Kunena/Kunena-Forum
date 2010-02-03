@@ -34,6 +34,3 @@ class AlphaUserPointsHelper {}
 
 // PDF
 class Cezpdf {}
-
-// MyPMS
-class MyPMSTools {}

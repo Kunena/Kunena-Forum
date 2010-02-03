@@ -26,7 +26,7 @@ $kunena_app = & JFactory::getApplication ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
 
-global $imageLocation, $fileLocation, $board_title, $topic_emoticons;
+global $imageLocation, $fileLocation, $topic_emoticons;
 
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
@@ -91,9 +91,8 @@ if ($id || $parentid) {
 }
 
 // Check user access rights
-$kunena_is_admin = CKunenaTools::isAdmin ();
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
-if (($kunena_my->id==0 && !$kunena_config->pubwrite) || (empty($msg_cat->catparent) && $do != 'reply') && (! in_array ( $catid, $allow_forum ) && ! $kunena_is_admin)) {
+if (($kunena_my->id==0 && !$kunena_config->pubwrite) || (empty($msg_cat->catparent) && $do != 'reply') && (! in_array ( $catid, $allow_forum ) && ! CKunenaTools::isAdmin ())) {
 	//echo _KUNENA_NO_ACCESS;
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'login' . DS . 'login.php')) {
 			include (KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'login' . DS . 'login.php');
@@ -121,7 +120,7 @@ if(!empty($optionsnumbers) && !empty($polltitle))
 $ip = $_SERVER ["REMOTE_ADDR"];
 
 // Flood protection
-if ($kunena_config->floodprotection && ($action == "post" || $do == 'quote' || $do == 'reply') && ! $kunena_is_admin) {
+if ($kunena_config->floodprotection && ($action == "post" || $do == 'quote' || $do == 'reply') && ! CKunenaTools::isAdmin ()) {
 	$kunena_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'" );
 	$lastPostTime = $kunena_db->loadResult ();
 	check_dberror ( "Unable to load max time for current request from IP: $ip" );
@@ -445,8 +444,8 @@ if ($kunena_my->id) {
 							// clean up the message for review
 							$mailmessage = smile::purify ( stripslashes ( $message ) );
 
-							$mailsender = JMailHelper::cleanAddress( stripslashes ( $board_title ) . " " . _GEN_FORUM );
-							$mailsubject = JMailHelper::cleanSubject("[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")");
+							$mailsender = JMailHelper::cleanAddress( stripslashes ( $kunena_config->board_title ) . " " . _GEN_FORUM );
+							$mailsubject = JMailHelper::cleanSubject("[" . stripslashes ( $kunena_config->board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $msg_cat->catname ) . ")");
 
 							foreach ( $emailToList as $emailTo ) {
 								if (! $emailTo->email || ! JMailHelper::isEmailAddress($emailTo->email)) continue;
@@ -460,7 +459,7 @@ if ($kunena_my->id) {
 								}
 
 								$msg = "$emailTo->name,\n\n";
-								$msg .=  $msg1 . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
+								$msg .=  $msg1 . " " . stripslashes ( $kunena_config->board_title ) . " " . _GEN_FORUM . "\n\n";
 								$msg .= _GEN_SUBJECT . ": " . stripslashes ( $messagesubject ) . "\n";
 								$msg .= _GEN_FORUM . ": " . stripslashes ( $msg_cat->catname ) . "\n";
 								$msg .= _VIEW_POSTED . ": " . stripslashes ( $authorname ) . "\n\n";

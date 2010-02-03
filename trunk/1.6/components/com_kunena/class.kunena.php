@@ -18,14 +18,16 @@
 defined( '_JEXEC' ) or die();
 
 
-// Set charset
-define('KUNENA_CHARSET', 'UTF-8');
 jimport('joomla.utilities.string');
 
 // Joomla absolute path
 define('KUNENA_JLIVEURL', JURI::root());
 
 $kunena_app =& JFactory::getApplication();
+$document =& JFactory::getDocument();
+$kunena_config =& CKunenaConfig::getInstance();
+$kunena_db = &JFactory::getDBO();
+$kunena_my = &JFactory::getUser();
 
 // Joomla template dir
 define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $kunena_app->getTemplate());
@@ -33,27 +35,12 @@ define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$kunena_app->getTemp
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
-$document =& JFactory::getDocument();
-$kunena_config =& CKunenaConfig::getInstance();
-$kunena_db = &JFactory::getDBO();
-$kunena_my = &JFactory::getUser();
-
-/**
-*@desc Getting the correct Itemids, for components required
-*/
-$Itemid = JRequest::getInt('Itemid', 0, 'REQUEST');
-
 //check if we have all the itemid sets. if so, then no need for DB call
 if (!defined("KUNENA_COMPONENT_ITEMID"))
 {
 	$kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_kunena' AND published='1'");
     $kid = $kunena_db->loadResult();
     check_dberror ( "Unable to load kunena itemid." );
-
-	if ($kid < 1)
-	{
-		$kid = 0;
-	}
 
     define("KUNENA_COMPONENT_ITEMID", (int)$kid);
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
@@ -89,9 +76,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 	    	$kunena_config->pm_component = $kunena_config->pm_component == 'jomsocial' ? 'none' : $kunena_config->pm_component;
 	    	$kunena_config->fb_profile = $kunena_config->fb_profile == 'jomsocial' ? 'kunena' : $kunena_config->fb_profile;
 	    	$kunena_config->avatar_src = $kunena_config->avatar_src == 'jomsocial' ? 'kunena' : $kunena_config->avatar_src;
-
-	    	// Do not save new config - thats a task for the backend
-	    	// This is just a catch all in case it is not present
 	    }
     }
 
@@ -112,16 +96,6 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 
         define("KUNENA_UIM_ITEMID", (int)$UIM_itemid);
         define("KUNENA_UIM_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_UIM_ITEMID);
-        }
-
-    // MISSUS
-    if ($kunena_config->pm_component == 'missus') {
-        $kunena_db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_missus' AND published='1'");
-        $MISSUS_itemid = $kunena_db->loadResult();
-        check_dberror('Unable to load missus itemid');
-
-        define("KUNENA_MISSUS_ITEMID", (int)$MISSUS_itemid);
-        define("KUNENA_MISSUS_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_MISSUS_ITEMID);
         }
 
     // PROFILE LINK
@@ -1466,7 +1440,7 @@ function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";
 }
 
-function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset=KUNENA_CHARSET) {
+function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset='UTF-8') {
 	return htmlspecialchars($string, $quote_style, $charset);
 }
 

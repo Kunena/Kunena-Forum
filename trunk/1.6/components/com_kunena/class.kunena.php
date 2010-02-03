@@ -714,13 +714,15 @@ class CKunenaTools {
 			$instances = $kunena_db->loadObjectList('uid');
 			check_dberror("Unable to load moderators.");
 		}
-		// Is user a global moderator?
-		if (in_array(null, $instances[$uid], true)) return true;
-		// Is user moderator in any category?
-		if (!$catid && count($instances[$uid])) return true;
-		// Is user moderator in the category?
-		if ($catid && in_array($catid, $instances[$uid])) return true;
 
+		if (isset($instances[$uid])) {
+			// Is user a global moderator?
+			if (in_array(null, $instances[$uid], true)) return true;
+			// Is user moderator in any category?
+			if (!$catid && count($instances[$uid])) return true;
+			// Is user moderator in the category?
+			if ($catid && in_array($catid, $instances[$uid])) return true;
+		}
 		return false;
 	}
 

@@ -246,14 +246,14 @@ class CKunenaUserprofile extends JTable
 
 	function socialButton($name) {
 		$social = array (
-			'twitter' => array( 'name'=>'TWITTER', 'url'=>'http://twitter.com/##VALUE##', 'title'=>_KUNENA_MYPROFILE_TWITTER ),
-			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'##VALUE##', 'title'=>_KUNENA_MYPROFILE_FACEBOOK ),
-			'myspace' => array( 'name'=>'MYSPACE', 'url'=>'http://www.myspace.com/##VALUE##', 'title'=>_KUNENA_MYPROFILE_MYSPACE ),
-			'linkedin' => array( 'name'=>'LINKEDIN', 'url'=>'http://www.linkedin.com/pub/##VALUE##', 'title'=>_KUNENA_MYPROFILE_LINKEDIN ),
+			'twitter' => array( 'name'=>'TWITTER', 'url'=>'http://twitter.com/##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_TWITTER) ),
+			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_FACEBOOK) ),
+			'myspace' => array( 'name'=>'MYSPACE', 'url'=>'http://www.myspace.com/##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_MYSPACE) ),
+			'linkedin' => array( 'name'=>'LINKEDIN', 'url'=>'http://www.linkedin.com/pub/##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_LINKEDIN) ),
 
-			'delicious' => array( 'name'=>'DELICIOUS', 'url'=>'http://delicious.com/##VALUE##', 'title'=>_KUNENA_MYPROFILE_DELICIOUS ),
-			'friendfeed' => array( 'name'=>'FRIENDFEED', 'url'=>'http://friendfeed.com/##VALUE##', 'title'=>_KUNENA_MYPROFILE_FRIENDFEED ),
-			'digg' => array( 'name'=>'DIGG', 'url'=>'http://www.digg.com/##VALUE##', 'title'=>_KUNENA_MYPROFILE_DIGG ),
+			'delicious' => array( 'name'=>'DELICIOUS', 'url'=>'http://delicious.com/##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_DELICIOUS) ),
+			'friendfeed' => array( 'name'=>'FRIENDFEED', 'url'=>'http://friendfeed.com/##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_FRIENDFEED) ),
+			'digg' => array( 'name'=>'DIGG', 'url'=>'http://www.digg.com/##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_DIGG) ),
 
 			'skype' => array( 'name'=>'SKYPE', 'url'=>'skype:##VALUE##?chat', 'title'=>'' ),
 			'yim' => array( 'name'=>'YIM', 'url'=>'ymsgr:sendim?##VALUE##', 'title'=>'' ),
@@ -262,9 +262,9 @@ class CKunenaUserprofile extends JTable
 			'msn' => array( 'name'=>'MSN', 'url'=>'msn:##VALUE##', 'title'=>'' ),
 			'icq' => array( 'name'=>'ICQ', 'url'=>'http://www.icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title'=>'' ),
 
-			'blogspot' => array( 'name'=>'BLOGSPOT', 'url'=>'http://##VALUE##.blogspot.com/', 'title'=>_KUNENA_MYPROFILE_BLOGSPOT ),
-			'flickr' => array( 'name'=>'FLICKR', 'url'=>'http://www.flickr.com/photos/##VALUE##', 'title'=>_KUNENA_MYPROFILE_FLICKR ),
-			'bebo' => array( 'name'=>'BEBO', 'url'=>'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title'=>_KUNENA_MYPROFILE_BEBO )
+			'blogspot' => array( 'name'=>'BLOGSPOT', 'url'=>'http://##VALUE##.blogspot.com/', 'title'=>JText::_(COM_KUNENA_MYPROFILE_BLOGSPOT) ),
+			'flickr' => array( 'name'=>'FLICKR', 'url'=>'http://www.flickr.com/photos/##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_FLICKR) ),
+			'bebo' => array( 'name'=>'BEBO', 'url'=>'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title'=>JText::_(COM_KUNENA_MYPROFILE_BEBO) )
 		);
 		if (!isset($social[$name])) return;
 		$title = $social[$name]['title'];

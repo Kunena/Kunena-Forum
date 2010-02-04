@@ -31,17 +31,17 @@ if ($this->showgenstats > 0)
 	if ($kunena_config->fb_profile == "jomsocial")
 	{
 		$userlist1 = CKunenaLink::GetJomsocialUserListLink($this->totalmembers);
-		$userlist2 = CKunenaLink::GetJomsocialUserListLink(_STAT_USERLIST.' &raquo;');
+		$userlist2 = CKunenaLink::GetJomsocialUserListLink(JText::_(COM_KUNENA_STAT_USERLIST).' &raquo;');
 	}
 	else if ($kunena_config->fb_profile == 'cb')
 	{
 	    $userlist1 = CKunenaLink::GetCBUserListLink($this->totalmembers);
-	    $userlist2 = CKunenaLink::GetCBUserListLink(_STAT_USERLIST.' &raquo;');
+	    $userlist2 = CKunenaLink::GetCBUserListLink(JText::_(COM_KUNENA_STAT_USERLIST).' &raquo;');
 	}
 	else
 	{
 	    $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
-	    $userlist2 = CKunenaLink::GetUserlistLink('', _STAT_USERLIST.' &raquo;');
+	    $userlist2 = CKunenaLink::GetUserlistLink('', JText::_(COM_KUNENA_STAT_USERLIST).' &raquo;');
 	}
 
     	?>
@@ -56,7 +56,7 @@ if ($this->showgenstats > 0)
                 <tr>
                     <th align="left">
                         <div class = "ktitle_cover km">
-                            <?php echo CKunenaLink::GetStatsLink( stripslashes($kunena_config->board_title).' '._STAT_FORUMSTATS, 'ktitel kl'); ?>
+                            <?php echo CKunenaLink::GetStatsLink( stripslashes($kunena_config->board_title).' '.JText::_(COM_KUNENA_STAT_FORUMSTATS), 'ktitel kl'); ?>
                         </div>
                         <div class="fltrt">
 							<span id="kstats_status"><a class="ktoggler close" rel="frontstats_tbody"></a></span>
@@ -70,16 +70,16 @@ if ($this->showgenstats > 0)
                 <tr class="ksectiontableentry1">
                     <td class="td-1 km">
                     	<ul id="statslistright" class="fltrt right">
-                    		<li><?php echo _STAT_TOTAL_USERS; ?>: <strong><?php echo $userlist1; ?></strong> | <?php echo _STAT_LATEST_MEMBERS; ?>:<strong> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></strong></li>
+                    		<li><?php echo JText::_(COM_KUNENA_STAT_TOTAL_USERS); ?>: <strong><?php echo $userlist1; ?></strong> | <?php echo JText::_(COM_KUNENA_STAT_LATEST_MEMBERS); ?>:<strong> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></strong></li>
                     		<li>&nbsp;</li>
                     		<li><?php echo $userlist2; ?></li>
-                    		<li><?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo CKunenaLink::GetStatsLink(_STAT_MORE_ABOUT_STATS.' &raquo;');?></li>
+                    		<li><?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo CKunenaLink::GetStatsLink(JText::_(COM_KUNENA_STAT_MORE_ABOUT_STATS).' &raquo;');?></li>
                     	</ul>
                     	<ul id="statslistleft" class="fltlft">
-                    		<li><?php echo _STAT_TOTAL_MESSAGES; ?>: <strong> <?php echo $this->totalmsgs; ?></strong> | <?php echo _STAT_TOTAL_SUBJECTS; ?>: <strong><?php echo $this->totaltitles; ?></strong></li>
-                    		<li><?php echo _STAT_TOTAL_SECTIONS; ?>: <strong><?php echo $this->totalcats; ?></strong> | <?php echo _STAT_TOTAL_CATEGORIES; ?>: <strong><?php echo $this->totalsections; ?></strong></li>
-                    		<li><?php echo _STAT_TODAY_OPEN_THREAD; ?>: <strong><?php echo $this->todayopen; ?></strong> | <?php echo _STAT_YESTERDAY_OPEN_THREAD; ?>: <strong><?php echo $this->yesterdayopen; ?></strong></li>
-                    		<li><?php echo _STAT_TODAY_TOTAL_ANSWER; ?>: <strong><?php echo $this->todayanswer; ?></strong> | <?php echo _STAT_YESTERDAY_TOTAL_ANSWER; ?>: <strong><?php echo $this->yesterdayanswer; ?></strong></li>
+                    		<li><?php echo JText::_(COM_KUNENA_STAT_TOTAL_MESSAGES); ?>: <strong> <?php echo $this->totalmsgs; ?></strong> | <?php echo JText::_(COM_KUNENA_STAT_TOTAL_SUBJECTS); ?>: <strong><?php echo $this->totaltitles; ?></strong></li>
+                    		<li><?php echo JText::_(COM_KUNENA_STAT_TOTAL_SECTIONS); ?>: <strong><?php echo $this->totalcats; ?></strong> | <?php echo JText::_(COM_KUNENA_STAT_TOTAL_CATEGORIES); ?>: <strong><?php echo $this->totalsections; ?></strong></li>
+                    		<li><?php echo JText::_(COM_KUNENA_STAT_TODAY_OPEN_THREAD); ?>: <strong><?php echo $this->todayopen; ?></strong> | <?php echo JText::_(COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD); ?>: <strong><?php echo $this->yesterdayopen; ?></strong></li>
+                    		<li><?php echo JText::_(COM_KUNENA_STAT_TODAY_TOTAL_ANSWER); ?>: <strong><?php echo $this->todayanswer; ?></strong> | <?php echo JText::_(COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER); ?>: <strong><?php echo $this->yesterdayanswer; ?></strong></li>
                     	</ul>
                     </td>
                 </tr>

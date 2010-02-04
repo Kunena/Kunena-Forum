@@ -58,13 +58,13 @@ require_once (KUNENA_PATH_ADMIN . DS . 'admin.kunena.html.php');
 
 $kn_tables = CKunenaTables::getInstance ();
 if ($kn_tables->installed () === false) {
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_ERROR, 'error' );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_OFFLINE, 'notice' );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_REASONS );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_1 );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_2 );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_3 );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_SUPPORT . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_INCOMPLETE_ERROR), 'error' );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_INCOMPLETE_OFFLINE), 'notice' );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_INCOMPLETE_REASONS) );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_INCOMPLETE_1) );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_INCOMPLETE_2) );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_INCOMPLETE_3) );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_INCOMPLETE_SUPPORT) . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
 	html_Kunena::showFbFooter ();
 	return;
 }
@@ -264,7 +264,7 @@ switch ($task) {
 		CKunenaTools::reCountBoards ();
 		// Also reset the name info stored with messages
 		//CKunenaTools::updateNameInfo();
-		$kunena_app->redirect ( JURI::base () . 'index.php?option=com_kunena', _KUNENA_RECOUNTFORUMS_DONE );
+		$kunena_app->redirect ( JURI::base () . 'index.php?option=com_kunena', JText::_(COM_KUNENA_RECOUNTFORUMS_DONE) );
 		break;
 
 	case "showsmilies" :
@@ -350,7 +350,7 @@ switch ($task) {
 	case "createmenu" :
 		CKunenaTools::createMenu();
 
-		$kunena_app->enqueueMessage ( _KUNENA_MENU_CREATED );
+		$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_MENU_CREATED) );
 		// No break! Need to display the control panel
 	case 'cpanel' :
 	default :
@@ -360,32 +360,32 @@ switch ($task) {
 
 $kn_version = CKunenaVersion::versionArray ();
 if (JString::strpos ( $kn_version->version, 'SVN')) {
-	$kn_version_name = _KUNENA_VERSION_SVN;
-	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;
+	$kn_version_name = JText::_(COM_KUNENA_VERSION_SVN);
+	$kn_version_warning = JText::_(COM_KUNENA_VERSION_SVN_WARNING);
 } else if (JString::strpos ( $kn_version->version, 'RC' ) !== false) {
-	$kn_version_name = _KUNENA_VERSION_RC;
-	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;
+	$kn_version_name = JText::_(COM_KUNENA_VERSION_RC);
+	$kn_version_warning = JText::_(COM_KUNENA_VERSION_RC_WARNING);
 } else if (JString::strpos ( $kn_version->version, 'BETA' ) !== false) {
-	$kn_version_name = _KUNENA_VERSION_BETA;
-	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;
+	$kn_version_name = JText::_(COM_KUNENA_VERSION_BETA);
+	$kn_version_warning = JText::_(COM_KUNENA_VERSION_BETA_WARNING);
 } else if (JString::strpos ( $kn_version->version, 'ALPHA' ) !== false) {
-	$kn_version_name = _KUNENA_VERSION_ALPHA;
-	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;
+	$kn_version_name = JText::_(COM_KUNENA_VERSION_ALPHA);
+	$kn_version_warning = JText::_(COM_KUNENA_VERSION_ALPHA_WARNING);
 } else if (JString::strpos ( $kn_version->version, 'DEV' ) !== false) {
-	$kn_version_name = _KUNENA_VERSION_DEV;
-	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;
+	$kn_version_name = JText::_(COM_KUNENA_VERSION_DEV);
+	$kn_version_warning = JText::_(COM_KUNENA_VERSION_DEV_WARNING);
 } else if (JString::strpos ( $kn_version->version, 'SVN' ) !== false) {
-	$kn_version_name = _KUNENA_VERSION_DEV;
-	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;
+	$kn_version_name = JText::_(COM_KUNENA_VERSION_DEV);
+	$kn_version_warning = JText::_(COM_KUNENA_VERSION_DEV_WARNING);
 }
 if (! empty ( $kn_version_warning )) {
-	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name ) . ' ' . $kn_version_warning, 'notice' );
+	$kunena_app->enqueueMessage ( sprintf ( JText::_(COM_KUNENA_VERSION_INSTALLED), $kn_version->version, $kn_version_name ) . ' ' . $kn_version_warning, 'notice' );
 }
 if ($kn_version->versionname == 'NOT UPGRADED') {
-	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_ERROR_UPGRADE, $kn_version->version ), 'notice' );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_UPGRADE_WARN );
-	$kunena_app->enqueueMessage ( sprintf ( _KUNENA_ERROR_UPGRADE_AGAIN, $kn_version->version ) );
-	$kunena_app->enqueueMessage ( _KUNENA_ERROR_INCOMPLETE_SUPPORT . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
+	$kunena_app->enqueueMessage ( sprintf ( JText::_(COM_KUNENA_ERROR_UPGRADE), $kn_version->version ), 'notice' );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_UPGRADE_WARN) );
+	$kunena_app->enqueueMessage ( sprintf ( JText::_(COM_KUNENA_ERROR_UPGRADE_AGAIN), $kn_version->version ) );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_ERROR_INCOMPLETE_SUPPORT) . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
 }
 
 // Detect errors in CB integration
@@ -428,7 +428,7 @@ function showAdministration($option) {
 		if ($vv->parent) {
 			$v->parent = -1;
 			$v->published = 0;
-			$v->name = _KUNENA_CATEGORY_ORPHAN.' : '.$v->name;
+			$v->name = JText::_(COM_KUNENA_CATEGORY_ORPHAN).' : '.$v->name;
 		}
 		$children [$v->parent][] = $v;
 		$v->location = count ( $children [$v->parent] )-1;
@@ -436,7 +436,7 @@ function showAdministration($option) {
 
 	if (isset($children [-1])) {
 		$children [0] = array_merge($children [-1], $children [0]);
-		$kunena_app->enqueueMessage ( _KUNENA_CATEGORY_ORPHAN_DESC, 'notice' );
+		$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_CATEGORY_ORPHAN_DESC), 'notice' );
 	}
 
 	// second pass - get an indent list of the items
@@ -474,7 +474,7 @@ function editForum($uid, $option) {
 		$categories = array ();
 	} else {
 		// initialise new record
-		$categories [] = JHTML::_ ( 'select.option', '0', _KUNENA_TOPLEVEL, 'value', 'text' );
+		$categories [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_TOPLEVEL), 'value', 'text' );
 		$row->parent = 0;
 		$row->published = 0;
 		$row->ordering = 9999;
@@ -487,7 +487,7 @@ function editForum($uid, $option) {
 
 	if ($row->parent == 0) {
 		//make sure the Top Level Category is available in edit mode as well:
-		$kunena_db->setQuery ( "SELECT distinct '0' AS value, '" . _KUNENA_TOPLEVEL . "' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering" );
+		$kunena_db->setQuery ( "SELECT distinct '0' AS value, '" . JText::_(COM_KUNENA_TOPLEVEL) . "' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering" );
 		$categories = array_merge ( $categories, ( array ) $kunena_db->loadObjectList () );
 		check_dberror ( "Unable to load categories." );
 
@@ -500,25 +500,25 @@ function editForum($uid, $option) {
 	$categoryList = showCategories ( $row->parent, "parent", "", "4" );
 	// make a standard yes/no list
 	$yesno = array ();
-	$yesno [] = JHTML::_ ( 'select.option', '0', _ANN_NO );
-	$yesno [] = JHTML::_ ( 'select.option', '1', _ANN_YES );
+	$yesno [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_ANN_NO) );
+	$yesno [] = JHTML::_ ( 'select.option', '1', JText::_(COM_KUNENA_ANN_YES) );
 
 	// make a standard no/yes list
 	$noyes = array ();
-	$noyes [] = JHTML::_ ( 'select.option', '1', _ANN_YES );
-	$noyes [] = JHTML::_ ( 'select.option', '0', _ANN_NO );
+	$noyes [] = JHTML::_ ( 'select.option', '1', JText::_(COM_KUNENA_ANN_YES) );
+	$noyes [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_ANN_NO) );
 	//Create all kinds of Lists
 	$lists = array ();
 	$accessLists = array ();
 	//create custom group levels to include into the public group selectList
 	$pub_groups = array ();
-	$pub_groups [] = JHTML::_ ( 'select.option', 0, _KUNENA_EVERYBODY );
-	$pub_groups [] = JHTML::_ ( 'select.option', - 1, _KUNENA_ALLREGISTERED );
+	$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_(COM_KUNENA_EVERYBODY) );
+	$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_(COM_KUNENA_ALLREGISTERED) );
 
-	$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, _KUNENA_REGISTERED, true ) );
+	$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, JText::_(COM_KUNENA_REGISTERED), true ) );
 	//create admin groups array for use in selectList:
 	$adm_groups = array ();
-	$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, _KUNENA_PUBLICBACKEND, true ) );
+	$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, JText::_(COM_KUNENA_PUBLICBACKEND), true ) );
 	//create the access control list
 	$accessLists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access );
 	$accessLists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access );
@@ -569,7 +569,7 @@ function publishForum($cid = null, $publish = 1, $option) {
 	$kunena_my = &JFactory::getUser ();
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
-		echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+		echo "<script> alert('" . JText::_(COM_KUNENA_SELECTANITEMTO) . " $action'); window.history.go(-1);</script>\n";
 		exit ();
 	}
 
@@ -597,7 +597,7 @@ function deleteForum($cid = null, $option) {
 	$kunena_my = &JFactory::getUser ();
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		$action = 'delete';
-		echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+		echo "<script> alert('" . JText::_(COM_KUNENA_SELECTANITEMTO) . " $action'); window.history.go(-1);</script>\n";
 		exit ();
 	}
 
@@ -667,7 +667,7 @@ function pollpublish ( $option, $cid = null, $publish = 1 ) {
 	$kunena_my = &JFactory::getUser ();
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
-		echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+		echo "<script> alert('" . JText::_(COM_KUNENA_SELECTANITEMTO) . " $action'); window.history.go(-1);</script>\n";
 		exit ();
 	}
 
@@ -695,7 +695,7 @@ function pollunpublish ( $option, $cid = null, $unpublish = 0 ) {
 	$kunena_my = &JFactory::getUser ();
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		$action = $unpublish ? 'unpublish' : 'publish';
-		echo "<script> alert('" . _KUNENA_SELECTANITEMTO . " $action'); window.history.go(-1);</script>\n";
+		echo "<script> alert('" . JText::_(COM_KUNENA_SELECTANITEMTO) . " $action'); window.history.go(-1);</script>\n";
 		exit ();
 	}
 
@@ -729,9 +729,9 @@ function showConfig($option) {
 	// the default page when entering Kunena
 	$defpagelist = array ();
 
-	$defpagelist [] = JHTML::_ ( 'select.option', 'recent', _COM_A_FBDEFAULT_PAGE_RECENT );
-	$defpagelist [] = JHTML::_ ( 'select.option', 'my', _COM_A_FBDEFAULT_PAGE_MY );
-	$defpagelist [] = JHTML::_ ( 'select.option', 'categories', _COM_A_FBDEFAULT_PAGE_CATEGORIES );
+	$defpagelist [] = JHTML::_ ( 'select.option', 'recent', JText::_(COM_KUNENA_A_FBDEFAULT_PAGE_RECENT) );
+	$defpagelist [] = JHTML::_ ( 'select.option', 'my', JText::_(COM_KUNENA_A_FBDEFAULT_PAGE_MY) );
+	$defpagelist [] = JHTML::_ ( 'select.option', 'categories', JText::_(COM_KUNENA_A_FBDEFAULT_PAGE_CATEGORIES) );
 
 	// build the html select list
 	$lists ['fbdefaultpage'] = JHTML::_ ( 'select.genericlist', $defpagelist, 'cfg_fbdefaultpage', 'class="inputbox" size="1" ', 'value', 'text', $kunena_config->fbdefaultpage );
@@ -740,45 +740,45 @@ function showConfig($option) {
 
 
 	$rsslist = array ();
-	$rsslist [] = JHTML::_ ( 'select.option', 'thread', _COM_A_RSS_BY_THREAD );
-	$rsslist [] = JHTML::_ ( 'select.option', 'post', _COM_A_RSS_BY_POST );
+	$rsslist [] = JHTML::_ ( 'select.option', 'thread', JText::_(COM_KUNENA_A_RSS_BY_THREAD) );
+	$rsslist [] = JHTML::_ ( 'select.option', 'post', JText::_(COM_KUNENA_A_RSS_BY_POST) );
 
 	// build the html select list
 	$lists ['rsstype'] = JHTML::_ ( 'select.genericlist', $rsslist, 'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rsstype );
 
 	$rsshistorylist = array ();
-	$rsshistorylist [] = JHTML::_ ( 'select.option', 'week', _COM_A_RSS_HISTORY_WEEK );
-	$rsshistorylist [] = JHTML::_ ( 'select.option', 'month', _COM_A_RSS_HISTORY_MONTH );
-	$rsshistorylist [] = JHTML::_ ( 'select.option', 'year', _COM_A_RSS_HISTORY_YEAR );
+	$rsshistorylist [] = JHTML::_ ( 'select.option', 'week', JText::_(COM_KUNENA_A_RSS_HISTORY_WEEK) );
+	$rsshistorylist [] = JHTML::_ ( 'select.option', 'month', JText::_(COM_KUNENA_A_RSS_HISTORY_MONTH) );
+	$rsshistorylist [] = JHTML::_ ( 'select.option', 'year', JText::_(COM_KUNENA_A_RSS_HISTORY_YEAR) );
 
 	// build the html select list
 	$lists ['rsshistory'] = JHTML::_ ( 'select.genericlist', $rsshistorylist, 'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rsshistory );
 
 	// source of avatar picture
 	$avlist = array ();
-	$avlist [] = JHTML::_ ( 'select.option', 'fb', _KUNENA_KUNENA );
-	$avlist [] = JHTML::_ ( 'select.option', 'cb', _KUNENA_CB );
-	$avlist [] = JHTML::_ ( 'select.option', 'jomsocial', _KUNENA_JOMSOCIAL );
-	$avlist [] = JHTML::_ ( 'select.option', 'aup', _KUNENA_AUP_ALPHAUSERPOINTS ); // INTEGRATION ALPHAUSERPOINTS
+	$avlist [] = JHTML::_ ( 'select.option', 'fb', JText::_(COM_KUNENA_KUNENA) );
+	$avlist [] = JHTML::_ ( 'select.option', 'cb', JText::_(COM_KUNENA_CB) );
+	$avlist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_(COM_KUNENA_JOMSOCIAL) );
+	$avlist [] = JHTML::_ ( 'select.option', 'aup', JText::_(COM_KUNENA_AUP_ALPHAUSERPOINTS) ); // INTEGRATION ALPHAUSERPOINTS
 	// build the html select list
 	$lists ['avatar_src'] = JHTML::_ ( 'select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src );
 
 	// private messaging system to use
 	$pmlist = array ();
-	$pmlist [] = JHTML::_ ( 'select.option', 'no', _COM_A_NO );
-	$pmlist [] = JHTML::_ ( 'select.option', 'cb', _KUNENA_CB );
-	$pmlist [] = JHTML::_ ( 'select.option', 'jomsocial', _KUNENA_JOMSOCIAL );
-	$pmlist [] = JHTML::_ ( 'select.option', 'uddeim', _KUNENA_UDDEIM );
+	$pmlist [] = JHTML::_ ( 'select.option', 'no', JText::_(COM_KUNENA_A_NO) );
+	$pmlist [] = JHTML::_ ( 'select.option', 'cb', JText::_(COM_KUNENA_CB) );
+	$pmlist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_(COM_KUNENA_JOMSOCIAL) );
+	$pmlist [] = JHTML::_ ( 'select.option', 'uddeim', JText::_(COM_KUNENA_UDDEIM) );
 
 	$lists ['pm_component'] = JHTML::_ ( 'select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pm_component );
 
 	//redundant    $lists['pm_component'] = JHTML::_('select.genericlist',$pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pm_component);
 	// Profile select
 	$prflist = array ();
-	$prflist [] = JHTML::_ ( 'select.option', 'fb', _KUNENA_KUNENA );
-	$prflist [] = JHTML::_ ( 'select.option', 'cb', _KUNENA_CB );
-	$prflist [] = JHTML::_ ( 'select.option', 'jomsocial', _KUNENA_JOMSOCIAL );
-	$prflist [] = JHTML::_ ( 'select.option', 'aup', _KUNENA_AUP_ALPHAUSERPOINTS ); // INTEGRATION ALPHAUSERPOINTS
+	$prflist [] = JHTML::_ ( 'select.option', 'fb', JText::_(COM_KUNENA_KUNENA) );
+	$prflist [] = JHTML::_ ( 'select.option', 'cb', JText::_(COM_KUNENA_CB) );
+	$prflist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_(COM_KUNENA_JOMSOCIAL) );
+	$prflist [] = JHTML::_ ( 'select.option', 'aup', JText::_(COM_KUNENA_AUP_ALPHAUSERPOINTS) ); // INTEGRATION ALPHAUSERPOINTS
 
 
 	$lists ['fb_profile'] = JHTML::_ ( 'select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->fb_profile );
@@ -786,13 +786,13 @@ function showConfig($option) {
 	// build the html select list
 	// make a standard yes/no list
 	$yesno = array ();
-	$yesno [] = JHTML::_ ( 'select.option', '0', _COM_A_NO );
-	$yesno [] = JHTML::_ ( 'select.option', '1', _COM_A_YES );
+	$yesno [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_A_NO) );
+	$yesno [] = JHTML::_ ( 'select.option', '1', JText::_(COM_KUNENA_A_YES) );
 	/* Build the templates list*/
 	// This function was modified from the one posted to PHP.net by rockinmusicgv
 	// It is available under the readdir() entry in the PHP online manual
 	//function get_dirs($directory, $select_name, $selected = "") {
-	$listitems [] = JHTML::_ ( 'select.option', '1', _KUNENA_SELECTTEMPLATE );
+	$listitems [] = JHTML::_ ( 'select.option', '1', JText::_(COM_KUNENA_SELECTTEMPLATE) );
 
 	$templatelist = array();
 	$imagesetlist = array();
@@ -863,7 +863,7 @@ function showConfig($option) {
 
 	$ip_opt [] = JHTML::_ ( 'select.option', 'gd2', 'GD2' );
 	$ip_opt [] = JHTML::_ ( 'select.option', 'gd1', 'GD1' );
-	$ip_opt [] = JHTML::_ ( 'select.option', 'none', _KUNENA_IMAGE_PROCESSOR_NONE );
+	$ip_opt [] = JHTML::_ ( 'select.option', 'none', JText::_(COM_KUNENA_IMAGE_PROCESSOR_NONE) );
 
 	$lists ['imageprocessor'] = JHTML::_ ( 'select.genericlist', $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $kunena_config->imageprocessor );
 	$lists ['showstats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showstats );
@@ -920,10 +920,10 @@ function showConfig($option) {
 	$lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showfileforguest);
     // New for 1.6 -> Avatar Position
     $avpos = array ();
-	$avpos[] = JHTML::_('select.option', 'top',_KUNENA_AV_TOP);
-	$avpos[] = JHTML::_('select.option', 'left',_KUNENA_AV_LEFT);
-	$avpos[] = JHTML::_('select.option', 'right',_KUNENA_AV_RIGHT);
-	$avpos[] = JHTML::_('select.option', 'bottom',_KUNENA_AV_BOTTOM);
+	$avpos[] = JHTML::_('select.option', 'top',JText::_(COM_KUNENA_AV_TOP));
+	$avpos[] = JHTML::_('select.option', 'left',JText::_(COM_KUNENA_AV_LEFT));
+	$avpos[] = JHTML::_('select.option', 'right',JText::_(COM_KUNENA_AV_RIGHT));
+	$avpos[] = JHTML::_('select.option', 'bottom',JText::_(COM_KUNENA_AV_BOTTOM));
     $lists['avposition'] = JHTML::_('select.genericlist', $avpos, 'cfg_avposition', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avposition);
 	//New for 1.6 -> Poll
 	$lists['pollallowvoteone'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollallowvoteone', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollallowvoteone);
@@ -932,14 +932,14 @@ function showConfig($option) {
   	$lists['pollresultsuserslist'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollresultsuserslist', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollresultsuserslist);
   	//New for 1.6 -> Choose ordering system
   	$ordering_system_list = array ();
-  	$ordering_system_list[] = JHTML::_('select.option', 'new_ord', _KUNENA_COM_A_ORDERING_SYSTEM_NEW);
-  	$ordering_system_list[] = JHTML::_('select.option', 'old_ord',_KUNENA_COM_A_ORDERING_SYSTEM_OLD);
+  	$ordering_system_list[] = JHTML::_('select.option', 'new_ord', JText::_(COM_KUNENA_COM_A_ORDERING_SYSTEM_NEW));
+  	$ordering_system_list[] = JHTML::_('select.option', 'old_ord',JText::_(COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD));
   	$lists['ordering_system'] = JHTML::_('select.genericlist', $ordering_system_list, 'cfg_ordering_system', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->ordering_system);
 	// New for 1.6: datetime
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');
 	$dateformatlist = array ();
 	$time = CKunenaTimeformat::internalTime() - 80000;
-	$dateformatlist[] = JHTML::_('select.option', 'none', _KUNENA_OPTION_DATEFORMAT_NONE);
+	$dateformatlist[] = JHTML::_('select.option', 'none', JText::_(COM_KUNENA_OPTION_DATEFORMAT_NONE));
 	$dateformatlist[] = JHTML::_('select.option', 'ago', CKunenaTimeformat::showDate($time, 'ago'));
 	$dateformatlist[] = JHTML::_('select.option', 'datetime_today', CKunenaTimeformat::showDate($time, 'datetime_today'));
 	$dateformatlist[] = JHTML::_('select.option', 'datetime', CKunenaTimeformat::showDate($time, 'datetime'));
@@ -991,7 +991,7 @@ function saveConfig($option) {
 	$kunena_db->query ();
 	check_dberror ( "Unable to update sessions." );
 
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_(COM_KUNENA_CONFIGSAVED) );
 }
 
 function showInstructions($kunena_db, $option, $lang) {
@@ -1010,9 +1010,9 @@ function showCss($option) {
 	$permission = CKunenaPath::isWritable ( $file );
 
 	if (! $permission) {
-		echo "<center><h1><font color=red>" . _KUNENA_WARNING . "</font></h1><br />";
-		echo "<b>" . _KUNENA_CFC_FILENAME . ": " . $file . "</b><br />";
-		echo "<b>" . _KUNENA_CHMOD1 . "</b></center><br /><br />";
+		echo "<center><h1><font color=red>" . JText::_(COM_KUNENA_WARNING) . "</font></h1><br />";
+		echo "<b>" . JText::_(COM_KUNENA_CFC_FILENAME) . ": " . $file . "</b><br />";
+		echo "<b>" . JText::_(COM_KUNENA_CHMOD1) . "</b></center><br /><br />";
 	}
 
 	html_Kunena::showCss ( $file, $option );
@@ -1022,14 +1022,14 @@ function saveCss($file, $csscontent, $option) {
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
 
 	$kunena_app = & JFactory::getApplication ();
-	$tmpstr = _KUNENA_CSS_SAVE;
+	$tmpstr = JText::_(COM_KUNENA_CSS_SAVE);
 	$tmpstr = str_replace ( "%file%", $file, $tmpstr );
 	echo $tmpstr;
 
 	if (CKunenaFile::write ( $file, stripslashes ( $csscontent ) )) {
-		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showCss", _KUNENA_CFC_SAVED );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showCss", JText::_(COM_KUNENA_CFC_SAVED) );
 	} else {
-		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showCss", _KUNENA_CFC_NOTSAVED );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showCss", JText::_(COM_KUNENA_CFC_NOTSAVED) );
 	}
 }
 
@@ -1102,7 +1102,7 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 	}
 
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
-		echo "<script> alert('" . _KUNENA_SELECTMODTO . " $action'); window.history.go(-1);</script>\n";
+		echo "<script> alert('" . JText::_(COM_KUNENA_SELECTMODTO) . " $action'); window.history.go(-1);</script>\n";
 		exit ();
 	}
 
@@ -1180,7 +1180,7 @@ function showProfiles($kunena_db, $option, $lang, $order) {
 
 function editUserProfile($option, $uid) {
 	if (empty ( $uid [0] )) {
-		echo _KUNENA_PROFILE_NO_USER;
+		echo JText::_(COM_KUNENA_PROFILE_NO_USER);
 		return;
 	}
 
@@ -1211,7 +1211,7 @@ function editUserProfile($option, $uid) {
 	check_dberror ( 'Unable to load special ranks.' );
 
 	//build select list options
-	$yesnoRank [] = JHTML::_ ( 'select.option', '0', _KUNENA_RANK_NO_ASSIGNED );
+	$yesnoRank [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_RANK_NO_ASSIGNED) );
 	foreach ( $specialRanks as $ranks ) {
 		$yesnoRank [] = JHTML::_ ( 'select.option', $ranks->rank_id, $ranks->rank_title );
 	}
@@ -1219,18 +1219,18 @@ function editUserProfile($option, $uid) {
 	$selectRank = JHTML::_ ( 'select.genericlist', $yesnoRank, 'newrank', 'class="inputbox" size="5"', 'value', 'text', $userRank );
 
 	// make the select list for the view type
-	$yesno [] = JHTML::_ ( 'select.option', 'flat', _COM_A_FLAT );
-	$yesno [] = JHTML::_ ( 'select.option', 'threaded', _COM_A_THREADED );
+	$yesno [] = JHTML::_ ( 'select.option', 'flat', JText::_(COM_KUNENA_A_FLAT) );
+	$yesno [] = JHTML::_ ( 'select.option', 'threaded', JText::_(COM_KUNENA_A_THREADED) );
 	// build the html select list
 	$selectPref = JHTML::_ ( 'select.genericlist', $yesno, 'newview', 'class="inputbox" size="2"', 'value', 'text', $prefview );
 	// make the select list for the moderator flag
-	$yesnoMod [] = JHTML::_ ( 'select.option', '1', _ANN_YES );
-	$yesnoMod [] = JHTML::_ ( 'select.option', '0', _ANN_NO );
+	$yesnoMod [] = JHTML::_ ( 'select.option', '1', JText::_(COM_KUNENA_ANN_YES) );
+	$yesnoMod [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_ANN_NO) );
 	// build the html select list
 	$selectMod = JHTML::_ ( 'select.genericlist', $yesnoMod, 'moderator', 'class="inputbox" size="2"', 'value', 'text', $moderator );
 	// make the select list for the moderator flag
-	$yesnoOrder [] = JHTML::_ ( 'select.option', '0', _USER_ORDER_ASC );
-	$yesnoOrder [] = JHTML::_ ( 'select.option', '1', _USER_ORDER_DESC );
+	$yesnoOrder [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_USER_ORDER_ASC) );
+	$yesnoOrder [] = JHTML::_ ( 'select.option', '1', JText::_(COM_KUNENA_USER_ORDER_DESC) );
 	// build the html select list
 	$selectOrder = JHTML::_ ( 'select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering );
 
@@ -1327,7 +1327,7 @@ function doprune($kunena_db, $option) {
 	$deleted = 0;
 
 	if ($catid == - 1) {
-		echo "<script> alert('" . _KUNENA_CHOOSEFORUMTOPRUNE . "'); window.history.go(-1); </script>\n";
+		echo "<script> alert('" . JText::_(COM_KUNENA_CHOOSEFORUMTOPRUNE) . "'); window.history.go(-1); </script>\n";
 		$kunena_app->close ();
 	}
 
@@ -1387,7 +1387,7 @@ function doprune($kunena_db, $option) {
 		}
 	}
 
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum", "" . _KUNENA_FORUMPRUNEDFOR . " " . $prune_days . " " . _KUNENA_PRUNEDAYS . "; " . _KUNENA_PRUNEDELETED . $deleted . " " . _KUNENA_PRUNETHREADS );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum", "" . JText::_(COM_KUNENA_FORUMPRUNEDFOR) . " " . $prune_days . " " . JText::_(COM_KUNENA_PRUNEDAYS) . "; " . JText::_(COM_KUNENA_PRUNEDELETED) . $deleted . " " . JText::_(COM_KUNENA_PRUNETHREADS) );
 }
 
 //===============================
@@ -1411,23 +1411,23 @@ function douserssync($kunena_db, $option) {
 		$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
 		$kunena_db->query ();
 		check_dberror ( "Unable to update sessions." );
-		$kunena_app->enqueueMessage ( _KUNENA_SYNC_USERS_DO_CACHE );
+		$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_SYNC_USERS_DO_CACHE) );
 	}
 	if ($useradd) {
 		$kunena_db->setQuery ( "INSERT INTO #__fb_users (userid) SELECT a.id FROM #__users AS a LEFT JOIN #__fb_users AS b ON b.userid=a.id WHERE b.userid IS NULL" );
 		$kunena_db->query ();
 		check_dberror ( 'Unable to create user profiles.' );
-		$kunena_app->enqueueMessage ( _KUNENA_SYNC_USERS_DO_ADD . ' ' . $kunena_db->getAffectedRows () );
+		$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_SYNC_USERS_DO_ADD) . ' ' . $kunena_db->getAffectedRows () );
 	}
 	if ($userdel) {
 		$kunena_db->setQuery ( "DELETE a FROM #__fb_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE b.username IS NULL" );
 		$kunena_db->query ();
 		check_dberror ( "Unable to delete user profiles." );
-		$kunena_app->enqueueMessage ( _KUNENA_SYNC_USERS_DO_DEL . ' ' . $kunena_db->getAffectedRows () );
+		$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_SYNC_USERS_DO_DEL) . ' ' . $kunena_db->getAffectedRows () );
 	}
 	if ($userrename) {
 		$cnt = CKunenaTools::updateNameInfo ();
-		$kunena_app->enqueueMessage ( _KUNENA_SYNC_USERS_DO_RENAME . " $cnt" );
+		$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_SYNC_USERS_DO_RENAME) . " $cnt" );
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=syncusers" );
@@ -1496,7 +1496,7 @@ function replaceImage($kunena_db, $option, $imageName, $OxP) {
 		}
 	}
 	if ($ret)
-		$kunena_app->enqueueMessage ( _KUNENA_IMGDELETED );
+		$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_IMGDELETED) );
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=browseImages" );
 }
 
@@ -1520,7 +1520,7 @@ function deleteFile($kunena_db, $option, $fileName) {
 		check_dberror ( "Unable to delete attachment." );
 	}
 	if ($ret)
-		$kunena_app->enqueueMessage ( _KUNENA_FILEDELETED );
+		$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_FILEDELETED) );
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=browseFiles" );
 }
 
@@ -1570,7 +1570,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4") {
 	$list = catTreeRecurse ( 0, '', array (), $children );
 	// assemble menu items to the array
 	$mitems = array ();
-	$mitems [] = JHTML::_ ( 'select.option', '0', _KUNENA_TOPLEVEL, 'value', 'text' );
+	$mitems [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_TOPLEVEL), 'value', 'text' );
 	$this_treename = '';
 
 	foreach ( $list as $item ) {
@@ -1650,7 +1650,7 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 
 					if ($ow > 0) {
 						if ($verbose) {
-							$tmpstr = _KUNENA_COPY_FILE;
+							$tmpstr = JText::_(COM_KUNENA_COPY_FILE);
 							$tmpstr = str_replace ( '%src%', $srcfile, $tmpstr );
 							$tmpstr = str_replace ( '%dst%', $dstfile, $tmpstr );
 							echo $tmpstr;
@@ -1661,10 +1661,10 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 							$num ++;
 
 							if ($verbose) {
-								echo _KUNENA_COPY_OK;
+								echo JText::_(COM_KUNENA_COPY_OK);
 							}
 						} else {
-							echo "" . _KUNENA_DIRCOPERR . " '$srcfile' " . _KUNENA_DIRCOPERR1 . "";
+							echo "" . JText::_(COM_KUNENA_DIRCOPERR) . " '$srcfile' " . JText::_(COM_KUNENA_DIRCOPERR1) . "";
 						}
 					}
 				} else if (is_dir ( $srcfile )) {
@@ -1773,7 +1773,7 @@ function savesmiley($option, $id = NULL) {
 
 	if (empty ( $smiley_code ) || empty ( $smiley_location )) {
 		$task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id=' . $id;
-		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=" . $task, _KUNENA_MISSING_PARAMETER );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=" . $task, JText::_(COM_KUNENA_MISSING_PARAMETER) );
 		$kunena_app->close ();
 	}
 
@@ -1784,7 +1784,7 @@ function savesmiley($option, $id = NULL) {
 	foreach ( $smilies as $value ) {
 		if (in_array ( $smiley_code, $value ) && ! ($value ['id'] == $id)) {
 			$task = ($id == NULL) ? 'newsmiley' : 'editsmiley&id=' . $id;
-			$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=" . $task, _KUNENA_CODE_ALLREADY_EXITS );
+			$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=" . $task, JText::_(COM_KUNENA_CODE_ALLREADY_EXITS) );
 			$kunena_app->close ();
 		}
 
@@ -1799,7 +1799,7 @@ function savesmiley($option, $id = NULL) {
 	$kunena_db->query ();
 	check_dberror ( "Unable to save smiley." );
 
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_SAVED );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies", JText::_(COM_KUNENA_SMILEY_SAVED) );
 }
 
 function deletesmiley($option, $cid) {
@@ -1814,7 +1814,7 @@ function deletesmiley($option, $cid) {
 		check_dberror ( "Unable to delete smiley." );
 	}
 
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies", _KUNENA_SMILEY_DELETED );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies", JText::_(COM_KUNENA_SMILEY_DELETED) );
 }
 
 function smileypath() {
@@ -1923,7 +1923,7 @@ function deleteRank($option, $cid = null) {
 		check_dberror ( "Unable to delete rank." );
 	}
 
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks", _KUNENA_RANK_DELETED );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks", JText::_(COM_KUNENA_RANK_DELETED) );
 }
 
 function saveRank($option, $id = NULL) {
@@ -1937,7 +1937,7 @@ function saveRank($option, $id = NULL) {
 
 	if (empty ( $rank_title ) || empty ( $rank_image )) {
 		$task = ($id == NULL) ? 'newRank' : 'editRank&id=' . $id;
-		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=" . $task, _KUNENA_MISSING_PARAMETER );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=" . $task, JText::_(COM_KUNENA_MISSING_PARAMETER) );
 		$kunena_app->close ();
 	}
 
@@ -1947,7 +1947,7 @@ function saveRank($option, $id = NULL) {
 	foreach ( $ranks as $value ) {
 		if (in_array ( $rank_title, $value ) && ! ($value ['rank_id'] == $id)) {
 			$task = ($id == NULL) ? 'newRank' : 'editRank&id=' . $id;
-			$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=" . $task, _KUNENA_RANK_ALLREADY_EXITS );
+			$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=" . $task, JText::_(COM_KUNENA_RANK_ALLREADY_EXITS) );
 			$kunena_app->close ();
 		}
 	}
@@ -1960,7 +1960,7 @@ function saveRank($option, $id = NULL) {
 	$kunena_db->query ();
 	check_dberror ( "Unable to save ranks." );
 
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks", _KUNENA_RANK_SAVED );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks", JText::_(COM_KUNENA_RANK_SAVED) );
 }
 
 function editRank($option, $id) {
@@ -2108,7 +2108,7 @@ function deleteitemsnow ( $option, $cid ) {
 		}
 	}
 
-	//$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", _KUNENA_TRASH_DELETE_DONE );
+	//$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_(COM_KUNENA_TRASH_DELETE_DONE) );
 }
 
 function trashrestore($option, $cid) {
@@ -2121,7 +2121,7 @@ function trashrestore($option, $cid) {
 		check_dberror ( "Unable to restore message(s)." );
 	}
 
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", _KUNENA_TRASH_RESTORE_DONE );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_(COM_KUNENA_TRASH_RESTORE_DONE) );
 }
 //===============================
 // FINISH trash management

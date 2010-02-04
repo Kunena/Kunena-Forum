@@ -60,7 +60,7 @@ if ($task == 'listcat' || $func == 'showcat') {
     check_dberror ( "Unable to load category name." );
     }
 else if ($func == 'latest') {
-    $what = _KUNENA_ALL_DISCUSSIONS;
+    $what = JText::_(COM_KUNENA_ALL_DISCUSSIONS);
     }
 else if ($id) {
     $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$id}'");
@@ -82,10 +82,10 @@ else if ($func == 'post' && $do == 'edit') {
     check_dberror ( "Unable to load user name." );
     }
 else if ($func == 'who') {
-    $what = _KUNENA_WHO_LATEST_POSTS;
+    $what = JText::_(COM_KUNENA_WHO_LATEST_POSTS);
     }
 else {
-    $what = _KUNENA_WHO_MAINPAGE;
+    $what = JText::_(COM_KUNENA_WHO_MAINPAGE);
     }
 
 $link = JURI::current();

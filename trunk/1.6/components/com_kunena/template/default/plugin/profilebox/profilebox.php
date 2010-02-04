@@ -29,21 +29,21 @@ if ($type == 'logout') {
 				</td>
 				<td class="kprofileboxcnt left">
 					<ul class="kprofilebox_link">
-						<li><?php echo CKunenaLink::GetShowLatestLink(_PROFILEBOX_SHOW_LATEST_POSTS); ?></li>
-						<li><?php echo CKunenaLink::GetSearchLink ( $this->config, 'search', '', 0, 0, _KUNENA_SEARCH_ADVSEARCH ); ?></li>
+						<li><?php echo CKunenaLink::GetShowLatestLink(JText::_(COM_KUNENA_PROFILEBOX_SHOW_LATEST_POSTS)); ?></li>
+						<li><?php echo CKunenaLink::GetSearchLink ( $this->config, 'search', '', 0, 0, JText::_(COM_KUNENA_SEARCH_ADVSEARCH) ); ?></li>
 						<?php
 						$user_fields = @explode ( ',', $this->config->annmodid );
 						if (in_array ( $this->my->id, $user_fields ) || $this->my->usertype == 'Administrator' || $this->my->usertype == 'Super Administrator') {
 							$is_editor = true; } else { $is_editor = false; }
 						if ($is_editor) { ?>
-							<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( $this->config, 'show' ); ?>"><?php echo _ANN_ANNOUNCEMENTS; ?></a></li>
+							<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( $this->config, 'show' ); ?>"><?php echo JText::_(COM_KUNENA_ANN_ANNOUNCEMENTS); ?></a></li>
 						<?php } ?>
 					</ul>
 					<ul>
-						<li><?php echo _PROFILEBOX_WELCOME; ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></strong></li>
-						<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
+						<li><?php echo JText::_(COM_KUNENA_PROFILEBOX_WELCOME); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></strong></li>
+						<li><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_LASTVISITDATE); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 						<li>
-							<input type="submit" name="Submit" class="kbutton" value="<?php echo _PROFILEBOX_LOGOUT; ?>" /> <input type="hidden" name="option" value="com_user" />
+							<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_(COM_KUNENA_PROFILEBOX_LOGOUT); ?>" /> <input type="hidden" name="option" value="com_user" />
 							<input type="hidden" name="task" value="logout" />
 							<input type="hidden" name="return" value="<?php echo $return; ?>" />
 						</li>
@@ -70,19 +70,19 @@ if ($type == 'logout') {
 			<td valign="top" class="kprofileboxcnt" align="left">
 				<form action="index.php" method="post" name="login">
 					<div class="k_guest">
-						<?php echo _PROFILEBOX_WELCOME; ?>,
-						<b><?php echo _PROFILEBOX_GUEST; ?></b>
+						<?php echo JText::_(COM_KUNENA_PROFILEBOX_WELCOME); ?>,
+						<b><?php echo JText::_(COM_KUNENA_PROFILEBOX_GUEST); ?></b>
 					</div>
 					<div class="input">
 						<span>
-							<?php echo _COM_A_USERNAME; ?>
+							<?php echo JText::_(COM_KUNENA_A_USERNAME); ?>
 							<input type="text" name="username" class="inputbox ks" alt="username" size="18" />
 						</span>
 						<span>
-							<?php echo _KUNENA_PASS; ?>
+							<?php echo JText::_(COM_KUNENA_PASS); ?>
 							<input type="password" name="passwd" class="inputbox ks" size="18" alt="password" /></span>
 						<span>
-							<input type="submit" name="Submit" class="kbutton" value="<?php echo _PROFILEBOX_LOGIN; ?>" />
+							<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_(COM_KUNENA_PROFILEBOX_LOGIN); ?>" />
 							<input type="hidden" name="option" value="com_user" />
 							<input type="hidden" name="task" value="login" />
 							<input type="hidden" name="return" value="<?php echo $return; ?>" /> <?php echo JHTML::_ ( 'form.token' ); ?>

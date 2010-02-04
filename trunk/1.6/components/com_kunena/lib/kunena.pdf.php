@@ -98,7 +98,7 @@ function dofreePDF()
 		}
 
 		if (empty($row)) { //if the messages doesn't exist don't need to continue
-        	echo '<br /><br /><div align="center">' . _KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED . '</div><br /><br />';
+        	echo '<br /><br /><div align="center">' . JText::_(COM_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED) . '</div><br /><br />';
         	echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $id, $kunena_config->messages_per_page, $catid );
     	} else {
         	$mes_text = $row[0]->message;
@@ -116,10 +116,10 @@ function dofreePDF()
         	$pdf->line(10, 822, 578, 822);
         	$pdf->addText(30, 34, 6, $kunena_config->board_title . ' - ' . $kunena_app->getCfg('sitename'));
 
-        	$strtmp = _KUNENA_PDF_VERSION;
+        	$strtmp = JText::_(COM_KUNENA_PDF_VERSION);
         	$strtmp = str_replace('%version%', "NEW VERSION GOES HERE" /*$kunena_config->version*/, $strtmp); // TODO: fxstein - Need to change version handling
         	$pdf->addText(250, 34, 6, $strtmp);
-        	$strtmp = _KUNENA_PDF_DATE;
+        	$strtmp = JText::_(COM_KUNENA_PDF_DATE);
         	$strtmp = str_replace('%date%', date('j F, Y, H:i', CKunenaTimeformat::internalTime()), $strtmp);
         	$pdf->addText(450, 34, 6, $strtmp);
 
@@ -130,7 +130,7 @@ function dofreePDF()
 
         	$txt0 = $row[0]->subject;
         	$pdf->ezText($txt0, 14);
-        	$pdf->ezText(_VIEW_POSTED . " " . $row[0]->name . " - " . CKunenaTimeformat::showDate($row[0]->time), 8);
+        	$pdf->ezText(JText::_(COM_KUNENA_VIEW_POSTED) . " " . $row[0]->name . " - " . CKunenaTimeformat::showDate($row[0]->time), 8);
         	$pdf->ezText("_____________________________________", 8);
         	//$pdf->line( 10, 780, 578, 780 );
 
@@ -154,7 +154,7 @@ function dofreePDF()
 
                 	$txt0 = $reply->subject;
                 	$pdf->ezText($txt0, 14);
-                	$pdf->ezText(_VIEW_POSTED . " " . $reply->name . " - " . CKunenaTimeformat::showDate($reply->time), 8);
+                	$pdf->ezText(JText::_(COM_KUNENA_VIEW_POSTED) . " " . $reply->name . " - " . CKunenaTimeformat::showDate($reply->time), 8);
                 	$pdf->ezText("_____________________________________", 8);
                 	$txt3 = "\n";
                 	$txt3 .= stripslashes($mes_text);

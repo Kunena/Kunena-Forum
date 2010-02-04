@@ -117,7 +117,7 @@ echo '        </image>';
             $result = $kunena_db->loadObject();
             check_dberror("Unable to load last post.");
             echo "        <item>\n";
-            echo "            <title>" . _GEN_SUBJECT . ": " . CKunenaTools::parseText (kunena_htmlspecialchars($row->subject)) . " - " . _GEN_BY . ": " . stripslashes(kunena_htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
+            echo "            <title>" . JText::_(COM_KUNENA_GEN_SUBJECT) . ": " . CKunenaTools::parseText (kunena_htmlspecialchars($row->subject)) . " - " . JText::_(COM_KUNENA_GEN_BY) . ": " . stripslashes(kunena_htmlspecialchars($row->lastpostname)) . "</title>" . "\n";
             echo "            <link>";
             $uri =& JURI::getInstance(JURI::base());
             $itemlink = $uri->toString(array('scheme', 'host', 'port')) . CKunenaLink::GetThreadPageURL($kunena_config, 'view', $row->catid, $row->thread, ceil($thisThread->totalmessages / $kunena_config->messages_per_page), $kunena_config->messages_per_page, $result->id);

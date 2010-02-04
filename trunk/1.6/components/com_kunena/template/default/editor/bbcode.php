@@ -21,12 +21,12 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	// TODO: Help link need to point by default to a bbcode help page on kunena wiki
 	?>
 	<!--<td class="kleftcolumn" valign="top"><strong><?php
-	echo CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&amp;func=help', _COM_BOARDCODE , NULL, 'follow', NULL, 'boardcode', 'target=\'_new\'' );
+	echo CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&amp;func=help', JText::_(COM_KUNENA_BOARDCODE) , NULL, 'follow', NULL, 'boardcode', 'target=\'_new\'' );
 	?></strong>:
 	</td>-->
 	<?php //}else { 	?>
 	<td class="kleftcolumn" valign="top"><strong><?php
-	echo _COM_BOARDCODE;
+	echo JText::_(COM_KUNENA_BOARDCODE);
 	?></strong>
 	</td>
 	<?php //} 	?>
@@ -43,33 +43,33 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<div id="kbbcode-size-options" style="display: none;">
 				<span class="kmsgtext_xs" title='[size=1]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XS;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XS);?>')">&nbsp;<?php
+				echo JText::_(COM_KUNENA_EDITOR_SIZE_SAMPLETEXT);
 				?>&nbsp;</span>
 				<span class="kmsgtext_s" title='[size=2]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_S;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_S);?>')">&nbsp;<?php
+				echo JText::_(COM_KUNENA_EDITOR_SIZE_SAMPLETEXT);
 				?>&nbsp;</span>
 				<span class="kmsgtext_m" title='[size=3]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_M;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_M);?>')">&nbsp;<?php
+				echo JText::_(COM_KUNENA_EDITOR_SIZE_SAMPLETEXT);
 				?>&nbsp;</span>
 				<span class="kmsgtext_l" title='[size=4]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_L;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_L);?>')">&nbsp;<?php
+				echo JText::_(COM_KUNENA_EDITOR_SIZE_SAMPLETEXT);
 				?>&nbsp;</span>
 				<span class="kmsgtext_xl" title='[size=5]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XL;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XL);?>')">&nbsp;<?php
+				echo JText::_(COM_KUNENA_EDITOR_SIZE_SAMPLETEXT);
 				?>&nbsp;</span>
 				<span class="kmsgtext_xxl" title='[size=6]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_FONTSIZE_XXL;?>')">&nbsp;<?php
-				echo _KUNENA_EDITOR_SIZE_SAMPLETEXT;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XXL);?>')">&nbsp;<?php
+				echo JText::_(COM_KUNENA_EDITOR_SIZE_SAMPLETEXT);
 				?>&nbsp;</span>
 			</div>
 			<div id="kbbcode-colorpalette" style="display: none;">
@@ -92,50 +92,50 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			</div>
 
 			<div id="kbbcode-link-options" style="display: none;"><?php
-			echo _KUNENA_EDITOR_LINK_URL;
+			echo JText::_(COM_KUNENA_EDITOR_LINK_URL);
 			?>&nbsp;<input
 				id="kbbcode-link_url" name="url" type="text" size="40" maxlength="255" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_LINKURL;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_LINKURL);
 				?>')" />
 			<?php
-			echo _KUNENA_EDITOR_LINK_TEXT;
+			echo JText::_(COM_KUNENA_EDITOR_LINK_TEXT);
 			?>&nbsp;<input name="text2"
 				id="kbbcode-link_text" type="text" size="30" maxlength="100"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_LINKTEXT;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_LINKTEXT);
 				?>')" />
 			<input type="button" name="insterLink"
 				value="<?php
-				echo _KUNENA_EDITOR_LINK_INSERT;
+				echo JText::_(COM_KUNENA_EDITOR_LINK_INSERT);
 				?>"
 				onclick="kbbcode.replaceSelection('[url=' + $('kbbcode-link_url').get('value') + ']' + $('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_LINKAPPLY;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_LINKAPPLY);
 				?>')" />
 			</div>
 
 			<div id="kbbcode-image-options" style="display: none;"><?php
-			echo _KUNENA_EDITOR_IMAGELINK_SIZE;
+			echo JText::_(COM_KUNENA_EDITOR_IMAGELINK_SIZE);
 			?>&nbsp;<input
 				id="kbbcode-image_size" name="size" type="text" size="10" maxlength="10"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( _KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE )) ;
+				echo (addslashes ( JText::_(COM_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE) )) ;
 				?>')" />
 			<?php
-			echo _KUNENA_EDITOR_IMAGELINK_URL;
+			echo JText::_(COM_KUNENA_EDITOR_IMAGELINK_URL);
 			?>&nbsp;<input name="url2"
 				id="kbbcode-image_url" type="text" size="40" maxlength="250" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_IMAGELINKURL;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);
 				?>')" />&nbsp;
 			<input type="button" name="Link"
 				value="<?php
-				echo _KUNENA_EDITOR_IMAGELINK_INSERT;
+				echo JText::_(COM_KUNENA_EDITOR_IMAGELINK_INSERT);
 				?>"
 				onclick="kInsertImageLink()"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY);
 				?>')" />
 			</div>
 
@@ -153,22 +153,22 @@ $kunena_config = & CKunenaConfig::getInstance ();
 						$html_poll_edit = CKunenaPolls::get_input_poll($this->kunena_editmode, $id, $polldatasedit);
 						JHTML::_('behavior.calendar');
 			?><span id = "kpoll_not_allowed"></span><div id = "kpoll_hide_not_allowed">
-			<?php echo _KUNENA_POLL_TITLE;
+			<?php echo JText::_(COM_KUNENA_POLL_TITLE);
 			?>&nbsp;<input
 				type = "text" id = "kpolltitle" name = "poll_title" maxlength = "25" value =
 				"<?php if(isset($polldatasedit[0]->title)) { echo $polldatasedit[0]->title; } ?>"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_POLLTITLE; ?>')"/>
-			<?php echo _KUNENA_POLL_TIME_TO_LIVE; ?>&nbsp;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_POLLTITLE); ?>')"/>
+			<?php echo JText::_(COM_KUNENA_POLL_TIME_TO_LIVE); ?>&nbsp;
 			<input class="inputbox" type="text" maxlength="15" name="poll_time_to_live" id="poll_time_to_live"
 			style="display: none" value="<?php echo $polldatasedit[0]->polltimetolive; ?>" />
 			<img src="templates/system/images/calendar.png" alt="Calendar"
 			onclick="showCalendar('poll_time_to_live','%Y-%m-%d');$('poll_time_to_live').removeProperty('style');"
-			onmouseover="javascript:$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_POLLLIFESPAN; ?>')" />
+			onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_(COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN); ?>')" />
 			<img id = "kbutton_poll_add" src = "<?php echo JURI::root(); ?>/administrator/images/tick.png"
-			onmouseover="javascript:$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION; ?>')" />
+			onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_(COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION); ?>')" />
 			<img id = "kbutton_poll_rem" src = "<?php echo JURI::root(); ?>/administrator/images/publish_x.png"
-			onmouseover="javascript:$('helpbox').set('value', '<?php echo _KUNENA_EDITOR_HELPLINE_REMPOLLOPTION; ?>')" />
+			onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_(COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION); ?>')" />
 			</div>
             <?php
             if(!empty($html_poll_edit)) {
@@ -186,33 +186,33 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			</div>
 
 			<div id="kbbcode-video-options" style="display: none;"><?php
-			echo _KUNENA_EDITOR_VIDEO_SIZE;
+			echo JText::_(COM_KUNENA_EDITOR_VIDEO_SIZE);
 			?><input
 				name="videosize" type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_VIDEOSIZE;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_VIDEOSIZE);
 				?>')" />
 			<?php
-			echo _KUNENA_EDITOR_VIDEO_WIDTH;
+			echo JText::_(COM_KUNENA_EDITOR_VIDEO_WIDTH);
 			?><input name="videowidth"
 				type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_VIDEOWIDTH;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH);
 				?>')" />
 			<?php
-			echo _KUNENA_EDITOR_VIDEO_HEIGHT;
+			echo JText::_(COM_KUNENA_EDITOR_VIDEO_HEIGHT);
 			?><input
 				name="videoheight" type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT);
 				?>')" />
 			<br />
 			<?php
-			echo _KUNENA_EDITOR_VIDEO_PROVIDER;
+			echo JText::_(COM_KUNENA_EDITOR_VIDEO_PROVIDER);
 			?> <select
 				name="kvid_code1" class="kbutton"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER);
 				?>')">
 				<?php
 				$vid_provider = array ('', 'AnimeEpisodes', 'Biku', 'Bofunk', 'Break', 'Clip.vn', 'Clipfish', 'Clipshack', 'Collegehumor', 'Current', 'DailyMotion', 'DivX,divx]http://', 'DownloadFestival', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'Fliptrack', 'Fliqz', 'Gametrailers', 'Gamevideos', 'Glumbert', 'GMX', 'Google', 'GooglyFoogly', 'iFilm', 'Jumpcut', 'Kewego', 'LiveLeak', 'LiveVideo', 'MediaPlayer,mediaplayer]http://', 'MegaVideo', 'Metacafe', 'Mofile', 'Multiply', 'MySpace', 'MyVideo', 'QuickTime,quicktime]http://', 'Quxiu', 'RealPlayer,realplayer]http://', 'Revver', 'RuTube', 'Sapo', 'Sevenload', 'Sharkle', 'Spikedhumor', 'Stickam', 'Streetfire', 'StupidVideos', 'Toufee', 'Tudou', 'Unf-Unf', 'Uume', 'Veoh', 'VideoclipsDump', 'Videojug', 'VideoTube', 'Vidiac', 'VidiLife', 'Vimeo', 'WangYou', 'WEB.DE', 'Wideo.fr', 'YouKu', 'YouTube' );
@@ -222,28 +222,28 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				}
 				?>
 			</select> <?php
-			echo _KUNENA_EDITOR_VIDEO_ID;
+			echo JText::_(COM_KUNENA_EDITOR_VIDEO_ID);
 			?><input
 				name="videoid" type="text" size="11" maxlength="11"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_VIDEOID;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_VIDEOID);
 				?>')" />
 			<input type="button" name="Video" accesskey="p"
 				onclick="check_video('video1')"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1);
 				?>')" /><br />
 			<?php
-			echo _KUNENA_EDITOR_VIDEO_URL;
+			echo JText::_(COM_KUNENA_EDITOR_VIDEO_URL);
 			?><input name="videourl"
 				type="text" size="30" maxlength="250" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_VIDEOURL;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_VIDEOURL);
 				?>')" />
 			<input type="button" name="Video" accesskey="p"
 				onclick="check_video('video2')"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo _KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2;
+				echo JText::_(COM_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2);
 				?>')" />
 			<script type="text/javascript">
 								function check_video(art) {
@@ -293,7 +293,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<td class="kposthint"><input type="text" name="helpbox" id="helpbox"
 				size="45" class="kinputbox" maxlength="100"
 				value="<?php
-				echo (_KUNENA_EDITOR_HELPLINE_HINT) ;
+				echo (JText::_(COM_KUNENA_EDITOR_HELPLINE_HINT)) ;
 				?>" /></td>
 		</tr>
 	</table>
@@ -302,7 +302,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 
 <tr class="ksectiontableentry2">
 	<td valign="top" class="kleftcolumn"><strong><?php
-		echo (_MESSAGE) ;
+		echo (JText::_(COM_KUNENA_MESSAGE)) ;
 	// TODO: Replace Enlarge and Shrink with icons
 	?></strong><br />
 		<span class="ksmalltext" onclick="kGrowShrinkMessage(100);" style="cursor: pointer">Enlarge</span>&nbsp;/&nbsp;
@@ -318,7 +318,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 		// Moderator edit area
 		?>
 	<fieldset><legend><?php
-		echo (_KUNENA_EDITING_REASON) ?></legend> <input
+		echo (JText::_(COM_KUNENA_EDITING_REASON)) ?></legend> <input
 		name="modified_reason" size="40" maxlength="200" type="text" /><br />
 	</fieldset>
 	<?php

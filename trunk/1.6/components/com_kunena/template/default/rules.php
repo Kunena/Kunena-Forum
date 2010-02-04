@@ -26,7 +26,7 @@ $kunena_db = &JFactory::getDBO ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $document = & JFactory::getDocument ();
 
-$document->setTitle ( _GEN_RULES . ' - ' . stripslashes ( $kunena_config->board_title ) );
+$document->setTitle ( JText::_(COM_KUNENA_GEN_RULES) . ' - ' . stripslashes ( $kunena_config->board_title ) );
 
 $kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->rules_cid}'" );
 $j_introtext = $kunena_db->loadResult ();
@@ -43,7 +43,7 @@ check_dberror ( "Unable to load introtext." );
 			<tr>
 				<th>
 					<div class="ktitle_cover"><span class="ktitle kl"><?php
-					echo _COM_FORUM_RULES;
+					echo JText::_(COM_KUNENA_FORUM_RULES);
 					?></span></div>
 				</th>
 			</tr>

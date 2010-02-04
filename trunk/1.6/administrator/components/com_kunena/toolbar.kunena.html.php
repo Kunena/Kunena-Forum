@@ -86,7 +86,7 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::save('saveuserprofile');
         JToolBarHelper::spacer();
-        JToolBarHelper::cancel('showprofiles', _KUNENA_BACK);
+        JToolBarHelper::cancel('showprofiles', JText::_(COM_KUNENA_BACK));
         JToolBarHelper::spacer();
 
     }
@@ -95,7 +95,7 @@ class CKunenaToolbar
     {
 
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('userprofile', 'edit.png', 'edit_f2.png', _KUNENA_EDIT);
+        JToolBarHelper::custom('userprofile', 'edit.png', 'edit_f2.png', JText::_(COM_KUNENA_EDIT));
         JToolBarHelper::spacer();
         JToolBarHelper::cancel();
         JToolBarHelper::spacer();
@@ -120,7 +120,7 @@ class CKunenaToolbar
 
         JToolBarHelper::spacer();
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('doprune', 'delete.png', 'delete_f2.png', _KUNENA_PRUNE, false);
+        JToolBarHelper::custom('doprune', 'delete.png', 'delete_f2.png', JText::_(COM_KUNENA_PRUNE), false);
         JToolBarHelper::spacer();
         JToolBarHelper::cancel();
         JToolBarHelper::spacer();
@@ -131,7 +131,7 @@ class CKunenaToolbar
     {
 
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('douserssync', 'delete.png', 'delete_f2.png', _KUNENA_SYNC, false);
+        JToolBarHelper::custom('douserssync', 'delete.png', 'delete_f2.png', JText::_(COM_KUNENA_SYNC), false);
         JToolBarHelper::spacer();
         JToolBarHelper::cancel();
         JToolBarHelper::spacer();
@@ -157,11 +157,11 @@ class CKunenaToolbar
     {
 
         JToolBarHelper::spacer();
-        JToolBarHelper::addNew('newsmiley', _KUNENA_NEW_SMILIE);
+        JToolBarHelper::addNew('newsmiley', JText::_(COM_KUNENA_NEW_SMILIE));
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('editsmiley', 'edit.png', 'edit_f2.png', _KUNENA_EDIT);
+        JToolBarHelper::custom('editsmiley', 'edit.png', 'edit_f2.png', JText::_(COM_KUNENA_EDIT));
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('deletesmiley', 'delete.png', 'delete_f2.png', _GEN_DELETE);
+        JToolBarHelper::custom('deletesmiley', 'delete.png', 'delete_f2.png', JText::_(COM_KUNENA_GEN_DELETE));
         JToolBarHelper::spacer();
         JToolBarHelper::back();
 
@@ -191,11 +191,11 @@ class CKunenaToolbar
     {
 
         JToolBarHelper::spacer();
-        JToolBarHelper::addNew('newRank', _KUNENA_NEW_RANK);
+        JToolBarHelper::addNew('newRank', JText::_(COM_KUNENA_NEW_RANK));
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('editRank', 'edit.png', 'edit_f2.png', _KUNENA_EDIT);
+        JToolBarHelper::custom('editRank', 'edit.png', 'edit_f2.png', JText::_(COM_KUNENA_EDIT));
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('deleteRank', 'delete.png', 'delete_f2.png', _GEN_DELETE);
+        JToolBarHelper::custom('deleteRank', 'delete.png', 'delete_f2.png', JText::_(COM_KUNENA_GEN_DELETE));
         JToolBarHelper::spacer();
         JToolBarHelper::back();
 
@@ -224,9 +224,9 @@ class CKunenaToolbar
 	function _TRASHVIEW_MENU()
     {
     	JToolBarHelper::spacer();
-		JToolBarHelper::custom('trashrestore','restore.png','restore_f2.png', _KUNENA_TRASH_RESTORE);
+		JToolBarHelper::custom('trashrestore','restore.png','restore_f2.png', JText::_(COM_KUNENA_TRASH_RESTORE));
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('trashpurge','delete.png','delete_f2.png', _KUNENA_TRASH_PURGE);
+        JToolBarHelper::custom('trashpurge','delete.png','delete_f2.png', JText::_(COM_KUNENA_TRASH_PURGE));
         JToolBarHelper::spacer();
         JToolBarHelper::back();
 

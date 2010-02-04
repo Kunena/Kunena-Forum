@@ -33,7 +33,7 @@ defined( '_JEXEC' ) or die();
 			<tr>
 				<th colspan = "2">
 					<div class = "ktitle_cover">
-						<span class = "ktitle"><?php echo _USER_GENERAL; ?></span>
+						<span class = "ktitle"><?php echo JText::_(COM_KUNENA_USER_GENERAL); ?></span>
 					</div>
 				</th>
 			</tr>
@@ -42,14 +42,14 @@ defined( '_JEXEC' ) or die();
 		<tbody class = "kmyprofile_general">
 			<tr >
 				<td>
-					<strong><?php echo _USER_ORDER; ?>*</strong>:
+					<strong><?php echo JText::_(COM_KUNENA_USER_ORDER); ?>*</strong>:
 				</td>
 
 				<td>
 					<?php
 					// make the select list for the view type
-					$yesno1[] = JHTML::_('select.option', 0, _USER_ORDER_ASC);
-					$yesno1[] = JHTML::_('select.option', 1, _USER_ORDER_DESC);
+					$yesno1[] = JHTML::_('select.option', 0, JText::_(COM_KUNENA_USER_ORDER_ASC));
+					$yesno1[] = JHTML::_('select.option', 1, JText::_(COM_KUNENA_USER_ORDER_DESC));
 					// build the html select list
 					$tosend   = JHTML::_('select.genericlist', $yesno1, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $this->kunena_ordering);
 					echo $tosend;
@@ -58,14 +58,14 @@ defined( '_JEXEC' ) or die();
 			</tr>
             <tr >
 				<td>
-					<strong><?php echo _KUNENA_USER_HIDEEMAIL; ?>*</strong>:
+					<strong><?php echo JText::_(COM_KUNENA_USER_HIDEEMAIL); ?>*</strong>:
 				</td>
 
 				<td colspan = "2">
 					<?php
 					// make the select list for the view type
-					$yesno3[] = JHTML::_('select.option', 0, _COM_A_NO);
-					$yesno3[] = JHTML::_('select.option', 1, _COM_A_YES);
+					$yesno3[] = JHTML::_('select.option', 0, JText::_(COM_KUNENA_A_NO));
+					$yesno3[] = JHTML::_('select.option', 1, JText::_(COM_KUNENA_A_YES));
 					// build the html select list
 					$tosend   = JHTML::_('select.genericlist', $yesno3, 'newhideEmail', 'class="inputbox" size="2"', 'value', 'text', $this->kunena_hide_email);
 					echo $tosend;
@@ -76,14 +76,14 @@ defined( '_JEXEC' ) or die();
 
             <tr >
 				<td>
-					<strong><?php echo _USER_SHOWONLINE; ?>*</strong>:
+					<strong><?php echo JText::_(COM_KUNENA_USER_SHOWONLINE); ?>*</strong>:
 				</td>
 
 				<td>
 					<?php
 					// make the select list for the view type
-					$yesno4[] = JHTML::_('select.option', 0, _COM_A_NO);
-					$yesno4[] = JHTML::_('select.option', 1, _COM_A_YES);
+					$yesno4[] = JHTML::_('select.option', 0, JText::_(COM_KUNENA_A_NO));
+					$yesno4[] = JHTML::_('select.option', 1, JText::_(COM_KUNENA_A_YES));
 					// build the html select list
 					$tosend   = JHTML::_('select.genericlist', $yesno4, 'newshowOnline', 'class="inputbox" size="2"', 'value', 'text', $this->kunena_show_online);
 					echo $tosend;
@@ -95,12 +95,12 @@ defined( '_JEXEC' ) or die();
 
 			<tr>
 				<td colspan = "2" align="center">
-					<input type = "submit" class = "button" value = "<?php echo _GEN_SUBMIT;?>">
+					<input type = "submit" class = "button" value = "<?php echo JText::_(COM_KUNENA_GEN_SUBMIT);?>">
 				</td>
 			</tr>
             <tr >
 				<td colspan = "2">
-					<?php echo '<br /><font size="1"><em>*' . _USER_CHANGE_VIEW . '</em></font>'; ?>
+					<?php echo '<br /><font size="1"><em>*' . JText::_(COM_KUNENA_USER_CHANGE_VIEW) . '</em></font>'; ?>
 				</td>
 			</tr>
 		</tbody>

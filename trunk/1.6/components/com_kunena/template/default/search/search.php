@@ -35,9 +35,9 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 		<tr>
 			<th colspan="3">
 			<div class="ktitle_cover"><span class="ktitle fbl"><?php
-			echo _KUNENA_SEARCH_RESULTS;
+			echo JText::_(COM_KUNENA_SEARCH_RESULTS);
 			?></span> <b><?php
-		printf ( _FORUM_SEARCH, $this->q );
+		printf ( JText::_(COM_KUNENA_FORUM_SEARCH), $this->q );
 		?></b></div>
 			</th>
 		</tr>
@@ -47,17 +47,17 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 		<tr class="ksth">
 			<th class="th-2 ksectiontableheader">
 			<?php
-			echo _GEN_SUBJECT;
+			echo JText::_(COM_KUNENA_GEN_SUBJECT);
 			?></th>
 
 			<th class="th-3 ksectiontableheader">
 			<?php
-			echo _GEN_AUTHOR;
+			echo JText::_(COM_KUNENA_GEN_AUTHOR);
 			?></th>
 
 			<th class="th-4 ksectiontableheader">
 			<?php
-			echo _GEN_DATE;
+			echo JText::_(COM_KUNENA_GEN_DATE);
 			?></th>
 		</tr>
 
@@ -78,7 +78,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 			echo $result->message?>
 			<br />
 			<span style="font-size: x-small;"><?php
-			echo _KUNENA_CATEGORY . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $result->catid, $result->catname, $rel = 'follow', $class = '', $title = '' )?></span>
+			echo JText::_(COM_KUNENA_CATEGORY) . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $result->catid, $result->catname, $rel = 'follow', $class = '', $title = '' )?></span>
 			</td>
 			<td class="td-3"><?php
 			echo kunena_htmlspecialchars ( stripslashes ( $result->name ) )?></td>
@@ -112,7 +112,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 				$resStartStop = ( string ) ($resStart) . ' - ' . ( string ) ($resStop);
 			else
 				$resStartStop = '0';
-			printf ( _FORUM_SEARCHRESULTS, $resStartStop, $this->total );
+			printf ( JText::_(COM_KUNENA_FORUM_SEARCHRESULTS), $resStartStop, $this->total );
 			?>
 			</th>
 		</tr>

@@ -38,7 +38,7 @@ $kunena_config = CKunenaConfig::getInstance ();
 			<tr>
 				<th colspan = "3">
 					<div class = "ktitle_cover km">
-						<span class = "ktitle ks"><?php echo _USER_FAVORITES; ?></span>
+						<span class = "ktitle ks"><?php echo JText::_(COM_KUNENA_USER_FAVORITES); ?></span>
 					</div>
 				</th>
 			</tr>
@@ -46,9 +46,9 @@ $kunena_config = CKunenaConfig::getInstance ();
 
 		<tbody id = "kuserprofile_tbody">
 			<tr class = "ksth">
-				<th class = "th-1 ksectiontableheader"><?php echo _GEN_TOPICS; ?></th>
-				<th class = "th-2 ksectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?></th>
-				<th class = "th-3 ksectiontableheader"><?php echo _GEN_DELETE; ?></th>
+				<th class = "th-1 ksectiontableheader"><?php echo JText::_(COM_KUNENA_GEN_TOPICS); ?></th>
+				<th class = "th-2 ksectiontableheader" style = "text-align:center; width:25%"><?php echo JText::_(COM_KUNENA_GEN_AUTHOR); ?></th>
+				<th class = "th-3 ksectiontableheader"><?php echo JText::_(COM_KUNENA_GEN_DELETE); ?></th>
 			</tr>
 
 			<?php
@@ -95,13 +95,13 @@ $kunena_config = CKunenaConfig::getInstance ();
 
 				<tr>
 					<td colspan = "3" class = "kprofile-bottomnav" style = "text-align:right">
-<?php echo _KUNENA_USRL_DISPLAY_NR; ?>
+<?php echo JText::_(COM_KUNENA_USRL_DISPLAY_NR); ?>
 
 <?php
 // echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showfav" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
 
-			<input type = "submit" class = "button" value = "<?php echo _GEN_DELETE;?>"/>
+			<input type = "submit" class = "button" value = "<?php echo JText::_(COM_KUNENA_GEN_DELETE);?>"/>
 					</td>
 				</tr>
 
@@ -109,7 +109,7 @@ $kunena_config = CKunenaConfig::getInstance ();
 			}
 			else
 			{
-				echo '<tr class="k' . $tabclass[$k] . '"><td class="td-1" colspan = "3">' . _USER_NOFAVORITES . '</td></tr>';
+				echo '<tr class="k' . $tabclass[$k] . '"><td class="td-1" colspan = "3">' . JText::_(COM_KUNENA_USER_NOFAVORITES) . '</td></tr>';
 			}
 			?>
 

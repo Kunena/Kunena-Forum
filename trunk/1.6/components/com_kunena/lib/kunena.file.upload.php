@@ -36,7 +36,7 @@ function fileUploadError($msg)
     $GLOBALS['KUNENA_rc'] = 0;
     $message = str_replace("[file/]", "", $message);
     $kunena_app =& JFactory::getApplication();
-    $kunena_app->enqueueMessage(_FILE_NOT_UPLOADED .' ('. $msg .')', 'notice');
+    $kunena_app->enqueueMessage(JText::_(COM_KUNENA_FILE_NOT_UPLOADED) .' ('. $msg .')', 'notice');
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
@@ -66,15 +66,15 @@ if ($GLOBALS['KUNENA_rc'])
 
     // Check for empty filename
     if (!is_uploaded_file($attachfile['tmp_name']) || empty($attachfile['name'])) {
-        fileUploadError(_FILE_ERROR_EMPTY);
+        fileUploadError(JText::_(COM_KUNENA_FILE_ERROR_EMPTY));
     }
     // check for allowed file types
     else if (!in_array(strtolower(substr($fileExt,1)), $allowedArray)) {
-        fileUploadError(_FILE_ERROR_TYPE . " " . $kunena_config->filetypes);
+        fileUploadError(JText::_(COM_KUNENA_FILE_ERROR_TYPE) . " " . $kunena_config->filetypes);
     }
     // Check filesize
     else if ($fileSize > $maxImgSize) {
-        fileUploadError(_FILE_ERROR_SIZE . " (" . $kunena_config->filesize . "kb)");
+        fileUploadError(JText::_(COM_KUNENA_FILE_ERROR_SIZE) . " (" . $kunena_config->filesize . "kb)");
     }
 }
 
@@ -94,6 +94,6 @@ if ($GLOBALS['KUNENA_rc'])
     else {
         $message = $message . ' ' . $code;
     }
-    echo _KUNENA_ATTACHMENT_ADDED, ' '.$newFileName;
+    echo JText::_(COM_KUNENA_ATTACHMENT_ADDED), ' '.$newFileName;
 }
 ?>

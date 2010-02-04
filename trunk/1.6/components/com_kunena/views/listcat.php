@@ -51,8 +51,8 @@ class CKunenaListcat {
 		check_dberror ( "Unable to load categories." );
 
 		//meta description and keywords
-		$metaDesc = (_KUNENA_CATEGORIES . ' - ' . stripslashes ( $this->config->board_title ));
-		$metaKeys = (_KUNENA_CATEGORIES . ', ' . stripslashes ( $this->config->board_title ) . ', ' . $kunena_app->getCfg ( 'sitename' ));
+		$metaDesc = (JText::_(COM_KUNENA_CATEGORIES) . ' - ' . stripslashes ( $this->config->board_title ));
+		$metaKeys = (JText::_(COM_KUNENA_CATEGORIES) . ', ' . stripslashes ( $this->config->board_title ) . ', ' . $kunena_app->getCfg ( 'sitename' ));
 
 		$document = JFactory::getDocument ();
 		$cur = $document->get ( 'description' );
@@ -110,21 +110,21 @@ class CKunenaListcat {
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_on.gif" )) {
 						$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_on.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 					} else {
-						$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum'] . '" border="0" alt="' . _GEN_FORUM_NEWPOST . '" title="' . _GEN_FORUM_NEWPOST . '"/>' : stripslashes ( $this->config->newchar );
+						$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NEWPOST) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NEWPOST) . '"/>' : stripslashes ( $this->config->newchar );
 					}
 				} else {
 					// Check Read Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_off.gif" )) {
 						$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_off.gif\" border=\"0\" class='forum-cat-image' alt=\" \"  />";
 					} else {
-						$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes ( $this->config->newchar );
+						$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '"/>' : stripslashes ( $this->config->newchar );
 					}
 				}
 			} else {
 				if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_notlogin.gif" )) {
 					$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_notlogin.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 				} else {
-					$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum'] . '" border="0" alt="' . _GEN_FORUM_NOTNEW . '" title="' . _GEN_FORUM_NOTNEW . '"/>' : stripslashes ( $this->config->newchar );
+					$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '"/>' : stripslashes ( $this->config->newchar );
 				}
 			}
 		}
@@ -256,7 +256,7 @@ class CKunenaListcat {
 			$endpage = $totalpages;
 		}
 
-		$output = '<span class="kpagination">' . _PAGE;
+		$output = '<span class="kpagination">' . JText::_(COM_KUNENA_PAGE);
 
 		if (($startpage) > 1) {
 			if ($endpage < $totalpages)
@@ -289,11 +289,11 @@ class CKunenaListcat {
 
 	function display() {
 		if (! $this->allow) {
-			echo _KUNENA_NO_ACCESS;
+			echo JText::_(COM_KUNENA_NO_ACCESS);
 			return;
 		}
 		if (empty ( $this->categories [0] )) {
-			echo '' . _GEN_NOFORUMS . '';
+			echo '' . JText::_(COM_KUNENA_GEN_NOFORUMS) . '';
 			return;
 		}
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'listcat.php' )) {

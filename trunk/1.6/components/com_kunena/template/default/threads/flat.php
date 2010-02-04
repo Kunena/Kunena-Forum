@@ -58,7 +58,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 	$k = 0;
 	$counter = 0;
 	if (empty ( $this->messages )) {
-		echo '<tr class="ksectiontableentry2"><td class="td-0 km center">' . ($this->func=='showcat'?_VIEW_NO_POSTS:_NO_POSTS) . '</td></tr>';
+		echo '<tr class="ksectiontableentry2"><td class="td-0 km center">' . ($this->func=='showcat'?JText::_(COM_KUNENA_VIEW_NO_POSTS):JText::_(COM_KUNENA_NO_POSTS)) . '</td></tr>';
 	} else
 	foreach ( $this->messages as $leaf ) {
 		$leaf->name = kunena_htmlspecialchars ( stripslashes ( $leaf->name ) );
@@ -100,7 +100,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		echo CKunenaTools::formatLargeNumber ( $leaf->msgcount-1 );
 		?>
 			</strong><?php
-		echo _GEN_REPLIES;
+		echo JText::_(COM_KUNENA_GEN_REPLIES);
 		?></td>
 
 			<td class="td-2 center">
@@ -113,7 +113,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 			$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
 
 			if ($leaf->attachments) {
-				echo isset ( $kunena_icons ['topicattach'] ) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicattach'] . '" border="0" alt="' . _KUNENA_ATTACH . '" />' : '<img class="attachicon" src="' . KUNENA_URLICONSPATH . 'attachment.gif"  alt="' . _KUNENA_ATTACH . '" title="' . _KUNENA_ATTACH . '" />';
+				echo isset ( $kunena_icons ['topicattach'] ) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicattach'] . '" border="0" alt="' . JText::_(COM_KUNENA_ATTACH) . '" />' : '<img class="attachicon" src="' . KUNENA_URLICONSPATH . 'attachment.gif"  alt="' . JText::_(COM_KUNENA_ATTACH) . '" title="' . JText::_(COM_KUNENA_ATTACH) . '" />';
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
@@ -122,9 +122,9 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 			<?php
 			if ($leaf->favcount ) {
 				if ($leaf->myfavorite) {
-					echo isset ( $kunena_icons ['favoritestar'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLICONSPATH . 'favoritestar.png"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+					echo isset ( $kunena_icons ['favoritestar'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" border="0" alt="' . JText::_(COM_KUNENA_FAVORITE) . '" />' : '<img class="favoritestar" src="' . KUNENA_URLICONSPATH . 'favoritestar.png"  alt="' . JText::_(COM_KUNENA_FAVORITE) . '" title="' . JText::_(COM_KUNENA_FAVORITE) . '" />';
 				} else if (array_key_exists ( 'favoritestar_grey', $kunena_icons )) {
-					echo isset ( $kunena_icons ['favoritestar_grey'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar_grey'] . '" border="0" alt="' . _KUNENA_FAVORITE . '" />' : '<img class="favoritestar" src="' . KUNENA_URLICONSPATH . 'favoritestar.png"  alt="' . _KUNENA_FAVORITE . '" title="' . _KUNENA_FAVORITE . '" />';
+					echo isset ( $kunena_icons ['favoritestar_grey'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar_grey'] . '" border="0" alt="' . JText::_(COM_KUNENA_FAVORITE) . '" />' : '<img class="favoritestar" src="' . KUNENA_URLICONSPATH . 'favoritestar.png"  alt="' . JText::_(COM_KUNENA_FAVORITE) . '" title="' . JText::_(COM_KUNENA_FAVORITE) . '" />';
 				}
 			}
 			?>
@@ -135,7 +135,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 
 			if ($leaf->msgcount > $this->config->messages_per_page) {
 				echo ("<span class=\"jr-showcat-perpage\">[");
-				echo _PAGE . ' ' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 );
+				echo JText::_(COM_KUNENA_PAGE) . ' ' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 );
 
 				if ($threadPages > 3) {
 					echo ("...");
@@ -167,13 +167,13 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		if ($this->func != 'showcat') {
 			?>
 			<!-- Category --> <span class="topic_category"> <?php
-			echo _KUNENA_CATEGORY . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
+			echo JText::_(COM_KUNENA_CATEGORY) . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
 			?>
 			</span> <!-- /Category -->
 			<span class="divider">|</span>
 <?php 	} ?>
 			<span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
-		echo _KUNENA_POSTED_AT?>
+		echo JText::_(COM_KUNENA_POSTED_AT)?>
 			<?php
 			echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');
 		?></span>
@@ -181,7 +181,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		<?php
 		if ($leaf->name) {
 			echo '<span class="topic_by">';
-			echo _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $this->config, $leaf->userid, $leaf->name );
+			echo JText::_(COM_KUNENA_GEN_BY) . ' ' . CKunenaLink::GetProfileLink ( $this->config, $leaf->userid, $leaf->name );
 			echo '</span>';
 		}
 		?>
@@ -189,7 +189,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		<?php
 		if ($leaf->locked != 0) {
 			?> <!-- Locked --> <span class="topic_locked"> <?php
-			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . _GEN_LOCKED_TOPIC . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . _GEN_LOCKED_TOPIC . '" title="' . _GEN_LOCKED_TOPIC . '" />';
+			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_LOCKED_TOPIC) . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . JText::_(COM_KUNENA_GEN_LOCKED_TOPIC) . '" title="' . JText::_(COM_KUNENA_GEN_LOCKED_TOPIC) . '" />';
 			?>
 			</span> <!-- /Locked --> <?php
 		}
@@ -201,7 +201,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
 		?>
 			</span> <span class="topic_views"> <?php
-		echo _GEN_HITS;
+		echo JText::_(COM_KUNENA_GEN_HITS);
 		?> </span> <!-- /Views --></td>
 		<?php if ($this->showposts):?>
 			<td class="td-4 center">
@@ -210,7 +210,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->mycount );
 		?>
 			</span> <span class="topic_views"> <?php
-		echo _KUNENA_MY_POSTS;
+		echo JText::_(COM_KUNENA_MY_POSTS);
 		?> </span> <!-- /Posts --></td>
 		<?php endif; ?>
 			<td class="td-6 ks">
@@ -218,7 +218,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		if ($leaf->ordering != 0) {
 			?>
 			<span class="topic_sticky"> <?php
-			echo isset ( $kunena_icons ['topicsticky'] ) ? '<img  src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicsticky'] . '" border="0" alt="' . _GEN_ISSTICKY . '" />' : '<img class="stickyicon" src="' . KUNENA_URLICONSPATH . 'tsticky.gif"  alt="' . _GEN_ISSTICKY . '" title="' . _GEN_ISSTICKY . '" />';
+			echo isset ( $kunena_icons ['topicsticky'] ) ? '<img  src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicsticky'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_ISSTICKY) . '" />' : '<img class="stickyicon" src="' . KUNENA_URLICONSPATH . 'tsticky.gif"  alt="' . JText::_(COM_KUNENA_GEN_ISSTICKY) . '" title="' . JText::_(COM_KUNENA_GEN_ISSTICKY) . '" />';
 			?>
 			</span> <?php
 		}
@@ -257,15 +257,15 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 				class="topic_latest_post"> <?php
 		if ($this->config->default_sort == 'asc') {
 			if ($leaf->moved == 0)
-				echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $threadPages, $this->config->messages_per_page, _GEN_LAST_POST, $this->last_reply [$leaf->id]->id );
+				echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $threadPages, $this->config->messages_per_page, JText::_(COM_KUNENA_GEN_LAST_POST), $this->last_reply [$leaf->id]->id );
 			else
-				echo _KUNENA_MOVED . ' ';
+				echo JText::_(COM_KUNENA_MOVED) . ' ';
 		} else {
-			echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, 1, $this->config->messages_per_page, _GEN_LAST_POST, $this->last_reply [$leaf->id]->id );
+			echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, 1, $this->config->messages_per_page, JText::_(COM_KUNENA_GEN_LAST_POST), $this->last_reply [$leaf->id]->id );
 		}
 
 		if ($leaf->name)
-			echo ' ' . _GEN_BY . ' ' . CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, stripslashes ( $this->last_reply [$leaf->id]->name ), 'nofollow' );
+			echo ' ' . JText::_(COM_KUNENA_GEN_BY) . ' ' . CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, stripslashes ( $this->last_reply [$leaf->id]->name ), 'nofollow' );
 		?>
 			</span> <!-- /Latest Post --> <br />
 			<!-- Latest Post Date --> <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($this->last_reply[$leaf->id]->time, 'config_post_dateformat_hover'); ?>"> <?php
@@ -317,16 +317,16 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 				class="inputbox ks">
 				<option value="">&nbsp;</option>
 				<option value="bulkDel"><?php
-		echo _KUNENA_DELETE_SELECTED;
+		echo JText::_(COM_KUNENA_DELETE_SELECTED);
 		?></option>
 				<option value="bulkMove"><?php
-		echo _KUNENA_MOVE_SELECTED;
+		echo JText::_(COM_KUNENA_MOVE_SELECTED);
 		?></option>
 			</select> <?php
 		CKunenaTools::showBulkActionCats ();
 		?> <input type="submit" name="kBulkActionsGo" class="kbutton ks"
 				value="<?php
-		echo _KUNENA_GO;
+		echo JText::_(COM_KUNENA_GO);
 		?>" /></td>
 		</tr>
 		<!-- /Moderator Bulk Actions -->

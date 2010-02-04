@@ -36,7 +36,7 @@ function imageUploadError($msg)
     $GLOBALS['KUNENA_rc'] = 0;
     $message = str_replace("[img/]", "", $message);
     $kunena_app =& JFactory::getApplication();
-    $kunena_app->enqueueMessage(_IMAGE_NOT_UPLOADED .' ('. $msg .')', 'notice');
+    $kunena_app->enqueueMessage(JText::_(COM_KUNENA_IMAGE_NOT_UPLOADED) .' ('. $msg .')', 'notice');
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
@@ -65,26 +65,26 @@ if ($GLOBALS['KUNENA_rc'])
 
     // Check for empty filename
     if (!is_uploaded_file($attachimage['tmp_name']) || empty($attachimage['name'])) {
-        imageUploadError(_IMAGE_ERROR_EMPTY);
+        imageUploadError(JText::_(COM_KUNENA_IMAGE_ERROR_EMPTY));
     }
     // Check for allowed file type (jpeg, gif, png)
     else if (!($imgtype = kunena_check_image_type(substr($imageExt,1)))) {
-        imageUploadError(_IMAGE_ERROR_TYPE);
+        imageUploadError(JText::_(COM_KUNENA_IMAGE_ERROR_TYPE));
     }
     // Check filesize
     else if ($imageSize > $maxImgSize) {
-        imageUploadError(_IMAGE_ERROR_SIZE . " (" . $kunena_config->imagesize . "kb)");
+        imageUploadError(JText::_(COM_KUNENA_IMAGE_ERROR_SIZE) . " (" . $kunena_config->imagesize . "kb)");
     }
 	else {
     list($width, $height) = @getimagesize($attachimage['tmp_name']);
 
     // Check image width
     if ($width > $kunena_config->imagewidth) {
-        imageUploadError(_IMAGE_ERROR_WIDTH . " (" . $kunena_config->imagewidth . " pixels");
+        imageUploadError(JText::_(COM_KUNENA_IMAGE_ERROR_WIDTH) . " (" . $kunena_config->imagewidth . " pixels");
     }
     // Check image height
     else if ($height > $kunena_config->imageheight) {
-        imageUploadError(_IMAGE_ERROR_HEIGHT . " (" . $kunena_config->imageheight . " pixels");
+        imageUploadError(JText::_(COM_KUNENA_IMAGE_ERROR_HEIGHT) . " (" . $kunena_config->imageheight . " pixels");
     }
 	}
 }
@@ -94,7 +94,7 @@ if ($GLOBALS['KUNENA_rc'])
 	// file is OK, move it to the proper location
 	CKunenaFile::upload($attachimage['tmp_name'], $imageLocation);
 
-	// echo '<span class="contentheading">'._IMAGE_UPLOADED."...</span>";
+	// echo '<span class="contentheading">'.JText::_(COM_KUNENA_IMAGE_UPLOADED)."...</span>";
     $code = '[img]' . KUNENA_LIVEUPLOADEDPATH. '/images/' . $newFileName . '[/img]';
 
     if (preg_match('/\[img\/\]/si', $message)) {
@@ -103,6 +103,6 @@ if ($GLOBALS['KUNENA_rc'])
     else {
         $message = $message . ' ' . $code;
     }
-    echo _KUNENA_ATTACHMENT_IMG_ADDED, ' '.$newFileName;
+    echo JText::_(COM_KUNENA_ATTACHMENT_IMG_ADDED), ' '.$newFileName;
 }
 ?>

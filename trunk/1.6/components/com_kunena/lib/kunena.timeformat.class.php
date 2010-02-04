@@ -32,12 +32,12 @@ class CKunenaTimeformat {
 	}
 
 	function showTimeSince($older_date, $newer_date = false) {
-		$chunks = array (array (60 * 60 * 24 * 365, _KUNENA_DATE_YEAR, _KUNENA_DATE_YEARS ),
-			array (60 * 60 * 24 * 30, _KUNENA_DATE_MONTH, _KUNENA_DATE_MONTHS ),
-			array (60 * 60 * 24 * 7, _KUNENA_DATE_WEEK, _KUNENA_DATE_WEEKS ),
-			array (60 * 60 * 24, _KUNENA_DATE_DAY, _KUNENA_DATE_DAYS ),
-			array (60 * 60, _KUNENA_DATE_HOUR, _KUNENA_DATE_HOURS ),
-			array (60, _KUNENA_DATE_MINUTE, _KUNENA_DATE_MINUTES ) );
+		$chunks = array (array (60 * 60 * 24 * 365, JText::_(COM_KUNENA_DATE_YEAR), JText::_(COM_KUNENA_DATE_YEARS) ),
+			array (60 * 60 * 24 * 30, JText::_(COM_KUNENA_DATE_MONTH), JText::_(COM_KUNENA_DATE_MONTHS) ),
+			array (60 * 60 * 24 * 7, JText::_(COM_KUNENA_DATE_WEEK), JText::_(COM_KUNENA_DATE_WEEKS) ),
+			array (60 * 60 * 24, JText::_(COM_KUNENA_DATE_DAY), JText::_(COM_KUNENA_DATE_DAYS) ),
+			array (60 * 60, JText::_(COM_KUNENA_DATE_HOUR), JText::_(COM_KUNENA_DATE_HOURS) ),
+			array (60, JText::_(COM_KUNENA_DATE_MINUTE), JText::_(COM_KUNENA_DATE_MINUTES) ) );
 
 		$now = new JDate();
 		$newer_date = ($newer_date === false) ? $now->toUnix() : $newer_date;
@@ -80,7 +80,7 @@ class CKunenaTimeformat {
 			}
 		}
 
-		return str_replace ( '%time%', $output, _KUNENA_TIME_SINCE );
+		return str_replace ( '%time%', $output, JText::_(COM_KUNENA_TIME_SINCE) );
 	}
 
 	function showTimezone($timezone) {
@@ -106,7 +106,7 @@ class CKunenaTimeformat {
 				$date = new JDate ( $time, ( float ) $offset + self::diffToJoomla() );
 				break;
 		}
-		if ($date->toFormat('%Y')<1902) return _KUNENA_DT_DATETIME_UNKNOWN;
+		if ($date->toFormat('%Y')<1902) return JText::_(COM_KUNENA_DT_DATETIME_UNKNOWN);
 		if (preg_match ( '/^config_/', $mode ) == 1) {
 			$option = substr ( $mode, 7 );
 			$mode = $kunena_config->$option;
@@ -116,22 +116,22 @@ class CKunenaTimeformat {
 			case 'none' :
 				return '';
 			case 'time' :
-				$usertime_format = _KUNENA_DT_TIME_FMT;
-				$today_format = _KUNENA_DT_TIME_FMT;
-				$yesterday_format = _KUNENA_DT_TIME_FMT;
+				$usertime_format = JText::_(COM_KUNENA_DT_TIME_FMT);
+				$today_format = JText::_(COM_KUNENA_DT_TIME_FMT);
+				$yesterday_format = JText::_(COM_KUNENA_DT_TIME_FMT);
 				break;
 			case 'date' :
-				$usertime_format = _KUNENA_DT_DATE_FMT;
-				$today_format = _KUNENA_DT_DATE_TODAY_FMT;
-				$yesterday_format = _KUNENA_DT_DATE_YESTERDAY_FMT;
+				$usertime_format = JText::_(COM_KUNENA_DT_DATE_FMT);
+				$today_format = JText::_(COM_KUNENA_DT_DATE_TODAY_FMT);
+				$yesterday_format = JText::_(COM_KUNENA_DT_DATE_YESTERDAY_FMT);
 				break;
 			case 'ago' :
 				return CKunenaTimeformat::showTimeSince ( $date->toUnix() );
 				break;
 			default :
-				$usertime_format = _KUNENA_DT_DATETIME_FMT;
-				$today_format = _KUNENA_DT_DATETIME_TODAY_FMT;
-				$yesterday_format = _KUNENA_DT_DATETIME_YESTERDAY_FMT;
+				$usertime_format = JText::_(COM_KUNENA_DT_DATETIME_FMT);
+				$today_format = JText::_(COM_KUNENA_DT_DATETIME_TODAY_FMT);
+				$yesterday_format = JText::_(COM_KUNENA_DT_DATETIME_YESTERDAY_FMT);
 				break;
 		}
 

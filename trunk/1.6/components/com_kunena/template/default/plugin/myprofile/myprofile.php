@@ -31,7 +31,7 @@ $kunena_app = & JFactory::getApplication ();
 $document = & JFactory::getDocument ();
 $kunena_config = & CKunenaConfig::getInstance ();
 
-$document->setTitle ( _GEN_MYPROFILE . ' - ' . stripslashes ( $kunena_config->board_title ) );
+$document->setTitle ( JText::_(COM_KUNENA_GEN_MYPROFILE) . ' - ' . stripslashes ( $kunena_config->board_title ) );
 
 if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	$do = JRequest::getCmd ( 'do', 'show' );
@@ -56,15 +56,15 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 	$uIsAdm = 0;
 
 	if ($ugid == 0) {
-		$usr_usertype = _VIEW_VISITOR;
+		$usr_usertype = JText::_(COM_KUNENA_VIEW_VISITOR);
 	} else {
 		if (CKunenaTools::isAdmin ()) {
-			$usr_usertype = _VIEW_ADMIN;
+			$usr_usertype = JText::_(COM_KUNENA_VIEW_ADMIN);
 			$uIsAdm = 1;
 		} elseif ($uIsMod) {
-			$usr_usertype = _VIEW_MODERATOR;
+			$usr_usertype = JText::_(COM_KUNENA_VIEW_MODERATOR);
 		} else {
-			$usr_usertype = _VIEW_USER;
+			$usr_usertype = JText::_(COM_KUNENA_VIEW_USER);
 		}
 	}
 
@@ -92,7 +92,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 		<th>
 			<div class="ktitle_cover km">
 				<span class="ktitle kl">
-				<?php echo _USER_PROFILE; ?>
+				<?php echo JText::_(COM_KUNENA_USER_PROFILE); ?>
 				<?php echo $juserinfo->name; ?>
 				</span>
 
@@ -189,9 +189,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			$kunena_db->setQuery ( "UPDATE #__fb_users SET view='$newview', ordering='$neworder', hideEmail='$newhideEmail', showOnline='$newshowOnline' WHERE userid='$kunena_my->id'" );
 
 			if (! $kunena_db->query ()) {
-				$kunena_app->enqueueMessage ( _USER_PROFILE_NOT_A . _USER_PROFILE_NOT_B . _USER_PROFILE_NOT_C, 'notice' );
+				$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_PROFILE_NOT_A) . JText::_(COM_KUNENA_USER_PROFILE_NOT_B) . JText::_(COM_KUNENA_USER_PROFILE_NOT_C), 'notice' );
 			} else {
-				$kunena_app->enqueueMessage ( _USER_PROFILE_UPDATED );
+				$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_PROFILE_UPDATED) );
 			}
 			check_dberror ( "Unable to update profile." );
 
@@ -209,8 +209,8 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			$this->ulists ["day"] = $bd [2];
 
 			$genders [] = JHTML::_ ( 'select.option', "", "" );
-			$genders [] = JHTML::_ ( 'select.option', "1", _KUNENA_MYPROFILE_MALE );
-			$genders [] = JHTML::_ ( 'select.option', "2", _KUNENA_MYPROFILE_FEMALE );
+			$genders [] = JHTML::_ ( 'select.option', "1", JText::_(COM_KUNENA_MYPROFILE_MALE) );
+			$genders [] = JHTML::_ ( 'select.option', "2", JText::_(COM_KUNENA_MYPROFILE_FEMALE) );
 
 			$this->ulists ["gender"] = JHTML::_ ( 'select.genericlist', $genders, 'gender', 'class="inputbox"', 'value', 'text', $userinfo->gender );
 
@@ -274,7 +274,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 				$kunena_app->close ();
 			}
 
-			$kunena_app->enqueueMessage ( _USER_PROFILE_UPDATED );
+			$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_PROFILE_UPDATED) );
 			$kunena_app->redirect ( JRoute::_ ( KUNENA_LIVEURLREL . "&amp;func=myprofile" ) );
 			break;
 
@@ -365,9 +365,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			$kunena_db->setQuery ( "DELETE FROM #__fb_subscriptions WHERE userid=$kunena_my->id  AND thread in ($cids) " );
 
 			if (! $kunena_db->query ()) {
-				$kunena_app->enqueueMessage ( _USER_UNSUBSCRIBE_A . _USER_UNSUBSCRIBE_B . _USER_UNSUBSCRIBE_C, 'notice' );
+				$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_UNSUBSCRIBE_A) . JText::_(COM_KUNENA_USER_UNSUBSCRIBE_B) . JText::_(COM_KUNENA_USER_UNSUBSCRIBE_C), 'notice' );
 			} else {
-				$kunena_app->enqueueMessage ( _USER_UNSUBSCRIBE_YES );
+				$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_UNSUBSCRIBE_YES) );
 			}
 			check_dberror ( "Unable to unsubscribe." );
 
@@ -385,9 +385,9 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			$kunena_db->setQuery ( "DELETE from #__fb_subscriptions where userid=$kunena_my->id and thread=$thread" );
 
 			if (! $kunena_db->query ()) {
-				$kunena_app->enqueueMessage ( _USER_UNSUBSCRIBE_A . _USER_UNSUBSCRIBE_B . _USER_UNSUBSCRIBE_C, 'notice' );
+				$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_UNSUBSCRIBE_A) . JText::_(COM_KUNENA_USER_UNSUBSCRIBE_B) . JText::_(COM_KUNENA_USER_UNSUBSCRIBE_C), 'notice' );
 			} else {
-				$kunena_app->enqueueMessage ( _USER_UNSUBSCRIBE_YES );
+				$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_UNSUBSCRIBE_YES) );
 			}
 			check_dberror ( "Unable to unsubscribe." );
 
@@ -415,7 +415,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			if (! $kunena_db->query ()) {
 				$kunena_app->enqueueMessage ( _USER_UNFAVORITE_A . _USER_UNFAVORITE_B . _USER_UNFAVORITE_C, 'notice' );
 			} else {
-				$kunena_app->enqueueMessage ( _USER_UNFAVORITE_YES );
+				$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_UNFAVORITE_YES) );
 			}
 			check_dberror ( "Unable to unfavorite." );
 
@@ -435,7 +435,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			if (! $kunena_db->query ()) {
 				$kunena_app->enqueueMessage ( _USER_UNFAVORITE_A . _USER_UNFAVORITE_B . _USER_UNFAVORITE_C, 'notice' );
 			} else {
-				$kunena_app->enqueueMessage ( _USER_UNFAVORITE_YES );
+				$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_USER_UNFAVORITE_YES) );
 			}
 			check_dberror ( "Unable to unfavorite." );
 
@@ -517,7 +517,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 				check_dberror ( "Unable to update session info." );
 			}
 
-			$kunena_app->redirect ( JRoute::_ ( 'index.php?option=com_kunena&amp;func=myprofile' ), _KUNENA_USER_DETAILS_SAVE );
+			$kunena_app->redirect ( JRoute::_ ( 'index.php?option=com_kunena&amp;func=myprofile' ), JText::_(COM_KUNENA_USER_DETAILS_SAVE) );
 			break;
 	}
 	?>
@@ -553,6 +553,6 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 
 <?php
 } else {
-	$kunena_app->enqueueMessage ( _COM_A_REGISTERED_ONLY . '<br/>' . _FORUM_UNAUTHORIZIED2, 'error' );
+	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_A_REGISTERED_ONLY) . '<br/>' . JText::_(COM_KUNENA_FORUM_UNAUTHORIZIED2), 'error' );
 }
 ?>

@@ -87,9 +87,9 @@ class CKunenaLogin {
 		if ($kunena_config->fb_profile == 'cb') {
 			return CKunenaCBProfile::getRegisterURL ();
 		} else if ($kunena_config->fb_profile == 'jomsocial') {
-			return CKunenaLink::GetJomsocialRegisterLink(_PROFILEBOX_REGISTER);
+			return CKunenaLink::GetJomsocialRegisterLink(JText::_(COM_KUNENA_PROFILEBOX_REGISTER));
 		} else {
-			return CKunenaLink::GetRegisterLink(_PROFILEBOX_CREATE_ACCOUNT);
+			return CKunenaLink::GetRegisterLink(JText::_(COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT));
 		}
 	}
 
@@ -98,9 +98,9 @@ class CKunenaLogin {
 		if ($kunena_config->fb_profile == 'cb') {
 			return CKunenaCBProfile::getLostPasswordURL ();
 		} else if ($kunena_config->fb_profile == 'jomsocial') {
-			return CKunenaLink::GetJomsocialLoginLink(_PROFILEBOX_FORGOT_PASSWORD);
+			return CKunenaLink::GetJomsocialLoginLink(JText::_(COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD));
 		} else {
-			return CKunenaLink::GetLostpassLink(_PROFILEBOX_FORGOT_PASSWORD);
+			return CKunenaLink::GetLostpassLink(JText::_(COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD));
 		}
 	}
 
@@ -111,7 +111,7 @@ class CKunenaLogin {
 		} else if ($kunena_config->fb_profile == 'jomsocial') {
 			return '';
 		} else {
-			return CKunenaLink::GetLostuserLink(_PROFILEBOX_FORGOT_USERNAME);
+			return CKunenaLink::GetLostuserLink(JText::_(COM_KUNENA_PROFILEBOX_FORGOT_USERNAME));
 		}
 	}
 }

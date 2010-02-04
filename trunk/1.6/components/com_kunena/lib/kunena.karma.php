@@ -78,12 +78,12 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma+1 WHERE userid=' . $userid . '');
 							    $kunena_db->query();
 							    check_dberror("Unable to update karma.");
-							    echo _KARMA_INCREASED . '<br />';
+							    echo JText::_(COM_KUNENA_KARMA_INCREASED) . '<br />';
 								if ($pid) {
-									echo CKunenaLink::GetThreadLink('view', $catid, $pid, _POST_CLICK, _POST_CLICK);
+									echo CKunenaLink::GetThreadLink('view', $catid, $pid, JText::_(COM_KUNENA_POST_CLICK), JText::_(COM_KUNENA_POST_CLICK));
                                 	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
 								} else {
-									echo CKunenaLink::GetProfileLink(null, $userid, _POST_CLICK);
+									echo CKunenaLink::GetProfileLink(null, $userid, JText::_(COM_KUNENA_POST_CLICK));
                                 	echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
                                 }
                             }
@@ -95,26 +95,26 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma-1 WHERE userid=' . $userid . '');
                                 $kunena_db->query();
                                 check_dberror("Unable to update karma.");
-                                echo _KARMA_DECREASED . '<br />';
+                                echo JText::_(COM_KUNENA_KARMA_DECREASED) . '<br />';
 								if ($pid) {
-									echo CKunenaLink::GetThreadLink('view', $catid, $pid, _POST_CLICK, _POST_CLICK);
+									echo CKunenaLink::GetThreadLink('view', $catid, $pid, JText::_(COM_KUNENA_POST_CLICK), JText::_(COM_KUNENA_POST_CLICK));
                                 	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
 								} else {
-									echo CKunenaLink::GetProfileLink(null, $userid, _POST_CLICK);
+									echo CKunenaLink::GetProfileLink(null, $userid, JText::_(COM_KUNENA_POST_CLICK));
 									echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
                                 }
                             }
                             else
                             { //you got me there... don't know what to $do
-                                echo _USER_ERROR_A;
-                                echo _USER_ERROR_B . "<br /><br />";
-                                echo _USER_ERROR_C . "<br /><br />" . _USER_ERROR_D . ": <code>fb001-karma-02NoDO</code><br /><br />";
+                                echo JText::_(COM_KUNENA_USER_ERROR_A);
+                                echo JText::_(COM_KUNENA_USER_ERROR_B) . "<br /><br />";
+                                echo JText::_(COM_KUNENA_USER_ERROR_C) . "<br /><br />" . JText::_(COM_KUNENA_USER_ERROR_D) . ": <code>fb001-karma-02NoDO</code><br /><br />";
                             }
                         } else {
                         	if ($pid) {
-                        		echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK .' '. CKunenaLink::GetSefHrefLink( KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , _POST_CLICK , _POST_CLICK, 'nofollow');
+                        		echo JText::_(COM_KUNENA_KARMA_WAIT) . '<br /> ' . JText::_(COM_KUNENA_KARMA_BACK) .' '. CKunenaLink::GetSefHrefLink( KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , JText::_(COM_KUNENA_POST_CLICK) , JText::_(COM_KUNENA_POST_CLICK), 'nofollow');
                         	}else{
-                        		echo _KARMA_WAIT . '<br /> ' . _KARMA_BACK .' '. CKunenaLink::GetSefHrefLink( CKunenaLink::GetProfileURL($userid) , _POST_CLICK , _POST_CLICK, 'nofollow');
+                        		echo JText::_(COM_KUNENA_KARMA_WAIT) . '<br /> ' . JText::_(COM_KUNENA_KARMA_BACK) .' '. CKunenaLink::GetSefHrefLink( CKunenaLink::GetProfileURL($userid) , JText::_(COM_KUNENA_POST_CLICK) , JText::_(COM_KUNENA_POST_CLICK), 'nofollow');
                         	}
                         }
                     }
@@ -126,9 +126,9 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             $kunena_db->query();
                             check_dberror("Unable to update karma.");
                             if ($pid) {
-                            	echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , _POST_CLICK , _POST_CLICK , 'nofollow');
+                            	echo JText::_(COM_KUNENA_KARMA_SELF_INCREASE) . '<br />' . JText::_(COM_KUNENA_KARMA_BACK) . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , JText::_(COM_KUNENA_POST_CLICK) , JText::_(COM_KUNENA_POST_CLICK) , 'nofollow');
                             } else {
-                            	echo _KARMA_SELF_INCREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(CKunenaLink::GetProfileURL($userid) , _POST_CLICK , _POST_CLICK , 'nofollow');
+                            	echo JText::_(COM_KUNENA_KARMA_SELF_INCREASE) . '<br />' . JText::_(COM_KUNENA_KARMA_BACK) . ' ' . CKunenaLink::GetSefHrefLink(CKunenaLink::GetProfileURL($userid) , JText::_(COM_KUNENA_POST_CLICK) , JText::_(COM_KUNENA_POST_CLICK) , 'nofollow');
                             }
                         }
 
@@ -138,18 +138,18 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             $kunena_db->query();
                             check_dberror("Unable to update karma.");
                             if ($pid) {
-                            	echo _KARMA_SELF_DECREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , _POST_CLICK , _POST_CLICK, 'nofollow' );
+                            	echo JText::_(COM_KUNENA_KARMA_SELF_DECREASE) . '<br />' . JText::_(COM_KUNENA_KARMA_BACK) . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , JText::_(COM_KUNENA_POST_CLICK) , JText::_(COM_KUNENA_POST_CLICK), 'nofollow' );
                             } else {
-                            	echo _KARMA_SELF_DECREASE . '<br />' . _KARMA_BACK . ' ' . CKunenaLink::GetSefHrefLink(CKunenaLink::GetProfileURL($userid) , _POST_CLICK , _POST_CLICK, 'nofollow' );
+                            	echo JText::_(COM_KUNENA_KARMA_SELF_DECREASE) . '<br />' . JText::_(COM_KUNENA_KARMA_BACK) . ' ' . CKunenaLink::GetSefHrefLink(CKunenaLink::GetProfileURL($userid) , JText::_(COM_KUNENA_POST_CLICK) , JText::_(COM_KUNENA_POST_CLICK), 'nofollow' );
                             }
                         }
                     }
                 }
                 else
                 { //get outa here, you fraud!
-                    echo _USER_ERROR_A;
-                    echo _USER_ERROR_B . "<br /><br />";
-                    echo _USER_ERROR_C . "<br /><br />" . _USER_ERROR_D . ": <code>fb001-karma-01NLO</code><br /><br />";
+                    echo JText::_(COM_KUNENA_USER_ERROR_A);
+                    echo JText::_(COM_KUNENA_USER_ERROR_B) . "<br /><br />";
+                    echo JText::_(COM_KUNENA_USER_ERROR_C) . "<br /><br />" . JText::_(COM_KUNENA_USER_ERROR_D) . ": <code>fb001-karma-01NLO</code><br /><br />";
                 //that should scare 'em off enough... ;-)
                 }
                 ?>

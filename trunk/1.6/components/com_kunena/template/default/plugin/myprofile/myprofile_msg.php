@@ -36,7 +36,7 @@ global $kunena_icons;
 		<tr>
 			<th colspan = "6">
 				<div class = "ktitle_cover">
-					<span class = "ktitle"><?php echo _KUNENA_MY_POSTS; ?></span>
+					<span class = "ktitle"><?php echo JText::_(COM_KUNENA_MY_POSTS); ?></span>
 				</div>
 
 				<img id = "BoxSwitch_kuserprofile__kuserprofile_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = "" />
@@ -49,16 +49,16 @@ global $kunena_icons;
 			<th class = "th-1 ksectiontableheader">&nbsp;
 			</th>
 
-			<th class = "th-2 ksectiontableheader"><?php echo _KUNENA_USERPROFILE_TOPICS; ?>
+			<th class = "th-2 ksectiontableheader"><?php echo JText::_(COM_KUNENA_USERPROFILE_TOPICS); ?>
 			</th>
 
-			<th class = "th-3 ksectiontableheader"><?php echo _KUNENA_USERPROFILE_CATEGORIES; ?>
+			<th class = "th-3 ksectiontableheader"><?php echo JText::_(COM_KUNENA_USERPROFILE_CATEGORIES); ?>
 			</th>
 
-			<th class = "th-4 ksectiontableheader"><?php echo _KUNENA_USERPROFILE_HITS; ?>
+			<th class = "th-4 ksectiontableheader"><?php echo JText::_(COM_KUNENA_USERPROFILE_HITS); ?>
 			</th>
 
-			<th class = "th-5 ksectiontableheader"><?php echo _KUNENA_USERPROFILE_DATE; ?>
+			<th class = "th-5 ksectiontableheader"><?php echo JText::_(COM_KUNENA_USERPROFILE_DATE); ?>
 			</th>
 
 			<th class = "th-6 ksectiontableheader">&nbsp;
@@ -164,13 +164,13 @@ global $kunena_icons;
 
 				<td class = "td-5">
 					<div class = "jr-latest-subject-date">
-<?php echo '' . date(_DATETIME, $item->time) . ''; ?>
+<?php echo '' . date(JText::_(COM_KUNENA_DATETIME), $item->time) . ''; ?>
 					</div>
 				</td>
 
 				<td class = "td-6">
-					<a href = "<?php echo $fbURL; ?>"> <?php echo isset($kunena_icons['latestpost']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['latestpost'] . '" border="0" alt="' . _SHOW_LAST . '" title="' . _SHOW_LAST . '" />'
-																	  : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . _SHOW_LAST . '" />'; ?> </a>
+					<a href = "<?php echo $fbURL; ?>"> <?php echo isset($kunena_icons['latestpost']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['latestpost'] . '" border="0" alt="' . JText::_(COM_KUNENA_SHOW_LAST) . '" title="' . JText::_(COM_KUNENA_SHOW_LAST) . '" />'
+																	  : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"   alt="' . JText::_(COM_KUNENA_SHOW_LAST) . '" />'; ?> </a>
 				</td>
 			</tr>
 
@@ -185,7 +185,7 @@ global $kunena_icons;
 				<td colspan = "6" class = "kprofile-bottomnav">
 					<br/>
 
-					<b><?php echo _KUNENA_USERPROFILE_NOFORUMPOSTS; ?></b>
+					<b><?php echo JText::_(COM_KUNENA_USERPROFILE_NOFORUMPOSTS); ?></b>
 
 					<br/>
 
@@ -199,7 +199,7 @@ global $kunena_icons;
 
 		<tr>
 			<td colspan = "6" class = "kprofile-bottomnav">
-<?php echo _KUNENA_USRL_DISPLAY_NR; ?>
+<?php echo JText::_(COM_KUNENA_USRL_DISPLAY_NR); ?>
 
 <?php
 // echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX);

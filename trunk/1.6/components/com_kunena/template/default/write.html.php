@@ -46,9 +46,9 @@ $document->addScript ( KUNENA_DIRECTURL . '/js/mootools/mootools-1.2.4.2-more.js
 
 $selected = 0;
 
-if ($this->kunena_editmode) $this->title = _KUNENA_POST_EDIT . ' ' . $this->resubject;
-else if ($this->parentid) $this->title = _KUNENA_POST_REPLY_TOPIC . ' ' . $this->subject;
-else $this->title = _KUNENA_POST_NEW_TOPIC;
+if ($this->kunena_editmode) $this->title = JText::_(COM_KUNENA_POST_EDIT) . ' ' . $this->resubject;
+else if ($this->parentid) $this->title = JText::_(COM_KUNENA_POST_REPLY_TOPIC) . ' ' . $this->subject;
+else $this->title = JText::_(COM_KUNENA_POST_NEW_TOPIC);
 $document->setTitle ( $this->title . ' - ' . stripslashes ( $kunena_config->board_title ) );
 
 $cap[0] = explode('-',$document->getLanguage());
@@ -124,7 +124,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 	<?php if (isset($this->selectcatlist)): ?>
 			<tr class="ksectiontableentry2">
 			<td class="kleftcolumn"><strong><?php
-			echo _KUNENA_POST_IN_CATEGORY;
+			echo JText::_(COM_KUNENA_POST_IN_CATEGORY);
 			?></strong></td>
 
 			<td class="k-topicicons"><?php
@@ -136,7 +136,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<tr class="ksectiontableentry1">
 			<td class="kleftcolumn"><strong><?php
-			echo _GEN_NAME;
+			echo JText::_(COM_KUNENA_GEN_NAME);
 			?></strong></td>
 
 			<?php
@@ -174,7 +174,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		if (($kunena_config->askemail && !$kunena_my->id) || $kunena_config->changename == 1 || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
 		?>
 		<tr class = "ksectiontableentry2">
-			<td class = "kleftcolumn"><strong><?php echo _GEN_EMAIL;?></strong></td>
+			<td class = "kleftcolumn"><strong><?php echo JText::_(COM_KUNENA_GEN_EMAIL);?></strong></td>
 			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->email;?>" /></td>
 		</tr>
 		<?php
@@ -187,7 +187,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				?>
 
 			<td class="kleftcolumn"><strong><?php
-				echo _GEN_SUBJECT;
+				echo JText::_(COM_KUNENA_GEN_SUBJECT);
 				?></strong></td>
 
 			<td><input type="text"
@@ -205,7 +205,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				?>
 
 			<td class="kleftcolumn"><strong><?php
-				echo _GEN_SUBJECT;
+				echo JText::_(COM_KUNENA_GEN_SUBJECT);
 				?></strong>:</td>
 
 			<td><input type="hidden" class="inputbox" name="subject" size="35"
@@ -236,7 +236,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			?>
 		<tr class="ksectiontableentry2">
 			<td class="kleftcolumn"><strong><?php
-			echo _GEN_TOPIC_ICON;
+			echo JText::_(COM_KUNENA_GEN_TOPIC_ICON);
 			?></strong></td>
 
 			<td class="k-topicicons">
@@ -323,7 +323,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<tr class="ksectiontableentry1">
 			<td class="kleftcolumn"><strong><?php
-			echo _POST_SUBSCRIBE;
+			echo JText::_(COM_KUNENA_POST_SUBSCRIBE);
 			?></strong></td>
 
 			<td><?php
@@ -331,13 +331,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				?>
 
 			<input type="checkbox" name="subscribeMe" value="1" checked /> <i><?php
-				echo _POST_NOTIFIED;
+				echo JText::_(COM_KUNENA_POST_NOTIFIED);
 				?></i>
 
 			<?php
 			} else {
 				?> <input type="checkbox" name="subscribeMe" value="1" /> <i><?php
-				echo _POST_NOTIFIED;
+				echo JText::_(COM_KUNENA_POST_NOTIFIED);
 				?></i> <?php
 			}
 			?></td>
@@ -350,7 +350,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			?>
 		<tr class="ksectiontableentry1">
 			<td class="kleftcolumn">&nbsp;<strong><?php
-			echo _KUNENA_CAPDESC;
+			echo JText::_(COM_KUNENA_CAPDESC);
 			?></strong>&nbsp;</td>
 			<td align="left" valign="middle" height="35px">
 			<?php
@@ -368,20 +368,20 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		<tr id="kpost_buttons_tr" class="ksectiontableentry1">
 			<td id="kpost_buttons" colspan="2" style="text-align: center;">
 				<input type="button" name="cancel" class="kbutton"
-				value="<?php echo (' ' . _GEN_CANCEL . ' ');?>"
+				value="<?php echo (' ' . JText::_(COM_KUNENA_GEN_CANCEL) . ' ');?>"
 				onclick="javascript:window.history.back();"
-				title="<?php echo (_KUNENA_EDITOR_HELPLINE_CANCEL);?>" />
+				title="<?php echo (JText::_(COM_KUNENA_EDITOR_HELPLINE_CANCEL));?>" />
 				<input type="submit" name="ksubmit" class="kbutton"
-				value="<?php echo (' ' . _GEN_CONTINUE . ' ');?>"
+				value="<?php echo (' ' . JText::_(COM_KUNENA_GEN_CONTINUE) . ' ');?>"
 				onclick="return submitForm()"
-				title="<?php echo (_KUNENA_EDITOR_HELPLINE_SUBMIT);?>" />
+				title="<?php echo (JText::_(COM_KUNENA_EDITOR_HELPLINE_SUBMIT));?>" />
 				</td>
 		</tr>
 
 		<tr class="ksectiontableentry1">
 			<td colspan="2"><?php
 			if ($kunena_config->askemail) {
-				echo $kunena_config->showemail == '0' ? "<em>* - " . _POST_EMAIL_NEVER . "</em>" : "<em>* - " . _POST_EMAIL_REGISTERED . "</em>";
+				echo $kunena_config->showemail == '0' ? "<em>* - " . JText::_(COM_KUNENA_POST_EMAIL_NEVER) . "</em>" : "<em>* - " . JText::_(COM_KUNENA_POST_EMAIL_REGISTERED) . "</em>";
 			}
 			?>
 			</td>

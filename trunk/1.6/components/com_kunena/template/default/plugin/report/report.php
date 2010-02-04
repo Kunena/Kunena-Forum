@@ -74,29 +74,29 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
 	check_dberror ( "Unable to load username." );
 
     if ($reason) {
-        $subject = "[".stripslashes($kunena_config->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . $reason;
+        $subject = "[".stripslashes($kunena_config->board_title)." ".JText::_(COM_KUNENA_GEN_FORUM)."] ".JText::_(COM_KUNENA_REPORT_MSG) . ": " . $reason;
         }
     else {
-        $subject = "[".stripslashes($kunena_config->board_title)." "._GEN_FORUM."] "._KUNENA_REPORT_MSG . ": " . stripslashes($row->subject);
+        $subject = "[".stripslashes($kunena_config->board_title)." ".JText::_(COM_KUNENA_GEN_FORUM)."] ".JText::_(COM_KUNENA_REPORT_MSG) . ": " . stripslashes($row->subject);
         }
 
 	jimport('joomla.environment.uri');
 	$uri =& JURI::getInstance(JURI::base());
 	$msglink = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL($kunena_config, 'view', $row->catid , $row->id, NULL,NULL,$row->id));
 
-    $message  = "" . _KUNENA_REPORT_RSENDER . " " . $sender;
+    $message  = "" . JText::_(COM_KUNENA_REPORT_RSENDER) . " " . $sender;
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_RREASON . " " . $reason;
+    $message .= "" . JText::_(COM_KUNENA_REPORT_RREASON) . " " . $reason;
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_RMESSAGE . " " . $text;
+    $message .= "" . JText::_(COM_KUNENA_REPORT_RMESSAGE) . " " . $text;
     $message .= "\n\n";
-    $message .= "" . _KUNENA_REPORT_POST_POSTER . " " . $baduser;
+    $message .= "" . JText::_(COM_KUNENA_REPORT_POST_POSTER) . " " . $baduser;
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_POST_SUBJECT . " " . stripslashes($row->subject);
+    $message .= "" . JText::_(COM_KUNENA_REPORT_POST_SUBJECT) . " " . stripslashes($row->subject);
     $message .= "\n";
-    $message .= "" . _KUNENA_REPORT_POST_MESSAGE . "\n-----\n" . stripslashes($row->msg_text);
+    $message .= "" . JText::_(COM_KUNENA_REPORT_POST_MESSAGE) . "\n-----\n" . stripslashes($row->msg_text);
     $message .= "\n-----\n\n";
-    $message .= "" . _KUNENA_REPORT_POST_LINK . " " . $msglink;
+    $message .= "" . JText::_(COM_KUNENA_REPORT_POST_LINK) . " " . $msglink;
     $message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
     $message = strtr($message, array('&#32;'=>''));
 
@@ -112,20 +112,20 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
             break;
     }
 
-    echo '<div align="center">' . _KUNENA_REPORT_SUCCESS;
+    echo '<div align="center">' . JText::_(COM_KUNENA_REPORT_SUCCESS);
     echo CKunenaLink::GetAutoredirectThreadPageHTML($kunena_config,'view',$catid,$id,NULL,NULL,$id,3500);
 
 	}
     else
     {
     	echo '<div align="center">';
-    	if (empty($reason)) echo _POST_FORGOT_SUBJECT;
-    	else if (empty($text)) echo _POST_FORGOT_MESSAGE;
+    	if (empty($reason)) echo JText::_(COM_KUNENA_POST_FORGOT_SUBJECT);
+    	else if (empty($text)) echo JText::_(COM_KUNENA_POST_FORGOT_MESSAGE);
 
     }
     echo '<br /><br />';
-    echo CKunenaLink::GetThreadPageLink($kunena_config,'view', $catid, $id ,NULL,NULL, _POST_SUCCESS_VIEW ,$id,'nofollow' ).'<br />';
-    echo CKunenaLink::GetCategoryLink('showcat',$catid , _POST_SUCCESS_FORUM , 'nofollow').'<br />';
+    echo CKunenaLink::GetThreadPageLink($kunena_config,'view', $catid, $id ,NULL,NULL, JText::_(COM_KUNENA_POST_SUCCESS_VIEW) ,$id,'nofollow' ).'<br />';
+    echo CKunenaLink::GetCategoryLink('showcat',$catid , JText::_(COM_KUNENA_POST_SUCCESS_FORUM) , 'nofollow').'<br />';
     echo '</div>';
 }
 
@@ -136,10 +136,10 @@ function SendReportToMail($sender, $subject, $message, $emailToList) {
 
 	jimport( 'joomla.mail.helper' );
 	if (! $kunena_config->email  || ! JMailHelper::isEmailAddress($kunena_config->email)) {
-		$kunena_app->enqueueMessage (_KUNENA_EMAIL_INVALID, 'error' );
+		$kunena_app->enqueueMessage (JText::_(COM_KUNENA_EMAIL_INVALID), 'error' );
 		return;
 	}
-	$sender = JMailHelper::cleanAddress(stripslashes($kunena_config->board_title).' '._GEN_FORUM.': '.$sender);
+	$sender = JMailHelper::cleanAddress(stripslashes($kunena_config->board_title).' '.JText::_(COM_KUNENA_GEN_FORUM).': '.$sender);
 	$subject = JMailHelper::cleanSubject( $subject );
 	$message = JMailHelper::cleanBody($message);
 
@@ -177,7 +177,7 @@ function ReportForm($id, $catid) {
                             <tr>
                                 <th>
                                     <div class = "ktitle_cover">
-                                        <span class = "ktitle"><?php echo _KUNENA_COM_A_REPORT ?></span>
+                                        <span class = "ktitle"><?php echo JText::_(COM_KUNENA_COM_A_REPORT) ?></span>
                                     </div>
                             </tr>
                         </thead>
@@ -189,7 +189,7 @@ function ReportForm($id, $catid) {
                                         <table width = "100%" border = "0">
                                             <tr>
                                                 <td width = "10%">
-<?php echo _KUNENA_REPORT_REASON ?>:
+<?php echo JText::_(COM_KUNENA_REPORT_REASON) ?>:
                                                 </td>
 
                                                 <td>
@@ -199,7 +199,7 @@ function ReportForm($id, $catid) {
 
                                             <tr>
                                                 <td colspan = "2">
-<?php echo _KUNENA_REPORT_MESSAGE ?>:
+<?php echo JText::_(COM_KUNENA_REPORT_MESSAGE) ?>:
                                                 </td>
                                             </tr>
 
@@ -214,7 +214,7 @@ function ReportForm($id, $catid) {
                                         <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
                                         <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
                                         <input type = "hidden" name = "reporter" value = "<?php echo $kunena_my->id;?>"/>
-                                        <input type = "submit" name = "Submit" value = "<?php echo _KUNENA_REPORT_SEND ?>"/>
+                                        <input type = "submit" name = "Submit" value = "<?php echo JText::_(COM_KUNENA_REPORT_SEND) ?>"/>
                                     </form>
                                 </td>
                             </tr>

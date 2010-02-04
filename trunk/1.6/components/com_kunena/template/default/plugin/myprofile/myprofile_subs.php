@@ -36,26 +36,26 @@ $kunena_db = &JFactory::getDBO();
 			<tr>
 				<th colspan = "5">
 					<div class = "ktitle_cover">
-						<span class = "ktitle"><?php echo _KUNENA_MY_SUBSCRIPTIONS; ?></span>
+						<span class = "ktitle"><?php echo JText::_(COM_KUNENA_MY_SUBSCRIPTIONS); ?></span>
 					</div></th>
 			</tr>
 		</thead>
 
 		<tbody id = "kuserprofile_tbody">
 			<tr class = "ksth">
-				<th class = "th-1 ksectiontableheader"><?php echo _GEN_TOPICS; ?>
+				<th class = "th-1 ksectiontableheader"><?php echo JText::_(COM_KUNENA_GEN_TOPICS); ?>
 				</th>
 
-				<th class = "th-2 ksectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_AUTHOR; ?>
+				<th class = "th-2 ksectiontableheader" style = "text-align:center; width:25%"><?php echo JText::_(COM_KUNENA_GEN_AUTHOR); ?>
 				</th>
 
-				<th class = "th-3 ksectiontableheader" style = "text-align:center; width:25%"><?php echo _GEN_DATE; ?>
+				<th class = "th-3 ksectiontableheader" style = "text-align:center; width:25%"><?php echo JText::_(COM_KUNENA_GEN_DATE); ?>
 				</th>
 
-				<th class = "th-3 ksectiontableheader" style = "text-align:center; width:5%"><?php echo _GEN_HITS; ?>
+				<th class = "th-3 ksectiontableheader" style = "text-align:center; width:5%"><?php echo JText::_(COM_KUNENA_GEN_HITS); ?>
 				</th>
 
-				<th class = "th-4 ksectiontableheader"><?php echo _GEN_DELETE; ?>
+				<th class = "th-4 ksectiontableheader"><?php echo JText::_(COM_KUNENA_GEN_DELETE); ?>
 				</th>
 			</tr>
 
@@ -96,7 +96,7 @@ $kunena_db = &JFactory::getDBO();
 								echo kunena_htmlspecialchars(stripslashes($sub->name)); ?></td>
 
 							<td class = "td-3" style = "text-align:center; width:25%"> <?php
-								echo '' . date(_DATETIME, $sub->time) . ''; ?></td>
+								echo '' . date(JText::_(COM_KUNENA_DATETIME), $sub->time) . ''; ?></td>
 
 							<td class = "td-4" style = "text-align:center; width:5%"> <?php echo $sub->hits; ?></td>
 
@@ -113,13 +113,13 @@ $kunena_db = &JFactory::getDBO();
 
 				<tr>
 					<td colspan = "5" class = "kprofile-bottomnav" style = "text-align:right">
-<?php echo _KUNENA_USRL_DISPLAY_NR; ?>
+<?php echo JText::_(COM_KUNENA_USRL_DISPLAY_NR); ?>
 
 <?php
 // echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showsub" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
 
-			<input type = "submit" class = "button" value = "<?php echo _GEN_DELETE;?>"/>
+			<input type = "submit" class = "button" value = "<?php echo JText::_(COM_KUNENA_GEN_DELETE);?>"/>
 					</td>
 				</tr>
 
@@ -127,7 +127,7 @@ $kunena_db = &JFactory::getDBO();
 			}
 			else
 			{
-				echo '<tr class="k' . $tabclass[$k] . '"><td class="td-1" colspan = "5" >' . _USER_NOSUBSCRIPTIONS . '</td></tr>';
+				echo '<tr class="k' . $tabclass[$k] . '"><td class="td-1" colspan = "5" >' . JText::_(COM_KUNENA_USER_NOSUBSCRIPTIONS) . '</td></tr>';
 			}
 			?>
 

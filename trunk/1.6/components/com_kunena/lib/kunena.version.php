@@ -22,9 +22,9 @@ require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'k
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
 // use default translations if none are available
-if (!defined('_KUNENA_INSTALLED_VERSION')) DEFINE('_KUNENA_INSTALLED_VERSION', 'Installed version');
-if (!defined('_KUNENA_COPYRIGHT')) DEFINE('_KUNENA_COPYRIGHT', 'Copyright');
-if (!defined('_KUNENA_LICENSE')) DEFINE('_KUNENA_LICENSE', 'License');
+if (!defined('JText::_(COM_KUNENA_INSTALLED_VERSION)')) DEFINE('JText::_(COM_KUNENA_INSTALLED_VERSION)', 'Installed version');
+if (!defined('JText::_(COM_KUNENA_COPYRIGHT)')) DEFINE('JText::_(COM_KUNENA_COPYRIGHT)', 'Copyright');
+if (!defined('JText::_(COM_KUNENA_LICENSE)')) DEFINE('JText::_(COM_KUNENA_LICENSE)', 'License');
 
 class CKunenaVersion {
 	/**
@@ -102,7 +102,7 @@ class CKunenaVersion {
 	function versionHTML()
 	{
 		$version = CKunenaVersion::version();
-		return _KUNENA_INSTALLED_VERSION.': '.$version.' | '._KUNENA_COPYRIGHT.': &copy; 2008-2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  | '._KUNENA_LICENSE.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>';
+		return JText::_(COM_KUNENA_INSTALLED_VERSION).': '.$version.' | '.JText::_(COM_KUNENA_COPYRIGHT).': &copy; 2008-2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  | '.JText::_(COM_KUNENA_LICENSE).': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>';
 	}
 
 	/**

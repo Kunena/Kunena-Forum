@@ -32,7 +32,7 @@ $kunena_config =& CKunenaConfig::getInstance();
         <tr>
             <th>
                 <div class = "ktitle_cover">
-                    <span class = "ktitle"><?php echo _USER_PROFILE; ?> <?php echo $this->kunena_username; ?></span>
+                    <span class = "ktitle"><?php echo JText::_(COM_KUNENA_USER_PROFILE); ?> <?php echo $this->kunena_username; ?></span>
                 </div>
             </th>
         </tr>
@@ -42,14 +42,14 @@ $kunena_config =& CKunenaConfig::getInstance();
 
         <tr>
             <td class = "kmyprofile_menu_staff">
-                <span class = "kmyprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PERSONAL_INFO; ?></span>
-                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile', _KUNENA_MYPROFILE_SUMMARY, _KUNENA_MYPROFILE_SUMMARY,'nofollow'); ?>
+                <span class = "kmyprofile_menu_title"><?php echo JText::_(COM_KUNENA_MYPROFILE_PERSONAL_INFO); ?></span>
+                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile', JText::_(COM_KUNENA_MYPROFILE_SUMMARY), JText::_(COM_KUNENA_MYPROFILE_SUMMARY),'nofollow'); ?>
 <?php
  	// Only show userdetails link if we are in charge of the profile
     if ($kunena_config->fb_profile == 'fb')
     {
 ?>
-            	<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails', _KUNENA_EDIT_TITLE, _KUNENA_EDIT_TITLE,'follow'); ?>
+            	<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=userdetails', JText::_(COM_KUNENA_EDIT_TITLE), JText::_(COM_KUNENA_EDIT_TITLE),'follow'); ?>
 <?php
     }
 
@@ -57,7 +57,7 @@ $kunena_config =& CKunenaConfig::getInstance();
     if ($kunena_config->allowavatar && $kunena_config->avatar_src == 'fb')
     {
 ?>
-            	<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=avatar', _KUNENA_MYPROFILE_MYAVATAR, _KUNENA_MYPROFILE_MYAVATAR,'nofollow'); ?>
+            	<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=avatar', JText::_(COM_KUNENA_MYPROFILE_MYAVATAR), JText::_(COM_KUNENA_MYPROFILE_MYAVATAR),'nofollow'); ?>
 <?php
     }
 ?>
@@ -66,12 +66,12 @@ $kunena_config =& CKunenaConfig::getInstance();
 
         <tr>
             <td class = "kmyprofile_menu_staff">
-                <span class = "kmyprofile_menu_title"><?php echo _KUNENA_MYPROFILE_FORUM_SETTINGS; ?></span>
-                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset', _KUNENA_MYPROFILE_LOOK_AND_LAYOUT, _KUNENA_MYPROFILE_LOOK_AND_LAYOUT, 'follow'); ?>
-                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo', _KUNENA_MYPROFILE_MY_PROFILE_INFO, _KUNENA_MYPROFILE_MY_PROFILE_INFO, 'follow'); ?>
-                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg', _KUNENA_MYPROFILE_MY_POSTS, _KUNENA_MYPROFILE_MY_POSTS,'follow'); ?>
-				<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub', _KUNENA_MYPROFILE_MY_SUBSCRIBES, _KUNENA_MYPROFILE_MY_SUBSCRIBES, 'follow'); ?>
-				<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav', _KUNENA_MYPROFILE_MY_FAVORITES, _KUNENA_MYPROFILE_MY_FAVORITES, 'follow'); ?>
+                <span class = "kmyprofile_menu_title"><?php echo JText::_(COM_KUNENA_MYPROFILE_FORUM_SETTINGS); ?></span>
+                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showset', JText::_(COM_KUNENA_MYPROFILE_LOOK_AND_LAYOUT), JText::_(COM_KUNENA_MYPROFILE_LOOK_AND_LAYOUT), 'follow'); ?>
+                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=profileinfo', JText::_(COM_KUNENA_MYPROFILE_MY_PROFILE_INFO), JText::_(COM_KUNENA_MYPROFILE_MY_PROFILE_INFO), 'follow'); ?>
+                <?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showmsg', JText::_(COM_KUNENA_MYPROFILE_MY_POSTS), JText::_(COM_KUNENA_MYPROFILE_MY_POSTS),'follow'); ?>
+				<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showsub', JText::_(COM_KUNENA_MYPROFILE_MY_SUBSCRIBES), JText::_(COM_KUNENA_MYPROFILE_MY_SUBSCRIBES), 'follow'); ?>
+				<?php echo CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=myprofile&amp;do=showfav', JText::_(COM_KUNENA_MYPROFILE_MY_FAVORITES), JText::_(COM_KUNENA_MYPROFILE_MY_FAVORITES), 'follow'); ?>
             </td>
         </tr>
 
@@ -82,11 +82,11 @@ $kunena_config =& CKunenaConfig::getInstance();
 ?>
         <tr>
             <td class = "kmyprofile_menu_staff">
-                <span class = "kmyprofile_menu_title"><?php echo _KUNENA_MYPROFILE_PRIVATE_MESSAGING; ?></span>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;Itemid=' . KUNENA_UIM_ITEMID , _KUNENA_MYPROFILE_INBOX, _KUNENA_MYPROFILE_INBOX, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=new&amp;Itemid=' . KUNENA_UIM_ITEMID , _KUNENA_MYPROFILE_NEW_MESSAGE, _KUNENA_MYPROFILE_NEW_MESSAGE, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=outbox&amp;Itemid=' . KUNENA_UIM_ITEMID , _KUNENA_MYPROFILE_OUTBOX, _KUNENA_MYPROFILE_OUTBOX, 'follow'); ?>
-            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=trashcan&amp;Itemid=' . KUNENA_UIM_ITEMID , _KUNENA_MYPROFILE_TRASH, _KUNENA_MYPROFILE_TRASH, 'follow'); ?>
+                <span class = "kmyprofile_menu_title"><?php echo JText::_(COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING); ?></span>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;Itemid=' . KUNENA_UIM_ITEMID , JText::_(COM_KUNENA_MYPROFILE_INBOX), JText::_(COM_KUNENA_MYPROFILE_INBOX), 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=new&amp;Itemid=' . KUNENA_UIM_ITEMID , JText::_(COM_KUNENA_MYPROFILE_NEW_MESSAGE), JText::_(COM_KUNENA_MYPROFILE_NEW_MESSAGE), 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=outbox&amp;Itemid=' . KUNENA_UIM_ITEMID , JText::_(COM_KUNENA_MYPROFILE_OUTBOX), JText::_(COM_KUNENA_MYPROFILE_OUTBOX), 'follow'); ?>
+            <?php echo CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&amp;task=trashcan&amp;Itemid=' . KUNENA_UIM_ITEMID , JText::_(COM_KUNENA_MYPROFILE_TRASH), JText::_(COM_KUNENA_MYPROFILE_TRASH), 'follow'); ?>
             </td>
         </tr>
 <?php

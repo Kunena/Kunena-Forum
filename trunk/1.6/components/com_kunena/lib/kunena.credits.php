@@ -63,14 +63,14 @@ $kunena_config =& CKunenaConfig::getInstance();
                 $catid = (int)$catid;
 
                 // Add a link to go back to the latest category we where viewing...
-                echo '<div>To return to the forum ' . CKunenaLink::GetCategoryLink('showcat', $catid, _USER_RETURN_B, $rel='nofollow') . '<div>';
+                echo '<div>To return to the forum ' . CKunenaLink::GetCategoryLink('showcat', $catid, JText::_(COM_KUNENA_USER_RETURN_B), $rel='nofollow') . '<div>';
                 ?>
                         </div></td>
                     </tr>
                   </table>
 
 				<!-- Version Info -->
-				<div class="kfooter"><?php echo _KUNENA_COPYRIGHT;?> &copy; 2008, 2010, 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo _KUNENA_LICENSE;?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
+				<div class="kfooter"><?php echo JText::_(COM_KUNENA_COPYRIGHT);?> &copy; 2008, 2010, 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo JText::_(COM_KUNENA_LICENSE);?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
 				<!-- /Version Info -->
 
                   </td>

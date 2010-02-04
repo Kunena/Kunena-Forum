@@ -41,7 +41,7 @@ if ($func != "") {
 	$catids = intval ( $catid );
 	$jr_path_menu = array ();
 
-	$fr_title_name = _KUNENA_CATEGORIES;
+	$fr_title_name = JText::_(COM_KUNENA_CATEGORIES);
 	while ( $catids > 0 ) {
 		$query = "SELECT * FROM #__fb_categories WHERE id='{$catids}' AND published='1'";
 		$kunena_db->setQuery ( $query );
@@ -85,12 +85,12 @@ if ($func != "") {
 
 	$fireinfo = '';
 	if (! empty ( $this->kunena_forum_locked )) {
-		$fireinfo = isset ( $kunena_icons ['forumlocked'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forumlocked'] . '" border="0" alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . _GEN_LOCKED_FORUM . '" title="' . _GEN_LOCKED_FORUM . '">';
+		$fireinfo = isset ( $kunena_icons ['forumlocked'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forumlocked'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_LOCKED_FORUM) . '" title="' . JText::_(COM_KUNENA_GEN_LOCKED_FORUM) . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . JText::_(COM_KUNENA_GEN_LOCKED_FORUM) . '" title="' . JText::_(COM_KUNENA_GEN_LOCKED_FORUM) . '">';
 		$lockedForum = 1;
 	}
 
 	if (! empty ( $this->kunena_forum_reviewed )) {
-		$fireinfo = isset ( $kunena_icons ['forummoderated'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forummoderated'] . '" border="0" alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . _GEN_MODERATED . '" title="' . _GEN_MODERATED . '">';
+		$fireinfo = isset ( $kunena_icons ['forummoderated'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forummoderated'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_MODERATED) . '" title="' . JText::_(COM_KUNENA_GEN_MODERATED) . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . JText::_(COM_KUNENA_GEN_MODERATED) . '" title="' . JText::_(COM_KUNENA_GEN_MODERATED) . '">';
 		$moderatedForum = 1;
 	}
 
@@ -115,10 +115,10 @@ if ($func != "") {
 
 	$fireonline = '';
 	if ($sfunc == "userprofile") {
-		$fireonline .= _USER_PROFILE;
+		$fireonline .= JText::_(COM_KUNENA_USER_PROFILE);
 		$fireonline .= $this->kunena_username;
 	} else {
-		$fireonline .= "<div class=\"path-element-users\">($total_viewing " . _KUNENA_PATHWAY_VIEWING . ")&nbsp;";
+		$fireonline .= "<div class=\"path-element-users\">($total_viewing " . JText::_(COM_KUNENA_PATHWAY_VIEWING) . ")&nbsp;";
 		$totalguest = 0;
 		$divider = ', ';
 		$lastone = end ( $users );
@@ -136,9 +136,9 @@ if ($func != "") {
 		}
 		if ($totalguest > 0) {
 			if ($totalguest == 1) {
-				$fireonline .= '(' . $totalguest . ') ' . _WHO_ONLINE_GUEST;
+				$fireonline .= '(' . $totalguest . ') ' . JText::_(COM_KUNENA_WHO_ONLINE_GUEST);
 			} else {
-				$fireonline .= '(' . $totalguest . ') ' . _WHO_ONLINE_GUESTS;
+				$fireonline .= '(' . $totalguest . ') ' . JText::_(COM_KUNENA_WHO_ONLINE_GUESTS);
 			}
 		}
 		$fireonline .= '</div>';

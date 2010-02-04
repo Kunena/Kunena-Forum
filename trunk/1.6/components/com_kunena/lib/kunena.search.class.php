@@ -105,7 +105,7 @@ class CKunenaSearch {
 			$this->app->close ();
 		}
 
-		if ($q == _GEN_SEARCH_BOX)
+		if ($q == JText::_(COM_KUNENA_GEN_SEARCH_BOX))
 			$q = '';
 		$this->searchword = $q;
 		$arr_searchwords = explode ( ' ', $q );
@@ -124,7 +124,7 @@ class CKunenaSearch {
 
 		if ($do_search != TRUE) {
 			$this->int_kunena_errornr = 1;
-			$this->str_kunena_errormsg = _KUNENA_SEARCH_ERR_SHORTKEYWORD;
+			$this->str_kunena_errormsg = JText::_(COM_KUNENA_SEARCH_ERR_SHORTKEYWORD);
 			return;
 		}
 
@@ -132,7 +132,7 @@ class CKunenaSearch {
 		/* if there are no forums to search in, set error and return */
 		if (empty ( $search_forums )) {
 			$this->int_kunena_errornr = 2;
-			$this->str_kunena_errormsg = _KUNENA_SEARCH_NOFORUM;
+			$this->str_kunena_errormsg = JText::_(COM_KUNENA_SEARCH_NOFORUM);
 			return;
 		}
 
@@ -245,7 +245,7 @@ class CKunenaSearch {
 		/* if there are no forums to search in, set error and return */
 		if ($this->total == 0) {
 			$this->int_kunena_errornr = 3;
-			$this->str_kunena_errormsg = _KUNENA_SEARCH_ERR_NOPOSTS;
+			$this->str_kunena_errormsg = JText::_(COM_KUNENA_SEARCH_ERR_NOPOSTS);
 			return;
 		}
 		if ($this->total < $this->limitstart)
@@ -353,7 +353,7 @@ class CKunenaSearch {
 
 		//category select list
 		$options = array ();
-		$options [] = JHTML::_ ( 'select.option', '0', _KUNENA_SEARCH_SEARCHIN_ALLCATS );
+		$options [] = JHTML::_ ( 'select.option', '0', JText::_(COM_KUNENA_SEARCH_SEARCHIN_ALLCATS) );
 		$this->categorylist = CKunenaTools::forumSelectList ( 'searchlist', explode ( ',', $this->params ['catids'] ), $options, 'class="inputbox" size="8" multiple="multiple"', true );
 
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'advsearch.php' )) {
@@ -403,7 +403,7 @@ class CKunenaSearch {
 			$endpage = $totalpages;
 		}
 
-		$output = '<div class="kpagination">' . _PAGE;
+		$output = '<div class="kpagination">' . JText::_(COM_KUNENA_PAGE);
 		if ($startpage > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;

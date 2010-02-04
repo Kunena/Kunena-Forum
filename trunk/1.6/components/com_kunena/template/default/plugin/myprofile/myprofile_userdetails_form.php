@@ -40,27 +40,27 @@ $validate = JUtility::getToken ();
         // do field validation
         if (form.name.value == "")
         {
-            alert("<?php echo addslashes ( _KUNENA_JS_WARN_NAME_MISSING );?>");
+            alert("<?php echo addslashes ( JText::_(COM_KUNENA_JS_WARN_NAME_MISSING) );?>");
         }
         else if (form.username.value == "")
         {
-            alert("<?php echo addslashes ( _KUNENA_JS_WARN_UNAME_MISSING );?>");
+            alert("<?php echo addslashes ( JText::_(COM_KUNENA_JS_WARN_UNAME_MISSING) );?>");
         }
         else if (r.exec(form.username.value) || form.username.value.length < 3)
         {
-            alert("<?php printf ( addslashes ( _KUNENA_JS_WARN_VALID_AZ09 ), addslashes ( _KUNENA_JS_PROMPT_UNAME ), 4 );?>");
+            alert("<?php printf ( addslashes ( JText::_(COM_KUNENA_JS_WARN_VALID_AZ09) ), addslashes ( JText::_(COM_KUNENA_JS_PROMPT_UNAME) ), 4 );?>");
         }
         else if (form.email.value == "")
         {
-            alert("<?php echo addslashes ( _KUNENA_JS_WARN_MAIL_MISSING );?>");
+            alert("<?php echo addslashes ( JText::_(COM_KUNENA_JS_WARN_MAIL_MISSING) );?>");
         }
         else if ((form.password.value != "") && (form.password.value != form.password2.value))
         {
-            alert("<?php echo addslashes ( _KUNENA_JS_WARN_PASSWORD2 );?>");
+            alert("<?php echo addslashes ( JText::_(COM_KUNENA_JS_WARN_PASSWORD2) );?>");
         }
         else if (r.exec(form.password.value))
         {
-            alert("<?php printf ( addslashes ( _KUNENA_JS_WARN_VALID_AZ09 ), addslashes ( _KUNENA_JS_PROMPT_PASS ), 4 );?>");
+            alert("<?php printf ( addslashes ( JText::_(COM_KUNENA_JS_WARN_VALID_AZ09) ), addslashes ( JText::_(COM_KUNENA_JS_PROMPT_PASS) ), 4 );?>");
         }
         else
         {
@@ -90,7 +90,7 @@ mosToolBar::endtable ();
 		<tr>
 			<th colspan="2">
 			<div class="ktitle_cover"><span class="ktitle"><?php
-			echo _KUNENA_EDIT_TITLE;
+			echo JText::_(COM_KUNENA_EDIT_TITLE);
 			?></span>
 			</div>
 			</th>
@@ -100,13 +100,13 @@ mosToolBar::endtable ();
 		<tr class="ksth">
 			<th colspan="2">
 			<center><?php
-			echo _KUNENA_MYPROFILE_PERSONAL_INFO;
+			echo JText::_(COM_KUNENA_MYPROFILE_PERSONAL_INFO);
 			?></center>
 			</th>
 		</tr>
 		<tr>
 			<td><?php
-			echo _KUNENA_UNAME;
+			echo JText::_(COM_KUNENA_UNAME);
 			?></td>
 			<?php
 			if ($kunena_config->usernamechange) {
@@ -132,7 +132,7 @@ mosToolBar::endtable ();
 		</tr>
 		<tr>
 			<td><?php
-			echo _KUNENA_YOUR_NAME;
+			echo JText::_(COM_KUNENA_YOUR_NAME);
 			?></td>
 			<td><input class="inputbox" type="text" name="name"
 				value="<?php
@@ -141,7 +141,7 @@ mosToolBar::endtable ();
 		</tr>
 		<tr>
 			<td><?php
-			echo _KUNENA_EMAIL;
+			echo JText::_(COM_KUNENA_EMAIL);
 			?></td>
 			<td><input class="inputbox" type="text" name="email"
 				value="<?php
@@ -150,14 +150,14 @@ mosToolBar::endtable ();
 		</tr>
 		<tr>
 			<td><?php
-			echo _KUNENA_PASS;
+			echo JText::_(COM_KUNENA_PASS);
 			?></td>
 			<td><input class="inputbox" type="password" name="password" value=""
 				size="40" /></td>
 		</tr>
 		<tr>
 			<td><?php
-			echo _KUNENA_VPASS;
+			echo JText::_(COM_KUNENA_VPASS);
 			?></td>
 			<td><input class="inputbox" type="password" name="password2"
 				size="40" /></td>
@@ -177,10 +177,10 @@ mosToolBar::endtable ();
 		<tr>
 			<td colspan="2" align="center"><input type="button" name="save"
 				value="<?php
-				echo _KUNENA_SAVE;
+				echo JText::_(COM_KUNENA_SAVE);
 				?>" onclick="submitbuttons('');" /> <input
 				type="reset" value="<?php
-				echo _KUNENA_RESET;
+				echo JText::_(COM_KUNENA_RESET);
 				?>" /></td>
 		</tr>
 	</tbody>

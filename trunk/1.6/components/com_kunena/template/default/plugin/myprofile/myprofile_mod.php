@@ -32,7 +32,7 @@ defined( '_JEXEC' ) or die();
 		<tr>
 			<th>
 				<div class = "ktitle_cover km">
-					<span class = "ktitle kl"><?php echo _USER_MODERATOR; ?>:</span>
+					<span class = "ktitle kl"><?php echo JText::_(COM_KUNENA_USER_MODERATOR); ?>:</span>
 				</div>
 			</th>
 		</tr>
@@ -71,7 +71,7 @@ defined( '_JEXEC' ) or die();
 			{
 					?>
 
-				<tr class = "k<?php echo $tabclass[$k] ; ?>"><td class = "td-1" align="left"><?php echo _USER_MODERATOR_NONE; ?></td>
+				<tr class = "k<?php echo $tabclass[$k] ; ?>"><td class = "td-1" align="left"><?php echo JText::_(COM_KUNENA_USER_MODERATOR_NONE); ?></td>
 				</tr>
 
 		<?php
@@ -81,7 +81,7 @@ defined( '_JEXEC' ) or die();
 		{
 		?>
 
-			<tr class = "k<?php echo $tabclass[$k] ; ?>"><td class = "td-1" align="left"><?php echo _USER_MODERATOR_ADMIN; ?></td>
+			<tr class = "k<?php echo $tabclass[$k] ; ?>"><td class = "td-1" align="left"><?php echo JText::_(COM_KUNENA_USER_MODERATOR_ADMIN); ?></td>
 			</tr>
 
 		<?php

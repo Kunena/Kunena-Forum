@@ -61,11 +61,11 @@ if ($signature)
 					<li><span class="online-status-yes">NOW ONLINE</span></li>
 					<!-- The class on the span below should be rank then hyphen then the rank name -->
 					<li><span class="rankname"><?php echo $juserinfo->usertype; ?></span> <span class="rank-admin"></span></li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?>:</strong> <?php echo $juserinfo->registerDate; ?></li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?>:</strong> <?php echo $juserinfo->lastvisitDate; ?></li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_TIMEZONE; ?>:</strong> GMT +9</li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_POSTS; ?>:</strong> <?php echo $userinfo->posts; ?></li>
-					<li><strong><?php echo _KUNENA_MYPROFILE_PROFILEVIEW; ?>:</strong> <?php echo $userinfo->uhits; ?></li>
+					<li><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_REGISTERDATE); ?>:</strong> <?php echo $juserinfo->registerDate; ?></li>
+					<li><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_LASTVISITDATE); ?>:</strong> <?php echo $juserinfo->lastvisitDate; ?></li>
+					<li><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_TIMEZONE); ?>:</strong> GMT +9</li>
+					<li><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_POSTS); ?>:</strong> <?php echo $userinfo->posts; ?></li>
+					<li><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_PROFILEVIEW); ?>:</strong> <?php echo $userinfo->uhits; ?></li>
 				</ul>
 			</div>
 		</div>
@@ -74,15 +74,15 @@ if ($signature)
 				<div class="kprofile-rightcol2">
 
 					<div class="iconrow">
-						<a href="<?php echo 'http://twitter.com/'.kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_TWITTER; ?>"><span class="twitter"></span></a>
-						<a href="<?php echo 'http://www.facebook.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FACEBOOK; ?>"><span class="facebook"></span></a>
-						<a href="<?php echo 'http://www.myspace.com/'.kunena_htmlspecialchars(stripslashes($userinfo->MYSPACE)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_MYSPACE; ?>"><span class="myspace"></span></a>
-						<a href="<?php echo 'http://www.linkedin.com/in/'.kunena_htmlspecialchars(stripslashes($userinfo->LINKEDIN)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_LINKEDIN; ?>"><span class="linkedin"></span></a>
+						<a href="<?php echo 'http://twitter.com/'.kunena_htmlspecialchars(stripslashes($userinfo->TWITTER)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_TWITTER); ?>"><span class="twitter"></span></a>
+						<a href="<?php echo 'http://www.facebook.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FACEBOOK)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_FACEBOOK); ?>"><span class="facebook"></span></a>
+						<a href="<?php echo 'http://www.myspace.com/'.kunena_htmlspecialchars(stripslashes($userinfo->MYSPACE)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_MYSPACE); ?>"><span class="myspace"></span></a>
+						<a href="<?php echo 'http://www.linkedin.com/in/'.kunena_htmlspecialchars(stripslashes($userinfo->LINKEDIN)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_LINKEDIN); ?>"><span class="linkedin"></span></a>
 					</div>
 					<div class="iconrow">
-						<a href="<?php echo 'http://www.delicious.com/'.kunena_htmlspecialchars(stripslashes($userinfo->DELICIOUS)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_DELICIOUS; ?>"><span class="delicious"></span></a>
-						<a href="<?php echo 'http://friendfeed.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FRIENDFEED)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FRIENDFEED; ?>"><span class="friendfeed"></span></a>
-						<a href="<?php echo 'http://www.digg.com/'.kunena_htmlspecialchars(stripslashes($userinfo->DIGG)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_DIGG; ?>"><span class="digg"></span></a>
+						<a href="<?php echo 'http://www.delicious.com/'.kunena_htmlspecialchars(stripslashes($userinfo->DELICIOUS)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_DELICIOUS); ?>"><span class="delicious"></span></a>
+						<a href="<?php echo 'http://friendfeed.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FRIENDFEED)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_FRIENDFEED); ?>"><span class="friendfeed"></span></a>
+						<a href="<?php echo 'http://www.digg.com/'.kunena_htmlspecialchars(stripslashes($userinfo->DIGG)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_DIGG); ?>"><span class="digg"></span></a>
 					</div>
 					<div class="clr"></div>
 					<div class="iconrow">
@@ -92,18 +92,18 @@ if ($signature)
 						<a href="gtalk:chat?jid=<?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK)); ?>" target="_blank" title="Chat with <?php echo kunena_htmlspecialchars(stripslashes($userinfo->GTALK)); ?>"><span class="gtalk"></span></a>
 					</div>
 					<div class="iconrow">
-						<a href="<?php echo 'http://www.blogspot.com/'.kunena_htmlspecialchars(stripslashes($userinfo->BLOGSPOT)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_BLOGSPOT; ?>"><span class="blogspot"></span></a>
-						<a href="<?php echo 'http://www.flickr.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FLICKR)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_FLICKR; ?>"><span class="flickr"></span></a>
-						<a href="<?php echo 'http://www.bebo.com/'.kunena_htmlspecialchars(stripslashes($userinfo->BEBO)); ?>" target="_blank" title="<?php echo _KUNENA_MYPROFILE_BEBO; ?>"><span class="bebo"></span></a>
+						<a href="<?php echo 'http://www.blogspot.com/'.kunena_htmlspecialchars(stripslashes($userinfo->BLOGSPOT)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_BLOGSPOT); ?>"><span class="blogspot"></span></a>
+						<a href="<?php echo 'http://www.flickr.com/'.kunena_htmlspecialchars(stripslashes($userinfo->FLICKR)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_FLICKR); ?>"><span class="flickr"></span></a>
+						<a href="<?php echo 'http://www.bebo.com/'.kunena_htmlspecialchars(stripslashes($userinfo->BEBO)); ?>" target="_blank" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_BEBO); ?>"><span class="bebo"></span></a>
 					</div>
 
 				</div>
 				<div class="kprofile-rightcol1">
 					<ul>
-						<li><span class="location"></span><strong><?php echo _KUNENA_MYPROFILE_LOCATION; ?>:</strong> <a href="http://maps.google.com?q=<?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?></a></li>
+						<li><span class="location"></span><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_LOCATION); ?>:</strong> <a href="http://maps.google.com?q=<?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($userinfo->location)); ?></a></li>
 						<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
-						<li><span class="gender-<?php if( $userinfo->gender == 1 ) { echo _KUNENA_MYPROFILE_MALEC; } else if ( $userinfo->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALEC; }?>"></span><strong><?php echo _KUNENA_MYPROFILE_GENDER; ?>:</strong> <?php if( $userinfo->gender == 1 ) { echo _KUNENA_MYPROFILE_MALE; } else if ( $userinfo->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALE; }?></li>
-						<li class="bd"><span class="birthdate"></span><strong><?php echo _KUNENA_MYPROFILE_BIRTHDATE; ?>:</strong> <?php echo kunena_htmlspecialchars(stripslashes($userinfo->birthdate)); ?> <a href="#" title="<?php echo _KUNENA_MYPROFILE_BIRTHDAYREMIND; ?>"><span class="bday-remind"></span></a></li>
+						<li><span class="gender-<?php if( $userinfo->gender == 1 ) { echo _KUNENA_MYPROFILE_MALEC; } else if ( $userinfo->gender == 2 ) { echo _KUNENA_MYPROFILE_FEMALEC; }?>"></span><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_GENDER); ?>:</strong> <?php if( $userinfo->gender == 1 ) { echo JText::_(COM_KUNENA_MYPROFILE_MALE); } else if ( $userinfo->gender == 2 ) { echo JText::_(COM_KUNENA_MYPROFILE_FEMALE); }?></li>
+						<li class="bd"><span class="birthdate"></span><strong><?php echo JText::_(COM_KUNENA_MYPROFILE_BIRTHDATE); ?>:</strong> <?php echo kunena_htmlspecialchars(stripslashes($userinfo->birthdate)); ?> <a href="#" title="<?php echo JText::_(COM_KUNENA_MYPROFILE_BIRTHDAYREMIND); ?>"><span class="bday-remind"></span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -116,9 +116,9 @@ if ($signature)
 					</ul>
 				</div>
 				<div class="kprofile-rightcol1">
-					<h4><?php echo _KUNENA_MYPROFILE_ABOUTME; ?></h4>
+					<h4><?php echo JText::_(COM_KUNENA_MYPROFILE_ABOUTME); ?></h4>
 					<p><?php echo kunena_htmlspecialchars(stripslashes($userinfo->personalText)); ?></p>
-					<h4><?php echo _KUNENA_MYPROFILE_SIGNATURE; ?></h4>
+					<h4><?php echo JText::_(COM_KUNENA_MYPROFILE_SIGNATURE); ?></h4>
 					<div class="msgsignature"><div><?php echo $usr_signature; ?></div></div>
 				</div>
 
@@ -141,31 +141,31 @@ if ($signature)
 					</dd>
 
 					<!-- Only visible to moderators and admins -->
-					<dt class="kprofile-modbtn"><?php echo _KUNENA_MODERATE_THIS_USER; ?></dt>
+					<dt class="kprofile-modbtn"><?php echo JText::_(COM_KUNENA_MODERATE_THIS_USER); ?></dt>
 					<dd class="kprofile-modtools">
-						<h4><?php echo _KUNENA_MODERATE_USERIPS; ?>:</h4>
+						<h4><?php echo JText::_(COM_KUNENA_MODERATE_USERIPS); ?>:</h4>
 						<ul>
-							<li><span><a href="http://ws.arin.net/whois/?queryinput=147.22.33.88" target="_blank">147.22.33.88</a></span> (<?php echo _KUNENA_MODERATE_OTHER_USERS_WITH_IP; ?>: <a href="#">marks</a>, <a href="#">killboy</a>, <a href="#">fxstein</a>)</li>
-							<li><span><a href="http://ws.arin.net/whois/?queryinput=144.23.33.168" target="_blank">144.23.33.168</a></span> (<?php echo _KUNENA_MODERATE_OTHER_USERS_WITH_IP; ?>: None)</li>
+							<li><span><a href="http://ws.arin.net/whois/?queryinput=147.22.33.88" target="_blank">147.22.33.88</a></span> (<?php echo JText::_(COM_KUNENA_MODERATE_OTHER_USERS_WITH_IP); ?>: <a href="#">marks</a>, <a href="#">killboy</a>, <a href="#">fxstein</a>)</li>
+							<li><span><a href="http://ws.arin.net/whois/?queryinput=144.23.33.168" target="_blank">144.23.33.168</a></span> (<?php echo JText::_(COM_KUNENA_MODERATE_OTHER_USERS_WITH_IP); ?>: None)</li>
 						</ul>
-						<h4><?php echo _KUNENA_MODERATE_DELETE_USER; ?>:</h4>
+						<h4><?php echo JText::_(COM_KUNENA_MODERATE_DELETE_USER); ?>:</h4>
 						<form id="kform-ban" name="kformban" action="#" method="post">
 
 							<input type="checkbox" id="ban-ip" name="banip" value="banip" class="kcheckbox" >
-							<label for="ban-ip"><span onClick="document.kformban.banip.checked=(! document.kformban.banip.checked);"><?php echo _KUNENA_MODERATE_BANIP; ?></span></label>
+							<label for="ban-ip"><span onClick="document.kformban.banip.checked=(! document.kformban.banip.checked);"><?php echo JText::_(COM_KUNENA_MODERATE_BANIP); ?></span></label>
 							<select>
-								<option value=""><?php echo _KUNENA_MODERATE_SELECT_IP; ?></option>
+								<option value=""><?php echo JText::_(COM_KUNENA_MODERATE_SELECT_IP); ?></option>
 								<option value="147.22.33.88">147.22.33.88</option>
 								<option value="144.23.33.168">144.23.33.168</option>
-								<option value="allips"><?php echo _KUNENA_MODERATE_ALLIPS; ?></option>
+								<option value="allips"><?php echo JText::_(COM_KUNENA_MODERATE_ALLIPS); ?></option>
 							</select>
 							<input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" >
-							<label for="ban-email"><span onClick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo _KUNENA_MODERATE_BANEMAIL; ?></span></label>
+							<label for="ban-email"><span onClick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo JText::_(COM_KUNENA_MODERATE_BANEMAIL); ?></span></label>
 							<input type="checkbox" id="banu-sername" name="banusername" value="banusername" class="kcheckbox" >
-							<label for="ban-username"><span onClick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo _KUNENA_MODERATE_BANUSERNAME; ?></span></label>
+							<label for="ban-username"><span onClick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_(COM_KUNENA_MODERATE_BANUSERNAME); ?></span></label>
 							<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" >
-							<label for="ban-delposts"><span onClick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo _KUNENA_MODERATE_DELETE_ALL_POSTS; ?></span></label>
-							<input class="kbutton kbutton ks" type="submit" value="<?php echo _KUNENA_MODERATE_DELETE_USER; ?>" name="Submit"/>
+							<label for="ban-delposts"><span onClick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_(COM_KUNENA_MODERATE_DELETE_ALL_POSTS); ?></span></label>
+							<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_(COM_KUNENA_MODERATE_DELETE_USER); ?>" name="Submit"/>
 						</form>
 						<div class="clr"></div>
 					</dd>

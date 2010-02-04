@@ -39,7 +39,7 @@ $cid = JRequest::getVar('cid', array ());
 
 switch ($action)
 {
-    case _MOD_DELETE:
+    case JText::_(COM_KUNENA_MOD_DELETE):
         switch (jbDeletePosts($kunena_db, $cid))
         {
             case -1:
@@ -48,30 +48,30 @@ switch ($action)
                 break;
 
             case 0:
-                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_ERROR);
+                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, JText::_(COM_KUNENA_MODERATION_DELETE_ERROR));
 
                 break;
 
             case 1:
             default:
-                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_DELETE_SUCCESS);
+                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, JText::_(COM_KUNENA_MODERATION_DELETE_SUCCESS));
 
                 break;
         }
 
         break;
 
-    case _MOD_APPROVE:
+    case JText::_(COM_KUNENA_MOD_APPROVE):
         switch (jbApprovePosts($kunena_db, $cid))
         {
             case 0:
-                $kunena_app->redirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_ERROR);
+                $kunena_app->redirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, JText::_(COM_KUNENA_MODERATION_APPROVE_ERROR));
 
                 break;
 
             default:
             case 1:
-                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, _MODERATION_APPROVE_SUCCESS);
+                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, JText::_(COM_KUNENA_MODERATION_APPROVE_SUCCESS));
 
                 break;
         }
@@ -80,7 +80,7 @@ switch ($action)
 
     default:
     case 'list':
-        echo '<p class="sectionname"><?php echo _MESSAGE_ADMINISTRATION; ?></p>';
+        echo '<p class="sectionname"><?php echo JText::_(COM_KUNENA_MESSAGE_ADMINISTRATION); ?></p>';
 
         $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
         $allMes = $kunena_db->loadObjectList();
@@ -89,7 +89,7 @@ switch ($action)
         if (count($allMes) > 0)
             jbListMessages($allMes, $catid);
         else
-            echo '<p style="text-align:center">' . _MODERATION_MESSAGES . '</p>';
+            echo '<p style="text-align:center">' . JText::_(COM_KUNENA_MODERATION_MESSAGES) . '</p>';
 
         break;
 }
@@ -107,7 +107,7 @@ function jbListMessages($allMes, $catid)
     <script>
         function ConfirmDelete()
         {
-            if (confirm("<?php echo _MODERATION_DELETE_MESSAGE; ?>"))
+            if (confirm("<?php echo JText::_(COM_KUNENA_MODERATION_DELETE_MESSAGE); ?>"))
                 document.moderation.submit();
             else
                 return false;
@@ -117,23 +117,23 @@ function jbListMessages($allMes, $catid)
     <table width = "100%" border = 0 cellspacing = 1 cellpadding = 3>
         <tr height = "10" class = "ktable_header">
             <th align = "center">
-                <b><?php echo _GEN_DATE; ?></b>
+                <b><?php echo JText::_(COM_KUNENA_GEN_DATE); ?></b>
             </th>
 
             <th width = "8%" align = "center">
-                <b><?php echo _GEN_AUTHOR; ?></b>
+                <b><?php echo JText::_(COM_KUNENA_GEN_AUTHOR); ?></b>
             </th>
 
             <th width = "13%" align = "center">
-                <b><?php echo _GEN_SUBJECT; ?></b>
+                <b><?php echo JText::_(COM_KUNENA_GEN_SUBJECT); ?></b>
             </th>
 
             <th width = "55%" align = "center">
-                <b><?php echo _GEN_MESSAGE; ?></b>
+                <b><?php echo JText::_(COM_KUNENA_GEN_MESSAGE); ?></b>
             </th>
 
             <th width = "13%" align = "center">
-                <b><?php echo _GEN_ACTION; ?></b>
+                <b><?php echo JText::_(COM_KUNENA_GEN_ACTION); ?></b>
             </th>
         </tr>
 
@@ -163,7 +163,7 @@ function jbListMessages($allMes, $catid)
         <input type = "hidden" name = "catid" value = "<?php echo $catid; ?>"/>
 
         <input type = "submit"
-            class = "button" name = "action" value = "<?php echo _MOD_APPROVE; ?>" border = "0"> <input type = "submit" class = "button" name = "action" onclick = "ConfirmDelete()" value = "<?php echo _MOD_DELETE; ?>" border = "0">
+            class = "button" name = "action" value = "<?php echo JText::_(COM_KUNENA_MOD_APPROVE); ?>" border = "0"> <input type = "submit" class = "button" name = "action" onclick = "ConfirmDelete()" value = "<?php echo JText::_(COM_KUNENA_MOD_DELETE); ?>" border = "0">
     </td>
 </tr>
 

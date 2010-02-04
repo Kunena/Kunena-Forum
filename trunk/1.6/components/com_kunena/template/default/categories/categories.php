@@ -72,7 +72,7 @@ global $kunena_icons;
 
 		<?php
 		if (empty ( $this->categories [$cat->id] )) {
-			echo '' . JText::_(COM_KUNENA_GEN_NOFORUMS) . '';
+			echo '' . JText::_('COM_KUNENA_GEN_NOFORUMS') . '';
 		} else {
 			$k = 0;
 			foreach ( $this->categories [$cat->id] as $subcat ) {
@@ -91,14 +91,14 @@ global $kunena_icons;
 						if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_on.gif" )) {
 							$tmpIcon = '<img src="' . KUNENA_URLCATIMAGES . $subcat->id . '_on.gif" border="0" class="forum-cat-image"alt=" " />';
 						} else {
-							$tmpIcon = isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NEWPOST) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NEWPOST) . '" />' : stripslashes ( $this->config->newchar );
+							$tmpIcon = isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" />' : stripslashes ( $this->config->newchar );
 						}
 					} else {
 						// Check Read Cat Images
 						if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_off.gif" )) {
 							$tmpIcon = '<img src="' . KUNENA_URLCATIMAGES . $subcat->id . '_off.gif" border="0" class="forum-cat-image" alt=" " />';
 						} else {
-							$tmpIcon = isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" />' : stripslashes ( $this->config->newchar );
+							$tmpIcon = isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" />' : stripslashes ( $this->config->newchar );
 						}
 					}
 				} else {
@@ -106,7 +106,7 @@ global $kunena_icons;
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_notlogin.gif" )) {
 						$tmpIcon = '<img src="' . KUNENA_URLCATIMAGES . $subcat->id . '_notlogin.gif" border="0" class="forum-cat-image" alt=" " />';
 					} else {
-						$tmpIcon = isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" />' : stripslashes ( $this->config->newchar );
+						$tmpIcon = isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" />' : stripslashes ( $this->config->newchar );
 					}
 				}
 				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, $tmpIcon );
@@ -123,11 +123,11 @@ global $kunena_icons;
 				}
 
 				if ($subcat->locked) {
-					echo isset ( $kunena_icons ['forumlocked'] ) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forumlocked'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_LOCKED_FORUM) . '" title="' . JText::_(COM_KUNENA_GEN_LOCKED_FORUM) . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . JText::_(COM_KUNENA_GEN_LOCKED_FORUM) . '">';
+					echo isset ( $kunena_icons ['forumlocked'] ) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forumlocked'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_LOCKED_FORUM') . '" title="' . JText::_('COM_KUNENA_GEN_LOCKED_FORUM') . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0" alt="' . JText::_('COM_KUNENA_GEN_LOCKED_FORUM') . '">';
 				}
 
 				if ($subcat->review) {
-					echo isset ( $kunena_icons ['forummoderated'] ) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forummoderated'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_MODERATED) . '" title="' . JText::_(COM_KUNENA_GEN_MODERATED) . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . JText::_(COM_KUNENA_GEN_MODERATED) . '">';
+					echo isset ( $kunena_icons ['forummoderated'] ) ? '&nbsp;&nbsp;<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forummoderated'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_MODERATED') . '" title="' . JText::_('COM_KUNENA_GEN_MODERATED') . '"/>' : '&nbsp;&nbsp;<img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . JText::_('COM_KUNENA_GEN_MODERATED') . '">';
 				}
 				?>
 			</div>
@@ -152,9 +152,9 @@ global $kunena_icons;
 			<div class="kcc-table">
 			<div class="kcc-childcat-title"><?php
 					if (count ( $this->childforums [$subcat->id] ) == 1) {
-						echo JText::_(COM_KUNENA_CHILD_BOARD);
+						echo JText::_('COM_KUNENA_CHILD_BOARD');
 					} else {
-						echo JText::_(COM_KUNENA_CHILD_BOARDS);
+						echo JText::_('COM_KUNENA_CHILD_BOARDS');
 					}
 					?>:
 			</div>
@@ -171,14 +171,14 @@ global $kunena_icons;
 									if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_on_childsmall.gif" )) {
 										echo "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_on_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 									} else {
-										echo isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum_childsmall'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NEWPOST) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NEWPOST) . '" />' : stripslashes ( $this->config->newchar );
+										echo isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum_childsmall'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" />' : stripslashes ( $this->config->newchar );
 									}
 								} else {
 									// Check Read Cat Images
 									if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_off_childsmall.gif" )) {
 										echo "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_off_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 									} else {
-										echo isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum_childsmall'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" />' : stripslashes ( $this->config->newchar );
+										echo isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum_childsmall'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" />' : stripslashes ( $this->config->newchar );
 									}
 								}
 							} // Not Login Cat Images
@@ -186,7 +186,7 @@ else {
 								if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_notlogin_childsmall.gif" )) {
 									echo "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_notlogin_childsmall.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
 								} else {
-									echo isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum_childsmall'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" title="' . JText::_(COM_KUNENA_GEN_FORUM_NOTNEW) . '" />' : stripslashes ( $this->config->newchar );
+									echo isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum_childsmall'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" />' : stripslashes ( $this->config->newchar );
 								}
 								?>
 
@@ -211,7 +211,7 @@ else {
 
 				// get the Moderator list for display
 				if (! empty ( $this->modlist [$subcat->id] )) {
-					echo '<div class="kthead-moderators ks">' . JText::_(COM_KUNENA_GEN_MODERATORS) . ": ";
+					echo '<div class="kthead-moderators ks">' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 
 					$mod_cnt = 0;
 					foreach ( $this->modlist [$subcat->id] as $mod ) {
@@ -226,7 +226,7 @@ else {
 
 				if (isset ( $this->pending [$subcat->id] )) {
 					echo '<div class="ks"><font color="red">';
-					echo CKunenaLink::GetCategoryReviewListLink ( $subcat->id, $this->pending [$subcat->id] . ' ' . JText::_(COM_KUNENA_SHOWCAT_PENDING), 'nofollow' );
+					echo CKunenaLink::GetCategoryReviewListLink ( $subcat->id, $this->pending [$subcat->id] . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'), 'nofollow' );
 					echo '</font></div>';
 				}
 				?>
@@ -237,7 +237,7 @@ else {
 				echo CKunenaTools::formatLargeNumber ( $subcat->numTopics );
 				?>
 			</span> <span class="cat_topics"> <?php
-				echo JText::_(COM_KUNENA_GEN_TOPICS);
+				echo JText::_('COM_KUNENA_GEN_TOPICS');
 				?> </span> <!-- /Number of Replies --></td>
 
 			<td class="td-4 km" class="center" width="5%"><!-- Number of Topics -->
@@ -245,7 +245,7 @@ else {
 				echo CKunenaTools::formatLargeNumber ( $subcat->numPosts );
 				?>
 			</span> <span class="cat_replies"> <?php
-				echo JText::_(COM_KUNENA_GEN_REPLIES);
+				echo JText::_('COM_KUNENA_GEN_REPLIES');
 				?> </span> <!-- /Number of Replies --></td>
 
 			<?php
@@ -255,7 +255,7 @@ else {
 			<td class="td-5" class="left" width="25%">
 			<div class="klatest-subject km">
 			<?php
-					echo JText::_(COM_KUNENA_GEN_LAST_POST);
+					echo JText::_('COM_KUNENA_GEN_LAST_POST');
 					?>: <?php
 					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, kunena_htmlspecialchars ( stripslashes ( $subcat->subject ) ), $subcat->id_last_msg );
 					?>
@@ -263,13 +263,13 @@ else {
 
 			<div class="klatest-subject-by ks">
 			<?php
-					echo JText::_(COM_KUNENA_GEN_POSTEDBY) . ' ';
+					echo JText::_('COM_KUNENA_GEN_POSTEDBY') . ' ';
 					echo CKunenaLink::GetProfileLink ( $this->config, $subcat->userid, kunena_htmlspecialchars ( stripslashes ( $subcat->mname ) ) );
 					echo ' ';
-					echo JText::_(COM_KUNENA_GEN_ON);
+					echo JText::_('COM_KUNENA_GEN_ON');
 					echo ' <span title="' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat' ) . '</span>';
 
-					// echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . JText::_(COM_KUNENA_SHOW_LAST) . '" title="' . JText::_(COM_KUNENA_SHOW_LAST) . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . JText::_(COM_KUNENA_SHOW_LAST) . '"/>', $subcat->id_last_msg );
+					// echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '" title="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>', $subcat->id_last_msg );
 					?>
 			</div>
 			</td>
@@ -279,7 +279,7 @@ else {
 					?>
 
 			<td class="td-5" class="left"><?php
-					echo JText::_(COM_KUNENA_NO_POSTS);
+					echo JText::_('COM_KUNENA_NO_POSTS');
 					?></td>
 
 			<?php

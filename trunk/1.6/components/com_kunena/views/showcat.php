@@ -144,7 +144,7 @@ class CKunenaShowcat {
 		}
 
 		//meta description and keywords
-		$metaKeys = kunena_htmlspecialchars ( stripslashes ( JText::_(COM_KUNENA_CATEGORIES) . ", {$objCatParentInfo->name}, {$this->objCatInfo->name}, {$this->config->board_title}, " . $kunena_app->getCfg ( 'sitename' ) ) );
+		$metaKeys = kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_CATEGORIES') . ", {$objCatParentInfo->name}, {$this->objCatInfo->name}, {$this->config->board_title}, " . $kunena_app->getCfg ( 'sitename' ) ) );
 		$metaDesc = kunena_htmlspecialchars ( stripslashes ( "{$objCatParentInfo->name} ({$this->page}/{$this->totalpages}) - {$this->objCatInfo->name} - {$this->config->board_title}" ) );
 
 		$document = & JFactory::getDocument ();
@@ -158,22 +158,22 @@ class CKunenaShowcat {
 
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
 			//this user is allowed to post a new topic:
-			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_(COM_KUNENA_BUTTON_NEW_TOPIC) ), 'nofollow', 'buttoncomm btn-left', JText::_(COM_KUNENA_BUTTON_NEW_TOPIC_LONG) );
+			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'buttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
 		}
 		if ($this->my->id != 0) {
-			$this->forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $this->catid, CKunenaTools::showButton ( 'markread', JText::_(COM_KUNENA_BUTTON_MARKFORUMREAD) ), 'nofollow', 'buttonuser btn-left', JText::_(COM_KUNENA_BUTTON_MARKFORUMREAD_LONG) );
+			$this->forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $this->catid, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'buttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
 		}
 
 		// Thread Subscription
 		if ($kunena_cansubscribecat == 1) {
 			// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
-			$this->thread_subscribecat = CKunenaLink::GetCategoryLink ( 'subscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_(COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY) ), 'nofollow', 'buttonuser btn-left', JText::_(COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG) );
+			$this->thread_subscribecat = CKunenaLink::GetCategoryLink ( 'subscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'buttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
 		}
 
 		if ($this->my->id != 0 && $this->config->allowsubscriptions && $kunena_cansubscribecat == 0) {
 			// this user is allowed to unsubscribe
-			$this->thread_subscribecat = CKunenaLink::GetCategoryLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_(COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY) ), 'nofollow', 'buttonuser btn-left', JText::_(COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG) );
+			$this->thread_subscribecat = CKunenaLink::GetCategoryLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'buttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
 		}
 		//get the Moderator list for display
 		$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$this->catid}'" );
@@ -220,7 +220,7 @@ class CKunenaShowcat {
 	}
 
 	function displayFlat() {
-		$this->header = $this->title = JText::_(COM_KUNENA_THREADS_IN_FORUM).': '.kunena_htmlspecialchars ( stripslashes ( $this->objCatInfo->name ) );
+		$this->header = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '.kunena_htmlspecialchars ( stripslashes ( $this->objCatInfo->name ) );
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php' )) {
 			include (KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php');
 		} else {
@@ -259,7 +259,7 @@ class CKunenaShowcat {
 			$endpage = $totalpages;
 		}
 
-		$output = '<span class="kpagination">' . JText::_(COM_KUNENA_PAGE);
+		$output = '<span class="kpagination">' . JText::_('COM_KUNENA_PAGE');
 
 		if (($startpage) > 1) {
 			if ($endpage < $totalpages)
@@ -292,7 +292,7 @@ class CKunenaShowcat {
 
 	function display() {
 		if (! $this->allow) {
-			echo JText::_(COM_KUNENA_NO_ACCESS);
+			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'showcat.php' )) {

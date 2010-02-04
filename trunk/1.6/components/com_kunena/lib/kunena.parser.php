@@ -359,7 +359,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 					$types = array ("php", "mysql", "html", "js", "javascript" );
 
-					$code_start_html = '<div class="kmsgtext_code"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>' . JText::_(COM_KUNENA_MSG_CODE) . '</b></td></tr><tr><td><hr />';
+					$code_start_html = '<div class="kmsgtext_code"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>' . JText::_('COM_KUNENA_MSG_CODE') . '</b></td></tr><tr><td><hr />';
 
 					if (! empty ( $tag->options ["type"] ) && in_array ( $tag->options ["type"], $types )) {
 						$t_type = $tag->options ["type"];
@@ -430,7 +430,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					if ($kunena_my->id == 0 && $kunena_config->showimgforguest == 0) {
 						// Hide between content from non registered users
 
-						$tag_new = '<b>' . JText::_(COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG) . '</b>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG') . '</b>';
 					} else {
 						$task->autolink_disable --; # continue autolink conversion
 
@@ -475,11 +475,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					if ($kunena_my->id == 0 && $kunena_config->showfileforguest == 0) {
 						// Hide between content from non registered users
 
-						$tag_new = '<b>' . JText::_(COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE) . '</b>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE') . '</b>';
 					} else {
 						$task->autolink_disable --; # continue autolink conversion
 
-						$tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">" . JText::_(COM_KUNENA_FILEATTACH) . "</span><br>" . JText::_(COM_KUNENA_FILENAME) . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . (($tag->options ["name"]) ? kunena_htmlspecialchars ( $tag->options ["name"] ) : $tempstr) . "</a><br>" . JText::_(COM_KUNENA_FILESIZE) . ' ' . kunena_htmlspecialchars ( $tag->options ["size"], ENT_QUOTES ) . "</div>";
+						$tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">" . JText::_('COM_KUNENA_FILEATTACH') . "</span><br>" . JText::_('COM_KUNENA_FILENAME') . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . (($tag->options ["name"]) ? kunena_htmlspecialchars ( $tag->options ["name"] ) : $tempstr) . "</a><br>" . JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( $tag->options ["size"], ENT_QUOTES ) . "</div>";
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -688,10 +688,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				if ($between) {
 					if ($kunena_my->id == 0) {
 						// Hide between content from non registered users
-						$tag_new = JText::_(COM_KUNENA_BBCODE_HIDDENTEXT);
+						$tag_new = JText::_('COM_KUNENA_BBCODE_HIDDENTEXT');
 					} else {
 						// Display but highlight the fact that it is hidden from guests
-						$tag_new = '<b>' . JText::_(COM_KUNENA_BBCODE_HIDE) . '</b>' . '<span class="fb_quote">' . $between . '</span>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<span class="fb_quote">' . $between . '</span>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -711,7 +711,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 					$randomid = rand ();
 
-					$tag_new = '<div id="' . $randomid . '" onclick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="' . $randomid . '_img"' . 'src="' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png" border="0"> <strong>' . (isset ( $tag->options ["title"] ) ? ($tag->options ["title"]) : (JText::_(COM_KUNENA_BBCODE_SPOILER))) . '</strong></div><div id="' . $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
+					$tag_new = '<div id="' . $randomid . '" onclick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="' . $randomid . '_img"' . 'src="' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png" border="0"> <strong>' . (isset ( $tag->options ["title"] ) ? ($tag->options ["title"]) : (JText::_('COM_KUNENA_BBCODE_SPOILER'))) . '</strong></div><div id="' . $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
 
 					return TAGPARSER_RET_REPLACED;
 				}

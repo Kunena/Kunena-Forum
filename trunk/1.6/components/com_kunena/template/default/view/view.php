@@ -77,7 +77,7 @@ global $kunena_icons;
 					<td>
 
 					<div class="ktitle_cover km"><span class="ktitle kl"><?php
-		echo JText::_(COM_KUNENA_TOPIC);
+		echo JText::_('COM_KUNENA_TOPIC');
 		?>
 		<?php
 		echo $this->kunena_topic_title;
@@ -89,11 +89,11 @@ global $kunena_icons;
 		echo '<div class="ktotalfavorite">';
 		if ($kunena_icons ['favoritestar']) {
 			if ($this->favorited)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . JText::_(COM_KUNENA_FAVORITE) . '" />';
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" alt="*" border="0" title="' . JText::_('COM_KUNENA_FAVORITE') . '" />';
 			else if ($this->totalfavorited)
-				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar_grey'] . '" alt="*" border="0" title="' . JText::_(COM_KUNENA_FAVORITE) . '" />';
+				echo '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar_grey'] . '" alt="*" border="0" title="' . JText::_('COM_KUNENA_FAVORITE') . '" />';
 		} else {
-			echo JText::_(COM_KUNENA_TOTALFAVORITE);
+			echo JText::_('COM_KUNENA_TOTALFAVORITE');
 			echo $this->totalfavorited;
 		}
 		echo '</div>';
@@ -137,7 +137,7 @@ global $kunena_icons;
 		?>
 		<div class="kbox-bottomarea-modlist">
 		<?php
-			echo '' . JText::_(COM_KUNENA_GEN_MODERATORS) . ": ";
+			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 			$modlinks = array();
 			foreach ( $this->modslist as $mod ) {
 				$modlinks[] = CKunenaLink::GetProfileLink ( $this->config, $mod->userid, ($this->config->username ? $mod->username : $mod->name) );

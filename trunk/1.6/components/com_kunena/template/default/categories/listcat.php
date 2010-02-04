@@ -41,7 +41,7 @@ $this->displayPathway ();
 			name="markaction" value="allread" /> <input type="submit"
 			class="kbutton button ks"
 			value="<?php
-			echo JText::_(COM_KUNENA_GEN_MARK_ALL_FORUMS_READ);
+			echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ');
 			?>" /></form>
 
 		<?php
@@ -68,11 +68,11 @@ if (count ( $this->categories [0] ) > 0) {
 	?>
 
 <div><?php
-	echo JText::_(COM_KUNENA_LISTCAT_NO_CATS) . '<br />';
-	echo JText::_(COM_KUNENA_LISTCAT_ADMIN) . '<br />';
-	echo JText::_(COM_KUNENA_LISTCAT_PANEL) . '<br /><br />';
-	echo JText::_(COM_KUNENA_LISTCAT_INFORM) . '<br /><br />';
-	echo JText::_(COM_KUNENA_LISTCAT_DO) . ' <img src="' . KUNENA_URLEMOTIONSPATH . 'wink.png"  alt="" border="0" />';
+	echo JText::_('COM_KUNENA_LISTCAT_NO_CATS') . '<br />';
+	echo JText::_('COM_KUNENA_LISTCAT_ADMIN') . '<br />';
+	echo JText::_('COM_KUNENA_LISTCAT_PANEL') . '<br /><br />';
+	echo JText::_('COM_KUNENA_LISTCAT_INFORM') . '<br /><br />';
+	echo JText::_('COM_KUNENA_LISTCAT_DO') . ' <img src="' . KUNENA_URLEMOTIONSPATH . 'wink.png"  alt="" border="0" />';
 	?>
 </div>
 

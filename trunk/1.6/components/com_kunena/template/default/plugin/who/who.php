@@ -42,7 +42,7 @@ if ($kunena_config->showwhoisonline > 0)
             <tr>
                 <th colspan = "4">
                    <div class = "ktitle_cover">
-                        <span class="ktitle"><?php echo $kunena_app->getCfg('sitename'); ?> - <?php echo JText::_(COM_KUNENA_WHO_WHOIS_ONLINE); ?></span>
+                        <span class="ktitle"><?php echo $kunena_app->getCfg('sitename'); ?> - <?php echo JText::_('COM_KUNENA_WHO_WHOIS_ONLINE'); ?></span>
                     </div>
             </tr>
         </thead>
@@ -50,14 +50,14 @@ if ($kunena_config->showwhoisonline > 0)
         <tbody>
             <tr class = "ksth">
                 <th class = "th-1 ksectiontableheader">
-<?php echo JText::_(COM_KUNENA_WHO_ONLINE_USER); ?>
+<?php echo JText::_('COM_KUNENA_WHO_ONLINE_USER'); ?>
 
                 </th>
 
-                <th class = "th-2 ksectiontableheader"><?php echo JText::_(COM_KUNENA_WHO_ONLINE_TIME); ?>
+                <th class = "th-2 ksectiontableheader"><?php echo JText::_('COM_KUNENA_WHO_ONLINE_TIME'); ?>
                 </th>
 
-                <th class = "th-3 ksectiontableheader"><?php echo JText::_(COM_KUNENA_WHO_ONLINE_FUNC); ?>
+                <th class = "th-3 ksectiontableheader"><?php echo JText::_('COM_KUNENA_WHO_ONLINE_FUNC'); ?>
                 </th>
             </tr>
 
@@ -78,7 +78,7 @@ if ($kunena_config->showwhoisonline > 0)
                 $k = 1 - $k;
 
                 if ($user->userid == 0) {
-                    $user->username = JText::_(COM_KUNENA_GUEST);
+                    $user->username = JText::_('COM_KUNENA_GUEST');
                 } else if ($user->showOnline < 1 && !CKunenaTools::isModerator($kunena_my->id)) {
                 	continue;
                 }

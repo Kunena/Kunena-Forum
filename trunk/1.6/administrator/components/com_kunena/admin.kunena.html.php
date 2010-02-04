@@ -134,80 +134,80 @@ td.fbtdtitle {
 		<div id="fbheader"><a href="index.php?option=com_kunena"><img
 			src="components/com_kunena/images/kunena.logo.png" border="0"
 			alt="<?php
-		echo JText::_(COM_KUNENA_C_BACK);
+		echo JText::_('COM_KUNENA_C_BACK');
 		?>" /></a></div>
 		<!-- Begin : Kunena Left Menu -->
 		<div id="fbmenu"><?php
 		$stask = JRequest::getVar ( 'task', null );
 		?>
 		<a class="fbmainmenu" href="index.php?option=com_kunena"><?php
-		echo JText::_(COM_KUNENA_CP);
+		echo JText::_('COM_KUNENA_CP');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=showconfig"><?php
-		echo JText::_(COM_KUNENA_C_FBCONFIG);
+		echo JText::_('COM_KUNENA_C_FBCONFIG');
 		?></a>
 		<?php
 		if ($stask == 'showconfig') {
 			;
 			?> <a class="fbsubmenu" href="#basics"><?php
-			echo JText::_(COM_KUNENA_A_BASICS);
+			echo JText::_('COM_KUNENA_A_BASICS');
 			?></a> <a class="fbsubmenu" href="#frontend"><?php
-			echo JText::_(COM_KUNENA_A_FRONTEND);
+			echo JText::_('COM_KUNENA_A_FRONTEND');
 			?></a> <a class="fbsubmenu" href="#security"><?php
-			echo JText::_(COM_KUNENA_A_SECURITY);
+			echo JText::_('COM_KUNENA_A_SECURITY');
 			?></a> <a class="fbsubmenu" href="#avatars"><?php
-			echo JText::_(COM_KUNENA_A_AVATARS);
+			echo JText::_('COM_KUNENA_A_AVATARS');
 			?></a> <a class="fbsubmenu" href="#uploads"><?php
-			echo JText::_(COM_KUNENA_A_UPLOADS);
+			echo JText::_('COM_KUNENA_A_UPLOADS');
 			?></a> <a class="fbsubmenu" href="#ranking"><?php
-			echo JText::_(COM_KUNENA_A_RANKING);
+			echo JText::_('COM_KUNENA_A_RANKING');
 			?></a> <a class="fbsubmenu" href="#bbcode"><?php
-			echo JText::_(COM_KUNENA_A_BBCODE);
+			echo JText::_('COM_KUNENA_A_BBCODE');
 			?></a> <a class="fbsubmenu" href="#integration"><?php
-			echo JText::_(COM_KUNENA_A_INTEGRATION);
+			echo JText::_('COM_KUNENA_A_INTEGRATION');
 			?></a> <a class="fbsubmenu" href="#plugins"><?php
-			echo JText::_(COM_KUNENA_ADMIN_CONFIG_PLUGINS);
+			echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS');
 			?></a>
 		<?php
 		}
 		?> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=showAdministration"><?php
-		echo JText::_(COM_KUNENA_C_FORUM);
+		echo JText::_('COM_KUNENA_C_FORUM');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=showprofiles"><?php
-		echo JText::_(COM_KUNENA_C_USER);
+		echo JText::_('COM_KUNENA_C_USER');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=showsmilies"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_EDIT_SMILIES);
+		echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILIES');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=ranks"><?php
-		echo JText::_(COM_KUNENA_RANKS_MANAGE);
+		echo JText::_('COM_KUNENA_RANKS_MANAGE');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=browseFiles"><?php
-		echo JText::_(COM_KUNENA_C_FILES);
+		echo JText::_('COM_KUNENA_C_FILES');
 		?>
 		</a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=browseImages"><?php
-		echo JText::_(COM_KUNENA_C_IMAGES);
+		echo JText::_('COM_KUNENA_C_IMAGES');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=showCss"><?php
-		echo JText::_(COM_KUNENA_C_CSS);
+		echo JText::_('COM_KUNENA_C_CSS');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=pruneforum"><?php
-		echo JText::_(COM_KUNENA_C_PRUNETAB);
+		echo JText::_('COM_KUNENA_C_PRUNETAB');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=syncusers"><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS);
+		echo JText::_('COM_KUNENA_SYNC_USERS');
 		?></a> <a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=recount"><?php
-		echo JText::_(COM_KUNENA_RECOUNTFORUMS);
+		echo JText::_('COM_KUNENA_RECOUNTFORUMS');
 		?></a><a class="fbmainmenu"
 			href="index.php?option=com_kunena&task=showtrashview"><?php
-		echo JText::_(COM_KUNENA_TRASH_VIEW);
+		echo JText::_('COM_KUNENA_TRASH_VIEW');
 		?></a>
 		<a class="fbmainmenu" href="http://www.Kunena.com"
 			target="_blank"><?php
-		echo JText::_(COM_KUNENA_C_SUPPORT);
+		echo JText::_('COM_KUNENA_C_SUPPORT');
 		?></a></div>
 		<!-- Finish : Kunena Left Menu --> <!-- Finish: AdminLeft --></td>
 		<td valign="top" class="fbright"><!-- Begin: AdminRight --> <?php
@@ -243,7 +243,7 @@ td.fbtdtitle {
 		?>
 
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_CP);
+		echo JText::_('COM_KUNENA_CP');
 		?></div>
 
 
@@ -260,13 +260,13 @@ td.fbtdtitle {
 	function showAdministration($rows, $children, $pageNav, $option) {
 		?>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_ADMIN);
+		echo JText::_('COM_KUNENA_ADMIN');
 		?></div>
 <form action="index.php" method="post" name="adminForm">
 <table cellpadding="4" cellspacing="0" border="0" width="100%">
 	<tr>
 		<td align="right"><?php
-		echo JText::_(COM_KUNENA_A_DISPLAY);
+		echo JText::_('COM_KUNENA_A_DISPLAY');
 		?> <?php
 		echo $pageNav->getLimitBox ();
 		?>
@@ -285,47 +285,47 @@ td.fbtdtitle {
 		?>);" /></th>
 
 		<th class="title"><?php
-		echo JText::_(COM_KUNENA_CATFOR);
+		echo JText::_('COM_KUNENA_CATFOR');
 		?></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_CATID);
+		echo JText::_('COM_KUNENA_CATID');
 		?></small></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_LOCKED);
+		echo JText::_('COM_KUNENA_LOCKED');
 		?></small></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_MODERATED);
+		echo JText::_('COM_KUNENA_MODERATED');
 		?></small></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_REVIEW);
+		echo JText::_('COM_KUNENA_REVIEW');
 		?></small></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_ADMIN_POLLS);
+		echo JText::_('COM_KUNENA_ADMIN_POLLS');
 		?></small></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_PUBLISHED);
+		echo JText::_('COM_KUNENA_PUBLISHED');
 		?></small></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_PUBLICACCESS);
+		echo JText::_('COM_KUNENA_PUBLICACCESS');
 		?></small></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_ADMINACCESS);
+		echo JText::_('COM_KUNENA_ADMINACCESS');
 		?></small></th>
 
 		<th><small><?php
-		echo JText::_(COM_KUNENA_CHECKEDOUT);
+		echo JText::_('COM_KUNENA_CHECKEDOUT');
 		?></small></th>
 
 		<th colspan="2"><small><?php
-		echo JText::_(COM_KUNENA_REORDER);
+		echo JText::_('COM_KUNENA_REORDER');
 		?></small></th>
 	</tr>
 
@@ -391,9 +391,9 @@ td.fbtdtitle {
 			$img = $row->published ? 'publish_g.png' : 'publish_x.png';
 
 			if ($row->pub_access == 0) {
-				$groupname = JText::_(COM_KUNENA_EVERYBODY);
+				$groupname = JText::_('COM_KUNENA_EVERYBODY');
 			} else if ($row->pub_access == - 1) {
-				$groupname = JText::_(COM_KUNENA_ALLREGISTERED);
+				$groupname = JText::_('COM_KUNENA_ALLREGISTERED');
 			} else {
 				$groupname = $row->groupname == "" ? "&nbsp;" : $row->groupname;
 			}
@@ -493,7 +493,7 @@ td.fbtdtitle {
                 if (form.name.value == "")
                 {
                     alert("<?php
-		echo JText::_(COM_KUNENA_ERROR1);
+		echo JText::_('COM_KUNENA_ERROR1');
 		?>");
                 }
                 else
@@ -504,11 +504,11 @@ td.fbtdtitle {
         </script>
 
 <div class="fbfunctitle"><?php
-		echo $row->id ? JText::_(COM_KUNENA_EDIT) : JText::_(COM_KUNENA_ADD);
+		echo $row->id ? JText::_('COM_KUNENA_EDIT') : JText::_('COM_KUNENA_ADD');
 		?>
 <?php
 
-		echo JText::_(COM_KUNENA_CATFOR);
+		echo JText::_('COM_KUNENA_CATFOR');
 		?></div>
 
 <form action="index.php" method="POST" name="adminForm">
@@ -517,17 +517,17 @@ td.fbtdtitle {
 		?>" />
 
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_BASICSFORUM);
+		echo JText::_('COM_KUNENA_BASICSFORUM');
 		?></div>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_BASICSFORUMINFO);
+		echo JText::_('COM_KUNENA_BASICSFORUMINFO');
 		?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%">
 
 
 	<tr>
 		<td width="200" valign="top"><?php
-		echo JText::_(COM_KUNENA_PARENT);
+		echo JText::_('COM_KUNENA_PARENT');
 		?></td>
 
 		<td><?php
@@ -536,13 +536,13 @@ td.fbtdtitle {
 
 		<br />
 		<?php
-		echo JText::_(COM_KUNENA_PARENTDESC);
+		echo JText::_('COM_KUNENA_PARENTDESC');
 		?></td>
 	</tr>
 
 	<tr>
 		<td width="200"><?php
-		echo JText::_(COM_KUNENA_NAMEADD);
+		echo JText::_('COM_KUNENA_NAMEADD');
 		?></td>
 
 		<td><input class="inputbox" type="text" name="name" size="25"
@@ -554,7 +554,7 @@ td.fbtdtitle {
 
 	<tr>
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_DESCRIPTIONADD);
+		echo JText::_('COM_KUNENA_DESCRIPTIONADD');
 		?></td>
 
 		<td><textarea class="inputbox" cols="50" rows="3" name="description"
@@ -565,7 +565,7 @@ td.fbtdtitle {
 
 	<tr>
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_HEADERADD);
+		echo JText::_('COM_KUNENA_HEADERADD');
 		?></td>
 
 		<td><textarea class="inputbox" cols="50" rows="3" name="headerdesc"
@@ -576,17 +576,17 @@ td.fbtdtitle {
 </table>
 </fieldset>
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_ADVANCEDDESC);
+		echo JText::_('COM_KUNENA_ADVANCEDDESC');
 		?></div>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_ADVANCEDDESCINFO);
+		echo JText::_('COM_KUNENA_ADVANCEDDESCINFO');
 		?></legend>
 
 <table cellpadding="4" cellspacing="0" border="0" width="100%">
 
 	<tr>
 		<td><?php
-		echo JText::_(COM_KUNENA_LOCKED1);
+		echo JText::_('COM_KUNENA_LOCKED1');
 		?></td>
 
 		<td><?php
@@ -594,13 +594,13 @@ td.fbtdtitle {
 		?></td>
 
 		<td><?php
-		echo JText::_(COM_KUNENA_LOCKEDDESC);
+		echo JText::_('COM_KUNENA_LOCKEDDESC');
 		?></td>
 	</tr>
 
 	<tr>
 		<td nowrap="nowrap" valign="top"><?php
-		echo JText::_(COM_KUNENA_PUBACC);
+		echo JText::_('COM_KUNENA_PUBACC');
 		?></td>
 
 		<td valign="top"><?php
@@ -608,13 +608,13 @@ td.fbtdtitle {
 		?></td>
 
 		<td><?php
-		echo JText::_(COM_KUNENA_PUBACCDESC);
+		echo JText::_('COM_KUNENA_PUBACCDESC');
 		?></td>
 	</tr>
 
 	<tr>
 		<td nowrap="nowrap" valign="top"><?php
-		echo JText::_(COM_KUNENA_CGROUPS);
+		echo JText::_('COM_KUNENA_CGROUPS');
 		?></td>
 
 		<td valign="top"><?php
@@ -622,13 +622,13 @@ td.fbtdtitle {
 		?></td>
 
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_CGROUPSDESC);
+		echo JText::_('COM_KUNENA_CGROUPSDESC');
 		?></td>
 	</tr>
 
 	<tr>
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMINLEVEL);
+		echo JText::_('COM_KUNENA_ADMINLEVEL');
 		?></td>
 
 		<td valign="top"><?php
@@ -636,13 +636,13 @@ td.fbtdtitle {
 		?></td>
 
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMINLEVELDESC);
+		echo JText::_('COM_KUNENA_ADMINLEVELDESC');
 		?></td>
 	</tr>
 
 	<tr>
 		<td nowrap="nowrap" valign="top"><?php
-		echo JText::_(COM_KUNENA_CGROUPS1);
+		echo JText::_('COM_KUNENA_CGROUPS1');
 		?>
 		</td>
 
@@ -651,13 +651,13 @@ td.fbtdtitle {
 		?></td>
 
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_CGROUPS1DESC);
+		echo JText::_('COM_KUNENA_CGROUPS1DESC');
 		?></td>
 	</tr>
 
 	<tr>
 		<td nowrap="nowrap" valign="top"><?php
-		echo JText::_(COM_KUNENA_REV);
+		echo JText::_('COM_KUNENA_REV');
 		?></td>
 
 		<td valign="top"><?php
@@ -665,13 +665,13 @@ td.fbtdtitle {
 		?></td>
 
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_REVDESC);
+		echo JText::_('COM_KUNENA_REVDESC');
 		?></td>
 	</tr>
 
 	<tr>
 		<td nowrap="nowrap" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_POLL_CATEGORIES_ALLOWED);
+		echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED');
 		?></td>
 
 		<td valign="top"><?php
@@ -679,21 +679,21 @@ td.fbtdtitle {
 		?></td>
 
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC);
+		echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC');
 		?></td>
 	</tr>
 </table>
 
 </fieldset>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_ADVANCEDDISPINFO);
+		echo JText::_('COM_KUNENA_ADVANCEDDISPINFO');
 		?></legend>
 
 <table cellpadding="4" cellspacing="0" border="0" width="100%">
 
 	<tr>
 		<td><?php
-		echo JText::_(COM_KUNENA_CLASS_SFX);
+		echo JText::_('COM_KUNENA_CLASS_SFX');
 		?></td>
 
 		<td><input class="inputbox" type="text" name="class_sfx" size="20"
@@ -702,17 +702,17 @@ td.fbtdtitle {
 		?>"></td>
 
 		<td><?php
-		echo JText::_(COM_KUNENA_CLASS_SFXDESC);
+		echo JText::_('COM_KUNENA_CLASS_SFXDESC');
 		?></td>
 	</tr>
 </table>
 </fieldset>
 
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_MODNEWDESC);
+		echo JText::_('COM_KUNENA_MODNEWDESC');
 		?></div>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_MODHEADER);
+		echo JText::_('COM_KUNENA_MODHEADER');
 		?></legend>
 
 <table cellpadding="4" cellspacing="0" border="0" width="100%">
@@ -720,7 +720,7 @@ td.fbtdtitle {
 
 	<tr>
 		<td nowrap="nowrap" valign="top"><?php
-		echo JText::_(COM_KUNENA_MOD);
+		echo JText::_('COM_KUNENA_MOD');
 		?></td>
 
 		<td valign="top"><?php
@@ -728,7 +728,7 @@ td.fbtdtitle {
 		?></td>
 
 		<td valign="top"><?php
-		echo JText::_(COM_KUNENA_MODDESC);
+		echo JText::_('COM_KUNENA_MODDESC');
 		?></td>
 	</tr>
 </table>
@@ -739,7 +739,7 @@ td.fbtdtitle {
 
 
 <div class="fbfuncsubtitle"><?php
-			echo JText::_(COM_KUNENA_MODSASSIGNED);
+			echo JText::_('COM_KUNENA_MODSASSIGNED');
 			?></div>
 
 <table class="adminlist" border="0" cellspacing="0" cellpadding="3"
@@ -753,25 +753,25 @@ td.fbtdtitle {
 			?>);" /></th>
 
 		<th align="left"><?php
-			echo JText::_(COM_KUNENA_USRL_NAME);
+			echo JText::_('COM_KUNENA_USRL_NAME');
 			?></th>
 
 		<th align="left"><?php
-			echo JText::_(COM_KUNENA_USRL_USERNAME);
+			echo JText::_('COM_KUNENA_USRL_USERNAME');
 			?></th>
 
 		<th align="left"><?php
-			echo JText::_(COM_KUNENA_USRL_EMAIL);
+			echo JText::_('COM_KUNENA_USRL_EMAIL');
 			?></th>
 
 		<th align="center"><?php
-			echo JText::_(COM_KUNENA_PUBLISHED);
+			echo JText::_('COM_KUNENA_PUBLISHED');
 			?></th>
 	</tr>
 
 	<?php
 			if (count ( $moderatorList ) == 0) {
-				echo "<tr><td colspan=\"5\">" . JText::_(COM_KUNENA_NOMODS) . "</td></tr>";
+				echo "<tr><td colspan=\"5\">" . JText::_('COM_KUNENA_NOMODS') . "</td></tr>";
 			} else {
 				$k = 1;
 				$i = 0;
@@ -847,20 +847,20 @@ td.fbtdtitle {
 		?>
 <div id="fbcongifcover">
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_A_CONFIG)?></div>
+		echo JText::_('COM_KUNENA_A_CONFIG')?></div>
 <form action="index.php" method="post" name="adminForm">
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_A_BASICS)?><a name="basics" id="basics"> </a></div>
+		echo JText::_('COM_KUNENA_A_BASICS')?><a name="basics" id="basics"> </a></div>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_BASIC_SETTINGS)?></legend>
+		echo JText::_('COM_KUNENA_A_BASIC_SETTINGS')?></legend>
 
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_BOARD_TITLE)?>
+		echo JText::_('COM_KUNENA_A_BOARD_TITLE')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><input type="text"
@@ -870,13 +870,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_BOARD_TITLE_DESC)?>
+		echo JText::_('COM_KUNENA_A_BOARD_TITLE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_EMAIL)?></td>
+		echo JText::_('COM_KUNENA_A_EMAIL')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_email"
 			value="<?php
@@ -884,12 +884,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_EMAIL_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_EMAIL_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_BOARD_OFFLINE)?>
+		echo JText::_('COM_KUNENA_A_BOARD_OFFLINE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -898,13 +898,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_BOARD_OFFLINE_DESC)?>
+		echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_KUNENA_SESSION_TIMEOUT)?>
+		echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -914,13 +914,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC)?>
+		echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_BOARD_OFFLINE_MES)?>
+		echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES')?>
 		</td>
 
 		<td align="left" valign="top" colspan="2"><textarea
@@ -931,7 +931,7 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_RSS)?></td>
+		echo JText::_('COM_KUNENA_A_RSS')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['enablerss'];
@@ -943,25 +943,25 @@ td.fbtdtitle {
 		echo JURI::root ();
 		?>/images/M_images/livemarks.png"
 			alt="" /> <?php
-		echo JText::_(COM_KUNENA_A_RSS_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_RSS_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_RSS_TYPE)?></td>
+		echo JText::_('COM_KUNENA_A_RSS_TYPE')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['rsstype'];
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_RSS_TYPE_DESC)?>
+		echo JText::_('COM_KUNENA_A_RSS_TYPE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_RSS_HISTORY)?></td>
+		echo JText::_('COM_KUNENA_A_RSS_HISTORY')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['rsshistory'];
@@ -969,13 +969,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_RSS_HISTORY_DESC)?>
+		echo JText::_('COM_KUNENA_A_RSS_HISTORY_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_PDF)?></td>
+		echo JText::_('COM_KUNENA_A_PDF')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['enablepdf'];
@@ -987,20 +987,20 @@ td.fbtdtitle {
 		echo JURI::root ();
 		?>/images/M_images/pdf_button.png"
 			alt="" /> <?php
-		echo JText::_(COM_KUNENA_A_PDF_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_PDF_DESC')?></td>
 	</tr>
 </table>
 </fieldset>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_SEO_SETTINGS)?></legend>
+		echo JText::_('COM_KUNENA_SEO_SETTINGS')?></legend>
 
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_SEF)?>
+		echo JText::_('COM_KUNENA_SEF')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -1008,12 +1008,12 @@ td.fbtdtitle {
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SEF_DESC)?></td>
+		echo JText::_('COM_KUNENA_SEF_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_SEF_CATS)?>
+		echo JText::_('COM_KUNENA_SEF_CATS')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -1021,13 +1021,13 @@ td.fbtdtitle {
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SEF_CATS_DESC)?>
+		echo JText::_('COM_KUNENA_SEF_CATS_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_SEF_UTF8)?>
+		echo JText::_('COM_KUNENA_SEF_UTF8')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -1035,7 +1035,7 @@ td.fbtdtitle {
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SEF_UTF8_DESC)?>
+		echo JText::_('COM_KUNENA_SEF_UTF8_DESC')?>
 		</td>
 	</tr>
 
@@ -1043,16 +1043,16 @@ td.fbtdtitle {
 </fieldset>
 
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_A_FRONTEND)?> <a name="frontend" id="frontend"> </a></div>
+		echo JText::_('COM_KUNENA_A_FRONTEND')?> <a name="frontend" id="frontend"> </a></div>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_LOOKS)?></legend>
+		echo JText::_('COM_KUNENA_A_LOOKS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_THREADS)?>
+		echo JText::_('COM_KUNENA_A_THREADS')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><input type="text"
@@ -1062,12 +1062,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_THREADS_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_THREADS_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MESSAGES)?></td>
+		echo JText::_('COM_KUNENA_A_MESSAGES')?></td>
 
 		<td align="left" valign="top"><input type="text"
 			name="cfg_messages_per_page"
@@ -1076,13 +1076,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MESSAGES_DESC)?>
+		echo JText::_('COM_KUNENA_A_MESSAGES_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MESSAGES_SEARCH)?>
+		echo JText::_('COM_KUNENA_A_MESSAGES_SEARCH')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -1092,13 +1092,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MESSAGES_DESC_SEARCH)?>
+		echo JText::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_HISTORY)?></td>
+		echo JText::_('COM_KUNENA_A_HISTORY')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['showhistory'];
@@ -1106,12 +1106,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_HISTORY_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_HISTORY_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_HISTLIM)?></td>
+		echo JText::_('COM_KUNENA_A_HISTLIM')?></td>
 
 		<td align="left" valign="top"><input type="text"
 			name="cfg_historylimit"
@@ -1120,12 +1120,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_HISTLIM_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_HISTLIM_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_CFG_POST_DATEFORMAT)?>
+		echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1134,13 +1134,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_CFG_POST_DATEFORMAT_DESC)?>
+		echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_CFG_POST_DATEFORMAT_HOVER)?>
+		echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_HOVER')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1149,25 +1149,25 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC)?>
+		echo JText::_('COM_KUNENA_CFG_POST_DATEFORMAT_HOVER_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SHOWNEW)?></td>
+		echo JText::_('COM_KUNENA_A_SHOWNEW')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['shownew'];
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SHOWNEW_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_SHOWNEW_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_NEWCHAR)?></td>
+		echo JText::_('COM_KUNENA_A_NEWCHAR')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_newchar"
 			value="<?php
@@ -1175,12 +1175,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_NEWCHAR_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_NEWCHAR_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_MAMBOT_SUPPORT)?>
+		echo JText::_('COM_KUNENA_MAMBOT_SUPPORT')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1188,13 +1188,13 @@ td.fbtdtitle {
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_MAMBOT_SUPPORT_DESC)?>
+		echo JText::_('COM_KUNENA_MAMBOT_SUPPORT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_DISEMOTICONS)?></td>
+		echo JText::_('COM_KUNENA_A_DISEMOTICONS')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['disemoticons'];
@@ -1202,25 +1202,25 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_DISEMOTICONS_DESC)?>
+		echo JText::_('COM_KUNENA_A_DISEMOTICONS_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TEMPLATE)?></td>
+		echo JText::_('COM_KUNENA_A_TEMPLATE')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['template'];
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TEMPLATE_DESC)?>
+		echo JText::_('COM_KUNENA_A_TEMPLATE_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TEMPLATE_IMAGE_PATH)?>
+		echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1229,13 +1229,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TEMPLATE_IMAGE_PATH_DESC)?>
+		echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AV_POSITION)?>
+		echo JText::_('COM_KUNENA_AV_POSITION')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1244,13 +1244,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AV_POSITION_DESC)?>
+		echo JText::_('COM_KUNENA_AV_POSITION_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FBDEFAULT_PAGE)?>
+		echo JText::_('COM_KUNENA_A_FBDEFAULT_PAGE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1259,13 +1259,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FBDEFAULT_PAGE_DESC)?>
+		echo JText::_('COM_KUNENA_A_FBDEFAULT_PAGE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_ANNOUNCEMENT)?>
+		echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1274,13 +1274,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_ANNOUNCEMENT_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_AVATAR_ON_CAT)?>
+		echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1289,12 +1289,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_AVATAR_ON_CAT_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_CATIMAGEPATH)?>
+		echo JText::_('COM_KUNENA_CATIMAGEPATH')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -1304,12 +1304,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_CATIMAGEPATH_DESC)?>
+		echo JText::_('COM_KUNENA_CATIMAGEPATH_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST)?>
+		echo JText::_('COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1318,13 +1318,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ANN_MODID)?></td>
+		echo JText::_('COM_KUNENA_ANN_MODID')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_annmodid"
 			value="<?php
@@ -1332,13 +1332,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ANN_MODID_DESC)?>
+		echo JText::_('COM_KUNENA_ANN_MODID_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TAWIDTH)?></td>
+		echo JText::_('COM_KUNENA_A_TAWIDTH')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_rtewidth"
 			value="<?php
@@ -1346,12 +1346,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TAWIDTH_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_TAWIDTH_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TAHEIGHT)?></td>
+		echo JText::_('COM_KUNENA_A_TAHEIGHT')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_rteheight"
 			value="<?php
@@ -1359,13 +1359,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TAHEIGHT_DESC)?>
+		echo JText::_('COM_KUNENA_A_TAHEIGHT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_RULESPAGE)?></td>
+		echo JText::_('COM_KUNENA_RULESPAGE')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['enablerulespage'];
@@ -1373,12 +1373,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_RULESPAGE_DESC)?>
+		echo JText::_('COM_KUNENA_RULESPAGE_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_RULESPAGE_IN_FB)?>
+		echo JText::_('COM_KUNENA_RULESPAGE_IN_FB')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1387,12 +1387,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_RULESPAGE_IN_KUNENA_DESC)?>
+		echo JText::_('COM_KUNENA_RULESPAGE_IN_KUNENA_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_RULESPAGE_CID)?>
+		echo JText::_('COM_KUNENA_RULESPAGE_CID')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_rules_cid"
@@ -1401,12 +1401,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_RULESPAGE_CID_DESC)?>
+		echo JText::_('COM_KUNENA_RULESPAGE_CID_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_RULESPAGE_LINK)?>
+		echo JText::_('COM_KUNENA_RULESPAGE_LINK')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_rules_link"
@@ -1415,12 +1415,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_RULESPAGE_LINK_DESC)?>
+		echo JText::_('COM_KUNENA_RULESPAGE_LINK_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_HELPPAGE)?></td>
+		echo JText::_('COM_KUNENA_HELPPAGE')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['enablehelppage'];
@@ -1428,12 +1428,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_HELPPAGE_DESC)?>
+		echo JText::_('COM_KUNENA_HELPPAGE_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_HELPPAGE_IN_FB)?>
+		echo JText::_('COM_KUNENA_HELPPAGE_IN_FB')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1442,12 +1442,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_HELPPAGE_IN_KUNENA_DESC)?>
+		echo JText::_('COM_KUNENA_HELPPAGE_IN_KUNENA_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_HELPPAGE_CID)?>
+		echo JText::_('COM_KUNENA_HELPPAGE_CID')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_help_cid"
@@ -1456,12 +1456,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_HELPPAGE_CID_DESC)?>
+		echo JText::_('COM_KUNENA_HELPPAGE_CID_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_HELPPAGE_LINK)?>
+		echo JText::_('COM_KUNENA_HELPPAGE_LINK')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_help_link"
@@ -1470,12 +1470,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_HELPPAGE_LINK_DESC)?>
+		echo JText::_('COM_KUNENA_HELPPAGE_LINK_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FORUM_JUMP)?></td>
+		echo JText::_('COM_KUNENA_A_FORUM_JUMP')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['enableforumjump'];
@@ -1483,12 +1483,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FORUM_JUMP_DESC)?>
+		echo JText::_('COM_KUNENA_A_FORUM_JUMP_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_COM_A_REPORT)?>
+		echo JText::_('COM_KUNENA_COM_A_REPORT')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1497,12 +1497,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_COM_A_REPORT_DESC)?>
+		echo JText::_('COM_KUNENA_COM_A_REPORT_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_COM_A_ORDERING_SYSTEM)?>
+		echo JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1511,12 +1511,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC)?>
+		echo JText::_('COM_KUNENA_COM_A_REPORT_ORDERING_SYSTEM_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_COM_A_HIDE_IP)?>
+		echo JText::_('COM_KUNENA_COM_A_HIDE_IP')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1525,20 +1525,20 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_COM_A_HIDE_IP_DESC)?>
+		echo JText::_('COM_KUNENA_COM_A_HIDE_IP_DESC')?>
 		</td>
 	</tr>
 </table>
 </fieldset>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_USERS)?></legend>
+		echo JText::_('COM_KUNENA_A_USERS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_USERNAME)?>
+		echo JText::_('COM_KUNENA_A_USERNAME')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -1547,26 +1547,26 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USERNAME_DESC)?>
+		echo JText::_('COM_KUNENA_A_USERNAME_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_ASK_EMAIL)?></td>
+		echo JText::_('COM_KUNENA_A_ASK_EMAIL')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['askemail'];
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_ASK_EMAIL_DESC)?>
+		echo JText::_('COM_KUNENA_A_ASK_EMAIL_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SHOWMAIL)?></td>
+		echo JText::_('COM_KUNENA_A_SHOWMAIL')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['showemail'];
@@ -1574,13 +1574,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SHOWMAIL_DESC)?>
+		echo JText::_('COM_KUNENA_A_SHOWMAIL_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USERSTATS)?></td>
+		echo JText::_('COM_KUNENA_A_USERSTATS')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['showuserstats'];
@@ -1588,13 +1588,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USERSTATS_DESC)?>
+		echo JText::_('COM_KUNENA_A_USERSTATS_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_KARMA)?></td>
+		echo JText::_('COM_KUNENA_A_KARMA')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['showkarma'];
@@ -1602,25 +1602,25 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_KARMA_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_KARMA_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USER_EDIT)?></td>
+		echo JText::_('COM_KUNENA_A_USER_EDIT')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['useredit'];
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USER_EDIT_DESC)?>
+		echo JText::_('COM_KUNENA_A_USER_EDIT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USER_EDIT_TIME)?>
+		echo JText::_('COM_KUNENA_A_USER_EDIT_TIME')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -1630,13 +1630,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USER_EDIT_TIME_DESC)?>
+		echo JText::_('COM_KUNENA_A_USER_EDIT_TIME_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USER_EDIT_TIMEGRACE)?>
+		echo JText::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -1646,13 +1646,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC)?>
+		echo JText::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USER_MARKUP)?></td>
+		echo JText::_('COM_KUNENA_A_USER_MARKUP')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['editmarkup'];
@@ -1660,13 +1660,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_USER_MARKUP_DESC)?>
+		echo JText::_('COM_KUNENA_A_USER_MARKUP_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SUBSCRIPTIONS)?>
+		echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1675,12 +1675,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SUBSCRIPTIONS_DESC)?>
+		echo JText::_('COM_KUNENA_A_SUBSCRIPTIONS_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SUBSCRIPTIONSCHECKED)?>
+		echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1689,12 +1689,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SUBSCRIPTIONSCHECKED_DESC)?>
+		echo JText::_('COM_KUNENA_SUBSCRIPTIONSCHECKED_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FAVORITES)?></td>
+		echo JText::_('COM_KUNENA_A_FAVORITES')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['allowfavorites'];
@@ -1702,20 +1702,20 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FAVORITES_DESC)?>
+		echo JText::_('COM_KUNENA_A_FAVORITES_DESC')?>
 		</td>
 	</tr>
 </table>
 </fieldset>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_LENGTHS)?></legend>
+		echo JText::_('COM_KUNENA_A_LENGTHS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" width="25%" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SUBJECTLENGTH)?>
+		echo JText::_('COM_KUNENA_A_SUBJECTLENGTH')?>
 		</td>
 
 		<td align="left" width="25%" valign="top"><input type="text"
@@ -1725,13 +1725,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SUBJECTLENGTH_DESC)?>
+		echo JText::_('COM_KUNENA_A_SUBJECTLENGTH_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SIGNATURE)?></td>
+		echo JText::_('COM_KUNENA_A_SIGNATURE')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_maxsig"
 			value="<?php
@@ -1739,12 +1739,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SIGNATURE_DESC)?>
+		echo JText::_('COM_KUNENA_A_SIGNATURE_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_PESONNALTEXT)?></td>
+		echo JText::_('COM_KUNENA_A_PESONNALTEXT')?></td>
 
 		<td align="left" valign="top"><input type="text"
 			name="cfg_maxpersotext"
@@ -1753,21 +1753,21 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_PESONNALTEXT_DESC)?>
+		echo JText::_('COM_KUNENA_A_PESONNALTEXT_DESC')?>
 		</td>
 	</tr>
 </table>
 </fieldset>
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_A_SECURITY)?> <a name="security" id="security"> </a></div>
+		echo JText::_('COM_KUNENA_A_SECURITY')?> <a name="security" id="security"> </a></div>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_SECURITY_SETTINGS)?></legend>
+		echo JText::_('COM_KUNENA_A_SECURITY_SETTINGS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_REGISTERED_ONLY)?>
+		echo JText::_('COM_KUNENA_A_REGISTERED_ONLY')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -1776,13 +1776,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_REG_ONLY_DESC)?>
+		echo JText::_('COM_KUNENA_A_REG_ONLY_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_CHANGENAME)?></td>
+		echo JText::_('COM_KUNENA_A_CHANGENAME')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['changename'];
@@ -1790,26 +1790,26 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_CHANGENAME_DESC)?>
+		echo JText::_('COM_KUNENA_A_CHANGENAME_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_PUBWRITE)?></td>
+		echo JText::_('COM_KUNENA_A_PUBWRITE')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['pubwrite'];
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_PUBWRITE_DESC)?>
+		echo JText::_('COM_KUNENA_A_PUBWRITE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FLOOD)?></td>
+		echo JText::_('COM_KUNENA_A_FLOOD')?></td>
 
 		<td align="left" valign="top"><input type="text"
 			name="cfg_floodprotection"
@@ -1818,24 +1818,24 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FLOOD_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_FLOOD_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MODERATION)?></td>
+		echo JText::_('COM_KUNENA_A_MODERATION')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['mailmod'];
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MODERATION_DESC)?>
+		echo JText::_('COM_KUNENA_A_MODERATION_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MAIL_ADMIN)?>
+		echo JText::_('COM_KUNENA_A_MAIL_ADMIN')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1844,45 +1844,45 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MAIL_ADMIN_DESC)?>
+		echo JText::_('COM_KUNENA_A_MAIL_ADMIN_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_CAPTCHA_ON)?></td>
+		echo JText::_('COM_KUNENA_CAPTCHA_ON')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['captcha'];
 		?></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_CAPTCHA_DESC)?>
+		echo JText::_('COM_KUNENA_CAPTCHA_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_MAILFULL);
+		echo JText::_('COM_KUNENA_MAILFULL');
 		?></td>
 		<td align="left" valign="top"><?php
 		echo $lists ['mailfull'];
 		?></td>
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_MAILFULL_DESC);
+		echo JText::_('COM_KUNENA_MAILFULL_DESC');
 		?>
 		</td>
 	</tr>
 </table>
 </fieldset>
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_A_AVATARS)?><a name="avatars" id="avatars"> </a></div>
+		echo JText::_('COM_KUNENA_A_AVATARS')?><a name="avatars" id="avatars"> </a></div>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_AVATAR_SETTINGS)?></legend>
+		echo JText::_('COM_KUNENA_A_AVATAR_SETTINGS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_AVATAR)?>
+		echo JText::_('COM_KUNENA_A_AVATAR')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -1891,12 +1891,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AVATAR_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_AVATAR_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AVATARUPLOAD)?></td>
+		echo JText::_('COM_KUNENA_A_AVATARUPLOAD')?></td>
 
 		<td align="left" valign="top"><?php
 		echo $lists ['allowavatarupload'];
@@ -1904,13 +1904,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AVATARUPLOAD_DESC)?>
+		echo JText::_('COM_KUNENA_A_AVATARUPLOAD_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AVATARGALLERY)?>
+		echo JText::_('COM_KUNENA_A_AVATARGALLERY')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1919,12 +1919,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AVATARGALLERY_DESC)?>
+		echo JText::_('COM_KUNENA_A_AVATARGALLERY_DESC')?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_IMAGE_PROCESSOR)?>
+		echo JText::_('COM_KUNENA_IMAGE_PROCESSOR')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -1936,11 +1936,11 @@ td.fbtdtitle {
 
 		$fb_gd = intval ( KUNENA_gdVersion () );
 		if ($fb_gd > 0) {
-			$fbmsg = JText::_(COM_KUNENA_GD_INSTALLED) . $fb_gd;
+			$fbmsg = JText::_('COM_KUNENA_GD_INSTALLED') . $fb_gd;
 		} elseif ($fb_gd == - 1) {
-			$fbmsg = JText::_(COM_KUNENA_GD_NO_VERSION);
+			$fbmsg = JText::_('COM_KUNENA_GD_NO_VERSION');
 		} else {
-			$fbmsg = JText::_(COM_KUNENA_GD_NOT_INSTALLED) . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
+			$fbmsg = JText::_('COM_KUNENA_GD_NOT_INSTALLED') . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
 		}
 
 		echo $fbmsg;
@@ -1950,7 +1950,7 @@ td.fbtdtitle {
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AVATAR_SMALL_HEIGHT)?>
+		echo JText::_('COM_KUNENA_AVATAR_SMALL_HEIGHT')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -1962,7 +1962,7 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AVATAR_SMALL_WIDTH)?>
+		echo JText::_('COM_KUNENA_AVATAR_SMALL_WIDTH')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -1973,7 +1973,7 @@ td.fbtdtitle {
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AVATAR_MEDIUM_HEIGHT)?>
+		echo JText::_('COM_KUNENA_AVATAR_MEDIUM_HEIGHT')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -1985,7 +1985,7 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AVATAR_MEDIUM_WIDTH)?>
+		echo JText::_('COM_KUNENA_AVATAR_MEDIUM_WIDTH')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -1996,7 +1996,7 @@ td.fbtdtitle {
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AVATAR_LARGE_HEIGHT)?>
+		echo JText::_('COM_KUNENA_AVATAR_LARGE_HEIGHT')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2008,7 +2008,7 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AVATAR_LARGE_WIDTH)?>
+		echo JText::_('COM_KUNENA_AVATAR_LARGE_WIDTH')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2020,7 +2020,7 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AVSIZE)?></td>
+		echo JText::_('COM_KUNENA_A_AVSIZE')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_avatarsize"
 			value="<?php
@@ -2029,7 +2029,7 @@ td.fbtdtitle {
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AVATAR_QUALITY)?>
+		echo JText::_('COM_KUNENA_AVATAR_QUALITY')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2041,16 +2041,16 @@ td.fbtdtitle {
 </table>
 </fieldset>
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_A_UPLOADS)?><a name="uploads" id="uploads"> </a></div>
+		echo JText::_('COM_KUNENA_A_UPLOADS')?><a name="uploads" id="uploads"> </a></div>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_IMAGE)?></legend>
+		echo JText::_('COM_KUNENA_A_IMAGE')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_IMAGEUPLOAD)?>
+		echo JText::_('COM_KUNENA_A_IMAGEUPLOAD')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2059,13 +2059,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_IMAGEUPLOAD_DESC)?>
+		echo JText::_('COM_KUNENA_A_IMAGEUPLOAD_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_IMAGEREGUPLOAD)?>
+		echo JText::_('COM_KUNENA_A_IMAGEREGUPLOAD')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2074,13 +2074,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_IMAGEREGUPLOAD_DESC)?>
+		echo JText::_('COM_KUNENA_A_IMAGEREGUPLOAD_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_SHOWIMGFORGUEST)?>
+		echo JText::_('COM_KUNENA_SHOWIMGFORGUEST')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2089,13 +2089,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOWIMGFORGUEST_DESC)?>
+		echo JText::_('COM_KUNENA_SHOWIMGFORGUEST_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_IMGHEIGHT)?></td>
+		echo JText::_('COM_KUNENA_A_IMGHEIGHT')?></td>
 
 		<td align="left" valign="top"><input type="text"
 			name="cfg_imageheight"
@@ -2106,7 +2106,7 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_IMGWIDTH)?></td>
+		echo JText::_('COM_KUNENA_A_IMGWIDTH')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_imagewidth"
 			value="<?php
@@ -2116,7 +2116,7 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_IMGSIZE)?></td>
+		echo JText::_('COM_KUNENA_A_IMGSIZE')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_imagesize"
 			value="<?php
@@ -2126,13 +2126,13 @@ td.fbtdtitle {
 </table>
 </fieldset>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_FILE)?></legend>
+		echo JText::_('COM_KUNENA_A_FILE')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_FILEUPLOAD)?>
+		echo JText::_('COM_KUNENA_A_FILEUPLOAD')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2141,13 +2141,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FILEUPLOAD_DESC)?>
+		echo JText::_('COM_KUNENA_A_FILEUPLOAD_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FILEREGUPLOAD)?>
+		echo JText::_('COM_KUNENA_A_FILEREGUPLOAD')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2156,13 +2156,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FILEREGUPLOAD_DESC)?>
+		echo JText::_('COM_KUNENA_A_FILEREGUPLOAD_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_SHOWFILEFORGUEST)?>
+		echo JText::_('COM_KUNENA_SHOWFILEFORGUEST')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2171,13 +2171,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOWFILEFORGUEST_DESC)?>
+		echo JText::_('COM_KUNENA_SHOWFILEFORGUEST_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FILEALLOWEDTYPES)?>
+		echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_filetypes"
@@ -2186,13 +2186,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FILEALLOWEDTYPES_DESC)?>
+		echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_FILESIZE)?></td>
+		echo JText::_('COM_KUNENA_A_FILESIZE')?></td>
 
 		<td align="left" valign="top"><input type="text" name="cfg_filesize"
 			value="<?php
@@ -2204,15 +2204,15 @@ td.fbtdtitle {
 </fieldset>
 
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_A_RANKING)?><a name="ranking" id="ranking"> </a></div>
+		echo JText::_('COM_KUNENA_A_RANKING')?><a name="ranking" id="ranking"> </a></div>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_RANKING_SETTINGS)?></legend>
+		echo JText::_('COM_KUNENA_A_RANKING_SETTINGS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_RANKING)?>
+		echo JText::_('COM_KUNENA_A_RANKING')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2221,12 +2221,12 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_RANKING_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_RANKING_DESC')?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_RANKINGIMAGES)?>
+		echo JText::_('COM_KUNENA_A_RANKINGIMAGES')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2235,7 +2235,7 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_RANKINGIMAGES_DESC)?>
+		echo JText::_('COM_KUNENA_A_RANKINGIMAGES_DESC')?>
 		</td>
 	</tr>
 </table>
@@ -2244,15 +2244,15 @@ td.fbtdtitle {
 
 
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_A_BBCODE)?><a name="bbcode" id="bbcode"> </a></div>
+		echo JText::_('COM_KUNENA_A_BBCODE')?><a name="bbcode" id="bbcode"> </a></div>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_BBCODE_SETTINGS)?></legend>
+		echo JText::_('COM_KUNENA_A_BBCODE_SETTINGS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_SHOWSPOILERTAG)?>
+		echo JText::_('COM_KUNENA_A_SHOWSPOILERTAG')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2261,13 +2261,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SHOWSPOILERTAG_DESC)?>
+		echo JText::_('COM_KUNENA_A_SHOWSPOILERTAG_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_SHOWVIDEOTAG)?>
+		echo JText::_('COM_KUNENA_A_SHOWVIDEOTAG')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2276,13 +2276,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SHOWVIDEOTAG_DESC)?>
+		echo JText::_('COM_KUNENA_A_SHOWVIDEOTAG_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_SHOWEBAYTAG)?>
+		echo JText::_('COM_KUNENA_A_SHOWEBAYTAG')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2291,13 +2291,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_SHOWEBAYTAG_DESC)?>
+		echo JText::_('COM_KUNENA_A_SHOWEBAYTAG_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_EBAYLANGUAGECODE)?>
+		echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2307,13 +2307,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_EBAYLANGUAGECODE_DESC)?>
+		echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_TRIMLONGURLS)?>
+		echo JText::_('COM_KUNENA_A_TRIMLONGURLS')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2322,13 +2322,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TRIMLONGURLS_DESC)?>
+		echo JText::_('COM_KUNENA_A_TRIMLONGURLS_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TRIMLONGURLSFRONT)?>
+		echo JText::_('COM_KUNENA_A_TRIMLONGURLSFRONT')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2338,13 +2338,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TRIMLONGURLSFRONT_DESC)?>
+		echo JText::_('COM_KUNENA_A_TRIMLONGURLSFRONT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TRIMLONGURLSBACK)?>
+		echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2354,13 +2354,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_TRIMLONGURLSBACK_DESC)?>
+		echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AUTOEMBEDYOUTUBE)?>
+		echo JText::_('COM_KUNENA_A_AUTOEMBEDYOUTUBE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2369,13 +2369,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AUTOEMBEDYOUTUBE_DESC)?>
+		echo JText::_('COM_KUNENA_A_AUTOEMBEDYOUTUBE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AUTOEMBEDEBAY)?>
+		echo JText::_('COM_KUNENA_A_AUTOEMBEDEBAY')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2384,13 +2384,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AUTOEMBEDEBAY_DESC)?>
+		echo JText::_('COM_KUNENA_A_AUTOEMBEDEBAY_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_HIGHLIGHTCODE)?>
+		echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2399,7 +2399,7 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_HIGHLIGHTCODE_DESC)?>
+		echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE_DESC')?>
 		</td>
 	</tr>
 
@@ -2407,16 +2407,16 @@ td.fbtdtitle {
 </fieldset>
 
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_A_INTEGRATION)?><a name="integration" id="integration"> </a></div>
+		echo JText::_('COM_KUNENA_A_INTEGRATION')?><a name="integration" id="integration"> </a></div>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_AVATAR_INTEGRATION)?></legend>
+		echo JText::_('COM_KUNENA_A_AVATAR_INTEGRATION')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_AVATAR_SRC)?>
+		echo JText::_('COM_KUNENA_A_AVATAR_SRC')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2425,19 +2425,19 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_AVATAR_SRC_DESC)?>
+		echo JText::_('COM_KUNENA_A_AVATAR_SRC_DESC')?>
 		</td>
 	</tr>
 </table>
 </fieldset>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_FORUMPRF_TITLE)?></legend>
+		echo JText::_('COM_KUNENA_FORUMPRF_TITLE')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_FORUMPRF)?>
+		echo JText::_('COM_KUNENA_FORUMPRF')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2447,21 +2447,21 @@ td.fbtdtitle {
 
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_FORUMPRRDESC)?>
+		echo JText::_('COM_KUNENA_FORUMPRRDESC')?>
 		</td>
 	</tr>
 
 </table>
 </fieldset>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_PMS_TITLE)?></legend>
+		echo JText::_('COM_KUNENA_A_PMS_TITLE')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_PMS)?>
+		echo JText::_('COM_KUNENA_A_PMS')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2470,19 +2470,19 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_PMS_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_PMS_DESC')?></td>
 	</tr>
 </table>
 </fieldset>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_AUP_ALPHAUSERPOINTS);
+		echo JText::_('COM_KUNENA_AUP_ALPHAUSERPOINTS');
 		?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE);
+		echo JText::_('COM_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE');
 		?>
 		</td>
 
@@ -2492,14 +2492,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE_DESC);
+		echo JText::_('COM_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE_DESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_AUP_ENABLED_RULES);
+		echo JText::_('COM_KUNENA_AUP_ENABLED_RULES');
 		?>
 		</td>
 
@@ -2508,14 +2508,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AUP_ENABLED_RULES_DESC);
+		echo JText::_('COM_KUNENA_AUP_ENABLED_RULES_DESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY);
+		echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY');
 		?>
 		</td>
 
@@ -2526,7 +2526,7 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC);
+		echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC');
 		?>
 		</td>
 	</tr>
@@ -2534,14 +2534,14 @@ td.fbtdtitle {
 </table>
 </fieldset>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_MOSBOT_TITLE)?></legend>
+		echo JText::_('COM_KUNENA_A_MOSBOT_TITLE')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_MOSBOT)?>
+		echo JText::_('COM_KUNENA_A_MOSBOT')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2550,19 +2550,19 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_MOSBOT_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_MOSBOT_DESC')?></td>
 	</tr>
 </table>
 </fieldset>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION)?></legend>
+		echo JText::_('COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION)?>
+		echo JText::_('COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2571,23 +2571,23 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC')?></td>
 	</tr>
 </table>
 </fieldset>
 
 
 <div class="fbfuncsubtitle"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_PLUGINS)?><a name="plugins" id="plugins"> </a></div>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS')?><a name="plugins" id="plugins"> </a></div>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST)?></legend>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><input type="text"
@@ -2597,13 +2597,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2612,13 +2612,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERONLINE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_AVATAR)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_AVATAR')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2627,13 +2627,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERLIST_AVATAR_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2642,13 +2642,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_name_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_name_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2657,13 +2657,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2672,13 +2672,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2687,13 +2687,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2702,13 +2702,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2717,13 +2717,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_USERTYPE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2732,13 +2732,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_JOINDATE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2747,13 +2747,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_LASTVISITDATE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2762,19 +2762,19 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC)?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC')?>
 		</td>
 	</tr>
 </table>
 </fieldset>
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_RECENT_POSTS)?></legend>
+		echo JText::_('COM_KUNENA_RECENT_POSTS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_MESSAGES)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_MESSAGES')?>
 		</td>
 
 		<td align="left" valign="top" width="25%"><?php
@@ -2783,13 +2783,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_MESSAGES_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_MESSAGES_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_NUMBER_OF_LATEST_MESSAGES)?>
+		echo JText::_('COM_KUNENA_NUMBER_OF_LATEST_MESSAGES')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2799,13 +2799,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_NUMBER_OF_LATEST_MESSAGES_DESC)?>
+		echo JText::_('COM_KUNENA_NUMBER_OF_LATEST_MESSAGES_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES)?>
+		echo JText::_('COM_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2815,13 +2815,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES_DESC)?>
+		echo JText::_('COM_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_LATEST_CATEGORY)?>
+		echo JText::_('COM_KUNENA_LATEST_CATEGORY')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2831,13 +2831,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_LATEST_CATEGORY_DESC)?>
+		echo JText::_('COM_KUNENA_LATEST_CATEGORY_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_SINGLE_SUBJECT)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_SINGLE_SUBJECT')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2846,13 +2846,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_SINGLE_SUBJECT_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_SINGLE_SUBJECT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_REPLY_SUBJECT)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_REPLY_SUBJECT')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2861,13 +2861,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_REPLY_SUBJECT_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_REPLY_SUBJECT_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_LATEST_SUBJECT_LENGTH)?>
+		echo JText::_('COM_KUNENA_LATEST_SUBJECT_LENGTH')?>
 		</td>
 
 		<td align="left" valign="top"><input type="text"
@@ -2877,13 +2877,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_LATEST_SUBJECT_LENGTH_DESC)?>
+		echo JText::_('COM_KUNENA_LATEST_SUBJECT_LENGTH_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_DATE)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_DATE')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2892,13 +2892,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_DATE_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_DATE_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_HITS)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_HITS')?>
 		</td>
 
 		<td align="left" valign="top"><?php
@@ -2907,13 +2907,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_LATEST_HITS_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_LATEST_HITS_DESC')?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_AUTHOR)?></td>
+		echo JText::_('COM_KUNENA_SHOW_AUTHOR')?></td>
 
 		<td align="left" valign="top"><input type="text"
 			name="cfg_latestshowauthor"
@@ -2922,21 +2922,21 @@ td.fbtdtitle {
 		?>" size="1" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOW_AUTHOR_DESC)?>
+		echo JText::_('COM_KUNENA_SHOW_AUTHOR_DESC')?>
 		</td>
 	</tr>
 </table>
 </fieldset>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_STATS)?></legend>
+		echo JText::_('COM_KUNENA_STATS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_SHOWSTATS);
+		echo JText::_('COM_KUNENA_SHOWSTATS');
 		?>
 		</td>
 
@@ -2946,14 +2946,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOWSTATSDESC);
+		echo JText::_('COM_KUNENA_SHOWSTATSDESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOWWHOIS);
+		echo JText::_('COM_KUNENA_SHOWWHOIS');
 		?></td>
 
 		<td align="left" valign="top"><?php
@@ -2962,14 +2962,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_SHOWWHOISDESC);
+		echo JText::_('COM_KUNENA_SHOWWHOISDESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_STATSGENERAL);
+		echo JText::_('COM_KUNENA_STATSGENERAL');
 		?>
 		</td>
 
@@ -2979,14 +2979,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_STATSGENERALDESC);
+		echo JText::_('COM_KUNENA_STATSGENERALDESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_USERSTATS);
+		echo JText::_('COM_KUNENA_USERSTATS');
 		?></td>
 
 		<td align="left" valign="top"><?php
@@ -2995,14 +2995,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_USERSTATSDESC);
+		echo JText::_('COM_KUNENA_USERSTATSDESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_USERNUM);
+		echo JText::_('COM_KUNENA_USERNUM');
 		?></td>
 
 		<td align="left" valign="top"><input type="text"
@@ -3012,13 +3012,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_USERNUM);
+		echo JText::_('COM_KUNENA_USERNUM');
 		?></td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_USERPOPULAR);
+		echo JText::_('COM_KUNENA_USERPOPULAR');
 		?>
 		</td>
 
@@ -3028,14 +3028,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_USERPOPULARDESC);
+		echo JText::_('COM_KUNENA_USERPOPULARDESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_NUMPOP);
+		echo JText::_('COM_KUNENA_NUMPOP');
 		?></td>
 
 		<td align="left" valign="top"><input type="text"
@@ -3045,12 +3045,12 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_NUMPOP);
+		echo JText::_('COM_KUNENA_NUMPOP');
 		?></td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_POLLSSTATS);
+		echo JText::_('COM_KUNENA_POLLSSTATS');
 		?></td>
 
 		<td align="left" valign="top"><?php
@@ -3059,14 +3059,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_POLLSTATSDESC);
+		echo JText::_('COM_KUNENA_POLLSTATSDESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_POLLSPOP);
+		echo JText::_('COM_KUNENA_POLLSPOP');
 		?></td>
 
 		<td align="left" valign="top"><input type="text"
@@ -3076,21 +3076,21 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_POLLSPOP);
+		echo JText::_('COM_KUNENA_POLLSPOP');
 		?></td>
 	</tr>
 </table>
 </fieldset>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_MYPROFILE_PLUGIN_SETTINGS)?></legend>
+		echo JText::_('COM_KUNENA_MYPROFILE_PLUGIN_SETTINGS')?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_USERNAMECANCHANGE);
+		echo JText::_('COM_KUNENA_USERNAMECANCHANGE');
 		?>
 		</td>
 
@@ -3100,7 +3100,7 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_USERNAMECANCHANGE_DESC);
+		echo JText::_('COM_KUNENA_USERNAMECANCHANGE_DESC');
 		?>
 		</td>
 	</tr>
@@ -3111,13 +3111,13 @@ td.fbtdtitle {
 </fieldset>
 
 <fieldset><legend> <?php
-		echo JText::_(COM_KUNENA_A_POLL_TITLE);
+		echo JText::_('COM_KUNENA_A_POLL_TITLE');
 		?></legend>
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="fbadminform">
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_POLL_ENABLED);
+		echo JText::_('COM_KUNENA_A_POLL_ENABLED');
 		?>
 		</td>
 
@@ -3126,14 +3126,14 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_ENABLED_DESC);
+		echo JText::_('COM_KUNENA_A_ENABLED_DESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_POLL_NUMBER_OPTIONS);
+		echo JText::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS');
 		?>
 		</td>
 
@@ -3144,14 +3144,14 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC);
+		echo JText::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_POLL_TIME_VOTES);
+		echo JText::_('COM_KUNENA_A_POLL_TIME_VOTES');
 		?>
 		</td>
 
@@ -3162,14 +3162,14 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_POLL_TIME_VOTES_DESC);
+		echo JText::_('COM_KUNENA_A_POLL_TIME_VOTES_DESC');
 		?>
 		</td>
 	</tr>
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_POLL_NUMBER_VOTES_BY_USER);
+		echo JText::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_USER');
 		?>
 		</td>
 
@@ -3180,13 +3180,13 @@ td.fbtdtitle {
 		?>" /></td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC);
+		echo JText::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC');
 		?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_POLL_ALLOW_ONE_VOTE);
+		echo JText::_('COM_KUNENA_A_POLL_ALLOW_ONE_VOTE');
 		?>
 		</td>
 
@@ -3195,13 +3195,13 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC);
+		echo JText::_('COM_KUNENA_A_POLL_ALLOW_ONE_VOTE_DESC');
 		?>
 		</td>
 	</tr>
 	<tr align="center" valign="middle">
 		<td align="left" valign="top" width="25%"><?php
-		echo JText::_(COM_KUNENA_A_POLL_SHOW_USER_LIST);
+		echo JText::_('COM_KUNENA_A_POLL_SHOW_USER_LIST');
 		?>
 		</td>
 
@@ -3210,7 +3210,7 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_(COM_KUNENA_A_POLL_SHOW_USER_LIST_DESC);
+		echo JText::_('COM_KUNENA_A_POLL_SHOW_USER_LIST_DESC');
 		?>
 		</td>
 	</tr>
@@ -3259,7 +3259,7 @@ echo $pane->endPane();
 	class="adminheading">
 	<TR>
 		<th class="info">&nbsp;<?php
-		echo JText::_(COM_KUNENA_INSTRUCTIONS);
+		echo JText::_('COM_KUNENA_INSTRUCTIONS');
 		?></th>
 	</TR>
 </table>
@@ -3268,13 +3268,13 @@ echo $pane->endPane();
 	class="adminform">
 	<tr>
 		<th><?php
-		echo JText::_(COM_KUNENA_FINFO);
+		echo JText::_('COM_KUNENA_FINFO');
 		?></th>
 	</tr>
 
 	<tr>
 		<td><?php
-		echo JText::_(COM_KUNENA_INFORMATION);
+		echo JText::_('COM_KUNENA_INFORMATION');
 		?></td>
 	</tr>
 </table>
@@ -3289,7 +3289,7 @@ echo $pane->endPane();
 		$content = kunena_htmlspecialchars ( $content );
 		?>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_CSSEDITOR);
+		echo JText::_('COM_KUNENA_CSSEDITOR');
 		?></div>
 <form action="index.php?" method="post" name="adminForm"
 	class="adminForm" id="adminForm">
@@ -3299,7 +3299,7 @@ echo $pane->endPane();
 	class="adminform">
 	<tr>
 		<th colspan="4"><?php
-		echo JText::_(COM_KUNENA_PATH);
+		echo JText::_('COM_KUNENA_PATH');
 		?> <?php
 		echo $file;
 		?>
@@ -3314,7 +3314,7 @@ echo $pane->endPane();
 
 	<tr>
 		<td class="error"><?php
-		echo JText::_(COM_KUNENA_CSSERROR);
+		echo JText::_('COM_KUNENA_CSSERROR');
 		?></td>
 	</tr>
 </table>
@@ -3335,7 +3335,7 @@ echo $pane->endPane();
 	function showProfiles($option, $lang, &$profileList, $countPL, $pageNavSP, $order, $search) {
 		?>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_FUM);
+		echo JText::_('COM_KUNENA_FUM');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table cellpadding="4" cellspacing="0" border="0" width="100%">
@@ -3343,14 +3343,14 @@ echo $pane->endPane();
 
 
 		<td nowrap align="right"><?php
-		echo JText::_(COM_KUNENA_A_DISPLAY);
+		echo JText::_('COM_KUNENA_A_DISPLAY');
 		?> <?php
 		echo $pageNavSP->getLimitBox ();
 		?>
 		</td>
 
 		<td nowrap align="right"><?php
-		echo JText::_(COM_KUNENA_USRL_SEARCH_BUTTON);
+		echo JText::_('COM_KUNENA_USRL_SEARCH_BUTTON');
 		?>:
 		<input type="text" name="search" value="<?php
 		echo $search;
@@ -3363,13 +3363,13 @@ echo $pane->endPane();
 
 		<td colspan="4" nowrap><a
 			href="index.php?option=com_kunena&task=profiles&order=0"><?php
-		echo JText::_(COM_KUNENA_SORTID);
+		echo JText::_('COM_KUNENA_SORTID');
 		?></a> | <a href="index.php?option=com_kunena&task=profiles&order=2"><?php
-		echo JText::_(COM_KUNENA_SORTNAME);
+		echo JText::_('COM_KUNENA_SORTNAME');
 		?></a> | <a href="index.php?option=com_kunena&task=profiles&order=3"><?php
-		echo JText::_(COM_KUNENA_SORTREALNAME);
+		echo JText::_('COM_KUNENA_SORTREALNAME');
 		?></a> | <a href="index.php?option=com_kunena&task=profiles&order=1"><?php
-		echo JText::_(COM_KUNENA_SORTMOD);
+		echo JText::_('COM_KUNENA_SORTMOD');
 		?></a></td>
 	</tr>
 </table>
@@ -3384,32 +3384,32 @@ echo $pane->endPane();
 		?>);" /></th>
 
 		<th align="left" width="10"><?php
-		echo JText::_(COM_KUNENA_ANN_ID);
+		echo JText::_('COM_KUNENA_ANN_ID');
 		?></th>
 
 		<th align="left" width="10"><?php
-		echo JText::_(COM_KUNENA_USRL_NAME);
+		echo JText::_('COM_KUNENA_USRL_NAME');
 		?></th>
 
 		<th align="left" width="10"><?php
-		echo JText::_(COM_KUNENA_USRL_REALNAME);
+		echo JText::_('COM_KUNENA_USRL_REALNAME');
 		?>
 		</th>
 
 		<th align="left" width="100"><?php
-		echo JText::_(COM_KUNENA_GEN_EMAIL);
+		echo JText::_('COM_KUNENA_GEN_EMAIL');
 		?></th>
 
 		<th align="left" width="15"><?php
-		echo JText::_(COM_KUNENA_VIEW_MODERATOR);
+		echo JText::_('COM_KUNENA_VIEW_MODERATOR');
 		?></th>
 
 		<th align="left" width="10"><?php
-		echo JText::_(COM_KUNENA_VIEW);
+		echo JText::_('COM_KUNENA_VIEW');
 		?></th>
 
 		<th align="left" width="*"><?php
-		echo JText::_(COM_KUNENA_GEN_SIGNATURE);
+		echo JText::_('COM_KUNENA_GEN_SIGNATURE');
 		?></th>
 	</tr>
 
@@ -3462,9 +3462,9 @@ echo $pane->endPane();
 
 		<td align="center" width="15"><?php
 				if ($pl->moderator) {
-					echo JText::_(COM_KUNENA_ANN_YES);
+					echo JText::_('COM_KUNENA_ANN_YES');
 				} else {
-					echo JText::_(COM_KUNENA_ANN_NO);
+					echo JText::_('COM_KUNENA_ANN_NO');
 				}
 
 				;
@@ -3485,7 +3485,7 @@ echo $pane->endPane();
 	<?php
 			}
 		} else {
-			echo "<tr><td colspan=\"7\">" . JText::_(COM_KUNENA_NOUSERSFOUND) . "</td></tr>";
+			echo "<tr><td colspan=\"7\">" . JText::_('COM_KUNENA_NOUSERSFOUND') . "</td></tr>";
 		}
 		?>
 
@@ -3517,14 +3517,14 @@ echo $pane->endPane();
 	width="100%">
 	<tr>
 		<th width="100%" class="user"><?php
-		echo JText::_(COM_KUNENA_ADDMOD);
+		echo JText::_('COM_KUNENA_ADDMOD');
 		?> <?php
 		echo $forumName;
 		?>
 		</th>
 
 		<td nowrap><?php
-		echo JText::_(COM_KUNENA_A_DISPLAY);
+		echo JText::_('COM_KUNENA_A_DISPLAY');
 		?></td>
 
 		<td><?php
@@ -3548,19 +3548,19 @@ echo $pane->endPane();
 		?>);" /></th>
 
 		<th><?php
-		echo JText::_(COM_KUNENA_ANN_ID);
+		echo JText::_('COM_KUNENA_ANN_ID');
 		?></th>
 
 		<th align="left"><?php
-		echo JText::_(COM_KUNENA_USRL_NAME);
+		echo JText::_('COM_KUNENA_USRL_NAME');
 		?></th>
 
 		<th align="left"><?php
-		echo JText::_(COM_KUNENA_GEN_EMAIL);
+		echo JText::_('COM_KUNENA_GEN_EMAIL');
 		?></th>
 
 		<th><?php
-		echo JText::_(COM_KUNENA_PUBLISHED);
+		echo JText::_('COM_KUNENA_PUBLISHED');
 		?></th>
 
 		<th>&nbsp;</th>
@@ -3626,7 +3626,7 @@ echo $pane->endPane();
 	<?php
 			}
 		} else {
-			echo "<tr><td align='left' colspan='7'>" . JText::_(COM_KUNENA_NOMODSAV) . "</td></tr>";
+			echo "<tr><td align='left' colspan='7'>" . JText::_('COM_KUNENA_NOMODSAV') . "</td></tr>";
 		}
 		?>
 
@@ -3642,7 +3642,7 @@ echo $pane->endPane();
 
 	<tr>
 		<td colspan="7"><?php
-		echo JText::_(COM_KUNENA_NOTEUS);
+		echo JText::_('COM_KUNENA_NOTEUS');
 		?></td>
 	</tr>
 </table>
@@ -3685,7 +3685,7 @@ echo $pane->endPane();
 	class="adminheading">
 	<tr>
 		<th colspan="3" class="user"><?php
-		echo JText::_(COM_KUNENA_PROFFOR);
+		echo JText::_('COM_KUNENA_PROFFOR');
 		?> <?php
 		echo $username;
 		?>
@@ -3697,13 +3697,13 @@ echo $pane->endPane();
 	class="adminlist">
 	<tr>
 		<th colspan="3" class="title"><?php
-		echo JText::_(COM_KUNENA_GENPROF);
+		echo JText::_('COM_KUNENA_GENPROF');
 		?></th>
 	</tr>
 
 	<tr>
 		<td width="150" class="contentpane"><?php
-		echo JText::_(COM_KUNENA_PREFOR);
+		echo JText::_('COM_KUNENA_PREFOR');
 		?>
 		</td>
 
@@ -3717,7 +3717,7 @@ echo $pane->endPane();
 
 	<tr>
 		<td width="150" class="contentpane"><?php
-		echo JText::_(COM_KUNENA_RANKS);
+		echo JText::_('COM_KUNENA_RANKS');
 		?>
 		</td>
 
@@ -3731,7 +3731,7 @@ echo $pane->endPane();
 
 	<tr>
 		<td width="150" valign="top" class="contentpane"><?php
-		echo JText::_(COM_KUNENA_GEN_SIGNATURE);
+		echo JText::_('COM_KUNENA_GEN_SIGNATURE');
 		?>:
 		</td>
 
@@ -3758,14 +3758,14 @@ echo $pane->endPane();
 		if ($kunena_config->allowavatar) {
 			?>
 		<td class="contentpane" align="center"><?php
-			echo JText::_(COM_KUNENA_UAVATAR);
+			echo JText::_('COM_KUNENA_UAVATAR');
 			?><br />
 		<?php
 			if ($avatar != '') {
 				echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" ><br />';
 				echo '<input type="hidden" value="' . $avatar . '" name="avatar">';
 			} else {
-				echo "<em>" . JText::_(COM_KUNENA_NS) . "</em><br />";
+				echo "<em>" . JText::_('COM_KUNENA_NS') . "</em><br />";
 				echo '<input type="hidden" value="$avatar" name="avatar">';
 			}
 			?>
@@ -3780,14 +3780,14 @@ echo $pane->endPane();
 	<tr>
 		<td colspan="2" class="contentpane"><input type="checkbox" value="1"
 			name="deleteSig"> <em><?php
-		echo JText::_(COM_KUNENA_DELSIG);
+		echo JText::_('COM_KUNENA_DELSIG');
 		?></em></td>
 		<?php
 		if ($kunena_config->allowavatar) {
 			?>
 		<td class="contentpane"><input type="checkbox" value="1"
 			name="deleteAvatar"> <em><?php
-			echo JText::_(COM_KUNENA_DELAV);
+			echo JText::_('COM_KUNENA_DELAV');
 			?></em></td>
 		<?php
 		} else {
@@ -3801,17 +3801,17 @@ echo $pane->endPane();
 	class="adminform">
 	<tr>
 		<th colspan="2" class="title"><?php
-		echo JText::_(COM_KUNENA_MOD_NEW);
+		echo JText::_('COM_KUNENA_MOD_NEW');
 		?></th>
 	</tr>
 	<tr>
 		<td width="150" class="contentpane"><?php
-		echo JText::_(COM_KUNENA_ISMOD);
+		echo JText::_('COM_KUNENA_ISMOD');
 		?>
 		<?php
 		//admins are always moderators
 		if (CKunenaTools::isAdmin ( $uid )) {
-			echo JText::_(COM_KUNENA_ISADM);
+			echo JText::_('COM_KUNENA_ISADM');
 			?>
 		<input type="hidden" name="moderator" value="1"> <?php
 		} else {
@@ -3833,7 +3833,7 @@ echo $pane->endPane();
 	class="adminform">
 	<tr>
 		<th colspan="2" class="title"><?php
-		echo JText::_(COM_KUNENA_SUBFOR);
+		echo JText::_('COM_KUNENA_SUBFOR');
 		?> <?php
 		echo $username;
 		?>
@@ -3861,7 +3861,7 @@ echo $pane->endPane();
 				}
 			}
 		} else {
-			echo "<tr><td class=\"message\">" . JText::_(COM_KUNENA_NOSUBS) . "</td></tr>";
+			echo "<tr><td class=\"message\">" . JText::_('COM_KUNENA_NOSUBS') . "</td></tr>";
 		}
 		?>
 </table>
@@ -3874,7 +3874,7 @@ echo $pane->endPane();
 	function pruneforum($option, $forumList) {
 		?>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_A_PRUNE);
+		echo JText::_('COM_KUNENA_A_PRUNE');
 		?></div>
 <form action="index.php" method="post" name="adminForm">
 <table class="adminform" cellpadding="4" cellspacing="0" border="0"
@@ -3884,21 +3884,21 @@ echo $pane->endPane();
 	</tr>
 	<tr>
 		<td colspan="2"><?php
-		echo JText::_(COM_KUNENA_A_PRUNE_DESC)?></td>
+		echo JText::_('COM_KUNENA_A_PRUNE_DESC')?></td>
 	</tr>
 	<tr>
 		<td nowrap width="10%"><?php
-		echo JText::_(COM_KUNENA_A_PRUNE_NAME)?></td>
+		echo JText::_('COM_KUNENA_A_PRUNE_NAME')?></td>
 		<td nowrap><?php
 		echo $forumList ['forum']?></td>
 	</tr>
 	<tr>
 		<td nowrap width="10%"><?php
-		echo JText::_(COM_KUNENA_A_PRUNE_NOPOSTS)?></td>
+		echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS')?></td>
 
 		<td nowrap><input type="text" name="prune_days" value="30">
 		<?php
-		echo JText::_(COM_KUNENA_A_PRUNE_DAYS)?></td>
+		echo JText::_('COM_KUNENA_A_PRUNE_DAYS')?></td>
 	</tr>
 </table>
 <input type="hidden" name="task" value="" /> <input type="hidden"
@@ -3915,50 +3915,50 @@ echo $pane->endPane();
 		?>
 <div id="fbcongifcover">
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS);
+		echo JText::_('COM_KUNENA_SYNC_USERS');
 		?></div>
 <form action="index.php" method="post" name="adminForm">
 <fieldset><legend><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_OPTIONS);
+		echo JText::_('COM_KUNENA_SYNC_USERS_OPTIONS');
 		?></legend>
 <table cellpadding="4" class="fbadminform" cellspacing="0" border="0"
 	width="100%">
 	<tr>
 		<td><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_CACHE);
+		echo JText::_('COM_KUNENA_SYNC_USERS_CACHE');
 		?></td>
 		<td><input type="checkbox" name="usercache" value="1"
 			checked="checked" /></td>
 		<td><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_CACHE_DESC);
+		echo JText::_('COM_KUNENA_SYNC_USERS_CACHE_DESC');
 		?></td>
 	</tr>
 
 	<tr>
 		<td><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_ADD);
+		echo JText::_('COM_KUNENA_SYNC_USERS_ADD');
 		?></td>
 		<td><input type="checkbox" name="useradd" value="1" /></td>
 		<td><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_ADD_DESC);
+		echo JText::_('COM_KUNENA_SYNC_USERS_ADD_DESC');
 		?></td>
 	</tr>
 	<tr>
 		<td><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_DEL);
+		echo JText::_('COM_KUNENA_SYNC_USERS_DEL');
 		?></td>
 		<td><input type="checkbox" name="userdel" value="1" /></td>
 		<td><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_DEL_DESC);
+		echo JText::_('COM_KUNENA_SYNC_USERS_DEL_DESC');
 		?></td>
 	</tr>
 	<tr>
 		<td><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_RENAME);
+		echo JText::_('COM_KUNENA_SYNC_USERS_RENAME');
 		?></td>
 		<td><input type="checkbox" name="userrename" value="1" /></td>
 		<td><?php
-		echo JText::_(COM_KUNENA_SYNC_USERS_RENAME_DESC);
+		echo JText::_('COM_KUNENA_SYNC_USERS_RENAME_DESC');
 		?></td>
 	</tr>
 </table>
@@ -3991,15 +3991,15 @@ echo $pane->endPane();
 
 <?php
 		echo ' <div class="fbfunctitle">';
-		echo $type ? JText::_(COM_KUNENA_A_IMGB_IMG_BROWSE) : JText::_(COM_KUNENA_A_IMGB_FILE_BROWSE);
+		echo $type ? JText::_('COM_KUNENA_A_IMGB_IMG_BROWSE') : JText::_('COM_KUNENA_A_IMGB_FILE_BROWSE');
 		echo '</div>';
 		echo '<table class="adminform"><tr><td>';
-		echo $type ? JText::_(COM_KUNENA_A_IMGB_TOTAL_IMG) : JText::_(COM_KUNENA_A_IMGB_TOTAL_FILES);
+		echo $type ? JText::_('COM_KUNENA_A_IMGB_TOTAL_IMG') : JText::_('COM_KUNENA_A_IMGB_TOTAL_FILES');
 		echo ': ' . count ( $uploaded ) . '</td></tr>';
 		echo '<tr><td>';
-		echo $type ? JText::_(COM_KUNENA_A_IMGB_ENLARGE) : JText::_(COM_KUNENA_A_IMGB_DOWNLOAD);
+		echo $type ? JText::_('COM_KUNENA_A_IMGB_ENLARGE') : JText::_('COM_KUNENA_A_IMGB_DOWNLOAD');
 		echo '</td></tr><tr><td>';
-		echo $type ? JText::_(COM_KUNENA_A_IMGB_DUMMY_DESC) . '</td></tr><tr><td>' . JText::_(COM_KUNENA_A_IMGB_DUMMY) . ':</td></tr><tr><td> <img src="' . KUNENA_LIVEUPLOADEDPATH . '/dummy.gif">' : '';
+		echo $type ? JText::_('COM_KUNENA_A_IMGB_DUMMY_DESC') . '</td></tr><tr><td>' . JText::_('COM_KUNENA_A_IMGB_DUMMY') . ':</td></tr><tr><td> <img src="' . KUNENA_LIVEUPLOADEDPATH . '/dummy.gif">' : '';
 		echo '</td></tr></table>';
 		echo '<table class="adminform"><tr>';
 
@@ -4016,21 +4016,21 @@ echo $pane->endPane();
 			check_dberror ( "Unable to load category id." );
 			echo $mesid == '' ? '<td>' : '<td>';
 			echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
-			echo $type ? '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded [$i] . '" target="_blank" title="' . JText::_(COM_KUNENA_A_IMGB_ENLARGE) . '" alt="' . JText::_(COM_KUNENA_A_IMGB_ENLARGE) . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded [$i] . '" width="80" heigth="80" border="0"></a>' : '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/files/' . $uploaded [$i] . '" title="' . JText::_(COM_KUNENA_A_IMGB_DOWNLOAD) . '" alt="' . JText::_(COM_KUNENA_A_IMGB_DOWNLOAD) . '"><img src="../administrator/components/com_kunena/images/file.png" border="0"></a>';
+			echo $type ? '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded [$i] . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded [$i] . '" width="80" heigth="80" border="0"></a>' : '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/files/' . $uploaded [$i] . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/file.png" border="0"></a>';
 			echo '</td></tr><tr><td style="text-align: center">';
 			//echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
 			echo '<br /><small>';
-			echo '<strong>' . JText::_(COM_KUNENA_A_IMGB_NAME) . ': </strong> ' . $uploaded [$i] . '<br />';
-			echo '<strong>' . JText::_(COM_KUNENA_A_IMGB_SIZE) . ': </strong> ' . filesize ( $uploaded_path . DS . $uploaded [$i] ) . ' bytes<br />';
+			echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . $uploaded [$i] . '<br />';
+			echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_SIZE') . ': </strong> ' . filesize ( $uploaded_path . DS . $uploaded [$i] ) . ' bytes<br />';
 			$type ? list ( $width, $height ) = @getimagesize ( $uploaded_path . DS . $uploaded [$i] ) : '';
-			echo $type ? '<strong>' . JText::_(COM_KUNENA_A_IMGB_DIMS) . ': </strong> ' . $width . 'x' . $height . '<br />' : '';
-			echo $type ? '<a href="index.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $uploaded [$i] . '">' . JText::_(COM_KUNENA_A_IMGB_REPLACE) . '</a><br />' : '';
-			echo $type ? '<a href="javascript:decision(\'' . JText::_(COM_KUNENA_A_IMGB_CONFIRM) . '\',\'index.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $uploaded [$i] . '\')">' . JText::_(COM_KUNENA_A_IMGB_REMOVE) . '</a><br />' : '<a href="javascript:decision(\'' . JText::_(COM_KUNENA_A_IMGB_CONFIRM) . '\',\'index.php?option=' . $option . '&task=deleteFile&fileName=' . $uploaded [$i] . '\')">' . JText::_(COM_KUNENA_A_IMGB_REMOVE) . '</a><br />';
+			echo $type ? '<strong>' . JText::_('COM_KUNENA_A_IMGB_DIMS') . ': </strong> ' . $width . 'x' . $height . '<br />' : '';
+			echo $type ? '<a href="index.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $uploaded [$i] . '">' . JText::_('COM_KUNENA_A_IMGB_REPLACE') . '</a><br />' : '';
+			echo $type ? '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $uploaded [$i] . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />' : '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=deleteFile&fileName=' . $uploaded [$i] . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />';
 
 			if ($mesid != '') {
-				echo '<a href="../index.php?option=' . $option . '&func=view&catid=' . $catid . '&id=' . $mesid . '#' . $mesid . '" target="_blank">' . JText::_(COM_KUNENA_A_IMGB_VIEW) . '</a>';
+				echo '<a href="../index.php?option=' . $option . '&func=view&catid=' . $catid . '&id=' . $mesid . '#' . $mesid . '" target="_blank">' . JText::_('COM_KUNENA_A_IMGB_VIEW') . '</a>';
 			} else {
-				echo JText::_(COM_KUNENA_A_IMGB_NO_POST);
+				echo JText::_('COM_KUNENA_A_IMGB_NO_POST');
 			}
 
 			echo '</td></tr></table>';
@@ -4052,14 +4052,14 @@ echo $pane->endPane();
 	function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath) {
 		?>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS);
+		echo JText::_('COM_KUNENA_EMOTICONS');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table class="adminheading" cellpadding="4" cellspacing="0" border="0"
 	width="100%">
 	<tr>
 		<td nowrap align="right"><?php
-		echo JText::_(COM_KUNENA_A_DISPLAY);
+		echo JText::_('COM_KUNENA_A_DISPLAY');
 		?><?php
 
 		echo $pageNavSP->getLimitBox ();
@@ -4076,15 +4076,15 @@ echo $pane->endPane();
 		echo count ( $smileytmp );
 		?>);" /></th>
 		<th align="center" width="50"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_SMILEY);
+		echo JText::_('COM_KUNENA_EMOTICONS_SMILEY');
 		?>
 		</th>
 		<th align="center" width="50"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_CODE);
+		echo JText::_('COM_KUNENA_EMOTICONS_CODE');
 		?>
 		</th>
 		<th align="left" width="200"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_URL);
+		echo JText::_('COM_KUNENA_EMOTICONS_URL');
 		?>
 		</th>
 		<th width="*">&nbsp;</th>
@@ -4168,14 +4168,14 @@ echo $pane->endPane();
 		//-->
 		</script>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_EDIT_SMILEY);
+		echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
 	class="adminform">
 	<tr align="center">
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_CODE);
+		echo JText::_('COM_KUNENA_EMOTICONS_CODE');
 		?></td>
 		<td width="200"><input class="post" type="text" name="smiley_code"
 			value="<?php
@@ -4189,7 +4189,7 @@ echo $pane->endPane();
 	</tr>
 	<tr align="center">
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_URL);
+		echo JText::_('COM_KUNENA_EMOTICONS_URL');
 		?></td>
 		<td><select name="smiley_url"
 			onchange="update_smiley(this.options[selectedIndex].value);">
@@ -4200,7 +4200,7 @@ echo $pane->endPane();
 	</tr>
 	<tr>
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_EMOTICONBAR);
+		echo JText::_('COM_KUNENA_EMOTICONS_EMOTICONBAR');
 		?></td>
 		<td><input type="checkbox" name="smiley_emoticonbar" value="1"
 			<?php
@@ -4239,7 +4239,7 @@ echo $pane->endPane();
 		//-->
 		</script>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_NEW_SMILEY);
+		echo JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
@@ -4247,7 +4247,7 @@ echo $pane->endPane();
 
 	<tr align="center">
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_CODE);
+		echo JText::_('COM_KUNENA_EMOTICONS_CODE');
 		?></td>
 		<td width="200"><input class="post" type="text" name="smiley_code"
 			value="" /></td>
@@ -4257,7 +4257,7 @@ echo $pane->endPane();
 	</tr>
 	<tr align="center">
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_URL);
+		echo JText::_('COM_KUNENA_EMOTICONS_URL');
 		?></td>
 		<td><select name="smiley_url"
 			onchange="update_smiley(this.options[selectedIndex].value);">
@@ -4268,7 +4268,7 @@ echo $pane->endPane();
 	</tr>
 	<tr>
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_EMOTICONS_EMOTICONBAR);
+		echo JText::_('COM_KUNENA_EMOTICONS_EMOTICONBAR');
 		?></td>
 		<td><input type="checkbox" name="smiley_emoticonbar" value="1" /></td>
 	</tr>
@@ -4292,14 +4292,14 @@ echo $pane->endPane();
 		$kunena_db = &JFactory::getDBO ();
 		?>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_RANKS_MANAGE);
+		echo JText::_('COM_KUNENA_RANKS_MANAGE');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table class="adminheading" cellpadding="4" cellspacing="0" border="0"
 	width="100%">
 	<tr>
 		<td nowrap="nowrap" align="right"><?php
-		echo JText::_(COM_KUNENA_A_DISPLAY);
+		echo JText::_('COM_KUNENA_A_DISPLAY');
 		?><?php
 
 		echo $pageNavSP->getLimitBox ();
@@ -4315,16 +4315,16 @@ echo $pane->endPane();
 		echo count ( $ranks );
 		?>);" /></th>
 		<th align="left"><?php
-		echo JText::_(COM_KUNENA_RANKSIMAGE);
+		echo JText::_('COM_KUNENA_RANKSIMAGE');
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JText::_(COM_KUNENA_RANKS);
+		echo JText::_('COM_KUNENA_RANKS');
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JText::_(COM_KUNENA_RANKS_SPECIAL);
+		echo JText::_('COM_KUNENA_RANKS_SPECIAL');
 		?></th>
 		<th align="center" nowrap="nowrap"><?php
-		echo JText::_(COM_KUNENA_RANKSMIN);
+		echo JText::_('COM_KUNENA_RANKSMIN');
 		?></th>
 		<th width="100%">&nbsp;</th>
 	</tr>
@@ -4366,9 +4366,9 @@ echo $pane->endPane();
 			?></a></td>
 		<td><?php
 			if ($row->rank_special == 1) {
-				echo JText::_(COM_KUNENA_ANN_YES);
+				echo JText::_('COM_KUNENA_ANN_YES');
 			} else {
-				echo JText::_(COM_KUNENA_ANN_NO);
+				echo JText::_('COM_KUNENA_ANN_NO');
 			}
 			?></td>
 		<td align="center"><?php
@@ -4408,7 +4408,7 @@ echo $pane->endPane();
 		//-->
 		</script>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_NEW_RANK);
+		echo JText::_('COM_KUNENA_NEW_RANK');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
@@ -4416,14 +4416,14 @@ echo $pane->endPane();
 
 	<tr align="center">
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_RANKS);
+		echo JText::_('COM_KUNENA_RANKS');
 		?></td>
 		<td width="200"><input class="post" type="text" name="rank_title"
 			value="" /></td>
 	</tr>
 	<tr>
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_RANKSIMAGE);
+		echo JText::_('COM_KUNENA_RANKSIMAGE');
 		?></td>
 		<td><select name="rank_image"
 			onchange="update_rank(this.options[selectedIndex].value);">
@@ -4434,13 +4434,13 @@ echo $pane->endPane();
 	</tr>
 	<tr>
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_RANKSMIN);
+		echo JText::_('COM_KUNENA_RANKSMIN');
 		?></td>
 		<td><input class="post" type="text" name="rank_min" value="1" /></td>
 	</tr>
 	<tr>
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_RANKS_SPECIAL);
+		echo JText::_('COM_KUNENA_RANKS_SPECIAL');
 		?></td>
 		<td><input type="checkbox" name="rank_special" value="1" /></td>
 	</tr>
@@ -4471,7 +4471,7 @@ echo $pane->endPane();
 		//-->
 		</script>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_RANKS_EDIT);
+		echo JText::_('COM_KUNENA_RANKS_EDIT');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table cellpadding="4" cellspacing="0" border="0" width="100%"
@@ -4479,7 +4479,7 @@ echo $pane->endPane();
 
 	<tr align="center">
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_RANKS);
+		echo JText::_('COM_KUNENA_RANKS');
 		?></td>
 		<td width="200"><input class="post" type="text" name="rank_title"
 			value="<?php
@@ -4488,7 +4488,7 @@ echo $pane->endPane();
 	</tr>
 	<tr align="center">
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_RANKSIMAGE);
+		echo JText::_('COM_KUNENA_RANKSIMAGE');
 		?></td>
 		<td><select name="rank_image"
 			onchange="update_rank(this.options[selectedIndex].value);">
@@ -4502,7 +4502,7 @@ echo $pane->endPane();
 	</tr>
 	<tr>
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_RANKSMIN);
+		echo JText::_('COM_KUNENA_RANKSMIN');
 		?></td>
 		<td><input class="post" type="text" name="rank_min"
 			value="<?php
@@ -4511,7 +4511,7 @@ echo $pane->endPane();
 	</tr>
 	<tr>
 		<td width="100"><?php
-		echo JText::_(COM_KUNENA_RANKS_SPECIAL);
+		echo JText::_('COM_KUNENA_RANKS_SPECIAL');
 		?></td>
 		<td><input type="checkbox" name="rank_special" value="1"
 			<?php
@@ -4540,7 +4540,7 @@ echo $pane->endPane();
 	function showtrashview($option, $trashitems, $pageNavSP, $lists) {
 		?>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_TRASH_VIEW);
+		echo JText::_('COM_KUNENA_TRASH_VIEW');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table class="adminheading" cellpadding="4" cellspacing="0" border="0"
@@ -4555,22 +4555,22 @@ echo $pane->endPane();
 		echo count ( $trashitems );
 		?>);" /></th>
 		<th align="left"><?php
-		echo  JText::_(COM_KUNENA_TRASH_ID);
+		echo  JText::_('COM_KUNENA_TRASH_ID');
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JHTML::_( 'grid.sort', JText::_(COM_KUNENA_TRASH_TITLE), 'subject', $lists['order_Dir'], $lists['order']);
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_TITLE'), 'subject', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JText::_(COM_KUNENA_TRASH_CATEGORY);
+		echo JText::_('COM_KUNENA_TRASH_CATEGORY');
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JText::_(COM_KUNENA_TRASH_IP);
+		echo JText::_('COM_KUNENA_TRASH_IP');
 		?></th>
 		<th align="center" nowrap="nowrap"><?php
-		echo JText::_(COM_KUNENA_TRASH_AUTHOR);
+		echo JText::_('COM_KUNENA_TRASH_AUTHOR');
 		?></th>
 		<th align="center" nowrap="nowrap"><?php
-		echo JText::_(COM_KUNENA_TRASH_DATE);
+		echo JText::_('COM_KUNENA_TRASH_DATE');
 		?></th>
 		<th width="100%">&nbsp;</th>
 	</tr>
@@ -4610,7 +4610,7 @@ echo $pane->endPane();
 			?></td>
 		<td nowrap="nowrap"><?php
 			if(empty($row->username)){
-				echo JText::_(COM_KUNENA_VIEW_VISITOR);
+				echo JText::_('COM_KUNENA_VIEW_VISITOR');
 			} else {
 				echo $row->username;
 			}
@@ -4643,7 +4643,7 @@ echo $pane->endPane();
 	function trashpurge($option, $return, $cid, $items) {
 ?>
 <div class="fbfunctitle"><?php
-		echo JText::_(COM_KUNENA_TRASH_PURGE);
+		echo JText::_('COM_KUNENA_TRASH_PURGE');
 		?></div>
 <form action="index.php" method="POST" name="adminForm">
 <table class="adminheading" cellpadding="4" cellspacing="0" border="0"
@@ -4653,13 +4653,13 @@ echo $pane->endPane();
 	width="100%">
 	<tr>
 		<td>
-				<strong><?php echo JText::_(COM_KUNENA_NUMBER_ITEMS); ?>:</strong>
+				<strong><?php echo JText::_('COM_KUNENA_NUMBER_ITEMS'); ?>:</strong>
 				<br />
 				<font color="#000066"><strong><?php echo count( $cid ); ?></strong></font>
 				<br /><br />
 		</td>
 		<td  valign="top" width="25%">
-				<strong><?php echo JText::_(COM_KUNENA_ITEMS_BEING_DELETED); ?>:</strong>
+				<strong><?php echo JText::_('COM_KUNENA_ITEMS_BEING_DELETED'); ?>:</strong>
 				<br />
 				<?php
 				echo "<ol>";
@@ -4669,7 +4669,7 @@ echo $pane->endPane();
 				echo "</ol>";
 				?>
 		</td>
-		<td valign="top"><span style="color: red ";><strong><?php echo JText::_(COM_KUNENA_PERM_DELETE_ITEMS); ?></strong></span>
+		<td valign="top"><span style="color: red ";><strong><?php echo JText::_('COM_KUNENA_PERM_DELETE_ITEMS'); ?></strong></span>
 		</td>
 	</tr>
 	</table>

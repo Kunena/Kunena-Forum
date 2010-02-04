@@ -43,7 +43,7 @@ $catid = JRequest::getInt ( 'catid', 0 );
 			if ($kunena_config->username) { $authorName = $this->my->username;
 			} else { $authorName = $this->my->name; }
 			//contruct the reply subject
-			$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $this->msg_html->subject, 0, JString::strlen ( JText::_(COM_KUNENA_POST_RE) ) ) ) == JString::strtolower ( JText::_(COM_KUNENA_POST_RE) ) ? $this->msg_html->subject : JText::_(COM_KUNENA_POST_RE) . ' ' . $this->msg_html->subject );
+			$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $this->msg_html->subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $this->msg_html->subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $this->msg_html->subject );
 		?>
 		<form action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post" name="postform" enctype="multipart/form-data">
 			<input type="hidden" name="parentid" value="<?php echo $this->msg_html->id; ?>" />
@@ -52,9 +52,9 @@ $catid = JRequest::getInt ( 'catid', 0 );
 			<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo $kunena_config->maxsubject; ?>" value="<?php echo html_entity_decode ( $resubject ); ?>" />
 			<textarea class="inputbox" name="message" rows="6" cols="60" style="height: 100px; width: 100%; overflow: auto;">
 			</textarea>
-			<input type="submit" class="kbutton kqr_fire" name="submit" value="<?php @print (JText::_(COM_KUNENA_GEN_CONTINUE)) ; ?>" />
-			<input type="button" class="kbutton kqm_cncl_btn" id="cancel__<?php echo $this->msg_html->id; ?>" name="cancel" value="<?php @print (JText::_(COM_KUNENA_CANCEL)) ; ?>" />
-			<small><em><?php echo JText::_(COM_KUNENA_QMESSAGE_NOTE)?></em></small>
+			<input type="submit" class="kbutton kqr_fire" name="submit" value="<?php @print (JText::_('COM_KUNENA_GEN_CONTINUE')) ; ?>" />
+			<input type="button" class="kbutton kqm_cncl_btn" id="cancel__<?php echo $this->msg_html->id; ?>" name="cancel" value="<?php @print (JText::_('COM_KUNENA_CANCEL')) ; ?>" />
+			<small><em><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE')?></em></small>
 		</form>
 	</div>
 		<?php } ?>
@@ -68,14 +68,14 @@ $catid = JRequest::getInt ( 'catid', 0 );
 </div>
 <div class="kmessage_editMarkUp_cover"><?php
 	if ($this->kunena_message->modified_by) {
-		echo '<span class="kmessage_editMarkUp" title="'.CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat_hover').'">' . JText::_(COM_KUNENA_EDITING_LASTEDIT) . ': ' .
-					CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat' ) . ' ' . JText::_(COM_KUNENA_BY) . ' ' .
+		echo '<span class="kmessage_editMarkUp" title="'.CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat_hover').'">' . JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' .
+					CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat' ) . ' ' . JText::_('COM_KUNENA_BY') . ' ' .
 					($kunena_config->username ? $this->kunena_message->modified_username : $this->kunena_message->modified_name) . '.';
 	if ($this->kunena_message->modified_reason) {
-		echo JText::_(COM_KUNENA_REASON) . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->kunena_message->modified_reason ) ); }
+		echo JText::_('COM_KUNENA_REASON') . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->kunena_message->modified_reason ) ); }
 	echo '</span>'; }
 	if ($kunena_config->reportmsg && $this->my->id > 1) {
-	echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $this->msg_html->id, JText::_(COM_KUNENA_REPORT) ) . '</span>'; }
+	echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetReportMessageLink ( $catid, $this->msg_html->id, JText::_('COM_KUNENA_REPORT') ) . '</span>'; }
 	//Check that the user is an admin to display the ip in messages
 	$check = '0';
 	if($kunena_config->hide_ip){

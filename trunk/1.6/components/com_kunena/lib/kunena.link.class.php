@@ -578,8 +578,8 @@ class CKunenaLink
         // Finally build output block
 
         $Output  = '<div align="center">';
-        if (is_object($result)) $Output .= CKunenaLink::GetThreadPageLink($kunena_config, 'view', $catid, $result->thread, $threadPages, $limit, JText::_(COM_KUNENA_POST_SUCCESS_VIEW), $result->latest_id) .'<br />';
-        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, JText::_(COM_KUNENA_POST_SUCCESS_FORUM)).'<br />';
+        if (is_object($result)) $Output .= CKunenaLink::GetThreadPageLink($kunena_config, 'view', $catid, $result->thread, $threadPages, $limit, JText::_('COM_KUNENA_POST_SUCCESS_VIEW'), $result->latest_id) .'<br />';
+        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_POST_SUCCESS_FORUM')).'<br />';
         $Output .= '</div>';
         if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($kunena_config, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
         else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
@@ -613,7 +613,7 @@ class CKunenaLink
     function GetLatestCategoryAutoRedirectHTML($catid)
     {
         $Output  = '<div id="Kunena_post_result" align="center">';
-        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, JText::_(COM_KUNENA_POST_SUCCESS_FORUM)).'<br />';
+        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_POST_SUCCESS_FORUM')).'<br />';
         $Output .= '</div>';
         $Output .= CKunenaLink::GetAutoRedirectHTML(KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid, 3500);
 

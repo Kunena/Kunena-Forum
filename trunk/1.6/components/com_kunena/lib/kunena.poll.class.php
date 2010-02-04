@@ -121,12 +121,12 @@ class CKunenaPolls {
 		JApplication::addCustomHeadTag('
       <script type="text/javascript">
 	   <!--
-	   var KUNENA_POLL_SAVE_ALERT_OK = "'.JText::_(COM_KUNENA_POLL_SAVE_ALERT_OK).'";
-	   var KUNENA_POLL_SAVE_ALERT_ERROR = "'.JText::_(COM_KUNENA_POLL_SAVE_ALERT_ERROR).'";
-	   var KUNENA_POLL_SAVE_VOTE_ALREADY = "'.JText::_(COM_KUNENA_POLL_SAVE_VOTE_ALREADY).'";
-	   var KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK = "'.JText::_(COM_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK).'";
-	   var KUNENA_POLL_WAIT_BEFORE_VOTE = "'.JText::_(COM_KUNENA_POLL_WAIT_BEFORE_VOTE).'";
-	   var KUNENA_POLL_CANNOT_VOTE_NEW_TIME = "'.JText::_(COM_KUNENA_POLL_CANNOT_VOTE_NEW_TIME).'";
+	   var KUNENA_POLL_SAVE_ALERT_OK = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK').'";
+	   var KUNENA_POLL_SAVE_ALERT_ERROR = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_ERROR').'";
+	   var KUNENA_POLL_SAVE_VOTE_ALREADY = "'.JText::_('COM_KUNENA_POLL_SAVE_VOTE_ALREADY').'";
+	   var KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_ERROR_NOT_CHECK').'";
+	   var KUNENA_POLL_WAIT_BEFORE_VOTE = "'.JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE').'";
+	   var KUNENA_POLL_CANNOT_VOTE_NEW_TIME = "'.JText::_('COM_KUNENA_POLL_CANNOT_VOTE_NEW_TIME').'";
 	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
 	   var KUNENA_ICON_INFO = "'.JURI::root(). 'images/M_images/con_info.png'.'";
      //-->
@@ -147,11 +147,11 @@ class CKunenaPolls {
         			if(empty($html_poll_edit)) {
 						$html_poll_edit = "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
 						javascript:$('helpbox').set('value', '"
-				. JText::_(COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION). "')\" /></div>";
+				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). "')\" /></div>";
         			} else {
 						$html_poll_edit .= "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
 						javascript:$('helpbox').set('value', '"
-				. JText::_(COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION). "')\" /></div>";
+				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). "')\" /></div>";
         			}
         			$nboptions++;
         		}
@@ -193,10 +193,10 @@ class CKunenaPolls {
 		JApplication::addCustomHeadTag('
     <script type="text/javascript">
 	   <!--
-	   var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_(COM_KUNENA_POLL_CATS_NOT_ALLOWED).'";
-	   var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_(COM_KUNENA_EDITOR_HELPLINE_OPTION).'";
-	   var KUNENA_POLL_OPTION_NAME = "'.JText::_(COM_KUNENA_POLL_OPTION_NAME).'";
-	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'.JText::_(COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW).'";
+	   var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
+	   var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";
+	   var KUNENA_POLL_OPTION_NAME = "'.JText::_('COM_KUNENA_POLL_OPTION_NAME').'";
+	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'.JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW').'";
 	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
 	   var kunena_ajax_url_poll = "'.CKunenaLink::GetJsonURL('pollcatsallowed').'";
       //-->

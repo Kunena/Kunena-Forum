@@ -194,7 +194,7 @@ class CKunenaModeration {
 					// TODO: need to fetch correct user id for new ghost thread - current moderator who executed the move
 					// @Oliver: we already have it. It's current user: $my->id
 					// TODO: obey configuration setting username vs realname
-					// TODO: what do we do with ghost message title? JText::_(COM_KUNENA_MOVED_TOPIC) was used before
+					// TODO: what do we do with ghost message title? JText::_('COM_KUNENA_MOVED_TOPIC') was used before
 					// @Oliver: I'd like to get rid of it and add it while rendering..
 					$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
 

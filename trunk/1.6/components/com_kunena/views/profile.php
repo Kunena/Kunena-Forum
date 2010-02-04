@@ -50,20 +50,20 @@ class CKunenaProfile {
 		switch ($this->profile->gender) {
 			case 1:
 				$this->genderclass = 'male';
-				$this->gender = JText::_(COM_KUNENA_MYPROFILE_MALE);
+				$this->gender = JText::_('COM_KUNENA_MYPROFILE_MALE');
 				break;
 			case 2:
 				$this->genderclass = 'female';
-				$this->gender = JText::_(COM_KUNENA_MYPROFILE_FEMALE);
+				$this->gender = JText::_('COM_KUNENA_MYPROFILE_FEMALE');
 				break;
 			default:
 				$this->genderclass = 'unknown';
-				$this->gender = JText::_(COM_KUNENA_MYPROFILE_GENDER_UNKNOWN);
+				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN');
 		}
 		if ($this->profile->location)
 			$this->location = '<a href="http://maps.google.com?q='.kunena_htmlspecialchars(stripslashes($this->profile->location)).'" target="_blank">'.kunena_htmlspecialchars(stripslashes($this->profile->location)).'</a>';
 		else
-			$this->location = JText::_(COM_KUNENA_LOCATION_UNKNOWN);
+			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
 		$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->user->id . ' AND s.client_id = 0 GROUP BY s.userid';
 		$this->_db->setQuery ( $query );

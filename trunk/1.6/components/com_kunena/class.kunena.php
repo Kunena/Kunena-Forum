@@ -570,7 +570,7 @@ class CKunenaTools {
 		$kunena_db = &JFactory::getDBO();
 
         if (!CKunenaTools::isAdmin() && !$isMod) {
-            $kunena_app->redirect($return, JText::_(COM_KUNENA_POST_NOT_MODERATOR));
+            $kunena_app->redirect($return, JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
             }
 
         $items = fbGetArrayInts("kDelete");
@@ -639,7 +639,7 @@ class CKunenaTools {
             } //end foreach
             CKunenaTools::reCountBoards();
 
-            $kunena_app->redirect($return, JText::_(COM_KUNENA_BULKMSG_DELETED));
+            $kunena_app->redirect($return, JText::_('COM_KUNENA_BULKMSG_DELETED'));
         }
 
     function isAdmin($uid = null) {
@@ -709,7 +709,7 @@ class CKunenaTools {
 
 		$rank = new stdClass();
 		$rank->rank_id = false;
-		$rank->rank_title = JText::_(COM_KUNENA_VIEW_USER);
+		$rank->rank_title = JText::_('COM_KUNENA_VIEW_USER');
 		$rank->rank_min = 0;
 		$rank->rank_special = 0;
 		$rank->rank_image = 'rank6.gif';
@@ -719,7 +719,7 @@ class CKunenaTools {
 		}
 		else if ($profile->rank == '0' && self::isAdmin($profile->userid)) {
 			$rank->rank_id = 0;
-			$rank->rank_title = JText::_(COM_KUNENA_RANK_ADMINISTRATOR);
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_ADMINISTRATOR');
 			$rank->rank_special = 1;
 			$rank->rank_image = 'rankadmin.gif';
 			jimport ('joomla.filesystem.file');
@@ -732,7 +732,7 @@ class CKunenaTools {
 		}
 		else if ($profile->rank == '0' && self::isModerator($profile->userid)) {
 			$rank->rank_id = 0;
-			$rank->rank_title = JText::_(COM_KUNENA_RANK_MODERATOR);
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_MODERATOR');
 			$rank->rank_special = 1;
 			$rank->rank_image = 'rankmod.gif';
 			jimport ('joomla.filesystem.file');
@@ -844,7 +844,7 @@ class CKunenaTools {
 
         //isMod will stay until better group management comes in
         if (!$isAdmin && !$isMod) {
-            $kunena_app->redirect($return, JText::_(COM_KUNENA_POST_NOT_MODERATOR));
+            $kunena_app->redirect($return, JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
             }
 
 		$catid = (int)$catid;
@@ -862,7 +862,7 @@ class CKunenaTools {
 
 		    if (CKunenaTools::isModerator($kunena_my->id, $oldRecord[0]->catid)) {
 
-		        $newSubject = JText::_(COM_KUNENA_MOVED_TOPIC) . " " . $oldRecord[0]->subject;
+		        $newSubject = JText::_('COM_KUNENA_MOVED_TOPIC') . " " . $oldRecord[0]->subject;
 		        $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread='{$id}'");
 		        $lastTimestamp = $kunena_db->loadResult();
 			check_dberror("Unable to load messages max(time).");
@@ -876,13 +876,13 @@ class CKunenaTools {
 			$kunena_db->query();
 			check_dberror("Unable to move thread.");
 
-			$err = JText::_(COM_KUNENA_POST_SUCCESS_MOVE);
+			$err = JText::_('COM_KUNENA_POST_SUCCESS_MOVE');
 		    } else {
-                        $err = JText::_(COM_KUNENA_POST_NOT_MODERATOR);
+                        $err = JText::_('COM_KUNENA_POST_NOT_MODERATOR');
                     }
 		} //end foreach
 		} else {
-			$err = JText::_(COM_KUNENA_POST_NO_DEST_CATEGORY);
+			$err = JText::_('COM_KUNENA_POST_NO_DEST_CATEGORY');
 		}
         CKunenaTools::reCountBoards();
 
@@ -970,9 +970,9 @@ class CKunenaTools {
 			if ($number < 10000) {
 				$output = $number;
 			} elseif ($number >= 1000000) {
-				$output = $number / 1000000 . JText::_(COM_KUNENA_MILLION);
+				$output = $number / 1000000 . JText::_('COM_KUNENA_MILLION');
 			} else {
-				$output = $number / 1000 . JText::_(COM_KUNENA_THOUSAND);
+				$output = $number / 1000 . JText::_('COM_KUNENA_THOUSAND');
 			}
 
 			return $output;
@@ -1003,7 +1003,7 @@ class CKunenaTools {
 			if (!$moduleid) {
 				// Create a menu type for the Kunena menu
 				$query = "REPLACE INTO `#__menu_types` (`menutype`, `title`, `description`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_TITLE) . "', 'This is the default Kunena menu. It is used as the top navigation for Kunena. It can be publish in any module position. Simply unpublish items that are not required.');";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_TITLE') . "', 'This is the default Kunena menu. It is used as the top navigation for Kunena. It can be publish in any module position. Simply unpublish items that are not required.');";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create menu." );
@@ -1021,7 +1021,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load Category Index." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_LISTCAT) . "', 'forum/listcat', 'index.php?option=com_kunena&func=listcat', 'component', 1, 0, $componentid, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_LISTCAT') . "', 'forum/listcat', 'index.php?option=com_kunena&func=listcat', 'component', 1, 0, $componentid, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Category Index." );
@@ -1033,7 +1033,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load Recent Topics." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_LATEST) . "', 'forum/latest', 'index.php?option=com_kunena&func=latest', 'component', 1, 0, $componentid, 0, 5, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_LATEST') . "', 'forum/latest', 'index.php?option=com_kunena&func=latest', 'component', 1, 0, $componentid, 0, 5, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Recent Topics." );
@@ -1045,7 +1045,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load My latest." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_MYLATEST) . "', 'forum/mylatest', 'index.php?option=com_kunena&func=mylatest', 'component', 1, 0, $componentid, 0, 9, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_MYLATEST') . "', 'forum/mylatest', 'index.php?option=com_kunena&func=mylatest', 'component', 1, 0, $componentid, 0, 9, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create My latest." );
@@ -1057,7 +1057,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load No Replies." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_NOREPLIES) . "', 'forum/noreplies', 'index.php?option=com_kunena&func=noreplies', 'component', 1, 0, $componentid, 0, 8, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_NOREPLIES') . "', 'forum/noreplies', 'index.php?option=com_kunena&func=noreplies', 'component', 1, 0, $componentid, 0, 8, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create No Replies." );
@@ -1069,7 +1069,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load My Profile." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_PROFILE) . "', 'forum/profile', 'index.php?option=com_kunena&func=profile', 'component', 1, 0, $componentid, 0, 10, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_PROFILE') . "', 'forum/profile', 'index.php?option=com_kunena&func=profile', 'component', 1, 0, $componentid, 0, 10, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create My Profile." );
@@ -1081,7 +1081,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load Rules." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_RULES) . "', 'forum/rules', 'index.php?option=com_kunena&func=rules', 'component', 1, 0, $componentid, 0, 11, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_RULES') . "', 'forum/rules', 'index.php?option=com_kunena&func=rules', 'component', 1, 0, $componentid, 0, 11, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Rules." );
@@ -1093,7 +1093,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load Help." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_HELP) . "', 'forum/help', 'index.php?option=com_kunena&func=help', 'component', 1, 0, $componentid, 0, 12, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_HELP') . "', 'forum/help', 'index.php?option=com_kunena&func=help', 'component', 1, 0, $componentid, 0, 12, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Help." );
@@ -1105,7 +1105,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load Search." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_SEARCH) . "', 'forum/search', 'index.php?option=com_kunena&func=search', 'component', 1, 0, $componentid, 0, 13, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_SEARCH') . "', 'forum/search', 'index.php?option=com_kunena&func=search', 'component', 1, 0, $componentid, 0, 13, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Search." );
@@ -1117,7 +1117,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load Welcome." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_WELCOME) . "', 'forum/welcome', 'index.php?option=com_kunena&func=showcat&catid=2', 'component', 1, 0, $componentid, 0, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_WELCOME') . "', 'forum/welcome', 'index.php?option=com_kunena&func=showcat&catid=2', 'component', 1, 0, $componentid, 0, 6, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Welcome." );
@@ -1129,7 +1129,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load New Topic." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_(COM_KUNENA_MENU_NEWTOPIC) . "', 'forum/newtopic', 'index.php?option=com_kunena&func=post&do=reply', 'component', 1, 0, $componentid, 0, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_NEWTOPIC') . "', 'forum/newtopic', 'index.php?option=com_kunena&func=post&do=reply', 'component', 1, 0, $componentid, 0, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create New Topic." );
@@ -1144,7 +1144,7 @@ class CKunenaTools {
 			if (!$moduleid) {
 				// Create a module for the Kunena menu
 				$query = "REPLACE INTO `#__modules` (`title`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `published`, `module`, `numnews`, `access`, `showtitle`, `params`, `iscore`, `client_id`, `control`) VALUES
-				('" . JText::_(COM_KUNENA_MENU_TITLE) . "', '', 0, 'kunena_menu', 0, '0000-00-00 00:00:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=kunenamenu\nmenu_style=list\nstartLevel=0\nendLevel=0\nshowAllChildren=0\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 0, 0, '');";
+				('" . JText::_('COM_KUNENA_MENU_TITLE') . "', '', 0, 'kunena_menu', 0, '0000-00-00 00:00:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=kunenamenu\nmenu_style=list\nstartLevel=0\nendLevel=0\nshowAllChildren=0\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 0, 0, '');";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create menu." );
@@ -1168,7 +1168,7 @@ class CKunenaTools {
 			check_dberror ( "Unable to load main menu." );
 			if (!$kunena_db->loadResult ()) {
 				$query = "INSERT INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('mainmenu', '" . JText::_(COM_KUNENA_MENU_FORUM) . "', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'page_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0);";
+							('mainmenu', '" . JText::_('COM_KUNENA_MENU_FORUM') . "', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'page_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create item into main menu." );
@@ -1216,9 +1216,9 @@ class fbForum
 	function check() {
 		if ($this->parent) {
 			if ($this->id == $this->parent):
-				$this->setError(JText::_(COM_KUNENA_FORUM_SAME_ERR));
+				$this->setError(JText::_('COM_KUNENA_FORUM_SAME_ERR'));
 				elseif ($this->isChild($this->parent)):
-				$this->setError(JText::_(COM_KUNENA_FORUM_OWNCHILD_ERR));
+				$this->setError(JText::_('COM_KUNENA_FORUM_OWNCHILD_ERR'));
 			endif;
 		}
 		return ($this->getError() == '');
@@ -1234,12 +1234,12 @@ class fbForum
 			$recurse = array();
 			while ($id) {
 				if (in_array($id, $recurse)) {
-					$this->setError(get_class( $this ).JText::_(COM_KUNENA_RECURSION));
+					$this->setError(get_class( $this ).JText::_('COM_KUNENA_RECURSION'));
 					return 0;
 				}
 				$recurse[] = $id;
 				if (!isset($list[$id])) {
-					$this->setError(get_class( $this ).JText::_(COM_KUNENA_FORUM_UNKNOWN_ERR));
+					$this->setError(get_class( $this ).JText::_('COM_KUNENA_FORUM_UNKNOWN_ERR'));
 					return 0;
 				}
 				$id = $list[$id]->parent;
@@ -1412,7 +1412,7 @@ function generate_smilies() {
                 }
 
             if ($num_smilies > $inline_rows * $inline_columns) {
-                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:dE('smilie');\" style=\"cursor:pointer\"><b>" . JText::_(COM_KUNENA_EMOTICONS_MORE_SMILIES) . "</b></td></tr>";
+                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:dE('smilie');\" style=\"cursor:pointer\"><b>" . JText::_('COM_KUNENA_EMOTICONS_MORE_SMILIES') . "</b></td></tr>";
                 }
             }
         return $kunena_emoticons_rowset;

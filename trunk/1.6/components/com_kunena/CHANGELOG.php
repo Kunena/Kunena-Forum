@@ -43,6 +43,7 @@ Kunena 1.6.0-DEV
 # [#19380] Many small fixes to the editor ajax calls (language strings, error handling)
 ^ [#19645] Convert Language files to native Joomla 1.5/6 ini's
 ^ [#19645] Convert all language strings to use JText::_()
+# [#19645] Fix missing quotes from language strings, use new language files
 
 04-Feb-2010 fxstein
 ^ [#19345] Re-style child board counts to match new template

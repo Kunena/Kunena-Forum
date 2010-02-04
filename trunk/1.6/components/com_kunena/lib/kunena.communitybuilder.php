@@ -67,9 +67,9 @@ class CKunenaCBProfile {
 function enqueueErrors() {
 		if ($this->error) {
 			$kunena_app =& JFactory::getApplication();
-			$kunena_app->enqueueMessage(JText::_(COM_KUNENA_INTEGRATION_CB_WARN_GENERAL), 'notice');
+			$kunena_app->enqueueMessage(JText::_('COM_KUNENA_INTEGRATION_CB_WARN_GENERAL'), 'notice');
 			$kunena_app->enqueueMessage($this->errormsg, 'notice');
-			$kunena_app->enqueueMessage(JText::_(COM_KUNENA_INTEGRATION_CB_WARN_HIDE), 'notice');
+			$kunena_app->enqueueMessage(JText::_('COM_KUNENA_INTEGRATION_CB_WARN_HIDE'), 'notice');
 		}
 	}
 
@@ -79,21 +79,21 @@ function enqueueErrors() {
 
 		// Detect
 		if (!isset($ueConfig['version'])) {
-			$this->errormsg = sprintf(JText::_(COM_KUNENA_INTEGRATION_CB_WARN_INSTALL), '1.2');
+			$this->errormsg = sprintf(JText::_('COM_KUNENA_INTEGRATION_CB_WARN_INSTALL'), '1.2');
 			$this->error = 1;
 			return false;
 		}
 		if ($kunena_config->fb_profile != 'cb') return true;
 		if (!class_exists('getForumModel') && version_compare($ueConfig['version'], '1.2.1') < 0) {
-			$this->errormsg = sprintf(JText::_(COM_KUNENA_INTEGRATION_CB_WARN_UPDATE), '1.2.1');
+			$this->errormsg = sprintf(JText::_('COM_KUNENA_INTEGRATION_CB_WARN_UPDATE'), '1.2.1');
 			$this->error = 3;
 		}
 		else if (isset($ueConfig['xhtmlComply']) && $ueConfig['xhtmlComply'] == 0) {
-			$this->errormsg = JText::_(COM_KUNENA_INTEGRATION_CB_WARN_XHTML);
+			$this->errormsg = JText::_('COM_KUNENA_INTEGRATION_CB_WARN_XHTML');
 			$this->error = 4;
 		}
 		else if (!class_exists('getForumModel')) {
-			$this->errormsg = JText::_(COM_KUNENA_INTEGRATION_CB_WARN_INTEGRATION);
+			$this->errormsg = JText::_('COM_KUNENA_INTEGRATION_CB_WARN_INTEGRATION');
 			$this->error = 5;
 		}
 		return true;

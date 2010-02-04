@@ -20,7 +20,7 @@ global $kunena_icons;
 	<tr>
 		<td class="klist_actions_goto"><a name="forumtop"></a>
 			<?php
-			echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . JText::_(COM_KUNENA_GEN_GOTOBOTTOM) . '" title="' . JText::_(COM_KUNENA_GEN_GOTOBOTTOM) . '"/>' : JText::_(COM_KUNENA_GEN_GOTOBOTTOM) );
+			echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_GOTOBOTTOM') . '" title="' . JText::_('COM_KUNENA_GEN_GOTOBOTTOM') . '"/>' : JText::_('COM_KUNENA_GEN_GOTOBOTTOM') );
 			?>
 		</td>
 		<?php

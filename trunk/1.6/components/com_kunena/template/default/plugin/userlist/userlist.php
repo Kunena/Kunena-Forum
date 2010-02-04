@@ -26,7 +26,7 @@ defined( '_JEXEC' ) or die();
 $kunena_config =& CKunenaConfig::getInstance();
 $document=& JFactory::getDocument();
 
-$document->setTitle(JText::_(COM_KUNENA_USRL_USERLIST) . ' - ' . stripslashes($kunena_config->board_title));
+$document->setTitle(JText::_('COM_KUNENA_USRL_USERLIST') . ' - ' . stripslashes($kunena_config->board_title));
 
 list_users();
 
@@ -111,7 +111,7 @@ class HTML_userlist_content
         $kunena_db = &JFactory::getDBO();
 
         if ($search == "") {
-            $search = JText::_(COM_KUNENA_USRL_SEARCH);
+            $search = JText::_('COM_KUNENA_USRL_SEARCH');
         }
 ?>
 
@@ -121,7 +121,7 @@ class HTML_userlist_content
             {
                 if ((document.usrlform.search == "") || (document.usrlform.search.value == ""))
                 {
-                    alert('<?php echo JText::_(COM_KUNENA_USRL_SEARCH_ALERT); ?>');
+                    alert('<?php echo JText::_('COM_KUNENA_USRL_SEARCH_ALERT'); ?>');
                     return false;
                 }
                 else
@@ -144,10 +144,10 @@ class HTML_userlist_content
                             <tr>
                                 <td align = "left">
                                     <div class = "ktitle_cover  km">
-                                        <span class="ktitle kl"> <?php echo JText::_(COM_KUNENA_USRL_USERLIST); ?></span>
+                                        <span class="ktitle kl"> <?php echo JText::_('COM_KUNENA_USRL_USERLIST'); ?></span>
 
                                         <?php
-                                        printf(JText::_(COM_KUNENA_USRL_REGISTERED_USERS), $kunena_app->getCfg('sitename'), $total_results);
+                                        printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $kunena_app->getCfg('sitename'), $total_results);
                                         ?>
                                     </div>
                                 </td>
@@ -160,7 +160,7 @@ class HTML_userlist_content
                                             style = "width:150px"
                                             maxlength = "100" value = "<?php echo $search; ?>" onblur = "if(this.value=='') this.value='<?php echo $search; ?>';" onfocus = "if(this.value=='<?php echo $search; ?>') this.value='';" />
 
-                                        <input type = "image" src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.gif' ;?>" alt = "<?php echo JText::_(COM_KUNENA_USRL_SEARCH); ?>" align = "top" style = "border: 0px;"/>
+                                        <input type = "image" src = "<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.gif' ;?>" alt = "<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align = "top" style = "border: 0px;"/>
                                     </form>
                                 </td>
                             </tr>
@@ -184,7 +184,7 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-2 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_ONLINE); ?>
+<?php echo JText::_('COM_KUNENA_USRL_ONLINE'); ?>
                                     </th>
 
                                 <?php
@@ -197,7 +197,7 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-3 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_AVATAR); ?>
+<?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?>
                                     </th>
 
                                 <?php
@@ -210,9 +210,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-4 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_NAME); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=name&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=name&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_NAME'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=name&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=name&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -225,9 +225,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-5 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_USERNAME); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_USERNAME'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -240,9 +240,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-7 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_POSTS); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=posts&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=posts&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_POSTS'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=posts&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=posts&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -255,9 +255,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-7 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_KARMA); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=karma&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=karma&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_KARMA'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=karma&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=karma&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -270,9 +270,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-8 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_EMAIL); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=email&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=email&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_EMAIL'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=email&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=email&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -285,9 +285,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-9 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_USERTYPE); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=usertype&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=usertype&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_USERTYPE'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=usertype&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=usertype&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -300,9 +300,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-10 ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_JOIN_DATE); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=registerDate&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=registerDate&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_JOIN_DATE'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=registerDate&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=registerDate&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
                                      </th>
 
                                 <?php
@@ -315,9 +315,9 @@ class HTML_userlist_content
                                 ?>
 
                                     <th class = "th-11  ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_LAST_LOGIN); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=lastvisitDate&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=lastvisitDate&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_LAST_LOGIN'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=lastvisitDate&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=lastvisitDate&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -329,9 +329,9 @@ class HTML_userlist_content
                                 {
                                 ?>
 								<th class = "th-12 lst ksectiontableheader" align="center">
-<?php echo JText::_(COM_KUNENA_USRL_HITS); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=uhits&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_ASC) .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=uhits&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_(COM_KUNENA_USRL_DESC) .'" />'); ?>
+<?php echo JText::_('COM_KUNENA_USRL_HITS'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=uhits&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_ASC') .'" />'); ?>
+<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=uhits&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . JText::_('COM_KUNENA_USRL_DESC') .'" />'); ?>
 								</th>
                                 <?php
                                 }
@@ -407,10 +407,10 @@ class HTML_userlist_content
 											check_dberror ( "Unable to load online status." );
 
                                             if ($isonline && $ulrow->showOnline ==1 ) {
-                                                echo isset($kunena_icons['onlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['onlineicon'] . '" border="0" alt="' . JText::_(COM_KUNENA_MODLIST_ONLINE) . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . JText::_(COM_KUNENA_MODLIST_ONLINE) . '" />';
+                                                echo isset($kunena_icons['onlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['onlineicon'] . '" border="0" alt="' . JText::_('COM_KUNENA_MODLIST_ONLINE') . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0"  alt="' . JText::_('COM_KUNENA_MODLIST_ONLINE') . '" />';
                                             }
                                             else {
-                                                echo isset($kunena_icons['offlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['offlineicon'] . '" border="0" alt="' . JText::_(COM_KUNENA_MODLIST_OFFLINE) . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . JText::_(COM_KUNENA_MODLIST_OFFLINE) . '" />';
+                                                echo isset($kunena_icons['offlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['offlineicon'] . '" border="0" alt="' . JText::_('COM_KUNENA_MODLIST_OFFLINE') . '" />' : '  <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0"  alt="' . JText::_('COM_KUNENA_MODLIST_OFFLINE') . '" />';
                                             }
                                             ?>
                                         </td>
@@ -544,7 +544,7 @@ class HTML_userlist_content
         <table class = "kblocktable" id="kuserlist_bottom" style="border-bottom:0px;margin:0;" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
                 <tr>
                     <th  class = "th-right  ks" align="right" style="text-align:right">
-                     <?php echo $pageNav->getPagesCounter(); ?> | <?php echo JText::_(COM_KUNENA_USRL_DISPLAY_NR); ?> <?php echo $pageNav->getLimitBox(CKunenaLink::GetUserlistURL($query_ext)); ?>
+                     <?php echo $pageNav->getPagesCounter(); ?> | <?php echo JText::_('COM_KUNENA_USRL_DISPLAY_NR'); ?> <?php echo $pageNav->getLimitBox(CKunenaLink::GetUserlistURL($query_ext)); ?>
                 </th>
             </tr>
         </table>

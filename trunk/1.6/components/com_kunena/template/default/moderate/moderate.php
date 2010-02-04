@@ -29,7 +29,7 @@ if (! CKunenaTools::isAdmin () && ! $kunena_is_moderator) {
 	// Sorry - but you have nothing to do here.
 	// This module is for moderators and admins only.
 
-	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_(COM_KUNENA_POST_NOT_MODERATOR) );
+	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 } else {
 	// Here comes the moderator functionality
 

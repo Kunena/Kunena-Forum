@@ -143,8 +143,8 @@ class CKunenaLatestX {
 	function getMyLatest($posts = true, $fav = true, $sub = false) {
 		if (isset($this->total)) return;
 		if ($posts === true && $fav === true) {
-			$this->header = JText::_(COM_KUNENA_MENU_MYLATEST_DESC);
-			$this->title = JText::_(COM_KUNENA_MY_DISCUSSIONS);
+			$this->header = JText::_('COM_KUNENA_MENU_MYLATEST_DESC');
+			$this->title = JText::_('COM_KUNENA_MY_DISCUSSIONS');
 		}
 
 		$subquery = array();
@@ -190,7 +190,7 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->columns++;
 		$this->showposts = 1;
-		$this->header = $this->title = JText::_(COM_KUNENA_OWNTOPICS);
+		$this->header = $this->title = JText::_('COM_KUNENA_OWNTOPICS');
 		$this->getMyLatest(false, false, false);
 	}
 
@@ -198,7 +198,7 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->columns++;
 		$this->showposts = 1;
-		$this->header = $this->title = JText::_(COM_KUNENA_USERTOPICS);
+		$this->header = $this->title = JText::_('COM_KUNENA_USERTOPICS');
 		$this->getMyLatest(true, false, false);
 	}
 
@@ -206,7 +206,7 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->columns++;
 		$this->showposts = 1;
-		$this->header = $this->title = JText::_(COM_KUNENA_FAVORITES);
+		$this->header = $this->title = JText::_('COM_KUNENA_FAVORITES');
 		$this->getMyLatest(false, true, false);
 	}
 
@@ -214,14 +214,14 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->columns++;
 		$this->showposts = 1;
-		$this->header = $this->title = JText::_(COM_KUNENA_SUBSCRIPTIONS);
+		$this->header = $this->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
 		$this->getMyLatest(false, false, true);
 	}
 
 	function getLatest() {
 		if (isset($this->total)) return;
-		$this->header =  JText::_(COM_KUNENA_MENU_LATEST_DESC);
-		$this->title = JText::_(COM_KUNENA_ALL_DISCUSSIONS);
+		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
+		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$lookcats = explode ( ',', $this->config->latestcategory );
 		$catlist = array ();
 		$latestcats = '';
@@ -260,8 +260,8 @@ class CKunenaLatestX {
 
 	function getNoReplies() {
 		if (isset($this->total)) return;
-		$this->header =  JText::_(COM_KUNENA_MENU_NOREPLIES_DESC);
-		$this->title = JText::_(COM_KUNENA_NO_REPLIES);
+		$this->header =  JText::_('COM_KUNENA_MENU_NOREPLIES_DESC');
+		$this->title = JText::_('COM_KUNENA_NO_REPLIES');
 		$query = "SELECT COUNT(DISTINCT tmp.thread) FROM
 			(SELECT m.thread, count(*) AS posts
 				FROM #__fb_messages as m
@@ -332,7 +332,7 @@ class CKunenaLatestX {
 
 	function displayFlat() {
 		if (! $this->allow) {
-			echo JText::_(COM_KUNENA_NO_ACCESS);
+			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
 		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'threads' . DS . 'flat.php' )) {
@@ -373,7 +373,7 @@ class CKunenaLatestX {
 			$endpage = $totalpages;
 		}
 
-		$output = '<span class="kpagination">' . JText::_(COM_KUNENA_PAGE);
+		$output = '<span class="kpagination">' . JText::_('COM_KUNENA_PAGE');
 
 		if (($startpage) > 1) {
 			if ($endpage < $totalpages)
@@ -406,7 +406,7 @@ class CKunenaLatestX {
 
 	function display() {
 		if (! $this->allow) {
-			echo JText::_(COM_KUNENA_NO_ACCESS);
+			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
 		if ($this->func == 'mylatest') $this->getMyLatest();

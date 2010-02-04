@@ -31,7 +31,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 	<tr>
 		<td class="klist_actions_info_all"><strong><?php
 		echo $this->total?></strong> <?php
-		echo JText::_(COM_KUNENA_DISCUSSIONS)?>
+		echo JText::_('COM_KUNENA_DISCUSSIONS')?>
 		</td>
 		<?php
 		if ($this->func != 'mylatest' && $this->func != 'noreplies') :
@@ -51,7 +51,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				?>
 				value="<?php
 				echo CKunenaLink::GetShowLatestThreadsURL(0)?>"><?php
-				echo JText::_(COM_KUNENA_SHOW_LASTVISIT)?></option>
+				echo JText::_('COM_KUNENA_SHOW_LASTVISIT')?></option>
 
 			<?php endif;
 			?>
@@ -65,7 +65,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				value="<?php
 			echo CKunenaLink::GetShowLatestThreadsURL(4);
 			?>"><?php
-			echo JText::_(COM_KUNENA_SHOW_4_HOURS)?></option>
+			echo JText::_('COM_KUNENA_SHOW_4_HOURS')?></option>
 			<option <?php
 			if ($this->show_list_time == '8') :
 				?>
@@ -76,7 +76,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				value="<?php
 			echo CKunenaLink::GetShowLatestThreadsURL(8);
 			?>"><?php
-			echo JText::_(COM_KUNENA_SHOW_8_HOURS)?></option>
+			echo JText::_('COM_KUNENA_SHOW_8_HOURS')?></option>
 			<option <?php
 			if ($this->show_list_time == '12') :
 				?>
@@ -87,7 +87,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				value="<?php
 			echo CKunenaLink::GetShowLatestThreadsURL(12);
 			?>"><?php
-			echo JText::_(COM_KUNENA_SHOW_12_HOURS)?></option>
+			echo JText::_('COM_KUNENA_SHOW_12_HOURS')?></option>
 			<option <?php
 			if ($this->show_list_time == '24') :
 				?>
@@ -98,7 +98,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				value="<?php
 			echo CKunenaLink::GetShowLatestThreadsURL(24);
 			?>"><?php
-			echo JText::_(COM_KUNENA_SHOW_24_HOURS)?></option>
+			echo JText::_('COM_KUNENA_SHOW_24_HOURS')?></option>
 			<option <?php
 			if ($this->show_list_time == '48') :
 				?>
@@ -109,7 +109,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				value="<?php
 			echo CKunenaLink::GetShowLatestThreadsURL(48);
 			?>"><?php
-			echo JText::_(COM_KUNENA_SHOW_48_HOURS)?></option>
+			echo JText::_('COM_KUNENA_SHOW_48_HOURS')?></option>
 			<option <?php
 			if ($this->show_list_time == '168') :
 				?>
@@ -120,7 +120,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				value="<?php
 			echo CKunenaLink::GetShowLatestThreadsURL(168);
 			?>"><?php
-			echo JText::_(COM_KUNENA_SHOW_WEEK)?></option>
+			echo JText::_('COM_KUNENA_SHOW_WEEK')?></option>
 			<option <?php
 			if ($this->show_list_time == '720') :
 				?>
@@ -131,7 +131,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 				value="<?php
 			echo CKunenaLink::GetShowLatestThreadsURL(720);
 			?>"><?php
-			echo JText::_(COM_KUNENA_SHOW_MONTH)?></option>
+			echo JText::_('COM_KUNENA_SHOW_MONTH')?></option>
 			<option <?php
 			if ($this->show_list_time == '8760') :
 				?>
@@ -141,7 +141,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			?>
 				value="<?php
 			echo CKunenaLink::GetShowLatestThreadsURL(8760)?>"><?php
-			echo JText::_(COM_KUNENA_SHOW_YEAR)?></option>
+			echo JText::_('COM_KUNENA_SHOW_YEAR')?></option>
 		</select></td>
 
 		<?php
@@ -178,7 +178,7 @@ if (count ( $this->threadids ) > 0) :
 	<tr>
 		<td class="klist_actions_info_all"><strong><?php
 	echo $this->total?></strong> <?php
-	echo JText::_(COM_KUNENA_DISCUSSIONS)?>
+	echo JText::_('COM_KUNENA_DISCUSSIONS')?>
 			</td>
 
 			<?php

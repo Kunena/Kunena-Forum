@@ -23,6 +23,9 @@
 
 defined( '_JEXEC' ) or die();
 
+$lang = JFactory::getLanguage();
+$lang->load('com_kunena', JPATH_COMPONENT);
+
 // First of all take a profiling information snapshot for JFirePHP
 if(JDEBUG == 1){
 	require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.profiler.php');
@@ -32,9 +35,6 @@ if(JDEBUG == 1){
 
 // Kunena wide defines
 require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
-
-require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'kunena.langconvert.php');
-return;
 
 global $message;
 global $kunena_this_cat;
@@ -187,7 +187,7 @@ if ($func == "json") {
 // Check if we only allow registered users
 
 if ($kunena_config->regonly && ! $kunena_my->id) {
-	$kunena_app->enqueueMessage ( JText::_(COM_KUNENA_A_REGISTERED_ONLY) . '<br/>' . JText::_(COM_KUNENA_FORUM_UNAUTHORIZIED) . '<br/>' . JText::_(COM_KUNENA_FORUM_UNAUTHORIZIED2), 'error' );
+	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_A_REGISTERED_ONLY') . '<br/>' . JText::_('COM_KUNENA_FORUM_UNAUTHORIZIED') . '<br/>' . JText::_('COM_KUNENA_FORUM_UNAUTHORIZIED2'), 'error' );
 } // or if the board is offline
 
 else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
@@ -267,7 +267,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$kunena_session->save ( $kunena_session );
 
 		if ($markaction == "allread") {
-			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_(COM_KUNENA_GEN_ALL_MARKED) );
+			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
 		}
 
 		$userprofile = CKunenaUserprofile::getInstance($kunena_my->id);
@@ -340,7 +340,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	if ($kunena_config->board_offline) {
 		?>
 <span id="fbOffline"><?php
-		echo JText::_(COM_KUNENA_FORUM_IS_OFFLINE)?></span> <?php
+		echo JText::_('COM_KUNENA_FORUM_IS_OFFLINE')?></span> <?php
 	}
 	?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0"
@@ -601,7 +601,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$kunena_db->query ();
 			check_dberror ( 'Unable to update readtopics in session table.' );
 
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), JText::_(COM_KUNENA_GEN_FORUM_MARKED) );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
 			break;
 
 		#########################################################################################
@@ -614,7 +614,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				$kunena_db->setQuery ( $query );
 
 				if (@$kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
-					$success_msg = JText::_(COM_KUNENA_GEN_CATEGORY_SUBCRIBED);
+					$success_msg = JText::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED');
 				}
 				check_dberror ( "Unable to subscribe to category." );
 			}
@@ -631,7 +631,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				$kunena_db->setQuery ( $query );
 
 				if ($kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
-					$success_msg = JText::_(COM_KUNENA_GEN_CATEGORY_UNSUBCRIBED);
+					$success_msg = JText::_('COM_KUNENA_GEN_CATEGORY_UNSUBCRIBED');
 				}
 				check_dberror ( "Unable to unsubscribe from category." );
 			}
@@ -743,10 +743,10 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	// Credits
 
-	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_(COM_KUNENA_POWEREDBY) ) . ' ' . CKunenaLink::GetCreditsLink ();
+	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
 	if ($kunena_config->enablerss) {
-		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_(COM_KUNENA_LISTCAT_RSS) . '" href="' . CKunenaLink::GetRSSURL() . '" />' );
-		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . 'rss.gif" border="0" alt="' . JText::_(COM_KUNENA_LISTCAT_RSS) . '" title="' . JText::_(COM_KUNENA_LISTCAT_RSS) . '" />' );
+		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL() . '" />' );
+		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . 'rss.gif" border="0" alt="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" />' );
 	}
 	echo '</div>';
 

@@ -29,7 +29,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 		<tr>
 			<th colspan="2">
 				<div class="ktitle_cover km">
-					<a class="ktitle kl"><?php echo JText::_(COM_KUNENA_FORUM_MESSAGE); ?></a>
+					<a class="ktitle kl"><?php echo JText::_('COM_KUNENA_FORUM_MESSAGE'); ?></a>
 				</div>
 			</th>
 		</tr>
@@ -37,7 +37,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 	<tbody>
 		<tr class="ksth">
 			<th colspan="2" class="ksectiontableheader" align="left">
-				<?php echo JText::_(COM_KUNENA_LOGIN_FORUM) ?>
+				<?php echo JText::_('COM_KUNENA_LOGIN_FORUM') ?>
 			</th>
 		</tr>
 		<tr>
@@ -47,7 +47,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 		<tr>
 			<th colspan="2">
 				<div class="ktitle_cover km">
-					<a class="ktitle kl"><?php echo JText::_(COM_KUNENA_PROFILEBOX_LOGIN); ?></a>
+					<a class="ktitle kl"><?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?></a>
 				</div>
 			</th>
 		</tr>
@@ -63,7 +63,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 						<table cellspacing="1" cellpadding="4" align="center" style="width: 100%;">
 							<tbody>
 								<tr>
-									<td valign="top"><b><?php echo JText::_(COM_KUNENA_A_USERNAME); ?></b></td>
+									<td valign="top"><b><?php echo JText::_('COM_KUNENA_A_USERNAME'); ?></b></td>
 									<td><input type="text" name="username" class="inputbox ks" alt="username" size="40" /> <br />
 									<span class="kprofilebox_link">
 										<?php echo CKunenaLogin::getLostUserLink ();?>
@@ -71,7 +71,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 									</td>
 								</tr>
 								<tr>
-									<td valign="top"><b><?php echo JText::_(COM_KUNENA_PASS); ?></b>
+									<td valign="top"><b><?php echo JText::_('COM_KUNENA_PASS'); ?></b>
 									</td>
 									<td>
 										<input type="password" name="passwd" class="inputbox ks" size="40" alt="password" value=""/>
@@ -88,7 +88,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 									<td></td>
 									<td>
 										<input type="checkbox" name="remember" value="yes" alt="Remember Me" />
-										<span><?php echo JText::_(COM_KUNENA_PROFILEBOX_REMEMBER_ME); ?></span>
+										<span><?php echo JText::_('COM_KUNENA_PROFILEBOX_REMEMBER_ME'); ?></span>
 									</td>
 								</tr>
 								<?php endif;
@@ -99,7 +99,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 					</tr>
 					<tr>
 			<td align="left">
-				<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_(COM_KUNENA_PROFILEBOX_LOGIN); ?>" />
+				<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
 				<input type="hidden" name="option" value="com_user" />
 				<input type="hidden" name="task" value="login" />
 				<input type="hidden" name="return" value="<?php echo $return; ?>" />
@@ -118,7 +118,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 		<tr>
 			<th colspan="2">
 				<div class="ktitle_cover km">
-					<a class="ktitle kl"><?php echo JText::_(COM_KUNENA_PROFILEBOX_REGISTER); ?></a>
+					<a class="ktitle kl"><?php echo JText::_('COM_KUNENA_PROFILEBOX_REGISTER'); ?></a>
 				</div>
 			</th>
 		</tr>
@@ -136,20 +136,20 @@ $return = CKunenaLogin::getReturnURL ( $type );
 						<p><?php
 						$usersConfig = &JComponentHelper::getParams ( 'com_users' );
 						if ($usersConfig->get ( 'allowUserRegistration' )) {
-						echo JText::_(COM_KUNENA_LOGIN_MESSAGE);
+						echo JText::_('COM_KUNENA_LOGIN_MESSAGE');
 						} else {
-						echo JText::_(COM_KUNENA_REG_NOTALLOWED); }
+						echo JText::_('COM_KUNENA_REG_NOTALLOWED'); }
 						?></p>
 						<p align="center"><?php
 						if ($this->config->enablerulespage) {
 							?><span class="kprofilebox_link">
-						<?php echo CKunenaLink::GetRulesLink($this->config, JText::_(COM_KUNENA_FORUM_RULES) ); ?></span>
+						<?php echo CKunenaLink::GetRulesLink($this->config, JText::_('COM_KUNENA_FORUM_RULES') ); ?></span>
 						<?php
 						}
 						?> &nbsp;&nbsp;&nbsp;&nbsp; <?php
 						if ($this->config->enablehelppage) {
 							?><span class="kprofilebox_link">
-							<?php echo CKunenaLink::GetHelpLink($this->config, JText::_(COM_KUNENA_FORUM_HELP) ); ?></span>
+							<?php echo CKunenaLink::GetHelpLink($this->config, JText::_('COM_KUNENA_FORUM_HELP') ); ?></span>
 						<?php
 						}
 						?></p>

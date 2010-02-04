@@ -105,61 +105,61 @@ table.fbstat .col2 {
 }
 </style>
 <div class="fbwelcome">
-  <h3><?php echo JText::_(COM_KUNENA_WELCOME);?></h3>
-  <p><?php echo JText::_(COM_KUNENA_WELCOME_DESC);?></p>
+  <h3><?php echo JText::_('COM_KUNENA_WELCOME');?></h3>
+  <p><?php echo JText::_('COM_KUNENA_WELCOME_DESC');?></p>
 </div>
 <div style="border:1px solid #ddd; background:#FBFBFB;">
   <table class = "thisform">
     <tr class = "thisform">
       <td width = "100%" valign = "top" class = "thisform"><div id = "cpanel">
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showconfig" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_FBCONFIGDESC);?>"> <img src = "components/com_kunena/images/fbconfig.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_C_FBCONFIG); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showconfig" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_FBCONFIGDESC');?>"> <img src = "components/com_kunena/images/fbconfig.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showAdministration" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_FORUMDESC);?>"> <img src = "components/com_kunena/images/fbforumadm.png" align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_C_FORUM); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showAdministration" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_FORUMDESC');?>"> <img src = "components/com_kunena/images/fbforumadm.png" align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_FORUM'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showprofiles" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_USERDESC);?>"> <img src = "components/com_kunena/images/fbuser.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_C_USER); ?> </span> </a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showprofiles" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_USERDESC');?>"> <img src = "components/com_kunena/images/fbuser.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_USER'); ?> </span> </a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=browseFiles" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_FILESDESC);?>"> <img src = "components/com_kunena/images/fbfiles.png" align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_C_FILES); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=browseFiles" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_FILESDESC');?>"> <img src = "components/com_kunena/images/fbfiles.png" align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_FILES'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=browseImages" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_IMAGESDESC);?>"> <img src = "components/com_kunena/images/fbimages.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_C_IMAGES); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=browseImages" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_IMAGESDESC');?>"> <img src = "components/com_kunena/images/fbimages.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_IMAGES'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showCss" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_CSSDESC);?>"> <img src = "components/com_kunena/images/fbcss.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_C_CSS); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showCss" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_CSSDESC');?>"> <img src = "components/com_kunena/images/fbcss.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_CSS'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=pruneforum" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_PRUNETABDESC);?>"> <img src = "components/com_kunena/images/fbtable.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_C_PRUNETAB); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=pruneforum" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_PRUNETABDESC');?>"> <img src = "components/com_kunena/images/fbtable.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_SYNCEUSERSDESC);?>"> <img src = "components/com_kunena/images/fbusers.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_SYNC_USERS); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=syncusers" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_SYNCEUSERSDESC');?>"> <img src = "components/com_kunena/images/fbusers.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "http://www.kunena.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_C_SUPPORTDESC);?>"> <img src = "components/com_kunena/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_C_SUPPORT); ?> </span></a> </div>
+            <div class = "icon"> <a href = "http://www.kunena.com" target = "_blank" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_C_SUPPORTDESC');?>"> <img src = "components/com_kunena/images/fbtechsupport.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_EMOTICONS_EDIT_SMILIES);?>"> <img src = "components/com_kunena/images/fbsmiley.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_EMOTICONS_EDIT_SMILIES);?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showsmilies" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILIES');?>"> <img src = "components/com_kunena/images/fbsmiley.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILIES');?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=recount&no_html=1" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_RECOUNTFORUMS);?>"> <img src = "components/com_kunena/images/fbupgrade.png" align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_RECOUNTFORUMS); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=recount&no_html=1" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_RECOUNTFORUMS');?>"> <img src = "components/com_kunena/images/fbupgrade.png" align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_RANKS_MANAGE);?>"> <img src = "components/com_kunena/images/fbranks.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_RANKS_MANAGE); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=ranks" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_RANKS_MANAGE');?>"> <img src = "components/com_kunena/images/fbranks.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_RANKS_MANAGE'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=createmenu" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_CREATE_MENU);?>"> <img src = "images/menu.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_CREATE_MENU); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=createmenu" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_CREATE_MENU');?>"> <img src = "images/menu.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_CREATE_MENU'); ?> </span></a> </div>
           </div>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showtrashview" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_TRASH_VIEW);?>"> <img src = "images/trash.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_TRASH_VIEW); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showtrashview" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_TRASH_VIEW');?>"> <img src = "images/trash.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?> </span></a> </div>
           </div>
           <?php
           $kn_version = CKunenaVersion::versionArray ();
           if (JString::strpos ( $kn_version->version, 'SVN' ) !== false) {
           ?>
           <div style = "float:left;">
-            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=install" style = "text-decoration:none;" title = "<?php echo JText::_(COM_KUNENA_SVN_INSTALL);?>"> <img src = "images/install.png"  align = "middle" border = "0"/> <span> <?php echo JText::_(COM_KUNENA_SVN_INSTALL); ?> </span></a> </div>
+            <div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=install" style = "text-decoration:none;" title = "<?php echo JText::_('COM_KUNENA_SVN_INSTALL');?>"> <img src = "images/install.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_SVN_INSTALL'); ?> </span></a> </div>
           </div>
           <?php
           }
@@ -176,7 +176,7 @@ table.fbstat .col2 {
     ?>
   <table cellspacing="1"  border="0" width="100%" class="fbstat">
     <caption>
-    <?php echo JText::_(COM_KUNENA_STATS_GEN_STATS); ?>
+    <?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?>
     </caption>
     <col class="col1">
     <col class="col2">
@@ -184,10 +184,10 @@ table.fbstat .col2 {
     <col class="col2">
     <thead>
       <tr>
-        <th><?php echo JText::_(COM_KUNENA_STATISTIC);?></th>
-        <th><?php echo JText::_(COM_KUNENA_VALUE);?></th>
-        <th><?php echo JText::_(COM_KUNENA_STATISTIC);?></th>
-        <th><?php echo JText::_(COM_KUNENA_VALUE);?></th>
+        <th><?php echo JText::_('COM_KUNENA_STATISTIC');?></th>
+        <th><?php echo JText::_('COM_KUNENA_VALUE');?></th>
+        <th><?php echo JText::_('COM_KUNENA_STATISTIC');?></th>
+        <th><?php echo JText::_('COM_KUNENA_VALUE');?></th>
       </tr>
     </thead>
     <?php
@@ -195,33 +195,33 @@ table.fbstat .col2 {
 	?>
     <tbody>
       <tr>
-        <td><?php echo JText::_(COM_KUNENA_STATS_TOTAL_MEMBERS); ?> </td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_MEMBERS'); ?> </td>
         <td><strong><?php echo jbStats::get_total_members(); ?></strong></td>
-        <td><?php echo JText::_(COM_KUNENA_STATS_TOTAL_SECTIONS); ?> </td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_SECTIONS'); ?> </td>
         <td><strong><?php echo jbStats::get_total_sections();?></strong></td>
       </tr>
       <tr>
-        <td><?php echo JText::_(COM_KUNENA_STATS_TOTAL_REPLIES); ?></td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_REPLIES'); ?></td>
         <td><strong><?php echo jbStats::get_total_messages() ;?></strong></td>
-        <td><?php echo JText::_(COM_KUNENA_STATS_TOTAL_CATEGORIES); ?> </td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_CATEGORIES'); ?> </td>
         <td><strong><?php echo jbStats::get_total_categories() ;?></strong></td>
       </tr>
       <tr>
-        <td><?php echo JText::_(COM_KUNENA_STATS_TOTAL_TOPICS); ?></td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_TOPICS'); ?></td>
         <td><strong><?php echo jbStats::get_total_topics() ;?></strong></td>
-        <td><?php echo JText::_(COM_KUNENA_STATS_LATEST_MEMBER); ?> </td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_LATEST_MEMBER'); ?> </td>
         <td><strong><?php echo jbStats::get_latest_member() ;?></strong></td>
       </tr>
       <tr>
-        <td><?php echo JText::_(COM_KUNENA_STATS_TODAY_TOPICS); ?></td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_TODAY_TOPICS'); ?></td>
         <td><strong><?php echo jbStats::get_total_topics(date("Y-m-d 00:00:01"),date("Y-m-d 23:59:59")) ;?></strong></td>
-        <td><?php echo JText::_(COM_KUNENA_STATS_YESTERDAY_TOPICS); ?> </td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_YESTERDAY_TOPICS'); ?> </td>
         <td><strong><?php echo jbStats::get_total_topics(date("Y-m-d 00:00:01",$yesterday),date("Y-m-d 23:59:59",$yesterday)) ;?></strong></td>
       </tr>
       <tr>
-        <td><?php echo JText::_(COM_KUNENA_STATS_TODAY_REPLIES); ?></td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_TODAY_REPLIES'); ?></td>
         <td><strong><?php echo jbStats::get_total_messages(date("Y-m-d 00:00:01"),date("Y-m-d 23:59:59")) ;?></strong></td>
-        <td><?php echo JText::_(COM_KUNENA_STATS_YESTERDAY_REPLIES); ?></td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_YESTERDAY_REPLIES'); ?></td>
         <td><strong>
           <?php
 	echo jbStats::get_total_messages(date("Y-m-d 00:00:01",$yesterday),date("Y-m-d 23:59:59",$yesterday)) ;
@@ -236,16 +236,16 @@ table.fbstat .col2 {
       <td width="49%" valign="top"><!-- -->
         <table cellspacing="1"  border="0" width="100%" class="fbstat">
           <caption>
-          <?php echo JText::_(COM_KUNENA_STATS_TOP_POSTERS); ?>
+          <?php echo JText::_('COM_KUNENA_STATS_TOP_POSTERS'); ?>
           </caption>
           <col class="col1">
           <col class="col2">
           <col class="col2">
           <thead>
             <tr>
-              <th><?php echo JText::_(COM_KUNENA_USRL_USERNAME);?></th>
+              <th><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
               <th></th>
-              <th><?php echo JText::_(COM_KUNENA_USRL_HITS);?></th>
+              <th><?php echo JText::_('COM_KUNENA_USRL_HITS');?></th>
             </tr>
           </thead>
           <tbody>
@@ -275,16 +275,16 @@ table.fbstat .col2 {
       <td width="49%" valign="top"><!--  -->
         <table cellspacing="1"  border="0" width="100%" class="fbstat">
           <caption>
-          <?php echo  JText::_(COM_KUNENA_STATS_POPULAR_PROFILE); ?>
+          <?php echo  JText::_('COM_KUNENA_STATS_POPULAR_PROFILE'); ?>
           </caption>
           <col class="col1">
           <col class="col2">
           <col class="col2">
           <thead>
             <tr>
-              <th><?php echo JText::_(COM_KUNENA_USRL_USERNAME);?></th>
+              <th><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
               <th></th>
-              <th><?php echo JText::_(COM_KUNENA_USRL_HITS);?></th>
+              <th><?php echo JText::_('COM_KUNENA_USRL_HITS');?></th>
             </tr>
           </thead>
           <tbody>
@@ -314,16 +314,16 @@ table.fbstat .col2 {
   <!-- Begin : Top popular topics -->
   <table cellspacing="1"  border="0" width="100%" class="fbstat">
     <caption>
-    <?php echo JText::_(COM_KUNENA_STATS_POPULAR_TOPICS); ?>
+    <?php echo JText::_('COM_KUNENA_STATS_POPULAR_TOPICS'); ?>
     </caption>
     <col class="col1">
     <col class="col2">
     <col class="col2">
     <thead>
       <tr>
-        <th><?php echo JText::_(COM_KUNENA_USERPROFILE_TOPICS);?></th>
+        <th><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
         <th></th>
-        <th><?php echo JText::_(COM_KUNENA_USRL_HITS);?></th>
+        <th><?php echo JText::_('COM_KUNENA_USRL_HITS');?></th>
       </tr>
     </thead>
     <tbody>

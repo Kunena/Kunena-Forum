@@ -39,17 +39,7 @@ include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 // keep session alive while editing
 JHTML::_ ( 'behavior.keepalive' );
 JHTML::_('behavior.formvalidation');
-?>
-<script language="javascript">
-function myValidate(f) {
-   if (document.formvalidator.isValid(f)) {
-      f.check.value='<?php echo JUtility::getToken(); ?>'; //send token
-      return true;
-   }
-   return false;
-}
-</script>
-<?php
+
 $document =& JFactory::getDocument();
 
 // Load mootool more as it is currently not included in Joomla or the mootools12 plugin
@@ -112,7 +102,7 @@ if (! empty ( $this->kunena_editmode )) :
 <?php if (! empty ( $this->contentURL )) :?>
 <input type="hidden" name="contentURL" value="<?php echo $this->contentURL; ?>" />
 <?php endif; ?>
-<input type="hidden" name="check" value="post"/>
+<?php echo JHTML::_( 'form.token' ); ?>
 
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -174,7 +164,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				} else {
 					?>
 					<td><input type="text" id="kauthorname" name="authorname" size="35"
-						class="kinputbox postinput required"  maxlength="35" value="" />
+						class="kinputbox postinput required" maxlength="35" value="" />
 						<script type="text/javascript">document.postform.authorname.focus();</script>
 					</td>
 					<?php

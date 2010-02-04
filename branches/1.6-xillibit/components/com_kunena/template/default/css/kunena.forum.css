@@ -69,7 +69,7 @@ PX		EM			PCT			PT
 /* 
 ----------------------------------------------------------------------------------------------- */
 
-.invalid {color:red;}
+
 
 /* Main styles  */	
 #Kunena td,
@@ -1905,8 +1905,8 @@ POST PAGE
 #Kunena #kpost_message .postinput {
 	width: 94%;
 	background: #FFFFFF; 
-	/*color: #000000;
-	border: 1px solid #BFC3C6;removed because are in conflict with the from validation */
+	color: #000000;
+	border: 1px solid #BFC3C6;
 	padding: 3px 5px;
 }
 
@@ -1955,7 +1955,7 @@ POST PAGE
 	overflow: auto;
 	/* IMPORTANT: height must be set in px */
 	height: 200px;
-	/*border: 1px solid #BFC3C6;*/
+	border: 1px solid #BFC3C6;
 }
 
 td.kcaptcha {
@@ -3607,3 +3607,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 	color: #999999;
 }
 
+/* for form-validation
+--------------------------------------------------------------------------------------------------- */
+	
+#Kunena #kpost_message .invalid {border: 1px solid red !important;}

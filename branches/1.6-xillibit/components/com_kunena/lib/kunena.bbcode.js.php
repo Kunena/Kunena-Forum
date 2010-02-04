@@ -913,6 +913,13 @@ function kGrowShrinkMessage(change){
 	}
 }
 
+function myValidate(f) {
+   if (document.formvalidator.isValid(f)) {
+      return true;
+   }
+   return false;
+}
+
 function cancelForm() {
    document.forms['postform'].action.value = "cancel";
    return true;

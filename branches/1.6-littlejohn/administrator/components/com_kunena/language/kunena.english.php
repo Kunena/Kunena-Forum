@@ -26,6 +26,36 @@ defined( '_JEXEC' ) or die();
 
 // 1.6.0
 
+// rss
+DEFINE('_COM_A_RSS', 'Enable RSS feeds');
+DEFINE('_COM_A_RSS_DESC', 'The RSS feed enables users to download the latest posts to their desktop or RSS reader aplication. See <a href="http://www.rssreader.com" target="_blank">rssreader.com</a> for an example.');
+DEFINE('_COM_A_RSS_TYPE', 'Global RSS: Feed type');
+DEFINE('_COM_A_RSS_TYPE_DESC', 'Choose between RSS feed types.<br/><u>Newest Threads</u> - list only threads, no posts. Sorted by newest first.<br /><u>Newest Post</u> - list only posts, no threads. Sorted by newest first.<br /><u>Recent activity</u> - list threads that have the newest answers first (incl. posts).');
+DEFINE('_COM_A_RSS_TYPE_THREAD', 'By newest Threads');
+DEFINE('_COM_A_RSS_TYPE_POST', 'By newest Posts');
+DEFINE('_COM_A_RSS_TYPE_RECENT', 'By recent activity');
+DEFINE('_COM_A_RSS_SPEC', 'Global RSS: Specification');
+DEFINE('_COM_A_RSS_SPEC_DESC', 'Specify an custom format for all rss feeds.');
+DEFINE('_COM_A_RSS_SPEC_090', 'RSS 0.9');
+DEFINE('_COM_A_RSS_SPEC_091', 'RSS 0.91');
+DEFINE('_COM_A_RSS_SPEC_10', 'RSS 1.0');
+DEFINE('_COM_A_RSS_SPEC_20', 'RSS 2.0');
+DEFINE('_COM_A_RSS_TIMELIMIT', 'Global RSS: History (timelimit)');
+DEFINE('_COM_A_RSS_TIMELIMIT_DESC', 'Select how much history should be included in the RSS feeds. The default is one month, but it is recommended to limit it to one week on high volume sites.');
+DEFINE('_COM_A_RSS_TIMELIMIT_WEEK', '1 week');
+DEFINE('_COM_A_RSS_TIMELIMIT_MONTH', '1 month');
+DEFINE('_COM_A_RSS_TIMELIMIT_YEAR', '1 year');
+DEFINE('_COM_A_RSS_LIMIT', 'Global RSS: Limit');
+DEFINE('_COM_A_RSS_LIMIT_DESC', 'You can also limit the number of items in your RSS feeds. Use this, if the timelimit is not enough. Can be used with, or without, a timelimit.<br />Use 0 or leave empty for no limit.');
+DEFINE('_COM_A_RSS_ONLY_PUBLIC', 'Global RSS: Only public categories?');
+DEFINE('_COM_A_RSS_ONLY_PUBLIC_DESC', 'Select the behaviour of feed content.<br/><u>Yes</u> - only include postings from the public categories which everyone has access to.<br/><u>No</u> - include postings from all categories (override security)<br/>Note: Included and excluded categories below, is applied no matter of this setting.');
+DEFINE('_COM_A_RSS_INCLUDED_CATEGORIES', 'Global RSS: Include categories');
+DEFINE('_COM_A_RSS_INCLUDED_CATEGORIES_DESC', 'Specify a list of categories (separated by comma) to be included exclusively in global feeds. <br/>Please note: This option is not real usefull, because global feeds will then ONLY present data from these categories if specified.<br/>Leave empty to include all categories.');
+DEFINE('_COM_A_RSS_EXCLUDED_CATEGORIES', 'Global RSS: Exclude categories');
+DEFINE('_COM_A_RSS_EXCLUDED_CATEGORIES_DESC', 'Specify a list of categories (separated by comma) to be excluded in <u>all</u> feeds. <br/>Leave empty to ignore feature.');
+DEFINE('_COM_A_RSS_ALLOW_HTML', 'Global RSS: Allow HTML &amp; bbcode in RSS feeds');
+DEFINE('_COM_A_RSS_ALLOW_HTML_DESC', 'Allowing HTML & bbcode in RSS feeds can be a security threat, as hackers sometimes try to smuggle evil javascripts and images into forum-messages.<br />It is therefore not recommended to allow HTML &amp; bbcode in RSS feeds.');
+
 //change captcha strings
 DEFINE('_KUNENA_CAPTCHA_ON','Enable anti-spam system with reCaptcha');
 DEFINE('_KUNENA_CAPTCHA_DESC','Captcha system On/Off, before enable this you need to have installed the plugin reCaptcha, look into the wiki for more information');
@@ -637,15 +667,6 @@ DEFINE('_KUNENA_JOMSOCIAL', 'JomSocial');
 // 1.0.5
 DEFINE('_COM_A_HIGHLIGHTCODE', 'Enable Code Highlighting');
 DEFINE('_COM_A_HIGHLIGHTCODE_DESC', 'Enables the Kunena code tag highlighting Javascript. If your members post PHP or other code fragments within code tags, turning this on will colorize the code. If your forum does not make use of such programing language posts, you might want to turn it off to avoid code tags from becoming malformed.');
-DEFINE('_COM_A_RSS_TYPE', 'Default RSS type');
-DEFINE('_COM_A_RSS_TYPE_DESC', 'Choose between RSS feeds <em>By Thread <em> or <em>By Post.</em> <em>By Thread <em> means that only one entry per thread will be listed in the RSS feed independent of how many posts have been made within that thread. <em>By Thread</em> creates a shorter, more compact RSS feed but will not list every reply.');
-DEFINE('_COM_A_RSS_BY_THREAD', 'By Thread');
-DEFINE('_COM_A_RSS_BY_POST', 'By Post');
-DEFINE('_COM_A_RSS_HISTORY', 'RSS History');
-DEFINE('_COM_A_RSS_HISTORY_DESC', 'Select how much history should be included in the RSS feed. The default is one month, but it is recommended to limit it to one week on high volume sites.');
-DEFINE('_COM_A_RSS_HISTORY_WEEK', '1 week');
-DEFINE('_COM_A_RSS_HISTORY_MONTH', '1 month');
-DEFINE('_COM_A_RSS_HISTORY_YEAR', '1 year');
 DEFINE('_COM_A_FBDEFAULT_PAGE', 'Default Kunena Page');
 DEFINE('_COM_A_FBDEFAULT_PAGE_DESC', 'Select the default Kunena page that is displayed when a forum link is clicked or the forum is initially entered. Default is Recent Topics. Should be set to Categories for templates other than default. If My Topics is selected, guests will default to Recent Topics.');
 DEFINE('_COM_A_FBDEFAULT_PAGE_RECENT', 'Recent Topics');
@@ -1676,8 +1697,6 @@ DEFINE('_USER_CHANGE_VIEW', 'Changes in these settings will become active the ne
 DEFINE('_MOSBOT_DISCUSS_A', 'Discuss this article on the forums. (');
 DEFINE('_MOSBOT_DISCUSS_B', 'posts)');
 DEFINE('_POST_DISCUSS', 'This thread discusses the content article');
-DEFINE('_COM_A_RSS', 'Enable RSS feed');
-DEFINE('_COM_A_RSS_DESC', 'The RSS feed enables users to download the latest posts to their desktop or RSS reader aplication. See <a href="http://www.rssreader.com" target="_blank">rssreader.com</a> for an example.');
 DEFINE('_LISTCAT_RSS', 'get the latest posts directly to your desktop');
 DEFINE('_SEARCH_REDIRECT', 'Kunena needs to (re)establish your access privileges before it can perform your search request.\nDo not worry, this is quite normal after more than 30 minutes of inactivity.\nPlease submit your search request again.');
 //====================

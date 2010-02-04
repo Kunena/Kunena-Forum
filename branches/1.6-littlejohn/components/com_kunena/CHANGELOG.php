@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-Feb-2010 littlejohn
+^ [#19399] New RSS feeds (part 1 - adding administrative options)
+ 
 01-Feb-2010 fxstein
 ^ [#19236] Revert category overlay colors
 # [#19356] Center menu tabs and make spacing font size relative

@@ -738,22 +738,60 @@ function showConfig($option) {
 
 	// build the html select list
 
-
-	$rsslist = array ();
-	$rsslist [] = JHTML::_ ( 'select.option', 'thread', _COM_A_RSS_BY_THREAD );
-	$rsslist [] = JHTML::_ ( 'select.option', 'post', _COM_A_RSS_BY_POST );
-
-	// build the html select list
-	$lists ['rsstype'] = JHTML::_ ( 'select.genericlist', $rsslist, 'cfg_rsstype', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rsstype );
-
-	$rsshistorylist = array ();
-	$rsshistorylist [] = JHTML::_ ( 'select.option', 'week', _COM_A_RSS_HISTORY_WEEK );
-	$rsshistorylist [] = JHTML::_ ( 'select.option', 'month', _COM_A_RSS_HISTORY_MONTH );
-	$rsshistorylist [] = JHTML::_ ( 'select.option', 'year', _COM_A_RSS_HISTORY_YEAR );
-
-	// build the html select list
-	$lists ['rsshistory'] = JHTML::_ ( 'select.genericlist', $rsshistorylist, 'cfg_rsshistory', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rsshistory );
-
+	// RSS
+	{
+		// options to be used later
+		$rss_yesno = array ();
+		$rss_yesno [] = JHTML::_ ( 'select.option', '0', _COM_A_NO );
+		$rss_yesno [] = JHTML::_ ( 'select.option', '1', _COM_A_YES );
+		
+		// ------
+		
+		$rss_type = array ();
+		$rss_type [] = JHTML::_ ( 'select.option', 'thread', _COM_A_RSS_TYPE_THREAD );
+		$rss_type [] = JHTML::_ ( 'select.option', 'post', _COM_A_RSS_TYPE_POST );
+		$rss_type [] = JHTML::_ ( 'select.option', 'recent', _COM_A_RSS_TYPE_RECENT );
+		
+		// build the html select list
+		$lists ['rss_type'] = JHTML::_ ( 'select.genericlist', $rss_type, 'cfg_rss_type', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_type );
+		
+		// ------
+		
+		$rss_timelimit = array ();
+		$rss_timelimit [] = JHTML::_ ( 'select.option', 'week', _COM_A_RSS_TIMELIMIT_WEEK );
+		$rss_timelimit [] = JHTML::_ ( 'select.option', 'month', _COM_A_RSS_TIMELIMIT_MONTH );
+		$rss_timelimit [] = JHTML::_ ( 'select.option', 'year', _COM_A_RSS_TIMELIMIT_YEAR );
+		
+		// build the html select list
+		$lists ['rss_timelimit'] = JHTML::_ ( 'select.genericlist', $rss_timelimit, 'cfg_rss_timelimit', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_timelimit );
+		
+		// ------
+		
+		$rss_specification = array ();
+		$rss_specification [] = JHTML::_ ( 'select.option', 'rss0.9', _COM_A_RSS_SPEC_090 );
+		$rss_specification [] = JHTML::_ ( 'select.option', 'rss0.91', _COM_A_RSS_SPEC_091 );
+		$rss_specification [] = JHTML::_ ( 'select.option', 'rss1.0', _COM_A_RSS_SPEC_10 );
+		$rss_specification [] = JHTML::_ ( 'select.option', 'rss2.0', _COM_A_RSS_SPEC_20 );
+		
+		// build the html select list
+		$lists ['rss_specification'] = JHTML::_ ( 'select.genericlist', $rss_specification, 'cfg_rss_specification', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_specification );
+		
+		// ------
+		
+		// build the html select list
+		$lists ['rss_allow_html'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_rss_allow_html', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_allow_html );
+		
+		// ------
+		
+		// build the html select list
+		$lists ['rss_only_public'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_rss_only_public', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_only_public );
+		
+		// ------
+		
+		// build the html select list - (moved enablerss here, to keep all rss-related features together)
+		$lists ['enablerss'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerss );
+	}
+	
 	// source of avatar picture
 	$avlist = array ();
 	$avlist [] = JHTML::_ ( 'select.option', 'fb', _KUNENA_KUNENA );
@@ -881,7 +919,6 @@ function showConfig($option) {
 	$lists ['allowfileregupload'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowfileregupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowfileregupload );
 	$lists ['editmarkup'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->editmarkup );
 	$lists ['discussbot'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_discussbot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->discussbot );
-	$lists ['enablerss'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerss );
 	$lists ['showkarma'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showkarma );
 	$lists ['enablepdf'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablepdf );
 	$lists ['enablerulespage'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerulespage );

@@ -31,6 +31,15 @@ global $imageLocation, $fileLocation, $board_title, $topic_emoticons;
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
 $kunena_config =& CKunenaConfig::getInstance();
+if(isset($_POST['check'])){
+	if ($_POST['check']!=JUtility::getToken()) {
+   		// First verify (by a Javascript error or other methods) that the form has not been submitted without the validation
+   		if ($_POST['check']=='post') $kunena_app->enqueueMessage('Please check all the fields of the form, aub.<br/>
+		If your browser blocks Javascript, then this form will never be successful. This is a security measure.','error');
+   		// If the check still isn't a valid token, do nothing. This might be a spoof attack or other invalid form submission
+   		return false;
+	}
+}
 
 $subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );

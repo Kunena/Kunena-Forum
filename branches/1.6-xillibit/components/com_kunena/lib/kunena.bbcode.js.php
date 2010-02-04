@@ -913,52 +913,6 @@ function kGrowShrinkMessage(change){
 	}
 }
 
-function submitForm() {
- submitme=1;
- formname=document.postform.authorname.value;
- polltitle=document.postform.poll_title.value;
-
-//
-// TODO: Really bad code - Needs to be rewritten
-//
-//	polloptionone=document.postform.field_option0.value;
-//	if((polltitle.length<1) && (polloptionone.length<1)){
-//		alert("<?php echo _KUNENA_POLL_FORGOT_TITLE_OPTIONS;?>");
-//		submitme=0;
-//	}
- if ((formname.length<1)) {
-    alert("<?php echo _POST_FORGOT_NAME_ALERT;?>");
-    submitme=0;
- }
-<?php
-if ($kunena_config->askemail) {
-?>
- formmail=document.postform.email.value;
- if ((formmail.length<1)) {
-    alert("<?php echo _POST_FORGOT_EMAIL_ALERT;?>");
-    submitme=0;
-  }
-<?php
-}
-?>
-  formsubject=document.postform.subject.value;
-  if ((formsubject.length<1)) {
-    alert("<?php echo _POST_FORGOT_SUBJECT_ALERT;?>");
-    submitme=0;
-  }
-  message=document.postform.message.value;
-  if ((message.length<1)) {
-    alert("<?php echo _POST_FORGOT_MESSAGE_ALERT;?>");
-    submitme=0;
-  }
-  if (submitme>0) {
-  //change the following line to true to submit form
-    return true;
-  }else{
-    return false;
-  }
-}
-
 function cancelForm() {
    document.forms['postform'].action.value = "cancel";
    return true;

@@ -38,7 +38,18 @@ include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
 // keep session alive while editing
 JHTML::_ ( 'behavior.keepalive' );
-
+JHTML::_('behavior.formvalidation');
+?>
+<script language="javascript">
+function myValidate(f) {
+   if (document.formvalidator.isValid(f)) {
+      f.check.value='<?php echo JUtility::getToken(); ?>'; //send token
+      return true;
+   }
+   return false;
+}
+</script>
+<?php
 $document =& JFactory::getDocument();
 
 // Load mootool more as it is currently not included in Joomla or the mootools12 plugin
@@ -63,16 +74,18 @@ var RecaptchaOptions = {
 		');
 ?>
 
-<form class="postform" id="postform"
+<form class="postform form-validate" id="postform"
 	action="<?php
 	echo CKunenaLink::GetPostURL();
 	?>"
-	method="post" name="postform" enctype="multipart/form-data">
+	method="post" name="postform" enctype="multipart/form-data" onSubmit="return myValidate(this);">
 	<?php if (!isset($this->selectcatlist)): ?>
 	<input
 	type="hidden" name="catid" value="<?php
 	echo $this->catid;
 	?>" />
+	<input type="hidden" name="action" value="<?php echo $this->action; ?>" />
+	<?php else: ?>
 	<input type="hidden" name="action" value="<?php echo $this->action; ?>" />
 	<?php endif; ?>
 <?php
@@ -99,6 +112,7 @@ if (! empty ( $this->kunena_editmode )) :
 <?php if (! empty ( $this->contentURL )) :?>
 <input type="hidden" name="contentURL" value="<?php echo $this->contentURL; ?>" />
 <?php endif; ?>
+<input type="hidden" name="check" value="post"/>
 
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -160,7 +174,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				} else {
 					?>
 					<td><input type="text" id="kauthorname" name="authorname" size="35"
-						class="kinputbox postinput"  maxlength="35" value="" />
+						class="kinputbox postinput required"  maxlength="35" value="" />
 						<script type="text/javascript">document.postform.authorname.focus();</script>
 					</td>
 					<?php
@@ -175,7 +189,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		?>
 		<tr class = "ksectiontableentry2">
 			<td class = "kleftcolumn"><strong><?php echo _GEN_EMAIL;?></strong></td>
-			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->email;?>" /></td>
+			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo $this->email;?>" /></td>
 		</tr>
 		<?php
 		}
@@ -191,7 +205,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				?></strong></td>
 
 			<td><input type="text"
-				class="kinputbox postinput"
+				class="kinputbox postinput required"
 				name="subject" id="subject" size="35"
 				maxlength="<?php
 				echo $kunena_config->maxsubject;
@@ -373,7 +387,6 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				title="<?php echo (_KUNENA_EDITOR_HELPLINE_CANCEL);?>" />
 				<input type="submit" name="ksubmit" class="kbutton"
 				value="<?php echo (' ' . _GEN_CONTINUE . ' ');?>"
-				onclick="return submitForm()"
 				title="<?php echo (_KUNENA_EDITOR_HELPLINE_SUBMIT);?>" />
 				</td>
 		</tr>

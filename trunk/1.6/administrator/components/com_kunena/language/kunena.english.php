@@ -373,7 +373,7 @@ define('_KUNENA_SEF', 'Search Engine Friendly URLs');
 define('_KUNENA_SEF_DESC', 'Select whether or not URLs are optimized for search engines. NOTE: Kunena accepts SEF URLs even if this feature has been turned off.');
 define('_KUNENA_SEF_CATS', 'Do Not Use Category IDs');
 // Please use words from your own (or nearby) language in the next URL, but only using a-z:
-define('_KUNENA_SEF_CATS_DESC', 'Slightly better looking URLs: http://www.domain.com/forum/category/123-message . WARNING: If set to "No", Kunena will no longer accept these URLs!');
+define('_KUNENA_SEF_CATS_DESC', 'Slightly better looking URLs: http://www.domain.com/forum/category/123-message . WARNING: If set to <em>No</em>, Kunena will no longer accept these URLs!');
 define('_KUNENA_SEF_UTF8', 'Enable UTF-8 Support');
 // Please use words from your own (or nearby) language in the next URL, but make sure that they contain UTF8 letters:
 define('_KUNENA_SEF_UTF8_DESC', 'Use this option if your SEF URLs are not readable. Result: http://www.domain.com/forum/2-Catégorie/123-Meßage . NOTE: Kunena accepts UTF-8 URLs even if this feature has been turned off.');
@@ -642,7 +642,7 @@ DEFINE('_KUNENA_JOMSOCIAL', 'JomSocial');
 DEFINE('_COM_A_HIGHLIGHTCODE', 'Enable Code Highlighting');
 DEFINE('_COM_A_HIGHLIGHTCODE_DESC', 'Enables the Kunena code tag highlighting Javascript. If your members post PHP or other code fragments within code tags, turning this on will colorize the code. If your forum does not make use of such programing language posts, you might want to turn it off to avoid code tags from becoming malformed.');
 DEFINE('_COM_A_RSS_TYPE', 'Default RSS type');
-DEFINE('_COM_A_RSS_TYPE_DESC', 'Choose between RSS feeds <em>By Thread <em> or <em>By Post.</em> <em>By Thread <em> means that only one entry per thread will be listed in the RSS feed independent of how many posts have been made within that thread. <em>By Thread</em> creates a shorter, more compact RSS feed but will not list every reply.');
+DEFINE('_COM_A_RSS_TYPE_DESC', 'Choose between RSS feeds <em>By Thread<em> or <em>By Post</em>. <em>By Thread<em> means that only one entry per thread will be listed in the RSS feed independent of how many posts have been made within that thread. <em>By Thread</em> creates a shorter, more compact RSS feed but will not list every reply.');
 DEFINE('_COM_A_RSS_BY_THREAD', 'By Thread');
 DEFINE('_COM_A_RSS_BY_POST', 'By Post');
 DEFINE('_COM_A_RSS_HISTORY', 'RSS History');
@@ -754,8 +754,8 @@ DEFINE('_KUNENA_POST_DEL_ERR_CHILD', 'Could not promote children in post hierarc
 DEFINE('_KUNENA_POST_DEL_ERR_MSG', 'Could not delete the post(s). Nothing else deleted.');
 DEFINE('_KUNENA_POST_DEL_ERR_TXT', 'Could not delete the texts of the post(s). Update the database manually (mesid=%id%).');
 DEFINE('_KUNENA_POST_DEL_ERR_USR', 'Everything deleted, but failed to update user post statistics.');
-DEFINE('_KUNENA_POST_MOV_ERR_DB', "Severe database error. Update your database manually so the replies to the topic are matched to the new forum.");
-DEFINE('_KUNENA_UNIST_SUCCESS', "The Kunena Forum component was successfully uninstalled.");
+DEFINE('_KUNENA_POST_MOV_ERR_DB', 'Severe database error. Update your database manually so the replies to the topic are matched to the new forum.');
+DEFINE('_KUNENA_UNIST_SUCCESS', 'The Kunena Forum component was successfully uninstalled.');
 DEFINE('_KUNENA_PDF_VERSION', 'Kunena Forum Component version: %version%');
 DEFINE('_KUNENA_PDF_DATE', 'Generated: %date%');
 DEFINE('_KUNENA_SEARCH_NOFORUM', 'No forums to search in.');
@@ -828,9 +828,9 @@ DEFINE('_KUNENA_DATE_HOURS', 'hours');
 DEFINE('_KUNENA_DATE_MINUTES', 'minutes');
 // 1.0.2
 DEFINE('_KUNENA_HEADERADD', 'Forum header:');
-DEFINE('_KUNENA_ADVANCEDDISPINFO', "Forum display");
-DEFINE('_KUNENA_CLASS_SFX', "Forum CSS class suffix");
-DEFINE('_KUNENA_CLASS_SFXDESC', "CSS suffixes applied to index, showcat, view, and allow for different designs per forum.");
+DEFINE('_KUNENA_ADVANCEDDISPINFO', 'Forum display');
+DEFINE('_KUNENA_CLASS_SFX', 'Forum CSS class suffix');
+DEFINE('_KUNENA_CLASS_SFXDESC', 'CSS suffixes applied to index, showcat, view, and allow for different designs per forum.');
 DEFINE('_COM_A_USER_EDIT_TIME', 'User Edit Time');
 DEFINE('_COM_A_USER_EDIT_TIME_DESC', 'Set to 0 for unlimited time, else window
 in seconds from post or last modification to allow edit.');
@@ -844,15 +844,15 @@ DEFINE('_KUNENA_HELPPAGE_IN_KUNENA_DESC','If set to <em>Yes</em>, help content w
 DEFINE('_KUNENA_HELPPAGE_CID','Help Content ID');
 DEFINE('_KUNENA_HELPPAGE_CID_DESC','You should set <em>Yes</em> to the <em>Show help in Kunena</em> setting.');
 DEFINE('_KUNENA_HELPPAGE_LINK','Help external page link');
-DEFINE('_KUNENA_HELPPAGE_LINK_DESC','If you show help external link, please set <em>No</em> in the <em>Show help in Kunena</em> setting.');
+DEFINE('_KUNENA_HELPPAGE_LINK_DESC','If you show an external help link, please set <em>No</em> in the <em>Show help in Kunena</em> setting.');
 DEFINE('_KUNENA_RULESPAGE','Enable Rules Page');
 DEFINE('_KUNENA_RULESPAGE_DESC','If set to <em>Yes</em>, a link to your rules page will be shown in the header menu.');
 DEFINE('_KUNENA_RULESPAGE_IN_FB','Show rules in Kunena');
-DEFINE('_KUNENA_RULESPAGE_IN_KUNENA_DESC','If set to <em>Yes</em>, rules content text will be included in Kunena and the external rules page link will be disabled. <strong>Note:</strong> you should add a Rules Content ID.');
+DEFINE('_KUNENA_RULESPAGE_IN_KUNENA_DESC','If set to <em>Yes</em>, the rules content text will be included in Kunena and the external rules page link will be disabled. <strong>Note:</strong> you should add a Rules Content ID.');
 DEFINE('_KUNENA_RULESPAGE_CID','Rules Content ID');
-DEFINE('_KUNENA_RULESPAGE_CID_DESC','You should set <em>Yes</em> in the <em>Show rules in Kunena</em> setting.');
+DEFINE('_KUNENA_RULESPAGE_CID_DESC','You should choose <em>Yes</em> in the <em>Show rules in Kunena</em> setting.');
 DEFINE('_KUNENA_RULESPAGE_LINK','Rules external page link');
-DEFINE('_KUNENA_RULESPAGE_LINK_DESC','If you show rules external link, please set <strong><em>No</em></strong> <em>Show rules in Kunena</em> setting.');
+DEFINE('_KUNENA_RULESPAGE_LINK_DESC','If you show an external rules link, please choose <em>No</em> in the <em>Show rules in Kunena</em> setting.');
 DEFINE('_KUNENA_AVATAR_GDIMAGE_NOT','GD Library not found');
 DEFINE('_KUNENA_AVATAR_GD2IMAGE_NOT','GD2 Library not found');
 DEFINE('_KUNENA_GD_INSTALLED','GD is available, version');
@@ -1126,8 +1126,8 @@ DEFINE('_KUNENA_FILEDELETED', 'File deleted');
 DEFINE('_KUNENA_NOPARENT', 'No Parent');
 DEFINE('_KUNENA_DIRCOPERR', 'Error: File');
 DEFINE('_KUNENA_DIRCOPERR1', 'could not be copied!\n');
-DEFINE('_KUNENA_INSTALL1', '<strong>Kunena Forum</strong> component <em>for Joomla </em> <br />&copy; 2008 - 2010 by www.Kunena.com<br />All rights reserved.');
-DEFINE('_KUNENA_INSTALL2', 'Transfer/Installation :</code></strong><br /><br /><font color="red"><strong>succesfull');
+DEFINE('_KUNENA_INSTALL1', '<strong>Kunena Forum</strong> component <em>for Joomla</em> <br />&copy;2008-2010 by www.Kunena.com<br />All rights reserved.');
+DEFINE('_KUNENA_INSTALL2', 'Transfer/Installation :</code></strong><br /><br /><font color="red"><strong>succesful');
 DEFINE('_KUNENA_FORUMPRF_TITLE', 'Profile Settings');
 DEFINE('_KUNENA_FORUMPRF', 'Profile');
 DEFINE('_KUNENA_FORUMPRRDESC', 'If you have Community Builder or JomSocial installed, you can configure Kunena to use their user profiles.');
@@ -1142,9 +1142,9 @@ DEFINE('_KUNENA_USERPROFILE_HITS', 'Hits');
 DEFINE('_KUNENA_USERPROFILE_NOFORUMPOSTS', 'No Forum Post');
 DEFINE('_KUNENA_TOTALFAVORITE', 'Favoured: ');
 DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_COLON', 'Number of child board columns ');
-DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_COLONDESC', 'Number of child board column formating under main category');
+DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_COLONDESC', 'Number of child board column formatting under main category');
 DEFINE('_KUNENA_SUBSCRIPTIONSCHECKED', 'Post-subscription checked by default?');
-DEFINE('_KUNENA_SUBSCRIPTIONSCHECKED_DESC', 'Set to <em>Yes</em> if you want to post subscription box always checked.');
+DEFINE('_KUNENA_SUBSCRIPTIONSCHECKED_DESC', 'Set to <em>Yes</em> if you want the post subscription box to always be checked.');
 // Errors (Re-integration from Joomlaboard 1.2)
 DEFINE('_KUNENA_ERROR1', 'Category / Forum must have a name');
 // Forum Configuration (New in Kunena)
@@ -1197,7 +1197,7 @@ DEFINE('_KUNENA_BASICS', 'Basics');
 DEFINE('_KUNENA_BASICSFORUM', 'Basic Forum Information');
 DEFINE('_KUNENA_PARENT', 'Parent:');
 DEFINE('_KUNENA_PARENTDESC',
-    'Please note: To create a category, choose \'Top Level Category\' as a parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can be <strong>ONLY</strong> posted to forums, not categories.');
+    'Please note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can be <strong>only</strong> posted to forums, not categories.');
 DEFINE('_KUNENA_BASICSFORUMINFO', 'Forum name and description');
 DEFINE('_KUNENA_NAMEADD', 'Name:');
 DEFINE('_KUNENA_DESCRIPTIONADD', 'Description:');
@@ -1207,9 +1207,9 @@ DEFINE('_KUNENA_LOCKEDDESC', 'Set to <em>Yes</em> if you want to lock this forum
 DEFINE('_KUNENA_LOCKED1', 'Locked:');
 DEFINE('_KUNENA_PUBACC', 'Public Access Level:');
 DEFINE('_KUNENA_PUBACCDESC',
-    'To create a non-public Forum, you can specify the minimum user level that can see/enter the forum here. By default, the minumum user level is set to <em>Everybody&quot;.<br /><strong>Please note:</strong> If you restrict the access of a whole category to one or more certain groups, you will hide all forums it contains to anybody not having proper privileges for the category <strong>even</strong> if one or more of these Forums has a lower access level set! This is also true for moderators. You will need to add a moderator to the category moderator list if they do not have the proper group level to see the category.<br /> Categories cannot be moderated, but moderators can still be added to the moderator list.');
+    'To create a non-public forum, you can specify the minimum user level that can view and enter the forum here. By default, the minumum user level is set to <em>Everybody</em>.<br /><strong>Please note:</strong> If you restrict the access of a whole category to one or more certain groups, you will hide all forums it contains to anybody not having proper privileges for the category even if one or more of these forums has a lower access level set! This also applies to moderators. You will need to add a moderator to the category moderator list if they do not have the proper group level to see the category.<br /> Categories cannot be moderated, but moderators can still be added to the moderator list.');
 DEFINE('_KUNENA_CGROUPS', 'Include Child Groups:');
-DEFINE('_KUNENA_CGROUPSDESC', 'Should child groups also be allowed access? If set to <em>No,</em> access to this forum is restricted to the selected group <strong>only</strong>.');
+DEFINE('_KUNENA_CGROUPSDESC', 'Should child groups also be allowed access? If set to <em>No</em>, access to this forum is restricted to the selected group.');
 DEFINE('_KUNENA_ADMINLEVEL', 'Admin Access Level:');
 DEFINE('_KUNENA_ADMINLEVELDESC',
     'If you create a forum with Public Access restrictions, you can specify here an additional Administration Access Level.<br /> If you restrict the access to the Forum to a special Public Frontend user group and don\'t specify a Public Backend Group here, administrators will not be able to enter/view the forum.');
@@ -1298,7 +1298,7 @@ DEFINE('_KUNENA_SHOW_AUTHOR', 'Show Author');
 DEFINE('_KUNENA_SHOW_AUTHOR_DESC', '1=username, 2=realname, 0=none');
 DEFINE('_KUNENA_STATS', 'Stats Plugin Settings');
 DEFINE('_KUNENA_CATIMAGEPATH', 'Category Image Path');
-DEFINE('_KUNENA_CATIMAGEPATH_DESC', 'Category Image path. If you set the path as <em>category_images,</em> the full path will be "your_html_rootfolder/images/fbfiles/category_images/');
+DEFINE('_KUNENA_CATIMAGEPATH_DESC', 'Category Image Path. If you set the path as <em>category_images</em>, the full path will be <em>your_html_rootfolder/images/fbfiles/category_images/</em>');
 DEFINE('_KUNENA_ANN_MODID', 'Announcement Moderator IDs');
 DEFINE('_KUNENA_ANN_MODID_DESC', 'Add user IDs for announcement moderators (e.g. 62,63,73). Announcement moderators can add, edit, and delete the announcements.');
 //
@@ -1488,7 +1488,7 @@ DEFINE('_COM_A_FORUM_JUMP_DESC', 'If set to <em>Yes</em>, a selector will be sho
 DEFINE('_GEN_RULES', 'Rules');
 DEFINE('_COM_A_RULESPAGE', 'Enable Rules Page');
 DEFINE('_COM_A_RULESPAGE_DESC',
-    'If set to <em>Yes</em>, a link to your rules [page will be shown in the header menu. This page can be used for things like forum rules, etc. You can alter the contents of this file by opening rules.php in /joomla_root/components/com_kunena. <em>Make sure to always save a backup of this file. It will be overwritten when upgrading!</em>');
+    'If set to <em>Yes</em>, a link to your rules page will be shown in the header menu. This page can be used for things like forum rules, etc. You can alter the contents of this file by opening rules.php in /joomla_root/components/com_kunena. <strong>Make sure to always save a backup of this file. It will be overwritten when upgrading!</strong>');
 DEFINE('_MOVED_TOPIC', 'MOVED:');
 DEFINE('_COM_A_PDF', 'Enable PDF creation');
 DEFINE('_COM_A_PDF_DESC',
@@ -1821,7 +1821,7 @@ DEFINE('_UPLOAD_ERROR_NAME', 'The image file must contain only alphanumeric char
 DEFINE('_UPLOAD_ERROR_SIZE', 'The image file size exceeds the maximum set by the Administrator.');
 DEFINE('_UPLOAD_ERROR_WIDTH', 'The image file width exceeds the maximum set by the Administrator.');
 DEFINE('_UPLOAD_ERROR_HEIGHT', 'The image file height exceeds the maximum set by the Administrator.');
-DEFINE('_UPLOAD_ERROR_CHOOSE', "You didn't choose an avatar from the gallery...");
+DEFINE('_UPLOAD_ERROR_CHOOSE', 'You didn\'t choose an avatar from the gallery...');
 DEFINE('_UPLOAD_UPLOADED', 'Your avatar has been uploaded.');
 DEFINE('_UPLOAD_GALLERY', 'Choose an Avatar from the Gallery');
 DEFINE('_UPLOAD_CHOOSE', 'Confirm Choice.');

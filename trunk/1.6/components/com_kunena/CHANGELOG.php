@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+04-Feb-2010 severdia
+# [#19312] Language fixes (thanks to kmilos)
+
 04-Feb-2010 Matias
 # [#19288] Fix regression: Posting new message did not work
 # [#19561] Fix poll ajax calls: broken SQL, only first element got matched in JS

@@ -1148,6 +1148,8 @@ div#kheader h1 a:hover {
 	/* position: relative;
 	bottom: 2px;
 	letter-spacing: 1px; */
+	color: #999999;
+	font-size: 0.667em;
 }
 
 #Kunena div.klatest-subject a {

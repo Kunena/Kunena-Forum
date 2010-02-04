@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+04-Feb-2010 fxstein
+^ [#19345] Re-style child board counts to match new template
+
 03-Feb-2010 Matias
 # [#19251] Advanced special user prefetch: bugfix
 # [#19380] Multifile upload: didn't work while editing a post

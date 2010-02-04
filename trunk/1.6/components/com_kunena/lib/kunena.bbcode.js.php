@@ -986,7 +986,7 @@ function newAttachment() {
 		events: {
 			load: function(){
 				var item = $H(JSON.decode(window.frames['upload_target'+id].document.body.innerHTML));
-				if (!item.error) {
+				if (item.status != 0) {
 					if (!item.width)
 						status.set('text', '('+item.mime+', '+item.size+' bytes)');
 					else

@@ -68,14 +68,14 @@ var RecaptchaOptions = {
 	echo CKunenaLink::GetPostURL();
 	?>"
 	method="post" name="postform" enctype="multipart/form-data">
+	<input type="hidden" name="action" value="<?php echo $this->action; ?>" />
 	<?php if (!isset($this->selectcatlist)): ?>
 	<input
 	type="hidden" name="catid" value="<?php
 	echo $this->catid;
 	?>" />
-	<input type="hidden" name="action" value="<?php echo $this->action; ?>" />
 	<?php endif; ?>
-<?php
+	<?php
 if (! empty ( $this->kunena_editmode )) :
 	?>
 <input type="hidden" name="do" value="editpostnow" /> <input

@@ -91,6 +91,12 @@ class CKunenaAjaxHelper {
 					break;
 			}
 		}
+		else {
+			$response = array(
+				'status' => '0',
+				'error' => @sprintf(_KUNENA_AJAX_PERMISSION_DENIED)
+			);
+		}
 		// Output the JSON data.
 		return json_encode ( $response );
 	}
@@ -183,13 +189,12 @@ class CKunenaAjaxHelper {
 
 		$query = "SELECT id
 							FROM #__fb_categories
-							WHERE allow_polls=1 AND parent=1;";
+							WHERE allow_polls=1;";
 		$this->_db->setQuery ( $query );
 		$allow_polls = $this->_db->loadResultArray ();
 		check_dberror ( "Unable to lookup categories by name." );
-		if(!empty($allow_polls)) {
-			$result['allowed_polls'] = $allow_polls;
-		}
+		$result['status'] = '1';
+		$result['allowed_polls'] = $allow_polls;
 
 		return $result;
 	}
@@ -238,23 +243,23 @@ class CKunenaAjaxHelper {
 	        switch ($fileError)
 	        {
 	        case 1:
-		        $error = JText::_( 'FILE TO LARGE THAN PHP INI ALLOWS' );
+		        $error = @sprintf(_KUNENA_AJAX_ERROR_UPLOAD_LIMITPHP);
 		        break;
 
 	        case 2:
-		        $error = JText::_( 'FILE TO LARGE THAN HTML FORM ALLOWS' );
+		        $error = @sprintf(_KUNENA_AJAX_ERROR_UPLOAD_LIMITHTML);
 		        break;
 
 	        case 3:
-		        $error = JText::_( 'ERROR PARTIAL UPLOAD' );
+		        $error = @sprintf(_KUNENA_AJAX_ERROR_UPLOAD_PARTIAL);
 		        break;
 
 	        case 4:
-		        $error = JText::_( 'ERROR NO FILE' );
+		        $error = @sprintf(_KUNENA_AJAX_ERROR_UPLOAD_NOFILE);
 		        break;
 
 	        default:
-		        $error = JText::_( 'UNKNOWN ERROR' );
+		        $error = @sprintf(_KUNENA_AJAX_ERROR_UNKNOWN);
 	        }
 		}
 
@@ -276,7 +281,7 @@ class CKunenaAjaxHelper {
 				'id' => $fileid,
 				'status' => '0',
 				'name' => $file['name'],
-				'error' => JText::_( 'FILE BIGGER THAN 2MB' )
+				'error' => @sprintf(_KUNENA_AJAX_ERROR_UPLOAD_TOOLARGE, $fileSize)
 			);
 		}
 
@@ -306,7 +311,7 @@ class CKunenaAjaxHelper {
 				'id' => $fileid,
 				'status' => '0',
 				'name' => $file['name'],
-				'error' => JText::_( 'INVALID EXTENSION' )
+				'error' => @sprintf(_KUNENA_AJAX_ERROR_EXTENSION)
 			);
 		}
 
@@ -329,7 +334,7 @@ class CKunenaAjaxHelper {
 				'id' => $fileid,
 				'status' => '0',
 				'name' => $file['name'],
-				'error' => JText::_( 'INVALID FILETYPE' )
+				'error' => @sprintf(_KUNENA_AJAX_ERROR_UPLOAD_MIME)
 			);
 		}
 
@@ -351,7 +356,7 @@ class CKunenaAjaxHelper {
 				'id' => $fileid,
 				'status' => '0',
 				'name' => $file['name'],
-				'error' => JText::_( 'ERROR MOVING FILE' )
+				'error' => @sprintf(_KUNENA_AJAX_ERROR_UPLOAD_NOTMOVED)
 			);
 		}
 

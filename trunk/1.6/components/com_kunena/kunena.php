@@ -169,7 +169,9 @@ if ($func == "json") {
 
 	if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()){
 		// when the forum is offline, we don't entertain json requests
-		echo '[]';
+		json_encode ( array(
+				'status' => '0',
+				'error' => @sprintf(_KUNENA_FORUM_OFFLINE)) );
 	}
 	else {
 		// Generate reponse

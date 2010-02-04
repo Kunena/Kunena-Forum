@@ -780,32 +780,26 @@ window.addEvent('domready', function(){
 	});
 		
 	if($('postcatid') != undefined) {
-		$('postcatid').getElements('option').each( function( elem ) {
-			elem.addEvent('click', function(e) {
-				//get the item selected in drop down list
-				var catid_seleted = elem.value;							
-				
+		$('postcatid').getElements('option').each( function( catid ) {
+			catid.addEvent('click', function(e) {
 				//call a json query to check if the catid selected is allowed for polls
-				var url = "index.php?option=com_kunena&func=json&action=pollcatsallowed&selectedcatid="+catid_seleted;
+				var url = kunena_ajax_url_poll;
 				var request = new Request.JSON({
 						url: url,
 						onComplete: function(jsonObj) {
-							//the result is an array so we need to test each item of the array
-							for(var j = 0; j < jsonObj.allowed_polls.length; j++){
-								var elemhide = $('kpoll_hide_not_allowed').getStyle('display');
-								if(jsonObj.allowed_polls[j] == catid_seleted){ //in this case the polls are allowed									
-									if(elemhide != '0'){//we check if the polls are hided, and if it's the case we show them										
-										$('kpoll_hide_not_allowed').removeProperty('style');
-										$('kpoll_not_allowed').set('text', ' ');
-									} 
-								} else {	//in this case the polls aren't allowed, so we hide them									
-									$('kpoll_hide_not_allowed').setStyle('display','none');
-									$('kpoll_not_allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
-								}
-							}							
+							if (jsonObj.allowed_polls != null && jsonObj.allowed_polls.indexOf(catid.value) >= 0) {
+								$('kpoll_hide_not_allowed').removeProperty('style');
+								$('kpoll_not_allowed').set('text', ' ');
+							} else {
+								$('kpoll_hide_not_allowed').setStyle('display','none');
+								if (jsonObj.allowed_polls != null) $('kpoll_not_allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
+								else if (jsonObj.error) $('kpoll_not_allowed').set('text', jsonObj.error);
+								else $('kpoll_not_allowed').set('text', 'Unknown error!');
+							}
 						},
 						onFailure: function(){
-							alert ('request failed... Please reload the page');
+							$('kpoll_hide_not_allowed').setStyle('display','none');
+							$('kpoll_not_allowed').set('text', 'Cannot contact server!');
 						}
 				}).send();				
 			})

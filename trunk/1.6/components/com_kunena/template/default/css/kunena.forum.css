@@ -727,7 +727,7 @@ td.td-1  {
 }
 
 #Kunena span.topic_views_number {
-	display:block;
+	display: block;
 	font-size: 1.455em;
 	/* line-height:21px; */
 	margin:5px 0;
@@ -735,7 +735,9 @@ td.td-1  {
 }
 	
 #Kunena span.topic_by { 
+	display: block;
 	margin-left: 3px;
+	text-align: left;
 }
 
 /* HEADER

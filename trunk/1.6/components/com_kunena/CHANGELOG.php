@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 05-Feb-2010 fxstein
 ^ [#19345] Display page creation time in footer
++ [#19251] Jomsocial user prefetch caching to reduce query counts - showcat
 
 04-Feb-2010 fxstein
 ^ [#19345] Re-style child board counts to match new template
@@ -62,7 +63,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Installer does not work
 
 03-Feb-2010 fxstein
-+ [#19251] Jomsocial user prefecth caching to reduce query counts
++ [#19251] Jomsocial user prefetch caching to reduce query counts
 ^ [#19634] Update package file name for internal night build
 
 02-Feb-2010 fxstein

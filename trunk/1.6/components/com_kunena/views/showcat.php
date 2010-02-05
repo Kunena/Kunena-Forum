@@ -108,6 +108,9 @@ class CKunenaShowcat {
 			$messagelist = $this->db->loadObjectList ();
 			check_dberror ( "Unable to load messages." );
 
+			// collect user ids for avatar prefetch when integrated
+			$__userlist = array();
+
 			foreach ( $messagelist as $message ) {
 				$this->messagetext [$message->id] = JString::substr ( smile::purify ( $message->messagetext ), 0, 500 );
 				if ($message->parent == 0) {
@@ -118,9 +121,16 @@ class CKunenaShowcat {
 				} else {
 					$this->last_reply [$message->thread] = $message;
 				}
+				$__userlist[] = $message->userid;
 			}
 			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
+
+			// If jomSocial integration for the avatar is turned on, prefetch all users
+			// to avoid user by user queries during template iterations
+			if ($this->config->avatar_src == "jomsocial") {
+				CFactory::loadUsers(array_unique($__userlist));
+			}
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = '0' . $this->session->readtopics;

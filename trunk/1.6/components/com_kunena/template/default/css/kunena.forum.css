@@ -306,6 +306,10 @@ a:focus {outline: none;}
 	font-size: .833em;
 }
 
+#Kunena .kfooter-time {
+	color: #999999;
+}
+
 /* COLOR ADMINISTRATOR AND MODERATOR
 ----------------------------------------------------------------------------------------------- */
 

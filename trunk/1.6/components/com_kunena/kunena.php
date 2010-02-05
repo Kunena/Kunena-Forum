@@ -24,13 +24,14 @@
 defined( '_JEXEC' ) or die();
 
 // Display time it took to create the entire page in the footer
+jimport( 'joomla.error.profiler' );
 $__kstarttime = JProfiler::getmicrotime();
 
 $lang = JFactory::getLanguage();
 $lang->load('com_kunena', JPATH_COMPONENT);
 
 // First of all take a profiling information snapshot for JFirePHP
-if(JDEBUG == 1){
+if(JDEBUG){
 	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.profiler.php');
 	$__profiler = KProfiler::GetInstance();
 	$__profiler->mark('Start');
@@ -750,7 +751,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// Show total time it took to create the page
 	$__ktime = JProfiler::getmicrotime() - $__kstarttime;
 ?>
-<div class="fb_footer">Time to create page: <?php echo sprintf('%0.2f', $__ktime);?> seconds</div>
+<div class="kfooter"><span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').'&nbsp;'.sprintf('%0.2f', $__ktime).'&nbsp;'.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span></div>
 </div>
 <!-- closes Kunena div -->
 <?php

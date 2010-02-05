@@ -36,6 +36,7 @@ Kunena 1.6.0-Xillibit-Special-Dev
 
 05-Feb-2010 Xillibit
 # [#19631] Re-implement quick reply by using mootools - little changes
+# [#19288] Fix regression - remove deprecated $mainframe put in trash manager
 
 04-Feb-2010 Xillibit
 ^ [#19639] Add form-validation instead alert

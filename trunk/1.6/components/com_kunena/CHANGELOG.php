@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+05-Feb-2010 fxstein
+^ [#19345] Display page creation time in footer
+
 04-Feb-2010 fxstein
 ^ [#19345] Re-style child board counts to match new template
 ^ [#19645] More language conversion changes

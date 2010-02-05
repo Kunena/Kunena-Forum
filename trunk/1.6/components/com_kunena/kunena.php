@@ -751,7 +751,9 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// Show total time it took to create the page
 	$__ktime = JProfiler::getmicrotime() - $__kstarttime;
 ?>
-<div class="kfooter"><span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').'&nbsp;'.sprintf('%0.2f', $__ktime).'&nbsp;'.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span></div>
+	<div class="kfooter">
+		<span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').'&nbsp;'.sprintf('%0.2f', $__ktime).'&nbsp;'.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span>
+	</div>
 </div>
 <!-- closes Kunena div -->
 <?php

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-Xillibit-Special-Dev
 
+05-Feb-2010 Xillibit
+# [#19631] Re-implement quick reply by using mootools - little changes
+
 04-Feb-2010 Xillibit
 ^ [#19639] Add form-validation instead alert
 # [#19639] Add form-validation instead alert - some fixes on this, now work like it should

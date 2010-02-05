@@ -34,31 +34,9 @@ $catid = JRequest::getInt ( 'catid', 0 );
 	</span>
 </div>
 <div>
-	<div class="msgtext">
+	<div id="kmesgtext_qr<?php echo $this->mmm; ?>" class="msgtext">
 		<?php echo $this->msg_html->text; ?>
 	</div>
-	<div id = "k_quick_reply<?php echo $this->mmm; ?>" style = "display : none;">
-			<form id="kqr_form" action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post">
-				<input id="kqr_subject<?php echo $this->mmm; ?>" type = "text" name="subject" id="subject" size="50" maxlength="50" /><br />
-				<textarea name="message" rows="2" cols="60"></textarea><br />
-				<input type="hidden"
-				name="catid" value="<?php
-				echo $this->catid;
-				?>" />
-				<input type="hidden"
-				name="id" value="<?php
-				echo $this->id;
-				?>" />
-				<input type="hidden"
-				name="action" value="post" />
-				<input id="kbut_can" type="button" name="cancel" class="kbutton"
-				value="<?php echo (' ' . _GEN_CANCEL . ' ');?>"
-				title="<?php echo (_KUNENA_EDITOR_HELPLINE_CANCEL);?>" />
-				<input id="kbut_sub" type="submit" name="submit" class="kbutton"
-				value="<?php echo (' ' . _GEN_CONTINUE . ' ');?>"
-				title="<?php echo (_KUNENA_EDITOR_HELPLINE_SUBMIT);?>" /><?php echo _KUNENA_QMESSAGE_NOTE; ?>
-			</form>
-		</div>
 		<?php if (! isset ( $this->msg_html->closed )) { ?>
 	<div id="sc<?php echo $this->msg_html->id; ?>" class="switchcontent"><!-- make this div distinct from others on this page -->
 		<?php //see if we need the users realname or his loginname

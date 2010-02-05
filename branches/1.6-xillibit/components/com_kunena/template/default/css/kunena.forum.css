@@ -3611,3 +3611,11 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 --------------------------------------------------------------------------------------------------- */
 	
 #Kunena #kpost_message .invalid {border: 1px solid red !important;}
+
+
+/* for quick-reply
+--------------------------------------------------------------------------------------------------- */
+.kqr_spec {
+	border: 1px solid #BFC3C6;	
+	padding: 0.5em;			
+}

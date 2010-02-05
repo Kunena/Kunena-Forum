@@ -22,19 +22,11 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-global $lang;
-
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
-//Get right Language file
-if (file_exists(KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . $lang . '.php')) {
-    include (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . $lang . '.php');
-}
-else {
-    include (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php');
-}
+$lang = JFactory::getLanguage();
+$lang->load('com_kunena', JPATH_COMPONENT);
 
 include_once(JPATH_ROOT."/administrator/components/com_kunena/lib/fx.upgrade.class.php");
 

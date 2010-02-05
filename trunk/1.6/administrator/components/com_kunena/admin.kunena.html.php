@@ -3233,7 +3233,7 @@ td.fbtdtitle {
 
 echo $pane->startPanel( 'Show Instructions', 'panel2' );
 
-showInstructions($kunena_db, $option, $lang);
+showInstructions($kunena_db, $option);
 
 echo $pane->endPanel();
 
@@ -3252,7 +3252,7 @@ echo $pane->endPane();
 */
 	}
 
-	function showInstructions($kunena_db, $option, $lang) {
+	function showInstructions($kunena_db, $option) {
 		?>
 
 <table width="100%" border="0" cellpadding="2" cellspacing="2"
@@ -3332,7 +3332,7 @@ echo $pane->endPane();
 	} //end function showCss
 
 
-	function showProfiles($option, $lang, &$profileList, $countPL, $pageNavSP, $order, $search) {
+	function showProfiles($option, &$profileList, $countPL, $pageNavSP, $order, $search) {
 		?>
 <div class="fbfunctitle"><?php
 		echo JText::_('COM_KUNENA_FUM');
@@ -3657,7 +3657,7 @@ echo $pane->endPane();
 <?php
 	}
 
-	//   function showUserProfile ($kunena_db,$mosLang,$user_id,$do,$deleteSig,$signature,$newview,$user_id,$thread,$moderator)
+	//   function showUserProfile ($kunena_db,$user_id,$do,$deleteSig,$signature,$newview,$user_id,$thread,$moderator)
 	//   {
 	//
 	//      include ('components/com_kunena/moderate_user.php');
@@ -4049,7 +4049,7 @@ echo $pane->endPane();
 	//***************************************
 
 
-	function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath) {
+	function showsmilies($option, &$smileytmp, $pageNavSP, $smileypath) {
 		?>
 <div class="fbfunctitle"><?php
 		echo JText::_('COM_KUNENA_EMOTICONS');
@@ -4155,7 +4155,7 @@ echo $pane->endPane();
 	} //end function showsmilies
 
 
-	function editsmiley($option, $lang, $smiley_edit_img, $filename_list, $smileypath, $smileycfg) {
+	function editsmiley($option, $smiley_edit_img, $filename_list, $smileypath, $smileycfg) {
 		?>
 <script language="javascript" type="text/javascript">
 		<!--
@@ -4288,7 +4288,7 @@ echo $pane->endPane();
 
 
 	/// Dan Syme/IGD Rank Administration
-	function showRanks($option, $lang, &$ranks, $pageNavSP, $order, $rankpath) {
+	function showRanks($option, &$ranks, $pageNavSP, $order, $rankpath) {
 		$kunena_db = &JFactory::getDBO ();
 		?>
 <div class="fbfunctitle"><?php
@@ -4458,7 +4458,7 @@ echo $pane->endPane();
 	} //end function edit rank
 
 
-	function editrank($option, $lang, $edit_img, $filename_list, $path, $row) {
+	function editrank($option, $edit_img, $filename_list, $path, $row) {
 		?>
 <script language="javascript" type="text/javascript">
 		<!--

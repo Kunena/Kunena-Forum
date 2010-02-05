@@ -17,7 +17,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
 jimport('joomla.utilities.string');
 
 // Joomla absolute path

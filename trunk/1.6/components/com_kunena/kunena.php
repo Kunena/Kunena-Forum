@@ -23,18 +23,21 @@
 
 defined( '_JEXEC' ) or die();
 
+// Display time it took to create the entire page in the footer
+$__kstarttime = JProfiler::getmicrotime();
+
 $lang = JFactory::getLanguage();
 $lang->load('com_kunena', JPATH_COMPONENT);
 
 // First of all take a profiling information snapshot for JFirePHP
 if(JDEBUG == 1){
-	require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.profiler.php');
+	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.profiler.php');
 	$__profiler = KProfiler::GetInstance();
 	$__profiler->mark('Start');
 }
 
 // Kunena wide defines
-require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
+require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
 
 global $message;
 global $kunena_this_cat;
@@ -87,10 +90,10 @@ if (isset ( $_POST ['func'] ) && $func == "showcat") {
 }
 
 // Debug helpers
-include_once (KUNENA_PATH_LIB . DS . "kunena.debug.php");
+include_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.debug.php");
 // get Kunenas configuration params in
 
-require_once (KUNENA_PATH_LIB . DS . "kunena.config.class.php");
+require_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.config.class.php");
 
 global $kunenaProfile;
 global $lang, $kunena_icons, $topic_emoticons;
@@ -124,36 +127,28 @@ if ($func == ''){
 	}
 }
 
-// get right Language file
-
-if (file_exists ( KUNENA_FILE_LANGUAGE )) {
-	include_once (KUNENA_FILE_LANGUAGE);
-} else {
-	include_once (KUNENA_FILE_LANGUAGE_DEFAULT);
-}
-
 $kn_tables = & CKunenaTables::getInstance ();
 if ($kn_tables->installed () === false) {
 	$kunena_config->board_offline = 1;
 }
 
 // Class structure should be used after this and all the common task should be moved to this class
-require_once (KUNENA_PATH . DS . "class.kunena.php");
+require_once (JPATH_COMPONENT . DS . 'class.kunena.php');
 
 // Central Location for all internal links
-require_once (KUNENA_PATH_LIB . DS . "kunena.link.class.php");
+require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.link.class.php');
 
-require_once (KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
+require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
 
 // Check for JSON request
 if ($func == "json") {
 
 	if(JDEBUG == 1 && defined('JFIREPHP')){
-		FB::log("Kunena JSON request");
+		FB::log('Kunena JSON request');
 	}
 
 	// URL format for JSON requests: e.g: index.php?option=com_kunena&func=json&action=autocomplete&do=getcat
-	require_once (KUNENA_PATH_LIB . DS . "kunena.ajax.helper.php");
+	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.ajax.helper.php');
 
 	$ajaxHelper = &CKunenaAjaxHelper::getInstance();
 
@@ -198,12 +193,12 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	//intercept the RSS request; we should stop afterwards
 	if ($func == 'fb_rss') {
-		include (KUNENA_PATH_LIB . DS . 'kunena.rss.php');
+		include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.rss.php');
 		$kunena_app->close ();
 	}
 
 	if ($func == 'fb_pdf') {
-		include (KUNENA_PATH_LIB . DS . 'kunena.pdf.php');
+		include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.pdf.php');
 		$kunena_app->close ();
 	}
 
@@ -214,7 +209,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	}
 
 	//time format
-	include_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
+	include_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.timeformat.class.php');
 
 	$document = & JFactory::getDocument ();
 
@@ -250,7 +245,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		include_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'icons.php');
 	}
 
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.session.class.php');
+	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.session.class.php');
 
 	// We only do the session handling for registered users
 
@@ -307,7 +302,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	//Call the call for polls
 	if($kunena_config->pollenabled){
-  		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  		require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
   		$poll = new CKunenaPolls();
 	}
 
@@ -567,7 +562,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 		case 'search' :
 		case 'advsearch' :
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.search.class.php');
+			require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.search.class.php');
 
 			$kunenaSearch = new CKunenaSearch ( );
 			$kunenaSearch->show ();
@@ -642,7 +637,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		#########################################################################################
 
 		case 'karma' :
-			include (KUNENA_PATH_LIB . DS . 'kunena.karma.php');
+			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.karma.php');
 
 			break;
 
@@ -718,7 +713,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		#########################################################################################
 
 		case 'credits' :
-			include (KUNENA_PATH_LIB . DS . 'kunena.credits.php');
+			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.credits.php');
 
 			break;
 
@@ -752,8 +747,10 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	// display footer
 
-	?>
-<div class="fb_footer"></div>
+	// Show total time it took to create the page
+	$__ktime = JProfiler::getmicrotime() - $__kstarttime;
+?>
+<div class="fb_footer">Time to create page: <?php echo sprintf('%0.2f', $__ktime);?> seconds</div>
 </div>
 <!-- closes Kunena div -->
 <?php

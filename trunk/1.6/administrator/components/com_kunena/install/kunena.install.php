@@ -54,13 +54,8 @@ ignore_user_abort(true);
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
-// get right Language file
-if (file_exists(KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php')) {
-    include_once (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php');
-    }
-else {
-    include_once (KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.english.php');
-    }
+$lang = JFactory::getLanguage();
+$lang->load('com_kunena', JPATH_COMPONENT);
 
 include_once(KUNENA_PATH_ADMIN_LIB .DS. 'fx.upgrade.class.php');
 

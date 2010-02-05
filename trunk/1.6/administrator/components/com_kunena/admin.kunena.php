@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die();
 $lang = JFactory::getLanguage();
 $lang->load('com_kunena', JPATH_COMPONENT);
 
-global $kunenaProfile, $lang;
+global $kunenaProfile;
 
 // Kunena wide defines
 require_once (JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
@@ -36,10 +36,6 @@ if ($task == 'install') {
 	com_install ();
 	return;
 }
-
-$langfile = KUNENA_PATH_ADMIN_LANGUAGE . DS . 'kunena.' . KUNENA_LANGUAGE . '.php';
-$defaultlangfile = KUNENA_PATH_ADMIN_LANGUAGE . DS . 'kunena.english.php';
-(file_exists ( $langfile )) ? require_once ($langfile) : require_once ($defaultlangfile);
 
 // Now that we have the global defines we can use shortcut defines
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
@@ -174,12 +170,12 @@ switch ($task) {
 		break;
 
 	case "showprofiles" :
-		showProfiles ( $kunena_db, $option, $lang, $order );
+		showProfiles ( $kunena_db, $option, $order );
 
 		break;
 
 	case "profiles" :
-		showProfiles ( $kunena_db, $option, $lang, $order );
+		showProfiles ( $kunena_db, $option, $order );
 
 		break;
 
@@ -189,7 +185,7 @@ switch ($task) {
 		break;
 
 	case "showinstructions" :
-		showInstructions ( $kunena_db, $option, $lang );
+		showInstructions ( $kunena_db, $option );
 
 		break;
 
@@ -207,7 +203,7 @@ switch ($task) {
 		break;
 
 	case "instructions" :
-		showInstructions ( $kunena_db, $option, $lang );
+		showInstructions ( $kunena_db, $option );
 
 		break;
 
@@ -996,9 +992,9 @@ function saveConfig($option) {
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIGSAVED') );
 }
 
-function showInstructions($kunena_db, $option, $lang) {
+function showInstructions($kunena_db, $option) {
 	$kunena_db = &JFactory::getDBO ();
-	html_Kunena::showInstructions ( $kunena_db, $option, $lang );
+	html_Kunena::showInstructions ( $kunena_db, $option );
 }
 
 //===============================
@@ -1135,7 +1131,7 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 //===============================
 //   User Profile functions
 //===============================
-function showProfiles($kunena_db, $option, $lang, $order) {
+function showProfiles($kunena_db, $option, $order) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
 	//$limit = intval(JRequest::getVar( 'limit', 10));
@@ -1177,7 +1173,7 @@ function showProfiles($kunena_db, $option, $lang, $order) {
 
 	jimport ( 'joomla.html.pagination' );
 	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
-	html_Kunena::showProfiles ( $option, $lang, $profileList, $countPL, $pageNavSP, $order, $search );
+	html_Kunena::showProfiles ( $option, $profileList, $countPL, $pageNavSP, $order, $search );
 }
 
 function editUserProfile($option, $uid) {
@@ -1714,7 +1710,7 @@ function showsmilies($option) {
 
 	jimport ( 'joomla.html.pagination' );
 	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
-	html_Kunena::showsmilies ( $option, KUNENA_LANGUAGE, $smileytmp, $pageNavSP, $smileypath );
+	html_Kunena::showsmilies ( $option, $smileytmp, $pageNavSP, $smileypath );
 
 }
 
@@ -1745,7 +1741,7 @@ function editsmiley($option, $id) {
 
 		$filename_list .= '<option value="' . $smiley_images [$i] . '"' . $smiley_selected . '>' . $smiley_images [$i] . '</option>' . "\n";
 	}
-	html_Kunena::editsmiley ( $option, KUNENA_LANGUAGE, $smiley_edit_img, $filename_list, $smileypath, $smileycfg );
+	html_Kunena::editsmiley ( $option, $smiley_edit_img, $filename_list, $smileypath, $smileycfg );
 }
 
 function newsmiley($option) {
@@ -1869,7 +1865,7 @@ function showRanks($option) {
 
 	jimport ( 'joomla.html.pagination' );
 	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
-	html_Kunena::showRanks ( $option, KUNENA_LANGUAGE, $ranks, $pageNavSP, $order, $rankpath );
+	html_Kunena::showRanks ( $option, $ranks, $pageNavSP, $order, $rankpath );
 
 }
 
@@ -1999,7 +1995,7 @@ function editRank($option, $id) {
 		}
 	}
 
-	html_Kunena::editRank ( $option, KUNENA_LANGUAGE, $edit_img, $filename_list, $path, $row );
+	html_Kunena::editRank ( $option, $edit_img, $filename_list, $path, $row );
 }
 
 //===============================

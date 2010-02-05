@@ -23,6 +23,7 @@
 		<filename>router.php</filename>
 		<filename>jomsocial_rule.xml</filename>
 		<folder>kunena.files.distribution</folder>
+		<folder>language</folder>
 		<folder>lib</folder>
 		<folder>template</folder>
 		<folder>views</folder>

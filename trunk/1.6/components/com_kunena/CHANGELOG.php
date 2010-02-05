@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+04-Feb-2010 fxstein
+^ [#19345] Re-style child board counts to match new template
+^ [#19645] More language conversion changes
+
 04-Feb-2010 severdia
 # [#19312] Language fixes (thanks to kmilos)
 
@@ -44,9 +48,6 @@ Kunena 1.6.0-DEV
 ^ [#19645] Convert Language files to native Joomla 1.5/6 ini's
 ^ [#19645] Convert all language strings to use JText::_()
 # [#19645] Fix missing quotes from language strings, use new language files
-
-04-Feb-2010 fxstein
-^ [#19345] Re-style child board counts to match new template
 
 03-Feb-2010 Matias
 # [#19251] Advanced special user prefetch: bugfix

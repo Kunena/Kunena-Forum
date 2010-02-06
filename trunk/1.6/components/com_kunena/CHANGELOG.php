@@ -37,6 +37,15 @@ Kunena 1.6.0-DEV
 05-Feb-2010 fxstein
 ^ [#19345] Display page creation time in footer
 + [#19251] Jomsocial user prefetch caching to reduce query counts - showcat
+! [#19657] Merge latest branch provided by xillibit
+
+05-Feb-2010 Xillibit
+# [#19631] Re-implement quick reply by using mootools - little changes
+# [#19288] Fix regression - remove deprecated $mainframe put in trash manager
+
+04-Feb-2010 Xillibit
+^ [#19639] Add form-validation instead alert
+# [#19639] Add form-validation instead alert - some fixes on this, now work like it should
 
 04-Feb-2010 fxstein
 ^ [#19345] Re-style child board counts to match new template
@@ -54,6 +63,9 @@ Kunena 1.6.0-DEV
 ^ [#19645] Convert Language files to native Joomla 1.5/6 ini's
 ^ [#19645] Convert all language strings to use JText::_()
 # [#19645] Fix missing quotes from language strings, use new language files
+
+03-Feb-2010 Xillibit
++ [#19631] Re-implement quick reply by using mootools
 
 03-Feb-2010 Matias
 # [#19251] Advanced special user prefetch: bugfix

@@ -310,7 +310,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	</td>
 
 	<td valign="top">
-		<textarea class="ktxtarea" name="message" id="kbbcode-message" ><?php
+		<textarea class="ktxtarea required" name="message" id="kbbcode-message" ><?php
 			echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
 			?></textarea>
 	<?php

@@ -69,6 +69,8 @@ PX		EM			PCT			PT
 /* 
 ----------------------------------------------------------------------------------------------- */
 
+
+
 /* Main styles  */	
 #Kunena td,
 #Kunena table,
@@ -1910,7 +1912,7 @@ POST PAGE
 
 #Kunena #kpost_message .postinput {
 	width: 94%;
-	background: #FFFFFF;
+	background: #FFFFFF; 
 	color: #000000;
 	border: 1px solid #BFC3C6;
 	padding: 3px 5px;
@@ -3613,3 +3615,15 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
 	color: #999999;
 }
 
+/* for form-validation
+--------------------------------------------------------------------------------------------------- */
+	
+#Kunena #kpost_message .invalid {border: 1px solid red !important;}
+
+
+/* for quick-reply
+--------------------------------------------------------------------------------------------------- */
+.kqr_spec {
+	border: 1px solid #BFC3C6;	
+	padding: 0.5em;			
+}

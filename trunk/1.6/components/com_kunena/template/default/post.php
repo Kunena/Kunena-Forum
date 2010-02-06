@@ -32,6 +32,14 @@ $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
 $kunena_config =& CKunenaConfig::getInstance();
 
+//get the token put in the message form to check that the form has been valided successfully
+if(JRequest::get('post')){
+	if(JRequest::checkToken( 'post' ) == false) {
+		$kunena_app->enqueueMessage('Please check all the fields of the form, aub.<br/>
+		If your browser blocks Javascript, then this form will never be successful. This is a security measure.','error');
+	}
+}
+
 $subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $attachfile = JRequest::getVar ( 'attachfile', NULL, 'FILES', 'array' );

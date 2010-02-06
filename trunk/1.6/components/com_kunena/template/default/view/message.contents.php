@@ -21,7 +21,7 @@ $catid = JRequest::getInt ( 'catid', 0 );
 					} else {
 						$msgtitle = 'msgtitle';
 					} ?>
-	<span class="<?php echo $msgtitle; ?>">
+	<span id="kmes_title<?php echo $this->mmm; ?>" class="<?php echo $msgtitle; ?>">
 		<?php echo $this->msg_html->subject; ?>
 	</span>
 	<span class="msgdate" title="<?php echo CKunenaTimeformat::showDate($this->kunena_message->time, 'config_post_dateformat_hover'); ?>">
@@ -34,7 +34,7 @@ $catid = JRequest::getInt ( 'catid', 0 );
 	</span>
 </div>
 <div>
-	<div class="msgtext">
+	<div id="kmesgtext_qr<?php echo $this->mmm; ?>" class="msgtext">
 		<?php echo $this->msg_html->text; ?>
 	</div>
 		<?php if (! isset ( $this->msg_html->closed )) { ?>

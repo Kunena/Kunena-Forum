@@ -79,6 +79,7 @@ PX		EM			PCT			PT
 #Kunena p,
 #Kunena span {
 	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
 }
 
 a:focus {outline: none;}
@@ -136,6 +137,10 @@ a:focus {outline: none;}
 	/* 20px */
 	font-size: 1.667em;
 }
+#Kunena sup {
+	font-size: .583em;
+}
+
 #Kunena table {
 	width :100%;
 	border-collapse:collapse;
@@ -289,13 +294,15 @@ a:focus {outline: none;}
 #Kunena tr.ksectiontableentry2_stickymsg td.td-0	{
 	border-left: 1px solid #BFC3C6;
 	color: #999999;
+	text-align:center;
 }
 
 #Kunena .topic_sticky {
-	position: absolute;
-	/* top: -5px; */
-	right: -3px;
-	margin-left: 5px;
+	/* position: absolute;
+	top: -5px;
+	right: -3px; 
+	margin-left: 5px; */
+	float:right;
 }
 
 #Kunena .kcredits {
@@ -368,6 +375,7 @@ a:focus {outline: none;}
 	float: left;
 	margin: 2px 2px 0 0!important;
 	padding: 0;
+	border: 0;
 }
 
 #Kunena_tab div.moduletable {
@@ -379,7 +387,8 @@ a:focus {outline: none;}
 #Kunena_tab div.moduletable ul.menu li a,
 #Kunena_tab div.moduletable ul.menu li a span {
 	background-image:none!important;
-	/* font-size: 1em; */
+	font-size: 1em;
+	line-height: 2em;
 }
 
 #Kunena #Kunena_tab a {
@@ -396,13 +405,12 @@ a:focus {outline: none;}
 #Kunena #Kunena_tab a span {
 	display: block;
 	/* background: url("../images/backgrounds/tabmenuleft.gif") no-repeat left top; */
-	padding: 0 1.2em;
+	padding: 0 1.1em;
 	font-family: Arial, Helvetica, sans-serif;
-	/* font-size: 1em; */
+	font-size: 1em; 
 	color: #FFFFFF;
 	/* font-weight: bold; */
-	line-height: 2em;
-	/* line-height: 35px; */
+	line-height: 2.8em;
 	text-indent: 0;
 }
 
@@ -742,6 +750,11 @@ td.td-1  {
 	text-align: left;
 }
 
+#Kunena span.topic_locked { 
+	margin-left: 3px;
+	text-align: left;
+}
+
 /* HEADER
 ----------------------------------------------------------------------------------------------- */
 
@@ -1015,8 +1028,6 @@ div#kheader h1 a:hover {
 	margin-bottom: 5px;
 }
 
-
-
 #Kunena div.ktitle_cover {
 	float: left;
 	text-align: left;
@@ -1025,7 +1036,7 @@ div#kheader h1 a:hover {
 	padding: 5px;
 	margin-left: 3px;
 	display: block;
-	width: 95%;
+	width: 90%;
 }
 
 #Kunena div.ktitle_cover a { 
@@ -1043,6 +1054,13 @@ div#kheader h1 a:hover {
 #Kunena div.ktitle_desc {
 	clear:left;
 }
+#Kunena .kcheckbox {
+	float:right;
+	margin-right: 22px;
+	width: 20px;
+}
+
+
 
 #Kunena div.ktotalfavorite {
 	text-align: left;
@@ -1102,7 +1120,6 @@ div#kheader h1 a:hover {
 	margin-bottom: 3px;
 	font-weight: bold;
 }
-
 #Kunena div.kthead-desc,
 #Kunena div.kthead-moderators  {
 	clear: left;
@@ -1135,6 +1152,7 @@ div#kheader h1 a:hover {
 	display: inline-block;
 	vertical-align: top;
 	padding-top: 4px;
+	line-height: 2em;
 }
 
 #Kunena div.kcc-table {
@@ -1238,14 +1256,17 @@ span.newchar {
 
 #Kunena tr.ksectiontableentry1_stickymsg td,
 #Kunena tr.ksectiontableentry2_stickymsg td	{
-	text-align:center;
+	text-align:left;
 	color: #000000;
 	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #FFFFFF;
 	border-right: 1px solid #BFC3C6;
 	padding: 4px 8px;
 }
-
+#Kunena tr.ksectiontableentry1_stickymsg td.td-4,
+#Kunena tr.ksectiontableentry2_stickymsg td.td-4 {
+	text-align:center;
+}
 
 /* VIEW PAGE
 -------------------------------------------------------------------- */
@@ -2658,7 +2679,6 @@ POST HISTORY
 	color: #000000;
 	background: #F2F1EE;
 }
-
 #Kunena .kforum-pathway-bottom {
 	padding: 3px;
 	line-height: 18px;
@@ -2667,7 +2687,9 @@ POST HISTORY
 	color: #000000;
 	background: #F2F1EE;
 }
-
+#Kunena .kforum-pathway-bottom img {
+	vertical-align:text-bottom;
+}
 #Kunena .path-element-first {
 	font-weight: normal;
 	height: 18px;

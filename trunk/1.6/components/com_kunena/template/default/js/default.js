@@ -121,6 +121,64 @@ window.addEvent('domready', function() {
 
 });
 */
+/**
+* Toggles the check state of a group of boxes
+*
+* Checkboxes must have an id attribute in the form cb0, cb1...
+* @param The number of box to 'check'
+* @param An alternative field name
+*/
+function checkAll( n, fldName ) {
+  if (!fldName) {
+     fldName = 'cb';
+  }
+	var f = document.kBulkActionForm;
+	var c = f.toggle.checked;
+	var n2 = 0;
+	for (i=0; i < n; i++) {
+		cb = eval( 'f.' + fldName + '' + i );
+		if (cb) {
+			cb.checked = c;
+			n2++;
+		}
+	}
+	if (c) {
+		document.kBulkActionForm.boxchecked.value = n2;
+	} else {
+		document.kBulkActionForm.boxchecked.value = 0;
+	}
+}
+
+function listItemTask( id, task ) {
+    var f = document.kBulkActionForm;
+    cb = eval( 'f.' + id );
+    if (cb) {
+        for (i = 0; true; i++) {
+            cbx = eval('f.cb'+i);
+            if (!cbx) break;
+            cbx.checked = false;
+        } // for
+        cb.checked = true;
+        f.boxchecked.value = 1;
+        submitbutton(task);
+    }
+    return false;
+}
+
+function hideMainMenu() {
+	if (document.kBulkActionForm.hidemainmenu) {
+		document.kBulkActionForm.hidemainmenu.value=1;
+	}
+}
+
+function isChecked(isitchecked){
+	if (isitchecked == true){
+		document.kBulkActionForm.boxchecked.value++;
+	}
+	else {
+		document.kBulkActionForm.boxchecked.value--;
+	}
+}
 
 //----------------- New Mootools extensions ---------------------------
 

@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+06-Feb-2010 severdia
++ [#19312] Checkbox for check toggle
+# [#19356] CSS fixes
+
 05-Feb-2010 fxstein
 ^ [#19345] Display page creation time in footer
 + [#19251] Jomsocial user prefetch caching to reduce query counts - showcat

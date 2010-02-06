@@ -50,6 +50,9 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		<div class="ktitle_cover km"><span class="ktitle kl">
 
 	<?php if (!empty($this->header)) echo $this->header; ?></span></div>
+	<div class="kcheckbox select-toggle">
+		<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->messages); ?>);" />
+	</div>
 		</th>
 		</tr>
 	</thead>
@@ -104,7 +107,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		?></td>
 
 			<td class="td-2 center">
-			<img src="<?php echo (isset($topic_emoticons [$leaf->topic_emoticon]) ? $topic_emoticons [$leaf->topic_emoticon] : $topic_emoticons [0]) ?>" alt="emo" border="0" />
+			<img src="<?php echo (isset($topic_emoticons [$leaf->topic_emoticon]) ? $topic_emoticons [$leaf->topic_emoticon] : $topic_emoticons [0]) ?>" alt="emo" />
 		</td>
 
 			<td class="td-3"><?php
@@ -159,7 +162,13 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 
 				echo ("]</span>");
 			}
-			 ?>
+		if ($leaf->locked != 0) {
+			?> <!-- Locked --> <span class="topic_locked"> <?php
+			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" title="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" />';
+			?>
+			</span> <!-- /Locked --> <?php
+		}
+		?>
 			</div>
 			<div class="ks">
 			<!-- By -->
@@ -186,21 +195,13 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		}
 		?>
 			<!-- /By -->
-		<?php
-		if ($leaf->locked != 0) {
-			?> <!-- Locked --> <span class="topic_locked"> <?php
-			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" title="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" />';
-			?>
-			</span> <!-- /Locked --> <?php
-		}
-		?></div>
+		</div>
 			</td>
 			<td class="td-4 center">
 			<!-- Views -->
 			<span class="topic_views_number"><?php
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
-		?>
-			</span> <span class="topic_views"> <?php
+		?></span> <span class="topic_views"> <?php
 		echo JText::_('COM_KUNENA_GEN_HITS');
 		?> </span> <!-- /Views --></td>
 		<?php if ($this->showposts):?>
@@ -208,8 +209,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 			<!-- Posts -->
 			<span class="topic_views_number"><?php
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->mycount );
-		?>
-			</span> <span class="topic_views"> <?php
+		?></span> <span class="topic_views"> <?php
 		echo JText::_('COM_KUNENA_MY_POSTS');
 		?> </span> <!-- /Posts --></td>
 		<?php endif; ?>
@@ -278,9 +278,9 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			?>
 
-			<td class="td-7 center"><input type="checkbox"
-				name="kDelete[<?php
-			echo $leaf->id?>]" value="1" /></td>
+			<td class="td-7 center">
+				<input id="cb<?php echo $counter-1 ?>" type="checkbox" name="cb[]" value="<?php echo $leaf->id?>" onclick="isChecked(this.checked);" />
+			</td>
 
 			<?php
 		}

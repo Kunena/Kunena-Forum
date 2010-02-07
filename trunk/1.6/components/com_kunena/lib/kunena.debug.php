@@ -100,18 +100,7 @@ function debug_vars($varlist)
 				$output .= '<table border=1><tr> <th>key</th> <th>value</th> </tr>';
 		        foreach ($value as $skey => $svalue)
 		        {
-		        	if (is_array ($svalue) )
-		        	{
-		        		$output .= '<tr><td>[' . $skey .']</td><td>Nested Array</td></tr>';
-		        	}
-				    else if (is_object($svalue))
-				    {
-				    	$objvarlist = get_object_vars($svalue);
-
-				    	// recursive function call
-				    	debug_vars($objvarlist);
-				    }
-				    else
+				    if (is_string($svalue))
 				    {
 				    	$dberror = ($svalue == "check_dberror");
 						$output .= '<tr><td>$' . $skey .'</td><td>"'. $svalue .'"</td></tr>';

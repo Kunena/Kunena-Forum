@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: New installation did not work because of old sample data
 # [#19288] Fix regression: Missing language strings in installer and in backend
 # [#19288] Fix regression: Create menu item: Kunena cannot be selected
+# [#19288] Fix regression: Upgrade failed if configuration did not exist
 
 07-Feb-2010 severdia
 # [#19312] Language fixes (thanks again to kmilos)

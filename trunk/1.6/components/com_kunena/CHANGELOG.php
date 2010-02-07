@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+07-Feb-2010 severdia
+# [#19312] Language fixes (thanks again to kmilos)
+
 06-Feb-2010 severdia
 + [#19312] Checkbox for check toggle
 # [#19356] CSS fixes

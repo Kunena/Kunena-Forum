@@ -128,7 +128,9 @@ window.addEvent('domready', function() {
 * @param The number of box to 'check'
 * @param An alternative field name
 */
-function checkAll( n, fldName ) {
+/*
+ //no need this
+ function checkAll( n, fldName ) {
   if (!fldName) {
      fldName = 'cb';
   }
@@ -178,7 +180,7 @@ function isChecked(isitchecked){
 	else {
 		document.kBulkActionForm.boxchecked.value--;
 	}
-}
+}*/
 
 //----------------- New Mootools extensions ---------------------------
 
@@ -906,5 +908,40 @@ window.addEvent('domready', function(){
 				$('kqr_clone'+lastchar).dispose();
 			});
 		});
+	});	
+	/* Javascript with mootools logic for bulkactions
+	 * 
+	 * 
+	 */
+	$$('.kDelete_bulkcheckboxes').each(function(el){
+		el.addEvent('change', function(e){		  	
+			if(el.get('value')=='1'){
+				el.set('value','0');								
+			} else {
+				el.set('value','1');								
+			}			
+		});		
 	});
+	if($('kBulkChooseActions') != undefined){
+		$('kBulkChooseActions').addEvent('change', function(e){
+			if(this.get('value') == 'bulkMove'){
+				$('bulkactions').removeProperty('disabled');
+			} else {
+				$('bulkactions').setProperty('disabled','disabled');
+			}	
+		});
+	}
+	if($('kcbcheckall') != undefined){
+		$('kcbcheckall').addEvent('change', function(e){
+			$$('.kDelete_bulkcheckboxes').each(function(el){
+				if(el.get('checked')==false){
+					el.set('checked',true);
+					el.set('value','1');								
+				} else {
+					el.set('value','0');	
+					el.set('checked',false);
+				}
+			});
+		});
+	}		
 });

@@ -113,6 +113,10 @@ global $kunena_icons;
 				echo $this->id;
 				?>" />
 				<input type="hidden"
+				name="parentid" value="<?php
+				echo $this->thread;
+				?>" />
+				<input type="hidden"
 				name="action" value="post" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 				<input id="kbut_can" type="button" name="cancel" class="kbutton"

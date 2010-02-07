@@ -32,14 +32,6 @@ $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
 $kunena_config =& CKunenaConfig::getInstance();
 
-//get the token put in the message form to check that the form has been valided successfully
-if(JRequest::get('post')){
-	if(JRequest::checkToken( 'post' ) == false) {
-		$kunena_app->enqueueMessage('Please check all the fields of the form, aub.<br/>
-		If your browser blocks Javascript, then this form will never be successful. This is a security measure.','error');
-	}
-}
-
 $subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $attachfile = JRequest::getVar ( 'attachfile', NULL, 'FILES', 'array' );
@@ -62,6 +54,13 @@ if (! $id) {
 $catid = JRequest::getInt ( 'catid', 0 );
 $do = JRequest::getCmd ( 'do', '' );
 $action = JRequest::getCmd ( 'action', '' );
+
+//get the token put in the message form to check that the form has been valided successfully
+if(JRequest::get('post') && $action == 'post'){
+	if(JRequest::checkToken( 'post' ) == false) {
+		$kunena_app->enqueueMessage(_KUNENA_ERROR_FORM_UNVALIDED,'error');
+	}
+}
 
 if ($id || $parentid) {
 	// Check that message and category exists and fill some information for later use

@@ -187,21 +187,21 @@ $kunena_config = & CKunenaConfig::getInstance ();
 
 			<div id="kbbcode-video-options" style="display: none;"><?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_SIZE');
-			?><input
+			?><input id="kvideosize"
 				name="videosize" type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOSIZE');
 				?>')" />
 			<?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_WIDTH');
-			?><input name="videowidth"
+			?><input id="kvideowidth" name="videowidth"
 				type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH');
 				?>')" />
 			<?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_HEIGHT');
-			?><input
+			?><input id="kvideoheight"
 				name="videoheight" type="text" size="5" maxlength="5"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT');
@@ -209,7 +209,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<br />
 			<?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
-			?> <select
+			?> <select id="kvideoprovider"
 				name="kvid_code1" class="kbutton"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER');
@@ -223,41 +223,35 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				?>
 			</select> <?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_ID');
-			?><input
+			?><input id="kvideoid"
 				name="videoid" type="text" size="11" maxlength="11"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOID');
 				?>')" />
-			<input type="button" name="Video" accesskey="p"
-				onclick="check_video('video1')"
+			<input id="kbutton_addvideo1" type="button" name="Video" accesskey="p"
+				onclick="kInsertVideo1()"
+				value="<?php
+						echo JText::_('COM_KUNENA_EDITOR_VIDEO_INSERT');
+						?>"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1');
 				?>')" /><br />
 			<?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_URL');
-			?><input name="videourl"
+			?><input id="kvideourl" name="videourl"
 				type="text" size="30" maxlength="250" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOURL');
 				?>')" />
-			<input type="button" name="Video" accesskey="p"
-				onclick="check_video('video2')"
+			<input id="kbutton_addvideo2" type="button" name="Video" accesskey="p"
+				onclick="kInsertVideo2()"
+				value="<?php
+						echo JText::_('COM_KUNENA_EDITOR_VIDEO_INSERT');
+						?>"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2');
 				?>')" />
-			<script type="text/javascript">
-								function check_video(art) {
-									var video;
-									if (document.postform.videosize.value != "") {video = " size=" + document.postform.videosize.value;}
-									else {video="";}
-									if (document.postform.videowidth.value != "") {video = video + " width=" + document.postform.videowidth.value;}
-									if (document.postform.videoheight.value != "") {video = video + " height=" + document.postform.videoheight.value;}
-									if (art=='video1'){
-									if (document.postform.fb_vid_code1.value != "") {video = video + " type=" + document.postform.fb_vid_code1.options[document.postform.fb_vid_code1.selectedIndex].value;}
-									bbfontstyle('[video' + video + ']'+ document.postform.videoid.value,'[/video]');}
-									else {bbfontstyle('[video' + video + ']'+ document.postform.videourl.value,'[/video]');}
-								}
-							</script></div>
+			</div>
 			</td>
 		</tr>
 		<tr>

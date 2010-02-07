@@ -32,6 +32,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Special-DEV-Xillibit
+
+07-Feb-2010 Xillibit
+# [#19631] Re-implement quick reply by using mootools - fix a bug which create new threads instead replies
++ [#19668] Re-implement bulkactions with mootools
++ [#19668] Write javascript logic for video in editor
+
 Kunena 1.6.0-DEV
 
 06-Feb-2010 severdia

@@ -27,6 +27,7 @@ global $kunena_icons, $topic_emoticons;
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
+$this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 	?>
 <div class="k_bt_cvr1">
@@ -51,7 +52,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 
 	<?php if (!empty($this->header)) echo $this->header; ?></span></div>
 	<div class="kcheckbox select-toggle">
-		<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->messages); ?>);" />
+		<input id="kcbcheckall" type="checkbox" name="toggle" value=""  />
 	</div>
 		</th>
 		</tr>
@@ -279,7 +280,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 			?>
 
 			<td class="td-7 center">
-				<input id="cb<?php echo $counter-1 ?>" type="checkbox" name="cb[]" value="<?php echo $leaf->id?>" onclick="isChecked(this.checked);" />
+				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo $leaf->id?>]" value="0"  />
 			</td>
 
 			<?php
@@ -289,31 +290,12 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 
 		<?php
 	}
-	// TODO: disable bulk tools durig transisiton to mootools
-	// need to rewrite the function based on mootools
-	if (false /* CKunenaTools::isModerator ( $this->my->id, $this->catid ) */) {
+	if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) {
 		?>
 		<!-- Moderator Bulk Actions -->
 		<tr class="ksectiontableentry1">
-			<td colspan="7" align="right" class="td-1 ks"><script
-				type="text/javascript">
-//                            jQuery(document).ready(function()
-//                            {
-//                                jQuery('#kBulkActions').change(function()
-//                                {
-//                                    var myList = jQuery(this);
-//
-//                                    if (jQuery(myList).val() == "bulkMove")
-//                                    {
-//                                        jQuery("#bulkactions").removeAttr('disabled');
-//                                    }
-//                                    else
-//                                    {
-//                                        jQuery("#bulkactions").attr('disabled', 'disabled');
-//                                    }
-//                                });
-//                            });
-                        </script> <select name="do" id="kBulkActions"
+			<td colspan="7" align="right" class="td-1 ks">
+				<select name="do" id="kBulkChooseActions"
 				class="inputbox ks">
 				<option value="">&nbsp;</option>
 				<option value="bulkDel"><?php
@@ -340,10 +322,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 	value="<?php
 	echo KUNENA_COMPONENT_ITEMID;
 	?>" /> <input type="hidden" name="option" value="com_kunena" /> <input
-	type="hidden" name="func" value="bulkactions" /> <input type="hidden"
-	name="return" value="<?php
-	echo JRoute::_ ( $Breturn );
-	?>" /></form>
+	type="hidden" name="func" value="bulkactions" /> </form>
 </div>
 </div>
 </div>

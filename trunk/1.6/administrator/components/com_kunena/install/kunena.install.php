@@ -55,7 +55,8 @@ ignore_user_abort(true);
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 
 $lang = JFactory::getLanguage();
-$lang->load('com_kunena', JPATH_COMPONENT);
+$lang->load('com_kunena', KUNENA_PATH);
+$lang->load('com_kunena', KUNENA_PATH_ADMIN);
 
 include_once(KUNENA_PATH_ADMIN_LIB .DS. 'fx.upgrade.class.php');
 

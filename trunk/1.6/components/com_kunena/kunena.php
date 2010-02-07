@@ -23,12 +23,15 @@
 
 defined( '_JEXEC' ) or die();
 
+// Kunena wide defines
+require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
+
 // Display time it took to create the entire page in the footer
 jimport( 'joomla.error.profiler' );
 $__kstarttime = JProfiler::getmicrotime();
 
 $lang = JFactory::getLanguage();
-$lang->load('com_kunena', JPATH_COMPONENT);
+$lang->load('com_kunena', KUNENA_PATH);
 
 // First of all take a profiling information snapshot for JFirePHP
 if(JDEBUG){
@@ -36,9 +39,6 @@ if(JDEBUG){
 	$__profiler = KProfiler::GetInstance();
 	$__profiler->mark('Start');
 }
-
-// Kunena wide defines
-require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
 
 global $message;
 global $kunena_this_cat;
@@ -425,7 +425,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'myprofile' :
 		case 'fbprofile' :
 		case 'profile' :
-			require_once ( KUNENA_PATH_VIEWS .DS. 'profile.php');
+			require_once ( KUNENA_PATH_FUNCS .DS. 'profile.php');
 			$page = new CKunenaProfile($userid);
 			$page->display();
 
@@ -456,7 +456,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		#########################################################################################
 
 		case 'view' :
-			require_once (KUNENA_PATH_VIEWS . DS . 'view.php');
+			require_once (KUNENA_PATH_FUNCS . DS . 'view.php');
 			$page = new CKunenaView($func, $catid, $id);
 			$page->display();
 
@@ -476,7 +476,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		#########################################################################################
 
 		case 'showcat' :
-			require_once (KUNENA_PATH_VIEWS . DS . 'showcat.php');
+			require_once (KUNENA_PATH_FUNCS . DS . 'showcat.php');
 			$page = new CKunenaShowcat($catid, $page);
 			$page->display();
 
@@ -485,7 +485,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		#########################################################################################
 
 		case 'listcat' :
-			require_once (KUNENA_PATH_VIEWS . DS . 'listcat.php');
+			require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
 			$page = new CKunenaListcat($catid);
 			$page->display();
 
@@ -553,7 +553,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'noreplies' :
 		case 'subscriptions' :
 		case 'favorites' :
-			require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
+			require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 			$page = new CKunenaLatestX($func, $page);
 			$page->display();
 

@@ -71,16 +71,22 @@
 	</target>
 
 	<target name="copy" depends="mkdir">
-		<copy todir="${tmp_dir}">
-			<fileset dir="${kunena.frontend}" />
+		<copy todir="${tmp_dir}/admin">
+			<fileset dir="${kunena.backend}">
+				<exclude name="manifest.xml" />
+				<exclude name="install/" />
+			</fileset>
 		</copy>
-		<copy todir="${tmp_dir}">
-			<fileset dir="${kunena.backend}" />
+		<copy todir="${tmp_dir}/install">
+			<fileset dir="${kunena.backend}/install"/>
+		</copy>
+		<copy todir="${tmp_dir}/site">
+			<fileset dir="${kunena.frontend}"/>
 		</copy>
 	</target>
 
 	<target name="init" depends="copy">
-		<xmlproperty file="${tmp_dir}/manifest.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<xmlproperty file="${kunena.backend}/manifest.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<buildnumber />
 		<tstamp>
 			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
@@ -144,7 +150,7 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 		<copy file="${project_dir}/administrator/components/com_kunena/manifest.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_kunena/lib/kunena.defines.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/components/com_kunena/lib/kunena.defines.php" todir="${tmp_dir}/site/lib" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
 

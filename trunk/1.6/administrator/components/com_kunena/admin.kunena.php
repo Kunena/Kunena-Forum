@@ -21,13 +21,14 @@
 
 defined( '_JEXEC' ) or die();
 
-$lang = JFactory::getLanguage();
-$lang->load('com_kunena', JPATH_COMPONENT);
-
-global $kunenaProfile;
-
 // Kunena wide defines
 require_once (JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
+
+$lang = JFactory::getLanguage();
+$lang->load('com_kunena', KUNENA_PATH);
+$lang->load('com_kunena', KUNENA_PATH_ADMIN);
+
+global $kunenaProfile;
 
 $task = JRequest::getCmd ( 'task' );
 

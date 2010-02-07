@@ -90,7 +90,7 @@ class CKunenaProfile {
 
 	function displayOwnTopics()
 	{
-		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('owntopics', 0);
 		$obj->user = $this->user;
 		$obj->getOwnTopics();
@@ -100,7 +100,7 @@ class CKunenaProfile {
 
 	function displayUserTopics()
 	{
-		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('usertopics', 0);
 		$obj->user = $this->user;
 		$obj->getUserTopics();
@@ -110,7 +110,7 @@ class CKunenaProfile {
 
 	function displayFavorites()
 	{
-		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('favorites', 0);
 		$obj->user = $this->user;
 		$obj->getFavorites();
@@ -120,7 +120,7 @@ class CKunenaProfile {
 
 	function displaySubscriptions()
 	{
-		require_once (KUNENA_PATH_VIEWS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);
 		$obj->user = $this->user;
 		$obj->getSubscriptions();

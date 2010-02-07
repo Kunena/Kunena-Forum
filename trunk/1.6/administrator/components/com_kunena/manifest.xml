@@ -14,7 +14,7 @@
 	<description>Kunena Forum</description>
 	<installfile>install/kunena.install.php</installfile>
 	<uninstallfile>install/kunena.uninstall.php</uninstallfile>
-	<files>
+	<files folder="site">
 		<filename>CHANGELOG.php</filename>
 		<filename>COPYRIGHT.php</filename>
 		<filename>class.kunena.php</filename>
@@ -23,25 +23,28 @@
 		<filename>router.php</filename>
 		<filename>jomsocial_rule.xml</filename>
 		<folder>kunena.files.distribution</folder>
+		<folder>funcs</folder>
+		<folder>js</folder>
 		<folder>language</folder>
 		<folder>lib</folder>
 		<folder>template</folder>
-		<folder>views</folder>
 	</files>
 	<administration>
 		<files>
+			<filename>manifest.xml</filename>
+			<folder>install</folder>
+		</files>
+		<files folder="admin">
 			<filename>admin.kunena.html.php</filename>
 			<filename>admin.kunena.php</filename>
 			<filename>kunena.cpanel.php</filename>
-			<filename>manifest.xml</filename>
 			<filename>toolbar.kunena.html.php</filename>
-			<filename>toolbar.kunena.php</filename>    
+			<filename>toolbar.kunena.php</filename>
 			<folder>images</folder>
-			<folder>install</folder>
 			<folder>language</folder>
 			<folder>lib</folder>
 		</files>
-	<menu>Kunena Forum</menu>
+		<menu>Kunena Forum</menu>
 	</administration>
 	<params />
 </install>

@@ -2642,7 +2642,7 @@ td.fbtdtitle {
 		</td>
 
 		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_name_DESC')?>
+		echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_NAME_DESC')?>
 		</td>
 	</tr>
 

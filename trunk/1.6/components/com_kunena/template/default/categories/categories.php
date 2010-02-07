@@ -83,7 +83,7 @@ global $kunena_icons;
 				?>"
 			id="kcat<?php
 				echo $subcat->id?>">
-			<td class="td-1" class="center" width="1%"><?php
+			<td class="td-1 center" width="1%"><?php
 				$tmpIcon = '';
 				if ($this->config->shownew && $this->my->id != 0) {
 					if ($subcat->new) {
@@ -113,7 +113,7 @@ global $kunena_icons;
 				?>
 			</td>
 
-			<td class="td-2" class="left">
+			<td class="td-2 left">
 			<div class="kthead-title kl"><?php
 				//new posts available
 				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( stripslashes ( $subcat->name ) ) );
@@ -232,7 +232,7 @@ else {
 				?>
 			</td>
 
-			<td class="td-3 km" class="center" width="5%"><!-- Number of Topics -->
+			<td class="td-3 km center" width="5%"><!-- Number of Topics -->
 			<span class="cat_topics_number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numTopics );
 				?>
@@ -240,7 +240,7 @@ else {
 				echo JText::_('COM_KUNENA_GEN_TOPICS');
 				?> </span> <!-- /Number of Replies --></td>
 
-			<td class="td-4 km" class="center" width="5%"><!-- Number of Topics -->
+			<td class="td-4 km center" width="5%"><!-- Number of Topics -->
 			<span class="cat_replies_number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numPosts );
 				?>
@@ -252,7 +252,7 @@ else {
 				if ($subcat->numTopics != 0) {
 					?>
 
-			<td class="td-5" class="left" width="25%">
+			<td class="td-5 left" width="25%">
 			<div class="klatest-subject km">
 			<?php
 					echo JText::_('COM_KUNENA_GEN_LAST_POST');
@@ -278,7 +278,7 @@ else {
 				} else {
 					?>
 
-			<td class="td-5" class="left"><?php
+			<td class="td-5 left"><?php
 					echo JText::_('COM_KUNENA_NO_POSTS');
 					?></td>
 

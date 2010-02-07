@@ -300,11 +300,16 @@ a:focus {outline: none;}
 #Kunena .topic_sticky {
 	/* position: absolute;
 	top: -5px;
-	right: -3px; 
-	margin-left: 5px; */
+	right: -3px;  */
+	margin-left: 5px;
 	float:right;
+	display:block;
 }
 
+#Kunena .klatest-post-info {
+	display:block;
+}
+	
 #Kunena .kcredits {
 	height: 31px;
 	line-height: 26px;
@@ -400,6 +405,10 @@ a:focus {outline: none;}
 	border: 0;
 	display: block;
 	float: left;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-radius-topright: 5px;
+	-webkit-border-radius-topleft: 5px;
 }
 
 #Kunena #Kunena_tab a span {
@@ -698,7 +707,7 @@ td.td-1  {
 #Kunena .kpagination a:visited	{
 	background-color: #F2F1EE;
 	border: 1px solid #999999;
-	color: #000000;
+	color: #333333;
 }
 
 #Kunena .kpagination strong,
@@ -965,8 +974,6 @@ form#searchform {
 }
 
 #Kunena table.kblocktable {
-	width: 100%;
-	margin: 0 ;
 	border-style: solid;
 	border-color: #BFC3C6;
 	border-width: 0px 0px 4px 0px;
@@ -1267,6 +1274,18 @@ span.newchar {
 #Kunena tr.ksectiontableentry2_stickymsg td.td-4 {
 	text-align:center;
 }
+
+#Kunena td.td-1.center ,
+#Kunena td.td-2.center,
+#Kunena td.td-3.center,
+#Kunena td.td-4.center,
+#Kunena td.td-5.center,
+#Kunena td.td-6.center,
+#Kunena td.td-7.center {
+	text-align:center;
+}
+
+
 
 /* VIEW PAGE
 -------------------------------------------------------------------- */
@@ -3214,7 +3233,7 @@ div.clrline {
 
 div#kprofile-rightcolbot {}
 
-div.kprofile-rightcol1 h4 { margin:10px 0 0 0; padding: 0;}
+div.kprofile-rightcol1 h4 { margin:10px 0 0 0; padding: 0; color: #333333; font-size: 1em; font-weight:bold;}
 
 div.kprofile-rightcol1 p { margin:0; padding: 0;}
 				

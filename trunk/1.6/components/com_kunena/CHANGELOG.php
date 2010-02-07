@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+07-Feb-2010 severdia
+# [#19356] CSS fixes, rounded tabs
+
 07-Feb-2010 Matias
 # [#19288] Fix regression: New installation did not work because of old sample data
 # [#19288] Fix regression: Missing language strings in installer and in backend

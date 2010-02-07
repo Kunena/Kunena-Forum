@@ -214,7 +214,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		?> </span> <!-- /Posts --></td>
 		<?php endif; ?>
 			<td class="td-6 ks">
-			<div style="position: relative"><!--  Sticky   --> <?php
+			<div class="klatest-post-info"><!--  Sticky   --> <?php
 		if ($leaf->ordering != 0) {
 			?>
 			<span class="topic_sticky"> <?php

@@ -134,14 +134,13 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 							<label for="ban-delposts"><span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_ALL_POSTS'); ?></span></label>
 							<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_USER'); ?>" name="Submit" />
 						</form>
-						<div class="clr"></div>
 					</dd>
 					<?php endif; ?>
 				</dl>
 			</div>
+			<div class="clr"></div>
 		</div>
 	</div>
-
 </div>
 </div>
 </div>

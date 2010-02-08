@@ -66,14 +66,14 @@ class CKunenaLink
     	return $redirect == false ? JRoute::_(KUNENA_LIVEURLREL) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL));
     }
 
-    function GetRSSLink($name , $rel='follow')
+    function GetRSSLink($name , $rel='follow', $params = '')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=fb_rss&amp;no_html=1', $name, '', $rel, '', '', 'target="_blank"');
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=rss' . $params, $name, '', $rel, '', '', 'target="_blank"');
     }
 
-    function GetRSSURL()
+    function GetRSSURL($params = '')
     {
-    	return JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=fb_rss&amp;no_html=1' );
+    	return JRoute::_ ( KUNENA_LIVEURLREL . '&amp;func=rss' . $params );
     }
 
     function GetPDFLink($catid, $id , $name, $rel='nofollow', $title='')

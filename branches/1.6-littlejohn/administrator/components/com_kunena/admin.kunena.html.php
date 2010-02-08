@@ -1059,7 +1059,49 @@ td.fbtdtitle {
 		echo _COM_A_RSS_ALLOW_HTML_DESC?>
 		</td>
 	</tr>
+	
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _COM_A_RSS_AUTHOR_FORMAT?></td>
 
+		<td align="left" valign="top"><?php
+		echo $lists ['rss_author_format'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo _COM_A_RSS_AUTHOR_FORMAT_DESC?>
+		</td>
+	</tr>
+	
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _COM_A_RSS_WORD_COUNT?></td>
+
+		<td align="left" valign="top"><?php
+		echo $lists ['rss_word_count'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo _COM_A_RSS_WORD_COUNT_DESC?>
+		</td>
+	</tr>
+	
+	<tr align="center" valign="middle">
+		<td align="left" valign="top"><?php
+		echo _COM_A_RSS_OLD_TITLES?></td>
+
+		<td align="left" valign="top"><?php
+		echo $lists ['rss_old_titles'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo _COM_A_RSS_OLD_TITLES_DESC?>
+		</td>
+	</tr>
+	
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo _COM_A_PDF?></td>

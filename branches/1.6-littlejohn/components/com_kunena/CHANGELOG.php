@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+08-Feb-2010 littlejohn
+# [#19399] New RSS feeds (part 3 - removed trailing space from parser affecting all templates)
+^ [#19399] New RSS feeds (part 2 - changed and corrected administrative options)
+
 03-Feb-2010 littlejohn
 ^ [#19399] New RSS feeds (part 1 - adding administrative options)
  

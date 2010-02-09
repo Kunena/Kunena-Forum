@@ -493,7 +493,7 @@ class CKunenaTools {
             $kunena_db->setQuery("SELECT id, time FROM #__fb_messages WHERE catid='{$msg_cat}' AND (thread!='{$msg_id}' AND id!='{$msg_id}') ORDER BY time DESC LIMIT 1;");
             $lastMsgInCat = $kunena_db->loadObject();
             	check_dberror("Unable to load messages.");
-
+            	
             $ctg[$msg_cat]->numTopics = (int) ($ctg[$msg_cat]->numTopics - $cntTopics);
             $ctg[$msg_cat]->numPosts = (int) ($ctg[$msg_cat]->numPosts - $cntPosts);
 
@@ -578,17 +578,12 @@ class CKunenaTools {
 
         // start iterating here
         foreach ($items as $id => $value) {
-            $kunena_db->setQuery("SELECT a.id, b.id AS poll_exist, catid, parent, thread, subject, userid FROM #__fb_messages AS a
-            					JOIN #__fb_polls AS b ON a.id=b.threadid WHERE a.id='{$id}'");
+            $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid FROM #__fb_messages
+            					  WHERE id='{$id}'");
             $mes = $kunena_db->loadObject();
             check_dberror ( "Unable to load online message info." );
             if (!$mes) return -2;
             $thread = $mes->thread;
-
-            if($mes->poll_exist) {
-            	//remove of poll
-            	CKunenaPolls::delete_poll($id);
-            }
 
             if ($mes->parent == 0) {
                 // this is the forum topic; if removed, all children must be removed as well.
@@ -621,7 +616,7 @@ class CKunenaTools {
             $kunena_db->setQuery('UPDATE #__fb_messages SET hold=2 WHERE id=' . $id . ' OR thread=' . $id);
 			$kunena_db->query();
 			check_dberror ( "Unable to delete messages." );
-
+			
             // now update stats
             CKunenaTools::decreaseCategoryStats($id, $mes->catid);
 

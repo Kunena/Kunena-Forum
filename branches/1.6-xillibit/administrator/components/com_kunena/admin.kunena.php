@@ -2062,6 +2062,24 @@ function deleteitemsnow ( $option, $cid ) {
 
 	$cids = implode ( ',', $cid );
 	if ($cids) {
+		foreach ($cid as $id ) {
+			$kunena_db->setQuery ( "SELECT a.parent, a.id, b.threadid FROM #__fb_messages AS a INNER JOIN #__fb_polls AS b ON b.threadid=a.id WHERE threadid='{$id}'" );
+			$mes = $kunena_db->loadObjectList ();
+			check_dberror ( "Unable to load online message info." );
+			if( !empty($mes[0])) {
+				if ($mes[0]->parent == '0' && !empty($mes[0]->threadid) ) {
+					//remove of poll
+					require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  					$poll = new CKunenaPolls();
+            		$poll->delete_poll($mes[0]->threadid);
+				}
+			}
+		}
+
+		$kunena_db->setQuery ( 'SELECT userid FROM #__fb_messages WHERE id IN (' . $cids. ')' );
+		$userids = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load userids in message." );
+
 		$kunena_db->setQuery ( 'DELETE FROM #__fb_messages WHERE id IN (' .$cids. ')' );
 		$kunena_db->query ();
 		check_dberror ( "Unable to delete messages." );
@@ -2069,11 +2087,6 @@ function deleteitemsnow ( $option, $cid ) {
 		$kunena_db->setQuery ( 'DELETE FROM #__fb_messages_text WHERE mesid IN (' . $cids. ')' );
 		$kunena_db->query ();
 		check_dberror ( "Unable to delete messages text." );
-
-		$kunena_db->setQuery ( 'SELECT userid FROM #__fb_messages WHERE id IN (' . $cids. ')' );
-		$userids = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to load userids in message." );
-
 		foreach ( $userids as $line ) {
 			if ($line->userid > 0) {
 				$userid_array [] = $line->userid;
@@ -2087,6 +2100,7 @@ function deleteitemsnow ( $option, $cid ) {
 			$kunena_db->query ();
 			check_dberror ( "Unable to update users posts." );
 		}
+
 
 		$kunena_db->setQuery ( 'SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
 		$fileList = $kunena_db->loadObjectList ();
@@ -2105,7 +2119,7 @@ function deleteitemsnow ( $option, $cid ) {
 		}
 	}
 
-	//$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_('COM_KUNENA_TRASH_DELETE_DONE') );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_('COM_KUNENA_TRASH_DELETE_DONE') );
 }
 
 function trashrestore($option, $cid) {

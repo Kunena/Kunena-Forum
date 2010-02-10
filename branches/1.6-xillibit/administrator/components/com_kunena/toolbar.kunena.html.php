@@ -239,5 +239,14 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::cancel('showtrashview');
     }
+
+	function _REPORTSYSTEM_MENU()
+    {
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('generatereport','apply.png','apply_f2.png', JText::_('COM_KUNENA_GENERATE_REPORT'));
+        JToolBarHelper::spacer();
+        JToolBarHelper::back();
+
+    }
 }
 ?>

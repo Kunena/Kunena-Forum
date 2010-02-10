@@ -320,6 +320,16 @@ switch ($task) {
 
 		break;
 
+	case "showreportsystem" :
+		showreportsystem ( $option, $report='0' );
+
+		break;
+
+	case "generatereport" :
+		generatereport ( $option );
+
+		break;
+
 	case "trashpurge" :
 		trashpurge ( $option, $cid );
 
@@ -2136,6 +2146,112 @@ function trashrestore($option, $cid) {
 }
 //===============================
 // FINISH trash management
+//===============================
+
+//===============================
+// Report System
+//===============================
+function showreportsystem ( $option, $report ) {
+	$kunena_app = & JFactory::getApplication ();
+	$return = JRequest::getCmd( 'return', 'showreportsystem', 'post' );
+	$report = $kunena_app->getUserState( "com_kunena.reportsystem" );
+	html_Kunena::showreportsystem ( $option, $return, $report );
+}
+
+function generatereport ( $option ) {
+	$kunena_config =& CKunenaConfig::getInstance();
+	$kunena_app = & JFactory::getApplication ();
+	$JVersion = new JVersion();
+	$jversion = $JVersion->PRODUCT .' '. $JVersion->RELEASE .'.'. $JVersion->DEV_LEVEL .' '. $JVersion->DEV_STATUS.' [ '.$JVersion->CODENAME .' ] '. $JVersion->RELDATE .' '. $JVersion->RELTIME .' '. $JVersion->RELTZ;
+	$JConfig		= new JConfig();
+	if(isset($JConfig->legacy)) {
+		$jconfig_legacy = 'Enabled';
+	} else {
+		$jconfig_legacy = 'Disabled';
+	}
+	if($JConfig->ftp_enable) {
+		$jconfig_ftp = 'Enabled';
+	} else {
+		$jconfig_ftp = 'Disabled';
+	}
+	if($JConfig->sef) {
+		$jconfig_sef = 'Enabled';
+	} else {
+		$jconfig_sef = 'Disabled';
+	}
+	if($JConfig->sef_rewrite) {
+		$jconfig_sef_rewrite = 'Enabled';
+	} else {
+		$jconfig_sef_rewrite = 'Disabled';
+	}
+	if(!JUtility::isWinOS()) {
+		if (!file_exists(JPATH_ROOT. DS. '.htaccess')) {
+			$htaccess = 'Implemented';
+		} else {
+			$htaccess = 'Not implemented';
+		}
+	} else {
+		$htaccess = 'Can not test on windows system';
+	}
+	if(ini_get('safe_mode')) {
+		$safe_mode = '[u]safe_mode:[/u] [color=#FF0000]Loaded[/color]';
+	} else {
+		$safe_mode = '[u]safe_mode:[/u] Not loaded';
+	}
+	if(extension_loaded('mbstring')) {
+		$mbstring = '[u]mbstring Support:[/u] Loaded';
+	} else {
+		$mbstring = '[u]mbstring Support:[/u] [color=#FF0000]Not loaded[/color]';
+	}
+	if(extension_loaded('gd')) {
+		$gd_info = gd_info ();
+		$gd_support = '[u]gd support:[/u] Loaded ('.$gd_info['GD Version'].')' ;
+	} else {
+		$gd_support = '[u]gd support:[/u] Not loaded';
+	}
+	$maxExecTime = ini_get('max_execution_time');
+	$maxExecMem = ini_get('memory_limit');
+	$fileuploads = ini_get('upload_max_filesize');
+	$kunenaVersionInfo = CKunenaVersion::versionArray ();
+	$kunena_integration_type = '';
+	switch ($kunena_config->fb_profile) {
+    case 'fb':
+        $kunena_integration_type = 'Kunena';
+        break;
+    case 'cb':
+        $kunena_integration_type = 'Community Builder';
+        break;
+    case 'aup':
+        $kunena_integration_type = 'Alpha User Points';
+        break;
+   	case 'jomsocial':
+        $kunena_integration_type = 'Jomsocial';
+        break;
+	}
+	if($kunena_config->sef) {
+		$Ksef = 'Enabled';
+	}else {
+		$Ksef = 'Disabled';
+	}
+	if($kunena_config->sefcats) {
+		$Ksefcats = 'Enabled';
+	}else {
+		$Ksefcats = 'Disabled';
+	}
+	if($kunena_config->sefutf8) {
+		$Ksefutf8 = 'Enabled';
+	}else {
+		$Ksefutf8 = 'Disabled';
+	}
+    $report = '[quote][b]Joomla! version:[/b] '.$jversion.' [b]Plateform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('.$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' [b]PHP requirements:[/b] '.$safe_mode.' | '.$mbstring.' | '.$gd_support.' | [b]MySQL version:[/b] '.mysql_get_server_info().'[/quote]
+    	[quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '.$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' | [b]htaccess:[/b] '.$htaccess.' | [b]PHP environnement:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '.$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.'
+    	| [b]Kunena:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '.$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [u]Kunena integration type:[/u] '.$kunena_integration_type.' | [u]Kunena sef:[/u] '.$Ksef.' | [u]Kunena sefcats:[/u] '.$Ksefcats.' | [u]Kunena sefutf8:[/u] '.$Ksefutf8.'[/quote]';
+	$kunena_app->setUserState( "com_kunena.reportsystem", $report );
+    $kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showreportsystem", JText::_('COM_KUNENA_REPORT_GENERATED') );
+}
+
+//===============================
+// FINISH report system
 //===============================
 
 function KUNENA_GetAvailableModCats($catids) {

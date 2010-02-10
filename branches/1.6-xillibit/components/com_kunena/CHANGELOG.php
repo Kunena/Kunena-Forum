@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-Special-DEV-Xillibit
 
+10-Feb-2010 Xillibit
++ [#19690] Add configuration report system in Kunena backend
+
 08-Feb-2010 Xillibit
 # [#19332] Change Delete behavior - fixes to solve an issue in trash manager and now put the poll deletion in trash manager
 

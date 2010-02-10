@@ -205,6 +205,10 @@ td.fbtdtitle {
 			href="index.php?option=com_kunena&task=showtrashview"><?php
 		echo JText::_('COM_KUNENA_TRASH_VIEW');
 		?></a>
+		<a class="fbmainmenu"
+			href="index.php?option=com_kunena&task=showreportsystem"><?php
+		echo JText::_('COM_KUNENA_REPORT_SYSTEM');
+		?></a>
 		<a class="fbmainmenu" href="http://www.Kunena.com"
 			target="_blank"><?php
 		echo JText::_('COM_KUNENA_C_SUPPORT');
@@ -4686,4 +4690,22 @@ echo $pane->endPane();
 	<?php
 	}
 	//End trash view
+	//Start report system
+	function showreportsystem($option, $return ,$report) {
+		?>
+<div class="fbfunctitle"><?php
+		echo JText::_('COM_KUNENA_REPORT_SYSTEM');
+		?></div>
+		<form action="index.php" method="POST" name="adminForm">
+		<fieldset><?php
+		echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC');
+		?><br /></fieldset>
+		<textarea name="report_final"cols="135" rows="10"><?php if($report != '0') { echo $report; } ?></textarea>
+		<input type="hidden" name="option" value="<?php echo $option;?>" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="boxchecked" value="1" />
+		<input type="hidden" name="return" value="<?php echo $return;?>" />
+		</form>
+<?php
+	}//End report system
 } //end class

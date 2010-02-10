@@ -130,6 +130,11 @@ switch ($task)
 
         break;
 
+	case "showreportsystem":
+        CKunenaToolbar::_REPORTSYSTEM_MENU();
+
+        break;
+
     default:
 
         CKunenaToolbar::BACKONLY_MENU();

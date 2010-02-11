@@ -75,8 +75,6 @@ var RecaptchaOptions = {
 	type="hidden" name="catid" value="<?php
 	echo $this->catid;
 	?>" />
-	<?php else: ?>
-	<input type="hidden" name="action" value="<?php echo $this->action; ?>" />
 	<?php endif; ?>
 	<?php
 if (! empty ( $this->kunena_editmode )) :

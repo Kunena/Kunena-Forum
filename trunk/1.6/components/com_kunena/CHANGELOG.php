@@ -34,11 +34,14 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+12-Feb-2010 severdia
+# [#19356] CSS fixes for Afterburner
+
 12-Feb-2010 Matias
 # [#19288] Fix regression: AJAX Upload broke up during merge
 
 07-Feb-2010 severdia
-# [#19356] CSS fixes, rounded tabs
+# [#19356] CSS fixes, rounded tabs (CSS3 only)
 
 07-Feb-2010 Matias
 # [#19288] Fix regression: New installation did not work because of old sample data

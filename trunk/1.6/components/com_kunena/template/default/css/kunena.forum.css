@@ -186,6 +186,7 @@ a:focus {outline: none;}
 	border-bottom: 1px solid #BFC3C6;
 	/* border-left: 1px solid #FFFFFF; */
 	border-right: 1px solid #BFC3C6;
+	vertical-align: middle;
 }
 
 #Kunena tr.ksectiontableentry2 td {
@@ -195,6 +196,7 @@ a:focus {outline: none;}
 	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #FFFFFF;
 	border-right: 1px solid #BFC3C6;
+	vertical-align: middle;
 }
 
 #Kunena tr.ksectiontableentry1 td.td-3,
@@ -419,7 +421,7 @@ a:focus {outline: none;}
 	font-size: 1em; 
 	color: #FFFFFF;
 	/* font-weight: bold; */
-	line-height: 2.8em;
+	line-height: 2.3em;
 	text-indent: 0;
 }
 
@@ -494,6 +496,10 @@ td.td-1  {
 	line-height: 28px;
 	text-align:center;
  }
+#Kunena table.klist_bottom td.klist_moderators {
+	text-align:left;
+ }
+ 
  
 #Kunena .kbutton:hover,
 #Kunena .kbutton:focus {
@@ -579,6 +585,7 @@ td.td-1  {
 	height: 28px;
 	padding: 0px 2px 0px 2px;
 	width: 1%;
+	vertical-align: middle;
 }
 
 #Kunena .klist_actions_forum {
@@ -586,6 +593,7 @@ td.td-1  {
 	height: 28px;
 	padding: 1px 4px 1px 4px;
 	white-space: nowrap;
+	vertical-align: middle;
 }
 
 #Kunena .klist_pages_all {
@@ -777,7 +785,11 @@ td.td-1  {
 }
 
 #Kunena td.kprofileboxcnt ul {
-	margin: 5px 0 5px -38px;
+	margin: 5px 0 5px 5px;
+	padding-left: 0;
+}
+#Kunena td.kprofileboxcnt ul.kprofilebox_link {
+	margin: 5px 0 ;
 }
 
 #Kunena td.kprofileboxcnt ul li {
@@ -860,19 +872,27 @@ table#kprofilebox {
 
 #Kunena fieldset {
 	background-color: #fff;
+	border:1px solid #CCCCCC;
+	margin-top:15px;
+	padding:15px;
 }
 
 #Kunena fieldset legend {
 	font-size: 1.182em;
 	padding-left: 5px;
 	padding-right: 5px;
-	margin-left: -5px;
+	margin: 0 0 0 -5px;
+	font-weight: bold;
 }
 
 #Kunena select#catids option{
 	padding-left: 5px;
 }
 
+#Kunena table#kforumsearch_adv td {
+	vertical-align:top;
+	padding-bottom: 15px;
+}
 
 label.searchlabel {
  	display:block;
@@ -1130,6 +1150,7 @@ div#kheader h1 a:hover {
 #Kunena div.kthead-desc,
 #Kunena div.kthead-moderators  {
 	clear: left;
+	line-height: 1.2em;
 }
 
 #Kunena div.kthead-moderators  {
@@ -1269,6 +1290,7 @@ span.newchar {
 	border-left: 1px solid #FFFFFF;
 	border-right: 1px solid #BFC3C6;
 	padding: 4px 8px;
+	vertical-align: middle;
 }
 #Kunena tr.ksectiontableentry1_stickymsg td.td-4,
 #Kunena tr.ksectiontableentry2_stickymsg td.td-4 {
@@ -1283,6 +1305,7 @@ span.newchar {
 #Kunena td.td-6.center,
 #Kunena td.td-7.center {
 	text-align:center;
+	vertical-align:middle;
 }
 
 
@@ -1562,6 +1585,7 @@ span.newchar {
 	margin: 4px 0px 3px;
 	line-height: 14px;
 	white-space: nowrap;
+	font-size: .917em;
 }
 #Kunena div.kmessage_buttons_row  a {
 	margin-right: 5px;
@@ -3134,7 +3158,7 @@ div.kprofile-rightcol1 {
 
 div.kprofile-rightcol1 ul {margin: 0;padding: 0;}
 
-div.kprofile-rightcol1 ul li { list-style-type: none; padding-bottom: 8px; }
+div.kprofile-rightcol1 ul li { list-style-type: none !important; padding-bottom: 8px; }
 
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
 	float:left;
@@ -3241,7 +3265,7 @@ div.kprofile-rightcol2 { float:right; width: 45%; margin-left: 10px;}
 
 div.kprofile-rightcol2 ul {margin: 0;padding: 0;}
 
-div.kprofile-rightcol2 ul li {list-style-type: none; padding-bottom: 8px;}
+div.kprofile-rightcol2 ul li {list-style-type: none !important; padding-bottom: 8px;}
 
 div.kprofile-rightcol2 ul li span.email {
 	float:left;

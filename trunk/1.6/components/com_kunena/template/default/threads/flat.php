@@ -185,7 +185,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 		echo JText::_('COM_KUNENA_POSTED_AT')?>
 			<?php
 			echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');
-		?></span>
+		?>&nbsp;</span>
 
 		<?php
 		if ($leaf->name) {

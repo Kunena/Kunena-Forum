@@ -4696,11 +4696,19 @@ echo $pane->endPane();
 <div class="fbfunctitle"><?php
 		echo JText::_('COM_KUNENA_REPORT_SYSTEM');
 		?></div>
+		<script type="text/javascript">
+		window.addEvent('domready', function(){
+			$('link_sel_all').addEvent('click', function(e){
+				$('report_final').select();
+			});
+		});
+		</script>
 		<form action="index.php" method="POST" name="adminForm">
 		<fieldset><?php
 		echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC');
 		?><br /></fieldset>
-		<textarea name="report_final"cols="135" rows="10"><?php if($report != '0') { echo $report; } ?></textarea>
+		<fieldset><div><a href="#" id="link_sel_all" ><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a></div>
+		<textarea id="report_final" name="report_final" cols="135" rows="10"><?php if($report != '0') { echo $report; } ?></textarea></fieldset>
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="1" />

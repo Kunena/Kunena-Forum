@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+13-Feb-2010 Matias
+^ [#19380] Multifile upload: Yet another try with plupload 1.0 (supports flash, html5 etc)
+
 12-Feb-2010 severdia
 # [#19356] CSS fixes for Afterburner
 

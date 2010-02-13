@@ -2609,6 +2609,22 @@ ul#kbbcode-toolbar li a#kbbcode-help_button {
 	background-position:-396px -18px;
 }
 
+#kattachments {
+	line-height:18px;
+}
+
+
+#kattachments a {
+	background:url("../images/editor/editor_buttons.png") no-repeat;
+	display:inline-block;
+	height:18px;
+	width:18px;
+	margin-right: 2px;
+}
+
+#kattachments a {
+	background-position:-216px -18px;
+}
 
 /*
 POLLS

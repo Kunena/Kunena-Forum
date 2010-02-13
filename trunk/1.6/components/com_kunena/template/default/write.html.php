@@ -62,6 +62,7 @@ var RecaptchaOptions = {
 //-->
      </script>
 		');
+$k=0;
 ?>
 
 <form class="postform form-validate" id="postform"
@@ -124,7 +125,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 	<tbody id="kpost_message">
 	<?php if (isset($this->selectcatlist)): ?>
-			<tr class="ksectiontableentry2">
+			<tr class="ksectiontableentry<?php echo 1 + $k^=1;?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_POST_IN_CATEGORY');
 			?></strong></td>
@@ -136,7 +137,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		</tr>
 		<?php endif; ?>
 
-		<tr class="ksectiontableentry1">
+		<tr class="ksectiontableentry<?php echo 1 + $k^=1;?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_GEN_NAME');
 			?></strong></td>
@@ -175,7 +176,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		<?php
 		if (($kunena_config->askemail && !$kunena_my->id) || $kunena_config->changename == 1 || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
 		?>
-		<tr class = "ksectiontableentry2">
+		<tr class = "ksectiontableentry<?php echo 1+ $k^=1 ;?>">
 			<td class = "kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
 			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo $this->email;?>" /></td>
 		</tr>
@@ -183,7 +184,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		}
 		?>
 
-		<tr class="ksectiontableentry1">
+		<tr class="ksectiontableentry<?php echo 1 + $k^=1;?>">
 			<?php
 			if (empty($this->kunena_from_bot)) {
 				?>
@@ -236,7 +237,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		<?php
 		if ($this->parentid == 0) {
 			?>
-		<tr class="ksectiontableentry2">
+		<tr class="ksectiontableentry<?php echo 1 + $k^=1;?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_GEN_TOPIC_ICON');
 			?></strong></td>
@@ -304,18 +305,17 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		?>
 
 		<?php
-		if (($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
+		if ($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || ($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
 			?>
-
-
-		<?php
-		}
-		?>
-
-		<?php
-		if (($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
-			?>
-
+		<tr class="ksectiontableentry<?php echo 1 + $k^=1;?>">
+			<td class="kleftcolumn"><strong><?php
+			echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS');
+			?></strong></td>
+		<td>
+			<div id="kattachments"></div>
+			<input id="kuploadfiles" name="attachment" type="file" />
+			<span id="kattachmentsnote"></span>
+		</td>
 
 		<?php
 		}
@@ -323,7 +323,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		if ($kunena_my->id != 0 && $kunena_config->allowsubscriptions == 1 && $fb_cansubscribe == 1 && ! $this->kunena_editmode) {
 			?>
 
-		<tr class="ksectiontableentry1">
+		<tr class="ksectiontableentry<?php echo 1 + $k^=1;?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_POST_SUBSCRIBE');
 			?></strong></td>
@@ -350,7 +350,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		if ($kunena_config->captcha == 1 && $kunena_my->id < 1) {
 			if(JPluginHelper::isEnabled('system', 'jezReCaptcha')){
 			?>
-		<tr class="ksectiontableentry1">
+		<tr class="ksectiontableentry<?php echo 1 + $k^=1;?>">
 			<td class="kleftcolumn">&nbsp;<strong><?php
 			echo JText::_('COM_KUNENA_CAPDESC');
 			?></strong>&nbsp;</td>
@@ -379,7 +379,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 				</td>
 		</tr>
 
-		<tr class="ksectiontableentry1">
+		<tr class="ksectiontableentry<?php echo 1 + $k^=1;?>">
 			<td colspan="2"><?php
 			if ($kunena_config->askemail) {
 				echo $kunena_config->showemail == '0' ? "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_NEVER') . "</em>" : "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_REGISTERED') . "</em>";

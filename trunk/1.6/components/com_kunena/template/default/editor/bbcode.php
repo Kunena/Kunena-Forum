@@ -15,6 +15,10 @@ defined ( '_JEXEC' ) or die ();
 // Kunena bbcode editor
 
 $kunena_config = & CKunenaConfig::getInstance ();
+
+$document = & JFactory::getDocument ();
+//$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
+$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 ?>
 <tr class="ksectiontableentry1">
 	<?php //if ($kunena_config->enablehelppage) {
@@ -75,21 +79,6 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<div id="kbbcode-colorpalette" style="display: none;">
 				<script type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
  			</div>
-
- 			<div id="kbbcode-attachment-options" style="display: none;">
-
-				<ul id="kbbcode-filelist">
-				<li id="kattachment" style="display: none;">
-					<span class="kfile"></span>
-					<span class="kstat"></span>
-					<a href="#">Remove</a>
-				</li>
-				<li id="knewfile">
-					<input name="attachment" type="file" />
-				</li>
-				</ul>
-
-			</div>
 
 			<div id="kbbcode-link-options" style="display: none;"><?php
 			echo JText::_('COM_KUNENA_EDITOR_LINK_URL');

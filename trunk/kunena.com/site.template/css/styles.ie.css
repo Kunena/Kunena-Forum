@@ -1,0 +1,10 @@
+.dp20,.dp25,.dp33,.dp50,.dp100 {margin-left:-0.04em;}
+#showcase .pad .readon span {margin-right: 5px;padding: 0 5px 0 15px;}
+.readon {cursor: pointer;}
+#showcase .foreground {zoom: 1;padding-bottom: 0;}
+#leftcol, #rightcol, .footer-pad, .module-title, .module-body, #mainmods, #mainmods2, #mainmods3, #nav, .breadcrumbs-pad, .article_row, .dp100 {zoom: 1;}
+p.buttonheading {display: inline;}
+#modlgn_username, #modlgn_passwd {width: 90%;}
+#header .module {width: 500px;margin-left: 0;}
+#header .module ul {float: right;}
+#main a.readon2 span {margin-right: 4px;}

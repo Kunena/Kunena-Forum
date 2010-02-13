@@ -1,0 +1,3 @@
+#header .module {width: 500px;margin-left: 0;}
+#header .module ul {float: right;}
+#nav ul li li:hover, #nav ul li li.hover {position: static;}

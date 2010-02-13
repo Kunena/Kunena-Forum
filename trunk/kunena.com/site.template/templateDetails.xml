@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<install version="1.5" type="template">
+    <name>rt_afterburner_j15</name>
+    <version>1.5.0</version>
+    <creationDate>08/07/09</creationDate>
+    <author>RocketTheme</author>
+    <authorEmail>support@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <copyright>Copyright 2005-2009 - RocketTheme.com</copyright>
+    <license>GNU/GPL</license>
+    <description>
+			<![CDATA[
+			<h1>RocketTheme Afterburner</h1>
+
+			<img src="../templates/rt_afterburner_j15/template_thumbnail.png" style="border: 4px solid #ccc; padding: 2px; float: left; margin-bottom: 10px;" /><div class="clr"></div><br />Afterburner is a lightning fast GPL template designed specifically for speed and SEO. For additional information visit the <a href="http://www.rockettheme.com/joomla-templates/afterburner">Afterburner Overview Page</a>.
+
+			<h3>Changelog</h3>
+
+			<b>1.5.0</b><br />
+			<ul>
+			<li>Initial Release</li>
+			</ul>
+
+			]]>  	
+    </description>
+	<files>
+		<filename>index.php</filename>
+		<filename>params.ini</filename>
+		<filename>component.php</filename>
+		<filename>rt_utils.php</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>templateDetails.xml</filename>
+		<folder>admin/</folder>
+		<folder>html/</folder>
+		<folder>css/</folder>
+		<folder>js/</folder>
+		<folder>images/</folder>
+	</files>
+	<positions>
+		<position>top</position>
+		<position>nav</position>
+		<position>showcase</position>
+		<position>advertisement</position>
+		<position>breadcrumb</position>
+		<position>left</position>
+		<position>right</position>
+		<position>user1</position>
+		<position>user2</position>
+		<position>user3</position>
+		<position>user4</position>
+		<position>user5</position>
+		<position>user6</position>
+		<position>user7</position>
+		<position>user8</position>
+		<position>user9</position>
+		<position>bottom</position>
+		<position>footer</position>
+		<position>debug</position>
+	</positions>
+	<administration>
+		<languages folder="admin">
+			<language tag="en-GB">en-GB.tpl_rt_afterburner_j15.ini</language>
+		</languages>
+	</administration>
+	<params>
+		<param name="colorStyle" type="list" default="light" label="COLOR_STYLE" description="COLOR_STYLE_DESC">
+			<option value="light">LIGHT</option>
+			<option value="light2">LIGHT2</option>
+			<option value="light3">LIGHT3</option>
+			<option value="light4">LIGHT4</option>
+			<option value="dark">DARK</option>
+			<option value="dark2">DARK2</option>
+			<option value="dark3">DARK3</option>
+			<option value="dark4">DARK4</option>
+		</param>
+		<param name="templateWidth" type="text" default="962" label="TEMPLATE_WIDTH" description="TEMPLATE_WIDTH_DESC" />
+		<param name="leftcolumnWidth" type="text" default="210" label="LEFTCOLUMN_WIDTH" description="LEFTCOLUMN_WIDTH_DESC" />
+		<param name="rightcolumnWidth" type="text" default="210" label="RIGHTCOLUMN_WIDTH" description="RIGHTCOLUMN_WIDTH_DESC" />
+		<param name="leftcolumnColor" type="list" default="color2" label="LEFTCOLUMN_COLOR" description="LEFTCOLOR_DESC">
+			<option value="color1">COLOR1</option>
+			<option value="color2">COLOR2</option>
+		</param>
+		<param name="rightcolumnColor" type="list" default="color1" label="RIGHTCOLUMN_COLOR" description="RIGHTCOLOR_DESC">
+			<option value="color1">COLOR1</option>
+			<option value="color2">COLOR2</option>
+		</param>
+		<param name="mootools_enabled" type="radio" default="1" label="MOOTOOLS_ENABLED" description="MOOTOOLS_ENABLED_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="caption_enabled" type="radio" default="1" label="CAPTION_ENABLED" description="CAPTION_ENABLED_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param name="rocketthemeLogo" type="radio" default="1" label="RT_LOGO" description="RT_LOGO_DESC">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+	</params>
+</install>

@@ -1,12 +1,15 @@
 <?php
 /**
+ * @copyright	Copyright (C) 2010 Kunena Team - All Rights Reserved.
+ * @license		GNU/GPL, see LICENSE.php
+ *
  * @copyright	Copyright (C) 2005 - 2009 RocketTheme, LLC - All Rights Reserved.
  * @license		GNU/GPL, see LICENSE.php
 **/
 defined( '_JEXEC' ) or die( 'Restricted access' );
 define( 'YOURBASEPATH', dirname(__FILE__) );
 
-$color_style			= $this->params->get("colorStyle", "dark");
+$color_style			= $this->params->get("colorStyle", "kunena");
 $template_width 		= $this->params->get("templateWidth", "962");
 $leftcolumn_width		= $this->params->get("leftcolumnWidth", "210");
 $rightcolumn_width		= $this->params->get("rightcolumnWidth", "210");
@@ -24,13 +27,13 @@ $rockettheme_logo       = ($this->params->get("rocketthemeLogo", 1)  == 0)?"fals
 <?php
 require(YOURBASEPATH . DS . "rt_utils.php");
 ?>
-<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/rt_afterburner_j15/css/<?php echo $color_style ?>.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/kunena_j15/css/<?php echo $color_style ?>.css" type="text/css" />
 <!--[if lte IE 6]>
-<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/rt_afterburner_j15/js/ie_suckerfish.js"></script>
-<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/rt_afterburner_j15/css/styles.ie.css" type="text/css" />
+<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/kunena_j15/js/ie_suckerfish.js"></script>
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/kunena_j15/css/styles.ie.css" type="text/css" />
 <![endif]-->
 <!--[if lte IE 7]>
-<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/rt_afterburner_j15/css/styles.ie7.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/kunena_j15/css/styles.ie7.css" type="text/css" />
 <![endif]-->
 </head>
 <body>
@@ -38,7 +41,7 @@ require(YOURBASEPATH . DS . "rt_utils.php");
 <div id="main">
 	<div id="wrapper" class="foreground">
 	    <div id="header">
-    		<jdoc:include type="modules" name="top" style="afterburner" />		
+    		<jdoc:include type="modules" name="top" style="afterburner" />
     	    <a href="<?php echo $this->baseurl ?>" id="logo"></a>
 		</div>
 		<div id="nav">

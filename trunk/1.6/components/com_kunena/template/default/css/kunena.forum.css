@@ -91,6 +91,7 @@ a:focus {outline: none;}
 .center {text-align:center;}
 .nowrap {white-space:nowrap;}
 .divider {display:block;float:left;margin:0 5px;color:#999999;}
+.divider-stat {color:#999999;}
 
 #Kunena a {
 	text-decoration: none;
@@ -297,6 +298,7 @@ a:focus {outline: none;}
 	border-left: 1px solid #BFC3C6;
 	color: #999999;
 	text-align:center;
+	width: 1%;
 }
 
 #Kunena .topic_sticky {
@@ -795,9 +797,14 @@ td.td-1  {
 #Kunena td.kprofileboxcnt ul li {
 	list-style-type:none;
 	display:block;
+	background: 0 none;
 }
 
-#Kunena td.kprofileboxcnt ul li input.kbutton {
+#Kunena td.kprofileboxcnt ul.kprofilebox_welcome li {
+	padding-left: 0;
+}
+
+#Kunena td.kprofileboxcnt ul.kprofilebox_welcome li input.kbutton {
 	margin-left: 0;
 }
 table#kforum-head td {
@@ -935,11 +942,11 @@ form#searchform {
 }
 
 #Kunena ul.kprofilebox_link li {
-	background: url("../images/icons/arrow.png") no-repeat left 2px;
+	background: url("../images/icons/arrow.png") no-repeat left !important;
 	padding-left: 12px;
 	display: inline;
 	padding-right:10px;
-	margin-top: 3px;
+
 }
 
 #Kunena table.kprofilebox {
@@ -1083,7 +1090,7 @@ div#kheader h1 a:hover {
 }
 #Kunena .kcheckbox {
 	float:right;
-	margin-right: 22px;
+	margin-right: 8px;
 	width: 20px;
 }
 
@@ -1155,6 +1162,8 @@ div#kheader h1 a:hover {
 
 #Kunena div.kthead-moderators  {
 	margin-top: 5px;
+	font-size: .833em;
+	color: #666;
 }
 
 #Kunena div.kthead-desc a {
@@ -1307,6 +1316,22 @@ span.newchar {
 	text-align:center;
 	vertical-align:middle;
 }
+
+
+#Kunena table#kflattable tr.ksectiontableentry1 td.td-2,
+#Kunena table#kflattable tr.ksectiontableentry2 td.td-2,
+#Kunena table#kflattable tr.ksectiontableentry1 td.td-4,
+#Kunena table#kflattable tr.ksectiontableentry2 td.td-4,
+#Kunena table#kflattable tr.ksectiontableentry1 td.td-7,
+#Kunena table#kflattable tr.ksectiontableentry2 td.td-7 {
+	width: 1%;
+}
+
+#Kunena table#kflattable tr.ksectiontableentry1 td.td-6,
+#Kunena table#kflattable tr.ksectiontableentry2 td.td-6 {
+	width: 28%;
+}
+
 
 
 
@@ -1951,6 +1976,7 @@ ul#statslistright li	 {
 	display:block;
 	margin-left: 0;
 	padding: 1px 0px 1px 0;
+	background: 0 none;
 }
 ul#statslistright li strong a {
 	font-weight:bold;
@@ -2410,9 +2436,8 @@ div#kbbcode-size-options span:hover {
 
 #kbbcode-toolbar li {
 	float:left;
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;
+	list-style-image:none !important;
+	list-style-type:none !important;
 	margin:0;
 	padding:0;
 }
@@ -3174,7 +3199,19 @@ div.kprofile-rightcol1 {
 
 div.kprofile-rightcol1 ul {margin: 0;padding: 0;}
 
-div.kprofile-rightcol1 ul li { list-style-type: none !important; padding-bottom: 8px; }
+div.kprofile-rightcol1 ul li,
+div.kprofile-rightcol2 ul li { 
+	list-style-type: none !important; 
+	background: 0 none; 
+	padding-bottom: 8px;
+	padding-left: 0;
+}
+
+div#kprofile-stats ul li { 
+	list-style-type: none !important; 
+	background: 0 none; 
+	padding-left: 0;
+}
 
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
 	float:left;

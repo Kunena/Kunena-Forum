@@ -39,7 +39,7 @@ if ($type == 'logout') {
 							<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( $this->config, 'show' ); ?>"><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?></a></li>
 						<?php } ?>
 					</ul>
-					<ul>
+					<ul class="kprofilebox_welcome">
 						<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></strong></li>
 						<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 						<li>

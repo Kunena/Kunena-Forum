@@ -4559,22 +4559,22 @@ echo $pane->endPane();
 		echo count ( $trashitems );
 		?>);" /></th>
 		<th align="left"><?php
-		echo  JText::_('COM_KUNENA_TRASH_ID');
+		echo  JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_ID'), 'id', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
 		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_TITLE'), 'subject', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JText::_('COM_KUNENA_TRASH_CATEGORY');
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_CATEGORY'), 'cats_name', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JText::_('COM_KUNENA_TRASH_IP');
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_IP'), 'ip', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="center" nowrap="nowrap"><?php
-		echo JText::_('COM_KUNENA_TRASH_AUTHOR');
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR'), 'username', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="center" nowrap="nowrap"><?php
-		echo JText::_('COM_KUNENA_TRASH_DATE');
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_DATE'), 'time', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th width="100%">&nbsp;</th>
 	</tr>

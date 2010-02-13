@@ -26,7 +26,7 @@ class CKunenaPolls {
     	$kunena_db = &JFactory::getDBO();
     	$query = "SELECT *
     				FROM #__fb_polls AS a
-    				JOIN #__fb_polls_options AS b ON a.threadid=b.pollid
+    				INNER JOIN #__fb_polls_options AS b ON a.threadid=b.pollid
     				WHERE a.threadid=$threadid";
     	$kunena_db->setQuery($query);
     	$polldata = $kunena_db->loadObjectList();
@@ -58,7 +58,7 @@ class CKunenaPolls {
 		//To show the usernames of the users which have voted for this poll
 		$query = "SELECT pollid,userid,name,username
 					FROM #__fb_polls_users AS a
-					JOIN #__users AS b ON a.userid=b.id
+					INNER JOIN #__users AS b ON a.userid=b.id
 					WHERE pollid=$threadid";
     	$kunena_db->setQuery($query);
     	$uservotedata = $kunena_db->loadObjectList();
@@ -73,7 +73,7 @@ class CKunenaPolls {
 	function get_number_total_voters($pollid)
 	{
     	$kunena_db = &JFactory::getDBO();
-    	$query = "SELECT SUM(votes) FROM #__fb_polls_options WHERE pollid=$pollid";
+    	$query = "SELECT SUM(votes) FROM #__fb_polls_users WHERE pollid=$pollid";
     	$kunena_db->setQuery($query);
     	$numvotes = $kunena_db->loadResult();
     	check_dberror('Unable to count votes');
@@ -492,7 +492,7 @@ class CKunenaPolls {
 		$kunena_db = &JFactory::getDBO();
 
 		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM #__fb_polls_options AS a
-				JOIN #__fb_polls_users AS b ON a.pollid=b.pollid
+				INNER JOIN #__fb_polls_users AS b ON a.pollid=b.pollid
 				WHERE a.pollid=$threadid";
     	$kunena_db->setQuery($query);
     	$poll_options_user = $kunena_db->loadObjectList();

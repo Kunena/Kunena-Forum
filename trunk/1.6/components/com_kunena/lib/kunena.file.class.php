@@ -12,6 +12,7 @@ defined( '_JEXEC' ) or die();
 
 
 jimport('joomla.filesystem.path');
+jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
 class CKunenaPath extends JPath
@@ -19,18 +20,14 @@ class CKunenaPath extends JPath
 	function tmpdir()
 	{
 		static $tmpdir=false;
-		if (!empty($tmpdir)) return $tmpdir;
+		if ($tmpdir) return realpath($tmpdir);
 
-		if (function_exists('sys_get_temp_dir')) {
-			$tmpdir  = sys_get_temp_dir();
+		$temp=tempnam(JPATH_ROOT . DS . 'tmp','');
+		if (file_exists($temp)) {
+			unlink($temp);
+			$tmpdir = dirname($temp);
 		}
-		if (empty($tmpdir)) {
-			$file = tempnam(false,false);
-			if ($file === false) return false;
-			@unlink($file);
-			$tmpdir = realpath(dirname($file));
-		}
-		return $tmpdir;
+		return realpath($tmpdir);
 	}
 
 	function _owner($getgroup = false)
@@ -90,6 +87,10 @@ class CKunenaPath extends JPath
 		}
 		return false;
 	}
+}
+
+class CKunenaFolder extends JFolder
+{
 }
 
 class CKunenaFile extends JFile

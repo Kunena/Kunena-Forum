@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+13-Feb-2010 Matias
+^ [#19380] Multifile upload: Working logic for html5 uploads (not saved into DB yet)
+
 14-Feb-2010 severdia
 # [#19356] More CSS fixes and reworked Report to Mod page
 

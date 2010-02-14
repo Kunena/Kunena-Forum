@@ -978,46 +978,46 @@ window.addEvent('domready', function() {
 */
 
 window.addEvent('domready', function() {
-	var uploader = new plupload.Uploader({
-		runtimes : 'flash',
-		browse_button : 'kuploadfiles',
-		max_file_size : '1mb',
-		url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>',
-		resize : {width : 320, height : 240, quality : 90},
-		flash_swf_url : '/plupload/js/plupload.flash.swf',
-		//silverlight_xap_url : '/plupload/js/plupload.silverlight.xap',
-		filters : [
-			{title : "Image files", extensions : "jpg,gif,png"},
-			{title : "Zip files", extensions : "zip,gz"}
-		]
-	});
-
-	uploader.bind('Init', function(up, params) {
-		$('kattachmentsnote').set('html', "<div>Multi-File Upload enabled: " + params.runtime + "</div>");
-	});
-
-	uploader.bind('FilesAdded', function(up, files) {
-		$each(files, function(file, i) {
-			fileDiv = new Element('div', {id: file.id, html: file.name + ' (' + plupload.formatSize(file.size) + ') <a></a> <b></b>'});
-			fileDiv.inject($('kattachments'), 'bottom');
-			$$('#'+file.id+' a').addEvent('click', function(e) { $(file.id).dispose(); uploader.removeFile(file); return false;});
+	kuploadfiles = $('kuploadfiles');
+	if (typeof(plupload) == 'object' && kuploadfiles) {
+		var uploader = new plupload.Uploader({
+			runtimes : 'html5',
+			browse_button : 'kuploadfiles',
+			max_file_size : '1mb',
+			url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>',
+			//resize : {width : 320, height : 240, quality : 90},
+			flash_swf_url : '/plupload/js/plupload.flash.swf',
+			//silverlight_xap_url : '/plupload/js/plupload.silverlight.xap',
+			filters : [
+				{title : "Image files", extensions : "jpg,gif,png"},
+				{title : "Zip files", extensions : "zip,gz"}
+			]
 		});
-		$('kuploadfiles').fireEvent('upload', null, 3000);
-	});
 
-	uploader.bind('FilesRemoved', function(up, file) {
-	});
+		uploader.bind('Init', function(up, params) {
+			$('kattachmentsnote').set('html', "<div>Multi-File Upload enabled: " + params.runtime + "</div>");
+		});
 
-	uploader.bind('UploadProgress', function(up, file) {
-		$$("#" + file.id + " b").set('html', file.percent + "%");
-	});
+		uploader.bind('FilesAdded', function(up, files) {
+			$each(files, function(file, i) {
+				fileDiv = new Element('div', {id: file.id, html: file.name + ' (' + plupload.formatSize(file.size) + ') <a></a> <b></b>'});
+				fileDiv.inject($('kattachments'), 'bottom');
+				$$('#'+file.id+' a').addEvent('click', function(e) { $(file.id).dispose(); uploader.removeFile(file); return false;});
+			});
+			$('kuploadfiles').fireEvent('upload', null, 500);
+		});
 
-	$('kuploadfiles').addEvent('upload', function() {
-		uploader.start();
-	});
+		uploader.bind('UploadProgress', function(up, file) {
+			$$("#" + file.id + " b").set('html', file.percent + "%");
+		});
 
-	$('kuploadfiles').setProperty('value', '');
-	uploader.init();
+		kuploadfiles.addEvent('upload', function() {
+			uploader.start();
+		});
+
+		kuploadfiles.setProperty('value', '');
+		uploader.init();
+	}
 });
 
 <?php

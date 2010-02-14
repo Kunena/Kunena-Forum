@@ -631,12 +631,12 @@ if ($kunena_my->id) {
 					$this->action = 'edit';
 
 					//save the options for query after and load the text options, the number options is for create the fields in the form after
-                	if ($message->poll_id) {
-						$polldatasedit = CKunenaPolls::get_poll_data($id);
+					if ($message->poll_id) {
+						$this->polldatasedit = CKunenaPolls::get_poll_data($id);
 						if ($this->kunena_editmode) {
-							$polloptionstotal = count($polldatasedit);
+							$this->polloptionstotal = count($this->polldatasedit);
 						}
-                	}
+					}
 
 					//get the writing stuff in:
 					if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {

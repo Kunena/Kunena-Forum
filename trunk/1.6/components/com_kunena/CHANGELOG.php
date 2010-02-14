@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+14-Feb-2010 severdia
+# [#19356] More CSS fixes and reworked Report to Mod page
+
 13-Feb-2010 severdia
 # [#19356] More CSS fixes for default Joomla templates
 

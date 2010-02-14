@@ -112,13 +112,13 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
             break;
     }
 
-    echo '<div align="center">' . JText::_('COM_KUNENA_REPORT_SUCCESS');
+    echo '<div class="kreportstatus">' . JText::_('COM_KUNENA_REPORT_SUCCESS');
     echo CKunenaLink::GetAutoredirectThreadPageHTML($kunena_config,'view',$catid,$id,NULL,NULL,$id,3500);
 
 	}
     else
     {
-    	echo '<div align="center">';
+    	echo '<div class="kreportstatus">';
     	if (empty($reason)) echo JText::_('COM_KUNENA_POST_FORGOT_SUBJECT');
     	else if (empty($text)) echo JText::_('COM_KUNENA_POST_FORGOT_MESSAGE');
 
@@ -167,59 +167,29 @@ function ReportForm($id, $catid) {
         }
 ?>
 
+ <h1><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></h1>
 <div class = "k_bt_cvr1">
     <div class = "k_bt_cvr2">
         <div class = "k_bt_cvr3">
             <div class = "k_bt_cvr4">
                 <div class = "k_bt_cvr5">
-                    <table class = "kblocktable" id = "kforumhelp" border = "0" cellspacing = "0" cellpadding = "0" width = "100%">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div class = "ktitle_cover">
-                                        <span class = "ktitle"><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></span>
-                                    </div>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td class = "khelpdesc">
-                                    <form method = "post" action = "<?php echo CKunenaLink::GetReportURL(); ?>">
-                                        <table width = "100%" border = "0">
-                                            <tr>
-                                                <td width = "10%">
-<?php echo JText::_('COM_KUNENA_REPORT_REASON') ?>:
-                                                </td>
-
-                                                <td>
-                                                    <input type = "text" name = "reason" class = "inputbox" size = "30"/>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan = "2">
-<?php echo JText::_('COM_KUNENA_REPORT_MESSAGE') ?>:
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan = "2">
-                                                    <textarea id = "text" name = "text" cols = "40" rows = "10" class = "inputbox"></textarea>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                        <input type = "hidden" name = "do" value = "report"/>
-                                        <input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
-                                        <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
-                                        <input type = "hidden" name = "reporter" value = "<?php echo $kunena_my->id;?>"/>
-                                        <input type = "submit" name = "Submit" value = "<?php echo JText::_('COM_KUNENA_REPORT_SEND') ?>"/>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+	                <div id="kreport-container">
+		                 <form method = "post" action = "<?php echo CKunenaLink::GetReportURL(); ?>" class="kform-report">
+		                                        
+							<label for="kreport-reason"><?php echo JText::_('COM_KUNENA_REPORT_REASON') ?>:</label>
+							<input type = "text" name = "reason" class = "inputbox" size = "30" id="kreport-reason"/>
+		                                             
+							<label for="kreport-msg"><?php echo JText::_('COM_KUNENA_REPORT_MESSAGE') ?>:</label>
+		                                             
+							<textarea id = "kreport-msg" name = "text" cols = "40" rows = "10" class = "inputbox"></textarea>
+		
+							<input type = "hidden" name = "do" value = "report"/>
+							<input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
+							<input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
+							<input type = "hidden" name = "reporter" value = "<?php echo $kunena_my->id;?>"/>
+							<input class="kbutton ks" type = "submit" name = "Submit" value = "<?php echo JText::_('COM_KUNENA_REPORT_SEND') ?>"/>
+						</form>
+	                </div>        
                 </div>
             </div>
         </div>

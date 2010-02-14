@@ -90,8 +90,7 @@ a:focus {outline: none;}
 .left {text-align:left;}
 .center {text-align:center;}
 .nowrap {white-space:nowrap;}
-.divider {display:block;float:left;margin:0 5px;color:#999999;}
-.divider-stat {color:#999999;}
+.divider {margin:0 3px;color:#999999;}
 
 #Kunena a {
 	text-decoration: none;
@@ -520,6 +519,10 @@ td.td-1  {
 	width: 100%;
 }
 
+#Kunena .klist_actions td {
+	vertical-align:middle;
+}
+
 #Kunena .klist_actions_bottom {
 	background-color: #FFFFFF;
 	color: #000000;
@@ -587,7 +590,6 @@ td.td-1  {
 	height: 28px;
 	padding: 0px 2px 0px 2px;
 	width: 1%;
-	vertical-align: middle;
 }
 
 #Kunena .klist_actions_forum {
@@ -595,7 +597,6 @@ td.td-1  {
 	height: 28px;
 	padding: 1px 4px 1px 4px;
 	white-space: nowrap;
-	vertical-align: middle;
 }
 
 #Kunena .klist_pages_all {
@@ -698,6 +699,10 @@ td.td-1  {
 	white-space: nowrap;
 }
 
+#Kunena div.bannergroup {
+	text-align:center;
+}
+
 #Kunena .kpagination {
 	white-space: nowrap;
 	font-weight: normal;
@@ -731,23 +736,34 @@ td.td-1  {
 #Kunena .ksectiontableheader a {
 	color: #F2F1EE;
 }
+#Kunena .ksectiontableheader a:hover {
+	text-decoration: underline;
+}
 
 #Kunena table#kflattable th {
 	background: #5388B4;
 }
+
+#Kunena table#kflattable td.td-3 {
+	text-align:left;
+}
+#Kunena table#kflattable td.td-4 {
+	text-align:center;
+}
+
 
 #Kunena table#kflattable div.ks {
 	margin-top: 3px;
 }
 
 #Kunena span.topic_posted_time {
-	display: block;
+	/* display: block;
 	float:left;
-	text-align:left;
+	text-align:left; */
 }
 #Kunena span.topic_category {
-	display: block;
-	float:left;
+	/* display: block;
+	float:left; */
 	clear:left;
 }
 #Kunena span.topic_views {
@@ -764,9 +780,9 @@ td.td-1  {
 }
 	
 #Kunena span.topic_by { 
-	display: block;
+	/* display: block;
 	margin-left: 3px;
-	text-align: left;
+	text-align: left; */
 }
 
 #Kunena span.topic_locked { 
@@ -880,8 +896,8 @@ table#kprofilebox {
 #Kunena fieldset {
 	background-color: #fff;
 	border:1px solid #CCCCCC;
-	margin-top:15px;
 	padding:15px;
+	margin-bottom: 15px;
 }
 
 #Kunena fieldset legend {
@@ -898,7 +914,8 @@ table#kprofilebox {
 
 #Kunena table#kforumsearch_adv td {
 	vertical-align:top;
-	padding-bottom: 15px;
+	padding: 15px 10px;
+
 }
 
 label.searchlabel {
@@ -1190,6 +1207,9 @@ div#kheader h1 a:hover {
 	vertical-align: top;
 	padding-top: 4px;
 	line-height: 2em;
+	text-transform: uppercase;
+	font-size: .833em;
+	color: #666666;
 }
 
 #Kunena div.kcc-table {
@@ -2218,6 +2238,32 @@ div#video {
 }
 #Kunena a.buttonuser span span:hover {
 	text-decoration: underline;
+}
+#Kunena div#kreport-container {
+	border:1px solid #BFC3C6;
+	height:1%;
+	overflow:auto;
+	padding:10px 10px 30px;	
+}
+
+#Kunena form.kform-report,
+#Kunena form.kform-report label,
+#Kunena form.kform-report input,
+#Kunena form.kform-report textarea {
+	float:left;
+	clear:both;
+}
+#Kunena form.kform-report label {
+	margin-top: 15px;
+}
+#Kunena form.kform-report input,
+#Kunena form.kform-report textarea {
+	border:1px solid #BFC3C6;
+}
+	
+#Kunena div.kreportstatus {
+	text-align:center;
+	margin: 30px 0;
 }
 
 /* Moderator Action buttons */
@@ -3443,7 +3489,6 @@ form#jumpto input.kbutton {
 /* SLIDERS
 ----------------------------------------------------------------------------------------------- */
 
-
 #Kunena span#kprofilebox_status {
 	font-weight:bold;
 	display:block;
@@ -3472,8 +3517,6 @@ span.open, a.open {
 	height: 15px; 
 	width: 15px;
 }
-	
-	
 	
 /* RECENT POSTS
 ----------------------------------------------------------------------------------------------- */
@@ -3511,8 +3554,7 @@ table#kforumsearch tr.ksectiontableentry1 td.td-1 fieldset.fieldset {
 /* Mootools Autocompleter css classes
 ----------------------------------------------------------------------------------------------- */
 
-ul.autocompleter-choices
-{
+ul.autocompleter-choices {
 	position:				absolute;
 	margin:					0;
 	padding:				0;
@@ -3528,8 +3570,7 @@ ul.autocompleter-choices
 	background-color:		#fff;
 }
 
-ul.autocompleter-choices li
-{
+ul.autocompleter-choices li {
 	position:				relative;
 	margin:					-2px 0 0 0;
 	padding:				0.2em 1.5em 0.2em 1em;
@@ -3542,14 +3583,12 @@ ul.autocompleter-choices li
 	line-height:			1.5em;
 }
 
-ul.autocompleter-choices li.kautocompleter-selected
-{
+ul.autocompleter-choices li.kautocompleter-selected {
 	background-color:		#444;
 	color:					#fff;
 }
 
-ul.autocompleter-choices span.kautocompleter-queried
-{
+ul.autocompleter-choices span.kautocompleter-queried {
 	display:				inline;
 	float:					none;
 	font-weight:			bold;
@@ -3557,8 +3596,7 @@ ul.autocompleter-choices span.kautocompleter-queried
 	padding:				0;
 }
 
-ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried
-{
+ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried {
 	color:					#9FCFFF;
 }
 

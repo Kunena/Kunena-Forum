@@ -684,6 +684,20 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_NOTHING;
 
 				break;
+			case 'map' :
+				if ($between) {
+					$task->autolink_disable --; # continue autolink conversion
+
+					$map_maxwidth = ( int ) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
+					$map_maxheight = 480; // max. display size
+
+					$tag_new = '<iframe width="'.$map_maxwidth.'" height="'.$map_maxheight.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$between.'"></iframe><br /><small><a href="'.$between.'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
+
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
 			case 'hide' :
 				if ($between) {
 					if ($kunena_my->id == 0) {

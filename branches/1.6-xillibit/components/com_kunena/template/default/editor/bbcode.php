@@ -252,6 +252,22 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2');
 				?>')" />
 			</div>
+			<div id="kbbcode-map-options" style="display: none;"><?php
+			echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_URL');
+			?>&nbsp;<input name="map-url"
+				id="kbbcode-map_url" type="text" size="40" maxlength="250" value="http://"
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKURL');
+				?>')" />&nbsp;
+			<input type="button" name="Link"
+				value="<?php
+				echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_INSERT');
+				?>"
+				onclick="kInsertMapLink()"
+				onmouseover="javascript:$('helpbox').set('value', '<?php
+				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY');
+				?>')" />
+			</div>
 			</td>
 		</tr>
 		<tr>

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-Special-DEV-Xillibit
 
+15-Feb-2010 Xillibit
++ [#19668] Add parser logic for map
+
 13-Feb-2010 Xillibit
 # [#19332] Change Delete behavior - add sortables on all items
 ^ [#19358] Apply some changes on the polls - wrong path for bar.png, remove url in javascript for vote

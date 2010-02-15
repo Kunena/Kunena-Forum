@@ -811,7 +811,7 @@ kbbcode.addFunction('Video', function() {
 ?>
 
 kbbcode.addFunction('Map', function() {
-	this.replaceSelection('[map]' + this.getSelection() + '[/map]');
+	kToggleOrSwap("kbbcode-map-options");
 }, {'id': 'kbbcode-map_button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_MAP');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');?>',
@@ -1015,6 +1015,20 @@ function kInsertVideo2() {
 	var videourl = $("kvideourl").get("value");
 	kbbcode.replaceSelection('[video]'+ videourl +'[/video]');
 	kToggleOrSwap("kbbcode-video-options");
+}
+
+<?php
+//
+// kInsertMapLink()
+//
+// Helper function to insert the map link bbcode into the message
+//
+?>
+
+function kInsertMapLink() {
+	var mapurl = $("kbbcode-map_url").get("value");
+	kbbcode.replaceSelection('[map]'+ mapurl +'[/map]');
+	kToggleOrSwap("kbbcode-map-options");
 }
 
 <?php

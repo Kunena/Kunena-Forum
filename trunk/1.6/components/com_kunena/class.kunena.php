@@ -563,31 +563,27 @@ class CKunenaTools {
         echo $lists['parent'];
         }
 
-    function fbDeletePosts($isMod, $return) {
+    function fbDeletePosts($isMod) {
     	$kunena_app =& JFactory::getApplication();
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
+		$backUrl = $kunena_app->getUserState( "com_kunena.ActionBulk");
 
         if (!CKunenaTools::isAdmin() && !$isMod) {
-            $kunena_app->redirect($return, JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
+            $kunena_app->redirect($backUrl, JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
             }
 
-        $items = fbGetArrayInts("kDelete");
+        $items = fbGetArrayInts("cb");
         $dellattach = 1;
 
         // start iterating here
         foreach ($items as $id => $value) {
-            $kunena_db->setQuery("SELECT a.id, b.id AS poll_exist, catid, parent, thread, subject, userid FROM #__fb_messages AS a
-            					JOIN #__fb_polls AS b ON a.id=b.threadid WHERE a.id='{$id}'");
+            $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid FROM #__fb_messages
+            					  WHERE id='{$id}'");
             $mes = $kunena_db->loadObject();
             check_dberror ( "Unable to load online message info." );
             if (!$mes) return -2;
             $thread = $mes->thread;
-
-            if($mes->poll_exist) {
-            	//remove of poll
-            	CKunenaPolls::delete_poll($id);
-            }
 
             if ($mes->parent == 0) {
                 // this is the forum topic; if removed, all children must be removed as well.
@@ -620,7 +616,7 @@ class CKunenaTools {
             $kunena_db->setQuery('UPDATE #__fb_messages SET hold=2 WHERE id=' . $id . ' OR thread=' . $id);
 			$kunena_db->query();
 			check_dberror ( "Unable to delete messages." );
-
+			
             // now update stats
             CKunenaTools::decreaseCategoryStats($id, $mes->catid);
 
@@ -638,7 +634,7 @@ class CKunenaTools {
             } //end foreach
             CKunenaTools::reCountBoards();
 
-            $kunena_app->redirect($return, JText::_('COM_KUNENA_BULKMSG_DELETED'));
+            $kunena_app->redirect($backUrl, JText::_('COM_KUNENA_BULKMSG_DELETED'));
         }
 
     function isAdmin($uid = null) {
@@ -827,10 +823,11 @@ class CKunenaTools {
 		return $subsList;
 	}
 
-    function fbMovePosts($catid, $isMod, $return) {
+    function fbMovePosts($catid, $isMod) {
     	$kunena_app =& JFactory::getApplication();
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
+		$backUrl = $kunena_app->getUserState( "com_kunena.ActionBulk");
 
 	// $isMod if user is moderator in the current category
 	if (!$isMod) {
@@ -843,12 +840,12 @@ class CKunenaTools {
 
         //isMod will stay until better group management comes in
         if (!$isAdmin && !$isMod) {
-            $kunena_app->redirect($return, JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
+            $kunena_app->redirect($backUrl, JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
             }
 
 		$catid = (int)$catid;
 		if ($catid > 0) {
-	        $items = fbGetArrayInts("kDelete");
+	        $items = fbGetArrayInts("cb");
 
 	        // start iterating here
 
@@ -885,7 +882,7 @@ class CKunenaTools {
 		}
         CKunenaTools::reCountBoards();
 
-        $kunena_app->redirect($return, $err);
+        $kunena_app->redirect($backUrl, $err);
         }
 
 	function &prepareContent(&$content)

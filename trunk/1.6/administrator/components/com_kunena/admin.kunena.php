@@ -321,6 +321,11 @@ switch ($task) {
 
 		break;
 
+	case "showsystemreport" :
+		showSystemReport ( $option );
+
+		break;
+
 	case "trashpurge" :
 		trashpurge ( $option, $cid );
 
@@ -2129,6 +2134,24 @@ function deleteitemsnow ( $option, $cid ) {
 
 	$cids = implode ( ',', $cid );
 	if ($cids) {
+		foreach ($cid as $id ) {
+			$kunena_db->setQuery ( "SELECT a.parent, a.id, b.threadid FROM #__fb_messages AS a INNER JOIN #__fb_polls AS b ON b.threadid=a.id WHERE threadid='{$id}'" );
+			$mes = $kunena_db->loadObjectList ();
+			check_dberror ( "Unable to load online message info." );
+			if( !empty($mes[0])) {
+				if ($mes[0]->parent == '0' && !empty($mes[0]->threadid) ) {
+					//remove of poll
+					require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+					$poll = new CKunenaPolls();
+					$poll->delete_poll($mes[0]->threadid);
+				}
+			}
+		}
+
+		$kunena_db->setQuery ( 'SELECT userid FROM #__fb_messages WHERE id IN (' . $cids. ')' );
+		$userids = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load userids in message." );
+
 		$kunena_db->setQuery ( 'DELETE FROM #__fb_messages WHERE id IN (' .$cids. ')' );
 		$kunena_db->query ();
 		check_dberror ( "Unable to delete messages." );
@@ -2136,11 +2159,6 @@ function deleteitemsnow ( $option, $cid ) {
 		$kunena_db->setQuery ( 'DELETE FROM #__fb_messages_text WHERE mesid IN (' . $cids. ')' );
 		$kunena_db->query ();
 		check_dberror ( "Unable to delete messages text." );
-
-		$kunena_db->setQuery ( 'SELECT userid FROM #__fb_messages WHERE id IN (' . $cids. ')' );
-		$userids = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to load userids in message." );
-
 		foreach ( $userids as $line ) {
 			if ($line->userid > 0) {
 				$userid_array [] = $line->userid;
@@ -2154,6 +2172,7 @@ function deleteitemsnow ( $option, $cid ) {
 			$kunena_db->query ();
 			check_dberror ( "Unable to update users posts." );
 		}
+
 
 		$kunena_db->setQuery ( 'SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
 		$fileList = $kunena_db->loadObjectList ();
@@ -2172,7 +2191,7 @@ function deleteitemsnow ( $option, $cid ) {
 		}
 	}
 
-	//$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_('COM_KUNENA_TRASH_DELETE_DONE') );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_('COM_KUNENA_TRASH_DELETE_DONE') );
 }
 
 function trashrestore($option, $cid) {
@@ -2189,6 +2208,126 @@ function trashrestore($option, $cid) {
 }
 //===============================
 // FINISH trash management
+//===============================
+
+//===============================
+// Report System
+//===============================
+function showSystemReport ( $option ) {
+	$kunena_app = & JFactory::getApplication ();
+	$return = JRequest::getCmd( 'return', 'showsystemreport', 'post' );
+	$report = generateSystemReport ();
+	html_Kunena::showSystemReport ( $option, $report );
+}
+
+function generateSystemReport () {
+	$kunena_config =& CKunenaConfig::getInstance();
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_db = &JFactory::getDBO ();
+	$JVersion = new JVersion();
+	$jversion = $JVersion->PRODUCT .' '. $JVersion->RELEASE .'.'. $JVersion->DEV_LEVEL .' '. $JVersion->DEV_STATUS.' [ '.$JVersion->CODENAME .' ] '. $JVersion->RELDATE .' '. $JVersion->RELTIME .' '. $JVersion->RELTZ;
+	$JConfig = JFactory::getConfig();
+	if($kunena_app->getCfg('legacy' )) {
+		$jconfig_legacy = '[color=#FF0000]Enabled[/color]';
+	} else {
+		$jconfig_legacy = 'Disabled';
+	}
+	if($kunena_app->getCfg('ftp_enable' )) {
+		$jconfig_ftp = 'Enabled';
+	} else {
+		$jconfig_ftp = 'Disabled';
+	}
+	if($kunena_app->getCfg('sef' )) {
+		$jconfig_sef = 'Enabled';
+	} else {
+		$jconfig_sef = 'Disabled';
+	}
+	if($kunena_app->getCfg('sef_rewrite' )) {
+		$jconfig_sef_rewrite = 'Enabled';
+	} else {
+		$jconfig_sef_rewrite = 'Disabled';
+	}
+	if(!JUtility::isWinOS()) {
+		if (!file_exists(JPATH_ROOT. DS. '.htaccess')) {
+			$htaccess = 'Exists';
+		} else {
+			$htaccess = 'Missing';
+		}
+	} else {
+		$htaccess = 'Cannot test on windows system';
+	}
+	if(ini_get('register_globals')) {
+		$register_globals = '[u]register_globals:[/u] [color=#FF0000]On[/color]';
+	} else {
+		$register_globals = '[u]register_globals:[/u] Off';
+	}
+	if(ini_get('safe_mode')) {
+		$safe_mode = '[u]safe_mode:[/u] [color=#FF0000]On[/color]';
+	} else {
+		$safe_mode = '[u]safe_mode:[/u] Off';
+	}
+	if(extension_loaded('mbstring')) {
+		$mbstring = '[u]mbstring:[/u] Enabled';
+	} else {
+		$mbstring = '[u]mbstring:[/u] [color=#FF0000]Not installed[/color]';
+	}
+	if(extension_loaded('gd')) {
+		$gd_info = gd_info ();
+		$gd_support = '[u]GD:[/u] '.$gd_info['GD Version'] ;
+	} else {
+		$gd_support = '[u]GD:[/u] [color=#FF0000]Not installed[/color]';
+	}
+	$maxExecTime = ini_get('max_execution_time');
+	$maxExecMem = ini_get('memory_limit');
+	$fileuploads = ini_get('upload_max_filesize');
+	$kunenaVersionInfo = CKunenaVersion::versionArray ();
+	$kunena_integration_type = '';
+	switch ($kunena_config->fb_profile) {
+    case 'fb':
+        $kunena_integration_type = 'Kunena';
+        break;
+    case 'cb':
+        $kunena_integration_type = 'Community Builder';
+        break;
+    case 'aup':
+        $kunena_integration_type = 'Alpha User Points';
+        break;
+   	case 'jomsocial':
+        $kunena_integration_type = 'Jomsocial';
+        break;
+	}
+	if($kunena_config->sef) {
+		$Ksef = 'Enabled';
+	}else {
+		$Ksef = 'Disabled';
+	}
+	if($kunena_config->sefcats) {
+		$Ksefcats = 'Enabled';
+	}else {
+		$Ksefcats = 'Disabled';
+	}
+	if($kunena_config->sefutf8) {
+		$Ksefutf8 = 'Enabled';
+	}else {
+		$Ksefutf8 = 'Disabled';
+	}
+	$databasecollation = $kunena_db->getCollation();
+    $report = '[mod][quote][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
+	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
+	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.mysql_get_server_info().'[/quote][/mod]'
+		.'[quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
+	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' | [b]htaccess:[/b] '.$htaccess
+	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' | [u]Database collation:[/u]
+		'.$databasecollation.'| [b]Kunena:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
+	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [u]Kunena integration type:[/u] '
+	    .$kunena_integration_type.' | [u]Kunena sef:[/u] '.$Ksef.' | [u]Kunena sefcats:[/u] '.$Ksefcats.' | [u]Kunena sefutf8:[/u] '
+	    .$Ksefutf8.'[/quote]';
+    return $report;
+}
+
+//===============================
+// FINISH report system
 //===============================
 
 function KUNENA_GetAvailableModCats($catids) {

@@ -100,29 +100,6 @@ global $kunena_icons;
 				$this->displayMessage($message);
 			}
 			?>
-			<div id = "k_quick_reply" style = "display : none;">
-			<form id="kqr_form" action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post">
-				<input id="kqr_subject" type = "text" name="subject" size="50" maxlength="50" /><br />
-				<textarea name="message" rows="2" cols="60"></textarea><br />
-				<input type="hidden"
-				name="catid" value="<?php
-				echo $this->catid;
-				?>" />
-				<input type="hidden"
-				name="id" value="<?php
-				echo $this->id;
-				?>" />
-				<input type="hidden"
-				name="action" value="post" />
-				<?php echo JHTML::_( 'form.token' ); ?>
-				<input id="kbut_can" type="button" name="cancel" class="kbutton"
-				value="<?php echo JText::_('COM_KUNENA_GEN_CANCEL');?>"
-				title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL');?>" />
-				<input id="kbut_sub" type="submit" name="submit" class="kbutton"
-				value="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE');?>"
-				title="<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT');?>" /><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE'); ?>
-			</form>
-		</div>
 			</td>
 		</tr>
 	</tbody>

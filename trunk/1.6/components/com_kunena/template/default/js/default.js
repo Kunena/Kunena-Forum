@@ -128,7 +128,9 @@ window.addEvent('domready', function() {
 * @param The number of box to 'check'
 * @param An alternative field name
 */
-function checkAll( n, fldName ) {
+/*
+ //no need this
+ function checkAll( n, fldName ) {
   if (!fldName) {
      fldName = 'cb';
   }
@@ -178,7 +180,7 @@ function isChecked(isitchecked){
 	else {
 		document.kBulkActionForm.boxchecked.value--;
 	}
-}
+}*/
 
 //----------------- New Mootools extensions ---------------------------
 
@@ -864,47 +866,56 @@ window.addEvent('domready', function(){
 			})
 		});
 	}
-	//For manage quick reply
-	//this function to remove blanc space in the subject
-	function trim(str) {
-        return str.replace(/^\s+|\s+$/g,"");
-    }
-	$$('.kqr_fire').each(function(el){
+	
+	/* Quick reply */
+	$$('.kqreply').each(function(el){
 		el.addEvent('click', function(e){
 			//prevent to load the page when click is detected on a button
 			e.stop();
-			var itemslected = el.getProperty('id');
-			var itemlength = itemslected.length-1;
-			var lastchar = itemslected.charAt(itemlength);
-			var itemtoslide = 'k_quick_reply'+lastchar;				
-			if($('kqr_clone'+lastchar)==undefined){
-				$('k_quick_reply').clone().inject('kmesgtext_qr'+lastchar,'after').set('id','kqr_clone'+lastchar);
-				$$('.kqr_spec').each(function(el){
-					if(el != undefined){
-						el.dispose();
-					}
-				});
-				$('kqr_clone'+lastchar).set('class','kqr_spec');
-				$('kqr_clone'+lastchar).removeProperty('style');
-				$('kqr_clone'+lastchar).getChildren('form').set('id','kqr_form_clone'+lastchar);
-				$('kqr_form_clone'+lastchar).getChildren().each(function(child) {
-					if(child.getProperty('name') == 'subject') {
-						child.set('id','kqr_subject_clone'+lastchar);
-					}
-					if(child.getProperty('name') == 'cancel') {
-						child.set('id','kbut_can_clone'+lastchar);
-					}
-					if(lastchar == '1'){
-						$('kqr_subject_clone'+lastchar).set('value','Re: '+trim($('kmes_title'+lastchar).get('text')));
-					} else {	
-						$('kqr_subject_clone'+lastchar).set('value',trim($('kmes_title'+lastchar).get('text')));
-					}	
-				});				
-			}
-			$('kbut_can_clone'+lastchar).addEvent('click', function(e){
-				//delete the quick reply
-				$('kqr_clone'+lastchar).dispose();
-			});
+			var kreply = el.getProperty('id');
+			var kstate = $(kreply+'_form').getStyle('display');
+			$$('.kreply_form').setStyle('display', 'none');
+			if (kstate == 'none') $(kreply+'_form').removeProperty('style');
 		});
 	});
+	
+	$$('.kreply_cancel').addEvent('click', function(e){
+		$$('.kreply_form').setStyle('display', 'none');
+	});
+	
+	/* Javascript with mootools logic for bulkactions
+	 * 
+	 * 
+	 */
+	$$('.kDelete_bulkcheckboxes').each(function(el){
+		el.addEvent('change', function(e){		  	
+			if(el.get('value')=='1'){
+				el.set('value','0');
+			} else {
+				el.set('value','1');
+			}
+		});
+	});
+	if($('kBulkChooseActions') != undefined){
+		$('kBulkChooseActions').addEvent('change', function(e){
+			if(this.get('value') == 'bulkMove'){
+				$('bulkactions').removeProperty('disabled');
+			} else {
+				$('bulkactions').setProperty('disabled','disabled');
+			}	
+		});
+	}
+	if($('kcbcheckall') != undefined){
+		$('kcbcheckall').addEvent('change', function(e){
+			$$('.kDelete_bulkcheckboxes').each(function(el){
+				if(el.get('checked')==false){
+					el.set('checked',true);
+					el.set('value','1');								
+				} else {
+					el.set('value','0');	
+					el.set('checked',false);
+				}
+			});
+		});
+	}		
 });

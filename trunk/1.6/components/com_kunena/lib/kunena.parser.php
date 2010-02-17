@@ -684,6 +684,20 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_NOTHING;
 
 				break;
+			case 'map' :
+				if ($between) {
+					$task->autolink_disable --; # continue autolink conversion
+
+					$map_maxwidth = ( int ) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
+					$map_maxheight = 480; // max. display size
+
+					$tag_new = '<iframe width="'.$map_maxwidth.'" height="'.$map_maxheight.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$between.'"></iframe><br /><small><a href="'.$between.'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
+
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
 			case 'hide' :
 				if ($between) {
 					if ($kunena_my->id == 0) {
@@ -692,6 +706,17 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					} else {
 						// Display but highlight the fact that it is hidden from guests
 						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<span class="fb_quote">' . $between . '</span>';
+					}
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
+			case 'mod' :
+				if ($between) {
+					if (CKunenaTools::isModerator($kunena_my->id)) {
+						// Display but highlight the fact that it is hidden from everyone except admins and mods
+						$tag_new = '<span class="ktagmod">' . $between . '</span>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}

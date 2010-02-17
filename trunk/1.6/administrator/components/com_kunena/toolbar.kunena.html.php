@@ -239,5 +239,11 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::cancel('showtrashview');
     }
+
+	function _SYSTEMREPORT_MENU()
+    {
+        JToolBarHelper::back();
+
+    }
 }
 ?>

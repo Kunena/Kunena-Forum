@@ -32,14 +32,6 @@ $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
 $kunena_config =& CKunenaConfig::getInstance();
 
-//get the token put in the message form to check that the form has been valided successfully
-if(JRequest::get('post')){
-	if(JRequest::checkToken( 'post' ) == false) {
-		$kunena_app->enqueueMessage('Please check all the fields of the form, aub.<br/>
-		If your browser blocks Javascript, then this form will never be successful. This is a security measure.','error');
-	}
-}
-
 $subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $attachfile = JRequest::getVar ( 'attachfile', NULL, 'FILES', 'array' );
@@ -62,6 +54,14 @@ if (! $id) {
 $catid = JRequest::getInt ( 'catid', 0 );
 $do = JRequest::getCmd ( 'do', '' );
 $action = JRequest::getCmd ( 'action', '' );
+
+//get the token put in the message form to check that the form has been valided successfully
+if($action == 'post'){
+	if(JRequest::checkToken() == false) {
+		$kunena_app->enqueueMessage(JText::_(COM_KUNENA_ERROR_TOKEN),'error');
+		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $parentid, $kunena_config->messages_per_page, $catid) );
+	}
+}
 
 if ($id || $parentid) {
 	// Check that message and category exists and fill some information for later use
@@ -565,7 +565,6 @@ if ($kunena_my->id) {
 			} else if ($do == "newFromBot" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				// The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
 				$parentid = 0;
-				$id = ( int ) $id;
 				$this->kunena_set_focus = 0;
 				$resubject = base64_decode ( strtr ( $resubject, "()", "+/" ) );
 				$resubject = str_replace ( '%20', ' ', $resubject );
@@ -651,7 +650,6 @@ if ($kunena_my->id) {
 				$modified_reason = addslashes ( JRequest::getVar ( "modified_reason", null ) );
 				$modified_by = $kunena_my->id;
 				$modified_time = CKunenaTimeformat::internalTime();
-				$id = ( int ) $id;
 
 				$query = "SELECT a.*, b.*, p.id AS poll_id FROM #__fb_messages AS a
 							LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
@@ -793,7 +791,6 @@ if ($kunena_my->id) {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$id = ( int ) $id;
 				$kunena_db->setQuery ( "SELECT * FROM #__fb_messages WHERE id='{$id}'" );
 				$message = $kunena_db->loadObjectList ();
 				check_dberror ( "Unable to load messages." );
@@ -843,7 +840,6 @@ if ($kunena_my->id) {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$id = JRequest::getInt ( 'id', 0 );
 				$dellattach = JRequest::getVar ( 'delAttachments', '' ) == 'delAtt' ? 1 : 0;
 				$thread = fb_delete_post ( $kunena_db, $id, $dellattach );
 
@@ -895,8 +891,6 @@ else if ($do == "move") {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$catid = ( int ) $catid;
-				$id = ( int ) $id;
 				$options = array();
 				$selectlist = CKunenaTools::forumSelectList('postmove', 0, $options, ' size="15" class="kmove_selectbox"');
 
@@ -943,8 +937,6 @@ else if ($do == "move") {
 
 		<?php
 			} else if ($do == "domovepost") {
-				$catid = ( int ) $catid;
-				$id = ( int ) $id;
 				$bool_leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
 				//get the some details from the original post for later
 				$kunena_db->setQuery ( "SELECT id, subject, catid, time AS timestamp FROM #__fb_messages WHERE id='{$id}'" );
@@ -995,8 +987,6 @@ else if ($do == "move") {
 				echo '<br /><br /><div align="center">' . JText::_('COM_KUNENA_POST_SUCCESS_MOVE') . "</div><br />";
 				echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $kunena_config, $id, $kunena_config->messages_per_page, $catid );
 			} else if ($do == "subscribe") {
-				$catid = ( int ) $catid;
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC');
 				$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$id}'" );
 				if ($id && $kunena_my->id && $kunena_db->query ()) {
@@ -1009,8 +999,6 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "unsubscribe") {
-				$catid = ( int ) $catid;
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC');
 				$kunena_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$id}'" );
 				if ($id && $kunena_my->id && $kunena_db->query ()) {
@@ -1023,8 +1011,6 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "favorite") {
-				$catid = ( int ) $catid;
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_NO_FAVORITED_TOPIC');
 				$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$id}'" );
 				if ($id && $kunena_my->id && $kunena_db->query ()) {
@@ -1037,8 +1023,6 @@ else if ($do == "move") {
 				}
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $success_msg );
 			} else if ($do == "unfavorite") {
-				$catid = ( int ) $catid;
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_NO_UNFAVORITED_TOPIC');
 				$kunena_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$id}'" );
 				if ($id && $kunena_my->id && $kunena_db->query ()) {
@@ -1055,7 +1039,6 @@ else if ($do == "move") {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_STICKY_NOT_SET');
 				$kunena_db->setQuery ( "update #__fb_messages set ordering=1 where id=$id" );
 				if ($id && $kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
@@ -1067,7 +1050,6 @@ else if ($do == "move") {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_STICKY_NOT_UNSET');
 				$kunena_db->setQuery ( "update #__fb_messages set ordering=0 where id=$id" );
 				if ($id && $kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
@@ -1079,7 +1061,6 @@ else if ($do == "move") {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_LOCK_NOT_SET');
 				$kunena_db->setQuery ( "update #__fb_messages set locked=1 where id=$id" );
 				if ($id && $kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
@@ -1091,7 +1072,6 @@ else if ($do == "move") {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_LOCK_NOT_UNSET');
 				$kunena_db->setQuery ( "update #__fb_messages set locked=0 where id=$id" );
 				if ($id && $kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
@@ -1103,7 +1083,6 @@ else if ($do == "move") {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$id = ( int ) $id;
 				$success_msg = JText::_('COM_KUNENA_POST_LOCK_NOT_UNSET');
 				$kunena_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE id=$id" );
 				if ($id && $kunena_db->query () && $kunena_db->getAffectedRows () == 1) {

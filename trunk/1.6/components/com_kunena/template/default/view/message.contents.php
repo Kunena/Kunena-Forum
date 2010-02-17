@@ -21,7 +21,7 @@ $catid = JRequest::getInt ( 'catid', 0 );
 					} else {
 						$msgtitle = 'msgtitle';
 					} ?>
-	<span id="kmes_title<?php echo $this->mmm; ?>" class="<?php echo $msgtitle; ?>">
+	<span class="<?php echo $msgtitle; ?>">
 		<?php echo $this->msg_html->subject; ?>
 	</span>
 	<span class="msgdate" title="<?php echo CKunenaTimeformat::showDate($this->kunena_message->time, 'config_post_dateformat_hover'); ?>">
@@ -34,30 +34,9 @@ $catid = JRequest::getInt ( 'catid', 0 );
 	</span>
 </div>
 <div>
-	<div id="kmesgtext_qr<?php echo $this->mmm; ?>" class="msgtext">
+	<div class="msgtext">
 		<?php echo $this->msg_html->text; ?>
 	</div>
-		<?php if (! isset ( $this->msg_html->closed )) { ?>
-	<div id="sc<?php echo $this->msg_html->id; ?>" class="switchcontent"><!-- make this div distinct from others on this page -->
-		<?php //see if we need the users realname or his loginname
-			if ($kunena_config->username) { $authorName = $this->my->username;
-			} else { $authorName = $this->my->name; }
-			//contruct the reply subject
-			$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $this->msg_html->subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $this->msg_html->subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $this->msg_html->subject );
-		?>
-		<form action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post" name="postform" enctype="multipart/form-data">
-			<input type="hidden" name="parentid" value="<?php echo $this->msg_html->id; ?>" />
-			<input type="hidden" name="catid" value="<?php echo $catid; ?>" />
-			<input type="hidden" name="action" value="post" />
-			<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo $kunena_config->maxsubject; ?>" value="<?php echo html_entity_decode ( $resubject ); ?>" />
-			<textarea class="inputbox" name="message" rows="6" cols="60" style="height: 100px; width: 100%; overflow: auto;">
-			</textarea>
-			<input type="submit" class="kbutton kqr_fire" name="submit" value="<?php @print (JText::_('COM_KUNENA_GEN_CONTINUE')) ; ?>" />
-			<input type="button" class="kbutton kqm_cncl_btn" id="cancel__<?php echo $this->msg_html->id; ?>" name="cancel" value="<?php @print (JText::_('COM_KUNENA_CANCEL')) ; ?>" />
-			<small><em><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE')?></em></small>
-		</form>
-	</div>
-		<?php } ?>
 </div>
 <div>
 	<span><?php if (isset ( $this->msg_html->signature )) {
@@ -66,6 +45,25 @@ $catid = JRequest::getInt ( 'catid', 0 );
 		echo '</div>'; } ?>
 	</span>
 </div>
+<?php if ( isset ( $this->msg_html->quickreply ) ) { ?>
+<div id="kreply<?php echo $this->msg_html->id; ?>_form" class="kreply_form" style="display: none">
+	<?php
+		//contruct the reply subject
+		$resubject = kunena_htmlspecialchars ( JString::strtolower ( JString::substr ( $this->msg_html->subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $this->msg_html->subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $this->msg_html->subject );
+	?>
+	<form action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post" name="postform" enctype="multipart/form-data">
+		<input type="hidden" name="parentid" value="<?php echo $this->msg_html->id; ?>" />
+		<input type="hidden" name="catid" value="<?php echo $catid; ?>" />
+		<input type="hidden" name="action" value="post" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo $kunena_config->maxsubject; ?>" value="<?php echo html_entity_decode ( $resubject ); ?>" /><br />
+		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
+		<input type="reset" class="kbutton kreply_cancel" name="cancel" value="<?php @print (JText::_('COM_KUNENA_CANCEL')) ; ?>" />
+		<input type="submit" class="kbutton kreply_submit" name="submit" value="<?php @print (JText::_('COM_KUNENA_GEN_CONTINUE')) ; ?>" />
+		<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE')?></small>
+	</form>
+</div>
+<?php } ?>
 <div class="kmessage_editMarkUp_cover"><?php
 	if ($this->kunena_message->modified_by) {
 		echo '<span class="kmessage_editMarkUp" title="'.CKunenaTimeformat::showDate($this->kunena_message->modified_time, 'config_post_dateformat_hover').'">' . JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' .

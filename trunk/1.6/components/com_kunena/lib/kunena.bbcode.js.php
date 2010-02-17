@@ -804,7 +804,7 @@ kbbcode.addFunction('Video', function() {
 ?>
 
 kbbcode.addFunction('Map', function() {
-	this.replaceSelection('[map]' + this.getSelection() + '[/map]');
+	kToggleOrSwap("kbbcode-map-options");
 }, {'id': 'kbbcode-map_button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_MAP');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');?>',
@@ -974,6 +974,13 @@ function newAttachment() {
 
 window.addEvent('domready', function() {
 	newAttachment();
+	//This is need to retrieve the video provider selected by the user in the dropdownlist
+	$('kvideoprovider').addEvent('change', function() {
+		var sel = $$('#kvideoprovider option:selected');
+		sel.each(function(el) {
+			$('kvideoprovider').store('videoprov',el.value);
+		});
+	});
 });
 */
 
@@ -1019,6 +1026,48 @@ window.addEvent('domready', function() {
 		uploader.init();
 	}
 });
+
+<?php
+//
+// kInsertVideo()
+//
+// Helper function to insert the video bbcode into the message
+//
+?>
+
+//This selector can be re-used for the dropdwown list, to get the item selected easily
+Selectors.Pseudo.selected = function(){
+	return (this.selected && this.get('tag') == 'option');
+};
+
+function kInsertVideo1() {
+	var videosize = $('kvideosize').get('value');
+	var videowidth = $('kvideowidth').get('value');
+	var videoheigth = $('kvideoheight').get('value');
+	var videoid = $('kvideoid').get('value');
+	kbbcode.replaceSelection('[video size='+videosize+' width='+videowidth+' height='+videoheigth+' type='+$('kvideoprovider').retrieve('videoprov')+']'+videoid+'[/video]');
+	kToggleOrSwap("kbbcode-video-options");
+}
+
+function kInsertVideo2() {
+	var videourl = $("kvideourl").get("value");
+	kbbcode.replaceSelection('[video]'+ videourl +'[/video]');
+	kToggleOrSwap("kbbcode-video-options");
+}
+
+<?php
+//
+// kInsertMapLink()
+//
+// Helper function to insert the map link bbcode into the message
+//
+?>
+
+function kInsertMapLink() {
+	var mapurl = $("kbbcode-map_url").get("value");
+	kbbcode.replaceSelection('[map]'+ mapurl +'[/map]');
+	kToggleOrSwap("kbbcode-map-options");
+}
 
 <?php
 $script = ob_get_contents();

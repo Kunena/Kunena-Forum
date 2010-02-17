@@ -37,7 +37,7 @@ class CKunenaShowcat {
 		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 		$this->prevCheck = $this->session->lasttime;
 
-		$kunena_app = & JFactory::getApplication ();
+		$this->app = & JFactory::getApplication ();
 
 		//Get the category information
 		$query = "SELECT c.*, s.catid AS subscribeid
@@ -154,7 +154,7 @@ class CKunenaShowcat {
 		}
 
 		//meta description and keywords
-		$metaKeys = kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_CATEGORIES') . ", {$objCatParentInfo->name}, {$this->objCatInfo->name}, {$this->config->board_title}, " . $kunena_app->getCfg ( 'sitename' ) ) );
+		$metaKeys = kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_CATEGORIES') . ", {$objCatParentInfo->name}, {$this->objCatInfo->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) ) );
 		$metaDesc = kunena_htmlspecialchars ( stripslashes ( "{$objCatParentInfo->name} ({$this->page}/{$this->totalpages}) - {$this->objCatInfo->name} - {$this->config->board_title}" ) );
 
 		$document = & JFactory::getDocument ();

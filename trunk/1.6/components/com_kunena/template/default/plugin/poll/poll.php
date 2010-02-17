@@ -54,25 +54,27 @@ if ($do == 'vote')
                     <td class = "td-1 km" align="left">
                         <div class = "polldesc">
                         <div id="poll_text_help"></div>
+                        <form id="kpoll_form_vote" method="post" action="<?php echo CKunenaLink::GetJsonURL('pollvote'); ?>">
                         <fieldset>
                         <legend style="font-size: 14px;"><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
                         <ul>
 	<?php
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
-       echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
+       echo "<li><input class=\"kpoll_boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
     }
        ?>
-    	</ul></fieldset>
+
+    	</ul>
+    	<input type="hidden" name="kpoll_id" value="<?php echo $id; ?>">
+    	</fieldset>
 		<div class="poll_center" id="poll_buttons">
-       <input id="k_poll_button_vote" type="button" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
-       <input type="hidden" id="k_poll_nb_options" name="pollid" value="<?php echo sizeof($dataspollresult); ?>">
-       <input type="hidden" id="k_poll_id" name="nb_options" value="<?php echo $id; ?>">
-       <input type="hidden" id="k_poll_do" name="nb_options" value="pollvote">
+       <input id="k_poll_button_vote" type="submit" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
        <?php
        echo '	'.CKunenaLink::GetThreadLink('view',$catid,$id,kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_POLL_NAME_URL_RESULT') ) ), kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_POLL_NAME_URL_RESULT') ) ), 'follow');
     ?>
     	</div>
+    	</form>
      </div>
                 	  </td>
                  </tr>
@@ -128,27 +130,30 @@ elseif ($do == 'changevote')
                     <td class = "td-1 km" align="left">
                         <div class = "polldesc">
                         <div id="poll_text_help"></div>
-                        <fieldset><legend style="font-size: 14px;"><?php JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend><ul>
+                        <form id="kpoll_form_vote" method="post" action="<?php echo CKunenaLink::GetJsonURL('pollchangevote'); ?>">
+                        <fieldset><legend style="font-size: 14px;"><?php JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
+                        <ul>
 	<?php
     for ($i=0; $i < sizeof($dataspollresult);$i++)
     {
     	if($dataspollresult[$i]->id == $id_last_vote){
-       		echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" checked />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
+       		echo "<li><input class=\"kpoll_boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" checked />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
     	}else {
-			echo "<li><input type=\"radio\" name=\"radio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
+			echo "<li><input class=\"kpoll_boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".CKunenaTools::parseText ( $dataspollresult[$i]->text )."</li>";
     	}
     }
        ?>
-    	</ul></fieldset>
+       	</ul>
+    	<input type="hidden" name="kpoll_id" value="<?php echo $id; ?>">
+    	</fieldset>
 		<div class="poll_center" id="poll_buttons">
-       <input id="k_poll_button_vote" type="button" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
-       <input type="hidden" id="k_poll_nb_options" name="pollid" value="<?php echo sizeof($dataspollresult); ?>">
-       <input type="hidden" id="k_poll_id" name="nb_options" value="<?php echo $id; ?>">
-       <input type="hidden" id="k_poll_do" name="nb_options" value="pollchangevote">
+       <input id="k_poll_button_vote" type="submit" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
+
        <?php
 		echo '	'.CKunenaLink::GetThreadLink('view',$catid,$id,kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_POLL_NAME_URL_RESULT') ) ), kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_POLL_NAME_URL_RESULT') ) ), 'follow');
 		?>
 		</div>
+		</form>
        </div>
                 	  </td>
                  </tr>

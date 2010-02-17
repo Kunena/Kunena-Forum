@@ -205,6 +205,10 @@ td.fbtdtitle {
 			href="index.php?option=com_kunena&task=showtrashview"><?php
 		echo JText::_('COM_KUNENA_TRASH_VIEW');
 		?></a>
+		<a class="fbmainmenu"
+			href="index.php?option=com_kunena&task=showsystemreport"><?php
+		echo JText::_('COM_KUNENA_REPORT_SYSTEM');
+		?></a>
 		<a class="fbmainmenu" href="http://www.Kunena.com"
 			target="_blank"><?php
 		echo JText::_('COM_KUNENA_C_SUPPORT');
@@ -958,7 +962,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_TYPE_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_SPEC')?></td>
@@ -972,7 +976,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_SPEC_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_TIMELIMIT')?></td>
@@ -1001,7 +1005,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_LIMIT_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_ONLY_PUBLIC')?></td>
@@ -1015,7 +1019,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_ONLY_PUBLIC_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES')?></td>
@@ -1030,7 +1034,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES')?></td>
@@ -1045,7 +1049,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_ALLOW_HTML')?></td>
@@ -1059,7 +1063,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_ALLOW_HTML_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT')?></td>
@@ -1073,7 +1077,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT')?></td>
@@ -1087,7 +1091,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES')?></td>
@@ -1101,7 +1105,7 @@ td.fbtdtitle {
 		echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES_DESC')?>
 		</td>
 	</tr>
-	
+
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_PDF')?></td>
@@ -4684,24 +4688,23 @@ echo $pane->endPane();
 		echo count ( $trashitems );
 		?>);" /></th>
 		<th align="left"><?php
-		echo  JText::_('COM_KUNENA_TRASH_ID');
+		echo  JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_ID'), 'id', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
 		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_TITLE'), 'subject', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JText::_('COM_KUNENA_TRASH_CATEGORY');
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_CATEGORY'), 'cats_name', $lists['order_Dir'], $lists['order']);
 		?></th>
 		<th align="left" nowrap="nowrap"><?php
-		echo JText::_('COM_KUNENA_TRASH_IP');
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_IP'), 'ip', $lists['order_Dir'], $lists['order']);
 		?></th>
-		<th align="center" nowrap="nowrap"><?php
-		echo JText::_('COM_KUNENA_TRASH_AUTHOR');
+		<th align="left" nowrap="nowrap"><?php
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR'), 'username', $lists['order_Dir'], $lists['order']);
 		?></th>
-		<th align="center" nowrap="nowrap"><?php
-		echo JText::_('COM_KUNENA_TRASH_DATE');
+		<th align="left" nowrap="nowrap"><?php
+		echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_DATE'), 'time', $lists['order_Dir'], $lists['order']);
 		?></th>
-		<th width="100%">&nbsp;</th>
 	</tr>
 	<?php
 		$k = 0;
@@ -4747,7 +4750,6 @@ echo $pane->endPane();
 		<td nowrap="nowrap"><?php
 			echo strftime('%Y-%m-%d %H:%M:%S',$row->time);
 			?></td>
-		<td width="100%">&nbsp;</td>
 	</tr>
 	<?php
 		}
@@ -4815,4 +4817,29 @@ echo $pane->endPane();
 	<?php
 	}
 	//End trash view
+	//Start report system
+	function showSystemReport($option, $report) {
+		?>
+		<div class="fbfunctitle"><?php
+		echo JText::_('COM_KUNENA_REPORT_SYSTEM');
+		?></div>
+		<script type="text/javascript">
+		window.addEvent('domready', function(){
+			$('link_sel_all').addEvent('click', function(e){
+				$('report_final').select();
+			});
+		});
+		</script>
+		<form action="index.php" method="POST" name="adminForm">
+		<fieldset><?php
+		echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC');
+		?><br /></fieldset>
+		<fieldset><div><a href="#" id="link_sel_all" ><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a></div>
+		<textarea id="report_final" name="report_final" cols="80" rows="15"><?php echo $report; ?></textarea></fieldset>
+		<input type="hidden" name="option" value="<?php echo $option;?>" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="boxchecked" value="1" />
+		</form>
+<?php
+	}//End report system
 } //end class

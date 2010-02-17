@@ -64,7 +64,6 @@ $parentid = JRequest::getInt ( 'parentid', 0 );
 $pid = JRequest::getInt ( 'pid', 0 );
 $replyto = JRequest::getInt ( 'replyto', 0 );
 $resubject = JRequest::getVar ( 'resubject', '' );
-$return = JRequest::getVar ( 'return', '' );
 $rowid = JRequest::getInt ( 'rowid', 0 );
 $rowItemid = JRequest::getInt ( 'rowItemid', 0 );
 $subject = JRequest::getVar ( 'subject', '' );
@@ -650,12 +649,12 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'bulkactions' :
 			switch ($do) {
 				case "bulkDel" :
-					CKunenaTools::fbDeletePosts ( CKunenaTools::isModerator ( $kunena_my->id, $catid ), $return );
+					CKunenaTools::fbDeletePosts ( CKunenaTools::isModerator ( $kunena_my->id, $catid ) );
 
 					break;
 
 				case "bulkMove" :
-					CKunenaTools::fbMovePosts ( $catid, CKunenaTools::isModerator ( $kunena_my->id, $catid ), $return );
+					CKunenaTools::fbMovePosts ( $catid, CKunenaTools::isModerator ( $kunena_my->id, $catid ) );
 					break;
 			}
 

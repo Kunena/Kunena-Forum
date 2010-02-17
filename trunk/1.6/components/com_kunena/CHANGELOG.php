@@ -43,6 +43,13 @@ Kunena 1.6.0-DEV
 
 17-Feb-2010 Matias
 ^ [#19345] Restyle Default template: pagination
+^ [#15886] Merge latest changes /branches/1.5-xillibit, added minor fixes
+
+17-Feb-2010 Xillibit
++ [#19690] Add configuration report system in Kunena backend - add new bbcode [mod][/mod] for show content only for mods and admins
+
+15-Feb-2010 Xillibit
++ [#19668] Add parser logic for map
 
 14-Feb-2010 Matias
 ^ [#19380] Multifile upload: Working logic for html5 uploads (not saved into DB yet)
@@ -56,17 +63,35 @@ Kunena 1.6.0-DEV
 13-Feb-2010 Matias
 ^ [#19380] Multifile upload: Yet another try with plupload 1.0 (supports flash, html5 etc)
 
+13-Feb-2010 Xillibit
+# [#19332] Change Delete behavior - add sortables on all items
+^ [#19358] Apply some changes on the polls - wrong path for bar.png, remove url in javascript for vote
+
+12-Feb-2010 Xillibit
+# [#19690] Add configuration report system in Kunena backend - add function to select all text, add two configurations settings
+
 12-Feb-2010 severdia
 # [#19356] CSS fixes for Afterburner
 
 12-Feb-2010 Matias
 # [#19288] Fix regression: AJAX Upload broke up during merge
 
+10-Feb-2010 Xillibit
++ [#19690] Add configuration report system in Kunena backend
+
 08-Feb-2010 littlejohn
 + [#19399] New RSS feeds (part 5 - added frontend view and rss class)
 - [#19399] New RSS feeds (part 4 - removed old frontend)
 # [#19399] New RSS feeds (part 3 - removed trailing space from parser affecting all templates)
 ^ [#19399] New RSS feeds (part 2 - changed and corrected administrative options)
+
+08-Feb-2010 Xillibit
+# [#19332] Change Delete behavior - fixes to solve an issue in trash manager and now put the poll deletion in trash manager
+
+07-Feb-2010 Xillibit
+# [#19631] Re-implement quick reply by using mootools - fix a bug which create new threads instead replies
++ [#19668] Re-implement bulkactions with mootools
++ [#19668] Write javascript logic for video in editor
 
 07-Feb-2010 severdia
 # [#19356] CSS fixes, rounded tabs (CSS3 only)

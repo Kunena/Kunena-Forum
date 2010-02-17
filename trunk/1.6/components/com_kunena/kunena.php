@@ -350,7 +350,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	if (JDocumentHTML::countModules ( 'kunena_menu' )) {
 		?>
 		<!-- Kunena Menu position: kunena_menu -->
-		<div id="fb_topmenu">
+		<div id="ktopmenu">
 		<div id="Kunena_tab"><?php
 		$document = &JFactory::getDocument ();
 		$renderer = $document->loadRenderer ( 'modules' );
@@ -745,7 +745,7 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
 	if ($kunena_config->enablerss) {
 		$rss_params = ((int) $catid > 0 ? '&amp;catid=' . (int) $catid : '');
-		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . _LISTCAT_RSS . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
+		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
 		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />', 'follow', $rss_params );
 	}
 	echo '</div>';

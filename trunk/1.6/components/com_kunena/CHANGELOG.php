@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 17-Feb-2010 fxstein
 + [#19399] merged new RSS code (part 1 - intial merge from littlejohn branch)
+^ [#19399] merged new RSS code (part 2 - language string corrections)
 
 17-Feb-2010 severdia
 ^ [#19345] Added new styles for pagination, but still needs correct output

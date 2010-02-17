@@ -305,7 +305,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<?php
 		if ($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || ($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
-			//$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
+			$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
 			$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 
 			?>

@@ -988,13 +988,13 @@ window.addEvent('domready', function() {
 	kuploadfiles = $('kuploadfiles');
 	if (typeof(plupload) == 'object' && kuploadfiles) {
 		var uploader = new plupload.Uploader({
-			runtimes : 'html5',
+			runtimes : 'gears,silverlight,flash,html5',
 			browse_button : 'kuploadfiles',
 			max_file_size : '1mb',
 			url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>',
 			//resize : {width : 320, height : 240, quality : 90},
 			flash_swf_url : '/plupload/js/plupload.flash.swf',
-			//silverlight_xap_url : '/plupload/js/plupload.silverlight.xap',
+			silverlight_xap_url : '/plupload/js/plupload.silverlight.xap',
 			filters : [
 				{title : "Image files", extensions : "jpg,gif,png"},
 				{title : "Zip files", extensions : "zip,gz"}

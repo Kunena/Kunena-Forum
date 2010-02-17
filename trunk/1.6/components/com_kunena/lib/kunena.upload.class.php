@@ -33,7 +33,7 @@ class CKunenaUpload {
 	}
 
 	function __destruct() {
-		if ($this->status === false && is_file($this->fileTemp)) unlink ( $this->fileTemp );
+		if (!$this->status && is_file($this->fileTemp)) unlink ( $this->fileTemp );
 	}
 
 	function &getInstance() {
@@ -157,12 +157,13 @@ class CKunenaUpload {
 				} else {
 					$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_INPUT' );
 				}
+
 				$fileInfo = fstat($out);
 				$this->fileSize = $fileInfo['size'];
 				fclose ( $out );
 				$this->checkFileSize($this->fileSize);
 				if ($chunk+1 < $chunks) {
-					$this->status = ($this->error !== false);
+					$this->status = empty($this->error);
 					return $this->status;
 				}
 			} else {

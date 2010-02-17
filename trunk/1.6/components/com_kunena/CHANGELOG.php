@@ -46,6 +46,7 @@ Kunena 1.6.0-DEV
 17-Feb-2010 Matias
 ^ [#19345] Restyle Default template: pagination
 ^ [#15886] Merge latest changes /branches/1.5-xillibit, added minor fixes
+# [#19380] Multifile upload: Fixed logic for gears, silverlight, flash uploads
 
 17-Feb-2010 Xillibit
 + [#19690] Add configuration report system in Kunena backend - add new bbcode [mod][/mod] for show content only for mods and admins

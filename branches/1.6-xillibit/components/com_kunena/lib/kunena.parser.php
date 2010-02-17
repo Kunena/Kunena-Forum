@@ -712,6 +712,20 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_NOTHING;
 
 				break;
+			case 'mod' :
+				if ($between) {
+					if (CKunenaTools::isAdmin($kunena_my->id) || CKunenaTools::isModerator($kunena_my->id)) {
+						// Display but highlight the fact that it is hidden from everyone except admins and mods
+						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_SHOW_TEXT_MOD') . '</b><br />' . '<span class="fb_quote">' . $between . '</span>';
+					} else {
+						// Hide between content from non admins/mods users
+						$tag_new = JText::_('COM_KUNENA_BBCODE_SHOWTEXT_MOD');
+					}
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
 			case 'spoiler' :
 				if ($between) {
 

@@ -2250,9 +2250,9 @@ function generatereport ( $option ) {
 		$Ksefutf8 = 'Disabled';
 	}
 	$databasecollation = $kunena_db->getCollation();
-    $report = '[quote][b]Joomla! version:[/b] '.$jversion.' [b]Plateform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('.$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' [b]PHP requirements:[/b] '.$safe_mode.' | '.$mbstring.' | '.$gd_support.' | '.$register_globals.' | [b]MySQL version:[/b] '.mysql_get_server_info().'[/quote]
+    $report = '[mod][quote][b]Joomla! version:[/b] '.$jversion.' [b]Plateform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('.$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' [b]PHP requirements:[/b] '.$safe_mode.' | '.$mbstring.' | '.$gd_support.' | '.$register_globals.' | [b]MySQL version:[/b] '.mysql_get_server_info().'[/quote]
     	[quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '.$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' | [b]htaccess:[/b] '.$htaccess.' | [b]PHP environnement:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '.$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' | [u]Database collation:[/u]
-    	'.$databasecollation.'| [b]Kunena:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '.$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [u]Kunena integration type:[/u] '.$kunena_integration_type.' | [u]Kunena sef:[/u] '.$Ksef.' | [u]Kunena sefcats:[/u] '.$Ksefcats.' | [u]Kunena sefutf8:[/u] '.$Ksefutf8.'[/quote]';
+    	'.$databasecollation.'| [b]Kunena:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '.$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [u]Kunena integration type:[/u] '.$kunena_integration_type.' | [u]Kunena sef:[/u] '.$Ksef.' | [u]Kunena sefcats:[/u] '.$Ksefcats.' | [u]Kunena sefutf8:[/u] '.$Ksefutf8.'[/quote][/mod]';
 	$kunena_app->setUserState( "com_kunena.reportsystem", $report );
     $kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showreportsystem", JText::_('COM_KUNENA_REPORT_GENERATED') );
 }

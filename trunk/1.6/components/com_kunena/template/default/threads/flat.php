@@ -137,30 +137,22 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 			}
 
 			if ($leaf->msgcount > $this->config->messages_per_page) {
-				echo ("<span class=\"jr-showcat-perpage\">[");
-				echo JText::_('COM_KUNENA_PAGE') . ' ' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 );
+				echo '<ul class="kpagination">';
+				echo '<li>' . JText::_('COM_KUNENA_PAGE') . '</li>';
+				echo '<li>' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 ) . '</li>';
 
 				if ($threadPages > 3) {
-					echo ("...");
+					echo ('<li>...</li>');
 					$startPage = $threadPages - 2;
 				} else {
-					echo (",");
 					$startPage = 2;
 				}
 
-				$noComma = true;
-
 				for($hopPage = $startPage; $hopPage <= $threadPages; $hopPage ++) {
-					if ($noComma) {
-						$noComma = false;
-					} else {
-						echo (",");
-					}
-
-					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $hopPage, $this->config->messages_per_page, $hopPage );
+					echo '<li>' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $hopPage, $this->config->messages_per_page, $hopPage ) . '</li>';
 				}
 
-				echo ("]</span>");
+				echo ("</ul>");
 			}
 		if ($leaf->locked != 0) {
 			?> <!-- Locked --> <span class="topic_locked"> <?php

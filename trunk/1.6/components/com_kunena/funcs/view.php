@@ -722,33 +722,35 @@ class CKunenaView {
 			$endpage = $totalpages;
 		}
 
-		$output = '<span class="kpagination">' . JText::_('COM_KUNENA_PAGE');
+		$output = '<ul class="kpagination">';
+		$output = '<li>' . JText::_('COM_KUNENA_PAGE') . '</li>';
+
 		if ($startpage > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $catid, $threadid, 1, $kunena_config->messages_per_page, 1, '', $rel = 'follow' );
+			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $catid, $threadid, 1, $kunena_config->messages_per_page, 1, '', $rel = 'follow' ) . '</li>';
 			if ($startpage > 2) {
-				$output .= "...";
+				$output .= '<li class="more">...</li>';
 			}
 		}
 
 		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
 			if ($page == $i) {
-				$output .= "<strong>$i</strong>";
+				$output .= '<li class="active">' . $i . '</li>';
 			} else {
-				$output .= CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $catid, $threadid, $i, $kunena_config->messages_per_page, $i, '', $rel = 'follow' );
+				$output .= '<li>' . CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $catid, $threadid, $i, $kunena_config->messages_per_page, $i, '', $rel = 'follow' ) . '</li>';
 			}
 		}
 
 		if ($endpage < $totalpages) {
 			if ($endpage < $totalpages - 1) {
-				$output .= "...";
+				$output .= '<li class="more">...</li>';
 			}
 
-			$output .= CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $catid, $threadid, $totalpages, $kunena_config->messages_per_page, $totalpages, '', $rel = 'follow' );
+			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( $kunena_config, 'view', $catid, $threadid, $totalpages, $kunena_config->messages_per_page, $totalpages, '', $rel = 'follow' ) . '</li>';
 		}
 
-		$output .= '</span>';
+		$output .= '</ul>';
 		return $output;
 	}
 

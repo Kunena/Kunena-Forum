@@ -403,34 +403,36 @@ class CKunenaSearch {
 			$endpage = $totalpages;
 		}
 
-		$output = '<div class="kpagination">' . JText::_('COM_KUNENA_PAGE');
+		$output = '<ul class="kpagination">';
+		$output = '<li>' . JText::_('COM_KUNENA_PAGE') . '</li>';
+
 		if ($startpage > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= CKunenaLink::GetSearchLink ( $this->config, $function, $q, 0, $limit, 1, $urlparams, $rel = 'nofollow' );
+			$output .= '<li>' . CKunenaLink::GetSearchLink ( $this->config, $function, $q, 0, $limit, 1, $urlparams, $rel = 'nofollow' ) . '</li>';
 
 			if ($startpage > 2) {
-				$output .= "...";
+				$output .= '<li class="more">...</li>';
 			}
 		}
 
 		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
 			if ($page == $i) {
-				$output .= "<strong>$i</strong>";
+				$output .= '<li class="active">' . $i . '</li>';
 			} else {
-				$output .= CKunenaLink::GetSearchLink ( $this->config, $function, $q, ($i - 1) * $limit, $limit, $i, $urlparams, $rel = 'nofollow' );
+				$output .= '<li>' . CKunenaLink::GetSearchLink ( $this->config, $function, $q, ($i - 1) * $limit, $limit, $i, $urlparams, $rel = 'nofollow' ) . '</li>';
 			}
 		}
 
 		if ($endpage < $totalpages) {
 			if ($endpage < $totalpages - 1) {
-				$output .= "...";
+				$output .= '<li class="more">...</li>';
 			}
 
-			$output .= CKunenaLink::GetSearchLink ( $this->config, $function, $q, ($totalpages - 1) * $limit, $limit, $totalpages, $urlparams, $rel = 'nofollow' );
+			$output .= '<li>' . CKunenaLink::GetSearchLink ( $this->config, $function, $q, ($totalpages - 1) * $limit, $limit, $totalpages, $urlparams, $rel = 'nofollow' ) . '</li>';
 		}
 
-		$output .= '</div>';
+		$output .= '</ul>';
 		return $output;
 	}
 }

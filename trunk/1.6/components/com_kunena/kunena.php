@@ -193,13 +193,16 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// Forum is online:
 
 	//intercept the RSS request; we should stop afterwards
-	if ($func == 'fb_rss') {
-		include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.rss.php');
+	if ($func == 'rss') {
+		require_once ( JPATH_COMPONENT.DS.'funcs'.DS.'rss.php');
+
+		$feed = new CKunenaRSSView($catid);
+		$feed->display();
 		$kunena_app->close ();
 	}
 
 	if ($func == 'fb_pdf') {
-		include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.pdf.php');
+		include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
 		$kunena_app->close ();
 	}
 
@@ -741,8 +744,9 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
 	if ($kunena_config->enablerss) {
-		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL() . '" />' );
-		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . 'rss.gif" border="0" alt="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" />' );
+		$rss_params = ((int) $catid > 0 ? '&amp;catid=' . (int) $catid : '');
+		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . _LISTCAT_RSS . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
+		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . 'rss.gif" border="0" alt="' . _LISTCAT_RSS . '" title="' . _LISTCAT_RSS . '" />', 'follow', $rss_params );
 	}
 	echo '</div>';
 

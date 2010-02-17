@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+17-Feb-2010 fxstein
++ [#19399] merged new RSS code (part 1 - intial merge from littlejohn branch)
+
 17-Feb-2010 severdia
 ^ [#19345] Added new styles for pagination, but still needs correct output
 
@@ -57,6 +60,12 @@ Kunena 1.6.0-DEV
 
 12-Feb-2010 Matias
 # [#19288] Fix regression: AJAX Upload broke up during merge
+
+08-Feb-2010 littlejohn
++ [#19399] New RSS feeds (part 5 - added frontend view and rss class)
+- [#19399] New RSS feeds (part 4 - removed old frontend)
+# [#19399] New RSS feeds (part 3 - removed trailing space from parser affecting all templates)
+^ [#19399] New RSS feeds (part 2 - changed and corrected administrative options)
 
 07-Feb-2010 severdia
 # [#19356] CSS fixes, rounded tabs (CSS3 only)
@@ -117,6 +126,9 @@ Kunena 1.6.0-DEV
 03-Feb-2010 fxstein
 + [#19251] Jomsocial user prefetch caching to reduce query counts
 ^ [#19634] Update package file name for internal night build
+
+03-Feb-2010 littlejohn
+^ [#19399] New RSS feeds (part 1 - adding administrative options)
 
 02-Feb-2010 fxstein
 + [#19251] Advanced special user prefetch caching to reduce query counts

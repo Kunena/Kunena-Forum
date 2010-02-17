@@ -345,8 +345,18 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $fbsessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
 	var $highlightcode = 0;
-	var $rsstype = 'thread';
-	var $rsshistory = 'month';
+	// New 1.6 rss config vars 
+	var $rss_type = 'thread';
+	var $rss_timelimit = 'month';
+	var $rss_limit = 100;
+	var $rss_included_categories = '';
+	var $rss_excluded_categories = '';
+	var $rss_specification = 'rss2.0';
+	var $rss_allow_html = 1;
+	var $rss_only_public = 1;
+	var $rss_author_format = 'name';
+	var $rss_word_count = '0';
+	var $rss_old_titles = 1;
 	var $fbdefaultpage = 'recent';
 	// New 1.0.8 config variables
 	var $default_sort = 'asc'; // 'desc' for latest post first

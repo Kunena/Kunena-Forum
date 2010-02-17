@@ -878,4 +878,3 @@ class KunenaBBCodeInterpreterPlain extends BBCodeInterpreter {
 	}
 }
 ?>
-

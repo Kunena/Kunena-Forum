@@ -704,13 +704,14 @@ td.td-1  {
 }
 
 /*---------- Pagination ------------- */
-/*---------- Needs to be checked when output is correct ------------- */
 
 #Kunena ul.kpagination{ 
 	border:0; 
 	margin:0; 
 	padding:0;
-	min-width: 100px;
+	min-width: 190px;
+	text-align:right;
+	padding-right: 5px;
 }
 #Kunena .kpagination li{
 	border:0; 
@@ -720,58 +721,65 @@ td.td-1  {
 	list-style-type:none;
 	margin-right:2px;
 	line-height: .667em;
+	display:inline-block;
 }
 #Kunena .kpagination a {
 	border:solid 1px #5388B4;
 	margin-right:2px;
+	background: #ffffff;
 }
-
 #Kunena .kpagination li.page {
-	display:block;
-	float:left;
 	margin-right:2px;
 	padding:3px 4px;
 } 
 #Kunena .kpagination li.more {
 	font-weight:bold;
-	display:block;
-	float:left;
 } 
 #Kunena .kpagination .active {
 	background:#5388B4;
 	color:#FFFFFF;
 	font-weight:bold;
-	display:block;
-	float:left;
 	padding:4px 6px;
 }
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited {
 	color:#5388B4;
 	display:block;
-	float:left;
 	padding:3px 6px;
 	text-decoration:none;
 }
 #Kunena .kpagination a:hover{
 	border:solid 1px #5388B4;
+	color: #ffffff;
+	background: #609FBF;
 }
 
-/* Not using these but may in the future */
-#Kunena .kpagination .previous-off,
-#Kunena .kpagination .next-off {
-	border:solid 1px #5388B4;
-	color:#888888;
-	display:block;
+/* Inline pagination in topics */
+#Kunena div.k-topic-title-cover ul.kpagination { 
+	padding-top: 2px;
+	text-align:left;
+	/* display:inline; */
+}
+#Kunena div.k-topic-title-cover ul.kpagination li{
+	font-size:.833em;
+}
+#Kunena div.k-topic-title-cover ul.kpagination li.page {
 	float:left;
-	font-weight:bold;
-	margin-right:2px;
-	padding:3px 4px;
+	color:#999;
+	padding:4px 3px 0 0; 
+} 
+#Kunena div.k-topic-title-cover ul.kpagination a {
+	/* border:solid 1px #a1a1a1; */
+	border:solid 1px #bcbcbc;
+	background: #ffffff;
 }
-#Kunena .kpagination .next a,
-#Kunena .kpagination .previous a {
-	font-weight:bold;
+#Kunena div.k-topic-title-cover ul.kpagination a:hover{
+	border:solid 1px #5388B4;
+	color: #ffffff;
+	background: #609FBF;
 }
+
+
 
 /* OLD PAGINATION
 #Kunena .kpagination {

@@ -812,11 +812,6 @@ function showConfig($option) {
 		// ------
 
 		// build the html select list
-		$lists ['rss_only_public'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_rss_only_public', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_only_public );
-
-		// ------
-
-		// build the html select list
 		$lists ['rss_old_titles'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_rss_old_titles', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_old_titles );
 
 		// ------

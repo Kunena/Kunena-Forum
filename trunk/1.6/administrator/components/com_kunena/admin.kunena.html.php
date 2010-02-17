@@ -952,162 +952,7 @@ td.fbtdtitle {
 
 	<tr align="center" valign="middle">
 		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_TYPE')?></td>
 
-		<td align="left" valign="top"><?php
-		echo $lists ['rss_type'];
-		?></td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_TYPE_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_SPEC')?></td>
-
-		<td align="left" valign="top"><?php
-		echo $lists ['rss_specification'];
-		?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_SPEC_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_TIMELIMIT')?></td>
-
-		<td align="left" valign="top"><?php
-		echo $lists ['rss_timelimit'];
-		?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_TIMELIMIT_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_LIMIT')?></td>
-
-		<td align="left" valign="top"><input type="text"
-			name="cfg_rss_limit"
-			value="<?php
-		echo $kunena_config->rss_limit;
-		?>" /></td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_LIMIT_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_ONLY_PUBLIC')?></td>
-
-		<td align="left" valign="top"><?php
-		echo $lists ['rss_only_public'];
-		?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_ONLY_PUBLIC_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES')?></td>
-
-		<td align="left" valign="top"><input type="text"
-			name="cfg_rss_included_categories"
-			value="<?php
-		echo $kunena_config->rss_included_categories;
-		?>" /></td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES')?></td>
-
-		<td align="left" valign="top"><input type="text"
-			name="cfg_rss_excluded_categories"
-			value="<?php
-		echo $kunena_config->rss_excluded_categories;
-		?>" /></td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_ALLOW_HTML')?></td>
-
-		<td align="left" valign="top"><?php
-		echo $lists ['rss_allow_html'];
-		?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_ALLOW_HTML_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT')?></td>
-
-		<td align="left" valign="top"><?php
-		echo $lists ['rss_author_format'];
-		?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT')?></td>
-
-		<td align="left" valign="top"><?php
-		echo $lists ['rss_word_count'];
-		?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES')?></td>
-
-		<td align="left" valign="top"><?php
-		echo $lists ['rss_old_titles'];
-		?>
-		</td>
-
-		<td align="left" valign="top"><?php
-		echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES_DESC')?>
-		</td>
-	</tr>
-
-	<tr align="center" valign="middle">
-		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_PDF')?></td>
 
 		<td align="left" valign="top"><?php
@@ -2705,6 +2550,158 @@ td.fbtdtitle {
 
 		<td align="left" valign="top"><?php
 		echo JText::_('COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC')?></td>
+	</tr>
+</table>
+</fieldset>
+
+
+<div class="fbfuncsubtitle"><?php
+		echo JText::_('COM_KUNENA_ADMIN_RSS')?><a name="rss" id="rss"> </a></div>
+<fieldset><legend> <?php
+		echo JText::_('COM_KUNENA_ADMIN_RSS_SETTINGS')?></legend>
+<table cellpadding="4" cellspacing="0" border="0" width="100%"
+	class="fbadminform">
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_TYPE')?></td>
+
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['rss_type'];
+		?></td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_TYPE_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_SPEC')?></td>
+
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['rss_specification'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_SPEC_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_TIMELIMIT')?></td>
+
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['rss_timelimit'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_TIMELIMIT_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_LIMIT')?></td>
+
+		<td align="left" valign="top" width="25%"><input type="text"
+			name="cfg_rss_limit"
+			value="<?php
+		echo $kunena_config->rss_limit;
+		?>" /></td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_LIMIT_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES')?></td>
+
+		<td align="left" valign="top" width="25%"><input type="text"
+			name="cfg_rss_included_categories"
+			value="<?php
+		echo $kunena_config->rss_included_categories;
+		?>" /></td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES')?></td>
+
+		<td align="left" valign="top" width="25%"><input type="text"
+			name="cfg_rss_excluded_categories"
+			value="<?php
+		echo $kunena_config->rss_excluded_categories;
+		?>" /></td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_ALLOW_HTML')?></td>
+
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['rss_allow_html'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_ALLOW_HTML_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT')?></td>
+
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['rss_author_format'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT')?></td>
+
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['rss_word_count'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT_DESC')?>
+		</td>
+	</tr>
+
+	<tr align="center" valign="middle">
+		<td align="left" valign="top" width="25%"><?php
+		echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES')?></td>
+
+		<td align="left" valign="top" width="25%"><?php
+		echo $lists ['rss_old_titles'];
+		?>
+		</td>
+
+		<td align="left" valign="top"><?php
+		echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES_DESC')?>
+		</td>
 	</tr>
 </table>
 </fieldset>

@@ -51,7 +51,6 @@ class CKunenaRSSView extends CKunenaRSS {
 	 */
 	public function setCategory($catid = 0) {
 		$excl_cat	= $this->getQueryOption('excl_cat');
-		$only_pub	= $this->getQueryOption('only_public');
 		$catid		= (int) $catid;
 
 		if ($catid > 0) {
@@ -63,9 +62,6 @@ class CKunenaRSSView extends CKunenaRSS {
 				// forbidden
 			}
 			else if (in_array($catid, $excl_cat)) {
-				// forbidden
-			}
-			else if ($only_pub == 1 && $category->pub_access != 0) {
 				// forbidden
 			}
 			else {

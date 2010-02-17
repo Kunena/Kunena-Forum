@@ -2164,7 +2164,7 @@ function generatereport ( $option ) {
 	$kunena_db = &JFactory::getDBO ();
 	$JVersion = new JVersion();
 	$jversion = $JVersion->PRODUCT .' '. $JVersion->RELEASE .'.'. $JVersion->DEV_LEVEL .' '. $JVersion->DEV_STATUS.' [ '.$JVersion->CODENAME .' ] '. $JVersion->RELDATE .' '. $JVersion->RELTIME .' '. $JVersion->RELTZ;
-	$JConfig		= new JConfig();
+	$JConfig		= JFactory::getConfig();
 	if(isset($JConfig->legacy)) {
 		$jconfig_legacy = 'Enabled';
 	} else {

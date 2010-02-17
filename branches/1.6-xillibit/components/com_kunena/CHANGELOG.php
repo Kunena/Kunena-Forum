@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-Special-DEV-Xillibit
 
+17-Feb-2010 Xillibit
+# [#19668] Remove poll icon on reply topic, little change on report system
+
 15-Feb-2010 Xillibit
 + [#19668] Add parser logic for map
 

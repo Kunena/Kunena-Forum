@@ -774,12 +774,16 @@ kbbcode.addFunction('Gallery', function() {
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_GALLERY');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_GALLERY');?>")'});
 
+<?php if(CKunenaPolls::get_message_parent($id, $this->kunena_editmode)){ ?>
+
 kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");
 }, {'id': 'kbbcode-poll_button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_POLL');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>")'});
+
+<?php } ?>
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator5'});

@@ -703,44 +703,42 @@ td.td-1  {
 	text-align:center;
 }
 
+/*---------- Pagination ------------- */
+/*---------- Needs to be checked when output is correct ------------- */
+
 #Kunena ul.kpagination{ 
 	border:0; 
 	margin:0; 
 	padding:0;
+	min-width: 100px;
 }
-
-/*---------- Pagination ------------- */
-/*---------- Needs to be checked when output is correct ------------- */
 #Kunena .kpagination li{
 	border:0; 
 	margin:0; 
 	padding:0;
-	font-size:11px;
-	list-style:none;
+	font-size:.667em;
+	list-style-type:none;
+	margin-right:2px;
+	line-height: .667em;
+}
+#Kunena .kpagination a {
+	border:solid 1px #5388B4;
 	margin-right:2px;
 }
-#Kunena .kpagination a{
-	border:solid 1px #9aafe5;
-	margin-right:2px;
-}
-/* Not using this but may in the future */
-#Kunena .kpagination .previous-off,
-#Kunena .kpagination .next-off {
-	border:solid 1px #DEDEDE;
-	color:#888888;
+
+#Kunena .kpagination li.page {
 	display:block;
 	float:left;
-	font-weight:bold;
 	margin-right:2px;
 	padding:3px 4px;
-}
-/* Not using this but may in the future */
-#Kunena .kpagination .next a,
-#Kunena .kpagination .previous a {
-	font-weight:bold;
 } 
-#Kunena .kpagination .active{
-	background:#2e6ab1;
+#Kunena .kpagination li.more {
+	font-weight:bold;
+	display:block;
+	float:left;
+} 
+#Kunena .kpagination .active {
+	background:#5388B4;
 	color:#FFFFFF;
 	font-weight:bold;
 	display:block;
@@ -749,16 +747,31 @@ td.td-1  {
 }
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited {
-	color:#0e509e;
+	color:#5388B4;
 	display:block;
 	float:left;
 	padding:3px 6px;
 	text-decoration:none;
 }
 #Kunena .kpagination a:hover{
-	border:solid 1px #0e509e
+	border:solid 1px #5388B4;
 }
 
+/* Not using these but may in the future */
+#Kunena .kpagination .previous-off,
+#Kunena .kpagination .next-off {
+	border:solid 1px #5388B4;
+	color:#888888;
+	display:block;
+	float:left;
+	font-weight:bold;
+	margin-right:2px;
+	padding:3px 4px;
+}
+#Kunena .kpagination .next a,
+#Kunena .kpagination .previous a {
+	font-weight:bold;
+}
 
 /* OLD PAGINATION
 #Kunena .kpagination {
@@ -791,9 +804,6 @@ td.td-1  {
 	color: #FFFFFF;
 }
 */
-
-
-
 
 
 #Kunena .ksectiontableheader a {

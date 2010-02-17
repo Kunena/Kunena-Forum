@@ -257,7 +257,7 @@ class CKunenaListcat {
 		}
 
 		$output = '<ul class="kpagination">';
-		$output = '<li>' . JText::_('COM_KUNENA_PAGE') . '</li>';
+		$output .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
 
 		if (($startpage) > 1) {
 			if ($endpage < $totalpages)

@@ -77,7 +77,7 @@ if ($this->objCatInfo->headerdesc) {
 		}
 		?>
 		</td>
-		<td class="klist_pages_all" nowrap="nowrap">
+		<td class="klist_pages_all nowrap">
 		<?php
 		//pagination 1
 		if (count ( $this->messages ) > 0) {
@@ -120,7 +120,7 @@ if ($this->objCatInfo->headerdesc) {
 		?>
 
 		</td>
-		<td class="klist_pages_all" nowrap="nowrap"><?php
+		<td class="klist_pages_all nowrap"><?php
 		//pagination 2
 		if (count ( $this->messages ) > 0) {
 			echo $pagination;

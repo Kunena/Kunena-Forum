@@ -138,7 +138,7 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 
 			if ($leaf->msgcount > $this->config->messages_per_page) {
 				echo '<ul class="kpagination">';
-				echo '<li>' . JText::_('COM_KUNENA_PAGE') . '</li>';
+				echo '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
 				echo '<li>' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 ) . '</li>';
 
 				if ($threadPages > 3) {

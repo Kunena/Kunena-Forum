@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+17-Feb-2010 severdia
+^ [#19345] Added new styles for pagination, but still needs correct output
+
 17-Feb-2010 Matias
 ^ [#19345] Restyle Default template: pagination
 

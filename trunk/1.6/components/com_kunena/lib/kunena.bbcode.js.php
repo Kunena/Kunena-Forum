@@ -993,8 +993,8 @@ window.addEvent('domready', function() {
 			max_file_size : '1mb',
 			url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>',
 			//resize : {width : 320, height : 240, quality : 90},
-			flash_swf_url : '/plupload/js/plupload.flash.swf',
-			silverlight_xap_url : '/plupload/js/plupload.silverlight.xap',
+			flash_swf_url : '<?php echo KUNENA_DIRECTURL;?>/js/plupload/plupload.flash.swf',
+			silverlight_xap_url : '<?php echo KUNENA_DIRECTURL;?>/js/plupload/plupload.silverlight.xap',
 			filters : [
 				{title : "Image files", extensions : "jpg,gif,png"},
 				{title : "Zip files", extensions : "zip,gz"}

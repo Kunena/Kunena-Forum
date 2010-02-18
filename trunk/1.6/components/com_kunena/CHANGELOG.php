@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+18-Feb-2010 Matias
+# [#19380] Multifile upload: Fixed fixed path to silverlight, flash runtimes
+
 17-Feb-2010 fxstein
 + [#19399] merged new RSS code (part 1 - intial merge from littlejohn branch)
 ^ [#19399] merged new RSS code (part 2 - language string corrections)

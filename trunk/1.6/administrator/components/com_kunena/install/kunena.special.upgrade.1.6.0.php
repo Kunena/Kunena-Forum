@@ -39,5 +39,41 @@ foreach ( $templatedeprecatedlist as $template ) {
 	}
 }
 
+// Convert attachments table to support new multi file attachments
+
+// First check if new attachments table is empty. This either means this is the first
+// time the upgrade is executed, or the table has been manually reset to force another
+// upgrade of the old structure.
+$query = 'SELECT count(*) FROM #__kunena_attachaments;';
+$kunena_db->setQuery ( $query );
+$attachcount = (int) $kunena_db->loadResult ();
+
+if ($attachcount==0){
+	// New attachements table is empty - assume we have to convert attachments
+
+	// hash and size ommited -> NULL
+	$query = "INSERT INTO #__kunena_attachments (mesid, userid, filetype, filename)
+				SELECT a.mesid, m.userid,
+					SUBSTRING_INDEX(a.filelocation, '.', -1) AS filetype,
+					SUBSTRING_INDEX(a.filelocation, '".DS."', -1) AS filename
+				FROM #__fb_attachments AS a
+				JOIN #__fb_messages AS m ON a.mesid = m.id";
+
+	if(JDEBUG == 1 && defined('JFIREPHP')){
+		FB::log($query, 'Attachment Upgrade');
+	}
+
+	$kunena_db->setQuery ( $query );
+	$kunena_db->query();
+
+	// By now the old attachmets table has been converted to the new Kunena 1.6 format
+	// with the exception of file size and file hash that cannot be calculated inside
+	// the database. Both of these columns are set to null. As we could be dealing with
+	// thousands of medium to large size images, we cannot afford to iterate over all
+	// of them to calculate this values. A seperate maintenance task will have to be
+	// created and executed outside of the upgrade itself.
+}
+
+
 CKunenaTools::createMenu();
 

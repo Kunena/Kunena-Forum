@@ -11,11 +11,20 @@
                     `published` tinyint(1) NOT NULL default '0',
                     `ordering` tinyint(4) NOT NULL default '0',
                     `showdate` tinyint(1) NOT NULL default '1',
-                PRIMARY KEY  (`id`) ) DEFAULT CHARSET=utf8</query>
-        <query>CREATE TABLE IF NOT EXISTS `#__fb_attachments` (
+                PRIMARY KEY  (`id`) ), DEFAULT CHARSET=utf8</query>
+        <query>CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
+                    `id` int(11) NOT NULL auto_increment,
                     `mesid` int(11) NOT NULL default '0',
-                    `filelocation` text NOT NULL,
-                KEY `mesid` (`mesid`) ) DEFAULT CHARSET=utf8</query>
+                    `userid` int(11) NOT NULL default '0',
+                    `hash` char(32) NULL,
+                    `size` int(11) NULL,
+                    `filetype` varchar(20) NOT NULL,
+                    `filename` varchar(255) NOT NULL,
+                PRIMARY KEY (`id`),                
+                KEY `mesid` (`mesid`),
+                KEY `userid` (`userid`),
+                KEY `hash` (`hash`),
+                KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8</query>
         <query>CREATE TABLE IF NOT EXISTS `#__fb_categories` (
                     `id` int(11) NOT NULL auto_increment,
                     `parent` int(11) default '0',
@@ -428,6 +437,19 @@
 				ADD `allow_polls` tinyint(4) NOT NULL default '0' AFTER `class_sfx` ;</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_polls_users` 
 				ADD `lastvote` int(11) default NULL AFTER `lasttime` ;</query>
+	        <query>CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
+                    `id` int(11) NOT NULL auto_increment,
+                    `mesid` int(11) NOT NULL default '0',
+                    `userid` int(11) NOT NULL default '0',
+                    `hash` char(32) NULL,
+                    `size` int(11) NULL,
+                    `filetype` varchar(20) NOT NULL,
+                    `filename` varchar(255) NOT NULL,
+	                PRIMARY KEY (`id`),                
+	                KEY `mesid` (`mesid`),
+	                KEY `userid` (`userid`),
+	                KEY `hash` (`hash`),
+	                KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8;</query>
 			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
 		</version>
 	</upgrade>

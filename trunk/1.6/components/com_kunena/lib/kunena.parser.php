@@ -705,18 +705,18 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$tag_new = JText::_('COM_KUNENA_BBCODE_HIDDENTEXT');
 					} else {
 						// Display but highlight the fact that it is hidden from guests
-						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<span class="fb_quote">' . $between . '</span>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<span class="kmsgtext_quote">' . $between . '</span>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
 				return TAGPARSER_RET_NOTHING;
 
 				break;
-			case 'mod' :
+			case 'confidential' :
 				if ($between) {
 					if (CKunenaTools::isModerator($kunena_my->id)) {
 						// Display but highlight the fact that it is hidden from everyone except admins and mods
-						$tag_new = '<span class="ktagmod">' . $between . '</span>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><span class="kmsgtext_confidential">' . $between . '</span>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}

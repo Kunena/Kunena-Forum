@@ -1745,7 +1745,8 @@ span.newchar {
 	margin: 2px 0px;
 }
 
-#Kunena span.kmsgtext_quote {
+#Kunena span.kmsgtext_quote,
+#Kunena span.kmsgtext_confidential {
 	display: block;
 	border: 1px dotted #BFC3C6;
 	margin: 5px 0pt;
@@ -1753,6 +1754,10 @@ span.newchar {
 	font-family: Arial, Helvetica, sans-serif;
 	font-style: italic;
 	background: #F2F1EE;
+}
+
+#Kunena span.kmsgtext_confidential {
+	background: #FAE0F8;
 }
 
 #Kunena div.khide {

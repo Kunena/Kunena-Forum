@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+19-Feb-2010 Matias
+^ [#19690] Rename bbcode [mod] to [confidential] and make small changes to it's logic
+
 18-Feb-2010 Matias
 # [#19399] Fixed undefined variable in RSS code
 

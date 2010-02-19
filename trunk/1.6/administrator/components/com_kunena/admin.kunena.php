@@ -2220,7 +2220,7 @@ function generateSystemReport () {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
 	$JVersion = new JVersion();
-	$jversion = $JVersion->PRODUCT .' '. $JVersion->RELEASE .'.'. $JVersion->DEV_LEVEL .' '. $JVersion->DEV_STATUS.' [ '.$JVersion->CODENAME .' ] '. $JVersion->RELDATE .' '. $JVersion->RELTIME .' '. $JVersion->RELTZ;
+	$jversion = $JVersion->PRODUCT .' '. $JVersion->RELEASE .'.'. $JVersion->DEV_LEVEL .' '. $JVersion->DEV_STATUS.' [ '.$JVersion->CODENAME .' ] '. $JVersion->RELDATE;
 	$JConfig = JFactory::getConfig();
 	if($kunena_app->getCfg('legacy' )) {
 		$jconfig_legacy = '[color=#FF0000]Enabled[/color]';
@@ -2243,7 +2243,7 @@ function generateSystemReport () {
 		$jconfig_sef_rewrite = 'Disabled';
 	}
 	if(!JUtility::isWinOS()) {
-		if (!file_exists(JPATH_ROOT. DS. '.htaccess')) {
+		if (file_exists(JPATH_ROOT. DS. '.htaccess')) {
 			$htaccess = 'Exists';
 		} else {
 			$htaccess = 'Missing';
@@ -2307,17 +2307,21 @@ function generateSystemReport () {
 		$Ksefutf8 = 'Disabled';
 	}
 	$databasecollation = $kunena_db->getCollation();
-    $report = '[mod][quote][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
-	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
-	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.mysql_get_server_info().'[/quote][/mod]'
-		.'[quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
-	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' | [b]htaccess:[/b] '.$htaccess
-	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' | [u]Database collation:[/u]
-		'.$databasecollation.'| [b]Kunena:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
-	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [u]Kunena integration type:[/u] '
-	    .$kunena_integration_type.' | [u]Kunena sef:[/u] '.$Ksef.' | [u]Kunena sefcats:[/u] '.$Ksefcats.' | [u]Kunena sefutf8:[/u] '
-	    .$Ksefutf8.'[/quote]';
+    $report = '[confidential][b]Web Server:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('.$_SERVER['SERVER_NAME'].')
+[b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring.' | '.$gd_support.'
+[b]MySQL version:[/b] '.mysql_get_server_info().'
+[b]Joomla! Version:[/b] '.$jversion.'[/confidential]
+[b]General configuration:[/b]
+[quote][b]Web server:[/b]  [u]htaccess:[/u] '.$htaccess.'
+[b]PHP:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '.$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.'
+[b]Database:[/b] [u]Default collation:[/u] '.$databasecollation.'
+[b]Joomla!:[/b] [u]Legacy mode:[/u] '.$jconfig_legacy.' | [u]Joomla! SEF:[/u] '.$jconfig_sef.' | [u]Joomla! SEF rewrite:[/u] '.$jconfig_sef_rewrite.' | [u]FTP layer:[/u] '.$jconfig_ftp.'[/quote]
+[b]Kunena information:[/b]
+[quote][u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
+.$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [u]Kunena integration type:[/u] '
+.$kunena_integration_type.' | [u]Kunena sef:[/u] '.$Ksef.' | [u]Kunena sefcats:[/u] '.$Ksefcats.' | [u]Kunena sefutf8:[/u] '
+.$Ksefutf8.'[/quote]';
+
     return $report;
 }
 

@@ -133,7 +133,7 @@ class CKunenaRSSView extends CKunenaRSS {
 			$feed->lastBuildDate	= $this->getLabel('lastBuildDate');
 			$feed->generator		= $this->getLabel('generator');
 
-			$feed->encoding			= KUNENA_CHARSET;
+			$feed->encoding			= 'UTF-8';
 			$feed->syndicationURL	= $uribase . $_SERVER["REQUEST_URI"];
 			$feed->xslStyleSheet	= '';	// needed, else errors from feedcreator shows
 			$feed->cssStyleSheet	= '';	// needed, else errors from feedcreator shows

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+18-Feb-2010 Matias
+# [#19399] Fixed undefined variable in RSS code
+
 18-Feb-2010 fxstein
 ^ [#19399] Changed remaining _LISTCAT_RSS occurances to JText
 ^ [#19312] Changed "Posted at" to "Posted" in language file

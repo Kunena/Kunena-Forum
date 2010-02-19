@@ -18,8 +18,10 @@
                     `userid` int(11) NOT NULL default '0',
                     `hash` char(32) NULL,
                     `size` int(11) NULL,
+                    `folder` charchar(255) NOT NULL,
                     `filetype` varchar(20) NOT NULL,
                     `filename` varchar(255) NOT NULL,
+                    `legacy` tinyint(4) NOT NULL default '0',
                 PRIMARY KEY (`id`),                
                 KEY `mesid` (`mesid`),
                 KEY `userid` (`userid`),
@@ -420,6 +422,7 @@
 					`userid` int(11) default NULL,
 					`votes` int(11) default NULL,
 					`lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+					`lastvote` int(11) default NULL,
 					UNIQUE KEY `pollid` (`pollid`,`userid`)
 				) DEFAULT CHARSET=utf8;</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_users` 
@@ -435,16 +438,19 @@
 				ADD `BEBO` VARCHAR( 50 )  NULL AFTER `FLICKR` ;</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_categories` 
 				ADD `allow_polls` tinyint(4) NOT NULL default '0' AFTER `class_sfx` ;</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_polls_users` 
-				ADD `lastvote` int(11) default NULL AFTER `lasttime` ;</query>
+			<query>
+<!-- TODO: !!!temporary development statement remove for release builds!!!-->
+				DROP TABLE `#__kunena_attachments`;</query>
 	        <query>CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
                     `id` int(11) NOT NULL auto_increment,
                     `mesid` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                     `hash` char(32) NULL,
                     `size` int(11) NULL,
+                    `folder` varchar(255) NOT NULL,
                     `filetype` varchar(20) NOT NULL,
                     `filename` varchar(255) NOT NULL,
+                    `legacy` tinyint(4) NOT NULL default '0',
 	                PRIMARY KEY (`id`),                
 	                KEY `mesid` (`mesid`),
 	                KEY `userid` (`userid`),

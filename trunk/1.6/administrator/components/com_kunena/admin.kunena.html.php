@@ -2069,7 +2069,7 @@ td.kadmin-tdtitle {
 				$content = fread ( $f, filesize ( $file ) );
 				$content = kunena_htmlspecialchars ( $content );
 		?>
-		<div class="kadmin-functitle editcss"><?php echo JText::_('COM_KUNENA_CSSEDITOR'); ?></div>
+		<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_CSSEDITOR'); ?></div>
 		<form action="index.php?" method="post" name="adminForm" class="adminForm" id="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr>

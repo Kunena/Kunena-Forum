@@ -518,7 +518,7 @@ class CKunenaView {
 					$rank = CKunenaTools::getRank ( $this->profile );
 
 					if ($this->config->rankimages && isset ( $rank->rank_image )) {
-						$this->msg_html->userrankimg = '<img src="' . $rank->rank_image . '" alt="" />';
+						$this->msg_html->userrankimg = '<img src="' . KUNENA_URLRANKSPATH . $rank->rank_image . '" alt="" />';
 					}
 					$this->msg_html->userrank = $rank->rank_title;
 				}

@@ -616,7 +616,7 @@ class CKunenaTools {
             $kunena_db->setQuery('UPDATE #__fb_messages SET hold=2 WHERE id=' . $id . ' OR thread=' . $id);
 			$kunena_db->query();
 			check_dberror ( "Unable to delete messages." );
-			
+
             // now update stats
             CKunenaTools::decreaseCategoryStats($id, $mes->catid);
 
@@ -747,7 +747,6 @@ class CKunenaTools {
 				}
 			}
 		}
-		$rank->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
 		return $rank;
 	}
 

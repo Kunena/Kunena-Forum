@@ -46,7 +46,9 @@ class CKunenaProfile {
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->user->id);
 		$this->admin = CKunenaTools::isAdmin($this->user->id);
-		$this->rank = CKunenaTools::getRank($this->profile);
+		$rank = CKunenaTools::getRank($this->profile);
+		$this->rank_title = $rank->rank_title;
+		$this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
 		switch ($this->profile->gender) {
 			case 1:
 				$this->genderclass = 'male';

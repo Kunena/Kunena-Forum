@@ -34,7 +34,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<!-- Check this: -->
 					<li class="usertype"><?php echo $this->user->usertype; ?></li>
 					<!-- The class on the span below should be rank then hyphen then the rank name -->
-					<li class="kprofile-rank"><strong>Rank: </strong><?php echo $this->rank->rank_title; ?><img src="<?php echo $this->rank->rank_image; ?>" alt="<?php echo $this->rank->rank_title; ?>" /></li>
+					<li class="kprofile-rank"><strong>Rank: </strong><?php echo $this->rank_title; ?><img src="<?php echo $this->rank_image; ?>" alt="<?php echo $this->rank->rank_title; ?>" /></li>
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'date_today', 'utc'); ?></span></li>
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?>:</strong> GMT <?php echo CKunenaTimeformat::showTimezone($this->timezone); ?></li>
@@ -63,7 +63,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 						<li><span class="location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>:</strong> <?php echo $this->location; ?></li>
 						<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
 						<li><span class="gender-<?php echo $this->genderclass; ?>"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong> <?php echo $this->gender; ?></li>
-						<li class="bd"><span class="birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'ago'); ?>"><?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'date'); ?></span> 
+						<li class="bd"><span class="birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'ago'); ?>"><?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'date'); ?></span>
 						<!--  <a href="#" title=""><span class="bday-remind"></span></a> -->
 						</li>
 					</ul>

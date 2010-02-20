@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+
+20-Feb-2010 severdia
+^ [#19758] Clean up admin interface, add tabs struture (still needs tab JS)
+
 20-Feb-2010 Matias
 # [#19288] Fix regression: Only the first rank image works (wrong url)
 

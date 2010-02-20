@@ -38,7 +38,13 @@ define('KUNENA_PATH_ADMIN_INSTALL', KUNENA_PATH_ADMIN .DS. 'install');
 define('KUNENA_PATH_ADMIN_IMAGES', KUNENA_PATH_ADMIN .DS. 'images');
 
 // Kunena uploaded files directory
-define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . '/images/fbfiles');
+define('KUNENA_RELPATH_UPLOADED', '/media/kunena/attachments');
+define('KUNENA_RELPATH_UPLOADED_LEGACY', '/images/fbfiles');
+define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED);
+define('KUNENA_PATH_UPLOADED_LEGACY', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED_LEGACY);
+
+// The tunmbnail folder is relative to any image file folder
+define('KUNENA_FOLDER_THUMBNAIL', 'thumb');
 
 // Files
 define('KUNENA_FILE_LANGUAGE_DEFAULT', KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE_DEFAULT . '.php');

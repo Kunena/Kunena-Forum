@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+20-Feb-2010 fxstein
++ [#19380] Basic attachments display scaffolding added with sample display data
+
 19-Feb-2010 fxstein
 ^ [#19380] Modified attachments table to support legacy folder structure
 

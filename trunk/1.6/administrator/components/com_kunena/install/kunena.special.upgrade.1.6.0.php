@@ -44,7 +44,7 @@ foreach ( $templatedeprecatedlist as $template ) {
 // First check if new attachments table is empty. This either means this is the first
 // time the upgrade is executed, or the table has been manually reset to force another
 // upgrade of the old structure.
-$query = 'SELECT count(*) FROM #__kunena_attachaments;';
+$query = 'SELECT count(*) FROM #__kunena_attachments;';
 $kunena_db->setQuery ( $query );
 $attachcount = (int) $kunena_db->loadResult ();
 

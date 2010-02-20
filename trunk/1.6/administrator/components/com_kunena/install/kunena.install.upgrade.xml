@@ -438,9 +438,6 @@
 				ADD `BEBO` VARCHAR( 50 )  NULL AFTER `FLICKR` ;</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_categories` 
 				ADD `allow_polls` tinyint(4) NOT NULL default '0' AFTER `class_sfx` ;</query>
-			<query>
-<!-- TODO: !!!temporary development statement remove for release builds!!!-->
-				DROP TABLE `#__kunena_attachments`;</query>
 	        <query>CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
                     `id` int(11) NOT NULL auto_increment,
                     `mesid` int(11) NOT NULL default '0',

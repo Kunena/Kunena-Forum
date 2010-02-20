@@ -160,6 +160,22 @@ class CKunenaView {
 		$replies = $this->db->loadObjectList ();
 		check_dberror ( 'Unable to load replies' );
 
+		// Load attachments
+
+		// TODO: Load attachments
+
+//		$query = "SELECT a.* FROM #__kunena_attachments AS a
+//					WHERE a.mesid = '21683'";
+
+		$query = "SELECT a.* FROM #__kunena_attachments AS a
+					WHERE a.mesid = '38594'";
+
+		$this->db->setQuery ( $query );
+		$attachments = $this->db->loadObjectList ();
+		check_dberror ( 'Unable to load attachments' );
+
+		$this->first_message->attachments = $attachments;
+
 		$this->flat_messages = array ();
 		if ($page == 1 && $ordering == 'asc')
 			$this->flat_messages [] = $this->first_message; // ASC: first message is the first one
@@ -637,7 +653,6 @@ class CKunenaView {
 
 		// Finish: Additional Info //
 
-
 		//Show admins the IP address of the user:
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			$this->msg_html->ip = $this->kunena_message->ip;
@@ -645,6 +660,53 @@ class CKunenaView {
 
 		$this->msg_html->subject = CKunenaTools::parseText ( $this->kunena_message->subject );
 		$this->msg_html->text = CKunenaTools::parseBBCode ( $this->kunena_message->message );
+
+		// Add attachments
+
+		if (isset($this->kunena_message->attachments)) {
+			$this->msg_html->attachments = array();
+
+			foreach($this->kunena_message->attachments as $attachment)
+			{
+				// First lets check the attachment file type
+				switch (strtolower($attachment->filetype)){
+					case 'jpg' :
+					case 'jepg' :
+					case 'png' :
+					case 'gif' :
+						// Filetype indicates an image - check for thumbnail to display
+
+						// First we need to check if a thumbnail exists - if so - we are going to use it
+						// instead of the fullsize image or file
+
+						// TODO: Add check for thumbnail and display thumb instead
+
+						// TODO: Add config size limiters to image
+						$this->msg_html->attachments[]= '<a href="'.($attachment->legacy ? KUNENA_RELPATH_UPLOADED_LEGACY : KUNENA_RELPATH_UPLOADED).DS.$attachment->folder.DS.$attachment->filename.'" rel="nofollow">'.
+														'<img width="64px" height="64px" src="'.($attachment->legacy ? KUNENA_RELPATH_UPLOADED_LEGACY : KUNENA_RELPATH_UPLOADED).DS.$attachment->folder.DS.$attachment->filename.'" alt="'.$attachment->filename.'" />'.
+														'</a>'.
+														'<span>'.$attachment->filename.'</span>';
+						break;
+					case 'zip' :
+					case 'pdf' :
+					case 'txt' :
+						// Filetype is a known non-image file type - use type specific icon
+
+						// TODO: Add extension specific icons
+						// TODO: Replace href link with CKunenaLink::Call
+						$this->msg_html->attachments[]= '<span><a href="'.($attachment->legacy ? KUNENA_RELPATH_UPLOADED_LEGACY : KUNENA_RELPATH_UPLOADED).DS.$attachment->folder.DS.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
+
+						break;
+					default :
+						// Filetype without thumbnail or icon support - use default file icon
+
+						// TODO: Add generic attachment icon
+						// TODO: Replace href link with CKunenaLink::Call
+						$this->msg_html->attachments[]= '<span><a href="'.($attachment->legacy ? KUNENA_RELPATH_UPLOADED_LEGACY : KUNENA_RELPATH_UPLOADED).DS.$attachment->folder.DS.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
+										}
+			}
+		}
+
 		$this->msg_html->signature = CKunenaTools::parseBBCode ( $this->userinfo->signature );
 
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0)) {

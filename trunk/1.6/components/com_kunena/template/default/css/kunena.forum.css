@@ -1586,6 +1586,15 @@ span.newchar {
 	min-height: 180px;
 }
 
+#Kunena div.msgattach {
+	overflow: hidden;
+	padding: 5px;
+	margin-top: 5px;
+	background:#F8F7EF none repeat scroll 0 0;
+	border:1px dotted #BFC3C6;
+	display:block;
+}
+
 #Kunena span.kmsgtext_xs {
 	font-size: 0.5em;
 }

@@ -11,7 +11,7 @@
                     `published` tinyint(1) NOT NULL default '0',
                     `ordering` tinyint(4) NOT NULL default '0',
                     `showdate` tinyint(1) NOT NULL default '1',
-                PRIMARY KEY  (`id`) ), DEFAULT CHARSET=utf8</query>
+                PRIMARY KEY  (`id`) ) DEFAULT CHARSET=utf8</query>
         <query>CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
                     `id` int(11) NOT NULL auto_increment,
                     `mesid` int(11) NOT NULL default '0',
@@ -145,7 +145,7 @@
              KEY `group_id` (`group_id`),
              KEY `posts` (`posts`),
              KEY `uhits` (`uhits`)
-             ) ENGINE=MyISAM DEFAULT CHARSET=utf8;</query>
+             ) DEFAULT CHARSET=utf8;</query>
 		<query>CREATE TABLE IF NOT EXISTS `#__fb_whoisonline` (
                     `id` int(6) NOT NULL auto_increment,
                     `userid` int(7) NOT NULL default '0',
@@ -292,7 +292,7 @@
 			<query>CREATE TABLE IF NOT EXISTS `#__fb_groups`(
                         `id` int(4) NOT NULL  auto_increment  , 
                         `title` varchar(255) NULL   , 
-                        PRIMARY KEY (`id`) )</query>
+                        PRIMARY KEY (`id`) ) DEFAULT CHARSET=utf8;</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD COLUMN `modified_by` int(7) NULL AFTER `moved`, COMMENT=''</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD COLUMN `modified_time` int(11) NULL AFTER `modified_by`, COMMENT=''</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD COLUMN `modified_reason` tinytext NULL AFTER `modified_time`, COMMENT=''</query>
@@ -309,7 +309,7 @@
                         `rank_min` mediumint(8) unsigned NOT NULL  DEFAULT '0'  , 
                         `rank_special` tinyint(1) unsigned NOT NULL  DEFAULT '0'  , 
                         `rank_image` varchar(255) NOT NULL   , 
-                        PRIMARY KEY (`rank_id`) )</query>
+                        PRIMARY KEY (`rank_id`) ) DEFAULT CHARSET=utf8;</query>
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `group_id` int(4) NULL DEFAULT '1' AFTER `karma_time`, COMMENT=''</query>			
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `uhits` int(11) NULL  DEFAULT '0' AFTER `group_id`, COMMENT=''</query>			
 			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `personalText` tinytext NULL AFTER `uhits`, COMMENT=''</query>			

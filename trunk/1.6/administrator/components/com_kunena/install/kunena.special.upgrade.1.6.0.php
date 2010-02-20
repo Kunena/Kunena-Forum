@@ -59,9 +59,9 @@ if ($attachcount==0){
 	// the move into the new folder tree. - Not planned for K1.6
 	$query = "INSERT INTO #__kunena_attachments (mesid, userid, folder, filetype, filename, legacy)
 				SELECT a.mesid, m.userid,
-					SUBSTRING_INDEX(SUBSTRING_INDEX(a.filelocation, '".DS."', -2), '".DS."', 1) AS folder,
+					SUBSTRING_INDEX(SUBSTRING_INDEX(a.filelocation, '/', -2), '/', 1) AS folder,
 					SUBSTRING_INDEX(a.filelocation, '.', -1) AS filetype,
-					SUBSTRING_INDEX(a.filelocation, '".DS."', -1) AS filename,
+					SUBSTRING_INDEX(a.filelocation, '/', -1) AS filename,
 					'1'
 				FROM #__fb_attachments AS a
 				JOIN #__fb_messages AS m ON a.mesid = m.id";

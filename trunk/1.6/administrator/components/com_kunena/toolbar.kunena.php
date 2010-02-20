@@ -105,7 +105,7 @@ switch ($task)
 
         break;
 
-				case "ranks":
+	case "ranks":
         CKunenaToolbar::_SHOWRANKS_MENU();
 
         break;
@@ -142,4 +142,5 @@ switch ($task)
         break;
 
 }
+
 ?>

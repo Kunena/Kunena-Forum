@@ -57,22 +57,41 @@ class html_Kunena {
 #kadmin table td {
 	padding 5px;
 }
-a.icon-cp { background: url('components/com_kunena/images/icons/icon_controlpanel.png') 5px 5px no-repeat; }
-a.icon-config { background: url('components/com_kunena/images/icons/icon_config.png') 5px 5px no-repeat; }
-a.icon-adminforum { background: url('components/com_kunena/images/icons/icon_forumadmin.png') 5px 5px no-repeat; }
-a.icon-profiles { background: url('components/com_kunena/images/icons/icon_useradmin.png') 5px 5px no-repeat; }
-a.icon-smilies{ background: url('components/com_kunena/images/icons/icon_smilies.png') 5px 5px no-repeat; }
-a.icon-ranks { background: url('components/com_kunena/images/icons/icon_ranks.png') 5px 5px no-repeat; }
-a.icon-files { background: url('components/com_kunena/images/icons/icon_uploadedfiles.png') 5px 5px no-repeat; }
-a.icon-images { background: url('components/com_kunena/images/icons/icon_uploadedimages.png') 5px 5px no-repeat; }
-a.icon-editcss { background: url('components/com_kunena/images/icons/icon_editcss.png') 5px 5px no-repeat; }
-a.icon-prune { background: url('components/com_kunena/images/icons/icon_pruneforums.png') 5px 5px no-repeat; }
-a.icon-syncusers { background: url('components/com_kunena/images/icons/icon_syncusers.png') 5px 5px no-repeat; }
-a.icon-recount { background: url('components/com_kunena/images/icons/icon_recountstats.png') 5px 5px no-repeat; }
-a.icon-trash { background: url('components/com_kunena/images/icons/icon_trash.png') 5px 5px no-repeat; }
-a.icon-systemreport { background: url('components/com_kunena/images/icons/icon_reportconfig.png') 5px 5px no-repeat; }
-a.icon-support { background: url('components/com_kunena/images/icons/icon_supportsite.png') 5px 5px no-repeat; }
-				
+
+/* Small icons  */
+a.icon-cp-sm { background: url('components/com_kunena/images/icons/icon_controlpanel.png') 5px 5px no-repeat; }
+a.icon-config-sm { background: url('components/com_kunena/images/icons/icon_config.png') 5px 5px no-repeat; }
+a.icon-adminforum-sm { background: url('components/com_kunena/images/icons/icon_forumadmin.png') 5px 5px no-repeat; }
+a.icon-profiles-sm { background: url('components/com_kunena/images/icons/icon_useradmin.png') 5px 5px no-repeat; }
+a.icon-smilies-sm{ background: url('components/com_kunena/images/icons/icon_smilies.png') 5px 5px no-repeat; }
+a.icon-ranks-sm { background: url('components/com_kunena/images/icons/icon_ranks.png') 5px 5px no-repeat; }
+a.icon-files-sm { background: url('components/com_kunena/images/icons/icon_uploadedfiles.png') 5px 5px no-repeat; }
+a.icon-images-sm { background: url('components/com_kunena/images/icons/icon_uploadedimages.png') 5px 5px no-repeat; }
+a.icon-editcss-sm { background: url('components/com_kunena/images/icons/icon_editcss.png') 5px 5px no-repeat; }
+a.icon-prune-sm { background: url('components/com_kunena/images/icons/icon_pruneforums.png') 5px 5px no-repeat; }
+a.icon-syncusers-sm { background: url('components/com_kunena/images/icons/icon_syncusers.png') 5px 5px no-repeat; }
+a.icon-recount-sm { background: url('components/com_kunena/images/icons/icon_recountstats.png') 5px 5px no-repeat; }
+a.icon-trash-sm { background: url('components/com_kunena/images/icons/icon_trash.png') 5px 5px no-repeat; }
+a.icon-systemreport-sm { background: url('components/com_kunena/images/icons/icon_reportconfig.png') 5px 5px no-repeat; }
+a.icon-support-sm { background: url('components/com_kunena/images/icons/icon_supportsite.png') 5px 5px no-repeat; }
+
+/* Large icons */
+div.kadmin-functitle.icon-config { background: url('components/com_kunena/images/kconfig.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-adminforum { background: url('components/com_kunena/images/kforumadm.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-profiles { background: url('components/com_kunena/images/kuser.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-smilies{ background: url('components/com_kunena/images/ksmiley.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-ranks { background: url('components/com_kunena/images/kranks.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-files { background: url('components/com_kunena/images/kfiles.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-images { background: url('components/com_kunena/images/kimages.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-editcss { background: url('components/com_kunena/images/kcss.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-prune { background: url('components/com_kunena/images/ktable.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-syncusers { background: url('components/com_kunena/images/kusers.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-trash { background: url('components/com_kunena/images/trash.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-systemreport { background: url('components/com_kunena/images/report_conf.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-support { background: url('components/com_kunena/images/ktechsupport.png') 5px 5px no-repeat; }
+	
+div.kadmin-functitle.no-icon { text-indent: 5px !important; }
+
 #kadmin-menu {
 	border-top: 1px solid #ccc;
 	text-indent: 30px;
@@ -127,12 +146,18 @@ a.icon-support { background: url('components/com_kunena/images/icons/icon_suppor
 	font-size: 16px;
 	text-align: left;
 	padding: 5px;
-	background: #FBFBFB;
+	/* background: #FBFBFB; */
 	border: 1px solid #CCC;
 	font-weight: bold;
 	margin-bottom: 10px;
 	clear: both;
+	display:block;
+	height: 48px;
+	line-height: 44px;
+	text-indent: 60px;
 }
+
+
 
 .kadmin-funcsubtitle {
 	font-size: 14px;
@@ -179,21 +204,21 @@ td.kadmin-tdtitle {
 	<div class="kadmin-left">
 		<div id="kadmin-menu">
 			<?php $stask = JRequest::getVar ( 'task', null ); ?>
-				<a class="kadmin-mainmenu icon-cp" href="index.php?option=com_kunena"><?php echo JText::_('COM_KUNENA_CP'); ?></a> 
-				<a class="kadmin-mainmenu icon-config" href="index.php?option=com_kunena&task=showconfig"><?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?></a>
-				<a class="kadmin-mainmenu icon-adminforum" href="index.php?option=com_kunena&task=showAdministration"><?php echo JText::_('COM_KUNENA_C_FORUM'); ?></a> 
-				<a class="kadmin-mainmenu icon-profiles" href="index.php?option=com_kunena&task=showprofiles"><?php echo JText::_('COM_KUNENA_C_USER'); ?></a> 
-				<a class="kadmin-mainmenu icon-smilies" href="index.php?option=com_kunena&task=showsmilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILIES'); ?></a> 
-				<a class="kadmin-mainmenu icon-ranks" href="index.php?option=com_kunena&task=ranks"><?php echo JText::_('COM_KUNENA_RANKS_MANAGE'); ?></a> 
-				<a class="kadmin-mainmenu icon-files" href="index.php?option=com_kunena&task=browseFiles"><?php echo JText::_('COM_KUNENA_C_FILES'); ?></a> 
-				<a class="kadmin-mainmenu icon-images" href="index.php?option=com_kunena&task=browseImages"><?php echo JText::_('COM_KUNENA_C_IMAGES'); ?></a> 
-				<a class="kadmin-mainmenu icon-editcss" href="index.php?option=com_kunena&task=showCss"><?php echo JText::_('COM_KUNENA_C_CSS'); ?></a> 
-				<a class="kadmin-mainmenu icon-prune" href="index.php?option=com_kunena&task=pruneforum"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a> 
-				<a class="kadmin-mainmenu icon-syncusers" href="index.php?option=com_kunena&task=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a> 
-				<a class="kadmin-mainmenu icon-recount" href="index.php?option=com_kunena&task=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
-				<a class="kadmin-mainmenu icon-trash" href="index.php?option=com_kunena&task=showtrashview"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>
-				<a class="kadmin-mainmenu icon-systemreport" href="index.php?option=com_kunena&task=showsystemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
-				<a class="kadmin-mainmenu icon-support" href="http://www.Kunena.com" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
+				<a class="kadmin-mainmenu icon-cp-sm" href="index.php?option=com_kunena"><?php echo JText::_('COM_KUNENA_CP'); ?></a> 
+				<a class="kadmin-mainmenu icon-config-sm" href="index.php?option=com_kunena&task=showconfig"><?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?></a>
+				<a class="kadmin-mainmenu icon-adminforum-sm" href="index.php?option=com_kunena&task=showAdministration"><?php echo JText::_('COM_KUNENA_C_FORUM'); ?></a> 
+				<a class="kadmin-mainmenu icon-profiles-sm" href="index.php?option=com_kunena&task=showprofiles"><?php echo JText::_('COM_KUNENA_C_USER'); ?></a> 
+				<a class="kadmin-mainmenu icon-smilies-sm" href="index.php?option=com_kunena&task=showsmilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></a> 
+				<a class="kadmin-mainmenu icon-ranks-sm" href="index.php?option=com_kunena&task=ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a> 
+				<a class="kadmin-mainmenu icon-files-sm" href="index.php?option=com_kunena&task=browseFiles"><?php echo JText::_('COM_KUNENA_C_FILES'); ?></a> 
+				<a class="kadmin-mainmenu icon-images-sm" href="index.php?option=com_kunena&task=browseImages"><?php echo JText::_('COM_KUNENA_C_IMAGES'); ?></a> 
+				<a class="kadmin-mainmenu icon-editcss-sm" href="index.php?option=com_kunena&task=showCss"><?php echo JText::_('COM_KUNENA_C_CSS'); ?></a> 
+				<a class="kadmin-mainmenu icon-prune-sm" href="index.php?option=com_kunena&task=pruneforum"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a> 
+				<a class="kadmin-mainmenu icon-syncusers-sm" href="index.php?option=com_kunena&task=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a> 
+				<a class="kadmin-mainmenu icon-recount-sm" href="index.php?option=com_kunena&task=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
+				<a class="kadmin-mainmenu icon-trash-sm" href="index.php?option=com_kunena&task=showtrashview"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>
+				<a class="kadmin-mainmenu icon-systemreport-sm" href="index.php?option=com_kunena&task=showsystemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
+				<a class="kadmin-mainmenu icon-support-sm" href="http://www.kunena.com" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
 		</div>
 	</div>
 	<div class="kadmin-right">
@@ -217,7 +242,7 @@ td.kadmin-tdtitle {
 	function controlPanel() {
 		?>
 
-	<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_CP'); ?></div>
+	<div class="kadmin-functitle no-icon"><?php echo JText::_('COM_KUNENA_CP'); ?></div>
 	<?php
 		$path = JPATH_COMPONENT_ADMINISTRATOR . '/kunena.cpanel.php';
 
@@ -230,7 +255,7 @@ td.kadmin-tdtitle {
 
 	function showAdministration($rows, $children, $pageNav, $option) {
 		?>
-	<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
+	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
 		<table>
 			<tr>
@@ -448,13 +473,7 @@ td.kadmin-tdtitle {
             }
         </script>
 
-	<div class="kadmin-functitle"><?php
-		echo $row->id ? JText::_('COM_KUNENA_EDIT') : JText::_('COM_KUNENA_ADD');
-		?>
-		<?php
-		echo JText::_('COM_KUNENA_CATFOR');
-		?>
-	</div>
+	<div class="kadmin-functitle"><?php echo $row->id ? JText::_('COM_KUNENA_EDIT') : JText::_('COM_KUNENA_ADD'); ?><?php echo JText::_('COM_KUNENA_CATFOR'); ?></div>
 
 	<form action="index.php" method="POST" name="adminForm">
 		<input type="hidden" name="cfg_board_ofset" value="<?php echo $kunena_config->board_ofset; ?>" />
@@ -613,18 +632,23 @@ td.kadmin-tdtitle {
 		}
 
 		function showConfig(&$kunena_config, &$lists, $option) {
+			
+			jimport('joomla.html.pane');
+			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0)); 
+			//$mysliders = &JPane::getInstance('sliders', array('allowAllClose' => true));
+ 
 		//	jimport ( 'joomla.html.pane' );
 		//	$pane = & JPane::getInstance ( 'tabs', array ('startOffset' => 0 ) );
-	
 		//	echo $pane->startPane ( 'pane' );
 		//	echo $pane->startPanel ( 'Config', 'panel1' );
 			?>
 			
 	<div id="kadmin-configtabs">
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
+		<div class="kadmin-functitle icon-config"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
 		<form action="index.php" method="post" name="adminForm">
 		
-		<dl class="tabs">
+		<dl class="tabs" id="pane">
+        
 		<dt><?php echo JText::_('COM_KUNENA_A_BASICS') ?></dt>
 		<dd>
 			<fieldset>
@@ -1641,7 +1665,7 @@ td.kadmin-tdtitle {
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_RSS_SETTINGS') ?></legend>
 					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-ß						<tr align="center" valign="middle">
+						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_TYPE') ?></td>
 							<td align="left" valign="top" width="25%"><?php echo $lists ['rss_type']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_TYPE_DESC') ?></td>
@@ -2020,20 +2044,9 @@ td.kadmin-tdtitle {
 			</form>
 		</div>
 		<?php
-		/*echo $pane->endPanel();
-		echo $pane->startPanel( 'Show Instructions', 'panel2' );
-		showInstructions($kunena_db, $option);
-		echo $pane->endPanel();
-		*/
-		/*echo $pane->startPanel( 'Forum Administration', 'panel3' );
-		showCss($file, $option);
-		echo $pane->endPanel();
-		echo $pane->endPane();
-		*/
-		}
-		function showInstructions($kunena_db, $option) {
+			}
+			function showInstructions($kunena_db, $option) {
 		?>
-
 		<table width="100%" border="0" cellpadding="2" cellspacing="2" class="adminheading">
 			<tr>
 				<th class="info">&nbsp;<?php echo JText::_('COM_KUNENA_INSTRUCTIONS'); ?></th>
@@ -2049,14 +2062,14 @@ td.kadmin-tdtitle {
 			</tr>
 		</table>
 		<?php
-		} //end function showInstructions
+			} //end function showInstructions
 
-		function showCss($file, $option) {
-			$f = fopen ( $file, "r" );
-			$content = fread ( $f, filesize ( $file ) );
-			$content = kunena_htmlspecialchars ( $content );
+			function showCss($file, $option) {
+				$f = fopen ( $file, "r" );
+				$content = fread ( $f, filesize ( $file ) );
+				$content = kunena_htmlspecialchars ( $content );
 		?>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_CSSEDITOR'); ?></div>
+		<div class="kadmin-functitle editcss"><?php echo JText::_('COM_KUNENA_CSSEDITOR'); ?></div>
 		<form action="index.php?" method="post" name="adminForm" class="adminForm" id="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr>
@@ -2076,18 +2089,18 @@ td.kadmin-tdtitle {
 			} //end function showCss
 			function showProfiles($option, &$profileList, $countPL, $pageNavSP, $order, $search) {
 		?>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_FUM'); ?></div>
+		<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_FUM'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 		<table>
 			<tr>
 				<td nowrap align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNavSP->getLimitBox (); ?></td>
 				<td nowrap align="right"><?php echo JText::_('COM_KUNENA_USRL_SEARCH_BUTTON'); ?>:
-				<input type="text" name="search" value="<?php echo $search; ?>"
-					class="inputbox" onChange="document.adminForm.submit();" /></td>
+				<input type="text" name="search" value="<?php echo $search; ?>" class="inputbox" onChange="document.adminForm.submit();" /></td>
 			</tr>
 			<tr>
-				<td colspan="4" nowrap><a
-					href="index.php?option=com_kunena&task=profiles&order=0"><?php echo JText::_('COM_KUNENA_SORTID'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=2"><?php echo JText::_('COM_KUNENA_SORTNAME'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=3"><?php echo JText::_('COM_KUNENA_SORTREALNAME'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=1"><?php echo JText::_('COM_KUNENA_SORTMOD'); ?></a></td>
+				<td colspan="4" nowrap>
+					<a href="index.php?option=com_kunena&task=profiles&order=0"><?php echo JText::_('COM_KUNENA_SORTID'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=2"><?php echo JText::_('COM_KUNENA_SORTNAME'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=3"><?php echo JText::_('COM_KUNENA_SORTREALNAME'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=1"><?php echo JText::_('COM_KUNENA_SORTMOD'); ?></a>
+				</td>
 			</tr>
 		</table>
 		<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
@@ -2253,8 +2266,7 @@ td.kadmin-tdtitle {
 		<input type="hidden" name="limitstart" value="0"></form>
 
 		<?php
-	}
-		
+			}
 			//   function showUserProfile ($kunena_db,$user_id,$do,$deleteSig,$signature,$newview,$user_id,$thread,$moderator)
 			//   {
 			//
@@ -2269,7 +2281,6 @@ td.kadmin-tdtitle {
 				$avatar = $user->avatar;
 				$ordering = $user->ordering;
 				//that's what we got now; later the 'future_use' columns can be used..
-		
 		
 				$csubslist = count ( $subslist );
 				//        include_once ('components/com_kunena/bb_adm.js'); ?>
@@ -2401,7 +2412,7 @@ td.kadmin-tdtitle {
 		//**************************
 		function pruneforum($option, $forumList) {
 	?>
-	<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_A_PRUNE'); ?></div>
+	<div class="kadmin-functitle icon-prune"><?php echo JText::_('COM_KUNENA_A_PRUNE'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
 		<table class="adminform" cellpadding="4" cellspacing="0" border="0" width="100%">
 			<tr>
@@ -2430,7 +2441,7 @@ td.kadmin-tdtitle {
 			function syncusers($option) {
 		?>
 		<div id="kadmin-congifcover">
-			<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></div>
+			<div class="kadmin-functitle icon-syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></div>
 			<form action="index.php" method="post" name="adminForm">
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_SYNC_USERS_OPTIONS'); ?></legend>
@@ -2481,7 +2492,7 @@ td.kadmin-tdtitle {
 					//--->
 			</script>
 		<?php
-			echo ' <div class="kadmin-functitle">';
+			echo $type ? '<div class="kadmin-functitle icon-images">' : '<div class="kadmin-functitle icon-files">';
 			echo $type ? JText::_('COM_KUNENA_A_IMGB_IMG_BROWSE') : JText::_('COM_KUNENA_A_IMGB_FILE_BROWSE');
 			echo '</div>';
 			echo '<table class="adminform"><tr><td>';
@@ -2539,7 +2550,7 @@ td.kadmin-tdtitle {
 			//***************************************
 		function showsmilies($option, &$smileytmp, $pageNavSP, $smileypath) {
 		?>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_EMOTICONS'); ?></div>
+		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
 				<tr>
@@ -2549,22 +2560,10 @@ td.kadmin-tdtitle {
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
 				<tr>
 					<th width="20" align="center">#</th>
-					<th align="center" width="20"><input type="checkbox" name="toggle"
-						value="" onclick="checkAll(<?php
-					echo count ( $smileytmp );
-					?>);" /></th>
-					<th align="center" width="50"><?php
-					echo JText::_('COM_KUNENA_EMOTICONS_SMILEY');
-					?>
-					</th>
-					<th align="center" width="50"><?php
-					echo JText::_('COM_KUNENA_EMOTICONS_CODE');
-					?>
-					</th>
-					<th align="left" width="200"><?php
-					echo JText::_('COM_KUNENA_EMOTICONS_URL');
-					?>
-					</th>
+					<th align="center" width="20"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $smileytmp ); ?>);" /></th>
+					<th align="center" width="50"><?php echo JText::_('COM_KUNENA_EMOTICON'); ?></th>
+					<th align="center" width="50"><?php echo JText::_('COM_KUNENA_EMOTICONS_CODE'); ?></th>
+					<th align="left" width="200"><?php echo JText::_('COM_KUNENA_EMOTICONS_URL'); ?></th>
 					<th width="*">&nbsp;</th>
 				</tr>
 				<?php
@@ -2573,10 +2572,8 @@ td.kadmin-tdtitle {
 					for($i = 0, $n = count ( $smileytmp ); $i < $n; $i ++) {
 						$k = 1 - $k;
 						$s = &$smileytmp [$i];
-						?>
-				<tr class="row<?php
-						echo $k;
-						?>" align="center">
+				?>
+				<tr class="row<?php echo $k; ?>" align="center">
 					<td width="10" align="center"><a href="#edit"
 						onclick="return listItemTask('cb<?php
 						echo $i;
@@ -2601,12 +2598,8 @@ td.kadmin-tdtitle {
 						alt="<?php
 						echo $s->location;
 						?>" border="0" /></a></td>
-					<td width="50" align="center"><?php
-						echo $s->code;
-						?>&nbsp;</td>
-					<td width="200" align="left"><?php
-						echo $s->location;
-						?>&nbsp;</td>
+					<td width="50" align="center"><?php echo $s->code; ?>&nbsp;</td>
+					<td width="200" align="left"><?php echo $s->location; ?>&nbsp;</td>
 					<td>&nbsp;</td>
 				</tr>
 				<?php
@@ -2636,7 +2629,7 @@ td.kadmin-tdtitle {
 			}
 			//-->
 		</script>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?></div>
+		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILEY'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr align="center">
@@ -2746,7 +2739,7 @@ td.kadmin-tdtitle {
 			function showRanks($option, &$ranks, $pageNavSP, $order, $rankpath) {
 			$kunena_db = &JFactory::getDBO ();
 		?>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_RANKS_MANAGE'); ?></div>
+		<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
 				<tr>
@@ -2970,7 +2963,7 @@ td.kadmin-tdtitle {
 			//Start trash view
 			function showtrashview($option, $trashitems, $pageNavSP, $lists) {
 			?>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></div>
+		<div class="kadmin-functitle icon-trash"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%"></table>
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
@@ -3085,7 +3078,7 @@ td.kadmin-tdtitle {
 							echo "</ol>"; 
 						?>
 					</td>
-					<td valign="top"><span style="color: red ";><strong><?php echo JText::_('COM_KUNENA_PERM_DELETE_ITEMS'); ?></strong></span>
+					<td valign="top"><span style="color:red;"><strong><?php echo JText::_('COM_KUNENA_PERM_DELETE_ITEMS'); ?></strong></span>
 					</td>
 				</tr>
 			</table>
@@ -3105,7 +3098,7 @@ td.kadmin-tdtitle {
 			//Start report system
 			function showSystemReport($option, $report) {
 		?>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
+		<div class="kadmin-functitle icon-systemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
 		<script type="text/javascript">
 			window.addEvent('domready', function(){
 				$('link_sel_all').addEvent('click', function(e){

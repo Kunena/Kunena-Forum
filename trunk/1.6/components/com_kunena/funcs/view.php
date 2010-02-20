@@ -162,19 +162,26 @@ class CKunenaView {
 
 		// Load attachments
 
-		// TODO: Load attachments
+		// First collect the message ids of the first message and all replies
+		$messageids = array();
+		$messageids[] = $this->id;
+		foreach($replies AS $reply){
+			$messageids[] = $reply->id;
+		}
 
-//		$query = "SELECT a.* FROM #__kunena_attachments AS a
-//					WHERE a.mesid = '21683'";
+		// create a list of ids we can use for our sql
+		$idstr = @join ( ",", $messageids );
 
-		$query = "SELECT a.* FROM #__kunena_attachments AS a
-					WHERE a.mesid = '38594'";
-
+		// now grab all attchments for these messages
+		$query = "SELECT * FROM #__kunena_attachments
+					WHERE mesid IN ($idstr)";
 		$this->db->setQuery ( $query );
 		$attachments = $this->db->loadObjectList ();
 		check_dberror ( 'Unable to load attachments' );
 
-		$this->first_message->attachments = $attachments;
+		// arrange attachments by message
+		$message_attachments = array();
+		foreach ($attachments as $attachment) $message_attachments[$attachment->mesid][] = $attachment;
 
 		$this->flat_messages = array ();
 		if ($page == 1 && $ordering == 'asc')
@@ -184,6 +191,13 @@ class CKunenaView {
 		if ($page == $totalpages && $ordering == 'desc')
 			$this->flat_messages [] = $this->first_message; // DESC: first message is the last one
 		unset ( $replies );
+
+		// Now that we have all relevant messages in flat_messages, asign any matching attachments
+		foreach ( $this->flat_messages as $message ){
+			if (isset($message_attachments[$message->id]))
+				$message->attachments = $message_attachments[$message->id];
+		}
+		// Done with attachments
 
 		$this->pagination = $this->getPagination ( $this->catid, $this->thread, $page, $totalpages, $maxpages );
 
@@ -682,8 +696,8 @@ class CKunenaView {
 						// TODO: Add check for thumbnail and display thumb instead
 
 						// TODO: Add config size limiters to image
-						$this->msg_html->attachments[]= '<a href="'.($attachment->legacy ? KUNENA_RELPATH_UPLOADED_LEGACY : KUNENA_RELPATH_UPLOADED).DS.$attachment->folder.DS.$attachment->filename.'" rel="nofollow">'.
-														'<img width="64px" height="64px" src="'.($attachment->legacy ? KUNENA_RELPATH_UPLOADED_LEGACY : KUNENA_RELPATH_UPLOADED).DS.$attachment->folder.DS.$attachment->filename.'" alt="'.$attachment->filename.'" />'.
+						$this->msg_html->attachments[]= '<a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.
+														'<img width="64px" height="64px" src="'.$attachment->folder.'/'.$attachment->filename.'" alt="'.$attachment->filename.'" />'.
 														'</a>'.
 														'<span>'.$attachment->filename.'</span>';
 						break;
@@ -694,7 +708,7 @@ class CKunenaView {
 
 						// TODO: Add extension specific icons
 						// TODO: Replace href link with CKunenaLink::Call
-						$this->msg_html->attachments[]= '<span><a href="'.($attachment->legacy ? KUNENA_RELPATH_UPLOADED_LEGACY : KUNENA_RELPATH_UPLOADED).DS.$attachment->folder.DS.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
+						$this->msg_html->attachments[]= '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
 
 						break;
 					default :
@@ -702,8 +716,8 @@ class CKunenaView {
 
 						// TODO: Add generic attachment icon
 						// TODO: Replace href link with CKunenaLink::Call
-						$this->msg_html->attachments[]= '<span><a href="'.($attachment->legacy ? KUNENA_RELPATH_UPLOADED_LEGACY : KUNENA_RELPATH_UPLOADED).DS.$attachment->folder.DS.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
-										}
+						$this->msg_html->attachments[]= '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
+				}
 			}
 		}
 

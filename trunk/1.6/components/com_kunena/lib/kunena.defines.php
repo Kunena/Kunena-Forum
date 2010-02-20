@@ -39,9 +39,7 @@ define('KUNENA_PATH_ADMIN_IMAGES', KUNENA_PATH_ADMIN .DS. 'images');
 
 // Kunena uploaded files directory
 define('KUNENA_RELPATH_UPLOADED', '/media/kunena/attachments');
-define('KUNENA_RELPATH_UPLOADED_LEGACY', '/images/fbfiles');
 define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED);
-define('KUNENA_PATH_UPLOADED_LEGACY', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED_LEGACY);
 
 // The tunmbnail folder is relative to any image file folder
 define('KUNENA_FOLDER_THUMBNAIL', 'thumb');

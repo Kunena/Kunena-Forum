@@ -23,6 +23,7 @@ class CKunenaUpload {
 	protected $fileHash = false;
 	protected $imageInfo = false;
 
+	protected $ready = false;
 	protected $status = false;
 	protected $error = false;
 
@@ -33,22 +34,24 @@ class CKunenaUpload {
 	}
 
 	function __destruct() {
-		if (!$this->status && is_file($this->fileTemp)) unlink ( $this->fileTemp );
+		if (!$this->status) {
+			if(JDEBUG == 1 && defined('JFIREPHP')){
+				FB::log('Kunena upload failed: '.$this->error);
+			}
+			if (is_file($this->fileTemp)) unlink ( $this->fileTemp );
+		}
 	}
 
-	function &getInstance() {
-		static $instance = NULL;
-
-		if (! $instance) {
-			$instance = new CKunenaUpload ( );
-		}
-		return $instance;
+	function fail($errormsg) {
+		$this->error = $errormsg;
+		$this->status = false;
 	}
 
 	function fileInfo()
 	{
 		$result = array(
 			'status' => $this->status,
+			'ready' => $this->ready,
 			'name' => $this->fileName,
 			'size' => $this->fileSize
 		);
@@ -81,11 +84,18 @@ class CKunenaUpload {
 		return ($this->error !== false);
 	}
 
-	function uploadFile() {
+	function uploadFile($uploadPath) {
 		$result = array ();
 		$this->error = false;
 
 		require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
+
+		if (!CKunenaFolder::exists($uploadPath)) {
+			if (!CKunenaFolder::create($uploadPath)) {
+				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' );
+				return false;
+			}
+		}
 
 		$this->fileName = CKunenaFile::makeSafe ( JRequest::getVar ( 'name', '' ) );
 		$this->fileSize = 0;
@@ -208,20 +218,29 @@ class CKunenaUpload {
 
 		//if the temp file does not have a width or a height, or it has a non ok MIME, return
 		if (! is_int ( $this->imageInfo [0] ) || ! is_int ( $this->imageInfo [1] ) || ! in_array ( $this->imageInfo ['mime'], $validFileTypes )) {
-			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_MIME' ) . $this->fileTemp. $this->imageInfo [0] . $this->imageInfo ['mime'];
+			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_MIME' );
 			return false;
 		}
-
-		//always use constants when making file paths, to avoid the possibilty of remote file inclusion
-		$uploadPath = KUNENA_PATH_UPLOADED . DS . 'images' . DS . $this->fileName;
 
 		// Our processing, we get a hash value from the file
 		$this->fileHash = md5_file ( $this->fileTemp );
 
-		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath )) {
-			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_MOVED' );
+		//TODO: Create a new version from the file (if hash is different)
+		/*
+		if (file_exists($uploadPath .DS. $newFileName)) {
+			$newFileName = $imageName . '-' . date('Ymd') . "." . $imageExt;
+			for ($i=2; file_exists($uploadPath .DS. $newFileName); $i++) {
+				$newFileName = $imageName . '-' . date('Ymd') . "-$i." . $imageExt;
+			}
+		}
+		*/
+
+		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath .  $this->fileName )) {
+			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_MOVED'.' '.$uploadPath .  $this->fileName );
 			return false;
 		}
+
+		$this->ready = true;
 		return $this->status = true;
 	}
 

@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 
 20-Feb-2010 Matias
 # [#19288] Fix regression: Only the first rank image works (wrong url)
++ [#19380] Multi attachments: use new folder, add to database and assign to message
 
 20-Feb-2010 fxstein
 + [#19380] Basic attachments display scaffolding added with sample display data

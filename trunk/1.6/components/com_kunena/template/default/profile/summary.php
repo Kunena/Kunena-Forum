@@ -34,7 +34,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<!-- Check this: -->
 					<li class="usertype"><?php echo $this->user->usertype; ?></li>
 					<!-- The class on the span below should be rank then hyphen then the rank name -->
-					<li class="kprofile-rank"><strong>Rank: </strong><?php echo $this->rank_title; ?><img src="<?php echo $this->rank_image; ?>" alt="<?php echo $this->rank->rank_title; ?>" /></li>
+					<li class="kprofile-rank"><strong>Rank: </strong><?php echo $this->rank_title; ?><img src="<?php echo $this->rank_image; ?>" alt="<?php echo $this->rank_title; ?>" /></li>
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->registerDate, 'date_today', 'utc'); ?></span></li>
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?>:</strong> GMT <?php echo CKunenaTimeformat::showTimezone($this->timezone); ?></li>

@@ -220,10 +220,9 @@ class CKunenaAjaxHelper {
 	}
 
 	protected function _uploadFile ($do) {
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
-		$upload = new CKunenaUpload();
-		$upload->uploadFile();
-		return $upload->fileInfo();
+		require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
+		$attachments = CKunenaAttachments::getInstance();
+		return $attachments->upload();
 	}
 
 }

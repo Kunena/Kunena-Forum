@@ -206,15 +206,7 @@ if ($kunena_my->id) {
 					return;
 				}
 
-				if (is_array ( $attachfile ) && $attachfile ['error'] != UPLOAD_ERR_NO_FILE) {
-					include (KUNENA_PATH_LIB . DS . 'kunena.file.upload.php');
-				}
-				if (is_array ( $attachimage ) && $attachimage ['error'] != UPLOAD_ERR_NO_FILE) {
-					include (KUNENA_PATH_LIB . DS . 'kunena.image.upload.php');
-				}
-
 				$messagesubject = $subject; //before we add slashes and all... used later in mail
-
 
 				$authorname = addslashes ( JString::trim ( $my_name ) );
 				$subject = addslashes ( JString::trim ( $subject ) );
@@ -363,22 +355,9 @@ if ($kunena_my->id) {
 						}
 
 						//Update the attachments table if an image has been attached
-						if (! empty ( $imageLocation ) && file_exists ( $imageLocation )) {
-							$kunena_db->setQuery ( "INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid'," . $kunena_db->quote ( $imageLocation ) . ")" );
-
-							if (! $kunena_db->query ()) {
-								echo "<script> alert('Storing image failed: " . $kunena_db->getErrorMsg () . "'); </script>\n";
-							}
-						}
-
-						//Update the attachments table if an file has been attached
-						if (! empty ( $fileLocation ) && file_exists ( $fileLocation )) {
-							$kunena_db->setQuery ( "INSERT INTO #__fb_attachments (mesid, filelocation) values ('$pid'," . $kunena_db->quote ( $fileLocation ) . ")" );
-
-							if (! $kunena_db->query ()) {
-								echo "<script> alert('Storing file failed: " . $kunena_db->getErrorMsg () . "'); </script>\n";
-							}
-						}
+						require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
+						$attachments = CKunenaAttachments::getInstance();
+						$attachments->assign($pid);
 
 						// Perform proper page pagination for better SEO support
 						// used in subscriptions and auto redirect back to latest post
@@ -686,14 +665,6 @@ if ($kunena_my->id) {
 				}
 
 				if ($allowEdit == 1) {
-					if (is_array ( $attachfile ) && $attachfile ['error'] != UPLOAD_ERR_NO_FILE) {
-						include KUNENA_PATH_LIB . DS . 'kunena.file.upload.php';
-					}
-
-					if (is_array ( $attachimage ) && $attachimage ['error'] != UPLOAD_ERR_NO_FILE) {
-						include KUNENA_PATH_LIB . DS . 'kunena.image.upload.php';
-					}
-
 					$subject = addslashes ( JString::trim ( $subject ) );
 					$message = addslashes ( JString::trim ( $message ) );
 
@@ -766,14 +737,10 @@ if ($kunena_my->id) {
 							}
 
 							//Update the attachments table if an file has been attached
-							if (! empty ( $fileLocation ) && file_exists ( $fileLocation )) {
-								$fileLocation = addslashes ( $fileLocation );
-								$kunena_db->setQuery ( "INSERT INTO #__fb_attachments (mesid, filelocation) VALUES ('$id'," . $kunena_db->quote ( $fileLocation ) . ")" );
+							require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
+							$attachments = CKunenaAttachments::getInstance();
+							$attachments->assign($id);
 
-								if (! $kunena_db->query ()) {
-									$kunena_app->enqueueMessage ( 'Storing file failed: " . $kunena_db->getErrorMsg () . "', 'error' );
-								}
-							}
 							$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page, $catid), JText::_('COM_KUNENA_POST_SUCCESS_EDIT') );
 						} else {
 							$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_POST_ERROR_MESSAGE_OCCURED'), 'error' );

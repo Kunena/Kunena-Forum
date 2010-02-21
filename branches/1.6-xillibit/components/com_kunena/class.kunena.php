@@ -488,8 +488,7 @@ class CKunenaTools {
                 }
             }
 
-        while ($msg_cat)
-        {
+		if (!empty($msg_cat)) {
             $kunena_db->setQuery("SELECT id, time FROM #__fb_messages WHERE catid='{$msg_cat}' AND (thread!='{$msg_id}' AND id!='{$msg_id}') ORDER BY time DESC LIMIT 1;");
             $lastMsgInCat = $kunena_db->loadObject();
             	check_dberror("Unable to load messages.");

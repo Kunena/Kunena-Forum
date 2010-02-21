@@ -18,7 +18,7 @@
                     `userid` int(11) NOT NULL default '0',
                     `hash` char(32) NULL,
                     `size` int(11) NULL,
-                    `folder` charchar(255) NOT NULL,
+                    `folder` char(255) NOT NULL,
                     `filetype` varchar(20) NOT NULL,
                     `filename` varchar(255) NOT NULL,
                 PRIMARY KEY (`id`),                

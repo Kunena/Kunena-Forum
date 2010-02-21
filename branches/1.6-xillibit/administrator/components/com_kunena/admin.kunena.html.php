@@ -445,7 +445,7 @@ td.kadmin-tdtitle {
 <?php
 	}
 
-	function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option) {
+	function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option, $kunena_config) {
 		jimport ( 'joomla.html.pane' );
 		$pane = & JPane::getInstance ( 'tabs', array ('startOffset' => 0 ) );
 		?>

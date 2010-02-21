@@ -202,7 +202,7 @@ if ($is_editor) {
                                 </td>
 
                                 <td class = "td-5"  align="center">
-                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'edit', $row->id, JText::_('COM_KUNENA_ANN_EDIT'),_ANN_EDIT); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'edit', $row->id, JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
                                 </td>
 
                                 <td class = "td-6"  align="center">

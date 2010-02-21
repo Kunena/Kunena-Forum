@@ -34,6 +34,15 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+21-Feb-2010 Xillibit
+# [#19288] Fix regression: Notice: Use of undefined constant _ANN_EDIT - assumed '_ANN_EDIT' in announcement.php
+# [#19288] Fix regression: Notice: Undefined variable: kunena_config in admin.kunena.html.php on line 480
+# [#19288] Fix regression: wrong type for the folder field in kunena.install.upgrade.xml for create jos_kunena_attachments
+# [#19288] Fix regression: CKunenaTables doesn't check the table jos_kunena_attachments
+# [#19288] Fix regression: removed while in CKunenaTools:decreaseCategoryStats() causing issues
+# [#19690] Add configuration report system in Kunena backend - display kunena configs settings in a table and check for each kunena table which is in utf8
+^ [#19358] Display the poll icon only on the first message of the thread
+
 21-Feb-2010 Matias
 ^ [#19758] Clean up admin interface: move logo to toolbar, change emoticons path etc..
 ^ [#19758] Clean up admin interface: make logo a bit larger

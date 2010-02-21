@@ -36,8 +36,6 @@ CKunenaPolls::call_javascript_form();
 
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
-// keep session alive while editing
-JHTML::_ ( 'behavior.keepalive' );
 JHTML::_('behavior.formvalidation');
 
 $document =& JFactory::getDocument();
@@ -305,18 +303,15 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<?php
 		if ($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || ($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
-			$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
-			$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
-
+/*			$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
+			$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );*/
 			?>
 		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS');
 			?></strong></td>
 		<td>
-			<div id="kattachments"></div>
-			<input id="kuploadfiles" name="file" type="file" />
-			<span id="kattachmentsnote"></span>
+			<div id="kattachment"><input name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
 		</td>
 		</tr>
 

@@ -358,6 +358,10 @@ if ($kunena_my->id) {
 						require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
 						$attachments = CKunenaAttachments::getInstance();
 						$attachments->assign($pid);
+						$fileinfos = $attachments->multiupload($pid);
+						foreach ($fileinfos as $fileinfo) {
+							if (!$fileinfo['status']) $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo[name]).': '.$fileinfo['error'], 'error' );
+						}
 
 						// Perform proper page pagination for better SEO support
 						// used in subscriptions and auto redirect back to latest post
@@ -740,6 +744,10 @@ if ($kunena_my->id) {
 							require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
 							$attachments = CKunenaAttachments::getInstance();
 							$attachments->assign($id);
+							$fileinfos = $attachments->multiupload($pid);
+							foreach ($fileinfos as $fileinfo) {
+								if (!$fileinfo['status']) $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo[name]).': '.$fileinfo['error'], 'error' );
+							}
 
 							$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page, $catid), JText::_('COM_KUNENA_POST_SUCCESS_EDIT') );
 						} else {

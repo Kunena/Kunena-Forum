@@ -73,18 +73,18 @@ class CKunenaUpload {
 	function checkFileSize($fileSize)
 	{
 		//check for filesize
-		if ( $fileSize == 0 )
+		if ( $fileSize <= 0 )
 		{
 			 $this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_EMPTY_FILE' );
 		}
 		if ( $fileSize > 2 * 1024 * 1024) // TODO: configuration option
 		{
-			$this->error = JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_TOO_LARGE', $fileSize );
+			$this->error = JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_SIZE_X', $fileSize );
 		}
 		return ($this->error !== false);
 	}
 
-	function uploadFile($uploadPath) {
+	function uploadFile($uploadPath, $input='kattachment', $ajax=true) {
 		$result = array ();
 		$this->error = false;
 
@@ -104,37 +104,33 @@ class CKunenaUpload {
 
 		if ($chunks && $chunk >= $chunks)
 			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_EXTRA_CHUNK' );
-
-		//If uploaded by using normal form (no javascript or html5 upload)
-		if (isset ( $_REQUEST ["multipart"] )) {
-			$file = JRequest::getVar ( 'file', NULL, 'FILES', 'array' );
-			if (isset ( $file ['tmp_name'] ) && is_uploaded_file ( $file ['tmp_name'] )) {
+		//If uploaded by using normal form (no AJAX)
+		if ($ajax == false || isset ( $_REQUEST ["multipart"])) {
+			$file = JRequest::getVar ( $input, NULL, 'FILES', 'array' );
+			if (isset($file ['tmp_name'])) {
 				$this->fileTemp = $file ['tmp_name'];
 				$this->fileSize = $file ['size'];
 				if (! $this->fileName)
 					$this->fileName = CKunenaFile::makeSafe ( $file ['name'] );
 					//any errors the server registered on uploading
 				switch ($file ['error']) {
-					case UPLOAD_ERR_OK :
+					case 0 : // UPLOAD_ERR_OK :
 						break;
 
-					case UPLOAD_ERR_INI_SIZE :
-						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_INI_SIZE' );
+					case 1 : // UPLOAD_ERR_INI_SIZE :
+					case 2 : // UPLOAD_ERR_FORM_SIZE :
+						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_SIZE' );
 						break;
 
-					case UPLOAD_ERR_FORM_SIZE :
-						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_FROM_SIZE' );
-						break;
-
-					case UPLOAD_ERR_PARTIAL :
+					case 3 : // UPLOAD_ERR_PARTIAL :
 						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PARTIAL' );
 						break;
 
-					case UPLOAD_ERR_NO_FILE :
+					case 4 : // UPLOAD_ERR_NO_FILE :
 						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_FILE' );
 						break;
 
-					case UPLOAD_ERR_NO_TMP_DIR :
+					case 5 : // UPLOAD_ERR_NO_TMP_DIR :
 						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR' );
 						break;
 
@@ -149,11 +145,17 @@ class CKunenaUpload {
 					default :
 						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNKNOWN' );
 				}
-				$this->checkFileSize($this->fileSize);
-			} else {
+				if (!$this->error) $this->checkFileSize($this->fileSize);
+			}
+			else
+			{
+				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNDEFINED' );
+			}
+			if (!$this->error && !is_uploaded_file ( $file ['tmp_name'] )) {
 				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED' );
 			}
 		} else {
+			// Currently not in use: this is meant for experimental AJAX uploads
 			// Open temp file
 			$this->fileTemp = CKunenaPath::tmpdir() . DS . 'kunena_' . md5 ( $this->_my->id . '/' . $this->_my->username . '/' . $this->fileName );
 			$out = fopen ($this->fileTemp, $chunk == 0 ? "wb" : "ab");
@@ -171,7 +173,7 @@ class CKunenaUpload {
 				$fileInfo = fstat($out);
 				$this->fileSize = $fileInfo['size'];
 				fclose ( $out );
-				$this->checkFileSize($this->fileSize);
+				if (!$this->error) $this->checkFileSize($this->fileSize);
 				if ($chunk+1 < $chunks) {
 					$this->status = empty($this->error);
 					return $this->status;
@@ -235,7 +237,7 @@ class CKunenaUpload {
 		}
 		*/
 
-		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath .  $this->fileName )) {
+		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath .DS.  $this->fileName )) {
 			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_MOVED'.' '.$uploadPath .  $this->fileName );
 			return false;
 		}

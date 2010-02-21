@@ -32,10 +32,10 @@ class CKunenaAttachments {
 		return $instance;
 	}
 
-	function upload($mesid=0) {
+	function upload($mesid=0, $key='kattachment', $ajax=true) {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
 		$upload = new CKunenaUpload();
-		$upload->uploadFile(KUNENA_PATH_UPLOADED . DS . $this->_my->id);
+		$upload->uploadFile(KUNENA_PATH_UPLOADED . DS . $this->_my->id, $key, $ajax);
 		$fileinfo = $upload->fileInfo();
 
 		$folder = KUNENA_RELPATH_UPLOADED . '/' . $this->_my->id;
@@ -48,10 +48,21 @@ class CKunenaAttachments {
 				$this->_db->quote ( $fileinfo['size'] ) . "," . $this->_db->quote ( $folder ) . "," . $this->_db->quote ( $fileinfo['mime'] ) . "," .
 				$this->_db->quote ( $fileinfo['name'] ) . ")" );
 
-			if (! $this->_db->query () || $this->_db->getErrorNum()) {
+				if (! $this->_db->query () || $this->_db->getErrorNum()) {
 				$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_DATABASE_STORE'));
 				$fileinfo = $upload->fileInfo();
 			}
+		}
+			if(JDEBUG == 1 && defined('JFIREPHP')){
+				FB::log('Kunena save attachment ready');
+			}
+		return $fileinfo;
+	}
+
+	function multiupload($mesid=0) {
+		$fileinfo = array();
+		foreach ($_FILES as $key=>$file) {
+			if ($file['error'] != UPLOAD_ERR_NO_FILE) $fileinfo[] = $this->upload($mesid, $key, false);
 		}
 		return $fileinfo;
 	}

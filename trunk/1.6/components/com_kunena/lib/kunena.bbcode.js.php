@@ -918,58 +918,18 @@ function cancelForm() {
    return true;
 }
 
-/*
 function newAttachment() {
-	var newfile = $('knewfile');
-	var id = newfile.retrieve('nextid',1);
-	newfile.store('nextid',id+1);
-	var input = newfile.getElement('input');
-	input.addEvent('change', function() {
-		this.removeEvents('change');
-		var attachment = $('kattachment');
-		var file = attachment.clone().inject(newfile,'before').set('id','attachment'+id);
-		var filename = file.getElement('.kfile').set('text',input.get('value')).removeProperty('style');
-		var status = file.getElement('.kstat').set('text','Uploading..').removeProperty('style');
-		var remove = file.removeProperty('style').getElement('a').addEvent('click', function() {file.dispose(); return false; });
-
-		var iframe = new IFrame({
-		id: 'upload_target'+id,
-		name: 'upload_target'+id,
-		styles: {
-			display: 'none'
-		},
-		events: {
-			load: function(){
-				var item = $H(JSON.decode(window.frames['upload_target'+id].document.body.innerHTML));
-				if (!item.error) {
-					if (!item.width)
-						status.set('text', '('+item.mime+', '+item.size+' bytes)');
-					else
-						status.set('text', '('+item.mime+', '+item.width+'x'+item.height+'px, '+item.size+' bytes)');
-				}
-				else {
-					status.set('text', '('+item.error+')');
-				}
-				//this.dispose();
-			}
-		}
-		});
-		iframe.inject(status, 'after');
-
-		var form = $('postform');
-		var action = form.getElement('input[name=action]');
-
-		var properties = form.getProperties('target', 'action');
-		var actionprop =  action.getProperties('value');
-		form.set('target','upload_target'+id);
-		form.set('action','<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>');
-		action.set('value', 'uploadfile');
-		form.submit();
-		form.setProperties(properties);
-		action.setProperties(actionprop);
-		input.setProperty('value', '');
-		newAttachment();
+	var kattachment = $('kattachment');
+	kattachment.getElement('input').setProperty('value', '');
+	kattachment.addEvent('change', function(el) {
+		var id = kattachment.retrieve('nextid',1);
+		kattachment.store('nextid',id+1);
+		var file = this.clone().inject(kattachment,'before').set('id','kattachment'+id);
+		file.getElement('a').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
+		file.getElement('input').set('name', 'kattachment'+id);
+		kattachment.getElement('input').setProperty('value', '');
 	});
+	kattachment.getElement('input').setProperty('value', '');
 }
 
 window.addEvent('domready', function() {
@@ -982,13 +942,16 @@ window.addEvent('domready', function() {
 		});
 	});
 });
-*/
 
+<?php
+/* Plupload hooks: promising piece of software, but not ready for production use */
+/*
 window.addEvent('domready', function() {
 	kuploadfiles = $('kuploadfiles');
 	if (typeof(plupload) == 'object' && kuploadfiles) {
 		var uploader = new plupload.Uploader({
-			runtimes : 'gears,silverlight,flash,html5',
+			//runtimes : 'gears,silverlight,flash,html5,html4',
+			runtimes : 'html4',
 			browse_button : 'kuploadfiles',
 			max_file_size : '1mb',
 			url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>',
@@ -998,6 +961,9 @@ window.addEvent('domready', function() {
 			filters : [
 				{title : "Image files", extensions : "jpg,gif,png"},
 				{title : "Zip files", extensions : "zip,gz"}
+			],
+			multipart_params : [
+				{type: 'hidden', name: 'mesid', value: '0'}
 			]
 		});
 
@@ -1018,6 +984,10 @@ window.addEvent('domready', function() {
 			$$("#" + file.id + " b").set('html', file.percent + "%");
 		});
 
+		uploader.bind('FileUploaded', function(up, file) {
+			$$("#" + file.id + " b").set('html', file.response);
+		});
+
 		kuploadfiles.addEvent('upload', function() {
 			uploader.start();
 		});
@@ -1026,7 +996,8 @@ window.addEvent('domready', function() {
 		uploader.init();
 	}
 });
-
+*/
+?>
 <?php
 //
 // kInsertVideo()

@@ -79,12 +79,43 @@ class CKunenaModeration {
 		// Always check security clearance before taking action!
 
 
-		// TODO: Add security permissions check
+		// Add security permissions check
 		// Assumption: only moderators can move messages
 		// - Check that user has moderator permissions for source category (= $currentMessage->catid)
 		// - Check that destination category exists and is visible to our moderator
 		// - Error message if one of those fails (log entry too?)
 
+		//check permissions for source message and category related
+		$query = 'SELECT b.catid, b.userid FROM #__fb_messages AS a INNER JOIN #__fb_moderation AS b ON a.catid=b.catid WHERE a.id='.$MessageID;
+		$this->_db->setQuery ( $query );
+		$SourceMes = $this->_db->loadObjectList ();
+		check_dberror ( "Unable to load source messages." );
+
+		if ( !empty($SourceMes) ) {
+			foreach ($SourceMes as $mes) {
+				if ( !CKunenaTools::isModerator($mes->userid) ) {
+					//the user haven't moderator permissions
+					$this->_errormsg = 'You have not moderator permissions.';
+					return false;
+				}
+			}
+		}
+
+		//check that the destination category exists
+		$query = 'SELECT catid FROM #__fb_moderation WHERE userid='.$this->user->id;
+		$this->_db->setQuery ( $query );
+		$ModCats = $this->_db->loadObjectList ();
+		check_dberror ( "Unable to load moderator cats." );
+
+		if ( !empty( $ModCats ) ) {
+			foreach ( $ModCats as $catid ) {
+				if ($catid != $TargetCatID) {
+					//the user haven't moderator permissions in target category
+					$this->_errormsg = 'You have not moderator permissions in the target category.';
+					return false;
+				}
+			}
+		}
 
 		// Test parameters to see if they are valid selecions or abord
 
@@ -168,8 +199,13 @@ class CKunenaModeration {
 					// We are about to pull the thread starter from the original thread.
 					// Need to promote the second post of the original thread as the new starter.
 
+					$sqlnewparent = "SELECT id, MAX( time ) AS timestamp FROM #__fb_messages WHERE `thread`='$currentMessage->thread' AND `parent`='$currentMessage->thread';";
+					$this->_db->setQuery ( $sqlnewparent );
+					$newParent = $this->_db->loadObjectList ();
+					check_dberror ( 'Unable to select new message for promote parent.' );
 
-					$sql .= "";
+					$sql .= "UPDATE #__fb_messages SET `parent`='0' WHERE `id`='$newParent[0]->id';";
+
 				}
 
 				break;
@@ -181,40 +217,8 @@ class CKunenaModeration {
 				}
 
 				// Create ghost thread if requested
-				// TODO: move this to a function
 				if ($GhostThread == true) {
-					// Post time in ghost message is the same as in the last message of the thread
-					$this->_db->setQuery ( "SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`='$MessageID'" );
-					$lastTimestamp = $this->_db->loadResult ();
-					check_dberror ( "Unable to load last timestamp." );
-					if ($lastTimestamp == "") {
-						$lastTimestamp = $currentMessage->timestamp;
-					}
-
-					// TODO: need to fetch correct user id for new ghost thread - current moderator who executed the move
-					// @Oliver: we already have it. It's current user: $my->id
-					// TODO: obey configuration setting username vs realname
-					// TODO: what do we do with ghost message title? JText::_('COM_KUNENA_MOVED_TOPIC') was used before
-					// @Oliver: I'd like to get rid of it and add it while rendering..
-					$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
-
-					$this->_db->setQuery ( "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '" . trim ( addslashes ( $my_name ) ) . "')" );
-					$this->_db->query ();
-					check_dberror ( 'Unable to insert ghost message.' );
-
-					//determine the new location for link composition
-					$newId = $this->_db->insertid ();
-
-					// and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-					$this->_db->setQuery ( "UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'" );
-					$this->_db->query ();
-					check_dberror ( 'Unable to update thread id of ghost thread.' );
-
-					// TODO: we need to fix all old ghost messages and change behaviour of them
-					$newURL = "id=" . $currentMessage->id;
-					$this->_db->setQuery ( "INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')" );
-					$this->_db->query ();
-					check_dberror ( 'Unable to insert ghost message.' );
+					$this->_createGhostThread($MessageID,$currentMessage,$my_name);
 				}
 
 				break;
@@ -270,7 +274,10 @@ class CKunenaModeration {
 		// Reset error message
 		$this->_ResetErrorMessage ();
 
-		// TODO: Sanitize parameters!
+		// Sanitize parameters!
+		$MessageID = intval ( $MessageID );
+		$mode = intval ( $mode );
+		// no need to check $DeleteAttachments as we only test for true
 
 
 		// Always check security clearance before taking action!
@@ -300,8 +307,8 @@ class CKunenaModeration {
 		// When done log the action
 		$this->_Log ( 'Delete', $MessageID, 0, '', 0, $mode );
 
-		// TODO: Last but not least update forum stats
-
+		// Last but not least update forum stats
+		CKunenaTools::reCountBoards();
 
 		return true;
 	}
@@ -360,5 +367,39 @@ class CKunenaModeration {
 		return $this->_errormsg;
 	}
 
+	function _createGhostThread($MessageID,$currentMessage,$my_name) {
+		// Post time in ghost message is the same as in the last message of the thread
+		$this->_db->setQuery ( "SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`='$MessageID'" );
+		$lastTimestamp = $this->_db->loadResult ();
+		check_dberror ( "Unable to load last timestamp." );
+		if ($lastTimestamp == "") {
+			$lastTimestamp = $currentMessage->timestamp;
+		}
+
+		// TODO: need to fetch correct user id for new ghost thread - current moderator who executed the move
+		// @Oliver: we already have it. It's current user: $my->id
+		// TODO: obey configuration setting username vs realname
+		// TODO: what do we do with ghost message title? JText::_('COM_KUNENA_MOVED_TOPIC') was used before
+		// @Oliver: I'd like to get rid of it and add it while rendering..
+		$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
+
+		$this->_db->setQuery ( "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '" . trim ( addslashes ( $my_name ) ) . "')" );
+		$this->_db->query ();
+		check_dberror ( 'Unable to insert ghost message.' );
+
+		//determine the new location for link composition
+		$newId = $this->_db->insertid ();
+
+		// and update the thread id on the 'moved' post for the right ordering when viewing the forum..
+		$this->_db->setQuery ( "UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'" );
+		$this->_db->query ();
+		check_dberror ( 'Unable to update thread id of ghost thread.' );
+
+		// TODO: we need to fix all old ghost messages and change behaviour of them
+		$newURL = "id=" . $currentMessage->id;
+		$this->_db->setQuery ( "INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')" );
+		$this->_db->query ();
+		check_dberror ( 'Unable to insert ghost message.' );
+	}
 }
 ?>

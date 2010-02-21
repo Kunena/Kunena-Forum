@@ -42,6 +42,8 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: removed while in CKunenaTools:decreaseCategoryStats() causing issues
 # [#19690] Add configuration report system in Kunena backend - display kunena configs settings in a table and check for each kunena table which is in utf8
 ^ [#19358] Display the poll icon only on the first message of the thread
+^ [#19358] Take care a bit of Class kunena.moderation.class.php
+# [#19668] Show the checkbox for select all the checkboxes only for moderators
 
 21-Feb-2010 Matias
 ^ [#19758] Clean up admin interface: move logo to toolbar, change emoticons path etc..

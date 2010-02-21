@@ -51,9 +51,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<div class="ktitle_cover km"><span class="ktitle kl">
 
 	<?php if (!empty($this->header)) echo $this->header; ?></span></div>
+	<?php if (CKunenaTools::isModerator($this->my->id)) { ?>
 	<div class="kcheckbox select-toggle">
 		<input id="kcbcheckall" type="checkbox" name="toggle" value="" />
 	</div>
+	<?php } ?>
 		</th>
 		</tr>
 	</thead>

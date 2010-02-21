@@ -149,13 +149,13 @@ div.icon-container {
 						<div class = "icon"> <a href = "http://www.kunena.com" target = "_blank" title = "<?php echo JText::_('COM_KUNENA_C_SUPPORTDESC');?>"> <img src = "components/com_kunena/images/ktechsupport.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?> </span></a> </div>
 					  </div>
 					   <div class="icon-container">
-						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showsmilies" title = "<?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILIES');?>"> <img src = "components/com_kunena/images/ksmiley.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_EMOTICONS_EDIT_SMILIES');?> </span></a> </div>
+						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showsmilies" title = "<?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER');?>"> <img src = "components/com_kunena/images/ksmiley.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER');?> </span></a> </div>
 					  </div>
 					   <div class="icon-container">
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=recount&no_html=1" title = "<?php echo JText::_('COM_KUNENA_RECOUNTFORUMS');?>"> <img src = "components/com_kunena/images/kupgrade.png" align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?> </span></a> </div>
 					  </div>
 					   <div class="icon-container">
-						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=ranks" title = "<?php echo JText::_('COM_KUNENA_RANKS_MANAGE');?>"> <img src = "components/com_kunena/images/kranks.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_RANKS_MANAGE'); ?> </span></a> </div>
+						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=ranks" title = "<?php echo JText::_('COM_KUNENA_RANK_MANAGER');?>"> <img src = "components/com_kunena/images/kranks.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?> </span></a> </div>
 					  </div>
 					   <div class="icon-container">
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=createmenu" title = "<?php echo JText::_('COM_KUNENA_CREATE_MENU');?>"> <img src = "images/menu.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_CREATE_MENU'); ?> </span></a> </div>

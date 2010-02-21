@@ -34,6 +34,8 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+21-Feb-2010 Matias
+^ [#19758] Clean up admin interface: move logo to toolbar, change emoticons path etc..
 
 20-Feb-2010 severdia
 ^ [#19758] Clean up admin interface, add tabs struture (still needs tab JS)

@@ -28,6 +28,8 @@ $lang = JFactory::getLanguage();
 $lang->load('com_kunena', KUNENA_PATH);
 $lang->load('com_kunena', KUNENA_PATH_ADMIN);
 
+JToolBarHelper::title('&nbsp;', 'kunena.png');
+
 global $kunenaProfile;
 
 $task = JRequest::getCmd ( 'task' );
@@ -1884,14 +1886,8 @@ function deletesmiley($option, $cid) {
 
 function smileypath() {
 	$kunena_config = & CKunenaConfig::getInstance ();
-
-	if (is_dir ( KUNENA_PATH_TEMPLATE . DS . $kunena_config->template . '/images/' . KUNENA_LANGUAGE . '/emoticons' )) {
-		$smiley_live_path = JURI::root () . '/components/com_kunena/template/' . $kunena_config->template . '/images/' . KUNENA_LANGUAGE . '/emoticons/';
-		$smiley_abs_path = KUNENA_PATH_TEMPLATE . DS . $kunena_config->template . '/images/' . KUNENA_LANGUAGE . '/emoticons';
-	} else {
-		$smiley_live_path = KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'images/' . KUNENA_LANGUAGE . '/emoticons/';
-		$smiley_abs_path = KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'images/' . KUNENA_LANGUAGE . '/emoticons';
-	}
+	$smiley_live_path = KUNENA_URLEMOTIONSPATH;
+	$smiley_abs_path = KUNENA_ABSEMOTIONSPATH;
 
 	$smileypath ['live'] = $smiley_live_path;
 	$smileypath ['abs'] = $smiley_abs_path;

@@ -920,16 +920,16 @@ function cancelForm() {
 
 function newAttachment() {
 	var kattachment = $('kattachment');
-	kattachment.getElement('input').setProperty('value', '');
-	kattachment.addEvent('change', function(el) {
-		var id = kattachment.retrieve('nextid',1);
-		kattachment.store('nextid',id+1);
-		var file = this.clone().inject(kattachment,'before').set('id','kattachment'+id);
-		file.getElement('a').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
-		file.getElement('input').set('name', 'kattachment'+id);
-		kattachment.getElement('input').setProperty('value', '');
+	kattachment.setStyle('display', 'none').getElement('input').setProperty('value', '').setStyle('display', 'none');
+	var id = kattachment.retrieve('nextid',1);
+	kattachment.store('nextid',id+1);
+	var file = kattachment.clone().inject(kattachment,'before').set('id','kattachment'+id).removeProperty('style');
+	file.getElement('input').set('name', 'kattachment'+id).removeProperty('style');
+	file.addEvent('change', function(el) {
+		this.removeEvents('change');
+		this.getElement('a').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
+		newAttachment();
 	});
-	kattachment.getElement('input').setProperty('value', '');
 }
 
 window.addEvent('domready', function() {

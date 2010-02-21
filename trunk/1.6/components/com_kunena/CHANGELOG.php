@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 ^ [#19758] Clean up admin interface: move logo to toolbar, change emoticons path etc..
 ^ [#19758] Clean up admin interface: make logo a bit larger
 ^ [#19380] Multi attachments: Add basic old style attachments with some JavaScript for backup
+# [#19380] Multi attachments: Try to make it to work with Chrome
 
 20-Feb-2010 severdia
 ^ [#19758] Clean up admin interface, add tabs struture (still needs tab JS)

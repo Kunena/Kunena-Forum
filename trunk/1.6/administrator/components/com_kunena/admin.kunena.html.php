@@ -28,7 +28,7 @@ class html_Kunena {
 		?>
 <style type="text/css">
 div.header {
-	padding-left:146px !important;
+	padding-left:148px !important;
 }
 div.icon-48-kunena {
 	background-image:url(components/com_kunena/images/kunena-logo-48.png);

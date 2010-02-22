@@ -35,6 +35,7 @@
 			<folder>install</folder>
 		</files>
 		<files folder="admin">
+			<filename>api.php</filename>
 			<filename>admin.kunena.html.php</filename>
 			<filename>admin.kunena.php</filename>
 			<filename>kunena.cpanel.php</filename>

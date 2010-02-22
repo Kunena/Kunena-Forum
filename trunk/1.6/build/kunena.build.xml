@@ -150,7 +150,7 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 		<copy file="${project_dir}/administrator/components/com_kunena/manifest.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_kunena/lib/kunena.defines.php" todir="${tmp_dir}/site/lib" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/api.php" todir="${tmp_dir}/admin" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
 

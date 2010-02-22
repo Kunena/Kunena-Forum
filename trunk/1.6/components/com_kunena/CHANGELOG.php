@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 22-Feb-2010 Matias
 # [#19288] Fix regression: New attachment table broke installation, upgrade works
++ [#19770] Add external API for other components: added api.php
 
 21-Feb-2010 severdia
 ^ [#19758] Clean up admin interface, language fixes

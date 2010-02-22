@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: New attachment table broke installation, upgrade works
 + [#19770] Add external API for other components: added api.php
 # [#19288] Fix regression: New attachment table broke latestx, showcat, post
++ [#19770] Add external API for other components: added interfaces for user, forum and post
 
 21-Feb-2010 severdia
 ^ [#19758] Clean up admin interface, language fixes

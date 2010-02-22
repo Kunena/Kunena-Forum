@@ -264,7 +264,7 @@ class CKunenaModeration {
 		// $mode
 		// KN_DEL_MESSAGE ... delete current message only
 		// KN_DEL_THREAD  ... delete entire thread
-		// KN_DEL_ATTACH  ... delete Attachements of message
+		// KN_DEL_ATTACH  ... delete Attachments of message
 
 
 		// Reset error message

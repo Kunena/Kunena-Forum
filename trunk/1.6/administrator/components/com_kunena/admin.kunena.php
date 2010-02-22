@@ -2178,7 +2178,7 @@ function deleteitemsnow ( $option, $cid ) {
 
 			$kunena_db->setQuery ( 'DELETE FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
 			$kunena_db->query ();
-			check_dberror ( "Unable to delete attachements." );
+			check_dberror ( "Unable to delete attachments." );
 		}
 	}
 

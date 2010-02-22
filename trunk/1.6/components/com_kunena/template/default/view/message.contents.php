@@ -41,7 +41,7 @@ $catid = JRequest::getInt ( 'catid', 0 );
 <?php
 // Include attachments template if we have any
 if ( isset ( $this->msg_html->attachments ) ) {
-	CKunenaTools::loadTemplate('/view/message.attachements.php');
+	CKunenaTools::loadTemplate('/view/message.attachments.php');
 } ?>
 <div>
 	<span><?php if (isset ( $this->msg_html->signature )) {

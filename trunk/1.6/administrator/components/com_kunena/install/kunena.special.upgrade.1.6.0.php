@@ -49,7 +49,7 @@ $kunena_db->setQuery ( $query );
 $attachcount = (int) $kunena_db->loadResult ();
 
 if ($attachcount==0){
-	// New attachements table is empty - assume we have to convert attachments
+	// New attachments table is empty - assume we have to convert attachments
 
 	// hash and size ommited -> NULL
 	$query = "INSERT INTO #__kunena_attachments (mesid, userid, folder, filetype, filename)

@@ -1048,7 +1048,7 @@ else if ($do == "move") {
  *
  * @param database object
  * @param int the id if the post to be deleted
- * @param boolean determines if we need to delete attachements as well
+ * @param boolean determines if we need to delete attachments as well
  *
  * @return int returns thread id if all went well, -1 to -4 are error numbers
  **/

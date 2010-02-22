@@ -47,7 +47,7 @@ if ($is_101_version) {
     else
     {
     	print '<li class="fbscslist">Attachments in messages table were not successfully upgraded to 1.0.2+ version schema!</li>';
-    	check_dbwarning("Unable to upgrade attachements in messages table.");
+    	check_dbwarning("Unable to upgrade attachments in messages table.");
     }
 
     //backward compatibility . all the cats are by default moderated

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+21-Feb-2010 severdia
+^ [#19758] Clean up admin interface, language fixes
+
 21-Feb-2010 Matias
 ^ [#19758] Clean up admin interface: move logo to toolbar, change emoticons path etc..
 ^ [#19758] Clean up admin interface: make logo a bit larger

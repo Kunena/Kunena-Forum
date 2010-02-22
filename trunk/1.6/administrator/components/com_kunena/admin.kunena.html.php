@@ -569,21 +569,18 @@ td.kadmin-tdtitle {
 				<?php 	if ($row->moderated) {
 				?>
 
-
 				<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
-
 				<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
 					<tr>
 						<th width="20">#</th>
-								<th width="20"><input type="checkbox" name="toggle" value=""
-							onclick="checkAll(<?php echo count ( $moderatorList ); ?>);" /></th>
-								<th align="left"><?php echo JText::_('COM_KUNENA_USRL_NAME'); ?></th>
-								<th align="left"><?php echo JText::_('COM_KUNENA_USRL_USERNAME'); ?></th>
-								<th align="left"><?php echo JText::_('COM_KUNENA_USRL_EMAIL'); ?></th>
-								<th align="center"><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></th>
+						<th width="20"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $moderatorList ); ?>);" /></th>
+						<th align="left"><?php echo JText::_('COM_KUNENA_USRL_NAME'); ?></th>
+						<th align="left"><?php echo JText::_('COM_KUNENA_USRL_USERNAME'); ?></th>
+						<th align="left"><?php echo JText::_('COM_KUNENA_USRL_EMAIL'); ?></th>
+						<th align="center"><?php echo JText::_('COM_KUNENA_PUBLISHED'); ?></th>
 					</tr>
 
-					<?php 		if (count ( $moderatorList ) == 0) {
+					<?php if (count ( $moderatorList ) == 0) {
 							echo "<tr><td colspan=\"5\">" . JText::_('COM_KUNENA_NOMODS') . "</td></tr>";
 						} else {
 							$k = 1;
@@ -633,15 +630,8 @@ td.kadmin-tdtitle {
 		}
 
 		function showConfig(&$kunena_config, &$lists, $option) {
-
 			jimport('joomla.html.pane');
 			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
-			//$mysliders = &JPane::getInstance('sliders', array('allowAllClose' => true));
-
-		//	jimport ( 'joomla.html.pane' );
-		//	$pane = & JPane::getInstance ( 'tabs', array ('startOffset' => 0 ) );
-		//	echo $pane->startPane ( 'pane' );
-		//	echo $pane->startPanel ( 'Config', 'panel1' );
 			?>
 
 	<div id="kadmin-configtabs">
@@ -1036,7 +1026,43 @@ td.kadmin-tdtitle {
 				</table>
 			</fieldset>
 			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_A_USERS') ?></legend>
+				<legend><?php echo JText::_('COM_KUNENA_A_LENGTHS') ?></legend>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<tr align="center" valign="middle">
+						<td align="left" width="25%" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH') ?>
+						</td>
+								<td align="left" width="25%" valign="top"><input type="text"
+							name="cfg_maxsubject"
+							value="<?php echo $kunena_config->maxsubject;
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH_DESC') ?>
+						</td>
+					</tr>
+							<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
+								<td align="left" valign="top"><input type="text" name="cfg_maxsig"
+							value="<?php echo $kunena_config->maxsig;
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT') ?></td>
+								<td align="left" valign="top"><input type="text"
+							name="cfg_maxpersotext"
+							value="<?php echo $kunena_config->maxpersotext;
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT_DESC') ?>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			</dd>
+			
+			<dt><?php echo JText::_('COM_KUNENA_A_USERS') ?></dt>
+			<dd>
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_USERNAME') ?>
@@ -1136,38 +1162,6 @@ td.kadmin-tdtitle {
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FAVORITES_DESC') ?>
-						</td>
-					</tr>
-				</table>
-			</fieldset>
-			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_A_LENGTHS') ?></legend>
-				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-					<tr align="center" valign="middle">
-						<td align="left" width="25%" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH') ?>
-						</td>
-								<td align="left" width="25%" valign="top"><input type="text"
-							name="cfg_maxsubject"
-							value="<?php echo $kunena_config->maxsubject;
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH_DESC') ?>
-						</td>
-					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
-								<td align="left" valign="top"><input type="text" name="cfg_maxsig"
-							value="<?php echo $kunena_config->maxsig;
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT') ?></td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_maxpersotext"
-							value="<?php echo $kunena_config->maxpersotext;
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT_DESC') ?>
 						</td>
 					</tr>
 				</table>

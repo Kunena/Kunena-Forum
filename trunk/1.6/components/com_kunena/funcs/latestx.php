@@ -88,7 +88,7 @@ class CKunenaLatestX {
 			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
 			else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
 			$query .= "
-			LEFT JOIN #__fb_attachments AS a ON a.mesid = m.thread
+			LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.thread
 			WHERE m.hold='0' AND m.moved='0' AND m.thread IN ({$idstr})
 			GROUP BY thread
 		) AS l

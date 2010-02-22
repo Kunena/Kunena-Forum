@@ -730,16 +730,6 @@ if ($kunena_my->id) {
 						$kunena_db->setQuery ( "UPDATE #__fb_messages_text SET message=" . $kunena_db->quote ( $message ) . " WHERE mesid='{$id}'" );
 
 						if ($kunena_db->query () && $dbr_nameset) {
-							//Update the attachments table if an image has been attached
-							if (! empty ( $imageLocation ) && file_exists ( $imageLocation )) {
-								$imageLocation = addslashes ( $imageLocation );
-								$kunena_db->setQuery ( "INSERT INTO #__fb_attachments (mesid, filelocation) VALUES ('$id'," . $kunena_db->quote ( $imageLocation ) . ")" );
-
-								if (! $kunena_db->query ()) {
-									$kunena_app->enqueueMessage ( 'Storing image failed: " . $kunena_db->getErrorMsg () . "', 'error' );
-								}
-							}
-
 							//Update the attachments table if an file has been attached
 							require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
 							$attachments = CKunenaAttachments::getInstance();

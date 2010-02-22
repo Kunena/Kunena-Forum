@@ -75,11 +75,7 @@ check_dberror ( "Unable to load introtext." );
 			<th class="th-right">
 				<?php
 				if ($kunena_config->enableforumjump) {
-					if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
-						include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
-					} else {
-						include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
-					}
+					CKunenaTools::loadTemplate('/forumjump.php');
 				}
 				?>
 			</th>

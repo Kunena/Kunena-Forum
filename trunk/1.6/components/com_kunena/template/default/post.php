@@ -100,13 +100,10 @@ if ($id || $parentid) {
 
 // Check user access rights
 $allow_forum = ($kunena_session->allowed != '') ? explode ( ',', $kunena_session->allowed ) : array ();
-if (($kunena_my->id==0 && !$kunena_config->pubwrite) || (empty($msg_cat->catparent) && $do != 'reply') && (! in_array ( $catid, $allow_forum ) && ! CKunenaTools::isAdmin ())) {
-	//echo JText::_('COM_KUNENA_NO_ACCESS');
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'login' . DS . 'login.php')) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'login' . DS . 'login.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin' . DS . 'login' . DS . 'login.php');
-		}
+
+if (($kunena_my->id==0 && !$kunena_config->pubwrite) || (empty($msg_cat->catparent) && $do != 'reply') &&
+	(! in_array ( $catid, $allow_forum ) && ! CKunenaTools::isAdmin ())) {
+	CKunenaTools::loadTemplate('/plugin/login/login.php');
 	return;
 }
 
@@ -162,11 +159,7 @@ if ($kunena_my->id) {
 	align="center">
 	<tr>
 		<td><?php
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/pathway.php' )) {
-			require_once (KUNENA_ABSTMPLTPATH . '/pathway.php');
-		} else {
-			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
-		}
+		CKunenaTools::loadTemplate('/pathway.php');
 
 		if ($action == "post" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 			?>
@@ -540,11 +533,7 @@ if ($kunena_my->id) {
 				$this->emoid = 0;
 				$this->action = 'post';
 
-				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
-					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
-				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
-				}
+				CKunenaTools::loadTemplate('/write.html.php');
 			} else if ($do == "newFromBot" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				// The Mosbot "discuss on forums" has detected an unexisting thread and wants to create one
 				$parentid = 0;
@@ -571,11 +560,7 @@ if ($kunena_my->id) {
 				$this->action = 'bot';
 
 				//get the writing stuff in:
-				if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
-					include (KUNENA_ABSTMPLTPATH . '/write.html.php');
-				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
-				}
+				CKunenaTools::loadTemplate('/write.html.php');
 			} else if ($do == "edit" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
 				$message = $msg_cat;
 
@@ -621,11 +606,7 @@ if ($kunena_my->id) {
 					}
 
 					//get the writing stuff in:
-					if (file_exists ( KUNENA_ABSTMPLTPATH . '/write.html.php' )) {
-						include (KUNENA_ABSTMPLTPATH . '/write.html.php');
-					} else {
-						include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'write.html.php');
-					}
+					CKunenaTools::loadTemplate('/write.html.php');
 				} else {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
@@ -1230,11 +1211,7 @@ function listThreadHistory($id, $kunena_config, $kunena_db) {
 			<th class="th-right"><?php
 			//(JJ) FINISH: CAT LIST BOTTOM
 			if ($kunena_config->enableforumjump) {
-				if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
-					include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
-				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
-				}
+				CKunenaTools::loadTemplate('/forumjump.php');
 			}
 			?>
 			</th>

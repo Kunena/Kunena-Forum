@@ -308,62 +308,34 @@ class CKunenaView {
 	}
 
 	function displayPathway() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/pathway.php' )) {
-			require_once (KUNENA_ABSTMPLTPATH . '/pathway.php');
-		} else {
-			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
-		}
+		CKunenaTools::loadTemplate('/pathway.php');
 	}
 
 	function displayPoll() {
 		if ($this->config->pollenabled == "1" && $this->first_message->poll_id) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php' )) {
-				require_once (KUNENA_ABSTMPLTPATH . '/plugin/poll/pollbox.php');
-			} else {
-				require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/poll/pollbox.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/poll/pollbox.php');
 		}
 	}
 
 	function displayThreadActions() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'thread.actions.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'thread.actions.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'view' . DS . 'thread.actions.php');
-		}
+		CKunenaTools::loadTemplate('/view/thread.actions.php');
 	}
 
 	function displayMessageActions() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'message.actions.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'message.actions.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'view' . DS . 'message.actions.php');
-		}
+		CKunenaTools::loadTemplate('/view/message.actions.php');
 	}
 
 	function displayMessageContents() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'message.contents.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'message.contents.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'view' . DS . 'message.contents.php');
-		}
+		CKunenaTools::loadTemplate('/view/message.contents.php');
 	}
 
 	function displayProfileBox() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'message.profilebox.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'message.profilebox.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'view' . DS . 'message.profilebox.php');
-		}
+		CKunenaTools::loadTemplate('/view/message.profilebox.php');
 	}
 
 	function displayForumJump() {
 		if ($this->config->enableforumjump) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
-				include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
-			}
+			CKunenaTools::loadTemplate('/forumjump.php');
 		}
 	}
 
@@ -433,7 +405,7 @@ class CKunenaView {
 
 		if ($this->config->fb_profile == 'cb') {
 			$triggerParams = array ('userid' => $this->kunena_message->userid, 'userinfo' => &$this->userinfo );
-			$kunenaProfile = & CkunenaCBProfile::getInstance ();
+			$kunenaProfile = & CKunenaCBProfile::getInstance ();
 			$kunenaProfile->trigger ( 'profileIntegration', $triggerParams );
 		}
 
@@ -685,9 +657,13 @@ class CKunenaView {
 				// First lets check the attachment file type
 				switch (strtolower($attachment->filetype)){
 					case 'jpg' :
+					case 'image/jpg' :
 					case 'jepg' :
+					case 'image/jepg' :
 					case 'png' :
+					case 'image/png' :
 					case 'gif' :
+					case 'image/gif' :
 						// Filetype indicates an image - check for thumbnail to display
 
 						// First we need to check if a thumbnail exists - if so - we are going to use it
@@ -781,11 +757,7 @@ class CKunenaView {
 		}
 
 		//(JJ)
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'message.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'message.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'view' . DS . 'message.php');
-		}
+		CKunenaTools::loadTemplate('/view/message.php');
 	}
 
 	function getPagination($catid, $threadid, $page, $totalpages, $maxpages) {
@@ -839,10 +811,6 @@ class CKunenaView {
 			echo JText::_('COM_KUNENA_MODERATION_INVALID_ID');
 			return;
 		}
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'view.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'view' . DS . 'view.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'view' . DS . 'view.php');
-		}
+		CKunenaTools::loadTemplate('/view/view.php');
 	}
 }

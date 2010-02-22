@@ -163,18 +163,10 @@ class CKunenaStats {
 	}
 
 	public function showStats() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.php' )) {
-			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/stats/stats.php');
-		}
+		CKunenaTools::loadTemplate('/plugin/stats/stats.php');
 	}
 
 	public function showFrontStats() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php' )) {
-			include (KUNENA_ABSTMPLTPATH . '/plugin/stats/frontstats.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/stats/frontstats.php');
-		}
+		CKunenaTools::loadTemplate('/plugin/stats/frontstats.php');
 	}
 }

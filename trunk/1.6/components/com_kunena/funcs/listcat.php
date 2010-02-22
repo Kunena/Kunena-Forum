@@ -189,49 +189,29 @@ class CKunenaListcat {
 	}
 
 	function displayPathway() {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'pathway.php' )) {
-			require_once (KUNENA_ABSTMPLTPATH . DS . 'pathway.php');
-		} else {
-			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'pathway.php');
-		}
+		CKunenaTools::loadTemplate('/pathway.php');
 	}
 
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php' )) {
-				require_once (KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php');
-			} else {
-				require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin' . DS . 'announcement' . DS . 'announcementbox.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/announcement/announcementbox.php');
 		}
 	}
 
 	function displayForumJump() {
 		if ($this->config->enableforumjump) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
-				include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
-			}
+			CKunenaTools::loadTemplate('/forumjump.php');
 		}
 	}
 
 	function displayCategories() {
 		$this->loadCategories();
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'categories.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'categories.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'categories' . DS . 'categories.php');
-		}
+		CKunenaTools::loadTemplate('/categories/categories.php');
 	}
 
 	function displayStats() {
 		if ($this->config->showstats > 0) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'stats' . DS . 'stats.class.php' )) {
-				include_once (KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'stats' . DS . 'stats.class.php');
-			} else {
-				include_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin' . DS . 'stats' . DS . 'stats.class.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/stats/stats.class.php');
 
 			$kunena_stats = new CKunenaStats ( );
 			$kunena_stats->showFrontStats ();
@@ -240,11 +220,7 @@ class CKunenaListcat {
 
 	function displayWhoIsOnline() {
 		if ($this->config->showwhoisonline > 0) {
-			if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'who' . DS . 'whoisonline.php' )) {
-				include (KUNENA_ABSTMPLTPATH . DS . 'plugin' . DS . 'who' . DS . 'whoisonline.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin' . DS . 'who' . DS . 'whoisonline.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/who/whoisonline.php');
 		}
 	}
 
@@ -297,10 +273,6 @@ class CKunenaListcat {
 			echo '' . JText::_('COM_KUNENA_GEN_NOFORUMS') . '';
 			return;
 		}
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'categories' . DS . 'listcat.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'categories' . DS .  'listcat.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'categories' . DS .  'listcat.php');
-		}
+		CKunenaTools::loadTemplate('/categories/listcat.php');
 	}
 }

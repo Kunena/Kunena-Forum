@@ -38,24 +38,11 @@ $catid = JRequest::getInt ( 'catid', 0 );
 		<?php echo $this->msg_html->text; ?>
 	</div>
 </div>
-<?php if ( isset ( $this->msg_html->attachments ) ) { ?>
-<div>
-	<div class="msgattach">
-	<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
-		<ul class="kfile-attach">
-		<?php
-		foreach($this->msg_html->attachments as $attachment){
-		?>
-			<li>
-				<?php echo $attachment;?>
-			</li>
-		<?php
-		}
-		?>
-		</ul>
-	</div>
-</div>
-<?php } ?>
+<?php
+// Include attachments template if we have any
+if ( isset ( $this->msg_html->attachments ) ) {
+	CKunenaTools::loadTemplate('/view/message.attachements.php');
+} ?>
 <div>
 	<span><?php if (isset ( $this->msg_html->signature )) {
 		echo '<div class="msgsignature">';

@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+22-Feb-2010 fxstein
++ [#19774] New template loader helper: CKunenaTools::loadTemplate()
++ [#19380] New attachments template
+
 22-Feb-2010 Matias
 # [#19288] Fix regression: New attachment table broke installation, upgrade works
 + [#19770] Add external API for other components: added api.php

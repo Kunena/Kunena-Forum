@@ -584,11 +584,7 @@ class HTML_userlist_content
                         <?php
                         //(JJ) FINISH: CAT LIST BOTTOM
 						if ($kunena_config->enableforumjump) {
-							if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
-								include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
-							} else {
-								include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
-							}
+							CKunenaTools::loadTemplate('/forumjump.php');
 						}
                         ?>
                     </th>

@@ -356,11 +356,7 @@ class CKunenaSearch {
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );
 		$this->categorylist = CKunenaTools::forumSelectList ( 'searchlist', explode ( ',', $this->params ['catids'] ), $options, 'class="inputbox" size="8" multiple="multiple"', true );
 
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'advsearch.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'advsearch.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'search' . DS . 'advsearch.php');
-		}
+		CKunenaTools::loadTemplate('/search/advsearch.php');
 
 		$this->results = $this->get_results ();
 
@@ -386,11 +382,7 @@ class CKunenaSearch {
 			$this->results [$i]->message = $resmessage;
 		}
 
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'search.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'search' . DS . 'search.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'search' . DS . 'search.php');
-		}
+		CKunenaTools::loadTemplate('/search/search.php');
 	}
 
 	function getPagination($function, $q, $urlparams, $page, $limit, $totalpages, $maxpages) {

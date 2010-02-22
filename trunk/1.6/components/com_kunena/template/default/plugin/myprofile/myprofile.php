@@ -108,12 +108,8 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 		<!-- Links relocated in menu -->
 		<td class="kmyprofile_left" valign="top" width="20%">
 		<!-- B:My Profile Left -->
-		<?php
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_menu.php');
-	 } else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_menu.php');
-	 }
+	<?php
+	CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_menu.php');
 	?>
 
 		<!-- F:My Profile Left -->
@@ -129,12 +125,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 		default :
 			// B: Summary
 
-
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_summary.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_summary.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_summary.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_summary.php');
 
 			// F: Summary
 			break;
@@ -143,12 +134,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 
 			// B: Show Posts
 
-
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_msg.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_msg.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_msg.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_msg.php');
 
 			// F: Show Posts
 			break;
@@ -156,11 +142,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 		case "avatar" :
 			// B: Avatar
 			if ($kunena_config->fb_profile != 'cb' && $kunena_config->fb_profile != 'jomsocial') {
-				if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php' )) {
-					include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_avatar_upload.php');
-				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_avatar_upload.php');
-				}
+				CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_avatar_upload.php');
 			}
 
 			// F: Avatar
@@ -168,11 +150,8 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 
 		case "showset" :
 			// B: Settings
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_set.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_set.php');
-			}
+
+			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_set.php');
 
 			// F: Settings
 			break;
@@ -217,11 +196,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			if ($kunena_config->fb_profile != 'cb' && $kunena_config->fb_profile != 'jomSocial') {
 				include (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 
-				if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php' )) {
-					include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_profile_info.php');
-				} else {
-					include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_profile_info.php');
-				}
+				CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_profile_info.php');
 			}
 
 			// F: Signature
@@ -300,11 +275,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			check_dberror ( "Unable to load subscriptions." );
 			$this->kunena_csubslist = count ( $this->kunena_subslist );
 
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_subs.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_subs.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_subs.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_subs.php');
 
 			break;
 
@@ -330,11 +301,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			check_dberror ( "Unable to load favorites." );
 			$this->kunena_cfavslist = count ( $this->kunena_favslist );
 
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_fav.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_fav.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_fav.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_fav.php');
 
 			break;
 
@@ -348,11 +315,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 				$this->kunena_cmodslist = count ( $this->kunena_modslist );
 			}
 
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_mod.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_mod.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_mod.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_mod.php');
 
 			break;
 
@@ -462,11 +425,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 			$file = $kunena_app->getPath ( 'com_xml', 'com_users' );
 			$params = new JParameter ( $row->params, $file, 'component' );
 
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile_userdetails_form.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile_userdetails_form.php');
 
 			break;
 
@@ -530,11 +489,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0) {
 					<th class="th-right"><?php
 	//(JJ) FINISH: CAT LIST BOTTOM
 	if ($kunena_config->enableforumjump) {
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'forumjump.php' )) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'forumjump.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'forumjump.php');
-		}
+		CKunenaTools::loadTemplate('/forumjump.php');
 	}
 	?>
 					</th>

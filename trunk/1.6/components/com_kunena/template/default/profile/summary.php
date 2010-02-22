@@ -50,11 +50,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 				<div class="kprofile-rightcol2">
 
 <?php
-	if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php')) {
-		include (KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php');
-	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'profile' . DS . 'socialbuttons.php');
-	}
+	CKunenaTools::loadTemplate('/profile/socialbuttons.php');
 ?>
 
 				</div>

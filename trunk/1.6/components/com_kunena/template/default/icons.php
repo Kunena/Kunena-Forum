@@ -74,8 +74,6 @@ $kunena_icons['myspace'] ='myspace.png';
 $kunena_icons['skype'] ='skype.png';
 $kunena_icons['twitter'] ='twitter.png';
 $kunena_icons['yahoo'] ='yahoo.png';
-$kunena_icons['twitter'] ='msn.png';
-$kunena_icons['yahoo'] ='icq.png';
 
 // Topic icons
 $topic_emoticons = array ();

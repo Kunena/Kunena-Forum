@@ -40,9 +40,6 @@ JHTML::_('behavior.formvalidation');
 
 $document =& JFactory::getDocument();
 
-// Load mootool more as it is currently not included in Joomla or the mootools12 plugin
-$document->addScript ( KUNENA_DIRECTURL . '/js/mootools/mootools-1.2.4.2-more.js' );
-
 $selected = 0;
 
 if ($this->kunena_editmode) $this->title = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->resubject;
@@ -268,11 +265,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		}
 
 		// No show bbcode editor
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'editor' . DS . 'bbcode.php' )) {
-			require_once (KUNENA_ABSTMPLTPATH . DS . 'editor' . DS . 'bbcode.php');
-		} else {
-			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'editor' . DS . 'bbcode.php');
-		}
+		CKunenaTools::loadTemplate('/editor/bbcode.php');
 
 		if ($this->kunena_set_focus == 0) {
 			echo '<tr><td style="display:none;"><script type="text/javascript">document.postform.message.focus();</script></td></tr>';

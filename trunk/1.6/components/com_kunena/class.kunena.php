@@ -1169,6 +1169,32 @@ class CKunenaTools {
 				check_dberror ( "Unable to create item into main menu." );
 			}
 		}
+
+		/**
+		 * This function loads the appropriate template file
+		 * It checks if the selected template contains an override
+		 * and if so loads it. Fall back is the default template
+		 * implementation
+		 *
+		 * @param string 	$relpath	Relative path to template file
+		 * @param bool 		$once		limit to single include default false
+		 */
+		function loadTemplate($relpath, $once=false) {
+			if ($once){
+				if (file_exists ( KUNENA_ABSTMPLTPATH.$relpath )) {
+					require_once (KUNENA_ABSTMPLTPATH.$relpath);
+				} else {
+					require_once (KUNENA_PATH_TEMPLATE_DEFAULT.$relpath);
+				}
+			} else {
+				if (file_exists ( KUNENA_ABSTMPLTPATH.$relpath )) {
+					require (KUNENA_ABSTMPLTPATH.$relpath);
+				} else {
+					require (KUNENA_PATH_TEMPLATE_DEFAULT.$relpath);
+				}
+			}
+		}
+
     } // end of class
 
 class fbForum

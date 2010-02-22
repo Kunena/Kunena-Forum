@@ -38,18 +38,16 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 		</li>
 
 		<!--  The markup needs to be removed from these tags and each enclosed as a list item. -->
-		
+
 		<?php if (isset ( $this->msg_html->posts )) { echo $this->msg_html->posts; }
 				if (isset ( $this->msg_html->points )) { echo $this->msg_html->points; }?>
 			<?php if (isset ( $this->msg_html->pms )) { echo $this->msg_html->pms; } ?>
-			
+
 		<li class="kpost-online-status-<?php echo $this->msg_html->online ? 'yes':'no'; ?>"> </li>
 		<li class="kpost-smallicons">
-			<?php 	if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php')) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'profile' . DS . 'socialbuttons.php');
-		} ?>
+			<?php
+			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
+			?>
 		</li>
 		<li class="kpost-personal">
 			<?php if (isset ( $this->msg_html->personal )) { echo $this->msg_html->personal; } ?>
@@ -58,11 +56,9 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 <?php } else { ?>
 	<ul id="kpost-profiletop">
 		<li class="kpost-smallicons">
-			<?php 	if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php')) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'socialbuttons.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'profile' . DS . 'socialbuttons.php');
-		} ?>
+			<?php
+			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
+			?>
 		</li>
 		<li class="kpost-personal">
 			<?php if (isset ( $this->msg_html->personal )) { echo $this->msg_html->personal; } ?>
@@ -88,9 +84,9 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 			<?php if (isset ( $this->msg_html->userrankimg )) { echo $this->msg_html->userrankimg; } ?>
 		</li>
 		<li class="kpost-online-status-<?php echo $this->msg_html->online ? 'yes':'no'; ?>"> </li>
-		
+
 		<!--  The markup needs to be removed from these tags and each enclosed as a list item. -->
-		
+
 		<?php if (isset ( $this->msg_html->posts )) { echo $this->msg_html->posts; }
 				if (isset ( $this->msg_html->points )) { echo $this->msg_html->points; }?>
 	</ul>

@@ -83,11 +83,7 @@ class CKunenaProfile {
 			$this->profile->store();
 		}
 
-		if (file_exists ( KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'summary.php')) {
-			include (KUNENA_ABSTMPLTPATH . DS . 'profile' . DS . 'summary.php');
-		} else {
-			include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'profile' . DS . 'summary.php');
-		}
+		CKunenaTools::loadTemplate('/profile/summary.php');
 	}
 
 	function displayOwnTopics()

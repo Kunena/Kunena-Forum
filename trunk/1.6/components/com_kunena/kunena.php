@@ -369,60 +369,31 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	</tr>
 </table>
 <!-- /Kunena Header --> <?php
-	//BEGIN: PROFILEBOX
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/plugin/profilebox/profilebox.php');
-	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/profilebox/profilebox.php');
-	}
-	//FINISH: PROFILEBOX
+	CKunenaTools::loadTemplate('/plugin/profilebox/profilebox.php');
 
 	switch ($func) {
 		case 'who' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/who/who.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/who/who.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'announcement' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcement.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/announcement/announcement.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/announcement/announcement.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/announcement/announcement.php');
 
 			break;
-		#########################################################################################
+
         case 'poll':
-            if (file_exists (KUNENA_ABSTMPLTPATH . '/plugin/poll/poll.php')) {
-                include (KUNENA_ABSTMPLTPATH . '/plugin/poll/poll.php');
-                }
-            else {
-                include (KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/poll/poll.php');
-                }
+			CKunenaTools::loadTemplate('/plugin/poll/poll.php');
 
             break;
 
-		#########################################################################################
-
 		case 'stats' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/stats/stats.class.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/stats/stats.class.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/stats/stats.class.php');
 
 			$kunena_stats = new CKunenaStats ( );
 			$kunena_stats->showStats ();
 
 			break;
-
-		#########################################################################################
 
 		case 'myprofile' :
 		case 'fbprofile' :
@@ -433,29 +404,15 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		#########################################################################################
-
 		case 'userlist' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/userlist/userlist.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/userlist/userlist.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/userlist/userlist.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/userlist/userlist.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'post' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/post.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/post.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'post.php');
-			}
+			CKunenaTools::loadTemplate('/post.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'view' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'view.php');
@@ -464,18 +421,10 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		#########################################################################################
-
 		case 'help' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/help.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/help.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'help.php');
-			}
+			CKunenaTools::loadTemplate('/help.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'showcat' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'showcat.php');
@@ -484,8 +433,6 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		#########################################################################################
-
 		case 'listcat' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
 			$page = new CKunenaListcat($catid);
@@ -493,62 +440,30 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		#########################################################################################
-
 		case 'review' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/moderate/moderate_messages.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/moderate/moderate_messages.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . '/moderate/moderate_messages.php');
-			}
+			CKunenaTools::loadTemplate('/moderate/moderate_messages.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'moderate' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/moderate/moderate.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/moderate/moderate.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . '/moderate/moderate.php');
-			}
+			CKunenaTools::loadTemplate('/moderate/moderate.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'rules' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . 'rules.php' )) {
-				include (KUNENA_ABSTMPLTPATH . 'rules.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'rules.php');
-			}
+			CKunenaTools::loadTemplate('/rules.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'userprofile' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/myprofile/myprofile.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'report' :
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/report/report.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/plugin/report/report.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/report/report.php');
-			}
+			CKunenaTools::loadTemplate('/plugin/report/report.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'latest' :
 		case 'mylatest' :
@@ -561,8 +476,6 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		#########################################################################################
-
 		case 'search' :
 		case 'advsearch' :
 			require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.search.class.php');
@@ -570,8 +483,6 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$kunenaSearch = new CKunenaSearch ( );
 			$kunenaSearch->show ();
 			break;
-
-		#########################################################################################
 
 		case 'markthisread' :
 			// get all already read topics
@@ -602,7 +513,6 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
 			break;
 
-		#########################################################################################
 		case 'subscribecat' :
 
 			$success_msg = '';
@@ -620,7 +530,6 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $success_msg );
 			break;
 
-		#########################################################################################
 		case 'unsubscribecat' :
 
 			$success_msg = '';
@@ -637,14 +546,10 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $success_msg );
 			break;
 
-		#########################################################################################
-
 		case 'karma' :
 			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.karma.php');
 
 			break;
-
-		#########################################################################################
 
 		case 'bulkactions' :
 			switch ($do) {
@@ -660,9 +565,6 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		######################
-
-		/*    template chooser    */
 		case "templatechooser" :
 			$fb_user_template = strval ( JRequest::getVar ( 'kunena_user_template', '', 'COOKIE' ) );
 
@@ -713,28 +615,16 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true) );
 			break;
 
-		#########################################################################################
-
 		case 'credits' :
 			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.credits.php');
 
 			break;
 
-		#########################################################################################
-
 		default :
-			echo "Unknown request: $func";
-			break;
-			if (file_exists ( KUNENA_ABSTMPLTPATH . '/listcat.php' )) {
-				include (KUNENA_ABSTMPLTPATH . '/listcat.php');
-			} else {
-				include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'listcat.php');
-			}
+			CKunenaTools::loadTemplate('/listcat.php');
 
 			break;
-	} //hctiws
-
-
+	}
 
 	// Bottom Module
 	CKunenaTools::showModulePosition( 'kunena_bottom' );

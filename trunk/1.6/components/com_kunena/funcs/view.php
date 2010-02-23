@@ -547,7 +547,7 @@ class CKunenaView {
 			if ($kunena_icons ['pms']) {
 				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
 			} else {
-				$img_html .= KUNENA_URLEMOTIONSPATH . "sendpm.gif";
+				$img_html .= KUNENA_URLEMOTIONSPATH . "pm.png";
 			}
 
 			$img_html .= "\" alt=\"" . JText::_('COM_KUNENA_VIEW_PMS') . "\" border=\"0\" title=\"" . JText::_('COM_KUNENA_VIEW_PMS') . "\" />";

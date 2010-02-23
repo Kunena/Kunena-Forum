@@ -1609,6 +1609,7 @@ span.newchar {
 #Kunena ul.kfile-attach li span {
 	padding-left: 10px;
 	vertical-align:top;
+	font-size: .833em;
 }
 #Kunena ul.kfile-attach li a img {
 	max-width: 32px;

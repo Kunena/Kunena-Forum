@@ -395,6 +395,11 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $imagetypes = 'jpg,jpeg,gif,png';
     var $checkmimetypes = 1;
 	var $imagemimetypes = 'image/jpeg,image/jpg,image/gif,image/png';
+	var $imagequality = 50;
+	var $thumbheight = 60;
+	var $thumbwidth = 60;
+
+
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

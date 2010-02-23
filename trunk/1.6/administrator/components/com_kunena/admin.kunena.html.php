@@ -1413,23 +1413,52 @@ td.kadmin-tdtitle {
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_imageheight"
-							value="<?php echo $kunena_config->imageheight;
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGSIZE') ?></td>
+								<td align="left" valign="top"><input type="text" name="cfg_imagesize"
+							value="<?php echo $kunena_config->imagesize;
 						?>" /></td>
+						<td align="left" valign="top">
+							<?php echo JText::sprintf('COM_KUNENA_A_IMGSIZE_DESC',
+														ini_get('post_max_size'),
+														php_ini_loaded_file()) ?>
+						</td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGWIDTH') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagewidth"
 							value="<?php echo $kunena_config->imagewidth;
 						?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGWIDTH_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGSIZE') ?></td>
-								<td align="left" valign="top"><input type="text" name="cfg_imagesize"
-							value="<?php echo $kunena_config->imagesize;
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
+								<td align="left" valign="top"><input type="text"
+							name="cfg_imageheight"
+							value="<?php echo $kunena_config->imageheight;
 						?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH') ?></td>
+								<td align="left" valign="top"><input type="text" name="cfg_thumbwidth"
+							value="<?php echo $kunena_config->thumbwidth;
+						?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT') ?></td>
+								<td align="left" valign="top"><input type="text"
+							name="cfg_thumbheight"
+							value="<?php echo $kunena_config->thumbheight;
+						?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY') ?></td>
+								<td align="left" valign="top"><input type="text" name="cfg_imagequality"
+							value="<?php echo $kunena_config->imagequality;
+						?>" /></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY_DESC') ?></td>
 					</tr>
 				</table>
 			</fieldset>
@@ -1477,6 +1506,11 @@ td.kadmin-tdtitle {
 						<td align="left" valign="top"><input type="text" name="cfg_filesize"
 							value="<?php echo $kunena_config->filesize;
 						?>" /></td>
+						<td align="left" valign="top">
+							<?php echo JText::sprintf('COM_KUNENA_A_FILESIZE_DESC',
+														ini_get('post_max_size'),
+														php_ini_loaded_file()) ?>
+						</td>
 					</tr>
 				</table>
 			</fieldset>

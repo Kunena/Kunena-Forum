@@ -380,17 +380,19 @@ class CKunenaConfig extends CKunenaConfigBase {
     var $polltimebtvotes = '00:15:00';
     var $pollnbvotesbyuser = 100;
     var $pollresultsuserslist = 1;
-    //New for 1.6 -> Max length for personnal text
+    // New for 1.6 -> Max length for personnal text
     var $maxpersotext = 50;
-    //New for 1.6 -> Choose ordering system
+    // New for 1.6 -> Choose ordering system
     var $ordering_system = 'new_ord';
     // New for 1.6 -> dateformat
     var $post_dateformat         = 'ago'; // See CKunenaTimeformat::showDate()
     var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()
-    //New for 1.6 -> hide IP
+    // New for 1.6 -> hide IP
     var $hide_ip = 1;
-    //New for 1.6 -> disable/enable activity stream
+    // New for 1.6 -> disable/enable activity stream
     var $js_actstr_integration = 0;
+    // New for 1.6 -> image file types
+	var $imagetypes = 'jpg,jpeg,gif,png';
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

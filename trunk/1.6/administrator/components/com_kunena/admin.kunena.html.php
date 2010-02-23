@@ -1058,7 +1058,7 @@ td.kadmin-tdtitle {
 				</table>
 			</fieldset>
 			</dd>
-			
+
 			<dt><?php echo JText::_('COM_KUNENA_A_USERS') ?></dt>
 			<dd>
 			<fieldset>
@@ -1383,6 +1383,15 @@ td.kadmin-tdtitle {
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOWIMGFORGUEST_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES') ?>
+						</td>
+								<td align="left" valign="top"><input type="text" name="cfg_imagetypes"
+							value="<?php echo $kunena_config->imagetypes;
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">

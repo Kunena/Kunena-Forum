@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 + [#19774] New template loader helper: CKunenaTools::loadTemplate()
 + [#19380] New attachments template (scaffolding)
 + [#19295] Add svn:keywords Id to all new files
++ [#19380] New imagetype attachment config option
 
 22-Feb-2010 Matias
 # [#19288] Fix regression: New attachment table broke installation, upgrade works

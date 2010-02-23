@@ -16,6 +16,10 @@ class CKunenaUpload {
 	protected $_db;
 	protected $_my;
 	protected $_session;
+	protected $_config;
+
+	protected $_isimage;
+	protected $_isfile;
 
 	protected $fileName = false;
 	protected $fileTemp = false;
@@ -30,7 +34,10 @@ class CKunenaUpload {
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
 		$this->_my = &JFactory::getUser ();
-		$this->_session = & CKunenaSession::getInstance ();
+		$this->_session = &CKunenaSession::getInstance ();
+		$this->_config = &CKunenaConfig::getInstance ();
+		$this->_isimage = false;
+		$this->_isfile = false;
 	}
 
 	function __destruct() {
@@ -47,7 +54,7 @@ class CKunenaUpload {
 		$this->status = false;
 	}
 
-	function fileInfo()
+	function getFileInfo()
 	{
 		$result = array(
 			'status' => $this->status,
@@ -77,23 +84,26 @@ class CKunenaUpload {
 		{
 			 $this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_EMPTY_FILE' );
 		}
-		if ( $fileSize > 2 * 1024 * 1024) // TODO: configuration option
-		{
+
+		if (!$this->_isfile && !$this->_isimage){
+			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNDEFINED' );
+		} else if (($this->_isfile && ($fileSize > $this->_config->filesize*1024))||
+			($this->_isimage && ($fileSize > $this->_config->imagesize*1024))){
 			$this->error = JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_SIZE_X', $fileSize );
 		}
+
 		return ($this->error !== false);
 	}
 
 	function processFile( $file ){
 
-		//imageInof gets us MIME tyep and size information if it is an image
-		$this->imageInfo = @getimagesize ( $file );
+		if ($this->_isimage){
+			//imageInof gets us MIME type and size information if it is an image
+			$this->imageInfo = @getimagesize ( $file );
+		}
 
 		// Get a hash value from the file
 		$this->fileHash = md5_file ( $this->fileTemp );
-
-
-
 	}
 
 	function uploadFile($uploadPath, $input='kattachment', $ajax=true) {
@@ -157,7 +167,6 @@ class CKunenaUpload {
 					default :
 						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNKNOWN' );
 				}
-				if (!$this->error) $this->checkFileSize($this->fileSize);
 			}
 			else
 			{
@@ -203,7 +212,8 @@ class CKunenaUpload {
 		$uploadedFileNameParts = explode ( '.', $this->fileName );
 		$uploadedFileExtension = array_pop ( $uploadedFileNameParts );
 
-		$validFileExts = explode ( ',', 'jpeg,jpg,png,gif' );
+		$validFileExts = explode ( ',', $this->_config->filetypes );
+		$validImageExts = explode ( ',', $this->_config->imagetypes );
 
 		//assume the extension is false until we know its ok
 		$extOk = false;
@@ -212,6 +222,13 @@ class CKunenaUpload {
 		//then the file extension is ok
 		foreach ( $validFileExts as $key => $value ) {
 			if (preg_match ( "/$value/i", $uploadedFileExtension )) {
+				$this->_isfile = true;
+				$extOk = true;
+			}
+		}
+		foreach ( $validImageExts as $key => $value ) {
+			if (preg_match ( "/$value/i", $uploadedFileExtension )) {
+				$this->_isimage = true;
 				$extOk = true;
 			}
 		}
@@ -221,23 +238,29 @@ class CKunenaUpload {
 			return false;
 		}
 
-		//we are going to define what file extensions/MIMEs are ok, and only let these ones in (whitelisting), rather than try to scan for bad
-		//types, where we might miss one (whitelisting is always better than blacklisting)
-		$okMIMETypes = 'image/jpeg,image/pjpeg,image/png,image/x-png,image/gif';
-		$validFileTypes = explode ( ",", $okMIMETypes );
+		$this->checkFileSize($this->fileSize);
+		// Check again for error and terminate early if we already hit an error
+		if ($this->error) {
+			return false;
+		}
 
-		//for security purposes, we will also do a getimagesize on the temp file (before we have moved it
-		//to the folder) to check the MIME type of the file, and whether it has a width and height
-		$this->imageInfo = @getimagesize ( $this->fileTemp );
-
-
+		// Populate file size and other info
 		$this->processFile($this->fileTemp);
 
+		// Special processing for images
+		if ($this->_isimage){
+			// Let see if we need to check the MIME type
+			if ($this->_config->checkmimetypes){
+				// check against whitelist of MIME types
+				$validFileTypes = explode ( ",", $this->_config->imagemimetypes );
 
-		//if the temp file does not have a width or a height, or it has a non ok MIME, return
-		if (! is_int ( $this->imageInfo [0] ) || ! is_int ( $this->imageInfo [1] ) || ! in_array ( $this->imageInfo ['mime'], $validFileTypes )) {
-			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_MIME' );
-			return false;
+				//if the temp file does not have a width or a height, or it has a non ok MIME, return
+				if (!is_int ( $this->imageInfo [0] ) || !is_int ( $this->imageInfo [1] ) ||
+					!in_array ( $this->imageInfo ['mime'], $validFileTypes )) {
+					$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_MIME' );
+					return false;
+				}
+			}
 		}
 
 		//TODO: Create a new version from the file (if hash is different)
@@ -250,8 +273,8 @@ class CKunenaUpload {
 		}
 		*/
 
-		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath .DS.  $this->fileName )) {
-			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_MOVED'.' '.$uploadPath .  $this->fileName );
+		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
+			$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/'.$this->fileName;
 			return false;
 		}
 

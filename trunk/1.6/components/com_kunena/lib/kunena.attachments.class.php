@@ -36,7 +36,7 @@ class CKunenaAttachments {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
 		$upload = new CKunenaUpload();
 		$upload->uploadFile(KUNENA_PATH_UPLOADED . DS . $this->_my->id, $key, $ajax);
-		$fileinfo = $upload->fileInfo();
+		$fileinfo = $upload->getFileInfo();
 
 		$folder = KUNENA_RELPATH_UPLOADED . '/' . $this->_my->id;
 		if ($fileinfo['ready'] === true) {

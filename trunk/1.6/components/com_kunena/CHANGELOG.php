@@ -34,8 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+
 23-Feb-2010 severdia
 ^ [#19356] New PM icon
++ [#19380] New attachment CSS styles
 
 23-Feb-2010 fxstein
 + [#19380] New MIME imagetype attachment config option

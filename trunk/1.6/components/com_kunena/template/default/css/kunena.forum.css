@@ -1588,13 +1588,33 @@ span.newchar {
 
 #Kunena div.msgattach {
 	overflow: hidden;
-	padding: 5px;
-	margin-top: 5px;
+	padding: 8px;
+	margin-top: 8px;
 	background:#F8F7EF none repeat scroll 0 0;
 	border:1px dotted #BFC3C6;
 	display:block;
 }
-
+#Kunena ul.kfile-attach {
+	margin:0 0 8px 0;
+	padding:0;
+}
+#Kunena ul.kfile-attach li {
+	list-style-type: none;
+	margin-top: 10px;
+	padding-left: 30px;
+	background:url("../images/icons/attachment.gif") no-repeat;
+	height: 32px;
+	line-height: 32px;
+}
+#Kunena ul.kfile-attach li span {
+	padding-left: 10px;
+	vertical-align:top;
+}
+#Kunena ul.kfile-attach li a img {
+	max-width: 32px;
+	max-height: 32px;
+	margin-left: 10px;
+}
 #Kunena span.kmsgtext_xs {
 	font-size: 0.5em;
 }
@@ -3148,7 +3168,7 @@ FORUM TOOLS
 }
 
 /*
-HELP , RULES , UPLOAD AVATAR, ANNOUNCEMENT
+HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 -------------------------------------------------------------------- */
 #Kunena td.khelpdesc,
 #Kunena td.krulesdesc,

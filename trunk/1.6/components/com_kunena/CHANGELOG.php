@@ -34,10 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
-21-Feb-2010 severdia
+23-Feb-2010 severdia
 ^ [#19356] New PM icon
 
-22-Feb-2010 fxstein
+23-Feb-2010 fxstein
 + [#19380] New MIME imagetype attachment config option
 + [#19380] New upload file processing based on config option
 

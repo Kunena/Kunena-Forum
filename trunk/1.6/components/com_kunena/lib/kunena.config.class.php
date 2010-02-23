@@ -286,7 +286,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $imagesize = 150;
 	var $allowfileupload = 0;
 	var $allowfileregupload = 1;
-	var $filetypes = 'zip,txt,doc,gz,tgz';
+	var $filetypes = 'txt,rtf,pdf,zip,gz,tgz,bz2';
 	var $filesize = 120;
 	var $showranking = 1;
 	var $rankimages = 1;
@@ -393,6 +393,8 @@ class CKunenaConfig extends CKunenaConfigBase {
     var $js_actstr_integration = 0;
     // New for 1.6 -> image file types
 	var $imagetypes = 'jpg,jpeg,gif,png';
+    var $checkmimetypes = 1;
+	var $imagemimetypes = 'image/jpeg,image/jpg,image/gif,image/png';
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

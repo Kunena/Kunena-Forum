@@ -985,6 +985,8 @@ function showConfig($option) {
 	// New for 1.6 -> Hide images and files for guests
 	$lists['showimgforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showimgforguest);
 	$lists['showfileforguest'] = JHTML::_('select.genericlist', $yesno, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showfileforguest);
+	// New for 1.6 -> Check Image MIME types
+	$lists['checkmimetypes'] = JHTML::_('select.genericlist', $yesno, 'cfg_checkmimetypes', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->checkmimetypes);
     // New for 1.6 -> Avatar Position
     $avpos = array ();
 	$avpos[] = JHTML::_('select.option', 'top',JText::_('COM_KUNENA_AV_TOP'));

@@ -35,6 +35,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 22-Feb-2010 fxstein
++ [#19380] New MIME imagetype attachment config option
+
+22-Feb-2010 fxstein
 + [#19774] New template loader helper: CKunenaTools::loadTemplate()
 + [#19380] New attachments template (scaffolding)
 + [#19295] Add svn:keywords Id to all new files

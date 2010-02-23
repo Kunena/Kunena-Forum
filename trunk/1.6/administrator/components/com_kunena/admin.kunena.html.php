@@ -1395,6 +1395,24 @@ td.kadmin-tdtitle {
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGECHECKMIMETYPES') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['checkmimetypes'];
+						?>
+						</td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGECHECKMIMETYPES_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES') ?>
+						</td>
+								<td align="left" valign="top"><input type="text" name="cfg_imagemimetypes"
+							value="<?php echo $kunena_config->imagemimetypes;
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_imageheight"

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 1813 2010-01-30 16:38:42Z fxstein $
+* @version $Id$
 * MyKunena Plugin
 * @package MyKunena
 *

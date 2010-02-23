@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunena.ajax.helper.php 1805 2010-01-30 04:01:07Z xillibit $
+ * @version $Id$
  * Kunena Component - CKunenaAjaxHelper class
  * @package Kunena
  *

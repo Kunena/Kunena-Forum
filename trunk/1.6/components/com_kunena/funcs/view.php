@@ -654,46 +654,19 @@ class CKunenaView {
 
 			foreach($this->kunena_message->attachments as $attachment)
 			{
-				// First lets check the attachment file type
-				switch (strtolower($attachment->filetype)){
-					case 'jpg' :
-					case 'image/jpg' :
-					case 'jepg' :
-					case 'image/jepg' :
-					case 'png' :
-					case 'image/png' :
-					case 'gif' :
-					case 'image/gif' :
-						// Filetype indicates an image - check for thumbnail to display
+				// Check if file has been pre-processed
+				if (is_null($attachment->hash)){
+					// This attachment has not been processed.
+					// It migth be a legacy file, or the settings might have been reset.
+					// Force recalculation ...
 
-						// First we need to check if a thumbnail exists - if so - we are going to use it
-						// instead of the fullsize image or file
-
-						// TODO: Add check for thumbnail and display thumb instead
-
-						// TODO: Add config size limiters to image
-						$this->msg_html->attachments[]= '<a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.
-														'<img width="64px" height="64px" src="'.$attachment->folder.'/'.$attachment->filename.'" alt="'.$attachment->filename.'" />'.
-														'</a>'.
-														'<span>'.$attachment->filename.'</span>';
-						break;
-					case 'zip' :
-					case 'pdf' :
-					case 'txt' :
-						// Filetype is a known non-image file type - use type specific icon
-
-						// TODO: Add extension specific icons
-						// TODO: Replace href link with CKunenaLink::Call
-						$this->msg_html->attachments[]= '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
-
-						break;
-					default :
-						// Filetype without thumbnail or icon support - use default file icon
-
-						// TODO: Add generic attachment icon
-						// TODO: Replace href link with CKunenaLink::Call
-						$this->msg_html->attachments[]= '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
+					// TODO: Perform image re-prosessing
 				}
+
+				// shorttype based on MIME type to determine if image for displaying purposes
+				$attachment->shorttype = (stripos($attachment->filetype, 'image/') !== false) ? 'image' : $attachment->filetype;
+
+				$this->msg_html->attachments[] = $attachment;
 			}
 		}
 

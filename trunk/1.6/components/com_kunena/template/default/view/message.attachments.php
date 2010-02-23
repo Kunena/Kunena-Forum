@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: message.contents.php 1952 2010-02-20 03:10:27Z fxstein $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -23,7 +23,27 @@ if ( isset ( $this->msg_html->attachments ) ) { ?>
 		foreach($this->msg_html->attachments as $attachment){
 		?>
 			<li>
-				<?php echo $attachment;?>
+			<?php
+			// First lets check the attachment file type
+			switch (strtolower($attachment->shorttype)){
+				case 'image' :
+
+					// TODO: Add check for thumbnail and display thumb instead
+
+					// TODO: Add config size limiters to image
+					echo '<a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.
+						'<img width="64px" height="64px" src="'.$attachment->folder.'/'.$attachment->filename.'" alt="'.$attachment->filename.'" />'.
+						'</a>'.
+						'<span>'.$attachment->filename.'</span>';
+					break;
+				default :
+					// Filetype without thumbnail or icon support - use default file icon
+
+					// TODO: Add generic attachment icon
+					// TODO: Replace href link with CKunenaLink::Call
+					echo '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
+			}
+			?>
 			</li>
 		<?php
 		}

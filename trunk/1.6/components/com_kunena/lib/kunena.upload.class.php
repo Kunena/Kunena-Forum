@@ -84,6 +84,18 @@ class CKunenaUpload {
 		return ($this->error !== false);
 	}
 
+	function processFile( $file ){
+
+		//imageInof gets us MIME tyep and size information if it is an image
+		$this->imageInfo = @getimagesize ( $file );
+
+		// Get a hash value from the file
+		$this->fileHash = md5_file ( $this->fileTemp );
+
+
+
+	}
+
 	function uploadFile($uploadPath, $input='kattachment', $ajax=true) {
 		$result = array ();
 		$this->error = false;
@@ -218,14 +230,15 @@ class CKunenaUpload {
 		//to the folder) to check the MIME type of the file, and whether it has a width and height
 		$this->imageInfo = @getimagesize ( $this->fileTemp );
 
+
+		$this->processFile($this->fileTemp);
+
+
 		//if the temp file does not have a width or a height, or it has a non ok MIME, return
 		if (! is_int ( $this->imageInfo [0] ) || ! is_int ( $this->imageInfo [1] ) || ! in_array ( $this->imageInfo ['mime'], $validFileTypes )) {
 			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_MIME' );
 			return false;
 		}
-
-		// Our processing, we get a hash value from the file
-		$this->fileHash = md5_file ( $this->fileTemp );
 
 		//TODO: Create a new version from the file (if hash is different)
 		/*

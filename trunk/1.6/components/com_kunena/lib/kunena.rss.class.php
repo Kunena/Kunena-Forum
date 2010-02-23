@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: rss.php - $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

@@ -70,6 +70,11 @@ switch ($task)
 
         break;
 
+    case "moveusermessages":
+        CKunenaToolbar::_MOVEUSERMESSAGES_MENU();
+
+        break;
+
     case "pruneforum":
         CKunenaToolbar::_PRUNEFORUM_MENU();
 

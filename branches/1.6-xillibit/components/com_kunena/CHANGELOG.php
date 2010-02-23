@@ -32,7 +32,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0-DEV
+Kunena 1.6.0-xillibit-special-DEV
+
+23-Feb-2010 Xillibit
++ [#19764] Block/Unblock User in Admin Backend - trash all messages, move to categories and iplog implemented in backend
 
 21-Feb-2010 Xillibit
 # [#19288] Fix regression: Notice: Use of undefined constant _ANN_EDIT - assumed '_ANN_EDIT' in announcement.php
@@ -44,6 +47,8 @@ Kunena 1.6.0-DEV
 ^ [#19358] Display the poll icon only on the first message of the thread
 ^ [#19358] Take care a bit of Class kunena.moderation.class.php
 # [#19668] Show the checkbox for select all the checkboxes only for moderators
+
+Kunena 1.6.0-DEV
 
 21-Feb-2010 Matias
 ^ [#19758] Clean up admin interface: move logo to toolbar, change emoticons path etc..

@@ -187,6 +187,21 @@ switch ($task) {
 
 		break;
 
+	case "trashusermessages" :
+		trashUserMessages ( $option, $uid );
+
+		break;
+
+	case "moveusermessages" :
+		moveUserMessages ( $option, $uid );
+
+		break;
+
+	case "moveusermessagesnow" :
+		moveUserMessagesNow ( $option, $cid );
+
+		break;
+
 	case "showinstructions" :
 		showInstructions ( $kunena_db, $option );
 
@@ -1318,9 +1333,21 @@ function editUserProfile($option, $uid) {
 		$__modCats [] = JHTML::_ ( 'select.option', $_v );
 	}
 
+	//get all IPs used by this user
+	$kunena_db->setQuery ( "SELECT ip, count(ip) AS nbip FROM #__fb_messages WHERE userid=$uid[0] GROUP BY ip" );
+	$ipslist = $kunena_db->loadObjectList ();
+	check_dberror ( 'Unable to load ip for user.' );
+
+	$useridslist = array();
+	foreach ($ipslist as $ip) {
+		$kunena_db->setQuery ( "SELECT userid FROM #__fb_messages WHERE ip='$ip->ip' GROUP BY userid" );
+		$useridslist[$ip->ip] = $kunena_db->loadResultArray ();
+		check_dberror ( 'Unable to load ip for user.' );
+	}
+
 	$modCats = KUNENA_GetAvailableModCats ( $__modCats );
 
-	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats );
+	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $ipslist,$useridslist );
 }
 
 function saveUserProfile($option) {
@@ -1372,6 +1399,56 @@ function saveUserProfile($option) {
 	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=showprofiles" );
+}
+
+function trashUserMessages ( $option, $uid ) {
+	$kunena_db = &JFactory::getDBO ();
+	kunena_app = & JFactory::getApplication ();
+	$uids = implode ( ',', $uid );
+	if ($uids) {
+		$kunena_db->setQuery ( "SELECT id FROM #__fb_messages WHERE userid IN ('$uid')" );
+		$idusermessages = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load message id from fb_messages." );
+		foreach ($idusermessages as $messageID) {
+			//CKunenaModeration::deleteMessage($messageID->id, $DeleteAttachments = false);
+		}
+	}
+	//$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" );
+}
+
+function moveUserMessages ( $option, $uid ){
+	$kunena_db = &JFactory::getDBO ();
+	$return = JRequest::getCmd( 'return', 'edituserprofile', 'post' );
+
+	$kunena_db->setQuery ( "SELECT id,parent,name FROM #__fb_categories" );
+	$catsList = $kunena_db->loadObjectList ();
+	check_dberror ( "Unable to load id from users." );
+	//print_r($catsList);
+	foreach ($catsList as $cat) {
+		if ($cat->parent) {
+			$category[] = JHTML::_('select.option', $cat->id, '...'.$cat->name);
+		} else {
+			$category[] = JHTML::_('select.option', $cat->id, $cat->name);
+		}
+	}
+	$lists = JHTML::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
+
+	html_Kunena::moveUserMessages ( $option, $return, $uid, $lists );
+}
+
+function moveUserMessagesNow ( $option, $cid ) {
+	$kunena_db = &JFactory::getDBO ();
+	$kunena_app = & JFactory::getApplication ();
+	$uid = JRequest::getVar( 'uid', '', 'post' );
+	if ($uid) {
+		$kunena_db->setQuery ( "SELECT id FROM #__fb_messages WHERE userid IN ('$uid')" );
+		$idusermessages = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load message id from fb_messages." );
+		foreach ($idusermessages as $id) {
+			//CKunenaModeration::moveMessage($id->id, $cid[0], $TargetSubject = '', $TargetThreadID = 0);
+		}
+	}
+	//$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" );
 }
 
 //===============================

@@ -2273,7 +2273,7 @@ td.kadmin-tdtitle {
 			//
 			//      include ('components/com_kunena/moderate_user.php');
 			//   }
-			function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats) {
+			function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $ipslist,$useridslist) {
 				$kunena_config = & CKunenaConfig::getInstance ();
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
@@ -2293,7 +2293,7 @@ td.kadmin-tdtitle {
 				</th>
 			</tr>
 		</table>
-\		<table border=0 cellspacing=0 width="100%" align="center" class="adminlist">
+		<table border=0 cellspacing=0 width="100%" align="center" class="adminlist">
 			<tr>
 				<th colspan="3" class="title"><?php echo JText::_('COM_KUNENA_GENPROF'); ?></th>
 			</tr>
@@ -2371,6 +2371,7 @@ td.kadmin-tdtitle {
 		<input type="hidden" name="uid" value="<?php echo $uid; ?>">
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="option" value="com_kunena" />
+		<input type="hidden" name="boxchecked" value="1" />
 	</form>
 	<table border=0 cellspacing=0 width="100%" align="center" class="adminform">
 		<tr>
@@ -2406,6 +2407,48 @@ td.kadmin-tdtitle {
 			}
 			?>
 	</table>
+	<table border=0 cellspacing=0 width="100%" align="center" class="adminform">
+		<tr>
+			<th colspan="2" class="title"><?php
+			echo JText::_('COM_KUNENA_IPFOR');
+			?> <?php
+			echo $username;
+			?>
+			</th>
+		</tr>
+		<?php
+		$i = '0';
+		$k = 0; //value for alternating rows
+
+		$userids='';
+		foreach ($ipslist as $ip) {
+			$userids = array();
+			$k = 1 - $k;
+			$i++;
+			$userids = array_merge($userids,$useridslist[$ip->ip]);
+			$userids=implode(',',$userids);
+			echo "<tr class=\"row$k\">";
+			echo "  <td>".$i.":".$ip->ip." (".$ip->nbip.") ".JText::_('COM_KUNENA_USERIDUSED')." (".$userids.")</td>";
+			echo "  <td>&nbsp;</td>";
+			echo "</tr>";
+		}
+		?>
+	</table>
+	<?php
+		}
+		function moveUserMessages ( $option, $return, $uid, $lists ) {
+	?>
+			<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></div>
+			<form action="index.php" method="post" name="adminForm">
+	<?php
+			echo $lists;
+	?>
+			<input type="hidden" name="boxchecked" value="1">
+			<input type="hidden" name="return" value="<?php echo $return;?>" />
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="option" value="<?php echo $option; ?>" />
+			<input type="hidden" name="uid" value="<?php echo $uid[0]; ?>" />
+			</form>
 	<?php
 		}
 		//**************************

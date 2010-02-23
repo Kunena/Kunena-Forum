@@ -82,11 +82,12 @@ class CKunenaToolbar
 
     function _EDITUSER_MENU()
     {
-
         JToolBarHelper::spacer();
         JToolBarHelper::save('saveuserprofile');
         JToolBarHelper::spacer();
-        JToolBarHelper::cancel('showprofiles', JText::_('COM_KUNENA_BACK'));
+        JToolBarHelper::custom('moveusermessages', 'apply.png', 'apply_f2.png', JText::_('COM_KUNENA_MOVE_USERMESSAGES'));
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('showprofiles', JText::_('COM_KUNENA_CANCEL'));
         JToolBarHelper::spacer();
 
     }
@@ -97,11 +98,21 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::custom('userprofile', 'edit.png', 'edit_f2.png', JText::_('COM_KUNENA_EDIT'));
         JToolBarHelper::spacer();
+        JToolBarHelper::custom('trashusermessages', 'trash.png', 'trash_f2.png', JText::_('COM_KUNENA_TRASH_USERMESSAGES'));
+        JToolBarHelper::spacer();
         JToolBarHelper::cancel();
         JToolBarHelper::spacer();
         JToolBarHelper::back();
         JToolBarHelper::spacer();
 
+    }
+
+    function _MOVEUSERMESSAGES_MENU()
+    {
+		JToolBarHelper::custom('moveusermessagesnow', 'apply.png', 'apply_f2.png', JText::_('COM_KUNENA_MOVE_USERMESSAGES'));
+    	JToolBarHelper::spacer();
+    	JToolBarHelper::cancel('profiles');
+        JToolBarHelper::spacer();
     }
 
     function CSS_MENU()

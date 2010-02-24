@@ -327,9 +327,11 @@ class CKunenaUpload {
 		}
 
 		// Now move thumbnail
-		if (! CKunenaFile::move ( $this->fileTemp.'.thumb', $uploadPath.'/thumb/'.$this->fileName )) {
-			$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/thumb/'.$this->fileName;
-			return false;
+		if ($this->_isimage){
+			if (! CKunenaFile::move ( $this->fileTemp.'.thumb', $uploadPath.'/thumb/'.$this->fileName )) {
+				$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/thumb/'.$this->fileName;
+				return false;
+			}
 		}
 
 		$this->ready = true;

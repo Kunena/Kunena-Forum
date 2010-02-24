@@ -1402,18 +1402,22 @@ function saveUserProfile($option) {
 }
 
 function trashUserMessages ( $option, $uid ) {
+	$path = KUNENA_PATH_LIB  .DS. 'kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
 	$kunena_db = &JFactory::getDBO ();
-	kunena_app = & JFactory::getApplication ();
+	$kunena_app = & JFactory::getApplication ();
 	$uids = implode ( ',', $uid );
 	if ($uids) {
-		$kunena_db->setQuery ( "SELECT id FROM #__fb_messages WHERE userid IN ('$uid')" );
+		//select only the messages which aren't already in the trash
+		$kunena_db->setQuery ( "SELECT id FROM #__fb_messages WHERE hold=0 AND userid IN ('$uids')" );
 		$idusermessages = $kunena_db->loadObjectList ();
 		check_dberror ( "Unable to load message id from fb_messages." );
 		foreach ($idusermessages as $messageID) {
-			//CKunenaModeration::deleteMessage($messageID->id, $DeleteAttachments = false);
+			$kunena_mod->deleteMessage($messageID->id, $DeleteAttachments = false);
 		}
 	}
-	//$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" , JText::_('COM_KUNENA_A_USERMES_TRASHED_DONE'));
 }
 
 function moveUserMessages ( $option, $uid ){
@@ -1423,7 +1427,7 @@ function moveUserMessages ( $option, $uid ){
 	$kunena_db->setQuery ( "SELECT id,parent,name FROM #__fb_categories" );
 	$catsList = $kunena_db->loadObjectList ();
 	check_dberror ( "Unable to load id from users." );
-	//print_r($catsList);
+
 	foreach ($catsList as $cat) {
 		if ($cat->parent) {
 			$category[] = JHTML::_('select.option', $cat->id, '...'.$cat->name);
@@ -1437,18 +1441,23 @@ function moveUserMessages ( $option, $uid ){
 }
 
 function moveUserMessagesNow ( $option, $cid ) {
+	$path = KUNENA_PATH_LIB  .DS. 'kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
 	$uid = JRequest::getVar( 'uid', '', 'post' );
 	if ($uid) {
-		$kunena_db->setQuery ( "SELECT id FROM #__fb_messages WHERE userid IN ('$uid')" );
+		$kunena_db->setQuery ( "SELECT id,thread FROM #__fb_messages WHERE hold=0 AND userid IN ('$uid')" );
 		$idusermessages = $kunena_db->loadObjectList ();
 		check_dberror ( "Unable to load message id from fb_messages." );
-		foreach ($idusermessages as $id) {
-			//CKunenaModeration::moveMessage($id->id, $cid[0], $TargetSubject = '', $TargetThreadID = 0);
+		if ( !empty($idusermessages) ) {
+			foreach ($idusermessages as $id) {
+				$kunena_mod->moveMessage($id->id, $cid[0], $TargetSubject = '', $TargetMessageID = 0);
+			}
 		}
 	}
-	//$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" );
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", JText::_('COM_A_KUNENA_USERMES_MOVED_DONE') );
 }
 
 //===============================

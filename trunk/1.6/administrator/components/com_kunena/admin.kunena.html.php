@@ -1419,7 +1419,7 @@ td.kadmin-tdtitle {
 						?>" /></td>
 						<td align="left" valign="top">
 							<?php echo JText::sprintf('COM_KUNENA_A_IMGSIZE_DESC',
-														ini_get('post_max_size'),
+														ini_get('post_max_size'), ini_get('upload_max_filesize'),
 														php_ini_loaded_file()) ?>
 						</td>
 					</tr>
@@ -1508,7 +1508,7 @@ td.kadmin-tdtitle {
 						?>" /></td>
 						<td align="left" valign="top">
 							<?php echo JText::sprintf('COM_KUNENA_A_FILESIZE_DESC',
-														ini_get('post_max_size'),
+														ini_get('post_max_size'), ini_get('upload_max_filesize'),
 														php_ini_loaded_file()) ?>
 						</td>
 					</tr>

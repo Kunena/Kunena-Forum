@@ -71,7 +71,8 @@ PX		EM			PCT			PT
 
 
 
-/* Main styles  */	
+/* MAIN STYLES
+----------------------------------------------------------------------------------------------- */
 #Kunena td,
 #Kunena table,
 #Kunena th,
@@ -110,6 +111,11 @@ a:focus {outline: none;}
 #Kunena .kxs {
 	/* 9px */
 	font-size: .75em;
+}
+
+#Kunena .kms {
+	/* 10px */
+	font-size: .833em; 
 }
 
 #Kunena .ks,
@@ -173,7 +179,8 @@ a:focus {outline: none;}
 }
 
 #Kunena th.ksectiontableheader {
-	padding: 3px 5px;
+	/* padding: 3px 5px; */
+	padding: 4px 8px;
 	font-weight: normal;
 	font-size: 1em;
 	font-family: Arial, Helvetica, sans-serif;
@@ -888,12 +895,17 @@ td.td-1  {
 	padding-left: 0;
 }
 #Kunena td.kprofileboxcnt ul.kprofilebox_link {
-	margin: 5px 0 ;
+	margin: 5px 0;
 }
-
+#Kunena td.kprofileboxcnt ul.kprofilebox_link li {
+	height: 10px;
+	line-height: 10px;
+	font-size: .917em;
+	margin-top: 5px;
+}
 #Kunena td.kprofileboxcnt ul li {
 	list-style-type:none;
-	display:block;
+	display: block;
 	background: 0 none;
 }
 
@@ -1232,7 +1244,7 @@ div#kheader h1 a:hover {
 }
 
 #Kunena th.ksectiontableheader {
-	height: 25px;
+	/* height: 25px; */
 }
 
 #Kunena tr.ksectiontableentry1 td.td-1 {
@@ -3304,10 +3316,19 @@ div#kprofile-container { border: 1px solid #BFC3C6; padding: 10px 10px 30px 10px
 
 div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
 
-div.avatar-lg { width: 200px; height: 200px; background-color: #FFF; border: 1px solid #999999; margin-bottom: 15px;}
+div.avatar-lg { 
+	width: 200px; 
+	height: 200px; 
+	background-color: #FFF; 
+	border: 1px solid #999999; 
+	display: table-cell;
+	vertical-align:middle;
+	text-align:center;
+}
 
-div.avatar-lg img { margin: 33% auto; display:block; width: auto; height: auto;}
-	
+div.avatar-lg img {	 }
+
+div#kprofile-stats { margin-top: 15px;}
 div#kprofile-stats ul { margin: 0 0 0 3px; padding: 0;}
 
 div#kprofile-stats ul li { list-style-type: none; padding-top: 5px; clear:both; font-size:.917em ;}
@@ -3467,7 +3488,7 @@ div.clrline {
 	line-height: 10px;
 }
 
-div#kprofile-rightcolbot {}
+div#kprofile-rightcolbot { }
 
 div.kprofile-rightcol1 h4 { margin:10px 0 0 0; padding: 0; color: #333333; font-size: 1em; font-weight:bold;}
 
@@ -3512,10 +3533,14 @@ li.usertype {
 	font-weight:bold;
 }
 
+li.kprofile-rank {
+	line-height: 16px;
+	height: 16px;
+}
 li.kprofile-rank img {
-	vertical-align:middle;
+	/* vertical-align:middle;
 	float:right;
-	padding-bottom: 2px;
+	padding-bottom: 2px; */
 }
 
 	
@@ -3524,7 +3549,7 @@ li.kprofile-rank img {
 
 #kprofile-tabs {
 	width: 100%;
-	margin-top: 15px;
+	margin-top: 30px;
 }
 
 dl.tabs {

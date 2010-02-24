@@ -95,11 +95,11 @@ class CKunenaUpload {
 		return ($this->error !== false);
 	}
 
-	function resizeImage( $file ){
-		$source_pic = $file;
-		$destination_pic = $file;
-		$max_width = $this->_config->imagewidth;
-		$max_height = $this->_config->imageheight;
+	function resizeImage( $src, $target, $max_width, $max_height ){
+		$source_pic = $src;
+		$destination_pic = $target;
+//		$max_width = $this->_config->imagewidth;
+//		$max_height = $this->_config->imageheight;
 
 		$src = imagecreatefromjpeg($source_pic);
 		if($src === false){
@@ -136,19 +136,15 @@ class CKunenaUpload {
 		imagedestroy($tmp);
 	}
 
-	function createThumb( $file ){
-
-
-	}
-
 	function uploadFile($uploadPath, $input='kattachment', $ajax=true) {
 		$result = array ();
 		$this->error = false;
 
 		require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
 
-		if (!CKunenaFolder::exists($uploadPath)) {
-			if (!CKunenaFolder::create($uploadPath)) {
+		// create thumb and upload directory if it does not exist
+		if (!CKunenaFolder::exists($uploadPath.'/thumb')) {
+			if (!CKunenaFolder::create($uploadPath.'/thumb')) {
 				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' );
 				return false;
 			}
@@ -310,22 +306,30 @@ class CKunenaUpload {
 		}
 		*/
 
-		// If this is a valid image we need to check dimensions and resize the image if it is too big
+		// If this is a valid image we need to resize/resample it to the config settings
 		if ($this->_isimage){
-			$this->resizeImage($this->fileTemp);
+			// Replace the file itself with a resized version of it
+			$this->resizeImage($this->fileTemp, $this->fileTemp, $this->_config->imagewidth, $this->_config->imageheight);
 			if ($this->error) {
+				return false;
+			}
+			// If the resize was successful we create a thumbnail
+			$this->resizeImage($this->fileTemp, $this->fileTemp.'.thumb', $this->_config->thumbwidth, $this->_config->thumbheight);
+						if ($this->error) {
 				return false;
 			}
 		}
 
+		// First move actual file
 		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
 			$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/'.$this->fileName;
 			return false;
 		}
 
-		// If this is a valid image we need to create a thumbnail for it
-		if ($this->_isimage){
-			$this->createThumb($this->fileName);
+		// Now move thumbnail
+		if (! CKunenaFile::move ( $this->fileTemp.'.thumb', $uploadPath.'/thumb/'.$this->fileName )) {
+			$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/thumb/'.$this->fileName;
+			return false;
 		}
 
 		$this->ready = true;

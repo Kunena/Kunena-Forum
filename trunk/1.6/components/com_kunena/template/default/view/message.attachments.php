@@ -28,13 +28,19 @@ if ( isset ( $this->msg_html->attachments ) ) { ?>
 			switch (strtolower($attachment->shorttype)){
 				case 'image' :
 
-					// TODO: Add check for thumbnail and display thumb instead
+					// Check for thumbnail and if available, use for display
+					if (file_exists(JPATH_ROOT.$attachment->folder.'/thumb/'.$attachment->filename)){
+						$thumb = $attachment->folder.'/thumb/'.$attachment->filename;
+						$imgsize = '';
+					} else {
+						$thumb = $attachment->folder.'/'.$attachment->filename;
+						$imgsize = 'width="'.$kunena_config->thumbwidth.'px" height="'.$kunena_config->thumbheight.'px"';
+					}
 
-					// TODO: Add config size limiters to image
 					echo '<a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.
-						'<img width="64px" height="64px" src="'.$attachment->folder.'/'.$attachment->filename.'" alt="'.$attachment->filename.'" />'.
+						'<img '.$imgsize.' src="'.$thumb.'" alt="'.$attachment->filename.'" />'.
 						'</a>'.
-						'<span>'.$attachment->filename.'</span>';
+						'<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon

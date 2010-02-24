@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 24-Feb-2010 fxstein
 + [#19380] Extended upload (part 2) automatic resize
++ [#19380] Extended upload (part 3) automatic thumbnail creation and display
 
 23-Feb-2010 severdia
 ^ [#19356] New PM icon

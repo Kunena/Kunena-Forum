@@ -781,16 +781,58 @@ if ($kunena_my->id) {
 					?></strong>. <br />
 
 		<br />
-		<?php
-					echo JText::_('COM_KUNENA_POST_ABOUT_DELETE');
-					?><br />
 
-		<br />
+		<a href="javascript:document.myform.submit();"><?php
+					echo JText::_('COM_KUNENA_GEN_CONTINUE');
+					?></a> | <?php
+					echo CKunenaLink::GetThreadLink('view', $catid, $id, JText::_('COM_KUNENA_GEN_CANCEL'), JText::_('COM_KUNENA_GEN_CANCEL'), 'nofollow');
+					?></form>
 
-		<input type="checkbox" checked name="delAttachments" value="delAtt" />
 		<?php
-					echo JText::_('COM_KUNENA_POST_DELETE_ATT');
-					?> <br />
+				}
+			} else if ($do == "deletepostnow") {
+				$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
+				require_once ($path);
+				$kunena_mod = &CKunenaModeration::getInstance();
+
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+				}
+
+				$delete = $kunena_mod->deleteMessage($id, $DeleteAttachments = false);
+				if (!$delete) {
+					echo $kunena_mod->getErrorMessage();
+				}
+
+				echo CKunenaLink::GetLatestCategoryAutoRedirectHTML ( $catid );
+
+			} //fi $do==deletepostnow
+			else if ($do == "deletethread") {
+				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
+					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+				}
+
+				$kunena_db->setQuery ( "SELECT * FROM #__fb_messages WHERE id='{$id}'" );
+				$message = $kunena_db->loadObjectList ();
+				check_dberror ( "Unable to load messages." );
+
+				foreach ( $message as $mes ) {
+					?>
+
+		<form
+			action="<?php
+					echo CKunenaLink::GetPostURL($catid);
+					?>"
+			method="post" name="myform"><input type="hidden" name="do"
+			value="deletethreadnow" /> <input type="hidden" name="id"
+			value="<?php
+					echo $mes->id;
+					?>" /> <?php
+					echo JText::_('COM_KUNENA_POST_ABOUT_TO_DELETE');
+					?>:
+		<strong><?php
+					echo stripslashes ( kunena_htmlspecialchars ( $mes->subject ) );
+					?></strong>. <br />
 
 		<br />
 
@@ -802,58 +844,25 @@ if ($kunena_my->id) {
 
 		<?php
 				}
-			} else if ($do == "deletepostnow") {
+			} else if ($do == "deletethreadnow") {
+				$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
+				require_once ($path);
+				$kunena_mod = &CKunenaModeration::getInstance();
+
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
 
-				$dellattach = JRequest::getVar ( 'delAttachments', '' ) == 'delAtt' ? 1 : 0;
-				$thread = fb_delete_post ( $kunena_db, $id, $dellattach );
 
-				CKunenaTools::reCountBoards ();
-
-				switch ($thread) {
-					case - 1 :
-						echo JText::_('COM_KUNENA_POST_ERROR_TOPIC') . '<br />';
-
-						echo JText::_('COM_KUNENA_POST_DEL_ERR_CHILD');
-						break;
-
-					case - 2 :
-						echo JText::_('COM_KUNENA_POST_ERROR_TOPIC') . '<br />';
-
-						echo JText::_('COM_KUNENA_POST_DEL_ERR_MSG');
-						break;
-
-					case - 3 :
-						echo JText::_('COM_KUNENA_POST_ERROR_TOPIC') . '<br />';
-
-						$tmpstr = JText::_('COM_KUNENA_POST_DEL_ERR_TXT');
-						$tmpstr = str_replace ( '%id%', $id, $tmpstr );
-						echo $tmpstr;
-						break;
-
-					case - 4 :
-						echo JText::_('COM_KUNENA_POST_ERROR_TOPIC') . '<br />';
-
-						echo JText::_('COM_KUNENA_POST_DEL_ERR_USR');
-						break;
-
-					case - 5 :
-						echo JText::_('COM_KUNENA_POST_ERROR_TOPIC') . '<br />';
-
-						echo JText::_('COM_KUNENA_POST_DEL_ERR_FILE');
-						break;
-
-					default :
-						echo '<br /><br /><div align="center">' . JText::_('COM_KUNENA_POST_SUCCESS_DELETE') . "</div><br />";
-
-						break;
+				$delete = $kunena_mod->deleteThread($id, $DeleteAttachments = false);
+				if (!$delete) {
+					echo $kunena_mod->getErrorMessage();
 				}
+
 				echo CKunenaLink::GetLatestCategoryAutoRedirectHTML ( $catid );
 
-			} //fi $do==deletepostnow
-else if ($do == "move") {
+			} //fi $do==deletethreadnow
+			else if ($do == "move") {
 				if (! CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
@@ -1064,90 +1073,18 @@ else if ($do == "move") {
 </table>
 
 <?php
-/**
- * Function to delete posts
- *
- * @param database object
- * @param int the id if the post to be deleted
- * @param boolean determines if we need to delete attachements as well
- *
- * @return int returns thread id if all went well, -1 to -4 are error numbers
- **/
-function fb_delete_post(&$kunena_db, $id, $dellattach) {
-	$kunena_db->setQuery ( "SELECT id, catid, parent, thread, subject, userid FROM #__fb_messages WHERE id='{$id}'" );
-
-	if (! $kunena_db->query ()) {
-		return - 2;
-	}
-
-	$mes = $kunena_db->loadObject ();
-	$thread = $mes->thread;
-
-	$userid_array = array ();
-	if ($mes->parent == 0) {
-		// this is the forum topic; if removed, all children must be removed as well.
-		$children = array ();
-		$kunena_db->setQuery ( "SELECT userid, id, catid FROM #__fb_messages WHERE thread='{$id}' OR id='{$id}'" );
-
-		foreach ( $kunena_db->loadObjectList () as $line ) {
-			$children [] = $line->id;
-
-			if ($line->userid > 0) {
-				$userid_array [] = $line->userid;
-			}
-		}
-
-		$children = implode ( ',', $children );
-		$userids = implode ( ',', $userid_array );
-	} else {
-		//this is not the forum topic, so delete it and promote the direct children one level up in the hierarchy
-		$kunena_db->setQuery ( 'UPDATE #__fb_messages SET parent=\'' . $mes->parent . '\' WHERE parent=\'' . $id . '\'' );
-
-		if (! $kunena_db->query ()) {
-			return - 1;
-		}
-
-		$children = $id;
-		$userids = $mes->userid > 0 ? $mes->userid : '';
-	}
-
-	//Delete the post (and it's children when it's the first post)
-	$kunena_db->setQuery ( 'UPDATE #__fb_messages SET hold=2 WHERE id=' . $id . ' OR thread=' . $id );
-
-	if (! $kunena_db->query ()) {
-		return - 2;
-	}
-
-	//Delete (possible) ghost post
-	$kunena_db->setQuery ( "SELECT mesid FROM #__fb_messages_text WHERE message='catid={$mes->catid}&amp;id={$id}'" );
-	$int_ghost_id = $kunena_db->loadResult ();
-
-	if ($int_ghost_id > 0) {
-		$kunena_db->setQuery ( 'UPDATE #__fb_messages SET hold=2 WHERE id=' . $int_ghost_id );
-		$kunena_db->query ();
-	}
-
-	// Already done outside - see dodelete code above
-	//    CKunenaTools::reCountBoards();
-
-
-	return $thread; // all went well :-)
-}
-
 function listThreadHistory($id, $kunena_config, $kunena_db) {
 	if ($id != 0) {
-		//get the parent# for the post on which 'reply' or 'quote' is chosen
-		$kunena_db->setQuery ( "SELECT parent FROM #__fb_messages WHERE id='{$id}'" );
-		$this_message_parent = $kunena_db->loadResult ();
-		//Get the thread# for the same post
-		$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$id}'" );
-		$this_message_thread = $kunena_db->loadResult ();
+		//get the parent# and  the thread#  for the post on which 'reply' or 'quote' is chosen
+		$kunena_db->setQuery ( "SELECT thread,parent FROM #__fb_messages WHERE id='{$id}'" );
+		$this_message = $kunena_db->loadObjectlist ();
+		check_dberror ( "Unable to load messages." );
 
 		//determine the correct thread# for the entire thread
-		if ($this_message_parent == 0) {
+		if ($this_message[0]->parent == 0) {
 			$thread = $id;
 		} else {
-			$thread = $this_message_thread;
+			$thread = $this_message[0]->thread;
 		}
 
 		//get all the messages for this thread

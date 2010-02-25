@@ -285,15 +285,19 @@ class CKunenaModeration {
 		// Always check security clearance before taking action!
 		// An author should be able to delete her/his own message, without deleting an
 		// entire thread should there be any responses in that thread.
-		$this->_db->setQuery ( "SELECT `id` FROM #__fb_messages WHERE `userid`={$this->_my->id} AND `thread`='{$currentMessage[0]->thread}'" );
-		$allReplies = $this->_db->loadResultArray ();
-		check_dberror ( "Unable to load message." );
-		$lastReply = array_pop($allReplies);
+		if ( !CKunenaTools::isModerator($this->_my->id) ) {
+			$this->_db->setQuery ( "SELECT `id` FROM #__fb_messages WHERE `userid`={$this->_my->id} AND `thread`='{$currentMessage[0]->thread}'" );
+			$allReplies = $this->_db->loadResultArray ();
+			check_dberror ( "Unable to load message." );
 
-		if ($lastReply != $MessageID) {
-			//author not allowed to delete his post
-			$this->_errormsg = 'Author not allowed to delete his post because there are replies.';
-			return false;
+			if ( count($allReplies) != '0' ) {
+				$lastReply = array_pop($allReplies);
+				if ($lastReply != $MessageID) {
+					//author not allowed to delete his post
+					$this->_errormsg = 'Author not allowed to delete his post because there are replies.';
+					return false;
+				}
+			}
 		}
 
 		// Test parameters to see if they are valid selecions or abord

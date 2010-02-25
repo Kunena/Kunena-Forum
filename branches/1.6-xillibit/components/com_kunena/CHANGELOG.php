@@ -37,6 +37,7 @@ Kunena 1.6.0-xillibit-special-DEV
 25-Feb-2010 Xillibit
 + [#19332] Change Delete behavior - add search function and now delete attachments with CKunenaModeration on kunena_attachments
 + [#19807] Add in search options, the options to search in trash for moderators
+^ [#19764] Make delete a post and delete a thread unsing CKunenaModeration working in frontend
 
 24-Feb-2010 Xillibit
 ^ [#19764] Make delete and move functions in CKunenaModeration class functionnals (not fully tested)

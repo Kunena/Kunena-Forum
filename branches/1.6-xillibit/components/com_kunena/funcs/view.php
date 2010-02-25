@@ -296,7 +296,7 @@ class CKunenaView {
 			} else {
 				$this->thread_lock = CKunenaLink::GetTopicPostLink ( 'unlock', $this->catid, $this->id, CKunenaTools::showButton ( 'lock', JText::_('COM_KUNENA_BUTTON_UNLOCK_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNLOCK_TOPIC_LONG') );
 			}
-			$this->thread_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_TOPIC_LONG') );
+			$this->thread_delete = CKunenaLink::GetTopicPostLink ( 'deletethread', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_TOPIC_LONG') );
 			$this->thread_merge = CKunenaLink::GetTopicPostLink ( 'merge', $this->catid, $this->id, CKunenaTools::showButton ( 'merge', JText::_('COM_KUNENA_BUTTON_MERGE_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MERGE_TOPIC_LONG') );
 		}
 

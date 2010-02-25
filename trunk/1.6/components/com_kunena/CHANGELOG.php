@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 24-Feb-2010 severdia
 # [#19356] Random CSS fixes for UI
++ [#19356] New greyed out social/message icons (needs logic)
 
 24-Feb-2010 fxstein
 + [#19380] Extended upload (part 2) automatic resize

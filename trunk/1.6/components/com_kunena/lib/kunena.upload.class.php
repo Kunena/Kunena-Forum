@@ -82,7 +82,7 @@ class CKunenaUpload {
 		//check for filesize
 		if ( $fileSize <= 0 )
 		{
-			 $this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_EMPTY_FILE' );
+			 $this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_SIZE_0' );
 		}
 
 		if (!$this->_isfile && !$this->_isimage){
@@ -130,7 +130,7 @@ class CKunenaUpload {
 		if ($quality < 1 || $quality > 100) $quality = 60;
 
 		if (!imagejpeg($tmp,$destination_pic,$quality)){
-			$this->error = JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_RESIZE_SAVE');
+			$this->error = JText::_( 'COM_KUNENA_UPLOAD_ERROR_RESIZE_SAVE');
 		}
 		imagedestroy($src);
 		imagedestroy($tmp);
@@ -192,7 +192,7 @@ class CKunenaUpload {
 						break;
 
 					case 8 : // UPLOAD_ERR_EXTENSION, PHP 5.2.0
-						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION' );
+						$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION' );
 						break;
 
 					default :
@@ -201,7 +201,7 @@ class CKunenaUpload {
 			}
 			else
 			{
-				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNDEFINED' );
+				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_FORM_UNDEFINED' );
 			}
 			if (!$this->error && !is_uploaded_file ( $file ['tmp_name'] )) {
 				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED' );
@@ -231,7 +231,7 @@ class CKunenaUpload {
 					return $this->status;
 				}
 			} else {
-				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_OUTPUT' );
+				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CANT_WRITE' );
 			}
 		}
 		// Terminate early if we already hit an error
@@ -265,7 +265,7 @@ class CKunenaUpload {
 		}
 
 		if ($extOk == false) {
-			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION' );
+			$this->error = JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION', $this->_config->imagetypes, $this->_config->filetypes );
 			return false;
 		}
 
@@ -322,14 +322,14 @@ class CKunenaUpload {
 
 		// First move actual file
 		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
-			$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/'.$this->fileName;
+			$this->error = JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/'.$this->fileName);
 			return false;
 		}
 
 		// Now move thumbnail
 		if ($this->_isimage){
 			if (! CKunenaFile::move ( $this->fileTemp.'.thumb', $uploadPath.'/thumb/'.$this->fileName )) {
-				$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/thumb/'.$this->fileName;
+				$this->error = JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/thumb/'.$this->fileName);
 				return false;
 			}
 		}

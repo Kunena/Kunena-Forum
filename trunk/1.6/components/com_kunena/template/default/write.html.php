@@ -296,15 +296,16 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 
 		<?php
 		if ($kunena_config->allowfileupload || ($kunena_config->allowfileregupload && $kunena_my->id != 0) || ($kunena_config->allowimageupload || ($kunena_config->allowimageregupload && $kunena_my->id != 0) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid ))) {
-/*			$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
-			$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );*/
+			//$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
+			//$document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 			?>
 		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS');
 			?></strong></td>
 		<td>
-			<div id="kattachment"><input name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
+			<div id="kattachment"><input id="kupload" name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
+			<div id="kattachmentsnote"></div>
 		</td>
 		</tr>
 

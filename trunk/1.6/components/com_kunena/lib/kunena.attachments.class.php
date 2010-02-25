@@ -49,7 +49,7 @@ class CKunenaAttachments {
 				$this->_db->quote ( $fileinfo['name'] ) . ")" );
 
 				if (! $this->_db->query () || $this->_db->getErrorNum()) {
-				$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_DATABASE_STORE'));
+				$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_ATTACHMENT_DATABASE_STORE'));
 				$fileinfo = $upload->fileInfo();
 			}
 		}

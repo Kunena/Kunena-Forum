@@ -920,6 +920,7 @@ function cancelForm() {
 
 function newAttachment() {
 	var kattachment = $('kattachment');
+	if (!kattachment) return;
 	kattachment.setStyle('display', 'none').getElement('input').setProperty('value', '').setStyle('display', 'none');
 	var id = kattachment.retrieve('nextid',1);
 	kattachment.store('nextid',id+1);
@@ -947,13 +948,13 @@ window.addEvent('domready', function() {
 /* Plupload hooks: promising piece of software, but not ready for production use */
 /*
 window.addEvent('domready', function() {
-	kuploadfiles = $('kuploadfiles');
-	if (typeof(plupload) == 'object' && kuploadfiles) {
+	kupload = $('kupload');
+	if (typeof(plupload) == 'object' && kupload) {
 		var uploader = new plupload.Uploader({
 			//runtimes : 'gears,silverlight,flash,html5,html4',
-			runtimes : 'html4',
-			browse_button : 'kuploadfiles',
-			max_file_size : '1mb',
+			runtimes : 'flash,html4',
+			browse_button : 'kupload',
+			max_file_size : '4mb',
 			url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>',
 			//resize : {width : 320, height : 240, quality : 90},
 			flash_swf_url : '<?php echo KUNENA_DIRECTURL;?>/js/plupload/plupload.flash.swf',
@@ -974,10 +975,10 @@ window.addEvent('domready', function() {
 		uploader.bind('FilesAdded', function(up, files) {
 			$each(files, function(file, i) {
 				fileDiv = new Element('div', {id: file.id, html: file.name + ' (' + plupload.formatSize(file.size) + ') <a></a> <b></b>'});
-				fileDiv.inject($('kattachments'), 'bottom');
+				fileDiv.inject($('kattachment'), 'before');
 				$$('#'+file.id+' a').addEvent('click', function(e) { $(file.id).dispose(); uploader.removeFile(file); return false;});
 			});
-			$('kuploadfiles').fireEvent('upload', null, 500);
+			$('kupload').fireEvent('upload', null, 500);
 		});
 
 		uploader.bind('UploadProgress', function(up, file) {
@@ -988,11 +989,11 @@ window.addEvent('domready', function() {
 			$$("#" + file.id + " b").set('html', file.response);
 		});
 
-		kuploadfiles.addEvent('upload', function() {
+		kupload.addEvent('upload', function() {
 			uploader.start();
 		});
 
-		kuploadfiles.setProperty('value', '');
+		kupload.setProperty('value', '');
 		uploader.init();
 	}
 });

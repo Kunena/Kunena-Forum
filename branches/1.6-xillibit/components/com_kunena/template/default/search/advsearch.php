@@ -211,6 +211,25 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                             <span onClick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
                             </label>
                     </fieldset>
+                    <?php if ( CKunenaTools::isModerator($this->my->id) ) { ?>
+                    <fieldset class="fieldset">
+                        <legend>
+                            <?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_TRASH'); ?>
+                        </legend>
+                          <label id="activetrashed" for="activetrashed">
+                          <input type="radio" name="activetrashed" value="postactive" <?php if ($this->params['activetrashed']=='postactive') echo 'checked="checked"'; ?> />
+                            <span onClick="document.adminForm.activetrashed.checked=(! document.adminForm.activetrashed.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_ACTIVEPOSTS'); ?></span><br/>
+                          <input type="radio" name="activetrashed" value="unapproved" <?php if ($this->params['activetrashed']=='unapproved') echo 'checked="checked"'; ?> />
+                          <span onClick="document.adminForm.activetrashed.checked=(! document.adminForm.activetrashed.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_UNAPPROVED'); ?></span><br/>
+                          <input type="radio" name="activetrashed" value="trashed" <?php if ($this->params['activetrashed']=='trashed') echo 'checked="checked"'; ?> />
+                            <span onClick="document.adminForm.activetrashed.checked=(! document.adminForm.activetrashed.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_TRASHED'); ?></span><br/>
+                          <input type="radio" name="activetrashed" value="activetrashed" <?php if ($this->params['activetrashed']=='activetrashed') echo 'checked="checked"'; ?> />
+                            <span onClick="document.adminForm.activetrashed.checked=(! document.adminForm.activetrashed.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_ACTIVE_TRASHED'); ?></span><br/>
+                            <input type="radio" name="activetrashed" value="allplace" <?php if ($this->params['activetrashed']=='allplace') echo 'checked="checked"'; ?> />
+                            <span onClick="document.adminForm.activetrashed.checked=(! document.adminForm.activetrashed.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALL'); ?></span>
+                            </label>
+                    </fieldset>
+                    <?php } ?>
                 </td>
             </tr>
         </tbody>

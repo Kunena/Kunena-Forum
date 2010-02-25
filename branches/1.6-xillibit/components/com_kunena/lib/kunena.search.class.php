@@ -47,7 +47,7 @@ class CKunenaSearch {
 	/** limit **/
 	var $limit;
 	/** defaults **/
-	var $defaults = array ('titleonly' => 0, 'searchuser' => '', 'starteronly' => 0, 'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost', 'order' => 'dec', 'catids' => '0' );
+	var $defaults = array ('titleonly' => 0, 'searchuser' => '', 'starteronly' => 0, 'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost', 'order' => 'dec', 'catids' => '0', 'activetrashed' => 'active' );
 	/**
 	 * Search constructor
 	 * @param limitstart First shown item
@@ -80,6 +80,7 @@ class CKunenaSearch {
 		$q = stripslashes ( JString::trim ( $q ) );
 		$this->params ['titleonly'] = JRequest::getInt ( 'titleonly', $this->defaults ['titleonly'] );
 		$this->params ['searchuser'] = stripslashes ( JRequest::getVar ( 'searchuser', $this->defaults ['searchuser'] ) );
+		$this->params ['activetrashed'] = stripslashes ( JRequest::getVar ( 'activetrashed' ) );
 		$this->params ['starteronly'] = JRequest::getInt ( 'starteronly', $this->defaults ['starteronly'] );
 		$this->params ['exactname'] = JRequest::getInt ( 'exactname', $this->defaults ['exactname'] );
 		$this->params ['replyless'] = JRequest::getInt ( 'replyless', $this->defaults ['replyless'] );
@@ -199,8 +200,22 @@ class CKunenaSearch {
 
 		/* build query */
 		$querystrings [] = "m.moved='0'";
-		$querystrings [] = "m.hold='0'";
 		$querystrings [] = "m.catid IN ({$search_forums})";
+
+		//Search in trash
+		if (JString::strlen ( $this->params ['activetrashed'] ) > 0) {
+			if ( $this->params ['activetrashed'] == 'postactive' ) {
+				$querystrings [] = "m.hold='0'";
+			} elseif ( $this->params ['activetrashed'] == 'activetrashed' ) {
+				$querystrings [] = "m.hold IN(0,2)";
+			} elseif ( $this->params ['activetrashed'] == 'trashed' ) {
+				$querystrings [] = "m.hold='2'";
+			} elseif ( $this->params ['activetrashed'] == 'unapproved' ) {
+				$querystrings [] = "m.hold='1'";
+			} elseif ( $this->params ['activetrashed'] == 'allplace' ) {
+				$querystrings [] = "m.hold IN(0,1,2)";
+			}
+		}
 		$where = implode ( ' AND ', $querystrings );
 
 		$groupby = array ();

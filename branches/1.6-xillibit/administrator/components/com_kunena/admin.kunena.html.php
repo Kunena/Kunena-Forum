@@ -2428,7 +2428,7 @@ td.kadmin-tdtitle {
 			$userids = array_merge($userids,$useridslist[$ip->ip]);
 			$userids=implode(',',$userids);
 			echo "<tr class=\"row$k\">";
-			echo "  <td>".$i.":".$ip->ip." (".$ip->nbip.") ".JText::_('COM_KUNENA_USERIDUSED')." (".$userids.")</td>";
+			echo "  <td>".$i.":".$ip->ip." ".JText::_('COM_KUNENA_IP_OCCURENCES')." (".$ip->nbip.") ".JText::_('COM_KUNENA_USERIDUSED')." (".$userids.")</td>";
 			echo "  <td>&nbsp;</td>";
 			echo "</tr>";
 		}

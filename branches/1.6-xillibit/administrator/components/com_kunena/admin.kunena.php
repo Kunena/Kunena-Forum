@@ -2161,6 +2161,8 @@ function showtrashview($option) {
 	$kunena_db = &JFactory::getDBO ();
 	$filter_order		= $kunena_app->getUserStateFromRequest( $option.'filter_order',		'filter_order',		'subject', 'cmd' );
 	$filter_order_Dir	= $kunena_app->getUserStateFromRequest( $option.'filter_order_Dir',	'filter_order_Dir',	'asc',			'word' );
+	$search				= $kunena_app->getUserStateFromRequest( $option.'search',						'search', 			'',			'string' );
+	$search				= JString::strtolower( $search );
 
 	$order = JRequest::getVar ( 'order', '' );
 	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
@@ -2173,12 +2175,19 @@ function showtrashview($option) {
 	if ($limit == 0 || $limit > 100)
 		$limit = 100;
 
+	$where 	= ' WHERE hold=2 ';
+
+	if ($search) {
+		$where .= ' AND LOWER( a.subject ) LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false ).' OR LOWER( c.username )LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false ).' OR  a.thread LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false );
+	}
+
 	$orderby = ' ORDER BY '. $filter_order .' '. $filter_order_Dir;
 
 	$query = 'SELECT a.*, b.name AS cats_name, c.username FROM #__fb_messages AS a
 	INNER JOIN #__fb_categories AS b ON a.catid=b.id
-	LEFT JOIN #__users AS c ON a.userid=c.id
-	WHERE hold=2'.$orderby;
+	LEFT JOIN #__users AS c ON a.userid=c.id'
+	.$where
+	.$orderby;
 	$kunena_db->setQuery ( $query, $limitstart, $limit );
 	$trashitems = $kunena_db->loadObjectList ();
 	check_dberror ( "Unable to load messages." );
@@ -2189,6 +2198,9 @@ function showtrashview($option) {
 
 	jimport ( 'joomla.html.pagination' );
 	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
+
+	$lists['search']= $search;
+
 	html_Kunena::showtrashview ( $option, $trashitems, $pageNavSP, $lists );
 }
 
@@ -2209,6 +2221,9 @@ function trashpurge($option, $cid) {
 function deleteitemsnow ( $option, $cid ) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
+	$path = KUNENA_PATH_LIB  .DS. 'kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
 
 	$cids = implode ( ',', $cid );
 	if ($cids) {
@@ -2251,22 +2266,10 @@ function deleteitemsnow ( $option, $cid ) {
 			check_dberror ( "Unable to update users posts." );
 		}
 
-
-		$kunena_db->setQuery ( 'SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
-		$fileList = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to load attachments." );
-
-		if (count ( $fileList ) > 0) {
-			foreach ( $fileList as $fl ) {
-				if (file_exists ( $fl->filelocation )) {
-					unlink ( $fl->filelocation );
-				}
-			}
-
-			$kunena_db->setQuery ( 'DELETE FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
-			$kunena_db->query ();
-			check_dberror ( "Unable to delete attachements." );
+		foreach ($cid as $MessageID) {
+			$kunena_mod->deleteAttachments($MessageID);
 		}
+
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_('COM_KUNENA_TRASH_DELETE_DONE') );

@@ -34,8 +34,11 @@ Legend:
 
 Kunena 1.6.0-xillibit-special-DEV
 
+25-Feb-2010 Xillibit
++ [#19332] Change Delete behavior - add search function and now delete attachments with CKunenaModeration on kunena_attachments
+
 24-Feb-2010 Xillibit
-^ [#19764] Make delete and move functions in CKunenaModeration class functionnals
+^ [#19764] Make delete and move functions in CKunenaModeration class functionnals (not fully tested)
 
 23-Feb-2010 Xillibit
 + [#19764] Block/Unblock User in Admin Backend - trash all messages, move to categories and iplog implemented in backend

@@ -185,7 +185,7 @@ class CKunenaModeration {
 		$subjectupdatesql = $TargetSubject != '' ? "`subject`='$TargetSubject'" : "";
 
 		switch ($mode) {
-			case KN_MOVE_MESSAGE : // Move Single message only				
+			case KN_MOVE_MESSAGE : // Move Single message only
 				if ($TargetMessageID == 0) {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$MessageID', `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
 				} else {
@@ -301,7 +301,7 @@ class CKunenaModeration {
 		// Check if message to delete exists
 		if (empty ( $currentMessage[0]->id )) {
 			// Message not found. Cannot proceed with delete
-			$this->_errormsg = 'Message to move not found.';
+			$this->_errormsg = 'Message to delete not found.';
 			return false;
 		}
 
@@ -314,7 +314,17 @@ class CKunenaModeration {
 				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `thread`='{$currentMessage[0]->thread}';";
 			break;
 			case KN_DEL_ATTACH : //Delete only the attachments
+				jimport('joomla.filesystem.file');
+				$this->_db->setQuery ( "SELECT `userid`,`filename` FROM #__kunena_attachments WHERE `mesid`='$MessageID';" );
+				$fileList = $this->_db->loadObjectList ();
+				check_dberror ( "Unable to load attachments." );
 				$sql = "DELETE FROM #__kunena_attachments WHERE `mesid`='$MessageID';";
+				$filetoDelete = JPATH_ROOT.DS.'media'.DS.'kunena'.DS.'attachments'.DS.$fileList[0]->userid.DS.$fileList[0]->filename;
+				if (JFile::exists($filetoDelete)) {
+					JFile::delete($filetoDelete);
+				} else {
+					$this->_errormsg = 'Impossible to delete the attachment, the file doesn\'t exist.';
+				}
 			break;
 			default :
 				// Unsupported mode - Error!

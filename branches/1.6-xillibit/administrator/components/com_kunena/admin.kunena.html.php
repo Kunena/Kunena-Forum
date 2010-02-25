@@ -3010,6 +3010,18 @@ td.kadmin-tdtitle {
 		<div class="kadmin-functitle icon-trash"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%"></table>
+			<table>
+				<tr>
+					<td align="left" width="100%">
+						<?php echo JText::_( 'Filter' ); ?>:
+						<input type="text" name="search" id="search" value="<?php echo $lists['search'];?>" class="text_area" onchange="document.adminForm.submit();" />
+						<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
+						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+					</td>
+					<td nowrap="nowrap">
+					</td>
+				</tr>
+			</table>
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
 				<tr>
 					<th width="20" align="center">#</th>

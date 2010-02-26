@@ -702,14 +702,20 @@ class CKunenaTools {
 			check_dberror ( "Unable to load ranks." );
 		}
 
+		// Default rank
 		$rank = new stdClass();
 		$rank->rank_id = false;
-		$rank->rank_title = JText::_('COM_KUNENA_VIEW_USER');
+		$rank->rank_title = JText::_('COM_KUNENA_RANK_USER');
 		$rank->rank_min = 0;
 		$rank->rank_special = 0;
-		$rank->rank_image = 'rank6.gif';
+		$rank->rank_image = 'rank0.gif';
 
-		if ($profile->rank != '0' && isset($ranks[$profile->rank])) {
+		if ($profile->userid == 0) {
+			$rank->rank_id = 0;
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_VISITOR');
+			$rank->rank_special = 1;
+		}
+		else if ($profile->rank != '0' && isset($ranks[$profile->rank])) {
 			$rank = $ranks[$profile->rank];
 		}
 		else if ($profile->rank == '0' && self::isAdmin($profile->userid)) {

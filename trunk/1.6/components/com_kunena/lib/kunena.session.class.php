@@ -12,7 +12,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
+require_once (KUNENA_PATH .DS. "class.kunena.php");
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
 class CKunenaSession extends JTable

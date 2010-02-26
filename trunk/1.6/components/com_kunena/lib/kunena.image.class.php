@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: message.attachments.php 1997 2010-02-26 00:57:19Z fxstein $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -211,7 +211,8 @@ class KImage
 		if (!class_exists($className))
 		{
 			jimport('joomla.filesystem.path');
-			if ($path = JPath::find(KImageFilter::addIncludePath(), strtolower($name).'.php'))
+			$path = JPath::find(KImageFilter::addIncludePath(), strtolower($name).'.php');
+			if ($path)
 			{
 				require_once $path;
 
@@ -514,7 +515,7 @@ class KImageFilter
 	 */
 	function addIncludePath($path='')
 	{
-		static $paths;
+		static $paths=null;
 
 		if (!isset($paths)) {
 			$paths = array(dirname(__FILE__).'/image');

@@ -34,7 +34,7 @@ Legend:
 
 Kunena 1.6.0-DEV
 
-25-Feb-2010 fxstein
+26-Feb-2010 fxstein
 + [#19380] Extended upload (part 6) support gif, png in addition to jpeg; square thumbnails
 
 25-Feb-2010 fxstein

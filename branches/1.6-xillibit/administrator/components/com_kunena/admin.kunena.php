@@ -1402,7 +1402,7 @@ function saveUserProfile($option) {
 }
 
 function trashUserMessages ( $option, $uid ) {
-	$path = KUNENA_PATH_LIB  .DS. 'kunena.moderation.class.php';
+	$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
 	$kunena_db = &JFactory::getDBO ();
@@ -1441,7 +1441,7 @@ function moveUserMessages ( $option, $uid ){
 }
 
 function moveUserMessagesNow ( $option, $cid ) {
-	$path = KUNENA_PATH_LIB  .DS. 'kunena.moderation.class.php';
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
 	$kunena_db = &JFactory::getDBO ();
@@ -2221,7 +2221,7 @@ function trashpurge($option, $cid) {
 function deleteitemsnow ( $option, $cid ) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
-	$path = KUNENA_PATH_LIB  .DS. 'kunena.moderation.class.php';
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
 

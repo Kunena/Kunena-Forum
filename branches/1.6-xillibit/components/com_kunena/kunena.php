@@ -649,12 +649,12 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'bulkactions' :
 			switch ($do) {
 				case "bulkDel" :
-					CKunenaTools::fbDeletePosts ( CKunenaTools::isModerator ( $kunena_my->id, $catid ) );
+					CKunenaTools::KDeletePosts ( CKunenaTools::isModerator ( $kunena_my->id, $catid ) );
 
 					break;
 
 				case "bulkMove" :
-					CKunenaTools::fbMovePosts ( $catid, CKunenaTools::isModerator ( $kunena_my->id, $catid ) );
+					CKunenaTools::KMovePosts ( $catid, CKunenaTools::isModerator ( $kunena_my->id, $catid ) );
 					break;
 			}
 

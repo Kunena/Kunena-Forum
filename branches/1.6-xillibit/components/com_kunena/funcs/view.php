@@ -771,6 +771,7 @@ class CKunenaView {
 			}
 			if ($allowEdit) {
 				$this->msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
+				$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 				$showedEdit = 1;
 			}
 		}

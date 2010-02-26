@@ -95,7 +95,7 @@ class CKunenaModeration {
 			foreach ($SourceMes as $mes) {
 				if ( $mes->mesCatid != $mes->modCatid && !CKunenaTools::isModerator($this->_my->id) ) {
 					//the user haven't moderator permissions
-					$this->_errormsg = 'You have not moderator permissions.';
+					$this->_errormsg = JText::_('COM_KUNENA_POST_NOT_MODERATOR');
 					return false;
 				}
 			}
@@ -111,7 +111,7 @@ class CKunenaModeration {
 			foreach ($destMes as $mes) {
 				if ( $mes->catid != $TargetCatID ) {
 					//the user haven't moderator permissions in target category
-					$this->_errormsg = 'You have not moderator permissions in the target category.';
+					$this->_errormsg = JText::_('COM_KUNENA_MOD_CATOGERY_DEST_NOT');
 					return false;
 				}
 			}
@@ -120,19 +120,20 @@ class CKunenaModeration {
 		// Test parameters to see if they are valid selecions or abord
 
 		// Check if message to move exists (also covers thread test)
-		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$MessageID'" );
+		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages
+								WHERE `id`='$MessageID'" );
 		$currentMessage = $this->_db->loadObjectList ();
 		check_dberror ( "Unable to load message." );
 
 		if (empty ( $currentMessage[0]->id )) {
 			// Message not found. Cannot proceed with move
-			$this->_errormsg = 'Message to move not found.';
+			$this->_errormsg = JText::_('COM_KUNENA_MOD_MES_MOVE_NOT_FOUND');
 			return false;
 		}
 
 		if ($TargetCatID == 0 and $TargetMessageID == 0) {
 			// Nothing to move. No new category, no target message to append
-			$this->_errormsg = 'No move targets specified.';
+			$this->_errormsg = JText::_('COM_KUNENA_MOD_MES_MOVE_NOT_TARGETS');
 			return false;
 		}
 
@@ -143,7 +144,7 @@ class CKunenaModeration {
 
 			if (empty ( $targetCategory[0]->id )) {
 				// Category not found. Cannot proceed with move
-				$this->_errormsg = 'Target category not found.';
+				$this->_errormsg = JText::_('COM_KUNENA_MOD_CAT_TARGET_NOT_FOUND');
 				return false;
 			}
 
@@ -160,13 +161,13 @@ class CKunenaModeration {
 
 			if (empty ( $targetMessage->id )) {
 				// Target message not found. Cannot proceed with move
-				$this->_errormsg = 'Target message for append not found.';
+				$this->_errormsg = JText::_('COM_KUNENA_MOD_MES_TARGET_NOT_FOUND');
 				return false;
 			}
 
 			if ($targetMessage->thread == $currentMessage[0]->thread) {
 				// Recursive self moves not supported
-				$this->_errormsg = 'Target thread identical to source threat. Recursive self moved not supported.';
+				$this->_errormsg = JText::_('COM_KUNENA_MOD_TARGET_THREAD_SOURCE_IDENTICAL');
 				return false;
 			}
 
@@ -210,24 +211,24 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_THREAD : // Move entire Thread
 				if ($TargetMessageID == 0) {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage[0]->thread';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}';";
 				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$targetMessage->thread' $subjectupdatesql WHERE `thread`='$currentMessage->thread';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$targetMessage->thread' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}';";
 				}
 
 				// Create ghost thread if requested
 				if ($GhostThread == true) {
-					$this->_createGhostThread($MessageID,$currentMessage,$my_name);
+					$this->createGhostThread($MessageID,$currentMessage,$this->_my);
 				}
 
 				break;
 			case KN_MOVE_NEWER : // Move message and all newer messages of thread
 				if ($TargetMessageID == 0) {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='$currentMessage[0]->thread' AND `id`>'$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}' AND `id`>'$MessageID';";
 				} else {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}' AND `id`>'$MessageID';";
 				}
 
 				break;
@@ -237,13 +238,13 @@ class CKunenaModeration {
 					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
 				} else {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}' AND `id`>'$MessageID' AND `parent`='$MessageID';";
 				}
 
 				break;
 			default :
 				// Unsupported mode - Error!
-				$this->_errormsg = 'Move mode not supported. Logic not implemented.';
+				$this->_errormsg = JText::_('COM_KUNENA_MOD_UNSUPPORTED_MODE');
 
 				return false;
 		}
@@ -294,7 +295,7 @@ class CKunenaModeration {
 				$lastReply = array_pop($allReplies);
 				if ($lastReply != $MessageID) {
 					//author not allowed to delete his post
-					$this->_errormsg = 'Author not allowed to delete his post because there are replies.';
+					$this->_errormsg = JText::_('COM_KUNENA_MOD_DEL_MES_AUTHOR_IMPOSSIBLE');
 					return false;
 				}
 			}
@@ -305,7 +306,7 @@ class CKunenaModeration {
 		// Check if message to delete exists
 		if (empty ( $currentMessage[0]->id )) {
 			// Message not found. Cannot proceed with delete
-			$this->_errormsg = 'Message to delete not found.';
+			$this->_errormsg = JText::_('COM_KUNENA_MOD_DEL_MES_NOT_FOUND');
 			return false;
 		}
 
@@ -323,11 +324,11 @@ class CKunenaModeration {
 				$fileList = $this->_db->loadObjectList ();
 				check_dberror ( "Unable to load attachments." );
 				$sql = "DELETE FROM #__kunena_attachments WHERE `mesid`='$MessageID';";
-				$filetoDelete = JPATH_ROOT.DS.'media'.DS.'kunena'.DS.'attachments'.DS.$fileList[0]->userid.DS.$fileList[0]->filename;
+				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$fileList[0]->userid.'/'.$fileList[0]->filename;
 				if (JFile::exists($filetoDelete)) {
 					JFile::delete($filetoDelete);
 				} else {
-					$this->_errormsg = 'Impossible to delete the attachment, the file doesn\'t exist.';
+					$this->_errormsg = JText::_('COM_KUNENA_MOD_DEL_ATTACH_NOT_FOUND');
 				}
 			break;
 			default :
@@ -419,22 +420,23 @@ class CKunenaModeration {
 		return $this->_errormsg;
 	}
 
-	function _createGhostThread($MessageID,$currentMessage,$my_name) {
+	function _createGhostThread($MessageID,$currentMessage,$my) {
 		// Post time in ghost message is the same as in the last message of the thread
 		$this->_db->setQuery ( "SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE `thread`='$MessageID'" );
 		$lastTimestamp = $this->_db->loadResult ();
 		check_dberror ( "Unable to load last timestamp." );
 		if ($lastTimestamp == "") {
-			$lastTimestamp = $currentMessage->timestamp;
+			$lastTimestamp = $currentMessage[0]->timestamp;
 		}
 
 		// TODO: need to fetch correct user id for new ghost thread - current moderator who executed the move
 		// @Oliver: we already have it. It's current user: $my->id
 		// TODO: what do we do with ghost message title? JText::_('COM_KUNENA_MOVED_TOPIC') was used before
 		// @Oliver: I'd like to get rid of it and add it while rendering..
-		$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
+		$myname = $this->_config->username ? $my->username : $my->name;
+		echo 'myname'.$myname;
 
-		$this->_db->setQuery ( "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','$currentMessage->subject','$lastTimestamp','$currentMessage->catid','1', '$my->id', '" . trim ( addslashes ( $my_name ) ) . "')" );
+		$this->_db->setQuery ( "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','{$currentMessage[0]->subject}','$lastTimestamp','{$currentMessage[0]->catid}','1', '$my->id', '" . trim ( addslashes ( $myname ) ) . "')" );
 		$this->_db->query ();
 		check_dberror ( 'Unable to insert ghost message.' );
 
@@ -447,10 +449,14 @@ class CKunenaModeration {
 		check_dberror ( 'Unable to update thread id of ghost thread.' );
 
 		// TODO: we need to fix all old ghost messages and change behaviour of them
-		$newURL = "id=" . $currentMessage->id;
+		$newURL = "id=" . $currentMessage[0]->id;
 		$this->_db->setQuery ( "INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')" );
 		$this->_db->query ();
 		check_dberror ( 'Unable to insert ghost message.' );
+	}
+
+	function createGhostThread($MessageID,$currentMessage,$my) {
+		return $this->_createGhostThread($MessageID,$currentMessage,$my);
 	}
 }
 ?>

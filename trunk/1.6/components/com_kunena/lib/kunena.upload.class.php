@@ -98,8 +98,6 @@ class CKunenaUpload {
 	function resizeImage( $src, $target, $max_width, $max_height ){
 		$source_pic = $src;
 		$destination_pic = $target;
-//		$max_width = $this->_config->imagewidth;
-//		$max_height = $this->_config->imageheight;
 
 		$src = imagecreatefromjpeg($source_pic);
 		if($src === false){
@@ -145,6 +143,13 @@ class CKunenaUpload {
 		// create thumb and upload directory if it does not exist
 		if (!CKunenaFolder::exists($uploadPath.'/thumb')) {
 			if (!CKunenaFolder::create($uploadPath.'/thumb')) {
+				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' );
+				return false;
+			}
+		}
+		// create originals/raw folder if it does not exist
+		if (!CKunenaFolder::exists($uploadPath.'/raw')) {
+			if (!CKunenaFolder::create($uploadPath.'/raw')) {
 				$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' );
 				return false;
 			}
@@ -275,9 +280,48 @@ class CKunenaUpload {
 			return false;
 		}
 
+		//TODO: Create a new version from the file (if hash is different)
+		/*
+		if (file_exists($uploadPath .DS. $newFileName)) {
+			$newFileName = $imageName . '-' . date('Ymd') . "." . $imageExt;
+			for ($i=2; file_exists($uploadPath .DS. $newFileName); $i++) {
+				$newFileName = $imageName . '-' . date('Ymd') . "-$i." . $imageExt;
+			}
+		}
+		*/
+
+		// If this is a valid image we need to resize/resample it to the config settings
+		if ($this->_isimage){
+			// First rename the raw image file(original)
+			if (! CKunenaFile::move ( $this->fileTemp, $this->fileTemp.'.raw' )) {
+				$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$this->fileName;
+				return false;
+			}
+
+			// Replace the file itself with a resized version of it
+			$this->resizeImage($this->fileTemp.'.raw', $this->fileTemp, $this->_config->imagewidth, $this->_config->imageheight);
+			if ($this->error) {
+				return false;
+			}
+			// If the resize was successful we create a thumbnail
+			$this->resizeImage($this->fileTemp, $this->fileTemp.'.thumb', $this->_config->thumbwidth, $this->_config->thumbheight);
+			if ($this->error) {
+				return false;
+			}
+		}
+
 		// Populate hash, file size and other info
 		// Get a hash value from the file
 		$this->fileHash = md5_file ( $this->fileTemp );
+
+		// Also re-calculate physical file properties lize size as images might have been shrunk
+		$stat = stat($this->fileTemp);
+		if (! $stat) {
+			$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_STAT').' '.$this->fileTemp;
+			return false;
+		}
+
+		$this->fileSize = $stat['size'];
 
 		// Special processing for images
 		if ($this->_isimage){
@@ -296,38 +340,18 @@ class CKunenaUpload {
 			}
 		}
 
-		//TODO: Create a new version from the file (if hash is different)
-		/*
-		if (file_exists($uploadPath .DS. $newFileName)) {
-			$newFileName = $imageName . '-' . date('Ymd') . "." . $imageExt;
-			for ($i=2; file_exists($uploadPath .DS. $newFileName); $i++) {
-				$newFileName = $imageName . '-' . date('Ymd') . "-$i." . $imageExt;
-			}
-		}
-		*/
-
-		// If this is a valid image we need to resize/resample it to the config settings
-		if ($this->_isimage){
-			// Replace the file itself with a resized version of it
-			$this->resizeImage($this->fileTemp, $this->fileTemp, $this->_config->imagewidth, $this->_config->imageheight);
-			if ($this->error) {
-				return false;
-			}
-			// If the resize was successful we create a thumbnail
-			$this->resizeImage($this->fileTemp, $this->fileTemp.'.thumb', $this->_config->thumbwidth, $this->_config->thumbheight);
-						if ($this->error) {
-				return false;
-			}
-		}
-
-		// First move actual file
+		// All the processing is complete - now we need to move the file(s) into the final location
 		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
 			$this->error = JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/'.$this->fileName);
 			return false;
 		}
 
-		// Now move thumbnail
+		// For images we also have to move the raw (original) and thumbnails
 		if ($this->_isimage){
+			if (! CKunenaFile::move ( $this->fileTemp.'.raw', $uploadPath.'/raw/'.$this->fileName )) {
+				$this->error = JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/raw/'.$this->fileName;
+				return false;
+			}
 			if (! CKunenaFile::move ( $this->fileTemp.'.thumb', $uploadPath.'/thumb/'.$this->fileName )) {
 				$this->error = JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/thumb/'.$this->fileName);
 				return false;

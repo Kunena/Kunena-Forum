@@ -24,6 +24,8 @@ if ( isset ( $this->msg_html->attachments ) ) { ?>
 		?>
 			<li>
 			<?php
+			// shortname for output
+			$shortname = CKunenaTools::shortenFileName($attachment->filename);
 			// First lets check the attachment file type
 			switch (strtolower($attachment->shorttype)){
 				case 'image' :
@@ -40,14 +42,16 @@ if ( isset ( $this->msg_html->attachments ) ) { ?>
 					echo '<a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.
 						'<img '.$imgsize.' src="'.$thumb.'" alt="'.$attachment->filename.'" />'.
 						'</a>'.
-						'<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
+						'<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" title="'.$attachment->filename.'" rel="nofollow">'.$shortname.'</a>'.
+						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'kB)</span>';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
 
 					// TODO: Add generic attachment icon
 					// TODO: Replace href link with CKunenaLink::Call
-					echo '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.$attachment->filename.'</a></span>';
+					echo '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" title="'.$attachment->filename.'" rel="nofollow">'.$shortname.'</a>'.
+						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'kB)</span>';
 			}
 			?>
 			</li>

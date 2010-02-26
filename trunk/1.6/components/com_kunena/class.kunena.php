@@ -945,7 +945,7 @@ class CKunenaTools {
 		}
 
 		/**
-		 * This function format a number to n significant digits when above
+		 * This function formats a number to n significant digits when above
 		 * 10,000. Starting at 10,0000 the out put changes to 10k, starting
 		 * at 1,000,000 the output switches to 1m. Both k and m are defined
 		 * in the language file. The significant digits are used to limit the
@@ -970,6 +970,23 @@ class CKunenaTools {
 				$output = $number / 1000 . JText::_('COM_KUNENA_THOUSAND');
 			}
 
+			return $output;
+		}
+
+		/**
+		 * This function shortens long filenames for display purposes.
+		 * The first 8 characters of the filename, followed by three dots
+		 * and the last 5 character of the filename.
+		 *
+		 * @param char $filename 	Filename to be shortened if too long
+		 */
+		function shortenFileName($filename, $front=12, $back=8, $filler='...') {
+			$len = strlen($filename);
+			if ($len>($front+strlen($filler)+$back)){
+				$output=substr($filename,0,$front).$filler.substr($filename,$len-$back,$back);
+			}else{
+				$output=$filename;
+			}
 			return $output;
 		}
 

@@ -29,7 +29,7 @@ class KImage
 	 * Scale the image to fill.
 	 *
 	 * @var		integer
-	 * @since	2.0
+	 * @since	1.6
 	 */
 	const SCALE_FILL = 1;
 
@@ -37,7 +37,7 @@ class KImage
 	 * Scale the image based on its innermost dimensions.
 	 *
 	 * @var		integer
-	 * @since	2.0
+	 * @since	1.6
 	 */
 	const SCALE_INSIDE = 2;
 
@@ -45,7 +45,7 @@ class KImage
 	 * Scale the image based on its outermost dimensions.
 	 *
 	 * @var		integer
-	 * @since	2.0
+	 * @since	1.6
 	 */
 	const SCALE_OUTSIDE = 3;
 
@@ -53,7 +53,7 @@ class KImage
 	 * The image handle.
 	 *
 	 * @var		resource
-	 * @since	1.0
+	 * @since	1.6
 	 */
 	protected $_handle;
 
@@ -61,15 +61,23 @@ class KImage
 	 * The source image path.
 	 *
 	 * @var		string
-	 * @since	1.0
+	 * @since	1.6
 	 */
 	protected $_path;
+
+	/**
+	 * The image type.
+	 *
+	 * @var		string
+	 * @since	1.6
+	 */
+	protected $_type;
 
 	/**
 	 * List of file types supported by the server.
 	 *
 	 * @var		array
-	 * @since	2.0
+	 * @since	1.6
 	 */
 	protected $_support = array('JPG'=>false, 'GIF'=>false, 'PNG'=>false);
 
@@ -77,7 +85,7 @@ class KImage
 	 * Constructor.
 	 *
 	 * @return	void
-	 * @since	1.0
+	 * @since	1.6
 	 */
 	public function __construct($source = null)
 	{
@@ -87,6 +95,9 @@ class KImage
 			$this->setError('Unmet Dependencies');
 			return false;
 		}
+
+		// Initialize image type
+		$this->_type = IMAGETYPE_JPEG;
 
 		// Determine which image types are supported by GD.
 		$info = gd_info();
@@ -108,6 +119,10 @@ class KImage
 		elseif (!empty($source) && is_string($source)) {
 			$this->loadFromFile($source);
 		}
+	}
+
+	function getType(){
+		return $this->type;
 	}
 
 	function crop($width, $height, $left, $top, $createNew = true, $scaleMethod = KImage::SCALE_INSIDE)
@@ -304,6 +319,8 @@ class KImage
 					return false;
 				}
 
+				$this->_type = IMAGETYPE_GIF;
+
 				// Attempt to create the image handle.
 				$handle = @imagecreatefromgif($path);
 				if (!is_resource($handle))
@@ -322,6 +339,8 @@ class KImage
 					return false;
 				}
 
+				$this->_type = IMAGETYPE_JPEG;
+
 				// Attempt to create the image handle.
 				$handle = @imagecreatefromjpeg($path);
 				if (!is_resource($handle))
@@ -339,6 +358,8 @@ class KImage
 					$this->setError('File Type Not Supported');
 					return false;
 				}
+
+				$this->_type = IMAGETYPE_PNG;
 
 				// Attempt to create the image handle.
 				$handle = @imagecreatefrompng($path);

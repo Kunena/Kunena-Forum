@@ -82,6 +82,10 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		return 0;
 	}
 
+	public function getAllowedCategories($userid) {
+		if ((int)$userid<1 || $userid != $this->_my->id) return;
+		return $this->_session->allowed;
+	}
 	public function getProfile($userid) {
 		require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
@@ -95,26 +99,68 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		return CKunenaTools::getRank ( $profile );
 	}
 
-	public function getTopics($userid, $start = 0, $limit = 10, $order='default') {
+	public function getTopicsTotal($userid) {
+		$result = $this->getTopics($userid);
+		return $result->total;
+	}
+	public function getTopics($userid, $start = 0, $limit = 10, $search=false) {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('usertopics', 0);
 		$obj->user = JUser::getInstance ( $userid );
+		$obj->offset = $start;
+		$obj->threads_per_page = $limit;
 		$obj->getUserTopics();
+		$result->total = $obj->total;
+		$result->messages = $obj->messages;
+		$result->last_reply = $obj->last_reply;
+		return $result;
 	}
-	public function getPosts($userid, $start = 0, $limit = 10, $order='default') {
-
+	public function getPostsTotal($userid) {
+		$result = $this->getPosts($userid);
+		return $result->total;
 	}
-	public function getFavorites($userid, $start = 0, $limit = 10, $order='default') {
+	public function getPosts($userid, $start = 0, $limit = 10, $search=false) {
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('ownposts', 0);
+		$obj->user = JUser::getInstance ( $userid );
+		$obj->offset = $start;
+		$obj->threads_per_page = $limit;
+		$obj->getOwnPosts();
+		$result->total = $obj->total;
+		$result->messages = $obj->messages;
+		return $result;
+	}
+	public function getFavoritesTotal($userid) {
+		$result = $this->getFavorites($userid);
+		return $result->total;
+	}
+	public function getFavorites($userid, $start = 0, $limit = 10, $search=false) {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('favorites', 0);
-		$obj->user = $this->user;
+		$obj->user = JUser::getInstance ( $userid );
+		$obj->offset = $start;
+		$obj->threads_per_page = $limit;
 		$obj->getFavorites();
+		$result->total = $obj->total;
+		$result->messages = $obj->messages;
+		$result->last_reply = $obj->last_reply;
+		return $result;
 	}
-	public function getSubscriptions($userid, $start = 0, $limit = 10, $order='default') {
+	public function getSubscriptionsTotal($userid) {
+		$result = $this->getSubscriptions($userid);
+		return $result->total;
+	}
+	public function getSubscriptions($userid, $start = 0, $limit = 10, $search=false) {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);
-		$obj->user = $this->user;
+		$obj->user = JUser::getInstance ( $userid );
+		$obj->offset = $start;
+		$obj->threads_per_page = $limit;
 		$obj->getSubscriptions();
+		$result->total = $obj->total;
+		$result->messages = $obj->messages;
+		$result->last_reply = $obj->last_reply;
+		return $result;
 	}
 
 	public function subscribeThreads($userid, $threads) {

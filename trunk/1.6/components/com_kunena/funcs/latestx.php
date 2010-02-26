@@ -11,18 +11,23 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+require_once (KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
+
 class CKunenaLatestX {
 	public $allow = 0;
 
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
-		$this->page = $page < 1 ? 1 : $page;
 
 		$this->db = JFactory::getDBO ();
 		$this->user = $this->my = JFactory::getUser ();
 		$this->session = CKunenaSession::getInstance ();
 		$this->config = CKunenaConfig::getInstance ();
+
+		$this->page = $page < 1 ? 1 : $page;
+		$this->threads_per_page = $this->config->threads_per_page;
+		$this->offset = ($this->page - 1) * $this->threads_per_page;
 
 		$this->prevCheck = $this->session->lasttime;
 
@@ -54,8 +59,6 @@ class CKunenaLatestX {
 			$this->querytime = time () - $back_time;
 		}
 
-		$this->threads_per_page = $this->config->threads_per_page;
-
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 		$this->showposts = 0;
 	}
@@ -63,20 +66,10 @@ class CKunenaLatestX {
 	function _common() {
 		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
 
-		//meta description and keywords
-		$metaKeys = $this->header . kunena_htmlspecialchars ( stripslashes ( ", {$this->config->board_title}, " ) ) . $this->app->getCfg ( 'sitename' );
-		$metaDesc = $this->header . kunena_htmlspecialchars ( stripslashes ( " ({$this->page}/{$this->totalpages}) - {$this->config->board_title}" ) );
-
-		$cur = $this->document->get ( 'description' );
-		$metaDesc = $cur . '. ' . $metaDesc;
-		$this->document = & JFactory::getDocument ();
-		$this->document->setMetadata ( 'robots', 'noindex, follow' );
-		$this->document->setMetadata ( 'keywords', $metaKeys );
-		$this->document->setDescription ( $metaDesc );
-
 		$idstr = @join ( ",", $this->threadids );
 
 		$this->messages = array ();
+		$this->last_reply = array ();
 
 		if (count ( $this->threadids ) > 0) {
 			$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachments,
@@ -167,7 +160,6 @@ class CKunenaLatestX {
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		check_dberror ( 'Unable to count total threads' );
-		$offset = ($this->page - 1) * $this->threads_per_page;
 
 		if ($this->func == 'mylatest') $this->order = "myfavorite DESC, lastid DESC";
 		else if ($this->func == 'usertopics') $this->order = "mylastid DESC";
@@ -179,11 +171,37 @@ class CKunenaLatestX {
 		GROUP BY thread
 		ORDER BY {$this->order}";
 
-		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
+		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
 		$this->threadids = $this->db->loadResultArray ();
 		check_dberror ( "Unable to load thread list." );
 
 		$this->_common();
+	}
+
+	function getUserPosts() {
+		$query = "SELECT COUNT(*) FROM #__fb_messages AS m
+		WHERE m.moved='0' AND m.hold='0' AND m.userid='{$this->user->id}' AND m.catid IN ({$this->session->allowed})";
+		$this->db->setQuery ( $query );
+		$this->total = ( int ) $this->db->loadResult ();
+		check_dberror ( 'Unable to count total threads' );
+
+		$query = "SELECT m.*, t.message AS messagetext, c.id AS catid, c.name AS catname FROM #__fb_messages AS m
+		INNER JOIN #__fb_messages_text AS t ON m.id = t.mesid
+		LEFT JOIN #__fb_categories AS c ON c.id = m.catid
+		WHERE m.moved='0' AND m.hold='0' AND m.userid='{$this->user->id}' AND m.catid IN ({$this->session->allowed})
+		ORDER BY time DESC";
+
+		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
+		$this->messages = $this->db->loadObjectList ();
+		check_dberror ( "Unable to load thread list." );
+	}
+
+	function getOwnPosts() {
+		if (isset($this->total)) return;
+//		$this->columns++;
+		$this->showposts = 1;
+		$this->header = $this->title = JText::_('COM_KUNENA_OWNTOPICS');
+		$this->getUserPosts();
 	}
 
 	function getOwnTopics() {
@@ -391,6 +409,17 @@ class CKunenaLatestX {
 		else if ($this->func == 'subscriptions') $this->getSubscriptions();
 		else if ($this->func == 'favorites') $this->getFavorites();
 		else $this->getLatest();
+
+		//meta description and keywords
+		$metaKeys = $this->header . kunena_htmlspecialchars ( stripslashes ( ", {$this->config->board_title}, " ) ) . $this->app->getCfg ( 'sitename' );
+		$metaDesc = $this->header . kunena_htmlspecialchars ( stripslashes ( " ({$this->page}/{$this->totalpages}) - {$this->config->board_title}" ) );
+
+		$cur = $this->document->get ( 'description' );
+		$metaDesc = $cur . '. ' . $metaDesc;
+		$this->document = & JFactory::getDocument ();
+		$this->document->setMetadata ( 'robots', 'noindex, follow' );
+		$this->document->setMetadata ( 'keywords', $metaKeys );
+		$this->document->setDescription ( $metaDesc );
 
 		$this->document->setTitle ( $this->title . ' - ' . stripslashes ( $this->config->board_title ) );
 

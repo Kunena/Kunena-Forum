@@ -115,12 +115,10 @@ interface iKunenaUserAPI {
 	 */
 	public function getRank($userid);
 
-	/*
-	public function getTopics($userid, $start = 0, $limit = 10, $order='default');
-	public function getPosts($userid, $start = 0, $limit = 10, $order='default');
-	public function getFavorites($userid, $start = 0, $limit = 10, $order='default');
-	public function getSubscriptions($userid, $start = 0, $limit = 10, $order='default');
-	*/
+	public function getTopics($userid, $start = 0, $limit = 10, $search=false);
+	public function getPosts($userid, $start = 0, $limit = 10, $search=false);
+	public function getFavorites($userid, $start = 0, $limit = 10, $search=false);
+	public function getSubscriptions($userid, $start = 0, $limit = 10, $search=false);
 
 	/**
 	 * Subscribe to Threads

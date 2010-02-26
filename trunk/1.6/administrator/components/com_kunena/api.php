@@ -21,53 +21,176 @@ define ( 'KUNENA_NAME', substr ( KUNENA_COMPONENT_NAME, 4 ) );
 define ( 'KUNENA_COMPONENT_LOCATION', basename ( dirname ( dirname ( __FILE__ ) ) ) );
 
 // Component paths
-define ( 'KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . '/' . KUNENA_COMPONENT_NAME );
-define ( 'KPATH_SITE', JPATH_ROOT . '/' . KPATH_COMPONENT_RELATIVE );
-define ( 'KPATH_ADMIN', JPATH_ADMINISTRATOR . '/' . KPATH_COMPONENT_RELATIVE );
-define ( 'KPATH_MEDIA', JPATH_ROOT . '/media/' . KUNENA_NAME );
+define ( 'KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . DS . KUNENA_COMPONENT_NAME );
+define ( 'KPATH_SITE', JPATH_ROOT . DS . KPATH_COMPONENT_RELATIVE );
+define ( 'KPATH_ADMIN', JPATH_ADMINISTRATOR . DS . KPATH_COMPONENT_RELATIVE );
+define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
 
 // URLs
-define ( 'KURL_SITE', 'index.php?option=' . KUNENA_COMPONENT_NAME );
+define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
 define ( 'KURL_MEDIA', JURI::Base () . 'media/' . KUNENA_NAME . '/' );
 
-if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
-	$changelog = file_get_contents ( KPATH_SITE . '/CHANGELOG.php', NULL, NULL, 0, 1000 );
-	preg_match ( '|\$Id\: CHANGELOG.php (\d+) (\S+) (\S+) (\S+) \$|', $changelog, $svn );
-	preg_match ( '|~~\s+Kunena\s(\d+\.\d+.\d+\S*)|', $changelog, $version );
-}
+/**
+ * Defines public interface for class Kunena. Loads version information and APIs to be used in the third party application.
+ *
+ * Usage:
+ *  $kapipath = JPATH_ADMINISTRATOR . DS. 'components' . DS . 'com_kunena' . DS . 'api.php';
+ *  if (file_exists ($kapipath)) {
+ *  	require_once($kapipath);
+ *  	$kunenaVersion = Kunena::version();
+ *  	$kunenaUserApi = Kunena::getUserAPI();
+ *  } else {
+ *  	// Kunena 1.6+ not detected
+ *  }
+ *
+ * @since	1.6
+ */
+interface iKunena {
+	/**
+	 * Get Kunena version.
+	 *
+	 * @return	string	Version
+	 */
+	public static function version();
 
-// Version information
-define ( 'KUNENA_VERSION', ('@kunenaversion@' == '@' . 'kunenaversion' . '@') ? strtoupper ( $version [1] . '-SVN' ) : strtoupper ( '@kunenaversion@' ) );
-define ( 'KUNENA_VERSION_DATE', ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? $svn [2] : '@kunenaversiondate@' );
-define ( 'KUNENA_VERSION_NAME', ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@' );
-define ( 'KUNENA_VERSION_BUILD', ('@kunenaversionbuild@' == '@' . 'kunenaversionbuild' . '@') ? $svn [1] : '@kunenaversionbuild@' );
+	/**
+	 * Get Kunena version, date, name and build number.
+	 *
+	 * @return	stdClass	Class containing version, date, name, build
+	 */
+	public static function getVersionInfo();
+
+	/**
+	 * Get Kunena configuration
+	 *
+	 * @return	CKunenaConfig
+	 */
+	public static function getConfig();
+
+	/**
+	 * Return instance of KunenaUserAPI.
+	 *
+	 * @return	KunenaUserAPI
+	 */
+	public static function getUserAPI();
+
+	/**
+	 * Return instance of KunenaForumAPI.
+	 *
+	 * @return	KunenaForumAPI
+	 */
+	//public static function getForumAPI();
+
+	/**
+	 * Return instance of KunenaPostAPI.
+	 *
+	 * This API is meant to post, reply, edit and delete individual messages.
+	 * By default it obeys the permissions of current user.
+	 *
+	 * @return	KunenaPostAPI
+	 */
+	//public static function getPostAPI();
+}
 
 interface iKunenaUserAPI {
-	public function __construct($apiversion, $my_id = false);
-	public function version();
+	public function __construct();
+	public static function version();
 
-	public function getReputation($userid);
+	/**
+	 * Get Kunena User Profile
+	 *
+	 * If $userid = 0 or user profile does not exist, default profile will be returned
+	 *
+	 * @param int $userid User ID
+	 * @return CKunenaUserprofile (lib/kunena.user.class.php)
+	 */
+	public function getProfile($userid);
+	/**
+	 * Get User Rank
+	 *
+	 * Note: for buildin ranks (default, visitor, moderator, administrator) rank_id = 0
+	 *
+	 * @param int $userid User ID
+	 * @return stdClass Rank object with rank_id, rank_title and rank_image
+	 */
 	public function getRank($userid);
-	public function getSignature($userid);
-	public function getProfileFields($userid);
-	public function getSettings($userid, $setting = false);
-	public function getThreads($userid, $start = 0, $limit = 10);
-	public function getPosts($userid, $start = 0, $limit = 10);
-	public function getFavorites($userid, $start = 0, $limit = 10);
-	public function getSubscriptions($userid, $start = 0, $limit = 10);
 
-	public function setReputation($userid, $positive = true);
-	public function setRank($userid, $rankid = 0);
-	public function setSignature($userid, $signature = '');
-	public function subscribe($userid, $catid = false, $mesid = false);
-	public function unsubscribe($userid, $catid = false, $mesid = false);
-	public function favorite($userid, $catid = false, $mesid = false);
-	public function unfavorite($userid, $catid = false, $mesid = false);
+	/*
+	public function getTopics($userid, $start = 0, $limit = 10, $order='default');
+	public function getPosts($userid, $start = 0, $limit = 10, $order='default');
+	public function getFavorites($userid, $start = 0, $limit = 10, $order='default');
+	public function getSubscriptions($userid, $start = 0, $limit = 10, $order='default');
+	*/
+
+	/**
+	 * Subscribe to Threads
+	 *
+	 * subscribeThreads( $userid, 1 );
+	 * subscribeThreads( $userid, array(1,2,3) );
+	 *
+	 * @param int $userid Only current user is accepted
+	 * @param mixed $thread Thread or array of threads
+	 */
+	public function subscribeThreads($userid, $threads);
+	/**
+	 * Unsubscribe from Threads
+	 *
+	 * unsubscribeThreads( $userid, true ); // All
+	 * unsubscribeThreads( $userid, 1 );
+	 * unsubscribeThreads( $userid, array(1,2,3) );
+	 *
+	 * @param int $userid Only current user is accepted
+	 * @param mixed $thread true, Thread or array of threads
+	 */
+	public function unsubscribeThreads($userid, $threads = false);
+	/**
+	 * Subscribe to Categories
+	 *
+	 * subscribeCategories( $userid, 1 );
+	 * subscribeCategories( $userid, array(1,2,3) );
+	 *
+	 * @param int $userid Only current user is accepted
+	 * @param mixed $catid Category or array of categories
+	 */
+	public function subscribeCategories($userid, $catids);
+	/**
+	 * Unsubscribe from Categories
+	 *
+	 * unsubscribeCategories( $userid, true ); // All
+	 * unsubscribeCategories( $userid, 1 );
+	 * unsubscribeCategories( $userid, array(1,2,3) );
+	 *
+	 * @param int $userid Only current user is accepted
+	 * @param mixed $catid true, category or array of categories
+	 */
+	public function unsubscribeCategories($userid, $catids = false);
+	/**
+	 * Favorite Threads
+	 *
+	 * favoriteThreads( $userid, 1 );
+	 * favoriteThreads( $userid, array(1,2,3) );
+	 *
+	 * @param int $userid Only current user is accepted
+	 * @param mixed $thread Thread or array of threads
+	 */
+	public function favoriteThreads($userid, $threads);
+	/**
+	 * Unfavorite Threads
+	 *
+	 * unfavoriteThreads( $userid, true ); // All
+	 * unfavoriteThreads( $userid, 1 );
+	 * unfavoriteThreads( $userid, array(1,2,3) );
+	 *
+	 * @param int $userid Only current user is accepted
+	 * @param mixed $thread true, Thread or array of threads
+	 */
+	public function unfavoriteThreads($userid, $threads = false);
 }
 
+/*
 interface iKunenaForumAPI {
-	public function __construct($apiversion, $my_id = false);
-	public function version();
+	public function __construct();
+	public static function version();
 
 	public function get($catid);
 	public function create($foruminfo);
@@ -85,8 +208,8 @@ interface iKunenaForumAPI {
 }
 
 interface iKunenaPostAPI {
-	public function __construct($apiversion, $my_id = false);
-	public function version();
+	public function __construct();
+	public static function version();
 
 	public function canRead($mesid);
 	public function canPost($catid);
@@ -100,6 +223,9 @@ interface iKunenaPostAPI {
 	public function edit($mesid, $msginfo);
 	public function delete($mesid);
 }
+*/
+
+require_once(KPATH_SITE .'/lib/api.php');
 
 // Kunena has been initialized
 define ( 'KUNENA_LOADED', 1 );

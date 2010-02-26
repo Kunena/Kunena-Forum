@@ -50,7 +50,20 @@ define('KUNENA_FILE_LANGUAGE_DEFAULT', KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.'
 define('KUNENA_FILE_LANGUAGE', KUNENA_PATH_ADMIN_LANGUAGE .DS. 'kunena.' . KUNENA_LANGUAGE . '.php');
 define('KUNENA_FILE_INSTALL', KUNENA_PATH_ADMIN .DS. 'manifest.xml');
 
-// Constants
+// Version information
+
+// This special check to detect svn based dev environments that are lacking the proper variables
+if ('@kunenaversion@' == '@'.'kunenaversion'.'@') {
+	$changelog = file_get_contents(KUNENA_PATH.DS.'CHANGELOG.php', NULL, NULL, 0, 1000);
+	preg_match('|\$Id\: CHANGELOG.php (\d+) (\S+) (\S+) (\S+) \$|', $changelog, $svn);
+	preg_match('|~~\s+Kunena\s(\d+\.\d+.\d+\S*)|', $changelog, $version);
+}
+
+// Version information
+define ('KUNENA_VERSION', ('@kunenaversion@' == '@'.'kunenaversion'.'@') ? strtoupper($version[1].'-SVN') : strtoupper('@kunenaversion@'));
+define ('KUNENA_VERSION_DATE', ('@kunenaversiondate@' == '@'.'kunenaversiondate'.'@') ? $svn[2] : '@kunenaversiondate@');
+define ('KUNENA_VERSION_NAME', ('@kunenaversionname@' == '@'.'kunenaversionname'.'@') ? 'SVN Revision' : '@kunenaversionname@');
+define ('KUNENA_VERSION_BUILD', ('@kunenaversionbuild@' == '@'.'kunenaversionbuild'.'@') ? $svn[1] : '@kunenaversionbuild@');
 
 // Minimum version requirements
 DEFINE('KUNENA_MIN_PHP',   '5.0.3');

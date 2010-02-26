@@ -272,6 +272,7 @@ class CKunenaUserprofile extends JTable
 		$value = kunena_htmlspecialchars(stripslashes($this->$item));
 		$url = strtr($social[$name]['url'], array('##VALUE##'=>$value));
 		if (!empty($this->$item)) return '<a href="'.$url.'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
+		return '<span class="'.$name.'_off"></span>';
 	}
 }
 

@@ -3480,7 +3480,24 @@ span.flickr 	{ background: url("../images/social/flickr.png") no-repeat; }
 span.bebo 		{ background: url("../images/social/bebo.png") no-repeat; }
 span.msn 		{ background: url("../images/social/msn.png") no-repeat; }
 span.icq 		{ background: url("../images/social/icq.png") no-repeat; }
-	
+
+span.twitter_off 	{ background: url("../images/social/twitter_off.png") no-repeat; }
+span.facebook_off 	{ background: url("../images/social/facebook_off.png") no-repeat; }
+span.myspace_off 	{ background: url("../images/social/myspace_off.png") no-repeat; }
+span.linkedin_off	{ background: url("../images/social/linkedin_off.png") no-repeat; }			
+span.delicious_off	{ background: url("../images/social/delicious_off.png") no-repeat; }
+span.friendfeed_off	{ background: url("../images/social/friendfeed_off.png") no-repeat; }
+span.digg_off		{ background: url("../images/social/digg_off.png") no-repeat; }
+span.skype_off		{ background: url("../images/social/skype_off.png") no-repeat; }
+span.yim_off		{ background: url("../images/social/yahoo_off.png") no-repeat; }
+span.aim_off 		{ background: url("../images/social/aim_off.png") no-repeat; }
+span.gtalk_off 		{ background: url("../images/social/googletalk_off.png") no-repeat; }
+span.blogspot_off 	{ background: url("../images/social/blogger_off.png") no-repeat; }
+span.flickr_off 	{ background: url("../images/social/flickr_off.png") no-repeat; }
+span.bebo_off 		{ background: url("../images/social/bebo_off.png") no-repeat; }
+span.msn_off 		{ background: url("../images/social/msn_off.png") no-repeat; }
+span.icq_off 		{ background: url("../images/social/icq_off.png") no-repeat; }
+
 div.clrline {
 	clear:both; 
 	border-top: 1px solid #BFC3C6; 

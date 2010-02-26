@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 26-Feb-2010 Matias
 + [#19356] New default rank, used also for visitors
++ [#19356] New greyed out social/message icons (logic)
 
 26-Feb-2010 fxstein
 + [#19380] Extended upload (part 6) support gif, png in addition to jpeg; square thumbnails

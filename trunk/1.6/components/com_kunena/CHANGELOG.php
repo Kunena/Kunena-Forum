@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+24-Feb-2010 severdia
++ [#19356] New rank image
+
 24-Feb-2010 Matias
 ^ [#19380] Multi attachments: Plupload upgraded to version 1.1 (but is disabled for now)
 

@@ -14,9 +14,9 @@ defined('JPATH_BASE') or die;
 
 jimport('joomla.filesystem.file');
 
-define('JXIMAGE_SCALE_FILL', 1);
-define('JXIMAGE_SCALE_INSIDE', 2);
-define('JXIMAGE_SCALE_OUTSIDE', 3);
+define('KIMAGE_SCALE_FILL', 1);
+define('KIMAGE_SCALE_INSIDE', 2);
+define('KIMAGE_SCALE_OUTSIDE', 3);
 
 /**
  * Class to manipulate an image.

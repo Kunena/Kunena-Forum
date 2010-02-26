@@ -159,13 +159,13 @@ class CKunenaModeration {
 			$targetMessage = $this->_db->loadObjectList ();
 			check_dberror ( "Unable to load message." );
 
-			if (empty ( $targetMessage->id )) {
+			if (empty ( $targetMessage[0]->id )) {
 				// Target message not found. Cannot proceed with move
 				$this->_errormsg = JText::_('COM_KUNENA_MOD_MES_TARGET_NOT_FOUND');
 				return false;
 			}
 
-			if ($targetMessage->thread == $currentMessage[0]->thread) {
+			if ($targetMessage[0]->thread == $currentMessage[0]->thread) {
 				// Recursive self moves not supported
 				$this->_errormsg = JText::_('COM_KUNENA_MOD_TARGET_THREAD_SOURCE_IDENTICAL');
 				return false;
@@ -173,7 +173,7 @@ class CKunenaModeration {
 
 			// If $TargetMessageID has been specified and is valid,
 			// overwrite $TargetCatID with the category ID of the target message
-			$TargetCatID = $targetMessage->catid;
+			$TargetCatID = $targetMessage[0]->catid;
 		}
 
 		// Assemble move logic based on $mode
@@ -213,7 +213,7 @@ class CKunenaModeration {
 				if ($TargetMessageID == 0) {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}';";
 				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$targetMessage->thread' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='{$targetMessage[0]->thread}' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}';";
 				}
 
 				// Create ghost thread if requested

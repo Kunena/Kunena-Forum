@@ -34,11 +34,14 @@ Legend:
 
 Kunena 1.6.0-xillibit-special-DEV
 
+26-Feb-2010 Xillibit
+^ [#19764] Make working move in message, and bulk delete/move with CKunenaModeration class
+^ [#19764] Make working merge for complete thread only with CKunenaModeration class
+
 25-Feb-2010 Xillibit
 + [#19332] Change Delete behavior - add search function and now delete attachments with CKunenaModeration on kunena_attachments
 + [#19807] Add in search options, the options to search in trash for moderators
 ^ [#19764] Make delete a post and delete a thread in message using CKunenaModeration working in frontend
-^ [#19764] Make move in message, and bulk delete/move with CKunenaModeration class working
 
 24-Feb-2010 Xillibit
 ^ [#19764] Make delete and move functions in CKunenaModeration class functionnals (not fully tested)

@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 25-Feb-2010 fxstein
 + [#19380] Extended upload (part 4) filesize display and filename shortener
++ [#19380] Extended upload (part 5) new KImage class
 
 24-Feb-2010 severdia
 + [#19356] New rank image

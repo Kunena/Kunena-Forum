@@ -1617,6 +1617,8 @@ span.newchar {
 	background:url("../images/icons/attachment.gif") no-repeat;
 	height: 32px;
 	line-height: 32px;
+	width: 200px;
+	float: left;
 }
 #Kunena ul.kfile-attach li span {
 	padding-left: 10px;

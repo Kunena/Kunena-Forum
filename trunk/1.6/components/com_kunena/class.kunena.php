@@ -986,7 +986,7 @@ class CKunenaTools {
 		 *
 		 * @param char $filename 	Filename to be shortened if too long
 		 */
-		function shortenFileName($filename, $front=12, $back=8, $filler='...') {
+		function shortenFileName($filename, $front=10, $back=8, $filler='...') {
 			$len = strlen($filename);
 			if ($len>($front+strlen($filler)+$back)){
 				$output=substr($filename,0,$front).$filler.substr($filename,$len-$back,$back);

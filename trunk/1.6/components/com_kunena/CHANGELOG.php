@@ -44,6 +44,7 @@ Kunena 1.6.0-DEV
 
 26-Feb-2010 fxstein
 + [#19380] Extended upload (part 6) support gif, png in addition to jpeg; square thumbnails
+^ [#19380] Display multiple attachments in a single row - shorten filenames to fit
 
 25-Feb-2010 fxstein
 + [#19380] Extended upload (part 4) filesize display and filename shortener

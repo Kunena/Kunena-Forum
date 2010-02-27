@@ -94,17 +94,17 @@ class CKunenaToolbar
 
     function _PROFILE_MENU()
     {
-
         JToolBarHelper::spacer();
         JToolBarHelper::custom('userprofile', 'edit.png', 'edit_f2.png', JText::_('COM_KUNENA_EDIT'));
         JToolBarHelper::spacer();
+        JToolBarHelper::custom('logout', 'cancel.png', 'cancel_f2.png', JText::_('COM_KUNENA_LOGOUT'));
+        JToolBarHelper::spacer();
         JToolBarHelper::custom('trashusermessages', 'trash.png', 'trash_f2.png', JText::_('COM_KUNENA_TRASH_USERMESSAGES'));
         JToolBarHelper::spacer();
-        JToolBarHelper::cancel();
+        JToolBarHelper::custom('deleteuser','delete.png','delete_f2.png', JText::_('COM_KUNENA_USER_DELETE'));
         JToolBarHelper::spacer();
         JToolBarHelper::back();
         JToolBarHelper::spacer();
-
     }
 
     function _MOVEUSERMESSAGES_MENU()

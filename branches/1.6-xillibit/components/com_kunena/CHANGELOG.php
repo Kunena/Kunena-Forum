@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-xillibit-special-DEV
 
+27-Feb-2010 Xillibit
+^ [#19764] Make merge working for one message and put things for split
++ [#19764] Add functions to logout an user and to delete an user from kunena user manager
+
 26-Feb-2010 Xillibit
 ^ [#19764] Make working move in message, and bulk delete/move with CKunenaModeration class
 ^ [#19764] Make working merge for complete thread only with CKunenaModeration class

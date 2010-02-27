@@ -182,6 +182,16 @@ switch ($task) {
 
 		break;
 
+	case "logout" :
+		logout ( $option, $uid );
+
+		break;
+
+	case "deleteuser" :
+		deleteUser ( $option, $uid );
+
+		break;
+
 	case "userprofile" :
 		editUserProfile ( $option, $uid );
 
@@ -1242,13 +1252,13 @@ function showProfiles($kunena_db, $option, $order) {
 		$limit = 100;
 
 	if ($order == 1) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY sbu.moderator DESC", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id "  . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY sbu.moderator DESC", $limitstart, $limit );
 	} else if ($order == 2) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY u.name ASC ", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY u.name ASC ", $limitstart, $limit );
 	} else if ($order == 3) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY u.username ASC", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY u.username ASC", $limitstart, $limit );
 	} else if ($order < 1) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY sbu.userid", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY sbu.userid", $limitstart, $limit );
 	}
 
 	$profileList = $kunena_db->loadObjectList ();
@@ -1458,6 +1468,37 @@ function moveUserMessagesNow ( $option, $cid ) {
 		}
 	}
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", JText::_('COM_A_KUNENA_USERMES_MOVED_DONE') );
+}
+
+function logout ( $option, $uid ) {
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
+	foreach ( $uid as $UserID) {
+		$kunena_mod->logoutUser($UserID);
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", JText::_('COM_A_KUNENA_USER_LOGOUT_DONE') );
+}
+
+function deleteUser ( $option, $uid ) {
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
+	foreach ($uid as $UserID) {
+		$deleteuser = $kunena_mod->deleteUserAccount($UserID);
+		if (!$deleteuser) {
+			$message = $kunena_mod->getErrorMessage();
+		} else {
+			$message = JText::_('COM_A_KUNENA_USER_DELETE_DONE');
+		}
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );
 }
 
 //===============================

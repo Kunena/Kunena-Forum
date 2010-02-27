@@ -415,6 +415,43 @@ class CKunenaModeration {
 		return false;
 	}
 
+	function deleteUserAccount($UserID) {
+		$acl =& JFactory::getACL();
+
+		//check for super admin
+		$objectID 	= $acl->get_object_id( 'users', $UserID, 'ARO' );
+		$groups 	= $acl->get_object_groups( $objectID, 'ARO' );
+		$this_group = strtolower( $acl->get_group_name( $groups[0], 'ARO' ) );
+
+		if ( $this_group == 'super administrator' ) {
+				$this->_errormsg = JText::_( 'COM_KUNENA_USER_DELETE_ADMIN_NOT' );
+				return false;
+		} else if ( $UserID == $this->_my->id ) {
+				$this->_errormsg = JText::_( 'COM_KUNENA_USER_DELETE_YOURSELF_NOT' );
+				return false;
+		} else if ( ( $this_group == 'administrator' ) && ( $currentUser->get( 'gid' ) == 24 ) ) {
+				$this->_errormsg = JText::_( 'COM_KUNENA_USER_DELETE_WARM' );
+				return false;
+		} else {
+			$TargetUser =& JUser::getInstance($UserID);
+			$TargetUser->delete();
+			$this->_db->setQuery ( "DELETE FROM #__fb_users WHERE `userid`='$UserID';" );
+			$this->_db->query ();
+			check_dberror ( "Unable to delete user." );
+			return true;
+		}
+		return false;
+	}
+
+	function logoutUser($UserID) {
+		$kunena_app = & JFactory::getApplication ();
+		$options = array();
+		$options['clientid'][] = 0; //site
+		$kunena_app->logout((int)$UserID,$options);
+
+		return true;
+	}
+
 	// If a function failed - a detailed error message can be requested
 	function getErrorMessage() {
 		return $this->_errormsg;
@@ -434,7 +471,6 @@ class CKunenaModeration {
 		// TODO: what do we do with ghost message title? JText::_('COM_KUNENA_MOVED_TOPIC') was used before
 		// @Oliver: I'd like to get rid of it and add it while rendering..
 		$myname = $this->_config->username ? $my->username : $my->name;
-		echo 'myname'.$myname;
 
 		$this->_db->setQuery ( "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','{$currentMessage[0]->subject}','$lastTimestamp','{$currentMessage[0]->catid}','1', '$my->id', '" . trim ( addslashes ( $myname ) ) . "')" );
 		$this->_db->query ();

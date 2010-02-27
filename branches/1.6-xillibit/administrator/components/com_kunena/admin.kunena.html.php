@@ -2111,20 +2111,23 @@ td.kadmin-tdtitle {
 					onclick="checkAll(<?php echo count ( $profileList ); ?>);" /></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_NAME'); ?></th>
-				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?>
-				</th>
+				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?></th>
+				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_LOGGUED'); ?></th>
 				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
+				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
 				<th align="left" width="15"><?php echo JText::_('COM_KUNENA_VIEW_MODERATOR'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_VIEW'); ?></th>
 				<th align="left" width="*"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?></th>
 			</tr>
-			<?php if ($countPL > 0) {
+			<?php
+			if ($countPL > 0) {
 					$k = 0;
 					//foreach ($profileList as $pl)
 					$i = 0;
 					for($i = 0, $n = count ( $profileList ); $i < $n; $i ++) {
 						$pl = &$profileList [$i];
 						$k = 1 - $k;
+						$userLogged = $pl->session_id ?  '<img src="images/tick.png" width="16" height="16" border="0" alt="" />': '';
 			?>
 			<tr class="row<?php echo $k;
 						?>">
@@ -2145,7 +2148,11 @@ td.kadmin-tdtitle {
 					onclick="return listItemTask('cb<?php echo $i;
 						?>','userprofile')"><?php echo $pl->name;
 						?></a></td>
+				<td width="100" align="center"><?php echo $userLogged;
+						?>&nbsp;</td>
 				<td width="100"><?php echo $pl->email;
+						?>&nbsp;</td>
+				<td width="100"><?php echo $pl->usertype;
 						?>&nbsp;</td>
 				<td align="center" width="15"><?php 		if ($pl->moderator) {
 							echo JText::_('COM_KUNENA_ANN_YES');
@@ -2167,7 +2174,7 @@ td.kadmin-tdtitle {
 				}
 				?>
 			<tr>
-				<th align="center" colspan="8"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?>
+				<th align="center" colspan="10"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?>
 				</th>
 			</tr>
 		</table>

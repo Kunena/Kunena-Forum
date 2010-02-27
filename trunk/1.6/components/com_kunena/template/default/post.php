@@ -83,29 +83,34 @@ if ($id || $parentid) {
 	}
 
 	// Load attachments
-	$query = "SELECT * FROM #__kunena_attachments
-				WHERE mesid ='" . ($parentid ? $parentid : $id) . "'";
-	$kunena_db->setQuery ( $query );
-	$attachments = $kunena_db->loadObjectList ();
-	check_dberror ( 'Unable to load attachments' );
+	$attachments = array();
 
-	$this->msg_html->attachments = array();
+	if ($do == "edit"){
+		// Only populate attachments if we go into edit mode
+		$query = "SELECT * FROM #__kunena_attachments
+					WHERE mesid ='" . $id . "'";
+		$kunena_db->setQuery ( $query );
+		$attachments = $kunena_db->loadObjectList ();
+		check_dberror ( 'Unable to load attachments' );
 
-	foreach($attachments as $attachment)
-	{
-		// Check if file has been pre-processed
-		if (is_null($attachment->hash)){
-			// This attachment has not been processed.
-			// It migth be a legacy file, or the settings might have been reset.
-			// Force recalculation ...
+		$this->msg_html->attachments = array();
 
-			// TODO: Perform image re-prosessing
+		foreach($attachments as $attachment)
+		{
+			// Check if file has been pre-processed
+			if (is_null($attachment->hash)){
+				// This attachment has not been processed.
+				// It migth be a legacy file, or the settings might have been reset.
+				// Force recalculation ...
+
+				// TODO: Perform image re-prosessing
+			}
+
+			// shorttype based on MIME type to determine if image for displaying purposes
+			$attachment->shorttype = (stripos($attachment->filetype, 'image/') !== false) ? 'image' : $attachment->filetype;
+
+			$this->msg_html->attachments[] = $attachment;
 		}
-
-		// shorttype based on MIME type to determine if image for displaying purposes
-		$attachment->shorttype = (stripos($attachment->filetype, 'image/') !== false) ? 'image' : $attachment->filetype;
-
-		$this->msg_html->attachments[] = $attachment;
 	}
 
 	// Make sure that category id is from the message (post may have been moved)

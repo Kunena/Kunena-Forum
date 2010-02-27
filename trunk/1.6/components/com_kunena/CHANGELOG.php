@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+27-Feb-2010 severdia
++ [#19356] New icons
+
 27-Feb-2010 fxstein
 + [#19380] Extended upload (part 7) display existing attachments in edit mode
 ^ [#19380] Renamed KImage to CKunenaImage

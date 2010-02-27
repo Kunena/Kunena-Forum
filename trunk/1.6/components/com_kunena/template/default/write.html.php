@@ -306,6 +306,13 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 		<td>
 			<div id="kattachment"><input id="kupload" name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
 			<div id="kattachmentsnote"></div>
+
+		<?php
+		// Include attachments template if we have any
+		if ( isset ( $this->msg_html->attachments ) ) {
+			CKunenaTools::loadTemplate('/view/message.attachments.php');
+		} ?>
+
 		</td>
 		</tr>
 

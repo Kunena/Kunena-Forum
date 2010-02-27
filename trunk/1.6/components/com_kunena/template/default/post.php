@@ -26,7 +26,7 @@ $kunena_app = & JFactory::getApplication ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_session = & CKunenaSession::getInstance ();
 
-global $imageLocation, $fileLocation, $topic_emoticons;
+global $topic_emoticons;
 
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
@@ -34,8 +34,6 @@ $kunena_config =& CKunenaConfig::getInstance();
 
 $subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-$attachfile = JRequest::getVar ( 'attachfile', NULL, 'FILES', 'array' );
-$attachimage = JRequest::getVar ( 'attachimage', NULL, 'FILES', 'array' );
 $authorname = JRequest::getVar ( 'authorname', '' );
 $email = JRequest::getVar ( 'email', '' );
 $contentURL = JRequest::getVar ( 'contentURL', '' );
@@ -83,6 +81,33 @@ if ($id || $parentid) {
 		echo JText::_('COM_KUNENA_POST_INVALID');
 		return;
 	}
+
+	// Load attachments
+	$query = "SELECT * FROM #__kunena_attachments
+				WHERE mesid ='" . ($parentid ? $parentid : $id) . "'";
+	$kunena_db->setQuery ( $query );
+	$attachments = $kunena_db->loadObjectList ();
+	check_dberror ( 'Unable to load attachments' );
+
+	$this->msg_html->attachments = array();
+
+	foreach($attachments as $attachment)
+	{
+		// Check if file has been pre-processed
+		if (is_null($attachment->hash)){
+			// This attachment has not been processed.
+			// It migth be a legacy file, or the settings might have been reset.
+			// Force recalculation ...
+
+			// TODO: Perform image re-prosessing
+		}
+
+		// shorttype based on MIME type to determine if image for displaying purposes
+		$attachment->shorttype = (stripos($attachment->filetype, 'image/') !== false) ? 'image' : $attachment->filetype;
+
+		$this->msg_html->attachments[] = $attachment;
+	}
+
 	// Make sure that category id is from the message (post may have been moved)
 	if ($do != 'domovepost' && $do != 'domergepost' && $do != 'dosplit') {
 		$catid = $msg_cat->catid;
@@ -623,7 +648,7 @@ if ($kunena_my->id) {
 				$kunena_db->setQuery ( $query );
 
 				$message1 = $kunena_db->loadObjectList ();
-				check_dberror ( "Unable to load messages." );
+				check_dberror ( "Unable to load message." );
 				$mes = $message1 [0];
 				$userid = $mes->userid;
 

@@ -648,7 +648,6 @@ class CKunenaView {
 		$this->msg_html->text = CKunenaTools::parseBBCode ( $this->kunena_message->message );
 
 		// Add attachments
-
 		if (isset($this->kunena_message->attachments)) {
 			$this->msg_html->attachments = array();
 

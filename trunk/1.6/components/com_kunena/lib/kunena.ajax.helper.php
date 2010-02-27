@@ -23,7 +23,15 @@ class CKunenaAjaxHelper {
 	 * @var JDatabase
 	 */
 	protected $_db;
+
+	/**
+	 * @var JUser
+	 */
 	protected $_my;
+
+	/**
+	 * @var CKunenaSession
+	 */
 	protected $_session;
 
 	function __construct() {
@@ -47,6 +55,9 @@ class CKunenaAjaxHelper {
 		if(JDEBUG == 1 && defined('JFIREPHP')){
 			FB::log("Kunena JSON action: ".$action);
 		}
+
+		// Sanitize $data variable
+		$data = $this->_db->getEscaped($data);
 
 		if ($this->_my->id) {
 			// We only entertain json requests for registered and logged in users
@@ -86,15 +97,20 @@ class CKunenaAjaxHelper {
 					$response = $this->_uploadFile ($do);
 
 					break;
-				default :
+				case 'removeattachment' :
+
+					$response = $this->_removeAttachment ($data);
+
+					break;
+					default :
 
 					break;
 			}
 		}
 		else {
 			$response = array(
-				'status' => '0',
-				'error' => @sprintf(_KUNENA_AJAX_PERMISSION_DENIED)
+				'status' => '-1',
+				'error' => JText::_('COM_KUNENA_AJAX_PERMISSION_DENIED')
 			);
 		}
 		// Output the JSON data.
@@ -105,7 +121,7 @@ class CKunenaAjaxHelper {
 	protected function _getAutoComplete($do, $data) {
 		$result = array ();
 
-		// only registered users when the board is online should endup here
+		// only registered users when the board is online will endup here
 
 		// Verify permissions
 		if ($this->_session->allowed && $this->_session->allowed != 'na') {
@@ -157,6 +173,10 @@ class CKunenaAjaxHelper {
 				break;
 			default :
 			// Operation not supported
+				$result = array(
+					'status' => '-1',
+					'error' => JText::_('COM_KUNENA_AJAX_INVALID_OPERATION')
+				);
 
 
 		}
@@ -223,6 +243,67 @@ class CKunenaAjaxHelper {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance();
 		return $attachments->upload();
+	}
+
+
+
+	protected function _removeAttachment($data) {
+		$result = array ();
+
+		// only registered users when the board is online will endup here
+		// $data has already been escaped as part of this class
+
+		// TODO: Get attachment details
+
+		$query = "SELECT a.*, m.*
+			FROM #__kunena_attachments AS a
+			JOIN #__fb_messages AS m ON a.mesid = m.id
+			WHERE a.id = '".$data."'";
+
+		$this->_db->setQuery ( $query );
+		$attachment = $this->_db->loadObject ();
+		check_dberror ( "Unable to load attachment." );
+
+		// Verify permissions, user must be author of the message this
+		// attachment is attached to or be a moderator or admin of the site
+
+		if ($attachment->userid != $this->_my->id &&
+			!CKunenaTools::isModerator($this->_my->id, $attachment->catid) &&
+			!CKunenaTools::isAdmin()){
+			// not the author, not a moderator, not an admin
+			// nothing todo here - end with permission error
+			$result = array(
+				'status' => '-1',
+				'error' => JText::_('COM_KUNENA_AJAX_PERMISSION_DENIED')
+			);
+			return $result;
+		}
+
+		// Request coming form valid user, moderator or admin...
+
+		// First remove files from filsystem - check fro thumbs and raw in case this is an image
+		if (file_exists(JPATH_ROOT.$attachment->folder.$attachment->filename))
+			JFile::delete (JPATH_ROOT.$attachment->folder.$attachment->filename);
+		if (file_exists(JPATH_ROOT.$attachment->folder.'/raw/'.$attachment->filename))
+			JFile::delete (JPATH_ROOT.$attachment->folder.'/raw/'.$attachment->filename);
+		if (file_exists(JPATH_ROOT.$attachment->folder.'/thumb/'.$attachment->filename))
+			JFile::delete (JPATH_ROOT.$attachment->folder.'/thumb/'.$attachment->filename);
+
+		// Finally delete attachment record from db
+		$query = "DELETE FROM #__kunena_attachments AS a
+					WHERE a.id = '".$data."'";
+
+		$this->_db->setQuery ( $query );
+		$this->_db->query ();
+		check_dberror ( "Unable to delete attachment." );
+
+		$result = array(
+			'status' => '1',
+			'error' => JText::_('COM_KUNENA_AJAX_ATTACHMENT_DELETED')
+		);
+
+
+		return $result;
 	}
 
 }

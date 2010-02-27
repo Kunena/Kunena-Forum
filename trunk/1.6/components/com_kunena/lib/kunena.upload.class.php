@@ -343,12 +343,12 @@ class CKunenaUpload {
 
 			$options = array('quality' => $quality);
 
-			$imageRaw = new KImage($this->fileTemp.'.raw');
+			$imageRaw = new CKunenaImage($this->fileTemp.'.raw');
 			$image = $imageRaw->resize($this->_config->imagewidth, $this->_config->imageheight);
 			$type = $imageRaw->getType();
 			unset($imageRaw);
-			$imageThumb = $image->resize($this->_config->thumbwidth, $this->_config->thumbheight,true,KImage::SCALE_OUTSIDE);
-			$imageThumb->crop($this->_config->thumbwidth, $this->_config->thumbheight,0,0,false,KImage::SCALE_INSIDE);
+			$imageThumb = $image->resize($this->_config->thumbwidth, $this->_config->thumbheight,true,CKunenaImage::SCALE_OUTSIDE);
+			$imageThumb->crop($this->_config->thumbwidth, $this->_config->thumbheight,0,0,false,CKunenaImage::SCALE_INSIDE);
 
 			$image->toFile($this->fileTemp,$type,$options);
 			$imageThumb->toFile($this->fileTemp.'.thumb',$type,$options);

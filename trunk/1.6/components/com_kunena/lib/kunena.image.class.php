@@ -14,16 +14,12 @@ defined('JPATH_BASE') or die;
 
 jimport('joomla.filesystem.file');
 
-define('KIMAGE_SCALE_FILL', 1);
-define('KIMAGE_SCALE_INSIDE', 2);
-define('KIMAGE_SCALE_OUTSIDE', 3);
-
 /**
  * Class to manipulate an image.
  *
  * Derived from JXtended JImage class Copyright (C) 2008 - 2009 JXtended, LLC. All rights reserved.
  */
-class KImage
+class CKunenaImage
 {
 	/**
 	 * Scale the image to fill.
@@ -90,7 +86,7 @@ class KImage
 	public function __construct($source = null)
 	{
 		// First we test if dependencies are met.
-		if (!KImageHelper::test())
+		if (!CKunenaImageHelper::test())
 		{
 			$this->setError('Unmet Dependencies');
 			return false;
@@ -125,7 +121,7 @@ class KImage
 		return $this->type;
 	}
 
-	function crop($width, $height, $left, $top, $createNew = true, $scaleMethod = KImage::SCALE_INSIDE)
+	function crop($width, $height, $left, $top, $createNew = true, $scaleMethod = CKunenaImage::SCALE_INSIDE)
 	{
 		// Make sure the file handle is valid.
 		if ((!is_resource($this->_handle) || get_resource_type($this->_handle) != 'gd'))
@@ -202,11 +198,11 @@ class KImage
 			);
 		}
 
-		// If we are cropping to a new image, create a new KImage object.
+		// If we are cropping to a new image, create a new CKunenaImage object.
 		if ($createNew)
 		{
-			// Create the new KImage object for the new truecolor image handle.
-			$new = new KImage($handle);
+			// Create the new CKunenaImage object for the new truecolor image handle.
+			$new = new CKunenaImage($handle);
 			return $new;
 		}
 		else
@@ -222,11 +218,11 @@ class KImage
 		// Initialize variables.
 		$name = preg_replace('#[^A-Z0-9_]#i', '', $type);
 
-		$className = 'KImageFilter_'.ucfirst($name);
+		$className = 'CKunenaImageFilter_'.ucfirst($name);
 		if (!class_exists($className))
 		{
 			jimport('joomla.filesystem.path');
-			$path = JPath::find(KImageFilter::addIncludePath(), strtolower($name).'.php');
+			$path = JPath::find(CKunenaImageFilter::addIncludePath(), strtolower($name).'.php');
 			if ($path)
 			{
 				require_once $path;
@@ -303,7 +299,7 @@ class KImage
 		}
 
 		// Get the image properties.
-		$properties = KImageHelper::getProperties($path);
+		$properties = CKunenaImageHelper::getProperties($path);
 		if (!$properties) {
 			return false;
 		}
@@ -383,7 +379,7 @@ class KImage
 		return true;
 	}
 
-	function resize($width, $height, $createNew = true, $scaleMethod = KImage::SCALE_INSIDE)
+	function resize($width, $height, $createNew = true, $scaleMethod = CKunenaImage::SCALE_INSIDE)
 	{
 		// Make sure the file handle is valid.
 		if ((!is_resource($this->_handle) || get_resource_type($this->_handle) != 'gd'))
@@ -438,11 +434,11 @@ class KImage
 			);
 		}
 
-		// If we are resizing to a new image, create a new KImage object.
+		// If we are resizing to a new image, create a new CKunenaImage object.
 		if ($createNew)
 		{
-			// Create the new KImage object for the new truecolor image handle.
-			$new = new KImage($handle);
+			// Create the new CKunenaImage object for the new truecolor image handle.
+			$new = new CKunenaImage($handle);
 			return $new;
 		}
 		else
@@ -493,17 +489,17 @@ class KImage
 		}
 
 		$dimensions = array();
-		if ($scaleMethod == KImage::SCALE_FILL)
+		if ($scaleMethod == CKunenaImage::SCALE_FILL)
 		{
 			$dimensions['width'] = $width;
 			$dimensions['height'] = $height;
 		}
-		elseif ($scaleMethod == KImage::SCALE_INSIDE || $scaleMethod == KImage::SCALE_OUTSIDE)
+		elseif ($scaleMethod == CKunenaImage::SCALE_INSIDE || $scaleMethod == CKunenaImage::SCALE_OUTSIDE)
 		{
 			$rx = $this->getWidth() / $width;
 			$ry = $this->getHeight() / $height;
 
-			if ($scaleMethod == KImage::SCALE_INSIDE) {
+			if ($scaleMethod == CKunenaImage::SCALE_INSIDE) {
 				$ratio = ($rx > $ry) ? $rx : $ry;
 			}
 			else {
@@ -523,10 +519,10 @@ class KImage
 	}
 }
 
-class KImageFilter
+class CKunenaImageFilter
 {
 	/**
-	 * Add a directory where KImage should search for filters. You may
+	 * Add a directory where CKunenaImage should search for filters. You may
 	 * either pass a string or an array of directories.
 	 *
 	 * @access	public
@@ -563,7 +559,7 @@ class KImageFilter
 	}
 }
 
-class KImageHelper
+class CKunenaImageHelper
 {
 	public static function getProperties($path)
 	{

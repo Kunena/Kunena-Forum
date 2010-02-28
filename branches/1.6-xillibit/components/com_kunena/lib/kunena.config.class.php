@@ -395,6 +395,8 @@ class CKunenaConfig extends CKunenaConfigBase {
     var $hide_ip = 1;
     //New for 1.6 -> disable/enable activity stream
     var $js_actstr_integration = 0;
+    // New for 1.6: hide profile info when user is deleted from joomla!
+    var $hideuserprofileinfo = 'put_empty';
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

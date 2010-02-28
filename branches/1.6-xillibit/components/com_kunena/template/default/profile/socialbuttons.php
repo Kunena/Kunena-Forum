@@ -10,6 +10,8 @@
  *
  **/
 defined( '_JEXEC' ) or die();
+
+if ($this->userinfo->userid != '0' || $this->config->hideuserprofileinfo == 'hide_prof') {
 ?>
 
 <div class="iconrow">
@@ -26,7 +28,7 @@ defined( '_JEXEC' ) or die();
 </div>
 <div class="clr"></div>
 <div class="iconrow">
-	
+
 	<?php echo $this->profile->socialButton('yim'); ?>
 	<?php echo $this->profile->socialButton('aim'); ?>
 	<?php echo $this->profile->socialButton('gtalk'); ?>
@@ -38,3 +40,5 @@ defined( '_JEXEC' ) or die();
 	<?php echo $this->profile->socialButton('flickr'); ?>
 	<?php echo $this->profile->socialButton('bebo'); ?>
 </div>
+
+<?php } ?>

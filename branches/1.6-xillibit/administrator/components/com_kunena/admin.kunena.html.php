@@ -1138,6 +1138,14 @@ td.kadmin-tdtitle {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FAVORITES_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HIDE_USER_DELETED_PROFILE_INFO') ?></td>
+								<td align="left" valign="top"><?php echo $lists ['hideuserprofileinfo'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HIDE_USER_DELETED_PROFILE_INFO_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

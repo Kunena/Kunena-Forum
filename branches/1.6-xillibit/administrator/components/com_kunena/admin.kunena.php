@@ -1042,6 +1042,11 @@ function showConfig($option) {
 	$lists['hide_ip'] = JHTML::_('select.genericlist', $yesno, 'cfg_hide_ip', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->hide_ip);
 	//New for 1.6: Joomsocial Activity Stream Integration disable/enable
 	$lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->js_actstr_integration);
+	// New for 1.6: hide profile info when user is deleted from joomla!
+	$user_profile_info = array ();
+  	$user_profile_info[] = JHTML::_('select.option', 'hide_prof', JText::_('COM_KUNENA_COM_A_HIDE_USERPROFILE_HIDE'));
+  	$user_profile_info[] = JHTML::_('select.option', 'put_empty',JText::_('COM_KUNENA_COM_A_HIDE_USERPROFILE_PUT_EMPTY_DATAS'));
+	$lists['hideuserprofileinfo'] = JHTML::_('select.genericlist', $user_profile_info, 'cfg_hideuserprofileinfo', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->hideuserprofileinfo);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }

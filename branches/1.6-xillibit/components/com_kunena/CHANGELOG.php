@@ -36,6 +36,7 @@ Kunena 1.6.0-xillibit-special-DEV
 
 28-Feb-2010 Xillibit
 ^ [#19764] Make split working with CKunenaModeration class
++ [#19607] Add option do hide user profile and information
 
 27-Feb-2010 Xillibit
 ^ [#19764] Make merge working for one message and put things for split

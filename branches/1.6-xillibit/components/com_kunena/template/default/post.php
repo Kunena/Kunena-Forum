@@ -1061,12 +1061,12 @@ if ($kunena_my->id) {
 				echo CKunenaLink::GetPostURL();
 				?>"
 			method="post" name="myform"><input type="hidden" name="do"
-			value="domergepostnow" /> <input type="hidden" name="id"
+			value="splitnow" /> <input type="hidden" name="id"
 			value="<?php
 				echo $id;
 				?>" /> <input type="hidden" name="messubeject"
 			value="<?php
-				echo $topicSubject;
+				echo stripslashes($topicSubject);
 				?>" />
 
 		<p><?php
@@ -1082,13 +1082,13 @@ if ($kunena_my->id) {
 
 		<input type="radio" name="split" value="splitpost" > Split only this message<br />
 		<?php echo $lists; ?><br />
-		<input type="radio" name="split" value="splitmultpost" > Split this message and messages following:<br />
+		<!-- <input type="radio" name="split" value="splitmultpost" > Split this message and messages following:<br />-->
 
 		<br />
 
 		<input type="submit" class="button"
 			value="<?php
-				echo JText::_('COM_KUNENA_BUTTON_SPLIT');
+				echo JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC');
 				?>" /></p>
 		</form>
 <?php
@@ -1103,14 +1103,17 @@ if ($kunena_my->id) {
 
 				$mode = JRequest::getVar ( 'split', null );
 				$TargetSubject = JRequest::getVar ( 'messubeject', null );
+
 				if ( $mode == 'splitpost') { // we split only the message specified
 					$TargetCatID = JRequest::getVar ( 'targetcat', null );
-					$splitpost = $kunena_mod->moveMessage($id, $TargetCatID, $TargetSubject , $TargetThreadID = 0);
+
+					$splitpost = $kunena_mod->moveMessage($id, $TargetCatID, $TargetSubject , '0');
 					if (!$splitpost) {
 						$message = $kunena_mod->getErrorMessage();
 					} else {
 						$message = JText::_('COM_KUNENA_POST_SUCCESS_SPLIT');
 					}
+
 				} else { // we split the message specified and the replies to this message
 					$TargetCatID = JRequest::getVar ( 'targetcat2', null );
 					$splitpost = $kunena_mod->moveMessageAndNewer($id, $TargetCatID, $TargetSubject , $TargetThreadID = 0);
@@ -1120,8 +1123,8 @@ if ($kunena_my->id) {
 						$message = JText::_('COM_KUNENA_POST_SUCCESS_SPLIT');
 					}
 				}
-				echo $message;
-				//$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $message );
+
+				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ), $message );
 			} else if ($do == "unsubscribe") {
 				$success_msg = JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC');
 				$kunena_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$id}'" );

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-xillibit-special-DEV
 
+28-Feb-2010 Xillibit
+^ [#19764] Make split working with CKunenaModeration class
+
 27-Feb-2010 Xillibit
 ^ [#19764] Make merge working for one message and put things for split
 + [#19764] Add functions to logout an user and to delete an user from kunena user manager

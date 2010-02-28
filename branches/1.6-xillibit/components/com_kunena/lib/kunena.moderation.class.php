@@ -75,7 +75,6 @@ class CKunenaModeration {
 		$mode = intval ( $mode );
 		// no need to check $GhostThread as we only test for true
 
-
 		// Always check security clearance before taking action!
 
 
@@ -183,7 +182,7 @@ class CKunenaModeration {
 			$mode = KN_MOVE_THREAD;
 
 		// partial logic to update target subject if specified
-		$subjectupdatesql = $TargetSubject != '' ? "`subject`='$TargetSubject'" : "";
+		$subjectupdatesql = $TargetSubject != '' ? ",`subject`='$TargetSubject'" : "";
 
 		switch ($mode) {
 			case KN_MOVE_MESSAGE : // Move Single message only
@@ -194,18 +193,24 @@ class CKunenaModeration {
 				}
 
 				// If we are moving the first message of a thread only - make the second post the new thread header
-				if ($MessageID == $currentMessage[0]->thread && $currentMessage[0]->parent == '0') {
+				if ( $currentMessage[0]->parent == '0') {
 					// We are about to pull the thread starter from the original thread.
 					// Need to promote the second post of the original thread as the new starter.
-					$sqlnewparent = "SELECT id, userid, MAX( time ) AS timestamp FROM #__fb_messages WHERE `thread`='{$currentMessage[0]->thread}' AND `parent`='{$currentMessage[0]->thread}';";
+					$sqlnewparent = "SELECT id, userid, MIN(time) FROM #__fb_messages WHERE `thread`='{$currentMessage[0]->thread}' AND `parent`='{$currentMessage[0]->thread}';";
 					$this->_db->setQuery ( $sqlnewparent );
 					$newParent = $this->_db->loadObjectList ();
 					check_dberror ( 'Unable to select new message for promote parent.' );
 
 					if ( $newParent[0]->id != null ) {
-						$sql .= "UPDATE #__fb_messages SET `parent`='0' WHERE `id`='{$newParent[0]->id}';";
+						$sqlparent = "UPDATE #__fb_messages SET `parent`=0, `thread`='{$newParent[0]->id}' WHERE `id`='{$newParent[0]->id}';";
+						$this->_db->setQuery ( $sqlparent );
+						$this->_db->query ();
+						check_dberror ( 'Unable to promote message parent.' );
+						$sqlparent1 = "UPDATE #__fb_messages SET `thread`='{$newParent[0]->id}' WHERE `parent`='{$currentMessage[0]->thread}' AND `thread`='{$currentMessage[0]->thread}';";
+						$this->_db->setQuery ( $sqlparent1 );
+						$this->_db->query ();
+						check_dberror ( 'Unable to put child to have the new parent.' );
 					}
-
 				}
 
 				break;
@@ -234,11 +239,11 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_REPLIES : // Move message and all replies and quotes - 1 level deep for now
 				if ($TargetMessageID == 0) {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='0', $subjectupdatesql WHERE id`='$MessageID';";
 					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
 				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}' AND `id`>'$MessageID' AND `parent`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID', $subjectupdatesql WHERE id`='$MessageID';";
+					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID', $subjectupdatesql WHERE `thread`='{$currentMessage[0]->thread}' AND `id`>'$MessageID' AND `parent`='$MessageID';";
 				}
 
 				break;

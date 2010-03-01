@@ -197,6 +197,16 @@ switch ($task) {
 
 		break;
 
+	case "userblock" :
+		userblock ( $option, $uid, 1 );
+
+		break;
+
+	case "userunblock" :
+		userunblock ( $option, $uid, 0 );
+
+		break;
+
 	case "trashusermessages" :
 		trashUserMessages ( $option, $uid );
 
@@ -1501,6 +1511,52 @@ function deleteUser ( $option, $uid ) {
 		} else {
 			$message = JText::_('COM_A_KUNENA_USER_DELETE_DONE');
 		}
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );
+}
+
+function userblock ( $option, $uid = null, $block = 1 ) {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
+	if (! is_array ( $uid ) || count ( $uid ) < 1) {
+		$action = $block ? 'userblock' : 'userunblock';
+		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTANITEMTO') . " $action'); window.history.go(-1);</script>\n";
+		exit ();
+	}
+
+	$disableuseraccount = $kunena_mod->blockUserAccount($uid[0],1);
+	if (!$disableuseraccount) {
+		$message = $kunena_mod->getErrorMessage();
+	} else {
+		$message = JText::_('COM_A_KUNENA_USER_BLOCKED_DONE');
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );
+}
+
+function userunblock ( $option, $uid = null, $block = 0 ) {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
+	if (! is_array ( $uid ) || count ( $uid ) < 1) {
+		$action = $block ? 'userblock' : 'userunblock';
+		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTANITEMTO') . " $action'); window.history.go(-1);</script>\n";
+		exit ();
+	}
+
+	$enableuseraccount = $kunena_mod->blockUserAccount($uid[0],0);
+	if (!$enableuseraccount) {
+			$message = $kunena_mod->getErrorMessage();
+	} else {
+			$message = JText::_('COM_A_KUNENA_USER_UNBLOCKED_DONE');
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );

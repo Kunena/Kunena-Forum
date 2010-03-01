@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-xillibit-special-DEV
 
+01-Mar-2010 Xillibit
++ [#19764] Add user blocking/unblocking functions in kunena users managers like in the j! user managers
+
 28-Feb-2010 Xillibit
 ^ [#19764] Make split working with CKunenaModeration class
 + [#19607] Add option do hide user profile and information

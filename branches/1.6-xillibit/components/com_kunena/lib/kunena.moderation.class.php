@@ -406,18 +406,51 @@ class CKunenaModeration {
 		return $this->_Delete ( $MessageID, true, KN_DEL_ATTACH );
 	}
 
-	function disableUserAccount($UserID) {
-		// Future functionality
-		$this->_errormsg = 'Future feature. Logic not implemented.';
+	function blockUserAccount($UserID, $block) {
+		$acl =& JFactory::getACL();
 
-		return false;
-	}
+		// check for a super admin ... can't block them
+		$objectID 	= $acl->get_object_id( 'users', $UserID, 'ARO' );
+		$groups 	= $acl->get_object_groups( $objectID, 'ARO' );
+		$this_group = strtolower( $acl->get_group_name( $groups[0], 'ARO' ) );
 
-	function enableUserAccount($UserID) {
-		// Future functionality
-		$this->_errormsg = 'Future feature. Logic not implemented.';
+		if ( $this_group == 'super administrator' ) {
+			$this->_errormsg = JText::_( 'COM_KUNENA_USER_BLOCK_ADMIN_NOT' );
+			return false;
+		} else if ( $UserID == $this->_my->id ) {
+			$this->_errormsg = JText::_( 'COM_KUNENA_USER_BLOCK_YOURSELF_NOT' );
+			return false;
+		} else if ( ( $this_group == 'administrator' ) && ( $currentUser->get( 'gid' ) == 24 ) ) {
+			$this->_errormsg = JText::_( 'COM_KUNENA_USER_BLOCK_WARM' );
+			return false;
+		} else {
+			$user =& JUser::getInstance((int)$UserID);
+			$count = 2;
 
-		return false;
+			if ( $user->get( 'gid' ) == 25 ) {
+				// count number of active super admins
+				$query = 'SELECT COUNT( id )'
+					. ' FROM #__users'
+					. ' WHERE gid = 25'
+					. ' AND block = 0'
+					;
+				$this->_db->setQuery( $query );
+				$count = $this->_db->loadResult();
+			}
+
+			if ( $count <= 1 && $user->get( 'gid' ) == 25 ) {
+					// cannot delete Super Admin where it is the only one that exists
+					$this->_errormsg = JText::_( 'COM_KUNENA_USER_BLOCK_WARM_ADMIN' );
+			} else {
+				$user->block = $block;
+				$user->save();
+
+				// delete user acounts active sessions
+				$this->logoutUser($UserID);
+
+				return true;
+			}
+		}
 	}
 
 	function deleteUserAccount($UserID) {
@@ -438,14 +471,32 @@ class CKunenaModeration {
 				$this->_errormsg = JText::_( 'COM_KUNENA_USER_DELETE_WARM' );
 				return false;
 		} else {
-			$TargetUser =& JUser::getInstance($UserID);
-			$TargetUser->delete();
-			if ( $this->_config->hideuserprofileinfo == 'put_empty' ) {
-				$this->_db->setQuery ( "UPDATE #__fb_users SET `signature`=NULL, `moderator`=0, `posts`=0, `avatar`=NULL, `karma`=NULL, `uhits`=0, `personalText`=NULL, `gender`=0, `birthdate`=0001-01-01, `location`=NULL, `ICQ`=NULL, `AIM`=NULL, `YIM`=NULL, `MSN`=NULL, `SKYPE`=NULL, `GTALK`=NULL, `websitename`=NULL, `websiteurl`=NULL, `rank`=0, `TWITTER`=NULL, `FACEBOOK`=NULL, `MYSPACE`=NULL, `LINKEDIN`=NULL, `DELICIOUS`=NULL, `FRIENDFEED`=NULL, `DIGG`=NULL, `BLOGSPOT`=NULL, `FLICKR`=NULL, `BEBO`=NULL WHERE `userid`='$UserID';" );
-				$this->_db->query ();
-				check_dberror ( "Unable to delete user." );
+			$user =& JUser::getInstance((int)$UserID);
+			$count = 2;
+
+			if ( $user->get( 'gid' ) == 25 ) {
+				// count number of active super admins
+				$query = 'SELECT COUNT( id )'
+					. ' FROM #__users'
+					. ' WHERE gid = 25'
+					. ' AND block = 0'
+					;
+				$this->_db->setQuery( $query );
+				$count = $this->_db->loadResult();
 			}
-			return true;
+
+			if ( $count <= 1 && $user->get( 'gid' ) == 25 ) {
+					// cannot delete Super Admin where it is the only one that exists
+					$this->_errormsg = JText::_( 'COM_KUNENA_USER_DELETE_WARM_ADMIN' );
+			} else {
+				$user->delete();
+				if ( $this->_config->hideuserprofileinfo == 'put_empty' ) {
+					$this->_db->setQuery ( "UPDATE #__fb_users SET `signature`=NULL, `moderator`=0, `posts`=0, `avatar`=NULL, `karma`=NULL, `uhits`=0, `personalText`=NULL, `gender`=0, `birthdate`=0001-01-01, `location`=NULL, `ICQ`=NULL, `AIM`=NULL, `YIM`=NULL, `MSN`=NULL, `SKYPE`=NULL, `GTALK`=NULL, `websitename`=NULL, `websiteurl`=NULL, `rank`=0, `TWITTER`=NULL, `FACEBOOK`=NULL, `MYSPACE`=NULL, `LINKEDIN`=NULL, `DELICIOUS`=NULL, `FRIENDFEED`=NULL, `DIGG`=NULL, `BLOGSPOT`=NULL, `FLICKR`=NULL, `BEBO`=NULL WHERE `userid`='$UserID';" );
+					$this->_db->query ();
+					check_dberror ( "Unable to put empty content for user." );
+				}
+				return true;
+			}
 		}
 		return false;
 	}

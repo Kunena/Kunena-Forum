@@ -458,6 +458,7 @@ class CKunenaTools {
         return;
         }
 
+    // FIXME: broken function, bad implementation
     function decreaseCategoryStats($msg_id, $msg_cat) {
         //topic : 1 , message = 0
         $kunena_db = &JFactory::getDBO();
@@ -561,80 +562,6 @@ class CKunenaTools {
         $lists['parent'] = CKunenaTools::forumSelectList('bulkactions', 0, $options, $attr);
 
         echo $lists['parent'];
-        }
-
-    function fbDeletePosts($isMod) {
-    	$kunena_app =& JFactory::getApplication();
-        $kunena_my = &JFactory::getUser();
-		$kunena_db = &JFactory::getDBO();
-		$backUrl = $kunena_app->getUserState( "com_kunena.ActionBulk");
-
-        if (!CKunenaTools::isAdmin() && !$isMod) {
-            $kunena_app->redirect($backUrl, JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
-            }
-
-        $items = fbGetArrayInts("cb");
-        $dellattach = 1;
-
-        // start iterating here
-        foreach ($items as $id => $value) {
-            $kunena_db->setQuery("SELECT id, catid, parent, thread, subject, userid FROM #__fb_messages
-            					  WHERE id='{$id}'");
-            $mes = $kunena_db->loadObject();
-            check_dberror ( "Unable to load online message info." );
-            if (!$mes) return -2;
-            $thread = $mes->thread;
-
-            if ($mes->parent == 0) {
-                // this is the forum topic; if removed, all children must be removed as well.
-                $children = array ();
-                $userids = array ();
-                $kunena_db->setQuery("SELECT userid, id, catid FROM #__fb_messages WHERE thread='{$id}' OR id='{$id}'");
-				$msguserlist = $kunena_db->loadObjectList();
-				check_dberror ( "Unable to load user list." );
-                foreach ($msguserlist as $line) {
-                    $children[] = $line->id;
-
-                    if ($line->userid > 0) {
-                        $userids[] = $line->userid;
-                        }
-                    }
-
-                $children = implode(',', $children);
-                }
-            else {
-                //this is not the forum topic, so delete it and promote the direct children one level up in the hierarchy
-                $kunena_db->setQuery('UPDATE #__fb_messages SET parent=\'' . $mes->parent . '\' WHERE parent=\'' . $id . '\'');
-                $kunena_db->query();
-                check_dberror ( "Unable to update messages." );
-
-                $children = $id;
-                $userids = $mes->userid > 0 ? $mes->userid : '';
-                }
-
-            //Delete the post (and it's children when it's the first post)
-            $kunena_db->setQuery('UPDATE #__fb_messages SET hold=2 WHERE id=' . $id . ' OR thread=' . $id);
-			$kunena_db->query();
-			check_dberror ( "Unable to delete messages." );
-
-            // now update stats
-            CKunenaTools::decreaseCategoryStats($id, $mes->catid);
-
-            //Delete (possible) ghost post
-            $kunena_db->setQuery("SELECT mesid FROM #__fb_messages_text WHERE message='catid={$mes->catid}&amp;id={$id}'");
-            $int_ghost_id = $kunena_db->loadResult();
-            check_dberror ( "Unable to load ghost post." );
-
-            if ($int_ghost_id > 0) {
-                $kunena_db->setQuery('UPDATE #__fb_messages SET hold=2 WHERE id=' . $int_ghost_id);
-                $kunena_db->query();
-                check_dberror ( "Unable to delete ghost message." );
-                }
-
-            } //end foreach
-            CKunenaTools::reCountBoards();
-
-            $kunena_app->redirect($backUrl, JText::_('COM_KUNENA_BULKMSG_DELETED'));
         }
 
     function isAdmin($uid = null) {
@@ -828,67 +755,56 @@ class CKunenaTools {
 		return $subsList;
 	}
 
-    function fbMovePosts($catid, $isMod) {
-    	$kunena_app =& JFactory::getApplication();
-        $kunena_db = &JFactory::getDBO();
-		$kunena_my = &JFactory::getUser();
-		$backUrl = $kunena_app->getUserState( "com_kunena.ActionBulk");
+	function KDeletePosts() {
+		$kunena_app = JFactory::getApplication ();
 
-	// $isMod if user is moderator in the current category
-	if (!$isMod) {
-		// Test also if user is a moderator in some other category
-		$kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE userid='{$kunena_my->id}'");
-		$isMod = $kunena_db->loadResult();
-		check_dberror("Unable to load moderation info.");
-	}
-	$isAdmin = CKunenaTools::isAdmin();
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+		$kunena_mod = CKunenaModeration::getInstance ();
 
-        //isMod will stay until better group management comes in
-        if (!$isAdmin && !$isMod) {
-            $kunena_app->redirect($backUrl, JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
-            }
+		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
 
-		$catid = (int)$catid;
-		if ($catid > 0) {
-	        $items = fbGetArrayInts("cb");
+		$items = KGetArrayInts ( "cb" );
 
-	        // start iterating here
+		// start iterating here
+		$message = '';
+		foreach ( $items as $id => $value ) {
+			$delete = $kunena_mod->deleteThread ( $id, $DeleteAttachments = false );
+			if (! $delete) {
+				$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
+			} else {
+				$message = JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' );
+			}
 
-	        foreach ($items as $id => $value) {
-	            $id = (int)$id;
-
-	            $kunena_db->setQuery("SELECT subject, catid, time AS timestamp FROM #__fb_messages WHERE id='{$id}'");
-	            $oldRecord = $kunena_db->loadObjectList();
-	            	check_dberror("Unable to load message detail.");
-
-		    if (CKunenaTools::isModerator($kunena_my->id, $oldRecord[0]->catid)) {
-
-		        $newSubject = JText::_('COM_KUNENA_MOVED_TOPIC') . " " . $oldRecord[0]->subject;
-		        $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread='{$id}'");
-		        $lastTimestamp = $kunena_db->loadResult();
-			check_dberror("Unable to load messages max(time).");
-
-			if ($lastTimestamp == "") {
-				$lastTimestamp = $oldRecord[0]->timestamp;
-                	}
-
-			//perform the actual move
-			$kunena_db->setQuery("UPDATE #__fb_messages SET `catid`='$catid' WHERE `id`='$id' OR `thread`='$id'");
-			$kunena_db->query();
-			check_dberror("Unable to move thread.");
-
-			$err = JText::_('COM_KUNENA_POST_SUCCESS_MOVE');
-		    } else {
-                        $err = JText::_('COM_KUNENA_POST_NOT_MODERATOR');
-                    }
 		} //end foreach
-		} else {
-			$err = JText::_('COM_KUNENA_POST_NO_DEST_CATEGORY');
-		}
-        CKunenaTools::reCountBoards();
 
-        $kunena_app->redirect($backUrl, $err);
-        }
+		$kunena_app->redirect ( $backUrl, $message );
+	}
+
+	function KMovePosts($catid) {
+		$catid = ( int ) $catid;
+
+		$kunena_app = JFactory::getApplication ();
+
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+		$kunena_mod = CKunenaModeration::getInstance ();
+
+		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
+
+		$items = KGetArrayInts ( "cb" );
+
+		$message = '';
+		// start iterating here
+		foreach ( $items as $id => $value ) {
+			$move = $kunena_mod->moveThread ( $id, $catid, $DeleteAttachments = false );
+			if (! $move) {
+				$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
+			} else {
+				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
+			}
+		} //end foreach
+
+		$kunena_app->redirect ( $backUrl, $message );
+	}
 
 	function &prepareContent(&$content)
 	{
@@ -1462,7 +1378,7 @@ function generate_smilies() {
         return $kunena_emoticons_rowset;
     }
 
-function fbGetArrayInts($name) {
+function KGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;

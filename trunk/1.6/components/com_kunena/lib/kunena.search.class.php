@@ -47,7 +47,7 @@ class CKunenaSearch {
 	/** limit **/
 	var $limit;
 	/** defaults **/
-	var $defaults = array ('titleonly' => 0, 'searchuser' => '', 'starteronly' => 0, 'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost', 'order' => 'dec', 'catids' => '0' );
+	var $defaults = array ('titleonly' => 0, 'searchuser' => '', 'starteronly' => 0, 'replyless' => 0, 'replylimit' => 0, 'searchdate' => '365', 'beforeafter' => 'after', 'sortby' => 'lastpost', 'order' => 'dec', 'catids' => '0', 'show' => '0' );
 	/**
 	 * Search constructor
 	 * @param limitstart First shown item
@@ -90,6 +90,7 @@ class CKunenaSearch {
 		$this->params ['order'] = JRequest::getVar ( 'order', $this->defaults ['order'] );
 		$this->params ['childforums'] = JRequest::getInt ( 'childforums', $this->defaults ['childforums'] );
 		$this->params ['catids'] = strtr ( JRequest::getVar ( 'catids', '0', 'get' ), KUNENA_URL_LIST_SEPARATOR, ',' );
+		$this->params ['show'] = JRequest::getInt ( 'show', $this->defaults ['show'] );
 		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
 		$this->limit = JRequest::getInt ( 'limit', $this->config->messages_per_page_search );
 		extract ( $this->params );
@@ -98,7 +99,7 @@ class CKunenaSearch {
 			$this->limit = $this->limit = $this->config->messages_per_page_search;
 
 		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
-			$this->params ['catids'] = implode ( ',', JRequest::getVar ( 'catids', array (0 ), 'post', 'array' ) );
+			$this->params ['catids'] = implode ( ',', JRequest::getVar ( 'catids', array (0), 'post', 'array' ) );
 			$url = CKunenaLink::GetSearchURL ( $this->config, $this->func, $q, $this->limitstart, $this->limit, $this->getUrlParams () );
 			header ( "HTTP/1.1 303 See Other" );
 			header ( "Location: " . htmlspecialchars_decode ( $url ) );
@@ -199,8 +200,23 @@ class CKunenaSearch {
 
 		/* build query */
 		$querystrings [] = "m.moved='0'";
-		$querystrings [] = "m.hold='0'";
+
+		//Search also unapproved, trash
+		$this->show = array();
+		if ( CKunenaTools::isModerator($this->my->id) && $this->params['show']>0 ) {
+			$search_forums_array = explode(',', $search_forums);
+			$search_forums = array();
+			foreach ($search_forums_array as $currforum) {
+				if (CKunenaTools::isModerator($this->my->id, $currforum)) $search_forums[] = $currforum;
+			}
+			if (empty($search_forums)) return;
+			$search_forums = implode ( ',', $search_forums );
+			$querystrings [] = "m.hold='".(int)$this->params['show'] ."'";
+		} else {
+			$querystrings [] = "m.hold='0'";
+		}
 		$querystrings [] = "m.catid IN ({$search_forums})";
+
 		$where = implode ( ' AND ', $querystrings );
 
 		$groupby = array ();

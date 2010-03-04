@@ -27,11 +27,11 @@ require_once (JPATH_ROOT . '/components/com_kunena/lib/kunena.user.class.php');
 
 class CKunenaTables {
 	var $tables = array ();
-	var $_tables = array ('#__fb_announcement', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__fb_version', '#__fb_whoisonline' );
+	var $_tables = array ('#__fb_announcement', '#__kunena_attachments', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__fb_version', '#__fb_whoisonline' );
 
 	function __construct() {
 		$kunena_db = &JFactory::getDBO ();
-		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () . "fb_%'" );
+		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."%'" );
 		$tables = $kunena_db->loadResultArray ();
 		check_dberror ( 'Unable to check for existing tables.' );
 		$prelen = strlen ( $kunena_db->getPrefix () );
@@ -398,8 +398,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $imagequality = 50;
 	var $thumbheight = 60;
 	var $thumbwidth = 60;
-
-
+	// New for 1.6: hide profile info when user is deleted from joomla!
+	var $hideuserprofileinfo = 'put_empty';
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

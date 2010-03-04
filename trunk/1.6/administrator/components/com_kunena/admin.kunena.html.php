@@ -445,7 +445,7 @@ td.kadmin-tdtitle {
 <?php
 	}
 
-	function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option) {
+	function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option, $kunena_config) {
 		jimport ( 'joomla.html.pane' );
 		$pane = & JPane::getInstance ( 'tabs', array ('startOffset' => 0 ) );
 		?>
@@ -1162,6 +1162,14 @@ td.kadmin-tdtitle {
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FAVORITES_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HIDE_USER_DELETED_PROFILE_INFO') ?></td>
+								<td align="left" valign="top"><?php echo $lists ['hideuserprofileinfo'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HIDE_USER_DELETED_PROFILE_INFO_DESC') ?>
 						</td>
 					</tr>
 				</table>
@@ -2166,21 +2174,28 @@ td.kadmin-tdtitle {
 					onclick="checkAll(<?php echo count ( $profileList ); ?>);" /></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_NAME'); ?></th>
-				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?>
-				</th>
+				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?></th>
+				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
+				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_ENABLED'); ?></th>
 				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
+				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
 				<th align="left" width="15"><?php echo JText::_('COM_KUNENA_VIEW_MODERATOR'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_VIEW'); ?></th>
 				<th align="left" width="*"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?></th>
 			</tr>
-			<?php if ($countPL > 0) {
+			<?php
+			if ($countPL > 0) {
 					$k = 0;
 					//foreach ($profileList as $pl)
 					$i = 0;
 					for($i = 0, $n = count ( $profileList ); $i < $n; $i ++) {
 						$pl = &$profileList [$i];
 						$k = 1 - $k;
-			?>
+						$userLogged = $pl->session_id ? '<img src="images/tick.png" width="16" height="16" border="0" alt="" />': '';
+						$userEnabled = $pl->block ? 'publish_x.png' : 'tick.png';
+						$altUserEnabled = $pl->block ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
+						$userBlockTask = $pl->block ? 'userunblock' : 'userblock';
+					?>
 			<tr class="row<?php echo $k;
 						?>">
 				<td width="20"><input type="checkbox" id="cb<?php echo $i;
@@ -2200,7 +2215,13 @@ td.kadmin-tdtitle {
 					onclick="return listItemTask('cb<?php echo $i;
 						?>','userprofile')"><?php echo $pl->name;
 						?></a></td>
+				<td width="100" align="center"><?php echo $userLogged;
+						?>&nbsp;</td>
+				<td width="100" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
+						<img src="images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" /></a>&nbsp;</td>
 				<td width="100"><?php echo $pl->email;
+						?>&nbsp;</td>
+				<td width="100"><?php echo $pl->usertype;
 						?>&nbsp;</td>
 				<td align="center" width="15"><?php 		if ($pl->moderator) {
 							echo JText::_('COM_KUNENA_ANN_YES');
@@ -2222,7 +2243,7 @@ td.kadmin-tdtitle {
 				}
 				?>
 			<tr>
-				<th align="center" colspan="8"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?>
+				<th align="center" colspan="11"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?>
 				</th>
 			</tr>
 		</table>
@@ -2328,7 +2349,7 @@ td.kadmin-tdtitle {
 			//
 			//      include ('components/com_kunena/moderate_user.php');
 			//   }
-			function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats) {
+			function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $ipslist,$useridslist) {
 				$kunena_config = & CKunenaConfig::getInstance ();
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
@@ -2348,7 +2369,7 @@ td.kadmin-tdtitle {
 				</th>
 			</tr>
 		</table>
-\		<table border=0 cellspacing=0 width="100%" align="center" class="adminlist">
+		<table border=0 cellspacing=0 width="100%" align="center" class="adminlist">
 			<tr>
 				<th colspan="3" class="title"><?php echo JText::_('COM_KUNENA_GENPROF'); ?></th>
 			</tr>
@@ -2426,6 +2447,7 @@ td.kadmin-tdtitle {
 		<input type="hidden" name="uid" value="<?php echo $uid; ?>">
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="option" value="com_kunena" />
+		<input type="hidden" name="boxchecked" value="1" />
 	</form>
 	<table border=0 cellspacing=0 width="100%" align="center" class="adminform">
 		<tr>
@@ -2461,6 +2483,46 @@ td.kadmin-tdtitle {
 			}
 			?>
 	</table>
+	<table border=0 cellspacing=0 width="100%" align="center" class="adminform">
+		<tr>
+			<th colspan="2" class="title"><?php
+			echo JText::sprintf('COM_KUNENA_IPFOR', $username);
+			?>
+			</th>
+		</tr>
+		<?php
+		$i = '0';
+		$k = 0; //value for alternating rows
+
+		$userids='';
+		foreach ($ipslist as $ip) {
+			$userids = array();
+			$k = 1 - $k;
+			$i++;
+			$userids = array_merge($userids,$useridslist[$ip->ip]);
+			$userids=implode(', ',$userids);
+			echo "<tr class=\"row$k\">";
+			echo "  <td>".$i.":".$ip->ip." - ".JText::sprintf('COM_KUNENA_IP_OCCURENCES', $ip->nbip).(!empty($userids)?" ".JText::sprintf('COM_KUNENA_USERIDUSED', $userids):'')."</td>";
+			echo "  <td>&nbsp;</td>";
+			echo "</tr>";
+		}
+		?>
+	</table>
+	<?php
+		}
+		function moveUserMessages ( $option, $return, $uid, $lists ) {
+	?>
+			<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></div>
+			<form action="index.php" method="post" name="adminForm">
+	<?php
+			echo $lists;
+	?>
+			<input type="hidden" name="boxchecked" value="1">
+			<input type="hidden" name="return" value="<?php echo $return;?>" />
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="option" value="<?php echo $option; ?>" />
+			<input type="hidden" name="uid" value="<?php echo $uid[0]; ?>" />
+			</form>
 	<?php
 		}
 		//**************************
@@ -3022,6 +3084,18 @@ td.kadmin-tdtitle {
 		<div class="kadmin-functitle icon-trash"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%"></table>
+			<table>
+				<tr>
+					<td align="left" width="100%">
+						<?php echo JText::_( 'Filter' ); ?>:
+						<input type="text" name="search" id="search" value="<?php echo $lists['search'];?>" class="text_area" onchange="document.adminForm.submit();" />
+						<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
+						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+					</td>
+					<td nowrap="nowrap">
+					</td>
+				</tr>
+			</table>
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
 				<tr>
 					<th width="20" align="center">#</th>

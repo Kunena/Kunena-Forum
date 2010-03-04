@@ -182,8 +182,43 @@ switch ($task) {
 
 		break;
 
+	case "logout" :
+		logout ( $option, $uid );
+
+		break;
+
+	case "deleteuser" :
+		deleteUser ( $option, $uid );
+
+		break;
+
 	case "userprofile" :
 		editUserProfile ( $option, $uid );
+
+		break;
+
+	case "userblock" :
+		userblock ( $option, $uid, 1 );
+
+		break;
+
+	case "userunblock" :
+		userunblock ( $option, $uid, 0 );
+
+		break;
+
+	case "trashusermessages" :
+		trashUserMessages ( $option, $uid );
+
+		break;
+
+	case "moveusermessages" :
+		moveUserMessages ( $option, $uid );
+
+		break;
+
+	case "moveusermessagesnow" :
+		moveUserMessagesNow ( $option, $cid );
 
 		break;
 
@@ -471,6 +506,7 @@ function editForum($uid, $option) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_acl = &JFactory::getACL ();
 	$kunena_my = &JFactory::getUser ();
+	$kunena_config = & CKunenaConfig::getInstance ();
 	$row = new fbForum ( $kunena_db );
 	// load the row from the db table
 	$row->load ( $uid );
@@ -543,7 +579,7 @@ function editForum($uid, $option) {
 		check_dberror ( "Unable to load moderator list." );
 	}
 
-	html_Kunena::editForum ( $row, $categoryList, $moderatorList, $lists, $accessLists, $option );
+	html_Kunena::editForum ( $row, $categoryList, $moderatorList, $lists, $accessLists, $option, $kunena_config );
 }
 
 function saveForum($option) {
@@ -1018,6 +1054,11 @@ function showConfig($option) {
 	$lists['hide_ip'] = JHTML::_('select.genericlist', $yesno, 'cfg_hide_ip', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->hide_ip);
 	//New for 1.6: Joomsocial Activity Stream Integration disable/enable
 	$lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->js_actstr_integration);
+	// New for 1.6: hide profile info when user is deleted from joomla!
+	$user_profile_info = array ();
+  	$user_profile_info[] = JHTML::_('select.option', 'hide_prof', JText::_('COM_KUNENA_COM_A_HIDE_USERPROFILE_HIDE'));
+  	$user_profile_info[] = JHTML::_('select.option', 'put_empty',JText::_('COM_KUNENA_COM_A_HIDE_USERPROFILE_PUT_EMPTY_DATAS'));
+	$lists['hideuserprofileinfo'] = JHTML::_('select.genericlist', $user_profile_info, 'cfg_hideuserprofileinfo', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->hideuserprofileinfo);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
@@ -1228,13 +1269,13 @@ function showProfiles($kunena_db, $option, $order) {
 		$limit = 100;
 
 	if ($order == 1) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY sbu.moderator DESC", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY sbu.moderator DESC", $limitstart, $limit );
 	} else if ($order == 2) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY u.name ASC ", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY u.name ASC ", $limitstart, $limit );
 	} else if ($order == 3) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY u.username ASC", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY u.username ASC", $limitstart, $limit );
 	} else if ($order < 1) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n ORDER BY sbu.userid", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY sbu.userid", $limitstart, $limit );
 	}
 
 	$profileList = $kunena_db->loadObjectList ();
@@ -1319,9 +1360,21 @@ function editUserProfile($option, $uid) {
 		$__modCats [] = JHTML::_ ( 'select.option', $_v );
 	}
 
+	//get all IPs used by this user
+	$kunena_db->setQuery ( "SELECT ip, count(ip) AS nbip FROM #__fb_messages WHERE userid=$uid[0] GROUP BY ip" );
+	$ipslist = $kunena_db->loadObjectList ();
+	check_dberror ( 'Unable to load ip for user.' );
+
+	$useridslist = array();
+	foreach ($ipslist as $ip) {
+		$kunena_db->setQuery ( "SELECT userid FROM #__fb_messages WHERE ip='$ip->ip' GROUP BY userid" );
+		$useridslist[$ip->ip] = $kunena_db->loadResultArray ();
+		check_dberror ( 'Unable to load ip for user.' );
+	}
+
 	$modCats = KUNENA_GetAvailableModCats ( $__modCats );
 
-	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats );
+	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $ipslist,$useridslist );
 }
 
 function saveUserProfile($option) {
@@ -1373,6 +1426,142 @@ function saveUserProfile($option) {
 	check_dberror ( "Unable to update sessions." );
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=showprofiles" );
+}
+
+function trashUserMessages ( $option, $uid ) {
+	$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+	$kunena_db = &JFactory::getDBO ();
+	$kunena_app = & JFactory::getApplication ();
+	$uids = implode ( ',', $uid );
+	if ($uids) {
+		//select only the messages which aren't already in the trash
+		$kunena_db->setQuery ( "SELECT id FROM #__fb_messages WHERE hold!=2 AND userid IN ('$uids')" );
+		$idusermessages = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load message id from fb_messages." );
+		foreach ($idusermessages as $messageID) {
+			$kunena_mod->deleteMessage($messageID->id, $DeleteAttachments = false);
+		}
+	}
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles" , JText::_('COM_KUNENA_A_USERMES_TRASHED_DONE'));
+}
+
+function moveUserMessages ( $option, $uid ){
+	$kunena_db = &JFactory::getDBO ();
+	$return = JRequest::getCmd( 'return', 'edituserprofile', 'post' );
+
+	$kunena_db->setQuery ( "SELECT id,parent,name FROM #__fb_categories" );
+	$catsList = $kunena_db->loadObjectList ();
+	check_dberror ( "Unable to load id from users." );
+
+	foreach ($catsList as $cat) {
+		if ($cat->parent) {
+			$category[] = JHTML::_('select.option', $cat->id, '...'.$cat->name);
+		} else {
+			$category[] = JHTML::_('select.option', $cat->id, $cat->name);
+		}
+	}
+	$lists = JHTML::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
+
+	html_Kunena::moveUserMessages ( $option, $return, $uid, $lists );
+}
+
+function moveUserMessagesNow ( $option, $cid ) {
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+	$kunena_db = &JFactory::getDBO ();
+	$kunena_app = & JFactory::getApplication ();
+	$uid = JRequest::getVar( 'uid', '', 'post' );
+	if ($uid) {
+		$kunena_db->setQuery ( "SELECT id,thread FROM #__fb_messages WHERE hold=0 AND userid IN ('$uid')" );
+		$idusermessages = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load message id from fb_messages." );
+		if ( !empty($idusermessages) ) {
+			foreach ($idusermessages as $id) {
+				$kunena_mod->moveMessage($id->id, $cid[0], $TargetSubject = '', $TargetMessageID = 0);
+			}
+		}
+	}
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", JText::_('COM_A_KUNENA_USERMES_MOVED_DONE') );
+}
+
+function logout ( $option, $uid ) {
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
+	foreach ( $uid as $UserID) {
+		$kunena_mod->logoutUser($UserID);
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", JText::_('COM_A_KUNENA_USER_LOGOUT_DONE') );
+}
+
+function deleteUser ( $option, $uid ) {
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
+	foreach ($uid as $UserID) {
+		$deleteuser = $kunena_mod->deleteUserAccount($UserID);
+		if (!$deleteuser) {
+			$message = $kunena_mod->getErrorMessage();
+		} else {
+			$message = JText::_('COM_A_KUNENA_USER_DELETE_DONE');
+		}
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );
+}
+
+function userblock ( $option, $uid = null, $block = 1 ) {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
+	if (! is_array ( $uid ) || count ( $uid ) < 1) {
+		$action = $block ? 'userblock' : 'userunblock';
+		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTANITEMTO') . " $action'); window.history.go(-1);</script>\n";
+		exit ();
+	}
+
+	$disableuseraccount = $kunena_mod->blockUserAccount($uid[0],1);
+	if (!$disableuseraccount) {
+		$message = $kunena_mod->getErrorMessage();
+	} else {
+		$message = JText::_('COM_A_KUNENA_USER_BLOCKED_DONE');
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );
+}
+
+function userunblock ( $option, $uid = null, $block = 0 ) {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
+	if (! is_array ( $uid ) || count ( $uid ) < 1) {
+		$action = $block ? 'userblock' : 'userunblock';
+		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTANITEMTO') . " $action'); window.history.go(-1);</script>\n";
+		exit ();
+	}
+
+	$enableuseraccount = $kunena_mod->blockUserAccount($uid[0],0);
+	if (!$enableuseraccount) {
+			$message = $kunena_mod->getErrorMessage();
+	} else {
+			$message = JText::_('COM_A_KUNENA_USER_UNBLOCKED_DONE');
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );
 }
 
 //===============================
@@ -2076,6 +2265,8 @@ function showtrashview($option) {
 	$kunena_db = &JFactory::getDBO ();
 	$filter_order		= $kunena_app->getUserStateFromRequest( $option.'filter_order',		'filter_order',		'subject', 'cmd' );
 	$filter_order_Dir	= $kunena_app->getUserStateFromRequest( $option.'filter_order_Dir',	'filter_order_Dir',	'asc',			'word' );
+	$search				= $kunena_app->getUserStateFromRequest( $option.'search',						'search', 			'',			'string' );
+	$search				= JString::strtolower( $search );
 
 	$order = JRequest::getVar ( 'order', '' );
 	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
@@ -2088,12 +2279,19 @@ function showtrashview($option) {
 	if ($limit == 0 || $limit > 100)
 		$limit = 100;
 
+	$where 	= ' WHERE hold=2 ';
+
+	if ($search) {
+		$where .= ' AND LOWER( a.subject ) LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false ).' OR LOWER( c.username )LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false ).' OR  a.thread LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false );
+	}
+
 	$orderby = ' ORDER BY '. $filter_order .' '. $filter_order_Dir;
 
 	$query = 'SELECT a.*, b.name AS cats_name, c.username FROM #__fb_messages AS a
 	INNER JOIN #__fb_categories AS b ON a.catid=b.id
-	LEFT JOIN #__users AS c ON a.userid=c.id
-	WHERE hold=2'.$orderby;
+	LEFT JOIN #__users AS c ON a.userid=c.id'
+	.$where
+	.$orderby;
 	$kunena_db->setQuery ( $query, $limitstart, $limit );
 	$trashitems = $kunena_db->loadObjectList ();
 	check_dberror ( "Unable to load messages." );
@@ -2104,6 +2302,9 @@ function showtrashview($option) {
 
 	jimport ( 'joomla.html.pagination' );
 	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
+
+	$lists['search']= $search;
+
 	html_Kunena::showtrashview ( $option, $trashitems, $pageNavSP, $lists );
 }
 
@@ -2124,6 +2325,9 @@ function trashpurge($option, $cid) {
 function deleteitemsnow ( $option, $cid ) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
 
 	$cids = implode ( ',', $cid );
 	if ($cids) {
@@ -2166,21 +2370,8 @@ function deleteitemsnow ( $option, $cid ) {
 			check_dberror ( "Unable to update users posts." );
 		}
 
-
-		$kunena_db->setQuery ( 'SELECT filelocation FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
-		$fileList = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to load attachments." );
-
-		if (count ( $fileList ) > 0) {
-			foreach ( $fileList as $fl ) {
-				if (file_exists ( $fl->filelocation )) {
-					unlink ( $fl->filelocation );
-				}
-			}
-
-			$kunena_db->setQuery ( 'DELETE FROM #__fb_attachments WHERE mesid IN (' . $cids . ')' );
-			$kunena_db->query ();
-			check_dberror ( "Unable to delete attachments." );
+		foreach ($cid as $MessageID) {
+			$kunena_mod->deleteAttachments($MessageID);
 		}
 	}
 
@@ -2240,15 +2431,13 @@ function generateSystemReport () {
 	} else {
 		$jconfig_sef_rewrite = 'Disabled';
 	}
-	if(!JUtility::isWinOS()) {
-		if (file_exists(JPATH_ROOT. DS. '.htaccess')) {
-			$htaccess = 'Exists';
-		} else {
-			$htaccess = 'Missing';
-		}
+
+	if (file_exists(JPATH_ROOT. DS. '.htaccess')) {
+		$htaccess = 'Exists';
 	} else {
-		$htaccess = 'Cannot test on windows system';
+		$htaccess = 'Missing';
 	}
+
 	if(ini_get('register_globals')) {
 		$register_globals = '[u]register_globals:[/u] [color=#FF0000]On[/color]';
 	} else {
@@ -2274,51 +2463,49 @@ function generateSystemReport () {
 	$maxExecMem = ini_get('memory_limit');
 	$fileuploads = ini_get('upload_max_filesize');
 	$kunenaVersionInfo = CKunenaVersion::versionArray ();
-	$kunena_integration_type = '';
-	switch ($kunena_config->fb_profile) {
-    case 'fb':
-        $kunena_integration_type = 'Kunena';
-        break;
-    case 'cb':
-        $kunena_integration_type = 'Community Builder';
-        break;
-    case 'aup':
-        $kunena_integration_type = 'Alpha User Points';
-        break;
-   	case 'jomsocial':
-        $kunena_integration_type = 'Jomsocial';
-        break;
+
+	//get all the config settings for Kunena
+	$kunena_db->setQuery("SELECT * FROM #__fb_config");
+	$kconfig = $kunena_db->loadObjectList ();
+    	check_dberror("Unable to load config.");
+
+    $kconfigsettings = '[table]';
+    foreach ($kconfig[0] as $key => $value ) {
+    	if ($key != 'id') {
+				$kconfigsettings .= '[tr][td]'.$key.'[/td][td]'.$value.'[/td][/tr]';
+    	}
+    }
+	$kconfigsettings .= '[/table]';
+
+	//test on each table if the collation is on utf8
+	$tableslist = $kunena_db->getTableList();
+	$collation = '';
+	foreach($tableslist as $table) {
+		if (preg_match('`_fb_`',$table)) {
+			$kunena_db->setQuery("SHOW FULL FIELDS FROM " .$table. "");
+			$fullfields = $kunena_db->loadObjectList ();
+            	check_dberror("Unable to load field.");
+
+			foreach ($fullfields as $row) {
+				if(!empty($row->Collation) && !preg_match('`utf8_general`',$row->Collation)) {
+					$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+				}
+			}
+		}
 	}
-	if($kunena_config->sef) {
-		$Ksef = 'Enabled';
-	}else {
-		$Ksef = 'Disabled';
+	if(empty($collation)) {
+		$collation = 'The collation of your table fields are correct';
 	}
-	if($kunena_config->sefcats) {
-		$Ksefcats = 'Enabled';
-	}else {
-		$Ksefcats = 'Disabled';
-	}
-	if($kunena_config->sefutf8) {
-		$Ksefutf8 = 'Enabled';
-	}else {
-		$Ksefutf8 = 'Disabled';
-	}
-	$databasecollation = $kunena_db->getCollation();
-    $report = '[confidential][b]Web Server:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('.$_SERVER['SERVER_NAME'].')
-[b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring.' | '.$gd_support.'
-[b]MySQL version:[/b] '.mysql_get_server_info().'
-[b]Joomla! Version:[/b] '.$jversion.'[/confidential]
-[b]General configuration:[/b]
-[quote][b]Web server:[/b]  [u]htaccess:[/u] '.$htaccess.'
-[b]PHP:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '.$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.'
-[b]Database:[/b] [u]Default collation:[/u] '.$databasecollation.'
-[b]Joomla!:[/b] [u]Legacy mode:[/u] '.$jconfig_legacy.' | [u]Joomla! SEF:[/u] '.$jconfig_sef.' | [u]Joomla! SEF rewrite:[/u] '.$jconfig_sef_rewrite.' | [u]FTP layer:[/u] '.$jconfig_ftp.'[/quote]
-[b]Kunena information:[/b]
-[quote][u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
-.$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [u]Kunena integration type:[/u] '
-.$kunena_integration_type.' | [u]Kunena sef:[/u] '.$Ksef.' | [u]Kunena sefcats:[/u] '.$Ksefcats.' | [u]Kunena sefutf8:[/u] '
-.$Ksefutf8.'[/quote]';
+
+    $report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
+	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
+	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'
+		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
+	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' | [b]htaccess:[/b] '.$htaccess
+	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][quote]
+		 [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
+	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [b]Kunena config settings:[/b][spoiler] '.$kconfigsettings.'[/spoiler][/quote]';
 
     return $report;
 }

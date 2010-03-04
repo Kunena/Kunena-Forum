@@ -34,6 +34,16 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+04-Mar-2010 Matias
+^ [#15886] Merge latest changes /branches/1.5-xillibit with some fixes and changes (not tested, may contain regression)
+
+01-Mar-2010 Xillibit
++ [#19764] Add user blocking/unblocking functions in kunena users managers like in the j! user managers
+
+28-Feb-2010 Xillibit
+^ [#19764] Make split working with CKunenaModeration class
++ [#19607] Add option do hide user profile and information
+
 27-Feb-2010 severdia
 + [#19356] New icons
 
@@ -43,8 +53,16 @@ Kunena 1.6.0-DEV
 + [#19380] Additional AJAX translation strings
 + [#19380] New Ajax helper to delete/remove attachments by author/moderator/admin
 
+27-Feb-2010 Xillibit
+^ [#19764] Make merge working for one message and put things for split
++ [#19764] Add functions to logout an user and to delete an user from kunena user manager
+
 26-Feb-2010 severdia
 + [#19356] New inactive icons
+
+26-Feb-2010 Xillibit
+^ [#19764] Make working move in message, and bulk delete/move with CKunenaModeration class
+^ [#19764] Make working merge for complete thread only with CKunenaModeration class
 
 26-Feb-2010 Matias
 + [#19356] New default rank, used also for visitors
@@ -59,6 +77,11 @@ Kunena 1.6.0-DEV
 + [#19380] Extended upload (part 4) filesize display and filename shortener
 + [#19380] Extended upload (part 5) new KImage class
 
+25-Feb-2010 Xillibit
++ [#19332] Change Delete behavior - add search function and now delete attachments with CKunenaModeration on kunena_attachments
++ [#19807] Add in search options, the options to search in trash for moderators
+^ [#19764] Make delete a post and delete a thread in message using CKunenaModeration working in frontend
+
 24-Feb-2010 severdia
 + [#19356] New rank image
 
@@ -72,6 +95,12 @@ Kunena 1.6.0-DEV
 24-Feb-2010 fxstein
 + [#19380] Extended upload (part 2) automatic resize
 + [#19380] Extended upload (part 3) automatic thumbnail creation and display
+
+24-Feb-2010 Xillibit
+^ [#19764] Make delete and move functions in CKunenaModeration class functionnals (not fully tested)
+
+23-Feb-2010 Xillibit
++ [#19764] Block/Unblock User in Admin Backend - trash all messages, move to categories and iplog implemented in backend
 
 23-Feb-2010 severdia
 ^ [#19356] New PM icon
@@ -93,6 +122,16 @@ Kunena 1.6.0-DEV
 + [#19770] Add external API for other components: added api.php
 # [#19288] Fix regression: New attachment table broke latestx, showcat, post
 + [#19770] Add external API for other components: added interfaces for user, forum and post
+
+21-Feb-2010 Xillibit
+# [#19288] Fix regression: Notice: Use of undefined constant _ANN_EDIT - assumed '_ANN_EDIT' in announcement.php
+# [#19288] Fix regression: Notice: Undefined variable: kunena_config in admin.kunena.html.php on line 480
+# [#19288] Fix regression: wrong type for the folder field in kunena.install.upgrade.xml for create jos_kunena_attachments
+# [#19288] Fix regression: CKunenaTables doesn't check the table jos_kunena_attachments
+# [#19690] Add configuration report system in Kunena backend - display kunena configs settings in a table and check for each kunena table which is in utf8
+^ [#19358] Display the poll icon only on the first message of the thread
+^ [#19358] Take care a bit of Class kunena.moderation.class.php
+# [#19668] Show the checkbox for select all the checkboxes only for moderators
 
 21-Feb-2010 severdia
 ^ [#19758] Clean up admin interface, language fixes

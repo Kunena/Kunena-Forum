@@ -211,6 +211,19 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                             <span onClick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
                             </label>
                     </fieldset>
+                    <?php if ( CKunenaTools::isModerator($this->my->id) ) { ?>
+                    <fieldset class="fieldset">
+                        <legend>
+                            <?php echo JText::_('COM_KUNENA_SEARCH_SHOW'); ?>
+                        </legend>
+							<input id="show0" type="radio" name="show" value="0" <?php if ($this->params['show']==0) echo 'checked="checked"'; ?> />
+							<label for="show0"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_NORMAL'); ?></label><br/>
+							<input id="show1" type="radio" name="show" value="1" <?php if ($this->params['show'] == 1) echo 'checked="checked"'; ?> />
+							<label for="show1"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_UNAPPROVED'); ?></label><br/>
+							<input id="show2" type="radio" name="show" value="2" <?php if ($this->params['show'] == 2) echo 'checked="checked"'; ?> />
+							<label for="show2"><?php echo JText::_('COM_KUNENA_SEARCH_SHOW_TRASHED'); ?></label><br/>
+                    </fieldset>
+                    <?php } ?>
                 </td>
             </tr>
         </tbody>

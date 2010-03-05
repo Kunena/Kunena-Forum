@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-Special-DEV
 
+05-Mar-2010 Xillibit
+# [#19764] Fix delete the user from kunena table instead of put empty content
+^ [#19764] Put the edit time check into a fucntion in CKunenaTools
++ [#19649] Allow user to edit post while he can edit it
+
 04-Mar-2010 Xillibit
 # [#19764] Fix regressions in CKunenaModeration on undefined variable session
 # [#19764] Fix undefined variable in post.php line 893

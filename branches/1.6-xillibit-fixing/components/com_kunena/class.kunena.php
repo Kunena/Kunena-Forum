@@ -1134,6 +1134,79 @@ class CKunenaTools {
 			}
 		}
 
+		/**
+		 * This function check the edit time for the author of the author
+		 * of the post and return if the user is allwoed or not to edit
+		 * her post
+		 *
+		 * @param timestamp $messagemodifiedtime	Time when the message has been edited
+		 * @param timestamp $messagetime			Actual message time
+		 */
+		function editTimeCheck ($messagemodifiedtime, $messagetime) {
+			$kunena_config = & CKunenaConfig::getInstance ();
+			if ((( int ) $kunena_config->useredittime) == 0) {
+					return true;
+			} else {
+				//Check whether edit is in time
+				$modtime = $messagemodifiedtime;
+				if (! $modtime) {
+					$modtime = $messagetime;
+				}
+				if (($modtime + (( int ) $kunena_config->useredittime)) >= CKunenaTimeformat::internalTime ()) {
+					return true;
+				}
+			}
+		}
+
+			/**
+		 * This function allows normal user to delete their own posts, if there aren't replies
+		 * after that
+		 *
+		 * @param int $MessageID	The id of the message to deleted
+		 */
+		function userOwnDelete ($MessageID) {
+			$kunena_db =& JFactory::getDBO();
+			$user =& JFactory::getUser();
+
+			// Sanitize parameters!
+			$MessageID = intval ( $MessageID );
+			// no need to check $DeleteAttachments as we only test for true
+
+			$kunena_db->setQuery ( "SELECT `id`,  `parent`, `userid`, `thread`, `subject`, `time` AS timestamp FROM #__fb_messages WHERE `id`='$MessageID'" );
+			$currentMessage = $kunena_db->loadObject ();
+			check_dberror ( "Unable to load message." );
+
+			// Check that message to be moved actually exists
+			if ( !is_object($currentMessage) ) {
+				return false;
+			}
+
+			//need to check that the user is right the author of the post
+			if ($currentMessage->userid != $user->id ) {
+				return false;
+			}
+
+			//need to check that the message is the last of the thread
+			$kunena_db->setQuery ( "SELECT MAX(id) AS lastthreadid FROM #__fb_messages WHERE `hold`='0' AND `thread`='$currentMessage->thread'" );
+			$lastMessage = $kunena_db->loadObject ();
+			check_dberror ( "Unable to load message." );
+
+			if ($currentMessage->id != $lastMessage->lastthreadid ) {
+				return false;
+			}
+
+			// Execute delete
+			$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='$MessageID';";
+			$kunena_db->setQuery ( $sql );
+			$kunena_db->query ();
+			check_dberror ( 'Unable to perform delete.' );
+
+			// Last but not least update forum stats
+			CKunenaTools::reCountBoards();
+
+			return true;
+		}
+
     } // end of class
 
 class fbForum

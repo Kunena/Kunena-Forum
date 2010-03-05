@@ -705,22 +705,13 @@ class CKunenaView {
 			//Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
 			$allowEdit = 0;
 			if ($this->my->id == $this->userinfo->userid) {
-				if ((( int ) $this->config->useredittime) == 0) {
-					$allowEdit = 1;
-				} else {
-					//Check whether edit is in time
-					$modtime = $this->kunena_message->modified_time;
-					if (! $modtime) {
-						$modtime = $this->kunena_message->time;
-					}
-					if (($modtime + (( int ) $this->config->useredittime)) >= CKunenaTimeformat::internalTime ()) {
-						$allowEdit = 1;
-					}
-				}
+				$allowEdit = CKunenaTools::editTimeCheck($this->kunena_message->modified_time, $this->kunena_message->time);
 			}
 			if ($allowEdit) {
 				$this->msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
-				$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+				if (!CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+					$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'deleteownpost', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+				}
 				$showedEdit = 1;
 			}
 		}

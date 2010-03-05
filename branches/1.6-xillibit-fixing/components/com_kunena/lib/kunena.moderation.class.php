@@ -23,6 +23,8 @@ define ( 'KN_DEL_MESSAGE', 0 );
 define ( 'KN_DEL_THREAD', 1 );
 define ( 'KN_DEL_ATTACH', 2 );
 
+require_once (KUNENA_PATH_LIB .DS. "kunena.session.class.php");
+
 class CKunenaModeration {
 	// Private data and functions
 	protected $_db = null;
@@ -442,11 +444,10 @@ class CKunenaModeration {
 		}
 
 		$user->delete();
-		if ( $this->_config->hideuserprofileinfo == 'put_empty' ) {
-			$this->_db->setQuery ( "UPDATE #__fb_users SET `signature`=NULL, `moderator`=0, `posts`=0, `avatar`=NULL, `karma`=NULL, `uhits`=0, `personalText`=NULL, `gender`=0, `birthdate`=0001-01-01, `location`=NULL, `ICQ`=NULL, `AIM`=NULL, `YIM`=NULL, `MSN`=NULL, `SKYPE`=NULL, `GTALK`=NULL, `websitename`=NULL, `websiteurl`=NULL, `rank`=0, `TWITTER`=NULL, `FACEBOOK`=NULL, `MYSPACE`=NULL, `LINKEDIN`=NULL, `DELICIOUS`=NULL, `FRIENDFEED`=NULL, `DIGG`=NULL, `BLOGSPOT`=NULL, `FLICKR`=NULL, `BEBO`=NULL WHERE `userid`='$UserID';" );
-			$this->_db->query ();
-			check_dberror ( "Unable to put empty content for user." );
-		}
+		$this->_db->setQuery ( "DELETE FROM #__fb_users WHERE `userid`='$UserID';" );
+		$this->_db->query ();
+		check_dberror ( "Unable to delete user from kunena." );
+
 		return true;
 	}
 

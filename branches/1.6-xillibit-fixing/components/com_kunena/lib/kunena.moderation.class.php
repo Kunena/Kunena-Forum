@@ -34,7 +34,7 @@ class CKunenaModeration {
 	protected function __construct($db, $config) {
 		$this->_db = $db;
 		$this->_my = &JFactory::getUser ();
-		$this->_session = CKunenaConfig::getInstance ();
+		$this->_session = CKunenaSession::getInstance ();
 		$this->_allowed = ($this->_session->allowed != '') ? explode ( ',', $this->_session->allowed ) : array();
 		$this->_ResetErrorMessage ();
 		$this->_config = $config;
@@ -138,7 +138,7 @@ class CKunenaModeration {
 		}
 
 		// Check that target category exists and is visible to our moderator
-		if (! in_array ( $TargetCatID, $this->_allow ) ) {
+		if (! in_array ( $TargetCatID, $this->_allowed ) ) {
 			//the user haven't moderator permissions in target category
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_TARGET_CATEGORY_NOT_FOUND', $currentMessage->id, $TargetCatID);
 			return false;

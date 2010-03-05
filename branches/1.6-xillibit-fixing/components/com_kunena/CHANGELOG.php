@@ -32,6 +32,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Special-DEV
+
+04-Mar-2010 Xillibit
+# [#19764] Fix regressions in CKunenaModeration on undefined variable session
+# [#19764] Fix undefined variable in post.php line 893
+# [#19764] Fix wrong language string for merge in post.php
+# [#19288] Fix regression - normal user can not go into read more for the announcement
+# [#19764] Put auto-redirect when decreasing/increasing karma
+
 Kunena 1.6.0-DEV
 
 04-Mar-2010 Matias

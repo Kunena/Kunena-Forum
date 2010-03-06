@@ -63,10 +63,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 	$k = 0;
 	$counter = 0;
-	if (empty ( $this->messages )) {
+	if (!count ( $this->threads )) {
 		echo '<tr class="ksectiontableentry2"><td class="td-0 km center">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
 	} else
-	foreach ( $this->messages as $leaf ) {
+	foreach ( $this->threads as $leaf ) {
 		$leaf->name = kunena_htmlspecialchars ( stripslashes ( $leaf->name ) );
 		$leaf->email = kunena_htmlspecialchars ( stripslashes ( $leaf->email ) );
 		if ($leaf->moved == 1) $leaf->topic_emoticon = 3;
@@ -123,7 +123,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $leaf->subject ) ), kunena_htmlspecialchars ( stripslashes ( $this->messagetext [$leaf->id] ) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $leaf->subject ) ), kunena_htmlspecialchars ( CKunenaTools::stripBBCode ( $leaf->message, 500) ), 'follow', 'k-topic-title km' );
 			?>
 			<?php
 			if ($leaf->favcount ) {
@@ -223,26 +223,26 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<span class="topic_latest_post_avatar"> <?php
 			if ($this->config->avatar_src == "jomsocial" && $leaf->userid) {
 				// Get CUser object
-				$jsuser = & CFactory::getUser ( $this->last_reply [$leaf->id]->userid );
+				$jsuser = & CFactory::getUser ( $this->lastreply [$leaf->thread]->userid );
 				$useravatar = '<img class="klist_avatar" src="' . $jsuser->getThumbAvatar () . '" alt=" " />';
-				echo CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, $useravatar );
+				echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, $useravatar );
 			} else if ($this->config->avatar_src == "cb") {
 				$kunenaProfile = & CkunenaCBProfile::getInstance ();
-				$useravatar = $kunenaProfile->showAvatar ( $this->last_reply [$leaf->id]->userid, 'fb_list_avatar' );
-				echo CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, $useravatar );
+				$useravatar = $kunenaProfile->showAvatar ( $this->lastreply [$leaf->thread]->userid, 'fb_list_avatar' );
+				echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, $useravatar );
 			} else if ($this->config->avatar_src == "aup") {
 				// integration AlphaUserPoints
 				$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
 				if (file_exists ( $api_AUP )) {
 					($this->config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
-					echo AlphaUserPointsHelper::getAupAvatar ( $this->last_reply [$leaf->id]->userid, $showlink, 40, 40 );
+					echo AlphaUserPointsHelper::getAupAvatar ( $this->lastreply [$leaf->thread]->userid, $showlink, 40, 40 );
 				} // end integration AlphaUserPoints
 			} else {
-				$javatar = $this->last_reply [$leaf->id]->avatar;
+				$javatar = $this->lastreply [$leaf->thread]->avatar;
 				if ($javatar != '') {
-					echo CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, '<img class="klist_avatar" src="' . (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $javatar ) ? KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $javatar : KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $javatar) . '" alt="" />' );
+					echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, '<img class="klist_avatar" src="' . (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $javatar ) ? KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $javatar : KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $javatar) . '" alt="" />' );
 				} else {
-					echo CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, '<img class="klist_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />' );
+					echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, '<img class="klist_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />' );
 				}
 			}
 			?>
@@ -252,19 +252,19 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				class="topic_latest_post"> <?php
 		if ($this->config->default_sort == 'asc') {
 			if ($leaf->moved == 0)
-				echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $threadPages, $this->config->messages_per_page, JText::_('COM_KUNENA_GEN_LAST_POST'), $this->last_reply [$leaf->id]->id );
+				echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $threadPages, $this->config->messages_per_page, JText::_('COM_KUNENA_GEN_LAST_POST'), $this->lastreply [$leaf->thread]->id );
 			else
 				echo JText::_('COM_KUNENA_MOVED') . ' ';
 		} else {
-			echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, 1, $this->config->messages_per_page, JText::_('COM_KUNENA_GEN_LAST_POST'), $this->last_reply [$leaf->id]->id );
+			echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, 1, $this->config->messages_per_page, JText::_('COM_KUNENA_GEN_LAST_POST'), $this->lastreply [$leaf->thread]->id );
 		}
 
 		if ($leaf->name)
-			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->config, $this->last_reply [$leaf->id]->userid, stripslashes ( $this->last_reply [$leaf->id]->name ), 'nofollow' );
+			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, stripslashes ( $this->lastreply [$leaf->thread]->name ), 'nofollow' );
 		?>
 			</span> <!-- /Latest Post --> <br />
-			<!-- Latest Post Date --> <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($this->last_reply[$leaf->id]->time, 'config_post_dateformat_hover'); ?>"> <?php
-			echo CKunenaTimeformat::showDate($this->last_reply[$leaf->id]->time, 'config_post_dateformat');
+			<!-- Latest Post Date --> <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($this->lastreply [$leaf->thread]->time, 'config_post_dateformat_hover'); ?>"> <?php
+			echo CKunenaTimeformat::showDate($this->lastreply [$leaf->thread]->time, 'config_post_dateformat');
 		?> </span> <!-- /Latest Post Date --></div>
 
 			</td>

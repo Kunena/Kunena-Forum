@@ -318,7 +318,20 @@ class CKunenaTools {
 		return $txt;
 	}
 
-    function reCountUserPosts() {
+	function stripBBCode($txt, $len=0) {
+		static $emoticons = null;
+
+		if (!$txt) return;
+		if (!$emoticons) $emoticons = smile::getEmoticons ( 0 );
+		$kunena_config = & CKunenaConfig::getInstance ();
+		$txt = stripslashes ( $txt );
+		$txt = smile::purify ( $txt );
+		if ($len) $txt = JString::substr ( $txt, 0, $len );
+		$txt = CKunenaTools::prepareContent ( $txt );
+		return $txt;
+	}
+
+	function reCountUserPosts() {
     	$kunena_db = &JFactory::getDBO();
 
         // Reset category counts as next query ignores users which have written no messages

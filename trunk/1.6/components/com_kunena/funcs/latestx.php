@@ -63,60 +63,71 @@ class CKunenaLatestX {
 		$this->showposts = 0;
 	}
 
-	function _common() {
+	protected function _common() {
 		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
 
-		$idstr = @join ( ",", $this->threadids );
-
 		$this->messages = array ();
-		$this->last_reply = array ();
+		$this->threads = array ();
+		$this->lastreply = array ();
+		$this->customreply = array ();
 
-		if (count ( $this->threadids ) > 0) {
-			$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachments,
-			l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
-		FROM (
-			SELECT m.thread, MAX(f.userid IS NOT null AND f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
-				COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->user->id}, m.id, NULL)) AS mycount, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
-			FROM #__fb_messages AS m";
-			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
-			else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
-			$query .= "
-			LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.thread
-			WHERE m.hold='0' AND m.moved='0' AND m.thread IN ({$idstr})
-			GROUP BY thread
-		) AS l
-		INNER JOIN #__fb_messages AS a ON a.thread = l.thread
-		INNER JOIN #__fb_messages_text AS t ON a.thread = t.mesid
-		LEFT JOIN #__users AS j ON j.id = a.userid
-		LEFT JOIN #__fb_users AS u ON u.userid = j.id
-		LEFT JOIN #__fb_categories AS c ON c.id = a.catid
-		WHERE (a.parent='0' OR a.id=l.lastid)
-		ORDER BY {$this->order}";
+		if (!empty ( $this->threadids ) ) {
+			$idstr = implode ( ",", $this->threadids );
+			if (empty($this->loadids)) $loadstr = '';
+			else $loadstr = 'OR a.id IN ('.implode ( ",", $this->loadids ).')';
+
+			$query = "SELECT a.*, j.id AS userid, t.message, l.myfavorite, l.favcount, l.threadhits, l.threadattachments, COUNT(aa.id) AS attachments,
+				l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.name AS catname, c.class_sfx
+			FROM (
+				SELECT m.thread, MAX(m.hits) AS threadhits, MAX(f.userid IS NOT null AND f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount,
+					COUNT(DISTINCT a.id) AS threadattachments, COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->user->id}, m.id, NULL)) AS mycount,
+					MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
+				FROM #__fb_messages AS m";
+				if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
+				else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
+				$query .= "
+				LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.id
+				WHERE m.hold='0' AND m.moved='0' AND m.thread IN ({$idstr})
+				GROUP BY thread
+			) AS l
+			INNER JOIN #__fb_messages AS a ON a.thread = l.thread
+			INNER JOIN #__fb_messages_text AS t ON a.id = t.mesid
+			LEFT JOIN #__users AS j ON j.id = a.userid
+			LEFT JOIN #__fb_users AS u ON u.userid = j.id
+			LEFT JOIN #__fb_categories AS c ON c.id = a.catid
+			LEFT JOIN #__kunena_attachments AS aa ON aa.mesid = a.id
+			WHERE (a.parent='0' OR a.id=l.lastid {$loadstr})
+			GROUP BY a.id
+			ORDER BY {$this->order}";
 
 			$this->db->setQuery ( $query );
-			$messagelist = $this->db->loadObjectList ();
+			$this->messages = $this->db->loadObjectList ('id');
 			check_dberror ( "Unable to load messages." );
 			// collect user ids for avatar prefetch when integrated
-			$__userlist = array();
-			foreach ( $messagelist as $message ) {
-				$this->messagetext [$message->id] = JString::substr ( smile::purify ( $message->messagetext ), 0, 500 );
+			$userlist = array();
+			foreach ( $this->messages as $message ) {
 				if ($message->parent == 0) {
-					$this->messages [$message->id] = $message;
-					$this->last_reply [$message->id] = $message;
+					$this->threads [$message->thread] = $message;
 					$routerlist [$message->id] = $message->subject;
 					if ($this->func == 'mylatest' && $message->myfavorite) $this->highlight++;
-				} else {
-					$this->last_reply [$message->thread] = $message;
 				}
-				$__userlist[] = $message->userid;
+				if ($message->id == $message->lastid) {
+					$this->lastreply [$message->thread] = $message;
+				}
+				if (isset($this->loadids) && in_array($message->id, $this->loadids)) {
+					$this->customreply [$message->id] = $message;
+				}
+				$userlist[$message->userid] = $message->userid;
 			}
+
+			// Load threads to Kunena router to avoid extra SQL queries
 			include_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
 
-			// If jomSocial integration for the avatra is turned on, prefetch all users
+			// If jomSocial integration for the avatar is turned on, prefetch all users
 			// to avoid user by user queries during template iterations
 			if ($this->config->avatar_src == "jomsocial") {
-				CFactory::loadUsers(array_unique($__userlist));
+				CFactory::loadUsers($userlist);
 			}
 
 			if ($this->config->shownew && $this->my->id) {
@@ -133,13 +144,7 @@ class CKunenaLatestX {
 		}
 	}
 
-	function getMyLatest($posts = true, $fav = true, $sub = false) {
-		if (isset($this->total)) return;
-		if ($posts === true && $fav === true) {
-			$this->header = JText::_('COM_KUNENA_MENU_MYLATEST_DESC');
-			$this->title = JText::_('COM_KUNENA_MY_DISCUSSIONS');
-		}
-
+	protected function _getMyLatest($posts = true, $fav = true, $sub = false) {
 		$subquery = array();
 		if (!$posts && !$fav && !$sub) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
 			FROM #__fb_messages
@@ -178,30 +183,43 @@ class CKunenaLatestX {
 		$this->_common();
 	}
 
-	function getUserPosts() {
+	protected function _getMyPosts() {
+		if (isset($this->total)) return;
+
+		$this->threads_per_page = 10;
+
 		$query = "SELECT COUNT(*) FROM #__fb_messages AS m
-		WHERE m.moved='0' AND m.hold='0' AND m.userid='{$this->user->id}' AND m.catid IN ({$this->session->allowed})";
+		LEFT JOIN #__fb_messages AS mm ON m.thread = mm.id
+		WHERE mm.moved='0' AND mm.hold='0' AND m.moved='0' AND m.hold='0' AND m.userid='{$this->user->id}' AND m.catid IN ({$this->session->allowed})";
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		check_dberror ( 'Unable to count total threads' );
 
-		$query = "SELECT m.*, t.message AS messagetext, c.id AS catid, c.name AS catname FROM #__fb_messages AS m
-		INNER JOIN #__fb_messages_text AS t ON m.id = t.mesid
-		LEFT JOIN #__fb_categories AS c ON c.id = m.catid
-		WHERE m.moved='0' AND m.hold='0' AND m.userid='{$this->user->id}' AND m.catid IN ({$this->session->allowed})
-		ORDER BY time DESC";
+		$query = "SELECT m.thread, m.id
+		FROM #__fb_messages AS m
+		LEFT JOIN #__fb_messages AS mm ON m.thread = mm.id
+		WHERE mm.moved='0' AND mm.hold='0' AND m.hold='0' AND m.userid='{$this->user->id}' AND m.catid IN ({$this->session->allowed})
+		ORDER BY m.time DESC";
 
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
-		$this->messages = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load thread list." );
+		$idlist = $this->db->loadObjectList ();
+		check_dberror ( "Unable to load post list." );
+
+		$this->threadids = array();
+		$this->loadids = array();
+		foreach ( $idlist as $item ) {
+			$this->threadids[$item->thread] = $item->thread;
+			$this->loadids[$item->id] = $item->id;
+		}
+
+		$this->order = 'field(a.id,'.implode ( ",", $this->loadids ).')';
+		$this->_common();
 	}
 
-	function getOwnPosts() {
+	function getUserPosts() {
 		if (isset($this->total)) return;
-//		$this->columns++;
-		$this->showposts = 1;
-		$this->header = $this->title = JText::_('COM_KUNENA_OWNTOPICS');
-		$this->getUserPosts();
+		$this->header = $this->title = JText::_('COM_KUNENA_USERPOSTS');
+		$this->_getMyPosts();
 	}
 
 	function getOwnTopics() {
@@ -209,7 +227,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_OWNTOPICS');
-		$this->getMyLatest(false, false, false);
+		$this->_getMyLatest(false, false, false);
 	}
 
 	function getUserTopics() {
@@ -217,7 +235,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_USERTOPICS');
-		$this->getMyLatest(true, false, false);
+		$this->_getMyLatest(true, false, false);
 	}
 
 	function getFavorites() {
@@ -225,7 +243,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_FAVORITES');
-		$this->getMyLatest(false, true, false);
+		$this->_getMyLatest(false, true, false);
 	}
 
 	function getSubscriptions() {
@@ -233,7 +251,14 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
-		$this->getMyLatest(false, false, true);
+		$this->_getMyLatest(false, false, true);
+	}
+
+	function getmyLatest() {
+		if (isset($this->total)) return;
+		$this->header = JText::_('COM_KUNENA_MENU_MYLATEST_DESC');
+		$this->title = JText::_('COM_KUNENA_MY_DISCUSSIONS');
+		$this->_getMyLatest();
 	}
 
 	function getLatest() {
@@ -342,6 +367,14 @@ class CKunenaLatestX {
 			return;
 		}
 		CKunenaTools::loadTemplate('/threads/flat.php');
+	}
+
+	function displayPosts() {
+		if (! $this->allow) {
+			echo JText::_('COM_KUNENA_NO_ACCESS');
+			return;
+		}
+		CKunenaTools::loadTemplate('/threads/posts.php');
 	}
 
 	function displayStats() {

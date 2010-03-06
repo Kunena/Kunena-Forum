@@ -86,6 +86,16 @@ class CKunenaProfile {
 		CKunenaTools::loadTemplate('/profile/summary.php');
 	}
 
+	function displayUserPosts()
+	{
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('userposts', 0);
+		$obj->user = $this->user;
+		$obj->getUserPosts();
+		$obj->displayPosts();
+		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	}
+
 	function displayOwnTopics()
 	{
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');

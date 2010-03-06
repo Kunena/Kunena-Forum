@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+05-Mar-2010 Matias
++ [#19383] Revise Profile Page: added Posts tab
+
 04-Mar-2010 Matias
 ^ [#15886] Merge latest changes /branches/1.5-xillibit with some fixes and changes (not tested, may contain regression)
 

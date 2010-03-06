@@ -80,10 +80,11 @@ class CKunenaShowcat {
 		$idstr = @join ( ",", $threadids );
 
 		$this->messages = array ();
+		$this->threads = array ();
 		$this->highlight = 0;
 		$routerlist = array ();
 		if (count ( $threadids ) > 0) {
-			$query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachments,
+			$query = "SELECT a.*, j.id AS userid, t.message AS message, l.myfavorite, l.favcount, l.attachments,
 							l.msgcount, l.lastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 	FROM (
 		SELECT m.thread, MAX(f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
@@ -105,23 +106,22 @@ class CKunenaShowcat {
 	ORDER BY ordering DESC, lastid DESC";
 
 			$this->db->setQuery ( $query );
-			$messagelist = $this->db->loadObjectList ();
+			$this->messages = $this->db->loadObjectList ();
 			check_dberror ( "Unable to load messages." );
 
 			// collect user ids for avatar prefetch when integrated
-			$__userlist = array();
+			$userlist = array();
 
-			foreach ( $messagelist as $message ) {
-				$this->messagetext [$message->id] = JString::substr ( smile::purify ( $message->messagetext ), 0, 500 );
+			foreach ( $this->messages as $message ) {
 				if ($message->parent == 0) {
-					$this->messages [$message->id] = $message;
-					$this->last_reply [$message->id] = $message;
+					$this->threads [$message->thread] = $message;
 					$routerlist [$message->id] = $message->subject;
 					if ($message->ordering) $this->highlight++;
-				} else {
-					$this->last_reply [$message->thread] = $message;
 				}
-				$__userlist[] = $message->userid;
+				if ($message->id == $message->lastid) {
+					$this->lastreply [$message->thread] = $message;
+				}
+				$userlist[$message->userid] = $message->userid;
 			}
 			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
@@ -129,7 +129,7 @@ class CKunenaShowcat {
 			// If jomSocial integration for the avatar is turned on, prefetch all users
 			// to avoid user by user queries during template iterations
 			if ($this->config->avatar_src == "jomsocial") {
-				CFactory::loadUsers(array_unique($__userlist));
+				CFactory::loadUsers($userlist);
 			}
 
 			if ($this->config->shownew && $this->my->id) {

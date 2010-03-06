@@ -110,9 +110,9 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$obj->offset = $start;
 		$obj->threads_per_page = $limit;
 		$obj->getUserTopics();
+		$result = new stdClass();
 		$result->total = $obj->total;
-		$result->messages = $obj->messages;
-		$result->last_reply = $obj->last_reply;
+		$result->messages = $obj->threads;
 		return $result;
 	}
 	public function getPostsTotal($userid) {
@@ -125,9 +125,10 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$obj->user = JUser::getInstance ( $userid );
 		$obj->offset = $start;
 		$obj->threads_per_page = $limit;
-		$obj->getOwnPosts();
+		$obj->getUserPosts();
+		$result = new stdClass();
 		$result->total = $obj->total;
-		$result->messages = $obj->messages;
+		$result->messages = $obj->customreply;
 		return $result;
 	}
 	public function getFavoritesTotal($userid) {
@@ -141,9 +142,9 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$obj->offset = $start;
 		$obj->threads_per_page = $limit;
 		$obj->getFavorites();
+		$result = new stdClass();
 		$result->total = $obj->total;
-		$result->messages = $obj->messages;
-		$result->last_reply = $obj->last_reply;
+		$result->messages = $obj->threads;
 		return $result;
 	}
 	public function getSubscriptionsTotal($userid) {
@@ -157,9 +158,9 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$obj->offset = $start;
 		$obj->threads_per_page = $limit;
 		$obj->getSubscriptions();
+		$result = new stdClass();
 		$result->total = $obj->total;
-		$result->messages = $obj->messages;
-		$result->last_reply = $obj->last_reply;
+		$result->messages = $obj->threads;
 		return $result;
 	}
 

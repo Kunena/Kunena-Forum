@@ -111,6 +111,7 @@ class smile {
 	}
 
 	function purify($text) {
+		$text = stripslashes ( $text );
 		$text = preg_replace ( "'<script[^>]*>.*?</script>'si", "", $text );
 		$text = preg_replace ( '/<a\s+.*?href="([^"]+)"[^>]*>([^<]+)<\/a>/is', '\2 (\1)', $text );
 		$text = preg_replace ( '/<!--.+?-->/', '', $text );
@@ -141,6 +142,7 @@ class smile {
 		$text = preg_replace ( '/:pinch:/', ' ', $text );
 		//bbcode
 		$text = preg_replace ( '/\[hide==([1-3])\](.*?)\[\/hide\]/s', '', $text );
+		$text = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $text );
 		$text = preg_replace ( '/(\[b\])/', ' ', $text );
 		$text = preg_replace ( '/(\[\/b\])/', ' ', $text );
 		$text = preg_replace ( '/(\[s\])/', ' ', $text );
@@ -183,7 +185,6 @@ class smile {
 		$text = preg_replace ( '#/n#s', ' ', $text );
 		$text = strip_tags ( $text );
 		//$text = stripslashes(kunena_htmlspecialchars($text));
-		$text = stripslashes ( $text );
-		return ($text);
+		return (trim($text));
 	} //purify
 }

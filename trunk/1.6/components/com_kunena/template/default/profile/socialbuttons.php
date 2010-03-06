@@ -11,7 +11,7 @@
  **/
 defined( '_JEXEC' ) or die();
 
-if ($this->userinfo->userid != '0' || $this->config->hideuserprofileinfo == 'hide_prof') {
+if ($this->my->id != '0' || $this->config->hideuserprofileinfo == 'hide_prof') {
 ?>
 
 <div class="iconrow">

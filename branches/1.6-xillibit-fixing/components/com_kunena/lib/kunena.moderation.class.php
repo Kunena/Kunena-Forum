@@ -177,8 +177,7 @@ class CKunenaModeration {
 
 					if ( is_object( $newParent ) ) {
 						// Rest of the thread will become new thread with different thread id
-						// TODO: what to do with the subject in the old thread
-						$sqlparent = "UPDATE #__fb_messages SET `parent`=0, `thread`='{$newParent->id}' WHERE `id`='{$newParent->id}'";
+						$sqlparent = "UPDATE #__fb_messages SET `parent`=0, `thread`='{$newParent->id}' $subjectupdatesql WHERE `id`='{$newParent->id}'";
 						$this->_db->setQuery ( $sqlparent );
 						$this->_db->query ();
 						check_dberror ( 'Unable to promote message parent.' );
@@ -452,6 +451,9 @@ class CKunenaModeration {
 	}
 
 	public function logoutUser($UserID) {
+		// Sanitize parameters!
+		$UserID = intval ( $UserID );
+
 		if ( !CKunenaTools::isModerator($this->_my->id) ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR');
 			return false;
@@ -504,6 +506,33 @@ class CKunenaModeration {
 
 	public function createGhostThread($MessageID,$currentMessage) {
 		return $this->_createGhostThread($MessageID,$currentMessage);
+	}
+
+	public function getUserIPs ($UserID) {
+		// Sanitize parameters!
+		$UserID = intval ( $UserID );
+
+		$this->_db->setQuery ( "SELECT ip FROM #__fb_messages WHERE userid=$UserID GROUP BY ip" );
+		$ipslist = $this->_db->loadObjectList ();
+		check_dberror ( 'Unable to load ip for user.' );
+
+		return $ipslist;
+	}
+
+	public function getUsernameMatchingIPs ($UserID) {
+		// Sanitize parameters!
+		$UserID = intval ( $UserID );
+
+		$ipslist = $this->getUserIPs ($UserID);
+
+		$useridslist = array();
+		foreach ($ipslist as $ip) {
+			$this->_db->setQuery ( "SELECT name,userid FROM #__fb_messages WHERE ip='$ip->ip' GROUP BY name" );
+			$useridslist[$ip->ip] = $this->_db->loadObjectList ();
+			check_dberror ( 'Unable to load ip for user.' );
+		}
+
+		return $useridslist;
 	}
 }
 ?>

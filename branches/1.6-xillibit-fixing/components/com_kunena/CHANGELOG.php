@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-Special-DEV
 
+06-Mar-2010 Xillibit
+# [#19649] Put error message when something goes wrong when user delete own post
+# [#19764] Some fixes on CKunenaModeration class
+^ [#19764] Make moderation part in profile working almost
+
 05-Mar-2010 Xillibit
 # [#19764] Fix delete the user from kunena table instead of put empty content
 ^ [#19764] Put the edit time check into a fucntion in CKunenaTools

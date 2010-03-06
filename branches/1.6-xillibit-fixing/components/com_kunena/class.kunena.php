@@ -1176,7 +1176,7 @@ class CKunenaTools {
 			$currentMessage = $kunena_db->loadObject ();
 			check_dberror ( "Unable to load message." );
 
-			// Check that message to be moved actually exists
+			// Check that message to be deleted actually exists
 			if ( !is_object($currentMessage) ) {
 				return false;
 			}

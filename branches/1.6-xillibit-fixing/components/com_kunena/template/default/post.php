@@ -765,13 +765,12 @@ if ($kunena_my->id) {
 			} else if ($do == "deleteownpost") {
 				$delete = $delete = CKunenaTools::userOwnDelete ($id);
 				if (!$delete) {
-					$message = 'error';
+					$message = JText::_('COM_KUNENA_POST_OWN_DELETE_ERROR');
 				} else {
 					$message = JText::_('COM_KUNENA_POST_SUCCESS_DELETE');
 				}
-				echo $message;
 
-				//$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $message );
+				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $message );
 			} else if ($do == "delete") {
 				require_once (KUNENA_PATH_LIB.'/kunena.moderation.class.php');
 				$kunena_mod = CKunenaModeration::getInstance();

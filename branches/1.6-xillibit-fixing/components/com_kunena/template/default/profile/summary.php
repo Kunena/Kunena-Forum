@@ -138,9 +138,9 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 							} ?>
 						</ul>
 						<h4><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_USER'); ?>:</h4>
-						<form id="kform-ban" name="kformban" action="#" method="post">
+						<form id="kform-ban" name="kformban" action="index.php" method="post">
 
-							<label for="ban-ip"><input type="checkbox" id="banip" name="banip" value="banip" class="kcheckbox" />
+							<label for="ban-ip">
 							<span><?php echo JText::_('COM_KUNENA_MODERATE_BANIP'); ?></span>
 							<?php
 							$ipselect = array();
@@ -150,7 +150,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 								$ipselect [] = JHTML::_ ( 'select.option', 'allips', JText::_('COM_KUNENA_MODERATE_ALLIPS') );
 							}
 
-							echo $lists = JHTML::_ ( 'select.genericlist', $ipselect, 'prof_ip_select', 'class="inputbox" size="1" onchange="document.kformban.banip.checked=(! document.kformban.banip.checked);"', 'value', 'text' );
+							echo $lists = JHTML::_ ( 'select.genericlist', $ipselect, 'prof_ip_select', 'class="inputbox" size="1"', 'value', 'text' );
 							?>
 							</label>
 							<label for="ban-email"><input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
@@ -160,6 +160,12 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 							<label for="ban-delposts"><input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" />
 							<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_ALL_POSTS'); ?></span></label>
 							<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_USER'); ?>" name="Submit" />
+							<input type="hidden" name="Itemid"
+							value="<?php
+							echo KUNENA_COMPONENT_ITEMID;
+							?>" /> <input type="hidden" name="option" value="com_kunena" /> <input
+							type="hidden" name="func" value="banactions" /> <input
+							type="hidden" name="thisuserid" value="<?php echo $this->user->id; ?>" />
 						</form>
 					</dd>
 					<?php endif; ?>

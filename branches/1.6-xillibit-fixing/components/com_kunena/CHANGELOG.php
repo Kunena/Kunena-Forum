@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-Special-DEV
 
+07-Mar-2010 Xillibit
+^ [#19764] Make moderation part in profile working almost (part 2)
+
 06-Mar-2010 Xillibit
 # [#19649] Put error message when something goes wrong when user delete own post
 # [#19764] Some fixes on CKunenaModeration class

@@ -1160,7 +1160,7 @@ div#kheader h1 a:hover {
 #Kunena h1 {
 	background: #5388B4;
 	text-align: left;
-	border-bottom:3px solid #D9D9D9;
+	border-bottom:2px solid #D9D9D9;
 	display: block;
 	width:100%;
 	line-height: 1.9em;
@@ -1169,7 +1169,7 @@ div#kheader h1 a:hover {
 	padding-top: 2px;
 	color: #FFFFFF;
 	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 }
 
 #Kunena div.ktitle_cover {
@@ -3368,9 +3368,9 @@ div#kprofile-stats ul li span.rank-admin {
 }
 
 div#kprofile-rightcol  { 
-	width: 75%;
-	float:right;
+	display: table;
 	margin-right: 10px;
+	margin-left: 210px;
 }
 
 div#kprofile-rightcoltop  {width: 100%;}
@@ -3568,7 +3568,7 @@ li.kprofile-rank img {
 
 #kprofile-tabs {
 	width: 100%;
-	margin-top: 30px;
+	margin-top: 0px;
 }
 
 dl.tabs {

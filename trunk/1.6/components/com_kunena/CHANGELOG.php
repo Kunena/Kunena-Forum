@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+7-Mar-2010 Matias
+^ [#19383] Revise Profile Page: Layout fixes
+
 05-Mar-2010 Matias
 + [#19383] Revise Profile Page: added Posts tab
 

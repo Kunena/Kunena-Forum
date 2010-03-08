@@ -16,15 +16,12 @@ $document = & JFactory::getDocument ();
 $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new JTabs(tabs); }); });" );
 ?>
 
-
-<h1><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->user->name; ?> (<?php echo $this->user->username; ?>)</h1>
-
 <div class="kbt_cvr1">
 <div class="kbt_cvr2">
 <div class="kbt_cvr3">
 <div class="kbt_cvr4">
 <div class="kbt_cvr5">
-
+<h1><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->user->name; ?> (<?php echo $this->user->username; ?>)</h1>
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
 			<div class="avatar-lg"><img src="<?php echo $this->avatarurl; ?>" alt=""/></div>
@@ -86,24 +83,24 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 
 			<div id="kprofile-tabs">
 				<dl class="tabs">
-					<dt><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?></dt>
-					<dd>
+					<dt class="open"><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?></dt>
+					<dd style="display: none;">
 						<?php $this->displayUserPosts(); ?>
 					</dd>
-					<dt><?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?></dt>
-					<dd>
+					<dt class="closed"><?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?></dt>
+					<dd style="display: none;">
 						<?php $this->displayOwnTopics(); ?>
 					</dd>
-					<dt><?php echo JText::_('COM_KUNENA_USERTOPICS'); ?></dt>
-					<dd>
+					<dt class="closed"><?php echo JText::_('COM_KUNENA_USERTOPICS'); ?></dt>
+					<dd style="display: none;">
 						<?php $this->displayUserTopics(); ?>
 					</dd>
-					<dt><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
-					<dd>
+					<dt class="closed"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
+					<dd style="display: none;">
 						<?php $this->displaySubscriptions(); ?>
 					</dd>
-					<dt><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
-					<dd>
+					<dt class="closed"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
+					<dd style="display: none;">
 						<?php $this->displayFavorites(); ?>
 					</dd>
 

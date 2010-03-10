@@ -120,21 +120,21 @@ if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 		$upload = new CKunenaUpload();
 		$upload->uploadFile(KUNENA_PATH_AVATAR_UPLOADED .DS. $this->user->id , 'kavatar', false);
 		$fileinfo = $upload->getFileInfo();
-		print_r($fileinfo);
 
 		if ($fileinfo['ready'] === true) {
 			if(JDEBUG == 1 && defined('JFIREPHP')){
 				FB::log('Kunena save avatar: ' . $fileinfo['name']);
 			}
-			$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar={$kunena_db->quote($this->user->id)} WHERE userid='{$this->user->id}'" );
+			$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar={$kunena_db->quote($fileinfo['name'])} WHERE userid='{$this->user->id}'" );
 
 				if (! $kunena_db->query () || $kunena_db->getErrorNum()) {
 				$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_DATABASE_STORE'));
 				$fileinfo = $upload->fileInfo();
 			}
 		}
-
-		//$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, $name='', $rel='nofollow', $redirect=false,$do='') );
+		if (!$fileinfo['status']) $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo[name]).': '.$fileinfo['error'], 'error' );
+		else $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
+		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id) );
 	}
 }
 ?>

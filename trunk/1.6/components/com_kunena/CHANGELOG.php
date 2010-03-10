@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 ^ [#15886] Merge revisions 2022-2032 from /branches/1.5-xillibit-fixing
 - [#19383] Revise Profile Page: cleanup
 # [#19380] Many fixes to CKunenaImage, CKunenaAttachments
+# [#19383] Fix avatar upload, other logic still missing
 
 10-Mar-2010 Xillibit
 + [#19383] Revise Profile Page: re-write page for edit joomla! and details, forum settings and avatar

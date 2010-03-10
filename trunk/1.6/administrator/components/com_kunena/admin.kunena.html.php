@@ -136,12 +136,9 @@ div.kadmin-functitle.no-icon { text-indent: 5px !important; }
 }
 
 .kadmin-right {
-	border: 1px solid #ccc;
 	background: #fff;
-	padding: 5px;
-	width: 80%;
-	float:left;
-	min-width: 760px;
+	padding: 5px 5px 5px 0;
+	display: table;
 }
 
 .kadmin-footer {

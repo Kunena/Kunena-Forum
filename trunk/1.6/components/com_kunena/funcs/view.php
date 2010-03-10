@@ -609,35 +609,9 @@ class CKunenaView {
 			$this->msg_html->profile = CKunenaLink::GetProfileLink ( $this->config, $this->userinfo->userid, $this->msg_html->profileicon );
 		}
 
-		// Begin: Additional Info //
-		if ($this->userinfo->gender != '') {
-			$gender = JText::_('COM_KUNENA_NOGENDER');
-			if ($this->userinfo->gender == 1) {
-				$gender = '' . JText::_('COM_KUNENA_MYPROFILE_MALE');
-				$this->msg_html->gender = isset ( $kunena_icons ['msgmale'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgmale'] . '" border="0" alt="' . JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': ' . $gender . '" title="' . JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': ' . $gender . '" />' : '' . JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': ' . $gender . '';
-			}
-
-			if ($this->userinfo->gender == 2) {
-				$gender = '' . JText::_('COM_KUNENA_MYPROFILE_FEMALE');
-				$this->msg_html->gender = isset ( $kunena_icons ['msgfemale'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgfemale'] . '" border="0" alt="' . JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': ' . $gender . '" title="' . JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': ' . $gender . '" />' : '' . JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': ' . $gender . '';
-			}
-
-		}
 		if ($this->userinfo->personalText != '') {
 			$this->msg_html->personal = kunena_htmlspecialchars ( CKunenaTools::parseText ( $this->userinfo->personalText ) );
 		}
-		if ($this->userinfo->location != '') {
-			$this->msg_html->location = isset ( $kunena_icons ['msglocation'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msglocation'] . '" border="0" alt="' . JText::_('COM_KUNENA_MYPROFILE_LOCATION') . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->location ) ) . '" title="' . JText::_('COM_KUNENA_MYPROFILE_LOCATION') . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->location ) ) . '" />' : ' ' . JText::_('COM_KUNENA_MYPROFILE_LOCATION') . ': ' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->location ) ) . '';
-		}
-		if ($this->userinfo->birthdate != '0001-01-01' and $this->userinfo->birthdate != '0000-00-00' and $this->userinfo->birthdate != '') {
-			$birthday = CKunenaTimeformat::showDate ( $this->userinfo->birthdate, 'date' );
-			$this->msg_html->birthdate = isset ( $kunena_icons ['msgbirthdate'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgbirthdate'] . '" border="0" alt="' . JText::_('COM_KUNENA_PROFILE_BIRTHDAY') . ': ' . $birthday . '" title="' . JText::_('COM_KUNENA_PROFILE_BIRTHDAY') . ': ' . $birthday . '" />' : ' ' . JText::_('COM_KUNENA_PROFILE_BIRTHDAY') . ': ' . $birthday . '';
-		}
-		if ($this->userinfo->websiteurl != '') {
-			$this->msg_html->website = isset ( $kunena_icons ['msgwebsite'] ) ? '<a href="http://' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->websiteurl ) ) . '" target="_blank"><img src="' . KUNENA_URLICONSPATH . $kunena_icons ['msgwebsite'] . '" border="0" alt="' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->websitename ) ) . '" title="' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->websitename ) ) . '" /></a>' : '<a href="http://' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->websiteurl ) ) . '" target="_blank">' . kunena_htmlspecialchars ( stripslashes ( $this->userinfo->websitename ) ) . '</a>';
-		}
-
-		// Finish: Additional Info //
 
 		//Show admins the IP address of the user:
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {

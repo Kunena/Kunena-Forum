@@ -104,7 +104,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<div class="k-topic-title-cover"><?php
 			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $message->subject ) ), kunena_htmlspecialchars ( CKunenaTools::stripBBCode ( $message->message ) ), 'follow', 'k-topic-title km' );
 			?>
-			</div><div><?php echo CKunenaTools::parseBBCode ( $message->message );?></div>
+			</div><div style="display:none"><?php echo CKunenaTools::parseBBCode ( $message->message );?></div>
 			</td>
 			<td class="td-3"><?php
 			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $firstpost->subject ) ), kunena_htmlspecialchars ( CKunenaTools::stripBBCode ( $firstpost->message ) ), 'follow', 'k-topic-title km' );

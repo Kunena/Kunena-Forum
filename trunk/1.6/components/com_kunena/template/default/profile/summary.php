@@ -91,6 +91,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<dd style="display: none;">
 						<?php $this->displayUserPosts(); ?>
 					</dd>
+					<!--
 					<dt class="closed"><?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?></dt>
 					<dd style="display: none;">
 						<?php $this->displayOwnTopics(); ?>
@@ -99,6 +100,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<dd style="display: none;">
 						<?php $this->displayUserTopics(); ?>
 					</dd>
+					-->
 					<dt class="closed"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 					<dd style="display: none;">
 						<?php $this->displaySubscriptions(); ?>

@@ -570,6 +570,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
+		case 'banactions' :
+			CKunenaTools::KModerateUser ();
+
+			break;
+
 		case "templatechooser" :
 			$fb_user_template = strval ( JRequest::getVar ( 'kunena_user_template', '', 'COOKIE' ) );
 

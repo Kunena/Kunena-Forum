@@ -108,29 +108,65 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<!-- Only visible to moderators and admins -->
 					<dt class="kprofile-modbtn"><?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?></dt>
 					<dd class="kprofile-modtools">
+					<?php
+					$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
+					require_once ($path);
+					$kunena_mod = CKunenaModeration::getInstance();
+					$iplist = $kunena_mod->getUserIPs ($this->user->id);
+					$useriplist = $kunena_mod->getUsernameMatchingIPs($this->user->id);
+						?>
 						<h4><?php echo JText::_('COM_KUNENA_MODERATE_USERIPS'); ?>:</h4>
 						<ul>
-							<li><span><a href="http://ws.arin.net/whois/?queryinput=147.22.33.88" target="_blank">147.22.33.88</a></span> (<?php echo JText::_('COM_KUNENA_MODERATE_OTHER_USERS_WITH_IP'); ?>: <a href="#">marks</a>, <a href="#">killboy</a>, <a href="#">fxstein</a>)</li>
-							<li><span><a href="http://ws.arin.net/whois/?queryinput=144.23.33.168" target="_blank">144.23.33.168</a></span> (<?php echo JText::_('COM_KUNENA_MODERATE_OTHER_USERS_WITH_IP'); ?>: None)</li>
+							<?php
+							$usernames = array();
+							foreach ($iplist as $ip) {
+								$usernames = array_merge($usernames,$useriplist[$ip->ip]);
+								$username = array();
+								foreach ($usernames as $user) {
+									$username[] = CKunenalink::GetProfileLink($this->_config, $user->userid, $user->name, $rel='nofollow', $class='');
+								}
+								$username=implode(', ',$username);
+
+								if (!empty($useriplist[$ip->ip])) {
+							?>
+							<li><span><a href="http://ws.arin.net/whois/?queryinput=<?php echo $ip->ip; ?>" target="_blank"><?php echo $ip->ip; ?></a></span> (<?php echo JText::_('COM_KUNENA_MODERATE_OTHER_USERS_WITH_IP'); ?>: <?php echo $username; ?>)</li>
+							<?php
+								} else {
+								?>
+							<li><span><a href="http://ws.arin.net/whois/?queryinput=<?php echo $ip->ip; ?>" target="_blank"><?php echo $ip->ip; ?></a></span> (<?php echo JText::_('COM_KUNENA_MODERATE_OTHER_USERS_WITH_IP'); ?>: <?php echo JText::_('COM_KUNENA_MODERATION_USER_NONE_IPS'); ?>)</li>
+							<?php
+								}
+							} ?>
 						</ul>
 						<h4><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_USER'); ?>:</h4>
-						<form id="kform-ban" name="kformban" action="#" method="post">
+						<form id="kform-ban" name="kformban" action="index.php" method="post">
 
-							<input type="checkbox" id="ban-ip" name="banip" value="banip" class="kcheckbox" />
-							<label for="ban-ip"><span onclick="document.kformban.banip.checked=(! document.kformban.banip.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANIP'); ?></span></label>
-							<select>
-								<option value=""><?php echo JText::_('COM_KUNENA_MODERATE_SELECT_IP'); ?></option>
-								<option value="147.22.33.88">147.22.33.88</option>
-								<option value="144.23.33.168">144.23.33.168</option>
-								<option value="allips"><?php echo JText::_('COM_KUNENA_MODERATE_ALLIPS'); ?></option>
-							</select>
-							<input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
-							<label for="ban-email"><span onclick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANEMAIL'); ?></span></label>
-							<input type="checkbox" id="ban-username" name="banusername" value="banusername" class="kcheckbox" />
-							<label for="ban-username"><span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>
-							<input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" />
-							<label for="ban-delposts"><span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_ALL_POSTS'); ?></span></label>
+							<label for="ban-ip">
+							<span><?php echo JText::_('COM_KUNENA_MODERATE_BANIP'); ?></span>
+							<?php
+							$ipselect = array();
+							foreach ($iplist as $ip) {
+								$ipselect [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_MODERATE_SELECT_IP') );
+								$ipselect [] = JHTML::_ ( 'select.option', $ip->ip, $ip->ip );
+								$ipselect [] = JHTML::_ ( 'select.option', 'allips', JText::_('COM_KUNENA_MODERATE_ALLIPS') );
+							}
+
+							echo $lists = JHTML::_ ( 'select.genericlist', $ipselect, 'prof_ip_select', 'class="inputbox" size="1"', 'value', 'text' );
+							?>
+							</label>
+							<label for="ban-email"><input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
+							<span onclick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANEMAIL'); ?></span></label>
+							<label for="ban-username"><input type="checkbox" id="ban-username" name="banusername" value="banusername" class="kcheckbox" />
+							<span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>
+							<label for="ban-delposts"><input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" />
+							<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_ALL_POSTS'); ?></span></label>
 							<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_USER'); ?>" name="Submit" />
+							<input type="hidden" name="Itemid"
+							value="<?php
+							echo KUNENA_COMPONENT_ITEMID;
+							?>" /> <input type="hidden" name="option" value="com_kunena" /> <input
+							type="hidden" name="func" value="banactions" /> <input
+							type="hidden" name="thisuserid" value="<?php echo $this->user->id; ?>" />
 						</form>
 					</dd>
 					<?php endif; ?>

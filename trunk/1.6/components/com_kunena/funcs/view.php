@@ -690,47 +690,24 @@ class CKunenaView {
 		$showedEdit = 0; //reset this value
 		$this->msg_html->class = 'class="kmsg"';
 
-		//Offer an moderator the delete link
+		//Offer an moderator a few tools
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-			$this->msg_html->split = CKunenaLink::GetTopicPostLink ( 'split', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'split', JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC_LONG') );
+			$this->msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
 			$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+			$this->msg_html->split = CKunenaLink::GetTopicPostLink ( 'split', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'split', JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC_LONG') );
 			$this->msg_html->merge = CKunenaLink::GetTopicPostLink ( 'merge', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'merge', JText::_('COM_KUNENA_BUTTON_MERGE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MERGE_LONG') );
 			if ($this->kunena_message->hold == 1) {
 				$this->msg_html->publish = CKunenaLink::GetTopicPostReplyLink ( 'approve', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
 				$this->msg_html->class = 'class="kmsg kunapproved"';
 			}
 		}
-
-		if ($this->config->useredit && $this->my->id != "") {
+		else if ($this->config->useredit && $this->my->id && $this->my->id == $this->profile->userid) {
 			//Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
-			$allowEdit = 0;
-			if ($this->my->id == $this->userinfo->userid) {
-				if ((( int ) $this->config->useredittime) == 0) {
-					$allowEdit = 1;
-				} else {
-					//Check whether edit is in time
-					$modtime = $this->kunena_message->modified_time;
-					if (! $modtime) {
-						$modtime = $this->kunena_message->time;
-					}
-					if (($modtime + (( int ) $this->config->useredittime)) >= CKunenaTimeformat::internalTime ()) {
-						$allowEdit = 1;
-					}
-				}
-			}
-			if ($allowEdit) {
+			if (CKunenaTools::editTimeCheck($this->kunena_message->modified_time, $this->kunena_message->time)) {
 				$this->msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
-				$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
-				$showedEdit = 1;
+				$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'deleteownpost', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 			}
 		}
-
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) && $showedEdit != 1) {
-			//Offer a moderator always the edit link except when it is already showing..
-			$this->msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
-		}
-
-		//(JJ)
 		CKunenaTools::loadTemplate('/view/message.php');
 	}
 

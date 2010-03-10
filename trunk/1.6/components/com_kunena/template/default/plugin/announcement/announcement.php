@@ -36,10 +36,9 @@ $user_fields = @explode(',', $kunena_config->annmodid);
 
 if (in_array($kunena_my->id, $user_fields) || CKunenaTools::isAdmin()) {
     $is_editor = true;
-    }
-else {
+} else {
     $is_editor = false;
-    }
+}
 
 // BEGIN: READ ANN
 if ($do == "read") {
@@ -114,12 +113,12 @@ if ($do == "read") {
     }
 
 // FINISH: READ ANN
-if ($is_editor) {
         ?>
         <!-- announcement-->
         <?php
     // BEGIN: SHOW ANN
     if ($do == "show") {
+    	if ($is_editor) {
         ?>
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -222,30 +221,38 @@ if ($is_editor) {
 </div>
 </div>
             <?php
+    		} else {
+    			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+    		}
         }
 
     // FINISH: SHOW ANN
     // BEGIN: ADD ANN
     if ($do == "doadd") {
-        JFilterOutput::objectHTMLSafe ($_POST);
-        $title = addslashes(JRequest::getVar("title", ""));
-        $description = addslashes(JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW));
-        $sdescription = addslashes(JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW));
-        $created = addslashes(JRequest::getVar("created", ""));
-        $published = JRequest::getInt("published", 0);
-        $ordering = 0;
-        $showdate = addslashes(JRequest::getVar("showdate", ""));
-        # Clear any HTML
-        $query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
-        $kunena_db->setQuery($query1);
+    	if ($is_editor) {
+        	JFilterOutput::objectHTMLSafe ($_POST);
+        	$title = addslashes(JRequest::getVar("title", ""));
+        	$description = addslashes(JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW));
+        	$sdescription = addslashes(JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW));
+        	$created = addslashes(JRequest::getVar("created", ""));
+        	$published = JRequest::getInt("published", 0);
+        	$ordering = 0;
+        	$showdate = addslashes(JRequest::getVar("showdate", ""));
+        	# Clear any HTML
+        	$query1 = "INSERT INTO #__fb_announcement VALUES ('', '$title', '$sdescription', '$description', " . (($created <> '')?"'$created'":"NOW()") . ", '$published', '$ordering','$showdate')";
+        	$kunena_db->setQuery($query1);
 
-        $kunena_db->query();
-        check_dberror("Unable to insert announcement.");
-        $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_SUCCESS_ADD'));
+        	$kunena_db->query();
+        	check_dberror("Unable to insert announcement.");
+        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_SUCCESS_ADD'));
+    	} else {
+    		$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+    	}
     }
 
     if ($do == "add") {
-		$calendar = JHTML::_('calendar', '', 'created', 'addcreated');
+    	if ($is_editor) {
+			$calendar = JHTML::_('calendar', '', 'created', 'addcreated');
             ?>
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -339,6 +346,9 @@ if ($is_editor) {
 </div>
 </div>
 <?php
+    		} else {
+    			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+    		}
         }
     // FINISH: ADD ANN
 ?>
@@ -346,38 +356,44 @@ if ($is_editor) {
 <?php
     // BEGIN: EDIT ANN
     if ($do == "doedit") {
-        JFilterOutput::objectHTMLSafe ($_POST);
-        $title = JRequest::getVar("title", "");
-        $description = JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW);
-        $sdescription = JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW);
-        $created = JRequest::getVar("created", "");
-        $published = JRequest::getVar("published", 0);
-        $showdate = JRequest::getVar("showdate", "");
+    	if ($is_editor) {
+        	JFilterOutput::objectHTMLSafe ($_POST);
+       		$title = JRequest::getVar("title", "");
+        	$description = JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW);
+        	$sdescription = JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW);
+        	$created = JRequest::getVar("created", "");
+        	$published = JRequest::getVar("published", 0);
+        	$showdate = JRequest::getVar("showdate", "");
 
-        $kunena_db->setQuery("UPDATE #__fb_announcement SET title=". $kunena_db->Quote ( $title ) .", description=". $kunena_db->Quote ( $description ) .", sdescription=". $kunena_db->Quote ( $sdescription ) .",  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
+        	$kunena_db->setQuery("UPDATE #__fb_announcement SET title=". $kunena_db->Quote ( $title ) .", description=". $kunena_db->Quote ( $description ) .", sdescription=". $kunena_db->Quote ( $sdescription ) .",  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
-        if ($kunena_db->query()) {
-            $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_SUCCESS_EDIT'));
+       		if ($kunena_db->query()) {
+            	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_SUCCESS_EDIT'));
             }
-        check_dberror("Unable to update announcement.");
+        	check_dberror("Unable to update announcement.");
+    	} else {
+    		$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+    	}
     }
 
     if ($do == "edit") {
-        $kunena_db->setQuery("SELECT * FROM #__fb_announcement WHERE id='{$id}'");
-        $anns = $kunena_db->loadObjectList();
-        check_dberror("Unable to load announcements.");
+    	if ($is_editor) {
+        	$kunena_db->setQuery("SELECT * FROM #__fb_announcement WHERE id='{$id}'");
+        	$anns = $kunena_db->loadObjectList();
+        	check_dberror("Unable to load announcements.");
 
-        $ann = $anns[0];
-        $annID = $ann->id;
-        $anntitle = kunena_htmlspecialchars(stripslashes($ann->title));
-        $annsdescription = kunena_htmlspecialchars(stripslashes($ann->sdescription));
-        $anndescription = kunena_htmlspecialchars(stripslashes($ann->description));
-        $anncreated = $ann->created;
-        $annpublished = $ann->published;
-        $annordering = $ann->ordering;
-        $annshowdate = $ann->showdate;
-        $calendar = JHTML::_('calendar', $anncreated, 'created', 'addcreated');
-        //$document->addCustomTag('<link rel="stylesheet" type="text/css" media="all" href="' . JURI::root() . '/includes/js/calendar/calendar-mos.css" title="green" />');
+        	$ann = $anns[0];
+        	$annID = $ann->id;
+        	$anntitle = kunena_htmlspecialchars(stripslashes($ann->title));
+        	$annsdescription = kunena_htmlspecialchars(stripslashes($ann->sdescription));
+        	$anndescription = kunena_htmlspecialchars(stripslashes($ann->description));
+        	$anncreated = $ann->created;
+        	$annpublished = $ann->published;
+        	$annordering = $ann->ordering;
+        	$annshowdate = $ann->showdate;
+        	$calendar = JHTML::_('calendar', $anncreated, 'created', 'addcreated');
+        	//$document->addCustomTag('<link rel="stylesheet" type="text/css" media="all" href="' . JURI::root() . '/includes/js/calendar/calendar-mos.css" title="green" />');
+
 ?>
 <script type = "text/javascript">
     <!--
@@ -499,24 +515,26 @@ if ($is_editor) {
 </div>
 </div>
 <?php
+    		} else {
+    			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+    		}
         }
 
     // FINISH: EDIT ANN
     // BEGIN: delete ANN
-    if ($do == "delete")
-    {
-        $query1 = "DELETE FROM #__fb_announcement WHERE id=$id ";
-        $kunena_db->setQuery($query1);
-        $kunena_db->query();
-        check_dberror("Unable to delete announcement.");
+    if ($do == "delete") {
+    	if ($is_editor) {
+        	$query1 = "DELETE FROM #__fb_announcement WHERE id=$id ";
+        	$kunena_db->setQuery($query1);
+        	$kunena_db->query();
+        	check_dberror("Unable to delete announcement.");
 
-        $kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_DELETED'));
+        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_DELETED'));
+    	} else {
+    		$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+    	}
     }
     // FINISH: delete ANN
 ?>
 <!-- /announcement-->
-<?php
-    } else {
-    	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
-    }
-?>
+

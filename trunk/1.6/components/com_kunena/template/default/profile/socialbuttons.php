@@ -10,8 +10,6 @@
  *
  **/
 defined( '_JEXEC' ) or die();
-
-if ($this->my->id != '0' || $this->config->hideuserprofileinfo == 'hide_prof') {
 ?>
 
 <div class="iconrow">
@@ -40,5 +38,3 @@ if ($this->my->id != '0' || $this->config->hideuserprofileinfo == 'hide_prof') {
 	<?php echo $this->profile->socialButton('flickr'); ?>
 	<?php echo $this->profile->socialButton('bebo'); ?>
 </div>
-
-<?php } ?>

@@ -79,12 +79,12 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    $kunena_db->query();
 							    check_dberror("Unable to update karma.");
 							    echo JText::_('COM_KUNENA_KARMA_INCREASED') . '<br />';
-								if ($pid) {
-									echo CKunenaLink::GetThreadLink('view', $catid, $pid, JText::_('COM_KUNENA_POST_CLICK'), JText::_('COM_KUNENA_POST_CLICK'));
-                                	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
+                           	 	if ($pid) {
+								    $kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
+									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
 								} else {
-									echo CKunenaLink::GetProfileLink(null, $userid, JText::_('COM_KUNENA_POST_CLICK'));
-                                	echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
+                                	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
+									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
                                 }
                             }
                             else if ($do == "decrease")
@@ -96,25 +96,26 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 $kunena_db->query();
                                 check_dberror("Unable to update karma.");
                                 echo JText::_('COM_KUNENA_KARMA_DECREASED') . '<br />';
-								if ($pid) {
-									echo CKunenaLink::GetThreadLink('view', $catid, $pid, JText::_('COM_KUNENA_POST_CLICK'), JText::_('COM_KUNENA_POST_CLICK'));
-                                	echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&id='.$pid), 3500);
+                            	if ($pid) {
+									$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
+									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
 								} else {
-									echo CKunenaLink::GetProfileLink(null, $userid, JText::_('COM_KUNENA_POST_CLICK'));
-									echo CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetProfileURL($userid), 3500);
+									$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
+									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
                                 }
                             }
                             else
                             { //you got me there... don't know what to $do
-                                echo JText::_('COM_KUNENA_USER_ERROR_A');
-                                echo JText::_('COM_KUNENA_USER_ERROR_B') . "<br /><br />";
-                                echo JText::_('COM_KUNENA_USER_ERROR_C') . "<br /><br />" . JText::_('COM_KUNENA_USER_ERROR_D') . ": <code>fb001-karma-02NoDO</code><br /><br />";
+                                $kunena_app->enqueueMessage(JText::_('COM_KUNENA_USER_ERROR_KARMA'));
+                    			$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ) );
                             }
                         } else {
                         	if ($pid) {
-                        		echo JText::_('COM_KUNENA_KARMA_WAIT') . '<br /> ' . JText::_('COM_KUNENA_KARMA_BACK') .' '. CKunenaLink::GetSefHrefLink( KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , JText::_('COM_KUNENA_POST_CLICK') , JText::_('COM_KUNENA_POST_CLICK'), 'nofollow');
+                        		$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_WAIT'));
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
                         	}else{
-                        		echo JText::_('COM_KUNENA_KARMA_WAIT') . '<br /> ' . JText::_('COM_KUNENA_KARMA_BACK') .' '. CKunenaLink::GetSefHrefLink( CKunenaLink::GetProfileURL($userid) , JText::_('COM_KUNENA_POST_CLICK') , JText::_('COM_KUNENA_POST_CLICK'), 'nofollow');
+                        		$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_WAIT'));
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
                         	}
                         }
                     }
@@ -125,10 +126,12 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             $kunena_db->setQuery('UPDATE #__fb_users SET karma=karma-10, karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
                             $kunena_db->query();
                             check_dberror("Unable to update karma.");
-                            if ($pid) {
-                            	echo JText::_('COM_KUNENA_KARMA_SELF_INCREASE') . '<br />' . JText::_('COM_KUNENA_KARMA_BACK') . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , JText::_('COM_KUNENA_POST_CLICK') , JText::_('COM_KUNENA_POST_CLICK') , 'nofollow');
+                        	if ($pid) {
+                            	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'));
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
                             } else {
-                            	echo JText::_('COM_KUNENA_KARMA_SELF_INCREASE') . '<br />' . JText::_('COM_KUNENA_KARMA_BACK') . ' ' . CKunenaLink::GetSefHrefLink(CKunenaLink::GetProfileURL($userid) , JText::_('COM_KUNENA_POST_CLICK') , JText::_('COM_KUNENA_POST_CLICK') , 'nofollow');
+                            	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'));
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
                             }
                         }
 
@@ -137,20 +140,20 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             $kunena_db->setQuery('UPDATE #__fb_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
                             $kunena_db->query();
                             check_dberror("Unable to update karma.");
-                            if ($pid) {
-                            	echo JText::_('COM_KUNENA_KARMA_SELF_DECREASE') . '<br />' . JText::_('COM_KUNENA_KARMA_BACK') . ' ' . CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $pid , JText::_('COM_KUNENA_POST_CLICK') , JText::_('COM_KUNENA_POST_CLICK'), 'nofollow' );
+                        	if ($pid) {
+                            	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_DECREASE'));
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
                             } else {
-                            	echo JText::_('COM_KUNENA_KARMA_SELF_DECREASE') . '<br />' . JText::_('COM_KUNENA_KARMA_BACK') . ' ' . CKunenaLink::GetSefHrefLink(CKunenaLink::GetProfileURL($userid) , JText::_('COM_KUNENA_POST_CLICK') , JText::_('COM_KUNENA_POST_CLICK'), 'nofollow' );
+                            	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_DECREASE'));
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
                             }
                         }
                     }
                 }
                 else
                 { //get outa here, you fraud!
-                    echo JText::_('COM_KUNENA_USER_ERROR_A');
-                    echo JText::_('COM_KUNENA_USER_ERROR_B') . "<br /><br />";
-                    echo JText::_('COM_KUNENA_USER_ERROR_C') . "<br /><br />" . JText::_('COM_KUNENA_USER_ERROR_D') . ": <code>fb001-karma-01NLO</code><br /><br />";
-                //that should scare 'em off enough... ;-)
+                    $kunena_app->enqueueMessage(JText::_('COM_KUNENA_USER_ERROR_KARMA'));
+                    $kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ) );
                 }
                 ?>
             </center>

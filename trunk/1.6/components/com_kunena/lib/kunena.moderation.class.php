@@ -23,6 +23,8 @@ define ( 'KN_DEL_MESSAGE', 0 );
 define ( 'KN_DEL_THREAD', 1 );
 define ( 'KN_DEL_ATTACH', 2 );
 
+require_once (KUNENA_PATH_LIB .DS. "kunena.session.class.php");
+
 class CKunenaModeration {
 	// Private data and functions
 	protected $_db = null;
@@ -34,7 +36,7 @@ class CKunenaModeration {
 	protected function __construct($db, $config) {
 		$this->_db = $db;
 		$this->_my = &JFactory::getUser ();
-		$this->_session = CKunenaConfig::getInstance ();
+		$this->_session = CKunenaSession::getInstance ();
 		$this->_allowed = ($this->_session->allowed != '') ? explode ( ',', $this->_session->allowed ) : array();
 		$this->_ResetErrorMessage ();
 		$this->_config = $config;
@@ -138,7 +140,7 @@ class CKunenaModeration {
 		}
 
 		// Check that target category exists and is visible to our moderator
-		if (! in_array ( $TargetCatID, $this->_allow ) ) {
+		if (! in_array ( $TargetCatID, $this->_allowed ) ) {
 			//the user haven't moderator permissions in target category
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_TARGET_CATEGORY_NOT_FOUND', $currentMessage->id, $TargetCatID);
 			return false;
@@ -175,8 +177,7 @@ class CKunenaModeration {
 
 					if ( is_object( $newParent ) ) {
 						// Rest of the thread will become new thread with different thread id
-						// TODO: what to do with the subject in the old thread
-						$sqlparent = "UPDATE #__fb_messages SET `parent`=0, `thread`='{$newParent->id}' WHERE `id`='{$newParent->id}'";
+						$sqlparent = "UPDATE #__fb_messages SET `parent`=0, `thread`='{$newParent->id}' $subjectupdatesql WHERE `id`='{$newParent->id}'";
 						$this->_db->setQuery ( $sqlparent );
 						$this->_db->query ();
 						check_dberror ( 'Unable to promote message parent.' );
@@ -442,15 +443,17 @@ class CKunenaModeration {
 		}
 
 		$user->delete();
-		if ( $this->_config->hideuserprofileinfo == 'put_empty' ) {
-			$this->_db->setQuery ( "UPDATE #__fb_users SET `signature`=NULL, `moderator`=0, `posts`=0, `avatar`=NULL, `karma`=NULL, `uhits`=0, `personalText`=NULL, `gender`=0, `birthdate`=0001-01-01, `location`=NULL, `ICQ`=NULL, `AIM`=NULL, `YIM`=NULL, `MSN`=NULL, `SKYPE`=NULL, `GTALK`=NULL, `websitename`=NULL, `websiteurl`=NULL, `rank`=0, `TWITTER`=NULL, `FACEBOOK`=NULL, `MYSPACE`=NULL, `LINKEDIN`=NULL, `DELICIOUS`=NULL, `FRIENDFEED`=NULL, `DIGG`=NULL, `BLOGSPOT`=NULL, `FLICKR`=NULL, `BEBO`=NULL WHERE `userid`='$UserID';" );
-			$this->_db->query ();
-			check_dberror ( "Unable to put empty content for user." );
-		}
+		$this->_db->setQuery ( "DELETE FROM #__fb_users WHERE `userid`='$UserID';" );
+		$this->_db->query ();
+		check_dberror ( "Unable to delete user from kunena." );
+
 		return true;
 	}
 
 	public function logoutUser($UserID) {
+		// Sanitize parameters!
+		$UserID = intval ( $UserID );
+
 		if ( !CKunenaTools::isModerator($this->_my->id) ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR');
 			return false;
@@ -503,6 +506,33 @@ class CKunenaModeration {
 
 	public function createGhostThread($MessageID,$currentMessage) {
 		return $this->_createGhostThread($MessageID,$currentMessage);
+	}
+
+	public function getUserIPs ($UserID) {
+		// Sanitize parameters!
+		$UserID = intval ( $UserID );
+
+		$this->_db->setQuery ( "SELECT ip FROM #__fb_messages WHERE userid=$UserID GROUP BY ip" );
+		$ipslist = $this->_db->loadObjectList ();
+		check_dberror ( 'Unable to load ip for user.' );
+
+		return $ipslist;
+	}
+
+	public function getUsernameMatchingIPs ($UserID) {
+		// Sanitize parameters!
+		$UserID = intval ( $UserID );
+
+		$ipslist = $this->getUserIPs ($UserID);
+
+		$useridslist = array();
+		foreach ($ipslist as $ip) {
+			$this->_db->setQuery ( "SELECT name,userid FROM #__fb_messages WHERE ip='$ip->ip' GROUP BY name" );
+			$useridslist[$ip->ip] = $this->_db->loadObjectList ();
+			check_dberror ( 'Unable to load ip for user.' );
+		}
+
+		return $useridslist;
 	}
 }
 ?>

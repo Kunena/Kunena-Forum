@@ -37,12 +37,34 @@ Kunena 1.6.0-DEV
 10-Mar-2010 Matias
 # [#19288] Fix regression: User gender, birthdate, location and website missing from message info
 # [#19233] Show Kunena login screen to visitors, if forum is for registered users only
+^ [#15886] Merge revisions 2022-2028 from /branches/1.5-xillibit-fixing
+
+07-Mar-2010 Xillibit
+^ [#19764] Make moderation part in profile working almost (part 2)
+# [#19764] Uncomment the function list_users() in userlist.php, add sortable, put new icons for users search
 
 7-Mar-2010 Matias
 ^ [#19383] Revise Profile Page: Layout fixes
 
+06-Mar-2010 Xillibit
+# [#19649] Put error message when something goes wrong when user delete own post
+# [#19764] Some fixes on CKunenaModeration class
+^ [#19764] Make moderation part in profile working almost
+
+05-Mar-2010 Xillibit
+# [#19764] Fix delete the user from kunena table instead of put empty content
+^ [#19764] Put the edit time check into a function in CKunenaTools
++ [#19649] Allow user to edit post while he can edit it
+
 05-Mar-2010 Matias
 + [#19383] Revise Profile Page: added Posts tab
+
+04-Mar-2010 Xillibit
+# [#19764] Fix regressions in CKunenaModeration on undefined variable session
+# [#19764] Fix undefined variable in post.php line 893
+# [#19764] Fix wrong language string for merge in post.php
+# [#19288] Fix regression - normal user can not go into read more for the announcement
+# [#19764] Put auto-redirect when decreasing/increasing karma
 
 04-Mar-2010 Matias
 ^ [#15886] Merge latest changes /branches/1.5-xillibit with some fixes and changes (not tested, may contain regression)

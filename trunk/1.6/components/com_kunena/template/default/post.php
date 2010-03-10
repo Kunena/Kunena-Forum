@@ -762,6 +762,15 @@ if ($kunena_my->id) {
 				} else {
 					$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 				}
+			} else if ($do == "deleteownpost") {
+				$delete = $delete = CKunenaTools::userOwnDelete ($id);
+				if (!$delete) {
+					$message = JText::_('COM_KUNENA_POST_OWN_DELETE_ERROR');
+				} else {
+					$message = JText::_('COM_KUNENA_POST_SUCCESS_DELETE');
+				}
+
+				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $message );
 			} else if ($do == "delete") {
 				require_once (KUNENA_PATH_LIB.'/kunena.moderation.class.php');
 				$kunena_mod = CKunenaModeration::getInstance();
@@ -890,7 +899,7 @@ if ($kunena_my->id) {
 		<p><?php
 				echo JText::_('COM_KUNENA_GEN_TOPIC');
 				?>: <strong><?php
-				echo kunena_htmlspecialchars ( stripslashes ( $topicSubject ) );
+				echo kunena_htmlspecialchars ( stripslashes ( $topicDetails[0]->subject ) );
 				?></strong> <br />
 
 		<br />
@@ -918,7 +927,7 @@ if ($kunena_my->id) {
 				if (!$merge) {
 					$message = $kunena_mod->getErrorMessage();
 				} else {
-					$message = JText::_('COM_KUNENA_POST_SUCCESS_MOVE');
+					$message = JText::_('COM_KUNENA_POST_SUCCESS_MERGE');
 				}
 
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $$TargetThreadID, $kunena_config->messages_per_page ), $message );
@@ -989,7 +998,7 @@ if ($kunena_my->id) {
 				if (!$merge) {
 					$message = $kunena_mod->getErrorMessage();
 				} else {
-					$message = JText::_('COM_KUNENA_POST_SUCCESS_MOVE');
+					$message = JText::_('COM_KUNENA_POST_SUCCESS_MERGE');
 				}
 
 				$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $$TargetThreadID, $kunena_config->messages_per_page ), $message );

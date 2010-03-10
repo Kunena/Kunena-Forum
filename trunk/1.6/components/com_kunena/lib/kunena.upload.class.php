@@ -344,6 +344,10 @@ class CKunenaUpload {
 			$options = array('quality' => $quality);
 
 			$imageRaw = new CKunenaImage($this->fileTemp.'.raw');
+			if ($imageRaw->getError()) {
+				$this->fail(JText::_($imageRaw->getError()));
+				return false;
+			}
 			$image = $imageRaw->resize($this->_config->imagewidth, $this->_config->imageheight);
 			$type = $imageRaw->getType();
 			unset($imageRaw);

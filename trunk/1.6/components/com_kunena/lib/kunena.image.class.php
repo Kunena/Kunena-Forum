@@ -51,7 +51,7 @@ class CKunenaImage
 	 * @var		resource
 	 * @since	1.6
 	 */
-	protected $_handle;
+	protected $_handle = null;
 
 	/**
 	 * The source image path.
@@ -59,7 +59,7 @@ class CKunenaImage
 	 * @var		string
 	 * @since	1.6
 	 */
-	protected $_path;
+	protected $_path = null;
 
 	/**
 	 * The image type.
@@ -67,7 +67,7 @@ class CKunenaImage
 	 * @var		string
 	 * @since	1.6
 	 */
-	protected $_type;
+	protected $_type = null;
 
 	/**
 	 * List of file types supported by the server.
@@ -76,6 +76,14 @@ class CKunenaImage
 	 * @since	1.6
 	 */
 	protected $_support = array('JPG'=>false, 'GIF'=>false, 'PNG'=>false);
+
+	/**
+	 * Error message
+	 *
+	 * @var		array
+	 * @since	1.6
+	 */
+	protected $_error = null;
 
 	/**
 	 * Constructor.
@@ -97,13 +105,13 @@ class CKunenaImage
 
 		// Determine which image types are supported by GD.
 		$info = gd_info();
-		if ($info['JPG Support']) {
+		if (!empty($info['JPG Support']) || !empty($info['JPEG Support'])) {
 			$this->_support['JPG'] = true;
 		}
-		if ($info['GIF Create Support']) {
+		if (!empty($info['GIF Create Support'])) {
 			$this->_support['GIF'] = true;
 		}
-		if ($info['PNG Support']) {
+		if (!empty($info['PNG Support'])) {
 			$this->_support['PNG'] = true;
 		}
 
@@ -117,8 +125,16 @@ class CKunenaImage
 		}
 	}
 
+	function setError($errormsg){
+		$this->_error = $errormsg;
+	}
+
+	function getError(){
+		return $this->_error;
+	}
+
 	function getType(){
-		return $this->type;
+		return $this->_type;
 	}
 
 	function crop($width, $height, $left, $top, $createNew = true, $scaleMethod = CKunenaImage::SCALE_INSIDE)
@@ -458,12 +474,12 @@ class CKunenaImage
 				break;
 
 			case IMAGETYPE_PNG:
-				imagepng($this->_handle, $path, (array_key_exists('quality', $options)) ? $options['quality'] : 0);
+				imagepng($this->_handle, $path, (array_key_exists('quality', $options)) ? intval(($options['quality']-1)/10) : 6);
 				break;
 
 			case IMAGETYPE_JPEG:
 			default:
-				imagejpeg($this->_handle, $path, (array_key_exists('quality', $options)) ? $options['quality'] : 100);
+				imagejpeg($this->_handle, $path, (array_key_exists('quality', $options)) ? $options['quality'] : 60);
 				break;
 		}
 	}

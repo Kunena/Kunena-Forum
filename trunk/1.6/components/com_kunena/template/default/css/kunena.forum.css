@@ -3318,7 +3318,7 @@ div#kprofile-container { border: 1px solid #BFC3C6; padding: 10px 10px 30px 10px
 
 div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
 
-div.avatar-lg { 
+#Kunena div.avatar-lg { 
 	width: 200px; 
 	height: 200px; 
 	background-color: #FFF; 
@@ -3395,6 +3395,51 @@ div#kprofile-stats ul li {
 	padding-left: 0;
 }
 
+#Kunena span.location { 
+	display:block; 
+	background: url("../images/icons/location.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+
+#Kunena span.gender-male { 
+	display:block; 
+	background: url("../images/icons/male.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin:0 5px 5px 0;
+}
+
+#Kunena span.gender-female { 
+	display:block; 
+	background: url("../images/icons/female.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin:0 5px 5px 0;
+}
+
+#Kunena span.gender-unknown { 
+	display:block; 
+	background: url("../images/icons/gender-unknown.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+	margin:0 5px 5px 0;
+}
+
+#Kunena span.birthdate { 
+	display:block; 
+	background: url("../images/icons/birthday.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+
+#Kunena span.website {
+	display:block; 
+	background: url("../images/icons/website.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
 	float:left;
 	display:block; 
@@ -3406,37 +3451,21 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location {
 
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male { 
 	float:left;
-	display:block; 
-	background: url("../images/icons/male.png") no-repeat; 
-	height: 16px; 
-	width: 16px;
 	margin-right: 10px;
 }
 
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female { 
 	float:left;
-	display:block; 
-	background: url("../images/icons/female.png") no-repeat; 
-	height: 16px; 
-	width: 16px;
 	margin-right: 10px;
 }
 
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-unknown { 
 	float:left;
-	display:block; 
-	background: url("../images/icons/gender-unknown.png") no-repeat; 
-	height: 16px; 
-	width: 16px;
 	margin-right: 10px;
 }
 
 div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate { 
 	float:left;
-	display:block; 
-	background: url("../images/icons/birthday.png") no-repeat; 
-	height: 16px; 
-	width: 16px;
 	margin-right: 10px;
 }
 
@@ -3530,10 +3559,6 @@ div.kprofile-rightcol2 ul li span.email {
 
 div.kprofile-rightcol2 ul li span.website {
 	float:left;
-	display:block; 
-	background: url("../images/icons/website.png") no-repeat; 
-	height: 16px; 
-	width: 16px;
 	margin-right: 5px;
 }
 

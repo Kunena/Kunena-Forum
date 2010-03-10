@@ -110,6 +110,34 @@ class CKunenaUserprofile extends JTable
 	var $location = null;
 
 	/**
+	* Name of web site
+	* @var string
+	**/
+	var $websitename = null;
+
+	/**
+	* URL to web site
+	* @var string
+	**/
+	var $websiteurl = null;
+
+	/**
+	* User rank
+	* @var int
+	**/
+	var $rank = null;
+	/**
+	* Hide Email address
+	* @var int
+	**/
+	var $hideEmail = null;
+
+	/**
+	* Show online
+	* @var int
+	**/
+	var $showOnline = null;
+	/**
 	* ICQ ID
 	* @var string
 	**/
@@ -155,34 +183,6 @@ class CKunenaUserprofile extends JTable
 	**/
 	var $GTALK = null;
 
-	/**
-	* Name of web site
-	* @var string
-	**/
-	var $websitename = null;
-
-	/**
-	* URL to web site
-	* @var string
-	**/
-	var $websiteurl = null;
-
-	/**
-	* User rank
-	* @var int
-	**/
-	var $rank = null;
-	/**
-	* Hide Email address
-	* @var int
-	**/
-	var $hideEmail = null;
-
-	/**
-	* Show online
-	* @var int
-	**/
-	var $showOnline = null;
 	/**
 	* MYSPACE ID
 	* @var string
@@ -242,6 +242,39 @@ class CKunenaUserprofile extends JTable
 	function &getInstance($userid=null, $reload=false)
 	{
 		return CKunenaUserHelper::getInstance($userid, $reload);
+	}
+
+	function profileIcon($name) {
+		switch ($name) {
+			case 'gender':
+				switch ($this->gender) {
+					case 1:
+						$gender = 'male';
+						break;
+					case 2:
+						$gender = 'female';
+						break;
+					default:
+						$gender = 'unknown';
+				}
+				$title = JText::_('COM_KUNENA_MYPROFILE_GENDER') . ': '.JText::_('COM_KUNENA_MYPROFILE_GENDER_'.$gender);
+				return '<span class="gender-'.$gender.'" title="'.$title.'"></span>';
+				break;
+			case 'birthdate':
+				if ($this->birthdate)
+					return '<span class="birthdate" title="'. JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') . ': ' . CKunenaTimeformat::showDate($this->birthdate, 'date').'"></span>';
+				break;
+			case 'location':
+				if ($this->location)
+					return '<span class="location" title="' . JText::_('COM_KUNENA_MYPROFILE_LOCATION').': '. kunena_htmlspecialchars(stripslashes($this->location)).'"></span>';
+				break;
+			case 'website':
+				$url = 'http://'.$this->websiteurl;
+				if (!$this->websitename) $websitename = $this->websiteurl;
+				if ($this->websiteurl)
+					return '<a href="'.kunena_htmlspecialchars(stripslashes($url)).'" target="_blank"><span class="website" title="'. JText::_('COM_KUNENA_MYPROFILE_WEBSITE') . ': ' .  kunena_htmlspecialchars(stripslashes($websitename)).'"></span></a>';
+				break;
+		}
 	}
 
 	function socialButton($name) {

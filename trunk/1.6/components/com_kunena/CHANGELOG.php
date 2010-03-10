@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+10-Mar-2010 Matias
+# [#19288] Fix regression: User gender, birthdate, location and website missing from message info
+
 7-Mar-2010 Matias
 ^ [#19383] Revise Profile Page: Layout fixes
 

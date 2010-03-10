@@ -52,11 +52,11 @@ class CKunenaProfile {
 		switch ($this->profile->gender) {
 			case 1:
 				$this->genderclass = 'male';
-				$this->gender = JText::_('COM_KUNENA_MYPROFILE_MALE');
+				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE');
 				break;
 			case 2:
 				$this->genderclass = 'female';
-				$this->gender = JText::_('COM_KUNENA_MYPROFILE_FEMALE');
+				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE');
 				break;
 			default:
 				$this->genderclass = 'unknown';

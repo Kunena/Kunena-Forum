@@ -45,6 +45,12 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 
 		<li class="kpost-online-status-<?php echo $this->msg_html->online ? 'yes':'no'; ?>"> </li>
 		<li class="kpost-smallicons">
+			<div class="iconrow">
+				<?php echo $this->profile->profileIcon('gender'); ?>
+				<?php echo $this->profile->profileIcon('birthdate'); ?>
+				<?php echo $this->profile->profileIcon('location'); ?>
+				<?php echo $this->profile->profileIcon('website'); ?>
+			</div>
 			<?php
 			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
 			?>
@@ -56,6 +62,10 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 <?php } else { ?>
 	<ul id="kpost-profiletop">
 		<li class="kpost-smallicons">
+			<?php if (isset($this->msg_html->gender)) echo $this->msg_html->gender; ?>
+			<?php if (isset($this->msg_html->birthdate)) echo $this->msg_html->birthdate; ?>
+			<?php if (isset($this->msg_html->location)) echo $this->msg_html->location; ?>
+			<?php if (isset($this->msg_html->website)) echo $this->msg_html->website; ?>
 			<?php
 			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
 			?>

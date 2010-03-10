@@ -330,9 +330,9 @@ class CKunenaUpload {
 
 		// If this is a valid image we need to resize/resample it to the config settings
 		if ($this->_isimage){
-			// First rename the raw image file(original)
-			if (! CKunenaFile::move ( $this->fileTemp, $this->fileTemp.'.raw' )) {
-				$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$this->fileName);
+			// First rename the raw image file(original) with php function (FTP user cannot do this)
+			if (!rename ( $this->fileTemp, $this->fileTemp.'.raw' )) {
+				$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED',$this->fileName.'.raw'));
 				return false;
 			}
 
@@ -376,7 +376,7 @@ class CKunenaUpload {
 		// For images we also have to move the raw (original) and thumbnails
 		if ($this->_isimage){
 			if (! CKunenaFile::move ( $this->fileTemp.'.raw', $uploadPath.'/raw/'.$this->fileName )) {
-				$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED').' '.$uploadPath.'/raw/'.$this->fileName);
+				$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/raw/'.$this->fileName));
 				return false;
 			}
 			if (! CKunenaFile::move ( $this->fileTemp.'.thumb', $uploadPath.'/thumb/'.$this->fileName )) {

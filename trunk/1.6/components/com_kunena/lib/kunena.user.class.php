@@ -271,6 +271,7 @@ class CKunenaUserprofile extends JTable
 			case 'website':
 				$url = 'http://'.$this->websiteurl;
 				if (!$this->websitename) $websitename = $this->websiteurl;
+				else $websitename = $this->websitename;
 				if ($this->websiteurl)
 					return '<a href="'.kunena_htmlspecialchars(stripslashes($url)).'" target="_blank"><span class="website" title="'. JText::_('COM_KUNENA_MYPROFILE_WEBSITE') . ': ' .  kunena_htmlspecialchars(stripslashes($websitename)).'"></span></a>';
 				break;

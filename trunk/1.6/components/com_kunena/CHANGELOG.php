@@ -37,7 +37,10 @@ Kunena 1.6.0-DEV
 10-Mar-2010 Matias
 # [#19288] Fix regression: User gender, birthdate, location and website missing from message info
 # [#19233] Show Kunena login screen to visitors, if forum is for registered users only
-^ [#15886] Merge revisions 2022-2028 from /branches/1.5-xillibit-fixing
+^ [#15886] Merge revisions 2022-2032 from /branches/1.5-xillibit-fixing
+
+10-Mar-2010 Xillibit
++ [#19383] Revise Profile Page: re-write page for edit joomla! and details, forum settings and avatar
 
 07-Mar-2010 Xillibit
 ^ [#19764] Make moderation part in profile working almost (part 2)

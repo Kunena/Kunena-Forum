@@ -40,6 +40,10 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_POSTS'); ?>:</strong> <?php echo $this->profile->posts; ?></li>
 					<!-- Profile view*s*? -->
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW'); ?>:</strong> <?php echo $this->profile->uhits; ?></li>
+					<li><a href="<?php echo CKunenaLink::GetProfileSettingsURL($this->_config, $this->user->id, '', $rel='nofollow', $redirect=false,'edituser'); ?>"><?php echo JText::_('COM_KUNENA_EDIT_TITLE'); ?></a></li>
+					<li><a href="<?php echo CKunenaLink::GetProfileSettingsURL($this->_config, $this->user->id, '', $rel='nofollow', $redirect=false,'editprofile'); ?>"><?php echo JText::_('COM_KUNENA_MYPROFILE_EDIT_KUNENA'); ?></a></li>
+					<li><a href="<?php echo CKunenaLink::GetProfileSettingsURL($this->_config, $this->user->id, '', $rel='nofollow', $redirect=false,'editsettings'); ?>"><?php echo JText::_('COM_KUNENA_MYPROFILE_LOOK_AND_LAYOUT'); ?></a></li>
+					<li><a href="<?php echo CKunenaLink::GetProfileSettingsURL($this->_config, $this->user->id, '', $rel='nofollow', $redirect=false,'editavatar'); ?>"><?php echo JText::_('COM_KUNENA_MYPROFILE_MYAVATAR'); ?></a></li>
 				</ul>
 			</div>
 		</div>

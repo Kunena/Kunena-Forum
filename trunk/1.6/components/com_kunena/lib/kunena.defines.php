@@ -42,6 +42,10 @@ define('KUNENA_PATH_ADMIN_IMAGES', KUNENA_PATH_ADMIN .DS. 'images');
 define('KUNENA_RELPATH_UPLOADED', '/media/kunena/attachments');
 define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED);
 
+// Kunena uploaded avatars directory
+define('KUNENA_RELPATH_AVATAR_UPLOADED', '/media/kunena/avatars');
+define('KUNENA_PATH_AVATAR_UPLOADED', KUNENA_ROOT_PATH . KUNENA_RELPATH_AVATAR_UPLOADED);
+
 // The tunmbnail folder is relative to any image file folder
 define('KUNENA_FOLDER_THUMBNAIL', 'thumb');
 

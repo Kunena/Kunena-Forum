@@ -179,14 +179,19 @@ if ($func == "json") {
 	$kunena_app->close ();
 }
 
-// Check if we only allow registered users
-
-if ($kunena_config->regonly && ! $kunena_my->id) {
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_A_REGISTERED_ONLY') . '<br/>' . JText::_('COM_KUNENA_FORUM_UNAUTHORIZIED') . '<br/>' . JText::_('COM_KUNENA_FORUM_UNAUTHORIZIED2'), 'error' );
-} // or if the board is offline
-
-else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
+if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
+	// if the board is offline
 	echo stripslashes ( $kunena_config->offline_message );
+} else if ($kunena_config->regonly && ! $kunena_my->id) {
+	// if we only allow registered users
+	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
+		$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
+	} else {
+		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
+	}
+	echo '<div id="Kunena">';
+	CKunenaTools::loadTemplate('/plugin/login/login.php');
+	echo '</div>';
 } else {
 	// =======================================================================================
 	// Forum is online:

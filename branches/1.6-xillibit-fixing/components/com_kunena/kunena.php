@@ -404,6 +404,10 @@ else if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
+		case 'profilesettings' :
+			require_once ( KUNENA_PATH_FUNCS .DS. 'profilesettings.php');
+			break;
+
 		case 'userlist' :
 			CKunenaTools::loadTemplate('/plugin/userlist/userlist.php');
 

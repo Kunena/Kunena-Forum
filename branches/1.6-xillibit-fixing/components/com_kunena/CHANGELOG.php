@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-Special-DEV
 
+10-Mar-2010 Xillibit
++ [#19383] Revise Profile Page: re-write page for edit joomla! and details, forum settings and avatar
+
 07-Mar-2010 Xillibit
 ^ [#19764] Make moderation part in profile working almost (part 2)
 # [#19764] Uncomment the function list_users() in userlist.php, add sortable, put new icons for users search

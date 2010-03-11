@@ -41,9 +41,15 @@ Kunena 1.5.10
 # [#19907] Fix in Kunena Administration: some wrong translations
 # [#19908] Moderators list is always using username, regardless of configuration option
 # [#19909] Debug does not show MySQL error in trace
+# [#19911] Conflict with sh404sef language strings
 # [#19912] Deprecated links to index2.php
+# [#19913] Most viewed profiles should use profile integration
+# [#19914] User list and count shows also disabled users
+^ [#19915] Backend: Show Avatar on Categories list option misleading
+# [#19916] Fix broken layout with too long strings
+# [#19917] fix broken ftp write function in kunena.file.class.php
 
-21-Mar-2010 Matias
+11-Mar-2010 Matias
 # [#19900] PHP 5.3 Deprecated: Assigning the return value of new by reference
 
 31-Jan-2010 fxstein

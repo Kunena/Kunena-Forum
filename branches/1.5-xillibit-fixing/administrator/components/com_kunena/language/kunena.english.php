@@ -22,6 +22,15 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+//1.5.10
+DEFINE('_KUNENA_PARENTDESC',
+    'Please note: To create a category, choose \'Top Level Category\' as a parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can be <strong>ONLY</strong> posted to forums, not categories.');
+DEFINE('_KUNENA_ADMIN', 'Forum Administration');
+DEFINE('_KUNENA_NOTEUS',
+    'NOTE: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, give a user a moderator flag and then go to <a href="index.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select their profile and update it. The moderator flag can only be set by a site administrator.');
+DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on Categories view, Recent discussions and My Discussions.');
+DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');
+
 // 1.5.8
 
 define('_KUNENA_USRL_REALNAME', 'Real Name');
@@ -829,8 +838,6 @@ DEFINE('_KUNENA_VIEW', 'View');
 DEFINE('_KUNENA_NOUSERSFOUND', 'No user profiles found.');
 DEFINE('_KUNENA_ADDMOD', 'Add Moderator to');
 DEFINE('_KUNENA_NOMODSAV', 'There are no possible moderators found. Read the note below.');
-DEFINE('_KUNENA_NOTEUS',
-    'NOTE: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, give a user a moderator flag and then go to <a href="index.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select their profile and update it. The moderator flag can only be set by a site administrator.');
 DEFINE('_KUNENA_PROFFOR', 'Profile for');
 DEFINE('_KUNENA_GENPROF', 'General Profile Options');
 //DEFINE('_KUNENA_PREFVIEW', 'Prefered Viewtype:');
@@ -848,8 +855,6 @@ DEFINE('_KUNENA_NOSUBS', 'No subscriptions found for this user');
 DEFINE('_KUNENA_BASICS', 'Basics');
 DEFINE('_KUNENA_BASICSFORUM', 'Basic Forum Information');
 DEFINE('_KUNENA_PARENT', 'Parent:');
-DEFINE('_KUNENA_PARENTDESC',
-    'Please note: To create a category, choose \'Top Level Category\' as a parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can be <strong>ONLY</strong> posted to forums, not categories.');
 DEFINE('_KUNENA_BASICSFORUMINFO', 'Forum name and description');
 DEFINE('_KUNENA_NAMEADD', 'Name:');
 DEFINE('_KUNENA_DESCRIPTIONADD', 'Description:');
@@ -898,7 +903,6 @@ DEFINE('_KUNENA_REVIEW', 'Review');
 DEFINE('_KUNENA_MODERATED', 'Moderated');
 DEFINE('_KUNENA_LOCKED', 'Locked');
 DEFINE('_KUNENA_CATFOR', 'Category / Forum');
-DEFINE('_KUNENA_ADMIN', 'Forum Administration');
 DEFINE('_KUNENA_CP', 'Kunena Control Panel');
 // Configuration page - Headings (Re-integrated from Joomlaboard 1.2)
 DEFINE('_COM_A_AVATAR_INTEGRATION', 'Avatar Integration');
@@ -927,8 +931,6 @@ DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST', 'Show Child Category Image');
 DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC', 'If you want to show child category small icon on your forum list, set to &quot;Yes.&quot;&#32;');
 DEFINE('_KUNENA_SHOW_ANNOUNCEMENT', 'Show Announcement');
 DEFINE('_KUNENA_SHOW_ANNOUNCEMENT_DESC', 'Set to &quot;Yes&quot; if you want to show the announcement box on your Forum home page.');
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories list?');
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on your forum category list.');
 DEFINE('_KUNENA_RECENT_POSTS', 'Recent Post Settings');
 DEFINE('_KUNENA_SHOW_LATEST_MESSAGES', 'Show Recent Posts');
 DEFINE('_KUNENA_SHOW_LATEST_MESSAGES_DESC', 'Set to &quot;Yes&quot; if you want to show recent post plugin on your forum.');

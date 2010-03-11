@@ -48,7 +48,7 @@ function list_users()
     $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
 
     // Total
-    $kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
+	$kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block =0");
     $total_results = $kunena_db->loadResult();
 
     // Search total
@@ -69,7 +69,7 @@ function list_users()
     // Select query
     $query
         = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits, g.id AS gid, g.title "
-        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id ";
+        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id  WHERE u.block=0";
 
     if ($search != "")
     {

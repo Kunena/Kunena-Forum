@@ -145,7 +145,7 @@ if ($signature)
     </tr>
     <tr>
       <td><b><?php echo _KUNENA_MYPROFILE_SIGNATURE; ?></b> </td>
-      <td><?php echo $usr_signature; ?></td>
+      <td><div class="msgsignature"><div><?php echo $usr_signature; ?></div></div></td>
     </tr>
   </tbody>
 </table>

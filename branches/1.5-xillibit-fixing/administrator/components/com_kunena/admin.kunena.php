@@ -823,7 +823,6 @@ function showConfig($option)
     $lists['userlist_avatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_avatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_avatar);
     $lists['userlist_name'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_name', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_name);
     $lists['userlist_username'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_username);
-    $lists['userlist_group'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_group', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_group);
     $lists['userlist_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_posts', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_posts);
     $lists['userlist_karma'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_karma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_karma);
     $lists['userlist_email'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_email', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_email);
@@ -1390,7 +1389,9 @@ function browseUploaded($kunena_db, $option, $type)
     $uploaded = array ();
     $uploaded_col_count = 0;
 
-    while ($file = @readdir($dir))
+    $file = @readdir($dir);
+
+    while ($file)
     {
         if ($file != '.' && $file != '..' && $file != 'index.php' && is_file($uploaded_path .DS . $file) && !is_link($uploaded_path .DS . $file))
         {
@@ -1401,6 +1402,7 @@ function browseUploaded($kunena_db, $option, $type)
             $uploaded_col_count++;
         //}
         }
+        $file = @readdir($dir);
     }
 
     @closedir ($dir);

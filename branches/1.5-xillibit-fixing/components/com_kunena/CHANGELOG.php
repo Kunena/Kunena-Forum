@@ -48,6 +48,10 @@ Kunena 1.5.10
 ^ [#19915] Backend: Show Avatar on Categories list option misleading
 # [#19916] Fix broken layout with too long strings
 # [#19917] fix broken ftp write function in kunena.file.class.php
+- [#19918] Remove group from userlist / user profile
+# [#19919] Configuration option "Show join date" has no effect
+# [#19920] Fix regression in uploaded files and images browser
+# [#19903] Remove remaining deprecated split(), eregi(), ereg() function in front end
 
 11-Mar-2010 Matias
 # [#19900] PHP 5.3 Deprecated: Assigning the return value of new by reference

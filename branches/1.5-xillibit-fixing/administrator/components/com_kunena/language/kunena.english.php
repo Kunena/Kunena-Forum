@@ -830,7 +830,7 @@ DEFINE('_KUNENA_NOUSERSFOUND', 'No user profiles found.');
 DEFINE('_KUNENA_ADDMOD', 'Add Moderator to');
 DEFINE('_KUNENA_NOMODSAV', 'There are no possible moderators found. Read the note below.');
 DEFINE('_KUNENA_NOTEUS',
-    'NOTE: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, give a user a moderator flag and then go to <a href="index2.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select their profile and update it. The moderator flag can only be set by a site administrator.');
+    'NOTE: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, give a user a moderator flag and then go to <a href="index.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select their profile and update it. The moderator flag can only be set by a site administrator.');
 DEFINE('_KUNENA_PROFFOR', 'Profile for');
 DEFINE('_KUNENA_GENPROF', 'General Profile Options');
 //DEFINE('_KUNENA_PREFVIEW', 'Prefered Viewtype:');
@@ -1214,7 +1214,6 @@ DEFINE('_COM_A_TEMPLATE', 'Template');
 DEFINE('_COM_A_TEMPLATE_DESC', 'Choose the template to use.');
 DEFINE('_COM_A_TEMPLATE_IMAGE_PATH', 'Image Sets');
 DEFINE('_COM_A_TEMPLATE_IMAGE_PATH_DESC', 'Choose the images set template to use.');
-DEFINE('_PREVIEW_CLOSE', 'Close this window');
 //==========================================
 //new in 1.0 Stable
 DEFINE('_COM_A_POSTSTATSBAR', 'Use Posts Statistics Bar');

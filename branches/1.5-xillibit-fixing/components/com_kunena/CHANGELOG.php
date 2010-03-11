@@ -39,6 +39,9 @@ Kunena 1.5.10
 # [#19904] Fix for wrong link in profilebox for my profile when using AUP integration
 # [#19905] Fix for Moderation: Merge shows extra slashes in topic list
 # [#19907] Fix in Kunena Administration: some wrong translations
+# [#19908] Moderators list is always using username, regardless of configuration option
+# [#19909] Debug does not show MySQL error in trace
+# [#19912] Deprecated links to index2.php
 
 21-Mar-2010 Matias
 # [#19900] PHP 5.3 Deprecated: Assigning the return value of new by reference

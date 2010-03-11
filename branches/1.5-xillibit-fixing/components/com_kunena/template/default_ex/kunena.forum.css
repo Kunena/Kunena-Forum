@@ -741,6 +741,8 @@ VIEW PAGE
 	border:1px solid #BFC3C6;
 	padding: 1px;
 	margin:5px;
+	max-width: 100px;
+	max-height: 150px;
 }
 #Kunena div.viewcover {
 	border:1px solid #BFC3C6;

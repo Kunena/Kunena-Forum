@@ -105,7 +105,7 @@ span.view-username a:visited{font-weight:bold;text-decoration: none;color:#35799
 span.view-username a:hover{color:#000000;text-decoration: none;}
 span.msgusertype{font-weight:normal;text-decoration: none;text-decoration: none;font-style:italic;}
 span.fb_avatar{}
-span.fb_avatar img{border:1px solid #CCCCCC;padding: 1px;margin:5px;}
+span.fb_avatar img{border:1px solid #CCCCCC;padding: 1px;margin:5px;max-width: 100px;max-height: 150px;}
 div.viewcover{border:1px solid #CCCCCC;background: #DDDDDD;color:#333333;text-align: center;margin:2px 5px;}
 span.msgtitle,span.msgtitle_new{font-weight:bold;text-decoration: none;background: url(images/msgtitleicon.gif) no-repeat left center;padding-left:25px;line-height:26px;}
 span.msgtitle_new{background: url(images/msgtitlenew.gif) no-repeat left center;}

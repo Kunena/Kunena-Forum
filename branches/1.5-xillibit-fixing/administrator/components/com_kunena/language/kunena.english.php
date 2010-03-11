@@ -30,6 +30,11 @@ DEFINE('_KUNENA_NOTEUS',
     'NOTE: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, give a user a moderator flag and then go to <a href="index.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select their profile and update it. The moderator flag can only be set by a site administrator.');
 DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on Categories view, Recent discussions and My Discussions.');
 DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');
+DEFINE('_KUNENA_SORTID', 'Sort by Userid');
+DEFINE('_KUNENA_SORTMOD', 'Sort by Moderators');
+DEFINE('_KUNENA_SORTNAME', 'Sort by Names');
+DEFINE('_KUNENA_SORTREALNAME', 'Sort By Real Names');
+define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The thread has been deleted, so the pdf can not be generated');
 
 // 1.5.8
 
@@ -829,9 +834,6 @@ DEFINE('_KUNENA_PATH', 'Path:');
 DEFINE('_KUNENA_CSSERROR', 'Please note: The CSS template file must be writable to save changes.');
 // User Management
 DEFINE('_KUNENA_FUM', 'Kunena User Profile Manager');
-DEFINE('_KUNENA_SORTID', 'sort by userid');
-DEFINE('_KUNENA_SORTMOD', 'sort by moderators');
-DEFINE('_KUNENA_SORTNAME', 'sort by names');
 DEFINE('_KUNENA_VIEW', 'View');
 DEFINE('_KUNENA_NOUSERSFOUND', 'No user profiles found.');
 DEFINE('_KUNENA_ADDMOD', 'Add Moderator to');

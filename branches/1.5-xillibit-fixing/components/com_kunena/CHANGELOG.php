@@ -52,6 +52,11 @@ Kunena 1.5.10
 # [#19919] Configuration option "Show join date" has no effect
 # [#19920] Fix regression in uploaded files and images browser
 # [#19903] Remove remaining deprecated split(), eregi(), ereg() function in front end
+# [#19922] URLs using HTTPS protocol are not working in img tag
+# [#19923] rss image isn't always displayed in config backend
+# [#19925] Fix: Super Admin in the User List
+# [#19927] Add max avatar size into user profiles
+^ [#19928] New standard "Registered Users Only" error message
 
 11-Mar-2010 Matias
 # [#19900] PHP 5.3 Deprecated: Assigning the return value of new by reference

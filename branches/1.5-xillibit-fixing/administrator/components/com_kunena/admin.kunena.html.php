@@ -784,7 +784,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <img src = "/images/M_images/livemarks.png"/> <?php echo _COM_A_RSS_DESC ?>
+                         <img src = "<?php echo JURI::root();?>/images/M_images/livemarks.png"/> <?php echo _COM_A_RSS_DESC ?>
                     </td>
                 </tr>
 
@@ -2520,17 +2520,12 @@ echo $pane->endPane();
 
 
                     <td nowrap align = "right"><?php echo _COM_A_DISPLAY; ?>
-                    </td>
-
-                    <td nowrap align = "right">
 <?php echo $pageNavSP->getLimitBox(); ?>
                     </td>
 
                     <td nowrap align = "right">
 <?php echo _USRL_SEARCH_BUTTON; ?>:
-                    </td>
 
-                    <td nowrap align = "right">
                         <input type = "text" name = "search" value = "<?php echo $search;?>" class = "inputbox" onChange = "document.adminForm.submit();"/>
                     </td>
                 </tr>
@@ -2539,8 +2534,8 @@ echo $pane->endPane();
 
 
                     <td colspan = "4" nowrap>
-                        :: <a href = "index.php?option=com_kunena&task=profiles&order=0"><?php
-    echo _KUNENA_SORTID; ?></a> :: <a href = "index.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> :: <a href = "index.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
+                        <a href = "index.php?option=com_kunena&task=profiles&order=0"><?php
+    echo _KUNENA_SORTID; ?></a> | <a href = "index.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> | <a href = "index.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a> | <a href = "index.php?option=com_kunena&task=profiles&order=3"><?php echo _KUNENA_SORTREALNAME; ?></a>
                     </td>
                 </tr>
             </table>
@@ -2644,7 +2639,7 @@ echo $pane->endPane();
     <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
-        <th align = "center" colspan = "7"> <?php
+        <th align = "center" colspan = "8"> <?php
         echo $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?>
         </th>
     </tr>

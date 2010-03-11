@@ -177,7 +177,7 @@ switch ($task) {
 		$app =& JFactory::getApplication();
 
 		//numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
-		$filename = explode('\.', $_FILES['avatar']['name']);
+		$filename = explode('.', $_FILES['avatar']['name']);
 		$numExtensions = (count($filename)) - 1;
 		$avatarName = $filename[0];
 		$avatarExt = $filename[$numExtensions];
@@ -588,7 +588,6 @@ if ($fbConfig->allowavatarupload)
 }
 else
 {
- echo '<b>'. _COM_A_REGISTERED_ONLY.'</b><br />';
-   echo _FORUM_UNAUTHORIZIED2 ;
+	 $app->enqueueMessage ( _COM_A_REGISTERED_ONLY . '<br/>' . _FORUM_UNAUTHORIZIED2, 'error' );
 }
 ?>

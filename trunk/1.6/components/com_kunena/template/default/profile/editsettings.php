@@ -30,7 +30,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 					echo JHTML::_('select.genericlist', $mesordering, 'messageordering', 'class="inputbox" size="1"', 'value', 'text', $userprofile->profile->ordering);
 			?></td>
 		</tr>
-		<tr  class="ksectiontableentry2">
+		<tr  class="ksectiontableentry1">
 			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_USER_HIDEEMAIL'); ?></td>
 			<td><?php
 					$hideEmail[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));

@@ -17,6 +17,7 @@ if (empty($userprofile->profile->avatar)) {
 } else {
 	$userprofile->profile->avatar = KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $userprofile->profile->avatar;
 }
+$i=0;
 ?>
 
 <h1><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?></h1>
@@ -25,17 +26,34 @@ if (empty($userprofile->profile->avatar)) {
 	class="<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
 	?>" id="kflattable">
-	<tbody>
-		<tr class="ksectiontableentry2">
-			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_MYPROFILE_MYAVATAR'); ?></td><td><div class="avatar-lg"><img src="<?php echo $userprofile->profile->avatar; ?>" alt=""/></div></td>
+<?php if ($userprofile->profile->avatar): ?>
+		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
+			<td class="td-0 km center">
+				<label for="kavatar_delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE');?></label>
+			</td><td>
+				<input id="kavatar_delete" type="radio" name="action" value="delete"/>
+			</td>
 		</tr>
-		<tr class="ksectiontableentry2">
-			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_SET_NEW_AVATAR'); ?></td><td><input name="kavatar" type="file"></td>
+<?php endif; ?>
+<?php if ($this->_config->allowavatarupload):?>
+		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
+			<td class="td-0 km center">
+				<label for="kavatar_upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
+			</td><td>
+				<input id="kavatar_upload" type="radio" name="action" value="upload" /> <input type="file" class="button" name="avatar" />
+			</td>
 		</tr>
-		<tr class="ksectiontableentry2">
-			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_CHOOSE_AVATAR'); ?></td><td></td>
+<?php endif; ?>
+<?php if ($this->_config->allowavatargallery):?>
+		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
+			<td class="td-0 km center">
+				<label for="kavatar_gallery"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
+			</td><td>
+				<input id="kavatar_gallery" type="radio" name="action" value="gallery" />
+			</td>
 		</tr>
-		<tr class="ksectiontableentry2">
+<?php endif; ?>
+		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td class="td-0 km center" colspan="2"><input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_GEN_SUBMIT'); ?>" name="Submit" /></td>
 		</tr>
 	</tbody>

@@ -19,15 +19,7 @@ if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 	$kunena_app = & JFactory::getApplication ();
 	$do = JRequest::getVar("do", "");
 
-	if ( $do == 'editprofile' ) {
-		CKunenaTools::loadTemplate('/profile/editprofile.php');
-	} elseif ( $do == 'editavatar' ) {
-		CKunenaTools::loadTemplate('/profile/editavatar.php');
-	} elseif ( $do == 'editsettings' ) {
-		CKunenaTools::loadTemplate('/profile/editsettings.php');
-	} elseif ( $do == 'edituser' ) {
-		CKunenaTools::loadTemplate('/profile/edituser.php');
-	} elseif ( $do == 'saveprofile' ) {
+	if ( $do == 'saveprofile' ) {
 
 		$personnaltext = JRequest::getVar ( 'personnaltext', '' );
 		$birthdate1 = JRequest::getInt ( 'birthdate1', '' );

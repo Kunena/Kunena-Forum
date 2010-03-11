@@ -13,25 +13,12 @@ defined( '_JEXEC' ) or die();
 $kunena_config =& CKunenaConfig::getInstance();
 ?>
 
-<h1><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->user->name; ?> (<?php echo $this->user->username; ?>)</h1>
-
-<div class="kbt_cvr1">
-<div class="kbt_cvr2">
-<div class="kbt_cvr3">
-<div class="kbt_cvr4">
-<div class="kbt_cvr5">
-
+<h1><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE'); ?></h1>
 <form action="<?php echo CKunenaLink::GetProfileSettingsURL($kunena_config, $this->user->id, '', $rel='nofollow', $redirect=false,'saveuser'); ?>" method="post" name="kprofileEditing">
 <table
 	class="<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
 	?>" id="kflattable">
-	<thead>
-		<tr>
-			<th
-				colspan="2"><?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONAL_INFO'); ?></th>
-		</tr>
-	</thead>
 	<tbody>
 		<!-- General settings -->
 		<tr class="ksectiontableentry2">
@@ -58,11 +45,4 @@ $kunena_config =& CKunenaConfig::getInstance();
 		</tr>
 	</tbody>
 </table>
-
 </form>
-
-</div>
-</div>
-</div>
-</div>
-</div>

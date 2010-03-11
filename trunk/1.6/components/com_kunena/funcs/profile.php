@@ -17,13 +17,14 @@ class CKunenaProfile {
 	public $profile = null;
 	public $online = null;
 
-	function __construct($userid) {
+	function __construct($userid, $do='') {
 		require_once (KUNENA_PATH_LIB . DS . "kunena.user.class.php");
 
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = CKunenaConfig::getInstance ();
 		$this->my = JFactory::getUser ();
+		$this->do = $do;
 
 		if (!$userid) {
 			$this->user = JFactory::getUser();
@@ -39,7 +40,6 @@ class CKunenaProfile {
 			check_dberror ( 'Unable to create user profile.' );
 			$this->profile = CKunenaUserprofile::getInstance($this->user->id, true);
 		}
-		$this->profile->store();
 		$this->avatarurl = KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $this->profile->avatar;
 		$this->personalText = CKunenaTools::parseText($this->profile->personalText);
 		$this->signature = CKunenaTools::parseBBCode($this->profile->signature);
@@ -75,15 +75,60 @@ class CKunenaProfile {
 		$this->online = ($lastseen + $timeout) > time ();
 	}
 
-	function displaySummary() {
-		$user = JFactory::getUser();
-		if ($user->id != $this->user->id)
-		{
-			$this->profile->uhits++;
-			$this->profile->store();
-		}
+	/**
+	* Escapes a value for output in a view script.
+	*
+	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
+	* {@link $_encoding} setting.
+	*
+	* @param  mixed $var The output to escape.
+	* @return mixed The escaped value.
+	*/
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
 
-		CKunenaTools::loadTemplate('/profile/summary.php');
+	function displayEditUser() {
+		$this->user = JFactory::getUser();
+
+		// check to see if Frontend User Params have been enabled
+		$usersConfig = JComponentHelper::getParams( 'com_users' );
+		$check = $usersConfig->get('frontend_userparams');
+
+		if ($check == 1 || $check == NULL)
+		{
+			if($this->user->authorize( 'com_user', 'edit' )) {
+				$this->params		= $this->user->getParameters(true);
+			}
+		}
+		CKunenaTools::loadTemplate('/profile/edituser.php');
+	}
+
+	function displayEditProfile() {
+		$bd = @explode("-" , $this->profile->birthdate);
+
+		$this->birthdate["year"] = $bd[0];
+		$this->birthdate["month"] = $bd[1];
+		$this->birthdate["day"] = $bd[2];
+
+		$this->genders[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN'));
+		$this->genders[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_MYPROFILE_GENDER_MALE'));
+		$this->genders[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_MYPROFILE_GENDER_FEMALE'));
+
+		CKunenaTools::loadTemplate('/profile/editprofile.php');
+	}
+
+	function displayEditAvatar() {
+		if (!$this->_config->allowavatar) return;
+		$this->gallery='';
+		$path = KUNENA_PATH_UPLOADED .DS. 'avatars/gallery/' . $this->gallery;
+		//$this->galleryimg = $this->getAvatarGallery($path);
+		CKunenaTools::loadTemplate('/profile/editavatar.php');
+	}
+
+	function displayEditSettings() {
+		CKunenaTools::loadTemplate('/profile/editsettings.php');
 	}
 
 	function displayUserPosts()
@@ -136,8 +181,37 @@ class CKunenaProfile {
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
+	function displayTab() {
+		switch ($this->do) {
+			case 'edit':
+				$user = JFactory::getUser();
+				if ($user->id == $this->user->id) CKunenaTools::loadTemplate('/profile/edittab.php');
+				break;
+			default:
+				CKunenaTools::loadTemplate('/profile/usertab.php');
+		}
+	}
+
+	function displaySummary() {
+		$user = JFactory::getUser();
+		if ($user->id != $this->user->id)
+		{
+			$this->profile->uhits++;
+			$this->profile->store();
+		}
+
+		CKunenaTools::loadTemplate('/profile/summary.php');
+	}
+
+	function displayEdit() {
+		$user = JFactory::getUser();
+		if ($user->id != $this->user->id) return;
+
+		CKunenaTools::loadTemplate('/profile/edit.php');
+	}
+
 	function display() {
 		if (!$this->user->id) return;
-		$this->displaySummary();
+		else $this->displaySummary();
 	}
 }

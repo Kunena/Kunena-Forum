@@ -1157,7 +1157,8 @@ div#kheader h1 a:hover {
 */
 
 
-#Kunena h1 {
+#Kunena h1,
+#Kunena h2 {
 	background: #5388B4;
 	text-align: left;
 	border-bottom:2px solid #D9D9D9;
@@ -1170,6 +1171,17 @@ div#kheader h1 a:hover {
 	color: #FFFFFF;
 	margin-top: 5px;
 	margin-bottom: 0px;
+}
+
+#Kunena h1 a:link,
+#Kunena h1 a:active,
+#Kunena h1 a:visited {
+	color: #FFFFFF;
+}
+
+#Kunena h1 span.right {
+	float: right;
+	margin: 0 10px;
 }
 
 #Kunena div.ktitle_cover {

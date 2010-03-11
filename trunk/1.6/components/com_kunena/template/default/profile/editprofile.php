@@ -15,25 +15,12 @@ $userprofile = new CKunenaProfile($this->user->id);
 $kunena_config =& CKunenaConfig::getInstance();
 ?>
 
-<h1><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->user->name; ?> (<?php echo $this->user->username; ?>)</h1>
-
-<div class="kbt_cvr1">
-<div class="kbt_cvr2">
-<div class="kbt_cvr3">
-<div class="kbt_cvr4">
-<div class="kbt_cvr5">
-
+<h1><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE'); ?></h1>
 <form action="<?php echo CKunenaLink::GetProfileSettingsURL($kunena_config, $this->user->id, '', $rel='nofollow', $redirect=false,'saveprofile'); ?>" method="post" name="kprofileEditing">
 <table
 	class="<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
 	?>" id="kflattable">
-	<thead>
-		<tr>
-			<th
-				colspan="2"><?php echo JText::_('COM_KUNENA_MYPROFILE_EDIT_KUNENA'); ?></th>
-		</tr>
-	</thead>
 	<tbody>
 		<!-- Kunena specific settings -->
 		<tr class="ksectiontableentry1">
@@ -128,12 +115,5 @@ $kunena_config =& CKunenaConfig::getInstance();
 			<td class="td-0 km center" colspan="2"><input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_GEN_SUBMIT'); ?>" name="Submit" /></td>
 		</tr>
 	</tbody>
-
 </table>
 </form>
-
-</div>
-</div>
-</div>
-</div>
-</div>

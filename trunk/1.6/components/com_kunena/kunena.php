@@ -404,7 +404,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'fbprofile' :
 		case 'profile' :
 			require_once ( KUNENA_PATH_FUNCS .DS. 'profile.php');
-			$page = new CKunenaProfile($userid);
+			$page = new CKunenaProfile($userid, $do);
 			$page->display();
 
 			break;

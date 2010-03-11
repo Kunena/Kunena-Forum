@@ -197,7 +197,7 @@ class CKunenaLink
         return $iplink;
     }
 
-    function GetMyProfileLink($kunena_config, $userid, $name, $rel='nofollow')
+    function GetMyProfileLink($kunena_config, $userid, $name, $rel='nofollow', $do='')
     {
     	$kunena_config =& CKunenaConfig::getInstance();
     	if($kunena_config->fb_profile == 'jomsocial' || $kunena_config->fb_profile == 'cb' || $kunena_config->fb_profile == 'aup')
@@ -206,12 +206,13 @@ class CKunenaLink
     	}
     	else
     	{
-    		return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=profile', $name, '', $rel);
+    		$do_do = $do != '' ? '&do='.$do : '';
+    		return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&amp;func=profile'.$do_do, $name, '', $rel);
     	}
     }
 
 	//do only for kunena own profile!
-    function GetMyProfileURL($kunena_config, $userid='', $name='', $rel='nofollow', $redirect=false,$do='')
+    function GetMyProfileURL($kunena_config, $userid='', $name='', $rel='nofollow', $redirect=false, $do='')
     {
     	$kunena_config =& CKunenaConfig::getInstance();
     	if($kunena_config->fb_profile == 'jomsocial' || $kunena_config->fb_profile == 'cb' || $kunena_config->fb_profile == 'aup')

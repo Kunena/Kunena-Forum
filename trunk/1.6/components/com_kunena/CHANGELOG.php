@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+11-Mar-2010 Matias
+^ [#19383] Revise Profile Page: Combine all edit actions under tabs
+
 10-Mar-2010 Matias
 # [#19288] Fix regression: User gender, birthdate, location and website missing from message info
 # [#19233] Show Kunena login screen to visitors, if forum is for registered users only

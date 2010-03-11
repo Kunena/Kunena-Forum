@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.5.10
 
+11-Mar-2010 Xillibit
+# [#19902] Remove extra { which causing issues with avatar uploading
+# [#19903] Remove remaining deprecated split() function in backend, add dummy.jpeg file
+# [#19904] Fix for wrong link in profilebox for my profile when using AUP integration
+# [#19905] Fix for Moderation: Merge shows extra slashes in topic list
+# [#19907] Fix in Kunena Administration: some wrong translations
+
 21-Mar-2010 Matias
 # [#19900] PHP 5.3 Deprecated: Assigning the return value of new by reference
 

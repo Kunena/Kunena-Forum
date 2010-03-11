@@ -849,7 +849,7 @@ DEFINE('_KUNENA_BASICS', 'Basics');
 DEFINE('_KUNENA_BASICSFORUM', 'Basic Forum Information');
 DEFINE('_KUNENA_PARENT', 'Parent:');
 DEFINE('_KUNENA_PARENTDESC',
-    'Please note: To create a category, choose \'Top Level Category\' as a parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can <strong>NOT</strong> be posted to forums, not categories.');
+    'Please note: To create a category, choose \'Top Level Category\' as a parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can be <strong>ONLY</strong> posted to forums, not categories.');
 DEFINE('_KUNENA_BASICSFORUMINFO', 'Forum name and description');
 DEFINE('_KUNENA_NAMEADD', 'Name:');
 DEFINE('_KUNENA_DESCRIPTIONADD', 'Description:');
@@ -898,7 +898,7 @@ DEFINE('_KUNENA_REVIEW', 'Review');
 DEFINE('_KUNENA_MODERATED', 'Moderated');
 DEFINE('_KUNENA_LOCKED', 'Locked');
 DEFINE('_KUNENA_CATFOR', 'Category / Forum');
-DEFINE('_KUNENA_ADMIN', 'Kunena Administration');
+DEFINE('_KUNENA_ADMIN', 'Forum Administration');
 DEFINE('_KUNENA_CP', 'Kunena Control Panel');
 // Configuration page - Headings (Re-integrated from Joomlaboard 1.2)
 DEFINE('_COM_A_AVATAR_INTEGRATION', 'Avatar Integration');

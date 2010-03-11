@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.10
 
+21-Mar-2010 Matias
+# [#19900] PHP 5.3 Deprecated: Assigning the return value of new by reference
+
 31-Jan-2010 fxstein
 ^ [#19600] Updated version info
 + [#19601] Add KProfiler and JFirePHP support

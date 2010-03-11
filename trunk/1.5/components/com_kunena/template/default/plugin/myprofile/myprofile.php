@@ -528,7 +528,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
                     $row->username = trim($row->username);
 
                     $file = $app->getPath('com_xml', 'com_users');
-                    $params = &new JParameter($row->params, $file, 'component');
+                    $params = new JParameter($row->params, $file, 'component');
 
                     if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/myprofile/myprofile_userdetails_form.php'))
                     {

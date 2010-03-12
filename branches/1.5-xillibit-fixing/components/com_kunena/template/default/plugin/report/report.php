@@ -96,21 +96,13 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
     $message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
     $message = strtr($message, array('&#32;'=>''));
 
-    //get category moderators
-    $kunena_db->setQuery("SELECT userid FROM #__fb_moderation WHERE catid={$row->catid}");
-    $mods = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load moderators.");
-
-    //get admins
-    $kunena_db->setQuery("SELECT id FROM #__users WHERE gid IN (24, 25)");
-    $admins = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load admin.");
+    $emailToList = CKunenaTools::getEMailToList($row->catid, $row->thread, false,$fbConfig->mailmod, $fbConfig->mailadmin, $kunena_my->id);
 
     switch ($type)
     {
         default:
         case '0':
-            SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins);
+            SendReportToMail($sender, $subject, $message, $emailToList);
 
             break;
 
@@ -137,7 +129,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
     echo '</div>';
 }
 
-function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
+function SendReportToMail($sender, $subject, $message, $emailToList) {
     $fbConfig =& CKunenaConfig::getInstance();
     $kunena_db =& JFactory::getDBO();
     $app = & JFactory::getApplication ();
@@ -152,12 +144,9 @@ function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins)
      $subject = JMailHelper::cleanSubject( $subject );
      $message = JMailHelper::cleanBody($message);
 
-    //send report to site admins
-    foreach ($admins as $admin) {
-        $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
-        $email = $kunena_db->loadResult();
-        if (! $email || ! JMailHelper::isEmailAddress($email)) continue;
-        JUtility::sendMail($fbConfig->email, $sender, $email, $subject, $message);
+     foreach ( $emailToList as $emailTo ) {
+     	if (! $emailTo->email || ! JMailHelper::isEmailAddress($emailTo->email)) continue;
+     	JUtility::sendMail($fbConfig->email, $sender, $emailTo->email, $subject, $message);
         }
     }
 

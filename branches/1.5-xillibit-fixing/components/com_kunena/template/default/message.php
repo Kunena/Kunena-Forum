@@ -336,10 +336,6 @@ if ($fbConfig->fb_profile == 'cb')
                             <?php
                             //Check that the user is an admin to display the ip in messages
                             $check = '0';
-                            $kunena_acl = &JFactory::getACL();
-							$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
-   							$aro_group->id = $aro_group->id;
-    						$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
                             if($fbConfig->hide_ip){
                             	if ( $is_admin ) {
 									$check = 1;

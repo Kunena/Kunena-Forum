@@ -42,6 +42,9 @@ Kunena 1.5.10
 # [#19934] Keep topic icon after editing message
 ^ [#19938] Make jomSocial Activity stream integration configurable
 ^ [#19939] Improve sending moderator/subscription mail (check email addresses, cleanup contents, etc)
+# [#19940] Moderator and subscribed to topic: user will receive two emails
+# [#19941] Flood protection should not block Subscribe and Favorite
+^ [#19942] Put a redirect when an user try to access the reply function when there is not logged
 
 11-Mar-2010 Xillibit
 # [#19902] Remove extra { which causing issues with avatar uploading

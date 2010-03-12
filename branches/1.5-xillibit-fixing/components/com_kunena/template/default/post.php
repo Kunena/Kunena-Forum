@@ -69,9 +69,28 @@ $resubject = JRequest::getVar('resubject', '', 'REQUEST', 'string');
 $attachfile 	= JRequest::getVar('attachfile', NULL, 'FILES', 'array');
 $attachimage 	= JRequest::getVar('attachimage', NULL, 'FILES', 'array');
 
+//ip for floodprotection, post logging, subscriptions, etcetera
+$ip = $_SERVER ["REMOTE_ADDR"];
+
+//flood protection
+$fbConfig->floodprotection = (int)$fbConfig->floodprotection;
+
+// Flood protection
+if ($fbConfig->floodprotection && ($action == "post" || $do == 'quote' || $do == 'reply') && ! $is_admin) {
+	$kunena_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'" );
+ 	$lastPostTime = $kunena_db->loadResult ();
+	check_dberror ( "Unable to load max time for current request from IP: $ip" );
+
+	if ($lastPostTime + $fbConfig->floodprotection > $systime) {
+		echo _POST_TOPIC_FLOOD1 . ' ' . $fbConfig->floodprotection . ' ' . _POST_TOPIC_FLOOD2 . '<br />';
+ 	  	echo _POST_TOPIC_FLOOD3;
+ 	  	return;
+	}
+}
+
 // Begin captcha
 if ($fbConfig->captcha == 1 && $kunena_my->id < 1) {
-    $number = $_POST['txtNumber'];
+    $number = JRequest::getVar ( 'txtNumber', '', 'POST' );
 
     if ($message != NULL)
     {
@@ -93,41 +112,20 @@ if ($fbConfig->captcha == 1 && $kunena_my->id < 1) {
 
 // Finish captcha
 
-//flood protection
-$fbConfig->floodprotection = (int)$fbConfig->floodprotection;
-
-if ($fbConfig->floodprotection != 0)
-{
-    $kunena_db->setQuery("SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'");
-    $kunena_db->query() or trigger_dberror("Unable to load max time for current request from IP: $ip");
-    $lastPostTime = $kunena_db->loadResult();
-}
-
-if (($fbConfig->floodprotection != 0 && ((($lastPostTime + $fbConfig->floodprotection) < $systime) || $do == "edit" || $is_admin)) || $fbConfig->floodprotection == 0)
-{
-    //Let's find out who we're dealing with if a registered user wants to make a post
-    if ($kunena_my->id)
-    {
-        $my_name = $fbConfig->username ? $kunena_my->username : $kunena_my->name;
-        $user_email = $kunena_my->email;
-        $registeredUser = 1;
+//Let's find out who we're dealing with if a registered user wants to make a post
+if ($kunena_my->id) {
+	$my_name = $fbConfig->username ? $kunena_my->username : $kunena_my->name;
+    $user_email = $kunena_my->email;
+    $registeredUser = 1;
 	if ($is_Moderator) {
 		if (!empty($fb_authorname)) $my_name = $fb_authorname;
 		if(!empty($email))
 			$user_email = $email;
 	}
-    } else {
-        $my_name = $fb_authorname;
+} else {
+	$my_name = $fb_authorname;
 	$user_email = (isset($email) && !empty($email))? $email:'';
 	$registeredUser = 0;
-    }
-}
-else
-{
-    echo _POST_TOPIC_FLOOD1;
-    echo $fbConfig->floodprotection . " " . _POST_TOPIC_FLOOD2 . "<br />";
-    echo _POST_TOPIC_FLOOD3;
-    return;
 }
 
 //Now find out the forumname to which the user wants to post (for reference only)
@@ -439,60 +437,43 @@ $catName = $objCatInfo->name;
 										}
 										// end insertion AlphaUserPoints
 
+										//clean up the message for review
+										$mailmessage = smile::purify ( stripslashes ( $message ) );
+
+										//get all subscriptions and moderators
+		  	                            $emailToList = CKunenaTools::getEMailToList($catid, $querythread, $fbConfig->allowsubscriptions && !$holdPost,
+                                           $fbConfig->mailmod, $fbConfig->mailadmin, $kunena_my->id);
+
                                         //Now manage the subscriptions (only if subscriptions are allowed)
-                                        if ($fbConfig->allowsubscriptions == 1 && $holdPost == 0)
-                                        { //they're allowed
-                                            //get the proper user credentials for each subscription to this topic
+                                        if (count($emailToList)) {
+                                        	if (! $fbConfig->email  || ! JMailHelper::isEmailAddress($fbConfig->email)) {
+                                            	$app->enqueueMessage (_KUNENA_EMAIL_INVALID, 'error' );
+                                            } else {
 
-                                            //clean up the message
-                                            $mailmessage = smile::purify($message);
-                                            $kunena_db->setQuery("SELECT * FROM #__fb_subscriptions AS a"
-                                            . " LEFT JOIN #__users AS u ON a.userid=u.id "
-                                            . " WHERE u.block='0' AND a.thread='{$querythread}'");
+                                            	$mailsender = JMailHelper::cleanAddress( stripslashes ( $board_title ) . " " . _GEN_FORUM );
+                                               	$mailsubject = JMailHelper::cleanSubject("[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $catName ) . ")");
 
-                                            $subsList = $kunena_db->loadObjectList();
-                                            	check_dberror("Unable to load subscriptions.");
+												foreach ( $emailToList as $emailTo ) {
+													if (! $emailTo->email || ! JMailHelper::isEmailAddress($emailTo->email)) continue;
 
-                                            if (count($subsList) > 0)
-                                            {                                                     //we got more than 0 subscriptions
-                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
-
-												$_catobj = new jbCategory($kunena_db, $catid);
-                                                foreach ($subsList as $subs)
-                                                {
-                                                	if (! $fbConfig->email  || ! JMailHelper::isEmailAddress($fbConfig->email)) {
-                                                		$app->enqueueMessage (_KUNENA_EMAIL_INVALID, 'error' );
-                                                	} else {
-                                                		$mailsender = JMailHelper::cleanAddress( stripslashes ( $board_title ) . " " . _GEN_FORUM );
-                                                		$mailsubject = JMailHelper::cleanSubject("[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $catName ) . ")");
-                                                	}
-
-                                                	if (! $subs->email || ! JMailHelper::isEmailAddress($subs->email)) continue;
-
-													//check for permission
-													if ($subs->id) {
-														$_arogrp = $kunena_acl->getAroGroup($subs->id);
-														$_arogrp->group_id = $_arogrp->id;
-														$_isadm = (strtolower($_arogrp->name) == 'super administrator' || strtolower($_arogrp->name) == 'administrator');
-													}
-														if (!fb_has_moderator_permission($kunena_db, $_catobj, $subs->id, $_isadm)) {
-															$allow_forum = array();
-															if (!fb_has_read_permission($_catobj, $allow_forum, $_arogrp->group_id, $kunena_acl)) {
-																//maybe remove record from subscription list?
-																continue;
-														}
+													if ($emailTo->subscription) {
+														$msg1 = JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1');
+														$msg2 = JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2');
+													} else {
+														$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
+														$msg2 = JText::_('COM_KUNENA_POST_EMAIL_MOD2');
 													}
 
-                                                    $msg = "$subs->name,\n\n";
-                                                    $msg .= trim($_COM_A_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
+                                                    $msg = "$emailTo->name,\n\n";
+                                                    $msg .=  $msg1 . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
                                                     $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
                                                     $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
-                                                    $msg .= "$_COM_A_NOTIFICATION2\n";
+                                                    $msg .= $msg2 . "\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($fbConfig->mailfull == 1) {
                                                         $msg .= _GEN_MESSAGE.":\n-----\n";
-                                                        $msg .= stripslashes($mailmessage);
+                                                        $msg .= $mailmessage;
                                                         $msg .= "\n-----";
                                                     }
                                                     $msg .= "\n\n";
@@ -501,75 +482,13 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
                                                     $msg = JMailHelper::cleanBody($msg);
 
-                                                    if ($ip != "127.0.0.1" && $kunena_my->id != $subs->id) { //don't mail yourself
+                                                    if ($ip != "127.0.0.1") { //don't mail yourself
                                                         JUtility::sendMail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
                                                     }
                                                 }
-                                                unset($_catobj);
                                             }
                                         }
 
-                                        //Now manage the mail for moderator or admins (only if configured)
-                                        if($fbConfig->mailmod=='1'
-                                        || $fbConfig->mailadmin=='1')
-                                        { //they're configured
-                                            //get the proper user credentials for each moderator for this forum
-                                            $sql = "SELECT * FROM #__users AS u";
-                                            if($fbConfig->mailmod==1) {
-                                                $sql .= " LEFT JOIN #__fb_moderation AS a";
-                                                $sql .= " ON a.userid=u.id";
-                                                $sql .= "  AND a.catid='{$catid}'";
-                                            }
-                                            $sql .= " WHERE u.block='0'";
-                                            $sql .= " AND (";
-                                            // helper for OR condition
-                                            $sql2 = '';
-                                            if($fbConfig->mailmod==1) {
-                                                $sql2 .= " a.userid IS NOT NULL";
-                                            }
-                                            if($fbConfig->mailadmin==1) {
-                                                if(strlen($sql2)) { $sql2 .= " OR "; }
-                                                $sql2 .= " u.gid IN (24, 25)";
-                                            }
-                                            $sql .= "".$sql2.")";
-
-                                            $kunena_db->setQuery($sql);
-                                            $modsList = $kunena_db->loadObjectList();
-                                            	check_dberror("Unable to load moderators.");
-
-                                            if (count($modsList) > 0)
-                                            {                                                     //we got more than 0 moderators eligible for email
-                                                require_once (KUNENA_PATH_LIB .DS. 'kunena.mail.php'); // include fbMail class for mailing
-
-                                                foreach ($modsList as $mods)
-                                                {
-                                                    $mailsender = stripslashes($board_title)." "._GEN_FORUM;
-
-                                                    $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
-
-                                                    $msg = "$mods->name,\n\n";
-                                                    $msg .= trim($_COM_A_NOT_MOD1)." ".stripslashes($board_title)." ".trim(_GEN_FORUM)."\n\n";
-                                                    $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
-                                                    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
-                                                    $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
-                                                    $msg .= "$_COM_A_NOT_MOD2\n";
-                                                    $msg .= "URL: $LastPostUrl\n\n";
-                                                    if ($fbConfig->mailfull == 1) {
-                                                        $msg .= _GEN_MESSAGE.":\n-----\n";
-                                                        $msg .= stripslashes($mailmessage);
-                                                        $msg .= "\n-----";
-                                                    }
-                                                    $msg .= "\n\n";
-                                                    $msg .= "$_COM_A_NOTIFICATION3\n";
-                                                    $msg .= "\n\n\n\n";
-                                                    $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
-
-                                                    if ($ip != "127.0.0.1" && $kunena_my->id != $mods->id) { //don't mail yourself
-                                                        JUtility::sendMail($fbConfig->email, $mailsender, $mods->email, $mailsubject, $msg);
-                                                    }
-                                                }
-                                            }
-                                        }
                                         //now try adding any new subscriptions if asked for by the poster
                                         if ($subscribeMe == 1)
                                         {
@@ -1846,6 +1765,7 @@ $catName = $objCatInfo->name;
 function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
 {
     $fbConfig =& CKunenaConfig::getInstance();
+    $app =& JFactory::getApplication();
 
     $topicLock = 0;
     if ($id != 0)
@@ -1886,16 +1806,10 @@ function hasPostPermission($kunena_db, $catid, $id, $userid, $pubwrite, $ismod)
         }
         else
         {
-            echo "<p align=\"center\">";
-            echo _POST_NO_PUBACCESS1 . "<br />";
-            echo _POST_NO_PUBACCESS2 . "<br /><br />";
+        	$app->enqueueMessage(_POST_NO_PUBACCESS1, 'notice');
+        	$app->enqueueMessage(_POST_NO_PUBACCESS2, 'notice');
 
-            if ($fbConfig->fb_profile == 'cb') {
-                echo '<a href="' . CKunenaCBProfile::getRegisterURL() . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
-            }
-            else {
-                echo '<a href="' . JRoute::_('index.php?option=com_registration&amp;view=register') . '">' . _POST_NO_PUBACCESS3 . '</a><br /></p>';
-            }
+            $app->redirect( CKunenaLink::GetShowLatestURL());
         }
 
         return 0;

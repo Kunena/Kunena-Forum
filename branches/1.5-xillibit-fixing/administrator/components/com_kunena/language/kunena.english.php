@@ -1549,7 +1549,7 @@ DEFINE('_POST_EMAIL_REGISTERED', 'your e-mail address will only be available to 
 DEFINE('_POST_LOCKED', 'locked by the administrator.');
 DEFINE('_POST_NO_NEW', 'New replies are not allowed.');
 DEFINE('_POST_NO_PUBACCESS1', 'The administrator has disabled public write access.');
-DEFINE('_POST_NO_PUBACCESS2', 'Only logged-in/registered users<br /> are allowed to contribute to the forum.');
+DEFINE('_POST_NO_PUBACCESS2', 'Only logged-in/registered users are allowed to contribute to the forum.');
 // showcat.php
 DEFINE('_SHOWCAT_NO_TOPICS', '>> There are no topics in this forum yet <<');
 DEFINE('_SHOWCAT_PENDING', 'pending message(s)');

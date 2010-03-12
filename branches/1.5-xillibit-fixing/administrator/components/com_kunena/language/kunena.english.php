@@ -38,6 +38,12 @@ define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The thread has been deleted
 //Hide Ip
 define('_KUNENA_COM_A_HIDE_IP', 'Hide IP in messages from moderators');
 define('_KUNENA_COM_A_HIDE_IP_DESC', 'Hide IP in messages from moderators and show IP¨only for administrators');
+//Joomsocial Activity Stream Integration disable/enable
+define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION', 'Enable the Jomsocial Activity Stream Integration');
+define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC', 'The activity stream shows in Jomsocial wall the latest messages or new topics posted into Kunena');
+// EMail
+define('_KUNENA_EMAIL_INVALID', 'Forum tried to send email from invalid address. Please contact site administrator!');
+define('_KUNENA_MY_EMAIL_INVALID', 'Your EMail address is invalid. Valid EMail address is required to post into this forum!');
 
 // 1.5.8
 

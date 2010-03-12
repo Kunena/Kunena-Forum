@@ -158,14 +158,15 @@ $catName = $objCatInfo->name;
                         <td>
                             <?php
                             $parent = (int)$parentid;
-
+							if ($fbConfig->askemail) jimport( 'joomla.mail.helper' );
                             if (empty($my_name)) {
                                 echo _POST_FORGOT_NAME;
                             }
                             else if ($fbConfig->askemail && empty($user_email)) {
                                 echo _POST_FORGOT_EMAIL;
-                            }
-                            else if (empty($subject)) {
+                            } else if ($fbConfig->askemail && ! JMailHelper::isEmailAddress($user_email)) {
+ 	  	                    	echo _KUNENA_MY_EMAIL_INVALID;
+                            } else if (empty($subject)) {
                                 echo _POST_FORGOT_SUBJECT;
                             }
                             else if (empty($message)) {
@@ -280,24 +281,27 @@ $catName = $objCatInfo->name;
 												// Check for permisions of the current category - activity only if public
 												if ($thisCat->getPubAccess() == 0)
 												{
-													//activity stream  - new post
-													$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $pid, 1);
 
-													$content = stripslashes($message);
-													$content = smile::smileReplace($content, 0, $fbConfig->disemoticons, $smileyList);
-													$content = nl2br($content);
+													if ($fbConfig->js_actstr_integration) {
+														//activity stream  - new post
+														$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $pid, 1);
 
-													$act = new stdClass();
-													$act->cmd    = 'wall.write';
-													$act->actor  = $kunena_my->id;
-													$act->target = 0; // no target
-													$act->title  = JText::_('{actor} '._KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1.' <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> '._KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2);
-													$act->content= $content;
-													$act->app    = 'wall';
-													$act->cid    = 0;
+														$content = stripslashes($message);
+														$content = smile::smileReplace($content, 0, $fbConfig->disemoticons, $smileyList);
+														$content = nl2br($content);
 
-													CFactory::load('libraries', 'activities');
-													CActivityStream::add($act);
+														$act = new stdClass();
+														$act->cmd    = 'wall.write';
+														$act->actor  = $kunena_my->id;
+														$act->target = 0; // no target
+														$act->title  = JText::_('{actor} '._KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1.' <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> '._KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2);
+														$act->content= $content;
+														$act->app    = 'wall';
+														$act->cid    = 0;
+
+														CFactory::load('libraries', 'activities');
+														CActivityStream::add($act);
+													}
 												}
                                             }
 
@@ -312,26 +316,28 @@ $catName = $objCatInfo->name;
 												CuserPoints::assignPoint('com_kunena.thread.reply');
 
 												// Check for permisions of the current category - activity only if public
-												if ($thisCat->getPubAccess() == 0)
+												if ($thisCat->getPubAccess() == 0 && $fbConfig->js_actstr_integration)
 												{
-													//activity stream - reply post
-													$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $thread, 1);
+													if ($fbConfig->js_actstr_integration) {
+														//activity stream - reply post
+														$JSPostLink = CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $thread, 1);
 
-													$content = stripslashes($message);
-													$content = smile::smileReplace($content, 0, $fbConfig->disemoticons, $smileyList);
-													$content = nl2br($content);
+														$content = stripslashes($message);
+														$content = smile::smileReplace($content, 0, $fbConfig->disemoticons, $smileyList);
+														$content = nl2br($content);
 
-													$act = new stdClass();
-													$act->cmd    = 'wall.write';
-													$act->actor  = $kunena_my->id;
-													$act->target = 0; // no target
-													$act->title  = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} '._KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1.' <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> '._KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2);
-													$act->content= $content;
-													$act->app    = 'wall';
-													$act->cid    = 0;
+														$act = new stdClass();
+														$act->cmd    = 'wall.write';
+														$act->actor  = $kunena_my->id;
+														$act->target = 0; // no target
+														$act->title  = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} '._KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1.' <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> '._KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2);
+														$act->content= $content;
+														$act->app    = 'wall';
+														$act->cid    = 0;
 
-													CFactory::load('libraries', 'activities');
-													CActivityStream::add($act);
+														CFactory::load('libraries', 'activities');
+														CActivityStream::add($act);
+													}
 												}
                                             }
 										}
@@ -454,6 +460,15 @@ $catName = $objCatInfo->name;
 												$_catobj = new jbCategory($kunena_db, $catid);
                                                 foreach ($subsList as $subs)
                                                 {
+                                                	if (! $fbConfig->email  || ! JMailHelper::isEmailAddress($fbConfig->email)) {
+                                                		$app->enqueueMessage (_KUNENA_EMAIL_INVALID, 'error' );
+                                                	} else {
+                                                		$mailsender = JMailHelper::cleanAddress( stripslashes ( $board_title ) . " " . _GEN_FORUM );
+                                                		$mailsubject = JMailHelper::cleanSubject("[" . stripslashes ( $board_title ) . " " . _GEN_FORUM . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $catName ) . ")");
+                                                	}
+
+                                                	if (! $subs->email || ! JMailHelper::isEmailAddress($subs->email)) continue;
+
 													//check for permission
 													if ($subs->id) {
 														$_arogrp = $kunena_acl->getAroGroup($subs->id);
@@ -467,10 +482,6 @@ $catName = $objCatInfo->name;
 																continue;
 														}
 													}
-
-                                                    $mailsender = stripslashes($board_title)." "._GEN_FORUM;
-
-                                                    $mailsubject = "[".stripslashes($board_title)." "._GEN_FORUM."] " . stripslashes($messagesubject) . " (" . stripslashes($catName) . ")";
 
                                                     $msg = "$subs->name,\n\n";
                                                     $msg .= trim($_COM_A_NOTIFICATION1)." ".stripslashes($board_title)." "._GEN_FORUM."\n\n";
@@ -488,6 +499,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "$_COM_A_NOTIFICATION3\n";
                                                     $msg .= "\n\n\n\n";
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+                                                    $msg = JMailHelper::cleanBody($msg);
 
                                                     if ($ip != "127.0.0.1" && $kunena_my->id != $subs->id) { //don't mail yourself
                                                         JUtility::sendMail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
@@ -943,9 +955,9 @@ $catName = $objCatInfo->name;
 	 	                         }
 	 	                  	}
 
-                        	if ($mes->topic_emoticon == '0') {
-	 	                    	$topic_emoticon = $mes->topic_emoticon;
-	 	                    }
+	 	                  	if ( $mes->topic_emoticon == $topic_emoticon ) {
+								$topic_emoticon = $mes->topic_emoticon;
+	 	                  	}
 
                             $kunena_db->setQuery(
                             "UPDATE #__fb_messages SET name=".$kunena_db->quote($fb_authorname).", email=".$kunena_db->quote(addslashes($email))

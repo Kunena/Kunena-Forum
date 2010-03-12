@@ -43,7 +43,7 @@ switch ($do)
         break;
 }
 
-function ReportMessage($id, $catid, $reporter, $reason, $text, $type) 
+function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 {
     $kunena_my = &JFactory::getUser();
     $kunena_db = &JFactory::getDBO();
@@ -56,7 +56,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 
 	if (!empty($reason) && !empty($text))
 	{
-        
+
     $kunena_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text FROM #__fb_messages AS a"
     . " LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id"
     . " WHERE a.id='{$id}'");
@@ -119,17 +119,17 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 
             break;
     }
-    
+
     echo '<div align="center">' . _KUNENA_REPORT_SUCCESS;
     echo CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=view&amp;catid='.$catid.'&amp;id='.$id).'#'.$id, 3500);
-    
+
 	}
     else
     {
     	echo '<div align="center">';
-    	if (empty($reason)) echo _POST_FORGOT_SUBJECT; 
+    	if (empty($reason)) echo _POST_FORGOT_SUBJECT;
     	else if (empty($text)) echo _POST_FORGOT_MESSAGE;
-    	
+
     }
     echo '<br /><br />';
     echo '<a href="' . JRoute::_(KUNENA_LIVEURLREL . '&amp;func=view&amp;catid=' . $catid . '&amp;id=' . $id) . '#' . $id . '">' . _POST_SUCCESS_VIEW . '</a><br />';
@@ -140,22 +140,24 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
 function SendReporttoMail($sender, $subject, $message, $msglink, $mods, $admins) {
     $fbConfig =& CKunenaConfig::getInstance();
     $kunena_db =& JFactory::getDBO();
+    $app = & JFactory::getApplication ();
 
-    //send report to category moderators
-    if (count($mods)>0) {
-        foreach ($mods as $mod) {
-            $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$mod->userid}");
-            $email = $kunena_db->loadResult();
-
-            JUtility::sendMail($fbConfig->email, $fbConfig->board_title, $email, $subject, $message);
-            }
+    jimport( 'joomla.mail.helper' );
+	if (! $fbConfig->email  || ! JMailHelper::isEmailAddress($fbConfig->email)) {
+		$app->enqueueMessage (_KUNENA_EMAIL_INVALID, 'error' );
+		return;
     }
+
+     $sender = JMailHelper::cleanAddress(stripslashes($kunena_config->board_title).' '._GEN_FORUM.': '.$sender);
+     $subject = JMailHelper::cleanSubject( $subject );
+     $message = JMailHelper::cleanBody($message);
 
     //send report to site admins
     foreach ($admins as $admin) {
         $kunena_db->setQuery("SELECT email FROM #__users WHERE id={$admin->id}");
         $email = $kunena_db->loadResult();
-        JUtility::sendMail($fbConfig->email, stripslashes($fbConfig->board_title)." ".trim(_GEN_FORUM), $email, $subject, $message);
+        if (! $email || ! JMailHelper::isEmailAddress($email)) continue;
+        JUtility::sendMail($fbConfig->email, $sender, $email, $subject, $message);
         }
     }
 

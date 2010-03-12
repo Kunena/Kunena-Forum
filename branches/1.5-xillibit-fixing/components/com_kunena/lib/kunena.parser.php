@@ -330,7 +330,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             case 'url':
                 $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                 if ( !preg_match("`^(https?://)`",$tempstr) ) {
-                  $tempstr = 'http://'.$tempstr;
+                	$tempstr = 'http://'.$tempstr;
                 }
                 $tag_new = "<a href='".$tempstr."' rel=\"nofollow\" target=\"_blank\">".$between.'</a>';
                 return TAGPARSER_RET_REPLACED;

@@ -38,6 +38,10 @@ Kunena 1.5.10
 ^ [#19930] Hide IP addresses from Moderators and add in backend configuration setting
 # [#19932] Bulk delete and move returns to main page
 # [#19933] If moderator edits the post, email address gets replaced
+^ [#19931] Modification for collect_smilies() and collect_ranks()
+# [#19934] Keep topic icon after editing message
+^ [#19938] Make jomSocial Activity stream integration configurable
+^ [#19939] Improve sending moderator/subscription mail (check email addresses, cleanup contents, etc)
 
 11-Mar-2010 Xillibit
 # [#19902] Remove extra { which causing issues with avatar uploading

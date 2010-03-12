@@ -2067,6 +2067,27 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 </tr>
             </table>
 </fieldset>
+<fieldset><legend> <?php
+ 	  	                 echo _COM_A_JS_ACTIVITYSTREAM_INTEGRATION?></legend>
+ 	  	 <table cellpadding="4" cellspacing="0" border="0" width="100%"
+ 	  	         class="fbadminform">
+
+
+ 	  	         <tr align="center" valign="middle">
+ 	  	                 <td align="left" valign="top" width="25%"><?php
+ 	  	                 echo _COM_A_JS_ACTIVITYSTREAM_INTEGRATION?>
+ 	  	                 </td>
+
+ 	  	                 <td align="left" valign="top" width="25%"><?php
+ 	  	                 echo $lists ['js_actstr_integration'];
+ 	  	                 ?>
+ 	  	                 </td>
+
+ 	  	                 <td align="left" valign="top"><?php
+ 	  	                 echo _COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC?></td>
+ 	  	         </tr>
+ 	  	 </table>
+ 	  	 </fieldset>
 
 
             <div class="fbfuncsubtitle"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS ?><a name="plugins" id="plugins"> </a></div>

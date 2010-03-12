@@ -138,7 +138,12 @@ JHTML::_('behavior.keepalive');
 
             <td class = "fb-topicicons">
                 <?php
-                $topicToolbar = smile::topicToolbar(0, $fbConfig->rtewidth);
+                if ( !empty($mes->topic_emoticon) && $editmode ) {
+					$emoid_selected = $mes->topic_emoticon;
+                } else {
+					$emoid_selected = '0';
+                }
+                $topicToolbar = smile::topicToolbar($emoid_selected, $fbConfig->rtewidth);
                 echo $topicToolbar;
                 ?>
             </td>

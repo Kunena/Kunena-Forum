@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.5.10
 
+12-Mar-2010 Xillibit
+# [#19929] Fix XHTML validation errors while posting a message
+^ [#19930] Hide IP addresses from Moderators and add in backend configuration setting
+# [#19932] Bulk delete and move returns to main page
+# [#19933] If moderator edits the post, email address gets replaced
+
 11-Mar-2010 Xillibit
 # [#19902] Remove extra { which causing issues with avatar uploading
 # [#19903] Remove remaining deprecated split() function in backend, add dummy.jpeg file

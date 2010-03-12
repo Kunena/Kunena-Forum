@@ -109,15 +109,16 @@ if (($fbConfig->floodprotection != 0 && ((($lastPostTime + $fbConfig->floodprote
     if ($kunena_my->id)
     {
         $my_name = $fbConfig->username ? $kunena_my->username : $kunena_my->name;
-        $my_email = $kunena_my->email;
+        $user_email = $kunena_my->email;
         $registeredUser = 1;
 	if ($is_Moderator) {
 		if (!empty($fb_authorname)) $my_name = $fb_authorname;
-		if(isset($email) && !empty($email)) $my_email = $email;
+		if(!empty($email))
+			$user_email = $email;
 	}
     } else {
         $my_name = $fb_authorname;
-	$my_email = (isset($email) && !empty($email))? $email:'';
+	$user_email = (isset($email) && !empty($email))? $email:'';
 	$registeredUser = 0;
     }
 }
@@ -161,7 +162,7 @@ $catName = $objCatInfo->name;
                             if (empty($my_name)) {
                                 echo _POST_FORGOT_NAME;
                             }
-                            else if ($fbConfig->askemail && empty($my_email)) {
+                            else if ($fbConfig->askemail && empty($user_email)) {
                                 echo _POST_FORGOT_EMAIL;
                             }
                             else if (empty($subject)) {
@@ -217,7 +218,7 @@ $catName = $objCatInfo->name;
                                 }
 
                                 //--
-                                $email = trim(addslashes($my_email));
+                                $email = trim(addslashes($user_email));
                                 $topic_emoticon = (int)$topic_emoticon;
                                 $topic_emoticon = ($topic_emoticon < 0 || $topic_emoticon > 7) ? 0 : $topic_emoticon;
                                 $posttime = CKunenaTools::fbGetInternalTime();
@@ -815,6 +816,7 @@ $catName = $objCatInfo->name;
                         //$htmlText = smile::fbStripHtmlTags($mes->message);
                         $htmlText = stripslashes($mes->message);
                         $table = array_flip(get_html_translation_table(HTML_ENTITIES));
+                        $user_email = kunena_htmlspecialchars ( stripslashes ( $mes->email ) );
 
                         //$htmlText = strtr($htmlText, $table);
 
@@ -934,6 +936,16 @@ $catName = $objCatInfo->name;
                         		$kunena_db->query() or trigger_dberror('Unable to load review flag from categories.');
                         		$holdPost = $kunena_db->loadResult();
                         	}
+
+                        	if (!$fbConfig->askemail){
+	 	                    	if (empty($email)) {
+	 	                        	$email = $mes->email;
+	 	                         }
+	 	                  	}
+
+                        	if ($mes->topic_emoticon == '0') {
+	 	                    	$topic_emoticon = $mes->topic_emoticon;
+	 	                    }
 
                             $kunena_db->setQuery(
                             "UPDATE #__fb_messages SET name=".$kunena_db->quote($fb_authorname).", email=".$kunena_db->quote(addslashes($email))

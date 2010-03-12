@@ -35,6 +35,9 @@ DEFINE('_KUNENA_SORTMOD', 'Sort by Moderators');
 DEFINE('_KUNENA_SORTNAME', 'Sort by Names');
 DEFINE('_KUNENA_SORTREALNAME', 'Sort By Real Names');
 define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The thread has been deleted, so the pdf can not be generated');
+//Hide Ip
+define('_KUNENA_COM_A_HIDE_IP', 'Hide IP in messages from moderators');
+define('_KUNENA_COM_A_HIDE_IP_DESC', 'Hide IP in messages from moderators and show IP¨only for administrators');
 
 // 1.5.8
 

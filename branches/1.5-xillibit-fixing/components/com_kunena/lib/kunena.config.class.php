@@ -377,6 +377,8 @@ class CKunenaConfig extends CKunenaConfigBase
 	var $sef                     = 1;
 	var $sefcats                 = 0;
 	var $sefutf8                 = 0;
+	//New for 1.5.10 -> hide IP
+    var $hide_ip = 1;
 
     public function __construct($KunenaUser=null)
     {

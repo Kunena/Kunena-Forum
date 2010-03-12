@@ -334,7 +334,24 @@ if ($fbConfig->fb_profile == 'cb')
                             <?php echo isset($fbIcons['msgip']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
                             ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
                             <?php
-                            if(!empty($msg_ip)) echo CKunenaLink::GetMessageIPLink($msg_ip);
+                            //Check that the user is an admin to display the ip in messages
+                            $check = '0';
+                            $kunena_acl = &JFactory::getACL();
+							$aro_group = $kunena_acl->getAroGroup($kunena_my->id);
+   							$aro_group->id = $aro_group->id;
+    						$is_admin = (strtolower($aro_group->name) == 'super administrator' || strtolower($aro_group->name) == 'administrator');
+                            if($fbConfig->hide_ip){
+                            	if ( $is_admin ) {
+									$check = 1;
+                            	}
+                            } else {
+                            	$thisCat = new jbCategory($kunena_db, $catid);
+								$check = fb_has_moderator_permission($kunena_db, $thisCat, $kunena_my->id, $is_admin);
+                            }
+                            if (isset ( $msg_ip ) && $check)
+                            {
+				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
+                            }
                             ?>
                             </div>
        </td>

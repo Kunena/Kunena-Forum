@@ -609,6 +609,7 @@ class CKunenaTools {
 
     function fbDeletePosts($isMod, $return) {
     	$app =& JFactory::getApplication();
+    	$backUrl = $app->getUserState ( "com_kunena.ActionBulk" );
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
 
@@ -738,6 +739,7 @@ class CKunenaTools {
 
     function fbMovePosts($catid, $isMod, $return) {
     	$app =& JFactory::getApplication();
+    	$backUrl = $app->getUserState ( "com_kunena.ActionBulk" );
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
 

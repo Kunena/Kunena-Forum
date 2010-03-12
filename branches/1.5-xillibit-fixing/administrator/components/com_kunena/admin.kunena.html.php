@@ -1550,6 +1550,20 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_MAILFULL_DESC; ?>
                     </td>
                 </tr>
+                <tr align="center" valign="middle">
+	 	                 <td align="left" valign="top"><?php
+	 	                 echo _KUNENA_COM_A_HIDE_IP?>
+	 	                 </td>
+
+	 	                 <td align="left" valign="top"><?php
+	 	                 echo $lists ['hide_ip'];
+	 	                 ?>
+	 	                 </td>
+
+	 	                 <td align="left" valign="top"><?php
+	 	                 echo _KUNENA_COM_A_HIDE_IP_DESC?>
+	 	                 </td>
+	 	         </tr>
             </table>
           </fieldset>
 			<div class="fbfuncsubtitle"><?php echo _COM_A_AVATARS ?><a name="avatars" id="avatars" > </a></div>

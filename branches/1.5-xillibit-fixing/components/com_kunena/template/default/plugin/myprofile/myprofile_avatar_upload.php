@@ -159,7 +159,7 @@ switch ($task) {
 			$avatar = "";
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{{$kunena_db->getEscaped($avatar)}' WHERE userid='{$kunena_my->id}'");
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$kunena_db->getEscaped($avatar)}' WHERE userid='{$kunena_my->id}'");
 
 		if (!$kunena_db->query())
 		{

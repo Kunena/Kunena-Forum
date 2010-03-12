@@ -99,7 +99,8 @@ class CKunenaProfile {
 		if ($check == 1 || $check == NULL)
 		{
 			if($this->user->authorize( 'com_user', 'edit' )) {
-				$this->params		= $this->user->getParameters(true);
+				$params = $this->user->getParameters(true);
+				$this->userparams = $params->renderToArray();
 			}
 		}
 		CKunenaTools::loadTemplate('/profile/edituser.php');

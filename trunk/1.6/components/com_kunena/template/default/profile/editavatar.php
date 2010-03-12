@@ -20,7 +20,7 @@ if (empty($userprofile->profile->avatar)) {
 $i=0;
 ?>
 
-<h1><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?></h1>
+<h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?></h2>
 <form action="<?php echo CKunenaLink::GetProfileSettingsURL($this->config, $this->user->id, '', $rel='nofollow', $redirect=false,'saveavatar'); ?>" method="post" enctype="multipart/form-data" name="kprofileEditing">
 <table
 	class="<?php
@@ -56,6 +56,5 @@ $i=0;
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td class="td-0 km center" colspan="2"><input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_GEN_SUBMIT'); ?>" name="Submit" /></td>
 		</tr>
-	</tbody>
 </table>
 </form>

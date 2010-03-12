@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+12-Mar-2010 Matias
+^ [#19383] Revise Profile Page: Add parameters to edit user account
+
 11-Mar-2010 Matias
 ^ [#19383] Revise Profile Page: Combine all edit actions under tabs
 ^ [#19383] Revise Profile Page: Fix layout for edit tabs

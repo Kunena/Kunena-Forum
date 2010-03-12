@@ -15,7 +15,7 @@ $userprofile = new CKunenaProfile($this->user->id);
 $kunena_config =& CKunenaConfig::getInstance();
 ?>
 
-<h1><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE'); ?></h1>
+<h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE'); ?></h2>
 <form action="<?php echo CKunenaLink::GetProfileSettingsURL($kunena_config, $this->user->id, '', $rel='nofollow', $redirect=false,'saveprofile'); ?>" method="post" name="kprofileEditing">
 <table
 	class="<?php

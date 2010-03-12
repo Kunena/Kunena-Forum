@@ -212,7 +212,7 @@ class CKunenaLink
     }
 
 	//do only for kunena own profile!
-    function GetMyProfileURL($kunena_config, $userid='', $name='', $rel='nofollow', $redirect=false, $do='')
+    function GetMyProfileURL($kunena_config, $userid='', $do='', $redirect=false)
     {
     	$kunena_config =& CKunenaConfig::getInstance();
     	if($kunena_config->fb_profile == 'jomsocial' || $kunena_config->fb_profile == 'cb' || $kunena_config->fb_profile == 'aup')
@@ -226,7 +226,7 @@ class CKunenaLink
     	else
     	{
     		$do_do = $do != '' ? '&do='.$do : '';
-    		return $redirect != true ? JRoute::_(KUNENA_LIVEURLREL.'&amp;func=profile'.$do_do, $name, '', $rel) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile'.$do_do, $name, '', $rel));
+    		return $redirect != true ? JRoute::_(KUNENA_LIVEURLREL.'&amp;func=profile'.$do_do) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile'.$do_do));
     	}
     }
 

@@ -1256,7 +1256,7 @@ class CKunenaTools {
 					$idusermessages = $kunena_db->loadObjectList ();
 					check_dberror ( "Unable to load message id from fb_messages." );
 
-					$kunena_mod->deleteMessage($userid, $DeleteAttachments = false);
+					$kunena_mod->deleteMessage($thisuserid, $DeleteAttachments = false);
 				}
 			}
 		}

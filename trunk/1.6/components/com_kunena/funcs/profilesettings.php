@@ -11,6 +11,8 @@
  **/
 defined( '_JEXEC' ) or die();
 $user = JFactory::getUser ();
+$kunena_config =& CKunenaConfig::getInstance();
+$kunena_db = &JFactory::getDBO();
 
 if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 
@@ -60,7 +62,7 @@ if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 		$kunena_db->query ();
 		check_dberror ( 'Unable to update kunena user profile.' );
 
-		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, $name='', $rel='nofollow', $redirect=false,$do='') );
+		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true) );
 
 	} elseif ( $do == 'saveuser' ) {
 		$kunena_app =& JFactory::getApplication();
@@ -94,7 +96,7 @@ if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 			}
 		}
 
-		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, $name='', $rel='nofollow', $redirect=false,$do='') );
+		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true) );
 	} elseif ( $do == 'savesettings' ) {
 		$messageordering = JRequest::getInt('messageordering', '', 'post', 'messageordering');
 		$hidemail = JRequest::getInt('hidemail', '', 'post', 'hidemail');
@@ -106,7 +108,7 @@ if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 		$kunena_db->query ();
 		check_dberror ( 'Unable to update kunena user profile.' );
 
-		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, $name='', $rel='nofollow', $redirect=false,$do='') );
+		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true) );
 	} elseif ( $do == 'saveavatar' ) {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
 		$upload = new CKunenaUpload();
@@ -126,7 +128,7 @@ if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 		}
 		if (!$fileinfo['status']) $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo[name]).': '.$fileinfo['error'], 'error' );
 		else $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
-		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id) );
+		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true) );
 	}
 }
 ?>

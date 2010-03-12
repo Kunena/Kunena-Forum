@@ -46,6 +46,10 @@ define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED);
 define('KUNENA_RELPATH_AVATAR_UPLOADED', '/media/kunena/avatars');
 define('KUNENA_PATH_AVATAR_UPLOADED', KUNENA_ROOT_PATH . KUNENA_RELPATH_AVATAR_UPLOADED);
 
+// Kunena legacy uploaded files directory
+define('KUNENA_RELPATH_UPLOADED_LEGACY', '/images/fbfiles');
+define('KUNENA_PATH_UPLOADED_LEGACY', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED_LEGACY);
+
 // The tunmbnail folder is relative to any image file folder
 define('KUNENA_FOLDER_THUMBNAIL', 'thumb');
 

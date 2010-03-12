@@ -89,6 +89,49 @@ class CKunenaProfile {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
+	function getAvatarGallery($path) {
+		jimport('joomla.filesystem.folder');
+		$files = JFolder::files($path,'(\.gif|\.png|\.jpg|\.jpeg)$');
+		return $files;
+	}
+
+	// This function was modified from the one posted to PHP.net by rockinmusicgv
+	// It is available under the readdir() entry in the PHP online manual
+	function getAvatarGalleries($path, $select_name) {
+		jimport('joomla.filesystem.folder');
+		jimport('joomla.utilities.string');
+		$folders = JFolder::folders($path,'.',true, true);
+		foreach ($folders as $key => $folder) {
+			$folder = substr($folder, strlen($path)+1);
+			$folders[$key] = $folder;
+		}
+
+		$selected = $this->gallery;
+		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
+		$str .=  "<option value=\"default\"";
+
+		if ($selected == "") {
+			$str .=  " selected=\"selected\"";
+		}
+
+		$str .=  ">" . JText::_ ( 'COM_KUNENA_DEFAULT_GALLERY' ) . "</option>\n";
+
+		asort ( $folders );
+
+		foreach ( $folders as $key => $val ) {
+			$str .=  '<option value="' . urlencode($val) . '"';
+
+			if ($selected == $val) {
+				$str .=  " selected=\"selected\"";
+			}
+
+			$str .=  ">{$this->escape(JString::ucwords(JString::str_ireplace('/', ' / ', $val)))}</option>\n";
+		}
+
+		$str .=  "</select>\n";
+		return $str;
+	}
+
 	function displayEditUser() {
 		$this->user = JFactory::getUser();
 
@@ -122,9 +165,11 @@ class CKunenaProfile {
 
 	function displayEditAvatar() {
 		if (!$this->_config->allowavatar) return;
-		$this->gallery='';
-		$path = KUNENA_PATH_UPLOADED .DS. 'avatars/gallery/' . $this->gallery;
-		//$this->galleryimg = $this->getAvatarGallery($path);
+		$this->gallery = JRequest::getVar('gallery', 'default');
+		if ($this->gallery == 'default') $this->gallery = '';
+		$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';
+		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
+		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 		CKunenaTools::loadTemplate('/profile/editavatar.php');
 	}
 

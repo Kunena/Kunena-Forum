@@ -12,14 +12,6 @@
 defined( '_JEXEC' ) or die();
 $kunena_config =& CKunenaConfig::getInstance();
 ?>
-<script type="text/javascript">
-<!--
-	Window.onDomReady(function(){
-		document.formvalidator.setHandler('passverify', function (value) { return ($('password').value == value); }	);
-	});
-// -->
-</script>
-
 <h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE') ?></h2>
 <form action="<?php echo JRoute::_( 'index.php' ); ?>" method="post" name="userform" class="form-validate">
 	<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '' ?>" id="kflattable">

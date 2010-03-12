@@ -24,6 +24,7 @@ defined( '_JEXEC' ) or die();
 
 $kunena_config =& CKunenaConfig::getInstance();
 $kunena_db = &JFactory::getDBO();
+$kunena_app =& JFactory::getApplication();
 
 $do = JRequest::getCmd ( 'do', '' );
 $userid = JRequest::getInt ( 'userid', 0 );
@@ -107,7 +108,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             else
                             { //you got me there... don't know what to $do
                                 $kunena_app->enqueueMessage(JText::_('COM_KUNENA_USER_ERROR_KARMA'));
-                    			$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ) );
+                    			$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page ) );
                             }
                         } else {
                         	if ($pid) {
@@ -153,7 +154,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 else
                 { //get outa here, you fraud!
                     $kunena_app->enqueueMessage(JText::_('COM_KUNENA_USER_ERROR_KARMA'));
-                    $kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $id, $kunena_config->messages_per_page ) );
+                    $kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page ) );
                 }
                 ?>
             </center>

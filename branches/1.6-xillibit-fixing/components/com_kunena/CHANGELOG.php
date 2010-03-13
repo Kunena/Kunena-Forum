@@ -32,6 +32,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-Special-DEV
+
+13-Mar-2010 Xillibit
+^ [#19383] Make working the various actions for saveavatar, always an issue with avatar uplaoding
+
 Kunena 1.6.0-DEV
 
 12-Mar-2010 Matias

@@ -19,7 +19,7 @@ if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 	//check that the userid is the same that the userid of $profile
 
 	$kunena_app = & JFactory::getApplication ();
-	$do = JRequest::getVar("do", "");
+	$do = JRequest::getVar('do', '');
 
 	if ( $do == 'saveprofile' ) {
 
@@ -110,25 +110,48 @@ if ( $this->user->id != '0' && $this->user->id == $user->id ) {
 
 		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true) );
 	} elseif ( $do == 'saveavatar' ) {
-		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
-		$upload = new CKunenaUpload();
-		$upload->uploadFile(KUNENA_PATH_AVATAR_UPLOADED .DS. $this->user->id , 'kavatar', false);
-		$fileinfo = $upload->getFileInfo();
+		$action = JRequest::getString('action', '');
 
-		if ($fileinfo['ready'] === true) {
-			if(JDEBUG == 1 && defined('JFIREPHP')){
-				FB::log('Kunena save avatar: ' . $fileinfo['name']);
-			}
-			$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar={$kunena_db->quote($fileinfo['name'])} WHERE userid='{$this->user->id}'" );
+		if ( $action == 'keep' ) {
+			$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true),JText::_('COM_KUNENA_AVATAR_UNCHANGED') );
+		} else if ( $action == 'delete' ) {
+			//set default avatar
+			$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar='nophoto.jpg' WHERE userid='{$this->user->id}'" );
+			$kunena_db->query ();
+			check_dberror ( 'Unable to set default avatar.' );
+
+			$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true),JText::_('COM_KUNENA_SET_DEFAULT_AVATAR') );
+		} else if ( $action == 'upload' ) {
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
+			$upload = new CKunenaUpload();
+			$upload->uploadFile(KUNENA_PATH_AVATAR_UPLOADED , 'kavatar', false);
+			$fileinfo = $upload->getFileInfo();
+
+			if ($fileinfo['ready'] === true) {
+				if(JDEBUG == 1 && defined('JFIREPHP')){
+					FB::log('Kunena save avatar: ' . $fileinfo['name']);
+				}
+				$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar='thumb/{$kunena_db->quote($fileinfo['name'])}' WHERE userid='{$this->user->id}'" );
 
 				if (! $kunena_db->query () || $kunena_db->getErrorNum()) {
-				$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_DATABASE_STORE'));
-				$fileinfo = $upload->fileInfo();
+					$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_DATABASE_STORE'));
+					$fileinfo = $upload->getFileInfo();
+				}
 			}
+			if (!$fileinfo['status']) $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
+			else $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
+
+			//$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true), JText::_('COM_KUNENA_AVATAR_UPLOADED_WITH_SUCCESS'));
+
+		} else if ( $action == 'gallery' ) {
+			$AvatarGallery = JRequest::getString('newAvatar', '');
+
+			$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar='gallery/$AvatarGallery' WHERE userid='{$this->user->id}'" );
+			$kunena_db->query ();
+			check_dberror ( 'Unable to set default avatar.' );
+
+			$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true),JText::_('COM_KUNENA_AVATAR_SET_FROM_GALLERY_WITH_SUCCESS') );
 		}
-		if (!$fileinfo['status']) $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo[name]).': '.$fileinfo['error'], 'error' );
-		else $kunena_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
-		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL($kunena_config, $this->user->id, '', true) );
 	}
 }
 ?>

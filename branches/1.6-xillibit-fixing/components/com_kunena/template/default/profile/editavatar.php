@@ -21,7 +21,7 @@ $i=0;
 ?>
 
 <h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?></h2>
-<form action="<?php echo CKunenaLink::GetProfileSettingsURL($this->config, $this->user->id, '', $rel='nofollow', $redirect=false,'saveavatar'); ?>" method="post" enctype="multipart/form-data" name="kprofileEditing">
+<form action="<?php echo CKunenaLink::GetProfileSettingsURL($this->_config, $this->user->id, '', $rel='nofollow', $redirect=false,'saveavatar'); ?>" method="post" enctype="multipart/form-data" name="kprofileEditing">
 <table
 	class="<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
@@ -48,7 +48,7 @@ $i=0;
 				<label for="kavatar_upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
 			</td><td>
 				<input id="kavatar_upload" type="radio" name="action" value="upload" />
-				<div><input type="file" class="button" name="avatar" /></div>
+				<div><input type="file" class="button" name="kavatar" /></div>
 			</td>
 		</tr>
 <?php endif; ?>

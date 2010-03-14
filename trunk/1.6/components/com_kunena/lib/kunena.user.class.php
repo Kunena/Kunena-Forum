@@ -15,6 +15,7 @@ defined( '_JEXEC' ) or die();
 
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
+require_once (KUNENA_PATH . DS . 'class.kunena.php');
 
 /**
 
@@ -224,17 +225,15 @@ class CKunenaUserprofile extends JTable
 	**/
 	var $BEBO = null;
 
-	/**
+	protected $_online = null;
+	protected static $_ranks = null;
 
-	* @param userid NULL=current user
-
-	*/
-
-	function CKunenaUserprofile($userid)
+	function __construct($userid)
 	{
-		$kunena_db = &JFactory::getDBO();
+		$db = JFactory::getDBO();
+		$this->_app = JFactory::getApplication ();
 
-		parent::__construct('#__fb_users', 'userid', $kunena_db);
+		parent::__construct('#__fb_users', 'userid', $db);
 		if ($userid) $this->load($userid);
 
 	}
@@ -242,6 +241,95 @@ class CKunenaUserprofile extends JTable
 	function &getInstance($userid=null, $reload=false)
 	{
 		return CKunenaUserHelper::getInstance($userid, $reload);
+	}
+
+	function online() {
+		$my = JFactory::getUser ();
+		if ($this->_online === null && ($this->showOnline || CKunenaTools::isModerator($my->id))) {
+			$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->userid . ' AND s.client_id = 0 GROUP BY s.userid';
+			$this->_db->setQuery ( $query );
+			$lastseen = $this->_db->loadResult ();
+			check_dberror ( "Unable get user online information." );
+			$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
+			$this->_online = ($lastseen + $timeout) > time ();
+		}
+		return $this->_online;
+	}
+
+	function isAdmin() {
+		CKunenaTools::isAdmin($this->userid);
+	}
+
+	function isModerator($catid=0) {
+		CKunenaTools::isModerator($catid);
+	}
+
+	function getRank($catid=0) {
+		// Default rank
+		$rank = new stdClass();
+		$rank->rank_id = false;
+		$rank->rank_title = null;
+		$rank->rank_min = 0;
+		$rank->rank_special = 0;
+		$rank->rank_image = null;
+
+		$config = CKunenaConfig::getInstance ();
+		if (!$config->showranking) return $rank;
+		if (self::$_ranks === null) {
+			$kunena_db = &JFactory::getDBO();
+			$kunena_db->setQuery ( "SELECT * FROM #__fb_ranks" );
+			self::$_ranks = $kunena_db->loadObjectList ('rank_id');
+			check_dberror ( "Unable to load ranks." );
+		}
+
+		$rank->rank_title = JText::_('COM_KUNENA_RANK_USER');
+		$rank->rank_image = 'rank0.gif';
+
+		if ($this->userid == 0) {
+			$rank->rank_id = 0;
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_VISITOR');
+			$rank->rank_special = 1;
+		}
+		else if ($this->rank != '0' && isset(self::$_ranks[$this->rank])) {
+			$rank = self::$_ranks[$this->rank];
+		}
+		else if ($this->rank == '0' && self::isAdmin()) {
+			$rank->rank_id = 0;
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_ADMINISTRATOR');
+			$rank->rank_special = 1;
+			$rank->rank_image = 'rankadmin.gif';
+			jimport ('joomla.filesystem.file');
+			foreach (self::$_ranks as $cur) {
+				if ($cur->rank_special == 1 && JFile::stripExt($cur->rank_image) == 'rankadmin') {
+					$rank = $cur;
+					break;
+				}
+			}
+		}
+		else if ($this->rank == '0' && self::isModerator($catid)) {
+			$rank->rank_id = 0;
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_MODERATOR');
+			$rank->rank_special = 1;
+			$rank->rank_image = 'rankmod.gif';
+			jimport ('joomla.filesystem.file');
+			foreach (self::$_ranks as $cur) {
+				if ($cur->rank_special == 1 && JFile::stripExt($cur->rank_image) == 'rankadmin') {
+					$rank = $cur;
+					break;
+				}
+			}
+		}
+		if ($rank->rank_id === false) {
+			//post count rank
+			$rank->rank_id = 0;
+			foreach (self::$_ranks as $cur) {
+				if ($cur->rank_special == 0 && $cur->rank_min <= $this->posts && $cur->rank_min >= $rank->rank_min) {
+					$rank = $cur;
+				}
+			}
+		}
+		if (!$config->rankimages) $rank->rank_image = null;
+		return $rank;
 	}
 
 	function profileIcon($name) {

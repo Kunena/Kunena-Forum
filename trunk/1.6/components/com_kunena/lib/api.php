@@ -96,7 +96,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		require_once (KPATH_SITE .DS. "class.kunena.php");
 
 		$profile = CKunenaUserprofile::getInstance ( $userid );
-		return CKunenaTools::getRank ( $profile );
+		return $profile->getRank ();
 	}
 
 	public function getTopicsTotal($userid) {

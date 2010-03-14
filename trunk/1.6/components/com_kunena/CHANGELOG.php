@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 14-Mar-2010 Matias
 ^ [#19383] Revise Profile Page: Save all user information in a single form
 ^ [#19383] Revise Profile Page: Clean up changing avatar
++ [#19383] Revise Profile Page: Obey configuration
 
 13-Mar-2010 Xillibit
 ^ [#19383] Make working the various actions for saveavatar, always an issue with avatar uplaoding

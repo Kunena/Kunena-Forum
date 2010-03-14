@@ -34,7 +34,7 @@ defined( '_JEXEC' ) or die();
 <div id="kprofile-rightcolbot">
 	<div class="kprofile-rightcol2">
 		<ul>
-			<li><span class="email"></span><a href="mailto:<?php echo $this->user->email; ?>"><?php echo $this->user->email; ?></a></li>
+			<?php if ($this->_config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="email"></span><a href="mailto:<?php echo $this->user->email; ?>"><?php echo $this->user->email; ?></a></li><?php endif; ?>
 			<li><span class="website"></span><a href="<?php echo kunena_htmlspecialchars(stripslashes($this->profile->websiteurl)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($this->profile->websitename)); ?></a></li>
 		</ul>
 	</div>
@@ -55,14 +55,15 @@ defined( '_JEXEC' ) or die();
 		<dd style="display: none;">
 			<?php $this->displayUserPosts(); ?>
 		</dd>
+		<?php if ($this->my->id == $this->user->id): ?>
 		<!--
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayOwnTopics(); ?>
+			<?php //$this->displayOwnTopics(); ?>
 		</dd>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_USERTOPICS'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayUserTopics(); ?>
+			<?php //$this->displayUserTopics(); ?>
 		</dd>
 		-->
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
@@ -73,8 +74,7 @@ defined( '_JEXEC' ) or die();
 		<dd style="display: none;">
 			<?php $this->displayFavorites(); ?>
 		</dd>
-
-		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id): ?>
+		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id): ?>
 		<!-- Only visible to moderators and admins -->
 		<dt class="kprofile-modbtn"><?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?></dt>
 		<dd class="kprofile-modtools">

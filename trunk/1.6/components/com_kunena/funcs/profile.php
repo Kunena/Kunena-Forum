@@ -40,15 +40,21 @@ class CKunenaProfile {
 			check_dberror ( 'Unable to create user profile.' );
 			$this->profile = CKunenaUserprofile::getInstance($this->user->id, true);
 		}
+		if ($this->user->id == $this->my->id) $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->user->id, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
+		$this->name = $this->user->username;
+		if ($this->_config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
+		if ($this->_config->userlist_usertype) $this->usertype = $this->user->usertype;
+		if ($this->_config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
+		if ($this->_config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
 		$this->avatarurl = KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $this->profile->avatar;
 		$this->personalText = CKunenaTools::parseText($this->profile->personalText);
 		$this->signature = CKunenaTools::parseBBCode($this->profile->signature);
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->user->id);
 		$this->admin = CKunenaTools::isAdmin($this->user->id);
-		$rank = CKunenaTools::getRank($this->profile);
-		$this->rank_title = $rank->rank_title;
-		$this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
+		$rank = $this->profile->getRank();
+		if ($rank->rank_title) $this->rank_title = $rank->rank_title;
+		if ($rank->rank_image) $this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
 		switch ($this->profile->gender) {
 			case 1:
 				$this->genderclass = 'male';
@@ -67,12 +73,7 @@ class CKunenaProfile {
 		else
 			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
-		$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->user->id . ' AND s.client_id = 0 GROUP BY s.userid';
-		$this->_db->setQuery ( $query );
-		$lastseen = $this->_db->loadResult ();
-		check_dberror ( "Unable get user online information." );
-		$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
-		$this->online = ($lastseen + $timeout) > time ();
+		$this->online = $this->profile->online();
 	}
 
 	/**

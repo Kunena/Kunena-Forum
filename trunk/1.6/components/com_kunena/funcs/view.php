@@ -500,12 +500,11 @@ class CKunenaView {
 				$numPosts = ( int ) $this->userinfo->posts;
 
 				//ranking
-				if ($this->config->showranking) {
-					$rank = CKunenaTools::getRank ( $this->profile );
-
-					if ($this->config->rankimages && isset ( $rank->rank_image )) {
-						$this->msg_html->userrankimg = '<img src="' . KUNENA_URLRANKSPATH . $rank->rank_image . '" alt="" />';
-					}
+				$rank = $this->profile->getRank ($this->catid);
+				if ($rank->rank_image) {
+					$this->msg_html->userrankimg = '<img src="' . KUNENA_URLRANKSPATH . $rank->rank_image . '" alt="" />';
+				}
+				if ($rank->rank_title) {
 					$this->msg_html->userrank = $rank->rank_title;
 				}
 

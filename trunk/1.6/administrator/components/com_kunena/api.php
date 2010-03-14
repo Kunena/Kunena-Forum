@@ -112,6 +112,8 @@ interface iKunenaUserAPI {
 	 *
 	 * @param int $userid User ID
 	 * @return stdClass Rank object with rank_id, rank_title and rank_image
+	 *
+	 * Note! rank_title and/or rank_image may be null if ranks are hidden!
 	 */
 	public function getRank($userid);
 

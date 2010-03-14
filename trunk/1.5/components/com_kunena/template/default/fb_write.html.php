@@ -76,16 +76,12 @@ JHTML::_('behavior.keepalive');
         </tr>
 
         <?php
-        if ($fbConfig->askemail)
+        if (($fbConfig->askemail && !$kunena_my->id) || $fbConfig->changename == 1 || $is_Moderator)
         {
             echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
-            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
-                echo "<td>$my_email</td>";
-            }
-            else
-            {
-                echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"$my_email\" /></td>";
-            }
+
+            echo "<td><input type=\"text\" name=\"email\"  size=\"35\" class=\"" . $boardclass . "inputbox postinput\" maxlength=\"35\" value=\"".$user_email."\" /></td>";
+
             echo '</tr>';
         }
         ?>
@@ -142,7 +138,12 @@ JHTML::_('behavior.keepalive');
 
             <td class = "fb-topicicons">
                 <?php
-                $topicToolbar = smile::topicToolbar(0, $fbConfig->rtewidth);
+                if ( !empty($mes->topic_emoticon) && $editmode ) {
+					$emoid_selected = $mes->topic_emoticon;
+                } else {
+					$emoid_selected = '0';
+                }
+                $topicToolbar = smile::topicToolbar($emoid_selected, $fbConfig->rtewidth);
                 echo $topicToolbar;
                 ?>
             </td>
@@ -283,7 +284,7 @@ JHTML::_('behavior.keepalive');
         <tr class = "<?php echo $boardclass; ?>sectiontableentry1">
             <td class = "fb_leftcolumn">&nbsp;<strong><?php echo _KUNENA_CAPDESC; ?></strong>&nbsp;</td>
             <td align="left" valign="middle" height="35px">&nbsp;<input name="txtNumber" type="text" id="txtNumber" value="" class="fb_button" style="vertical-align:top" size="15">
-			<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" />
+			<img src="index.php?option=com_kunena&func=showcaptcha" alt="" />
 		 </td>
          </tr>
         <?php

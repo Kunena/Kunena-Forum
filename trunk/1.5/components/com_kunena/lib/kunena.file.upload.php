@@ -38,7 +38,7 @@ function fileUploadError($msg)
 }
 
 $GLOBALS['KUNENA_rc'] = 1; //reset return code
-$filename = split("\.", $filename);
+$filename = explode('.', $filename);
 //some transaltions for readability
 //numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
 $numExtensions = (count($filename)) - 1;
@@ -65,7 +65,7 @@ if ($GLOBALS['KUNENA_rc'])
     $fileLocation = strtr(KUNENA_PATH_UPLOADED .DS. "files" .DS. $newFileName, "\\", "/");
     $allowedArray = explode(',', strtolower($fbConfig->filetypes));
     $maxImgSize = $fbConfig->filesize * 1024;
-    
+
     // Check for empty filename
     if (!is_uploaded_file($attachfile['tmp_name']) || empty($attachfile['name'])) {
         fileUploadError(_FILE_ERROR_EMPTY);

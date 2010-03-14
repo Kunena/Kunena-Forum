@@ -707,8 +707,13 @@ VIEW PAGE
 	vertical-align: top;
 	border-left:1px solid #BFC3C6;
 }
+#Kunena td.fb-msgview-right table {
+	table-layout: fixed;
+}
 #Kunena div.fb-msgview-l-cover {
-	overflow:auto;
+	display: table;
+	table-layout: fixed;
+	width: 160px;
 	text-align: center;
 	padding:5px;
 }
@@ -736,6 +741,8 @@ VIEW PAGE
 	border:1px solid #BFC3C6;
 	padding: 1px;
 	margin:5px;
+	max-width: 100px;
+	max-height: 150px;
 }
 #Kunena div.viewcover {
 	border:1px solid #BFC3C6;
@@ -743,6 +750,7 @@ VIEW PAGE
 	color:#333333;
 	text-align: center;
 	margin:2px 5px;
+	overflow: auto;
 }
 #Kunena span.msgtitle, 
 #Kunena span.msgtitle_new {
@@ -773,7 +781,7 @@ VIEW PAGE
 }
 #Kunena div.msgtext {
 	width: 100%;
-	overflow: hidden;
+	overflow: auto;
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
 	border-top:1px solid #ddd;
 	padding:10px 0 0 0;
@@ -852,9 +860,15 @@ VIEW PAGE
 	color:#999;
 	font-size:x-small;
 	padding: 5px 5px;
+	display: table;
+	table-layout: fixed;
+	width:99%;
+}
+#Kunena div.msgsignature div {
+	overflow: auto;
 }
 #Kunena div.fb_message_buttons_cover {
-	float: right;
+	 text-align: right;
 }
 #Kunena div.fb_message_buttons_row {
 	text-align:right;
@@ -1031,6 +1045,7 @@ POST HISTORY
 	text-align:left;
 	border-spacing: 1px;
 	background:#BFC3C6;
+	table-layout:fixed;
 }
 #Kunena .fb_review_header {
 	color: #ffffff;
@@ -1046,6 +1061,10 @@ POST HISTORY
 	background-color: #FFFFFF;
 	padding:3px 10px;
 	line-height:140%;
+}
+#Kunena .fb_review_body0,
+#Kunena .fb_review_body1 {
+	overflow:auto;
 }
 #Kunena .fb_review_quote {
 	padding: 5px;

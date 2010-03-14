@@ -48,7 +48,7 @@ function list_users()
     $limit = JRequest::getInt('limit', $fbConfig->userlist_rows);
 
     // Total
-    $kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
+	$kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block =0");
     $total_results = $kunena_db->loadResult();
 
     // Search total
@@ -69,12 +69,14 @@ function list_users()
     // Select query
     $query
         = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits, g.id AS gid, g.title "
-        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id ";
+        ." FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id INNER JOIN #__fb_groups AS g ON g.id = fu.group_id  WHERE u.block=0";
 
     if ($search != "")
     {
-        $query .= " WHERE (name LIKE '%$search%' OR username LIKE '%$search%')";
+        $query .= " AND (name LIKE '%$search%' OR username LIKE '%$search%') AND u.id NOT IN (62)";
         $query_ext .= "&amp;search=" . $search;
+    } else {
+		$query .= " AND u.id NOT IN (62)";
     }
 
     $query .= " ORDER BY $orderby $direction, id $direction";
@@ -98,7 +100,7 @@ function convertDate($date)
 	// used for non-FB dates only!
     $format = _KUNENA_USRL_DATE_FORMAT;
 
-    if ($date != "0000-00-00 00:00:00" && ereg("([0-9]{4})-([0-9]{2})-([0-9]{2})[ ]([0-9]{2}):([0-9]{2}):([0-9]{2})", $date, $regs))
+    if ($date != "0000-00-00 00:00:00" && preg_match('`(\d{4})-(\d{2})-(\d{2})[[:space:]](\d{2}):(\d{2}):(\d{2})`', $date, $regs))
     {
         $date = mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
         $date = $date > -1 ? strftime($format, CKunenaTools::fbGetShowTime($date, 'UTC')) : '-';
@@ -245,21 +247,6 @@ class HTML_userlist_content
 <?php echo _KUNENA_USRL_USERNAME; ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
 <?php echo CKunenaLink::GetUserlistLink('&amp;orderby=username&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
-                                    </th>
-
-                                <?php
-                                }
-                                ?>
-
-                                <?php
-                                if ($fbConfig->userlist_group)
-                                {
-                                ?>
-
-                                    <th class = "th-6 <?php echo $boardclass; ?>sectiontableheader" align="center">
-<?php echo _KUNENA_USRL_GROUP; ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=group_id&amp;direction=ASC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/down.gif" border="0" alt="' . _KUNENA_USRL_ASC .'" />'); ?>
-<?php echo CKunenaLink::GetUserlistLink('&amp;orderby=group_id&amp;direction=DESC', '<img src="' . KUNENA_TMPLTMAINIMGURL . '/images/up.gif" border="0" alt="' . _KUNENA_USRL_DESC .'" />'); ?>
                                     </th>
 
                                 <?php
@@ -492,19 +479,6 @@ class HTML_userlist_content
 
                                         <td class = "td-5  fbm" align="center">
 						<?php echo CKunenaLink::GetProfileLink($fbConfig, $ulrow->id, $ulrow->username); ?>
-                                        </td>
-
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if ($fbConfig->userlist_group)
-                                    {
-                                    ?>
-
-                                        <td class = "td-6  fbs" align="center">
-                                            <span class = "view-group_<?php echo $ulrow->group_id; ?>"> <?php echo $ulrow->title; ?> </span>
                                         </td>
 
                                     <?php

@@ -113,7 +113,7 @@ $offset           = ($page - 1) * $threads_per_page;
 $row_count        = $page * $threads_per_page;
 
 if ($func != "mylatest") {
-	$lookcats = split(',', $fbConfig->latestcategory);
+	$lookcats = explode(',', $fbConfig->latestcategory);
 	$catlist = array();
 	$latestcats = '';
 	foreach ($lookcats as $catnum) {
@@ -170,10 +170,10 @@ if ($func == "mylatest")
 {
 	$order = "myfavorite DESC, lastid DESC";
 	$query = "SELECT m.thread, MAX(m.id) as lastid, MAX(t.fav) AS myfavorite FROM (
-			SELECT thread, 0 AS fav 
-			FROM #__fb_messages 
-			WHERE userid='{$kunena_my->id}' AND moved='0' AND hold='0' AND catid IN ({$fbSession->allowed}) 
-			GROUP BY thread 
+			SELECT thread, 0 AS fav
+			FROM #__fb_messages
+			WHERE userid='{$kunena_my->id}' AND moved='0' AND hold='0' AND catid IN ({$fbSession->allowed})
+			GROUP BY thread
 		UNION ALL
 			SELECT thread, 1 AS fav FROM #__fb_favorites WHERE userid='{$kunena_my->id}'
 		) AS t
@@ -186,8 +186,8 @@ if ($func == "mylatest")
 else
 {
 	$order = "lastid DESC";
-	$query = "SELECT thread, MAX(id) AS lastid FROM #__fb_messages WHERE time>'{$querytime}' AND hold='0' AND moved='0' AND catid IN ({$fbSession->allowed}) 
-		GROUP BY thread 
+	$query = "SELECT thread, MAX(id) AS lastid FROM #__fb_messages WHERE time>'{$querytime}' AND hold='0' AND moved='0' AND catid IN ({$fbSession->allowed})
+		GROUP BY thread
 		ORDER BY {$order}
 	";
 }
@@ -205,7 +205,7 @@ if (count($threadids) > 0)
 {
 $query = "SELECT a.*, j.id AS userid, t.message AS messagetext, l.myfavorite, l.favcount, l.attachmesid, l.msgcount, l.lastid, u.avatar, c.id AS catid, c.name AS catname
 	FROM (
-		SELECT m.thread, (f.userid IS NOT null AND f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid, 
+		SELECT m.thread, (f.userid IS NOT null AND f.userid='{$kunena_my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachmesid,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__fb_messages AS m
 		LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread

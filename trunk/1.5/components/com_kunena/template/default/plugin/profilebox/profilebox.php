@@ -80,7 +80,7 @@ else
 
 }
 
-if ($fbConfig->fb_profile == "cb" || $fbConfig->fb_profile == "jomsocial")
+if ($fbConfig->fb_profile == "cb" || $fbConfig->fb_profile == "jomsocial" || $fbConfig->fb_profile == "aup")
 {
     $jr_profilelink = CKunenaLink::GetProfileLink($fbConfig, $kunena_my->id, _PROFILEBOX_MYPROFILE);
 }

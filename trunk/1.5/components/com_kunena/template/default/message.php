@@ -33,13 +33,13 @@ $user = $kunena_db->loadObject();
 if ($fbConfig->fb_profile == 'cb')
 {
 	$msg_params = array(
-		'username' => &$msg_username, 
-		'messageobject' => &$fmessage, 
-		'subject' => &$msg_subject, 
-		'messagetext' => &$msg_text, 
-		'signature' => &$msg_signature, 
-		'karma' => &$msg_karma, 
-		'karmaplus' => &$msg_karmaplus, 
+		'username' => &$msg_username,
+		'messageobject' => &$fmessage,
+		'subject' => &$msg_subject,
+		'messagetext' => &$msg_text,
+		'signature' => &$msg_signature,
+		'karma' => &$msg_karma,
+		'karmaplus' => &$msg_karmaplus,
 		'karmaminus' => &$msg_karmaminus
 	);
 	$profileHtml = $kunenaProfile->showProfile($fmessage->userid, $msg_params);
@@ -62,14 +62,14 @@ if ($fbConfig->fb_profile == 'cb')
         <tr>
               <td class = "fb-msgview-left">
                 <div class = "fb-msgview-l-cover">
-<?php 
+<?php
 					if ($profileHtml)
 					{
 						echo $profileHtml;
 					}
 					else
 					{
-?>                
+?>
                     <span class = "view-username">
 <?php
                         if ($fmessage->userid > 0)
@@ -146,7 +146,7 @@ if ($fbConfig->fb_profile == 'cb')
                     <?php
                     if (isset($msg_online)) {
                     	echo $msg_online;
-                    } 
+                    }
                     ?>
 
                     <?php
@@ -239,7 +239,7 @@ if ($fbConfig->fb_profile == 'cb')
                             <?php
                             if (isset($msg_karma)) {
                                 echo $msg_karma;
-								if (isset($msg_karmaplus)) 
+								if (isset($msg_karmaplus))
 									echo '&nbsp;&nbsp;' . $msg_karmaplus . ' ' . $msg_karmaminus;
                             }
                             else {
@@ -293,7 +293,7 @@ if ($fbConfig->fb_profile == 'cb')
 								if ($fbConfig->captcha == 1 && $kunena_my->id < 1) { ?>
 								<?php echo _KUNENA_CAPDESC.'&nbsp;'?>
 								<input name="txtNumber" type="text" id="txtNumber" value="" style="vertical-align:middle" size="10">&nbsp;
-								<img src="index2.php?option=com_kunena&func=showcaptcha" alt="" /><br />
+								<img src="index.php?option=com_kunena&func=showcaptcha" alt="" /><br />
 								<?php
 								}
 								// Finish captcha
@@ -334,7 +334,20 @@ if ($fbConfig->fb_profile == 'cb')
                             <?php echo isset($fbIcons['msgip']) ? '<img src="'.KUNENA_URLICONSPATH.$fbIcons['msgip'] .'" border="0" alt="'._KUNENA_REPORT_LOGGED.'" />' : ' <img src="'.KUNENA_URLEMOTIONSPATH.'ip.gif" border="0" alt="'. _KUNENA_REPORT_LOGGED.'" />';
                             ?> <span class="fb_smalltext"> <?php echo _KUNENA_REPORT_LOGGED;?></span>
                             <?php
-                            if(!empty($msg_ip)) echo CKunenaLink::GetMessageIPLink($msg_ip);
+                            //Check that the user is an admin to display the ip in messages
+                            $check = '0';
+                            if($fbConfig->hide_ip){
+                            	if ( $is_admin ) {
+									$check = 1;
+                            	}
+                            } else {
+                            	$thisCat = new jbCategory($kunena_db, $catid);
+								$check = fb_has_moderator_permission($kunena_db, $thisCat, $kunena_my->id, $is_admin);
+                            }
+                            if (isset ( $msg_ip ) && $check)
+                            {
+				echo '<span class="fb_message_informMarkUp">'.CKunenaLink::GetMessageIPLink($msg_ip).'</span>';
+                            }
                             ?>
                             </div>
        </td>

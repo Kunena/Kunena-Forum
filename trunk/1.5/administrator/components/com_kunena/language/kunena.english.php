@@ -22,6 +22,29 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+//1.5.10
+DEFINE('_KUNENA_PARENTDESC',
+    'Please note: To create a category, choose \'Top Level Category\' as a parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can be <strong>ONLY</strong> posted to forums, not categories.');
+DEFINE('_KUNENA_ADMIN', 'Forum Administration');
+DEFINE('_KUNENA_NOTEUS',
+    'NOTE: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, give a user a moderator flag and then go to <a href="index.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select their profile and update it. The moderator flag can only be set by a site administrator.');
+DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on Categories view, Recent discussions and My Discussions.');
+DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');
+DEFINE('_KUNENA_SORTID', 'Sort by Userid');
+DEFINE('_KUNENA_SORTMOD', 'Sort by Moderators');
+DEFINE('_KUNENA_SORTNAME', 'Sort by Names');
+DEFINE('_KUNENA_SORTREALNAME', 'Sort By Real Names');
+define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The thread has been deleted, so the pdf can not be generated');
+//Hide Ip
+define('_KUNENA_COM_A_HIDE_IP', 'Hide IP in messages from moderators');
+define('_KUNENA_COM_A_HIDE_IP_DESC', 'Hide IP in messages from moderators and show IP¨only for administrators');
+//Joomsocial Activity Stream Integration disable/enable
+define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION', 'Enable the Jomsocial Activity Stream Integration');
+define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC', 'The activity stream shows in Jomsocial wall the latest messages or new topics posted into Kunena');
+// EMail
+define('_KUNENA_EMAIL_INVALID', 'Forum tried to send email from invalid address. Please contact site administrator!');
+define('_KUNENA_MY_EMAIL_INVALID', 'Your EMail address is invalid. Valid EMail address is required to post into this forum!');
+
 // 1.5.8
 
 define('_KUNENA_USRL_REALNAME', 'Real Name');
@@ -719,8 +742,6 @@ DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_NAME','Show Real Name');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_name_DESC','');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME','Show Username');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC','');
-DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_GROUP','Show User Group');
-DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_GROUP_DESC','');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_POSTS','Show Number of Posts');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_POSTS_DESC','');
 DEFINE('_KUNENA_ADMIN_CONFIG_USERLIST_KARMA','Show Karma');
@@ -822,15 +843,10 @@ DEFINE('_KUNENA_PATH', 'Path:');
 DEFINE('_KUNENA_CSSERROR', 'Please note: The CSS template file must be writable to save changes.');
 // User Management
 DEFINE('_KUNENA_FUM', 'Kunena User Profile Manager');
-DEFINE('_KUNENA_SORTID', 'sort by userid');
-DEFINE('_KUNENA_SORTMOD', 'sort by moderators');
-DEFINE('_KUNENA_SORTNAME', 'sort by names');
 DEFINE('_KUNENA_VIEW', 'View');
 DEFINE('_KUNENA_NOUSERSFOUND', 'No user profiles found.');
 DEFINE('_KUNENA_ADDMOD', 'Add Moderator to');
 DEFINE('_KUNENA_NOMODSAV', 'There are no possible moderators found. Read the note below.');
-DEFINE('_KUNENA_NOTEUS',
-    'NOTE: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, give a user a moderator flag and then go to <a href="index2.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select their profile and update it. The moderator flag can only be set by a site administrator.');
 DEFINE('_KUNENA_PROFFOR', 'Profile for');
 DEFINE('_KUNENA_GENPROF', 'General Profile Options');
 //DEFINE('_KUNENA_PREFVIEW', 'Prefered Viewtype:');
@@ -848,8 +864,6 @@ DEFINE('_KUNENA_NOSUBS', 'No subscriptions found for this user');
 DEFINE('_KUNENA_BASICS', 'Basics');
 DEFINE('_KUNENA_BASICSFORUM', 'Basic Forum Information');
 DEFINE('_KUNENA_PARENT', 'Parent:');
-DEFINE('_KUNENA_PARENTDESC',
-    'Please note: To create a category, choose \'Top Level Category\' as a parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can <strong>NOT</strong> be posted to forums, not categories.');
 DEFINE('_KUNENA_BASICSFORUMINFO', 'Forum name and description');
 DEFINE('_KUNENA_NAMEADD', 'Name:');
 DEFINE('_KUNENA_DESCRIPTIONADD', 'Description:');
@@ -898,7 +912,6 @@ DEFINE('_KUNENA_REVIEW', 'Review');
 DEFINE('_KUNENA_MODERATED', 'Moderated');
 DEFINE('_KUNENA_LOCKED', 'Locked');
 DEFINE('_KUNENA_CATFOR', 'Category / Forum');
-DEFINE('_KUNENA_ADMIN', 'Kunena Administration');
 DEFINE('_KUNENA_CP', 'Kunena Control Panel');
 // Configuration page - Headings (Re-integrated from Joomlaboard 1.2)
 DEFINE('_COM_A_AVATAR_INTEGRATION', 'Avatar Integration');
@@ -927,8 +940,6 @@ DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST', 'Show Child Category Image');
 DEFINE('_KUNENA_SHOW_CHILD_CATEGORY_ON_LIST_DESC', 'If you want to show child category small icon on your forum list, set to &quot;Yes.&quot;&#32;');
 DEFINE('_KUNENA_SHOW_ANNOUNCEMENT', 'Show Announcement');
 DEFINE('_KUNENA_SHOW_ANNOUNCEMENT_DESC', 'Set to &quot;Yes&quot; if you want to show the announcement box on your Forum home page.');
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories list?');
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on your forum category list.');
 DEFINE('_KUNENA_RECENT_POSTS', 'Recent Post Settings');
 DEFINE('_KUNENA_SHOW_LATEST_MESSAGES', 'Show Recent Posts');
 DEFINE('_KUNENA_SHOW_LATEST_MESSAGES_DESC', 'Set to &quot;Yes&quot; if you want to show recent post plugin on your forum.');
@@ -1214,7 +1225,6 @@ DEFINE('_COM_A_TEMPLATE', 'Template');
 DEFINE('_COM_A_TEMPLATE_DESC', 'Choose the template to use.');
 DEFINE('_COM_A_TEMPLATE_IMAGE_PATH', 'Image Sets');
 DEFINE('_COM_A_TEMPLATE_IMAGE_PATH_DESC', 'Choose the images set template to use.');
-DEFINE('_PREVIEW_CLOSE', 'Close this window');
 //==========================================
 //new in 1.0 Stable
 DEFINE('_COM_A_POSTSTATSBAR', 'Use Posts Statistics Bar');
@@ -1539,7 +1549,7 @@ DEFINE('_POST_EMAIL_REGISTERED', 'your e-mail address will only be available to 
 DEFINE('_POST_LOCKED', 'locked by the administrator.');
 DEFINE('_POST_NO_NEW', 'New replies are not allowed.');
 DEFINE('_POST_NO_PUBACCESS1', 'The administrator has disabled public write access.');
-DEFINE('_POST_NO_PUBACCESS2', 'Only logged-in/registered users<br /> are allowed to contribute to the forum.');
+DEFINE('_POST_NO_PUBACCESS2', 'Only logged-in/registered users are allowed to contribute to the forum.');
 // showcat.php
 DEFINE('_SHOWCAT_NO_TOPICS', '>> There are no topics in this forum yet <<');
 DEFINE('_SHOWCAT_PENDING', 'pending message(s)');

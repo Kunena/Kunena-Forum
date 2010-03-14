@@ -283,7 +283,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
                     $types = array ("php", "mysql", "html", "js", "javascript");
 
-                    $code_start_html = '<div class="fbcode" style="width:'. $fbConfig->rtewidth .'px;"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
+                     $code_start_html = '<div class="fbcode"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>'._KUNENA_MSG_CODE.'</b></td></tr><tr><td><hr />';
 
                     if (!empty($tag->options["type"]) && in_array($tag->options["type"], $types)) {
                         $t_type = $tag->options["type"];
@@ -329,8 +329,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 break;
             case 'url':
                 $tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
-                if(substr($tempstr, 0, 7)!='http://') {
-                  $tempstr = 'http://'.$tempstr;
+                if ( !preg_match("`^(https?://)`",$tempstr) ) {
+                	$tempstr = 'http://'.$tempstr;
                 }
                 $tag_new = "<a href='".$tempstr."' rel=\"nofollow\" target=\"_blank\">".$between.'</a>';
                 return TAGPARSER_RET_REPLACED;
@@ -367,12 +367,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                     // Need to check if we are nested inside a URL code
 					if($task->autolink_disable == 0)
 					{
-						// This part: <div style=\"table-layout:fixed; display:table; width:100%\"> ... </div> compliments of IE8
-						$tag_new = "<div style=\"table-layout:fixed; display:table; width:100%\"><a href='".$tempstr."' rel=\"lightbox\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a></div>";					}
-					else
-					{
-						// This part: <div style=\"table-layout:fixed; display:table; width:100%\"> ... </div> compliments of IE8
-						$tag_new = "<div style=\"table-layout:fixed; display:table; width:100%\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></div>";
+						 // This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
+
+						$tag_new = "<a href='".$tempstr."' rel=\"lightbox\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
+                	} else {
+						 // This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
+
+						 $tag_new = "<img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
 					}
 
 

@@ -23,6 +23,10 @@
 defined( '_JEXEC' ) or die('Restricted access');
 
 $fbConfig =& CKunenaConfig::getInstance();
+// url of current page that user will be returned to after bulk operation
+$kuri = JURI::getInstance ();
+$Breturn = $kuri->toString ( array('path', 'query', 'fragment') );
+$app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 global $is_Moderator;
 $kunena_my = &JFactory::getUser();
 // Func Check
@@ -56,10 +60,6 @@ $topic_emoticons[4] = KUNENA_URLEMOTIONSPATH . 'love.gif';
 $topic_emoticons[5] = KUNENA_URLEMOTIONSPATH . 'grin.gif';
 $topic_emoticons[6] = KUNENA_URLEMOTIONSPATH . 'shock.gif';
 $topic_emoticons[7] = KUNENA_URLEMOTIONSPATH . 'smile.gif';
-
-// url of current page that user will be returned to after bulk operation
-$kuri = JURI::getInstance();
-$Breturn = $kuri->toString( array('path'));
 
 $tabclass = array
 (
@@ -330,7 +330,7 @@ if (count($messages[0]) > 0)
         <span class="topic_posted_time"><?php echo _KUNENA_POSTED_AT ?> <?php echo time_since($leaf->time , time() + ($fbConfig->board_ofset * 3600)); ?> <?php echo _KUNENA_AGO ?>
         </span>
 <?php
-	if ($leaf->name) 
+	if ($leaf->name)
 	{
         	echo '<span class="topic_by">';
 	        echo _GEN_BY.' '.CKunenaLink::GetProfileLink($fbConfig, $leaf->userid, $leaf->name);
@@ -438,7 +438,7 @@ if (count($messages[0]) > 0)
         	echo CKunenaLink::GetThreadPageLink($fbConfig, 'view', $leaf->catid, $leaf->thread, 1, $fbConfig->messages_per_page, _GEN_LAST_POST, $last_reply[$leaf->id]->id);
         }
 
-        if ($leaf->name) 
+        if ($leaf->name)
 		echo ' '._GEN_BY. ' '.CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, stripslashes($last_reply[$leaf->id]->name), 'nofollow', 'topic_latest_post_user'); ?>
         </span>
         <!-- /Latest Post -->

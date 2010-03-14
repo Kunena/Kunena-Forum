@@ -159,7 +159,7 @@ switch ($task) {
 			$avatar = "";
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{{$kunena_db->getEscaped($avatar)}' WHERE userid='{$kunena_my->id}'");
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$kunena_db->getEscaped($avatar)}' WHERE userid='{$kunena_my->id}'");
 
 		if (!$kunena_db->query())
 		{
@@ -177,7 +177,7 @@ switch ($task) {
 		$app =& JFactory::getApplication();
 
 		//numExtensions= people tend to upload malicious files using mutliple extensions like: virus.txt.vbs; we'll want to have the last extension to validate against..
-		$filename = split("\.", $_FILES['avatar']['name']);
+		$filename = explode('.', $_FILES['avatar']['name']);
 		$numExtensions = (count($filename)) - 1;
 		$avatarName = $filename[0];
 		$avatarExt = $filename[$numExtensions];
@@ -215,7 +215,7 @@ switch ($task) {
 		}
 
 		//check file name characteristics
-		if (eregi("[^0-9a-zA-Z_]", $avatarExt))
+		if (preg_match('`[^0-9a-zA-Z_]`', $avatarExt))
 		{
 			$app->enqueueMessage(_UPLOAD_ERROR_NAME, 'notice');
 			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'));
@@ -242,7 +242,7 @@ switch ($task) {
 			$fbConfig->imageprocessor = 'none';
 		}
 
-		//$gdversion = ereg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
+		//$gdversion = preg_replace('[[:alpha:][:space:]()]+', '', $GDArray['GD Version']); // just FYI for detection from gd_info()
 
 		switch ($fbConfig->imageprocessor) {
 		case 'gd1' :
@@ -332,7 +332,7 @@ switch ($task) {
 			$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&amp;func=myprofile&do=avatar'));
 		}
 
-		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{{$kunena_db->getEscaped($newAvatar)}' WHERE userid={$kunena_my->id}");
+		$kunena_db->setQuery("UPDATE #__fb_users SET avatar='{$kunena_db->getEscaped($newAvatar)}' WHERE userid={$kunena_my->id}");
 		$kunena_db->query() or trigger_dberror("Unable to update user avatar.");
 
 		$app->redirect(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile'),_UPLOAD_UPLOADED);
@@ -588,7 +588,6 @@ if ($fbConfig->allowavatarupload)
 }
 else
 {
- echo '<b>'. _COM_A_REGISTERED_ONLY.'</b><br />';
-   echo _FORUM_UNAUTHORIZIED2 ;
+	 $app->enqueueMessage ( _COM_A_REGISTERED_ONLY . '<br/>' . _FORUM_UNAUTHORIZIED2, 'error' );
 }
 ?>

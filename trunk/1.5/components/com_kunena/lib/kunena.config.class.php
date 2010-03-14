@@ -75,7 +75,7 @@ abstract class CKunenaConfigBase
     abstract public function &getInstance();
     abstract public function GetClassVars();
     abstract protected function GetConfigTableName();
-    
+
     // This function allows for the overload of user specific settings.
     // All settings can now be user specific. No further code changes
     // are required inside of Kunena.
@@ -199,7 +199,7 @@ abstract class CKunenaConfigBase
     public function load($KunenaUser=null)
     {
         $tables = CKunenaTables::getInstance();
-        if ($tables->check($this->GetConfigTableName())) 
+        if ($tables->check($this->GetConfigTableName()))
 	{
         	$this->_db->setQuery("SELECT * FROM ".$this->GetConfigTableName());
 		$config = $this->_db->loadAssoc();
@@ -210,7 +210,7 @@ abstract class CKunenaConfigBase
 			$this->bind($config);
 		}
         }
-        
+
         // Check for user specific overrides
         if(is_object($KunenaUser))
         {
@@ -227,7 +227,7 @@ abstract class CKunenaConfigBase
 class CKunenaConfig extends CKunenaConfigBase
 {
 	// All vars MUST BE LOWER CASE!
-	// New in Kunena 1.5.2: $id for JoomFish support 
+	// New in Kunena 1.5.2: $id for JoomFish support
 	var $id                      = 0;
     var $board_title             = 'Kunena';
     var $email                   = 'change@me.com';
@@ -318,7 +318,6 @@ class CKunenaConfig extends CKunenaConfigBase
     var $userlist_avatar         = 1;
     var $userlist_name           = 1;
     var $userlist_username       = 1;
-    var $userlist_group          = 0;
     var $userlist_posts          = 1;
     var $userlist_karma          = 1;
     var $userlist_email          = 0;
@@ -378,7 +377,11 @@ class CKunenaConfig extends CKunenaConfigBase
 	var $sef                     = 1;
 	var $sefcats                 = 0;
 	var $sefutf8                 = 0;
-	
+	//New for 1.5.10 -> hide IP
+    var $hide_ip = 1;
+    //New for 1.5.10 -> disable/enable activity stream
+	var $js_actstr_integration = 0;
+
     public function __construct($KunenaUser=null)
     {
         parent::__construct();

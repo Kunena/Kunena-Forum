@@ -334,8 +334,8 @@ switch ($task)
 
 $kn_version = CKunenaVersion::versionArray();
 if ($kn_version->versionname == '@kunenaversionname@') {
-	$kn_version_name = _KUNENA_VERSION_SVN;	
-	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_SVN;
+	$kn_version_warning = _KUNENA_VERSION_SVN_WARNING;
 } else if ($kn_version->versionname == 'NOT UPGRADED') {
 	$app->enqueueMessage(sprintf(_KUNENA_ERROR_UPGRADE, $kn_version->version), 'notice');
 	$app->enqueueMessage(_KUNENA_ERROR_UPGRADE_WARN);
@@ -343,25 +343,25 @@ if ($kn_version->versionname == '@kunenaversionname@') {
 	$app->enqueueMessage(_KUNENA_ERROR_INCOMPLETE_SUPPORT.' <a href="http://www.kunena.com">www.kunena.com</a>');
 }
 if (strpos($kn_version->version, 'RC') !== false) {
-	$kn_version_name = _KUNENA_VERSION_RC;	
-	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_RC;
+	$kn_version_warning = _KUNENA_VERSION_RC_WARNING;
 } else if (strpos($kn_version->version, 'BETA') !== false) {
-	$kn_version_name = _KUNENA_VERSION_BETA;	
-	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_BETA;
+	$kn_version_warning = _KUNENA_VERSION_BETA_WARNING;
 } else if (strpos($kn_version->version, 'ALPHA') !== false) {
-	$kn_version_name = _KUNENA_VERSION_ALPHA;	
-	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_ALPHA;
+	$kn_version_warning = _KUNENA_VERSION_ALPHA_WARNING;
 } else if (strpos($kn_version->version, 'DEV') !== false) {
-	$kn_version_name = _KUNENA_VERSION_DEV;	
-	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;	
+	$kn_version_name = _KUNENA_VERSION_DEV;
+	$kn_version_warning = _KUNENA_VERSION_DEV_WARNING;
 }
 if (!empty($kn_version_warning))
 {
-	$app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');	
+	$app->enqueueMessage(sprintf(_KUNENA_VERSION_INSTALLED, $kn_version->version, $kn_version_name).' '.$kn_version_warning, 'notice');
 }
 
 // Detect errors in CB integration
-if (is_object($kunenaProfile)) 
+if (is_object($kunenaProfile))
 {
 	$kunenaProfile->enqueueErrors();
 	//$kunenaProfile->close();
@@ -534,7 +534,7 @@ $kunena_db = &JFactory::getDBO();
 
     $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
-    
+
     $app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
 
@@ -608,7 +608,7 @@ function deleteForum($cid = null, $option)
 
 	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
-    
+
     $app->redirect( JURI::base() ."index.php?option=$option&task=showAdministration");
 }
 
@@ -749,14 +749,14 @@ function showConfig($option)
 
     asort ($templatelist);
     asort ($imagesetlist);
-    
+
     while (list($key, $val) = each($templatelist)) {
 		$templatelistitems[] = JHTML::_('select.option',  $val, $val);
     }
     while (list($key, $val) = each($imagesetlist)) {
 		$imagesetlistitems[] = JHTML::_('select.option',  $val, $val);
     }
-    
+
 	$lists['jmambot'] = JHTML::_('select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->jmambot);
     $lists['disemoticons'] = JHTML::_('select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->disemoticons);
     $lists['template'] = JHTML::_('select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->template);
@@ -823,7 +823,6 @@ function showConfig($option)
     $lists['userlist_avatar'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_avatar', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_avatar);
     $lists['userlist_name'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_name', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_name);
     $lists['userlist_username'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_username', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_username);
-    $lists['userlist_group'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_group', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_group);
     $lists['userlist_posts'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_posts', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_posts);
     $lists['userlist_karma'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_karma', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_karma);
     $lists['userlist_email'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_email', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_email);
@@ -850,7 +849,11 @@ function showConfig($option)
 	$lists['sef'] = JHTML::_('select.genericlist', $yesno, 'cfg_sef', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sef);
 	$lists['sefcats'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sefcats);
 	$lists['sefutf8'] = JHTML::_('select.genericlist', $yesno, 'cfg_sefutf8', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->sefutf8);
-	
+	// New for 1.5.10: hide ip
+	$lists['hide_ip'] = JHTML::_('select.genericlist', $yesno, 'cfg_hide_ip', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->hide_ip);
+	//New for 1.5.10: Joomsocial Activity Stream Integration disable/enable
+    $lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->js_actstr_integration);
+
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 
@@ -899,7 +902,7 @@ function saveConfig($option)
 
 	$kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
-	
+
 	$app->redirect( JURI::base() . "index.php?option=$option&task=showconfig", _KUNENA_CONFIGSAVED);
 }
 
@@ -914,7 +917,7 @@ function showInstructions($kunena_db, $option, $lang) {
 function showCss($option)
 {
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
-	
+
 	$fbConfig =& CKunenaConfig::getInstance();
     $file = KUNENA_PATH_TEMPLATE .DS. $fbConfig->template .DS. "kunena.forum.css";
     $permission = CKunenaPath::isWritable($file);
@@ -932,7 +935,7 @@ function showCss($option)
 function saveCss($file, $csscontent, $option)
 {
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
-	
+
 	$app =& JFactory::getApplication();
     $tmpstr = _KUNENA_CSS_SAVE;
     $tmpstr = str_replace("%file%", $file, $tmpstr);
@@ -965,7 +968,7 @@ function newModerator($option, $id = null)
     $total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
     if ($limit == 0 || $limit > 100) $limit = 100;
-	
+
     $kunena_db->setQuery("SELECT * FROM #__users AS a" . "\n LEFT JOIN #__fb_users AS b" . "\n ON a.id=b.userid" . "\n WHERE b.moderator=1", $limitstart, $limit);
     $userList = $kunena_db->loadObjectList();
     	check_dberror('Unable to load moderators.');
@@ -1045,10 +1048,10 @@ function addModerator($option, $id, $cid = null, $publish = 1)
 
     $row = new fbForum($kunena_db);
     $row->checkin($id);
-    
+
     $kunena_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 	$kunena_db->query() or trigger_dberror("Unable to update sessions.");
-	
+
     $app->redirect( JURI::base() ."index.php?option=$option&task=edit2&uid=" . $id);
 }
 
@@ -1078,7 +1081,7 @@ function showProfiles($kunena_db, $option, $lang, $order)
 
     if ($limitstart >= $total) $limitstart = 0;
     if ($limit == 0 || $limit > 100) $limit = 100;
-    
+
     if ($order == 1)
     {
         $kunena_db->setQuery(
@@ -1087,9 +1090,9 @@ function showProfiles($kunena_db, $option, $lang, $order)
     else if ($order == 2)
     {
         $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.name ASC ", $limitstart, $limit);
-    }
-    else if ($order < 1)
-    {
+    } else if ($order == 3) {
+	 	$kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY u.username ASC", $limitstart, $limit);
+    } else if ($order < 1) {
         $kunena_db->setQuery("SELECT * FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . (count($where) ? "\nWHERE " . implode(' AND ', $where) : "") . "\n ORDER BY sbu.userid", $limitstart, $limit);
     }
 
@@ -1109,7 +1112,7 @@ function editUserProfile($uid)
 		echo _KUNENA_PROFILE_NO_USER;
 		return;
 	}
-	
+
 	$kunena_db = &JFactory::getDBO();
 	$kunena_acl = &JFactory::getACL();
 
@@ -1335,10 +1338,10 @@ function douserssync($kunena_db, $option)
     $useradd = JRequest::getBool('useradd', 0);
     $userdel = JRequest::getBool('userdel', 0);
     $userrename = JRequest::getBool('userrename', 0);
-    
+
     $app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
-    
+
     if ($usercache)
     {
     	//reset access rights
@@ -1390,7 +1393,9 @@ function browseUploaded($kunena_db, $option, $type)
     $uploaded = array ();
     $uploaded_col_count = 0;
 
-    while ($file = @readdir($dir))
+    $file = @readdir($dir);
+
+    while ($file)
     {
         if ($file != '.' && $file != '..' && $file != 'index.php' && is_file($uploaded_path .DS . $file) && !is_link($uploaded_path .DS . $file))
         {
@@ -1401,6 +1406,7 @@ function browseUploaded($kunena_db, $option, $type)
             $uploaded_col_count++;
         //}
         }
+        $file = @readdir($dir);
     }
 
     @closedir ($dir);
@@ -1423,7 +1429,7 @@ function replaceImage($kunena_db, $option, $imageName, $OxP)
 
     if ($OxP == "1")
     {
-        $filename = split("\.", $imageName);
+        $filename = explode('.', $imageName);
         $fileName = $filename[0];
         $fileExt = $filename[1];
         $ret = CKunenaFile::copy(KUNENA_PATH_UPLOADED .DS. 'dummy.' . $fileExt, KUNENA_PATH_UPLOADED .DS. 'images' .DS. $imageName);
@@ -1452,7 +1458,7 @@ function deleteFile($kunena_db, $option, $fileName)
     }
 
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.file.class.php');
-    
+
 	// step 1: Remove file
     $ret = CKunenaFile::delete(KUNENA_PATH_UPLOADED .DS. 'files' .DS. $fileName);
     //step 2: remove the database link to the file
@@ -1514,7 +1520,7 @@ function showCategories($cat, $cname, $extras = "", $levellimit = "4")
     $list = catTreeRecurse(0, '', array (), $children);
     // assemble menu items to the array
     $mitems = array ();
-    $mitems[] = JHTML::_('select.option', '0', _KUNENA_NOPARENT, 'value', 'text');
+    $mitems[] = JHTML::_('select.option', '0', _KUNENA_TOPLEVEL, 'value', 'text');
     $this_treename = '';
 
     foreach ($list as $item)
@@ -1637,6 +1643,15 @@ function dircopy($srcdir, $dstdir, $verbose = false) {
 //===============================
 //   smiley functions
 //===============================
+
+//
+// Read a listing of uploaded smilies for use in the add or edit smiley code...
+//
+function collect_smilies_ranks($path) {
+	$smiley_rank_images = JFolder::Files($path,false,false,false,array('index.php'));
+	return $smiley_rank_images;
+}
+
 function showsmilies($option)
 {
 $kunena_db = &JFactory::getDBO();
@@ -1648,7 +1663,7 @@ $kunena_db = &JFactory::getDBO();
 	$total = $kunena_db->loadResult();
 	if ($limitstart >= $total) $limitstart = 0;
     if ($limit == 0 || $limit > 100) $limit = 100;
-	
+
     $kunena_db->setQuery("SELECT * FROM #__fb_smileys", $limitstart, $limit);
     $smileytmp = $kunena_db->loadObjectList();
             check_dberror("Unable to load smileys.");
@@ -1669,10 +1684,11 @@ function editsmiley($option, $id)
     $smileytmp = $kunena_db->loadAssocList();
     $smileycfg = $smileytmp[0];
 
-    $smiley_images = collect_smilies();
-
     $smileypath = smileypath();
+    $smileypathabs = $smileypath ['abs'];
     $smileypath = $smileypath['live'];
+
+    $smiley_images = collect_smilies_ranks ($smileypathabs);
 
 	$smiley_edit_img = '';
 
@@ -1698,9 +1714,11 @@ function newsmiley($option)
 {
 	$kunena_db = &JFactory::getDBO();
 
-	$smiley_images = collect_smilies();
     $smileypath = smileypath();
+    $smileypathabs = $smileypath ['abs'];
     $smileypath = $smileypath['live'];
+
+    $smiley_images = collect_smilies_ranks ($smileypathabs);
 
     $filename_list = "";
 	for( $i = 0; $i < count($smiley_images); $i++ )
@@ -1786,32 +1804,7 @@ function smileypath()
 
     return $smileypath;
 }
-//
-// Read a listing of uploaded smilies for use in the add or edit smiley code...
-//
-function collect_smilies()
-{
-	$smileypath = smileypath();
-	$smiley_images = array();
 
-    $dir = @opendir($smileypath['abs']);
-
-	while($file = @readdir($dir))
-	{
-		if( !@is_dir($smiley_abs_path .DS . $file) )
-		{
-			$img_size = @getimagesize($smileypath['abs'] .DS . $file);
-
-			if( $img_size[0] && $img_size[1] )
-			{
-				$smiley_images[] = $file;
-			}
-		}
-	}
-
-	@closedir($dir);
-	return $smiley_images;
-}
 //===============================
 //  FINISH smiley functions
 //===============================
@@ -1873,37 +1866,15 @@ function rankpath()
 
 }
 
-function collectRanks()
-{
-	$rankpath = rankpath();
-
-	$dir = @opendir($rankpath['abs']);
-
-	$rank_images = array();
-	while($file = @readdir($dir))
-	{
-		if( !@is_dir($rankpath['abs'] . DS . $file) )
-		{
-			$img_size = @getimagesize($rankpath['abs'] .DS . $file);
-
-			if( $img_size[0] && $img_size[1] )
-			{
-				$rank_images[] = $file;
-			}
-		}
-	}
-
-	@closedir($dir);
-	return $rank_images;
-}
-
 function newRank($option)
 {
 	$kunena_db = &JFactory::getDBO();
 
-	$rank_images = collectRanks();
 	$rankpath = rankpath();
+	$rankpathabs = $rankpath ['abs'];
 	$rankpath = $rankpath['live'];
+
+	$rank_images = collect_smilies_ranks($rankpathabs);
 
 	$filename_list = "";
 	$i = 0;
@@ -1982,10 +1953,11 @@ function editRank($option, $id)
 	$ranks = $kunena_db->loadObjectList();
 	        check_dberror("Unable to load ranks.");
 
-    $rank_images = collectRanks();
-
     $path = rankpath();
+    $pathabs = $path ['abs'];
     $path = $path['live'];
+
+    $rank_images = collect_smilies_ranks($pathabs);
 
     $edit_img = $filename_list = '';
 

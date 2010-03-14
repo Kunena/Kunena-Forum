@@ -172,7 +172,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID")) {
 
 // Kunena live url
 define('KUNENA_LIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
-define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index2.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
+define('KUNENA_CLEANLIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena&amp;no_html=1' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITEMID_SUFFIX);
 
 // Kunena souces absolute path
@@ -609,6 +609,7 @@ class CKunenaTools {
 
     function fbDeletePosts($isMod, $return) {
     	$app =& JFactory::getApplication();
+    	$backUrl = $app->getUserState ( "com_kunena.ActionBulk" );
         $kunena_my = &JFactory::getUser();
 		$kunena_db = &JFactory::getDBO();
 
@@ -717,6 +718,78 @@ class CKunenaTools {
             $app->redirect($return, _KUNENA_BULKMSG_DELETED);
         }
 
+	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
+		$catid = intval ( $catid );
+		$thread = intval ( $thread );
+		if (! $catid || ! $thread)
+			return array();
+
+		// Make sure that category exists and fetch access info
+		$kunena_db = &JFactory::getDBO ();
+		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE id={$catid}";
+		$kunena_db->setQuery ($query);
+		$access = $kunena_db->loadObject ();
+		check_dberror ( "Unable to load category access rights." );
+		if (!$access) return array();
+
+		$arogroups = '';
+		if ($subscriptions) {
+			// Get all allowed Joomla groups to make sure that subscription is valid
+			$kunena_acl = &JFactory::getACL ();
+			$public = array ();
+			$admin = array ();
+			if ($access->pub_access > 0) {
+				if ($access->pub_recurse) {
+					$public = $kunena_acl->get_group_children ( $access->pub_access, 'ARO', 'RECURSE' );
+				}
+				$public [] = $access->pub_access;
+			}
+			if ($access->admin_access > 0) {
+				if ($access->admin_recurse) {
+					$admin = $kunena_acl->get_group_children ( $access->admin_access, 'ARO', 'RECURSE' );
+				}
+				$admin [] = $access->admin_access;
+			}
+			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
+			if ($arogroups)
+				$arogroups = "u.gid IN ({$arogroups})";
+		}
+
+		$querysel = "SELECT u.id, u.name, u.username, u.email,
+					MAX((s.thread IS NOT NULL) OR (sc.catid IS NOT NULL)) as subscription,
+					MAX(p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid=$catid))) as moderator,
+					MAX(u.gid IN (24, 25)) AS admin FROM #__users AS u
+					LEFT JOIN #__fb_users AS p ON u.id=p.userid
+					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid
+					LEFT JOIN #__fb_categories AS c ON m.catid=c.id
+					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread=$thread
+					LEFT JOIN #__fb_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=$catid";
+
+		$where = array ();
+		$having = '';
+		if ($subscriptions){
+			if ($arogroups)
+				$where [] = "$arogroups";
+			$having = "HAVING subscription > 0";
+		}
+		if ($moderators)
+			$where [] = " ( p.moderator=1 AND ( m.catid IS NULL OR ( c.moderated=1 AND m.catid=$catid ) ) ) ";
+		if ($admins)
+			$where [] = " ( u.gid IN (24, 25) ) ";
+
+		$subsList = array ();
+		if (count ( $where )) {
+			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ($excludeList)
+									AND (" . implode ( ' OR ', $where ) . ")
+									GROUP BY u.id
+									$having";
+			$kunena_db->setQuery ( $query );
+			$subsList = $kunena_db->loadObjectList ();
+			check_dberror ( "Unable to load email list." );
+		}
+		return $subsList;
+	}
+
     function isModOrAdmin($id = 0) {
         $kunena_my = &JFactory::getUser();
 // echo '<div>CALL isModOrAdmin</div>';
@@ -738,6 +811,7 @@ class CKunenaTools {
 
     function fbMovePosts($catid, $isMod, $return) {
     	$app =& JFactory::getApplication();
+    	$backUrl = $app->getUserState ( "com_kunena.ActionBulk" );
         $kunena_db = &JFactory::getDBO();
 		$kunena_my = &JFactory::getUser();
 

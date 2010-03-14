@@ -784,7 +784,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top">
-                        <img src = "/images/M_images/livemarks.png"/> <?php echo _COM_A_RSS_DESC ?>
+                         <img src = "<?php echo JURI::root();?>/images/M_images/livemarks.png"/> <?php echo _COM_A_RSS_DESC ?>
                     </td>
                 </tr>
 
@@ -854,14 +854,14 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top"  width="25%" ><?php echo $lists['sefutf8']; ?></td>
- 
+
                     <td align = "left" valign = "top"><?php echo _KUNENA_SEF_UTF8_DESC ?>
                     </td>
                 </tr>
-                
+
 			</table>
 		</fieldset>
-		
+
 		<div class="fbfuncsubtitle"><?php echo _COM_A_FRONTEND ?> <a name="frontend" id="frontend" > </a></div>
 
           <fieldset>
@@ -1550,6 +1550,20 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_MAILFULL_DESC; ?>
                     </td>
                 </tr>
+                <tr align="center" valign="middle">
+	 	                 <td align="left" valign="top"><?php
+	 	                 echo _KUNENA_COM_A_HIDE_IP?>
+	 	                 </td>
+
+	 	                 <td align="left" valign="top"><?php
+	 	                 echo $lists ['hide_ip'];
+	 	                 ?>
+	 	                 </td>
+
+	 	                 <td align="left" valign="top"><?php
+	 	                 echo _KUNENA_COM_A_HIDE_IP_DESC?>
+	 	                 </td>
+	 	         </tr>
             </table>
           </fieldset>
 			<div class="fbfuncsubtitle"><?php echo _COM_A_AVATARS ?><a name="avatars" id="avatars" > </a></div>
@@ -2008,7 +2022,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_AUP_ENABLED_POINTS_IN_PROFILE_DESC; ?>
                     </td>
                 </tr>
-				
+
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_AUP_ENABLED_RULES; ?>
                     </td>
@@ -2019,7 +2033,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _KUNENA_AUP_ENABLED_RULES_DESC; ?>
                     </td>
                 </tr>
-                
+
 	            <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_AUP_MINIMUM_POINTS_ON_REPLY; ?>
                     </td>
@@ -2053,6 +2067,27 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 </tr>
             </table>
 </fieldset>
+<fieldset><legend> <?php
+ 	  	                 echo _COM_A_JS_ACTIVITYSTREAM_INTEGRATION?></legend>
+ 	  	 <table cellpadding="4" cellspacing="0" border="0" width="100%"
+ 	  	         class="fbadminform">
+
+
+ 	  	         <tr align="center" valign="middle">
+ 	  	                 <td align="left" valign="top" width="25%"><?php
+ 	  	                 echo _COM_A_JS_ACTIVITYSTREAM_INTEGRATION?>
+ 	  	                 </td>
+
+ 	  	                 <td align="left" valign="top" width="25%"><?php
+ 	  	                 echo $lists ['js_actstr_integration'];
+ 	  	                 ?>
+ 	  	                 </td>
+
+ 	  	                 <td align="left" valign="top"><?php
+ 	  	                 echo _COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC?></td>
+ 	  	         </tr>
+ 	  	 </table>
+ 	  	 </fieldset>
 
 
             <div class="fbfuncsubtitle"><?php echo _KUNENA_ADMIN_CONFIG_PLUGINS ?><a name="plugins" id="plugins"> </a></div>
@@ -2114,17 +2149,6 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_USERNAME_DESC ?>
-                    </td>
-                </tr>
-
-                <tr align = "center" valign = "middle">
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_GROUP ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo $lists['userlist_group']; ?>
-                    </td>
-
-                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_GROUP_DESC ?>
                     </td>
                 </tr>
 
@@ -2531,17 +2555,12 @@ echo $pane->endPane();
 
 
                     <td nowrap align = "right"><?php echo _COM_A_DISPLAY; ?>
-                    </td>
-
-                    <td nowrap align = "right">
 <?php echo $pageNavSP->getLimitBox(); ?>
                     </td>
 
                     <td nowrap align = "right">
 <?php echo _USRL_SEARCH_BUTTON; ?>:
-                    </td>
 
-                    <td nowrap align = "right">
                         <input type = "text" name = "search" value = "<?php echo $search;?>" class = "inputbox" onChange = "document.adminForm.submit();"/>
                     </td>
                 </tr>
@@ -2550,8 +2569,8 @@ echo $pane->endPane();
 
 
                     <td colspan = "4" nowrap>
-                        :: <a href = "index.php?option=com_kunena&task=profiles&order=0"><?php
-    echo _KUNENA_SORTID; ?></a> :: <a href = "index.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> :: <a href = "index.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a>
+                        <a href = "index.php?option=com_kunena&task=profiles&order=0"><?php
+    echo _KUNENA_SORTID; ?></a> | <a href = "index.php?option=com_kunena&task=profiles&order=1"><?php echo _KUNENA_SORTMOD; ?></a> | <a href = "index.php?option=com_kunena&task=profiles&order=2"><?php echo _KUNENA_SORTNAME; ?></a> | <a href = "index.php?option=com_kunena&task=profiles&order=3"><?php echo _KUNENA_SORTREALNAME; ?></a>
                     </td>
                 </tr>
             </table>
@@ -2567,7 +2586,7 @@ echo $pane->endPane();
 
                     <th algin = "left" width = "10"><?php echo _KUNENA_USRL_NAME; ?>
                     </th>
-                    
+
                     <th algin = "left" width = "10"><?php echo _KUNENA_USRL_REALNAME; ?>
                     </th>
 
@@ -2609,7 +2628,7 @@ echo $pane->endPane();
                                 <td width = "100">
                                     <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','userprofile')"><?php echo $pl->username; ?></a>
                                 </td>
-                                
+
                                 <td width = "100">
                                     <a href = "#edit" onclick = "return listItemTask('cb<?php echo $i; ?>','userprofile')"><?php echo $pl->name; ?></a>
                                 </td>
@@ -2655,7 +2674,7 @@ echo $pane->endPane();
     <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 
     <tr>
-        <th align = "center" colspan = "7"> <?php
+        <th align = "center" colspan = "8"> <?php
         echo $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?>
         </th>
     </tr>
@@ -2790,7 +2809,7 @@ echo $pane->endPane();
         </th>
     </tr>
 
-    
+
 
     <tr>
         <td colspan = "7"><?php echo _KUNENA_NOTEUS; ?>
@@ -3156,7 +3175,7 @@ else
             </tr>
 
             <tr>
-                <td><?php echo _KUNENA_SYNC_USERS_RENAME; ?></td>           
+                <td><?php echo _KUNENA_SYNC_USERS_RENAME; ?></td>
                 <td><input type="checkbox" name="userrename" value="1" /></td>
                 <td><?php echo _KUNENA_SYNC_USERS_RENAME_DESC; ?></td>
             </tr>
@@ -3347,7 +3366,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
         		<th align = "center" colspan = "6"> <?php echo  $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?>
 		        </th>
 		    </tr>
-            
+
       	</table>
                 <input type = "hidden" name = "option" value = "<?php echo $option; ?>"><input type = "hidden" name = "task" value = "showsmilies"><input type = "hidden" name = "boxchecked" value = "0">
                 <?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
@@ -3486,7 +3505,7 @@ function showsmilies($option, $lang, &$smileytmp, $pageNavSP, $smileypath)
       <th align="center" colspan="7"><?php
       echo $pageNavSP->getLimitBox().$pageNavSP->getResultsCounter().$pageNavSP->getPagesLinks(); ?></th>
     </tr>
-    
+
   </table>
   </form>
 

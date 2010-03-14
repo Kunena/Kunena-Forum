@@ -259,8 +259,8 @@ class smile
                 <table border = "0" cellspacing = "0" cellpadding = "0" class = "fb-postbuttonset">
                     <tr>
                         <td class = "fb-postbuttons">
-							<input name="speicher" type="hidden" size="30" maxlength="100">
-							<input name="previewspeicher" type="hidden" size="30" maxlength="100">
+							<input name="speicher" type="hidden" size="30" maxlength="100" />
+							<input name="previewspeicher" type="hidden" size="30" maxlength="100" />
 							<img class = "fb-bbcode" title = "Bold" accesskey = "b" name = "addbbcode0" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_bold.png" alt="B" onclick = "bbfontstyle('[b]', '[/b]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_BOLD);?>')" />
 							<img class = "fb-bbcode" accesskey = "i" name = "addbbcode2" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_italic.png" alt="I" onclick = "bbfontstyle('[i]', '[/i]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ITALIC);?>')" />
 							<img class = "fb-bbcode" accesskey = "u" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_underline.png" alt="U" onclick = "bbfontstyle('[u]', '[/u]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UNDERL);?>')" />
@@ -280,25 +280,25 @@ class smile
 							<img class = "fb-bbcode" accesskey = "s" name = "addbbcode40" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spoiler.png" alt="Spoiler" onclick = "bbfontstyle('[spoiler]', '[/spoiler]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_SPOILER);?>')" />
 							<?php } ?>
 							<img class = "fb-bbcode" accesskey = "h" name = "addbbcode24" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>group_key.png" alt="Hide" onclick = "bbfontstyle('[hide]', '[/hide]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_HIDE);?>')" />
-							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "fb-bbcode" alt="" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
 							<img class = "fb-bbcode" accesskey = "k" name = "addbbcode10" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_bullets.png" alt="ul" onclick = "bbfontstyle('[ul]', '[/ul]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_UL);?>')" />
 							<img class = "fb-bbcode" accesskey = "o" name = "addbbcode12" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_numbers.png" alt="ol" onclick = "bbfontstyle('[ol]', '[/ol]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_OL);?>')" />
 							<img class = "fb-bbcode" accesskey = "l" name = "addbbcode18" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_list_none.png" alt="li" onclick = "bbfontstyle('[li]', '[/li]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LI);?>')" />
 							<img class = "fb-bbcode" accesskey = "left" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_left.png" alt="left" onclick = "bbfontstyle('[left]', '[/left]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_LEFT);?>')" />
 							<img class = "fb-bbcode" accesskey = "center" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_center.png" alt="center" onclick = "bbfontstyle('[center]', '[/center]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_CENTER);?>')" />
 							<img class = "fb-bbcode" accesskey = "right" name = "addbbcode4" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>text_align_right.png" alt="right" onclick = "bbfontstyle('[right]', '[/right]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_ALIGN_RIGHT);?>')" />
-							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "fb-bbcode" alt="" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
 							<img class = "fb-bbcode" accesskey = "q" name = "addbbcode6" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>comment.png" alt="Quote" onclick = "bbfontstyle('[quote]', '[/quote]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_QUOTE);?>')" />
-							<img class = "fb-bbcode" accesskey = "c" name = "addbbcode8" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>code.png" alt="Code" onclick = "bbfontstyle('[code]', '[/code]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_CODE);?>')" />                            
-							<img class = "fb-bbcode" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
+							<img class = "fb-bbcode" accesskey = "c" name = "addbbcode8" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>code.png" alt="Code" onclick = "bbfontstyle('[code]', '[/code]');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_CODE);?>')" />
+							<img class = "fb-bbcode" alt="" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>spacer.png" style="cursor: auto;" />
 							<img class = "fb-bbcode" accesskey = "p" name = "addbbcode14" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>picture_link.png" alt="Img" onclick = "javascript:dE('image');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINK);?>')" />
-							<img class = "fb-bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />	
+							<img class = "fb-bbcode" accesskey = "w" name = "addbbcode16" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>link_url.png" alt="URL" onclick = "javascript:dE('link');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINK);?>')" />
 							<?php if ($fbConfig->showebaytag) {?>
 							<img class = "fb-bbcode" accesskey = "e" name = "addbbcode20" src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>ebay.png" alt="Ebay" onclick = "bbfontstyle('[ebay]', '[/ebay]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_EBAY);?>')" />
 							<?php } ?>
 							<?php if ($fbConfig->showvideotag) {?>
 								&nbsp;<span style="white-space:nowrap;">
-								<a href = "javascript:dE('video');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEO);?>')"><img  src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>film.png"  /></a>
+								<a href = "javascript:dE('video');" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEO);?>')"><img  src="<?php echo KUNENA_LIVEUPLOADEDPATH.'/editor/'; ?>film.png" alt="video"   /></a>
                               </span>
 							<?php } ?>
                         </td>
@@ -313,16 +313,16 @@ class smile
 						</div>
 
 						<div id="link" style="display: none;">
-							<?php @print(_KUNENA_EDITOR_LINK_URL); ?><input name="url" type="text" size="40" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKURL);?>')"> 
-							<?php @print(_KUNENA_EDITOR_LINK_TEXT); ?><input name="text2" type="text" size="30" maxlength="100" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKTEXT);?>')"> 
+							<?php @print(_KUNENA_EDITOR_LINK_URL); ?><input name="url" type="text" size="40" maxlength="100" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKURL);?>')" />
+							<?php @print(_KUNENA_EDITOR_LINK_TEXT); ?><input name="text2" type="text" size="30" maxlength="100" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKTEXT);?>')" />
 							<input type="button" name="Link" accesskey = "w" value="<?php @print(_KUNENA_EDITOR_LINK_INSERT); ?>""
-								onclick="bbfontstyle('[url=' + this.form.url.value + ']'+ this.form.text2.value,'[/url]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKAPPLY);?>')">
+								onclick="bbfontstyle('[url=' + this.form.url.value + ']'+ this.form.text2.value,'[/url]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKAPPLY);?>')" />
 						</div>
 
 						<div id="image" style="display: none;">
-							<?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input name="size" type="text" size="10" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE);?>')"> 
-							<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="40" maxlength="250" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')"> 
-							<input type="button" name="Link" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_image()" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY);?>')">
+							<?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input name="size" type="text" size="10" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE);?>')" />
+							<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="40" maxlength="250" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')" />
+							<input type="button" name="Link" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_image()" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY);?>')" />
 							<script type="text/javascript">
 								function check_image() {
 									if (document.postform.size.value == "") {
@@ -332,12 +332,12 @@ class smile
 									}
 								}
 							</script>
-						</div> 
+						</div>
 
 						<div id="video" style="display: none;">
-							<?php @print(_KUNENA_EDITOR_VIDEO_SIZE); ?><input name="videosize" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOSIZE);?>')"> 
-							<?php @print(_KUNENA_EDITOR_VIDEO_WIDTH); ?><input name="videowidth" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH);?>')"> 
-							<?php @print(_KUNENA_EDITOR_VIDEO_HEIGHT); ?><input name="videoheight" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT);?>')"> <br>
+							<?php @print(_KUNENA_EDITOR_VIDEO_SIZE); ?><input name="videosize" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOSIZE);?>')" />
+							<?php @print(_KUNENA_EDITOR_VIDEO_WIDTH); ?><input name="videowidth" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOWIDTH);?>')" />
+							<?php @print(_KUNENA_EDITOR_VIDEO_HEIGHT); ?><input name="videoheight" type="text" size="5" maxlength="5" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOHEIGHT);?>')" /> <br />
 							<?php @print(_KUNENA_EDITOR_VIDEO_PROVIDER); ?>
 							<select name = "fb_vid_code1" class = "<?php echo $boardclass;?>button" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER);?>')">
 								<?php
@@ -353,12 +353,12 @@ class smile
 								}
 								?>
 							</select>
-							<?php @print(_KUNENA_EDITOR_VIDEO_ID); ?><input name="videoid" type="text" size="11" maxlength="11" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOID);?>')"> 
-							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video1')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1);?>')"><br>
-							<?php @print(_KUNENA_EDITOR_VIDEO_URL); ?><input name="videourl" type="text" size="30" maxlength="250" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOURL);?>')">
-							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video2')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2);?>')">
+							<?php @print(_KUNENA_EDITOR_VIDEO_ID); ?><input name="videoid" type="text" size="11" maxlength="11" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOID);?>')" />
+							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video1')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY1);?>')" /><br />
+							<?php @print(_KUNENA_EDITOR_VIDEO_URL); ?><input name="videourl" type="text" size="30" maxlength="250" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOURL);?>')" />
+							<input type="button" name="Video" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_video('video2')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2);?>')" />
 							<script type="text/javascript">
-								function check_video(art) { 
+								function check_video(art) {
 									var video;
 									if (document.postform.videosize.value != "") {video = " size=" + document.postform.videosize.value;}
 									else {video=""}
@@ -373,7 +373,7 @@ class smile
 						</div>
 
 						<div id="smilie" style="display: none;">
-							<?php  
+							<?php
 							$kunena_db = &JFactory::getDBO();
 							$kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id");
 							if ($kunena_db->query()) {
@@ -381,7 +381,7 @@ class smile
 								$set = $kunena_db->loadAssocList();
 								foreach ($set as $smilies) {
 									$key_exists = false;
-									foreach ($rowset as $check) { //checks if the smiley (location) already exists with another code 
+									foreach ($rowset as $check) { //checks if the smiley (location) already exists with another code
 									if ($check['location'] == $smilies['location']) {$key_exists = true; }
 								}
 								if ($key_exists == false) {
@@ -413,7 +413,7 @@ class smile
 
         <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
             <td valign = "top" class = "fb_leftcolumn">
-                <strong><?php @print(_MESSAGE); ?></strong>:<br>
+                <strong><?php @print(_MESSAGE); ?></strong>:<br />
                <b onclick = "size_messagebox(100);" style="cursor:pointer">(+)</b><b> / </b><b onclick = "size_messagebox(-100);" style="cursor:pointer">(-)</b>
                 <?php
                 if ($emoticons != 1)
@@ -451,7 +451,7 @@ if ($editmode) {
      ?>
      <fieldset>
      <legend><?php @print(_KUNENA_EDITING_REASON)?></legend>
-        <input name="modified_reason" size="40" maxlength="200"  type="text"><br />
+        <input name="modified_reason" size="40" maxlength="200"  type="text" /><br />
 
      </fieldset>
 <?php

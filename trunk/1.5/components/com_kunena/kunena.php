@@ -145,8 +145,7 @@ $my_id = $kunena_my->id;
 // Check if we only allow registered users
 if ($fbConfig->regonly && !$my_id)
 {
-    echo '<div>' . _FORUM_UNAUTHORIZIED . '</div>';
-    echo '<div>' . _FORUM_UNAUTHORIZIED2 . '</div>';
+     $app->enqueueMessage ( _COM_A_REGISTERED_ONLY . '<br/>' . _FORUM_UNAUTHORIZIED . '<br/>' . _FORUM_UNAUTHORIZIED2, 'error' );
 }
 // or if the board is offline
 else if ($fbConfig->board_offline && !$is_admin)
@@ -226,7 +225,7 @@ if ($func == "getpreview")
     $msgbody = nl2br($msgbody);
     $msgbody = str_replace("__FBTAB__", "\t", $msgbody);
 	$msgbody = CKunenaTools::prepareContent($msgbody);
-    // $msgbody = ereg_replace('%u0([[:alnum:]]{3})', '&#x1;',$msgbody);
+    // $msgbody = preg_replace('%u0([[:alnum:]]{3})', '&#x1;',$msgbody);
 
     $msgbody = smile::htmlwrap($msgbody, $fbConfig->wrap);
     header("Content-Type: text/html; charset=utf-8");

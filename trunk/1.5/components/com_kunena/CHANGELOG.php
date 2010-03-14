@@ -33,8 +33,51 @@ Legend:
 
 Kunena 1.5.10
 
-21-Mar-2010 Matias
+14-Mar-2010 Matias
+^ [#15784] Merge and review all backported fixes from /branches/1.5-xillibit-fixing
+
+12-Mar-2010 Xillibit
+# [#19929] Fix XHTML validation errors while posting a message
+^ [#19930] Hide IP addresses from Moderators and add in backend configuration setting
+# [#19932] Bulk delete and move returns to main page
+# [#19933] If moderator edits the post, email address gets replaced
+^ [#19931] Modification for collect_smilies() and collect_ranks()
+# [#19934] Keep topic icon after editing message
+^ [#19938] Make jomSocial Activity stream integration configurable
+^ [#19939] Improve sending moderator/subscription mail (check email addresses, cleanup contents, etc)
+# [#19940] Moderator and subscribed to topic: user will receive two emails
+# [#19941] Flood protection should not block Subscribe and Favorite
+^ [#19942] Put a redirect when an user try to access the reply function when there is not logged
+# [#19902] Remove extra { which causing issues with avatar uploading (Part 2)
+
+11-Mar-2010 Xillibit
+# [#19902] Remove extra { which causing issues with avatar uploading
+# [#19903] Remove remaining deprecated split() function in backend, add dummy.jpeg file
+# [#19904] Fix for wrong link in profilebox for my profile when using AUP integration
+# [#19905] Fix for Moderation: Merge shows extra slashes in topic list
+# [#19907] Fix in Kunena Administration: some wrong translations
+# [#19908] Moderators list is always using username, regardless of configuration option
+# [#19909] Debug does not show MySQL error in trace
+# [#19911] Conflict with sh404sef language strings
+# [#19912] Deprecated links to index2.php
+# [#19913] Most viewed profiles should use profile integration
+# [#19914] User list and count shows also disabled users
+^ [#19915] Backend: Show Avatar on Categories list option misleading
+# [#19916] Fix broken layout with too long strings
+# [#19917] fix broken ftp write function in kunena.file.class.php
+- [#19918] Remove group from userlist / user profile
+# [#19919] Configuration option "Show join date" has no effect
+# [#19920] Fix regression in uploaded files and images browser
+# [#19903] Remove remaining deprecated split(), eregi(), ereg() function in front end
+# [#19922] URLs using HTTPS protocol are not working in img tag
+# [#19923] rss image isn't always displayed in config backend
+# [#19925] Fix: Super Admin in the User List
+# [#19927] Add max avatar size into user profiles
+^ [#19928] New standard "Registered Users Only" error message
+
+11-Mar-2010 Matias
 # [#19900] PHP 5.3 Deprecated: Assigning the return value of new by reference
+- [#19901] Remove deprecated directories
 
 31-Jan-2010 fxstein
 ^ [#19600] Updated version info

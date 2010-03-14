@@ -83,15 +83,20 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_USERTYPE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $userinfo->usertype; ?></td>
     </tr>
-    <?php } ?>
+    <?php }
+    if ( $fbConfig->userlist_joindate ) {
+    ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_REGISTERDATE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $registerDate; ?></td>
     </tr>
+    <?php }
+    if ( $fbConfig->userlist_lastvisitdate ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_LASTVISITDATE; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $lastvisitDate; ?></td>
     </tr>
+    <?php } ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_POSTS; ?></b> </td>
       <td  class = "td-2 fbm"><?php echo $numPosts; ?></td>
@@ -176,7 +181,7 @@ $lastvisitDate = strftime(_KUNENA_DT_DATETIME_FMT, strtotime($userinfo->lastvisi
     <?php  if ( !empty($usr_signature) ) { ?>
     <tr class ="<?php echo $boardclass; ?>sectiontableentry1">
       <td  class = "td-1 fbm"><b><?php echo _KUNENA_MYPROFILE_SIGNATURE; ?></b> </td>
-      <td  class = "td-2 fbm"><?php echo $usr_signature; ?></td>
+      <td  class = "td-2 fbm"><div class="msgsignature"><div><?php echo $usr_signature; ?></div></div></td>
     </tr>
      <?php }?>
   </tbody>

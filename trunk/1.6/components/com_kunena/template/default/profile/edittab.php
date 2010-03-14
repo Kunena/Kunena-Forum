@@ -11,6 +11,7 @@
  **/
 defined( '_JEXEC' ) or die();
 ?>
+<form action="<?php echo JRoute::_( 'index.php' ); ?>" method="post" name="kuserform" class="form-validate" enctype="multipart/form-data">
 <div id="kprofile-edit">
 	<dl class="tabs">
 		<dt class="open"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER'); ?></dt>
@@ -30,4 +31,11 @@ defined( '_JEXEC' ) or die();
 			<?php $this->displayEditSettings(); ?>
 		</dd>
 	</dl>
+	<input type="hidden" name="option" value="com_kunena" />
+	<input type="hidden" name="func" value="profile" />
+	<input type="hidden" name="do" value="save" />
+	<?php echo JHTML::_( 'form.token' ); ?>
+	<br />
+	<button class="kbutton ks validate" type="submit"><?php echo JText::_('COM_KUNENA_GEN_SUBMIT'); ?></button>
 </div>
+</form>

@@ -10,13 +10,9 @@
  *
  **/
 defined( '_JEXEC' ) or die();
-require_once ( KUNENA_PATH_FUNCS .DS. 'profile.php');
-$userprofile = new CKunenaProfile($this->user->id);
-$kunena_config =& CKunenaConfig::getInstance();
 ?>
 
 <h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE'); ?></h2>
-<form action="<?php echo CKunenaLink::GetProfileSettingsURL($kunena_config, $this->user->id, '', $rel='nofollow', $redirect=false,'savesettings'); ?>" method="post" name="kprofileEditing">
 <table
 	class="<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
@@ -27,7 +23,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 			<td><?php
 					$mesordering[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_ASC'));
 					$mesordering[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
-					echo JHTML::_('select.genericlist', $mesordering, 'messageordering', 'class="inputbox" size="1"', 'value', 'text', $userprofile->profile->ordering);
+					echo JHTML::_('select.genericlist', $mesordering, 'messageordering', 'class="inputbox" size="1"', 'value', 'text', $this->profile->ordering);
 			?></td>
 		</tr>
 		<tr  class="ksectiontableentry1">
@@ -35,7 +31,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 			<td><?php
 					$hideEmail[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
 					$hideEmail[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
-					echo JHTML::_('select.genericlist', $hideEmail, 'hidemail', 'class="inputbox" size="1"', 'value', 'text', $userprofile->profile->hideEmail);
+					echo JHTML::_('select.genericlist', $hideEmail, 'hidemail', 'class="inputbox" size="1"', 'value', 'text', $this->profile->hideEmail);
 
 					?></td>
 		</tr>
@@ -44,13 +40,9 @@ $kunena_config =& CKunenaConfig::getInstance();
 			<td><?php
 					$showonline[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
 					$showonline[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
-					echo JHTML::_('select.genericlist', $showonline, 'showonline', 'class="inputbox" size="1"', 'value', 'text', $userprofile->profile->showOnline);
+					echo JHTML::_('select.genericlist', $showonline, 'showonline', 'class="inputbox" size="1"', 'value', 'text', $this->profile->showOnline);
 
 					?></td>
 		</tr>
-		<tr class="ksectiontableentry1">
-			<td class="td-0 km center" colspan="2"><input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_GEN_SUBMIT'); ?>" name="Submit" /></td>
-		</tr>
 	</tbody>
 </table>
-</form>

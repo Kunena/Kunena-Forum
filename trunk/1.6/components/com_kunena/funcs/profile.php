@@ -258,6 +258,188 @@ class CKunenaProfile {
 
 	function display() {
 		if (!$this->user->id) return;
-		else $this->displaySummary();
+
+		switch ($this->do) {
+			case 'save':
+				$this->save();
+				break;
+			case 'cancel':
+				$this->cancel();
+				break;
+			default:
+				$this->displaySummary();
+		}
+	}
+
+	// Mostly copied from Joomla 1.5
+	protected function saveUser()
+	{
+		$user = $this->user; //new JUser ( $this->user->get('id') );
+
+		// we don't want users to edit certain fields so we will ignore them
+		$ignore = array('id', 'gid', 'block', 'usertype', 'registerDate', 'activation');
+
+		//clean request
+		$post = JRequest::get( 'post' );
+		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		if ($this->_config->usernamechange) $post['username']	= JRequest::getVar('username', '', 'post', 'username');
+		else $ignore[] = 'username';
+
+		// get the redirect
+		$return = CKunenaLink::GetMyProfileURL($this->_config, $this->user->get('id'), '', true);
+		$err_return = CKunenaLink::GetMyProfileURL($this->_config, $this->user->get('id'), 'edit', true);
+
+		// do a password safety check
+		if(strlen($post['password']) || strlen($post['password2'])) { // so that "0" can be used as password e.g.
+			if($post['password'] != $post['password2']) {
+				$msg	= JText::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH');
+				$this->_app->redirect ( $err_return, $msg, 'error' );
+			}
+		}
+
+		$username = $this->user->get('username');
+
+		// Bind the form fields to the user table
+		if (!$user->bind($post, $ignore)) {
+			$this->_app->redirect ( $err_return, $this->_db->getErrorMsg(), 'error' );
+		}
+
+		// Store the web link table to the database
+		if (!$user->save(true)) {
+			$this->_app->redirect ( $err_return, $this->user->getError(), 'error' );
+		}
+
+		$session = JFactory::getSession();
+		$session->set('user', $user);
+
+		// update session if username has been changed
+		if ( $username && $username != $user->get('username') )
+		{
+			$table = JTable::getInstance('session', 'JTable' );
+			$table->load($session->getId());
+			$table->username = $user->get('username');
+			$table->store();
+		}
+	}
+
+	protected function saveProfile() {
+		$personnaltext = JRequest::getVar ( 'personnaltext', '' );
+		$birthdate1 = JRequest::getInt ( 'birthdate1', '' );
+		$birthdate2 = JRequest::getInt ( 'birthdate2', '' );
+		$birthdate3 = JRequest::getInt ( 'birthdate3', '' );
+		$birthdate = $birthdate1.'-'.$birthdate2.'-'.$birthdate3;
+		$location = trim(JRequest::getVar ( 'location', '' ));
+		$gender = JRequest::getInt ( 'gender', '' );
+		$icq = trim(JRequest::getVar ( 'icq', '' ));
+		$aim = trim(JRequest::getVar ( 'aim', '' ));
+		$yim = trim(JRequest::getVar ( 'yim', '' ));
+		$msn = trim(JRequest::getVar ( 'msn', '' ));
+		$skype = trim(JRequest::getVar ( 'skype', '' ));
+		$gtalk = trim(JRequest::getVar ( 'gtalk', '' ));
+		$twitter = trim(JRequest::getVar ( 'twitter', '' ));
+		$facebook = trim(JRequest::getVar ( 'facebook', '' ));
+		$myspace = trim(JRequest::getVar ( 'myspace', '' ));
+		$linkedin = trim(JRequest::getVar ( 'linkedin', '' ));
+		$delicious = trim(JRequest::getVar ( 'delicious', '' ));
+		$friendfeed = trim(JRequest::getVar ( 'friendfeed', '' ));
+		$digg = trim(JRequest::getVar ( 'digg', '' ));
+		$blogspot = trim(JRequest::getVar ( 'blogspot', '' ));
+		$flickr = trim(JRequest::getVar ( 'flickr', '' ));
+		$bebo = trim(JRequest::getVar ( 'bebo', '' ));
+		$websitename = JRequest::getVar ( 'websitename', '' );
+		$websiteurl = JRequest::getVar ( 'websiteurl', '' );
+		$signature = JRequest::getVar ( 'signature', '' );
+
+		//Query on kunena user
+		$this->_db->setQuery ( "UPDATE #__fb_users SET personalText={$this->_db->Quote($personnaltext)},birthdate={$this->_db->Quote($birthdate)},
+			location={$this->_db->Quote($location)},gender={$this->_db->Quote($gender)},ICQ={$this->_db->Quote($icq)}, AIM={$this->_db->Quote($aim)},
+			YIM={$this->_db->Quote($yim)},MSN={$this->_db->Quote($msn)},SKYPE={$this->_db->Quote($skype)},GTALK={$this->_db->Quote($gtalk)},
+			TWITTER={$this->_db->Quote($twitter)},FACEBOOK={$this->_db->Quote($facebook)},MYSPACE={$this->_db->Quote($myspace)},
+			LINKEDIN={$this->_db->Quote($linkedin)},DELICIOUS={$this->_db->Quote($delicious)},FRIENDFEED={$this->_db->Quote($friendfeed)},
+			DIGG={$this->_db->Quote($digg)},BLOGSPOT={$this->_db->Quote($blogspot)},FLICKR={$this->_db->Quote($flickr)},BEBO={$this->_db->Quote($bebo)},
+			websitename={$this->_db->Quote($websitename)},websiteurl={$this->_db->Quote($websiteurl)},signature={$this->_db->Quote($signature)}
+			WHERE userid={$this->_db->Quote($this->user->id)}" );
+		$this->_db->query ();
+		check_dberror ( 'Unable to update kunena user profile.' );
+	}
+
+	protected function saveAvatar() {
+		$action = JRequest::getString('avatar', 'keep');
+
+		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
+		$upload = new CKunenaUpload();
+
+		if ( $upload->uploaded('avatarfile') ) {
+			$upload->uploadFile(KUNENA_PATH_AVATAR_UPLOADED , 'avatarfile', false);
+			$fileinfo = $upload->getFileInfo();
+
+			if ($fileinfo['ready'] === true) {
+				if(JDEBUG == 1 && defined('JFIREPHP')){
+					FB::log('Kunena save avatar: ' . $fileinfo['name']);
+				}
+				$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($fileinfo['name'])} WHERE userid='{$this->user->id}'" );
+
+				if (! $this->_db->query () || $this->_db->getErrorNum()) {
+					$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_DATABASE_STORE'));
+					$fileinfo = $upload->getFileInfo();
+				}
+			}
+			if (!$fileinfo['status']) $this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
+			else $this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
+
+			//$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->_config, $this->user->id, '', true), JText::_('COM_KUNENA_AVATAR_UPLOADED_WITH_SUCCESS'));
+
+		} else if ( $action == 'delete' ) {
+			//set default avatar
+			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar='' WHERE userid='{$this->user->id}'" );
+			$this->_db->query ();
+			check_dberror ( 'Unable to set default avatar.' );
+		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($path, '..') === false) {
+			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($action)} WHERE userid='{$this->user->id}'" );
+			$this->_db->query ();
+			check_dberror ( 'Unable to set avatar from gallery.' );
+		}
+	}
+
+	protected function saveSettings() {
+		$messageordering = JRequest::getInt('messageordering', '', 'post', 'messageordering');
+		$hidemail = JRequest::getInt('hidemail', '', 'post', 'hidemail');
+		$showonline = JRequest::getInt('showonline', '', 'post', 'showonline');
+
+		//Query on kunena user
+		$this->_db->setQuery ( "UPDATE #__fb_users SET ordering='$messageordering', hideEmail='$hidemail', showOnline='$showonline'
+							WHERE userid='{$this->user->id}'" );
+		$this->_db->query ();
+		check_dberror ( 'Unable to update kunena user profile.' );
+	}
+
+	function save()
+	{
+		// get the redirect
+		$return = CKunenaLink::GetMyProfileURL($this->_config, $this->user->get('id'), '', true);
+		$err_return = CKunenaLink::GetMyProfileURL($this->_config, $this->user->get('id'), 'edit', true);
+
+		// Check for request forgeries
+		JRequest::checkToken() or $this->_app->redirect ( $err_return, COM_KUNENA_ERROR_TOKEN, 'error' );
+
+		// perform security checks
+		if ($this->user->get('id') <= 0 || $this->user->get('id') != $this->my->get('id')) {
+			JError::raiseError( 403, JText::_('Access Forbidden') );
+			return;
+		}
+
+		$this->saveUser();
+		$this->saveProfile();
+		$this->saveAvatar();
+		$this->saveSettings();
+
+		$msg = JText::_( COM_KUNENA_PROFILE_SAVED );
+		$this->_app->redirect ( $return, $msg );
+	}
+
+	function cancel()
+	{
+		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->_config, $this->user->id, '', true) );
 	}
 }

@@ -226,14 +226,8 @@ class CKunenaLink
     	else
     	{
     		$do_do = $do != '' ? '&do='.$do : '';
-    		return $redirect != true ? JRoute::_(KUNENA_LIVEURLREL.'&amp;func=profile'.$do_do) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=myprofile'.$do_do));
+    		return $redirect != true ? JRoute::_(KUNENA_LIVEURLREL.'&amp;func=profile'.$do_do) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=profile'.$do_do));
     	}
-    }
-
- 	function GetProfileSettingsURL($kunena_config, $userid='', $name='', $rel='nofollow', $redirect=false,$do='')
-    {
-    	$do_do = $do != '' ? '&do='.$do : '';
-    	return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=profilesettings'.$do_do, $name, '', $rel);
     }
 
     function GetProfileLink($kunena_config, $userid, $name, $rel='nofollow', $class='')

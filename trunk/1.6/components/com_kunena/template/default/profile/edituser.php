@@ -13,8 +13,7 @@ defined( '_JEXEC' ) or die();
 $kunena_config =& CKunenaConfig::getInstance();
 ?>
 <h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE') ?></h2>
-<form action="<?php echo JRoute::_( 'index.php' ); ?>" method="post" name="userform" class="form-validate">
-	<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '' ?>" id="kflattable">
+<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '' ?>" id="kflattable">
 	<tbody class="kmyprofile_general">
 	<tr class="ksectiontableentry2">
 		<td class="td-0 km center">
@@ -23,8 +22,11 @@ $kunena_config =& CKunenaConfig::getInstance();
 			</label>
 		</td>
 		<td>
-			<span><?php echo $this->user->get('username');?></span>
+		<?php if ($this->_config->usernamechange) { ?>
 			<input type="hidden" name="username" value="<?php echo $this->user->get('username');?>" />
+		<?php } else { ?>
+			<span><?php echo $this->user->get('username');?></span>
+		<?php } ?>
 		</td>
 	</tr>
 	<tr class="ksectiontableentry1">
@@ -65,15 +67,16 @@ $kunena_config =& CKunenaConfig::getInstance();
 			</label>
 		</td>
 		<td>
-			<input class="inputbox validate-passverify" type="password" id="password2" name="password2" size="40" />
+			<input class="inputbox validate-passverify" type="password" id="password2" name="password2" value="" size="40" />
 		</td>
 	</tr>
 	<?php endif; ?>
 	</tbody>
-	</table>
-	<?php if(!empty($this->userparams)) : ?>
-	<h2><?php echo JText::_('Global Settings'); ?></h2>
-	<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '' ?>" id="kflattable">
+</table>
+
+<?php if(!empty($this->userparams)) : ?>
+<h2><?php echo JText::_('Global Settings'); ?></h2>
+<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '' ?>" id="kflattable">
 	<tbody class="kmyprofile_params">
 	<?php $i=0; foreach ($this->userparams as $userparam): ?>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
@@ -87,15 +90,6 @@ $kunena_config =& CKunenaConfig::getInstance();
 		</td>
 	</tr>
 	<?php endforeach; ?>
-		</tbody>
-	</table>
-	<?php endif; ?>
-
-	<button class="kbutton ks validate" type="submit" onclick="submitbutton( this.form );return false;"><?php echo JText::_('COM_KUNENA_GEN_SUBMIT'); ?></button>
-
-	<input type="hidden" name="id" value="<?php echo $this->user->get('id');?>" />
-	<input type="hidden" name="gid" value="<?php echo $this->user->get('gid');?>" />
-	<input type="hidden" name="option" value="com_user" />
-	<input type="hidden" name="task" value="save" />
-	<?php echo JHTML::_( 'form.token' ); ?>
-</form>
+	</tbody>
+</table>
+<?php endif; ?>

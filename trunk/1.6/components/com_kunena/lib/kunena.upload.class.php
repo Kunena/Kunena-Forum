@@ -156,6 +156,11 @@ class CKunenaUpload {
 		imagedestroy($tmp);
 	}
 
+	function uploaded($input='kattachment') {
+		$file = JRequest::getVar ( $input, NULL, 'FILES', 'array' );
+		if (isset($file ['tmp_name']) && $file ['error'] == 0) return true;
+	}
+
 	function uploadFile($uploadPath, $input='kattachment', $ajax=true) {
 		$result = array ();
 		$this->resetStatus();
@@ -175,7 +180,7 @@ class CKunenaUpload {
 			}
 		}
 
-		$this->fileName = CKunenaFile::makeSafe ( JRequest::getVar ( 'name', '' ) );
+		$this->fileName = CKunenaFile::makeSafe ( JRequest::getVar ( $input.'_name', '' ) );
 		$this->fileSize = 0;
 		$chunk = JRequest::getInt ( 'chunk', 0 );
 		$chunks = JRequest::getInt ( 'chunks', 0 );

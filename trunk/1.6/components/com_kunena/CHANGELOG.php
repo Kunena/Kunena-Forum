@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 # [#19654] Edit category: allow public access to be changed to nobody
 + [#19956] Allow anonymous posts from registered users in special categories
 + [#19956] Allow anonymous also in Quick Reply
+# [#19288] Fix regression: Do not show reply/quote for hidden posts
 
 14-Mar-2010 Matias
 ^ [#19383] Revise Profile Page: Save all user information in a single form

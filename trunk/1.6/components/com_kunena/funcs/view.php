@@ -648,7 +648,7 @@ class CKunenaView {
 
 		$this->msg_html->signature = CKunenaTools::parseBBCode ( $this->userinfo->signature );
 
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0)) {
+		if (!$this->kunena_message->hold && (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0))) {
 			//user is allowed to reply/quote
 			if ($this->my->id > 0) {
 				$this->msg_html->quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'reply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY') ), 'nofollow', 'buttoncomm btn-left kqreply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY_LONG'), ' id="kreply'.$this->kunena_message->id.'"' );
@@ -669,6 +669,7 @@ class CKunenaView {
 
 		//Offer an moderator a few tools
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+			unset($this->msg_html->closed);
 			$this->msg_html->edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
 			$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 			$this->msg_html->split = CKunenaLink::GetTopicPostLink ( 'split', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'split', JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC_LONG') );

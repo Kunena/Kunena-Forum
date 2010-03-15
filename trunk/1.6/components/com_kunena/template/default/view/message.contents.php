@@ -90,6 +90,6 @@ if ( isset ( $this->msg_html->attachments ) ) {
 	} else {
 		$check = CKunenaTools::isModerator($this->my->id);
 	}
-	if (isset ( $this->msg_html->ip ) && $check) {
+	if (!empty ( $this->msg_html->ip ) && $check) {
 	echo '<span class="kmessage_informMarkUp">' . CKunenaLink::GetMessageIPLink ( $this->msg_html->ip ) . '</span>'; } ?>
 </div>

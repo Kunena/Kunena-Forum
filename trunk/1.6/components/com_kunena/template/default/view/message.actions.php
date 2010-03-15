@@ -19,11 +19,9 @@ $catid = JRequest::getInt ( 'catid', 0 );
 	<div class="kmessage_buttons_row">
 			<?php if (! isset ( $this->msg_html->closed )) {
 				if (isset ( $this->msg_html->quickreply )) echo " " . $this->msg_html->quickreply;
+				if (isset ( $this->msg_html->reply )) { echo " " . $this->msg_html->reply; }
+				if (isset ( $this->msg_html->quote )) { echo " " . $this->msg_html->quote; }
 				if (isset ( $this->msg_html->edit )) { echo " " . $this->msg_html->edit; }
-				echo " " . $this->msg_html->reply;
-				echo " " . $this->msg_html->quote;
-				if (CKunenaTools::isModerator ( $this->my->id, $catid ))
-				//echo ' </div><div class="kmessage_buttons_row">';
 				if (isset ( $this->msg_html->merge )) { echo " " . $this->msg_html->merge; }
 				if (isset ( $this->msg_html->split )) { echo " " . $this->msg_html->split; }
 				if (isset ( $this->msg_html->delete )) { echo " " . $this->msg_html->delete; }

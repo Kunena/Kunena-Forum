@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 15-Mar-2010 Matias
 - [#19383] Revise Profile Page: remove old profile code
 # [#19954] Admin: Differentiate sections from categories, default new category parent to the first section
+# [#19654] Edit category: allow public access to be changed to nobody
 
 14-Mar-2010 Matias
 ^ [#19383] Revise Profile Page: Save all user information in a single form

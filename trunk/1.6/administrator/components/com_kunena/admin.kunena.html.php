@@ -355,21 +355,35 @@ td.kadmin-tdtitle {
 		<td align="center"><?php
 			echo $row->id;
 			?></td>
+		<?php if (! $row->category): ?>
+		<td colspan="4" align="center"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+		<?php else: ?>
 		<td align="center"><?php
-			echo (! $row->category ? "&nbsp;" : ($row->locked == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
+			echo ($row->locked == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
 			?>
 		</td>
 		<td align="center"><?php
-			echo (! $row->category ? "&nbsp;" : ($row->moderated == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
+			echo ($row->moderated == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
 			?>
 		</td>
 		<td align="center"><?php
-			echo (! $row->category ? "&nbsp;" : ($row->review == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
+			echo ($row->review == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
 			?>
 		</td>
 
 		<?php
 			$polltask = $row->allow_polls ? 'pollunpublish' : 'pollpublish';
+			?>
+
+		<td width="10%" align="center">
+			<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $polltask; ?>')">
+			<?php
+			echo ($row->allow_polls == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
+			?>
+			</a>
+		</td>
+		<?php endif; ?>
+		<?php
 			$task = $row->published ? 'unpublish' : 'publish';
 			$img = $row->published ? 'publish_g.png' : 'publish_x.png';
 
@@ -377,22 +391,14 @@ td.kadmin-tdtitle {
 				$groupname = JText::_('COM_KUNENA_EVERYBODY');
 			} else if ($row->pub_access == - 1) {
 				$groupname = JText::_('COM_KUNENA_ALLREGISTERED');
+			} else if ($row->pub_access == 1) {
+				$groupname = JText::_('COM_KUNENA_NOBODY');
 			} else {
 				$groupname = $row->groupname == "" ? "&nbsp;" : $row->groupname;
 			}
 
 			$adm_groupname = $row->admingroup == "" ? "&nbsp;" : $row->admingroup;
-			?>
-
-		<td width="10%" align="center">
-			<?php if (! $row->category): echo '&nbsp;'; else: ?>
-			<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $polltask; ?>')">
-			<?php
-			echo ($row->allow_polls == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
-			?>
-			</a>
-			<?php endif; ?>
-		</td>
+		?>
 		<td width="10%" align="center"><a href="javascript: void(0);"
 			onclick="return listItemTask('cb<?php
 			echo $i;

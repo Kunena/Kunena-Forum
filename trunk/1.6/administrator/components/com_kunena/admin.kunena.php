@@ -525,6 +525,9 @@ function editForum($uid, $option) {
 		$row->parent = empty($sections) ? 0 : $sections[0]->id;
 		$row->published = 0;
 		$row->ordering = 9999;
+		$row->pub_recurse = 1;
+		$row->admin_recurse = 1;
+		$row->pub_access = 0;
 	}
 
 	$categoryList = showCategories ( $row->parent, "parent", "", "4" );
@@ -542,13 +545,14 @@ function editForum($uid, $option) {
 	$accessLists = array ();
 	//create custom group levels to include into the public group selectList
 	$pub_groups = array ();
+	$pub_groups [] = JHTML::_ ( 'select.option', 1, JText::_('COM_KUNENA_NOBODY') );
 	$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_EVERYBODY') );
 	$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_('COM_KUNENA_ALLREGISTERED') );
 
-	$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, JText::_('COM_KUNENA_REGISTERED'), true ) );
+	$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, 'Registered', true ) );
 	//create admin groups array for use in selectList:
 	$adm_groups = array ();
-	$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, JText::_('COM_KUNENA_PUBLICBACKEND'), true ) );
+	$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, 'Public Backend', true ) );
 	//create the access control list
 	$accessLists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access );
 	$accessLists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access );

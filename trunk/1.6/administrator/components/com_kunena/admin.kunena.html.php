@@ -360,7 +360,7 @@ td.kadmin-tdtitle {
 			?>
 		</td>
 		<td align="center"><?php
-			echo ($row->moderated == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
+			echo (! $row->category ? "&nbsp;" : ($row->moderated == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
 			?>
 		</td>
 		<td align="center"><?php
@@ -384,14 +384,15 @@ td.kadmin-tdtitle {
 			$adm_groupname = $row->admingroup == "" ? "&nbsp;" : $row->admingroup;
 			?>
 
-		<td width="10%" align="center"><a href="javascript: void(0);"
-			onclick="return listItemTask('cb<?php
-			echo $i;
-			?>','<?php echo $polltask; ?>')">
+		<td width="10%" align="center">
+			<?php if (! $row->category): echo '&nbsp;'; else: ?>
+			<a href="javascript: void(0);" onclick="return listItemTask('cb<?php echo $i; ?>','<?php echo $polltask; ?>')">
 			<?php
 			echo ($row->allow_polls == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
 			?>
-		</a></td>
+			</a>
+			<?php endif; ?>
+		</td>
 		<td width="10%" align="center"><a href="javascript: void(0);"
 			onclick="return listItemTask('cb<?php
 			echo $i;
@@ -471,7 +472,7 @@ td.kadmin-tdtitle {
             }
         </script>
 
-	<div class="kadmin-functitle"><?php echo $row->id ? JText::_('COM_KUNENA_EDIT') : JText::_('COM_KUNENA_ADD'); ?><?php echo JText::_('COM_KUNENA_CATFOR'); ?></div>
+	<div class="kadmin-functitle icon-adminforum"><?php echo $row->id ? JText::_('COM_KUNENA_EDIT') : JText::_('COM_KUNENA_ADD'); ?> <?php echo JText::_('COM_KUNENA_CATFOR'); ?></div>
 
 	<form action="index.php" method="POST" name="adminForm">
 		<input type="hidden" name="cfg_board_ofset" value="<?php echo $kunena_config->board_ofset; ?>" />
@@ -505,11 +506,13 @@ td.kadmin-tdtitle {
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
 				<table>
+					<?php if (!$row->id || $row->parent): ?>
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
  						<td><?php echo $lists ['forumLocked']; ?></td>
 						<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 					</tr>
+					<?php endif; ?>
 					<tr>
 						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
 						<td valign="top"><?php echo $accessLists ['pub_access']; ?></td>
@@ -530,6 +533,7 @@ td.kadmin-tdtitle {
 						<td valign="top"><?php echo $lists ['admin_recurse']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1DESC'); ?></td>
 					</tr>
+					<?php if (!$row->id || $row->parent): ?>
 					<tr>
 						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
 						<td valign="top"><?php echo $lists ['forumReview']; ?></td>
@@ -540,8 +544,10 @@ td.kadmin-tdtitle {
 						<td valign="top"><?php echo $lists ['allow_polls']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 					</tr>
+					<?php endif; ?>
 				</table>
 			</fieldset>
+			<?php if (!$row->id || $row->parent): ?>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
 				<table>
@@ -611,6 +617,7 @@ td.kadmin-tdtitle {
 				<?php 	}
 				?>
 		</fieldset>
+		<?php endif; ?>
 		<input type="hidden" name="id" value="<?php echo $row->id; ?>">
 		<input type="hidden" name="option"
 			value="<?php

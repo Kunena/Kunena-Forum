@@ -445,7 +445,7 @@ function showAdministration($option) {
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$levellimit = $kunena_app->getUserStateFromRequest ( "{$option}.limit", 'levellimit', 10, 'int' );
 
-	$kunena_db->setQuery ( "SELECT a.*, a.name AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
+	$kunena_db->setQuery ( "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
 		FROM #__fb_categories AS a
 		LEFT JOIN #__users AS u ON u.id = a.checked_out
 		LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
@@ -507,36 +507,24 @@ function editForum($uid, $option) {
 	$kunena_acl = &JFactory::getACL ();
 	$kunena_my = &JFactory::getUser ();
 	$kunena_config = & CKunenaConfig::getInstance ();
+
 	$row = new fbForum ( $kunena_db );
 	// load the row from the db table
-	$row->load ( $uid );
+	if ($uid) $row->load ( $uid );
+	$uid = $row->id;
+
+	// get a list of sections
+	$kunena_db->setQuery ( "SELECT a.id, a.name FROM #__fb_categories AS a WHERE parent='0' AND id!='$row->id' ORDER BY ordering" );
+	$sections = $kunena_db->loadObjectList ();
+	check_dberror ( "Unable to load sections." );
 
 	if ($uid) {
 		$row->checkout ( $kunena_my->id );
-		$categories = array ();
 	} else {
-		// initialise new record
-		$categories [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_TOPLEVEL'), 'value', 'text' );
-		$row->parent = 0;
+		// New category is by default child of the first section -- this will help new users to do it right
+		$row->parent = empty($sections) ? 0 : $sections[0]->id;
 		$row->published = 0;
 		$row->ordering = 9999;
-	}
-
-	// get a list of just the categories
-	$kunena_db->setQuery ( "SELECT a.id AS value, a.name AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering" );
-	$categories = array_merge ( $categories, $kunena_db->loadObjectList () );
-	check_dberror ( "Unable to load categories." );
-
-	if ($row->parent == 0) {
-		//make sure the Top Level Category is available in edit mode as well:
-		$kunena_db->setQuery ( "SELECT distinct '0' AS value, '" . JText::_('COM_KUNENA_TOPLEVEL') . "' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering" );
-		$categories = array_merge ( $categories, ( array ) $kunena_db->loadObjectList () );
-		check_dberror ( "Unable to load categories." );
-
-		//build the select list:
-		$categoryList = JHTML::_ ( 'select.genericlist', $categories, 'parent', 'class="inputbox" size="1"', 'value', 'text', $row->parent );
-	} else {
-		$categoryList = JHTML::_ ( 'select.genericlist', $categories, 'parent', 'class="inputbox" size="1"', 'value', 'text', $row->parent );
 	}
 
 	$categoryList = showCategories ( $row->parent, "parent", "", "4" );

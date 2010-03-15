@@ -61,6 +61,10 @@ if ( isset ( $this->msg_html->attachments ) ) {
 		<input type="hidden" name="catid" value="<?php echo $catid; ?>" />
 		<input type="hidden" name="action" value="post" />
 		<?php echo JHTML::_( 'form.token' ); ?>
+		<?php if ($this->allow_anonymous): ?>
+		<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->myname;?>" /><br />
+		<input type="checkbox" id="kanonymous" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label><br />
+		<?php endif; ?>
 		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo $kunena_config->maxsubject; ?>" value="<?php echo html_entity_decode ( $resubject ); ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
 		<input type="reset" class="kbutton kreply_cancel" name="cancel" value="<?php @print (JText::_('COM_KUNENA_CANCEL')) ; ?>" />

@@ -305,6 +305,10 @@ class CKunenaView {
 		$tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 		$this->mmm = 0;
+
+		$this->myname = $this->config->username ? $this->my->username : $this->my->name;
+		$this->allow_anonymous = !empty($this->catinfo->allow_anonymous) && $this->my->id;
+		$this->anonymous = ($this->allow_anonymous && !empty($this->catinfo->post_anonymous));
 	}
 
 	function displayPathway() {

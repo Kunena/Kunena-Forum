@@ -18,7 +18,7 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 ?>
 	<ul id="kpost-profile">
 		<li class="kpost-username">
-			<?php if ($this->userinfo->userid) { echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $this->msg_html->username );
+			<?php if ($this->profile->userid) { echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $this->msg_html->username );
 				} else { echo $this->msg_html->username; } ?>
 		</li>
 		<li class="kpost-usertype">
@@ -26,10 +26,11 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 				echo '<span class = "msgusertype">(' . $this->msg_html->usertype . ')</span>'; ?>
 		</li>
 		<li class="kpost-avatar">
-		<?php if ($this->kunena_message->userid > 0) {
+		<?php if ($this->profile->userid > 0) {
 			echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $this->msg_html->avatar );
 			} else { echo $this->msg_html->avatar; } ?>
 		</li>
+		<?php if ($this->profile->userid): ?>
 		<li class="kpost-userrank">
 			<?php if (isset ( $this->msg_html->userrank )) { echo $this->msg_html->userrank; } ?>
 		</li>
@@ -58,9 +59,11 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 		<li class="kpost-personal">
 			<?php if (isset ( $this->msg_html->personal )) { echo $this->msg_html->personal; } ?>
 		</li>
+		<?php endif; ?>
 </ul>
 <?php } else { ?>
 	<ul id="kpost-profiletop">
+		<?php if ($this->profile->userid): ?>
 		<li class="kpost-smallicons">
 			<?php if (isset($this->msg_html->gender)) echo $this->msg_html->gender; ?>
 			<?php if (isset($this->msg_html->birthdate)) echo $this->msg_html->birthdate; ?>
@@ -73,13 +76,14 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 		<li class="kpost-personal">
 			<?php if (isset ( $this->msg_html->personal )) { echo $this->msg_html->personal; } ?>
 		</li>
+		<?php endif; ?>
 		<li class="kpost-avatar">
-		<?php if ($this->kunena_message->userid > 0) {
+		<?php if ($this->profile->userid > 0) {
 			echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $this->msg_html->avatar );
 			} else { echo $this->msg_html->avatar; } ?>
 		</li>
 		<li class="kpost-username">
-			<?php if ($this->userinfo->userid) { echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $this->msg_html->username );
+			<?php if ($this->profile->userid) { echo CKunenaLink::GetProfileLink ( $kunena_config, $this->kunena_message->userid, $this->msg_html->username );
 				} else { echo $this->msg_html->username; } ?>
 		</li>
 		<li class="kpost-usertype">
@@ -87,6 +91,7 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 				echo '<span class = "msgusertype">(' . $this->msg_html->usertype . ')</span>'; ?>
 		</li>
 
+		<?php if ($this->profile->userid): ?>
 		<li class="kpost-userrank">
 			<?php if (isset ( $this->msg_html->userrank )) { echo $this->msg_html->userrank; } ?>
 		</li>
@@ -99,6 +104,7 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 
 		<?php if (isset ( $this->msg_html->posts )) { echo $this->msg_html->posts; }
 				if (isset ( $this->msg_html->points )) { echo $this->msg_html->points; }?>
+		<?php endif; ?>
 	</ul>
 <?php } ?>
 

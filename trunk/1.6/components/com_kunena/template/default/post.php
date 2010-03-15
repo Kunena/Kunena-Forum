@@ -35,6 +35,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 $subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
 $authorname = JRequest::getVar ( 'authorname', '' );
+$anonymous = JRequest::getInt('anonymous' , 0);
 $email = JRequest::getVar ( 'email', '' );
 $contentURL = JRequest::getVar ( 'contentURL', '' );
 $subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
@@ -61,11 +62,13 @@ if($action == 'post'){
 	}
 }
 
+$msg_cat = null;
 if ($id || $parentid) {
 	// Check that message and category exists and fill some information for later use
 	$query = "SELECT m.*, (mm.locked OR c.locked) AS locked, t.message,
 					c.name AS catname, c.parent AS catparent, c.pub_access,
-					c.review, c.class_sfx, p.id AS poll_id, c.allow_polls
+					c.review, c.class_sfx, p.id AS poll_id, c.allow_anonymous,
+					c.post_anonymous, c.allow_polls
 				FROM #__fb_messages AS m
 				INNER JOIN #__fb_messages AS mm ON mm.id=m.thread
 				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
@@ -119,7 +122,7 @@ if ($id || $parentid) {
 	}
 } else if ($catid) {
 	// Check that category exists and fill some information for later use
-	$kunena_db->setQuery ( "SELECT 0 AS id, id AS catid, name AS catname, parent AS catparent, pub_access, locked, review, class_sfx, allow_polls FROM #__fb_categories WHERE id='{$catid}'" );
+	$kunena_db->setQuery ( "SELECT 0 AS id, id AS catid, name AS catname, parent AS catparent, pub_access, locked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls FROM #__fb_categories WHERE id='{$catid}'" );
 	$msg_cat = $kunena_db->loadObject ();
 	check_dberror ( 'Unable to load category.' );
 	if (! $msg_cat) {
@@ -171,7 +174,6 @@ if ($kunena_config->floodprotection && ($action == "post" || $do == 'quote' || $
 if ($kunena_my->id) {
 	$my_name = $kunena_config->username ? $kunena_my->username : $kunena_my->name;
 	$this->email = $kunena_my->email;
-	$this->kunena_registered_user = 1;
 	if (CKunenaTools::isModerator ( $kunena_my->id, $catid )) {
 		if (! empty ( $authorname ))
 			$my_name = $authorname;
@@ -181,7 +183,6 @@ if ($kunena_my->id) {
 } else {
 	$my_name = $authorname;
 	$this->email = (isset ( $email ) && ! empty ( $email )) ? $email : '';
-	$this->kunena_registered_user = 0;
 }
 ?>
 
@@ -199,10 +200,16 @@ if ($kunena_my->id) {
 			<tr>
 				<td><?php
 			$parent = ( int ) $parentid;
-			if ($kunena_config->askemail) jimport( 'joomla.mail.helper' );
-			if (empty ( $my_name )) {
+			jimport( 'joomla.mail.helper' );
+			if ($catid==0 || empty($msg_cat)) {
+				echo JText::_('COM_KUNENA_POST_ERROR_NO_CATEGORY');
+			} else if ($msg_cat->catparent == 0) {
+				echo JText::_('COM_KUNENA_POST_ERROR_IS_SECTION');
+			} else if ($anonymous && !$msg_cat->allow_anonymous) {
+				echo JText::_('COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN');
+			} else if (empty ( $my_name )) {
 				echo JText::_('COM_KUNENA_POST_FORGOT_NAME');
-			} else if ($kunena_config->askemail && empty ( $this->email )) {
+			} else if (!$kunena_my->id && $kunena_config->askemail && empty ( $this->email )) {
 				echo JText::_('COM_KUNENA_POST_FORGOT_EMAIL');
 			} else if ($kunena_config->askemail && ! JMailHelper::isEmailAddress($this->email)) {
 				echo JText::_('COM_KUNENA_MY_EMAIL_INVALID');
@@ -224,12 +231,21 @@ if ($kunena_my->id) {
 					$thread = $msg_cat->parent == 0 ? $msg_cat->id : $msg_cat->thread;
 				}
 
-				if ($catid == 0) {
-					echo "POST: INTERNAL ERROR: catid=0";
-					return;
-				}
-
 				$messagesubject = $subject; //before we add slashes and all... used later in mail
+
+				$userid = $kunena_my->id;
+				if ($anonymous) {
+					// Anonymous post: remove all user information from the post
+					$userid = 0;
+					jimport('joomla.user.helper');
+					if ($authorname == $kunena_my->name || $authorname == $kunena_my->username || JUserHelper::getUserId($authorname)) {
+						$my_name = JText::_('COM_KUNENA_USERNAME_ANONYMOUS');
+					} else {
+						$my_name = $authorname;
+					}
+					$this->email = '';
+					$ip = '';
+				}
 
 				$authorname = addslashes ( JString::trim ( $my_name ) );
 				$subject = addslashes ( JString::trim ( $subject ) );
@@ -249,7 +265,7 @@ if ($kunena_my->id) {
 
 				// DO NOT PROCEED if there is an exact copy of the message already in the db
 				$duplicatetimewindow = $posttime - $kunena_config->fbsessiontimeout;
-				$kunena_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'" );
+				$kunena_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$userid}' AND m.name='{$authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'" );
 				$pid = ( int ) $kunena_db->loadResult ();
 				check_dberror ( 'Unable to load post.' );
 
@@ -261,7 +277,7 @@ if ($kunena_my->id) {
 				} else {
 					$kunena_db->setQuery ( "INSERT INTO #__fb_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
-                                    						VALUES('$parent','$thread','$catid'," . $kunena_db->quote ( $authorname ) . ",'{$kunena_my->id}'," . $kunena_db->quote ( $email ) . "," . $kunena_db->quote ( $subject ) . ",'$posttime','$ip','$topic_emoticon','$holdPost')" );
+                                    						VALUES('$parent','$thread','$catid'," . $kunena_db->quote ( $authorname ) . ",'{$userid}'," . $kunena_db->quote ( $email ) . "," . $kunena_db->quote ( $subject ) . ",'$posttime','$ip','$topic_emoticon','$holdPost')" );
 
 					if (! $kunena_db->query ()) {
 						echo JText::_('COM_KUNENA_POST_ERROR_MESSAGE');
@@ -306,7 +322,7 @@ if ($kunena_my->id) {
 
 										$act = new stdClass ( );
 										$act->cmd = 'wall.write';
-										$act->actor = $kunena_my->id;
+										$act->actor = $userid;
 										$act->target = 0; // no target
 										$act->title = JText::_ ( '{actor} ' . JText::_('COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1') . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_('COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2') );
 										$act->content = $content;
@@ -346,7 +362,7 @@ if ($kunena_my->id) {
 
 										$act = new stdClass ( );
 										$act->cmd = 'wall.write';
-										$act->actor = $kunena_my->id;
+										$act->actor = $userid;
 										$act->target = 0; // no target
 										$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_('COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1') . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_('COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2') );
 										$act->content = $content;
@@ -372,8 +388,8 @@ if ($kunena_my->id) {
 						CKunenaTools::markTopicRead($pid, $kunena_my->id);
 
 						//update the user posts count
-						if ($kunena_my->id) {
-							$kunena_db->setQuery ( "UPDATE #__fb_users SET posts=posts+1 WHERE userid={$kunena_my->id}" );
+						if ($userid) {
+							$kunena_db->setQuery ( "UPDATE #__fb_users SET posts=posts+1 WHERE userid={$userid}" );
 							$kunena_db->query ();
 						}
 
@@ -554,7 +570,7 @@ if ($kunena_my->id) {
 					$this->resubject = '';
 
 					$options = array();
-					$this->selectcatlist = CKunenaTools::forumSelectList('postcatid', $catid, $options, '');
+					if (empty($msg_cat->allow_anonymous)) $this->selectcatlist = CKunenaTools::forumSelectList('postcatid', $catid, $options, '');
 				}
 				$this->authorName = kunena_htmlspecialchars ( $my_name );
 				$this->id = $id;
@@ -562,6 +578,13 @@ if ($kunena_my->id) {
 				$this->catid = $catid;
 				$this->emoid = 0;
 				$this->action = 'post';
+
+				$this->allow_anonymous = !empty($msg_cat->allow_anonymous) && $kunena_my->id;
+				$this->anonymous = ($this->allow_anonymous && !empty($msg_cat->post_anonymous));
+				$this->allow_name_change = 0;
+				if (!$kunena_my->id || $kunena_config->changename || !empty($msg_cat->allow_anonymous) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
+					$this->allow_name_change = 1;
+				}
 
 				CKunenaTools::loadTemplate('/write.html.php');
 			} else if ($do == "newFromBot" && (!$msg_cat->locked || CKunenaTools::isModerator ( $kunena_my->id, $catid ) )) {
@@ -588,6 +611,13 @@ if ($kunena_my->id) {
 				$this->catid = $catid;
 				$this->emoid = 0;
 				$this->action = 'bot';
+
+				$this->allow_anonymous = !empty($msg_cat->allow_anonymous) && $kunenna_my->id;
+				$this->anonymous = ($this->allow_anonymous && !empty($msg_cat->post_anonymous));
+				$this->allow_name_change = 0;
+				if (!$kunena_my->id || $kunena_config->changename || !empty($msg_cat->allow_anonymous) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
+					$this->allow_name_change = 1;
+				}
 
 				//get the writing stuff in:
 				CKunenaTools::loadTemplate('/write.html.php');
@@ -633,6 +663,13 @@ if ($kunena_my->id) {
 						if ($this->kunena_editmode) {
 							$this->polloptionstotal = count($this->polldatasedit);
 						}
+					}
+
+					$this->allow_anonymous = !empty($msg_cat->allow_anonymous) && $message->userid;
+					$this->anonymous = 0;
+					$this->allow_name_change = 0;
+					if (!$kunena_my->id || $kunena_config->changename || !empty($msg_cat->allow_anonymous) || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
+						$this->allow_name_change = 1;
 					}
 
 					//get the writing stuff in:
@@ -728,15 +765,27 @@ if ($kunena_my->id) {
                            }
                         }
 
-						if (!$kunena_config->askemail){
+						if (!$kunena_my->id && !$kunena_config->askemail){
 							jimport( 'joomla.mail.helper' );
 							if (empty($email) || ! JMailHelper::isEmailAddress($kunena_config->email)) {
 								$email = $mes->email;
 							}
 						}
 
+					if ($anonymous) {
+						// Anonymous post: remove all user information from the post
+						jimport ( 'joomla.user.helper' );
+						if (JUserHelper::getUserId ( $authorname )) {
+							$authorname = JText::_ ( 'COM_KUNENA_USERNAME_ANONYMOUS' );
+						}
+						$modified = "modified_by='0', modified_time='0' ,modified_reason='', ";
+						if ($kunena_config->editmarkup && $kunena_my->id != $mes->userid) {
+							$modified = "modified_by='" . $modified_by . "', modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) .", ";
+						}
+						$kunena_db->setQuery ( "UPDATE #__fb_messages SET userid='0', name=" . $kunena_db->quote ( $authorname ) . ", email='', ip='', " . $modified . " subject=" . $kunena_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
+					} else {
 						$kunena_db->setQuery ( "UPDATE #__fb_messages SET name=" . $kunena_db->quote ( $authorname ) . ", email=" . $kunena_db->quote ( addslashes ( $email ) ) . (($kunena_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote ( $modified_reason ) : "") . ", subject=" . $kunena_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
-
+					}
 						$dbr_nameset = $kunena_db->query ();
 						$kunena_db->setQuery ( "UPDATE #__fb_messages_text SET message=" . $kunena_db->quote ( $message ) . " WHERE mesid='{$id}'" );
 
@@ -812,8 +861,7 @@ if ($kunena_my->id) {
 				check_dberror ( "Unable to load messages." );
 				?>
 
-		<form
-			action="<?php
+		<form action="<?php
 				echo CKunenaLink::GetPostURL();
 				?>"
 			method="post" name="myform"><input type="hidden" name="do"
@@ -883,8 +931,7 @@ if ($kunena_my->id) {
 				}
 				$lists = JHTML::_('select.genericlist', $message, 'mergepost', 'class="inputbox" multiple="multiple" size="15"', 'value', 'text');
 				?>
-		<form
-			action="<?php
+		<form action="<?php
 				echo CKunenaLink::GetPostURL();
 				?>"
 			method="post" name="myform"><input type="hidden" name="do"
@@ -954,8 +1001,7 @@ if ($kunena_my->id) {
 				}
 				$lists = JHTML::_('select.genericlist', $message, 'mergepost', 'class="inputbox" multiple="multiple" size="15"', 'value', 'text');
 				?>
-		<form
-			action="<?php
+		<form action="<?php
 				echo CKunenaLink::GetPostURL();
 				?>"
 			method="post" name="myform"><input type="hidden" name="do"
@@ -1025,8 +1071,7 @@ if ($kunena_my->id) {
 				$lists = JHTML::_('select.genericlist', $message, 'targetcat', 'class="inputbox" multiple="multiple" size="8"', 'value', 'text');
 				$lists2 = JHTML::_('select.genericlist', $message, 'targetcat2', 'class="inputbox" multiple="multiple" size="8"', 'value', 'text');
 		?>
-				<form
-			action="<?php
+				<form action="<?php
 				echo CKunenaLink::GetPostURL();
 				?>"
 			method="post" name="myform"><input type="hidden" name="do"
@@ -1049,7 +1094,7 @@ if ($kunena_my->id) {
 				echo JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC');
 				?>: <br />
 
-		<input type="radio" name="split" value="splitpost" > Split only this message<br />
+		<input type="radio" name="split" value="splitpost" /> Split only this message<br />
 		<?php echo $lists; ?><br />
 		<!-- <input type="radio" name="split" value="splitmultpost" > Split this message and messages following:<br />-->
 

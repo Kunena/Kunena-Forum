@@ -535,11 +535,6 @@ function editForum($uid, $option) {
 	$yesno = array ();
 	$yesno [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_ANN_NO') );
 	$yesno [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_ANN_YES') );
-
-	// make a standard no/yes list
-	$noyes = array ();
-	$noyes [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_ANN_YES') );
-	$noyes [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_ANN_NO') );
 	//Create all kinds of Lists
 	$lists = array ();
 	$accessLists = array ();
@@ -548,20 +543,26 @@ function editForum($uid, $option) {
 	$pub_groups [] = JHTML::_ ( 'select.option', 1, JText::_('COM_KUNENA_NOBODY') );
 	$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_EVERYBODY') );
 	$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_('COM_KUNENA_ALLREGISTERED') );
-
 	$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, 'Registered', true ) );
 	//create admin groups array for use in selectList:
 	$adm_groups = array ();
 	$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, 'Public Backend', true ) );
+	// Anonymous posts default
+	$post_anonymous = array ();
+	$post_anonymous [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG') );
+	$post_anonymous [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO') );
+
 	//create the access control list
 	$accessLists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access );
 	$accessLists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access );
 	$lists ['pub_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $row->pub_recurse );
 	$lists ['admin_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $row->admin_recurse );
 	$lists ['forumLocked'] = JHTML::_ ( 'select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $row->locked );
-	$lists ['forumModerated'] = JHTML::_ ( 'select.genericlist', $noyes, 'moderated', 'class="inputbox" size="1"', 'value', 'text', $row->moderated );
+	$lists ['forumModerated'] = JHTML::_ ( 'select.genericlist', $yesno, 'moderated', 'class="inputbox" size="1"', 'value', 'text', $row->moderated );
 	$lists ['forumReview'] = JHTML::_ ( 'select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $row->review );
 	$lists ['allow_polls'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $row->allow_polls );
+	$lists ['allow_anonymous'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $row->allow_anonymous );
+	$lists ['post_anonymous'] = JHTML::_ ( 'select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $row->post_anonymous );
 	//get a list of moderators, if forum/category is moderated
 	$moderatorList = array ();
 

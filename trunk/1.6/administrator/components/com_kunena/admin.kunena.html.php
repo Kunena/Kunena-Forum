@@ -297,6 +297,10 @@ td.kadmin-tdtitle {
 		?></small></th>
 
 		<th><small><?php
+		echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS');
+		?></small></th>
+
+		<th><small><?php
 		echo JText::_('COM_KUNENA_ADMIN_POLLS');
 		?></small></th>
 
@@ -328,7 +332,7 @@ td.kadmin-tdtitle {
 			?>
 	<tr
 		<?php
-			echo ($row->parent == 0) ? 'bgcolor = "#D4D4D4"' : 'class = "row' . $k . '"';
+			echo 'class = "row' . $k . '"';
 			?>>
 
 		<td width="20" align="right"><?php
@@ -356,7 +360,7 @@ td.kadmin-tdtitle {
 			echo $row->id;
 			?></td>
 		<?php if (! $row->category): ?>
-		<td colspan="4" align="center"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+		<td colspan="5" align="center"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
 		<?php else: ?>
 		<td align="center"><?php
 			echo ($row->locked == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
@@ -368,6 +372,10 @@ td.kadmin-tdtitle {
 		</td>
 		<td align="center"><?php
 			echo ($row->review == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
+			?>
+		</td>
+		<td align="center"><?php
+			echo ($row->allow_anonymous == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
 			?>
 		</td>
 
@@ -546,7 +554,17 @@ td.kadmin-tdtitle {
 						<td valign="top"><?php echo JText::_('COM_KUNENA_REVDESC'); ?></td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?></td>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:</td>
+						<td valign="top"><?php echo $lists ['allow_anonymous']; ?></td>
+						<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:</td>
+						<td valign="top"><?php echo $lists ['post_anonymous']; ?></td>
+						<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:</td>
 						<td valign="top"><?php echo $lists ['allow_polls']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 					</tr>

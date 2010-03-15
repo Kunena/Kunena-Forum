@@ -31,7 +31,6 @@ $kunena_my = &JFactory::getUser ();
 //Some initial thingies needed anyway:
 if (! isset ( $this->kunena_set_focus )) $this->kunena_set_focus = 0;
 
-$authorName = stripslashes ( $this->authorName );
 CKunenaPolls::call_javascript_form();
 
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
@@ -137,39 +136,26 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			echo JText::_('COM_KUNENA_GEN_NAME');
 			?></strong></td>
 
-			<?php
-			if (($kunena_config->regonly == "1" || $kunena_config->changename == '0') && $kunena_my->id != "" && ! CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
-				?>
-			<td><input type="hidden" id="kauthorname" name="authorname" size="35"
-				class="kinputbox postinput"
-				maxlength="35" value="<?php
-				echo $this->authorName;
-				?>"><b><?php
-				echo $this->authorName;
-				?></b></td>
-			<?php
-			} else {
-				if ($this->kunena_registered_user == 1) {
-					?>
-					<td><input type="text" id="kauthorname" name="authorname" size="35"
-						class="kinputbox postinput"  maxlength="35" value="<?php echo $authorName;?>" />
-					</td>
-					<?php
-				} else {
-					?>
-					<td><input type="text" id="kauthorname" name="authorname" size="35"
-						class="kinputbox postinput required" maxlength="35" value="" />
-						<script type="text/javascript">document.postform.authorname.focus();</script>
-					</td>
-					<?php
-					$this->kunena_set_focus = 1;
-				}
-			}
-			?>
+			<td>
+			<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput required" maxlength="35" value="<?php echo $this->authorName;?>" <?php if (!$this->allow_name_change) echo 'disabled="disabled" '; ?>/>
+			<?php if (!$this->authorName): ?>
+			<script type="text/javascript">document.postform.authorname.focus();</script>
+			<?php $this->kunena_set_focus = 1; endif; ?>
+			</td>
 		</tr>
 
+		<?php if ($this->allow_anonymous): ?>
+		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
+			<td class="kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong></td>
+
+			<td>
+			<input type="checkbox" id="kanonymous" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
+			</td>
+		</tr>
+		<?php endif; ?>
+
 		<?php
-		if (($kunena_config->askemail && !$kunena_my->id) || $kunena_config->changename == 1 || CKunenaTools::isModerator ( $kunena_my->id, $this->catid )) {
+		if ($kunena_config->askemail && !$kunena_my->id) {
 		?>
 		<tr class = "ksectiontableentry<?php echo 1+ $this->k^=1 ;?>">
 			<td class = "kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
@@ -331,7 +317,7 @@ echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : '';
 			if ($kunena_config->subscriptionschecked == 1) {
 				?>
 
-			<input type="checkbox" name="subscribeMe" value="1" checked /> <i><?php
+			<input type="checkbox" name="subscribeMe" value="1" checked="checked" /> <i><?php
 				echo JText::_('COM_KUNENA_POST_NOTIFIED');
 				?></i>
 

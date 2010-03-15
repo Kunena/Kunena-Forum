@@ -45,6 +45,8 @@
                     `checked_out` tinyint(4) NOT NULL default '0',
                     `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
                     `review` tinyint(4) NOT NULL default '0',
+                    `allow_anonymous` tinyint(4) NOT NULL DEFAULT '0',
+                    `post_anonymous` tinyint(4) NOT NULL DEFAULT '0',
                     `hits` int(11) NOT NULL default '0',
                     `description` text NOT NULL,
                     `headerdesc` text NOT NULL,
@@ -451,6 +453,8 @@
 	                KEY `userid` (`userid`),
 	                KEY `hash` (`hash`),
 	                KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8;</query>
+			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `review` ,
+				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
 			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
 		</version>
 	</upgrade>

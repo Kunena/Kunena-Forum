@@ -273,26 +273,6 @@ class CKunenaLink
    		return '';
     }
 
-    //set redirect to true if you need & and not &amp;
-    function GetMyProfileAvatarURL($action='' , $redirect=false)
-    {
-    	$action_do = $action !== '' ? '&action='.$action : '';
-    	$return = $redirect != true ? JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'.$action_do) : htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'.$action_do));
-    	return $return;
-    }
-
-    function GetMyProfileAvatarLink($name, $title='',$action='',$rel='nofollow')
-    {
-    	$action_do = $action !== '' ? '&action='.$action : '';
-    	return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar'.$action_do, $name, $title, $rel);
-    }
-
-    //Used in myprofile_avatar_upload.php
-    function GetMyProfilAvatarGalleryURL()
-    {
-    	return htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL . '&func=myprofile&do=avatar&gallery='));
-    }
-
     function GetUserlistURL($action='')
 	{
 		return JRoute::_(KUNENA_LIVEURLREL.'&amp;func=userlist'.$action);

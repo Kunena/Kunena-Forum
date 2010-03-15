@@ -40,7 +40,10 @@ class CKunenaProfile {
 			check_dberror ( 'Unable to create user profile.' );
 			$this->profile = CKunenaUserprofile::getInstance($this->user->id, true);
 		}
-		if ($this->user->id == $this->my->id) $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->user->id, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
+		if ($this->user->id == $this->my->id) {
+			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->user->id, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
+			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->user->id, JText::_('COM_KUNENA_BACK'), 'nofollow' );
+		}
 		$this->name = $this->user->username;
 		if ($this->_config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
 		if ($this->_config->userlist_usertype) $this->usertype = $this->user->usertype;

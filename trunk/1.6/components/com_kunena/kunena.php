@@ -401,6 +401,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'myprofile' :
+		case 'userprofile' :
 		case 'fbprofile' :
 		case 'profile' :
 			require_once ( KUNENA_PATH_FUNCS .DS. 'profile.php');
@@ -457,11 +458,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 		case 'rules' :
 			CKunenaTools::loadTemplate('/rules.php');
-
-			break;
-
-		case 'userprofile' :
-			CKunenaTools::loadTemplate('/plugin/myprofile/myprofile.php');
 
 			break;
 

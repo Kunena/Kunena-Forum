@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+15-Mar-2010 Matias
+- [#19383] Revise Profile Page: remove old profile code
+
 14-Mar-2010 Matias
 ^ [#19383] Revise Profile Page: Save all user information in a single form
 ^ [#19383] Revise Profile Page: Clean up changing avatar

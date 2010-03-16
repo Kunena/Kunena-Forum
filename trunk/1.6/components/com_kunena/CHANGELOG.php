@@ -34,6 +34,13 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+16-Mar-2010 Matias
+^ [#19277] Clean up and restructure post.php: Make it a class in functions directory
+^ [#19277] Clean up and restructure post.php: Split code into functions
+^ [#19277] Clean up and restructure post.php: Move all html to the templates (editor & moderate directories)
+^ [#19277] Clean up and restructure post.php: Move all code out from the templates
+# [#19277] Clean up and fix many misc bugs in funcs/post.php
+
 15-Mar-2010 Matias
 - [#19383] Revise Profile Page: remove old profile code
 # [#19954] Admin: Differentiate sections from categories, default new category parent to the first section

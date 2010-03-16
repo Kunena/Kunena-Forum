@@ -416,7 +416,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'post' :
-			CKunenaTools::loadTemplate('/post.php');
+			require_once (KUNENA_PATH_FUNCS . DS . 'post.php');
+			$page = new CKunenaPost();
+			$page->display();
 
 			break;
 

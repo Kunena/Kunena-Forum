@@ -768,7 +768,7 @@ kbbcode.addFunction('Gallery', function() {
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_GALLERY');?>")'});
 
 <?php //display only the poll icon in the first message of the thread
-if(CKunenaPolls::get_message_parent($id, $this->kunena_editmode)){ ?>
+if(CKunenaPolls::get_message_parent($this->id, $this->kunena_editmode)){ ?>
 
 kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");

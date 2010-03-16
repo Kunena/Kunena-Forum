@@ -1093,7 +1093,8 @@ class CKunenaTools {
 		 */
 		function editTimeCheck ($messagemodifiedtime, $messagetime) {
 			$kunena_config = & CKunenaConfig::getInstance ();
-			if ((( int ) $kunena_config->useredittime) == 0) {
+			if (intval($kunena_config->useredit) != 1) return false;
+			if (intval($kunena_config->useredittime) == 0) {
 					return true;
 			} else {
 				//Check whether edit is in time
@@ -1101,7 +1102,7 @@ class CKunenaTools {
 				if (! $modtime) {
 					$modtime = $messagetime;
 				}
-				if (($modtime + (( int ) $kunena_config->useredittime)) >= CKunenaTimeformat::internalTime ()) {
+				if ($modtime + intval($kunena_config->useredittime) >= CKunenaTimeformat::internalTime ()) {
 					return true;
 				}
 			}

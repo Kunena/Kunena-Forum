@@ -113,6 +113,8 @@ class CKunenaPost {
 	}
 
 	protected function post() {
+		$this->verifyCaptcha();
+
 		if ($this->tokenProtection ())
 			return false;
 		if ($this->lockProtection ())
@@ -1285,24 +1287,43 @@ class CKunenaPost {
 		$this->document->setTitle ( $title . ' - ' . stripslashes ( $this->_config->board_title ) );
 	}
 
-	function hasCaptha() {
-		if ($this->_config->captcha == 1 && $this->my->id < 1 && JPluginHelper::isEnabled('system', 'jezReCaptcha')) return true;
+	function hasCaptcha() {
+		if ($this->_config->captcha == 1 && $this->my->id < 1) return true;
 		return false;
 	}
 
-	function displayCaptha() {
+	function displayCaptcha() {
+		if (!$this->hasCaptcha()) return;
+		if (!JPluginHelper::isEnabled('system', 'jezReCaptcha')) {
+			echo JText::_ ( 'reCAPTCHA is not properly configured.' );
+			return;
+		}
 		$lang = explode('-',$this->document->getLanguage());
-JApplication::addCustomHeadTag('
-      <script type="text/javascript">
-	   <!--
+JApplication::addCustomHeadTag('<script type="text/javascript">
+<!--
 var RecaptchaOptions = {
-   lang : "'.$lang.'"
+	lang : "'.$lang.'"
 };
 //-->
-     </script>
-		');
+</script>');
 		JPluginHelper::importPlugin( 'jezReCaptcha' );
 		$dispatcher =& JDispatcher::getInstance();
-		$results = $dispatcher->trigger('onCaptchaDisplay');
+		$dispatcher->trigger('onCaptchaDisplay');
+	}
+
+	function verifyCaptcha() {
+		if (!$this->hasCaptcha()) return;
+		if (!JPluginHelper::isEnabled('system', 'jezReCaptcha')) {
+			$this->_app->enqueueMessage ( JText::_ ( 'Cannot verify security code: reCAPTCHA is not properly configured.' ), 'error' );
+			$this->redirectBack();
+		}
+		JPluginHelper::importPlugin( 'jezReCaptcha' );
+		$dispatcher =& JDispatcher::getInstance();
+		$dispatcher->trigger('onCaptchaConfirm');
+	}
+
+	function redirectBack() {
+		$httpReferer = JRequest::getVar('HTTP_REFERER', JURI::base(true), 'server');
+		$this->_app->redirect($httpReferer);
 	}
 }

@@ -195,7 +195,7 @@ $this->k=0;
 		<?php
 		}
 		//Begin captcha
-		if ($this->hasCaptha()) : ?>
+		if ($this->hasCaptcha()) : ?>
 		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_CAPDESC');

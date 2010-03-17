@@ -85,9 +85,7 @@ class CKunenaPost {
 		}
 
 		// Check user access rights
-		$allow_forum = ($this->_session->allowed != '') ? explode ( ',', $this->_session->allowed ) : array ();
-
-		if (($this->my->id == 0 && ! $this->_config->pubwrite) || (empty ( $this->msg_cat->catparent ) && $this->do != 'reply') && (! in_array ( $this->catid, $allow_forum ) && ! CKunenaTools::isAdmin ())) {
+		if (($this->my->id == 0 && ! $this->_config->pubwrite) || (empty ( $this->msg_cat->catparent ) && $this->do != 'reply') && (! $this->_session->canRead ( $this->catid ) && ! CKunenaTools::isAdmin ())) {
 			CKunenaTools::loadTemplate ( '/plugin/login/login.php' );
 			return;
 		}

@@ -73,7 +73,7 @@ function dofreePDF()
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.session.class.php');
     $kunena_session =& CKunenaSession::getInstance(true);
-    $kunena_session->updateAllowedForums ( $kunena_my->id );
+    $kunena_session->updateAllowedForums ();
 	$allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
 
 	if (in_array($catid, $allow_forum) && $id)

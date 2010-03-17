@@ -255,18 +255,13 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.session.class.php');
 
-	// We only do the session handling for registered users
-
-	// No point in keeping track of whats new for guests
-
+	// We only save session for registered users
 	$kunena_session = & CKunenaSession::getInstance ( true );
 	if ($kunena_my->id > 0) {
 		// new indicator handling
 		if ($markaction == "allread") {
 			$kunena_session->markAllCategoriesRead ();
 		}
-
-		$kunena_session->updateAllowedForums ( $kunena_my->id );
 		$kunena_session->save ( $kunena_session );
 
 		if ($markaction == "allread") {
@@ -286,19 +281,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$this->prevCheck = $kunena_session->lasttime;
 
 	} else {
-		// collect accessaable categories for guest user
-		$kunena_db->setQuery ( "SELECT id FROM #__fb_categories WHERE pub_access='0' AND published='1'" );
-		$kunena_session->allowed = ($arr_pubcats = $kunena_db->loadResultArray ()) ? implode ( ',', $arr_pubcats ) : '';
-		check_dberror ( 'Unable load accessible categories for user.' );
-
 		// For guests we don't show new posts
 		$this->prevCheck = CKunenaTimeformat::internalTime()+60;
-		$kunena_session->readtopics = '';
 	}
-
-	// no access to categories?
-	if (! $kunena_session->allowed)
-		$kunena_session->allowed = '0';
 
 	// Integration with GroupJive, Jomsocial:
 	$params = array ($kunena_my->id, &$kunena_session->allowed );

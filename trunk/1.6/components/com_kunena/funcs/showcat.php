@@ -24,12 +24,9 @@ class CKunenaShowcat {
 		$this->session = CKunenaSession::getInstance ();
 		$this->config = CKunenaConfig::getInstance ();
 
-		//get the allowed forums and turn it into an array
-		$allow_forum = ($this->session->allowed != '') ? explode ( ',', $this->session->allowed ) : array ();
-
 		if (! $this->catid)
 			return;
-		if (! in_array ( $this->catid, $allow_forum ))
+		if (! $this->session->canRead ( $this->catid ))
 			return;
 
 		$this->allow = 1;

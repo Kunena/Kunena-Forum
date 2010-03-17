@@ -109,4 +109,3 @@ defined( '_JEXEC' ) or die();
 		</tr>
 	</tbody>
 </table>
-</form>

@@ -22,14 +22,12 @@ class CKunenaView {
 		$this->db = JFactory::getDBO ();
 		$this->session = CKunenaSession::getInstance ();
 
-		$this->allow_forum = ($this->session->allowed != '') ? explode ( ',', $this->session->allowed ) : array ();
-
 		$this->getView();
 	}
 
 	function getView() {
 		// Is user allowed to see the forum specified in URL?
-		if (! in_array ( $this->catid, $this->allow_forum )) {
+		if (! $this->session->canRead ( $this->catid )) {
 			return;
 		}
 		$this->allow = 1;

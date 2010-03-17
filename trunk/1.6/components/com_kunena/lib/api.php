@@ -170,7 +170,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		if (!is_array($threadlist) || empty($threadlist)) return;
 		$threads = implode(',', $threadlist);
 
-		$this->_session->updateAllowedForums($this->_my->id);
+		$this->_session->updateAllowedForums();
 		$allowed = $this->_session->allowed;
 
 		// Only subscribe if allowed and not already subscribed
@@ -214,7 +214,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		if (!is_array($catlist) || empty($catlist)) return;
 		$catids = implode(',', $catlist);
 
-		$this->_session->updateAllowedForums($this->_my->id);
+		$this->_session->updateAllowedForums();
 		$allowed = $this->_session->allowed;
 
 		// Only subscribe if allowed and not already subscribed
@@ -261,7 +261,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		if (!is_array($threadlist) || empty($threadlist)) return;
 		$threads = implode(',', $threadlist);
 
-		$this->_session->updateAllowedForums($this->_my->id);
+		$this->_session->updateAllowedForums();
 		$allowed = $this->_session->allowed;
 
 		// Only favorite if allowed and not already favorited

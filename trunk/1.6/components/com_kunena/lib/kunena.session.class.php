@@ -14,11 +14,13 @@ defined( '_JEXEC' ) or die();
 
 require_once (KUNENA_PATH .DS. "class.kunena.php");
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
+require_once (KUNENA_PATH_LIB .DS. "kunena.timeformat.class.php");
 
 class CKunenaSession extends JTable
 {
 	var $userid = 0;
 	var $allowed = 'na';
+	var $allowedcats = null;
 	var $lasttime = 0;
 	var $readtopics = '';
 	var $currvisit = 0;
@@ -26,23 +28,23 @@ class CKunenaSession extends JTable
 	protected $_sessiontimeout = false;
 	private static $_instance;
 
-	function __construct(&$kunena_db)
+	function __construct($db)
 	{
-		$kunena_config =& CKunenaConfig::getInstance();
-		parent::__construct('#__fb_sessions', 'userid', $kunena_db);
-		// New/unregistered user gets a month of unread messages
-		$this->lasttime = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR - KUNENA_SECONDS_IN_HOUR*24*30;
-		$this->currvisit = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
+		$kconfig = CKunenaConfig::getInstance();
+		parent::__construct('#__fb_sessions', 'userid', $db);
+		// New user gets a month of unread messages
+		$this->lasttime = CKunenaTimeformat::internalTime() - 3600*24*30;
+		$this->currvisit = CKunenaTimeformat::internalTime();
 	}
 
-	function &getInstance( $updateSessionInfo=false )
+	function &getInstance( $update=false )
 	{
 		if (!self::$_instance) {
-			$kunena_my = &JFactory::getUser();
-			$kunena_db = &JFactory::getDBO();
-			self::$_instance = new CKunenaSession($kunena_db);
-			if ($kunena_my->id) self::$_instance->load($kunena_my->id);
-			if ($updateSessionInfo) self::$_instance->updateSessionInfo();
+			$my = JFactory::getUser();
+			$db = JFactory::getDBO();
+			self::$_instance = new CKunenaSession($db);
+			if ($my->id) self::$_instance->load($my->id);
+			if ($update) self::$_instance->updateSessionInfo();
 		}
 		return self::$_instance;
 	}
@@ -58,10 +60,8 @@ class CKunenaSession extends JTable
 
 	function store( $updateNulls=false )
 	{
-		$kunena_config =& CKunenaConfig::getInstance();
-
 		// Finally update current visit timestamp before saving
-		$this->currvisit = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
+		$this->currvisit = CKunenaTimeformat::internalTime();
 
 		$k = $this->_tbl_key;
 
@@ -94,15 +94,13 @@ class CKunenaSession extends JTable
 		$kunena_config =& CKunenaConfig::getInstance();
 
 		// perform session timeout check
-		$this->_sessiontimeout = ($this->currvisit + $kunena_config->fbsessiontimeout < time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR);
+		$this->_sessiontimeout = ($this->currvisit + $kunena_config->fbsessiontimeout < CKunenaTimeformat::internalTime());
 		return $this->_sessiontimeout;
 	}
 
 	function markAllCategoriesRead()
 	{
-		$kunena_config =& CKunenaConfig::getInstance();
-
-		$this->lasttime = time() + $kunena_config->board_ofset * KUNENA_SECONDS_IN_HOUR;
+		$this->lasttime = CKunenaTimeformat::internalTime();
 		$this->readtopics = '';
 	}
 
@@ -115,25 +113,31 @@ class CKunenaSession extends JTable
 			$this->lasttime = $this->currvisit;
 			$this->readtopics = '';
 		}
+		$this->updateAllowedForums();
 	}
 
-	function updateAllowedForums($my_id)
+	function updateAllowedForums()
 	{
 		// check to see if we need to refresh the allowed forums cache
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$this->allowed or $this->allowed == 'na' or $this->isNewSession()) {
-			$allow_forums = CKunenaTools::getAllowedForums($my_id);
+			$allow_forums = CKunenaTools::getAllowedForums($this->userid);
 
 			if (!$allow_forums)
 			{
 				$allow_forums = '0';
 			}
 
-			if ($allow_forums != $this->allowed)
-			{
-				$this->allowed = $allow_forums;
-			}
+			$this->allowed = $allow_forums;
 		}
+	}
+
+	function canRead($catid) {
+		if ($this->allowedcats === null) {
+			$this->updateAllowedForums();
+			$this->allowedcats = ($this->allowed) ? explode ( ',', $this->_session->allowed ) : array ();
+		}
+		return in_array ( $catid, $this->allowedcats );
 	}
 }
 

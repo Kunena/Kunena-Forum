@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 17-Mar-2010 Matias
 # [#19288] Fix regression: Make CAPTCHA to work again
+# [#19295] Clean up code: Improve session handling and fix access for global moderators
 
 16-Mar-2010 Matias
 ^ [#19277] Clean up and restructure post.php: Make it a class in functions directory

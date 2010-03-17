@@ -138,8 +138,7 @@ define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena' . KUNENA_COMPONENT_ITE
 define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena/');
 
 if (!defined("KUNENA_JCSSURL")) {
-    $kunena_db->setQuery("SELECT template FROM #__templates_menu WHERE client_id='0'");
-    $current_stylesheet = $kunena_db->loadResult();
+    $current_stylesheet = $kunena_app->getTemplate();
     check_dberror ( "Unable to load template." );
     define('KUNENA_JCSSURL', KUNENA_JLIVEURL . 'templates/' . $current_stylesheet . '/css/template_css.css');
 }
@@ -577,21 +576,23 @@ class CKunenaTools {
         echo $lists['parent'];
         }
 
-    function isAdmin($uid = null) {
+	function isAdmin($uid = null) {
 		static $instances = null;
 
-		if ($uid === 0) return false;
-		if ($uid === null){
-			$user =& JFactory::getUser();
-			$uid = $user->id;
+		// Avoid loading instances if it is possible
+		$my = JFactory::getUser();
+		if ($uid === null || (is_numeric($uid) && $uid == $my->id)){
+			$uid = $my;
 		}
-		if (is_object($uid)){
-			$uid = $uid->id;
+		if ($uid instanceof JUser) {
+			$usertype = $uid->get('usertype');
+			return ($usertype == 'Administrator' || $usertype == 'Super Administrator');
 		}
+		if (!is_numeric($uid) || $uid == 0) return false;
 
-    	if (!$instances) {
+		if (!$instances) {
 			$kunena_db = &JFactory::getDBO();
-			$kunena_db->setQuery ("SELECT u.id AS uid FROM #__users AS u"
+			$kunena_db->setQuery ("SELECT u.id FROM #__users AS u"
 				." WHERE u.block='0' "
 				." AND u.usertype IN ('Administrator', 'Super Administrator')");
 			$instances = $kunena_db->loadResultArray();
@@ -600,15 +601,25 @@ class CKunenaTools {
 
 		if (in_array($uid, $instances)) return true;
 		return false;
-    }
+	}
 
-	function isModerator($uid, $catid=0) {
+	function isModerator($uid=null, $catid=0) {
 		static $instances = null;
 
-		$uid = (int)$uid;
 		$catid = (int)$catid;
-		if ($uid == 0) return false; // Anonymous never has moderator permission
+
+		$my = JFactory::getUser();
+		if ($uid === null || (is_numeric($uid) && $uid == $my->id)){
+			$uid = $my;
+		}
+		// Administrators are always moderators
 		if (self::isAdmin($uid)) return true;
+		if ($uid instanceof JUser) {
+			$uid = $uid->id;
+		}
+		// Visitors cannot be moderators
+		if (!is_numeric($uid) || $uid == 0) return false;
+
 		if (!$instances) {
 			$kunena_db = &JFactory::getDBO();
 			$kunena_db->setQuery ("SELECT u.id AS uid, m.catid FROM #__users AS u"
@@ -773,47 +784,47 @@ class CKunenaTools {
 		return $content;
 	}
 
-	function getAllowedForums($uid, $unused = 0, $unused2 = 0) {
-		$kunena_acl = &JFactory::getACL();
-		$kunena_db = &JFactory::getDBO();
+	function getAllowedForums($uid) {
+		$kunena_acl = &JFactory::getACL ();
+		$kunena_db = &JFactory::getDBO ();
 
-        if ($uid != 0)
-        {
-        	$aro_group = $kunena_acl->getAroGroup($uid);
+		if ($uid != 0) {
+			$aro_group = $kunena_acl->getAroGroup ( $uid );
 			$gid = $aro_group->id;
 		} else {
 			$gid = 0;
 		}
 
-			function _has_rights(&$kunena_acl, $gid, $access, $recurse) {
-				if ($gid == $access) return 1;
-				if ($recurse) {
-					$childs = $kunena_acl->get_group_children($access, 'ARO', 'RECURSE');
-					return (is_array($childs) and in_array($gid, $childs));
-				}
-				return 0;
+		function _has_rights(&$kunena_acl, $gid, $access, $recurse) {
+			if ($gid == $access)
+				return 1;
+			if ($recurse) {
+				$childs = $kunena_acl->get_group_children ( $access, 'ARO', 'RECURSE' );
+				return (is_array ( $childs ) and in_array ( $gid, $childs ));
 			}
-
-			$catlist = '';
-			$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse, c.moderated"
-				. ",(m.userid IS NOT NULL) AS ismod FROM #__fb_categories c"
-				. " LEFT JOIN #__fb_moderation m ON c.id=m.catid AND m.userid='{$uid}' WHERE published='1'";
-			$kunena_db->setQuery($query);
-			$rows = $kunena_db->loadObjectList();
-					check_dberror("Unable to load category list.");
-			if ($rows) {
-				foreach($rows as $row) {
-					if (($gid == 24 || $gid == 25) or
-						($row->moderated and $row->ismod) or
-						($row->pub_access == 0) or
-						($row->pub_access == -1 and $uid > 0) or
-						($row->pub_access > 0 and _has_rights($kunena_acl, $gid, $row->pub_access, $row->pub_recurse)) or
-						($row->admin_access > 0 and _has_rights($kunena_acl, $gid, $row->admin_access, $row->admin_recurse))
-					) $catlist .= (($catlist == '')?'':',').$row->id;
-				}
-			}
-			return $catlist;
+			return 0;
 		}
+
+		$catlist = '';
+		$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
+				FROM #__fb_categories c
+				WHERE published='1'";
+		$kunena_db->setQuery ( $query );
+		$rows = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load category list." );
+		if ($rows) {
+			foreach ( $rows as $row ) {
+				if (($row->pub_access == 0)
+					or ($row->pub_access == - 1 && $uid > 0)
+					or (self::isModerator($uid, $row->id))
+					or ($row->pub_access > 0 && _has_rights ( $kunena_acl, $gid, $row->pub_access, $row->pub_recurse ))
+					or ($row->admin_access > 0 && _has_rights ( $kunena_acl, $gid, $row->admin_access, $row->admin_recurse ))) {
+					$catlist .= (($catlist == '') ? '' : ',') . $row->id;
+				}
+			}
+		}
+		return $catlist;
+	}
 
 		/**
 		 * This function formats a number to n significant digits when above

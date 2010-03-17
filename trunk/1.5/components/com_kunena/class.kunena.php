@@ -756,14 +756,13 @@ class CKunenaTools {
 		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
-					MAX((s.thread IS NOT NULL) OR (sc.catid IS NOT NULL)) as subscription,
-					MAX(p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid=$catid))) as moderator,
+					MAX(s.thread IS NOT NULL) AS subscription,
+					MAX(p.moderator='1' AND (m.catid IS NULL OR (c.moderated='1' AND m.catid=$catid))) AS moderator,
 					MAX(u.gid IN (24, 25)) AS admin FROM #__users AS u
 					LEFT JOIN #__fb_users AS p ON u.id=p.userid
 					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid
 					LEFT JOIN #__fb_categories AS c ON m.catid=c.id
-					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread=$thread
-					LEFT JOIN #__fb_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=$catid";
+					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread=$thread";
 
 		$where = array ();
 		$having = '';

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.10
 
+17-Mar-2010 Matias
+# [#19940] Regression: Sending email while posting causes Kunena to crash
+
 14-Mar-2010 Matias
 ^ [#15784] Merge and review all backported fixes from /branches/1.5-xillibit-fixing
 

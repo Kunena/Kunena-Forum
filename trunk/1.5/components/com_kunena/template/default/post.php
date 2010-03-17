@@ -446,6 +446,7 @@ $catName = $objCatInfo->name;
 
                                         //Now manage the subscriptions (only if subscriptions are allowed)
                                         if (count($emailToList)) {
+                                            jimport ( 'joomla.mail.helper' );
                                         	if (! $fbConfig->email  || ! JMailHelper::isEmailAddress($fbConfig->email)) {
                                             	$app->enqueueMessage (_KUNENA_EMAIL_INVALID, 'error' );
                                             } else {

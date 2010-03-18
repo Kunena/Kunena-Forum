@@ -23,6 +23,7 @@ jimport('joomla.utilities.string');
 define('KUNENA_JLIVEURL', JURI::root());
 
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
+require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 
 $kunena_app =& JFactory::getApplication();
 $document =& JFactory::getDocument();

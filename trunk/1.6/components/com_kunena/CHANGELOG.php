@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+18-Mar-2010 Matias
+# [#19288] Fix regression: Typo in session handling
+# [#19288] Fix regression: Circular class reference does not work with APC
+
 17-Mar-2010 Matias
 # [#19288] Fix regression: Make CAPTCHA to work again
 # [#19295] Clean up code: Improve session handling and fix access for global moderators

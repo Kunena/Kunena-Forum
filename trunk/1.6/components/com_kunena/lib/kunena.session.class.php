@@ -135,7 +135,7 @@ class CKunenaSession extends JTable
 	function canRead($catid) {
 		if ($this->allowedcats === null) {
 			$this->updateAllowedForums();
-			$this->allowedcats = ($this->allowed) ? explode ( ',', $this->_session->allowed ) : array ();
+			$this->allowedcats = ($this->allowed) ? explode ( ',', $this->allowed ) : array ();
 		}
 		return in_array ( $catid, $this->allowedcats );
 	}

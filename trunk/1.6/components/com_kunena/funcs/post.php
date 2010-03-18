@@ -628,127 +628,69 @@ class CKunenaPost {
 	protected function editpostnow() {
 		if ($this->tokenProtection ())
 			return false;
-		if ($this->lockProtection ())
-			return false;
 
-		$subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-		$message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-		$topic_emoticon = JRequest::getInt ( 'topic_emoticon', 0 );
-		$anonymous = JRequest::getInt ( 'anonymous', 0 );
+		$fields ['name'] = JRequest::getString ( 'authorname', null );
+		$fields ['email'] = JRequest::getString ( 'email', null );
+		$fields ['subject'] = JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW );
+		$fields ['message'] = JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW );
+		$fields ['topic_emoticon'] = JRequest::getInt ( 'topic_emoticon', null );
+		$fields ['modified_reason'] = JRequest::getString ( 'modified_reason', null );
 
-		$query = "SELECT a.*, b.*, p.id AS poll_id FROM #__fb_messages AS a
-							LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
-							LEFT JOIN #__fb_polls AS p ON a.id=p.threadid
-							WHERE a.id='$this->id'";
-		$this->_db->setQuery ( $query );
-		$mes = $this->_db->loadObject ();
-		check_dberror ( "Unable to load message." );
+		$options ['anonymous'] = JRequest::getInt ( 'anonymous', 0 );
 
-		if (! $mes) {
-			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_INVALID' ), 'error' );
-			$this->_app->redirect ( CKunenaLink::GetKunenaURL ( true ) );
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		$message = new CKunenaPosting ( );
+		$success = $message->edit ( $this->id, $fields, $options );
+		if ($success) {
+			$success = $message->save ();
 		}
 
-		$userid = $mes->userid;
+		// Handle errors
+		if (! $success) {
+			$errors = $message->getErrors ();
+			foreach ( $errors as $field => $error ) {
+				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
+			}
+			$this->redirectBack();
+		}
+
+		$mes = $message->parent;
 
 		$polltitle = JRequest::getString ( 'poll_title', 0 );
 		$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
 		$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
 
-		$modified_reason = addslashes ( JRequest::getVar ( "modified_reason", null ) );
-		$modified_by = $this->my->id;
-		$modified_time = CKunenaTimeformat::internalTime ();
-
-		//Check for a moderator or superadmin
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-			$allowEdit = 1;
-		} else if ($this->my->id && $this->my->id == $mes->userid) {
-			// FIXME: consider taking account ( int ) $this->_config->useredittimegrace) or save last edit action to session
-			$allowEdit = CKunenaTools::editTimeCheck ( $mes->modified_time, $mes->time );
-		}
-
-		if ($allowEdit == 1) {
-			$authorname = $this->getAuthorName ( $mes->name, $anonymous );
-			$subject = addslashes ( JString::trim ( $subject ) );
-			$message = addslashes ( JString::trim ( $message ) );
-
-			// check if the post must be reviewed by a Moderator prior to showing
-			// doesn't apply to admin/moderator posts ;-)
-			$holdPost = 0;
-			if (! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-				$holdPost = $msg_cat->review;
+		//update the poll when an user edit his post
+		if ($this->_config->pollenabled) {
+			$optvalue = array ();
+			for($i = 0; $i < $optionsnumbers; $i ++) {
+				$optvalue [] = JRequest::getString ( 'field_option' . $i, null );
 			}
-
-			//update the poll when an user edit his post
-			if ($this->_config->pollenabled) {
-				$optvalue = array ();
-				for($i = 0; $i < $optionsnumbers; $i ++) {
-					$optvalue [] = JRequest::getString ( 'field_option' . $i, null );
-				}
-				//need to check if the poll exist, if it's not the case the poll is insered like new poll
-				if (! $mes->poll_id) {
-					CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
+			//need to check if the poll exist, if it's not the case the poll is insered like new poll
+			if (! $mes->poll_id) {
+				CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
+			} else {
+				if (empty ( $polltitle ) && empty ( $optionsnumbers )) {
+					//The poll is deleted because the polltitle and the options are empty
+					CKunenaPolls::delete_poll ( $this->id );
 				} else {
-					if (empty ( $polltitle ) && empty ( $optionsnumbers )) {
-						//The poll is deleted because the polltitle and the options are empty
-						CKunenaPolls::delete_poll ( $this->id );
-					} else {
-						CKunenaPolls::update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers );
-					}
+					CKunenaPolls::update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers );
 				}
 			}
-
-			// Get email address
-			jimport ( 'joomla.mail.helper' );
-			if (! $this->my->id || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-				$email = JRequest::getVar ( 'email', $mes->email );
-			}
-			if (empty ( $email ) || ! JMailHelper::isEmailAddress ( $email )) {
-				$email = $mes->email;
-			}
-
-			// Default modified by information
-			if (! $this->_config->editmarkup)
-				$modified = "modified_by='0', modified_time='0' ,modified_reason='', ";
-			else
-				$modified = "modified_by='" . $modified_by . "', modified_time='" . $modified_time . "' ,modified_reason=" . $this->_db->quote ( $modified_reason ) . ", ";
-
-			if ($anonymous) {
-				if ($this->my->id == $mes->userid && $mes->modified_by == $mes->userid) {
-					// I am the author and previous modification was made by me => delete modification information to hide my personality
-					$modified = "modified_by='0', modified_time='0' ,modified_reason='', ";
-				} else if ($this->my->id == $mes->userid) {
-					// I am the author, but somebody else has modified the message => leave modification information as it is pointing to moderator
-					$modified = "";
-				}
-				// Remove userid, email and ip address. Change author name if needed
-				$query = "UPDATE #__fb_messages SET userid='0', name=" . $this->_db->quote ( $authorname ) . ", email='', ip='', " . $modified . " subject=" . $this->_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$this->id}";
-			} else {
-				$query = "UPDATE #__fb_messages SET name=" . $this->_db->quote ( $authorname ) . ", email=" . $this->_db->quote ( addslashes ( $email ) ) . (($this->_config->editmarkup) ? " ,modified_by='" . $modified_by . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $this->_db->quote ( $modified_reason ) : "") . ", subject=" . $this->_db->quote ( $subject ) . ", topic_emoticon='" . $topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$this->id}";
-			}
-			$this->_db->setQuery ( $query );
-			$dbr_nameset = $this->_db->query ();
-			$this->_db->setQuery ( "UPDATE #__fb_messages_text SET message=" . $this->_db->quote ( $message ) . " WHERE mesid='{$this->id}'" );
-
-			if ($this->_db->query () && $dbr_nameset) {
-				//Update the attachments table if an file has been attached
-				require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
-				$attachments = CKunenaAttachments::getInstance ();
-				$attachments->assign ( $this->id );
-				$fileinfos = $attachments->multiupload ( $mes->id );
-				foreach ( $fileinfos as $fileinfo ) {
-					if (! $fileinfo ['status'])
-						$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
-				}
-
-				$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page, $this->catid ), JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-			} else {
-				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_MESSAGE_OCCURED' ), 'error' );
-				$this->_app->redirect ( CKunenaLink::GetKunenaURL ( true ) );
-			}
-		} else {
-			$this->_app->redirect ( CKunenaLink::GetKunenaURL ( true ), JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
 		}
+
+		//Update the attachments table if an file has been attached
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
+		$attachments = CKunenaAttachments::getInstance ();
+		$attachments->assign ( $this->id );
+		$fileinfos = $attachments->multiupload ( $this->id );
+		foreach ( $fileinfos as $fileinfo ) {
+			if (! $fileinfo ['status'])
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
+		}
+
+		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page, $this->catid ));
 	}
 
 	protected function deleteownpost() {

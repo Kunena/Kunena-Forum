@@ -53,7 +53,7 @@ class CKunenaView {
 
 		// Is user allowed to see the forum specified in the message?
 		$this->catid = $this->first_message->catid;
-		if (! in_array ( $this->catid, $this->allow_forum )) {
+		if (! $this->session->canRead ( $this->catid )) {
 			$this->allow = 0;
 			return;
 		}

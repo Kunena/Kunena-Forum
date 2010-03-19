@@ -380,7 +380,7 @@ class CKunenaConfig extends CKunenaConfigBase
 	//New for 1.5.10 -> hide IP
     var $hide_ip = 1;
     //New for 1.5.10 -> disable/enable activity stream
-	var $js_actstr_integration = 0;
+	var $js_actstr_integration = 1;
 
     public function __construct($KunenaUser=null)
     {

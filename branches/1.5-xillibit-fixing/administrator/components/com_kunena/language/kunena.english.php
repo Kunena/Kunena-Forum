@@ -44,6 +44,8 @@ define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC', 'The activity stream shows i
 // EMail
 define('_KUNENA_EMAIL_INVALID', 'Forum tried to send email from invalid address. Please contact site administrator!');
 define('_KUNENA_MY_EMAIL_INVALID', 'Your EMail address is invalid. Valid EMail address is required to post into this forum!');
+define('_KUNENA_SECTION','Section');
+define('_KUNENA_NOBODY','Nobody');
 
 // 1.5.8
 

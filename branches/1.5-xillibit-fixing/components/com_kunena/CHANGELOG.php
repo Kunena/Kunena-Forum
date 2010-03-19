@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.5.10
 
+19-Mar-2010 Xillibit
+^ [#19938] Make jomSocial Activity stream integration configurable - set enabled by default
+^ [#19942] Put one redirect when the user trying to access the pdf when the message is deleted
+# [#19992] Put rev 2063 and 2064 from K1.6 into K1.5
+
 17-Mar-2010 Matias
 # [#19940] Regression: Sending email while posting causes Kunena to crash
 

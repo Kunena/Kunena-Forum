@@ -15,7 +15,7 @@ class CKunenaPosting {
 	var $parent = null;
 	private $message = null;
 	private $options = null;
-	private $errors = array();
+	private $errors = array ();
 
 	function __construct() {
 		$this->_config = CKunenaConfig::getInstance ();
@@ -24,16 +24,15 @@ class CKunenaPosting {
 		$this->_my = JFactory::getUser ();
 		$this->_app = JFactory::getApplication ();
 
-		$this->setError('-load-', JText::_ ( 'COM_KUNENA_POSTING_NOT_LOADED' ));
+		$this->setError ( '-load-', JText::_ ( 'COM_KUNENA_POSTING_NOT_LOADED' ) );
 	}
 
 	protected function checkDatabaseError() {
-		if ($this->_db->getErrorNum())
-		{
-			if (CKunenaTools::isAdmin()) {
-				$this->_app->enqueueMessage(JText::sprintf ( 'COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.com/">ww.kunena.com</a>' ), 'error');
+		if ($this->_db->getErrorNum ()) {
+			if (CKunenaTools::isAdmin ()) {
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.com/">ww.kunena.com</a>' ), 'error' );
 			} else {
-				$this->_app->enqueueMessage(JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' ), 'error');
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' ), 'error' );
 			}
 			return true;
 		}
@@ -41,18 +40,20 @@ class CKunenaPosting {
 	}
 
 	public function getErrors() {
-		if (empty($this->errors)) return false;
+		if (empty ( $this->errors ))
+			return false;
 		return $this->errors;
 	}
 
 	protected function setError($field, $message) {
-		if (empty($message)) return true;
-		$this->errors[$field] = $message;
+		if (empty ( $message ))
+			return true;
+		$this->errors [$field] = $message;
 		return false;
 	}
 
 	protected function loadMessage($mesid) {
-		$this->errors = array();
+		$this->errors = array ();
 		$this->options = null;
 		if ($mesid) {
 			// Check that message and category exists and fetch some information for later use
@@ -69,31 +70,32 @@ class CKunenaPosting {
 
 			$this->_db->setQuery ( $query, 0, 1 );
 			$this->parent = $this->_db->loadObject ();
-			$this->checkDatabaseError();
+			$this->checkDatabaseError ();
 		}
 		if (! $this->parent) {
-			return $this->setError('-load-', JText::_ ( 'COM_KUNENA_POST_INVALID' ));
+			return $this->setError ( '-load-', JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
 		}
 		return true;
 	}
 
 	protected function loadCategory($catid) {
-		$this->errors = array();
+		$this->errors = array ();
 		$this->options = null;
 		if ($catid) {
 			// Check that category exists and fill some information for later use
-			$query = "SELECT 0 AS id, 0 AS parent, 0 AS thread, 0 AS hold, 0 AS topichold,
-					id AS catid, 0 AS locked, locked AS catlocked, '' AS message,
-					name AS catname, parent AS catparent, pub_access,
-					review, class_sfx, 0 AS poll_id, allow_anonymous,
-					post_anonymous, allow_polls
-				FROM #__fb_categories WHERE id=" . intval ( $catid ) . " AND published";
+			$query = "SELECT m.*, 0 AS topichold, 0 AS locked, c.locked AS catlocked, '' AS message,
+					c.id AS catid, c.name AS catname, c.parent AS catparent, c.pub_access,
+					c.review, c.class_sfx, 0 AS poll_id, c.allow_anonymous,
+					c.post_anonymous, c.allow_polls
+				FROM #__fb_categories AS c
+				LEFT JOIN #__fb_messages AS m ON m.id=0
+				WHERE c.id=" . intval ( $catid ) . " AND c.published";
 			$this->_db->setQuery ( $query, 0, 1 );
-			$this->message = $this->_db->loadObject ();
-			$this->checkDatabaseError();
+			$this->parent = $this->_db->loadObject ();
+			$this->checkDatabaseError ();
 		}
 		if (! $this->parent) {
-			return $this->setError('-load-', JText::_ ( 'COM_KUNENA_NO_ACCESS' ));
+			return $this->setError ( '-load-', JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 		}
 		return true;
 	}
@@ -116,20 +118,20 @@ class CKunenaPosting {
 		}
 		// Category must be visible
 		if (! $this->_session->canRead ( $this->parent->catid )) {
-			return $this->setError('-read-', JText::_ ( 'COM_KUNENA_NO_ACCESS' ));
+			return $this->setError ( '-read-', JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 		}
 		// Check unapproved, deleted etc messages
 		if (CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
 			if ($this->parent->hold > 1 || $this->parent->topichold > 1) {
 				// Moderators cannot see deleted posts
-				return $this->setError('-read-', JText::_ ( 'COM_KUNENA_POST_INVALID' ));
+				return $this->setError ( '-read-', JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
 			}
 		} else {
-			if ($this->parent->hold == 1 && $this->_my->id == $this->message->userid) {
+			if ($this->parent->hold == 1 && $this->_my->id == $this->parent->userid) {
 				// User can see his own post before it gets approved
 			} else if ($this->parent->hold > 0 || $this->parent->topichold > 0) {
 				// Otherwise users can only see visible topics/posts
-				return $this->setError('-read-', JText::_ ( 'COM_KUNENA_POST_INVALID' ));
+				return $this->setError ( '-read-', JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
 			}
 		}
 
@@ -139,7 +141,7 @@ class CKunenaPosting {
 	function canPost() {
 		// Visitors are allowed to post only if public writing is enabled
 		if (($this->_my->id == 0 && ! $this->_config->pubwrite)) {
-			return $this->setError('-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ));
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
 		}
 		// User must see category or topic in order to be able post into it
 		if (! $this->canRead ()) {
@@ -147,7 +149,7 @@ class CKunenaPosting {
 		}
 		// Posts cannot be in sections
 		if (! $this->parent->catparent) {
-			return $this->setError('-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' ));
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' ) );
 		}
 		// Do not perform rest of the checks to moderators and admins
 		if (CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
@@ -155,20 +157,24 @@ class CKunenaPosting {
 		}
 		// Posts cannot be written to locked topics
 		if ($this->parent->locked) {
-			return $this->setError('-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ));
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
 		}
 		// Posts cannot be written to locked categories
 		if ($this->parent->catlocked) {
-			return $this->setError('-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ));
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 		}
 
 		return true;
 	}
 
+	function canReply() {
+		return $this->canPost ();
+	}
+
 	function canEdit() {
 		// Visitors cannot edit posts
 		if (! $this->_my->id) {
-			return $this->setError('-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ));
+			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
 		}
 		// User must see topic in order to edit messages in it
 		if (! $this->canRead ()) {
@@ -176,7 +182,7 @@ class CKunenaPosting {
 		}
 		// Categories cannot be edited - verify that post exist
 		if (! $this->parent->id) {
-			return $this->setError('-edit-', JText::_ ( 'COM_KUNENA_POST_INVALID' ));
+			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
 		}
 		// Do not perform rest of the checks to moderators and admins
 		if (CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
@@ -184,186 +190,311 @@ class CKunenaPosting {
 		}
 		// User must be author of the message
 		if ($this->parent->userid != $this->_my->id) {
-			return $this->setError('-edit-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ));
+			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 		}
 		// User is only allowed to edit post within time specified in the configuration
 		if (! CKunenaTools::editTimeCheck ( $this->parent->modified_time, $this->parent->time )) {
-			return $this->setError('-edit-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ));
+			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 		}
 		// Posts cannot be edited in locked topics
 		if ($this->parent->locked) {
-			return $this->setError('-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ));
+			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
 		}
 		// Posts cannot be edited in locked categories
 		if ($this->parent->catlocked) {
-			return $this->setError('-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ));
+			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 		}
 
 		return true;
 	}
 
-	protected function post() {
-		if (!$this->canPost()) return false;
-		if ($this->floodProtection ())
+	public function post($catid, $fields = array(), $options = array()) {
+		if (! $this->parent || $this->parent->catid != $catid || $this->parent->id) {
+			$this->loadCategory ( $catid );
+		}
+		if (! $this->canPost ())
 			return false;
 
-		$subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-		$message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-		$anonymous = JRequest::getInt ( 'anonymous', 0 );
-		$email = JRequest::getVar ( 'email', '' );
-		$contentURL = JRequest::getVar ( 'contentURL', '' );
-		$subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
-		$topic_emoticon = JRequest::getInt ( 'topic_emoticon', 0 );
-		$polltitle = JRequest::getString ( 'poll_title', 0 );
-		$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
-		$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
+		// Load all options and fields
+		$this->loadOptions ( $options );
+		$this->setOption ( 'action', 'post' );
+		$this->setOption ( 'allowed', array ('name', 'email', 'subject', 'message', 'topic_emoticon' ) );
+		$this->setOption ( 'required', array ('subject', 'message' ) );
 
-		$parent = ( int ) $this->parentid;
-		$my_name = $this->getAuthorName ( '', $options->anonymous );
-		jimport ( 'joomla.mail.helper' );
-		if ($this->parent->catid == 0 || empty ( $this->msg_cat )) {
-			echo JText::_ ( 'COM_KUNENA_POST_ERROR_NO_CATEGORY' );
-		} else if ($this->msg_cat->catparent == 0) {
-			echo JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' );
-		} else if ($options->anonymous && ! $this->msg_cat->allow_anonymous) {
-			echo JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' );
-		} else if (empty ( $my_name )) {
-			echo JText::_ ( 'COM_KUNENA_POST_FORGOT_NAME' );
-		} else if (! $this->_my->id && $this->_config->askemail && empty ( $this->email )) {
-			echo JText::_ ( 'COM_KUNENA_POST_FORGOT_EMAIL' );
-		} else if ($this->_config->askemail && ! JMailHelper::isEmailAddress ( $this->email )) {
-			echo JText::_ ( 'COM_KUNENA_MY_EMAIL_INVALID' );
-		} else if (empty ( $subject )) {
-			echo JText::_ ( 'COM_KUNENA_POST_FORGOT_SUBJECT' );
-		} else if (empty ( $message )) {
-			echo JText::_ ( 'COM_KUNENA_POST_FORGOT_MESSAGE' );
-		} else {
-			if ($parent == 0) {
-				$thread = 0;
-			}
+		$this->loadFields ( $fields );
 
-			if ($this->msg_cat->id == 0) {
-				// bad parent, create a new post
-				$parent = 0;
-				$thread = 0;
-			} else {
+		return empty ( $this->errors );
+	}
 
-				$thread = $this->msg_cat->parent == 0 ? $this->msg_cat->id : $this->msg_cat->thread;
-			}
-
-			$messagesubject = $subject; //before we add slashes and all... used later in mail
-
-
-			$userid = $this->_my->id;
-			if ($options->anonymous) {
-				// Anonymous post: remove all user information from the post
-				$userid = 0;
-				$this->email = '';
-				$this->ip = '';
-			}
-
-			$authorname = addslashes ( JString::trim ( $my_name ) );
-			$subject = addslashes ( JString::trim ( $subject ) );
-			$message = addslashes ( JString::trim ( $message ) );
-			$email = addslashes ( JString::trim ( $this->email ) );
-
-			global $topic_emoticons;
-			$topic_emoticon = (! isset ( $topic_emoticons [$options->topic_emoticon] )) ? 0 : $options->topic_emoticon;
-			$posttime = CKunenaTimeformat::internalTime ();
-			if ($contentURL) {
-				$message = $contentURL . "\n\n" . $message;
-			}
-
-			//check if the post must be reviewed by a moderator prior to showing
-			$holdPost = 0;
-			if (! CKunenaTools::isModerator ( $this->_my->id, $this->parent->catid )) {
-				$holdPost = $this->msg_cat->review;
-			}
-
-			// DO NOT PROCEED if there is an exact copy of the message already in the db
-			$duplicatetimewindow = $posttime - $this->_config->fbsessiontimeout;
-			$this->_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$userid}' AND m.name='{$authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$this->ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'" );
-			$pid = ( int ) $this->_db->loadResult ();
-			check_dberror ( 'Unable to load post.' );
-
-			if ($pid) {
-				// We get here in case we have detected a double post
-				// We did not do any further processing and just display the failure message
-				echo '<br /><br /><div align="center">' . JText::_ ( 'COM_KUNENA_POST_DUPLICATE_IGNORED' ) . '</div><br /><br />';
-				echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $this->_config, $pid, $this->_config->messages_per_page, $this->parent->catid );
-			} else {
-				$this->_db->setQuery ( "INSERT INTO #__fb_messages
-						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
-						VALUES('$parent','$thread','$this->parent->catid'," . $this->_db->quote ( $authorname ) . ",'{$userid}'," . $this->_db->quote ( $email ) . "," . $this->_db->quote ( $subject ) . ",'$posttime','{$this->ip}','$topic_emoticon','$holdPost')" );
-
-				if (! $this->_db->query ()) {
-					echo JText::_ ( 'COM_KUNENA_POST_ERROR_MESSAGE' );
-				} else {
-					$pid = $this->_db->insertId ();
-
-					$this->_db->setQuery ( "INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid'," . $this->_db->quote ( $message ) . ")" );
-					$this->_db->query ();
-
-					// A couple more tasks required...
-					if ($thread == 0) {
-						//if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
-						$this->_db->setQuery ( "UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'" );
-						$this->_db->query ();
-					}
-
-					CKunenaTools::markTopicRead ( $pid, $this->_my->id );
-
-					//update the user posts count
-					if ($userid) {
-						$this->_db->setQuery ( "UPDATE #__fb_users SET posts=posts+1 WHERE userid={$userid}" );
-						$this->_db->query ();
-					}
-
-					// Perform proper page pagination for better SEO support
-					// used in subscriptions and auto redirect back to latest post
-					if ($thread == 0) {
-						$querythread = $pid;
-					} else {
-						$querythread = $thread;
-					}
-
-					$this->_db->setQuery ( "SELECT * FROM #__fb_sessions WHERE readtopics LIKE '%$thread%' AND userid!={$this->_my->id}" );
-					$sessions = $this->_db->loadObjectList ();
-					check_dberror ( "Unable to load sessions." );
-					foreach ( $sessions as $session ) {
-						$readtopics = $session->readtopics;
-						$userid = $session->userid;
-						$rt = explode ( ",", $readtopics );
-						$key = array_search ( $thread, $rt );
-						if ($key !== FALSE) {
-							unset ( $rt [$key] );
-							$readtopics = implode ( ",", $rt );
-							$this->_db->setQuery ( "UPDATE #__fb_sessions SET readtopics='$readtopics' WHERE userid=$userid" );
-							$this->_db->query ();
-							check_dberror ( "Unable to update sessions." );
-						}
-					}
-				}
-			}
+	public function reply($mesid, $fields = array(), $options = array()) {
+		if (! $this->parent || $this->parent->id != $mesid) {
+			$this->loadMessage ( $mesid );
 		}
+		if (! $this->canReply ())
+			return false;
+
+		// Load all options and fields
+		$this->loadOptions ( $options );
+		$this->setOption ( 'action', 'reply' );
+		$this->setOption ( 'allowed', array ('name', 'email', 'subject', 'message', 'topic_emoticon' ) );
+		$this->setOption ( 'required', array ('message' ) );
+
+		$this->loadFields ( $fields );
+
+		return empty ( $this->errors );
 	}
 
 	public function edit($mesid, $fields = array(), $options = array()) {
-		if (! $this->message || $this->message->id != $mesid) {
+		if (! $this->parent || $this->parent->id != $mesid) {
 			$this->loadMessage ( $mesid );
 		}
 		if (! $this->canEdit ())
 			return false;
 
 		// Load all options and fields
-		$this->loadOptions($options);
-		$this->setOption('action', 'edit');
-		$this->setOption('allowed', array ('name', 'email', 'subject', 'message', 'topic_emoticon', 'modified_reason'));
-		$this->setOption('required', array ());
+		$this->loadOptions ( $options );
+		$this->setOption ( 'action', 'edit' );
 
-		$this->loadFields($fields);
+		// Restrict fields that user can enter
+		$this->setOption ( 'allowed', array ('name', 'email', 'subject', 'message', 'topic_emoticon', 'modified_reason' ) );
+		$this->setOption ( 'required', array () );
 
-		return empty($this->errors);
+		$this->loadFields ( $fields );
+
+		return empty ( $this->errors );
+	}
+
+	protected function savePost() {
+		if (! $this->check ())
+			return false;
+
+		// Update rest of the information
+		$this->setOption ( 'allowed', null );
+
+		// Fill user related information
+		if ($this->getOption ( 'anonymous' )) {
+			// Anonymous post: Just in case remove userid, email and IP address - name is already anonymous
+			$this->set ( 'ip', '' );
+			$this->set ( 'userid', 0 );
+			$this->set ( 'email', '' );
+		} else {
+			// Regular post: Fill missing fields
+			if (! $this->get ( 'ip' ))
+				$this->set ( 'ip', $_SERVER ["REMOTE_ADDR"] );
+			if (! $this->get ( 'userid' ))
+				$this->set ( 'userid', $this->_my->id );
+			if (! $this->get ( 'name' ))
+				$this->set ( 'name', $this->_config->username ? $this->_my->username : $this->_my->name );
+			if (! $this->get ( 'email' ))
+				$this->set ( 'email', $this->_my->email );
+		}
+
+		// Fill thread/post related information
+		$this->set ( 'parent', $this->parent->id );
+		$this->set ( 'thread', $this->parent->thread );
+		$this->set ( 'catid', $this->parent->catid );
+		$this->set ( 'time', CKunenaTimeformat::internalTime () );
+
+		// On reviewed forum, require approval if user is not a moderator
+		$this->set ( 'hold', CKunenaTools::isModerator ( $this->_my, $this->parent->catid ) ? 0 : ( int ) $this->parent->review );
+
+		if (! empty ( $this->errors ))
+			return false;
+
+		if ($this->isAlreadyPosted ()) {
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_DUPLICATE_IGNORED' ) );
+		}
+
+		$meskeys = array ();
+		$mesvalues = array ();
+		$txtkeys = array ('mesid' );
+		$txtvalues = array (0 );
+		foreach ( $this->message as $field => $value ) {
+			if ($field != 'message') {
+				$meskeys [] = $this->_db->nameQuote ( $field );
+				$mesvalues [] = $this->_db->quote ( $value );
+			} else {
+				$txtkeys [] = $this->_db->nameQuote ( $field );
+				$txtvalues [] = $this->_db->quote ( $value );
+			}
+		}
+		if (empty ( $mesvalues ) || count ( $txtvalues ) < 2) {
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
+		}
+
+		$meskeys = implode ( ', ', $meskeys );
+		$mesvalues = implode ( ', ', $mesvalues );
+		$query = "INSERT INTO #__fb_messages ({$meskeys}) VALUES({$mesvalues})";
+		$this->_db->setQuery ( $query );
+		$this->_db->query ();
+		$dberror = $this->checkDatabaseError ();
+		if ($dberror)
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
+
+		$id = ( int ) $this->_db->insertId ();
+		$txtvalues [0] = $this->_db->quote ( $id );
+
+		$txtkeys = implode ( ', ', $txtkeys );
+		$txtvalues = implode ( ', ', $txtvalues );
+		$query = "INSERT INTO #__fb_messages_text ({$txtkeys}) VALUES({$txtvalues})";
+		$this->_db->setQuery ( $query );
+		$this->_db->query ();
+		$dberror = $this->checkDatabaseError ();
+		if ($dberror) {
+			// Delete partial message on error
+			$query = "DELETE FROM #__fb_messages WHERE mesid={$id}";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
+		}
+
+		$this->set ( 'id', $id );
+		if ($this->parent->thread == 0) {
+			// For new thread, we now know to where the message belongs
+			$this->set ( 'thread', $id );
+			$query = "UPDATE #__fb_messages SET thread={$id} WHERE id={$id}";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			$dberror = $this->checkDatabaseError ();
+			if ($dberror)
+				return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
+		}
+
+		//update the user posts count
+		$userid = ( int ) $this->get ( 'userid' );
+		if ($userid) {
+			$query = "UPDATE #__fb_users SET posts=posts+1 WHERE userid={$userid}";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+
+		}
+
+		// now increase the #s in categories only case approved
+		if (! $this->get ( 'hold' )) {
+			CKunenaTools::modifyCategoryStats ( $id, $this->get ( 'parent' ), $this->get ( 'time' ), $this->get ( 'catid' ) );
+		}
+
+		// Mark topic read for me
+		CKunenaTools::markTopicRead ( $id, $this->_my->id );
+
+		// Mark topic unread for others
+
+
+		// First take care of old sessions to make our job easier and faster
+		$lasttime = $this->get ( 'time' ) - $this->_config->fbsessiontimeout - 60;
+		$query = "UPDATE #__fb_sessions SET readtopics=NULL WHERE currvisit<{$lasttime}";
+		$this->_db->setQuery ( $query );
+		$this->_db->query ();
+		$dberror = $this->checkDatabaseError ();
+		if ($dberror)
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
+
+		// Then look at users who have read the thread
+		$thread = $this->get ( 'thread' );
+		$query = "SELECT userid, readtopics FROM #__fb_sessions WHERE readtopics LIKE '%{$thread}%' AND userid!={$userid}";
+		$this->_db->setQuery ( $query );
+		$sessions = $this->_db->loadObjectList ();
+		$dberror = $this->checkDatabaseError ();
+		if ($dberror)
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
+
+		// And clear current thread
+		$errcount = 0;
+		foreach ( $sessions as $session ) {
+			$readtopics = $session->readtopics;
+			$rt = explode ( ",", $readtopics );
+			$key = array_search ( $thread, $rt );
+			if ($key !== false) {
+				unset ( $rt [$key] );
+				$readtopics = implode ( ",", $rt );
+				$query = "UPDATE #__fb_sessions SET readtopics={$this->_db->quote($readtopics)} WHERE userid={$session->userid}";
+				$this->_db->setQuery ( $query );
+				$this->_db->query ();
+				$dberror = $this->checkDatabaseError ();
+				if ($dberror)
+					$errcount ++;
+			}
+		}
+		if (isset ( $errcount ))
+			$this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
+
+		return true;
+	}
+
+	protected function saveEdit() {
+		$anonymous = $this->getOption ( 'anonymous' );
+
+		// Moderators do not have to fill anonymous name
+		if ($anonymous && CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
+			jimport ( 'joomla.user.helper' );
+			$nickname = $this->get ( 'name' );
+			if (! $nickname)
+				$nickname = $this->parent->name;
+			$nicktaken = JUserHelper::getUserId ( $nickname );
+			if ($nicktaken || $nickname == $this->_my->name) {
+				$this->set ( 'name', JText::_ ( 'COM_KUNENA_USERNAME_ANONYMOUS' ) );
+			}
+		}
+
+		if (! $this->check ())
+			return false;
+
+		// Update rest of the information
+		$this->setOption ( 'allowed', null );
+		$this->set ( 'hold', CKunenaTools::isModerator ( $this->_my, $this->parent->catid ) ? 0 : ( int ) $this->parent->review );
+		$this->set ( 'modified_by', ( int ) $this->_my->id );
+		$this->set ( 'modified_time', CKunenaTimeformat::internalTime () );
+
+		if ($anonymous) {
+			if ($this->_my->id == $this->parent->userid && $this->parent->modified_by == $this->parent->userid) {
+				// I am the author and previous modification was made by me => delete modification information to hide my personality
+				$this->set ( 'modified_by', 0 );
+				$this->set ( 'modified_time', 0 );
+				$this->set ( 'modified_reason', '' );
+			} else if ($this->_my->id == $this->parent->userid) {
+				// I am the author, but somebody else has modified the message => leave modification information intact
+				$this->set ( 'modified_by', null );
+				$this->set ( 'modified_time', null );
+				$this->set ( 'modified_reason', null );
+			}
+			// Remove userid, email and ip address
+			$this->set ( 'userid', 0 );
+			$this->set ( 'ip', '' );
+			$this->set ( 'email', '' );
+		}
+
+		if (! empty ( $this->errors ))
+			return false;
+
+		$mesvalues = array ();
+		$txtvalues = array ();
+		foreach ( $this->message as $field => $value ) {
+			if ($field != 'message') {
+				$mesvalues [] = "{$this->_db->nameQuote($field)}={$this->_db->quote($value)}";
+			} else {
+				$txtvalues [] = "{$this->_db->nameQuote($field)}={$this->_db->quote($value)}";
+			}
+		}
+		if (! empty ( $mesvalues )) {
+			$mesvalues = implode ( ', ', $mesvalues );
+			$query = "UPDATE #__fb_messages SET {$mesvalues} WHERE id={$this->_db->quote($this->parent->id)}";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			$dberror = $this->checkDatabaseError ();
+			if ($dberror)
+				return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
+		}
+		if (! empty ( $txtvalues )) {
+			$txtvalues = implode ( ', ', $txtvalues );
+			$query = "UPDATE #__fb_messages_text SET {$txtvalues} WHERE mesid={$this->_db->quote($this->parent->id)}";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			$dberror = $this->checkDatabaseError ();
+			if ($dberror)
+				return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
+		}
+		$this->set ( 'id', $this->parent->id );
+		return true;
 	}
 
 	public function delete() {
@@ -376,15 +507,18 @@ class CKunenaPosting {
 
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->parent->catid, true ), $message );
 
-		return empty($this->errors);
+		return empty ( $this->errors );
 	}
 
 	public function save() {
-		switch ($this->getOption('action')) {
-			case 'edit':
-				return $this->saveEdit();
-			default:
-				return $this->setError('-commit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ));
+		switch ($this->getOption ( 'action' )) {
+			case 'post' :
+			case 'reply' :
+				return $this->savePost ();
+			case 'edit' :
+				return $this->saveEdit ();
+			default :
+				return $this->setError ( '-commit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
 		}
 	}
 
@@ -405,181 +539,123 @@ class CKunenaPosting {
 	}
 
 	public function loadOptions($options) {
-		foreach ($options as $option=>$value) {
-			$this->setOption($option, $value);
+		foreach ( $options as $option => $value ) {
+			$this->setOption ( $option, $value );
 		}
 	}
 
 	public function loadFields($fields) {
-		foreach ($fields as $field=>$value) {
-			$this->set($field, $value);
+		foreach ( $fields as $field => $value ) {
+			$this->set ( $field, $value );
 		}
 	}
 
 	public function setOption($name, $value) {
-		$this->options[$name] = $value;
+		$this->options [$name] = $value;
 	}
 
 	public function getOption($name) {
-		return isset($this->options[$name]) ? $this->options[$name] : false;
+		return isset ( $this->options [$name] ) ? $this->options [$name] : false;
 	}
 
 	public function set($name, $value = null) {
-		if (!in_array($name, $this->options['allowed'])) {
-			return $this->setError($name, JText::_ ( 'COM_KUNENA_POST_ERROR_FIELD_NOT_ALLOWED' ));
+		if (! empty ( $this->options ['allowed'] ) && ! in_array ( $name, $this->options ['allowed'] )) {
+			return $this->setError ( $name, JText::_ ( 'COM_KUNENA_POST_ERROR_FIELD_NOT_ALLOWED' ) );
 		}
-		$retval = $this->get($name);
-		if ($value === null) unset($this->message[$name]);
-		else $this->message[$name] = addslashes ( JString::trim ( (string) $value ) );
+		$retval = $this->get ( $name );
+		if ($value === null)
+			unset ( $this->message [$name] );
+		else
+			$this->message [$name] = addslashes ( JString::trim ( ( string ) $value ) );
 		return $retval;
 	}
 
 	public function get($name) {
-		if (!isset($this->message[$name])) return null;
-		return stripslashes( $this->message[$name] );
-	}
-
-	protected function saveEdit() {
-		$anonymous = $this->getOption('anonymous');
-
-		// Moderators do not have to fill anonymous name
-		if ($anonymous && CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
-			jimport ( 'joomla.user.helper' );
-			$nickname = $this->get('name');
-			if (!$nickname) $nickname = $this->parent->name;
-			$nicktaken = JUserHelper::getUserId ( $nickname );
-			if ($nicktaken || $nickname == $this->_my->name) {
-				$this->set('name', JText::_('COM_KUNENA_USERNAME_ANONYMOUS'));
-			}
-		}
-
-		if (!$this->check()) return false;
-
-		// Allow this function to change a few more fields without raising an error
-		$allowed = array ('userid', 'ip', 'hold', 'modified_by', 'modified_time');
-		$this->setOption('allowed', array_unique(array_merge($this->getOption('allowed'), $allowed)));
-
-		$this->set('hold', CKunenaTools::isModerator ( $this->_my, $this->parent->catid ) ? 0 : ( int ) $this->parent->review);
-		$this->set('modified_by', ( int ) $this->_my->id);
-		$this->set('modified_time', CKunenaTimeformat::internalTime ());
-
-		if ($anonymous) {
-			if ($this->_my->id == $this->parent->userid && $this->parent->modified_by == $this->parent->userid) {
-				// I am the author and previous modification was made by me => delete modification information to hide my personality
-				$this->set('modified_by', 0);
-				$this->set('modified_time', 0);
-				$this->set('modified_reason', '');
-			} else if ($this->_my->id == $this->parent->userid) {
-				// I am the author, but somebody else has modified the message => leave modification information intact
-				$this->set('modified_by', null);
-				$this->set('modified_time', null);
-				$this->set('modified_reason', null);
-			}
-			// Remove userid, email and ip address
-			$this->set('userid', 0);
-			$this->set('ip', '');
-			$this->set('email', '');
-		}
-
-		if (!empty($this->errors)) return false;
-
-		$mesvalues = array();
-		$txtvalues = array();
-		foreach ($this->message as $field => $value)
-		{
-			if ($field != 'message') {
-				$mesvalues[] = "{$this->_db->nameQuote($field)}={$this->_db->quote($value)}";
-			} else {
-				$txtvalues[] = "{$this->_db->nameQuote($field)}={$this->_db->quote($value)}";
-			}
-		}
-		if (!empty($mesvalues)) {
-			$mesvalues = implode(', ', $mesvalues);
-			$query = "UPDATE #__fb_messages SET {$mesvalues} WHERE id={$this->_db->quote($this->parent->id)}";
-			$this->_db->setQuery ( $query );
-			$this->_db->query ();
-			$dberror = $this->checkDatabaseError();
-			if ($dberror) return $this->setError('-edit-', JText::_('COM_KUNENA_POST_ERROR_SAVE'));
-		}
-		if (!empty($txtvalues)) {
-			$txtvalues = implode(', ', $txtvalues);
-			$query = "UPDATE #__fb_messages_text SET {$txtvalues} WHERE mesid={$this->_db->quote($this->parent->id)}";
-			$this->_db->setQuery ( $query );
-			$this->_db->query ();
-			$dberror = $this->checkDatabaseError();
-			if ($dberror) return $this->setError('-edit-', JText::_('COM_KUNENA_POST_ERROR_SAVE'));
-		}
-		return true;
+		if (! isset ( $this->message [$name] ))
+			return null;
+		return stripslashes ( $this->message [$name] );
 	}
 
 	// Functions to check that values are legal
 
+
 	protected function check() {
-		if ($this->errors) return false;
-		foreach ($this->message as $field => $value) {
+		if ($this->errors)
+			return false;
+		foreach ( $this->message as $field => $value ) {
 			switch ($field) {
-				case 'name':
-					$this->checkAuthorName($field, $value);
+				case 'name' :
+					$this->checkAuthorName ( $field, $value );
 					break;
-				case 'email':
-					$this->checkEmail($field, $value);
+				case 'email' :
+					$this->checkEmail ( $field, $value );
 					break;
-				case 'subject':
-					$this->checkNotEmpty($field, $value);
+				case 'subject' :
+					$this->checkNotEmpty ( $field, $value );
 					break;
-				case 'message':
-					$this->checkNotEmpty($field, $value);
+				case 'message' :
+					$this->checkNotEmpty ( $field, $value );
 					break;
-				case 'topic_emoticon':
+				case 'topic_emoticon' :
+					$this->checkTopicEmoticon ( $field, $value );
 					break;
-				case 'modified_reason':
+				case 'modified_reason' :
 					break;
 			}
 		}
-		foreach ($this->getOption('required') as $field) {
-			$value = $this->get($field);
-			if (empty($value)) {
-				$this->setError($field, JText::_('COM_KUNENA_POST_FIELD_REQUIRED'));
+		foreach ( $this->getOption ( 'required' ) as $field ) {
+			$value = $this->get ( $field );
+			if (empty ( $value )) {
+				$this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_REQUIRED' ) );
 			}
 		}
-		return empty($this->errors);
+		return empty ( $this->errors );
 	}
 
 	protected function checkNotEmpty($field, $value) {
-		if (empty($value)) {
-			return $this->setError($field, JText::_('COM_KUNENA_POST_FIELD_EMPTY'));
+		if (empty ( $value )) {
+			return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_EMPTY' ) );
 		}
 		return true;
 	}
 
+	protected function checkTopicEmoticon($field, $value) {
+		global $topic_emoticons;
+		if (! isset ( $topic_emoticons [$value] )) {
+			return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_TOPICEMOTICON_INVALID' ) );
+		}
+		return true;
+	}
 	protected function checkEmail($field, $value) {
 		if ($value) {
 			// Email address must be valid
 			jimport ( 'joomla.mail.helper' );
-			if ( ! JMailHelper::isEmailAddress ( $value )) {
-				return $this->setError($field, JText::_('COM_KUNENA_POST_FIELD_EMAIL_INVALID'));
+			if (! JMailHelper::isEmailAddress ( $value )) {
+				return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_EMAIL_INVALID' ) );
 			}
-		} else if (!$this->_my->id && $this->_config->askemail) {
-			return $this->setError($field, JText::_('COM_KUNENA_POST_FIELD_EMAIL_EMPTY'));
+		} else if (! $this->_my->id && $this->_config->askemail) {
+			return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_EMAIL_EMPTY' ) );
 		}
 		return true;
 	}
 
 	protected function checkAuthorName($field, $value) {
-		if (empty($value)) {
-			return $this->setError($field, JText::_('COM_KUNENA_POST_FIELD_NAME_EMPTY'));
+		if (empty ( $value )) {
+			return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_EMPTY' ) );
 		}
-		if (! $this->_my->id || $this->getOption('anonymous')) {
+		if (! $this->_my->id || $this->getOption ( 'anonymous' )) {
 			// Unregistered or anonymous users
+
 
 			// Do not allow existing username
 			jimport ( 'joomla.user.helper' );
 			$nicktaken = JUserHelper::getUserId ( $value );
 			if ($nicktaken || $value == $this->_my->name) {
-				return $this->setError($field, JText::_('COM_KUNENA_POST_FIELD_NAME_CONFLICT_ANON'));
+				return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CONFLICT_ANON' ) );
 			}
 		} else {
 			// Registered users
+
 
 			if (CKunenaTools::isModerator ( $this->_my->id, $this->parent->catid )) {
 				// Moderators can to do whatever they want to
@@ -588,12 +664,84 @@ class CKunenaPosting {
 				jimport ( 'joomla.user.helper' );
 				$nicktaken = JUserHelper::getUserId ( $value );
 				if ($nicktaken && $nicktaken != $this->_my->id) {
-					return $this->setError($field, JText::_('COM_KUNENA_POST_FIELD_NAME_CONFLICT_REG'));
+					return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CONFLICT_REG' ) );
 				}
 			} else {
-				return $this->setError($field, JText::_('COM_KUNENA_POST_FIELD_NAME_CHANGED'));
+				return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CHANGED' ) );
 			}
 		}
 		return true;
+	}
+
+	protected function isAlreadyPosted() {
+		// Ignore identical messages (posted within 5 minutes)
+		$duplicatetimewindow = CKunenaTimeformat::internalTime () - 5 * 60;
+		$this->_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid
+			WHERE m.userid={$this->_db->quote($this->message['userid'])}
+			AND m.name={$this->_db->quote($this->message['name'])}
+			AND m.subject={$this->_db->quote($this->message['subject'])}
+			AND m.ip={$this->_db->quote($this->message['ip'])}
+			AND t.message={$this->_db->quote($this->message['message'])}
+			AND m.time>='{$duplicatetimewindow}'" );
+		$id = $this->_db->loadResult ();
+		$dberror = $this->checkDatabaseError ();
+		if ($dberror)
+			return $this->setError ( '-duplicate-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
+		return ( bool ) $id;
+	}
+
+	public function emailToSubscribers($LastPostUrl, $mailsubs = false, $mailmods = false, $mailadmins = false) {
+		//get all subscribers, moderators and admins who will get the email
+		$emailToList = CKunenaTools::getEMailToList ( $this->get ( 'catid' ), $this->get ( 'thread' ), $mailsubs, $mailmods, $mailadmins, $this->_my->id );
+
+		if (count ( $emailToList )) {
+			if (! $this->_config->email || ! JMailHelper::isEmailAddress ( $this->_config->email )) {
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'notice' );
+				return false;
+			} else if ($_SERVER ["REMOTE_ADDR"] == '127.0.0.1') {
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ), 'notice' );
+				return false;
+			}
+			// clean up the message for review
+			$authorname = $this->get('name');
+			$message = smile::purify ( $this->get('message') );
+			$subject = $this->get('subject');
+
+			$mailsender = JMailHelper::cleanAddress ( stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
+			$mailsubject = JMailHelper::cleanSubject ( "[" . stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . stripslashes ( $subject ) . " (" . stripslashes ( $this->parent->catname ) . ")" );
+
+			foreach ( $emailToList as $emailTo ) {
+				if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
+					continue;
+
+				if ($emailTo->subscription) {
+					$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' );
+					$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' );
+				} else {
+					$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD1' );
+					$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD2' );
+				}
+
+				$msg = "$emailTo->name,\n\n";
+				$msg .= $msg1 . " " . stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "\n\n";
+				$msg .= JText::_ ( 'COM_KUNENA_GEN_SUBJECT' ) . ": " . stripslashes ( $subject ) . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ": " . stripslashes ( $this->parent->catname ) . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . stripslashes ( $authorname ) . "\n\n";
+				$msg .= $msg2 . "\n";
+				$msg .= "URL: $LastPostUrl\n\n";
+				if ($this->_config->mailfull == 1) {
+					$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . ":\n-----\n";
+					$msg .= $message;
+					$msg .= "\n-----";
+				}
+				$msg .= "\n\n";
+				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
+				$msg .= "\n\n\n\n";
+				$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+				$msg = JMailHelper::cleanBody ( $msg );
+
+				JUtility::sendMail ( $this->_config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
+			}
+		}
 	}
 }

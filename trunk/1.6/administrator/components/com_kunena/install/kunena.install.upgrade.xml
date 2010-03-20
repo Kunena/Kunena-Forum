@@ -85,7 +85,8 @@
                     `lasttime` int(11) NOT NULL default '0',
                     `readtopics` text,
                     `currvisit` int(11) NOT NULL default '0',
-                PRIMARY KEY  (`userid`) ) DEFAULT CHARSET=utf8</query>
+                PRIMARY KEY  (`userid`),
+                KEY `currvisit` (`currvisit`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE IF NOT EXISTS `#__fb_smileys` (
                     `id` int(4) NOT NULL auto_increment,
                     `code` varchar(12) NOT NULL default '',
@@ -456,6 +457,7 @@
 			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `review` ,
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
 			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
+			<query mode="silenterror">ALTER TABLE `jos_fb_sessions` ADD INDEX ( `currvisit` )</query>
 		</version>
 	</upgrade>
 </comupgrade>

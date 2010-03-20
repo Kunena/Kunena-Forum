@@ -22,7 +22,7 @@ class CKunenaPost {
 		$this->_config = & CKunenaConfig::getInstance ();
 		$this->_session = & CKunenaSession::getInstance ();
 		$this->_db = &JFactory::getDBO ();
-		$this->document = JFactory::getDocument();
+		$this->document = JFactory::getDocument ();
 
 		$this->my = &JFactory::getUser ();
 
@@ -111,376 +111,220 @@ class CKunenaPost {
 	}
 
 	protected function post() {
-		$this->verifyCaptcha();
+		$this->verifyCaptcha ();
 
 		if ($this->tokenProtection ())
-			return false;
-		if ($this->lockProtection ())
 			return false;
 		if ($this->floodProtection ())
 			return false;
 
-		$subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-		$message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-		$anonymous = JRequest::getInt ( 'anonymous', 0 );
-		$email = JRequest::getVar ( 'email', '' );
+		$fields ['name'] = JRequest::getString ( 'authorname', null );
+		$fields ['email'] = JRequest::getString ( 'email', null );
+		$fields ['subject'] = JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW );
+		$fields ['message'] = JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW );
+		$fields ['topic_emoticon'] = JRequest::getInt ( 'topic_emoticon', null );
+
+		$options ['anonymous'] = JRequest::getInt ( 'anonymous', 0 );
 		$contentURL = JRequest::getVar ( 'contentURL', '' );
-		$subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
-		$topic_emoticon = JRequest::getInt ( 'topic_emoticon', 0 );
+
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		$message = new CKunenaPosting ( );
+		if (! $this->parentid) {
+			$success = $message->post ( $this->catid, $fields, $options );
+		} else {
+			$success = $message->reply ( $this->parentid, $fields, $options );
+		}
+
+		if ($success) {
+			$success = $message->save ();
+		}
+
+		// Handle errors
+		if (! $success) {
+			$errors = $message->getErrors ();
+			foreach ( $errors as $field => $error ) {
+				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
+			}
+			$this->redirectBack ();
+		}
+
+		$userid = $message->get ( 'userid' );
+		$id = $message->get ( 'id' );
+		$thread = $message->get('thread');
+		$subject = $message->get('subject');
+		$holdPost = $message->get ( 'hold' );
+
 		$polltitle = JRequest::getString ( 'poll_title', 0 );
 		$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
 		$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
 
-		$parent = ( int ) $this->parentid;
-		$my_name = $this->getAuthorName ( '', $anonymous );
-		jimport ( 'joomla.mail.helper' );
-		if ($this->catid == 0 || empty ( $this->msg_cat )) {
-			echo JText::_ ( 'COM_KUNENA_POST_ERROR_NO_CATEGORY' );
-		} else if ($this->msg_cat->catparent == 0) {
-			echo JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' );
-		} else if ($anonymous && ! $this->msg_cat->allow_anonymous) {
-			echo JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' );
-		} else if (empty ( $my_name )) {
-			echo JText::_ ( 'COM_KUNENA_POST_FORGOT_NAME' );
-		} else if (! $this->my->id && $this->_config->askemail && empty ( $this->email )) {
-			echo JText::_ ( 'COM_KUNENA_POST_FORGOT_EMAIL' );
-		} else if ($this->_config->askemail && ! JMailHelper::isEmailAddress ( $this->email )) {
-			echo JText::_ ( 'COM_KUNENA_MY_EMAIL_INVALID' );
-		} else if (empty ( $subject )) {
-			echo JText::_ ( 'COM_KUNENA_POST_FORGOT_SUBJECT' );
-		} else if (empty ( $message )) {
-			echo JText::_ ( 'COM_KUNENA_POST_FORGOT_MESSAGE' );
+		//Insert in the database the informations for the poll and the options for the poll
+		$poll_exist = null;
+		if (! empty ( $optionsnumbers ) && ! empty ( $polltitle )) {
+			$poll_exist = "1";
+			//Begin Poll management options
+			$optionvalue = array ();
+			for($ioptions = 0; $ioptions < $optionsnumbers; $ioptions ++) {
+				$optionvalue [] = JRequest::getString ( 'field_option' . $ioptions, null );
+			}
+		}
+
+		if (! empty ( $polltitle ) && ! empty ( $optionsnumbers )) {
+			CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
+		}
+
+		// TODO: remove this...
+		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$thread}'" );
+		$result = $this->_db->loadObject ();
+		check_dberror ( "Unable to load messages." );
+		$threadPages = ceil ( $result->totalmessages / $this->_config->messages_per_page );
+		//construct a useable URL (for plaintext - so no &amp; encoding!)
+		jimport ( 'joomla.environment.uri' );
+		$uri = & JURI::getInstance ( JURI::base () );
+		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $thread, $threadPages, $this->_config->messages_per_page, $id ) );
+
+		// A couple more tasks required...
+		if ($thread == 0) {
+			// if JomScoial integration is active integrate user points and activity stream
+			if ($this->_config->pm_component == 'jomsocial' || $this->_config->fb_profile == 'jomsocial' || $this->_config->avatar_src == 'jomsocial') {
+				include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
+
+				CuserPoints::assignPoint ( 'com_kunena.thread.new' );
+
+				// Check for permisions of the current category - activity only if public or registered
+				if ($this->msg_cat->pub_access == 0 || $this->msg_cat->pub_access == - 1) {
+					if ($this->_config->js_actstr_integration) {
+						//activity stream  - new post
+						$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $id, 1 );
+
+						$kunena_emoticons = smile::getEmoticons ( 1 );
+						$content = stripslashes ( $message );
+						$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
+						$content = nl2br ( $content );
+
+						$act = new stdClass ( );
+						$act->cmd = 'wall.write';
+						$act->actor = $userid;
+						$act->target = 0; // no target
+						$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
+						$act->content = $content;
+						$act->app = 'wall';
+						$act->cid = 0;
+
+						// jomsocial 0 = public, 20 = registered members
+						if ($this->msg_cat->pub_access == 0) {
+							$act->access = 0;
+						} else {
+							$act->access = 20;
+						}
+
+						CFactory::load ( 'libraries', 'activities' );
+						CActivityStream::add ( $act );
+					}
+				}
+			}
+
 		} else {
-			if ($parent == 0) {
-				$thread = 0;
-			}
+			// if JomScoial integration is active integrate user points and activity stream
+			if ($this->_config->pm_component == 'jomsocial' || $this->_config->fb_profile == 'jomsocial' || $this->_config->avatar_src == 'jomsocial') {
+				include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
 
-			if ($this->msg_cat->id == 0) {
-				// bad parent, create a new post
-				$parent = 0;
-				$thread = 0;
-			} else {
+				CuserPoints::assignPoint ( 'com_kunena.thread.reply' );
 
-				$thread = $this->msg_cat->parent == 0 ? $this->msg_cat->id : $this->msg_cat->thread;
-			}
+				// Check for permisions of the current category - activity only if public or registered
+				if ($this->msg_cat->pub_access == 0 || $this->msg_cat->pub_access == - 1 && $this->_config->js_actstr_integration) {
+					if ($this->_config->js_actstr_integration) {
+						//activity stream - reply post
+						$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $thread, 1 );
 
-			$messagesubject = $subject; //before we add slashes and all... used later in mail
+						$content = stripslashes ( $message );
+						$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
+						$content = nl2br ( $content );
 
+						$act = new stdClass ( );
+						$act->cmd = 'wall.write';
+						$act->actor = $userid;
+						$act->target = 0; // no target
+						$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
+						$act->content = $content;
+						$act->app = 'wall';
+						$act->cid = 0;
 
-			$userid = $this->my->id;
-			if ($anonymous) {
-				// Anonymous post: remove all user information from the post
-				$userid = 0;
-				$this->email = '';
-				$this->ip = '';
-			}
-
-			$authorname = addslashes ( JString::trim ( $my_name ) );
-			$subject = addslashes ( JString::trim ( $subject ) );
-			$message = addslashes ( JString::trim ( $message ) );
-			$email = addslashes ( JString::trim ( $this->email ) );
-
-			global $topic_emoticons;
-			$topic_emoticon = (! isset ( $topic_emoticons [$topic_emoticon] )) ? 0 : $topic_emoticon;
-			$posttime = CKunenaTimeformat::internalTime ();
-			if ($contentURL) {
-				$message = $contentURL . "\n\n" . $message;
-			}
-
-			//check if the post must be reviewed by a moderator prior to showing
-			$holdPost = 0;
-			if (! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-				$holdPost = $this->msg_cat->review;
-			}
-
-			// DO NOT PROCEED if there is an exact copy of the message already in the db
-			$duplicatetimewindow = $posttime - $this->_config->fbsessiontimeout;
-			$this->_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$userid}' AND m.name='{$authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$this->ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'" );
-			$pid = ( int ) $this->_db->loadResult ();
-			check_dberror ( 'Unable to load post.' );
-
-			if ($pid) {
-				// We get here in case we have detected a double post
-				// We did not do any further processing and just display the failure message
-				echo '<br /><br /><div align="center">' . JText::_ ( 'COM_KUNENA_POST_DUPLICATE_IGNORED' ) . '</div><br /><br />';
-				echo CKunenaLink::GetLatestPostAutoRedirectHTML ( $this->_config, $pid, $this->_config->messages_per_page, $this->catid );
-			} else {
-				$this->_db->setQuery ( "INSERT INTO #__fb_messages
-						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
-						VALUES('$parent','$thread','$this->catid'," . $this->_db->quote ( $authorname ) . ",'{$userid}'," . $this->_db->quote ( $email ) . "," . $this->_db->quote ( $subject ) . ",'$posttime','{$this->ip}','$topic_emoticon','$holdPost')" );
-
-				if (! $this->_db->query ()) {
-					echo JText::_ ( 'COM_KUNENA_POST_ERROR_MESSAGE' );
-				} else {
-					$pid = $this->_db->insertId ();
-					//Insert in the database the informations for the poll and the options for the poll
-					$poll_exist = null;
-					if (! empty ( $optionsnumbers ) && ! empty ( $polltitle )) {
-						$poll_exist = "1";
-						//Begin Poll management options
-						$optionvalue = array ();
-						for($ioptions = 0; $ioptions < $optionsnumbers; $ioptions ++) {
-							$optionvalue [] = JRequest::getString ( 'field_option' . $ioptions, null );
-						}
-					}
-
-					if (! empty ( $polltitle ) && ! empty ( $optionsnumbers )) {
-						CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $pid, $optionvalue );
-					}
-
-					// now increase the #s in categories only case approved
-					if ($holdPost == 0) {
-						CKunenaTools::modifyCategoryStats ( $pid, $parent, $posttime, $this->catid );
-					}
-
-					$this->_db->setQuery ( "INSERT INTO #__fb_messages_text (mesid,message) VALUES('$pid'," . $this->_db->quote ( $message ) . ")" );
-					$this->_db->query ();
-
-					// A couple more tasks required...
-					if ($thread == 0) {
-						//if thread was zero, we now know to which id it belongs, so we can determine the thread and update it
-						$this->_db->setQuery ( "UPDATE #__fb_messages SET thread='$pid' WHERE id='$pid'" );
-						$this->_db->query ();
-
-						// if JomScoial integration is active integrate user points and activity stream
-						if ($this->_config->pm_component == 'jomsocial' || $this->_config->fb_profile == 'jomsocial' || $this->_config->avatar_src == 'jomsocial') {
-							include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
-
-							CuserPoints::assignPoint ( 'com_kunena.thread.new' );
-
-							// Check for permisions of the current category - activity only if public or registered
-							if ($this->msg_cat->pub_access == 0 || $this->msg_cat->pub_access == - 1) {
-								if ($this->_config->js_actstr_integration) {
-									//activity stream  - new post
-									$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $pid, 1 );
-
-									$kunena_emoticons = smile::getEmoticons ( 1 );
-									$content = stripslashes ( $message );
-									$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-									$content = nl2br ( $content );
-
-									$act = new stdClass ( );
-									$act->cmd = 'wall.write';
-									$act->actor = $userid;
-									$act->target = 0; // no target
-									$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
-									$act->content = $content;
-									$act->app = 'wall';
-									$act->cid = 0;
-
-									// jomsocial 0 = public, 20 = registered members
-									if ($this->msg_cat->pub_access == 0) {
-										$act->access = 0;
-									} else {
-										$act->access = 20;
-									}
-
-									CFactory::load ( 'libraries', 'activities' );
-									CActivityStream::add ( $act );
-								}
-							}
-						}
-
-					} else {
-						// if JomScoial integration is active integrate user points and activity stream
-						if ($this->_config->pm_component == 'jomsocial' || $this->_config->fb_profile == 'jomsocial' || $this->_config->avatar_src == 'jomsocial') {
-							include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
-
-							CuserPoints::assignPoint ( 'com_kunena.thread.reply' );
-
-							// Check for permisions of the current category - activity only if public or registered
-							if ($this->msg_cat->pub_access == 0 || $this->msg_cat->pub_access == - 1 && $this->_config->js_actstr_integration) {
-								if ($this->_config->js_actstr_integration) {
-									//activity stream - reply post
-									$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $thread, 1 );
-
-									$content = stripslashes ( $message );
-									$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-									$content = nl2br ( $content );
-
-									$act = new stdClass ( );
-									$act->cmd = 'wall.write';
-									$act->actor = $userid;
-									$act->target = 0; // no target
-									$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
-									$act->content = $content;
-									$act->app = 'wall';
-									$act->cid = 0;
-
-									// jomsocial 0 = public, 20 = registered members
-									if ($this->msg_cat->pub_access == 0) {
-										$act->access = 0;
-									} else {
-										$act->access = 20;
-									}
-
-									CFactory::load ( 'libraries', 'activities' );
-									CActivityStream::add ( $act );
-								}
-							}
-						}
-					}
-					// End Modify for activities stream
-
-
-					CKunenaTools::markTopicRead ( $pid, $this->my->id );
-
-					//update the user posts count
-					if ($userid) {
-						$this->_db->setQuery ( "UPDATE #__fb_users SET posts=posts+1 WHERE userid={$userid}" );
-						$this->_db->query ();
-					}
-
-					//Update the attachments table if an image has been attached
-					require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
-					$attachments = CKunenaAttachments::getInstance ();
-					$attachments->assign ( $pid );
-					$fileinfos = $attachments->multiupload ( $pid );
-					foreach ( $fileinfos as $fileinfo ) {
-						if (! $fileinfo ['status'])
-							$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
-					}
-
-					// Perform proper page pagination for better SEO support
-					// used in subscriptions and auto redirect back to latest post
-					if ($thread == 0) {
-						$querythread = $pid;
-					} else {
-						$querythread = $thread;
-					}
-
-					$this->_db->setQuery ( "SELECT * FROM #__fb_sessions WHERE readtopics LIKE '%$thread%' AND userid!={$this->my->id}" );
-					$sessions = $this->_db->loadObjectList ();
-					check_dberror ( "Unable to load sessions." );
-					foreach ( $sessions as $session ) {
-						$readtopics = $session->readtopics;
-						$userid = $session->userid;
-						$rt = explode ( ",", $readtopics );
-						$key = array_search ( $thread, $rt );
-						if ($key !== FALSE) {
-							unset ( $rt [$key] );
-							$readtopics = implode ( ",", $rt );
-							$this->_db->setQuery ( "UPDATE #__fb_sessions SET readtopics='$readtopics' WHERE userid=$userid" );
-							$this->_db->query ();
-							check_dberror ( "Unable to update sessions." );
-						}
-					}
-
-					$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$querythread}'" );
-					$result = $this->_db->loadObject ();
-					check_dberror ( "Unable to load messages." );
-					$threadPages = ceil ( $result->totalmessages / $this->_config->messages_per_page );
-					//construct a useable URL (for plaintext - so no &amp; encoding!)
-					jimport ( 'joomla.environment.uri' );
-					$uri = & JURI::getInstance ( JURI::base () );
-					$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $querythread, $threadPages, $this->_config->messages_per_page, $pid ) );
-
-					// start integration alphauserpoints component
-					if ($this->_config->alphauserpointsrules) {
-						// Insert AlphaUserPoints rules
-						$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-						$datareference = '<a href="' . $LastPostUrl . '">' . $subject . '</a>';
-						if (file_exists ( $api_AUP )) {
-							require_once ($api_AUP);
-							if ($thread == 0) {
-								// rule for post a new topic
-								AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $pid, $datareference );
-							} else {
-								// rule for post a reply to a topic
-								if ($this->_config->alphauserpointsnumchars > 0) {
-									// use if limit chars for a response
-									if (JString::strlen ( $message ) > $this->_config->alphauserpointsnumchars) {
-										AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $pid, $datareference );
-									} else {
-										$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_AUP_MESSAGE_TOO_SHORT' ) );
-									}
-								} else {
-									AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $pid, $datareference );
-								}
-							}
-						}
-					}
-					// end insertion AlphaUserPoints
-
-
-					//get all subscriptions and moderators
-					$emailToList = CKunenaTools::getEMailToList ( $this->catid, $querythread, $this->_config->allowsubscriptions && ! $holdPost, $this->_config->mailmod, $this->_config->mailadmin, $this->my->id );
-
-					if (count ( $emailToList )) {
-						if (! $this->_config->email || ! JMailHelper::isEmailAddress ( $this->_config->email )) {
-							$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );
+						// jomsocial 0 = public, 20 = registered members
+						if ($this->msg_cat->pub_access == 0) {
+							$act->access = 0;
 						} else {
-							// clean up the message for review
-							$mailmessage = smile::purify ( stripslashes ( $message ) );
-
-							$mailsender = JMailHelper::cleanAddress ( stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
-							$mailsubject = JMailHelper::cleanSubject ( "[" . stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . stripslashes ( $messagesubject ) . " (" . stripslashes ( $this->msg_cat->catname ) . ")" );
-
-							foreach ( $emailToList as $emailTo ) {
-								if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
-									continue;
-
-								if ($emailTo->subscription) {
-									$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' );
-									$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' );
-								} else {
-									$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD1' );
-									$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD2' );
-								}
-
-								$msg = "$emailTo->name,\n\n";
-								$msg .= $msg1 . " " . stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "\n\n";
-								$msg .= JText::_ ( 'COM_KUNENA_GEN_SUBJECT' ) . ": " . stripslashes ( $messagesubject ) . "\n";
-								$msg .= JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ": " . stripslashes ( $this->msg_cat->catname ) . "\n";
-								$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . stripslashes ( $authorname ) . "\n\n";
-								$msg .= $msg2 . "\n";
-								$msg .= "URL: $LastPostUrl\n\n";
-								if ($this->_config->mailfull == 1) {
-									$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . ":\n-----\n";
-									$msg .= $mailmessage;
-									$msg .= "\n-----";
-								}
-								$msg .= "\n\n";
-								$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
-								$msg .= "\n\n\n\n";
-								$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
-								$msg = JMailHelper::cleanBody ( $msg );
-
-								if ($this->ip != "127.0.0.1") {
-									JUtility::sendMail ( $this->_config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
-								}
-							}
-						}
-					}
-
-					$redirectmsg = '';
-
-					//now try adding any new subscriptions if asked for by the poster
-					if ($subscribeMe == 1) {
-						if ($thread == 0) {
-							$fb_thread = $pid;
-						} else {
-							$fb_thread = $thread;
+							$act->access = 20;
 						}
 
-						$this->_db->setQuery ( "INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$fb_thread','{$this->my->id}')" );
-
-						if (@$this->_db->query ()) {
-							$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) . '<br />';
-						} else {
-							$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) . '<br />';
-						}
+						CFactory::load ( 'libraries', 'activities' );
+						CActivityStream::add ( $act );
 					}
-
-					if ($holdPost == 1) {
-						$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCES_REVIEW' );
-					} else {
-						$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' );
-					}
-					$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $pid, $this->_config->messages_per_page, $this->catid ), $redirectmsg );
 				}
 			}
 		}
+		// End Modify for activities stream
+
+		// start integration alphauserpoints component
+		if ($this->_config->alphauserpointsrules) {
+			// Insert AlphaUserPoints rules
+			$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
+			$datareference = '<a href="' . $LastPostUrl . '">' . $subject . '</a>';
+			if (file_exists ( $api_AUP )) {
+				require_once ($api_AUP);
+				if ($thread == 0) {
+					// rule for post a new topic
+					AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $id, $datareference );
+				} else {
+					// rule for post a reply to a topic
+					if ($this->_config->alphauserpointsnumchars > 0) {
+						// use if limit chars for a response
+						if (JString::strlen ( $message ) > $this->_config->alphauserpointsnumchars) {
+							AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $id, $datareference );
+						} else {
+							$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_AUP_MESSAGE_TOO_SHORT' ) );
+						}
+					} else {
+						AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $id, $datareference );
+					}
+				}
+			}
+		}
+		// end insertion AlphaUserPoints
+
+		//Update the attachments table if an image has been attached
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
+		$attachments = CKunenaAttachments::getInstance ();
+		$attachments->assign ( $id );
+		$fileinfos = $attachments->multiupload ( $id );
+		foreach ( $fileinfos as $fileinfo ) {
+			if (! $fileinfo ['status'])
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
+		}
+
+		$message->emailToSubscribers($LastPostUrl, $this->_config->allowsubscriptions && ! $holdPost, $this->_config->mailmod || $holdPost, $this->_config->mailadmin || $holdPost);
+
+		$redirectmsg = '';
+
+		$subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
+
+		//now try adding any new subscriptions if asked for by the poster
+		if ($subscribeMe == 1) {
+			$this->_db->setQuery ( "INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$thread','{$this->my->id}')" );
+
+			if (@$this->_db->query ()) {
+				$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) . '<br />';
+			} else {
+				$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) . '<br />';
+			}
+		}
+
+		if ($holdPost == 1) {
+			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCES_REVIEW' );
+		} else {
+			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' );
+		}
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $id, $this->_config->messages_per_page, $this->catid ), $redirectmsg );
 	}
 
 	protected function reply($do) {
@@ -539,9 +383,10 @@ class CKunenaPost {
 			}
 		}
 
-
-		if ($this->parentid) $this->title = JText::_('COM_KUNENA_POST_REPLY_TOPIC') . ' ' . $this->subject;
-		else $this->title = JText::_('COM_KUNENA_POST_NEW_TOPIC');
+		if ($this->parentid)
+			$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->subject;
+		else
+			$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
 
 		CKunenaTools::loadTemplate ( '/editor/form.php' );
 	}
@@ -617,7 +462,7 @@ class CKunenaPost {
 				$this->allow_name_change = 1;
 			}
 
-			$this->title = JText::_('COM_KUNENA_POST_EDIT') . ' ' . $this->resubject;
+			$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->resubject;
 
 			CKunenaTools::loadTemplate ( '/editor/form.php' );
 		} else {
@@ -651,7 +496,7 @@ class CKunenaPost {
 			foreach ( $errors as $field => $error ) {
 				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
 			}
-			$this->redirectBack();
+			$this->redirectBack ();
 		}
 
 		$mes = $message->parent;
@@ -690,7 +535,7 @@ class CKunenaPost {
 		}
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page, $this->catid ));
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page, $this->catid ) );
 	}
 
 	protected function deleteownpost() {
@@ -1114,7 +959,8 @@ class CKunenaPost {
 	}
 
 	function display() {
-		if (!$this->allow) return;
+		if (! $this->allow)
+			return;
 		if ($this->action == "post") {
 			$this->post ();
 			return;
@@ -1228,42 +1074,45 @@ class CKunenaPost {
 	}
 
 	function hasCaptcha() {
-		if ($this->_config->captcha == 1 && $this->my->id < 1) return true;
+		if ($this->_config->captcha == 1 && $this->my->id < 1)
+			return true;
 		return false;
 	}
 
 	function displayCaptcha() {
-		if (!$this->hasCaptcha()) return;
-		if (!JPluginHelper::isEnabled('system', 'jezReCaptcha')) {
+		if (! $this->hasCaptcha ())
+			return;
+		if (! JPluginHelper::isEnabled ( 'system', 'jezReCaptcha' )) {
 			echo JText::_ ( 'reCAPTCHA is not properly configured.' );
 			return;
 		}
-		$lang = explode('-',$this->document->getLanguage());
-JApplication::addCustomHeadTag('<script type="text/javascript">
+		$lang = explode ( '-', $this->document->getLanguage () );
+		JApplication::addCustomHeadTag ( '<script type="text/javascript">
 <!--
 var RecaptchaOptions = {
-	lang : "'.$lang.'"
+	lang : "' . $lang . '"
 };
 //-->
-</script>');
-		JPluginHelper::importPlugin( 'jezReCaptcha' );
-		$dispatcher =& JDispatcher::getInstance();
-		$dispatcher->trigger('onCaptchaDisplay');
+</script>' );
+		JPluginHelper::importPlugin ( 'jezReCaptcha' );
+		$dispatcher = & JDispatcher::getInstance ();
+		$dispatcher->trigger ( 'onCaptchaDisplay' );
 	}
 
 	function verifyCaptcha() {
-		if (!$this->hasCaptcha()) return;
-		if (!JPluginHelper::isEnabled('system', 'jezReCaptcha')) {
+		if (! $this->hasCaptcha ())
+			return;
+		if (! JPluginHelper::isEnabled ( 'system', 'jezReCaptcha' )) {
 			$this->_app->enqueueMessage ( JText::_ ( 'Cannot verify security code: reCAPTCHA is not properly configured.' ), 'error' );
-			$this->redirectBack();
+			$this->redirectBack ();
 		}
-		JPluginHelper::importPlugin( 'jezReCaptcha' );
-		$dispatcher =& JDispatcher::getInstance();
-		$dispatcher->trigger('onCaptchaConfirm');
+		JPluginHelper::importPlugin ( 'jezReCaptcha' );
+		$dispatcher = & JDispatcher::getInstance ();
+		$dispatcher->trigger ( 'onCaptchaConfirm' );
 	}
 
 	function redirectBack() {
-		$httpReferer = JRequest::getVar('HTTP_REFERER', JURI::base(true), 'server');
-		$this->_app->redirect($httpReferer);
+		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		$this->_app->redirect ( $httpReferer );
 	}
 }

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+20-Mar-2010 Matias
+^ [#19277] Clean up and restructure post.php: Use class CKunenaPosting to post/reply message
+
 18-Mar-2010 Matias
 # [#19288] Fix regression: Typo in session handling
 # [#19288] Fix regression: Circular class reference does not work with APC

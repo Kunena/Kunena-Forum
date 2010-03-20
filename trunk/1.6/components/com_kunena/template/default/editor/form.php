@@ -37,16 +37,9 @@ $this->k=0;
 	<?php if (!isset($this->selectcatlist)) : ?>
 	<input type="hidden" name="catid" value="<?php echo $this->catid?>" />
 	<?php endif; ?>
+	<input type="hidden" name="id" value="<?php echo $this->id?>" />
 	<?php if (! empty ( $this->kunena_editmode )) : ?>
 	<input type="hidden" name="do" value="editpostnow" />
-	<input type="hidden" name="id" value="<?php echo $this->id?>" />
-	<?php else: ?>
-	<input type="hidden" name="parentid" value="<?php echo $this->parentid?>" />
-	<?php endif; ?>
-	<input type="hidden" value="<?php echo JURI::base ( true ) . '/components/com_kunena/template/default'?>"
-	name="templatePath" /> <input type="hidden" value="<?php echo JURI::base ( true )?>/" name="kunenaPath" />
-	<?php if (! empty ( $this->contentURL )) :?>
-	<input type="hidden" name="contentURL" value="<?php echo $this->contentURL; ?>" />
 	<?php endif; ?>
 	<?php echo JHTML::_( 'form.token' ); ?>
 
@@ -123,7 +116,7 @@ $this->k=0;
 				?>" /></td>
 		</tr>
 
-		<?php if ($this->parentid == 0) : ?>
+		<?php if ($this->id == 0) : ?>
 		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_GEN_TOPIC_ICON');

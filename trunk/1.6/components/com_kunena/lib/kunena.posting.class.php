@@ -57,7 +57,7 @@ class CKunenaPosting {
 		$this->options = null;
 		if ($mesid) {
 			// Check that message and category exists and fetch some information for later use
-			$query = "SELECT m.*, mm.hold AS topichold, mm.locked AS locked, c.locked AS catlocked, t.message,
+			$query = "SELECT m.*, mm.hold AS topichold, mm.locked AS topiclocked, c.locked AS catlocked, t.message,
 					c.name AS catname, c.parent AS catparent, c.pub_access,
 					c.review, c.class_sfx, p.id AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
@@ -66,7 +66,7 @@ class CKunenaPosting {
 				INNER JOIN #__fb_messages AS mm ON mm.id=m.thread AND mm.moved=0
 				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
 				LEFT JOIN #__fb_polls AS p ON m.id=p.threadid
-				WHERE m.id=" . intval ( $mesid ) . " AND m.moved=0";
+				WHERE m.id={$this->_db->quote($mesid)} AND m.moved=0";
 
 			$this->_db->setQuery ( $query, 0, 1 );
 			$this->parent = $this->_db->loadObject ();
@@ -83,13 +83,13 @@ class CKunenaPosting {
 		$this->options = null;
 		if ($catid) {
 			// Check that category exists and fill some information for later use
-			$query = "SELECT m.*, 0 AS topichold, 0 AS locked, c.locked AS catlocked, '' AS message,
+			$query = "SELECT m.*, 0 AS topichold, 0 AS topiclocked, c.locked AS catlocked, '' AS message,
 					c.id AS catid, c.name AS catname, c.parent AS catparent, c.pub_access,
 					c.review, c.class_sfx, 0 AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
 				FROM #__fb_categories AS c
 				LEFT JOIN #__fb_messages AS m ON m.id=0
-				WHERE c.id=" . intval ( $catid ) . " AND c.published";
+				WHERE c.id={$this->_db->quote($catid)} AND c.published";
 			$this->_db->setQuery ( $query, 0, 1 );
 			$this->parent = $this->_db->loadObject ();
 			$this->checkDatabaseError ();
@@ -98,13 +98,6 @@ class CKunenaPosting {
 			return $this->setError ( '-load-', JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 		}
 		return true;
-	}
-
-	public function load($catid, $mesid = 0) {
-		if ($mesid) {
-			return $this->loadMessage ( $mesid );
-		}
-		return $this->loadCategory ( $catid );
 	}
 
 	public function canRead() {
@@ -156,7 +149,7 @@ class CKunenaPosting {
 			return true; // ACCEPT!
 		}
 		// Posts cannot be written to locked topics
-		if ($this->parent->locked) {
+		if ($this->parent->topiclocked) {
 			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
 		}
 		// Posts cannot be written to locked categories
@@ -197,7 +190,7 @@ class CKunenaPosting {
 			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 		}
 		// Posts cannot be edited in locked topics
-		if ($this->parent->locked) {
+		if ($this->parent->topiclocked) {
 			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
 		}
 		// Posts cannot be edited in locked categories
@@ -240,6 +233,8 @@ class CKunenaPosting {
 		$this->setOption ( 'required', array ('message' ) );
 
 		$this->loadFields ( $fields );
+		// Load these default values from the previous message
+		$this->loadDefaults ( array ('subject' ) );
 
 		return empty ( $this->errors );
 	}
@@ -260,6 +255,8 @@ class CKunenaPosting {
 		$this->setOption ( 'required', array () );
 
 		$this->loadFields ( $fields );
+		// Load these default values from the edited message
+		$this->loadDefaults ( array ('name', 'email', 'subject', 'message', 'topic_emoticon' ) );
 
 		return empty ( $this->errors );
 	}
@@ -558,6 +555,14 @@ class CKunenaPosting {
 		return isset ( $this->options [$name] ) ? $this->options [$name] : false;
 	}
 
+	protected function loadDefaults($fields) {
+		foreach ( $fields as $name ) {
+			if (! isset ( $this->message [$name] ) && $this->parent->$name !== null) {
+				$this->message [$name] = $this->parent->$name;
+			}
+		}
+	}
+
 	public function set($name, $value = null) {
 		if (! empty ( $this->options ['allowed'] ) && ! in_array ( $name, $this->options ['allowed'] )) {
 			return $this->setError ( $name, JText::_ ( 'COM_KUNENA_POST_ERROR_FIELD_NOT_ALLOWED' ) );
@@ -703,9 +708,9 @@ class CKunenaPosting {
 				return false;
 			}
 			// clean up the message for review
-			$authorname = $this->get('name');
-			$message = smile::purify ( $this->get('message') );
-			$subject = $this->get('subject');
+			$authorname = $this->get ( 'name' );
+			$message = smile::purify ( $this->get ( 'message' ) );
+			$subject = $this->get ( 'subject' );
 
 			$mailsender = JMailHelper::cleanAddress ( stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
 			$mailsubject = JMailHelper::cleanSubject ( "[" . stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . stripslashes ( $subject ) . " (" . stripslashes ( $this->parent->catname ) . ")" );

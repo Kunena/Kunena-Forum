@@ -26,28 +26,28 @@ class CKunenaPost {
 
 		$this->my = &JFactory::getUser ();
 
-		$subject = JRequest::getVar ( 'subject', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-		$message = JRequest::getVar ( 'message', '', 'POST', 'string', JREQUEST_ALLOWRAW );
-		$authorname = JRequest::getVar ( 'authorname', '' );
-		$anonymous = JRequest::getInt ( 'anonymous', 0 );
-		$email = JRequest::getVar ( 'email', '' );
-		$contentURL = JRequest::getVar ( 'contentURL', '' );
-		$subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
-		$topic_emoticon = JRequest::getInt ( 'topic_emoticon', 0 );
-		$polltitle = JRequest::getString ( 'poll_title', 0 );
-		$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
-		$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
-
 		$this->id = JRequest::getInt ( 'id', 0 );
-		$this->parentid = JRequest::getInt ( 'parentid', 0 );
 		if (! $this->id) {
-			// Support for old $replyto variable in post reply/quote
+			$this->id = JRequest::getInt ( 'parentid', 0 );
+		}
+		if (! $this->id) {
+		// Support for old $replyto variable in post reply/quote
 			$this->id = JRequest::getInt ( 'replyto', 0 );
 		}
 		$this->catid = JRequest::getInt ( 'catid', 0 );
 
 		$this->msg_cat = null;
-		if ($this->id || $this->parentid) {
+
+		$this->allow = 1;
+	}
+
+	// Temporary function to handle old style permission handling
+	// TODO: Remove this when all functions are using new style
+	protected function load() {
+		if ($this->msg_cat)
+			return true;
+
+		if ($this->id) {
 			// Check that message and category exists and fill some information for later use
 			$query = "SELECT m.*, (mm.locked OR c.locked) AS locked, c.locked AS catlocked, t.message,
 					c.name AS catname, c.parent AS catparent, c.pub_access,
@@ -58,7 +58,7 @@ class CKunenaPost {
 				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
 				INNER JOIN #__fb_categories AS c ON c.id=m.catid
 				LEFT JOIN #__fb_polls AS p ON m.id=p.threadid
-				WHERE m.id='" . ($this->parentid ? $this->parentid : $this->id) . "'";
+				WHERE m.id='" . $this->id . "'";
 
 			$this->_db->setQuery ( $query );
 			$this->msg_cat = $this->_db->loadObject ();
@@ -66,7 +66,7 @@ class CKunenaPost {
 
 			if (! $this->msg_cat) {
 				echo JText::_ ( 'COM_KUNENA_POST_INVALID' );
-				return;
+				return false;
 			}
 
 			// Make sure that category id is from the message (post may have been moved)
@@ -80,34 +80,17 @@ class CKunenaPost {
 			check_dberror ( 'Unable to load category.' );
 			if (! $this->msg_cat) {
 				echo JText::_ ( 'COM_KUNENA_NO_ACCESS' );
-				return;
+				return false;
 			}
 		}
 
 		// Check user access rights
 		if (($this->my->id == 0 && ! $this->_config->pubwrite) || (empty ( $this->msg_cat->catparent ) && $this->do != 'reply') && (! $this->_session->canRead ( $this->catid ) && ! CKunenaTools::isAdmin ())) {
 			CKunenaTools::loadTemplate ( '/plugin/login/login.php' );
-			return;
+			return false;
 		}
 
-		//reset variables used
-		$this->kunena_editmode = 0;
-
-		//ip for floodprotection, post logging, subscriptions, etcetera
-		$this->ip = $_SERVER ["REMOTE_ADDR"];
-
-		//Let's find out who we're dealing with if a registered user wants to make a post
-		if ($this->my->id) {
-			$this->email = $this->my->email;
-			if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-				if (! empty ( $email ))
-					$this->email = $email;
-			}
-		} else {
-			$this->email = (isset ( $email ) && ! empty ( $email )) ? $email : '';
-		}
-
-		$this->allow = 1;
+		return true;
 	}
 
 	protected function post() {
@@ -129,10 +112,10 @@ class CKunenaPost {
 
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
-		if (! $this->parentid) {
+		if (! $this->id) {
 			$success = $message->post ( $this->catid, $fields, $options );
 		} else {
-			$success = $message->reply ( $this->parentid, $fields, $options );
+			$success = $message->reply ( $this->id, $fields, $options );
 		}
 
 		if ($success) {
@@ -148,6 +131,7 @@ class CKunenaPost {
 			$this->redirectBack ();
 		}
 
+		$catinfo = $message->parent;
 		$userid = $message->get ( 'userid' );
 		$id = $message->get ( 'id' );
 		$thread = $message->get('thread');
@@ -173,7 +157,7 @@ class CKunenaPost {
 			CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
 		}
 
-		// TODO: remove this...
+		// TODO: replace this with better solution
 		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$thread}'" );
 		$result = $this->_db->loadObject ();
 		check_dberror ( "Unable to load messages." );
@@ -192,7 +176,7 @@ class CKunenaPost {
 				CuserPoints::assignPoint ( 'com_kunena.thread.new' );
 
 				// Check for permisions of the current category - activity only if public or registered
-				if ($this->msg_cat->pub_access == 0 || $this->msg_cat->pub_access == - 1) {
+				if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1) {
 					if ($this->_config->js_actstr_integration) {
 						//activity stream  - new post
 						$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $id, 1 );
@@ -212,7 +196,7 @@ class CKunenaPost {
 						$act->cid = 0;
 
 						// jomsocial 0 = public, 20 = registered members
-						if ($this->msg_cat->pub_access == 0) {
+						if ($catinfo->pub_access == 0) {
 							$act->access = 0;
 						} else {
 							$act->access = 20;
@@ -232,7 +216,7 @@ class CKunenaPost {
 				CuserPoints::assignPoint ( 'com_kunena.thread.reply' );
 
 				// Check for permisions of the current category - activity only if public or registered
-				if ($this->msg_cat->pub_access == 0 || $this->msg_cat->pub_access == - 1 && $this->_config->js_actstr_integration) {
+				if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1 && $this->_config->js_actstr_integration) {
 					if ($this->_config->js_actstr_integration) {
 						//activity stream - reply post
 						$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $thread, 1 );
@@ -251,7 +235,7 @@ class CKunenaPost {
 						$act->cid = 0;
 
 						// jomsocial 0 = public, 20 = registered members
-						if ($this->msg_cat->pub_access == 0) {
+						if ($catinfo->pub_access == 0) {
 							$act->access = 0;
 						} else {
 							$act->access = 20;
@@ -328,15 +312,17 @@ class CKunenaPost {
 	}
 
 	protected function reply($do) {
+		if (!$this->load())
+			return false;
 		if ($this->lockProtection ())
 			return false;
 		if ($this->floodProtection ())
 			return false;
 
-		$parentid = 0;
+		$this->kunena_editmode = 0;
+
 		if ($this->catid && $this->msg_cat->id > 0) {
 			$message = $this->msg_cat;
-			$parentid = $message->id;
 			if ($do == 'quote') {
 				$this->message_text = "[b]" . kunena_htmlspecialchars ( stripslashes ( $message->name ) ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
 				$this->message_text .= '[quote]' . kunena_htmlspecialchars ( stripslashes ( $message->message ) ) . "[/quote]";
@@ -355,9 +341,8 @@ class CKunenaPost {
 				$this->selectcatlist = CKunenaTools::forumSelectList ( 'postcatid', $this->catid, $options, '' );
 		}
 		$this->authorName = kunena_htmlspecialchars ( $this->getAuthorName () );
-		$this->id = $this->id;
-		$this->parentid = $parentid;
-		$this->catid = $this->catid;
+		$this->id = $message->id;
+		$this->catid = $message->catid;
 		$this->emoid = 0;
 		$this->action = 'post';
 
@@ -383,7 +368,7 @@ class CKunenaPost {
 			}
 		}
 
-		if ($this->parentid)
+		if ($this->id)
 			$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->subject;
 		else
 			$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
@@ -392,6 +377,8 @@ class CKunenaPost {
 	}
 
 	protected function edit() {
+		if (!$this->load())
+			return false;
 		if ($this->lockProtection ())
 			return false;
 
@@ -423,7 +410,6 @@ class CKunenaPost {
 				// It migth be a legacy file, or the settings might have been reset.
 				// Force recalculation ...
 
-
 				// TODO: Perform image re-prosessing
 				}
 
@@ -434,7 +420,6 @@ class CKunenaPost {
 			}
 			// End of load attachments
 
-
 			$this->kunena_editmode = 1;
 
 			$this->message_text = kunena_htmlspecialchars ( stripslashes ( $message->message ) );
@@ -443,7 +428,6 @@ class CKunenaPost {
 			$this->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
 			$this->id = $message->id;
 			$this->catid = $message->catid;
-			$this->parentid = 0;
 			$this->emoid = $message->topic_emoticon;
 			$this->action = 'edit';
 
@@ -539,6 +523,8 @@ class CKunenaPost {
 	}
 
 	protected function deleteownpost() {
+		if (!$this->load())
+			return false;
 		$delete = $delete = CKunenaTools::userOwnDelete ( $this->id );
 		if (! $delete) {
 			$message = JText::_ ( 'COM_KUNENA_POST_OWN_DELETE_ERROR' );
@@ -550,6 +536,8 @@ class CKunenaPost {
 	}
 
 	protected function delete() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -568,6 +556,8 @@ class CKunenaPost {
 	}
 
 	protected function deletethread() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -585,6 +575,8 @@ class CKunenaPost {
 	}
 
 	protected function move() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -596,6 +588,8 @@ class CKunenaPost {
 	}
 
 	protected function domovepost() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -614,6 +608,8 @@ class CKunenaPost {
 	}
 
 	protected function mergethread() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -634,6 +630,8 @@ class CKunenaPost {
 	}
 
 	protected function domergethreadnow() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -654,6 +652,8 @@ class CKunenaPost {
 	}
 
 	protected function merge() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -674,6 +674,8 @@ class CKunenaPost {
 	}
 
 	protected function domergepostnow() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -693,6 +695,8 @@ class CKunenaPost {
 	}
 
 	protected function split() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -705,6 +709,8 @@ class CKunenaPost {
 	}
 
 	protected function splitnow() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -738,6 +744,8 @@ class CKunenaPost {
 	}
 
 	protected function subscribe() {
+		if (!$this->load())
+			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' );
 		$this->_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
@@ -752,6 +760,8 @@ class CKunenaPost {
 	}
 
 	protected function unsubscribe() {
+		if (!$this->load())
+			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
 		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
@@ -766,6 +776,8 @@ class CKunenaPost {
 	}
 
 	protected function favorite() {
+		if (!$this->load())
+			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
 		$this->_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
@@ -780,6 +792,8 @@ class CKunenaPost {
 	}
 
 	protected function unfavorite() {
+		if (!$this->load())
+			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
 		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
@@ -794,6 +808,8 @@ class CKunenaPost {
 	}
 
 	protected function sticky() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -806,6 +822,8 @@ class CKunenaPost {
 	}
 
 	protected function unsticky() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -818,6 +836,8 @@ class CKunenaPost {
 	}
 
 	protected function lock() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -830,6 +850,8 @@ class CKunenaPost {
 	}
 
 	protected function unlock() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -842,6 +864,8 @@ class CKunenaPost {
 	}
 
 	protected function approve() {
+		if (!$this->load())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
@@ -875,42 +899,12 @@ class CKunenaPost {
 		CKunenaTools::loadTemplate ( '/editor/history.php' );
 	}
 
-	protected function getAuthorName($authorname = '', $anonymous = false) {
-		static $name = false;
-
-		if (empty ( $name )) {
-			if (! $this->my->id || $anonymous) {
-				jimport ( 'joomla.user.helper' );
-
-				// By default use authorname (from edited message etc)
-				$nickname = JRequest::getVar ( 'authorname', $authorname );
-				$nickused = $nickname ? JUserHelper::getUserId ( $nickname ) : 0;
-
-				// Do not allow empty name or existing username
-				if (! $nickname || $nickused || $nickname == $this->my->name) {
-					$name = JText::_ ( 'COM_KUNENA_USERNAME_ANONYMOUS' );
-				} else {
-					$name = $nickname;
-				}
-			} else {
-				// By default use authorname (from edited message etc)
-				if (! empty ( $authorname ))
-					$name = $authorname;
-				else
-					$name = $this->_config->username ? $this->my->username : $this->my->name;
-
-				// Check if changing name is allowed
-				$moderator = CKunenaTools::isModerator ( $this->my->id, $this->catid );
-				$nickname = JRequest::getVar ( 'authorname', '' );
-				if (! empty ( $nickname ) && ($moderator || $this->_config->changename)) {
-					jimport ( 'joomla.user.helper' );
-					$nickused = $moderator ? 0 : JUserHelper::getUserId ( $nickname );
-					if (! $nickused || $nickused == $this->my->id)
-						$name = $nickname;
-				}
-			}
+	protected function getAuthorName() {
+		if (! $this->my->id) {
+			$name = '';
+		} else {
+			$name = $this->_config->username ? $this->my->username : $this->my->name;
 		}
-
 		return $name;
 	}
 
@@ -944,10 +938,12 @@ class CKunenaPost {
 
 	protected function floodProtection() {
 		// Flood protection
+		$ip = $_SERVER ["REMOTE_ADDR"];
+
 		if ($this->_config->floodprotection && ! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-			$this->_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$this->ip}'" );
+			$this->_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'" );
 			$lastPostTime = $this->_db->loadResult ();
-			check_dberror ( "Unable to load max time for current request from IP: {$this->ip}" );
+			check_dberror ( "Unable to load max time for current request from IP: {$ip}" );
 
 			if ($lastPostTime + $this->_config->floodprotection > CKunenaTimeformat::internalTime ()) {
 				echo JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD1' ) . ' ' . $this->_config->floodprotection . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD2' ) . '<br />';

@@ -2108,6 +2108,16 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 			<legend> <?php echo _KUNENA_ADMIN_CONFIG_USERLIST ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
+				<tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ENABLE ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['userlist_enable']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ENABLE_DESC ?>
+                    </td>
+                </tr>
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ROWS ?>

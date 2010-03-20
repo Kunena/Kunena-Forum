@@ -841,6 +841,8 @@ function showConfig($option)
 	$lists['hide_ip'] = JHTML::_('select.genericlist', $yesno, 'cfg_hide_ip', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->hide_ip);
 	//New for 1.5.10: Joomsocial Activity Stream Integration disable/enable
     $lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->js_actstr_integration);
+	//New for 1.5.10: Disable userlist
+	$lists['userlist_enable'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_enable', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_enable);
 
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }

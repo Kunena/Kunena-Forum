@@ -34,7 +34,7 @@ function list_users()
     global $lang;
 
     $fbConfig =& CKunenaConfig::getInstance();
-
+	$app =& JFactory::getApplication();
     $kunena_db = &JFactory::getDBO();
 
     jimport('joomla.html.pagination');
@@ -92,7 +92,12 @@ function list_users()
 
     // echo "<pre>"; print_r($ulrows); die;
     $pageNav = new JPagination($total, $limitstart, $limit);
-    HTML_userlist_content::showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search);
+
+    if ( $fbConfig->userlist_enable ) {
+    	HTML_userlist_content::showlist($ulrows, $total_results, $pageNav, $limitstart, $query_ext, $search);
+    } else {
+		$app->redirect( CKunenaLink::GetShowLatestURL(), _USERLIST_DISABLED);
+    }
 }
 
 function convertDate($date)

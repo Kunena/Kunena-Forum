@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.10
 
+20-Mar-2010 Xillibit
+^ [#19984] Give administrator option to hide userlist and do not use it if integration provides list
+
 19-Mar-2010 Xillibit
 ^ [#19938] Make jomSocial Activity stream integration configurable - set enabled by default
 ^ [#19942] Put one redirect when the user trying to access the pdf when the message is deleted

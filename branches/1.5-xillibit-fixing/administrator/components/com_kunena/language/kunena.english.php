@@ -46,6 +46,11 @@ define('_KUNENA_EMAIL_INVALID', 'Forum tried to send email from invalid address.
 define('_KUNENA_MY_EMAIL_INVALID', 'Your EMail address is invalid. Valid EMail address is required to post into this forum!');
 define('_KUNENA_SECTION','Section');
 define('_KUNENA_NOBODY','Nobody');
+//Disable userlist
+define('_USERLIST_DISABLED','The Kunena userlist has been disabled, you can not access to it');
+define('_KUNENA_ADMIN_CONFIG_USERLIST_ENABLE','Enable the userlist');
+define('_KUNENA_ADMIN_CONFIG_USERLIST_ENABLE_DESC','Set the userlist on enabled or disable it if you don\'t want use it');
+
 
 // 1.5.8
 

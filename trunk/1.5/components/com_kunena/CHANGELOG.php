@@ -31,7 +31,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.10
+Kunena 1.5.10RC1
+
+20-Mar-2010 Matias
+^ [#19600] Updated version info (RC1)
 
 17-Mar-2010 Matias
 # [#19940] Regression: Sending email while posting causes Kunena to crash

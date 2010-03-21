@@ -11,6 +11,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+require_once(KUNENA_PATH_LIB.DS.'kunena.session.class.php');
+
 class CKunenaPosting {
 	var $parent = null;
 	private $message = null;
@@ -376,7 +378,6 @@ class CKunenaPosting {
 
 		// Mark topic unread for others
 
-
 		// First take care of old sessions to make our job easier and faster
 		$lasttime = $this->get ( 'time' ) - $this->_config->fbsessiontimeout - 60;
 		$query = "UPDATE #__fb_sessions SET readtopics=NULL WHERE currvisit<{$lasttime}";
@@ -397,6 +398,7 @@ class CKunenaPosting {
 
 		// And clear current thread
 		$errcount = 0;
+		print_r($sessions);
 		foreach ( $sessions as $session ) {
 			$readtopics = $session->readtopics;
 			$rt = explode ( ",", $readtopics );
@@ -412,10 +414,10 @@ class CKunenaPosting {
 					$errcount ++;
 			}
 		}
-		if (isset ( $errcount ))
-			$this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
+		if ($errcount)
+			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
 
-		return true;
+		return $id;
 	}
 
 	protected function saveEdit() {
@@ -490,8 +492,8 @@ class CKunenaPosting {
 			if ($dberror)
 				return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
 		}
-		$this->set ( 'id', $this->parent->id );
-		return true;
+		$this->set ( 'id', $id = $this->parent->id );
+		return $id;
 	}
 
 	public function delete() {

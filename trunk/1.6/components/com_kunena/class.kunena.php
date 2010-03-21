@@ -702,11 +702,11 @@ class CKunenaTools {
 			$where [] = " ( p.moderator=1 AND ( m.catid IS NULL OR ( c.moderated=1 AND m.catid=$catid ) ) ) ";
 		if ($admins)
 			$where [] = " ( u.gid IN (24, 25) ) ";
+		$where = empty($where) ? '' : "AND (" . implode ( ' OR ', $where ) . ")";
 
 		$subsList = array ();
-		if (count ( $where )) {
-			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ($excludeList)
-									AND (" . implode ( ' OR ', $where ) . ")
+		if ($where || $having) {
+			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ($excludeList) $where
 									GROUP BY u.id
 									$having";
 			$kunena_db->setQuery ( $query );

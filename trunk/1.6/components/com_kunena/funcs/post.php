@@ -321,8 +321,8 @@ class CKunenaPost {
 
 		$this->kunena_editmode = 0;
 
+		$message = $this->msg_cat;
 		if ($this->catid && $this->msg_cat->id > 0) {
-			$message = $this->msg_cat;
 			if ($do == 'quote') {
 				$this->message_text = "[b]" . kunena_htmlspecialchars ( stripslashes ( $message->name ) ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
 				$this->message_text .= '[quote]' . kunena_htmlspecialchars ( stripslashes ( $message->message ) ) . "[/quote]";

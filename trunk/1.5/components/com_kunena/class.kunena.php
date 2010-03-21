@@ -767,7 +767,7 @@ class CKunenaTools {
 
 		$where = array ();
 		if ($subscriptions)
-			$where [] = " ( s.thread IS NOT NULL" . ($arogroups ? " AND {$arogroups} " : ' ) ');
+			$where [] = " ( s.thread IS NOT NULL" . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
 		if ($moderators)
 			$where [] = " ( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid} ) ) ";
 		if ($admins)

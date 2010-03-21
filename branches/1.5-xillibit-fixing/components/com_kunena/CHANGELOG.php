@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.10
 
+21-Mar-2010 Xillibit
+# [#19940] Fix regression in CKunenaTools::getEMailToList() which prevent to send subscription mails
+
 20-Mar-2010 Xillibit
 ^ [#19984] Give administrator option to hide userlist and do not use it if integration provides list
 

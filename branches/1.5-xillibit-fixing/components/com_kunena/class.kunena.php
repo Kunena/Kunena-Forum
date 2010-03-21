@@ -721,7 +721,7 @@ class CKunenaTools {
 	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
 		$catid = intval ( $catid );
 		$thread = intval ( $thread );
-		if (! $catid || ! $thread)
+		if ( $catid == '0' || $thread == '0' )
 			return array();
 
 		// Make sure that category exists and fetch access info
@@ -778,14 +778,19 @@ class CKunenaTools {
 
 		$subsList = array ();
 		if (count ( $where )) {
-			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ($excludeList)
-									AND (" . implode ( ' OR ', $where ) . ")
+			$wheres = " AND (" . implode ( ' OR ', $where ) . ")";
+		} else {
+			$wheres = '';
+		}
+
+		$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ($excludeList) $wheres
 									GROUP BY u.id
 									$having";
-			$kunena_db->setQuery ( $query );
-			$subsList = $kunena_db->loadObjectList ();
-			check_dberror ( "Unable to load email list." );
-		}
+		$kunena_db->setQuery ( $query );
+		$subsList = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load email list." );
+
+
 		return $subsList;
 	}
 

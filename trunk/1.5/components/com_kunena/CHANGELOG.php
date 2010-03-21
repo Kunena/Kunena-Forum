@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.10RC1
 
+21-Mar-2010 Xillibit
+# [#19940] Fix regression in CKunenaTools::getEMailToList() which prevent to send subscription mails
+
 20-Mar-2010 Matias
 ^ [#19600] Updated version info (RC1)
 

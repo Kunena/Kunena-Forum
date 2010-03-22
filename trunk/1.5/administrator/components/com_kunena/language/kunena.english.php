@@ -22,28 +22,26 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
-//1.5.10
-DEFINE('_KUNENA_PARENTDESC',
-    'Please note: To create a category, choose \'Top Level Category\' as a parent. A category serves as a container for forums.<br />A forum can <strong>only</strong> be created within a category by selecting a previously created category as the parent for the forum.<br /> Messages can be <strong>ONLY</strong> posted to forums, not categories.');
+// 1.5.10
+DEFINE('_KUNENA_PARENTDESC', 'Note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can only be created within a category by selecting an existing category as the parent for the forum.<br /> Messages can only be posted to forums, not categories.');
 DEFINE('_KUNENA_ADMIN', 'Forum Administration');
-DEFINE('_KUNENA_NOTEUS',
-    'NOTE: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, give a user a moderator flag and then go to <a href="index.php?option=com_kunena&task=profiles">User Administration</a> and search for the user you want to make a moderator. Then select their profile and update it. The moderator flag can only be set by a site administrator.');
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to &quot;Yes&quot; if you want to show user avatar on Categories view, Recent discussions and My Discussions.');
-DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show Avatar on Categories view, Recent discussions and My Discussions?');
-DEFINE('_KUNENA_SORTID', 'Sort by Userid');
-DEFINE('_KUNENA_SORTMOD', 'Sort by Moderators');
-DEFINE('_KUNENA_SORTNAME', 'Sort by Names');
-DEFINE('_KUNENA_SORTREALNAME', 'Sort By Real Names');
-define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The thread has been deleted, so the pdf can not be generated');
-//Hide Ip
-define('_KUNENA_COM_A_HIDE_IP', 'Hide IP in messages from moderators');
-define('_KUNENA_COM_A_HIDE_IP_DESC', 'Hide IP in messages from moderators and show IP¨only for administrators');
-//Joomsocial Activity Stream Integration disable/enable
-define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION', 'Enable the Jomsocial Activity Stream Integration');
-define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC', 'The activity stream shows in Jomsocial wall the latest messages or new topics posted into Kunena');
-// EMail
-define('_KUNENA_EMAIL_INVALID', 'Forum tried to send email from invalid address. Please contact site administrator!');
-define('_KUNENA_MY_EMAIL_INVALID', 'Your EMail address is invalid. Valid EMail address is required to post into this forum!');
+DEFINE('_KUNENA_NOTEUS', 'Note: Only users which have the moderator flag set in their Kunena profile are shown here. In order to be able to add a moderator, set the moderator flag and then go to <a href="index.php?option=com_kunena&task=profiles">User Administration</a>. Search for the user to make a moderator and update their profile. The moderator flag can only be set by a Site Administrator.');
+DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT_DESC', 'Set to <em>Yes</em> if you want to show user avatars in Category view, Recent Discussions, and My Discussions.');
+DEFINE('_KUNENA_SHOW_AVATAR_ON_CAT', 'Show avatars in Category view, Recent Discussions, and My Discussions?');
+DEFINE('_KUNENA_SORTID', 'Sort by UserID');
+DEFINE('_KUNENA_SORTMOD', 'Sort by Moderator');
+DEFINE('_KUNENA_SORTNAME', 'Sort by Name');
+DEFINE('_KUNENA_SORTREALNAME', 'Sort by Real Name');
+define('_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED', 'The PDF cannot be generated because the thread was deleted.');
+//Hide IP
+define('_KUNENA_COM_A_HIDE_IP', 'Hide the IP in messages from moderators.');
+define('_KUNENA_COM_A_HIDE_IP_DESC', 'Hide the IP in messages from moderators and display IP¨only to administrators.');
+//JomSocial Activity Stream Integration disable/enable
+define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION', 'Enable the JomSocial Activity Stream Integration');
+define('_COM_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC', 'The activity stream on the JomSocial wall displays the latest messages or topics posted in the Kunena forum.');
+// Email
+define('_KUNENA_EMAIL_INVALID', 'Forum tried to send email from an invalid address. Please contact the site administrator!');
+define('_KUNENA_MY_EMAIL_INVALID', 'Your email address is invalid. A valid email address is required to post in this forum!');
 
 // 1.5.8
 

@@ -31,7 +31,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.10RC2
+Kunena 1.5.10
+
+22-Mar-2010 Matias
+^ [#16390] Update language file
+^ [#19600] Updated version info
 
 21-Mar-2010 Matias
 ^ [#19600] Updated version info (RC2)

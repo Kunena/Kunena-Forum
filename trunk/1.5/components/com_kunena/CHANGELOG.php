@@ -38,6 +38,7 @@ Kunena 1.5.11-DEV
 ^ [#15784] Merge and review all fixes from /branches/1.5-xillibit-fixing
 + [#19992] Allow anonymous posts from registered users in special categories
 + [#19992] Allow anonymous also in Quick Reply
+# [#20001] Do not allow users to move/post into sections
 
 22-Mar-2010 Xillibit
 ^ [#19984] Give administrator option to hide userlist and do not use it if integration provides list

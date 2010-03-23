@@ -135,6 +135,17 @@ $kunena_db->query() or trigger_dberror('Unable to load category.');
 
 $objCatInfo = $kunena_db->loadObject();
 $catName = $objCatInfo->name;
+
+if (empty($objCatInfo)) {
+    // Do not allow actions in categories that do not exist
+    echo _KUNENA_POST_ERROR_NO_CATEGORY;
+    return;
+} else if ($objCatInfo->parent == 0) {
+    // Do not allow actions in sections
+    echo _KUNENA_POST_ERROR_IS_SECTION;
+    return;
+}
+
 ?>
 
 <table border = "0" cellspacing = "0" cellpadding = "0" width = "100%" align = "center">
@@ -158,11 +169,7 @@ $catName = $objCatInfo->name;
                             <?php
                             $parent = (int)$parentid;
 							if ($fbConfig->askemail) jimport( 'joomla.mail.helper' );
-                            if ($catid==0 || empty($objCatInfo)) {
-                                echo _KUNENA_POST_ERROR_NO_CATEGORY;
-                            } else if ($objCatInfo->parent == 0) {
-                                echo _KUNENA_POST_ERROR_IS_SECTION;
-                            } else if ($anonymous && !$objCatInfo->allow_anonymous) {
+                            if ($anonymous && !$objCatInfo->allow_anonymous) {
                                 echo _KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN;
                             } else if (empty($my_name)) {
                                 echo _POST_FORGOT_NAME;

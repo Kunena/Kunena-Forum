@@ -836,8 +836,9 @@ class CKunenaTools {
 	            $oldRecord = $kunena_db->loadObjectList();
 	            	check_dberror("Unable to load message detail.");
 
-                    $newCatObj = new jbCategory($kunena_db, $oldRecord[0]->catid);
-		    if (fb_has_moderator_permission($kunena_db, $newCatObj, $kunena_my->id, $isAdmin)) {
+                    $oldCatObj = new jbCategory($kunena_db, $oldRecord[0]->catid);
+                    $newCatObj = new jbCategory($kunena_db, $catid);
+                    if ($newCatObj && $newCatObj->parent>0 && fb_has_moderator_permission($kunena_db, $oldCatObj, $kunena_my->id, $isAdmin)) {
 
 		        $newSubject = _MOVED_TOPIC . " " . $oldRecord[0]->subject;
 		        $kunena_db->setQuery("SELECT MAX(time) AS timestamp FROM #__fb_messages WHERE thread='{$id}'");

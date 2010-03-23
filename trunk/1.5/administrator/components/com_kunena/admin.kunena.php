@@ -380,7 +380,7 @@ function showAdministration($option)
     /*
     * danial
     */
-    $kunena_db->setQuery("SELECT a.*, a.name AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup"
+    $kunena_db->setQuery("SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup"
     . "\nFROM #__fb_categories AS a"
     . "\nLEFT JOIN #__users AS u ON u.id = a.checked_out"
     . "\nLEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access"
@@ -434,41 +434,28 @@ function editForum($uid, $option)
 	$kunena_my = &JFactory::getUser();
     $row = new fbForum($kunena_db);
     // load the row from the db table
-    $row->load($uid);
+    if ($uid) $row->load ( $uid );
+		$uid = $row->id;
+
+		// get a list of sections
+		$kunena_db->setQuery ( "SELECT a.id, a.name FROM #__fb_categories AS a WHERE parent='0' AND id!='$row->id' ORDER BY ordering" );
+		$sections = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to load sections." );
 
     //echo "<pre>"; print_r ($row); echo "</pre>";
     if ($uid)
     {
         $row->checkout($kunena_my->id);
-        $categories = array ();
     }
     else
     {
-        // initialise new record
-        $categories[] = JHTML::_('select.option', '0', _KUNENA_TOPLEVEL, 'value', 'text');
-        $row->parent = 0;
+        // New category is by default child of the first section -- this will help new users to do it right
+        $row->parent = empty($sections) ? 0 : $sections[0]->id;
         $row->published = 0;
         $row->ordering = 9999;
-    }
-
-    // get a list of just the categories
-    $kunena_db->setQuery("SELECT a.id AS value, a.name AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
-    $categories = array_merge($categories, $kunena_db->loadObjectList());
-    	check_dberror("Unable to load categories.");
-
-    if ($row->parent == 0)
-    {
-        //make sure the Top Level Category is available in edit mode as well:
-        $kunena_db->setQuery("SELECT distinct '0' AS value, '"._KUNENA_TOPLEVEL."' AS text FROM #__fb_categories AS a WHERE parent='0' AND id<>'$row->id' ORDER BY ordering");
-        $categories = array_merge($categories, (array)$kunena_db->loadObjectList());
-        	check_dberror("Unable to load categories.");
-
-        //build the select list:
-        $categoryList = JHTML::_('select.genericlist',$categories, 'parent', 'class="inputbox" size="1"', 'value', 'text', $row->parent);
-    }
-    else
-    {
-        $categoryList = JHTML::_('select.genericlist',$categories, 'parent', 'class="inputbox" size="1"', 'value', 'text', $row->parent);
+        $row->pub_recurse = 1;
+		$row->admin_recurse = 1;
+		$row->pub_access = 0;
     }
 
     $categoryList = showCategories($row->parent, "parent", "", "4");
@@ -486,13 +473,14 @@ function editForum($uid, $option)
     $accessLists = array ();
     //create custom group levels to include into the public group selectList
     $pub_groups = array ();
+    $pub_groups[] = JHTML::_ ( 'select.option', 1, _KUNENA_NOBODY );
     $pub_groups[] = JHTML::_('select.option',0, _KUNENA_EVERYBODY);
     $pub_groups[] = JHTML::_('select.option', -1, _KUNENA_ALLREGISTERED);
 
-    $pub_groups = array_merge($pub_groups, $kunena_acl->get_group_children_tree(null, _KUNENA_REGISTERED, true));
+    $pub_groups = array_merge($pub_groups, $kunena_acl->get_group_children_tree(null, 'Registered', true));
     //create admin groups array for use in selectList:
     $adm_groups = array ();
-    $adm_groups = array_merge($adm_groups, $kunena_acl->get_group_children_tree(null, _KUNENA_PUBLICBACKEND, true));
+    $adm_groups = array_merge($adm_groups, $kunena_acl->get_group_children_tree(null, 'Public Backend', true));
     //create the access control list
     $accessLists['pub_access'] = JHTML::_('select.genericlist',$pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $row->pub_access);
     $accessLists['admin_access'] = JHTML::_('select.genericlist',$adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $row->admin_access);
@@ -853,6 +841,8 @@ function showConfig($option)
 	$lists['hide_ip'] = JHTML::_('select.genericlist', $yesno, 'cfg_hide_ip', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->hide_ip);
 	//New for 1.5.10: Joomsocial Activity Stream Integration disable/enable
     $lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->js_actstr_integration);
+	//New for 1.5.10: Disable userlist
+	$lists['userlist_enable'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_enable', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_enable);
 
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }

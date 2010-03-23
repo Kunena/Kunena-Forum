@@ -117,8 +117,7 @@ function dofreePDF($kunena_db)
 		}
 
 		if (empty($row)) { //if the messages doesn't exist don't need to continue
-			//Doesn't work Fatal error: Call to undefined method CKunenaLink::GetKunenaURL()
-			//$app->redirect ( CKunenaLink::GetKunenaURL(true), _KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED );
+			$app->redirect ( CKunenaLink::GetShowLatestURL(), _KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED );
 	 	} else {
 	 		$mes_text = $row[0]->message;
 	        filterHTML($mes_text);

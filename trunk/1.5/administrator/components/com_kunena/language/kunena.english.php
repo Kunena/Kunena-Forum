@@ -22,6 +22,14 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
+// 1.5.11
+define('_KUNENA_SECTION','Section');
+define('_KUNENA_NOBODY','Nobody');
+//Disable userlist
+define('_USERLIST_DISABLED','The Kunena userlist has been disabled, you can not access to it');
+define('_KUNENA_ADMIN_CONFIG_USERLIST_ENABLE','Enable the userlist');
+define('_KUNENA_ADMIN_CONFIG_USERLIST_ENABLE_DESC','Set the userlist on enabled or disable it if you don\'t want use it');
+
 // 1.5.10
 DEFINE('_KUNENA_PARENTDESC', 'Note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can only be created within a category by selecting an existing category as the parent for the forum.<br /> Messages can only be posted to forums, not categories.');
 DEFINE('_KUNENA_ADMIN', 'Forum Administration');

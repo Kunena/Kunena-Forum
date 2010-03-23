@@ -265,7 +265,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                       <small><?php echo _KUNENA_CHECKEDOUT; ?></small>
                     </th>
 
-                    <th colspan = "2">
+                    <th>
                       <small><?php echo _KUNENA_REORDER; ?></small>
                     </th>
                 </tr>
@@ -306,7 +306,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 
                         <?php
                             //echo ($row->category ? "$row->category/$row->name" : "$row->name");
-                            echo ($row->treename);
+                            echo $row->treename;
                         ?>
 
                         </a>
@@ -318,21 +318,25 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         ?>
                     </td>
 
-                    <td align = "center">
-                        <?php
-                            echo (!$row->category ? "&nbsp;" : ($row->locked == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
-                        ?>
-                    </td>
-
-                    <td align = "center"><?php echo ($row->moderated == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"); ?>
-                    </td>
+					<?php if (! $row->category): ?>
+ 	  	            	<td colspan="4" align="center"><?php echo _KUNENA_SECTION; ?></td>
+ 	  	            <?php else: ?>
 
                     <td align = "center">
                         <?php
-                            echo (!$row->category ? "&nbsp;" : ($row->review == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"));
+                            echo ($row->locked == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
                         ?>
                     </td>
 
+                    <td align = "center"><?php  echo ($row->moderated == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">"); ?>
+                    </td>
+
+                    <td align = "center">
+                        <?php
+                            echo ($row->review == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
+                        ?>
+                    </td>
+					<?php endif; ?>
                     <?php
                         $task = $row->published ? 'unpublish' : 'publish';
                         $img = $row->published ? 'publish_g.png' : 'publish_x.png';
@@ -343,7 +347,9 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                         else if ($row->pub_access == -1) {
                             $groupname = _KUNENA_ALLREGISTERED;
                         }
-                        else {
+                         else if ($row->pub_access == 1) {
+                            $groupname = _KUNENA_NOBODY;
+                         } else {
                             $groupname = $row->groupname == "" ? "&nbsp;" : $row->groupname;
                         }
 
@@ -351,9 +357,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     ?>
 
                         <td width = "10%" align = "center">
+                        	<?php if (! $row->category): echo '&nbsp;'; else: ?>
                             <a href = "javascript: void(0);" onclick = "return listItemTask('cb<?php echo $i;?>','<?php echo $task;?>')">
 
                             <img src = "images/<?php echo $img;?>" width = "12" height = "12" border = "0" alt = ""/></a>
+                            <?php endif; ?>
                         </td>
 
                         <td width = "" align = "center"><?php echo $groupname; ?>
@@ -366,10 +374,12 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 <?php echo $row->editor; ?>&nbsp;
                         </td>
 
+						<?php if ( $row->category): ?>
                         <td class="order" nowrap="nowrap">
 							<span><?php echo $pageNav->orderUpIcon( $i, isset($children[$row->parent][$row->location-1]), 'orderup', 'Move Up', 1); ?></span>
 							<span><?php echo $pageNav->orderDownIcon( $i, $n, isset($children[$row->parent][$row->location+1]), 'orderdown', 'Move Down', 1); ?></span>
                         </td>
+                        <?php endif; ?>
 
                 <?php
                             $k = 1 - $k;
@@ -487,7 +497,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
            <legend> <?php echo _KUNENA_ADVANCEDDESCINFO; ?></legend>
 
             <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%">
-
+				 <?php if (!$row->id || $row->parent): ?>
                 <tr>
                     <td><?php echo _KUNENA_LOCKED1; ?>
                     </td>
@@ -499,7 +509,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 <?php echo _KUNENA_LOCKEDDESC; ?>
                     </td>
                 </tr>
-
+				<?php endif; ?>
                 <tr>
                     <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_PUBACC; ?>
                     </td>
@@ -543,7 +553,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td valign = "top"><?php echo _KUNENA_CGROUPS1DESC; ?>
                     </td>
                 </tr>
-
+				<?php if (!$row->id || $row->parent): ?>
                 <tr>
                     <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_REV; ?>
                     </td>
@@ -554,9 +564,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td valign = "top"><?php echo _KUNENA_REVDESC; ?>
                     </td>
                 </tr>
+                <?php endif; ?>
             </table>
 
            </fieldset>
+           <?php if (!$row->id || $row->parent): ?>
            <fieldset>
            <legend> <?php echo _KUNENA_ADVANCEDDISPINFO; ?></legend>
 
@@ -576,6 +588,7 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                 </tr>
             </table>
            </fieldset>
+           <?php endif; ?>
 
            <div class="fbfuncsubtitle"><?php echo _KUNENA_MODNEWDESC; ?></div>
            <fieldset>
@@ -2095,6 +2108,16 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 			<legend> <?php echo _KUNENA_ADMIN_CONFIG_USERLIST ?></legend>
    <table cellpadding = "4" cellspacing = "0" border = "0" width = "100%" class = "fbadminform">
 
+				<tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ENABLE ?>
+                    </td>
+
+                    <td align = "left" valign = "top" width="25%"><?php echo $lists['userlist_enable']; ?>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ENABLE_DESC ?>
+                    </td>
+                </tr>
 
                 <tr align = "center" valign = "middle">
                     <td align = "left" valign = "top" width="25%"><?php echo _KUNENA_ADMIN_CONFIG_USERLIST_ROWS ?>

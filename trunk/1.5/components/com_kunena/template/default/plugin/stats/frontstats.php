@@ -65,7 +65,7 @@ if ($fbConfig->showstats > 0)
             <tbody id = "frontstats_tbody">
                 <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                     <td class = "td-1  fbm" align="left">
-<?php echo _STAT_TOTAL_USERS; ?>:<b> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> </b>
+<?php echo _STAT_TOTAL_USERS; ?>:<b> <?php if ( $fbConfig->userlist_enable || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb' ) { ?> <a href = "<?php echo $userlist;?>"><?php echo $totalmembers; ?></a> <?php } else { ?> <?php echo $totalmembers; ?> <?php } ?> </b>
                     &nbsp; <?php echo _STAT_LATEST_MEMBERS; ?>:<b> <?php echo CKunenaLink::GetProfileLink($fbConfig, $lastestmemberid, $lastestmember, $rel='nofollow'); ?></b>
 
                 <br/> <?php echo _STAT_TOTAL_MESSAGES; ?>: <b> <?php echo $totalmsgs; ?></b> &nbsp;
@@ -76,7 +76,7 @@ if ($fbConfig->showstats > 0)
 
                 <br/>
 
-                &raquo; <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> <?php if ($fbConfig->showpopuserstats || $fbConfig->showpopsubjectstats) echo '&raquo; <a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.'</a>'; ?>  &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a>
+                &raquo; <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL .'&amp;func=latest');?>"><?php echo _STAT_VIEW_RECENT_POSTS_ON_FORUM; ?></a> <?php if ($fbConfig->showpopuserstats || $fbConfig->showpopsubjectstats) echo '&raquo; <a href = "'.$statslink.'">'. _STAT_MORE_ABOUT_STATS.'</a>'; if ( $fbConfig->userlist_enable || $fbConfig->fb_profile == 'jomsocial' || $fbConfig->fb_profile == 'cb' ) { ?>  &raquo; <a href="<?php echo $userlist;?>"><?php echo _STAT_USERLIST; ?></a><?php } ?>
                     </td>
                 </tr>
             </tbody>

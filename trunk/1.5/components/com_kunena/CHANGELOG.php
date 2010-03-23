@@ -31,6 +31,17 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.5.11-DEV
+
+23-Mar-2010 Matias
+^ [#19999] Updated version info to 1.5.11-DEV Calificar (Spanish, meaning describe)
+^ [#15784] Merge and review all fixes from /branches/1.5-xillibit-fixing
+
+22-Mar-2010 Xillibit
+^ [#19984] Give administrator option to hide userlist and do not use it if integration provides list
+^ [#19942] Put one redirect when the user trying to access the pdf when the message is deleted
+# [#19992] Put rev 2063 and 2064 from K1.6 into K1.5
+
 Kunena 1.5.10
 
 22-Mar-2010 Matias

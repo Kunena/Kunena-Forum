@@ -250,6 +250,10 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </th>
 
                     <th>
+                      <small><?php echo _KUNENA_CATEGORY_ANONYMOUS; ?></small>
+                    </th>
+
+                    <th>
                       <small><?php echo _KUNENA_PUBLISHED; ?></small>
                     </th>
 
@@ -336,6 +340,13 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                             echo ($row->review == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
                         ?>
                     </td>
+
+                    <td align = "center">
+                        <?php
+                            echo ($row->allow_anonymous == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
+                        ?>
+                    </td>
+
 					<?php endif; ?>
                     <?php
                         $task = $row->published ? 'unpublish' : 'publish';
@@ -357,11 +368,9 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     ?>
 
                         <td width = "10%" align = "center">
-                        	<?php if (! $row->category): echo '&nbsp;'; else: ?>
                             <a href = "javascript: void(0);" onclick = "return listItemTask('cb<?php echo $i;?>','<?php echo $task;?>')">
 
                             <img src = "images/<?php echo $img;?>" width = "12" height = "12" border = "0" alt = ""/></a>
-                            <?php endif; ?>
                         </td>
 
                         <td width = "" align = "center"><?php echo $groupname; ?>
@@ -374,12 +383,10 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 <?php echo $row->editor; ?>&nbsp;
                         </td>
 
-						<?php if ( $row->category): ?>
                         <td class="order" nowrap="nowrap">
 							<span><?php echo $pageNav->orderUpIcon( $i, isset($children[$row->parent][$row->location-1]), 'orderup', 'Move Up', 1); ?></span>
 							<span><?php echo $pageNav->orderDownIcon( $i, $n, isset($children[$row->parent][$row->location+1]), 'orderdown', 'Move Down', 1); ?></span>
                         </td>
-                        <?php endif; ?>
 
                 <?php
                             $k = 1 - $k;
@@ -562,6 +569,26 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     </td>
 
                     <td valign = "top"><?php echo _KUNENA_REVDESC; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_CATEGORY_ANONYMOUS_ALLOW; ?>
+                    </td>
+
+                    <td valign = "top"> <?php echo $lists['allow_anonymous']; ?>
+                    </td>
+
+                    <td valign = "top"><?php echo _KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td nowrap = "nowrap" valign = "top"><?php echo _KUNENA_CATEGORY_ANONYMOUS_DEFAULT; ?>
+                    </td>
+
+                    <td valign = "top"> <?php echo $lists['post_anonymous']; ?>
+                    </td>
+
+                    <td valign = "top"><?php echo _KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC; ?>
                     </td>
                 </tr>
                 <?php endif; ?>

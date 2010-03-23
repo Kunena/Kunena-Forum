@@ -57,7 +57,7 @@ JHTML::_('behavior.keepalive');
             </td>
 
             <?php
-            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator) {
+            if (($fbConfig->regonly == "1" || $fbConfig->changename == '0') && $kunena_my->id != "" && !$is_Moderator && !$allow_anonymous) {
                 echo "<td><input type=\"hidden\" name=\"fb_authorname\" size=\"35\" class=\"" . $boardclass . "inputbox postinput\"  maxlength=\"35\" value=\"$authorName\" /><b>$authorName</b></td>";
             }
             else
@@ -75,8 +75,18 @@ JHTML::_('behavior.keepalive');
             ?>
         </tr>
 
+		<?php if ($allow_anonymous): ?>
+        <tr class = "<?php echo $boardclass; ?>sectiontableentry2">
+			<td class="fb_leftcolumn"><strong><?php echo _KUNENA_POST_AS_ANONYMOUS; ?></strong></td>
+
+			<td>
+			<input type="checkbox" id="fb_anonymous" name="anonymous" value="1" class="<?php echo $bardclass; ?>inputbox postinput" <?php if ($anonymous) echo 'checked="checked"'; ?> /> <label for="fb_anonymous"><?php echo _KUNENA_POST_AS_ANONYMOUS_DESC; ?></label>
+			</td>
+		</tr>
+		<?php endif; ?>
+
         <?php
-        if (($fbConfig->askemail && !$kunena_my->id) || $fbConfig->changename == 1 || $is_Moderator)
+        if (($fbConfig->askemail && !$kunena_my->id) || $is_Moderator)
         {
             echo '<tr class = "'. $boardclass . 'sectiontableentry2"><td class = "fb_leftcolumn"><strong>' . _GEN_EMAIL . ' *</strong>:</td>';
 
@@ -255,7 +265,7 @@ JHTML::_('behavior.keepalive');
                     {
                     ?>
 
-                            <input type = "checkbox" name = "subscribeMe" value = "1" checked/>
+                            <input type = "checkbox" name = "subscribeMe" value = "1" checked="checked" />
 
                             <i><?php echo _POST_NOTIFIED; ?></i>
 

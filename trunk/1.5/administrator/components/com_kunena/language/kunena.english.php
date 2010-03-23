@@ -25,11 +25,25 @@ defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 // 1.5.11
 define('_KUNENA_SECTION','Section');
 define('_KUNENA_NOBODY','Nobody');
-//Disable userlist
+// Disable userlist
 define('_USERLIST_DISABLED','The Kunena userlist has been disabled, you can not access to it');
 define('_KUNENA_ADMIN_CONFIG_USERLIST_ENABLE','Enable the userlist');
 define('_KUNENA_ADMIN_CONFIG_USERLIST_ENABLE_DESC','Set the userlist on enabled or disable it if you don\'t want use it');
-
+// Anonymous posting
+define('_KUNENA_CATEGORY_ANONYMOUS',"Anonymous");
+define('_KUNENA_CATEGORY_ANONYMOUS_ALLOW',"Allow anonymous messages");
+define('_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC',"Anonymous messages can be used by registered users to post sensitive information to this category: <b>No user related information</b> will be stored to anonymous messages (including IP address).");
+define('_KUNENA_CATEGORY_ANONYMOUS_DEFAULT',"By default post replies as");
+define('_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC',"If anonymous messages have been enabled, this option selects default choice for the user. Regular users can later edit their own posts to be anonymous, but only moderators have the ability to edit anonymous posts.");
+define('_KUNENA_CATEGORY_ANONYMOUS_X_REG',"Registered user");
+define('_KUNENA_CATEGORY_ANONYMOUS_X_ANO',"Anonymous user");
+define('_KUNENA_BACK',"Back");
+define('_KUNENA_POST_AS_ANONYMOUS',"Anonymous Post");
+define('_KUNENA_POST_AS_ANONYMOUS_DESC',"This post contains sensitive information. Remove all user information from this post.");
+define('_KUNENA_POST_ERROR_NO_CATEGORY',"No category was chosen to save your message.");
+define('_KUNENA_POST_ERROR_IS_SECTION',"You are not allowed to post messages into section.");
+define('_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN',"This category does not allow you to write anonymous posts. To keep your privacy, message was not sent.");
+define('_KUNENA_USERNAME_ANONYMOUS',"Anonymous");
 // 1.5.10
 DEFINE('_KUNENA_PARENTDESC', 'Note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can only be created within a category by selecting an existing category as the parent for the forum.<br /> Messages can only be posted to forums, not categories.');
 DEFINE('_KUNENA_ADMIN', 'Forum Administration');

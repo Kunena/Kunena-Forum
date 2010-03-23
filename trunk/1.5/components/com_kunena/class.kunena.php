@@ -987,6 +987,8 @@ class fbForum
     var $checked_out = null;
     var $checked_out_time = null;
     var $review = null;
+    var $allow_anonymous = null;
+    var $post_anonymous = null;
     var $hits = null;
     var $description = null;
     var $class_sfx = null;

@@ -118,6 +118,7 @@ if ($fbConfig->fb_profile == 'cb')
                                     ?>
 
                             <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL. '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
+                                <br /><br />
                                 <input type = "hidden" name = "parentid" value = "<?php echo $msg_id;?>"/>
 
                                 <input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
@@ -125,6 +126,16 @@ if ($fbConfig->fb_profile == 'cb')
                                 <input type = "hidden" name = "action" value = "post"/>
 
                                 <input type = "hidden" name = "contentURL" value = "empty"/>
+
+                                <?php
+                                $myname = $fbConfig->username ? $kunena_my->username : $kunena_my->name;
+                                $allow_anonymous = !empty($objCatInfo->allow_anonymous) && $kunena_my->id;
+                                $anonymous = ($allow_anonymous && !empty($objCatInfo->post_anonymous));
+
+                                if ($allow_anonymous): ?>
+                                <input type="text" name="authorname" size="35" class="inputbox postinput" maxlength="35" value="<?php echo $myname;?>" /><br />
+                                <input type="checkbox" id="anonymous" name="anonymous" value="1" class="inputbox postinput" <?php if ($anonymous) echo 'checked="checked"'; ?> /> <label for="anonymous"><?php echo _KUNENA_POST_AS_ANONYMOUS_DESC; ?></label><br />
+                                <?php endif; ?>
 
                                 <input type = "text" name = "subject" size = "35" class = "inputbox" maxlength = "<?php echo $fbConfig->maxsubject;?>" value = "<?php echo $resubject;?>"/>
 

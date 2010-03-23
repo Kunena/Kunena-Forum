@@ -65,6 +65,7 @@ $kunena_db = &JFactory::getDBO();
 $editmode = 0;
 $message = JRequest::getVar('message', '', 'REQUEST', 'string', JREQUEST_ALLOWRAW);
 $resubject = JRequest::getVar('resubject', '', 'REQUEST', 'string');
+$anonymous = JRequest::getInt('anonymous' , 0);
 
 $attachfile 	= JRequest::getVar('attachfile', NULL, 'FILES', 'array');
 $attachimage 	= JRequest::getVar('attachimage', NULL, 'FILES', 'array');
@@ -157,12 +158,17 @@ $catName = $objCatInfo->name;
                             <?php
                             $parent = (int)$parentid;
 							if ($fbConfig->askemail) jimport( 'joomla.mail.helper' );
-                            if (empty($my_name)) {
+                            if ($catid==0 || empty($objCatInfo)) {
+                                echo _KUNENA_POST_ERROR_NO_CATEGORY;
+                            } else if ($objCatInfo->parent == 0) {
+                                echo _KUNENA_POST_ERROR_IS_SECTION;
+                            } else if ($anonymous && !$objCatInfo->allow_anonymous) {
+                                echo _KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN;
+                            } else if (empty($my_name)) {
                                 echo _POST_FORGOT_NAME;
-                            }
-                            else if ($fbConfig->askemail && empty($user_email)) {
+                            } else if ($fbConfig->askemail && empty($user_email)) {
                                 echo _POST_FORGOT_EMAIL;
-                            } else if ($fbConfig->askemail && ! JMailHelper::isEmailAddress($user_email)) {
+                            } else if (!$kunena_my->id && $fbConfig->askemail && ! JMailHelper::isEmailAddress($user_email)) {
  	  	                    	echo _KUNENA_MY_EMAIL_INVALID;
                             } else if (empty($subject)) {
                                 echo _POST_FORGOT_SUBJECT;
@@ -208,6 +214,18 @@ $catName = $objCatInfo->name;
 
                                 $messagesubject = $subject; //before we add slashes and all... used later in mail
 
+                                $userid = $kunena_my->id;
+                                if ($anonymous) {
+                                    // Anonymous post: remove all user information from the post
+                                    $userid = 0;
+                                    jimport('joomla.user.helper');
+                                    if ($my_name == $kunena_my->name || $my_name == $kunena_my->username || JUserHelper::getUserId($my_name)) {
+                                        $my_name = _KUNENA_USERNAME_ANONYMOUS;
+                                    }
+                                    $user_email = '';
+                                    $ip = '';
+                                }
+
                                 $fb_authorname = trim(addslashes($my_name));
                                 $subject = trim(addslashes($subject));
                                 $message = trim(addslashes($message));
@@ -238,7 +256,7 @@ $catName = $objCatInfo->name;
                                 //
                                 $duplicatetimewindow = $posttime - $fbConfig->fbsessiontimeout;
                                 unset($existingPost);
-                                $kunena_db->setQuery("SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$kunena_my->id}' AND m.name='{$fb_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
+                                $kunena_db->setQuery("SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.userid='{$userid}' AND m.name='{$fb_authorname}' AND m.email='{$email}' AND m.subject='{$subject}' AND m.ip='{$ip}' AND t.message='{$message}' AND m.time>='{$duplicatetimewindow}'");
                                 $kunena_db->query() or trigger_dberror('Unable to load post.');
 
                                 $existingPost = $kunena_db->loadObject();
@@ -249,7 +267,7 @@ $catName = $objCatInfo->name;
                                 {
                                     $kunena_db->setQuery("INSERT INTO #__fb_messages
                                     						(parent,thread,catid,name,userid,email,subject,time,ip,topic_emoticon,hold)
-                                    						VALUES('$parent','$thread','$catid',".$kunena_db->quote($fb_authorname).",'{$kunena_my->id}',".$kunena_db->quote($email).",".$kunena_db->quote($subject).",'$posttime','$ip','$topic_emoticon','$holdPost')");
+                                    						VALUES('$parent','$thread','$catid',".$kunena_db->quote($fb_authorname).",'{$userid}',".$kunena_db->quote($email).",".$kunena_db->quote($subject).",'$posttime','$ip','$topic_emoticon','$holdPost')");
 
     			                    if ($kunena_db->query())
                                     {
@@ -290,7 +308,7 @@ $catName = $objCatInfo->name;
 
 														$act = new stdClass();
 														$act->cmd    = 'wall.write';
-														$act->actor  = $kunena_my->id;
+														$act->actor  = $userid;
 														$act->target = 0; // no target
 														$act->title  = JText::_('{actor} '._KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1.' <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> '._KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2);
 														$act->content= $content;
@@ -326,7 +344,7 @@ $catName = $objCatInfo->name;
 
 														$act = new stdClass();
 														$act->cmd    = 'wall.write';
-														$act->actor  = $kunena_my->id;
+														$act->actor  = $userid;
 														$act->target = 0; // no target
 														$act->title  = JText::_('{single}{actor}{/single}{multiple}{actors}{/multiple} '._KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1.' <a href="'.$JSPostLink.'">'.stripslashes($subject).'</a> '._KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2);
 														$act->content= $content;
@@ -342,9 +360,9 @@ $catName = $objCatInfo->name;
 										// End Modify for activities stream
 
                                         //update the user posts count
-                                        if ($kunena_my->id)
+                                        if ($userid)
                                         {
-                                            $kunena_db->setQuery("UPDATE #__fb_users SET posts=posts+1 WHERE userid={$kunena_my->id}");
+                                            $kunena_db->setQuery("UPDATE #__fb_users SET posts=posts+1 WHERE userid={$userid}");
                                             $kunena_db->query();
                                         }
 
@@ -582,7 +600,9 @@ $catName = $objCatInfo->name;
                             $authorName = $my_name;
                         }
                     }
-            ?>
+                    $allow_anonymous = !empty($objCatInfo->allow_anonymous) && $kunena_my->id;
+                    $anonymous = ($allow_anonymous && !empty($objCatInfo->post_anonymous));
+                    ?>
 
                     <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL.'&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
                         <input type = "hidden" name = "parentid" value = "<?php echo $parentid;?>"/>
@@ -630,7 +650,9 @@ $catName = $objCatInfo->name;
                     }
 
                     $authorName = $my_name;
-                        ?>
+                    $allow_anonymous = !empty($objCatInfo->allow_anonymous) && $kunena_my->id;
+                    $anonymous = ($allow_anonymous && !empty($objCatInfo->post_anonymous));
+                    ?>
 
                     <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL . '&amp;func=post'); ?>" method = "post" name = "postform" enctype = "multipart/form-data">
                         <input type = "hidden" name = "parentid" value = "<?php echo $parentid;?>"/>
@@ -755,6 +777,9 @@ $catName = $objCatInfo->name;
                         //$htmlText = smile::fbHtmlSafe($htmlText);
                         $resubject = kunena_htmlspecialchars(stripslashes($mes->subject));
                         $authorName = kunena_htmlspecialchars($mes->name);
+
+                        $allow_anonymous = !empty($objCatInfo->allow_anonymous) && $kunena_my->id;
+                        $anonymous = ($allow_anonymous && !empty($objCatInfo->post_anonymous));
                         ?>
 
                         <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "postform" enctype = "multipart/form-data"/>
@@ -879,11 +904,19 @@ $catName = $objCatInfo->name;
 								$topic_emoticon = $mes->topic_emoticon;
 	 	                  	}
 
-                            $kunena_db->setQuery(
-                            "UPDATE #__fb_messages SET name=".$kunena_db->quote($fb_authorname).", email=".$kunena_db->quote(addslashes($email))
-                            . (($fbConfig->editmarkup) ? " ,modified_by='" . $modified_by
-                            . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote($modified_reason) : "") . ", subject=" . $kunena_db->quote(addslashes($subject)) . ", topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
-
+                            if ($anonymous) {
+                                // Anonymous post: remove all user information from the post
+                                jimport ( 'joomla.user.helper' );
+                                if (JUserHelper::getUserId ( $fb_authorname )) {
+                                    $fb_authorname = _KUNENA_USERNAME_ANONYMOUS;
+                                }
+                                $kunena_db->setQuery ( "UPDATE #__fb_messages SET userid='0', name=" . $kunena_db->quote ( $fb_authorname ) . ", email='', ip='', modified_by='0', modified_time='0' ,modified_reason='', subject=" . $kunena_db->quote ( addslashes($subject) ) . ", topic_emoticon='" . (int)$topic_emoticon . "', hold='" . (( int ) $holdPost) . "' WHERE id={$id}" );
+                            } else {
+                                $kunena_db->setQuery(
+                                "UPDATE #__fb_messages SET name=".$kunena_db->quote($fb_authorname).", email=".$kunena_db->quote(addslashes($email))
+                                . (($fbConfig->editmarkup) ? " ,modified_by='" . $modified_by
+                                . "' ,modified_time='" . $modified_time . "' ,modified_reason=" . $kunena_db->quote($modified_reason) : "") . ", subject=" . $kunena_db->quote(addslashes($subject)) . ", topic_emoticon='" . ((int)$topic_emoticon) .  "', hold='" . ((int)$holdPost) . "' WHERE id={$id}");
+                            }
                             $dbr_nameset = $kunena_db->query();
                             $kunena_db->setQuery("UPDATE #__fb_messages_text SET message=".$kunena_db->quote($message)." WHERE mesid='{$id}'");
 

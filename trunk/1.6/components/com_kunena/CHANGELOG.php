@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 21-Mar-2010 Matias
 # [#19288] Fix regression: Subscription emails not sent, small bug in posting
+^ [#19770] API: Make CKunenaView more useful to be used by external modules/plugins
 
 20-Mar-2010 Matias
 ^ [#19277] Clean up and restructure post.php: Use class CKunenaPosting to post/reply message

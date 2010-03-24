@@ -1073,16 +1073,21 @@ class CKunenaTools {
 		 *
 		 * @param string 	$relpath	Relative path to template file
 		 * @param bool 		$once		limit to single include default false
+		 * @param string 	$template	Custom path to template (relative to Joomla)
 		 */
-		function loadTemplate($relpath, $once=false) {
+		function loadTemplate($relpath, $once=false, $template=null) {
 			if ($once){
-				if (file_exists ( KUNENA_ABSTMPLTPATH.$relpath )) {
+				if ($template && file_exists ( JPATH_ROOT.$template.$relpath )) {
+					require_once (JPATH_ROOT.$template.$relpath);
+				} else if (file_exists ( KUNENA_ABSTMPLTPATH.$relpath )) {
 					require_once (KUNENA_ABSTMPLTPATH.$relpath);
 				} else {
 					require_once (KUNENA_PATH_TEMPLATE_DEFAULT.$relpath);
 				}
 			} else {
-				if (file_exists ( KUNENA_ABSTMPLTPATH.$relpath )) {
+				if ($template && file_exists ( JPATH_ROOT.$template.$relpath )) {
+					require (JPATH_ROOT.$template.$relpath);
+				} else if (file_exists ( KUNENA_ABSTMPLTPATH.$relpath )) {
 					require (KUNENA_ABSTMPLTPATH.$relpath);
 				} else {
 					require (KUNENA_PATH_TEMPLATE_DEFAULT.$relpath);

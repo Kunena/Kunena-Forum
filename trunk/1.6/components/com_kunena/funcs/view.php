@@ -13,21 +13,36 @@ defined ( '_JEXEC' ) or die ();
 
 class CKunenaView {
 	public $allow = 0;
+	protected $templatepath = null;
 
-	function __construct($func, $catid, $id) {
+	function __construct($func, $catid, $id, $limitstart=0, $limit=0) {
+		require_once(KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
+		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
+
+		$this->db = JFactory::getDBO ();
+		$this->config = CKunenaConfig::getInstance ();
+		$this->session = CKunenaSession::getInstance ();
+
 		$this->func = $func;
 		$this->catid = $catid;
 		$this->id = $id;
 
-		$this->db = JFactory::getDBO ();
-		$this->session = CKunenaSession::getInstance ();
+		//prepare paging
+		$this->limitstart = $limitstart;
+		if ($this->limitstart < 0)
+			$this->limitstart = 0;
+		$this->limit = $limit;
+		if ($this->limit < 1)
+			$this->limit = $this->config->messages_per_page;
+}
 
-		$this->getView();
+	function setTemplate($path) {
+		$this->templatepath = $path;
 	}
 
 	function getView() {
 		// Is user allowed to see the forum specified in URL?
-		if (! $this->session->canRead ( $this->catid )) {
+		if ($this->catid && ! $this->session->canRead ( $this->catid )) {
 			return;
 		}
 		$this->allow = 1;
@@ -59,7 +74,6 @@ class CKunenaView {
 		}
 
 		$this->app = & JFactory::getApplication ();
-		$this->config = CKunenaConfig::getInstance ();
 		// Test if this is a valid URL. If not, redirect browser to the right location
 		$this->thread = $this->first_message->parent == 0 ? $this->id : $this->first_message->thread;
 		if ($this->first_message->moved || $this->thread != $this->id || $this->catid != $this->first_message->catid) {
@@ -128,25 +142,16 @@ class CKunenaView {
 		$this->total_messages = $this->db->loadResult ();
 		check_dberror ( 'Unable to calculate message count.' );
 
-		//prepare paging
-		$limit = JRequest::getInt ( 'limit', 0 );
-		if ($limit < 1)
-			$limit = $this->config->messages_per_page;
-		$limitstart = JRequest::getInt ( 'limitstart', 0 );
-		if ($limitstart < 0)
-			$limitstart = 0;
-		if ($limitstart > $this->total_messages)
-			$limitstart = intval ( $this->total_messages / $limit ) * $limit;
-		$ordering = ($this->config->default_sort == 'desc' ? 'desc' : 'asc'); // Just to make sure only valid options make it
+		if ($this->limitstart > $this->total_messages)
+			$this->limitstart = intval ( $this->total_messages / $this->limit ) * $this->limit;
+		$ordering = ($this->config->default_sort == 'desc' ? 'DESC' : 'ASC'); // Just to make sure only valid options make it
 		$maxpages = 9 - 2; // odd number here (show - 2)
-		$totalpages = ceil ( $this->total_messages / $limit );
-		$page = floor ( $limitstart / $limit ) + 1;
+		$totalpages = ceil ( $this->total_messages / $this->limit );
+		$page = floor ( $this->limitstart / $this->limit ) + 1;
 		$firstpage = 1;
 		if ($ordering == 'desc')
 			$firstpage = $totalpages;
 
-		$replylimit = $page == $firstpage ? $limit - 1 : $limit; // If page contains first message, load $limit-1 messages
-		$replystart = $limitstart && $ordering == 'asc' ? $limitstart - 1 : $limitstart; // If not first page and order=asc, start on $limitstart-1
 		// Get replies of current thread
 		$query = "SELECT a.*, b.*, modified.name AS modified_name, modified.username AS modified_username
 					FROM #__fb_messages AS a
@@ -154,7 +159,7 @@ class CKunenaView {
 					LEFT JOIN #__users AS modified ON a.modified_by = modified.id
 					WHERE a.thread='{$this->thread}' AND a.id!='{$this->id}' AND {$where}
 					ORDER BY id {$ordering}";
-		$this->db->setQuery ( $query, $replystart, $replylimit );
+		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
 		$replies = $this->db->loadObjectList ();
 		check_dberror ( 'Unable to load replies' );
 
@@ -684,7 +689,7 @@ class CKunenaView {
 				$this->msg_html->delete = CKunenaLink::GetTopicPostLink ( 'deleteownpost', $this->catid, $this->kunena_message->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 			}
 		}
-		CKunenaTools::loadTemplate('/view/message.php');
+		CKunenaTools::loadTemplate('/view/message.php', false, $this->templatepath);
 	}
 
 	function getPagination($catid, $threadid, $page, $totalpages, $maxpages) {
@@ -730,6 +735,8 @@ class CKunenaView {
 	}
 
 	function display() {
+		$this->getView();
+
 		if (! $this->allow) {
 			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
@@ -738,6 +745,6 @@ class CKunenaView {
 			echo JText::_('COM_KUNENA_MODERATION_INVALID_ID');
 			return;
 		}
-		CKunenaTools::loadTemplate('/view/view.php');
+		CKunenaTools::loadTemplate('/view/view.php', false, $this->templatepath);
 	}
 }

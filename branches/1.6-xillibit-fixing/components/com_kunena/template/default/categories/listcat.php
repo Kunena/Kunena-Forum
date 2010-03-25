@@ -35,7 +35,7 @@ $this->displayPathway ();
 			?>
 
 		<form action="<?php
-			echo KUNENA_LIVEURLREL;
+			echo CKunenaLink::GetCategoryURL('listcat', $this->catid, $redirect=true);
 			?>"
 			name="markAllForumsRead" method="post"><input type="hidden"
 			name="markaction" value="allread" /> <input type="submit"

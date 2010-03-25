@@ -312,20 +312,22 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
 			?></textarea>
 	<?php
+	//
+	// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
+	//
+	?>
+	<!-- Hidden preview placeholder -->
+	<div id="kbbcode-preview" style="display: none;"></div>
+	<?php
 	if ($this->kunena_editmode) {
 		// Moderator edit area
 		?>
-	<fieldset><legend><?php
+	<fieldset style="width:585px;"><legend><?php
 		echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend> <input
 		name="modified_reason" size="40" maxlength="200" type="text" /><br />
 	</fieldset>
 	<?php
 	}
-//
-// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
-//
 	?>
-		<!-- Hidden preview placeholder -->
-	<div id="kbbcode-preview" style="display: none;"></div>
 	</td>
 </tr>

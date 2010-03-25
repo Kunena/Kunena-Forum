@@ -265,7 +265,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$kunena_session->save ( $kunena_session );
 
 		if ($markaction == "allread") {
-			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat', $catid, $redirect=true), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
 		}
 
 		$userprofile = CKunenaUserprofile::getInstance($kunena_my->id);

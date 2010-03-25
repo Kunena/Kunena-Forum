@@ -2320,15 +2320,24 @@ function deleteitemsnow ( $option, $cid ) {
 	$cids = implode ( ',', $cid );
 	if ($cids) {
 		foreach ($cid as $id ) {
-			$kunena_db->setQuery ( "SELECT a.parent, a.id, b.threadid FROM #__fb_messages AS a INNER JOIN #__fb_polls AS b ON b.threadid=a.id WHERE threadid='{$id}'" );
-			$mes = $kunena_db->loadObjectList ();
+			$kunena_db->setQuery ( "SELECT a.parent, a.userid, a.id, a.thread, b.threadid AS poll, c.thread AS favorite, d.thread AS sub FROM #__fb_messages AS a
+									LEFT JOIN #__fb_polls AS b ON b.threadid=a.id
+									LEFT JOIN #__fb_favorites AS c ON c.thread=a.thread
+									LEFT JOIN #__fb_subscriptions AS d ON d.thread=a.thread WHERE a.id='{$id}'" );
+			$mes = $kunena_db->loadObject ();
 			check_dberror ( "Unable to load online message info." );
-			if( !empty($mes[0])) {
-				if ($mes[0]->parent == '0' && !empty($mes[0]->threadid) ) {
+			if( !empty($mes)) {
+				if ( !empty($mes->favorite ) ) {
+					CKunenaTools::removeFavorite ($mes->thread, $mes->userid );
+				}
+				if ( !empty($mes->sub ) ) {
+					CKunenaTools::removeSubscritpion ($mes->thread,$mes->userid );
+				}
+				if ($mes->parent == '0' && !empty($mes->threadid) ) {
 					//remove of poll
 					require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
 					$poll = new CKunenaPolls();
-					$poll->delete_poll($mes[0]->threadid);
+					$poll->delete_poll($mes->threadid);
 				}
 			}
 		}

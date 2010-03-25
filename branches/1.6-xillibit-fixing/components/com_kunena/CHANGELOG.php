@@ -32,6 +32,17 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Special-DEV
+
+25-Mar-2010 Xillibit
+^ [#19764] Add the move function for one message
+
+21-Mar-2010 Xillibit
+# [#19978] BUG: Editing posts containing quotation marks
+# [#19983] Side-by-side preview is not side-by-side
+# [#19825] BUG: Redirection on "Mark forum read" fails
+^ [#19995] Remove favorites and subscriptions if thread gets deleted/merged (need testing)
+
 Kunena 1.6.0-DEV
 
 21-Mar-2010 Matias

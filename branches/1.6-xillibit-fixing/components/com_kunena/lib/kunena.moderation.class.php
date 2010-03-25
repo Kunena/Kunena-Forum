@@ -146,6 +146,21 @@ class CKunenaModeration {
 			return false;
 		}
 
+		//remove favorite and subscription if exists when do a merge thread
+		if ( $TargetMessageID != '0' ) {
+			$this->_db->setQuery ( "SELECT c.thread AS favorite, d.thread AS sub
+									FROM #__fb_favorites AS c
+									LEFT JOIN #__fb_subscriptions AS d ON d.thread=c.thread WHERE c.thread='{$currentMessage->thread}'" );
+			$mesFavSub = $this->_db->loadObject ();
+			check_dberror ( "Unable to load the favorite and subscription details." );
+
+			if ( !empty($mesFavSub->favorite ) ) {
+				CKunenaTools::removeFavorite ($currentMessage->thread, $mes->userid );
+			}
+			if ( !empty($mesFavSub->sub ) ) {
+				CKunenaTools::removeSubscritpion ($currentMessage->thread,$mes->userid );
+			}
+		}
 
 		// Assemble move logic based on $mode
 

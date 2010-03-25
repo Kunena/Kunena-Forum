@@ -1210,6 +1210,32 @@ class CKunenaTools {
 			}
 		}
 
+		/**
+		 * This function remove the favorite
+		 *
+		 */
+		function removeFavorite ($thread, $userid) {
+			$kunena_db =& JFactory::getDBO();
+
+			$sql = "DELETE FROM #__fb_favorites WHERE `userid`='$userid' AND `thread`='$thread';";
+			$kunena_db->setQuery ( $sql );
+			$kunena_db->query ();
+			check_dberror ( 'Unable to perform delete favorite.' );
+		}
+
+		/**
+		 * This function remove the post subscription
+		 *
+		 */
+		function removeSubscritpion ($thread, $userid) {
+			$kunena_db =& JFactory::getDBO();
+
+			$sql = "DELETE FROM #__fb_subscriptions WHERE `userid`='$userid' AND `thread`='$thread';";
+			$kunena_db->setQuery ( $sql );
+			$kunena_db->query ();
+			check_dberror ( 'Unable to perform delete subscription.' );
+		}
+
     } // end of class
 
 class fbForum

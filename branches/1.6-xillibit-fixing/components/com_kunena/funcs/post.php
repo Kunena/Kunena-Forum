@@ -341,8 +341,12 @@ class CKunenaPost {
 				$this->selectcatlist = CKunenaTools::forumSelectList ( 'postcatid', $this->catid, $options, '' );
 		}
 		$this->authorName = kunena_htmlspecialchars ( $this->getAuthorName () );
-		$this->id = $message->id;
-		$this->catid = $message->catid;
+		if ( isset($message->id) ) {
+			$this->id = $message->id;
+		}
+		if ( isset($message->catid) ) {
+			$this->catid = $message->catid;
+		}
 		$this->emoid = 0;
 		$this->action = 'post';
 
@@ -422,7 +426,7 @@ class CKunenaPost {
 
 			$this->kunena_editmode = 1;
 
-			$this->message_text = kunena_htmlspecialchars ( stripslashes ( $message->message ) );
+			$this->message_text =  stripslashes ( $message->message );
 			$this->resubject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
 			$this->authorName = kunena_htmlspecialchars ( stripslashes ( $message->name ) );
 			$this->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
@@ -605,6 +609,40 @@ class CKunenaPost {
 		}
 
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+	}
+
+	protected function movemessage() {
+		if (!$this->load())
+			return false;
+		if ($this->moderatorProtection ())
+			return false;
+
+		$options = array ();
+		$this->selectlist = CKunenaTools::forumSelectList ( 'postmovemessage', 0, $options, ' size="15" class="kmove_selectbox"' );
+		$this->message = $this->msg_cat;
+
+		CKunenaTools::loadTemplate ( '/moderate/messagemove.php' );
+	}
+
+	protected function domovemessage() {
+		if (!$this->load())
+			return false;
+		if ($this->moderatorProtection ())
+			return false;
+
+		$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
+		$Targetcat = JRequest::getInt ( 'catid', 0 );
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+		$kunena_mod = CKunenaModeration::getInstance ();
+
+		$move = $kunena_mod->moveMessage( $this->id, $Targetcat, $TargetSubject = '', '');
+		if (! $move) {
+			$message = $kunena_mod->getErrorMessage ();
+		} else {
+			$message = JText::_ ( 'COM_KUNENA_MESSAGE_SUCCESS_MOVE' );
+		}
+
+		$this->_app->redirect ( CKunenaLink::GetThreadPageURL($this->_config, 'view', $Targetcat, $this->msg_cat->thread, 1, $limit='', $anker='',true),$message);
 	}
 
 	protected function mergethread() {
@@ -1001,6 +1039,14 @@ class CKunenaPost {
 
 			case 'domovepost' :
 				$this->domovepost ();
+				break;
+
+			case 'movemessage' :
+				$this->movemessage ();
+				break;
+
+			case 'domovemessage' :
+				$this->domovemessage ();
 				break;
 
 			case 'mergethread' :

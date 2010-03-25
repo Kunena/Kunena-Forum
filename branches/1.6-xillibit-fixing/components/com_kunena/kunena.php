@@ -549,6 +549,14 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				case "bulkMove" :
 					CKunenaTools::KMovePosts ( $catid );
 					break;
+
+				case "bulkFavorite" :
+					CKunenaTools::KUnfavorite ( );
+					break;
+
+				case "bulkSub" :
+					CKunenaTools::KUnsubscribe ( );
+					break;
 			}
 
 			break;

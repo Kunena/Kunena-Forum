@@ -36,6 +36,9 @@ Kunena 1.6.0-Special-DEV
 
 25-Mar-2010 Xillibit
 ^ [#19764] Add the move function for one message
+# [#19288] Fix regression - Fatal error: Class 'JMailHelper' not found in kunena.posting.class.php
+^ [#20002] Do not allow moderator to move threads into sections
+^ [#19764] Add in profile bulkaction the delete favorite and subscription functions
 
 21-Mar-2010 Xillibit
 # [#19978] BUG: Editing posts containing quotation marks

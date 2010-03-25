@@ -398,7 +398,6 @@ class CKunenaPosting {
 
 		// And clear current thread
 		$errcount = 0;
-		print_r($sessions);
 		foreach ( $sessions as $session ) {
 			$readtopics = $session->readtopics;
 			$rt = explode ( ",", $readtopics );
@@ -702,6 +701,7 @@ class CKunenaPosting {
 		$emailToList = CKunenaTools::getEMailToList ( $this->get ( 'catid' ), $this->get ( 'thread' ), $mailsubs, $mailmods, $mailadmins, $this->_my->id );
 
 		if (count ( $emailToList )) {
+			jimport('joomla.mail.helper');
 			if (! $this->_config->email || ! JMailHelper::isEmailAddress ( $this->_config->email )) {
 				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'notice' );
 				return false;

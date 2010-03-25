@@ -99,6 +99,16 @@ class CKunenaModeration {
 			return false;
 		}
 
+		// Check that thread can't be move into a section
+		$query = 'SELECT `parent` FROM #__fb_categories WHERE `id`='.$TargetCatID;
+		$this->_db->setQuery ( $query );
+		$catParent = $this->_db->loadResult ();
+		check_dberror ( "Unable to load category detail." );
+		if ( $catParent == '0' ) {
+			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION');
+			return false;
+		}
+
 		// Check that user has moderator permissions in source category
 		if ( !CKunenaTools::isModerator($this->_my->id, $currentMessage->catid) ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR_IN_CATEGORY', $currentMessage->id, $currentMessage->catid);

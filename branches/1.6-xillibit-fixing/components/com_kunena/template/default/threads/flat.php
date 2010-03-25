@@ -285,6 +285,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 	}
 	if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) {
+		$appfunc = JRequest::getCmd('func');
 		?>
 		<!-- Moderator Bulk Actions -->
 		<tr class="ksectiontableentry1">
@@ -298,6 +299,21 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				<option value="bulkMove"><?php
 		echo JText::_('COM_KUNENA_MOVE_SELECTED');
 		?></option>
+		<?php
+
+		if ( $appfunc == 'profile' && $this->func == 'favorites' ) {
+		?>
+			<option value="bulkFavorite"><?php
+					echo JText::_('COM_KUNENA_DELETE_FAVORITE');
+		} elseif ( $appfunc == 'profile' && $this->func == 'subscriptions' ) {
+		?>
+			</option>
+		<option value="bulkSub"><?php
+					echo JText::_('COM_KUNENA_DELETE_SUBSCRIPTION');
+		?></option>
+		<?php
+		}
+		?>
 			</select> <?php
 		CKunenaTools::showBulkActionCats ();
 		?> <input type="submit" name="kBulkActionsGo" class="kbutton ks"

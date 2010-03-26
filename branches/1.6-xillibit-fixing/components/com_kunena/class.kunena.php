@@ -1221,12 +1221,16 @@ class CKunenaTools {
 		 */
 		function KModerateUser () {
 			$kunena_db =& JFactory::getDBO();
+			$kunena_app = JFactory::getApplication ();
 
 			$thisuserid = JRequest::getInt ( 'thisuserid', '' );
 			$banIP = JRequest::getVar ( 'prof_ip_select', '' );
 			$banEmail = JRequest::getVar ( 'banemail', '' );
 			$banUsername = JRequest::getVar ( 'banusername', '' );
 			$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
+			$DelAvatar = JRequest::getVar ( 'delavatar', '' );
+			$DelSignature = JRequest::getVar ( 'delsignature', '' );
+			$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
 
 			if ( isset($banIP) ) {
 				//future feature
@@ -1238,6 +1242,38 @@ class CKunenaTools {
 
 			if ( isset($banUsername) ) {
 				//future feature
+			}
+
+			if ( isset ($DelAvatar) ) {
+				jimport('joomla.filesystem.file');
+				$userprofile = CKunenaUserprofile::getInstance($thisuserid);
+
+				$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar=null WHERE userid=$thisuserid" );
+				$kunena_db->Query ();
+				check_dberror ( "Unable to remove user avatar." );
+
+				// Delete avatar from file system
+				if ( JFile::exists(KUNENA_PATH_AVATAR_UPLOADED.DS.$userprofile->avatar) ) {
+					JFile::delete(KUNENA_PATH_AVATAR_UPLOADED.DS.$userprofile->avatar);
+				}
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
+			}
+
+			if ( isset ($DelSignature) ) {
+				$kunena_db->setQuery ( "UPDATE #__fb_users SET signature=null WHERE userid=$thisuserid" );
+				$kunena_db->Query ();
+				check_dberror ( "Unable to remove user singature." );
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
+			}
+
+			if ( isset ($DelProfileInfo) ) {
+				$kunena_db->setQuery ( "UPDATE #__fb_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid=$thisuserid" );
+				$kunena_db->Query ();
+				check_dberror ( "Unable to remove user profile information." );
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
 			}
 
 			if ( isset($banDelPosts) ) {
@@ -1253,6 +1289,8 @@ class CKunenaTools {
 
 					$kunena_mod->deleteMessage($thisuserid, $DeleteAttachments = false);
 				}
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
 			}
 		}
 

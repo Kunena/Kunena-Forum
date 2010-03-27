@@ -39,6 +39,11 @@ defined ( '_JEXEC' ) or die ();
 		<?php
 		echo $this->selectlist;
 		?> <br />
+<br />
+		<?php
+		echo JText::_ ( 'COM_KUNENA_BUTTON_MERGE_TOPIC_ID' );
+		?>: <br />
+		<input type="text" name="mergethreadid" value="" /><br />
 
 <br />
 

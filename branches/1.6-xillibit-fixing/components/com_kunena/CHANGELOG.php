@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-Special-DEV
 
+27-Mar-2010 Xillibit
+# [#19764] Fix undefined variables in post.php for merge function when there is only one thread in a cat
+^ [#19764] For merge/slpit functions you can directly put the target thread/cat ID instead of search in a long list
+^ [#19764] Add in split the possibility to split the actual message and newer messages (doesn't work)
+
 25-Mar-2010 Xillibit
 ^ [#19764] Add the move function for one message
 # [#19288] Fix regression - Fatal error: Class 'JMailHelper' not found in kunena.posting.class.php

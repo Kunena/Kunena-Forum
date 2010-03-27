@@ -117,7 +117,7 @@ class CKunenaModeration {
 
 		// Check that we have target category or message
 		if ($TargetCatID == 0 && $TargetMessageID == 0) {
-			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $currentMessage->id);
+			$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_NO_TARGET', $currentMessage->id);
 			return false;
 		}
 
@@ -129,13 +129,13 @@ class CKunenaModeration {
 
 			if ( !is_object( $targetMessage )) {
 				// Target message not found. Cannot proceed with move
-				$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_TARGET_MESSAGE_NOT_FOUND', $currentMessage->id, $TargetMessageID);
+				$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_TARGET_MESSAGE_NOT_FOUND', $currentMessage->id, $TargetMessageID);
 				return false;
 			}
 
 			if ($targetMessage->thread == $currentMessage->thread) {
 				// Recursive self moves not supported
-				$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $currentMessage->id, $currentMessage->thread);
+				$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $currentMessage->id, $currentMessage->thread);
 				return false;
 			}
 
@@ -144,7 +144,7 @@ class CKunenaModeration {
 			$TargetCatID = $targetMessage->catid;
 		} else {
 			if ($TargetCatID == $currentMessage->catid) {
-				$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_CATEGORY', $currentMessage->id, $TargetCatID);
+				$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_CATEGORY', $currentMessage->id, $TargetCatID);
 				return false;
 			}
 		}
@@ -152,7 +152,7 @@ class CKunenaModeration {
 		// Check that target category exists and is visible to our moderator
 		if (! in_array ( $TargetCatID, $this->_allowed ) ) {
 			//the user haven't moderator permissions in target category
-			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_TARGET_CATEGORY_NOT_FOUND', $currentMessage->id, $TargetCatID);
+			$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_TARGET_CATEGORY_NOT_FOUND', $currentMessage->id, $TargetCatID);
 			return false;
 		}
 
@@ -229,12 +229,17 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_NEWER : // Move message and all newer messages of thread
 				if ($TargetMessageID == 0) {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`=0 $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
+					$sql1 = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
 				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID' $subjectupdatesql WHERE id`='$MessageID';";
-					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
+					$sql1 = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID' $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
 				}
+
+				// Execute move
+				$this->_db->setQuery ( $sql1 );
+				$this->_db->query ();
+				check_dberror ( 'Unable to perform move.' );
 
 				break;
 			case KN_MOVE_REPLIES : // Move message and all replies and quotes - 1 level deep for now
@@ -242,7 +247,7 @@ class CKunenaModeration {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='0', $subjectupdatesql WHERE id`='$MessageID';";
 					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
 				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID', $subjectupdatesql WHERE id`='$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID', $subjectupdatesql WHERE `id`='$MessageID';";
 					$sql .= "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID', $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID' AND `parent`='$MessageID';";
 				}
 

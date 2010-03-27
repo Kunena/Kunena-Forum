@@ -566,6 +566,18 @@ class CKunenaTools {
 		return $parent;
 	}
 
+	function KSelectList($name, $options=array(), $attr='', $sections=false) {
+		$kunena_db = &JFactory::getDBO ();
+		$list = JJ_categoryArray ();
+
+		foreach ( $list as $item ) {
+			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename, 'value', 'text', !$sections && $item->section);
+		}
+
+		$catsList = JHTML::_ ( 'select.genericlist', $options, $name, $attr, 'value', 'text', '', $name );
+		return $catsList;
+	}
+
 	function showBulkActionCats($disabled = 1) {
         $kunena_db = &JFactory::getDBO();
 
@@ -1568,6 +1580,7 @@ function generate_smilies() {
 
 function KGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
+
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
     }

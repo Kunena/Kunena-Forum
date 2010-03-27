@@ -584,8 +584,7 @@ class CKunenaPost {
 		if ($this->moderatorProtection ())
 			return false;
 
-		$options = array ();
-		$this->selectlist = CKunenaTools::forumSelectList ( 'postmove', 0, $options, ' size="15" class="kmove_selectbox"' );
+		$this->selectlist = CKunenaTools::KSelectList ( 'postmove', $options=array(), ' size="15" class="kmove_selectbox"' );
 		$this->message = $this->msg_cat;
 
 		CKunenaTools::loadTemplate ( '/moderate/topicmove.php' );
@@ -597,11 +596,13 @@ class CKunenaPost {
 		if ($this->moderatorProtection ())
 			return false;
 
-		$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
+		$leaveGhost = (int) JRequest::getInt ( 'leaveGhost', 0 );
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = CKunenaModeration::getInstance ();
+		$TargetCatID = (int) JRequest::getInt ( 'postmove', 0 );
+		echo $TargetCatID;
 
-		$move = $kunena_mod->moveThread ( $this->id, $this->catid, $leaveGhost );
+		$move = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
 		if (! $move) {
 			$message = $kunena_mod->getErrorMessage ();
 		} else {
@@ -654,17 +655,24 @@ class CKunenaPost {
 		$this->message = $this->msg_cat;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND catid='{$this->catid}' AND thread!='{$this->message->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND catid='{$this->message->catid}' AND thread!='{$this->message->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );
 
-		foreach ( $messagesList as $mes ) {
-			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
-		}
-		$this->selectlist = JHTML::_ ( 'select.genericlist', $messages, 'mergepost', 'class="inputbox" size="15"', 'value', 'text' );
 
-		CKunenaTools::loadTemplate ( '/moderate/topicmerge.php' );
+		if ( !empty($messagesList) ) {
+			$messages = Array();
+			foreach ( $messagesList as $mes ) {
+				$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
+			}
+			$this->selectlist = JHTML::_ ( 'select.genericlist', $messages, 'mergepost', 'class="inputbox" size="15"', 'value', 'text' );
+
+			CKunenaTools::loadTemplate ( '/moderate/topicmerge.php' );
+		} else {
+			//There are no others threads in this category so the merge function can't be done
+			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, true),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
+		}
 	}
 
 	protected function domergethreadnow() {
@@ -674,11 +682,17 @@ class CKunenaPost {
 			return false;
 
 		$TargetSubject = JRequest::getVar ( 'messubject', null );
-		$TargetThreadID = JRequest::getInt ( 'mergepost', null );
+		$TargetThreadID = (int) JRequest::getInt ( 'mergepost', null );
+		$TargetTopicID = (int) JRequest::getInt ( 'mergethreadid', null );
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = &CKunenaModeration::getInstance ();
 
-		$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
+		if ( !empty( $TargetThreadID ) ) {
+			$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
+		} elseif( !empty( $TargetTopicID ) ) {
+			$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetTopicID );
+		}
+
 		if (! $merge) {
 			$message = $kunena_mod->getErrorMessage ();
 		} else {
@@ -703,12 +717,19 @@ class CKunenaPost {
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );
 
-		foreach ( $messagesList as $mes ) {
-			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
-		}
-		$this->selectlist = JHTML::_ ( 'select.genericlist', $messages, 'mergepost', 'class="inputbox" multiple="multiple" size="15"', 'value', 'text' );
 
-		CKunenaTools::loadTemplate ( '/moderate/postmerge.php' );
+		if ( !empty($messagesList) ) {
+			$messages = Array();
+			foreach ( $messagesList as $mes ) {
+				$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
+			}
+			$this->selectlist = JHTML::_ ( 'select.genericlist', $messages, 'mergepost', 'class="inputbox" multiple="multiple" size="15"', 'value', 'text' );
+
+			CKunenaTools::loadTemplate ( '/moderate/postmerge.php' );
+		} else {
+			//There are no others threads in this category so the merge function can't be done
+			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, true),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
+		}
 	}
 
 	protected function domergepostnow() {
@@ -719,10 +740,16 @@ class CKunenaPost {
 
 		$TargetThreadID = JRequest::getInt ( 'mergepost', null );
 		$TargetSubject = JRequest::getInt ( 'subject', null );
+		$TargetTopicID = (int) JRequest::getInt ( 'mergethreadid', null );
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = &CKunenaModeration::getInstance ();
 
-		$merge = $kunena_mod->moveMessage ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
+		if ( !empty( $TargetThreadID ) ) {
+			$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
+		} elseif( !empty( $TargetTopicID ) ) {
+			$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetTopicID );
+		}
+
 		if (! $merge) {
 			$message = $kunena_mod->getErrorMessage ();
 		} else {
@@ -740,8 +767,7 @@ class CKunenaPost {
 
 		$this->message = $this->msg_cat;
 
-		$options = array ();
-		$this->selectlist = CKunenaTools::forumSelectList ( 'targetcat', 0, $options, ' size="15" class="ksplit_selectbox"' );
+		$this->selectlist = CKunenaTools::KSelectList('targetcat', $options=array(), ' size="15" class="ksplit_selectbox"');
 
 		CKunenaTools::loadTemplate ( '/moderate/postsplit.php' );
 	}
@@ -757,10 +783,14 @@ class CKunenaPost {
 
 		$mode = JRequest::getVar ( 'split', null );
 		$TargetSubject = JRequest::getVar ( 'messubject', null );
+		$TargetCatID = JRequest::getInt ( 'targetcat', null );
+		$TargetSplitCatId = (int) JRequest::getInt ( 'splitcatid', null );
+
+		if ( !empty($TargetSplitCatId) ) {
+			$TargetCatID = $TargetSplitCatId;
+		}
 
 		if ($mode == 'splitpost') { // we split only the message specified
-			$TargetCatID = JRequest::getVar ( 'targetcat', null );
-
 			$splitpost = $kunena_mod->moveMessage ( $this->id, $TargetCatID, $TargetSubject );
 			if (! $splitpost) {
 				$message = $kunena_mod->getErrorMessage ();
@@ -769,13 +799,13 @@ class CKunenaPost {
 			}
 
 		} else { // we split the message specified and the replies to this message
-			$TargetCatID = JRequest::getVar ( 'targetcat2', null );
-			$splitpost = $kunena_mod->moveMessageAndNewer ( $this->id, $TargetCatID, $TargetSubject );
+			/*$splitpost = $kunena_mod->moveMessageAndNewer ( $this->id, $TargetCatID, $TargetSubject, '' );
 			if (! $splitpost) {
 				$message = $kunena_mod->getErrorMessage ();
 			} else {
 				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_SPLIT' );
-			}
+			}*/
+			$message = "This function doesn't work yet";
 		}
 
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $message );

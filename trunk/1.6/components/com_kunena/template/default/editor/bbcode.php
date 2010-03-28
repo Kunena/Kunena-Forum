@@ -84,7 +84,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT');
 				?>')" /> <input type="button" name="insterLink"
 				value="<?php
-				echo JText::_('COM_KUNENA_EDITOR_LINK_INSERT');
+				echo JText::_('COM_KUNENA_EDITOR_INSERT');
 				?>"
 				onclick="kbbcode.replaceSelection('[url=' + $('kbbcode-link_url').get('value') + ']' + $('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
@@ -106,7 +106,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKURL');
 				?>')" />&nbsp; <input type="button" name="Link"
 				value="<?php
-				echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_INSERT');
+				echo JText::_('COM_KUNENA_EDITOR_INSERT');
 				?>"
 				onclick="kInsertImageLink()"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
@@ -240,19 +240,19 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				?>')" />
 			</div>
 			<div id="kbbcode-map-options" style="display: none;"><?php
-			echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_URL');
+			echo JText::_('COM_KUNENA_EDITOR_MAP');
 			?>&nbsp;<input name="map-url"
-				id="kbbcode-map_url" type="text" size="40" maxlength="250" value="http://"
+				id="kbbcode-map_url" type="text" size="40" maxlength="250" value=""
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKURL');
+				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');
 				?>')" />&nbsp;
 			<input type="button" name="Link"
 				value="<?php
-				echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_INSERT');
+				echo JText::_('COM_KUNENA_EDITOR_INSERT');
 				?>"
 				onclick="kInsertMapLink()"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY');
+				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAPAPPLY');
 				?>')" />
 			</div>
 			</td>
@@ -302,9 +302,9 @@ $kunena_config = & CKunenaConfig::getInstance ();
 		echo (JText::_('COM_KUNENA_MESSAGE')) ;
 	// TODO: Replace Enlarge and Shrink with icons
 	?></strong><br />
-	<span class="ksmalltext" onclick="kGrowShrinkMessage(100);"
+	<span class="ks" onclick="kGrowShrinkMessage(100);"
 		style="cursor: pointer">Enlarge</span>&nbsp;/&nbsp; <span
-		class="ksmalltext" onclick="kGrowShrinkMessage(-100);"
+		class="ks" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer">Shrink</span></td>
 
 	<td valign="top"><textarea class="ktxtarea required" name="message"

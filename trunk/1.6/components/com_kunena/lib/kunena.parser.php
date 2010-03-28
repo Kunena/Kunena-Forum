@@ -691,7 +691,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					$map_maxwidth = ( int ) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
 					$map_maxheight = 480; // max. display size
 
-					$tag_new = '<iframe width="'.$map_maxwidth.'" height="'.$map_maxheight.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$between.'"></iframe><br /><small><a href="'.$between.'" style="color:#0000FF;text-align:left">View Larger Map</a></small>';
+					$tag_new = '<a href="http://maps.google.com/?q='.$between.'" rel="nofollow" target="_blank">'.$between.'</a>';
 
 					return TAGPARSER_RET_REPLACED;
 				}

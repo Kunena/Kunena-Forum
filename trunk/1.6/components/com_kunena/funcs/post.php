@@ -341,7 +341,6 @@ class CKunenaPost {
 				$this->selectcatlist = CKunenaTools::forumSelectList ( 'postcatid', $this->catid, $options, '' );
 		}
 		$this->authorName = kunena_htmlspecialchars ( $this->getAuthorName () );
-		$this->catid = $message->catid;
 		$this->emoid = 0;
 		$this->action = 'post';
 

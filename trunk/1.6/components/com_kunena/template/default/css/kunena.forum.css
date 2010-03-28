@@ -83,82 +83,67 @@ PX		EM			PCT			PT
 	font-size: 1em;
 }
 
-a:focus {outline: none;}
-.clr { clear:both; height:1px; overflow:hidden;}
-.fltlft {float:left;}
-.fltrt {float:right; }
-.right {text-align:right;}
-.left {text-align:left;}
-.center {text-align:center;}
-.nowrap {white-space:nowrap;}
-.divider {margin:0 3px;color:#999999;}
+#Kunena .clr { clear:both; height:1px; overflow:hidden;}
+#Kunena .fltlft {float:left;}
+#Kunena .fltrt {float:right; }
+#Kunena .right {text-align:right;}
+#Kunena .left {text-align:left;}
+#Kunena .center {text-align:center;}
+#Kunena .nowrap {white-space:nowrap;}
+#Kunena .divider {margin:0 3px;color:#999999;}
 
 #Kunena a {
 	text-decoration: none;
 	font-weight: normal;
 }
-
 #Kunena a:link,
 #Kunena a:visited,
-#Kunena a:active {
-	color: #5388B4;
-}
-
-#Kunena a:hover {
-	color: #FF0000;
-}
+#Kunena a:active {color: #5388B4;}
+#Kunena a:focus {outline: none;}
+#Kunena a:hover {color: #FF0000;}
 
 #Kunena .kxs {
 	/* 9px */
 	font-size: .75em;
 }
-
 #Kunena .kms {
 	/* 10px */
 	font-size: .833em; 
 }
-
-#Kunena .ks,
-#Kunena div.ksmalltext {
+#Kunena .ks {
 	/* 11px */
 	font-size: .917em; 
 }
-
 #Kunena .km {
 	/* 12px */
 	font-size: 1em;
 }
-
 #Kunena .kl {
 	/* 16px */
 	font-size: 1.333em;
 }
-
 #Kunena .kxl {
 	/* 17px */
 	font-size: 1.417em;
 }
-
 #Kunena .kxxl {
 	/* 20px */
 	font-size: 1.667em;
 }
+
 #Kunena sup {
 	font-size: .583em;
 }
-
 #Kunena table {
 	width :100%;
 	border-collapse:collapse;
 	padding:0;
 	margin:0;
 }
-
 #Kunena .kheader {
 	background: #3B3B3B url("../images/backgrounds/cat_title_bg.gif") repeat-x top left;
 	height: 30px;
 }
-
 #Kunena table.kblocktable thead tr th,
 #Kunena table.kblocktablehalf thead tr th  {
 	background: #5388b4;
@@ -169,7 +154,6 @@ a:focus {outline: none;}
 	border-bottom: 1px solid #d9d9d9;
 	text-align:center;
 }
-
 #Kunena tr.ksth {
 	background: #737373;
 	/* background: #8CABC8 url("../images/backgrounds/cat_title_head_bg.gif") repeat-x top left; */
@@ -177,7 +161,6 @@ a:focus {outline: none;}
 	font-size: 1em;
 	font-family: Arial, Helvetica, sans-serif;
 }
-
 #Kunena th.ksectiontableheader {
 	/* padding: 3px 5px; */
 	padding: 4px 8px;
@@ -185,7 +168,6 @@ a:focus {outline: none;}
 	font-size: 1em;
 	font-family: Arial, Helvetica, sans-serif;
 }
-
 #Kunena tr.ksectiontableentry1 td {
 	background: #F2F1EE;
 	color: #333333;
@@ -195,7 +177,6 @@ a:focus {outline: none;}
 	border-right: 1px solid #BFC3C6;
 	vertical-align: middle;
 }
-
 #Kunena tr.ksectiontableentry2 td {
 	/* background: #F2F1EE; */
 	color: #333333;
@@ -462,7 +443,7 @@ a:focus {outline: none;}
 	padding: 0px;
 }
 
-td.td-1  {
+#Kunena td.td-1  {
 	vertical-align:top;
 }
 
@@ -786,41 +767,6 @@ td.td-1  {
 	background: #609FBF;
 }
 
-
-
-/* OLD PAGINATION
-#Kunena .kpagination {
-	white-space: nowrap;
-	font-weight: normal;
-	font-size: .75em;
-}
-
-#Kunena .kpagination a,
-#Kunena .kpagination strong {
-	font-weight: normal;
-	margin: 0px 2px;
-	padding: 0px 4px;
-	text-decoration: none;
-}
-
-#Kunena .kpagination a,
-#Kunena .kpagination a:link,
-#Kunena .kpagination a:visited	{
-	background-color: #F2F1EE;
-	border: 1px solid #999999;
-	color: #333333;
-}
-
-#Kunena .kpagination strong,
-#Kunena .kpagination a:active,
-#Kunena .kpagination a:hover {
-	background-color: #609FBF;
-	border: 1px solid #5388B4;
-	color: #FFFFFF;
-}
-*/
-
-
 #Kunena .ksectiontableheader a {
 	color: #F2F1EE;
 }
@@ -916,16 +862,9 @@ td.td-1  {
 #Kunena td.kprofileboxcnt ul.kprofilebox_welcome li input.kbutton {
 	margin-left: 0;
 }
-table#kforum-head td {
+#Kunena table#kforum-head td {
 	padding: 5px 10px;
 }
-
-
-/*
-table#kprofilebox {
-	margin-bottom: 10px;
-}
-*/
 
 /* TOPMENU
 ----------------------------------------------------------------------------------------------- */
@@ -1011,36 +950,36 @@ table#kprofilebox {
 
 }
 
-label.searchlabel {
+#Kunena label.searchlabel {
  	display:block;
  	margin-bottom: 5px;
 	margin-right: 100px;
 }
 
-input#keywords,
-input#username {
+#Kunena input#keywords,
+#Kunena input#username {
 	width:250px;
 	margin-right: 10px;
 }
 
-select#catids {
+#Kunena select#catids {
 	float:left;
 	margin-bottom: 20px;
 	
 }
-label#childforums-lbl{
+#Kunena label#childforums-lbl{
 	float:left;
 	clear:left;
 }
-fieldset#search-posts-date select,
-fieldset#search-posts-sort select {
+#Kunena fieldset#search-posts-date select,
+#Kunena fieldset#search-posts-sort select {
 	margin-right: 10px;
 }
-fieldset#search-posts-start select {
+#Kunena fieldset#search-posts-start select {
 	margin-left: 10px;
 }
 
-form#searchform {
+#Kunena form#searchform {
 	margin-top: 5px;
 }
 
@@ -1127,36 +1066,6 @@ form#searchform {
 	text-align: left;
 }
 
-/*
-div#kheader {
-	background: #5388B4;
-	float: left;
-	text-align: left;
-	border-bottom:3px solid #D9D9D9;
-	display: block;
-	width:100%;
-}
-
-div#kheader h1 {
-	padding: 0;
-	margin: 8px 10px;
-	font-size:1.333em;
-	color: #FFFFFF;
-	font-weight: normal;
-}
-
-div#kheader h1 a {
-	color: #ffffff;
-	font-weight:bold;
-}
-
-div#kheader h1 a:hover {
-	text-decoration: underline;
-}
-
-*/
-
-
 #Kunena h1,
 #Kunena h2 {
 	background: #5388B4;
@@ -1215,8 +1124,6 @@ div#kheader h1 a:hover {
 	margin-right: 8px;
 	width: 20px;
 }
-
-
 
 #Kunena div.ktotalfavorite {
 	text-align: left;
@@ -1348,7 +1255,7 @@ div#kheader h1 a:hover {
 	
 }
 
-span.newchar {
+#Kunena span.newchar {
 	color: #009900;
 	font-weight: bold;
 	font-family: Arial, Helvetica, sans-serif;
@@ -1701,11 +1608,6 @@ span.newchar {
 	
 }
 
-#Kunena td.k-msgview-right-c div.ksmalltext {
-	padding: 5px;
-	text-align: right;
-}
-
 #Kunena div.kmessage_editMarkUp_cover {
 	padding-top: 5px;
 	margin-left: 5px;
@@ -1908,48 +1810,47 @@ span.newchar {
 ----------------------------------------*/
 
 /* Left and right layouts */
-ul#kpost-profile {
+#Kunena ul#kpost-profile {
 	margin:15px 0 0 0;
 	padding: 0;
 	text-align:center;
 }
 
-ul#kpost-profile li {
+#Kunena ul#kpost-profile li {
 	list-style-type: none;
 	display:block;
 	padding-bottom: 3px;
 }
 
-ul#kpost-profile li.kpost-username {}
+#Kunena ul#kpost-profile li.kpost-username {}
 
-ul#kpost-profile li.kpost-usertype {}
+#Kunena ul#kpost-profile li.kpost-usertype {}
 			
-ul#kpost-profile li.kpost-avatar{}
+#Kunena ul#kpost-profile li.kpost-avatar{}
 		
-ul#kpost-profile li.kpost-userrank{}
+#Kunena ul#kpost-profile li.kpost-userrank{}
 			
-ul#kpost-profile li.kpost-userrank-img {}
+#Kunena ul#kpost-profile li.kpost-userrank-img {}
 		
-ul#kpost-profile li.kpost-online-img{}
+#Kunena ul#kpost-profile li.kpost-online-img{}
 		
-ul#kpost-profile li.kpost-smallicons{
+#Kunena ul#kpost-profile li.kpost-smallicons{
 	margin:20px auto;
 	width: 80px;
 }
-ul#kpost-profile li.kpost-personal{
+#Kunena ul#kpost-profile li.kpost-personal{
 	text-align: center;
 	font-style:italic;
 	line-height: 32px;
 }
-li.kpost-online-status-yes {
+#Kunena li.kpost-online-status-yes {
 	margin:10px auto;
 	display:block; 
 	background: url("../images/icons/online.gif") no-repeat; 
 	height: 15px; 
 	width: 74px;
 }
-
-li.kpost-online-status-no {
+#Kunena li.kpost-online-status-no {
 	margin:10px auto;
 	display:block; 
 	background: url("../images/icons/offline.gif") no-repeat; 
@@ -1958,63 +1859,50 @@ li.kpost-online-status-no {
 }
 
 /* Top and bottom layouts */
-ul#kpost-profiletop {
+#Kunena ul#kpost-profiletop {
 	margin:0;
 	padding: 0;
 }
-
-ul#kpost-profiletop li {
+#Kunena ul#kpost-profiletop li {
 	list-style-type: none;
 	display:block;
 	margin:0;
 	padding: 0;
 }
-
-ul#kpost-profiletop li.kpost-username {
+#Kunena ul#kpost-profiletop li.kpost-username {
 	padding-top: 5px;
 }
-
-ul#kpost-profiletop li.kpost-usertype {
+#Kunena ul#kpost-profiletop li.kpost-usertype {
 }
-			
-ul#kpost-profiletop li.kpost-avatar{
+#Kunena ul#kpost-profiletop li.kpost-avatar{
 	float:left;
 	clear:left;
 	margin-right: 5px;
 }
-		
-ul#kpost-profiletop li.kpost-userrank{
+#Kunena ul#kpost-profiletop li.kpost-userrank{
 	float:left;
 	padding-right: 5px;
 }
-			
-ul#kpost-profiletop li.kpost-userrank-img {
-	
-	
+#Kunena ul#kpost-profiletop li.kpost-userrank-img {
 }
-		
-ul#kpost-profiletop li.kpost-online-img{
+#Kunena ul#kpost-profiletop li.kpost-online-img{
 }
-		
-ul#kpost-profiletop li.kpost-smallicons{
+#Kunena ul#kpost-profiletop li.kpost-smallicons{
 	float:right;
 	width: auto;
 	padding-top: 5px;
 }
-
-ul#kpost-profiletop li.kpost-smallicons div.iconrow{
+#Kunena ul#kpost-profiletop li.kpost-smallicons div.iconrow{
 	width: auto;
 	padding-right: 0;
 }
-
-ul#kpost-profiletop li.kpost-personal{
+#Kunena ul#kpost-profiletop li.kpost-personal{
 	text-align: center;
 	font-style:italic;
 	float:right;
 	width: 40%;
 	padding-top: 5px;
 }
-
 
 /* top
 ----------------------------------------*/
@@ -2123,31 +2011,31 @@ THREAD VIEW
 
 /*  Stats on main page  */
 
-ul#statslistleft,
-ul#statslistright	 {
+#Kunena ul#statslistleft,
+#Kunena ul#statslistright	 {
 	margin: 0;
 	padding: 0;
 }
 
-ul#statslistleft li,
-ul#statslistright li	 {
+#Kunena ul#statslistleft li,
+#Kunena ul#statslistright li	 {
 	list-style-type:none;
 	display:block;
 	margin-left: 0;
 	padding: 1px 0px 1px 0;
 	background: 0 none;
 }
-ul#statslistright li strong a {
+#Kunena ul#statslistright li strong a {
 	font-weight:bold;
 }
 
 /*  Stats page  */
-tbody#kpopsubstats_tbody tr.ksectiontableentry1 td.td-3,
-tbody#kpopsubstats_tbody tr.ksectiontableentry2 td.td-3, 
-tbody#kpopusermsgstats_tbody tr.ksectiontableentry1 td.td-3,
-tbody#kpopusermsgstats_tbody tr.ksectiontableentry2 td.td-3,
-tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3,
-tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3	{
+#Kunena tbody#kpopsubstats_tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopsubstats_tbody tr.ksectiontableentry2 td.td-3, 
+#Kunena tbody#kpopusermsgstats_tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopusermsgstats_tbody tr.ksectiontableentry2 td.td-3,
+#Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3	{
 	text-align:center;
 }
 
@@ -2215,7 +2103,7 @@ POST PAGE
 	border: 1px solid #BFC3C6;
 }
 
-td.kcaptcha {
+#Kunena td.kcaptcha {
 	text-align: left;
 	vertical-align:middle;
 	height: 35px;
@@ -2223,25 +2111,25 @@ td.kcaptcha {
 
 /* ---- Post Previews ---- */
 
-textarea#kbbcode-message {
+#Kunena textarea#kbbcode-message {
 	width: 95%;
 	float: left;
 }
-div.kbbcode-preview_right,
-div.kbbcode-preview_bottom {
+#Kunena div.kbbcode-preview_right,
+#Kunena div.kbbcode-preview_bottom {
 	/* IMPORTANT: do not set height - controlled by js */
 	border: 1px solid #BFC3C6;
 	overflow: scroll;
 	background: #F2F1EE
 }
-div.kbbcode-preview_bottom {
+#Kunena div.kbbcode-preview_bottom {
 	/* IMPORTANT: do not set height - controlled by js */
 	float:left;
 	clear:left;
 	width: 95%;
 	margin-top: 10px;
 }
-div.kbbcode-preview_right {
+#Kunena div.kbbcode-preview_right {
 	/* IMPORTANT: do not set height - controlled by js */
 	float:right;
 	width: 45%;
@@ -2275,10 +2163,10 @@ div.kbbcode-preview_right {
 	font-size: 1em;
 }
 
-div#k-color_palette,
-div#link,
-div#image,
-div#video {
+#Kunena div#k-color_palette,
+#Kunena div#link,
+#Kunena div#image,
+#Kunena div#video {
 	border-bottom: 1px solid #BFC3C6;
 	margin-bottom: 5px;
 	padding-bottom: 5px;
@@ -2424,7 +2312,7 @@ div#video {
 	float: left;
 }
 
-a.buttonmod span {
+#Kunena a.buttonmod span {
 	float: left;
 }
 
@@ -2491,7 +2379,7 @@ a.buttonmod span {
 #Kunena a.buttongen.btn-left {
 	float: left;
 }
-a.buttongen span {
+#Kunena a.buttongen span {
 	float: left;
 }
 #Kunena a.buttongen span.gen {
@@ -2522,7 +2410,7 @@ a.buttongen span {
 #Kunena span.buttononline-yes.btn-left {
 	float: left;
 }
-span.buttononline-yes span {
+#Kunena span.buttononline-yes span {
 	float: left;
 }
 #Kunena span.buttononline-yes span.online-yes {
@@ -2551,7 +2439,7 @@ span.buttononline-yes span {
 #Kunena span.buttononline-no.btn-left {
 	float: left;
 }
-span.buttononline-no span {
+#Kunena span.buttononline-no span {
 	float: left;
 }
 #Kunena span.buttononline-no span.online-no {
@@ -2567,14 +2455,14 @@ span.buttononline-no span {
 /*
 BBCODE BUTTONS
 -------------------------------------------------------------------- */
-img.k-bbcode {
+#Kunena img.k-bbcode {
 	cursor: pointer;
 	margin-top: 4px;
 	margin-right: 1px;
 	padding: 0px;
 }
 
-img.k-bbcode:hover {
+#Kunena img.k-bbcode:hover {
 	background-color: #e4e4e4;
 	cursor: pointer;
 	margin-top: 4px;
@@ -2582,24 +2470,24 @@ img.k-bbcode:hover {
 	padding: 0px;
 }
 
-.kbbcode-colortable {
+#Kunena .kbbcode-colortable {
 	cursor: pointer;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-div#kbbcode-size-options {
+#Kunena div#kbbcode-size-options {
 	margin:2px 0 0;
 }
 
-div#kbbcode-size-options span {
+#Kunena div#kbbcode-size-options span {
 	vertical-align: middle;
 	display: inline-block;
 	line-height: 24px;
 }
 
-div#kbbcode-size-options span:hover {
+#Kunena div#kbbcode-size-options span:hover {
 	background-color: #e4e4e4;
 	cursor: pointer;
 	padding: 0px;
@@ -2610,7 +2498,7 @@ div#kbbcode-size-options span:hover {
 	bottom: 5px;
 }
 
-#kbbcode-toolbar {
+#Kunena #kbbcode-toolbar {
 	list-style-position:inside;
 	list-style-type:none;
 	height:18px;
@@ -2619,7 +2507,7 @@ div#kbbcode-size-options span:hover {
 	position:relative;
 }
 
-#kbbcode-toolbar li {
+#Kunena #kbbcode-toolbar li {
 	float:left;
 	list-style-image:none !important;
 	list-style-type:none !important;
@@ -2627,204 +2515,203 @@ div#kbbcode-size-options span:hover {
 	padding:0;
 }
 
-#kbbcode-toolbar li a {
+#Kunena #kbbcode-toolbar li a {
 	background:url("../images/editor/editor_buttons.png") no-repeat;
 	display:block;
-	float:left;
 	height:18px;
 	width:18px;
 	margin-right: 2px;
 }
 
-#kbbcode-toolbar li a:hover {
+#Kunena #kbbcode-toolbar li a:hover {
 	background-color: #e4e4e4;
 	cursor: pointer;
 	padding: 0px;
 }
 
-#kbbcode-toolbar li span {
+#Kunena #kbbcode-toolbar li span {
 	display:none;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-bold_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-bold_button {
 	background-position:0 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-italic_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-italic_button {
 	background-position:-18px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-underline_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-underline_button {
 	background-position:-36px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-strike_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-strike_button {
 	background-position:-54px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-sub_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-sub_button {
 	background-position:-72px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-sup_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-sup_button {
 	background-position:-90px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-size_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-size_button {
 	background-position:-108px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-color_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-color_button {
 	background-position:-126px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-spoiler_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-spoiler_button {
 	background-position:-144px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-hide_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-hide_button {
 	background-position:-162px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-separator1 {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator1 {
 	background-position:-400px 0;
 	width: 8px;
 	background-color: #eeeeee;
 	cursor: default;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-ulist_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-ulist_button {
 	background-position:-180px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-olist_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-olist_button {
 	background-position:-198px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-list_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-list_button {
 	background-position:-216px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-left_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-left_button {
 	background-position:-234px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-center_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-center_button {
 	background-position:-252px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-right_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-right_button {
 	background-position:-270px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-separator2 {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator2 {
 	background-position:-400px 0;
 	width: 8px;
 	background-color: #eeeeee;
 	cursor: default;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-quote_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-quote_button {
 	background-position:-288px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-code_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-code_button {
 	background-position:-306px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-separator3 {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator3 {
 	background-position:-400px 0;
 	width: 8px;
 	background-color: #eeeeee;
 	cursor: default;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-image_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-image_button {
 	background-position:-324px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-link_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-link_button {
 	background-position:-342px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-separator4 {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator4 {
 	background-position:-400px 0;
 	width: 8px;
 	background-color: #eeeeee;
 	cursor: default;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-table_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-table_button {
 	background-position:0 -18px;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-module_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-module_button {
 	background-position:-18px -18px;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-separator5 {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator5 {
 	background-position:-400px 0;
 	width: 8px;
 	background-color: #eeeeee;
 	cursor: default;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-ebay_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-ebay_button {
 	background-position:-360px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-video_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-video_button {
 	background-position:-378px 0;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-map_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-map_button {
 	background-position:-72px -18px;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-attach_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-attach_button {
 	background-position:-36px -18px;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-gallery_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-gallery_button {
 	background-position:-54px -18px;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-poll_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-poll_button {
 	background-position:-90px -18px;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-separator6 {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator6 {
 	background-position:-400px 0;
 	width: 8px;
 	background-color: #eeeeee;
 	cursor: default;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-previewbottom_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-previewbottom_button {
 	background-position:-252px -18px;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-previewright_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-previewright_button {
 	background-position:-270px -18px;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-separator7 {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator7 {
 	background-position:-400px 0;
 	width: 8px;
 	background-color: #eeeeee;
 	cursor: default;
 }
 
-ul#kbbcode-toolbar li a#kbbcode-help_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-help_button {
 	background-position:-396px -18px;
 }
 
-#kattachments {
+#Kunena #kattachments {
 	line-height:18px;
 }
 
 
-#kattachments a {
+#Kunena #kattachments a {
 	background:url("../images/editor/editor_buttons.png") no-repeat;
 	display:inline-block;
 	height:18px;
@@ -2832,7 +2719,7 @@ ul#kbbcode-toolbar li a#kbbcode-help_button {
 	margin-right: 2px;
 }
 
-#kattachments a {
+#Kunena #kattachments a {
 	background-position:-216px -18px;
 }
 
@@ -2840,7 +2727,7 @@ ul#kbbcode-toolbar li a#kbbcode-help_button {
 POLLS
 -------------------------------------------------------------------- */
 
-div#poll_text_help {
+#Kunena div#poll_text_help {
 	font-weight:bold;
 }
 	
@@ -2849,13 +2736,13 @@ div#poll_text_help {
 Multi file upload for bbcode editor
 -------------------------------------------------------------------- */
 
-#kbbcode-filelist {
+#Kunena #kbbcode-filelist {
 	padding: 0;
 	list-style: none;
 	margin: 0;
 }
  
-#kbbcode-filelist .file-invalid {
+#Kunena #kbbcode-filelist .file-invalid {
 	cursor: pointer;
 	color: #514721;
 	padding-left: 48px;
@@ -2863,31 +2750,31 @@ Multi file upload for bbcode editor
 	background: url(assets/error.png) no-repeat 24px 5px;
 	margin-bottom: 1px;
 }
-#kbbcode-filelist .file-invalid span {
+#Kunena #kbbcode-filelist .file-invalid span {
 	background-color: #fff6bf;
 	padding: 1px;
 }
  
-#kbbcode-filelist .file {
+#Kunena #kbbcode-filelist .file {
 	line-height: 2em;
 	padding-left: 22px;
 	background: url(assets/attach.png) no-repeat 1px 50%;
 }
  
-#kbbcode-filelist .file span,
-#kbbcode-filelist .file a {
+#Kunena #kbbcode-filelist .file span,
+#Kunena #kbbcode-filelist .file a {
 	padding: 0 4px;
 }
  
-#kbbcode-filelist .file .file-size {
+#Kunena #kbbcode-filelist .file .file-size {
 	color: #666;
 }
  
-#kbbcode-filelist .file .file-error {
+#Kunena #kbbcode-filelist .file .file-error {
 	color: #8a1f11;
 }
  
-#kbbcode-filelist .file .file-progress {
+#Kunena #kbbcode-filelist .file .file-progress {
 	width: 125px;
 	height: 12px;
 	vertical-align: middle;
@@ -2898,7 +2785,7 @@ Multi file upload for bbcode editor
 POLLS
 -------------------------------------------------------------------- */
 
-div#poll_text_help {
+#Kunena div#poll_text_help {
 	font-weight:bold;
 }
 	
@@ -3063,16 +2950,13 @@ POST HISTORY
 #Kunena div.jr-pagenav-nb,#Kunena div.jr-pagenav-nb-act {
 	display: inline;
 }
-
 #Kunena a.jr-pagenav-nb:link,#Kunena a.jr-pagenav-nb:visited {
 	font-weight: bold;
 	text-decoration: none;
 }
-
 #Kunena a.jr-pagenav-nb:hover {
 	text-decoration: underline;
 }
-
 #Kunena li.jr-pagenav-nb span.pagenav,
 #Kunena li.jr-pagenav-nb a.pagenav:link,
 #Kunena li.jr-pagenav-nb a.pagenav:visited {
@@ -3100,7 +2984,6 @@ FORUM HEADER DESCRIPTION
 	color: #000000;
 	background: #FFF;
 }
-
 #Kunena .kforum-headerdesc td{
 	padding: 8px;
 }
@@ -3112,25 +2995,20 @@ FORUM TOOLS
 	position: relative;
 	float: right;
 }
-
 #Kunena table.jr-ft {
 	width: 100%;
 }
-
 #Kunena td.ft-td1 {
 	width: 100%;
 }
-
 #Kunena td.ft-td2 {
 	width: 150px;
 }
-
 #Kunena #forumtools_control {
 	width: 150px;
 	text-align: right;
 	margin-right: 5px;
 }
-
 #Kunena .forumtools_contentBox {
 	z-index: 2;
 	border: 1px solid #BFC3C6;
@@ -3142,20 +3020,17 @@ FORUM TOOLS
 	overflow: hidden;
 	width: 150px;
 }
-
 #Kunena .forumtools_content {
 	position: relative;
 	width: 100%;
 	text-align: left;
 	padding: 1px;
 }
-
 #Kunena #subBox1 ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
-
 #Kunena #subBox1 ul li {
 	margin: 0;
 	padding: 0;
@@ -3164,7 +3039,6 @@ FORUM TOOLS
 	color: #FFFFFF;
 	background: none;
 }
-
 #Kunena #subBox1 ul li a:link,
 #Kunena #subBox1 ul li a:visited {
 	color: #FFFFFF;
@@ -3172,11 +3046,9 @@ FORUM TOOLS
 	font-weight: normal;
 	list-style: none;
 }
-
 #Kunena #subBox1 ul li a:hover {
 	text-decoration: underline;
 }
-
 #Kunena a.forumtools:link,
 #Kunena a.forumtools:visited {
 	background: url("../images/menu_open.gif") no-repeat right center;
@@ -3189,7 +3061,6 @@ FORUM TOOLS
 	text-align: center;
 	text-decoration: none;
 }
-
 #Kunena a.forumtools:hover {
 	text-decoration: underline;
 }
@@ -3214,13 +3085,11 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena .kcredits_intro {
 	padding: 10px 0 10px 0;
 }
-
 #Kunena .kteam {
 	margin: 0;
 	padding: 0;
 	border-top: 1px solid #BFC3C6;
 }
-
 #Kunena .kteammember {
 	padding: 7px 10px 7px 10px;
 	border-bottom: 1px solid #BFC3C6;
@@ -3229,17 +3098,15 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	margin: 0;
 	background: transparent none;
 }
-
 #Kunena .kcredits_more {
 	padding: 10px 0 10px 20px;
 }
-
 
 /*
 MODERATOR PAGE
 -------------------------------------------------------------------- */
 
-div#kmod-container {
+#Kunena div#kmod-container {
 	border: 1px solid #BFC3C6; 
 	margin: 10px 0 10px 0; 
 	padding: 10px 10px 30px 10px; 
@@ -3247,16 +3114,15 @@ div#kmod-container {
 	height: 1%;
 	clear:left;
 }
-div#kmod-leftcol {
+#Kunena div#kmod-leftcol {
 	width: 47%; 
 	float:left;
 	clear:left;
 }
-div#kmod-rightcol {
+#Kunena div#kmod-rightcol {
 	width: 47%;
 	float:right;
 }
-
 
 /*
 USER PROFILE
@@ -3264,26 +3130,19 @@ USER PROFILE
 #Kunena .kprofile-left {
 	padding-right: 5px;
 }
-
-#Kunena .kprofile-right {
-	
-}
-
+#Kunena .kprofile-right {}
 #Kunena .kprofileinfo {
 	background: #ffffff;
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 }
-
 #Kunena .k-usrprofile-misc {
 	text-align: center;
 	margin: 0 auto;
 }
-
 #Kunena #kuserprfmsg td.td-6 {
 	border-right: 1px solid #BFC3C6;
 }
-
 #Kunena .kprofile-bottomnav {
 	background: #ffffff;
 	border-left: 1px solid #BFC3C6;
@@ -3297,26 +3156,21 @@ MY PROFILE
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 }
-
 #Kunena .kmyprofile_menu a {
 	display: block;
 	padding: 2px 5px 3px 10px;
 	text-decoration: none;
 }
-
 #Kunena .kmyprofile_menu a:hover {
 	text-decoration: underline;
 }
-
 #Kunena .kmyprofile_menu_title {
 	font-weight: bold;
 }
-
 #Kunena .kmyprofile_menu_staff {
 	padding: 5px 10px;
 	border-bottom: 4px solid #BFC3C6;
 }
-
 #Kunena .kmyprofile_general td {
 	padding: 3px 5px;
 	border-left: 1px solid #BFC3C6;
@@ -3326,10 +3180,8 @@ MY PROFILE
 /*
 NEW PROFILE
 -------------------------------------------------------------------- */
-div#kprofile-container { border: 1px solid #BFC3C6; padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
-
-div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
-
+#Kunena div#kprofile-container { border: 1px solid #BFC3C6; padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
+#Kunena div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
 #Kunena div.avatar-lg { 
 	width: 200px; 
 	height: 200px; 
@@ -3339,30 +3191,24 @@ div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 1
 	vertical-align:middle;
 	text-align:center;
 }
-
-div.avatar-lg img {	 }
-
-div#kprofile-stats { margin-top: 15px;}
-div#kprofile-stats ul { margin: 0 0 0 3px; padding: 0;}
-
-div#kprofile-stats ul li { list-style-type: none; padding-top: 5px; clear:both; font-size:.917em ;}
-
-div#kprofile-stats ul li span.online-status-yes {
+#Kunena div.avatar-lg img {	 }
+#Kunena div#kprofile-stats { margin-top: 15px;}
+#Kunena div#kprofile-stats ul { margin: 0 0 0 3px; padding: 0;}
+#Kunena div#kprofile-stats ul li { list-style-type: none; padding-top: 5px; clear:both; font-size:.917em ;}
+#Kunena div#kprofile-stats ul li span.online-status-yes {
 	display:block; 
 	background: url("../images/icons/online.gif") no-repeat; 
 	height: 16px; 
 	width: 70px;
 	color: #fff;
 }
-
-div#kprofile-stats ul li span.online-status-no {
+#Kunena div#kprofile-stats ul li span.online-status-no {
 	display:block; 
 	background: url("../images/icons/offline.gif") no-repeat; 
 	height: 16px; 
 	width: 70px;
 	color:#fff;
 }	
-
 div#kprofile-stats ul li span.rankname {
 	display:block; 
 	margin-right: 5px;
@@ -3378,42 +3224,34 @@ div#kprofile-stats ul li span.rank-admin {
 	float:right;
 	margin-top: 0;
 }
-
-div#kprofile-rightcol  { 
+#Kunena div#kprofile-rightcol  { 
 	display: table;
 	margin-right: 10px;
 	margin-left: 210px;
 }
-
-div#kprofile-rightcoltop  {width: 100%;}
-
-div.kprofile-rightcol1 { 
+#Kunena div#kprofile-rightcoltop  {width: 100%;}
+#Kunena div.kprofile-rightcol1 { 
 	width: 45%;
 }
-
-div.kprofile-rightcol1 ul {margin: 0;padding: 0;}
-
-div.kprofile-rightcol1 ul li,
-div.kprofile-rightcol2 ul li { 
+#Kunena div.kprofile-rightcol1 ul {margin: 0;padding: 0;}
+#Kunena div.kprofile-rightcol1 ul li,
+#Kunena div.kprofile-rightcol2 ul li { 
 	list-style-type: none !important; 
 	background: 0 none; 
 	padding-bottom: 8px;
 	padding-left: 0;
 }
-
-div#kprofile-stats ul li { 
+#Kunena div#kprofile-stats ul li { 
 	list-style-type: none !important; 
 	background: 0 none; 
 	padding-left: 0;
 }
-
 #Kunena span.location { 
 	display:block; 
 	background: url("../images/icons/location.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
-
 #Kunena span.gender-male { 
 	display:block; 
 	background: url("../images/icons/male.png") no-repeat; 
@@ -3421,7 +3259,6 @@ div#kprofile-stats ul li {
 	width: 16px;
 	margin:0 5px 5px 0;
 }
-
 #Kunena span.gender-female { 
 	display:block; 
 	background: url("../images/icons/female.png") no-repeat; 
@@ -3429,7 +3266,6 @@ div#kprofile-stats ul li {
 	width: 16px;
 	margin:0 5px 5px 0;
 }
-
 #Kunena span.gender-unknown { 
 	display:block; 
 	background: url("../images/icons/gender-unknown.png") no-repeat; 
@@ -3437,22 +3273,19 @@ div#kprofile-stats ul li {
 	width: 16px;
 	margin:0 5px 5px 0;
 }
-
 #Kunena span.birthdate { 
 	display:block; 
 	background: url("../images/icons/birthday.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
-
 #Kunena span.website {
 	display:block; 
 	background: url("../images/icons/website.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
-
-div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
 	float:left;
 	display:block; 
 	background: url("../images/icons/location.png") no-repeat; 
@@ -3460,45 +3293,39 @@ div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location {
 	width: 16px;
 	margin-right: 10px;
 }
-
-div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male { 
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male { 
 	float:left;
 	margin-right: 10px;
 }
-
-div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female { 
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female { 
 	float:left;
 	margin-right: 10px;
 }
-
-div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-unknown { 
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-unknown { 
 	float:left;
 	margin-right: 10px;
 }
-
-div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate { 
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate { 
 	float:left;
 	margin-right: 10px;
 }
-
-div.kprofile-rightcol1 ul li span.bday-remind { 
+#Kunena div.kprofile-rightcol1 ul li span.bday-remind { 
 	display:inline-block; 
 	height: 16px; 
 	width: 16px;
 	background: url("../images/icons/remind.png") no-repeat; 
 	vertical-align:middle;
 }
-li.bd a {
+#Kunena li.bd a {
 	margin-left: 10px;
 }
-	
-div.iconrow {
+#Kunena div.iconrow {
 	width: 121px;
 	padding-right: 10px;
 	padding-bottom: 5px;
 	float:left;
 }
-div.iconrow span {
+#Kunena div.iconrow span {
 	display:block;
 	width: 16px;
 	height: 16px;
@@ -3507,60 +3334,52 @@ div.iconrow span {
 	border: 0 none;
 }
 
-span.twitter 	{ background: url("../images/social/twitter.png") no-repeat; }
-span.facebook 	{ background: url("../images/social/facebook.png") no-repeat; }
-span.myspace 	{ background: url("../images/social/myspace.png") no-repeat; }
-span.linkedin	{ background: url("../images/social/linkedin.png") no-repeat; }			
-span.delicious	{ background: url("../images/social/delicious.png") no-repeat; }
-span.friendfeed	{ background: url("../images/social/friendfeed.png") no-repeat; }
-span.digg		{ background: url("../images/social/digg.png") no-repeat; }
-span.skype		{ background: url("../images/social/skype.png") no-repeat; }
-span.yim		{ background: url("../images/social/yahoo.png") no-repeat; }
-span.aim 		{ background: url("../images/social/aim.png") no-repeat; }
-span.gtalk 		{ background: url("../images/social/googletalk.png") no-repeat; }
-span.blogspot 	{ background: url("../images/social/blogger.png") no-repeat; }
-span.flickr 	{ background: url("../images/social/flickr.png") no-repeat; }
-span.bebo 		{ background: url("../images/social/bebo.png") no-repeat; }
-span.msn 		{ background: url("../images/social/msn.png") no-repeat; }
-span.icq 		{ background: url("../images/social/icq.png") no-repeat; }
+#Kunena span.twitter 	{ background: url("../images/social/twitter.png") no-repeat; }
+#Kunena span.facebook 	{ background: url("../images/social/facebook.png") no-repeat; }
+#Kunena span.myspace 	{ background: url("../images/social/myspace.png") no-repeat; }
+#Kunena span.linkedin	{ background: url("../images/social/linkedin.png") no-repeat; }			
+#Kunena span.delicious	{ background: url("../images/social/delicious.png") no-repeat; }
+#Kunena span.friendfeed	{ background: url("../images/social/friendfeed.png") no-repeat; }
+#Kunena span.digg		{ background: url("../images/social/digg.png") no-repeat; }
+#Kunena span.skype		{ background: url("../images/social/skype.png") no-repeat; }
+#Kunena span.yim		{ background: url("../images/social/yahoo.png") no-repeat; }
+#Kunena span.aim 		{ background: url("../images/social/aim.png") no-repeat; }
+#Kunena span.gtalk 		{ background: url("../images/social/googletalk.png") no-repeat; }
+#Kunena span.blogspot 	{ background: url("../images/social/blogger.png") no-repeat; }
+#Kunena span.flickr 	{ background: url("../images/social/flickr.png") no-repeat; }
+#Kunena span.bebo 		{ background: url("../images/social/bebo.png") no-repeat; }
+#Kunena span.msn 		{ background: url("../images/social/msn.png") no-repeat; }
+#Kunena span.icq 		{ background: url("../images/social/icq.png") no-repeat; }
 
-span.twitter_off 	{ background: url("../images/social/twitter_off.png") no-repeat; }
-span.facebook_off 	{ background: url("../images/social/facebook_off.png") no-repeat; }
-span.myspace_off 	{ background: url("../images/social/myspace_off.png") no-repeat; }
-span.linkedin_off	{ background: url("../images/social/linkedin_off.png") no-repeat; }			
-span.delicious_off	{ background: url("../images/social/delicious_off.png") no-repeat; }
-span.friendfeed_off	{ background: url("../images/social/friendfeed_off.png") no-repeat; }
-span.digg_off		{ background: url("../images/social/digg_off.png") no-repeat; }
-span.skype_off		{ background: url("../images/social/skype_off.png") no-repeat; }
-span.yim_off		{ background: url("../images/social/yahoo_off.png") no-repeat; }
-span.aim_off 		{ background: url("../images/social/aim_off.png") no-repeat; }
-span.gtalk_off 		{ background: url("../images/social/googletalk_off.png") no-repeat; }
-span.blogspot_off 	{ background: url("../images/social/blogger_off.png") no-repeat; }
-span.flickr_off 	{ background: url("../images/social/flickr_off.png") no-repeat; }
-span.bebo_off 		{ background: url("../images/social/bebo_off.png") no-repeat; }
-span.msn_off 		{ background: url("../images/social/msn_off.png") no-repeat; }
-span.icq_off 		{ background: url("../images/social/icq_off.png") no-repeat; }
-
-div.clrline {
+#Kunena span.twitter_off 	{ background: url("../images/social/twitter_off.png") no-repeat; }
+#Kunena span.facebook_off 	{ background: url("../images/social/facebook_off.png") no-repeat; }
+#Kunena span.myspace_off 	{ background: url("../images/social/myspace_off.png") no-repeat; }
+#Kunena span.linkedin_off	{ background: url("../images/social/linkedin_off.png") no-repeat; }			
+#Kunena span.delicious_off	{ background: url("../images/social/delicious_off.png") no-repeat; }
+#Kunena span.friendfeed_off	{ background: url("../images/social/friendfeed_off.png") no-repeat; }
+#Kunena span.digg_off		{ background: url("../images/social/digg_off.png") no-repeat; }
+#Kunena span.skype_off		{ background: url("../images/social/skype_off.png") no-repeat; }
+#Kunena span.yim_off		{ background: url("../images/social/yahoo_off.png") no-repeat; }
+#Kunena span.aim_off 		{ background: url("../images/social/aim_off.png") no-repeat; }
+#Kunena span.gtalk_off 		{ background: url("../images/social/googletalk_off.png") no-repeat; }
+#Kunena span.blogspot_off 	{ background: url("../images/social/blogger_off.png") no-repeat; }
+#Kunena span.flickr_off 	{ background: url("../images/social/flickr_off.png") no-repeat; }
+#Kunena span.bebo_off 		{ background: url("../images/social/bebo_off.png") no-repeat; }
+#Kunena span.msn_off 		{ background: url("../images/social/msn_off.png") no-repeat; }
+#Kunena span.icq_off 		{ background: url("../images/social/icq_off.png") no-repeat; }
+#Kunena div.clrline {
 	clear:both; 
 	border-top: 1px solid #BFC3C6; 
 	margin: 15px 0 20px 0; 
 	line-height: 10px;
 }
-
-div#kprofile-rightcolbot { }
-
-div.kprofile-rightcol1 h4 { margin:10px 0 0 0; padding: 0; color: #333333; font-size: 1em; font-weight:bold;}
-
-div.kprofile-rightcol1 p { margin:0; padding: 0;}
-				
-div.kprofile-rightcol2 { float:right; width: 45%; margin-left: 10px;}
-
-div.kprofile-rightcol2 ul {margin: 0;padding: 0;}
-
-div.kprofile-rightcol2 ul li {list-style-type: none !important; padding-bottom: 8px;}
-
-div.kprofile-rightcol2 ul li span.email {
+#Kunena div#kprofile-rightcolbot { }
+#Kunena div.kprofile-rightcol1 h4 { margin:10px 0 0 0; padding: 0; color: #333333; font-size: 1em; font-weight:bold;}
+#Kunena div.kprofile-rightcol1 p { margin:0; padding: 0;}
+#Kunena div.kprofile-rightcol2 { float:right; width: 45%; margin-left: 10px;}
+#Kunena div.kprofile-rightcol2 ul {margin: 0;padding: 0;}
+#Kunena div.kprofile-rightcol2 ul li {list-style-type: none !important; padding-bottom: 8px;}
+#Kunena div.kprofile-rightcol2 ul li span.email {
 	float:left;
 	display:block; 
 	background: url("../images/icons/email.png") no-repeat; 
@@ -3568,32 +3387,28 @@ div.kprofile-rightcol2 ul li span.email {
 	width: 16px;
 	margin-right: 5px;
 }
-
-div.kprofile-rightcol2 ul li span.website {
+#Kunena div.kprofile-rightcol2 ul li span.website {
 	float:left;
 	margin-right: 5px;
 }
-
-dd.kprofile-modtools h4 {
+#Kunena dd.kprofile-modtools h4 {
 	margin-bottom: 5px;
 	margin-left: 5px;
 }
-dd.kprofile-modtools ul li span {
+#Kunena dd.kprofile-modtools ul li span {
 	margin-right: 15px;
 }
-dd.kprofile-modtools ul li {
+#Kunena dd.kprofile-modtools ul li {
 	padding-bottom: 5px;
 }
-
-li.usertype {
+#Kunena li.usertype {
 	font-weight:bold;
 }
-
-li.kprofile-rank {
+#Kunena li.kprofile-rank {
 	line-height: 16px;
 	height: 16px;
 }
-li.kprofile-rank img {
+#Kunena li.kprofile-rank img {
 	/* vertical-align:middle;
 	float:right;
 	padding-bottom: 2px; */
@@ -3603,18 +3418,16 @@ li.kprofile-rank img {
 /* Tabs
 ----------------------------------*/
 
-#kprofile-tabs {
+#Kunena #kprofile-tabs {
 	width: 100%;
 	margin-top: 0px;
 }
-
-dl.tabs {
+#Kunena dl.tabs {
 	float: left;
 	margin: 10px 0 -1px 0;
 	z-index: 50;
 }
-
-dl.tabs dt {
+#Kunena dl.tabs dt {
 	float: left;
 	padding: 4px 10px;
 	border-left: 1px solid #BFC3C6;
@@ -3624,58 +3437,48 @@ dl.tabs dt {
 	background: #f0f0f0;
 	color: #666;
 }
-
-dl.tabs dt.open {
+#Kunena dl.tabs dt.open {
 	background: #F9F9F9;
 	border-bottom: 1px solid #F9F9F9;
 	z-index: 100;
 	color: #000;
 }
-
-div.current {
+#Kunena div.current {
 	clear: both;
 	border: 1px solid #BFC3C6;
 	padding: 10px 10px;
 }
-
-div.current dd {
+#Kunena div.current dd {
 	padding: 0;
 	margin: 0;
 }
-
-dt.kprofile-modbtn {
+#Kunena dt.kprofile-modbtn {
 	background-color:#999999 !important;
 	color: #FFF !important;
 }
-
-dd.kprofile-modtools ul {
+#Kunena dd.kprofile-modtools ul {
 	margin:0;
 	padding:0;
 	margin-left: 5px;
 }
-
-dd.kprofile-modtools ul li {
+#Kunena dd.kprofile-modtools ul li {
 	list-style-type:none;
 }
-
-dd.kprofile-modtools .kcheckbox {
+#Kunena dd.kprofile-modtools .kcheckbox {
 	float:left;
 	clear:left;
 }
-
-dd.kprofile-modtools label {
+#Kunena dd.kprofile-modtools label {
 	float:left;
 	clear:right;
 	margin: 3px 10px 10px 5px;
 }
-input.kbutton {
+#Kunena input.kbutton {
 	margin: 10px 0 0 5px;
 }
-
-form#jumpto input.kbutton {
+#Kunena form#jumpto input.kbutton {
 	margin: 5px;
 }
-
 #Kunena table.klist_top td.klist_markallcatsread input.kbutton {
 	margin-top: 0;
 }
@@ -3699,13 +3502,15 @@ form#jumpto input.kbutton {
 	margin-top: -14px;
 	border: 1px solid #fff;
 }
-span.close, a.close {
+#Kunena span.close
+#Kunena a.close {
 	display:block; 
 	background: url("../images/shrink.gif") no-repeat; 
 	height: 15px; 
 	width: 15px;
 }
-span.open, a.open {
+#Kunena span.open, 
+#Kunena a.open {
 	display:block; 
 	background: url("../images/expand.gif") no-repeat; 
 	height: 15px; 
@@ -3730,25 +3535,22 @@ span.open, a.open {
 	position: relative;
 	text-align: center;
 }
-
 #Kunena .kfooter {
 	text-align: center;
 }
-
 #Kunena img.rsslink {
 	float:right;
 	margin-top: 10px;
 	margin-right: 3px;
 }
-
-table#kforumsearch tr.ksectiontableentry1 td.td-1 fieldset.fieldset {
+#Kunena table#kforumsearch tr.ksectiontableentry1 td.td-1 fieldset.fieldset {
 	background-image:none!important;
 }
 
 /* Mootools Autocompleter css classes
 ----------------------------------------------------------------------------------------------- */
 
-ul.autocompleter-choices {
+#Kunena ul.autocompleter-choices {
 	position:				absolute;
 	margin:					0;
 	padding:				0;
@@ -3763,8 +3565,7 @@ ul.autocompleter-choices {
 	z-index:				50;
 	background-color:		#fff;
 }
-
-ul.autocompleter-choices li {
+#Kunena ul.autocompleter-choices li {
 	position:				relative;
 	margin:					-2px 0 0 0;
 	padding:				0.2em 1.5em 0.2em 1em;
@@ -3776,21 +3577,18 @@ ul.autocompleter-choices li {
 	font-size:				1em;
 	line-height:			1.5em;
 }
-
-ul.autocompleter-choices li.kautocompleter-selected {
+#Kunena ul.autocompleter-choices li.kautocompleter-selected {
 	background-color:		#444;
 	color:					#fff;
 }
-
-ul.autocompleter-choices span.kautocompleter-queried {
+#Kunena ul.autocompleter-choices span.kautocompleter-queried {
 	display:				inline;
 	float:					none;
 	font-weight:			bold;
 	margin:					0;
 	padding:				0;
 }
-
-ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried {
+#Kunena ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried {
 	color:					#9FCFFF;
 }
 
@@ -3804,21 +3602,17 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	color: #000000;
 	background: #FFDDDD;
 }
-
 #Kunena tr.ksectiontableentry1-red td {
 	background: #FFDDDD;
 }
-
 #Kunena tr.ksectiontableentry2-red td {
 	background: #FFCFCF;
 }
-
 #Kunena tr.ksectiontableentry1-red td.td-0,
 #Kunena tr.ksectiontableentry2-red td.td-0	{
 	background: #EEEEEE;
 	color: #999999;
 }
-
 #Kunena tr.ksectiontableentry1-red td.td-1,
 #Kunena tr.ksectiontableentry2-red td.td-1	{
 	background: #EEEEEE;
@@ -3831,27 +3625,22 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 #Kunena .kforum-headerdesc-green {
 	background: #d2f8db;
 }
-
 #Kunena tr.ksectiontableentry1-green td {
 	background: #d2f8db;
 }
-
 #Kunena tr.ksectiontableentry2-green td {
 	background: #bfe5c7;
 }
-
 #Kunena tr.ksectiontableentry1-green td.td-0,
 #Kunena tr.ksectiontableentry2-green td.td-0	{
 	background: #EEEEEE;
 	color: #999999;
 }
-
 #Kunena tr.ksectiontableentry1-green td.td-1,
 #Kunena tr.ksectiontableentry2-green td.td-1	{
 	background: #EEEEEE;
 	color: #999999;
 }
-
 
 /* -yellow category suffix
 ----------------------------------------------------------------------------------------------- */
@@ -3860,21 +3649,17 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	color: #000000;
 	background: #FFFFCC;
 }
-
 #Kunena tr.ksectiontableentry1-yellow td {
 	background: #FFFFCC;
 }
-
 #Kunena tr.ksectiontableentry2-yellow td {
 	background: #FFFFAA;
 }
-
 #Kunena tr.ksectiontableentry1-yellow td.td-0,
 #Kunena tr.ksectiontableentry2-yellow td.td-0	{
 	background: #EEEEEE;
 	color: #999999;
 }
-
 #Kunena tr.ksectiontableentry1-yellow td.td-1,
 #Kunena tr.ksectiontableentry2-yellow td.td-1	{
 	background: #EEEEEE;
@@ -3888,21 +3673,17 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	color: #000000;
 	background: #c3f0ff;
 }
-
 #Kunena tr.ksectiontableentry1-blue td {
 	background: #c3f0ff;
 }
-
 #Kunena tr.ksectiontableentry2-blue td {
 	background: #b1e3ff;
 }
-
 #Kunena tr.ksectiontableentry1-blue td.td-0,
 #Kunena tr.ksectiontableentry2-blue td.td-0	{
 	background: #EEEEEE;
 	color: #999999;
 }
-
 #Kunena tr.ksectiontableentry1-blue td.td-1,
 #Kunena tr.ksectiontableentry2-blue td.td-1	{
 	background: #EEEEEE;
@@ -3916,21 +3697,17 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	color: #000000;
 	background: #e5e5e5;
 }
-
 #Kunena tr.ksectiontableentry1-grey td {
 	background: #e5e5e5;
 }
-
 #Kunena tr.ksectiontableentry2-grey td {
 	background: #d5d5d5;
 }
-
 #Kunena tr.ksectiontableentry1-grey td.td-0,
 #Kunena tr.ksectiontableentry2-grey td.td-0	{
 	background: #EEEEEE;
 	color: #999999;
 }
-
 #Kunena tr.ksectiontableentry1-grey td.td-1,
 #Kunena tr.ksectiontableentry2-grey td.td-1	{
 	background: #EEEEEE;
@@ -3944,21 +3721,17 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	color: #000000;
 	background: #ffddff;
 }
-
 #Kunena tr.ksectiontableentry1-pink td {
 	background: #ffddff;
 }
-
 #Kunena tr.ksectiontableentry2-pink td {
 	background: #ffd0ff;
 }
-
 #Kunena tr.ksectiontableentry1-pink td.td-0,
 #Kunena tr.ksectiontableentry2-pink td.td-0	{
 	background: #EEEEEE;
 	color: #999999;
 }
-
 #Kunena tr.ksectiontableentry1-pink td.td-1,
 #Kunena tr.ksectiontableentry2-pink td.td-1	{
 	background: #EEEEEE;

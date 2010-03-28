@@ -30,18 +30,26 @@ defined ( '_JEXEC' ) or die ();
 		?>: <strong><?php
 		echo kunena_htmlspecialchars ( stripslashes ( $this->message->subject ) );
 		?></strong> <br />
+		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?> :<strong><?php
+		echo kunena_htmlspecialchars ( stripslashes ( $this->message->catname ) );
+		?></strong> <br />
 
+<br />
+		<input type="radio" name="split" value="splitpost" /><?php echo JText::_('COM_KUNENA_MODERATION_SPLIT_CHOOSE'); ?> <br />
+ 		<input type="radio" name="split" value="splitmultpost" ><?php echo JText::_('COM_KUNENA_MODERATION_SPLIT_CHOOSE2'); ?> <br />
 <br />
 		<?php
 		echo JText::_ ( 'COM_KUNENA_BUTTON_SPLIT_TOPIC' );
 		?>: <br />
 
-<input type="radio" name="split" value="splitpost" /> Split only this
-message<br />
 		<?php
 		echo $this->selectlist;
 		?><br />
-<!-- <input type="radio" name="split" value="splitmultpost" > Split this message and messages following:<br />-->
+<br />
+		<?php
+		echo JText::_ ( 'COM_KUNENA_BUTTON_SPIT_CAT_ID' );
+		?>: <br />
+		<input type="text" name="splitcatid" value="" /><br />
 
 <br />
 

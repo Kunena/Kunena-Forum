@@ -579,6 +579,18 @@ class CKunenaTools {
 		return $parent;
 	}
 
+	function KSelectList($name, $options=array(), $attr='', $sections=false) {
+		$kunena_db = &JFactory::getDBO ();
+		$list = JJ_categoryArray ();
+
+		foreach ( $list as $item ) {
+			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename, 'value', 'text', !$sections && $item->section);
+		}
+
+		$catsList = JHTML::_ ( 'select.genericlist', $options, $name, $attr, 'value', 'text', '', $name );
+		return $catsList;
+	}
+
 	function showBulkActionCats($disabled = 1) {
         $kunena_db = &JFactory::getDBO();
 
@@ -603,6 +615,52 @@ class CKunenaTools {
 	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
 		$acl = KunenaFactory::getAccessControl();
 		return $acl->getSubscribers($catid, $thread, $subscriptions, $moderators, $admins, $excludeList);
+	}
+
+	function KUnfavorite() {
+		$kunena_app = JFactory::getApplication ();
+		$kunena_db = &JFactory::getDBO ();
+		$user =& JFactory::getUser();
+
+		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
+
+		$items = KGetArrayInts ( "cb" );
+		$items = implode(',',array_keys($items));
+
+		//Need to get thread and userid related to message id
+		$query="SELECT thread FROM #__fb_messages WHERE id IN ('$items')";
+		$kunena_db->setQuery ( $query );
+		$messList = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to message details list." );
+
+		foreach ( $messList as $mes ) {
+			CKunenaTools::removeFavorite ($mes->thread, $user->id);
+		}
+
+		$kunena_app->redirect ( $backUrl, 'Unfavorite done' );
+	}
+
+	function KUnsubscribe () {
+		$kunena_app = JFactory::getApplication ();
+		$kunena_db = &JFactory::getDBO ();
+		$user =& JFactory::getUser();
+
+		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
+
+		$items = KGetArrayInts ( "cb" );
+		$items = implode(',',array_keys($items));
+
+		//Need to get thread and userid related to message id
+		$query="SELECT thread FROM #__fb_messages WHERE id IN ('$items')";
+		$kunena_db->setQuery ( $query );
+		$messList = $kunena_db->loadObjectList ();
+		check_dberror ( "Unable to message details list." );
+
+		foreach ( $messList as $mes ) {
+			CKunenaTools::removeSubscritpion ($mes->thread, $user->id);
+		}
+
+		$kunena_app->redirect ( $backUrl, 'Unsubscribe done' );
 	}
 
 	function getAllowedForums($uid) {
@@ -1032,12 +1090,16 @@ class CKunenaTools {
 		 */
 		function KModerateUser () {
 			$kunena_db =& JFactory::getDBO();
+			$kunena_app = JFactory::getApplication ();
 
 			$thisuserid = JRequest::getInt ( 'thisuserid', '' );
 			$banIP = JRequest::getVar ( 'prof_ip_select', '' );
 			$banEmail = JRequest::getVar ( 'banemail', '' );
 			$banUsername = JRequest::getVar ( 'banusername', '' );
 			$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
+			$DelAvatar = JRequest::getVar ( 'delavatar', '' );
+			$DelSignature = JRequest::getVar ( 'delsignature', '' );
+			$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
 
 			if ( isset($banIP) ) {
 				//future feature
@@ -1049,6 +1111,38 @@ class CKunenaTools {
 
 			if ( isset($banUsername) ) {
 				//future feature
+			}
+
+			if ( isset ($DelAvatar) ) {
+				jimport('joomla.filesystem.file');
+				$userprofile = CKunenaUserprofile::getInstance($thisuserid);
+
+				$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar=null WHERE userid=$thisuserid" );
+				$kunena_db->Query ();
+				check_dberror ( "Unable to remove user avatar." );
+
+				// Delete avatar from file system
+				if ( JFile::exists(KUNENA_PATH_AVATAR_UPLOADED.DS.$userprofile->avatar) ) {
+					JFile::delete(KUNENA_PATH_AVATAR_UPLOADED.DS.$userprofile->avatar);
+				}
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
+			}
+
+			if ( isset ($DelSignature) ) {
+				$kunena_db->setQuery ( "UPDATE #__fb_users SET signature=null WHERE userid=$thisuserid" );
+				$kunena_db->Query ();
+				check_dberror ( "Unable to remove user singature." );
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
+			}
+
+			if ( isset ($DelProfileInfo) ) {
+				$kunena_db->setQuery ( "UPDATE #__fb_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid=$thisuserid" );
+				$kunena_db->Query ();
+				check_dberror ( "Unable to remove user profile information." );
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
 			}
 
 			if ( isset($banDelPosts) ) {
@@ -1064,6 +1158,8 @@ class CKunenaTools {
 
 					$kunena_mod->deleteMessage($thisuserid, $DeleteAttachments = false);
 				}
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
 			}
 		}
 
@@ -1315,6 +1411,7 @@ function generate_smilies() {
 
 function KGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
+
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
     }

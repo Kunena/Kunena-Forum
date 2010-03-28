@@ -44,9 +44,25 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Prune forums complains of missing CKunenaTimeformat class
 # [#19288] Fix regression: First message in topic missing in func=view
 # [#19288] Fix regression: CommunityBuilder profile integration did not fill all the fields
+^ [#15886] Merged revisions 2098-2103 from /branches/1.5-xillibit-fixing
 
-24-Mar-2010 Matias
-^ [#19770] API: Make CKunenaView more useful to be used by external modules/plugins
+27-Mar-2010 Xillibit
+# [#19764] Fix undefined variables in post.php for merge function when there is only one thread in a cat
+^ [#19764] For merge/slpit functions you can directly put the target thread/cat ID instead of search in a long list
+^ [#19764] Add in split the possibility to split the actual message and newer messages (doesn't work)
+
+25-Mar-2010 Xillibit
+^ [#19764] Add the move function for one message
+# [#19288] Fix regression - Fatal error: Class 'JMailHelper' not found in kunena.posting.class.php
+^ [#20002] Do not allow moderator to move threads into sections
+^ [#19764] Add in profile bulkaction the delete favorite and subscription functions
++ [#20021] Add few options to moderate user
+
+21-Mar-2010 Xillibit
+# [#19978] BUG: Editing posts containing quotation marks
+# [#19983] Side-by-side preview is not side-by-side
+# [#19825] BUG: Redirection on "Mark forum read" fails
+^ [#19995] Remove favorites and subscriptions if thread gets deleted/merged (need testing)
 
 21-Mar-2010 Matias
 # [#19288] Fix regression: Subscription emails not sent, small bug in posting

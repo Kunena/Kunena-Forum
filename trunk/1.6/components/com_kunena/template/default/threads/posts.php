@@ -217,7 +217,18 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<!-- Moderator Bulk Actions -->
 		<tr class="ksectiontableentry1">
 			<td colspan="7" align="right" class="td-1 ks">
-				<input type="submit" name="kBulkActionsGo" class="kbutton ks"
+				<select name="do" id="kBulkChooseActions"
+				class="inputbox ks">
+				<option value="">&nbsp;</option>
+				<option value="bulkDel"><?php
+		echo JText::_('COM_KUNENA_DELETE_SELECTED');
+		?></option>
+				<option value="bulkMove"><?php
+		echo JText::_('COM_KUNENA_MOVE_SELECTED');
+		?></option>
+			</select> <?php
+		CKunenaTools::showBulkActionCats ();
+		?> <input type="submit" name="kBulkActionsGo" class="kbutton ks"
 				value="<?php
 		echo JText::_('COM_KUNENA_GO');
 		?>" /></td>

@@ -17,12 +17,9 @@ defined ( '_JEXEC' ) or die ();
 		echo CKunenaLink::GetPostURL ();
 		?>"
 	method="post" name="myform"><input type="hidden" name="do"
-	value="domergepostnow" /> <input type="hidden" name="id"
+	value="domovemessage" /> <input type="hidden" name="id"
 	value="<?php
 		echo $this->id;
-		?>" /> <input type="hidden" name="catid"
-	value="<?php
-		echo $this->catid;
 		?>" />
 
 <p><?php
@@ -30,25 +27,27 @@ defined ( '_JEXEC' ) or die ();
 		?>: <strong><?php
 		echo kunena_htmlspecialchars ( stripslashes ( $this->message->subject ) );
 		?></strong> <br />
+		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?> :<strong><?php
+		echo kunena_htmlspecialchars ( stripslashes ( $this->message->catname ) );
+		?></strong> <br />
 
 <br />
 		<?php
-		echo JText::_ ( 'COM_KUNENA_BUTTON_MERGE_TOPIC' );
+		echo JText::_ ( 'COM_KUNENA_POST_MOVE_TOPIC' );
 		?>: <br />
 
 		<?php
 		echo $this->selectlist;
 		?> <br />
-<br />
-		<?php
-		echo JText::_ ( 'COM_KUNENA_BUTTON_MERGE_TOPIC_ID' );
-		?>: <br />
-		<input type="text" name="mergethreadid" value="" /><br />
 
-<br />
+<input type="checkbox" checked name="leaveGhost" value="1" /> <?php
+		echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' );
+		?>
+
+		<br />
 
 <input type="submit" class="button"
 	value="<?php
-		echo JText::_ ( 'COM_KUNENA_BUTTON_MERGE' );
+		echo JText::_ ( 'COM_KUNENA_GEN_MOVE' );
 		?>" /></p>
 </form>

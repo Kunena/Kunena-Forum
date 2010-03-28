@@ -12,8 +12,6 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-require_once (KUNENA_PATH_LIB . DS . 'kunena.session.class.php');
-
 /**
  * @author fxstein
  *
@@ -30,14 +28,14 @@ class CKunenaAjaxHelper {
 	protected $_my;
 
 	/**
-	 * @var CKunenaSession
+	 * @var KunenaSession
 	 */
 	protected $_session;
 
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
 		$this->_my = &JFactory::getUser ();
-		$this->_session = & CKunenaSession::getInstance ();
+		$this->_session = KunenaFactory::getSession ();
 	}
 
 	function &getInstance() {

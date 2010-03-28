@@ -21,7 +21,7 @@ class CKunenaListcat {
 
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
-		$this->session = CKunenaSession::getInstance ();
+		$this->session = KunenaFactory::getSession ();
 		$this->config = CKunenaConfig::getInstance ();
 
 		if ($this->catid && ! $this->session->canRead ( $this->catid ))

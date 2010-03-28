@@ -21,7 +21,7 @@ class CKunenaView {
 
 		$this->db = JFactory::getDBO ();
 		$this->config = CKunenaConfig::getInstance ();
-		$this->session = CKunenaSession::getInstance ();
+		$this->session = KunenaFactory::getSession ();
 
 		$this->func = $func;
 		$this->catid = $catid;
@@ -142,8 +142,6 @@ class CKunenaView {
 		$this->total_messages = $this->db->loadResult ();
 		check_dberror ( 'Unable to calculate message count.' );
 
-		if ($this->limitstart > $this->total_messages)
-			$this->limitstart = intval ( $this->total_messages / $this->limit ) * $this->limit;
 		$ordering = ($this->config->default_sort == 'desc' ? 'DESC' : 'ASC'); // Just to make sure only valid options make it
 		$maxpages = 9 - 2; // odd number here (show - 2)
 		$totalpages = ceil ( $this->total_messages / $this->limit );
@@ -157,19 +155,18 @@ class CKunenaView {
 					FROM #__fb_messages AS a
 					LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
 					LEFT JOIN #__users AS modified ON a.modified_by = modified.id
-					WHERE a.thread='{$this->thread}' AND a.id!='{$this->id}' AND {$where}
+					WHERE a.thread='{$this->thread}' AND {$where}
 					ORDER BY id {$ordering}";
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
-		$replies = $this->db->loadObjectList ();
+		$posts = $this->db->loadObjectList ();
 		check_dberror ( 'Unable to load replies' );
 
 		// Load attachments
 
 		// First collect the message ids of the first message and all replies
 		$messageids = array();
-		$messageids[] = $this->id;
-		foreach($replies AS $reply){
-			$messageids[] = $reply->id;
+		foreach($posts AS $post){
+			$messageids[] = $post->id;
 		}
 
 		// create a list of ids we can use for our sql
@@ -187,13 +184,9 @@ class CKunenaView {
 		foreach ($attachments as $attachment) $message_attachments[$attachment->mesid][] = $attachment;
 
 		$this->flat_messages = array ();
-		if ($page == 1 && $ordering == 'asc')
-			$this->flat_messages [] = $this->first_message; // ASC: first message is the first one
-		foreach ( $replies as $message )
+		foreach ( $posts as $message )
 			$this->flat_messages [] = $message;
-		if ($page == $totalpages && $ordering == 'desc')
-			$this->flat_messages [] = $this->first_message; // DESC: first message is the last one
-		unset ( $replies );
+		unset ( $posts );
 
 		// Now that we have all relevant messages in flat_messages, asign any matching attachments
 		foreach ( $this->flat_messages as $message ){
@@ -362,56 +355,10 @@ class CKunenaView {
 		$this->kunena_message->email = kunena_htmlspecialchars ( $this->kunena_message->email );
 		$this->kunena_message->subject = kunena_htmlspecialchars ( $this->kunena_message->subject );
 
-		//Get userinfo needed later on, this limits the amount of queries
-		static $uinfocache = array ();
-		if (! isset ( $uinfocache [$this->kunena_message->userid] )) {
-			$this->db->setQuery ( "SELECT  a.*, b.id, b.name, b.username, b.gid FROM #__fb_users AS a INNER JOIN #__users AS b ON b.id=a.userid WHERE a.userid='{$this->kunena_message->userid}'" );
-			$userinfo = $this->db->loadObject ();
-			check_dberror ( 'Unable to load user info' );
-			if ($userinfo == NULL) {
-				$userinfo = new stdClass ( );
-				$userinfo->userid = 0;
-				$userinfo->name = '';
-				$userinfo->username = '';
-				$userinfo->avatar = '';
-				$userinfo->gid = 0;
-				$userinfo->rank = 0;
-				$userinfo->posts = 0;
-				$userinfo->karma = 0;
-				$userinfo->gender = JText::_('COM_KUNENA_NOGENDER');
-				$userinfo->personalText = '';
-				$userinfo->ICQ = '';
-				$userinfo->location = '';
-				$userinfo->birthdate = '';
-				$userinfo->AIM = '';
-				$userinfo->MSN = '';
-				$userinfo->YIM = '';
-				$userinfo->SKYPE = '';
-				$userinfo->TWITTER = '';
-				$userinfo->FACEBOOK = '';
-				$userinfo->GTALK = '';
-				$userinfo->MYSPACE = '';
-				$userinfo->LINKEDIN = '';
-				$userinfo->DELICIOUS = '';
-				$userinfo->FRIENDFEED = '';
-				$userinfo->DIGG = '';
-				$userinfo->BLOGSPOT = '';
-				$userinfo->FLICKR = '';
-				$userinfo->BEBO = '';
-				$userinfo->websiteurl = '';
-				$userinfo->signature = '';
-			}
-			$uinfocache [$this->kunena_message->userid] = $userinfo;
-		} else
-			$userinfo = $uinfocache [$this->kunena_message->userid];
-
-		$this->userinfo = $userinfo;
-
-		// FIXME: reduce number of queries by preload:
-		$this->profile = CKunenaUserprofile::getInstance ( $this->kunena_message->userid );
+		$this->profile = KunenaFactory::getUser ( $this->kunena_message->userid );
 
 		if ($this->config->fb_profile == 'cb') {
-			$triggerParams = array ('userid' => $this->kunena_message->userid, 'userinfo' => &$this->userinfo );
+			$triggerParams = array ('userid' => $this->kunena_message->userid, 'userinfo' => &$this->profile );
 			$kunenaProfile = & CKunenaCBProfile::getInstance ();
 			$kunenaProfile->trigger ( 'profileIntegration', $triggerParams );
 		}
@@ -423,7 +370,7 @@ class CKunenaView {
 			$fb_queryName = "name";
 		}
 
-		$fb_username = $this->userinfo->$fb_queryName;
+		$fb_username = $this->profile->$fb_queryName;
 
 		if ($fb_username == "" || $this->config->changename) {
 			$fb_username = stripslashes ( $this->kunena_message->name );
@@ -432,11 +379,11 @@ class CKunenaView {
 
 		$this->msg_html = new StdClass ( );
 		$this->msg_html->id = $this->kunena_message->id;
-		$lists ["userid"] = $this->userinfo->userid;
+		$lists ["userid"] = $this->profile->userid;
 		$this->msg_html->username = $this->kunena_message->email != "" && $this->my->id > 0 && $this->config->showemail ? CKunenaLink::GetEmailLink ( kunena_htmlspecialchars ( stripslashes ( $this->kunena_message->email ) ), $fb_username ) : $fb_username;
 
 		if ($this->config->allowavatar) {
-			$Avatarname = $this->userinfo->username;
+			$Avatarname = $this->profile->username;
 			$kunena_config = & CKunenaConfig::getInstance ();
 
 			if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right') {
@@ -449,19 +396,19 @@ class CKunenaView {
 
 			if ($this->config->avatar_src == "jomsocial") {
 				// Get CUser object
-				$jsuser = & CFactory::getUser ( $this->userinfo->userid );
+				$jsuser = & CFactory::getUser ( $this->profile->userid );
 				$this->msg_html->avatar = '<span class="kavatar"><img src="' . $jsuser->getThumbAvatar () . '" alt=" " /></span>';
 			} else if ($this->config->avatar_src == "cb") {
 				$kunenaProfile = & CkunenaCBProfile::getInstance ();
-				$this->msg_html->avatar = '<span class="kavatar">' . $kunenaProfile->showAvatar ( $this->userinfo->userid, '', false ) . '</span>';
+				$this->msg_html->avatar = '<span class="kavatar">' . $kunenaProfile->showAvatar ( $this->profile->userid, '', false ) . '</span>';
 			} else if ($this->config->avatar_src == "aup") {
 				$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
 				if (file_exists ( $api_AUP )) {
 					($this->config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
-					$this->msg_html->avatar = '<span class="kavatar">' . AlphaUserPointsHelper::getAupAvatar ( $this->userinfo->userid, $showlink ) . '</span>';
+					$this->msg_html->avatar = '<span class="kavatar">' . AlphaUserPointsHelper::getAupAvatar ( $this->profile->userid, $showlink ) . '</span>';
 				}
 			} else {
-				$avatar = $this->userinfo->avatar;
+				$avatar = $this->profile->avatar;
 
 				if (! empty ( $avatar )) {
 					if (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $avatar )) {
@@ -483,15 +430,15 @@ class CKunenaView {
 
 		if ($this->config->showuserstats) {
 			//user type determination
-			$ugid = $this->userinfo->gid;
+			$ugid = !!$this->profile->userid;
 			$uIsMod = 0;
 			$uIsAdm = 0;
-			$uIsMod = in_array ( $this->userinfo->userid, $this->catModerators );
+			$uIsMod = in_array ( $this->profile->userid, $this->catModerators );
 
 			if ($ugid == 0) {
 				$this->msg_html->usertype = JText::_('COM_KUNENA_VIEW_VISITOR');
 			} else {
-				if (CKunenaTools::isAdmin ( $this->userinfo->id )) {
+				if (CKunenaTools::isAdmin ( $this->profile->userid )) {
 					$this->msg_html->usertype = JText::_('COM_KUNENA_VIEW_ADMIN');
 					$uIsAdm = 1;
 				} elseif ($uIsMod) {
@@ -503,8 +450,8 @@ class CKunenaView {
 
 			//done usertype determination, phew...
 			//# of post for this user and ranking
-			if ($this->userinfo->userid) {
-				$numPosts = ( int ) $this->userinfo->posts;
+			if ($this->profile->userid) {
+				$numPosts = ( int ) $this->profile->posts;
 
 				//ranking
 				$rank = $this->profile->getRank ($this->catid);
@@ -532,22 +479,22 @@ class CKunenaView {
 
 
 		//karma points and buttons
-		if ($this->config->showkarma && $this->userinfo->userid != '0') {
-			$karmaPoints = $this->userinfo->karma;
+		if ($this->config->showkarma && $this->profile->userid != '0') {
+			$karmaPoints = $this->profile->karma;
 			$karmaPoints = ( int ) $karmaPoints;
 			$this->msg_html->karma = "<strong>" . JText::_('COM_KUNENA_KARMA') . ":</strong> $karmaPoints";
 
-			if ($this->my->id != '0' && $this->my->id != $this->userinfo->userid) {
-				$this->msg_html->karmaminus = CKunenaLink::GetKarmaLink ( 'decrease', $this->catid, $this->kunena_message->id, $this->userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaminus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaminus']) : (KUNENA_URLEMOTIONSPATH . "karmaminus.gif")) . '" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '" />' );
-				$this->msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $this->catid, $this->kunena_message->id, $this->userinfo->userid, '<img src="' . (isset ( $kunena_icons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '" />' );
+			if ($this->my->id != '0' && $this->my->id != $this->profile->userid) {
+				$this->msg_html->karmaminus = CKunenaLink::GetKarmaLink ( 'decrease', $this->catid, $this->kunena_message->id, $this->profile->userid, '<img src="' . (isset ( $kunena_icons ['karmaminus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaminus']) : (KUNENA_URLEMOTIONSPATH . "karmaminus.gif")) . '" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '" />' );
+				$this->msg_html->karmaplus = CKunenaLink::GetKarmaLink ( 'increase', $this->catid, $this->kunena_message->id, $this->profile->userid, '<img src="' . (isset ( $kunena_icons ['karmaplus'] ) ? (KUNENA_URLICONSPATH . $kunena_icons ['karmaplus']) : (KUNENA_URLEMOTIONSPATH . "karmaplus.gif")) . '" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '" />' );
 			}
 		}
 
 		/*let's see if we should use uddeIM integration */
-		if ($this->config->pm_component == "uddeim" && $this->userinfo->userid && $this->my->id) {
+		if ($this->config->pm_component == "uddeim" && $this->profile->userid && $this->my->id) {
 			//we should offer the user a PMS link
 			//first get the username of the user to contact
-			$PMSName = $this->userinfo->username;
+			$PMSName = $this->profile->username;
 			$img_html = "<img src=\"";
 
 			if ($kunena_icons ['pms']) {
@@ -557,26 +504,26 @@ class CKunenaView {
 			}
 
 			$img_html .= "\" alt=\"" . JText::_('COM_KUNENA_VIEW_PMS') . "\" border=\"0\" title=\"" . JText::_('COM_KUNENA_VIEW_PMS') . "\" />";
-			$this->msg_html->pms = CKunenaLink::GetUddeImLink( $this->userinfo->userid, $img_html );
+			$this->msg_html->pms = CKunenaLink::GetUddeImLink( $this->profile->userid, $img_html );
 		}
 		// online - ofline status
 		$this->msg_html->online = 0;
-		if ($this->userinfo->userid > 0 && $this->userinfo->showOnline == 1) {
+		if ($this->profile->userid > 0 && $this->profile->showOnline == 1) {
 			static $onlinecache = array ();
-			if (! isset ( $onlinecache [$this->userinfo->userid] )) {
-				$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->userinfo->userid . ' AND s.client_id = 0 GROUP BY s.userid';
+			if (! isset ( $onlinecache [$this->profile->userid] )) {
+				$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->profile->userid . ' AND s.client_id = 0 GROUP BY s.userid';
 				$this->db->setQuery ( $query );
 				$lastseen = $this->db->loadResult ();
 				check_dberror ( "Unable get user online information." );
 				$timeout = $this->app->getCfg ( 'lifetime', 15 ) * 60;
-				$onlinecache [$this->userinfo->userid] = ($lastseen + $timeout) > time ();
+				$onlinecache [$this->profile->userid] = ($lastseen + $timeout) > time ();
 			}
-			$this->msg_html->online = $onlinecache [$this->userinfo->userid];
+			$this->msg_html->online = $onlinecache [$this->profile->userid];
 		}
 
 		/* PM integration */
-		if ($this->config->pm_component == "jomsocial" && $this->userinfo->userid && $this->my->id) {
-			$onclick = CMessaging::getPopup ( $this->userinfo->userid );
+		if ($this->config->pm_component == "jomsocial" && $this->profile->userid && $this->my->id) {
+			$onclick = CMessaging::getPopup ( $this->profile->userid );
 			$this->msg_html->pms = '<a href="javascript:void(0)" onclick="' . $onclick . "\">";
 
 			if ($kunena_icons ['pms']) {
@@ -589,8 +536,8 @@ class CKunenaView {
 		}
 		//Check if the Integration settings are on, and set the variables accordingly.
 		if ($this->config->fb_profile == "cb") {
-			if ($this->config->fb_profile == 'cb' && $this->userinfo->userid > 0) {
-				$this->msg_html->prflink = CKunenaCBProfile::getProfileURL ( $this->userinfo->userid );
+			if ($this->config->fb_profile == 'cb' && $this->profile->userid > 0) {
+				$this->msg_html->prflink = CKunenaCBProfile::getProfileURL ( $this->profile->userid );
 				$this->msg_html->profile = "<a href=\"" . $this->msg_html->prflink . "\"><img src=\"";
 
 				if ($kunena_icons ['userprofile']) {
@@ -601,7 +548,7 @@ class CKunenaView {
 
 				$this->msg_html->profile .= "\" alt=\"" . JText::_('COM_KUNENA_VIEW_PROFILE') . "\" border=\"0\" title=\"" . JText::_('COM_KUNENA_VIEW_PROFILE') . "\" /></a>";
 			}
-		} else if ($this->userinfo->gid > 0) {
+		} else if ($this->profile->userid) {
 			//Kunena Profile link.
 			$this->msg_html->profileicon = "<img src=\"";
 
@@ -612,11 +559,11 @@ class CKunenaView {
 			}
 
 			$this->msg_html->profileicon .= "\" alt=\"" . JText::_('COM_KUNENA_VIEW_PROFILE') . "\" border=\"0\" title=\"" . JText::_('COM_KUNENA_VIEW_PROFILE') . "\" />";
-			$this->msg_html->profile = CKunenaLink::GetProfileLink ( $this->config, $this->userinfo->userid, $this->msg_html->profileicon );
+			$this->msg_html->profile = CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->msg_html->profileicon );
 		}
 
-		if ($this->userinfo->personalText != '') {
-			$this->msg_html->personal = kunena_htmlspecialchars ( CKunenaTools::parseText ( $this->userinfo->personalText ) );
+		if ($this->profile->personalText != '') {
+			$this->msg_html->personal = kunena_htmlspecialchars ( CKunenaTools::parseText ( $this->profile->personalText ) );
 		}
 
 		//Show admins the IP address of the user:
@@ -649,7 +596,7 @@ class CKunenaView {
 			}
 		}
 
-		$this->msg_html->signature = CKunenaTools::parseBBCode ( $this->userinfo->signature );
+		$this->msg_html->signature = CKunenaTools::parseBBCode ( $this->profile->signature );
 
 		if (!$this->kunena_message->hold && (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0))) {
 			//user is allowed to reply/quote

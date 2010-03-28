@@ -16,17 +16,9 @@ defined ( '_JEXEC' ) or die ();
 class CKunenaLogin {
 
 	function getReturnURL($type) {
-		$itemid = '';
-		if ($itemid) {
-			$menu = & JSite::getMenu ();
-			$item = $menu->getItem ( $itemid );
-			$url = JRoute::_ ( $item->link . '&Itemid=' . $itemid, false );
-		} else {
-			// stay on the same page
-			$uri = JFactory::getURI ();
-			$url = $uri->toString ( array ('path', 'query', 'fragment' ) );
-		}
-
+		// stay on the same page
+		$uri = JFactory::getURI ();
+		$url = $uri->toString ( array ('path', 'query', 'fragment' ) );
 		return base64_encode ( $url );
 	}
 
@@ -40,7 +32,7 @@ class CKunenaLogin {
 		$this->my = &JFactory::getUser ();
 		//first we gather some information about this person
 		$juserinfo = JUser::getInstance ( $this->my->id );
-		$userinfo = CKunenaUserprofile::getInstance ( );
+		$userinfo = KunenaFactory::getUser ( );
 
 		$Itemid = JRequest::getInt ( 'Itemid' );
 		$this->kunena_avatar = NULL;
@@ -82,37 +74,40 @@ class CKunenaLogin {
 	return $this->jr_avatar;
 	}
 
+	function getloginFields() {
+		$login = KunenaFactory::getLogin();
+		if (!$login) return;
+		return $login->getLoginFormFields();
+	}
+
+	function getlogoutFields() {
+		$login = KunenaFactory::getLogin();
+		if (!$login) return;
+		return $login->getLogoutFormFields();
+	}
+
 	function getRegisterLink() {
-		$kunena_config = & CKunenaConfig::getInstance ();
-		if ($kunena_config->fb_profile == 'cb') {
-			return CKunenaCBProfile::getRegisterURL ();
-		} else if ($kunena_config->fb_profile == 'jomsocial') {
-			return CKunenaLink::GetJomsocialRegisterLink(JText::_('COM_KUNENA_PROFILEBOX_REGISTER'));
-		} else {
-			return CKunenaLink::GetRegisterLink(JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'));
-		}
+		$login = KunenaFactory::getLogin();
+		if (!$login) return '';
+		$url = $login->getRegistrationURL();
+		if (!$url) return '';
+		return CKunenaLink::GetHrefLink($url, JText::_('COM_KUNENA_PROFILEBOX_CREATE_ACCOUNT'));
 	}
 
 	function getLostPasswordLink() {
-		$kunena_config = & CKunenaConfig::getInstance ();
-		if ($kunena_config->fb_profile == 'cb') {
-			return CKunenaCBProfile::getLostPasswordURL ();
-		} else if ($kunena_config->fb_profile == 'jomsocial') {
-			return CKunenaLink::GetJomsocialLoginLink(JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'));
-		} else {
-			return CKunenaLink::GetLostpassLink(JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'));
-		}
+		$login = KunenaFactory::getLogin();
+		if (!$login) return '';
+		$url = $login->getResetURL();
+		if (!$url) return '';
+		return CKunenaLink::GetHrefLink($url, JText::_('COM_KUNENA_PROFILEBOX_FORGOT_PASSWORD'));
 	}
 
 	function getLostUserLink() {
-		$kunena_config = & CKunenaConfig::getInstance ();
-		if ($kunena_config->fb_profile == 'cb') {
-			return '';
-		} else if ($kunena_config->fb_profile == 'jomsocial') {
-			return '';
-		} else {
-			return CKunenaLink::GetLostuserLink(JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'));
-		}
+		$login = KunenaFactory::getLogin();
+		if (!$login) return '';
+		$url = $login->getRemindURL();
+		if (!$url) return '';
+		return CKunenaLink::GetHrefLink($url, JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'));
 	}
 }
 

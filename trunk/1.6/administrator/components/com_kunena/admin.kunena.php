@@ -756,6 +756,7 @@ function pollunpublish ( $option, $cid = null, $unpublish = 0 ) {
 // Config Functions
 //===============================
 function showConfig($option) {
+	require_once (KUNENA_PATH_LIB.'/kunena.timeformat.class.php');
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_config = & CKunenaConfig::getInstance ();
 
@@ -1296,13 +1297,6 @@ function editUserProfile($option, $uid) {
 	$moderator = $user->moderator;
 	$userRank = $user->rank;
 
-	//check to see if this is an administrator
-	$result = '';
-	//$kunena_db->setQuery("select usertype from #__users where id=$uid[0]");
-	//$result=$kunena_db->loadResult();
-	//check_dberror ( 'Unable to load user type.' );
-	$result = $kunena_acl->getAroGroup ( $uid [0] );
-
 	//grab all special ranks
 	$kunena_db->setQuery ( "SELECT * FROM #__fb_ranks WHERE rank_special = '1'" );
 	$specialRanks = $kunena_db->loadObjectList ();
@@ -1567,6 +1561,7 @@ function pruneforum($kunena_db, $option) {
 }
 
 function doprune($kunena_db, $option) {
+	require_once (KUNENA_PATH_LIB.'/kunena.timeformat.class.php');
 	$kunena_app = & JFactory::getApplication ();
 
 	$catid = intval ( JRequest::getVar ( 'prune_forum', - 1 ) );

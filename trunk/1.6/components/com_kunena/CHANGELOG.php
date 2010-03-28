@@ -34,9 +34,22 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+28-Mar-2010 Matias
++ [#20038] Add basic Joomla 1.6 support (no installer, no acl)
+# [#20038] Add basic Joomla 1.6 support: use new format in language files
++ [#20039] Add kimport(), new location for libraries and static KunenaFactory class
+^ [#20038] Add basic Joomla 1.6 support: move (C)KunenaSession and (C)KunenaUser to libraries
+^ [#20038] Add basic Joomla 1.6 support: move access control to KunenaAccess in libraries
++ [#20038] Add basic Joomla 1.6 support: new KunenaIntegration classes, use them for login
+# [#19288] Fix regression: Prune forums complains of missing CKunenaTimeformat class
+# [#19288] Fix regression: First message in topic missing in func=view
+# [#19288] Fix regression: CommunityBuilder profile integration did not fill all the fields
+
+24-Mar-2010 Matias
+^ [#19770] API: Make CKunenaView more useful to be used by external modules/plugins
+
 21-Mar-2010 Matias
 # [#19288] Fix regression: Subscription emails not sent, small bug in posting
-^ [#19770] API: Make CKunenaView more useful to be used by external modules/plugins
 
 20-Mar-2010 Matias
 ^ [#19277] Clean up and restructure post.php: Use class CKunenaPosting to post/reply message

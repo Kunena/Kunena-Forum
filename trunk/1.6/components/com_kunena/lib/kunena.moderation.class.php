@@ -23,8 +23,6 @@ define ( 'KN_DEL_MESSAGE', 0 );
 define ( 'KN_DEL_THREAD', 1 );
 define ( 'KN_DEL_ATTACH', 2 );
 
-require_once (KUNENA_PATH_LIB .DS. "kunena.session.class.php");
-
 class CKunenaModeration {
 	// Private data and functions
 	protected $_db = null;
@@ -36,7 +34,7 @@ class CKunenaModeration {
 	protected function __construct($db, $config) {
 		$this->_db = $db;
 		$this->_my = &JFactory::getUser ();
-		$this->_session = CKunenaSession::getInstance ();
+		$this->_session = KunenaFactory::getSession ();
 		$this->_allowed = ($this->_session->allowed != '') ? explode ( ',', $this->_session->allowed ) : array();
 		$this->_ResetErrorMessage ();
 		$this->_config = $config;

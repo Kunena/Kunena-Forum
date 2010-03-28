@@ -58,7 +58,7 @@ class CKunenaSearch {
 		$this->app = & JFactory::getApplication ();
 		$this->db = &JFactory::getDBO ();
 		$this->config = & CKunenaConfig::getInstance ();
-		$this->session = & CKunenaSession::getInstance ();
+		$this->session = & KunenaFactory::getSession ();
 
 		// TODO: started_by
 		// TODO: active_in

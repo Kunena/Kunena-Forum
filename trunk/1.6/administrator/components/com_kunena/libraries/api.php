@@ -71,11 +71,9 @@ class KunenaUserAPI implements iKunenaUserAPI {
 	protected $_session = null;
 
 	public function __construct() {
-		require_once (KUNENA_PATH_LIB .DS. "kunena.session.class.php");
-
 		$this->_db = JFactory::getDBO ();
 		$this->_my = JFactory::getUser ();
-		$this->_session = CKunenaSession::getInstance();
+		$this->_session = KunenaFactory::getSession();
 	}
 
 	public static function version() {
@@ -87,15 +85,12 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		return $this->_session->allowed;
 	}
 	public function getProfile($userid) {
-		require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
-
-		return CKunenaUserprofile::getInstance ( $userid );
+		return KunenaFactory::getUser ( $userid );
 	}
 	public function getRank($userid) {
-		require_once (KUNENA_PATH_LIB .DS. "kunena.user.class.php");
 		require_once (KPATH_SITE .DS. "class.kunena.php");
 
-		$profile = CKunenaUserprofile::getInstance ( $userid );
+		$profile = KunenaFactory::getUser ( $userid );
 		return $profile->getRank ();
 	}
 

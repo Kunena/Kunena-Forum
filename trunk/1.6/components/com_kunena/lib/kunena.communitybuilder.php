@@ -164,7 +164,7 @@ function enqueueErrors() {
 		{
 			global $_PLUGINS;
 			$kunena_config = CKunenaConfig::getInstance();
-			$userprofile = CKunenaUserprofile::getInstance($userid);
+			$userprofile = KunenaFactory::getUser($userid);
 			$_PLUGINS->loadPluginGroup('user');
 			$instances[$userid] = implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $userid,
 				array( 'config'=> &$kunena_config, 'userprofile'=> &$userprofile, 'msg_params'=>&$msg_params) ) ) );

@@ -43,7 +43,7 @@ function trigger_dberror($text = '', $back=0)
 {
 	$kunena_db = &JFactory::getDBO();
 	$dberror = $kunena_db->stderr(true);
-	echo debug_callstackinfo($back+1);
+	//echo debug_callstackinfo($back+1);
 
 	require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
 	$kunenaVersion = CKunenaVersion::version();
@@ -109,7 +109,7 @@ function debug_vars($varlist)
 				if ($dberror) {
 					$kunena_db = &JFactory::getDBO();
 					jimport('geshi.geshi');
-					$sql = $kunena_db->_sql;
+					$sql = $kunena_db->getQuery();
 					if (file_exists(JPATH_ROOT.DS.'libraries'.DS.'geshi'.DS.'geshi'.DS."mysql.php")) {
 						$geshi = new GeSHi($sql, "mysql");
 						$geshi->enable_keyword_links(false);

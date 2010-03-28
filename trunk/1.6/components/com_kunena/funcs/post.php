@@ -20,7 +20,7 @@ class CKunenaPost {
 
 		$this->_app = & JFactory::getApplication ();
 		$this->_config = & CKunenaConfig::getInstance ();
-		$this->_session = & CKunenaSession::getInstance ();
+		$this->_session = KunenaFactory::getSession ();
 		$this->_db = &JFactory::getDBO ();
 		$this->document = JFactory::getDocument ();
 
@@ -341,7 +341,6 @@ class CKunenaPost {
 				$this->selectcatlist = CKunenaTools::forumSelectList ( 'postcatid', $this->catid, $options, '' );
 		}
 		$this->authorName = kunena_htmlspecialchars ( $this->getAuthorName () );
-		$this->id = $message->id;
 		$this->catid = $message->catid;
 		$this->emoid = 0;
 		$this->action = 'post';

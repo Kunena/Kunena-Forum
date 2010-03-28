@@ -2452,13 +2452,7 @@ td.kadmin-tdtitle {
 			</tr>
 			<tr>
 				<td width="150" class="contentpane"><?php echo JText::_('COM_KUNENA_ISMOD');
-				?>
-				<?php //admins are always moderators
-				if (CKunenaTools::isAdmin ( $uid )) {
-					echo JText::_('COM_KUNENA_ISADM'); ?>
-				<input type="hidden" name="moderator" value="1"> <?php } else {
-					echo $selectMod;
-				}
+				echo $selectMod;
 				?>
 				</td>
 				<td><?php echo $modCats; ?></td>

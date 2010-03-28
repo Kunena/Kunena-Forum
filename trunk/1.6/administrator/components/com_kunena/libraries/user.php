@@ -12,8 +12,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
 require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
 require_once (KUNENA_PATH . DS . 'class.kunena.php');
 
@@ -24,247 +22,187 @@ require_once (KUNENA_PATH . DS . 'class.kunena.php');
 * Provides access to the #__fb_users table
 
 */
-
-class CKunenaUserprofile extends JTable
+class KunenaUser extends JObject
 {
-
-	/**
-	* User ID
-	* @var int
-	**/
-	var $userid = null;
-
-	var $view = null;
-
-	/**
-	* Signature
-	* @var string
-	**/
-	var $signature = null;
-
-	/**
-	* Is moderator?
-	* @var int
-	**/
-	var $moderator = null;
-
-	/**
-	* Ordering of posts
-	* @var int
-	**/
-	var $ordering = null;
-
-	/**
-	* User post count
-	* @var int
-	**/
-	var $posts = null;
-
-	/**
-	* Avatar image file
-	* @var string
-	**/
-	var $avatar = null;
-
-	/**
-	* User karma
-	* @var int
-	**/
-	var $karma = null;
-
-	var $karma_time = null;
-
-	/**
-	* Kunena Group ID
-	* @var int
-	**/
-	var $group_id = null;
-
-	/**
-	* Kunena Profile hits
-	* @var int
-	**/
-	var $uhits = null;
-
-	/**
-	* Personal text
-	* @var string
-	**/
-	var $personalText = null;
-
-	/**
-	* Gender
-	* @var int
-	**/
-	var $gender = null;
-
-	/**
-	* Birthdate
-	* @var string
-	**/
-	var $birthdate = null;
-
-	/**
-	* User Location
-	* @var string
-	**/
-	var $location = null;
-
-	/**
-	* Name of web site
-	* @var string
-	**/
-	var $websitename = null;
-
-	/**
-	* URL to web site
-	* @var string
-	**/
-	var $websiteurl = null;
-
-	/**
-	* User rank
-	* @var int
-	**/
-	var $rank = null;
-	/**
-	* Hide Email address
-	* @var int
-	**/
-	var $hideEmail = null;
-
-	/**
-	* Show online
-	* @var int
-	**/
-	var $showOnline = null;
-	/**
-	* ICQ ID
-	* @var string
-	**/
-	var $ICQ = null;
-
-	/**
-	* AIM ID
-	* @var string
-	**/
-	var $AIM = null;
-
-	/**
-	* YIM ID
-	* @var string
-	**/
-	var $YIM = null;
-
-	/**
-	* MSN ID
-	* @var string
-	**/
-	var $MSN = null;
-
-	/**
-	* SKYPE ID
-	* @var string
-	**/
-	var $SKYPE = null;
-	/**
-	* TWITTER ID
-	* @var string
-	**/
-	var $TWITTER = null;
-	/**
-	* FACEBOOK ID
-	* @var string
-	**/
-	var $FACEBOOK = null;
-
-	/**
-	* GTALK ID
-	* @var string
-	**/
-	var $GTALK = null;
-
-	/**
-	* MYSPACE ID
-	* @var string
-	**/
-	var $MYSPACE = null;
-	/**
-	* LINKEDIN ID
-	* @var string
-	**/
-	var $LINKEDIN = null;
-	/**
-	* DELICIOUS ID
-	* @var string
-	**/
-	var $DELICIOUS = null;
-	/**
-	* FRIENDFEED ID
-	* @var string
-	**/
-	var $FRIENDFEED = null;
-	/**
-	* $DIGG ID
-	* @var string
-	**/
-	var $DIGG = null;
-	/**
-	* BLOGSPOT ID
-	* @var string
-	**/
-	var $BLOGSPOT = null;
-	/**
-	* FLICKR ID
-	* @var string
-	**/
-	var $FLICKR = null;
-	/**
-	* BEBO ID
-	* @var string
-	**/
-	var $BEBO = null;
-
-	protected $_online = null;
+	// Global for every instance
+	protected static $_instances = array();
 	protected static $_ranks = null;
 
-	function __construct($userid)
+	protected $_online = null;
+	protected $_exists = false;
+	protected $_db = null;
+
+	/**
+	* Constructor
+	*
+	* @access	protected
+	*/
+	public function __construct($identifier = 0)
 	{
-		$db = JFactory::getDBO();
+		// Always load the user -- if user does not exist: fill empty data
+		$this->load($identifier);
+		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
-
-		parent::__construct('#__fb_users', 'userid', $db);
-		if ($userid) $this->load($userid);
-
 	}
 
-	function &getInstance($userid=null, $reload=false)
+	/**
+	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
+	 *
+	 * @access	public
+	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
+	 * @return	JUser			The User object.
+	 * @since	1.6
+	 */
+	static public function getInstance($identifier = 0, $reset = false)
 	{
-		return CKunenaUserHelper::getInstance($userid, $reload);
+		// Find the user id
+		if (!is_numeric($identifier)) {
+			jimport('joomla.user.helper');
+			$id = JUserHelper::getUserId($identifier);
+		} else {
+			$id = $identifier;
+		}
+
+		if (!$reset && empty(self::$_instances[$id])) {
+			self::$_instances[$id] = new KunenaUser($id);
+		}
+
+		return self::$_instances[$id];
 	}
 
-	function online() {
+	/**
+	 * Method to get the user table object
+	 *
+	 * This function uses a static variable to store the table name of the user table to
+	 * it instantiates. You can call this function statically to set the table name if
+	 * needed.
+	 *
+	 * @access	public
+	 * @param	string	The user table name to be used
+	 * @param	string	The user table prefix to be used
+	 * @return	object	The user table object
+	 * @since	1.6
+	 */
+	function getTable($type = 'KunenaUser', $prefix = 'Table')
+	{
+		static $tabletype = null;
+
+		//Set a custom table type is defined
+		if ($tabletype === null || $type != $tabletype['name'] || $prefix != $tabletype['prefix']) {
+			$tabletype['name']		= $type;
+			$tabletype['prefix']	= $prefix;
+		}
+
+		// Create the user table object
+		return JTable::getInstance($tabletype['name'], $tabletype['prefix']);
+	}
+
+	/**
+	 * Method to load a KunenaUser object by userid
+	 *
+	 * @access	public
+	 * @param	mixed	$identifier The user id of the user to load
+	 * @param	string	$path		Path to a parameters xml file
+	 * @return	boolean			True on success
+	 * @since 1.6
+	 */
+	public function load($id)
+	{
+		// Create the user table object
+		$table	= &$this->getTable();
+
+		// Load the KunenaTableUser object based on the user id
+		if ($table->load($id)) {
+			$this->_exists = true;
+		}
+
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties($table->getProperties());
+		return true;
+	}
+
+	/**
+	 * Method to save the KunenaUser object to the database
+	 *
+	 * @access	public
+	 * @param	boolean $updateOnly Save the object only if not a new user
+	 * @return	boolean True on success
+	 * @since 1.6
+	 */
+	function save($updateOnly = false)
+	{
+		// Create the user table object
+		$table	= &$this->getTable();
+		$table->bind($this->getProperties());
+		$table->exists($this->_exists);
+
+		// Check and store the object.
+		if (!$table->check()) {
+			$this->setError($table->getError());
+			return false;
+		}
+
+		//are we creating a new user
+		$isnew = !$this->userid || !$this->_exists;
+
+		// If we aren't allowed to create new users return
+		if ($isnew && $updateOnly) {
+			return true;
+		}
+
+		//Store the user data in the database
+		if (!$result = $table->store()) {
+			$this->setError($table->getError());
+		}
+
+		// Set the id for the JUser object in case we created a new user.
+		if ($result && $isnew) $this->load($table->get('userid'));
+
+		return $result;
+	}
+
+	/**
+	 * Method to delete the KunenaUser object from the database
+	 *
+	 * @access	public
+	 * @return	boolean	True on success
+	 * @since 1.6
+	 */
+	function delete()
+	{
+		// Create the user table object
+		$table	= &$this->getTable();
+
+		$result = $table->delete($this->userid);
+		if (!$result) {
+			$this->setError($table->getError());
+		}
+		return $result;
+
+	}
+
+	public function isOnline() {
 		$my = JFactory::getUser ();
 		if ($this->_online === null && ($this->showOnline || CKunenaTools::isModerator($my->id))) {
 			$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->userid . ' AND s.client_id = 0 GROUP BY s.userid';
 			$this->_db->setQuery ( $query );
 			$lastseen = $this->_db->loadResult ();
-			check_dberror ( "Unable get user online information." );
+			CKunenaTools::checkDatabaseError();
 			$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
 			$this->_online = ($lastseen + $timeout) > time ();
 		}
 		return $this->_online;
 	}
 
-	function isAdmin() {
-		CKunenaTools::isAdmin($this->userid);
+	public function isAdmin() {
+		return CKunenaTools::isAdmin($this->userid);
 	}
 
-	function isModerator($catid=0) {
-		CKunenaTools::isModerator($catid);
+	public function isModerator($catid=0) {
+		return CKunenaTools::isModerator($this->userid, $catid);
 	}
 
-	function getRank($catid=0) {
+	public function getRank($catid=0) {
 		// Default rank
 		$rank = new stdClass();
 		$rank->rank_id = false;
@@ -276,10 +214,9 @@ class CKunenaUserprofile extends JTable
 		$config = CKunenaConfig::getInstance ();
 		if (!$config->showranking) return $rank;
 		if (self::$_ranks === null) {
-			$kunena_db = &JFactory::getDBO();
-			$kunena_db->setQuery ( "SELECT * FROM #__fb_ranks" );
-			self::$_ranks = $kunena_db->loadObjectList ('rank_id');
-			check_dberror ( "Unable to load ranks." );
+			$this->_db->setQuery ( "SELECT * FROM #__fb_ranks" );
+			self::$_ranks = $this->_db->loadObjectList ('rank_id');
+			CKunenaTools::checkDatabaseError();
 		}
 
 		$rank->rank_title = JText::_('COM_KUNENA_RANK_USER');
@@ -290,10 +227,10 @@ class CKunenaUserprofile extends JTable
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_VISITOR');
 			$rank->rank_special = 1;
 		}
-		else if ($this->rank != '0' && isset(self::$_ranks[$this->rank])) {
+		else if ($this->rank != 0 && isset(self::$_ranks[$this->rank])) {
 			$rank = self::$_ranks[$this->rank];
 		}
-		else if ($this->rank == '0' && self::isAdmin()) {
+		else if ($this->rank == 0 && self::isAdmin()) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_ADMINISTRATOR');
 			$rank->rank_special = 1;
@@ -306,7 +243,7 @@ class CKunenaUserprofile extends JTable
 				}
 			}
 		}
-		else if ($this->rank == '0' && self::isModerator($catid)) {
+		else if ($this->rank == 0 && self::isModerator($catid)) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_MODERATOR');
 			$rank->rank_special = 1;
@@ -332,7 +269,7 @@ class CKunenaUserprofile extends JTable
 		return $rank;
 	}
 
-	function profileIcon($name) {
+	public function profileIcon($name) {
 		switch ($name) {
 			case 'gender':
 				switch ($this->gender) {
@@ -366,7 +303,7 @@ class CKunenaUserprofile extends JTable
 		}
 	}
 
-	function socialButton($name) {
+	public function socialButton($name) {
 		$social = array (
 			'twitter' => array( 'name'=>'TWITTER', 'url'=>'http://twitter.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_TWITTER') ),
 			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FACEBOOK') ),
@@ -396,20 +333,4 @@ class CKunenaUserprofile extends JTable
 		if (!empty($this->$item)) return '<a href="'.$url.'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
 		return '<span class="'.$name.'_off"></span>';
 	}
-}
-
-class CKunenaUserHelper {
-	static $instances = array();
-	function &getInstance($userid=null, $reload=false)
-	{
-		if ($userid === null) {
-			$user =& JFactory::getUser();
-			$userid = $user->get('id');
-		}
-		if ($reload || !isset(self::$instances[$userid])) {
-			self::$instances[$userid] = new CKunenaUserprofile($userid);
-		}
-		return self::$instances[$userid];
-	}
-
 }

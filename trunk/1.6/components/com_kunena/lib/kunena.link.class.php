@@ -23,7 +23,7 @@ class CKunenaLink
     //
     // Basic universal href link
     //
-    function GetHrefLink($link, $name, $title, $rel, $class ='', $anker='', $attr='')
+    function GetHrefLink($link, $name, $title='', $rel='nofollow', $class ='', $anker='', $attr='')
     {
         return '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.$link.($anker?('#'.$anker):'').'" title="'.$title.'"'.($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$name.'</a>';
     }
@@ -31,7 +31,7 @@ class CKunenaLink
     //
     // Basic universal href link
     //
-    function GetSefHrefLink($link, $name, $title, $rel, $class ='', $anker='', $attr='')
+    function GetSefHrefLink($link, $name, $title='', $rel='nofollow', $class ='', $anker='', $attr='')
     {
         return '<a '.($class ? 'class="'.$class.'" ' : '').'href="'.JRoute::_($link).($anker?('#'.$anker):'').'" title="'.$title.'"'.($rel ? ' rel="'.$rel.'"' : '').($attr ? ' '.$attr : '').'>'.$name.'</a>';
     }
@@ -460,16 +460,6 @@ class CKunenaLink
     	return CKunenaLink::GetSefHrefLink('index.php?option=com_community&view=search&task=browse', $name, '', $rel);
     }
 
-    function GetJomsocialLoginLink($name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_community&amp;view=frontpage',$name, '', $rel);
-    }
-
-    function GetJomsocialRegisterLink($name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_community&amp;view=register', $name, '', $rel);
-    }
-
     //
     //CB
     //
@@ -477,53 +467,6 @@ class CKunenaLink
     {
     	$cb_url = CKunenaCBProfile::getUserListURL();
     	return CKunenaLink::GetHrefLink($cb_url, $name, '', $rel);
-    }
-
-    function GetCBLoginLink($name, $rel='nofollow')
-    {
-    	$cb_url = CKunenaCBProfile::getLoginURL();
-    	return CKunenaLink::GetHrefLink($cb_url,$name, '', $rel);
-    }
-
-    function GetCBLogoutLink($name, $rel='nofollow')
-    {
-    	$cb_url = CKunenaCBProfile::getLogoutURL();
-    	return CKunenaLink::GetHrefLink($cb_url,$name,'',$rel);
-    }
-
-    function GetCBRegisterLink($name, $rel='nofollow')
-    {
-    	$cb_url = CKunenaCBProfile::getRegisterURL();
-    	return CKunenaLink::GetHrefLink($cb_url,$name,'',$rel);
-    }
-
-    function GetCBLostPWLink($name, $rel='nofollow')
-    {
-    	$cb_url = CKunenaCBProfile::getLostPasswordURL();
-    	return CKunenaLink::GetHrefLink($cb_url,$name,'',$rel);
-    }
-
-    //
-    // Joomla links
-    //
-    function GetLoginLink($name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=login',$name, '', $rel);
-    }
-
-    function GetRegisterLink($name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=register',$name, '', $rel);
-    }
-
-    function GetLostpassLink($name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=reset',$name, '', $rel);
-    }
-
-    function GetLostuserLink($name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_user&amp;view=remind',$name, '', $rel);
     }
 
     //

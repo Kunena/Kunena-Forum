@@ -144,7 +144,7 @@ class CKunenaStats {
 			return;
 
 		$PopSubjectCount = $this->_config->popsubjectcount;
-		$kunena_session = & CKunenaSession::getInstance ();
+		$kunena_session = & KunenaFactory::getSession ();
 		$this->_db->setQuery ( "SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunena_session->allowed)
 				ORDER BY hits DESC", 0, $PopSubjectCount );
 

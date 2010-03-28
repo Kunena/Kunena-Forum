@@ -31,6 +31,24 @@ define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
 define ( 'KURL_MEDIA', JURI::Base () . 'media/' . KUNENA_NAME . '/' );
 
 /**
+ * Intelligent library importer.
+ *
+ * @param	string	A dot syntax path.
+ * @return	boolean	True on success
+ * @since	1.6
+ */
+function kimport($path)
+{
+	return JLoader::import($path, KPATH_ADMIN.'/libraries');
+}
+
+// Give access to all KunenaTables
+JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
+
+// Import KunenaFactory
+kimport('factory');
+
+/**
  * Defines public interface for class Kunena. Loads version information and APIs to be used in the third party application.
  *
  * Usage:
@@ -102,7 +120,7 @@ interface iKunenaUserAPI {
 	 * If $userid = 0 or user profile does not exist, default profile will be returned
 	 *
 	 * @param int $userid User ID
-	 * @return CKunenaUserprofile (lib/kunena.user.class.php)
+	 * @return KunenaUser
 	 */
 	public function getProfile($userid);
 	/**
@@ -225,7 +243,7 @@ interface iKunenaPostAPI {
 }
 */
 
-require_once(KPATH_SITE .'/lib/api.php');
+kimport('api');
 
 // Kunena has been initialized
 define ( 'KUNENA_LOADED', 1 );

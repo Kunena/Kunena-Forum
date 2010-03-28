@@ -11,8 +11,6 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-require_once(KUNENA_PATH_LIB.DS.'kunena.session.class.php');
-
 class CKunenaPosting {
 	var $parent = null;
 	private $message = null;
@@ -21,7 +19,7 @@ class CKunenaPosting {
 
 	function __construct() {
 		$this->_config = CKunenaConfig::getInstance ();
-		$this->_session = CKunenaSession::getInstance ();
+		$this->_session = KunenaFactory::getSession ();
 		$this->_db = JFactory::getDBO ();
 		$this->_my = JFactory::getUser ();
 		$this->_app = JFactory::getApplication ();
@@ -398,7 +396,6 @@ class CKunenaPosting {
 
 		// And clear current thread
 		$errcount = 0;
-		print_r($sessions);
 		foreach ( $sessions as $session ) {
 			$readtopics = $session->readtopics;
 			$rt = explode ( ",", $readtopics );

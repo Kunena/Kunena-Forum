@@ -20,7 +20,6 @@ defined( '_JEXEC' ) or die();
 
 require_once (JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
-//require_once (KUNENA_PATH_LIB . DS . 'kunena.user.class.php');
 
 class CKunenaTables {
 	var $tables = array ();
@@ -411,7 +410,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	public function &getInstance() {
 		static $instance = NULL;
 		if (! $instance) {
-			//$userinfo = CKunenaUserprofile::getInstance ( );
+			//$userinfo = KunenaFactory::getUser ( );
 			$instance = new CKunenaConfig ( /*$userinfo*/ );
 		}
 		return $instance;

@@ -17,6 +17,7 @@ require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
 $this->config = & CKunenaConfig::getInstance ();
 $type = CKunenaLogin::getType ();
 $return = CKunenaLogin::getReturnURL ( $type );
+$login = CKunenaLogin::getloginFields();
 
 ?>
 <div class="k_bt_cvr1">
@@ -35,6 +36,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 		</tr>
 	</thead>
 	<tbody>
+	<?php if ($login) : ?>
 		<tr class="ksth">
 			<th colspan="2" class="ksectiontableheader" align="left">
 				<?php echo JText::_('COM_KUNENA_LOGIN_FORUM') ?>
@@ -64,7 +66,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 							<tbody>
 								<tr>
 									<td valign="top"><b><?php echo JText::_('COM_KUNENA_A_USERNAME'); ?></b></td>
-									<td><input type="text" name="username" class="inputbox ks" alt="username" size="40" /> <br />
+									<td><input type="text" name="<?php echo $login['field_username']; ?>" class="inputbox ks" alt="username" size="40" /> <br />
 									<span class="kprofilebox_link">
 										<?php echo CKunenaLogin::getLostUserLink ();?>
 									</span>
@@ -74,7 +76,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 									<td valign="top"><b><?php echo JText::_('COM_KUNENA_PASS'); ?></b>
 									</td>
 									<td>
-										<input type="password" name="passwd" class="inputbox ks" size="40" alt="password" value=""/>
+										<input type="password" name="<?php echo $login['field_password']; ?>" class="inputbox ks" size="40" alt="password" value=""/>
 										<br/>
 										<span class="kprofilebox_link">
 											<?php echo CKunenaLogin::getLostPasswordLink (); ?>
@@ -87,7 +89,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 								<tr>
 									<td></td>
 									<td>
-										<input type="checkbox" name="remember" value="yes" alt="Remember Me" />
+										<input type="checkbox" name="<?php echo $login['field_remember']; ?>" value="yes" alt="Remember Me" />
 										<span><?php echo JText::_('COM_KUNENA_PROFILEBOX_REMEMBER_ME'); ?></span>
 									</td>
 								</tr>
@@ -100,9 +102,9 @@ $return = CKunenaLogin::getReturnURL ( $type );
 					<tr>
 			<td align="left">
 				<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
-				<input type="hidden" name="option" value="com_user" />
-				<input type="hidden" name="task" value="login" />
-				<input type="hidden" name="return" value="<?php echo $return; ?>" />
+				<input type="hidden" name="option" value="<?php echo $login['option']; ?>" />
+				<input type="hidden" name="task" value="<?php echo $login['task']; ?>" />
+				<input type="hidden" name="<?php echo $login['field_return']; ?>" value="<?php echo $return; ?>" />
 				<?php echo JHTML::_( 'form.token' ); ?>
 			</td>
 					</tr>
@@ -111,6 +113,7 @@ $return = CKunenaLogin::getReturnURL ( $type );
 			</form>
 			</td>
 		</tr>
+	<?php endif; ?>
 	</tbody>
 </table>
 <table border="0" cellspacing="0" cellpadding="0" width="60%">

@@ -18,8 +18,6 @@ class CKunenaProfile {
 	public $online = null;
 
 	function __construct($userid, $do='') {
-		require_once (KUNENA_PATH_LIB . DS . "kunena.user.class.php");
-
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = CKunenaConfig::getInstance ();
@@ -27,22 +25,22 @@ class CKunenaProfile {
 		$this->do = $do;
 
 		if (!$userid) {
-			$this->user = JFactory::getUser();
+			$this->user = $this->my;
 		}
 		else {
-			$this->user = JUser::getInstance ( $userid );
+			$this->user = JFactory::getUser( $userid );
 		}
-		if (!$this->user->id) return;
-		$this->profile = CKunenaUserprofile::getInstance ( $this->user->id );
+		$this->profile = KunenaFactory::getUser ( $this->user->id );
+		if ($this->profile->userid == 0) return;
 		if ($this->profile->posts === null) {
 			$this->_db->setQuery ( "INSERT INTO #__fb_users (userid) VALUES ('{$this->user->id}')" );
 			$this->_db->query ();
 			check_dberror ( 'Unable to create user profile.' );
-			$this->profile = CKunenaUserprofile::getInstance($this->user->id, true);
+			$this->profile = KunenaFactory::getUser ($this->profile->userid, true);
 		}
-		if ($this->user->id == $this->my->id) {
-			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->user->id, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
-			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->user->id, JText::_('COM_KUNENA_BACK'), 'nofollow' );
+		if ($this->profile->userid == $this->my->id) {
+			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->profile->userid, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
+			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
 		}
 		$this->name = $this->user->username;
 		if ($this->_config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
@@ -53,8 +51,8 @@ class CKunenaProfile {
 		$this->personalText = CKunenaTools::parseText($this->profile->personalText);
 		$this->signature = CKunenaTools::parseBBCode($this->profile->signature);
 		$this->timezone = $this->user->getParam('timezone', 0);
-		$this->moderator = CKunenaTools::isModerator($this->user->id);
-		$this->admin = CKunenaTools::isAdmin($this->user->id);
+		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
+		$this->admin = CKunenaTools::isAdmin($this->profile->userid);
 		$rank = $this->profile->getRank();
 		if ($rank->rank_title) $this->rank_title = $rank->rank_title;
 		if ($rank->rank_image) $this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
@@ -76,7 +74,7 @@ class CKunenaProfile {
 		else
 			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
-		$this->online = $this->profile->online();
+		$this->online = $this->profile->isOnline();
 	}
 
 	/**
@@ -235,7 +233,7 @@ class CKunenaProfile {
 		switch ($this->do) {
 			case 'edit':
 				$user = JFactory::getUser();
-				if ($user->id == $this->user->id) CKunenaTools::loadTemplate('/profile/edittab.php');
+				if ($user->id == $this->profile->userid) CKunenaTools::loadTemplate('/profile/edittab.php');
 				break;
 			default:
 				CKunenaTools::loadTemplate('/profile/usertab.php');
@@ -244,10 +242,10 @@ class CKunenaProfile {
 
 	function displaySummary() {
 		$user = JFactory::getUser();
-		if ($user->id != $this->user->id)
+		if ($user->id != $this->profile->userid)
 		{
 			$this->profile->uhits++;
-			$this->profile->store();
+			$this->profile->save();
 		}
 
 		CKunenaTools::loadTemplate('/profile/summary.php');
@@ -255,13 +253,13 @@ class CKunenaProfile {
 
 	function displayEdit() {
 		$user = JFactory::getUser();
-		if ($user->id != $this->user->id) return;
+		if ($user->id != $this->profile->userid) return;
 
 		CKunenaTools::loadTemplate('/profile/edit.php');
 	}
 
 	function display() {
-		if (!$this->user->id) return;
+		if (!$this->profile->userid) return;
 
 		switch ($this->do) {
 			case 'save':
@@ -363,7 +361,7 @@ class CKunenaProfile {
 			LINKEDIN={$this->_db->Quote($linkedin)},DELICIOUS={$this->_db->Quote($delicious)},FRIENDFEED={$this->_db->Quote($friendfeed)},
 			DIGG={$this->_db->Quote($digg)},BLOGSPOT={$this->_db->Quote($blogspot)},FLICKR={$this->_db->Quote($flickr)},BEBO={$this->_db->Quote($bebo)},
 			websitename={$this->_db->Quote($websitename)},websiteurl={$this->_db->Quote($websiteurl)},signature={$this->_db->Quote($signature)}
-			WHERE userid={$this->_db->Quote($this->user->id)}" );
+			WHERE userid={$this->_db->Quote($this->profile->userid)}" );
 		$this->_db->query ();
 		check_dberror ( 'Unable to update kunena user profile.' );
 	}
@@ -382,7 +380,7 @@ class CKunenaProfile {
 				if(JDEBUG == 1 && defined('JFIREPHP')){
 					FB::log('Kunena save avatar: ' . $fileinfo['name']);
 				}
-				$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($fileinfo['name'])} WHERE userid='{$this->user->id}'" );
+				$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($fileinfo['name'])} WHERE userid='{$this->profile->userid}'" );
 
 				if (! $this->_db->query () || $this->_db->getErrorNum()) {
 					$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_DATABASE_STORE'));
@@ -392,15 +390,15 @@ class CKunenaProfile {
 			if (!$fileinfo['status']) $this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
 			else $this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
 
-			//$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->_config, $this->user->id, '', true), JText::_('COM_KUNENA_AVATAR_UPLOADED_WITH_SUCCESS'));
+			//$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->_config, $this->profile->userid, '', true), JText::_('COM_KUNENA_AVATAR_UPLOADED_WITH_SUCCESS'));
 
 		} else if ( $action == 'delete' ) {
 			//set default avatar
-			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar='' WHERE userid='{$this->user->id}'" );
+			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar='' WHERE userid='{$this->profile->userid}'" );
 			$this->_db->query ();
 			check_dberror ( 'Unable to set default avatar.' );
 		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($path, '..') === false) {
-			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($action)} WHERE userid='{$this->user->id}'" );
+			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($action)} WHERE userid='{$this->profile->userid}'" );
 			$this->_db->query ();
 			check_dberror ( 'Unable to set avatar from gallery.' );
 		}
@@ -413,7 +411,7 @@ class CKunenaProfile {
 
 		//Query on kunena user
 		$this->_db->setQuery ( "UPDATE #__fb_users SET ordering='$messageordering', hideEmail='$hidemail', showOnline='$showonline'
-							WHERE userid='{$this->user->id}'" );
+							WHERE userid='{$this->profile->userid}'" );
 		$this->_db->query ();
 		check_dberror ( 'Unable to update kunena user profile.' );
 	}
@@ -444,6 +442,6 @@ class CKunenaProfile {
 
 	function cancel()
 	{
-		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->_config, $this->user->id, '', true) );
+		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->_config, $this->profile->userid, '', true) );
 	}
 }

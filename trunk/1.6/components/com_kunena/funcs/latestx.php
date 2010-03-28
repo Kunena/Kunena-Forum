@@ -22,7 +22,7 @@ class CKunenaLatestX {
 
 		$this->db = JFactory::getDBO ();
 		$this->user = $this->my = JFactory::getUser ();
-		$this->session = CKunenaSession::getInstance ();
+		$this->session = KunenaFactory::getSession ();
 		$this->config = CKunenaConfig::getInstance ();
 
 		$this->page = $page < 1 ? 1 : $page;

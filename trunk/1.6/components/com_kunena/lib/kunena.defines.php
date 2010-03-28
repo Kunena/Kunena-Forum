@@ -14,11 +14,7 @@ require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS .'com_kunena'. DS . '
 define('KUNENA_LANGUAGE_DEFAULT', 'english');
 define('KUNENA_TEMPLATE_DEFAULT', 'default');
 
-global $lang;
-$language =& JFactory::getLanguage();
-$lang = $language->getBackwardLang();
-
-define('KUNENA_LANGUAGE', $lang);
+define('KUNENA_LANGUAGE', 'english');
 
 // File system paths
 define('KUNENA_COMPONENT_RELPATH', 'components' .DS. KUNENA_COMPONENT_NAME);

@@ -64,7 +64,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         // This checkes to see if it's not too soon for a new karma change
                         if (!CKunenaTools::isModerator($kunena_my->id, $catid))
                         {
-                        	$userprofile = CKunenaUserprofile::getInstance($kunena_my->id);
+                        	$userprofile = KunenaFactory::getUser($kunena_my->id);
                             $karma_time_old = $userprofile->karma_time;
                             $karma_time_diff = $time - $karma_time_old;
                         }

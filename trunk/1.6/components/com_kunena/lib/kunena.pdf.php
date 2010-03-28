@@ -71,8 +71,7 @@ function dofreePDF()
 	$id = JRequest::getInt('id', 0);
 
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.session.class.php');
-    $kunena_session =& CKunenaSession::getInstance(true);
+    $kunena_session = KunenaFactory::getSession(true);
     $kunena_session->updateAllowedForums ();
 	$allow_forum = ($kunena_session->allowed <> '')?explode(',', $kunena_session->allowed):array();
 

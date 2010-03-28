@@ -44,7 +44,7 @@ class CKunenaUpload {
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
 		$this->_my = &JFactory::getUser ();
-		$this->_session = &CKunenaSession::getInstance ();
+		$this->_session = &KunenaFactory::getSession ();
 		$this->_config = &CKunenaConfig::getInstance ();
 		$this->_isimage = false;
 		$this->_isfile = false;

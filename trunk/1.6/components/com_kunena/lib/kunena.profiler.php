@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+jimport('joomla.error.profiler');
+
 /**
  * @author fxstein
  *

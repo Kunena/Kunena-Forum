@@ -26,6 +26,9 @@ defined( '_JEXEC' ) or die();
 // Kunena wide defines
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
 
+class KunenaApp {
+
+	function __construct() {
 // Display time it took to create the entire page in the footer
 jimport( 'joomla.error.profiler' );
 $__kstarttime = JProfiler::getmicrotime();
@@ -119,7 +122,7 @@ if ($func == ''){
 			$func = 'listcat';
 	}
 
-	if ( $redirect ){
+	if ( !$markaction && $redirect ){
 		$Itemid = JRequest::getInt ( 'Itemid', 0, 'REQUEST' );
 		header ( "HTTP/1.1 303 See Other" );
 		header ( "Location: " . htmlspecialchars_decode ( JRoute::_ ( 'index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=' . $func ) ) );
@@ -253,28 +256,23 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		include_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'icons.php');
 	}
 
-	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.session.class.php');
-
 	// We only save session for registered users
-	$kunena_session = & CKunenaSession::getInstance ( true );
+	$kunena_session = KunenaFactory::getSession ( true );
 	if ($kunena_my->id > 0) {
 		// new indicator handling
 		if ($markaction == "allread") {
 			$kunena_session->markAllCategoriesRead ();
 		}
-		$kunena_session->save ( $kunena_session );
+		if (!$kunena_session->save ()) $kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 
 		if ($markaction == "allread") {
 			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
 		}
 
-		$userprofile = CKunenaUserprofile::getInstance($kunena_my->id);
+		$userprofile = KunenaFactory::getUser($kunena_my->id);
 		if ($userprofile->posts === null) {
-			// user does not yet have a Kunena profile -> lets create one
-			$kunena_db->setQuery ( "INSERT INTO #__fb_users (userid) VALUES ('$kunena_my->id')" );
-			$kunena_db->query ();
-			check_dberror ( 'Unable to create user profile.' );
-			$userprofile = CKunenaUserprofile::getInstance($kunena_my->id, true);
+			$userprofile->save();
+			//$userprofile = KunenaFactory::getUser($kunena_my->id, true);
 		}
 
 		// Assign previous visit without user offset to variable for templates to decide
@@ -614,7 +612,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		default :
-			CKunenaTools::loadTemplate('/listcat.php');
+			require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
+			$page = new CKunenaListcat($catid);
+			$page->display();
 
 			break;
 	}
@@ -662,3 +662,9 @@ if(JDEBUG == 1){
 		}
 	}
 }
+
+	}
+
+}
+
+$kunena = new KunenaApp();

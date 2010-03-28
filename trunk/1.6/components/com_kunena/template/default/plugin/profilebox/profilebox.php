@@ -19,8 +19,8 @@ $type = CKunenaLogin::getType ();
 $return = CKunenaLogin::getReturnURL ( $type );
 
 if ($type == 'logout') {
-?>
-<form action="index.php" method="post" name="login">
+$logout = CKunenaLogin::getlogoutFields();
+	?>
 	<table class="kprofilebox" id="kprofilebox">
 		<tbody id="topprofilebox_tbody">
 			<tr class="ksectiontableentry1">
@@ -42,11 +42,16 @@ if ($type == 'logout') {
 					<ul class="kprofilebox_welcome">
 						<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></strong></li>
 						<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
+						<?php if ($logout) : ?>
 						<li>
-							<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>" /> <input type="hidden" name="option" value="com_user" />
-							<input type="hidden" name="task" value="logout" />
-							<input type="hidden" name="return" value="<?php echo $return; ?>" />
+						<form action="<?php echo KUNENA_LIVEURLREL ?>" method="post" name="login">
+							<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>" />
+							<input type="hidden" name="option" value="<?php echo $logout['option']; ?>" />
+							<input type="hidden" name="task" value="<?php echo $logout['task']; ?>" />
+							<input type="hidden" name="<?php echo $logout['field_return']; ?>" value="<?php echo $return; ?>" />
+						</form>
 						</li>
+						<?php endif; ?>
 					</ul>
 				</td>
 					<?php if (JDocumentHTML::countModules ( 'kunena_profilebox' )) { ?>
@@ -59,33 +64,33 @@ if ($type == 'logout') {
 			</tr>
 		</tbody>
 	</table>
-</form>
 <?php
 } else {
-// LOGOUT AREA
+$login = CKunenaLogin::getloginFields();
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">
 			<td valign="top" class="kprofileboxcnt" align="left">
-				<form action="index.php" method="post" name="login">
-					<div class="k_guest">
-						<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>,
-						<b><?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST'); ?></b>
-					</div>
+				<div class="k_guest">
+					<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>,
+					<b><?php echo JText::_('COM_KUNENA_PROFILEBOX_GUEST'); ?></b>
+				</div>
+				<?php if ($login) : ?>
+				<form action="<?php echo KUNENA_LIVEURLREL ?>" method="post" name="login">
 					<div class="input">
 						<span>
 							<?php echo JText::_('COM_KUNENA_A_USERNAME'); ?>
-							<input type="text" name="username" class="inputbox ks" alt="username" size="18" />
+							<input type="text" name="<?php echo $login['field_username']; ?>" class="inputbox ks" alt="username" size="18" />
 						</span>
 						<span>
 							<?php echo JText::_('COM_KUNENA_PASS'); ?>
-							<input type="password" name="passwd" class="inputbox ks" size="18" alt="password" /></span>
+							<input type="password" name="<?php echo $login['field_password']; ?>" class="inputbox ks" size="18" alt="password" /></span>
 						<span>
-							<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
-							<input type="hidden" name="option" value="com_user" />
-							<input type="hidden" name="task" value="login" />
-							<input type="hidden" name="return" value="<?php echo $return; ?>" /> <?php echo JHTML::_ ( 'form.token' ); ?>
+							<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
+							<input type="hidden" name="option" value="<?php echo $login['option']; ?>" />
+							<input type="hidden" name="task" value="<?php echo $login['task']; ?>" />
+							<input type="hidden" name="<?php echo $login['field_return']; ?>" value="<?php echo $return; ?>" /> <?php echo JHTML::_ ( 'form.token' ); ?>
 						</span>
 					</div>
 					<div class="link_block">
@@ -103,6 +108,7 @@ if ($type == 'logout') {
 							<?php endif; ?>
 					</div>
 				</form>
+				<?php endif; ?>
 			</td>
 				<?php if (JDocumentHTML::countModules ( 'kunena_profilebox' )) { ?>
 			<td class = "kprofilebox-right">

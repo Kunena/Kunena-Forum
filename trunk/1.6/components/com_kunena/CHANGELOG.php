@@ -46,7 +46,8 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: CommunityBuilder profile integration did not fill all the fields
 ^ [#15886] Merged revisions 2098-2103 from /branches/1.5-xillibit-fixing
 # [#19288] Fix regression: Do not mess up Joomla template (local css rules)
-# [#19064] Add new bbcodes: Simple working implementation with external link
+# [#19064] Add new bbcodes: Simple working implementation of MAP with external link
+# [#19064] Add new bbcodes: article tag pointing to com_content articles
 
 27-Mar-2010 Xillibit
 # [#19764] Fix undefined variables in post.php for merge function when there is only one thread in a cat

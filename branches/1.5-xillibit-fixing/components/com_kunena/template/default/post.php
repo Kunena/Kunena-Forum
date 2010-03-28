@@ -492,7 +492,7 @@ if (empty($objCatInfo)) {
 
                                                     $msg = "$emailTo->name,\n\n";
                                                     $msg .=  $msg1 . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
-                                                    $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
+                                                    $msg .= COM_KUNENA_POST_EMAIL_SUBJECT.": " . stripslashes($messagesubject) . "\n";
                                                     $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
                                                     $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= $msg2 . "\n";
@@ -507,6 +507,8 @@ if (empty($objCatInfo)) {
                                                     $msg .= "\n\n\n\n";
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
                                                     $msg = JMailHelper::cleanBody($msg);
+
+                                                    echo $msg;
 
                                                     if ($ip != "127.0.0.1") { //don't mail yourself
                                                         JUtility::sendMail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);

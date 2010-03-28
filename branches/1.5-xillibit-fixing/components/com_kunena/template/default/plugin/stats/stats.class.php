@@ -27,7 +27,7 @@ if ($fbConfig->showstats)
 
 if ($fbConfig->showgenstats)
 {
-$kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
+$kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block=0 AND activation=''");
 $totalmembers = $kunena_db->loadResult();
 
 $kunena_db->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent='0'");

@@ -44,6 +44,9 @@ define('_KUNENA_POST_ERROR_NO_CATEGORY',"No category was chosen to save your mes
 define('_KUNENA_POST_ERROR_IS_SECTION',"You are not allowed to post messages into section.");
 define('_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN',"This category does not allow you to write anonymous posts. To keep your privacy, message was not sent.");
 define('_KUNENA_USERNAME_ANONYMOUS',"Anonymous");
+//Mail notification
+DEFINE('COM_KUNENA_POST_EMAIL_SUBJECT','Message subject');
+
 // 1.5.10
 DEFINE('_KUNENA_PARENTDESC', 'Note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can only be created within a category by selecting an existing category as the parent for the forum.<br /> Messages can only be posted to forums, not categories.');
 DEFINE('_KUNENA_ADMIN', 'Forum Administration');
@@ -1421,12 +1424,12 @@ DEFINE('_COM_A_RANKINGIMAGES_DESC',
     'Set to &quot;Yes&quot; if you want to show the rank registered users have using an image (from components/com_kunena/ranks). Turning this of will show the text for that rank. Check the documentation on www.kunena.com for more information on ranking images.');
 
 //email and stuff
-$_COM_A_NOTIFICATION = "New post notification from";
-$_COM_A_NOTIFICATION1 = "A new post has been made to a topic to which you have subscribed on the";
-$_COM_A_NOTIFICATION2 = "You can administer your subscriptions by following the 'My Profile' link on the Forum home page after you have logged in on the site. From your profile you can also unsubscribe from the topic.";
-$_COM_A_NOTIFICATION3 = "Do not answer to this e-mail notification as it is a generated e-mail.";
-$_COM_A_NOT_MOD1 = "A new post has been made to a forum to which you have assigned as moderator on the";
-$_COM_A_NOT_MOD2 = "Please have a look at it after you have logged in on the site.";
+DEFINE('COM_KUNENA_POST_EMAIL_NOTIFICATION', 'New post notification from');
+DEFINE('COM_KUNENA_POST_EMAIL_NOTIFICATION1' , 'A new post has been made to a topic to which you have subscribed on the');
+DEFINE('COM_KUNENA_POST_EMAIL_NOTIFICATION2', 'You can administer your subscriptions by following the \'My Profile\' link on the Forum home page after you have logged in on the site. From your profile you can also unsubscribe from the topic.');
+DEFINE('COM_KUNENA_POST_EMAIL_NOTIFICATION3', 'Do not answer to this e-mail notification as it is a generated e-mail.');
+DEFINE('COM_KUNENA_POST_EMAIL_MOD1', 'A new post has been made to a forum to which you have assigned as moderator on the');
+DEFINE('COM_KUNENA_POST_EMAIL_MOD2', 'Please have a look at it after you have logged in on the site.');
 DEFINE('_COM_A_NO', 'No');
 DEFINE('_COM_A_YES', 'Yes');
 DEFINE('_COM_A_FLAT', 'Flat');
@@ -1497,8 +1500,8 @@ DEFINE('_GEN_TOPIC', 'Topic');
 DEFINE('_GEN_TOPICS', 'Topics');
 DEFINE('_GEN_TOPIC_ICON', 'topic icon');
 DEFINE('_GEN_SEARCH_BOX', 'Search Forum');
-$_GEN_THREADED_VIEW = "Threaded";
-$_GEN_FLAT_VIEW = "Flat";
+DEFINE('_GEN_THREADED_VIEW', 'Threaded');
+DEFINE('_GEN_FLAT_VIEW', 'Flat');
 //avatar_upload.php
 DEFINE('_UPLOAD_UPLOAD', 'Upload');
 DEFINE('_UPLOAD_DIMENSIONS', 'Your image file can be maximum (width x height - size)');

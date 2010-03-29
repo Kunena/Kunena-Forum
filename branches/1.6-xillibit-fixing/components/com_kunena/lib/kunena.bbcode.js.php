@@ -779,12 +779,12 @@ kbbcode.addFunction('Poll', function() {
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>")'});
 
-<?php } ?>
-
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator5'});
 
 <?php
+}
+
 if ($kunena_config->showebaytag) {
 ?>
 kbbcode.addFunction('eBay', function() {

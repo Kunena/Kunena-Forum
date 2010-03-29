@@ -32,6 +32,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-DEV
+
+29-Mar-2010 Xillbit
+# [#19764] Fix small typo with button move message which doesn't diplay the icon
+# [#19358] Fix an issue which prevent to display the poll under some conditions
+# [#19764] Some fixes on moderation.class and functions which use this class
+# [#20044] Undefined property: CKunenaPost::$email on components\com_kunena\template\default\editor\form.php on line 97
+
 Kunena 1.6.0-DEV
 
 29-Mar-2010 Matias

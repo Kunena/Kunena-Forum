@@ -117,15 +117,17 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<?php
 			//Check if the poll is allowed and check if the polls is enabled
 			if ($kunena_config->pollenabled) {
-				$display_poll = CKunenaPolls::get_message_parent($this->id, $this->kunena_editmode);
+				if ( empty($this->msg_cat->allow_polls) )
+					$this->msg_cat->allow_polls = '';
+
+				$display_poll = CKunenaPolls::get_poll_allowed($this->id, $this->kunena_editmode, $this->msg_cat->allow_polls, $this->catid);
 				if($display_poll) {
-					if (!empty($msg_cat->allow_polls) || $this->catid == '0')	{
-						if (!isset($this->polldatasedit[0]->polltimetolive)) {
-							$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-						}
-						CKunenaPolls::call_js_poll_edit($this->kunena_editmode, $this->id);
-						$html_poll_edit = CKunenaPolls::get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
-						JHTML::_('behavior.calendar');
+					if (!isset($this->polldatasedit[0]->polltimetolive)) {
+						$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+					}
+					CKunenaPolls::call_js_poll_edit($this->kunena_editmode, $this->id);
+					$html_poll_edit = CKunenaPolls::get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
+					JHTML::_('behavior.calendar');
 			?><span id="kpoll_not_allowed"></span>
 			<div id="kpoll_hide_not_allowed">
 			<?php echo JText::_('COM_KUNENA_POLL_TITLE');
@@ -167,8 +169,11 @@ $kunena_config = & CKunenaConfig::getInstance ();
 						?>">
 
 			<?php
+					} else {
+			?>
+				<span id="kpoll_not_allowed_static"><?php echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); ?></span>
+			<?php
 					}
-				}
 			}
 			?>
 			</div>
@@ -312,20 +317,23 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			echo kunena_htmlspecialchars ( $this->message_text, ENT_QUOTES );
 			?></textarea>
 	<?php
+	//
+	// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
+	//
+	?>
+			<!-- Hidden preview placeholder -->
+	<div id="kbbcode-preview" style="display: none;"></div>
+	<?php
 	if ($this->kunena_editmode) {
 		// Moderator edit area
 		?>
-	<fieldset><legend><?php
+	<fieldset style="width:585px;"><legend><?php
 		echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend> <input
 		name="modified_reason" size="40" maxlength="200" type="text" /><br />
 	</fieldset>
 	<?php
 	}
-//
-// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
-//
 	?>
-		<!-- Hidden preview placeholder -->
-	<div id="kbbcode-preview" style="display: none;"></div>
+
 	</td>
 </tr>

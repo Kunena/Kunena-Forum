@@ -94,7 +94,7 @@ $this->k=0;
 		?>
 		<tr class = "ksectiontableentry<?php echo 1+ $this->k^=1 ?>">
 			<td class = "kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
-			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo $this->email;?>" /></td>
+			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php if ( !empty($this->emai) ) { echo $this->email; } ?>" /></td>
 		</tr>
 		<?php
 		}

@@ -95,14 +95,33 @@ class CKunenaPolls {
     	return $numoptions;
 	}
 	/**
-	* Get message parent to display the poll
+	* Get if the poll is allowed to be displayed
+	*/
+	function get_poll_allowed($id, $kunena_editmode, $allow_poll, $catid) {
+		$display_poll = '';
+		if ($allow_poll || $catid == '0' ) {
+			if($kunena_editmode) {
+				$mesparent 	= CKunenaPolls::get_parent($id);
+				if ($mesparent->parent == '0') {
+					$display_poll = '1';
+				}
+			} else {
+				if ($id == "0") {
+					$display_poll = '1';
+				}
+			}
+		}
+		return $display_poll;
+	}
+	/**
+	* Get if the poll is allowed to be displayed
 	*/
 	function get_message_parent($id, $kunena_editmode) {
 		$display_poll = '';
 		if($kunena_editmode) {
 			$mesparent 	= CKunenaPolls::get_parent($id);
-			if ($mesparent->parent == "0") {
-					$display_poll = '1';
+			if ($mesparent->parent == '0') {
+				$display_poll = '1';
 			}
 		} else {
 			if ($id == "0") {

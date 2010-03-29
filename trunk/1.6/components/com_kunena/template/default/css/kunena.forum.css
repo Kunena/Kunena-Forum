@@ -3246,6 +3246,12 @@ div#kprofile-stats ul li span.rank-admin {
 	background: 0 none; 
 	padding-left: 0;
 }
+#Kunena span.pm { 
+	display:block; 
+	background: url("../images/icons/pm.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
 #Kunena span.location { 
 	display:block; 
 	background: url("../images/icons/location.png") no-repeat; 

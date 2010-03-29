@@ -85,6 +85,20 @@ abstract class KunenaFactory {
 		return KunenaAvatar::getInstance();
 	}
 
+
+	/**
+	 * Get Kunena private message system integration object
+	 *
+	 * Returns the global {@link KunenaPrivate} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaPrivate
+	 */
+	public static function getPMSIntegration()
+	{
+		kimport('integration.private');
+		return KunenaPrivate::getInstance();
+	}
+
 	/**
 	 * Get Kunena access control object
 	 *

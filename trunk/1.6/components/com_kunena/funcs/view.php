@@ -462,22 +462,6 @@ class CKunenaView {
 			}
 		}
 
-		/*let's see if we should use uddeIM integration */
-		if ($this->config->pm_component == "uddeim" && $this->profile->userid && $this->my->id) {
-			//we should offer the user a PMS link
-			//first get the username of the user to contact
-			$PMSName = $this->profile->username;
-			$img_html = "<img src=\"";
-
-			if ($kunena_icons ['pms']) {
-				$img_html .= KUNENA_URLICONSPATH . $kunena_icons ['pms'];
-			} else {
-				$img_html .= KUNENA_URLEMOTIONSPATH . "pm.png";
-			}
-
-			$img_html .= "\" alt=\"" . JText::_('COM_KUNENA_VIEW_PMS') . "\" border=\"0\" title=\"" . JText::_('COM_KUNENA_VIEW_PMS') . "\" />";
-			$this->msg_html->pms = CKunenaLink::GetUddeImLink( $this->profile->userid, $img_html );
-		}
 		// online - ofline status
 		$this->msg_html->online = 0;
 		if ($this->profile->userid > 0 && $this->profile->showOnline == 1) {
@@ -493,19 +477,10 @@ class CKunenaView {
 			$this->msg_html->online = $onlinecache [$this->profile->userid];
 		}
 
-		/* PM integration */
-		if ($this->config->pm_component == "jomsocial" && $this->profile->userid && $this->my->id) {
-			$onclick = CMessaging::getPopup ( $this->profile->userid );
-			$this->msg_html->pms = '<a href="javascript:void(0)" onclick="' . $onclick . "\">";
+		/* PMS integration */
+		$pms = KunenaFactory::getPMSIntegration();
+		$this->msg_html->pms = $pms->showIcon( $this->profile->userid );
 
-			if ($kunena_icons ['pms']) {
-				$this->msg_html->pms .= "<img src=\"" . KUNENA_URLICONSPATH . $kunena_icons ['pms'] . "\" alt=\"" . JText::_('COM_KUNENA_VIEW_PMS') . "\" border=\"0\" title=\"" . JText::_('COM_KUNENA_VIEW_PMS') . "\" />";
-			} else {
-				$this->msg_html->pms .= JText::_('COM_KUNENA_VIEW_PMS');
-			}
-
-			$this->msg_html->pms .= "</a>";
-		}
 		//Check if the Integration settings are on, and set the variables accordingly.
 		if ($this->config->fb_profile == "cb") {
 			if ($this->config->fb_profile == 'cb' && $this->profile->userid > 0) {

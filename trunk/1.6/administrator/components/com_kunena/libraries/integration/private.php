@@ -13,31 +13,29 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
-class KunenaPrivateMessages
+abstract class KunenaPrivate
 {
-	protected static $instance = null;
+	public $priority = 0;
 
-	protected function __construct() {}
+	protected static $instance = false;
 
-	public function getInstance()
-	{
-		if (!self::$instance) {
-			self::$instance = new KunenaPrivateMessages();
+	abstract public function __construct();
+
+	static public function getInstance($integration = null) {
+		if (self::$instance === false) {
+			$config = KunenaFactory::getConfig ();
+			if (! $integration)
+				$integration = $config->integration_login;
+			self::$instance = KunenaIntegration::initialize ( 'private', $integration );
 		}
 		return self::$instance;
 	}
 
-	function getOnClick($userid)
-	{
-		return '';
-	}
+	protected function getOnClick($userid) {}
 
-	function getURL($userid)
-	{
-		return '';
-	}
+	abstract protected function getURL($userid);
 
-	function showSendPMIcon($userid)
+	public function showIcon($userid)
 	{
 		$my = JFactory::getUser();
 
@@ -45,25 +43,12 @@ class KunenaPrivateMessages
 		if ($my->id == 0 || $userid == 0 || $userid == $my->id) return '';
 
 		$url = $this->getURL($userid);
+
 		$onclick = $this->getOnClick($userid);
-		// No PMS system enabled or PM not allowed
+		// No PMS enabled or PM not allowed
 		if (empty($url)) return '';
 
 		// We should offer the user a PM link
-		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('K_PM_SEND_TITLE').'">' .$this->_getIcon() . '</a>';
-	}
-
-	protected function _getIcon()
-	{
-		global $kunenaIcons;
-
-		if ($kunenaIcons['pms']) {
-			$html = '<img src="' . KUNENA_URLICONSPATH . $kunenaIcons['pms'] . '" alt="' .JText::_('K_PM_ICONTEXT'). '" />';
-		}
-		else {
-			$html = JText::_('K_PM_ICONTEXT');
-		}
-
-		return $html;
+		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="pm" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '" /></a>';
 	}
 }

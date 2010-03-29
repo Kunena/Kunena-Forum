@@ -28,50 +28,22 @@ class CKunenaLogin {
 	}
 
 	function getMyAvatar() {
+
+		$this->my = JFactory::getUser();
+		$profile = KunenaFactory::getUser();
 		$this->config = & CKunenaConfig::getInstance ();
-		$this->my = &JFactory::getUser ();
 		//first we gather some information about this person
 		$juserinfo = JUser::getInstance ( $this->my->id );
-		$userinfo = KunenaFactory::getUser ( );
 
 		$Itemid = JRequest::getInt ( 'Itemid' );
-		$this->kunena_avatar = NULL;
-		if ($userinfo != NULL) {
-			$prefview = $userinfo->view;
+		if ($profile != NULL) {
 			if ($this->config->username)
 				$this->kunena_username = $juserinfo->username; // externally used  by pathway, myprofile_menu
 			else
 				$this->kunena_username = $juserinfo->name;
-			$this->kunena_avatar = $userinfo->avatar;
 		}
 
-		$this->jr_avatar = '';
-		if ($this->config->avatar_src == "jomsocial") {
-			// Get CUser object
-			$jsuser = & CFactory::getUser ( $this->my->id );
-			$this->jr_avatar = '<img src="' . $jsuser->getThumbAvatar () . '" alt=" " />';
-		} else if ($this->config->avatar_src == "cb") {
-			$kunenaProfile = & CkunenaCBProfile::getInstance ();
-			$this->jr_avatar = $kunenaProfile->showAvatar ( $this->my->id );
-		} else if ($this->config->avatar_src == "aup") // integration AlphaUserPoints
-		{
-			$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-			if (file_exists ( $api_AUP )) {
-				($this->config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
-				$this->jr_avatar = AlphaUserPointsHelper::getAupAvatar ( $this->my->id, $showlink, $this->config->avatarsmallwidth, $this->config->avatarsmallheight );
-			} // end integration AlphaUserPointselse
-		} else {
-			if ($this->kunena_avatar != "") {
-				if (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $this->kunena_avatar )) {
-					$this->jr_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $this->kunena_avatar . '" alt=" " style="max-width: ' . $this->config->avatarsmallwidth . 'px; max-height: ' . $this->config->avatarsmallheight . 'px;" />';
-				} else {
-					$this->jr_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $this->kunena_avatar . '" alt=" " />';
-				}
-			} else {
-				$this->jr_avatar = '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt=" " />';
-			}
-		}
-	return $this->jr_avatar;
+		return $profile->getAvatarLink();
 	}
 
 	function getloginFields() {

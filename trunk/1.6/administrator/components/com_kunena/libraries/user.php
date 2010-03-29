@@ -53,14 +53,22 @@ class KunenaUser extends JObject
 	 * @return	JUser			The User object.
 	 * @since	1.6
 	 */
-	static public function getInstance($identifier = 0, $reset = false)
+	static public function getInstance($identifier = null, $reset = false)
 	{
+		if ($identifier instanceof KunenaUser) {
+			return $identifier;
+		}
+		if ($identifier === null || $identifier === false) {
+			$identifier = JFactory::getUser();
+		}
 		// Find the user id
-		if (!is_numeric($identifier)) {
-			jimport('joomla.user.helper');
-			$id = JUserHelper::getUserId($identifier);
-		} else {
+		if ($identifier instanceof JUser) {
+			$id = $identifier->id;
+		} else if (is_numeric($identifier)) {
 			$id = $identifier;
+		} else {
+			jimport('joomla.user.helper');
+			$id = JUserHelper::getUserId((string)$identifier);
 		}
 
 		if (!$reset && empty(self::$_instances[$id])) {
@@ -68,6 +76,10 @@ class KunenaUser extends JObject
 		}
 
 		return self::$_instances[$id];
+	}
+
+	function exists() {
+		return $this->_exists;
 	}
 
 	/**
@@ -112,13 +124,11 @@ class KunenaUser extends JObject
 		$table	= &$this->getTable();
 
 		// Load the KunenaTableUser object based on the user id
-		if ($table->load($id)) {
-			$this->_exists = true;
-		}
+		$this->_exists = $table->load($id);
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties($table->getProperties());
-		return true;
+		return $this->_exists;
 	}
 
 	/**
@@ -200,6 +210,16 @@ class KunenaUser extends JObject
 
 	public function isModerator($catid=0) {
 		return CKunenaTools::isModerator($this->userid, $catid);
+	}
+
+	public function getAvatarLink($class='', $size='thumb') {
+		$avatars = KunenaFactory::getAvatarIntegration();
+		return $avatars->getLink($this, $class, $size);
+	}
+
+	public function getAvatarURL($size='thumb') {
+		$avatars = KunenaFactory::getAvatarIntegration();
+		return $avatars->getURL($this, $size);
 	}
 
 	public function getRank($catid=0) {

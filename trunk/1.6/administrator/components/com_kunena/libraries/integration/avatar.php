@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunena.session.class.php 2071 2010-03-17 11:27:58Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ( '' );
 
 kimport ( 'integration.integration' );
 
-abstract class KunenaLogin {
+abstract class KunenaAvatar {
 	public $priority = 0;
 
 	protected static $instance = false;
@@ -26,17 +26,21 @@ abstract class KunenaLogin {
 		if (self::$instance === false) {
 			$config = KunenaFactory::getConfig ();
 			if (! $integration)
-				$integration = $config->integration_login;
-			self::$instance = KunenaIntegration::initialize ( 'login', $integration );
+				$integration = $config->integration_access;
+			self::$instance = KunenaIntegration::initialize ( 'avatar', $integration );
 		}
 		return self::$instance;
 	}
 
-	abstract public function getLoginFormFields();
-	abstract public function getLogoutFormFields();
-	abstract public function getLoginURL();
-	abstract public function getLogoutURL();
-	abstract public function getRegistrationURL();
-	abstract public function getResetURL();
-	abstract public function getRemindURL();
+	public function load($userlist) {}
+
+	abstract public function getEditURL();
+	abstract public function getURL($user, $size='thumb');
+
+	public function getLink($user, $class='', $size='thumb')
+	{
+		$avatar = $this->getURL($user, $size);
+		if ($class) $class=' class="'.$class.'"';
+		return '<img'.$class.' src="'.$avatar.'" alt="" />';
+	}
 }

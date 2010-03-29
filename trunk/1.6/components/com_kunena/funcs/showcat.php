@@ -123,11 +123,9 @@ class CKunenaShowcat {
 			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
 
-			// If jomSocial integration for the avatar is turned on, prefetch all users
-			// to avoid user by user queries during template iterations
-			if ($this->config->avatar_src == "jomsocial") {
-				CFactory::loadUsers($userlist);
-			}
+			// Prefetch all users/avatars to avoid user by user queries during template iterations
+			$avatars = KunenaFactory::getAvatarIntegration();
+			$avatars->load($userlist);
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = '0' . $this->session->readtopics;

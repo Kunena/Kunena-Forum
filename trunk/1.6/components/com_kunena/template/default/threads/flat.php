@@ -221,30 +221,9 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($this->config->avataroncat > 0) {
 			?>
 			<span class="topic_latest_post_avatar"> <?php
-			if ($this->config->avatar_src == "jomsocial" && $leaf->userid) {
-				// Get CUser object
-				$jsuser = & CFactory::getUser ( $this->lastreply [$leaf->thread]->userid );
-				$useravatar = '<img class="klist_avatar" src="' . $jsuser->getThumbAvatar () . '" alt=" " />';
-				echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, $useravatar );
-			} else if ($this->config->avatar_src == "cb") {
-				$kunenaProfile = & CkunenaCBProfile::getInstance ();
-				$useravatar = $kunenaProfile->showAvatar ( $this->lastreply [$leaf->thread]->userid, 'fb_list_avatar' );
-				echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, $useravatar );
-			} else if ($this->config->avatar_src == "aup") {
-				// integration AlphaUserPoints
-				$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-				if (file_exists ( $api_AUP )) {
-					($this->config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
-					echo AlphaUserPointsHelper::getAupAvatar ( $this->lastreply [$leaf->thread]->userid, $showlink, 40, 40 );
-				} // end integration AlphaUserPoints
-			} else {
-				$javatar = $this->lastreply [$leaf->thread]->avatar;
-				if ($javatar != '') {
-					echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, '<img class="klist_avatar" src="' . (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $javatar ) ? KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $javatar : KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $javatar) . '" alt="" />' );
-				} else {
-					echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, '<img class="klist_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />' );
-				}
-			}
+			$profile = KunenaFactory::getUser($this->lastreply [$leaf->thread]->userid);
+			$useravatar = $profile->getAvatarLink('klist_avatar');
+			echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, $useravatar );
 			?>
 			</span> <?php
 		}

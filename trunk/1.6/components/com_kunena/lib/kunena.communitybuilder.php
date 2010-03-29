@@ -40,7 +40,6 @@ class CKunenaCBProfile {
 		}
 		if ($this->_detectIntegration() === false) {
 			$kunena_config->pm_component = $kunena_config->pm_component == 'cb' ? 'none' : $kunena_config->pm_component;
-			$kunena_config->avatar_src = $kunena_config->avatar_src == 'cb' ? 'kunena' : $kunena_config->avatar_src;
 			$kunena_config->fb_profile = $kunena_config->fb_profile == 'cb' ? 'kunena' : $kunena_config->fb_profile;
 		}
 		else if ($this->useProfileIntegration() === false) {

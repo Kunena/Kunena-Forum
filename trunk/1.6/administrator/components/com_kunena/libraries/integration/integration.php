@@ -11,30 +11,28 @@
  **/
 //
 // Dont allow direct linking
-defined( '_JEXEC' ) or die('');
+defined ( '_JEXEC' ) or die ( '' );
 
 // Abstract base class for various 3rd party integration classes
-abstract class KunenaIntegration extends JObject
-{
-	protected static $instances = array();
+abstract class KunenaIntegration extends JObject {
+	protected static $instances = array ();
 	protected $loaded = false;
 
-	public function __construct() {}
-
 	static public function getInstance($integration) {
-		if (!$integration) return false;
-		if (!isset(self::$instances[$integration])) {
-			$basedir = dirname(__FILE__);
+		if (! $integration)
+			return false;
+		if (! isset ( self::$instances [$integration] )) {
+			$basedir = dirname ( __FILE__ );
 			$file = "{$basedir}/{$integration}/integration.php";
-			if (is_file($file)) {
-				require_once($file);
-				$class = __CLASS__.ucfirst($integration);
-				self::$instances[$integration] = new $class();
+			if (is_file ( $file )) {
+				require_once ($file);
+				$class = __CLASS__ . ucfirst ( $integration );
+				self::$instances [$integration] = new $class ( );
 			} else {
-				self::$instances[$integration] = false;
+				self::$instances [$integration] = false;
 			}
 		}
-		return self::$instances[$integration];
+		return self::$instances [$integration];
 	}
 
 	public function isLoaded() {
@@ -42,22 +40,26 @@ abstract class KunenaIntegration extends JObject
 	}
 
 	static public function initialize($name, $integration) {
-			if (!$integration) $integration = 'none';
-			if ($integration == 'auto') $integration = self::detectIntegration($name, true);
-			else if ($integration == 'joomla') $integration = self::detectJoomla();
-			$basedir = dirname(__FILE__);
-			$file = "{$basedir}/{$integration}/{$name}.php";
-			if (is_file($file)) {
-				require_once($file);
-				$class = 'Kunena'.ucfirst($name).ucfirst($integration);
-				if (!class_exists($class)) return null;
-				return new $class();
-			}
-			return null;
+		if (! $integration)
+			$integration = 'none';
+		if ($integration == 'auto')
+			$integration = self::detectIntegration ( $name, true );
+		else if ($integration == 'joomla')
+			$integration = self::detectJoomla ();
+		$basedir = dirname ( __FILE__ );
+		$file = "{$basedir}/{$integration}/{$name}.php";
+		if (is_file ( $file )) {
+			require_once ($file);
+			$class = 'Kunena' . ucfirst ( $name ) . ucfirst ( $integration );
+			if (! class_exists ( $class ))
+				return null;
+			return new $class ( );
+		}
+		return null;
 	}
 
 	static protected function detectJoomla() {
-		if (is_dir(JPATH_LIBRARIES.'/joomla/access')) {
+		if (is_dir ( JPATH_LIBRARIES . '/joomla/access' )) {
 			return 'joomla16';
 		} else {
 			return 'joomla15';
@@ -65,31 +67,32 @@ abstract class KunenaIntegration extends JObject
 	}
 
 	static public function detectIntegration($name, $best = false) {
-		jimport('joomla.filesystem.folder');
-		$dir = dirname(__FILE__);
-		$folders = JFolder::folders($dir);
-		$list = array();
-		foreach ($folders as $integration) {
+		jimport ( 'joomla.filesystem.folder' );
+		$dir = dirname ( __FILE__ );
+		$folders = JFolder::folders ( $dir );
+		$list = array ();
+		foreach ( $folders as $integration ) {
 			$file = "$dir/$integration/$name.php";
-			if (is_file($file)) {
-				$obj = self::initialize($name, $integration);
+			if (is_file ( $file )) {
+				$obj = self::initialize ( $name, $integration );
 				$priority = 0;
-				if ($obj) $priority = $obj->priority;
-				$list[$integration] = $priority;
-				unset ($obj);
+				if ($obj)
+					$priority = $obj->priority;
+				$list [$integration] = $priority;
+				unset ( $obj );
 			}
 		}
 		if ($best) {
 			// Return best choice
-			arsort($list);
-			reset($list);
-			return key($list);
+			arsort ( $list );
+			reset ( $list );
+			return key ( $list );
 		}
 		// Return associative list of all options
 		return $list;
 	}
 
 	// abstract function to be overriden in derived class
-	public function load() {}
+	public function load() {
+	}
 }
-?>

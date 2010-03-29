@@ -35,7 +35,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 29-Mar-2010 Matias
-+ [#20050] Add new integration classes: Login/Registration for CommunityBuilder and JomSocial
++ [#20050] Add new integration classes: Login/Registration for None, CommunityBuilder, JomSocial
++ [#20050] Add new integration classes: Avatar for None, Kunena, CommunityBuilder, JomSocial
+# [#19288] Fix regression: Fixed many bugs in KunenaUser class
 
 28-Mar-2010 Matias
 + [#20038] Add basic Joomla 1.6 support (no installer, no acl)

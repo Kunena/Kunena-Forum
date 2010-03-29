@@ -358,39 +358,9 @@ class HTML_userlist_content
 
                                 $nr = $i + $limitstart;
 
-                                // Avatar
-                                $uslavatar = '';
-                                if ($kunena_config->avatar_src == "cb")
-                                {
-                                	$kunenaProfile =& CKunenaCBProfile::getInstance();
-									$uslavatar = $kunenaProfile->showAvatar($ulrow->id);
-                                }
-                                else if ($kunena_config->avatar_src == "aup") // integration AlphaUserPoints
-                                {
-                                	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
-                                	if ( file_exists($api_AUP)) {
-                                		( $kunena_config->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
-                                		 $uslavatar = AlphaUserPointsHelper::getAupAvatar( $ulrow->id, $showlink, $kunena_config->avatarsmallwidth, $kunena_config->avatarsmallheight );
-                                	} // end integration AlphaUserPoints
-                                }
-                                else
-                                {
-                                    $kunena_db->setQuery("SELECT avatar FROM #__fb_users WHERE userid='{$ulrow->id}'");
-                                    $avatar = $kunena_db->loadResult();
-                                    check_dberror ( "Unable to load avatar." );
-
-                                    if ($avatar != '') {
-
-									if(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $avatar)) {
-										$uslavatar = '<img  border="0" class="usl_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" />';
-										}else {
-                                        $uslavatar = '<img  border="0" class="usl_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $avatar . '" alt="" />';
-										}
-                                    }
-                                    else {$uslavatar = '<img  border="0" class="usl_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />'; }
-                                }
-                                //
-                            ?>
+								$profile = KunenaFactory::getUser($ulrow->id);
+                                $uslavatar = $profile->getAvatarLink('usl_avatar');
+?>
 
                                 <tr class = "k<?php echo $usrl_class ;?>  km">
                                     <td class = "td-1 frst ks" align="center">

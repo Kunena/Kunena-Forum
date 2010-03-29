@@ -45,7 +45,7 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
 
     //JomSocial
-    if ($kunena_config->pm_component == 'jomsocial' || $kunena_config->fb_profile == 'jomsocial' || $kunena_config->avatar_src == 'jomsocial')
+    if ($kunena_config->pm_component == 'jomsocial' || $kunena_config->fb_profile == 'jomsocial')
     {
     	// Only proceed if jomSocial is really installed
 	    if ( file_exists( KUNENA_ROOT_PATH .DS. 'components/com_community/libraries/core.php' ) )
@@ -74,12 +74,11 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 	    	// JomSocial not present reset config settings to avoid problems
 	    	$kunena_config->pm_component = $kunena_config->pm_component == 'jomsocial' ? 'none' : $kunena_config->pm_component;
 	    	$kunena_config->fb_profile = $kunena_config->fb_profile == 'jomsocial' ? 'kunena' : $kunena_config->fb_profile;
-	    	$kunena_config->avatar_src = $kunena_config->avatar_src == 'jomsocial' ? 'kunena' : $kunena_config->avatar_src;
 	    }
     }
 
     //Community Builder 1.2 integration
-	if ($kunena_config->pm_component == 'cb' || $kunena_config->fb_profile == 'cb' || $kunena_config->avatar_src == 'cb')
+	if ($kunena_config->pm_component == 'cb' || $kunena_config->fb_profile == 'cb')
     {
 		// Get Community Builder compability
 		require_once (KUNENA_PATH_LIB .DS. "kunena.communitybuilder.php");
@@ -1115,7 +1114,7 @@ class CKunenaTools {
 
 			if ( isset ($DelAvatar) ) {
 				jimport('joomla.filesystem.file');
-				$userprofile = CKunenaUserprofile::getInstance($thisuserid);
+				$userprofile = KunenaFactory::getUser($thisuserid);
 
 				$kunena_db->setQuery ( "UPDATE #__fb_users SET avatar=null WHERE userid=$thisuserid" );
 				$kunena_db->Query ();

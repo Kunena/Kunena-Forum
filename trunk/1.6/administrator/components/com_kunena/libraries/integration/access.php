@@ -11,23 +11,23 @@
  **/
 //
 // Dont allow direct linking
-defined( '_JEXEC' ) or die('');
+defined ( '_JEXEC' ) or die ( '' );
+
+kimport ( 'integration.integration' );
 
 abstract class KunenaAccess {
 	public $priority = 0;
 
 	protected static $instance = false;
 
-	abstract protected function __construct();
+	abstract public function __construct();
 
-	static public function getInstance($integration = null)
-	{
+	static public function getInstance($integration = null) {
 		if (self::$instance === false) {
-			$config = KunenaFactory::getConfig();
-			if (!$integration) $integration = $config->integration_access;
-
-			// Result will be null if initialize fails (=no login)
-			self::$instance = KunenaIntegration::initialize('access', $integration);
+			$config = KunenaFactory::getConfig ();
+			if (! $integration)
+				$integration = $config->integration_access;
+			self::$instance = KunenaIntegration::initialize ( 'access', $integration );
 		}
 		return self::$instance;
 	}

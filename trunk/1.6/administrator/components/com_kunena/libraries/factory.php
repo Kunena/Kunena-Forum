@@ -37,7 +37,7 @@ abstract class KunenaFactory {
 	 *
 	 * @return object KunenaUser
 	 */
-	static public function getUser($id = 0, $reload = false) {
+	static public function getUser($id = null, $reload = false) {
 		kimport('user');
 		return KunenaUser::getInstance($id, $reload);
 	}
@@ -70,6 +70,19 @@ abstract class KunenaFactory {
 	{
 		kimport('integration.login');
 		return KunenaLogin::getInstance();
+	}
+
+	/**
+	 * Get Kunena avatar integration object
+	 *
+	 * Returns the global {@link KunenaAvatar} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaAvatar
+	 */
+	public static function getAvatarIntegration()
+	{
+		kimport('integration.avatar');
+		return KunenaAvatar::getInstance();
 	}
 
 	/**

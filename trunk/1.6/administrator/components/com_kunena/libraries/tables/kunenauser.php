@@ -250,23 +250,22 @@ class TableKunenaUser extends TableKunena
 		// Load the user data.
 		$query = 'SELECT u.name, u.username, ku.* FROM #__users AS u LEFT JOIN #__fb_users AS ku ON u.id = ku.userid WHERE u.id = '.(int) $this->$k;
 		$this->_db->setQuery($query);
-		$data = (array) $this->_db->loadAssoc();
+		$data = $this->_db->loadAssoc();
 
 		// Check for an error message.
 		if ($this->_db->getErrorNum()) {
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
-
-		if(!count($data))
+		if(!$data)
 		{
 			return false;
 		}
 
 		// Bind the data to the table.
 		$return = $this->bind($data);
-		$this->_exists = true;
-		return $return;
+		if ($return && $data['posts'] !== null) $this->_exists = true;
+		return $this->_exists;
 	}
 
 	public function reset(){

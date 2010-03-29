@@ -382,6 +382,7 @@ class CKunenaView {
 		$lists ["userid"] = $this->profile->userid;
 		$this->msg_html->username = $this->kunena_message->email != "" && $this->my->id > 0 && $this->config->showemail ? CKunenaLink::GetEmailLink ( kunena_htmlspecialchars ( stripslashes ( $this->kunena_message->email ) ), $fb_username ) : $fb_username;
 
+		// FIXME: we do not need allowavatar anymore
 		if ($this->config->allowavatar) {
 			$Avatarname = $this->profile->username;
 			$kunena_config = & CKunenaConfig::getInstance ();
@@ -394,36 +395,7 @@ class CKunenaView {
 				$avheight = $kunena_config->avatarsmallwidth;
 			}
 
-			if ($this->config->avatar_src == "jomsocial") {
-				// Get CUser object
-				$jsuser = & CFactory::getUser ( $this->profile->userid );
-				$this->msg_html->avatar = '<span class="kavatar"><img src="' . $jsuser->getThumbAvatar () . '" alt=" " /></span>';
-			} else if ($this->config->avatar_src == "cb") {
-				$kunenaProfile = & CkunenaCBProfile::getInstance ();
-				$this->msg_html->avatar = '<span class="kavatar">' . $kunenaProfile->showAvatar ( $this->profile->userid, '', false ) . '</span>';
-			} else if ($this->config->avatar_src == "aup") {
-				$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-				if (file_exists ( $api_AUP )) {
-					($this->config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
-					$this->msg_html->avatar = '<span class="kavatar">' . AlphaUserPointsHelper::getAupAvatar ( $this->profile->userid, $showlink ) . '</span>';
-				}
-			} else {
-				$avatar = $this->profile->avatar;
-
-				if (! empty ( $avatar )) {
-					if (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $avatar )) {
-						$this->msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $avwidth . 'px; max-height: ' . $avheight . 'px;" /></span>';
-					} else {
-						$this->msg_html->avatar = '<span class="kavatar"><img border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" alt="" style="max-width: ' . $avwidth . 'px; max-height: ' . $avheight . 'px;" /></span>';
-					}
-				} else {
-					if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right') {
-						$this->msg_html->avatar = '<span class="kavatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/nophoto.jpg" alt="" style="max-width: ' . $avwidth . 'px; max-height: ' . $avheight . 'px;" /></span>';
-					} else {
-						$this->msg_html->avatar = '<span class="kavatar"><img  border="0" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" style="max-width: ' . $avwidth . 'px; max-height: ' . $avheight . 'px;" /></span>';
-					}
-				}
-			}
+			$this->msg_html->avatar = '<span class="kavatar">' .$this->profile->getAvatarLink () . '</span>';
 		} else {
 			$this->msg_html->avatar = '';
 		}

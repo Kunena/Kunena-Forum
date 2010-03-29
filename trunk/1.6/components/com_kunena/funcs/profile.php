@@ -47,7 +47,7 @@ class CKunenaProfile {
 		if ($this->_config->userlist_usertype) $this->usertype = $this->user->usertype;
 		if ($this->_config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->_config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
-		$this->avatarurl = KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $this->profile->avatar;
+		$this->avatarurl = $this->profile->getAvatarURL('large');
 		$this->personalText = CKunenaTools::parseText($this->profile->personalText);
 		$this->signature = CKunenaTools::parseBBCode($this->profile->signature);
 		$this->timezone = $this->user->getParam('timezone', 0);
@@ -397,7 +397,7 @@ class CKunenaProfile {
 			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar='' WHERE userid='{$this->profile->userid}'" );
 			$this->_db->query ();
 			check_dberror ( 'Unable to set default avatar.' );
-		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($path, '..') === false) {
+		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false) {
 			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($action)} WHERE userid='{$this->profile->userid}'" );
 			$this->_db->query ();
 			check_dberror ( 'Unable to set avatar from gallery.' );

@@ -150,30 +150,9 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($this->config->avataroncat > 0) {
 			?>
 			<span class="topic_latest_post_avatar"> <?php
-			if ($this->config->avatar_src == "jomsocial" && $message->userid) {
-				// Get CUser object
-				$jsuser = & CFactory::getUser ( $message->userid );
-				$useravatar = '<img class="klist_avatar" src="' . $jsuser->getThumbAvatar () . '" alt=" " />';
-				echo CKunenaLink::GetProfileLink ( $this->config, $message->userid, $useravatar );
-			} else if ($this->config->avatar_src == "cb") {
-				$kunenaProfile = & CkunenaCBProfile::getInstance ();
-				$useravatar = $kunenaProfile->showAvatar ( $message->userid, 'fb_list_avatar' );
-				echo CKunenaLink::GetProfileLink ( $this->config, $message->userid, $useravatar );
-			} else if ($this->config->avatar_src == "aup") {
-				// integration AlphaUserPoints
-				$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-				if (file_exists ( $api_AUP )) {
-					($this->config->fb_profile == 'aup') ? $showlink = 1 : $showlink = 0;
-					echo AlphaUserPointsHelper::getAupAvatar ( $message->userid, $showlink, 40, 40 );
-				} // end integration AlphaUserPoints
-			} else {
-				$javatar = $message->avatar;
-				if ($javatar != '') {
-					echo CKunenaLink::GetProfileLink ( $this->config, $message->userid, '<img class="klist_avatar" src="' . (! file_exists ( KUNENA_PATH_UPLOADED . DS . 'avatars/s_' . $javatar ) ? KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $javatar : KUNENA_LIVEUPLOADEDPATH . '/avatars/s_' . $javatar) . '" alt="" />' );
-				} else {
-					echo CKunenaLink::GetProfileLink ( $this->config, $message->userid, '<img class="klist_avatar" src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/s_nophoto.jpg" alt="" />' );
-				}
-			}
+			$profile = KunenaFactory::getUser($message->userid);
+			$useravatar = $profile->getAvatarLink('klist_avatar');
+			echo CKunenaLink::GetProfileLink ( $this->config, $message->userid, $useravatar );
 			?>
 			</span> <?php
 		}

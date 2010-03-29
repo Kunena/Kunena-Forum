@@ -600,7 +600,7 @@ abstract class CKunenaModerationTools {
 				return false;
 		}
 		
-		$query = "INSERT INTO #__fb_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . addslashes ( $message ) . "', NOW(), '{$this->_my->id}', '" . addslashes ( $comment ) . "')";
+		$query = "INSERT INTO #__kunena_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . addslashes ( $message ) . "', NOW(), '{$this->_my->id}', '" . addslashes ( $comment ) . "')";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		check_dberror ( 'Unable to insert user state.' );
@@ -648,7 +648,7 @@ abstract class CKunenaModerationTools {
 		// appended this extra text to comment
 		$extra = "- (Disabled by ". $user->username ." at ". date('r') .")";
 		
-		$query = "UPDATE #__fb_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') ' WHERE `userid`='{$UserID}' AND `enabled`=1";
+		$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') ' WHERE `userid`='{$UserID}' AND `enabled`=1";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		check_dberror ( 'Unable to delete user state.' );

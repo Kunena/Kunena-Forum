@@ -508,8 +508,6 @@ if (empty($objCatInfo)) {
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
                                                     $msg = JMailHelper::cleanBody($msg);
 
-                                                    echo $msg;
-
                                                     if ($ip != "127.0.0.1") { //don't mail yourself
                                                         JUtility::sendMail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
                                                     }
@@ -607,6 +605,10 @@ if (empty($objCatInfo)) {
                             //$resubject = smile::fbStripHtmlTags($resubject);
                             $parentid = $message->id;
                             $authorName = $my_name;
+
+                            if ( !$editmode ) {
+								$resubject = kunena_htmlspecialchars($resubject);
+                            }
                         }
                     }
                     $allow_anonymous = !empty($objCatInfo->allow_anonymous) && $kunena_my->id;

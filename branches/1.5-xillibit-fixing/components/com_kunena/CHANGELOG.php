@@ -36,6 +36,7 @@ Kunena 1.5.11-DEV
 28-Mar-2010 Xillibit
 # [#20020] Total users number count also disabled users
 # [#20041] Mail notification content broken
+# [#20046] Quote button to reply to a post truncates the subject if the subject contains quotation marks
 
 23-Mar-2010 Matias
 ^ [#19999] Updated version info to 1.5.11-DEV Calificar (Spanish, meaning describe)

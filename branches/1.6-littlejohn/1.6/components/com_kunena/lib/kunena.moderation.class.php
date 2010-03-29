@@ -150,6 +150,128 @@ class CKunenaModeration extends CKunenaModerationTools {
 
 		return $useridslist;
 	}
+	
+	/**
+	 * 
+	 * @param unknown_type $UserID
+	 * @param unknown_type $limit
+	 */
+	public function getBanHistory ( $UserID, $limit = 1000 ) {
+		// Sanitize parameters!
+		$UserID	= intval ( $UserID );
+		$limit	= intval ( $limit );
+		
+		$sql = "SELECT ban.id, ban.enabled, ban.userid, ban.bantype, ban.expiry, ban.message, ban.created, ban.created_userid, user.username AS created_name, ban.comment ".
+				"FROM #__fb_banned_users ban ".
+				"LEFT JOIN #__users user ON (user.id = ban.created_userid) ".
+				"WHERE ban.userid = '". $UserID ."' ". 
+				"ORDER BY ban.created ASC ".
+				"LIMIT 0, ". $limit;
+		
+		$this->_db->setQuery ( $sql );
+		$blocklist = $this->_db->loadObjectList ();
+		check_dberror ( 'Unable to load blocks for user.' );
+		
+		return $blocklist;
+	}
+	
+	
+	/**
+	 * 
+	 * @param $UserID
+	 */
+	public function getIPBanHistory ( $UserID, $limit = 1000 ) {
+		// Sanitize parameters!
+		$UserID	= intval ( $UserID );
+		$limit	= intval ( $limit );
+		
+		$iplist = $this->getIPs( $UserID, $limit );
+		
+		// extract ips to string
+		$ips = '';
+		foreach ($iplist as $entry) {
+			$ips .= "'". $entry->ip ."',";
+		}
+		
+		if ($ips) {
+			$ips = substr($ips, 0, -1);	// remove last comma
+			
+			$sql = "SELECT ban.id, ban.enabled, ban.ip, ban.expiry, ban.message, ban.created, ban.created_userid, user.username AS created_name, ban.comment ".
+				"FROM #__fb_banned_ips ban ".
+				"LEFT JOIN #__users user ON (user.id = ban.created_userid) ".
+				"WHERE ban.ip IN (". $ips .") ". 
+				"ORDER BY ban.created ASC ".
+				"LIMIT 0, ". $limit;
+			
+			$this->_db->setQuery ( $sql );
+			$blocklist = $this->_db->loadObjectList ();
+			check_dberror ( 'Unable to load blocks for user.' );
+		}
+		else {
+			$blocklist = array();
+		}
+		
+		return $blocklist;
+	}
+	
+	
+	/**
+	 * 
+	 * @param unknown_type $UserID
+	 * @param unknown_type $limit
+	 */
+	public function getIPs ( $UserID, $limit = 100 ) {
+		// Sanitize parameters!
+		$UserID	= intval ( $UserID );
+		$limit	= intval ( $limit );
+		
+		$sql = "SELECT msgs.ip AS ip, MAX(ban.enabled) AS enabled ". 
+				"FROM #__fb_messages msgs ".
+				"LEFT JOIN #__fb_banned_ips ban ON (ban.ip = msgs.ip) ".
+				"WHERE msgs.userid = '". $UserID ."' ". 
+				"GROUP BY msgs.ip ".
+				"ORDER BY msgs.time ASC ".
+				"LIMIT 0, ". $limit;
+		
+		$this->_db->setQuery ( $sql );
+		$ipslist = $this->_db->loadObjectList ();
+		check_dberror ( 'Unable to load ips for user.' );
+
+		return $ipslist;
+	}
+	
+	
+	/**
+	 * 
+	 * @param $UserID
+	 * @param $limit
+	 * @param $usernamelimit
+	 */
+	public function getUsersMatchingUserIP ( $UserID, $limit = 1000, $usernamelimit = 100 ) {
+		// Sanitize parameters!
+		$UserID			= intval ( $UserID );
+		$limit			= intval ( $limit );
+		$usernamelimit	= intval ( $usernamelimit );
+		
+		$iplist = $this->getIPs( $UserID, $limit );
+		
+		$useridslist = array();
+		foreach ($iplist as $entry) {
+			$sql = "SELECT msgs.name, msgs.userid, MAX(ban.enabled) AS enabled ".
+				"FROM #__fb_messages msgs ".
+				"LEFT JOIN #__fb_banned_users ban ON (msgs.userid = ban.userid) ".
+				"WHERE msgs.ip = '". $entry->ip ."' ".
+				"GROUP BY msgs.name, msgs.userid ".
+				"ORDER BY msgs.time ASC ".
+				"LIMIT 0, ". $usernamelimit;
+			
+			$this->_db->setQuery ( $sql );
+			$useridslist[ $entry->ip ] = $this->_db->loadObjectList ();
+			check_dberror ( 'Unable to load usernames for ip.' );
+		}
+		
+		return $useridslist;
+	}
 }
 
 ?>

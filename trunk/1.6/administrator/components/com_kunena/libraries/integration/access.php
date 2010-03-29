@@ -13,39 +13,21 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
-class KunenaAccess {
-	protected static $instance = null;
-	protected static $name = 'access';
+abstract class KunenaAccess {
+	public $priority = 0;
 
-	static protected function initialize($name) {
-			if (!$name) return false;
-			$basedir = dirname(__FILE__);
-			$file = self::$name;
-			$file = "{$basedir}/{$name}/{$file}.php";
-			if (is_file($file)) {
-				require_once($file);
-				$class = __CLASS__ . ucfirst($name);
-				if (!class_exists($class)) return false;
-				return new $class();
-			}
-			return false;
-	}
+	protected static $instance = false;
 
-	static public function getInstance()
+	abstract protected function __construct();
+
+	static public function getInstance($integration = null)
 	{
-		if (!self::$instance) {
+		if (self::$instance === false) {
 			$config = KunenaFactory::getConfig();
-			$name = ''; //$config->integration_access;
+			if (!$integration) $integration = $config->integration_access;
 
-			self::$instance = self::initialize($name);
-			if (!self::$instance) {
-				if (is_dir(JPATH_LIBRARIES.'/joomla/access')) {
-					$name = 'joomla16';
-				} else {
-					$name = 'joomla15';
-				}
-				self::$instance = self::initialize($name);
-			}
+			// Result will be null if initialize fails (=no login)
+			self::$instance = KunenaIntegration::initialize('access', $integration);
 		}
 		return self::$instance;
 	}

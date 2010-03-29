@@ -286,8 +286,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $filesize = 120;
 	var $showranking = 1;
 	var $rankimages = 1;
-	var $avatar_src = 'fb';
-	var $fb_profile = 'fb';
+	var $avatar_src = 'fb'; // deprecated
+	var $fb_profile = 'fb'; // deprecated
 	var $pm_component = 'no';
 	var $discussbot = 0;
 	var $userlist_rows = 30;
@@ -396,6 +396,12 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $thumbwidth = 60;
 	// New for 1.6: hide profile info when user is deleted from joomla!
 	var $hideuserprofileinfo = 'put_empty';
+	// New for 1.6 -> New integration options
+	var $integration_access = 'auto';
+	var $integration_login = 'auto';
+	var $integration_avatar = 'auto';
+	var $integration_profile = 'auto';
+	var $integration_private = 'auto';
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

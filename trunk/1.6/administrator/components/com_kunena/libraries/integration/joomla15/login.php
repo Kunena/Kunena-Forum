@@ -15,6 +15,12 @@ defined( '_JEXEC' ) or die('');
 
 class KunenaLoginJoomla15 extends KunenaLogin
 {
+	public function __construct() {
+		if (is_dir(JPATH_LIBRARIES.'/joomla/access'))
+			return;
+		$this->priority = 25;
+	}
+
 	public function getLoginFormFields() {
 		return array (
 			'form'=>'login',
@@ -48,7 +54,9 @@ class KunenaLoginJoomla15 extends KunenaLogin
 
 	public function getRegistrationURL()
 	{
-		return JRoute::_('index.php?option=com_user&view=register');
+		$usersConfig = JComponentHelper::getParams ( 'com_users' );
+		if ($usersConfig->get ( 'allowUserRegistration' ))
+			return JRoute::_('index.php?option=com_user&view=register');
 	}
 
 	public function getResetURL()

@@ -13,47 +13,30 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
+kimport('integration.integration');
+
 abstract class KunenaLogin
 {
-	protected static $instance = null;
-	protected static $name = 'login';
+	public $priority = 0;
 
-	protected function __construct() {}
+	protected static $instance = false;
 
-	static protected function initialize($name) {
-			if (!$name) return false;
-			$basedir = dirname(__FILE__);
-			$file = self::$name;
-			$file = "{$basedir}/{$name}/{$file}.php";
-			if (is_file($file)) {
-				require_once($file);
-				$class = __CLASS__ . ucfirst($name);
-				if (!class_exists($class)) return false;
-				return new $class();
-			}
-			return false;
-	}
+	abstract protected function __construct();
 
-	static public function getInstance()
+	static public function getInstance($integration = null)
 	{
-		if (!self::$instance) {
+		if (self::$instance === false) {
 			$config = KunenaFactory::getConfig();
-			$name = ''; //$config->integration_login;
+			if (!$integration) $integration = $config->integration_login;
 
-			self::$instance = self::initialize($name);
-			if (!self::$instance) {
-				if (is_dir(JPATH_LIBRARIES.'/joomla/access')) {
-					$name = 'joomla16';
-				} else {
-					$name = 'joomla15';
-				}
-				self::$instance = self::initialize($name);
-			}
+			// Result will be null if initialize fails (=no login)
+			self::$instance = KunenaIntegration::initialize('login', $integration);
 		}
 		return self::$instance;
 	}
 
 	abstract public function getLoginFormFields();
+	abstract public function getLogoutFormFields();
 	abstract public function getLoginURL();
 	abstract public function getLogoutURL();
 	abstract public function getRegistrationURL();

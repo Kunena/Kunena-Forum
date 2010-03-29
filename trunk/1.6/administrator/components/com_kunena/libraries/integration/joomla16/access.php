@@ -14,6 +14,12 @@
 defined( '_JEXEC' ) or die('');
 
 class KunenaAccessJoomla16 extends KunenaAccess {
+	function __construct() {
+		if (!is_dir(JPATH_LIBRARIES.'/joomla/access'))
+			return;
+		$this->priority = 25;
+	}
+
 	function isAdmin($uid = null) {
 		static $instances = null;
 

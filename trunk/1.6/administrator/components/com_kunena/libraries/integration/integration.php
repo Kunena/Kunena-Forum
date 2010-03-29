@@ -14,86 +14,82 @@
 defined( '_JEXEC' ) or die('');
 
 // Abstract base class for various 3rd party integration classes
-abstract class KunenaIntegration
+abstract class KunenaIntegration extends JObject
 {
-	protected static $name = 'NONE';
-	protected static $loaded = false;
-	protected static $enabled = false;
-	protected static $error = 0;
-	protected static $errormsg = '';
+	protected static $instances = array();
+	protected $loaded = false;
 
-	private function __construct() {}
+	public function __construct() {}
+
+	static public function getInstance($integration) {
+		if (!$integration) return false;
+		if (!isset(self::$instances[$integration])) {
+			$basedir = dirname(__FILE__);
+			$file = "{$basedir}/{$integration}/integration.php";
+			if (is_file($file)) {
+				require_once($file);
+				$class = __CLASS__.ucfirst($integration);
+				self::$instances[$integration] = new $class();
+			} else {
+				self::$instances[$integration] = false;
+			}
+		}
+		return self::$instances[$integration];
+	}
+
+	public function isLoaded() {
+		return $this->loaded;
+	}
+
+	static public function initialize($name, $integration) {
+			if (!$integration) $integration = 'none';
+			if ($integration == 'auto') $integration = self::detectIntegration($name, true);
+			else if ($integration == 'joomla') $integration = self::detectJoomla();
+			$basedir = dirname(__FILE__);
+			$file = "{$basedir}/{$integration}/{$name}.php";
+			if (is_file($file)) {
+				require_once($file);
+				$class = 'Kunena'.ucfirst($name).ucfirst($integration);
+				if (!class_exists($class)) return null;
+				return new $class();
+			}
+			return null;
+	}
+
+	static protected function detectJoomla() {
+		if (is_dir(JPATH_LIBRARIES.'/joomla/access')) {
+			return 'joomla16';
+		} else {
+			return 'joomla15';
+		}
+	}
+
+	static public function detectIntegration($name, $best = false) {
+		jimport('joomla.filesystem.folder');
+		$dir = dirname(__FILE__);
+		$folders = JFolder::folders($dir);
+		$list = array();
+		foreach ($folders as $integration) {
+			$file = "$dir/$integration/$name.php";
+			if (is_file($file)) {
+				$obj = self::initialize($name, $integration);
+				$priority = 0;
+				if ($obj) $priority = $obj->priority;
+				$list[$integration] = $priority;
+				unset ($obj);
+			}
+		}
+		if ($best) {
+			// Return best choice
+			arsort($list);
+			reset($list);
+			return key($list);
+		}
+		// Return associative list of all options
+		return $list;
+	}
 
 	// abstract function to be overriden in derived class
-	abstract public function init();
-
-	public function close() {
-		self::enable ( false );
-	}
-
-	// Public helper function to access our private vars
-	public function getName()
-	{
-		return self::$name;
-	}
-
-	public function IsLoaded()
-	{
-		return self::$loaded;
-	}
-
-	public function IsEnabled()
-	{
-		return self::$enabled;
-	}
-
-	public function GetError()
-	{
-		return self::$error;
-	}
-
-	public function GetErrorMsg()
-	{
-		return self::$errormsg;
-	}
-
-	// Identical to isEnabled()
-	public function status()
-	{
-		return self::$enabled;
-	}
-
-	// Protected function to manipulate our private vars in derived classes
-	protected function enable($enable = true)
-	{
-		self::$enabled = $enable;
-	}
-
-	protected function loaded($loaded = true)
-	{
-		self::$loaded = $loaded;
-	}
-
-	protected function setError($error = 0)
-	{
-		self::$error = $error;
-	}
-
-	protected function setErrorMsg($errormsg = '')
-	{
-		self::$errormsg = $errormsg;
-	}
-
-	// Various Currently supported integration options
-	// Derived class overrides those that are available
-	protected function detectIntegration()
-	{
-		return false;
-	}
-
-	function useIntegration($scope)
-	{
-		return false;
-	}
+	public function load() {}
 }
 ?>

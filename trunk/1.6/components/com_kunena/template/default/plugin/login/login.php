@@ -116,6 +116,10 @@ $login = CKunenaLogin::getloginFields();
 	<?php endif; ?>
 	</tbody>
 </table>
+<?php
+$registration = CKunenaLogin::getRegisterLink ();
+if ($registration) :
+?>
 <table border="0" cellspacing="0" cellpadding="0" width="60%">
 	<thead>
 		<tr>
@@ -158,16 +162,11 @@ $login = CKunenaLogin::getloginFields();
 						?></p>
 						</td>
 					</tr>
-						<?php
-							$usersConfig = &JComponentHelper::getParams ( 'com_users' );
-							if ($usersConfig->get ( 'allowUserRegistration' )) :
-							?>
 					<tr>
 						<td align="left">
-							<span class = "kbutton"><?php echo CKunenaLogin::getRegisterLink (); ?></span>
+							<span class = "kbutton"><?php echo $registration; ?></span>
 						</td>
 					</tr>
-					<?php endif; ?>
 				</tbody>
 			</table>
 			</form>
@@ -175,6 +174,7 @@ $login = CKunenaLogin::getloginFields();
 		</tr>
 	</tbody>
 </table>
+<?php endif; ?>
 			</td>
 		</tr>
 	</tbody>

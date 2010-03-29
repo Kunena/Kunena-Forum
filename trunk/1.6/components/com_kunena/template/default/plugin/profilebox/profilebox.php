@@ -100,10 +100,11 @@ $login = CKunenaLogin::getloginFields();
 						<span class="kprofilebox_link">
 							<?php echo CKunenaLogin::getLostUserLink ();?>
 						</span>
-							<?php $usersConfig = &JComponentHelper::getParams ( 'com_users' );
-							if ($usersConfig->get ( 'allowUserRegistration' )) : ?>
+						<?php
+						$registration = CKunenaLogin::getRegisterLink ();
+						if ($registration) : ?>
 						<span class="kprofilebox_link">
-							<?php echo CKunenaLogin::getRegisterLink (); ?>
+							<?php echo $registration ?>
 						</span>
 							<?php endif; ?>
 					</div>

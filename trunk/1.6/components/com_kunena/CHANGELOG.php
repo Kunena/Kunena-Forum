@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+29-Mar-2010 Matias
++ [#20050] Add new integration classes: Login/Registration for CommunityBuilder and JomSocial
+
 28-Mar-2010 Matias
 + [#20038] Add basic Joomla 1.6 support (no installer, no acl)
 # [#20038] Add basic Joomla 1.6 support: use new format in language files
@@ -47,7 +50,7 @@ Kunena 1.6.0-DEV
 ^ [#15886] Merged revisions 2098-2103 from /branches/1.5-xillibit-fixing
 # [#19288] Fix regression: Do not mess up Joomla template (local css rules)
 # [#19064] Add new bbcodes: Simple working implementation of MAP with external link
-# [#19064] Add new bbcodes: article tag pointing to com_content articles
++ [#19064] Add new bbcodes: article tag pointing to com_content articles
 
 27-Mar-2010 Xillibit
 # [#19764] Fix undefined variables in post.php for merge function when there is only one thread in a cat

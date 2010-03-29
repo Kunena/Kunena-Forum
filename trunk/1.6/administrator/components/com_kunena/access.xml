@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE access>
 <access component="com_content">
 	<section name="component">
 		<action name="core.admin" title="JAction_Admin" description="JAction_Admin_Component_Desc" />
@@ -13,10 +14,5 @@
 		<action name="core.delete" title="CATEGORY_ACCESS_DELETE" description="CATEGORY_ACCESS_DELETE_DESC" />
 		<action name="core.edit" title="CATEGORY_ACCESS_EDIT" description="CATEGORY_ACCESS_EDIT_DESC" />
 		<action name="core.edit.state" title="CATEGORY_ACCESS_EDITSTATE" description="CATEGORY_ACCESS_EDITSTATE_DESC" />
-	</section>
-	<section name="topic">
-		<action name="core.delete" title="CONTENT_ACCESS_DELETE" description="CONTENT_ACCESS_DELETE_DESC" />
-		<action name="core.edit" title="CONTENT_ACCESS_EDIT" description="CONTENT_ACCESS_EDIT_DESC" />
-		<action name="core.edit.state" title="CONTENT_ACCESS_EDITSTATE" description="CONTENT_ACCESS_EDITSTATE_DESC" />
 	</section>
 </access>

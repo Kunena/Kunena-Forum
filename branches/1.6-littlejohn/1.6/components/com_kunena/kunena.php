@@ -619,6 +619,13 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
+		case 'modutils':
+			require_once (KUNENA_PATH_FUNCS . DS . 'modutils.php');
+			$page = new CKunenaModutils();
+			$page->display();
+			
+			break;
+			
 		default :
 			require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
 			$page = new CKunenaListcat($catid);

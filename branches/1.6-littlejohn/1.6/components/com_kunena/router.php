@@ -22,7 +22,7 @@ class KunenaRouter
 	static $functions = array('showcat', 'view', 'listcat', 'latest', 'mylatest', 'noreplies', 'post',
 		'credits', 'fb_rss', 'review', 'report', 'fbprofile', 'userprofile', 'myprofile',
 		'userlist', 'karma', 'rules', 'help', 'announcement', 'who', 'stats', 'advsearch',
-		'search', 'markthisread', 'bulkactions', 'templatechooser');
+		'search', 'markthisread', 'bulkactions', 'templatechooser', 'modutils');
 
 	function loadCategories()
 	{

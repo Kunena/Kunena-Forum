@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.5.11
 
+29-Mar-2010 Matias
+# [#20048] Remove debug message while deleting threads
+# [#20041] E-Mail notification: thread subject is missing "Subject:"
+
 26-Mar-2010 Matias
 ^ [#19999] Updated version info to 1.5.11 Kirjeldama (Describe in Estonian)
 

@@ -1267,7 +1267,6 @@ function generate_smilies() {
 
 function fbGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
-print_r($array);
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
     }

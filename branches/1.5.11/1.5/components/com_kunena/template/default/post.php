@@ -467,9 +467,9 @@ $catName = $objCatInfo->name;
 
                                                     $msg = "$emailTo->name,\n\n";
                                                     $msg .=  $msg1 . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
-                                                    $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
-                                                    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
-                                                    $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
+                                                    $msg .= _GEN_SUBJECT." : " . stripslashes($messagesubject) . "\n";
+                                                    $msg .= _GEN_FORUM." : " . stripslashes($catName) . "\n";
+                                                    $msg .= _VIEW_POSTED." : " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= $msg2 . "\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($fbConfig->mailfull == 1) {

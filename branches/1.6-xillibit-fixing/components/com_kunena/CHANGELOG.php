@@ -39,6 +39,7 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19764] Delete attachments now delete from old locations
 # [#19288] When you use quote function with content with double quote, it's showed in html in editmode
 # [#19288] Quick reply function doesn't work, it need that you enter a name
++ [#20050] Add stats functions in API
 
 29-Mar-2010 Xillbit
 # [#19764] Fix small typo with button move message which doesn't diplay the icon

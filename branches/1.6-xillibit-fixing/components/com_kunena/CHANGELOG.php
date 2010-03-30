@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+30-Mar-2010 Xillibit
+# [#19872] Externals urls in some places are considered like local urls
+# [#19764] Delete attachments now delete from old locations
+
 29-Mar-2010 Xillbit
 # [#19764] Fix small typo with button move message which doesn't diplay the icon
 # [#19358] Fix an issue which prevent to display the poll under some conditions

@@ -292,6 +292,23 @@ class CKunenaModeration {
 		switch ($mode) {
 			case KN_DEL_MESSAGE : //Delete only the actual message
 				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='$MessageID';";
+				if ( $currentMessage->parent == 0 ) {
+					// We are about to pull the thread starter from the original thread.
+					// Need to promote the second post of the original thread as the new starter.
+					$sqlnewparent = "SELECT `id` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
+					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
+					$newParent = $this->_db->loadObject ();
+					check_dberror ( 'Unable to select new message for promote parent.' );
+
+					if ( is_object( $newParent ) ) {
+						$sql1 = "UPDATE #__fb_messages SET `catid`='$currentMessage->catid', `thread`='$newParent->id', `parent`=0 WHERE `id`='$newParent->id';";
+						$this->_db->setQuery ( $sql1 );
+						$this->_db->query ();
+						$sql2 = "UPDATE #__fb_messages SET `catid`='$currentMessage->catid', `thread`='$newParent->id', `parent`='$newParent->id' WHERE `thread`='{$currentMessage->thread}' AND `id`>'$newParent->id';";
+						$this->_db->setQuery ( $sql2 );
+						$this->_db->query ();
+					}
+				}
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
 				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `thread`='{$currentMessage->thread}';";
@@ -299,22 +316,40 @@ class CKunenaModeration {
 			case KN_DEL_ATTACH : //Delete only the attachments
 				jimport('joomla.filesystem.file');
 				$this->_db->setQuery ( "SELECT `userid`,`filename` FROM #__kunena_attachments WHERE `mesid`='$MessageID';" );
-				$fileList = $this->_db->loadObjectList ();
+				$fileList = $this->_db->loadObjectlist ();
 				check_dberror ( "Unable to load attachments." );
-				$sql = "DELETE FROM #__kunena_attachments WHERE `mesid`='$MessageID';";
-				// FIXME: could be more than one attachments in a message.
-				// TODO: what to do with files that should not be deleted (attachments from other components, multiple occurances of the same file)?
-				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$fileList[0]->userid.'/'.$fileList[0]->filename;
-				if (JFile::exists($filetoDelete)) {
-					JFile::delete($filetoDelete);
+				if ( is_array($fileList) ) {
+					$sql = "DELETE FROM #__kunena_attachments WHERE `mesid`='$MessageID';";
+					// TODO: what to do with files that should not be deleted (attachments from other components, multiple occurances of the same file)?
+					foreach ( $fileList as $file ) {
+						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/'.$file->filename;
+						if (JFile::exists($filetoDelete)) {
+							JFile::delete($filetoDelete);
+						}
+						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/raw/'.$file->filename;
+						if (JFile::exists($filetoDelete)) {
+							JFile::delete($filetoDelete);
+						}
+						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/thumb/'.$file->filename;
+						if (JFile::exists($filetoDelete)) {
+							JFile::delete($filetoDelete);
+						}
+					}
 				}
 				// Delete from old location too
-				// Need to make the differences between a image or a file because there are two locations
-				$fileExt = JFile::getExt($fileList[0]->filename);
-				// check that the ext is an image else it's a file
-				/*if (  ) {
-
-				}*/
+				$this->_db->setQuery ( "SELECT `filelocation` FROM #__fb_attachments WHERE `mesid`='$MessageID';" );
+				$fileListOld = $this->_db->loadObjectList ();
+				check_dberror ( "Unable to load attachments from old location." );
+				if ( is_array($fileListOld) ) {
+					$this->_db->setQuery ( "DELETE FROM #__fb_attachments WHERE `mesid`='$MessageID';" );
+					$this->_db->query ();
+					check_dberror ( "Unable to delete old attachments." );
+					foreach ( $fileListOld as $file ) {
+						if (JFile::exists($file->filelocation)) {
+							JFile::delete($file->filelocation);
+						}
+					}
+				}
 				break;
 			default :
 				// Unsupported mode - Error!
@@ -329,9 +364,8 @@ class CKunenaModeration {
 
 		// Remember to delete ghost post
 		// FIXME: replies may have ghosts, too. What to do with them?
-		// FIXME: this query does not match if message gets moved again to another category
 		$this->_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m INNER JOIN #__fb_messages_text AS t ON m.`id`=t.`mesid`
-			WHERE `moved`=1 AND `message`='catid={$currentMessage->catid}&id={$currentMessage->id}';" );
+			WHERE `moved`=1;" );
 		$ghostMessageID = $this->_db->loadResult ();
 		check_dberror ( "Unable to load ghost message." );
 

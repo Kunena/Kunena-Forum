@@ -483,9 +483,7 @@ $catName = $objCatInfo->name;
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
                                                     $msg = JMailHelper::cleanBody($msg);
 
-                                                    if ($ip != "127.0.0.1") { //don't mail yourself
-                                                        JUtility::sendMail($fbConfig->email, $mailsender, $emailTo->email, $mailsubject, $msg);
-                                                    }
+                                                    JUtility::sendMail($fbConfig->email, $mailsender, $emailTo->email, $mailsubject, $msg);
                                                 }
                                             }
                                         }

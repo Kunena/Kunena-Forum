@@ -27,7 +27,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 // First of all take a profiling information snapshot for JFirePHP
 if(JDEBUG == 1){
 	require_once (JPATH_BASE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.profiler.php');
-	$__profiler = KProfiler::GetInstance();
+	$__profiler = KProfiler::GetInstance('Kunena');
 	$__profiler->mark('Start');
 }
 

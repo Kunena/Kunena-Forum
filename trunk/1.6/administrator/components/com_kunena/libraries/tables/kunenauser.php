@@ -233,6 +233,7 @@ class TableKunenaUser extends TableKunena
 	 */
 	function load($userid = null)
 	{
+		$this->_exists = false;
 		$k = $this->_tbl_key;
 		// Get the id to load.
 		if ($userid !== null) {
@@ -243,7 +244,8 @@ class TableKunenaUser extends TableKunena
 		$this->reset();
 
 		// Check for a valid id to load.
-		if ($this->$k === null || !is_numeric($this->$k)) {
+		if ($this->$k === null || intval($this->$k) < 1) {
+			$this->$k = 0;
 			return false;
 		}
 
@@ -259,6 +261,7 @@ class TableKunenaUser extends TableKunena
 		}
 		if(!$data)
 		{
+			$this->$k = 0;
 			return false;
 		}
 

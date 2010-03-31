@@ -25,7 +25,7 @@ abstract class KunenaPrivate
 		if (self::$instance === false) {
 			$config = KunenaFactory::getConfig ();
 			if (! $integration)
-				$integration = $config->integration_login;
+				$integration = $config->integration_private;
 			self::$instance = KunenaIntegration::initialize ( 'private', $integration );
 		}
 		return self::$instance;

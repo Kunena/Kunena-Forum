@@ -221,7 +221,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($this->config->avataroncat > 0) {
 			?>
 			<span class="topic_latest_post_avatar"> <?php
-			$profile = KunenaFactory::getUser($this->lastreply [$leaf->thread]->userid);
+			$profile = KunenaFactory::getUser((int)$this->lastreply [$leaf->thread]->userid);
 			$useravatar = $profile->getAvatarLink('klist_avatar');
 			echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, $useravatar );
 			?>

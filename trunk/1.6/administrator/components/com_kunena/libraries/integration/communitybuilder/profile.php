@@ -1,0 +1,73 @@
+<?php
+/**
+ * @version $Id$
+ * Kunena Component
+ * @package Kunena
+ *
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ *
+ **/
+//
+// Dont allow direct linking
+defined( '_JEXEC' ) or die('');
+
+class KunenaProfileCommunityBuilder extends KunenaProfile
+{
+	protected $integration = null;
+
+	public function __construct() {
+		$this->integration = KunenaIntegration::getInstance ('communitybuilder');
+		if (! $this->integration || ! $this->integration->isLoaded())
+			return;
+		$this->priority = 50;
+	}
+
+	public function open()
+	{
+		//KIntegrationCommunityBuilder::close();
+	}
+
+	public function close()
+	{
+		//KIntegrationCommunityBuilder::close();
+	}
+
+	public function getForumTabURL()
+	{
+		return cbSef( 'index.php?option=com_comprofiler&amp;tab=getForumTab' . getCBprofileItemid() );
+	}
+
+	public function getUserListURL()
+	{
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=usersList' );
+	}
+
+	public function getProfileURL($user)
+	{
+		$user = KunenaFactory::getUser($user);
+		if ($user->userid == 0) return false;
+		// Get CUser object
+		$cbUser = CBuser::getInstance( $user->userid );
+		if($cbUser === null) return false;
+		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' .$user->userid. getCBprofileItemid() );
+	}
+
+	public function showProfile($user, &$msg_params)
+	{
+		global $_PLUGINS;
+
+		$kunenaConfig = KunenaFactory::getConfig();
+		$user = KunenaFactory::getUser($user);
+		$_PLUGINS->loadPluginGroup('user');
+		return implode( '', $_PLUGINS->trigger( 'forumSideProfile', array( 'kunena', null, $user->userid,
+			array( 'config'=> &$kunenaConfig, 'userprofile'=> &$user, 'msg_params'=>&$msg_params) ) ) );
+	}
+
+	public function trigger($event, &$params)
+	{
+		//return KIntegrationCommunityBuilder::trigger($event, $params);
+	}
+
+}

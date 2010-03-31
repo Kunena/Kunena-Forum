@@ -365,6 +365,13 @@ PX		EM			PCT			PT
 	float: left;
 }
 
+#Kunena #Kunena_tab ul ul {
+	margin: -2px 2px;
+	padding: 0;
+	list-style: none;
+	float: left;
+}
+
 #Kunena #Kunena_tab li,
 #Kunena #Kunena_tab div.moduletable ul.menu li	{
 	display: inline;

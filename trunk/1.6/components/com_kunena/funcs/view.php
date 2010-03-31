@@ -478,7 +478,7 @@ class CKunenaView {
 		}
 
 		/* PMS integration */
-		$pms = KunenaFactory::getPMSIntegration();
+		$pms = KunenaFactory::getPrivateMessaging();
 		$this->msg_html->pms = $pms->showIcon( $this->profile->userid );
 
 		//Check if the Integration settings are on, and set the variables accordingly.

@@ -49,6 +49,7 @@ JTable::addIncludePath(KPATH_ADMIN.'/libraries/tables');
 
 // Import KunenaFactory
 kimport('factory');
+kimport('route');
 
 /**
  * Defines public interface for class Kunena. Loads version information and APIs to be used in the third party application.

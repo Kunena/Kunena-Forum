@@ -123,9 +123,8 @@ if ($func == ''){
 	}
 
 	if ( !$markaction && $redirect ){
-		$Itemid = JRequest::getInt ( 'Itemid', 0, 'REQUEST' );
 		header ( "HTTP/1.1 303 See Other" );
-		header ( "Location: " . htmlspecialchars_decode ( JRoute::_ ( 'index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=' . $func ) ) );
+		header ( "Location: " . htmlspecialchars_decode ( KunenaRoute::_ ( 'index.php?option=com_kunena&func=' . $func ) ) );
 		$kunena_app->close ();
 	}
 }
@@ -564,7 +563,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case "templatechooser" :
+		case 'templatechooser' :
 			$fb_user_template = strval ( JRequest::getVar ( 'kunena_user_template', '', 'COOKIE' ) );
 
 			$fb_user_img_template = strval ( JRequest::getVar ( 'kunena_user_img_template', $fb_user_img_template ) );

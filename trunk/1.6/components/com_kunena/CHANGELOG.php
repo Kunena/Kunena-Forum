@@ -34,6 +34,15 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+31-Mar-2010 Matias
++ [#20050] Add new integration classes: Profile for None, Kunena, CommunityBuilder, JomSocial
++ [#20071] KunenaRoute: make Kunena to find best possible Itemid
++ [#20071] KunenaRoute: Fix bugs in router.php, add support for intelligent routing
+^ [#20071] KunenaRoute: Use KunenaRoute::_($url) in CKunenaLink, remove &amp;
+# [#20071] KunenaRoute: Fix menuitems to be Joomla compatible
+# [#19288] Fix regression: Bugs in Kunena user classes
+# [#19288] Fix regression: Anonymous users had users avatar in view
+
 29-Mar-2010 Matias
 + [#20050] Add new integration classes: Login/Registration for None, CommunityBuilder, JomSocial
 + [#20050] Add new integration classes: Avatar for None, Kunena, CommunityBuilder, JomSocial

@@ -93,10 +93,23 @@ abstract class KunenaFactory {
 	 *
 	 * @return object KunenaPrivate
 	 */
-	public static function getPMSIntegration()
+	public static function getPrivateMessaging()
 	{
 		kimport('integration.private');
 		return KunenaPrivate::getInstance();
+	}
+
+	/**
+	 * Get Kunena profile integration object
+	 *
+	 * Returns the global {@link KunenaProfile} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaProfile
+	 */
+	public static function getProfile()
+	{
+		kimport('integration.profile');
+		return KunenaProfile::getInstance();
 	}
 
 	/**

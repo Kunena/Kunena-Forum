@@ -26,7 +26,7 @@ abstract class KunenaAvatar {
 		if (self::$instance === false) {
 			$config = KunenaFactory::getConfig ();
 			if (! $integration)
-				$integration = $config->integration_access;
+				$integration = $config->integration_avatar;
 			self::$instance = KunenaIntegration::initialize ( 'avatar', $integration );
 		}
 		return self::$instance;

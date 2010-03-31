@@ -19,10 +19,13 @@ class KunenaRouter
 	static $msgidcache = array();
 
 	// List of reserved functions (if category name is one of these, use always catid)
-	static $functions = array('showcat', 'view', 'listcat', 'latest', 'mylatest', 'noreplies', 'post',
-		'credits', 'fb_rss', 'review', 'report', 'fbprofile', 'userprofile', 'myprofile',
-		'userlist', 'karma', 'rules', 'help', 'announcement', 'who', 'stats', 'advsearch',
-		'search', 'markthisread', 'bulkactions', 'templatechooser');
+	static $functions = array(
+		'who','announcement','poll','stats','myprofile','userprofile','fbprofile','profile',
+		'userlist','post','view','help','showcat','listcat','review','moderate','rules',
+		'report','latest','mylatest','noreplies','subscriptions','favorites','search','advsearch',
+		'markthisread','subscribecat','unsubscribecat','karma','bulkactions','banactions',
+		'templatechooser','credits'
+	);
 
 	function loadCategories()
 	{
@@ -82,13 +85,27 @@ function BuildRoute(&$query)
 	$parsevars = array('task', 'id', 'userid', 'page', 'sel');
 	$segments = array();
 
-	$kunena_config =& CKunenaConfig::getInstance();
+	$kunena_config = CKunenaConfig::getInstance();
 	if (!$kunena_config->sef) return $segments;
+
+	if (isset($query['Itemid'])) {
+		// If we have Itemid, make sure that we remove identical parameters
+		$menu = JSite::getMenu();
+		$menuitem = (object) $menu->getItem($query['Itemid']);
+		foreach ($menuitem->query as $var=>$value) {
+			if ($var == 'Itemid' || $var == 'option') continue;
+			if (isset($query[$var]) && $value == $query[$var]) {
+				unset($query[$var]);
+			}
+		}
+	}
 
 	$db =& JFactory::getDBO();
 	jimport('joomla.filter.output');
 
-	$catfound = false;
+	// We may have catid also in the menu item
+	$catfound = isset($menuitem->query['catid']);
+	// If we had identical catid in menuitem, this one will be skipped:
 	if(isset($query['catid']))
 	{
 		$catid = (int) $query['catid'];
@@ -149,25 +166,29 @@ function BuildRoute(&$query)
 
 function ParseRoute($segments)
 {
-	jimport('joomla.environment.uri');
-	$menu = &JSite::getMenu();
-	$item = $menu->getActive();
-	$link = new JURI($item->link);
-
 	$funcitems = array(
 		array('func'=>'showcat', 'var'=>'catid'),
 		array('func'=>'view', 'var'=>'id')
 	);
 	$doitems = array('func', 'do');
 	$funcpos = $dopos = 0;
+	$vars = array();
 
 	$kunena_config =& CKunenaConfig::getInstance();
 
-	$vars = array();
-	$func = $link->getVar('func', '');
-	if ($func) {
-		$vars['func'] = $func;
+	// Get current menu item
+	$menu = JSite::getMenu();
+	$active = $menu->getActive();
+	$menuquery = isset($active->query) ? $active->query : array();
+	if (isset($menuquery['func'])) {
+		$funcinmenu=true;
+		$vars['func'] = $menuquery['func'];
 		$dopos++;
+	}
+	if (isset($menuquery['catid'])) {
+		$funcinmenu=true;
+		$vars['catid'] = $menuquery['catid'];
+		$funcpos++;
 	}
 
 	while (($segment = array_shift($segments)) !== null)
@@ -201,6 +222,11 @@ function ParseRoute($segments)
 			$var = $funcitems[$funcpos++]['var'];
 		} else if ($value === null) // Value must be either func or do
 		{
+			// Do we need to override func from menuitem?
+			if (!empty($funcinmenu) && in_array($var, self::$functions)) {
+				unset($funcinmenu);
+				$dopos = 0;
+			}
 			if ($dopos > count($doitems)) continue; // Unknown parameter
 			$value = $var;
 			$var = $doitems[$dopos++];
@@ -227,6 +253,7 @@ function ParseRoute($segments)
 
 	return $vars;
 }
+
 }
 
 function KunenaBuildRoute(&$query)

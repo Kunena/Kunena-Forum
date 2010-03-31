@@ -170,7 +170,7 @@ class CKunenaPost {
 		// A couple more tasks required...
 		if ($thread == 0) {
 			// if JomScoial integration is active integrate user points and activity stream
-			if ($this->_config->pm_component == 'jomsocial' || $this->_config->fb_profile == 'jomsocial') {
+			if ($this->_config->fb_profile == 'jomsocial') {
 				include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
 
 				CuserPoints::assignPoint ( 'com_kunena.thread.new' );
@@ -210,7 +210,7 @@ class CKunenaPost {
 
 		} else {
 			// if JomScoial integration is active integrate user points and activity stream
-			if ($this->_config->pm_component == 'jomsocial' || $this->_config->fb_profile == 'jomsocial') {
+			if ($this->_config->fb_profile == 'jomsocial') {
 				include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
 
 				CuserPoints::assignPoint ( 'com_kunena.thread.reply' );

@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+31-Mar-2010 Xillibit
+# [#19288] The message subject in RSS have slashes
+# [#19288] When you set profilebox in top or bottom position, the online image is misplaced
+# [#19288] When the user choose last post first in his profile, this has no effect
+
 30-Mar-2010 Xillibit
 # [#19872] Externals urls in some places are considered like local urls
 # [#19764] Delete attachments now delete from old locations

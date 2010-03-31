@@ -436,7 +436,7 @@ class CKunenaProfile {
 		$this->saveAvatar();
 		$this->saveSettings();
 
-		$msg = JText::_( COM_KUNENA_PROFILE_SAVED );
+		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
 		$this->_app->redirect ( $return, $msg );
 	}
 

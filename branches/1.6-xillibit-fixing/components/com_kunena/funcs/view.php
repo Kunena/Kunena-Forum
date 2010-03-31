@@ -22,6 +22,7 @@ class CKunenaView {
 		$this->db = JFactory::getDBO ();
 		$this->config = CKunenaConfig::getInstance ();
 		$this->session = KunenaFactory::getSession ();
+		$this->profile = KunenaFactory::getUser ();
 
 		$this->func = $func;
 		$this->catid = $catid;
@@ -142,7 +143,11 @@ class CKunenaView {
 		$this->total_messages = $this->db->loadResult ();
 		check_dberror ( 'Unable to calculate message count.' );
 
-		$ordering = ($this->config->default_sort == 'desc' ? 'DESC' : 'ASC'); // Just to make sure only valid options make it
+		if (!$this->profile->ordering) {
+			$ordering = ($this->config->default_sort == 'desc' ? 'DESC' : 'ASC'); // Just to make sure only valid options make it
+		} else {
+			$ordering = 'DESC';
+		}
 		$maxpages = 9 - 2; // odd number here (show - 2)
 		$totalpages = ceil ( $this->total_messages / $this->limit );
 		$page = floor ( $this->limitstart / $this->limit ) + 1;

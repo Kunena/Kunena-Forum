@@ -40,11 +40,11 @@ defined ( '_JEXEC' ) or die ();
 		echo $this->selectlist;
 		?> <br />
 
-<input type="checkbox" checked name="leaveGhost" value="1" /> <?php
+<input type="checkbox" <?php if ($this->_config->boxghostmessage): ?> checked <?php endif; ?> name="leaveGhost"  value="<?php echo $this->_config->boxghostmessage ? '1' : '0'; ?>" /> <?php
 		echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' );
 		?>
 
-		<br />
+<br />
 
 <input type="submit" class="button"
 	value="<?php

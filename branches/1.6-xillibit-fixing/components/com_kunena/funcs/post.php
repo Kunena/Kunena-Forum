@@ -1147,33 +1147,43 @@ class CKunenaPost {
 	function displayCaptcha() {
 		if (! $this->hasCaptcha ())
 			return;
-		if (! JPluginHelper::isEnabled ( 'system', 'jezReCaptcha' )) {
-			echo JText::_ ( 'reCAPTCHA is not properly configured.' );
+
+		$dispatcher = &JDispatcher::getInstance();
+        $results = $dispatcher->trigger( 'onCaptchaRequired', array( 'kunena.post' ) );
+
+		if (! JPluginHelper::isEnabled ( 'system', 'captcha' ) || !$results[0] ) {
+			echo JText::_ ( 'COM_KUNENA_CAPTCHA_NOT_CONFIGURED' );
 			return;
 		}
-		$lang = explode ( '-', $this->document->getLanguage () );
-		JApplication::addCustomHeadTag ( '<script type="text/javascript">
-<!--
-var RecaptchaOptions = {
-	lang : "' . $lang . '"
-};
-//-->
-</script>' );
-		JPluginHelper::importPlugin ( 'jezReCaptcha' );
-		$dispatcher = & JDispatcher::getInstance ();
-		$dispatcher->trigger ( 'onCaptchaDisplay' );
+
+        if ($results[0]) {
+        	$dispatcher->trigger( 'onCaptchaView', array( 'kunena.post', 0, '', '<br />' ) );
+        }
 	}
 
 	function verifyCaptcha() {
 		if (! $this->hasCaptcha ())
 			return;
-		if (! JPluginHelper::isEnabled ( 'system', 'jezReCaptcha' )) {
-			$this->_app->enqueueMessage ( JText::_ ( 'Cannot verify security code: reCAPTCHA is not properly configured.' ), 'error' );
+
+		$dispatcher     = &JDispatcher::getInstance();
+        $results = $dispatcher->trigger( 'onCaptchaRequired', array( 'kunena.post' ) );
+
+		if (! JPluginHelper::isEnabled ( 'system', 'captcha' ) || !$results[0]) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CAPTCHA_CANNOT_CHECK_CODE' ), 'error' );
 			$this->redirectBack ();
 		}
-		JPluginHelper::importPlugin ( 'jezReCaptcha' );
-		$dispatcher = & JDispatcher::getInstance ();
-		$dispatcher->trigger ( 'onCaptchaConfirm' );
+
+        if ( $results[0] ) {
+        	$captchaparams = array( JRequest::getVar( 'captchacode', '', 'post' )
+                        , JRequest::getVar( 'captchasuffix', '', 'post' )
+                        , JRequest::getVar( 'captchasessionid', '', 'post' ));
+        	$results = $dispatcher->trigger( 'onCaptchaVerify', $captchaparams );
+            if ( ! $results[0] ) {
+                $this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CAPTCHACODE_DO_NOT_MATCH' ), 'error' );
+				$this->redirectBack ();
+                return false;
+           }
+      }
 	}
 
 	function redirectBack() {

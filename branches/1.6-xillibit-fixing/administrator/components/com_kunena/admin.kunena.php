@@ -1048,6 +1048,8 @@ function showConfig($option) {
 	$lists['hide_ip'] = JHTML::_('select.genericlist', $yesno, 'cfg_hide_ip', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->hide_ip);
 	//New for 1.6: Joomsocial Activity Stream Integration disable/enable
 	$lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->js_actstr_integration);
+	//New for 1.6: choose if you want that ghost message box checked by default
+	$lists['boxghostmessage'] = JHTML::_('select.genericlist', $yesno, 'cfg_boxghostmessage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->boxghostmessage);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }

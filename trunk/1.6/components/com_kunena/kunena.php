@@ -249,7 +249,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		if (!$kunena_session->save ()) $kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 
 		if ($markaction == "allread") {
-			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat', $catid, true), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
 		}
 
 		$userprofile = KunenaFactory::getUser($kunena_my->id);

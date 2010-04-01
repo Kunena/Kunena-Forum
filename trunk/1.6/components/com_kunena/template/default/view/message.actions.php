@@ -25,6 +25,7 @@ $catid = JRequest::getInt ( 'catid', 0 );
 				if (isset ( $this->msg_html->merge )) { echo " " . $this->msg_html->merge; }
 				if (isset ( $this->msg_html->split )) { echo " " . $this->msg_html->split; }
 				if (isset ( $this->msg_html->delete )) { echo " " . $this->msg_html->delete; }
+				if (isset ( $this->msg_html->move )) { echo " " . $this->msg_html->move; }
 				if (isset ( $this->msg_html->publish )) { echo " " . $this->msg_html->publish; }
 			} else { echo $this->msg_html->closed; }
 			?>

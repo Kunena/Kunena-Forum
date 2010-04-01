@@ -139,7 +139,7 @@ class CKunenaSearch {
 
 		for($x = 0; $x < count ( $arr_searchwords ); $x ++) {
 			$searchword = $arr_searchwords [$x];
-			$searchword = $this->db->getEscaped ( addslashes ( JString::trim ( $searchword ) ) );
+			$searchword = $this->db->getEscaped ( JString::trim ( $searchword ) );
 			if (empty ( $searchword ))
 				continue;
 			$matches = array ();

@@ -41,6 +41,14 @@ Kunena 1.6.0-DEV
 ^ [#20071] Simplify redirect and error handling for empty or illegal func
 # [#20071] Routing: alter it to take account all variables in menu item, simplify logic
 # [#19288] Fix regression: cannot post, reply topics
+^ [#15886] Merged revisions 2124-2133 from /branches/1.6-xillibit-fixing with some changes
+
+31-Mar-2010 Xillibit
+# [#19288] The message subject in RSS have slashes
+# [#19288] When you set profilebox in top or bottom position, the online image is misplaced
+# [#19288] When the user choose last post first in his profile, this has no effect
++ [#19764] Add configuration setting to allow the user let the ghost message box checked or not
+^ [#19395] Leverage of a better captcha plugin instead of the crappy thing
 
 31-Mar-2010 Matias
 + [#20050] Add new integration classes: Profile for None, Kunena, CommunityBuilder, JomSocial
@@ -51,11 +59,24 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Bugs in Kunena user classes
 # [#19288] Fix regression: Anonymous users had users avatar in view
 
+30-Mar-2010 Xillibit
+# [#19872] Externals urls in some places are considered like local urls
+# [#19764] Delete attachments now delete from old locations
+# [#19288] When you use quote function with content with double quote, it's showed in html in editmode
+# [#19288] Quick reply function doesn't work, it need that you enter a name
++ [#20050] Add stats functions in API
+
 29-Mar-2010 Matias
 + [#20050] Add new integration classes: Login/Registration for None, CommunityBuilder, JomSocial
 + [#20050] Add new integration classes: Avatar for None, Kunena, CommunityBuilder, JomSocial
 # [#19288] Fix regression: Fixed many bugs in KunenaUser class
 + [#20050] Add new integration classes: Private for None, CommunityBuilder, JomSocial, UddeIM
+
+29-Mar-2010 Xillbit
+# [#19764] Fix small typo with button move message which doesn't diplay the icon
+# [#19358] Fix an issue which prevent to display the poll under some conditions
+# [#19764] Some fixes on moderation.class and functions which use this class
+# [#20044] Undefined property: CKunenaPost::$email on components\com_kunena\template\default\editor\form.php on line 97
 
 28-Mar-2010 Matias
 + [#20038] Add basic Joomla 1.6 support (no installer, no acl)
@@ -67,7 +88,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Prune forums complains of missing CKunenaTimeformat class
 # [#19288] Fix regression: First message in topic missing in func=view
 # [#19288] Fix regression: CommunityBuilder profile integration did not fill all the fields
-^ [#15886] Merged revisions 2098-2103 from /branches/1.5-xillibit-fixing
+^ [#15886] Merged revisions 2098-2103 from /branches/1.6-xillibit-fixing
 # [#19288] Fix regression: Do not mess up Joomla template (local css rules)
 # [#19064] Add new bbcodes: Simple working implementation of MAP with external link
 + [#19064] Add new bbcodes: article tag pointing to com_content articles
@@ -140,7 +161,7 @@ Kunena 1.6.0-DEV
 10-Mar-2010 Matias
 # [#19288] Fix regression: User gender, birthdate, location and website missing from message info
 # [#19233] Show Kunena login screen to visitors, if forum is for registered users only
-^ [#15886] Merge revisions 2022-2032 from /branches/1.5-xillibit-fixing
+^ [#15886] Merge revisions 2022-2032 from /branches/1.6-xillibit-fixing
 - [#19383] Revise Profile Page: cleanup
 # [#19380] Many fixes to CKunenaImage, CKunenaAttachments
 # [#19383] Fix avatar upload, other logic still missing
@@ -176,7 +197,7 @@ Kunena 1.6.0-DEV
 # [#19764] Put auto-redirect when decreasing/increasing karma
 
 04-Mar-2010 Matias
-^ [#15886] Merge latest changes /branches/1.5-xillibit with some fixes and changes (not tested, may contain regression)
+^ [#15886] Merge latest changes /branches/1.6-xillibit with some fixes and changes (not tested, may contain regression)
 
 01-Mar-2010 Xillibit
 + [#19764] Add user blocking/unblocking functions in kunena users managers like in the j! user managers
@@ -323,7 +344,7 @@ Kunena 1.6.0-DEV
 
 17-Feb-2010 Matias
 ^ [#19345] Restyle Default template: pagination
-^ [#15886] Merge latest changes /branches/1.5-xillibit, added minor fixes
+^ [#15886] Merge latest changes /branches/1.6-xillibit, added minor fixes
 # [#19380] Multifile upload: Fixed logic for gears, silverlight, flash uploads
 
 17-Feb-2010 Xillibit

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: $
  * Kunena Component
  * @package Kunena
  *
@@ -27,9 +27,6 @@ defined ( '_JEXEC' ) or die ();
 		?>: <strong><?php
 		echo kunena_htmlspecialchars ( stripslashes ( $this->message->subject ) );
 		?></strong> <br />
-		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?> :<strong><?php
-		echo kunena_htmlspecialchars ( stripslashes ( $this->message->catname ) );
-		?></strong> <br />
 
 <br />
 		<?php
@@ -40,8 +37,11 @@ defined ( '_JEXEC' ) or die ();
 		echo $this->selectlist;
 		?> <br />
 
+<input type="checkbox" checked name="leaveGhost" value="1" /> <?php
+		echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' );
+		?>
 
-<br />
+		<br />
 
 <input type="submit" class="button"
 	value="<?php

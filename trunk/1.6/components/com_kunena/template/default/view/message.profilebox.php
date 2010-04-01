@@ -98,13 +98,16 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 		<li class="kpost-userrank-img">
 			<?php if (isset ( $this->msg_html->userrankimg )) { echo $this->msg_html->userrankimg; } ?>
 		</li>
-		<li class="kpost-online-status-<?php echo $this->msg_html->online ? 'yes':'no'; ?>"> </li>
+		<li class="kpost-online-status-top-<?php echo $this->msg_html->online ? 'yes':'no'; ?>"> </li>
 
 		<!--  The markup needs to be removed from these tags and each enclosed as a list item. -->
 
+		<li class="kpost-userposts">
 		<?php if (isset ( $this->msg_html->posts )) { echo $this->msg_html->posts; }
 				if (isset ( $this->msg_html->points )) { echo $this->msg_html->points; }?>
 		<?php endif; ?>
+		</li>
+
 	</ul>
 <?php } ?>
 

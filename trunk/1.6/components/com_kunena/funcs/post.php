@@ -329,7 +329,7 @@ class CKunenaPost {
 		if ($this->catid && $this->msg_cat->id > 0) {
 			if ($do == 'quote') {
 				$this->message_text = "[b]" . kunena_htmlspecialchars ( stripslashes ( $message->name ) ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
-				$this->message_text .= '[quote]' . kunena_htmlspecialchars ( stripslashes ( $message->message ) ) . "[/quote]";
+				$this->message_text .= '[quote]' .  stripslashes ( $message->message )  . "[/quote]";
 			} else {
 				$this->message_text = '';
 			}
@@ -424,7 +424,7 @@ class CKunenaPost {
 
 			$this->kunena_editmode = 1;
 
-			$this->message_text = kunena_htmlspecialchars ( stripslashes ( $message->message ) );
+			$this->message_text = stripslashes ( $message->message );
 			$this->resubject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
 			$this->authorName = kunena_htmlspecialchars ( stripslashes ( $message->name ) );
 			$this->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
@@ -589,7 +589,7 @@ class CKunenaPost {
 		CKunenaTools::loadTemplate ( '/moderate/topicmove.php' );
 	}
 
-	protected function domovepost() {
+	protected function domovethread() {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -601,6 +601,40 @@ class CKunenaPost {
 		$TargetCatID = JRequest::getInt ( 'postmove', 0 );
 
 		$move = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
+		if (! $move) {
+			$message = $kunena_mod->getErrorMessage ();
+		} else {
+			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
+		}
+
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+	}
+
+	protected function movepost() {
+		if (!$this->load())
+			return false;
+		if ($this->moderatorProtection ())
+			return false;
+
+		$options=array();
+		$this->selectlist = CKunenaTools::KSelectList ( 'postmove', $options, ' size="15" class="kmove_selectbox"' );
+		$this->message = $this->msg_cat;
+
+		CKunenaTools::loadTemplate ( '/moderate/postmove.php' );
+	}
+
+	protected function domovepost() {
+		if (!$this->load())
+			return false;
+		if ($this->moderatorProtection ())
+			return false;
+
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+
+		$kunena_mod = CKunenaModeration::getInstance ();
+		$TargetCatID = JRequest::getInt ( 'postmove', 0 );
+
+		$move = $kunena_mod->moveMessage ( $this->id, $TargetCatID, '' , '' );
 		if (! $move) {
 			$message = $kunena_mod->getErrorMessage ();
 		} else {
@@ -651,11 +685,11 @@ class CKunenaPost {
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = &CKunenaModeration::getInstance ();
 
-		if ( !empty( $TargetThreadID ) ) {
-			$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
-		} elseif( !empty( $TargetTopicID ) ) {
-			$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetTopicID );
+		if ( !empty( $TargetTopicID ) ) {
+			$TargetThreadID = $TargetTopicID;
 		}
+
+		$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
 
 		if (! $merge) {
 			$message = $kunena_mod->getErrorMessage ();
@@ -708,11 +742,11 @@ class CKunenaPost {
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = &CKunenaModeration::getInstance ();
 
-		if ( !empty( $TargetThreadID ) ) {
-			$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
-		} elseif( !empty( $TargetTopicID ) ) {
-			$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetTopicID );
+		if ( !empty( $TargetTopicID ) ) {
+			$TargetThreadID = $TargetTopicID;
 		}
+
+		$merge = $kunena_mod->moveMessage ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
 
 		if (! $merge) {
 			$message = $kunena_mod->getErrorMessage ();
@@ -731,7 +765,8 @@ class CKunenaPost {
 
 		$this->message = $this->msg_cat;
 
-		$this->selectlist = CKunenaTools::KSelectList('targetcat', $options=array(), ' size="15" class="ksplit_selectbox"');
+		$options=array();
+		$this->selectlist = CKunenaTools::KSelectList('targetcat', $options, ' size="15" class="ksplit_selectbox"');
 
 		CKunenaTools::loadTemplate ( '/moderate/postsplit.php' );
 	}
@@ -746,7 +781,6 @@ class CKunenaPost {
 		$kunena_mod = &CKunenaModeration::getInstance ();
 
 		$mode = JRequest::getVar ( 'split', null );
-		$TargetSubject = JRequest::getVar ( 'messubject', null );
 		$TargetCatID = JRequest::getInt ( 'targetcat', null );
 		$TargetSplitCatId = JRequest::getInt ( 'splitcatid', null );
 
@@ -755,7 +789,7 @@ class CKunenaPost {
 		}
 
 		if ($mode == 'splitpost') { // we split only the message specified
-			$splitpost = $kunena_mod->moveMessage ( $this->id, $TargetCatID, $TargetSubject );
+			$splitpost = $kunena_mod->moveMessage ( $this->id, $TargetCatID, '', '' );
 			if (! $splitpost) {
 				$message = $kunena_mod->getErrorMessage ();
 			} else {
@@ -763,14 +797,12 @@ class CKunenaPost {
 			}
 
 		} else { // we split the message specified and the replies to this message
-			// FIXME: does not work
-			/*$splitpost = $kunena_mod->moveMessageAndNewer ( $this->id, $TargetCatID, $TargetSubject, '' );
+			$splitpost = $kunena_mod->moveMessageAndNewer ( $this->id, $TargetCatID, '', '' );
 			if (! $splitpost) {
 				$message = $kunena_mod->getErrorMessage ();
 			} else {
 				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_SPLIT' );
-			}*/
-			$message = "This function doesn't work yet";
+			}
 		}
 
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $message );
@@ -1036,6 +1068,14 @@ class CKunenaPost {
 				$this->domovepost ();
 				break;
 
+			case 'domovethread' :
+				$this->domovethread ();
+				break;
+
+			case 'movepost' :
+				$this->movepost ();
+				break;
+
 			case 'mergethread' :
 				$this->mergethread ();
 				break;
@@ -1111,33 +1151,43 @@ class CKunenaPost {
 	function displayCaptcha() {
 		if (! $this->hasCaptcha ())
 			return;
-		if (! JPluginHelper::isEnabled ( 'system', 'jezReCaptcha' )) {
-			echo JText::_ ( 'reCAPTCHA is not properly configured.' );
+
+		$dispatcher = &JDispatcher::getInstance();
+        $results = $dispatcher->trigger( 'onCaptchaRequired', array( 'kunena.post' ) );
+
+		if (! JPluginHelper::isEnabled ( 'system', 'captcha' ) || !$results[0] ) {
+			echo JText::_ ( 'COM_KUNENA_CAPTCHA_NOT_CONFIGURED' );
 			return;
 		}
-		$lang = explode ( '-', $this->document->getLanguage () );
-		JApplication::addCustomHeadTag ( '<script type="text/javascript">
-<!--
-var RecaptchaOptions = {
-	lang : "' . $lang . '"
-};
-//-->
-</script>' );
-		JPluginHelper::importPlugin ( 'jezReCaptcha' );
-		$dispatcher = & JDispatcher::getInstance ();
-		$dispatcher->trigger ( 'onCaptchaDisplay' );
+
+        if ($results[0]) {
+        	$dispatcher->trigger( 'onCaptchaView', array( 'kunena.post', 0, '', '<br />' ) );
+        }
 	}
 
 	function verifyCaptcha() {
 		if (! $this->hasCaptcha ())
 			return;
-		if (! JPluginHelper::isEnabled ( 'system', 'jezReCaptcha' )) {
-			$this->_app->enqueueMessage ( JText::_ ( 'Cannot verify security code: reCAPTCHA is not properly configured.' ), 'error' );
+
+		$dispatcher     = &JDispatcher::getInstance();
+        $results = $dispatcher->trigger( 'onCaptchaRequired', array( 'kunena.post' ) );
+
+		if (! JPluginHelper::isEnabled ( 'system', 'captcha' ) || !$results[0]) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CAPTCHA_CANNOT_CHECK_CODE' ), 'error' );
 			$this->redirectBack ();
 		}
-		JPluginHelper::importPlugin ( 'jezReCaptcha' );
-		$dispatcher = & JDispatcher::getInstance ();
-		$dispatcher->trigger ( 'onCaptchaConfirm' );
+
+        if ( $results[0] ) {
+        	$captchaparams = array( JRequest::getVar( 'captchacode', '', 'post' )
+                        , JRequest::getVar( 'captchasuffix', '', 'post' )
+                        , JRequest::getVar( 'captchasessionid', '', 'post' ));
+        	$results = $dispatcher->trigger( 'onCaptchaVerify', $captchaparams );
+            if ( ! $results[0] ) {
+                $this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CAPTCHACODE_DO_NOT_MATCH' ), 'error' );
+				$this->redirectBack ();
+                return false;
+           }
+      }
 	}
 
 	function redirectBack() {

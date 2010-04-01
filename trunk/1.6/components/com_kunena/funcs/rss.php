@@ -169,17 +169,17 @@ class CKunenaRSSView extends CKunenaRSS {
 
 				switch ($type) {
 					case 'thread':
-						$tmp['title']		= $data->subject;
+						$tmp['title']		= stripslashes($data->subject);
 						$tmp['text']		= $data->message;
 						$tmp['date']		= $data->time;
 						$tmp['email']		= $data->email;
 						$tmp['name']		= $data->name;
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
+							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
 						break;
 					case 'post':
-						$tmp['title']		= $data->lastpost_subject;
+						$tmp['title']		= stripslashes($data->lastpost_subject);
 						$tmp['text']		= $data->lastpost_message;
 						$tmp['date']		= $data->lastpost_time;
 						$tmp['email']		= $data->lastpost_email;
@@ -190,14 +190,14 @@ class CKunenaRSSView extends CKunenaRSS {
 						break;
 					case 'recent':
 					default:
-						$tmp['title']		= $data->subject;
+						$tmp['title']		= stripslashes($data->subject);
 						$tmp['text']		= $data->lastpost_message;
 						$tmp['date']		= $data->lastpost_time;
 						$tmp['email']		= $data->lastpost_email;
 						$tmp['name']		= $data->lastpost_name;
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
+							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
 				}
 
 				// Guid is used by aggregators to uniquely identify each item

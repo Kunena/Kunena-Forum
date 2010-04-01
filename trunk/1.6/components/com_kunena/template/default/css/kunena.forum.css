@@ -1840,7 +1840,11 @@ PX		EM			PCT			PT
 #Kunena ul#kpost-profile li.kpost-userrank-img {}
 		
 #Kunena ul#kpost-profile li.kpost-online-img{}
-		
+
+#Kunena li.kpost-userposts{
+	margin-top : 20px;	
+}
+
 #Kunena ul#kpost-profile li.kpost-smallicons{
 	margin:20px auto;
 	width: 80px;
@@ -1859,7 +1863,24 @@ PX		EM			PCT			PT
 }
 #Kunena li.kpost-online-status-no {
 	margin:10px auto;
-	display:block; 
+	display:block;
+	background: url("../images/icons/offline.gif") no-repeat; 
+	height: 15px; 
+	width: 74px;
+}
+
+#Kunena li.kpost-online-status-top-yes {
+	display:block;
+	float: left;
+	padding-right:5px;
+	background: url("../images/icons/online.gif") no-repeat; 
+	height: 15px; 
+	width: 74px;
+}
+#Kunena li.kpost-online-status-top-no {	
+	display:block;
+	float: left;
+	padding-right:5px;	
 	background: url("../images/icons/offline.gif") no-repeat; 
 	height: 15px; 
 	width: 74px;
@@ -1873,7 +1894,7 @@ PX		EM			PCT			PT
 #Kunena ul#kpost-profiletop li {
 	list-style-type: none;
 	display:block;
-	margin:0;
+	/*margin:0;*/
 	padding: 0;
 }
 #Kunena ul#kpost-profiletop li.kpost-username {

@@ -169,30 +169,27 @@ class CKunenaModeration {
 				if ($TargetMessageID == 0) {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$MessageID', `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
 				} else {
+					// TODO: in the future we may want to leave parent alone when message is not promoted to be a thread starter
+					// TODO: check that current code allows leaving parent alone.. that enables us to point another topic as parent
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID', `parent`='$TargetMessageID' $subjectupdatesql WHERE `id`='$MessageID';";
 				}
+				$this->_db->setQuery ( $sql );
+				$this->_db->query ();
+				check_dberror ( 'Unable to perform move.' );
 
 				// If we are moving the first message of a thread only - make the second post the new thread header
-				// FIXME: Does this make any sense? What happens in here is that first message maybe gets moved into another category/thread, while all replies
-				// get moved, too: into new thread. So I do not see this useful option before we have threads table.
 				if ( $currentMessage->parent == 0 ) {
 					// We are about to pull the thread starter from the original thread.
 					// Need to promote the second post of the original thread as the new starter.
-					$sqlnewparent = "SELECT `catid`, `parent`, `thread`, `subject` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
+					$sqlnewparent = "SELECT `id` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
 					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
 					$newParent = $this->_db->loadObject ();
 					check_dberror ( 'Unable to select new message for promote parent.' );
 
 					if ( is_object( $newParent ) ) {
-						// Rest of the thread will become new thread with different thread id
-						$sqlparent = "UPDATE #__fb_messages SET `parent`=0, `thread`='{$newParent->id}' $subjectupdatesql WHERE `id`='{$newParent->id}'";
-						$this->_db->setQuery ( $sqlparent );
-						$this->_db->query ();
-						check_dberror ( 'Unable to promote message parent.' );
-						$sqlparent = "UPDATE #__fb_messages SET `thread`='{$newParent->id}' WHERE `thread`='{$currentMessage->thread}'";
-						$this->_db->setQuery ( $sqlparent );
-						$this->_db->query ();
-						check_dberror ( 'Unable to put child to have the new parent.' );
+						// Can't call directly the $this->_Move ( $ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_NEWER ); because this check if the move is set in the same cat
+						$sql = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`=0 $subjectupdatesql WHERE `id`='$newParent->id';";
+						$sql2 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`='$newParent->id' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id` NOT IN('$MessageID', '$newParent->id');";
 					}
 				}
 
@@ -201,7 +198,7 @@ class CKunenaModeration {
 				if ($TargetMessageID == 0) {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}';";
 				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='{$targetMessage->thread}' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID', `thread`='{$targetMessage->thread}' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}';";
 				}
 
 				// Create ghost thread if requested
@@ -212,8 +209,8 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_NEWER : // Move message and all newer messages of thread
 				if ($TargetMessageID == 0) {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
-					$sql2 = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
+					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$MessageID', `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
+					$sql2 = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$MessageID', `parent`='$MessageID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
 				} else {
 					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID' $subjectupdatesql WHERE `id`='$MessageID';";
 					$sql2 = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
@@ -246,7 +243,7 @@ class CKunenaModeration {
 			$this->_db->query ();
 			check_dberror ( 'Unable to perform move.' );
 		}
-		
+
 		// When done log the action
 		$this->_Log ( 'Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode );
 
@@ -298,21 +295,66 @@ class CKunenaModeration {
 		switch ($mode) {
 			case KN_DEL_MESSAGE : //Delete only the actual message
 				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='$MessageID';";
+				if ( $currentMessage->parent == 0 ) {
+					// We are about to pull the thread starter from the original thread.
+					// Need to promote the second post of the original thread as the new starter.
+					$sqlnewparent = "SELECT `id` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
+					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
+					$newParent = $this->_db->loadObject ();
+					check_dberror ( 'Unable to select new message for promote parent.' );
+
+					if ( is_object( $newParent ) ) {
+						$sql1 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`=0 WHERE `id`='$newParent->id';";
+						$this->_db->setQuery ( $sql1 );
+						$this->_db->query ();
+						// TODO: leave parent alone after checking that it's possible in our code..
+						$sql2 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`='$newParent->id' WHERE `thread`='{$currentMessage->thread}' AND `id`!='$newParent->id';";
+						$this->_db->setQuery ( $sql2 );
+						$this->_db->query ();
+					}
+				}
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
 				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `thread`='{$currentMessage->thread}';";
 				break;
 			case KN_DEL_ATTACH : //Delete only the attachments
 				jimport('joomla.filesystem.file');
-				$this->_db->setQuery ( "SELECT `userid`,`filename` FROM #__kunena_attachments WHERE `mesid`='$MessageID';" );
-				$fileList = $this->_db->loadObjectList ();
+				$this->_db->setQuery ( "SELECT `userid`,`filename`, `filelocation` FROM #__kunena_attachments WHERE `mesid`='$MessageID';" );
+				$fileList = $this->_db->loadObjectlist ();
 				check_dberror ( "Unable to load attachments." );
-				$sql = "DELETE FROM #__kunena_attachments WHERE `mesid`='$MessageID';";
-				// FIXME: need to delete attachment from the old location, too..
-				// TODO: what to do with files that should not be deleted (attachments from other components, multiple occurances of the same file)?
-				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$fileList[0]->userid.'/'.$fileList[0]->filename;
-				if (JFile::exists($filetoDelete)) {
-					JFile::delete($filetoDelete);
+				if ( is_array($fileList) ) {
+					$sql = "DELETE FROM #__kunena_attachments WHERE `mesid`='$MessageID';";
+					// TODO: what to do with files that should not be deleted (attachments from other components, multiple occurances of the same file)?
+					// TODO: Joomla has function which can be used to search file in multiple locations, use it
+					foreach ( $fileList as $file ) {
+						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/'.$file->filename;
+						if (JFile::exists($filetoDelete)) {
+							JFile::delete($filetoDelete);
+						}
+						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/raw/'.$file->filename;
+						if (JFile::exists($filetoDelete)) {
+							JFile::delete($filetoDelete);
+						}
+						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/thumb/'.$file->filename;
+						if (JFile::exists($filetoDelete)) {
+							JFile::delete($filetoDelete);
+						}
+					}
+				}
+				// Delete from old location too
+				// TODO: get rid of old table / lcation
+				$this->_db->setQuery ( "SELECT `filelocation` FROM #__fb_attachments WHERE `mesid`='$MessageID';" );
+				$fileListOld = $this->_db->loadObjectList ();
+				check_dberror ( "Unable to load attachments from old location." );
+				if ( is_array($fileListOld) ) {
+					$this->_db->setQuery ( "DELETE FROM #__fb_attachments WHERE `mesid`='$MessageID';" );
+					$this->_db->query ();
+					check_dberror ( "Unable to delete old attachments." );
+					foreach ( $fileListOld as $file ) {
+						if (JFile::exists($file->filelocation)) {
+							JFile::delete($file->filelocation);
+						}
+					}
 				}
 				break;
 			default :
@@ -328,9 +370,8 @@ class CKunenaModeration {
 
 		// Remember to delete ghost post
 		// FIXME: replies may have ghosts, too. What to do with them?
-		// FIXME: this query does not match if message gets moved again to another category
 		$this->_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m INNER JOIN #__fb_messages_text AS t ON m.`id`=t.`mesid`
-			WHERE `moved`=1 AND `message`='catid={$currentMessage->catid}&id={$currentMessage->id}';" );
+			WHERE `moved`=1;" );
 		$ghostMessageID = $this->_db->loadResult ();
 		check_dberror ( "Unable to load ghost message." );
 
@@ -487,7 +528,8 @@ class CKunenaModeration {
 
 	protected function _createGhostThread($MessageID,$currentMessage) {
 		// Post time in ghost message is the same as in the last message of the thread
-		$this->_db->setQuery ( "SELECT time AS timestamp FROM #__fb_messages WHERE `thread`='$MessageID' ORDER BY id DESC", 0, 1 );
+		$sql="SELECT `time` AS timestamp FROM #__fb_messages WHERE `thread`='$MessageID' ORDER BY id DESC";
+		$this->_db->setQuery ( $sql, 0, 1 );
 		$lastTimestamp = $this->_db->loadResult ();
 		check_dberror ( "Unable to load last timestamp." );
 		if ($lastTimestamp == "") {
@@ -498,7 +540,8 @@ class CKunenaModeration {
 		// @Oliver: I'd like to get rid of it and add it while rendering..
 		$myname = $this->_config->username ? $this->_my->username : $this->_my->name;
 
-		$this->_db->setQuery ( "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','{$currentMessage->subject}','$lastTimestamp','{$currentMessage->catid}','1', '{$this->_my->id}', '" . trim ( addslashes ( $myname ) ) . "')" );
+		$sql = "INSERT INTO #__fb_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','{$currentMessage->subject}','$lastTimestamp','{$currentMessage->catid}','1', '{$this->_my->id}', " . $this->_db->Quote ( $myname ) . ")";
+		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		check_dberror ( 'Unable to insert ghost message.' );
 
@@ -506,13 +549,15 @@ class CKunenaModeration {
 		$newId = $this->_db->insertid ();
 
 		// and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-		$this->_db->setQuery ( "UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'" );
+		$sql = "UPDATE #__fb_messages SET `thread`='$newId' WHERE `id`='$newId'";
+		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		check_dberror ( 'Unable to update thread id of ghost thread.' );
 
 		// TODO: we need to fix all old ghost messages and change behaviour of them
 		$newURL = "id=" . $currentMessage->id;
-		$this->_db->setQuery ( "INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')" );
+		$sql = "INSERT INTO #__fb_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')";
+		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		check_dberror ( 'Unable to insert ghost message.' );
 	}

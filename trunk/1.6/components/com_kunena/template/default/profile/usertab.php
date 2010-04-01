@@ -137,10 +137,7 @@ defined( '_JEXEC' ) or die();
 				<label for="ban-delposts"><input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" />
 				<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_ALL_POSTS'); ?></span></label>
 				<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_USER'); ?>" name="Submit" />
-				<input type="hidden" name="Itemid"
-				value="<?php
-				echo KUNENA_COMPONENT_ITEMID;
-				?>" /> <input type="hidden" name="option" value="com_kunena" /> <input
+				<input type="hidden" name="option" value="com_kunena" /> <input
 				type="hidden" name="func" value="banactions" /> <input
 				type="hidden" name="thisuserid" value="<?php echo $this->user->id; ?>" />
 			</form>

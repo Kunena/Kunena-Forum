@@ -13,6 +13,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
+kimport('integration.integration');
+
 abstract class KunenaPrivate
 {
 	public $priority = 0;

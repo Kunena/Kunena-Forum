@@ -26,20 +26,22 @@ class KunenaProfileCommunityBuilder extends KunenaProfile
 
 	public function open()
 	{
-		//KIntegrationCommunityBuilder::close();
+		$this->integration->open();
 	}
 
 	public function close()
 	{
-		//KIntegrationCommunityBuilder::close();
+		$this->integration->close();
 	}
 
+/* TODO: do we need this anymore:
 	public function getForumTabURL()
 	{
 		return cbSef( 'index.php?option=com_comprofiler&amp;tab=getForumTab' . getCBprofileItemid() );
 	}
+*/
 
-	public function getUserListURL()
+	public function getUserListURL($action='')
 	{
 		return cbSef( 'index.php?option=com_comprofiler&amp;task=usersList' );
 	}
@@ -67,7 +69,7 @@ class KunenaProfileCommunityBuilder extends KunenaProfile
 
 	public function trigger($event, &$params)
 	{
-		//return KIntegrationCommunityBuilder::trigger($event, $params);
+		return $this->integration->trigger($event, $params);
 	}
 
 }

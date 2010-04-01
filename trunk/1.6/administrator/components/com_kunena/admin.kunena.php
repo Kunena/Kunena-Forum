@@ -30,8 +30,6 @@ $lang->load('com_kunena', KUNENA_PATH_ADMIN);
 
 JToolBarHelper::title('&nbsp;', 'kunena.png');
 
-global $kunenaProfile;
-
 $task = JRequest::getCmd ( 'task' );
 
 if ($task == 'install') {
@@ -48,10 +46,6 @@ require_once (KUNENA_PATH_LIB . DS . 'kunena.version.php');
 $kunena_app = & JFactory::getApplication ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $kunena_db = JFactory::getDBO ();
-
-//$kunena_config =& CKunenaConfig::getInstance();
-//$kunena_config->load();
-
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (KUNENA_PATH . DS . 'class.kunena.php');
@@ -430,10 +424,12 @@ if ($kn_version->versionname == 'NOT UPGRADED') {
 }
 
 // Detect errors in CB integration
+// TODO: do we need to enable this?
+/*
 if (is_object ( $kunenaProfile )) {
 	$kunenaProfile->enqueueErrors ();
-	//$kunenaProfile->close();
 }
+*/
 
 html_Kunena::showFbFooter ();
 

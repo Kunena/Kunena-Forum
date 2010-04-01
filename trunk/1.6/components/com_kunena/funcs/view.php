@@ -362,11 +362,9 @@ class CKunenaView {
 
 		$this->profile = KunenaFactory::getUser ( $this->kunena_message->userid );
 
-		if ($this->config->fb_profile == 'cb') {
-			$triggerParams = array ('userid' => $this->kunena_message->userid, 'userinfo' => &$this->profile );
-			$kunenaProfile = & CKunenaCBProfile::getInstance ();
-			$kunenaProfile->trigger ( 'profileIntegration', $triggerParams );
-		}
+		$triggerParams = array ('userid' => $this->kunena_message->userid, 'userinfo' => &$this->profile );
+		$integration = KunenaFactory::getProfile();
+		$integration->trigger ( 'profileIntegration', $triggerParams );
 
 		//get the username:
 		if ($this->config->username) {
@@ -486,21 +484,7 @@ class CKunenaView {
 		$pms = KunenaFactory::getPrivateMessaging();
 		$this->msg_html->pms = $pms->showIcon( $this->profile->userid );
 
-		//Check if the Integration settings are on, and set the variables accordingly.
-		if ($this->config->fb_profile == "cb") {
-			if ($this->config->fb_profile == 'cb' && $this->profile->userid > 0) {
-				$this->msg_html->prflink = CKunenaCBProfile::getProfileURL ( $this->profile->userid );
-				$this->msg_html->profile = "<a href=\"" . $this->msg_html->prflink . "\"><img src=\"";
-
-				if ($kunena_icons ['userprofile']) {
-					$this->msg_html->profile .= KUNENA_URLICONSPATH . $kunena_icons ['userprofile'];
-				} else {
-					$this->msg_html->profile .= KUNENA_JLIVEURL . "/components/com_comprofiler/images/profiles.gif";
-				}
-
-				$this->msg_html->profile .= "\" alt=\"" . JText::_('COM_KUNENA_VIEW_PROFILE') . "\" border=\"0\" title=\"" . JText::_('COM_KUNENA_VIEW_PROFILE') . "\" /></a>";
-			}
-		} else if ($this->profile->userid) {
+		if ($this->profile->userid) {
 			//Kunena Profile link.
 			$this->msg_html->profileicon = "<img src=\"";
 

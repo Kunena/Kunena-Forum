@@ -28,21 +28,8 @@ if ($this->showgenstats > 0)
 
 	$kunena_config =& CKunenaConfig::getInstance();
 
-	if ($kunena_config->fb_profile == "jomsocial")
-	{
-		$userlist1 = CKunenaLink::GetJomsocialUserListLink($this->totalmembers);
-		$userlist2 = CKunenaLink::GetJomsocialUserListLink(JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
-	}
-	else if ($kunena_config->fb_profile == 'cb')
-	{
-	    $userlist1 = CKunenaLink::GetCBUserListLink($this->totalmembers);
-	    $userlist2 = CKunenaLink::GetCBUserListLink(JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
-	}
-	else
-	{
-	    $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
-	    $userlist2 = CKunenaLink::GetUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
-	}
+	$userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
+	$userlist2 = CKunenaLink::GetUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
 
     	?>
         <!-- BEGIN: GENERAL STATS -->

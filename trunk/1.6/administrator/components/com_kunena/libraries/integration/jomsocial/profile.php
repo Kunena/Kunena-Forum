@@ -24,14 +24,9 @@ class KunenaProfileJomSocial extends KunenaProfile
 		$this->priority = 50;
 	}
 
-	public function getForumTabURL()
+	public function getUserListURL($action='')
 	{
-		return parent::getForumTabURL(); /* TODO */
-	}
-
-	public function getUserListURL()
-	{
-		return CRoute::_('index.php?option=com_community&view=friends');
+		return CRoute::_('index.php?option=com_community&view=search&task=browse');
 	}
 
 	public function getProfileURL($userid, $thumb=true)

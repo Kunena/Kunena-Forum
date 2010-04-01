@@ -106,7 +106,6 @@ include_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.debug.php");
 
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.config.class.php");
 
-global $kunenaProfile;
 global $lang, $kunena_icons, $topic_emoticons;
 
 $kunena_my = &JFactory::getUser ();
@@ -202,6 +201,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$kunena_app->close ();
 	}
 
+	$integration = KunenaFactory::getProfile();
+	$integration->open();
+
 	//time format
 	include_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.timeformat.class.php');
 
@@ -265,11 +267,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		// For guests we don't show new posts
 		$this->prevCheck = CKunenaTimeformat::internalTime()+60;
 	}
-
-	// Integration with GroupJive, Jomsocial:
-	$params = array ($kunena_my->id, &$kunena_session->allowed );
-	if (is_object ( $kunenaProfile ))
-		$kunenaProfile->trigger ( 'getAllowedForumsRead', $params );
 
 	//Get the topics this user has already read this session from #__fb_sessions
 	$this->read_topics = explode ( ',', $kunena_session->readtopics );
@@ -635,10 +632,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 </div>
 <!-- closes Kunena div -->
 <?php
-} //else
+$integration = KunenaFactory::getProfile();
+$integration->close();
 
-if (is_object ( $kunenaProfile ))
-	$kunenaProfile->close ();
+} // end of online
 
 if(JDEBUG == 1){
 	$__profiler->mark('Done');

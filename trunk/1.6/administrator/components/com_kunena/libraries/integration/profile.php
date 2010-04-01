@@ -13,6 +13,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
+kimport('integration.integration');
+
 abstract class KunenaProfile
 {
 	public $priority = 0;
@@ -35,7 +37,7 @@ abstract class KunenaProfile
 	public function close() {}
 	public function trigger($event, &$params) {}
 
-	abstract public function getUserListURL();
+	abstract public function getUserListURL($action='');
 	abstract public function getProfileURL($userid);
 	abstract public function showProfile($userid, &$msg_params);
 }

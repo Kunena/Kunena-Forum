@@ -19,9 +19,9 @@ class KunenaProfileKunena extends KunenaProfile
 		$this->priority = 25;
 	}
 
-	public function getUserListURL()
+	public function getUserListURL($action='')
 	{
-		return KunenaRoute::_('index.php?option=com_kunena&func=userlist');
+		return KunenaRoute::_('index.php?option=com_kunena&func=userlist',$action);
 	}
 
 	public function getProfileURL($user, $task='')

@@ -37,18 +37,7 @@ $this->loadPollStats();
 
 $forumurl = 'index.php?option=com_kunena';
 
-if ($kunena_config->fb_profile == "jomsocial")
-{
-	$userlist1 = CKunenaLink::GetJomsocialUserListLink($this->totalmembers);
-}
-else if ($kunena_config->fb_profile == 'cb')
-{
-    $userlist1 = CKunenaLink::GetCBUserListLink($this->totalmembers);
-}
-else
-{
-    $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
-}
+$userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
 
 ?>
 

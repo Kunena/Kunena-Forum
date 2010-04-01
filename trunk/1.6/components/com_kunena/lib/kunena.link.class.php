@@ -234,12 +234,14 @@ class CKunenaLink
 
     function GetUserlistURL($action='')
 	{
-		return KunenaRoute::_(KUNENA_LIVEURLREL.'&func=userlist'.$action);
+    	$profile = KunenaFactory::getProfile();
+    	return $profile->getUserListURL($action);
 	}
 
 	function GetUserlistLink($action, $name, $rel='nofollow', $class='')
 	{
-		return self::GetSefHrefLink(KUNENA_LIVEURLREL.'&func=userlist'.$action, $name, '', $rel, $class);
+		$link = self::GetUserlistURL($action);
+		return self::GetHrefLink($link, $name, '', $rel, $class);
 	}
 
     function GetViewLink($func, $id, $catid, $view, $name, $rel='nofollow')
@@ -396,36 +398,11 @@ class CKunenaLink
     }
 
     //
-    // Functions for the different pm extensions
-    //
-    function GetUddeImLink($userid, $name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_uddeim&task=new&recip=' . $userid, $name, '', $rel);
-    }
-
-    //
     //Some URL functions for the discuss bot
     //
     function GetContentView( $rowid, $rowItemid)
     {
     	return KunenaRoute::_ ( 'index.php?option=com_content&task=view&Itemid=' . $rowItemid . '&id=' . $rowid );
-    }
-
-    //
-    // Jomsocial
-    //
-    function GetJomsocialUserListLink($name, $rel='nofollow')
-    {
-    	return CKunenaLink::GetSefHrefLink('index.php?option=com_community&view=search&task=browse', $name, '', $rel);
-    }
-
-    //
-    //CB
-    //
-    function GetCBUserListLink($name, $rel='nofollow')
-    {
-    	$cb_url = CKunenaCBProfile::getUserListURL();
-    	return CKunenaLink::GetHrefLink($cb_url, $name, '', $rel);
     }
 
     //

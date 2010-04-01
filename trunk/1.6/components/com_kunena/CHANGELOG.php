@@ -42,6 +42,7 @@ Kunena 1.6.0-DEV
 # [#20071] Routing: alter it to take account all variables in menu item, simplify logic
 # [#19288] Fix regression: cannot post, reply topics
 ^ [#15886] Merged revisions 2124-2133 from /branches/1.6-xillibit-fixing with some changes
+# [#19288] Fix regression: Session was not updated in API, causing sql query to fail
 
 31-Mar-2010 Xillibit
 # [#19288] The message subject in RSS have slashes

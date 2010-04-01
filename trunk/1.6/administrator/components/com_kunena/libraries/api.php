@@ -77,7 +77,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 	public function __construct() {
 		$this->_db = JFactory::getDBO ();
 		$this->_my = JFactory::getUser ();
-		$this->_session = KunenaFactory::getSession();
+		$this->_session = KunenaFactory::getSession( true );
 	}
 
 	public static function version() {

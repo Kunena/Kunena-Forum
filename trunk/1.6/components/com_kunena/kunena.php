@@ -83,12 +83,20 @@ if(JDEBUG == 1 && defined('JFIREPHP')){
 	// FB::trace("Kunena Startup");
 }
 
-// Redirect Forum Jump
-
-if (isset ( $_POST ['func'] ) && $func == "showcat") {
-	$Itemid = JRequest::getInt ( 'Itemid', 0, 'REQUEST' );
+require_once(KUNENA_PATH . DS . 'router.php');
+if (!$func || (!$markaction && !in_array($func, KunenaRouter::$functions))) {
+	// If func is not legal, raise joomla error
+	if ($func) return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
+	// Redirect empty func to default page
 	header ( "HTTP/1.1 303 See Other" );
-	header ( "Location: " . htmlspecialchars_decode ( JRoute::_ ( 'index.php?option=com_kunena&amp;Itemid=' . $Itemid . '&amp;func=showcat&amp;catid=' . $catid ) ) );
+	header ( "Location: " . KunenaRoute::_ ( 'index.php?option=com_kunena', false ) );
+	$kunena_app->close ();
+}
+
+// Redirect Forum Jump
+if (isset ( $_POST ['func'] ) && $func == "showcat") {
+	header ( "HTTP/1.1 303 See Other" );
+	header ( "Location: " . KunenaRoute::_ ( 'index.php?option=com_kunena&func=showcat&catid=' . $catid, false ) );
 	$kunena_app->close ();
 }
 
@@ -104,30 +112,6 @@ global $lang, $kunena_icons, $topic_emoticons;
 $kunena_my = &JFactory::getUser ();
 $kunena_config = &CKunenaConfig::getInstance ();
 $kunena_db = &JFactory::getDBO ();
-
-// Check if we need to redirect to a different default view
-if ($func == ''){
-	$redirect = false;
-
-	switch ($kunena_config->fbdefaultpage){
-		case 'recent' :
-			$func = 'latest';
-			$redirect = true;
-			break;
-		case 'my' :
-			$func = $kunena_my->id > 0 ? 'mylatest' : 'latest';
-			$redirect = true;
-			break;
-		default :
-			$func = 'listcat';
-	}
-
-	if ( !$markaction && $redirect ){
-		header ( "HTTP/1.1 303 See Other" );
-		header ( "Location: " . htmlspecialchars_decode ( KunenaRoute::_ ( 'index.php?option=com_kunena&func=' . $func ) ) );
-		$kunena_app->close ();
-	}
-}
 
 $kn_tables = & CKunenaTables::getInstance ();
 if ($kn_tables->installed () === false) {
@@ -207,7 +191,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$kunena_app->close ();
 	}
 
-	if ($func == 'fb_pdf') {
+	if ($func == 'fb_pdf' || $func == 'pdf') {
 		include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
 		$kunena_app->close ();
 	}
@@ -471,13 +455,14 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 		case 'markthisread' :
 			// get all already read topics
+			// FIXME: buggy: can have values like this: 0--,5,6
 
 			$kunena_db->setQuery ( "SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'" );
 			$allreadyRead = $kunena_db->loadResult ();
 			check_dberror ( "Unable to load read topics." );
 			/* Mark all these topics read */
-			$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND thread NOT IN ('{$allreadyRead}') GROUP BY thread" );
-			$readForum = $kunena_db->loadObjectList ();
+			$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND thread NOT IN ({$allreadyRead}) GROUP BY thread" );
+			$readForum = $kunena_db->loadResultArray ();
 			check_dberror ( "Unable to load messages." );
 			$readTopics = '--';
 

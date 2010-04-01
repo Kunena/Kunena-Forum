@@ -297,7 +297,7 @@ class CKunenaLink
 
     function GetPostNewTopicLink($catid, $name, $rel='nofollow', $class='', $title='')
     {
-        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&func=post&do=reply&catid='.$catid, $name, $title, $rel, $class);
+        return CKunenaLink::GetSefHrefLink(KUNENA_LIVEURLREL.'&func=post&do=new&catid='.$catid, $name, $title, $rel, $class);
     }
 
     function GetTopicPostLink($do, $catid, $id, $name, $rel='nofollow', $class='', $title='')

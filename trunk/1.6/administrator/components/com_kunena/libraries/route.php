@@ -24,6 +24,24 @@ abstract class KunenaRoute {
 		$link = new JURI ( $uri );
 		$query = $link->getQuery ( true );
 
+		if (!isset($query['func'])) {
+			// Handle default page
+			$config = CKunenaConfig::getInstance ();
+			$my = JFactory::getUser();
+			switch ($config->fbdefaultpage){
+				case 'my' :
+					if ($my->id) {
+						$link->setVar ( 'func', 'mylatest' );
+						break;
+					}
+				case 'recent' :
+					$link->setVar ( 'func', 'latest' );
+					break;
+				default :
+					$link->setVar ( 'func', 'listcat' );
+			}
+			$query = $link->getQuery ( true );
+		}
 		$Itemid = self::getItemID ( $query );
 		if ($Itemid > 0) $link->setVar ( 'Itemid', $Itemid );
 
@@ -93,8 +111,8 @@ abstract class KunenaRoute {
 		}
 		foreach ( $item->query as $var => $value ) {
 			if (!isset ( $query [$var] ) || $value != $query [$var]) {
-				if (!$catid || $var!='func')
-					return false;
+				if ($catid && $var=='func') continue;
+				return false;
 			} else {
 				$hits++;
 			}

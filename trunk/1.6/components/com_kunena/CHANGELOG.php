@@ -34,6 +34,14 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+1-Apr-2010 Matias
+# [#20071] KunenaRoute: Add support for default page, fix bug where wrong Itemid got selected
+# [#20071] Routing: Add new option &post=new for new topics
+# [#20071] KunenaMenu: Change New Topic to use &post=new (fixes suboptimal Itemid in routing)
+^ [#20071] Simplify redirect and error handling for empty or illegal func
+# [#20071] Routing: alter it to take account all variables in menu item, simplify logic
+# [#19288] Fix regression: cannot post, reply topics
+
 31-Mar-2010 Matias
 + [#20050] Add new integration classes: Profile for None, Kunena, CommunityBuilder, JomSocial
 + [#20071] KunenaRoute: make Kunena to find best possible Itemid

@@ -311,6 +311,10 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $id, $this->_config->messages_per_page, $this->catid ), $redirectmsg );
 	}
 
+	protected function newtopic($do) {
+		$this->reply($do);
+	}
+
 	protected function reply($do) {
 		if (!$this->load())
 			return false;
@@ -995,13 +999,13 @@ class CKunenaPost {
 		}
 
 		switch ($this->do) {
+			case 'new' :
+				$this->newtopic ( $this->do );
+				break;
+
 			case 'reply' :
 			case 'quote' :
 				$this->reply ( $this->do );
-				break;
-
-			case 'newFromBot' :
-				$this->newFromBot ();
 				break;
 
 			case 'edit' :

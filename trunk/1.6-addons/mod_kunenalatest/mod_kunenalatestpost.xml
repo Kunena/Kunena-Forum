@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+ <!DOCTYPE install>
 <install type="module" version="1.5.0">
 	<name>Kunena Latest Post</name>
 	<author>Kunena team</author>

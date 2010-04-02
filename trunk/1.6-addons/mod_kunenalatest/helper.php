@@ -1,9 +1,12 @@
 <?php
 /**
-* @version		$Id
-* @package		klatestpost
-* @copyright	(c) 2010 Kunena Team, All rights reserved
-* @license		GNU/GPL
+* @version $Id$
+* KunenaLatest Module
+* @package mod_kunenalatest
+*
+* @Copyright (C) 2009 www.kunena.com All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
 */
 
 // no direct access
@@ -12,29 +15,29 @@ defined('_JEXEC') or die('Restricted access');
 class modklatestpostHelper
 {
 	function getKunenaLatestList(&$params,$k_config,$db,$page = 0)
-	{	  
+	{
 		$my = JFactory::getUser ();
-		$nbpoststoshow = $params->get( 'nbpost' );		
-						
+		$nbpoststoshow = $params->get( 'nbpost' );
+
 		$page = $page < 1 ? 1 : $page;
-		
+
 		//Time translation
 		$back_time = 720 * 3600; //hours*(mins*secs)
-		$querytime = time () - $back_time;	 
-	
+		$querytime = time () - $back_time;
+
 		$lookcats = explode ( ',', $k_config->latestcategory );
 		$catlist = array ();
-		$latestcats = '';		
+		$latestcats = '';
 		foreach ( $lookcats as $catnum ) {
 			if (( int ) $catnum > 0)
 				$catlist [] = ( int ) $catnum;
 		}
 		if (count ( $catlist ))
 			$latestcats = " AND m.catid IN (" . implode ( ',', $catlist ) . ") ";
-			
+
 	  $query = "Select allowed FROM #__fb_sessions";
 		$db->setQuery ( $query );
-		$cat_total = $db->loadResult ();		
+		$cat_total = $db->loadResult ();
 
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread
@@ -43,9 +46,9 @@ class modklatestpostHelper
 
 
 		$db->setQuery ( $query );
-		$total = ( int ) $db->loadResult ();		
-		$order = "lastid DESC";    	
-		
+		$total = ( int ) $db->loadResult ();
+		$order = "lastid DESC";
+
 		$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread
 			WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$cat_total})
@@ -56,10 +59,10 @@ class modklatestpostHelper
 
 		$db->setQuery ( $query, '', $params->get( 'nbpost' ) );
 		$threadids = $db->loadResultArray ();
-    
+
     $idstr = @join ( ",", $threadids );
-    
-		
+
+
 		$query = "SELECT a.*, j.id AS userid, u.posts, t.message AS messagetext, l.myfavorite, l.favcount, l.attachments,
 			l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 		FROM (
@@ -82,49 +85,49 @@ class modklatestpostHelper
 		ORDER BY {$order} ";
 
 		$db->setQuery ( $query );
-		$messagelist = $db->loadObjectList ();	
-    
-    $messages = '';	
-	  foreach ( $messagelist as $message ) {				
+		$messagelist = $db->loadObjectList ();
+
+    $messages = '';
+	  foreach ( $messagelist as $message ) {
 				if ($message->parent == 0) {
-					$messages [$message->id] = $message;					
-				} 
+					$messages [$message->id] = $message;
+				}
 			}
 		return $messages;
 	}
 
   function getKunenaConfigClass()
-	{    
+	{
 		$path = JPATH_SITE.DS.'components'.DS.'com_kunena'.DS.'lib'.DS.'kunena.config.class.php';
 		$false = false;
 
 		// If the file exists include it and try to instantiate the object
 		if (file_exists( $path )) {
 			require_once( $path );
-      $return = CKunenaConfig::getInstance ();			
+      $return = CKunenaConfig::getInstance ();
 		} else {
 			JError::raiseWarning( 0, 'File Kunena Config Class not found.' );
 			return $false;
-		} 
-    		
+		}
+
 		return $return;
 	}
 
   function getKunenaLinkClass()
-	{    
+	{
 		$path = JPATH_SITE.DS.'components'.DS.'com_kunena'.DS.'lib'.DS.'kunena.link.class.php';;
 		$false = false;
 
 		// If the file exists include it and try to instantiate the object
 		if (file_exists( $path )) {
 			require_once( $path );
-      $return = new CKunenaLink();			
+      $return = new CKunenaLink();
 		} else {
 			JError::raiseWarning( 0, 'File Kunena Link Class not found.' );
 			return $false;
-		} 
-    		
+		}
+
 		return $return;
 	}
-	
+
 }

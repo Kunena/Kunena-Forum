@@ -1,9 +1,12 @@
 <?php
 /**
-* @version		$Id
-* @package		klatestpost
-* @copyright	(c) 2010 Kunena Team, All rights reserved
-* @license		GNU/GPL
+* @version $Id$
+* KunenaLatest Module
+* @package mod_kunenalatest
+*
+* @Copyright (C) 2009 www.kunena.com All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
 */
 
 // no direct access
@@ -24,10 +27,10 @@ if (!defined("KUNENA_COMPONENT_ITEMID"))
 {
 	$db->setQuery("SELECT id FROM #__menu WHERE link='index.php?option=com_kunena' AND published='1'");
     $kid = $db->loadResult();
-    
+
     define("KUNENA_COMPONENT_ITEMID", (int)$kid);
     define("KUNENA_COMPONENT_ITEMID_SUFFIX", "&amp;Itemid=" . KUNENA_COMPONENT_ITEMID);
- }   
+ }
 
 if (!defined("KUNENA_LIVEURLREL"))
 {

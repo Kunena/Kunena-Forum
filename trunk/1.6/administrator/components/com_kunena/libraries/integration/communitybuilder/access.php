@@ -35,6 +35,7 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 
 	function getAllowedCategories($userid) {
 		$allowed = $this->joomlaAccess->getAllowedCategories($userid);
+		if (!$allowed) $allowed = '0';
 		$params = array ($userid, &$allowed );
 		$this->integration->trigger ( 'getAllowedForumsRead', $params );
 		return $allowed;

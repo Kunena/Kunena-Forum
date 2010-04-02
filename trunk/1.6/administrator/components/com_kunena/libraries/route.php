@@ -46,7 +46,7 @@ abstract class KunenaRoute {
 		if ($Itemid > 0) $link->setVar ( 'Itemid', $Itemid );
 
 		//echo $link->getQuery();
-		return JRoute::_ ( 'index.php?' . $link->getQuery () );
+		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml );
 	}
 
 	protected static function buildMenuTree() {

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+2-Apr-2010 Matias
+# [#19288] Fix regression: Break compatibility (white screen) with older GroupJive releases
+
 1-Apr-2010 Matias
 # [#20071] KunenaRoute: Add support for default page, fix bug where wrong Itemid got selected
 # [#20071] Routing: Add new option &post=new for new topics

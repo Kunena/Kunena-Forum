@@ -2,7 +2,7 @@
 /**
 * @version $Id$
 * KunenaLatest Module
-* @package mod_kunenalatest
+* @package Kunena latest
 *
 * @Copyright (C) 2009 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL

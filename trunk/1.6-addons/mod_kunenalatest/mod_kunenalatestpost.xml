@@ -12,17 +12,17 @@
 	<description>Kunena Latest Post is an official module from Kunena Dev team designed for Kunena 1.6.0 which allow you to show the latest post from kunena forum in a module</description>
 	
 	<files>        
-                <filename module="mod_klatestpost">mod_klatestpost.php</filename>
+                <filename module="mod_kunenalatestpost">mod_kunenalatestpost.php</filename>
                 <filename>index.html</filename>
                 <filename>helper.php</filename>
                 <filename>tmpl/default.php</filename>
                 <filename>tmpl/sticky.png</filename>
                 <filename>tmpl/index.html</filename>
-                 <filename>tmpl/klatest.css</filename>
+                 <filename>tmpl/kunenalatest.css</filename>
         </files>
  
    <languages>        
-        <language tag="en-GB">en-GB.mod_klatestpost.ini</language>
+        <language tag="en-GB">en-GB.mod_kunenalatestpost.ini</language>
     </languages>
  
     

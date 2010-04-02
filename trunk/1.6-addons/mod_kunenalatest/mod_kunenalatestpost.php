@@ -2,7 +2,7 @@
 /**
 * @version $Id$
 * KunenaLatest Module
-* @package mod_kunenalatest
+* @package Kunena Latest
 *
 * @Copyright (C) 2009 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -47,4 +47,4 @@ if (modklatestpostHelper::getKunenaLinkClass()) {
   $klink = modklatestpostHelper::getKunenaLinkClass();
 }
 
-require(JModuleHelper::getLayoutPath('mod_klatestpost'));
+require(JModuleHelper::getLayoutPath('mod_kunenalatestpost'));

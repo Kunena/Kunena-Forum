@@ -32,6 +32,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-DEV
+
+2-Apr-2010 Xillibit
+^ [#20050] Stats API finished and frontstats leverages API methods
+
 Kunena 1.6.0-DEV
 
 1-Apr-2010 Matias

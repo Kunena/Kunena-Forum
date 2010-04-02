@@ -30,14 +30,11 @@ $document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . stripslashe
 
 if($kunena_config->showstats):
 
-$this->loadGenStats();
-$this->loadUserStats();
-$this->loadTopicStats();
-$this->loadPollStats();
+$loadAPIStats = new KunenaStatsAPI();
 
 $forumurl = 'index.php?option=com_kunena';
 
-$userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
+$userlist1 = CKunenaLink::GetUserlistLink('', $loadAPIStats->getToTalMembers());
 
 ?>
 
@@ -69,13 +66,13 @@ $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
                 <tr class = "ksectiontableentry1">
                     <td class = "td-1" align="left">
 <?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:<b> <?php echo $userlist1;?></b>
-                    &nbsp; <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<b> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember); ?></b>
+                    &nbsp; <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<b> <?php echo CKunenaLink::GetProfileLink($kunena_config, $loadAPIStats->getLastestMemberid(), $loadAPIStats->getLastestMember()); ?></b>
 
-                <br/> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>: <b> <?php echo $this->totalmsgs; ?></b> &nbsp;
-    <?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>: <b> <?php echo $this->totaltitles; ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>: <b> <?php echo $this->totalcats; ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>: <b> <?php echo $this->totalsections; ?></b>
+                <br/> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>: <b> <?php echo $loadAPIStats->getTotalMessages(); ?></b> &nbsp;
+    <?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>: <b> <?php echo $loadAPIStats->getTotalTitles(); ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>: <b> <?php echo $loadAPIStats->getTotalCats(); ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>: <b> <?php echo $loadAPIStats->getTotalSections(); ?></b>
 
-                <br/> <?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>: <b> <?php echo $this->todayopen; ?></b> &nbsp; <?php echo
-    JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>: <b> <?php echo $this->yesterdayopen; ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>: <b> <?php echo $this->todayanswer; ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>: <b> <?php echo $this->yesterdayanswer; ?></b>
+                <br/> <?php echo JText::_('COM_KUNENA_STAT_TODAY_OPEN_THREAD'); ?>: <b> <?php echo $loadAPIStats->getTodayOpen(); ?></b> &nbsp; <?php echo
+    JText::_('COM_KUNENA_STAT_YESTERDAY_OPEN_THREAD'); ?>: <b> <?php echo $loadAPIStats->getTodayOpen(); ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_TODAY_TOTAL_ANSWER'); ?>: <b> <?php echo $loadAPIStats->getTodayOpen(); ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_YESTERDAY_TOTAL_ANSWER'); ?>: <b> <?php echo $loadAPIStats->getYesterdayAnswer(); ?></b>
 
                     </td>
                 </tr>
@@ -121,14 +118,15 @@ $k = 0;
       <th class = "th-2 ksectiontableheader" width="40%">&nbsp;  </th>
       <th class = "th-3 ksectiontableheader" align="center" width="10%"></th>
     </tr>
- <?php foreach ($this->toptitles as $toptitle)
+ <?php
+ foreach ($loadAPIStats->getTopicsStats($kunena_config->popsubjectcount) as $toptitle)
        {
 	   $k = 1 - $k;
-		   if ($toptitle->hits == $this->toptitlehits) {
+		   if ($toptitle->hits == $loadAPIStats->getTopTitlesHits($kunena_config->popsubjectcount)) {
 		   $barwidth = 100;
 		   }
 		   else {
-		   $barwidth = round(($toptitle->hits * 100) / $this->toptitlehits);
+		   $barwidth = round(($toptitle->hits * 100) / $loadAPIStats->getTopTitlesHits($kunena_config->popsubjectcount));
 		   }
 ?>
 
@@ -177,19 +175,19 @@ $k = 0;
       <th class = "th-2 ksectiontableheader" width="40%">&nbsp;  </th>
       <th class = "th-3 ksectiontableheader" align="center" width="10%"></th>
     </tr>
- <?php foreach($this->toppolls as $toppoll)
+ <?php foreach($loadAPIStats->getTopPollStats($kunena_config->poppollscount) as $toppoll)
        {
        if($toppoll->total != "0")
        {
 	   $k = 1 - $k;
-		   if ($toppoll->total == $this->toppollvotes) {
+		   if ($toppoll->total == $loadAPIStats->getTopPollVotesStats($kunena_config->poppollscount)) {
           $barwidth = 100;
 		   }
 		   else {
 		    if($toppoll->total== null){
           $toppoll->total = "0";
         }
-		    $barwidth = round(($toppoll->total * 100) / $this->toppollvotes);
+		    $barwidth = round(($toppoll->total * 100) / $loadAPIStats->getTopPollVotesStats($kunena_config->poppollscount));
 		   }
 ?>
 
@@ -241,16 +239,16 @@ $k = 0;
     </tr>
 <?php
 
-	foreach ($this->topposters as $poster)
+	foreach ($loadAPIStats->getPostersStats($kunena_config->popusercount) as $poster)
 	{
 
 	$k = 1 - $k;
 
-	if ($poster->posts == $this->topmessage) {
+	if ($poster->posts == $loadAPIStats->getTopMessage($kunena_config->popusercount)) {
 	$barwidth = 100;
 	}
 	else {
-	$barwidth = round(($poster->posts * 100) / $this->topmessage);
+	$barwidth = round(($poster->posts * 100) / $loadAPIStats->getTopMessage($kunena_config->popusercount));
 	}
 ?>
 
@@ -303,14 +301,14 @@ $k = 0;
     </tr>
 
 <?php
-foreach ($this->topprofiles as $topprofile)
+foreach ($loadAPIStats->getProfileStats($kunena_config->popusercount) as $topprofile)
 {
 $k = 1 - $k;
-if ($topprofile->hits == $this->topprofilehits) {
+if ($topprofile->hits == $loadAPIStats->getTopTitlesHits($kunena_config->popusercount)) {
 $barwidth = 100;
 }
 else {
-$barwidth = round(($topprofile->hits * 100) / $this->topprofilehits);
+$barwidth = round(($topprofile->hits * 100) / $loadAPIStats->getTopTitlesHits($kunena_config->popusercount));
 }
 ?>
 

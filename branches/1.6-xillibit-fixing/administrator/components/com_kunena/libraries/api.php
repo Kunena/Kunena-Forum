@@ -322,6 +322,133 @@ class KunenaStatsAPI {
 		$this->_config = CKunenaConfig::getInstance();
 	}
 
+	public function getToTalMembers() {
+		$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0" );
+		$totalmembers = $this->_db->loadResult ();
+		check_dberror ( "Unable to load total users." );
+
+		return $totalmembers;
+	}
+
+	private function _queryTotalPosts() {
+		$todaystart = strtotime ( date ( 'Y-m-d' ) );
+		$yesterdaystart = $todaystart - (1 * 24 * 60 * 60);
+		$this->_db->setQuery ( "SELECT SUM(time >= '{$todaystart}' AND parent='0') AS todayopen,
+			SUM(time >= '{$yesterdaystart}' AND time < '{$todaystart}' AND parent='0') AS yesterdayopen,
+			SUM(time >= '{$todaystart}' AND parent>'0') AS todayanswer,
+			SUM(time >= '{$yesterdaystart}' AND time < '{$todaystart}' AND parent>'0') AS yesterdayanswer
+			FROM #__fb_messages WHERE time >= '{$yesterdaystart}' AND hold='0'" );
+
+		$totaltmp = $this->_db->loadObject ();
+		check_dberror ( "Unable to load total posts today/yesterday." );
+
+		return $totaltmp;
+	}
+
+	public function getTodayOpen() {
+		$totaltmp = $this->_queryTotalPosts();
+
+		$todayopen = ! empty ( $totaltmp->todayopen ) ? $totaltmp->todayopen : 0;
+
+		return $todayopen;
+	}
+
+	public function getYesterdayOpen(){
+		$totaltmp = $this->_queryTotalPosts();
+
+		$yesterdayopen = ! empty ( $totaltmp->yesterdayopen ) ? $totaltmp->yesterdayopen : 0;
+
+		return $yesterdayopen;
+	}
+
+	public function getTodayAnswer(){
+		$totaltmp = $this->_queryTotalPosts();
+
+		$todayanswer = ! empty ( $totaltmp->todayanswer ) ? $totaltmp->todayanswer : 0;
+
+		return $todayanswer;
+	}
+
+	public function getYesterdayAnswer(){
+		$totaltmp = $this->_queryTotalPosts();
+
+		$yesterdayanswer = ! empty ( $totaltmp->yesterdayanswer ) ? $totaltmp->yesterdayanswer : 0;
+
+		return $yesterdayanswer;
+	}
+
+	private function _getTotalMessagesQuery(){
+		$this->_db->setQuery ( "SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent='0'" );
+		$totaltmp = $this->_db->loadObject ();
+		check_dberror ( "Unable to load total total messages." );
+
+		return $totaltmp;
+	}
+
+	public function getTotalTitles(){
+	 	$totaltmp =	$this->_getTotalMessagesQuery();
+
+	 	$totaltitles = ! empty ( $totaltmp->titles ) ? $totaltmp->titles : 0;
+	 	return $totaltitles;
+	}
+
+	public function getTotalMessages(){
+		$totaltmp =	$this->_getTotalMessagesQuery();
+		$totaltitles = $this->getTotalTitles();
+
+		$totalmsgs = ! empty ( $totaltmp->msgs ) ? $totaltmp->msgs + $totaltitles : $totaltitles;
+		return $totalmsgs;
+	}
+
+	private function _getTotalCategoriesQuery(){
+		$this->_db->setQuery ( "SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__fb_categories" );
+		$totaltmp = $this->_db->loadObject ();
+		check_dberror ( "Unable to load total categories." );
+
+		return $totaltmp;
+	}
+
+	public function getTotalSections(){
+		$totaltmp = $this->_getTotalCategoriesQuery();
+
+		$totalsections = ! empty ( $totaltmp->totalsections ) ? $totaltmp->totalsections : 0;
+
+		return $totalsections;
+	}
+
+	public function getTotalCats(){
+		$totaltmp = $this->_getTotalCategoriesQuery();
+
+		$totalcats = ! empty ( $totaltmp->totalcats ) ? $totaltmp->totalcats : 0;
+
+		return $totalcats;
+	}
+
+	private function _getLastUserQuery() {
+		$queryName = $this->_config->username ? "username" : "name";
+		$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM #__users WHERE block='0' AND activation='' ORDER BY id DESC", 0, 1 );
+		$lastestmember = $this->_db->loadObject ();
+		check_dberror ( "Unable to load last user." );
+
+		return $lastestmember;
+	}
+
+	public function getLastestMember(){
+		$tmpmember = $this->_getLastUserQuery();
+
+		$lastestmember = $tmpmember->username;
+
+		return $lastestmember;
+	}
+
+	public function getLastestMemberid(){
+		$tmpmemberid = $this->_getLastUserQuery();
+
+		$lastestmemberid = $tmpmemberid->id;
+
+		return $lastestmemberid;
+	}
+
 	public function getPostersStats($PosterCount) {
 		if ((int)$PosterCount<0) return;
 
@@ -333,7 +460,22 @@ class KunenaStatsAPI {
 		$topposters = $this->_db->loadObjectList ();
 		check_dberror ( "Unable to load top messages." );
 
-		return $topposters;
+		if (is_array($topposters)) {
+			return $topposters;
+		} else {
+			return 0;
+		}
+
+	}
+
+	public function getTopMessage($PosterCount){
+		if ((int)$PosterCount<0) return;
+
+		$topposters = $this->getPostersStats($PosterCount);
+
+		$topmessage = ! empty ( $topposters [0]->posts ) ? $topposters [0]->posts : 0;
+
+		return $topmessage;
 	}
 
 	public function getProfileStats($ProfileCount) {
@@ -362,7 +504,11 @@ class KunenaStatsAPI {
 		$topprofiles = $this->_db->loadObjectList ();
 		check_dberror ( "Unable to load top profiles." );
 
-		return $topprofiles;
+		if (is_array($topprofiles)) {
+			return $topprofiles;
+		} else {
+			return 0;
+		}
 	}
 
 	public function getTopicsStats($TopicCount) {
@@ -375,7 +521,21 @@ class KunenaStatsAPI {
 		$toptopics = $this->_db->loadObjectList ();
 		check_dberror ( "Unable to load top topics." );
 
-		return $toptopics;
+		if (is_array($toptopics)) {
+			return $toptopics;
+		} else {
+			return 0;
+		}
+	}
+
+	public function getTopTitlesHits($TopicCount) {
+		if ((int)$TopicCount<0) return;
+
+		$toptitlehitslist = $this->getTopicsStats($TopicCount);
+
+		$toptitlehits = ! empty ( $toptitlehitslist [0]->hits ) ? $toptitlehitslist [0]->hits : 0;
+
+		return $toptitlehits;
 	}
 
 	public function getTopPollStats($PollCount) {
@@ -395,4 +555,3 @@ class KunenaStatsAPI {
 		return $toppollvotes;
 	}
 }
-

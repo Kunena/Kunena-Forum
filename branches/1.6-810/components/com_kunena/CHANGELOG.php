@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+2-Apr-2010 810
+# [#19288] Fix regression: Bug bbcode in internet explorer, changed the class name into kunenaclass in lib/bbcode.js.php
+
 2-Apr-2010 Matias
 # [#19288] Fix regression: Break compatibility (white screen) with older GroupJive releases
 

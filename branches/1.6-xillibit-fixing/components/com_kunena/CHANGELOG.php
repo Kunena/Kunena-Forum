@@ -37,6 +37,7 @@ Kunena 1.6.0-Xillibit-DEV
 3-Apr-2010 Xillibit
 ^ [#20050] Fix somes missing things in stats API
 # [#19288] Fix regression when you try to log in kunena with a new user
+^ [#19356] On profilebox when you have pm enabled and AUP enabled the icons are misplaced
 
 2-Apr-2010 Xillibit
 ^ [#20050] Stats API finished and frontstats leverages API methods

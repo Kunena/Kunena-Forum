@@ -40,9 +40,13 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 
 		<!--  The markup needs to be removed from these tags and each enclosed as a list item. -->
 
-		<?php if (isset ( $this->msg_html->posts )) { echo $this->msg_html->posts; }
-				if (isset ( $this->msg_html->points )) { echo $this->msg_html->points; }?>
-			<?php if (isset ( $this->msg_html->pms )) { echo $this->msg_html->pms; } ?>
+		<?php
+			if (isset ( $this->msg_html->posts )) { ?>
+		<li><?php echo $this->msg_html->posts; ?></li>
+		<?php   }
+			if (isset ( $this->msg_html->points )) { ?>
+		<li><?php echo $this->msg_html->points; ?></li>
+		<?php }	 ?>
 
 		<li class="kpost-online-status-<?php echo $this->msg_html->online ? 'yes':'no'; ?>"> </li>
 		<li class="kpost-smallicons">
@@ -50,7 +54,10 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 				<?php echo $this->profile->profileIcon('gender'); ?>
 				<?php echo $this->profile->profileIcon('birthdate'); ?>
 				<?php echo $this->profile->profileIcon('location'); ?>
-				<?php echo $this->profile->profileIcon('website'); ?>
+				<?php echo $this->profile->profileIcon('website');
+				if (isset ( $this->msg_html->pms )) {
+			 		echo $this->msg_html->pms;
+				}?>
 			</div>
 			<?php
 			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
@@ -65,10 +72,15 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 	<ul id="kpost-profiletop">
 		<?php if ($this->profile->userid): ?>
 		<li class="kpost-smallicons">
-			<?php if (isset($this->msg_html->gender)) echo $this->msg_html->gender; ?>
-			<?php if (isset($this->msg_html->birthdate)) echo $this->msg_html->birthdate; ?>
-			<?php if (isset($this->msg_html->location)) echo $this->msg_html->location; ?>
-			<?php if (isset($this->msg_html->website)) echo $this->msg_html->website; ?>
+			<div class="iconrow">
+			<?php echo $this->profile->profileIcon('gender'); ?>
+			<?php echo $this->profile->profileIcon('birthdate'); ?>
+			<?php echo $this->profile->profileIcon('location'); ?>
+			<?php echo $this->profile->profileIcon('website');
+			if (isset ( $this->msg_html->pms )) {
+				echo $this->msg_html->pms;
+			} ?>
+			</div><br />
 			<?php
 			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
 			?>
@@ -103,9 +115,9 @@ if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right
 		<!--  The markup needs to be removed from these tags and each enclosed as a list item. -->
 
 		<li class="kpost-userposts">
-		<?php if (isset ( $this->msg_html->posts )) { echo $this->msg_html->posts; }
-				if (isset ( $this->msg_html->points )) { echo $this->msg_html->points; }?>
-		<?php endif; ?>
+		<?php if (isset ( $this->msg_html->posts )) { ?><li><?php  echo $this->msg_html->posts; ?></li><?php  }
+				if (isset ( $this->msg_html->points )) { ?><li><?php  echo $this->msg_html->points; ?></li><?php }
+		 endif; ?>
 		</li>
 
 	</ul>

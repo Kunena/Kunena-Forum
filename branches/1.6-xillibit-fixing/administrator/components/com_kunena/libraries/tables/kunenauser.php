@@ -266,7 +266,8 @@ class TableKunenaUser extends TableKunena
 		}
 
 		// Bind the data to the table.
-		$return = $this->bind($data);
+		$ignore = '';
+		$return = $this->bind($data,$ignore);
 		if ($return && $data['posts'] !== null) $this->_exists = true;
 		return $this->_exists;
 	}
@@ -279,11 +280,16 @@ class TableKunenaUser extends TableKunena
 		}
 	}
 
-	public function bind($data){
+	public function bind($data,$ignore){
 		parent::bind($data);
-		$fields = array('name', 'username');
-		foreach ($fields as $field) {
-			if (isset($data[$field])) $this->$field = $data[$field];
+
+		if ( !empty($ignore) ) {
+			if ( !is_array($ignore) ) {
+				$fields = array('name', 'username');
+				foreach ($fields as $field) {
+					if (isset($data[$field])) $this->$field = $data[$field];
+				}
+			}
 		}
 	}
 }

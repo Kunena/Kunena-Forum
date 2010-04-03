@@ -318,7 +318,7 @@ class KunenaStatsAPI {
 
 	public function __construct() {
 		$this->_db = JFactory::getDBO ();
-		$this->_session = KunenaFactory::getSession();
+		$this->_session = KunenaFactory::getSession( true );
 		$this->_config = CKunenaConfig::getInstance();
 	}
 
@@ -538,8 +538,20 @@ class KunenaStatsAPI {
 		return $toptitlehits;
 	}
 
+	public function getTopProfileHits($PopUserCount) {
+		if ((int)$PopUserCount<0) return;
+
+		$topprofilehitslist = $this->getProfileStats($PopUserCount);
+
+		$topprofilehits = ! empty ( $topprofilehitslist [0]->hits ) ? $topprofilehitslist [0]->hits : 0;
+
+		return $topprofilehits;
+	}
+
 	public function getTopPollStats($PollCount) {
 		if ((int)$PollCount<0) return;
+
+		require_once(KPATH_SITE . DS . 'lib' . DS .'kunena.poll.class.php');
 
 		$toppolls = CKunenaPolls::get_top_five_polls ( $PollCount );
 

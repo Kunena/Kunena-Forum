@@ -594,13 +594,10 @@ if (empty($objCatInfo)) {
 
                             $htmlText = "[b]" . stripslashes($message->name) . " " . _POST_WROTE . ":[/b]\n";
                             $htmlText .= '[quote]' . $quote . "[/quote]";
-                            //$quote = smile::fbStripHtmlTags($quote);
-                            $resubject = strtr($message->subject, $table);
 
-                            $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
-                            //$resubject = kunena_htmlspecialchars($resubject);
-                            $resubject = smile::fbStripHtmlTags($resubject);
-                            //$resubject = smile::fbStripHtmlTags($resubject);
+                            $resubject = strtr($message->subject, $table);
+                            $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE .' '. stripslashes($resubject);
+                            $resubject = kunena_htmlspecialchars($resubject);
                             $parentid = $message->id;
                             $authorName = $my_name;
                         }
@@ -647,8 +644,9 @@ if (empty($objCatInfo)) {
                             unset($message);
                             $message = $kunena_db->loadObject();
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES));
-                            $resubject = kunena_htmlspecialchars(strtr($message->subject, $table));
-                            $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE . stripslashes($resubject);
+                            $resubject = strtr($message->subject, $table);
+                            $resubject = strtolower(substr($resubject, 0, strlen(_POST_RE))) == strtolower(_POST_RE) ? stripslashes($resubject) : _POST_RE .' '. stripslashes($resubject);
+                            $resubject = kunena_htmlspecialchars($resubject);
                             $parentid = $message->id;
                             $htmlText = "";
                         }

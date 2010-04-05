@@ -27,7 +27,7 @@ if ($fbConfig->showstats)
 
 if ($fbConfig->showgenstats)
 {
-$kunena_db->setQuery("SELECT COUNT(*) FROM #__users");
+$kunena_db->setQuery("SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''");
 $totalmembers = $kunena_db->loadResult();
 
 $kunena_db->setQuery("SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent='0'");
@@ -43,7 +43,7 @@ $totalcats = !empty($totaltmp->totalcats)?$totaltmp->totalcats:0;
 unset($totaltmp);
 
 $fb_queryName = $fbConfig->username ? "username" : "name";
-$kunena_db->setQuery("SELECT id, {$fb_queryName} AS username FROM #__users WHERE block='0' AND activation='' ORDER BY id DESC", 0, 1);
+$kunena_db->setQuery("SELECT id, {$fb_queryName} AS username FROM #__users WHERE block='0' OR activation='' ORDER BY id DESC", 0, 1);
 $_lastestmember = $kunena_db->loadObject();
 $lastestmember = $_lastestmember->username;
 $lastestmemberid =$_lastestmember->id;

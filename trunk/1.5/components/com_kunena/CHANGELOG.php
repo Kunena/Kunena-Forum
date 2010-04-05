@@ -37,6 +37,10 @@ Kunena 1.5.12-DEV
 ^ [#20106] Updated version info to 1.5.12-DEV Calificar (Spanish, meaning describe)
 # [#20107] Merge changes from K1.5.11 into trunk
 
+28-Mar-2010 Xillibit
+# [#20020] Total users number count also disabled users
+# [#20046] Quote button to reply to a post truncates the subject if the subject contains quotation marks
+
 23-Mar-2010 Matias
 ^ [#15784] Merge and review all fixes from /branches/1.5-xillibit-fixing
 + [#19992] Allow anonymous posts from registered users in special categories

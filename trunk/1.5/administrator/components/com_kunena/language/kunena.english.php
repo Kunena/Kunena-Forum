@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
-// 1.5.11
+// 1.5.12
 define('_KUNENA_SECTION','Section');
 define('_KUNENA_NOBODY','Nobody');
 // Disable userlist
@@ -44,6 +44,7 @@ define('_KUNENA_POST_ERROR_NO_CATEGORY',"No category was chosen to save your mes
 define('_KUNENA_POST_ERROR_IS_SECTION',"You are not allowed to post messages into section.");
 define('_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN',"This category does not allow you to write anonymous posts. To keep your privacy, message was not sent.");
 define('_KUNENA_USERNAME_ANONYMOUS',"Anonymous");
+
 // 1.5.10
 DEFINE('_KUNENA_PARENTDESC', 'Note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can only be created within a category by selecting an existing category as the parent for the forum.<br /> Messages can only be posted to forums, not categories.');
 DEFINE('_KUNENA_ADMIN', 'Forum Administration');

@@ -744,7 +744,7 @@ class CKunenaTools {
 				}
 				$public [] = $access->pub_access;
 			}
-			if ($access->admin_access > 0) {
+			if ($access->pub_access > 0 && $access->admin_access > 0) {
 				if ($access->admin_recurse) {
 					$admin = $kunena_acl->get_group_children ( $access->admin_access, 'ARO', 'RECURSE' );
 				}
@@ -756,18 +756,18 @@ class CKunenaTools {
 		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
-					MAX(0 + ( s.thread IS NOT NULL )) AS subscription,
-					MAX(0 + ( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid}) )) AS moderator,
-					MAX(0 + ( u.gid IN (24, 25) )) AS admin
+					IF( s.thread IS NOT NULL, 1, 0 ) AS subscription,
+					IF( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid}), 1, 0 ) AS moderator,
+					IF( u.gid IN (24, 25), 1, 0 ) AS admin
 					FROM #__users AS u
 					LEFT JOIN #__fb_users AS p ON u.id=p.userid
-					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid
-					LEFT JOIN #__fb_categories AS c ON m.catid=c.id
-					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread=$thread";
+					LEFT JOIN #__fb_categories AS c ON c.id={$catid}
+					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid AND m.catid=c.id
+					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}";
 
 		$where = array ();
 		if ($subscriptions)
-			$where [] = " ( s.thread IS NOT NULL" . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
+			$where [] = " ( s.thread IS NOT NULL " . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
 		if ($moderators)
 			$where [] = " ( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid} ) ) ";
 		if ($admins)
@@ -1266,7 +1266,6 @@ function generate_smilies() {
 
 function fbGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
-print_r($array);
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
     }

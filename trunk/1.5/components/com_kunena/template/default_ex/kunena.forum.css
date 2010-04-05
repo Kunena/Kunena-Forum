@@ -778,6 +778,7 @@ VIEW PAGE
 	text-decoration: none;
 	padding-right: 10px;
 	white-space: nowrap;
+	float: right;
 }
 #Kunena div.msgtext {
 	width: 100%;

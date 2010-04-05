@@ -96,7 +96,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type)
     $message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
     $message = strtr($message, array('&#32;'=>''));
 
-    $emailToList = CKunenaTools::getEMailToList($row->catid, $row->thread, false,$fbConfig->mailmod, $fbConfig->mailadmin, $kunena_my->id);
+    $emailToList = CKunenaTools::getEMailToList($row->catid, $row->thread, false, true, true, $kunena_my->id);
 
     switch ($type)
     {

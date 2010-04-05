@@ -483,18 +483,18 @@ if (empty($objCatInfo)) {
 													if (! $emailTo->email || ! JMailHelper::isEmailAddress($emailTo->email)) continue;
 
 													if ($emailTo->subscription) {
-														$msg1 = JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION1');
-														$msg2 = JText::_('COM_KUNENA_POST_EMAIL_NOTIFICATION2');
+														$msg1 = $_COM_A_NOTIFICATION1;
+														$msg2 = $_COM_A_NOTIFICATION2;
 													} else {
-														$msg1 = JText::_('COM_KUNENA_POST_EMAIL_MOD1');
-														$msg2 = JText::_('COM_KUNENA_POST_EMAIL_MOD2');
+														$msg1 = $_COM_A_NOT_MOD1;
+														$msg2 = $_COM_A_NOT_MOD2;
 													}
 
                                                     $msg = "$emailTo->name,\n\n";
                                                     $msg .=  $msg1 . " " . stripslashes ( $board_title ) . " " . _GEN_FORUM . "\n\n";
-                                                    $msg .= _GEN_SUBJECT.": " . stripslashes($messagesubject) . "\n";
-                                                    $msg .= _GEN_FORUM.": " . stripslashes($catName) . "\n";
-                                                    $msg .= _VIEW_POSTED.": " . stripslashes($fb_authorname) . "\n\n";
+                                                    $msg .= _GEN_SUBJECT." : " . stripslashes($messagesubject) . "\n";
+                                                    $msg .= _GEN_FORUM." : " . stripslashes($catName) . "\n";
+                                                    $msg .= _VIEW_POSTED." : " . stripslashes($fb_authorname) . "\n\n";
                                                     $msg .= $msg2 . "\n";
                                                     $msg .= "URL: $LastPostUrl\n\n";
                                                     if ($fbConfig->mailfull == 1) {
@@ -508,9 +508,7 @@ if (empty($objCatInfo)) {
                                                     $msg .= "** Powered by Kunena! - http://www.Kunena.com **";
                                                     $msg = JMailHelper::cleanBody($msg);
 
-                                                    if ($ip != "127.0.0.1") { //don't mail yourself
-                                                        JUtility::sendMail($fbConfig->email, $mailsender, $subs->email, $mailsubject, $msg);
-                                                    }
+                                                    JUtility::sendMail($fbConfig->email, $mailsender, $emailTo->email, $mailsubject, $msg);
                                                 }
                                             }
                                         }

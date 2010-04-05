@@ -31,10 +31,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.11-DEV
+Kunena 1.5.12-DEV
+
+05-Apr-2010 Matias
+^ [#20106] Updated version info to 1.5.12-DEV Calificar (Spanish, meaning describe)
+# [#20107] Merge changes from K1.5.11 into trunk
 
 23-Mar-2010 Matias
-^ [#19999] Updated version info to 1.5.11-DEV Calificar (Spanish, meaning describe)
 ^ [#15784] Merge and review all fixes from /branches/1.5-xillibit-fixing
 + [#19992] Allow anonymous posts from registered users in special categories
 + [#19992] Allow anonymous also in Quick Reply
@@ -45,6 +48,24 @@ Kunena 1.5.11-DEV
 ^ [#19942] Put one redirect when the user trying to access the pdf when the message is deleted
 # [#19992] Admin: Differentiate sections from categories, default new category parent to the first section
 # [#19992] Edit category: allow public access to be changed to nobody
+
+Kunena 1.5.11
+
+31-Mar-2010 Matias
+# [#20007] Regression: Report to moderator should send emails regardless of configuration settings
+^ [#15798] Update credits page
+
+29-Mar-2010 Matias
+# [#20048] Remove debug message while deleting threads
+# [#20041] Regression: E-Mail notification: thread subject is missing "Subject:"
+
+26-Mar-2010 Matias
+^ [#19999] Updated version info to 1.5.11 Kirjeldama (Describe in Estonian)
+
+24-Mar-2010 Matias
+# [#20007] Regression: E-Mail notification is broken
+# [#20008] Regression: Subject splits into two rows even if there is plenty of room
+^ [#19600] Updated version info
 
 Kunena 1.5.10
 

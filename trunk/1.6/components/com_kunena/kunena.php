@@ -356,8 +356,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
             break;
 
 		case 'stats' :
-			CKunenaTools::loadTemplate('/plugin/stats/stats.class.php');
-
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 			$kunena_stats = new CKunenaStats ( );
 			$kunena_stats->showStats ();
 

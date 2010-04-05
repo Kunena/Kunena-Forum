@@ -318,81 +318,114 @@ class KunenaStatsAPI {
 
 	public function __construct() {
 		$this->_db = JFactory::getDBO ();
-		$this->_session = KunenaFactory::getSession();
+		$this->_session = KunenaFactory::getSession( true );
 		$this->_config = CKunenaConfig::getInstance();
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+		$this->_stats = new CKunenaStats ( );
+	}
+
+	public function getTotalMembers() {
+		$this->_stats->loadTotalMembers();
+		return $this->_stats->totalmembers;
+	}
+
+	public function getTodayOpen() {
+		$this->_stats->loadLastDays();
+		return $this->_stats->todayopen;
+	}
+
+	public function getYesterdayOpen(){
+		$this->_stats->loadLastDays();
+		return $this->_stats->yesterdayopen;
+	}
+
+	public function getTodayAnswer(){
+		$this->_stats->loadLastDays();
+		return $this->_stats->todayanswer;
+	}
+
+	public function getYesterdayAnswer(){
+		$this->_stats->loadLastDays();
+		return $this->_stats->yesterdayanswer;
+	}
+
+	public function getTotalTitles(){
+		$this->_stats->loadTotalTopics();
+	 	return $this->_stats->totaltitles;
+	}
+
+	public function getTotalMessages(){
+		$this->_stats->loadTotalTopics();
+		return $this->_stats->totalmsgs;
+	}
+
+	public function getTotalSections(){
+		$this->_stats->loadTotalCategories();
+		return $this->_stats->totalsections;
+	}
+
+	public function getTotalCats(){
+		$this->_stats->loadTotalCategories();
+		return $this->_stats->totalcats;
+	}
+
+	public function getLastestMember(){
+		$this->_stats->loadLastUser();
+		return $this->_stats->lastestmember;
+	}
+
+	public function getLastestMemberid(){
+		$this->_stats->loadLastUser();
+		return $this->_stats->lastestmemberid;
 	}
 
 	public function getPostersStats($PosterCount) {
 		if ((int)$PosterCount<0) return;
+		$this->_stats->loadTopPosters((int)$PosterCount);
+		return $this->_stats->topposters;
+	}
 
-		$queryName = $this->_config->username ? "username" : "name";
-
-		$this->_db->setQuery ( "SELECT p.userid, p.posts, u.id, u.{$queryName} AS username FROM #__fb_users AS p
-			INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' AND u.block=0 ORDER BY p.posts DESC", 0, $PosterCount );
-
-		$topposters = $this->_db->loadObjectList ();
-		check_dberror ( "Unable to load top messages." );
-
-		return $topposters;
+	public function getTopMessage($PosterCount){
+		if ((int)$PosterCount<0) return;
+		$this->_stats->loadTopPosters((int)$PosterCount);
+		return $this->_stats->topmessage;
 	}
 
 	public function getProfileStats($ProfileCount) {
 		if ((int)$ProfileCount<0) return;
+		$this->_stats->loadTopProfiles((int)$ProfileCount);
+		return $this->_stats->topprofiles;
+	}
 
-		$queryName = $this->_config->username ? "username" : "name";
-
-		if ($this->_config->fb_profile == "jomsocial") {
-			$this->_db->setQuery ( "SELECT u.id AS user_id, c.view AS hits, u.{$queryName} AS user FROM #__community_users as c
-				LEFT JOIN #__users as u on u.id=c.userid
-				WHERE c.view>'0' ORDER BY c.view DESC", 0, $ProfileCount );
-		} elseif ($this->_config->fb_profile == "cb") {
-			$this->_db->setQuery ( "SELECT c.hits AS hits, u.id AS user_id, u.{$queryName} AS user FROM #__comprofiler AS c
-				INNER JOIN #__users AS u ON u.id = c.user_id
-				WHERE c.hits>'0' ORDER BY c.hits DESC", 0, $ProfileCount );
-		} elseif ($this->_config->fb_profile == "aup") {
-			$this->_db->setQuery ( "SELECT a.profileviews AS hits, u.id AS user_id, u.{$queryName} AS user FROM #__alpha_userpoints AS a
-				INNER JOIN #__users AS u ON u.id = a.userid
-				WHERE u.profileviews>'0' ORDER BY u.profileviews DESC", 0, $ProfileCount );
-		} else {
-			$this->_db->setQuery ( "SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$queryName} AS user FROM #__fb_users AS u
-				INNER JOIN #__users AS j ON j.id = u.userid
-				WHERE u.uhits>'0' AND j.block=0 ORDER BY u.uhits DESC", 0, $ProfileCount );
-		}
-
-		$topprofiles = $this->_db->loadObjectList ();
-		check_dberror ( "Unable to load top profiles." );
-
-		return $topprofiles;
+	public function getTopProfileHits($ProfileCount) {
+		if ((int)$ProfileCount<0) return;
+		$this->_stats->loadTopProfiles((int)$ProfileCount);
+		return $this->_stats->topprofilehits;
 	}
 
 	public function getTopicsStats($TopicCount) {
 		if ((int)$TopicCount<0) return;
+		$this->_stats->loadTopicStats((int)$TopicCount);
+		return $this->_stats->toptitles;
+	}
 
-		$allowed = $this->_session->allowed;
-		$this->_db->setQuery ( "SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($allowed)
-				ORDER BY hits DESC", 0, $TopicCount );
-
-		$toptopics = $this->_db->loadObjectList ();
-		check_dberror ( "Unable to load top topics." );
-
-		return $toptopics;
+	public function getTopTitlesHits($TopicCount) {
+		if ((int)$TopicCount<0) return;
+		$this->_stats->loadTopicStats((int)$TopicCount);
+		return $this->_stats->toptitlehits;
 	}
 
 	public function getTopPollStats($PollCount) {
 		if ((int)$PollCount<0) return;
-
-		$toppolls = CKunenaPolls::get_top_five_polls ( $PollCount );
-
+		require_once(KPATH_SITE . DS . 'lib' . DS .'kunena.poll.class.php');
+		$toppolls = CKunenaPolls::get_top_five_polls ( (int)$PollCount );
 		return $toppolls;
 	}
 
 	public function getTopPollVotesStats($PollCount) {
 		if ((int)$PollCount<0) return;
-
-
-		$toppollvotes = CKunenaPolls::get_top_five_votes ( $PollCount );
-
+		require_once(KPATH_SITE . DS . 'lib' . DS .'kunena.poll.class.php');
+		$toppollvotes = CKunenaPolls::get_top_five_votes ( (int)$PollCount );
 		return $toppollvotes;
 	}
 }
-

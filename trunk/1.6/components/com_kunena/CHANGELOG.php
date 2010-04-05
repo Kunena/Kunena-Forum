@@ -37,6 +37,15 @@ Kunena 1.6.0-DEV
 5-Apr-2010 Matias
 # [#20020] Total users number count also disabled users (from K1.5.12)
 # [#19288] Fix regression: Restore old behaviour to report emails (send always to mods/admins)
+^ [#15886] Merged revisions 2142-2160 from /branches/1.6-xillibit-fixing with some changes
+
+3-Apr-2010 Xillibit
+^ [#20050] Fix somes missing things in stats API
+# [#19288] Fix regression when you try to log in kunena with a new user
+^ [#19356] On profilebox when you have pm enabled and AUP enabled the icons are misplaced
+
+2-Apr-2010 Xillibit
+^ [#20050] Stats API finished and frontstats leverages API methods
 
 2-Apr-2010 Matias
 # [#19288] Fix regression: Break compatibility (white screen) with older GroupJive releases

@@ -279,11 +279,11 @@ class TableKunenaUser extends TableKunena
 		}
 	}
 
-	public function bind($data){
-		parent::bind($data);
+	public function bind($data, $ignore=array()) {
+		parent::bind($data, $ignore);
 		$fields = array('name', 'username');
 		foreach ($fields as $field) {
-			if (isset($data[$field])) $this->$field = $data[$field];
+			if (isset($data[$field]) && !in_array($field, $ignore)) $this->$field = $data[$field];
 		}
 	}
 }

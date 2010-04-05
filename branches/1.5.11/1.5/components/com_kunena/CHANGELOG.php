@@ -35,6 +35,7 @@ Kunena 1.5.11
 
 31-Mar-2010 Matias
 # [#20007] Regression: Report to moderator should send emails regardless of configuration settings
+^ [#15798] Update credits page
 
 29-Mar-2010 Matias
 # [#20048] Remove debug message while deleting threads

@@ -52,6 +52,7 @@ global $boardclass;
                           <li class="fb_teammember"><a href="http://www.camelcity.com" target='_blank' rel='follow'>Noel Hunter</a> Kunena developer and admin of <a href="http://www.housecalls.com/view-qaa?func=listcat" target='_blank' rel='follow'>House Calls Q&amp;A Forum/</a></li>
                           <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=122" target='_blank' rel='follow'>Roland76</a> Kunena developer</li>
                           <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=114" target='_blank' rel='follow'>severdia</a> Kunena developer</li>
+                          <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=997" target='_blank' rel='follow'>sozzled</a> Kunena moderator</li>
                           <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=314" target='_blank' rel='follow'>Spock</a> Kunena moderator</li>
                           <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=148" target='_blank' rel='follow'>whouse</a> Kunena developer</li>
                           <li class="fb_teammember"><a href="http://www.kunena.com/community/profile?userid=1288" target='_blank' rel='follow'>xillibit</a> Kunena developer</li>

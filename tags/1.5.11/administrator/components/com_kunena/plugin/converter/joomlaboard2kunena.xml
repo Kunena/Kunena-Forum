@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<fbconverter version="1.0">
+	<import version="1.0">
+		<query>INSERT INTO #__fb_messages SELECT * FROM #__sb_messages</query>
+		<query>INSERT INTO #__fb_attachments SELECT * FROM #__sb_attachments</query>
+		<query>INSERT INTO #__fb_categories SELECT * FROM #__sb_categories</query>
+		<query>INSERT INTO #__fb_messages_text SELECT * FROM #__sb_messages_text</query>
+		<query>INSERT INTO #__fb_moderation SELECT * FROM #__sb_moderation</query>
+		<query>INSERT INTO #__fb_sessions SELECT * FROM #__sb_sessions</query>
+		<query>INSERT INTO #__fb_smileys SELECT * FROM #__sb_smileys</query>
+		<query>INSERT INTO #__fb_subscriptions SELECT * FROM #__sb_subscriptions</query>
+		<query>INSERT INTO #__fb_users SELECT * FROM #__sb_users</query>
+		<query>UPDATE #__fb_users  SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>
+		<phpfile name="joomlaboard.php" />
+   	</import>
+</fbconverter>

@@ -100,8 +100,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
     $message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
     $message = strtr($message, array('&#32;'=>''));
 
-	$emailToList = CKunenaTools::getEMailToList($row->catid, $row->thread, false,
-		$kunena_config->mailmod, $kunena_config->mailadmin, $kunena_my->id);
+	$emailToList = CKunenaTools::getEMailToList($row->catid, $row->thread, false, true, true, $kunena_my->id);
 
     switch ($type)
     {
@@ -175,21 +174,21 @@ function ReportForm($id, $catid) {
                 <div class = "k_bt_cvr5">
 	                <div id="kreport-container">
 		                 <form method = "post" action = "<?php echo CKunenaLink::GetReportURL(); ?>" class="kform-report">
-		                                        
+
 							<label for="kreport-reason"><?php echo JText::_('COM_KUNENA_REPORT_REASON') ?>:</label>
 							<input type = "text" name = "reason" class = "inputbox" size = "30" id="kreport-reason"/>
-		                                             
+
 							<label for="kreport-msg"><?php echo JText::_('COM_KUNENA_REPORT_MESSAGE') ?>:</label>
-		                                             
+
 							<textarea id = "kreport-msg" name = "text" cols = "40" rows = "10" class = "inputbox"></textarea>
-		
+
 							<input type = "hidden" name = "do" value = "report"/>
 							<input type = "hidden" name = "id" value = "<?php echo $id;?>"/>
 							<input type = "hidden" name = "catid" value = "<?php echo $catid;?>"/>
 							<input type = "hidden" name = "reporter" value = "<?php echo $kunena_my->id;?>"/>
 							<input class="kbutton ks" type = "submit" name = "Submit" value = "<?php echo JText::_('COM_KUNENA_REPORT_SEND') ?>"/>
 						</form>
-	                </div>        
+	                </div>
                 </div>
             </div>
         </div>

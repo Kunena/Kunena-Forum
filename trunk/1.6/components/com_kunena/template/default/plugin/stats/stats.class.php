@@ -64,7 +64,7 @@ class CKunenaStats {
 		if (! $this->showgenstats)
 			return;
 
-		$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0" );
+		$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );
 		$this->totalmembers = $this->_db->loadResult ();
 		check_dberror ( "Unable to load total users." );
 
@@ -81,7 +81,7 @@ class CKunenaStats {
 		$this->totalcats = ! empty ( $totaltmp->totalcats ) ? $totaltmp->totalcats : 0;
 
 		$queryName = $this->_config->username ? "username" : "name";
-		$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM #__users WHERE block='0' AND activation='' ORDER BY id DESC", 0, 1 );
+		$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM #__users WHERE block='0' OR activation='' ORDER BY id DESC", 0, 1 );
 		$_lastestmember = $this->_db->loadObject ();
 		check_dberror ( "Unable to load last user." );
 		$this->lastestmember = $_lastestmember->username;

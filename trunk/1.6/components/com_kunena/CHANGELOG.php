@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+5-Apr-2010 Matias
+# [#20020] Total users number count also disabled users (from K1.5.12)
+# [#19288] Fix regression: Restore old behaviour to report emails (send always to mods/admins)
+
 2-Apr-2010 Matias
 # [#19288] Fix regression: Break compatibility (white screen) with older GroupJive releases
 

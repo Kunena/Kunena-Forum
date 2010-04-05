@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 # [#20020] Total users number count also disabled users (from K1.5.12)
 # [#19288] Fix regression: Restore old behaviour to report emails (send always to mods/admins)
 ^ [#15886] Merged revisions 2142-2160 from /branches/1.6-xillibit-fixing with some changes
+^ [#15886] Merged revision 2154 from /branches/1.6-810
 
 3-Apr-2010 Xillibit
 ^ [#20050] Fix somes missing things in stats API
@@ -46,6 +47,9 @@ Kunena 1.6.0-DEV
 
 2-Apr-2010 Xillibit
 ^ [#20050] Stats API finished and frontstats leverages API methods
+
+2-Apr-2010 810
+# [#19288] Fix regression: Bug bbcode in internet explorer, changed the class name into kunenaclass in lib/bbcode.js.php
 
 2-Apr-2010 Matias
 # [#19288] Fix regression: Break compatibility (white screen) with older GroupJive releases

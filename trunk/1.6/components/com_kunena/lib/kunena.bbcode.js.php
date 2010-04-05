@@ -130,15 +130,15 @@ function kPreviewHelper()
 // (preview to the right) and vertical (preview at the bottom) modes
 //
 ?>
-function kToggleOrSwapPreview(class)
+function kToggleOrSwapPreview(kunenaclass)
 {
 	e = $("kbbcode-preview");
 	f = $("kbbcode-message");
 	if (e) {
-		if (e.getStyle('display') == "none" || e.getProperty('class') != class){
+		if (e.getStyle('display') == "none" || e.getProperty('kunenaclass') != kunenaclass){
 	    	e.setStyle('display', 'block');
 
-			if (class=="kbbcode-preview_right"){
+			if (kunenaclass=="kbbcode-preview_right"){
 	    		f.setStyle('width', '47%');
 	    	} else {
 		    	f.setStyle('width', '95%');
@@ -153,7 +153,7 @@ function kToggleOrSwapPreview(class)
 	    	f.setStyle('width', '95%');
 	    	_previewActive=false;
 		}
-		e.setProperty('class', class);
+		e.setProperty('kunenaclass', kunenaclass);
 		var height = f.getStyle('height');
 		e.setStyle('height', f.getStyle('height'));
 	}

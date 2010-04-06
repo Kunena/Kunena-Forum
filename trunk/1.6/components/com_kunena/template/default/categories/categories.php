@@ -266,7 +266,6 @@ else {
 					echo JText::_('COM_KUNENA_GEN_POSTEDBY') . ' ';
 					echo CKunenaLink::GetProfileLink ( $this->config, $subcat->userid, kunena_htmlspecialchars ( stripslashes ( $subcat->mname ) ) );
 					echo ' ';
-					echo JText::_('COM_KUNENA_GEN_ON');
 					echo ' <span title="' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat' ) . '</span>';
 
 					// echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '" title="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>', $subcat->id_last_msg );

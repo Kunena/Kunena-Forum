@@ -670,7 +670,7 @@ class CKunenaPosting {
 				if ($nicktaken && $nicktaken != $this->_my->id) {
 					return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CONFLICT_REG' ) );
 				}
-			} else {
+			} else if ($value != $this->_my->username || $value != $this->_my->name) {
 				return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CHANGED' ) );
 			}
 		}

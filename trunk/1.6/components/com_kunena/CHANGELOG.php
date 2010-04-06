@@ -38,6 +38,9 @@ Kunena 1.6.0-DEV
 + [#20050] Add new integration classes: Avatar and Profile for AUP
 + [#20050] Add new integration classes: Make them configurable
 + [#20050] Add new integration classes: Profile for None
+# [#19288] Fix regression: Sub-Categories are not showing up on showcat
+# [#19288] Fix regression: Regular users couldn't post / edit messages
+# [#19288] Fix regression: Improve user existance detection in KunenaUser
 
 5-Apr-2010 Matias
 # [#20020] Total users number count also disabled users (from K1.5.12)

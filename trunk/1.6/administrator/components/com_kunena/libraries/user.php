@@ -154,10 +154,10 @@ class KunenaUser extends JObject
 		}
 
 		//are we creating a new user
-		$isnew = !$this->userid || !$this->_exists;
+		$isnew = !$this->_exists;
 
 		// If we aren't allowed to create new users return
-		if ($isnew && $updateOnly) {
+		if (!$this->userid || ($isnew && $updateOnly)) {
 			return true;
 		}
 
@@ -166,7 +166,7 @@ class KunenaUser extends JObject
 			$this->setError($table->getError());
 		}
 
-		// Set the id for the JUser object in case we created a new user.
+		// Set the id for the KunenaUser object in case we created a new user.
 		if ($result && $isnew) $this->load($table->get('userid'));
 
 		return $result;
@@ -211,6 +211,15 @@ class KunenaUser extends JObject
 
 	public function isModerator($catid=0) {
 		return CKunenaTools::isModerator($this->userid, $catid);
+	}
+
+	protected function getName() {
+		if (! $this->userid) {
+			$name = '';
+		} else {
+			$name = $this->_config->username ? $this->username : $this->name;
+		}
+		return $name;
 	}
 
 	public function getAvatarLink($class='', $size='thumb') {

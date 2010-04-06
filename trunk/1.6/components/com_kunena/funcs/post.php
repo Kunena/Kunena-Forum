@@ -101,7 +101,7 @@ class CKunenaPost {
 		if ($this->floodProtection ())
 			return false;
 
-		$fields ['name'] = JRequest::getString ( 'authorname', null );
+		$fields ['name'] = JRequest::getString ( 'authorname', $this->getAuthorName () );
 		$fields ['email'] = JRequest::getString ( 'email', null );
 		$fields ['subject'] = JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW );
 		$fields ['message'] = JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW );
@@ -447,6 +447,7 @@ class CKunenaPost {
 			if (! $this->my->id || $this->_config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 				$this->allow_name_change = 1;
 			}
+			if (!$this->allow_name_change && $message->userid == $this->my->id) $this->authorName = $this->getAuthorName ();
 
 			$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->resubject;
 
@@ -460,7 +461,7 @@ class CKunenaPost {
 		if ($this->tokenProtection ())
 			return false;
 
-		$fields ['name'] = JRequest::getString ( 'authorname', null );
+		$fields ['name'] = JRequest::getString ( 'authorname', $this->getAuthorName () );
 		$fields ['email'] = JRequest::getString ( 'email', null );
 		$fields ['subject'] = JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW );
 		$fields ['message'] = JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW );

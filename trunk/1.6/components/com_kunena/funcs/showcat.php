@@ -209,7 +209,7 @@ class CKunenaShowcat {
 		require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
 		$obj = new CKunenaListCat($this->catid);
 		$obj->loadCategories();
-		if (!empty($obj->childforums)) $obj->displayCategories();
+		if (!empty($obj->categories [$this->catid])) $obj->displayCategories();
 	}
 
 	function displayFlat() {

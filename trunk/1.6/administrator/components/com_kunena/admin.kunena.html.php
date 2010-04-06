@@ -1724,16 +1724,6 @@ td.kadmin-tdtitle {
 					</table>
 				</fieldset>
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_A_MOSBOT_TITLE') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_MOSBOT') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['discussbot']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MOSBOT_DESC') ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION') ?></legend>
 					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 						<tr align="center" valign="middle">
@@ -1881,64 +1871,11 @@ td.kadmin-tdtitle {
 					<legend><?php echo JText::_('COM_KUNENA_RECENT_POSTS') ?></legend>
 					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_MESSAGES') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['showlatest']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_MESSAGES_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_NUMBER_OF_LATEST_MESSAGES') ?></td>
-							<td align="left" valign="top"><input type="text"
-								name="cfg_latestcount"
-								value="<?php echo $kunena_config->latestcount; ?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_NUMBER_OF_LATEST_MESSAGES_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES') ?></td>
-							<td align="left" valign="top"><input type="text"
-								name="cfg_latestcountperpage"
-								value="<?php echo $kunena_config->latestcountperpage; ?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COUNT_PER_PAGE_LATEST_MESSAGES_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_LATEST_CATEGORY') ?></td>
 							<td align="left" valign="top"><input type="text"
 								name="cfg_latestcategory"
 								value="<?php echo $kunena_config->latestcategory; ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_LATEST_CATEGORY_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_SINGLE_SUBJECT') ?></td>
-							<td align="left" valign="top"><?php echo $lists ['latestsinglesubject']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_SINGLE_SUBJECT_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_REPLY_SUBJECT') ?></td>
-							<td align="left" valign="top"><?php echo $lists ['latestreplysubject']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_REPLY_SUBJECT_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_LATEST_SUBJECT_LENGTH') ?></td>
-							<td align="left" valign="top"><input type="text"
-								name="cfg_latestsubjectlength"
-								value="<?php echo $kunena_config->latestsubjectlength; ?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_LATEST_SUBJECT_LENGTH_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_DATE') ?></td>
-							<td align="left" valign="top"><?php echo $lists ['latestshowdate']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_DATE_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_HITS') ?></td>
-							<td align="left" valign="top"><?php echo $lists ['latestshowhits']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_LATEST_HITS_DESC') ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_AUTHOR') ?></td>
-							<td align="left" valign="top"><input type="text"
-								name="cfg_latestshowauthor"
-								value="<?php echo $kunena_config->latestshowauthor; ?>" size="1" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_AUTHOR_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>

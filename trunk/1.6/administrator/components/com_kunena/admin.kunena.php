@@ -931,12 +931,7 @@ function showConfig($option) {
 	$lists ['showhistory'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showhistory', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showhistory );
 	$lists ['showannouncement'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showannouncement', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showannouncement );
 	$lists ['avataroncat'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_avataroncat', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avataroncat );
-	$lists ['showlatest'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showlatest', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showlatest );
-	$lists ['latestsinglesubject'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_latestsinglesubject', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestsinglesubject );
-	$lists ['latestreplysubject'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_latestreplysubject', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestreplysubject );
-	$lists ['latestshowdate'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_latestshowdate', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestshowdate );
 	$lists ['showchildcaticon'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showchildcaticon', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showchildcaticon );
-	$lists ['latestshowhits'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_latestshowhits', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestshowhits );
 	$lists ['showuserstats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showuserstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showuserstats );
 	$lists ['showwhoisonline'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showwhoisonline', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showwhoisonline );
 	$lists ['showpopsubjectstats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showpopsubjectstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopsubjectstats );
@@ -969,7 +964,6 @@ function showConfig($option) {
 	$lists ['allowfileupload'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowfileupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowfileupload );
 	$lists ['allowfileregupload'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowfileregupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowfileregupload );
 	$lists ['editmarkup'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->editmarkup );
-	$lists ['discussbot'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_discussbot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->discussbot );
 	$lists ['showkarma'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showkarma );
 	$lists ['enablepdf'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablepdf );
 	$lists ['enablerulespage'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerulespage );

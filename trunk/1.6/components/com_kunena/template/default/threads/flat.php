@@ -217,16 +217,18 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			</span> <?php
 		}
-		?> <!--  /Sticky   --> <!-- Avatar --> <?php // (JJ) AVATAR
-		if ($this->config->avataroncat > 0) {
-			?>
-			<span class="topic_latest_post_avatar"> <?php
+		?> <!--  /Sticky   --> <!-- Avatar --> <?php
+		if ($this->config->avataroncat > 0) :
 			$profile = KunenaFactory::getUser((int)$this->lastreply [$leaf->thread]->userid);
 			$useravatar = $profile->getAvatarLink('klist_avatar');
+			if ($useravatar) :
+			?>
+			<span class="topic_latest_post_avatar"> <?php
 			echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, $useravatar );
 			?>
 			</span> <?php
-		}
+			endif;
+		endif;
 		?> <!-- /Avatar --> <!-- Latest Post --> <span
 				class="topic_latest_post"> <?php
 		if ($this->config->default_sort == 'asc') {

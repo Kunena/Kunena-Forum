@@ -47,7 +47,7 @@ class CKunenaProfile {
 		if ($this->_config->userlist_usertype) $this->usertype = $this->user->usertype;
 		if ($this->_config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->_config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
-		$this->avatarurl = $this->profile->getAvatarURL('large');
+		$this->avatarlink = $this->profile->getAvatarLink('large');
 		$this->personalText = CKunenaTools::parseText($this->profile->personalText);
 		$this->signature = CKunenaTools::parseBBCode($this->profile->signature);
 		$this->timezone = $this->user->getParam('timezone', 0);
@@ -75,6 +75,9 @@ class CKunenaProfile {
 			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
 		$this->online = $this->profile->isOnline();
+
+		$avatar = KunenaFactory::getAvatarIntegration();
+		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
 	}
 
 	/**
@@ -166,7 +169,7 @@ class CKunenaProfile {
 	}
 
 	function displayEditAvatar() {
-		if (!$this->_config->allowavatar) return;
+		if (!$this->editavatar) return;
 		$this->gallery = JRequest::getVar('gallery', 'default');
 		if ($this->gallery == 'default') $this->gallery = '';
 		$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';

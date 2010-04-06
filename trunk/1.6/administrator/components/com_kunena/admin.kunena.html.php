@@ -1282,14 +1282,6 @@ td.kadmin-tdtitle {
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATAR_SETTINGS') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr align="center" valign="middle">
-						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_AVATAR') ?>
-						</td>
-								<td align="left" valign="top" width="25%"><?php echo $lists ['allowavatar'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVATAR_DESC') ?></td>
-					</tr>
-							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVATARUPLOAD') ?></td>
 								<td align="left" valign="top"><?php echo $lists ['allowavatarupload'];
 						?>
@@ -1680,32 +1672,32 @@ td.kadmin-tdtitle {
 			<dt><?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?></dt>
 			<dd>
 				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_A_AVATAR_INTEGRATION') ?></legend>
+					<legend><?php echo JText::_('COM_KUNENA_INTEGRATION_TITLE') ?></legend>
 					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_AVATAR_SRC') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['avatar_src']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVATAR_SRC_DESC') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_AVATAR') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_avatar']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_AVATAR_DESC') ?></td>
 						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_FORUMPRF_TITLE') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_FORUMPRF') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['fb_profile']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_FORUMPRRDESC') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_PROFILE') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_profile']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_PROFILE_DESC') ?></td>
 						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_A_PMS_TITLE') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_PMS') ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['pm_component']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PMS_DESC') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_LOGIN') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_login']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_LOGIN_DESC') ?></td>
+						</tr>
+						<tr align="center" valign="middle">
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_PRIVATE') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_private']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_PRIVATE_DESC') ?></td>
+						</tr>
+						<tr align="center" valign="middle">
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_access']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -2383,6 +2375,8 @@ td.kadmin-tdtitle {
 				//fill the variables needed later
 				$signature = $user->signature;
 				$username = $user->name;
+				$avatarint = KunenaFactory::getAvatarIntegration();
+				$editavatar = is_a($avatarint, 'KunenaAvatarKunena') ? true : false;
 				$avatar = $user->avatar;
 				$ordering = $user->ordering;
 				//that's what we got now; later the 'future_use' columns can be used..
@@ -2424,7 +2418,8 @@ td.kadmin-tdtitle {
 					cols="50" name="message">
 									<?php echo html_entity_decode_utf8 ( stripslashes ( $signature ) ); ?>
 								</textarea></td>
-				<?php if ($kunena_config->allowavatar) {
+				<?php
+				if ($editavatar) {
 					?>
 				<td class="contentpane" align="center"><?php echo JText::_('COM_KUNENA_UAVATAR'); ?><br />
 				<?php 	if ($avatar != '') {
@@ -2444,7 +2439,7 @@ td.kadmin-tdtitle {
 			<tr>
 				<td colspan="2" class="contentpane"><input type="checkbox" value="1"
 					name="deleteSig"> <em><?php echo JText::_('COM_KUNENA_DELSIG'); ?></em></td>
-				<?php if ($kunena_config->allowavatar) {
+				<?php if ($editavatar) {
 					?>
 				<td class="contentpane"><input type="checkbox" value="1"
 					name="deleteAvatar"> <em><?php echo JText::_('COM_KUNENA_DELAV'); ?></em></td>

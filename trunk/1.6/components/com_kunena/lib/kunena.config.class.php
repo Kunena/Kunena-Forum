@@ -263,7 +263,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $mailadmin = 0;
 	var $captcha = 0;
 	var $mailfull = 1;
-	var $allowavatar = 1;
+	var $allowavatar = 1; // deprecated
 	var $allowavatarupload = 1;
 	var $allowavatargallery = 1;
 	var $imageprocessor = 'gd2';
@@ -402,6 +402,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $integration_avatar = 'auto';
 	var $integration_profile = 'auto';
 	var $integration_private = 'auto';
+	var $integration_actions = 'auto';
 	//New for 1.6: choose if you want that ghost message box checked by default
 	var $boxghostmessage = 0;
 

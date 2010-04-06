@@ -385,20 +385,9 @@ class CKunenaView {
 		$lists ["userid"] = $this->profile->userid;
 		$this->msg_html->username = $this->kunena_message->email != "" && $this->my->id > 0 && $this->config->showemail ? CKunenaLink::GetEmailLink ( kunena_htmlspecialchars ( stripslashes ( $this->kunena_message->email ) ), $fb_username ) : $fb_username;
 
-		// FIXME: we do not need allowavatar anymore
-		if ($this->config->allowavatar) {
-			$Avatarname = $this->profile->username;
-			$kunena_config = & CKunenaConfig::getInstance ();
-
-			if ($kunena_config->avposition == 'left' || $kunena_config->avposition == 'right') {
-				$avwidth = $kunena_config->avatarwidth;
-				$avheight = $kunena_config->avatarwidth;
-			} else {
-				$avwidth = $kunena_config->avatarsmallwidth;
-				$avheight = $kunena_config->avatarsmallwidth;
-			}
-
-			$this->msg_html->avatar = '<span class="kavatar">' .$this->profile->getAvatarLink () . '</span>';
+		$avatar = $this->profile->getAvatarLink ();
+		if ($avatar) {
+			$this->msg_html->avatar = '<span class="kavatar">' .$avatar . '</span>';
 		} else {
 			$this->msg_html->avatar = '';
 		}

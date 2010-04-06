@@ -25,7 +25,9 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 <?php if (!empty($this->editlink)) echo '<span class="right">'.$this->editlink.'</span>';?></h1>
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
-			<div class="avatar-lg"><img src="<?php echo $this->avatarurl; ?>" alt=""/></div>
+			<?php if ($this->avatarlink) : ?>
+			<div class="avatar-lg"><?php echo $this->avatarlink; ?></div>
+			<?php endif; ?>
 			<div id="kprofile-stats">
 				<ul>
 					<li><span class="buttononline-<?php echo $this->online ? 'yes':'no'; ?> btn-left"><span class="online-<?php echo $this->online ? 'yes':'no'; ?>"><span><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></span></span></li>

@@ -22,10 +22,12 @@ defined( '_JEXEC' ) or die();
 		<dd style="display: none;">
 			<?php $this->displayEditProfile(); ?>
 		</dd>
+		<?php if ($this->editavatar) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayEditAvatar(); ?>
 		</dd>
+		<?php endif; ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayEditSettings(); ?>

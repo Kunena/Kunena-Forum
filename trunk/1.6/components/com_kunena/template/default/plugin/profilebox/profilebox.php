@@ -17,6 +17,7 @@ $this->user = JFactory::getUser();
 $this->config = & CKunenaConfig::getInstance ();
 $type = CKunenaLogin::getType ();
 $return = CKunenaLogin::getReturnURL ( $type );
+$avatar = CKunenaLogin::getMyAvatar();
 
 if ($type == 'logout') {
 $logout = CKunenaLogin::getlogoutFields();
@@ -24,9 +25,12 @@ $logout = CKunenaLogin::getlogoutFields();
 	<table class="kprofilebox" id="kprofilebox">
 		<tbody id="topprofilebox_tbody">
 			<tr class="ksectiontableentry1">
+				<?php
+				if ($avatar) : ?>
 				<td class="kprofilebox-left center" width="1%">
-					<?php echo CKunenaLogin::getMyAvatar(); ?>
+					<?php echo $avatar; ?>
 				</td>
+				<?php endif; ?>
 				<td class="kprofileboxcnt left">
 					<ul class="kprofilebox_link">
 						<li><?php echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_PROFILEBOX_SHOW_LATEST_POSTS')); ?></li>

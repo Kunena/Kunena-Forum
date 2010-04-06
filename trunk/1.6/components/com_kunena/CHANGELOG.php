@@ -36,6 +36,8 @@ Kunena 1.6.0-DEV
 
 6-Apr-2010 Matias
 + [#20050] Add new integration classes: Avatar and Profile for AUP
++ [#20050] Add new integration classes: Make them configurable
++ [#20050] Add new integration classes: Profile for None
 
 5-Apr-2010 Matias
 # [#20020] Total users number count also disabled users (from K1.5.12)

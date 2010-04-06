@@ -74,6 +74,7 @@ abstract class KunenaIntegration extends JObject {
 		foreach ( $folders as $integration ) {
 			$file = "$dir/$integration/$name.php";
 			if (is_file ( $file )) {
+				kimport("integration.$name");
 				$obj = self::initialize ( $name, $integration );
 				$priority = 0;
 				if ($obj)
@@ -90,6 +91,30 @@ abstract class KunenaIntegration extends JObject {
 		}
 		// Return associative list of all options
 		return $list;
+	}
+
+	static public function getConfigOptions($name) {
+		$config = KunenaFactory::getConfig ();
+		$options = KunenaIntegration::detectIntegration($name);
+		$integration = 'integration_' . $name;
+		if (isset($options['none'])) {
+			 $none = $options['none'];
+			 unset ($options['none']);
+		}
+
+		$opt[] = JHTML::_('select.option', 'auto',JText::_('COM_KUNENA_INTEGRATION_AUTO'));
+		foreach ($options as $component=>$status) {
+			if ($component == 'joomla15' || $component == 'joomla16') {
+				if (!$status) continue;
+				$component = 'joomla';
+			}
+
+			$opt[] = JHTML::_('select.option', $component, JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($component)), 'value', 'text', !$status);
+		}
+		if (isset($none)) {
+			$opt[] = JHTML::_('select.option', 'none', JText::_('COM_KUNENA_INTEGRATION_NONE'), 'value', 'text', !$none);
+		}
+		return JHTML::_('select.genericlist', $opt, 'cfg_'.$integration, 'class="inputbox" size="1"', 'value', 'text', $config->$integration);
 	}
 
 	// abstract function to be overriden in derived class

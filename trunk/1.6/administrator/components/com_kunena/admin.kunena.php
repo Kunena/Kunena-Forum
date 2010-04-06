@@ -950,7 +950,6 @@ function showConfig($option) {
 	$lists ['showemail'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showemail', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showemail );
 	$lists ['askemail'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_askemail', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->askemail );
 	$lists ['changename'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_changename', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->changename );
-	$lists ['allowavatar'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowavatar', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatar );
 	$lists ['allowavatarupload'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatarupload );
 	$lists ['allowavatargallery'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatargallery );
 	$lists ['avatar_src'] = JHTML::_ ( 'select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src );
@@ -1046,6 +1045,13 @@ function showConfig($option) {
 	$lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->js_actstr_integration);
 	//New for 1.6: choose if you want that ghost message box checked by default
 	$lists['boxghostmessage'] = JHTML::_('select.genericlist', $yesno, 'cfg_boxghostmessage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->boxghostmessage);
+
+	kimport('integration.integration');
+	$lists['integration_access'] = KunenaIntegration::getConfigOptions('access');
+	$lists['integration_avatar'] = KunenaIntegration::getConfigOptions('avatar');
+	$lists['integration_login'] = KunenaIntegration::getConfigOptions('login');
+	$lists['integration_profile'] = KunenaIntegration::getConfigOptions('profile');
+	$lists['integration_private'] = KunenaIntegration::getConfigOptions('private');
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }

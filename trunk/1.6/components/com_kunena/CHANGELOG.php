@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+6-Apr-2010 Matias
++ [#20050] Add new integration classes: Avatar and Profile for AUP
+
 5-Apr-2010 Matias
 # [#20020] Total users number count also disabled users (from K1.5.12)
 # [#19288] Fix regression: Restore old behaviour to report emails (send always to mods/admins)

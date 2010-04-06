@@ -21,7 +21,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 
 	public function getEditURL()
 	{
-		return JRoute::_('index.php?option=com_kunena&func=profile&do=edit');
+		return KunenaRoute::_('index.php?option=com_kunena&func=profile&do=edit');
 	}
 
 	public function getURL($user, $size='thumb')

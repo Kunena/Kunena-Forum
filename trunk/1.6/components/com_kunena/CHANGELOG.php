@@ -41,6 +41,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Sub-Categories are not showing up on showcat
 # [#19288] Fix regression: Regular users couldn't post / edit messages
 # [#19288] Fix regression: Improve user existance detection in KunenaUser
+# [#19288] Fix regression: Toggler (show/hide) did not work
 
 5-Apr-2010 Matias
 # [#20020] Total users number count also disabled users (from K1.5.12)

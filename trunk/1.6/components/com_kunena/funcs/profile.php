@@ -33,10 +33,7 @@ class CKunenaProfile {
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
 		if ($this->profile->userid == 0) return;
 		if ($this->profile->posts === null) {
-			$this->_db->setQuery ( "INSERT INTO #__fb_users (userid) VALUES ('{$this->user->id}')" );
-			$this->_db->query ();
-			check_dberror ( 'Unable to create user profile.' );
-			$this->profile = KunenaFactory::getUser ($this->profile->userid, true);
+			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->my->id) {
 			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->profile->userid, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );

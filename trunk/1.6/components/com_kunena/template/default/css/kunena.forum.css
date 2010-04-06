@@ -3536,14 +3536,12 @@ div#kprofile-stats ul li span.rank-admin {
 	margin-top: -14px;
 	border: 1px solid #fff;
 }
-#Kunena span.close
 #Kunena a.close {
 	display:block; 
 	background: url("../images/shrink.gif") no-repeat; 
 	height: 15px; 
 	width: 15px;
 }
-#Kunena span.open, 
 #Kunena a.open {
 	display:block; 
 	background: url("../images/expand.gif") no-repeat; 

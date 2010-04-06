@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die();
 
 
 $document = & JFactory::getDocument ();
-$document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new JTabs(tabs); }); });" );
+$document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });" );
 ?>
 
 <div class="kbt_cvr1">

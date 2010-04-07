@@ -31,6 +31,10 @@ Legend:
 
 Kunena Discuss Plugin 1.6-DEV
 
+08-Apr-2010 Matias
+^ [#20084] Update template
+
+02-Apr-2010 Matias
 + [#20084] Initial version
 
  -->

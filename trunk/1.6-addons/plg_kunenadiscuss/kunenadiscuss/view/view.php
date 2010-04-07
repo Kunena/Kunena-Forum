@@ -12,8 +12,6 @@ defined( '_JEXEC' ) or die ( '' );
 ?>
 <div class="kdiscuss-title"><?php echo JText::_('PLG_KUNENADISCUSS_POSTS') ?></div>
 <?php
-$this->rowid = 0;
-foreach ( $this->flat_messages as $message ) {
-	$this->rowid = $this->rowid & 1 ? 2 : 1;
+foreach ( $this->messages as $message ) {
 	$this->displayMessage($message);
 }

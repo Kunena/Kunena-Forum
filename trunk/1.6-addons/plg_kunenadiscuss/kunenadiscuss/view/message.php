@@ -10,26 +10,26 @@
  **/
 defined( '_JEXEC' ) or die ( '' );
 ?>
-<div class="kdiscuss-item kdiscuss-item<?php echo $this->rowid ?>">
-<a name="<?php echo $this->msg_html->id ?>" id="id<?php echo $this->msg_html->id ?>" > </a>
+<div class="kdiscuss-item kdiscuss-item<?php echo $this->mmm & 1 ? 1 : 2 ?>">
+<a name="<?php echo $this->id ?>" id="id<?php echo $this->id ?>" > </a>
 <table>
 	<tr>
 		<?php if ($this->config->allowavatar) : ?>
 		<td valign="top" class="kdiscuss-avatar-cover">
-			<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->kunena_message->userid, $this->msg_html->avatar ) ?>
+			<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->avatar ) ?>
 		</td>
 		<?php endif; ?>
 		<td valign="top" class="kdiscuss-content-cover">
-			<span class="kdiscuss-subject"><?php echo $this->msg_html->subject; ?></span>
-			<span class="kdiscuss-date" title="<?php echo CKunenaTimeformat::showDate($this->kunena_message->time, 'config_post_dateformat_hover'); ?>">
-				<?php echo CKunenaTimeformat::showDate($this->kunena_message->time, 'config_post_dateformat'); ?>
+			<span class="kdiscuss-subject"><?php echo $this->escape($this->subject); ?></span>
+			<span class="kdiscuss-date" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover'); ?>">
+				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat'); ?>
 			</span>
 			<span class="kdiscuss-username">
-				<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->kunena_message->userid, $this->msg_html->username ) ?>
+				<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->username ) ?>
 			</span>
-			<div class="kdiscuss-text"><?php echo $this->msg_html->text; ?></div>
+			<div class="kdiscuss-text"><?php echo $this->escape($this->message); ?></div>
 		</td>
-		<td valign="top" class="kdiscuss-itemid-cover">#<?php echo $this->msg_html->id ?></td>
+		<td valign="top" class="kdiscuss-itemid-cover">#<?php echo $this->id ?></td>
 	</tr>
 </table>
 </div>

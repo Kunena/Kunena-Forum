@@ -155,7 +155,6 @@ class CKunenaRSSView extends CKunenaRSS {
 
 				// Build unique direct linking url for each item (htmlspecialchars_decode because FeedCreator uses htmlspecialchars on input)
 				$url = htmlspecialchars_decode(CKunenaLink::GetThreadPageURL(
-					$this->config,
 					'view',
 					$data->catid,
 					$data->thread,

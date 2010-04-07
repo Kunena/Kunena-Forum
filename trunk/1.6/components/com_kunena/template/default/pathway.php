@@ -128,7 +128,7 @@ if ($func != "") {
 					$divider = '';
 				}
 				if ($user->showOnline > 0) {
-					$fireonline .= CKunenaLink::GetProfileLink ( $kunena_config, $user->userid, $user->username ) . $divider;
+					$fireonline .= CKunenaLink::GetProfileLink ( $user->userid, $user->username ) . $divider;
 				}
 			} else {
 				$totalguest = $totalguest + 1;

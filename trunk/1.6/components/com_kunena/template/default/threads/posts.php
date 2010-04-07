@@ -120,7 +120,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			<?php
 			if ($message->unread) {
-					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $message->catid, $message->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $message->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $message->lastread );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $message->catid, $message->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $message->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $message->lastread );
 			}
 
 		if ($message->locked != 0) {
@@ -153,7 +153,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			if ($useravatar) :
 			?>
 			<span class="topic_latest_post_avatar"> <?php
-			echo CKunenaLink::GetProfileLink ( $this->config, $this->messages[$message->id]->userid, $useravatar );
+			echo CKunenaLink::GetProfileLink ( $this->messages[$message->id]->userid, $useravatar );
 			?>
 			</span> <?php
 			endif;
@@ -170,7 +170,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 		if ($message->name) {
 			echo '<br /><span class="topic_by">';
-			echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->config, $message->userid, $message->name );
+			echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $message->userid, $message->name );
 			echo '</span>';
 		}
 		?>

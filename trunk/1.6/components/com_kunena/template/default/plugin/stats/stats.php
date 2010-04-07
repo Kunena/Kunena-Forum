@@ -69,7 +69,7 @@ $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
                 <tr class = "ksectiontableentry1">
                     <td class = "td-1" align="left">
 <?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:<b> <?php echo $userlist1;?></b>
-                    &nbsp; <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<b> <?php echo CKunenaLink::GetProfileLink($kunena_config, $this->lastestmemberid, $this->lastestmember); ?></b>
+                    &nbsp; <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<b> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid, $this->lastestmember); ?></b>
 
                 <br/> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>: <b> <?php echo $this->totalmsgs; ?></b> &nbsp;
     <?php echo JText::_('COM_KUNENA_STAT_TOTAL_SUBJECTS'); ?>: <b> <?php echo $this->totaltitles; ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_TOTAL_SECTIONS'); ?>: <b> <?php echo $this->totalcats; ?></b> &nbsp; <?php echo JText::_('COM_KUNENA_STAT_TOTAL_CATEGORIES'); ?>: <b> <?php echo $this->totalsections; ?></b>
@@ -257,7 +257,7 @@ $k = 0;
     <tr class = "k<?php echo $tabclass[$k]; ?>">
       <td  class="td-1"  align="left">
 
-         <?php echo CKunenaLink::GetProfileLink($kunena_config, $poster->userid, $poster->username); ?>
+         <?php echo CKunenaLink::GetProfileLink($poster->userid, $poster->username); ?>
 
 </td>
       <td  class="td-2">
@@ -316,7 +316,7 @@ $barwidth = round(($topprofile->hits * 100) / $this->topprofilehits);
 
     <tr class = "k<?php echo $tabclass[$k]; ?>">
       <td  class="td-1"  align="left">
-        <?php echo CKunenaLink::GetProfileLink($kunena_config, $topprofile->user_id, $topprofile->user); ?>
+        <?php echo CKunenaLink::GetProfileLink($topprofile->user_id, $topprofile->user); ?>
 </td>
       <td  class="td-2">
          <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>

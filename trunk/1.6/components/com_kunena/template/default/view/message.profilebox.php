@@ -16,7 +16,7 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 ?>
 	<ul id="kpost-profile">
 		<li class="kpost-username">
-			<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->escape($this->username) ); ?>
+			<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->escape($this->username) ); ?>
 		</li>
 		<?php if ($this->usertype) : ?>
 		<li class="kpost-usertype">
@@ -24,7 +24,7 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 		</li>
 		<?php endif ?>
 		<li class="kpost-avatar">
-		<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->avatar ); ?>
+		<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->avatar ); ?>
 		</li>
 		<?php if ($this->profile->userid): ?>
 
@@ -90,10 +90,10 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 		<?php endif ?>
 		<?php endif; ?>
 		<li class="kpost-avatar">
-		<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->avatar ); ?>
+		<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->avatar ); ?>
 		</li>
 		<li class="kpost-username">
-			<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->escape($this->username) ); ?>
+			<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->escape($this->username) ); ?>
 		</li>
 		<?php if ($this->usertype) : ?>
 		<li class="kpost-usertype">

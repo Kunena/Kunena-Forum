@@ -400,7 +400,7 @@ class HTML_userlist_content
                                         <td class = "td-3" align="center">
                                       <?php
                                       if(JString::strlen($uslavatar)) {
-						echo CKunenaLink::GetProfileLink($kunena_config, $ulrow->id, $uslavatar);
+						echo CKunenaLink::GetProfileLink($ulrow->id, $uslavatar);
                                       }
                                       else { echo '&nbsp;'; }
                                       ?>
@@ -416,7 +416,7 @@ class HTML_userlist_content
                                     ?>
 
                                         <td class = "td-4  km" align="center">
-						<?php echo CKunenaLink::GetProfileLink($kunena_config, $ulrow->id, $ulrow->name); ?>
+						<?php echo CKunenaLink::GetProfileLink($ulrow->id, $ulrow->name); ?>
                                         </td>
 
                                     <?php
@@ -429,7 +429,7 @@ class HTML_userlist_content
                                     ?>
 
                                         <td class = "td-5  km" align="center">
-						<?php echo CKunenaLink::GetProfileLink($kunena_config, $ulrow->id, $ulrow->username); ?>
+						<?php echo CKunenaLink::GetProfileLink($ulrow->id, $ulrow->username); ?>
                                         </td>
 
                                     <?php

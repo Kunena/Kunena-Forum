@@ -82,7 +82,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
 
 	jimport('joomla.environment.uri');
 	$uri =& JURI::getInstance(JURI::base());
-	$msglink = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL($kunena_config, 'view', $row->catid , $row->id, NULL,NULL,$row->id));
+	$msglink = $uri->toString(array('scheme', 'host', 'port')) . str_replace('&amp;', '&', CKunenaLink::GetThreadPageURL('view', $row->catid , $row->id, NULL,NULL,$row->id));
 
     $message  = "" . JText::_('COM_KUNENA_REPORT_RSENDER') . " " . $sender;
     $message .= "\n";
@@ -112,7 +112,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
     }
 
     echo '<div class="kreportstatus">' . JText::_('COM_KUNENA_REPORT_SUCCESS');
-    echo CKunenaLink::GetAutoredirectThreadPageHTML($kunena_config,'view',$catid,$id,NULL,NULL,$id,3500);
+    echo CKunenaLink::GetAutoredirectThreadPageHTML('view',$catid,$id,NULL,NULL,$id,3500);
 
 	}
     else
@@ -123,7 +123,7 @@ function ReportMessage($id, $catid, $reporter, $reason, $text, $type=0)
 
     }
     echo '<br /><br />';
-    echo CKunenaLink::GetThreadPageLink($kunena_config,'view', $catid, $id ,NULL,NULL, JText::_('COM_KUNENA_POST_SUCCESS_VIEW') ,$id,'nofollow' ).'<br />';
+    echo CKunenaLink::GetThreadPageLink('view', $catid, $id ,NULL,NULL, JText::_('COM_KUNENA_POST_SUCCESS_VIEW') ,$id,'nofollow' ).'<br />';
     echo CKunenaLink::GetCategoryLink('showcat',$catid , JText::_('COM_KUNENA_POST_SUCCESS_FORUM') , 'nofollow').'<br />';
     echo '</div>';
 }
@@ -153,7 +153,7 @@ function ReportForm($id, $catid) {
     $kunena_config =& CKunenaConfig::getInstance();
     $kunena_my = &JFactory::getUser();
 
-    $redirect = CKunenaLink::GetThreadPageURL($kunena_config,'view',$catid, $id,NULL,NULL,$id,true);
+    $redirect = CKunenaLink::GetThreadPageURL('view',$catid, $id,NULL,NULL,$id,true);
 
     if (!$kunena_my->id) {
         $kunena_app->redirect($redirect);

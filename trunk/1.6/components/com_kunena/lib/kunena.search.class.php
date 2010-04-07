@@ -100,7 +100,7 @@ class CKunenaSearch {
 
 		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
 			$this->params ['catids'] = implode ( ',', JRequest::getVar ( 'catids', array (0), 'post', 'array' ) );
-			$url = CKunenaLink::GetSearchURL ( $this->config, $this->func, $q, $this->limitstart, $this->limit, $this->getUrlParams () );
+			$url = CKunenaLink::GetSearchURL ( $this->func, $q, $this->limitstart, $this->limit, $this->getUrlParams () );
 			header ( "HTTP/1.1 303 See Other" );
 			header ( "Location: " . htmlspecialchars_decode ( $url ) );
 			$this->app->close ();
@@ -417,7 +417,7 @@ class CKunenaSearch {
 		if ($startpage > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetSearchLink ( $this->config, $function, $q, 0, $limit, 1, $urlparams, $rel = 'nofollow' ) . '</li>';
+			$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, 0, $limit, 1, $urlparams, $rel = 'nofollow' ) . '</li>';
 
 			if ($startpage > 2) {
 				$output .= '<li class="more">...</li>';
@@ -428,7 +428,7 @@ class CKunenaSearch {
 			if ($page == $i) {
 				$output .= '<li class="active">' . $i . '</li>';
 			} else {
-				$output .= '<li>' . CKunenaLink::GetSearchLink ( $this->config, $function, $q, ($i - 1) * $limit, $limit, $i, $urlparams, $rel = 'nofollow' ) . '</li>';
+				$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, ($i - 1) * $limit, $limit, $i, $urlparams, $rel = 'nofollow' ) . '</li>';
 			}
 		}
 
@@ -437,7 +437,7 @@ class CKunenaSearch {
 				$output .= '<li class="more">...</li>';
 			}
 
-			$output .= '<li>' . CKunenaLink::GetSearchLink ( $this->config, $function, $q, ($totalpages - 1) * $limit, $limit, $totalpages, $urlparams, $rel = 'nofollow' ) . '</li>';
+			$output .= '<li>' . CKunenaLink::GetSearchLink ( $function, $q, ($totalpages - 1) * $limit, $limit, $totalpages, $urlparams, $rel = 'nofollow' ) . '</li>';
 		}
 
 		$output .= '</ul>';

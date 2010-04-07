@@ -165,7 +165,7 @@ class CKunenaPost {
 		//construct a useable URL (for plaintext - so no &amp; encoding!)
 		jimport ( 'joomla.environment.uri' );
 		$uri = & JURI::getInstance ( JURI::base () );
-		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $thread, $threadPages, $this->_config->messages_per_page, $id ) );
+		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, $threadPages, $this->_config->messages_per_page, $id ) );
 
 		// A couple more tasks required...
 		if ($thread == 0) {
@@ -179,7 +179,7 @@ class CKunenaPost {
 				if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1) {
 					if ($this->_config->js_actstr_integration) {
 						//activity stream  - new post
-						$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $id, 1 );
+						$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $id, 1 );
 
 						$kunena_emoticons = smile::getEmoticons ( 1 );
 						$content = stripslashes ( $message );
@@ -219,7 +219,7 @@ class CKunenaPost {
 				if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1 && $this->_config->js_actstr_integration) {
 					if ($this->_config->js_actstr_integration) {
 						//activity stream - reply post
-						$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $thread, 1 );
+						$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, 1 );
 
 						$content = stripslashes ( $message );
 						$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
@@ -308,7 +308,7 @@ class CKunenaPost {
 		} else {
 			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $id, $this->_config->messages_per_page, $this->catid ), $redirectmsg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $id, $this->_config->messages_per_page, $this->catid ), $redirectmsg );
 	}
 
 	protected function newtopic($do) {
@@ -522,7 +522,7 @@ class CKunenaPost {
 		}
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page, $this->catid ) );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page, $this->catid ) );
 	}
 
 	protected function deleteownpost() {
@@ -698,7 +698,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $TargetThreadID, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
 
 	}
 
@@ -755,7 +755,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $TargetThreadID, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
 	}
 
 	protected function split() {
@@ -806,7 +806,7 @@ class CKunenaPost {
 			}
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $message );
 	}
 
 	protected function subscribe() {
@@ -822,7 +822,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function unsubscribe() {
@@ -838,7 +838,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function favorite() {
@@ -854,7 +854,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function unfavorite() {
@@ -870,7 +870,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function sticky() {
@@ -884,7 +884,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_SET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function unsticky() {
@@ -898,7 +898,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function lock() {
@@ -912,7 +912,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_SET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function unlock() {
@@ -926,7 +926,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function approve() {
@@ -940,7 +940,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( ::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	function hasThreadHistory() {

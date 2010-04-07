@@ -34,17 +34,17 @@ $logout = CKunenaLogin::getlogoutFields();
 				<td class="kprofileboxcnt left">
 					<ul class="kprofilebox_link">
 						<li><?php echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_PROFILEBOX_SHOW_LATEST_POSTS')); ?></li>
-						<li><?php echo CKunenaLink::GetSearchLink ( $this->config, 'search', '', 0, 0, JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ); ?></li>
+						<li><?php echo CKunenaLink::GetSearchLink ('search', '', 0, 0, JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ); ?></li>
 						<?php
 						$user_fields = @explode ( ',', $this->config->annmodid );
 						if (in_array ( $this->my->id, $user_fields ) || $this->my->usertype == 'Administrator' || $this->my->usertype == 'Super Administrator') {
 							$is_editor = true; } else { $is_editor = false; }
 						if ($is_editor) { ?>
-							<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( $this->config, 'show' ); ?>"><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?></a></li>
+							<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( 'show' ); ?>"><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?></a></li>
 						<?php } ?>
 					</ul>
 					<ul class="kprofilebox_welcome">
-						<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->config, $this->user->id, $this->kunena_username ); ;?></strong></li>
+						<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->user->id, $this->kunena_username ); ;?></strong></li>
 						<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 						<?php if ($logout) : ?>
 						<li>

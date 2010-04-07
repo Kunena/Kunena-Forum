@@ -99,7 +99,7 @@ if ($kunena_config->showwhoisonline > 0)
                         }
                         else
                         {
-				echo CKunenaLink::GetProfileLink($kunena_config, $user->userid, $user->username);
+				echo CKunenaLink::GetProfileLink($user->userid, $user->username);
                         }
                         ?>
 

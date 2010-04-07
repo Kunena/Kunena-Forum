@@ -93,7 +93,7 @@ defined( '_JEXEC' ) or die();
 					$usernames = array_merge($usernames,$useriplist[$ip->ip]);
 					$username = array();
 					foreach ($usernames as $user) {
-						$username[] = CKunenalink::GetProfileLink($this->_config, $user->userid, $user->name, $rel='nofollow', $class='');
+						$username[] = CKunenalink::GetProfileLink($user->userid, $user->name, $rel='nofollow', $class='');
 					}
 					$username=implode(', ',$username);
 

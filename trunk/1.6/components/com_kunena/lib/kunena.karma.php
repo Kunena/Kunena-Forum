@@ -82,10 +82,10 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 							    echo JText::_('COM_KUNENA_KARMA_INCREASED') . '<br />';
                            	 	if ($pid) {
 								    $kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
-									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
 								} else {
                                 	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
-									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                                 }
                             }
                             else if ($do == "decrease")
@@ -99,24 +99,24 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                                 echo JText::_('COM_KUNENA_KARMA_DECREASED') . '<br />';
                             	if ($pid) {
 									$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
-									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
 								} else {
 									$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
-									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                                 }
                             }
                             else
                             { //you got me there... don't know what to $do
                                 $kunena_app->enqueueMessage(JText::_('COM_KUNENA_USER_ERROR_KARMA'));
-                    			$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page ) );
+                    			$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page ) );
                             }
                         } else {
                         	if ($pid) {
                         		$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_WAIT'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                         	}else{
                         		$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_WAIT'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                         	}
                         }
                     }
@@ -129,10 +129,10 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             check_dberror("Unable to update karma.");
                         	if ($pid) {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                             } else {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                             }
                         }
 
@@ -143,10 +143,10 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             check_dberror("Unable to update karma.");
                         	if ($pid) {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_DECREASE'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                             } else {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_DECREASE'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                             }
                         }
                     }
@@ -154,7 +154,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                 else
                 { //get outa here, you fraud!
                     $kunena_app->enqueueMessage(JText::_('COM_KUNENA_USER_ERROR_KARMA'));
-                    $kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $kunena_config, $pid, $kunena_config->messages_per_page ) );
+                    $kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page ) );
                 }
                 ?>
             </center>

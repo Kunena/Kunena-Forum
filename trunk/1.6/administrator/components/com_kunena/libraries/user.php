@@ -363,7 +363,7 @@ class KunenaUser extends JObject
 				break;
 			case 'profile':
 				if (!$this->userid) return;
-				return CKunenaLink::GetProfileLink ( $this->_config, $this->userid, '<span class="profile" title="' . JText::_('COM_KUNENA_VIEW_PROFILE') . '"></span>' );
+				return CKunenaLink::GetProfileLink ( $this->userid, '<span class="profile" title="' . JText::_('COM_KUNENA_VIEW_PROFILE') . '"></span>' );
 				break;
 		}
 	}

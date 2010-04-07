@@ -76,7 +76,7 @@ $this->displayThreadActions(0);
 			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 			$modlinks = array();
 			foreach ( $this->modslist as $mod ) {
-				$modlinks[] = CKunenaLink::GetProfileLink ( $this->config, $mod->userid, ($this->config->username ? $mod->username : $mod->name) );
+				$modlinks[] = CKunenaLink::GetProfileLink ( $mod->userid, ($this->config->username ? $mod->username : $mod->name) );
 			}
 			echo implode(', ', $modlinks);
 		?>

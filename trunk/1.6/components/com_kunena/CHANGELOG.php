@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+7-Apr-2010 Matias
+^ [#19448] Move code out of template: simplify func=view
+
 6-Apr-2010 Matias
 + [#20050] Add new integration classes: Avatar and Profile for AUP
 + [#20050] Add new integration classes: Make them configurable

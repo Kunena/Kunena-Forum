@@ -403,7 +403,7 @@ class CKunenaPost {
 			$attachments = $this->_db->loadObjectList ();
 			check_dberror ( 'Unable to load attachments' );
 
-			$this->msg_html->attachments = array ();
+			$this->attachments = array ();
 
 			foreach ( $attachments as $attachment ) {
 				// Check if file has been pre-processed
@@ -418,7 +418,7 @@ class CKunenaPost {
 				// shorttype based on MIME type to determine if image for displaying purposes
 				$attachment->shorttype = (stripos ( $attachment->filetype, 'image/' ) !== false) ? 'image' : $attachment->filetype;
 
-				$this->msg_html->attachments [] = $attachment;
+				$this->attachments [] = $attachment;
 			}
 			// End of load attachments
 

@@ -12,15 +12,13 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-$kunena_config = & CKunenaConfig::getInstance ();
-
-if ( isset ( $this->msg_html->attachments ) ) { ?>
+?>
 <div>
 	<div class="msgattach">
 	<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
 		<ul class="kfile-attach">
 		<?php
-		foreach($this->msg_html->attachments as $attachment){
+		foreach($this->attachments as $attachment){
 		?>
 			<li>
 			<?php
@@ -36,14 +34,14 @@ if ( isset ( $this->msg_html->attachments ) ) { ?>
 						$imgsize = '';
 					} else {
 						$thumb = $attachment->folder.'/'.$attachment->filename;
-						$imgsize = 'width="'.$kunena_config->thumbwidth.'px" height="'.$kunena_config->thumbheight.'px"';
+						$imgsize = 'width="'.$this->config->thumbwidth.'px" height="'.$this->config->thumbheight.'px"';
 					}
 
 					echo '<a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.
 						'<img '.$imgsize.' src="'.$thumb.'" alt="'.$attachment->filename.'" />'.
 						'</a>'.
 						'<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" title="'.$attachment->filename.'" rel="nofollow">'.$shortname.'</a>'.
-						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'kB)</span>';
+						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
@@ -51,7 +49,7 @@ if ( isset ( $this->msg_html->attachments ) ) { ?>
 					// TODO: Add generic attachment icon
 					// TODO: Replace href link with CKunenaLink::Call
 					echo '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" title="'.$attachment->filename.'" rel="nofollow">'.$shortname.'</a>'.
-						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'kB)</span>';
+						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
 			}
 			?>
 			</li>
@@ -61,4 +59,3 @@ if ( isset ( $this->msg_html->attachments ) ) { ?>
 		</ul>
 	</div>
 </div>
-<?php } ?>

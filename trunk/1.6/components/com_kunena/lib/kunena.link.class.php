@@ -166,10 +166,10 @@ class CKunenaLink
         return $redirect == false ? KunenaRoute::_($pageURL).($anker?('#'.$anker):'') : htmlspecialchars_decode(KunenaRoute::_($pageURL).($anker?('#'.$anker):''));
     }
 
-    function GetSamePageAnkerLink($anker, $name, $rel='nofollow')
+    function GetSamePageAnkerLink($anker, $name, $rel='nofollow', $class='')
     {
     	jimport('joomla.environment.request');
-        return CKunenaLink::GetSefHrefLink(JRequest::getURI(), $name, '', $rel, '', $anker);
+        return CKunenaLink::GetSefHrefLink(JRequest::getURI(), $name, '', $rel, $class, $anker);
     }
 
     function GetReportURL($redirect=false)

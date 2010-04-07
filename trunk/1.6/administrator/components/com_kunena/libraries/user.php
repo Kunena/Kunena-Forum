@@ -43,6 +43,7 @@ class KunenaUser extends JObject
 		$this->load($identifier);
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
+		$this->_config = KunenaFactory::getConfig ();
 	}
 
 	/**
@@ -192,7 +193,7 @@ class KunenaUser extends JObject
 
 	}
 
-	public function isOnline() {
+	public function isOnline($yesno=false) {
 		$my = JFactory::getUser ();
 		if ($this->_online === null && ($this->showOnline || CKunenaTools::isModerator($my->id))) {
 			$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->userid . ' AND s.client_id = 0 GROUP BY s.userid';
@@ -202,6 +203,7 @@ class KunenaUser extends JObject
 			$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
 			$this->_online = ($lastseen + $timeout) > time ();
 		}
+		if ($yesno) return $this->_online ? 'yes' : 'no';
 		return $this->_online;
 	}
 
@@ -232,7 +234,19 @@ class KunenaUser extends JObject
 		return $avatars->getURL($this, $size);
 	}
 
-	public function getRank($catid=0) {
+	public function getType() {
+		if ($this->userid == 0) {
+			$type = JText::_('COM_KUNENA_VIEW_VISITOR');
+		} elseif ($this->isAdmin ()) {
+			$type = JText::_('COM_KUNENA_VIEW_ADMIN');
+		} elseif ($this->isModerator ($this->catid)) {
+			$type = JText::_('COM_KUNENA_VIEW_MODERATOR');
+		} else {
+			$type = JText::_('COM_KUNENA_VIEW_USER');
+		}
+		return $type;
+	}
+	public function getRank($catid=0, $type=false) {
 		// Default rank
 		$rank = new stdClass();
 		$rank->rank_id = false;
@@ -295,7 +309,16 @@ class KunenaUser extends JObject
 				}
 			}
 		}
-		if (!$config->rankimages) $rank->rank_image = null;
+		if ($type == 'title') {
+			return $rank->rank_title;
+		}
+		if ($type == 'image') {
+			if (!$config->rankimages) return;
+			return '<img src="' . KUNENA_URLRANKSPATH . $rank->rank_image . '" alt="" />';
+		}
+		if (!$config->rankimages) {
+			$rank->rank_image = null;
+		}
 		return $rank;
 	}
 
@@ -329,6 +352,18 @@ class KunenaUser extends JObject
 				else $websitename = $this->websitename;
 				if ($this->websiteurl)
 					return '<a href="'.kunena_htmlspecialchars(stripslashes($url)).'" target="_blank"><span class="website" title="'. JText::_('COM_KUNENA_MYPROFILE_WEBSITE') . ': ' .  kunena_htmlspecialchars(stripslashes($websitename)).'"></span></a>';
+				break;
+			case 'private':
+				$pms = KunenaFactory::getPrivateMessaging();
+				return $pms->showIcon( $this->userid );
+				break;
+			case 'email':
+				// TODO: show email
+				return; // '<span class="email" title="'. JText::_('COM_KUNENA_MYPROFILE_EMAIL').'"></span>';
+				break;
+			case 'profile':
+				if (!$this->userid) return;
+				return CKunenaLink::GetProfileLink ( $this->_config, $this->userid, '<span class="profile" title="' . JText::_('COM_KUNENA_VIEW_PROFILE') . '"></span>' );
 				break;
 		}
 	}

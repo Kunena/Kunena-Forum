@@ -1132,15 +1132,12 @@ PX		EM			PCT			PT
 	width: 20px;
 }
 
-#Kunena div.ktotalfavorite {
-	text-align: left;
-	color: #FFFFFF;
-	font-weight: normal;
-	line-height: normal;
-}
-
-#Kunena div.ktotalfavorite img {
-	margin-left: 10px;
+#Kunena div.kfavorite {
+	background: url("../images/icons/favoritestar.png") no-repeat left top;
+	height: 18px;
+	width: 18px;
+	display: inline-block;
+	margin: 0 4px;
 }
 
 #Kunena .ktitle,
@@ -1512,6 +1509,22 @@ PX		EM			PCT			PT
 	text-decoration: none;
 	white-space: nowrap;
 	float: right;
+}
+
+#Kunena span.karmaminus {
+	background: url("../images/icons/karmaminus.gif") no-repeat left top;
+	height: 14px;
+	width: 14px;
+	display: inline-block;
+	margin: -2px 0;
+}
+
+#Kunena span.karmaplus {
+	background: url("../images/icons/karmaplus.gif") no-repeat left top;
+	height: 14px;
+	width: 14px;
+	display: inline-block;
+	margin: -2px 0;
 }
 
 #Kunena div.msgtext {
@@ -2203,6 +2216,25 @@ POST PAGE
 
 /* FORUM BUTTONS
 ----------------------------------------------------------------------------------------------- */
+
+/* Goto Up/down buttons */
+
+#Kunena a.buttongoto {
+}
+
+#Kunena a.buttongoto span.top {
+	background: url("../images/icons/top_arrow.gif") no-repeat left top;
+	height: 18px;
+	width: 18px;
+	display: block;
+}
+
+#Kunena a.buttongoto span.bottom {
+	background: url("../images/icons/bottom_arrow.gif") no-repeat left top;
+	height: 18px;
+	width: 18px;
+	display: block;
+}
 
 /* Communication buttons */
 
@@ -3274,12 +3306,6 @@ div#kprofile-stats ul li span.rank-admin {
 	background: 0 none; 
 	padding-left: 0;
 }
-#Kunena span.pm { 
-	display:block; 
-	background: url("../images/icons/pm.png") no-repeat; 
-	height: 16px; 
-	width: 16px;
-}
 #Kunena span.location { 
 	display:block; 
 	background: url("../images/icons/location.png") no-repeat; 
@@ -3316,6 +3342,18 @@ div#kprofile-stats ul li span.rank-admin {
 #Kunena span.website {
 	display:block; 
 	background: url("../images/icons/website.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+#Kunena span.private {
+	display:block; 
+	background: url("../images/icons/pm.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+#Kunena span.email {
+	display:block; 
+	background: url("../images/icons/email.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }

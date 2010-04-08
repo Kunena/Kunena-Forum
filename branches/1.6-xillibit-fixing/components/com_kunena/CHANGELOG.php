@@ -40,6 +40,7 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Fix regression with profilebox in top Notice: Undefined property: CKunenaViewMessage::$textpersonal
 # [#19288] Fix regression Notice: Undefined property: KunenaUser::$catid in \libraries\user.php  on line 242
 # [#19288] Fix regression with AUP Notice: Undefined property: CKunenaViewMessage::$db in funcs\view.php  on line 143
+^ [#19356] Replace karmaminus and karmaplus icons by icons in png
 
 Kunena 1.6.0-DEV
 

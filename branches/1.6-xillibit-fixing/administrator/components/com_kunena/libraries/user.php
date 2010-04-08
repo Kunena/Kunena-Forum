@@ -234,12 +234,12 @@ class KunenaUser extends JObject
 		return $avatars->getURL($this, $size);
 	}
 
-	public function getType() {
+	public function getType($catid=0) {
 		if ($this->userid == 0) {
 			$type = JText::_('COM_KUNENA_VIEW_VISITOR');
 		} elseif ($this->isAdmin ()) {
 			$type = JText::_('COM_KUNENA_VIEW_ADMIN');
-		} elseif ($this->isModerator ($this->catid)) {
+		} elseif ($this->isModerator ($catid)) {
 			$type = JText::_('COM_KUNENA_VIEW_MODERATOR');
 		} else {
 			$type = JText::_('COM_KUNENA_VIEW_USER');

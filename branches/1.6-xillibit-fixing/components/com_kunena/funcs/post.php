@@ -940,7 +940,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( ::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	function hasThreadHistory() {

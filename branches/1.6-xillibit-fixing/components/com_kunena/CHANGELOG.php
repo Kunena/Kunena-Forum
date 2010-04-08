@@ -32,6 +32,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-DEV
+
+8-Apr-2010 Xillibit
+# [#19288] Fix regression Parse error: syntax error, unexpected T_PAAMAYIM_NEKUDOTAYIM, expecting ')' in funcs\post.php on line 943
+# [#19288] Fix regression call CKunenaConfig is now removed from CKunenaLink class
+# [#19288] Fix regression with profilebox in top Notice: Undefined property: CKunenaViewMessage::$textpersonal
+# [#19288] Fix regression Notice: Undefined property: KunenaUser::$catid in \libraries\user.php  on line 242
+# [#19288] Fix regression with AUP Notice: Undefined property: CKunenaViewMessage::$db in funcs\view.php  on line 143
+
 Kunena 1.6.0-DEV
 
 7-Apr-2010 Matias

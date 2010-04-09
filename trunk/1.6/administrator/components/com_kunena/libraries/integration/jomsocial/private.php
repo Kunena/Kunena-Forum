@@ -22,7 +22,7 @@ class KunenaPrivateJomSocial extends KunenaPrivate
 		$this->integration = KunenaIntegration::getInstance ('jomsocial');
 		if (! $this->integration || ! $this->integration->isLoaded())
 			return;
-		require_once (JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'messaging.php');
+		CFactory::load('libraries', 'messaging');
 		$this->priority = 40;
 	}
 

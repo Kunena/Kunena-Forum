@@ -167,115 +167,6 @@ class CKunenaPost {
 		$uri = & JURI::getInstance ( JURI::base () );
 		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, $threadPages, $this->_config->messages_per_page, $id ) );
 
-		// A couple more tasks required...
-		if ($thread == 0) {
-			// if JomScoial integration is active integrate user points and activity stream
-			if ($this->_config->fb_profile == 'jomsocial') {
-				include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
-
-				CuserPoints::assignPoint ( 'com_kunena.thread.new' );
-
-				// Check for permisions of the current category - activity only if public or registered
-				if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1) {
-					if ($this->_config->js_actstr_integration) {
-						//activity stream  - new post
-						$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $id, 1 );
-
-						$kunena_emoticons = smile::getEmoticons ( 1 );
-						$content = stripslashes ( $message );
-						$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-						$content = nl2br ( $content );
-
-						$act = new stdClass ( );
-						$act->cmd = 'wall.write';
-						$act->actor = $userid;
-						$act->target = 0; // no target
-						$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
-						$act->content = $content;
-						$act->app = 'wall';
-						$act->cid = 0;
-
-						// jomsocial 0 = public, 20 = registered members
-						if ($catinfo->pub_access == 0) {
-							$act->access = 0;
-						} else {
-							$act->access = 20;
-						}
-
-						CFactory::load ( 'libraries', 'activities' );
-						CActivityStream::add ( $act );
-					}
-				}
-			}
-
-		} else {
-			// if JomScoial integration is active integrate user points and activity stream
-			if ($this->_config->fb_profile == 'jomsocial') {
-				include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
-
-				CuserPoints::assignPoint ( 'com_kunena.thread.reply' );
-
-				// Check for permisions of the current category - activity only if public or registered
-				if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1 && $this->_config->js_actstr_integration) {
-					if ($this->_config->js_actstr_integration) {
-						//activity stream - reply post
-						$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, 1 );
-
-						$content = stripslashes ( $message );
-						$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-						$content = nl2br ( $content );
-
-						$act = new stdClass ( );
-						$act->cmd = 'wall.write';
-						$act->actor = $userid;
-						$act->target = 0; // no target
-						$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
-						$act->content = $content;
-						$act->app = 'wall';
-						$act->cid = 0;
-
-						// jomsocial 0 = public, 20 = registered members
-						if ($catinfo->pub_access == 0) {
-							$act->access = 0;
-						} else {
-							$act->access = 20;
-						}
-
-						CFactory::load ( 'libraries', 'activities' );
-						CActivityStream::add ( $act );
-					}
-				}
-			}
-		}
-		// End Modify for activities stream
-
-		// start integration alphauserpoints component
-		if ($this->_config->alphauserpointsrules) {
-			// Insert AlphaUserPoints rules
-			$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-			$datareference = '<a href="' . $LastPostUrl . '">' . $subject . '</a>';
-			if (file_exists ( $api_AUP )) {
-				require_once ($api_AUP);
-				if ($thread == 0) {
-					// rule for post a new topic
-					AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $id, $datareference );
-				} else {
-					// rule for post a reply to a topic
-					if ($this->_config->alphauserpointsnumchars > 0) {
-						// use if limit chars for a response
-						if (JString::strlen ( $message ) > $this->_config->alphauserpointsnumchars) {
-							AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $id, $datareference );
-						} else {
-							$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_AUP_MESSAGE_TOO_SHORT' ) );
-						}
-					} else {
-						AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $id, $datareference );
-					}
-				}
-			}
-		}
-		// end insertion AlphaUserPoints
-
 		//Update the attachments table if an image has been attached
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
@@ -940,7 +831,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( ::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	function hasThreadHistory() {

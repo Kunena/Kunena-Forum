@@ -85,7 +85,6 @@ abstract class KunenaFactory {
 		return KunenaAvatar::getInstance();
 	}
 
-
 	/**
 	 * Get Kunena private message system integration object
 	 *
@@ -97,6 +96,19 @@ abstract class KunenaFactory {
 	{
 		kimport('integration.private');
 		return KunenaPrivate::getInstance();
+	}
+
+	/**
+	 * Get Kunena activity integration object
+	 *
+	 * Returns the global {@link KunenaActivity} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaActivity
+	 */
+	public static function getActivityIntegration()
+	{
+		kimport('integration.activity');
+		return KunenaActivity::getInstance();
 	}
 
 	/**

@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+9-Apr-2010 Matias
++ [#20050] Add new integration classes: Activity for JomSocial, AUP, None
+# [#19288] Fix regression: Fixed JomSocial integration detection
+^ [#19295] Clean up code: Removed all integration code from posting
+
 8-Apr-2010 Matias
 # [#19288] Fix regression: not all $kunena_config parameters were removed from the code
 

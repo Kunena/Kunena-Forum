@@ -15,11 +15,10 @@ defined( '_JEXEC' ) or die('');
 
 class KunenaIntegrationJomSocial extends KunenaIntegration {
 	public function __construct() {
-		$jspath = JPATH_BASE . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php';
-		if (!is_file ( $jspath )) return;
-
-		include_once ($jspath);
-		$this->loaded = true;
+		$path = JPATH_ROOT . DS . 'components' . DS . 'com_community' . DS . 'libraries' . DS . 'core.php';
+		if (!is_file ( $path )) return;
+		include_once ($path);
+		$this->loaded = 1;
 	}
 
 	public function enqueueErrors() {

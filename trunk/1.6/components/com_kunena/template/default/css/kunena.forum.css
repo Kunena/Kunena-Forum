@@ -1512,7 +1512,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.karmaminus {
-	background: url("../images/icons/karmaminus.gif") no-repeat left top;
+	background: url("../images/icons/karmaminus.png") no-repeat left top;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -1520,7 +1520,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.karmaplus {
-	background: url("../images/icons/karmaplus.gif") no-repeat left top;
+	background: url("../images/icons/karmaplus.png") no-repeat left top;
 	height: 14px;
 	width: 14px;
 	display: inline-block;

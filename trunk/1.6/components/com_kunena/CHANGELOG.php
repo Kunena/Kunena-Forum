@@ -38,6 +38,13 @@ Kunena 1.6.0-DEV
 + [#20050] Add new integration classes: Activity for JomSocial, AUP, None
 # [#19288] Fix regression: Fixed JomSocial integration detection
 ^ [#19295] Clean up code: Removed all integration code from posting
+^ [#15886] Merged revisions 2142-2160 from /branches/1.6-xillibit-fixing
+
+8-Apr-2010 Xillibit
+# [#19288] Fix regression with profilebox in top Notice: Undefined property: CKunenaViewMessage::$textpersonal
+# [#19288] Fix regression Notice: Undefined property: KunenaUser::$catid in \libraries\user.php  on line 242
+# [#19288] Fix regression with AUP Notice: Undefined property: CKunenaViewMessage::$db in funcs\view.php  on line 143
+^ [#19356] Replace karmaminus and karmaplus icons by icons in png
 
 8-Apr-2010 Matias
 # [#19288] Fix regression: not all $kunena_config parameters were removed from the code

@@ -83,7 +83,7 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
 			?>
 		</li>
-		<?php if ($this->textpersonal) : ?>
+		<?php if ($this->personaltext) : ?>
 		<li class="kpost-personal">
 			<?php echo $this->escape($this->personaltext) ?>
 		</li>

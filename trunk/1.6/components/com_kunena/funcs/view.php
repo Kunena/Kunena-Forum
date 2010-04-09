@@ -63,6 +63,7 @@ class CKunenaViewMessage {
 
 		$this->my = JFactory::getUser ();
 		$this->config = CKunenaConfig::getInstance ();
+		$this->db = JFactory::getDBO ();
 	}
 
 	function displayActions() {
@@ -130,7 +131,7 @@ class CKunenaViewMessage {
 
 		if ($this->config->showuserstats) {
 			$this->userposts = $this->profile->posts;
-			if ($this->config->userlist_usertype) $this->usertype = $this->profile->getType();
+			if ($this->config->userlist_usertype) $this->usertype = $this->profile->getType($this->catid);
 			$this->userrankimage = $this->profile->getRank ($this->catid, 'image');
 			$this->userranktitle = $this->profile->getRank ($this->catid, 'title');
 		}

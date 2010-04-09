@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6-DEV
 
+09-Apr-2010 Matias
+^ [#20084] Removed $kunena_config variable from CKunenaLink functions to make it work with latest trunk
+
 08-Apr-2010 Matias
 ^ [#20084] Update template
 

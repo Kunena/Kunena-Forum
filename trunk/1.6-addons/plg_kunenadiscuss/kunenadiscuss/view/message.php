@@ -16,7 +16,7 @@ defined( '_JEXEC' ) or die ( '' );
 	<tr>
 		<?php if ($this->config->allowavatar) : ?>
 		<td valign="top" class="kdiscuss-avatar-cover">
-			<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->avatar ) ?>
+			<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->avatar ) ?>
 		</td>
 		<?php endif; ?>
 		<td valign="top" class="kdiscuss-content-cover">
@@ -25,7 +25,7 @@ defined( '_JEXEC' ) or die ( '' );
 				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat'); ?>
 			</span>
 			<span class="kdiscuss-username">
-				<?php echo CKunenaLink::GetProfileLink ( $this->config, $this->profile->userid, $this->username ) ?>
+				<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->username ) ?>
 			</span>
 			<div class="kdiscuss-text"><?php echo $this->escape($this->message); ?></div>
 		</td>

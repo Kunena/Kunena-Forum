@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Fixed JomSocial integration detection
 ^ [#19295] Clean up code: Removed all integration code from posting
 ^ [#15886] Merged revisions 2142-2160 from /branches/1.6-xillibit-fixing
+# [#19288] Fix regression: HTML escaped in message and signature (func=view)
 
 8-Apr-2010 Xillibit
 # [#19288] Fix regression with profilebox in top Notice: Undefined property: CKunenaViewMessage::$textpersonal

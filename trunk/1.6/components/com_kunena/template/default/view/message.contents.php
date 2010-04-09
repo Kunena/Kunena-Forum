@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kunena-msgtitle left">
 	<span class="msgtitle<?php echo $this->msgsuffix ?>">
-		<?php echo $this->escape($this->subject) ?>
+		<?php echo $this->subject ?>
 	</span>
 	<span class="msgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 		<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
@@ -26,14 +26,14 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <div>
 	<div class="msgtext">
-		<?php echo $this->escape($this->message) ?>
+		<?php echo $this->message ?>
 	</div>
 </div>
 <?php $this->displayAttachments() ?>
 <div>
 	<?php if ($this->signature) : ?>
 	<div class="msgsignature">
-		<?php echo $this->escape($this->signature) ?>
+		<?php echo $this->signature ?>
 	</div>
 	<?php endif ?>
 </div>

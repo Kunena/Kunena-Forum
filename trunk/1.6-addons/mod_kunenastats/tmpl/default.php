@@ -19,9 +19,9 @@ defined('_JEXEC') or die('Restricted access');
       <th><?php echo JText::_('MOD_STATS_SUBJECT'); ?></th>
       <th><?php echo JText::_('MOD_STATS_HIT'); ?></th>
     </tr>
-    
-      <?php 
-      foreach ( $stats as $stat) { 
+
+      <?php
+      foreach ( $stats as $stat) {
         if ($stat->hits == modKStatisticsHelper::getTopTitlesHits($this->nbItems)) {
 		      $barwidth = 100;
 		    } else {
@@ -33,7 +33,7 @@ defined('_JEXEC') or die('Restricted access');
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
       <?php } ?>
-    
+
   </table>
   <?php } elseif ( $this->statsType == '1' ) { ?>
   <table>
@@ -41,9 +41,9 @@ defined('_JEXEC') or die('Restricted access');
       <th><?php echo JText::_('MOD_STATS_POLL'); ?></th>
       <th><?php echo JText::_('MOD_STATS_VOTES'); ?></th>
     </tr>
-    
-      <?php 
-      foreach ( $stats as $stat) { 
+
+      <?php
+      foreach ( $stats as $stat) {
         if ($stat->total == modKStatisticsHelper::getTopPollVotesStats($this->nbItems)) {
 		      $barwidth = 100;
 		    } else {
@@ -55,39 +55,39 @@ defined('_JEXEC') or die('Restricted access');
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
       <?php } ?>
-    
+
   </table>
-  <?php } elseif ( $this->statsType == '2' ) { ?>  
+  <?php } elseif ( $this->statsType == '2' ) { ?>
   <table>
     <tr>
       <th><?php echo JText::_('MOD_STATS_USER'); ?></th>
       <th><?php echo JText::_('MOD_STATS_HIT'); ?></th>
     </tr>
-    
-      <?php 
-      foreach ( $stats as $stat) {       
+
+      <?php
+      foreach ( $stats as $stat) {
         if ($stat->posts == modKStatisticsHelper::getTopMessage($this->nbItems)) {
 	       $barwidth = 100;
 	     } else {
 	       $barwidth = round(($stat->posts * 100) / modKStatisticsHelper::getTopMessage($this->nbItems));
-	     }	     
+	     }
       ?>
       <tr>
-      <td><?php echo $klink->GetProfileLink($kconfig, $stat->userid, stripslashes($stat->username));  ?></td>
+      <td><?php echo $klink->GetProfileLink($stat->userid, stripslashes($stat->username));  ?></td>
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
       <?php } ?>
-    
+
   </table>
-  <?php } elseif ( $this->statsType == '3' ) { ?>  
+  <?php } elseif ( $this->statsType == '3' ) { ?>
   <table>
     <tr>
       <th><?php echo JText::_('MOD_STATS_USERPROFILE'); ?></th>
       <th><?php echo JText::_('MOD_STATS_HIT'); ?></th>
     </tr>
-    
-      <?php 
-      foreach ( $stats as $stat) { 
+
+      <?php
+      foreach ( $stats as $stat) {
         if ($stat->hits == modKStatisticsHelper::getTopProfileHits($this->nbItems)) {
           $barwidth = 100;
         } else {
@@ -95,24 +95,24 @@ defined('_JEXEC') or die('Restricted access');
         }
       ?>
       <tr>
-      <td><?php echo $klink->GetProfileLink($kconfig, $stat->user_id, stripslashes($stat->user));  ?></td>
+      <td><?php echo $klink->GetProfileLink($stat->user_id, stripslashes($stat->user));  ?></td>
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
-      </tr>      
+      </tr>
       <?php }  ?>
-    
+
   </table>
   <?php } elseif ( $this->statsType == '4' ) { ?>
   <table>
     <tr>
-      <th><?php echo JText::_('MOD_STATS_GENERALSTATS'); ?></th>      
-    </tr>      
+      <th><?php echo JText::_('MOD_STATS_GENERALSTATS'); ?></th>
+    </tr>
       <tr>
       <td><?php echo JText::_('MOD_STATS_TOTALUSERS'); ?><b><?php echo $model->getToTalMembers(); ?></b></td>
-      <td><?php echo JText::_('MOD_STATS_LATESTMEMBER'); ?><b><?php echo $klink->GetProfileLink($kconfig, $model->getLastestMemberid(), $model->getLastestMember()); ?></b></td>
-      </tr><tr> 
+      <td><?php echo JText::_('MOD_STATS_LATESTMEMBER'); ?><b><?php echo $klink->GetProfileLink($model->getLastestMemberid(), $model->getLastestMember()); ?></b></td>
+      </tr><tr>
       <td><?php echo JText::_('MOD_STATS_TOTALMESSAGES'); ?><b><?php echo $model->getTotalMessages(); ?></b></td>
       <td><?php echo JText::_('MOD_STATS_TOTALSUBJECTS'); ?><b><?php echo $model->getTotalTitles(); ?></b></td>
-      </tr><tr> 
+      </tr><tr>
       <td><?php echo JText::_('MOD_STATS_TOTALSECTIONS'); ?><b><?php echo $model->getTotalSections(); ?></b></td>
       <td><?php echo JText::_('MOD_STATS_TOTALCATS'); ?><b><?php echo $model->getTotalCats(); ?></b></td>
        </tr><tr>
@@ -121,10 +121,10 @@ defined('_JEXEC') or die('Restricted access');
        </tr><tr>
       <td><?php echo JText::_('MOD_STATS_TODAYTOTANSW'); ?><b><?php echo $model->getTodayAnswer(); ?></b></td>
       <td><?php echo JText::_('MOD_STATS_YESTERDAYTOTANSW'); ?><b><?php echo $model->getYesterdayAnswer(); ?></b></td>
-      </tr>    
+      </tr>
   </table>
-  <?php }  
-    if ($params->get( 'sh_statslink' )) { 
-      echo $klink->GetStatsLink('See full Stats details');  
+  <?php }
+    if ($params->get( 'sh_statslink' )) {
+      echo $klink->GetStatsLink('See full Stats details');
    } ?>
 </div>

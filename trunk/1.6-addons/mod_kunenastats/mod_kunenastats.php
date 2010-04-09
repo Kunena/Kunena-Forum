@@ -25,7 +25,5 @@ if (modKStatisticsHelper::getKunenaLinkClass()) {
 
 $model = modKStatisticsHelper::getModel();
 
-$kunena_config = CKunenaConfig::getInstance();
-
 $stats = modKStatisticsHelper::getDatas($params);
-require(JModuleHelper::getLayoutPath('mod_kunenastatistics'));
+require(JModuleHelper::getLayoutPath('mod_kunenastats'));

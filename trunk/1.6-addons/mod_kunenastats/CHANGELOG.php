@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.0
 
+9-Apr 2010 Xillibit
+^ [#20095] Removed $kunena_config variable from CKunenaLink functions
+
 3-Apr 2010 Xillibit
 ^ [#20095] Set keyword ID on all files
 + [#20095] Create initial structure

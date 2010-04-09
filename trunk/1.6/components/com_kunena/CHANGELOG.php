@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+8-Apr-2010 Matias
+# [#19288] Fix regression: not all $kunena_config parameters were removed from the code
+
 7-Apr-2010 Matias
 ^ [#19448] Move code out of template: simplify func=view
 ^ [#19295] Clean up code: remove $kunena_config parameter from CKunenaLink functions

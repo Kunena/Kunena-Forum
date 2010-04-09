@@ -30,8 +30,7 @@
           <param name="nbpost" type="text" default="5" label="Post number" description="PARAMNUMBERPOSTS" />
           <param name="titlelength" type="text" default="50" label="Title length" description="PARAMTITLELENGTH" />
           <param name="messagelength" type="text" default="150" label="Message length" description="PARAMMESSAGELENGTH" />
-          <param name="unreadindicator" type="text" default="!" label="Unread Indicator" description="PARAMUNREADINDICATOR" />
-          <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+          <param name="unreadindicator" type="text" default="!" label="Unread Indicator" description="PARAMUNREADINDICATOR" />          
           <param name="@spacer" type="spacer" default="" label="" description="" />
           <param name="sh_avatar" type="radio" default="0" label="Show avatar" description="PARAMSHOWAVATAR">          
 			     <option value="0">No</option>
@@ -58,6 +57,8 @@
 			     <option value="1">Yes</option>
 		      </param>		      
 		      <param name="@spacer" type="spacer" default="" label="" description="" />
-		      <param name="dateformat" type="text" default="%Y-%m-%d %H:%M:%S" label="Date format" description="PARAMDATEFORMAT" />		      
+		      <param name="dateformat" type="text" default="%Y-%m-%d %H:%M:%S" label="Date format" description="PARAMDATEFORMAT" />	
+		      <param name="@spacer" type="spacer" default="" label="" description="" />
+          <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />	      
         </params>
 </install>

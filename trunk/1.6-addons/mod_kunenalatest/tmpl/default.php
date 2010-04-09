@@ -24,10 +24,11 @@ $tzoffset = $config->getValue('config.offset');
 
 //vérifier que $klistpost n'est pas vide
 
-foreach($klistpost as $item) {
-//construct the date
-$date = JFactory::getDate($item->time, $tzoffset);
-$date = $date->toFormat($params->get( 'dateformat' ));
+if ( is_array($klistpost) ){
+	foreach($klistpost as $item) {
+	//construct the date
+	$date = JFactory::getDate($item->time, $tzoffset);
+	$date = $date->toFormat($params->get( 'dateformat' ));
 
 	?>
   <div style="display:block;float:left;width: 45%;">
@@ -84,6 +85,7 @@ $date = $date->toFormat($params->get( 'dateformat' ));
 	} ?></li>
 	</ul>
 	</div>
-<?php } //end foreach ?><br />
+<?php } //end foreach
+} ?><br />
 <?php echo CKunenaLink::GetShowLatestLink(JText::_('MOD_KLATESTPOST_MORE_LINK')); ?>
 </div>

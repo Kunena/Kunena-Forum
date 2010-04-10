@@ -1321,6 +1321,21 @@ function KGetArrayInts($name) {
     return $array;
 }
 
+function KGetArrayReverseInts($name) {
+    $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
+
+    foreach ($array as $item=>$value) {
+        if ((int)$item && (int)$item>0) $items[(int)$item] = (int)$item;
+    }
+    $array = $items;
+
+    if (!is_array($array)) {
+        $array = array ( 0 );
+    }
+
+    return $array;
+}
+
 function fbReturnDashed (&$string, $key) {
             $string = "_".$string."_";
 }

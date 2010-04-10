@@ -1062,6 +1062,19 @@ function saveConfig($option) {
 			$postname = JString::strtolower ( JString::substr ( $postsetting, 4 ) );
 			$postvalue = addslashes ( $postvalue );
 
+			if ($postname == 'enablerulespage') {
+				$postvalue = intval ( $postvalue );
+				$kunena_db->setQuery ( "UPDATE #__menu SET published={$postvalue} WHERE menutype='kunenamenu' AND link='index.php?option=com_kunena&func=rules'" );
+				$kunena_db->query ();
+				check_dberror ( "Unable to set kunena menu unpublished." );
+			}
+			if ($postname == 'enablehelppage') {
+				$postvalue = intval ( $postvalue );
+				$kunena_db->setQuery ( "UPDATE #__menu SET published={$postvalue} WHERE menutype='kunenamenu' AND link='index.php?option=com_kunena&func=help'" );
+				$kunena_db->query ();
+				check_dberror ( "Unable to set kunena menu unpublished." );
+			}
+
 			// No matter what got posted, we only store config parameters defined
 			// in the config class. Anything else posted gets ignored.
 			if (array_key_exists ( $postname, $kunena_config->GetClassVars () )) {

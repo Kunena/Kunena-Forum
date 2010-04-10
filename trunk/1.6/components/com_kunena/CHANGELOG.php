@@ -36,6 +36,11 @@ Kunena 1.6.0-DEV
 
 10-Apr-2010 Matias
 + [#20050] Add new integration classes: Activity for CB
+^ [#15886] Merged revision 2192 from /branches/1.6-xillibit-fixing with some changes
+
+10-Apr-2010 Xillibit
+# [#20100] Rules and help tabs is always displayed even if the settings are changed
+# [#19288] Fix regressions in profile, use now new function for unfavorite and unsubscribe
 
 9-Apr-2010 Matias
 + [#20050] Add new integration classes: Activity for JomSocial, AUP, None

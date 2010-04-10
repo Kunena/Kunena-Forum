@@ -84,9 +84,14 @@ class CKunenaPost {
 			}
 		}
 
-		// Check user access rights
-		if (($this->my->id == 0 && ! $this->_config->pubwrite) || (empty ( $this->msg_cat->catparent ) && $this->do != 'reply') && (! $this->_session->canRead ( $this->catid ) && ! CKunenaTools::isAdmin ())) {
+		// Check if anonymous user needs to log in
+		if ($this->my->id == 0 && (! $this->_config->pubwrite || ! $this->_session->canRead ( $this->catid ))) {
 			CKunenaTools::loadTemplate ( '/plugin/login/login.php' );
+			return false;
+		}
+		// Check user access rights
+		if (!empty ( $this->msg_cat->catparent ) && ! $this->_session->canRead ( $this->catid ) && ! CKunenaTools::isAdmin ()) {
+			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return false;
 		}
 

@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 + [#20050] Add new integration classes: Activity for CB
 ^ [#15886] Merged revision 2192 from /branches/1.6-xillibit-fixing with some changes
 # [#19288] Fix regression: Search function is not working
+# [#19288] Fix regression: Registered user is shown login screen if he does not have permissions to post
 
 10-Apr-2010 Xillibit
 # [#20100] Rules and help tabs is always displayed even if the settings are changed

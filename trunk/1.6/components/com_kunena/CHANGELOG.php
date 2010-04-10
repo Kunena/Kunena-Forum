@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+10-Apr-2010 Matias
++ [#20050] Add new integration classes: Activity for CB
+
 9-Apr-2010 Matias
 + [#20050] Add new integration classes: Activity for JomSocial, AUP, None
 # [#19288] Fix regression: Fixed JomSocial integration detection

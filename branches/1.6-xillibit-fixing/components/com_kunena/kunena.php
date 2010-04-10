@@ -529,11 +529,33 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 					break;
 
 				case "bulkFavorite" :
-					CKunenaTools::KUnfavorite ( );
+					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
+					$KunenaUserAPI = new KunenaUserAPI();
+					$cb = KGetArrayReverseInts ( "cb" );
+					$result = $KunenaUserAPI->unfavoriteThreads($userid, $cb);
+
+					if ( $result ) {
+						$message = JText::_('COM_KUNENA_USER_UNFAVORITE_YES');
+					} else {
+						$message = JText::_('COM_KUNENA_POST_UNFAVORITED_TOPIC');
+					}
+
+					$kunena_app->redirect(CKunenaLink::GetProfileURL($userid),$message);
 					break;
 
 				case "bulkSub" :
-					CKunenaTools::KUnsubscribe ( );
+					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
+					$KunenaUserAPI = new KunenaUserAPI();
+					$cb = KGetArrayReverseInts ( "cb" );
+					$result = $KunenaUserAPI->unsubscribeThreads($userid, $cb);
+
+					if ( $result ) {
+						$message = JText::_('COM_KUNENA_USER_UNSUBSCRIBE_YES');
+					} else {
+						$message = JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC');
+					}
+
+					$kunena_app->redirect(CKunenaLink::GetProfileURL($userid),$message);
 					break;
 			}
 

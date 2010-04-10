@@ -309,7 +309,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	</tbody>
 </table>
 
-<input type="hidden" name="option" value="com_kunena" /> <input
+<input type="hidden" name="option" value="com_kunena" /> <input type="hidden" name="userid" value="<?php echo $this->my->id; ?>" /> <input
 	type="hidden" name="func" value="bulkactions" /> </form>
 </div>
 </div>

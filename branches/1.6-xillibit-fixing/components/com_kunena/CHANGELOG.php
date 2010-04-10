@@ -36,6 +36,8 @@ Kunena 1.6.0-Xillibit-DEV
 
 10-Apr-2010 Xillibit
 ^ [#18627] Update 1.6-xillibit-fixing merge revisions 2190-2185, 2183-2182 from /trunk/1.6
+# [#20100] Rules and help tabs is always displayed even if the settings are changed
+# [#19288] Fix regressions in profile, use now new function for unfavorite and unsubscribe
 
 Kunena 1.6.0-DEV
 

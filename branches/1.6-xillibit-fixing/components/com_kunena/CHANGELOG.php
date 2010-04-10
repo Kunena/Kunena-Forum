@@ -34,6 +34,21 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+10-Apr-2010 Xillibit
+^ [#18627] Update 1.6-xillibit-fixing merge revisions 2190-2185, 2183-2182 from /trunk/1.6
+
+Kunena 1.6.0-DEV
+
+10-Apr-2010 Matias
++ [#20050] Add new integration classes: Activity for CB
+
+9-Apr-2010 Matias
++ [#20050] Add new integration classes: Activity for JomSocial, AUP, None
+# [#19288] Fix regression: Fixed JomSocial integration detection
+^ [#19295] Clean up code: Removed all integration code from posting
+^ [#15886] Merged revisions 2142-2160 from /branches/1.6-xillibit-fixing
+# [#19288] Fix regression: HTML escaped in message and signature (func=view)
+
 8-Apr-2010 Xillibit
 # [#19288] Fix regression Parse error: syntax error, unexpected T_PAAMAYIM_NEKUDOTAYIM, expecting ')' in funcs\post.php on line 943
 # [#19288] Fix regression call CKunenaConfig is now removed from CKunenaLink class
@@ -42,7 +57,8 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Fix regression with AUP Notice: Undefined property: CKunenaViewMessage::$db in funcs\view.php  on line 143
 ^ [#19356] Replace karmaminus and karmaplus icons by icons in png
 
-Kunena 1.6.0-DEV
+8-Apr-2010 Matias
+# [#19288] Fix regression: not all $kunena_config parameters were removed from the code
 
 7-Apr-2010 Matias
 ^ [#19448] Move code out of template: simplify func=view

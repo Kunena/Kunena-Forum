@@ -392,7 +392,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $integration_avatar = 'auto';
 	var $integration_profile = 'auto';
 	var $integration_private = 'auto';
-	var $integration_actions = 'auto';
+	var $integration_activity = 'auto';
 	//New for 1.6: choose if you want that ghost message box checked by default
 	var $boxghostmessage = 0;
 

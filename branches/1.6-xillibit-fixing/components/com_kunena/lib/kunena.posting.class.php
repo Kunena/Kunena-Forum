@@ -414,6 +414,14 @@ class CKunenaPosting {
 		if ($errcount)
 			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
 
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		if ($this->parent->thread == 0) {
+			$activity->onAfterPosting($this);
+		} else {
+			$activity->onAfterReply($this);
+		}
+
 		return $id;
 	}
 

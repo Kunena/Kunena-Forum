@@ -17,10 +17,10 @@ class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
 	protected $open = false;
 
 	public function __construct() {
-		$cbpath = KUNENA_ROOT_PATH_ADMIN . DS . 'components' . DS . 'com_comprofiler' . DS . 'plugin.foundation.php';
-		if (!is_file ( $cbpath )) return;
+		$path = KUNENA_ROOT_PATH_ADMIN . DS . 'components' . DS . 'com_comprofiler' . DS . 'plugin.foundation.php';
+		if (!is_file ( $path )) return;
 
-		include_once ($cbpath);
+		require_once ($path);
 		cbimport ( 'cb.database' );
 		cbimport ( 'cb.tables' );
 		cbimport ( 'language.front' );

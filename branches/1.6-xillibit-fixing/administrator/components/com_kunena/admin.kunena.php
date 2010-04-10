@@ -1042,6 +1042,7 @@ function showConfig($option) {
 
 	kimport('integration.integration');
 	$lists['integration_access'] = KunenaIntegration::getConfigOptions('access');
+	$lists['integration_activity'] = KunenaIntegration::getConfigOptions('activity');
 	$lists['integration_avatar'] = KunenaIntegration::getConfigOptions('avatar');
 	$lists['integration_login'] = KunenaIntegration::getConfigOptions('login');
 	$lists['integration_profile'] = KunenaIntegration::getConfigOptions('profile');

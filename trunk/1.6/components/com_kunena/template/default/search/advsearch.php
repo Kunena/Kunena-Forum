@@ -39,7 +39,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 });
 </script>
 
-<form action="<?php echo CKunenaLink::GetSearchURL('', 'advsearch',NULL, NULL, NULL); ?>" method="post" id="searchform" name="adminForm">
+<form action="<?php echo CKunenaLink::GetSearchURL('advsearch'); ?>" method="post" id="searchform" name="adminForm">
     <table id="kforumsearch" class="kblocktable">
         <thead>
             <tr>

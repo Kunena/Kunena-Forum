@@ -276,7 +276,7 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( $helplink, $name, '', $rel );
 	}
 
-	function GetSearchURL($func, $searchword, $limitstart, $limit, $params = '') {
+	function GetSearchURL($func, $searchword='', $limitstart=0, $limit=0, $params = '') {
 		$kunena_config = & CKunenaConfig::getInstance ();
 		$limitstr = "";
 		if ($limitstart > 0)

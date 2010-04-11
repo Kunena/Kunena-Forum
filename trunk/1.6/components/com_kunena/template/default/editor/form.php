@@ -84,7 +84,7 @@ $this->k=0;
 			<td class="kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong></td>
 
 			<td>
-			<input type="checkbox" id="kanonymous" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
+			<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 			</td>
 		</tr>
 		<?php endif; ?>

@@ -135,7 +135,7 @@ function kToggleOrSwapPreview(kunenaclass)
 	e = $("kbbcode-preview");
 	f = $("kbbcode-message");
 	if (e) {
-		if (e.getStyle('display') == "none" || e.getProperty('kunenaclass') != kunenaclass){
+		if (e.getStyle('display') == "none" || e.getProperty('class') != kunenaclass){
 	    	e.setStyle('display', 'block');
 
 			if (kunenaclass=="kbbcode-preview_right"){
@@ -153,7 +153,7 @@ function kToggleOrSwapPreview(kunenaclass)
 	    	f.setStyle('width', '95%');
 	    	_previewActive=false;
 		}
-		e.setProperty('kunenaclass', kunenaclass);
+		e.setProperty('class', kunenaclass);
 		var height = f.getStyle('height');
 		e.setStyle('height', f.getStyle('height'));
 	}

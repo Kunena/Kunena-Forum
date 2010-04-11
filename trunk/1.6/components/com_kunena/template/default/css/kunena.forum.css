@@ -2156,12 +2156,11 @@ POST PAGE
 	width: 95%;
 	float: left;
 }
-#Kunena div.kbbcode-preview_right,
-#Kunena div.kbbcode-preview_bottom {
+#Kunena #kbbcode-preview {
 	/* IMPORTANT: do not set height - controlled by js */
 	border: 1px solid #BFC3C6;
 	overflow: scroll;
-	background: #F2F1EE
+	background: #F2F1EE;
 }
 #Kunena div.kbbcode-preview_bottom {
 	/* IMPORTANT: do not set height - controlled by js */
@@ -2173,9 +2172,8 @@ POST PAGE
 #Kunena div.kbbcode-preview_right {
 	/* IMPORTANT: do not set height - controlled by js */
 	float:right;
-	width: 45%;
-	display:inline;
-	margin-right: 40px;
+	width: 48%;
+	margin-right: 10px;
 }
 
 #Kunena #kpostmessage tr.ksectiontableentry1 .k-postbuttonset td,

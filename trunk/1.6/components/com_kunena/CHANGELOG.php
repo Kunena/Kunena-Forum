@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+11-Apr-2010 Matias
+# [#19288] Fix regression: preview layout issues
+# [#19288] Fix regression: anonymous button too large in Opera
+
 10-Apr-2010 Matias
 + [#20050] Add new integration classes: Activity for CB
 ^ [#15886] Merged revision 2192 from /branches/1.6-xillibit-fixing with some changes

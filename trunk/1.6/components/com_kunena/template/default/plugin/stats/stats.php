@@ -134,7 +134,7 @@ $k = 0;
 
     <tr class = "k<?php echo $tabclass[$k]; ?>">
       <td class="td-1" align="left">
-       <?php echo CKunenaLink::GetThreadLink( 'view', $toptitle->catid, $toptitle->id, kunena_htmlspecialchars(stripslashes($toptitle->subject)), '' ); ?>
+       <?php echo CKunenaLink::GetThreadLink( 'view', $toptitle->catid, $toptitle->id, CKunenaTools::parseText (stripslashes($toptitle->subject)), '' ); ?>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
@@ -195,7 +195,7 @@ $k = 0;
 
     <tr class = "k<?php echo $tabclass[$k]; ?>">
       <td class="td-1" align="left">
-       <?php echo CKunenaLink::GetThreadLink( 'view', $toppoll->catid, $toppoll->threadid, kunena_htmlspecialchars(stripslashes($toppoll->title)), '' ); ?>
+       <?php echo CKunenaLink::GetThreadLink( 'view', $toppoll->catid, $toppoll->threadid, kunena_htmlspecialchars($toppoll->title), '' ); ?>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>

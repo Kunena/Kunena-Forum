@@ -169,7 +169,7 @@ class CKunenaRSSView extends CKunenaRSS {
 				switch ($type) {
 					case 'thread':
 						$tmp['title']		= stripslashes($data->subject);
-						$tmp['text']		= $data->message;
+						$tmp['text']		= stripslashes($data->message);
 						$tmp['date']		= $data->time;
 						$tmp['email']		= $data->email;
 						$tmp['name']		= $data->name;
@@ -179,21 +179,21 @@ class CKunenaRSSView extends CKunenaRSS {
 						break;
 					case 'post':
 						$tmp['title']		= stripslashes($data->lastpost_subject);
-						$tmp['text']		= $data->lastpost_message;
+						$tmp['text']		= stripslashes($data->lastpost_message);
 						$tmp['date']		= $data->lastpost_time;
-						$tmp['email']		= $data->lastpost_email;
-						$tmp['name']		= $data->lastpost_name;
+						$tmp['email']		= stripslashes($data->lastpost_email);
+						$tmp['name']		= stripslashes($data->lastpost_name);
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->lastpost_subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->lastpost_name;
+							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->lastpost_subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. stripslashes($data->lastpost_name);
 						break;
 					case 'recent':
 					default:
 						$tmp['title']		= stripslashes($data->subject);
-						$tmp['text']		= $data->lastpost_message;
+						$tmp['text']		= stripslashes($data->lastpost_message);
 						$tmp['date']		= $data->lastpost_time;
-						$tmp['email']		= $data->lastpost_email;
-						$tmp['name']		= $data->lastpost_name;
+						$tmp['email']		= stripslashes($data->lastpost_email);
+						$tmp['name']		= stripslashes($data->lastpost_name);
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
 							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;

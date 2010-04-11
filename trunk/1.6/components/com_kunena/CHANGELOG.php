@@ -49,6 +49,8 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Image MIME type (%s) is not allowed (%s).
 # [#19288] Fix regression: UTF-8 letters will break preview
 # [#19288] Fix regression: Birthdate should not use local timezone
+# [#19288] Fix regression: Consistent usage of stripslashes() inside CKunenaTools::parseText/parseBBCode/stripBBCode()
+# [#19288] Fix regression: More uniform usage of stripslashes() and htmlspecialchars() with bugfixes
 
 11-Apr-2010 Xillibit
 # [#19380] Fix attachments links in message and add generic icons for attachments

@@ -71,7 +71,7 @@ if ($do == 'vote')
 		<div class="poll_center" id="poll_buttons">
        <input id="k_poll_button_vote" type="submit" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
        <?php
-       echo '	'.CKunenaLink::GetThreadLink('view',$catid,$id,kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_POLL_NAME_URL_RESULT') ) ), kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_POLL_NAME_URL_RESULT') ) ), 'follow');
+       echo '	'.CKunenaLink::GetThreadLink('view',$catid,$id,JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), 'follow');
     ?>
     	</div>
     	</form>
@@ -150,7 +150,7 @@ elseif ($do == 'changevote')
        <input id="k_poll_button_vote" type="submit" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
 
        <?php
-		echo '	'.CKunenaLink::GetThreadLink('view',$catid,$id,kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_POLL_NAME_URL_RESULT') ) ), kunena_htmlspecialchars ( stripslashes ( JText::_('COM_KUNENA_POLL_NAME_URL_RESULT') ) ), 'follow');
+		echo '	'.CKunenaLink::GetThreadLink('view',$catid,$id,JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), 'follow');
 		?>
 		</div>
 		</form>

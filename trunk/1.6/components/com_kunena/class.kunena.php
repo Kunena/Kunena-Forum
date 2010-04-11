@@ -191,8 +191,8 @@ class CKunenaTools {
 
 	function parseText($txt) {
 		if (!$txt) return;
-		$txt = stripslashes ( $txt );
 		$txt = nl2br ( $txt );
+		$txt = kunena_htmlspecialchars ( $txt );
 		$txt = CKunenaTools::prepareContent ( $txt );
 		return $txt;
 	}
@@ -203,7 +203,6 @@ class CKunenaTools {
 		if (!$txt) return;
 		if (!$emoticons) $emoticons = smile::getEmoticons ( 0 );
 		$kunena_config = & CKunenaConfig::getInstance ();
-		$txt = stripslashes ( $txt );
 		$txt = smile::smileReplace ( $txt, 0, $kunena_config->disemoticons, $emoticons );
 		$txt = nl2br ( $txt );
 		$txt = str_replace ( "__FBTAB__", "&#009;", $txt ); // For [code]
@@ -217,9 +216,9 @@ class CKunenaTools {
 		if (!$txt) return;
 		if (!$emoticons) $emoticons = smile::getEmoticons ( 0 );
 		$kunena_config = & CKunenaConfig::getInstance ();
-		$txt = stripslashes ( $txt );
 		$txt = smile::purify ( $txt );
 		if ($len) $txt = JString::substr ( $txt, 0, $len );
+		$txt = kunena_htmlspecialchars ( $txt );
 		$txt = CKunenaTools::prepareContent ( $txt );
 		return $txt;
 	}
@@ -1200,9 +1199,9 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
             }
 
             if ( $v->parent == 0 ) {
-                $txt     = kunena_htmlspecialchars(stripslashes($v->name));
+                $txt     = kunena_htmlspecialchars($v->name);
             } else {
-                $txt     = $pre . kunena_htmlspecialchars(stripslashes($v->name));
+                $txt     = $pre . kunena_htmlspecialchars($v->name);
             }
             $pt = $v->parent;
             $list[$id] = $v;

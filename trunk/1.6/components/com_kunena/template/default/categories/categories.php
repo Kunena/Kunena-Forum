@@ -47,7 +47,7 @@ global $kunena_icons;
 				class="ktitle_cover<?php
 		echo isset ( $cat->class_sfx ) ? ' ktitle_cover' . $cat->class_sfx : '';
 		?> km"><?php
-		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( stripslashes ( $cat->name ) ), 'follow', $class = 'ktitle kl' );
+		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $cat->name ), 'follow', $class = 'ktitle kl' );
 
 		if ($cat->description != "") {
 			?>
@@ -116,7 +116,7 @@ global $kunena_icons;
 			<td class="td-2 left">
 			<div class="kthead-title kl"><?php
 				//new posts available
-				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( stripslashes ( $subcat->name ) ) );
+				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $subcat->name ) );
 
 				if ($subcat->new && $this->my->id > 0) {
 					echo '<sup><span class="newchar">&nbsp;(' . $subcat->new . ' ' . stripslashes ( $this->config->newchar ) . ")</span></sup>";
@@ -198,7 +198,7 @@ else {
 						?>
 
 			<?php
-						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( stripslashes ( $childforum->name ) ) );
+						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( $childforum->name ) );
 						echo '<span class="kchildcount ks">(' . $childforum->numTopics . "/" . $childforum->numPosts . ')</span>';
 						echo "</div>";
 					}

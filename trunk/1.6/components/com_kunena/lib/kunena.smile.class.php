@@ -184,7 +184,6 @@ class smile {
 		$text = preg_replace ( '/\[ebay\](.*?)\[\/ebay\]/s', '\\1', $text );
 		$text = preg_replace ( '#/n#s', ' ', $text );
 		$text = strip_tags ( $text );
-		//$text = stripslashes(kunena_htmlspecialchars($text));
 		return (trim($text));
 	} //purify
 }

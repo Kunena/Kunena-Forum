@@ -384,9 +384,9 @@ if ($do == "read") {
 
         	$ann = $anns[0];
         	$annID = $ann->id;
-        	$anntitle = kunena_htmlspecialchars(stripslashes($ann->title));
-        	$annsdescription = kunena_htmlspecialchars(stripslashes($ann->sdescription));
-        	$anndescription = kunena_htmlspecialchars(stripslashes($ann->description));
+        	$anntitle = kunena_htmlspecialchars($ann->title);
+        	$annsdescription = kunena_htmlspecialchars($ann->sdescription);
+        	$anndescription = kunena_htmlspecialchars($ann->description);
         	$anncreated = $ann->created;
         	$annpublished = $ann->published;
         	$annordering = $ann->ordering;

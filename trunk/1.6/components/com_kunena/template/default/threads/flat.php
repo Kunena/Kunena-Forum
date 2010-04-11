@@ -123,7 +123,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $leaf->subject ) ), kunena_htmlspecialchars ( CKunenaTools::stripBBCode ( $leaf->message, 500) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, CKunenaTools::parseText ( stripslashes($leaf->subject) ), CKunenaTools::stripBBCode ( stripslashes($leaf->message), 500), 'follow', 'k-topic-title km' );
 			?>
 			<?php
 			if ($leaf->favcount ) {
@@ -171,7 +171,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($this->func != 'showcat') {
 			?>
 			<!-- Category --> <span class="topic_category"> <?php
-			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
+			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( $leaf->catname ) );
 			?>
 			</span> <!-- /Category -->
 			<span class="divider">|</span>

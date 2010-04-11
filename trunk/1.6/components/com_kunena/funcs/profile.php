@@ -45,8 +45,8 @@ class CKunenaProfile {
 		if ($this->_config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->_config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
 		$this->avatarlink = $this->profile->getAvatarLink('','large');
-		$this->personalText = CKunenaTools::parseText($this->profile->personalText);
-		$this->signature = CKunenaTools::parseBBCode($this->profile->signature);
+		$this->personalText = CKunenaTools::parseText(stripslashes($this->profile->personalText));
+		$this->signature = CKunenaTools::parseBBCode(stripslashes($this->profile->signature));
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
 		$this->admin = CKunenaTools::isAdmin($this->profile->userid);

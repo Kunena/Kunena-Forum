@@ -45,6 +45,7 @@ Kunena 1.6.0-DEV
 + [#20050] Add new integration classes: Add new events onAfterEdit/Delete to Activity class
 ^ [#15886] Merged revisions 2196-2203 from /branches/1.6-xillibit-fixing
 # [#19288] Fix regression: KunenaRoute uses deprecated class initiation on config
+# [#19288] Fix regression: Allow splitting topic into the same category (invalid check fixed)
 
 11-Apr-2010 Xillibit
 # [#19380] Fix attachments links in message and add generic icons for attachments

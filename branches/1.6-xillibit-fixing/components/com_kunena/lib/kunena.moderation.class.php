@@ -141,10 +141,14 @@ class CKunenaModeration {
 			// overwrite $TargetCatID with the category ID of the target message
 			$TargetCatID = $targetMessage->catid;
 		} else {
-			if ($TargetCatID == $currentMessage->catid) {
+			/*if ($TargetCatID == $currentMessage->catid) {
 				$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_CATEGORY', $currentMessage->id, $TargetCatID);
 				return false;
-			}
+			}*/
+		if ($mode != KN_MOVE_MESSAGE && $currentMessage->parent == 0 && $TargetCatID == $currentMessage->catid) {
+    $this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_CATEGORY', $currentMessage->id, $TargetCatID);
+    return false;
+   }
 		}
 
 		// Check that target category exists and is visible to our moderator

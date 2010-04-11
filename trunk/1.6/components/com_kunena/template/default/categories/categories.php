@@ -52,7 +52,7 @@ global $kunena_icons;
 		if ($cat->description != "") {
 			?>
 			<div class="ktitle_desc km"><?php
-			echo CKunenaTools::parseBBCode ( $cat->description );
+			echo KunenaParser::parseBBCode ( $cat->description );
 			?>
 			</div>
 			<?php

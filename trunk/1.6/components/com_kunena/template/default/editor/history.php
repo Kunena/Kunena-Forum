@@ -37,7 +37,7 @@ $k = 0;
 
 		<td class="kreview_body<?php echo $k?>">
 			<div class="msgtext">
-				<?php echo CKunenaTools::parseBBCode( stripslashes($mes->message) )?>
+				<?php echo KunenaParser::parseBBCode( stripslashes($mes->message) )?>
 			</div>
 		</td>
 	</tr>

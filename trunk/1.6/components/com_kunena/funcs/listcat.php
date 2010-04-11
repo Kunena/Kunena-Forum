@@ -17,6 +17,7 @@ class CKunenaListcat {
 	private $_loaded = false;
 
 	function __construct($catid) {
+		kimport('html.parser');
 		$this->catid = $catid;
 
 		$this->db = JFactory::getDBO ();
@@ -93,7 +94,7 @@ class CKunenaListcat {
 			if ($subcat->mesid)
 				$routerlist [$subcat->mesid] = $subcat->subject;
 
-			$allsubcats [$i]->forumdesc = CKunenaTools::parseBBCode ( $subcat->description );
+			$allsubcats [$i]->forumdesc = KunenaParser::parseBBCode ( $subcat->description );
 
 			$subcat->page = ceil ( $subcat->msgcount / $this->config->messages_per_page );
 

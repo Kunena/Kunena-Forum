@@ -28,7 +28,7 @@ defined ( '_JEXEC' ) or die ();
 <p><?php
 		echo JText::_ ( 'COM_KUNENA_GEN_TOPIC' );
 		?>: <strong><?php
-		echo CKunenaTools::parseText ( stripslashes ( $this->message->subject ) );
+		echo KunenaParser::parseText ( stripslashes ( $this->message->subject ) );
 		?></strong> <br />
 		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?> :<strong><?php
 		echo kunena_htmlspecialchars ( $this->message->catname );

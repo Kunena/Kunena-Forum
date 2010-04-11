@@ -155,6 +155,8 @@ function kunena_check_image_type($type) {
     return false;
     }
 
+kimport('html.parser');
+
 class CKunenaTools {
     var $id = null;
 
@@ -190,6 +192,7 @@ class CKunenaTools {
 	}
 
 	function parseText($txt) {
+		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
 		if (!$txt) return;
 		$txt = nl2br ( $txt );
 		$txt = kunena_htmlspecialchars ( $txt );
@@ -198,6 +201,7 @@ class CKunenaTools {
 	}
 
 	function parseBBCode($txt) {
+		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
 		static $emoticons = null;
 
 		if (!$txt) return;
@@ -211,6 +215,7 @@ class CKunenaTools {
 	}
 
 	function stripBBCode($txt, $len=0) {
+		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
 		static $emoticons = null;
 
 		if (!$txt) return;

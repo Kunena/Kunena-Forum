@@ -15,6 +15,7 @@ class CKunenaShowcat {
 	public $allow = 0;
 
 	function __construct($catid, $page=0) {
+		kimport('html.parser');
 		$this->func = 'showcat';
 		$this->catid = $catid;
 		$this->page = $page;
@@ -159,7 +160,7 @@ class CKunenaShowcat {
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
 
-		$this->headerdesc = CKunenaTools::parseBBCode ( $this->objCatInfo->headerdesc );
+		$this->headerdesc = KunenaParser::parseBBCode ( $this->objCatInfo->headerdesc );
 
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
 			//this user is allowed to post a new topic:

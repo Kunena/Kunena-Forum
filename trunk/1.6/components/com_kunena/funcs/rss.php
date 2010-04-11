@@ -24,6 +24,7 @@ class CKunenaRSSView extends CKunenaRSS {
 	 * @return void
 	 */
 	public function __construct($catid = 0) {
+		kimport('html.parser');
 		parent::__construct();
 
 		if ((int) $catid > 0) {
@@ -237,12 +238,12 @@ class CKunenaRSSView extends CKunenaRSS {
 				if ($render_html) {
 					// Not nessecary to convert specialchars or use parsetext.
 					// ParseBBCode does it for us
-					$tmp['text'] = CKunenaTools::parseBBCode($tmp['text']);
+					$tmp['text'] = KunenaParser::parseBBCode($tmp['text']);
 				}
 				else {
 					// Not nessecary to convert specialchars.
 					// FeedCreator does it for us
-					$tmp['text'] = CKunenaTools::parseText($tmp['text']);
+					$tmp['text'] = KunenaParser::parseText($tmp['text']);
 				}
 
 

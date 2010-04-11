@@ -52,6 +52,7 @@ class CKunenaViewMessage {
 	public $attachments = array();
 
 	function __construct($parent, $message) {
+		kimport('html.parser');
 		$this->replynum = $parent->replynum;
 		$this->mmm = $parent->mmm;
 		$this->topicLocked = $parent->topicLocked;
@@ -102,8 +103,8 @@ class CKunenaViewMessage {
 
 		$subject = stripslashes ($message->subject);
 		$this->resubject = JString::strtolower ( JString::substr ( $subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $subject;
-		$this->subject = CKunenaTools::parseText ( $subject );
-		$this->message = CKunenaTools::parseBBCode ( stripslashes($message->message) );
+		$this->subject = KunenaParser::parseText ( $subject );
+		$this->message = KunenaParser::parseBBCode ( stripslashes($message->message) );
 
 		//Show admins the IP address of the user:
 		if ($message->ip && (CKunenaTools::isAdmin () || (CKunenaTools::isModerator ( $this->my->id, $this->catid ) && !$this->config->hide_ip))) {
@@ -157,8 +158,8 @@ class CKunenaViewMessage {
 		}
 
 		$this->profilelink = $this->profile->profileIcon('profile');
-		$this->personaltext = CKunenaTools::parseText ( stripslashes($this->profile->personalText) );
-		$this->signature = CKunenaTools::parseBBCode ( stripslashes($this->profile->signature) );
+		$this->personaltext = KunenaParser::parseText ( stripslashes($this->profile->personalText) );
+		$this->signature = KunenaParser::parseBBCode ( stripslashes($this->profile->signature) );
 
 		// Add attachments
 		if (isset($message->attachments)) {

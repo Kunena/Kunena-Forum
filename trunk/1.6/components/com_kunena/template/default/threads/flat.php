@@ -123,7 +123,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, CKunenaTools::parseText ( stripslashes($leaf->subject) ), CKunenaTools::stripBBCode ( stripslashes($leaf->message), 500), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, KunenaParser::parseText ( stripslashes($leaf->subject) ), KunenaParser::stripBBCode ( stripslashes($leaf->message), 500), 'follow', 'k-topic-title km' );
 			?>
 			<?php
 			if ($leaf->favcount ) {

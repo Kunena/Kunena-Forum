@@ -18,6 +18,7 @@ class CKunenaProfile {
 	public $online = null;
 
 	function __construct($userid, $do='') {
+		kimport('html.parser');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = CKunenaConfig::getInstance ();
@@ -45,8 +46,8 @@ class CKunenaProfile {
 		if ($this->_config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->_config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
 		$this->avatarlink = $this->profile->getAvatarLink('','large');
-		$this->personalText = CKunenaTools::parseText(stripslashes($this->profile->personalText));
-		$this->signature = CKunenaTools::parseBBCode(stripslashes($this->profile->signature));
+		$this->personalText = KunenaParser::parseText(stripslashes($this->profile->personalText));
+		$this->signature = KunenaParser::parseBBCode(stripslashes($this->profile->signature));
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
 		$this->admin = CKunenaTools::isAdmin($this->profile->userid);

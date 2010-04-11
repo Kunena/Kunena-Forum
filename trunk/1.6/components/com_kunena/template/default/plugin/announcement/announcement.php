@@ -48,10 +48,10 @@ if ($do == "read") {
 
     $ann = $anns_[0];
     $annID = $ann->id;
-    $anntitle = CKunenaTools::parseText ($ann->title);
-	$annsdescription = CKunenaTools::parseBBCode ($ann->sdescription);
+    $anntitle = KunenaParser::parseText ($ann->title);
+	$annsdescription = KunenaParser::parseBBCode ($ann->sdescription);
 
-	$anndescription = CKunenaTools::parseBBCode ($ann->description);
+	$anndescription = KunenaParser::parseBBCode ($ann->description);
 
     $annpublished = $ann->published;
     $annshowdate = $ann->showdate;
@@ -186,7 +186,7 @@ if ($do == "read") {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <?php echo CKunenaLink::GetAnnouncementLink('read', $row->id, CKunenaTools::parseText ($row->title), CKunenaTools::parseText ($row->title), 'follow'); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink('read', $row->id, KunenaParser::parseText ($row->title), KunenaParser::parseText ($row->title), 'follow'); ?>
                                 </td>
 
                                 <td class = "td-4"  align="center">

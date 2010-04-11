@@ -102,12 +102,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, CKunenaTools::parseText ( stripslashes($message->subject) ), CKunenaTools::stripBBCode ( stripslashes($message->message) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, KunenaParser::parseText ( stripslashes($message->subject) ), KunenaParser::stripBBCode ( stripslashes($message->message) ), 'follow', 'k-topic-title km' );
 			?>
-			</div><div style="display:none"><?php echo CKunenaTools::parseBBCode ( stripslashes($message->message) );?></div>
+			</div><div style="display:none"><?php echo KunenaParser::parseBBCode ( stripslashes($message->message) );?></div>
 			</td>
 			<td class="td-3"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, CKunenaTools::parseText ( stripslashes($firstpost->subject) ), CKunenaTools::stripBBCode ( stripslashes($firstpost->message) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, KunenaParser::parseText ( stripslashes($firstpost->subject) ), KunenaParser::stripBBCode ( stripslashes($firstpost->message) ), 'follow', 'k-topic-title km' );
 			?>
 			<?php
 			if ($message->favcount ) {

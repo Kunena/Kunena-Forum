@@ -52,6 +52,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Consistent usage of stripslashes() inside CKunenaTools::parseText/parseBBCode/stripBBCode()
 # [#19288] Fix regression: More uniform usage of stripslashes() and htmlspecialchars() with bugfixes
 + [#20050] Add new class KunenaParser (html.parser), deprecated CKunenaTools::parseText/parseBBCode/stripBBCode()
+# [#19288] Fix regression: Fix avatar/attachment upload not to scale up images
 
 11-Apr-2010 Xillibit
 # [#19380] Fix attachments links in message and add generic icons for attachments

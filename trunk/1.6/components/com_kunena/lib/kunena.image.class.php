@@ -521,6 +521,7 @@ class CKunenaImage
 			else {
 				$ratio = ($rx < $ry) ? $rx : $ry;
 			}
+			if ($ratio < 1) $ratio = 1;
 
 			$dimensions['width']	= round($this->getWidth() / $ratio);
 			$dimensions['height']	= round($this->getHeight() / $ratio);

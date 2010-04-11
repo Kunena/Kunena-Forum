@@ -55,15 +55,8 @@ define('BBCODE_PARSE_EQUAL',      'equal');
 define('BBCODE_PARSE_VAL',        'val');
 define('BBCODE_PARSE_VALQUOT',    'valquot');
 
-// For backward compatibility with pre-PHP5
 function fb_stripos($haystack , $needle , $offset=0) {
-    if(function_exists('stripos')) { #PHP5
-        return stripos($haystack, $needle, $offset);
-    }
-    else {
-        // Nasty overhead but it does the trick
-        return JString::strpos(JString::strtolower($haystack), JString::strtolower($needle), $offset);
-    }
+    return stripos($haystack, $needle, $offset);
 }
 
 class BBCodeInterpreter extends TagInterpreter {
@@ -91,7 +84,7 @@ class BBCodeInterpreter extends TagInterpreter {
         $text =& $task->text;
         $pos_act =& $task->pos_act;
 
-        if (JString::strlen($text) < $pos_act) return TAGPARSER_RET_ERR;
+        if (strlen($text) < $pos_act) return TAGPARSER_RET_ERR;
 
         // in_code state
         if($task->in_code) {
@@ -139,7 +132,7 @@ class BBCodeInterpreter extends TagInterpreter {
         # RET: 0 continue,
         $text =& $task->text;
         $pos_act =& $task->pos_act;
-        $nextchar = JString::substr($text, $pos_act+1, 1);
+        $nextchar = substr($text, $pos_act+1, 1);
         if($nextchar==$this->tag_start) {
             // escaped tagstart: remove escape!
             // abc[[def => pos_act@3, [@3, [@4 => abc[def
@@ -148,7 +141,7 @@ class BBCodeInterpreter extends TagInterpreter {
                 $pos_act += 2;
                 return TAGPARSER_RET_REPLACED;
             }
-            $text = JString::substr($text, 0, $pos_act).JString::substr($text, $pos_act+1);
+            $text = substr($text, 0, $pos_act).substr($text, $pos_act+1);
             $pos_act += 1;
             return TAGPARSER_RET_REPLACED;
         }
@@ -176,9 +169,9 @@ class BBCodeInterpreter extends TagInterpreter {
         $mode = BBCODE_PARSE_START;
         // scan through string
         #echo 'POS:'.$pos."\n";
-        $textlen = JString::strlen($text);
+        $textlen = strlen($text);
         while(++$pos<$textlen) {
-            $char = JString::substr($text, $pos, 1);
+            $char = substr($text, $pos, 1);
             #echo 'CHAR:'.$mode.':'.$char."\n";
             // missing tag end, overflow prevention!
             if($char===FALSE) {

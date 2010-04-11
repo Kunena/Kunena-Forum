@@ -89,38 +89,38 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 		// match www.something.domain:port/path/file.extension?some=variable&another=asf%
 		// match www.something.domain/path/file.extension?some=variable&another=asf%
 
-		$text = preg_replace ( '/(?<!S)((http(s?):\/\/)|(www\.[a-zA-Z0-9-_]+\.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text );
+		$text = preg_replace ( '/(?<!S)((http(s?):\/\/)|(www\.[a-zA-Z0-9-_]+\.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/u', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text );
 
 		// match name@address
-		$text = preg_replace ( '/(?<!S)([a-zA-Z0-9_.\-]+\@[a-zA-Z][a-zA-Z0-9_.\-]+[a-zA-Z]{2,6})/', '<a href="mailto:$1">$1</a>', $text );
+		$text = preg_replace ( '/(?<!S)([a-zA-Z0-9_.\-]+\@[a-zA-Z][a-zA-Z0-9_.\-]+[a-zA-Z]{2,6})/u', '<a href="mailto:$1">$1</a>', $text );
 
-		return JString::substr ( $text, 1, - 1 );
+		return substr ( $text, 1, - 1 );
 	}
 
 	function PostProcessing(&$task) {
 		$kunena_config = & CKunenaConfig::getInstance ();
 		if ($kunena_config->trimlongurls) {
 			// shorten URL text if they are too long (>65chars)
-			$task->text = preg_replace ( '/<a href=(\"|\')((http(s?):\/\/)?(([^\'\"]{' . $kunena_config->trimlongurlsfront . '})([^\'\"]{4,})([^\'\"]{' . $kunena_config->trimlongurlsback . '})))\1(.*)>\3?\5<\/a>/', '<a href="\2" \9>\6...\8</a>', $task->text );
+			$task->text = preg_replace ( '/<a href=(\"|\')((http(s?):\/\/)?(([^\'\"]{' . $kunena_config->trimlongurlsfront . '})([^\'\"]{4,})([^\'\"]{' . $kunena_config->trimlongurlsback . '})))\1(.*)>\3?\5<\/a>/u', '<a href="\2" \9>\6...\8</a>', $task->text );
 		}
 
 		if ($kunena_config->autoembedyoutube) {
 			// convert youtube links to embedded player
-			$task->text = preg_replace ( '/<a href=[^>]+youtube.([^>\/]+)\/watch\?[^>]*v=([^>"&]+)[^>]+>[^<]+<\/a>/', '<object width="425" height="344"><param name="movie" value="http://www.youtube.$1/v/$2&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.$1/v/$2&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+youtube.([^>\/]+)\/watch\?[^>]*v=([^>"&]+)[^>]+>[^<]+<\/a>/u', '<object width="425" height="344"><param name="movie" value="http://www.youtube.$1/v/$2&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.$1/v/$2&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>', $task->text );
 			// convert youtube playlists to embedded player
-			$task->text = preg_replace ( '/<a href=[^>]+youtube.([^>\/]+)\/view_play_list\?[^>]*p=([^>"&]+)[^>]+>[^<]+<\/a>/', '<object width="480" height="385"><param name="movie" value="http://www.youtube.$1/p/$2"></param><embed src="http://www.youtube.$1/p/$2" type="application/x-shockwave-flash" width="480" height="385"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+youtube.([^>\/]+)\/view_play_list\?[^>]*p=([^>"&]+)[^>]+>[^<]+<\/a>/u', '<object width="480" height="385"><param name="movie" value="http://www.youtube.$1/p/$2"></param><embed src="http://www.youtube.$1/p/$2" type="application/x-shockwave-flash" width="480" height="385"></embed></object>', $task->text );
 		}
 
 		if ($kunena_config->autoembedebay) {
 			// convert ebay item to embedded widget
-			$task->text = preg_replace ( '/<a href=[^>]+ebay.([^>\/]+)\/[^>]*QQitemZ([0-9]+)[^>]+>[^<]+<\/a>/', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $task->text );
-			$task->text = preg_replace ( '/<a href=[^>]+ebay.([^>\/]+)\/[^>]*ViewItem[^>"]+Item=([0-9]+)[^>]*>[^<]+<\/a>/', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+ebay.([^>\/]+)\/[^>]*QQitemZ([0-9]+)[^>]+>[^<]+<\/a>/u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+ebay.([^>\/]+)\/[^>]*ViewItem[^>"]+Item=([0-9]+)[^>]*>[^<]+<\/a>/u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=$2&campid=5336042350"></embed></object>', $task->text );
 
 			// convert ebay search to embedded widget
-			$task->text = preg_replace ( '/<a href=[^>]+ebay.([^>\/]+)\/[^>]*satitle=([^>&"]+)[^>]+>[^<]+<\/a>/', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=search&query=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=search&query=$2&campid=5336042350"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+ebay.([^>\/]+)\/[^>]*satitle=([^>&"]+)[^>]+>[^<]+<\/a>/u', '<object width="355" height="300"><param name="movie" value="http://togo.ebay.$1/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=search&query=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=search&query=$2&campid=5336042350"></embed></object>', $task->text );
 
 			// convert seller listing to embedded widget
-			$task->text = preg_replace ( '/<a href=[^>]+ebay.([^>\/]+)\/[^>]*QQsassZ([^>&"]+)[^>]*>[^<]+<\/a>/', '<object width="355" height="355"><param name="movie" value="http://togo.ebay.$1/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&seller=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&seller=$2&campid=5336042350"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+ebay.([^>\/]+)\/[^>]*QQsassZ([^>&"]+)[^>]*>[^<]+<\/a>/u', '<object width="355" height="355"><param name="movie" value="http://togo.ebay.$1/togo/seller.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&seller=$2&campid=5336042350" /><embed src="http://togo.ebay.$1/togo/seller.swf?2008013100" type="application/x-shockwave-flash" width="355" height="355" flashvars="base=http://togo.ebay.$1/togo/&lang=' . $kunena_config->ebaylanguagecode . '&seller=$2&campid=5336042350"></embed></object>', $task->text );
 		}
 	}
 
@@ -232,7 +232,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'size' :
-				if (! isset ( $tag->options ['default'] ) || JString::strlen ( $tag->options ['default'] ) == 0) {
+				if (! isset ( $tag->options ['default'] ) || strlen ( $tag->options ['default'] ) == 0) {
 					return TAGPARSER_RET_NOTHING;
 				}
 				$size_css = array (1 => 'kmsgtext_xs', 'kmsgtext_s', 'kmsgtext_m', 'kmsgtext_l', 'kmsgtext_xl', 'kmsgtext_xxl' );
@@ -261,7 +261,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'color' :
-				if (! isset ( $tag->options ['default'] ) || JString::strlen ( $tag->options ['default'] ) == 0) {
+				if (! isset ( $tag->options ['default'] ) || strlen ( $tag->options ['default'] ) == 0) {
 					return TAGPARSER_RET_NOTHING;
 				}
 				$tns = "<span style='color: " . kunena_htmlspecialchars ( $tag->options ['default'], ENT_QUOTES ) . "'>";
@@ -317,7 +317,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$task->autolink_disable --;
 				if (isset ( $tag->options ['default'] )) {
 					$tempstr = $tag->options ['default'];
-					if (JString::substr ( $tempstr, 0, 7 ) !== 'mailto:') {
+					if (substr ( $tempstr, 0, 7 ) !== 'mailto:') {
 						$tempstr = 'mailto:' . $tempstr;
 					}
 					$tns = "<a href='" . kunena_htmlspecialchars ( $tempstr, ENT_QUOTES ) . "'>";
@@ -331,7 +331,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 				if (isset ( $tag->options ['default'] )) {
 					$tempstr = $tag->options ['default'];
-					if (JString::substr ( $tempstr, 0, 4 ) == 'www.') {
+					if (substr ( $tempstr, 0, 4 ) == 'www.') {
 						$tempstr = 'http://' . $tempstr;
 					}
 					$tns = "<a href='" . kunena_htmlspecialchars ( $tempstr, ENT_QUOTES ) . "' rel=\"nofollow\" target=\"_blank\">";
@@ -397,8 +397,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 			case 'email' :
 				$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
-				if (JString::substr ( $tempstr, 0, 7 ) == 'mailto:') {
-					$between = JString::substr ( $tempstr, 7 );
+				if (substr ( $tempstr, 0, 7 ) == 'mailto:') {
+					$between = substr ( $tempstr, 7 );
 				} else {
 					$tempstr = 'mailto:' . $tempstr;
 				}
@@ -558,7 +558,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$linearr = explode ( '[*]', $between );
 				for($i = 0; $i < count ( $linearr ); $i ++) {
 					$tmp = JString::trim ( $linearr [$i] );
-					if (JString::strlen ( $tmp )) {
+					if (strlen ( $tmp )) {
 						$tag_new .= '<li>' . JString::trim ( $linearr [$i] ) . '</li>';
 						$tag_new .= "\n";
 					}

@@ -308,9 +308,9 @@ $kunena_config = & CKunenaConfig::getInstance ();
 	// TODO: Replace Enlarge and Shrink with icons
 	?></strong><br />
 	<span class="ks" onclick="kGrowShrinkMessage(100);"
-		style="cursor: pointer">Enlarge</span>&nbsp;/&nbsp; <span
+		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_ENLARGE'); ?></span>&nbsp;/&nbsp; <span
 		class="ks" onclick="kGrowShrinkMessage(-100);"
-		style="cursor: pointer">Shrink</span></td>
+		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
 	<td valign="top"><textarea class="ktxtarea required" name="message"
 		id="kbbcode-message"><?php

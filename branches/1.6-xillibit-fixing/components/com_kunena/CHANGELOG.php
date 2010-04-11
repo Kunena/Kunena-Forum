@@ -37,6 +37,8 @@ Kunena 1.6.0-Xillibit-DEV
 11-Apr-2010 Xillibit
 # [#19380] Fix attachments links in message and add generic icons for attachments
 # [#19288] Fix regression with post move
+^ [#19288] Replace some hard coded text strings
+# [#19288] Fix regression in who Undefined variable: kunena_my
 
 10-Apr-2010 Xillibit
 ^ [#18627] Update 1.6-xillibit-fixing merge revisions 2190-2185, 2183-2182 from /trunk/1.6

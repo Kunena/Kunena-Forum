@@ -26,6 +26,7 @@ defined( '_JEXEC' ) or die();
 $kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
+$kunena_my = JFactory::getUser();
 ?>
 
 <?php

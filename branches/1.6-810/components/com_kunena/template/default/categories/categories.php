@@ -47,12 +47,12 @@ global $kunena_icons;
 				class="ktitle_cover<?php
 		echo isset ( $cat->class_sfx ) ? ' ktitle_cover' . $cat->class_sfx : '';
 		?> km"><?php
-		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( stripslashes ( $cat->name ) ), 'follow', $class = 'ktitle kl' );
+		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $cat->name ), 'follow', $class = 'ktitle kl' );
 
 		if ($cat->description != "") {
 			?>
 			<div class="ktitle_desc km"><?php
-			echo CKunenaTools::parseBBCode ( $cat->description );
+			echo KunenaParser::parseBBCode ( $cat->description );
 			?>
 			</div>
 			<?php
@@ -116,7 +116,7 @@ global $kunena_icons;
 			<td class="td-2 left">
 			<div class="kthead-title kl"><?php
 				//new posts available
-				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( stripslashes ( $subcat->name ) ) );
+				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $subcat->name ) );
 
 				if ($subcat->new && $this->my->id > 0) {
 					echo '<sup><span class="newchar">&nbsp;(' . $subcat->new . ' ' . stripslashes ( $this->config->newchar ) . ")</span></sup>";
@@ -198,7 +198,7 @@ else {
 						?>
 
 			<?php
-						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( stripslashes ( $childforum->name ) ) );
+						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( $childforum->name ) );
 						echo '<span class="kchildcount ks">(' . $childforum->numTopics . "/" . $childforum->numPosts . ')</span>';
 						echo "</div>";
 					}
@@ -218,7 +218,7 @@ else {
 						if ($mod_cnt)
 							echo ', ';
 						$mod_cnt ++;
-						echo CKunenaLink::GetProfileLink ( $this->config, $mod->userid, ($this->config->username ? $mod->username : $mod->name) );
+						echo CKunenaLink::GetProfileLink ( $mod->userid, ($this->config->username ? $mod->username : $mod->name) );
 					}
 
 					echo '</div>';
@@ -257,19 +257,18 @@ else {
 			<?php
 					echo JText::_('COM_KUNENA_GEN_LAST_POST');
 					?>: <?php
-					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, kunena_htmlspecialchars ( stripslashes ( $subcat->subject ) ), $subcat->id_last_msg );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, kunena_htmlspecialchars ( stripslashes ( $subcat->subject ) ), $subcat->id_last_msg );
 					?>
 			</div>
 
 			<div class="klatest-subject-by ks">
 			<?php
 					echo JText::_('COM_KUNENA_GEN_POSTEDBY') . ' ';
-					echo CKunenaLink::GetProfileLink ( $this->config, $subcat->userid, kunena_htmlspecialchars ( stripslashes ( $subcat->mname ) ) );
+					echo CKunenaLink::GetProfileLink ( $subcat->userid, kunena_htmlspecialchars ( stripslashes ( $subcat->mname ) ) );
 					echo ' ';
-					echo JText::_('COM_KUNENA_GEN_ON');
 					echo ' <span title="' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat' ) . '</span>';
 
-					// echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '" title="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>', $subcat->id_last_msg );
+					// echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '" title="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>', $subcat->id_last_msg );
 					?>
 			</div>
 			</td>

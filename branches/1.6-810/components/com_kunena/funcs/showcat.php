@@ -15,6 +15,7 @@ class CKunenaShowcat {
 	public $allow = 0;
 
 	function __construct($catid, $page=0) {
+		kimport('html.parser');
 		$this->func = 'showcat';
 		$this->catid = $catid;
 		$this->page = $page;
@@ -128,7 +129,7 @@ class CKunenaShowcat {
 			$avatars->load($userlist);
 
 			if ($this->config->shownew && $this->my->id) {
-				$readlist = '0' . $this->session->readtopics;
+				$readlist = $this->session->readtopics;
 				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
 				check_dberror ( "Unable to get unread messages count and first id." );
@@ -159,7 +160,7 @@ class CKunenaShowcat {
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
 
-		$this->headerdesc = CKunenaTools::parseBBCode ( $this->objCatInfo->headerdesc );
+		$this->headerdesc = KunenaParser::parseBBCode ( $this->objCatInfo->headerdesc );
 
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
 			//this user is allowed to post a new topic:
@@ -209,7 +210,7 @@ class CKunenaShowcat {
 		require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
 		$obj = new CKunenaListCat($this->catid);
 		$obj->loadCategories();
-		if (!empty($obj->childforums)) $obj->displayCategories();
+		if (!empty($obj->categories [$this->catid])) $obj->displayCategories();
 	}
 
 	function displayFlat() {
@@ -219,8 +220,7 @@ class CKunenaShowcat {
 
 	function displayStats() {
 		if ($this->config->showstats > 0) {
-			CKunenaTools::loadTemplate('/plugin/stats/stats.class.php');
-
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 			$kunena_stats = new CKunenaStats ( );
 			$kunena_stats->showFrontStats ();
 		}

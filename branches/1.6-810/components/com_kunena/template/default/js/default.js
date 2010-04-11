@@ -2,7 +2,7 @@
 /* Javascript file for default Kunena BlueEagle template */
 
 /* Tabs class */
-var JTabs = new Class({
+var KunenaTabs = new Class({
 	Implements: [Options, Events],
 
 	options : {

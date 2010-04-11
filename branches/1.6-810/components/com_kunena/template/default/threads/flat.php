@@ -123,7 +123,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $leaf->subject ) ), kunena_htmlspecialchars ( CKunenaTools::stripBBCode ( $leaf->message, 500) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $leaf->catid, $leaf->id, KunenaParser::parseText ( stripslashes($leaf->subject) ), KunenaParser::stripBBCode ( stripslashes($leaf->message), 500), 'follow', 'k-topic-title km' );
 			?>
 			<?php
 			if ($leaf->favcount ) {
@@ -136,13 +136,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			<?php
 			if ($leaf->unread) {
-					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $leaf->lastread );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $leaf->lastread );
 			}
 
 			if ($leaf->msgcount > $this->config->messages_per_page) {
 				echo '<ul class="kpagination">';
 				echo '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
-				echo '<li>' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 ) . '</li>';
+				echo '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 ) . '</li>';
 
 				if ($threadPages > 3) {
 					echo ('<li>...</li>');
@@ -152,7 +152,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				}
 
 				for($hopPage = $startPage; $hopPage <= $threadPages; $hopPage ++) {
-					echo '<li>' . CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $hopPage, $this->config->messages_per_page, $hopPage ) . '</li>';
+					echo '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->thread, $hopPage, $this->config->messages_per_page, $hopPage ) . '</li>';
 				}
 
 				echo ("</ul>");
@@ -171,7 +171,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($this->func != 'showcat') {
 			?>
 			<!-- Category --> <span class="topic_category"> <?php
-			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( stripslashes ( $leaf->catname ) ) );
+			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( $leaf->catname ) );
 			?>
 			</span> <!-- /Category -->
 			<span class="divider">|</span>
@@ -185,7 +185,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 		if ($leaf->name) {
 			echo '<span class="topic_by">';
-			echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->config, $leaf->userid, $leaf->name );
+			echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $leaf->userid, $leaf->name );
 			echo '</span>';
 		}
 		?>
@@ -217,29 +217,31 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			</span> <?php
 		}
-		?> <!--  /Sticky   --> <!-- Avatar --> <?php // (JJ) AVATAR
-		if ($this->config->avataroncat > 0) {
-			?>
-			<span class="topic_latest_post_avatar"> <?php
+		?> <!--  /Sticky   --> <!-- Avatar --> <?php
+		if ($this->config->avataroncat > 0) :
 			$profile = KunenaFactory::getUser((int)$this->lastreply [$leaf->thread]->userid);
 			$useravatar = $profile->getAvatarLink('klist_avatar');
-			echo CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, $useravatar );
+			if ($useravatar) :
+			?>
+			<span class="topic_latest_post_avatar"> <?php
+			echo CKunenaLink::GetProfileLink ( $this->lastreply [$leaf->thread]->userid, $useravatar );
 			?>
 			</span> <?php
-		}
+			endif;
+		endif;
 		?> <!-- /Avatar --> <!-- Latest Post --> <span
 				class="topic_latest_post"> <?php
 		if ($this->config->default_sort == 'asc') {
 			if ($leaf->moved == 0)
-				echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, $threadPages, $this->config->messages_per_page, JText::_('COM_KUNENA_GEN_LAST_POST'), $this->lastreply [$leaf->thread]->id );
+				echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->thread, $threadPages, $this->config->messages_per_page, JText::_('COM_KUNENA_GEN_LAST_POST'), $this->lastreply [$leaf->thread]->id );
 			else
 				echo JText::_('COM_KUNENA_MOVED') . ' ';
 		} else {
-			echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $leaf->catid, $leaf->thread, 1, $this->config->messages_per_page, JText::_('COM_KUNENA_GEN_LAST_POST'), $this->lastreply [$leaf->thread]->id );
+			echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->thread, 1, $this->config->messages_per_page, JText::_('COM_KUNENA_GEN_LAST_POST'), $this->lastreply [$leaf->thread]->id );
 		}
 
 		if ($leaf->name)
-			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->config, $this->lastreply [$leaf->thread]->userid, stripslashes ( $this->lastreply [$leaf->thread]->name ), 'nofollow' );
+			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->lastreply [$leaf->thread]->userid, stripslashes ( $this->lastreply [$leaf->thread]->name ), 'nofollow' );
 		?>
 			</span> <!-- /Latest Post --> <br />
 			<!-- Latest Post Date --> <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($this->lastreply [$leaf->thread]->time, 'config_post_dateformat_hover'); ?>"> <?php
@@ -307,8 +309,9 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	</tbody>
 </table>
 
-<input type="hidden" name="option" value="com_kunena" /> <input
-	type="hidden" name="func" value="bulkactions" /> </form>
+<input type="hidden" name="option" value="com_kunena" />
+<input type="hidden" name="func" value="bulkactions" />
+</form>
 </div>
 </div>
 </div>

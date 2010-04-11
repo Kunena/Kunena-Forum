@@ -17,6 +17,7 @@ class CKunenaListcat {
 	private $_loaded = false;
 
 	function __construct($catid) {
+		kimport('html.parser');
 		$this->catid = $catid;
 
 		$this->db = JFactory::getDBO ();
@@ -30,7 +31,6 @@ class CKunenaListcat {
 		$this->allow = 1;
 
 		$this->prevCheck = $this->session->lasttime;
-		$this->read_topics = explode ( ',', $this->session->readtopics );
 
 		$kunena_app = JFactory::getApplication ();
 
@@ -68,8 +68,7 @@ class CKunenaListcat {
 		if (empty ( $catids ))
 			return;
 		$catlist = implode ( ',', $catids );
-		// FIXME: this is error prone:
-		$readlist = '0' . $this->session->readtopics;
+		$readlist = $this->session->readtopics;
 
 		if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS mmm WHERE c.id=mmm.catid AND mmm.hold='0' AND mmm.time>'{$this->prevCheck}' AND mmm.thread NOT IN ({$readlist})) AS new";
 		else $subquery = " 0 AS new";
@@ -95,7 +94,7 @@ class CKunenaListcat {
 			if ($subcat->mesid)
 				$routerlist [$subcat->mesid] = $subcat->subject;
 
-			$allsubcats [$i]->forumdesc = CKunenaTools::parseBBCode ( $subcat->description );
+			$allsubcats [$i]->forumdesc = KunenaParser::parseBBCode ( $subcat->description );
 
 			$subcat->page = ceil ( $subcat->msgcount / $this->config->messages_per_page );
 
@@ -209,8 +208,7 @@ class CKunenaListcat {
 
 	function displayStats() {
 		if ($this->config->showstats > 0) {
-			CKunenaTools::loadTemplate('/plugin/stats/stats.class.php');
-
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 			$kunena_stats = new CKunenaStats ( );
 			$kunena_stats->showFrontStats ();
 		}

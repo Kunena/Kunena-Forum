@@ -150,13 +150,13 @@ if ($registration) :
 						<p align="center"><?php
 						if ($this->config->enablerulespage) {
 							?><span class="kprofilebox_link">
-						<?php echo CKunenaLink::GetRulesLink($this->config, JText::_('COM_KUNENA_FORUM_RULES') ); ?></span>
+						<?php echo CKunenaLink::GetRulesLink(JText::_('COM_KUNENA_FORUM_RULES') ); ?></span>
 						<?php
 						}
 						?> &nbsp;&nbsp;&nbsp;&nbsp; <?php
 						if ($this->config->enablehelppage) {
 							?><span class="kprofilebox_link">
-							<?php echo CKunenaLink::GetHelpLink($this->config, JText::_('COM_KUNENA_FORUM_HELP') ); ?></span>
+							<?php echo CKunenaLink::GetHelpLink(JText::_('COM_KUNENA_FORUM_HELP') ); ?></span>
 						<?php
 						}
 						?></p>

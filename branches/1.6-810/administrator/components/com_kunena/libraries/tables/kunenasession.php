@@ -20,7 +20,7 @@ class TableKunenaSession extends TableKunena
 	var $allowed = 'na';
 	var $allowedcats = null;
 	var $lasttime = 0;
-	var $readtopics = '';
+	var $readtopics = 0;
 	var $currvisit = 0;
 	protected $_exists = false;
 

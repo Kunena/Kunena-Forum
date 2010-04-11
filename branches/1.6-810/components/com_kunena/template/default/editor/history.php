@@ -16,7 +16,7 @@ defined ( '_JEXEC' ) or die ();
 $k = 0;
 ?>
 <b><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY' )?>:</b>
-<?php echo kunena_htmlspecialchars ( $this->subject )?><br />
+<?php echo $this->subject ?><br />
 <?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->_config->historylimit . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?><br />
 <table border="0" cellspacing="1" cellpadding="3" width="100%"
 	class="kreview_table">
@@ -37,7 +37,7 @@ $k = 0;
 
 		<td class="kreview_body<?php echo $k?>">
 			<div class="msgtext">
-				<?php echo CKunenaTools::parseBBCode( $mes->message )?>
+				<?php echo KunenaParser::parseBBCode( stripslashes($mes->message) )?>
 			</div>
 		</td>
 	</tr>

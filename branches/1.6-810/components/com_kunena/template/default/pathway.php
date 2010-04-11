@@ -51,7 +51,7 @@ if ($func != "") {
 		if (! $results)
 			break;
 		$parent_ids = $results->parent;
-		$fr_name = kunena_htmlspecialchars ( JString::trim ( stripslashes ( $results->name ) ) );
+		$fr_name = kunena_htmlspecialchars ( JString::trim ( $results->name ) );
 		$sname = CKunenaLink::GetCategoryLink ( 'showcat', $catids, $fr_name );
 
 		if ($catid == $catids && $sfunc != "view") {
@@ -73,7 +73,7 @@ if ($func != "") {
 	if ($sfunc == "view" and $id) {
 		$sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
 		$kunena_db->setQuery ( $sql );
-		$this->kunena_topic_title = CKunenaTools::parseText ( html_entity_decode_utf8 ( $kunena_db->loadResult () ) );
+		$this->kunena_topic_title = KunenaParser::parseText ( stripslashes($kunena_db->loadResult ()) );
 		check_dberror ( "Unable to load subject." );
 		$jr_path_menu [] = $this->kunena_topic_title;
 	}
@@ -128,7 +128,7 @@ if ($func != "") {
 					$divider = '';
 				}
 				if ($user->showOnline > 0) {
-					$fireonline .= CKunenaLink::GetProfileLink ( $kunena_config, $user->userid, $user->username ) . $divider;
+					$fireonline .= CKunenaLink::GetProfileLink ( $user->userid, $user->username ) . $divider;
 				}
 			} else {
 				$totalguest = $totalguest + 1;

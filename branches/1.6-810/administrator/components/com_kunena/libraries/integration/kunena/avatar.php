@@ -21,25 +21,28 @@ class KunenaAvatarKunena extends KunenaAvatar
 
 	public function getEditURL()
 	{
-		return JRoute::_('index.php?option=com_kunena&func=profile&do=edit');
+		return KunenaRoute::_('index.php?option=com_kunena&func=profile&do=edit');
 	}
 
 	public function getURL($user, $size='thumb')
 	{
 		$user = KunenaFactory::getUser($user);
 		$avatar = $user->avatar;
-		if ($avatar == '') {
-			$avatar = 'nophoto.jpg';
-		}
 
-		if ($size=='thumb' && file_exists( KPATH_MEDIA_LEGACY ."/avatars/s_{$avatar}" ))
-			$avatar = 's_' . $avatar;
-		else if (!file_exists( KPATH_MEDIA_LEGACY ."/avatars/{$avatar}" )) {
+		if ( $avatar && file_exists(KPATH_MEDIA ."/avatars/{$avatar}" ) ) {
+			if ($size=='thumb') $avatar = 'thumb/'.$avatar;
+			$avatar = KURL_MEDIA . "avatars/{$avatar}";
+		} else if ($avatar && $size=='thumb' && file_exists( KPATH_MEDIA_LEGACY ."/avatars/s_{$avatar}" )){
+			$avatar = KURL_MEDIA_LEGACY . "avatars/s_{$avatar}";
+		} else if ($avatar && file_exists( KPATH_MEDIA_LEGACY ."/avatars/{$avatar}" )){
+			$avatar = KURL_MEDIA_LEGACY . "avatars/{$avatar}";
+		} else {
 			// If avatar does not exist use default image
 			if ($size=='thumb') $avatar = 's_nophoto.jpg';
 			else $avatar = 'nophoto.jpg';
+
+			$avatar = KURL_MEDIA_LEGACY . "avatars/{$avatar}";
 		}
-		$avatar = KURL_MEDIA_LEGACY . "avatars/{$avatar}";
 		return $avatar;
 	}
 }

@@ -155,6 +155,8 @@ function kunena_check_image_type($type) {
     return false;
     }
 
+kimport('html.parser');
+
 class CKunenaTools {
     var $id = null;
 
@@ -189,52 +191,22 @@ class CKunenaTools {
 		echo $html;
 	}
 
-    function getMessageId() {
-    	$page = JRequest::getInt ( 'page', 0 );
-    	$limitstart = JRequest::getInt ( 'limitstart', 0 );
-        $kunena_config = & CKunenaConfig::getInstance ();
-        $msg_html = new StdClass ( );
-        $msg_html->id = $this->kunena_message->id;
-
-        if ($kunena_config->ordering_system == 'old_ord') {
-    		echo CKunenaLink::GetSamePageAnkerLink ( $msg_html->id, '#' . $msg_html->id );
-    		} else {
-    		if ($kunena_config->default_sort == 'desc') {
-    			if ( $page == '1') {
-    				$numb = $this->total_messages--;
-    				echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
-    			} else {
-    				$nums = $this->total_messages - $limitstart;
-    				$numb = $nums;
-    				echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$numb);
-    				$this->total_messages--;
-    			}
-    			} else {
-    			if ( $page == '1') {
-    				echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$this->mmm);
-    				}else {
-    				$nums = $this->mmm + $limitstart;
-    				echo CKunenaLink::GetSamePageAnkerLink($msg_html->id,'#'.$nums);
-    				}
-    			}
-    		}
-    }
-
 	function parseText($txt) {
+		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
 		if (!$txt) return;
-		$txt = stripslashes ( $txt );
 		$txt = nl2br ( $txt );
+		$txt = kunena_htmlspecialchars ( $txt );
 		$txt = CKunenaTools::prepareContent ( $txt );
 		return $txt;
 	}
 
 	function parseBBCode($txt) {
+		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
 		static $emoticons = null;
 
 		if (!$txt) return;
 		if (!$emoticons) $emoticons = smile::getEmoticons ( 0 );
 		$kunena_config = & CKunenaConfig::getInstance ();
-		$txt = stripslashes ( $txt );
 		$txt = smile::smileReplace ( $txt, 0, $kunena_config->disemoticons, $emoticons );
 		$txt = nl2br ( $txt );
 		$txt = str_replace ( "__FBTAB__", "&#009;", $txt ); // For [code]
@@ -243,14 +215,15 @@ class CKunenaTools {
 	}
 
 	function stripBBCode($txt, $len=0) {
+		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
 		static $emoticons = null;
 
 		if (!$txt) return;
 		if (!$emoticons) $emoticons = smile::getEmoticons ( 0 );
 		$kunena_config = & CKunenaConfig::getInstance ();
-		$txt = stripslashes ( $txt );
 		$txt = smile::purify ( $txt );
 		if ($len) $txt = JString::substr ( $txt, 0, $len );
+		$txt = kunena_htmlspecialchars ( $txt );
 		$txt = CKunenaTools::prepareContent ( $txt );
 		return $txt;
 	}
@@ -466,7 +439,7 @@ class CKunenaTools {
 			$readTopics[] = $thread;
 			$readTopics = implode ( ',', $readTopics );
 		} else {
-			$readTopics = 0;
+			$readTopics = false; // do not update session
 		}
 
 		if ($readTopics) {
@@ -1231,9 +1204,9 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
             }
 
             if ( $v->parent == 0 ) {
-                $txt     = kunena_htmlspecialchars(stripslashes($v->name));
+                $txt     = kunena_htmlspecialchars($v->name);
             } else {
-                $txt     = $pre . kunena_htmlspecialchars(stripslashes($v->name));
+                $txt     = $pre . kunena_htmlspecialchars($v->name);
             }
             $pt = $v->parent;
             $list[$id] = $v;
@@ -1342,6 +1315,21 @@ function KGetArrayInts($name) {
 
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
+    }
+    $array = $items;
+
+    if (!is_array($array)) {
+        $array = array ( 0 );
+    }
+
+    return $array;
+}
+
+function KGetArrayReverseInts($name) {
+    $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
+
+    foreach ($array as $item=>$value) {
+        if ((int)$item && (int)$item>0) $items[(int)$item] = (int)$item;
     }
     $array = $items;
 

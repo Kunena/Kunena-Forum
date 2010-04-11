@@ -263,7 +263,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $mailadmin = 0;
 	var $captcha = 0;
 	var $mailfull = 1;
-	var $allowavatar = 1;
+	var $allowavatar = 1; // deprecated
 	var $allowavatarupload = 1;
 	var $allowavatargallery = 1;
 	var $imageprocessor = 'gd2';
@@ -289,7 +289,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $avatar_src = 'fb'; // deprecated
 	var $fb_profile = 'fb'; // deprecated
 	var $pm_component = 'no';
-	var $discussbot = 0;
 	var $userlist_rows = 30;
 	var $userlist_online = 1;
 	var $userlist_avatar = 1;
@@ -302,16 +301,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $userlist_joindate = 1;
 	var $userlist_lastvisitdate = 1;
 	var $userlist_userhits = 1;
-	var $showlatest = 1;
-	var $latestcount = 10;
-	var $latestcountperpage = 5;
-	var $latestcategory = ''; //Also used by default recent topics
-	var $latestsinglesubject = 1;
-	var $latestreplysubject = 1;
-	var $latestsubjectlength = 100;
-	var $latestshowdate = 1;
-	var $latestshowhits = 1;
-	var $latestshowauthor = 1;
+	var $latestcategory = '';
 	var $showstats = 1;
 	var $showwhoisonline = 1;
 	var $showgenstats = 1;
@@ -402,6 +392,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $integration_avatar = 'auto';
 	var $integration_profile = 'auto';
 	var $integration_private = 'auto';
+	var $integration_activity = 'auto';
 	//New for 1.6: choose if you want that ghost message box checked by default
 	var $boxghostmessage = 0;
 

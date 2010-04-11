@@ -21,7 +21,7 @@ defined( '_JEXEC' ) or die();
 		<!-- Kunena specific settings -->
 		<tr class="ksectiontableentry2">
 			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?></td>
-			<td><input type="text" maxlength="<?php echo $this->_config->maxpersotext; ?>" name="personnaltext" value="<?php echo kunena_htmlspecialchars ($this->profile->personalText); ?>"  /></td>
+			<td><input type="text" maxlength="<?php echo $this->_config->maxpersotext; ?>" name="personnaltext" value="<?php echo kunena_htmlspecialchars (stripslashes($this->profile->personalText)); ?>"  /></td>
 		</tr>
 		<tr class="ksectiontableentry1">
 			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?></td>
@@ -104,7 +104,7 @@ defined( '_JEXEC' ) or die();
 			<!-- Add some bbcode functions -->
 			<td><textarea class="ktxtarea required" name="signature"
 		id="kbbcode-message"><?php
-			echo kunena_htmlspecialchars ( $this->profile->signature );
+			echo kunena_htmlspecialchars ( stripslashes ( $this->profile->signature ) );
 			?></textarea></td>
 		</tr>
 	</tbody>

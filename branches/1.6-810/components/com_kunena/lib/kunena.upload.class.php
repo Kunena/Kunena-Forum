@@ -316,7 +316,7 @@ class CKunenaUpload {
 				//if the temp file does not have a width or a height, or it has a non ok MIME, return
 				if (!is_int ( $this->imageInfo [0] ) || !is_int ( $this->imageInfo [1] ) ||
 					!in_array ( $this->imageInfo ['mime'], $validFileTypes )) {
-					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_MIME' )." DEBUG Mimetype:". $this->imageInfo ['mime']);
+					$this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_MIME', $this->imageInfo ['mime'], $this->_config->imagetypes) );
 					return false;
 				}
 			}

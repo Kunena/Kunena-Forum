@@ -102,12 +102,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $message->subject ) ), kunena_htmlspecialchars ( CKunenaTools::stripBBCode ( $message->message ) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, KunenaParser::parseText ( stripslashes($message->subject) ), KunenaParser::stripBBCode ( stripslashes($message->message) ), 'follow', 'k-topic-title km' );
 			?>
-			</div><div style="display:none"><?php echo CKunenaTools::parseBBCode ( $message->message );?></div>
+			</div><div style="display:none"><?php echo KunenaParser::parseBBCode ( stripslashes($message->message) );?></div>
 			</td>
 			<td class="td-3"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, kunena_htmlspecialchars ( CKunenaTools::parseText ( $firstpost->subject ) ), kunena_htmlspecialchars ( CKunenaTools::stripBBCode ( $firstpost->message ) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, KunenaParser::parseText ( stripslashes($firstpost->subject) ), KunenaParser::stripBBCode ( stripslashes($firstpost->message) ), 'follow', 'k-topic-title km' );
 			?>
 			<?php
 			if ($message->favcount ) {
@@ -120,7 +120,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			<?php
 			if ($message->unread) {
-					echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $message->catid, $message->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $message->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $message->lastread );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $message->catid, $message->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $message->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $message->lastread );
 			}
 
 		if ($message->locked != 0) {
@@ -132,7 +132,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		?>
 			<div class="ks">
 			<!-- Category --> <span class="topic_category"> <?php
-			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $message->catid, kunena_htmlspecialchars ( stripslashes ( $message->catname ) ) );
+			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $message->catid, kunena_htmlspecialchars ( $message->catname ) );
 			?>
 			</span> <!-- /Category -->
 		</div>
@@ -146,16 +146,18 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			</span> <?php
 		}
-		?> <!--  /Sticky   --> <!-- Avatar --> <?php // (JJ) AVATAR
-		if ($this->config->avataroncat > 0) {
+		?> <!--  /Sticky   --> <!-- Avatar --> <?php
+		if ($this->config->avataroncat > 0) :
+			$profile = KunenaFactory::getUser((int)$this->messages[$message->id]->userid);
+			$useravatar = $profile->getAvatarLink('klist_avatar');
+			if ($useravatar) :
 			?>
 			<span class="topic_latest_post_avatar"> <?php
-			$profile = KunenaFactory::getUser($message->userid);
-			$useravatar = $profile->getAvatarLink('klist_avatar');
-			echo CKunenaLink::GetProfileLink ( $this->config, $message->userid, $useravatar );
+			echo CKunenaLink::GetProfileLink ( $this->messages[$message->id]->userid, $useravatar );
 			?>
 			</span> <?php
-		}
+			endif;
+		endif;
 		?> <!-- /Avatar -->
 
 			<!-- By -->
@@ -168,7 +170,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 		if ($message->name) {
 			echo '<br /><span class="topic_by">';
-			echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->config, $message->userid, $message->name );
+			echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $message->userid, $message->name );
 			echo '</span>';
 		}
 		?>

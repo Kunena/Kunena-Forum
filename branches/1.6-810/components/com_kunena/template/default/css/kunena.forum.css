@@ -221,6 +221,8 @@ PX		EM			PCT			PT
 	/* background: #F2F1EE; */
 	text-align: center;
 	color: #999999;
+	width:0px;
+	
 }
 
 #Kunena td.td-0 strong {
@@ -1132,15 +1134,12 @@ PX		EM			PCT			PT
 	width: 20px;
 }
 
-#Kunena div.ktotalfavorite {
-	text-align: left;
-	color: #FFFFFF;
-	font-weight: normal;
-	line-height: normal;
-}
-
-#Kunena div.ktotalfavorite img {
-	margin-left: 10px;
+#Kunena div.kfavorite {
+	background: url("../images/icons/favoritestar.png") no-repeat left top;
+	height: 18px;
+	width: 18px;
+	display: inline-block;
+	margin: 0 4px;
 }
 
 #Kunena .ktitle,
@@ -1514,6 +1513,22 @@ PX		EM			PCT			PT
 	float: right;
 }
 
+#Kunena span.karmaminus {
+	background: url("../images/icons/karmaminus.png") no-repeat left top;
+	height: 14px;
+	width: 14px;
+	display: inline-block;
+	margin: -2px 0;
+}
+
+#Kunena span.karmaplus {
+	background: url("../images/icons/karmaplus.png") no-repeat left top;
+	height: 14px;
+	width: 14px;
+	display: inline-block;
+	margin: -2px 0;
+}
+
 #Kunena div.msgtext {
 	width: 100%;
 	overflow: hidden;
@@ -1617,7 +1632,6 @@ PX		EM			PCT			PT
 
 #Kunena div.kmessage_editMarkUp_cover {
 	padding-top: 5px;
-	margin-left: 5px;
 	text-align: right;
 	border-bottom: 1px dotted #BFC3C6;
 }
@@ -1818,7 +1832,7 @@ PX		EM			PCT			PT
 
 /* Left and right layouts */
 #Kunena ul#kpost-profile {
-	margin:15px 0 0 0;
+	margin:8px 0 0 0;
 	padding: 0;
 	text-align:center;
 }
@@ -1826,7 +1840,7 @@ PX		EM			PCT			PT
 #Kunena ul#kpost-profile li {
 	list-style-type: none;
 	display:block;
-	padding-bottom: 3px;
+	padding-bottom: 1px;
 }
 
 #Kunena ul#kpost-profile li.kpost-username {}
@@ -1842,11 +1856,11 @@ PX		EM			PCT			PT
 #Kunena ul#kpost-profile li.kpost-online-img{}
 
 #Kunena li.kpost-userposts{
-	margin-top : 20px;	
+	margin : 0px;	
 }
 
 #Kunena ul#kpost-profile li.kpost-smallicons{
-	margin:20px auto;
+	margin: 0px auto;
 	width: 80px;
 }
 #Kunena ul#kpost-profile li.kpost-personal{
@@ -2143,12 +2157,11 @@ POST PAGE
 	width: 95%;
 	float: left;
 }
-#Kunena div.kbbcode-preview_right,
-#Kunena div.kbbcode-preview_bottom {
+#Kunena #kbbcode-preview {
 	/* IMPORTANT: do not set height - controlled by js */
 	border: 1px solid #BFC3C6;
 	overflow: scroll;
-	background: #F2F1EE
+	background: #F2F1EE;
 }
 #Kunena div.kbbcode-preview_bottom {
 	/* IMPORTANT: do not set height - controlled by js */
@@ -2160,9 +2173,8 @@ POST PAGE
 #Kunena div.kbbcode-preview_right {
 	/* IMPORTANT: do not set height - controlled by js */
 	float:right;
-	width: 45%;
-	display:inline;
-	margin-right: 40px;
+	width: 48%;
+	margin-right: 10px;
 }
 
 #Kunena #kpostmessage tr.ksectiontableentry1 .k-postbuttonset td,
@@ -2203,6 +2215,25 @@ POST PAGE
 
 /* FORUM BUTTONS
 ----------------------------------------------------------------------------------------------- */
+
+/* Goto Up/down buttons */
+
+#Kunena a.buttongoto {
+}
+
+#Kunena a.buttongoto span.top {
+	background: url("../images/icons/top_arrow.gif") no-repeat left top;
+	height: 18px;
+	width: 18px;
+	display: block;
+}
+
+#Kunena a.buttongoto span.bottom {
+	background: url("../images/icons/bottom_arrow.gif") no-repeat left top;
+	height: 18px;
+	width: 18px;
+	display: block;
+}
 
 /* Communication buttons */
 
@@ -3274,12 +3305,6 @@ div#kprofile-stats ul li span.rank-admin {
 	background: 0 none; 
 	padding-left: 0;
 }
-#Kunena span.pm { 
-	display:block; 
-	background: url("../images/icons/pm.png") no-repeat; 
-	height: 16px; 
-	width: 16px;
-}
 #Kunena span.location { 
 	display:block; 
 	background: url("../images/icons/location.png") no-repeat; 
@@ -3316,6 +3341,18 @@ div#kprofile-stats ul li span.rank-admin {
 #Kunena span.website {
 	display:block; 
 	background: url("../images/icons/website.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+#Kunena span.private {
+	display:block; 
+	background: url("../images/icons/pm.png") no-repeat; 
+	height: 16px; 
+	width: 16px;
+}
+#Kunena span.email {
+	display:block; 
+	background: url("../images/icons/email.png") no-repeat; 
 	height: 16px; 
 	width: 16px;
 }
@@ -3536,14 +3573,12 @@ div#kprofile-stats ul li span.rank-admin {
 	margin-top: -14px;
 	border: 1px solid #fff;
 }
-#Kunena span.close
 #Kunena a.close {
 	display:block; 
 	background: url("../images/shrink.gif") no-repeat; 
 	height: 15px; 
 	width: 15px;
 }
-#Kunena span.open, 
 #Kunena a.open {
 	display:block; 
 	background: url("../images/expand.gif") no-repeat; 

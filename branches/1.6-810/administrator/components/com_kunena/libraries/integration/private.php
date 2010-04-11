@@ -51,6 +51,6 @@ abstract class KunenaPrivate
 		if (empty($url)) return '';
 
 		// We should offer the user a PM link
-		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="pm" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '" /></a>';
+		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="private" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '" /></a>';
 	}
 }

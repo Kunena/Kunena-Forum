@@ -84,9 +84,14 @@ class CKunenaPost {
 			}
 		}
 
-		// Check user access rights
-		if (($this->my->id == 0 && ! $this->_config->pubwrite) || (empty ( $this->msg_cat->catparent ) && $this->do != 'reply') && (! $this->_session->canRead ( $this->catid ) && ! CKunenaTools::isAdmin ())) {
+		// Check if anonymous user needs to log in
+		if ($this->my->id == 0 && (! $this->_config->pubwrite || ! $this->_session->canRead ( $this->catid ))) {
 			CKunenaTools::loadTemplate ( '/plugin/login/login.php' );
+			return false;
+		}
+		// Check user access rights
+		if (!empty ( $this->msg_cat->catparent ) && ! $this->_session->canRead ( $this->catid ) && ! CKunenaTools::isAdmin ()) {
+			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return false;
 		}
 
@@ -101,7 +106,7 @@ class CKunenaPost {
 		if ($this->floodProtection ())
 			return false;
 
-		$fields ['name'] = JRequest::getString ( 'authorname', null );
+		$fields ['name'] = JRequest::getString ( 'authorname', $this->getAuthorName () );
 		$fields ['email'] = JRequest::getString ( 'email', null );
 		$fields ['subject'] = JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW );
 		$fields ['message'] = JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW );
@@ -165,116 +170,7 @@ class CKunenaPost {
 		//construct a useable URL (for plaintext - so no &amp; encoding!)
 		jimport ( 'joomla.environment.uri' );
 		$uri = & JURI::getInstance ( JURI::base () );
-		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $thread, $threadPages, $this->_config->messages_per_page, $id ) );
-
-		// A couple more tasks required...
-		if ($thread == 0) {
-			// if JomScoial integration is active integrate user points and activity stream
-			if ($this->_config->fb_profile == 'jomsocial') {
-				include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
-
-				CuserPoints::assignPoint ( 'com_kunena.thread.new' );
-
-				// Check for permisions of the current category - activity only if public or registered
-				if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1) {
-					if ($this->_config->js_actstr_integration) {
-						//activity stream  - new post
-						$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $id, 1 );
-
-						$kunena_emoticons = smile::getEmoticons ( 1 );
-						$content = stripslashes ( $message );
-						$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-						$content = nl2br ( $content );
-
-						$act = new stdClass ( );
-						$act->cmd = 'wall.write';
-						$act->actor = $userid;
-						$act->target = 0; // no target
-						$act->title = JText::_ ( '{actor} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG1' ) . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_CREATE_MSG2' ) );
-						$act->content = $content;
-						$act->app = 'wall';
-						$act->cid = 0;
-
-						// jomsocial 0 = public, 20 = registered members
-						if ($catinfo->pub_access == 0) {
-							$act->access = 0;
-						} else {
-							$act->access = 20;
-						}
-
-						CFactory::load ( 'libraries', 'activities' );
-						CActivityStream::add ( $act );
-					}
-				}
-			}
-
-		} else {
-			// if JomScoial integration is active integrate user points and activity stream
-			if ($this->_config->fb_profile == 'jomsocial') {
-				include_once (KUNENA_ROOT_PATH . DS . 'components/com_community/libraries/userpoints.php');
-
-				CuserPoints::assignPoint ( 'com_kunena.thread.reply' );
-
-				// Check for permisions of the current category - activity only if public or registered
-				if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1 && $this->_config->js_actstr_integration) {
-					if ($this->_config->js_actstr_integration) {
-						//activity stream - reply post
-						$JSPostLink = CKunenaLink::GetThreadPageURL ( $this->_config, 'view', $this->catid, $thread, 1 );
-
-						$content = stripslashes ( $message );
-						$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-						$content = nl2br ( $content );
-
-						$act = new stdClass ( );
-						$act->cmd = 'wall.write';
-						$act->actor = $userid;
-						$act->target = 0; // no target
-						$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $JSPostLink . '">' . stripslashes ( $subject ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
-						$act->content = $content;
-						$act->app = 'wall';
-						$act->cid = 0;
-
-						// jomsocial 0 = public, 20 = registered members
-						if ($catinfo->pub_access == 0) {
-							$act->access = 0;
-						} else {
-							$act->access = 20;
-						}
-
-						CFactory::load ( 'libraries', 'activities' );
-						CActivityStream::add ( $act );
-					}
-				}
-			}
-		}
-		// End Modify for activities stream
-
-		// start integration alphauserpoints component
-		if ($this->_config->alphauserpointsrules) {
-			// Insert AlphaUserPoints rules
-			$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-			$datareference = '<a href="' . $LastPostUrl . '">' . $subject . '</a>';
-			if (file_exists ( $api_AUP )) {
-				require_once ($api_AUP);
-				if ($thread == 0) {
-					// rule for post a new topic
-					AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $id, $datareference );
-				} else {
-					// rule for post a reply to a topic
-					if ($this->_config->alphauserpointsnumchars > 0) {
-						// use if limit chars for a response
-						if (JString::strlen ( $message ) > $this->_config->alphauserpointsnumchars) {
-							AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $id, $datareference );
-						} else {
-							$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_AUP_MESSAGE_TOO_SHORT' ) );
-						}
-					} else {
-						AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $id, $datareference );
-					}
-				}
-			}
-		}
-		// end insertion AlphaUserPoints
+		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, $threadPages, $this->_config->messages_per_page, $id ) );
 
 		//Update the attachments table if an image has been attached
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
@@ -308,7 +204,7 @@ class CKunenaPost {
 		} else {
 			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $id, $this->_config->messages_per_page, $this->catid ), $redirectmsg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $id, $this->_config->messages_per_page, $this->catid ), $redirectmsg );
 	}
 
 	protected function newtopic($do) {
@@ -329,7 +225,7 @@ class CKunenaPost {
 		if ($this->catid && $this->msg_cat->id > 0) {
 			if ($do == 'quote') {
 				$this->message_text = "[b]" . kunena_htmlspecialchars ( stripslashes ( $message->name ) ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
-				$this->message_text .= '[quote]' .  stripslashes ( $message->message )  . "[/quote]";
+				$this->message_text .= '[quote]' .  kunena_htmlspecialchars (stripslashes ( $message->message ) ) . "[/quote]";
 			} else {
 				$this->message_text = '';
 			}
@@ -403,7 +299,7 @@ class CKunenaPost {
 			$attachments = $this->_db->loadObjectList ();
 			check_dberror ( 'Unable to load attachments' );
 
-			$this->msg_html->attachments = array ();
+			$this->attachments = array ();
 
 			foreach ( $attachments as $attachment ) {
 				// Check if file has been pre-processed
@@ -418,13 +314,13 @@ class CKunenaPost {
 				// shorttype based on MIME type to determine if image for displaying purposes
 				$attachment->shorttype = (stripos ( $attachment->filetype, 'image/' ) !== false) ? 'image' : $attachment->filetype;
 
-				$this->msg_html->attachments [] = $attachment;
+				$this->attachments [] = $attachment;
 			}
 			// End of load attachments
 
 			$this->kunena_editmode = 1;
 
-			$this->message_text = stripslashes ( $message->message );
+			$this->message_text = kunena_htmlspecialchars ( stripslashes ( $message->message ) );
 			$this->resubject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
 			$this->authorName = kunena_htmlspecialchars ( stripslashes ( $message->name ) );
 			$this->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
@@ -447,6 +343,7 @@ class CKunenaPost {
 			if (! $this->my->id || $this->_config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 				$this->allow_name_change = 1;
 			}
+			if (!$this->allow_name_change && $message->userid == $this->my->id) $this->authorName = $this->getAuthorName ();
 
 			$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->resubject;
 
@@ -460,7 +357,7 @@ class CKunenaPost {
 		if ($this->tokenProtection ())
 			return false;
 
-		$fields ['name'] = JRequest::getString ( 'authorname', null );
+		$fields ['name'] = JRequest::getString ( 'authorname', $this->getAuthorName () );
 		$fields ['email'] = JRequest::getString ( 'email', null );
 		$fields ['subject'] = JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW );
 		$fields ['message'] = JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW );
@@ -521,7 +418,7 @@ class CKunenaPost {
 		}
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page, $this->catid ) );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page, $this->catid ) );
 	}
 
 	protected function deleteownpost() {
@@ -620,7 +517,7 @@ class CKunenaPost {
 		$this->selectlist = CKunenaTools::KSelectList ( 'postmove', $options, ' size="15" class="kmove_selectbox"' );
 		$this->message = $this->msg_cat;
 
-		CKunenaTools::loadTemplate ( '/moderate/postmove.php' );
+		CKunenaTools::loadTemplate ( '/moderate/messagemove.php' );
 	}
 
 	protected function domovepost() {
@@ -653,7 +550,7 @@ class CKunenaPost {
 		$this->message = $this->msg_cat;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND catid='{$this->message->catid}' AND thread!='{$this->message->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->message->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );
@@ -697,7 +594,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $TargetThreadID, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
 
 	}
 
@@ -710,7 +607,7 @@ class CKunenaPost {
 		$this->message = $this->msg_cat;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND catid='{$this->catid}' AND thread!='{$this->message->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->message->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );
@@ -754,7 +651,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $TargetThreadID, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
 	}
 
 	protected function split() {
@@ -805,7 +702,7 @@ class CKunenaPost {
 			}
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $message );
 	}
 
 	protected function subscribe() {
@@ -821,7 +718,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function unsubscribe() {
@@ -837,7 +734,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function favorite() {
@@ -853,7 +750,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function unfavorite() {
@@ -869,7 +766,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function sticky() {
@@ -883,7 +780,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_SET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function unsticky() {
@@ -897,7 +794,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function lock() {
@@ -911,7 +808,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_SET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function unlock() {
@@ -925,7 +822,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	protected function approve() {
@@ -939,7 +836,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->_config, $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
 	}
 
 	function hasThreadHistory() {

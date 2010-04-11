@@ -46,10 +46,10 @@ check_dberror("Unable to load announcements.");
 if (count($anns) == 0) return;
 $ann = $anns[0];
 $annID = $ann->id;
-$anntitle = CKunenaTools::parseText ($ann->title);
-$annsdescription = CKunenaTools::parseBBCode ($ann->sdescription);
+$anntitle = KunenaParser::parseText ($ann->title);
+$annsdescription = KunenaParser::parseBBCode ($ann->sdescription);
 
-$anndescription = CKunenaTools::parseBBCode ($ann->description);
+$anndescription = KunenaParser::parseBBCode ($ann->description);
 
 $annpublished = $ann->published;
 $annshowdate = $ann->showdate;
@@ -81,10 +81,10 @@ if ($annID > 0) {
 
                     <tr class = "ksth">
                         <th class = "th-1 ksectiontableheader km" align="left">
-                            <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'edit', $annID, JText::_('COM_KUNENA_ANN_EDIT'), JText::_('COM_KUNENA_ANN_EDIT')); ?> |
-                            <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'delete', $annID, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?> |
-							<?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'add',NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?> |
-							<?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'show', NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?>
+                            <?php echo CKunenaLink::GetAnnouncementLink( 'edit', $annID, JText::_('COM_KUNENA_ANN_EDIT'), JText::_('COM_KUNENA_ANN_EDIT')); ?> |
+                            <?php echo CKunenaLink::GetAnnouncementLink( 'delete', $annID, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?> |
+							<?php echo CKunenaLink::GetAnnouncementLink( 'add',NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?> |
+							<?php echo CKunenaLink::GetAnnouncementLink( 'show', NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?>
                         </th>
                     </tr>
 
@@ -113,7 +113,7 @@ if ($annID > 0) {
 if (!empty($anndescription)) {
 ?>
 
-    &nbsp;&nbsp;&nbsp;<?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'read', $annID, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
+    &nbsp;&nbsp;&nbsp;<?php echo CKunenaLink::GetAnnouncementLink( 'read', $annID, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
 
 <?php
     }

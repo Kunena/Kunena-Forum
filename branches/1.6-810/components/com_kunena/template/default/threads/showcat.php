@@ -149,7 +149,7 @@ echo '</div>';
 		<div class="kbox-bottomarea-modlist"><?php
 			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 			foreach ( $this->modslist as $mod ) {
-				echo CKunenaLink::GetProfileLink ( $this->config, $mod->userid, $mod->username ) . '&nbsp; ';
+				echo CKunenaLink::GetProfileLink ( $mod->userid, $mod->username ) . '&nbsp; ';
 			}
 			?>
 		</div>

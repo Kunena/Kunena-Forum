@@ -378,7 +378,7 @@ class CKunenaPosting {
 
 		// First take care of old sessions to make our job easier and faster
 		$lasttime = $this->get ( 'time' ) - $this->_config->fbsessiontimeout - 60;
-		$query = "UPDATE #__fb_sessions SET readtopics=NULL WHERE currvisit<{$lasttime}";
+		$query = "UPDATE #__fb_sessions SET readtopics='0' WHERE currvisit<{$lasttime}";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
@@ -413,6 +413,14 @@ class CKunenaPosting {
 		}
 		if ($errcount)
 			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
+
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		if ($this->parent->thread == 0) {
+			$activity->onAfterPost($this);
+		} else {
+			$activity->onAfterReply($this);
+		}
 
 		return $id;
 	}
@@ -490,6 +498,11 @@ class CKunenaPosting {
 				return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
 		}
 		$this->set ( 'id', $id = $this->parent->id );
+
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		$activity->onAfterEdit($this);
+
 		return $id;
 	}
 
@@ -499,8 +512,13 @@ class CKunenaPosting {
 			$message = JText::_ ( 'COM_KUNENA_POST_OWN_DELETE_ERROR' );
 		} else {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterDelete($this);
 		}
 
+		// FIXME: move redirect out of here
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->parent->catid, true ), $message );
 
 		return empty ( $this->errors );
@@ -670,7 +688,7 @@ class CKunenaPosting {
 				if ($nicktaken && $nicktaken != $this->_my->id) {
 					return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CONFLICT_REG' ) );
 				}
-			} else {
+			} else if ($value != $this->_my->username || $value != $this->_my->name) {
 				return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CHANGED' ) );
 			}
 		}

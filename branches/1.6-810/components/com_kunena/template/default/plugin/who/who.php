@@ -26,6 +26,7 @@ defined( '_JEXEC' ) or die();
 $kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 $kunena_config =& CKunenaConfig::getInstance();
+$kunena_my = JFactory::getUser();
 ?>
 
 <?php
@@ -99,7 +100,7 @@ if ($kunena_config->showwhoisonline > 0)
                         }
                         else
                         {
-				echo CKunenaLink::GetProfileLink($kunena_config, $user->userid, $user->username);
+				echo CKunenaLink::GetProfileLink($user->userid, $user->username);
                         }
                         ?>
 

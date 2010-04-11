@@ -22,7 +22,7 @@ defined( '_JEXEC' ) or die();
 			<li><span class="location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>:</strong> <?php echo $this->location; ?></li>
 			<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
 			<li><span class="gender-<?php echo $this->genderclass; ?>"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong> <?php echo $this->gender; ?></li>
-			<li class="bd"><span class="birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'ago'); ?>"><?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'date'); ?></span>
+			<li class="bd"><span class="birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'ago', 'utc', 0); ?>"><?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'date', 'utc', 0); ?></span>
 			<!--  <a href="#" title=""><span class="bday-remind"></span></a> -->
 			</li>
 		</ul>
@@ -93,7 +93,7 @@ defined( '_JEXEC' ) or die();
 					$usernames = array_merge($usernames,$useriplist[$ip->ip]);
 					$username = array();
 					foreach ($usernames as $user) {
-						$username[] = CKunenalink::GetProfileLink($this->_config, $user->userid, $user->name, $rel='nofollow', $class='');
+						$username[] = CKunenalink::GetProfileLink($user->userid, $user->name, $rel='nofollow', $class='');
 					}
 					$username=implode(', ',$username);
 

@@ -129,7 +129,7 @@ class CKunenaLatestX {
 			$avatars->load($userlist);
 
 			if ($this->config->shownew && $this->my->id) {
-				$readlist = '0' . $this->session->readtopics;
+				$readlist = $this->session->readtopics;
 				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
 				check_dberror ( "Unable to get unread messages count and first id." );
@@ -377,8 +377,7 @@ class CKunenaLatestX {
 
 	function displayStats() {
 		if ($this->config->showstats > 0) {
-			CKunenaTools::loadTemplate('/plugin/stats/stats.class.php');
-
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 			$kunena_stats = new CKunenaStats ( );
 			$kunena_stats->showFrontStats ();
 		}

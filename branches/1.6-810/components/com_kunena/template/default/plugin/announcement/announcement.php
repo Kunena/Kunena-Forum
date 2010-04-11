@@ -48,10 +48,10 @@ if ($do == "read") {
 
     $ann = $anns_[0];
     $annID = $ann->id;
-    $anntitle = CKunenaTools::parseText ($ann->title);
-	$annsdescription = CKunenaTools::parseBBCode ($ann->sdescription);
+    $anntitle = KunenaParser::parseText ($ann->title);
+	$annsdescription = KunenaParser::parseBBCode ($ann->sdescription);
 
-	$anndescription = CKunenaTools::parseBBCode ($ann->description);
+	$anndescription = KunenaParser::parseBBCode ($ann->description);
 
     $annpublished = $ann->published;
     $annshowdate = $ann->showdate;
@@ -75,10 +75,10 @@ if ($do == "read") {
                     <th class = "th-1 ksectiontableheader" align="left" >
                         <?php
                         if ($is_editor) {
-                        	echo CKunenaLink::GetAnnouncementLink($kunena_config, 'edit', $annID, JText::_('COM_KUNENA_ANN_EDIT'), JText::_('COM_KUNENA_ANN_EDIT')).' | ';
-                    		echo CKunenaLink::GetAnnouncementLink($kunena_config, 'delete', $annID, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')).' | ';
-                    		echo CKunenaLink::GetAnnouncementLink($kunena_config, 'add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')).' | ';
-                    		echo CkunenaLink::GetAnnouncementLink($kunena_config, 'show', NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL'));
+                        	echo CKunenaLink::GetAnnouncementLink('edit', $annID, JText::_('COM_KUNENA_ANN_EDIT'), JText::_('COM_KUNENA_ANN_EDIT')).' | ';
+                    		echo CKunenaLink::GetAnnouncementLink('delete', $annID, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')).' | ';
+                    		echo CKunenaLink::GetAnnouncementLink('add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')).' | ';
+                    		echo CkunenaLink::GetAnnouncementLink('show', NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL'));
                         }
                         ?>
                     </th>
@@ -130,7 +130,7 @@ if ($do == "read") {
                     <tr>
                         <th colspan = "6">
                             <div class = "ktitle_cover km">
-                                <span class = "ktitle kl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?> | <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?></span>
+                                <span class = "ktitle kl"> <?php echo $kunena_app->getCfg('sitename'); ?> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?> | <?php echo CKunenaLink::GetAnnouncementLink('add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?></span>
                             </div>
                         </th>
                     </tr>
@@ -186,7 +186,7 @@ if ($do == "read") {
                                 </td>
 
                                 <td class = "td-3"  align="left">
-                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'read', $row->id, CKunenaTools::parseText ($row->title), CKunenaTools::parseText ($row->title), 'follow'); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink('read', $row->id, KunenaParser::parseText ($row->title), KunenaParser::parseText ($row->title), 'follow'); ?>
                                 </td>
 
                                 <td class = "td-4"  align="center">
@@ -201,11 +201,11 @@ if ($do == "read") {
                                 </td>
 
                                 <td class = "td-5"  align="center">
-                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'edit', $row->id, JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink('edit', $row->id, JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
                                 </td>
 
                                 <td class = "td-6"  align="center">
-                                    <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'delete', $row->id, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
+                                    <?php echo CKunenaLink::GetAnnouncementLink('delete', $row->id, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
                                 </td>
                             </tr>
 
@@ -244,7 +244,7 @@ if ($do == "read") {
 
         	$kunena_db->query();
         	check_dberror("Unable to insert announcement.");
-        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_SUCCESS_ADD'));
+        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show'), JText::_('COM_KUNENA_ANN_SUCCESS_ADD'));
     	} else {
     		$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
     	}
@@ -264,7 +264,7 @@ if ($do == "read") {
         <tr>
             <th>
                 <div class = "ktitle_cover km">
-                    <span class = "ktitle kl"> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo JText::_('COM_KUNENA_ANN_ADD'); ?> | <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></span>
+                    <span class = "ktitle kl"> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo JText::_('COM_KUNENA_ANN_ADD'); ?> | <?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></span>
                 </div>
             </th>
         </tr>
@@ -273,7 +273,7 @@ if ($do == "read") {
     <tbody id = "announcement_tbody">
         <tr>
             <td class = "kanndesc" valign="top">
-                <form action = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'doadd'); ?>" method = "post" name = "addform">
+                <form action = "<?php echo CKunenaLink::GetAnnouncementURL('doadd'); ?>" method = "post" name = "addform">
                     <strong><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>:</strong>
 
                     <br/>
@@ -368,7 +368,7 @@ if ($do == "read") {
         	$kunena_db->setQuery("UPDATE #__fb_announcement SET title=". $kunena_db->Quote ( $title ) .", description=". $kunena_db->Quote ( $description ) .", sdescription=". $kunena_db->Quote ( $sdescription ) .",  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
        		if ($kunena_db->query()) {
-            	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_SUCCESS_EDIT'));
+            	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show'), JText::_('COM_KUNENA_ANN_SUCCESS_EDIT'));
             }
         	check_dberror("Unable to update announcement.");
     	} else {
@@ -384,9 +384,9 @@ if ($do == "read") {
 
         	$ann = $anns[0];
         	$annID = $ann->id;
-        	$anntitle = kunena_htmlspecialchars(stripslashes($ann->title));
-        	$annsdescription = kunena_htmlspecialchars(stripslashes($ann->sdescription));
-        	$anndescription = kunena_htmlspecialchars(stripslashes($ann->description));
+        	$anntitle = kunena_htmlspecialchars($ann->title);
+        	$annsdescription = kunena_htmlspecialchars($ann->sdescription);
+        	$anndescription = kunena_htmlspecialchars($ann->description);
         	$anncreated = $ann->created;
         	$annpublished = $ann->published;
         	$annordering = $ann->ordering;
@@ -427,7 +427,7 @@ if ($do == "read") {
         <tr>
             <th>
                 <div class = "ktitle_cover km">
-                    <span class = "ktitle kl"> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?> | <?php echo CKunenaLink::GetAnnouncementLink($kunena_config, 'show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></span>
+                    <span class = "ktitle kl"> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?> | <?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></span>
                 </div>
             </th>
         </tr>
@@ -436,7 +436,7 @@ if ($do == "read") {
     <tbody id = "announcement_tbody">
         <tr>
             <td class = "kanndesc" valign="top">
-                <form action = "<?php echo CKunenaLink::GetAnnouncementURL($kunena_config, 'doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
+                <form action = "<?php echo CKunenaLink::GetAnnouncementURL('doedit'); ?>" method = "post" name = "editform" onSubmit = "return validate_form ( );">
                     <strong>#<?php echo $annID; ?> : <?php echo $anntitle; ?></strong>
 
                     <br/>
@@ -529,7 +529,7 @@ if ($do == "read") {
         	$kunena_db->query();
         	check_dberror("Unable to delete announcement.");
 
-        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL($kunena_config, 'show'), JText::_('COM_KUNENA_ANN_DELETED'));
+        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show'), JText::_('COM_KUNENA_ANN_DELETED'));
     	} else {
     		$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
     	}

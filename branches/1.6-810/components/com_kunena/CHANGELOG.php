@@ -34,6 +34,88 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+11-Apr-2010 Matias
+# [#19288] Fix regression: preview layout issues
+# [#19288] Fix regression: anonymous button too large in Opera
+# [#19288] Fix regression: some layout issues in func=view
+# [#20141] Mark forum read can break your session
+# [#19288] Fix regression: UTF8 letters breaks outer tags in bbcode
+# [#19288] Fix regression: Allow username to be changed again from profile
+# [#19288] Fix regression: Karma layout issue in IE8
++ [#20050] Add new integration classes: Add new events onAfterEdit/Delete to Activity class
+^ [#15886] Merged revisions 2196-2213 from /branches/1.6-xillibit-fixing
+# [#19288] Fix regression: KunenaRoute uses deprecated class initiation on config
+# [#19288] Fix regression: Allow splitting topic into the same category (invalid check fixed)
+# [#19288] Fix regression: Image MIME type (%s) is not allowed (%s).
+# [#19288] Fix regression: UTF-8 letters will break preview
+# [#19288] Fix regression: Birthdate should not use local timezone
+# [#19288] Fix regression: Consistent usage of stripslashes() inside CKunenaTools::parseText/parseBBCode/stripBBCode()
+# [#19288] Fix regression: More uniform usage of stripslashes() and htmlspecialchars() with bugfixes
++ [#20050] Add new class KunenaParser (html.parser), deprecated CKunenaTools::parseText/parseBBCode/stripBBCode()
+# [#19288] Fix regression: Fix avatar/attachment upload not to scale up images
+
+11-Apr-2010 Xillibit
+# [#19380] Fix attachments links in message and add generic icons for attachments
+# [#19288] Fix regression with post move
+^ [#19288] Replace some hard coded text strings
+# [#19288] Fix regression in who Undefined variable: kunena_my
+# [#19288] Allow merge function to merge with any topics on the forum
+# [#19288] When you upload an avatar, it doesn't show
+
+10-Apr-2010 Matias
++ [#20050] Add new integration classes: Activity for CB
+^ [#15886] Merged revision 2192 from /branches/1.6-xillibit-fixing with some changes
+# [#19288] Fix regression: Search function is not working
+# [#19288] Fix regression: Registered user is shown login screen if he does not have permissions to post
+
+10-Apr-2010 Xillibit
+# [#20100] Rules and help tabs is always displayed even if the settings are changed
+# [#19288] Fix regressions in profile, use now new function for unfavorite and unsubscribe
+
+9-Apr-2010 Matias
++ [#20050] Add new integration classes: Activity for JomSocial, AUP, None
+# [#19288] Fix regression: Fixed JomSocial integration detection
+^ [#19295] Clean up code: Removed all integration code from posting
+^ [#15886] Merged revisions 2142-2160 from /branches/1.6-xillibit-fixing
+# [#19288] Fix regression: HTML escaped in message and signature (func=view)
+
+8-Apr-2010 Xillibit
+# [#19288] Fix regression with profilebox in top Notice: Undefined property: CKunenaViewMessage::$textpersonal
+# [#19288] Fix regression Notice: Undefined property: KunenaUser::$catid in \libraries\user.php  on line 242
+# [#19288] Fix regression with AUP Notice: Undefined property: CKunenaViewMessage::$db in funcs\view.php  on line 143
+^ [#19356] Replace karmaminus and karmaplus icons by icons in png
+
+8-Apr-2010 Matias
+# [#19288] Fix regression: not all $kunena_config parameters were removed from the code
+
+7-Apr-2010 Matias
+^ [#19448] Move code out of template: simplify func=view
+^ [#19295] Clean up code: remove $kunena_config parameter from CKunenaLink functions
+
+6-Apr-2010 Matias
++ [#20050] Add new integration classes: Avatar and Profile for AUP
++ [#20050] Add new integration classes: Make them configurable
++ [#20050] Add new integration classes: Profile for None
+# [#19288] Fix regression: Sub-Categories are not showing up on showcat
+# [#19288] Fix regression: Regular users couldn't post / edit messages
+# [#19288] Fix regression: Improve user existance detection in KunenaUser
+# [#19288] Fix regression: Toggler (show/hide) did not work
+- [#19293] Remove deprecated configuration options: discussbot, showlatest, latestcount, latestcountperpage, latestsinglesubject, latestreplysubject, latestsubjectlength, latestshowdate, latestshowhits, latestshowauthor
+
+5-Apr-2010 Matias
+# [#20020] Total users number count also disabled users (from K1.5.12)
+# [#19288] Fix regression: Restore old behaviour to report emails (send always to mods/admins)
+^ [#15886] Merged revisions 2142-2160 from /branches/1.6-xillibit-fixing with some changes
+^ [#15886] Merged revision 2154 from /branches/1.6-810
+
+3-Apr-2010 Xillibit
+^ [#20050] Fix somes missing things in stats API
+# [#19288] Fix regression when you try to log in kunena with a new user
+^ [#19356] On profilebox when you have pm enabled and AUP enabled the icons are misplaced
+
+2-Apr-2010 Xillibit
+^ [#20050] Stats API finished and frontstats leverages API methods
+
 2-Apr-2010 810
 # [#19288] Fix regression: Bug bbcode in internet explorer, changed the class name into kunenaclass in lib/bbcode.js.php
 

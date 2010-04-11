@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
 		echo CKunenaLink::GetPostURL ();
 		?>"
 	method="post" name="myform"><input type="hidden" name="do"
-	value="domovemessage" /> <input type="hidden" name="id"
+	value="domovepost" /> <input type="hidden" name="id"
 	value="<?php
 		echo $this->id;
 		?>" />
@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 <p><?php
 		echo JText::_ ( 'COM_KUNENA_GEN_TOPIC' );
 		?>: <strong><?php
-		echo kunena_htmlspecialchars ( stripslashes ( $this->message->subject ) );
+		echo KunenaParser::parseText ( stripslashes ( $this->message->subject ) );
 		?></strong> <br />
 
 <br />

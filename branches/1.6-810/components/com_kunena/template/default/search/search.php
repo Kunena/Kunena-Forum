@@ -73,7 +73,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 			class="k<?php
 			echo $this->tabclass [$k ^= 1] . (isset ( $result->class_sfx ) ? ' k' . $this->tabclass [$k ^ 1] . $result->class_sfx : '')?>">
 			<td class="td-2"><?php
-			echo CKunenaLink::GetThreadPageLink ( $this->config, 'view', $result->catid, $result->id, NULL, NULL, $result->subject, $result->id )?>
+			echo CKunenaLink::GetThreadPageLink ( 'view', $result->catid, $result->id, NULL, NULL, $result->subject, $result->id )?>
 			<br /><?php
 			echo $result->message?>
 			<br />

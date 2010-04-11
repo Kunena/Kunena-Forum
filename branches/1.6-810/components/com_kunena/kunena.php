@@ -356,8 +356,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
             break;
 
 		case 'stats' :
-			CKunenaTools::loadTemplate('/plugin/stats/stats.class.php');
-
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 			$kunena_stats = new CKunenaStats ( );
 			$kunena_stats->showStats ();
 
@@ -451,28 +450,12 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'markthisread' :
-			// get all already read topics
-			// FIXME: buggy: can have values like this: 0--,5,6
-
-			$kunena_db->setQuery ( "SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'" );
-			$allreadyRead = $kunena_db->loadResult ();
-			check_dberror ( "Unable to load read topics." );
-			/* Mark all these topics read */
-			$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND thread NOT IN ({$allreadyRead}) GROUP BY thread" );
+			// Mark all unread topics in the category to read
+			$readTopics = $kunena_session->readtopics;
+			$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND parent=0 AND thread NOT IN ({$readTopics})" );
 			$readForum = $kunena_db->loadResultArray ();
 			check_dberror ( "Unable to load messages." );
-			$readTopics = '--';
-
-			foreach ( $readForum as $rf ) {
-				$readTopics = $readTopics . ',' . $rf->thread;
-			}
-
-			$readTopics = str_replace ( '--,', '', $readTopics );
-
-			if ($allreadyRead != "") {
-				$readTopics = $readTopics . ',' . $allreadyRead;
-			}
-
+			$readTopics = implode(',', array_merge(explode(',', $readTopics), $readForum));
 			$kunena_db->setQuery ( "UPDATE #__fb_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id" );
 			$kunena_db->query ();
 			check_dberror ( 'Unable to update readtopics in session table.' );
@@ -530,11 +513,33 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 					break;
 
 				case "bulkFavorite" :
-					CKunenaTools::KUnfavorite ( );
+					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
+					$KunenaUserAPI = new KunenaUserAPI();
+					$cb = KGetArrayReverseInts ( "cb" );
+					$result = $KunenaUserAPI->unfavoriteThreads($kunena_my->id, $cb);
+
+					if ( $result ) {
+						$message = JText::_('COM_KUNENA_USER_UNFAVORITE_YES');
+					} else {
+						$message = JText::_('COM_KUNENA_POST_UNFAVORITED_TOPIC');
+					}
+
+					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id),$message);
 					break;
 
 				case "bulkSub" :
-					CKunenaTools::KUnsubscribe ( );
+					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
+					$KunenaUserAPI = new KunenaUserAPI();
+					$cb = KGetArrayReverseInts ( "cb" );
+					$result = $KunenaUserAPI->unsubscribeThreads($kunena_my->id, $cb);
+
+					if ( $result ) {
+						$message = JText::_('COM_KUNENA_USER_UNSUBSCRIBE_YES');
+					} else {
+						$message = JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC');
+					}
+
+					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id),$message);
 					break;
 			}
 

@@ -24,6 +24,7 @@ class CKunenaRSSView extends CKunenaRSS {
 	 * @return void
 	 */
 	public function __construct($catid = 0) {
+		kimport('html.parser');
 		parent::__construct();
 
 		if ((int) $catid > 0) {
@@ -155,7 +156,6 @@ class CKunenaRSSView extends CKunenaRSS {
 
 				// Build unique direct linking url for each item (htmlspecialchars_decode because FeedCreator uses htmlspecialchars on input)
 				$url = htmlspecialchars_decode(CKunenaLink::GetThreadPageURL(
-					$this->config,
 					'view',
 					$data->catid,
 					$data->thread,
@@ -170,7 +170,7 @@ class CKunenaRSSView extends CKunenaRSS {
 				switch ($type) {
 					case 'thread':
 						$tmp['title']		= stripslashes($data->subject);
-						$tmp['text']		= $data->message;
+						$tmp['text']		= stripslashes($data->message);
 						$tmp['date']		= $data->time;
 						$tmp['email']		= $data->email;
 						$tmp['name']		= $data->name;
@@ -180,21 +180,21 @@ class CKunenaRSSView extends CKunenaRSS {
 						break;
 					case 'post':
 						$tmp['title']		= stripslashes($data->lastpost_subject);
-						$tmp['text']		= $data->lastpost_message;
+						$tmp['text']		= stripslashes($data->lastpost_message);
 						$tmp['date']		= $data->lastpost_time;
-						$tmp['email']		= $data->lastpost_email;
-						$tmp['name']		= $data->lastpost_name;
+						$tmp['email']		= stripslashes($data->lastpost_email);
+						$tmp['name']		= stripslashes($data->lastpost_name);
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->lastpost_subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->lastpost_name;
+							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->lastpost_subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. stripslashes($data->lastpost_name);
 						break;
 					case 'recent':
 					default:
 						$tmp['title']		= stripslashes($data->subject);
-						$tmp['text']		= $data->lastpost_message;
+						$tmp['text']		= stripslashes($data->lastpost_message);
 						$tmp['date']		= $data->lastpost_time;
-						$tmp['email']		= $data->lastpost_email;
-						$tmp['name']		= $data->lastpost_name;
+						$tmp['email']		= stripslashes($data->lastpost_email);
+						$tmp['name']		= stripslashes($data->lastpost_name);
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
 							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
@@ -238,12 +238,12 @@ class CKunenaRSSView extends CKunenaRSS {
 				if ($render_html) {
 					// Not nessecary to convert specialchars or use parsetext.
 					// ParseBBCode does it for us
-					$tmp['text'] = CKunenaTools::parseBBCode($tmp['text']);
+					$tmp['text'] = KunenaParser::parseBBCode($tmp['text']);
 				}
 				else {
 					// Not nessecary to convert specialchars.
 					// FeedCreator does it for us
-					$tmp['text'] = CKunenaTools::parseText($tmp['text']);
+					$tmp['text'] = KunenaParser::parseText($tmp['text']);
 				}
 
 

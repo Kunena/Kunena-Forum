@@ -18,6 +18,7 @@ class CKunenaProfile {
 	public $online = null;
 
 	function __construct($userid, $do='') {
+		kimport('html.parser');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = CKunenaConfig::getInstance ();
@@ -33,23 +34,20 @@ class CKunenaProfile {
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
 		if ($this->profile->userid == 0) return;
 		if ($this->profile->posts === null) {
-			$this->_db->setQuery ( "INSERT INTO #__fb_users (userid) VALUES ('{$this->user->id}')" );
-			$this->_db->query ();
-			check_dberror ( 'Unable to create user profile.' );
-			$this->profile = KunenaFactory::getUser ($this->profile->userid, true);
+			$this->profile->save();
 		}
 		if ($this->profile->userid == $this->my->id) {
-			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->profile->userid, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
-			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->_config, $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
+			if ($this->do != 'edit') $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_EDIT'), 'nofollow', 'edit' );
+			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
 		}
 		$this->name = $this->user->username;
 		if ($this->_config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
 		if ($this->_config->userlist_usertype) $this->usertype = $this->user->usertype;
 		if ($this->_config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->_config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
-		$this->avatarurl = $this->profile->getAvatarURL('large');
-		$this->personalText = CKunenaTools::parseText($this->profile->personalText);
-		$this->signature = CKunenaTools::parseBBCode($this->profile->signature);
+		$this->avatarlink = $this->profile->getAvatarLink('','large');
+		$this->personalText = KunenaParser::parseText(stripslashes($this->profile->personalText));
+		$this->signature = KunenaParser::parseBBCode(stripslashes($this->profile->signature));
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
 		$this->admin = CKunenaTools::isAdmin($this->profile->userid);
@@ -75,6 +73,9 @@ class CKunenaProfile {
 			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
 		$this->online = $this->profile->isOnline();
+
+		$avatar = KunenaFactory::getAvatarIntegration();
+		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
 	}
 
 	/**
@@ -166,7 +167,7 @@ class CKunenaProfile {
 	}
 
 	function displayEditAvatar() {
-		if (!$this->_config->allowavatar) return;
+		if (!$this->editavatar) return;
 		$this->gallery = JRequest::getVar('gallery', 'default');
 		if ($this->gallery == 'default') $this->gallery = '';
 		$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';
@@ -289,8 +290,8 @@ class CKunenaProfile {
 		else $ignore[] = 'username';
 
 		// get the redirect
-		$return = CKunenaLink::GetMyProfileURL($this->_config, $this->user->get('id'), '', true);
-		$err_return = CKunenaLink::GetMyProfileURL($this->_config, $this->user->get('id'), 'edit', true);
+		$return = CKunenaLink::GetMyProfileURL($this->user->get('id'), '', true);
+		$err_return = CKunenaLink::GetMyProfileURL($this->user->get('id'), 'edit', true);
 
 		// do a password safety check
 		if(strlen($post['password']) || strlen($post['password2'])) { // so that "0" can be used as password e.g.
@@ -390,7 +391,7 @@ class CKunenaProfile {
 			if (!$fileinfo['status']) $this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
 			else $this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
 
-			//$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->_config, $this->profile->userid, '', true), JText::_('COM_KUNENA_AVATAR_UPLOADED_WITH_SUCCESS'));
+			//$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', true), JText::_('COM_KUNENA_AVATAR_UPLOADED_WITH_SUCCESS'));
 
 		} else if ( $action == 'delete' ) {
 			//set default avatar
@@ -419,8 +420,8 @@ class CKunenaProfile {
 	function save()
 	{
 		// get the redirect
-		$return = CKunenaLink::GetMyProfileURL($this->_config, $this->user->get('id'), '', true);
-		$err_return = CKunenaLink::GetMyProfileURL($this->_config, $this->user->get('id'), 'edit', true);
+		$return = CKunenaLink::GetMyProfileURL($this->user->get('id'), '', true);
+		$err_return = CKunenaLink::GetMyProfileURL($this->user->get('id'), 'edit', true);
 
 		// Check for request forgeries
 		JRequest::checkToken() or $this->_app->redirect ( $err_return, COM_KUNENA_ERROR_TOKEN, 'error' );
@@ -442,6 +443,6 @@ class CKunenaProfile {
 
 	function cancel()
 	{
-		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->_config, $this->profile->userid, '', true) );
+		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', true) );
 	}
 }

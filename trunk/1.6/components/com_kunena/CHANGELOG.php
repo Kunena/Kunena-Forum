@@ -47,6 +47,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: KunenaRoute uses deprecated class initiation on config
 # [#19288] Fix regression: Allow splitting topic into the same category (invalid check fixed)
 # [#19288] Fix regression: Image MIME type (%s) is not allowed (%s).
+# [#19288] Fix regression: UTF-8 letters breaks preview
 
 11-Apr-2010 Xillibit
 # [#19380] Fix attachments links in message and add generic icons for attachments

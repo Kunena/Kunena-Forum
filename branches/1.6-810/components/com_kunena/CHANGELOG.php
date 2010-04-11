@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+12-Apr-2010 810
+^ [#19356] CSS fixes
+
 11-Apr-2010 Matias
 # [#19288] Fix regression: preview layout issues
 # [#19288] Fix regression: anonymous button too large in Opera

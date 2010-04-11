@@ -30,7 +30,6 @@ class CKunenaListcat {
 		$this->allow = 1;
 
 		$this->prevCheck = $this->session->lasttime;
-		$this->read_topics = explode ( ',', $this->session->readtopics );
 
 		$kunena_app = JFactory::getApplication ();
 
@@ -68,8 +67,7 @@ class CKunenaListcat {
 		if (empty ( $catids ))
 			return;
 		$catlist = implode ( ',', $catids );
-		// FIXME: this is error prone:
-		$readlist = '0' . $this->session->readtopics;
+		$readlist = $this->session->readtopics;
 
 		if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS mmm WHERE c.id=mmm.catid AND mmm.hold='0' AND mmm.time>'{$this->prevCheck}' AND mmm.thread NOT IN ({$readlist})) AS new";
 		else $subquery = " 0 AS new";

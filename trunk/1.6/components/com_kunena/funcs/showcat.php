@@ -128,7 +128,7 @@ class CKunenaShowcat {
 			$avatars->load($userlist);
 
 			if ($this->config->shownew && $this->my->id) {
-				$readlist = '0' . $this->session->readtopics;
+				$readlist = $this->session->readtopics;
 				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
 				check_dberror ( "Unable to get unread messages count and first id." );

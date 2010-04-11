@@ -90,6 +90,12 @@ class KunenaSession extends JObject
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties($table->getProperties());
 		$this->userid = $userid;
+
+		jimport('joomla.utilities.arrayhelper');
+		$readtopics = JArrayHelper::toInteger(explode(',', $this->readtopics));
+		if (empty($readtopics)) $readtopics = array(0);
+		$this->readtopics = implode(',', $readtopics);
+
 		return true;
 	}
 
@@ -176,7 +182,7 @@ class KunenaSession extends JObject
 	function markAllCategoriesRead()
 	{
 		$this->lasttime = CKunenaTimeformat::internalTime();
-		$this->readtopics = '';
+		$this->readtopics = 0;
 	}
 
 	function updateSessionInfo()
@@ -186,7 +192,7 @@ class KunenaSession extends JObject
 		if ($this->isNewSession())
 		{
 			$this->lasttime = $this->currvisit;
-			$this->readtopics = '';
+			$this->readtopics = 0;
 		}
 		$this->updateAllowedForums();
 		$this->currvisit = CKunenaTimeformat::internalTime();

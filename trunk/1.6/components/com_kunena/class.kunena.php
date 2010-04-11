@@ -435,7 +435,7 @@ class CKunenaTools {
 			$readTopics[] = $thread;
 			$readTopics = implode ( ',', $readTopics );
 		} else {
-			$readTopics = 0;
+			$readTopics = false; // do not update session
 		}
 
 		if ($readTopics) {

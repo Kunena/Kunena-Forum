@@ -378,7 +378,7 @@ class CKunenaPosting {
 
 		// First take care of old sessions to make our job easier and faster
 		$lasttime = $this->get ( 'time' ) - $this->_config->fbsessiontimeout - 60;
-		$query = "UPDATE #__fb_sessions SET readtopics=NULL WHERE currvisit<{$lasttime}";
+		$query = "UPDATE #__fb_sessions SET readtopics='0' WHERE currvisit<{$lasttime}";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();

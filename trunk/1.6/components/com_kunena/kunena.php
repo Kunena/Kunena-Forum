@@ -450,28 +450,12 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'markthisread' :
-			// get all already read topics
-			// FIXME: buggy: can have values like this: 0--,5,6
-
-			$kunena_db->setQuery ( "SELECT readtopics FROM #__fb_sessions WHERE userid='{$kunena_my->id}'" );
-			$allreadyRead = $kunena_db->loadResult ();
-			check_dberror ( "Unable to load read topics." );
-			/* Mark all these topics read */
-			$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND thread NOT IN ({$allreadyRead}) GROUP BY thread" );
+			// Mark all unread topics in the category to read
+			$readTopics = $kunena_session->readtopics;
+			$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND parent=0 AND thread NOT IN ({$readTopics})" );
 			$readForum = $kunena_db->loadResultArray ();
 			check_dberror ( "Unable to load messages." );
-			$readTopics = '--';
-
-			foreach ( $readForum as $rf ) {
-				$readTopics = $readTopics . ',' . $rf->thread;
-			}
-
-			$readTopics = str_replace ( '--,', '', $readTopics );
-
-			if ($allreadyRead != "") {
-				$readTopics = $readTopics . ',' . $allreadyRead;
-			}
-
+			$readTopics = implode(',', array_merge(explode(',', $readTopics), $readForum));
 			$kunena_db->setQuery ( "UPDATE #__fb_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id" );
 			$kunena_db->query ();
 			check_dberror ( 'Unable to update readtopics in session table.' );

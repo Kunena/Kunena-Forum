@@ -35,8 +35,8 @@ define('KUNENA_PATH_ADMIN_INSTALL', KUNENA_PATH_ADMIN .DS. 'install');
 define('KUNENA_PATH_ADMIN_IMAGES', KUNENA_PATH_ADMIN .DS. 'images');
 
 // Kunena uploaded files directory
-define('KUNENA_RELPATH_UPLOADED', '/media/kunena/attachments');
-define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH . KUNENA_RELPATH_UPLOADED);
+define('KUNENA_RELPATH_UPLOADED', 'media/kunena/attachments');
+define('KUNENA_PATH_UPLOADED', KUNENA_ROOT_PATH .DS. KUNENA_RELPATH_UPLOADED);
 
 // Kunena uploaded avatars directory
 define('KUNENA_RELPATH_AVATAR_UPLOADED', '/media/kunena/avatars');

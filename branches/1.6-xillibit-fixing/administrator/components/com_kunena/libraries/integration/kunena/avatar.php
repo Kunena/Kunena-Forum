@@ -29,10 +29,6 @@ class KunenaAvatarKunena extends KunenaAvatar
 		$user = KunenaFactory::getUser($user);
 		$avatar = $user->avatar;
 
-		if ($avatar == '') {
-			$avatar = 'nophoto.jpg';
-		}
-
 		if ($size=='thumb' && file_exists( KPATH_MEDIA_LEGACY ."/avatars/s_{$avatar}" )){
 			$avatar = 's_' . $avatar;
 			$avatar = KURL_MEDIA_LEGACY . "avatars/{$avatar}";
@@ -42,9 +38,15 @@ class KunenaAvatarKunena extends KunenaAvatar
 			else $avatar = 'nophoto.jpg';
 
 			$avatar = KURL_MEDIA_LEGACY . "avatars/{$avatar}";
-		} else if ( file_exists(KPATH_MEDIA ."/avatars/{$avatar}" ) ) {
-			$avatar = 'thumb/'.$avatar;
+		} else if ( file_exists(KPATH_MEDIA ."/avatars/{$avatar}" ) && $avatar != '' ) {
+			if (!preg_match('`gallery`',$avatar)) {
+				$avatar = 'thumb/'.$avatar;
+			}
 
+			$avatar = KURL_MEDIA . "avatars/{$avatar}";
+		} else {
+			if ($size=='thumb') $avatar = 's_nophoto.jpg';
+			else $avatar = 'nophoto.jpg';
 			$avatar = KURL_MEDIA . "avatars/{$avatar}";
 		}
 

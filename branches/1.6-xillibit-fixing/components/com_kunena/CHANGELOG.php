@@ -41,6 +41,7 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Fix regression in who Undefined variable: kunena_my
 # [#19288] Allow merge function to merge with any topics on the forum
 # [#19288] When you upload an avatar, it doesn't show
+# [#19288] When you upload an avatar, it doesn't show (Part 2)
 
 10-Apr-2010 Xillibit
 ^ [#18627] Update 1.6-xillibit-fixing merge revisions 2190-2185, 2183-2182 from /trunk/1.6

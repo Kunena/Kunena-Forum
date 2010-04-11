@@ -148,11 +148,11 @@ class CKunenaViewMessage {
 
 		//karma points and buttons
 		if ($this->config->showkarma && $this->profile->userid) {
-			$this->userkarma = "<strong>" . JText::_('COM_KUNENA_KARMA') . ":</strong> " . $this->profile->karma;
+			$this->userkarma = JText::_('COM_KUNENA_KARMA') . ": " . $this->profile->karma;
 
 			if ($this->my->id && $this->my->id != $this->profile->userid) {
-				$this->userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'decrease', $this->catid, $this->id, $this->userid, '<span class="karmaminus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '" />' );
-				$this->userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'increase', $this->catid, $this->id, $this->userid, '<span class="karmaplus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '" />' );
+				$this->userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'decrease', $this->catid, $this->id, $this->userid, '<span class="karmaminus" alt="Karma-" border="0" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
+				$this->userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'increase', $this->catid, $this->id, $this->userid, '<span class="karmaplus" alt="Karma+" border="0" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
 			}
 		}
 

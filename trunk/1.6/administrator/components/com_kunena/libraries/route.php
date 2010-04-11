@@ -26,7 +26,7 @@ abstract class KunenaRoute {
 
 		if (!isset($query['func'])) {
 			// Handle default page
-			$config = CKunenaConfig::getInstance ();
+			$config = KunenaFactory::getConfig ();
 			$my = JFactory::getUser();
 			switch ($config->fbdefaultpage){
 				case 'my' :

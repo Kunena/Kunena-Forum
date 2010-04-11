@@ -512,7 +512,7 @@ class CKunenaPost {
 		$this->selectlist = CKunenaTools::KSelectList ( 'postmove', $options, ' size="15" class="kmove_selectbox"' );
 		$this->message = $this->msg_cat;
 
-		CKunenaTools::loadTemplate ( '/moderate/postmove.php' );
+		CKunenaTools::loadTemplate ( '/moderate/messagemove.php' );
 	}
 
 	protected function domovepost() {

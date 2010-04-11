@@ -17,7 +17,7 @@ defined ( '_JEXEC' ) or die ();
 		echo CKunenaLink::GetPostURL ();
 		?>"
 	method="post" name="myform"><input type="hidden" name="do"
-	value="domovemessage" /> <input type="hidden" name="id"
+	value="domovepost" /> <input type="hidden" name="id"
 	value="<?php
 		echo $this->id;
 		?>" />

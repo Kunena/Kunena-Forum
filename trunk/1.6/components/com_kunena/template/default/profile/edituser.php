@@ -22,11 +22,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 			</label>
 		</td>
 		<td>
-		<?php if ($this->_config->usernamechange) { ?>
-			<input type="hidden" name="username" value="<?php echo $this->user->get('username');?>" />
-		<?php } else { ?>
-			<span><?php echo $this->user->get('username');?></span>
-		<?php } ?>
+			<input type="text" name="username" value="<?php echo $this->user->get('username');?>" <?php echo !$this->_config->usernamechange ? 'disabled="disabled" ' : ''?>/>
 		</td>
 	</tr>
 	<tr class="ksectiontableentry1">

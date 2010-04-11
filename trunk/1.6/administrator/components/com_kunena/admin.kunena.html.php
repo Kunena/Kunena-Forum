@@ -1210,6 +1210,13 @@ td.kadmin-tdtitle {
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE') ?></td>
+								<td align="left" valign="top"><?php echo $lists ['pubwrite'];
+						?></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_REGISTERED_ONLY') ?>
 						</td>
 								<td align="left" valign="top" width="25%"><?php echo $lists ['regonly'];
@@ -1218,22 +1225,20 @@ td.kadmin-tdtitle {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_REG_ONLY_DESC') ?>
 						</td>
 					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CHANGENAME') ?></td>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_ALLOW_USERNAME_CHANGE'); ?></td>
+						<td align="left" valign="top" width="25%"><?php echo $lists ['usernamechange']; ?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ALLOW_USERNAME_CHANGE_DESC'); ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ALLOW_NICKNAME') ?></td>
 								<td align="left" valign="top"><?php echo $lists ['changename'];
 						?>
 						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_CHANGENAME_DESC') ?>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ALLOW_NICKNAME_DESC') ?>
 						</td>
 					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE') ?></td>
-								<td align="left" valign="top"><?php echo $lists ['pubwrite'];
-						?></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PUBWRITE_DESC') ?>
-						</td>
-					</tr>
-							<tr align="center" valign="middle">
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FLOOD') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_floodprotection"
@@ -1979,16 +1984,6 @@ td.kadmin-tdtitle {
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_POLLSPOP');
 							?></td>
-						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_MYPROFILE_PLUGIN_SETTINGS') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_USERNAMECANCHANGE'); ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['usernamechange']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_USERNAMECANCHANGE_DESC'); ?></td>
 						</tr>
 					</table>
 				</fieldset>

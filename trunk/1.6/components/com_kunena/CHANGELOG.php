@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: some layout issues in func=view
 # [#20141] Mark forum read can break your session
 # [#19288] Fix regression: UTF8 letters breaks outer tags in bbcode
+# [#19288] Fix regression: Allow username to be changed again
 
 10-Apr-2010 Matias
 + [#20050] Add new integration classes: Activity for CB

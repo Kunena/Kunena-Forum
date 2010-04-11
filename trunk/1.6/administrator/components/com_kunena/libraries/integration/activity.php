@@ -34,6 +34,8 @@ abstract class KunenaActivity
 	}
 
 
-	public function onAfterPosting($message) {}
+	public function onAfterPost($message) {}
 	public function onAfterReply($message) {}
+	public function onAfterEdit($message) {}
+	public function onAfterDelete($message) {}
 }

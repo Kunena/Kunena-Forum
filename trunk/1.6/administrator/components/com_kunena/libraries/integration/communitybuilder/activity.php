@@ -17,19 +17,30 @@ class KunenaActivityCommunityBuilder extends KunenaActivity {
 	protected $integration = null;
 
 	public function __construct() {
-		$this->integration = KunenaIntegration::getInstance ('communitybuilder');
-		if (! $this->integration || ! $this->integration->isLoaded())
+		$this->integration = KunenaIntegration::getInstance ( 'communitybuilder' );
+		if (! $this->integration || ! $this->integration->isLoaded ())
 			return;
 		$this->priority = 50;
 	}
 
-	public function onAfterPosting($message) {
-		$params = array ($message->userid, $message );
+	public function onAfterPost($message) {
+		$params = array ('actor' => $message->get ( 'userid' ), 'replyto' => 0, 'message' => $message );
 		$this->integration->trigger ( 'onAfterPost', $params );
 	}
 
 	public function onAfterReply($message) {
-		$params = array ($message->userid, $message );
+		$params = array ('actor' => $message->get ( 'userid' ), 'replyto' => $message->parent->userid, 'message' => $message );
 		$this->integration->trigger ( 'onAfterReply', $params );
+	}
+
+	public function onAfterEdit($message) {
+		$params = array ('actor' => $message->get ( 'modified_by' ), 'message' => $message );
+		$this->integration->trigger ( 'onAfterEdit', $params );
+	}
+
+	public function onAfterDelete($message) {
+		$my = JFactory::getUser();
+		$params = array ('actor' => $my->id, 'message' => $message );
+		$this->integration->trigger ( 'onAfterDelete', $params );
 	}
 }

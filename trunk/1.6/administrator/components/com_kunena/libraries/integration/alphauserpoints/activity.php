@@ -24,7 +24,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		$this->_config = KunenaFactory::getConfig();
 	}
 
-	public function onAfterPosting($message) {
+	public function onAfterPost($message) {
 		if ($this->_config->alphauserpointsrules) {
 			$datareference = '<a href="' . CKunenaLink::GetMessageURL($message->get('id')) . '">' . $message->get('subject') . '</a>';
 			AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $message->get('id'), $datareference );

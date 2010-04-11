@@ -24,7 +24,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		$this->_config = KunenaFactory::getConfig();
 	}
 
-	public function onAfterPosting($message) {
+	public function onAfterPost($message) {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.new' );
 

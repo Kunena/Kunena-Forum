@@ -417,7 +417,7 @@ class CKunenaPosting {
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		if ($this->parent->thread == 0) {
-			$activity->onAfterPosting($this);
+			$activity->onAfterPost($this);
 		} else {
 			$activity->onAfterReply($this);
 		}
@@ -498,6 +498,11 @@ class CKunenaPosting {
 				return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
 		}
 		$this->set ( 'id', $id = $this->parent->id );
+
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		$activity->onAfterEdit($this);
+
 		return $id;
 	}
 
@@ -507,8 +512,13 @@ class CKunenaPosting {
 			$message = JText::_ ( 'COM_KUNENA_POST_OWN_DELETE_ERROR' );
 		} else {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
+
+			// Activity integration
+			$activity = KunenaFactory::getActivityIntegration();
+			$activity->onAfterDelete($this);
 		}
 
+		// FIXME: move redirect out of here
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->parent->catid, true ), $message );
 
 		return empty ( $this->errors );

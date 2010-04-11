@@ -340,7 +340,7 @@ class KunenaUser extends JObject
 				break;
 			case 'birthdate':
 				if ($this->birthdate)
-					return '<span class="birthdate" title="'. JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') . ': ' . CKunenaTimeformat::showDate($this->birthdate, 'date').'"></span>';
+					return '<span class="birthdate" title="'. JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE') . ': ' . CKunenaTimeformat::showDate($this->birthdate, 'date', 'utc', 0).'"></span>';
 				break;
 			case 'location':
 				if ($this->location)

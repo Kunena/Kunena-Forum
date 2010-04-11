@@ -60,18 +60,3 @@ defined ( '_JEXEC' ) or die ();
 	</form>
 </div>
 <?php endif ?>
-<div class="kmessage_editMarkUp_cover">
-	<?php if ($this->msg->modified_by) : ?>
-	<span class="kmessage_editMarkUp" title="<?php echo CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat_hover') ?>">
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat' ) . ' '
-		. JText::_('COM_KUNENA_BY') . ' ' . ($this->config->username ? $this->msg->modified_username : $this->msg->modified_name) . '.'; ?>
-	<?php if ($this->msg->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( stripslashes ( $this->msg->modified_reason ) ); ?>
-	</span>
-	<?php endif ?>
-	<?php if ($this->config->reportmsg && $this->my->id) :?>
-	<span class="kmessage_informMarkUp"><?php echo CKunenaLink::GetReportMessageLink ( $this->catid, $this->id, JText::_('COM_KUNENA_REPORT') ) ?></span>
-	<?php endif ?>
-	<?php if (!empty ( $this->ipLink )) : ?>
-	<span class="kmessage_informMarkUp"><?php echo $this->ipLink ?></span>
-	<?php endif ?>
-</div>

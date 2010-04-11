@@ -106,7 +106,7 @@ class CKunenaViewMessage {
 		$this->message = CKunenaTools::parseBBCode ( $message->message );
 
 		//Show admins the IP address of the user:
-		if (CKunenaTools::isAdmin () || (CKunenaTools::isModerator ( $this->my->id, $this->catid ) && !$this->config->hide_ip)) {
+		if ($message->ip && (CKunenaTools::isAdmin () || (CKunenaTools::isModerator ( $this->my->id, $this->catid ) && !$this->config->hide_ip))) {
 			$this->ipLink = CKunenaLink::GetMessageIPLink ( $message->ip );
 		}
 

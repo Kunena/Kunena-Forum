@@ -1630,7 +1630,6 @@ PX		EM			PCT			PT
 
 #Kunena div.kmessage_editMarkUp_cover {
 	padding-top: 5px;
-	margin-left: 5px;
 	text-align: right;
 	border-bottom: 1px dotted #BFC3C6;
 }
@@ -1831,7 +1830,7 @@ PX		EM			PCT			PT
 
 /* Left and right layouts */
 #Kunena ul#kpost-profile {
-	margin:15px 0 0 0;
+	margin:8px 0 0 0;
 	padding: 0;
 	text-align:center;
 }
@@ -1839,7 +1838,7 @@ PX		EM			PCT			PT
 #Kunena ul#kpost-profile li {
 	list-style-type: none;
 	display:block;
-	padding-bottom: 3px;
+	padding-bottom: 1px;
 }
 
 #Kunena ul#kpost-profile li.kpost-username {}
@@ -1855,11 +1854,11 @@ PX		EM			PCT			PT
 #Kunena ul#kpost-profile li.kpost-online-img{}
 
 #Kunena li.kpost-userposts{
-	margin-top : 20px;	
+	margin : 0px;	
 }
 
 #Kunena ul#kpost-profile li.kpost-smallicons{
-	margin:20px auto;
+	margin: 0px auto;
 	width: 80px;
 }
 #Kunena ul#kpost-profile li.kpost-personal{

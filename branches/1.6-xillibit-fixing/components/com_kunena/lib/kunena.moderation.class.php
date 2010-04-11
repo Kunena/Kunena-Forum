@@ -109,7 +109,7 @@ class CKunenaModeration {
 
 		// Check that user has moderator permissions in source category
 		if ( !CKunenaTools::isModerator($this->_my->id, $currentMessage->catid) ) {
-			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR_IN_CATEGORY', $currentMessage->id, $currentMessage->catid);
+			$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR_IN_CATEGORY', $currentMessage->id, $currentMessage->catid);
 			return false;
 		}
 
@@ -127,13 +127,13 @@ class CKunenaModeration {
 
 			if ( !is_object( $targetMessage )) {
 				// Target message not found. Cannot proceed with move
-				$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_TARGET_MESSAGE_NOT_FOUND', $currentMessage->id, $TargetMessageID);
+				$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_TARGET_MESSAGE_NOT_FOUND', $currentMessage->id, $TargetMessageID);
 				return false;
 			}
 
 			if ($targetMessage->thread == $currentMessage->thread) {
 				// Recursive self moves not supported
-				$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $currentMessage->id, $currentMessage->thread);
+				$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $currentMessage->id, $currentMessage->thread);
 				return false;
 			}
 
@@ -142,7 +142,7 @@ class CKunenaModeration {
 			$TargetCatID = $targetMessage->catid;
 		} else {
 			if ($TargetCatID == $currentMessage->catid) {
-				$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_CATEGORY', $currentMessage->id, $TargetCatID);
+				$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_CATEGORY', $currentMessage->id, $TargetCatID);
 				return false;
 			}
 		}
@@ -150,7 +150,7 @@ class CKunenaModeration {
 		// Check that target category exists and is visible to our moderator
 		if (! in_array ( $TargetCatID, $this->_allowed ) ) {
 			//the user haven't moderator permissions in target category
-			$this->_errormsg = JText::printf('COM_KUNENA_MODERATION_ERROR_TARGET_CATEGORY_NOT_FOUND', $currentMessage->id, $TargetCatID);
+			$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_TARGET_CATEGORY_NOT_FOUND', $currentMessage->id, $TargetCatID);
 			return false;
 		}
 

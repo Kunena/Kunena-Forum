@@ -545,7 +545,7 @@ class CKunenaPost {
 		$this->message = $this->msg_cat;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND catid='{$this->message->catid}' AND thread!='{$this->message->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->message->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );
@@ -602,7 +602,7 @@ class CKunenaPost {
 		$this->message = $this->msg_cat;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND catid='{$this->catid}' AND thread!='{$this->message->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->message->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );

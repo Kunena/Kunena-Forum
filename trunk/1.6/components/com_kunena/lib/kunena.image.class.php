@@ -96,7 +96,7 @@ class CKunenaImage
 		// First we test if dependencies are met.
 		if (!CKunenaImageHelper::test())
 		{
-			$this->setError('Unmet Dependencies');
+			$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_UNMET_DEP'));
 			return false;
 		}
 
@@ -142,7 +142,7 @@ class CKunenaImage
 		// Make sure the file handle is valid.
 		if ((!is_resource($this->_handle) || get_resource_type($this->_handle) != 'gd'))
 		{
-			$this->setError('Invalid File Handle');
+			$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_INVALID_FILE_HANDLE'));
 			return false;
 		}
 
@@ -298,7 +298,7 @@ class CKunenaImage
 		// Make sure the file handle is valid.
 		if ((!is_resource($this->_handle) || get_resource_type($this->_handle) != 'gd'))
 		{
-			$this->setError('Invalid File Handle');
+			$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_INVALID_FILE_HANDLE'));
 			return false;
 		}
 
@@ -310,7 +310,7 @@ class CKunenaImage
 		// Make sure the file exists.
 		if (!JFile::exists($path))
 		{
-			$this->setError('File Does Not Exist');
+			$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_FILE_DONOT_EXIST'));
 			return false;
 		}
 
@@ -327,7 +327,7 @@ class CKunenaImage
 				// Make sure the image type is supported.
 				if (empty($this->_support['GIF']))
 				{
-					$this->setError('File Type Not Supported');
+					$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_FILETYPE_NOT_SUPPORTED'));
 					return false;
 				}
 
@@ -337,7 +337,7 @@ class CKunenaImage
 				$handle = @imagecreatefromgif($path);
 				if (!is_resource($handle))
 				{
-					$this->setError('Unable To Process Image');
+					$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_UNABLE_PROCESS_IMAGE'));
 					return false;
 				}
 				$this->_handle = &$handle;
@@ -347,7 +347,7 @@ class CKunenaImage
 				// Make sure the image type is supported.
 				if (empty($this->_support['JPG']))
 				{
-					$this->setError('File Type Not Supported');
+					$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_FILETYPE_NOT_SUPPORTED'));
 					return false;
 				}
 
@@ -357,7 +357,7 @@ class CKunenaImage
 				$handle = @imagecreatefromjpeg($path);
 				if (!is_resource($handle))
 				{
-					$this->setError('Unable To Process Image');
+					$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_UNABLE_PROCESS_IMAGE'));
 					return false;
 				}
 				$this->_handle = &$handle;
@@ -367,7 +367,7 @@ class CKunenaImage
 				// Make sure the image type is supported.
 				if (empty($this->_support['PNG']))
 				{
-					$this->setError('File Type Not Supported');
+					$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_FILETYPE_NOT_SUPPORTED'));
 					return false;
 				}
 
@@ -377,14 +377,14 @@ class CKunenaImage
 				$handle = @imagecreatefrompng($path);
 				if (!is_resource($handle))
 				{
-					$this->setError('Unable To Process Image');
+					$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_UNABLE_PROCESS_IMAGE'));
 					return false;
 				}
 				$this->_handle = &$handle;
 				break;
 
 			default:
-				$this->setError('File Type Not Supported');
+				$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_FILETYPE_NOT_SUPPORTED'));
 				return false;
 				break;
 		}
@@ -400,7 +400,7 @@ class CKunenaImage
 		// Make sure the file handle is valid.
 		if ((!is_resource($this->_handle) || get_resource_type($this->_handle) != 'gd'))
 		{
-			$this->setError('Invalid File Handle');
+			$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_INVALID_FILE_HANDLE'));
 			return false;
 		}
 
@@ -527,7 +527,7 @@ class CKunenaImage
 		}
 		else
 		{
-			$this->setError('Invalid Fit Option');
+			$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_INVALID_FIT'));
 			return false;
 		}
 
@@ -570,7 +570,7 @@ class CKunenaImageFilter
 
 	function execute()
 	{
-		$this->setError('Method Not Implemented');
+		$this->setError(JText::_('COM_KUNENA_ATTACHMENT_ERROR_METHOD_NOT_IMPLEMENTED'));
 		return false;
 	}
 }
@@ -585,7 +585,7 @@ class CKunenaImageHelper
 		// Make sure the file exists.
 		if (!JFile::exists($path))
 		{
-			$e = new JException('File Does Not Exist');
+			$e = new JException(JText::_('COM_KUNENA_ATTACHMENT_ERROR_FILE_DONOT_EXIST'));
 			return false;
 		}
 
@@ -593,7 +593,7 @@ class CKunenaImageHelper
 		$info = @getimagesize($path);
 		if (!$info)
 		{
-			$e = new JException('Unable To Get Image Size');
+			$e = new JException(JText::_('COM_KUNENA_ATTACHMENT_ERROR_UNABLE_TO_GET_IMAGESIZE'));
 			return false;
 		}
 

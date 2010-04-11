@@ -38,18 +38,15 @@ defined ( '_JEXEC' ) or die ();
 					}
 
 					echo '<a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.
-						'<img '.$imgsize.' src="'.$thumb.'" alt="'.$attachment->filename.'" />'.
+						'<img '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />'.
 						'</a>'.
-						'<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" title="'.$attachment->filename.'" rel="nofollow">'.$shortname.'</a>'.
+						'<span>'.CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$shortname,$shortname, 'nofollow').
 						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
 
-					// TODO: Add generic attachment icon
-					// TODO: Replace href link with CKunenaLink::Call
-					echo '<span><a href="'.$attachment->folder.'/'.$attachment->filename.'" title="'.$attachment->filename.'" rel="nofollow">'.$shortname.'</a>'.
-						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
+					echo '<span><img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />'.CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$attachment->filename,$attachment->filename, 'nofollow').'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
 			}
 			?>
 			</li>

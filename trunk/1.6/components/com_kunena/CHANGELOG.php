@@ -40,9 +40,16 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: some layout issues in func=view
 # [#20141] Mark forum read can break your session
 # [#19288] Fix regression: UTF8 letters breaks outer tags in bbcode
-# [#19288] Fix regression: Allow username to be changed again
+# [#19288] Fix regression: Allow username to be changed again from profile
 # [#19288] Fix regression: Karma layout issue in IE8
 + [#20050] Add new integration classes: Add new events onAfterEdit/Delete to Activity class
+^ [#15886] Merged revisions 2196-2203 from /branches/1.6-xillibit-fixing
+
+11-Apr-2010 Xillibit
+# [#19380] Fix attachments links in message and add generic icons for attachments
+# [#19288] Fix regression with post move
+^ [#19288] Replace some hard coded text strings
+# [#19288] Fix regression in who Undefined variable: kunena_my
 
 10-Apr-2010 Matias
 + [#20050] Add new integration classes: Activity for CB

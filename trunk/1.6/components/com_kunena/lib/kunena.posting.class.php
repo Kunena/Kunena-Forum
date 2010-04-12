@@ -22,6 +22,7 @@ class CKunenaPosting {
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = JFactory::getDBO ();
 		$this->_my = JFactory::getUser ();
+		$this->_myuser = KunenaFactory::getUser ();
 		$this->_app = JFactory::getApplication ();
 
 		$this->setError ( '-load-', JText::_ ( 'COM_KUNENA_POSTING_NOT_LOADED' ) );
@@ -281,7 +282,7 @@ class CKunenaPosting {
 			if (! $this->get ( 'userid' ))
 				$this->set ( 'userid', $this->_my->id );
 			if (! $this->get ( 'name' ))
-				$this->set ( 'name', $this->_config->username ? $this->_my->username : $this->_my->name );
+				$this->set ( 'name', $this->_myuser->getName() );
 			if (! $this->get ( 'email' ))
 				$this->set ( 'email', $this->_my->email );
 		}
@@ -688,7 +689,7 @@ class CKunenaPosting {
 				if ($nicktaken && $nicktaken != $this->_my->id) {
 					return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CONFLICT_REG' ) );
 				}
-			} else if ($value != $this->_my->username || $value != $this->_my->name) {
+			} else if ($value != $this->_my->username && $value != $this->_my->name) {
 				return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CHANGED' ) );
 			}
 		}

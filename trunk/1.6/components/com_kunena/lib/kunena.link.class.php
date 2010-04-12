@@ -304,21 +304,21 @@ class CKunenaLink {
 
 	function GetAnnouncementURL($do, $id = NULL, $xhtml = true) {
 		$idstring = '';
-		if ($id !== NULL)
+		if ($id)
 			$idstring .= "&id=$id";
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=announcement&do={$do}{$idstring}", $xhtml );
 	}
 
 	function GetAnnouncementLink($do, $id = NULL, $name, $title, $rel = 'nofollow') {
 		$idstring = '';
-		if ($id !== NULL)
+		if ($id)
 			$idstring .= "&id=$id";
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . "&func=announcement&do={$do}{$idstring}", $name, $title, $rel );
 	}
 
 	function GetPollURL($do, $id = NULL, $catid) {
 		$idstring = '';
-		if ($id !== NULL)
+		if ($id)
 			$idstring .= "&id=$id";
 		$catidstr = "&catid=$catid";
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=poll&do={$do}{$idstring}{$catidstr}" );

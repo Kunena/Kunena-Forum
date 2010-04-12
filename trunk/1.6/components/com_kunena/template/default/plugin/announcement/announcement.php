@@ -244,7 +244,7 @@ if ($do == "read") {
 
         	$kunena_db->query();
         	check_dberror("Unable to insert announcement.");
-        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show',false), JText::_('COM_KUNENA_ANN_SUCCESS_ADD'));
+        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show',null, false), JText::_('COM_KUNENA_ANN_SUCCESS_ADD'));
     	} else {
     		$kunena_app->redirect ( CKunenaLink::GetKunenaURL(false), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
     	}
@@ -368,7 +368,7 @@ if ($do == "read") {
         	$kunena_db->setQuery("UPDATE #__fb_announcement SET title=". $kunena_db->Quote ( $title ) .", description=". $kunena_db->Quote ( $description ) .", sdescription=". $kunena_db->Quote ( $sdescription ) .",  created=" . (($created <> '')?"'$created'":"NOW()") . ", published='$published', showdate='$showdate' WHERE id=$id");
 
        		if ($kunena_db->query()) {
-            	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show', false), JText::_('COM_KUNENA_ANN_SUCCESS_EDIT'));
+            	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show', null, false), JText::_('COM_KUNENA_ANN_SUCCESS_EDIT'));
             }
         	check_dberror("Unable to update announcement.");
     	} else {
@@ -529,7 +529,7 @@ if ($do == "read") {
         	$kunena_db->query();
         	check_dberror("Unable to delete announcement.");
 
-        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show', false), JText::_('COM_KUNENA_ANN_DELETED'));
+        	$kunena_app->redirect(CKunenaLink::GetAnnouncementURL('show', null, false), JText::_('COM_KUNENA_ANN_DELETED'));
     	} else {
     		$kunena_app->redirect ( CKunenaLink::GetKunenaURL(false), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
     	}

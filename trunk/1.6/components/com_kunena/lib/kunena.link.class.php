@@ -159,14 +159,18 @@ class CKunenaLink {
 		return $iplink;
 	}
 
+	// Returns always link to Kunena profile
 	function GetMyProfileLink($userid, $name, $rel = 'nofollow', $task = '') {
 		return CKunenaLink::GetHrefLink ( CKunenaLink::GetMyProfileURL ( $userid, $task ), $name, '', $rel );
 	}
 
+	// Returns always url to Kunena profile
 	function GetMyProfileURL($userid = '', $task = '', $xhtml = true) {
-		$profile = KunenaFactory::getProfile ();
-		$link = $profile->getProfileURL ( $userid, $task );
-		return $xhtml == true ? $link : htmlspecialchars_decode ( $link );
+		$my = JFactory::getUser();
+		if ($userid && $userid!=$my->id) $userid = "&userid=$userid";
+		else $userid = '';
+		if ($task) $task = "&do=$task";
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=profile{$userid}{$task}", $xhtml );
 	}
 
 	function GetProfileLink($userid, $name, $rel = 'nofollow', $class = '') {

@@ -46,6 +46,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Configuration screen did not work in PHP <5.2.4
 # [#19288] Fix regression: Edit profile url points to JomSocial (stay in Kunena)
 # [#19288] Fix regression: No threads were marked read
+# [#19288] Allow catid=0 in func=view (redirect it)
 
 12-Apr-2010 810
 ^ [#19356] Minor HTML/CSS fixes

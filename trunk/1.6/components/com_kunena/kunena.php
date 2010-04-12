@@ -289,14 +289,13 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	//Check if the catid requested is a parent category, because if it is
 	//the only thing we can do with it is 'listcat' and nothing else
 
-	if ($func == "showcat" || $func == "view") {
+	if ($func == "showcat") {
 		if ($catid != 0) {
 			$kunena_db->setQuery ( "SELECT parent FROM #__fb_categories WHERE id='{$catid}'" );
-			$strCatParent = $kunena_db->loadResult ();
+			$catParent = intval($kunena_db->loadResult ());
 			check_dberror ( 'Unable to load categories.' );
 		}
-		if ($catid == 0 || $strCatParent === '0') {
-
+		if ($catid == 0 || $catParent == 0) {
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, false) );
 		}
 	}

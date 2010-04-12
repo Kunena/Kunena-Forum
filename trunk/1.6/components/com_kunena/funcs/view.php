@@ -299,16 +299,16 @@ class CKunenaView {
 			return;
 
 		// Is user allowed to see the forum specified in the message?
-		$this->catid = $this->first_message->catid;
-		if (! $this->session->canRead ( $this->catid )) {
+		if (! $this->session->canRead ( $this->first_message->catid )) {
 			$this->allow = 0;
 			return;
 		}
 
-		$this->app = & JFactory::getApplication ();
+			$this->app = & JFactory::getApplication ();
 		// Test if this is a valid URL. If not, redirect browser to the right location
 		$this->thread = $this->first_message->parent == 0 ? $this->id : $this->first_message->thread;
 		if ($this->first_message->moved || $this->thread != $this->id || $this->catid != $this->first_message->catid) {
+			$this->catid = $this->first_message->catid;
 			if ($this->first_message->moved) {
 				$newurl = array();
 				parse_str ( $this->first_message->message, $newloc );

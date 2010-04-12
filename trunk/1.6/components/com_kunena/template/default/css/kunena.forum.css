@@ -221,6 +221,7 @@ PX		EM			PCT			PT
 	/* background: #F2F1EE; */
 	text-align: center;
 	color: #999999;
+	width:0px;
 }
 
 #Kunena td.td-0 strong {

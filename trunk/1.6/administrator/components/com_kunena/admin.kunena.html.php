@@ -439,7 +439,7 @@ td.kadmin-tdtitle {
 	</tr>
 
 	<tr>
-		<th align="center" colspan="13"><?php
+		<th align="center" colspan="14"><?php
 		echo $pageNav->getLimitBox () . $pageNav->getResultsCounter () . $pageNav->getPagesLinks ();
 		?>
 		</th>

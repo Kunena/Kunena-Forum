@@ -39,6 +39,9 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: facebook gets value from skype when user edits profile
 # [#19288] Fix regression: Users cannot post: You are not allowed to change your name!
 
+12-Apr-2010 810
+^ [#19356] Minor HTML/CSS fixes
+
 11-Apr-2010 Matias
 # [#19288] Fix regression: preview layout issues
 # [#19288] Fix regression: anonymous button too large in Opera

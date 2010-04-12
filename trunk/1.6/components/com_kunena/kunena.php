@@ -125,6 +125,16 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.link.class.php');
 
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
 
+// Redirect profile (menu item) to the right component
+if ($func == 'profile' && !$do) {
+	kimport('integration.integration');
+	$profileIntegration = KunenaIntegration::detectIntegration('profile', true);
+	if ($profileIntegration != 'kunena') {
+		$link = CKunenaLink::GetProfileURL($kunena_my->id, false);
+		if ($link) $kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id, false));
+	}
+}
+
 // Check for JSON request
 if ($func == "json") {
 

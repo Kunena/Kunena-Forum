@@ -165,7 +165,13 @@ class CKunenaLink {
 	}
 
 	// Returns always url to Kunena profile
-	function GetMyProfileURL($userid = '', $task = '', $xhtml = true) {
+	function GetMyProfileURL($userid = 0, $task = '', $xhtml = true) {
+		if (!$task) {
+			// Workaround for menu redirect: be more verbose
+			kimport('integration.integration');
+			$profileIntegration = KunenaIntegration::detectIntegration('profile', true);
+			if ($profileIntegration != 'kunena') $task='summary';
+		}
 		$my = JFactory::getUser();
 		if ($userid && $userid!=$my->id) $userid = "&userid=$userid";
 		else $userid = '';

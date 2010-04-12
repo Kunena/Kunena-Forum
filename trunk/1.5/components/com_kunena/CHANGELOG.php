@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+13-Apr-2010 Matias
+# [#20107] Regression: Trunk is missing fix for #20008: Subject splits into two
+# [#20150] Administration: Show Category configuration option has no effect
+
 05-Apr-2010 Matias
 ^ [#20106] Updated version info to 1.5.12-DEV Calificar (Spanish, meaning describe)
 # [#20107] Merge changes from K1.5.11 into trunk

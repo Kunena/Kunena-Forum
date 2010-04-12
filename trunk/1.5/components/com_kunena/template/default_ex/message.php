@@ -61,7 +61,7 @@ if ($fbConfig->fb_profile == 'cb')
         <td class = "fb-msgview-right">
                 <table width = "100%" border = "0" cellspacing = "0" cellpadding = "0">
                     <tr>
-                        <td align = "left">
+                        <td align = "left" width="100%">
                             <?php
                             $msg_time_since = _KUNENA_TIME_SINCE;
                             $msg_time_since = str_replace('%time%', time_since($fmessage->time, CKunenaTools::fbGetInternalTime()), $msg_time_since);

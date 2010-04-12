@@ -186,7 +186,7 @@ if ($func == "mylatest")
 else
 {
 	$order = "lastid DESC";
-	$query = "SELECT thread, MAX(id) AS lastid FROM #__fb_messages WHERE time>'{$querytime}' AND hold='0' AND moved='0' AND catid IN ({$fbSession->allowed})
+	$query = "SELECT thread, MAX(id) AS lastid FROM #__fb_messages WHERE time>'{$querytime}' AND hold='0' AND moved='0' AND catid IN ({$fbSession->allowed}) {$latestcats}
 		GROUP BY thread
 		ORDER BY {$order}
 	";

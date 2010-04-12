@@ -409,11 +409,14 @@ class CKunenaView {
 		$idstr = @join ( ",", $messageids );
 
 		// now grab all attchments for these messages
-		$query = "SELECT * FROM #__kunena_attachments
-					WHERE mesid IN ($idstr)";
-		$this->db->setQuery ( $query );
-		$attachments = $this->db->loadObjectList ();
-		check_dberror ( 'Unable to load attachments' );
+		$attachments = array();
+		if ($idstr) {
+			$query = "SELECT * FROM #__kunena_attachments
+				WHERE mesid IN ($idstr)";
+			$this->db->setQuery ( $query );
+			$attachments = $this->db->loadObjectList ();
+			check_dberror ( 'Unable to load attachments' );
+		}
 
 		// arrange attachments by message
 		$message_attachments = array();

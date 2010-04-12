@@ -282,7 +282,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $imagesize = 150;
 	var $allowfileupload = 0;
 	var $allowfileregupload = 1;
-	var $filetypes = 'txt,rtf,pdf,zip,gz,tgz,bz2';
+	var $filetypes = 'txt,rtf,pdf,zip,tar.gz,tgz,tar.bz2';
 	var $filesize = 120;
 	var $showranking = 1;
 	var $rankimages = 1;

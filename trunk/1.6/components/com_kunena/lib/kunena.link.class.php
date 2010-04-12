@@ -324,7 +324,7 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=poll&do={$do}{$idstring}{$catidstr}" );
 	}
 
-	function GetJsonURL($action, $do = '', $xhtml) {
+	function GetJsonURL($action, $do = '', $xhtml = true) {
 		if ($do) $do = "&do=$do";
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=json&action=$action$do", $xhtml );
 	}

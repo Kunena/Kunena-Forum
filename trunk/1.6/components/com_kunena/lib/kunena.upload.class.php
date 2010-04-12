@@ -161,6 +161,31 @@ class CKunenaUpload {
 		if (isset($file ['tmp_name']) && $file ['error'] == 0) return true;
 	}
 
+	function getValidExtension($validExts) {
+		$ret = null;
+		// Go through every allowed extension, if the extension matches the file extension (case insensitive)
+		//then the file extension is ok
+		foreach ( $validExts as $ext ) {
+			$ext = trim ( $ext );
+			if (!$ext) {
+				// Do not allow empty extensions
+				continue;
+			}
+			if ($ext[0] != '.') {
+				// Add first dot if it is missing in extension list
+				$ext = '.'.$ext;
+			}
+			$extension = substr($this->fileName, -strlen($ext));
+			if (strtolower($extension) == strtolower($ext)) {
+				// File must contain one letter before extension
+				$ret[] = substr($this->fileName, 0, -strlen($ext));
+				$ret[] = substr($extension, 1);
+				break;
+			}
+		}
+		return $ret;
+	}
+
 	function uploadFile($uploadPath, $input='kattachment', $ajax=true) {
 		$result = array ();
 		$this->resetStatus();
@@ -269,29 +294,26 @@ class CKunenaUpload {
 			return false;
 		}
 
-		//check the file extension is ok
-		$uploadedFileNameParts = explode ( '.', $this->fileName );
-		$uploadedFileExtension = array_pop ( $uploadedFileNameParts );
-
+		//check if the file extension is ok
 		$validFileExts = explode ( ',', $this->_config->filetypes );
 		$validImageExts = explode ( ',', $this->_config->imagetypes );
 
-		//assume the extension is false until we know its ok
+		// assume the extension is false until we know its ok
 		$extOk = false;
 
-		//go through every ok extension, if the ok extension matches the file extension (case insensitive)
-		//then the file extension is ok
-		foreach ( $validFileExts as $key => $value ) {
-			if (preg_match ( "/$value/i", $uploadedFileExtension )) {
-				$this->_isfile = true;
-				$extOk = true;
-			}
+		$fileparts = $this->getValidExtension($validFileExts);
+		if ($fileparts) {
+			$this->_isfile = true;
+			$extOk = true;
+			$uploadedFileBasename = $fileparts[0];
+			$uploadedFileExtension = $fileparts[1];
 		}
-		foreach ( $validImageExts as $key => $value ) {
-			if (preg_match ( "/$value/i", $uploadedFileExtension )) {
-				$this->_isimage = true;
-				$extOk = true;
-			}
+		$fileparts = $this->getValidExtension($validImageExts);
+		if ($fileparts) {
+			$this->_isimage = true;
+			$extOk = true;
+			$uploadedFileBasename = $fileparts[0];
+			$uploadedFileExtension = $fileparts[1];
 		}
 
 		if ($extOk == false) {
@@ -322,16 +344,15 @@ class CKunenaUpload {
 			}
 		}
 
-
-		//TODO: Create a new version from the file (if hash is different)
-		/*
-		if (file_exists($uploadPath .DS. $newFileName)) {
-			$newFileName = $imageName . '-' . date('Ymd') . "." . $imageExt;
+		// Rename file if there is already one with the same name
+		$newFileName = $this->fileName;
+		if (file_exists($uploadPath .'/'. $newFileName)) {
+			$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
 			for ($i=2; file_exists($uploadPath .DS. $newFileName); $i++) {
-				$newFileName = $imageName . '-' . date('Ymd') . "-$i." . $imageExt;
+				$newFileName = $uploadedFileBasename . date('_Y-m-d') . "-$i." . $uploadedFileExtension;
 			}
 		}
-		*/
+		$this->fileName = $newFileName;
 
 		// If this is a valid image we need to resize/resample it to the config settings
 		if ($this->_isimage){

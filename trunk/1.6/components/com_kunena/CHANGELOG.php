@@ -49,6 +49,7 @@ Kunena 1.6.0-DEV
 # [#19288] Allow catid=0 in func=view (redirect it)
 # [#19288] Fix regression: Show attachments while editing message
 # [#19288] Fix regression: Profile in menu does not point into CB/JomSocial/AUP profile
+# [#19288] Fix regression: Edit/Quote post adds &amp;s into the body
 
 12-Apr-2010 810
 ^ [#19356] Minor HTML/CSS fixes

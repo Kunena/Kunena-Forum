@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 12-Apr-2010 Matias
 ^ [#20050] Move more code to KunenaParser
+# [#19288] Fix regression: facebook gets value from skype when user edits profile
 
 11-Apr-2010 Matias
 # [#19288] Fix regression: preview layout issues

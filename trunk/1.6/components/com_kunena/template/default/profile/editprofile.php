@@ -55,7 +55,7 @@ defined( '_JEXEC' ) or die();
 			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_MYPROFILE_TWITTER'); ?></td><td><input type="text" name="twitter" value="<?php echo $this->profile->TWITTER; ?>" /></td>
 		</tr>
 		<tr class="ksectiontableentry1">
-			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'); ?></td><td><input type="text" name="facebook" value="<?php echo $this->profile->SKYPE; ?>" /></td>
+			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'); ?></td><td><input type="text" name="facebook" value="<?php echo $this->profile->FACEBOOK; ?>" /></td>
 		</tr>
 		<tr class="ksectiontableentry2">
 			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_MYPROFILE_MYSPACE'); ?></td><td><input type="text" name="myspace" value="<?php echo $this->profile->MYSPACE; ?>" /></td>

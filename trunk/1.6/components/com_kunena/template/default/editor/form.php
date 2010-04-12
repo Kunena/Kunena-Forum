@@ -90,7 +90,7 @@ $this->k=0;
 		<?php endif; ?>
 
 		<?php
-		if ($this->_config->askemail && !$this->my->id) {
+		if ($this->config->askemail && !$this->my->id) {
 		?>
 		<tr class = "ksectiontableentry<?php echo 1+ $this->k^=1 ?>">
 			<td class = "kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
@@ -109,7 +109,7 @@ $this->k=0;
 				class="kinputbox postinput required"
 				name="subject" id="subject" size="35"
 				maxlength="<?php
-				echo $this->_config->maxsubject;
+				echo $this->config->maxsubject;
 				?>"
 				value="<?php
 				echo $this->resubject;
@@ -137,7 +137,7 @@ $this->k=0;
 		?>
 
 		<?php
-		if ($this->_config->allowfileupload || ($this->_config->allowfileregupload && $this->my->id != 0) || ($this->_config->allowimageupload || ($this->_config->allowimageregupload && $this->my->id != 0) || CKunenaTools::isModerator ( $this->my->id, $this->catid ))) {
+		if ($this->config->allowfileupload || ($this->config->allowfileregupload && $this->my->id != 0) || ($this->config->allowimageupload || ($this->config->allowimageregupload && $this->my->id != 0) || CKunenaTools::isModerator ( $this->my->id, $this->catid ))) {
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 			?>
@@ -151,7 +151,7 @@ $this->k=0;
 
 		<?php
 		// Include attachments template if we have any
-		if ( isset ( $this->msg_html->attachments ) ) {
+		if ( isset ( $this->attachments ) ) {
 			CKunenaTools::loadTemplate('/view/message.attachments.php');
 		} ?>
 
@@ -170,7 +170,7 @@ $this->k=0;
 			?></strong></td>
 
 			<td><?php
-			if ($this->_config->subscriptionschecked == 1) {
+			if ($this->config->subscriptionschecked == 1) {
 				?>
 
 			<input type="checkbox" name="subscribeMe" value="1" checked="checked" /> <i><?php
@@ -215,8 +215,8 @@ $this->k=0;
 
 		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
 			<td colspan="2"><?php
-			if ($this->_config->askemail) {
-				echo $this->_config->showemail == '0' ? "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_NEVER') . "</em>" : "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_REGISTERED') . "</em>";
+			if ($this->config->askemail) {
+				echo $this->config->showemail == '0' ? "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_NEVER') . "</em>" : "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_REGISTERED') . "</em>";
 			}
 			?>
 			</td>

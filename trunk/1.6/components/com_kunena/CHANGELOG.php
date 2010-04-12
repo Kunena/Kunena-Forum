@@ -47,6 +47,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Edit profile url points to JomSocial (stay in Kunena)
 # [#19288] Fix regression: No threads were marked read
 # [#19288] Allow catid=0 in func=view (redirect it)
+# [#19288] Fix regression: Show attachments while editing message
 
 12-Apr-2010 810
 ^ [#19356] Minor HTML/CSS fixes

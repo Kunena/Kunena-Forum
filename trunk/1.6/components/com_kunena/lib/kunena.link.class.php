@@ -55,7 +55,7 @@ class CKunenaLink {
 	}
 
 	function GetAttachmentLink($folder,$filename,$name,$title = '', $rel = 'follow') {
-		return CKunenaLink::GetHrefLink ( JURI::ROOT().$folder.'/'.$filename, $name, '', $rel );
+		return CKunenaLink::GetHrefLink ( JURI::ROOT().$folder.'/'.$filename, $name, $title, $rel );
 	}
 
 	function GetKunenaURL($xhtml = true) {

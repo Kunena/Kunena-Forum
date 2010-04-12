@@ -19,7 +19,7 @@ class CKunenaPost {
 		$this->action = JRequest::getCmd ( 'action', '' );
 
 		$this->_app = & JFactory::getApplication ();
-		$this->_config = & CKunenaConfig::getInstance ();
+		$this->config = & CKunenaConfig::getInstance ();
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = &JFactory::getDBO ();
 		$this->document = JFactory::getDocument ();
@@ -85,7 +85,7 @@ class CKunenaPost {
 		}
 
 		// Check if anonymous user needs to log in
-		if ($this->my->id == 0 && (! $this->_config->pubwrite || ! $this->_session->canRead ( $this->catid ))) {
+		if ($this->my->id == 0 && (! $this->config->pubwrite || ! $this->_session->canRead ( $this->catid ))) {
 			CKunenaTools::loadTemplate ( '/plugin/login/login.php' );
 			return false;
 		}
@@ -166,11 +166,11 @@ class CKunenaPost {
 		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$thread}'" );
 		$result = $this->_db->loadObject ();
 		check_dberror ( "Unable to load messages." );
-		$threadPages = ceil ( $result->totalmessages / $this->_config->messages_per_page );
+		$threadPages = ceil ( $result->totalmessages / $this->config->messages_per_page );
 		//construct a useable URL (for plaintext - so no &amp; encoding!)
 		jimport ( 'joomla.environment.uri' );
 		$uri = & JURI::getInstance ( JURI::base () );
-		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, $threadPages, $this->_config->messages_per_page, $id ) );
+		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, $threadPages, $this->config->messages_per_page, $id ) );
 
 		//Update the attachments table if an image has been attached
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
@@ -182,7 +182,7 @@ class CKunenaPost {
 				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
 		}
 
-		$message->emailToSubscribers($LastPostUrl, $this->_config->allowsubscriptions && ! $holdPost, $this->_config->mailmod || $holdPost, $this->_config->mailadmin || $holdPost);
+		$message->emailToSubscribers($LastPostUrl, $this->config->allowsubscriptions && ! $holdPost, $this->config->mailmod || $holdPost, $this->config->mailadmin || $holdPost);
 
 		$redirectmsg = '';
 
@@ -204,7 +204,7 @@ class CKunenaPost {
 		} else {
 			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $id, $this->_config->messages_per_page, $this->catid ), $redirectmsg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $id, $this->config->messages_per_page, $this->catid ), $redirectmsg );
 	}
 
 	protected function newtopic($do) {
@@ -247,13 +247,13 @@ class CKunenaPost {
 		$this->allow_anonymous = ! empty ( $this->msg_cat->allow_anonymous ) && $this->my->id;
 		$this->anonymous = ($this->allow_anonymous && ! empty ( $this->msg_cat->post_anonymous ));
 		$this->allow_name_change = 0;
-		if (! $this->my->id || $this->_config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+		if (! $this->my->id || $this->config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			$this->allow_name_change = 1;
 		}
 
 		// check if this user is already subscribed to this topic but only if subscriptions are allowed
 		$this->cansubscribe = 0;
-		if ($this->my->id && $this->_config->allowsubscriptions == 1) {
+		if ($this->my->id && $this->config->allowsubscriptions == 1) {
 			$this->cansubscribe = 1;
 			if ($this->msg_cat && $this->msg_cat->thread) {
 				$this->_db->setQuery ( "SELECT thread FROM #__fb_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->msg_cat->thread}'" );
@@ -340,7 +340,7 @@ class CKunenaPost {
 			$this->allow_anonymous = ! empty ( $this->msg_cat->allow_anonymous ) && $message->userid;
 			$this->anonymous = 0;
 			$this->allow_name_change = 0;
-			if (! $this->my->id || $this->_config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+			if (! $this->my->id || $this->config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 				$this->allow_name_change = 1;
 			}
 			if (!$this->allow_name_change && $message->userid == $this->my->id) $this->authorName = $this->getAuthorName ();
@@ -389,7 +389,7 @@ class CKunenaPost {
 		$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
 
 		//update the poll when an user edit his post
-		if ($this->_config->pollenabled) {
+		if ($this->config->pollenabled) {
 			$optvalue = array ();
 			for($i = 0; $i < $optionsnumbers; $i ++) {
 				$optvalue [] = JRequest::getString ( 'field_option' . $i, null );
@@ -418,7 +418,7 @@ class CKunenaPost {
 		}
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page, $this->catid ) );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page, $this->catid ) );
 	}
 
 	protected function deleteownpost() {
@@ -598,7 +598,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->config->messages_per_page ), $message );
 
 	}
 
@@ -655,7 +655,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->config->messages_per_page ), $message );
 	}
 
 	protected function split() {
@@ -706,7 +706,7 @@ class CKunenaPost {
 			}
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $message );
 	}
 
 	protected function subscribe() {
@@ -722,7 +722,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	protected function unsubscribe() {
@@ -738,7 +738,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	protected function favorite() {
@@ -754,7 +754,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	protected function unfavorite() {
@@ -770,7 +770,7 @@ class CKunenaPost {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
 			}
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	protected function sticky() {
@@ -784,7 +784,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_SET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	protected function unsticky() {
@@ -798,7 +798,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	protected function lock() {
@@ -812,7 +812,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_SET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	protected function unlock() {
@@ -826,7 +826,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	protected function approve() {
@@ -840,23 +840,23 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
 
 	function hasThreadHistory() {
-		if (! $this->_config->showhistory || $this->id == 0)
+		if (! $this->config->showhistory || $this->id == 0)
 			return false;
 		return true;
 	}
 
 	function displayThreadHistory() {
-		if (! $this->_config->showhistory || $this->id == 0)
+		if (! $this->config->showhistory || $this->id == 0)
 			return;
 
 		//get all the messages for this thread
 		$query = "SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
 			WHERE thread='{$this->msg_cat->thread}' AND hold='0' ORDER BY time DESC";
-		$this->_db->setQuery ( $query, 0, $this->_config->historylimit );
+		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();
 		check_dberror ( "Unable to load messages." );
 
@@ -869,7 +869,7 @@ class CKunenaPost {
 		if (! $this->my->id) {
 			$name = '';
 		} else {
-			$name = $this->_config->username ? $this->my->username : $this->my->name;
+			$name = $this->config->username ? $this->my->username : $this->my->name;
 		}
 		return $name;
 	}
@@ -906,13 +906,13 @@ class CKunenaPost {
 		// Flood protection
 		$ip = $_SERVER ["REMOTE_ADDR"];
 
-		if ($this->_config->floodprotection && ! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+		if ($this->config->floodprotection && ! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			$this->_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'" );
 			$lastPostTime = $this->_db->loadResult ();
 			check_dberror ( "Unable to load max time for current request from IP: {$ip}" );
 
-			if ($lastPostTime + $this->_config->floodprotection > CKunenaTimeformat::internalTime ()) {
-				echo JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD1' ) . ' ' . $this->_config->floodprotection . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD2' ) . '<br />';
+			if ($lastPostTime + $this->config->floodprotection > CKunenaTimeformat::internalTime ()) {
+				echo JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD1' ) . ' ' . $this->config->floodprotection . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD2' ) . '<br />';
 				echo JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD3' );
 				return true;
 			}
@@ -1040,11 +1040,11 @@ class CKunenaPost {
 	}
 
 	function setTitle($title) {
-		$this->document->setTitle ( $title . ' - ' . stripslashes ( $this->_config->board_title ) );
+		$this->document->setTitle ( $title . ' - ' . stripslashes ( $this->config->board_title ) );
 	}
 
 	function hasCaptcha() {
-		if ($this->_config->captcha == 1 && $this->my->id < 1)
+		if ($this->config->captcha == 1 && $this->my->id < 1)
 			return true;
 		return false;
 	}

@@ -37,17 +37,15 @@ defined ( '_JEXEC' ) or die ();
 						$imgsize = 'width="'.$this->config->thumbwidth.'px" height="'.$this->config->thumbheight.'px"';
 					}
 
-					echo '<a href="'.$attachment->folder.'/'.$attachment->filename.'" rel="nofollow">'.
-						'<img '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />'.
-						'</a>'.
-						'<span>'.CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$shortname,$shortname, 'nofollow').
-						'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
+					$img = '<img '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
-
-					echo '<span><img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />'.CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$attachment->filename,$attachment->filename, 'nofollow').'&nbsp;('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
+					$img = '<img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />';
 			}
+			$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'nofollow');
+			$html .='<span>'.CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$shortname,$attachment->filename, 'nofollow').' ('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
+			echo $html;
 			?>
 			</li>
 		<?php

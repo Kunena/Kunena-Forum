@@ -32,6 +32,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-DEV
+
+12-Apr-2010 Xillibit
+- [#19764] Remove useless functions KUnfavorite() and KUnsubscribe() in class.kunena.php
+^ [#19764] Replace all separte pages for moderation (split, move...) by one page (not fully tested)
+
 Kunena 1.6.0-DEV
 
 12-Apr-2010 Matias

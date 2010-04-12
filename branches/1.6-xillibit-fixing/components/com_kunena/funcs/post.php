@@ -477,236 +477,113 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 	}
 
-	protected function move() {
+protected function moderatecommon() {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
+		// Get list of latest messages:
+		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
+		$this->_db->setQuery ( $query, 0, 30 );
+		$messagesList = $this->_db->loadObjectlist ();
+		check_dberror ( "Unable to load messages." );
+
+		$messages =array ();
+		foreach ( $messagesList as $mes ) {
+			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
+		}
+		$this->selectlistmessage = JHTML::_ ( 'select.genericlist', $messages, 'Modpostlist', 'class="inputbox" size="15"', 'value', 'text' );
+
 		$options=array();
-		$this->selectlist = CKunenaTools::KSelectList ( 'postmove', $options, ' size="15" class="kmove_selectbox"' );
+		$this->selectlist = CKunenaTools::KSelectList ( 'Modcategories', $options, ' size="15" class="kmove_selectbox"' );
 		$this->message = $this->msg_cat;
 
-		CKunenaTools::loadTemplate ( '/moderate/topicmove.php' );
+		CKunenaTools::loadTemplate ( '/moderate/moderate_common.php' );
 	}
 
-	protected function domovethread() {
+	protected function domoderatecommon() {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
 		$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-		$TargetCatID = JRequest::getInt ( 'postmove', 0 );
+		$modaction = JRequest::getVar ( 'moderation', null );
 
-		$move = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
-		if (! $move) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
-		}
+		if ( $modaction == 'modmergetopic' ) {
+			$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
+			require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+			$kunena_mod = CKunenaModeration::getInstance ();
+			$TargetCatID = JRequest::getInt ( 'Modcategories', 0 );
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
-	}
-
-	protected function movepost() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$options=array();
-		$this->selectlist = CKunenaTools::KSelectList ( 'postmove', $options, ' size="15" class="kmove_selectbox"' );
-		$this->message = $this->msg_cat;
-
-		CKunenaTools::loadTemplate ( '/moderate/messagemove.php' );
-	}
-
-	protected function domovepost() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-
-		$kunena_mod = CKunenaModeration::getInstance ();
-		$TargetCatID = JRequest::getInt ( 'postmove', 0 );
-
-		$move = $kunena_mod->moveMessage ( $this->id, $TargetCatID, '' , '' );
-		if (! $move) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
-	}
-
-	protected function mergethread() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$this->message = $this->msg_cat;
-
-		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->message->thread}' ORDER BY id DESC";
-		$this->_db->setQuery ( $query, 0, 30 );
-		$messagesList = $this->_db->loadObjectlist ();
-		check_dberror ( "Unable to load messages." );
-
-
-		if ( !empty($messagesList) ) {
-			$messages = Array();
-			foreach ( $messagesList as $mes ) {
-				$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
+			$merge = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
+			if (! $merge) {
+				$message = $kunena_mod->getErrorMessage ();
+			} else {
+				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
 			}
-			$this->selectlist = JHTML::_ ( 'select.genericlist', $messages, 'mergepost', 'class="inputbox" size="15"', 'value', 'text' );
 
-			CKunenaTools::loadTemplate ( '/moderate/topicmerge.php' );
-		} else {
-			//There are no others threads in this category so the merge function can't be done
-			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, false),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
-		}
-	}
+			$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+		} else if ( $modaction == 'modmergemessage' ) {
+			$TargetThreadID = JRequest::getInt ( 'Modpostlist', null );
+			$TargetSubject = JRequest::getInt ( 'subject', null );
+			$TargetTopicID = JRequest::getInt ( 'cattopicid', null );
+			require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+			$kunena_mod = &CKunenaModeration::getInstance ();
 
-	protected function domergethreadnow() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$TargetSubject = JRequest::getVar ( 'messubject', null );
-		$TargetThreadID = JRequest::getInt ( 'mergepost', null );
-		$TargetTopicID = JRequest::getInt ( 'mergethreadid', null );
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = &CKunenaModeration::getInstance ();
-
-		if ( !empty( $TargetTopicID ) ) {
-			$TargetThreadID = $TargetTopicID;
-		}
-
-		$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
-
-		if (! $merge) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
-
-	}
-
-	protected function merge() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$this->message = $this->msg_cat;
-
-		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->message->thread}' ORDER BY id DESC";
-		$this->_db->setQuery ( $query, 0, 30 );
-		$messagesList = $this->_db->loadObjectlist ();
-		check_dberror ( "Unable to load messages." );
-
-
-		if ( !empty($messagesList) ) {
-			$messages = Array();
-			foreach ( $messagesList as $mes ) {
-				$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
+			if ( !empty( $TargetTopicID ) ) {
+				$TargetThreadID = $TargetTopicID;
 			}
-			$this->selectlist = JHTML::_ ( 'select.genericlist', $messages, 'mergepost', 'class="inputbox" multiple="multiple" size="15"', 'value', 'text' );
 
-			CKunenaTools::loadTemplate ( '/moderate/postmerge.php' );
-		} else {
-			//There are no others threads in this category so the merge function can't be done
-			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, false),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
-		}
-	}
+			$merge = $kunena_mod->moveMessage ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
 
-	protected function domergepostnow() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
+			if (! $merge) {
+				$message = $kunena_mod->getErrorMessage ();
+			} else {
+				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
+			}
 
-		$TargetThreadID = JRequest::getInt ( 'mergepost', null );
-		$TargetSubject = JRequest::getInt ( 'subject', null );
-		$TargetTopicID = JRequest::getInt ( 'mergethreadid', null );
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = &CKunenaModeration::getInstance ();
+			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
+		} else if ( $modaction == 'modmovetopic' ) {
+			$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
+			require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+			$kunena_mod = CKunenaModeration::getInstance ();
+			$TargetCatID = JRequest::getInt ( 'Modcategories', 0 );
 
-		if ( !empty( $TargetTopicID ) ) {
-			$TargetThreadID = $TargetTopicID;
-		}
+			$move = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
+			if (! $move) {
+				$message = $kunena_mod->getErrorMessage ();
+			} else {
+				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
+			}
 
-		$merge = $kunena_mod->moveMessage ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
+			$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+		} else if ( $modaction == 'modmovemessage' ) {
+			$TargetCatID = JRequest::getInt ( 'Modcategories', 0 );
 
-		if (! $merge) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->_config->messages_per_page ), $message );
-	}
-
-	protected function split() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$this->message = $this->msg_cat;
-
-		$options=array();
-		$this->selectlist = CKunenaTools::KSelectList('targetcat', $options, ' size="15" class="ksplit_selectbox"');
-
-		CKunenaTools::loadTemplate ( '/moderate/postsplit.php' );
-	}
-
-	protected function splitnow() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = &CKunenaModeration::getInstance ();
-
-		$mode = JRequest::getVar ( 'split', null );
-		$TargetCatID = JRequest::getInt ( 'targetcat', null );
-		$TargetSplitCatId = JRequest::getInt ( 'splitcatid', null );
-
-		if ( !empty($TargetSplitCatId) ) {
-			$TargetCatID = $TargetSplitCatId;
-		}
-
-		if ($mode == 'splitpost') { // we split only the message specified
-			$splitpost = $kunena_mod->moveMessage ( $this->id, $TargetCatID, '', '' );
-			if (! $splitpost) {
+			$movemessage = $kunena_mod->moveMessage ( $this->id, $TargetCatID, '', '' );
+			if (! $movemessage) {
 				$message = $kunena_mod->getErrorMessage ();
 			} else {
 				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_SPLIT' );
 			}
 
-		} else { // we split the message specified and the replies to this message
+			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $message );
+		} else if ( $modaction == 'modsplitmultpost' ) {
+			$TargetCatID = JRequest::getInt ( 'Modcategories', 0 );
+
 			$splitpost = $kunena_mod->moveMessageAndNewer ( $this->id, $TargetCatID, '', '' );
 			if (! $splitpost) {
 				$message = $kunena_mod->getErrorMessage ();
 			} else {
 				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_SPLIT' );
 			}
-		}
 
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $message );
+			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), $message );
+		} else {
+			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page ), JText::_('COM_KUNENA_ATTACHMENT_ERROR_METHOD_NOT_IMPLEMENTED') );
+		}
 	}
 
 	protected function subscribe() {
@@ -961,45 +838,12 @@ class CKunenaPost {
 				$this->deletethread ();
 				break;
 
-			case 'move' :
-				$this->move ();
+			case 'moderatecommon' :
+				$this->moderatecommon ();
 				break;
 
-			case 'domovepost' :
-				$this->domovepost ();
-				break;
-
-			case 'domovethread' :
-				$this->domovethread ();
-				break;
-
-			case 'movepost' :
-				$this->movepost ();
-				break;
-
-			case 'mergethread' :
-				$this->mergethread ();
-				break;
-
-			case 'domergethreadnow' :
-				$this->domergethreadnow ();
-				break;
-
-			case 'merge' :
-				$this->merge ();
-				break;
-
-			case 'domergepostnow' :
-				$this->domergepostnow ();
-				break;
-
-			case 'split' :
-				$this->split ();
-				break;
-
-			case 'splitnow' :
-				$this->splitnow ();
-				break;
+			case 'domoderatecommon' :
+				$this->domoderatecommon ();
 
 			case 'subscribe' :
 				$this->subscribe ();

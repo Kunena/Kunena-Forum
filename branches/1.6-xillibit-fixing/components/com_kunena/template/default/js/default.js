@@ -857,5 +857,60 @@ window.addEvent('domready', function(){
 				}
 			});
 		});
-	}		
+	}
+	
+	if($('modmergetopic') != undefined){
+		$('modmergetopic').addEvent('change', function(e){			
+			if($('modcategorieslist').getProperty('style') == undefined){				
+				$('modcategorieslist').setStyle('display','none');
+			}			
+			if($('modtopicslist').getProperty('style') != undefined){
+				$('modtopicslist').removeProperty('style');
+			}
+		});
+	}
+	
+	if($('modmergemessage') != undefined){
+		$('modmergemessage').addEvent('change', function(e){
+			if($('modcategorieslist').getProperty('style') == undefined){				
+				$('modcategorieslist').setStyle('display','none');
+			}
+			if($('modtopicslist').getProperty('style') != undefined){
+				$('modtopicslist').removeProperty('style');
+			}
+		});
+	}
+	
+	if($('modmovetopic') != undefined){
+		$('modmovetopic').addEvent('change', function(e){			
+			if($('modtopicslist').getProperty('style') == undefined){
+				$('modtopicslist').setStyle('display','none');				
+			}
+			if($('modcategorieslist').getProperty('style') != undefined){				
+				$('modcategorieslist').removeProperty('style');
+			}
+		});
+	}
+	
+	if($('modmovemessage') != undefined){
+		$('modmovemessage').addEvent('change', function(e){
+			if($('modtopicslist').getProperty('style') == undefined){
+				$('modtopicslist').setStyle('display','none');				
+			}
+			if($('modcategorieslist').getProperty('style') != undefined){				
+				$('modcategorieslist').removeProperty('style');
+			}
+		});
+	}
+	
+	if($('modsplitmultpost') != undefined){
+		$('modsplitmultpost').addEvent('change', function(e){
+			if($('modtopicslist').getProperty('style') == undefined){
+				$('modtopicslist').setStyle('display','none');				
+			}
+			if($('modcategorieslist').getProperty('style') != undefined){				
+				$('modcategorieslist').removeProperty('style');
+			}
+		});
+	}
 });

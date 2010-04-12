@@ -410,7 +410,7 @@ class CKunenaPosting {
 		}
 
 		// Mark topic read for me
-		CKunenaTools::markTopicRead ( $id, $this->_my->id );
+		CKunenaTools::markTopicRead ( $this->get ( 'thread'), $this->_my->id );
 
 		// Mark topic unread for others
 

@@ -92,7 +92,8 @@ class KunenaSession extends JObject
 		$this->userid = $userid;
 
 		jimport('joomla.utilities.arrayhelper');
-		$readtopics = JArrayHelper::toInteger(explode(',', $this->readtopics));
+		$readtopics = explode(',', $this->readtopics);
+		JArrayHelper::toInteger($readtopics);
 		if (empty($readtopics)) $readtopics = array(0);
 		$this->readtopics = implode(',', $readtopics);
 

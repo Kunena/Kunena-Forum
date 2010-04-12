@@ -349,7 +349,7 @@ class CKunenaPost {
 
 			CKunenaTools::loadTemplate ( '/editor/form.php' );
 		} else {
-			$this->_app->redirect ( CKunenaLink::GetKunenaURL ( true ), JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
+			$this->_app->redirect ( CKunenaLink::GetKunenaURL ( false ), JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
 		}
 	}
 
@@ -431,7 +431,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 	}
 
 	protected function delete() {
@@ -450,7 +450,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 
 	}
 
@@ -470,7 +470,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 	}
 
 	protected function move() {
@@ -504,7 +504,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 	}
 
 	protected function movepost() {
@@ -538,7 +538,7 @@ class CKunenaPost {
 			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 	}
 
 	protected function mergethread() {
@@ -566,7 +566,7 @@ class CKunenaPost {
 			CKunenaTools::loadTemplate ( '/moderate/topicmerge.php' );
 		} else {
 			//There are no others threads in this category so the merge function can't be done
-			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, true),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
+			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, false),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
 		}
 	}
 
@@ -623,7 +623,7 @@ class CKunenaPost {
 			CKunenaTools::loadTemplate ( '/moderate/postmerge.php' );
 		} else {
 			//There are no others threads in this category so the merge function can't be done
-			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, true),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
+			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, false),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
 		}
 	}
 

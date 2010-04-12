@@ -64,7 +64,7 @@ $i=0;
 							if (gallery == "")
 								return;
 
-							location.href="<?php echo CKunenaLink::GetMyProfileURL ( $this->user->id, 'edit', true )?>"+'&gallery='+gallery;
+							location.href="<?php echo CKunenaLink::GetMyProfileURL ( $this->user->id, 'edit', false )?>"+'&gallery='+gallery;
 							}
 							// -->
 						</script>

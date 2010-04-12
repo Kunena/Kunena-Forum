@@ -29,7 +29,7 @@ if (! CKunenaTools::isAdmin () && ! $kunena_is_moderator) {
 	// Sorry - but you have nothing to do here.
 	// This module is for moderators and admins only.
 
-	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
+	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(false), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
 } else {
 	// Here comes the moderator functionality
 
@@ -50,10 +50,10 @@ if (! CKunenaTools::isAdmin () && ! $kunena_is_moderator) {
 	document.addEvent('domready', function() {
 
 		// Attach auto completer to the following ids:
-		new Autocompleter.Request.JSON('ksrc-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat');?>', { });
-		new Autocompleter.Request.JSON('ktrgt-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat');?>', { });
-		new Autocompleter.Request.JSON('ksrc-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic');?>', { });
-		new Autocompleter.Request.JSON('ktrgt-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic');?>', { });
+		new Autocompleter.Request.JSON('ksrc-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat', false);?>', { });
+		new Autocompleter.Request.JSON('ktrgt-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat', false);?>', { });
+		new Autocompleter.Request.JSON('ksrc-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic', false);?>', { });
+		new Autocompleter.Request.JSON('ktrgt-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic', false);?>', { });
 });
 </script>
 <div class="kbt_cvr1">

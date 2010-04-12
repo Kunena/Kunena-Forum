@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: facebook gets value from skype when user edits profile
 # [#19288] Fix regression: Users cannot post: You are not allowed to change your name!
 # [#19288] Fix regression: Fatal error: Unable to load attachments in func=view
+# [#19288] Fix regression: &amp;s in redirects - menu disappears
 
 12-Apr-2010 810
 ^ [#19356] Minor HTML/CSS fixes

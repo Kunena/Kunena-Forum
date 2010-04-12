@@ -520,7 +520,7 @@ class CKunenaPosting {
 		}
 
 		// FIXME: move redirect out of here
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->parent->catid, true ), $message );
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->parent->catid, false ), $message );
 
 		return empty ( $this->errors );
 	}

@@ -251,7 +251,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		if (!$kunena_session->save ()) $kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
 
 		if ($markaction == "allread") {
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat', $catid, true), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat', $catid, false), JText::_('COM_KUNENA_GEN_ALL_MARKED') );
 		}
 
 		$userprofile = KunenaFactory::getUser($kunena_my->id);
@@ -297,7 +297,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		}
 		if ($catid == 0 || $strCatParent === '0') {
 
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, true) );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, false) );
 		}
 	}
 	?>
@@ -460,7 +460,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$kunena_db->query ();
 			check_dberror ( 'Unable to update readtopics in session table.' );
 
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
 			break;
 
 		case 'subscribecat' :
@@ -477,7 +477,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				check_dberror ( "Unable to subscribe to category." );
 			}
 
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $success_msg );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
 			break;
 
 		case 'unsubscribecat' :
@@ -493,7 +493,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				check_dberror ( "Unable to unsubscribe from category." );
 			}
 
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, true ), $success_msg );
+			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
 			break;
 
 		case 'karma' :
@@ -524,7 +524,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 						$message = JText::_('COM_KUNENA_POST_UNFAVORITED_TOPIC');
 					}
 
-					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id),$message);
+					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id, false),$message);
 					break;
 
 				case "bulkSub" :
@@ -539,7 +539,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 						$message = JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC');
 					}
 
-					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id),$message);
+					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id, false),$message);
 					break;
 			}
 
@@ -597,7 +597,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				}
 			}
 
-			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(true) );
+			$kunena_app->redirect ( CKunenaLink::GetKunenaURL(false) );
 			break;
 
 		case 'credits' :

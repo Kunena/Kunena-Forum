@@ -153,7 +153,7 @@ function ReportForm($id, $catid) {
     $kunena_config =& CKunenaConfig::getInstance();
     $kunena_my = &JFactory::getUser();
 
-    $redirect = CKunenaLink::GetThreadPageURL('view',$catid, $id,NULL,NULL,$id,true);
+    $redirect = CKunenaLink::GetThreadPageURL('view',$catid, $id,NULL,NULL,$id,false);
 
     if (!$kunena_my->id) {
         $kunena_app->redirect($redirect);

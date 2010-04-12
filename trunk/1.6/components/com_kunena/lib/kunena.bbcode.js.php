@@ -962,7 +962,7 @@ window.addEvent('domready', function() {
 			runtimes : 'flash,html4',
 			browse_button : 'kupload',
 			max_file_size : '4mb',
-			url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload');?>',
+			url : '<?php echo CKunenaLink::GetJsonURL('uploadfile','upload', false);?>',
 			//resize : {width : 320, height : 240, quality : 90},
 			flash_swf_url : '<?php echo KUNENA_DIRECTURL;?>/js/plupload/plupload.flash.swf',
 			silverlight_xap_url : '<?php echo KUNENA_DIRECTURL;?>/js/plupload/plupload.silverlight.xap',

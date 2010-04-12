@@ -35,7 +35,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 	document.addEvent('domready', function() {
 
 		// Attach auto completer to the following ids:
-		new Autocompleter.Request.JSON('username', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getuser');?>', { });
+		new Autocompleter.Request.JSON('username', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getuser', false);?>', { });
 });
 </script>
 

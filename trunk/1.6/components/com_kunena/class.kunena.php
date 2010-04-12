@@ -993,7 +993,7 @@ class CKunenaTools {
 					JFile::delete(KUNENA_PATH_AVATAR_UPLOADED.DS.$userprofile->avatar);
 				}
 
-				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
 			if ( isset ($DelSignature) ) {
@@ -1001,7 +1001,7 @@ class CKunenaTools {
 				$kunena_db->Query ();
 				check_dberror ( "Unable to remove user singature." );
 
-				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
 			if ( isset ($DelProfileInfo) ) {
@@ -1009,7 +1009,7 @@ class CKunenaTools {
 				$kunena_db->Query ();
 				check_dberror ( "Unable to remove user profile information." );
 
-				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
 			if ( isset($banDelPosts) ) {
@@ -1026,7 +1026,7 @@ class CKunenaTools {
 					$kunena_mod->deleteMessage($thisuserid, $DeleteAttachments = false);
 				}
 
-				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid) );
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 		}
 

@@ -290,8 +290,8 @@ class CKunenaProfile {
 		else $ignore[] = 'username';
 
 		// get the redirect
-		$return = CKunenaLink::GetMyProfileURL($this->user->get('id'), '', true);
-		$err_return = CKunenaLink::GetMyProfileURL($this->user->get('id'), 'edit', true);
+		$return = CKunenaLink::GetMyProfileURL($this->user->get('id'), '', false);
+		$err_return = CKunenaLink::GetMyProfileURL($this->user->get('id'), 'edit', false);
 
 		// do a password safety check
 		if(strlen($post['password']) || strlen($post['password2'])) { // so that "0" can be used as password e.g.
@@ -391,7 +391,7 @@ class CKunenaProfile {
 			if (!$fileinfo['status']) $this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo['name']).': '.$fileinfo['error'], 'error' );
 			else $this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_PROFILE_AVATAR_UPLOADED' ) );
 
-			//$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', true), JText::_('COM_KUNENA_AVATAR_UPLOADED_WITH_SUCCESS'));
+			//$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', false), JText::_('COM_KUNENA_AVATAR_UPLOADED_WITH_SUCCESS'));
 
 		} else if ( $action == 'delete' ) {
 			//set default avatar
@@ -420,8 +420,8 @@ class CKunenaProfile {
 	function save()
 	{
 		// get the redirect
-		$return = CKunenaLink::GetMyProfileURL($this->user->get('id'), '', true);
-		$err_return = CKunenaLink::GetMyProfileURL($this->user->get('id'), 'edit', true);
+		$return = CKunenaLink::GetMyProfileURL($this->user->get('id'), '', false);
+		$err_return = CKunenaLink::GetMyProfileURL($this->user->get('id'), 'edit', false);
 
 		// Check for request forgeries
 		JRequest::checkToken() or $this->_app->redirect ( $err_return, COM_KUNENA_ERROR_TOKEN, 'error' );
@@ -443,6 +443,6 @@ class CKunenaProfile {
 
 	function cancel()
 	{
-		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', true) );
+		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', false) );
 	}
 }

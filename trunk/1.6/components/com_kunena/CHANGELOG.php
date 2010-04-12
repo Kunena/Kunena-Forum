@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Users cannot post: You are not allowed to change your name!
 # [#19288] Fix regression: Fatal error: Unable to load attachments in func=view
 # [#19288] Fix regression: &amp;s in redirects - menu disappears
+# [#19288] Fix regression: Better checks and error detection when deleting your own message
 
 12-Apr-2010 810
 ^ [#19356] Minor HTML/CSS fixes

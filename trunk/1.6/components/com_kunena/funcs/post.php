@@ -422,16 +422,20 @@ class CKunenaPost {
 	}
 
 	protected function deleteownpost() {
-		if (!$this->load())
-			return false;
-		$delete = $delete = CKunenaTools::userOwnDelete ( $this->id );
-		if (! $delete) {
-			$message = JText::_ ( 'COM_KUNENA_POST_OWN_DELETE_ERROR' );
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
-		}
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		$message = new CKunenaPosting ( );
+		$success = $message->delete ( $this->id );
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
+		// Handle errors
+		if (! $success) {
+			$errors = $message->getErrors ();
+			foreach ( $errors as $field => $error ) {
+				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
+			}
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE') );
+		}
+		$this->redirectBack ();
 	}
 
 	protected function delete() {

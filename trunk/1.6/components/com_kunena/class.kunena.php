@@ -174,9 +174,9 @@ class CKunenaTools {
 		return false;
 	}
 
-    function showButton($name, $text) {
+	function showButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
-    }
+	}
 
 	function showModulePosition($position) {
 		$html = '';
@@ -191,41 +191,25 @@ class CKunenaTools {
 		echo $html;
 	}
 
+	// TODO: deprecated
 	function parseText($txt) {
 		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
-		if (!$txt) return;
-		$txt = nl2br ( $txt );
-		$txt = kunena_htmlspecialchars ( $txt );
-		$txt = CKunenaTools::prepareContent ( $txt );
-		return $txt;
+		kimport('html.parser');
+		return KunenaParser::parseText($txt);
 	}
 
+	// TODO: deprecated
 	function parseBBCode($txt) {
 		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
-		static $emoticons = null;
-
-		if (!$txt) return;
-		if (!$emoticons) $emoticons = smile::getEmoticons ( 0 );
-		$kunena_config = & CKunenaConfig::getInstance ();
-		$txt = smile::smileReplace ( $txt, 0, $kunena_config->disemoticons, $emoticons );
-		$txt = nl2br ( $txt );
-		$txt = str_replace ( "__FBTAB__", "&#009;", $txt ); // For [code]
-		$txt = CKunenaTools::prepareContent ( $txt );
-		return $txt;
+		kimport('html.parser');
+		return KunenaParser::parseBBCode($txt);
 	}
 
+	// TODO: deprecated
 	function stripBBCode($txt, $len=0) {
 		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
-		static $emoticons = null;
-
-		if (!$txt) return;
-		if (!$emoticons) $emoticons = smile::getEmoticons ( 0 );
-		$kunena_config = & CKunenaConfig::getInstance ();
-		$txt = smile::purify ( $txt );
-		if ($len) $txt = JString::substr ( $txt, 0, $len );
-		$txt = kunena_htmlspecialchars ( $txt );
-		$txt = CKunenaTools::prepareContent ( $txt );
-		return $txt;
+		kimport('html.parser');
+		return KunenaParser::stripBBCode($txt, $len);
 	}
 
 	function reCountUserPosts() {
@@ -601,24 +585,6 @@ class CKunenaTools {
 		} //end foreach
 
 		$kunena_app->redirect ( $backUrl, $message );
-	}
-
-	function &prepareContent(&$content)
-	{
-		$kunena_config =& CKunenaConfig::getInstance();
-
-		// Joomla Mambot Support, Thanks hacksider
-		if ($kunena_config->jmambot)
-		{
-			$row = new stdClass();
-			$row->text =& $content;
-			$params = new JParameter( '' );
-			$dispatcher	=& JDispatcher::getInstance();
-			JPluginHelper::importPlugin('content');
-			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
-			$content =& $row->text;
-		}
-		return $content;
 	}
 
 		/**

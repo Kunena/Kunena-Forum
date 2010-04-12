@@ -17,8 +17,8 @@ abstract class KunenaParser {
 
 	function parseText($txt) {
 		if (!$txt) return;
-		$txt = kunena_htmlspecialchars ( $txt );
-		$txt = CKunenaTools::prepareContent ( $txt );
+		$txt = self::escape ( $txt );
+		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
@@ -30,7 +30,7 @@ abstract class KunenaParser {
 		$txt = smile::smileReplace ( $txt, 0, $config->disemoticons, self::$emoticons );
 		$txt = nl2br ( $txt );
 		$txt = str_replace ( "__FBTAB__", "&#009;", $txt ); // For [code]
-		$txt = CKunenaTools::prepareContent ( $txt );
+		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
@@ -40,9 +40,30 @@ abstract class KunenaParser {
 
 		$txt = smile::purify ( $txt );
 		if ($len) $txt = JString::substr ( $txt, 0, $len );
-		$txt = kunena_htmlspecialchars ( $txt );
-		$txt = CKunenaTools::prepareContent ( $txt );
+		$txt = self::escape ( $txt );
+		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
+	function &prepareContent(&$content)
+	{
+		$config = KunenaFactory::getConfig();
+
+		if ($config->jmambot)
+		{
+			$row = new stdClass();
+			$row->text =& $content;
+			$params = new JParameter( '' );
+			$dispatcher	= JDispatcher::getInstance();
+			JPluginHelper::importPlugin('content');
+			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));
+			$content =& $row->text;
+		}
+		return $content;
+	}
+
+
+	function escape($string) {
+		return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+	}
 }

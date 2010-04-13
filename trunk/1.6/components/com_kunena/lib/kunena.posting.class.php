@@ -464,20 +464,6 @@ class CKunenaPosting {
 	}
 
 	protected function saveEdit() {
-		$anonymous = $this->getOption ( 'anonymous' );
-
-		// Moderators do not have to fill anonymous name
-		if ($anonymous && CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
-			jimport ( 'joomla.user.helper' );
-			$nickname = $this->get ( 'name' );
-			if (! $nickname)
-				$nickname = $this->parent->name;
-			$nicktaken = JUserHelper::getUserId ( $nickname );
-			if ($nicktaken || $nickname == $this->_my->name) {
-				$this->set ( 'name', JText::_ ( 'COM_KUNENA_USERNAME_ANONYMOUS' ) );
-			}
-		}
-
 		if (! $this->check ())
 			return false;
 
@@ -487,6 +473,7 @@ class CKunenaPosting {
 		$this->set ( 'modified_by', ( int ) $this->_my->id );
 		$this->set ( 'modified_time', CKunenaTimeformat::internalTime () );
 
+		$anonymous = $this->getOption ( 'anonymous' );
 		if ($anonymous) {
 			if ($this->_my->id == $this->parent->userid && $this->parent->modified_by == $this->parent->userid) {
 				// I am the author and previous modification was made by me => delete modification information to hide my personality
@@ -721,22 +708,19 @@ class CKunenaPosting {
 	}
 
 	protected function checkAuthorName($field, $value) {
-		if (empty ( $value )) {
-			return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_EMPTY' ) );
-		}
 		if (! $this->_my->id || $this->getOption ( 'anonymous' )) {
-			// Unregistered or anonymous users
-
-
-			// Do not allow existing username
+			// Unregistered or anonymous users: Do not allow existing username
 			jimport ( 'joomla.user.helper' );
 			$nicktaken = JUserHelper::getUserId ( $value );
-			if ($nicktaken || $value == $this->_my->name) {
-				return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_CONFLICT_ANON' ) );
+			if (empty ( $value ) || $nicktaken || $value == $this->_my->name) {
+				$this->set ( 'name', $name = JText::_ ( 'COM_KUNENA_USERNAME_ANONYMOUS' ) );
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_FIELD_NAME_CONFLICT_ANON', $value, $name ), 'notice' );
 			}
 		} else {
 			// Registered users
-
+			if (empty ( $value )) {
+				return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_NAME_EMPTY' ) );
+			}
 
 			if (CKunenaTools::isModerator ( $this->_my->id, $this->parent->catid )) {
 				// Moderators can to do whatever they want to

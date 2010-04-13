@@ -18,6 +18,7 @@ if (! is_file ( $kunena_api ))
 	return;
 require_once ($kunena_api);
 require_once (KUNENA_PATH . DS . 'class.kunena.php');
+require_once (KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 
 // Include the syndicate functions only once
 require_once (dirname ( __FILE__ ) . DS . 'helper.php');

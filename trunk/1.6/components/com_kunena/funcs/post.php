@@ -477,10 +477,10 @@ class CKunenaPost {
 			return false;
 
 		$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
 		$TargetCatID = JRequest::getInt ( 'postmove', 0 );
 
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+		$kunena_mod = CKunenaModeration::getInstance ();
 		$move = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
 		if (! $move) {
 			$message = $kunena_mod->getErrorMessage ();

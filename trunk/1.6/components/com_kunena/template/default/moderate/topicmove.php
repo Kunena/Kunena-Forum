@@ -13,41 +13,25 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 ?>
-<form action="<?php
-		echo CKunenaLink::GetPostURL ();
-		?>"
+<form action="<?php echo CKunenaLink::GetPostURL (); ?>"
 	method="post" name="myform"><input type="hidden" name="do"
 	value="domovethread" /> <input type="hidden" name="id"
-	value="<?php
-		echo $this->id;
-		?>" />
+	value="<?php echo $this->id; ?>" />
+	<p>
+		<?php echo JText::_ ( 'COM_KUNENA_GEN_TOPIC' ); ?>: <strong><?php echo KunenaParser::parseText ( stripslashes ( $this->message->subject ) ); ?></strong>
+		<br />
+		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?> :<strong><?php echo kunena_htmlspecialchars ( $this->message->catname ); ?></strong>
+		<br />
+		<br />
+		<?php echo JText::_ ( 'COM_KUNENA_POST_MOVE_TOPIC' ); ?>:
+		<br />
+		<?php echo $this->selectlist; ?>
+		<br />
 
-<p><?php
-		echo JText::_ ( 'COM_KUNENA_GEN_TOPIC' );
-		?>: <strong><?php
-		echo KunenaParser::parseText ( stripslashes ( $this->message->subject ) );
-		?></strong> <br />
-		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?> :<strong><?php
-		echo kunena_htmlspecialchars ( $this->message->catname );
-		?></strong> <br />
+		<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="leaveGhost"  value="1" />
+		<?php echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' ); ?>
+		<br />
 
-<br />
-		<?php
-		echo JText::_ ( 'COM_KUNENA_POST_MOVE_TOPIC' );
-		?>: <br />
-
-		<?php
-		echo $this->selectlist;
-		?> <br />
-
-<input type="checkbox" <?php if ($this->_config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="leaveGhost"  value="<?php echo $this->_config->boxghostmessage ? '1' : '0'; ?>" /> <?php
-		echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' );
-		?>
-
-<br />
-
-<input type="submit" class="button"
-	value="<?php
-		echo JText::_ ( 'COM_KUNENA_GEN_MOVE' );
-		?>" /></p>
+		<input type="submit" class="button" value="<?php echo JText::_ ( 'COM_KUNENA_GEN_MOVE' ); ?>" />
+	</p>
 </form>

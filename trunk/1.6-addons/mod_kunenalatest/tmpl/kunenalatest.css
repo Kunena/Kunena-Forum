@@ -4,22 +4,17 @@
 * KunenaLatest Module
 * @package Kunena latest
 *
-* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @Copyright (C) 2010 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 *
-* 
-**/ 
-
-#klatestnav { 
-  margin: 0; 
-  font-size: x-small;  
+**/
+#klatestnav {
+	margin: 0;
 }
 
-#klatestnav ul{
-  list-style: none;
+#klatestnav ul {
+	list-style: none;
+	margin: 10px 0;
+	padding: 0;
 }
-
-
-
-

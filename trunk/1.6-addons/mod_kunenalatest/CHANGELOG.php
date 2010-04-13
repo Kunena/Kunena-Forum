@@ -4,13 +4,13 @@
 * KunenaLatest Module
 * @package Kunena latest
 *
-* @Copyright (C) 2009 www.kunena.com All rights reserved
+* @Copyright (C) 2010 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 */
 
 // no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+die( '' );
 ?>
 <!--
 Changelog
@@ -29,6 +29,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLatest 1.0
+
+13-Apr-2010 Matias
+^ [#20081] Changed module name to mod_kunenalatest, cleanup code and css
 
 9-Apr-2010 Xillibit
 ^ [#20081] Little change to avoid try to list the results when there are nothing to display

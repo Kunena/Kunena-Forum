@@ -1,23 +1,21 @@
 <?php
 /**
-* @version $Id$
-* KunenaLatest Module
-* @package Kunena latest
-*
-* @Copyright (C) 2009 www.kunena.com All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
-*/
+ * @version $Id$
+ * KunenaLatest Module
+ * @package Kunena latest
+ *
+ * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ */
 
 // no direct access
-defined('_JEXEC') or die('Restricted access');
+defined ( '_JEXEC' ) or die ( 'Restricted access' );
 
-class modklatestpostHelper
-{
-	function getKunenaLatestList(&$params,$k_config,$db,$page = 0)
-	{
+class modKunenaLatestHelper {
+	function getKunenaLatestList(&$params, $k_config, $db, $page = 0) {
 		$my = JFactory::getUser ();
-		$nbpoststoshow = $params->get( 'nbpost' );
+		$nbpoststoshow = $params->get ( 'nbpost' );
 
 		$page = $page < 1 ? 1 : $page;
 
@@ -35,7 +33,7 @@ class modklatestpostHelper
 		if (count ( $catlist ))
 			$latestcats = " AND m.catid IN (" . implode ( ',', $catlist ) . ") ";
 
-	  $query = "Select allowed FROM #__fb_sessions";
+		$query = "Select allowed FROM #__fb_sessions";
 		$db->setQuery ( $query );
 		$cat_total = $db->loadResult ();
 
@@ -57,11 +55,10 @@ class modklatestpostHelper
 			ORDER BY {$order}
 		";
 
-		$db->setQuery ( $query, '', $params->get( 'nbpost' ) );
+		$db->setQuery ( $query, '', $params->get ( 'nbpost' ) );
 		$threadids = $db->loadResultArray ();
 
-    $idstr = @join ( ",", $threadids );
-
+		$idstr = @join ( ",", $threadids );
 
 		$query = "SELECT a.*, j.id AS userid, u.posts, t.message AS messagetext, l.myfavorite, l.favcount, l.attachments,
 			l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
@@ -69,9 +66,11 @@ class modklatestpostHelper
 			SELECT m.thread, MAX(f.userid IS NOT null AND f.userid='{$my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
 				COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$my->id}, m.id, NULL)) AS mycount, MAX(m.id) AS lastid, MAX(IF(m.userid={$my->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
 			FROM #__fb_messages AS m";
-			if ($k_config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
-			else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
-			$query .= "
+		if ($k_config->allowfavorites)
+			$query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
+		else
+			$query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
+		$query .= "
 			LEFT JOIN #__fb_attachments AS a ON a.mesid = m.thread
 			WHERE m.hold='0' AND m.moved='0' AND m.thread IN ({$idstr})
 			GROUP BY thread
@@ -87,43 +86,42 @@ class modklatestpostHelper
 		$db->setQuery ( $query );
 		$messagelist = $db->loadObjectList ();
 
-    $messages = '';
-	  foreach ( $messagelist as $message ) {
-				if ($message->parent == 0) {
-					$messages [$message->id] = $message;
-				}
+		$messages = '';
+		foreach ( $messagelist as $message ) {
+			if ($message->parent == 0) {
+				$messages [$message->id] = $message;
 			}
+		}
 		return $messages;
 	}
 
-  function getKunenaConfigClass()
-	{
-		$path = JPATH_SITE.DS.'components'.DS.'com_kunena'.DS.'lib'.DS.'kunena.config.class.php';
+	function getKunenaConfigClass() {
+		$path = JPATH_SITE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.config.class.php';
 		$false = false;
 
 		// If the file exists include it and try to instantiate the object
-		if (file_exists( $path )) {
-			require_once( $path );
-      $return = CKunenaConfig::getInstance ();
+		if (file_exists ( $path )) {
+			require_once ($path);
+			$return = CKunenaConfig::getInstance ();
 		} else {
-			JError::raiseWarning( 0, 'File Kunena Config Class not found.' );
+			JError::raiseWarning ( 0, 'File Kunena Config Class not found.' );
 			return $false;
 		}
 
 		return $return;
 	}
 
-  function getKunenaLinkClass()
-	{
-		$path = JPATH_SITE.DS.'components'.DS.'com_kunena'.DS.'lib'.DS.'kunena.link.class.php';;
+	function getKunenaLinkClass() {
+		$path = JPATH_SITE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.link.class.php';
+
 		$false = false;
 
 		// If the file exists include it and try to instantiate the object
-		if (file_exists( $path )) {
-			require_once( $path );
-      $return = new CKunenaLink();
+		if (file_exists ( $path )) {
+			require_once ($path);
+			$return = new CKunenaLink ( );
 		} else {
-			JError::raiseWarning( 0, 'File Kunena Link Class not found.' );
+			JError::raiseWarning ( 0, 'File Kunena Link Class not found.' );
 			return $false;
 		}
 

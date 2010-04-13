@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Forum administration breaks up when there are no categories
 # [#19288] Fix regression: Mark all forums read does not work
 # [#19295] Clean up code: Delete post should use the same function as moderator and normal user
+# [#19288] Fix regression: Delete post button shows up even if there are replies
 
 12-Apr-2010 Matias
 ^ [#20050] Move more code to KunenaParser

@@ -10,10 +10,12 @@
  */
 
 // no direct access
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined ( '_JEXEC' ) or die ( '' );
 
 class modKunenaLatestHelper {
-	function getKunenaLatestList(&$params, $k_config, $db, $page = 0) {
+	function getKunenaLatestList($params, $page = 0) {
+		$db = JFactory::getDBO ();
+		$k_config = KunenaFactory::getConfig();
 		$my = JFactory::getUser ();
 		$nbpoststoshow = $params->get ( 'nbpost' );
 
@@ -33,15 +35,13 @@ class modKunenaLatestHelper {
 		if (count ( $catlist ))
 			$latestcats = " AND m.catid IN (" . implode ( ',', $catlist ) . ") ";
 
-		$query = "Select allowed FROM #__fb_sessions";
-		$db->setQuery ( $query );
-		$cat_total = $db->loadResult ();
+		$userAPI = Kunena::getUserAPI();
+		$cat_total = $userAPI->getAllowedCategories($my->id);
 
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$cat_total})
 		AND t.time >'{$querytime}' AND t.hold=0 AND t.moved=0 AND t.catid IN ({$cat_total})" . $latestcats; // if categories are limited apply filter
-
 
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
@@ -94,38 +94,4 @@ class modKunenaLatestHelper {
 		}
 		return $messages;
 	}
-
-	function getKunenaConfigClass() {
-		$path = JPATH_SITE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.config.class.php';
-		$false = false;
-
-		// If the file exists include it and try to instantiate the object
-		if (file_exists ( $path )) {
-			require_once ($path);
-			$return = CKunenaConfig::getInstance ();
-		} else {
-			JError::raiseWarning ( 0, 'File Kunena Config Class not found.' );
-			return $false;
-		}
-
-		return $return;
-	}
-
-	function getKunenaLinkClass() {
-		$path = JPATH_SITE . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.link.class.php';
-
-		$false = false;
-
-		// If the file exists include it and try to instantiate the object
-		if (file_exists ( $path )) {
-			require_once ($path);
-			$return = new CKunenaLink ( );
-		} else {
-			JError::raiseWarning ( 0, 'File Kunena Link Class not found.' );
-			return $false;
-		}
-
-		return $return;
-	}
-
 }

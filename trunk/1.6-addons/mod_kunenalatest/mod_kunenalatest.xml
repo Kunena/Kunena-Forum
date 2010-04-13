@@ -2,7 +2,7 @@
  <!DOCTYPE install>
 <install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Latest</name>
-	<version>1.0.0</version>
+	<version>1.6-DEV</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>www.Kunena.com</author>
@@ -10,7 +10,7 @@
 	<authorUrl>http://www.kunena.com</authorUrl>
 	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
 	<license>GNU/GPL</license>
-	<description>Kunena Latest Post is an official module from Kunena Dev team designed for Kunena 1.6.0 which allow you to show the latest post from kunena forum in a module</description>
+	<description>MOD_KUNENALATEST_DESCRIPTION</description>
 	
 	<files>
 		<filename module="mod_kunenalatest">mod_kunenalatest.php</filename>
@@ -27,38 +27,33 @@
 	</languages>
 
 	<params>
-		<param name="nbpost" type="text" default="5" label="Post number" description="PARAMNUMBERPOSTS" />
-		<param name="titlelength" type="text" default="50" label="Title length" description="PARAMTITLELENGTH" />
-		<param name="messagelength" type="text" default="150" label="Message length" description="PARAMMESSAGELENGTH" />
-		<param name="unreadindicator" type="text" default="!" label="Unread Indicator" description="PARAMUNREADINDICATOR" />
+		<param name="nbpost" type="text" default="5" label="MOD_KUNENALATEST_PARAM_NUMBERPOSTS" description="MOD_KUNENALATEST_PARAM_NUMBERPOSTS_DESC" />
+		<param name="titlelength" type="text" default="50" label="MOD_KUNENALATEST_PARAM_TITLELENGTH" description="MOD_KUNENALATEST_PARAM_TITLELENGTH_DESC" />
+		<param name="messagelength" type="text" default="150" label="MOD_KUNENALATEST_PARAM_MESSAGELENGTH" description="MOD_KUNENALATEST_PARAM_MESSAGELENGTH_DESC" />
+		<param name="unreadindicator" type="text" default="!" label="MOD_KUNENALATEST_PARAM_UNREADINDICATOR" description="MOD_KUNENALATEST_PARAM_UNREADINDICATOR_DESC" />
+		<param name="dateformat" type="text" default="%Y-%m-%d %H:%M:%S" label="MOD_KUNENALATEST_PARAM_DATEFORMAT" description="MOD_KUNENALATEST_PARAM_DATEFORMAT_DESC" />
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="sh_avatar" type="radio" default="0" label="Show avatar" description="PARAMSHOWAVATAR">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
+		<param name="sh_avatar" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWAVATAR" description="MOD_KUNENALATEST_PARAM_SHOWAVATAR_DESC">
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+		</param>
+		<param name="sh_favorite" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWFAVORITE" description="MOD_KUNENALATEST_PARAM_SHOWFAVORITE_DESC">
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+		</param>
+		<param name="sh_locked" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWLOCKED" description="MOD_KUNENALATEST_PARAM_SHOWLOCKED_DESC">
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+		</param>
+		<param name="sh_sticky" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWSTICKY" description="MOD_KUNENALATEST_PARAM_SHOWSTICKY_DESC">
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+		</param>
+		<param name="sh_rank" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWPOSTS" description="MOD_KUNENALATEST_PARAM_SHOWPOSTS_DESC">
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="sh_favorite" type="radio" default="0" label="Show favorite" description="PARAMSHOWFAVORITE">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="sh_locked" type="radio" default="0" label="Show thread locked" description="PARAMSHOWLOCKED">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="sh_sticky" type="radio" default="0" label="Show sticky thread" description="PARAMSHOWSTICKY">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="sh_rank" type="radio" default="0" label="Show rank" description="PARAMSHOWPOSTS">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="dateformat" type="text" default="%Y-%m-%d %H:%M:%S" label="Date format" description="PARAMDATEFORMAT" />
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+		<param name="moduleclass_sfx" type="text" default="" label="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX" description="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX_DESC" />
 	</params>
 </install>

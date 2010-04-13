@@ -32,6 +32,10 @@ KunenaLatest 1.0
 
 13-Apr-2010 Matias
 ^ [#20081] Changed module name to mod_kunenalatest, cleanup code and css
+^ [#20081] Updated language file to use J1.6 style
++ [#20081] Add missing translations, improve others
++ [#20081] Use new API and profile integration, fix links
+# [#20081] Fixed bug where no latest posts were shown to the user
 
 9-Apr-2010 Xillibit
 ^ [#20081] Little change to avoid try to list the results when there are nothing to display

@@ -84,7 +84,7 @@ class CKunenaLatestX {
 					MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
 				FROM #__fb_messages AS m";
 				if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
-				else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
+				else $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = 0";
 				$query .= "
 				LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.id
 				WHERE m.hold='0' AND m.moved='0' AND m.thread IN ({$idstr})

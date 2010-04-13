@@ -84,7 +84,7 @@ if(JDEBUG == 1 && defined('JFIREPHP')){
 }
 
 require_once(KUNENA_PATH . DS . 'router.php');
-if (!$func || (!$markaction && !in_array($func, KunenaRouter::$functions))) {
+if (!$markaction && (!$func || !in_array($func, KunenaRouter::$functions))) {
 	// If func is not legal, raise joomla error
 	if ($func) return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
 	// Redirect empty func to default page

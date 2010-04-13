@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 13-Apr-2010 Matias
 # [#19288] Anonymous posts should change name to "Anonymous" with a warning if username exists
 # [#19288] Fix regression: Forum administration breaks up when there are no categories
+# [#19288] Fix regression: Mark all forums read does not work
 
 12-Apr-2010 Matias
 ^ [#20050] Move more code to KunenaParser

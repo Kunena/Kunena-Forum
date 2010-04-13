@@ -34,7 +34,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<!-- Check this: -->
 					<?php if (!empty($this->usertype)): ?><li class="usertype"><?php echo $this->usertype; ?></li><?php endif; ?>
 					<!-- The class on the span below should be rank then hyphen then the rank name -->
-					<?php if (!empty($this->rank_title)): ?><li><strong>Rank: </strong><?php echo $this->rank_title; ?></li><?php endif; ?>
+					<?php if (!empty($this->rank_title)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>: </strong><?php echo $this->rank_title; ?></li><?php endif; ?>
 					<?php if (!empty($this->rank_image)): ?><li class="kprofile-rank"><img src="<?php echo $this->rank_image; ?>" alt="<?php echo $this->rank_title; ?>" /></li><?php endif; ?>
 					<?php if (!empty($this->registerdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->registerdate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->registerdate, 'date_today', 'utc'); ?></span></li><?php endif; ?>
 					<?php if (!empty($this->lastvisitdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->lastvisitdate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->lastvisitdate, 'date_today', 'utc'); ?></span></li><?php endif; ?>

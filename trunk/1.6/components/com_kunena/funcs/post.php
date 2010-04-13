@@ -421,7 +421,7 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page, $this->catid ) );
 	}
 
-	protected function deleteownpost() {
+	protected function delete() {
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$success = $message->delete ( $this->id );
@@ -436,26 +436,6 @@ class CKunenaPost {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE') );
 		}
 		$this->redirectBack ();
-	}
-
-	protected function delete() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$delete = $kunena_mod->deleteMessage ( $this->id );
-		if (! $delete) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
-
 	}
 
 	protected function deletethread() {
@@ -947,10 +927,6 @@ class CKunenaPost {
 
 			case 'editpostnow' :
 				$this->editpostnow ();
-				break;
-
-			case 'deleteownpost' :
-				$this->deleteownpost ();
 				break;
 
 			case 'delete' :

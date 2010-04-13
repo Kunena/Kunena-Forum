@@ -33,7 +33,7 @@ defined( '_JEXEC' ) or die();
 <div id="kprofile-rightcolbot">
 	<div class="kprofile-rightcol2">
 		<ul>
-			<?php if ($this->_config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="email"></span><a href="mailto:<?php echo $this->user->email; ?>"><?php echo $this->user->email; ?></a></li><?php endif; ?>
+			<?php if ($this->config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="email"></span><a href="mailto:<?php echo $this->user->email; ?>"><?php echo $this->user->email; ?></a></li><?php endif; ?>
 			<?php // FIXME: we need a better way to add http/https ?>
 			<li><span class="website"></span><a href="http://<?php echo kunena_htmlspecialchars(stripslashes($this->profile->websiteurl)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($this->profile->websitename)); ?></a></li>
 		</ul>

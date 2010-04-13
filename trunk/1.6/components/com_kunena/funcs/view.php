@@ -41,7 +41,7 @@ class CKunenaViewMessage {
 	public $useravatar = null;
 	public $usertype = null;
 	public $userposts = null;
-	public $userrankimg = null;
+	public $userrankimage = null;
 	public $userranktitle = null;
 	public $userpoints = null;
 	public $userkarma = null;

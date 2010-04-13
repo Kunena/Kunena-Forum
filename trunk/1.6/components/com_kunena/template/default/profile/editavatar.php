@@ -34,7 +34,7 @@ $i=0;
 			</td>
 		</tr>
 <?php endif; ?>
-<?php if ($this->_config->allowavatarupload):?>
+<?php if ($this->config->allowavatarupload):?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td class="td-0 km center">
 				<label for="kavatar_upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
@@ -43,7 +43,7 @@ $i=0;
 			</td>
 		</tr>
 <?php endif; ?>
-<?php if ($this->_config->allowavatargallery):?>
+<?php if ($this->config->allowavatargallery):?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td class="td-0 km center">
 				<label for="kavatar_gallery"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>

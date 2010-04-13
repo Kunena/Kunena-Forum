@@ -21,7 +21,7 @@ class CKunenaProfile {
 		kimport('html.parser');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
-		$this->_config = CKunenaConfig::getInstance ();
+		$this->config = CKunenaConfig::getInstance ();
 		$this->my = JFactory::getUser ();
 		$this->do = $do;
 
@@ -41,19 +41,22 @@ class CKunenaProfile {
 			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
 		}
 		$this->name = $this->user->username;
-		if ($this->_config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
-		if ($this->_config->userlist_usertype) $this->usertype = $this->user->usertype;
-		if ($this->_config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
-		if ($this->_config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
+		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
+		if ($this->config->showuserstats) {
+			if ($this->config->userlist_usertype) $this->usertype = $this->user->usertype;
+			$rank = $this->profile->getRank();
+			if ($rank->rank_title) $this->rank_title = $rank->rank_title;
+			if ($rank->rank_image) $this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
+			$this->posts = $this->profile->posts;
+		}
+		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
+		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
 		$this->avatarlink = $this->profile->getAvatarLink('','large');
 		$this->personalText = KunenaParser::parseText(stripslashes($this->profile->personalText));
 		$this->signature = KunenaParser::parseBBCode(stripslashes($this->profile->signature));
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
 		$this->admin = CKunenaTools::isAdmin($this->profile->userid);
-		$rank = $this->profile->getRank();
-		if ($rank->rank_title) $this->rank_title = $rank->rank_title;
-		if ($rank->rank_image) $this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
 		switch ($this->profile->gender) {
 			case 1:
 				$this->genderclass = 'male';
@@ -286,7 +289,7 @@ class CKunenaProfile {
 		$post = JRequest::get( 'post' );
 		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
 		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
-		if ($this->_config->usernamechange) $post['username']	= JRequest::getVar('username', '', 'post', 'username');
+		if ($this->config->usernamechange) $post['username']	= JRequest::getVar('username', '', 'post', 'username');
 		else $ignore[] = 'username';
 
 		// get the redirect

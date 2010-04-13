@@ -305,7 +305,7 @@ class CKunenaView {
 			return;
 		}
 
-			$this->app = & JFactory::getApplication ();
+		$this->app = & JFactory::getApplication ();
 		// Test if this is a valid URL. If not, redirect browser to the right location
 		$this->thread = $this->first_message->parent == 0 ? $this->id : $this->first_message->thread;
 		if ($this->first_message->moved || $this->thread != $this->id || $this->catid != $this->first_message->catid) {
@@ -374,6 +374,12 @@ class CKunenaView {
 		$this->db->setQuery ( $query );
 		$this->total_messages = $this->db->loadResult ();
 		check_dberror ( 'Unable to calculate message count.' );
+
+		// If page does not exist, redirect to the last page
+		if ($this->total_messages <= $this->limitstart) {
+			$page = ceil ( $this->total_messages / $this->limit );
+			$this->app->redirect(CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $page, $this->limit, '', false));
+		}
 
 		if (!$this->myprofile->ordering) {
 			$ordering = ($this->config->default_sort == 'desc' ? 'DESC' : 'ASC'); // Just to make sure only valid options make it

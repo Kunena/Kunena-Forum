@@ -46,6 +46,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Configuration option Show User Statistics = Yes has no effect in profile
 # [#19288] Fix regression: "Rank" is not translated in profile/summary.php
 # [#19288] Fix regression: If configuration option Allow Favorites = No, all topics have been favorited by visitor
+# [#19288] Fix regression: Fix some minor bugs in router/routing
 
 12-Apr-2010 Matias
 ^ [#20050] Move more code to KunenaParser

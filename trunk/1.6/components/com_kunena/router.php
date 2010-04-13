@@ -83,15 +83,17 @@ class KunenaRouter {
 		if (! $kconfig->sef)
 			return $segments;
 
-		if (isset ( $query ['Itemid'] )) {
+		if (isset ( $query ['Itemid'] ) && $query ['Itemid'] > 0) {
 			// If we have Itemid, make sure that we remove identical parameters
 			$menu = JSite::getMenu ();
-			$menuitem = ( object ) $menu->getItem ( $query ['Itemid'] );
-			foreach ( $menuitem->query as $var => $value ) {
-				if ($var == 'Itemid' || $var == 'option')
-					continue;
-				if (isset ( $query [$var] ) && $value == $query [$var]) {
-					unset ( $query [$var] );
+			$menuitem = $menu->getItem ( $query ['Itemid'] );
+			if ($menuitem) {
+				foreach ( $menuitem->query as $var => $value ) {
+					if ($var == 'Itemid' || $var == 'option')
+						continue;
+					if (isset ( $query [$var] ) && $value == $query [$var]) {
+						unset ( $query [$var] );
+					}
 				}
 			}
 		}

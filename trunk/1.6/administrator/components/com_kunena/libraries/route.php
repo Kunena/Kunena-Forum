@@ -44,6 +44,7 @@ abstract class KunenaRoute {
 		}
 		$Itemid = self::getItemID ( $query );
 		if ($Itemid > 0) $link->setVar ( 'Itemid', $Itemid );
+		else $link->delVar ( 'Itemid' );
 
 		//echo $link->getQuery();
 		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml );

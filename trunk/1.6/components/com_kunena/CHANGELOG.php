@@ -42,6 +42,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Delete post button shows up even if there are replies
 # [#19288] Fix regression: Empty page in view if limitstart > messagecount (redirect to last page)
 # [#19288] Fix regression: In move topic, "Leave ghost message in old forum" has no effect
+# [#19288] Fix regression: Configuration option Ranking = No causes func=view to crash
 
 12-Apr-2010 Matias
 ^ [#20050] Move more code to KunenaParser

@@ -256,7 +256,7 @@ class KunenaUser extends JObject
 		$rank->rank_image = null;
 
 		$config = CKunenaConfig::getInstance ();
-		if (!$config->showranking) return $rank;
+		if (!$config->showranking) return;
 		if (self::$_ranks === null) {
 			$this->_db->setQuery ( "SELECT * FROM #__fb_ranks" );
 			self::$_ranks = $this->_db->loadObjectList ('rank_id');

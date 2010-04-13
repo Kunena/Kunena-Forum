@@ -597,7 +597,19 @@ class CKunenaTools {
         return;
         }
 
-    function showBulkActionCats($disabled = 1) {
+	function KSelectList($name, $options=array(), $attr='', $sections=false) {
+		$kunena_db = &JFactory::getDBO ();
+		$list = JJ_categoryArray ();
+
+		foreach ( $list as $item ) {
+			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename, 'value', 'text', !$sections && !$item->parent);
+		}
+
+		$catsList = JHTML::_ ( 'select.genericlist', $options, $name, $attr, 'value', 'text', '', $name );
+		return $catsList;
+	}
+
+        function showBulkActionCats($disabled = 1) {
         $kunena_db = &JFactory::getDBO();
 
         $options = array ();

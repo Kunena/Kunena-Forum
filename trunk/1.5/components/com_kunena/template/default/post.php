@@ -1059,20 +1059,14 @@ if (empty($objCatInfo)) {
                     if (!$is_Moderator) {
 			$app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
                     }
-
-                    $catid = (int)$catid;
-                    $id = (int)$id;
-                    //get list of available forums
-                    //$kunena_db->setQuery("SELECT id, name FROM #__fb_categories WHERE parent != '0'");
-                    $kunena_db->setQuery("SELECT a.*, b.id AS catid, b.name AS category FROM #__fb_categories AS a LEFT JOIN #__fb_categories AS b ON b.id = a.parent WHERE a.parent!='0' AND a.id IN ($fbSession->allowed) ORDER BY parent, ordering");
-                    $catlist = $kunena_db->loadObjectList();
-                    	check_dberror("Unable to load categories.");
                     // get topic subject:
                     $kunena_db->setQuery("SELECT subject, id FROM #__fb_messages WHERE id='{$id}'");
                     $topicSubject = $kunena_db->loadResult();
                     	check_dberror("Unable to load messages.");
-            ?>
 
+					$options = array ();
+					$catlist = CKunenaTools::KSelectList ( 'catid', $options, ' size="15" class="fb_move_selectbox"' );
+            ?>
                     <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;func=post"); ?>" method = "post" name = "myform">
                         <input type = "hidden" name = "do" value = "domovepost"/>
 
@@ -1087,13 +1081,8 @@ if (empty($objCatInfo)) {
 
     <br/>
 
-    <select name = "catid" size = "15" class = "fb_move_selectbox">
-        <?php
-        foreach ($catlist as $cat) {
-            echo "<OPTION value=\"$cat->id\" > $cat->category/$cat->name </OPTION>";
-        }
+        <?php echo $catlist;
         ?>
-    </select>
 
     <br/>
 

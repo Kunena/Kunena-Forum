@@ -23,6 +23,8 @@
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.5.12
+define('_KUNENA_CATEGORY_ORPHAN','ORPHAN');
+define('_KUNENA_CATEGORY_ORPHAN_DESC','You have orphaned or lost categories! Please change their parent to be a valid category.');
 define('_KUNENA_SECTION','Section');
 define('_KUNENA_NOBODY','Nobody');
 // Disable userlist

@@ -369,59 +369,67 @@ if (is_object($kunenaProfile))
 
 html_Kunena::showFbFooter();
 
-function showAdministration($option)
-{
-    $app =& JFactory::getApplication();
-	$kunena_db = &JFactory::getDBO();
+function showAdministration($option) {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_db = &JFactory::getDBO ();
 
-    $limit = $app->getUserStateFromRequest("global.list.limit", 'limit', $app->getCfg('list_limit'), 'int');
-    $limitstart = $app->getUserStateFromRequest("{$option}.limitstart", 'limitstart', 0, 'int');
-    $levellimit = $app->getUserStateFromRequest("{$option}.limit", 'levellimit', 10, 'int');
-    /*
-    * danial
-    */
-    $kunena_db->setQuery("SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup"
-    . "\nFROM #__fb_categories AS a"
-    . "\nLEFT JOIN #__users AS u ON u.id = a.checked_out"
-    . "\nLEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access"
-    . "\nLEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access"
-    . "\n GROUP BY a.id"
-    . "\n ORDER BY a.ordering, a.name");
+	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
+	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
+	$levellimit = $kunena_app->getUserStateFromRequest ( "{$option}.limit", 'levellimit', 10, 'int' );
 
-    $rows = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load categories.");
+	$kunena_db->setQuery ( "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
+		FROM #__fb_categories AS a
+		LEFT JOIN #__users AS u ON u.id = a.checked_out
+		LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
+		LEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access
+		ORDER BY a.ordering, a.name" );
 
-    // establish the hierarchy of the categories
-    $children = array ();
+	$rows = $kunena_db->loadObjectList ('id');
+	check_dberror ( "Unable to load categories." );
 
-    // first pass - collect children
-    foreach ($rows as $v)
-    {
-        $pt = $v->parent;
-        $list = isset($children[$pt]) ? $children[$pt] : array ();
-        $v->location = count($list);
-        array_push($list, $v);
-        $children[$pt] = $list;
-    }
+	// establish the hierarchy of the categories
+	$children = array (0 => array());
 
-    // second pass - get an indent list of the items
-    $list = fbTreeRecurse(0, '', array (), $children, max(0, $levellimit - 1));
-    $total = count($list);
-    if ($limitstart >= $total) $limitstart = 0;
+	// first pass - collect children
+	foreach ( $rows as $v ) {
+		$list = array();
+		$vv = $v;
+		while ($vv->parent>0 && isset($rows[$vv->parent]) && !in_array($vv->parent, $list)) {
+			$list[] = $vv->id;
+			$vv = $rows[$vv->parent];
+		}
+		if ($vv->parent) {
+			$v->parent = -1;
+			$v->published = 0;
+			$v->name = _KUNENA_CATEGORY_ORPHAN.' : '.$v->name;
+		}
+		$children [$v->parent][] = $v;
+		$v->location = count ( $children [$v->parent] )-1;
+	}
 
-	jimport('joomla.html.pagination');
-	$pageNav = new JPagination( $total, $limitstart, $limit );
+	if (isset($children [-1])) {
+		$children [0] = array_merge($children [-1], $children [0]);
+		$kunena_app->enqueueMessage ( _KUNENA_CATEGORY_ORPHAN_DESC, 'notice' );
+	}
 
-	$levellist = JHTML::_('select.integerList' , 1, 20, 1, 'levellimit', 'size="1" onchange="document.adminForm.submit();"', $levellimit);
-    // slice out elements based on limits
-    $list = array_slice($list, $pageNav->limitstart, $pageNav->limit);
-    /**
-    *@end
-    */
+	// second pass - get an indent list of the items
+	$list = fbTreeRecurse ( 0, '', array (), $children, max ( 0, $levellimit - 1 ) );
+	$total = count ( $list );
+	if ($limitstart >= $total)
+		$limitstart = 0;
 
-    html_Kunena::showAdministration($list, $children, $pageNav, $option);
+	jimport ( 'joomla.html.pagination' );
+	$pageNav = new JPagination ( $total, $limitstart, $limit );
+
+	$levellist = JHTML::_ ( 'select.integerList', 1, 20, 1, 'levellimit', 'size="1" onchange="document.adminForm.submit();"', $levellimit );
+	// slice out elements based on limits
+	$list = array_slice ( $list, $pageNav->limitstart, $pageNav->limit );
+	/**
+	 *@end
+	 */
+
+	html_Kunena::showAdministration ( $list, $children, $pageNav, $option );
 }
-
 
 
 //---------------------------------------

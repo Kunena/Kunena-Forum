@@ -452,7 +452,7 @@ function showAdministration($option) {
 	check_dberror ( "Unable to load categories." );
 
 	// establish the hierarchy of the categories
-	$children = array ();
+	$children = array (0 => array());
 
 	// first pass - collect children
 	foreach ( $rows as $v ) {

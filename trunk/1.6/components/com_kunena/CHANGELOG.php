@@ -35,11 +35,16 @@ Legend:
 Kunena 1.6.0-DEV
 
 14-Apr-2010 Matias
-# [#19288] Fix regression: Some topics are broken in current schema -- upgrade database during install
+# [#19288] Fix regression: Some old topics are invisible in current schema -- fix database during install
 + [#19288] Allow administrator to see deleted posts and undelete them
 + [#20050] Add new integration classes: Add new event onAfterUndelete to Activity class
 # [#19288] Fix regression: do not allow anyone to reply hidden messages
 # [#19288] Fix regression: do not use auto redirect to valid topic in KunenaDiscuss plugin
+# [#19288] Fix regression: do not hide "Who is online" when Show Statistics = No
+# [#19288] Fix regression: Disable emoticons = Yes has no effect when you write a new message
+# [#19288] Fix regression: CommunityBuilder avatar for visitor was broken
+# [#19288] Fix regression: Allow Subscriptions = No has no effect in profile page
+# [#19288] Fix regression: Allow Favorites = No has no effect in profile page
 
 13-Apr-2010 Matias
 # [#19288] Anonymous posts should change name to "Anonymous" with a warning if username exists

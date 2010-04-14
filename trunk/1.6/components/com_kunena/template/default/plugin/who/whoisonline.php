@@ -28,7 +28,7 @@ $kunena_config =& CKunenaConfig::getInstance();
 $kunena_my = &JFactory::getUser();
 $kunena_is_a_moderator = CKunenaTools::isAdmin($kunena_my->id);
 
-if ($kunena_config->showstats && $kunena_config->showwhoisonline)
+if ($kunena_config->showwhoisonline)
 {
 ?>
 <!-- WHOIS ONLINE -->

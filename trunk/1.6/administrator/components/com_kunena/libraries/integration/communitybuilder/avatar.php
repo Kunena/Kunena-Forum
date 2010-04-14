@@ -33,9 +33,13 @@ class KunenaAvatarCommunityBuilder extends KunenaAvatar
 	{
 		$user = KunenaFactory::getUser($user);
 		// Get CUser object
-		$cbUser = CBuser::getInstance( $user->userid );
+		$cbUser = null;
+		if ($user->userid) {
+			$cbUser = CBuser::getInstance( $user->userid );
+		}
 		if ( $cbUser === null ) {
-			$cbUser = CBuser::getInstance( null );
+			if ($size=='thumb') return selectTemplate() . 'images/avatar/tnnophoto_n.png';
+			return selectTemplate() . 'images/avatar/nophoto_n.png';
 		}
 		if ($size=='thumb') return $cbUser->getField( 'avatar' , null, 'csv' );
 		return $cbUser->getField( 'avatar' , null, 'csv', 'none', 'list' );

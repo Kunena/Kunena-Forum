@@ -262,6 +262,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			</div>
 			</td>
 		</tr>
+		<?php if (!$this->config->disemoticons) : ?>
 		<tr>
 			<td class="k-postbuttons">
 			<div id="smilie"><?php
@@ -290,6 +291,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 
 			</td>
 		</tr>
+		<?php endif; ?>
 		<!-- end of extendable secondary toolbar -->
 		<tr>
 			<td class="kposthint"><input type="text" name="helpbox" id="helpbox"

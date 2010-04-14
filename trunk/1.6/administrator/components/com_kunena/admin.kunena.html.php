@@ -844,15 +844,7 @@ td.kadmin-tdtitle {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAMBOT_SUPPORT_DESC') ?>
 						</td>
 					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISEMOTICONS') ?></td>
-								<td align="left" valign="top"><?php echo $lists ['disemoticons'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISEMOTICONS_DESC') ?>
-						</td>
-					</tr>
-							<tr align="center" valign="middle">
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE') ?></td>
 								<td align="left" valign="top"><?php echo $lists ['template'];
 						?></td>
@@ -1579,6 +1571,14 @@ td.kadmin-tdtitle {
 				<legend><?php echo JText::_('COM_KUNENA_A_BBCODE_SETTINGS') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISEMOTICONS') ?></td>
+								<td align="left" valign="top"><?php echo $lists ['disemoticons'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DISEMOTICONS_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_SHOWSPOILERTAG') ?>
 						</td>
 								<td align="left" valign="top" width="25%"><?php echo $lists ['showspoilertag'];
@@ -1893,6 +1893,16 @@ td.kadmin-tdtitle {
 					<legend><?php echo JText::_('COM_KUNENA_STATS') ?></legend>
 					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 						<tr align="center" valign="middle">
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOWWHOIS');
+							?></td>
+							<td align="left" valign="top"><?php echo $lists ['showwhoisonline'];
+							?>
+							</td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOWWHOISDESC');
+							?>
+							</td>
+						</tr>
+						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_SHOWSTATS');
 							?>
 							</td>
@@ -1900,16 +1910,6 @@ td.kadmin-tdtitle {
 							?>
 							</td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOWSTATSDESC');
-							?>
-							</td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOWWHOIS');
-							?></td>
-							<td align="left" valign="top"><?php echo $lists ['showwhoisonline'];
-							?>
-							</td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOWWHOISDESC');
 							?>
 							</td>
 						</tr>

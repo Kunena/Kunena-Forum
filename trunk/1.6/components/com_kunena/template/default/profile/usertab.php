@@ -66,14 +66,18 @@ defined( '_JEXEC' ) or die();
 			<?php //$this->displayUserTopics(); ?>
 		</dd>
 		-->
+		<?php if ($this->config->allowsubscriptions) :?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displaySubscriptions(); ?>
 		</dd>
+		<?php endif; ?>
+		<?php if ($this->config->allowfavorites) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayFavorites(); ?>
 		</dd>
+		<?php endif; ?>
 		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id): ?>
 		<!-- Only visible to moderators and admins -->
 		<dt class="kprofile-modbtn"><?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?></dt>

@@ -101,7 +101,7 @@ class CKunenaPosting {
 		return true;
 	}
 
-	public function canRead() {
+	public function canRead($action = '-read-') {
 		// Load must have been performed successfully!
 		if (! $this->parent) {
 			return false; // Error has already been set, either in construct() or load()
@@ -112,38 +112,32 @@ class CKunenaPosting {
 		}
 		// Category must be visible
 		if (! $this->_session->canRead ( $this->parent->catid )) {
-			return $this->setError ( '-read-', JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 		}
 		// Check unapproved, deleted etc messages
-		if (CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
-			if ($this->parent->hold > 1 || $this->parent->topichold > 1) {
-				// Moderators cannot see deleted posts
-				return $this->setError ( '-read-', JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
-			}
-		} else {
-			if ($this->parent->hold == 1 && $this->_my->id == $this->parent->userid) {
+		$access = KunenaFactory::getAccessControl();
+		$hold = $access->getAllowedHold($this->_my->id, $this->catid, false);
+		if ($this->parent->hold == 1 && $this->_my->id == $this->parent->userid) {
 				// User can see his own post before it gets approved
-			} else if ($this->parent->hold > 0 || $this->parent->topichold > 0) {
-				// Otherwise users can only see visible topics/posts
-				return $this->setError ( '-read-', JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
-			}
+		} else if (!in_array($this->parent->hold, $hold) || !in_array($this->parent->topichold, $hold)) {
+			// User is not allowed to see this post
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
 		}
-
 		return true;
 	}
 
-	function canPost() {
+	function canPost($action = '-post-') {
 		// Visitors are allowed to post only if public writing is enabled
 		if (($this->_my->id == 0 && ! $this->_config->pubwrite)) {
-			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
 		}
 		// User must see category or topic in order to be able post into it
-		if (! $this->canRead ()) {
+		if (! $this->canRead ($action)) {
 			return false; // Error has already been set
 		}
 		// Posts cannot be in sections
 		if (! $this->parent->catparent) {
-			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' ) );
 		}
 		// Do not perform rest of the checks to moderators and admins
 		if (CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
@@ -151,32 +145,32 @@ class CKunenaPosting {
 		}
 		// Posts cannot be written to locked topics
 		if ($this->parent->topiclocked) {
-			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
 		}
 		// Posts cannot be written to locked categories
 		if ($this->parent->catlocked) {
-			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 		}
 
 		return true;
 	}
 
-	function canReply() {
-		return $this->canPost ();
+	function canReply($action = 'reply') {
+		return $this->canPost ($action);
 	}
 
-	function canEdit() {
+	function canEdit($action = '-edit-') {
 		// Visitors cannot edit posts
 		if (! $this->_my->id) {
-			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
 		}
 		// User must see topic in order to edit messages in it
-		if (! $this->canRead ()) {
+		if (! $this->canRead ($action)) {
 			return false;
 		}
 		// Categories cannot be edited - verify that post exists
 		if (! $this->parent->id) {
-			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
 		}
 		// Do not perform rest of the checks to moderators and admins
 		if (CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
@@ -184,36 +178,36 @@ class CKunenaPosting {
 		}
 		// User must be author of the message
 		if ($this->parent->userid != $this->_my->id) {
-			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 		}
 		// User is only allowed to edit post within time specified in the configuration
 		if (! CKunenaTools::editTimeCheck ( $this->parent->modified_time, $this->parent->time )) {
-			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 		}
 		// Posts cannot be edited in locked topics
 		if ($this->parent->topiclocked) {
-			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
 		}
 		// Posts cannot be edited in locked categories
 		if ($this->parent->catlocked) {
-			return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 		}
 
 		return true;
 	}
 
-	function canDelete() {
+	function canDelete($action = '-delete-') {
 		// Visitors cannot delete posts
 		if (! $this->_my->id) {
-			return $this->setError ( '-delete-', JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
 		}
 		// User must see topic in order to delete messages in it
-		if (! $this->canRead ()) {
+		if (! $this->canRead ($action)) {
 			return false;
 		}
 		// Categories cannot be deleted - verify that post exists
 		if (! $this->parent->id) {
-			return $this->setError ( '-delete-', JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
 		}
 		// Do not perform rest of the checks to moderators and admins
 		if (CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
@@ -221,21 +215,29 @@ class CKunenaPosting {
 		}
 		// User must be author of the message
 		if ($this->parent->userid != $this->_my->id) {
-			return $this->setError ( '-delete-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 		}
 		// User is only allowed to delete post within time specified in the configuration
 		if (! CKunenaTools::editTimeCheck ( $this->parent->modified_time, $this->parent->time )) {
-			return $this->setError ( '-delete-', JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
 		}
 		// Posts cannot be deleted in locked topics
 		if ($this->parent->topiclocked) {
-			return $this->setError ( '-delete-', JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_TOPIC_LOCKED' ) );
 		}
 		// Posts cannot be deleted in locked categories
 		if ($this->parent->catlocked) {
-			return $this->setError ( '-delete-', JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 		}
 
+		return true;
+	}
+
+	function canUndelete($action = '-undelete-') {
+		// User must be able to delete message
+		if (! $this->canDelete ($action)) {
+			return false;
+		}
 		return true;
 	}
 
@@ -555,6 +557,7 @@ class CKunenaPosting {
 		$query = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='{$this->parent->id}';";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
+		$dberror = $this->checkDatabaseError ();
 		if ($dberror)
 			return $this->setError ( '-delete-', JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE' ) );
 
@@ -566,6 +569,33 @@ class CKunenaPosting {
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterDelete($this);
+
+		return empty ( $this->errors );
+	}
+
+	public function undelete($mesid) {
+		if (! $this->parent || $this->parent->id != $mesid) {
+			$this->loadMessage ( $mesid );
+		}
+		if (! $this->canUndelete ())
+			return false;
+
+		// Execute undelete
+		$query = "UPDATE #__fb_messages SET `hold`=0 WHERE `id`='{$this->parent->id}';";
+		$this->_db->setQuery ( $query );
+		$this->_db->query ();
+		$dberror = $this->checkDatabaseError ();
+		if ($dberror)
+			return $this->setError ( '-undelete-', JText::_ ( 'COM_KUNENA_POST_ERROR_UNDELETE' ) );
+
+		// Last but not least update forum stats
+		CKunenaTools::reCountBoards();
+
+		$this->set ( 'id', $this->parent->id );
+
+		// Activity integration
+		$activity = KunenaFactory::getActivityIntegration();
+		$activity->onAfterUndelete($this);
 
 		return empty ( $this->errors );
 	}

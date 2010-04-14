@@ -25,7 +25,7 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 		$this->priority = 50;
 	}
 
-	function isAdmin($uid = null) {
+	function isAdmin($uid = null, $catid=0) {
 		return $this->joomlaAccess->isAdmin($uid);
 	}
 

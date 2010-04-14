@@ -458,6 +458,7 @@
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
 			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
 			<query mode="silenterror">ALTER TABLE `jos_fb_sessions` ADD INDEX ( `currvisit` )</query>
+			<query>UPDATE `#__fb_messages` SET thread=id WHERE parent=0</query>
 		</version>
 	</upgrade>
 </comupgrade>

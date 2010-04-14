@@ -19,8 +19,9 @@ class CKunenaViewMessage {
 	public $message_edit = null;
 	public $message_merge = null;
 	public $message_split = null;
-	public $message_delete = null;
 	public $message_move = null;
+	public $message_delete = null;
+	public $message_undelete = null;
 	public $message_publish = null;
 	public $message_closed = null;
 
@@ -182,7 +183,7 @@ class CKunenaViewMessage {
 			}
 		}
 
-		if ((!$message->hold && (CKunenaTools::isModerator ( $this->my->id, $this->catid )) || ($this->topicLocked == 0))) {
+		if (!$message->hold && (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->topicLocked)) {
 			//user is allowed to reply/quote
 			if ($this->my->id) {
 				$this->message_quickreply = CKunenaLink::GetTopicPostReplyLink ( 'reply', $this->catid, $this->id, CKunenaTools::showButton ( 'reply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY') ), 'nofollow', 'buttoncomm btn-left kqreply', JText::_('COM_KUNENA_BUTTON_QUICKREPLY_LONG'), ' id="kreply'.$this->id.'"' );
@@ -204,7 +205,6 @@ class CKunenaViewMessage {
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			unset($this->message_closed);
 			$this->message_edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
-			$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 			$this->message_split = CKunenaLink::GetTopicPostLink ( 'split', $this->catid, $this->id, CKunenaTools::showButton ( 'split', JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_SPLIT_TOPIC_LONG') );
 			$this->message_merge = CKunenaLink::GetTopicPostLink ( 'merge', $this->catid, $this->id, CKunenaTools::showButton ( 'merge', JText::_('COM_KUNENA_BUTTON_MERGE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MERGE_LONG') );
 			$this->message_move = CKunenaLink::GetTopicPostLink ( 'movepost', $this->catid, $this->id, CKunenaTools::showButton ( 'move', JText::_('COM_KUNENA_BUTTON_MOVE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MOVE_LONG') );
@@ -212,10 +212,16 @@ class CKunenaViewMessage {
 				$this->message_publish = CKunenaLink::GetTopicPostReplyLink ( 'approve', $this->catid, $this->id, CKunenaTools::showButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
 				$this->class = 'class="kmsg kunapproved"';
 			}
+			if ($message->hold == 2) {
+				$this->class = 'class="kmsg kunapproved"';
+				$this->message_undelete = CKunenaLink::GetTopicPostLink ( 'undelete', $this->catid, $this->id, CKunenaTools::showButton ( 'undelete', JText::_('COM_KUNENA_BUTTON_UNDELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG') );
+			} else {
+				$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+			}
 		}
 		else if ($this->config->useredit && $this->my->id && $this->my->id == $this->profile->userid) {
 			//Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
-			if (CKunenaTools::editTimeCheck($message->modified_time, $message->time)) {
+			if ($message->hold != 2 && CKunenaTools::editTimeCheck($message->modified_time, $message->time)) {
 				$this->message_edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
 				if ($this->replynum == $this->replycnt) $this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 			}
@@ -233,6 +239,7 @@ class CKunenaViewMessage {
 class CKunenaView {
 	public $allow = 0;
 	public $templatepath = null;
+	public $redirect = null;
 
 	// Thread actions
 	public $thread_reply = null;
@@ -254,7 +261,9 @@ class CKunenaView {
 		$this->db = JFactory::getDBO ();
 		$this->config = CKunenaConfig::getInstance ();
 		$this->session = KunenaFactory::getSession ();
+		$this->my = JFactory::getUser ();
 		$this->myprofile = KunenaFactory::getUser ();
+		$this->app = JFactory::getApplication ();
 
 		$this->func = $func;
 		$this->catid = $catid;
@@ -274,16 +283,15 @@ class CKunenaView {
 	}
 
 	function getView() {
-		// Is user allowed to see the forum specified in URL?
+		// Is user allowed to read category from the URL?
 		if ($this->catid && ! $this->session->canRead ( $this->catid )) {
 			return;
 		}
 		$this->allow = 1;
 
-		$this->my = JFactory::getUser ();
-		if (!CKunenaTools::isModerator ( $this->my->id, $this->catid )) $where[] = "a.hold=0";
-		else $where[] = "a.hold<=1";
-		$where = implode(' AND ',$where); // always contains at least 1 item
+		$access = KunenaFactory::getAccessControl();
+		$where[] = "a.hold IN ({$access->getAllowedHold($this->myprofile, $this->catid)})";
+		$where = implode(' AND ',$where);
 
 		$query = "SELECT a.*, b.*, p.id AS poll_id, modified.name AS modified_name, modified.username AS modified_username
 			FROM #__fb_messages AS a
@@ -305,9 +313,9 @@ class CKunenaView {
 			return;
 		}
 
-		$this->app = & JFactory::getApplication ();
+		$this->thread = $this->first_message->thread;
+
 		// Test if this is a valid URL. If not, redirect browser to the right location
-		$this->thread = $this->first_message->parent == 0 ? $this->id : $this->first_message->thread;
 		if ($this->first_message->moved || $this->thread != $this->id || $this->catid != $this->first_message->catid) {
 			$this->catid = $this->first_message->catid;
 			if ($this->first_message->moved) {
@@ -330,10 +338,7 @@ class CKunenaView {
 
 			$replyPage = $replyCount > $this->config->messages_per_page ? ceil ( $replyCount / $this->config->messages_per_page ) : 1;
 
-			header ( "HTTP/1.1 301 Moved Permanently" );
-			header ( "Location: " . htmlspecialchars_decode ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->thread, $replyPage, $this->config->messages_per_page, $this->first_message->id ) ) );
-
-			$this->app->close ();
+			$this->redirect = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->thread, $replyPage, $this->config->messages_per_page, $this->first_message->id, false );
 		}
 
 		//Get the category name for breadcrumb
@@ -378,7 +383,7 @@ class CKunenaView {
 		// If page does not exist, redirect to the last page
 		if ($this->total_messages <= $this->limitstart) {
 			$page = ceil ( $this->total_messages / $this->limit );
-			$this->app->redirect(CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $page, $this->limit, '', false));
+			$this->redirect = CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $page, $this->limit, '', false);
 		}
 
 		if (!$this->myprofile->ordering) {
@@ -648,6 +653,9 @@ class CKunenaView {
 		if (! $this->first_message) {
 			echo JText::_('COM_KUNENA_MODERATION_INVALID_ID');
 			return;
+		}
+		if ($this->redirect) {
+			$this->app->redirect($this->redirect);
 		}
 		CKunenaTools::loadTemplate('/view/view.php', false, $this->templatepath);
 	}

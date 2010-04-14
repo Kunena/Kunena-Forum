@@ -20,7 +20,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		$this->priority = 25;
 	}
 
-	function isAdmin($uid = null) {
+	function isAdmin($uid = null, $catid=0) {
 		static $instances = null;
 
 		// Avoid loading instances if it is possible
@@ -86,6 +86,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		}
 		return false;
 	}
+
 	function getAllowedCategories($userid) {
 		$acl = JFactory::getACL ();
 		$db = JFactory::getDBO ();

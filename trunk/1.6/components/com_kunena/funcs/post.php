@@ -438,6 +438,23 @@ class CKunenaPost {
 		$this->redirectBack ();
 	}
 
+	protected function undelete() {
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		$message = new CKunenaPosting ( );
+		$success = $message->undelete ( $this->id );
+
+		// Handle errors
+		if (! $success) {
+			$errors = $message->getErrors ();
+			foreach ( $errors as $field => $error ) {
+				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
+			}
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE') );
+		}
+		$this->redirectBack ();
+	}
+
 	protected function deletethread() {
 		if (!$this->load())
 			return false;
@@ -931,6 +948,10 @@ class CKunenaPost {
 
 			case 'delete' :
 				$this->delete ();
+				break;
+
+			case 'undelete' :
+				$this->undelete ();
 				break;
 
 			case 'deletethread' :

@@ -2386,6 +2386,10 @@ POST PAGE
 	float: left;
 	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
 }
+#Kunena a.buttonmod span.undelete {
+	float: left;
+	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
+}
 #Kunena a.buttonmod span.move {
 	float: left;
 	background: url("../images/buttons/btn-left-move.gif") no-repeat left top;

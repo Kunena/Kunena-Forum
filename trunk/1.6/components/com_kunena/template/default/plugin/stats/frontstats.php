@@ -43,7 +43,7 @@ if ($this->showgenstats > 0)
                 <tr>
                     <th align="left">
                         <div class = "ktitle_cover km">
-                            <?php echo CKunenaLink::GetStatsLink( stripslashes($kunena_config->board_title).' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), 'ktitel kl'); ?>
+                            <?php echo CKunenaLink::GetStatsLink( stripslashes($kunena_config->board_title).' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), 'ktitle kl'); ?>
                         </div>
                         <div class="fltrt">
 							<span id="kstats_status"><a class="ktoggler close" rel="frontstats_tbody"></a></span>

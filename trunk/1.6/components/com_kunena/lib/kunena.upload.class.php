@@ -41,6 +41,9 @@ class CKunenaUpload {
 	protected $status = true;
 	protected $error = false;
 
+	protected $validImageExts = array();
+	protected $validFileExts = array();
+
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
 		$this->_my = &JFactory::getUser ();
@@ -48,6 +51,12 @@ class CKunenaUpload {
 		$this->_config = &CKunenaConfig::getInstance ();
 		$this->_isimage = false;
 		$this->_isfile = false;
+		if (($this->_my->id && $this->_config->allowimageregupload) || (!$this->_my->id && $this->_config->allowimageupload)) {
+			$this->validImageExts = explode ( ',', $this->_config->imagetypes );
+		}
+		if (($this->_my->id && $this->_config->allowfileregupload) || (!$this->_my->id && $this->_config->allowfileupload)) {
+			$this->validFileExts = explode ( ',', $this->_config->filetypes );
+		}
 	}
 
 	function __destruct() {
@@ -74,6 +83,13 @@ class CKunenaUpload {
 	function resetStatus(){
 		$this->error = '';
 		$this->status = true;
+	}
+
+	function setAllowedExtensions($imageExts=array(), $fileExts=array()) {
+		if (!is_array($imageExts)) $imageExts = explode ( ',', $imageExts );
+		if (!is_array($fileExts)) $fileExts = explode ( ',', $fileExts );
+		$this->validImageExts = $imageExts;
+		$this->validFileExts = $fileExts;
 	}
 
 	function getFileInfo()
@@ -294,21 +310,17 @@ class CKunenaUpload {
 			return false;
 		}
 
-		//check if the file extension is ok
-		$validFileExts = explode ( ',', $this->_config->filetypes );
-		$validImageExts = explode ( ',', $this->_config->imagetypes );
-
 		// assume the extension is false until we know its ok
 		$extOk = false;
 
-		$fileparts = $this->getValidExtension($validFileExts);
+		$fileparts = $this->getValidExtension($this->validFileExts);
 		if ($fileparts) {
 			$this->_isfile = true;
 			$extOk = true;
 			$uploadedFileBasename = $fileparts[0];
 			$uploadedFileExtension = $fileparts[1];
 		}
-		$fileparts = $this->getValidExtension($validImageExts);
+		$fileparts = $this->getValidExtension($this->validImageExts);
 		if ($fileparts) {
 			$this->_isimage = true;
 			$extOk = true;
@@ -317,7 +329,8 @@ class CKunenaUpload {
 		}
 
 		if ($extOk == false) {
-			$this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION', $this->_config->imagetypes, $this->_config->filetypes ));
+			// TODO: better to split this error message into 4
+			$this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION', implode(', ',$this->validImageExts), implode(', ',$this->validFileExts) ));
 			return false;
 		}
 

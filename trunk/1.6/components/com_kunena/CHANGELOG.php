@@ -45,6 +45,9 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: CommunityBuilder avatar for visitor was broken
 # [#19288] Fix regression: Allow Subscriptions = No has no effect in profile page
 # [#19288] Fix regression: Allow Favorites = No has no effect in profile page
+# [#19288] Fix regression: If configuration option Allow Favorites = No, all topics have been favorited by visitor (part 2)
+# [#19288] Fix regression: The NEW indicator doesn't show up in func=showcat
+# [#19288] Fix regression: Users should not be able to upload image if only files are allowed and files if only images are allowed
 
 13-Apr-2010 Matias
 # [#19288] Anonymous posts should change name to "Anonymous" with a warning if username exists

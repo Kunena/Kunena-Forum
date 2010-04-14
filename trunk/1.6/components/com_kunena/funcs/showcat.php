@@ -75,7 +75,7 @@ class CKunenaShowcat {
 		$this->db->setQuery ( $query, $offset, $threads_per_page );
 		$threadids = $this->db->loadResultArray ();
 		check_dberror ( "Unable to load thread list." );
-		$idstr = @join ( ",", $threadids );
+		$idstr = implode ( ",", $threadids );
 
 		$this->messages = array ();
 		$this->threads = array ();
@@ -89,7 +89,7 @@ class CKunenaShowcat {
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__fb_messages AS m";
 			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
-			else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
+			else $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = 0";
 			$query .= "
 		LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.thread
 		WHERE m.hold='0' AND m.thread IN ({$idstr})
@@ -104,7 +104,7 @@ class CKunenaShowcat {
 	ORDER BY ordering DESC, lastid DESC";
 
 			$this->db->setQuery ( $query );
-			$this->messages = $this->db->loadObjectList ();
+			$this->messages = $this->db->loadObjectList ('id');
 			check_dberror ( "Unable to load messages." );
 
 			// collect user ids for avatar prefetch when integrated

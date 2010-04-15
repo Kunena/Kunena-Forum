@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+15-Apr-2010 Matias
+# [#19288] Fix regression: Fatal error when changing vote in a poll
+# [#19288] Fix regression: Topic icon cannot be changed while editing post
+# [#19288] Fix regression: Show images for guests and Show attachments for guests = 'No' have no effect
+
 14-Apr-2010 Matias
 # [#19288] Fix regression: Some old topics are invisible in current schema -- fix database during install
 + [#19288] Allow administrator to see deleted posts and undelete them

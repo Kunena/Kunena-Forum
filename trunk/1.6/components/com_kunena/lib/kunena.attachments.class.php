@@ -20,6 +20,7 @@ class CKunenaAttachments {
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
 		$this->_my = &JFactory::getUser ();
+		$this->_config = KunenaFactory::getConfig ();
 		$this->_session = KunenaFactory::getSession ();
 	}
 
@@ -74,4 +75,30 @@ class CKunenaAttachments {
 		check_dberror ( "Unable to assign attachments to message ".$mesid );
 	}
 
+	function get($mesids) {
+		$ret = array();
+		if (empty($mesids)) return $ret;
+		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ($mesids)";
+		$this->_db->setQuery ( $query );
+		$attachments = $this->_db->loadObjectList ();
+		check_dberror ( 'Unable to load attachments' );
+		foreach ($attachments as $attachment) {
+			// Check if file has been pre-processed
+			if (is_null ( $attachment->hash )) {
+				// This attachment has not been processed.
+				// It migth be a legacy file, or the settings might have been reset.
+				// Force recalculation ...
+
+				// TODO: Perform image re-prosessing
+			}
+
+			// combine all images into one type
+			$attachment->shorttype = (stripos ( $attachment->filetype, 'image/' ) !== false) ? 'image' : $attachment->filetype;
+			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) continue;
+			else if (!$this->_my->id && !$this->_config->showfileforguest) continue;
+
+			$ret[$attachment->mesid][] = $attachment;
+		}
+		return $ret;
+	}
 }

@@ -232,9 +232,11 @@ class CKunenaPost {
 			$reprefix = JString::substr ( stripslashes ( $message->subject ), 0, JString::strlen ( JText::_ ( 'COM_KUNENA_POST_RE' ) ) ) != JText::_ ( 'COM_KUNENA_POST_RE' ) ? JText::_ ( 'COM_KUNENA_POST_RE' ) . ' ' : '';
 			$this->subject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
 			$this->resubject = $reprefix . $this->subject;
+			$this->parent = $message->parent;
 		} else {
 			$this->message_text = '';
 			$this->resubject = '';
+			$this->parent = 0;
 
 			$options = array ();
 			if (empty ( $this->msg_cat->allow_anonymous ))
@@ -292,31 +294,9 @@ class CKunenaPost {
 
 		if ($allowEdit == 1) {
 			// Load attachments
-			$attachments = array ();
-			$query = "SELECT * FROM #__kunena_attachments
-					WHERE mesid ='" . $message->id . "'";
-			$this->_db->setQuery ( $query );
-			$attachments = $this->_db->loadObjectList ();
-			check_dberror ( 'Unable to load attachments' );
-
-			$this->attachments = array ();
-
-			foreach ( $attachments as $attachment ) {
-				// Check if file has been pre-processed
-				if (is_null ( $attachment->hash )) {
-					// This attachment has not been processed.
-				// It migth be a legacy file, or the settings might have been reset.
-				// Force recalculation ...
-
-				// TODO: Perform image re-prosessing
-				}
-
-				// shorttype based on MIME type to determine if image for displaying purposes
-				$attachment->shorttype = (stripos ( $attachment->filetype, 'image/' ) !== false) ? 'image' : $attachment->filetype;
-
-				$this->attachments [] = $attachment;
-			}
-			// End of load attachments
+			require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+			$attachments = new CKunenaAttachments();
+			$this->attachments = array_pop($attachments->get($message->id));
 
 			$this->kunena_editmode = 1;
 
@@ -326,6 +306,7 @@ class CKunenaPost {
 			$this->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
 			$this->id = $message->id;
 			$this->catid = $message->catid;
+			$this->parent = $message->parent;
 			$this->emoid = $message->topic_emoticon;
 			$this->action = 'edit';
 

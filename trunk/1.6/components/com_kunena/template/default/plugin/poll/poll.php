@@ -93,6 +93,7 @@ elseif ($do == 'changevote')
 	CKunenaPolls::call_javascript_vote();
 	$dataspollresult = CKunenaPolls::get_poll_data($id);
 	//Remove one vote to the user concerned and remove one vote in option
+	$kunena_my = JFactory::getUser();
 	$id_last_vote = CKunenaPolls::get_last_vote_id($kunena_my->id,$id);
 	CKunenaPolls::change_vote($kunena_my->id,$id,$id_last_vote);
 	?>

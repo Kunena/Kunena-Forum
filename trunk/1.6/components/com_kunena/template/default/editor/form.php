@@ -116,7 +116,7 @@ $this->k=0;
 				?>" /></td>
 		</tr>
 
-		<?php if ($this->id == 0) : ?>
+		<?php if ($this->parent == 0) : ?>
 		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_GEN_TOPIC_ICON');

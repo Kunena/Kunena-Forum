@@ -38,6 +38,8 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Fatal error when changing vote in a poll
 # [#19288] Fix regression: Topic icon cannot be changed while editing post
 # [#19288] Fix regression: Show images for guests and Show attachments for guests = 'No' have no effect
+# [#19288] Fix regression: Only allow gif, jpeg, jpg and png images in avatar upload
+# [#19288] Fix regression: Fix bug in API which prevented mod_kunenalatest from working with unregistered users
 
 14-Apr-2010 Matias
 # [#19288] Fix regression: Some old topics are invisible in current schema -- fix database during install

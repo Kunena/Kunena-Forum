@@ -375,6 +375,7 @@ class CKunenaProfile {
 
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
 		$upload = new CKunenaUpload();
+		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
 
 		if ( $upload->uploaded('avatarfile') ) {
 			$upload->uploadFile(KUNENA_PATH_AVATAR_UPLOADED , 'avatarfile', false);

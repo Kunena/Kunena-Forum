@@ -85,7 +85,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 	}
 
 	public function getAllowedCategories($userid) {
-		if ((int)$userid<1 || $userid != $this->_my->id) return;
+		if ($userid != $this->_my->id) return;
 		return $this->_session->allowed;
 	}
 	public function getProfile($userid) {

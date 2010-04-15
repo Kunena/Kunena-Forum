@@ -95,7 +95,7 @@ class CKunenaAttachments {
 			// combine all images into one type
 			$attachment->shorttype = (stripos ( $attachment->filetype, 'image/' ) !== false) ? 'image' : $attachment->filetype;
 			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) continue;
-			else if (!$this->_my->id && !$this->_config->showfileforguest) continue;
+			if ($attachment->shorttype != 'image' && !$this->_my->id && !$this->_config->showfileforguest) continue;
 
 			$ret[$attachment->mesid][] = $attachment;
 		}

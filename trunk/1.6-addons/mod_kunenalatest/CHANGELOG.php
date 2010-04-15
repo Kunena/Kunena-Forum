@@ -30,6 +30,15 @@ Legend:
 
 KunenaLatest 1.0
 
+15-Apr-2010 Matias
+# [#20081] Removed user posts configuration option
+# [#20081] Improve database error detection
+^ [#20081] Show always author name
+^ [#20081] More layout fixes
+
+14-Apr-2010 Ron
+^ [#20081] Layout fixes
+
 13-Apr-2010 Matias
 ^ [#20081] Changed module name to mod_kunenalatest, cleanup code and css
 ^ [#20081] Updated language file to use J1.6 style

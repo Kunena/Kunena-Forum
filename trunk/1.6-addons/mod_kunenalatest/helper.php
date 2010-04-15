@@ -45,8 +45,9 @@ class modKunenaLatestHelper {
 
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
-		$order = "lastid DESC";
+		CKunenaTools::checkDatabaseError();
 
+		$order = "lastid DESC";
 		$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread
 			WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$cat_total})
@@ -57,6 +58,7 @@ class modKunenaLatestHelper {
 
 		$db->setQuery ( $query, '', $params->get ( 'nbpost' ) );
 		$threadids = $db->loadResultArray ();
+		CKunenaTools::checkDatabaseError();
 
 		$idstr = @join ( ",", $threadids );
 
@@ -85,8 +87,9 @@ class modKunenaLatestHelper {
 
 		$db->setQuery ( $query );
 		$messagelist = $db->loadObjectList ();
+		CKunenaTools::checkDatabaseError();
 
-		$messages = '';
+		$messages = array();
 		foreach ( $messagelist as $message ) {
 			if ($message->parent == 0) {
 				$messages [$message->id] = $message;

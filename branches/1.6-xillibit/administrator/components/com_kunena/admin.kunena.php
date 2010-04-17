@@ -2501,17 +2501,28 @@ function generateSystemReport () {
 	$kunenaVersionInfo = CKunenaVersion::versionArray ();
 
 	//get all the config settings for Kunena
-	$kunena_db->setQuery("SELECT * FROM #__fb_config");
-	$kconfig = $kunena_db->loadObjectList ();
+	$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."fb_config'" );
+	$table_config = $kunena_db->loadResult ();
+	check_dberror ( 'Unable to check for existing tables.' );
+
+	if ($table_config) {
+		$kunena_db->setQuery("SELECT * FROM #__fb_config");
+		$kconfig = $kunena_db->loadObjectList ();
     	check_dberror("Unable to load config.");
 
-    $kconfigsettings = '[table]';
-    foreach ($kconfig[0] as $key => $value ) {
-    	if ($key != 'id') {
+    	$kconfigsettings = '[table]';
+    	foreach ($kconfig[0] as $key => $value ) {
+    		if ($key != 'id') {
 				$kconfigsettings .= '[tr][td]'.$key.'[/td][td]'.$value.'[/td][/tr]';
+    		}
     	}
-    }
-	$kconfigsettings .= '[/table]';
+		$kconfigsettings .= '[/table]';
+	} else {
+		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
+	}
+
+
+
 
 	//test on each table if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();

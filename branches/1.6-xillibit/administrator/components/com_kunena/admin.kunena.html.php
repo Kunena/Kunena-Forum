@@ -3079,6 +3079,9 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_IP'), 'ip', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" nowrap="nowrap"><?php
+					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_USERID'), 'userid', $lists['order_Dir'], $lists['order']);
+					?></th>
+					<th align="left" nowrap="nowrap"><?php
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR'), 'username', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" nowrap="nowrap"><?php
@@ -3118,6 +3121,9 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 						?></td>
 					<td nowrap="nowrap"><?php
 						echo $row->ip;
+						?></td>
+					<td nowrap="nowrap"><?php
+						echo $row->userid;
 						?></td>
 					<td nowrap="nowrap"><?php
 						if(empty($row->username)){

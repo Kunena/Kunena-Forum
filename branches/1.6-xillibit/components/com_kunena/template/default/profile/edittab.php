@@ -38,6 +38,6 @@ defined( '_JEXEC' ) or die();
 	<input type="hidden" name="do" value="save" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 	<br />
-	<button class="kbutton ks validate" type="submit"><?php echo JText::_('COM_KUNENA_GEN_SUBMIT'); ?></button>
+	<button class="kbutton ks validate" type="submit"><?php echo JText::_('COM_KUNENA_GEN_SAVE'); ?></button>
 </div>
 </form>

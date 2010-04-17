@@ -32,6 +32,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-DEV
+
+17-Apr-2010 Xillibit
+# [#19288] Fix issue which prevents to display images from not default gallery
+# [#19288] Fix issue which prevents to display images in browse images in backend (not totally working)
+
 Kunena 1.6.0-DEV
 
 17-Apr-2010 Matias

@@ -172,12 +172,18 @@ class CKunenaProfile {
 	function displayEditAvatar() {
 		if (!$this->editavatar) return;
 		$this->gallery = JRequest::getVar('gallery', 'default');
-		if ($this->gallery == 'default') $this->gallery = '';
+		if ($this->gallery == 'default') {
+			$this->gallery = '';
+		} else {
+			$this->gallery = $this->gallery .'/';
+		}
 		$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';
+		if (!file_exists($path)) $path = KUNENA_PATH_AVATAR_UPLOADED .'/gallery';
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 		CKunenaTools::loadTemplate('/profile/editavatar.php');
 	}
+
 
 	function displayEditSettings() {
 		CKunenaTools::loadTemplate('/profile/editsettings.php');

@@ -55,7 +55,8 @@ if (!defined("KUNENA_JCSSURL")) {
 }
 
 // Kunena uploaded files directory
-define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . 'images/fbfiles');
+define('KUNENA_LIVEUPLOADEDPATH_LEGACY', KUNENA_JLIVEURL . 'images/fbfiles');
+define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . 'media/kunena/');
 
 
 // now continue with other paths

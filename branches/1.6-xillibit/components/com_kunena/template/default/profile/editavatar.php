@@ -71,6 +71,9 @@ $i=0;
 
 <?php
 $kid = 0;
+$live_path = KUNENA_LIVEUPLOADEDPATH_LEGACY .'/';
+if (!file_exists(KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery')) $live_path = KUNENA_LIVEUPLOADEDPATH;
+
 foreach ($this->galleryimg as $avatarimg)
 {
 	echo '<span>';

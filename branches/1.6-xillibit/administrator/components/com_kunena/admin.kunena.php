@@ -1691,35 +1691,76 @@ function douserssync($kunena_db, $option) {
 //===============================
 function browseUploaded($kunena_db, $option, $type) {
 	$kunena_db = &JFactory::getDBO ();
-	if ($type) { //we're doing images
-		$dir = @opendir ( KUNENA_PATH_UPLOADED . DS . 'images' );
-		$uploaded_path = KUNENA_PATH_UPLOADED . DS . 'images';
-	} else { //we're doing regular files
-		$dir = @opendir ( KUNENA_PATH_UPLOADED . DS . 'files' );
-		$uploaded_path = KUNENA_PATH_UPLOADED . DS . 'files';
+	$kunena_config = & CKunenaConfig::getInstance ();
+
+	if ($type) {
+		$extensionsAllowed = explode(',',$kunena_config->imagetypes);
+	} else {
+		$extensionsAllowed = explode(',',$kunena_config->filetypes);
 	}
 
-	$uploaded = array ();
-	$uploaded_col_count = 0;
+	// type = 1 -> images ; type = 0 -> files
 
-	$file = @readdir ( $dir );
+	//test if legacy directory exist to load proper attachments
 
-	while ( $file ) {
-		if ($file != '.' && $file != '..' && $file != 'index.php' && is_file ( $uploaded_path . DS . $file ) && ! is_link ( $uploaded_path . DS . $file )) {
-			//if( preg_match('/(\.gif$|\.png$|\.jpg|\.jpeg)$/is', $file) )
-			//{
-			$uploaded [$uploaded_col_count] = $file;
-			$uploaded_name [$uploaded_col_count] = JString::ucfirst ( str_replace ( "_", " ", preg_replace ( '/^(.*)\..*$/', '\1', $file ) ) );
-			$uploaded_col_count ++;
-			//}
+	if ( !JFolder::exists(KUNENA_PATH_UPLOADED_LEGACY) ) {
+		$attachlivepath = KUNENA_LIVEUPLOADEDPATH.'attachments/';
+
+	 	$image_types =	explode(',',$kunena_config->imagemimetypes);
+	 	$imageTypes = array();
+	 	foreach ($image_types as $images ) {
+			$imageTypes[] = "'".$images."'";
+	 	}
+	 	$imageTypes= implode(',',$imageTypes);
+		if ($type) {
+			$where = ' WHERE filetype IN ('.$imageTypes.')';
+		} else {
+			$where = '';
 		}
-		$file = @readdir ( $dir );
+
+		$query = "SELECT a.*, b.catid, b.id FROM #__kunena_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id $where";
+		$kunena_db->setQuery ( $query );
+		$uploaded = $kunena_db->loadObjectlist();
+		check_dberror ( "Unable to load attachments." );
+
+	} else {
+		$image_types =	explode(',',$kunena_config->imagemimetypes);
+	 	$imageTypes = array();
+	 	foreach ($image_types as $images ) {
+			$imageTypes[] = "'".$images."'";
+	 	}
+	 	$imageTypes= implode(',',$imageTypes);
+		if ($type) {
+			$attachlivepath = KUNENA_LIVEUPLOADEDPATH_LEGACY .'/'. 'images/';
+			$where = ' WHERE filetype IN ('.$imageTypes.')';
+		} else {
+			$attachlivepath = KUNENA_LIVEUPLOADEDPATH_LEGACY .'/'. 'files/';
+			$where = '';
+		}
+
+		$query = "SELECT a.*, b.catid, b.id FROM #__kunena_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id $where";
+		$kunena_db->setQuery ( $query );
+		$uploaded1 = $kunena_db->loadObjectlist();
+		check_dberror ( "Unable to load attachments." );
+
+		$query = "SELECT a.*, b.catid, b.id FROM #__fb_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id ";
+		$kunena_db->setQuery ( $query );
+		$uploaded2 = $kunena_db->loadObjectlist ();
+		check_dberror ( "Unable to load attachments." );
+
+		jimport('joomla.filesystem.file');
+
+		for ($i =0; $i < count($uploaded2); $i++ ) {
+			$fileExt = JFile::getExt($uploaded2[$i]->filelocation);
+			if ( !in_array($fileExt,$extensionsAllowed)  ) {
+				unset($uploaded2[$i]);
+			}
+		}
+
+		$uploaded = array_merge($uploaded1,$uploaded2);
 	}
 
-	@closedir ( $dir );
-	@ksort ( $uploaded );
-	@reset ( $uploaded );
-	html_Kunena::browseUploaded ( $option, $uploaded, $uploaded_path, $type );
+	html_Kunena::browseUploaded ( $option, $uploaded, $attachlivepath, $type );
 }
 
 function replaceImage($kunena_db, $option, $imageName, $OxP) {

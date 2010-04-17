@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+17-Apr-2010 Matias
+# [#19288] Do not list moderators who do not exists (deleted or banned)
+
 15-Apr-2010 Matias
 # [#19288] Fix regression: Fatal error when changing vote in a poll
 # [#19288] Fix regression: Topic icon cannot be changed while editing post

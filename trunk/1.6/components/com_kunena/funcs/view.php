@@ -478,7 +478,7 @@ class CKunenaView {
 		}
 
 		//get the Moderator list for display
-		$this->db->setQuery ( "SELECT m.*, u.* FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->catid}" );
+		$this->db->setQuery ( "SELECT m.*, u.* FROM #__fb_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->catid} AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
 		check_dberror ( "Unable to load moderators." );
 		$this->catModerators = array();

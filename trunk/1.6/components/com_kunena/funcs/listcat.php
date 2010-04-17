@@ -159,7 +159,7 @@ class CKunenaListcat {
 		$this->pending = array ();
 		if (count ( $modcats )) {
 			$modcatlist = implode ( ',', $modcats );
-			$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid IN ({$modcatlist})" );
+			$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
 			$modlist = $this->db->loadObjectList ();
 			check_dberror ( "Unable to load moderators." );
 			foreach ( $modlist as $mod ) {

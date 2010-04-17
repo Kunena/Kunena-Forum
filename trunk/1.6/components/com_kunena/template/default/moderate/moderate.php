@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @version $Id$
  * Kunena Component
@@ -11,102 +10,77 @@
  **/
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+?>
 
-// Get request varibales
-$catid = JRequest::getInt ( 'catid', 0 );
-$action = JRequest::getVar ( 'action', 'view' );
-
-// Get singletons
-$kunena_db = &JFactory::getDBO ();
-$kunena_app = & JFactory::getApplication ();
-$kunena_my = &JFactory::getUser ();
-
-// perform admin and moderator check
-$kunena_is_moderator = CKunenaTools::isModerator ( $kunena_my->id, $catid );
-
-// make sure only admins and valid moderators can proceed
-if (! CKunenaTools::isAdmin () && ! $kunena_is_moderator) {
-	// Sorry - but you have nothing to do here.
-	// This module is for moderators and admins only.
-
-	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(false), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
-} else {
-	// Here comes the moderator functionality
-
-	switch ($action) {
-		case 'xxx' :
-
-			break;
-
-		case 'yyy' :
-
-			break;
-
-		default :
-		case 'view' :
-
-			?>
-<script type="text/javascript">
-	document.addEvent('domready', function() {
-
-		// Attach auto completer to the following ids:
-		new Autocompleter.Request.JSON('ksrc-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat', false);?>', { });
-		new Autocompleter.Request.JSON('ktrgt-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat', false);?>', { });
-		new Autocompleter.Request.JSON('ksrc-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic', false);?>', { });
-		new Autocompleter.Request.JSON('ktrgt-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic', false);?>', { });
-});
-</script>
 <div class="kbt_cvr1">
 <div class="kbt_cvr2">
 <div class="kbt_cvr3">
 <div class="kbt_cvr4">
 <div class="kbt_cvr5">
+<h1><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC'); ?>: <?php echo kunena_htmlspecialchars ( $this->message->subject ); ?></h1>
+	<div id="kmod-container">
+<form action="<?php
+		echo CKunenaLink::GetPostURL ();
+		?>"
+	method="post" name="myform"><input type="hidden" name="do"
+	value="domoderatecommon" /> <input type="hidden" name="id"
+	value="<?php
+		echo $this->id;
+		?>" />
+		<input type="hidden" name="catid"
+	value="<?php
+		echo $this->catid;
+		?>" />
 
-<h1>Forum Moderation</h1>
-<div id="kmod-container">
-		<div id="kmod-leftcol">
-			<fieldset><legend>Source:</legend>
-				<label>
-					<span>Category:</span>
-					<input type="text" name="ksource-category" class="text" id="ksrc-cat" />
-				</label>
-				<label>
-					<span>Topic:</span>
-					<input type="text" name="ksource-topic" class="text" id="ksrc-topic" />
-				</label>
-			</fieldset>
-		</div>
-		<div id="kmod-rightcol">
-			<form id="ktarget">
-				<fieldset><legend>Target:</legend>
-					<label>
-					<span>Category:</span>
-					<input type="text" name="ktarget-category" class="text" id="ktrgt-cat" />
-					</label>
-					<label>
-					<span>Topic:</span>
-					<input type="text" name="ktarget-topic" class="text" id="ktrgt-topic" />
-					</label>
-				</fieldset>
-			</form>
+<div>
+		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?> :<strong><?php
+		echo kunena_htmlspecialchars ( $this->message->catname );
+		?></strong></div>
+<div>
 
-			<div class="clr"></div>
-		</div>
+<?php if ($this->moderateTopic) : ?>
+		<input id="modmergetopic" type="radio" name="moderation" value="modmergetopic" /><?php echo 'Merge topic'; ?> <br />
+		<input id="modmovetopic" type="radio" name="moderation" value="modmovetopic" ><?php echo 'Move Topic'; ?> <br />
+<?php else : ?>
+		<input id="modmergemessage" type="radio" name="moderation" value="modmergemessage" /><?php echo 'Merge Message'; ?> <br />
+		<input id="modmovemessage" type="radio" name="moderation" value="modmovemessage" ><?php echo 'Move Message'; ?> <br />
+		<input id="modsplitmultpost" type="radio" name="moderation" value="modsplitmultpost" ><?php echo JText::_('COM_KUNENA_MODERATION_SPLIT_CHOOSE2'); ?> <br />
+<?php endif; ?>
+<br />
+		<div id="modtopicslist"><?php
+		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_TOPIC' );
+		?>: <br />
+
+		<?php
+		echo $this->selectlist;
+		?></div> <br />
+
+		<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="leaveGhost"  value="<?php echo $this->config->boxghostmessage ? '1' : '0'; ?>" /> <?php echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' ); ?>
+		<br />
+
+		<div id="modcategorieslist"><?php
+		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_CATEGORY' );
+		?>: <br />
+
+		<?php
+		echo $this->selectlistmessage;
+		?></div> <br />
+
+		<?php
+		echo JText::_ ( 'COM_KUNENA_MODERATE_FIELD_ID' );
+		?>: <br />
+		<input type="text" name="cattopicid" value="" /><br />
+
+<br />
+
+<input type="submit" class="button"
+	value="<?php
+		echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' );
+		?>" /></div>
+</form>
+	</div>
 </div>
-
-
-
-
-
-
-
 </div>
 </div>
 </div>
 </div>
-</div>
-<?php
-
-			break;
-	}
-}

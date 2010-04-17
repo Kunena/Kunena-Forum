@@ -161,7 +161,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 		// HTMLize from plaintext
 
-		$text_new = kunena_htmlspecialchars ( $text_new, ENT_QUOTES );
+		$text_new = KunenaParser::escape ( $text_new );
 		if ($context == 'text' && ($task->autolink_disable == 0)) {
 			// Build links HTML2HTML
 

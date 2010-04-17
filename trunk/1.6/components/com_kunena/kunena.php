@@ -424,11 +424,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case 'moderate' :
-			CKunenaTools::loadTemplate('/moderate/moderate.php');
-
-			break;
-
 		case 'rules' :
 			CKunenaTools::loadTemplate('/rules.php');
 

@@ -485,52 +485,6 @@ class CKunenaTools {
 		return $acl->getSubscribers($catid, $thread, $subscriptions, $moderators, $admins, $excludeList);
 	}
 
-	function KUnfavorite() {
-		$kunena_app = JFactory::getApplication ();
-		$kunena_db = &JFactory::getDBO ();
-		$user =& JFactory::getUser();
-
-		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
-
-		$items = KGetArrayInts ( "cb" );
-		$items = implode(',',array_keys($items));
-
-		//Need to get thread and userid related to message id
-		$query="SELECT thread FROM #__fb_messages WHERE id IN ('$items')";
-		$kunena_db->setQuery ( $query );
-		$messList = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to message details list." );
-
-		foreach ( $messList as $mes ) {
-			CKunenaTools::removeFavorite ($mes->thread, $user->id);
-		}
-
-		$kunena_app->redirect ( $backUrl, 'Unfavorite done' );
-	}
-
-	function KUnsubscribe () {
-		$kunena_app = JFactory::getApplication ();
-		$kunena_db = &JFactory::getDBO ();
-		$user =& JFactory::getUser();
-
-		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
-
-		$items = KGetArrayInts ( "cb" );
-		$items = implode(',',array_keys($items));
-
-		//Need to get thread and userid related to message id
-		$query="SELECT thread FROM #__fb_messages WHERE id IN ('$items')";
-		$kunena_db->setQuery ( $query );
-		$messList = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to message details list." );
-
-		foreach ( $messList as $mes ) {
-			CKunenaTools::removeSubscritpion ($mes->thread, $user->id);
-		}
-
-		$kunena_app->redirect ( $backUrl, 'Unsubscribe done' );
-	}
-
 	function getAllowedForums($uid) {
 		$acl = KunenaFactory::getAccessControl();
 		return $acl->getAllowedCategories($uid);

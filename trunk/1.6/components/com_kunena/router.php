@@ -19,7 +19,7 @@ class KunenaRouter {
 
 	// List of reserved functions (if category name is one of these, use always catid)
 	static $functions = array ('who', 'announcement', 'poll', 'stats', 'myprofile', 'userprofile', 'fbprofile',
-		'profile', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'moderate', 'rules', 'report',
+		'profile', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'rules', 'report',
 		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'search', 'advsearch', 'markthisread',
 		'subscribecat', 'unsubscribecat', 'karma', 'bulkactions', 'banactions', 'templatechooser', 'credits',
 		'json', 'rss', 'pdf', 'fb_pdf' );

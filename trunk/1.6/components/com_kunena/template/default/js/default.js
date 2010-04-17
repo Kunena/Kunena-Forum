@@ -850,12 +850,67 @@ window.addEvent('domready', function(){
 			$$('.kDelete_bulkcheckboxes').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
-					el.set('value','1');								
+					el.set('value','1');
 				} else {
-					el.set('value','0');	
+					el.set('value','0');
 					el.set('checked',false);
 				}
 			});
 		});
-	}		
+	}
+	
+	if($('modmergetopic') != undefined){
+		$('modmergetopic').addEvent('change', function(e){
+			if($('modcategorieslist').getProperty('style') == undefined){
+				$('modcategorieslist').setStyle('display','none');
+			}			
+			if($('modtopicslist').getProperty('style') != undefined){
+				$('modtopicslist').removeProperty('style');
+			}
+		});
+	}
+	
+	if($('modmergemessage') != undefined){
+		$('modmergemessage').addEvent('change', function(e){
+			if($('modcategorieslist').getProperty('style') == undefined){
+				$('modcategorieslist').setStyle('display','none');
+			}
+			if($('modtopicslist').getProperty('style') != undefined){
+				$('modtopicslist').removeProperty('style');
+			}
+		});
+	}
+	
+	if($('modmovetopic') != undefined){
+		$('modmovetopic').addEvent('change', function(e){
+			if($('modtopicslist').getProperty('style') == undefined){
+				$('modtopicslist').setStyle('display','none');
+			}
+			if($('modcategorieslist').getProperty('style') != undefined){
+				$('modcategorieslist').removeProperty('style');
+			}
+		});
+	}
+	
+	if($('modmovemessage') != undefined){
+		$('modmovemessage').addEvent('change', function(e){
+			if($('modtopicslist').getProperty('style') == undefined){
+				$('modtopicslist').setStyle('display','none');
+			}
+			if($('modcategorieslist').getProperty('style') != undefined){
+				$('modcategorieslist').removeProperty('style');
+			}
+		});
+	}
+	
+	if($('modsplitmultpost') != undefined){
+		$('modsplitmultpost').addEvent('change', function(e){
+			if($('modtopicslist').getProperty('style') == undefined){
+				$('modtopicslist').setStyle('display','none');
+			}
+			if($('modcategorieslist').getProperty('style') != undefined){
+				$('modcategorieslist').removeProperty('style');
+			}
+		});
+	}	
 });

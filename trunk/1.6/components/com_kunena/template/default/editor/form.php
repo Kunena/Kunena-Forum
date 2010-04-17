@@ -152,8 +152,10 @@ $this->k=0;
 		<?php
 		// Include attachments template if we have any
 		if ( isset ( $this->attachments ) ) {
-			CKunenaTools::loadTemplate('/view/message.attachments.php');
-		} ?>
+//			CKunenaTools::loadTemplate('/view/message.attachments.php');
+			CKunenaTools::loadTemplate('/editor/attachments.php');
+		}
+		?>
 
 		</td>
 		</tr>

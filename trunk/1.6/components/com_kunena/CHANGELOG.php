@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 17-Apr-2010 Matias
 # [#19288] Do not list moderators who do not exists (deleted or banned)
+^ [#15886] Merged revisions 2239 and 2272 from /branches/1.6-xillibit-fixing with changes
 
 15-Apr-2010 Matias
 # [#19288] Fix regression: Fatal error when changing vote in a poll
@@ -73,6 +74,9 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: If configuration option Allow Favorites = No, all topics have been favorited by visitor
 # [#19288] Fix regression: Fix some minor bugs in router/routing
 
+13-Apr-2010 Xillibit
+^ [#19380] List attachments when editing post with checkboxes to delete the attachements
+
 12-Apr-2010 Matias
 ^ [#20050] Move more code to KunenaParser
 # [#19288] Fix regression: facebook gets value from skype when user edits profile
@@ -89,6 +93,10 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Show attachments while editing message
 # [#19288] Fix regression: Profile in menu does not point into CB/JomSocial/AUP profile
 # [#19288] Fix regression: Edit/Quote post adds &amp;s into the body
+
+12-Apr-2010 Xillibit
+- [#19764] Remove useless functions KUnfavorite() and KUnsubscribe() in class.kunena.php
+^ [#19764] Replace all separte pages for moderation (split, move...) by one page (not fully tested)
 
 12-Apr-2010 810
 ^ [#19356] Minor HTML/CSS fixes

@@ -1565,6 +1565,20 @@ PX		EM			PCT			PT
 	vertical-align:top;
 	font-size: .833em;
 }
+#Kunena ul.kfile-attach-editing {
+	margin:0 0 8px 0;
+	padding:0;
+}
+#Kunena ul.kfile-attach-editing li {
+	list-style-type: none;
+	margin-top: 10px;
+	line-height: 32px;	
+}
+#Kunena ul.kfile-attach-editing li span {
+	padding-left: 10px;
+	vertical-align:top;
+	font-size: .833em;
+}
 #Kunena ul.kfile-attach li a img {
 	max-width: 32px;
 	max-height: 32px;
@@ -3170,7 +3184,7 @@ MODERATOR PAGE
 
 #Kunena div#kmod-container {
 	border: 1px solid #BFC3C6; 
-	margin: 10px 0 10px 0; 
+	margin: 0 0 10px 0; 
 	padding: 10px 10px 30px 10px; 
 	overflow:auto; 
 	height: 1%;

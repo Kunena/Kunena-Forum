@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+13-Apr-2010 Xillibit
+^ [#19380] List attachments when editing post with checkboxes to delete the attachements
+
 12-Apr-2010 Xillibit
 - [#19764] Remove useless functions KUnfavorite() and KUnsubscribe() in class.kunena.php
 ^ [#19764] Replace all separte pages for moderation (split, move...) by one page (not fully tested)

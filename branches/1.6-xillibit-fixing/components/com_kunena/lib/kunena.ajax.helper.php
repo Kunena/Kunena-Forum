@@ -96,7 +96,6 @@ class CKunenaAjaxHelper {
 
 					break;
 				case 'removeattachment' :
-
 					$response = $this->_removeAttachment ($data);
 
 					break;
@@ -292,7 +291,6 @@ class CKunenaAjaxHelper {
 			'status' => '1',
 			'error' => JText::_('COM_KUNENA_AJAX_ATTACHMENT_DELETED')
 		);
-
 
 		return $result;
 	}

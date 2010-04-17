@@ -357,6 +357,7 @@ class CKunenaPost {
 		if ($this->tokenProtection ())
 			return false;
 
+		$attachments = JRequest::getVar('attach-id',array ( 0 ), 'post', 'array');
 		$fields ['name'] = JRequest::getString ( 'authorname', $this->getAuthorName () );
 		$fields ['email'] = JRequest::getString ( 'email', null );
 		$fields ['subject'] = JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW );
@@ -407,6 +408,33 @@ class CKunenaPost {
 			}
 		}
 
+		if ( $attachments ) {
+			$attachs = implode(',',$attachments);
+			$query = "SELECT * FROM #__kunena_attachments WHERE id IN ($attachs)";
+			$this->_db->setQuery ( $query );
+			$attachslist = $this->_db->loadObjectlist ();
+			check_dberror ( "Unable to load attachments." );
+			$query = "DELETE FROM #__kunena_attachments WHERE id IN ($attachs)";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			check_dberror ( "Unable to delete attachments." );
+			jimport('joomla.filesystem.file');
+			foreach ( $attachslist as $attach ) {
+				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$attach->userid.'/'.$attach->filename;
+				if (JFile::exists($filetoDelete)) {
+					JFile::delete($filetoDelete);
+				}
+				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$attach->userid.'/raw/'.$attach->filename;
+					if (JFile::exists($filetoDelete)) {
+					JFile::delete($filetoDelete);
+				}
+				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$attach->userid.'/thumb/'.$attach->filename;
+					if (JFile::exists($filetoDelete)) {
+							JFile::delete($filetoDelete);
+				}
+			}
+		}
+
 		//Update the attachments table if an file has been attached
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
@@ -418,7 +446,7 @@ class CKunenaPost {
 		}
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page, $this->catid ) );
+		//$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->_config->messages_per_page, $this->catid ) );
 	}
 
 	protected function deleteownpost() {

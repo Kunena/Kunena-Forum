@@ -912,5 +912,5 @@ window.addEvent('domready', function(){
 				$('modcategorieslist').removeProperty('style');
 			}
 		});
-	}
+	}	
 });

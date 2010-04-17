@@ -74,11 +74,8 @@ if (is_array ( $klistpost )) {
 		</li>
 		<?php endif; ?>
 		<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $item->catid, $item->catname ); ?></li>
-		<li class="klatest-posttime">
-		<?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo $date; ?></li>
-
 		<li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_LAST_POST_BY' ) .' '. CKunenaLink::GetProfileLink ( $item->userid, $item->name ); ?></li>
-
+		<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo $date; ?></li>
 	</ul>
 </li>
 <?php

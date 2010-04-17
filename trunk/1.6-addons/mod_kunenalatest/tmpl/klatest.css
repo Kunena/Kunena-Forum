@@ -10,6 +10,7 @@
 *
 **/
 
+div.klatest {}
 #klatest-items {
 	margin: 0;
 	padding: 0;
@@ -17,38 +18,31 @@
 #klatest-items li.klatest-item {
 	list-style: none;
 	margin: 0;
-	padding: 0 0 5px;
+	padding: 0 0 3px;
 	clear: both;
 }
 #klatest-items ul.klatest-itemdetails {
 	margin: 0;
 	padding: 0;
 }
-div.klatest {
-}
-#klatestmodule div {
-	float:left;
-	clear:left;
-}
-#klatestmodule img {
-	height: 32px;
-	width: 32px;
-	margin-right: 10px;
-	margin-bottom: 5px;
-	border:1px solid #CCCCCC;
-	padding:2px;
-}
 ul.klatest-itemdetails li {
 	margin-bottom: 0 !important;
 	display: block;
 }
-ul.klatest-itemdetails li.klatest-subject,
-ul.klatest-itemdetails li.klatest-cat {
-	display: inline-block;
-}
 li.klatest-subject a {
 	font-weight: bold;
 	font-size: 12px;
+}
+li.klatest-avatar {
+	float:left;
+	display: block;
+}
+li.klatest-avatar img {
+	height: 32px;
+	width: 32px;
+	margin: 3px 5px 3px 0;
+	border:1px solid #CCCCCC;
+	padding:2px;
 }
 li.klatest-posttime,
 li.klatest-cat,

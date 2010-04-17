@@ -31,21 +31,13 @@ $tzoffset = $config->getValue ( 'config.offset' );
 if (is_array ( $klistpost )) {
 	foreach ( $klistpost as $item ) {
 		//construct the date
-		$date = JFactory::getDate ( $item->time, $tzoffset );
+		$date = JFactory::getDate ( $item->lasttime, $tzoffset );
 		$date = $date->toFormat ( $params->get ( 'dateformat' ) );
 
 		?>
 
 
 <li class="klatest-item">
-	<?php if ($params->get ( 'sh_avatar' )) : ?>
-	<div>
-		<?php
-		$kprofile = KunenaFactory::getUser($item->userid);
-		echo CKunenaLink::GetProfileLink ($item->userid, $kprofile->getAvatarLink () );
-		?>
-	</div>
-	<?php endif; ?>
 	<ul class="klatest-itemdetails">
 		<li class="klatest-subject">
 		<?php
@@ -73,6 +65,14 @@ if (is_array ( $klistpost )) {
 				}
 			}
 			?></li>
+		<?php if ($params->get ( 'sh_avatar' )) : ?>
+		<li class="klatest-avatar">
+			<?php
+			$kprofile = KunenaFactory::getUser($item->userid);
+			echo CKunenaLink::GetProfileLink ($item->userid, $kprofile->getAvatarLink () );
+			?>
+		</li>
+		<?php endif; ?>
 		<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $item->catid, $item->catname ); ?></li>
 		<li class="klatest-posttime">
 		<?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo $date; ?></li>

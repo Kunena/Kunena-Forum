@@ -21,10 +21,6 @@ class modKunenaLatestHelper {
 
 		$page = $page < 1 ? 1 : $page;
 
-		//Time translation
-		$back_time = 720 * 3600; //hours*(mins*secs)
-		$querytime = time () - $back_time;
-
 		$lookcats = explode ( ',', $k_config->latestcategory );
 		$catlist = array ();
 		$latestcats = '';
@@ -41,7 +37,7 @@ class modKunenaLatestHelper {
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$cat_total})
-		AND t.time >'{$querytime}' AND t.hold=0 AND t.moved=0 AND t.catid IN ({$cat_total})" . $latestcats; // if categories are limited apply filter
+		AND t.hold=0 AND t.moved=0 AND t.catid IN ({$cat_total})" . $latestcats; // if categories are limited apply filter
 
 		$db->setQuery ( $query );
 		$total = ( int ) $db->loadResult ();
@@ -51,7 +47,7 @@ class modKunenaLatestHelper {
 		$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread
 			WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$cat_total})
-			AND t.time>'{$querytime}' AND t.hold='0' AND t.moved='0' AND t.catid IN ({$cat_total}) {$latestcats}
+			AND t.hold='0' AND t.moved='0' AND t.catid IN ({$cat_total}) {$latestcats}
 			GROUP BY t.thread
 			ORDER BY {$order}
 		";
@@ -62,8 +58,12 @@ class modKunenaLatestHelper {
 
 		$idstr = @join ( ",", $threadids );
 
+		if (empty($threadids)) {
+			return array();
+		}
+
 		$query = "SELECT a.*, j.id AS userid, u.posts, t.message AS messagetext, l.myfavorite, l.favcount, l.attachments,
-			l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
+			l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, l.lasttime, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 		FROM (
 			SELECT m.thread, MAX(f.userid IS NOT null AND f.userid='{$my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
 				COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$my->id}, m.id, NULL)) AS mycount, MAX(m.id) AS lastid, MAX(IF(m.userid={$my->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime

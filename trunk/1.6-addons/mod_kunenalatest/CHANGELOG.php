@@ -30,6 +30,11 @@ Legend:
 
 KunenaLatest 1.0
 
+17-Apr-2010 Matias
+# [#20081] Fixed fatal error when there are no latest messages
+# [#20081] Do not limit latest messages by time, show last post time instead of thread start time
+# [#20081] Even more layout fixes
+
 15-Apr-2010 Matias
 # [#20081] Removed user posts configuration option
 # [#20081] Improve database error detection

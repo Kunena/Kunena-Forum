@@ -30,6 +30,7 @@ defined ( '_JEXEC' ) or die ();
 			<div class="kmessage_buttons_row">
 			<?php echo $this->thread_delete ?>
 			<?php echo $this->thread_sticky ?>
+			<?php echo $this->thread_move ?>
 			<?php echo $this->thread_lock ?>
 			</div>
 		<?php endif ?>
@@ -46,6 +47,11 @@ defined ( '_JEXEC' ) or die ();
 			<?php echo $this->thread_moderate; ?>
 			</div>
 		<?php endif ?>
+		<?php if (isset ( $this->thread_merge )) : ?>
+ 	                         <div class="kmessage_buttons_row">
+ 	                         <?php echo $this->thread_merge; ?>
+ 	                         </div>
+ 	                 <?php endif ?>
 		</td>
 
 		<td class="klist_pages_all nowrap">

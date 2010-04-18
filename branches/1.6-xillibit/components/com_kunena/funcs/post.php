@@ -483,13 +483,14 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 	}
 
-protected function moderate($modthread = false) {
+protected function moderate($modchoices='',$modthread = false) {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
 		$this->moderateTopic = $modthread;
+		$this->moderateMultiplesChoices = $modchoices;
 
 		// Get list of latest messages:
 		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
@@ -852,10 +853,30 @@ protected function moderate($modthread = false) {
 				break;
 
 			case 'moderatethread' :
-				$this->moderate (true);
+				$this->moderate ('',true);
 				break;
 
-				case 'domoderate' :
+			case 'moderatemergemessage' :
+				$this->moderate ('modmergemessage',false);
+				break;
+
+			case 'moderatemovetopic' :
+				$this->moderate ('modmovetopic',false);
+				break;
+
+			case 'moderatemovemessage' :
+				$this->moderate ('modmovemessage',false);
+				break;
+
+			case 'moderatemergetopic' :
+				$this->moderate ('modmergetopic',false);
+				break;
+
+			case 'moderatesplit' :
+				$this->moderate ('modsplitmultpost',false);
+				break;
+
+			case 'domoderate' :
 				$this->domoderate ();
 
 			case 'subscribe' :

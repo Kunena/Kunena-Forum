@@ -1043,6 +1043,15 @@ td.kadmin-tdtitle {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_HIDE_IP_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_BUTTONS') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['mod_buttons'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_BUTTONS_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

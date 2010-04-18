@@ -2599,7 +2599,7 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 					$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
 				} else {
 					if ( isset($uploaded [$i]->filename) ) {
-						$attachlivepath = KUNENA_LIVEUPLOADEDPATH.'attachments/';
+						$attachlivepath = KUNENA_LIVEUPLOADEDPATH.'/attachments/';
 						$attach_live_path = $attachlivepath.$uploaded [$i]->userid.'/'.$filename;
 						$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
 					} else {
@@ -2611,7 +2611,7 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 
 				echo $uploaded [$i]->mesid == '' ? '<td>' : '<td>';
 				echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
-				echo $type ? '<a href="' . $attach_live_path . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . $attach_live_path . '" width="80" heigth="80" border="0"></a>' : '<a href="' . $attach_live_path . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/file.png" border="0"></a>';
+				echo $type ? '<a href="' . $attach_live_path . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . $attach_live_path . '" width="80" heigth="80" border="0"></a>' : '<a href="' . $attach_live_path . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/kfile.png" border="0"></a>';
 				echo '</td></tr><tr><td style="text-align: center">';
 				//echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
 				echo '<br /><small>';

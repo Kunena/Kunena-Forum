@@ -24,6 +24,7 @@ class CKunenaViewMessage {
 	public $message_undelete = null;
 	public $message_publish = null;
 	public $message_closed = null;
+	public $message_moderate = null;
 
 	// Message
 	public $id = null;

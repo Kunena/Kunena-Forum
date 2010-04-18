@@ -2448,15 +2448,22 @@ td.kadmin-tdtitle {
 		$i = '0';
 		$k = 0; //value for alternating rows
 
-		$userids='';
 		foreach ($ipslist as $ip) {
 			$userids = array();
 			$k = 1 - $k;
 			$i++;
-			$userids = array_merge($userids,$useridslist[$ip->ip]);
-			$userids=implode(', ',$userids);
+
+			foreach ($useridslist[$ip->ip] as $uid) {
+				if ($uid->userid == '0') {
+					$userids[]= JText::_('COM_KUNENA_CATEGORY_ANONYMOUS').' ('.$uid->userid.')';
+				} else {
+					$userids[]= $uid->name.' ('.$uid->userid.')';
+				}
+			}
+
+			$uids=implode(', ',$userids);
 			echo "<tr class=\"row$k\">";
-			echo "  <td>".$i.":".$ip->ip." - ".JText::sprintf('COM_KUNENA_IP_OCCURENCES', $ip->nbip).(!empty($userids)?" ".JText::sprintf('COM_KUNENA_USERIDUSED', $userids):'')."</td>";
+			echo "  <td>".$i.":".$ip->ip." - ".JText::sprintf('COM_KUNENA_IP_OCCURENCES', $ip->nbip).(!empty($uids)?" ".JText::sprintf('COM_KUNENA_USERIDUSED', $uids):'')."</td>";
 			echo "  <td>&nbsp;</td>";
 			echo "</tr>";
 		}
@@ -3122,8 +3129,7 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 					<td nowrap="nowrap"><?php
 						echo $row->ip;
 						?></td>
-					<td nowrap="nowrap"><?php
-						echo $row->userid;
+					<td nowrap="nowrap"><?php echo $row->userid;
 						?></td>
 					<td nowrap="nowrap"><?php
 						if(empty($row->username)){

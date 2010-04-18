@@ -282,10 +282,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	$this->read_topics = explode ( ',', $kunena_session->readtopics );
 
 	//Call the call for polls
-	if($kunena_config->pollenabled){
-  		require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
-  		$poll = new CKunenaPolls();
-	}
+  	require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+  	$poll = new CKunenaPolls();
+
 
 	/*       _\|/_
              (o o)

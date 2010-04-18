@@ -38,6 +38,8 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Fix issue which prevents to display images from not default gallery
 # [#19288] Fix issue which prevents to display images in browse images in backend (not totally working)
 # [#19288] Fix some language strings and little changes
+# [#19288] Some little fixes and changes on backend
+# [#19288] Make javascript working on select category when you aren't on new topic and hide poll icon
 
 Kunena 1.6.0-DEV
 

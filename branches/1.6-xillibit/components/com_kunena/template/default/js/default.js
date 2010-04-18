@@ -790,8 +790,12 @@ window.addEvent('domready', function(){
 						onComplete: function(jsonObj) {
 							if (jsonObj.allowed_polls != null && jsonObj.allowed_polls.indexOf(catid.value) >= 0) {
 								$('kpoll_hide_not_allowed').removeProperty('style');
+								$('kbbcode-separator5').removeProperty('style');
+								$('kbbcode-poll_button').removeProperty('style');
 								$('kpoll_not_allowed').set('text', ' ');
-							} else {
+							} else {								
+								$('kbbcode-separator5').setStyle('display','none');
+								$('kbbcode-poll_button').setStyle('display','none');
 								$('kpoll_hide_not_allowed').setStyle('display','none');
 								if (jsonObj.allowed_polls != null) $('kpoll_not_allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
 								else if (jsonObj.error) $('kpoll_not_allowed').set('text', jsonObj.error);

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+18-Apr-2010 810
+^ [#19758] Clean up Admin interface: Fixed Signature in backend -edit profile
+
 18-Apr-2010 Matias
 ^ [#15886] Merged revisions 2279-2280 from /branches/1.6-xillibit
 

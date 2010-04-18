@@ -2346,15 +2346,27 @@ td.kadmin-tdtitle {
 				<td width="150" valign="top" class="contentpane"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?>:
 				</td>
 				<td align="left" valign="top" class="contentpane">
-					<textarea rows="6"
-					class="inputbox"
-					onMouseOver="textCounter(this.form.message,this.form.rem,<?php echo $kunena_config->maxsig; ?>);"
-					onClick="textCounter(this.form.message,this.form.rem,<?php echo $kunena_config->maxsig; ?>);"
-					onKeyDown="textCounter(this.form.message,this.form.rem,<?php echo $kunena_config->maxsig; ?>);"
-					onKeyUp="textCounter(this.form.message,this.form.rem,<?php echo $kunena_config->maxsig; ?>);"
-					cols="50" name="message">
-									<?php echo html_entity_decode_utf8 ( stripslashes ( $signature ) ); ?>
-								</textarea></td>
+					<script type="text/javascript">
+var current_count = 0;
+var max_count = <?php echo $kunena_config->maxsig; ?>;
+
+function textCounter(field, target) {
+  if (field.value.length > max_count) {
+    field.value = field.value.substring(0, max_count);
+  } else {
+    current_count = max_count - field.value.length;
+    target.value = current_count;
+  }
+}
+</script>
+
+
+  <p><?php echo $kunena_config->maxsig; ?> character maximum,
+    <input readonly type="text" name="current_count" value="<?php echo $kunena_config->maxsig; ?>" size="3" />
+    characters remaining.</p>
+
+  <textarea class="inputbox" name="message" cols="50" rows="6"
+   onkeyup="textCounter(this, this.form.current_count);"><?php echo html_entity_decode_utf8 ( stripslashes ( $signature ) ); ?></textarea></td>
 				<?php
 				if ($editavatar) {
 					?>

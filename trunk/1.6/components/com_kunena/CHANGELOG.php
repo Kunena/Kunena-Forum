@@ -34,6 +34,14 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+18-Apr-2010 Matias
+^ [#15886] Merged revisions 2279-2280 from /branches/1.6-xillibit
+
+17-Apr-2010 Xillibit
+# [#19288] Fix issue which prevents to display images from not default gallery
+# [#19288] Fix issue which prevents to display images in browse images in backend (not totally working)
+# [#19288] Fix some language strings and little changes
+
 17-Apr-2010 Matias
 # [#19288] Do not list moderators who do not exists (deleted or banned)
 ^ [#15886] Merged revisions 2239 and 2272 from /branches/1.6-xillibit-fixing with changes

@@ -2550,7 +2550,7 @@ td.kadmin-tdtitle {
 			//***************************************
 			// Uploaded Image Browser
 			//***************************************
-			function browseUploaded($option, $uploaded, $uploaded_path, $type) {
+function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 				$kunena_db = &JFactory::getDBO ();
 				$map = JPATH_ROOT;
 				?>
@@ -2579,30 +2579,39 @@ td.kadmin-tdtitle {
 
 			for($i = 0; $i < count ( $uploaded ); $i ++) {
 				$j = $i + 1;
-				//get the corresponding posting
-				$query = "SELECT mesid FROM #__fb_attachments where filelocation='" . KUNENA_PATH_UPLOADED . "/" . ($type ? 'images' : 'files') . "/$uploaded[$i]'";
-				$kunena_db->setQuery ( $query );
-				$mesid = $kunena_db->loadResult ();
-				check_dberror ( "Unable to load attachments." );
-				//get the catid for the posting
-				$kunena_db->setQuery ( "SELECT catid FROM #__fb_messages where id='$mesid'" );
-				$catid = $kunena_db->loadResult ();
-				check_dberror ( "Unable to load category id." );
-				echo $mesid == '' ? '<td>' : '<td>';
+				if (isset($uploaded [$i]->filename)) {
+					$filename = $uploaded [$i]->filename;
+				}
+				if ( !JFolder::exists(KUNENA_PATH_UPLOADED_LEGACY) ) {
+					$attach_live_path = $attachlivepath.$uploaded [$i]->userid.'/'.$filename;
+					$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
+				} else {
+					if ( isset($uploaded [$i]->filename) ) {
+						$attachlivepath = KUNENA_LIVEUPLOADEDPATH.'attachments/';
+						$attach_live_path = $attachlivepath.$uploaded [$i]->userid.'/'.$filename;
+						$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
+					} else {
+						$attach_path = $uploaded[$i]->filelocation;
+						$tmpFileinfos = pathinfo($uploaded[$i]->filelocation);
+						$filename = $tmpFileinfos['basename'];
+					}
+				}
+
+				echo $uploaded [$i]->mesid == '' ? '<td>' : '<td>';
 				echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
-				echo $type ? '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded [$i] . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/images/' . $uploaded [$i] . '" width="80" heigth="80" border="0"></a>' : '<a href="' . KUNENA_LIVEUPLOADEDPATH . '/files/' . $uploaded [$i] . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/file.png" border="0"></a>';
+				echo $type ? '<a href="' . $attach_live_path . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . $attach_live_path . '" width="80" heigth="80" border="0"></a>' : '<a href="' . $attach_live_path . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/file.png" border="0"></a>';
 				echo '</td></tr><tr><td style="text-align: center">';
 				//echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
 				echo '<br /><small>';
-				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . $uploaded [$i] . '<br />';
-				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_SIZE') . ': </strong> ' . filesize ( $uploaded_path . DS . $uploaded [$i] ) . ' bytes<br />';
-				$type ? list ( $width, $height ) = @getimagesize ( $uploaded_path . DS . $uploaded [$i] ) : '';
+				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . JString::ucfirst ( str_replace ( "_", " ", preg_replace ( '/^(.*)\..*$/', '\1', $filename ) ) ) . '<br />';
+				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_SIZE') . ': </strong> ' . filesize ( $attach_path ) . ' bytes<br />';
+				$type ? list ( $width, $height ) = @getimagesize ( $attach_path ) : '';
 				echo $type ? '<strong>' . JText::_('COM_KUNENA_A_IMGB_DIMS') . ': </strong> ' . $width . 'x' . $height . '<br />' : '';
-				echo $type ? '<a href="index.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $uploaded [$i] . '">' . JText::_('COM_KUNENA_A_IMGB_REPLACE') . '</a><br />' : '';
-				echo $type ? '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $uploaded [$i] . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />' : '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=deleteFile&fileName=' . $uploaded [$i] . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />';
+				echo $type ? '<a href="index.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $filename . '">' . JText::_('COM_KUNENA_A_IMGB_REPLACE') . '</a><br />' : '';
+				echo $type ? '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $filename . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />' : '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=deleteFile&fileName=' . $filename . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />';
 
-				if ($mesid != '') {
-					echo '<a href="../index.php?option=' . $option . '&func=view&catid=' . $catid . '&id=' . $mesid . '#' . $mesid . '" target="_blank">' . JText::_('COM_KUNENA_A_IMGB_VIEW') . '</a>';
+				if ($uploaded [$i]->mesid != '') {
+					echo '<a href="../index.php?option=' . $option . '&func=view&catid=' . $uploaded [$i]->catid . '&id=' . $uploaded [$i]->mesid . '#' . $uploaded [$i]->mesid . '" target="_blank">' . JText::_('COM_KUNENA_A_IMGB_VIEW') . '</a>';
 				} else {
 					echo JText::_('COM_KUNENA_A_IMGB_NO_POST');
 				}
@@ -3070,6 +3079,9 @@ td.kadmin-tdtitle {
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_IP'), 'ip', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" nowrap="nowrap"><?php
+					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_USERID'), 'userid', $lists['order_Dir'], $lists['order']);
+					?></th>
+					<th align="left" nowrap="nowrap"><?php
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR'), 'username', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" nowrap="nowrap"><?php
@@ -3109,6 +3121,9 @@ td.kadmin-tdtitle {
 						?></td>
 					<td nowrap="nowrap"><?php
 						echo $row->ip;
+						?></td>
+					<td nowrap="nowrap"><?php
+						echo $row->userid;
 						?></td>
 					<td nowrap="nowrap"><?php
 						if(empty($row->username)){

@@ -237,7 +237,7 @@ class CKunenaToolbar
     	JToolBarHelper::spacer();
 		JToolBarHelper::custom('trashrestore','restore.png','restore_f2.png', JText::_('COM_KUNENA_TRASH_RESTORE'));
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('trashpurge','delete.png','delete_f2.png', JText::_('COM_KUNENA_TRASH_PURGE'));
+        JToolBarHelper::custom('trashpurge','trash.png','trash_f2.png', JText::_('COM_KUNENA_TRASH_PURGE'));
         JToolBarHelper::spacer();
         JToolBarHelper::back();
 
@@ -246,7 +246,7 @@ class CKunenaToolbar
 	function _TRASHVIEW_PURGE()
     {
     	JToolBarHelper::spacer();
-    	JToolBarHelper::trash('deleteitemsnow');
+    	JToolBarHelper::custom('deleteitemsnow','delete.png','delete_f2.png', JText::_('COM_KUNENA_DELETE_PERMANENTLY'));
         JToolBarHelper::spacer();
         JToolBarHelper::cancel('showtrashview');
     }

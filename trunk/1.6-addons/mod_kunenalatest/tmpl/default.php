@@ -68,7 +68,7 @@ if (is_array ( $klistpost )) {
 		<?php if ($params->get ( 'sh_avatar' )) : ?>
 		<li class="klatest-avatar">
 			<?php
-			$kprofile = KunenaFactory::getUser($item->userid);
+			$kprofile = KunenaFactory::getUser((int)$item->userid);
 			echo CKunenaLink::GetProfileLink ($item->userid, $kprofile->getAvatarLink () );
 			?>
 		</li>

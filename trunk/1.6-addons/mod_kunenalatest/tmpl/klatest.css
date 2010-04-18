@@ -38,11 +38,11 @@ li.klatest-avatar {
 	display: block;
 }
 li.klatest-avatar img {
-	height: 32px;
-	width: 32px;
+	height: 36px;
+	width: 36px;
 	margin: 3px 5px 3px 0;
-	border:1px solid #CCCCCC;
-	padding:2px;
+	border: 1px solid #CCCCCC;
+	padding: 1px;
 }
 li.klatest-posttime,
 li.klatest-cat,

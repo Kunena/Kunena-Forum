@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.0
 
+18-Apr-2010 Matias
+# [#20081] Fixed wrong avatar if user had been deleted
+
 17-Apr-2010 Matias
 # [#20081] Fixed fatal error when there are no latest messages
 # [#20081] Do not limit latest messages by time, show last post time instead of thread start time

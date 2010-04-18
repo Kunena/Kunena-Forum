@@ -2,7 +2,7 @@
 /**
  * Joomla! 1.5 component: Kunena Forum Importer
  *
- * @version $Id: $
+ * @version $Id$
  * @author Kunena Team
  * @package Joomla
  * @subpackage Kunena Forum Importer
@@ -27,7 +27,7 @@ set_time_limit(120);
 define( 'COM_KUNENAIMPORTER_BASEDIR', JPATH_COMPONENT_ADMINISTRATOR );
 define( 'COM_KUNENAIMPORTER_BASEURL', JURI::root().'administrator/index.php?option=com_kunenaimporter');
 
-$document =& JFactory::getDocument();
+$document = JFactory::getDocument();
 $document->addStyleSheet('components/com_kunenaimporter/assets/importer.css');
 
 // Require the base controller
@@ -36,10 +36,9 @@ require_once JPATH_COMPONENT.DS.'controller.php';
 // Require the base controller
 require_once JPATH_COMPONENT.DS.'helpers'.DS.'helper.php';
 
-$language =& JFactory::getLanguage();
-$language->load('com_kunenaimporter');
+$lang = JFactory::getLanguage();
+$lang->load('com_kunenaimporter', COM_KUNENAIMPORTER_BASEDIR);
 
-$document = & JFactory::getDocument(); 
 $document->setTitle( JText::_('Kunena Forum Importer') );
 JToolBarHelper::title(JText::_('Forum Importer'), 'kunenaimporter.png');
 
@@ -50,7 +49,7 @@ $controller = new KunenaimporterController( );
 $controller->execute( JRequest::getCmd('task'));
 $controller->redirect();
 
-function getKunenaImporterParams($component="com_kunenaimporter") 
+function getKunenaImporterParams($component="com_kunenaimporter")
 {
 	static $instance = null;
 	if ($instance == null)

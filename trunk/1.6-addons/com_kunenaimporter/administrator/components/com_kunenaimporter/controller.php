@@ -2,7 +2,7 @@
 /**
  * Joomla! 1.5 component: Kunena Forum Importer
  *
- * @version $Id: $
+ * @version $Id$
  * @author Kunena Team
  * @package Joomla
  * @subpackage Kunena Forum Importer
@@ -66,7 +66,7 @@ class KunenaimporterController extends JController {
 		$app =& JFactory::getApplication();
 		$form = JRequest::getBool('form');
 
-		if ($form) 
+		if ($form)
 		{
 			$state = JRequest::getVar('cid', array(), 'post', 'array');
 			$app->setUserState('com_knimporter.state', $state);
@@ -96,10 +96,10 @@ class KunenaimporterController extends JController {
 
 		$options = $importer->getImportOptions();
 		$state = $this->getParams();
-		foreach ($options as $option) 
+		foreach ($options as $option)
 		{
 			if (isset($state[$option])) {
-				$app->setUserState('com_knimporter.'.$option, 0); 				$importer->truncateData($option);
+				$app->setUserState('com_knimporter.'.$option, 0);				$importer->truncateData($option);
 			}
 		}
 		// FIXME: !!!
@@ -205,7 +205,7 @@ class KunenaimporterController extends JController {
 		$component = JComponentHelper::getComponent( 'com_kunenaimporter' );
 		$params = new JParameter( $component->params );
 		$view->setModel( $this->getModel( 'import' ), true );
-		$view->setModel( $this->getModel( 'export_'.$params->get('extforum') ), false );
+		$view->setModel( $this->getModel( 'export_'.$params->get('extforum', 'kunena') ), false );
 		$view->display();
 	}
 }

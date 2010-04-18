@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<!--
+  Kunena Importer ant build file
+
+  @version      $Id:kunena.build.xml 95 2010-01-23 21:46:51Z fxstein $
+  @copyright    Copyright (c) 2008 - 2010 Kunena Team 
+  				portions 2007 MjazTools. All rights reserved.
+  @license      GNU/GPL
+  @link         http://www.kunena.com
+  
+  The following parameter need to be defined inside the Eclipse build task as Arguments. They
+  allow the build file to be platform independent as not path information resides within
+  any of the build files.
+   
+  Required Parameters: (with example - adjust the directories in Eclispe to your individual setup)
+  	-Dproject_dir=${project_loc}/kunenadiscuss
+  	-Dpackage_dir=/Development/packages 
+  	-Dtmp_dir=/Development/tmp 
+-->
+<project name="KunenaImporter" default="dist" basedir=".">
+	<description>Ant Build File for Kunena Importer</description>
+	<condition property="project_dir" value="..">
+		<not>
+			<isset property="project_dir" />
+		</not>
+	</condition>
+	<condition property="package_dir" value="../../packages">
+		<not>
+			<isset property="package_dir" />
+		</not>
+	</condition>
+	<condition property="tmp_dir" value="tmp">
+		<not>
+			<isset property="tmp_dir" />
+		</not>
+	</condition>
+	<property file="build.config.ini" />
+	<property name="kunena.directory" value="${project_dir}/" />
+	<property name="kunena.directory.list" value="" />
+
+	<target name="dist" depends="mkdir,archive,copy,init,package,tar,zip,gzip,bz2,info,cleanup" />
+
+	<target name="mkdir">
+		<mkdir dir="${tmp_dir}" />
+		<mkdir dir="${package_dir}" />
+		<mkdir dir="${package_dir}/archive" />
+	</target>
+
+	<target name="archive">
+		<move todir="${package_dir}/archive" preservelastmodified="yes" includeEmptyDirs="no">
+			<fileset dir="${package_dir}">
+				<exclude name="archive/" />
+			</fileset>
+		</move>
+	</target>
+
+	<target name="copy" depends="mkdir">
+		<copy todir="${tmp_dir}">
+			<fileset dir="${kunena.directory}">
+				<exclude name="build/" />
+				<exclude name="administrator/" />
+			</fileset>
+		</copy>
+		<copy todir="${tmp_dir}/admin">
+			<fileset dir="${kunena.directory}/administrator/components/com_kunenaimporter/">
+				<exclude name="build/" />
+				<exclude name="kunenaimporter.xml" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="init" depends="copy">
+		<xmlproperty file="${kunena.directory}/administrator/components/com_kunenaimporter/kunenaimporter.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<buildnumber />
+		<tstamp>
+			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
+		</tstamp>
+
+		<condition property="str.build" value="_${cfg.buildprefix}${build.number}" else="">
+			<istrue value="${cfg.addbuild}" />
+		</condition>
+		<condition property="str.version" value="_${cfg.versionprefix}${xml.version}" else="">
+			<istrue value="${cfg.addversion}" />
+		</condition>
+		<condition property="str.date" value="_${str.datefmt}" else="">
+			<istrue value="${cfg.adddate}" />
+		</condition>
+		<property name="str.destfile" value="${package_dir}/${cfg.prefix}${cfg.name}${str.version}${str.build}${str.date}" />
+
+		<condition property="do.tar">
+			<istrue value="${cfg.tar}" />
+		</condition>
+		<condition property="do.zip">
+			<istrue value="${cfg.zip}" />
+		</condition>
+		<condition property="do.gzip">
+			<istrue value="${cfg.gzip}" />
+		</condition>
+		<condition property="do.bz2">
+			<istrue value="${cfg.bz2}" />
+		</condition>
+	</target>
+
+	<target name="package" depends="init">
+		<!-- Copy files that conatin version tags again and perform token replacement -->
+		<condition property="version.date" value="${str.datefmt}" else="">
+			<istrue value="${cfg.adddate}" />
+		</condition>
+		<filter token="kunenaversion" value="${xml.version}" />
+		<filter token="kunenaversiondate" value="${version.date}" />
+		<filter token="kunenaversionbuild" value="${build.number}" />
+		<filter token="kunenaversionname" value="${xml.versionname}" />
+		<copy file="${project_dir}/administrator/components/com_kunenaimporter/kunenaimporter.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
+	</target>
+
+	<target name="tar" depends="package" if="do.tar">
+		<tar destfile="${str.destfile}.tar" basedir="${tmp_dir}" />
+	</target>
+
+	<target name="zip" depends="package" if="do.zip">
+		<zip destfile="${str.destfile}.zip" basedir="${tmp_dir}" />
+	</target>
+
+	<target name="gzip" depends="package" if="do.gzip">
+		<tar destfile="${str.destfile}.tar.gz" basedir="${tmp_dir}" compression="gzip" />
+	</target>
+
+	<target name="bz2" depends="package" if="do.bz2">
+		<tar destfile="${str.destfile}.tar.bz2" basedir="${tmp_dir}" compression="bzip2" />
+	</target>
+
+	<target name="info" depends="package">
+		<echo message="Ant Version:     ${ant.version}" />
+		<echo message="Project:         ${cfg.name}" />
+		<echo message="XML Name:        ${xml.name}" />
+		<echo message="XML Version:     ${xml.version}" />
+		<echo message="XML Author:      ${xml.author}" />
+		<echo message="XML Copyright:   ${xml.copyright}" />
+		<echo message="XML License:     ${xml.license}" />
+		<echo message="XML Description: ${xml.description}" />
+		<echo message="Build:           ${build.number}" />
+		<echo message="Date:            ${TODAY}" />
+	</target>
+
+	<target name="cleanup" depends="info">
+		<delete dir="${tmp_dir}" />
+	</target>
+</project>

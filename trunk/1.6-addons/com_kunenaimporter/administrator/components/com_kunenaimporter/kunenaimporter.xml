@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install type="component" version="1.5.0" method="upgrade">
+	<name>KunenaImporter</name>
+	<version>1.6-DEV</version>
+	<versionname>Gespraech</versionname>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Team</author>
+	<authorEmail>Kunena@Kunena.com</authorEmail>
+	<authorUrl>http://www.Kunena.com</authorUrl>
+	<copyright>www.Kunena.com</copyright>
+	<license>GNU/GPL</license>
+
+	<description>
+		Imports external forum data (Kunena, phpBB3, phpBB2, PNphpBB2) into Kunena Forum.
+	</description>
+
+	<!-- installation part -->
+	<installfile>install.kunenaimporter.php</installfile>
+	<uninstallfile>uninstall.kunenaimporter.php</uninstallfile>
+
+	<!-- administration part -->
+	<administration>
+
+		<menu view="default">Kunena Forum Importer</menu>
+
+		<files folder="admin">
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<filename>admin.kunenaimporter.php</filename>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+			<folder>assets</folder>
+			<folder>install</folder>
+		</files>
+
+	</administration>
+
+	<params>
+	</params>
+
+</install>

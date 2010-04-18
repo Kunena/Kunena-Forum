@@ -2,7 +2,7 @@
 /**
  * Joomla! 1.5 component: Kunena Forum Importer
  *
- * @version $Id: $
+ * @version $Id$
  * @author Kunena Team
  * @package Joomla
  * @subpackage Kunena Forum Importer
@@ -30,6 +30,7 @@ if (file_exists($kunena_defines)) require_once ($kunena_defines);
 class KunenaimporterModelExport extends JModel {
 	var $ext_database;
 	var $ext_table_prefix;
+	var $ext_same = false;
 	var $messages = array();
 	var $error = '';
 	var $importOps = array();
@@ -46,6 +47,7 @@ class KunenaimporterModelExport extends JModel {
 		$db_tableprefix = $params->get('db_tableprefix');
 		if (empty($db_name)) {
 			$this->ext_database =& JFactory::getDBO();
+			$this->ext_same = 1;
 		} else {
 			$option['driver']   = $app->getCfg('dbtype');
 			$option['host']     = $params->get('db_host');
@@ -56,6 +58,9 @@ class KunenaimporterModelExport extends JModel {
 
 			$this->ext_database =& JDatabase::getInstance( $option );
 		}
+		// TODO: make this to work
+		//jimport('joomla.error.exception');
+		//$this->ext_database->debug(0);
 		$this->buildImportOps();
 	}
 
@@ -109,14 +114,20 @@ class KunenaimporterModelExport extends JModel {
 	function getCount($query) {
 		$this->ext_database->setQuery($query);
 		$result = $this->ext_database->loadResult();
-		if ($this->ext_database->getErrorNum()) die("<br />Invalid query:<br />$query<br />" . $this->ext_database->getErrorMsg()); 
+		if ($this->ext_database->getErrorNum()) {
+			$this->error = $this->ext_database->getErrorMsg();
+			$this->addMessage('<div><b>Error:</b> '.$this->error.'</div>');
+		}
 		return $result;
 	}
 
 	function &getExportData($query, $start=0, $limit=0, $key = null) {
 		$this->ext_database->setQuery($query, $start, $limit);
 		$result = $this->ext_database->loadObjectList($key);
-		if ($this->ext_database->getErrorNum()) die("<br />Invalid query:<br />$query<br />" . $this->ext_database->getErrorMsg()); 
+		if ($this->ext_database->getErrorNum()) {
+			$this->error = $this->ext_database->getErrorMsg();
+			$this->addMessage('<div><b>Error:</b> '.$this->error.'</div>');
+		}
 		return $result;
 	}
 
@@ -149,7 +160,7 @@ class KunenaimporterModelExport extends JModel {
 	}
 
 	function &exportJoomlaUsers($start=0, $limit=0) {
-		
+
 	}
 
 }

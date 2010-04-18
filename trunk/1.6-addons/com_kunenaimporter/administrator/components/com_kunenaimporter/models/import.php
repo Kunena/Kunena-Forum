@@ -2,7 +2,7 @@
 /**
  * Joomla! 1.5 component: Kunena Forum Importer
  *
- * @version $Id: $
+ * @version $Id$
  * @author Kunena Team
  * @package Joomla
  * @subpackage Kunena Forum Importer
@@ -31,6 +31,8 @@ require_once( JPATH_COMPONENT.DS.'models'.DS.'kunena.php' );
 class KunenaimporterModelImport extends JModel {
 	function __construct() {
 		parent::__construct();
+		$this->db = JFactory::getDBO();
+		$this->db->debug = 0;
 	}
 
 	function getImportOptions() {
@@ -40,34 +42,30 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function commitStart() {
-		$db =& JFactory::getDBO();
 		$query="SET autocommit=0;";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Disabling autocommit failed:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Disabling autocommit failed:<br />$query<br />" . $this->db->errorMsg());
 	}
 
 	function commitEnd() {
-		$db =& JFactory::getDBO();
 		$query="COMMIT;";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Commit failed:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Commit failed:<br />$query<br />" . $this->db->errorMsg());
 		$query="SET autocommit=1;";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Enabling autocommit failed:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Enabling autocommit failed:<br />$query<br />" . $this->db->errorMsg());
 	}
 
 	function disableKeys($table) {
-		$db =& JFactory::getDBO();
 		$query="ALTER TABLE {$table} DISABLE KEYS";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Disable keys failed:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Disable keys failed:<br />$query<br />" . $this->db->errorMsg());
 	}
 
 	function enableKeys($table) {
-		$db =& JFactory::getDBO();
 		$query="ALTER TABLE {$table} ENABLE KEYS";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Enable keys failed:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Enable keys failed:<br />$query<br />" . $this->db->errorMsg());
 	}
 
 	function setAuthMethod($auth_method) {
@@ -82,18 +80,17 @@ class KunenaimporterModelImport extends JModel {
 	function mapUser($extuserid, $username=null, $email=null, $registerDate=null) {
 		//if ($this->auth_method == 'joomla') return $extuserid;
 
-		$db =& JFactory::getDBO();
 		// Check if we have already mapped our user
-		$query = "SELECT * FROM `#__knimport_extuser` WHERE extuserid=".$db->quote($extuserid);
-		$db->setQuery($query, 0, 1);
-		$user = $db->loadObject();
+		$query = "SELECT * FROM `#__knimport_extuser` WHERE extuserid=".$this->db->quote($extuserid);
+		$this->db->setQuery($query, 0, 1);
+		$user = $this->db->loadObject();
 		if (is_object($user) && $user->userid > 0) return $user->userid;
 		if (empty($username)) return 0;
 
 		// Check if user exists in Joomla
-		$query = "SELECT id, username, email, registerDate FROM `#__users` WHERE username=".$db->quote($this->getUsername($username))." OR email=".$db->quote($email)." OR registerDate=".$db->quote($registerDate);
-		$db->setQuery($query);
-		$userlist = $db->loadObjectList('id');
+		$query = "SELECT id, username, email, registerDate FROM `#__users` WHERE username=".$this->db->quote($this->getUsername($username))." OR email=".$this->db->quote($email)." OR registerDate=".$this->db->quote($registerDate);
+		$this->db->setQuery($query);
+		$userlist = $this->db->loadObjectList('id');
 
 		$bestpoints = 0;
 		$bestid = 0;
@@ -123,18 +120,15 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function truncateUsersMap() {
-		$db =& JFactory::getDBO();
 		$query="TRUNCATE TABLE `#__knimport_extuser`";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Invalid query:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 	}
 
 	function mapUsers(&$users) {
-		$db =& JFactory::getDBO();
-
 		$query = "SELECT id, name FROM `#__core_acl_aro_groups`";
-		$db->setQuery($query);
-		$groups = $db->loadObjectList('name');
+		$this->db->setQuery($query);
+		$groups = $this->db->loadObjectList('name');
 
 		foreach ($users as $userdata)
 		{
@@ -158,42 +152,41 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function UpdateCatStats() {
-		$db =& JFactory::getDBO();
 		// Update last message time from all categories.
 		$query="UPDATE `#__fb_categories`, `#__fb_messages` SET `#__fb_categories`.time_last_msg=`#__fb_messages`.time WHERE `#__fb_categories`.id_last_msg=`#__fb_messages`.id AND `#__fb_categories`.id_last_msg>0";
-		$db->setQuery($query); 
-		$result = $db->query() or die("<br />Invalid query:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 		unset($query);
 	}
 
 	function truncateData($option) {
 		if ($option == 'config') return;
 		if ($option == 'messages') $this->truncateData($option.'_text');
-		$db =& JFactory::getDBO();
+		$this->db =& JFactory::getDBO();
 		$table =& JTable::getInstance($option, 'CKunenaTable');
-		$query="TRUNCATE TABLE ".$db->nameQuote($table->getTableName());
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Invalid query:<br />$query<br />" . $db->errorMsg());
+		$query="TRUNCATE TABLE ".$this->db->nameQuote($table->getTableName());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 	}
 
 	function truncateJoomlaUsers() {
 		// Leave only Super Administrators
-		$db =& JFactory::getDBO();
+		$this->db =& JFactory::getDBO();
 		$query="DELETE FROM #__users WHERE gid != 25";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Invalid query:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 		$query="ALTER TABLE `#__users` AUTO_INCREMENT = 0";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Invalid query:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 		$query="DELETE #__core_acl_aro AS a FROM #__core_acl_aro AS a LEFT JOIN #__users AS u ON a.value=u.id WHERE u.id IS NULL";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Invalid query:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 		$query="DELETE FROM #__core_acl_groups_aro_map WHERE group_id != 25";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Invalid query:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 		$query="ALTER TABLE `#__core_acl_aro` AUTO_INCREMENT = 0";
-		$db->setQuery($query);
-		$result = $db->query() or die("<br />Invalid query:<br />$query<br />" . $db->errorMsg());
+		$this->db->setQuery($query);
+		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 	}
 
 	function importData($option, &$data) {
@@ -217,8 +210,6 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function importUnique($option, &$data) {
-		$db =& JFactory::getDBO();
-
 		$table =& JTable::getInstance($option, 'CKunenaTable');
 		if (!$table) die($option);
 		$this->commitStart();
@@ -233,8 +224,6 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function importDefault($option, &$data) {
-		$db =& JFactory::getDBO();
-
 		$table =& JTable::getInstance($option, 'CKunenaTable');
 		if (!$table) die($option);
 		$this->commitStart();
@@ -246,7 +235,6 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function importMessages(&$messages) {
-		$db =& JFactory::getDBO();
 		$this->commitStart();
 		$msgtable =& JTable::getInstance('messages', 'CKunenaTable');
 		$txttable =& JTable::getInstance('messages_text', 'CKunenaTable');
@@ -268,8 +256,6 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function importUsers(&$users) {
-		$db =& JFactory::getDBO();
-
 		foreach ($users as $userdata)
 		{
 			$conflict = 0;
@@ -280,8 +266,8 @@ class KunenaimporterModelImport extends JModel {
 
 			if ($uid > 0) {
 				$query = "INSERT INTO `#__fb_users` (userid, posts, signature) VALUES ('$uid', '$userdata->user_posts', '$userdata->user_sig')";
-				$db->setQuery($query);
-				$result = $db->query() or die("<br />Invalid query ($userdata->username):<br />$query<br />" . $db->errorMsg());
+				$this->db->setQuery($query);
+				$result = $this->db->query() or die("<br />Invalid query ($userdata->username):<br />$query<br />" . $this->db->errorMsg());
 			}
 		}
 	}

@@ -30,6 +30,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+17-Apr-2010 Matias
+# [#20178] Make more stable against database errors, including failed detection of external forum
+# [#20178] Detect and prevent importing Kunena into itself
+
+03-Apr-2010 Matias
+# [#20178] Restructuring, add build system, add keywords for every file etc
+
 30-Aug-2009 Matias
 # [#17875] Fix all errors and warnings found in Eclipse
 

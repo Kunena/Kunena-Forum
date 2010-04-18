@@ -2,7 +2,7 @@
 /**
  * Joomla! 1.5 component: Kunena Forum Importer
  *
- * @version $Id: $
+ * @version $Id$
  * @author Kunena Team
  * @package Joomla
  * @subpackage Kunena Forum Importer

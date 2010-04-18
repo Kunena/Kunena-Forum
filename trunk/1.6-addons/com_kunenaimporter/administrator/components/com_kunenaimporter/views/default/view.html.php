@@ -2,7 +2,7 @@
 /**
  * Joomla! 1.5 component: Kunena Forum Importer
  *
- * @version $Id: $
+ * @version $Id$
  * @author Kunena Team
  * @package Joomla
  * @subpackage Kunena Forum Importer
@@ -21,15 +21,16 @@ defined('_JEXEC') or die('Restricted access');
 
 // Import Joomla! libraries
 jimport( 'joomla.application.component.view');
+
 class KunenaimporterViewDefault extends JView {
 
 	function display($tpl = null) {
-		$app =& JFactory::getApplication();
-		$params =& getKunenaImporterParams();
+		$app = JFactory::getApplication();
+		$params = getKunenaImporterParams();
 		$this->assign('params', $params);
 
-		$importer =& $this->getModel('import');
-		$exporter =& $this->getModel('export_'.$params->get('extforum'));
+		$importer = $this->getModel('import');
+		$exporter = $this->getModel('export_'.$params->get('extforum'));
 		if (is_object($exporter)) {
 
 			$exporter->checkConfig();

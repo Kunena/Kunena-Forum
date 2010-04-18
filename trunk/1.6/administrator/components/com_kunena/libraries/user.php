@@ -371,7 +371,7 @@ class KunenaUser extends JObject
 	public function socialButton($name) {
 		$social = array (
 			'twitter' => array( 'name'=>'TWITTER', 'url'=>'http://twitter.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_TWITTER') ),
-			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FACEBOOK') ),
+			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'http://www.facebook.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FACEBOOK') ),
 			'myspace' => array( 'name'=>'MYSPACE', 'url'=>'http://www.myspace.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_MYSPACE') ),
 			'linkedin' => array( 'name'=>'LINKEDIN', 'url'=>'http://www.linkedin.com/pub/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_LINKEDIN') ),
 
@@ -379,12 +379,12 @@ class KunenaUser extends JObject
 			'friendfeed' => array( 'name'=>'FRIENDFEED', 'url'=>'http://friendfeed.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED') ),
 			'digg' => array( 'name'=>'DIGG', 'url'=>'http://www.digg.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_DIGG') ),
 
-			'skype' => array( 'name'=>'SKYPE', 'url'=>'skype:##VALUE##?chat', 'title'=>'' ),
-			'yim' => array( 'name'=>'YIM', 'url'=>'ymsgr:sendim?##VALUE##', 'title'=>'' ),
-			'aim' => array( 'name'=>'AIM', 'url'=>'aim:goim?screenname=##VALUE##', 'title'=>'' ),
-			'gtalk' => array( 'name'=>'GTALK', 'url'=>'gtalk:chat?jid=##VALUE##', 'title'=>'' ),
-			'msn' => array( 'name'=>'MSN', 'url'=>'msn:##VALUE##', 'title'=>'' ),
-			'icq' => array( 'name'=>'ICQ', 'url'=>'http://www.icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title'=>'' ),
+			'skype' => array( 'name'=>'SKYPE', 'url'=>'skype:##VALUE##?chat', 'title'=>JText::_('COM_KUNENA_MYPROFILE_SKYPE') ),
+			'yim' => array( 'name'=>'YIM', 'url'=>'ymsgr:sendim?##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_YIM') ),
+			'aim' => array( 'name'=>'AIM', 'url'=>'aim:goim?screenname=##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_AIM') ),
+			'gtalk' => array( 'name'=>'GTALK', 'url'=>'gtalk:chat?jid=##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_GTALK') ),
+			'msn' => array( 'name'=>'MSN', 'url'=>'msn:##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_MSN') ),
+			'icq' => array( 'name'=>'ICQ', 'url'=>'http://www.icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title'=>JText::_('COM_KUNENA_MYPROFILE_ICQ') ),
 
 			'blogspot' => array( 'name'=>'BLOGSPOT', 'url'=>'http://##VALUE##.blogspot.com/', 'title'=>JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT') ),
 			'flickr' => array( 'name'=>'FLICKR', 'url'=>'http://www.flickr.com/photos/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FLICKR') ),

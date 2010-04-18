@@ -115,21 +115,20 @@ $kunena_config = & CKunenaConfig::getInstance ();
 
 			<div id="kbbcode-poll-options" style="display: none;">
 			<?php
-			//Check if the poll is allowed and check if the polls is enabled
+			//Check if the poll is allowed
 			if ($kunena_config->pollenabled) {
 				if ( empty($this->msg_cat->allow_polls) )
 					$this->msg_cat->allow_polls = '';
 
 				$display_poll = CKunenaPolls::get_poll_allowed($this->id, $this->kunena_editmode, $this->msg_cat->allow_polls, $this->catid);
-				if($display_poll) {
 					if (!isset($this->polldatasedit[0]->polltimetolive)) {
 						$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 					}
 					CKunenaPolls::call_js_poll_edit($this->kunena_editmode, $this->id);
 					$html_poll_edit = CKunenaPolls::get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
 					JHTML::_('behavior.calendar');
-			?><span id="kpoll_not_allowed"></span>
-			<div id="kpoll_hide_not_allowed">
+			?><span id="kpoll_not_allowed"><?php if(!$display_poll) { echo JText::_('The polls are not allowed in this category'); } ?></span>
+			<div id="kpoll_hide_not_allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
 			<?php echo JText::_('COM_KUNENA_POLL_TITLE');
 			?>&nbsp;<input type="text" id="kpolltitle" name="poll_title"
 				maxlength="25"
@@ -169,11 +168,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 						?>">
 
 			<?php
-					} else {
-			?>
-				<span id="kpoll_not_allowed_static"><?php echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); ?></span>
-			<?php
-					}
+
 			}
 			?>
 			</div>

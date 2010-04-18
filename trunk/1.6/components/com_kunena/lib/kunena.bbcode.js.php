@@ -769,18 +769,28 @@ kbbcode.addFunction('Gallery', function() {
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_GALLERY');?>")'});
 */
 ?>
-<?php //display only the poll icon in the first message of the thread
+<?php if (!isset($this->msg_cat->allow_polls)) $this->msg_cat->allow_polls = ''; //display only the poll icon in the first message of the thread
+
 if(CKunenaPolls::get_message_parent($this->id, $this->kunena_editmode)){ ?>
 
 kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");
 }, {'id': 'kbbcode-poll_button',
+<?php
+if ($this->msg_cat->allow_polls == '0') {
+	echo '\'style\':\'display: none;\',';
+} ?>
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_POLL');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>")'});
 
 kbbcode.addFunction('#', function() {
-}, {'id': 'kbbcode-separator5'});
+}, {'id': 'kbbcode-separator5'
+<?php
+if ($this->msg_cat->allow_polls == '0') {
+	echo ',\'style\':\'display: none;\'';
+} ?>
+});
 
 <?php
 }

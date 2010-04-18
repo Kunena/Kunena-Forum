@@ -35,12 +35,17 @@ Legend:
 Kunena 1.6.0-DEV
 
 18-Apr-2010 Matias
-^ [#15886] Merged revisions 2279-2280 from /branches/1.6-xillibit
+^ [#15886] Merged revisions 2279-2288 from /branches/1.6-xillibit
+
+18-Apr-2010 Xillibit
+^ [#19764] New configuration setting to choose between multiples buttons or one button for moderation
 
 17-Apr-2010 Xillibit
 # [#19288] Fix issue which prevents to display images from not default gallery
 # [#19288] Fix issue which prevents to display images in browse images in backend (not totally working)
 # [#19288] Fix some language strings and little changes
+# [#19288] Some little fixes and changes on backend
+# [#19288] Make javascript working on select category when you aren't on new topic and hide poll icon
 
 17-Apr-2010 Matias
 # [#19288] Do not list moderators who do not exists (deleted or banned)

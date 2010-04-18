@@ -1048,6 +1048,8 @@ function showConfig($option) {
 	$lists['integration_profile'] = KunenaIntegration::getConfigOptions('profile');
 	$lists['integration_private'] = KunenaIntegration::getConfigOptions('private');
 
+	$lists['mod_buttons'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_buttons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_buttons);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
@@ -1355,16 +1357,17 @@ function editUserProfile($option, $uid) {
 	}
 
 	//get all IPs used by this user
-	$kunena_db->setQuery ( "SELECT ip, count(ip) AS nbip FROM #__fb_messages WHERE userid=$uid[0] GROUP BY ip" );
+	$kunena_db->setQuery ( "SELECT ip, count(ip) AS nbip, userid FROM #__fb_messages WHERE userid=$uid[0] GROUP BY ip" );
 	$ipslist = $kunena_db->loadObjectList ();
 	check_dberror ( 'Unable to load ip for user.' );
 
 	$useridslist = array();
 	foreach ($ipslist as $ip) {
-		$kunena_db->setQuery ( "SELECT userid FROM #__fb_messages WHERE ip='$ip->ip' GROUP BY userid" );
-		$useridslist[$ip->ip] = $kunena_db->loadResultArray ();
+		$kunena_db->setQuery ( "SELECT userid,name FROM #__fb_messages WHERE ip='$ip->ip' GROUP BY userid" );
+		$useridslist[$ip->ip] = $kunena_db->loadObjectlist ();
 		check_dberror ( 'Unable to load ip for user.' );
 	}
+
 
 	$modCats = KUNENA_GetAvailableModCats ( $__modCats );
 

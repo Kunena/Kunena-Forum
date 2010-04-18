@@ -37,6 +37,8 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $this->message_edit; ?>
 				<?php echo $this->message_moderate; ?>
 				<?php echo $this->message_move; ?>
+				<?php echo $this->message_merge; ?>
+				<?php echo $this->message_split; ?>
 				<?php echo $this->message_delete; ?>
 				<?php echo $this->message_undelete; ?>
 				<?php echo $this->message_publish; ?>

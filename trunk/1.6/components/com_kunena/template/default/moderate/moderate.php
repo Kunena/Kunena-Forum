@@ -38,34 +38,66 @@ defined ( '_JEXEC' ) or die ();
 		?></strong></div>
 <div>
 
-<?php if ($this->moderateTopic) : ?>
+<?php
+if (empty($this->moderateMultiplesChoices)) {
+	if ($this->moderateTopic) :	?>
 		<input id="modmergetopic" type="radio" name="moderation" value="modmergetopic" /><?php echo 'Merge topic'; ?> <br />
 		<input id="modmovetopic" type="radio" name="moderation" value="modmovetopic" ><?php echo 'Move Topic'; ?> <br />
-<?php else : ?>
+<?php else :?>
 		<input id="modmergemessage" type="radio" name="moderation" value="modmergemessage" /><?php echo 'Merge Message'; ?> <br />
 		<input id="modmovemessage" type="radio" name="moderation" value="modmovemessage" ><?php echo 'Move Message'; ?> <br />
 		<input id="modsplitmultpost" type="radio" name="moderation" value="modsplitmultpost" ><?php echo JText::_('COM_KUNENA_MODERATION_SPLIT_CHOOSE2'); ?> <br />
-<?php endif; ?>
+<?php endif;
+} else {
+	switch ($this->moderateMultiplesChoices) {
+		case 'modmergetopic':
+?>
+	<input id="modmergetopic" type="radio" name="moderation" value="modmergetopic" /><?php echo 'Merge topic'; ?> <br />
+<?php
+   	 	break;
+   	 	case 'modmovetopic':
+?>
+	<input id="modmovetopic" type="radio" name="moderation" value="modmovetopic" ><?php echo 'Move Topic'; ?> <br />
+<?php
+   	 	break;
+   	 	case 'modmergemessage':
+?>
+	<input id="modmergemessage" type="radio" name="moderation" value="modmergemessage" /><?php echo 'Merge Message'; ?> <br />
+<?php
+   	 	break;
+   	 	case 'modmovemessage':
+?>
+	<input id="modmovemessage" type="radio" name="moderation" value="modmovemessage" ><?php echo 'Move Message'; ?> <br />
+<?php
+   	 	break;
+   	 	case 'modsplitmultpost':
+?>
+	<input id="modsplitmultpost" type="radio" name="moderation" value="modsplitmultpost" ><?php echo JText::_('COM_KUNENA_MODERATION_SPLIT_CHOOSE2'); ?> <br />
+<?php
+   	 	break;
+	}
+} ?>
 <br />
-		<div id="modtopicslist"><?php
-		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_TOPIC' );
+		<div id="modcategorieslist"><?php
+		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_CATEGORY' );
 		?>: <br />
 
 		<?php
 		echo $this->selectlist;
 		?></div> <br />
 
-		<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="leaveGhost"  value="<?php echo $this->config->boxghostmessage ? '1' : '0'; ?>" /> <?php echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' ); ?>
-		<br />
 
-		<div id="modcategorieslist"><?php
-		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_CATEGORY' );
+		<div id="modtopicslist"><?php
+		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_TOPIC' );
 		?>: <br />
 
 		<?php
 		echo $this->selectlistmessage;
 		?></div> <br />
 
+		<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="leaveGhost"  value="<?php echo $this->config->boxghostmessage ? '1' : '0'; ?>" /> <?php echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' ); ?>
+		<br />
+<br />
 		<?php
 		echo JText::_ ( 'COM_KUNENA_MODERATE_FIELD_ID' );
 		?>: <br />

@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+19-Apr-2010 severdia
+# [#19758] Fixes for admin UI, cross-browser issues
+
+
 18-Apr-2010 Matias
 ^ [#15886] Merged revisions 2279-2288 from /branches/1.6-xillibit
 

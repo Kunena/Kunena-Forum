@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+19-Apr-2010 810
+^ [#19758] Clean up Admin interface: New edit Profile style in backend
+
 18-Apr-2010 810
 ^ [#19758] Clean up Admin interface: Uploaded Images Browser
 ^ [#19758] Clean up Admin interface: Fixed Signature in backend -edit profile

@@ -863,58 +863,43 @@ window.addEvent('domready', function(){
 		});
 	}
 	
-	if($('modmergetopic') != undefined){
-		$('modmergetopic').addEvent('change', function(e){
-			if($('modcategorieslist').getProperty('style') == undefined){
-				$('modcategorieslist').setStyle('display','none');
-			}			
-			if($('modtopicslist').getProperty('style') != undefined){
-				$('modtopicslist').removeProperty('style');
-			}
-		});
-	}
-	
-	if($('modmergemessage') != undefined){
-		$('modmergemessage').addEvent('change', function(e){
-			if($('modcategorieslist').getProperty('style') == undefined){
-				$('modcategorieslist').setStyle('display','none');
-			}
-			if($('modtopicslist').getProperty('style') != undefined){
-				$('modtopicslist').removeProperty('style');
-			}
-		});
-	}
-	
-	if($('modmovetopic') != undefined){
-		$('modmovetopic').addEvent('change', function(e){
-			if($('modtopicslist').getProperty('style') == undefined){
-				$('modtopicslist').setStyle('display','none');
-			}
-			if($('modcategorieslist').getProperty('style') != undefined){
-				$('modcategorieslist').removeProperty('style');
-			}
-		});
-	}
-	
-	if($('modmovemessage') != undefined){
-		$('modmovemessage').addEvent('change', function(e){
-			if($('modtopicslist').getProperty('style') == undefined){
-				$('modtopicslist').setStyle('display','none');
-			}
-			if($('modcategorieslist').getProperty('style') != undefined){
-				$('modcategorieslist').removeProperty('style');
-			}
-		});
-	}
-	
-	if($('modsplitmultpost') != undefined){
-		$('modsplitmultpost').addEvent('change', function(e){
-			if($('modtopicslist').getProperty('style') == undefined){
-				$('modtopicslist').setStyle('display','none');
-			}
-			if($('modcategorieslist').getProperty('style') != undefined){
-				$('modcategorieslist').removeProperty('style');
-			}
+	if($('Modcategories') != undefined){
+		$('Modcategories').getElements('option').each( function( catid ) {
+			catid.addEvent('click', function(e){
+				
+				var check = '1';			 
+			
+				if ($('modmovetopic') != undefined ) {
+					var movetopic = $('modmovetopic').getProperty('checked','checked'); 
+					if (movetopic == true) {
+						check = '0';
+					}
+				}
+				if ($('modmovemessage') != undefined ) {
+					var movemessage = $('modmovemessage').getProperty('checked','checked');
+					if (movemessage == true) {
+						check = '0';
+					}
+				}
+				if ($('modsplitmultpost') != undefined ) {
+					var splitmultpost = $('modsplitmultpost').getProperty('checked','checked'); 
+					if (splitmultpost == true) {
+						check = '0';
+					}
+				}				
+				if (check == '1') {
+					//load topiclist with json
+					new Request.JSONP({
+						url: '/kunena_1.6.0_branch/index.php?option=com_kunena&func=json&action=modtopiclist',
+					    	data: {
+					        	value: catid.get('value')					        
+					    	},
+					    	onComplete: function(jsonObj) {
+					    		alert('complete');
+					    	}
+					}).send();					
+				}
+			})
 		});
 	}	
 });

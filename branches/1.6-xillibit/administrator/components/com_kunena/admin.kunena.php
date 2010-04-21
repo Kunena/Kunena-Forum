@@ -1738,7 +1738,7 @@ function browseUploaded($kunena_db, $option, $type) {
 			$where = ' WHERE filetype IN ('.$imageTypes.')';
 		} else {
 			$attachlivepath = KUNENA_LIVEUPLOADEDPATH_LEGACY .'/'. 'files/';
-			$where = '';
+			$where = " WHERE filetype NOT like '%image%'";
 		}
 
 		$query = "SELECT a.*, b.catid, b.id FROM #__kunena_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id $where";
@@ -1746,21 +1746,35 @@ function browseUploaded($kunena_db, $option, $type) {
 		$uploaded1 = $kunena_db->loadObjectlist();
 		check_dberror ( "Unable to load attachments." );
 
-		$query = "SELECT a.*, b.catid, b.id FROM #__fb_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id ";
-		$kunena_db->setQuery ( $query );
-		$uploaded2 = $kunena_db->loadObjectlist ();
-		check_dberror ( "Unable to load attachments." );
+		echo $query;
 
-		jimport('joomla.filesystem.file');
+		print_r($uploaded1);
 
-		for ($i =0; $i < count($uploaded2); $i++ ) {
-			$fileExt = JFile::getExt($uploaded2[$i]->filelocation);
-			if ( !in_array($fileExt,$extensionsAllowed)  ) {
-				unset($uploaded2[$i]);
+		// Check if the tables #__fb_attachments exist before to query the database
+		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."fb_config'" );
+		$table_fb_attachements = $kunena_db->loadResult ();
+		check_dberror ( 'Unable to check for existing tables.' );
+
+		if ( $table_fb_attachements ) {
+
+			$query = "SELECT a.*, b.catid, b.id FROM #__fb_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id ";
+			$kunena_db->setQuery ( $query );
+			$uploaded2 = $kunena_db->loadObjectlist ();
+			check_dberror ( "Unable to load attachments." );
+
+			jimport('joomla.filesystem.file');
+
+			for ($i =0; $i < count($uploaded2); $i++ ) {
+				$fileExt = JFile::getExt($uploaded2[$i]->filelocation);
+				if ( !in_array($fileExt,$extensionsAllowed)  ) {
+					unset($uploaded2[$i]);
+				}
 			}
-		}
 
-		$uploaded = array_merge($uploaded1,$uploaded2);
+			$uploaded = array_merge($uploaded1,$uploaded2);
+		}
+		$uploaded = $uploaded1;
+
 	}
 
 	html_Kunena::browseUploaded ( $option, $uploaded, $attachlivepath, $type );

@@ -95,6 +95,11 @@ class CKunenaAjaxHelper {
 					$response = $this->_uploadFile ($do);
 
 					break;
+				case 'modtopiclist' :
+
+					$response = $this->_modTopicList ($data);
+
+					break;
 				case 'removeattachment' :
 
 					$response = $this->_removeAttachment ($data);
@@ -293,6 +298,27 @@ class CKunenaAjaxHelper {
 			'error' => JText::_('COM_KUNENA_AJAX_ATTACHMENT_DELETED')
 		);
 
+
+		return $result;
+	}
+
+	protected function _modTopicList ($data) {
+		$result = array ();
+
+		if ( $data ) {
+			$query = "SELECT id, name, subject, parent
+							FROM #__fb_messages
+							WHERE catid=$data;";
+			$this->_db->setQuery ( $query );
+			$topics_list = $this->_db->loadObjectlist ();
+			check_dberror ( "Unable to get topics list name." );
+			$result['status'] = '1';
+			$result['topics_list'] = $topics_list;
+
+		} else {
+			$result['status'] = '0';
+			$result['error'] = 'Error';
+		}
 
 		return $result;
 	}

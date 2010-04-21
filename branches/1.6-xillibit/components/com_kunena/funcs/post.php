@@ -741,7 +741,8 @@ protected function moderate($modchoices='',$modthread = false) {
 			return;
 
 		//get all the messages for this thread
-		$query = "SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
+		$query = "SELECT * FROM #__fb_messages AS m
+				LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
 			WHERE thread='{$this->msg_cat->thread}' AND hold='0' ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();

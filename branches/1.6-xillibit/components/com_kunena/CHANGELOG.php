@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+21-Apr-2010 Xillibit
+# [#19288] Fix issue which prevents to display images in browse images in backend (Part 2)
+^ [#19764] Add new javascript part for common moderation page (not working yet)
+
 18-Apr-2010 Xillibit
 ^ [#19764] New configuration setting to choose between multiples buttons or one button for moderation
 

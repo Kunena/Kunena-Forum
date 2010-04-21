@@ -24,8 +24,11 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.config.class.php');
 
 class CKunenaTable extends JTable
 {
+	public $_exists;
+
 	function store($updateNulls=false) {
-		$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
+		if (!$this->_exists) $ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
+		else $ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key );
 		if (!$ret)
 		{
 			$this->setError(get_class( $this ).'::store failed - '.$this->_db->getErrorMsg());
@@ -34,7 +37,7 @@ class CKunenaTable extends JTable
 	}
 }
 
-class CKunenaImporterTableUser extends CKunenaTable
+class CKunenaTableExtUser extends CKunenaTable
 {
 	var $extid = null;
 	var $extusername = null;
@@ -53,11 +56,11 @@ class CKunenaImporterTableUser extends CKunenaTable
 	var $error = null;
 
 	function __construct( &$database ) {
-		parent::__construct( '#__knimporter_user', 'extid', $database );
+		parent::__construct( '#__kunenaimporter_users', 'extid', $database );
 	}
 }
 
-class CKunenaTableAnnouncements extends CKunenaTable 
+class CKunenaTableAnnouncements extends CKunenaTable
 {
 	var $id = null;
 	var $title = null;
@@ -74,7 +77,7 @@ class CKunenaTableAnnouncements extends CKunenaTable
 	}
 }
 
-class CKunenaTableAttachments extends CKunenaTable 
+class CKunenaTableAttachments extends CKunenaTable
 {
 	var $mesid = null;
 	var $filelocation = null;
@@ -85,7 +88,7 @@ class CKunenaTableAttachments extends CKunenaTable
 	}
 }
 
-class CKunenaTableCategories extends CKunenaTable 
+class CKunenaTableCategories extends CKunenaTable
 {
 	var $id = null;
 	var $parent = null;
@@ -125,7 +128,7 @@ class CKunenaTableCategories extends CKunenaTable
 			// we must reset fbSession (allowed), when forum record was changed
 			$this->_db->setQuery("UPDATE #__fb_sessions SET allowed='na'");
 			$this->_db->query() or trigger_dberror("Unable to update sessions.");
-		} 
+		}
 		return $ret;
 	}
 }
@@ -158,7 +161,7 @@ class CKunenaTableConfig extends CKunenaConfig
 	}
 }
 
-class CKunenaTableFavorites extends CKunenaTable 
+class CKunenaTableFavorites extends CKunenaTable
 {
 	var $thread = null;
 	var $userid = null;
@@ -169,27 +172,27 @@ class CKunenaTableFavorites extends CKunenaTable
 	}
 }
 
-class CKunenaTableMessages extends CKunenaTable 
+class CKunenaTableMessages extends CKunenaTable
 {
-	var $id = null;	
-	var $parent = null;	
-	var $thread = null;	
-	var $catid = null;	
-	var $name = null;	
-	var $userid = null;	
-	var $email = null;	
-	var $subject = null;	
-	var $time = null;	
-	var $ip = null;	
-	var $topic_emoticon = null;	
-	var $locked = null;	
-	var $hold = null;	
-	var $ordering = null;	
-	var $hits = null;	
-	var $moved = null;	
-	var $modified_by = null;	
-	var $modified_time = null;	
-	var $modified_reason = null;	
+	var $id = null;
+	var $parent = null;
+	var $thread = null;
+	var $catid = null;
+	var $name = null;
+	var $userid = null;
+	var $email = null;
+	var $subject = null;
+	var $time = null;
+	var $ip = null;
+	var $topic_emoticon = null;
+	var $locked = null;
+	var $hold = null;
+	var $ordering = null;
+	var $hits = null;
+	var $moved = null;
+	var $modified_by = null;
+	var $modified_time = null;
+	var $modified_reason = null;
 
 	function __construct( &$database )
 	{
@@ -197,7 +200,7 @@ class CKunenaTableMessages extends CKunenaTable
 	}
 }
 
-class CKunenaTableMessages_Text extends CKunenaTable 
+class CKunenaTableMessages_Text extends CKunenaTable
 {
 	var $mesid = null;
 	var $message = null;
@@ -220,13 +223,13 @@ class CKunenaTableModeration extends CKunenaTable
 	}
 }
 
-class CKunenaTableRanks extends CKunenaTable 
+class CKunenaTableRanks extends CKunenaTable
 {
-	var $rank_id = null;	
-	var $rank_title = null;	
-	var $rank_min = null;	
-	var $rank_special = null;	
-	var $rank_image = null;	
+	var $rank_id = null;
+	var $rank_title = null;
+	var $rank_min = null;
+	var $rank_special = null;
+	var $rank_image = null;
 
 	function __construct( &$database )
 	{
@@ -234,7 +237,7 @@ class CKunenaTableRanks extends CKunenaTable
 	}
 }
 
-class CKunenaTableSessions extends CKunenaTable 
+class CKunenaTableSessions extends CKunenaTable
 {
 	var $userid = null;
 	var $allowed = null;
@@ -248,7 +251,7 @@ class CKunenaTableSessions extends CKunenaTable
 	}
 }
 
-class CKunenaTableSmilies extends CKunenaTable 
+class CKunenaTableSmilies extends CKunenaTable
 {
 	var $id = null;
 	var $code = null;
@@ -262,7 +265,7 @@ class CKunenaTableSmilies extends CKunenaTable
 	}
 }
 
-class CKunenaTableSubscriptions extends CKunenaTable 
+class CKunenaTableSubscriptions extends CKunenaTable
 {
 	var $thread = null;
 	var $userid = null;
@@ -309,14 +312,14 @@ class CKunenaTableUserProfile extends CKunenaTable
 	}
 }
 
-class CKunenaTableVersion extends CKunenaTable 
+class CKunenaTableVersion extends CKunenaTable
 {
-	var $id = null;	
-	var $version = null;	
-	var $versiondate = null;	
-	var $installdate = null;	
-	var $build = null;	
-	var $versionname = null;	
+	var $id = null;
+	var $version = null;
+	var $versiondate = null;
+	var $installdate = null;
+	var $build = null;
+	var $versionname = null;
 
 	function __construct( &$database )
 	{
@@ -324,19 +327,19 @@ class CKunenaTableVersion extends CKunenaTable
 	}
 }
 
-class CKunenaTableWhoIsOnline extends CKunenaTable 
+class CKunenaTableWhoIsOnline extends CKunenaTable
 {
-	var $id = null;	
-	var $userid = null;	
-	var $time = null;	
-	var $item = null;	
-	var $what = null;	
-	var $func = null;	
-	var $do = null;	
-	var $task = null;	
-	var $link = null;	
-	var $userip = null;	
-	var $user = null;	
+	var $id = null;
+	var $userid = null;
+	var $time = null;
+	var $item = null;
+	var $what = null;
+	var $func = null;
+	var $do = null;
+	var $task = null;
+	var $link = null;
+	var $userip = null;
+	var $user = null;
 
 	function __construct( &$database )
 	{

@@ -28,7 +28,7 @@ $kunena_defines = JPATH_ROOT .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS.
 if (file_exists($kunena_defines)) require_once ($kunena_defines);
 
 class KunenaimporterModelExport extends JModel {
-	var $ext_database;
+	var $ext_database = null;
 	var $ext_table_prefix;
 	var $ext_same = false;
 	var $messages = array();
@@ -43,20 +43,21 @@ class KunenaimporterModelExport extends JModel {
 		$component = JComponentHelper::getComponent( 'com_kunenaimporter' );
 		$params = new JParameter( $component->params );
 
-		$db_name = $params->get('db_name');
-		$db_tableprefix = $params->get('db_tableprefix');
-		if (empty($db_name)) {
-			$this->ext_database =& JFactory::getDBO();
-			$this->ext_same = 1;
-		} else {
-			$option['driver']   = $app->getCfg('dbtype');
-			$option['host']     = $params->get('db_host');
-			$option['user']     = $params->get('db_user');
-			$option['password'] = $params->get('db_passwd');
-			$option['database'] = $params->get('db_name');
-			$option['prefix']   = $params->get('db_prefix');
-
-			$this->ext_database =& JDatabase::getInstance( $option );
+		if (!$this->ext_database) {
+			$db_name = $params->get('db_name');
+			$db_tableprefix = $params->get('db_tableprefix');
+			if (empty($db_name)) {
+				$this->ext_database =& JFactory::getDBO();
+				$this->ext_same = 1;
+			} else {
+				$option['driver']   = $app->getCfg('dbtype');
+				$option['host']     = $params->get('db_host');
+				$option['user']     = $params->get('db_user');
+				$option['password'] = $params->get('db_passwd');
+				$option['database'] = $params->get('db_name');
+				$option['prefix']   = $params->get('db_prefix');
+				$this->ext_database =& JDatabase::getInstance( $option );
+			}
 		}
 		// TODO: make this to work
 		//jimport('joomla.error.exception');

@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id:$
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *
@@ -29,6 +29,15 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+21-Apr-2010 Matias
+# [#20178] Add views to aid on users import
+# [#20178] phpBB3: Fix slashes on category names
+# [#20178] phpBB3: Fix never logged in date
+# [#20178] Fix installer: usermap table was not created
+
+19-Apr-2010 Matias
++ [#20178] Detect rokbridge (phpBB3)
 
 17-Apr-2010 Matias
 # [#20178] Make more stable against database errors, including failed detection of external forum

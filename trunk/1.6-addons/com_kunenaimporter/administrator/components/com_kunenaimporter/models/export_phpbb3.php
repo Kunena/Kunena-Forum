@@ -28,11 +28,27 @@ require_once( JPATH_COMPONENT.DS.'models'.DS.'export.php' );
 class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 	var $version;
 	var $auth_method;
+	var $rokbridge = null;
+
+	function __construct() {
+		$component = JComponentHelper::getComponent( 'com_kunenaimporter' );
+		$params = new JParameter( $component->params );
+
+		$rokbridge = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_rokbridge' . DS . 'helper.php';
+		if (is_file($rokbridge)) {
+			require_once ($rokbridge);
+			$this->rokbridge = new RokBridgeHelper();
+			if (isset($this->rokbridge->phpbb_db)) $this->ext_database = $this->rokbridge->phpbb_db;
+		}
+
+		parent::__construct();
+	}
 
 	function checkConfig() {
 		parent::checkConfig();
 		if (JError::isError($this->ext_database)) return;
 
+		if ($this->rokbridge) $this->addMessage('<div>RokBridge: <b style="color:green">detected</b></div>');
 		$query="SELECT config_value FROM #__config WHERE config_name='version'";
 		$this->ext_database->setQuery($query);
 		$this->version = $this->ext_database->loadResult();
@@ -47,7 +63,7 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 
 		if ($this->version[0] == '.') $this->version = '2'.$this->version;
 		$version = explode('.', $this->version, 3);
-		if ($version[0] != 3 || $version[1] != 0) $this->error = "Unsupported forum: phpBB $this->version"; 
+		if ($version[0] != 3 || $version[1] != 0) $this->error = "Unsupported forum: phpBB $this->version";
 		if ($this->error) {
 			$this->addMessage('<div>phpBB version: <b style="color:red">'.$this->version.'</b></div>');
 			$this->addMessage('<div><b>Error:</b> '.$this->error.'</div>');
@@ -57,7 +73,7 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 
 		$query="SELECT config_value FROM #__config WHERE config_name='auth_method'";
 		$this->ext_database->setQuery($query);
-		$this->auth_method = $this->ext_database->loadResult() or die("<br />Invalid query:<br />$query<br />" . $this->ext_database->errorMsg()); 
+		$this->auth_method = $this->ext_database->loadResult() or die("<br />Invalid query:<br />$query<br />" . $this->ext_database->errorMsg());
 		$this->addMessage('<div>phpBB authentication method: <b style="color:green">'.$this->auth_method.'</b></div>');
 	}
 
@@ -112,11 +128,11 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 			"forum_last_post_time AS time_last_msg ".
 			"FROM #__forums ORDER BY id";
 		$result = $this->getExportData($query, $start, $limit, 'id');
-		foreach ($result as $item) { 
+		foreach ($result as $item) {
 			$row =& $result[$item->id];
-			$row->name = prep($row->name);
-			$row->description = prep($row->description);
-		}		
+			$row->name = stripslashes(prep($row->name));
+			$row->description = stripslashes(prep($row->description));
+		}
 		return $result;
 	}
 
@@ -307,7 +323,7 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 			" ORDER BY p.post_id";
 		$result = $this->getExportData($query, $start, $limit, 'id');
 
-		foreach ($result as $item) { 
+		foreach ($result as $item) {
 			$row =& $result[$item->id];
 			$row->name = prep($row->name);
 			$row->email = prep($row->email);
@@ -410,26 +426,21 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 
 	function &exportUsers($start=0, $limit=0)
 	{
-		$query="SELECT u.user_id as extuserid, u.*, b.ban_userid FROM `#__users` AS u LEFT OUTER JOIN `#__banlist` AS b ON u.user_id = b.ban_userid WHERE user_id > 0 AND u.user_type != 2 ORDER BY u.user_id";
-		$result = $this->getExportData($query, $start, $limit, 'extuserid');
-
+		$query="SELECT u.user_id as extid, u.*, IF(b.ban_userid,1,0) AS blocked FROM `#__users` AS u LEFT JOIN `#__banlist` AS b ON u.user_id = b.ban_userid WHERE user_id > 0 AND u.user_type != 2 ORDER BY u.user_id";
+		$result = $this->getExportData($query, $start, $limit, 'extid');
 		foreach ($result as $item) {
-			$row =& $result[$item->user_id];			// Is this user banned?
-			$row->blocked = "0";
-			if ( $row->ban_userid ) {
-				$row->blocked = "1";
-			}
-
+			$row =& $result[$item->user_id];
 			$row->name = $row->username = html_entity_decode($row->username);
 			$row->email = $row->user_email;
 			$row->password = $row->user_password;
 
 			// Convert date for last visit and register date.
 			$row->registerDate  = date( "Y-m-d H:i:s", $row->user_regdate );
-			$row->lastvisitDate = date( "Y-m-d H:i:s", $row->user_lastvisit );
+			if ($row->user_lastvisit==0) $row->lastvisitDate = '0000-00-00 00:00:00';
+			else $row->lastvisitDate = date( "Y-m-d H:i:s", $row->user_lastvisit );
 
 			// Set user type and group id - 0=regular, 2=bots, 3=Admin
-			if ( $row->user_type == "3" ) { 
+			if ( $row->user_type == "3" ) {
 				$row->usertype = "Administrator";
 			} else {
 				$row->usertype = "Registered";
@@ -469,31 +480,31 @@ function prep($s) {
     $s = preg_replace('/\&gt;/', '>', $s);
     $s = preg_replace('/\&quot;/','"',$s);
     $s = preg_replace('/\&amp;/','&',$s);
-    $s = preg_replace('/\&nbsp;/',' ',$s);  
-    
+    $s = preg_replace('/\&nbsp;/',' ',$s);
+
     $s = preg_replace('/\&#39;/',"'",$s);
     $s = preg_replace('/\&#40;/','(',$s);
     $s = preg_replace('/\&#41;/',')',$s);
-    $s = preg_replace('/\&#46;/', '.', $s);    
+    $s = preg_replace('/\&#46;/', '.', $s);
     $s = preg_replace('/\&#58;/', ':', $s);
     $s = preg_replace('/\&#123;/', '{', $s);
     $s = preg_replace('/\&#125;/', '}', $s);
 
-    // <strong> </strong>    
+    // <strong> </strong>
     $s = preg_replace('/\[b:(.*?)\]/', '[b]', $s);
     $s = preg_replace('/\[\/b:(.*?)\]/', '[/b]', $s);
-        
+
     // <em> </em>
     $s = preg_replace('/\[i:(.*?)\]/', '[i]', $s);
     $s = preg_replace('/\[\/i:(.*?)\]/', '[/i]', $s);
-    
-    // <u> </u>    
+
+    // <u> </u>
     $s = preg_replace('/\[u:(.*?)\]/', '[u]', $s);
     $s = preg_replace('/\[\/u:(.*?)\]/', '[/u]', $s);
 
     // quote
     $s = preg_replace('/\[quote:(.*?)\]/', '[quote]', $s);
-    $s = preg_replace('/\[quote(:(.*?))?="(.*?)"\]/', '[b]\\3[/b]\n[quote]', $s);    
+    $s = preg_replace('/\[quote(:(.*?))?="(.*?)"\]/', '[b]\\3[/b]\n[quote]', $s);
     $s = preg_replace('/\[\/quote:(.*?)\]/', '[/quote]', $s);
 
     // image
@@ -517,13 +528,13 @@ function prep($s) {
     // code
     // $s = preg_replace('/\[code:(.*?):(.*?)\]/',    '[code:\\1]', $s);
     // $s = preg_replace('/\[\/code:(.*?):(.*?)\]/', '[/code:\\1]', $s);
-    
+
     // $s = preg_replace('/\[code:(.*?):(.*?)\]/',    '[code]', $s);
     // #$s = preg_replace('/\[\/code:(.*?):(.*?)\]/', '[/code]', $s);
 
     $s = preg_replace('/\[code:(.*?)]/',    '[code]', $s);
     $s = preg_replace('/\[\/code:(.*?)]/', '[/code]', $s);
-    
+
     // lists
     $s = preg_replace('/\[list(:(.*?))?\]/', '[ul]', $s);
     $s = preg_replace('/\[list=([a1]):(.*?)\]/', '[ol]', $s);
@@ -532,7 +543,7 @@ function prep($s) {
 
     $s = preg_replace('/\[\*:(.*?)\]/', '[li]', $s);
     $s = preg_replace('/\[\/\*:(.*?)\]/', '[/li]', $s);
-    
+
     $s = preg_replace('/<!-- s(.*?) --><img src=\"{SMILIES_PATH}.*?\/><!-- s.*? -->/', ' \\1 ', $s);
 
     $s = preg_replace('/\<!-- e(.*?) -->/', '', $s);
@@ -547,12 +558,12 @@ function prep($s) {
     $s = preg_replace('/\[\/url:(.*?)]/', '[/url]', $s);
 
     $s = preg_replace('/\<\/a>/' ,'' , $s);
-    
+
     # $s = preg_replace('/\\\\/', '', $s);
 
 
     $s = addslashes($s);
-    
+
     return $s;
 }
 ?>

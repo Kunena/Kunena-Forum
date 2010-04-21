@@ -22,7 +22,7 @@ defined('_JEXEC') or die('Restricted access');
 // Initialize the database
 $db =& JFactory::getDBO();
 $update_queries = array (
-"CREATE TABLE IF NOT EXISTS `#__knimporter_user` (
+"CREATE TABLE IF NOT EXISTS `#__kunenaimporter_users` (
   `extid` int(11) NOT NULL auto_increment,
   `extusername` varchar(150) NOT NULL default '',
   `id` int(11),
@@ -44,6 +44,7 @@ $update_queries = array (
   KEY `username` (`username`),
   KEY `email` (`email`)
 ) DEFAULT CHARSET=utf8;",
+"DROP TABLE IF EXISTS `#__knimporter_user`",
 "DROP TABLE IF EXISTS `#__knimport_extuser`",
 "DROP TABLE IF EXISTS `#__knimporter_extuser`"
 );
@@ -52,6 +53,6 @@ $update_queries = array (
 foreach( $update_queries as $query ) {
     $db->setQuery( $query );
     $db->query();
-	if ($db->getErrorNum()) die("<br />Invalid query:<br />$query<br />" . $db->getErrorMsg()); 
+	if ($db->getErrorNum()) die("<br />Invalid query:<br />$query<br />" . $db->getErrorMsg());
 }
 ?>

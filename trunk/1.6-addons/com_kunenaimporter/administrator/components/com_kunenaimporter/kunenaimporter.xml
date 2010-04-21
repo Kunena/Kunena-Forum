@@ -17,8 +17,8 @@
 	</description>
 
 	<!-- installation part -->
-	<installfile>install.kunenaimporter.php</installfile>
-	<uninstallfile>uninstall.kunenaimporter.php</uninstallfile>
+	<installfile>install/install.kunenaimporter.php</installfile>
+	<uninstallfile>install/uninstall.kunenaimporter.php</uninstallfile>
 
 	<!-- administration part -->
 	<administration>

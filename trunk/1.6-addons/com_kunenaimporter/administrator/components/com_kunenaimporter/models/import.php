@@ -77,18 +77,9 @@ class KunenaimporterModelImport extends JModel {
 		return strtr($name, "<>\"'%;()&", '_________');
 	}
 
-	function mapUser($extuserid, $username=null, $email=null, $registerDate=null) {
-		//if ($this->auth_method == 'joomla') return $extuserid;
-
-		// Check if we have already mapped our user
-		$query = "SELECT * FROM `#__knimport_extuser` WHERE extuserid=".$this->db->quote($extuserid);
-		$this->db->setQuery($query, 0, 1);
-		$user = $this->db->loadObject();
-		if (is_object($user) && $user->userid > 0) return $user->userid;
-		if (empty($username)) return 0;
-
-		// Check if user exists in Joomla
-		$query = "SELECT id, username, email, registerDate FROM `#__users` WHERE username=".$this->db->quote($this->getUsername($username))." OR email=".$this->db->quote($email)." OR registerDate=".$this->db->quote($registerDate);
+	function findPotentialUsers($extuserid, $username=null, $email=null, $registerDate=null) {
+				// Check if user exists in Joomla
+		$query = "SELECT u.*, g.name AS groupname FROM `#__users` AS u INNER JOIN #__core_acl_aro_groups AS g ON g.id = u.gid WHERE u.username=".$this->db->quote($this->getUsername($username))." OR u.email=".$this->db->quote($email)." OR u.registerDate=".$this->db->quote($registerDate);
 		$this->db->setQuery($query);
 		$userlist = $this->db->loadObjectList('id');
 
@@ -99,28 +90,34 @@ class KunenaimporterModelImport extends JModel {
 			if ($username == $user->username) $points++;
 			if ($this->getUsername($username) == $user->username) $points++;
 			if ($registerDate == $user->registerDate) $points+=2;
-			if ("1970-01-01 02:00:00" == $user->registerDate) $points+=1;
+			if ("0000-00-00 00:00:00" == $user->registerDate) $points+=1;
 			if ($email == $user->email) $points+=2;
-			if ($points == 6) return $user->id;
-			echo "User: $username ($registerDate) vs $user->username ($user->registerDate): ";
-			if ($username == $user->username) { echo "u"; }
-			if ($this->getUsername($username) == $user->username) { echo "u"; }
-			if ($registerDate == $user->registerDate) { echo "rr"; }
-			if ("1970-01-01 02:00:00" == $user->registerDate) { echo "r"; }
-			if ($email == $user->email) { echo "ee"; }
-			echo "<br />";
-			if ($points > $bestpoints) {
-				$bestpoints = $points;
-				$bestid = $user->id;
-			}
+
+			$user->points = $points;
+			$newlist[$points] = $user;
 		}
-		unset ($userlist);
-		if ($bestpoints >= 3) return -$bestid;
+		krsort($newlist);
+		return $newlist;
+	}
+
+	function mapUser($extuserid, $username=null, $email=null, $registerDate=null) {
+		//if ($this->auth_method == 'joomla') return $extuserid;
+
+		// Check if we have already mapped our user
+		$extuser = JTable::getInstance('ExtUser', 'CKunenaTable');
+		$extuser->load($extuserid);
+		if ($extuser->id > 0) return $extuser->id;
+		if (empty($username)) return 0;
+
+		$userlist = $this->findPotentialUsers($extuserid, $username, $email, $registerDate);
+		$best = array_shift($userlist);
+		if ($best->points >= 4) return $best->id;
+		if ($best->points >= 3) return -$best->id;
 		return 0;
 	}
 
 	function truncateUsersMap() {
-		$query="TRUNCATE TABLE `#__knimport_extuser`";
+		$query="TRUNCATE TABLE `#__kunenaimporter_users`";
 		$this->db->setQuery($query);
 		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 	}
@@ -132,19 +129,18 @@ class KunenaimporterModelImport extends JModel {
 
 		foreach ($users as $userdata)
 		{
-			$conflict = 0;
-			$error = '';
-			$userdata->extname = $userdata->username;
+			$userdata->error = '';
+			$userdata->extusername = $userdata->username;
 			$userdata->username = $this->getUsername($userdata->username);
-			$uid = $this->mapUser($userdata->extuserid, $userdata->extname, $userdata->email, $userdata->registerDate);
-
+			$uid = $this->mapUser($userdata->extid, $userdata->extusername, $userdata->email, $userdata->registerDate);
+			if ($uid > 0) $userdata->id = abs($uid);
+			if ($uid < 0) $userdata->conflict = abs($uid);
 			$userdata->gid = $groups[$userdata->usertype]->id;
 
 			$extuser = JTable::getInstance('ExtUser', 'CKunenaTable');
-			$extuser->load($userdata->extuserid);
-			if ($extuser->userid === NULL) {
-				$extuserdata = array ('userid'=>abs($uid), 'extuserid'=>$userdata->extuserid, 'extname'=>$userdata->extname, 'conflict'=>$conflict, 'error'=>$error);
-				if ($extuser->save($extuserdata) === false) {
+			$extuser->load($userdata->extid);
+			if ($extuser->username === NULL) {
+				if ($extuser->save($userdata) === false) {
 					echo "ERROR: Saving external data for $userdata->username failed: ". $extuser->getError() ."<br />";
 				}
 			}
@@ -169,6 +165,7 @@ class KunenaimporterModelImport extends JModel {
 		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 	}
 
+	/*
 	function truncateJoomlaUsers() {
 		// Leave only Super Administrators
 		$this->db =& JFactory::getDBO();
@@ -188,6 +185,7 @@ class KunenaimporterModelImport extends JModel {
 		$this->db->setQuery($query);
 		$result = $this->db->query() or die("<br />Invalid query:<br />$query<br />" . $this->db->errorMsg());
 	}
+	*/
 
 	function importData($option, &$data) {
 		switch ($option) {

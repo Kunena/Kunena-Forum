@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+22-Apr-2010 Xillibit
+# [#19288] Sow attachments in post history
+# [#19288] Fix issue which prevents to display images from not default gallery (Part 2)
+
 21-Apr-2010 Xillibit
 # [#19288] Fix issue which prevents to display images in browse images in backend (Part 2)
 ^ [#19764] Add new javascript part for common moderation page (not working yet)

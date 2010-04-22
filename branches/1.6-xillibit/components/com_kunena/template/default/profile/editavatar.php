@@ -77,7 +77,7 @@ if (!file_exists(KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery')) $live_path =
 foreach ($this->galleryimg as $avatarimg)
 {
 	echo '<span>';
-	echo '<label for="kavatar'.$kid.'"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery/' . $this->gallery . $avatarimg . '" alt="" /></label>';
+	echo '<label for="kavatar'.$kid.'"><img src="' . $live_path . 'avatars/gallery/' . $this->gallery . $avatarimg . '" alt="" /></label>';
 	echo '<input id="kavatar'.$kid.'" type="radio" name="avatar" value="gallery/' . $this->gallery . $avatarimg . '"/>';
 	echo "</span>";
 	$kid++;

@@ -741,12 +741,34 @@ protected function moderate($modchoices='',$modthread = false) {
 			return;
 
 		//get all the messages for this thread
-		$query = "SELECT * FROM #__fb_messages AS m
+		$query = "SELECT t.*,m.*, a.mesid, a.id AS attach FROM #__fb_messages AS m
+				LEFT JOIN #__kunena_attachments AS a ON a.mesid=m.id
 				LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
-			WHERE thread='{$this->msg_cat->thread}' AND hold='0' ORDER BY time DESC";
+			WHERE thread='{$this->msg_cat->thread}' AND hold='0' GROUP BY a.mesid ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();
 		check_dberror ( "Unable to load messages." );
+
+		//get attachments
+		$query = "SELECT id FROM #__fb_messages WHERE thread='{$this->msg_cat->thread}' AND hold='0' ORDER BY time DESC";
+		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
+		$mesids = $this->_db->loadObjectlist ();
+		check_dberror ( "Unable to attachments id." );
+
+		if ( $mesids ) {
+			$mes_ids = array();
+
+			foreach ($mesids as $mesid) {
+				$mes_ids[]=$mesid->id;
+			}
+
+			$mes_ids = implode(',',$mes_ids);
+
+			$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN($mes_ids)";
+			$this->_db->setQuery ( $query, 0, $this->config->historylimit );
+			$this->attachments = $this->_db->loadObjectlist ();
+			check_dberror ( "Unable to attachments." );
+		}
 
 		$this->subject = stripslashes ( $this->msg_cat->subject );
 

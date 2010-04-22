@@ -112,7 +112,7 @@ class CKunenaProfile {
 			$folders[$key] = $folder;
 		}
 
-		$selected = $this->gallery;
+		$selected = preg_replace('`/`',' ',$this->gallery);
 		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
 		$str .=  "<option value=\"default\"";
 

@@ -30,6 +30,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+22-Apr-2010 Matias
+# [#20178] Fix [url] tag (contained extra information and were not parsed)
+# [#20178] Some posts were modified 0 minutes ago
+# [#20178] Importer status was broken (showing 0% all the time)
+# [#20178] Modified by (userid) was not mapped to Joomla
+
 21-Apr-2010 Matias
 # [#20178] Add views to aid on users import
 # [#20178] phpBB3: Fix slashes on category names

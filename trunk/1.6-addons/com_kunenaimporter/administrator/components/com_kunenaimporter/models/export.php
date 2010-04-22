@@ -72,7 +72,7 @@ class KunenaimporterModelExport extends JModel {
 		$exportOpt = array();
 		foreach ($options as $option) {
 			$count = $this->countData($option);
-			if ($count !== false) $exportOpt[] = array('name'=>$option, 'task'=>'KnImporter_Task_'.$option, 'desc'=>'KnImporter_Description_'.$option, 'status'=>(int)$app->getUserState('com_knimporter.'.$option), 'total'=>$count);
+			if ($count !== false) $exportOpt[] = array('name'=>$option, 'task'=>'KnImporter_Task_'.$option, 'desc'=>'KnImporter_Description_'.$option, 'status'=>(int)$app->getUserState('com_kunenaimporter.'.$option), 'total'=>$count);
 		}
 		return $exportOpt;
 	}

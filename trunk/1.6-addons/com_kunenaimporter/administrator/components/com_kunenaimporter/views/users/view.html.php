@@ -94,7 +94,6 @@ class KunenaImporterViewUsers extends JView
 			. ' INNER JOIN #__core_acl_aro_groups AS g ON g.id = a.gid'
 			. $filter
 			. $where
-			. ' GROUP BY a.id'
 			. $orderby
 		;
 		$db->setQuery( $query, $pagination->limitstart, $pagination->limit );

@@ -79,15 +79,16 @@ class KunenaimporterModelImport extends JModel {
 
 	function findPotentialUsers($extuserid, $username=null, $email=null, $registerDate=null) {
 				// Check if user exists in Joomla
-		$query = "SELECT u.*, g.name AS groupname FROM `#__users` AS u INNER JOIN #__core_acl_aro_groups AS g ON g.id = u.gid WHERE u.username=".$this->db->quote($this->getUsername($username))." OR u.email=".$this->db->quote($email)." OR u.registerDate=".$this->db->quote($registerDate);
+		$query = "SELECT u.*, g.name AS groupname FROM `#__users` AS u INNER JOIN #__core_acl_aro_groups AS g ON g.id = u.gid WHERE u.username LIKE ".$this->db->quote($this->getUsername($username))." OR u.email LIKE ".$this->db->quote($email)." OR u.registerDate=".$this->db->quote($registerDate);
 		$this->db->setQuery($query);
 		$userlist = $this->db->loadObjectList('id');
 
 		$bestpoints = 0;
 		$bestid = 0;
+		$newlist = array();
 		foreach ($userlist as $user) {
 			$points = 0;
-			if ($username == $user->username) $points++;
+			if ($username == $user->username) $points+=2;
 			if ($this->getUsername($username) == $user->username) $points++;
 			if ($registerDate == $user->registerDate) $points+=2;
 			if ("0000-00-00 00:00:00" == $user->registerDate) $points+=1;
@@ -112,7 +113,7 @@ class KunenaimporterModelImport extends JModel {
 		$userlist = $this->findPotentialUsers($extuserid, $username, $email, $registerDate);
 		$best = array_shift($userlist);
 		if ($best->points >= 4) return $best->id;
-		if ($best->points >= 3) return -$best->id;
+		if ($best->points >= 3) return $best->id;
 		return 0;
 	}
 
@@ -241,6 +242,7 @@ class KunenaimporterModelImport extends JModel {
 			$message->mesid = $message->id;
 			if (!isset($message->extuserid)) $message->extuserid = $message->userid;
 			$message->userid = $this->mapUser($message->extuserid);
+			if ($message->modified_by) $message->modified_by = $this->mapUser($message->modified_by);
 			$user = JUser::getInstance($message->userid);
 			if (empty($message->email)) $message->email = $user->email;
 			if (empty($message->name)) $message->name = $user->username;

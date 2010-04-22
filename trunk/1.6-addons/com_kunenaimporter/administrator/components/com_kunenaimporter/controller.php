@@ -132,7 +132,7 @@ class KunenaimporterController extends JController {
 
 	function mapusers()
 	{
-		$limit = 1000;
+		$limit = 100;
 		$timeout = false;
 
 		$db =& JFactory::getDBO();

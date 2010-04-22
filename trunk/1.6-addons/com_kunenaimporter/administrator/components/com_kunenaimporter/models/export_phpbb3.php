@@ -328,6 +328,7 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 			$row->name = prep($row->name);
 			$row->email = prep($row->email);
 			$row->subject = prep($row->subject);
+			if (!$row->modified_time) $row->modified_by = 0;
 			$row->modified_reason = prep($row->modified_reason);
 			$row->message =prep($row->message);
 		}
@@ -555,6 +556,7 @@ function prep($s) {
 
     $s = preg_replace('/\<a href=.*?mailto:.*?>/','' , $s);
 
+    $s = preg_replace('/\[url:(.*?)]/', '[url]', $s);
     $s = preg_replace('/\[\/url:(.*?)]/', '[/url]', $s);
 
     $s = preg_replace('/\<\/a>/' ,'' , $s);

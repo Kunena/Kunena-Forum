@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+22-Apr-2010 Matias
+# [#20203] Administrator has full moderator permissions, but that does not mean that he has to be one
+# [#20204] Every moderator gets email when only global moderators and assigned moderators should get it
+
 13-Apr-2010 Matias
 # [#20107] Regression: Trunk is missing fix for #20008: Subject splits into two
 # [#20150] Administration: Show Category configuration option has no effect

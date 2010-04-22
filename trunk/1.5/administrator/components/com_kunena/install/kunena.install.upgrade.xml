@@ -343,6 +343,7 @@
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `review` ,
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
+			<query>UPDATE `#__fb_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.gid IN (24, 25)</query>
 		</version>
 	</upgrade>
 </comupgrade>

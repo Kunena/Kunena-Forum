@@ -3079,23 +3079,10 @@ else
 
                         <tr>
 
-
-    <td width = "150" class = "contentpane">
-    <?php echo _KUNENA_ISMOD; ?>
-
-                    <?php
-                    //admins are always moderators
-                    if (CKunenaTools::isModOrAdmin($uid))
-                    {
-                    echo _KUNENA_ISADM; ?> <input type = "hidden" name = "moderator" value = "1">
-                    <?php
-                    }
-                    else
-                    {
-                            echo $selectMod;
-                    }
-                    ?>
-                        </td>
+	<td width = "150" class = "contentpane">
+	<?php echo _KUNENA_ISMOD; ?>
+	<?php echo $selectMod; ?>
+	</td>
                         <td>
 <?php echo $modCats;?>
                         </td>

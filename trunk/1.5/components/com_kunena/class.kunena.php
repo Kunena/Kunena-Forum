@@ -774,7 +774,7 @@ class CKunenaTools {
 					FROM #__users AS u
 					LEFT JOIN #__fb_users AS p ON u.id=p.userid
 					LEFT JOIN #__fb_categories AS c ON c.id={$catid}
-					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid AND m.catid=c.id
+					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid
 					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}";
 
 		$where = array ();

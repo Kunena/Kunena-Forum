@@ -459,6 +459,7 @@
 			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
 			<query mode="silenterror">ALTER TABLE `jos_fb_sessions` ADD INDEX ( `currvisit` )</query>
 			<query>UPDATE `#__fb_messages` SET thread=id WHERE parent=0</query>
+			<query>UPDATE `#__fb_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.gid IN (24, 25)</query>
 		</version>
 	</upgrade>
 </comupgrade>

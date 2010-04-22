@@ -42,6 +42,7 @@ div.icon-48-kunena {
 #kadmin {
 	text-align: left;
 	width: 100%;
+	min-height: 500px;
 }
 
 #kadmin-header {
@@ -58,6 +59,7 @@ div.icon-48-kunena {
 	float:left;
 	border-right: 1px solid #ccc;
 	margin-right: 20px;
+	position: absolute;
 }
 
 #kadmin table {
@@ -105,9 +107,13 @@ div.kadmin-functitle.icon-support { background: url('components/com_kunena/image
 
 div.kadmin-functitle.no-icon { text-indent: 5px !important; }
 
+table.adminform,
+form.adminform{
+	margin-top: 10px !important;
+}
+
 #kadmin-menu {
 	border-top: 1px solid #ccc;
-	text-indent: 30px;
 }
 
 #kadmin-menu a {
@@ -117,6 +123,7 @@ div.kadmin-functitle.no-icon { text-indent: 5px !important; }
 	border-bottom: 1px solid #ccc;
 	height: 25px;
 	line-height: 25px;
+	text-indent: 30px;
 }
 
 .kadmin-mainmenu {
@@ -137,8 +144,7 @@ div.kadmin-functitle.no-icon { text-indent: 5px !important; }
 
 .kadmin-right {
 	background: #fff;
-	padding: 5px 5px 5px 0;
-	display: table;
+	padding: 5px 5px 5px 220px;
 }
 
 .kadmin-footer {
@@ -147,21 +153,16 @@ div.kadmin-functitle.no-icon { text-indent: 5px !important; }
 	text-align: right;
 	padding: 5px;
 	background: #FBFBFB;
-	border-bottom: 1px solid #CCC;
-	border-left: 1px solid #CCC;
-	border-right: 1px solid #CCC;
 }
 
 .kadmin-functitle {
 	font-size: 16px;
 	text-align: left;
 	padding: 5px;
-	/* background: #FBFBFB; */
 	border: 1px solid #CCC;
 	font-weight: bold;
-	margin-bottom: 10px;
 	clear: both;
-	display:block;
+	display: block;
 	height: 48px;
 	line-height: 44px;
 	text-indent: 60px;
@@ -203,7 +204,29 @@ td.kadmin-tdtitle {
 	color: #666;
 }
 
+table.kadmin-sort td {
+	height: 35px;
+}
+
+td.kadmin-paging {
+	margin: 0 auto;
+	background: #F3F3F3 !important;
+}
 </style>
+
+<!--[if IE]>
+<style type="text/css">
+
+table.kadmin-stat caption {
+	display:block;
+	font-size:12px !important;
+	padding-top: 10px !important;
+}
+
+</style>
+<![endif]-->
+
+
 
 <div id="kadmin">
 	<div class="kadmin-left">
@@ -234,12 +257,11 @@ td.kadmin-tdtitle {
 			function showFbFooter() {
 				$kunena_config = & CKunenaConfig::getInstance ();
 				require_once (KUNENA_PATH_LIB . DS . 'kunena.version.php'); ?>
-		</div>
-		<div class="kadmin-footer"><?php
-			echo CKunenaVersion::versionHTML ();
-			?>
-		</div>
 	</div>
+	<div class="kadmin-footer">
+		<?php echo CKunenaVersion::versionHTML (); ?>
+	</div>
+</div>
 
 	<?php
 	} // Finish: FOOTER FUNC
@@ -262,7 +284,7 @@ td.kadmin-tdtitle {
 		?>
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
-		<table>
+		<table class="kadmin-sort">
 			<tr>
 				<td align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></td>
 			</tr>
@@ -426,7 +448,7 @@ td.kadmin-tdtitle {
 			echo $row->editor;
 			?>&nbsp;
 		</td>
-		<td class="order" nowrap="nowrap"><span><?php
+		<td class="order" ><span><?php
 			echo $pageNav->orderUpIcon ( $i, isset ( $children [$row->parent] [$row->location - 1] ), 'orderup', 'Move Up', 1 );
 			?></span> <span><?php
 			echo $pageNav->orderDownIcon ( $i, $n, isset ( $children [$row->parent] [$row->location + 1] ), 'orderdown', 'Move Down', 1 );
@@ -437,12 +459,14 @@ td.kadmin-tdtitle {
 		}
 		?>
 	</tr>
-
 	<tr>
-		<th align="center" colspan="14"><?php
-		echo $pageNav->getLimitBox () . $pageNav->getResultsCounter () . $pageNav->getPagesLinks ();
-		?>
-		</th>
+		<td class="kadmin-paging" colspan="14">
+			<div class="pagination">
+				<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+					<?php echo $pageNav->getPagesLinks (); ?>
+				<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
+			</div>
+		</td>
 	</tr>
 </table>
 
@@ -528,12 +552,12 @@ td.kadmin-tdtitle {
 					</tr>
 					<?php endif; ?>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
+						<td  valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
 						<td valign="top"><?php echo $accessLists ['pub_access']; ?></td>
 						<td><?php echo JText::_('COM_KUNENA_PUBACCDESC'); ?></td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS'); ?></td>
+						<td  valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS'); ?></td>
 						<td valign="top"><?php echo $lists ['pub_recurse']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPSDESC'); ?></td>
 					</tr>
@@ -543,28 +567,28 @@ td.kadmin-tdtitle {
 						<td valign="top"><?php echo JText::_('COM_KUNENA_ADMINLEVELDESC'); ?></td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1'); ?></td>
+						<td  valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1'); ?></td>
 						<td valign="top"><?php echo $lists ['admin_recurse']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1DESC'); ?></td>
 					</tr>
 					<?php if (!$row->id || $row->parent): ?>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
+						<td  valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
 						<td valign="top"><?php echo $lists ['forumReview']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_REVDESC'); ?></td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:</td>
+						<td  valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:</td>
 						<td valign="top"><?php echo $lists ['allow_anonymous']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:</td>
+						<td  valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:</td>
 						<td valign="top"><?php echo $lists ['post_anonymous']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:</td>
+						<td  valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:</td>
 						<td valign="top"><?php echo $lists ['allow_polls']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 					</tr>
@@ -587,7 +611,7 @@ td.kadmin-tdtitle {
 				<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
 				<table>
 					<tr>
-						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_MOD'); ?></td>
+						<td  valign="top"><?php echo JText::_('COM_KUNENA_MOD'); ?></td>
 						<td valign="top"><?php echo $lists ['forumModerated']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_MODDESC'); ?></td>
 					</tr>
@@ -2112,11 +2136,11 @@ td.kadmin-tdtitle {
 		?>
 		<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_FUM'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
-		<table>
+		<table class="kadmin-sort">
 			<tr>
-				<td nowrap align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNavSP->getLimitBox (); ?></td>
-				<td nowrap align="right"><?php echo JText::_('COM_KUNENA_USRL_SEARCH_BUTTON'); ?>:
+				<td align="left"><?php echo JText::_('COM_KUNENA_USRL_SEARCH_BUTTON'); ?>:
 				<input type="text" name="search" value="<?php echo $search; ?>" class="inputbox" onChange="document.adminForm.submit();" /></td>
+				<td align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNavSP->getLimitBox (); ?></td>
 			</tr>
 			<tr>
 				<td colspan="4" nowrap>
@@ -2220,7 +2244,7 @@ td.kadmin-tdtitle {
 			<tr>
 				<th width="100%" class="user"><?php echo JText::_('COM_KUNENA_ADDMOD'); ?> <?php echo $forumName; ?>
 				</th>
-				<td nowrap><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?></td>
+				<td><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?></td>
 				<td><?php echo $pageNav->getLimitBox (); ?></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
@@ -2281,13 +2305,15 @@ td.kadmin-tdtitle {
 				}
 				?>
 
-
 			<tr>
-				<th align="center" colspan="7"><?php echo $pageNav->getLimitBox () . $pageNav->getResultsCounter () . $pageNav->getPagesLinks (); ?>
-				</th>
+				<td class="kadmin-paging" colspan="6">
+					<div class="pagination">
+						<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<?php echo $pageNav->getPagesLinks (); ?>
+						<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
+					</div>
+				</td>
 			</tr>
-
-
 
 			<tr>
 				<td colspan="7"><?php echo JText::_('COM_KUNENA_NOTEUS'); ?></td>
@@ -2410,6 +2436,7 @@ function textCounter(field, target) {
 					echo '<input type="hidden" value="" name="avatar">';
 				}
 				?>
+
 				<td><?php if ($editavatar) {
 					?>
 				<?php } else {
@@ -2418,6 +2445,7 @@ function textCounter(field, target) {
 				?></td>
 			</tr>
 		</table>
+
          </fieldset>
 </dd>
 
@@ -2548,12 +2576,12 @@ function textCounter(field, target) {
 				<td colspan="2"><?php echo JText::_('COM_KUNENA_A_PRUNE_DESC') ?></td>
 			</tr>
 			<tr>
-				<td nowrap width="10%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NAME') ?></td>
-				<td nowrap><?php echo $forumList ['forum']?></td>
+				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NAME') ?></td>
+				<td><?php echo $forumList ['forum']?></td>
 			</tr>
 			<tr>
-				<td nowrap width="10%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
-				<td nowrap><input type="text" name="prune_days" value="30"><?php echo JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
+				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
+				<td><input type="text" name="prune_days" value="30"><?php echo JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
 			</tr>
 		</table>
 		<input type="hidden" name="task" value="" />
@@ -2568,7 +2596,7 @@ function textCounter(field, target) {
 		?>
 		<div id="kadmin-congifcover">
 			<div class="kadmin-functitle icon-syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></div>
-			<form action="index.php" method="post" name="adminForm">
+			<form action="index.php" method="post" name="adminForm" class="adminform">
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_SYNC_USERS_OPTIONS'); ?></legend>
 					<table cellpadding="4" class="kadmin-adminform" cellspacing="0" border="0" width="100%">
@@ -2604,7 +2632,7 @@ function textCounter(field, target) {
 			//***************************************
 			// Uploaded Image Browser
 			//***************************************
-function browseUploaded($option, $uploaded, $attachlivepath, $type) {
+			function browseUploaded($option, $uploaded, $uploaded_path, $type) {
 				$kunena_db = &JFactory::getDBO ();
 				$map = JPATH_ROOT;
 				?>
@@ -2683,13 +2711,13 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 			//***************************************
 			// Show Smilies
 			//***************************************
-		function showsmilies($option, &$smileytmp, $pageNavSP, $smileypath) {
+			function showsmilies($option, &$smileytmp, $pageNavSP, $smileypath) {
 		?>
 		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
-			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
+			<table class="kadmin-sort" cellpadding="4" cellspacing="0" border="0" width="100%">
 				<tr>
-					<td nowrap align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?><?php echo $pageNavSP->getLimitBox (); ?></td>
+					<td align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?><?php echo $pageNavSP->getLimitBox (); ?></td>
 				</tr>
 			</table>
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
@@ -2741,7 +2769,13 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 					}
 					?>
 				<tr>
-					<th align="center" colspan="6"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?></th>
+					<td class="kadmin-paging" colspan="6">
+						<div class="pagination">
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNavSP->getLimitBox (); ?></div>
+							<?php echo $pageNavSP->getPagesLinks (); ?>
+							<div class="limit"><?php echo $pageNavSP->getResultsCounter (); ?></div>
+						</div>
+					</td>
 				</tr>
 			</table>
 			<input type="hidden" name="option" value="<?php echo $option; ?>">
@@ -2876,9 +2910,9 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 		?>
 		<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
-			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%">
+			<table class="kadmin-sort" cellpadding="4" cellspacing="0" border="0" width="100%">
 				<tr>
-					<td nowrap="nowrap" align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?><?php echo $pageNavSP->getLimitBox (); ?></td>
+					<td  align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?><?php echo $pageNavSP->getLimitBox (); ?></td>
 				</tr>
 			</table>
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
@@ -2891,13 +2925,13 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 					<th align="left"><?php
 					echo JText::_('COM_KUNENA_RANKSIMAGE');
 					?></th>
-					<th align="left" nowrap="nowrap"><?php
+					<th align="left" ><?php
 					echo JText::_('COM_KUNENA_RANKS');
 					?></th>
-					<th align="left" nowrap="nowrap"><?php
+					<th align="left" ><?php
 					echo JText::_('COM_KUNENA_RANKS_SPECIAL');
 					?></th>
-					<th align="center" nowrap="nowrap"><?php
+					<th align="center" ><?php
 					echo JText::_('COM_KUNENA_RANKSMIN');
 					?></th>
 					<th width="100%">&nbsp;</th>
@@ -2932,7 +2966,7 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 						alt="<?php
 						echo $row->rank_image;
 						?>" border="0" /></a></td>
-					<td nowrap="nowrap"><a href="#edit"
+					<td ><a href="#edit"
 						onclick="return listItemTask('cb<?php
 						echo $id;
 						?>','editRank')"><?php
@@ -2953,11 +2987,16 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 				<?php
 					}
 					?>
-				<tr>
-					<th align="center" colspan="7"><?php
-					echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks ();
-					?></th>
-				</tr>
+			<tr>
+				<td class="kadmin-paging" colspan="7">
+					<div class="pagination">
+						<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNavSP->getLimitBox (); ?></div>
+							<?php echo $pageNavSP->getPagesLinks (); ?>
+						<div class="limit"><?php echo $pageNavSP->getResultsCounter (); ?></div>
+					</div>
+				</td>
+			</tr>
+
 			</table>
 			<input type="hidden" name="option" value="<?php echo $option; ?>">
 			<input type="hidden" name="boxchecked" value="0">
@@ -3099,7 +3138,7 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 			function showtrashview($option, $trashitems, $pageNavSP, $lists) {
 			?>
 		<div class="kadmin-functitle icon-trash"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></div>
-		<form action="index.php" method="POST" name="adminForm">
+		<form action="index.php" method="POST" name="adminForm" class="adminform">
 			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%"></table>
 			<table>
 				<tr>
@@ -3109,7 +3148,7 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 						<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
 						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
 					</td>
-					<td nowrap="nowrap">
+					<td >
 					</td>
 				</tr>
 			</table>
@@ -3123,22 +3162,19 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 					<th align="left"><?php
 					echo  JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_ID'), 'id', $lists['order_Dir'], $lists['order']);
 					?></th>
-					<th align="left" nowrap="nowrap"><?php
+					<th align="left" ><?php
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_TITLE'), 'subject', $lists['order_Dir'], $lists['order']);
 					?></th>
-					<th align="left" nowrap="nowrap"><?php
+					<th align="left" ><?php
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_CATEGORY'), 'cats_name', $lists['order_Dir'], $lists['order']);
 					?></th>
-					<th align="left" nowrap="nowrap"><?php
+					<th align="left" ><?php
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_IP'), 'ip', $lists['order_Dir'], $lists['order']);
 					?></th>
-					<th align="left" nowrap="nowrap"><?php
-					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_USERID'), 'userid', $lists['order_Dir'], $lists['order']);
-					?></th>
-					<th align="left" nowrap="nowrap"><?php
+					<th align="left" ><?php
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR'), 'username', $lists['order_Dir'], $lists['order']);
 					?></th>
-					<th align="left" nowrap="nowrap"><?php
+					<th align="left" ><?php
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_DATE'), 'time', $lists['order_Dir'], $lists['order']);
 					?></th>
 				</tr>
@@ -3162,42 +3198,43 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 						echo $row->id;
 						?>"
 						onClick="isChecked(this.checked);"></td>
-					<td nowrap="nowrap">
+					<td >
 						<?php
 						echo $row->id;
 						?>
 						</td>
-					<td nowrap="nowrap"><?php
+					<td ><?php
 						echo $row->subject;
 						?></td>
-					<td nowrap="nowrap"><?php
+					<td ><?php
 						echo $row->cats_name;
 						?></td>
-					<td nowrap="nowrap"><?php
+					<td ><?php
 						echo $row->ip;
 						?></td>
-					<td nowrap="nowrap"><?php
-						echo $row->userid;
-						?></td>
-					<td nowrap="nowrap"><?php
+					<td ><?php
 						if(empty($row->username)){
 							echo JText::_('COM_KUNENA_VIEW_VISITOR');
 						} else {
 							echo $row->username;
 						}
 						?></td>
-					<td nowrap="nowrap"><?php
+					<td ><?php
 						echo strftime('%Y-%m-%d %H:%M:%S',$row->time);
 						?></td>
 				</tr>
 				<?php
 					}
 					?>
-				<tr>
-					<th align="center" colspan="9"><?php
-					echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks ();
-					?></th>
-				</tr>
+			<tr>
+				<td class="kadmin-paging" colspan="9">
+					<div class="pagination">
+						<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNavSP->getLimitBox (); ?></div>
+							<?php echo $pageNavSP->getPagesLinks (); ?>
+						<div class="limit"><?php echo $pageNavSP->getResultsCounter (); ?></div>
+					</div>
+				</td>
+			</tr>
 			</table>
 			<input type="hidden" name="option" value="<?php echo $option; ?>">
 			<input type="hidden" name="boxchecked" value="0">
@@ -3214,7 +3251,7 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_TRASH_PURGE'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table class="adminheading" cellpadding="4" cellspacing="0" border="0" width="100%"></table>
-			<table class="adminlist" border=0 cellspacing=0 cellpadding=3 width="100%">
+			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
 				<tr>
 					<td><strong><?php echo JText::_('COM_KUNENA_NUMBER_ITEMS'); ?>:</strong>
 						<br />
@@ -3259,7 +3296,7 @@ function browseUploaded($option, $uploaded, $attachlivepath, $type) {
 				});
 			});
 		</script>
-		<form action="index.php" method="POST" name="adminForm">
+		<form action="index.php" method="POST" name="adminForm" class="adminform">
 		<fieldset><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM_DESC'); ?><br /></fieldset>
 		<fieldset>
 			<div><a href="#" id="link_sel_all" ><?php echo JText::_('COM_KUNENA_REPORT_SELECT_ALL'); ?></a></div>

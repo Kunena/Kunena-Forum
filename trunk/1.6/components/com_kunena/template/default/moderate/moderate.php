@@ -87,7 +87,7 @@ if (empty($this->moderateMultiplesChoices)) {
 		?></div> <br />
 
 
-		<div id="modtopicslist"><?php
+		<div id="modtopicslist" style="display:none;"><?php
 		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_TOPIC' );
 		?>: <br />
 

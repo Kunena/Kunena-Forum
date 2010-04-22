@@ -37,6 +37,14 @@ Kunena 1.6.0-DEV
 22-Apr-2010 Matias
 # [#20203] Administrator has full moderator permissions, but that does not mean that he has to be one
 # [#20204] Every moderator gets email when only global moderators and assigned moderators should get it
+^ [#15886] Merged revisions 2316 and 2318 from /branches/1.6-xillibit
+
+22-Apr-2010 Xillibit
+# [#19288] Show attachments in post history
+
+21-Apr-2010 Xillibit
+# [#19288] Fix issue which prevents to display images in browse images in backend (Part 2)
+^ [#19764] Add new javascript part for common moderation page (not working yet)
 
 19-Apr-2010 severdia
 # [#19758] Fixes for admin UI, cross-browser issues

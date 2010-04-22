@@ -741,11 +741,25 @@ protected function moderate($modchoices='',$modthread = false) {
 			return;
 
 		//get all the messages for this thread
-		$query = "SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
-			WHERE thread='{$this->msg_cat->thread}' AND hold='0' ORDER BY time DESC";
+		$query = "SELECT m.*, t.* FROM #__fb_messages AS m
+			LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
+			WHERE thread='{$this->msg_cat->thread}' AND hold='0'
+			ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();
 		check_dberror ( "Unable to load messages." );
+
+		//get attachments
+		$mes_ids = array();
+		foreach ($this->messages as $mes) {
+			$mes_ids[]=$mes->id;
+		}
+		$mes_ids = implode(',', $mes_ids);
+
+		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN($mes_ids)";
+		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
+		$this->attachments = $this->_db->loadObjectlist ();
+		check_dberror ( "Unable to attachments." );
 
 		$this->subject = stripslashes ( $this->msg_cat->subject );
 

@@ -47,19 +47,19 @@ global $kunena_icons;
 				class="ktitle_cover<?php
 		echo isset ( $cat->class_sfx ) ? ' ktitle_cover' . $cat->class_sfx : '';
 		?> km"><?php
-		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $cat->name ), 'follow', $class = 'ktitle kl' );
+		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( stripslashes($cat->name) ), 'follow', $class = 'ktitle kl' );
 
 		if ($cat->description != "") {
 			?>
 			<div class="ktitle_desc km"><?php
-			echo KunenaParser::parseBBCode ( $cat->description );
+			echo KunenaParser::parseBBCode ( stripslashes($cat->description) );
 			?>
 			</div>
 			<?php
 		}
 		?></div>
 
-			<div class="fltrt"><span id="cat_list"><a class="ktoggler close"
+			<div class="fltrt"><span id="cat_lis("><a class="ktoggler close"
 				rel="catid_<?php
 		echo $cat->id;
 		?>"></a></span></div>
@@ -116,7 +116,7 @@ global $kunena_icons;
 			<td class="td-2 left">
 			<div class="kthead-title kl"><?php
 				//new posts available
-				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $subcat->name ) );
+				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( stripslashes($subcat->name) ) );
 
 				if ($subcat->new && $this->my->id > 0) {
 					echo '<sup><span class="newchar">&nbsp;(' . $subcat->new . ' ' . stripslashes ( $this->config->newchar ) . ")</span></sup>";
@@ -137,7 +137,7 @@ global $kunena_icons;
 					?>
 
 			<div class="kthead-desc km"><?php
-					echo $subcat->forumdesc?>
+					echo stripslashes($subcat->forumdesc)?>
 			</div>
 
 			<?php

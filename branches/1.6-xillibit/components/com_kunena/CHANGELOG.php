@@ -35,8 +35,12 @@ Legend:
 Kunena 1.6.0-Xillibit-DEV
 
 22-Apr-2010 Xillibit
-# [#19288] Sow attachments in post history
+# [#19288] Show attachments in post history
 # [#19288] Fix issue which prevents to display images from not default gallery (Part 2)
+# [#19288] Fix issue which prevents to display images from not default gallery (Part 3)
+^ [#19288] Replace poll field add/remove icons, by icons minus and plus
+# [#19288] Fix slashes still presents in categoy description in listcat
+# [#19288] Put tooltips on profile input field to better understand the format of strings to enter
 
 21-Apr-2010 Xillibit
 # [#19288] Fix issue which prevents to display images in browse images in backend (Part 2)

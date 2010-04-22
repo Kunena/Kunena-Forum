@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+22-Apr-2010 severdia
+^ [#19758] New smilies and new key combos (including maps to other forums)
+
 22-Apr-2010 Matias
 # [#20203] Administrator has full moderator permissions, but that does not mean that he has to be one
 # [#20204] Every moderator gets email when only global moderators and assigned moderators should get it

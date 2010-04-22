@@ -144,10 +144,10 @@ $kunena_config = & CKunenaConfig::getInstance ();
 				onclick="showCalendar('poll_time_to_live','%Y-%m-%d');$('poll_time_to_live').removeProperty('style');"
 				onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN'); ?>')" />
 			<img id="kbutton_poll_add"
-				src="<?php echo JURI::root(); ?>/administrator/images/tick.png"
+				src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/karmaplus.png"
 				onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>')" />
 			<img id="kbutton_poll_rem"
-				src="<?php echo JURI::root(); ?>/administrator/images/publish_x.png"
+				src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/karmaminus.png"
 				onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" />
 			</div>
 			<?php

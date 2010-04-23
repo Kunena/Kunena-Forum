@@ -43,6 +43,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<?php if (!empty($this->posts)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_POSTS'); ?>:</strong> <?php echo $this->posts; ?></li><?php endif; ?>
 					<!-- Profile view*s*? -->
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW'); ?>:</strong> <?php echo $this->profile->uhits; ?></li>
+					<li><?php echo $this->displayKarma(); ?></li>
 				</ul>
 			</div>
 		</div>

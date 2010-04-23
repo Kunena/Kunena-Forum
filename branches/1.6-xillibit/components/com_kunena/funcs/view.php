@@ -228,7 +228,11 @@ class CKunenaViewMessage {
 			//Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
 			if ($message->hold != 2 && CKunenaTools::editTimeCheck($message->modified_time, $message->time)) {
 				$this->message_edit = CKunenaLink::GetTopicPostLink ( 'edit', $this->catid, $this->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
-				if ($this->replynum == $this->replycnt) $this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+				if ( $this->config->userdeletetmessage == '1' ) {
+					if ($this->replynum == $this->replycnt) $this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+				} else if ( $this->config->userdeletetmessage == '2' ) {
+					$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
+				}
 			}
 		}
 
@@ -391,10 +395,10 @@ class CKunenaView {
 			$this->redirect = CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $page, $this->limit, '', false);
 		}
 
-		if (!$this->myprofile->ordering) {
-			$ordering = ($this->config->default_sort == 'desc' ? 'DESC' : 'ASC'); // Just to make sure only valid options make it
+		if ($this->myprofile->ordering != '0') {
+			$ordering = $this->myprofile->ordering == '1' ? 'ASC' : 'DESC';
 		} else {
-			$ordering = 'DESC';
+			$ordering = $this->config->default_sort == 'asc' ? 'ASC' : 'DESC'; // Just to make sure only valid options make it
 		}
 		$maxpages = 9 - 2; // odd number here (show - 2)
 		$totalpages = ceil ( $this->total_messages / $this->limit );

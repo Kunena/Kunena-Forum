@@ -21,8 +21,9 @@ defined( '_JEXEC' ) or die();
 		<tr  class="ksectiontableentry2">
 			<td class="td-0 km center"><?php echo JText::_('COM_KUNENA_USER_ORDER'); ?></td>
 			<td><?php
-					$mesordering[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_ASC'));
-					$mesordering[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
+					$mesordering[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_ASC'));
+					$mesordering[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_DESC'));
+					$mesordering[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 					echo JHTML::_('select.genericlist', $mesordering, 'messageordering', 'class="inputbox" size="1"', 'value', 'text', $this->profile->ordering);
 			?></td>
 		</tr>

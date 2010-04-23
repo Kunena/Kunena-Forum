@@ -32,6 +32,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Special-DEV
+
+23-Apr-2010 Xillibit
+# [#19288] Fix wrong description for social info in edit profile and wrong links
+^ [#19288] Change ordering setting in profile by adding a kunena global option
+# [#19288] Put karma details with icons minus and plus in profile
+# [#19288] Add configuration setting to choose delete behaviour for user
+
 Kunena 1.6.0-DEV
 
 23-Apr-2010 Matias

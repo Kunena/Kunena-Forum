@@ -1050,6 +1050,12 @@ function showConfig($option) {
 
 	$lists['mod_buttons'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_buttons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_buttons);
 
+	$listUserDeleteMessage = array();
+	$listUserDeleteMessage[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED'));
+	$listUserDeleteMessage[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALLOWED_IF_REPLIES'));
+	$listUserDeleteMessage[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED'));
+	$lists['userdeletetmessage'] = JHTML::_('select.genericlist', $listUserDeleteMessage, 'cfg_userdeletetmessage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userdeletetmessage);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

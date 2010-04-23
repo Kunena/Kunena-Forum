@@ -17,6 +17,7 @@ kimport ( 'integration.integration' );
 
 abstract class KunenaAvatar {
 	public $priority = 0;
+	public $avatarSizes = null;
 
 	protected static $instance = false;
 
@@ -35,12 +36,33 @@ abstract class KunenaAvatar {
 	public function load($userlist) {}
 
 	abstract public function getEditURL();
-	abstract public function getURL($user, $size='thumb');
+	abstract protected function _getURL($user, $sizex, $sizey);
 
-	public function getLink($user, $class='', $size='thumb')
+	public function getSize($sizex=90, $sizey=90) {
+		if (!$this->avatarSizes) {
+			CKunenaTools::loadTemplate('/settings.php');
+		}
+		$size = new StdClass();
+		$size->x = intval($sizex);
+		$size->y = intval($sizey);
+		if (!intval($sizex) && isset($this->avatarSizes[$sizex])) {
+			$size->x = intval($this->avatarSizes[$sizex][0]);
+			$size->y = intval($this->avatarSizes[$sizex][1]);
+		}
+		return $size;
+	}
+
+	public function getURL($user, $sizex=90, $sizey=90) {
+		$size = $this->getSize($sizex, $sizey);
+		if (!$size->x || !$size->y) return;
+		return $this->_getURL($user, $size->x, $size->y);
+	}
+
+	public function getLink($user, $class='', $sizex=90, $sizey=90)
 	{
-		$avatar = $this->getURL($user, $size);
+		$size = $this->getSize($sizex, $sizey);
+		$avatar = $this->getURL($user, $size->x, $size->y);
 		if ($class) $class=' class="'.$class.'"';
-		return '<img'.$class.' src="'.$avatar.'" alt="" />';
+		return '<img'.$class.' src="'.$avatar.'" alt="" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
 	}
 }

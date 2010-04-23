@@ -67,8 +67,6 @@ class CKunenaUpload {
 		}
 		// Delete any left over files in temp
 		if (is_file($this->fileTemp)) unlink ( $this->fileTemp );
-		if (is_file($this->fileTemp.'raw')) unlink ( $this->fileTemp.'raw' );
-		if (is_file($this->fileTemp.'thumb')) unlink ( $this->fileTemp.'thumb' );
 	}
 
 	function fail($errormsg) {
@@ -105,9 +103,9 @@ class CKunenaUpload {
 			$result['hash'] = $this->fileHash;
 		}
 		if ($this->imageInfo) {
-			$result['width'] = $this->imageInfo[0];
-			$result['height'] = $this->imageInfo[1];
-			$result['mime'] = $this->imageInfo['mime'];
+			$result['width'] = $this->imageInfo->width;
+			$result['height'] = $this->imageInfo->height;
+			$result['mime'] = $this->imageInfo->mime;
 		}
 		if ($this->error) {
 			$result['error'] = $this->error;
@@ -133,48 +131,9 @@ class CKunenaUpload {
 		return $this->getStatus();
 	}
 
-	function resizeImage( $src, $target, $max_width, $max_height ){
-		$source_pic = $src;
-		$destination_pic = $target;
-
-		$src = imagecreatefromjpeg($source_pic);
-		if($src === false){
-			$this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_RESIZE_1' ));
-			return;
-		}
-		list($width,$height)=getimagesize($source_pic);
-
-		$x_ratio = $max_width / $width;
-		$y_ratio = $max_height / $height;
-
-		if( ($width <= $max_width) && ($height <= $max_height) ){
-		    $tn_width = $width;
-		    $tn_height = $height;
-		    }elseif (($x_ratio * $height) < $max_height){
-		        $tn_height = ceil($x_ratio * $height);
-		        $tn_width = $max_width;
-		    }else{
-		        $tn_width = ceil($y_ratio * $width);
-		        $tn_height = $max_height;
-		}
-
-		$tmp=imagecreatetruecolor($tn_width,$tn_height);
-		imagecopyresampled($tmp,$src,0,0,0,0,$tn_width, $tn_height,$width,$height);
-
-		$quality = intval($this->_config->imagequality);
-		// If quality value provided is invalid, reset to default
-		if ($quality < 1 || $quality > 100) $quality = 60;
-
-		if (!imagejpeg($tmp,$destination_pic,$quality)){
-			$this->fail(JText::_( 'COM_KUNENA_UPLOAD_ERROR_RESIZE_SAVE'));
-		}
-		imagedestroy($src);
-		imagedestroy($tmp);
-	}
-
 	function uploaded($input='kattachment') {
 		$file = JRequest::getVar ( $input, NULL, 'FILES', 'array' );
-		if (isset($file ['tmp_name']) && $file ['error'] == 0) return true;
+		if (is_uploaded_file ( $file ['tmp_name'] ) && $file ['error'] == 0) return true;
 	}
 
 	function getValidExtension($validExts) {
@@ -202,20 +161,13 @@ class CKunenaUpload {
 		return $ret;
 	}
 
-	function uploadFile($uploadPath, $input='kattachment', $ajax=true) {
+	function uploadFile($uploadPath, $input='kattachment', $filename='', $ajax=true) {
 		$result = array ();
 		$this->resetStatus();
 
-		// create thumb and upload directory if it does not exist
-		if (!CKunenaFolder::exists($uploadPath.'/thumb')) {
-			if (!CKunenaFolder::create($uploadPath.'/thumb')) {
-				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' ));
-				return false;
-			}
-		}
-		// create originals/raw folder if it does not exist
-		if (!CKunenaFolder::exists($uploadPath.'/raw')) {
-			if (!CKunenaFolder::create($uploadPath.'/raw')) {
+		// create upload directory if it does not exist
+		if (!CKunenaFolder::exists($uploadPath)) {
+			if (!CKunenaFolder::create($uploadPath)) {
 				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CREATE_DIR' ));
 				return false;
 			}
@@ -228,54 +180,50 @@ class CKunenaUpload {
 
 		if ($chunks && $chunk >= $chunks)
 			$this->error = JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_EXTRA_CHUNK' );
+
 		//If uploaded by using normal form (no AJAX)
 		if ($ajax == false || isset ( $_REQUEST ["multipart"])) {
 			$file = JRequest::getVar ( $input, NULL, 'FILES', 'array' );
-			if (isset($file ['tmp_name'])) {
-				$this->fileTemp = $file ['tmp_name'];
-				$this->fileSize = $file ['size'];
-				if (! $this->fileName)
-					$this->fileName = CKunenaFile::makeSafe ( $file ['name'] );
-					//any errors the server registered on uploading
-				switch ($file ['error']) {
-					case 0 : // UPLOAD_ERR_OK :
-						break;
-
-					case 1 : // UPLOAD_ERR_INI_SIZE :
-					case 2 : // UPLOAD_ERR_FORM_SIZE :
-						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_SIZE' ) . "DEBUG: file[error]". $file ['error']);
-						break;
-
-					case 3 : // UPLOAD_ERR_PARTIAL :
-						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PARTIAL' ));
-						break;
-
-					case 4 : // UPLOAD_ERR_NO_FILE :
-						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_FILE' ));
-						break;
-
-					case 5 : // UPLOAD_ERR_NO_TMP_DIR :
-						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR' ));
-						break;
-
-					case 7 : // UPLOAD_ERR_CANT_WRITE, PHP 5.1.0
-						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CANT_WRITE' ));
-						break;
-
-					case 8 : // UPLOAD_ERR_EXTENSION, PHP 5.2.0
-						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION' ));
-						break;
-
-					default :
-						$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNKNOWN' ));
-				}
-			}
-			else
-			{
-				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_FORM_UNDEFINED' ));
-			}
-			if (!$this->error && !is_uploaded_file ( $file ['tmp_name'] )) {
+			if (!is_uploaded_file ( $file ['tmp_name'] )) {
 				$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NOT_UPLOADED' ));
+				return false;
+			}
+			$this->fileTemp = $file ['tmp_name'];
+			$this->fileSize = $file ['size'];
+			if (! $this->fileName)
+				$this->fileName = CKunenaFile::makeSafe ( $file ['name'] );
+				//any errors the server registered on uploading
+			switch ($file ['error']) {
+				case 0 : // UPLOAD_ERR_OK :
+					break;
+
+				case 1 : // UPLOAD_ERR_INI_SIZE :
+				case 2 : // UPLOAD_ERR_FORM_SIZE :
+					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_SIZE' ) . "DEBUG: file[error]". $file ['error']);
+					break;
+
+				case 3 : // UPLOAD_ERR_PARTIAL :
+					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PARTIAL' ));
+					break;
+
+				case 4 : // UPLOAD_ERR_NO_FILE :
+					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_FILE' ));
+					break;
+
+				case 5 : // UPLOAD_ERR_NO_TMP_DIR :
+					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_TMP_DIR' ));
+					break;
+
+				case 7 : // UPLOAD_ERR_CANT_WRITE, PHP 5.1.0
+					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_CANT_WRITE' ));
+					break;
+
+				case 8 : // UPLOAD_ERR_EXTENSION, PHP 5.2.0
+					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_PHP_EXTENSION' ));
+					break;
+
+				default :
+					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_UNKNOWN' ));
 			}
 		} else {
 			// Currently not in use: this is meant for experimental AJAX uploads
@@ -312,7 +260,6 @@ class CKunenaUpload {
 
 		// assume the extension is false until we know its ok
 		$extOk = false;
-
 		$fileparts = $this->getValidExtension($this->validFileExts);
 		if ($fileparts) {
 			$this->_isfile = true;
@@ -329,9 +276,58 @@ class CKunenaUpload {
 		}
 
 		if ($extOk == false) {
-			// TODO: better to split this error message into 4
-			$this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION', implode(', ',$this->validImageExts), implode(', ',$this->validFileExts) ));
+			$imglist = implode(', ',$this->validImageExts);
+			$filelist = implode(', ',$this->validFileExts);
+			if ($imglist && $filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION', $imglist, $filelist ));
+			else if ($imglist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_IMAGE', $imglist ));
+			else if ($filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', $filelist ));
+			else $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_NOT_ALLOWED', $filelist ));
 			return false;
+		}
+
+		// Special processing for images
+		if ($this->_isimage){
+			$this->imageInfo = CKunenaImageHelper::getProperties( $this->fileTemp );
+
+			// Let see if we need to check the MIME type
+			if ($this->_config->checkmimetypes){
+				// check against whitelist of MIME types
+				$validFileTypes = explode ( ",", $this->_config->imagemimetypes );
+
+				//if the temp file does not have a width or a height, or it has a non ok MIME, return
+				if (!is_int ( $this->imageInfo->width ) || !is_int ( $this->imageInfo->height ) ||
+					!in_array ( $this->imageInfo->mime, $validFileTypes )) {
+					$this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_MIME', $this->imageInfo->mime, $this->_config->imagetypes) );
+					return false;
+				}
+			}
+
+			// If image is not inside allowed size limits, resize it
+			if ($this->fileSize > $this->_config->imagesize*1024 || $this->imageInfo->width > $this->_config->imagewidth || $this->imageInfo->height > $this->_config->imageheight) {
+				// Quality for jpeg and png files
+				$quality = intval($this->_config->imagequality);
+				// If quality value provided is invalid, reset to default
+				if ($quality < 1 || $quality > 100) $quality = 70;
+				$options = array('quality' => $quality);
+
+				$imageRaw = new CKunenaImage($this->fileTemp);
+				if ($imageRaw->getError()) {
+					$this->fail(JText::_($imageRaw->getError()));
+					return false;
+				}
+				$image = $imageRaw->resize($this->_config->imagewidth, $this->_config->imageheight);
+				$type = $imageRaw->getType();
+				unset($imageRaw);
+				$image->toFile($this->fileTemp,$type,$options);
+
+				// Re-calculate physical file size: image has been shrunk
+				$stat = stat($this->fileTemp);
+				if (! $stat) {
+					$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT').' '.$this->fileTemp);
+					return false;
+				}
+				$this->fileSize = $stat['size'];
+			}
 		}
 
 		$this->checkFileSize($this->fileSize);
@@ -340,25 +336,15 @@ class CKunenaUpload {
 			return false;
 		}
 
-		// Special processing for images
-		if ($this->_isimage){
-			$this->imageInfo = @getimagesize ( $this->fileTemp );
-			// Let see if we need to check the MIME type
-			if ($this->_config->checkmimetypes){
-				// check against whitelist of MIME types
-				$validFileTypes = explode ( ",", $this->_config->imagemimetypes );
+		// Populate hash, file size and other info
+		// Get a hash value from the file
+		$this->fileHash = md5_file ( $this->fileTemp );
 
-				//if the temp file does not have a width or a height, or it has a non ok MIME, return
-				if (!is_int ( $this->imageInfo [0] ) || !is_int ( $this->imageInfo [1] ) ||
-					!in_array ( $this->imageInfo ['mime'], $validFileTypes )) {
-					$this->fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_MIME', $this->imageInfo ['mime'], $this->_config->imagetypes) );
-					return false;
-				}
-			}
-		}
+		// Override filename if given in the parameter
+		if ($filename) $uploadedFileBasename = $filename;
 
 		// Rename file if there is already one with the same name
-		$newFileName = $this->fileName;
+		$newFileName = $uploadedFileBasename . "." . $uploadedFileExtension;
 		if (file_exists($uploadPath .'/'. $newFileName)) {
 			$newFileName = $uploadedFileBasename . date('_Y-m-d') . "." . $uploadedFileExtension;
 			for ($i=2; file_exists($uploadPath .DS. $newFileName); $i++) {
@@ -367,65 +353,10 @@ class CKunenaUpload {
 		}
 		$this->fileName = $newFileName;
 
-		// If this is a valid image we need to resize/resample it to the config settings
-		if ($this->_isimage){
-			// First rename the raw image file(original) with php function (FTP user cannot do this)
-			if (!rename ( $this->fileTemp, $this->fileTemp.'.raw' )) {
-				$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED',$this->fileName.'.raw'));
-				return false;
-			}
-
-			// Quality for jpeg and png files
-			$quality = intval($this->_config->imagequality);
-			// If quality value provided is invalid, reset to default
-			if ($quality < 1 || $quality > 100) $quality = 60;
-
-			$options = array('quality' => $quality);
-
-			$imageRaw = new CKunenaImage($this->fileTemp.'.raw');
-			if ($imageRaw->getError()) {
-				$this->fail(JText::_($imageRaw->getError()));
-				return false;
-			}
-			$image = $imageRaw->resize($this->_config->imagewidth, $this->_config->imageheight);
-			$type = $imageRaw->getType();
-			unset($imageRaw);
-			$imageThumb = $image->resize($this->_config->thumbwidth, $this->_config->thumbheight,true,CKunenaImage::SCALE_OUTSIDE);
-			$imageThumb->crop($this->_config->thumbwidth, $this->_config->thumbheight,0,0,false,CKunenaImage::SCALE_INSIDE);
-
-			$image->toFile($this->fileTemp,$type,$options);
-			$imageThumb->toFile($this->fileTemp.'.thumb',$type,$options);
-		}
-
-		// Populate hash, file size and other info
-		// Get a hash value from the file
-		$this->fileHash = md5_file ( $this->fileTemp );
-
-		// Also re-calculate physical file properties lize size as images might have been shrunk
-		$stat = stat($this->fileTemp);
-		if (! $stat) {
-			$this->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_STAT').' '.$this->fileTemp);
-			return false;
-		}
-
-		$this->fileSize = $stat['size'];
-
 		// All the processing is complete - now we need to move the file(s) into the final location
 		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
 			$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/'.$this->fileName));
 			return false;
-		}
-
-		// For images we also have to move the raw (original) and thumbnails
-		if ($this->_isimage){
-			if (! CKunenaFile::move ( $this->fileTemp.'.raw', $uploadPath.'/raw/'.$this->fileName )) {
-				$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/raw/'.$this->fileName));
-				return false;
-			}
-			if (! CKunenaFile::move ( $this->fileTemp.'.thumb', $uploadPath.'/thumb/'.$this->fileName )) {
-				$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/thumb/'.$this->fileName));
-				return false;
-			}
 		}
 
 		$this->ready = true;

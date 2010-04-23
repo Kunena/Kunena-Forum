@@ -265,19 +265,20 @@ PX		EM			PCT			PT
 }
 	
 	
+#Kunena .klatest-avatar,
 #Kunena .topic_latest_post_avatar {
 	display: block;
 	height: auto;
-	width: 40px;
+	width: 36px;
 	padding: 1px;
-	margin-right: 10px;
+	margin: 4px 6px 2px 0;
 	border: 1px solid #BFC3C6;
 	float: left;
 }
 
 #Kunena img.klist_avatar {
 	height: auto;
-	width: 40px;
+	width: 36px;
 	border: 0px
 }
 

@@ -1338,54 +1338,6 @@ table.kadmin-stat caption {
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_SMALL_HEIGHT') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarsmallheight"
-							value="<?php echo $kunena_config->avatarsmallheight;
-						?>" /></td>
-					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_SMALL_WIDTH') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarsmallwidth"
-							value="<?php echo $kunena_config->avatarsmallwidth;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_MEDIUM_HEIGHT') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarheight"
-							value="<?php echo $kunena_config->avatarheight;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_MEDIUM_WIDTH') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarwidth"
-							value="<?php echo $kunena_config->avatarwidth;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_LARGE_HEIGHT') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarlargeheight"
-							value="<?php echo $kunena_config->avatarlargeheight;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_LARGE_WIDTH') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarlargewidth"
-							value="<?php echo $kunena_config->avatarlargewidth;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVSIZE') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_avatarsize"
 							value="<?php echo $kunena_config->avatarsize;

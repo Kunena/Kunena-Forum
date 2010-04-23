@@ -29,7 +29,7 @@ class KunenaAvatarCommunityBuilder extends KunenaAvatar
 		return cbSef( 'index.php?option=com_comprofiler&task=userAvatar' . getCBprofileItemid() );
 	}
 
-	public function getURL($user, $size='thumb')
+	protected function _getURL($user, $sizex, $sizey)
 	{
 		$user = KunenaFactory::getUser($user);
 		// Get CUser object
@@ -38,10 +38,10 @@ class KunenaAvatarCommunityBuilder extends KunenaAvatar
 			$cbUser = CBuser::getInstance( $user->userid );
 		}
 		if ( $cbUser === null ) {
-			if ($size=='thumb') return selectTemplate() . 'images/avatar/tnnophoto_n.png';
+			if ($sizex<=90) return selectTemplate() . 'images/avatar/tnnophoto_n.png';
 			return selectTemplate() . 'images/avatar/nophoto_n.png';
 		}
-		if ($size=='thumb') return $cbUser->getField( 'avatar' , null, 'csv' );
+		if ($sizex<=90) return $cbUser->getField( 'avatar' , null, 'csv' );
 		return $cbUser->getField( 'avatar' , null, 'csv', 'none', 'list' );
 	}
 }

@@ -33,12 +33,12 @@ class KunenaAvatarJomSocial extends KunenaAvatar
 		return CRoute::_('index.php?option=com_community&view=profile&task=uploadAvatar');
 	}
 
-	public function getURL($user, $size='thumb')
+	protected function _getURL($user, $sizex, $sizey)
 	{
 		$user = KunenaFactory::getUser($user);
 		// Get CUser object
 		$user =& CFactory::getUser($user->userid);
-		if ($size=='thumb')	$avatar = $user->getThumbAvatar();
+		if ($sizex<=90)	$avatar = $user->getThumbAvatar();
 		else $avatar = $user->getAvatar();
 		return $avatar;
 	}

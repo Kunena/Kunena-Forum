@@ -27,12 +27,12 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 		return JRoute::_('index.php?option=com_alphauserpoints&view=account');
 	}
 
-	public function getURL($user, $size='thumb')
+	public function _getURL($user, $sizex, $sizey)
 	{
 		trigger_error(__CLASS__.'::'.__FUNCTION__.'() not implemented');
 	}
 
-	public function getLink($user, $class='', $size='thumb')
+	public function getLink($user, $class='', $sizex=90, $sizey=90)
 	{
 		$user = KunenaFactory::getUser($user);
 		$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0 );

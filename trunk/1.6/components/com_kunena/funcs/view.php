@@ -128,7 +128,7 @@ class CKunenaViewMessage {
 			$this->username = stripslashes ($message->name);
 		}
 
-		$avatar = $this->profile->getAvatarLink ();
+		$avatar = $this->profile->getAvatarLink ('', 'reply');
 		if ($avatar) {
 			$this->avatar = '<span class="kavatar">' . $avatar . '</span>';
 		}

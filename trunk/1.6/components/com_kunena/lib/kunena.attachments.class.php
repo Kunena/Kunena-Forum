@@ -35,8 +35,9 @@ class CKunenaAttachments {
 
 	function upload($mesid=0, $key='kattachment', $ajax=true) {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
+		$path = KUNENA_PATH_UPLOADED . DS . $this->_my->id;
 		$upload = new CKunenaUpload();
-		$upload->uploadFile(KUNENA_PATH_UPLOADED . DS . $this->_my->id, $key, $ajax);
+		$upload->uploadFile($path, $key, '', $ajax);
 		$fileinfo = $upload->getFileInfo();
 
 		$folder = KUNENA_RELPATH_UPLOADED . '/' . $this->_my->id;
@@ -54,9 +55,11 @@ class CKunenaAttachments {
 				$fileinfo = $upload->fileInfo();
 			}
 		}
-			if(JDEBUG == 1 && defined('JFIREPHP')){
-				FB::log('Kunena save attachment ready');
-			}
+
+		CKunenaImageHelper::version($path . DS . $fileinfo['name'], $path .DS. 'thumb', $fileinfo['name'], $this->_config->thumbwidth, $this->_config->thumbheight, intval($this->_config->imagequality));
+		if(JDEBUG == 1 && defined('JFIREPHP')){
+			FB::log('Kunena save attachment ready');
+		}
 		return $fileinfo;
 	}
 

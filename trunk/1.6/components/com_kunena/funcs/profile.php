@@ -51,7 +51,7 @@ class CKunenaProfile {
 		}
 		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
-		$this->avatarlink = $this->profile->getAvatarLink('','large');
+		$this->avatarlink = $this->profile->getAvatarLink('','profile');
 		$this->personalText = KunenaParser::parseText(stripslashes($this->profile->personalText));
 		$this->signature = KunenaParser::parseBBCode(stripslashes($this->profile->signature));
 		$this->timezone = $this->user->getParam('timezone', 0);
@@ -386,7 +386,16 @@ class CKunenaProfile {
 		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
 
 		if ( $upload->uploaded('avatarfile') ) {
-			$upload->uploadFile(KUNENA_PATH_AVATAR_UPLOADED , 'avatarfile', false);
+			$uploadpath = 'users';
+			$path = KUNENA_PATH_AVATAR_UPLOADED .DS. $uploadpath;
+
+			// Delete old uploaded avatars:
+			$deletelist = JFolder::files($path, 'user'.$this->profile->userid, false, true);
+			foreach ($deletelist as $delete) {
+				JFile::delete($delete);
+			}
+
+			$upload->uploadFile($path , 'avatarfile', 'user'.$this->profile->userid, false);
 			$fileinfo = $upload->getFileInfo();
 
 			if ($fileinfo['ready'] === true) {

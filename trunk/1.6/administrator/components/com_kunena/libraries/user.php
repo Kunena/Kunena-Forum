@@ -224,14 +224,14 @@ class KunenaUser extends JObject
 		return $name;
 	}
 
-	public function getAvatarLink($class='', $size='thumb') {
+	public function getAvatarLink($class='', $sizex='thumb', $sizey=90) {
 		$avatars = KunenaFactory::getAvatarIntegration();
-		return $avatars->getLink($this, $class, $size);
+		return $avatars->getLink($this, $class, $sizex, $sizey);
 	}
 
-	public function getAvatarURL($size='thumb') {
+	public function getAvatarURL($sizex='thumb', $sizey=90) {
 		$avatars = KunenaFactory::getAvatarIntegration();
-		return $avatars->getURL($this, $size);
+		return $avatars->getURL($this, $sizex, $sizey);
 	}
 
 	public function getType($catid=0) {

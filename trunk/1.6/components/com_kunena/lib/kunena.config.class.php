@@ -267,12 +267,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $allowavatarupload = 1;
 	var $allowavatargallery = 1;
 	var $imageprocessor = 'gd2';
-	var $avatarsmallheight = 50;
-	var $avatarsmallwidth = 50;
-	var $avatarheight = 100;
-	var $avatarwidth = 100;
-	var $avatarlargeheight = 250;
-	var $avatarlargewidth = 250;
 	var $avatarquality = 65;
 	var $avatarsize = 2048;
 	var $allowimageupload = 0;

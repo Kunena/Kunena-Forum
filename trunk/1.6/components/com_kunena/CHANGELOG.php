@@ -39,6 +39,12 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Administration: fix IP listing in user manager
 # [#19288] Fix last edit 0 minutes ago, if edit time was not saved (import?)
 # [#19288] Fix regression: New smiley query in installer was slightly broken
+# [#19288] Better error message if upload fails on extension check
+# [#19288] Do not resize image if it is within allowed size limits (keeps animated gif working)
+# [#19288] Handle correctly transparent images (including blending), keep image format
+# [#19288] Save uploaded avatars to avarars/users/user123.jpg and sizeXX_user123.jpg etc
++ [#19288] Show avatar also in Categories page
+^ [#19293] Remove deprecated configuration options: make avatar sizes to be template specific instead of global options
 
 22-Apr-2010 severdia
 ^ [#19758] New smilies and new key combos (including maps to other forums)

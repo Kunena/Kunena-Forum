@@ -12,11 +12,16 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+$dateshown = $datehover = '';
+if ($this->msg->modified_time) {
+	$datehover = 'title="'.CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat_hover').'"';
+	$dateshown =  CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat' ).' ';
+}
 ?>
 <div class="kmessage_editMarkUp_cover">
 	<?php if ($this->msg->modified_by) : ?>
-	<span class="kmessage_editMarkUp" title="<?php echo CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat_hover') ?>">
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat' ) . ' '
+	<span class="kmessage_editMarkUp" <?php echo $datehover ?>">
+		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown
 		. JText::_('COM_KUNENA_BY') . ' ' . ($this->config->username ? $this->msg->modified_username : $this->msg->modified_name) . '.'; ?>
 	<?php if ($this->msg->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( stripslashes ( $this->msg->modified_reason ) ); ?>
 	</span>

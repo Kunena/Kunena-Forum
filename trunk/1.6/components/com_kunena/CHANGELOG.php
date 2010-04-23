@@ -37,6 +37,8 @@ Kunena 1.6.0-DEV
 23-Apr-2010 Matias
 ^ [#15886] Merged revision 2322 from /branches/1.6-810 with changes
 # [#19288] Fix regression: Administration: fix IP listing in user manager
+# [#19288] Fix last edit 0 minutes ago, if edit time was not saved (import?)
+# [#19288] Fix regression: New smiley query in installer was slightly broken
 
 22-Apr-2010 severdia
 ^ [#19758] New smilies and new key combos (including maps to other forums)

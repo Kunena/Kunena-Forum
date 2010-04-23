@@ -34,13 +34,22 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+23-Apr-2010 Matias
+^ [#15886] Merged revision 2322 from /branches/1.6-810 with changes
+# [#19288] Fix regression: Administration: fix IP listing in user manager
+
 22-Apr-2010 severdia
 ^ [#19758] New smilies and new key combos (including maps to other forums)
+
+22-Apr-2010 810
+^ [#19758] Clean up Admin interface: Improve profile in backend
+# [#19758] Clean up Admin interface: Fixed signature editing
+# [#19288] Fix regression: Fix upload browsers
 
 22-Apr-2010 Matias
 # [#20203] Administrator has full moderator permissions, but that does not mean that he has to be one
 # [#20204] Every moderator gets email when only global moderators and assigned moderators should get it
-^ [#15886] Merged revisions 2316 and 2318 from /branches/1.6-xillibit
+^ [#15886] Merged revisions 2316, 2318 and 2323 from /branches/1.6-xillibit
 
 22-Apr-2010 Xillibit
 # [#19288] Show attachments in post history

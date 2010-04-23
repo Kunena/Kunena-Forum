@@ -1357,21 +1357,25 @@ function editUserProfile($option, $uid) {
 	}
 
 	//get all IPs used by this user
-	$kunena_db->setQuery ( "SELECT ip, count(ip) AS nbip, userid FROM #__fb_messages WHERE userid=$uid[0] GROUP BY ip" );
-	$ipslist = $kunena_db->loadObjectList ();
+	$kunena_db->setQuery ( "SELECT ip FROM #__fb_messages WHERE userid=$uid[0] GROUP BY ip" );
+	$iplist = implode("','", $kunena_db->loadResultArray ());
 	check_dberror ( 'Unable to load ip for user.' );
 
-	$useridslist = array();
-	foreach ($ipslist as $ip) {
-		$kunena_db->setQuery ( "SELECT userid,name FROM #__fb_messages WHERE ip='$ip->ip' GROUP BY userid" );
-		$useridslist[$ip->ip] = $kunena_db->loadObjectlist ();
+	if ($iplist) {
+		$iplist = "'{$iplist}'";
+		$kunena_db->setQuery ( "SELECT m.ip,m.userid,u.username,COUNT(*) as mescnt FROM #__fb_messages AS m INNER JOIN #__users AS u ON m.userid=u.id WHERE m.ip IN ({$iplist}) GROUP BY m.userid,m.ip" );
+		$list = $kunena_db->loadObjectlist ();
 		check_dberror ( 'Unable to load ip for user.' );
+	}
+	$useridslist = array();
+	foreach ($list as $item) {
+		$useridslist[$item->ip][] = $item;
 	}
 
 
 	$modCats = KUNENA_GetAvailableModCats ( $__modCats );
 
-	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $ipslist,$useridslist );
+	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $useridslist );
 }
 
 function saveUserProfile($option) {

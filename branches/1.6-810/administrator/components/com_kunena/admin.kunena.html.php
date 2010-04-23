@@ -626,7 +626,7 @@ table.kadmin-stat caption {
 				<?php 	if ($row->moderated) {
 				?>
 
-				<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?> <img src="..\components\com_kunena\template\default\images\icons\karmaminus.png" alt="" align="right"> <img src="..\components\com_kunena\template\default\images\icons\karmaplus.png" alt="" align="right" style="padding-left:5px;"></div>
+				<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
 
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
@@ -683,10 +683,11 @@ table.kadmin-stat caption {
 				echo '<input type="hidden" name="ordering" value="' . $row->ordering . '">';
 			}
 			?>
-</fieldset>
+			</fieldset>
 </dd>
 </dl>
 </form>
+
 
 	<?php
 		}
@@ -1346,54 +1347,6 @@ table.kadmin-stat caption {
 								echo $fbmsg;
 								?>
 						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_SMALL_HEIGHT') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarsmallheight"
-							value="<?php echo $kunena_config->avatarsmallheight;
-						?>" /></td>
-					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_SMALL_WIDTH') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarsmallwidth"
-							value="<?php echo $kunena_config->avatarsmallwidth;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_MEDIUM_HEIGHT') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarheight"
-							value="<?php echo $kunena_config->avatarheight;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_MEDIUM_WIDTH') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarwidth"
-							value="<?php echo $kunena_config->avatarwidth;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_LARGE_HEIGHT') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarlargeheight"
-							value="<?php echo $kunena_config->avatarlargeheight;
-						?>" /></td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AVATAR_LARGE_WIDTH') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_avatarlargewidth"
-							value="<?php echo $kunena_config->avatarlargewidth;
-						?>" /></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVSIZE') ?></td>
@@ -2342,11 +2295,11 @@ table.kadmin-stat caption {
 			//
 			//      include ('components/com_kunena/moderate_user.php');
 			//   }
-			function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $ipslist,$useridslist) {
+			function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $useriplist) {
 				$kunena_config = & CKunenaConfig::getInstance ();
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
-				$signature = $user->signature;
+				$signature = stripslashes ($user->signature );
 				$username = $user->name;
 				$avatarint = KunenaFactory::getAvatarIntegration();
 				$editavatar = is_a($avatarint, 'KunenaAvatarKunena') ? true : false;
@@ -2358,17 +2311,17 @@ table.kadmin-stat caption {
 				//        include_once ('components/com_kunena/bb_adm.js'); ?>
 		<div class="kadmin-functitle icon-profiles"> <?php echo JText::_('COM_KUNENA_PROFFOR'); ?>: <?php echo $username; ?></div>
 		<form action="index.php?option=<?php echo $option; ?>" method="POST" name="adminForm">
-        <?php jimport('joomla.html.pane');
+		<?php jimport('joomla.html.pane');
 			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			?>
-        <dl class="tabs" id="pane">
+		<dl class="tabs" id="pane">
 
 		<dt><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></dt>
 		<dd>
-			<fieldset>
-				<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
-                <table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-                <tr>
+		<fieldset>
+		<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
+		<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+			<tr>
 				<th colspan="3" class="title"><?php echo JText::_('COM_KUNENA_GENPROF'); ?></th>
 			</tr>
 			<tr>
@@ -2386,53 +2339,48 @@ table.kadmin-stat caption {
 				</td>
 				<td align="left" valign="top" class="contentpane">
 
-
-                                <script type="text/javascript">
-var current_count = 0;
+<script type="text/javascript">
+var current_count = <?php echo JString::strlen($signature) ?>;
 var max_count = <?php echo $kunena_config->maxsig; ?>;
 
 function textCounter(field, target) {
-  if (field.value.length > max_count) {
-    field.value = field.value.substring(0, max_count);
-  } else {
-    current_count = max_count - field.value.length;
-    target.value = current_count;
-  }
+	if (field.value.length > max_count) {
+		field.value = field.value.substring(0, max_count);
+	} else {
+		current_count = max_count - field.value.length;
+		target.value = current_count;
+	}
 }
 </script>
 
+	<textarea class="inputbox" name="message" cols="50" rows="6"
+	onkeyup="textCounter(this, this.form.current_count);"><?php echo kunena_htmlspecialchars ( $signature ); ?></textarea>
+	<div><?php echo JText::sprintf('COM_KUNENA_SIGNATURE_LENGTH_COUNTER', $kunena_config->maxsig,
+			'<input readonly="readonly" type="text" name="current_count" value="'.($kunena_config->maxsig-JString::strlen($signature)).'" size="3" />');?>
+	</div>
 
-  <p><?php echo $kunena_config->maxsig; ?> character maximum,
-    <input readonly type="text" name="current_count" value="<?php echo $kunena_config->maxsig; ?>" size="3" />
-    characters remaining.</p>
+	<div> <input type="checkbox" value="1" name="deleteSig"> <em><?php echo JText::_('COM_KUNENA_DELSIG'); ?></em></div>
 
-  <textarea class="inputbox" name="message" cols="50" rows="6"
-   onkeyup="textCounter(this, this.form.current_count);"><?php echo html_entity_decode_utf8 ( stripslashes ( $signature ) ); ?></textarea>
-
-  <p> <input type="checkbox" value="1"
-					name="deleteSig"> <em><?php echo JText::_('COM_KUNENA_DELSIG'); ?></em></p>
-
-
-   </td>
- </table>
+	</td>
+	</table>
 </fieldset>
 </dd>
 <dt><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></legend>
-                <table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-                <tr>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<tr>
 				<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></th>
 			</tr>
 			<tr>
 				<td width="150" class="contentpane">
-                <?php
+				<?php
 				if ($editavatar) {
 					?>
 				<?php echo JText::_('COM_KUNENA_UAVATAR'); ?>
 				<?php 	if ($avatar != '') {
-						echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" ><br />';
+						echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/users/size200_' . $avatar . '" ><br />';
 						echo '<input type="hidden" value="' . $avatar . '" name="avatar">';
 					}
 					else {
@@ -2456,15 +2404,15 @@ function textCounter(field, target) {
 			</tr>
 		</table>
 
-         </fieldset>
+	</fieldset>
 </dd>
 
 <dt><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></legend>
-                <table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-                <tr>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<tr>
 				<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></th>
 			</tr>
 			<tr>
@@ -2479,14 +2427,14 @@ function textCounter(field, target) {
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="option" value="com_kunena" />
 		<input type="hidden" name="boxchecked" value="1" />
-         </fieldset>
+	</fieldset>
 </dd>
 <dt><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
-                <table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-                <tr>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<tr>
 			<th colspan="2" class="title"><?php
 			echo JText::_('COM_KUNENA_SUBFOR');
 			?> <?php
@@ -2525,32 +2473,39 @@ function textCounter(field, target) {
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></legend>
-                <table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-                <tr>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+				<tr>
 			<th colspan="2" class="title"><?php
 			echo JText::sprintf('COM_KUNENA_IPFOR', $username);
 			?>
 			</th>
 		</tr>
 		<?php
-		$i = '0';
+		$i = 0;
 		$k = 0; //value for alternating rows
 
 		$userids='';
-		foreach ($ipslist as $ip) {
-			$userids = array();
+		foreach ($useriplist as $ip => $list) {
 			$k = 1 - $k;
 			$i++;
-			$userids = array_merge($userids,$useridslist[$ip->ip]);
-			$userids=implode(', ',$userids);
+			$userlist = array();
+			$mescnt = 0;
+			foreach ($list as $curuser) {
+				if ($curuser->userid == $user->id) {
+					$mescnt = $curuser->mescnt;
+					continue;
+				}
+				$userlist[] = "{$curuser->username} ({$curuser->mescnt})";
+			}
+			$userlist = implode(', ', $userlist);
 			echo "<tr class=\"row$k\">";
-			echo "  <td>".$i.":".$ip->ip." - ".JText::sprintf('COM_KUNENA_IP_OCCURENCES', $ip->nbip).(!empty($userids)?" ".JText::sprintf('COM_KUNENA_USERIDUSED', $userids):'')."</td>";
+			echo "  <td>".$i.":".$ip." - ".JText::sprintf('COM_KUNENA_IP_OCCURENCES', $mescnt).(!empty($userlist)?" ".JText::sprintf('COM_KUNENA_USERIDUSED', $userlist):'')."</td>";
 			echo "  <td>&nbsp;</td>";
 			echo "</tr>";
 		}
 		?>
 	</table>
-  </fieldset>
+	</fieldset>
 </dd>
 </dl>
 </form>
@@ -2679,8 +2634,7 @@ function textCounter(field, target) {
 					$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
 				} else {
 					if ( isset($uploaded [$i]->filename) ) {
-						$attachlivepath = KUNENA_LIVEUPLOADEDPATH.'/attachments/';
-						$attach_live_path = $attachlivepath.$uploaded [$i]->userid.'/'.$filename;
+						$attach_live_path = KUNENA_LIVEUPLOADEDPATH.'/attachments/'.$uploaded [$i]->userid.'/'.$filename;
 						$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
 					} else {
 						$attach_path = $uploaded[$i]->filelocation;
@@ -2702,7 +2656,7 @@ function textCounter(field, target) {
 				echo $type ? '<a href="index.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $filename . '">' . JText::_('COM_KUNENA_A_IMGB_REPLACE') . '</a><br />' : '';
 				echo $type ? '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $filename . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />' : '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=deleteFile&fileName=' . $filename . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />';
 
-				if ($uploaded [$i]->mesid != '') {
+				if ($uploaded [$i]->id > 0) {
 					echo '<a href="../index.php?option=' . $option . '&func=view&catid=' . $uploaded [$i]->catid . '&id=' . $uploaded [$i]->mesid . '#' . $uploaded [$i]->mesid . '" target="_blank">' . JText::_('COM_KUNENA_A_IMGB_VIEW') . '</a>';
 				} else {
 					echo JText::_('COM_KUNENA_A_IMGB_NO_POST');
@@ -2721,7 +2675,7 @@ function textCounter(field, target) {
 			//***************************************
 			// Show Smilies
 			//***************************************
-			function showsmilies($option, &$smileytmp, $pageNavSP, $smileypath) {
+		function showsmilies($option, &$smileytmp, $pageNavSP, $smileypath) {
 		?>
 		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
@@ -2873,7 +2827,7 @@ function textCounter(field, target) {
 			}
 		//-->
 		</script>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY'); ?></div>
+		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr align="center">
@@ -2891,7 +2845,7 @@ function textCounter(field, target) {
 					echo JText::_('COM_KUNENA_EMOTICONS_URL');
 					?></td>
 					<td><select name="smiley_url"
-						onchange="update_smiley(this.options[selectedIndex].value);">
+						onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);">
 						<?php
 					echo $filename_list;
 					?>
@@ -3026,7 +2980,7 @@ function textCounter(field, target) {
 			}
 			//-->
 		</script>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></div>
+		<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 
@@ -3042,7 +2996,7 @@ function textCounter(field, target) {
 					echo JText::_('COM_KUNENA_RANKSIMAGE');
 					?></td>
 					<td><select name="rank_image"
-						onchange="update_rank(this.options[selectedIndex].value);">
+						onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);">
 						<?php
 					echo $filename_list;
 					?>
@@ -3083,7 +3037,7 @@ function textCounter(field, target) {
 			}
 			//-->
 		</script>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_RANKS_EDIT'); ?></div>
+		<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_RANKS_EDIT'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr align="center">

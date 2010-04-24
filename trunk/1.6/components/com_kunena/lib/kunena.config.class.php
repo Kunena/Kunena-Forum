@@ -390,6 +390,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	//New for 1.6: choose if you want that ghost message box checked by default
 	var $boxghostmessage = 0;
 	var $mod_buttons = 0;
+	var $userdeletetmessage = 0;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

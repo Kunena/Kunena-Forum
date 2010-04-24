@@ -85,7 +85,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
 								} else {
                                 	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
-									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
+									$kunena_app->redirect ( CKunenaLink::GetMyProfileURL ( $userid) );
                                 }
                             }
                             else if ($do == "decrease")
@@ -102,7 +102,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
 								} else {
 									$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
-									$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
+									$kunena_app->redirect ( CKunenaLink::GetMyProfileURL ( $userid) );
                                 }
                             }
                             else
@@ -116,7 +116,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                         	}else{
                         		$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_WAIT'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL ( $userid) );
                         	}
                         }
                     }
@@ -132,7 +132,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                             } else {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL ( $userid) );
                             }
                         }
 
@@ -146,7 +146,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
                             } else {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_DECREASE'));
-                        		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
+                        		$kunena_app->redirect ( CKunenaLink::GetMyProfileURL ( $userid) );
                             }
                         }
                     }

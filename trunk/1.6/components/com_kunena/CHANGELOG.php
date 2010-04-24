@@ -36,6 +36,13 @@ Kunena 1.6.0-DEV
 
 24-Apr-2010 Matias
 ^ [#15886] Merged revisions 2332, 2333 and 2337 from /branches/1.6-810
+^ [#15886] Merged revision 2335 from /branches/1.6-xillibit
+
+23-Apr-2010 Xillibit
+# [#19288] Fix wrong description for social info in edit profile and wrong links
+^ [#19288] Change ordering setting in profile by adding a kunena global option
+# [#19288] Put karma details with icons minus and plus in profile
+# [#19288] Add configuration setting to choose delete behaviour for user
 
 23-Apr-2010 Matias
 ^ [#15886] Merged revision 2322 from /branches/1.6-810 with changes

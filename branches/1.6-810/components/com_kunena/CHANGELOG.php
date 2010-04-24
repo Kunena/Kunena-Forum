@@ -35,6 +35,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 23-Apr-2010 810
+# [#19288] Fix regression:Checkall
+
+23-Apr-2010 810
 ^ [#19758] Clean up Admin interface: New edit Forum style in backend
 ^ [#19758] Clean up Admin interface: New smillie header image fixed, (not working yet the first smillie)
 ^ [#19356] Minor HTML/CSS fixes backend ^build 2285

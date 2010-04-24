@@ -482,11 +482,8 @@ table.kadmin-stat caption {
 	}
 
 	function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option, $kunena_config) {
-		jimport ( 'joomla.html.pane' );
-		$pane = & JPane::getInstance ( 'tabs', array ('startOffset' => 0 ) );
 		?>
-
-	<script language="javascript" type="text/javascript">
+        <script language="javascript" type="text/javascript">
             function submitbutton(pressbutton)
             {
                 var form = document.adminForm;
@@ -509,41 +506,46 @@ table.kadmin-stat caption {
                 }
             }
         </script>
+		<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_A_CONFIG') ?></div>
+		<form action="index.php?option=<?php echo $option; ?>" method="POST" name="adminForm">
 
-	<div class="kadmin-functitle icon-adminforum"><?php echo $row->id ? JText::_('COM_KUNENA_EDIT') : JText::_('COM_KUNENA_ADD'); ?> <?php echo JText::_('COM_KUNENA_CATFOR'); ?></div>
-
-	<form action="index.php" method="POST" name="adminForm">
-		<input type="hidden" name="cfg_board_ofset" value="<?php echo $kunena_config->board_ofset; ?>" />
-		<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_BASICSFORUM'); ?></div>
-		<fieldset>
+		<?php jimport('joomla.html.pane');
+			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
+			?>
+	<dl class="tabs" id="pane">
+	<dt><?php echo $row->id ? JText::_('COM_KUNENA_EDIT') : JText::_('COM_KUNENA_ADD'); ?> <?php echo JText::_('COM_KUNENA_CATFOR'); ?></dt>
+<dd>
+	<fieldset>
 			<legend><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></legend>
-			<table>
+			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 				<tr>
 					<td width="200" valign="top"><?php echo JText::_('COM_KUNENA_PARENT'); ?></td>
 					<td><?php echo $categoryList; ?><br /><br /><?php echo JText::_('COM_KUNENA_PARENTDESC'); ?></td>
 				</tr>
 				<tr>
 					<td width="200"><?php echo JText::_('COM_KUNENA_NAMEADD'); ?></td>
-					<td><input class="inputbox" type="text" name="name" size="25" maxlength="100" value="<?php echo stripslashes ( $row->name ); ?>"></td>
+					<td><input class="inputbox" type="text" name="name" size="120" maxlength="<?php echo $kunena_config->maxsubject; ?>" value="<?php echo stripslashes ( $row->name ); ?>"></td>
 				</tr>
 				<tr>
 					<td valign="top"><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 					<td>
-						<textarea class="inputbox" cols="50" rows="3" name="description" id="description" style="width: 500px"><?php echo stripslashes ( $row->description ); ?></textarea>
+						<textarea class="inputbox" cols="50" rows="6" name="description" id="description" style="width: 500px"><?php echo stripslashes ( $row->description ); ?></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td valign="top"><?php echo JText::_('COM_KUNENA_HEADERADD'); ?></td>
 					<td>
-						<textarea class="inputbox" cols="50" rows="3" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo stripslashes ( $row->headerdesc ); ?></textarea>
+						<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo stripslashes ( $row->headerdesc ); ?></textarea>
 					</td>
 				</tr>
 			</table>
 		</fieldset>
-		<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></div>
+		</dd>
+		<dt><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></dt>
+		<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
-				<table>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<?php if (!$row->id || $row->parent): ?>
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
@@ -552,12 +554,12 @@ table.kadmin-stat caption {
 					</tr>
 					<?php endif; ?>
 					<tr>
-						<td  valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
 						<td valign="top"><?php echo $accessLists ['pub_access']; ?></td>
 						<td><?php echo JText::_('COM_KUNENA_PUBACCDESC'); ?></td>
 					</tr>
 					<tr>
-						<td  valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS'); ?></td>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS'); ?></td>
 						<td valign="top"><?php echo $lists ['pub_recurse']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPSDESC'); ?></td>
 					</tr>
@@ -567,38 +569,40 @@ table.kadmin-stat caption {
 						<td valign="top"><?php echo JText::_('COM_KUNENA_ADMINLEVELDESC'); ?></td>
 					</tr>
 					<tr>
-						<td  valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1'); ?></td>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1'); ?></td>
 						<td valign="top"><?php echo $lists ['admin_recurse']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1DESC'); ?></td>
 					</tr>
 					<?php if (!$row->id || $row->parent): ?>
 					<tr>
-						<td  valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
 						<td valign="top"><?php echo $lists ['forumReview']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_REVDESC'); ?></td>
 					</tr>
 					<tr>
-						<td  valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:</td>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW'); ?>:</td>
 						<td valign="top"><?php echo $lists ['allow_anonymous']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_ALLOW_DESC'); ?></td>
 					</tr>
 					<tr>
-						<td  valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:</td>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT'); ?>:</td>
 						<td valign="top"><?php echo $lists ['post_anonymous']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC'); ?></td>
 					</tr>
 					<tr>
-						<td  valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:</td>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED'); ?>:</td>
 						<td valign="top"><?php echo $lists ['allow_polls']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_CATEGORIES_ALLOWED_DESC'); ?></td>
 					</tr>
 					<?php endif; ?>
 				</table>
 			</fieldset>
+
 			<?php if (!$row->id || $row->parent): ?>
+
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
-				<table>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_CLASS_SFX'); ?></td>
 						<td><input class="inputbox" type="text" name="class_sfx" size="20" maxlength="20" value="<?php echo $row->class_sfx; ?>"></td>
@@ -606,12 +610,14 @@ table.kadmin-stat caption {
 					</tr>
 				</table>
 			</fieldset>
-			<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></div>
+			</dd>
+			<dt><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></dt>
+			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
-				<table>
-					<tr>
-						<td  valign="top"><?php echo JText::_('COM_KUNENA_MOD'); ?></td>
+				   <table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+						<tr>
+						<td nowrap="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_MOD'); ?></td>
 						<td valign="top"><?php echo $lists ['forumModerated']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_MODDESC'); ?></td>
 					</tr>
@@ -621,7 +627,8 @@ table.kadmin-stat caption {
 				?>
 
 				<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
-				<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
+
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr>
 						<th width="20">#</th>
 						<th width="20"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $moderatorList ); ?>);" /></th>
@@ -662,9 +669,7 @@ table.kadmin-stat caption {
 						}
 						?>
 			</table>
-				<?php 	}
-				?>
-		</fieldset>
+			<?php 	} ?>
 		<?php endif; ?>
 		<input type="hidden" name="id" value="<?php echo $row->id; ?>">
 		<input type="hidden" name="option"
@@ -676,7 +681,11 @@ table.kadmin-stat caption {
 				echo '<input type="hidden" name="ordering" value="' . $row->ordering . '">';
 			}
 			?>
-	</form>
+	</fieldset>
+</dd>
+</dl>
+</form>
+
 
 	<?php
 		}
@@ -2369,7 +2378,7 @@ function textCounter(field, target) {
 					?>
 				<?php echo JText::_('COM_KUNENA_UAVATAR'); ?>
 				<?php 	if ($avatar != '') {
-						echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/' . $avatar . '" ><br />';
+						echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/users/size200_' . $avatar . '" ><br />';
 						echo '<input type="hidden" value="' . $avatar . '" name="avatar">';
 					}
 					else {
@@ -2816,7 +2825,7 @@ function textCounter(field, target) {
 			}
 		//-->
 		</script>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY'); ?></div>
+		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_NEW_SMILEY'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr align="center">
@@ -2834,7 +2843,7 @@ function textCounter(field, target) {
 					echo JText::_('COM_KUNENA_EMOTICONS_URL');
 					?></td>
 					<td><select name="smiley_url"
-						onchange="update_smiley(this.options[selectedIndex].value);">
+						onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);">
 						<?php
 					echo $filename_list;
 					?>
@@ -2969,7 +2978,7 @@ function textCounter(field, target) {
 			}
 			//-->
 		</script>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></div>
+		<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_NEW_RANK'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 
@@ -2985,7 +2994,7 @@ function textCounter(field, target) {
 					echo JText::_('COM_KUNENA_RANKSIMAGE');
 					?></td>
 					<td><select name="rank_image"
-						onchange="update_rank(this.options[selectedIndex].value);">
+						onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);">
 						<?php
 					echo $filename_list;
 					?>
@@ -3026,7 +3035,7 @@ function textCounter(field, target) {
 			}
 			//-->
 		</script>
-		<div class="kadmin-functitle"><?php echo JText::_('COM_KUNENA_RANKS_EDIT'); ?></div>
+		<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_RANKS_EDIT'); ?></div>
 		<form action="index.php" method="POST" name="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr align="center">

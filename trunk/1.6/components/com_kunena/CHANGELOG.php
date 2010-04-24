@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+24-Apr-2010 Matias
+^ [#15886] Merged revisions 2332, 2333 and 2337 from /branches/1.6-810
+
 23-Apr-2010 Matias
 ^ [#15886] Merged revision 2322 from /branches/1.6-810 with changes
 # [#19288] Fix regression: Administration: fix IP listing in user manager
@@ -46,11 +49,16 @@ Kunena 1.6.0-DEV
 + [#19288] Show avatar also in Categories page
 ^ [#19293] Remove deprecated configuration options: make avatar sizes to be template specific instead of global options
 
+23-Apr-2010 810
+^ [#19758] Clean up Admin interface: New edit Forum style in backend
+^ [#19758] Clean up Admin interface: New smillies header image fixed (first smiley not yet working)
+^ [#19356] Minor HTML/CSS fixes in the backend
+
 22-Apr-2010 severdia
 ^ [#19758] New smilies and new key combos (including maps to other forums)
 
 22-Apr-2010 810
-^ [#19758] Clean up Admin interface: Improve profile in backend
+^ [#19758] Clean up Admin interface: New edit Profile style in backend
 # [#19758] Clean up Admin interface: Fixed signature editing
 # [#19288] Fix regression: Fix upload browsers
 

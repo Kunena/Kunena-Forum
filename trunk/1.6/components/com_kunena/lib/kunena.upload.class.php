@@ -57,6 +57,7 @@ class CKunenaUpload {
 		if (($this->_my->id && $this->_config->allowfileregupload) || (!$this->_my->id && $this->_config->allowfileupload)) {
 			$this->validFileExts = explode ( ',', $this->_config->filetypes );
 		}
+		$this->setImageResize(intval($this->_config->imagesize)*1024, intval($this->_config->imagewidth), intval($this->_config->imageheight), intval($this->_config->imagequality));
 	}
 
 	function __destruct() {
@@ -88,6 +89,14 @@ class CKunenaUpload {
 		if (!is_array($fileExts)) $fileExts = explode ( ',', $fileExts );
 		$this->validImageExts = $imageExts;
 		$this->validFileExts = $fileExts;
+	}
+
+	function setImageResize($size, $maxwidth, $maxheight, $quality) {
+		$this->imagesize =  intval($size);
+		$this->imagewidth = intval($maxwidth);
+		$this->imageheight = intval($maxheight);
+		$this->imagequality = intval($quality);
+		if ($this->imagequality < 1 || $this->imagequality > 100) $this->imagequality = 70;
 	}
 
 	function getFileInfo()
@@ -303,19 +312,15 @@ class CKunenaUpload {
 			}
 
 			// If image is not inside allowed size limits, resize it
-			if ($this->fileSize > $this->_config->imagesize*1024 || $this->imageInfo->width > $this->_config->imagewidth || $this->imageInfo->height > $this->_config->imageheight) {
-				// Quality for jpeg and png files
-				$quality = intval($this->_config->imagequality);
-				// If quality value provided is invalid, reset to default
-				if ($quality < 1 || $quality > 100) $quality = 70;
-				$options = array('quality' => $quality);
+			if ($this->fileSize > $this->imagesize || $this->imageInfo->width > $this->imagewidth || $this->imageInfo->height > $this->imageheight) {
+				$options = array('quality' => $this->imagequality);
 
 				$imageRaw = new CKunenaImage($this->fileTemp);
 				if ($imageRaw->getError()) {
 					$this->fail(JText::_($imageRaw->getError()));
 					return false;
 				}
-				$image = $imageRaw->resize($this->_config->imagewidth, $this->_config->imageheight);
+				$image = $imageRaw->resize($this->imagewidth, $this->imageheight);
 				$type = $imageRaw->getType();
 				unset($imageRaw);
 				$image->toFile($this->fileTemp,$type,$options);

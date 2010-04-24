@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 24-Apr-2010 Matias
 ^ [#15886] Merged revisions 2332, 2333 and 2337 from /branches/1.6-810
 ^ [#15886] Merged revision 2335 from /branches/1.6-xillibit
+# [#19288] Fix regression: Use avatar size/quality on avatar uploads, set maximum size to 200x200px
 
 23-Apr-2010 Xillibit
 # [#19288] Fix wrong description for social info in edit profile and wrong links

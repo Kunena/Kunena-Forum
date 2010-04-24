@@ -407,6 +407,7 @@ class CKunenaProfile {
 			foreach ($deletelist as $delete) {
 				JFile::delete($delete);
 			}
+			$upload->setImageResize(intval($this->config->avatarsize)*1024, 200, 200, $this->config->avatarquality);
 
 			$upload->uploadFile($path , 'avatarfile', 'user'.$this->profile->userid, false);
 			$fileinfo = $upload->getFileInfo();

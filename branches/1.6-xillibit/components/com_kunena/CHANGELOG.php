@@ -32,6 +32,18 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-DEV
+
+24-Apr-2010 Xillibit
+# [#19288] Fix issue which prevents to display images in browse images in backend (Part 4)
+# [#19288] Hide button Mark Forum Read if there are no posts in the cat
+# [#19288] Show message "There are no posts in this forum" if there are no posts but there are sub-categories
+# [#19288] Add a list of extensions file allowed in post form
+# [#19288] Show description cat on hover on listcat
+# [#19288] Put button delete permanently near to the button delete
+# [#19288] Restore in trash manager doesn't take care if the message is a parent or not
+# [#19288] Put new configuration setting to exclude or allow specifics cats from recent discussions page
+
 Kunena 1.6.0-DEV
 
 24-Apr-2010 Matias

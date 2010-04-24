@@ -1056,6 +1056,26 @@ function showConfig($option) {
 	$listUserDeleteMessage[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED'));
 	$lists['userdeletetmessage'] = JHTML::_('select.genericlist', $listUserDeleteMessage, 'cfg_userdeletetmessage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userdeletetmessage);
 
+	$listCatsAllowDeny = array();
+	$listCatsAllowDeny[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_COM_A_CATEGORYDENYALLOW_DENY'));
+	$listCatsAllowDeny[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_COM_A_CATEGORYDENYALLOW_ALLOW'));
+	$lists['cats_denyallow'] = JHTML::_('select.genericlist', $listCatsAllowDeny, 'cfg_cats_denyallow', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->cats_denyallow);
+
+	$optionsDenyAllow = array();
+	$text = JText::_('COM_KUNENA_IMAGE_PROCESSOR_NONE');
+	$val = 'all';
+	$optionsDenyAllow[] = JHTML::_('select.option', $val, $text);
+
+	foreach(JJ_categoryArray('1') as $cat){
+		if ($cat->parent != '0'){
+			$text  = $cat->treename;
+			$val   = $cat->id;
+        	$optionsDenyAllow[] = JHTML::_('select.option', $val, $text);
+		}
+	}
+
+	$lists['listcats_denyallow'] = JHTML::_('select.genericlist', $optionsDenyAllow, 'cfg_listcats_denyallow[]', 'class="inputbox" multiple="multiple"', 'value', 'text', explode(',',$kunena_config->listcats_denyallow) );
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
@@ -1067,6 +1087,9 @@ function saveConfig($option) {
 	foreach ( $_POST as $postsetting => $postvalue ) {
 		if (JString::strpos ( $postsetting, 'cfg_' ) === 0) {
 			//remove cfg_ and force lower case
+			if ( is_array($postvalue) ) {
+				$postvalue = implode(',',$postvalue);
+			}
 			$postname = JString::strtolower ( JString::substr ( $postsetting, 4 ) );
 			$postvalue = addslashes ( $postvalue );
 
@@ -1757,7 +1780,7 @@ function browseUploaded($kunena_db, $option, $type) {
 		check_dberror ( "Unable to load attachments." );
 
 		// Check if the tables #__fb_attachments exist before to query the database
-		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."fb_config'" );
+		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."fb_fb_attachments'" );
 		$table_fb_attachements = $kunena_db->loadResult ();
 		check_dberror ( 'Unable to check for existing tables.' );
 
@@ -2440,11 +2463,28 @@ function deleteitemsnow ( $option, $cid ) {
 function trashrestore($option, $cid) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
-	$cids = implode ( ',', $cid );
-	if ($cids) {
-		$kunena_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE id IN ($cids)" );
-		$kunena_db->query ();
-		check_dberror ( "Unable to restore message(s)." );
+
+	if ( $cid ) {
+		foreach ( $cid as $id ) {
+			$kunena_db->setQuery ( "SELECT thread,parent FROM #__fb_messages WHERE id=$id");
+			$mes = $kunena_db->loadObject ();
+			check_dberror ( "Unable to load messages." );
+
+			$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE hold=0 AND thread=$mes->thread");
+			$messages = $kunena_db->loadObjectList ();
+			check_dberror ( "Unable to load messages." );
+
+			if ( !$messages && $mes->parent != '0' ) {
+				echo 'on definit un parent';
+				$kunena_db->setQuery ( "UPDATE #__fb_messages SET parent=0, hold=0 WHERE  id=$id" );
+				$kunena_db->query ();
+				check_dberror ( "Unable to restore message(s)." );
+			} else {
+				$kunena_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE  id=$id" );
+				$kunena_db->query ();
+				check_dberror ( "Unable to restore message(s)." );
+			}
+		}
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_('COM_KUNENA_TRASH_RESTORE_DONE') );

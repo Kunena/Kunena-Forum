@@ -464,6 +464,25 @@ class CKunenaPost {
 		$this->redirectBack ();
 	}
 
+	protected function permdelete() {
+		if (!$this->load())
+			return false;
+		if ($this->moderatorProtection ())
+			return false;
+
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+		$kunena_mod = CKunenaModeration::getInstance ();
+
+		$delete = $kunena_mod->deleteMessagePermanently ( $this->id, true );
+		if (! $delete) {
+			$this->_app->enqueueMessage( $kunena_mod->getErrorMessage ());
+		} else {
+			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ));
+		}
+
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ) );
+	}
+
 	protected function deletethread() {
 		if (!$this->load())
 			return false;
@@ -483,7 +502,7 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 	}
 
-protected function moderate($modchoices='',$modthread = false) {
+	protected function moderate($modchoices='',$modthread = false) {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -885,13 +904,18 @@ protected function moderate($modchoices='',$modthread = false) {
 			case 'movetopic' :
 				$this->moderate ('modmovetopic',true);
 				break;
-				
+
 			case 'mergetopic' :
 				$this->moderate ('modmergetopic',true);
 				break;
 
-				case 'domoderate' :
+			case 'domoderate' :
 				$this->domoderate ();
+				break;
+
+			case 'permdelete' :
+				$this->permdelete();
+				break;
 
 			case 'subscribe' :
 				$this->subscribe ();

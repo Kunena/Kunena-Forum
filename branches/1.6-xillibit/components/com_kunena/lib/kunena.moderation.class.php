@@ -20,8 +20,9 @@ define ( 'KN_MOVE_REPLIES', 3 );
 
 //Defines for deletes
 define ( 'KN_DEL_MESSAGE', 0 );
-define ( 'KN_DEL_THREAD', 1 );
-define ( 'KN_DEL_ATTACH', 2 );
+define ( 'KN_DEL_MESSAGE_PERMANENTLY', 1 );
+define ( 'KN_DEL_THREAD', 2 );
+define ( 'KN_DEL_ATTACH', 3 );
 
 class CKunenaModeration {
 	// Private data and functions
@@ -294,23 +295,25 @@ class CKunenaModeration {
 		switch ($mode) {
 			case KN_DEL_MESSAGE : //Delete only the actual message
 				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='$MessageID';";
-				if ( $currentMessage->parent == 0 ) {
-					// We are about to pull the thread starter from the original thread.
-					// Need to promote the second post of the original thread as the new starter.
-					$sqlnewparent = "SELECT `id` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
-					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
-					$newParent = $this->_db->loadObject ();
-					check_dberror ( 'Unable to select new message for promote parent.' );
+		if ( $currentMessage->parent == 0 ) {
+					$this->_setSecondMessageParent ($MessageID, $currentMessage);
+				}
+				break;
+			case KN_DEL_MESSAGE_PERMANENTLY : // Delete the message from the database
+				$sql = "DELETE FROM #__fb_messages WHERE `id`='$MessageID';";
 
-					if ( is_object( $newParent ) ) {
-						$sql1 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`=0 WHERE `id`='$newParent->id';";
-						$this->_db->setQuery ( $sql1 );
-						$this->_db->query ();
-						// TODO: leave parent alone after checking that it's possible in our code..
-						$sql2 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`='$newParent->id' WHERE `thread`='{$currentMessage->thread}' AND `id`!='$newParent->id';";
-						$this->_db->setQuery ( $sql2 );
-						$this->_db->query ();
-					}
+				$query = "DELETE FROM #__fb_messages_text WHERE `mesid`='$MessageID'; ";
+				$this->_db->query ($query);
+				check_dberror ( "Unable to delete messages text." );
+
+				if ( $currentMessage->parent == 0 ) {
+					$this->_setSecondMessageParent ($MessageID, $currentMessage);
+				}
+
+				if ( $currentMessage->userid > 0) {
+					$query = "UPDATE #__fb_users SET posts=posts-1 WHERE `usersid`='$MessageID'; ";
+					$this->_db->query ($query);
+					check_dberror ( "Unable to update users posts." );
 				}
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
@@ -419,6 +422,10 @@ class CKunenaModeration {
 		return $this->_Delete ( $ThreadID, $DeleteAttachments, KN_DEL_THREAD );
 	}
 
+	public function deleteMessagePermanently($MessageID, $DeleteAttachments = false) {
+		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE_PERMANENTLY );
+	}
+
 	public function deleteMessage($MessageID, $DeleteAttachments = false) {
 		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE );
 	}
@@ -523,6 +530,25 @@ class CKunenaModeration {
 	// If a function failed - a detailed error message can be requested
 	public function getErrorMessage() {
 		return $this->_errormsg;
+	}
+
+	protected function _setSecondMessageParent ($MessageID, $currentMessage){
+		// We are about to pull the thread starter from the original thread.
+		// Need to promote the second post of the original thread as the new starter.
+		$sqlnewparent = "SELECT `id` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
+		$this->_db->setQuery ( $sqlnewparent, 0, 1 );
+		$newParent = $this->_db->loadObject ();
+		check_dberror ( 'Unable to select new message for promote parent.' );
+
+		if ( is_object( $newParent ) ) {
+			$sql1 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`=0 WHERE `id`='$newParent->id';";
+			$this->_db->setQuery ( $sql1 );
+			$this->_db->query ();
+			// TODO: leave parent alone after checking that it's possible in our code..
+			$sql2 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`='$newParent->id' WHERE `thread`='{$currentMessage->thread}' AND `id`!='$newParent->id';";
+			$this->_db->setQuery ( $sql2 );
+			$this->_db->query ();
+		}
 	}
 
 	protected function _createGhostThread($MessageID,$currentMessage) {

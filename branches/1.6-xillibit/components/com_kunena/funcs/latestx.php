@@ -19,6 +19,7 @@ class CKunenaLatestX {
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
+		$this->hasSubCats = '';
 
 		$this->db = JFactory::getDBO ();
 		$this->user = $this->my = JFactory::getUser ();
@@ -76,6 +77,15 @@ class CKunenaLatestX {
 			if (empty($this->loadids)) $loadstr = '';
 			else $loadstr = 'OR a.id IN ('.implode ( ",", $this->loadids ).')';
 
+			$wheres = '';
+			if ( $this->config->listcats_denyallow != 'all' ) {
+				if ( $this->config->cats_denyallow == '1' ) {
+					$wheres = ' a.catid IN ('.$this->config->listcats_denyallow.') AND ';
+				} else {
+					$wheres = ' a.catid NOT IN ('.$this->config->listcats_denyallow.') AND ';
+				}
+			}
+
 			$query = "SELECT a.*, j.id AS userid, t.message, l.myfavorite, l.favcount, l.threadhits, l.threadattachments, COUNT(aa.id) AS attachments,
 				l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.name AS catname, c.class_sfx
 			FROM (
@@ -96,7 +106,7 @@ class CKunenaLatestX {
 			LEFT JOIN #__fb_users AS u ON u.userid = j.id
 			LEFT JOIN #__fb_categories AS c ON c.id = a.catid
 			LEFT JOIN #__kunena_attachments AS aa ON aa.mesid = a.id
-			WHERE (a.parent='0' OR a.id=l.lastid {$loadstr})
+			WHERE $wheres (a.parent='0' OR a.id=l.lastid {$loadstr})
 			GROUP BY a.id
 			ORDER BY {$this->order}";
 
@@ -121,8 +131,10 @@ class CKunenaLatestX {
 			}
 
 			// Load threads to Kunena router to avoid extra SQL queries
-			include_once (KUNENA_PATH . DS . 'router.php');
-			KunenaRouter::loadMessages ( $routerlist );
+			if ( !empty($this->messages) ) {
+				include_once (KUNENA_PATH . DS . 'router.php');
+				KunenaRouter::loadMessages ( $routerlist );
+			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
 			$avatars = KunenaFactory::getAvatarIntegration();
@@ -270,8 +282,17 @@ class CKunenaLatestX {
 			if (( int ) $catnum > 0)
 				$catlist [] = ( int ) $catnum;
 		}
-		if (count ( $catlist ))
-			$latestcats = " AND m.catid IN (" . implode ( ',', $catlist ) . ") ";
+		$latestcats = '';
+		if ( $this->config->listcats_denyallow != 'all' ) {
+			if ( $this->config->cats_denyallow == '1' ) {
+				$latestcats = ' AND m.catid IN ('.$this->config->listcats_denyallow.')  ';
+			} else {
+				$latestcats = ' AND m.catid NOT IN ('.$this->config->listcats_denyallow.')  ';
+			}
+		} else {
+			if (count ( $catlist ))
+				$latestcats = " AND m.catid IN (" . implode ( ',', $catlist ) . ") ";
+		}
 
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread

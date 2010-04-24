@@ -1076,6 +1076,24 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_HIDE_IP_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_CATEGORYDENYALLOW') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['cats_denyallow'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_CATEGORYDENYALLOW_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_CATEGORYDENYALLOWLIST') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['listcats_denyallow'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_CATEGORYDENYALLOWLIST_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>
@@ -2636,8 +2654,8 @@ function textCounter(field, target) {
 					$filename = $uploaded [$i]->filename;
 				}
 				if ( !JFolder::exists(KUNENA_PATH_UPLOADED_LEGACY) ) {
-					$attach_live_path = $attachlivepath.$uploaded [$i]->userid.'/'.$filename;
-					$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
+					$attach_live_path = KUNENA_LIVEUPLOADEDPATH_LEGACY.$uploaded [$i]->userid.'/'.$filename;
+					$attach_path = KUNENA_PATH_UPLOADED_LEGACY.'/'.$uploaded [$i]->userid.'/'.$filename;
 				} else {
 					if ( isset($uploaded [$i]->filename) ) {
 						$attach_live_path = KUNENA_LIVEUPLOADEDPATH.'/attachments/'.$uploaded [$i]->userid.'/'.$filename;

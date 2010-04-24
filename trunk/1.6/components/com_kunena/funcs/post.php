@@ -175,7 +175,7 @@ class CKunenaPost {
 		//Update the attachments table if an image has been attached
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
-		$attachments->assign ( $id );
+		//$attachments->assign ( $id );
 		$fileinfos = $attachments->multiupload ( $id );
 		foreach ( $fileinfos as $fileinfo ) {
 			if (! $fileinfo ['status'])
@@ -295,7 +295,7 @@ class CKunenaPost {
 		if ($allowEdit == 1) {
 			// Load attachments
 			require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
-			$attachments = new CKunenaAttachments();
+			$attachments = CKunenaAttachments::getInstance ();
 			$this->attachments = array_pop($attachments->get($message->id));
 
 			$this->kunena_editmode = 1;
@@ -388,38 +388,22 @@ class CKunenaPost {
 			}
 		}
 
-		$attachments = JRequest::getVar('attach-id',array ( 0 ), 'post', 'array');
-		if ( $attachments ) {
-			$attachs = implode(',',$attachments);
-			$query = "SELECT * FROM #__kunena_attachments WHERE id IN ($attachs)";
-			$this->_db->setQuery ( $query );
-			$attachslist = $this->_db->loadObjectlist ();
-			check_dberror ( "Unable to load attachments." );
-			$query = "DELETE FROM #__kunena_attachments WHERE id IN ($attachs)";
-			$this->_db->setQuery ( $query );
-			$this->_db->query ();
-			check_dberror ( "Unable to delete attachments." );
-			jimport('joomla.filesystem.file');
-			foreach ( $attachslist as $attach ) {
-				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$attach->userid.'/'.$attach->filename;
-				if (JFile::exists($filetoDelete)) {
-					JFile::delete($filetoDelete);
-				}
-				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$attach->userid.'/raw/'.$attach->filename;
-					if (JFile::exists($filetoDelete)) {
-					JFile::delete($filetoDelete);
-				}
-				$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$attach->userid.'/thumb/'.$attach->filename;
-					if (JFile::exists($filetoDelete)) {
-							JFile::delete($filetoDelete);
-				}
-			}
-		}
-
 		//Update the attachments table if an file has been attached
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
-		$attachments->assign ( $this->id );
+
+		// Delete attachments which weren't checked (= not listed in here)
+		jimport('joomla.utilities.arrayhelper');
+		$attachkeeplist = JRequest::getVar('attach-id',array ( 0 ), 'post', 'array');
+		JArrayHelper::toInteger($attachkeeplist, array ( 0 ));
+		$attachkeeplist = implode(',', $attachkeeplist);
+		$query = "SELECT id FROM #__kunena_attachments WHERE mesid={$this->id} AND id NOT IN ({$attachkeeplist})";
+		$this->_db->setQuery ( $query );
+		$attachmentlist = implode(',', $this->_db->loadResultArray ());
+		check_dberror ( "Unable to load attachments." );
+		$attachments->deleteAttachment($attachmentlist);
+
+		//$attachments->assign ( $this->id );
 		$fileinfos = $attachments->multiupload ( $this->id );
 		foreach ( $fileinfos as $fileinfo ) {
 			if (! $fileinfo ['status'])
@@ -885,7 +869,7 @@ protected function moderate($modchoices='',$modthread = false) {
 			case 'movetopic' :
 				$this->moderate ('modmovetopic',true);
 				break;
-				
+
 			case 'mergetopic' :
 				$this->moderate ('modmergetopic',true);
 				break;

@@ -430,7 +430,7 @@ class CKunenaView {
 		$idstr = @join ( ",", $messageids );
 
 		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
-		$attachments = new CKunenaAttachments();
+		$attachments = CKunenaAttachments::getInstance();
 		$message_attachments = $attachments->get($idstr);
 
 		$this->messages = array ();

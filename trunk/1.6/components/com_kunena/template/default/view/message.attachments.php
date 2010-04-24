@@ -25,7 +25,7 @@ defined ( '_JEXEC' ) or die ();
 			switch (strtolower($attachment->shorttype)){
 				case 'image' :
 					// Check for thumbnail and if available, use for display
-					if (file_exists(JPATH_ROOT.$attachment->folder.'/thumb/'.$attachment->filename)){
+					if (file_exists(JPATH_ROOT.'/'.$attachment->folder.'/thumb/'.$attachment->filename)){
 						$thumb = $attachment->folder.'/thumb/'.$attachment->filename;
 						$imgsize = '';
 					} else {

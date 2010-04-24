@@ -19,15 +19,14 @@ defined ( '_JEXEC' ) or die ();
 
 			<ul class="kfile-attach-editing">
 		<?php
-		foreach($this->attachments as $attachment){
+		foreach($this->attachments as $attachment) :
 		?>
 
 			<li>
-				<input type="checkbox" name="kedit-attach" checked="checked" value="" /><span><?php echo $attachment->filename.'&nbsp; ('.number_format(($attachment->size)/1024,0,'',',').'KB)'; ?></span>
-				<input type="hidden" id="kedit-attach-id" name="attach-id[]" value="<?php echo $attachment->id; ?>" />
+				<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo $attachment->id; ?>" /><span><?php echo $attachment->filename.'&nbsp; ('.number_format(($attachment->size)/1024,0,'',',').'KB)'; ?></span>
 			</li>
 		<?php
-		}
+		endforeach;
 		?>
 			</ul>
 

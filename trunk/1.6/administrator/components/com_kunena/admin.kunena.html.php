@@ -2306,16 +2306,16 @@ table.kadmin-stat caption {
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
 				$signature = stripslashes ($user->signature );
-				$username = $user->name;
+				$username = $user->username;
 				$avatarint = KunenaFactory::getAvatarIntegration();
 				$editavatar = is_a($avatarint, 'KunenaAvatarKunena') ? true : false;
-				$avatar = $user->avatar;
+				$avatar = $avatarint->getLink($user->id, '', 'profile');
 				$ordering = $user->ordering;
 				//that's what we got now; later the 'future_use' columns can be used..
 
 				$csubslist = count ( $subslist );
 				//        include_once ('components/com_kunena/bb_adm.js'); ?>
-		<div class="kadmin-functitle icon-profiles"> <?php echo JText::_('COM_KUNENA_PROFFOR'); ?>: <?php echo $username; ?></div>
+		<div class="kadmin-functitle icon-profiles"> <?php echo JText::_('COM_KUNENA_PROFFOR'); ?>: <?php echo $user->name .' ('. $user->username .')'; ?></div>
 		<form action="index.php?option=<?php echo $option; ?>" method="POST" name="adminForm">
 		<?php jimport('joomla.html.pane');
 			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
@@ -2385,15 +2385,8 @@ function textCounter(field, target) {
 				if ($editavatar) {
 					?>
 				<?php echo JText::_('COM_KUNENA_UAVATAR'); ?>
-				<?php 	if ($avatar != '') {
-						echo '<img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/users/size200_' . $avatar . '" ><br />';
-						echo '<input type="hidden" value="' . $avatar . '" name="avatar">';
-					}
-					else {
-						echo "<em>" . JText::_('COM_KUNENA_NS') . "</em><br />";
-						echo '<input type="hidden" value="$avatar" name="avatar">';
-					}
-					?><p><input type="checkbox" value="1"
+				<?php echo $avatar; ?>
+					<p><input type="checkbox" value="1"
 					name="deleteAvatar"> <em><?php echo JText::_('COM_KUNENA_DELAV'); ?></em></p></td>
 				<?php } else {
 					echo "<td>&nbsp;</td>";
@@ -2603,7 +2596,7 @@ function textCounter(field, target) {
 			//***************************************
 			// Uploaded Image Browser
 			//***************************************
-			function browseUploaded($option, $uploaded, $uploaded_path, $type) {
+			function browseUploaded($option, $attachments, $type) {
 				$kunena_db = &JFactory::getDBO ();
 				$map = JPATH_ROOT;
 				?>
@@ -2622,48 +2615,34 @@ function textCounter(field, target) {
 			echo '</div>';
 			echo '<table class="adminform"><tr><td>';
 			echo $type ? JText::_('COM_KUNENA_A_IMGB_TOTAL_IMG') : JText::_('COM_KUNENA_A_IMGB_TOTAL_FILES');
-			echo ': ' . count ( $uploaded ) . '</td></tr>';
+			echo ': ' . count ( $attachments ) . '</td></tr>';
 			echo '<tr><td>';
 			echo $type ? JText::_('COM_KUNENA_A_IMGB_ENLARGE') : JText::_('COM_KUNENA_A_IMGB_DOWNLOAD');
-			echo '</td></tr><tr><td>';
-			echo $type ? JText::_('COM_KUNENA_A_IMGB_DUMMY_DESC') . '</td></tr><tr><td>' . JText::_('COM_KUNENA_A_IMGB_DUMMY') . ':</td></tr><tr><td> <img src="' . KUNENA_LIVEUPLOADEDPATH . '/dummy.gif">' : '';
 			echo '</td></tr></table>';
 			echo '<table class="adminform"><tr>';
 
-			for($i = 0; $i < count ( $uploaded ); $i ++) {
-				$j = $i + 1;
-				if (isset($uploaded [$i]->filename)) {
-					$filename = $uploaded [$i]->filename;
-				}
-				if ( !JFolder::exists(KUNENA_PATH_UPLOADED_LEGACY) ) {
-					$attach_live_path = $attachlivepath.$uploaded [$i]->userid.'/'.$filename;
-					$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
-				} else {
-					if ( isset($uploaded [$i]->filename) ) {
-						$attach_live_path = KUNENA_LIVEUPLOADEDPATH.'/attachments/'.$uploaded [$i]->userid.'/'.$filename;
-						$attach_path = KUNENA_PATH_UPLOADED.'/'.$uploaded [$i]->userid.'/'.$filename;
-					} else {
-						$attach_path = $uploaded[$i]->filelocation;
-						$tmpFileinfos = pathinfo($uploaded[$i]->filelocation);
-						$filename = $tmpFileinfos['basename'];
-					}
-				}
+			$i=0;
+			foreach($attachments as $attachment) {
+				$i++;
+				$filename = $attachment->filename;
+				$attach_live_path = JURI::root().'/'.$attachment->folder.'/'.$attachment->filename;
+				$attach_path = JPATH_ROOT.'/'.$attachment->folder.'/'.$attachment->filename;
 
-				echo $uploaded [$i]->mesid == '' ? '<td>' : '<td>';
+				echo '<td>';
 				echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
 				echo $type ? '<a href="' . $attach_live_path . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . $attach_live_path . '" width="80" heigth="80" border="0"></a>' : '<a href="' . $attach_live_path . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/kfile.png" border="0"></a>';
 				echo '</td></tr><tr><td style="text-align: center">';
-				//echo '<input type="radio" name="newAvatar" value="gallery/'.$uploaded[$i].'">';
 				echo '<br /><small>';
-				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . JString::ucfirst ( str_replace ( "_", " ", preg_replace ( '/^(.*)\..*$/', '\1', $filename ) ) ) . '<br />';
-				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_SIZE') . ': </strong> ' . filesize ( $attach_path ) . ' bytes<br />';
-				$type ? list ( $width, $height ) = @getimagesize ( $attach_path ) : '';
-				echo $type ? '<strong>' . JText::_('COM_KUNENA_A_IMGB_DIMS') . ': </strong> ' . $width . 'x' . $height . '<br />' : '';
-				echo $type ? '<a href="index.php?option=' . $option . '&task=replaceImage&OxP=1&img=' . $filename . '">' . JText::_('COM_KUNENA_A_IMGB_REPLACE') . '</a><br />' : '';
-				echo $type ? '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=replaceImage&OxP=2&img=' . $filename . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />' : '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=deleteFile&fileName=' . $filename . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />';
+				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . $filename . '<br />';
+				if (is_file($attach_path)) {
+					echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_SIZE') . ': </strong> ' . @filesize ( $attach_path ) . ' bytes<br />';
+					$type ? list ( $width, $height ) = @getimagesize ( $attach_path ) : '';
+					echo $type ? '<strong>' . JText::_('COM_KUNENA_A_IMGB_DIMS') . ': </strong> ' . $width . 'x' . $height . '<br />' : '';
+				}
+				echo $type ? '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=deleteImage&id=' . $attachment->id . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />' : '<a href="javascript:decision(\'' . JText::_('COM_KUNENA_A_IMGB_CONFIRM') . '\',\'index.php?option=' . $option . '&task=deleteFile&id=' . $attachment->id . '\')">' . JText::_('COM_KUNENA_A_IMGB_REMOVE') . '</a><br />';
 
-				if ($uploaded [$i]->id > 0) {
-					echo '<a href="../index.php?option=' . $option . '&func=view&catid=' . $uploaded [$i]->catid . '&id=' . $uploaded [$i]->mesid . '#' . $uploaded [$i]->mesid . '" target="_blank">' . JText::_('COM_KUNENA_A_IMGB_VIEW') . '</a>';
+				if ($attachment->catid > 0) {
+					echo '<a href="../index.php?option=' . $option . '&func=view&catid=' . $attachment->catid . '&id=' . $attachment->mesid . '#' . $attachment->mesid . '" target="_blank">' . JText::_('COM_KUNENA_A_IMGB_VIEW') . '</a>';
 				} else {
 					echo JText::_('COM_KUNENA_A_IMGB_NO_POST');
 				}
@@ -2671,7 +2650,7 @@ function textCounter(field, target) {
 				echo '</td></tr></table>';
 				echo '</td>';
 
-				if (! fmod ( ($j), 5 )) {
+				if (! fmod ( $i, 5 )) {
 					echo '</tr><tr align="center" valign="middle">';
 				}
 			}

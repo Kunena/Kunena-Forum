@@ -317,44 +317,9 @@ class CKunenaModeration {
 				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `thread`='{$currentMessage->thread}';";
 				break;
 			case KN_DEL_ATTACH : //Delete only the attachments
-				jimport('joomla.filesystem.file');
-				$this->_db->setQuery ( "SELECT `userid`,`filename`, `filelocation` FROM #__kunena_attachments WHERE `mesid`='$MessageID';" );
-				$fileList = $this->_db->loadObjectlist ();
-				check_dberror ( "Unable to load attachments." );
-				if ( is_array($fileList) ) {
-					$sql = "DELETE FROM #__kunena_attachments WHERE `mesid`='$MessageID';";
-					// TODO: what to do with files that should not be deleted (attachments from other components, multiple occurances of the same file)?
-					// TODO: Joomla has function which can be used to search file in multiple locations, use it
-					foreach ( $fileList as $file ) {
-						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/'.$file->filename;
-						if (JFile::exists($filetoDelete)) {
-							JFile::delete($filetoDelete);
-						}
-						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/raw/'.$file->filename;
-						if (JFile::exists($filetoDelete)) {
-							JFile::delete($filetoDelete);
-						}
-						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/thumb/'.$file->filename;
-						if (JFile::exists($filetoDelete)) {
-							JFile::delete($filetoDelete);
-						}
-					}
-				}
-				// Delete from old location too
-				// TODO: get rid of old table / lcation
-				$this->_db->setQuery ( "SELECT `filelocation` FROM #__fb_attachments WHERE `mesid`='$MessageID';" );
-				$fileListOld = $this->_db->loadObjectList ();
-				check_dberror ( "Unable to load attachments from old location." );
-				if ( is_array($fileListOld) ) {
-					$this->_db->setQuery ( "DELETE FROM #__fb_attachments WHERE `mesid`='$MessageID';" );
-					$this->_db->query ();
-					check_dberror ( "Unable to delete old attachments." );
-					foreach ( $fileListOld as $file ) {
-						if (JFile::exists($file->filelocation)) {
-							JFile::delete($file->filelocation);
-						}
-					}
-				}
+				require_once (KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+				$attachments = CKunenaAttachments::getInstance();
+				$attachments->deleteMessage($MessageID);
 				break;
 			default :
 				// Unsupported mode - Error!
@@ -363,9 +328,11 @@ class CKunenaModeration {
 		}
 
 		// Execute delete
-		$this->_db->setQuery ( $sql );
-		$this->_db->query ();
-		check_dberror ( 'Unable to perform delete.' );
+		if (isset($sql)) {
+			$this->_db->setQuery ( $sql );
+			$this->_db->query ();
+			check_dberror ( 'Unable to perform delete.' );
+		}
 
 		// Remember to delete ghost post
 		// FIXME: replies may have ghosts, too. What to do with them?

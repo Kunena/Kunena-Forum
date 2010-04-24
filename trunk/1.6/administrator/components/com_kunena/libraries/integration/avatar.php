@@ -62,7 +62,9 @@ abstract class KunenaAvatar {
 	{
 		$size = $this->getSize($sizex, $sizey);
 		$avatar = $this->getURL($user, $size->x, $size->y);
+		if (!$avatar) return;
 		if ($class) $class=' class="'.$class.'"';
-		return '<img'.$class.' src="'.$avatar.'" alt="" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
+		$link = '<img'.$class.' src="'.$avatar.'" alt="" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
+		return $link;
 	}
 }

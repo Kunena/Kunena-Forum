@@ -38,6 +38,13 @@ Kunena 1.6.0-DEV
 ^ [#15886] Merged revisions 2332, 2333 and 2337 from /branches/1.6-810
 ^ [#15886] Merged revision 2335 from /branches/1.6-xillibit
 # [#19288] Fix regression: Use avatar size/quality on avatar uploads, set maximum size to 200x200px
+# [#19288] Use always new avatar class to show avatar (image may not exist)
+# [#19288] Fix regression: Fix media URL in administration
+# [#19288] Fix regression: In some cases users get attachments to their messages from nowhere
+# [#19295] Clean up code: remove old attachment code, use always new CKunenaAttachments class
+# [#19251] Reduce the number of SQL calls in forum prune (3x messages + 2x threads + 2 -> 2x threads + 3)
+# [#19288] Do not delete files which are used in other attachments or are not really Kunena attachments
+# [#19288] Fix regression: Deleting attachments didn't work, they were always deleted during edit
 
 23-Apr-2010 Xillibit
 # [#19288] Fix wrong description for social info in edit profile and wrong links

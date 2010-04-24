@@ -274,13 +274,13 @@ switch ($task) {
 
 		break;
 
-	case "replaceImage" :
-		replaceImage ( $kunena_db, $option, JRequest::getVar ( 'img', '' ), JRequest::getInt ( 'OxP', 1 ) );
+	case "deleteImage" :
+		deleteAttachment ( JRequest::getInt ( 'id', 0 ), JURI::base () . "index.php?option=$option&task=browseImages", 'COM_KUNENA_IMGDELETED');
 
 		break;
 
 	case "deleteFile" :
-		deleteFile ( $kunena_db, $option, JRequest::getVar ( 'fileName', '' ) );
+		deleteAttachment ( JRequest::getInt ( 'id', 0 ), JURI::base () . "index.php?option=$option&task=browseFiles", 'COM_KUNENA_FILEDELETED' );
 
 		break;
 
@@ -1367,6 +1367,7 @@ function editUserProfile($option, $uid) {
 	$iplist = implode("','", $kunena_db->loadResultArray ());
 	check_dberror ( 'Unable to load ip for user.' );
 
+	$list = array();
 	if ($iplist) {
 		$iplist = "'{$iplist}'";
 		$kunena_db->setQuery ( "SELECT m.ip,m.userid,u.username,COUNT(*) as mescnt FROM #__fb_messages AS m INNER JOIN #__users AS u ON m.userid=u.id WHERE m.ip IN ({$iplist}) GROUP BY m.userid,m.ip" );
@@ -1589,7 +1590,7 @@ function doprune($kunena_db, $option) {
 	require_once (KUNENA_PATH_LIB.'/kunena.timeformat.class.php');
 	$kunena_app = & JFactory::getApplication ();
 
-	$catid = intval ( JRequest::getVar ( 'prune_forum', - 1 ) );
+	$catid = JRequest::getInt ( 'prune_forum', - 1 );
 	$deleted = 0;
 
 	if ($catid == - 1) {
@@ -1597,62 +1598,52 @@ function doprune($kunena_db, $option) {
 		$kunena_app->close ();
 	}
 
-	$prune_days = intval ( JRequest::getVar ( 'prune_days', 0 ) );
-	//get the thread list for this forum
-	$kunena_db->setQuery ( "SELECT DISTINCT a.thread AS thread, max(a.time) AS lastpost, c.locked AS locked " . "\n FROM #__fb_messages AS a" . "\n JOIN #__fb_categories AS b ON a.catid=b.id " . "\n JOIN #__fb_messages   AS c ON a.thread=c.thread" . "\n where a.catid=$catid " . "\n and b.locked != 1 " . "\n and a.locked != 1 " . "\n and c.locked != 1 " . "\n and c.parent = 0 " . "\n and c.ordering != 1 " . "\n group by thread" );
-	$threadlist = $kunena_db->loadObjectList ();
-	check_dberror ( "Unable to load thread list." );
-
 	// Convert days to seconds for timestamp functions...
+	$prune_days = intval ( JRequest::getVar ( 'prune_days', 36500 ) );
 	$prune_date = CKunenaTimeformat::internalTime () - ($prune_days * 86400);
 
-	if (count ( $threadlist ) > 0) {
-		foreach ( $threadlist as $tl ) {
-			//check if thread is eligible for pruning
-			if ($tl->lastpost < $prune_date) {
-				//get the id's for all posts belonging to this thread
-				$kunena_db->setQuery ( "SELECT id from #__fb_messages WHERE thread=$tl->thread" );
-				$idlist = $kunena_db->loadObjectList ();
-				check_dberror ( "Unable to load thread messages." );
+	//get the thread list for this forum
+	$kunena_db->setQuery ( "SELECT t.thread, MAX(m.time) AS lasttime
+		FROM #__fb_messages AS m
+		LEFT JOIN #__fb_messages AS t ON m.thread=t.thread AND t.parent=0
+		WHERE m.catid={$catid} AND t.ordering = 0
+		GROUP BY thread
+		HAVING lasttime < {$prune_date}" );
+	$threadlist = $kunena_db->loadResultArray ();
+	check_dberror ( "Unable to load thread list." );
 
-				if (count ( $idlist ) > 0) {
-					foreach ( $idlist as $id ) {
-						//prune all messages belonging to the thread
-						$kunena_db->setQuery ( "DELETE FROM #__fb_messages WHERE id=$id->id" );
-						$kunena_db->query ();
-						check_dberror ( "Unable to delete messages." );
+	require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+	foreach ( $threadlist as $thread ) {
+		//get the id's for all posts belonging to this thread
+		$kunena_db->setQuery ( "SELECT id FROM #__fb_messages WHERE thread={$thread}" );
+		$idlist = $kunena_db->loadResultArray ();
+		check_dberror ( "Unable to load thread messages." );
 
-						$kunena_db->setQuery ( "DELETE FROM #__fb_messages_text WHERE mesid=$id->id" );
-						$kunena_db->query ();
-						check_dberror ( "Unable to delete message texts." );
+		if (count ( $idlist ) > 0) {
+			//prune all messages belonging to the thread
+			$deleted += count ($idlist);
+			$idlist = implode(',', $idlist);
+			$attachments = CKunenaAttachments::getInstance();
+			$attachments->deleteMessage($idlist);
 
-						//delete all attachments
-						$kunena_db->setQuery ( "SELECT filelocation FROM #__fb_attachments WHERE mesid=$id->id" );
-						$fileList = $kunena_db->loadObjectList ();
-						check_dberror ( "Unable to load attachments." );
-
-						if (count ( $fileList ) > 0) {
-							foreach ( $fileList as $fl ) {
-								unlink ( $fl->filelocation );
-							}
-
-							$kunena_db->setQuery ( "DELETE FROM #__fb_attachments WHERE mesid=$id->id" );
-							$kunena_db->query ();
-							check_dberror ( "Unable to delete attachments." );
-						}
-
-						$deleted ++;
-					}
-				}
-			}
-
-			//clean all subscriptions to these deleted threads
-			$kunena_db->setQuery ( "DELETE FROM #__fb_subscriptions WHERE thread=$tl->thread" );
+			$kunena_db->setQuery ( "DELETE m, t FROM #__fb_messages AS m INNER JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE m.thread={$thread}" );
 			$kunena_db->query ();
-			check_dberror ( "Unable to delete subscriptions." );
+			check_dberror ( "Unable to delete message texts." );
 		}
+		unset ($idlist);
 	}
+	if (!empty($threadlist)) {
+		$threadlist = implode(',', $threadlist);
+		//clean all subscriptions to these deleted threads
+		$kunena_db->setQuery ( "DELETE FROM #__fb_subscriptions WHERE thread IN ({$threadlist})" );
+		$kunena_db->query ();
+		check_dberror ( "Unable to delete subscriptions." );
 
+		//clean all favorites to these deleted threads
+		$kunena_db->setQuery ( "DELETE FROM #__fb_favorites WHERE thread IN ({$threadlist})" );
+		$kunena_db->query ();
+		check_dberror ( "Unable to delete favorites." );
+	}
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum", "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . $deleted . " " . JText::_('COM_KUNENA_PRUNETHREADS') );
 }
 
@@ -1714,131 +1705,40 @@ function browseUploaded($kunena_db, $option, $type) {
 
 	// type = 1 -> images ; type = 0 -> files
 
-	//test if legacy directory exist to load proper attachments
-
-	if ( !JFolder::exists(KUNENA_PATH_UPLOADED_LEGACY) ) {
-		$attachlivepath = KUNENA_LIVEUPLOADEDPATH.'attachments/';
-
-	 	$image_types =	explode(',',$kunena_config->imagemimetypes);
-	 	$imageTypes = array();
-	 	foreach ($image_types as $images ) {
-			$imageTypes[] = "'".$images."'";
-	 	}
-	 	$imageTypes= implode(',',$imageTypes);
-		if ($type) {
-			$where = ' WHERE filetype IN ('.$imageTypes.')';
-		} else {
-			$where = '';
-		}
-
-		$query = "SELECT a.*, b.catid, b.id FROM #__kunena_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id $where";
-		$kunena_db->setQuery ( $query );
-		$uploaded = $kunena_db->loadObjectlist();
-		check_dberror ( "Unable to load attachments." );
-
+	$image_types =	explode(',',$kunena_config->imagemimetypes);
+	$imageTypes = array();
+	foreach ($image_types as $images ) {
+		$imageTypes[] = "'".trim($images)."'";
+	}
+	$imageTypes= implode(',',$imageTypes);
+	if ($type) {
+		$where = ' WHERE filetype IN ('.$imageTypes.')';
 	} else {
-		$image_types =	explode(',',$kunena_config->imagemimetypes);
-	 	$imageTypes = array();
-	 	foreach ($image_types as $images ) {
-			$imageTypes[] = "'".$images."'";
-	 	}
-	 	$imageTypes= implode(',',$imageTypes);
-		if ($type) {
-			$attachlivepath = KUNENA_LIVEUPLOADEDPATH_LEGACY .'/'. 'images/';
-			$where = ' WHERE filetype IN ('.$imageTypes.')';
-		} else {
-			$attachlivepath = KUNENA_LIVEUPLOADEDPATH_LEGACY .'/'. 'files/';
-			$where = " WHERE filetype NOT like '%image%'";
-		}
-
-		$query = "SELECT a.*, b.catid, b.id FROM #__kunena_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id $where";
-		$kunena_db->setQuery ( $query );
-		$uploaded1 = $kunena_db->loadObjectlist();
-		check_dberror ( "Unable to load attachments." );
-
-		// Check if the tables #__fb_attachments exist before to query the database
-		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."fb_config'" );
-		$table_fb_attachements = $kunena_db->loadResult ();
-		check_dberror ( 'Unable to check for existing tables.' );
-
-		if ( $table_fb_attachements ) {
-
-			$query = "SELECT a.*, b.catid, b.id FROM #__fb_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id ";
-			$kunena_db->setQuery ( $query );
-			$uploaded2 = $kunena_db->loadObjectlist ();
-			check_dberror ( "Unable to load attachments." );
-
-			jimport('joomla.filesystem.file');
-
-			for ($i =0; $i < count($uploaded2); $i++ ) {
-				$fileExt = JFile::getExt($uploaded2[$i]->filelocation);
-				if ( !in_array($fileExt,$extensionsAllowed)  ) {
-					unset($uploaded2[$i]);
-				}
-			}
-
-			$uploaded = array_merge($uploaded1,$uploaded2);
-		}
-		$uploaded = $uploaded1;
-
+		$where = ' WHERE filetype NOT IN ('.$imageTypes.')';
 	}
 
-	html_Kunena::browseUploaded ( $option, $uploaded, $attachlivepath, $type );
+	$query = "SELECT a.*, b.catid, b.thread FROM #__kunena_attachments AS a LEFT JOIN #__fb_messages AS b ON a.mesid=b.id $where";
+	$kunena_db->setQuery ( $query );
+	$uploaded = $kunena_db->loadObjectlist();
+	check_dberror ( "Unable to load attachments." );
+
+	html_Kunena::browseUploaded ( $option, $uploaded, $type );
 }
 
-function replaceImage($kunena_db, $option, $imageName, $OxP) {
+function deleteAttachment($id, $redirect, $message) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
-	if (! $imageName) {
-		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=browseImages" );
+	if (! $id) {
+		$kunena_app->redirect ( $redirect );
 		return;
 	}
 
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
-	// This function will replace the selected image with a dummy (OxP=1) or delete it
+	require_once (KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+	$attachments = CKunenaAttachments::getInstance();
+	$attachments->deleteAttachment($id);
 
-
-	if ($OxP == "1") {
-		$filename = explode ( ".", $imageName );
-		$fileName = $filename [0];
-		$fileExt = $filename [1];
-		$ret = CKunenaFile::copy ( KUNENA_PATH_UPLOADED . DS . 'dummy.' . $fileExt, KUNENA_PATH_UPLOADED . DS . 'images' . DS . $imageName );
-	} else {
-		$ret = CKunenaFile::delete ( KUNENA_PATH_UPLOADED . DS . 'images' . DS . $imageName );
-		//remove the database link as well
-		if ($ret) {
-			$kunena_db->setQuery ( "DELETE FROM #__fb_attachments where filelocation='%/images/" . $imageName . "'" );
-			$kunena_db->query ();
-			check_dberror ( "Unable to delete attachment." );
-		}
-	}
-	if ($ret)
-		$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_IMGDELETED') );
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=browseImages" );
-}
-
-function deleteFile($kunena_db, $option, $fileName) {
-	$kunena_app = & JFactory::getApplication ();
-	$kunena_db = &JFactory::getDBO ();
-
-	if (! $fileName) {
-		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=browseFiles" );
-		return;
-	}
-
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
-
-	// step 1: Remove file
-	$ret = CKunenaFile::delete ( KUNENA_PATH_UPLOADED . DS . 'files' . DS . $fileName );
-	//step 2: remove the database link to the file
-	if ($ret) {
-		$kunena_db->setQuery ( "DELETE FROM #__fb_attachments where filelocation='%/files/" . $fileName . "'" );
-		$kunena_db->query ();
-		check_dberror ( "Unable to delete attachment." );
-	}
-	if ($ret)
-		$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_FILEDELETED') );
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=browseFiles" );
+	$kunena_app->enqueueMessage ( JText::_($message) );
+	$kunena_app->redirect ( $redirect );
 }
 
 //===============================

@@ -3540,6 +3540,7 @@ div#kprofile-stats ul li span.rank-admin {
 	clear: both;
 	border: 1px solid #BFC3C6;
 	padding: 10px 10px;
+	overflow: auto;
 }
 #Kunena div.current dd {
 	padding: 0;

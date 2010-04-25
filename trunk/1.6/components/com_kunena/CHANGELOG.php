@@ -41,6 +41,8 @@ Kunena 1.6.0-DEV
 # [#19288] Administration: Improve category lists for users and categories
 + [#19288] User Administration: Add missing Global Moderator option to the category list
 # [#19295] Clean up code: remove a few unused or deprecated functions in administration
+# [#19288] Fix moderate user layout (thanks Cerberus)
+# [#20222] Do Not Use Category IDs: Router cannot decide which catid to use if categories have the same name
 
 24-Apr-2010 Xillibit
 # [#19288] Hide button Mark Forum Read if there are no posts in the cat

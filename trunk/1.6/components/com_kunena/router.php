@@ -28,10 +28,9 @@ class KunenaRouter {
 		if (self::$catidcache !== null)
 			return; // Already loaded
 
-
 		$db = & JFactory::getDBO ();
 
-		$query = 'SELECT id, name FROM #__fb_categories WHERE published=1';
+		$query = 'SELECT id, name, parent FROM #__fb_categories WHERE published=1';
 		$db->setQuery ( $query );
 		self::$catidcache = $db->loadAssocList ( 'id' );
 		check_dberror ( "Unable to load categories." );
@@ -44,6 +43,13 @@ class KunenaRouter {
 	 */
 	function loadMessages($msglist) {
 		self::$msgidcache = self::$msgidcache + $msglist;
+	}
+
+	function isCategoryConflict($catid, $catname) {
+		foreach (self::$catidcache as $cat) {
+			if ($cat ['id'] != $catid && $catname == self::stringURLSafe ( $cat ['name'] ) ) return true;
+		}
+		return false;
 	}
 
 	function filterOutput($str) {
@@ -111,14 +117,23 @@ class KunenaRouter {
 
 				if (self::$catidcache === null)
 					self::loadCategories ();
-				if (isset ( self::$catidcache [$catid] ))
+				if (isset ( self::$catidcache [$catid] )) {
 					$suf = self::stringURLSafe ( self::$catidcache [$catid] ['name'] );
+				}
 				if (empty ( $suf ))
+					// If translated category name is empty, use catid: 123
 					$segments [] = $query ['catid'];
-				else if ($kconfig->sefcats && ! in_array ( $suf, self::$functions ))
-					$segments [] = $suf;
-				else
+				else if ($kconfig->sefcats && ! in_array ( $suf, self::$functions )) {
+					// We want to remove catid: check that there are no conflicts between names
+					if (self::isCategoryConflict($catid, $suf)) {
+						$segments [] = $query ['catid'] . '-' . $suf;
+					} else {
+						$segments [] = $suf;
+					}
+				} else {
+					// By default use 123-category_name
 					$segments [] = $query ['catid'] . '-' . $suf;
+				}
 			}
 			unset ( $query ['catid'] );
 		}

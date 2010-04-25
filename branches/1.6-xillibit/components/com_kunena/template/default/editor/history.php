@@ -39,7 +39,7 @@ $k = 0;
 			<div class="msgtext">
 				<?php echo KunenaParser::parseBBCode( stripslashes($mes->message) )?>
 			</div>
-			<?php if ($mes->attach){ ?>
+			<?php if ( !empty($mes->attach) ){ ?>
 			<div>
 				<div class="msgattach">
 					<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>

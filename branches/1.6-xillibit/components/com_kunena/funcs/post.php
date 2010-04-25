@@ -760,9 +760,10 @@ class CKunenaPost {
 			return;
 
 		//get all the messages for this thread
-		$query = "SELECT m.*, t.* FROM #__fb_messages AS m
+		$query = "SELECT m.*, t.*, a.id AS attach, a.mesid FROM #__fb_messages AS m
+			LEFT JOIN #__kunena_attachments AS a ON a.mesid=m.id
 			LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
-			WHERE thread='{$this->msg_cat->thread}' AND hold='0'
+			WHERE thread='{$this->msg_cat->thread}' AND hold='0' GROUP BY m.id
 			ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();
@@ -771,11 +772,12 @@ class CKunenaPost {
 		//get attachments
 		$mes_ids = array();
 		foreach ($this->messages as $mes) {
+			echo $mes->id;
 			$mes_ids[]=$mes->id;
 		}
 		$mes_ids = implode(',', $mes_ids);
 
-		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN($mes_ids)";
+		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN($mes_ids) ";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->attachments = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to attachments." );

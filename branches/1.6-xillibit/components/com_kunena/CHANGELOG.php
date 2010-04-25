@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+25-Apr-2010 Xillibit
+# [#19288] Fix undefined variable in history.php
+
 24-Apr-2010 Xillibit
 # [#19288] Fix issue which prevents to display images in browse images in backend (Part 4)
 # [#19288] Hide button Mark Forum Read if there are no posts in the cat

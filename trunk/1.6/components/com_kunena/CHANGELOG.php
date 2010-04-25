@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 25-Apr-2010 Matias
 # [#19288] Fix regression: Do not show gray/unused social icons when viewing a topic
+^ [#15886] Merged revision 2345 from /branches/1.6-810
 
 24-Apr-2010 Matias
 ^ [#15886] Merged revisions 2332, 2333 and 2337 from /branches/1.6-810
@@ -68,6 +69,7 @@ Kunena 1.6.0-DEV
 ^ [#19293] Remove deprecated configuration options: make avatar sizes to be template specific instead of global options
 
 23-Apr-2010 810
+# [#19288] Fix regression: Check all button didn't work in IE8
 ^ [#19758] Clean up Admin interface: New edit Forum style in backend
 ^ [#19758] Clean up Admin interface: New smillies header image fixed (first smiley not yet working)
 ^ [#19356] Minor HTML/CSS fixes in the backend

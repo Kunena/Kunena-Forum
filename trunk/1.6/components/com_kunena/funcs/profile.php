@@ -76,6 +76,7 @@ class CKunenaProfile {
 			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
 		$this->online = $this->profile->isOnline();
+		$this->showUnusedSocial = true;
 
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;

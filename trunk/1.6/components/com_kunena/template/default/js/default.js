@@ -850,7 +850,7 @@ window.addEvent('domready', function(){
 		});
 	}
 	if($('kcbcheckall') != undefined){
-		$('kcbcheckall').addEvent('change', function(e){
+		$('kcbcheckall').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);

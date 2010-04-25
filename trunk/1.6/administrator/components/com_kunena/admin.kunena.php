@@ -509,15 +509,14 @@ function editForum($uid, $option) {
 	if ($uid) $row->load ( $uid );
 	$uid = $row->id;
 
-	// get a list of sections
-	$kunena_db->setQuery ( "SELECT a.id, a.name FROM #__fb_categories AS a WHERE parent='0' AND id!='$row->id' ORDER BY ordering" );
-	$sections = $kunena_db->loadObjectList ();
-	check_dberror ( "Unable to load sections." );
-
 	if ($uid) {
 		$row->checkout ( $kunena_my->id );
 	} else {
 		// New category is by default child of the first section -- this will help new users to do it right
+		$kunena_db->setQuery ( "SELECT a.id, a.name FROM #__fb_categories AS a WHERE parent='0' AND id!='$row->id' ORDER BY ordering" );
+		$sections = $kunena_db->loadObjectList ();
+
+		check_dberror ( "Unable to load sections." );
 		$row->parent = empty($sections) ? 0 : $sections[0]->id;
 		$row->published = 0;
 		$row->ordering = 9999;
@@ -526,7 +525,10 @@ function editForum($uid, $option) {
 		$row->pub_access = 0;
 	}
 
-	$categoryList = showCategories ( $row->parent, "parent", "", "4" );
+	$catList = array();
+	$catList[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_TOPLEVEL'));
+	$categoryList = CKunenaTools::KSelectList('parent', $catList, 'class="inputbox"', true, 'parent', $row->parent);
+
 	// make a standard yes/no list
 	$yesno = array ();
 	$yesno [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_ANN_NO') );
@@ -1365,14 +1367,13 @@ function editUserProfile($option, $uid) {
 
 	//get all moderation category ids for this user
 	$kunena_db->setQuery ( "select catid from #__fb_moderation where userid=" . $uid [0] );
-	$_modCats = $kunena_db->loadResultArray ();
+	$modCatList = $kunena_db->loadResultArray ();
 	check_dberror ( 'Unable to moderation category ids for user.' );
+	if ($moderator && empty($modCatList)) $modCatList[] = 0;
 
-	$__modCats = array ();
-
-	foreach ( $_modCats as $_v ) {
-		$__modCats [] = JHTML::_ ( 'select.option', $_v );
-	}
+	$categoryList = array();
+	$categoryList[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_GLOBAL_MODERATOR'));
+	$modCats = CKunenaTools::KSelectList('catid[]', $categoryList, 'class="inputbox" multiple="multiple"', false, 'kforums', $modCatList);
 
 	//get all IPs used by this user
 	$kunena_db->setQuery ( "SELECT ip FROM #__fb_messages WHERE userid=$uid[0] GROUP BY ip" );
@@ -1390,9 +1391,6 @@ function editUserProfile($option, $uid) {
 	foreach ($list as $item) {
 		$useridslist[$item->ip][] = $item;
 	}
-
-
-	$modCats = KUNENA_GetAvailableModCats ( $__modCats );
 
 	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $useridslist );
 }
@@ -1432,7 +1430,7 @@ function saveUserProfile($option) {
 
 	//if there are moderatored forums, add them all
 	if ($moderator == 1) {
-		if (count ( $modCatids ) > 0) {
+		if (!empty ( $modCatids ) && !in_array(0, $modCatids)) {
 			foreach ( $modCatids as $c ) {
 				$kunena_db->setQuery ( "INSERT INTO #__fb_moderation SET catid='$c', userid='$uid'" );
 				$kunena_db->query ();
@@ -1754,161 +1752,6 @@ function deleteAttachment($id, $redirect, $message) {
 }
 
 //===============================
-// Generic Functions
-//===============================
-
-
-/*  danial */
-#########  category functions #########
-function catTreeRecurse($id, $indent = "&nbsp;&nbsp;&nbsp;", $list, &$children, $maxlevel = 9999, $level = 0, $seperator = " >> ") {
-	if (@$children [$id] && $level <= $maxlevel) {
-		foreach ( $children [$id] as $v ) {
-			$id = $v->id;
-			$txt = $v->name;
-			$pt = $v->parent;
-			$list [$id] = $v;
-			$list [$id]->treename = "$indent$txt";
-			$list [$id]->children = count ( @$children [$id] );
-			$list = catTreeRecurse ( $id, "$indent$txt$seperator", $list, $children, $maxlevel, $level + 1 );
-			//$list = catTreeRecurse( $id, "*", $list, $children, $maxlevel, $level+1 );
-		}
-	}
-
-	return $list;
-}
-
-function showCategories($cat, $cname, $extras = "", $levellimit = "4") {
-	$kunena_db = &JFactory::getDBO ();
-	$kunena_db->setQuery ( "select id ,parent,name from
-          #__fb_categories" . "\nORDER BY name" );
-	$mitems = $kunena_db->loadObjectList ();
-	check_dberror ( "Unable to load categories." );
-
-	// establish the hierarchy of the menu
-	$children = array ();
-
-	// first pass - collect children
-	foreach ( $mitems as $v ) {
-		$pt = $v->parent;
-		$list = @$children [$pt] ? $children [$pt] : array ();
-		array_push ( $list, $v );
-		$children [$pt] = $list;
-	}
-
-	// second pass - get an indent list of the items
-	$list = catTreeRecurse ( 0, '', array (), $children );
-	// assemble menu items to the array
-	$mitems = array ();
-	$mitems [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_TOPLEVEL'), 'value', 'text' );
-	$this_treename = '';
-
-	foreach ( $list as $item ) {
-		if ($this_treename) {
-			if ($item->id != $mitems && JString::strpos ( $item->treename, $this_treename ) === false) {
-				$mitems [] = JHTML::_ ( 'select.option', $item->id, $item->treename );
-			}
-		} else {
-			if ($item->id != $mitems) {
-				$mitems [] = JHTML::_ ( 'select.option', $item->id, $item->treename );
-			} else {
-				$this_treename = "$item->treename/";
-			}
-		}
-	}
-
-	// build the html select list
-	$parlist = selectList2 ( $mitems, $cname, 'class="inputbox"  ' . $extras, 'value', 'text', $cat );
-	return $parlist;
-}
-
-#######################################
-## multiple select list
-function selectList2(&$arr, $tag_name, $tag_attribs, $key, $text, $selected) {
-	reset ( $arr );
-	$html = "\n<select name=\"$tag_name\" $tag_attribs>";
-
-	for($i = 0, $n = count ( $arr ); $i < $n; $i ++) {
-		$k = $arr [$i]->$key;
-		$t = $arr [$i]->$text;
-		$id = @$arr [$i]->id;
-		$extra = '';
-		$extra .= $id ? " id=\"" . $arr [$i]->id . "\"" : '';
-
-		if (is_array ( $selected )) {
-			foreach ( $selected as $obj ) {
-				$k2 = $obj;
-
-				if ($k == $k2) {
-					$extra .= " selected=\"selected\"";
-					break;
-				}
-			}
-		} else {
-			$extra .= ($k == $selected ? " selected=\"selected\"" : '');
-		}
-
-		$html .= "\n\t<option value=\"" . $k . "\"$extra>" . $t . "</option>";
-	}
-
-	$html .= "\n</select>\n";
-	return $html;
-}
-
-function dircopy($srcdir, $dstdir, $verbose = false) {
-	$num = 0;
-
-	if (! is_dir ( $dstdir )) {
-		mkdir ( $dstdir );
-	}
-
-	$curdir = opendir ( $srcdir );
-
-	if ($curdir) {
-		$file = readdir ( $curdir );
-		while ( $file ) {
-			if ($file != '.' && $file != '..') {
-				$srcfile = $srcdir . DS . $file;
-				$dstfile = $dstdir . DS . $file;
-
-				if (is_file ( $srcfile )) {
-					if (is_file ( $dstfile )) {
-						$ow = filemtime ( $srcfile ) - filemtime ( $dstfile );
-					} else {
-						$ow = 1;
-					}
-
-					if ($ow > 0) {
-						if ($verbose) {
-							$tmpstr = JText::_('COM_KUNENA_COPY_FILE');
-							$tmpstr = str_replace ( '%src%', $srcfile, $tmpstr );
-							$tmpstr = str_replace ( '%dst%', $dstfile, $tmpstr );
-							echo $tmpstr;
-						}
-
-						if (copy ( $srcfile, $dstfile )) {
-							touch ( $dstfile, filemtime ( $srcfile ) );
-							$num ++;
-
-							if ($verbose) {
-								echo JText::_('COM_KUNENA_COPY_OK');
-							}
-						} else {
-							echo "" . JText::_('COM_KUNENA_DIRCOPERR') . " '$srcfile' " . JText::_('COM_KUNENA_DIRCOPERR1') . "";
-						}
-					}
-				} else if (is_dir ( $srcfile )) {
-					$num += dircopy ( $srcfile, $dstfile, $verbose );
-				}
-			}
-		}
-
-		closedir ( $curdir );
-	}
-
-	return $num;
-}
-
-//===============================
 //   smiley functions
 //===============================
 //
@@ -2095,21 +1938,6 @@ function showRanks($option) {
 }
 
 function rankpath() {
-	/*
-	$kunena_config =& CKunenaConfig::getInstance();
-
-    if (is_dir(JURI::root() . '/components/com_kunena/template/'.$kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/ranks')) {
-        $rank_live_path = JURI::root() . '/components/com_kunena/template/'.$kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/ranks/';
-        $rank_abs_path = 	KUNENA_PATH_TEMPLATE .DS. $kunena_config->template.'/images/'.KUNENA_LANGUAGE.'/ranks';
-    }
-    else {
-        $rank_live_path = JURI::root() . '/components/com_kunena/template/default/images/'.KUNENA_LANGUAGE.'/ranks/';
-        $rank_abs_path = 	KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'images/'.KUNENA_LANGUAGE.'/ranks';
-    }
-
-    $rankpath['live'] = $rank_live_path;
-    $rankpath['abs'] = $rank_abs_path;
-*/
 	$rankpath ['live'] = KUNENA_URLRANKSPATH;
 	$rankpath ['abs'] = KUNENA_ABSRANKSPATH;
 
@@ -2224,7 +2052,7 @@ function editRank($option, $id) {
 }
 
 //===============================
-//  FINISH smiley functions
+//  FINISH rank functions
 //===============================
 // Dan Syme/IGD - Ranks Management
 
@@ -2457,8 +2285,6 @@ function generateSystemReport () {
 	}
 
 
-
-
 	//test on each table if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';
@@ -2496,29 +2322,6 @@ function generateSystemReport () {
 // FINISH report system
 //===============================
 
-function KUNENA_GetAvailableModCats($catids) {
-	$kunena_db = &JFactory::getDBO ();
-	$list = JJ_categoryArray ( 1 );
-	$this_treename = '';
-	$catid = 0;
-
-	foreach ( $list as $item ) {
-		if ($this_treename) {
-			if ($item->id != $catid && JString::strpos ( $item->treename, $this_treename ) === false) {
-				$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename );
-			}
-		} else {
-			if ($item->id != $catid) {
-				$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename );
-			} else {
-				$this_treename = stripslashes ( $item->treename ) . "/";
-			}
-		}
-	}
-	$parent = JHTML::_ ( 'select.genericlist', $options, 'catid[]', 'class="inputbox fbs"  multiple="multiple"   id="FB_AvailableForums" ', 'value', 'text', $catids );
-	return $parent;
-}
-
 // Grabs gd version
 
 
@@ -2527,11 +2330,6 @@ function KUNENA_gdVersion() {
 	if (! extension_loaded ( 'gd' )) {
 		return;
 	}
-
-	$phpver = JString::substr ( phpversion (), 0, 3 );
-	// gd_info came in at 4.3
-	if ($phpver < 4.3)
-		return - 1;
 
 	if (function_exists ( 'gd_info' )) {
 		$ver_info = gd_info ();

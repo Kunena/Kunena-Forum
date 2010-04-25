@@ -1032,10 +1032,11 @@ class fbForum
 
 function JJ_categoryArray($admin=0) {
     $kunena_db = &JFactory::getDBO();
+    $app = JFactory::getApplication();
 
     // get a list of the menu items
 	$query = "SELECT * FROM #__fb_categories";
-	if(!$admin) {
+	if($app->isSite()) {
 		$kunena_session =& KunenaFactory::getSession();
 		if ($kunena_session && $kunena_session->allowed != 'na') {
 			$query .= " WHERE id IN ($kunena_session->allowed)";

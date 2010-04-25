@@ -38,6 +38,9 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Do not show gray/unused social icons when viewing a topic
 ^ [#15886] Merged revision 2345 from /branches/1.6-810
 ^ [#15886] Merged revision 2343 from /branches/1.6-xillibit with changes
+# [#19288] Administration: Improve category lists for users and categories
++ [#19288] User Administration: Add missing Global Moderator option to the category list
+# [#19295] Clean up code: remove a few unused or deprecated functions in administration
 
 24-Apr-2010 Xillibit
 # [#19288] Hide button Mark Forum Read if there are no posts in the cat

@@ -13,28 +13,28 @@ defined( '_JEXEC' ) or die();
 ?>
 
 <div class="iconrow">
-	<?php echo $this->profile->socialButton('twitter'); ?>
-	<?php echo $this->profile->socialButton('facebook'); ?>
-	<?php echo $this->profile->socialButton('myspace'); ?>
-	<?php echo $this->profile->socialButton('linkedin'); ?>
-	<?php echo $this->profile->socialButton('skype'); ?>
+	<?php echo $this->profile->socialButton('twitter', true); ?>
+	<?php echo $this->profile->socialButton('facebook', true); ?>
+	<?php echo $this->profile->socialButton('myspace', true); ?>
+	<?php echo $this->profile->socialButton('linkedin', true); ?>
+	<?php echo $this->profile->socialButton('skype', true); ?>
 </div>
 <div class="iconrow">
-	<?php echo $this->profile->socialButton('delicious'); ?>
-	<?php echo $this->profile->socialButton('friendfeed'); ?>
-	<?php echo $this->profile->socialButton('digg'); ?>
+	<?php echo $this->profile->socialButton('delicious', true); ?>
+	<?php echo $this->profile->socialButton('friendfeed', true); ?>
+	<?php echo $this->profile->socialButton('digg', true); ?>
 </div>
 <div class="clr"></div>
 <div class="iconrow">
 
-	<?php echo $this->profile->socialButton('yim'); ?>
-	<?php echo $this->profile->socialButton('aim'); ?>
-	<?php echo $this->profile->socialButton('gtalk'); ?>
-	<?php echo $this->profile->socialButton('icq'); ?>
-	<?php echo $this->profile->socialButton('msn'); ?>
+	<?php echo $this->profile->socialButton('yim', true); ?>
+	<?php echo $this->profile->socialButton('aim', true); ?>
+	<?php echo $this->profile->socialButton('gtalk', true); ?>
+	<?php echo $this->profile->socialButton('icq', true); ?>
+	<?php echo $this->profile->socialButton('msn', true); ?>
 </div>
 <div class="iconrow">
-	<?php echo $this->profile->socialButton('blogspot'); ?>
-	<?php echo $this->profile->socialButton('flickr'); ?>
-	<?php echo $this->profile->socialButton('bebo'); ?>
+	<?php echo $this->profile->socialButton('blogspot', true); ?>
+	<?php echo $this->profile->socialButton('flickr', true); ?>
+	<?php echo $this->profile->socialButton('bebo', true); ?>
 </div>

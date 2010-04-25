@@ -368,7 +368,7 @@ class KunenaUser extends JObject
 		}
 	}
 
-	public function socialButton($name) {
+	public function socialButton($name, $gray=false) {
 		$social = array (
 			'twitter' => array( 'name'=>'TWITTER', 'url'=>'http://twitter.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_TWITTER') ),
 			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'http://www.facebook.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FACEBOOK') ),
@@ -396,6 +396,7 @@ class KunenaUser extends JObject
 		$value = kunena_htmlspecialchars(stripslashes($this->$item));
 		$url = strtr($social[$name]['url'], array('##VALUE##'=>$value));
 		if (!empty($this->$item)) return '<a href="'.$url.'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
-		return '<span class="'.$name.'_off"></span>';
+		if ($gray) return '<span class="'.$name.'_off"></span>';
+		else return '';
 	}
 }

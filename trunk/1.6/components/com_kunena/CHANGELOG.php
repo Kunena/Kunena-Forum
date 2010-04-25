@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+25-Apr-2010 Matias
+# [#19288] Fix regression: Do not show gray/unused social icons when viewing a topic
+
 24-Apr-2010 Matias
 ^ [#15886] Merged revisions 2332, 2333 and 2337 from /branches/1.6-810
 ^ [#15886] Merged revision 2335 from /branches/1.6-xillibit

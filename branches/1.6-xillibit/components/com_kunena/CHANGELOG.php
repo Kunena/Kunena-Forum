@@ -36,6 +36,7 @@ Kunena 1.6.0-Xillibit-DEV
 
 25-Apr-2010 Xillibit
 # [#19288] Fix undefined variable in history.php
+# [#19288] Little change to gallery url
 
 24-Apr-2010 Xillibit
 # [#19288] Fix issue which prevents to display images in browse images in backend (Part 4)

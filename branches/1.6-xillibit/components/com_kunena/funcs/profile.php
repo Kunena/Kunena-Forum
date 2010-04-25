@@ -183,7 +183,7 @@ class CKunenaProfile {
 		} else {
 			$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';
 			$this->galleryurl = KUNENA_LIVEUPLOADEDPATH_LEGACY . '/avatars/gallery';
-	}
+		}
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 		CKunenaTools::loadTemplate('/profile/editavatar.php');

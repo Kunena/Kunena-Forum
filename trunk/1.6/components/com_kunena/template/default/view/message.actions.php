@@ -45,6 +45,7 @@ if ($this->msg->modified_time) {
 				<?php echo $this->message_merge; ?>
 				<?php echo $this->message_split; ?>
 				<?php echo $this->message_delete; ?>
+				<?php echo $this->message_permdelete; ?>
 				<?php echo $this->message_undelete; ?>
 				<?php echo $this->message_publish; ?>
 			<?php else : ?>

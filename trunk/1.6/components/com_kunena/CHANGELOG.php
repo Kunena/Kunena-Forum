@@ -37,6 +37,15 @@ Kunena 1.6.0-DEV
 25-Apr-2010 Matias
 # [#19288] Fix regression: Do not show gray/unused social icons when viewing a topic
 ^ [#15886] Merged revision 2345 from /branches/1.6-810
+^ [#15886] Merged revision 2343 from /branches/1.6-xillibit with changes
+
+24-Apr-2010 Xillibit
+# [#19288] Hide button Mark Forum Read if there are no posts in the cat
+# [#19288] Show message "There are no posts in this forum" if there are no posts but there are sub-categories
+# [#19288] Add a list of extensions file allowed in post form
+# [#19288] Show description cat on hover on listcat
+# [#19288] Put button delete permanently near to the button delete
+# [#19288] Put new configuration setting to exclude or allow specifics cats from recent discussions page
 
 24-Apr-2010 Matias
 ^ [#15886] Merged revisions 2332, 2333 and 2337 from /branches/1.6-810

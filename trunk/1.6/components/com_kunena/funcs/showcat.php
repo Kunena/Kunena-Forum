@@ -19,6 +19,7 @@ class CKunenaShowcat {
 		$this->func = 'showcat';
 		$this->catid = $catid;
 		$this->page = $page;
+		$this->hasSubCats = '';
 
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
@@ -166,7 +167,7 @@ class CKunenaShowcat {
 			//this user is allowed to post a new topic:
 			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'buttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
 		}
-		if ($this->my->id != 0) {
+		if ($this->my->id != 0 && $this->total) {
 			$this->forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $this->catid, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'buttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
 		}
 
@@ -210,7 +211,10 @@ class CKunenaShowcat {
 		require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
 		$obj = new CKunenaListCat($this->catid);
 		$obj->loadCategories();
-		if (!empty($obj->categories [$this->catid])) $obj->displayCategories();
+		if (!empty($obj->categories [$this->catid])) {
+			$obj->displayCategories();
+			$this->hasSubCats = '1';
+		}
 	}
 
 	function displayFlat() {

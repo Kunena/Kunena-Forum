@@ -175,6 +175,8 @@ class CKunenaProfile {
 		$this->gallery = JRequest::getVar('gallery', 'default');
 		if ($this->gallery == 'default') {
 			$this->gallery = '';
+		} else {
+			$this->gallery = $this->gallery . '/';
 		}
 		$path = KUNENA_PATH_AVATAR_UPLOADED .'/gallery';
 		if (is_dir($path)) {

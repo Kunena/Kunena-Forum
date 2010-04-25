@@ -144,7 +144,7 @@ class CKunenaListcat {
 			if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>'{$this->prevCheck}' AND m.thread NOT IN ({$readlist})) AS new";
 			else $subquery = " 0 AS new";
 
-			$query = "SELECT id, name, parent, numTopics, numPosts, {$subquery}
+			$query = "SELECT id, name, description, parent, numTopics, numPosts, {$subquery}
 			FROM #__fb_categories AS c
 			WHERE c.parent IN ({$subcatlist}) AND c.published='1'";
 			$this->db->setQuery ($query);

@@ -1076,6 +1076,24 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_HIDE_IP_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['latestcategory_in'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LATESTCATEGORY') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['latestcategory'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>
@@ -1867,18 +1885,6 @@ table.kadmin-stat caption {
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS') ?></td>
 							<td align="left" valign="top"><?php echo $lists ['userlist_userhits']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_RECENT_POSTS') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-						<tr align="center" valign="middle">
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_LATEST_CATEGORY') ?></td>
-							<td align="left" valign="top"><input type="text"
-								name="cfg_latestcategory"
-								value="<?php echo $kunena_config->latestcategory; ?>" /></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_LATEST_CATEGORY_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>

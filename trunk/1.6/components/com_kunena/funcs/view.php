@@ -21,6 +21,7 @@ class CKunenaViewMessage {
 	public $message_split = null;
 	public $message_move = null;
 	public $message_delete = null;
+	public $message_permdelete = null;
 	public $message_undelete = null;
 	public $message_publish = null;
 	public $message_closed = null;
@@ -220,6 +221,7 @@ class CKunenaViewMessage {
 			if ($message->hold == 2) {
 				$this->class = 'class="kmsg kunapproved"';
 				$this->message_undelete = CKunenaLink::GetTopicPostLink ( 'undelete', $this->catid, $this->id, CKunenaTools::showButton ( 'undelete', JText::_('COM_KUNENA_BUTTON_UNDELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG') );
+				$this->message_permdelete = CKunenaLink::GetTopicPostLink ( 'permdelete', $this->catid, $this->id, CKunenaTools::showButton ( 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG') );
 			} else {
 				$this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
 			}

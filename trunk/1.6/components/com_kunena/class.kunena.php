@@ -448,7 +448,7 @@ class CKunenaTools {
 		return $parent;
 	}
 
-	function KSelectList($name, $options=array(), $attr='', $sections=false) {
+	function KSelectList($name, $options=array(), $attr='', $sections=false, $id='', $selected=0) {
 		$kunena_db = &JFactory::getDBO ();
 		$list = JJ_categoryArray ();
 
@@ -456,7 +456,8 @@ class CKunenaTools {
 			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename, 'value', 'text', !$sections && $item->section);
 		}
 
-		$catsList = JHTML::_ ( 'select.genericlist', $options, $name, $attr, 'value', 'text', '', $name );
+		if (!$id) $id = $name;
+		$catsList = JHTML::_ ( 'select.genericlist', $options, $name, $attr, 'value', 'text', $selected, $id );
 		return $catsList;
 	}
 

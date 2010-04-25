@@ -391,6 +391,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $boxghostmessage = 0;
 	var $mod_buttons = 0;
 	var $userdeletetmessage = 0;
+	var $latestcategory_in = 1;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

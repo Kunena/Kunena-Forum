@@ -146,6 +146,7 @@ $this->k=0;
 			echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS');
 			?></strong></td>
 		<td>
+			<div><?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED').'<b>'.$this->config->imagetypes.','.$this->config->filetypes.'</b>'; ?></div>
 			<div id="kattachment"><input id="kupload" name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
 			<div id="kattachmentsnote"></div>
 

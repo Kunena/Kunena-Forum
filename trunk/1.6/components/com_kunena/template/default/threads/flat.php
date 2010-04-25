@@ -63,7 +63,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 	$k = 0;
 	$counter = 0;
-	if (!count ( $this->threads )) {
+	if (!count ( $this->threads ) && !$this->hasSubCats) {
 		echo '<tr class="ksectiontableentry2"><td class="td-0 km center">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
 	} else
 	foreach ( $this->threads as $leaf ) {

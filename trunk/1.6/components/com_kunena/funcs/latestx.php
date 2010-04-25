@@ -19,6 +19,7 @@ class CKunenaLatestX {
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
+		$this->hasSubCats = '';
 
 		$this->db = JFactory::getDBO ();
 		$this->user = $this->my = JFactory::getUser ();
@@ -265,13 +266,18 @@ class CKunenaLatestX {
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$lookcats = explode ( ',', $this->config->latestcategory );
 		$catlist = array ();
-		$latestcats = '';
 		foreach ( $lookcats as $catnum ) {
-			if (( int ) $catnum > 0)
-				$catlist [] = ( int ) $catnum;
+			$catlist [] = ( int ) $catnum;
 		}
-		if (count ( $catlist ))
-			$latestcats = " AND m.catid IN (" . implode ( ',', $catlist ) . ") ";
+		$latestcats = '';
+		if ( !empty($catlist) && !in_array(0, $catlist)) {
+			$catlist = implode ( ',', $catlist );
+			if ( $this->config->latestcategory_in == '1' ) {
+				$latestcats = ' AND m.catid IN ('.$catlist.') ';
+			} else {
+				$latestcats = ' AND m.catid NOT IN ('.$catlist.') ';
+			}
+		}
 
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread

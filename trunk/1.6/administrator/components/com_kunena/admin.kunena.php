@@ -1056,6 +1056,15 @@ function showConfig($option) {
 	$listUserDeleteMessage[] = JHTML::_('select.option', '2', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALWAYS_ALLOWED'));
 	$lists['userdeletetmessage'] = JHTML::_('select.genericlist', $listUserDeleteMessage, 'cfg_userdeletetmessage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userdeletetmessage);
 
+	$latestCategoryIn = array();
+	$latestCategoryIn[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE'));
+	$latestCategoryIn[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW'));
+	$lists['latestcategory_in'] = JHTML::_('select.genericlist', $latestCategoryIn, 'cfg_latestcategory_in', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->latestcategory_in);
+
+	$optionsShowHide = array();
+	$optionsShowHide[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_COM_A_LATESTCATEGORY_SHOWALL'));
+	$lists['latestcategory'] = CKunenaTools::KSelectList('cfg_latestcategory[]', $optionsShowHide, 'class="inputbox" multiple="multiple"', false, 'latestcategory', explode(',',$kunena_config->latestcategory));
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
@@ -1067,6 +1076,9 @@ function saveConfig($option) {
 	foreach ( $_POST as $postsetting => $postvalue ) {
 		if (JString::strpos ( $postsetting, 'cfg_' ) === 0) {
 			//remove cfg_ and force lower case
+			if ( is_array($postvalue) ) {
+				$postvalue = implode(',',$postvalue);
+			}
 			$postname = JString::strtolower ( JString::substr ( $postsetting, 4 ) );
 			$postvalue = addslashes ( $postvalue );
 

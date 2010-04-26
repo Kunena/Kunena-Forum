@@ -40,6 +40,7 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Put tooltip to show extensions allowed in form
 # [#19288] Put the personnaltext (about me) below the avatar
 # [#19288] Change how the functions Restore and Delete works
+# [#19288] Fix undefined variable on line 95 on kunena.php (only happen one time, maybe not usefull)
 
 Kunena 1.6.0-DEV
 

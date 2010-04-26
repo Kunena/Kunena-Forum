@@ -40,6 +40,7 @@ Kunena 1.6.0-DEV
 # [#19288] Make custom avatar galleries to work with SEF (thanks xillibit)
 # [#19288] Use CKunenaAttachments in post history
 # [#19288] Fix YouTube embed bug where some videos were not showing up
+# [#19288] Do not redirect in CKunenaView->display(), fixes a bug in Kunena Discuss plugin
 
 25-Apr-2010 Xillibit
 # [#19288] Small change to gallery url

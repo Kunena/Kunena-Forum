@@ -398,6 +398,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'view' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'view.php');
 			$page = new CKunenaView($func, $catid, $id, $limitstart, $limit);
+			$page->redirect();
 			$page->display();
 
 			break;

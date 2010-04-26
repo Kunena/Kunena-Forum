@@ -648,6 +648,11 @@ class CKunenaView {
 		return $output;
 	}
 
+	function redirect() {
+		if ($this->redirect) {
+			$this->app->redirect($this->redirect);
+		}
+	}
 	function display() {
 		$this->getView();
 
@@ -658,9 +663,6 @@ class CKunenaView {
 		if (! $this->first_message) {
 			echo JText::_('COM_KUNENA_MODERATION_INVALID_ID');
 			return;
-		}
-		if ($this->redirect) {
-			$this->app->redirect($this->redirect);
 		}
 		CKunenaTools::loadTemplate('/view/view.php', false, $this->templatepath);
 	}

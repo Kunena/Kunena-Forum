@@ -39,6 +39,10 @@ Kunena 1.6.0-DEV
 ^ [#15886] Merged revision 2349 from /branches/1.6-xillibit with changes
 # [#19288] Make custom avatar galleries to work with SEF (thanks xillibit)
 # [#19288] Use CKunenaAttachments in post history
+# [#19288] Fix YouTube embed bug where some videos were not showing up
+
+25-Apr-2010 Xillibit
+# [#19288] Small change to gallery url
 
 25-Apr-2010 Matias
 # [#19288] Fix regression: Do not show gray/unused social icons when viewing a topic
@@ -49,9 +53,6 @@ Kunena 1.6.0-DEV
 # [#19295] Clean up code: remove a few unused or deprecated functions in administration
 # [#19288] Fix moderate user layout (thanks Cerberus)
 # [#20222] Do Not Use Category IDs: Router cannot decide which catid to use if categories have the same name
-
-25-Apr-2010 Xillibit
-# [#19288] Small change to gallery url
 
 24-Apr-2010 Xillibit
 # [#19288] Hide button Mark Forum Read if there are no posts in the cat

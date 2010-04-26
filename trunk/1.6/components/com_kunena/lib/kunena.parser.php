@@ -106,9 +106,9 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 		if ($kunena_config->autoembedyoutube) {
 			// convert youtube links to embedded player
-			$task->text = preg_replace ( '/<a href=[^>]+youtube.([^>\/]+)\/watch\?[^>]*v=([^>"&]+)[^>]+>[^<]+<\/a>/u', '<object width="425" height="344"><param name="movie" value="http://www.youtube.$1/v/$2&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.$1/v/$2&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+\/\/(\w+\.youtube\.[^\/]+)\/watch\?[^>]*v=([^>"&\']+)[^>]+>[^<]+<\/a>/u', '<object width="425" height="344"><param name="movie" value="http://$1/v/$2&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://$1/v/$2&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>', $task->text );
 			// convert youtube playlists to embedded player
-			$task->text = preg_replace ( '/<a href=[^>]+youtube.([^>\/]+)\/view_play_list\?[^>]*p=([^>"&]+)[^>]+>[^<]+<\/a>/u', '<object width="480" height="385"><param name="movie" value="http://www.youtube.$1/p/$2"></param><embed src="http://www.youtube.$1/p/$2" type="application/x-shockwave-flash" width="480" height="385"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+\/\/(\w+\.youtube\.[^\/]+)\/view_play_list\?[^>]*p=([^>"&]+)[^>]+>[^<]+<\/a>/u', '<object width="480" height="385"><param name="movie" value="http://$1/p/$2"></param><embed src="http://$1/p/$2" type="application/x-shockwave-flash" width="480" height="385"></embed></object>', $task->text );
 		}
 
 		if ($kunena_config->autoembedebay) {

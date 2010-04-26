@@ -39,8 +39,6 @@ defined( '_JEXEC' ) or die();
 		</ul>
 	</div>
 	<div class="kprofile-rightcol1">
-		<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?></h4>
-		<p><?php echo $this->personalText; ?></p>
 		<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></h4>
 		<div class="msgsignature"><div><?php echo $this->signature; ?></div></div>
 	</div>

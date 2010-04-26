@@ -391,7 +391,7 @@ class CKunenaModeration {
 	}
 
 	public function deleteMessagePerminantly($MessageID, $DeleteAttachments = false) {
-		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE_PERMANENTLY );
+		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE_PERMINANTLY );
 	}
 
 	public function deleteMessage($MessageID, $DeleteAttachments = false) {

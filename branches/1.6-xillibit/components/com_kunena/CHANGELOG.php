@@ -32,6 +32,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-DEV
+
+26-Apr-2010 Xillibit
+# [#19288] Display userid in trash manager
+# [#19288] Fix little regression on delete perminantly function
+# [#19288] Put tooltip to show extensions allowed in form
+# [#19288] Put the personnaltext (about me) below the avatar
+
 Kunena 1.6.0-DEV
 
 26-Apr-2010 Matias

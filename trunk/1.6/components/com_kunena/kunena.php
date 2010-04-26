@@ -84,13 +84,16 @@ if(JDEBUG == 1 && defined('JFIREPHP')){
 }
 
 require_once(KUNENA_PATH . DS . 'router.php');
-if (!$markaction && (!$func || !in_array($func, KunenaRouter::$functions))) {
+if ($func && !in_array($func, KunenaRouter::$functions)) {
 	// If func is not legal, raise joomla error
-	if ($func) return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
-	// Redirect empty func to default page
-	header ( "HTTP/1.1 303 See Other" );
-	header ( "Location: " . KunenaRoute::_ ( 'index.php?option=com_kunena', false ) );
-	$kunena_app->close ();
+	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
+}
+
+// Set active menuitem so that Kunena menu shows up
+$menu = JSite::getMenu ();
+$active = $menu->getActive ();
+if (!$active->menutype != 'kunenamenu' || !$func) {
+	$menu->setActive(KunenaRoute::getItemID());
 }
 
 // Redirect Forum Jump

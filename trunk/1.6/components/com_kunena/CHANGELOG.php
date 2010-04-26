@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+26-Apr-2010 Matias
++ [#20071] KunenaRoute: Remove redirect when not in kunenamenu, set active menu item instead
+
 25-Apr-2010 Matias
 # [#19288] Fix regression: Do not show gray/unused social icons when viewing a topic
 ^ [#15886] Merged revision 2345 from /branches/1.6-810

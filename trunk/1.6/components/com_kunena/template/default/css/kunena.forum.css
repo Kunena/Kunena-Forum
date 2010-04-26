@@ -83,6 +83,11 @@ PX		EM			PCT			PT
 	font-size: 1em;
 }
 
+#Kunena ul li {
+	background: none;
+	padding: 0;
+}
+
 #Kunena .clr { clear:both; height:1px; overflow:hidden;}
 #Kunena .fltlft {float:left;}
 #Kunena .fltrt {float:right; }

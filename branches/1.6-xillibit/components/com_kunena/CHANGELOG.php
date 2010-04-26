@@ -39,6 +39,7 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Fix little regression on delete perminantly function
 # [#19288] Put tooltip to show extensions allowed in form
 # [#19288] Put the personnaltext (about me) below the avatar
+# [#19288] Change how the functions Restore and Delete works
 
 Kunena 1.6.0-DEV
 

@@ -113,7 +113,7 @@ class CKunenaProfile {
 			$folders[$key] = $folder;
 		}
 
-		$selected = JString::ltrim(JString::rtrim(preg_replace('`/`',' ',$this->gallery)));
+		$selected = JString::trim($this->gallery);
 		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
 		$str .=  "<option value=\"default\"";
 
@@ -175,8 +175,6 @@ class CKunenaProfile {
 		$this->gallery = JRequest::getVar('gallery', 'default');
 		if ($this->gallery == 'default') {
 			$this->gallery = '';
-		} else {
-			$this->gallery = $this->gallery . '/';
 		}
 		$path = KUNENA_PATH_AVATAR_UPLOADED .'/gallery';
 		if (is_dir($path)) {
@@ -184,7 +182,7 @@ class CKunenaProfile {
 		} else {
 			$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';
 			$this->galleryurl = KUNENA_LIVEUPLOADEDPATH_LEGACY . '/avatars/gallery';
-	}
+		}
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 		CKunenaTools::loadTemplate('/profile/editavatar.php');

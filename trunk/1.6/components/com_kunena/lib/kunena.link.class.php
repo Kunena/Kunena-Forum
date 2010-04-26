@@ -165,7 +165,7 @@ class CKunenaLink {
 	}
 
 	// Returns always url to Kunena profile
-	function GetMyProfileURL($userid = 0, $task = '', $xhtml = true) {
+	function GetMyProfileURL($userid = 0, $task = '', $xhtml = true, $extra = '') {
 		if (!$task) {
 			// Workaround for menu redirect: be more verbose
 			kimport('integration.integration');
@@ -176,7 +176,7 @@ class CKunenaLink {
 		if ($userid && $userid!=$my->id) $userid = "&userid=$userid";
 		else $userid = '';
 		if ($task) $task = "&do=$task";
-		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=profile{$userid}{$task}", $xhtml );
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 
 	function GetProfileLink($userid, $name, $rel = 'nofollow', $class = '') {

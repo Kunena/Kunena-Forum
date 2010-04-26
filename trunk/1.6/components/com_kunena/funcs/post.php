@@ -754,16 +754,14 @@ class CKunenaPost {
 		check_dberror ( "Unable to load messages." );
 
 		//get attachments
-		$mes_ids = array();
+		$mesids = array();
 		foreach ($this->messages as $mes) {
-			$mes_ids[]=$mes->id;
+			$mesids[]=$mes->id;
 		}
-		$mes_ids = implode(',', $mes_ids);
-
-		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN($mes_ids)";
-		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
-		$this->attachments = $this->_db->loadObjectlist ();
-		check_dberror ( "Unable to attachments." );
+		$mesids = implode(',', $mesids);
+		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+		$attachments = CKunenaAttachments::getInstance ();
+		$this->attachmentslist = $attachments->get($mesids);
 
 		$this->subject = stripslashes ( $this->msg_cat->subject );
 
@@ -823,6 +821,11 @@ class CKunenaPost {
 			}
 		}
 		return false;
+	}
+
+	function displayAttachments($attachments) {
+		$this->attachments = $attachments;
+		CKunenaTools::loadTemplate('/view/message.attachments.php');
 	}
 
 	function display() {

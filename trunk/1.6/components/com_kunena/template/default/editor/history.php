@@ -39,50 +39,7 @@ $k = 0;
 			<div class="msgtext">
 				<?php echo KunenaParser::parseBBCode( stripslashes($mes->message) )?>
 			</div>
-			<?php if ($mes->attach){ ?>
-			<div>
-				<div class="msgattach">
-					<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
-						<ul class="kfile-attach">
-							<?php
-							foreach($this->attachments as $attachment){
-								if ($attachment->mesid == $mes->id) {
-									// shortname for output
-									$shortname = CKunenaTools::shortenFileName($attachment->filename);
-									// First lets check the attachment file type
-									switch (strtolower($attachment->filetype)){
-										case 'image' :
-											// Check for thumbnail and if available, use for display
-											if (file_exists(JPATH_ROOT.$attachment->folder.'/thumb/'.$attachment->filename)){
-												$thumb = $attachment->folder.'/thumb/'.$attachment->filename;
-												$imgsize = '';
-											} else {
-												$thumb = $attachment->folder.'/'.$attachment->filename;
-												$imgsize = 'width="'.$this->config->thumbwidth.'px" height="'.$this->config->thumbheight.'px"';
-											}
-
-											$img = '<img '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
-										break;
-										default :
-											// Filetype without thumbnail or icon support - use default file icon
-											$img = '<img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />';
-									}
-								?>
-								<li>
-									<?php
-									$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'nofollow');
-									$html .='<span>'.CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$shortname,$attachment->filename, 'nofollow').' ('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
-									echo $html;
-									?>
-								</li>
-						<?php
-						}
-					}
-					?>
-						</ul>
-				</div>
-			</div>
-			<?php } ?>
+			<?php if ( !empty($this->attachmentslist[$mes->id]) ) $this->displayAttachments($this->attachmentslist[$mes->id]); ?>
 		</td>
 	</tr>
 	<?php endforeach; ?>

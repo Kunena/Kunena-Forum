@@ -11,6 +11,9 @@
 **/
 
 div.klatest {}
+div.klatest ul li {
+	background: none !important;
+}
 #klatest-items {
 	margin: 0;
 	padding: 0;

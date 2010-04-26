@@ -28,8 +28,15 @@ class modKunenaLatestHelper {
 			if (( int ) $catnum > 0)
 				$catlist [] = ( int ) $catnum;
 		}
-		if (count ( $catlist ))
-			$latestcats = " AND m.catid IN (" . implode ( ',', $catlist ) . ") ";
+		$latestcats = '';
+		if ( !empty($catlist) && !in_array(0, $catlist)) {
+			$catlist = implode ( ',', $catlist );
+			if ( $k_config->latestcategory_in == '1' ) {
+				$latestcats = ' AND m.catid IN ('.$catlist.') ';
+			} else {
+				$latestcats = ' AND m.catid NOT IN ('.$catlist.') ';
+			}
+		}
 
 		$userAPI = Kunena::getUserAPI();
 		$cat_total = $userAPI->getAllowedCategories($my->id);

@@ -30,6 +30,10 @@ Legend:
 
 KunenaLatest 1.0
 
+26-Apr-2010 Matias
+# [#20081] Small layout fixes
+# [#20081] Show the same items as Recent Topics in Kunena
+
 18-Apr-2010 Matias
 # [#20081] Fixed wrong avatar if user had been deleted
 

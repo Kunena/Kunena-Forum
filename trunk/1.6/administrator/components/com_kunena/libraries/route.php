@@ -62,7 +62,7 @@ abstract class KunenaRoute {
 		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml, $ssl );
 	}
 
-	protected static function getDefaultFunc() {
+	public static function getDefaultFunc() {
 		// Handle default page
 		$retval = 'listcat';
 		$config = KunenaFactory::getConfig ();

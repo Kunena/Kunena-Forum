@@ -595,26 +595,26 @@ class CKunenaTools {
 		 *  In addition it check if there is a link to Kunena in any of the menus
 		 *  and if not, adds a forum link in the mainmenu.
 		 */
-		function createMenu() {
+		function createMenu($update = true) {
 			$kunena_db =& JFactory::getDBO();
 
 			// First we need to get the componentid of the install Kunena component
 			$query = "SELECT id FROM `#__components` WHERE `option`='com_kunena';";
 			$kunena_db->setQuery ($query);
-			$componentid = $kunena_db->loadResult ();
+			$componentid = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to get component id." );
 
 			// Create new Joomla menu for Kunena
 			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
-			$moduleid = $kunena_db->loadResult ();
+			$moduleid = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load kunena menu." );
 
 			// Check if it exsits, if not create it
-			if (!$moduleid) {
+			if (!$moduleid || $update) {
 				// Create a menu type for the Kunena menu
-				$query = "REPLACE INTO `#__menu_types` (`menutype`, `title`, `description`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_TITLE') . "', 'This is the default Kunena menu. It is used as the top navigation for Kunena. It can be publish in any module position. Simply unpublish items that are not required.');";
+				$query = "REPLACE INTO `#__menu_types` (`id`, `menutype`, `title`, `description`) VALUES
+							($moduleid, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_TITLE') . "', 'This is the default Kunena menu. It is used as the top navigation for Kunena. It can be publish in any module position. Simply unpublish items that are not required.');";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create menu." );
@@ -622,18 +622,18 @@ class CKunenaTools {
 				// Now get the menu id again, we need it, in order to publish the menu module
 				$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 				$kunena_db->setQuery ($query);
-				$moduleid = $kunena_db->loadResult ();
+				$moduleid = (int)$kunena_db->loadResult ();
 				check_dberror ( "Unable to load kunena menu." );
 			}
 
 			// Forum
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
-			$parentid = $kunena_db->loadResult ();
+			$parentid = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load Category Index." );
-			if (!$parentid) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_LISTCAT') . "', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$parentid || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($parentid, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_FORUM') . "', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Category Index." );
@@ -646,10 +646,11 @@ class CKunenaTools {
 			// Category Index
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=listcat' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load Category Index." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_LISTCAT') . "', 'listcat', 'index.php?option=com_kunena&func=listcat', 'component', 1, $parentid, $componentid, 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_LISTCAT') . "', 'listcat', 'index.php?option=com_kunena&func=listcat', 'component', 1, $parentid, $componentid, 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Category Index." );
@@ -658,10 +659,11 @@ class CKunenaTools {
 			// Recent Topics
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=latest' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load Recent Topics." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_LATEST') . "', 'latest', 'index.php?option=com_kunena&func=latest', 'component', 1, $parentid, $componentid, 1, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_LATEST') . "', 'latest', 'index.php?option=com_kunena&func=latest', 'component', 1, $parentid, $componentid, 1, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Recent Topics." );
@@ -670,10 +672,11 @@ class CKunenaTools {
 			// Welcome
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=showcat&catid=2' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load Welcome." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_WELCOME') . "', 'welcome', 'index.php?option=com_kunena&func=showcat&catid=2', 'component', 1, $parentid, $componentid, 1, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_WELCOME') . "', 'welcome', 'index.php?option=com_kunena&func=showcat&catid=2', 'component', 1, $parentid, $componentid, 1, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Welcome." );
@@ -682,10 +685,11 @@ class CKunenaTools {
 			// New Topic
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=post&do=new' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load New Topic." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_NEWTOPIC') . "', 'newtopic', 'index.php?option=com_kunena&func=post&do=new', 'component', 1, $parentid, $componentid, 1, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_NEWTOPIC') . "', 'newtopic', 'index.php?option=com_kunena&func=post&do=new', 'component', 1, $parentid, $componentid, 1, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create New Topic." );
@@ -694,10 +698,11 @@ class CKunenaTools {
 			// No Replies
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=noreplies' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load No Replies." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_NOREPLIES') . "', 'noreplies', 'index.php?option=com_kunena&func=noreplies', 'component', 1, $parentid, $componentid, 1, 4, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_NOREPLIES') . "', 'noreplies', 'index.php?option=com_kunena&func=noreplies', 'component', 1, $parentid, $componentid, 1, 4, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create No Replies." );
@@ -706,10 +711,11 @@ class CKunenaTools {
 			// My latest
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=mylatest' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load My latest." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_MYLATEST') . "', 'mylatest', 'index.php?option=com_kunena&func=mylatest', 'component', 1, $parentid, $componentid, 1, 5, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_MYLATEST') . "', 'mylatest', 'index.php?option=com_kunena&func=mylatest', 'component', 1, $parentid, $componentid, 1, 5, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create My latest." );
@@ -718,10 +724,11 @@ class CKunenaTools {
 			// My Profile
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=profile' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load My Profile." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_PROFILE') . "', 'profile', 'index.php?option=com_kunena&func=profile', 'component', 1, $parentid, $componentid, 1, 6, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_PROFILE') . "', 'profile', 'index.php?option=com_kunena&func=profile', 'component', 1, $parentid, $componentid, 1, 6, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create My Profile." );
@@ -730,10 +737,11 @@ class CKunenaTools {
 			// Rules
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=rules' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load Rules." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_RULES') . "', 'rules', 'index.php?option=com_kunena&func=rules', 'component', 1, $parentid, $componentid, 1, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_RULES') . "', 'rules', 'index.php?option=com_kunena&func=rules', 'component', 1, $parentid, $componentid, 1, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Rules." );
@@ -742,10 +750,11 @@ class CKunenaTools {
 			// Help
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=help' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load Help." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_HELP') . "', 'help', 'index.php?option=com_kunena&func=help', 'component', 1, $parentid, $componentid, 1, 8, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_HELP') . "', 'help', 'index.php?option=com_kunena&func=help', 'component', 1, $parentid, $componentid, 1, 8, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Help." );
@@ -754,10 +763,11 @@ class CKunenaTools {
 			// Search
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=search' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load Search." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "REPLACE INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('kunenamenu', '" . JText::_('COM_KUNENA_MENU_SEARCH') . "', 'search', 'index.php?option=com_kunena&func=search', 'component', 1, $parentid, $componentid, 1, 9, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_SEARCH') . "', 'search', 'index.php?option=com_kunena&func=search', 'component', 1, $parentid, $componentid, 1, 9, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create Search." );
@@ -765,14 +775,14 @@ class CKunenaTools {
 
 			$query = "SELECT id FROM `#__modules` WHERE `position`='kunena_menu';";
 			$kunena_db->setQuery ($query);
-			$moduleid = $kunena_db->loadResult ();
+			$moduleid = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load module id." );
 
 			// Check if it exsits, if not create it
-			if (!$moduleid) {
+			if (!$moduleid || $update) {
 				// Create a module for the Kunena menu
-				$query = "REPLACE INTO `#__modules` (`title`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `published`, `module`, `numnews`, `access`, `showtitle`, `params`, `iscore`, `client_id`, `control`) VALUES
-				('" . JText::_('COM_KUNENA_MENU_TITLE') . "', '', 0, 'kunena_menu', 0, '0000-00-00 00:00:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=kunenamenu\nmenu_style=list\nstartLevel=1\nendLevel=2\nshowAllChildren=1\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 0, 0, '');";
+				$query = "REPLACE INTO `#__modules` (`id`, `title`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `published`, `module`, `numnews`, `access`, `showtitle`, `params`, `iscore`, `client_id`, `control`) VALUES
+					($moduleid, '" . JText::_('COM_KUNENA_MENU_TITLE') . "', '', 0, 'kunena_menu', 0, '0000-00-00 00:00:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=kunenamenu\nmenu_style=list\nstartLevel=1\nendLevel=2\nshowAllChildren=1\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 0, 0, '');";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create menu." );
@@ -780,11 +790,11 @@ class CKunenaTools {
 				// Now get the module id again, we need it, in order to publish the menu module
 				$query = "SELECT id FROM `#__modules` WHERE `position`='kunena_menu';";
 				$kunena_db->setQuery ($query);
-				$moduleid = $kunena_db->loadResult ();
+				$moduleid = (int)$kunena_db->loadResult ();
 				check_dberror ( "Unable to load menu." );
 
 				// Now publish the module
-				$query = "INSERT INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
+				$query = "REPLACE INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to publish menu." );
@@ -793,14 +803,30 @@ class CKunenaTools {
 			// Finally add Kunena to mainmenu if it does not exist somewhere
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena' AND `menutype`='mainmenu';";
 			$kunena_db->setQuery ($query);
+			$id = (int)$kunena_db->loadResult ();
 			check_dberror ( "Unable to load main menu." );
-			if (!$kunena_db->loadResult ()) {
-				$query = "INSERT INTO `#__menu` (`menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-							('mainmenu', '" . JText::_('COM_KUNENA_MENU_FORUM') . "', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'page_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0);";
+			if (!$id || $update) {
+				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, 'mainmenu', '" . JText::_('COM_KUNENA_MENU_FORUM') . "', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'page_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
 				check_dberror ( "Unable to create item into main menu." );
 			}
+			require_once(JPATH_ADMINISTRATOR.'/components/com_menus/helpers/helper.php');
+			MenusHelper::cleanCache();
+		}
+
+		function DeleteMenu() {
+			$db = JFactory::getDBO();
+			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
+			$db->setQuery ($query);
+			$menuid = $db->loadResult ();
+			check_dberror ( "Unable to load kunena menu." );
+
+			require_once(JPATH_ADMINISTRATOR.'/components/com_menus/helpers/helper.php');
+			require_once(JPATH_ADMINISTRATOR.'/components/com_menus/models/menutype.php');
+			$menuhelper = new MenusModelMenutype();
+			$menuhelper->delete($menuid);
 		}
 
 		/**

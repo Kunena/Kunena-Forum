@@ -399,7 +399,7 @@ class CKunenaPost {
 		$attachkeeplist = implode(',', $attachkeeplist);
 		$query = "SELECT id FROM #__kunena_attachments WHERE mesid={$this->id} AND id NOT IN ({$attachkeeplist})";
 		$this->_db->setQuery ( $query );
-		$attachmentlist = implode(',', $this->_db->loadResultArray ());
+		$attachmentlist = $this->_db->loadResultArray ();
 		check_dberror ( "Unable to load attachments." );
 		$attachments->deleteAttachment($attachmentlist);
 

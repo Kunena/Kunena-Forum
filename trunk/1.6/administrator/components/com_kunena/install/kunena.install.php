@@ -53,6 +53,7 @@ ignore_user_abort(true);
 
 // Kunena wide defines
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
+include_once (KUNENA_PATH .DS. "class.kunena.php");
 
 $lang = JFactory::getLanguage();
 $lang->load('com_kunena', KUNENA_PATH);
@@ -81,6 +82,8 @@ function com_install()
 		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
 		$kunena_db->query();
 		check_dbwarning("Unable to set admin menu image.");
+
+		CKunenaTools::createMenu(false);
 
 		//install & upgrade class
 		$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);

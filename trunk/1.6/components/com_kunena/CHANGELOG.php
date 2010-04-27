@@ -36,6 +36,11 @@ Kunena 1.6.0-DEV
 
 27-Apr-2010 Matias
 ^ [#15886] Merged revisions 2360-2363 from /branches/1.6-xillibit with minor changes
+# [#19288] Fix regression: Wrong menuitem gets highlighted if default page is not Index
+# [#19288] Fix regression: Only one attachment can be deleted in edit
+# [#19288] Uninstall does not remove Kunena menu (=> broken links)
+# [#19288] Admin: Create menu does not reset kunenamenu, but users expect it to do it
+# [#19288] Installing Kunena does not always create menus
 
 26-Apr-2010 Xillibit
 # [#19288] Display userid in trash manager

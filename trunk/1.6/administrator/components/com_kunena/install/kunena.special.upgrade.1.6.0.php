@@ -75,6 +75,3 @@ if ($attachcount==0){
 	// created and executed outside of the upgrade itself.
 }
 
-
-CKunenaTools::createMenu();
-

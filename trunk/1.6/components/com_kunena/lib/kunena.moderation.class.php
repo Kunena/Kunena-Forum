@@ -313,7 +313,7 @@ class CKunenaModeration {
 				}
 
 				if ( $currentMessage->userid > 0) {
-					$query = "UPDATE #__fb_users SET posts=posts-1 WHERE `usersid`='$MessageID'; ";
+					$query = "UPDATE #__fb_users SET posts=posts-1 WHERE `userid`='$MessageID'; ";
 					$this->_db->setQuery ($query);
 					$this->_db->query ();
 					check_dberror ( "Unable to update users posts." );

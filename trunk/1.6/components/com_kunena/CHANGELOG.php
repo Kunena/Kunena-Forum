@@ -41,6 +41,7 @@ Kunena 1.6.0-DEV
 # [#19288] Uninstall does not remove Kunena menu (=> broken links)
 # [#19288] Admin: Create menu does not reset kunenamenu, but users expect it to do it
 # [#19288] Installing Kunena does not always create menus
+# [#19288] Fix regression: Typo in CKunenaModeration::_Delete(): usersid
 
 26-Apr-2010 Xillibit
 # [#19288] Display userid in trash manager

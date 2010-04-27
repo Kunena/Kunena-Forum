@@ -41,6 +41,9 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Put the personnaltext (about me) below the avatar
 # [#19288] Change how the functions Restore and Delete works
 # [#19288] Fix undefined variable on line 95 on kunena.php (only happen one time, maybe not usefull)
+# [#19288] Wrong width and height for video added by choosing the provider in the list and putting the video ID
+# [#19288] Set standard width and height for video if the user forgot to put them
+# [#19288] When you save your own avatar for the first time, you have the message JFolder::files: Path is not a folder:
 
 Kunena 1.6.0-DEV
 

@@ -92,7 +92,7 @@ if ($func && !in_array($func, KunenaRouter::$functions)) {
 // Set active menuitem so that Kunena menu shows up
 $menu = JSite::getMenu ();
 $active = $menu->getActive ();
-if (!$active->menutype != 'kunenamenu' || !$func) {
+if (empty($active) || !$active->menutype != 'kunenamenu' || !$func) {
 	$menu->setActive(KunenaRoute::getItemID());
 }
 

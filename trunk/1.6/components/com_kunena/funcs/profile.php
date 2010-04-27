@@ -404,9 +404,11 @@ class CKunenaProfile {
 			$path = KUNENA_PATH_AVATAR_UPLOADED .DS. $uploadpath;
 
 			// Delete old uploaded avatars:
-			$deletelist = JFolder::files($path, 'user'.$this->profile->userid, false, true);
-			foreach ($deletelist as $delete) {
-				JFile::delete($delete);
+			if ( JFolder::exists( $path ) ) {
+				$deletelist = JFolder::files($path, 'user'.$this->profile->userid, false, true);
+				foreach ($deletelist as $delete) {
+					JFile::delete($delete);
+				}
 			}
 			$upload->setImageResize(intval($this->config->avatarsize)*1024, 200, 200, $this->config->avatarquality);
 

@@ -2180,11 +2180,17 @@ function deleteitemsnow ( $option, $cid ) {
 function trashrestore($option, $cid) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
-	$cids = implode ( ',', $cid );
-	if ($cids) {
-		$kunena_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE id IN ($cids)" );
-		$kunena_db->query ();
-		check_dberror ( "Unable to restore message(s)." );
+
+	if ($cid) {
+		foreach ( $cid as $id ) {
+			$kunena_db->setQuery ( "SELECT * FROM #__fb_messages WHERE id=$id AND hold=2" );
+			$mes = $kunena_db->loadObject ();
+			check_dberror ( "Unable to restore message(s)." );
+
+			$kunena_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE hold IN (2,3) AND thread=$mes->thread " );
+			$kunena_db->query ();
+			check_dberror ( "Unable to restore message(s) replies." );
+		}
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showtrashview", JText::_('COM_KUNENA_TRASH_RESTORE_DONE') );

@@ -1032,7 +1032,13 @@ Selectors.Pseudo.selected = function(){
 function kInsertVideo1() {
 	var videosize = $('kvideosize').get('value');
 	var videowidth = $('kvideowidth').get('value');
+	if ( videowidth == '') {
+		videowidth = '425';
+	}
 	var videoheigth = $('kvideoheight').get('value');
+	if ( videoheigth == '') {
+		videoheigth = '344';
+	}
 	var videoid = $('kvideoid').get('value');
 	kbbcode.replaceSelection('[video size='+videosize+' width='+videowidth+' height='+videoheigth+' type='+$('kvideoprovider').retrieve('videoprov')+']'+videoid+'[/video]');
 	kToggleOrSwap("kbbcode-video-options");

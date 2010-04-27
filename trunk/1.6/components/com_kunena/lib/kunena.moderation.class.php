@@ -304,7 +304,8 @@ class CKunenaModeration {
 				$sql = "DELETE FROM #__fb_messages WHERE `id`='$MessageID';";
 
 				$query = "DELETE FROM #__fb_messages_text WHERE `mesid`='$MessageID'; ";
-				$this->_db->query ($query);
+				$this->_db->setQuery ($query);
+				$this->_db->query ();
 				check_dberror ( "Unable to delete messages text." );
 
 				if ( $currentMessage->parent == 0 ) {
@@ -313,12 +314,17 @@ class CKunenaModeration {
 
 				if ( $currentMessage->userid > 0) {
 					$query = "UPDATE #__fb_users SET posts=posts-1 WHERE `usersid`='$MessageID'; ";
-					$this->_db->query ($query);
+					$this->_db->setQuery ($query);
+					$this->_db->query ();
 					check_dberror ( "Unable to update users posts." );
 				}
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
-				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `thread`='{$currentMessage->thread}';";
+				$sql1 = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='$MessageID';";
+				$this->_db->setQuery ( $sql1 );
+				$this->_db->query ();
+				check_dberror ( 'Unable to perform delete.' );
+				$sql = "UPDATE #__fb_messages SET `hold`=3 WHERE hold IN (0,1) AND `thread`='{$currentMessage->thread}' AND `id`!='$MessageID' ;";
 				break;
 			case KN_DEL_ATTACH : //Delete only the attachments
 				require_once (KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
@@ -391,7 +397,7 @@ class CKunenaModeration {
 	}
 
 	public function deleteMessagePerminantly($MessageID, $DeleteAttachments = false) {
-		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE_PERMANENTLY );
+		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE_PERMINANTLY );
 	}
 
 	public function deleteMessage($MessageID, $DeleteAttachments = false) {

@@ -3127,6 +3127,9 @@ function textCounter(field, target) {
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_IP'), 'ip', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" ><?php
+					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR_USERID'), 'userid', $lists['order_Dir'], $lists['order']);
+					?></th>
+					<th align="left" ><?php
 					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR'), 'username', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" ><?php
@@ -3166,6 +3169,9 @@ function textCounter(field, target) {
 						?></td>
 					<td ><?php
 						echo $row->ip;
+						?></td>
+					<td ><?php
+						echo $row->userid;
 						?></td>
 					<td ><?php
 						if(empty($row->username)){

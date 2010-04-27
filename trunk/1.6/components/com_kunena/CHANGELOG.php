@@ -34,6 +34,20 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+27-Apr-2010 Matias
+^ [#15886] Merged revisions 2360-2363 from /branches/1.6-xillibit with minor changes
+
+26-Apr-2010 Xillibit
+# [#19288] Display userid in trash manager
+# [#19288] Fix little regression on delete perminantly function
+# [#19288] Put tooltip to show extensions allowed in form
+# [#19288] Profile: Put the personnaltext (about me) below the avatar
+# [#19288] Change how the functions Restore and Delete works (hold=2,3)
+# [#19288] Fix undefined variable on line 95 on kunena.php (no Itemid)
+# [#19288] Wrong width and height for video added by choosing the provider in the list and putting the video ID
+# [#19288] Set standard width and height for video if the user forgot to put them
+# [#19288] When you save your own avatar for the first time, you have the message JFolder::files: Path is not a folder:
+
 26-Apr-2010 Matias
 + [#20071] KunenaRoute: Remove redirect when not in kunenamenu, set active menu item instead
 ^ [#15886] Merged revision 2349 from /branches/1.6-xillibit with changes

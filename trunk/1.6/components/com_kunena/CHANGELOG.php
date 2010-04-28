@@ -48,6 +48,11 @@ Kunena 1.6.0-DEV
 # [#19244] Implement new Moderation features: Show unapproved and deleted messages in most screens (if permissions)
 # [#19244] Implement new Moderation features: Add func = unapproved/deleted
 ^ [#15886] Merged revisions 2370-2371 from /branches/1.6-xillibit
+# [#19288] Fix regression: If function/category does not exist, show error page
+# [#19288] Fix regression: Category administration: do not show non-existent moderators in the list
+# [#19288] Allow user to reset Kunena configuration
+# [#19288] By default, new category should be moderated
+# [#19288] Remove confidential information from quoted text
 
 27-Apr-2010 Xillibit
 # [#19288] Hide about me when it's empty

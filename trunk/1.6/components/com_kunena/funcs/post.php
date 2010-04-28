@@ -225,7 +225,8 @@ class CKunenaPost {
 		if ($this->catid && $this->msg_cat->id > 0) {
 			if ($do == 'quote') {
 				$this->message_text = "[b]" . kunena_htmlspecialchars ( stripslashes ( $message->name ) ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
-				$this->message_text .= '[quote]' .  kunena_htmlspecialchars (stripslashes ( $message->message ) ) . "[/quote]";
+				$mestext = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', stripslashes ( $message->message ) );
+				$this->message_text .= '[quote]' .  kunena_htmlspecialchars ( $mestext ) . "[/quote]";
 			} else {
 				$this->message_text = '';
 			}

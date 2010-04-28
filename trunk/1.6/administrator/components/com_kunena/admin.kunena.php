@@ -151,7 +151,12 @@ switch ($task) {
 
 		break;
 
-	case "newmoderator" :
+	case "defaultconfig" :
+		defaultConfig ( $option );
+
+		break;
+
+		case "newmoderator" :
 		newModerator ( $option, $id );
 
 		break;
@@ -523,6 +528,7 @@ function editForum($uid, $option) {
 		$row->pub_recurse = 1;
 		$row->admin_recurse = 1;
 		$row->pub_access = 0;
+		$row->moderated = 1;
 	}
 
 	$catList = array();
@@ -564,8 +570,8 @@ function editForum($uid, $option) {
 	//get a list of moderators, if forum/category is moderated
 	$moderatorList = array ();
 
-	if ($row->moderated == 1) {
-		$kunena_db->setQuery ( "SELECT * FROM #__fb_moderation AS a LEFT JOIN #__users as u ON a.userid=u.id where a.catid=$row->id" );
+	if ($row->moderated == 1 && $uid) {
+		$kunena_db->setQuery ( "SELECT * FROM #__fb_moderation AS a INNER JOIN #__users as u ON a.userid=u.id where a.catid=$row->id" );
 		$moderatorList = $kunena_db->loadObjectList ();
 		check_dberror ( "Unable to load moderator list." );
 	}
@@ -1070,6 +1076,20 @@ function showConfig($option) {
 	$lists['topicicons'] = JHTML::_('select.genericlist', $yesno, 'cfg_topicicons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->topicicons);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
+}
+
+function defaultConfig($option) {
+	$kunena_app = JFactory::getApplication ();
+	$kunena_config = CKunenaConfig::getInstance ();
+	$kunena_config->backup ();
+	$kunena_config->remove ();
+
+	$kunena_db = &JFactory::getDBO ();
+	$kunena_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
+	$kunena_db->query ();
+	check_dberror ( "Unable to update sessions." );
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIG_DEFAULT') );
 }
 
 function saveConfig($option) {

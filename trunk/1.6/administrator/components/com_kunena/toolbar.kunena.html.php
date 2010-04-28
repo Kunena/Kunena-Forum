@@ -74,6 +74,7 @@ class CKunenaToolbar
 
         JToolBarHelper::spacer();
         JToolBarHelper::save('saveconfig');
+        JToolBarHelper::trash('defaultconfig', JText::_('COM_KUNENA_RESET_CONFIG'), false);
         JToolBarHelper::spacer();
         JToolBarHelper::back();
         JToolBarHelper::spacer();

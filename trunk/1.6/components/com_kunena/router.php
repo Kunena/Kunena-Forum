@@ -231,11 +231,13 @@ class KunenaRouter {
 				$value = $var;
 				if (in_array ( $var, self::$functions )) {
 					$var = 'func';
-				} else if (!isset($vars ['do'])) {
+				} else if (isset($vars ['func']) && !isset($vars ['do'])) {
 					$var = 'do';
 				} else {
-					// Unknown parameter, skip it
-					continue;
+					// Unknown parameter: continue
+					if (isset($vars ['func'])) continue;
+					// Oops: unknown function or non-existing category
+					$var = 'func';
 				}
 			}
 			$vars [$var] = $value;

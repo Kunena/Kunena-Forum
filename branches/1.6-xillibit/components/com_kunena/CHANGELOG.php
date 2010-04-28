@@ -32,7 +32,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0-DEV
+28-Apr-2010 Xillibit
+# [#19288] Give the possibility to disable or enable easily the topicicons with config settings
+
+27-Apr-2010 Xillibit
+# [#19288] Hide about me when it's empty
+# [#19288] Set standard width and height for video if the user forgot to put them in parser
+
+Kunena 1.6.0-Xillibit-DEV
 
 28-Apr-2010 Matias
 # [#19288] Administration: Escape text input fields before showing them (to show "foo")

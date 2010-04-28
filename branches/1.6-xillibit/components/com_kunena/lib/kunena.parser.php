@@ -641,10 +641,17 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$vid_height += $vid_addy;
 				if (! isset ( $tag->options ["size"] )) {
 					if (isset ( $tag->options ["width"] ))
+						if($tag->options ['width'] == '1') {
+							$tag->options ['width'] = $vid_minwidth;
+						}
 						$vid_width = intval ( $tag->options ["width"] );
 					if (isset ( $tag->options ["height"] ))
+						if($tag->options ['height'] == '1') {
+							$tag->options ['height'] = $vid_minheight;
+						}
 						$vid_height = intval ( $tag->options ["height"] );
 				}
+
 				if ($vid_width < $vid_minwidth)
 					$vid_width = $vid_minwidth;
 				if ($vid_width > $vid_maxwidth)

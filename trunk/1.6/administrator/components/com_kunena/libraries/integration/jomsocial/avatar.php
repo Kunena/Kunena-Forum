@@ -13,10 +13,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
-kimport('integration.profile');
-
-return;
-
 class KunenaAvatarJomSocial extends KunenaAvatar
 {
 	protected $integration = null;

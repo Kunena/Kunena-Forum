@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+29-Apr-2010 Matias
+# [#19288] Fix regression: JomSocial avatar integration is not working
+
 28-Apr-2010 Severdia
 + [#19356] Tweak select box size on admin side.
 

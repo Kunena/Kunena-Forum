@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+28-Apr-2010 Severdia
++ [#19356] Tweak select box size on admin side.
+
 28-Apr-2010 Matias
 # [#19288] Administration: Escape text input fields before showing them (to show "foo")
 # [#19288] Magic Quotes setting in PHP adds slashes to configuration options and category names, desctriptions

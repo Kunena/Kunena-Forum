@@ -212,6 +212,19 @@ td.kadmin-paging {
 	margin: 0 auto;
 	background: #F3F3F3 !important;
 }
+
+select#pub_access,
+select#latestcategory,
+select#kforums {
+	height: 110px;
+}
+select#admin_access {
+	height: 70px;
+}
+select#kforums {
+	width: 200px;
+}
+
 </style>
 
 <!--[if IE]>

@@ -21,6 +21,7 @@ class CKunenaLatestX {
 		$this->catid = 0;
 		$this->hasSubCats = '';
 		$this->mode = 'threads';
+		$this->header = '';
 
 		$this->db = JFactory::getDBO ();
 		$this->user = $this->my = JFactory::getUser ();
@@ -197,15 +198,13 @@ class CKunenaLatestX {
 		switch ($type) {
 			case 'unapproved':
 				if (!in_array(1, $myhold)) {
-					$allow = false;
-					return;
+					return $this->allow = false;
 				}
 				$hold = '1';
 				break;
 			case 'deleted':
 				if (!in_array(2, $myhold)) {
-					$allow = false;
-					return;
+					return $this->allow = false;
 				}
 				$hold = '2,3';
 				break;
@@ -499,6 +498,10 @@ class CKunenaLatestX {
 		else if ($this->func == 'unapproved') $this->getUnapprovedPosts();
 		else if ($this->func == 'deleted') $this->getDeletedPosts();
 		else $this->getLatest();
+		if (! $this->allow) {
+			echo JText::_('COM_KUNENA_NO_ACCESS');
+			return;
+		}
 
 		//meta description and keywords
 		$metaKeys = $this->header . kunena_htmlspecialchars ( stripslashes ( ", {$this->config->board_title}, " ) ) . $this->app->getCfg ( 'sitename' );

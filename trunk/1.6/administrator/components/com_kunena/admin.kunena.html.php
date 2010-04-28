@@ -524,18 +524,18 @@ table.kadmin-stat caption {
 				</tr>
 				<tr>
 					<td width="200"><?php echo JText::_('COM_KUNENA_NAMEADD'); ?></td>
-					<td><input class="inputbox" type="text" name="name" size="120" maxlength="<?php echo $kunena_config->maxsubject; ?>" value="<?php echo stripslashes ( $row->name ); ?>"></td>
+					<td><input class="inputbox" type="text" name="name" size="120" maxlength="<?php echo $kunena_config->maxsubject; ?>" value="<?php echo kescape ( $row->name ); ?>"></td>
 				</tr>
 				<tr>
 					<td valign="top"><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
 					<td>
-						<textarea class="inputbox" cols="50" rows="6" name="description" id="description" style="width: 500px"><?php echo stripslashes ( $row->description ); ?></textarea>
+						<textarea class="inputbox" cols="50" rows="6" name="description" id="description" style="width: 500px"><?php echo kescape ( $row->description ); ?></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td valign="top"><?php echo JText::_('COM_KUNENA_HEADERADD'); ?></td>
 					<td>
-						<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo stripslashes ( $row->headerdesc ); ?></textarea>
+						<textarea class="inputbox" cols="50" rows="6" name="headerdesc" id="headerdesc" style="width: 500px"><?php echo kescape ( $row->headerdesc ); ?></textarea>
 					</td>
 				</tr>
 			</table>
@@ -656,11 +656,11 @@ table.kadmin-stat caption {
 						value="<?php echo $ml->id;
 								?>"
 						onClick="isChecked(this.checked);"></td>
-							<td><?php echo $ml->name;
+							<td><?php echo kescape($ml->name);
 								?></td>
-							<td><?php echo $ml->username;
+							<td><?php echo kescape($ml->username);
 								?></td>
-							<td><?php echo $ml->email;
+							<td><?php echo kescape($ml->email);
 								?></td>
 							<td align="center"><img src="images/tick.png" alt=""></td>
 						</tr>
@@ -712,7 +712,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top" width="25%"><input type="text"
 							name="cfg_board_title"
-							value="<?php echo stripslashes ( $kunena_config->board_title );
+							value="<?php echo kescape(stripslashes ( $kunena_config->board_title ));
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE_DESC') ?>
 						</td>
@@ -720,7 +720,7 @@ table.kadmin-stat caption {
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_email"
-							value="<?php echo $kunena_config->email;
+							value="<?php echo kescape($kunena_config->email);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL_DESC') ?></td>
 					</tr>
@@ -738,7 +738,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_fbsessiontimeout"
-							value="<?php echo $kunena_config->fbsessiontimeout;
+							value="<?php echo kescape($kunena_config->fbsessiontimeout);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KUNENA_SESSION_TIMEOUT_DESC') ?>
 						</td>
@@ -746,7 +746,7 @@ table.kadmin-stat caption {
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES') ?></td>
 						<td align="left" valign="top" colspan="2">
-							<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo stripslashes ( $kunena_config->offline_message ); ?></textarea>
+							<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo kescape(stripslashes ( $kunena_config->offline_message )); ?></textarea>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -800,7 +800,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top" width="25%"><input type="text"
 							name="cfg_threads_per_page"
-							value="<?php echo $kunena_config->threads_per_page;
+							value="<?php echo kescape($kunena_config->threads_per_page);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_THREADS_DESC') ?></td>
 					</tr>
@@ -808,7 +808,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MESSAGES') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_messages_per_page"
-							value="<?php echo $kunena_config->messages_per_page;
+							value="<?php echo kescape($kunena_config->messages_per_page);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC') ?>
 						</td>
@@ -818,7 +818,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_messages_per_page_search"
-							value="<?php echo $kunena_config->messages_per_page_search;
+							value="<?php echo kescape($kunena_config->messages_per_page_search);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_MESSAGES_DESC_SEARCH') ?>
 						</td>
@@ -834,7 +834,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HISTLIM') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_historylimit"
-							value="<?php echo $kunena_config->historylimit;
+							value="<?php echo kescape($kunena_config->historylimit);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HISTLIM_DESC') ?></td>
 					</tr>
@@ -865,7 +865,7 @@ table.kadmin-stat caption {
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_NEWCHAR') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_newchar"
-							value="<?php echo stripslashes ( $kunena_config->newchar );
+							value="<?php echo kescape(stripslashes ( $kunena_config->newchar ));
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_NEWCHAR_DESC') ?></td>
 					</tr>
@@ -934,7 +934,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_catimagepath"
-							value="<?php echo $kunena_config->catimagepath;
+							value="<?php echo kescape($kunena_config->catimagepath);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CATIMAGEPATH_DESC') ?>
 						</td>
@@ -951,7 +951,7 @@ table.kadmin-stat caption {
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ANN_MODID') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_annmodid"
-							value="<?php echo $kunena_config->annmodid;
+							value="<?php echo kescape($kunena_config->annmodid);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ANN_MODID_DESC') ?>
 						</td>
@@ -959,14 +959,14 @@ table.kadmin-stat caption {
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAWIDTH') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_rtewidth"
-							value="<?php echo $kunena_config->rtewidth;
+							value="<?php echo kescape($kunena_config->rtewidth);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAWIDTH_DESC') ?></td>
 					</tr>
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAHEIGHT') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_rteheight"
-							value="<?php echo $kunena_config->rteheight;
+							value="<?php echo kescape($kunena_config->rteheight);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TAHEIGHT_DESC') ?>
 						</td>
@@ -992,7 +992,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_CID') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_rules_cid"
-							value="<?php echo $kunena_config->rules_cid;
+							value="<?php echo kescape($kunena_config->rules_cid);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_CID_DESC') ?>
 						</td>
@@ -1001,7 +1001,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_LINK') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_rules_link"
-							value="<?php echo $kunena_config->rules_link;
+							value="<?php echo kescape($kunena_config->rules_link);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_LINK_DESC') ?>
 						</td>
@@ -1027,7 +1027,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_help_cid"
-							value="<?php echo $kunena_config->help_cid;
+							value="<?php echo kescape($kunena_config->help_cid);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID_DESC') ?>
 						</td>
@@ -1036,7 +1036,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_LINK') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_help_link"
-							value="<?php echo $kunena_config->help_link;
+							value="<?php echo kescape($kunena_config->help_link);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_LINK_DESC') ?>
 						</td>
@@ -1104,7 +1104,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" width="25%" valign="top"><input type="text"
 							name="cfg_maxsubject"
-							value="<?php echo $kunena_config->maxsubject;
+							value="<?php echo kescape($kunena_config->maxsubject);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SUBJECTLENGTH_DESC') ?>
 						</td>
@@ -1112,7 +1112,7 @@ table.kadmin-stat caption {
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_maxsig"
-							value="<?php echo $kunena_config->maxsig;
+							value="<?php echo kescape($kunena_config->maxsig);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SIGNATURE_DESC') ?>
 						</td>
@@ -1121,7 +1121,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_maxpersotext"
-							value="<?php echo $kunena_config->maxpersotext;
+							value="<?php echo kescape($kunena_config->maxpersotext);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PESONNALTEXT_DESC') ?>
 						</td>
@@ -1186,7 +1186,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_useredittime"
-							value="<?php echo $kunena_config->useredittime;
+							value="<?php echo kescape($kunena_config->useredittime);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIME_DESC') ?>
 						</td>
@@ -1196,7 +1196,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_useredittimegrace"
-							value="<?php echo $kunena_config->useredittimegrace;
+							value="<?php echo kescape($kunena_config->useredittimegrace);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_EDIT_TIMEGRACE_DESC') ?>
 						</td>
@@ -1293,7 +1293,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FLOOD') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_floodprotection"
-							value="<?php echo $kunena_config->floodprotection;
+							value="<?php echo kescape($kunena_config->floodprotection);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FLOOD_DESC') ?></td>
 					</tr>
@@ -1375,7 +1375,7 @@ table.kadmin-stat caption {
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVSIZE') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_avatarsize"
-							value="<?php echo $kunena_config->avatarsize;
+							value="<?php echo kescape($kunena_config->avatarsize);
 						?>" /></td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -1383,7 +1383,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_avatarquality"
-							value="<?php echo $kunena_config->avatarquality;
+							value="<?php echo kescape($kunena_config->avatarquality);
 						?>" /> %</td>
 					</tr>
 				</table>
@@ -1425,7 +1425,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagetypes"
-							value="<?php echo $kunena_config->imagetypes;
+							value="<?php echo kescape($kunena_config->imagetypes);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDTYPES_DESC') ?>
 						</td>
@@ -1443,7 +1443,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagemimetypes"
-							value="<?php echo $kunena_config->imagemimetypes;
+							value="<?php echo kescape($kunena_config->imagemimetypes);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMAGEALLOWEDMIMETYPES_DESC') ?>
 						</td>
@@ -1451,7 +1451,7 @@ table.kadmin-stat caption {
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGSIZE') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagesize"
-							value="<?php echo $kunena_config->imagesize;
+							value="<?php echo kescape($kunena_config->imagesize);
 						?>" /></td>
 						<td align="left" valign="top">
 							<?php echo JText::sprintf('COM_KUNENA_A_IMGSIZE_DESC',
@@ -1462,7 +1462,7 @@ table.kadmin-stat caption {
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGWIDTH') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagewidth"
-							value="<?php echo $kunena_config->imagewidth;
+							value="<?php echo kescape($kunena_config->imagewidth);
 						?>" /></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGWIDTH_DESC') ?></td>
 					</tr>
@@ -1470,14 +1470,14 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_imageheight"
-							value="<?php echo $kunena_config->imageheight;
+							value="<?php echo kescape($kunena_config->imageheight);
 						?>" /></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGHEIGHT_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_thumbwidth"
-							value="<?php echo $kunena_config->thumbwidth;
+							value="<?php echo kescape($kunena_config->thumbwidth);
 						?>" /></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBWIDTH_DESC') ?></td>
 					</tr>
@@ -1485,14 +1485,14 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT') ?></td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_thumbheight"
-							value="<?php echo $kunena_config->thumbheight;
+							value="<?php echo kescape($kunena_config->thumbheight);
 						?>" /></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGTHUMBHEIGHT_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagequality"
-							value="<?php echo $kunena_config->imagequality;
+							value="<?php echo kescape($kunena_config->imagequality);
 						?>" /></td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY_DESC') ?></td>
 					</tr>
@@ -1532,7 +1532,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_filetypes"
-							value="<?php echo $kunena_config->filetypes;
+							value="<?php echo kescape($kunena_config->filetypes);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILEALLOWEDTYPES_DESC') ?>
 						</td>
@@ -1540,7 +1540,7 @@ table.kadmin-stat caption {
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILESIZE') ?></td>
 						<td align="left" valign="top"><input type="text" name="cfg_filesize"
-							value="<?php echo $kunena_config->filesize;
+							value="<?php echo kescape($kunena_config->filesize);
 						?>" /></td>
 						<td align="left" valign="top">
 							<?php echo JText::sprintf('COM_KUNENA_A_FILESIZE_DESC',
@@ -1621,7 +1621,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_ebaylanguagecode"
-							value="<?php echo $kunena_config->ebaylanguagecode;
+							value="<?php echo kescape($kunena_config->ebaylanguagecode);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EBAYLANGUAGECODE_DESC') ?>
 						</td>
@@ -1640,7 +1640,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_trimlongurlsfront"
-							value="<?php echo $kunena_config->trimlongurlsfront;
+							value="<?php echo kescape($kunena_config->trimlongurlsfront);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSFRONT_DESC') ?>
 						</td>
@@ -1650,7 +1650,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top"><input type="text"
 							name="cfg_trimlongurlsback"
-							value="<?php echo $kunena_config->trimlongurlsback;
+							value="<?php echo kescape($kunena_config->trimlongurlsback);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TRIMLONGURLSBACK_DESC') ?>
 						</td>
@@ -1739,7 +1739,7 @@ table.kadmin-stat caption {
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY'); ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_alphauserpointsnumchars"
-								value="<?php echo $kunena_config->alphauserpointsnumchars; ?>" /></td>
+								value="<?php echo kescape($kunena_config->alphauserpointsnumchars); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC'); ?></td>
 						</tr>
 					</table>
@@ -1779,21 +1779,21 @@ table.kadmin-stat caption {
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_LIMIT') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_rss_limit"
-								value="<?php echo $kunena_config->rss_limit; ?>" /></td>
+								value="<?php echo kescape($kunena_config->rss_limit); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_LIMIT_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_rss_included_categories"
-								value="<?php echo $kunena_config->rss_included_categories; ?>" /></td>
+								value="<?php echo kescape($kunena_config->rss_included_categories); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_INCLUDED_CATEGORIES_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_rss_excluded_categories"
-								value="<?php echo $kunena_config->rss_excluded_categories; ?>" /></td>
+								value="<?php echo kescape($kunena_config->rss_excluded_categories); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_EXCLUDED_CATEGORIES_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
@@ -1828,7 +1828,7 @@ table.kadmin-stat caption {
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS') ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_userlist_rows"
-								value="<?php echo $kunena_config->userlist_rows; ?>" /></td>
+								value="<?php echo kescape($kunena_config->userlist_rows); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ROWS_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
@@ -1938,7 +1938,7 @@ table.kadmin-stat caption {
 							?></td>
 							<td align="left" valign="top"><input type="text"
 								name="cfg_popusercount"
-								value="<?php echo $kunena_config->popusercount;
+								value="<?php echo kescape($kunena_config->popusercount);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_USERNUM');
 							?></td>
@@ -1959,7 +1959,7 @@ table.kadmin-stat caption {
 							?></td>
 							<td align="left" valign="top"><input type="text"
 								name="cfg_popsubjectcount"
-								value="<?php echo $kunena_config->popsubjectcount;
+								value="<?php echo kescape($kunena_config->popsubjectcount);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_NUMPOP');
 							?></td>
@@ -1979,7 +1979,7 @@ table.kadmin-stat caption {
 							?></td>
 							<td align="left" valign="top"><input type="text"
 								name="cfg_popsubjectcount"
-								value="<?php echo $kunena_config->poppollscount;
+								value="<?php echo kescape($kunena_config->poppollscount);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_POLLSPOP');
 							?></td>
@@ -2005,7 +2005,7 @@ table.kadmin-stat caption {
 							</td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_pollnboptions"
-								value="<?php echo $kunena_config->pollnboptions;
+								value="<?php echo kescape($kunena_config->pollnboptions);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_OPTIONS_DESC');
 							?>
@@ -2017,7 +2017,7 @@ table.kadmin-stat caption {
 							</td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_polltimebtvotes"
-								value="<?php echo $kunena_config->polltimebtvotes;
+								value="<?php echo kescape($kunena_config->polltimebtvotes);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_TIME_VOTES_DESC');
 							?>
@@ -2029,7 +2029,7 @@ table.kadmin-stat caption {
 							</td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_pollnbvotesbyuser"
-								value="<?php echo $kunena_config->pollnbvotesbyuser;
+								value="<?php echo kescape($kunena_config->pollnbvotesbyuser);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_POLL_NUMBER_VOTES_BY_DESC');
 							?>
@@ -2161,23 +2161,23 @@ table.kadmin-stat caption {
 					onClick="isChecked(this.checked);"></td>
 				<td width="10"><a href="#edit"
 					onclick="return listItemTask('cb<?php echo $i;
-						?>','userprofile')"><?php echo $pl->userid;
+						?>','userprofile')"><?php echo kescape($pl->userid);
 						?></a></td>
 				<td width="100"><a href="#edit"
 					onclick="return listItemTask('cb<?php echo $i;
-						?>','userprofile')"><?php echo $pl->username;
+						?>','userprofile')"><?php echo kescape($pl->username);
 						?></a></td>
 				<td width="100"><a href="#edit"
 					onclick="return listItemTask('cb<?php echo $i;
-						?>','userprofile')"><?php echo $pl->name;
+						?>','userprofile')"><?php echo kescape($pl->name);
 						?></a></td>
 				<td width="100" align="center"><?php echo $userLogged;
 						?>&nbsp;</td>
 				<td width="100" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
 						<img src="images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" /></a>&nbsp;</td>
-				<td width="100"><?php echo $pl->email;
+				<td width="100"><?php echo kescape($pl->email);
 						?>&nbsp;</td>
-				<td width="100"><?php echo $pl->usertype;
+				<td width="100"><?php echo kescape($pl->usertype);
 						?>&nbsp;</td>
 				<td align="center" width="15"><?php 		if ($pl->moderator) {
 							echo JText::_('COM_KUNENA_ANN_YES');
@@ -2187,9 +2187,9 @@ table.kadmin-stat caption {
 						;
 						?>
 				&nbsp;</td>
-				<td align="center" width="10"><?php echo $pl->view;
+				<td align="center" width="10"><?php echo kescape($pl->view);
 						?>&nbsp;</td>
-				<td width="*"><?php echo html_entity_decode_utf8 ( stripslashes ( $pl->signature ) );
+				<td width="*"><?php echo kescape(stripslashes ( $pl->signature ) );
 						?>&nbsp;
 				</td>
 			</tr>
@@ -2254,12 +2254,12 @@ table.kadmin-stat caption {
 						?>"
 					onClick="isChecked(this.checked);"></td>
 				<td width="20"><a
-					href="index.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo $pl->id;
-						?>"><?php echo $pl->id;
+					href="index.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo kescape($pl->id);
+						?>"><?php echo kescape($pl->id);
 						?></a>&nbsp;</td>
-				<td><?php echo $pl->name;
+				<td><?php echo kescape($pl->name);
 						?>&nbsp;</td>
-				<td><?php echo $pl->email;
+				<td><?php echo kescape($pl->email);
 						?>&nbsp;</td>
 				<td align="center"><?php 		if ($moderators) {
 							if (in_array ( $pl->id, $modIDs )) {
@@ -2321,7 +2321,7 @@ table.kadmin-stat caption {
 
 				$csubslist = count ( $subslist );
 				//        include_once ('components/com_kunena/bb_adm.js'); ?>
-		<div class="kadmin-functitle icon-profiles"> <?php echo JText::_('COM_KUNENA_PROFFOR'); ?>: <?php echo $user->name .' ('. $user->username .')'; ?></div>
+		<div class="kadmin-functitle icon-profiles"> <?php echo JText::_('COM_KUNENA_PROFFOR'); ?>: <?php echo kescape($user->name) .' ('. kescape($user->username) .')'; ?></div>
 		<form action="index.php?option=<?php echo $option; ?>" method="POST" name="adminForm">
 		<?php jimport('joomla.html.pane');
 			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
@@ -2366,9 +2366,9 @@ function textCounter(field, target) {
 </script>
 
 	<textarea class="inputbox" name="message" cols="50" rows="6"
-	onkeyup="textCounter(this, this.form.current_count);"><?php echo kunena_htmlspecialchars ( $signature ); ?></textarea>
-	<div><?php echo JText::sprintf('COM_KUNENA_SIGNATURE_LENGTH_COUNTER', $kunena_config->maxsig,
-			'<input readonly="readonly" type="text" name="current_count" value="'.($kunena_config->maxsig-JString::strlen($signature)).'" size="3" />');?>
+	onkeyup="textCounter(this, this.form.current_count);"><?php echo kescape( $signature ); ?></textarea>
+	<div><?php echo JText::sprintf('COM_KUNENA_SIGNATURE_LENGTH_COUNTER', intval($kunena_config->maxsig),
+			'<input readonly="readonly" type="text" name="current_count" value="'.(intval($kunena_config->maxsig)-JString::strlen($signature)).'" size="3" />');?>
 	</div>
 
 	<div> <input type="checkbox" value="1" name="deleteSig"> <em><?php echo JText::_('COM_KUNENA_DELSIG'); ?></em></div>
@@ -2461,7 +2461,7 @@ function textCounter(field, target) {
 					foreach ( $subdet as $sub ) {
 						$k = 1 - $k;
 						echo "<tr class=\"row$k\">";
-						echo "  <td>$enum: " . html_entity_decode_utf8 ( stripslashes ( $sub->subject ) ) . " by " . html_entity_decode_utf8 ( stripslashes ( $sub->name ) );
+						echo "  <td>$enum: " . kescape( stripslashes ( $sub->subject ) ) . " by " . kescape( stripslashes ( $sub->name ) );
 						echo "  <td>&nbsp;</td>";
 						echo "</tr>";
 						$enum ++;
@@ -2497,10 +2497,10 @@ function textCounter(field, target) {
 			$mescnt = 0;
 			foreach ($list as $curuser) {
 				if ($curuser->userid == $user->id) {
-					$mescnt = $curuser->mescnt;
+					$mescnt += intval($curuser->mescnt);
 					continue;
 				}
-				$userlist[] = "{$curuser->username} ({$curuser->mescnt})";
+				$userlist[] = kescape($curuser->username).' ('.kescape($curuser->mescnt).')';
 			}
 			$userlist = implode(', ', $userlist);
 			echo "<tr class=\"row$k\">";
@@ -2636,10 +2636,10 @@ function textCounter(field, target) {
 
 				echo '<td>';
 				echo '<table style="border: 1px solid #ccc;"><tr><td height="90" width="130" style="text-align: center">';
-				echo $type ? '<a href="' . $attach_live_path . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . $attach_live_path . '" width="80" heigth="80" border="0"></a>' : '<a href="' . $attach_live_path . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/kfile.png" border="0"></a>';
+				echo $type ? '<a href="' . $attach_live_path . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . kescape($attach_live_path) . '" width="80" heigth="80" border="0"></a>' : '<a href="' . kescape($attach_live_path) . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/kfile.png" border="0"></a>';
 				echo '</td></tr><tr><td style="text-align: center">';
 				echo '<br /><small>';
-				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . $filename . '<br />';
+				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . kescape($filename) . '<br />';
 				if (is_file($attach_path)) {
 					echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_SIZE') . ': </strong> ' . @filesize ( $attach_path ) . ' bytes<br />';
 					$type ? list ( $width, $height ) = @getimagesize ( $attach_path ) : '';
@@ -2703,7 +2703,7 @@ function textCounter(field, target) {
 						echo $i;
 						?>" name="cid[]"
 						value="<?php
-						echo $s->id;
+						echo kescape($s->id);
 						?>"
 						onClick="isChecked(this.checked);"></td>
 					<td width="50" align="center"><a href="#edit"
@@ -2711,13 +2711,13 @@ function textCounter(field, target) {
 						echo $i;
 						?>','editsmiley')"><img
 						src="<?php
-						echo ($smileypath ['live'] . $s->location);
+						echo kescape($smileypath ['live'] . $s->location);
 						?>"
 						alt="<?php
-						echo $s->location;
+						echo kescape($s->location);
 						?>" border="0" /></a></td>
-					<td width="50" align="center"><?php echo $s->code; ?>&nbsp;</td>
-					<td width="200" align="left"><?php echo $s->location; ?>&nbsp;</td>
+					<td width="50" align="center"><?php echo kescape($s->code); ?>&nbsp;</td>
+					<td width="200" align="left"><?php echo kescape($s->location); ?>&nbsp;</td>
 					<td>&nbsp;</td>
 				</tr>
 				<?php
@@ -2762,7 +2762,7 @@ function textCounter(field, target) {
 					?></td>
 					<td width="200"><input class="post" type="text" name="smiley_code"
 						value="<?php
-					echo $smileycfg ['code'];
+					echo kescape($smileycfg ['code']);
 					?>" /></td>
 					<td rowspan="3" width="50"><img name="smiley_image"
 						src="<?php
@@ -2916,16 +2916,16 @@ function textCounter(field, target) {
 						echo $id;
 						?>','editRank')"><img
 						src="<?php
-						echo ($rankpath ['live'] . $row->rank_image);
+						echo kescape($rankpath ['live'] . $row->rank_image);
 						?>"
 						alt="<?php
-						echo $row->rank_image;
+						echo kescape($row->rank_image);
 						?>" border="0" /></a></td>
 					<td ><a href="#edit"
 						onclick="return listItemTask('cb<?php
 						echo $id;
 						?>','editRank')"><?php
-						echo $row->rank_title;
+						echo kescape($row->rank_title);
 						?></a></td>
 					<td><?php
 						if ($row->rank_special == 1) {
@@ -2935,7 +2935,7 @@ function textCounter(field, target) {
 						}
 						?></td>
 					<td align="center"><?php
-						echo $row->rank_min;
+						echo kescape($row->rank_min);
 						?></td>
 					<td width="100%">&nbsp;</td>
 				</tr>
@@ -3037,7 +3037,7 @@ function textCounter(field, target) {
 					?></td>
 					<td width="200"><input class="post" type="text" name="rank_title"
 						value="<?php
-					echo $row->rank_title;
+					echo kescape($row->rank_title);
 					?>" /></td>
 				</tr>
 				<tr align="center">
@@ -3060,7 +3060,7 @@ function textCounter(field, target) {
 					?></td>
 					<td><input class="post" type="text" name="rank_min"
 						value="<?php
-					echo $row->rank_min;
+					echo kescape($row->rank_min);
 					?>" /></td>
 				</tr>
 				<tr>
@@ -3162,22 +3162,22 @@ function textCounter(field, target) {
 						?>
 						</td>
 					<td ><?php
-						echo $row->subject;
+						echo kescape($row->subject);
 						?></td>
 					<td ><?php
-						echo $row->cats_name;
+						echo kescape($row->cats_name);
 						?></td>
 					<td ><?php
-						echo $row->ip;
+						echo kescape($row->ip);
 						?></td>
 					<td ><?php
-						echo $row->userid;
+						echo kescape($row->userid);
 						?></td>
 					<td ><?php
 						if(empty($row->username)){
 							echo JText::_('COM_KUNENA_VIEW_VISITOR');
 						} else {
-							echo $row->username;
+							echo kescape($row->username);
 						}
 						?></td>
 					<td ><?php
@@ -3224,7 +3224,7 @@ function textCounter(field, target) {
 						<br />
 						<?php echo "<ol>";
 							foreach ( $items as $item ) {
-								echo "<li>". $item->subject ."</li>";
+								echo "<li>". kescape($item->subject) ."</li>";
 							}
 							echo "</ol>";
 						?>

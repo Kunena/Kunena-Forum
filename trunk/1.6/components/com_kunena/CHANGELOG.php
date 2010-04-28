@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+28-Apr-2010 Matias
+# [#19288] Administration: Escape text input fields before showing them (to show "foo")
+# [#19288] Magic Quotes setting in PHP adds slashes to configuration options and forum names, desctriptions
+
 27-Apr-2010 Matias
 ^ [#15886] Merged revisions 2360-2363 from /branches/1.6-xillibit with minor changes
 # [#19288] Fix regression: Wrong menuitem gets highlighted if default page is not Index

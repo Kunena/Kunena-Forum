@@ -583,7 +583,7 @@ function saveForum($option) {
 	if ($id) {
 		$row->load ( $id );
 	}
-	if (! $row->save ( $_POST, 'parent' )) {
+	if (! $row->save ( JRequest::get('post', JREQUEST_ALLOWRAW), 'parent' )) {
 		$kunena_app->enqueueMessage ( $row->getError (), 'error' );
 		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 	}
@@ -674,7 +674,7 @@ function cancelForum($option) {
 
 	$kunena_db = &JFactory::getDBO ();
 	$row = new fbForum ( $kunena_db );
-	$row->bind ( $_POST );
+	$row->bind ( JRequest::get('post', JREQUEST_ALLOWRAW) );
 	$row->checkin ();
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
 }
@@ -1075,7 +1075,7 @@ function saveConfig($option) {
 	$kunena_config = & CKunenaConfig::getInstance ();
 	$kunena_db = &JFactory::getDBO ();
 
-	foreach ( $_POST as $postsetting => $postvalue ) {
+	foreach ( JRequest::get('post', JREQUEST_ALLOWHTML) as $postsetting => $postvalue ) {
 		if (JString::strpos ( $postsetting, 'cfg_' ) === 0) {
 			//remove cfg_ and force lower case
 			if ( is_array($postvalue) ) {
@@ -2346,4 +2346,7 @@ function KUNENA_gdVersion() {
 		return;
 	}
 }
-?>
+
+function kescape($string) {
+	return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+}

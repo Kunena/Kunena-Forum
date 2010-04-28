@@ -230,7 +230,6 @@ if ($do == "read") {
     // BEGIN: ADD ANN
     if ($do == "doadd") {
     	if ($is_editor) {
-        	JFilterOutput::objectHTMLSafe ($_POST);
         	$title = addslashes(JRequest::getVar("title", ""));
         	$description = addslashes(JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW));
         	$sdescription = addslashes(JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW));
@@ -357,7 +356,6 @@ if ($do == "read") {
     // BEGIN: EDIT ANN
     if ($do == "doedit") {
     	if ($is_editor) {
-        	JFilterOutput::objectHTMLSafe ($_POST);
        		$title = JRequest::getVar("title", "");
         	$description = JRequest::getVar('description', '', 'string', JREQUEST_ALLOWRAW);
         	$sdescription = JRequest::getVar('sdescription', '', 'string', JREQUEST_ALLOWRAW);

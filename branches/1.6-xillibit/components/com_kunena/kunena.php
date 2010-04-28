@@ -224,8 +224,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	$document = & JFactory::getDocument ();
 
 	// We require Mootools 1.2 framework
-	// On systems running < J1.5.16 this requires the mootools12 system plugin
+	// On systems running < J1.5.18 this requires the mootools12 system plugin
 	JHTML::_ ( 'behavior.framework' );
+
+	// We load smoothbox library
+	$document->addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox.js' );
 
 	// New Kunena JS for default template
 	// TODO: Need to check if selected template has an override

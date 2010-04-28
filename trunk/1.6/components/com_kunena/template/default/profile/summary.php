@@ -30,7 +30,7 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 			<?php endif; ?>
 			<div id="kprofile-stats">
 				<ul>
-					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo $this->personalText; ?></li>
+					<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo $this->personalText; ?></li><?php } ?>
 					<li><span class="buttononline-<?php echo $this->online ? 'yes':'no'; ?> btn-left"><span class="online-<?php echo $this->online ? 'yes':'no'; ?>"><span><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></span></span></li>
 					<!-- Check this: -->
 					<?php if (!empty($this->usertype)): ?><li class="usertype"><?php echo $this->usertype; ?></li><?php endif; ?>

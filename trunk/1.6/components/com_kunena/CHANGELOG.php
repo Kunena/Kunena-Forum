@@ -37,12 +37,21 @@ Kunena 1.6.0-DEV
 28-Apr-2010 Severdia
 + [#19356] Tweak select box size on admin side.
 
+28-Apr-2010 Xillibit
+# [#19288] Give the possibility to disable or enable easily the topicicons with config settings
++ [#20254] Integration of lightbox on images using script based on MooTools (thanks Cerberus)
+
 28-Apr-2010 Matias
 # [#19288] Administration: Escape text input fields before showing them (to show "foo")
 # [#19288] Magic Quotes setting in PHP adds slashes to configuration options and category names, desctriptions
 # [#19288] Fix regression: Minimizing top profilebox does not work if you're not logged in
 # [#19244] Implement new Moderation features: Show unapproved and deleted messages in most screens (if permissions)
 # [#19244] Implement new Moderation features: Add func = unapproved/deleted
+^ [#15886] Merged revisions 2370-2371 from /branches/1.6-xillibit
+
+27-Apr-2010 Xillibit
+# [#19288] Hide about me when it's empty
+# [#19288] Set standard width and height for video if the user forgot to put them in parser
 
 27-Apr-2010 Matias
 ^ [#15886] Merged revisions 2360-2363 from /branches/1.6-xillibit with minor changes

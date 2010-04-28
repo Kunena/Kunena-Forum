@@ -458,7 +458,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						// Need to check if we are nested inside a URL code
 						if ($task->autolink_disable == 0) {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = "<a href='" . $tempstr . "' rel=\"lightbox\"><img src='" . $tempstr . ($imgtagsize ? "' width='" . $imgmaxsize : '') . "' style='max-width:" . $imgmaxsize . "px; ' alt='' /></a>";
+							$tag_new = "<a title='' rel=\"lightbox\" href='".$tempstr."'><img src='".$tempstr."' width='".$imgmaxsize."' style='max-width:".$imgmaxsize."px; ' alt='' /></a></div>";
 						} else {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
 							$tag_new = "<img src='" . $tempstr . ($imgtagsize ? "' width='" . $imgmaxsize : '') . "' style='max-width:" . $imgmaxsize . "px; ' alt='' />";
@@ -641,10 +641,17 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$vid_height += $vid_addy;
 				if (! isset ( $tag->options ["size"] )) {
 					if (isset ( $tag->options ["width"] ))
+						if($tag->options ['width'] == '1') {
+							$tag->options ['width'] = $vid_minwidth;
+						}
 						$vid_width = intval ( $tag->options ["width"] );
 					if (isset ( $tag->options ["height"] ))
+						if($tag->options ['height'] == '1') {
+							$tag->options ['height'] = $vid_minheight;
+						}
 						$vid_height = intval ( $tag->options ["height"] );
 				}
+
 				if ($vid_width < $vid_minwidth)
 					$vid_width = $vid_minwidth;
 				if ($vid_width > $vid_maxwidth)

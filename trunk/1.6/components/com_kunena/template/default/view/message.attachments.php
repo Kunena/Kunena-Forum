@@ -33,16 +33,17 @@ defined ( '_JEXEC' ) or die ();
 						$imgsize = 'width="'.$this->config->thumbwidth.'px" height="'.$this->config->thumbheight.'px"';
 					}
 
-					$img = '<img '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
+					$img = '<img title="'.$attachment->filename.'" '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
+					$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments');
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
 					$img = '<img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />';
+					$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'nofollow');
 			}
 			?>
 			<li>
 			<?php
-			$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'nofollow');
 			$html .='<span>'.CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$shortname,$attachment->filename, 'nofollow').' ('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
 			echo $html;
 			?>

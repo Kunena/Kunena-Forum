@@ -87,6 +87,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			echo $firstpost->class_sfx;
 		}
+		if ($message->hold == 1) echo ' kunapproved';
+		else if ($message->hold) echo ' kdeleted';
 		?>">
 			<td class="td-0 center">
 			<img src="<?php echo (isset($topic_emoticons [$firstpost->topic_emoticon]) ? $topic_emoticons [$firstpost->topic_emoticon] : $topic_emoticons [0]) ?>" alt="emo" />

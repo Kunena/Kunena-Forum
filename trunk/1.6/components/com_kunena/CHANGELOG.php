@@ -36,7 +36,10 @@ Kunena 1.6.0-DEV
 
 28-Apr-2010 Matias
 # [#19288] Administration: Escape text input fields before showing them (to show "foo")
-# [#19288] Magic Quotes setting in PHP adds slashes to configuration options and forum names, desctriptions
+# [#19288] Magic Quotes setting in PHP adds slashes to configuration options and category names, desctriptions
+# [#19288] Fix regression: Minimizing top profilebox does not work if you're not logged in
+# [#19244] Implement new Moderation features: Show unapproved and deleted messages in most screens (if permissions)
+# [#19244] Implement new Moderation features: Add func = unapproved/deleted
 
 27-Apr-2010 Matias
 ^ [#15886] Merged revisions 2360-2363 from /branches/1.6-xillibit with minor changes

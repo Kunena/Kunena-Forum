@@ -1831,8 +1831,12 @@ PX		EM			PCT			PT
 	padding: 3px 10px;
 }
 
-#Kunena .kmsg.kunapproved {
-	background: #EFF0F4;
+#Kunena .kunapproved td {
+	background: #DDDDDD !important;
+}
+
+#Kunena .kdeleted td {
+	background: #CCCCCC !important;
 }
 
 #Kunena div.kunena-profile {

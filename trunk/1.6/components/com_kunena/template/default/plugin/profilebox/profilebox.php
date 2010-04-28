@@ -72,7 +72,7 @@ $logout = CKunenaLogin::getlogoutFields();
 } else {
 $login = CKunenaLogin::getloginFields();
 ?>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="kprofilebox">
+<table class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">
 			<td valign="top" class="kprofileboxcnt" align="left">

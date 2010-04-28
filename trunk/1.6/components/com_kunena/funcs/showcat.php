@@ -23,6 +23,7 @@ class CKunenaShowcat {
 
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
+		$this->myprofile = KunenaFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
 		$this->config = CKunenaConfig::getInstance ();
 
@@ -60,18 +61,21 @@ class CKunenaShowcat {
 
 		$threads_per_page = $this->config->threads_per_page;
 
+		$access = KunenaFactory::getAccessControl();
+		$hold = $access->getAllowedHold($this->myprofile, $this->catid);
+
 		/*//////////////// Start selecting messages, prepare them for threading, etc... /////////////////*/
 		$this->page = $this->page < 1 ? 1 : $this->page;
 		$offset = ($this->page - 1) * $threads_per_page;
 		$row_count = $this->page * $threads_per_page;
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE parent='0' AND catid='{$this->catid}' AND hold='0'" );
+		$this->db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE parent='0' AND catid='{$this->catid}' AND hold IN ({$hold})" );
 		$this->total = ( int ) $this->db->loadResult ();
 		check_dberror ( 'Unable to get message count.' );
 		$this->totalpages = ceil ( $this->total / $threads_per_page );
 
 		$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__fb_messages AS t
 	INNER JOIN #__fb_messages AS m ON t.id = m.thread
-	WHERE t.parent='0' AND t.hold='0' AND t.catid='{$this->catid}' AND m.hold='0' AND m.catid='{$this->catid}'
+	WHERE t.parent='0' AND t.hold IN ({$hold}) AND t.catid='{$this->catid}' AND m.hold IN ({$hold}) AND m.catid='{$this->catid}'
 	GROUP BY m.thread ORDER BY t.ordering DESC, lastid DESC";
 		$this->db->setQuery ( $query, $offset, $threads_per_page );
 		$threadids = $this->db->loadResultArray ();
@@ -93,7 +97,7 @@ class CKunenaShowcat {
 			else $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = 0";
 			$query .= "
 		LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.thread
-		WHERE m.hold='0' AND m.thread IN ({$idstr})
+		WHERE m.hold IN ({$hold}) AND m.thread IN ({$idstr})
 		GROUP BY thread
 	) AS l
 	INNER JOIN #__fb_messages AS a ON a.thread = l.thread
@@ -131,7 +135,7 @@ class CKunenaShowcat {
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
-				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
+				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold IN ({$hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
 				check_dberror ( "Unable to get unread messages count and first id." );
 

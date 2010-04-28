@@ -101,6 +101,9 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			echo $leaf->class_sfx;
 		}
+		if ($leaf->hold == 1) echo ' kunapproved';
+		else if ($leaf->hold) echo ' kdeleted';
+
 		?>">
 			<td class="td-0 km center"><strong> <?php
 		echo CKunenaTools::formatLargeNumber ( $leaf->msgcount-1 );

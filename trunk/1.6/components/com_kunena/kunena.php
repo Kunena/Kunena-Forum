@@ -443,6 +443,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'noreplies' :
 		case 'subscriptions' :
 		case 'favorites' :
+		case 'userposts' :
+		case 'unapproved' :
+		case 'deleted' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 			$page = new CKunenaLatestX($func, $page);
 			$page->display();

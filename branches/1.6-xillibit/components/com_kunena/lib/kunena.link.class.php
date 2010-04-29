@@ -179,7 +179,7 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 
-	function GetProfileLink($userid, $name, $rel = 'nofollow', $class = '') {
+	function GetProfileLink($userid, $name, $title ='', $rel = 'nofollow', $class = '') {
 		if ($userid > 0) {
 			if (CKunenaTools::isAdmin ( $userid )) {
 				$class = 'admin';
@@ -190,7 +190,7 @@ class CKunenaLink {
 			}
 			$link = CKunenaLink::GetProfileURL ( $userid );
 			if (! empty ( $link ))
-				return CKunenaLink::GetHrefLink ( $link, $name, '', $rel, $class );
+				return CKunenaLink::GetHrefLink ( $link, $name, $title, $rel, $class );
 		}
 		return $name;
 	}

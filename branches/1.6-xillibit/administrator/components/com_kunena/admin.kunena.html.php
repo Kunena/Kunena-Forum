@@ -1351,6 +1351,15 @@ table.kadmin-stat caption {
 						?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_ONLINE_USERS');
+						?></td>
+						<td align="left" valign="top"><?php echo $lists ['onlineusers'];
+						?></td>
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_ONLINE_USERS_DESC');
+						?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			</dd>

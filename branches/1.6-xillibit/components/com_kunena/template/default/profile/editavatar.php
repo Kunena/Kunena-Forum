@@ -76,7 +76,7 @@ foreach ($this->galleryimg as $avatarimg)
 {
 	echo '<span>';
 	echo '<label for="kavatar'.$kid.'"><img src="' . $this->galleryurl .'/'. ($this->gallery ? $this->gallery.'/':'') . $avatarimg . '" alt="" /></label>';
-	echo '<input id="kavatar'.$kid.'" type="radio" name="avatar" value="gallery/' . $this->gallery .'/'. $avatarimg . '"/>';
+	echo '<input id="kavatar'.$kid.'" type="radio" name="avatar" value="gallery/' . $this->gallery . $avatarimg . '"/>';
 	echo "</span>";
 	$kid++;
 }

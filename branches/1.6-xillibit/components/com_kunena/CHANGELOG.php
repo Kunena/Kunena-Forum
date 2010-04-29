@@ -32,6 +32,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-Xillibit-DEV
+
+29-Apr-2010 Xillibit
+# [#19288] Add $title parameter in function GetProfileLink() to be used in kunenalatest module
+# [#19288] Extra slash in path of avatars in gallery
+# [#19288] Add configuration setting to show or hide list of online users for security purpose
+
 Kunena 1.6.0-DEV
 
 29-Apr-2010 Matias

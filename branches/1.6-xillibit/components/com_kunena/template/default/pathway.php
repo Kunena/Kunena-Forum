@@ -106,6 +106,7 @@ if ($func != "") {
 	}
 
 	//get viewing
+
 	$fb_queryName = $kunena_config->username ? "username" : "name";
 	$query = "SELECT w.userid, u.$fb_queryName AS username, k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . addslashes ( JURI::current () ) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
 	$kunena_db->setQuery ( $query );
@@ -122,27 +123,30 @@ if ($func != "") {
 		$totalguest = 0;
 		$divider = ', ';
 		$lastone = end ( $users );
-		foreach ( $users as $user ) {
-			if ($user->userid != 0) {
-				if ($user == $lastone && ! $totalguest) {
-					$divider = '';
+		if ( $kunena_config->onlineusers ) {
+			foreach ( $users as $user ) {
+				if ($user->userid != 0) {
+					if ($user == $lastone && ! $totalguest) {
+						$divider = '';
+					}
+					if ($user->showOnline > 0) {
+						$fireonline .= CKunenaLink::GetProfileLink ( $user->userid, $user->username ) . $divider;
+					}
+				} else {
+					$totalguest = $totalguest + 1;
 				}
-				if ($user->showOnline > 0) {
-					$fireonline .= CKunenaLink::GetProfileLink ( $user->userid, $user->username ) . $divider;
-				}
-			} else {
-				$totalguest = $totalguest + 1;
 			}
-		}
-		if ($totalguest > 0) {
-			if ($totalguest == 1) {
-				$fireonline .= '(' . $totalguest . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUEST');
-			} else {
-				$fireonline .= '(' . $totalguest . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUESTS');
+			if ($totalguest > 0) {
+				if ($totalguest == 1) {
+					$fireonline .= '(' . $totalguest . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUEST');
+				} else {
+					$fireonline .= '(' . $totalguest . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUESTS');
+				}
 			}
 		}
 		$fireonline .= '</div>';
 	}
+
 
 	$document = & JFactory::getDocument ();
 	$document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name ) . ' - ' . stripslashes ( $kunena_config->board_title ) );

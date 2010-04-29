@@ -30,6 +30,11 @@ Legend:
 
 KunenaLatest 1.0
 
+29-Apr-2010 Xillibit
+# [#20081] Add option to choose between topic icon or avatar
+# [#20081] Add option for choose which categories shows
+# [#20081] Add option to define the avatar size
+
 26-Apr-2010 Matias
 # [#20081] Small layout fixes
 # [#20081] Show the same items as Recent Topics in Kunena

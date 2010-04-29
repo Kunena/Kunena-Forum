@@ -21,21 +21,16 @@ class modKunenaLatestHelper {
 
 		$page = $page < 1 ? 1 : $page;
 
-		$lookcats = explode ( ',', $k_config->latestcategory );
+		$lookcats = explode ( ',', $params->get( 'category_id' ) );
 		$catlist = array ();
-		$latestcats = '';
 		foreach ( $lookcats as $catnum ) {
-			if (( int ) $catnum > 0)
-				$catlist [] = ( int ) $catnum;
+			$catlist [] = ( int ) $catnum;
 		}
+
 		$latestcats = '';
 		if ( !empty($catlist) && !in_array(0, $catlist)) {
 			$catlist = implode ( ',', $catlist );
-			if ( $k_config->latestcategory_in == '1' ) {
-				$latestcats = ' AND m.catid IN ('.$catlist.') ';
-			} else {
-				$latestcats = ' AND m.catid NOT IN ('.$catlist.') ';
-			}
+			$latestcats = ' AND m.catid IN ('.$catlist.') ';
 		}
 
 		$userAPI = Kunena::getUserAPI();
@@ -104,4 +99,11 @@ class modKunenaLatestHelper {
 		}
 		return $messages;
 	}
+
+	function userAvatar( $userid,  $params ) {
+    $kunena_user = KunenaFactory::getUser((int)$userid);
+	  $avatarlink = $kunena_user->getAvatarLink('', $params->get ( 'avatarwidth') ,$params->get ( 'avatarheight' ));
+    return CKunenaLink::GetProfileLink ($userid,$avatarlink, $kunena_user->name  );
+
+  }
 }

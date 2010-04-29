@@ -21,12 +21,6 @@ $document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klates
 
 <ul id="klatest-items">
 <?php
-//print_r($klistpost);
-$config = & JFactory::getConfig ();
-$tzoffset = $config->getValue ( 'config.offset' );
-
-//vérifier que $klistpost n'est pas vide
-
 
 if (is_array ( $klistpost )) {
 	foreach ( $klistpost as $item ) {
@@ -65,14 +59,19 @@ if (is_array ( $klistpost )) {
 				}
 			}
 			?></li>
-		<?php if ($params->get ( 'sh_avatar' )) : ?>
+		<?php 
+     if ( $params->get ( 'sh_topiciconoravatar' )) { ?>
 		<li class="klatest-avatar">
-			<?php
-			$kprofile = KunenaFactory::getUser((int)$item->userid);
-			echo CKunenaLink::GetProfileLink ($item->userid, $kprofile->getAvatarLink () );
+			<?php			
+			
+			echo modKunenaLatestHelper::userAvatar( $item->userid,$params );
 			?>
 		</li>
-		<?php endif; ?>
+		<?php } else {  ?>
+		<li class="klatest-avatar">
+		<?php echo '<img src="' . $topic_emoticons[$item->topic_emoticon]  . '" />'; ?>
+		</li>
+		<?php } ?>
 		<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $item->catid, $item->catname ); ?></li>
 		<li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_LAST_POST_BY' ) .' '. CKunenaLink::GetProfileLink ( $item->userid, $item->name ); ?></li>
 		<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo $date; ?></li>

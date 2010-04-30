@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 30-Apr-2010 810
 # [#19288] Fix regression: Preview Post
+^ [#19288] Fix language string: missing COM_KUNENA_EDITOR_HELPLINE_MAPAPPLY
 
 30-Apr-2010 Matias
 + [#19356] New status based topicicons when users cannot pick up their own icons

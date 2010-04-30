@@ -34,10 +34,15 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+30-Apr-2010 Xillibit
+# [#19288] Fix undefined variables in parser.php on video size
+# [#19288] Missing language string on map apply button
+
 29-Apr-2010 Xillibit
 # [#19288] Add $title parameter in function GetProfileLink() to be used in kunenalatest module
 # [#19288] Extra slash in path of avatars in gallery
 # [#19288] Add configuration setting to show or hide list of online users for security purpose
+^ [#19288] change getName() function in user.php from protected to public
 
 Kunena 1.6.0-DEV
 

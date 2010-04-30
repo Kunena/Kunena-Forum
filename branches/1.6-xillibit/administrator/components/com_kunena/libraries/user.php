@@ -215,7 +215,7 @@ class KunenaUser extends JObject
 		return CKunenaTools::isModerator($this->userid, $catid);
 	}
 
-	protected function getName($visitorname = '') {
+	public function getName($visitorname = '') {
 		if (! $this->userid) {
 			$name = $visitorname;
 		} else {

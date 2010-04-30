@@ -38,6 +38,7 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Fix undefined variables in parser.php on video size
 # [#19288] Missing language string on map apply button
 # [#19288] Minimize javaxcript buttons on the Stats page not working
+# [#19288] Add tab in profile to see Uddeim links with unreadmessages
 
 29-Apr-2010 Xillibit
 # [#19288] Add $title parameter in function GetProfileLink() to be used in kunenalatest module

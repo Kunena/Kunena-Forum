@@ -472,6 +472,27 @@ class CKunenaTools {
         echo $lists['parent'];
         }
 
+	function topicIcon($topic) {
+		$config = & CKunenaConfig::getInstance ();
+		if ($config->topicicons) {
+			global $topic_emoticons;
+			$icon = isset($topic_emoticons [$topic->topic_emoticon]) ? $topic_emoticons [$topic->topic_emoticon] : $topic_emoticons [0];
+		} else {
+			$icon = 'normal';
+			if ($topic->msgcount < 2) $icon = 'unanswered';
+			if ($topic->ordering) $icon = 'sticky';
+			//if ($topic->myfavorite) $icon = 'favorite';
+			if ($topic->locked) $icon = 'locked';
+			if ($topic->moved) $icon = 'moved';
+			if ($topic->hold == 1) $icon = 'unapproved';
+			if ($topic->hold == 2) $icon = 'deleted';
+			if ($topic->unread) $icon .= '_new';
+			$icon =  KUNENA_TMPLTMAINIMGURL ."images/topicicons/icon_{$icon}.png";
+		}
+		$html = '<img src="'.$icon.'" alt="emo" />';
+		return $html;
+	}
+
 	function isAdmin($uid = null) {
 		$acl = KunenaFactory::getAccessControl();
 		return $acl->isAdmin($uid);

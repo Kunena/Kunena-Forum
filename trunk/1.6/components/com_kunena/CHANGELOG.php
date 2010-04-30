@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+30-Apr-2010 Matias
++ [#19356] New status based topicicons when users cannot pick up their own icons
++ [#19356] Topic icon: add link to first unread (or last) message
+
 29-Apr-2010 Matias
 # [#19288] Fix regression: JomSocial avatar integration is not working
 

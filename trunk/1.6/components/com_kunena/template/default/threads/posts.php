@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-global $kunena_icons, $topic_emoticons;
+global $kunena_icons;
 
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
@@ -91,7 +91,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		else if ($message->hold) echo ' kdeleted';
 		?>">
 			<td class="td-0 center">
-			<img src="<?php echo (isset($topic_emoticons [$firstpost->topic_emoticon]) ? $topic_emoticons [$firstpost->topic_emoticon] : $topic_emoticons [0]) ?>" alt="emo" />
+			<?php echo CKunenaTools::topicIcon($message) ?>
 		</td>
 
 			<td class="td-3"><?php

@@ -22,7 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-global $kunena_icons, $topic_emoticons;
+global $kunena_icons;
 
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
@@ -70,6 +70,9 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		$leaf->name = kunena_htmlspecialchars ( stripslashes ( $leaf->name ) );
 		$leaf->email = kunena_htmlspecialchars ( stripslashes ( $leaf->email ) );
 		if ($leaf->moved == 1) $leaf->topic_emoticon = 3;
+		$curMessageNo = $leaf->msgcount - ($leaf->unread ? $leaf->unread - 1 : 0);
+		$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
+		$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
 
 		if ($this->highlight && $counter == $this->highlight) {
 			$k = 0;
@@ -113,14 +116,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		?></td>
 
 			<td class="td-2 center">
-			<img src="<?php echo (isset($topic_emoticons [$leaf->topic_emoticon]) ? $topic_emoticons [$leaf->topic_emoticon] : $topic_emoticons [0]) ?>" alt="emo" />
+			<?php echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, CKunenaTools::topicIcon($leaf), $leaf->lastread ) ?>
 		</td>
 
 			<td class="td-3"><?php
-			$curMessageNo = $leaf->msgcount - ($leaf->unread ? $leaf->unread - 1 : 0);
-			$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
-			$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
-
 			if ($leaf->attachments) {
 				echo isset ( $kunena_icons ['topicattach'] ) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicattach'] . '" border="0" alt="' . JText::_('COM_KUNENA_ATTACH') . '" />' : '<img class="attachicon" src="' . KUNENA_URLICONSPATH . 'attachment.gif"  alt="' . JText::_('COM_KUNENA_ATTACH') . '" title="' . JText::_('COM_KUNENA_ATTACH') . '" />';
 			}

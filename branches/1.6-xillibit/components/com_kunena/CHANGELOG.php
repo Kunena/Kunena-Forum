@@ -37,6 +37,7 @@ Kunena 1.6.0-Xillibit-DEV
 30-Apr-2010 Xillibit
 # [#19288] Fix undefined variables in parser.php on video size
 # [#19288] Missing language string on map apply button
+# [#19288] Minimize javaxcript buttons on the Stats page not working
 
 29-Apr-2010 Xillibit
 # [#19288] Add $title parameter in function GetProfileLink() to be used in kunenalatest module

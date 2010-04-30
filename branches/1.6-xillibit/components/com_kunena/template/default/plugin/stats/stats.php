@@ -55,7 +55,9 @@ $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
                         <div class = "ktitle_cover km">
                             <span class="ktitle kl"><?php echo stripslashes($kunena_config->board_title); ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span>
                         </div>
-                        <img id = "BoxSwitch__morestat_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+                        <div class="fltrt">
+							<span id="kmorestat_head"><a class="ktoggler close" rel="morestat_tbody"></a></span>
+						</div>
                     </th>
                 </tr>
             </thead>
@@ -111,7 +113,9 @@ $k = 0;
     <tr>
       <th colspan="3">
       <div class = "ktitle_cover km"> <span class="ktitle kl"><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popsubjectcount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_KGSG'); ?></span> </div>
-      <img id = "BoxSwitch__kpopsubstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+      <div class="fltrt">
+						<span id="kpopsubmorestat_head"><a class="ktoggler close" rel="kpopsubstats_tbody"></a></span>
+		</div>
       </th>
     </tr>
   </thead>
@@ -162,16 +166,18 @@ $k = 0;
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
 <div class="k_bt_cvr5">
-<table class = "kblocktable " id="kpopsubmorestat"  cellpadding = "0" cellspacing = "0" border = "0" width = "100%">
+<table class = "kblocktable " id="kpoppollbmorestat"  cellpadding = "0" cellspacing = "0" border = "0" width = "100%">
   <thead>
     <tr>
       <th colspan="3">
       <div class = "ktitle_cover km"> <span class="ktitle kl"><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->poppollscount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_POLLS_KGSG'); ?></span> </div>
-      <img id = "BoxSwitch__kpopsubstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+      <div class="fltrt">
+						<span id="kpoppollbmorestat_head"><a class="ktoggler close" rel="kpoppollstats_tbody"></a></span>
+		</div>
       </th>
     </tr>
   </thead>
-  <tbody id = "kpopsubstats_tbody">
+  <tbody id = "kpoppollstats_tbody">
    <tr  class = "ksth" >
       <th class = "th-1 ksectiontableheader" align="left" width="50%"> <?php echo JText::_('COM_KUNENA_POLL_NAME');?></th>
       <th class = "th-2 ksectiontableheader" width="40%">&nbsp;  </th>
@@ -229,7 +235,9 @@ $k = 0;
     <tr>
       <th colspan="3">
       <div class = "ktitle_cover km"> <span class="ktitle kl"><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popusercount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_TMSG'); ?></span></div>
-      <img id = "BoxSwitch__kpopusermsgstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+      <div class="fltrt">
+						<span id="kpopusermsgmorestat_head"><a class="ktoggler close" rel="kpopusermsgstats_tbody"></a></span>
+		</div>
       </th>
     </tr>
   </thead>
@@ -291,7 +299,9 @@ $k = 0;
     <tr>
       <th colspan="3">
       <div class = "ktitle_cover km"> <span class="ktitle kl"><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popusercount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_GSG'); ?></span> </div>
-      <img id = "BoxSwitch__kpopuserhitstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+      <div class="fltrt">
+						<span id="kpopuserhitmorestat_head"><a class="ktoggler close" rel="kpopuserhitstats_tbody"></a></span>
+		</div>
       </th>
     </tr>
   </thead>

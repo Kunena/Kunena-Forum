@@ -22,10 +22,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-$kunena_db = &JFactory::getDBO();
-$kunena_config =& CKunenaConfig::getInstance();
-
 //Get some variables
 $id = JRequest::getInt('id');
 $catid = JRequest::getInt('catid');
@@ -34,92 +30,201 @@ $task = JRequest::getCmd('task');
 $replyto = intval(JRequest::getVar('replyto'));
 $do = JRequest::getCmd('do');
 
-$now = time();
-$past = $now - $kunena_config->fbsessiontimeout;
-$myip = getenv('REMOTE_ADDR');
+class CKunenaWhoIsOnline {
+	public $db = null;
+	public $my = null;
+	public $app = null;
+	public $config = null;
+	protected $myip = null;
 
-if ($kunena_my->id > 0) {
-    $isuser = 1;
-    }
-else {
-    $isuser = 0;
-    }
+	protected function __construct($db, $config, $app) {
+		$this->db = $db;
+		$this->my = &JFactory::getUser ();
+		$this->config = $config;
+		$this->app = $app;
+	}
 
-//Delete non online users from db
-$kunena_db->setQuery("DELETE FROM #__fb_whoisonline WHERE time < '{$past}'");
-$kunena_db->query();
-check_dberror ( "Unable to delete users from whoisonline." );
+	public function &getInstance() {
+		static $instance = NULL;
+		if (! $instance) {
+			$kunena_db = & JFactory::getDBO ();
+			$kunena_config = & CKunenaConfig::getInstance ();
+			$kunena_app = & JFactory::getApplication ();
 
-$kunena_db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='{$myip}' AND userid='{$kunena_my->id}'");
-$online = $kunena_db->loadResult();
-check_dberror ( "Unable to load online count." );
+			$instance = new CKunenaWhoIsOnline ( $kunena_db, $kunena_config, $kunena_app );
+		}
+		return $instance;
+	}
 
-if ($task == 'listcat' || $func == 'showcat') {
-    $kunena_db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
-    $what = $kunena_db->loadResult();
-    check_dberror ( "Unable to load category name." );
-    }
-else if ($func == 'latest') {
-    $what = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
-    }
-else if ($id) {
-    $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$id}'");
-    $what = $kunena_db->loadResult();
-    check_dberror ( "Unable to load message subject." );
-    }
-else if ($replyto) {
-    $kunena_db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$replyto}'");
-    $what = $kunena_db->loadResult();
-    check_dberror ( "Unable to load message subject." );
-    }
-else if ($do == 'reply') {
-    $kunena_db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
-    $what = $kunena_db->loadResult();
-    }
-else if ($func == 'post' && $do == 'edit') {
-    $kunena_db->setQuery("SELECT name FROM #__fb_messages WHERE id='{$id}'");
-    $what = $kunena_db->loadResult();
-    check_dberror ( "Unable to load user name." );
-    }
-else if ($func == 'who') {
-    $what = JText::_('COM_KUNENA_WHO_LATEST_POSTS');
-    }
-else {
-    $what = JText::_('COM_KUNENA_WHO_MAINPAGE');
-    }
+	public function getActiveUsersList() {
+		$name = $this->config->username ? "username" : "name";
+		$query
+        = "SELECT w.userip, w.time, w.what, u.{$name} AS username, u.id, k.moderator, k.showOnline "
+        . " FROM #__fb_whoisonline AS w"
+        . " LEFT JOIN #__users AS u ON u.id=w.userid "
+        . " LEFT JOIN #__fb_users AS k ON k.userid=w.userid "
+		# filter real public session logouts
+        . " INNER JOIN #__session AS s ON s.guest='0' AND s.userid=w.userid "
+        . " WHERE w.userid!='0' "
+        . " GROUP BY u.id "
+        . " ORDER BY username ASC";
+    	$this->db->setQuery($query);
+    	$users = $this->db->loadObjectList();
+    	check_dberror ( "Unable to load online users." );
 
-$link = JURI::current();
-$what = addslashes($what);
-$link = addslashes($link);
+    	return $users;
+	}
 
-if ($online == 1) {
-    $sql = "UPDATE #__fb_whoisonline SET ".
-    		" time=".$kunena_db->quote($now).", ".
-    		" what=".$kunena_db->quote($what).", ".
-    		" do=".$kunena_db->quote($do).", ".
-    		" task=".$kunena_db->quote($task).", ".
-    		" link=".$kunena_db->quote($link).", ".
-    		" func=".$kunena_db->quote($func).
-            " WHERE userid=".$kunena_db->quote($kunena_my->id).
-            " AND userip=".$kunena_db->quote($myip);
-    $kunena_db->setQuery($sql);
-    }
-else {
-    $sql = "INSERT INTO #__fb_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
+	public function getTotalRegistredUsers () {
+		$users =$this->getActiveUsersList();
+		return $totaluser = count($users);
+	}
+
+	public function getTotalGuestUsers () {
+		$query = "SELECT COUNT(*) FROM #__fb_whoisonline WHERE user='0'";
+    	$this->db->setQuery($query);
+    	$totalguests = $this->db->loadResult();
+    	check_dberror ( "Unable to load who is online." );
+
+    	return $totalguests;
+	}
+
+	public function getTitleWho ($totaluser,$totalguests) {
+		$who_name = '<strong>'.$totaluser.' </strong>';
+       	if($totaluser==1) {
+        	$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER').'&nbsp;';
+        } else {
+           	$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS').'&nbsp;';
+        }
+        $who_name .= JText::_('COM_KUNENA_WHO_AND');
+        $who_name .= '<strong> '. $totalguests.' </strong>';
+        if($totalguests==1) {
+           	$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST').'&nbsp;';
+        } else {
+           	$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS').'&nbsp;';
+        }
+		$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+
+		return $who_name;
+	}
+
+	public function getUsersList () {
+		$name = $this->config->username ? "username" : "name";
+		$query = "SELECT w.*, u.id, u.{$name}, f.showOnline FROM #__fb_whoisonline AS w
+        LEFT JOIN #__users AS u ON u.id=w.userid
+        LEFT JOIN #__fb_users AS f ON u.id=f.userid
+        ORDER BY w.time DESC";
+        $this->db->setQuery($query);
+        $users = $this->db->loadObjectList();
+        check_dberror ( "Unable to load online users." );
+
+        return $users;
+	}
+
+	protected function _deleteUsersOnline () {
+		$now = time();
+		$past = $now - $this->config->fbsessiontimeout;
+		$this->db->setQuery("DELETE FROM #__fb_whoisonline WHERE time < '{$past}'");
+		$this->db->query();
+		check_dberror ( "Unable to delete users from whoisonline." );
+	}
+
+	protected function _getOnlineUsers () {
+		$this->db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='{$this->myip}' AND userid='{$this->my->id}'");
+		$online = $this->db->loadResult();
+		check_dberror ( "Unable to load online count." );
+
+		return $online;
+	}
+
+	protected function _IsUser() {
+		if ($this->my->id > 0) {
+    		$isuser = 1;
+    	} else {
+    		$isuser = 0;
+    	}
+
+    	return $isuser;
+	}
+
+	public function insertOnlineDatas () {
+		$id = JRequest::getInt('id');
+		$catid = JRequest::getInt('catid');
+		$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
+		$task = JRequest::getCmd('task');
+		$replyto = intval(JRequest::getVar('replyto'));
+		$do = JRequest::getCmd('do');
+
+		$this->_deleteUsersOnline();
+
+		$isuser = $this->_IsUser();
+		$this->myip = getenv('REMOTE_ADDR');
+		$now = time();
+
+		$online = $this->_getOnlineUsers();
+
+		if ($task == 'listcat' || $func == 'showcat') {
+    		$this->db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
+    		$what = $this->db->loadResult();
+    		check_dberror ( "Unable to load category name." );
+    	} else if ($func == 'latest') {
+    		$what = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+   		} else if ($id) {
+    		$this->db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$id}'");
+    		$what = $this->db->loadResult();
+    		check_dberror ( "Unable to load message subject." );
+    	} else if ($replyto) {
+    		$this->db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$replyto}'");
+    		$what = $this->db->loadResult();
+   	 		check_dberror ( "Unable to load message subject." );
+    	} else if ($do == 'reply') {
+    		$this->db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
+    		$what = $this->db->loadResult();
+    	} else if ($func == 'post' && $do == 'edit') {
+    		$this->db->setQuery("SELECT name FROM #__fb_messages WHERE id='{$id}'");
+    		$what = $this->db->loadResult();
+    		check_dberror ( "Unable to load user name." );
+    	} else if ($func == 'who') {
+    		$what = JText::_('COM_KUNENA_WHO_LATEST_POSTS');
+    	} else {
+    		$what = JText::_('COM_KUNENA_WHO_MAINPAGE');
+    	}
+
+		$link = JURI::current();
+
+		if ($online == 1) {
+    		$sql = "UPDATE #__fb_whoisonline SET ".
+    		" time=".$this->db->quote($now).", ".
+    		" what=".$this->db->quote($what).", ".
+    		" do=".$this->db->quote($do).", ".
+    		" task=".$this->db->quote($task).", ".
+    		" link=".$this->db->quote($link).", ".
+    		" func=".$this->db->quote($func).
+            " WHERE userid=".$this->db->quote($this->my->id).
+            " AND userip=".$this->db->quote($this->myip);
+    		$this->db->setQuery($sql);
+    	} else {
+    		$sql = "INSERT INTO #__fb_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
             . " VALUES (".
-            $kunena_db->quote($kunena_my->id).",".
-            $kunena_db->quote($now).",".
-            $kunena_db->quote($what).",".
-            $kunena_db->quote($task).",".
-            $kunena_db->quote($do).",".
-            $kunena_db->quote($func).",".
-            $kunena_db->quote($link).",".
-            $kunena_db->quote($myip).",".
-            $kunena_db->quote($isuser).")";
+            $this->db->quote($this->my->id).",".
+            $this->db->quote($now).",".
+            $this->db->quote($what).",".
+            $this->db->quote($task).",".
+            $this->db->quote($do).",".
+            $this->db->quote($func).",".
+            $this->db->quote($link).",".
+            $this->db->quote($this->myip).",".
+            $this->db->quote($isuser).")";
 
-    $kunena_db->setQuery($sql);
-    }
+    		$this->db->setQuery($sql);
+    	}
 
-$kunena_db->query();
-check_dberror ( "Unable to insert user into whoisonline." );
+		$this->db->query();
+		check_dberror ( "Unable to insert user into whoisonline." );
+	}
+
+	public function displayWho () {
+		CKunenaTools::loadTemplate('/plugin/who/who.php');
+	}
+}
 ?>

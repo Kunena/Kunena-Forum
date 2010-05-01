@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+01-May-2010 Xillibit
+# [#19288] Use CKunenaTimeformat::showDate in who page
+# [#19288] Rewrite who.class.php like a true class with little changes
+
 30-Apr-2010 Xillibit
 # [#19288] Fix undefined variables in parser.php on video size
 # [#19288] Missing language string on map apply button

@@ -247,6 +247,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.class.php');
 	}
 
+	$who =& CKunenaWhoIsOnline::getInstance();
+	$who->insertOnlineDatas ();
+
 	// include required libraries
 	jimport('joomla.template.template');
 
@@ -356,7 +359,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	switch ($func) {
 		case 'who' :
-			CKunenaTools::loadTemplate('/plugin/who/who.php');
+			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.class.php');
+			$online =& CKunenaWhoIsOnline::getInstance();
+			$online->displayWho();
 
 			break;
 

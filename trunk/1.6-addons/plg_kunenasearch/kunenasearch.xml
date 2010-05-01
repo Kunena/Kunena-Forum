@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install version="1.5" type="plugin" group="search">
+  <name>Search - Kunenasearch</name>
+	<author>Kunena team</author>
+	<creationDate>April 2010</creationDate>
+	<version>1.0.0</version>
+	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
+	<license>GNU/GPL</license>	
+	<description>Make joomla search to searching too in Kunena forum</description>
+	<files>
+		<filename plugin="kunenasearch">kunenasearch.php</filename>		
+	</files>	
+	<languages>
+   <language tag="en-GB">language/en-GB/en-GB.plg_search_kunenasearch.ini</language>
+</languages>
+<params>
+		<param name="search_limit" type="text" size="5" default="50" label="Search Limit" description="PARAMNUMBERSEARCHITEM"/>
+    <param name="content_limit" type="text" size="5" default="40" label="Content length" description="PARAMCONTENTLENGTH"/>
+    <param name="show_bbcode" type="radio" default="1" label="Show bbcode" description="PARAMSHOWBBCODE">          
+			     <option value="0">No</option>
+			     <option value="1">Yes</option>
+     </param>      		      		
+	</params>
+</install>

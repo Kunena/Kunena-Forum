@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+03-May-2010 810
++ [#20254] Twitter Integration (part 1)
+
 30-Apr-2010 810
 # [#19288] Fix regression: Preview Post
 ^ [#19288] Fix language string: missing COM_KUNENA_EDITOR_HELPLINE_MAPAPPLY

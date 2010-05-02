@@ -1055,6 +1055,7 @@ function showConfig($option) {
 	$lists['integration_login'] = KunenaIntegration::getConfigOptions('login');
 	$lists['integration_profile'] = KunenaIntegration::getConfigOptions('profile');
 	$lists['integration_private'] = KunenaIntegration::getConfigOptions('private');
+	$lists['integration_twitter'] = KunenaIntegration::getConfigOptions('twitter');
 
 	$lists['mod_buttons'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_buttons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_buttons);
 

@@ -1737,6 +1737,11 @@ table.kadmin-stat caption {
 							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_activity']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_DESC') ?></td>
 						</tr>
+                        <tr align="center" valign="middle">
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_TWITTER') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_twitter']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_TWITTER_DESC') ?></td>
+						</tr>
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS') ?></td>
 							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_access']; ?></td>

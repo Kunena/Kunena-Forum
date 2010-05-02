@@ -232,6 +232,10 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=mylatest', $name, '', $rel );
 	}
 
+	function GetShowMyLatestURL() {
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=mylatest');
+	}
+
 	function GetShowNoRepliesLink($name, $rel = 'nofollow') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=noreplies', $name, '', $rel );
 	}
@@ -300,6 +304,10 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func={$func}{$searchword}{$params}{$limitstr}" );
 	}
 
+	function GetWhoURL() {
+        return KunenaRoute::_( KUNENA_LIVEURLREL.'&amp;func=who');
+    }
+
 	function GetSearchLink($func, $searchword, $limitstart, $limit, $name, $params = '', $rel = 'nofollow') {
 		$kunena_config = & CKunenaConfig::getInstance ();
 		$limitstr = "";
@@ -349,6 +357,10 @@ class CKunenaLink {
 
 	function GetStatsLink($name, $class = '', $rel = 'follow') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=stats', $name, '', $rel, $class );
+	}
+
+	function GetStatsURL() {
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=stats' );
 	}
 
 	//

@@ -22,14 +22,12 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-$online =& CKunenaWhoIsOnline::getInstance();
-
 if ($this->config->showwhoisonline)
 {
-	$users = 		$online->getActiveUsersList();
-	$totaluser = 	$online->getTotalRegistredUsers ();
-	$totalguests = 	$online->getTotalGuestUsers ();
-	$who_name = 	$online->getTitleWho ($totaluser,$totalguests);
+	$users = 		$this->getActiveUsersList();
+	$totaluser = 	$this->getTotalRegistredUsers ();
+	$totalguests = 	$this->getTotalGuestUsers ();
+	$who_name = 	$this->getTitleWho ($totaluser,$totalguests);
 ?>
 
 <!-- WHOIS ONLINE -->

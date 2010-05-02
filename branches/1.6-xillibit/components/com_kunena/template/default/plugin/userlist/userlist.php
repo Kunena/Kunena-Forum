@@ -539,14 +539,9 @@ class HTML_userlist_content
 </div>
 </div>
         <?php
-        //(JJ) BEGIN: WHOISONLINE
-        if (file_exists(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php')) {
-            include(KUNENA_ABSTMPLTPATH . '/plugin/who/whoisonline.php');
-        }
-        else {
-            include(KUNENA_PATH_TEMPLATE_DEFAULT .DS. 'plugin/who/whoisonline.php');
-        }
-        //(JJ) FINISH: WHOISONLINE
+        require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.class.php');
+		$online =& CKunenaWhoIsOnline::getInstance();
+		$online->displayWhoIsOnline();
         ?>
         <!-- Begin: Forum Jump -->
 <div class="k_bt_cvr1">

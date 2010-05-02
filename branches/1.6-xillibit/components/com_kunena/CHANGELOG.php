@@ -34,14 +34,18 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+02-May-2010 Xillibit
+# [#19288] Changes on CKunenaWhoIsOnline with functions to load templates : who.php and whoisonline.php
+# [#19288] Fix to have correct links on who page
+
 01-May-2010 Xillibit
-# [#19288] Use CKunenaTimeformat::showDate in who page
+# [#19288] Use CKunenaTimeformat::showDate() in who page
 # [#19288] Rewrite who.class.php like a true class with little changes
 
 30-Apr-2010 Xillibit
 # [#19288] Fix undefined variables in parser.php on video size
 # [#19288] Missing language string on map apply button
-# [#19288] Minimize javaxcript buttons on the Stats page not working
+# [#19288] Minimize javascript buttons on the Stats page not working
 # [#19288] Add tab in profile to see Uddeim links with unreadmessages
 
 29-Apr-2010 Xillibit

@@ -12,7 +12,8 @@
 defined( '_JEXEC' ) or die();
 
 $kunena_config = & CKunenaConfig::getInstance ();
-
+require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+$kunena_poll =& CKunenaPolls::getInstance();
 $document =& JFactory::getDocument();
 
 ob_start();
@@ -771,7 +772,9 @@ kbbcode.addFunction('Gallery', function() {
 ?>
 <?php if (!isset($this->msg_cat->allow_polls)) $this->msg_cat->allow_polls = ''; //display only the poll icon in the first message of the thread
 
-if(CKunenaPolls::get_message_parent($this->id, $this->kunena_editmode)){ ?>
+$poll_allowed = $kunena_poll->get_poll_allowed($this->id, $this->parent, $this->kunena_editmode, $this->msg_cat->allow_polls);
+
+if( $poll_allowed ){ ?>
 
 kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");

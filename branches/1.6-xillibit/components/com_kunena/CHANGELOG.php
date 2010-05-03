@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-Xillibit-DEV
 
+03-May-2010 Xillibit
+# [#19288] Put a constructor in the poll class with changes to use this thing
+# [#19288] Remove the useless query in poll to get parent
+
 02-May-2010 Xillibit
 # [#19288] Changes on CKunenaWhoIsOnline with functions to load templates : who.php and whoisonline.php
 # [#19288] Fix to have correct links on who page

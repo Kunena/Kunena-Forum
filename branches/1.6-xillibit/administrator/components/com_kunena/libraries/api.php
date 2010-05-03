@@ -418,14 +418,16 @@ class KunenaStatsAPI {
 	public function getTopPollStats($PollCount) {
 		if ((int)$PollCount<0) return;
 		require_once(KPATH_SITE . DS . 'lib' . DS .'kunena.poll.class.php');
-		$toppolls = CKunenaPolls::get_top_five_polls ( (int)$PollCount );
+		$kunena_poll =& CKunenaPolls::getInstance();
+		$toppolls = $kunena_poll->get_top_five_polls ( (int)$PollCount );
 		return $toppolls;
 	}
 
 	public function getTopPollVotesStats($PollCount) {
 		if ((int)$PollCount<0) return;
 		require_once(KPATH_SITE . DS . 'lib' . DS .'kunena.poll.class.php');
-		$toppollvotes = CKunenaPolls::get_top_five_votes ( (int)$PollCount );
+		$kunena_poll =& CKunenaPolls::getInstance();
+		$toppollvotes = $kunena_poll->get_top_five_votes ( (int)$PollCount );
 		return $toppollvotes;
 	}
 }

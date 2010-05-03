@@ -94,7 +94,7 @@ $menu = JSite::getMenu ();
 $active = $menu->getActive ();
 if (empty($active) || !$active->menutype != 'kunenamenu' || !$func) {
 	$menu->setActive(KunenaRoute::getItemID());
-	$func = KunenaRoute::getDefaultFunc();
+	//$func = KunenaRoute::getDefaultFunc();
 }
 
 // Redirect Forum Jump
@@ -291,10 +291,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	//Get the topics this user has already read this session from #__fb_sessions
 	$this->read_topics = explode ( ',', $kunena_session->readtopics );
 
-	//Call the call for polls
-  	require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
-  	$poll = new CKunenaPolls();
-
 
 	/*       _\|/_
              (o o)
@@ -371,7 +367,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
         case 'poll':
-			CKunenaTools::loadTemplate('/plugin/poll/poll.php');
+  			require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+  			$kunena_polls =& CKunenaPolls::getInstance();
+  			$kunena_polls->display();
 
             break;
 

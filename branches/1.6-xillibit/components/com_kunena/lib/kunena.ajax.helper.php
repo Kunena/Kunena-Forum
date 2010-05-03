@@ -219,8 +219,8 @@ class CKunenaAjaxHelper {
 		$result = array ();
 
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-		$poll = new CKunenaPolls();
-		$result = $poll->save_results($id,$userid,$value_choosed);
+		$kunena_polls =& CKunenaPolls::getInstance();
+		$result = $kunena_polls->save_results($id,$userid,$value_choosed);
 
 		return $result;
 	}
@@ -229,8 +229,8 @@ class CKunenaAjaxHelper {
 		$result = array ();
 
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-		$poll = new CKunenaPolls();
-		$result = $poll->save_changevote($id,$userid,$value_choosed);
+		$kunena_polls =& CKunenaPolls::getInstance();
+		$result = $kunena_polls->save_changevote($id,$userid,$value_choosed);
 
 		return $result;
 	}
@@ -304,7 +304,7 @@ class CKunenaAjaxHelper {
 
 	protected function _modTopicList ($data) {
 		$result = array ();
-		
+
 		$catid = intval($data);
 		$user = KunenaFactory::getuser();
 		if ( $catid && $user->isModerator($catid) ) {

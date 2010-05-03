@@ -87,8 +87,6 @@ if ($this->config->showwhoisonline)
                     }
                     ?>
 
-                    </div>
-
                 </td>
             </tr>
         </tbody>

@@ -539,7 +539,7 @@ class HTML_userlist_content
 </div>
 </div>
         <?php
-        require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.class.php');
+        require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
 		$online =& CKunenaWhoIsOnline::getInstance();
 		$online->displayWhoIsOnline();
         ?>

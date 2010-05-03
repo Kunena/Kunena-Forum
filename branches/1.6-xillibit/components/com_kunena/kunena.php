@@ -240,12 +240,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
 	}
 
-	// WHOIS ONLINE IN FORUM
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php');
-	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.class.php');
-	}
+	// Insert WhoIsOnlineDatas
+	require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
 
 	$who =& CKunenaWhoIsOnline::getInstance();
 	$who->insertOnlineDatas ();
@@ -355,7 +351,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	switch ($func) {
 		case 'who' :
-			require_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.class.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
 			$online =& CKunenaWhoIsOnline::getInstance();
 			$online->displayWho();
 
@@ -367,7 +363,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
         case 'poll':
-  			require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+  			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
   			$kunena_polls =& CKunenaPolls::getInstance();
   			$kunena_polls->display();
 

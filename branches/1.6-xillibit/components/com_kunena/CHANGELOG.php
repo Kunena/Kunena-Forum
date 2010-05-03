@@ -39,6 +39,7 @@ Kunena 1.6.0-Xillibit-DEV
 # [#19288] Remove the useless query in poll to get parent
 # [#19288] Put kunena.who.class.php in lib with a little change
 # [#19288] Fix one warning detected in whoisonline.php in html
+# [#19288] Workspace not updated file kunena.who.class.php not commited
 
 02-May-2010 Xillibit
 # [#19288] Changes on CKunenaWhoIsOnline with functions to load templates : who.php and whoisonline.php

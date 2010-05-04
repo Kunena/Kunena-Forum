@@ -41,6 +41,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Preview is not working
 # [#19288] Fix regression: CB/JomSocial installed, no integration: infinite redirect on Profile page
 ^ [#15886] Merged revisions 2380-2403 from /branches/1.6-xillibit with changes
++ [#19244] Implement new Moderation features: Add some AJAX to the move topic/post screen
 
 03-May-2010 Xillibit
 # [#19288] Put a constructor in the poll class with changes how to use it

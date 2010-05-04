@@ -749,6 +749,27 @@ var $equals = function(obj1, obj2) {
 	return (obj1 == obj2 || JSON.encode(obj1) == JSON.encode(obj2));
 };
 
+function kRequestShowTopics(catid, select, list)
+{
+	select.set('value', 0).fireEvent('change', select);
+	var first = select.getFirst().clone();
+	select.empty().grab(first);
+	list.each(function(item) {
+		var option = new Element('option', {'value':item.id, 'html':item.subject});
+		select.grab(option);
+	});	
+}
+
+function kRequestGetTopics(el)
+{
+	var catid = el.get("value");
+	var select = $('kmod_targettopic');
+	request = new Request.JSON({url: kunena_url_ajax,
+	onSuccess: function(response){
+		kRequestShowTopics(catid, select, response.topiclist);
+		}}).post({action: 'modtopiclist', value: catid
+	});
+}
 
 //----------------- New Mootools based behaviors ----------------------
 
@@ -863,43 +884,22 @@ window.addEvent('domready', function(){
 		});
 	}
 	
-	if($('Modcategories') != undefined){
-		$('Modcategories').getElements('option').each( function( catid ) {
-			catid.addEvent('click', function(e){
-				
-				var check = '1';
-			
-				if ($('modmovetopic') != undefined ) {
-					var movetopic = $('modmovetopic').getProperty('checked','checked'); 
-					if (movetopic == true) {
-						check = '0';
-					}
-				}
-				if ($('modmovemessage') != undefined ) {
-					var movemessage = $('modmovemessage').getProperty('checked','checked');
-					if (movemessage == true) {
-						check = '0';
-					}
-				}
-				if ($('modsplitmultpost') != undefined ) {
-					var splitmultpost = $('modsplitmultpost').getProperty('checked','checked'); 
-					if (splitmultpost == true) {
-						check = '0';
-					}
-				}
-				if (check == '1') {
-					//load topiclist with json
-					new Request.JSONP({
-						url: '/kunena_1.6.0_branch/index.php?option=com_kunena&func=json&action=modtopiclist',
-							data: {
-								value: catid.get('value')
-							},
-							onComplete: function(jsonObj) {
-								alert('complete');
-							}
-					}).send();
-				}
-			})
+	if($('kmod_categories') != undefined){
+		$('kmod_categories').addEvent('change', function(e){
+			kRequestGetTopics(this);
 		});
-	}	
+	}
+	if($('kmod_targettopic') != undefined){
+		$('kmod_targettopic').addEvent('change', function(e){
+			if (this.get('value') != 0) {
+				targetid = this.get('value');
+				display = 'none';
+			} else {
+				targetid = '';
+				display = 'block';
+			}
+			$('kmod_targetid').set('value', targetid);
+			$('kmod_subject').setStyle('display', display);
+		});
+	}
 });

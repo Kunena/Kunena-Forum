@@ -525,12 +525,12 @@ class CKunenaPost {
 		}
 		//$messages [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
 		foreach ( $messagesList as $mes ) {
-			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) )." (#{$mes->id})" );
+			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
 		}
-		$this->messagelist = JHTML::_ ( 'select.genericlist', $messages, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kposts' );
+		$this->messagelist = JHTML::_ ( 'select.genericlist', $messages, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_targettopic' );
 
 		$options=array();
-		$this->categorylist = CKunenaTools::KSelectList ( 'targetcat', $options, 'class="inputbox kmove_selectbox"', false, 'kcategories', $this->catid );
+		$this->categorylist = CKunenaTools::KSelectList ( 'targetcat', $options, 'class="inputbox kmove_selectbox"', false, 'kmod_categories', $this->catid );
 		$this->message = $this->msg_cat;
 		$this->user = KunenaFactory::getUser($this->msg_cat->userid);
 

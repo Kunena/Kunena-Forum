@@ -3218,6 +3218,8 @@ MODERATOR PAGE
 	border:1px solid #CCCCCC;
 	padding:5px;
 	margin:5px 0;
+	display:inline-block;
+	width:98%;
 }
 
 #Kunena div.kmoderate_message h4 {

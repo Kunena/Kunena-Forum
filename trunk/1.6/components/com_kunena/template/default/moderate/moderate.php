@@ -10,6 +10,7 @@
  **/
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+$this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';");
 ?>
 
 <div class="kbt_cvr1">
@@ -59,9 +60,9 @@ defined ( '_JEXEC' ) or die ();
 
 
 	<div id="modtopicslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_TOPIC' ); ?>:
-	<input type="text" size="7" name="targetid" value="" /> <?php echo $this->messagelist ?></div>
+	<input id="kmod_targetid" type="text" size="7" name="targetid" value="" /> <?php echo $this->messagelist ?></div>
 
-	<div><?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
+	<div id="kmod_subject"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
 	<input type="text" name="subject" value="<?php echo kunena_htmlspecialchars ( $this->message->subject ); ?>" /></div>
 <?php if ($this->moderateTopic) : ?>
 	<div><input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="shadow"

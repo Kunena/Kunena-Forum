@@ -342,9 +342,10 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=poll&do={$do}{$idstring}{$catidstr}" );
 	}
 
-	function GetJsonURL($action, $do = '', $xhtml = true) {
+	function GetJsonURL($action='', $do = '', $xhtml = true) {
+		if ($action) $action = "&action=$action";
 		if ($do) $do = "&do=$do";
-		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=json&action=$action$do", $xhtml );
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=json$action$do", $xhtml );
 	}
 
 	function GetMarkThisReadLink($catid, $name, $rel = 'nofollow', $title = '') {

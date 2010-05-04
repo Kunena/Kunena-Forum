@@ -308,15 +308,15 @@ class CKunenaAjaxHelper {
 		$catid = intval($data);
 		$user = KunenaFactory::getuser();
 		if ( $catid && $user->isModerator($catid) ) {
-			$query = "SELECT id, name, subject, parent
+			$query = "SELECT id, subject
 							FROM #__fb_messages
-							WHERE catid=$catid AND parent=0 AND moved=0
+							WHERE catid={$catid} AND parent=0 AND moved=0
 							ORDER BY id DESC";
 			$this->_db->setQuery ( $query, 0, 15 );
 			$topics_list = $this->_db->loadObjectlist ();
 			check_dberror ( "Unable to get topics list name." );
 			$result['status'] = '1';
-			$result['topics_list'] = $topics_list;
+			$result['topiclist'] = $topics_list;
 
 		} else {
 			$result['status'] = '0';

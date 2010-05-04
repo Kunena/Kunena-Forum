@@ -94,7 +94,7 @@ $menu = JSite::getMenu ();
 $active = $menu->getActive ();
 if (empty($active) || !$active->menutype != 'kunenamenu' || !$func) {
 	$menu->setActive(KunenaRoute::getItemID());
-	$func = KunenaRoute::getDefaultFunc();
+	if (!$func) $func = KunenaRoute::getDefaultFunc();
 }
 
 // Redirect Forum Jump

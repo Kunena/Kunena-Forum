@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 ^ [#19244] Implement new Moderation features: New topic/post moderation screen (no AJAX yet)
 - [#19244] Remove deprecated moderation buttons, for now on every action will be move
 # [#19244] Fixed a few bugs in moderator class, simplified logic
+# [#19288] Fix regression: Preview is not working
 
 30-Apr-2010 Matias
 + [#19356] New status based topicicons when users cannot pick up their own icons

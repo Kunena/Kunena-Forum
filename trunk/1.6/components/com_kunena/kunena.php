@@ -109,12 +109,16 @@ include_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.debug.php");
 // get Kunenas configuration params in
 
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.config.class.php");
+$kunena_my = &JFactory::getUser ();
+$kunena_db = &JFactory::getDBO ();
+$kunena_config = &CKunenaConfig::getInstance ();
+if ($kunena_config->debug) {
+	@ini_set('display_errors', 1);
+	@error_reporting(E_ALL);
+	$kunena_db->debug(1);
+}
 
 global $lang, $kunena_icons, $topic_emoticons;
-
-$kunena_my = &JFactory::getUser ();
-$kunena_config = &CKunenaConfig::getInstance ();
-$kunena_db = &JFactory::getDBO ();
 
 $kn_tables = & CKunenaTables::getInstance ();
 if ($kn_tables->installed () === false) {

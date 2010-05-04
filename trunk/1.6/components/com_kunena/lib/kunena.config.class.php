@@ -393,6 +393,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $latestcategory_in = 1;
 	var $topicicons = 1;
 	var $onlineusers = 1;
+	var $debug = 0;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

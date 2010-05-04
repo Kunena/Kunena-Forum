@@ -1075,6 +1075,8 @@ function showConfig($option) {
 
 	$lists['onlineusers'] = JHTML::_('select.genericlist', $yesno, 'cfg_onlineusers', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->onlineusers);
 
+	$lists['debug'] = JHTML::_('select.genericlist', $yesno, 'cfg_debug', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->debug);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

@@ -737,7 +737,7 @@ table.kadmin-stat caption {
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_EMAIL_DESC') ?></td>
 					</tr>
-							<tr align="center" valign="middle">
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $lists ['board_offline'];
@@ -778,6 +778,15 @@ table.kadmin-stat caption {
 						?>
 						</td>
 						<td align="left" valign="top"><img src="<?php echo JURI::root (); ?>/images/M_images/pdf_button.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_PDF_DESC') ?></td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['debug'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE_DESC') ?>
+						</td>
 					</tr>
 				</table>
 			</fieldset>

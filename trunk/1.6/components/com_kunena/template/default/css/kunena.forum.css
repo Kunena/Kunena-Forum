@@ -3214,6 +3214,25 @@ MODERATOR PAGE
 	float:right;
 }
 
+#Kunena div.kmoderate_message {
+	border:1px solid #CCCCCC;
+	padding:5px;
+	margin:5px 0;
+}
+
+#Kunena div.kmoderate_message h4 {
+	margin:0;
+	padding:0;
+}
+
+#Kunena div.kmoderate_message div.kmessage_avatar {
+	float:left;
+	padding:5px 5px 0 0;
+}
+
+#Kunena div.kmoderate_message div.kmessage_msgtext {
+	margin-left: 42px;
+}
 /*
 USER PROFILE
 -------------------------------------------------------------------- */

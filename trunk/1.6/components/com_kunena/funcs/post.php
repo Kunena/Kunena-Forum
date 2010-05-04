@@ -494,24 +494,43 @@ class CKunenaPost {
 		if ($this->moderatorProtection ())
 			return false;
 
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+
 		$this->moderateTopic = $modthread;
 		$this->moderateMultiplesChoices = $modchoices;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM #__fb_messages WHERE catid={$this->catid} AND parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );
 
+		// Get thread and reply count from current message:
+		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM #__fb_messages AS m
+			INNER JOIN #__fb_messages AS t ON m.thread=t.id
+			LEFT JOIN #__fb_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
+			WHERE m.id={$this->id}
+			GROUP BY m.thread";
+		$this->_db->setQuery ( $query, 0, 1 );
+		$this->threadmsg = $this->_db->loadObject ();
+		check_dberror ( "Unable to load messages." );
+
 		$messages =array ();
-		foreach ( $messagesList as $mes ) {
-			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
+		if ($this->moderateTopic) {
+			$messages [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
+		} else {
+			$messages [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
 		}
-		$this->selectlistmessage = JHTML::_ ( 'select.genericlist', $messages, 'Modpostlist', 'class="inputbox" size="15"', 'value', 'text' );
+		//$messages [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
+		foreach ( $messagesList as $mes ) {
+			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) )." (#{$mes->id})" );
+		}
+		$this->messagelist = JHTML::_ ( 'select.genericlist', $messages, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kposts' );
 
 		$options=array();
-		$this->selectlist = CKunenaTools::KSelectList ( 'Modcategories', $options, ' size="15" class="kmove_selectbox"' );
+		$this->categorylist = CKunenaTools::KSelectList ( 'targetcat', $options, 'class="inputbox kmove_selectbox"', false, 'kcategories', $this->catid );
 		$this->message = $this->msg_cat;
+		$this->user = KunenaFactory::getUser($this->msg_cat->userid);
 
 		CKunenaTools::loadTemplate ( '/moderate/moderate.php' );
 	}
@@ -522,84 +541,24 @@ class CKunenaPost {
 		if ($this->moderatorProtection ())
 			return false;
 
-		$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
-		$modaction = JRequest::getVar ( 'moderation', null );
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 
-		if ( $modaction == 'modmergetopic' ) {
-			$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
-			require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-			$kunena_mod = CKunenaModeration::getInstance ();
-			$TargetCatID = JRequest::getInt ( 'Modcategories', 0 );
+		$mode = JRequest::getVar ( 'mode', KN_MOVE_MESSAGE );
+		$targetSubject = JRequest::getString ( 'subject', '' );
+		$targetCat = JRequest::getInt ( 'targetcat', 0 );
+		$targetId = JRequest::getInt ( 'targetid', 0 );
+		if (!$targetId) $targetId = JRequest::getInt ( 'targettopic', 0 );
+		$shadow = JRequest::getInt ( 'shadow', 0 );
 
-			$merge = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
-			if (! $merge) {
-				$message = $kunena_mod->getErrorMessage ();
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
-			}
-
-			$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
-		} else if ( $modaction == 'modmergemessage' ) {
-			$TargetThreadID = JRequest::getInt ( 'Modpostlist', null );
-			$TargetSubject = JRequest::getInt ( 'subject', null );
-			$TargetTopicID = JRequest::getInt ( 'cattopicid', null );
-			require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-			$kunena_mod = &CKunenaModeration::getInstance ();
-
-			if ( !empty( $TargetTopicID ) ) {
-				$TargetThreadID = $TargetTopicID;
-			}
-
-			$merge = $kunena_mod->moveMessage ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
-
-			if (! $merge) {
-				$message = $kunena_mod->getErrorMessage ();
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
-			}
-
-			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->config->messages_per_page ), $message );
-		} else if ( $modaction == 'modmovetopic' ) {
-			$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
-			require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-			$kunena_mod = CKunenaModeration::getInstance ();
-			$TargetCatID = JRequest::getInt ( 'Modcategories', 0 );
-
-			$move = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
-			if (! $move) {
-				$message = $kunena_mod->getErrorMessage ();
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
-			}
-
-			$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ), $message );
-		} else if ( $modaction == 'modmovemessage' ) {
-			$TargetCatID = JRequest::getInt ( 'Modcategories', 0 );
-
-			$movemessage = $kunena_mod->moveMessage ( $this->id, $TargetCatID, '', '' );
-			if (! $movemessage) {
-				$message = $kunena_mod->getErrorMessage ();
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_SPLIT' );
-			}
-
-			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $message );
-		} else if ( $modaction == 'modsplitmultpost' ) {
-			$TargetCatID = JRequest::getInt ( 'Modcategories', 0 );
-
-			$splitpost = $kunena_mod->moveMessageAndNewer ( $this->id, $TargetCatID, '', '' );
-			if (! $splitpost) {
-				$message = $kunena_mod->getErrorMessage ();
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_SPLIT' );
-			}
-
-			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $message );
+		$moderation = CKunenaModeration::getInstance ();
+		$success = $moderation->move($this->id, $targetCat, $targetSubject, $targetId, $mode, $shadow);
+		if (! $success) {
+			$this->_app->enqueueMessage( $moderation->getErrorMessage () );
 		} else {
-			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), JText::_('COM_KUNENA_ATTACHMENT_ERROR_METHOD_NOT_IMPLEMENTED') );
+			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ));
 		}
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ) );
 	}
-
 
 	protected function subscribe() {
 		if (!$this->load())

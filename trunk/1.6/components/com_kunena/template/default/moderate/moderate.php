@@ -17,100 +17,60 @@ defined ( '_JEXEC' ) or die ();
 <div class="kbt_cvr3">
 <div class="kbt_cvr4">
 <div class="kbt_cvr5">
-<h1><?php echo JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC'); ?>: <?php echo kunena_htmlspecialchars ( $this->message->subject ); ?></h1>
+<h1><?php echo $this->moderateTopic ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></h1>
 	<div id="kmod-container">
-<form action="<?php
-		echo CKunenaLink::GetPostURL ();
-		?>"
-	method="post" name="myform"><input type="hidden" name="do"
-	value="domoderatecommon" /> <input type="hidden" name="id"
-	value="<?php
-		echo $this->id;
-		?>" />
-		<input type="hidden" name="catid"
-	value="<?php
-		echo $this->catid;
-		?>" />
+<form action="<?php echo CKunenaLink::GetPostURL (); ?>" method="post" name="myform"><input type="hidden" name="do" value="domoderate" />
+<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
+<input type="hidden" name="catid" value="<?php echo $this->catid; ?>" />
 
 <div>
-		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?> :<strong><?php
-		echo kunena_htmlspecialchars ( $this->message->catname );
-		?></strong></div>
+	<?php echo JText::_('COM_KUNENA_GEN_TOPIC'); ?>:
+	<strong><?php echo kunena_htmlspecialchars ( $this->threadmsg->subject ); ?></strong>
+</div>
 <div>
-
-<?php
-if (empty($this->moderateMultiplesChoices)) {
-	if ($this->moderateTopic) :	?>
-		<input id="modmergetopic" type="radio" name="moderation" value="modmergetopic" /><?php echo 'Merge topic'; ?> <br />
-		<input id="modmovetopic" type="radio" name="moderation" value="modmovetopic" ><?php echo 'Move Topic'; ?> <br />
-<?php else :?>
-		<input id="modmergemessage" type="radio" name="moderation" value="modmergemessage" /><?php echo 'Merge Message'; ?> <br />
-		<input id="modmovemessage" type="radio" name="moderation" value="modmovemessage" ><?php echo 'Move Message'; ?> <br />
-		<input id="modsplitmultpost" type="radio" name="moderation" value="modsplitmultpost" ><?php echo JText::_('COM_KUNENA_MODERATION_SPLIT_CHOOSE2'); ?> <br />
-<?php endif;
-} else {
-	switch ($this->moderateMultiplesChoices) {
-		case 'modmergetopic':
-?>
-	<input id="modmergetopic" type="radio" name="moderation" value="modmergetopic" /><?php echo 'Merge topic'; ?> <br />
-<?php
-   	 	break;
-   	 	case 'modmovetopic':
-?>
-	<input id="modmovetopic" type="radio" name="moderation" value="modmovetopic" ><?php echo 'Move Topic'; ?> <br />
-<?php
-   	 	break;
-   	 	case 'modmergemessage':
-?>
-	<input id="modmergemessage" type="radio" name="moderation" value="modmergemessage" /><?php echo 'Merge Message'; ?> <br />
-<?php
-   	 	break;
-   	 	case 'modmovemessage':
-?>
-	<input id="modmovemessage" type="radio" name="moderation" value="modmovemessage" ><?php echo 'Move Message'; ?> <br />
-<?php
-   	 	break;
-   	 	case 'modsplitmultpost':
-?>
-	<input id="modsplitmultpost" type="radio" name="moderation" value="modsplitmultpost" ><?php echo JText::_('COM_KUNENA_MODERATION_SPLIT_CHOOSE2'); ?> <br />
-<?php
-   	 	break;
-	}
-} ?>
-<br />
-		<div id="modcategorieslist"><?php
-		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_CATEGORY' );
-		?>: <br />
-
-		<?php
-		echo $this->selectlist;
-		?></div> <br />
-
-
-		<div id="modtopicslist" style="display:none;"><?php
-		echo JText::_ ( 'COM_KUNENA_POST_PROCEED_MODERATION_TOPIC' );
-		?>: <br />
-
-		<?php
-		echo $this->selectlistmessage;
-		?></div> <br />
-
-		<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="leaveGhost"  value="<?php echo $this->config->boxghostmessage ? '1' : '0'; ?>" /> <?php echo JText::_ ( 'COM_KUNENA_POST_MOVE_GHOST' ); ?>
-		<br />
-<br />
-		<?php
-		echo JText::_ ( 'COM_KUNENA_MODERATE_FIELD_ID' );
-		?>: <br />
-		<input type="text" name="cattopicid" value="" /><br />
+	<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?>:
+	<strong><?php echo kunena_htmlspecialchars ( $this->message->catname ) ?></strong>
+</div>
 
 <br />
-
-<input type="submit" class="button"
-	value="<?php
-		echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' );
-		?>" /></div>
-</form>
+	<?php if (!$this->moderateTopic) : ?>
+	<div><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_SELECTED'); ?>:</div>
+	<div class="kmoderate_message">
+		<h4><?php echo kunena_htmlspecialchars ( $this->message->subject ); ?></h4>
+		<div class="kmessage_timeby"><span class="kmessage_time" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover'); ?>">
+		<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat'); ?></span>
+		<span class="kmessage_by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->message->userid, $this->message->name ); ?></span></div>
+		<div class="kmessage_avatar"><?php echo $this->user->getAvatarLink('', 'lastpost'); ?></div>
+		<div class="kmessage_msgtext"><?php echo KunenaParser::stripBBCode ( stripslashes($this->message->message), 300) ?></div>
 	</div>
+	<?php if ($this->threadmsg->replies) : ?>
+	<ul>
+		<li><input id="kmoderate_mode_selected" type="radio" name="mode" checked="checked" value="<?php echo KN_MOVE_MESSAGE ?>" /><?php echo JText::_ ( 'COM_KUNENA_MODERATION_MOVE_SELECTED' ); ?></li>
+		<li><input id="kmoderate_mode_newer" type="radio" name="mode" value="<?php echo KN_MOVE_NEWER ?>" ><?php echo JText::sprintf ( 'COM_KUNENA_MODERATION_MOVE_NEWER', $this->threadmsg->replies ); ?></li>
+	</ul>
+	<?php endif; ?>
+	<br />
+<?php else : ?>
+	<input id="kmoderate_mode_topic" type="hidden" name="mode" value="<?php echo KN_MOVE_THREAD ?>" />
+<?php endif; ?>
+
+	<div id="modcategorieslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_CATEGORY' );?>:
+	<?php echo $this->categorylist ?></div>
+
+
+	<div id="modtopicslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_TOPIC' ); ?>:
+	<input type="text" size="7" name="targetid" value="" /> <?php echo $this->messagelist ?></div>
+
+	<div><?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
+	<input type="text" name="subject" value="<?php echo kunena_htmlspecialchars ( $this->message->subject ); ?>" /></div>
+<?php if ($this->moderateTopic) : ?>
+	<div><input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="shadow"
+		value="1" /> <?php echo JText::_ ( 'COM_KUNENA_MODERATION_TOPIC_SHADOW' ); ?></div>
+<?php endif ?>
+
+	<div><input type="submit" class="button" value="<?php echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' ); ?>" /></div>
+</form>
+</div>
 </div>
 </div>
 </div>

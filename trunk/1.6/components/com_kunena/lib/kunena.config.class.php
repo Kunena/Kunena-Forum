@@ -389,7 +389,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $integration_activity = 'auto';
 	//New for 1.6: choose if you want that ghost message box checked by default
 	var $boxghostmessage = 0;
-	var $mod_buttons = 0;
 	var $userdeletetmessage = 0;
 	var $latestcategory_in = 1;
 	var $topicicons = 1;

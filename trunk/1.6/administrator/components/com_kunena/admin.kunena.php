@@ -1056,8 +1056,6 @@ function showConfig($option) {
 	$lists['integration_profile'] = KunenaIntegration::getConfigOptions('profile');
 	$lists['integration_private'] = KunenaIntegration::getConfigOptions('private');
 
-	$lists['mod_buttons'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_buttons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_buttons);
-
 	$listUserDeleteMessage = array();
 	$listUserDeleteMessage[] = JHTML::_('select.option', '0', JText::_('COM_KUNENA_A_DELETEMESSAGE_NOT_ALLOWED'));
 	$listUserDeleteMessage[] = JHTML::_('select.option', '1', JText::_('COM_KUNENA_A_DELETEMESSAGE_ALLOWED_IF_REPLIES'));

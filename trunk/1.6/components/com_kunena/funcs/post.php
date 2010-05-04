@@ -523,7 +523,7 @@ class CKunenaPost {
 		} else {
 			$messages [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
 		}
-		//$messages [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
+		$messages [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
 		foreach ( $messagesList as $mes ) {
 			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
 		}

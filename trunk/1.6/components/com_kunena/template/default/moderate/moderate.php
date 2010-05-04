@@ -55,12 +55,13 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 	<input id="kmoderate_mode_topic" type="hidden" name="mode" value="<?php echo KN_MOVE_THREAD ?>" />
 <?php endif; ?>
 
+	<div><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST' );?>:
 	<div id="modcategorieslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_CATEGORY' );?>:
 	<?php echo $this->categorylist ?></div>
 
 
 	<div id="modtopicslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_TOPIC' ); ?>:
-	<input id="kmod_targetid" type="text" size="7" name="targetid" value="" /> <?php echo $this->messagelist ?></div>
+	<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none"/> <?php echo $this->messagelist ?></div>
 
 	<div id="kmod_subject"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
 	<input type="text" name="subject" value="<?php echo kunena_htmlspecialchars ( $this->message->subject ); ?>" /></div>
@@ -68,7 +69,7 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 	<div><input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="shadow"
 		value="1" /> <?php echo JText::_ ( 'COM_KUNENA_MODERATION_TOPIC_SHADOW' ); ?></div>
 <?php endif ?>
-
+	</div>
 	<div><input type="submit" class="button" value="<?php echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' ); ?>" /></div>
 </form>
 </div>

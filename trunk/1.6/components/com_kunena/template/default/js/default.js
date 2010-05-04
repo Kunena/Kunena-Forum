@@ -891,15 +891,21 @@ window.addEvent('domready', function(){
 	}
 	if($('kmod_targettopic') != undefined){
 		$('kmod_targettopic').addEvent('change', function(e){
-			if (this.get('value') != 0) {
+			id = this.get('value');
+			if (id != 0) {
 				targetid = this.get('value');
-				display = 'none';
+				$('kmod_subject').setStyle('display', 'none');
 			} else {
 				targetid = '';
-				display = 'block';
+				$('kmod_subject').setStyle('display', 'block');
+			}
+			if (id == -1) {
+				targetid = '';
+				$('kmod_targetid').setStyle('display', 'inline');
+			} else {
+				$('kmod_targetid').setStyle('display', 'none');
 			}
 			$('kmod_targetid').set('value', targetid);
-			$('kmod_subject').setStyle('display', display);
 		});
 	}
 });

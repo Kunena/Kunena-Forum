@@ -13,7 +13,8 @@
 defined ( '_JEXEC' ) or die ();
 
 // Kunena bbcode editor
-
+require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+$kunena_poll =& CKunenaPolls::getInstance();
 $kunena_config = & CKunenaConfig::getInstance ();
 ?>
 <tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
@@ -117,16 +118,15 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<?php
 			//Check if the poll is allowed
 			if ($kunena_config->pollenabled) {
-				if ( empty($this->msg_cat->allow_polls) )
-					$this->msg_cat->allow_polls = '';
+				if ( empty($this->msg_cat->allow_polls) ) $this->msg_cat->allow_polls = '';
 
-				$display_poll = CKunenaPolls::get_poll_allowed($this->id, $this->kunena_editmode, $this->msg_cat->allow_polls, $this->catid);
-					if (!isset($this->polldatasedit[0]->polltimetolive)) {
-						$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
-					}
-					CKunenaPolls::call_js_poll_edit($this->kunena_editmode, $this->id);
-					$html_poll_edit = CKunenaPolls::get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
-					JHTML::_('behavior.calendar');
+				$display_poll = $kunena_poll->get_poll_allowed($this->id, $this->parent, $this->kunena_editmode, $this->msg_cat->allow_polls);
+				if (!isset($this->polldatasedit[0]->polltimetolive)) {
+					$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
+				}
+				$kunena_poll->call_js_poll_edit($this->kunena_editmode, $this->id);
+				$html_poll_edit = $kunena_poll->get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
+				JHTML::_('behavior.calendar');
 			?><span id="kpoll_not_allowed"><?php if(!$display_poll) { echo JText::_('The polls are not allowed in this category'); } ?></span>
 			<div id="kpoll_hide_not_allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
 			<?php echo JText::_('COM_KUNENA_POLL_TITLE');

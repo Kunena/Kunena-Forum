@@ -22,16 +22,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-$kunena_db = &JFactory::getDBO();
-$kunena_app =& JFactory::getApplication();
-$kunena_config =& CKunenaConfig::getInstance();
-$kunena_my = JFactory::getUser();
-?>
-
-<?php
-if ($kunena_config->showwhoisonline > 0)
+if ($this->config->showwhoisonline)
 {
+	$users=$this->getUsersList();
 ?>
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
@@ -43,7 +36,7 @@ if ($kunena_config->showwhoisonline > 0)
             <tr>
                 <th colspan = "4">
                    <div class = "ktitle_cover">
-                        <span class="ktitle"><?php echo $kunena_app->getCfg('sitename'); ?> - <?php echo JText::_('COM_KUNENA_WHO_WHOIS_ONLINE'); ?></span>
+                        <span class="ktitle"><?php echo $this->app->getCfg('sitename'); ?> - <?php echo JText::_('COM_KUNENA_WHO_WHOIS_ONLINE'); ?></span>
                     </div>
             </tr>
         </thead>
@@ -63,10 +56,6 @@ if ($kunena_config->showwhoisonline > 0)
             </tr>
 
             <?php
-            $query = "SELECT w.*, u.id, u.username, f.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS f ON u.id=f.userid ORDER BY w.time DESC";
-            $kunena_db->setQuery($query);
-            $users = $kunena_db->loadObjectList();
-            check_dberror ( "Unable to load online users." );
             $k = 0; //for alternating rows
             $tabclass = array
             (
@@ -80,11 +69,9 @@ if ($kunena_config->showwhoisonline > 0)
 
                 if ($user->userid == 0) {
                     $user->username = JText::_('COM_KUNENA_GUEST');
-                } else if ($user->showOnline < 1 && !CKunenaTools::isModerator($kunena_my->id)) {
+                } else if ($user->showOnline < 1 && !CKunenaTools::isModerator($this->my->id)) {
                 	continue;
                 }
-
-                $time = date("H:i:s", $user->time + $kunena_config->board_ofset*3600);
             ?>
 
                 <tr class = "k<?php echo $tabclass[$k];?>">
@@ -97,28 +84,28 @@ if ($kunena_config->showwhoisonline > 0)
                         <?php
                         if ($user->userid == 0) {
                             echo $user->username;
-                        }
-                        else
-                        {
-				echo CKunenaLink::GetProfileLink($user->userid, $user->username);
+                        } else {
+							echo CKunenaLink::GetProfileLink($user->userid, $user->username);
                         }
                         ?>
 
                         </span>
 
                         <?php
-                        if (CKunenaTools::isModerator($kunena_my->id))
-                        {
+                        if (CKunenaTools::isAdmin($this->my->id) && $this->config->hide_ip) {
                         ?>
 
                             (<?php echo $user->userip; ?>)
 
                         <?php
+                        } elseif (CKunenaTools::isModerator($this->my->id) && !$this->config->hide_ip) {
+                       	?>
+							(<?php echo $user->userip; ?>)
+						<?php
                         }
                         ?>
                     </td>
-
-                    <td class = "td-2" nowrap = "nowrap"><?php echo $time; ?>
+                    <td class = "td-2" nowrap = "nowrap"><?php echo ' <span title="' . CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat' ) . '</span>'; ?>
                     </td>
 
                     <td class = "td-3">
@@ -142,7 +129,7 @@ else
 ?>
 
     <div style = "border:1px solid #FF6600; background: #FF9966; padding:20px; text-align:center;">
-        <h1>Not Active</h1>
+        <h1><?php echo JText::_('COM_KUNENA_WHO_IS_ONLINE_NOT_ACTIVE'); ?></h1>
     </div>
 
 <?php

@@ -1073,6 +1073,8 @@ function showConfig($option) {
 
 	$lists['topicicons'] = JHTML::_('select.genericlist', $yesno, 'cfg_topicicons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->topicicons);
 
+	$lists['onlineusers'] = JHTML::_('select.genericlist', $yesno, 'cfg_onlineusers', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->onlineusers);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

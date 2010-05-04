@@ -179,7 +179,7 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 
-	function GetProfileLink($userid, $name, $rel = 'nofollow', $class = '') {
+	function GetProfileLink($userid, $name, $title ='', $rel = 'nofollow', $class = '') {
 		if ($userid > 0) {
 			if (CKunenaTools::isAdmin ( $userid )) {
 				$class = 'admin';
@@ -190,7 +190,7 @@ class CKunenaLink {
 			}
 			$link = CKunenaLink::GetProfileURL ( $userid );
 			if (! empty ( $link ))
-				return CKunenaLink::GetHrefLink ( $link, $name, '', $rel, $class );
+				return CKunenaLink::GetHrefLink ( $link, $name, $title, $rel, $class );
 		}
 		return $name;
 	}
@@ -230,6 +230,10 @@ class CKunenaLink {
 
 	function GetShowMyLatestLink($name, $rel = 'nofollow') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=mylatest', $name, '', $rel );
+	}
+
+	function GetShowMyLatestURL() {
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=mylatest');
 	}
 
 	function GetShowNoRepliesLink($name, $rel = 'nofollow') {
@@ -300,6 +304,10 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func={$func}{$searchword}{$params}{$limitstr}" );
 	}
 
+	function GetWhoURL() {
+		return KunenaRoute::_( KUNENA_LIVEURLREL.'&amp;func=who');
+	}
+
 	function GetSearchLink($func, $searchword, $limitstart, $limit, $name, $params = '', $rel = 'nofollow') {
 		$kunena_config = & CKunenaConfig::getInstance ();
 		$limitstr = "";
@@ -349,6 +357,10 @@ class CKunenaLink {
 
 	function GetStatsLink($name, $class = '', $rel = 'follow') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=stats', $name, '', $rel, $class );
+	}
+
+	function GetStatsURL() {
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=stats' );
 	}
 
 	//

@@ -39,10 +39,37 @@ Kunena 1.6.0-DEV
 - [#19244] Remove deprecated moderation buttons, for now on every action will be move
 # [#19244] Fixed a few bugs in moderator class, simplified logic
 # [#19288] Fix regression: Preview is not working
+# [#19288] Fix regression: CB/JomSocial installed, no integration: infinite redirect on Profile page
+^ [#15886] Merged revisions 2380-2403 from /branches/1.6-xillibit with changes
+
+03-May-2010 Xillibit
+# [#19288] Put a constructor in the poll class with changes how to use it
+# [#19288] Remove the useless query in poll to get parent
+# [#19288] Put kunena.who.class.php in lib with a little change
+# [#19288] Fix one warning detected in whoisonline.php in html
+
+02-May-2010 Xillibit
+# [#19288] Changes on CKunenaWhoIsOnline with functions to load templates : who.php and whoisonline.php
+# [#19288] Fix links on who page
+
+01-May-2010 Xillibit
+# [#19288] Use CKunenaTimeformat::showDate() in who page
+# [#19288] Rewrite who.class.php like a true class with little changes
+
+30-Apr-2010 Xillibit
+# [#19288] Fix undefined variables in parser.php on video size
+# [#19288] Minimize javascript buttons on the Stats page not working
+# [#19288] Add tab in profile to see Uddeim links with unreadmessages
 
 30-Apr-2010 Matias
 + [#19356] New status based topicicons when users cannot pick up their own icons
 + [#19356] Topic icon: add link to first unread (or last) message
+
+29-Apr-2010 Xillibit
+# [#19288] Add $title parameter in function GetProfileLink() to be used in kunenalatest module
+# [#19288] Extra slash in path of avatars in gallery
+# [#19288] Add configuration setting to show or hide list of online users for security purpose
+^ [#19288] change getName() function in user.php from protected to public
 
 29-Apr-2010 Matias
 # [#19288] Fix regression: JomSocial avatar integration is not working

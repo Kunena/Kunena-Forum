@@ -392,6 +392,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $userdeletetmessage = 0;
 	var $latestcategory_in = 1;
 	var $topicicons = 1;
+	var $onlineusers = 1;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

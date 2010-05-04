@@ -76,6 +76,47 @@ defined( '_JEXEC' ) or die();
 			<?php $this->displayFavorites(); ?>
 		</dd>
 		<?php endif; ?>
+		<?php if (KunenaIntegration::detectIntegration('private', true) == 'uddeim' ) :
+				$uddeim = new uddeIMAPI();
+				if ($uddeim->getInboxTotalMessages($this->my->id) ) {
+		?>
+		<dt class="closed"><?php echo JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING').' ('.JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING_NEW_MESSAGES').$uddeim->getInboxTotalMessages($this->my->id).')'; ?></dt>
+		<?php } else { ?>
+		<dt class="closed"><?php echo JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING'); ?></dt>
+		<?php } ?>
+		<dd style="display: none;">
+			<table
+	class="<?php
+	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
+	?>" id="kflattable">
+	<thead>
+		<tr>
+			<th
+				colspan="<?php
+	echo $this->columns;
+	?>">
+			<div class="ktitle_cover km">
+				<span class="ktitle kl"><?php  echo JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING').' ('.JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING_NEW_MESSAGES').$uddeim->getInboxTotalMessages($this->my->id).')'; ?></span>
+			</div>
+			</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr class="ksectiontableentry2" >
+				<td style="border-left:1px solid #BFC3C6;">
+					<ul style="list-style-type: none;					">
+					<li><a href="<?php echo $uddeim->getLinkToBox('inbox',true); ?>"><?php echo JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING_INBOX'); ?></a></li>
+					<li><a href="<?php echo $uddeim->getLinkToBox('compose',true); ?>"><?php echo JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING_COMPOSE'); ?></a></li>
+					<li><a href="<?php echo $uddeim->getLinkToBox('trashcan',true); ?>"><?php echo JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING_TRASHCAN'); ?></a></li>
+					<li><a href="<?php echo $uddeim->getLinkToBox('outbox',true); ?>"><?php echo JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING_OUTBOX'); ?></a></li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+		</dd>
+		<?php endif; ?>
 		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id): ?>
 		<!-- Only visible to moderators and admins -->
 		<dt class="kprofile-modbtn"><?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?></dt>
@@ -95,7 +136,7 @@ defined( '_JEXEC' ) or die();
 					$usernames = array_merge($usernames,$useriplist[$ip->ip]);
 					$username = array();
 					foreach ($usernames as $user) {
-						$username[] = CKunenalink::GetProfileLink($user->userid, $user->name, $rel='nofollow', $class='');
+						$username[] = CKunenalink::GetProfileLink($user->userid, $user->name);
 					}
 					$username=implode(', ',$username);
 

@@ -131,11 +131,10 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
 
 // Redirect profile (menu item) to the right component
 if ($func == 'profile' && !$do) {
-	kimport('integration.integration');
-	$profileIntegration = KunenaIntegration::detectIntegration('profile', true);
-	if ($profileIntegration != 'kunena') {
-		$link = CKunenaLink::GetProfileURL($kunena_my->id, false);
-		if ($link) $kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id, false));
+	$profileIntegration = KunenaFactory::getProfile();
+	if (!($profileIntegration instanceof KunenaProfileKunena)) {
+		$url = CKunenaLink::GetProfileURL($kunena_my->id, false);
+		if ($url) $kunena_app->redirect($url);
 	}
 }
 
@@ -240,12 +239,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
 	}
 
-	// WHOIS ONLINE IN FORUM
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php');
-	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.class.php');
-	}
+	// Insert WhoIsOnlineDatas
+	require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+
+	$who =& CKunenaWhoIsOnline::getInstance();
+	$who->insertOnlineDatas ();
 
 	// include required libraries
 	jimport('joomla.template.template');
@@ -287,10 +285,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	//Get the topics this user has already read this session from #__fb_sessions
 	$this->read_topics = explode ( ',', $kunena_session->readtopics );
-
-	//Call the call for polls
-  	require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
-  	$poll = new CKunenaPolls();
 
 
 	/*       _\|/_
@@ -356,7 +350,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	switch ($func) {
 		case 'who' :
-			CKunenaTools::loadTemplate('/plugin/who/who.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			$online =& CKunenaWhoIsOnline::getInstance();
+			$online->displayWho();
 
 			break;
 
@@ -366,7 +362,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
         case 'poll':
-			CKunenaTools::loadTemplate('/plugin/poll/poll.php');
+  			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  			$kunena_polls =& CKunenaPolls::getInstance();
+  			$kunena_polls->display();
 
             break;
 

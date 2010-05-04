@@ -22,40 +22,15 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-$kunena_db = &JFactory::getDBO();
-$kunena_config =& CKunenaConfig::getInstance();
-$kunena_my = &JFactory::getUser();
-$kunena_is_a_moderator = CKunenaTools::isAdmin($kunena_my->id);
-
-if ($kunena_config->showwhoisonline)
+if ($this->config->showwhoisonline)
 {
+	$users = 		$this->getActiveUsersList();
+	$totaluser = 	$this->getTotalRegistredUsers ();
+	$totalguests = 	$this->getTotalGuestUsers ();
+	$who_name = 	$this->getTitleWho ($totaluser,$totalguests);
 ?>
+
 <!-- WHOIS ONLINE -->
-<?php
-    $fb_queryName = $kunena_config->username ? "username" : "name";
-    $query
-        = "SELECT w.userip, w.time, w.what, u.{$fb_queryName} AS username, u.id, k.moderator, k.showOnline "
-        . " FROM #__fb_whoisonline AS w"
-        . " LEFT JOIN #__users AS u ON u.id=w.userid "
-        . " LEFT JOIN #__fb_users AS k ON k.userid=w.userid "
-	# filter real public session logouts
-        . " INNER JOIN #__session AS s ON s.guest='0' AND s.userid=w.userid "
-        . " WHERE w.userid!='0' "
-        . " GROUP BY u.id "
-        . " ORDER BY username ASC";
-    $kunena_db->setQuery($query);
-    $users = $kunena_db->loadObjectList();
-    check_dberror ( "Unable to load online users." );
-    $totaluser = count($users);
-
-
-    $query = "SELECT COUNT(*) FROM #__fb_whoisonline WHERE user='0'";
-    $kunena_db->setQuery($query);
-    $totalguests = $kunena_db->loadResult();
-    check_dberror ( "Unable to load who is online." );
-?>
-
 <div class="k_bt_cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
@@ -66,12 +41,7 @@ if ($kunena_config->showwhoisonline)
             <tr>
                 <th class="left">
                     <div class = "ktitle_cover km">
-                        <?php $who_name = '<strong>'.$totaluser.' </strong>';
-                        if($totaluser==1) { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER').'&nbsp;'; } else { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS').'&nbsp;'; }
-                        $who_name .= JText::_('COM_KUNENA_WHO_AND');
-                        $who_name .= '<strong> '. $totalguests.' </strong>';
-                        if($totalguests==1) { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST').'&nbsp;'; } else { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS').'&nbsp;'; }
-						$who_name .= JText::_('COM_KUNENA_WHO_ONLINE_NOW');
+                        <?php
                         echo CKunenaLink::GetWhoIsOnlineLink($who_name, 'ktitle kl' );?>
                     </div>
                    <div class="fltrt">
@@ -89,19 +59,14 @@ if ($kunena_config->showwhoisonline)
                     <?php
                     foreach ($users as $user)
                     {
-                        $time = date("H:i:s", $user->time);
-                    ?>
+                         if ( $user->showOnline ){ ?>
 
-                  		 <?php if ( $user->showOnline > 0 ){ ?>
+                            <span title=" <?php echo CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat' ); ?> "><?php echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ?></span> &nbsp;
 
-                            <?php echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ;?> &nbsp;
-
-                		  <?php  } ?>
-
-                    <?php
+                		  <?php
+                         }
                     }
-                    ?>
-                     <?php if ($kunena_is_a_moderator){
+                    if (CKunenaTools::isModerator($this->my->id)){
 
 					 ?>
 
@@ -110,51 +75,18 @@ if ($kunena_config->showwhoisonline)
                     <?php
 
 					}
-					?>
-                         <?php
+
                     foreach ($users as $user)
                     {
-                        $time = date("H:i:s", $user->time);
-                    ?>
+                    	if ( CKunenaTools::isModerator($this->my->id) && $user->showOnline){ ?>
 
-                  		 <?php if ( $kunena_is_a_moderator && $user->showOnline < 1 ){ ?>
+                            <span title=" <?php echo CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat' ); ?> "><?php echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ?></span> &nbsp;
 
-                            <?php echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ;?> &nbsp;
-
-                		  <?php   } ?>
-
-                    <?php
+                		  <?php
+                    	  }
                     }
                     ?>
 
-
-
-
-                    <!--               groups     -->
-
-                    <?php
-                    $kunena_db->setQuery("SELECT id, title FROM #__fb_groups");
-                    $gr_row = $kunena_db->loadObjectList();
-                    check_dberror ( 'Unable to load group.' );
-
-                    if (count($gr_row) > 1) {
-					?>
-                    <div class="kgrouplist ks">
-                    <?php
-
-                    foreach ($gr_row as $gr)
-                    {
-                    ?>
-
-                        &nbsp; [ <span class = "<?php if ($gr->id > 1) {echo "kgroup_".$gr->id;}?>" title = "<?php echo $gr->title;?>"> <?php echo $gr->title; ?></span>]
-
-                    <?php
-                    } ?>
-
-                    </div>
-                    <?php
-                    }
-                    ?>
                 </td>
             </tr>
         </tbody>
@@ -164,7 +96,7 @@ if ($kunena_config->showwhoisonline)
 </div>
 </div>
 </div>
-<!-- /WHOIS ONLINE -->
+<!-- WHOIS ONLINE -->
 
 <?php
 }

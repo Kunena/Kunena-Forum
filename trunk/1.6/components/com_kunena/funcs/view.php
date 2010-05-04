@@ -568,7 +568,11 @@ class CKunenaView {
 
 	function displayPoll() {
 		if ($this->config->pollenabled == "1" && $this->first_message->poll_id) {
-			CKunenaTools::loadTemplate('/plugin/poll/pollbox.php');
+			if ( $this->catinfo->allow_polls ) {
+				require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+  				$kunena_polls =& CKunenaPolls::getInstance();
+  				$kunena_polls->showPollbox();
+			}
 		}
 	}
 

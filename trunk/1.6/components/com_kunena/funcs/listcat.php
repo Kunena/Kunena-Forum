@@ -216,7 +216,9 @@ class CKunenaListcat {
 
 	function displayWhoIsOnline() {
 		if ($this->config->showwhoisonline > 0) {
-			CKunenaTools::loadTemplate('/plugin/who/whoisonline.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			$online =& CKunenaWhoIsOnline::getInstance();
+			$online->displayWhoIsOnline();
 		}
 	}
 

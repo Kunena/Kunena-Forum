@@ -21,7 +21,9 @@
 
 global $topic_emoticons;
 
-CKunenaPolls::call_javascript_form();
+require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+$kunena_poll =& CKunenaPolls::getInstance();
+$kunena_poll->call_javascript_form();
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');

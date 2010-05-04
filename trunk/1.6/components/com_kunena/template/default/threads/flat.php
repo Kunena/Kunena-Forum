@@ -243,7 +243,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		}
 
 		if ($leaf->name)
-			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->lastreply [$leaf->thread]->userid, stripslashes ( $this->lastreply [$leaf->thread]->name ), 'nofollow' );
+			echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->lastreply [$leaf->thread]->userid, stripslashes ( $this->lastreply [$leaf->thread]->name ), '', 'nofollow' );
 		?>
 			</span> <!-- /Latest Post --> <br />
 			<!-- Latest Post Date --> <span class="topic_date" title="<?php echo CKunenaTimeformat::showDate($this->lastreply [$leaf->thread]->time, 'config_post_dateformat_hover'); ?>"> <?php

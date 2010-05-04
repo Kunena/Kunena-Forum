@@ -23,6 +23,8 @@ class CKunenaPost {
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = &JFactory::getDBO ();
 		$this->document = JFactory::getDocument ();
+		require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+		$this->poll =& CKunenaPolls::getInstance();
 
 		$this->my = &JFactory::getUser ();
 
@@ -159,7 +161,7 @@ class CKunenaPost {
 		}
 
 		if (! empty ( $polltitle ) && ! empty ( $optionsnumbers )) {
-			CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
+			$this->poll->save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
 		}
 
 		// TODO: replace this with better solution
@@ -313,7 +315,7 @@ class CKunenaPost {
 
 			//save the options for query after and load the text options, the number options is for create the fields in the form after
 			if ($message->poll_id) {
-				$this->polldatasedit = CKunenaPolls::get_poll_data ( $this->id );
+				$this->polldatasedit = $this->poll->get_poll_data ( $this->id );
 				if ($this->kunena_editmode) {
 					$this->polloptionstotal = count ( $this->polldatasedit );
 				}
@@ -378,13 +380,13 @@ class CKunenaPost {
 			}
 			//need to check if the poll exist, if it's not the case the poll is insered like new poll
 			if (! $mes->poll_id) {
-				CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
+				$this->poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
 			} else {
 				if (empty ( $polltitle ) && empty ( $optionsnumbers )) {
 					//The poll is deleted because the polltitle and the options are empty
-					CKunenaPolls::delete_poll ( $this->id );
+					$this->poll->delete_poll ( $this->id );
 				} else {
-					CKunenaPolls::update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers );
+					$this->poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers );
 				}
 			}
 		}

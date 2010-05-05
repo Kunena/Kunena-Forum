@@ -216,7 +216,7 @@ class CKunenaWhoIsOnline {
 					$link = CKunenaLink::GetShowMyLatestURL();
 				break;
 				case 'categories' :
-		  			$link = CKunenaLink::GetCategoryListURL();
+		  			$link = CKunenaLink::GetCategoryURL();
 		  		break;
 				default:
       				$link = CKunenaLink::GetShowLatestURL();

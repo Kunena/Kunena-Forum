@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+5-May-2010 Xillibit
+# [#19288] Fix regression in kunena.who.class.php with method GetCategoryListURL() undefined
+# [#19288] Fix regresssion wrong hidden users display in whoisonline
+# [#19288] Remove link for social buttons (skype, msn...) because doesn't work under IE
+
 4-May-2010 Matias
 ^ [#19244] Implement new Moderation features: New topic/post moderation screen (no AJAX yet)
 - [#19244] Remove deprecated moderation buttons, for now on every action will be move

@@ -78,7 +78,7 @@ if ($this->config->showwhoisonline)
 
                     foreach ($users as $user)
                     {
-                    	if ( CKunenaTools::isModerator($this->my->id) && $user->showOnline){ ?>
+                    	if ( CKunenaTools::isModerator($this->my->id) && $user->showOnline =='0' ){ ?>
 
                             <span title=" <?php echo CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat' ); ?> "><?php echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ?></span> &nbsp;
 

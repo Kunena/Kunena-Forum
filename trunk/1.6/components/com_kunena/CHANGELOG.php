@@ -36,6 +36,9 @@ Kunena 1.6.0-DEV
 
 5-May-2010 Matias
 ^ [#15886] Merged revision 2412 from /branches/1.6-xillibit
+# [#19288] Fix regression in listcat: router list had wrong values -> extra queries
+# [#19288] Fix regression in CKunenaWhoIsOnline: same task was done 2 times
+# [#19255] Fix XHTML validation errors in search
 
 5-May-2010 Xillibit
 # [#19288] Fix regression in kunena.who.class.php with method GetCategoryListURL() undefined

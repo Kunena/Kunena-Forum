@@ -78,9 +78,9 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                         <label class="searchlabel fltlft" for="username">
                             <?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
                         </label>
-                        <label class="searchlabel" for="exactname">
+                        <label class="searchlabel">
                         	<input type="checkbox" name="exactname" value="1" <?php if ($this->params['exactname']) echo $this->checked; ?> />
-                            <span onClick="document.adminForm.exactname.checked=(! document.adminForm.exactname.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?></span>
+                            <span onclick="document.adminForm.exactname.checked=(! document.adminForm.exactname.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?></span>
                         </label>
 
                         <input id="username" class="ks input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($this->params['searchuser']); ?>" />
@@ -206,9 +206,9 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 
                          <?php echo $this->categorylist; ?>
 
-                          <label id="childforums-lbl" for="childforums">
+                          <label id="childforums-lbl">
                           <input type="checkbox" name="childforums" value="1" <?php if ($this->params['childforums']) echo 'checked="checked"'; ?> />
-                            <span onClick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
+                            <span onclick="document.adminForm.childforums.checked=(! document.adminForm.childforums.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN_CHILDREN'); ?></span>
                             </label>
                     </fieldset>
                     <?php if ( CKunenaTools::isModerator($this->my->id) ) { ?>

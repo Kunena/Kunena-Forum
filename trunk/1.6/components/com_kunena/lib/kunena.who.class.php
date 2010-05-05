@@ -37,7 +37,7 @@ class CKunenaWhoIsOnline {
 		$this->config = $config;
 		$this->app = $app;
 		$this->name = $this->config->username ? "username" : "name";
-		$this->datenow = $this->_getDateNow();
+		$this->datenow = CKunenaTimeformat::internalTime();
 	}
 
 	public function &getInstance() {
@@ -52,16 +52,9 @@ class CKunenaWhoIsOnline {
 		return $instance;
 	}
 
-	protected function _getDateNow ( ) {
-		jimport('joomla.utilities.date');
-		$config = & JFactory::getConfig ();
-		$tzoffset = $config->getValue ( 'config.offset' );
-		$date =& JFactory::getDate($tzoffset);
-
-		return $date->toUnix();
-	}
-
 	public function getActiveUsersList() {
+		static $users = null;
+		if ($users) return $users;
 		$query
         = "SELECT w.userip, w.time, w.what, u.{$this->name} AS username, u.id, k.moderator, k.showOnline "
         . " FROM #__fb_whoisonline AS w"

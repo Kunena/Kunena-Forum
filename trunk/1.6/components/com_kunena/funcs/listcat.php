@@ -92,7 +92,7 @@ class CKunenaListcat {
 		$routerlist = array ();
 		foreach ( $allsubcats as $i => $subcat ) {
 			if ($subcat->mesid)
-				$routerlist [$subcat->mesid] = $subcat->subject;
+				$routerlist [$subcat->thread] = $subcat->subject;
 
 			$allsubcats [$i]->forumdesc = KunenaParser::parseBBCode ( $subcat->description );
 

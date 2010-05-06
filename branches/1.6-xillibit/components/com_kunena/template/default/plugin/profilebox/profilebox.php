@@ -20,7 +20,29 @@ $return = CKunenaLogin::getReturnURL ( $type );
 $avatar = CKunenaLogin::getMyAvatar();
 
 if ($type == 'logout') {
-$logout = CKunenaLogin::getlogoutFields();
+	$logout = CKunenaLogin::getlogoutFields();
+	$PMlink = '';
+	switch(KunenaIntegration::detectIntegration('private', true)) {
+		case 'uddeim':
+			require_once(JPATH_SITE.'/administrator/components/com_kunena/libraries/integration/uddeim/private.php');
+			$uddeim =  new KunenaPrivateUddeIM();
+			if ($uddeim->getUnreadMessages($this->my->id)) {
+				$PMlink = $uddeim->getUddeimLink ( 'inbox' , JText::_('COM_KUNENA_MYPROFILE_PRIVATE_MESSAGING_NEW_MESSAGES').' '.$uddeim->getUnreadMessages($this->my->id) );
+			} else {
+				$PMlink = $uddeim->getUddeimLink ( 'inbox' , JText::_('COM_KUNENA_MYPROFILE_PM_UDDEIM_INBOX') );
+			}
+		break;
+		case 'jomsocial':
+			require_once(JPATH_SITE.'/administrator/components/com_kunena/libraries/integration/jomsocial/private.php');
+			$jomsocial = new KunenaPrivateJomSocial();
+			$PMlink = '<a href="'.$jomsocial->getPMInboxLink().'">'.JText::_('COM_KUNENA_MYPROFILE_PM_JOMSOCIAL_INBOX').'</a>';
+		break;
+		case 'communitybuilder':
+			require_once(JPATH_SITE.'/administrator/components/com_kunena/libraries/integration/communitybuilder/private.php');
+			$communitybuilder = new KunenaPrivateCommunityBuilder();
+			$PMlink = '<a href="'.$communitybuilder->getProfileLink($this->my->id).'">'.JText::_('COM_KUNENA_MYPROFILE_PM_CB_INBOX').'</a>';
+		break;
+	}
 	?>
 	<table class="kprofilebox" id="kprofilebox">
 		<tbody id="topprofilebox_tbody">
@@ -41,6 +63,9 @@ $logout = CKunenaLogin::getlogoutFields();
 							$is_editor = true; } else { $is_editor = false; }
 						if ($is_editor) { ?>
 							<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( 'show' ); ?>"><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?></a></li>
+						<?php }
+						if ($PMlink) {?>
+							<li><?php echo $PMlink; ?></li>
 						<?php } ?>
 					</ul>
 					<ul class="kprofilebox_welcome">

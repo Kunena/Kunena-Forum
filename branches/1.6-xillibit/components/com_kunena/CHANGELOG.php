@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 6-May-2010 Xillibit
 # [#19288] Fix regresion on who.class.php which breack the viewing users in pathway
+# [#19288] Put PM links (CB, Uddeim, Jomsocial) in profilebox
 
 5-May-2010 Xillibit
 # [#19288] Fix regression in kunena.who.class.php with method GetCategoryListURL() undefined

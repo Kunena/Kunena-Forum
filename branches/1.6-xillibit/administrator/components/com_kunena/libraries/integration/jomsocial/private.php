@@ -43,4 +43,8 @@ class KunenaPrivateJomSocial extends KunenaPrivate
 	{
 		return "javascript:void(0)";
 	}
+
+	public function getPMInboxLink() {
+		return CRoute::_('index.php?option=com_community&view=inbox');
+	}
 }

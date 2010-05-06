@@ -24,7 +24,7 @@ class KunenaPrivateCommunityBuilder extends KunenaPrivate
 		$this->priority = 40;
 	}
 
-	protected function getURL($userid) {}
+	public function getURL($userid) {}
 
 	public function showIcon($userid)
 	{
@@ -47,5 +47,18 @@ class KunenaPrivateCommunityBuilder extends KunenaPrivate
 			}
 		}
 		return $html;
+	}
+
+	public function getProfileLink($userid) {
+		$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components' .DS. 'com_comprofiler' .DS. 'plugin.foundation.php';
+		if (file_exists($cbpath)) require_once($cbpath);
+		else return;
+
+		$cbUser =& CBuser::getInstance( (int) $userid );
+		if($cbUser === null) return;
+
+		$itemid = getCBprofileItemid();
+
+		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid );
 	}
 }

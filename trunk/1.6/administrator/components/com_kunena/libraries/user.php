@@ -396,7 +396,7 @@ class KunenaUser extends JObject
 		$value = kunena_htmlspecialchars(stripslashes($this->$item));
 		$url = strtr($social[$name]['url'], array('##VALUE##'=>$value));
 		if ( $social[$name]['nourl'] == '0') {
-			if (!empty($this->$item)) return '<a href="'.$url.'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
+			if (!empty($this->$item)) return '<a href="'.kunena_htmlspecialchars($url).'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
 		} else {
 			if (!empty($this->$item)) return '<a href="#" target="_blank" title="'.$title.': '.$url.'"><span class="'.$name.'"></span></a>';
 		}

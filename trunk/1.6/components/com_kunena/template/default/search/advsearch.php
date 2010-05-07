@@ -30,15 +30,11 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
     $fb_advsearch_class = ' close';
     $fb_advsearch_style = '';
 }
-?>
-<script type="text/javascript">
-	document.addEvent('domready', function() {
-
+$this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 		// Attach auto completer to the following ids:
-		new Autocompleter.Request.JSON('username', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getuser', false);?>', { });
-});
-</script>
-
+		new Autocompleter.Request.JSON('kusername', '" . CKunenaLink::GetJsonURL('autocomplete', 'getuser', false) . "', { 'postVar': 'value' });
+});");
+?>
 <form action="<?php echo CKunenaLink::GetSearchURL('advsearch'); ?>" method="post" id="searchform" name="adminForm">
     <table id="kforumsearch" class="kblocktable">
         <thead>
@@ -83,7 +79,7 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
                             <span onclick="document.adminForm.exactname.checked=(! document.adminForm.exactname.checked);"><?php echo JText::_('COM_KUNENA_SEARCH_EXACT'); ?></span>
                         </label>
 
-                        <input id="username" class="ks input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($this->params['searchuser']); ?>" />
+                        <input id="kusername" class="ks input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($this->params['searchuser']); ?>" />
 
                         <select class="ks" name="starteronly">
                              <option value="0"<?php if ($this->params['starteronly']==0) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_USER_POSTED'); ?></option>

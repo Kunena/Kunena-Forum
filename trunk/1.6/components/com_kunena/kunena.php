@@ -390,7 +390,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'userlist' :
-			CKunenaTools::loadTemplate('/plugin/userlist/userlist.php');
+			require_once (KUNENA_PATH_FUNCS . DS . 'userlist.php');
+			$page = new CKunenaUserlist();
+			$page->display();
 
 			break;
 

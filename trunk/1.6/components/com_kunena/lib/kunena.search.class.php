@@ -54,11 +54,12 @@ class CKunenaSearch {
 	 * @param limit Limit
 	 */
 	function CKunenaSearch() {
-		$this->my = &JFactory::getUser ();
-		$this->app = & JFactory::getApplication ();
-		$this->db = &JFactory::getDBO ();
-		$this->config = & CKunenaConfig::getInstance ();
-		$this->session = & KunenaFactory::getSession ();
+		$this->my = JFactory::getUser ();
+		$this->app = JFactory::getApplication ();
+		$this->doc = JFactory::getDocument ();
+		$this->db = JFactory::getDBO ();
+		$this->config = CKunenaConfig::getInstance ();
+		$this->session = KunenaFactory::getSession ();
 
 		// TODO: started_by
 		// TODO: active_in

@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+7-May-2010 Matias
+# [#19288] Fix autocompleter in search
++ [#19244] Moderation feature: add autocompleter into userlist (Find User)
+^ [#19448] Move code out of template: Userlist
+
 5-May-2010 Matias
 ^ [#15886] Merged revision 2412 from /branches/1.6-xillibit
 # [#19288] Fix regression in listcat: router list had wrong values -> extra queries

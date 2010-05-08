@@ -36,11 +36,11 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 		return JRoute::_('index.php?option=com_uddeim&task=new&recip='.(int)$userid.$itemid);
 	}
 
-	public function getUnreadMessages ($userid) {
+	public function getUnreadCount ($userid) {
 		return $this->uddeim->getInboxTotalMessages($userid);
 	}
 
-	public function getUddeimLink ( $type , $name ) {
-		return CKunenaLink::GetSefHrefLink ( $this->uddeim->getLinkToBox($type,false), $name, '', 'follow');
+	public function getInboxLink () {
+		return CKunenaLink::GetSefHrefLink ( $this->uddeim->getLinkToBox('inbox',false), JText::_('COM_KUNENA_MYPROFILE_PM_UDDEIM_INBOX'), '', 'follow');
 	}
 }

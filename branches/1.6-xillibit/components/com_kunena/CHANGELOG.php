@@ -36,6 +36,8 @@ Kunena 1.6.0-DEV
 
 7-May-2010 Xillibit
 # [#19288] Anonymous posting option isn't given when you begin a topic from the top tab new topic
+# [#19288] Move report.class.php into lib directoty
+# [#19288] Put correct things to make the link to PM systems
 
 6-May-2010 Xillibit
 # [#19288] Fix regresion on who.class.php which breack the viewing users in pathway

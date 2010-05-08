@@ -136,4 +136,16 @@ abstract class KunenaFactory {
 		kimport('integration.access');
 		return KunenaAccess::getInstance();
 	}
+	/**
+	 * Get Kunena PM integration object
+	 *
+	 * Returns the global {@link PMinboxlink} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaPrivate
+	 */
+	public static function getPMS()
+	{
+		kimport('integration.private');
+		return KunenaPrivate::getInstance();
+	}
 }

@@ -44,7 +44,7 @@ class KunenaPrivateJomSocial extends KunenaPrivate
 		return "javascript:void(0)";
 	}
 
-	public function getPMInboxLink() {
-		return CRoute::_('index.php?option=com_community&view=inbox');
+	public function getInboxLink() {
+		return CKunenaLink::GetSefHrefLink ('index.php?option=com_community&view=inbox', JText::_('COM_KUNENA_MYPROFILE_PM_JOMSOCIAL_INBOX'), '', 'follow');
 	}
 }

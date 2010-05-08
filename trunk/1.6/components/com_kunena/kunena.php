@@ -443,7 +443,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'report' :
-			CKunenaTools::loadTemplate('/plugin/report/report.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.report.class.php');
+			$report = new CKunenaReport();
+			$report->display();
 
 			break;
 

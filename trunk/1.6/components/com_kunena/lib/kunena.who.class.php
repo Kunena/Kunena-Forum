@@ -149,8 +149,6 @@ class CKunenaWhoIsOnline {
 		$task = JRequest::getCmd('task');
 		$do = JRequest::getCmd('do');
 
-		$this->_deleteUsersOnline();
-
 		$isuser = $this->_IsUser();
 		$this->myip = getenv('REMOTE_ADDR');
 
@@ -160,62 +158,39 @@ class CKunenaWhoIsOnline {
     		$this->db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
     		$what = JText::_('COM_KUNENA_WHO_VIEW_SHOWCAT').' '.$this->db->loadResult();
     		check_dberror ( "Unable to load category name." );
-    		$link = CKunenaLink::GetCategoryURL($catid);
 		} else if ($func == 'listcat') {
     		$what = JText::_('COM_KUNENA_WHO_VIEW_LISCAT');
-  			$link = CKunenaLink::GetCategoryURL('listcat');
 		} else if ($func == 'latest') {
     		$what = JText::_('COM_KUNENA_WHO_ALL_DISCUSSIONS');
-    		$link = CKunenaLink::GetShowLatestURL();
     	} else if ($func == 'mylatest') {
     		$what = JText::_('COM_KUNENA_WHO_MY_DISCUSSIONS');
-    		$link = CKunenaLink::GetShowMyLatestURL();
     	} else if ($func == 'view') {
     		$this->db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_VIEW_TOPIC').' '.$this->db->loadResult();
     		check_dberror ( "Unable to load subject of message." );
-    		$link = CKunenaLink::GetThreadPageURL( 'view', $catid, $id, $this->config->messages_per_page);
     	} else if ($func == 'post' && $do == 'reply') {
     		$this->db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_REPLY_TOPIC').' '.$this->db->loadResult();
     		check_dberror ( "Unable to load subject of message." );
-    		$link = CKunenaLink::GetThreadPageURL('view', $catid, $id, 1);
     	} else if ($func == 'post' && $do == 'edit') {
     		$this->db->setQuery("SELECT name FROM #__fb_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_POST_EDIT').' '.$this->db->loadResult();
     		check_dberror ( "Unable to load name of author of the message." );
-    		$link = CKunenaLink::GetThreadPageURL( 'view', $catid, $id, $this->config->messages_per_page);
     	} else if ($func == 'who') {
     		$what = JText::_('COM_KUNENA_WHO_VIEW_WHO');
-    		$link = CKunenaLink::GetWhoURL();
     	} else if ($func== 'search') {
   			$what = JText::_('COM_KUNENA_WHO_SEARCH');
-  			$link = CKunenaLink::GetSearchURL( 'search', '', '', '');
 		} else if ($func== 'profile') {
   			$what = JText::_('COM_KUNENA_WHO_PROFILE');
-  			$link = CKunenaLink::GetMyProfileURL($this->my->id);
 		} else if ($func== 'stats') {
   			$what = JText::_('COM_KUNENA_WHO_STATS');
-  			$link = CKunenaLink::GetStatsURL();
 		} else if ($func== 'userlist') {
   			$what = JText::_('COM_KUNENA_WHO_USERLIST');
-  			$link = CKunenaLink::GetUserlistURL();
 		} else {
-  			switch ($this->config->fbdefaultpage) {
-				case 'recent':
-					$link = CKunenaLink::GetShowLatestURL();
-				break;
-				case 'my':
-					$link = CKunenaLink::GetShowMyLatestURL();
-				break;
-				case 'categories' :
-		  			$link = CKunenaLink::GetCategoryURL();
-		  		break;
-				default:
-      				$link = CKunenaLink::GetShowLatestURL();
-	 		}
   			$what = JText::_('COM_KUNENA_WHO_MAINPAGE');
 		}
+
+		$link = addslashes(JURI::current());
 
 		if ($online == 1) {
     		$sql = "UPDATE #__fb_whoisonline SET ".
@@ -229,6 +204,7 @@ class CKunenaWhoIsOnline {
             " AND userip=".$this->db->quote($this->myip);
     		$this->db->setQuery($sql);
     	} else {
+    		$this->_deleteUsersOnline();
     		$sql = "INSERT INTO #__fb_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
             . " VALUES (".
             $this->db->quote($this->my->id).",".

@@ -87,7 +87,7 @@ class CKunenaPost {
 		}
 
 		// Check if anonymous user needs to log in
-		if ($this->my->id == 0 && (! $this->config->pubwrite || ! $this->_session->canRead ( $this->catid ))) {
+		if ($this->my->id == 0 && (! $this->config->pubwrite || ($this->catid && ! $this->_session->canRead ( $this->catid )))) {
 			CKunenaTools::loadTemplate ( '/login.php' );
 			return false;
 		}

@@ -53,4 +53,8 @@ abstract class KunenaPrivate
 		// We should offer the user a PM link
 		return '<a href="' . $url . '"' .$onclick. ' title="'.JText::_('COM_KUNENA_VIEW_PMS').'"><span class="private" alt="' .JText::_('COM_KUNENA_VIEW_PMS'). '" /></a>';
 	}
+
+	public function getInboxLink() {}
+
+	public function getUnreadCount() {}
 }

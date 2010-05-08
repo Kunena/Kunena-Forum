@@ -20,7 +20,10 @@ $return = CKunenaLogin::getReturnURL ( $type );
 $avatar = CKunenaLogin::getMyAvatar();
 
 if ($type == 'logout') :
-$logout = CKunenaLogin::getlogoutFields();
+	$logout = CKunenaLogin::getlogoutFields();
+	$private = KunenaFactory::getPrivateMessaging();
+	$PMCount = $private->getUnreadCount($this->my->id);
+	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 ?>
 <table class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
@@ -32,8 +35,9 @@ $logout = CKunenaLogin::getlogoutFields();
 			<?php endif; ?>
 			<td class="kprofileboxcnt left">
 				<ul class="kprofilebox_link">
-					<li><?php echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_PROFILEBOX_SHOW_LATEST_POSTS')); ?></li>
-					<li><?php echo CKunenaLink::GetSearchLink ('search', '', 0, 0, JText::_('COM_KUNENA_SEARCH_ADVSEARCH') ); ?></li>
+					<?php if ($PMlink) : ?>
+						<li><?php echo $PMlink; ?></li>
+					<?php endif ?>
 					<?php
 					$user_fields = @explode ( ',', $this->config->annmodid );
 					if (in_array ( $this->my->id, $user_fields ) || $this->my->usertype == 'Administrator' || $this->my->usertype == 'Super Administrator') {

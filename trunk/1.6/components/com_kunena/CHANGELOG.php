@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+8-May-2010 Xillibit
++ [#19288] Put links into profile page to access PM boxes
+# [#19288] Don't let unregistered users to report message
+# [#19288] Do not show login message if visitor tries to post new topic
+
 8-May-2010 Matias
 ^ [#19448] Move code out of template: Announcements
 ^ [#19448] Move login.php and profilebox.php from plugins to template dir
@@ -41,11 +46,21 @@ Kunena 1.6.0-DEV
 ^ [#19448] Clean up and simplify Rules, Help & Forumjump html
 ^ [#19448] Clean up and simplify Search html
 ^ [#19448] No need to have 2 login areas, simplified login.php
+^ [#15886] Merged revisions 2412-2424 from /branches/1.6-xillibit with changes
+
+7-May-2010 Xillibit
+# [#19288] Anonymous posting option isn't given when you begin a topic from the top tab new topic
+# [#19288] Move report.class.php into lib directory
 
 7-May-2010 Matias
 # [#19288] Fix autocompleter in search
 + [#19244] Moderation feature: add autocompleter into userlist (Find User)
 ^ [#19448] Move code out of template: Userlist
+
+6-May-2010 Xillibit
+# [#19288] Fix regresion on who.class.php which break the viewing users in pathway
+# [#19288] Put PM links (CB, Uddeim, Jomsocial) in profilebox
+^ [#19288] Rewrite report.php as a class
 
 5-May-2010 Matias
 ^ [#15886] Merged revision 2412 from /branches/1.6-xillibit

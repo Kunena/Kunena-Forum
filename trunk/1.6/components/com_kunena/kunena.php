@@ -192,7 +192,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
 	}
 	echo '<div id="Kunena">';
-	CKunenaTools::loadTemplate('/plugin/login/login.php');
+	CKunenaTools::loadTemplate('/login.php');
 	echo '</div>';
 } else {
 	// =======================================================================================
@@ -350,7 +350,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	</tr>
 </table>
 <!-- /Kunena Header --> <?php
-	CKunenaTools::loadTemplate('/plugin/profilebox/profilebox.php');
+	CKunenaTools::loadTemplate('/profilebox.php');
 
 	switch ($func) {
 		case 'who' :

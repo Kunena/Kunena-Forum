@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 8-May-2010 Matias
 ^ [#19448] Move code out of template: Announcements
+^ [#19448] Move login.php and profilebox.php from plugins to template dir
 
 7-May-2010 Matias
 # [#19288] Fix autocompleter in search

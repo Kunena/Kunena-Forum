@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+8-May-2010 Xillibit
+# [#19288] Put links in profile to access PM boxes
+# [#19288] Little change on report, don't let access to the form is the user is unlogged
+
 7-May-2010 Xillibit
 # [#19288] Anonymous posting option isn't given when you begin a topic from the top tab new topic
 # [#19288] Move report.class.php into lib directoty

@@ -14,6 +14,8 @@ defined( '_JEXEC' ) or die();
 
 $document = & JFactory::getDocument ();
 $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });" );
+$private = KunenaFactory::getPMS();
+$PMlink = $private->getInboxLink();
 ?>
 
 <div class="kbt_cvr1">
@@ -45,6 +47,10 @@ $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('d
 					<!-- Profile view*s*? -->
 					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW'); ?>:</strong> <?php echo $this->profile->uhits; ?></li>
 					<li><?php echo $this->displayKarma(); ?></li>
+					<?php if ($PMlink) {
+							?>
+						<li><?php echo $PMlink; ?></li>
+					<?php  } ?>
 				</ul>
 			</div>
 		</div>

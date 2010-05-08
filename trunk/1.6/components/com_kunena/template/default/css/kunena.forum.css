@@ -73,6 +73,12 @@ PX		EM			PCT			PT
 
 /* MAIN STYLES
 ----------------------------------------------------------------------------------------------- */
+#Kunena {
+	word-wrap: break-word;
+	padding: 0;
+	margin: 0;
+}
+
 #Kunena td,
 #Kunena table,
 #Kunena th,
@@ -107,6 +113,12 @@ PX		EM			PCT			PT
 #Kunena a:focus {outline: none;}
 #Kunena a:hover {color: #FF0000;}
 
+#Kunena .overflow {
+	display: table;
+	table-layout:fixed;
+	width: 100%;
+}
+
 #Kunena .kxs {
 	/* 9px */
 	font-size: .75em;
@@ -135,6 +147,27 @@ PX		EM			PCT			PT
 	/* 20px */
 	font-size: 1.667em;
 }
+#Kunena input.ksmall {
+	width: 25%;
+}
+#Kunena input.kmedium {
+	width: 45%;
+}
+#Kunena input.klarge {
+	width: 95%;
+}
+#Kunena textarea,
+#Kunena textarea.kmedium {
+	font-size: 1em;
+	width: 95%;
+	height: 10em;
+}
+#Kunena textarea.ksmall {
+	height: 5em;
+}
+#Kunena textarea.klarge {
+	height: 20em;
+}
 
 #Kunena sup {
 	font-size: .583em;
@@ -145,6 +178,159 @@ PX		EM			PCT			PT
 	padding:0;
 	margin:0;
 }
+
+#Kunena div.kblock {
+	display: table;
+	table-layout:fixed;
+	width: 100%;
+	border: none;
+	margin: 5px 0 0 0;
+	clear: both;
+	border-bottom:4px solid #BFC3C6;
+}
+#Kunena div.kblock div.ktitle {
+	background: #5388B4;
+	text-align: left;
+	border-bottom:1px solid #BFC3C6;
+	display: table-row;
+	width:100%;
+	color: #FFFFFF;
+	margin: 0;
+	overflow: hidden;
+}
+#Kunena div.kblock div.ktitle h1,
+#Kunena div.kblock div.ktitle h2 {
+	border: none;
+	display: block;
+	line-height: 1.9em;
+	font-size:1.333em;
+	text-indent: 0px;
+	padding-top: 2px;
+	color: #FFFFFF;
+	margin: 0 10px;
+	padding: 2px 0;
+	width: auto;
+}
+#Kunena div.kblock span.ktoggler {
+	float: right;
+	bottom: 15px;
+	right: 1px;
+	height: 1px;
+	position: relative;
+}
+#Kunena div.kblock div.kcontainer {
+	display: table-row;
+}
+#Kunena div.kblock div.kbody {
+	border-color:#BFC3C6;
+	border-style:solid;
+	border-width:0px 1px;
+	padding: 5px 10px;
+	overflow: auto;
+}
+#Kunena div.kblock label {
+	clear: both;
+	display: block;
+}
+#Kunena div.kblock div.kactions {
+	background: #737373;
+	color:#FFFFFF;
+	padding: 5px 10px;
+}
+#Kunena div.kblock div.kactions a {
+	color:#FFFFFF;
+}
+
+#Kunena table.kblock {
+	width: 100%;
+	border-bottom:4px solid #BFC3C6;
+	margin: 5px 0 0 0;
+	clear: both;
+	border-spacing: 0;
+}
+#Kunena table.kblock thead th {
+	background: #5388B4;
+	text-align: left;
+	border-bottom:1px solid #BFC3C6;
+	width:100%;
+	color: #FFFFFF;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+#Kunena table.kblock h1,
+#Kunena table.kblock h2 {
+	border: none;
+	display: block;
+	line-height: 1.9em;
+	font-size:1.333em;
+	text-indent: 0px;
+	color: #FFFFFF;
+	margin: 0;
+	padding: 4px 8px;
+	width: auto;
+}
+#Kunena table.kblock span.ktoggler {
+	float: right;
+	bottom: 16px;
+	right: 1px;
+	height: 0;
+	position: relative;
+}
+#Kunena table.kblock td,
+#Kunena table.kblock th {
+	text-align: left;
+	overflow: hidden;
+	padding: 4px 10px;
+	border: 1px solid #BFC3C6;
+	vertical-align: middle;
+}
+#Kunena table.kblock th {
+	padding: 0;
+}
+#Kunena tr.krow0 td,
+#Kunena tr.krow1 td {
+	background: #F2F1EE;
+	color: #333333;
+}
+#Kunena tr.krow1 td {
+	background: #FFFFFF;
+}
+#Kunena table.kblock .kcol {
+	padding: 4px 8px;
+}
+#Kunena table.kblock .kcol_annid {
+	text-align: center;
+	width: 5%;
+}
+#Kunena table.kblock .kcol-anndate {
+	width: 15%;
+}
+#Kunena table.kblock .kcol-anntitle {
+	width: 50%;
+}
+#Kunena table.kblock .kcol-annpublish {
+	text-align: center;
+	width: 10%;
+}
+#Kunena table.kblock .kcol-annedit {
+	text-align: center;
+	width: 10%;
+}
+#Kunena table.kblock .kcol-anndelete {
+	text-align: center;
+	width: 10%;
+}
+#Kunena table.kblock .kcol-search-subject {
+	width: 70%;
+}
+#Kunena table.kblock .kcol-search-author {
+	width: 10%;
+}
+#Kunena table.kblock .kcol-search-date {
+	width: 20%;
+}
+
 #Kunena .kheader {
 	background: #3B3B3B url("../images/backgrounds/cat_title_bg.gif") repeat-x top left;
 	height: 30px;

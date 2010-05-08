@@ -87,7 +87,6 @@ $kunena_config =& CKunenaConfig::getInstance();
       <div class="k_bt_cvr4">
         <div class="k_bt_cvr5">
           <table  class = "kblocktable" id="kbottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
-            <thead>
               <tr>
                 <th class = "th-right"> <?php
                 //(JJ) FINISH: CAT LIST BOTTOM
@@ -97,12 +96,6 @@ $kunena_config =& CKunenaConfig::getInstance();
                 ?>
                 </th>
               </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-              </tr>
-            </tbody>
           </table>
         </div>
       </div>

@@ -361,7 +361,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'announcement' :
-			CKunenaTools::loadTemplate('/plugin/announcement/announcement.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			$ann = CKunenaAnnouncement::getInstance();
+			$ann->display();
 
 			break;
 

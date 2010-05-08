@@ -191,7 +191,10 @@ class CKunenaListcat {
 
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
-			CKunenaTools::loadTemplate('/plugin/announcement/announcementbox.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			$ann = new CKunenaAnnouncement();
+			$ann->getAnnouncement();
+			$ann->displayBox();
 		}
 	}
 

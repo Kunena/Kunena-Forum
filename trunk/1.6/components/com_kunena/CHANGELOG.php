@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+8-May-2010 Matias
+^ [#19448] Move code out of template: Announcements
+
 7-May-2010 Matias
 # [#19288] Fix autocompleter in search
 + [#19244] Moderation feature: add autocompleter into userlist (Find User)

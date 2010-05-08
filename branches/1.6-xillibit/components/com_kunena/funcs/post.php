@@ -89,13 +89,15 @@ class CKunenaPost {
 		// Check if anonymous user needs to log in
 		if ( $this->catid ) {
 			if ($this->my->id == 0 && (! $this->config->pubwrite || ! $this->_session->canRead ( $this->catid ))) {
-				CKunenaTools::loadTemplate ( '/plugin/login/login.php' );
+				$this->_app->enqueueMessage (JText::_('COM_KUNENA_FORUM_UNAUTHORIZIED2'), 'error' );
+        		$this->_app->redirect(CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ));
 				return false;
 			}
 		} else {
 			if ($this->catid == 0 && ! $this->config->pubwrite){
 				if ($this->my->id == 0 && ! $this->config->pubwrite) {
-					CKunenaTools::loadTemplate ( '/plugin/login/login.php' );
+					$this->_app->enqueueMessage (JText::_('COM_KUNENA_FORUM_UNAUTHORIZIED2'), 'error' );
+        			$this->_app->redirect(CKunenaLink::GetCategoryURL ( 'listcat', NULL, false ));
 					return false;
 				}
 			}

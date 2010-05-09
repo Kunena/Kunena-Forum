@@ -15,7 +15,8 @@ defined( '_JEXEC' ) or die();
 $document = & JFactory::getDocument ();
 $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });" );
 $private = KunenaFactory::getPrivateMessaging();
-$PMlink = $private->getInboxLink();
+$PMCount = $private->getUnreadCount($this->my->id);
+$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 ?>
 
 <div class="kbt_cvr1">

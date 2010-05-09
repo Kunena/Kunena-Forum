@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+9-May-2010 Xillibit
+# [#19288] Fix regression on summary.php on function getInboxLink()
+# [#19288] Fix regression Undefined property: CKunenaPosting::$catid in kunena.posting.class.php
+
 8-May-2010 Xillibit
 + [#19288] Put links into profile page to access PM boxes
 # [#19288] Don't let unregistered users to report message

@@ -1077,6 +1077,11 @@ function showConfig($option) {
 
 	$lists['debug'] = JHTML::_('select.genericlist', $yesno, 'cfg_debug', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->debug);
 
+	$catsAutoSubscribed = array();
+	$catsAutoSubscribed[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_COM_A_CATSAUTOSUSCRIBED_NOTHING'));
+	$catsAutoSubscribed[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_COM_A_CATSAUTOSUSCRIBED_ALL'));
+	$lists['catsautosubscribed'] = CKunenaTools::KSelectList('cfg_catsautosubscribed[]', $catsAutoSubscribed, 'class="inputbox" multiple="multiple"', false, 'latestcategory', explode(',',$kunena_config->catsautosubscribed));
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

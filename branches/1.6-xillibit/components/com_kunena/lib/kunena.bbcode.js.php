@@ -949,6 +949,8 @@ function newAttachment() {
 	file.addEvent('change', function(el) {
 		this.removeEvents('change');
 		this.getElement('a').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
+		kbbcode.replaceSelection('[attachment]'+ id +'[/attachment]');
+		$('attach_list').set('text', id+1+'.');
 		newAttachment();
 	});
 }

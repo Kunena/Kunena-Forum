@@ -188,7 +188,18 @@ class CKunenaPost {
 
 		$redirectmsg = '';
 
-		$subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
+		if ( $this->config->catsautosubscribed ) {
+			$subscribeMe = 1;
+			if ( $this->config->catsautosubscribed != '1' ){
+				if ( in_array($this->catid, explode(',',$this->config->catsautosubscribed)) ) {
+					$subscribeMe = 1;
+				} else {
+					$subscribeMe = 0;
+				}
+			}
+		} else {
+			$subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
+		}
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($subscribeMe == 1) {

@@ -2200,7 +2200,7 @@ table.kadmin-stat caption {
 						$userLogged = $pl->session_id ? '<img src="images/tick.png" width="16" height="16" border="0" alt="" />': '';
 						$userEnabled = ($pl->enabled && $pl->bantype ==1) ? 'publish_x.png' : 'tick.png';
 						$altUserEnabled = ($pl->enabled && $pl->bantype==1) ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
-						$userBlockTask = ($pl->enabled && $pl->bantype==1) ? 'userunblock' : 'userblock';
+						$userBlockTask = $pl->block ? 'userunblock' : 'userblock';
 						$userbanned = ($pl->enabled && $pl->bantype==2) ? 'tick.png' : 'publish_x.png';
 						$userBannedTask = ($pl->enabled && $pl->bantype==2) ? 'userunban' : 'userban';
 						$altUserBanned = ($pl->enabled && $pl->bantype==2) ? JText::_( 'Banned' ) : JText::_( 'Not banned' );

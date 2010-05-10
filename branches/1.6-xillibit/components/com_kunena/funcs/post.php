@@ -231,6 +231,8 @@ class CKunenaPost {
 			return false;
 		if ($this->floodProtection ())
 			return false;
+		if ($this->isBanned($this->my->id) )
+			return false;
 
 		$this->kunena_editmode = 0;
 
@@ -294,6 +296,8 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		if ($this->lockProtection ())
+			return false;
+		if ($this->isBanned($this->my->id) )
 			return false;
 
 		$message = $this->msg_cat;
@@ -776,6 +780,20 @@ class CKunenaPost {
 			return true;
 		}
 		return false;
+	}
+
+	protected function isBanned($userid) {
+		$sql = "SELECT enabled, userid, bantype FROM #__kunena_banned_users WHERE userid='$userid' AND bantype=2";
+		$this->_db->setQuery ( $sql );
+		$isbanned = $this->_db->loadObject ();
+		check_dberror ( 'Unable to load datas from this user.' );
+
+		if ( is_object($isbanned) ) {
+			return true;
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ), 'error' );
+			return false;
+		}
 	}
 
 	protected function floodProtection() {

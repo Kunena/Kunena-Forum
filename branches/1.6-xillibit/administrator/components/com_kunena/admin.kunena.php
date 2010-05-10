@@ -1567,7 +1567,7 @@ function deleteUser ( $option, $uid ) {
 	$user_mod = new CKunenaModerationTools();
 
 	foreach ($uid as $id) {
-		$deleteuser = $user_mod->deleteUser($uid);
+		$deleteuser = $user_mod->deleteUser($id);
 		if (!$deleteuser) {
 			$message = $user_mod->getErrorMessage();
 		} else {

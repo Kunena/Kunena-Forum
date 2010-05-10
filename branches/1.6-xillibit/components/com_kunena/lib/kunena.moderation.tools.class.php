@@ -241,9 +241,15 @@ class CKunenaModerationTools {
 			return false;
 		}
 
+		// appended this extra text to comment
+		$extra = "(Disabled by ". $this->_my->id ." at ". date('r') .")";
+
 		switch ( $mode ) {
 			case KN_USER_BAN:
+				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=2 AND `userid`='{$UserID}' AND `enabled`=1";
+				break;
 			case KN_USER_BLOCK:
+				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=1 AND `userid`='{$UserID}' AND `enabled`=1";
 				break;
 			default:
 				// Unsupported mode - Error!
@@ -251,12 +257,6 @@ class CKunenaModerationTools {
 				return false;
 		}
 
-		// appended this extra text to comment
-		// FIX ME: wrong username
-		$extra = "(Disabled by ". $user->username ." at ". date('r') .")";
-
-		//FIX ME: need to differenciate ban and block
-		$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE `userid`='{$UserID}' AND `enabled`=1";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		check_dberror ( 'Unable to delete user state.' );
@@ -509,29 +509,29 @@ class CKunenaModerationTools {
 		return $useridslist;
 	}
 
-	function _banIP($ip, $expiry, $message, $comment) {
+	/**
+	 *
+	 */
+	protected function _banIP($ip, $expiry, $message, $comment) {
 		$sql = "SELECT ip FROM #__kunena_banned_ips WHERE ip='$ip'";
 		$this->_db->setQuery ( $sql );
 		$ipexist = $this->_db->loadResult ();
 		check_dberror ( 'Unable to load usernames for ip.' );
 
 		if ( !$ipexist ) {
-			$sql = "INSERT INTO #__kunena_banned_ips (ip,expiry,message,comment) VALUES ('$ip', '$expiry', '$message', '$comment')";
+			$sql = "INSERT INTO #__kunena_banned_ips (enabled,ip,expiry,message,comment) VALUES ('1',$ip', '$expiry', '$message', '$comment')";
 			$this->_db->setQuery ( $sql );
 			$this->_db->Query ();
 			check_dberror ( 'Unable to insert new element in ip table.' );
 		}
 	}
 
-	function _unbanIP($ip) {
-		$sql = "DELETE FROM #__kunena_banned_ips WHERE ip='$ip'";
-		$this->_db->setQuery ( $sql );
-		$this->_db->Query ();
-		check_dberror ( 'Unable to delete element in ip table.' );
-	}
-
-	function _disableIPban($id) {
-		$sql = "UPDATE #__kunena_banned_ips SET enabled=0";
+	/**
+	 *
+	 * @param int $UserID
+	 */
+	protected function _unbanIP($ip) {
+		$sql = "UPDATE #__kunena_banned_ips SET enabled=0 WHERE ip=$ip";
 		$this->_db->setQuery ( $sql );
 		$this->_db->Query ();
 		check_dberror ( 'Unable to disable ban ip.' );
@@ -584,10 +584,6 @@ class CKunenaModerationTools {
 
 	public function unbanIP($ip) {
 		return $this->_unbanIP($ip);
-	}
-
-	public function disableIPban($id) {
-		return $this->_disableIPban($id);
 	}
 }
 

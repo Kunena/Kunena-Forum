@@ -156,7 +156,7 @@ switch ($task) {
 
 		break;
 
-		case "newmoderator" :
+	case "newmoderator" :
 		newModerator ( $option, $id );
 
 		break;
@@ -204,6 +204,14 @@ switch ($task) {
 	case "userunblock" :
 		userunblock ( $option, $uid, 0 );
 
+		break;
+
+	case "userban" :
+		userban ($option, $uid, 1);
+		break;
+
+	case "userunban" :
+		userunban($option, $uid, 0);
 		break;
 
 	case "trashusermessages" :
@@ -1321,13 +1329,13 @@ function showProfiles($kunena_db, $option, $order) {
 		$limit = 100;
 
 	if ($order == 1) {
-		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY sbu.moderator DESC", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id, banusers.enabled, banusers.bantype, banusers.userid AS banuid FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . "\n LEFT JOIN #__kunena_banned_users AS banusers" . "\n ON banusers.userid=sbu.userid" . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY sbu.moderator DESC", $limitstart, $limit );
 	} else if ($order == 2) {
-		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY u.name ASC ", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id, banusers.enabled, banusers.bantype, banusers.userid AS banuid FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . "\n LEFT JOIN #__kunena_banned_users AS banusers" . "\n ON banusers.userid=sbu.userid" . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY u.name ASC ", $limitstart, $limit );
 	} else if ($order == 3) {
-		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY u.username ASC", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id, banusers.enabled, banusers.bantype, banusers.userid AS banuid FROM #__fb_users AS sbu" . "\n INNER JOIN #__users AS u " . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . "\n LEFT JOIN #__kunena_banned_users AS banusers" . "\n ON banusers.userid=sbu.userid" . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY u.username ASC", $limitstart, $limit );
 	} else if ($order < 1) {
-		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY sbu.userid", $limitstart, $limit );
+		$kunena_db->setQuery ( "SELECT sbu.*,u.*,sess.session_id, banusers.enabled, banusers.bantype, banusers.userid AS banuid FROM #__fb_users AS sbu " . "\n INNER JOIN #__users AS u" . "\n ON sbu.userid=u.id " . "\n LEFT JOIN #__session AS sess" . "\n ON sess.userid=u.id " . "\n LEFT JOIN #__kunena_banned_users AS banusers" . "\n ON banusers.userid=sbu.userid" . (count ( $where ) ? "\nWHERE " . implode ( ' AND ', $where ) : "") . "\n GROUP BY u.id ORDER BY sbu.userid", $limitstart, $limit );
 	}
 
 	$profileList = $kunena_db->loadObjectList ();
@@ -1476,11 +1484,13 @@ function saveUserProfile($option) {
 }
 
 function trashUserMessages ( $option, $uid ) {
+	$kunena_db = &JFactory::getDBO ();
+	$kunena_app = & JFactory::getApplication ();
+
 	$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
-	$kunena_db = &JFactory::getDBO ();
-	$kunena_app = & JFactory::getApplication ();
+
 	$uids = implode ( ',', $uid );
 	if ($uids) {
 		//select only the messages which aren't already in the trash
@@ -1515,11 +1525,14 @@ function moveUserMessages ( $option, $uid ){
 }
 
 function moveUserMessagesNow ( $option, $cid ) {
-	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
-	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
+
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	require_once ($path);
+	$kunena_mod = CKunenaModeration::getInstance();
+
 	$uid = JRequest::getVar( 'uid', '', 'post' );
 	if ($uid) {
 		$kunena_db->setQuery ( "SELECT id,thread FROM #__fb_messages WHERE hold=0 AND userid IN ('$uid')" );
@@ -1536,12 +1549,12 @@ function moveUserMessagesNow ( $option, $cid ) {
 
 function logout ( $option, $uid ) {
 	$kunena_app = & JFactory::getApplication ();
-	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.tools.class.php';
 	require_once ($path);
-	$kunena_mod = CKunenaModeration::getInstance();
+	$user_mod = new CKunenaModerationTools();
 
 	foreach ( $uid as $UserID) {
-		$kunena_mod->logoutUser($UserID);
+		$user_mod->logoutUser($UserID);
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", JText::_('COM_A_KUNENA_USER_LOGOUT_DONE') );
@@ -1549,14 +1562,14 @@ function logout ( $option, $uid ) {
 
 function deleteUser ( $option, $uid ) {
 	$kunena_app = & JFactory::getApplication ();
-	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.tools.class.php';
 	require_once ($path);
-	$kunena_mod = CKunenaModeration::getInstance();
+	$user_mod = new CKunenaModerationTools();
 
-	foreach ($uid as $UserID) {
-		$deleteuser = $kunena_mod->deleteUserAccount($UserID);
+	foreach ($uid as $id) {
+		$deleteuser = $user_mod->deleteUser($uid);
 		if (!$deleteuser) {
-			$message = $kunena_mod->getErrorMessage();
+			$message = $user_mod->getErrorMessage();
 		} else {
 			$message = JText::_('COM_A_KUNENA_USER_DELETE_DONE');
 		}
@@ -1567,10 +1580,9 @@ function deleteUser ( $option, $uid ) {
 
 function userblock ( $option, $uid = null, $block = 1 ) {
 	$kunena_app = & JFactory::getApplication ();
-	$kunena_app = & JFactory::getApplication ();
-	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.tools.class.php';
 	require_once ($path);
-	$kunena_mod = CKunenaModeration::getInstance();
+	$user_mod = new CKunenaModerationTools();
 
 	if (! is_array ( $uid ) || count ( $uid ) < 1) {
 		$action = $block ? 'userblock' : 'userunblock';
@@ -1578,9 +1590,9 @@ function userblock ( $option, $uid = null, $block = 1 ) {
 		exit ();
 	}
 
-	$disableuseraccount = $kunena_mod->blockUserAccount($uid[0],1);
+	$disableuseraccount = $user_mod->blockUser($uid[0], '0000-00-00 00:00:00', '', '');
 	if (!$disableuseraccount) {
-		$message = $kunena_mod->getErrorMessage();
+		$message = $user_mod->getErrorMessage();
 	} else {
 		$message = JText::_('COM_A_KUNENA_USER_BLOCKED_DONE');
 	}
@@ -1590,10 +1602,9 @@ function userblock ( $option, $uid = null, $block = 1 ) {
 
 function userunblock ( $option, $uid = null, $block = 0 ) {
 	$kunena_app = & JFactory::getApplication ();
-	$kunena_app = & JFactory::getApplication ();
-	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.tools.class.php';
 	require_once ($path);
-	$kunena_mod = CKunenaModeration::getInstance();
+	$user_mod = new CKunenaModerationTools();
 
 	if (! is_array ( $uid ) || count ( $uid ) < 1) {
 		$action = $block ? 'userblock' : 'userunblock';
@@ -1601,11 +1612,43 @@ function userunblock ( $option, $uid = null, $block = 0 ) {
 		exit ();
 	}
 
-	$enableuseraccount = $kunena_mod->blockUserAccount($uid[0],0);
+	$enableuseraccount = $user_mod->unblockUser($uid[0]);
 	if (!$enableuseraccount) {
-			$message = $kunena_mod->getErrorMessage();
+			$message = $user_mod->getErrorMessage();
 	} else {
 			$message = JText::_('COM_A_KUNENA_USER_UNBLOCKED_DONE');
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );
+}
+
+function userban ( $option, $uid, $block=1 ) {
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.tools.class.php';
+	require_once ($path);
+	$user_mod = new CKunenaModerationTools();
+
+	$banuser = $user_mod->banUser($uid[0], '0000-00-00 00:00:00', '', '');
+	if (!$banuser) {
+		$message = $user_mod->getErrorMessage();
+	} else {
+		$message = JText::_('COM_A_KUNENA_USER_BANNED_DONE');
+	}
+
+	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );
+}
+
+function userunban ( $option, $uid, $block=0 ) {
+	$kunena_app = & JFactory::getApplication ();
+	$path = KUNENA_PATH_LIB  .'/kunena.moderation.tools.class.php';
+	require_once ($path);
+	$user_mod = new CKunenaModerationTools();
+
+	$unbanuser = $user_mod->unbanUser($uid[0]);
+	if (!$unbanuser) {
+		$message = $kunena_mod->getErrorMessage();
+	} else {
+		$message = JText::_('COM_A_KUNENA_USER_UNBANNED_DONE');
 	}
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", $message );

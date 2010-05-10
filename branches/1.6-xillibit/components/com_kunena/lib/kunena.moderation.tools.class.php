@@ -12,11 +12,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+define ( 'KN_USER_BLOCK',1);	// block in joomla (even block login)
+define ( 'KN_USER_BAN',2);	// ban in kunena (read-only mode)
 
 class CKunenaModerationTools {
-	const		KN_USER_BLOCK		= 1;	// block in joomla (even block login)
-	const		KN_USER_BAN			= 2;	// ban in kunena (read-only mode)
-
 	// Private data and functions
 	protected	$_db				= null;
 	protected	$_my				= null;
@@ -198,8 +197,8 @@ class CKunenaModerationTools {
 		}
 
 		switch ( $mode ) {
-			case self::KN_USER_BAN:
-			case self::KN_USER_BLOCK:
+			case KN_USER_BAN:
+			case KN_USER_BLOCK:
 				break;
 			default:
 				// Unsupported mode - Error!
@@ -207,7 +206,7 @@ class CKunenaModerationTools {
 				return false;
 		}
 
-		$query = "INSERT INTO #__kunena_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . addslashes ( $message ) . "', NOW(), '{$this->_my->id}', '" . addslashes ( $comment ) . "')";
+		$query = "INSERT INTO #__kunena_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . $this->_db->Quote ( $message ) . "', NOW(), '{$this->_my->id}', '" . $this->_db->Quote ( $comment ) . "')";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		check_dberror ( 'Unable to insert user state.' );
@@ -253,9 +252,11 @@ class CKunenaModerationTools {
 		}
 
 		// appended this extra text to comment
-		$extra = "- (Disabled by ". $user->username ." at ". date('r') .")";
+		// FIX ME: wrong username
+		$extra = "(Disabled by ". $user->username ." at ". date('r') .")";
 
-		$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') ' WHERE `userid`='{$UserID}' AND `enabled`=1";
+		//FIX ME: need to differenciate ban and block
+		$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE `userid`='{$UserID}' AND `enabled`=1";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		check_dberror ( 'Unable to delete user state.' );

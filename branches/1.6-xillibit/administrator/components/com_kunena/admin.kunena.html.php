@@ -2182,6 +2182,7 @@ table.kadmin-stat caption {
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_ENABLED'); ?></th>
+				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_BANNED'); ?></th>
 				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
 				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
 				<th align="left" width="15"><?php echo JText::_('COM_KUNENA_VIEW_MODERATOR'); ?></th>
@@ -2197,9 +2198,12 @@ table.kadmin-stat caption {
 						$pl = &$profileList [$i];
 						$k = 1 - $k;
 						$userLogged = $pl->session_id ? '<img src="images/tick.png" width="16" height="16" border="0" alt="" />': '';
-						$userEnabled = $pl->block ? 'publish_x.png' : 'tick.png';
-						$altUserEnabled = $pl->block ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
-						$userBlockTask = $pl->block ? 'userunblock' : 'userblock';
+						$userEnabled = ($pl->enabled && $pl->bantype ==1) ? 'publish_x.png' : 'tick.png';
+						$altUserEnabled = ($pl->enabled && $pl->bantype==1) ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
+						$userBlockTask = ($pl->enabled && $pl->bantype==1) ? 'userunblock' : 'userblock';
+						$userbanned = ($pl->enabled && $pl->bantype==2) ? 'tick.png' : 'publish_x.png';
+						$userBannedTask = ($pl->enabled && $pl->bantype==2) ? 'userunban' : 'userban';
+						$altUserBanned = ($pl->enabled && $pl->bantype==2) ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
 					?>
 			<tr class="row<?php echo $k;
 						?>">
@@ -2224,6 +2228,8 @@ table.kadmin-stat caption {
 						?>&nbsp;</td>
 				<td width="100" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
 						<img src="images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" /></a>&nbsp;</td>
+				<td width="100" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
+						<img src="images/<?php echo $userbanned;?>" width="16" height="16" border="0" alt="<?php echo $altUserBanned; ?>" /></a>&nbsp;</td>
 				<td width="100"><?php echo kescape($pl->email);
 						?>&nbsp;</td>
 				<td width="100"><?php echo kescape($pl->usertype);
@@ -2248,7 +2254,7 @@ table.kadmin-stat caption {
 				}
 				?>
 			<tr>
-				<th align="center" colspan="11"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?>
+				<th align="center" colspan="12"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?>
 				</th>
 			</tr>
 		</table>

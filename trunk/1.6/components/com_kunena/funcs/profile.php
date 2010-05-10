@@ -16,6 +16,7 @@ class CKunenaProfile {
 	public $user = null;
 	public $profile = null;
 	public $online = null;
+	public $allow = false;
 
 	function __construct($userid, $do='') {
 		kimport('html.parser');
@@ -31,8 +32,9 @@ class CKunenaProfile {
 		else {
 			$this->user = JFactory::getUser( $userid );
 		}
+		if ($this->user->id == 0) return;
+		$this->allow = true;
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
-		if ($this->profile->userid == 0) return;
 		if ($this->profile->posts === null) {
 			$this->profile->save();
 		}
@@ -285,7 +287,7 @@ class CKunenaProfile {
 	}
 
 	function display() {
-		if (!$this->profile->userid) return;
+		if (!$this->allow) return;
 
 		switch ($this->do) {
 			case 'save':

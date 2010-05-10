@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 9-May-2010 Matias
 ^ [#15886] Merged revisions 2429-2431 from /branches/1.6-xillibit
+# [#19288] Fix regression in profile: non-existing users cause page to crash
 
 9-May-2010 Xillibit
 # [#19288] Fix regression on summary.php on function getInboxLink()

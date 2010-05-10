@@ -914,6 +914,7 @@ class CKunenaTools {
 			$kunena_app = JFactory::getApplication ();
 
 			$thisuserid = JRequest::getInt ( 'thisuserid', '' );
+			$banuser = JRequest::getString('banuser', '');
 			$banIP = JRequest::getVar ( 'prof_ip_select', '' );
 			$banEmail = JRequest::getVar ( 'banemail', '' );
 			$banUsername = JRequest::getVar ( 'banusername', '' );
@@ -922,19 +923,35 @@ class CKunenaTools {
 			$DelSignature = JRequest::getVar ( 'delsignature', '' );
 			$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
 
-			if ( isset($banIP) ) {
+			if ( !empty($banIP) ) {
+				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
+				$usermod = new CKunenaModerationTools();
+				$usermod->banIP($banIP, $expiry, $message, $comment);
+
+				// FIX ME: display ip banned sucessfully
+				// FIX ME: redirect
+			}
+
+			if ( !empty($banEmail) ) {
+				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				//future feature
 			}
 
-			if ( isset($banEmail) ) {
+			if ( !empty($banUsername) ) {
+				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				//future feature
 			}
 
-			if ( isset($banUsername) ) {
-				//future feature
+			if ( !empty($thisuserid) && !empty($banuser) ) {
+				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
+				$usermod = new CKunenaModerationTools();
+				$usermod->banUser($thisuserid, $expiry, $message, $comment);
+
+				// FIX ME: display ip banned sucessfully
+				// FIX ME: redirect
 			}
 
-			if ( isset ($DelAvatar) ) {
+			if ( !empty($DelAvatar) ) {
 				jimport('joomla.filesystem.file');
 				$userprofile = KunenaFactory::getUser($thisuserid);
 
@@ -950,7 +967,7 @@ class CKunenaTools {
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
-			if ( isset ($DelSignature) ) {
+			if ( !empty($DelSignature) ) {
 				$kunena_db->setQuery ( "UPDATE #__fb_users SET signature=null WHERE userid=$thisuserid" );
 				$kunena_db->Query ();
 				check_dberror ( "Unable to remove user singature." );
@@ -958,7 +975,7 @@ class CKunenaTools {
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
-			if ( isset ($DelProfileInfo) ) {
+			if ( !empty($DelProfileInfo) ) {
 				$kunena_db->setQuery ( "UPDATE #__fb_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid=$thisuserid" );
 				$kunena_db->Query ();
 				check_dberror ( "Unable to remove user profile information." );
@@ -966,7 +983,7 @@ class CKunenaTools {
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
-			if ( isset($banDelPosts) ) {
+			if ( !empty($banDelPosts) ) {
 				$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
 				require_once ($path);
 				$kunena_mod = CKunenaModeration::getInstance();

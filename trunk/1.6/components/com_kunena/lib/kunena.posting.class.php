@@ -116,7 +116,7 @@ class CKunenaPosting {
 		}
 		// Check unapproved, deleted etc messages
 		$access = KunenaFactory::getAccessControl();
-		$hold = $access->getAllowedHold($this->_my->id, $this->catid, false);
+		$hold = $access->getAllowedHold($this->_my->id, $this->parent->catid, false);
 		if ($this->parent->hold == 1 && $this->_my->id == $this->parent->userid) {
 				// User can see his own post before it gets approved
 		} else if (!in_array($this->parent->hold, $hold) || !in_array($this->parent->topichold, $hold)) {

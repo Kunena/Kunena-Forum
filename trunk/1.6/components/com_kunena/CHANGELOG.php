@@ -34,6 +34,15 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+9-May-2010 Matias
+^ [#15886] Merged revisions 2429-2431 from /branches/1.6-xillibit
+
+9-May-2010 Xillibit
+# [#19288] Fix regression on summary.php on function getInboxLink()
+# [#19288] Fix regression Undefined property: CKunenaPosting::$catid in kunena.posting.class.php
+# [#19288] Show new bbcode [attachment][/attachment] in textarea when put new attachments
++ [#19288] Add user moderation tools or ban functions (thanks littlejohn)
+
 8-May-2010 Xillibit
 + [#19288] Put links into profile page to access PM boxes
 # [#19288] Don't let unregistered users to report message

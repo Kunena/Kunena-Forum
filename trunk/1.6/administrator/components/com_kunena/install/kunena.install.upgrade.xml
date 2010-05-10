@@ -303,6 +303,33 @@
 			`lastvote` int(11) default NULL,
 			UNIQUE KEY `pollid` (`pollid`,`userid`)
 		) DEFAULT CHARSET=utf8;</query>
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_banned_users` (
+                `id` int(11) NOT NULL auto_increment,
+                `enabled` int(1) NOT NULL default '0',
+                `userid` int(11) NOT NULL default '0',
+                `bantype` int(1) NOT NULL,
+                `expiry` datetime NOT NULL default '0000-00-00 00:00:00',
+                `message` text,
+                `created` datetime NOT NULL default '0000-00-00 00:00:00',
+                `created_userid` int(11) NOT NULL default '0',
+                `comment` text,
+                PRIMARY KEY (`id`),
+                KEY `enabled` (`enabled`),
+                KEY `userid` (`userid`),
+                KEY `expiry` (`expiry`) ) DEFAULT CHARSET=utf8;</query>
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_banned_ips` (
+               	`id` int(11) NOT NULL auto_increment,
+               	`enabled` int(1) NOT NULL default '0',
+               	`ip` varchar(32) NOT NULL,
+               	`expiry` datetime NOT NULL default '0000-00-00 00:00:00',
+               	`message` text,
+               	`created` datetime NOT NULL default '0000-00-00 00:00:00',
+               	`created_userid` int(11) NOT NULL default '0',
+               	`comment` text,
+               	PRIMARY KEY (`id`),
+               	KEY `enabled` (`enabled`),
+               	KEY `ip` (`ip`),
+               	KEY `expiry` (`expiry`) ) DEFAULT CHARSET=utf8;</query>
 		<phpfile name="kunena.special.install.php" />
 	</install>
 	<upgrade>
@@ -490,6 +517,33 @@
 			<query mode="silenterror">ALTER TABLE `jos_fb_sessions` ADD INDEX ( `currvisit` )</query>
 			<query>UPDATE `#__fb_messages` SET thread=id WHERE parent=0</query>
 			<query>UPDATE `#__fb_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_banned_users` (
+                    `id` int(11) NOT NULL auto_increment,
+                    `enabled` int(1) NOT NULL default '0',
+                    `userid` int(11) NOT NULL default '0',
+                    `bantype` int(1) NOT NULL,
+                    `expiry` datetime NOT NULL default '0000-00-00 00:00:00',
+                    `message` text,
+                    `created` datetime NOT NULL default '0000-00-00 00:00:00',
+                    `created_userid` int(11) NOT NULL default '0',
+                    `comment` text,
+                    PRIMARY KEY (`id`),
+                    KEY `enabled` (`enabled`),
+                    KEY `userid` (`userid`),
+                    KEY `expiry` (`expiry`) ) DEFAULT CHARSET=utf8;</query>
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_banned_ips` (
+                   	`id` int(11) NOT NULL auto_increment,
+                   	`enabled` int(1) NOT NULL default '0',
+                   	`ip` varchar(32) NOT NULL,
+                   	`expiry` datetime NOT NULL default '0000-00-00 00:00:00',
+                   	`message` text,
+                   	`created` datetime NOT NULL default '0000-00-00 00:00:00',
+                   	`created_userid` int(11) NOT NULL default '0',
+                   	`comment` text,
+                   	PRIMARY KEY (`id`),
+                   	KEY `enabled` (`enabled`),
+                   	KEY `ip` (`ip`),
+                   	KEY `expiry` (`expiry`) ) DEFAULT CHARSET=utf8;</query>
 		</version>
 	</upgrade>
 </comupgrade>

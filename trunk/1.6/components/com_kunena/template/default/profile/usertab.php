@@ -118,6 +118,7 @@ defined( '_JEXEC' ) or die();
 				<span><?php echo JText::_('COM_KUNENA_MODERATE_BANIP'); ?></span>
 				<?php
 				$ipselect = array();
+				//FIX ME: if banip is changed display three others input : expiry, comment, message
 				foreach ($iplist as $ip) {
 					$ipselect [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_MODERATE_SELECT_IP') );
 					$ipselect [] = JHTML::_ ( 'select.option', $ip->ip, $ip->ip );
@@ -133,13 +134,15 @@ defined( '_JEXEC' ) or die();
 				<span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>
 				<label for="ban-delsignature"><input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="kcheckbox" />
 				<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_SIGNATURE'); ?></span></label>
+				<label for="ban-user"><input type="checkbox" id="ban-user" name="banuser" value="banuser" class="kcheckbox" />
+				<span onclick="document.kformban.banuser.checked=(! document.kformban.banuser.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BAN_USER'); ?></span></label>
 				<label for="ban-delavatar"><input type="checkbox" id="ban-delavatar" name="delavatar" value="delavatar" class="kcheckbox" />
 				<span onclick="document.kformban.delavatar.checked=(! document.kformban.delavatar.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_AVATAR'); ?></span></label>
 				<label for="ban-delprofileinfo"><input type="checkbox" id="ban-delprofileinfo" name="delprofileinfo" value="delprofileinfo" class="kcheckbox" />
 				<span onclick="document.kformban.delprofileinfo.checked=(! document.kformban.delprofileinfo.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_PROFILEINFO'); ?></span></label>
 				<label for="ban-delposts"><input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" />
 				<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_ALL_POSTS'); ?></span></label>
-				<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_USER'); ?>" name="Submit" />
+				<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_MODERATE_MODERATENOW'); ?>" name="Submit" />
 				<input type="hidden" name="option" value="com_kunena" /> <input
 				type="hidden" name="func" value="banactions" /> <input
 				type="hidden" name="thisuserid" value="<?php echo $this->user->id; ?>" />

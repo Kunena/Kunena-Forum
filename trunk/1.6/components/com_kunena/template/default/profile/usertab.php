@@ -118,7 +118,6 @@ defined( '_JEXEC' ) or die();
 				<span><?php echo JText::_('COM_KUNENA_MODERATE_BANIP'); ?></span>
 				<?php
 				$ipselect = array();
-				//FIX ME: if banip is changed display three others input : expiry, comment, message
 				foreach ($iplist as $ip) {
 					$ipselect [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_MODERATE_SELECT_IP') );
 					$ipselect [] = JHTML::_ ( 'select.option', $ip->ip, $ip->ip );

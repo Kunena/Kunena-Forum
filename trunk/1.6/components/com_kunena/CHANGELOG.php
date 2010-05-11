@@ -34,6 +34,12 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+11-May-2010 Matias
+^ [#15886] Merged revisions 2434-2435 from /branches/1.6-xillibit
+
+10-May-2010 Xillibit
+^ [#19288] Add user moderation tools, ban functions in kunena users manager (not yet finished)
+
 9-May-2010 Matias
 ^ [#15886] Merged revisions 2429-2431 from /branches/1.6-xillibit
 # [#19288] Fix regression in profile: non-existing users cause page to crash

@@ -12,11 +12,10 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+define ( 'KN_USER_BLOCK',1);	// block in joomla (even block login)
+define ( 'KN_USER_BAN',2);	// ban in kunena (read-only mode)
 
 class CKunenaModerationTools {
-	const		KN_USER_BLOCK		= 1;	// block in joomla (even block login)
-	const		KN_USER_BAN			= 2;	// ban in kunena (read-only mode)
-
 	// Private data and functions
 	protected	$_db				= null;
 	protected	$_my				= null;
@@ -198,8 +197,8 @@ class CKunenaModerationTools {
 		}
 
 		switch ( $mode ) {
-			case self::KN_USER_BAN:
-			case self::KN_USER_BLOCK:
+			case KN_USER_BAN:
+			case KN_USER_BLOCK:
 				break;
 			default:
 				// Unsupported mode - Error!
@@ -207,7 +206,7 @@ class CKunenaModerationTools {
 				return false;
 		}
 
-		$query = "INSERT INTO #__kunena_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . addslashes ( $message ) . "', NOW(), '{$this->_my->id}', '" . addslashes ( $comment ) . "')";
+		$query = "INSERT INTO #__kunena_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . $this->_db->Quote ( $message ) . "', NOW(), '{$this->_my->id}', '" . $this->_db->Quote ( $comment ) . "')";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		check_dberror ( 'Unable to insert user state.' );
@@ -242,9 +241,15 @@ class CKunenaModerationTools {
 			return false;
 		}
 
+		// appended this extra text to comment
+		$extra = "(Disabled by ". $this->_my->id ." at ". date('r') .")";
+
 		switch ( $mode ) {
 			case KN_USER_BAN:
+				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=2 AND `userid`='{$UserID}' AND `enabled`=1";
+				break;
 			case KN_USER_BLOCK:
+				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=1 AND `userid`='{$UserID}' AND `enabled`=1";
 				break;
 			default:
 				// Unsupported mode - Error!
@@ -252,10 +257,6 @@ class CKunenaModerationTools {
 				return false;
 		}
 
-		// appended this extra text to comment
-		$extra = "- (Disabled by ". $user->username ." at ". date('r') .")";
-
-		$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') ' WHERE `userid`='{$UserID}' AND `enabled`=1";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		check_dberror ( 'Unable to delete user state.' );
@@ -508,29 +509,29 @@ class CKunenaModerationTools {
 		return $useridslist;
 	}
 
-	function _banIP($ip, $expiry, $message, $comment) {
+	/**
+	 *
+	 */
+	protected function _banIP($ip, $expiry, $message, $comment) {
 		$sql = "SELECT ip FROM #__kunena_banned_ips WHERE ip='$ip'";
 		$this->_db->setQuery ( $sql );
 		$ipexist = $this->_db->loadResult ();
 		check_dberror ( 'Unable to load usernames for ip.' );
 
 		if ( !$ipexist ) {
-			$sql = "INSERT INTO #__kunena_banned_ips (ip,expiry,message,comment) VALUES ('$ip', '$expiry', '$message', '$comment')";
+			$sql = "INSERT INTO #__kunena_banned_ips (enabled,ip,expiry,message,comment) VALUES ('1',$ip', '$expiry', '$message', '$comment')";
 			$this->_db->setQuery ( $sql );
 			$this->_db->Query ();
 			check_dberror ( 'Unable to insert new element in ip table.' );
 		}
 	}
 
-	function _unbanIP($ip) {
-		$sql = "DELETE FROM #__kunena_banned_ips WHERE ip='$ip'";
-		$this->_db->setQuery ( $sql );
-		$this->_db->Query ();
-		check_dberror ( 'Unable to delete element in ip table.' );
-	}
-
-	function _disableIPban($id) {
-		$sql = "UPDATE #__kunena_banned_ips SET enabled=0";
+	/**
+	 *
+	 * @param int $UserID
+	 */
+	protected function _unbanIP($ip) {
+		$sql = "UPDATE #__kunena_banned_ips SET enabled=0 WHERE ip=$ip";
 		$this->_db->setQuery ( $sql );
 		$this->_db->Query ();
 		check_dberror ( 'Unable to disable ban ip.' );
@@ -583,10 +584,6 @@ class CKunenaModerationTools {
 
 	public function unbanIP($ip) {
 		return $this->_unbanIP($ip);
-	}
-
-	public function disableIPban($id) {
-		return $this->_disableIPban($id);
 	}
 }
 

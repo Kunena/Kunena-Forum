@@ -33,14 +33,12 @@ defined( '_JEXEC' ) or die();
 <div id="kprofile-rightcolbot">
 	<div class="kprofile-rightcol2">
 		<ul>
-			<?php if ($this->_config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="email"></span><a href="mailto:<?php echo $this->user->email; ?>"><?php echo $this->user->email; ?></a></li><?php endif; ?>
+			<?php if ($this->config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="email"></span><a href="mailto:<?php echo $this->user->email; ?>"><?php echo $this->user->email; ?></a></li><?php endif; ?>
 			<?php // FIXME: we need a better way to add http/https ?>
 			<li><span class="website"></span><a href="http://<?php echo kunena_htmlspecialchars(stripslashes($this->profile->websiteurl)); ?>" target="_blank"><?php echo kunena_htmlspecialchars(stripslashes($this->profile->websitename)); ?></a></li>
 		</ul>
 	</div>
 	<div class="kprofile-rightcol1">
-		<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?></h4>
-		<p><?php echo $this->personalText; ?></p>
 		<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></h4>
 		<div class="msgsignature"><div><?php echo $this->signature; ?></div></div>
 	</div>
@@ -66,14 +64,19 @@ defined( '_JEXEC' ) or die();
 			<?php //$this->displayUserTopics(); ?>
 		</dd>
 		-->
+		<?php if ($this->config->allowsubscriptions) :?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displaySubscriptions(); ?>
 		</dd>
+		<?php endif; ?>
+		<?php if ($this->config->allowfavorites) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayFavorites(); ?>
 		</dd>
+		<?php endif; ?>
+
 		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id): ?>
 		<!-- Only visible to moderators and admins -->
 		<dt class="kprofile-modbtn"><?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?></dt>
@@ -93,7 +96,7 @@ defined( '_JEXEC' ) or die();
 					$usernames = array_merge($usernames,$useriplist[$ip->ip]);
 					$username = array();
 					foreach ($usernames as $user) {
-						$username[] = CKunenalink::GetProfileLink($user->userid, $user->name, $rel='nofollow', $class='');
+						$username[] = CKunenalink::GetProfileLink($user->userid, $user->name);
 					}
 					$username=implode(', ',$username);
 
@@ -130,13 +133,15 @@ defined( '_JEXEC' ) or die();
 				<span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>
 				<label for="ban-delsignature"><input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="kcheckbox" />
 				<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_SIGNATURE'); ?></span></label>
+				<label for="ban-user"><input type="checkbox" id="ban-user" name="banuser" value="banuser" class="kcheckbox" />
+				<span onclick="document.kformban.banuser.checked=(! document.kformban.banuser.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BAN_USER'); ?></span></label>
 				<label for="ban-delavatar"><input type="checkbox" id="ban-delavatar" name="delavatar" value="delavatar" class="kcheckbox" />
 				<span onclick="document.kformban.delavatar.checked=(! document.kformban.delavatar.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_AVATAR'); ?></span></label>
 				<label for="ban-delprofileinfo"><input type="checkbox" id="ban-delprofileinfo" name="delprofileinfo" value="delprofileinfo" class="kcheckbox" />
 				<span onclick="document.kformban.delprofileinfo.checked=(! document.kformban.delprofileinfo.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_PROFILEINFO'); ?></span></label>
 				<label for="ban-delposts"><input type="checkbox" id="ban-delposts" name="bandelposts" value="bandelposts" class="kcheckbox" />
 				<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_ALL_POSTS'); ?></span></label>
-				<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_MODERATE_DELETE_USER'); ?>" name="Submit" />
+				<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_MODERATE_MODERATENOW'); ?>" name="Submit" />
 				<input type="hidden" name="option" value="com_kunena" /> <input
 				type="hidden" name="func" value="banactions" /> <input
 				type="hidden" name="thisuserid" value="<?php echo $this->user->id; ?>" />

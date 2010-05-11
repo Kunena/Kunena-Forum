@@ -12,7 +12,8 @@
 defined( '_JEXEC' ) or die();
 
 $kunena_config = & CKunenaConfig::getInstance ();
-
+require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+$kunena_poll =& CKunenaPolls::getInstance();
 $document =& JFactory::getDocument();
 
 ob_start();
@@ -769,18 +770,30 @@ kbbcode.addFunction('Gallery', function() {
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_GALLERY');?>")'});
 */
 ?>
-<?php //display only the poll icon in the first message of the thread
-if(CKunenaPolls::get_message_parent($this->id, $this->kunena_editmode)){ ?>
+<?php if (!isset($this->msg_cat->allow_polls)) $this->msg_cat->allow_polls = ''; //display only the poll icon in the first message of the thread
+
+$poll_allowed = $kunena_poll->get_poll_allowed($this->id, $this->parent, $this->kunena_editmode, $this->msg_cat->allow_polls);
+
+if( $poll_allowed ){ ?>
 
 kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");
 }, {'id': 'kbbcode-poll_button',
+<?php
+if ($this->msg_cat->allow_polls == '0') {
+	echo '\'style\':\'display: none;\',';
+} ?>
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_POLL');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLL');?>")'});
 
 kbbcode.addFunction('#', function() {
-}, {'id': 'kbbcode-separator5'});
+}, {'id': 'kbbcode-separator5'
+<?php
+if ($this->msg_cat->allow_polls == '0') {
+	echo ',\'style\':\'display: none;\'';
+} ?>
+});
 
 <?php
 }
@@ -936,6 +949,8 @@ function newAttachment() {
 	file.addEvent('change', function(el) {
 		this.removeEvents('change');
 		this.getElement('a').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
+		kbbcode.replaceSelection('[attachment]'+ id +'[/attachment]');
+		$('attach_list').set('text', id+1+'.');
 		newAttachment();
 	});
 }
@@ -1022,7 +1037,13 @@ Selectors.Pseudo.selected = function(){
 function kInsertVideo1() {
 	var videosize = $('kvideosize').get('value');
 	var videowidth = $('kvideowidth').get('value');
+	if ( videowidth == '') {
+		videowidth = '425';
+	}
 	var videoheigth = $('kvideoheight').get('value');
+	if ( videoheigth == '') {
+		videoheigth = '344';
+	}
 	var videoid = $('kvideoid').get('value');
 	kbbcode.replaceSelection('[video size='+videosize+' width='+videowidth+' height='+videoheigth+' type='+$('kvideoprovider').retrieve('videoprov')+']'+videoid+'[/video]');
 	kToggleOrSwap("kbbcode-video-options");

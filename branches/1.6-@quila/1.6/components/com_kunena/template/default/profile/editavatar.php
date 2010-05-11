@@ -34,7 +34,7 @@ $i=0;
 			</td>
 		</tr>
 <?php endif; ?>
-<?php if ($this->_config->allowavatarupload):?>
+<?php if ($this->config->allowavatarupload):?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td class="td-0 km center">
 				<label for="kavatar_upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
@@ -43,7 +43,7 @@ $i=0;
 			</td>
 		</tr>
 <?php endif; ?>
-<?php if ($this->_config->allowavatargallery):?>
+<?php if ($this->config->allowavatargallery):?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td class="td-0 km center">
 				<label for="kavatar_gallery"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
@@ -63,8 +63,9 @@ $i=0;
 							{
 							if (gallery == "")
 								return;
-
-							location.href="<?php echo CKunenaLink::GetMyProfileURL ( $this->user->id, 'edit', false )?>"+'&gallery='+gallery;
+							var url = "<?php echo CKunenaLink::GetMyProfileUrl ( $this->user->id, 'edit', false, '&gallery=_GALLERY_' )?>";
+							var urlreg = new  RegExp("_GALLERY_","g");
+							location.href=url.replace(urlreg,gallery);
 							}
 							// -->
 						</script>
@@ -74,8 +75,8 @@ $kid = 0;
 foreach ($this->galleryimg as $avatarimg)
 {
 	echo '<span>';
-	echo '<label for="kavatar'.$kid.'"><img src="' . KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery/' . $this->gallery . $avatarimg . '" alt="" /></label>';
-	echo '<input id="kavatar'.$kid.'" type="radio" name="avatar" value="gallery/' . $this->gallery . $avatarimg . '"/>';
+	echo '<label for="kavatar'.$kid.'"><img src="' . $this->galleryurl .'/'. ($this->gallery ? $this->gallery.'/':'') . $avatarimg . '" alt="" /></label>';
+	echo '<input id="kavatar'.$kid.'" type="radio" name="avatar" value="gallery/' . ($this->gallery ? $this->gallery.'/':'') . $avatarimg . '"/>';
 	echo "</span>";
 	$kid++;
 }

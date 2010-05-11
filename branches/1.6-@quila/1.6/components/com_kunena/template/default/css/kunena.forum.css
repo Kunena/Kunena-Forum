@@ -73,6 +73,12 @@ PX		EM			PCT			PT
 
 /* MAIN STYLES
 ----------------------------------------------------------------------------------------------- */
+#Kunena {
+	word-wrap: break-word;
+	padding: 0;
+	margin: 0;
+}
+
 #Kunena td,
 #Kunena table,
 #Kunena th,
@@ -81,6 +87,11 @@ PX		EM			PCT			PT
 #Kunena span {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em;
+}
+
+#Kunena ul li {
+	background: none;
+	padding: 0;
 }
 
 #Kunena .clr { clear:both; height:1px; overflow:hidden;}
@@ -101,6 +112,12 @@ PX		EM			PCT			PT
 #Kunena a:active {color: #5388B4;}
 #Kunena a:focus {outline: none;}
 #Kunena a:hover {color: #FF0000;}
+
+#Kunena .overflow {
+	display: table;
+	table-layout:fixed;
+	width: 100%;
+}
 
 #Kunena .kxs {
 	/* 9px */
@@ -130,6 +147,27 @@ PX		EM			PCT			PT
 	/* 20px */
 	font-size: 1.667em;
 }
+#Kunena input.ksmall {
+	width: 25%;
+}
+#Kunena input.kmedium {
+	width: 45%;
+}
+#Kunena input.klarge {
+	width: 95%;
+}
+#Kunena textarea,
+#Kunena textarea.kmedium {
+	font-size: 1em;
+	width: 95%;
+	height: 10em;
+}
+#Kunena textarea.ksmall {
+	height: 5em;
+}
+#Kunena textarea.klarge {
+	height: 20em;
+}
 
 #Kunena sup {
 	font-size: .583em;
@@ -140,6 +178,159 @@ PX		EM			PCT			PT
 	padding:0;
 	margin:0;
 }
+
+#Kunena div.kblock {
+	display: table;
+	table-layout:fixed;
+	width: 100%;
+	border: none;
+	margin: 5px 0 0 0;
+	clear: both;
+	border-bottom:4px solid #BFC3C6;
+}
+#Kunena div.kblock div.ktitle {
+	background: #5388B4;
+	text-align: left;
+	border-bottom:1px solid #BFC3C6;
+	display: table-row;
+	width:100%;
+	color: #FFFFFF;
+	margin: 0;
+	overflow: hidden;
+}
+#Kunena div.kblock div.ktitle h1,
+#Kunena div.kblock div.ktitle h2 {
+	border: none;
+	display: block;
+	line-height: 1.9em;
+	font-size:1.333em;
+	text-indent: 0px;
+	padding-top: 2px;
+	color: #FFFFFF;
+	margin: 0 10px;
+	padding: 2px 0;
+	width: auto;
+}
+#Kunena div.kblock span.ktoggler {
+	float: right;
+	bottom: 15px;
+	right: 1px;
+	height: 1px;
+	position: relative;
+}
+#Kunena div.kblock div.kcontainer {
+	display: table-row;
+}
+#Kunena div.kblock div.kbody {
+	border-color:#BFC3C6;
+	border-style:solid;
+	border-width:0px 1px;
+	padding: 5px 10px;
+	overflow: auto;
+}
+#Kunena div.kblock label {
+	clear: both;
+	display: block;
+}
+#Kunena div.kblock div.kactions {
+	background: #737373;
+	color:#FFFFFF;
+	padding: 5px 10px;
+}
+#Kunena div.kblock div.kactions a {
+	color:#FFFFFF;
+}
+
+#Kunena table.kblock {
+	width: 100%;
+	border-bottom:4px solid #BFC3C6;
+	margin: 5px 0 0 0;
+	clear: both;
+	border-spacing: 0;
+}
+#Kunena table.kblock thead th {
+	background: #5388B4;
+	text-align: left;
+	border-bottom:1px solid #BFC3C6;
+	width:100%;
+	color: #FFFFFF;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+#Kunena table.kblock h1,
+#Kunena table.kblock h2 {
+	border: none;
+	display: block;
+	line-height: 1.9em;
+	font-size:1.333em;
+	text-indent: 0px;
+	color: #FFFFFF;
+	margin: 0;
+	padding: 4px 8px;
+	width: auto;
+}
+#Kunena table.kblock span.ktoggler {
+	float: right;
+	bottom: 16px;
+	right: 1px;
+	height: 0;
+	position: relative;
+}
+#Kunena table.kblock td,
+#Kunena table.kblock th {
+	text-align: left;
+	overflow: hidden;
+	padding: 4px 10px;
+	border: 1px solid #BFC3C6;
+	vertical-align: middle;
+}
+#Kunena table.kblock th {
+	padding: 0;
+}
+#Kunena tr.krow0 td,
+#Kunena tr.krow1 td {
+	background: #F2F1EE;
+	color: #333333;
+}
+#Kunena tr.krow1 td {
+	background: #FFFFFF;
+}
+#Kunena table.kblock .kcol {
+	padding: 4px 8px;
+}
+#Kunena table.kblock .kcol_annid {
+	text-align: center;
+	width: 5%;
+}
+#Kunena table.kblock .kcol-anndate {
+	width: 15%;
+}
+#Kunena table.kblock .kcol-anntitle {
+	width: 50%;
+}
+#Kunena table.kblock .kcol-annpublish {
+	text-align: center;
+	width: 10%;
+}
+#Kunena table.kblock .kcol-annedit {
+	text-align: center;
+	width: 10%;
+}
+#Kunena table.kblock .kcol-anndelete {
+	text-align: center;
+	width: 10%;
+}
+#Kunena table.kblock .kcol-search-subject {
+	width: 70%;
+}
+#Kunena table.kblock .kcol-search-author {
+	width: 10%;
+}
+#Kunena table.kblock .kcol-search-date {
+	width: 20%;
+}
+
 #Kunena .kheader {
 	background: #3B3B3B url("../images/backgrounds/cat_title_bg.gif") repeat-x top left;
 	height: 30px;
@@ -265,19 +456,20 @@ PX		EM			PCT			PT
 }
 	
 	
+#Kunena .klatest-avatar,
 #Kunena .topic_latest_post_avatar {
 	display: block;
 	height: auto;
-	width: 40px;
+	width: 36px;
 	padding: 1px;
-	margin-right: 10px;
+	margin: 4px 6px 2px 0;
 	border: 1px solid #BFC3C6;
 	float: left;
 }
 
 #Kunena img.klist_avatar {
 	height: auto;
-	width: 40px;
+	width: 36px;
 	border: 0px
 }
 
@@ -1565,6 +1757,20 @@ PX		EM			PCT			PT
 	vertical-align:top;
 	font-size: .833em;
 }
+#Kunena ul.kfile-attach-editing {
+	margin:0 0 8px 0;
+	padding:0;
+}
+#Kunena ul.kfile-attach-editing li {
+	list-style-type: none;
+	margin-top: 10px;
+	line-height: 32px;	
+}
+#Kunena ul.kfile-attach-editing li span {
+	padding-left: 10px;
+	vertical-align:top;
+	font-size: .833em;
+}
 #Kunena ul.kfile-attach li a img {
 	max-width: 32px;
 	max-height: 32px;
@@ -1811,8 +2017,12 @@ PX		EM			PCT			PT
 	padding: 3px 10px;
 }
 
-#Kunena .kmsg.kunapproved {
-	background: #EFF0F4;
+#Kunena .kunapproved td {
+	background: #DDDDDD !important;
+}
+
+#Kunena .kdeleted td {
+	background: #CCCCCC !important;
 }
 
 #Kunena div.kunena-profile {
@@ -2383,6 +2593,14 @@ POST PAGE
 	background: url("../images/buttons/btn-left-edit.gif") no-repeat left top;
 }
 #Kunena a.buttonmod span.delete {
+	float: left;
+	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
+}
+#Kunena a.buttonmod span.permdelete {
+	float: left;
+	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
+}
+#Kunena a.buttonmod span.undelete {
 	float: left;
 	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
 }
@@ -3166,7 +3384,7 @@ MODERATOR PAGE
 
 #Kunena div#kmod-container {
 	border: 1px solid #BFC3C6; 
-	margin: 10px 0 10px 0; 
+	margin: 0 0 10px 0; 
 	padding: 10px 10px 30px 10px; 
 	overflow:auto; 
 	height: 1%;
@@ -3182,6 +3400,27 @@ MODERATOR PAGE
 	float:right;
 }
 
+#Kunena div.kmoderate_message {
+	border:1px solid #CCCCCC;
+	padding:5px;
+	margin:5px 0;
+	display:inline-block;
+	width:98%;
+}
+
+#Kunena div.kmoderate_message h4 {
+	margin:0;
+	padding:0;
+}
+
+#Kunena div.kmoderate_message div.kmessage_avatar {
+	float:left;
+	padding:5px 5px 0 0;
+}
+
+#Kunena div.kmoderate_message div.kmessage_msgtext {
+	margin-left: 42px;
+}
 /*
 USER PROFILE
 -------------------------------------------------------------------- */
@@ -3517,6 +3756,7 @@ div#kprofile-stats ul li span.rank-admin {
 	clear: both;
 	border: 1px solid #BFC3C6;
 	padding: 10px 10px;
+	overflow: auto;
 }
 #Kunena div.current dd {
 	padding: 0;
@@ -3810,3 +4050,141 @@ div#kprofile-stats ul li span.rank-admin {
 --------------------------------------------------------------------------------------------------- */
 	
 #Kunena #kpost_message .invalid {border: 1px solid red !important;}
+
+/* SLIMBOX */
+
+#lbOverlay {
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	cursor: pointer;
+}
+
+#lbCenter, #lbBottomContainer {
+	position: absolute;
+	z-index: 9999;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+.lbLoading {
+	background: #fff url(../images/loading.gif) no-repeat center;
+}
+
+#lbImage {
+	position: absolute;
+	left: 0;
+	top: 0;
+	border: 10px solid #fff;
+	background-repeat: no-repeat;
+}
+
+#lbPrevLink, #lbNextLink {
+	display: block;
+	position: absolute;
+	top: 0;
+	width: 50%;
+	outline: none;
+}
+
+#lbPrevLink {
+	left: 0;
+}
+
+#lbPrevLink:hover {
+	background: transparent url(../images/prevlabel.gif) no-repeat 0 15%;
+}
+
+#lbNextLink {
+	right: 0;
+}
+
+#lbNextLink:hover {
+	background: transparent url(../images/nextlabel.gif) no-repeat 100% 15%;
+}
+
+#lbBottom {
+	font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #666;
+	line-height: 1.4em;
+	text-align: left;
+	border: 10px solid #fff;
+	border-top-style: none;
+}
+
+#lbCloseLink {
+	display: block;
+	float: right;
+	width: 66px;
+	height: 22px;
+	background: transparent url(../images/closelabel.gif) no-repeat center;
+	margin: 5px 0;
+	outline: none;
+}
+
+#lbCaption, #lbNumber {
+	margin-right: 71px;
+}
+
+#lbCaption {
+	font-weight: bold;
+}
+
+/* Auto completer
+--------------------------------------------------------------------------------------------------- */
+
+ul.autocompleter-choices
+{
+	position:absolute;
+	margin:0;
+	padding:0;
+	list-style:none;
+	border:1px solid #7c7c7c;
+	border-left-color:#c3c3c3;
+	border-right-color:#c3c3c3;
+	border-bottom-color:#ddd;
+	background-color:#fff;
+	text-align:left;
+	font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+	z-index:50;
+	background-color:#fff;
+}
+
+ul.autocompleter-choices li
+{
+	position:relative;
+	margin:-2px 0 0 0;
+	padding:0.2em 1.5em 0.2em 1em;
+	display:block;
+	float:none !important; 
+	cursor:pointer;
+	font-weight:normal;
+	white-space:nowrap;
+	font-size:1em;
+	line-height:1.5em;
+}
+
+ul.autocompleter-choices li.autocompleter-selected
+{
+	background-color:#444;
+	color:#fff;
+}
+
+ul.autocompleter-choices span.autocompleter-queried
+{
+	display:inline;
+	float:none;
+	font-weight:bold;
+	margin:0;
+	padding:0;
+}
+
+ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried
+{
+	color:#9FCFFF;
+}

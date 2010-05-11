@@ -267,12 +267,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $allowavatarupload = 1;
 	var $allowavatargallery = 1;
 	var $imageprocessor = 'gd2';
-	var $avatarsmallheight = 50;
-	var $avatarsmallwidth = 50;
-	var $avatarheight = 100;
-	var $avatarwidth = 100;
-	var $avatarlargeheight = 250;
-	var $avatarlargewidth = 250;
 	var $avatarquality = 65;
 	var $avatarsize = 2048;
 	var $allowimageupload = 0;
@@ -395,6 +389,12 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $integration_activity = 'auto';
 	//New for 1.6: choose if you want that ghost message box checked by default
 	var $boxghostmessage = 0;
+	var $userdeletetmessage = 0;
+	var $latestcategory_in = 1;
+	var $topicicons = 1;
+	var $onlineusers = 1;
+	var $debug = 0;
+	var $catsautosubscribed = 0;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

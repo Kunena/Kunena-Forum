@@ -19,34 +19,65 @@ abstract class KunenaRoute {
 	static $subtree = array();
 	static $menu = null;
 
-	public static function _($uri, $xhtml = true) {
+	public static function getItemID($uri = null) {
 		jimport ( 'joomla.environment.uri' );
-		$link = new JURI ( $uri );
+		if (!$uri) {
+			$link = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )));
+			$link->delVar ( 'Itemid' );
+		}
+		else {
+			$link = new JURI ( $uri );
+		}
 		$query = $link->getQuery ( true );
 
 		if (!isset($query['func'])) {
 			// Handle default page
-			$config = KunenaFactory::getConfig ();
-			$my = JFactory::getUser();
-			switch ($config->fbdefaultpage){
-				case 'my' :
-					if ($my->id) {
-						$link->setVar ( 'func', 'mylatest' );
-						break;
-					}
-				case 'recent' :
-					$link->setVar ( 'func', 'latest' );
-					break;
-				default :
-					$link->setVar ( 'func', 'listcat' );
-			}
+			$link->setVar ( 'func', self::getDefaultFunc() );
 			$query = $link->getQuery ( true );
 		}
-		$Itemid = self::getItemID ( $query );
-		if ($Itemid > 0) $link->setVar ( 'Itemid', $Itemid );
+		$itemid = self::_getItemID ( $query );
+		return $itemid;
+	}
 
-		//echo $link->getQuery();
-		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml );
+	public static function _($uri = null, $xhtml = true, $ssl=0) {
+		jimport ( 'joomla.environment.uri' );
+		if (!$uri) {
+			$link = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )));
+			$link->delVar ( 'Itemid' );
+		}
+		else {
+			$link = new JURI ( $uri );
+		}
+		$query = $link->getQuery ( true );
+
+		if (!isset($query['func'])) {
+			// Handle default page
+			$link->setVar ( 'func', self::getDefaultFunc() );
+			$query = $link->getQuery ( true );
+		}
+		$Itemid = self::_getItemID ( $query );
+		if ($Itemid > 0) $link->setVar ( 'Itemid', $Itemid );
+		else $link->delVar ( 'Itemid' );
+
+		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml, $ssl );
+	}
+
+	public static function getDefaultFunc() {
+		// Handle default page
+		$retval = 'listcat';
+		$config = KunenaFactory::getConfig ();
+		$my = JFactory::getUser ();
+		switch ($config->fbdefaultpage) {
+			case 'my' :
+				if ($my->id) {
+					$retval = 'mylatest';
+					break;
+				}
+			case 'recent' :
+				$retval = 'latest';
+				break;
+		}
+		return $retval;
 	}
 
 	protected static function buildMenuTree() {
@@ -141,7 +172,7 @@ abstract class KunenaRoute {
 		return $Itemid;
 	}
 
-	protected static function getItemID($query) {
+	protected static function _getItemID($query) {
 		// If someone really wants to pass itemid to KunenaRoute, let him do that
 		if (isset ( $query ['Itemid'] )) {
 			//echo "FIXED {$query['Itemid']} ";

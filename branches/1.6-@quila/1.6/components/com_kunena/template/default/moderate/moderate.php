@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @version $Id$
  * Kunena Component
@@ -11,102 +10,71 @@
  **/
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+$this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';");
+?>
 
-// Get request varibales
-$catid = JRequest::getInt ( 'catid', 0 );
-$action = JRequest::getVar ( 'action', 'view' );
-
-// Get singletons
-$kunena_db = &JFactory::getDBO ();
-$kunena_app = & JFactory::getApplication ();
-$kunena_my = &JFactory::getUser ();
-
-// perform admin and moderator check
-$kunena_is_moderator = CKunenaTools::isModerator ( $kunena_my->id, $catid );
-
-// make sure only admins and valid moderators can proceed
-if (! CKunenaTools::isAdmin () && ! $kunena_is_moderator) {
-	// Sorry - but you have nothing to do here.
-	// This module is for moderators and admins only.
-
-	$kunena_app->redirect ( CKunenaLink::GetKunenaURL(false), JText::_('COM_KUNENA_POST_NOT_MODERATOR') );
-} else {
-	// Here comes the moderator functionality
-
-	switch ($action) {
-		case 'xxx' :
-
-			break;
-
-		case 'yyy' :
-
-			break;
-
-		default :
-		case 'view' :
-
-			?>
-<script type="text/javascript">
-	document.addEvent('domready', function() {
-
-		// Attach auto completer to the following ids:
-		new Autocompleter.Request.JSON('ksrc-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat', false);?>', { });
-		new Autocompleter.Request.JSON('ktrgt-cat', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'getcat', false);?>', { });
-		new Autocompleter.Request.JSON('ksrc-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic', false);?>', { });
-		new Autocompleter.Request.JSON('ktrgt-topic', '<?php echo CKunenaLink::GetJsonURL('autocomplete', 'gettopic', false);?>', { });
-});
-</script>
 <div class="kbt_cvr1">
 <div class="kbt_cvr2">
 <div class="kbt_cvr3">
 <div class="kbt_cvr4">
 <div class="kbt_cvr5">
+<h1><?php echo $this->moderateTopic ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></h1>
+	<div id="kmod-container">
+<form action="<?php echo CKunenaLink::GetPostURL (); ?>" method="post" name="myform"><input type="hidden" name="do" value="domoderate" />
+<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
+<input type="hidden" name="catid" value="<?php echo $this->catid; ?>" />
 
-<h1>Forum Moderation</h1>
-<div id="kmod-container">
-		<div id="kmod-leftcol">
-			<fieldset><legend>Source:</legend>
-				<label>
-					<span>Category:</span>
-					<input type="text" name="ksource-category" class="text" id="ksrc-cat" />
-				</label>
-				<label>
-					<span>Topic:</span>
-					<input type="text" name="ksource-topic" class="text" id="ksrc-topic" />
-				</label>
-			</fieldset>
-		</div>
-		<div id="kmod-rightcol">
-			<form id="ktarget">
-				<fieldset><legend>Target:</legend>
-					<label>
-					<span>Category:</span>
-					<input type="text" name="ktarget-category" class="text" id="ktrgt-cat" />
-					</label>
-					<label>
-					<span>Topic:</span>
-					<input type="text" name="ktarget-topic" class="text" id="ktrgt-topic" />
-					</label>
-				</fieldset>
-			</form>
-
-			<div class="clr"></div>
-		</div>
+<div>
+	<?php echo JText::_('COM_KUNENA_GEN_TOPIC'); ?>:
+	<strong><?php echo kunena_htmlspecialchars ( $this->threadmsg->subject ); ?></strong>
+</div>
+<div>
+	<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?>:
+	<strong><?php echo kunena_htmlspecialchars ( $this->message->catname ) ?></strong>
 </div>
 
+<br />
+	<?php if (!$this->moderateTopic) : ?>
+	<div><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_SELECTED'); ?>:</div>
+	<div class="kmoderate_message">
+		<h4><?php echo kunena_htmlspecialchars ( $this->message->subject ); ?></h4>
+		<div class="kmessage_timeby"><span class="kmessage_time" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover'); ?>">
+		<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat'); ?></span>
+		<span class="kmessage_by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->message->userid, $this->message->name ); ?></span></div>
+		<div class="kmessage_avatar"><?php echo $this->user->getAvatarLink('', 'lastpost'); ?></div>
+		<div class="kmessage_msgtext"><?php echo KunenaParser::stripBBCode ( stripslashes($this->message->message), 300) ?></div>
+	</div>
+	<?php if ($this->threadmsg->replies) : ?>
+	<ul>
+		<li><input id="kmoderate_mode_selected" type="radio" name="mode" checked="checked" value="<?php echo KN_MOVE_MESSAGE ?>" /><?php echo JText::_ ( 'COM_KUNENA_MODERATION_MOVE_SELECTED' ); ?></li>
+		<li><input id="kmoderate_mode_newer" type="radio" name="mode" value="<?php echo KN_MOVE_NEWER ?>" ><?php echo JText::sprintf ( 'COM_KUNENA_MODERATION_MOVE_NEWER', $this->threadmsg->replies ); ?></li>
+	</ul>
+	<?php endif; ?>
+	<br />
+<?php else : ?>
+	<input id="kmoderate_mode_topic" type="hidden" name="mode" value="<?php echo KN_MOVE_THREAD ?>" />
+<?php endif; ?>
+
+	<div><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST' );?>:
+	<div id="modcategorieslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_CATEGORY' );?>:
+	<?php echo $this->categorylist ?></div>
 
 
+	<div id="modtopicslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_TOPIC' ); ?>:
+	<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none"/> <?php echo $this->messagelist ?></div>
 
-
-
-
+	<div id="kmod_subject"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
+	<input type="text" name="subject" value="<?php echo kunena_htmlspecialchars ( $this->message->subject ); ?>" /></div>
+<?php if ($this->moderateTopic) : ?>
+	<div><input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="shadow"
+		value="1" /> <?php echo JText::_ ( 'COM_KUNENA_MODERATION_TOPIC_SHADOW' ); ?></div>
+<?php endif ?>
+	</div>
+	<div><input type="submit" class="button" value="<?php echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' ); ?>" /></div>
+</form>
 </div>
 </div>
 </div>
 </div>
 </div>
-<?php
-
-			break;
-	}
-}
+</div>

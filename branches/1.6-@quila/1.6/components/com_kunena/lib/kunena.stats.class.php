@@ -206,9 +206,12 @@ class CKunenaStats {
 		if (!$override) $PopPollsCount = $this->_config->poppollscount;
 		else $PopPollsCount = $override;
 
+		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  		$kunena_polls =& CKunenaPolls::getInstance();
+
 		if (count($this->toppolls) < $PopPollsCount) {
-			$this->toppolls = CKunenaPolls::get_top_five_polls ( $PopPollsCount );
-			$this->toppollvotes = CKunenaPolls::get_top_five_votes ( $PopPollsCount );
+			$this->toppolls = $kunena_polls->get_top_five_polls ( $PopPollsCount );
+			$this->toppollvotes = $kunena_polls->get_top_five_votes ( $PopPollsCount );
 		}
 	}
 

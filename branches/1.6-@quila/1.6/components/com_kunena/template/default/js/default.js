@@ -749,6 +749,27 @@ var $equals = function(obj1, obj2) {
 	return (obj1 == obj2 || JSON.encode(obj1) == JSON.encode(obj2));
 };
 
+function kRequestShowTopics(catid, select, list)
+{
+	select.set('value', 0).fireEvent('change', select);
+	var first = select.getFirst().clone();
+	select.empty().grab(first);
+	list.each(function(item) {
+		var option = new Element('option', {'value':item.id, 'html':item.subject});
+		select.grab(option);
+	});	
+}
+
+function kRequestGetTopics(el)
+{
+	var catid = el.get("value");
+	var select = $('kmod_targettopic');
+	request = new Request.JSON({url: kunena_url_ajax,
+	onSuccess: function(response){
+		kRequestShowTopics(catid, select, response.topiclist);
+		}}).post({action: 'modtopiclist', value: catid
+	});
+}
 
 //----------------- New Mootools based behaviors ----------------------
 
@@ -790,8 +811,12 @@ window.addEvent('domready', function(){
 						onComplete: function(jsonObj) {
 							if (jsonObj.allowed_polls != null && jsonObj.allowed_polls.indexOf(catid.value) >= 0) {
 								$('kpoll_hide_not_allowed').removeProperty('style');
+								$('kbbcode-separator5').removeProperty('style');
+								$('kbbcode-poll_button').removeProperty('style');
 								$('kpoll_not_allowed').set('text', ' ');
-							} else {
+							} else {								
+								$('kbbcode-separator5').setStyle('display','none');
+								$('kbbcode-poll_button').setStyle('display','none');
 								$('kpoll_hide_not_allowed').setStyle('display','none');
 								if (jsonObj.allowed_polls != null) $('kpoll_not_allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
 								else if (jsonObj.error) $('kpoll_not_allowed').set('text', jsonObj.error);
@@ -846,16 +871,61 @@ window.addEvent('domready', function(){
 		});
 	}
 	if($('kcbcheckall') != undefined){
-		$('kcbcheckall').addEvent('change', function(e){
+		$('kcbcheckall').addEvent('click', function(e){
 			$$('.kDelete_bulkcheckboxes').each(function(el){
 				if(el.get('checked')==false){
 					el.set('checked',true);
-					el.set('value','1');								
+					el.set('value','1');
 				} else {
-					el.set('value','0');	
+					el.set('value','0');
 					el.set('checked',false);
 				}
 			});
 		});
-	}		
+	}
+	
+	if($('kmod_categories') != undefined){
+		$('kmod_categories').addEvent('change', function(e){
+			kRequestGetTopics(this);
+		});
+	}
+	if($('kmod_targettopic') != undefined){
+		$('kmod_targettopic').addEvent('change', function(e){
+			id = this.get('value');
+			if (id != 0) {
+				targetid = this.get('value');
+				$('kmod_subject').setStyle('display', 'none');
+			} else {
+				targetid = '';
+				$('kmod_subject').setStyle('display', 'block');
+			}
+			if (id == -1) {
+				targetid = '';
+				$('kmod_targetid').setStyle('display', 'inline');
+			} else {
+				$('kmod_targetid').setStyle('display', 'none');
+			}
+			$('kmod_targetid').set('value', targetid);
+		});
+	}
+	
+	if($('prof_ip_select') != undefined){
+		$('prof_ip_select').addEvent('change', function(e){			
+			var myinput = new Element('input', {type: 'text', id: 'banexpiry', name: 'banexpriy'});
+			var myspan = new Element('span', {id:'spanban'});			
+			myspan.injectAfter($('prof_ip_select'));
+			myspan.appendText('Expiry');
+			myinput.injectAfter($('spanban'));
+			var myinput2 = new Element('input', {type: 'text', id: 'bancomment', name: 'bancomment'});
+			var myspan2 = new Element('span', {id:'spanban2'});
+			myspan2.injectAfter($('banexpiry'));
+			myspan2.appendText('Comment');
+			myinput2.injectAfter($('spanban2'));
+			var myinput3 = new Element('input', {type: 'text', id: 'banmessage', name: 'banmessage'});
+			var myspan3 = new Element('span', {id:'spanban3'});
+			myspan3.injectAfter($('bancomment'));
+			myspan3.appendText('Message');
+			myinput3.injectAfter($('spanban3'));
+		});
+	}
 });

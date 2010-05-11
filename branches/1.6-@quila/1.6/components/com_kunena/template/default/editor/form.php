@@ -21,9 +21,12 @@
 
 global $topic_emoticons;
 
-CKunenaPolls::call_javascript_form();
+require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+$kunena_poll =& CKunenaPolls::getInstance();
+$kunena_poll->call_javascript_form();
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 JHTML::_('behavior.formvalidation');
+JHTML::_('behavior.tooltip');
 
 $this->setTitle ( $this->title );
 
@@ -116,7 +119,7 @@ $this->k=0;
 				?>" /></td>
 		</tr>
 
-		<?php if ($this->id == 0) : ?>
+		<?php if ($this->parent == 0 && $this->config->topicicons) : ?>
 		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
 			<td class="kleftcolumn"><strong><?php
 			echo JText::_('COM_KUNENA_GEN_TOPIC_ICON');
@@ -146,14 +149,19 @@ $this->k=0;
 			echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS');
 			?></strong></td>
 		<td>
-			<div id="kattachment"><input id="kupload" name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
+			<div id="kattachment">
+				<div class="editlinktip hasTip" title="<?php echo  JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED'); ?>::<?php echo '<b>'.$this->config->imagetypes.','.$this->config->filetypes.'</b>'; ?>" >
+				<span id="attach_list">1.</span><input id="kupload" name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
+				</div>
 			<div id="kattachmentsnote"></div>
 
 		<?php
 		// Include attachments template if we have any
 		if ( isset ( $this->attachments ) ) {
-			CKunenaTools::loadTemplate('/view/message.attachments.php');
-		} ?>
+//			CKunenaTools::loadTemplate('/view/message.attachments.php');
+			CKunenaTools::loadTemplate('/editor/attachments.php');
+		}
+		?>
 
 		</td>
 		</tr>

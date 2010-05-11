@@ -19,9 +19,13 @@ class CKunenaLatestX {
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
+		$this->hasSubCats = '';
+		$this->mode = 'threads';
+		$this->header = '';
 
 		$this->db = JFactory::getDBO ();
 		$this->user = $this->my = JFactory::getUser ();
+		$this->myprofile = KunenaFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
 		$this->config = CKunenaConfig::getInstance ();
 
@@ -61,6 +65,9 @@ class CKunenaLatestX {
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 		$this->showposts = 0;
+
+		$access = KunenaFactory::getAccessControl();
+		$this->hold = $access->getAllowedHold($this->myprofile, $this->catid);
 	}
 
 	protected function _common() {
@@ -84,10 +91,10 @@ class CKunenaLatestX {
 					MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
 				FROM #__fb_messages AS m";
 				if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
-				else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
+				else $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = 0";
 				$query .= "
 				LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.id
-				WHERE m.hold='0' AND m.moved='0' AND m.thread IN ({$idstr})
+				WHERE m.hold IN ({$this->hold}) AND m.moved='0' AND m.thread IN ({$idstr})
 				GROUP BY thread
 			) AS l
 			INNER JOIN #__fb_messages AS a ON a.thread = l.thread
@@ -130,7 +137,7 @@ class CKunenaLatestX {
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
-				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
+				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold IN ({$this->hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
 				check_dberror ( "Unable to get unread messages count and first id." );
 
@@ -146,10 +153,10 @@ class CKunenaLatestX {
 		$subquery = array();
 		if (!$posts && !$fav && !$sub) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
 			FROM #__fb_messages
-			WHERE userid='{$this->user->id}' AND parent='0' AND moved='0' AND hold='0' AND catid IN ({$this->session->allowed})";
+			WHERE userid='{$this->user->id}' AND parent='0' AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})";
 		if ($posts) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
 			FROM #__fb_messages
-			WHERE userid='{$this->user->id}' AND moved='0' AND hold='0' AND catid IN ({$this->session->allowed})
+			WHERE userid='{$this->user->id}' AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})
 			GROUP BY thread";
 		if ($fav) $subquery[] = "SELECT thread, 1 AS fav, 0 AS sub FROM #__fb_favorites WHERE userid='{$this->user->id}'";
 		if ($sub)  $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__fb_subscriptions WHERE userid='{$this->user->id}'";
@@ -158,7 +165,7 @@ class CKunenaLatestX {
 
 		$query = "SELECT COUNT(DISTINCT m.thread) FROM ({$subqueries}) AS t
 		INNER JOIN #__fb_messages AS m ON m.id=t.thread
-		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})";
+		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})";
 
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
@@ -170,7 +177,7 @@ class CKunenaLatestX {
 
 		$query = "SELECT m.thread, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(t.fav) AS myfavorite, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
 		INNER JOIN #__fb_messages AS m ON m.id=t.thread
-		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})
+		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
 		GROUP BY thread
 		ORDER BY {$this->order}";
 
@@ -181,22 +188,49 @@ class CKunenaLatestX {
 		$this->_common();
 	}
 
-	protected function _getMyPosts() {
+	protected function _getPosts($type = 'user') {
 		if (isset($this->total)) return;
+		$this->mode = 'posts';
 
 		$this->threads_per_page = 10;
+		$myhold = explode(',', $this->hold);
+		$hold = $this->hold;
+		switch ($type) {
+			case 'unapproved':
+				if (!in_array(1, $myhold)) {
+					return $this->allow = false;
+				}
+				$hold = '1';
+				break;
+			case 'deleted':
+				if (!in_array(2, $myhold)) {
+					return $this->allow = false;
+				}
+				$hold = '2,3';
+				break;
+			case 'user':
+				$user = 1;
+				break;
+		}
+		if (isset($user)) $where[] = "m.userid='{$this->user->id}'";
+		$where[] = "mm.moved='0'";
+		$where[] = "m.moved='0'";
+		$where[] = "mm.hold IN ({$this->hold})";
+		$where[] = "m.hold IN ({$hold})";
+		$where[] = "mm.catid IN ({$this->session->allowed})";
+		$where = implode(' AND ', $where);
 
 		$query = "SELECT COUNT(*) FROM #__fb_messages AS m
-		LEFT JOIN #__fb_messages AS mm ON m.thread = mm.id
-		WHERE mm.moved='0' AND mm.hold='0' AND m.moved='0' AND m.hold='0' AND m.userid='{$this->user->id}' AND m.catid IN ({$this->session->allowed})";
+		INNER JOIN #__fb_messages AS mm ON m.thread = mm.id
+		WHERE {$where}";
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		check_dberror ( 'Unable to count total threads' );
 
 		$query = "SELECT m.thread, m.id
 		FROM #__fb_messages AS m
-		LEFT JOIN #__fb_messages AS mm ON m.thread = mm.id
-		WHERE mm.moved='0' AND mm.hold='0' AND m.hold='0' AND m.userid='{$this->user->id}' AND m.catid IN ({$this->session->allowed})
+		INNER JOIN #__fb_messages AS mm ON m.thread = mm.id
+		WHERE {$where}
 		ORDER BY m.time DESC";
 
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
@@ -217,7 +251,19 @@ class CKunenaLatestX {
 	function getUserPosts() {
 		if (isset($this->total)) return;
 		$this->header = $this->title = JText::_('COM_KUNENA_USERPOSTS');
-		$this->_getMyPosts();
+		$this->_getPosts('user');
+	}
+
+	function getUnapprovedPosts() {
+		if (isset($this->total)) return;
+		$this->header = $this->title = JText::_('COM_KUNENA_UNAPPROVEDPOSTS');
+		$this->_getPosts('unapproved');
+	}
+
+	function getDeletedPosts() {
+		if (isset($this->total)) return;
+		$this->header = $this->title = JText::_('COM_KUNENA_DELETEDPOSTS');
+		$this->_getPosts('deleted');
 	}
 
 	function getOwnTopics() {
@@ -265,18 +311,23 @@ class CKunenaLatestX {
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$lookcats = explode ( ',', $this->config->latestcategory );
 		$catlist = array ();
-		$latestcats = '';
 		foreach ( $lookcats as $catnum ) {
-			if (( int ) $catnum > 0)
-				$catlist [] = ( int ) $catnum;
+			$catlist [] = ( int ) $catnum;
 		}
-		if (count ( $catlist ))
-			$latestcats = " AND m.catid IN (" . implode ( ',', $catlist ) . ") ";
+		$latestcats = '';
+		if ( !empty($catlist) && !in_array(0, $catlist)) {
+			$catlist = implode ( ',', $catlist );
+			if ( $this->config->latestcategory_in == '1' ) {
+				$latestcats = ' AND m.catid IN ('.$catlist.') ';
+			} else {
+				$latestcats = ' AND m.catid NOT IN ('.$catlist.') ';
+			}
+		}
 
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread
-		WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})
-		AND t.time >'{$this->querytime}' AND t.hold=0 AND t.moved=0 AND t.catid IN ({$this->session->allowed})" . $latestcats; // if categories are limited apply filter
+		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
+		AND t.time >'{$this->querytime}' AND t.hold IN ({$this->hold}) AND t.moved=0 AND t.catid IN ({$this->session->allowed})" . $latestcats; // if categories are limited apply filter
 
 
 		$this->db->setQuery ( $query );
@@ -287,8 +338,8 @@ class CKunenaLatestX {
 		$this->order = "lastid DESC";
 		$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__fb_messages AS t
 			INNER JOIN #__fb_messages AS m ON m.id=t.thread
-			WHERE m.moved='0' AND m.hold='0' AND m.catid IN ({$this->session->allowed})
-			AND t.time>'{$this->querytime}' AND t.hold='0' AND t.moved='0' AND t.catid IN ({$this->session->allowed}) {$latestcats}
+			WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
+			AND t.time>'{$this->querytime}' AND t.hold IN ({$this->hold}) AND t.moved='0' AND t.catid IN ({$this->session->allowed}) {$latestcats}
 			GROUP BY t.thread
 			ORDER BY {$this->order}
 		";
@@ -349,7 +400,10 @@ class CKunenaLatestX {
 
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
-			CKunenaTools::loadTemplate('/plugin/announcement/announcementbox.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			$ann = new CKunenaAnnouncement();
+			$ann->getAnnouncement();
+			$ann->displayBox();
 		}
 	}
 
@@ -357,6 +411,11 @@ class CKunenaLatestX {
 		if ($this->config->enableforumjump) {
 			CKunenaTools::loadTemplate('/forumjump.php');
 		}
+	}
+
+	function displayItems() {
+		if ($this->mode == 'threads') $this->displayFlat();
+		else $this->displayPosts();
 	}
 
 	function displayFlat() {
@@ -385,7 +444,9 @@ class CKunenaLatestX {
 
 	function displayWhoIsOnline() {
 		if ($this->config->showwhoisonline > 0) {
-			CKunenaTools::loadTemplate('/plugin/who/whoisonline.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			$online =& CKunenaWhoIsOnline::getInstance();
+			$online->displayWhoIsOnline();
 		}
 	}
 
@@ -438,7 +499,14 @@ class CKunenaLatestX {
 		else if ($this->func == 'noreplies') $this->getNoReplies();
 		else if ($this->func == 'subscriptions') $this->getSubscriptions();
 		else if ($this->func == 'favorites') $this->getFavorites();
+		else if ($this->func == 'userposts') $this->getUserPosts();
+		else if ($this->func == 'unapproved') $this->getUnapprovedPosts();
+		else if ($this->func == 'deleted') $this->getDeletedPosts();
 		else $this->getLatest();
+		if (! $this->allow) {
+			echo JText::_('COM_KUNENA_NO_ACCESS');
+			return;
+		}
 
 		//meta description and keywords
 		$metaKeys = $this->header . kunena_htmlspecialchars ( stripslashes ( ", {$this->config->board_title}, " ) ) . $this->app->getCfg ( 'sitename' );

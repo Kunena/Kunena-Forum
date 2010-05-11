@@ -43,7 +43,7 @@ if ($this->showgenstats > 0)
                 <tr>
                     <th align="left">
                         <div class = "ktitle_cover km">
-                            <?php echo CKunenaLink::GetStatsLink( stripslashes($kunena_config->board_title).' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), 'ktitel kl'); ?>
+                            <?php echo CKunenaLink::GetStatsLink( stripslashes($kunena_config->board_title).' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), 'ktitle kl'); ?>
                         </div>
                         <div class="fltrt">
 							<span id="kstats_status"><a class="ktoggler close" rel="frontstats_tbody"></a></span>
@@ -57,7 +57,7 @@ if ($this->showgenstats > 0)
                 <tr class="ksectiontableentry1">
                     <td class="td-1 km">
                     	<ul id="statslistright" class="fltrt right">
-                    		<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $userlist1; ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<strong> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid, $this->lastestmember, $rel='nofollow'); ?></strong></li>
+                    		<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $userlist1; ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<strong> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid, $this->lastestmember, '', $rel='nofollow'); ?></strong></li>
                     		<li>&nbsp;</li>
                     		<li><?php echo $userlist2; ?></li>
                     		<li><?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo CKunenaLink::GetStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;');?></li>

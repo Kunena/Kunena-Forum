@@ -10,31 +10,32 @@
  *
  **/
 defined( '_JEXEC' ) or die();
+if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false
 ?>
 
 <div class="iconrow">
-	<?php echo $this->profile->socialButton('twitter'); ?>
-	<?php echo $this->profile->socialButton('facebook'); ?>
-	<?php echo $this->profile->socialButton('myspace'); ?>
-	<?php echo $this->profile->socialButton('linkedin'); ?>
-	<?php echo $this->profile->socialButton('skype'); ?>
+	<?php echo $this->profile->socialButton('twitter', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('facebook', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('myspace', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('linkedin', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('skype', $this->showUnusedSocial); ?>
 </div>
 <div class="iconrow">
-	<?php echo $this->profile->socialButton('delicious'); ?>
-	<?php echo $this->profile->socialButton('friendfeed'); ?>
-	<?php echo $this->profile->socialButton('digg'); ?>
+	<?php echo $this->profile->socialButton('delicious', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('friendfeed', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('digg', $this->showUnusedSocial); ?>
 </div>
 <div class="clr"></div>
 <div class="iconrow">
 
-	<?php echo $this->profile->socialButton('yim'); ?>
-	<?php echo $this->profile->socialButton('aim'); ?>
-	<?php echo $this->profile->socialButton('gtalk'); ?>
-	<?php echo $this->profile->socialButton('icq'); ?>
-	<?php echo $this->profile->socialButton('msn'); ?>
+	<?php echo $this->profile->socialButton('yim', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('aim', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('gtalk', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('icq', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('msn', $this->showUnusedSocial); ?>
 </div>
 <div class="iconrow">
-	<?php echo $this->profile->socialButton('blogspot'); ?>
-	<?php echo $this->profile->socialButton('flickr'); ?>
-	<?php echo $this->profile->socialButton('bebo'); ?>
+	<?php echo $this->profile->socialButton('blogspot', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('flickr', $this->showUnusedSocial); ?>
+	<?php echo $this->profile->socialButton('bebo', $this->showUnusedSocial); ?>
 </div>

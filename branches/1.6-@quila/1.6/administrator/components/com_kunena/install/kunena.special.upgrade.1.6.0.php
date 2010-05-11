@@ -15,9 +15,6 @@ defined ( '_JEXEC' ) or die ();
 
 include_once (KUNENA_PATH .DS. "class.kunena.php");
 
-// Add custom upgrade code here
-// Most or all sql statements should be covered within comupgrade.xml
-
 //Import filesystem libraries.
 jimport ( 'joomla.filesystem.folder' );
 
@@ -74,7 +71,4 @@ if ($attachcount==0){
 	// of them to calculate this values. A seperate maintenance task will have to be
 	// created and executed outside of the upgrade itself.
 }
-
-
-CKunenaTools::createMenu();
 

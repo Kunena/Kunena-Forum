@@ -19,19 +19,18 @@ class KunenaRouter {
 
 	// List of reserved functions (if category name is one of these, use always catid)
 	static $functions = array ('who', 'announcement', 'poll', 'stats', 'myprofile', 'userprofile', 'fbprofile',
-		'profile', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'moderate', 'rules', 'report',
-		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'search', 'advsearch', 'markthisread',
-		'subscribecat', 'unsubscribecat', 'karma', 'bulkactions', 'banactions', 'templatechooser', 'credits',
-		'json', 'rss', 'pdf', 'fb_pdf' );
+		'profile', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'rules', 'report',
+		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'userposts', 'unapproved',
+		'deleted', 'search', 'advsearch', 'markthisread', 'subscribecat', 'unsubscribecat', 'karma',
+		'bulkactions', 'banactions', 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'fb_pdf', 'modutils' );
 
 	function loadCategories() {
 		if (self::$catidcache !== null)
 			return; // Already loaded
 
-
 		$db = & JFactory::getDBO ();
 
-		$query = 'SELECT id, name FROM #__fb_categories WHERE published=1';
+		$query = 'SELECT id, name, parent FROM #__fb_categories WHERE published=1';
 		$db->setQuery ( $query );
 		self::$catidcache = $db->loadAssocList ( 'id' );
 		check_dberror ( "Unable to load categories." );
@@ -44,6 +43,13 @@ class KunenaRouter {
 	 */
 	function loadMessages($msglist) {
 		self::$msgidcache = self::$msgidcache + $msglist;
+	}
+
+	function isCategoryConflict($catid, $catname) {
+		foreach (self::$catidcache as $cat) {
+			if ($cat ['id'] != $catid && $catname == self::stringURLSafe ( $cat ['name'] ) ) return true;
+		}
+		return false;
 	}
 
 	function filterOutput($str) {
@@ -83,15 +89,17 @@ class KunenaRouter {
 		if (! $kconfig->sef)
 			return $segments;
 
-		if (isset ( $query ['Itemid'] )) {
+		if (isset ( $query ['Itemid'] ) && $query ['Itemid'] > 0) {
 			// If we have Itemid, make sure that we remove identical parameters
 			$menu = JSite::getMenu ();
-			$menuitem = ( object ) $menu->getItem ( $query ['Itemid'] );
-			foreach ( $menuitem->query as $var => $value ) {
-				if ($var == 'Itemid' || $var == 'option')
-					continue;
-				if (isset ( $query [$var] ) && $value == $query [$var]) {
-					unset ( $query [$var] );
+			$menuitem = $menu->getItem ( $query ['Itemid'] );
+			if ($menuitem) {
+				foreach ( $menuitem->query as $var => $value ) {
+					if ($var == 'Itemid' || $var == 'option')
+						continue;
+					if (isset ( $query [$var] ) && $value == $query [$var]) {
+						unset ( $query [$var] );
+					}
 				}
 			}
 		}
@@ -109,14 +117,23 @@ class KunenaRouter {
 
 				if (self::$catidcache === null)
 					self::loadCategories ();
-				if (isset ( self::$catidcache [$catid] ))
+				if (isset ( self::$catidcache [$catid] )) {
 					$suf = self::stringURLSafe ( self::$catidcache [$catid] ['name'] );
+				}
 				if (empty ( $suf ))
+					// If translated category name is empty, use catid: 123
 					$segments [] = $query ['catid'];
-				else if ($kconfig->sefcats && ! in_array ( $suf, self::$functions ))
-					$segments [] = $suf;
-				else
+				else if ($kconfig->sefcats && ! in_array ( $suf, self::$functions )) {
+					// We want to remove catid: check that there are no conflicts between names
+					if (self::isCategoryConflict($catid, $suf)) {
+						$segments [] = $query ['catid'] . '-' . $suf;
+					} else {
+						$segments [] = $suf;
+					}
+				} else {
+					// By default use 123-category_name
 					$segments [] = $query ['catid'] . '-' . $suf;
+				}
 			}
 			unset ( $query ['catid'] );
 		}
@@ -214,11 +231,13 @@ class KunenaRouter {
 				$value = $var;
 				if (in_array ( $var, self::$functions )) {
 					$var = 'func';
-				} else if (!isset($vars ['do'])) {
+				} else if (isset($vars ['func']) && !isset($vars ['do'])) {
 					$var = 'do';
 				} else {
-					// Unknown parameter, skip it
-					continue;
+					// Unknown parameter: continue
+					if (isset($vars ['func'])) continue;
+					// Oops: unknown function or non-existing category
+					$var = 'func';
 				}
 			}
 			$vars [$var] = $value;

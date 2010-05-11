@@ -12,11 +12,16 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+$dateshown = $datehover = '';
+if ($this->msg->modified_time) {
+	$datehover = 'title="'.CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat_hover').'"';
+	$dateshown =  CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat' ).' ';
+}
 ?>
 <div class="kmessage_editMarkUp_cover">
 	<?php if ($this->msg->modified_by) : ?>
-	<span class="kmessage_editMarkUp" title="<?php echo CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat_hover') ?>">
-		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat' ) . ' '
+	<span class="kmessage_editMarkUp" <?php echo $datehover ?>">
+		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown
 		. JText::_('COM_KUNENA_BY') . ' ' . ($this->config->username ? $this->msg->modified_username : $this->msg->modified_name) . '.'; ?>
 	<?php if ($this->msg->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( stripslashes ( $this->msg->modified_reason ) ); ?>
 	</span>
@@ -35,10 +40,13 @@ defined ( '_JEXEC' ) or die ();
 				<?php echo $this->message_reply; ?>
 				<?php echo $this->message_quote; ?>
 				<?php echo $this->message_edit; ?>
+				<?php echo $this->message_moderate; ?>
+				<?php echo $this->message_move; ?>
 				<?php echo $this->message_merge; ?>
 				<?php echo $this->message_split; ?>
 				<?php echo $this->message_delete; ?>
-				<?php echo $this->message_move; ?>
+				<?php echo $this->message_permdelete; ?>
+				<?php echo $this->message_undelete; ?>
 				<?php echo $this->message_publish; ?>
 			<?php else : ?>
 				<?php echo $this->message_closed; ?>

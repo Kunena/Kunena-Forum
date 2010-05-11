@@ -39,6 +39,7 @@ $k = 0;
 			<div class="msgtext">
 				<?php echo KunenaParser::parseBBCode( stripslashes($mes->message) )?>
 			</div>
+			<?php if ( !empty($this->attachmentslist[$mes->id]) ) $this->displayAttachments($this->attachmentslist[$mes->id]); ?>
 		</td>
 	</tr>
 	<?php endforeach; ?>

@@ -21,6 +21,5 @@ class KunenaAvatarNone
 
 	public function load($userlist) {}
 	public function getEditURL() {}
-	public function getURL($user, $size='thumb') {}
-	public function getLink($user, $class='', $size='thumb') {}
+	protected function _getURL($user, $sizex, $sizey) {}
 }

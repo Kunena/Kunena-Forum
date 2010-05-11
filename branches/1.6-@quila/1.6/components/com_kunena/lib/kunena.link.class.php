@@ -165,7 +165,7 @@ class CKunenaLink {
 	}
 
 	// Returns always url to Kunena profile
-	function GetMyProfileURL($userid = 0, $task = '', $xhtml = true) {
+	function GetMyProfileURL($userid = 0, $task = '', $xhtml = true, $extra = '') {
 		if (!$task) {
 			// Workaround for menu redirect: be more verbose
 			kimport('integration.integration');
@@ -176,10 +176,10 @@ class CKunenaLink {
 		if ($userid && $userid!=$my->id) $userid = "&userid=$userid";
 		else $userid = '';
 		if ($task) $task = "&do=$task";
-		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=profile{$userid}{$task}", $xhtml );
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 
-	function GetProfileLink($userid, $name, $rel = 'nofollow', $class = '') {
+	function GetProfileLink($userid, $name, $title ='', $rel = 'nofollow', $class = '') {
 		if ($userid > 0) {
 			if (CKunenaTools::isAdmin ( $userid )) {
 				$class = 'admin';
@@ -190,7 +190,7 @@ class CKunenaLink {
 			}
 			$link = CKunenaLink::GetProfileURL ( $userid );
 			if (! empty ( $link ))
-				return CKunenaLink::GetHrefLink ( $link, $name, '', $rel, $class );
+				return CKunenaLink::GetHrefLink ( $link, $name, $title, $rel, $class );
 		}
 		return $name;
 	}
@@ -230,6 +230,10 @@ class CKunenaLink {
 
 	function GetShowMyLatestLink($name, $rel = 'nofollow') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=mylatest', $name, '', $rel );
+	}
+
+	function GetShowMyLatestURL() {
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=mylatest');
 	}
 
 	function GetShowNoRepliesLink($name, $rel = 'nofollow') {
@@ -300,6 +304,10 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func={$func}{$searchword}{$params}{$limitstr}" );
 	}
 
+	function GetWhoURL() {
+		return KunenaRoute::_( KUNENA_LIVEURLREL.'&amp;func=who');
+	}
+
 	function GetSearchLink($func, $searchword, $limitstart, $limit, $name, $params = '', $rel = 'nofollow') {
 		$kunena_config = & CKunenaConfig::getInstance ();
 		$limitstr = "";
@@ -334,9 +342,10 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=poll&do={$do}{$idstring}{$catidstr}" );
 	}
 
-	function GetJsonURL($action, $do = '', $xhtml = true) {
+	function GetJsonURL($action='', $do = '', $xhtml = true) {
+		if ($action) $action = "&action=$action";
 		if ($do) $do = "&do=$do";
-		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=json&action=$action$do", $xhtml );
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=json$action$do", $xhtml );
 	}
 
 	function GetMarkThisReadLink($catid, $name, $rel = 'nofollow', $title = '') {
@@ -349,6 +358,10 @@ class CKunenaLink {
 
 	function GetStatsLink($name, $class = '', $rel = 'follow') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=stats', $name, '', $rel, $class );
+	}
+
+	function GetStatsURL() {
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=stats' );
 	}
 
 	//

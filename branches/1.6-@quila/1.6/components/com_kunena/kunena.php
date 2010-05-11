@@ -84,13 +84,17 @@ if(JDEBUG == 1 && defined('JFIREPHP')){
 }
 
 require_once(KUNENA_PATH . DS . 'router.php');
-if (!$func || (!$markaction && !in_array($func, KunenaRouter::$functions))) {
+if ($func && !in_array($func, KunenaRouter::$functions)) {
 	// If func is not legal, raise joomla error
-	if ($func) return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
-	// Redirect empty func to default page
-	header ( "HTTP/1.1 303 See Other" );
-	header ( "Location: " . KunenaRoute::_ ( 'index.php?option=com_kunena', false ) );
-	$kunena_app->close ();
+	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
+}
+
+// Set active menuitem so that Kunena menu shows up
+$menu = JSite::getMenu ();
+$active = $menu->getActive ();
+if (empty($active) || !$active->menutype != 'kunenamenu' || !$func) {
+	$menu->setActive(KunenaRoute::getItemID());
+	if (!$func) $func = KunenaRoute::getDefaultFunc();
 }
 
 // Redirect Forum Jump
@@ -105,12 +109,16 @@ include_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.debug.php");
 // get Kunenas configuration params in
 
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.config.class.php");
+$kunena_my = &JFactory::getUser ();
+$kunena_db = &JFactory::getDBO ();
+$kunena_config = &CKunenaConfig::getInstance ();
+if ($kunena_config->debug) {
+	@ini_set('display_errors', 1);
+	@error_reporting(E_ALL);
+	$kunena_db->debug(1);
+}
 
 global $lang, $kunena_icons, $topic_emoticons;
-
-$kunena_my = &JFactory::getUser ();
-$kunena_config = &CKunenaConfig::getInstance ();
-$kunena_db = &JFactory::getDBO ();
 
 $kn_tables = & CKunenaTables::getInstance ();
 if ($kn_tables->installed () === false) {
@@ -127,11 +135,10 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
 
 // Redirect profile (menu item) to the right component
 if ($func == 'profile' && !$do) {
-	kimport('integration.integration');
-	$profileIntegration = KunenaIntegration::detectIntegration('profile', true);
-	if ($profileIntegration != 'kunena') {
-		$link = CKunenaLink::GetProfileURL($kunena_my->id, false);
-		if ($link) $kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id, false));
+	$profileIntegration = KunenaFactory::getProfile();
+	if (!($profileIntegration instanceof KunenaProfileKunena)) {
+		$url = CKunenaLink::GetProfileURL($kunena_my->id, false);
+		if ($url) $kunena_app->redirect($url);
 	}
 }
 
@@ -185,7 +192,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
 	}
 	echo '<div id="Kunena">';
-	CKunenaTools::loadTemplate('/plugin/login/login.php');
+	CKunenaTools::loadTemplate('/login.php');
 	echo '</div>';
 } else {
 	// =======================================================================================
@@ -220,8 +227,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	$document = & JFactory::getDocument ();
 
 	// We require Mootools 1.2 framework
-	// On systems running < J1.5.16 this requires the mootools12 system plugin
+	// On systems running < J1.5.18 this requires the mootools12 system plugin
 	JHTML::_ ( 'behavior.framework' );
+
+	// We load smoothbox library
+	$document->addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox.js' );
 
 	// New Kunena JS for default template
 	// TODO: Need to check if selected template has an override
@@ -233,12 +243,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
 	}
 
-	// WHOIS ONLINE IN FORUM
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/plugin/who/who.class.php');
-	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'plugin/who/who.class.php');
-	}
+	// Insert WhoIsOnlineDatas
+	require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+
+	$who =& CKunenaWhoIsOnline::getInstance();
+	$who->insertOnlineDatas ();
 
 	// include required libraries
 	jimport('joomla.template.template');
@@ -281,11 +290,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	//Get the topics this user has already read this session from #__fb_sessions
 	$this->read_topics = explode ( ',', $kunena_session->readtopics );
 
-	//Call the call for polls
-	if($kunena_config->pollenabled){
-  		require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
-  		$poll = new CKunenaPolls();
-	}
 
 	/*       _\|/_
              (o o)
@@ -346,21 +350,27 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	</tr>
 </table>
 <!-- /Kunena Header --> <?php
-	CKunenaTools::loadTemplate('/plugin/profilebox/profilebox.php');
+	CKunenaTools::loadTemplate('/profilebox.php');
 
 	switch ($func) {
 		case 'who' :
-			CKunenaTools::loadTemplate('/plugin/who/who.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			$online =& CKunenaWhoIsOnline::getInstance();
+			$online->displayWho();
 
 			break;
 
 		case 'announcement' :
-			CKunenaTools::loadTemplate('/plugin/announcement/announcement.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			$ann = CKunenaAnnouncement::getInstance();
+			$ann->display();
 
 			break;
 
         case 'poll':
-			CKunenaTools::loadTemplate('/plugin/poll/poll.php');
+  			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  			$kunena_polls =& CKunenaPolls::getInstance();
+  			$kunena_polls->display();
 
             break;
 
@@ -382,7 +392,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'userlist' :
-			CKunenaTools::loadTemplate('/plugin/userlist/userlist.php');
+			require_once (KUNENA_PATH_FUNCS . DS . 'userlist.php');
+			$page = new CKunenaUserlist();
+			$page->display();
 
 			break;
 
@@ -396,6 +408,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'view' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'view.php');
 			$page = new CKunenaView($func, $catid, $id, $limitstart, $limit);
+			$page->redirect();
 			$page->display();
 
 			break;
@@ -424,18 +437,15 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case 'moderate' :
-			CKunenaTools::loadTemplate('/moderate/moderate.php');
-
-			break;
-
 		case 'rules' :
 			CKunenaTools::loadTemplate('/rules.php');
 
 			break;
 
 		case 'report' :
-			CKunenaTools::loadTemplate('/plugin/report/report.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.report.class.php');
+			$report = new CKunenaReport();
+			$report->display();
 
 			break;
 
@@ -444,6 +454,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'noreplies' :
 		case 'subscriptions' :
 		case 'favorites' :
+		case 'userposts' :
+		case 'unapproved' :
+		case 'deleted' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 			$page = new CKunenaLatestX($func, $page);
 			$page->display();
@@ -611,6 +624,13 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 		case 'credits' :
 			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.credits.php');
+
+			break;
+
+		case 'modutils':
+			require_once (KUNENA_PATH_FUNCS . DS . 'modutils.php');
+			$page = new CKunenaModutils();
+			$page->display();
 
 			break;
 

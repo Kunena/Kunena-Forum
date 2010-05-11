@@ -20,6 +20,7 @@ class CKunenaAttachments {
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
 		$this->_my = &JFactory::getUser ();
+		$this->_config = KunenaFactory::getConfig ();
 		$this->_session = KunenaFactory::getSession ();
 	}
 
@@ -34,8 +35,9 @@ class CKunenaAttachments {
 
 	function upload($mesid=0, $key='kattachment', $ajax=true) {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
+		$path = KUNENA_PATH_UPLOADED . DS . $this->_my->id;
 		$upload = new CKunenaUpload();
-		$upload->uploadFile(KUNENA_PATH_UPLOADED . DS . $this->_my->id, $key, $ajax);
+		$upload->uploadFile($path, $key, '', $ajax);
 		$fileinfo = $upload->getFileInfo();
 
 		$folder = KUNENA_RELPATH_UPLOADED . '/' . $this->_my->id;
@@ -53,9 +55,13 @@ class CKunenaAttachments {
 				$fileinfo = $upload->fileInfo();
 			}
 		}
-			if(JDEBUG == 1 && defined('JFIREPHP')){
-				FB::log('Kunena save attachment ready');
-			}
+
+		if ($this->isImage($fileinfo['mime']))
+			CKunenaImageHelper::version($path . DS . $fileinfo['name'], $path .DS. 'thumb', $fileinfo['name'], $this->_config->thumbwidth, $this->_config->thumbheight, intval($this->_config->imagequality));
+
+		if(JDEBUG == 1 && defined('JFIREPHP')){
+			FB::log('Kunena save attachment ready');
+		}
 		return $fileinfo;
 	}
 
@@ -68,10 +74,110 @@ class CKunenaAttachments {
 	}
 
 	function assign($mesid) {
+		// FIXME: this code seems to cause some weird bugs (and its not used) :)
+		/*
 		if (!$mesid) return;
 		$this->_db->setQuery ( "UPDATE #__kunena_attachments SET mesid=".(int)$mesid." WHERE userid=".(int)$this->_my->id." AND mesid=0" );
 		$this->_db->query ();
 		check_dberror ( "Unable to assign attachments to message ".$mesid );
+		*/
 	}
 
+	function isImage($mime) {
+		return (stripos ( $mime, 'image/' ) !== false);
+	}
+
+	function get($mesids) {
+		$ret = array();
+		if (empty($mesids)) return $ret;
+		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ($mesids)";
+		$this->_db->setQuery ( $query );
+		$attachments = $this->_db->loadObjectList ();
+		check_dberror ( 'Unable to load attachments' );
+		foreach ($attachments as $attachment) {
+			// Check if file has been pre-processed
+			if (is_null ( $attachment->hash )) {
+				// This attachment has not been processed.
+				// It migth be a legacy file, or the settings might have been reset.
+				// Force recalculation ...
+
+				// TODO: Perform image re-prosessing
+			}
+
+			// combine all images into one type
+			$attachment->shorttype = $this->isImage($attachment->filetype) ? 'image' : $attachment->filetype;
+			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) continue;
+			if ($attachment->shorttype != 'image' && !$this->_my->id && !$this->_config->showfileforguest) continue;
+
+			$ret[$attachment->mesid][] = $attachment;
+		}
+		return $ret;
+	}
+
+	function deleteMessage($mesids) {
+		if (is_array($mesids) && !empty($mesids)) {
+			$mesids = implode(',', $mesids);
+		} else {
+			$mesids = intval($mesids);
+		}
+		if ($mesids == 0) return;
+
+		// Do not delete files which are used in other attachments or are not really Kunena attachments
+		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.folder=b.folder AND a.filename=b.filename
+			WHERE a.mesid IN ({$mesids}) AND (a.folder LIKE '%media/kunena/attachments%' OR a.folder LIKE '%images/fbfiles%') AND b.filename IS NULL" );
+		$fileList = $this->_db->loadObjectlist ();
+		check_dberror ( "Unable to load attachments." );
+		if ( is_array($fileList) ) {
+			foreach ( $fileList as $file ) {
+				$this->deleteFile($file);
+			}
+		}
+		// Delete attachments in the messages
+		$sql = "DELETE FROM #__kunena_attachments WHERE mesid IN ({$mesids})";
+		$this->_db->setQuery ( $sql );
+		$this->_db->query ();
+		check_dberror ( "Unable to delete attachments." );
+	}
+
+	function deleteAttachment($attachids) {
+		if (is_array($attachids) && !empty($attachids)) {
+			$attachids = implode(',', $attachids);
+		} else {
+			$attachids = intval($attachids);
+		}
+		if ($attachids == 0) return;
+
+		// Do not delete files which are used in other attachments or are not really Kunena attachments
+		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.folder=b.folder AND a.filename=b.filename
+			WHERE a.id IN ({$attachids}) AND (a.folder LIKE '%media/kunena/attachments%' OR a.folder LIKE '%images/fbfiles%') AND b.filename IS NULL" );
+		$fileList = $this->_db->loadObjectlist ();
+		check_dberror ( "Unable to load attachments." );
+		if ( is_array($fileList) ) {
+			foreach ( $fileList as $file ) {
+				$this->deleteFile($file);
+			}
+		}
+		// Delete selected attachments
+		$sql = "DELETE FROM #__kunena_attachments WHERE id IN ({$attachids})";
+		$this->_db->setQuery ( $sql );
+		$this->_db->query ();
+		check_dberror ( "Unable to delete attachments." );
+	}
+
+	protected function deleteFile($file) {
+		jimport('joomla.filesystem.file');
+		$path = JPATH_ROOT.DS.$file->folder;
+		$filetoDelete = $path.'/'.$file->filename;
+		if (JFile::exists($filetoDelete)) {
+			JFile::delete($filetoDelete);
+		}
+		$filetoDelete = $path.'/raw/'.$file->filename;
+		if (JFile::exists($filetoDelete)) {
+			JFile::delete($filetoDelete);
+		}
+		$filetoDelete = $path.'/thumb/'.$file->filename;
+		if (JFile::exists($filetoDelete)) {
+			JFile::delete($filetoDelete);
+		}
+	}
 }

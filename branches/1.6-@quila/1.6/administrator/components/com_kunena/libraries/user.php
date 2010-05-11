@@ -215,23 +215,23 @@ class KunenaUser extends JObject
 		return CKunenaTools::isModerator($this->userid, $catid);
 	}
 
-	protected function getName() {
+	public function getName($visitorname = '') {
 		if (! $this->userid) {
-			$name = '';
+			$name = $visitorname;
 		} else {
 			$name = $this->_config->username ? $this->username : $this->name;
 		}
 		return $name;
 	}
 
-	public function getAvatarLink($class='', $size='thumb') {
+	public function getAvatarLink($class='', $sizex='thumb', $sizey=90) {
 		$avatars = KunenaFactory::getAvatarIntegration();
-		return $avatars->getLink($this, $class, $size);
+		return $avatars->getLink($this, $class, $sizex, $sizey);
 	}
 
-	public function getAvatarURL($size='thumb') {
+	public function getAvatarURL($sizex='thumb', $sizey=90) {
 		$avatars = KunenaFactory::getAvatarIntegration();
-		return $avatars->getURL($this, $size);
+		return $avatars->getURL($this, $sizex, $sizey);
 	}
 
 	public function getType($catid=0) {
@@ -256,7 +256,7 @@ class KunenaUser extends JObject
 		$rank->rank_image = null;
 
 		$config = CKunenaConfig::getInstance ();
-		if (!$config->showranking) return $rank;
+		if (!$config->showranking) return;
 		if (self::$_ranks === null) {
 			$this->_db->setQuery ( "SELECT * FROM #__fb_ranks" );
 			self::$_ranks = $this->_db->loadObjectList ('rank_id');
@@ -368,34 +368,39 @@ class KunenaUser extends JObject
 		}
 	}
 
-	public function socialButton($name) {
+	public function socialButton($name, $gray=false) {
 		$social = array (
-			'twitter' => array( 'name'=>'TWITTER', 'url'=>'http://twitter.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_TWITTER') ),
-			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FACEBOOK') ),
-			'myspace' => array( 'name'=>'MYSPACE', 'url'=>'http://www.myspace.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_MYSPACE') ),
-			'linkedin' => array( 'name'=>'LINKEDIN', 'url'=>'http://www.linkedin.com/pub/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_LINKEDIN') ),
+			'twitter' => array( 'name'=>'TWITTER', 'url'=>'http://twitter.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_TWITTER'),'nourl'=>'0' ),
+			'facebook' => array( 'name'=>'FACEBOOK', 'url'=>'http://www.facebook.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'),'nourl'=>'0' ),
+			'myspace' => array( 'name'=>'MYSPACE', 'url'=>'http://www.myspace.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_MYSPACE'),'nourl'=>'0' ),
+			'linkedin' => array( 'name'=>'LINKEDIN', 'url'=>'http://www.linkedin.com/in/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_LINKEDIN'),'nourl'=>'0' ),
 
-			'delicious' => array( 'name'=>'DELICIOUS', 'url'=>'http://delicious.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_DELICIOUS') ),
-			'friendfeed' => array( 'name'=>'FRIENDFEED', 'url'=>'http://friendfeed.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED') ),
-			'digg' => array( 'name'=>'DIGG', 'url'=>'http://www.digg.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_DIGG') ),
+			'delicious' => array( 'name'=>'DELICIOUS', 'url'=>'http://delicious.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_DELICIOUS'),'nourl'=>'0' ),
+			'friendfeed' => array( 'name'=>'FRIENDFEED', 'url'=>'http://friendfeed.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED'),'nourl'=>'0' ),
+			'digg' => array( 'name'=>'DIGG', 'url'=>'http://www.digg.com/users/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_DIGG'),'nourl'=>'0' ),
 
-			'skype' => array( 'name'=>'SKYPE', 'url'=>'skype:##VALUE##?chat', 'title'=>'' ),
-			'yim' => array( 'name'=>'YIM', 'url'=>'ymsgr:sendim?##VALUE##', 'title'=>'' ),
-			'aim' => array( 'name'=>'AIM', 'url'=>'aim:goim?screenname=##VALUE##', 'title'=>'' ),
-			'gtalk' => array( 'name'=>'GTALK', 'url'=>'gtalk:chat?jid=##VALUE##', 'title'=>'' ),
-			'msn' => array( 'name'=>'MSN', 'url'=>'msn:##VALUE##', 'title'=>'' ),
-			'icq' => array( 'name'=>'ICQ', 'url'=>'http://www.icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title'=>'' ),
+			'skype' => array( 'name'=>'SKYPE', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_SKYPE'),'nourl'=>'1' ),
+			'yim' => array( 'name'=>'YIM', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_YIM'),'nourl'=>'1' ),
+			'aim' => array( 'name'=>'AIM', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_AIM'),'nourl'=>'1' ),
+			'gtalk' => array( 'name'=>'GTALK', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_GTALK'),'nourl'=>'1' ),
+			'msn' => array( 'name'=>'MSN', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_MSN'),'nourl'=>'1' ),
+			'icq' => array( 'name'=>'ICQ', 'url'=>'http://www.icq.com/people/cmd.php?uin=##VALUE##&action=message', 'title'=>JText::_('COM_KUNENA_MYPROFILE_ICQ'),'nourl'=>'0' ),
 
-			'blogspot' => array( 'name'=>'BLOGSPOT', 'url'=>'http://##VALUE##.blogspot.com/', 'title'=>JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT') ),
-			'flickr' => array( 'name'=>'FLICKR', 'url'=>'http://www.flickr.com/photos/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FLICKR') ),
-			'bebo' => array( 'name'=>'BEBO', 'url'=>'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_BEBO') )
+			'blogspot' => array( 'name'=>'BLOGSPOT', 'url'=>'http://##VALUE##.blogspot.com/', 'title'=>JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT'),'nourl'=>'0' ),
+			'flickr' => array( 'name'=>'FLICKR', 'url'=>'http://www.flickr.com/photos/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FLICKR'),'nourl'=>'0' ),
+			'bebo' => array( 'name'=>'BEBO', 'url'=>'http://www.bebo.com/Profile.jsp?MemberId=##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_BEBO'),'nourl'=>'0' )
 		);
 		if (!isset($social[$name])) return;
 		$title = $social[$name]['title'];
 		$item = $social[$name]['name'];
 		$value = kunena_htmlspecialchars(stripslashes($this->$item));
 		$url = strtr($social[$name]['url'], array('##VALUE##'=>$value));
-		if (!empty($this->$item)) return '<a href="'.$url.'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
-		return '<span class="'.$name.'_off"></span>';
+		if ( $social[$name]['nourl'] == '0') {
+			if (!empty($this->$item)) return '<a href="'.kunena_htmlspecialchars($url).'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
+		} else {
+			if (!empty($this->$item)) return '<a href="#" target="_blank" title="'.$title.': '.$url.'"><span class="'.$name.'"></span></a>';
+		}
+		if ($gray) return '<span class="'.$name.'_off"></span>';
+		else return '';
 	}
 }

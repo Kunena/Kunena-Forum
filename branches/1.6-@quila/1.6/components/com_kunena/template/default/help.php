@@ -7,16 +7,6 @@
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
- *
- * Based on FireBoard Component
- * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.bestofjoomla.com
- *
- * Based on Joomlaboard Component
- * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @author TSMF & Jan de Graaff
  **/
 
 // Dont allow direct linking
@@ -29,62 +19,35 @@ $document = & JFactory::getDocument ();
 $document->setTitle ( JText::_('COM_KUNENA_GEN_HELP') . ' - ' . stripslashes ( $kunena_config->board_title ) );
 
 $kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'" );
-$j_introtext = $kunena_db->loadResult ();
+$introtext = $kunena_db->loadResult ();
 check_dberror ( "Unable to load introtext." );
 ?>
-<div class="k_bt_cvr1">
-<div class="k_bt_cvr2">
-<div class="k_bt_cvr3">
-<div class="k_bt_cvr4">
-<div class="k_bt_cvr5">
-	<table class="kblocktable" id="kforumhelp" border="0" cellspacing="0"
-		cellpadding="0" width="100%">
-		<thead>
-			<tr>
-				<th>
-					<div class="ktitle_cover km"><span class="ktitle kl">
-					<?php
-					echo JText::_('COM_KUNENA_FORUM_HELP');
-					?>
-					</span></div>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td class="khelpdesc" valign="top">
-					<?php
-					echo $j_introtext;
-					?>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Begin: Forum Jump -->
-<div class="k_bt_cvr1">
-<div class="k_bt_cvr2">
-<div class="k_bt_cvr3">
-<div class="k_bt_cvr4">
-<div class="k_bt_cvr5">
-	<table class="kblocktable" id="kbottomarea">
+<table class="kblock" id="kforumhelp">
+	<thead>
 		<tr>
-			<th class="th-right">
-			<?php
-			if ($kunena_config->enableforumjump) {
-				CKunenaTools::loadTemplate('/forumjump.php');
-			}
-			?>
+			<th>
+				<h1><?php echo JText::_('COM_KUNENA_FORUM_HELP'); ?></h1>
 			</th>
 		</tr>
-	</table>
-</div>
-</div>
-</div>
-</div>
-</div>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="khelpdesc">
+				<?php echo $introtext; ?>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!-- Begin: Forum Jump -->
+<table class="kblock" id="kbottomarea">
+	<tr>
+		<th class="th-right">
+		<?php
+		if ($kunena_config->enableforumjump) {
+			CKunenaTools::loadTemplate('/forumjump.php');
+		}
+		?>
+		</th>
+	</tr>
+</table>
 <!-- Finish: Forum Jump -->

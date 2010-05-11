@@ -92,7 +92,7 @@ class CKunenaListcat {
 		$routerlist = array ();
 		foreach ( $allsubcats as $i => $subcat ) {
 			if ($subcat->mesid)
-				$routerlist [$subcat->mesid] = $subcat->subject;
+				$routerlist [$subcat->thread] = $subcat->subject;
 
 			$allsubcats [$i]->forumdesc = KunenaParser::parseBBCode ( $subcat->description );
 
@@ -144,7 +144,7 @@ class CKunenaListcat {
 			if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__fb_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>'{$this->prevCheck}' AND m.thread NOT IN ({$readlist})) AS new";
 			else $subquery = " 0 AS new";
 
-			$query = "SELECT id, name, parent, numTopics, numPosts, {$subquery}
+			$query = "SELECT id, name, description, parent, numTopics, numPosts, {$subquery}
 			FROM #__fb_categories AS c
 			WHERE c.parent IN ({$subcatlist}) AND c.published='1'";
 			$this->db->setQuery ($query);
@@ -159,7 +159,7 @@ class CKunenaListcat {
 		$this->pending = array ();
 		if (count ( $modcats )) {
 			$modcatlist = implode ( ',', $modcats );
-			$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid IN ({$modcatlist})" );
+			$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
 			$modlist = $this->db->loadObjectList ();
 			check_dberror ( "Unable to load moderators." );
 			foreach ( $modlist as $mod ) {
@@ -191,7 +191,10 @@ class CKunenaListcat {
 
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
-			CKunenaTools::loadTemplate('/plugin/announcement/announcementbox.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			$ann = new CKunenaAnnouncement();
+			$ann->getAnnouncement();
+			$ann->displayBox();
 		}
 	}
 
@@ -216,7 +219,9 @@ class CKunenaListcat {
 
 	function displayWhoIsOnline() {
 		if ($this->config->showwhoisonline > 0) {
-			CKunenaTools::loadTemplate('/plugin/who/whoisonline.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			$online =& CKunenaWhoIsOnline::getInstance();
+			$online->displayWhoIsOnline();
 		}
 	}
 

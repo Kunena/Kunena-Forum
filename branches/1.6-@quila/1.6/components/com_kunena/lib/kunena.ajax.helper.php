@@ -95,6 +95,11 @@ class CKunenaAjaxHelper {
 					$response = $this->_uploadFile ($do);
 
 					break;
+				case 'modtopiclist' :
+
+					$response = $this->_modTopicList ($data);
+
+					break;
 				case 'removeattachment' :
 
 					$response = $this->_removeAttachment ($data);
@@ -214,8 +219,8 @@ class CKunenaAjaxHelper {
 		$result = array ();
 
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-		$poll = new CKunenaPolls();
-		$result = $poll->save_results($id,$userid,$value_choosed);
+		$kunena_polls =& CKunenaPolls::getInstance();
+		$result = $kunena_polls->save_results($id,$userid,$value_choosed);
 
 		return $result;
 	}
@@ -224,8 +229,8 @@ class CKunenaAjaxHelper {
 		$result = array ();
 
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-		$poll = new CKunenaPolls();
-		$result = $poll->save_changevote($id,$userid,$value_choosed);
+		$kunena_polls =& CKunenaPolls::getInstance();
+		$result = $kunena_polls->save_changevote($id,$userid,$value_choosed);
 
 		return $result;
 	}
@@ -293,6 +298,30 @@ class CKunenaAjaxHelper {
 			'error' => JText::_('COM_KUNENA_AJAX_ATTACHMENT_DELETED')
 		);
 
+
+		return $result;
+	}
+
+	protected function _modTopicList ($data) {
+		$result = array ();
+
+		$catid = intval($data);
+		$user = KunenaFactory::getuser();
+		if ( $catid && $user->isModerator($catid) ) {
+			$query = "SELECT id, subject
+							FROM #__fb_messages
+							WHERE catid={$catid} AND parent=0 AND moved=0
+							ORDER BY id DESC";
+			$this->_db->setQuery ( $query, 0, 15 );
+			$topics_list = $this->_db->loadObjectlist ();
+			check_dberror ( "Unable to get topics list name." );
+			$result['status'] = '1';
+			$result['topiclist'] = $topics_list;
+
+		} else {
+			$result['status'] = '0';
+			$result['error'] = 'Error';
+		}
 
 		return $result;
 	}

@@ -174,7 +174,7 @@ class CKunenaImage
 		$handle = imagecreatetruecolor($width, $height);
 
 		// Allow transparency for the new image handle.
-		imagealphablending($handle, false);
+		imagealphablending($handle, true);
 		imagesavealpha($handle, true);
 
 		if ($this->isTransparent())
@@ -417,44 +417,56 @@ class CKunenaImage
 		imagealphablending($handle, false);
 		imagesavealpha($handle, true);
 
-		if ($this->isTransparent())
-		{
-			// Get the transparent color values for the current image.
-			$rgba = imageColorsForIndex($this->_handle, imagecolortransparent($this->_handle));
-			$color = imageColorAllocate($this->_handle, $rgba['red'], $rgba['green'], $rgba['blue']);
+		if (($this->_type == IMAGETYPE_GIF) || ($this->_type == IMAGETYPE_PNG)) {
+			$trnprt_indx = imagecolortransparent ( $this->_handle );
 
-			// Set the transparent color values for the new image.
-			imagecolortransparent($handle, $color);
-			imagefill($handle, 0, 0, $color);
+			// If we have a specific transparent color
+			if ($trnprt_indx >= 0) {
 
-			imagecopyresized(
-				$handle,
-				$this->_handle,
-				0, 0, 0, 0,
-				$dimensions['width'],
-				$dimensions['height'],
-				$this->getWidth(),
-				$this->getHeight()
-			);
+				// Get the original image's transparent color's RGB values
+				$trnprt_color = imagecolorsforindex ( $this->_handle, $trnprt_indx );
+
+				// Allocate the same color in the new image resource
+				$trnprt_indx = imagecolorallocate ( $handle, $trnprt_color ['red'], $trnprt_color ['green'], $trnprt_color ['blue'] );
+
+				// Completely fill the background of the new image with allocated color.
+				imagefill ( $handle, 0, 0, $trnprt_indx );
+
+				// Set the background color for new image to transparent
+				imagecolortransparent ( $handle, $trnprt_indx );
+
+			} // Always make a transparent background color for PNGs that don't have one allocated already
+			elseif ($this->_type == IMAGETYPE_PNG) {
+
+				// Turn off transparency blending (temporarily)
+				imagealphablending ( $handle, false );
+
+				// Create a new transparent color for image
+				$color = imagecolorallocatealpha ( $handle, 0, 0, 0, 127 );
+
+				// Completely fill the background of the new image with allocated color.
+				imagefill ( $handle, 0, 0, $color );
+
+				// Restore transparency blending
+				imagesavealpha ( $handle, true );
+			}
 		}
-		else
-		{
-			imagecopyresampled(
-				$handle,
-				$this->_handle,
-				0, 0, 0, 0,
-				$dimensions['width'],
-				$dimensions['height'],
-				$this->getWidth(),
-				$this->getHeight()
-			);
-		}
+		imagecopyresampled(
+			$handle,
+			$this->_handle,
+			0, 0, 0, 0,
+			$dimensions['width'],
+			$dimensions['height'],
+			$this->getWidth(),
+			$this->getHeight()
+		);
 
 		// If we are resizing to a new image, create a new CKunenaImage object.
 		if ($createNew)
 		{
 			// Create the new CKunenaImage object for the new truecolor image handle.
 			$new = new CKunenaImage($handle);
+			$new->_type = $this->_type;
 			return $new;
 		}
 		else
@@ -465,8 +477,9 @@ class CKunenaImage
 		}
 	}
 
-	function toFile($path, $type = IMAGETYPE_JPEG, $options=array())
+	function toFile($path, $type = null, $options=array())
 	{
+		if (!$type) $type = $this->_type;
 		switch ($type)
 		{
 			case IMAGETYPE_GIF:
@@ -581,7 +594,7 @@ class CKunenaImageHelper
 	public static function getProperties($path)
 	{
 		// Initialize the path variable.
-		$path = (empty($path)) ? $this->_path : $path;
+		if (empty($path)) return false;
 
 		// Make sure the file exists.
 		if (!JFile::exists($path))
@@ -609,6 +622,42 @@ class CKunenaImageHelper
 		$result->set('mime',		$info['mime']);
 
 		return $result;
+	}
+
+	function version($file, $newpath, $newfile, $maxwidth = 800, $maxheight = 800, $quality = 70, $scale = CKunenaImage::SCALE_INSIDE) {
+		require_once(KUNENA_PATH_LIB.DS.'kunena.file.class.php');
+		// create upload directory if it does not exist
+		$imageinfo = self::getProperties($file);
+		if (!$imageinfo) return false;
+
+		if (!CKunenaFolder::exists($newpath)) {
+			if (!CKunenaFolder::create($newpath)) {
+				return false;
+			}
+		}
+
+		if ($imageinfo->width > $maxwidth || $imageinfo->height > $maxheight) {
+			$image = new CKunenaImage($file);
+			if ($image->getError()) {
+				return false;
+			}
+			if ($quality < 1 || $quality > 100) $quality = 70;
+			$options = array('quality' => $quality);
+			$image = $image->resize($maxwidth, $maxheight, true, $scale);
+			$type = $image->getType();
+			$temp = CKunenaPath::tmpdir() . DS . 'kunena_' . md5 ( rand() );
+			$image->toFile($temp, $type, $options);
+			unset ($image);
+			if (! CKunenaFile::move ( $temp, $newpath.'/'.$newfile )) {
+				unlink ($temp);
+				return false;
+			}
+		} else {
+			if (! CKunenaFile::copy ( $file, $newpath.'/'.$newfile )) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static function test()

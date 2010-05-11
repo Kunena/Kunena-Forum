@@ -54,7 +54,7 @@
 	<property name="kunena.backend.list" value="" />
 	<property name="kunena.customfrontend" value="${custom_dir}/components/com_kunena/" />
 
-	<target name="dist" depends="mkdir,archive,copy,init,package,tar,zip,gzip,bz2,customcopy,custompackage,customzip,customgzip,custombz2,info,cleanup" />
+	<target name="dist" depends="mkdir,archive,copy,init,package,tar,zip,gzip,bz2,customcopy,custompackage,customtar,customzip,customgzip,custombz2,info,cleanup" />
 
 	<target name="mkdir">
 		<mkdir dir="${tmp_dir}" />
@@ -74,14 +74,16 @@
 		<copy todir="${tmp_dir}/admin">
 			<fileset dir="${kunena.backend}">
 				<exclude name="manifest.xml" />
-				<exclude name="install/" />
+				<exclude name="*install.kunena.php" />
 			</fileset>
-		</copy>
-		<copy todir="${tmp_dir}/install">
-			<fileset dir="${kunena.backend}/install"/>
 		</copy>
 		<copy todir="${tmp_dir}/site">
 			<fileset dir="${kunena.frontend}"/>
+		</copy>
+		<copy todir="${tmp_dir}">
+			<fileset dir="${kunena.backend}">
+				<include name="*install.kunena.php" />
+			</fileset>
 		</copy>
 	</target>
 
@@ -118,6 +120,12 @@
 		<condition property="do.custom_build">
 			<istrue value="${custom_build}" />
 		</condition>
+		<condition property="do.customtar">
+			<and>
+				<istrue value="${cfg.tar}" />
+				<istrue value="${custom_build}" />
+			</and>
+		</condition>
 		<condition property="do.customzip">
 			<and>
 				<istrue value="${cfg.zip}" />
@@ -149,7 +157,7 @@
 		<filter token="kunenaversionbuild" value="${build.number}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 		<copy file="${project_dir}/administrator/components/com_kunena/manifest.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/admin/install" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/administrator/components/com_kunena/api.php" todir="${tmp_dir}/admin" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
@@ -171,7 +179,7 @@
 	</target>
 
 	<target name="customcopy" depends="mkdir" if="do.custom_build">
-		<copy todir="${tmp_dir}" overwrite="true">
+		<copy todir="${tmp_dir}/site" overwrite="true">
 			<fileset dir="${custom_dir}/components/com_kunena/" />
 		</copy>
 	</target>
@@ -187,16 +195,17 @@
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
 		<copy file="${project_dir}/administrator/components/com_kunena/manifest.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/install" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/components/com_kunena/lib/kunena.defines.php" todir="${tmp_dir}/lib" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/install/kunena.install.upgrade.xml" todir="${tmp_dir}/admin/install" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/administrator/components/com_kunena/api.php" todir="${tmp_dir}/admin" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
 	</target>
 
+	<target name="customtar" depends="custompackage" if="do.customtar">
+		<tar destfile="${str.destfile}.tar" basedir="${tmp_dir}" />
+	</target>
+
 	<target name="customzip" depends="custompackage" if="do.customzip">
-		<tar destfile="${str.destfile}_${custom_postfix}.tar" basedir="${tmp_dir}" />
-		<zip destfile="${str.destfile}_${custom_postfix}.zip">
-			<tarfileset src="${str.destfile}_${custom_postfix}.tar" />
-		</zip>
+		<zip destfile="${str.destfile}.zip" basedir="${tmp_dir}" />
 	</target>
 
 	<target name="customgzip" depends="custompackage" if="do.customgzip">

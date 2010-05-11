@@ -23,6 +23,8 @@ class CKunenaPost {
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = &JFactory::getDBO ();
 		$this->document = JFactory::getDocument ();
+		require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+		$this->poll =& CKunenaPolls::getInstance();
 
 		$this->my = &JFactory::getUser ();
 
@@ -85,8 +87,8 @@ class CKunenaPost {
 		}
 
 		// Check if anonymous user needs to log in
-		if ($this->my->id == 0 && (! $this->config->pubwrite || ! $this->_session->canRead ( $this->catid ))) {
-			CKunenaTools::loadTemplate ( '/plugin/login/login.php' );
+		if ($this->my->id == 0 && (! $this->config->pubwrite || ($this->catid && ! $this->_session->canRead ( $this->catid )))) {
+			CKunenaTools::loadTemplate ( '/login.php' );
 			return false;
 		}
 		// Check user access rights
@@ -159,7 +161,7 @@ class CKunenaPost {
 		}
 
 		if (! empty ( $polltitle ) && ! empty ( $optionsnumbers )) {
-			CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
+			$this->poll->save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
 		}
 
 		// TODO: replace this with better solution
@@ -175,7 +177,7 @@ class CKunenaPost {
 		//Update the attachments table if an image has been attached
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
-		$attachments->assign ( $id );
+		//$attachments->assign ( $id );
 		$fileinfos = $attachments->multiupload ( $id );
 		foreach ( $fileinfos as $fileinfo ) {
 			if (! $fileinfo ['status'])
@@ -218,6 +220,8 @@ class CKunenaPost {
 			return false;
 		if ($this->floodProtection ())
 			return false;
+		if ($this->isBanned($this->my->id) )
+			return false;
 
 		$this->kunena_editmode = 0;
 
@@ -225,16 +229,19 @@ class CKunenaPost {
 		if ($this->catid && $this->msg_cat->id > 0) {
 			if ($do == 'quote') {
 				$this->message_text = "[b]" . kunena_htmlspecialchars ( stripslashes ( $message->name ) ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
-				$this->message_text .= '[quote]' .  kunena_htmlspecialchars (stripslashes ( $message->message ) ) . "[/quote]";
+				$mestext = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', stripslashes ( $message->message ) );
+				$this->message_text .= '[quote]' .  kunena_htmlspecialchars ( $mestext ) . "[/quote]";
 			} else {
 				$this->message_text = '';
 			}
 			$reprefix = JString::substr ( stripslashes ( $message->subject ), 0, JString::strlen ( JText::_ ( 'COM_KUNENA_POST_RE' ) ) ) != JText::_ ( 'COM_KUNENA_POST_RE' ) ? JText::_ ( 'COM_KUNENA_POST_RE' ) . ' ' : '';
 			$this->subject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
 			$this->resubject = $reprefix . $this->subject;
+			$this->parent = $message->parent;
 		} else {
 			$this->message_text = '';
 			$this->resubject = '';
+			$this->parent = 0;
 
 			$options = array ();
 			if (empty ( $this->msg_cat->allow_anonymous ))
@@ -279,6 +286,8 @@ class CKunenaPost {
 			return false;
 		if ($this->lockProtection ())
 			return false;
+		if ($this->isBanned($this->my->id) )
+			return false;
 
 		$message = $this->msg_cat;
 
@@ -292,31 +301,9 @@ class CKunenaPost {
 
 		if ($allowEdit == 1) {
 			// Load attachments
-			$attachments = array ();
-			$query = "SELECT * FROM #__kunena_attachments
-					WHERE mesid ='" . $message->id . "'";
-			$this->_db->setQuery ( $query );
-			$attachments = $this->_db->loadObjectList ();
-			check_dberror ( 'Unable to load attachments' );
-
-			$this->attachments = array ();
-
-			foreach ( $attachments as $attachment ) {
-				// Check if file has been pre-processed
-				if (is_null ( $attachment->hash )) {
-					// This attachment has not been processed.
-				// It migth be a legacy file, or the settings might have been reset.
-				// Force recalculation ...
-
-				// TODO: Perform image re-prosessing
-				}
-
-				// shorttype based on MIME type to determine if image for displaying purposes
-				$attachment->shorttype = (stripos ( $attachment->filetype, 'image/' ) !== false) ? 'image' : $attachment->filetype;
-
-				$this->attachments [] = $attachment;
-			}
-			// End of load attachments
+			require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+			$attachments = CKunenaAttachments::getInstance ();
+			$this->attachments = array_pop($attachments->get($message->id));
 
 			$this->kunena_editmode = 1;
 
@@ -326,12 +313,13 @@ class CKunenaPost {
 			$this->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
 			$this->id = $message->id;
 			$this->catid = $message->catid;
+			$this->parent = $message->parent;
 			$this->emoid = $message->topic_emoticon;
 			$this->action = 'edit';
 
 			//save the options for query after and load the text options, the number options is for create the fields in the form after
 			if ($message->poll_id) {
-				$this->polldatasedit = CKunenaPolls::get_poll_data ( $this->id );
+				$this->polldatasedit = $this->poll->get_poll_data ( $this->id );
 				if ($this->kunena_editmode) {
 					$this->polloptionstotal = count ( $this->polldatasedit );
 				}
@@ -396,13 +384,13 @@ class CKunenaPost {
 			}
 			//need to check if the poll exist, if it's not the case the poll is insered like new poll
 			if (! $mes->poll_id) {
-				CKunenaPolls::save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
+				$this->poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
 			} else {
 				if (empty ( $polltitle ) && empty ( $optionsnumbers )) {
 					//The poll is deleted because the polltitle and the options are empty
-					CKunenaPolls::delete_poll ( $this->id );
+					$this->poll->delete_poll ( $this->id );
 				} else {
-					CKunenaPolls::update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers );
+					$this->poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers );
 				}
 			}
 		}
@@ -410,7 +398,19 @@ class CKunenaPost {
 		//Update the attachments table if an file has been attached
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
-		$attachments->assign ( $this->id );
+
+		// Delete attachments which weren't checked (= not listed in here)
+		jimport('joomla.utilities.arrayhelper');
+		$attachkeeplist = JRequest::getVar('attach-id',array ( 0 ), 'post', 'array');
+		JArrayHelper::toInteger($attachkeeplist, array ( 0 ));
+		$attachkeeplist = implode(',', $attachkeeplist);
+		$query = "SELECT id FROM #__kunena_attachments WHERE mesid={$this->id} AND id NOT IN ({$attachkeeplist})";
+		$this->_db->setQuery ( $query );
+		$attachmentlist = $this->_db->loadResultArray ();
+		check_dberror ( "Unable to load attachments." );
+		$attachments->deleteAttachment($attachmentlist);
+
+		//$attachments->assign ( $this->id );
 		$fileinfos = $attachments->multiupload ( $this->id );
 		foreach ( $fileinfos as $fileinfo ) {
 			if (! $fileinfo ['status'])
@@ -421,7 +421,7 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page, $this->catid ) );
 	}
 
-	protected function deleteownpost() {
+	protected function delete() {
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$success = $message->delete ( $this->id );
@@ -438,24 +438,41 @@ class CKunenaPost {
 		$this->redirectBack ();
 	}
 
-	protected function delete() {
+	protected function undelete() {
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		$message = new CKunenaPosting ( );
+		$success = $message->undelete ( $this->id );
+
+		// Handle errors
+		if (! $success) {
+			$errors = $message->getErrors ();
+			foreach ( $errors as $field => $error ) {
+				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
+			}
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE') );
+		}
+		$this->redirectBack ();
+	}
+
+	protected function permdelete() {
 		if (!$this->load())
 			return false;
+		// FIXME: we need better permission control
 		if ($this->moderatorProtection ())
 			return false;
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = CKunenaModeration::getInstance ();
 
-		$delete = $kunena_mod->deleteMessage ( $this->id );
+		$delete = $kunena_mod->deleteMessagePerminantly ( $this->id, true );
 		if (! $delete) {
-			$message = $kunena_mod->getErrorMessage ();
+			$this->_app->enqueueMessage( $kunena_mod->getErrorMessage ());
 		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
+			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ));
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
-
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ) );
 	}
 
 	protected function deletethread() {
@@ -477,54 +494,7 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
 	}
 
-	protected function move() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$options=array();
-		$this->selectlist = CKunenaTools::KSelectList ( 'postmove', $options, ' size="15" class="kmove_selectbox"' );
-		$this->message = $this->msg_cat;
-
-		CKunenaTools::loadTemplate ( '/moderate/topicmove.php' );
-	}
-
-	protected function domovethread() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$leaveGhost = JRequest::getInt ( 'leaveGhost', 0 );
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-		$TargetCatID = JRequest::getInt ( 'postmove', 0 );
-
-		$move = $kunena_mod->moveThread ( $this->id, $TargetCatID, $leaveGhost );
-		if (! $move) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
-	}
-
-	protected function movepost() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$options=array();
-		$this->selectlist = CKunenaTools::KSelectList ( 'postmove', $options, ' size="15" class="kmove_selectbox"' );
-		$this->message = $this->msg_cat;
-
-		CKunenaTools::loadTemplate ( '/moderate/messagemove.php' );
-	}
-
-	protected function domovepost() {
+	protected function moderate($modchoices='',$modthread = false) {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -532,181 +502,68 @@ class CKunenaPost {
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 
-		$kunena_mod = CKunenaModeration::getInstance ();
-		$TargetCatID = JRequest::getInt ( 'postmove', 0 );
-
-		$move = $kunena_mod->moveMessage ( $this->id, $TargetCatID, '' , '' );
-		if (! $move) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
-	}
-
-	protected function mergethread() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$this->message = $this->msg_cat;
+		$this->moderateTopic = $modthread;
+		$this->moderateMultiplesChoices = $modchoices;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->message->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM #__fb_messages WHERE catid={$this->catid} AND parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );
 
-
-		if ( !empty($messagesList) ) {
-			$messages = Array();
-			foreach ( $messagesList as $mes ) {
-				$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
-			}
-			$this->selectlist = JHTML::_ ( 'select.genericlist', $messages, 'mergepost', 'class="inputbox" size="15"', 'value', 'text' );
-
-			CKunenaTools::loadTemplate ( '/moderate/topicmerge.php' );
-		} else {
-			//There are no others threads in this category so the merge function can't be done
-			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, false),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
-		}
-	}
-
-	protected function domergethreadnow() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$TargetSubject = JRequest::getVar ( 'messubject', null );
-		$TargetThreadID = JRequest::getInt ( 'mergepost', null );
-		$TargetTopicID = JRequest::getInt ( 'mergethreadid', null );
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = &CKunenaModeration::getInstance ();
-
-		if ( !empty( $TargetTopicID ) ) {
-			$TargetThreadID = $TargetTopicID;
-		}
-
-		$merge = $kunena_mod->moveMessageAndNewer ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
-
-		if (! $merge) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->config->messages_per_page ), $message );
-
-	}
-
-	protected function merge() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$this->message = $this->msg_cat;
-
-		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE parent=0 AND hold=0 AND moved=0 AND thread!='{$this->message->thread}' ORDER BY id DESC";
-		$this->_db->setQuery ( $query, 0, 30 );
-		$messagesList = $this->_db->loadObjectlist ();
+		// Get thread and reply count from current message:
+		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM #__fb_messages AS m
+			INNER JOIN #__fb_messages AS t ON m.thread=t.id
+			LEFT JOIN #__fb_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
+			WHERE m.id={$this->id}
+			GROUP BY m.thread";
+		$this->_db->setQuery ( $query, 0, 1 );
+		$this->threadmsg = $this->_db->loadObject ();
 		check_dberror ( "Unable to load messages." );
 
-
-		if ( !empty($messagesList) ) {
-			$messages = Array();
-			foreach ( $messagesList as $mes ) {
-				$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
-			}
-			$this->selectlist = JHTML::_ ( 'select.genericlist', $messages, 'mergepost', 'class="inputbox" multiple="multiple" size="15"', 'value', 'text' );
-
-			CKunenaTools::loadTemplate ( '/moderate/postmerge.php' );
+		$messages =array ();
+		if ($this->moderateTopic) {
+			$messages [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
 		} else {
-			//There are no others threads in this category so the merge function can't be done
-			$this->_app->redirect( CKunenaLink::GetCategoryURL('showcat', $this->catid, false),JText::_ ( 'COM_KUNENA_MODERATE_NOTHING_TODO' ));
+			$messages [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
 		}
-	}
-
-	protected function domergepostnow() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$TargetThreadID = JRequest::getInt ( 'mergepost', null );
-		$TargetSubject = JRequest::getInt ( 'subject', null );
-		$TargetTopicID = JRequest::getInt ( 'mergethreadid', null );
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = &CKunenaModeration::getInstance ();
-
-		if ( !empty( $TargetTopicID ) ) {
-			$TargetThreadID = $TargetTopicID;
+		$messages [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
+		foreach ( $messagesList as $mes ) {
+			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
 		}
-
-		$merge = $kunena_mod->moveMessage ( $this->id, $this->catid, $TargetSubject, $TargetThreadID );
-
-		if (! $merge) {
-			$message = $kunena_mod->getErrorMessage ();
-		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MERGE' );
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $TargetThreadID, $this->config->messages_per_page ), $message );
-	}
-
-	protected function split() {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-
-		$this->message = $this->msg_cat;
+		$this->messagelist = JHTML::_ ( 'select.genericlist', $messages, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_targettopic' );
 
 		$options=array();
-		$this->selectlist = CKunenaTools::KSelectList('targetcat', $options, ' size="15" class="ksplit_selectbox"');
+		$this->categorylist = CKunenaTools::KSelectList ( 'targetcat', $options, 'class="inputbox kmove_selectbox"', false, 'kmod_categories', $this->catid );
+		$this->message = $this->msg_cat;
+		$this->user = KunenaFactory::getUser($this->msg_cat->userid);
 
-		CKunenaTools::loadTemplate ( '/moderate/postsplit.php' );
+		CKunenaTools::loadTemplate ( '/moderate/moderate.php' );
 	}
 
-	protected function splitnow() {
+	protected function domoderate() {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = &CKunenaModeration::getInstance ();
 
-		$mode = JRequest::getVar ( 'split', null );
-		$TargetCatID = JRequest::getInt ( 'targetcat', null );
-		$TargetSplitCatId = JRequest::getInt ( 'splitcatid', null );
+		$mode = JRequest::getVar ( 'mode', KN_MOVE_MESSAGE );
+		$targetSubject = JRequest::getString ( 'subject', '' );
+		$targetCat = JRequest::getInt ( 'targetcat', 0 );
+		$targetId = JRequest::getInt ( 'targetid', 0 );
+		if (!$targetId) $targetId = JRequest::getInt ( 'targettopic', 0 );
+		$shadow = JRequest::getInt ( 'shadow', 0 );
 
-		if ( !empty($TargetSplitCatId) ) {
-			$TargetCatID = $TargetSplitCatId;
+		$moderation = CKunenaModeration::getInstance ();
+		$success = $moderation->move($this->id, $targetCat, $targetSubject, $targetId, $mode, $shadow);
+		if (! $success) {
+			$this->_app->enqueueMessage( $moderation->getErrorMessage () );
+		} else {
+			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ));
 		}
-
-		if ($mode == 'splitpost') { // we split only the message specified
-			$splitpost = $kunena_mod->moveMessage ( $this->id, $TargetCatID, '', '' );
-			if (! $splitpost) {
-				$message = $kunena_mod->getErrorMessage ();
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_SPLIT' );
-			}
-
-		} else { // we split the message specified and the replies to this message
-			$splitpost = $kunena_mod->moveMessageAndNewer ( $this->id, $TargetCatID, '', '' );
-			if (! $splitpost) {
-				$message = $kunena_mod->getErrorMessage ();
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_SPLIT' );
-			}
-		}
-
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $message );
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ) );
 	}
 
 	protected function subscribe() {
@@ -854,11 +711,23 @@ class CKunenaPost {
 			return;
 
 		//get all the messages for this thread
-		$query = "SELECT * FROM #__fb_messages AS m LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
-			WHERE thread='{$this->msg_cat->thread}' AND hold='0' ORDER BY time DESC";
+		$query = "SELECT m.*, t.* FROM #__fb_messages AS m
+			LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
+			WHERE thread='{$this->msg_cat->thread}' AND hold='0'
+			ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();
 		check_dberror ( "Unable to load messages." );
+
+		//get attachments
+		$mesids = array();
+		foreach ($this->messages as $mes) {
+			$mesids[]=$mes->id;
+		}
+		$mesids = implode(',', $mesids);
+		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+		$attachments = CKunenaAttachments::getInstance ();
+		$this->attachmentslist = $attachments->get($mesids);
 
 		$this->subject = stripslashes ( $this->msg_cat->subject );
 
@@ -902,6 +771,20 @@ class CKunenaPost {
 		return false;
 	}
 
+	protected function isBanned($userid) {
+		$sql = "SELECT enabled, userid, bantype FROM #__kunena_banned_users WHERE userid='$userid' AND bantype=2";
+		$this->_db->setQuery ( $sql );
+		$isbanned = $this->_db->loadObject ();
+		check_dberror ( 'Unable to load datas from this user.' );
+
+		if ( is_object($isbanned) ) {
+			return true;
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ), 'error' );
+			return false;
+		}
+	}
+
 	protected function floodProtection() {
 		// Flood protection
 		$ip = $_SERVER ["REMOTE_ADDR"];
@@ -918,6 +801,11 @@ class CKunenaPost {
 			}
 		}
 		return false;
+	}
+
+	function displayAttachments($attachments) {
+		$this->attachments = $attachments;
+		CKunenaTools::loadTemplate('/view/message.attachments.php');
 	}
 
 	function display() {
@@ -949,56 +837,52 @@ class CKunenaPost {
 				$this->editpostnow ();
 				break;
 
-			case 'deleteownpost' :
-				$this->deleteownpost ();
-				break;
-
 			case 'delete' :
 				$this->delete ();
+				break;
+
+			case 'undelete' :
+				$this->undelete ();
 				break;
 
 			case 'deletethread' :
 				$this->deletethread ();
 				break;
 
-			case 'move' :
-				$this->move ();
+			case 'moderate' :
+				$this->moderate ();
 				break;
 
-			case 'domovepost' :
-				$this->domovepost ();
-				break;
-
-			case 'domovethread' :
-				$this->domovethread ();
-				break;
-
-			case 'movepost' :
-				$this->movepost ();
-				break;
-
-			case 'mergethread' :
-				$this->mergethread ();
-				break;
-
-			case 'domergethreadnow' :
-				$this->domergethreadnow ();
+			case 'moderatethread' :
+				$this->moderate ('',true);
 				break;
 
 			case 'merge' :
-				$this->merge ();
+				$this->moderate ('modmergemessage',false);
 				break;
 
-			case 'domergepostnow' :
-				$this->domergepostnow ();
+			case 'move' :
+				$this->moderate ('modmovemessage',false);
 				break;
 
 			case 'split' :
-				$this->split ();
+				$this->moderate ('modsplitmultpost',false);
 				break;
 
-			case 'splitnow' :
-				$this->splitnow ();
+			case 'movetopic' :
+				$this->moderate ('modmovetopic',true);
+				break;
+
+			case 'mergetopic' :
+				$this->moderate ('modmergetopic',true);
+				break;
+
+			case 'domoderate' :
+				$this->domoderate ();
+				break;
+
+			case 'permdelete' :
+				$this->permdelete();
 				break;
 
 			case 'subscribe' :

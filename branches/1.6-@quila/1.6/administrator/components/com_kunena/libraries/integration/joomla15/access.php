@@ -20,7 +20,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		$this->priority = 25;
 	}
 
-	function isAdmin($uid = null) {
+	function isAdmin($uid = null, $catid=0) {
 		static $instances = null;
 
 		// Avoid loading instances if it is possible
@@ -86,6 +86,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		}
 		return false;
 	}
+
 	function getAllowedCategories($userid) {
 		$acl = JFactory::getACL ();
 		$db = JFactory::getDBO ();
@@ -170,7 +171,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 					FROM #__users AS u
 					LEFT JOIN #__fb_users AS p ON u.id=p.userid
 					LEFT JOIN #__fb_categories AS c ON c.id=$catid
-					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid AND m.catid=c.id
+					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid
 					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread=$thread
 					LEFT JOIN #__fb_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=c.id";
 

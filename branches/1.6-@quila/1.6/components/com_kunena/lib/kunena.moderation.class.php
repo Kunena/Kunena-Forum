@@ -20,8 +20,9 @@ define ( 'KN_MOVE_REPLIES', 3 );
 
 //Defines for deletes
 define ( 'KN_DEL_MESSAGE', 0 );
-define ( 'KN_DEL_THREAD', 1 );
-define ( 'KN_DEL_ATTACH', 2 );
+define ( 'KN_DEL_MESSAGE_PERMINANTLY', 1 );
+define ( 'KN_DEL_THREAD', 2 );
+define ( 'KN_DEL_ATTACH', 3 );
 
 class CKunenaModeration {
 	// Private data and functions
@@ -97,6 +98,12 @@ class CKunenaModeration {
 			return false;
 		}
 
+		if ($mode == KN_MOVE_THREAD && $currentMessage->parent != 0) {
+			// When moving a thread, message has to point into first message
+			$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_NOT_TOPIC', $currentMessage->id);
+			return false;
+		}
+
 		// Check that thread can't be move into a section
 		$query = 'SELECT `parent` FROM #__fb_categories WHERE `id`='.$TargetCatID;
 		$this->_db->setQuery ( $query );
@@ -140,10 +147,6 @@ class CKunenaModeration {
 			// If $TargetMessageID has been specified and is valid,
 			// overwrite $TargetCatID with the category ID of the target message
 			$TargetCatID = $targetMessage->catid;
-		} else if ($mode != KN_MOVE_MESSAGE && $currentMessage->parent == 0 && $TargetCatID == $currentMessage->catid) {
-			// Do not allow whole thread to be moved into same category
-			$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_CATEGORY', $currentMessage->id, $TargetCatID);
-			return false;
 		}
 
 		// Check that target category exists and is visible to our moderator
@@ -153,52 +156,47 @@ class CKunenaModeration {
 			return false;
 		}
 
-
-		// Assemble move logic based on $mode
-
 		// Special case if the first message is moved in case 2 or 3
 		if ($mode != KN_MOVE_MESSAGE && $currentMessage->parent == 0)
 			$mode = KN_MOVE_THREAD;
 
+		// Moving first message is a special case: handle it separately to other messages
+		if ($TargetMessageID == 0) {
+			$TargetThreadID = $MessageID;
+			$TargetParentID = 0;
+		} else {
+			$TargetThreadID = $targetMessage->thread;
+			$TargetParentID = $currentMessage->parent ? $currentMessage->parent : $TargetMessageID;
+		}
 		// partial logic to update target subject if specified
-		$subjectupdatesql = $TargetSubject != '' ? ",`subject`='$TargetSubject'" : "";
+		$subjectupdatesql = !empty($TargetSubject) ? ",`subject`='$TargetSubject'" : "";
 
+		$sql = "UPDATE #__fb_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}', `parent`='{$TargetParentID}' {$subjectupdatesql} WHERE `id`='{$MessageID}'";
+		$this->_db->setQuery ( $sql );
+		$this->_db->query ();
+		check_dberror ( 'Unable to perform move.' );
+
+		// Assemble move logic based on $mode
 		switch ($mode) {
 			case KN_MOVE_MESSAGE : // Move Single message only
-				if ($TargetMessageID == 0) {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$MessageID', `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
-				} else {
-					// TODO: in the future we may want to leave parent alone when message is not promoted to be a thread starter
-					// TODO: check that current code allows leaving parent alone.. that enables us to point another topic as parent
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID', `parent`='$TargetMessageID' $subjectupdatesql WHERE `id`='$MessageID';";
-				}
-				$this->_db->setQuery ( $sql );
-				$this->_db->query ();
-				check_dberror ( 'Unable to perform move.' );
-
 				// If we are moving the first message of a thread only - make the second post the new thread header
 				if ( $currentMessage->parent == 0 ) {
 					// We are about to pull the thread starter from the original thread.
 					// Need to promote the second post of the original thread as the new starter.
 					$sqlnewparent = "SELECT `id` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
 					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
-					$newParent = $this->_db->loadObject ();
+					$newParentID = $this->_db->loadResult ();
 					check_dberror ( 'Unable to select new message for promote parent.' );
 
-					if ( is_object( $newParent ) ) {
-						// Can't call directly the $this->_Move ( $ThreadID, $TargetCatID, $TargetSubject, $TargetThreadID, KN_MOVE_NEWER ); because this check if the move is set in the same cat
-						$sql = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`=0 $subjectupdatesql WHERE `id`='$newParent->id';";
-						$sql2 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`='$newParent->id' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id` NOT IN('$MessageID', '$newParent->id');";
+					if ( $newParentID ) {
+						$this->_Move ( $newParentID, $currentMessage->catid, '', 0, KN_MOVE_NEWER );
 					}
 				}
 
 				break;
-			case KN_MOVE_THREAD : // Move entire Thread
-				if ($TargetMessageID == 0) {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}';";
-				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID', `thread`='{$targetMessage->thread}' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}';";
-				}
+			case KN_MOVE_THREAD :
+				// Move entire Thread
+				$sql = "UPDATE #__fb_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}' WHERE `thread`='{$currentMessage->thread}'";
 
 				// Create ghost thread if requested
 				if ($GhostThread == true) {
@@ -206,24 +204,14 @@ class CKunenaModeration {
 				}
 
 				break;
-			case KN_MOVE_NEWER : // Move message and all newer messages of thread
-				if ($TargetMessageID == 0) {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$MessageID', `parent`=0 $subjectupdatesql WHERE `id`='$MessageID';";
-					$sql2 = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$MessageID', `parent`='$MessageID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
-				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID' $subjectupdatesql WHERE `id`='$MessageID';";
-					$sql2 = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID' $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID';";
-				}
+			case KN_MOVE_NEWER :
+				// Move message and all newer messages of thread
+				$sql = "UPDATE #__fb_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}' WHERE `thread`='{$currentMessage->thread}' AND `id`>'{$MessageID}'";
 
 				break;
-			case KN_MOVE_REPLIES : // Move message and all replies and quotes - 1 level deep for now
-				if ($TargetMessageID == 0) {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='0', $subjectupdatesql WHERE id`='$MessageID';";
-					$sql2 = "UPDATE #__fb_messages SET `catid`='$TargetCatID', $subjectupdatesql WHERE `thread`='$currentMessage->thread' AND `id`>'$MessageID' AND `parent`='$MessageID';";
-				} else {
-					$sql = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `parent`='$TargetMessageID', $subjectupdatesql WHERE `id`='$MessageID';";
-					$sql2 = "UPDATE #__fb_messages SET `catid`='$TargetCatID', `thread`='$TargetMessageID', $subjectupdatesql WHERE `thread`='{$currentMessage->thread}' AND `id`>'$MessageID' AND `parent`='$MessageID';";
-				}
+			case KN_MOVE_REPLIES :
+				// Move message and all replies and quotes - 1 level deep for now
+				$sql = "UPDATE #__fb_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}' WHERE `thread`='{$currentMessage->thread}' AND `parent`='{$MessageID}'";
 
 				break;
 			default :
@@ -234,11 +222,8 @@ class CKunenaModeration {
 		}
 
 		// Execute move
-		$this->_db->setQuery ( $sql );
-		$this->_db->query ();
-		check_dberror ( 'Unable to perform move.' );
-		if (isset($sql2)) {
-			$this->_db->setQuery ( $sql2 );
+		if (isset($sql)) {
+			$this->_db->setQuery ( $sql );
 			$this->_db->query ();
 			check_dberror ( 'Unable to perform move.' );
 		}
@@ -295,66 +280,40 @@ class CKunenaModeration {
 			case KN_DEL_MESSAGE : //Delete only the actual message
 				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='$MessageID';";
 				if ( $currentMessage->parent == 0 ) {
-					// We are about to pull the thread starter from the original thread.
-					// Need to promote the second post of the original thread as the new starter.
-					$sqlnewparent = "SELECT `id` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
-					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
-					$newParent = $this->_db->loadObject ();
-					check_dberror ( 'Unable to select new message for promote parent.' );
+					$this->_setSecondMessageParent ($MessageID, $currentMessage);
+				}
+				break;
+			case KN_DEL_MESSAGE_PERMINANTLY : // Delete the message from the database
+				// FIXME: if only admins are allowed to do this, add restriction (and make it general/changeble)
+				$sql = "DELETE FROM #__fb_messages WHERE `id`='$MessageID';";
 
-					if ( is_object( $newParent ) ) {
-						$sql1 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`=0 WHERE `id`='$newParent->id';";
-						$this->_db->setQuery ( $sql1 );
-						$this->_db->query ();
-						// TODO: leave parent alone after checking that it's possible in our code..
-						$sql2 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`='$newParent->id' WHERE `thread`='{$currentMessage->thread}' AND `id`!='$newParent->id';";
-						$this->_db->setQuery ( $sql2 );
-						$this->_db->query ();
-					}
+				$query = "DELETE FROM #__fb_messages_text WHERE `mesid`='$MessageID'; ";
+				$this->_db->setQuery ($query);
+				$this->_db->query ();
+				check_dberror ( "Unable to delete messages text." );
+
+				if ( $currentMessage->parent == 0 ) {
+					$this->_setSecondMessageParent ($MessageID, $currentMessage);
+				}
+
+				if ( $currentMessage->userid > 0) {
+					$query = "UPDATE #__fb_users SET posts=posts-1 WHERE `userid`='$MessageID'; ";
+					$this->_db->setQuery ($query);
+					$this->_db->query ();
+					check_dberror ( "Unable to update users posts." );
 				}
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
-				$sql = "UPDATE #__fb_messages SET `hold`=2 WHERE `thread`='{$currentMessage->thread}';";
+				$sql1 = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='$MessageID';";
+				$this->_db->setQuery ( $sql1 );
+				$this->_db->query ();
+				check_dberror ( 'Unable to perform delete.' );
+				$sql = "UPDATE #__fb_messages SET `hold`=3 WHERE hold IN (0,1) AND `thread`='{$currentMessage->thread}' AND `id`!='$MessageID' ;";
 				break;
 			case KN_DEL_ATTACH : //Delete only the attachments
-				jimport('joomla.filesystem.file');
-				$this->_db->setQuery ( "SELECT `userid`,`filename`, `filelocation` FROM #__kunena_attachments WHERE `mesid`='$MessageID';" );
-				$fileList = $this->_db->loadObjectlist ();
-				check_dberror ( "Unable to load attachments." );
-				if ( is_array($fileList) ) {
-					$sql = "DELETE FROM #__kunena_attachments WHERE `mesid`='$MessageID';";
-					// TODO: what to do with files that should not be deleted (attachments from other components, multiple occurances of the same file)?
-					// TODO: Joomla has function which can be used to search file in multiple locations, use it
-					foreach ( $fileList as $file ) {
-						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/'.$file->filename;
-						if (JFile::exists($filetoDelete)) {
-							JFile::delete($filetoDelete);
-						}
-						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/raw/'.$file->filename;
-						if (JFile::exists($filetoDelete)) {
-							JFile::delete($filetoDelete);
-						}
-						$filetoDelete = JPATH_ROOT.'/media/kunena/attachments/'.$file->userid.'/thumb/'.$file->filename;
-						if (JFile::exists($filetoDelete)) {
-							JFile::delete($filetoDelete);
-						}
-					}
-				}
-				// Delete from old location too
-				// TODO: get rid of old table / lcation
-				$this->_db->setQuery ( "SELECT `filelocation` FROM #__fb_attachments WHERE `mesid`='$MessageID';" );
-				$fileListOld = $this->_db->loadObjectList ();
-				check_dberror ( "Unable to load attachments from old location." );
-				if ( is_array($fileListOld) ) {
-					$this->_db->setQuery ( "DELETE FROM #__fb_attachments WHERE `mesid`='$MessageID';" );
-					$this->_db->query ();
-					check_dberror ( "Unable to delete old attachments." );
-					foreach ( $fileListOld as $file ) {
-						if (JFile::exists($file->filelocation)) {
-							JFile::delete($file->filelocation);
-						}
-					}
-				}
+				require_once (KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+				$attachments = CKunenaAttachments::getInstance();
+				$attachments->deleteMessage($MessageID);
 				break;
 			default :
 				// Unsupported mode - Error!
@@ -363,9 +322,11 @@ class CKunenaModeration {
 		}
 
 		// Execute delete
-		$this->_db->setQuery ( $sql );
-		$this->_db->query ();
-		check_dberror ( 'Unable to perform delete.' );
+		if (isset($sql)) {
+			$this->_db->setQuery ( $sql );
+			$this->_db->query ();
+			check_dberror ( 'Unable to perform delete.' );
+		}
 
 		// Remember to delete ghost post
 		// FIXME: replies may have ghosts, too. What to do with them?
@@ -399,6 +360,10 @@ class CKunenaModeration {
 	// Public interface
 
 
+	public function move($ThreadID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE, $GhostThread = false) {
+		return $this->_Move ( $ThreadID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode, $GhostThread );
+	}
+
 	public function moveThread($ThreadID, $TargetCatID, $GhostThread = false) {
 		return $this->_Move ( $ThreadID, $TargetCatID, '', 0, KN_MOVE_THREAD, $GhostThread );
 	}
@@ -419,6 +384,10 @@ class CKunenaModeration {
 		return $this->_Delete ( $ThreadID, $DeleteAttachments, KN_DEL_THREAD );
 	}
 
+	public function deleteMessagePerminantly($MessageID, $DeleteAttachments = false) {
+		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE_PERMINANTLY );
+	}
+
 	public function deleteMessage($MessageID, $DeleteAttachments = false) {
 		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE );
 	}
@@ -427,102 +396,28 @@ class CKunenaModeration {
 		return $this->_Delete ( $MessageID, true, KN_DEL_ATTACH );
 	}
 
-	public function blockUserAccount($UserID, $block) {
-		// Sanitize parameters!
-		$UserID = intval ( $UserID );
-		$block = intval ( $block );
-
-		if ( !CKunenaTools::isModerator($this->_my->id) ) {
-			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR');
-			return false;
-		}
-		if ( $UserID == $this->_my->id ) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_BLOCK_YOURSELF' );
-			return false;
-		}
-		if (!$UserID) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_BLOCK_ANONYMOUS' );
-			return false;
-		}
-		$user = JUser::getInstance($UserID);
-		if (!$user->id) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_BLOCK_NO_USER', $UserID );
-			return false;
-		}
-		// Nobody can block admins
-		if ( CKunenaTools::isAdmin($UserID) ) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_BLOCK_ADMIN', $user->username );
-			return false;
-		}
-		// Only admins can block moderators
-		if ( !CKunenaTools::isAdmin($this->_my->id) && CKunenaTools::isModerator($UserID) ) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_BLOCK_MODERATOR', $user->username );
-			return false;
-		}
-
-		$user->block = $block;
-		$user->save();
-
-		// Logout user
-		$this->logoutUser($UserID);
-		return true;
-	}
-
-	public function deleteUserAccount($UserID) {
-		// Sanitize parameters!
-		$UserID = intval ( $UserID );
-
-		if ( !CKunenaTools::isAdmin($this->_my->id) ) {
-			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_ADMIN');
-			return false;
-		}
-		if ( $UserID == $this->_my->id ) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_DELETE_YOURSELF' );
-			return false;
-		}
-		if (!$UserID) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_DELETE_ANONYMOUS' );
-			return false;
-		}
-		$user = JUser::getInstance($UserID);
-		if (!$user->id) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_DELETE_NO_USER', $UserID );
-			return false;
-		}
-		// Nobody can delete admins
-		if ( CKunenaTools::isAdmin($UserID) ) {
-			$this->_errormsg = JText::_( 'COM_KUNENA_MODERATION_ERROR_USER_DELETE_ADMIN', $user->username );
-			return false;
-		}
-
-		$user->delete();
-		$this->_db->setQuery ( "DELETE FROM #__fb_users WHERE `userid`='$UserID';" );
-		$this->_db->query ();
-		check_dberror ( "Unable to delete user from kunena." );
-
-		return true;
-	}
-
-	public function logoutUser($UserID) {
-		// Sanitize parameters!
-		$UserID = intval ( $UserID );
-
-		if ( !CKunenaTools::isModerator($this->_my->id) ) {
-			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MODERATOR');
-			return false;
-		}
-
-		$kunena_app = & JFactory::getApplication ();
-		$options = array();
-		$options['clientid'][] = 0; //site
-		$kunena_app->logout((int)$UserID,$options);
-
-		return true;
-	}
-
 	// If a function failed - a detailed error message can be requested
 	public function getErrorMessage() {
 		return $this->_errormsg;
+	}
+
+	protected function _setSecondMessageParent ($MessageID, $currentMessage){
+		// We are about to pull the thread starter from the original thread.
+		// Need to promote the second post of the original thread as the new starter.
+		$sqlnewparent = "SELECT `id` FROM #__fb_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
+		$this->_db->setQuery ( $sqlnewparent, 0, 1 );
+		$newParent = $this->_db->loadObject ();
+		check_dberror ( 'Unable to select new message for promote parent.' );
+
+		if ( is_object( $newParent ) ) {
+			$sql1 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`=0 WHERE `id`='$newParent->id';";
+			$this->_db->setQuery ( $sql1 );
+			$this->_db->query ();
+			// TODO: leave parent alone after checking that it's possible in our code..
+			$sql2 = "UPDATE #__fb_messages SET `thread`='$newParent->id', `parent`='$newParent->id' WHERE `thread`='{$currentMessage->thread}' AND `id`!='$newParent->id';";
+			$this->_db->setQuery ( $sql2 );
+			$this->_db->query ();
+		}
 	}
 
 	protected function _createGhostThread($MessageID,$currentMessage) {

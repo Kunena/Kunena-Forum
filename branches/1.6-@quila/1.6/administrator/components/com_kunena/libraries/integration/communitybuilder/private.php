@@ -48,4 +48,22 @@ class KunenaPrivateCommunityBuilder extends KunenaPrivate
 		}
 		return $html;
 	}
+
+	public function getInboxLink ($text) {
+		if (!$text) $text = JText::_('COM_KUNENA_PMS_INBOX');
+		global $_CB_framework;
+
+		$cbpath = KUNENA_ROOT_PATH_ADMIN .DS. 'components' .DS. 'com_comprofiler' .DS. 'plugin.foundation.php';
+		if (file_exists($cbpath)) require_once($cbpath);
+		else return;
+
+		$userid = $_CB_framework->myId();
+
+		$cbUser =& CBuser::getInstance( (int) $userid );
+		if($cbUser === null) return;
+
+		$itemid = getCBprofileItemid();
+
+		return CKunenaLink::GetSefHrefLink ( 'index.php?option=com_comprofiler&task=userProfile&user=' .$userid. $itemid, $text, '', 'follow');
+	}
 }

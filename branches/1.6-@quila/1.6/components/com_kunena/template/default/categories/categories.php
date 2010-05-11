@@ -198,7 +198,7 @@ else {
 						?>
 
 			<?php
-						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( $childforum->name ) );
+						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( $childforum->name ), '','', KunenaParser::stripBBCode ( $childforum->description ) );
 						echo '<span class="kchildcount ks">(' . $childforum->numTopics . "/" . $childforum->numPosts . ')</span>';
 						echo "</div>";
 					}
@@ -253,8 +253,21 @@ else {
 					?>
 
 			<td class="td-5 left" width="25%">
+			<!-- Avatar --> <?php
+			if ($this->config->avataroncat > 0) :
+				$profile = KunenaFactory::getUser((int)$subcat->userid);
+				$useravatar = $profile->getAvatarLink('klist_avatar', 'lastpost');
+				if ($useravatar) :
+				?>
+				<span class="klatest-avatar"> <?php
+				echo CKunenaLink::GetProfileLink ( $subcat->userid, $useravatar );
+				?>
+				</span> <?php
+				endif;
+			endif;
+			?> <!-- /Avatar -->
 			<div class="klatest-subject km">
-			<?php
+					<?php
 					echo JText::_('COM_KUNENA_GEN_LAST_POST');
 					?>: <?php
 					echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, kunena_htmlspecialchars ( stripslashes ( $subcat->subject ) ), $subcat->id_last_msg );

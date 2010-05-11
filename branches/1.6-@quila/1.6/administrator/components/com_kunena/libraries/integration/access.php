@@ -31,4 +31,24 @@ abstract class KunenaAccess {
 		}
 		return self::$instance;
 	}
+
+	function getAllowedHold($user, $catid, $string=true) {
+		// hold = 0: normal
+		// hold = 1: unapproved
+		// hold = 2: deleted
+		$user = KunenaFactory::getUser($user);
+
+		$hold [] = 0;
+		if ($this->isModerator ( $user->userid, $catid ))
+			$hold [] = 1;
+		if ($this->isAdmin ( $user->userid, $catid ))
+			$hold [] = 2;
+		if ($string) $hold = implode ( ',', $hold );
+		return $hold;
+	}
+
+	abstract function isAdmin($uid = null, $catid = 0);
+	abstract function isModerator($uid = null, $catid = 0);
+	abstract function getAllowedCategories($userid);
+	abstract function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0');
 }

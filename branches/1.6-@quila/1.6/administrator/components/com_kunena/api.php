@@ -29,8 +29,8 @@ define ( 'KPATH_MEDIA_LEGACY', JPATH_ROOT . DS . 'images/fbfiles/' );
 
 // URLs
 define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
-define ( 'KURL_MEDIA', JURI::Base () . 'media/' . KUNENA_NAME . '/' );
-define ( 'KURL_MEDIA_LEGACY', JURI::Base () . 'images/fbfiles/' );
+define ( 'KURL_MEDIA', JURI::Root () . 'media/' . KUNENA_NAME . '/' );
+define ( 'KURL_MEDIA_LEGACY', JURI::Root () . 'images/fbfiles/' );
 
 /**
  * Intelligent library importer.

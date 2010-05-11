@@ -34,6 +34,295 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+11-May-2010 Matias
+^ [#15886] Merged revisions 2434-2435 from /branches/1.6-xillibit
+# [#20038] Basic Joomla 1.6 support: Fix archive and manifest to copy all files (including installer)
+
+10-May-2010 Xillibit
+^ [#19288] Add user moderation tools, ban functions in kunena users manager (not yet finished)
+
+9-May-2010 Matias
+^ [#15886] Merged revisions 2429-2431 from /branches/1.6-xillibit
+# [#19288] Fix regression in profile: non-existing users cause page to crash
+
+9-May-2010 Xillibit
+# [#19288] Fix regression on summary.php on function getInboxLink()
+# [#19288] Fix regression Undefined property: CKunenaPosting::$catid in kunena.posting.class.php
+# [#19288] Show new bbcode [attachment][/attachment] in textarea when put new attachments
++ [#19288] Add user moderation tools or ban functions (thanks littlejohn)
+
+8-May-2010 Xillibit
++ [#19288] Put links into profile page to access PM boxes
+# [#19288] Don't let unregistered users to report message
+# [#19288] Do not show login message if visitor tries to post new topic
+
+8-May-2010 Matias
+^ [#19448] Move code out of template: Announcements
+^ [#19448] Move login.php and profilebox.php from plugins to template dir
+^ [#19448] Clean up and simplify Announcements html
+^ [#19448] Clean up and simplify Rules, Help & Forumjump html
+^ [#19448] Clean up and simplify Search html
+^ [#19448] No need to have 2 login areas, simplified login.php
+^ [#15886] Merged revisions 2412-2424 from /branches/1.6-xillibit with changes
+
+7-May-2010 Xillibit
+# [#19288] Anonymous posting option isn't given when you begin a topic from the top tab new topic
+# [#19288] Move report.class.php into lib directory
+
+7-May-2010 Matias
+# [#19288] Fix autocompleter in search
++ [#19244] Moderation feature: add autocompleter into userlist (Find User)
+^ [#19448] Move code out of template: Userlist
+
+6-May-2010 Xillibit
+# [#19288] Fix regresion on who.class.php which break the viewing users in pathway
+# [#19288] Put PM links (CB, Uddeim, Jomsocial) in profilebox
+^ [#19288] Rewrite report.php as a class
+
+5-May-2010 Matias
+^ [#15886] Merged revision 2412 from /branches/1.6-xillibit
+# [#19288] Fix regression in listcat: router list had wrong values -> extra queries
+# [#19288] Fix regression in CKunenaWhoIsOnline: same task was done 2 times
+# [#19255] Fix XHTML validation errors in search
+
+5-May-2010 Xillibit
+# [#19288] Fix regression in kunena.who.class.php with method GetCategoryListURL() undefined
+# [#19288] Fix regresssion wrong hidden users display in whoisonline
+# [#19288] Remove link for social buttons (skype, msn...) because doesn't work under IE
+
+4-May-2010 Matias
+^ [#19244] Implement new Moderation features: New topic/post moderation screen (no AJAX yet)
+- [#19244] Remove deprecated moderation buttons, for now on every action will be move
+# [#19244] Fixed a few bugs in moderator class, simplified logic
+# [#19288] Fix regression: Preview is not working
+# [#19288] Fix regression: CB/JomSocial installed, no integration: infinite redirect on Profile page
+^ [#15886] Merged revisions 2380-2403 from /branches/1.6-xillibit with changes
++ [#19244] Implement new Moderation features: Add some AJAX to the move topic/post screen
++ [#19288] Add debug mode to Kunena
++ [#19244] Implement new Moderation features: Minor improvements to usability
+
+03-May-2010 Xillibit
+# [#19288] Put a constructor in the poll class with changes how to use it
+# [#19288] Remove the useless query in poll to get parent
+# [#19288] Put kunena.who.class.php in lib with a little change
+# [#19288] Fix one warning detected in whoisonline.php in html
+
+02-May-2010 Xillibit
+# [#19288] Changes on CKunenaWhoIsOnline with functions to load templates : who.php and whoisonline.php
+# [#19288] Fix links on who page
+
+01-May-2010 Xillibit
+# [#19288] Use CKunenaTimeformat::showDate() in who page
+# [#19288] Rewrite who.class.php like a true class with little changes
+
+30-Apr-2010 Xillibit
+# [#19288] Fix undefined variables in parser.php on video size
+# [#19288] Minimize javascript buttons on the Stats page not working
+# [#19288] Add tab in profile to see Uddeim links with unreadmessages
+
+30-Apr-2010 Matias
++ [#19356] New status based topicicons when users cannot pick up their own icons
++ [#19356] Topic icon: add link to first unread (or last) message
+
+29-Apr-2010 Xillibit
+# [#19288] Add $title parameter in function GetProfileLink() to be used in kunenalatest module
+# [#19288] Extra slash in path of avatars in gallery
+# [#19288] Add configuration setting to show or hide list of online users for security purpose
+^ [#19288] change getName() function in user.php from protected to public
+
+29-Apr-2010 Matias
+# [#19288] Fix regression: JomSocial avatar integration is not working
+
+28-Apr-2010 Severdia
++ [#19356] Tweak select box size on admin side.
+
+28-Apr-2010 Xillibit
+# [#19288] Give the possibility to disable or enable easily the topicicons with config settings
++ [#20254] Integration of lightbox on images using script based on MooTools (thanks Cerberus)
+
+28-Apr-2010 Matias
+# [#19288] Administration: Escape text input fields before showing them (to show "foo")
+# [#19288] Magic Quotes setting in PHP adds slashes to configuration options and category names, desctriptions
+# [#19288] Fix regression: Minimizing top profilebox does not work if you're not logged in
+# [#19244] Implement new Moderation features: Show unapproved and deleted messages in most screens (if permissions)
+# [#19244] Implement new Moderation features: Add func = unapproved/deleted
+^ [#15886] Merged revisions 2370-2371 from /branches/1.6-xillibit
+# [#19288] Fix regression: If function/category does not exist, show error page
+# [#19288] Fix regression: Category administration: do not show non-existent moderators in the list
+# [#19288] Allow user to reset Kunena configuration
+# [#19288] By default, new category should be moderated
+# [#19288] Remove confidential information from quoted text
+
+27-Apr-2010 Xillibit
+# [#19288] Hide about me when it's empty
+# [#19288] Set standard width and height for video if the user forgot to put them in parser
+
+27-Apr-2010 Matias
+^ [#15886] Merged revisions 2360-2363 from /branches/1.6-xillibit with minor changes
+# [#19288] Fix regression: Wrong menuitem gets highlighted if default page is not Index
+# [#19288] Fix regression: Only one attachment can be deleted in edit
+# [#19288] Uninstall does not remove Kunena menu (=> broken links)
+# [#19288] Admin: Create menu does not reset kunenamenu, but users expect it to do it
+# [#19288] Installing Kunena does not always create menus
+# [#19288] Fix regression: Typo in CKunenaModeration::_Delete(): usersid
+
+26-Apr-2010 Xillibit
+# [#19288] Display userid in trash manager
+# [#19288] Fix little regression on delete perminantly function
+# [#19288] Put tooltip to show extensions allowed in form
+# [#19288] Profile: Put the personnaltext (about me) below the avatar
+# [#19288] Change how the functions Restore and Delete works (hold=2,3)
+# [#19288] Fix undefined variable on line 95 on kunena.php (no Itemid)
+# [#19288] Wrong width and height for video added by choosing the provider in the list and putting the video ID
+# [#19288] Set standard width and height for video if the user forgot to put them
+# [#19288] When you save your own avatar for the first time, you have the message JFolder::files: Path is not a folder:
+
+26-Apr-2010 Matias
++ [#20071] KunenaRoute: Remove redirect when not in kunenamenu, set active menu item instead
+^ [#15886] Merged revision 2349 from /branches/1.6-xillibit with changes
+# [#19288] Make custom avatar galleries to work with SEF (thanks xillibit)
+# [#19288] Use CKunenaAttachments in post history
+# [#19288] Fix YouTube embed bug where some videos were not showing up
+# [#19288] Do not redirect in CKunenaView->display(), fixes a bug in Kunena Discuss plugin
+
+25-Apr-2010 Xillibit
+# [#19288] Small change to gallery url
+
+25-Apr-2010 Matias
+# [#19288] Fix regression: Do not show gray/unused social icons when viewing a topic
+^ [#15886] Merged revision 2345 from /branches/1.6-810
+^ [#15886] Merged revision 2343 from /branches/1.6-xillibit with changes
+# [#19288] Administration: Improve category lists for users and categories
++ [#19288] User Administration: Add missing Global Moderator option to the category list
+# [#19295] Clean up code: remove a few unused or deprecated functions in administration
+# [#19288] Fix moderate user layout (thanks Cerberus)
+# [#20222] Do Not Use Category IDs: Router cannot decide which catid to use if categories have the same name
+
+24-Apr-2010 Xillibit
+# [#19288] Hide button Mark Forum Read if there are no posts in the cat
+# [#19288] Show message "There are no posts in this forum" if there are no posts but there are sub-categories
+# [#19288] Add a list of extensions file allowed in post form
+# [#19288] Show description cat on hover on listcat
+# [#19288] Put button delete permanently near to the button delete
+# [#19288] Put new configuration setting to exclude or allow specifics cats from recent discussions page
+
+24-Apr-2010 Matias
+^ [#15886] Merged revisions 2332, 2333 and 2337 from /branches/1.6-810
+^ [#15886] Merged revision 2335 from /branches/1.6-xillibit
+# [#19288] Fix regression: Use avatar size/quality on avatar uploads, set maximum size to 200x200px
+# [#19288] Use always new avatar class to show avatar (image may not exist)
+# [#19288] Fix regression: Fix media URL in administration
+# [#19288] Fix regression: In some cases users get attachments to their messages from nowhere
+# [#19295] Clean up code: remove old attachment code, use always new CKunenaAttachments class
+# [#19251] Reduce the number of SQL calls in forum prune (3x messages + 2x threads + 2 -> 2x threads + 3)
+# [#19288] Do not delete files which are used in other attachments or are not really Kunena attachments
+# [#19288] Fix regression: Deleting attachments didn't work, they were always deleted during edit
+
+23-Apr-2010 Xillibit
+# [#19288] Fix wrong description for social info in edit profile and wrong links
+^ [#19288] Change ordering setting in profile by adding a kunena global option
+# [#19288] Put karma details with icons minus and plus in profile
+# [#19288] Add configuration setting to choose delete behaviour for user
+
+23-Apr-2010 Matias
+^ [#15886] Merged revision 2322 from /branches/1.6-810 with changes
+# [#19288] Fix regression: Administration: fix IP listing in user manager
+# [#19288] Fix last edit 0 minutes ago, if edit time was not saved (import?)
+# [#19288] Fix regression: New smiley query in installer was slightly broken
+# [#19288] Better error message if upload fails on extension check
+# [#19288] Do not resize image if it is within allowed size limits (keeps animated gif working)
+# [#19288] Handle correctly transparent images (including blending), keep image format
+# [#19288] Save uploaded avatars to avarars/users/user123.jpg and sizeXX_user123.jpg etc
++ [#19288] Show avatar also in Categories page
+^ [#19293] Remove deprecated configuration options: make avatar sizes to be template specific instead of global options
+
+23-Apr-2010 810
+# [#19288] Fix regression: Check all button didn't work in IE8
+^ [#19758] Clean up Admin interface: New edit Forum style in backend
+^ [#19758] Clean up Admin interface: New smillies header image fixed (first smiley not yet working)
+^ [#19356] Minor HTML/CSS fixes in the backend
+
+22-Apr-2010 severdia
+^ [#19758] New smilies and new key combos (including maps to other forums)
+
+22-Apr-2010 810
+^ [#19758] Clean up Admin interface: New edit Profile style in backend
+# [#19758] Clean up Admin interface: Fixed signature editing
+# [#19288] Fix regression: Fix upload browsers
+
+22-Apr-2010 Matias
+# [#20203] Administrator has full moderator permissions, but that does not mean that he has to be one
+# [#20204] Every moderator gets email when only global moderators and assigned moderators should get it
+^ [#15886] Merged revisions 2316, 2318 and 2323 from /branches/1.6-xillibit
+
+22-Apr-2010 Xillibit
+# [#19288] Show attachments in post history
+^ [#19288] Replace poll field add/remove icons, by icons minus and plus
+# [#19288] Put tooltips on profile input field to better understand the format of strings to enter
+
+21-Apr-2010 Xillibit
+# [#19288] Fix issue which prevents to display images in browse images in backend (Part 2)
+^ [#19764] Add new javascript part for common moderation page (not working yet)
+
+19-Apr-2010 severdia
+# [#19758] Fixes for admin UI, cross-browser issues
+
+18-Apr-2010 Matias
+^ [#15886] Merged revisions 2279-2288 from /branches/1.6-xillibit
+
+18-Apr-2010 Xillibit
+^ [#19764] New configuration setting to choose between multiples buttons or one button for moderation
+
+17-Apr-2010 Xillibit
+# [#19288] Fix issue which prevents to display images from not default gallery
+# [#19288] Fix issue which prevents to display images in browse images in backend (not totally working)
+# [#19288] Fix some language strings and little changes
+# [#19288] Some little fixes and changes on backend
+# [#19288] Make javascript working on select category when you aren't on new topic and hide poll icon
+
+17-Apr-2010 Matias
+# [#19288] Do not list moderators who do not exists (deleted or banned)
+^ [#15886] Merged revisions 2239 and 2272 from /branches/1.6-xillibit-fixing with changes
+
+15-Apr-2010 Matias
+# [#19288] Fix regression: Fatal error when changing vote in a poll
+# [#19288] Fix regression: Topic icon cannot be changed while editing post
+# [#19288] Fix regression: Show images for guests and Show attachments for guests = 'No' have no effect
+# [#19288] Fix regression: Only allow gif, jpeg, jpg and png images in avatar upload
+# [#19288] Fix regression: Fix bug in API which prevented mod_kunenalatest from working with unregistered users
+
+14-Apr-2010 Matias
+# [#19288] Fix regression: Some old topics are invisible in current schema -- fix database during install
++ [#19288] Allow administrator to see deleted posts and undelete them
++ [#20050] Add new integration classes: Add new event onAfterUndelete to Activity class
+# [#19288] Fix regression: do not allow anyone to reply hidden messages
+# [#19288] Fix regression: do not use auto redirect to valid topic in KunenaDiscuss plugin
+# [#19288] Fix regression: do not hide "Who is online" when Show Statistics = No
+# [#19288] Fix regression: Disable emoticons = Yes has no effect when you write a new message
+# [#19288] Fix regression: CommunityBuilder avatar for visitor was broken
+# [#19288] Fix regression: Allow Subscriptions = No has no effect in profile page
+# [#19288] Fix regression: Allow Favorites = No has no effect in profile page
+# [#19288] Fix regression: If configuration option Allow Favorites = No, all topics have been favorited by visitor (part 2)
+# [#19288] Fix regression: The NEW indicator doesn't show up in func=showcat
+# [#19288] Fix regression: Users should not be able to upload image if only files are allowed and files if only images are allowed
+
+13-Apr-2010 Matias
+# [#19288] Anonymous posts should change name to "Anonymous" with a warning if username exists
+# [#19288] Fix regression: Forum administration breaks up when there are no categories
+# [#19288] Fix regression: Mark all forums read does not work
+# [#19295] Clean up code: Delete post should use the same function as moderator and normal user
+# [#19288] Fix regression: Delete post button shows up even if there are replies
+# [#19288] Fix regression: Empty page in view if limitstart > messagecount (redirect to last page)
+# [#19288] Fix regression: In move topic, "Leave ghost message in old forum" has no effect
+# [#19288] Fix regression: Configuration option Ranking = No causes func=view to crash
+# [#19288] Fix regression: Configuration option Show User Statistics = Yes has no effect in profile
+# [#19288] Fix regression: "Rank" is not translated in profile/summary.php
+# [#19288] Fix regression: If configuration option Allow Favorites = No, all topics have been favorited by visitor
+# [#19288] Fix regression: Fix some minor bugs in router/routing
+
+13-Apr-2010 Xillibit
+^ [#19380] List attachments when editing post with checkboxes to delete the attachements
+
 12-Apr-2010 Matias
 ^ [#20050] Move more code to KunenaParser
 # [#19288] Fix regression: facebook gets value from skype when user edits profile
@@ -50,6 +339,10 @@ Kunena 1.6.0-DEV
 # [#19288] Fix regression: Show attachments while editing message
 # [#19288] Fix regression: Profile in menu does not point into CB/JomSocial/AUP profile
 # [#19288] Fix regression: Edit/Quote post adds &amp;s into the body
+
+12-Apr-2010 Xillibit
+- [#19764] Remove useless functions KUnfavorite() and KUnsubscribe() in class.kunena.php
+^ [#19764] Replace all separte pages for moderation (split, move...) by one page (not fully tested)
 
 12-Apr-2010 810
 ^ [#19356] Minor HTML/CSS fixes

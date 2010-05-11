@@ -16,12 +16,13 @@ class CKunenaProfile {
 	public $user = null;
 	public $profile = null;
 	public $online = null;
+	public $allow = false;
 
 	function __construct($userid, $do='') {
 		kimport('html.parser');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
-		$this->_config = CKunenaConfig::getInstance ();
+		$this->config = CKunenaConfig::getInstance ();
 		$this->my = JFactory::getUser ();
 		$this->do = $do;
 
@@ -31,8 +32,9 @@ class CKunenaProfile {
 		else {
 			$this->user = JFactory::getUser( $userid );
 		}
+		if ($this->user->id == 0) return;
+		$this->allow = true;
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
-		if ($this->profile->userid == 0) return;
 		if ($this->profile->posts === null) {
 			$this->profile->save();
 		}
@@ -41,19 +43,22 @@ class CKunenaProfile {
 			else $this->editlink = CKunenaLink::GetMyProfileLink ( $this->profile->userid, JText::_('COM_KUNENA_BACK'), 'nofollow' );
 		}
 		$this->name = $this->user->username;
-		if ($this->_config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
-		if ($this->_config->userlist_usertype) $this->usertype = $this->user->usertype;
-		if ($this->_config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
-		if ($this->_config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
-		$this->avatarlink = $this->profile->getAvatarLink('','large');
+		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
+		if ($this->config->showuserstats) {
+			if ($this->config->userlist_usertype) $this->usertype = $this->user->usertype;
+			$rank = $this->profile->getRank();
+			if ($rank->rank_title) $this->rank_title = $rank->rank_title;
+			if ($rank->rank_image) $this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
+			$this->posts = $this->profile->posts;
+		}
+		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
+		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
+		$this->avatarlink = $this->profile->getAvatarLink('','profile');
 		$this->personalText = KunenaParser::parseText(stripslashes($this->profile->personalText));
 		$this->signature = KunenaParser::parseBBCode(stripslashes($this->profile->signature));
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
 		$this->admin = CKunenaTools::isAdmin($this->profile->userid);
-		$rank = $this->profile->getRank();
-		if ($rank->rank_title) $this->rank_title = $rank->rank_title;
-		if ($rank->rank_image) $this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
 		switch ($this->profile->gender) {
 			case 1:
 				$this->genderclass = 'male';
@@ -73,6 +78,7 @@ class CKunenaProfile {
 			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
 		$this->online = $this->profile->isOnline();
+		$this->showUnusedSocial = true;
 
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
@@ -109,7 +115,7 @@ class CKunenaProfile {
 			$folders[$key] = $folder;
 		}
 
-		$selected = $this->gallery;
+		$selected = JString::trim($this->gallery);
 		$str =  "<select name=\" {$this->escape($select_name)}\" id=\"avatar_category_select\" onchange=\"switch_avatar_category(this.options[this.selectedIndex].value)\">\n";
 		$str .=  "<option value=\"default\"";
 
@@ -169,8 +175,16 @@ class CKunenaProfile {
 	function displayEditAvatar() {
 		if (!$this->editavatar) return;
 		$this->gallery = JRequest::getVar('gallery', 'default');
-		if ($this->gallery == 'default') $this->gallery = '';
-		$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';
+		if ($this->gallery == 'default') {
+			$this->gallery = '';
+		}
+		$path = KUNENA_PATH_AVATAR_UPLOADED .'/gallery';
+		if (is_dir($path)) {
+			$this->galleryurl = KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery';
+		} else {
+			$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';
+			$this->galleryurl = KUNENA_LIVEUPLOADEDPATH_LEGACY . '/avatars/gallery';
+		}
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 		CKunenaTools::loadTemplate('/profile/editavatar.php');
@@ -259,8 +273,21 @@ class CKunenaProfile {
 		CKunenaTools::loadTemplate('/profile/edit.php');
 	}
 
+	function displayKarma() {
+		if ($this->config->showkarma && $this->profile->userid) {
+			$userkarma = '<strong>'. JText::_('COM_KUNENA_KARMA') . "</strong>: " . $this->profile->karma;
+
+			if ($this->my->id && $this->my->id != $this->profile->userid) {
+				$userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'decrease', '', '', $this->profile->userid, '<span class="karmaminus" title="' . JText::_('COM_KUNENA_KARMA_SMITE') . '"> </span>' );
+				$userkarma .= ' '.CKunenaLink::GetKarmaLink ( 'increase', '', '', $this->profile->userid, '<span class="karmaplus" title="' . JText::_('COM_KUNENA_KARMA_APPLAUD') . '"> </span>' );
+			}
+		}
+
+		return $userkarma;
+	}
+
 	function display() {
-		if (!$this->profile->userid) return;
+		if (!$this->allow) return;
 
 		switch ($this->do) {
 			case 'save':
@@ -286,7 +313,7 @@ class CKunenaProfile {
 		$post = JRequest::get( 'post' );
 		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
 		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
-		if ($this->_config->usernamechange) $post['username']	= JRequest::getVar('username', '', 'post', 'username');
+		if ($this->config->usernamechange) $post['username']	= JRequest::getVar('username', '', 'post', 'username');
 		else $ignore[] = 'username';
 
 		// get the redirect
@@ -372,9 +399,22 @@ class CKunenaProfile {
 
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
 		$upload = new CKunenaUpload();
+		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
 
 		if ( $upload->uploaded('avatarfile') ) {
-			$upload->uploadFile(KUNENA_PATH_AVATAR_UPLOADED , 'avatarfile', false);
+			$uploadpath = 'users';
+			$path = KUNENA_PATH_AVATAR_UPLOADED .DS. $uploadpath;
+
+			// Delete old uploaded avatars:
+			if ( JFolder::exists( $path ) ) {
+				$deletelist = JFolder::files($path, 'user'.$this->profile->userid, false, true);
+				foreach ($deletelist as $delete) {
+					JFile::delete($delete);
+				}
+			}
+			$upload->setImageResize(intval($this->config->avatarsize)*1024, 200, 200, $this->config->avatarquality);
+
+			$upload->uploadFile($path , 'avatarfile', 'user'.$this->profile->userid, false);
 			$fileinfo = $upload->getFileInfo();
 
 			if ($fileinfo['ready'] === true) {

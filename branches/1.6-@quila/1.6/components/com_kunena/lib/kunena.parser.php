@@ -106,9 +106,9 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 		if ($kunena_config->autoembedyoutube) {
 			// convert youtube links to embedded player
-			$task->text = preg_replace ( '/<a href=[^>]+youtube.([^>\/]+)\/watch\?[^>]*v=([^>"&]+)[^>]+>[^<]+<\/a>/u', '<object width="425" height="344"><param name="movie" value="http://www.youtube.$1/v/$2&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://www.youtube.$1/v/$2&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+\/\/(\w+\.youtube\.[^\/]+)\/watch\?[^>]*v=([^>"&\']+)[^>]+>[^<]+<\/a>/u', '<object width="425" height="344"><param name="movie" value="http://$1/v/$2&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><embed src="http://$1/v/$2&hl=en&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="425" height="344"></embed></object>', $task->text );
 			// convert youtube playlists to embedded player
-			$task->text = preg_replace ( '/<a href=[^>]+youtube.([^>\/]+)\/view_play_list\?[^>]*p=([^>"&]+)[^>]+>[^<]+<\/a>/u', '<object width="480" height="385"><param name="movie" value="http://www.youtube.$1/p/$2"></param><embed src="http://www.youtube.$1/p/$2" type="application/x-shockwave-flash" width="480" height="385"></embed></object>', $task->text );
+			$task->text = preg_replace ( '/<a href=[^>]+\/\/(\w+\.youtube\.[^\/]+)\/view_play_list\?[^>]*p=([^>"&]+)[^>]+>[^<]+<\/a>/u', '<object width="480" height="385"><param name="movie" value="http://$1/p/$2"></param><embed src="http://$1/p/$2" type="application/x-shockwave-flash" width="480" height="385"></embed></object>', $task->text );
 		}
 
 		if ($kunena_config->autoembedebay) {
@@ -161,7 +161,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 		// HTMLize from plaintext
 
-		$text_new = kunena_htmlspecialchars ( $text_new, ENT_QUOTES );
+		$text_new = KunenaParser::escape ( $text_new );
 		if ($context == 'text' && ($task->autolink_disable == 0)) {
 			// Build links HTML2HTML
 
@@ -458,7 +458,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						// Need to check if we are nested inside a URL code
 						if ($task->autolink_disable == 0) {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = "<a href='" . $tempstr . "' rel=\"lightbox\"><img src='" . $tempstr . ($imgtagsize ? "' width='" . $imgmaxsize : '') . "' style='max-width:" . $imgmaxsize . "px; ' alt='' /></a>";
+							$tag_new = "<a title='' rel=\"lightbox\" href='".$tempstr."'><img src='".$tempstr."' width='".$imgmaxsize."' style='max-width:".$imgmaxsize."px; ' alt='' /></a></div>";
 						} else {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
 							$tag_new = "<img src='" . $tempstr . ($imgtagsize ? "' width='" . $imgmaxsize : '') . "' style='max-width:" . $imgmaxsize . "px; ' alt='' />";
@@ -574,8 +574,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 				// --- config start ------------
 
-				$vid_minwidth = 20;
-				$vid_minheight = 20; // min. display size
+				$vid_minwidth = 425;
+				$vid_minheight = 344; // min. display size
 
 				//$vid_maxwidth = 640; $vid_maxheight = 480; // max. display size
 
@@ -641,10 +641,21 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$vid_height += $vid_addy;
 				if (! isset ( $tag->options ["size"] )) {
 					if (isset ( $tag->options ["width"] ))
-						$vid_width = intval ( $tag->options ["width"] );
+						if($tag->options ['width'] == '1') {
+							$tag->options ['width'] = $vid_minwidth;
+						}
+						if ( isset($tag->options ["width"])) {
+							$vid_width = intval ( $tag->options ["width"] );
+						}
 					if (isset ( $tag->options ["height"] ))
-						$vid_height = intval ( $tag->options ["height"] );
+						if($tag->options ['height'] == '1') {
+							$tag->options ['height'] = $vid_minheight;
+						}
+						if ( isset($tag->options ["height"])) {
+							$vid_height = intval ( $tag->options ["height"] );
+						}
 				}
+
 				if ($vid_width < $vid_minwidth)
 					$vid_width = $vid_minwidth;
 				if ($vid_width > $vid_maxwidth)

@@ -26,7 +26,7 @@ defined( '_JEXEC' ) or die();
 <style>
 .kadmin-welcome {
 	clear:both;
-	margin-bottom:10px;
+	margin:10px 0;
 	padding:10px;
 	font-size:12px;
 	color:#536482;

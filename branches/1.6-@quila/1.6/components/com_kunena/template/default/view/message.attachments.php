@@ -19,17 +19,13 @@ defined ( '_JEXEC' ) or die ();
 		<ul class="kfile-attach">
 		<?php
 		foreach($this->attachments as $attachment){
-		?>
-			<li>
-			<?php
 			// shortname for output
 			$shortname = CKunenaTools::shortenFileName($attachment->filename);
 			// First lets check the attachment file type
 			switch (strtolower($attachment->shorttype)){
 				case 'image' :
-
 					// Check for thumbnail and if available, use for display
-					if (file_exists(JPATH_ROOT.$attachment->folder.'/thumb/'.$attachment->filename)){
+					if (file_exists(JPATH_ROOT.'/'.$attachment->folder.'/thumb/'.$attachment->filename)){
 						$thumb = $attachment->folder.'/thumb/'.$attachment->filename;
 						$imgsize = '';
 					} else {
@@ -37,13 +33,17 @@ defined ( '_JEXEC' ) or die ();
 						$imgsize = 'width="'.$this->config->thumbwidth.'px" height="'.$this->config->thumbheight.'px"';
 					}
 
-					$img = '<img '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
+					$img = '<img title="'.$attachment->filename.'" '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
+					$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments');
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
 					$img = '<img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />';
+					$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'nofollow');
 			}
-			$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'nofollow');
+			?>
+			<li>
+			<?php
 			$html .='<span>'.CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$shortname,$attachment->filename, 'nofollow').' ('.number_format(($attachment->size)/1024,0,'',',').'KB)</span>';
 			echo $html;
 			?>

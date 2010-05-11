@@ -19,9 +19,11 @@ class CKunenaShowcat {
 		$this->func = 'showcat';
 		$this->catid = $catid;
 		$this->page = $page;
+		$this->hasSubCats = '';
 
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
+		$this->myprofile = KunenaFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
 		$this->config = CKunenaConfig::getInstance ();
 
@@ -59,23 +61,26 @@ class CKunenaShowcat {
 
 		$threads_per_page = $this->config->threads_per_page;
 
+		$access = KunenaFactory::getAccessControl();
+		$hold = $access->getAllowedHold($this->myprofile, $this->catid);
+
 		/*//////////////// Start selecting messages, prepare them for threading, etc... /////////////////*/
 		$this->page = $this->page < 1 ? 1 : $this->page;
 		$offset = ($this->page - 1) * $threads_per_page;
 		$row_count = $this->page * $threads_per_page;
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE parent='0' AND catid='{$this->catid}' AND hold='0'" );
+		$this->db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages WHERE parent='0' AND catid='{$this->catid}' AND hold IN ({$hold})" );
 		$this->total = ( int ) $this->db->loadResult ();
 		check_dberror ( 'Unable to get message count.' );
 		$this->totalpages = ceil ( $this->total / $threads_per_page );
 
 		$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__fb_messages AS t
 	INNER JOIN #__fb_messages AS m ON t.id = m.thread
-	WHERE t.parent='0' AND t.hold='0' AND t.catid='{$this->catid}' AND m.hold='0' AND m.catid='{$this->catid}'
+	WHERE t.parent='0' AND t.hold IN ({$hold}) AND t.catid='{$this->catid}' AND m.hold IN ({$hold}) AND m.catid='{$this->catid}'
 	GROUP BY m.thread ORDER BY t.ordering DESC, lastid DESC";
 		$this->db->setQuery ( $query, $offset, $threads_per_page );
 		$threadids = $this->db->loadResultArray ();
 		check_dberror ( "Unable to load thread list." );
-		$idstr = @join ( ",", $threadids );
+		$idstr = implode ( ",", $threadids );
 
 		$this->messages = array ();
 		$this->threads = array ();
@@ -89,10 +94,10 @@ class CKunenaShowcat {
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__fb_messages AS m";
 			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
-			else $query .= " LEFT JOIN (SELECT 0 AS userid, 0 AS myfavorite) AS f ON 1";
+			else $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = 0";
 			$query .= "
 		LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.thread
-		WHERE m.hold='0' AND m.thread IN ({$idstr})
+		WHERE m.hold IN ({$hold}) AND m.thread IN ({$idstr})
 		GROUP BY thread
 	) AS l
 	INNER JOIN #__fb_messages AS a ON a.thread = l.thread
@@ -104,7 +109,7 @@ class CKunenaShowcat {
 	ORDER BY ordering DESC, lastid DESC";
 
 			$this->db->setQuery ( $query );
-			$this->messages = $this->db->loadObjectList ();
+			$this->messages = $this->db->loadObjectList ('id');
 			check_dberror ( "Unable to load messages." );
 
 			// collect user ids for avatar prefetch when integrated
@@ -130,7 +135,7 @@ class CKunenaShowcat {
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
-				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold='0' AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
+				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold IN ({$hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
 				check_dberror ( "Unable to get unread messages count and first id." );
 
@@ -166,7 +171,7 @@ class CKunenaShowcat {
 			//this user is allowed to post a new topic:
 			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'buttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
 		}
-		if ($this->my->id != 0) {
+		if ($this->my->id != 0 && $this->total) {
 			$this->forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $this->catid, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'buttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
 		}
 
@@ -182,7 +187,7 @@ class CKunenaShowcat {
 			$this->thread_subscribecat = CKunenaLink::GetCategoryLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'buttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
 		}
 		//get the Moderator list for display
-		$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m LEFT JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$this->catid}'" );
+		$this->db->setQuery ( "SELECT * FROM #__fb_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$this->catid}' AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
 		check_dberror ( "Unable to load moderators." );
 
@@ -196,7 +201,10 @@ class CKunenaShowcat {
 
 	function displayAnnouncement() {
 		if ($this->config->showannouncement > 0) {
-			CKunenaTools::loadTemplate('/plugin/announcement/announcementbox.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			$ann = new CKunenaAnnouncement();
+			$ann->getAnnouncement();
+			$ann->displayBox();
 		}
 	}
 
@@ -210,7 +218,10 @@ class CKunenaShowcat {
 		require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
 		$obj = new CKunenaListCat($this->catid);
 		$obj->loadCategories();
-		if (!empty($obj->categories [$this->catid])) $obj->displayCategories();
+		if (!empty($obj->categories [$this->catid])) {
+			$obj->displayCategories();
+			$this->hasSubCats = '1';
+		}
 	}
 
 	function displayFlat() {

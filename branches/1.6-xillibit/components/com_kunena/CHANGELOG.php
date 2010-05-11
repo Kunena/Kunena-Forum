@@ -35,6 +35,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 10-May-2010 Xillibit
+^ [#19288] Add user moderation tools or ban functions in kunena users manager and in profile page (Part 4)
+
+10-May-2010 Xillibit
 ^ [#19288] Add user moderation tools or ban functions in kunena users manager (not yet finished) (Part 2)
 ^ [#19288] Add user moderation tools or ban functions in kunena users manager (not yet finished) (Part 3)
 

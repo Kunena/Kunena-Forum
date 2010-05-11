@@ -127,10 +127,10 @@ defined( '_JEXEC' ) or die();
 				echo $lists = JHTML::_ ( 'select.genericlist', $ipselect, 'prof_ip_select', 'class="inputbox" size="1"', 'value', 'text' );
 				?>
 				</label>
-				<label for="ban-email"><input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
+				<!--<label for="ban-email"><input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
 				<span onclick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANEMAIL'); ?></span></label>
 				<label for="ban-username"><input type="checkbox" id="ban-username" name="banusername" value="banusername" class="kcheckbox" />
-				<span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>
+				<span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>-->
 				<label for="ban-delsignature"><input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="kcheckbox" />
 				<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_SIGNATURE'); ?></span></label>
 				<label for="ban-user"><input type="checkbox" id="ban-user" name="banuser" value="banuser" class="kcheckbox" />

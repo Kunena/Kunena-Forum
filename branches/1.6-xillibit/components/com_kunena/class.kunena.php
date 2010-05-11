@@ -926,29 +926,42 @@ class CKunenaTools {
 			if ( !empty($banIP) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				$usermod = new CKunenaModerationTools();
-				$usermod->banIP($banIP, $expiry, $message, $comment);
+				$banthisip=$usermod->banIP($banIP, $expiry, $message, $comment);
 
-				// FIX ME: display ip banned sucessfully
-				// FIX ME: redirect
+				if (!$banthisip) {
+					$this->_app->enqueueMessage( $kunena_mod->getErrorMessage());
+				} else {
+					$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_IP_BANNED_DONE' ) );
+				}
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
 			if ( !empty($banEmail) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				//future feature
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
 			if ( !empty($banUsername) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				//future feature
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
 			if ( !empty($thisuserid) && !empty($banuser) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				$usermod = new CKunenaModerationTools();
-				$usermod->banUser($thisuserid, $expiry, $message, $comment);
+				$banthisuser = $usermod->banUser($thisuserid, $expiry, $message, $comment);
 
-				// FIX ME: display ip banned sucessfully
-				// FIX ME: redirect
+				if (!$banthisuser) {
+					$this->_app->enqueueMessage( $kunena_mod->getErrorMessage());
+				} else {
+					$this->_app->enqueueMessage ( JText::_ ( 'COM_A_KUNENA_USER_BANNED_DONE' ) );
+				}
+
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
 			if ( !empty($DelAvatar) ) {

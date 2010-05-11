@@ -146,7 +146,7 @@ class CKunenaListcat {
 
 			$query = "SELECT id, name, description, parent, numTopics, numPosts, {$subquery}
 			FROM #__fb_categories AS c
-			WHERE c.parent IN ({$subcatlist}) AND c.published='1'";
+			WHERE c.parent IN ({$subcatlist}) AND c.published='1' ORDER BY ordering";
 			$this->db->setQuery ($query);
 			$childforums = $this->db->loadObjectList ();
 			check_dberror ( "Unable to load categories." );

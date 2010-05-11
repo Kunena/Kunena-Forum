@@ -38,6 +38,7 @@ Kunena 1.6.0-DEV
 ^ [#15886] Merged revisions 2434-2435 from /branches/1.6-xillibit
 # [#20038] Basic Joomla 1.6 support: Fix archive and manifest to copy all files (including installer)
 # [#19288] Fix regression: Forum ordering was not respected in subcategory level (listcat)
+# [#19288] Do not add [attachment] tag for now -- it's not fully implemented
 
 10-May-2010 Xillibit
 ^ [#19288] Add user moderation tools, ban functions in kunena users manager (not yet finished)

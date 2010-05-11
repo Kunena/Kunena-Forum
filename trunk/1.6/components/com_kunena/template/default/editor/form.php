@@ -151,7 +151,7 @@ $this->k=0;
 		<td>
 			<div id="kattachment">
 				<div class="editlinktip hasTip" title="<?php echo  JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED'); ?>::<?php echo '<b>'.$this->config->imagetypes.','.$this->config->filetypes.'</b>'; ?>" >
-				<span id="attach_list">1.</span><input id="kupload" name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
+				<span id="attach_list"></span><input id="kupload" name="kattachment" type="file" /><a href="#" style="display: none">Delete</a></div>
 				</div>
 			<div id="kattachmentsnote"></div>
 

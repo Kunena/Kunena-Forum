@@ -2178,6 +2178,7 @@ table.kadmin-stat caption {
 					value=""
 					onclick="checkAll(<?php echo count ( $profileList ); ?>);" /></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
+				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_NAME'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_REALNAME'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
@@ -2204,6 +2205,7 @@ table.kadmin-stat caption {
 						$userbanned = ($pl->enabled && $pl->bantype==2) ? 'tick.png' : 'publish_x.png';
 						$userBannedTask = ($pl->enabled && $pl->bantype==2) ? 'userunban' : 'userban';
 						$altUserBanned = ($pl->enabled && $pl->bantype==2) ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
+						$kunena_user = KunenaFactory::getUser($pl->userid);
 					?>
 			<tr class="row<?php echo $k;
 						?>">
@@ -2216,6 +2218,8 @@ table.kadmin-stat caption {
 					onclick="return listItemTask('cb<?php echo $i;
 						?>','userprofile')"><?php echo kescape($pl->userid);
 						?></a></td>
+					<td width="100"><?php echo $kunena_user->getAvatarLink('', '48' ,'48');
+						?></td>
 				<td width="100"><a href="#edit"
 					onclick="return listItemTask('cb<?php echo $i;
 						?>','userprofile')"><?php echo kescape($pl->username);

@@ -36,6 +36,8 @@ Kunena 1.6.0-DEV
 
 10-May-2010 Xillibit
 ^ [#19288] Add user moderation tools or ban functions in kunena users manager and in profile page (Part 4)
+^ [#19288] Show user avatar in kunena user manager list
+# [#19288] Fix regression on kunena avatar integration which prevents to display avatars from gallery
 
 10-May-2010 Xillibit
 ^ [#19288] Add user moderation tools or ban functions in kunena users manager (not yet finished) (Part 2)

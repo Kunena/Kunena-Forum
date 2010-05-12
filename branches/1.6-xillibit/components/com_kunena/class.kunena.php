@@ -915,6 +915,8 @@ class CKunenaTools {
 
 			$thisuserid = JRequest::getInt ( 'thisuserid', '' );
 			$banuser = JRequest::getString('banuser', '');
+			$banmessage = JRequest::getString('banmessage', '');
+			$banexpiry = JRequest::getString('banexpiry', '');
 			$banIP = JRequest::getVar ( 'prof_ip_select', '' );
 			$banEmail = JRequest::getVar ( 'banemail', '' );
 			$banUsername = JRequest::getVar ( 'banusername', '' );
@@ -926,7 +928,7 @@ class CKunenaTools {
 			if ( !empty($banIP) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				$usermod = new CKunenaModerationTools();
-				$banthisip=$usermod->banIP($banIP, $expiry, $message, $comment);
+				$banthisip=$usermod->banIP($banIP, $banexpiry, $banmessage, '');
 
 				if (!$banthisip) {
 					$this->_app->enqueueMessage( $kunena_mod->getErrorMessage());
@@ -953,7 +955,7 @@ class CKunenaTools {
 			if ( !empty($thisuserid) && !empty($banuser) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				$usermod = new CKunenaModerationTools();
-				$banthisuser = $usermod->banUser($thisuserid, $expiry, $message, $comment);
+				$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banmessage, '');
 
 				if (!$banthisuser) {
 					$this->_app->enqueueMessage( $kunena_mod->getErrorMessage());

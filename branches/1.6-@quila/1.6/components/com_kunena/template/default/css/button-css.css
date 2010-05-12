@@ -69,6 +69,7 @@
 #Kunena span.buttononline-no span {
 	float: left;
 	background: #bbbbbb;
+	text-shadow: -1px 1px 1px #ffffff;
 	-moz-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -87,8 +88,9 @@
 #Kunena a.buttongen span:hover,
 #Kunena span.buttononline-yes span:hover,
 #Kunena span.buttononline-no span:hover {
-	background: #444444;
+	background: #666666;
 	color: #fff;
+	text-shadow: -1px 1px 1px #cccccc;
 }
 
 #Kunena a.buttoncomm span span,
@@ -97,7 +99,7 @@
 #Kunena a.buttongen span span,
 #Kunena span.buttononline-yes span span,
 #Kunena span.buttononline-no span span {
-	/*height: 18px;*/
+	height: 15px;
 	padding: 0 7px 0 7px;
 }
 

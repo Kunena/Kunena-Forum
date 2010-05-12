@@ -44,6 +44,7 @@ Kunena 1.6.0-DEV
 + [#19345] Redesigned Who Is Online plugin
 + [#19345] Added User Color Code Legend in Who Is Online plugin
 + [#19345] Added more Color Code for Global Moderator, Users and Guests (need check if load extra query).
+# [#19356] Fix regression in language file.
 
 11-May-2010 Matias
 ^ [#15886] Merged revisions 2434-2435 from /branches/1.6-xillibit

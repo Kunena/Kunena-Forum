@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+12-May-2010 Matias
+^ [#20038] Basic Joomla 1.6 support: New installer
+
 11-May-2010 Severdia
 # [#19356] Various CSS fixes for frontend, IE7 compatibility
 

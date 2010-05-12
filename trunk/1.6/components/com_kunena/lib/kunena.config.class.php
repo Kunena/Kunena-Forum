@@ -23,7 +23,7 @@ require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
 class CKunenaTables {
 	var $tables = array ();
-	var $_tables = array ('#__fb_announcement', '#__kunena_attachments', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__fb_version', '#__fb_whoisonline' );
+	var $_tables = array ('#__fb_announcement', '#__kunena_attachments', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__kunena_version', '#__fb_whoisonline' );
 
 	function __construct() {
 		$kunena_db = &JFactory::getDBO ();

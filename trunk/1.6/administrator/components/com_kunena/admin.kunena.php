@@ -24,19 +24,24 @@ defined( '_JEXEC' ) or die();
 // Kunena wide defines
 require_once (JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
 
+JToolBarHelper::title('&nbsp;', 'kunena.png');
+
+$view = JRequest::getCmd ( 'view' );
+$task = JRequest::getCmd ( 'task' );
+
+require_once(KPATH_ADMIN.'/install/version.php');
+$kn_version = new KunenaVersion();
+if ($view == 'install' || $task == 'install' || !$kn_version->checkVersion()) {
+	require_once (KUNENA_PATH_ADMIN_INSTALL . DS . 'controller.php');
+	$controller = new KunenaControllerInstall();
+	$controller->execute( $task );
+	$controller->redirect();
+	return;
+}
+
 $lang = JFactory::getLanguage();
 $lang->load('com_kunena', KUNENA_PATH);
 $lang->load('com_kunena', KUNENA_PATH_ADMIN);
-
-JToolBarHelper::title('&nbsp;', 'kunena.png');
-
-$task = JRequest::getCmd ( 'task' );
-
-if ($task == 'install') {
-	require_once (KUNENA_PATH_ADMIN_INSTALL . DS . 'kunena.install.php');
-	com_install ();
-	return;
-}
 
 // Now that we have the global defines we can use shortcut defines
 require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
@@ -406,33 +411,14 @@ switch ($task) {
 		break;
 }
 
-$kn_version = CKunenaVersion::versionArray ();
-if (JString::strpos ( $kn_version->version, 'SVN')) {
-	$kn_version_name = JText::_('COM_KUNENA_VERSION_SVN');
-	$kn_version_warning = JText::_('COM_KUNENA_VERSION_SVN_WARNING');
-} else if (JString::strpos ( $kn_version->version, 'RC' ) !== false) {
-	$kn_version_name = JText::_('COM_KUNENA_VERSION_RC');
-	$kn_version_warning = JText::_('COM_KUNENA_VERSION_RC_WARNING');
-} else if (JString::strpos ( $kn_version->version, 'BETA' ) !== false) {
-	$kn_version_name = JText::_('COM_KUNENA_VERSION_BETA');
-	$kn_version_warning = JText::_('COM_KUNENA_VERSION_BETA_WARNING');
-} else if (JString::strpos ( $kn_version->version, 'ALPHA' ) !== false) {
-	$kn_version_name = JText::_('COM_KUNENA_VERSION_ALPHA');
-	$kn_version_warning = JText::_('COM_KUNENA_VERSION_ALPHA_WARNING');
-} else if (JString::strpos ( $kn_version->version, 'DEV' ) !== false) {
-	$kn_version_name = JText::_('COM_KUNENA_VERSION_DEV');
-	$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
-} else if (JString::strpos ( $kn_version->version, 'SVN' ) !== false) {
-	$kn_version_name = JText::_('COM_KUNENA_VERSION_DEV');
-	$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
-}
+$kn_version_warning = $kn_version->getVersionWarning('COM_KUNENA_VERSION_INSTALLED');
 if (! empty ( $kn_version_warning )) {
-	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_VERSION_INSTALLED'), $kn_version->version, $kn_version_name ) . ' ' . $kn_version_warning, 'notice' );
+	$kunena_app->enqueueMessage ( $kn_version_warning, 'notice' );
 }
-if ($kn_version->versionname == 'NOT UPGRADED') {
-	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE'), $kn_version->version ), 'notice' );
+if (!$kn_version->checkVersion()) {
+	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE'), KUNENA_VERSION ), 'notice' );
 	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_UPGRADE_WARN') );
-	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE_AGAIN'), $kn_version->version ) );
+	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE_AGAIN'), KUNENA_VERSION ) );
 	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_SUPPORT') . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
 }
 

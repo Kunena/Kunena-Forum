@@ -69,10 +69,6 @@ define ('KUNENA_VERSION_DATE', ('@kunenaversiondate@' == '@'.'kunenaversiondate'
 define ('KUNENA_VERSION_NAME', ('@kunenaversionname@' == '@'.'kunenaversionname'.'@') ? 'SVN Revision' : '@kunenaversionname@');
 define ('KUNENA_VERSION_BUILD', ('@kunenaversionbuild@' == '@'.'kunenaversionbuild'.'@') ? $svn[1] : '@kunenaversionbuild@');
 
-// Minimum version requirements
-DEFINE('KUNENA_MIN_PHP',   '5.0.3');
-DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
-
 // Time related
 define ('KUNENA_SECONDS_IN_HOUR', 3600);
 define ('KUNENA_SECONDS_IN_YEAR', 31536000);

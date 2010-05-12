@@ -12,6 +12,11 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-// Kunena wide defines
-require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
-require_once (KUNENA_PATH_ADMIN_INSTALL . DS . 'kunena.install.php');
+function com_install() {
+	$app = JFactory::getApplication();
+	$app->setUserState('com_kunena.install.step', 0);
+
+	// Redirect to Kunena Installer
+	header ( "HTTP/1.1 303 See Other" );
+	header ( "Location: ".JURI::base () . "index.php?option=com_kunena&view=install" );
+}

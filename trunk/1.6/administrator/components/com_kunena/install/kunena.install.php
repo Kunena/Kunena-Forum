@@ -73,18 +73,6 @@ function com_install()
 	//before we do anything else we want to check for minimum system requirements
 	if (version_compare(phpversion(), KUNENA_MIN_PHP, ">=") && version_compare($mysqlversion, KUNENA_MIN_MYSQL, ">"))
 	{
-		//change fb menu icon
-		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
-		$id = $kunena_db->loadResult();
-		check_dberror("Unable to find component.");
-
-		//add new admin menu images
-		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
-		$kunena_db->query();
-		check_dbwarning("Unable to set admin menu image.");
-
-		CKunenaTools::createMenu(false);
-
 		//install & upgrade class
 		$fbupgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);
 

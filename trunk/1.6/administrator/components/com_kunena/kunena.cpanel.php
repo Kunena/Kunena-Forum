@@ -167,8 +167,7 @@ div.icon-container {
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showsystemreport" title = "<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM');?>"> <img src = "components/com_kunena/images/report_conf.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?> </span></a> </div>
 					  </div>
 					  <?php
-						$kn_version = CKunenaVersion::versionArray ();
-						 if (JString::strpos ( $kn_version->version, 'SVN' ) !== false) {
+						 if (JString::strpos ( KUNENA_VERSION, 'SVN' ) !== false) {
 					  ?>
 					  <div class="icon-container">
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=install" title = "<?php echo JText::_('COM_KUNENA_SVN_INSTALL');?>"> <img src = "images/install.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_SVN_INSTALL'); ?> </span></a> </div>

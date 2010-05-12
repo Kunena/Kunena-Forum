@@ -46,13 +46,31 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .admin {
-	color: #FF0000 !important;
-	font-weight: bold;
+	color: #A95618 !important;
+}
+
+#Kunena .globalmoderator {
+	color: #008000 !important;
 }
 
 #Kunena .moderator {
 	color: #84618B !important;
-	font-weight: bold;
+}
+
+#Kunena .user {
+	color: #5388B4 !important;
+}
+
+#Kunena .guest {
+	color: #666666 !important;
+}
+
+#Kunena .banned {
+	color: #A39D49 !important;
+}
+
+#Kunena .banned-red {
+	color: #ff0000 !important;
 }
 
 /* COMMON STYLES
@@ -613,6 +631,14 @@ POST PAGE
 #Kunena tbody#frontstats_tbody td,
 #Kunena tbody#topprofilebox_tbody td {
 	background: #fff;
+}
+
+#Kunena .wholegend {
+	border-top: 1px dotted #CCCCCC;
+}
+
+#Kunena .whoonline {
+	border-bottom: 1px dotted #CCCCCC;
 }
 
 /* SEARCHBOX

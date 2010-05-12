@@ -290,7 +290,7 @@ else {
 				} else {
 					?>
 
-			<td class="td-5 left"><?php
+			<td class="td-5 left" width="25%"><?php
 					echo JText::_('COM_KUNENA_NO_POSTS');
 					?></td>
 

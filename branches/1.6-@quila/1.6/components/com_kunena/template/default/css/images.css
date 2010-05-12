@@ -231,3 +231,10 @@ div#kprofile-stats ul li span.rank-admin {
 #lbCloseLink {
 	background: transparent url(../images/closelabel.gif) no-repeat center;
 }
+
+/* 		WHO IS ONLINE
+------------------------------------------------------------------- */
+
+#Kunena .whoicon {
+	background: url("../images/who_is_online.png") no-repeat center top;
+}

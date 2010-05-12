@@ -51,3 +51,23 @@
 #Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3	{
 	text-align:center;
 }
+
+/* 		WHO IS ONLINE
+------------------------------------------------------------------- */
+
+#Kunena .whoicon {
+	min-width: 32px;
+	min-height: 32px;
+}
+
+#Kunena .wholegend {
+	width: 100%;
+	margin-top: 5px;
+	padding-top: 5px;
+}
+
+#Kunena .whoonline {
+	width: 100%;
+	/*margin-top: 5px;*/
+	padding-bottom: 5px;
+}

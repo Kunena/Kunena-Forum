@@ -40,6 +40,10 @@ Kunena 1.6.0-DEV
 + [#19345] Restyle Default template - Possibility to choose between Image Based and CSS Based buttons in the Configuration
 + [#19345] Restyle Default template - Added 4 template color ( green, red, gray and darkblue )
 # [#19288] Fix regression in profile: UddeIM Integration - PM Icon messed in IE8
+# [#19356] Fixed template frontend - listcat.php. If No Posts column is not aligned.
++ [#19345] Redesigned Who Is Online plugin
++ [#19345] Added User Color Code Legend in Who Is Online plugin
++ [#19345] Added more Color Code for Global Moderator, Users and Guests (need check if load extra query).
 
 11-May-2010 Matias
 ^ [#15886] Merged revisions 2434-2435 from /branches/1.6-xillibit

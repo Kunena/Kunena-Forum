@@ -107,6 +107,10 @@ class CKunenaPost {
 			return false;
 		if ($this->floodProtection ())
 			return false;
+		if ($this->isUserBanned($this->my->id) )
+			return false;
+		if ($this->isIPBanned())
+			return false;
 
 		$fields ['name'] = JRequest::getString ( 'authorname', $this->getAuthorName () );
 		$fields ['email'] = JRequest::getString ( 'email', null );
@@ -437,6 +441,11 @@ class CKunenaPost {
 	}
 
 	protected function delete() {
+		if ($this->isUserBanned($this->my->id) )
+			return false;
+		if ($this->isIPBanned())
+			return false;
+
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$success = $message->delete ( $this->id );
@@ -513,6 +522,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
+			return false;
+		if ($this->isUserBanned($this->my->id) )
+			return false;
+		if ($this->isIPBanned())
 			return false;
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
@@ -650,6 +663,10 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
+		if ($this->isUserBanned($this->my->id) )
+			return false;
+		if ($this->isIPBanned())
+			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' );
 		$this->_db->setQuery ( "update #__fb_messages set ordering=1 where id={$this->id}" );
@@ -663,6 +680,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
+			return false;
+		if ($this->isUserBanned($this->my->id) )
+			return false;
+		if ($this->isIPBanned())
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' );
@@ -678,6 +699,10 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
+		if ($this->isUserBanned($this->my->id) )
+			return false;
+		if ($this->isIPBanned())
+			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' );
 		$this->_db->setQuery ( "update #__fb_messages set locked=1 where id={$this->id}" );
@@ -692,6 +717,10 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
+		if ($this->isUserBanned($this->my->id) )
+			return false;
+		if ($this->isIPBanned())
+			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' );
 		$this->_db->setQuery ( "update #__fb_messages set locked=0 where id={$this->id}" );
@@ -705,6 +734,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
+			return false;
+		if ($this->isUserBanned($this->my->id) )
+			return false;
+		if ($this->isIPBanned())
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_FAIL' );
@@ -787,29 +820,43 @@ class CKunenaPost {
 	}
 
 	protected function isUserBanned($userid) {
-		$sql = "SELECT enabled, expiry, userid, bantype FROM #__kunena_banned_users WHERE userid='$userid' AND bantype=2";
+		$sql = "SELECT enabled, expiry, userid, bantype FROM #__kunena_banned_users WHERE enabled=1 AND userid='$userid' AND bantype=2";
 		$this->_db->setQuery ( $sql );
 		$isUserbanned = $this->_db->loadObject ();
 		check_dberror ( 'Unable to load datas from this user.' );
 
-		if ( is_object($isUserbanned) && ($isUserbanned->expiry < date( 'Y-m-d H:i:s' ) && $isUserbanned->expiry != '0000-00-00 00:00:00' ) ) {
-			return true;
+		if ( is_object($isUserbanned) ) {
+			if ( date( 'Y-m-d H:i:s') < $isUserbanned->expiry && $isUserbanned->expiry != '0000-00-00 00:00:00' ) {
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', $isUserbanned->expiry ), 'error' );
+				$this->redirectBack();
+				return true;
+			} else {
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ), 'error' );
+				$this->redirectBack();
+				return true;
+			}
 		} else {
-			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ), 'error' );
 			return false;
 		}
 	}
 
 	protected function isIPBanned() {
-		$sql = "SELECT expiry FROM #__kunena_banned_ips WHERE ip='{$_SERVER['REMOTE_ADDR']}'";
+		$sql = "SELECT expiry FROM #__kunena_banned_ips WHERE ip='{$_SERVER['REMOTE_ADDR']}' AND enabled=1";
 		$this->_db->setQuery ( $sql );
 		$isIPbanned = $this->_db->loadObject ();
 		check_dberror ( 'Unable to load datas from this user.' );
 
-		if ( is_object($isIPbanned) && ($isIPbanned->expiry < date( 'Y-m-d H:i:s' ) && $isIPbanned->expiry != '0000-00-00 00:00:00' ) ) {
-			return true;
+		if ( is_object($isIPbanned) ) {
+			if (date( 'Y-m-d H:i:s') < $isUserbanned->expiry && $isIPbanned->expiry != '0000-00-00 00:00:00' ) {
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_IP_BANNED_NOACCESS_EXPIRY', $isUserbanned->expiry ), 'error' );
+				$this->redirectBack();
+				return true;
+			} else {
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_IP_BANNED_NOACCESS' ), 'error' );
+				$this->redirectBack();
+				return true;
+			}
 		} else {
-			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_IP_BANNED_NOACCESS' ), 'error' );
 			return false;
 		}
 	}

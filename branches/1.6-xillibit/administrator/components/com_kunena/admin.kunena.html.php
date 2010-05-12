@@ -2258,7 +2258,7 @@ table.kadmin-stat caption {
 				}
 				?>
 			<tr>
-				<th align="center" colspan="12"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?>
+				<th align="center" colspan="13"><?php echo $pageNavSP->getLimitBox () . $pageNavSP->getResultsCounter () . $pageNavSP->getPagesLinks (); ?>
 				</th>
 			</tr>
 		</table>

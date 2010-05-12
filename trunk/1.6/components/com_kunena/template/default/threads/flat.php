@@ -140,7 +140,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			if ($leaf->unread) {
 					echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $leaf->lastread );
 			}
-
+			?>
+			</div>
+			
+			<?php
 			if ($leaf->msgcount > $this->config->messages_per_page) {
 				echo '<ul class="kpagination">';
 				echo '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
@@ -166,8 +169,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</span> <!-- /Locked --> <?php
 		}
 		?>
-			</div>
-			<div class="ks">
+			
+			<div class="ktopic-details ks">
 			<!-- By -->
 				<?php
 		if ($this->func != 'showcat') {
@@ -178,8 +181,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</span> <!-- /Category -->
 			<span class="divider">|</span>
 <?php 	} ?>
-			<span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>"><?php
-		echo JText::_('COM_KUNENA_POSTED_AT')?>
+			<span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>">
+			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') ?>
 			<?php
 			echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');
 		?>&nbsp;</span>

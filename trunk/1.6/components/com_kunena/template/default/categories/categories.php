@@ -43,8 +43,7 @@ global $kunena_icons;
 	<thead>
 		<tr>
 			<th colspan="5">
-			<div
-				class="ktitle_cover<?php
+			<div class="ktitle_cover<?php
 		echo isset ( $cat->class_sfx ) ? ' ktitle_cover' . $cat->class_sfx : '';
 		?> km"><?php
 		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $cat->name ), 'follow', $class = 'ktitle kl' );
@@ -119,7 +118,7 @@ global $kunena_icons;
 				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $subcat->name ) );
 
 				if ($subcat->new && $this->my->id > 0) {
-					echo '<sup><span class="newchar">&nbsp;(' . $subcat->new . ' ' . stripslashes ( $this->config->newchar ) . ")</span></sup>";
+					echo '<sup class="newchar">&nbsp;(' . $subcat->new . ' ' . stripslashes ( $this->config->newchar ) . ")</sup>";
 				}
 
 				if ($subcat->locked) {
@@ -266,7 +265,7 @@ else {
 				endif;
 			endif;
 			?> <!-- /Avatar -->
-			<div class="klatest-subject km">
+			<div class="klatest-subject ks">
 					<?php
 					echo JText::_('COM_KUNENA_GEN_LAST_POST');
 					?>: <?php
@@ -279,6 +278,7 @@ else {
 					echo JText::_('COM_KUNENA_GEN_POSTEDBY') . ' ';
 					echo CKunenaLink::GetProfileLink ( $subcat->userid, kunena_htmlspecialchars ( stripslashes ( $subcat->mname ) ) );
 					echo ' ';
+					echo JText::_('COM_KUNENA_GEN_ON');
 					echo ' <span title="' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat' ) . '</span>';
 
 					// echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, isset ( $kunena_icons ['latestpost'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['latestpost'] . '" border="0" alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '" title="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'icon_newest_reply.gif" border="0"  alt="' . JText::_('COM_KUNENA_SHOW_LAST') . '"/>', $subcat->id_last_msg );

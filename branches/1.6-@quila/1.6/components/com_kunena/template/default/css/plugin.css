@@ -1,0 +1,53 @@
+@CHARSET "UTF-8";
+/**
+* @version $Id: kunena.forum.css 2442 2010-05-11 18:20:48Z dragan $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/
+
+/*			POLLS
+-------------------------------------------------------------------- */
+
+#Kunena div#poll_text_help {
+	font-weight:bold;
+}
+
+/* 		STATS
+------------------------------------------------------------------- */
+
+#Kunena ul#statslistleft,
+#Kunena ul#statslistright	 {
+	margin: 0;
+	padding: 0;
+}
+
+#Kunena ul#statslistleft li,
+#Kunena ul#statslistright li	 {
+	list-style-type:none;
+	display:block;
+	margin-left: 0;
+	padding: 1px 0px 1px 0;
+	background: 0 none;
+}
+#Kunena ul#statslistright li strong a {
+	font-weight:bold;
+}
+
+#Kunena tbody#kpopsubstats_tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopsubstats_tbody tr.ksectiontableentry2 td.td-3, 
+#Kunena tbody#kpopusermsgstats_tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopusermsgstats_tbody tr.ksectiontableentry2 td.td-3,
+#Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3	{
+	text-align:center;
+}

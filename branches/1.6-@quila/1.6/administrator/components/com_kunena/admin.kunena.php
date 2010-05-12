@@ -1084,7 +1084,20 @@ function showConfig($option) {
 	$lists['onlineusers'] = JHTML::_('select.genericlist', $yesno, 'cfg_onlineusers', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->onlineusers);
 
 	$lists['debug'] = JHTML::_('select.genericlist', $yesno, 'cfg_debug', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->debug);
-
+	
+    // New for 1.6 -> Template Color
+    $templatecolor = array ();
+	$templatecolor[] = JHTML::_('select.option', 'default',JText::_('COM_KUNENA_TEMPLATE_COLOR_DEFAULT'));
+	$templatecolor[] = JHTML::_('select.option', 'green',JText::_('COM_KUNENA_TEMPLATE_COLOR_GREEN'));
+	$templatecolor[] = JHTML::_('select.option', 'red',JText::_('COM_KUNENA_TEMPLATE_COLOR_RED'));
+	$templatecolor[] = JHTML::_('select.option', 'gray',JText::_('COM_KUNENA_TEMPLATE_COLOR_GRAY'));
+	$templatecolor[] = JHTML::_('select.option', 'bluedark',JText::_('COM_KUNENA_TEMPLATE_COLOR_BLUEDARK'));
+    $lists['templatecolor'] = JHTML::_('select.genericlist', $templatecolor, 'cfg_templatecolor', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templatecolor);
+    // New for 1.6 -> Template Button Style
+    $templatebuttonstyle = array ();
+	$templatebuttonstyle[] = JHTML::_('select.option', 'images',JText::_('COM_KUNENA_TEMPLATE_BUTTONSTYLE_IMAGES'));
+	$templatebuttonstyle[] = JHTML::_('select.option', 'css',JText::_('COM_KUNENA_TEMPLATE_BUTTONSTYLE_CSS'));
+    $lists['templatebuttonstyle'] = JHTML::_('select.genericlist', $templatebuttonstyle, 'cfg_templatebuttonstyle', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templatebuttonstyle);
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

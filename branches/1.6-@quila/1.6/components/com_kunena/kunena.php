@@ -352,6 +352,31 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 <!-- /Kunena Header --> <?php
 	CKunenaTools::loadTemplate('/profilebox.php');
 
+	switch ($this->config->templatecolor) {
+        case 'bluedark' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-bluedark.css' );
+            break;
+        case 'gray' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-gray.css' );
+            break;
+		case 'red' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-red.css' );
+            break;
+        case 'green' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-green.css' );
+            break;
+        default :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-default.css' );
+	}
+	
+	switch ($this->config->templatebuttonstyle) {
+        case 'css' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/button-css.css' );
+            break;
+		default :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/button-images.css' );
+	}
+
 	switch ($func) {
 		case 'who' :
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');

@@ -17,3 +17,7 @@ $this->avatarSizes = array (
 'reply' => array(144, 144),
 'profile' => array(200, 200),
 );
+?>
+
+<!--[if IE 7]> <link href="components/com_kunena/template/default/css/ie7.css" rel="stylesheet" type="text/css"> <![endif]-->
+<!--[if IE 8]> <link href="components/com_kunena/template/default/css/ie8.css" rel="stylesheet" type="text/css"> <![endif]-->

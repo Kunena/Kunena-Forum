@@ -1,0 +1,121 @@
+@@CHARSET "UTF-8";
+/**
+* @version $Id: kunena.forum.css 2442 2010-05-11 18:20:48Z dragan $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/
+
+
+/* SEARCHBOX
+----------------------------------------------------------------------------------------------- */
+#Kunena #ksearchbox {
+	width: auto;
+	white-space: nowrap;
+}
+
+#Kunena #ksearchbox form {
+	margin: 0;
+	padding: 0;
+}
+
+#Kunena #ksearchbox .ksearch_inputbox {
+	width: auto;
+	margin: 0 0 0 5px;
+	font-weight: normal;
+	padding: 1px 5px 1px 20px;
+}
+
+#Kunena #ksearchbox .ksearch_inputbox:hover,
+#Kunena #ksearchbox .ksearch_inputbox:focus	{
+	width: auto;
+	margin: 0 0 0 5px;
+	font-weight: normal;
+	padding: 1px 5px 1px 20px;
+}
+
+#Kunena #ksearchbox .kbutton {
+	margin: 0 5px 0 0;
+}
+
+#Kunena .ksearch-results {
+	font-weight: bold;
+}
+
+#Kunena fieldset {
+	padding:15px;
+	margin-bottom: 15px;
+}
+
+#Kunena fieldset legend {
+	font-size: 1.182em;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin: 0 0 0 -5px;
+	font-weight: bold;
+}
+
+#Kunena select#catids option{
+	padding-left: 5px;
+}
+
+#Kunena table#kforumsearch_adv td {
+	vertical-align:top;
+	padding: 15px 10px;
+
+}
+
+#Kunena label.searchlabel {
+ 	display:block;
+ 	margin-bottom: 5px;
+	margin-right: 100px;
+}
+
+#Kunena input#keywords,
+#Kunena input#username {
+	width:250px;
+	margin-right: 10px;
+}
+
+#Kunena select#catids {
+	float:left;
+	margin-bottom: 20px;
+	
+}
+#Kunena label#childforums-lbl{
+	float:left;
+	clear:left;
+}
+#Kunena fieldset#search-posts-date select,
+#Kunena fieldset#search-posts-sort select {
+	margin-right: 10px;
+}
+#Kunena fieldset#search-posts-start select {
+	margin-left: 10px;
+}
+
+#Kunena form#searchform {
+	margin-top: 5px;
+}
+
+#Kunena table.kblock .kcol-search-subject {
+	width: 70%;
+}
+#Kunena table.kblock .kcol-search-author {
+	width: 10%;
+}
+#Kunena table.kblock .kcol-search-date {
+	width: 20%;
+}
+#Kunena table#kforumsearch tr.ksectiontableentry1 td.td-1 fieldset.fieldset {
+	background-image:none!important;
+}

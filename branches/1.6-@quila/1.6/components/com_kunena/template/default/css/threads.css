@@ -1,0 +1,162 @@
+@CHARSET "UTF-8";
+/**
+* @version $Id: kunena.forum.css 2442 2010-05-11 18:20:48Z dragan $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/
+
+/*
+THREAD VIEW
+-------------------------------------------------------------------- */
+
+#Kunena div#kthreadview table.kblocktable {
+	margin: 0;
+}
+
+#Kunena .kthreadview_row td {
+	padding: 2px 0;
+}
+
+#Kunena .ksectiontableheader a:hover {
+	text-decoration: underline;
+}
+
+#Kunena table#kflattable td.td-3 {
+	text-align:left;
+}
+#Kunena table#kflattable td.td-4 {
+	text-align:center;
+}
+
+
+#Kunena table#kflattable div.ks {
+	margin-top: 3px;
+}
+
+#Kunena span.topic_posted_time {
+	/* display: block;
+	float:left;
+	text-align:left; */
+}
+#Kunena span.topic_category {
+	/* display: block;
+	float:left; */
+	clear:left;
+}
+#Kunena span.topic_views {
+	text-align:center;
+}
+
+#Kunena span.topic_views_number {
+	display: block;
+	font-size: 1.455em;
+	/* line-height:21px; */
+	margin:5px 0;
+}
+	
+#Kunena span.topic_by { 
+	/* display: block;
+	margin-left: 3px;
+	text-align: left; */
+}
+
+#Kunena span.topic_locked { 
+	margin-left: 3px;
+	text-align: left;
+}
+
+
+#Kunena tr.ksectiontableentry1 td.kcc-sectiontableentry1,
+#Kunena tr.ksectiontableentry2 td.kcc-sectiontableentry1	{
+	background: none;
+}
+
+#Kunena tr.ksectiontableentry1 td.td-0,
+#Kunena tr.ksectiontableentry2 td.td-0	{
+	text-align: center;
+	width:0px;
+}
+
+#Kunena td.td-0 strong {
+	display: block;
+	font-size: 2.091em;
+	font-weight: normal;
+	margin: 5px 0;
+	/* line-height: 21px; */
+}
+
+#Kunena span.cat_topics,
+#Kunena span.cat_replies {
+	text-align:center;
+	font-size: 1em;
+}
+
+#Kunena span.cat_topics_number,
+#Kunena span.cat_replies_number {
+	display:block;
+	font-size: 1.417em;
+	/* line-height: 21px; */
+	margin:5px 0;
+}
+
+#Kunena .topic_latest_post{
+	font-size: 1.083em;
+}
+#Kunena .topic_date {
+	font-size: 1em;
+}
+
+#Kunena a.k-topic-title {
+	font-weight: bold;
+	font-size: 1.25em;
+}
+
+#Kunena div.k-topic-title-cover {
+	text-align:left;
+}
+	
+	
+#Kunena .klatest-avatar,
+#Kunena .topic_latest_post_avatar {
+	display: block;
+	height: auto;
+	width: 36px;
+	padding: 1px;
+	margin: 4px 6px 2px 0;
+	float: left;
+}
+
+#Kunena img.klist_avatar {
+	height: auto;
+	width: 36px;
+	border: 0px
+}
+
+#Kunena tr.ksectiontableentry1_stickymsg td.td-0,
+#Kunena tr.ksectiontableentry2_stickymsg td.td-0	{
+	text-align:center;
+	width: 1%;
+}
+
+#Kunena .topic_sticky {
+	/* position: absolute;
+	top: -5px;
+	right: -3px;  */
+	margin-left: 5px;
+	float:right;
+	display:block;
+}
+
+#Kunena .klatest-post-info {
+	display:block;
+}

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+13-May-2010 Matias
+# [#19288] Fix regression in installer: clean install failed
+
 12-May-2010 Matias
 ^ [#20038] Basic Joomla 1.6 support: New installer
 

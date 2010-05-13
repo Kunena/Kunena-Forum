@@ -27,6 +27,8 @@ class KunenaControllerInstall extends JController {
 	public function __construct() {
 		parent::__construct ();
 		require_once(KPATH_ADMIN.'/install/model.php');
+		set_exception_handler('kunenaInstallerExceptionHandler');
+		//set_error_handler('kunenaInstallerErrorHandler');
 		$this->model = $this->getModel ( 'Install' );
 		$this->step = $this->model->getStep ();
 		$this->steps = $this->model->getSteps ();
@@ -149,3 +151,29 @@ class KunenaControllerInstall extends JController {
 		return true;
 	}
 }
+
+function kunenaInstallerError($type, $errstr) {
+	$model = JModel::getInstance('Install', 'KunenaModel');
+	$model->addStatus($type, false, $errstr);
+	$app = JFactory::getApplication();
+	$task = JRequest::getCmd ( 'task' );
+	if ($task)
+		$app->redirect ( 'index.php?option=com_kunena&view=install' );
+}
+
+function kunenaInstallerExceptionHandler($exception) {
+	kunenaInstallerError('', 'Uncaught Exception: '.$exception->getMessage());
+	return true;
+}
+/*
+function kunenaInstallerErrorHandler($errno, $errstr, $errfile, $errline) {
+	kunenaInstallerError('', "Fatal Error: $errstr in $errfile on line $errline");
+	switch ($errno) {
+		case E_ERROR:
+		case E_USER_ERROR:
+			kunenaInstallerError('', "Fatal Error: $errstr in $errfile on line $errline");
+			return true;
+		}
+	return false;
+}
+*/

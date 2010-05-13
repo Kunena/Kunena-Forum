@@ -171,25 +171,26 @@ class KunenaModelInstall extends JModel {
 		if (! empty ( $versionprefix )) {
 			$results [] = $this->migrateTable ( $versionprefix . 'version', 'kunena_version' );
 
-		$fields = array_pop($this->db->getTableFields($this->db->getPrefix () . 'kunena_version'));
-		if (!isset($fields['state'])) {
-			$sql = "ALTER TABLE " . $this->db->nameQuote ( $this->db->getPrefix () . 'kunena_version' ) . "  ADD `state` VARCHAR( 32 ) NOT NULL AFTER `versionname`";
-			$this->db->setQuery ( $sql );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+			$fields = array_pop($this->db->getTableFields($this->db->getPrefix () . 'kunena_version'));
+			if (!isset($fields['state'])) {
+				$sql = "ALTER TABLE " . $this->db->nameQuote ( $this->db->getPrefix () . 'kunena_version' ) . "  ADD `state` VARCHAR( 32 ) NOT NULL AFTER `versionname`";
+				$this->db->setQuery ( $sql );
+				$this->db->query ();
+				if ($this->db->getErrorNum ())
+					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 			}
+
+			// Insert data from the old version, if it does not exist in the version table
+			$version = $this->getInstalledVersion ();
+			if ($version->id == 0 && $version->component)
+				$this->insertVersionData ( $version->version, $version->versiondate, $version->build, $version->versionname, null );
+
+		} else {
+			$results [] = $this->createVersionTable ( );
 		}
-
-		// Insert data from the old version, if it does not exist in the version table
-		$version = $this->getInstalledVersion ();
-		if ($version->id == 0 && $version->component)
-			$this->insertVersionData ( $version->version, $version->versiondate, $version->build, $version->versionname, null );
-
 		foreach ( $results as $i => $r )
 			if ($r)
 				$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], true );
-
 		$this->insertVersion ( 'migrateDatabase' );
 		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true );
 	}
@@ -456,6 +457,25 @@ class KunenaModelInstall extends JModel {
 			return array ('name' => $newtable, 'action' => 'migrate', 'sql' => $sql );
 		}
 		return array ();
+	}
+
+	function createVersionTable()
+	{
+	    $query = "CREATE TABLE IF NOT EXISTS `".$this->db->getPrefix()."kunena_version` (
+		`id` int(11) NOT NULL AUTO_INCREMENT,
+		`version` varchar(20) NOT NULL,
+		`versiondate` date NOT NULL,
+		`installdate` date NOT NULL,
+		`build` varchar(20) NOT NULL,
+		`versionname` varchar(40) DEFAULT NULL,
+		`state` varchar(32) NOT NULL,
+		PRIMARY KEY (`id`)
+		) DEFAULT CHARSET=utf8;";
+	    $this->db->setQuery($query);
+		$this->db->query();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+		return array('action'=>'create', 'name'=>'kunena_version', 'sql'=>$query);
 	}
 
 	// also insert old version if not in the table

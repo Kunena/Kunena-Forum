@@ -2735,6 +2735,12 @@ function textCounter(field, target) {
 		function showsmilies($option, &$smileytmp, $pageNavSP, $smileypath) {
 		?>
 		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></div>
+		<?php jimport('joomla.html.pane');
+			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
+			?>
+		<dl class="tabs" id="pane">
+		<dt><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></dt>
+		<dd>
 		<form action="index.php" method="POST" name="adminForm">
 			<table class="kadmin-sort" cellpadding="4" cellspacing="0" border="0" width="100%">
 				<tr>
@@ -2804,6 +2810,23 @@ function textCounter(field, target) {
 			<input type="hidden" name="boxchecked" value="0">
 			<?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
 		</form>
+		</dd>
+		<dt><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></dt>
+		<dd>
+		<form action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=uploadsmilies&amp;<?php echo JUtility::getToken();?>=1" id="uploadForm" method="post" enctype="multipart/form-data" >
+		<div style="padding:10px;">
+			<input type="file" id="file-upload" name="Filedata" />
+			<?php //echo $option['foldersmiley'] . "&nbsp;" ; ?>
+			<input type="submit" id="file-upload-submit" value="<?php echo JText::_('Start Upload'); ?>"/>
+			<span id="upload-clear"></span>
+		</div>
+		<ul class="upload-queue" id="upload-queue">
+			<li style="display: none" />
+		</ul>
+		<input type="hidden" name="return-url" value="<?php echo base64_encode('index.php?option=com_kunena&task=newsmiley'); ?>" />
+		</form>
+		</dd>
+		</dl>
 		<?php
 			} //end function showsmilies
 

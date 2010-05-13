@@ -42,21 +42,6 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 
 ----------------------------------------------------------*/
 
-#Kunena a.buttoncomm.btn-left,
-#Kunena a.buttonuser.btn-left,
-#Kunena a.buttonmod.btn-left,
-#Kunena a.buttongen.btn-left,
-#Kunena span.buttononline-yes.btn-left,
-#Kunena span.buttononline-no.btn-left,
-#Kunena a.buttoncomm span,
-#Kunena a.buttonuser span,
-#Kunena a.buttonmod span,
-#Kunena a.buttongen span,
-#Kunena span.buttononline-yes span,
-#Kunena span.buttononline-no span {
-	color:#000000 !important;
-}
-
 /* COLOR ADMINISTRATOR AND MODERATOR
 ----------------------------------------------------------------------------------------------- */
 
@@ -94,87 +79,81 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena .divider {color:#999999;}
 #Kunena a:link,
 #Kunena a:visited,
-#Kunena a:active {color: #191970/*c*/;}
-#Kunena a:hover {color: #ffffff;}
+#Kunena a:active {color: #191970;}
+#Kunena a:hover {color: #FF0000;}
 
 #Kunena div.kblock {
-	border-bottom:4px solid #333333;
+	border-bottom:4px solid #BFC3C6;
 }
 #Kunena div.kblock div.ktitle {
-	background: #191970/*c*/;
-	/*border:1px solid #333333;*/
-	color: #999999;
+	background: #191970;
+	border-bottom:1px solid #BFC3C6;
+	color: #FFFFFF;
 }
 #Kunena div.kblock div.ktitle h1,
 #Kunena div.kblock div.ktitle h2 {
-	color: #999999;
+	color: #FFFFFF;
 }
 #Kunena .kheader {
-	background: #3B3B3B;
+	background: #3B3B3B url("../images/backgrounds/cat_title_bg.gif") repeat-x top left;
 }
 #Kunena div.kblock div.kbody {
-	background: #111111;
-	border-color:#333333;
-	color:#666666;
+	border-color:#BFC3C6;
 }
 
 #Kunena div.kblock div.kactions {
-	background: #333333;
-	color:#999999;
+	background: #737373;
+	color:#FFFFFF;
 }
 #Kunena div.kblock div.kactions a {
-	color:#999999;
+	color:#FFFFFF;
 }
 #Kunena table.kblock {
-	border-bottom:4px solid #333333;
+	border-bottom:4px solid #BFC3C6;
 }
 #Kunena table.kblock thead th {
-	background: #111111;
-	border-bottom:1px solid #333333;
-	color: #999999;
+	background: #191970;
+	border-bottom:1px solid #BFC3C6;
+	color: #FFFFFF;
 }
 #Kunena table.kblock h1,
 #Kunena table.kblock h2 {
-	color: #ffffff/*ct*/;
+	color: #FFFFFF;
 }
 #Kunena table.kblock td,
 #Kunena table.kblock th {
-	border: 1px solid #191970/*c*/;
-	background: #111111;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena tr.krow0 td,
 #Kunena tr.krow1 td {
-	background: #111111;
+	background: #F2F1EE;
 	color: #333333;
 }
 #Kunena tr.krow1 td {
-	background: #999999;
+	background: #FFFFFF;
 }
 #Kunena table.kblocktable thead tr th,
 #Kunena table.kblocktablehalf thead tr th  {
-	background: #191970/*c*/;
-	color: #999999;
-	border-color: #333333;
-	border-style: solid;
-	border-width: 1px;
+	background: #191970;
+	color: #ffffff;
+	border-bottom: 1px solid #d9d9d9;
 }
 #Kunena tr.ksth {
-	background: #333333;
+	background: #737373;
 	color: #fff;
 }
 #Kunena tr.ksectiontableentry1 td {
-	background: #111111;
-	color: #666666;
-	border-bottom: 1px solid #333333;
-	border-right: 1px solid #333333;
+	background: #F2F1EE;
+	color: #333333;
+	border-bottom: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
 }
 #Kunena tr.ksectiontableentry2 td {
-	background: #151515;
-	color: #666666;
-	border-bottom: 1px solid #333333;
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
+	color: #333333;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena .kunapproved td {
@@ -188,66 +167,64 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena #Kunena_top td {
-	background: transparent;
-	color: #666666;
-	border-color: #111111;
+	background: #FFFFFF;
+	color: #000000;
+	border-color: #191970;
 }
 
 #Kunena #Kunena_top td img.hideshow {
-	background: #111111;
+	background: #191970;
 }
 #Kunena #Kunena_tab a {
-	background-color: #333333;
+	background-color: #737373;
 }
 
 #Kunena #Kunena_tab a span {
-	color: #999999;
+	color: #FFFFFF;
 }
 #Kunena #Kunena_tab a:hover,
 #Kunena #Kunena_tab li.Kunena_item_active a	{
-	background-color: #111111;
+	background-color: #191970;
 }
 
 #Kunena #Kunena_tab a:hover span,
 #Kunena #Kunena_tab li.Kunena_item_active a span	{
-	color: #999999;
+	color: #FFFFFF;
 }
 /* Select */
 
 #Kunena select,
 #Kunena select:focus,
 #Kunena select:hover {
-	border: 1px solid #111111;
-	color: #999999;
-	padding: 1px !important;
-	background: #444444;
+	border: 1px solid #999999;
+	color: #000000;
 }
 	
 #Kunena option {
-	background: #999999 none repeat scroll 0 0;
+	background: #FFFFFF none repeat scroll 0 0;
 	color: #000000;
 }
 /* PROFILEBOX AND LOGINBOX
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena table.kprofilebox {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena .kprofilebox-left {
-	border-right: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
 	background: #EEEEEE;
 }
 
 #Kunena .kprofilebox-right {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena .klogin-box {
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 #Kunena td.klogin-box {
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 	padding: 15px;
 }
 
@@ -263,93 +240,93 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 --------------------------------------------------------*/
 #Kunena .button,
 #Kunena .kbutton {
-	background: #222222 none repeat scroll 0 0;
-	border: 1px solid #333333;
-	color: #666666;
+	background: #F2F1EE none repeat scroll 0 0;
+	border: 1px solid #999999;
+	color: #000000;
 }
 #Kunena input.kinput {
 	border: 1px solid #999999;
 }
 #Kunena .kbutton:hover,
 #Kunena .kbutton:focus {
-	background: #333333 none repeat scroll 0 0;
-	border: 1px solid #111111;
-	color: #999999;
+	background: #609FBF none repeat scroll 0 0;
+	border: 1px solid #191970;
+	color: #FFFFFF;
 }
 
 #Kunena .klist_actions {
-	background-color: #252525;
-	color: #666666;
-	border: 1px solid #333333;
+	background-color: #FFFFFF;
+	color: #000000;
+	border: 1px solid #BFC3C6;
 }
 #Kunena .klist_actions_bottom {
-	background-color: #252525;
-	color: #666666;
-	border: 1px solid #333333;
+	background-color: #FFFFFF;
+	color: #000000;
+	border: 1px solid #BFC3C6;
 }
 #Kunena .klist_actions_info a {
 	color: #009933;
 }
 #Kunena .klist_pages {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 	color: #666666;
 }
 
 #Kunena .klist_times {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 	color: #666666;
 }
 #Kunena .klist_actions_info_all {
 	color: #999999;
 }
 #Kunena .klist_actions_forum {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena .klist_pages_all {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 	color: #666666;
 }
 #Kunena .klist_times_all {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 	color: #666666;
 }
 
 #Kunena .klist_jump_all {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 	color: #666666;
 }
 #Kunena .klist_top {
-	background: #272727 none;
-	border: 1px solid #333333;
+	background: #FFFFFF none;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena .klist_bottom {
-	background: #272727 none;
-	border: 1px solid #333333;
+	background: #FFFFFF none;
+	border: 1px solid #BFC3C6;
 }
 #Kunena .klist_categories {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 	color: #666666;
 }
 
 /*---------- Pagination ------------- */
 
 #Kunena .kpagination a {
-	border:solid 1px #111111;
-	background: #999999;
+	border:solid 1px #191970;
+	background: #ffffff;
 }
 #Kunena .kpagination .active {
-	background:#111111;
-	color:#999999;
+	background:#191970;
+	color:#FFFFFF;
 }
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited {
-	color:#111111;
+	color:#191970;
 }
 #Kunena .kpagination a:hover{
-	border:solid 1px #111111;
-	color: #999999;
+	border:solid 1px #191970;
+	color: #ffffff;
 	background: #609FBF;
 }
 /* Inline pagination in topics */
@@ -358,34 +335,34 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 } 
 #Kunena div.k-topic-title-cover ul.kpagination a {
 	border:solid 1px #bcbcbc;
-	background: #999999;
+	background: #ffffff;
 }
 #Kunena div.k-topic-title-cover ul.kpagination a:hover{
-	border:solid 1px #111111;
-	color: #999999;
+	border:solid 1px #191970;
+	color: #ffffff;
 	background: #609FBF;
 }
 /* TOPMENU
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .kheader div#ktopmenu a:hover {
-	color: #333333;
+	color: #BFC3C6;
 }
 #Kunena_tab ul.menu li#current.active a {
-	background-color:#111111;
+	background-color:#191970;
 }
 
 /* PATHWAY 
 ----------------------------------------------------------------------------------------------- */
 #Kunena .kforum-pathway {
-	border: 1px solid #333333;
-	color: #666666;
-	background: #252525;
+	border: 1px solid #BFC3C6;
+	color: #000000;
+	background: #F2F1EE;
 }
 #Kunena .kforum-pathway-bottom {
-	border: 1px solid #333333;
-	color: #666666;
-	background: #252525;
+	border: 1px solid #BFC3C6;
+	color: #000000;
+	background: #F2F1EE;
 }
 
 
@@ -393,61 +370,61 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 FORUM HEADER DESCRIPTION
 -------------------------------------------------------------------- */
 #Kunena .kforum-headerdesc {
-	border: 1px solid #333333;
-	color: #666666;
-	background: #252525;
+	border: 1px solid #BFC3C6;
+	color: #000000;
+	background: #FFF;
 }
 
 /* CATEGORY LIST
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena table.kblocktable {
-	border-color: #222222;
+	border-color: #BFC3C6;
 }
 
 #Kunena table.kblocktablehalf {
-	border-color: #333333;
+	border-color: #BFC3C6;
 }
 
 #Kunena h1,
 #Kunena h2 {
-	background: #191970/*c*/;
-	border-bottom:2px solid #191970/*c*/;
-	color: #ffffff/*ct*/;
+	background: #191970;
+	border-bottom:2px solid #D9D9D9;
+	color: #FFFFFF;
 }
 
 #Kunena h1 a:link,
 #Kunena h1 a:active,
 #Kunena h1 a:visited {
-	color: #999999;
+	color: #FFFFFF;
 }
 
 #Kunena div.ktitle_cover {
-	color: #ffffff/*ct*/;
+	color: #FFFFFF;
 }
 
 #Kunena div.ktitle_cover a { 
-	color: #ffffff/*ct*/;
+	color: #fff;
 }
 #Kunena div.ktitle_cover a.ktitle { 
-	color: #ffffff/*ct*/;
+	color: #fff;
 }
 
 #Kunena .ktitle,
 #Kunena a.ktitle {
-	color: #ffffff/*ct*/;
+	color: #FFFFFF;
 }
 
 #Kunena .ktitle a {
-	color: #ffffff/*ct*/;
+	color: #FFFFFF;
 }
 
 #Kunena tr.ksectiontableentry1 td.td-1 {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena tr.ksectiontableentry2 td.td-1 {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena div.kthead-moderators  {
@@ -459,7 +436,7 @@ FORUM HEADER DESCRIPTION
 }
 
 #Kunena table.kcc-table tr td {
-	border: 0px solid #999999;
+	border: 0px solid #FFFFFF;
 }
 
 #Kunena div.kcc-childcat-title {
@@ -477,36 +454,36 @@ FORUM HEADER DESCRIPTION
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena img.catavatar {
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena .kcontentheading {
 	background: #f2f1ee;
-	color: #333333;
-	border-bottom: 3px solid #333333;
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
-	border-top: 1px solid #999999;
+	color: #737373;
+	border-bottom: 3px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+	border-top: 1px solid #FFFFFF;
 }
 
 #Kunena .kcontenttablespacer {
-	border-bottom: 1px solid #333333;
+	border-bottom: 1px solid #BFC3C6;
 }
 
 #Kunena .ksectiontableentry1_stickymsg {
-	background: #252525;
+	background: #FFFFCC;
 }
 
 #Kunena .ksectiontableentry2_stickymsg {
-	background: #303030;
+	background: #FFFFCC;
 }
 
 #Kunena tr.ksectiontableentry1_stickymsg td,
 #Kunena tr.ksectiontableentry2_stickymsg td	{
-	color: #666666;
-	border-bottom: 1px solid #333333;
-	border-left: 1px solid #999999;
-	border-right: 1px solid #333333;
+	color: #000000;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #BFC3C6;
 }
 
 /*
@@ -555,25 +532,25 @@ Multi file upload for bbcode editor
 POST HISTORY
 -------------------------------------------------------------------- */
 #Kunena .kreview_table {
-	background: #333333;
+	background: #BFC3C6;
 }
 
 #Kunena .kreview_header {
-	color: #999999;
+	color: #ffffff;
 }
 #Kunena .kreview_body0 {
 	color: #404040;
-	background-color: #777777;
+	background-color: #FFFFCC;
 }
 
 #Kunena .kreview_body1 {
 	color: #404040;
-	background-color: #999999;
+	background-color: #FFFFFF;
 }
 
 #Kunena .kreview_quote {
-	border: dotted 1px #333333;
-	background-color: #111111;
+	border: dotted 1px #BFC3C6;
+	background-color: #FFF;
 	color: #999;
 }
 
@@ -581,26 +558,26 @@ POST HISTORY
 POST PAGE
 -------------------------------------------------------------------- */
 #Kunena #kpostmessage {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena #kpost_message .postinput {
-	background: #999999; 
+	background: #FFFFFF; 
 	color: #000000;
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena #kpost_message .postinput:hover,
 #Kunena #kpost_message .postinput:focus	{
-	background: #999999;
+	background: #FFFFFF;
 	color: #000000;
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena #kpostmessage tr.ksectiontableentry2 td.k-topicicons td {
-	background: #999999;
+	background: #FFFFFF;
 	color: #000000;
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena #kpostmessage tr.ksectiontableentry1 .k-postbuttonset td.kposthint	{
@@ -613,24 +590,22 @@ POST PAGE
 	border: 0px solid #FFFFCC;
 }
 #Kunena tr.ksectiontableentry1 .k-postbuttons {
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena table#kpostmessage .ktxtarea {
-	border: 1px solid #333333;
-	background: #333333;
-	color: #666666;
+	border: 1px solid #BFC3C6;
 }
 
 /* ---- Post Previews ---- */
 
 #Kunena #kbbcode-preview {
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 	background: #F2F1EE;
 }
 #Kunena #kpostmessage tr.ksectiontableentry1 .k-postbuttonset td,
 #Kunena #kpostmessage tr.ksectiontableentry2 .k-postbuttonset td	{
-	border-bottom: 0px solid #333333;
+	border-bottom: 0px solid #BFC3C6;
 }
 
 #Kunena #Kunena_post_result div {
@@ -641,7 +616,7 @@ POST PAGE
 #Kunena div#link,
 #Kunena div#image,
 #Kunena div#video {
-	border-bottom: 1px solid #333333;
+	border-bottom: 1px solid #BFC3C6;
 }
 
 /* for form-validation
@@ -655,15 +630,15 @@ POST PAGE
 #Kunena tbody#whoisonline_tbody td,
 #Kunena tbody#frontstats_tbody td,
 #Kunena tbody#topprofilebox_tbody td {
-	background: #050505;
+	background: #fff;
 }
 
 #Kunena .wholegend {
-	border-top: 1px dotted #333333;
+	border-top: 1px dotted #CCCCCC;
 }
 
 #Kunena .whoonline {
-	border-bottom: 1px dotted #333333;
+	border-bottom: 1px dotted #CCCCCC;
 }
 
 /* SEARCHBOX
@@ -679,14 +654,8 @@ POST PAGE
 }
 
 #Kunena fieldset {
-	background-color: #222222;
-	border:1px solid #333333;
-}
-#Kunena fieldset.fieldset input {
-	background-color: #333333;
-	border:1px solid #111111;
-	color: #888888;
-	padding:2px;
+	background-color: #fff;
+	border:1px solid #CCCCCC;
 }
 
 #Kunena .ksearch-results {
@@ -697,15 +666,15 @@ POST PAGE
 THREAD VIEW
 -------------------------------------------------------------------- */
 #Kunena #kthreadview {
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena .kthreadview_row td {
-	border-top: 1px dotted #333333;
+	border-top: 1px dotted #BFC3C6;
 }
 
 #Kunena .kthreadview_row td table tr td {
-	border-top: 0px solid #333333;
+	border-top: 0px solid #BFC3C6;
 }
 
 #Kunena .ksectiontableheader a {
@@ -713,10 +682,7 @@ THREAD VIEW
 }
 
 #Kunena table#kflattable th {
-	background: #191970/*c*/;
-	border-color: #191970/*c*/ #191970/*c*/ #333333;
-	border-style: solid;
-	border-width: 1px;
+	background: #191970;
 }
 
 #Kunena span.topic_views {
@@ -729,7 +695,7 @@ THREAD VIEW
 
 #Kunena tr.ksectiontableentry1 td.td-0,
 #Kunena tr.ksectiontableentry2 td.td-0	{
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 	color: #999999;
 }
 
@@ -745,12 +711,12 @@ THREAD VIEW
 
 #Kunena .klatest-avatar,
 #Kunena .topic_latest_post_avatar {
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena tr.ksectiontableentry1_stickymsg td.td-0,
 #Kunena tr.ksectiontableentry2_stickymsg td.td-0	{
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 	color: #999999;
 }
 
@@ -759,7 +725,7 @@ MODERATOR PAGE
 -------------------------------------------------------------------- */
 
 #Kunena div#kmod-container {
-	border: 1px solid #333333; 
+	border: 1px solid #BFC3C6; 
 }
 
 #Kunena div.kmoderate_message {
@@ -772,45 +738,41 @@ USER PROFILE
 
 #Kunena .kprofile-right {}
 #Kunena .kprofileinfo {
-	background: #999999;
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
+	background: #ffffff;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena #kuserprfmsg td.td-6 {
-	border-right: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
 }
 #Kunena .kprofile-bottomnav {
-	background: #999999;
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
+	background: #ffffff;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena .kmyprofile_menu td {
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena .kmyprofile_menu_staff {
-	border-bottom: 4px solid #333333;
+	border-bottom: 4px solid #BFC3C6;
 }
 #Kunena .kmyprofile_general td {
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
 }
 
 /*
 NEW PROFILE
 -------------------------------------------------------------------- */
-#Kunena div#kprofile-container {
-	border: 1px solid #222222;
-	color: #666666;
-	background: #000000;
-}
+#Kunena div#kprofile-container { border: 1px solid #BFC3C6;}
 
 #Kunena div.avatar-lg { 
-	background-color: #222222; 
-	border: 1px solid #333333;
+	background-color: #FFF; 
+	border: 1px solid #999999; 
 }
 
 #Kunena div#kprofile-stats ul li span.online-status-yes {
@@ -820,7 +782,7 @@ NEW PROFILE
 	color:#fff;
 }
 #Kunena div.clrline {
-	border-top: 1px solid #222222; 
+	border-top: 1px solid #BFC3C6; 
 }
 #Kunena div.kprofile-rightcol1 h4 {color: #333333;}
 
@@ -828,30 +790,30 @@ NEW PROFILE
 ----------------------------------*/
 
 #Kunena dl.tabs dt {
-	border-left: 1px solid #222222;
-	border-right: 1px solid #222222;
-	border-top: 1px solid #222222;
-	background: #222222;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+	border-top: 1px solid #BFC3C6;
+	background: #f0f0f0;
 	color: #666;
 }
 #Kunena dl.tabs dt.open {
-	background: #555555;
-	border-bottom: 1px solid #555555;
-	color: #eeeeee;
+	background: #F9F9F9;
+	border-bottom: 1px solid #F9F9F9;
+	color: #000;
 }
 #Kunena div.current {
-	border: 1px solid #222222;
+	border: 1px solid #BFC3C6;
 }
 #Kunena dt.kprofile-modbtn {
 	background-color:#999999 !important;
-	color: #666666 !important;
+	color: #FFF !important;
 }
 /* SLIDERS
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena span#kprofilebox_status {
 	color: #fff;
-	background-color: #111111;
+	background-color: #191970;
 }
 #Kunena #kprofilebox_toggle {
 	border: 1px solid #fff;
@@ -861,131 +823,127 @@ NEW PROFILE
 ----------------------------------------------------------------------- */
 
 #Kunena div.kunena-msgtitle {
-	border-bottom:1px solid #333333;
+	border-bottom:1px solid #DDDDDD;
 }
 
 /* right
 ----------------------------------------*/
 
 #Kunena td.kunena-profile-right {
-	background: #222222;
-	border-bottom: 1px solid #333333;
-	border-right: 1px solid #333333;
-	border-left: 1px solid #333333;
+	background: #EFF0F4;
+	border-bottom: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+	border-left: 1px solid #DDDDDD;
 }
 
 #Kunena td.kunena-message-right {
-	border-left: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena td.buttonbar-right {
-	border-left: 1px solid #333333;
-	border-bottom: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
 }
 
 /* left
 ----------------------------------------*/
 
 #Kunena td.kunena-profile-left {
-	background: #222222;
-	border-bottom: 1px solid #333333;
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
+	background: #EFF0F4;
+	border-bottom: 1px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #DDDDDD;
 }
 
 #Kunena td.kunena-message-left {
-	border-right: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena td.buttonbar-left {
-	border-right: 1px solid #333333;
-	border-bottom: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
 }
 
 #Kunena .kunapproved td {
-	background: #333333 !important;
+	background: #DDDDDD !important;
 }
 
 /* top
 ----------------------------------------*/
 
 #Kunena td.kunena-profile-top {
-	background: #222222;
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
-	border-bottom: 1px solid #333333;
+	background: #EFF0F4;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+	border-bottom: 1px solid #DDDDDD;
 }
 
 #Kunena td.kunena-message-top {
-	border-right: 1px solid #333333;
-	border-left: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena td.buttonbar-top {
-	border-bottom: 1px solid #333333;
-	border-right: 1px solid #333333;
-	border-left: 1px solid #333333;
+	border-bottom: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
 }
 
 /* bottom
 ----------------------------------------*/
 
 #Kunena td.kunena-profile-bottom {
-	background: #222222;
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
-	border-bottom: 1px solid #333333;
-	border-top: 1px solid #333333;
+	background: #EFF0F4;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
+	border-top: 1px solid #DDDDDD;
 }
 
 #Kunena td.kunena-message-bottom {
-	border-right: 1px solid #333333;
-	border-left: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena td.buttonbar-bottom {
-	border-right: 1px solid #333333;
-	border-left: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
 }
 
 /* VIEW PAGE
 -------------------------------------------------------------------- */
 #Kunena #kviews {
-	background: #111111;
-	color: #666666;
-}
-
-#Kunena table.kmsg {
-
+	background: #FFFFFF;
+	color: #000000;
 }
 
 #Kunena tr.ksth th.view-th {
-	background: #333333;
+	background: #737373;
 }
 
 #Kunena #kviews th.left {
-	background:#191970/*c*/;
+	background:#191970;
 }
 
 #Kunena td.k-msgview-left {
 	background: #EFF0F4;
-	border-bottom: 0px solid #333333;
-	border-right: 1px solid #333333;
+	border-bottom: 0px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena td.k-msgview-right {
-	border-right: 1px solid #333333;
-	border-left: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
+	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena td.k-msgview-left-l {
 	background: #EFF0F4;
-	border-left: 1px solid #333333;
-	border-right: 1px solid #333333;
+	border-left: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena td.k-msgview-right-l {
-	border-right: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena span.view-username a:link,
@@ -997,84 +955,84 @@ NEW PROFILE
 	color: #000000;
 }
 #Kunena span.kavatar img {
-	border: 1px solid #333333;
+	border: 1px solid #BFC3C6;
 }
 
 #Kunena div.smallicons {
-	color: #333333;
+	color: #737373;
 }
 #Kunena span.msgkarma {
-	color: #333333;
+	color: #737373;
 }
 #Kunena div.msgattach {
 	background:#F8F7EF none repeat scroll 0 0;
-	border:1px dotted #333333;
+	border:1px dotted #BFC3C6;
 }
 
 #Kunena div.msgtext pre,
 #Kunena div.msgtext .code {
 	border-left: 5px solid #F4A94F;
-	border-right: 1px solid #333333;
-	border-top: 1px solid #333333;
-	border-bottom: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
+	border-top: 1px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
 }
 
 #Kunena div.kfile_attachment {
-	background: #333333;
-	border: 1px dotted #333333;
+	background: #BFC3C6;
+	border: 1px dotted #737373;
 }
 
 #Kunena div.kmessage_editMarkUp_cover {
-	border-bottom: 1px dotted #333333;
+	border-bottom: 1px dotted #BFC3C6;
 }
 
 #Kunena span.kmessage_editMarkUp {
-	background: #333333 no-repeat left center;
-	border-left: 1px dotted #333333;
-	border-right: 1px dotted #333333;
-	border-top: 1px dotted #333333;
+	background: #F2F1EE no-repeat left center;
+	border-left: 1px dotted #BFC3C6;
+	border-right: 1px dotted #BFC3C6;
+	border-top: 1px dotted #BFC3C6;
 	color: #666666;
 }
 
 #Kunena span.kmessage_informMarkUp {
-	background: #333333;
-	border-left: 1px dotted #333333;
-	border-right: 1px dotted #333333;
-	border-top: 1px dotted #333333;
+	background: #F2F1EE;
+	border-left: 1px dotted #BFC3C6;
+	border-right: 1px dotted #BFC3C6;
+	border-top: 1px dotted #BFC3C6;
 	color: #666666;
 }
 
 #Kunena div.msgsignature {
-	border-top:1px dotted #333333;
+	border-top:1px dotted #BFC3C6;
 	color:#999999;
 }
 
 #Kunena td.k-msgview-left-b {
 	background: #EFF0F4;
-	border-bottom: 1px solid #333333;
-	border-right: 1px solid #333333;
+	border-bottom: 1px solid #BFC3C6;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena td.k-msgview-right-b {
-	border-bottom: 1px solid #333333;
+	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #DDD5BF;
-	border-right: 1px solid #333333;
+	border-right: 1px solid #BFC3C6;
 }
 
 #Kunena .kreply_form {
-	border: 1px solid #333333;				
+	border: 1px solid #BFC3C6;				
 }
 
 #Kunena .kreply_form .inputbox {
 	border: 1px solid #999999;
-	background: #999999;
+	background: #FFFFFF;
 	color: #000000;
 }
 
 #Kunena span.kmsgtext_quote,
 #Kunena span.kmsgtext_confidential {
-	border: 1px dotted #333333;
-	background: #252525;
+	border: 1px dotted #BFC3C6;
+	background: #F2F1EE;
 }
 #Kunena span.kmsgtext_confidential {
 	background: #FAE0F8;
@@ -1111,15 +1069,15 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT, CREDITS AND FOOTER
 #Kunena td.kuadesc,
 #Kunena td.kanndesc,
 #Kunena td.kcreditsdesc	{
-	border: 1px solid #333333;
-	background: #111111;
-	color: #666666;
+	border: 1px solid #BFC3C6;
+	background: #FFFFFF;
+	color: #000000;
 }
 #Kunena .kteam {
-	border-top: 1px solid #333333;
+	border-top: 1px solid #BFC3C6;
 }
 #Kunena .kteammember {
-	border-bottom: 1px solid #333333;
+	border-bottom: 1px solid #BFC3C6;
 	background: transparent none;
 }
 #Kunena .kfooter-time {

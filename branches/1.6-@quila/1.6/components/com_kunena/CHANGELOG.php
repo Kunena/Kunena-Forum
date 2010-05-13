@@ -42,6 +42,7 @@ Kunena 1.6.0-DEV
 + [#19345] Added Default Light and Default Dark Template Color
 + [#19345] Added Green Light and Green Dark Template Color
 + [#19345] Added Red Light and Red Dark Template Color
++ [#19345] Added Gray Light and Gray Dark Template Color
 
 12-May-2010 @quila
 ^ [#19345] Restyle Default template - Splited kunena.forum.css in more parts to improve development and design

@@ -57,40 +57,55 @@
 
 #Kunena a.buttoncomm.btn-left,
 #Kunena a.buttonuser.btn-left,
-#Kunena a.buttonmod.btn-left,
 #Kunena a.buttongen.btn-left,
 #Kunena span.buttononline-yes.btn-left,
 #Kunena span.buttononline-no.btn-left,
 #Kunena a.buttoncomm span,
 #Kunena a.buttonuser span,
-#Kunena a.buttonmod span,
 #Kunena a.buttongen span,
 #Kunena span.buttononline-yes span,
 #Kunena span.buttononline-no span {
 	float: left;
 	background: #bbbbbb;
-	text-shadow: -1px 1px 1px #ffffff;
+	text-shadow: -1px 1px 1px #dddddd;
 	-moz-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
 
+#Kunena a.buttonmod.btn-left,
+#Kunena a.buttonmod span {
+	float: left;
+	background: #777777;
+	text-shadow: -1px -1px 1px #888888;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+
 #Kunena a.buttoncomm.btn-left:hover,
 #Kunena a.buttonuser.btn-left:hover,
-#Kunena a.buttonmod.btn-left:hover,
 #Kunena a.buttongen.btn-left:hover,
 #Kunena span.buttononline-yes.btn-left:hover,
 #Kunena span.buttononline-no.btn-left:hover,
 #Kunena a.buttoncomm span:hover,
 #Kunena a.buttonuser span:hover,
-#Kunena a.buttonmod span:hover,
 #Kunena a.buttongen span:hover,
 #Kunena span.buttononline-yes span:hover,
 #Kunena span.buttononline-no span:hover {
 	background: #666666;
-	color: #fff;
+	color: #ffffff;
 	text-shadow: -1px 1px 1px #cccccc;
+}
+
+#Kunena a.buttonmod.btn-left:hover,
+#Kunena a.buttonmod span:hover {
+	background: #bbbbbb;
+	color: #ffffff;
+	text-shadow: -1px 1px 1px #999999;
 }
 
 #Kunena a.buttoncomm span span,

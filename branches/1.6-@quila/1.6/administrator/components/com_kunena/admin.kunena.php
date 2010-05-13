@@ -1087,12 +1087,16 @@ function showConfig($option) {
 	
     // New for 1.6 -> Template Color
     $templatecolor = array ();
-	$templatecolor[] = JHTML::_('select.option', 'default',JText::_('COM_KUNENA_TEMPLATE_COLOR_DEFAULT'));
-	$templatecolor[] = JHTML::_('select.option', 'green',JText::_('COM_KUNENA_TEMPLATE_COLOR_GREEN'));
-	$templatecolor[] = JHTML::_('select.option', 'red',JText::_('COM_KUNENA_TEMPLATE_COLOR_RED'));
-	$templatecolor[] = JHTML::_('select.option', 'gray',JText::_('COM_KUNENA_TEMPLATE_COLOR_GRAY'));
+	$templatecolor[] = JHTML::_('select.option', 'defaultlight',JText::_('COM_KUNENA_TEMPLATE_COLOR_DEFAULTLIGHT'));
+	$templatecolor[] = JHTML::_('select.option', 'greenlight',JText::_('COM_KUNENA_TEMPLATE_COLOR_GREENLIGHT'));
+	$templatecolor[] = JHTML::_('select.option', 'redlight',JText::_('COM_KUNENA_TEMPLATE_COLOR_REDLIGHT'));
+	$templatecolor[] = JHTML::_('select.option', 'graylight',JText::_('COM_KUNENA_TEMPLATE_COLOR_GRAYLIGHT'));
+	$templatecolor[] = JHTML::_('select.option', 'bluelight',JText::_('COM_KUNENA_TEMPLATE_COLOR_BLUELIGHT'));
+	$templatecolor[] = JHTML::_('select.option', 'defaultdark',JText::_('COM_KUNENA_TEMPLATE_COLOR_DEFAULTDARK'));
+	$templatecolor[] = JHTML::_('select.option', 'greendark',JText::_('COM_KUNENA_TEMPLATE_COLOR_GREENDARK'));
+	$templatecolor[] = JHTML::_('select.option', 'reddark',JText::_('COM_KUNENA_TEMPLATE_COLOR_REDDARK'));
+	$templatecolor[] = JHTML::_('select.option', 'graydark',JText::_('COM_KUNENA_TEMPLATE_COLOR_GRAYDARK'));
 	$templatecolor[] = JHTML::_('select.option', 'bluedark',JText::_('COM_KUNENA_TEMPLATE_COLOR_BLUEDARK'));
-	$templatecolor[] = JHTML::_('select.option', 'dark',JText::_('COM_KUNENA_TEMPLATE_COLOR_BLACKDARK'));
     $lists['templatecolor'] = JHTML::_('select.genericlist', $templatecolor, 'cfg_templatecolor', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templatecolor);
     // New for 1.6 -> Template Button Style
     $templatebuttonstyle = array ();

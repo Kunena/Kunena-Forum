@@ -353,23 +353,35 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	CKunenaTools::loadTemplate('/profilebox.php');
 
 	switch ($this->config->templatecolor) {
-        case 'dark' :
-			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-dark.css' );
-            break;
         case 'bluedark' :
 			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-bluedark.css' );
             break;
-        case 'gray' :
-			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-gray.css' );
+        case 'graydark' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-graydark.css' );
             break;
-		case 'red' :
-			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-red.css' );
+        case 'reddark' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-reddark.css' );
             break;
-        case 'green' :
-			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-green.css' );
+		case 'greendark' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-greendark.css' );
+            break;
+        case 'defaultdark' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-defaultdark.css' );
+            break;
+        case 'bluelight' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-bluelight.css' );
+            break;
+        case 'graylight' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-graylight.css' );
+            break;
+		case 'redlight' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-redlight.css' );
+            break;
+        case 'greenlight' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-greenlight.css' );
             break;
         default :
-			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-default.css' );
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-defaultlight.css' );
 	}
 	
 	switch ($this->config->templatebuttonstyle) {

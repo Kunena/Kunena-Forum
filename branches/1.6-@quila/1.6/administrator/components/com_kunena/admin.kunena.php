@@ -1092,6 +1092,7 @@ function showConfig($option) {
 	$templatecolor[] = JHTML::_('select.option', 'red',JText::_('COM_KUNENA_TEMPLATE_COLOR_RED'));
 	$templatecolor[] = JHTML::_('select.option', 'gray',JText::_('COM_KUNENA_TEMPLATE_COLOR_GRAY'));
 	$templatecolor[] = JHTML::_('select.option', 'bluedark',JText::_('COM_KUNENA_TEMPLATE_COLOR_BLUEDARK'));
+	$templatecolor[] = JHTML::_('select.option', 'dark',JText::_('COM_KUNENA_TEMPLATE_COLOR_BLACKDARK'));
     $lists['templatecolor'] = JHTML::_('select.genericlist', $templatecolor, 'cfg_templatecolor', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templatecolor);
     // New for 1.6 -> Template Button Style
     $templatebuttonstyle = array ();

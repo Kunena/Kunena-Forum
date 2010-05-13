@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+13-May-2010 @quila
+# [#19288] Fix regression - List of Allowed file exstensions is out of tip in post page.
++ [#19345] Restyle Default template - Added Dark ( Black ) Template Color
+
 12-May-2010 @quila
 ^ [#19345] Restyle Default template - Splited kunena.forum.css in more parts to improve development and design
 + [#19345] Restyle Default template - Added configuration for Template Color chooser

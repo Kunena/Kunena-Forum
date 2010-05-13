@@ -353,6 +353,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	CKunenaTools::loadTemplate('/profilebox.php');
 
 	switch ($this->config->templatecolor) {
+        case 'dark' :
+			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-dark.css' );
+            break;
         case 'bluedark' :
 			$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/color-bluedark.css' );
             break;

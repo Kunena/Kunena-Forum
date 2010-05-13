@@ -2036,7 +2036,7 @@ table.kadmin-stat caption {
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_POLLSPOP');
 							?></td>
 							<td align="left" valign="top"><input type="text"
-								name="cfg_popsubjectcount"
+								name="cfg_poppollscount"
 								value="<?php echo kescape($kunena_config->poppollscount);
 							?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_POLLSPOP');

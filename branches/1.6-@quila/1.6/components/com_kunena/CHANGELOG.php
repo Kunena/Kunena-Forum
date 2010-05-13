@@ -41,10 +41,14 @@ Kunena 1.6.0-DEV
 + [#19345] Restyle Default template - Added 4 template color ( green, red, gray and darkblue )
 # [#19288] Fix regression in profile: UddeIM Integration - PM Icon messed in IE8
 # [#19356] Fixed template frontend - listcat.php. If No Posts column is not aligned.
-+ [#19345] Redesigned Who Is Online plugin
++ [#19345] Restyled Who Is Online plugin
 + [#19345] Added User Color Code Legend in Who Is Online plugin
 + [#19345] Added more Color Code for Global Moderator, Users and Guests (need check if load extra query).
-# [#19356] Fix regression in language file.
+# [#19288] Fix regression in language file - Who page.
+# [#19288] Fix regression - too big avatar show in top and bottom avatar position.
+# [#19288] Fix regression - Number of Popular Polls in statistics.
+^ [#19345] Increased maxlenth for Poll Title (25 -> 100) and Options (25 -> 50), and added size to input.
++ [#19345] Restyled Frontstats plugin - added stats icon
 
 11-May-2010 Matias
 ^ [#15886] Merged revisions 2434-2435 from /branches/1.6-xillibit

@@ -52,6 +52,11 @@
 	text-align:center;
 }
 
+#Kunena .statsicon {
+	min-width: 32px;
+	min-height: 32px;
+}
+
 /* 		WHO IS ONLINE
 ------------------------------------------------------------------- */
 

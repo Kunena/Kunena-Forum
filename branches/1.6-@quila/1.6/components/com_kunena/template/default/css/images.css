@@ -236,5 +236,12 @@ div#kprofile-stats ul li span.rank-admin {
 ------------------------------------------------------------------- */
 
 #Kunena .whoicon {
-	background: url("../images/who_is_online.png") no-repeat center top;
+	background: url("../images/icons/who_is_online.png") no-repeat center top;
+}
+
+/* 		FRONTSTATS
+------------------------------------------------------------------- */
+
+#Kunena .statsicon {
+	background: url("../images/icons/stats.png") no-repeat center top;
 }

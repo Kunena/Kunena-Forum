@@ -41,7 +41,7 @@ if ($this->showgenstats > 0)
         <table class = "kblocktable" id ="kfrontstats">
             <thead>
                 <tr>
-                    <th align="left">
+                    <th align="left" colspan="2">
                         <div class = "ktitle_cover km">
                             <?php echo CKunenaLink::GetStatsLink( stripslashes($kunena_config->board_title).' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), 'ktitle kl'); ?>
                         </div>
@@ -55,6 +55,9 @@ if ($this->showgenstats > 0)
 
             <tbody id="frontstats_tbody">
                 <tr class="ksectiontableentry1">
+                    <td class = "td-1" width="1%">
+						<div class="statsicon"></div>
+                    </td>
                     <td class="td-1 km">
                     	<ul id="statslistright" class="fltrt right">
                     		<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $userlist1; ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<strong> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid, $this->lastestmember, '', $rel='nofollow'); ?></strong></li>

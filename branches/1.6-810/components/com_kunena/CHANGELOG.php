@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 ^ [#19356] Minor HTML/CSS fixes in the backend
 # [#19312] Language string added
 ^ [#19356] Minor HTML/CSS fixes in the backend (part2)
+^ [#19356] Minor HTML/CSS fixes in the backend (part3)
 
 13-May-2010 Matias
 # [#19288] Fix regression in installer: clean install failed

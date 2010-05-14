@@ -213,6 +213,10 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function upgradeDatabase() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', KUNENA_PATH);
+		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
+		
 		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
 		$curversion = $this->getInstalledVersion();
 

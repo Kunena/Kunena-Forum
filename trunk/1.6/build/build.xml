@@ -46,6 +46,7 @@
 	<property file="build.config.ini" />
 	<property name="kunena.frontend" value="components/com_kunena" />
 	<property name="kunena.backend" value="administrator/components/com_kunena" />
+	<property name="kunena.media" value="media/kunena" />
 
 	<target name="dist" depends="mkdir,archive,init,build,copy,tar,zip,gzip,bz2,info,cleanup" />
 
@@ -104,6 +105,9 @@
 		<copy todir="${tmp_dir}/components">
 			<fileset dir="${project_dir}/components" />
 		</copy>	
+		<copy todir="${tmp_dir}/media">
+			<fileset dir="${project_dir}/media" />
+		</copy>	
 		<copy todir="${tmp_dir}">
 			<fileset file="${project_dir}/README.txt" />
 		</copy>	
@@ -147,6 +151,9 @@
 		</zip>
 		<zip destfile="${build_dir}/archive/site.zip" basedir="${tmp_dir}">
 			<include name="${kunena.frontend}/**"/>
+		</zip>
+		<zip destfile="${build_dir}/archive/media.zip" basedir="${tmp_dir}">
+			<include name="${kunena.media}/**"/>
 		</zip>
 	</target>
 

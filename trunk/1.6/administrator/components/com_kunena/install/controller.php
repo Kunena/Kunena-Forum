@@ -106,18 +106,15 @@ class KunenaControllerInstall extends JController {
 			$this->model->setStep ( ++ $this->step );
 	}
 
-	function stepBackend() {
+	function stepExtract() {
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
 		$file = 'admin.zip';
 		if (file_exists ( $path . DS . $file ))
 			$this->model->extract ( $path, $file, JPATH_ROOT );
-		if (! $this->model->getError ())
-			$this->model->setStep ( ++ $this->step );
-	}
-
-	function stepFrontend() {
-		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
 		$file = 'site.zip';
+		if (file_exists ( $path . DS . $file ))
+			$this->model->extract ( $path, $file, JPATH_ROOT );
+		$file = 'media.zip';
 		if (file_exists ( $path . DS . $file ))
 			$this->model->extract ( $path, $file, JPATH_ROOT );
 		if (! $this->model->getError ())
@@ -125,8 +122,9 @@ class KunenaControllerInstall extends JController {
 	}
 
 	function stepDatabase() {
-		require_once(KPATH_ADMIN.'/install/kunena.install.php');
-		com_install();
+		include_once(KPATH_ADMIN . '/lib/fx.upgrade.class.php');
+		$upgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);
+		$upgrade->doUpgrade();
 		$this->model->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_DATABASE'), true, '' );
 		if (! $this->model->getError ())
 			$this->model->setStep ( ++ $this->step );

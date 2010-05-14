@@ -134,8 +134,7 @@ class KunenaModelInstall extends JModel {
 	public function getSteps() {
 		$this->steps = array (array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
 			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
-			array ('step' => 'Backend', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_BACKEND') ),
-			array ('step' => 'Frontend', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FRONTEND') ),
+			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_COMPLETE') ) );
@@ -191,8 +190,8 @@ class KunenaModelInstall extends JModel {
 		foreach ( $results as $i => $r )
 			if ($r)
 				$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], true );
-		$this->insertVersion ( 'migrateDatabase' );
 		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true );
+		$this->insertVersion ( 'migrateDatabase' );
 	}
 
 	public function migrateDatabase() {

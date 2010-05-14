@@ -34,11 +34,21 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+14-May-2010 Matias
+^ [#15886] Merged revisions 2437-2450 from /branches/1.6-xillibit with changes
+
 13-May-2010 Matias
 # [#19288] Fix regression in installer: clean install failed
 
 12-May-2010 Matias
 ^ [#20038] Basic Joomla 1.6 support: New installer
+
+11-May-2010 Xillibit
+^ [#19288] Add user moderation tools or ban functions in kunena users manager and in profile page (Part 2)
+^ [#19288] Show user avatar in kunena user manager list
+# [#19288] Fix regression on kunena avatar integration which prevents to display avatars from gallery
+# [#19288] Ban user or ip doesn't work properly
+# [#19288] Add fields into profile to add expriration and message when moderator bans a user
 
 11-May-2010 Severdia
 # [#19356] Various CSS fixes for frontend, IE7 compatibility

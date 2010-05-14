@@ -10,6 +10,7 @@
  *
  **/
 defined( '_JEXEC' ) or die();
+JHTML::_('behavior.calendar');
 ?>
 <div id="kprofile-rightcoltop">
 	<div class="kprofile-rightcol2">
@@ -127,14 +128,24 @@ defined( '_JEXEC' ) or die();
 				echo $lists = JHTML::_ ( 'select.genericlist', $ipselect, 'prof_ip_select', 'class="inputbox" size="1"', 'value', 'text' );
 				?>
 				</label>
-				<label for="ban-email"><input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
+				<label>
+				<ul id="ban-fields" style="display:none;">
+				<li>
+				<span><?php echo JText::_('COM_KUNENA_BAN_EXPIRY'); ?></span>
+				<input class="inputbox" type="text" maxlength="15" name="banexpiry" id="banexpiry" /> 
+				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('banexpiry','%Y-%m-%d');" /></li>
+				<li>
+				<span><?php echo JText::_('COM_KUNENA_BAN_MESSAGE'); ?></span>
+				<input type="text" name="banmessage" /></li>
+				</ul></label>
+				<!--<label for="ban-email"><input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
 				<span onclick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANEMAIL'); ?></span></label>
 				<label for="ban-username"><input type="checkbox" id="ban-username" name="banusername" value="banusername" class="kcheckbox" />
-				<span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>
+				<span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>-->
 				<label for="ban-delsignature"><input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="kcheckbox" />
 				<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_SIGNATURE'); ?></span></label>
 				<label for="ban-user"><input type="checkbox" id="ban-user" name="banuser" value="banuser" class="kcheckbox" />
-				<span onclick="document.kformban.banuser.checked=(! document.kformban.banuser.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BAN_USER'); ?></span></label>
+				<span id="ban-user-text" onclick="document.kformban.banuser.checked=(! document.kformban.banuser.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BAN_USER'); ?></span></label>
 				<label for="ban-delavatar"><input type="checkbox" id="ban-delavatar" name="delavatar" value="delavatar" class="kcheckbox" />
 				<span onclick="document.kformban.delavatar.checked=(! document.kformban.delavatar.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_AVATAR'); ?></span></label>
 				<label for="ban-delprofileinfo"><input type="checkbox" id="ban-delprofileinfo" name="delprofileinfo" value="delprofileinfo" class="kcheckbox" />

@@ -198,24 +198,29 @@ class CKunenaModerationTools {
 
 		switch ( $mode ) {
 			case KN_USER_BAN:
+				$sql = "SELECT userid FROM #__kunena_banned_users WHERE userid='$UserID'";
+				$this->_db->setQuery ( $sql );
+				$userbannedexist = $this->_db->loadResult ();
+				check_dberror ( 'Unable to load users banned.' );
+
+				if ( !$userbannedexist ) {
+					$query = "INSERT INTO #__kunena_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . $this->_db->Quote ( $message ) . "', NOW(), '{$this->_my->id}', '" . $this->_db->Quote ( $comment ) . "')";
+					$this->_db->setQuery ( $query );
+					$this->_db->query ();
+					check_dberror ( 'Unable to insert user state.' );
+				}
+				break;
 			case KN_USER_BLOCK:
+				$user->block = 1;
+				$user->save();
+
+				$this->_logoutUser($UserID);
+
 				break;
 			default:
 				// Unsupported mode - Error!
 				$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_UNSUPPORTED_MODE');
 				return false;
-		}
-
-		$query = "INSERT INTO #__kunena_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . $this->_db->Quote ( $message ) . "', NOW(), '{$this->_my->id}', '" . $this->_db->Quote ( $comment ) . "')";
-		$this->_db->setQuery ( $query );
-		$this->_db->query ();
-		check_dberror ( 'Unable to insert user state.' );
-
-		if ( $mode == KN_USER_BLOCK ) {
-			$user->block = 1;
-			$user->save();
-
-			$this->_logoutUser($UserID);
 		}
 
 		return true;
@@ -247,9 +252,15 @@ class CKunenaModerationTools {
 		switch ( $mode ) {
 			case KN_USER_BAN:
 				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=2 AND `userid`='{$UserID}' AND `enabled`=1";
+				$this->_db->setQuery ( $query );
+				$this->_db->query ();
+				check_dberror ( 'Unable to delete user state.' );
 				break;
 			case KN_USER_BLOCK:
-				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=1 AND `userid`='{$UserID}' AND `enabled`=1";
+				$user->block = 0;
+				$user->save();
+
+				$this->_logoutUser($UserID);	// is this needed?
 				break;
 			default:
 				// Unsupported mode - Error!
@@ -257,16 +268,7 @@ class CKunenaModerationTools {
 				return false;
 		}
 
-		$this->_db->setQuery ( $query );
-		$this->_db->query ();
-		check_dberror ( 'Unable to delete user state.' );
 
-		if ( $mode == KN_USER_BLOCK ) {
-			$user->block = 0;
-			$user->save();
-
-			$this->_logoutUser($UserID);	// is this needed?
-		}
 
 		return true;
 	}

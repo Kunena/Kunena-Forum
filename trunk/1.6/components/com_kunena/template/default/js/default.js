@@ -910,22 +910,30 @@ window.addEvent('domready', function(){
 	}
 	
 	if($('prof_ip_select') != undefined){
-		$('prof_ip_select').addEvent('change', function(e){			
-			var myinput = new Element('input', {type: 'text', id: 'banexpiry', name: 'banexpriy'});
-			var myspan = new Element('span', {id:'spanban'});			
-			myspan.injectAfter($('prof_ip_select'));
-			myspan.appendText('Expiry');
-			myinput.injectAfter($('spanban'));
-			var myinput2 = new Element('input', {type: 'text', id: 'bancomment', name: 'bancomment'});
-			var myspan2 = new Element('span', {id:'spanban2'});
-			myspan2.injectAfter($('banexpiry'));
-			myspan2.appendText('Comment');
-			myinput2.injectAfter($('spanban2'));
-			var myinput3 = new Element('input', {type: 'text', id: 'banmessage', name: 'banmessage'});
-			var myspan3 = new Element('span', {id:'spanban3'});
-			myspan3.injectAfter($('bancomment'));
-			myspan3.appendText('Message');
-			myinput3.injectAfter($('spanban3'));
+		$('prof_ip_select').addEvent('change', function(e){
+			if ($('ban-fields').getStyle('display') != undefined ) {
+				$('ban-fields').removeProperty('style');
+			} else {
+				$('ban-fields').setStyle('display', 'none');
+			}
+			if ($('ban-user-fields').getStyle('display') != undefined ) {
+				$('ban-user-fields').setStyle('display', 'none');
+			}
+		});
+	}
+	
+	if($('ban-user') != undefined){
+		$('ban-user').addEvent('change', function(e){
+			if ($('ban-user-fields') == undefined ) {
+				$('ban-fields').clone().inject('ban-user-text','after').setProperty('id','ban-user-fields');
+			}	
+			if ($('ban-fields').getStyle('display') != undefined ) {
+				$('ban-fields').setStyle('display', 'none');
+			}
+			if ($('ban-user-fields').getStyle('display') != undefined ) {
+				$('ban-user-fields').removeProperty('style');
+			}
+			alert( $('ban-user-fields').getChildren('input') );
 		});
 	}
 });

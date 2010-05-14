@@ -1627,7 +1627,7 @@ function userunban ( $option, $uid, $block=0 ) {
 
 	$unbanuser = $user_mod->unbanUser($uid[0]);
 	if (!$unbanuser) {
-		$message = $kunena_mod->getErrorMessage();
+		$message = $user_mod->getErrorMessage();
 	} else {
 		$message = JText::_('COM_A_KUNENA_USER_UNBANNED_DONE');
 	}

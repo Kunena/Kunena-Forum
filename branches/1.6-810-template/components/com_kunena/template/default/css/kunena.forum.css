@@ -601,7 +601,7 @@ PX		EM			PCT			PT
 
 #Kunena #Kunena_tab a {
 	/* background: url("../images/backgrounds/tabmenuright.gif") no-repeat right top; */
-	background-color: #737373;
+	background-color: #9dbad2;
 	margin: 0;
 	padding: 0;
 	text-decoration: none;
@@ -620,7 +620,7 @@ PX		EM			PCT			PT
 	padding: 0 1.1em;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em; 
-	color: #FFFFFF;
+	color: #FFF;
 	/* font-weight: bold; */
 	line-height: 2.3em;
 	text-indent: 0;

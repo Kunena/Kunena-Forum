@@ -359,7 +359,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 					$types = array ("php", "mysql", "html", "js", "javascript" );
 
-					$code_start_html = '<div class="kmsgtext_code"><table cellspacing="1" cellpadding="3" border="0"><tr><td><b>' . JText::_('COM_KUNENA_MSG_CODE') . '</b></td></tr><tr><td><hr />';
+					$code_start_html = '<div class="kmsgtext_code"><div class="kmsgtext_code-header"><span>' . JText::_('COM_KUNENA_MSG_CODE') . '</span></div><div class="kmsgtext_code-body">';
 
 					if (! empty ( $tag->options ["type"] ) && in_array ( $tag->options ["type"], $types )) {
 						$t_type = $tag->options ["type"];
@@ -370,7 +370,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					// make sure we show line breaks
 
 					$code_start_html .= "<code class=\"{$t_type}\">";
-					$code_end_html = '</code><hr /></td></tr></table></div>';
+					$code_end_html = '</code></div></div>';
 
 					// Preserve spaces and tabs in code
 					$codetext = str_replace ( "\t", "__FBTAB__", $between );

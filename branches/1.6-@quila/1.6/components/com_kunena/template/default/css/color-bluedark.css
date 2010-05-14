@@ -473,6 +473,14 @@ FORUM HEADER DESCRIPTION
 	color: #009900;
 }
 
+#Kunena div.kmsgtext_code-header {
+	border-bottom: 1px solid #555555;
+}
+
+#Kunena div.kmsgtext_code-body {
+	border-bottom: 1px solid #555555;
+}
+
 /* SHOW CATEGORY 
 ----------------------------------------------------------------------------------------------- */
 

@@ -464,6 +464,18 @@
 
 #Kunena div.kmsgtext_code {
 	overflow: auto;
+	margin: 10px;
+}
+
+#Kunena div.kmsgtext_code-header {
+	margin:0;
+	padding: 10px 0 5px;
+}
+#Kunena div.kmsgtext_code-header span {
+	font-weight:bold;
+}
+#Kunena div.kmsgtext_code-body {
+	padding: 10px 0;
 }
 
 #Kunena div.msgtext pre,

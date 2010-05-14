@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 + [#19758] Added function for upload Rank Image in the backend Rank Manager
 ^ [#19288] Kunena Header table moved from kunena.php to profilebox.php to improve template design
 ^ [#19288] Added rss icon in the icons.php to improve template design
+^ [#19288] Remouved rigid table from "Code" in kunena.parser.php and added some class to improve template design
 
 13-May-2010 @quila
 # [#19288] Fix regression - List of Allowed file exstensions is out of tip in post page.

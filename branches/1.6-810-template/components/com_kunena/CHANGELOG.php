@@ -36,6 +36,7 @@ Kunena 1.6.0-DEV
 
 14-May-2010 810
 ^ [#19356] Minor CSS change, menu grey changed to light blue
+^ [#19356] Grey Images changed to blue color
 
 14-May-2010 Matias
 ^ [#15886] Merged revisions 2437-2450 from /branches/1.6-xillibit with changes

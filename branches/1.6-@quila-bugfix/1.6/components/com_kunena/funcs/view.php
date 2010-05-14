@@ -129,7 +129,11 @@ class CKunenaViewMessage {
 			$this->username = stripslashes ($message->name);
 		}
 
+		if ($this->config->avposition == 'left' || $this->config->avposition == 'right') {
 		$avatar = $this->profile->getAvatarLink ('', 'reply');
+		} else {
+		$avatar = $this->profile->getAvatarLink ('', 'welcome');
+		}
 		if ($avatar) {
 			$this->avatar = '<span class="kavatar">' . $avatar . '</span>';
 		}

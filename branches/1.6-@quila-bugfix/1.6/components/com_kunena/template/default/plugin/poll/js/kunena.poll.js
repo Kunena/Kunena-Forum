@@ -34,7 +34,8 @@ window.addEvent('domready', function() {
 		  var input = new Element('input', {
 			  name:'field_option'+numfield,
 			  id:'field_option'+numfield,
-			  maxlength:'25',
+			  maxlength:'50',
+			  size:'30',
 			  onmouseover: '$("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
 		  });		  
 		  mydiv.injectInside(polldiv).injectBefore(hide_input);		  		  

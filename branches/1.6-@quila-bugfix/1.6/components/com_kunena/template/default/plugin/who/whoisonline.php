@@ -39,15 +39,18 @@ if ($this->config->showwhoisonline)
     <table class = "kblocktable" id ="kwhoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
-                <th class="left">
-                    <div class = "ktitle_cover km">
-                        <?php
-                        echo CKunenaLink::GetWhoIsOnlineLink($who_name, 'ktitle kl' );?>
-                    </div>
+                <th class="left" colspan="3"><div class = "ktitle_cover km">
+							<?php 
+							$who_online = JText::_('COM_KUNENA_WHO_WHOIS_ONLINE');
+							if (CKunenaTools::isModerator($this->my->id)) {
+                            echo CKunenaLink::GetWhoIsOnlineLink($who_online,'ktitle kl'); } 
+							else {
+							echo '<span class="ktitle kl">'.$who_online.'</span>';
+							}
+							?></div>
                    <div class="fltrt">
 						<span id="kwhoisonline_status"><a class="ktoggler close" rel="whoisonline_tbody"></a></span>
 					</div>
-                    <!-- <img id = "BoxSwitch_whoisonline__whoisonline_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> -->
                 </th>
 
             </tr>
@@ -55,38 +58,52 @@ if ($this->config->showwhoisonline)
 
         <tbody id = "whoisonline_tbody">
             <tr class = "ksectiontableentry1">
+               <td class = "td-1" width="1%">
+					<div class="whoicon"></div>
+                </td>
                 <td class = "td-1 km" align="left">
-                    <?php
-                    foreach ($users as $user)
-                    {
-                         if ( $user->showOnline ){ ?>
-
-                            <span title=" <?php echo CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat' ); ?> "><?php echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ?></span> &nbsp;
-
-                		  <?php
-                         }
-                    }
-                    if (CKunenaTools::isModerator($this->my->id)){
-
-					 ?>
-
-                    <br /><span class="ks"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span>
-
-                    <?php
-
-					}
-
-                    foreach ($users as $user)
-                    {
-                    	if ( CKunenaTools::isModerator($this->my->id) && $user->showOnline =='0' ){ ?>
-
-                            <span title=" <?php echo CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat' ); ?> "><?php echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ?></span> &nbsp;
-
-                		  <?php
-                    	  }
-                    }
-                    ?>
-
+					
+                    <div class="whoonline ks">
+                        <?php 
+							//$totalhiden = '';
+							$totalusers = ($totaluser + $totalguests);
+						    $who_name = JText::_('COM_KUNENA_WHO_TOTAL') ;
+						    $who_name .= '<strong>&nbsp;'.$totalusers.'</strong>&nbsp;';
+                            if($totalusers==1) { $who_name .= JText::_('COM_KUNENA_WHO_USER').'&nbsp;'; } else { $who_name .= JText::_('COM_KUNENA_WHO_USERS').'&nbsp;'; }
+						    $who_name .= JText::_('COM_KUNENA_WHO_TOTAL_USERS_ONLINE').'&nbsp;&nbsp;::&nbsp;&nbsp;';
+						    $who_name .= '<strong>'.$totaluser.' </strong>';
+                            if($totaluser==1) { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBER').'&nbsp;'; } else { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_MEMBERS').'&nbsp;'; }
+                            $who_name .= JText::_('COM_KUNENA_WHO_AND');
+                            $who_name .= '<strong> '. $totalguests.' </strong>';
+                            if($totalguests==1) { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST').'&nbsp;'; } else { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS').'&nbsp;'; }
+							echo $who_name; 
+						?>
+                    </div>
+					<div>
+                        <?php
+							foreach ($users as $user) {
+							$time = date("H:i:s", $user->time);
+							if ( $user->showOnline > 0 ){
+							echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ?> &nbsp;
+							<?php } }
+							if (CKunenaTools::isModerator($this->my->id)) { ?>
+							<br /> <span class="ks"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span><br />
+							<?php }
+							foreach ($users as $user) {
+							$time = date("H:i:s", $user->time);
+							if ( CKunenaTools::isModerator($this->my->id) && $user->showOnline =='0' ) {
+							echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ;?> &nbsp;
+							<?php } } 
+						?>
+					</div>
+                    <div class="wholegend ks">
+						<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?> :: </span>&nbsp;
+						<span class = "admin" title = "<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></span>,&nbsp;
+						<span class = "globalmoderator" title = "<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></span>,&nbsp;
+						<span class = "moderator" title = "<?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></span>,&nbsp;
+						<span class = "user" title = "<?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></span>,&nbsp;
+						<span class = "guest" title = "<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></span>
+                    </div>
                 </td>
             </tr>
         </tbody>

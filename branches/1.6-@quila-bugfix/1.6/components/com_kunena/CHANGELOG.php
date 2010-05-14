@@ -34,6 +34,24 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+14-May-2010 @quila
+# [#19288] Fix regression in language file - Who page.
+# [#19288] Fix regression - too big avatar show in top and bottom avatar position.
+# [#19288] Fix regression - Number of Popular Polls in statistics.
+# [#19288] Fix regression in profile: UddeIM Integration - PM Icon messed in IE8.
+# [#19288] Fix regression - List of Allowed file exstensions is out of tip in post page.
+^ [#19345] Increased maxlenth for Poll Title (25 -> 100) and Options (25 -> 50), and added size to input.
+# [#19356] Fixed template frontend - listcat.php. If No Posts column is not aligned.
++ [#19345] Restyled Frontstats plugin - added stats icon.
++ [#19345] Restyled Who Is Online plugin.
++ [#19345] Added User Color Code Legend in Who Is Online plugin.
++ [#19345] Added more Color Code for Global Moderator, Users and Guests (need check if load extra query).
++ [#19758] Added function for upload Emoticons in the backend Emoticon Manager.
++ [#19758] Added function for upload Rank Image in the backend Rank Manager.
+^ [#19288] Kunena Header table moved from kunena.php to profilebox.php to improve template design.
+^ [#19288] Added rss icon in the icons.php to improve template design.
+^ [#19288] Remouved rigid table from "Code" in kunena.parser.php and added some class to improve template design.
+
 14-May-2010 Matias
 ^ [#15886] Merged revisions 2437-2450 from /branches/1.6-xillibit with changes
 ^ [#20038] Basic Joomla 1.6 support: Move kunena.files.distribution to media/kunena

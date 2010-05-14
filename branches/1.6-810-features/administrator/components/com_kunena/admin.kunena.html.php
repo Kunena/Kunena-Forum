@@ -1259,6 +1259,14 @@ table.kadmin-stat caption {
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CATSUBSCRIPTIONSCHECKED') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['catsubscriptionschecked'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_CATSUBSCRIPTIONSCHECKED_DESC') ?>
+						</td>
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FAVORITES') ?></td>
 								<td align="left" valign="top"><?php echo $lists ['allowfavorites'];
 						?>

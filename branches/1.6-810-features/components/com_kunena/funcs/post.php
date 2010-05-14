@@ -205,6 +205,19 @@ class CKunenaPost {
 			}
 		}
 
+		$catsubscribeMe = JRequest::getVar ( 'catsubscribeMe', '' );
+
+			if ( $catsubscribeMe == 1 ) {
+				$this->_db->setQuery ( "INSERT INTO #__fb_subscriptions_categories (catid, userid) VALUES ('{$this->catid}','{$this->my->id}')" );
+
+
+				if (@$this->_db->query ()) {
+				$redirectmsg .= JText::_ ( 'COM_KUNENA_GEN_CATEGORY_SUBCRIBED' ) . '<br />';
+			} else {
+				$redirectmsg .= JText::_ ( "Unable to subscribe to category." ) . '<br />';
+			}
+		}
+
 		if ($holdPost == 1) {
 			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCES_REVIEW' );
 		} else {

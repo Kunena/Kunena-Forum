@@ -191,6 +191,22 @@ $this->k=0;
 				echo JText::_('COM_KUNENA_POST_NOTIFIED');
 				?></i> <?php
 			}
+			?>
+			<div>
+			<?php
+			if ($this->config->catsubscriptionschecked == 1) {
+				?>
+
+			<input type="checkbox" name="catsubscribeMe" value="1" checked="checked" /> <i><?php
+				echo JText::_('COM_KUNENA_POST_NOTIFIEDCATEGORY');
+				?></i>
+
+			<?php
+			} else {
+				?> <input type="checkbox" name="catsubscribeMe" value="1" /> <i><?php
+				echo JText::_('COM_KUNENA_POST_NOTIFIEDCATEGORY');
+				?></i> <?php
+			}
 			?></td>
 		</tr>
 		<?php

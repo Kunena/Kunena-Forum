@@ -34,6 +34,12 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+14-May-2010 810
+# [#19288] Fix regression: help/rules page Undefined property: KunenaApp::$catid
+^ [#19312] Language string added
+^ [#19356] Minor HTML/CSS fixes in the backend
+^ [#19356] Minor HTML/CSS fixes in the backend (part2)
+
 14-May-2010 Matias
 ^ [#15886] Merged revisions 2437-2450 from /branches/1.6-xillibit with changes
 ^ [#20038] Basic Joomla 1.6 support: Move kunena.files.distribution to media/kunena

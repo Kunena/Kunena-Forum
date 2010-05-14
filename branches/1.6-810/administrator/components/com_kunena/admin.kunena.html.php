@@ -2154,7 +2154,7 @@ table.kadmin-stat caption {
 		<table class="kadmin-sort">
 			<tr>
 				<td align="left"><?php echo JText::_('COM_KUNENA_USRL_SEARCH_BUTTON'); ?>:
-				<input type="text" name="search" value="<?php echo $search; ?>" class="inputbox" onChange="document.adminForm.submit();" /></td>
+				<input type="text" name="search" value="<?php echo $search; ?>" class="inputbox" onChange="document.adminForm.submit();" /> <INPUT type="submit" VALUE="Go"></td>
 				<td align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNavSP->getLimitBox (); ?></td>
 			</tr>
 			<tr>

@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 14-May-2010 810
 # [#19288] Fix regression: help/rules page Undefined property: KunenaApp::$catid
 ^ [#19356] Minor HTML/CSS fixes in the backend
+# [#19312] Language strng added
 
 13-May-2010 Matias
 # [#19288] Fix regression in installer: clean install failed

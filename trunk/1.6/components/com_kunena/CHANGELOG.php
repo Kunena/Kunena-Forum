@@ -37,7 +37,7 @@ Kunena 1.6.0-DEV
 14-May-2010 Matias
 ^ [#15886] Merged revisions 2437-2450 from /branches/1.6-xillibit with changes
 ^ [#20038] Basic Joomla 1.6 support: Move kunena.files.distribution to media/kunena
-# [#20038] Basic Joomla 1.6 support: Improve installer (almost working in J1.6)
+# [#20038] Basic Joomla 1.6 support: DB Installer for J1.6
 
 13-May-2010 Matias
 # [#19288] Fix regression in installer: clean install failed

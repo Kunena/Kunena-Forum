@@ -211,6 +211,69 @@ class KunenaModelInstall extends JModel {
 		}
 		$this->updateVersionState ( 'upgradeDatabase' );
 	}
+
+	public function upgradeDatabase() {
+		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
+		$curversion = $this->getInstalledVersion();
+
+		// Allow queries to fail
+		$this->db->debug(0);
+		if (!$curversion->id) {
+			foreach ($xml->install[0] as $action) {
+				$results [] = $this->processUpgradeXMLNode($action);
+			}
+		} else {
+			foreach ($xml->upgrade[0] as $version) {
+				if ($version['version'] == '@'.'kunenaversion'.'@') {
+					$svn = 1;
+				}
+				if(isset($svn) || 
+						($version['date'] > $curversion->date) || 
+						(version_compare($version['version'], $curversion->version, '>')) || 
+						(version_compare($version['version'], $curversion->version, '==') && 
+						$version['build'] > $curversion->build)) {
+					foreach ($version as $action) {
+						$results [] = $this->processUpgradeXMLNode($action);
+					}
+				}
+			}
+		}
+		foreach ( $results as $i => $r )
+			if ($r)
+				$this->addStatus ( $r ['action'] . ' ' . $r ['name'], $r ['success'] );
+	}
+	
+	function processUpgradeXMLNode($action)
+	{
+		$nodeName = $action->getName();
+		$mode = strtolower((string) $action['mode']);
+		$error = false;
+		switch($nodeName) {
+			case 'phpfile':
+				$fileName = $action['name'];
+				$include = KPATH_ADMIN . "/install/$fileName";
+				if(file_exists($include)) {
+					ob_start();
+					require( $include );
+					ob_end_clean();
+					$error = true;
+				}
+				$result = array('action'=>'Include', 'name'=>$fileName, 'success'=>$error);
+				break;
+			case 'query':
+				$query = (string)$action;
+				$this->db->setQuery($query);
+				$this->db->query();
+				if (!$this->db->getErrorNum()) {
+					$error = true;
+				}
+				if ($mode!='silenterror') $result = array('action'=>'SQL Query', 'name'=>'', 'success'=>$error);
+				break;
+			default:
+				$result = array('action'=>'fail', 'name'=>$nodeName, 'success'=>false);
+		}
+		return $result;
+	}
 /*
 	public function upgradeDatabase() {
 		kimport ( 'models.schema', 'admin' );
@@ -233,6 +296,7 @@ class KunenaModelInstall extends JModel {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', KUNENA_PATH);
 		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
+		require_once (KPATH_ADMIN . '/api.php');
 		require_once (KPATH_SITE . '/class.kunena.php');
 
 		$kunena_db = JFactory::getDBO();
@@ -326,7 +390,7 @@ class KunenaModelInstall extends JModel {
 				unset ( $version );
 		}
 
-		if (! isset ( $version )) {
+		if (! isset ( $version ) && !$versionprefix) {
 			// No version found -- try to detect version by searching some missing fields
 			$match = $this->detectTable ( $this->_versionarray );
 

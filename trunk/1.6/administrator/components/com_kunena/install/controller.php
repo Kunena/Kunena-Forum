@@ -70,6 +70,7 @@ class KunenaControllerInstall extends JController {
 
 	public function install() {
 		// Check requirements
+		$this->checkTimeout ();
 		$reqs = $this->model->getRequirements ();
 		if (! empty ( $reqs->fail )) {
 			// If requirements are not met, do not install
@@ -92,6 +93,12 @@ class KunenaControllerInstall extends JController {
 			$stop = ($this->checkTimeout () || $this->step <= 2 || ($this->step >= count ( $this->steps ) - 1));
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
 		} while ( ! $stop && ! $error );
+	}
+	
+	function abort() {
+		$app = JFactory::getApplication();
+		$app->setUserState('com_kunena.install.step', 0);
+		$this->setRedirect ( 'index.php?option=com_kunena' );
 	}
 
 	function next() {
@@ -122,9 +129,7 @@ class KunenaControllerInstall extends JController {
 	}
 
 	function stepDatabase() {
-		include_once(KPATH_ADMIN . '/lib/fx.upgrade.class.php');
-		$upgrade = new fx_Upgrade("com_kunena", "kunena.install.upgrade.xml", "fb_", "install", false);
-		$upgrade->doUpgrade();
+		$this->model->upgradeDatabase ();
 		$this->model->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_DATABASE'), true, '' );
 		if (! $this->model->getError ())
 			$this->model->setStep ( ++ $this->step );
@@ -139,12 +144,11 @@ class KunenaControllerInstall extends JController {
 
 	function checkTimeout() {
 		static $start = null;
-
-		list ( $usec, $sec ) = explode ( ' ', microtime () );
-		$time = (( float ) $usec + ( float ) $sec);
-		if (empty ( $start ))
+		$time = microtime (true);
+		if ($start === null) {
 			$start = $time;
-		if ($time - $start < 2)
+		}
+		if ($time - $start < 1)
 			return false;
 		return true;
 	}

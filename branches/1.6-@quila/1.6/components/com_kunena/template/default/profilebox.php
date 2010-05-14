@@ -25,6 +25,35 @@ if ($type == 'logout') :
 	$PMCount = $private->getUnreadCount($this->my->id);
 	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 ?>
+<!-- Kunena Header -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	id="Kunena_top">
+	<tr>
+		<td align="left"><?php
+	// display Kunena menu if present
+	if (JDocumentHTML::countModules ( 'kunena_menu' )) {
+		?>
+		<!-- Kunena Menu position: kunena_menu -->
+		<div id="ktopmenu">
+		<div id="Kunena_tab"><?php
+		$document = &JFactory::getDocument ();
+		$renderer = $document->loadRenderer ( 'modules' );
+		$options = array ('style' => 'xhtml' );
+		$position = 'kunena_menu';
+		echo $renderer->render ( $position, $options, null );
+		?>
+		</div>
+		</div>
+		<!-- /Kunena Menu position: kunena_menu -->
+		<?php
+	}
+	?></td>
+		<td align="right" width="1%"><span id="kprofilebox_status"><a
+			class="ktoggler close" rel="kprofilebox"></a></span>
+		</td>
+	</tr>
+</table>
+<!-- /Kunena Header -->
 <table class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">
@@ -75,6 +104,35 @@ if ($type == 'logout') :
 else :
 $login = CKunenaLogin::getloginFields();
 ?>
+<!-- Kunena Header -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	id="Kunena_top">
+	<tr>
+		<td align="left"><?php
+	// display Kunena menu if present
+	if (JDocumentHTML::countModules ( 'kunena_menu' )) {
+		?>
+		<!-- Kunena Menu position: kunena_menu -->
+		<div id="ktopmenu">
+		<div id="Kunena_tab"><?php
+		$document = &JFactory::getDocument ();
+		$renderer = $document->loadRenderer ( 'modules' );
+		$options = array ('style' => 'xhtml' );
+		$position = 'kunena_menu';
+		echo $renderer->render ( $position, $options, null );
+		?>
+		</div>
+		</div>
+		<!-- /Kunena Menu position: kunena_menu -->
+		<?php
+	}
+	?></td>
+		<td align="right" width="1%"><span id="kprofilebox_status"><a
+			class="ktoggler close" rel="kprofilebox"></a></span>
+		</td>
+	</tr>
+</table>
+<!-- /Kunena Header -->
 <table class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">

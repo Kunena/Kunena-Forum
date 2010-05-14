@@ -35,7 +35,8 @@ Legend:
 Kunena 1.6.0-DEV
 
 14-May-2010 @quila
-# [#19288] Add function for upload Emoticons in the backend Emoticon Manager
++ [#19758] Added function for upload Emoticons in the backend Emoticon Manager
++ [#19758] Added function for upload Rank Image in the backend Rank Manager
 
 13-May-2010 @quila
 # [#19288] Fix regression - List of Allowed file exstensions is out of tip in post page.

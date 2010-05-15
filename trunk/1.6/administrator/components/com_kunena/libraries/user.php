@@ -19,7 +19,7 @@ require_once (KUNENA_PATH . DS . 'class.kunena.php');
 
 * Kunena Users Table Class
 
-* Provides access to the #__fb_users table
+* Provides access to the #__kunena_users table
 
 */
 class KunenaUser extends JObject
@@ -258,7 +258,7 @@ class KunenaUser extends JObject
 		$config = CKunenaConfig::getInstance ();
 		if (!$config->showranking) return;
 		if (self::$_ranks === null) {
-			$this->_db->setQuery ( "SELECT * FROM #__fb_ranks" );
+			$this->_db->setQuery ( "SELECT * FROM #__kunena_ranks" );
 			self::$_ranks = $this->_db->loadObjectList ('rank_id');
 			CKunenaTools::checkDatabaseError();
 		}
@@ -344,14 +344,14 @@ class KunenaUser extends JObject
 				break;
 			case 'location':
 				if ($this->location)
-					return '<span class="location" title="' . JText::_('COM_KUNENA_MYPROFILE_LOCATION').': '. kunena_htmlspecialchars(stripslashes($this->location)).'"></span>';
+					return '<span class="location" title="' . JText::_('COM_KUNENA_MYPROFILE_LOCATION').': '. kunena_htmlspecialchars($this->location).'"></span>';
 				break;
 			case 'website':
 				$url = 'http://'.$this->websiteurl;
 				if (!$this->websitename) $websitename = $this->websiteurl;
 				else $websitename = $this->websitename;
 				if ($this->websiteurl)
-					return '<a href="'.kunena_htmlspecialchars(stripslashes($url)).'" target="_blank"><span class="website" title="'. JText::_('COM_KUNENA_MYPROFILE_WEBSITE') . ': ' .  kunena_htmlspecialchars(stripslashes($websitename)).'"></span></a>';
+					return '<a href="'.kunena_htmlspecialchars($url).'" target="_blank"><span class="website" title="'. JText::_('COM_KUNENA_MYPROFILE_WEBSITE') . ': ' .  kunena_htmlspecialchars($websitename).'"></span></a>';
 				break;
 			case 'private':
 				$pms = KunenaFactory::getPrivateMessaging();
@@ -393,7 +393,7 @@ class KunenaUser extends JObject
 		if (!isset($social[$name])) return;
 		$title = $social[$name]['title'];
 		$item = $social[$name]['name'];
-		$value = kunena_htmlspecialchars(stripslashes($this->$item));
+		$value = kunena_htmlspecialchars($this->$item);
 		$url = strtr($social[$name]['url'], array('##VALUE##'=>$value));
 		if ( $social[$name]['nourl'] == '0') {
 			if (!empty($this->$item)) return '<a href="'.kunena_htmlspecialchars($url).'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';

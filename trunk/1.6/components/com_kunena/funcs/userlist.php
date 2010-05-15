@@ -42,7 +42,7 @@ class CKunenaUserlist {
 		check_dberror ( "Unable to load user count." );
 
 		// Search total
-		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
+		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid";
 		if ($this->search != "") {
 			$query .= " WHERE (u.name LIKE '%{$this->search}%' OR u.username LIKE '%{$this->search}%')";
 		}
@@ -55,7 +55,7 @@ class CKunenaUserlist {
 		}
 
 		// Select query
-		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__fb_users AS fu ON fu.userid = u.id WHERE block=0";
+		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE block=0";
 		$this->searchuri = "";
 		if ($this->search != "") {
 			$query .= " AND (name LIKE '%{$this->search}%' OR username LIKE '%{$this->search}%') AND u.id NOT IN (62)";

@@ -88,7 +88,7 @@ class smile {
 	function getEmoticons($grayscale, $emoticonbar = 0) {
 		$kunena_db = &JFactory::getDBO ();
 		$grayscale == 1 ? $column = "greylocation" : $column = "location";
-		$sql = "SELECT code, `$column` FROM #__fb_smileys";
+		$sql = "SELECT code, `$column` FROM #__kunena_smileys";
 
 		if ($emoticonbar == 1)
 			$sql .= " WHERE emoticonbar='1'";
@@ -111,7 +111,6 @@ class smile {
 	}
 
 	function purify($text) {
-		$text = stripslashes ( $text );
 		$text = preg_replace ( "'<script[^>]*>.*?</script>'si", "", $text );
 		$text = preg_replace ( '/<a\s+.*?href="([^"]+)"[^>]*>([^<]+)<\/a>/is', '\2 (\1)', $text );
 		$text = preg_replace ( '/<!--.+?-->/', '', $text );

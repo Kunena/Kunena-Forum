@@ -54,8 +54,8 @@ class CKunenaProfile {
 		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
 		$this->avatarlink = $this->profile->getAvatarLink('','profile');
-		$this->personalText = KunenaParser::parseText(stripslashes($this->profile->personalText));
-		$this->signature = KunenaParser::parseBBCode(stripslashes($this->profile->signature));
+		$this->personalText = KunenaParser::parseText($this->profile->personalText);
+		$this->signature = KunenaParser::parseBBCode($this->profile->signature);
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
 		$this->admin = CKunenaTools::isAdmin($this->profile->userid);
@@ -73,7 +73,7 @@ class CKunenaProfile {
 				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN');
 		}
 		if ($this->profile->location)
-			$this->location = '<a href="http://maps.google.com?q='.kunena_htmlspecialchars(stripslashes($this->profile->location)).'" target="_blank">'.kunena_htmlspecialchars(stripslashes($this->profile->location)).'</a>';
+			$this->location = '<a href="http://maps.google.com?q='.kunena_htmlspecialchars($this->profile->location).'" target="_blank">'.kunena_htmlspecialchars($this->profile->location).'</a>';
 		else
 			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
@@ -382,7 +382,7 @@ class CKunenaProfile {
 		$signature = JRequest::getVar ( 'signature', '' );
 
 		//Query on kunena user
-		$this->_db->setQuery ( "UPDATE #__fb_users SET personalText={$this->_db->Quote($personnaltext)},birthdate={$this->_db->Quote($birthdate)},
+		$this->_db->setQuery ( "UPDATE #__kunena_users SET personalText={$this->_db->Quote($personnaltext)},birthdate={$this->_db->Quote($birthdate)},
 			location={$this->_db->Quote($location)},gender={$this->_db->Quote($gender)},ICQ={$this->_db->Quote($icq)}, AIM={$this->_db->Quote($aim)},
 			YIM={$this->_db->Quote($yim)},MSN={$this->_db->Quote($msn)},SKYPE={$this->_db->Quote($skype)},GTALK={$this->_db->Quote($gtalk)},
 			TWITTER={$this->_db->Quote($twitter)},FACEBOOK={$this->_db->Quote($facebook)},MYSPACE={$this->_db->Quote($myspace)},
@@ -421,7 +421,7 @@ class CKunenaProfile {
 				if(JDEBUG == 1 && defined('JFIREPHP')){
 					FB::log('Kunena save avatar: ' . $fileinfo['name']);
 				}
-				$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($fileinfo['name'])} WHERE userid='{$this->profile->userid}'" );
+				$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar={$this->_db->quote($fileinfo['name'])} WHERE userid='{$this->profile->userid}'" );
 
 				if (! $this->_db->query () || $this->_db->getErrorNum()) {
 					$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_DATABASE_STORE'));
@@ -435,11 +435,11 @@ class CKunenaProfile {
 
 		} else if ( $action == 'delete' ) {
 			//set default avatar
-			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar='' WHERE userid='{$this->profile->userid}'" );
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar='' WHERE userid='{$this->profile->userid}'" );
 			$this->_db->query ();
 			check_dberror ( 'Unable to set default avatar.' );
 		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false) {
-			$this->_db->setQuery ( "UPDATE #__fb_users SET avatar={$this->_db->quote($action)} WHERE userid='{$this->profile->userid}'" );
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar={$this->_db->quote($action)} WHERE userid='{$this->profile->userid}'" );
 			$this->_db->query ();
 			check_dberror ( 'Unable to set avatar from gallery.' );
 		}
@@ -451,7 +451,7 @@ class CKunenaProfile {
 		$showonline = JRequest::getInt('showonline', '', 'post', 'showonline');
 
 		//Query on kunena user
-		$this->_db->setQuery ( "UPDATE #__fb_users SET ordering='$messageordering', hideEmail='$hidemail', showOnline='$showonline'
+		$this->_db->setQuery ( "UPDATE #__kunena_users SET ordering='$messageordering', hideEmail='$hidemail', showOnline='$showonline'
 							WHERE userid='{$this->profile->userid}'" );
 		$this->_db->query ();
 		check_dberror ( 'Unable to update kunena user profile.' );

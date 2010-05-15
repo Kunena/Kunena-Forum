@@ -68,9 +68,9 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		if (!$instances) {
 			$kunena_db = &JFactory::getDBO();
 			$kunena_db->setQuery ("SELECT u.id AS uid, m.catid FROM #__users AS u"
-				." LEFT JOIN #__fb_users AS p ON u.id=p.userid"
-				." LEFT JOIN #__fb_moderation AS m ON u.id=m.userid"
-				." LEFT JOIN #__fb_categories AS c ON m.catid=c.id"
+				." LEFT JOIN #__kunena_users AS p ON u.id=p.userid"
+				." LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid"
+				." LEFT JOIN #__kunena_categories AS c ON m.catid=c.id"
 				." WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
 			$list = $kunena_db->loadObjectList();
 			check_dberror("Unable to load moderators.");
@@ -93,7 +93,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		$db = JFactory::getDBO ();
 
 		$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
-				FROM #__fb_categories c
+				FROM #__kunena_categories c
 				WHERE published='1'";
 		$db->setQuery ( $query );
 		$rows = $db->loadObjectList ();
@@ -113,7 +113,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 
 		// Make sure that category exists and fetch access info
 		$kunena_db = &JFactory::getDBO ();
-		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__fb_categories WHERE id={$catid}";
+		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__kunena_categories WHERE id={$catid}";
 		$kunena_db->setQuery ($query);
 		$access = $kunena_db->loadObject ();
 		check_dberror ( "Unable to load category access rights." );
@@ -127,11 +127,11 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 					IF( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid}), 1, 0 ) AS moderator,
 					0 AS admin
 					FROM #__users AS u
-					LEFT JOIN #__fb_users AS p ON u.id=p.userid
-					LEFT JOIN #__fb_categories AS c ON c.id=$catid
-					LEFT JOIN #__fb_moderation AS m ON u.id=m.userid AND m.catid=c.id
-					LEFT JOIN #__fb_subscriptions AS s ON u.id=s.userid AND s.thread=$thread
-					LEFT JOIN #__fb_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=c.id";
+					LEFT JOIN #__kunena_users AS p ON u.id=p.userid
+					LEFT JOIN #__kunena_categories AS c ON c.id=$catid
+					LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid AND m.catid=c.id
+					LEFT JOIN #__kunena_subscriptions AS s ON u.id=s.userid AND s.thread=$thread
+					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=c.id";
 
 		$where = array ();
 		if ($subscriptions)

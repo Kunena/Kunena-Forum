@@ -165,6 +165,7 @@ class KunenaModelInstall extends JModel {
 
 	public function beginInstall() {
 		$results = array ();
+		
 		// Migrate version table from old installation
 		$versionprefix = $this->getVersionPrefix ();
 		if (! empty ( $versionprefix )) {
@@ -379,7 +380,7 @@ class KunenaModelInstall extends JModel {
 			}
 			if ($version) {
 				$version->version = strtoupper ( $version->version );
-				if (version_compare ( $version->version, '1.5.999', ">" ))
+				if (version_compare ( $version->version, '1.6.0-DEV', ">" ))
 					$version->prefix = 'kunena_';
 				else
 					$version->prefix = 'fb_';
@@ -513,17 +514,27 @@ class KunenaModelInstall extends JModel {
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 		// And copy data into it
-		$sql = "INSERT INTO " . $this->db->nameQuote ( $this->db->getPrefix () . $newtable ) . " SELECT * FROM " . $this->db->nameQuote ( $this->db->getPrefix () . $oldtable );
+		$sql = "INSERT INTO " . $this->db->nameQuote ( $this->db->getPrefix () . $newtable ) . ' ' . $this->selectWithStripslashes($this->db->getPrefix () . $oldtable );
 		$this->db->setQuery ( $sql );
 		$this->db->query ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		if ($this->db->getAffectedRows ()) {
 			$this->tables ['kunena_'] [] = $newtable;
-			//$this->addStatus ( "Migrate $newtable", true );
 			return array ('name' => $newtable, 'action' => 'migrate', 'sql' => $sql );
 		}
 		return array ();
+	}
+	
+	function selectWithStripslashes($table) {
+		$fields = array_pop($this->db->getTableFields($table));
+		$select = array();
+		foreach ($fields as $field=>$type) {
+			$isString = preg_match('/text|char/', $type);
+			$select[] = ($isString ? "REPLACE(REPLACE(REPLACE({$this->db->nameQuote($field)}, {$this->db->Quote('\\\\')}, {$this->db->Quote('\\')}),{$this->db->Quote('\\\'')} ,{$this->db->Quote('\'')}),{$this->db->Quote('\"')} ,{$this->db->Quote('"')}) AS " : '') . $this->db->nameQuote($field);
+		}
+		$select = implode(', ', $select);
+		return "SELECT {$select} FROM {$table}";
 	}
 
 	function createVersionTable()

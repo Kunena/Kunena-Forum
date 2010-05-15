@@ -25,7 +25,7 @@ class TableKunenaSession extends TableKunena
 	protected $_exists = false;
 
 	function __construct($db) {
-		parent::__construct('#__fb_sessions', 'userid', $db);
+		parent::__construct('#__kunena_sessions', 'userid', $db);
 	}
 }
 

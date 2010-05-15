@@ -34,8 +34,8 @@ class KunenaControllerInstall extends JController {
 		$this->steps = $this->model->getSteps ();
 
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.install',KPATH_ADMIN);
 		$lang->load('com_kunena.install');
+		$lang->load('com_kunena.install',KPATH_ADMIN);
 	}
 
 	public function display()
@@ -48,16 +48,9 @@ class KunenaControllerInstall extends JController {
 		if ($view)
 		{
 			$view->addTemplatePath(KPATH_ADMIN.'/install/tmpl');
-			// Push the model into the view (as default).
 			$view->setModel($this->model, true);
-
-			// Set the view layout.
 			$view->setLayout(JRequest::getWord('layout', 'default'));
-
-			// Push document object into the view.
 			$view->assignRef('document', $document);
-
-			// Render the view.
 			$view->display();
 
 			// Display Toolbar. View must have setToolBar method
@@ -129,6 +122,7 @@ class KunenaControllerInstall extends JController {
 	}
 
 	function stepDatabase() {
+		$this->model->migrateDatabase ();
 		$this->model->upgradeDatabase ();
 		$this->model->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_DATABASE'), true, '' );
 		if (! $this->model->getError ())

@@ -43,7 +43,7 @@ switch ($action)
         switch (jbDeletePosts($kunena_db, $cid))
         {
             case -1:
-                $kunena_app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__fb_messages_text table for mesid IN " . explode(',', $cid));
+                $kunena_app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__kunena_messages_text table for mesid IN " . explode(',', $cid));
 
                 break;
 
@@ -82,7 +82,7 @@ switch ($action)
     case 'list':
         echo '<p class="sectionname">' . JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION') .'</p>';
 
-        $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
+        $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
         $allMes = $kunena_db->loadObjectList();
         	check_dberror("Unable to load messages.");
 
@@ -151,7 +151,7 @@ function jbListMessages($allMes, $catid)
             echo '<td valign="top"><b>' . $message->subject . '<b></td>';
 
 
-            $fb_message_txt = stripslashes($message->message);
+            $fb_message_txt = $message->message;
             echo '<td valign="top">' . smile::smileReplace($fb_message_txt, 0, $kunena_config->disemoticons, $kunena_emoticons) . '</td>';
             echo '<td valign="top"><input type="checkbox" name="cid[]" value="' . $message->id . '" /></td>';
             echo '</tr>';
@@ -190,11 +190,11 @@ function jbDeletePosts($kunena_db, $cid)
         return 0;
 
     $ids = implode(',', $cid);
-    $kunena_db->setQuery('DELETE FROM `#__fb_messages` WHERE `id` IN (' . $ids . ')');
+    $kunena_db->setQuery('DELETE FROM `#__kunena_messages` WHERE `id` IN (' . $ids . ')');
 
     if ($kunena_db->query())
     {
-        $kunena_db->setQuery('DELETE FROM `#__fb_messages_text` WHERE `mesid` IN (' . $ids . ')');
+        $kunena_db->setQuery('DELETE FROM `#__kunena_messages_text` WHERE `mesid` IN (' . $ids . ')');
 
         if ($kunena_db->query())
             return 1;
@@ -219,14 +219,14 @@ function jbApprovePosts($kunena_db, $cid)
     reset($cid);
     foreach($cid as $id) {
     	$id = (int)$id;
-        $newQuery = "SELECT * FROM #__fb_messages WHERE id='{$id}'";
+        $newQuery = "SELECT * FROM #__kunena_messages WHERE id='{$id}'";
         $kunena_db->setQuery($newQuery, 0, 1);
         $msg = null;
         $msg = $kunena_db->loadObject();
         check_dberror ( "Unable to load message." );
         if(!$msg) { continue; }
         // continue stats
-        $kunena_db->setQuery("UPDATE `#__fb_messages` SET hold='0' WHERE id='{$id}'");
+        $kunena_db->setQuery("UPDATE `#__kunena_messages` SET hold='0' WHERE id='{$id}'");
         $kunena_db->query();
 		check_dberror ( "Unable to approve posts." );
         CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);

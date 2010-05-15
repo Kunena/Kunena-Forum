@@ -55,7 +55,7 @@ class CKunenaRSSView extends CKunenaRSS {
 		$catid		= (int) $catid;
 
 		if ($catid > 0) {
-			$this->db->setQuery ( "SELECT * FROM #__fb_categories WHERE id = {$catid} ORDER BY ordering LIMIT 1" );
+			$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id = {$catid} ORDER BY ordering LIMIT 1" );
 			$category = $this->db->loadObject();
 			check_dberror("Unable to load category info.");
 
@@ -169,35 +169,35 @@ class CKunenaRSSView extends CKunenaRSS {
 
 				switch ($type) {
 					case 'thread':
-						$tmp['title']		= stripslashes($data->subject);
-						$tmp['text']		= stripslashes($data->message);
+						$tmp['title']		= $data->subject;
+						$tmp['text']		= $data->message;
 						$tmp['date']		= $data->time;
 						$tmp['email']		= $data->email;
 						$tmp['name']		= $data->name;
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
+							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
 						break;
 					case 'post':
-						$tmp['title']		= stripslashes($data->lastpost_subject);
-						$tmp['text']		= stripslashes($data->lastpost_message);
+						$tmp['title']		= $data->lastpost_subject;
+						$tmp['text']		= $data->lastpost_message;
 						$tmp['date']		= $data->lastpost_time;
-						$tmp['email']		= stripslashes($data->lastpost_email);
-						$tmp['name']		= stripslashes($data->lastpost_name);
+						$tmp['email']		= $data->lastpost_email;
+						$tmp['name']		= $data->lastpost_name;
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->lastpost_subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. stripslashes($data->lastpost_name);
+							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->lastpost_subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->lastpost_name;
 						break;
 					case 'recent':
 					default:
-						$tmp['title']		= stripslashes($data->subject);
-						$tmp['text']		= stripslashes($data->lastpost_message);
+						$tmp['title']		= $data->subject;
+						$tmp['text']		= $data->lastpost_message;
 						$tmp['date']		= $data->lastpost_time;
-						$tmp['email']		= stripslashes($data->lastpost_email);
-						$tmp['name']		= stripslashes($data->lastpost_name);
+						$tmp['email']		= $data->lastpost_email;
+						$tmp['name']		= $data->lastpost_name;
 						$tmp['cat_name']	= $data->category_name;
 						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. stripslashes($data->subject) .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
+							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
 				}
 
 				// Guid is used by aggregators to uniquely identify each item

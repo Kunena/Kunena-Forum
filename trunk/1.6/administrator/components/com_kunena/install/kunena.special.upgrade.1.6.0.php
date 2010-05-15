@@ -21,12 +21,12 @@ jimport ( 'joomla.filesystem.folder' );
 $templatedeprecatedlist = array ('default_ex', 'default_green', 'default_red', 'default_gray' );
 
 $kunena_db = & JFactory::getDBO ();
-$kunena_db->setQuery ( "SELECT template FROM #__fb_config" );
+$kunena_db->setQuery ( "SELECT template FROM #__kunena_config" );
 $kactualtemplate = $kunena_db->loadResult ();
 if ($kunena_db->getErrorNum() != 0)
 {
 	if (in_array ( $kactualtemplate, $templatedeprecatedlist )) {
-		$kunena_db->setQuery ( "UPDATE #__fb_config SET template='default',templateimagepath='default'" );
+		$kunena_db->setQuery ( "UPDATE #__kunena_config SET template='default',templateimagepath='default'" );
 		$kunena_db->query ();
 	}
 }
@@ -49,13 +49,14 @@ if ($attachcount==0){
 	// New attachments table is empty - assume we have to convert attachments
 
 	// hash and size ommited -> NULL
+	// FIXME!!!
 	$query = "INSERT INTO #__kunena_attachments (mesid, userid, folder, filetype, filename)
 				SELECT a.mesid, m.userid,
 					SUBSTRING_INDEX(SUBSTRING_INDEX(a.filelocation, '/', -4), '/', 3) AS folder,
 					SUBSTRING_INDEX(a.filelocation, '.', -1) AS filetype,
 					SUBSTRING_INDEX(a.filelocation, '/', -1) AS filename
 				FROM #__fb_attachments AS a
-				JOIN #__fb_messages AS m ON a.mesid = m.id";
+				JOIN #__kunena_messages AS m ON a.mesid = m.id";
 
 	if(JDEBUG == 1 && defined('JFIREPHP')){
 		FB::log($query, 'Attachment Upgrade');

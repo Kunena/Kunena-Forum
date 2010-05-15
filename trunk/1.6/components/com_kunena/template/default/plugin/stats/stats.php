@@ -26,7 +26,7 @@ defined( '_JEXEC' ) or die();
 $kunena_config =& CKunenaConfig::getInstance();
 $document =& JFactory::getDocument();
 
-$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . stripslashes($kunena_config->board_title));
+$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $kunena_config->board_title);
 
 if($kunena_config->showstats):
 
@@ -53,7 +53,7 @@ $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
                 <tr>
                     <th>
                         <div class = "ktitle_cover km">
-                            <span class="ktitle kl"><?php echo stripslashes($kunena_config->board_title); ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span>
+                            <span class="ktitle kl"><?php echo $kunena_config->board_title; ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span>
                         </div>
                         <div class="fltrt">
 							<span id="kmorestat_head"><a class="ktoggler close" rel="morestat_tbody"></a></span>
@@ -138,7 +138,7 @@ $k = 0;
 
     <tr class = "k<?php echo $tabclass[$k]; ?>">
       <td class="td-1" align="left">
-       <?php echo CKunenaLink::GetThreadLink( 'view', $toptitle->catid, $toptitle->id, KunenaParser::parseText (stripslashes($toptitle->subject)), '' ); ?>
+       <?php echo CKunenaLink::GetThreadLink( 'view', $toptitle->catid, $toptitle->id, KunenaParser::parseText ($toptitle->subject), '' ); ?>
       </td>
       <td  class="td-2">
        <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>

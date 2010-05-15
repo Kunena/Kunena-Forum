@@ -138,7 +138,7 @@ class CKunenaAjaxHelper {
 		switch ($do) {
 			case 'getcat' :
 				$query = "SELECT c.name, c.id
-							FROM #__fb_categories AS c
+							FROM #__kunena_categories AS c
 							WHERE $allowed AND name LIKE '" . $data . "%'
 							ORDER BY 1 LIMIT 0, 10;";
 
@@ -149,8 +149,8 @@ class CKunenaAjaxHelper {
 				break;
 			case 'gettopic' :
 				$query = "SELECT m.subject
-							FROM #__fb_messages AS m
-							JOIN #__fb_categories AS c ON m.catid = c.id
+							FROM #__kunena_messages AS m
+							JOIN #__kunena_categories AS c ON m.catid = c.id
 							WHERE m.hold=0 AND m.parent=0 AND $allowed
 								AND m.subject LIKE '" . $data . "%'
 							ORDER BY 1 LIMIT 0, 10;";
@@ -204,7 +204,7 @@ class CKunenaAjaxHelper {
 		$result = array ();
 
 		$query = "SELECT id
-							FROM #__fb_categories
+							FROM #__kunena_categories
 							WHERE allow_polls=1;";
 		$this->_db->setQuery ( $query );
 		$allow_polls = $this->_db->loadResultArray ();
@@ -253,7 +253,7 @@ class CKunenaAjaxHelper {
 
 		$query = "SELECT a.*, m.*
 			FROM #__kunena_attachments AS a
-			JOIN #__fb_messages AS m ON a.mesid = m.id
+			JOIN #__kunena_messages AS m ON a.mesid = m.id
 			WHERE a.id = '".$data."'";
 
 		$this->_db->setQuery ( $query );
@@ -309,7 +309,7 @@ class CKunenaAjaxHelper {
 		$user = KunenaFactory::getuser();
 		if ( $catid && $user->isModerator($catid) ) {
 			$query = "SELECT id, subject
-							FROM #__fb_messages
+							FROM #__kunena_messages
 							WHERE catid={$catid} AND parent=0 AND moved=0
 							ORDER BY id DESC";
 			$this->_db->setQuery ( $query, 0, 15 );

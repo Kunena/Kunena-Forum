@@ -105,10 +105,10 @@ class CKunenaViewMessage {
 			$this->msgsuffix = '_new';
 		}
 
-		$subject = stripslashes ($message->subject);
+		$subject = $message->subject;
 		$this->resubject = JString::strtolower ( JString::substr ( $subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $subject;
 		$this->subject = KunenaParser::parseText ( $subject );
-		$this->message = KunenaParser::parseBBCode ( stripslashes($message->message) );
+		$this->message = KunenaParser::parseBBCode ( $message->message );
 
 		//Show admins the IP address of the user:
 		if ($message->ip && (CKunenaTools::isAdmin () || (CKunenaTools::isModerator ( $this->my->id, $this->catid ) && !$this->config->hide_ip))) {
@@ -126,7 +126,7 @@ class CKunenaViewMessage {
 		$this->userid = $this->profile->userid;
 		$this->username = $this->config->username ? $this->profile->username : $this->profile->name;
 		if ((!$this->username || !$message->userid || $this->config->changename) && $message->name) {
-			$this->username = stripslashes ($message->name);
+			$this->username = $message->name;
 		}
 
 		$avatar = $this->profile->getAvatarLink ('', 'reply');
@@ -162,8 +162,8 @@ class CKunenaViewMessage {
 		}
 
 		$this->profilelink = $this->profile->profileIcon('profile');
-		$this->personaltext = KunenaParser::parseText ( stripslashes($this->profile->personalText) );
-		$this->signature = KunenaParser::parseBBCode ( stripslashes($this->profile->signature) );
+		$this->personaltext = KunenaParser::parseText ($this->profile->personalText);
+		$this->signature = KunenaParser::parseBBCode ($this->profile->signature);
 
 		// Add attachments
 		if (isset($message->attachments)) {
@@ -299,10 +299,10 @@ class CKunenaView {
 		$where = implode(' AND ',$where);
 
 		$query = "SELECT a.*, b.*, p.id AS poll_id, modified.name AS modified_name, modified.username AS modified_username
-			FROM #__fb_messages AS a
-			LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
+			FROM #__kunena_messages AS a
+			LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid
 			LEFT JOIN #__users AS modified ON a.modified_by = modified.id
-			LEFT JOIN #__fb_polls AS p ON a.id=p.threadid
+			LEFT JOIN #__kunena_polls AS p ON a.id=p.threadid
 			WHERE a.id='{$this->id}' AND {$where}";
 		$this->db->setQuery ( $query );
 		$this->first_message = $this->db->loadObject ();
@@ -327,7 +327,7 @@ class CKunenaView {
 				$newurl = array();
 				parse_str ( $this->first_message->message, $newloc );
 				$this->id = $newloc ['id'];
-				$query = "SELECT catid, thread FROM #__fb_messages AS a WHERE a.id='{$this->id}'";
+				$query = "SELECT catid, thread FROM #__kunena_messages AS a WHERE a.id='{$this->id}'";
 				$this->db->setQuery ( $query );
 				$newpos = $this->db->loadObject ();
 				check_dberror ( 'Unable to calculate location of current message.' );
@@ -336,7 +336,7 @@ class CKunenaView {
 			}
 
 			// This query to calculate the page this reply is sitting on within this thread
-			$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$this->thread}' AND {$where} AND a.id<='{$this->id}'";
+			$query = "SELECT COUNT(*) FROM #__kunena_messages AS a WHERE a.thread='{$this->thread}' AND {$where} AND a.id<='{$this->id}'";
 			$this->db->setQuery ( $query );
 			$replyCount = $this->db->loadResult ();
 			check_dberror ( 'Unable to calculate location of current message.' );
@@ -347,11 +347,11 @@ class CKunenaView {
 		}
 
 		//Get the category name for breadcrumb
-		$this->db->setQuery ( "SELECT * FROM #__fb_categories WHERE id='{$this->catid}'" );
+		$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id='{$this->catid}'" );
 		$this->catinfo = $this->db->loadObject ();
 		check_dberror ( 'Unable to load category info' );
 		//Get Parent's cat.name for breadcrumb
-		$this->db->setQuery ( "SELECT id, name FROM #__fb_categories WHERE id='{$this->catinfo->parent}'" );
+		$this->db->setQuery ( "SELECT id, name FROM #__kunena_categories WHERE id='{$this->catinfo->parent}'" );
 		$objCatParentInfo = $this->db->loadObject ();
 		check_dberror ( 'Unable to load parent category info' );
 
@@ -375,12 +375,12 @@ class CKunenaView {
 
 		//update the hits counter for this topic & exclude the owner
 		if ($this->my->id == 0 || $this->first_message->userid != $this->my->id) {
-			$this->db->setQuery ( "UPDATE #__fb_messages SET hits=hits+1 WHERE id='{$this->thread}' AND parent='0'" );
+			$this->db->setQuery ( "UPDATE #__kunena_messages SET hits=hits+1 WHERE id='{$this->thread}' AND parent='0'" );
 			$this->db->query ();
 			check_dberror ( 'Unable to update message hits.' );
 		}
 
-		$query = "SELECT COUNT(*) FROM #__fb_messages AS a WHERE a.thread='{$this->thread}' AND {$where}";
+		$query = "SELECT COUNT(*) FROM #__kunena_messages AS a WHERE a.thread='{$this->thread}' AND {$where}";
 		$this->db->setQuery ( $query );
 		$this->total_messages = $this->db->loadResult ();
 		check_dberror ( 'Unable to calculate message count.' );
@@ -405,8 +405,8 @@ class CKunenaView {
 
 		// Get replies of current thread
 		$query = "SELECT a.*, b.*, modified.name AS modified_name, modified.username AS modified_username
-					FROM #__fb_messages AS a
-					LEFT JOIN #__fb_messages_text AS b ON a.id=b.mesid
+					FROM #__kunena_messages AS a
+					LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid
 					LEFT JOIN #__users AS modified ON a.modified_by = modified.id
 					WHERE a.thread='{$this->thread}' AND {$where}
 					ORDER BY id {$ordering}";
@@ -451,8 +451,8 @@ class CKunenaView {
 		$this->pagination = $this->getPagination ( $this->catid, $this->thread, $page, $totalpages, $maxpages );
 
 		//meta description and keywords
-		$metaKeys = kunena_htmlspecialchars ( stripslashes ( "{$this->first_message->subject}, {$objCatParentInfo->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) ) );
-		$metaDesc = kunena_htmlspecialchars ( stripslashes ( "{$this->first_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$this->catinfo->name} - {$this->config->board_title} " . JText::_('COM_KUNENA_GEN_FORUM') ) );
+		$metaKeys = kunena_htmlspecialchars ( "{$this->first_message->subject}, {$objCatParentInfo->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
+		$metaDesc = kunena_htmlspecialchars ( "{$this->first_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$this->catinfo->name} - {$this->config->board_title} " . JText::_('COM_KUNENA_GEN_FORUM') );
 
 		$document = & JFactory::getDocument ();
 		$cur = $document->get ( 'description' );
@@ -463,7 +463,7 @@ class CKunenaView {
 		//Perform subscriptions check only once
 		$fb_cansubscribe = 0;
 		if ($this->config->allowsubscriptions && $this->my->id) {
-			$this->db->setQuery ( "SELECT thread FROM #__fb_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->thread}'" );
+			$this->db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->thread}'" );
 			$fb_subscribed = $this->db->loadResult ();
 			check_dberror ( 'Unable to load subscription' );
 
@@ -473,7 +473,7 @@ class CKunenaView {
 		}
 		//Perform favorites check only once
 		$fb_canfavorite = 0;
-		$this->db->setQuery ( "SELECT MAX(userid={$this->my->id}) AS favorited, COUNT(*) AS totalfavorited FROM #__fb_favorites WHERE thread='{$this->thread}'" );
+		$this->db->setQuery ( "SELECT MAX(userid={$this->my->id}) AS favorited, COUNT(*) AS totalfavorited FROM #__kunena_favorites WHERE thread='{$this->thread}'" );
 		list ( $this->favorited, $this->totalfavorited ) = $this->db->loadRow ();
 		check_dberror ( 'Unable to load favorite' );
 		if ($this->config->allowfavorites && $this->my->id) {
@@ -483,7 +483,7 @@ class CKunenaView {
 		}
 
 		//get the Moderator list for display
-		$this->db->setQuery ( "SELECT m.*, u.* FROM #__fb_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->catid} AND u.block=0" );
+		$this->db->setQuery ( "SELECT m.*, u.* FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->catid} AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
 		check_dberror ( "Unable to load moderators." );
 		$this->catModerators = array();
@@ -548,7 +548,7 @@ class CKunenaView {
 			$this->thread_moderate = CKunenaLink::GetTopicPostLink ( 'moderatethread', $this->catid, $this->id, CKunenaTools::showButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE_TOPIC') ), 'nofollow', 'buttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE') );
 		}
 
-		$this->headerdesc = nl2br ( stripslashes ( smile::smileReplace ( $this->catinfo->headerdesc, 0, $this->config->disemoticons, $this->emoticons ) ) );
+		$this->headerdesc = nl2br ( smile::smileReplace ( $this->catinfo->headerdesc, 0, $this->config->disemoticons, $this->emoticons ) );
 
 		$tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 

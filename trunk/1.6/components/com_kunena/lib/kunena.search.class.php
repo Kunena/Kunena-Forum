@@ -78,9 +78,9 @@ class CKunenaSearch {
 		if (empty ( $q ) && isset ( $_REQUEST ['searchword'] )) {
 			$q = JRequest::getVar ( 'searchword', '' );
 		}
-		$q = stripslashes ( JString::trim ( $q ) );
+		$q = JString::trim ( $q );
 		$this->params ['titleonly'] = JRequest::getInt ( 'titleonly', $this->defaults ['titleonly'] );
-		$this->params ['searchuser'] = stripslashes ( JRequest::getVar ( 'searchuser', $this->defaults ['searchuser'] ) );
+		$this->params ['searchuser'] = JRequest::getVar ( 'searchuser', $this->defaults ['searchuser'] );
 		$this->params ['starteronly'] = JRequest::getInt ( 'starteronly', $this->defaults ['starteronly'] );
 		$this->params ['exactname'] = JRequest::getInt ( 'exactname', $this->defaults ['exactname'] );
 		$this->params ['replyless'] = JRequest::getInt ( 'replyless', $this->defaults ['replyless'] );
@@ -163,16 +163,16 @@ class CKunenaSearch {
 		//User searching
 		if (JString::strlen ( $this->params ['searchuser'] ) > 0) {
 			if ($this->params ['exactname'] == '1') {
-				$querystrings [] = "m.name LIKE '" . $this->db->getEscaped ( addslashes ( $this->params ['searchuser'] ) ) . "'";
+				$querystrings [] = "m.name LIKE '" . $this->db->getEscaped ( $this->params ['searchuser'] ) . "'";
 			} else {
-				$querystrings [] = "m.name LIKE '%" . $this->db->getEscaped ( addslashes ( $this->params ['searchuser'] ) ) . "%'";
+				$querystrings [] = "m.name LIKE '%" . $this->db->getEscaped ( $this->params ['searchuser'] ) . "%'";
 			}
 		}
 
 		$time = 0;
 		switch ($this->params ['searchdate']) {
 			case 'lastvisit' :
-				$this->db->setQuery ( "SELECT lasttime FROM #__fb_sessions WHERE userid='{$this->my->id}'" );
+				$this->db->setQuery ( "SELECT lasttime FROM #__kunena_sessions WHERE userid='{$this->my->id}'" );
 				$time = $this->db->loadResult ();
 				break;
 			case 'all' :
@@ -255,7 +255,7 @@ class CKunenaSearch {
 			$groupby = '';
 
 		/* get total */
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}" );
+		$this->db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}" );
 		$this->total = $this->db->loadResult ();
 		check_dberror ( "Unable to count messages." );
 
@@ -271,8 +271,8 @@ class CKunenaSearch {
 		/* get results */
 		$sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, t.mesid, t.message,
 						c.name AS catname, c.class_sfx
-        		FROM #__fb_messages_text AS t JOIN #__fb_messages AS m ON m.id=t.mesid
-        		JOIN #__fb_categories AS c ON m.catid = c.id
+        		FROM #__kunena_messages_text AS t JOIN #__kunena_messages AS m ON m.id=t.mesid
+        		JOIN #__kunena_categories AS c ON m.catid = c.id
         		WHERE {$where} {$groupby} ORDER BY {$orderby}";
 		$this->db->setQuery ( $sql, $this->limitstart, $this->limit );
 		$rows = $this->db->loadObjectList ();
@@ -316,7 +316,7 @@ class CKunenaSearch {
 		} else {
 			$allowed_string = "published='1' AND pub_access='0'";
 		}
-		$this->db->setQuery ( "SELECT id, parent FROM #__fb_categories WHERE {$allowed_string}" );
+		$this->db->setQuery ( "SELECT id, parent FROM #__kunena_categories WHERE {$allowed_string}" );
 		$allowed_forums = $this->db->loadAssocList ( 'id' );
 		check_dberror ( "Unable to get public categories." );
 
@@ -385,9 +385,9 @@ class CKunenaSearch {
 		$searchlist = $this->get_searchstrings ();
 		foreach ( $this->results as $i => $result ) {
 			// Clean up subject
-			$ressubject = KunenaParser::parseText ( stripslashes($result->subject) );
+			$ressubject = KunenaParser::parseText ($result->subject);
 			// Strip smiles and bbcode out of search results; they look ugly
-			$resmessage = KunenaParser::parseBBCode ( stripslashes($result->message) );
+			$resmessage = KunenaParser::parseBBCode ($result->message);
 
 			foreach ( $searchlist as $searchword ) {
 				if (empty ( $searchword ))

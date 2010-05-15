@@ -78,11 +78,11 @@ function dofreePDF()
 	if (in_array($catid, $allow_forum) && $id)
     {
         //first get the thread id for the current post to later on determine the parent post
-        $kunena_db->setQuery("SELECT thread FROM #__fb_messages WHERE id='{$id}' AND catid='{$catid}'");
+        $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE id='{$id}' AND catid='{$catid}'");
         $threadid = $kunena_db->loadResult();
         check_dberror("Unable to load thread.");
         //load topic post and details
-        $kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0' AND a.id=b.mesid");
+        $kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0' AND a.id=b.mesid");
         $row = $kunena_db->loadObjectList();
                 check_dberror("Unable to load message details.");
 
@@ -134,11 +134,11 @@ function dofreePDF()
         	//$pdf->line( 10, 780, 578, 780 );
 
         	$txt3 = "\n";
-        	$txt3 .= stripslashes($mes_text);
+        	$txt3 .= $mes_text;
         	$pdf->ezText($txt3, 10);
         	$pdf->ezText("\n============================================================================\n\n", 8);
         	//now let's try to see if there's more...
-        	$kunena_db->setQuery("SELECT a.*, b.* FROM #__fb_messages AS a, #__fb_messages_text AS b WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
+        	$kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
         	$replies = $kunena_db->loadObjectList();
                 check_dberror("Unable to load messages & detail.");
 
@@ -156,7 +156,7 @@ function dofreePDF()
                 	$pdf->ezText(JText::_('COM_KUNENA_VIEW_POSTED') . " " . $reply->name . " - " . CKunenaTimeformat::showDate($reply->time), 8);
                 	$pdf->ezText("_____________________________________", 8);
                 	$txt3 = "\n";
-                	$txt3 .= stripslashes($mes_text);
+                	$txt3 .= $mes_text;
                 	$pdf->ezText($txt3, 10);
                 	$pdf->ezText("\n============================================================================\n\n", 8);
            		}

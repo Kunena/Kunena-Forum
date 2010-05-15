@@ -34,6 +34,12 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+15-May-2010 Matias
+^ [#20444] Convert our database tables to jos_kunena
+^ [#20444] Add jos_fb to jos_kunena migration to installer, while keeping backup for K1.5
+^ [#20444] Strip slashes from DB and remove all calls for addslashes() and stripslashes()
+# [#20038] Basic Joomla 1.6 support: Installer now redirects to our own installer
+
 14-May-2010 Matias
 ^ [#15886] Merged revisions 2437-2450 from /branches/1.6-xillibit with changes
 ^ [#20038] Basic Joomla 1.6 support: Move kunena.files.distribution to media/kunena

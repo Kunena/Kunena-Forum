@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>1.6.0-DEV</version>
+	<version>1.6.0-ALPHA</version>
 	<versionname>Gespraech</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
@@ -13,7 +13,8 @@
 	<license>GNU/GPL</license>
 	<description>Kunena Forum</description>
 	<installfile>install.kunena.php</installfile>
-	<uninstallfile>uninstall.kunena.php</uninstallfile>
+	<uninstallfile>install.kunena.php</uninstallfile>
+	<scriptfile>install.kunena.php</scriptfile>
 	<files>
 		<filename>CHANGELOG.php</filename>
 		<filename>COPYRIGHT.php</filename>

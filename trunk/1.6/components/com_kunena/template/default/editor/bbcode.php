@@ -97,7 +97,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			?>&nbsp;<input id="kbbcode-image_size" name="size" type="text"
 				size="10" maxlength="10"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo (addslashes ( JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE') )) ;
+				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE');
 				?>')" />
 			<?php
 			echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_URL');
@@ -262,7 +262,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<td class="k-postbuttons">
 			<div id="smilie"><?php
 			$kunena_db = &JFactory::getDBO ();
-			$kunena_db->setQuery ( "SELECT code, location, emoticonbar FROM #__fb_smileys ORDER BY id" );
+			$kunena_db->setQuery ( "SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id" );
 			$set = $kunena_db->loadAssocList ();
 			check_dberror ( "Unable to fetch smileys." );
 			$this->kunena_emoticons_rowset = array ();

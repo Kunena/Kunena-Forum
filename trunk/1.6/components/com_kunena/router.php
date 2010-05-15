@@ -30,7 +30,7 @@ class KunenaRouter {
 
 		$db = & JFactory::getDBO ();
 
-		$query = 'SELECT id, name, parent FROM #__fb_categories WHERE published=1';
+		$query = 'SELECT id, name, parent FROM #__kunena_categories WHERE published=1';
 		$db->setQuery ( $query );
 		self::$catidcache = $db->loadAssocList ( 'id' );
 		check_dberror ( "Unable to load categories." );
@@ -141,7 +141,7 @@ class KunenaRouter {
 		if ($catfound && isset ( $query ['id'] )) {
 			$id = $query ['id'];
 			if (! isset ( self::$msgidcache [$id] )) {
-				$quesql = 'SELECT subject, id FROM #__fb_messages WHERE id=' . ( int ) $id;
+				$quesql = 'SELECT subject, id FROM #__kunena_messages WHERE id=' . ( int ) $id;
 				$db->setQuery ( $quesql );
 				self::$msgidcache [$id] = $db->loadResult ();
 				check_dberror ( "Unable to load subject." );
@@ -258,7 +258,7 @@ class KunenaRouter {
 				$parent = 0;
 			} else {
 				$db = & JFactory::getDBO ();
-				$quesql = 'SELECT parent FROM #__fb_categories WHERE id=' . ( int ) $vars ['catid'];
+				$quesql = 'SELECT parent FROM #__kunena_categories WHERE id=' . ( int ) $vars ['catid'];
 				$db->setQuery ( $quesql );
 				$parent = $db->loadResult ();
 				check_dberror ( "Unable to load category parent." );

@@ -55,11 +55,11 @@ class CKunenaPost {
 					c.name AS catname, c.parent AS catparent, c.pub_access,
 					c.review, c.class_sfx, p.id AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
-				FROM #__fb_messages AS m
-				INNER JOIN #__fb_messages AS mm ON mm.id=m.thread
-				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
-				INNER JOIN #__fb_categories AS c ON c.id=m.catid
-				LEFT JOIN #__fb_polls AS p ON m.id=p.threadid
+				FROM #__kunena_messages AS m
+				INNER JOIN #__kunena_messages AS mm ON mm.id=m.thread
+				INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
+				INNER JOIN #__kunena_categories AS c ON c.id=m.catid
+				LEFT JOIN #__kunena_polls AS p ON m.id=p.threadid
 				WHERE m.id='" . $this->id . "'";
 
 			$this->_db->setQuery ( $query );
@@ -77,7 +77,7 @@ class CKunenaPost {
 			}
 		} else if ($this->catid) {
 			// Check that category exists and fill some information for later use
-			$this->_db->setQuery ( "SELECT 0 AS id, 0 AS thread, id AS catid, name AS catname, parent AS catparent, pub_access, locked, locked AS catlocked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls FROM #__fb_categories WHERE id='{$this->catid}'" );
+			$this->_db->setQuery ( "SELECT 0 AS id, 0 AS thread, id AS catid, name AS catname, parent AS catparent, pub_access, locked, locked AS catlocked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls FROM #__kunena_categories WHERE id='{$this->catid}'" );
 			$this->msg_cat = $this->_db->loadObject ();
 			check_dberror ( 'Unable to load category.' );
 			if (! $this->msg_cat) {
@@ -169,7 +169,7 @@ class CKunenaPost {
 		}
 
 		// TODO: replace this with better solution
-		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__fb_messages WHERE thread='{$thread}'" );
+		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread='{$thread}'" );
 		$result = $this->_db->loadObject ();
 		check_dberror ( "Unable to load messages." );
 		$threadPages = ceil ( $result->totalmessages / $this->config->messages_per_page );
@@ -196,7 +196,7 @@ class CKunenaPost {
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($subscribeMe == 1) {
-			$this->_db->setQuery ( "INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('$thread','{$this->my->id}')" );
+			$this->_db->setQuery ( "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES ('$thread','{$this->my->id}')" );
 
 			if (@$this->_db->query ()) {
 				$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) . '<br />';
@@ -234,14 +234,14 @@ class CKunenaPost {
 		$message = $this->msg_cat;
 		if ($this->catid && $this->msg_cat->id > 0) {
 			if ($do == 'quote') {
-				$this->message_text = "[b]" . kunena_htmlspecialchars ( stripslashes ( $message->name ) ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
-				$mestext = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', stripslashes ( $message->message ) );
+				$this->message_text = "[b]" . kunena_htmlspecialchars ( $message->name ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
+				$mestext = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $message->message );
 				$this->message_text .= '[quote]' .  kunena_htmlspecialchars ( $mestext ) . "[/quote]";
 			} else {
 				$this->message_text = '';
 			}
-			$reprefix = JString::substr ( stripslashes ( $message->subject ), 0, JString::strlen ( JText::_ ( 'COM_KUNENA_POST_RE' ) ) ) != JText::_ ( 'COM_KUNENA_POST_RE' ) ? JText::_ ( 'COM_KUNENA_POST_RE' ) . ' ' : '';
-			$this->subject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
+			$reprefix = JString::substr ( $message->subject, 0, JString::strlen ( JText::_ ( 'COM_KUNENA_POST_RE' ) ) ) != JText::_ ( 'COM_KUNENA_POST_RE' ) ? JText::_ ( 'COM_KUNENA_POST_RE' ) . ' ' : '';
+			$this->subject = kunena_htmlspecialchars ( $message->subject );
 			$this->resubject = $reprefix . $this->subject;
 			$this->parent = $message->parent;
 		} else {
@@ -269,7 +269,7 @@ class CKunenaPost {
 		if ($this->my->id && $this->config->allowsubscriptions == 1) {
 			$this->cansubscribe = 1;
 			if ($this->msg_cat && $this->msg_cat->thread) {
-				$this->_db->setQuery ( "SELECT thread FROM #__fb_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->msg_cat->thread}'" );
+				$this->_db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->msg_cat->thread}'" );
 				$subscribed = $this->_db->loadResult ();
 				check_dberror ( "Unable to load subscriptions." );
 
@@ -315,10 +315,10 @@ class CKunenaPost {
 
 			$this->kunena_editmode = 1;
 
-			$this->message_text = kunena_htmlspecialchars ( stripslashes ( $message->message ) );
-			$this->resubject = kunena_htmlspecialchars ( stripslashes ( $message->subject ) );
-			$this->authorName = kunena_htmlspecialchars ( stripslashes ( $message->name ) );
-			$this->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
+			$this->message_text = kunena_htmlspecialchars ( $message->message );
+			$this->resubject = kunena_htmlspecialchars ( $message->subject );
+			$this->authorName = kunena_htmlspecialchars ( $message->name );
+			$this->email = kunena_htmlspecialchars ( $message->email );
 			$this->id = $message->id;
 			$this->catid = $message->catid;
 			$this->parent = $message->parent;
@@ -523,15 +523,15 @@ class CKunenaPost {
 		$this->moderateMultiplesChoices = $modchoices;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__fb_messages WHERE catid={$this->catid} AND parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM #__kunena_messages WHERE catid={$this->catid} AND parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		check_dberror ( "Unable to load messages." );
 
 		// Get thread and reply count from current message:
-		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM #__fb_messages AS m
-			INNER JOIN #__fb_messages AS t ON m.thread=t.id
-			LEFT JOIN #__fb_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
+		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM #__kunena_messages AS m
+			INNER JOIN #__kunena_messages AS t ON m.thread=t.id
+			LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
 			WHERE m.id={$this->id}
 			GROUP BY m.thread";
 		$this->_db->setQuery ( $query, 0, 1 );
@@ -546,7 +546,7 @@ class CKunenaPost {
 		}
 		$messages [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
 		foreach ( $messagesList as $mes ) {
-			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( stripslashes ( $mes->subject ) ) );
+			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( $mes->subject ) );
 		}
 		$this->messagelist = JHTML::_ ( 'select.genericlist', $messages, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_targettopic' );
 
@@ -587,10 +587,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$this->id}'" );
+		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
 			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "INSERT INTO #__fb_subscriptions (thread,userid) VALUES ('{$thread}','{$this->my->id}')" );
+			$this->_db->setQuery ( "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES ('{$thread}','{$this->my->id}')" );
 
 			if (@$this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
@@ -603,10 +603,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
-		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$this->id}'" );
+		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
 			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "DELETE FROM #__fb_subscriptions WHERE thread={$thread} AND userid={$this->my->id}" );
+			$this->_db->setQuery ( "DELETE FROM #__kunena_subscriptions WHERE thread={$thread} AND userid={$this->my->id}" );
 
 			if ($this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
@@ -619,10 +619,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE id='{$this->id}'" );
+		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
 			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "INSERT INTO #__fb_favorites (thread,userid) VALUES ('{$thread}','{$this->my->id}')" );
+			$this->_db->setQuery ( "INSERT INTO #__kunena_favorites (thread,userid) VALUES ('{$thread}','{$this->my->id}')" );
 
 			if (@$this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
@@ -635,10 +635,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
-		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__fb_messages WHERE id='{$this->id}'" );
+		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
 			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "DELETE FROM #__fb_favorites WHERE thread={$thread} AND userid={$this->my->id}" );
+			$this->_db->setQuery ( "DELETE FROM #__kunena_favorites WHERE thread={$thread} AND userid={$this->my->id}" );
 
 			if ($this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
@@ -658,7 +658,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' );
-		$this->_db->setQuery ( "update #__fb_messages set ordering=1 where id={$this->id}" );
+		$this->_db->setQuery ( "update #__kunena_messages set ordering=1 where id={$this->id}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_SET' );
 		}
@@ -676,7 +676,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' );
-		$this->_db->setQuery ( "update #__fb_messages set ordering=0 where id={$this->id}" );
+		$this->_db->setQuery ( "update #__kunena_messages set ordering=0 where id={$this->id}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' );
 		}
@@ -694,7 +694,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' );
-		$this->_db->setQuery ( "update #__fb_messages set locked=1 where id={$this->id}" );
+		$this->_db->setQuery ( "update #__kunena_messages set locked=1 where id={$this->id}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_SET' );
 		}
@@ -712,7 +712,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' );
-		$this->_db->setQuery ( "update #__fb_messages set locked=0 where id={$this->id}" );
+		$this->_db->setQuery ( "update #__kunena_messages set locked=0 where id={$this->id}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' );
 		}
@@ -730,7 +730,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_FAIL' );
-		$this->_db->setQuery ( "UPDATE #__fb_messages SET hold=0 WHERE id={$this->id}" );
+		$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE id={$this->id}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
@@ -748,8 +748,8 @@ class CKunenaPost {
 			return;
 
 		//get all the messages for this thread
-		$query = "SELECT m.*, t.* FROM #__fb_messages AS m
-			LEFT JOIN #__fb_messages_text AS t ON m.id=t.mesid
+		$query = "SELECT m.*, t.* FROM #__kunena_messages AS m
+			LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid
 			WHERE thread='{$this->msg_cat->thread}' AND hold='0'
 			ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
@@ -766,7 +766,7 @@ class CKunenaPost {
 		$attachments = CKunenaAttachments::getInstance ();
 		$this->attachmentslist = $attachments->get($mesids);
 
-		$this->subject = stripslashes ( $this->msg_cat->subject );
+		$this->subject = $this->msg_cat->subject;
 
 		CKunenaTools::loadTemplate ( '/editor/history.php' );
 	}
@@ -853,7 +853,7 @@ class CKunenaPost {
 		$ip = $_SERVER ["REMOTE_ADDR"];
 
 		if ($this->config->floodprotection && ! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-			$this->_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$ip}'" );
+			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip='{$ip}'" );
 			$lastPostTime = $this->_db->loadResult ();
 			check_dberror ( "Unable to load max time for current request from IP: {$ip}" );
 
@@ -987,7 +987,7 @@ class CKunenaPost {
 	}
 
 	function setTitle($title) {
-		$this->document->setTitle ( $title . ' - ' . stripslashes ( $this->config->board_title ) );
+		$this->document->setTitle ( $title . ' - ' . $this->config->board_title );
 	}
 
 	function hasCaptcha() {

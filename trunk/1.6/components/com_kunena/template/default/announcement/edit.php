@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die();
 
 $document = JFactory::getDocument();
-$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . stripslashes($this->config->board_title));
+$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 $calendar = JHTML::_('calendar', $this->created, 'created', 'addcreated');
 ?>
 <script type="text/javascript">

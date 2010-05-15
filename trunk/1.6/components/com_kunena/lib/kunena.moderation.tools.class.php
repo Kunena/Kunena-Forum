@@ -382,7 +382,7 @@ class CKunenaModerationTools {
 		}
 
 		$user->delete();
-		$this->_db->setQuery ( "DELETE FROM #__fb_users WHERE `userid`='$UserID';" );
+		$this->_db->setQuery ( "DELETE FROM #__kunena_users WHERE `userid`='$UserID';" );
 		$this->_db->query ();
 		check_dberror ( "Unable to delete user from kunena." );
 
@@ -400,7 +400,7 @@ class CKunenaModerationTools {
 		$limit	= intval ( $limit );
 
 		$sql = "SELECT ban.id, ban.enabled, ban.userid, ban.bantype, ban.expiry, ban.message, ban.created, ban.created_userid, user.username AS created_name, ban.comment ".
-				"FROM #__fb_banned_users ban ".
+				"FROM #__kunena_banned_users ban ".
 				"LEFT JOIN #__users user ON (user.id = ban.created_userid) ".
 				"WHERE ban.userid = '". $UserID ."' ".
 				"ORDER BY ban.created ASC ".
@@ -435,7 +435,7 @@ class CKunenaModerationTools {
 			$ips = substr($ips, 0, -1);	// remove last comma
 
 			$sql = "SELECT ban.id, ban.enabled, ban.ip, ban.expiry, ban.message, ban.created, ban.created_userid, user.username AS created_name, ban.comment ".
-				"FROM #__fb_banned_ips ban ".
+				"FROM #__kunena_banned_ips ban ".
 				"LEFT JOIN #__users user ON (user.id = ban.created_userid) ".
 				"WHERE ban.ip IN (". $ips .") ".
 				"ORDER BY ban.created ASC ".
@@ -464,8 +464,8 @@ class CKunenaModerationTools {
 		$limit	= intval ( $limit );
 
 		$sql = "SELECT msgs.ip AS ip, MAX(ban.enabled) AS enabled ".
-				"FROM #__fb_messages msgs ".
-				"LEFT JOIN #__fb_banned_ips ban ON (ban.ip = msgs.ip) ".
+				"FROM #__kunena_messages msgs ".
+				"LEFT JOIN #__kunena_banned_ips ban ON (ban.ip = msgs.ip) ".
 				"WHERE msgs.userid = '". $UserID ."' ".
 				"GROUP BY msgs.ip ".
 				"ORDER BY msgs.time ASC ".
@@ -496,8 +496,8 @@ class CKunenaModerationTools {
 		$useridslist = array();
 		foreach ($iplist as $entry) {
 			$sql = "SELECT msgs.name, msgs.userid, MAX(ban.enabled) AS enabled ".
-				"FROM #__fb_messages msgs ".
-				"LEFT JOIN #__fb_banned_users ban ON (msgs.userid = ban.userid) ".
+				"FROM #__kunena_messages msgs ".
+				"LEFT JOIN #__kunena_banned_users ban ON (msgs.userid = ban.userid) ".
 				"WHERE msgs.ip = '". $entry->ip ."' ".
 				"GROUP BY msgs.name, msgs.userid ".
 				"ORDER BY msgs.time ASC ".

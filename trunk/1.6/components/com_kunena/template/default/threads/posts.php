@@ -70,8 +70,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		$lastreply = $this->lastreply[$message->thread];
 		$firstpost = $this->threads[$message->thread];
 
-		$message->name = kunena_htmlspecialchars ( stripslashes ( $message->name ) );
-		$message->email = kunena_htmlspecialchars ( stripslashes ( $message->email ) );
+		$message->name = kunena_htmlspecialchars ( $message->name );
+		$message->email = kunena_htmlspecialchars ( $message->email );
 ?>
 		<tr
 			class="k<?php
@@ -104,12 +104,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			<div class="k-topic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, KunenaParser::parseText ( stripslashes($message->subject) ), KunenaParser::stripBBCode ( stripslashes($message->message) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, KunenaParser::parseText ($message->subject), KunenaParser::stripBBCode ($message->message), 'follow', 'k-topic-title km' );
 			?>
-			</div><div style="display:none"><?php echo KunenaParser::parseBBCode ( stripslashes($message->message) );?></div>
+			</div><div style="display:none"><?php echo KunenaParser::parseBBCode ($message->message);?></div>
 			</td>
 			<td class="td-3"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, KunenaParser::parseText ( stripslashes($firstpost->subject) ), KunenaParser::stripBBCode ( stripslashes($firstpost->message) ), 'follow', 'k-topic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, KunenaParser::parseText ($firstpost->subject), KunenaParser::stripBBCode ($firstpost->message), 'follow', 'k-topic-title km' );
 			?>
 			<?php
 			if ($message->favcount ) {
@@ -122,7 +122,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			<?php
 			if ($message->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', $message->catid, $message->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $message->unread . ' ' . stripslashes ( $this->config->newchar ) . ')</span></sup>', $message->lastread );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $message->catid, $message->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $message->unread . ' ' . $this->config->newchar . ')</span></sup>', $message->lastread );
 			}
 
 		if ($message->locked != 0) {

@@ -725,7 +725,7 @@ table.kadmin-stat caption {
 						</td>
 								<td align="left" valign="top" width="25%"><input type="text"
 							name="cfg_board_title"
-							value="<?php echo kescape(stripslashes ( $kunena_config->board_title ));
+							value="<?php echo kescape ( $kunena_config->board_title );
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_TITLE_DESC') ?>
 						</td>
@@ -759,7 +759,7 @@ table.kadmin-stat caption {
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BOARD_OFFLINE_MES') ?></td>
 						<td align="left" valign="top" colspan="2">
-							<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo kescape(stripslashes ( $kunena_config->offline_message )); ?></textarea>
+							<textarea name="cfg_offline_message" rows="3" cols="50"><?php echo kescape ( $kunena_config->offline_message ); ?></textarea>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -887,7 +887,7 @@ table.kadmin-stat caption {
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_NEWCHAR') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_newchar"
-							value="<?php echo kescape(stripslashes ( $kunena_config->newchar ));
+							value="<?php echo kescape ( $kunena_config->newchar );
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_NEWCHAR_DESC') ?></td>
 					</tr>
@@ -2239,7 +2239,7 @@ table.kadmin-stat caption {
 				&nbsp;</td>
 				<td align="center" width="10"><?php echo kescape($pl->view);
 						?>&nbsp;</td>
-				<td width="*"><?php echo kescape(stripslashes ( $pl->signature ) );
+				<td width="*"><?php echo kescape ( $pl->signature );
 						?>&nbsp;
 				</td>
 			</tr>
@@ -2360,7 +2360,7 @@ table.kadmin-stat caption {
 				$kunena_config = & CKunenaConfig::getInstance ();
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
-				$signature = stripslashes ($user->signature );
+				$signature = $user->signature;
 				$username = $user->username;
 				$avatarint = KunenaFactory::getAvatarIntegration();
 				$editavatar = is_a($avatarint, 'KunenaAvatarKunena') ? true : false;
@@ -2503,14 +2503,14 @@ function textCounter(field, target) {
 
 			if ($csubslist > 0) {
 				foreach ( $subslist as $subs ) { //get all message details for each subscription
-					$kunena_db->setQuery ( "select * from #__fb_messages where id=$subs->thread" );
+					$kunena_db->setQuery ( "select * from #__kunena_messages where id=$subs->thread" );
 					$subdet = $kunena_db->loadObjectList ();
 					check_dberror ( "Unable to load subscription messages." );
 
 					foreach ( $subdet as $sub ) {
 						$k = 1 - $k;
 						echo "<tr class=\"row$k\">";
-						echo "  <td>$enum: " . kescape( stripslashes ( $sub->subject ) ) . " by " . kescape( stripslashes ( $sub->name ) );
+						echo "  <td>$enum: " . kescape ( $sub->subject ) . " by " . kescape ( $sub->name );
 						echo "  <td>&nbsp;</td>";
 						echo "</tr>";
 						$enum ++;

@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).DS.'kunena.php');
 
 /**
 * Kunena User Table
-* Provides access to the #__fb_users table
+* Provides access to the #__kunena_users table
 */
 class TableKunenaUser extends TableKunena
 {
@@ -219,7 +219,7 @@ class TableKunenaUser extends TableKunena
 	var $BEBO = null;
 
 	function __construct($db) {
-		parent::__construct('#__fb_users', 'userid', $db);
+		parent::__construct('#__kunena_users', 'userid', $db);
 	}
 
 	/**
@@ -250,7 +250,7 @@ class TableKunenaUser extends TableKunena
 		}
 
 		// Load the user data.
-		$query = 'SELECT u.name, u.username, ku.* FROM #__users AS u LEFT JOIN #__fb_users AS ku ON u.id = ku.userid WHERE u.id = '.$this->$k;
+		$query = 'SELECT u.name, u.username, ku.* FROM #__users AS u LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid WHERE u.id = '.$this->$k;
 		$this->_db->setQuery($query);
 		$data = $this->_db->loadAssoc();
 
@@ -259,7 +259,7 @@ class TableKunenaUser extends TableKunena
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		}
-		// User does not exist (may exist in #__fb_users, though)
+		// User does not exist (may exist in #__kunena_users, though)
 		if(!$data)
 		{
 			$this->$k = 0;

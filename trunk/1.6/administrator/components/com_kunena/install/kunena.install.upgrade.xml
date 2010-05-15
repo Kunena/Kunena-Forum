@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <!DOCTYPE comupgrade>
 <comupgrade version="1.0">
-	<install version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_announcement` (
+	<install>
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_announcement` (
                     `id` int(3) NOT NULL auto_increment,
                     `title` tinytext NOT NULL,
                     `sdescription` text NOT NULL,
@@ -26,7 +26,7 @@
                 KEY `userid` (`userid`),
                 KEY `hash` (`hash`),
                 KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8</query>
-        <query>CREATE TABLE IF NOT EXISTS `#__fb_categories` (
+        <query>CREATE TABLE IF NOT EXISTS `#__kunena_categories` (
                     `id` int(11) NOT NULL auto_increment,
                     `parent` int(11) default '0',
                     `name` tinytext,
@@ -60,26 +60,26 @@
                 KEY `parent` (`parent`),
                 KEY `published_pubaccess_id` (`published`,`pub_access`,`id`),
                 KEY `msg_id` (`id_last_msg`) ) DEFAULT CHARSET=utf8</query>
-       <query>CREATE TABLE IF NOT EXISTS `#__fb_favorites` (
+       <query>CREATE TABLE IF NOT EXISTS `#__kunena_favorites` (
                     `thread` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                 UNIQUE KEY `thread` (`thread`,`userid`),
                 KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
-       <query>CREATE TABLE IF NOT EXISTS `#__fb_groups` (
+       <query>CREATE TABLE IF NOT EXISTS `#__kunena_groups` (
                     `id` int(4) NOT NULL auto_increment,
                     `title` varchar(255) default NULL,
                 PRIMARY KEY  (`id`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_messages_text` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_messages_text` (
                     `mesid` int(11) NOT NULL default '0',
                     `message` text NOT NULL,
                 PRIMARY KEY  (`mesid`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_moderation` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_moderation` (
                     `catid` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                     `future1` tinyint(4) default '0',
                     `future2` int(11) default '0',
                 PRIMARY KEY  (`catid`,`userid`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_sessions` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_sessions` (
                     `userid` int(11) NOT NULL default '0',
                     `allowed` text,
                     `lasttime` int(11) NOT NULL default '0',
@@ -87,26 +87,26 @@
                     `currvisit` int(11) NOT NULL default '0',
                 PRIMARY KEY  (`userid`),
                 KEY `currvisit` (`currvisit`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_smileys` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_smileys` (
                     `id` int(4) NOT NULL auto_increment,
                     `code` varchar(12) NOT NULL default '',
                     `location` varchar(50) NOT NULL default '',
                     `greylocation` varchar(60) NOT NULL default '',
                     `emoticonbar` tinyint(4) NOT NULL default '0',
                 PRIMARY KEY  (`id`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_subscriptions` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_subscriptions` (
                     `thread` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                     `future1` int(11) default '0',
                 UNIQUE KEY `thread` (`thread`,`userid`),
                 KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_subscriptions_categories` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_subscriptions_categories` (
                     `catid` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                     `future1` int(11) default '0',
                 UNIQUE KEY `thread` (`catid`,`userid`),
                 KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE `jos_fb_users` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_users` (
  			 `userid` int(11) NOT NULL default '0',
  			 `view` varchar(8) NOT NULL default 'flat',
  			 `signature` text,
@@ -148,7 +148,7 @@
              KEY `posts` (`posts`),
              KEY `uhits` (`uhits`)
              ) DEFAULT CHARSET=utf8;</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_whoisonline` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_whoisonline` (
                     `id` int(6) NOT NULL auto_increment,
                     `userid` int(7) NOT NULL default '0',
                     `time` varchar(14) NOT NULL default '0',
@@ -162,14 +162,14 @@
                     `user` tinyint(2) NOT NULL default '0',
                 PRIMARY KEY  (`id`),
                 KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_ranks` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_ranks` (
                     `rank_id` mediumint(8) unsigned NOT NULL auto_increment,
                     `rank_title` varchar(255) NOT NULL default '',
                     `rank_min` mediumint(8) unsigned NOT NULL default '0',
                     `rank_special` tinyint(1) unsigned NOT NULL default '0',
                     `rank_image` varchar(255) NOT NULL default '',
                 PRIMARY KEY  (`rank_id`) ) DEFAULT CHARSET=utf8</query>
-		<query>INSERT INTO `#__fb_ranks` (
+		<query>INSERT INTO `#__kunena_ranks` (
 		            `rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
                     (1, 'Fresh Boarder', 0, 0, 'rank1.gif'),
                     (2, 'Junior Boarder', 20, 0, 'rank2.gif'),
@@ -180,8 +180,8 @@
                     (7, 'Administrator', 0, 1, 'rankadmin.gif'),
                     (8, 'Moderator', 0, 1, 'rankmod.gif'),
                     (9, 'Spammer', 0, 1, 'rankspammer.gif')</query>
-        <query>INSERT INTO `#__fb_groups`(`id`,`title`) values (1,'"._KUNENA_REGISTERED."')</query>
-		<query>INSERT INTO `#__fb_smileys`(`id`,`code`,`location`,`greylocation`,`emoticonbar`) 
+        <query>INSERT INTO `#__kunena_groups`(`id`,`title`) values (1,'"._KUNENA_REGISTERED."')</query>
+		<query>INSERT INTO `#__kunena_smileys`(`id`,`code`,`location`,`greylocation`,`emoticonbar`) 
 		            VALUES  (1, 'B)', 'cool.png', 'cool-grey.png', 1),
 							(2, '8)', 'cool.png', 'cool-grey.png', 0),
 							(3, '8-)', 'cool.png', 'cool-grey.png', 0),
@@ -248,7 +248,7 @@
 							(64, ':!:', 'exclamation.png', 'exclamation-grey.png', 0),
 							(65, ':arrow:', 'arrow.png', 'arrow-grey.png', 0),
 							(66, ':idea:', 'idea.png', 'idea-grey.png', 0)</query>
-       <query>CREATE TABLE IF NOT EXISTS `#__fb_messages` (
+       <query>CREATE TABLE IF NOT EXISTS `#__kunena_messages` (
                     `id` int(11) NOT NULL auto_increment,
                     `parent` int(11) default '0',
                     `thread` int(11) default '0',
@@ -279,7 +279,7 @@
                 KEY `hold_time` (`hold`,`time`),
                 KEY `parent_hits` (`parent`,`hits`) 
 			) DEFAULT CHARSET=utf8</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_polls` (
 				`id` int(11) NOT NULL auto_increment,
 				`title` varchar(100) NOT NULL,
 				`threadid` int(11) NOT NULL,
@@ -287,7 +287,7 @@
 				PRIMARY KEY  (`id`),
 				KEY `threadid` (`threadid`)
 			) DEFAULT CHARSET=utf8;</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_options` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_polls_options` (
 			`id` int(11) NOT NULL auto_increment,
 			`pollid` int(11) default NULL,
 			`text` varchar(100) default NULL,
@@ -295,7 +295,7 @@
 			PRIMARY KEY  (`id`),
 			KEY `pollid` (`pollid`)
 		) DEFAULT CHARSET=utf8;</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_users` (
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_polls_users` (
 			`pollid` int(11) default NULL,
 			`userid` int(11) default NULL,
 			`votes` int(11) default NULL,
@@ -335,61 +335,61 @@
 	<upgrade>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
 			<phpfile name="kunena.special.upgrade.1.0.5.php" />
-			<query mode="silenterror">ALTER TABLE `#__fb_attachments` ADD KEY `mesid`(`mesid`), COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD COLUMN `headerdesc` text NOT NULL AFTER `description`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD COLUMN `class_sfx` varchar(20) NOT NULL AFTER `headerdesc`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD COLUMN `id_last_msg` int(10) NOT NULL DEFAULT '0' AFTER `class_sfx`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD COLUMN `numTopics` mediumint(8) NOT NULL DEFAULT '0' AFTER `id_last_msg`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD COLUMN `numPosts` mediumint(8) NOT NULL DEFAULT '0' AFTER `numTopics`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD COLUMN `time_last_msg` int(11) NULL  AFTER `numPosts`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` DROP KEY `catid`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` DROP KEY `catparent`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD KEY `msg_id`(`id_last_msg`), COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD KEY `parent`(`parent`), COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD PRIMARY KEY(`id`), COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD KEY `published_pubaccess_id`(`published`,`pub_access`,`id`), COMMENT=''</query>
-			<query>CREATE TABLE IF NOT EXISTS `#__fb_groups`(
+			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD KEY `mesid`(`mesid`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `headerdesc` text NOT NULL AFTER `description`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `class_sfx` varchar(20) NOT NULL AFTER `headerdesc`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `id_last_msg` int(10) NOT NULL DEFAULT '0' AFTER `class_sfx`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `numTopics` mediumint(8) NOT NULL DEFAULT '0' AFTER `id_last_msg`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `numPosts` mediumint(8) NOT NULL DEFAULT '0' AFTER `numTopics`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD COLUMN `time_last_msg` int(11) NULL  AFTER `numPosts`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP KEY `catid`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` DROP KEY `catparent`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD KEY `msg_id`(`id_last_msg`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD KEY `parent`(`parent`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD PRIMARY KEY(`id`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD KEY `published_pubaccess_id`(`published`,`pub_access`,`id`), COMMENT=''</query>
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_groups`(
                         `id` int(4) NOT NULL  auto_increment  , 
                         `title` varchar(255) NULL   , 
                         PRIMARY KEY (`id`) ) DEFAULT CHARSET=utf8;</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD COLUMN `modified_by` int(7) NULL AFTER `moved`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD COLUMN `modified_time` int(11) NULL AFTER `modified_by`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD COLUMN `modified_reason` tinytext NULL AFTER `modified_time`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `hold_time`(`hold`,`time`), COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` DROP KEY `id`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `locked`(`locked`), COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `time`(`time`), COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages_text` DROP KEY `mesid`, COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_messages_text` ADD PRIMARY KEY(`mesid`), COMMENT=''</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_moderation` DROP KEY `catid`, COMMENT=''</query>			
-			<query>CREATE TABLE IF NOT EXISTS `#__fb_ranks`(
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD COLUMN `modified_by` int(7) NULL AFTER `moved`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD COLUMN `modified_time` int(11) NULL AFTER `modified_by`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD COLUMN `modified_reason` tinytext NULL AFTER `modified_time`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD KEY `hold_time`(`hold`,`time`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP KEY `id`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD KEY `locked`(`locked`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD KEY `time`(`time`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages_text` DROP KEY `mesid`, COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages_text` ADD PRIMARY KEY(`mesid`), COMMENT=''</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_moderation` DROP KEY `catid`, COMMENT=''</query>			
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_ranks`(
                         `rank_id` mediumint(8) unsigned NOT NULL  auto_increment  , 
                         `rank_title` varchar(255) NOT NULL   , 
                         `rank_min` mediumint(8) unsigned NOT NULL  DEFAULT '0'  , 
                         `rank_special` tinyint(1) unsigned NOT NULL  DEFAULT '0'  , 
                         `rank_image` varchar(255) NOT NULL   , 
                         PRIMARY KEY (`rank_id`) ) DEFAULT CHARSET=utf8;</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `group_id` int(4) NULL DEFAULT '1' AFTER `karma_time`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `uhits` int(11) NULL  DEFAULT '0' AFTER `group_id`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `personalText` tinytext NULL AFTER `uhits`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `gender` tinyint(4) NOT NULL DEFAULT '0' AFTER `personalText`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `birthdate` date NOT NULL DEFAULT '0000-00-00' AFTER `gender`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `location` varchar(50) NULL AFTER `birthdate`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `ICQ` varchar(50) NULL AFTER `location`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `AIM` varchar(50) NULL AFTER `ICQ`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `YIM` varchar(50) NULL AFTER `AIM`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `MSN` varchar(50) NULL AFTER `YIM`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `SKYPE` varchar(50) NULL AFTER `MSN`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `hideEmail` tinyint(1) NOT NULL DEFAULT '1' AFTER `SKYPE`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `showOnline` tinyint(1) NOT NULL DEFAULT '1' AFTER `hideEmail`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `rank` tinyint(4) NOT NULL DEFAULT '0' AFTER `showOnline`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `GTALK` varchar(50) NULL AFTER `rank`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `websitename` varchar(50) NULL AFTER `GTALK`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD COLUMN `websiteurl` varchar(50) NULL AFTER `websitename`, COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `group_id`(`group_id`), COMMENT=''</query>			
-			<query mode="silenterror">ALTER TABLE `#__fb_whoisonline` ADD KEY `userid`(`userid`), COMMENT=''</query>
-			<query mode="silenterror">INSERT INTO `#__fb_groups` VALUES ('1', 'Registered User')</query>
-			<query mode="silenterror">INSERT INTO `#__fb_ranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `group_id` int(4) NULL DEFAULT '1' AFTER `karma_time`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `uhits` int(11) NULL  DEFAULT '0' AFTER `group_id`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `personalText` tinytext NULL AFTER `uhits`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `gender` tinyint(4) NOT NULL DEFAULT '0' AFTER `personalText`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `birthdate` date NOT NULL DEFAULT '0000-00-00' AFTER `gender`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `location` varchar(50) NULL AFTER `birthdate`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `ICQ` varchar(50) NULL AFTER `location`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `AIM` varchar(50) NULL AFTER `ICQ`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `YIM` varchar(50) NULL AFTER `AIM`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `MSN` varchar(50) NULL AFTER `YIM`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `SKYPE` varchar(50) NULL AFTER `MSN`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `hideEmail` tinyint(1) NOT NULL DEFAULT '1' AFTER `SKYPE`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `showOnline` tinyint(1) NOT NULL DEFAULT '1' AFTER `hideEmail`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `rank` tinyint(4) NOT NULL DEFAULT '0' AFTER `showOnline`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `GTALK` varchar(50) NULL AFTER `rank`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `websitename` varchar(50) NULL AFTER `GTALK`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD COLUMN `websiteurl` varchar(50) NULL AFTER `websitename`, COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `group_id`(`group_id`), COMMENT=''</query>			
+			<query mode="silenterror">ALTER TABLE `#__kunena_whoisonline` ADD KEY `userid`(`userid`), COMMENT=''</query>
+			<query mode="silenterror">INSERT INTO `#__kunena_groups` VALUES ('1', 'Registered User')</query>
+			<query mode="silenterror">INSERT INTO `#__kunena_ranks` (`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
                         (1, 'Fresh Boarder', 0, 0, 'rank1.gif'),
                         (2, 'Junior Boarder', 20, 0, 'rank2.gif'),
                         (3, 'Senior Boarder', 40, 0, 'rank3.gif'),
@@ -399,68 +399,68 @@
                         (7, 'Administrator', 0, 1, 'rankadmin.gif'),
                         (8, 'Moderator', 0, 1, 'rankmod.gif'),
                         (9, 'Spammer', 0, 1, 'rankspammer.gif')</query>
-		    <query mode="silenterror">ALTER TABLE `#__fb_sessions` ADD COLUMN `currvisit` int(11) NOT NULL default '0' AFTER `readtopics`, COMMENT=''</query>
-		    <query>UPDATE `#__fb_sessions` SET `allowed`='na'</query>
-			<query>UPDATE `#__fb_users` SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>
-			<query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;#039;", "'")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;quot;", '"')</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;nbsp;", " ")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br />", "\n")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br>", "\n")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;lt;", "&lt;")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;gt;", "&gt;")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;amp;", "&amp;")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[IMG", "[img")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[/IMG]", "[/img]")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[URL", "[url")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[/URL]", "[/url]")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[QUOTE", "[quote")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[/QUOTE]", "[/quote]")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[CODE", "[code")</query>
-            <query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "[/CODE", "[/code")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;#039;", "'")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;quot;", '"')</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;nbsp;", " ")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br />", "\n")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br>", "\n")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;lt;", "&lt;")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;gt;", "&gt;")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "&amp;amp;amp;", "&amp;")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[IMG", "[img")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/IMG]", "[/img]")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[URL", "[url")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/URL]", "[/url]")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[QUOTE", "[quote")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/QUOTE]", "[/quote]")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[CODE", "[code")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "[/CODE", "[/code")</query>
+		    <query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD COLUMN `currvisit` int(11) NOT NULL default '0' AFTER `readtopics`, COMMENT=''</query>
+		    <query>UPDATE `#__kunena_sessions` SET `allowed`='na'</query>
+			<query>UPDATE `#__kunena_users` SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;#039;", "'")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;quot;", '"')</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;nbsp;", " ")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br />", "\n")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;lt;br>", "\n")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;lt;", "&lt;")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;gt;", "&gt;")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;amp;", "&amp;")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[IMG", "[img")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/IMG]", "[/img]")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[URL", "[url")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/URL]", "[/url]")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[QUOTE", "[quote")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/QUOTE]", "[/quote]")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[CODE", "[code")</query>
+            <query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "[/CODE", "[/code")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;#039;", "'")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;quot;", '"')</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;nbsp;", " ")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br />", "\n")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;lt;br>", "\n")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;lt;", "&lt;")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;gt;", "&gt;")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "&amp;amp;amp;", "&amp;")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[IMG", "[img")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/IMG]", "[/img]")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[URL", "[url")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/URL]", "[/url]")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[QUOTE", "[quote")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/QUOTE]", "[/quote]")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[CODE", "[code")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "[/CODE", "[/code")</query>
 		</version>
 		<version version="1.0.6" versiondate="2009-01-10" build="870" versionname="Communicate">
-			<query mode="silenterror">ALTER TABLE `#__fb_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `posts` ( `posts` )</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_users` ADD KEY `uhits` ( `uhits` )</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD KEY `parent_hits`(`parent`,`hits`)</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `posts` ( `posts` )</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `uhits` ( `uhits` )</query>
 		</version>
 		<version version="1.0.8" versiondate="2009-02-17" build="1166" versionname="Speakup!">
 			<phpfile name="kunena.special.upgrade.1.0.8.php" />
-			<query mode="silenterror">ALTER TABLE `#__fb_config` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_config` CHANGE `latestcategory` `latestcategory` TEXT NULL DEFAULT NULL</query>
-			<query mode="silenterror">UPDATE `#__fb_config` SET `latestcategory`=''</query>
-			<query>UPDATE `#__fb_users` SET `view`='flat'</query>
-			<query>UPDATE `#__fb_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
-            <query>UPDATE `#__fb_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_config` CHANGE `annmodid` `annmodid` TEXT NULL DEFAULT NULL</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_config` CHANGE `latestcategory` `latestcategory` TEXT NULL DEFAULT NULL</query>
+			<query mode="silenterror">UPDATE `#__kunena_config` SET `latestcategory`=''</query>
+			<query>UPDATE `#__kunena_users` SET `view`='flat'</query>
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
+            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
 		</version>
 		<version version="1.0.10" versiondate="2009-05-21" build="1344" versionname="Parier!">
-			<query mode="silenterror">UPDATE `#__fb_config` SET `jmambot`='0'</query>
+			<query mode="silenterror">UPDATE `#__kunena_config` SET `jmambot`='0'</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
-			<query>CREATE TABLE IF NOT EXISTS `#__fb_subscriptions_categories` (
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_subscriptions_categories` (
                     `catid` int(11) NOT NULL default '0',
                     `userid` int(11) NOT NULL default '0',
                     `future1` int(11) default '0',
 	                UNIQUE KEY `thread` (`catid`,`userid`),
 	                KEY `userid` (`userid`)
 				) DEFAULT CHARSET=utf8</query>
-			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls` (
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_polls` (
 					`id` int(11) NOT NULL auto_increment,
 					`title` varchar(100) NOT NULL,
 					`threadid` int(11) NOT NULL,
@@ -468,7 +468,7 @@
 					PRIMARY KEY  (`id`),
 					KEY `threadid` (`threadid`)
 				) DEFAULT CHARSET=utf8;</query>
-			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_options` (
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_polls_options` (
 					`id` int(11) NOT NULL auto_increment,
 					`pollid` int(11) default NULL,
 					`text` varchar(100) default NULL,
@@ -476,7 +476,7 @@
 					PRIMARY KEY  (`id`),
 					KEY `pollid` (`pollid`)
 				) DEFAULT CHARSET=utf8;</query>
-			<query>CREATE TABLE IF NOT EXISTS `#__fb_polls_users` (
+			<query>CREATE TABLE IF NOT EXISTS `#__kunena_polls_users` (
 					`pollid` int(11) default NULL,
 					`userid` int(11) default NULL,
 					`votes` int(11) default NULL,
@@ -484,7 +484,7 @@
 					`lastvote` int(11) default NULL,
 					UNIQUE KEY `pollid` (`pollid`,`userid`)
 				) DEFAULT CHARSET=utf8;</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_users` 
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` 
 				ADD `TWITTER` VARCHAR( 50 ) NULL AFTER `SKYPE` ,
 				ADD `FACEBOOK` VARCHAR( 50 ) NULL AFTER `TWITTER` ,
 				ADD `MYSPACE` VARCHAR( 50 ) NULL AFTER `GTALK` ,
@@ -495,7 +495,7 @@
 				ADD `BLOGSPOT` VARCHAR( 50 )  NULL AFTER `DIGG` ,
 				ADD `FLICKR` VARCHAR( 50 )  NULL AFTER `BLOGSPOT` ,
 				ADD `BEBO` VARCHAR( 50 )  NULL AFTER `FLICKR` ;</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` 
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` 
 				ADD `allow_polls` tinyint(4) NOT NULL default '0' AFTER `class_sfx` ;</query>
 	        <query>CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
                     `id` int(11) NOT NULL auto_increment,
@@ -511,12 +511,12 @@
 	                KEY `userid` (`userid`),
 	                KEY `hash` (`hash`),
 	                KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8;</query>
-			<query mode="silenterror">ALTER TABLE `#__fb_categories` ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `review` ,
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `review` ,
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
 			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
 			<query mode="silenterror">ALTER TABLE `jos_fb_sessions` ADD INDEX ( `currvisit` )</query>
-			<query>UPDATE `#__fb_messages` SET thread=id WHERE parent=0</query>
-			<query>UPDATE `#__fb_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
+			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
+			<query>UPDATE `#__kunena_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
 			<query>CREATE TABLE IF NOT EXISTS `#__kunena_banned_users` (
                     `id` int(11) NOT NULL auto_increment,
                     `enabled` int(1) NOT NULL default '0',

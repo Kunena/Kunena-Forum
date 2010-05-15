@@ -16,7 +16,7 @@ $kunena_db = &JFactory::getDBO ();
 $kunena_config = & CKunenaConfig::getInstance ();
 $document = & JFactory::getDocument ();
 
-$document->setTitle ( JText::_('COM_KUNENA_GEN_HELP') . ' - ' . stripslashes ( $kunena_config->board_title ) );
+$document->setTitle ( JText::_('COM_KUNENA_GEN_HELP') . ' - ' . $kunena_config->board_title );
 
 $kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'" );
 $introtext = $kunena_db->loadResult ();

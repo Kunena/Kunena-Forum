@@ -173,7 +173,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$allowed = $this->_session->allowed;
 
 		// Only subscribe if allowed and not already subscribed
-		$query = "SELECT id FROM #__fb_messages AS m LEFT JOIN #__fb_subscriptions AS s ON m.thread=s.thread
+		$query = "SELECT id FROM #__kunena_messages AS m LEFT JOIN #__kunena_subscriptions AS s ON m.thread=s.thread
 			WHERE m.id IN ($threads) AND m.parent=0 AND m.catid IN ($allowed) AND m.hold=0 AND m.moved=0 AND s.thread IS NULL";
 		$this->_db->setQuery ($query);
 		$threads = $this->_db->loadResultArray();
@@ -183,7 +183,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		foreach ($threads as $thread) {
 			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
 		}
-		$query = "INSERT INTO #__fb_subscriptions (thread,userid) VALUES " . implode(',', $subquery);
+		$query = "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES " . implode(',', $subquery);
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		check_dberror('Unable to subscribe '.implode(',', $threads).'.');
@@ -200,7 +200,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 			$where = ' AND thread IN('.$threads.')';
 		}
 
-		$query = "DELETE FROM #__fb_subscriptions WHERE userid=".(int)$userid . $where;
+		$query = "DELETE FROM #__kunena_subscriptions WHERE userid=".(int)$userid . $where;
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		check_dberror("Unable to unsubscribe $threads.");
@@ -217,7 +217,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$allowed = $this->_session->allowed;
 
 		// Only subscribe if allowed and not already subscribed
-		$query = "SELECT id FROM #__fb_categories AS c LEFT JOIN #__fb_subscriptions_categories AS s ON c.id=s.catid
+		$query = "SELECT id FROM #__kunena_categories AS c LEFT JOIN #__kunena_subscriptions_categories AS s ON c.id=s.catid
 			WHERE c.id IN ($catids) AND c.id IN ($allowed) AND s.catid IS NULL";
 		$this->_db->setQuery ($query);
 		echo $query;
@@ -228,7 +228,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		foreach ($catids as $thread) {
 			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
 		}
-		$query = "INSERT INTO #__fb_subscriptions_categories (catid,userid) VALUES " . implode(',', $subquery);
+		$query = "INSERT INTO #__kunena_subscriptions_categories (catid,userid) VALUES " . implode(',', $subquery);
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		echo $query;
@@ -247,7 +247,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 			$where = ' AND catid IN('.$catids.')';
 		}
 
-		$query = "DELETE FROM #__fb_subscriptions_categories WHERE userid=".(int)$userid . $where;
+		$query = "DELETE FROM #__kunena_subscriptions_categories WHERE userid=".(int)$userid . $where;
 		$this->_db->setQuery ($query);
 		echo $query;
 		$this->_db->query ();
@@ -264,7 +264,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$allowed = $this->_session->allowed;
 
 		// Only favorite if allowed and not already favorited
-		$query = "SELECT id FROM #__fb_messages AS m LEFT JOIN #__fb_favorites AS f ON m.thread=f.thread
+		$query = "SELECT id FROM #__kunena_messages AS m LEFT JOIN #__kunena_favorites AS f ON m.thread=f.thread
 			WHERE m.id IN ($threads) AND m.parent=0 AND m.catid IN ($allowed) AND m.hold=0 AND m.moved=0 AND f.thread IS NULL";
 		$this->_db->setQuery ($query);
 		$threads = $this->_db->loadResultArray();
@@ -274,7 +274,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		foreach ($threads as $thread) {
 			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
 		}
-		$query = "INSERT INTO #__fb_favorites (thread,userid) VALUES " . implode(',', $subquery);
+		$query = "INSERT INTO #__kunena_favorites (thread,userid) VALUES " . implode(',', $subquery);
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		check_dberror('Unable to favorite '.implode(',', $threads).'.');
@@ -292,7 +292,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 			$where = ' AND thread IN('.$threads.')';
 		}
 
-		$query = "DELETE FROM #__fb_favorites WHERE userid=".(int)$userid . $where;
+		$query = "DELETE FROM #__kunena_favorites WHERE userid=".(int)$userid . $where;
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		check_dberror("Unable to unfavorite $threads.");

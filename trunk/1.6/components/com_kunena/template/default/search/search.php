@@ -47,7 +47,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 			<span style="font-size: x-small;"><?php
 				echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $result->catid, $result->catname, $rel = 'follow', $class = '', $title = '' )?></span>
 			</td>
-			<td class="kcol kcol-search-author"><?php echo kunena_htmlspecialchars ( stripslashes ( $result->name ) )?></td>
+			<td class="kcol kcol-search-author"><?php echo kunena_htmlspecialchars ( $result->name )?></td>
 			<td class="kcol kcol-search-date"><?php echo CKunenaTimeformat::showDate ( $result->time )?></td>
 		</tr>
 		<?php endforeach; ?>

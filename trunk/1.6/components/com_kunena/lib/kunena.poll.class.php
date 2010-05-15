@@ -51,8 +51,8 @@ class CKunenaPolls {
 	function get_poll_data($threadid)
 	{
     	$query = "SELECT *
-    				FROM #__fb_polls AS a
-    				INNER JOIN #__fb_polls_options AS b ON a.threadid=b.pollid
+    				FROM #__kunena_polls AS a
+    				INNER JOIN #__kunena_polls_options AS b ON a.threadid=b.pollid
     				WHERE a.threadid=$threadid";
     	$this->_db->setQuery($query);
     	$polldata = $this->_db->loadObjectList();
@@ -69,7 +69,7 @@ class CKunenaPolls {
 	{
 		//To show the usernames of the users which have voted for this poll
 		$query = "SELECT pollid,userid,name,username
-					FROM #__fb_polls_users AS a
+					FROM #__kunena_polls_users AS a
 					INNER JOIN #__users AS b ON a.userid=b.id
 					WHERE pollid=$threadid";
     	$this->_db->setQuery($query);
@@ -84,7 +84,7 @@ class CKunenaPolls {
 	 */
 	function get_number_total_voters($pollid)
 	{
-    	$query = "SELECT SUM(votes) FROM #__fb_polls_users WHERE pollid=$pollid";
+    	$query = "SELECT SUM(votes) FROM #__kunena_polls_users WHERE pollid=$pollid";
     	$this->_db->setQuery($query);
     	$numvotes = $this->_db->loadResult();
     	check_dberror('Unable to count votes');
@@ -97,7 +97,7 @@ class CKunenaPolls {
 	 */
 	function get_total_options($pollid)
 	{
-    	$query = "SELECT COUNT(*) FROM #__fb_polls_options WHERE pollid=$pollid";
+    	$query = "SELECT COUNT(*) FROM #__kunena_polls_options WHERE pollid=$pollid";
     	$this->_db->setQuery($query);
     	$numoptions = $this->_db->loadResult();
     	check_dberror('Unable to count poll options');
@@ -206,7 +206,7 @@ class CKunenaPolls {
    function save_new_poll($polltimetolive,$polltitle,$pid,$optionvalue)
    {
 		if (isset($polltitle) && sizeof($optionvalue) > '0') {
-			$query = "INSERT INTO #__fb_polls (title,threadid,polltimetolive)
+			$query = "INSERT INTO #__kunena_polls (title,threadid,polltimetolive)
 						VALUES(".$this->_db->quote($polltitle).",'$pid','$polltimetolive')";
     		$this->_db->setQuery($query);
     		$this->_db->query();
@@ -214,7 +214,7 @@ class CKunenaPolls {
 
     		for ($i = 0; $i < sizeof($optionvalue); $i++)
     		{
-    			$query = "INSERT INTO #__fb_polls_options (text,pollid,votes)
+    			$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
     						VALUES(".$this->_db->quote($optionvalue[$i]).",'$pid','0')";
         		$this->_db->setQuery($query);
         		$this->_db->query();
@@ -230,7 +230,7 @@ class CKunenaPolls {
    {
 		$query = "SELECT pollid,userid,lasttime,votes,
 						TIMEDIFF(CURTIME(),DATE_FORMAT(lasttime, '%H:%i:%s')) AS timediff
-					FROM #__fb_polls_users
+					FROM #__kunena_polls_users
 					WHERE pollid=$threadid AND userid=$userid";
 		$this->_db->setQuery($query);
 		$polluserdata = $this->_db->loadObjectList();
@@ -245,8 +245,8 @@ class CKunenaPolls {
    function get_top_five_votes($PopPollsCount)
    {
 		$query = "SELECT SUM(o.votes) AS total
-					FROM #__fb_polls AS p
-					LEFT JOIN #__fb_polls_options AS o ON p.threadid=o.pollid
+					FROM #__kunena_polls AS p
+					LEFT JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
 					GROUP BY p.threadid
 					ORDER BY total
 					DESC ";
@@ -263,9 +263,9 @@ class CKunenaPolls {
 	function get_top_five_polls($PopPollsCount)
 	{
     	$query = "SELECT q.catid,p.*, SUM(o.votes) AS total
-    				FROM #__fb_polls AS p
-    				INNER JOIN #__fb_polls_options AS o ON p.threadid=o.pollid
-    				INNER JOIN #__fb_messages AS q ON p.threadid = q.thread
+    				FROM #__kunena_polls AS p
+    				INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
+    				INNER JOIN #__kunena_messages AS q ON p.threadid = q.thread
     				GROUP BY p.threadid
     				ORDER BY total DESC";
     	$this->_db->setQuery($query,0,$PopPollsCount);
@@ -301,26 +301,26 @@ class CKunenaPolls {
     		}
       		if ($poll_timediff || $pollusers[0]->timediff == null)
       		{
-        		$query = "SELECT * FROM #__fb_polls_options WHERE pollid=$pollid AND id=$vote";
+        		$query = "SELECT * FROM #__kunena_polls_options WHERE pollid=$pollid AND id=$vote";
         		$this->_db->setQuery($query);
         		$polloption = $this->_db->loadObject();
         		check_dberror('Unable to load poll options');
 
         		if (!$polloption) break; // OPTION DOES NOT EXIST
 
-        		$query = "SELECT votes FROM #__fb_polls_users WHERE pollid=$pollid AND userid=$userid";
+        		$query = "SELECT votes FROM #__kunena_polls_users WHERE pollid=$pollid AND userid=$userid";
         		$this->_db->setQuery($query);
           		$votes = $this->_db->loadResult();
           		check_dberror('Unable to load votes');
 
           		if (empty($votes))
           		{
-          			$query = "INSERT INTO #__fb_polls_users (pollid,userid,votes,lastvote) VALUES('$pollid','{$userid}',1,'{$vote}')";
+          			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote) VALUES('$pollid','{$userid}',1,'{$vote}')";
             		$this->_db->setQuery($query);
             		$this->_db->query();
             		check_dberror('Unable to insert poll user');
 
-            		$query = "UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$vote";
+            		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id=$vote";
              		$this->_db->setQuery($query);
              		$this->_db->query();
             		check_dberror('Unable to update poll options');
@@ -329,12 +329,12 @@ class CKunenaPolls {
           		}
          		else if ($votes < $this->config->pollnbvotesbyuser)
          		{
-         			$query = "UPDATE #__fb_polls_users SET votes=votes+1,lastvote=$vote WHERE pollid=$pollid AND userid={$userid}";
+         			$query = "UPDATE #__kunena_polls_users SET votes=votes+1,lastvote=$vote WHERE pollid=$pollid AND userid={$userid}";
             		$this->_db->setQuery($query);
             		$this->_db->query();
             		check_dberror('Unable to ubdate poll users');
 
-            		$query = "UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$vote";
+            		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id=$vote";
             		$this->_db->setQuery($query);
             		$this->_db->query();
             		check_dberror('Unable to update poll options');
@@ -364,12 +364,12 @@ class CKunenaPolls {
 
 		if ($pollusers[0]->timediff > $this->config->polltimebtvotes)
       	{
-			$query = "UPDATE #__fb_polls_options SET votes=votes+1 WHERE id=$vote";
+			$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id=$vote";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	check_dberror('Unable to update poll options');
 
-        	$query = "UPDATE #__fb_polls_users SET votes=votes+1, lasttime=now() WHERE pollid=$threadid AND userid=$userid";
+        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lasttime=now() WHERE pollid=$threadid AND userid=$userid";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	check_dberror('Unable to update poll users');
@@ -390,7 +390,7 @@ class CKunenaPolls {
     	$polloptions = $this->get_total_options($threadid);
     	$pollsdatas = $this->get_poll_data($threadid); //Need this to update/delete the right option in the database
 
-    	$query = "UPDATE #__fb_polls
+    	$query = "UPDATE #__kunena_polls
     				SET title=".$this->_db->quote($polltitle).",
     				polltimetolive=".$this->_db->quote($polltimetolive)."
     				WHERE threadid=$threadid";
@@ -402,7 +402,7 @@ class CKunenaPolls {
     	{
       		for ($i = 0; $i < sizeof($optvalue); $i++)
       		{
-      			$query = "UPDATE #__fb_polls_options
+      			$query = "UPDATE #__kunena_polls_options
       						SET text=".$this->_db->quote($optvalue[$i])."
       						WHERE id={$pollsdatas[$i]->id} AND pollid={$threadid}";
          		$this->_db->setQuery($query);
@@ -416,7 +416,7 @@ class CKunenaPolls {
       		{
         		if ($i < $polloptions)
         		{
-        			$query = "UPDATE #__fb_polls_options
+        			$query = "UPDATE #__kunena_polls_options
         						SET text=".$this->_db->quote($optvalue[$i])."
         						WHERE id={$pollsdatas[$i]->id} AND pollid={$threadid}";
           			$this->_db->setQuery($query);
@@ -425,7 +425,7 @@ class CKunenaPolls {
         		}
         		else
         		{
-					$query = "INSERT INTO #__fb_polls_options (text,pollid,votes)
+					$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
 								VALUES(".$this->_db->quote($optvalue[$i]).",'$threadid','0')";
         			$this->_db->setQuery($query);
           			$this->_db->query();
@@ -439,7 +439,7 @@ class CKunenaPolls {
       		{
         		if ($i < $optionsnumbers)
         		{
-        			$query = "UPDATE #__fb_polls_options
+        			$query = "UPDATE #__kunena_polls_options
         						SET text=".$this->_db->quote($optvalue[$i])."
         						WHERE id={$pollsdatas[$i]->id} AND pollid=$threadid";
           			$this->_db->setQuery($query);
@@ -448,7 +448,7 @@ class CKunenaPolls {
         		}
         		else
         		{
-        			$query = "DELETE FROM #__fb_polls_options
+        			$query = "DELETE FROM #__kunena_polls_options
         						WHERE pollid=$threadid AND id={$pollsdatas[$i]->id}";
           			$this->_db->setQuery($query);
           			$this->_db->query();
@@ -463,7 +463,7 @@ class CKunenaPolls {
    function get_last_vote_id($userid,$pollid)
    {
 
-		$query = "SELECT lastvote FROM #__fb_polls_users
+		$query = "SELECT lastvote FROM #__kunena_polls_users
 				WHERE pollid=$pollid AND userid=$userid";
     	$this->_db->setQuery($query);
     	$id_last_vote = $this->_db->loadResult();
@@ -476,8 +476,8 @@ class CKunenaPolls {
 	*/
    function change_vote($userid,$threadid,$lastvote)
    {
-		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM #__fb_polls_options AS a
-				INNER JOIN #__fb_polls_users AS b ON a.pollid=b.pollid
+		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM #__kunena_polls_options AS a
+				INNER JOIN #__kunena_polls_users AS b ON a.pollid=b.pollid
 				WHERE a.pollid=$threadid";
     	$this->_db->setQuery($query);
     	$poll_options_user = $this->_db->loadObjectList();
@@ -486,12 +486,12 @@ class CKunenaPolls {
 		foreach ($poll_options_user as $row) {
 			if ($row->id == $row->lastvote) {
 				if($row->option_votes > '0' && $row->user_votes > '0') {
-					$query = "UPDATE #__fb_polls_options SET votes=votes-1 WHERE id=$lastvote AND pollid=$threadid";
+					$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id=$lastvote AND pollid=$threadid";
     				$this->_db->setQuery($query);
     				$this->_db->query();
 					check_dberror('Unable to Update Polls Options');
 
-					$query = "UPDATE #__fb_polls_users SET votes=votes-1 WHERE userid=$userid AND pollid=$threadid";
+					$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid=$userid AND pollid=$threadid";
     				$this->_db->setQuery($query);
     				$this->_db->query();
 					check_dberror('Unable to Update Polls Users');
@@ -504,17 +504,17 @@ class CKunenaPolls {
 	*/
    function delete_poll($threadid)
    {
-    	$query = "DELETE FROM #__fb_polls WHERE threadid=$threadid";
+    	$query = "DELETE FROM #__kunena_polls WHERE threadid=$threadid";
     	$this->_db->setQuery($query);
     	$this->_db->query();
     	check_dberror('Unable to Delete Poll');
 
-    	$query = "DELETE FROM #__fb_polls_options WHERE pollid=$threadid";
+    	$query = "DELETE FROM #__kunena_polls_options WHERE pollid=$threadid";
     	$this->_db->setQuery($query);
     	$this->_db->query();
     	check_dberror('Unable to Delete Poll Options');
 
-    	$query = "DELETE FROM #__fb_polls_users WHERE pollid=$threadid";
+    	$query = "DELETE FROM #__kunena_polls_users WHERE pollid=$threadid";
     	$this->_db->setQuery($query);
     	$this->_db->query();
     	check_dberror('Unable to Delete Poll Users');

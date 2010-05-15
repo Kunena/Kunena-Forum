@@ -74,16 +74,16 @@ class CKunenaReport {
 
 		if (!empty($this->reason) && !empty($this->text)) {
 			if ( $this->id ) {
-    			$this->_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text, c.username, c.id FROM #__fb_messages AS a"
-    								. " LEFT JOIN #__fb_messages_text AS b ON b.mesid = a.id LEFT JOIN #__users AS c ON c.id=a.userid"
+    			$this->_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text, c.username, c.id FROM #__kunena_messages AS a"
+    								. " LEFT JOIN #__kunena_messages_text AS b ON b.mesid = a.id LEFT JOIN #__users AS c ON c.id=a.userid"
     								. " WHERE a.id='{$this->id}'");
 	   			$row = $this->_db->loadObject();
     			check_dberror ( "Unable to load message." );
 
     			if ($this->reason) {
-        			$subject = "[".stripslashes($this->config->board_title)." ".JText::_('COM_KUNENA_GEN_FORUM')."] ".JText::_('COM_KUNENA_REPORT_MSG') . ": " . $this->reason;
+        			$subject = "[".$this->config->board_title." ".JText::_('COM_KUNENA_GEN_FORUM')."] ".JText::_('COM_KUNENA_REPORT_MSG') . ": " . $this->reason;
         		} else {
-        			$subject = "[".stripslashes($this->config->board_title)." ".JText::_('COM_KUNENA_GEN_FORUM')."] ".JText::_('COM_KUNENA_REPORT_MSG') . ": " . stripslashes($row->subject);
+        			$subject = "[".$this->config->board_title." ".JText::_('COM_KUNENA_GEN_FORUM')."] ".JText::_('COM_KUNENA_REPORT_MSG') . ": " . $row->subject;
         		}
 
         		$baduser = $this->config->username ? $row->username : $row->name;
@@ -100,9 +100,9 @@ class CKunenaReport {
     			$message .= "\n\n";
     			$message .= "" . JText::_('COM_KUNENA_REPORT_POST_POSTER') . " " . $baduser;
     			$message .= "\n";
-    			$message .= "" . JText::_('COM_KUNENA_REPORT_POST_SUBJECT') . " " . stripslashes($row->subject);
+    			$message .= "" . JText::_('COM_KUNENA_REPORT_POST_SUBJECT') . " " . $row->subject;
     			$message .= "\n";
-    			$message .= "" . JText::_('COM_KUNENA_REPORT_POST_MESSAGE') . "\n-----\n" . stripslashes($row->msg_text);
+    			$message .= "" . JText::_('COM_KUNENA_REPORT_POST_MESSAGE') . "\n-----\n" . $row->msg_text;
     			$message .= "\n-----\n\n";
     			$message .= "" . JText::_('COM_KUNENA_REPORT_POST_LINK') . " " . $msglink;
     			$message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
@@ -132,7 +132,7 @@ class CKunenaReport {
 	protected function _sendReportToMail($message, $subject, $emailToList) {
 		jimport( 'joomla.mail.helper' );
 
-		$sender = JMailHelper::cleanAddress(stripslashes($this->config->board_title).' '.JText::_('COM_KUNENA_GEN_FORUM').': '. $this->_getSenderName());
+		$sender = JMailHelper::cleanAddress($this->config->board_title.' '.JText::_('COM_KUNENA_GEN_FORUM').': '. $this->_getSenderName());
 		$subject = JMailHelper::cleanSubject( $subject );
 		$message = JMailHelper::cleanBody($message);
 

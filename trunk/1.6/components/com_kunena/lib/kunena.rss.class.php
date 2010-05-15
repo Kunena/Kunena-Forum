@@ -82,7 +82,7 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 		$this->setOption('old_titles', 			(bool) $this->config->rss_old_titles);
 
 		// Labels for the needed rss tags in feed (combined with all needed tags for rss 0.9, 0.9, 1.0, 2.0)
-		$this->setLabel('name',					stripslashes(kunena_htmlspecialchars($this->app->getCfg('sitename'))));
+		$this->setLabel('name',					kunena_htmlspecialchars($this->app->getCfg('sitename')));
 		$this->setLabel('title',				$this->getLabel('name') .' - Forum');
 		$this->setLabel('description',			'Kunena Site Syndication');
 		$this->setLabel('link',					JURI::root());
@@ -484,9 +484,9 @@ abstract class CKunenaRSSDatasource {
 					category.name AS category_name,
 					category.cat_emoticon AS category_emoticon
 				FROM
-					#__fb_messages AS thread
-				INNER JOIN #__fb_messages_text AS message ON (message.mesid = thread.id)
-				INNER JOIN #__fb_categories AS category ON (category.id = thread.catid)
+					#__kunena_messages AS thread
+				INNER JOIN #__kunena_messages_text AS message ON (message.mesid = thread.id)
+				INNER JOIN #__kunena_categories AS category ON (category.id = thread.catid)
 				INNER JOIN (
 					SELECT
 						tmp1.id AS lastpost_id,
@@ -504,8 +504,8 @@ abstract class CKunenaRSSDatasource {
 						tmp1.modified_reason AS lastpost_modified_reason,
 						tmp2.message as lastpost_message
 					FROM
-						#__fb_messages tmp1,
-						#__fb_messages_text tmp2
+						#__kunena_messages tmp1,
+						#__kunena_messages_text tmp2
 					WHERE
 						tmp1.hold = '0'
 						AND tmp1.moved = '0'

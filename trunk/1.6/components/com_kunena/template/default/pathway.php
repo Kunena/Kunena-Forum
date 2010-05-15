@@ -43,7 +43,7 @@ if ($func != "") {
 
 	$fr_title_name = JText::_('COM_KUNENA_CATEGORIES');
 	while ( $catids > 0 ) {
-		$query = "SELECT * FROM #__fb_categories WHERE id='{$catids}' AND published='1'";
+		$query = "SELECT * FROM #__kunena_categories WHERE id='{$catids}' AND published='1'";
 		$kunena_db->setQuery ( $query );
 		$results = $kunena_db->loadObject ();
 		check_dberror ( "Unable to load categories." );
@@ -71,9 +71,9 @@ if ($func != "") {
 	//attach topic name
 	$this->kunena_topic_title = '';
 	if ($sfunc == "view" and $id) {
-		$sql = "SELECT subject, id FROM #__fb_messages WHERE id='{$id}'";
+		$sql = "SELECT subject, id FROM #__kunena_messages WHERE id='{$id}'";
 		$kunena_db->setQuery ( $sql );
-		$this->kunena_topic_title = KunenaParser::parseText ( stripslashes($kunena_db->loadResult ()) );
+		$this->kunena_topic_title = KunenaParser::parseText ($kunena_db->loadResult () );
 		check_dberror ( "Unable to load subject." );
 		$jr_path_menu [] = $this->kunena_topic_title;
 	}
@@ -94,7 +94,7 @@ if ($func != "") {
 		$moderatedForum = 1;
 	}
 
-	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( kunena_htmlspecialchars ( stripslashes ( $kunena_config->board_title ) ) ) . '</div>';
+	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( kunena_htmlspecialchars ( $kunena_config->board_title ) ) . '</div>';
 
 	$firelast = '';
 	for($i = 0; $i < $jr_forum_count; $i ++) {
@@ -109,7 +109,7 @@ if ($func != "") {
 	$fireonline = '';
 	if ( $kunena_config->onlineusers ) {
 		$fb_queryName = $kunena_config->username ? "username" : "name";
-		$query = "SELECT w.userid, u.$fb_queryName AS username, k.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . addslashes ( JURI::current () ) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
+		$query = "SELECT w.userid, u.$fb_queryName AS username, k.showOnline FROM #__kunena_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__kunena_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . $kunena_db->getEscaped ( JURI::current () ) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
 		$kunena_db->setQuery ( $query );
 		$users = $kunena_db->loadObjectList ();
 		check_dberror ( "Unable to load who is online." );
@@ -148,7 +148,7 @@ if ($func != "") {
 
 
 	$document = & JFactory::getDocument ();
-	$document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name ) . ' - ' . stripslashes ( $kunena_config->board_title ) );
+	$document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name ) . ' - ' . $kunena_config->board_title );
 
 	$this->kunena_pathway1 = $firepath . $fireinfo;
 	$this->kunena_pathway2 = $firelast . $fireonline;

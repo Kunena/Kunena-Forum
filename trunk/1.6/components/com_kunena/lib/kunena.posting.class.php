@@ -62,11 +62,11 @@ class CKunenaPosting {
 					c.name AS catname, c.parent AS catparent, c.pub_access,
 					c.review, c.class_sfx, p.id AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
-				FROM #__fb_messages AS m
-				INNER JOIN #__fb_categories AS c ON c.id=m.catid AND c.published
-				INNER JOIN #__fb_messages AS mm ON mm.id=m.thread AND mm.moved=0
-				INNER JOIN #__fb_messages_text AS t ON t.mesid=m.id
-				LEFT JOIN #__fb_polls AS p ON m.id=p.threadid
+				FROM #__kunena_messages AS m
+				INNER JOIN #__kunena_categories AS c ON c.id=m.catid AND c.published
+				INNER JOIN #__kunena_messages AS mm ON mm.id=m.thread AND mm.moved=0
+				INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
+				LEFT JOIN #__kunena_polls AS p ON m.id=p.threadid
 				WHERE m.id={$this->_db->quote($mesid)} AND m.moved=0";
 
 			$this->_db->setQuery ( $query, 0, 1 );
@@ -88,8 +88,8 @@ class CKunenaPosting {
 					c.id AS catid, c.name AS catname, c.parent AS catparent, c.pub_access,
 					c.review, c.class_sfx, 0 AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
-				FROM #__fb_categories AS c
-				LEFT JOIN #__fb_messages AS m ON m.id=0
+				FROM #__kunena_categories AS c
+				LEFT JOIN #__kunena_messages AS m ON m.id=0
 				WHERE c.id={$this->_db->quote($catid)} AND c.published";
 			$this->_db->setQuery ( $query, 0, 1 );
 			$this->parent = $this->_db->loadObject ();
@@ -361,7 +361,7 @@ class CKunenaPosting {
 
 		$meskeys = implode ( ', ', $meskeys );
 		$mesvalues = implode ( ', ', $mesvalues );
-		$query = "INSERT INTO #__fb_messages ({$meskeys}) VALUES({$mesvalues})";
+		$query = "INSERT INTO #__kunena_messages ({$meskeys}) VALUES({$mesvalues})";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
@@ -373,13 +373,13 @@ class CKunenaPosting {
 
 		$txtkeys = implode ( ', ', $txtkeys );
 		$txtvalues = implode ( ', ', $txtvalues );
-		$query = "INSERT INTO #__fb_messages_text ({$txtkeys}) VALUES({$txtvalues})";
+		$query = "INSERT INTO #__kunena_messages_text ({$txtkeys}) VALUES({$txtvalues})";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
 		if ($dberror) {
 			// Delete partial message on error
-			$query = "DELETE FROM #__fb_messages WHERE mesid={$id}";
+			$query = "DELETE FROM #__kunena_messages WHERE mesid={$id}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
@@ -389,7 +389,7 @@ class CKunenaPosting {
 		if ($this->parent->thread == 0) {
 			// For new thread, we now know to where the message belongs
 			$this->set ( 'thread', $id );
-			$query = "UPDATE #__fb_messages SET thread={$id} WHERE id={$id}";
+			$query = "UPDATE #__kunena_messages SET thread={$id} WHERE id={$id}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			$dberror = $this->checkDatabaseError ();
@@ -400,7 +400,7 @@ class CKunenaPosting {
 		//update the user posts count
 		$userid = ( int ) $this->get ( 'userid' );
 		if ($userid) {
-			$query = "UPDATE #__fb_users SET posts=posts+1 WHERE userid={$userid}";
+			$query = "UPDATE #__kunena_users SET posts=posts+1 WHERE userid={$userid}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 
@@ -418,7 +418,7 @@ class CKunenaPosting {
 
 		// First take care of old sessions to make our job easier and faster
 		$lasttime = $this->get ( 'time' ) - $this->_config->fbsessiontimeout - 60;
-		$query = "UPDATE #__fb_sessions SET readtopics='0' WHERE currvisit<{$lasttime}";
+		$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$lasttime}";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
@@ -427,7 +427,7 @@ class CKunenaPosting {
 
 		// Then look at users who have read the thread
 		$thread = $this->get ( 'thread' );
-		$query = "SELECT userid, readtopics FROM #__fb_sessions WHERE readtopics LIKE '%{$thread}%' AND userid!={$userid}";
+		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics LIKE '%{$thread}%' AND userid!={$userid}";
 		$this->_db->setQuery ( $query );
 		$sessions = $this->_db->loadObjectList ();
 		$dberror = $this->checkDatabaseError ();
@@ -443,7 +443,7 @@ class CKunenaPosting {
 			if ($key !== false) {
 				unset ( $rt [$key] );
 				$readtopics = implode ( ",", $rt );
-				$query = "UPDATE #__fb_sessions SET readtopics={$this->_db->quote($readtopics)} WHERE userid={$session->userid}";
+				$query = "UPDATE #__kunena_sessions SET readtopics={$this->_db->quote($readtopics)} WHERE userid={$session->userid}";
 				$this->_db->setQuery ( $query );
 				$this->_db->query ();
 				$dberror = $this->checkDatabaseError ();
@@ -508,7 +508,7 @@ class CKunenaPosting {
 		}
 		if (! empty ( $mesvalues )) {
 			$mesvalues = implode ( ', ', $mesvalues );
-			$query = "UPDATE #__fb_messages SET {$mesvalues} WHERE id={$this->_db->quote($this->parent->id)}";
+			$query = "UPDATE #__kunena_messages SET {$mesvalues} WHERE id={$this->_db->quote($this->parent->id)}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			$dberror = $this->checkDatabaseError ();
@@ -517,7 +517,7 @@ class CKunenaPosting {
 		}
 		if (! empty ( $txtvalues )) {
 			$txtvalues = implode ( ', ', $txtvalues );
-			$query = "UPDATE #__fb_messages_text SET {$txtvalues} WHERE mesid={$this->_db->quote($this->parent->id)}";
+			$query = "UPDATE #__kunena_messages_text SET {$txtvalues} WHERE mesid={$this->_db->quote($this->parent->id)}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			$dberror = $this->checkDatabaseError ();
@@ -542,7 +542,7 @@ class CKunenaPosting {
 
 		if (!CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
 			//need to check that the message is the last of the thread
-			$this->_db->setQuery ( "SELECT id FROM #__fb_messages WHERE `hold`='0' AND `thread`='{$this->parent->thread}' ORDER BY id DESC LIMIT 0, 1" );
+			$this->_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE `hold`='0' AND `thread`='{$this->parent->thread}' ORDER BY id DESC LIMIT 0, 1" );
 			$lastMessage = $this->_db->loadResult ();
 			$dberror = $this->checkDatabaseError ();
 			if ($dberror)
@@ -554,7 +554,7 @@ class CKunenaPosting {
 		}
 
 		// Execute delete
-		$query = "UPDATE #__fb_messages SET `hold`=2 WHERE `id`='{$this->parent->id}';";
+		$query = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`='{$this->parent->id}';";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
@@ -581,7 +581,7 @@ class CKunenaPosting {
 			return false;
 
 		// Execute undelete
-		$query = "UPDATE #__fb_messages SET `hold`=0 WHERE `id`='{$this->parent->id}';";
+		$query = "UPDATE #__kunena_messages SET `hold`=0 WHERE `id`='{$this->parent->id}';";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
@@ -615,7 +615,7 @@ class CKunenaPosting {
 	protected function floodProtection() {
 		// Flood protection
 		if ($this->_config->floodprotection && ! CKunenaTools::isModerator ( $this->_my->id, $this->parent->catid )) {
-			$this->_db->setQuery ( "SELECT MAX(time) FROM #__fb_messages WHERE ip='{$this->ip}'" );
+			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip='{$this->ip}'" );
 			$lastPostTime = $this->_db->loadResult ();
 			check_dberror ( "Unable to load max time for current request from IP: {$this->ip}" );
 
@@ -664,14 +664,14 @@ class CKunenaPosting {
 		if ($value === null)
 			unset ( $this->message [$name] );
 		else
-			$this->message [$name] = addslashes ( JString::trim ( ( string ) $value ) );
+			$this->message [$name] = JString::trim ( ( string ) $value );
 		return $retval;
 	}
 
 	public function get($name) {
 		if (! isset ( $this->message [$name] ))
 			return null;
-		return stripslashes ( $this->message [$name] );
+		return $this->message [$name];
 	}
 
 	// Functions to check that values are legal
@@ -771,7 +771,7 @@ class CKunenaPosting {
 	protected function isAlreadyPosted() {
 		// Ignore identical messages (posted within 5 minutes)
 		$duplicatetimewindow = CKunenaTimeformat::internalTime () - 5 * 60;
-		$this->_db->setQuery ( "SELECT m.id FROM #__fb_messages AS m JOIN #__fb_messages_text AS t ON m.id=t.mesid
+		$this->_db->setQuery ( "SELECT m.id FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid
 			WHERE m.userid={$this->_db->quote($this->message['userid'])}
 			AND m.name={$this->_db->quote($this->message['name'])}
 			AND m.subject={$this->_db->quote($this->message['subject'])}
@@ -803,8 +803,8 @@ class CKunenaPosting {
 			$message = smile::purify ( $this->get ( 'message' ) );
 			$subject = $this->get ( 'subject' );
 
-			$mailsender = JMailHelper::cleanAddress ( stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
-			$mailsubject = JMailHelper::cleanSubject ( "[" . stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . stripslashes ( $subject ) . " (" . stripslashes ( $this->parent->catname ) . ")" );
+			$mailsender = JMailHelper::cleanAddress ( $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
+			$mailsubject = JMailHelper::cleanSubject ( "[" . $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $subject . " (" . $this->parent->catname . ")" );
 
 			foreach ( $emailToList as $emailTo ) {
 				if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
@@ -819,10 +819,10 @@ class CKunenaPosting {
 				}
 
 				$msg = "$emailTo->name,\n\n";
-				$msg .= $msg1 . " " . stripslashes ( $this->_config->board_title ) . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "\n\n";
-				$msg .= JText::_ ( 'COM_KUNENA_GEN_SUBJECT' ) . ": " . stripslashes ( $subject ) . "\n";
-				$msg .= JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ": " . stripslashes ( $this->parent->catname ) . "\n";
-				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . stripslashes ( $authorname ) . "\n\n";
+				$msg .= $msg1 . " " . $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "\n\n";
+				$msg .= JText::_ ( 'COM_KUNENA_GEN_SUBJECT' ) . ": " . $subject . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ": " . $this->parent->catname . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . $authorname . "\n\n";
 				$msg .= $msg2 . "\n";
 				$msg .= "URL: $LastPostUrl\n\n";
 				if ($this->_config->mailfull == 1) {

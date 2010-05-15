@@ -23,7 +23,7 @@ if ($this->msg->modified_time) {
 	<span class="kmessage_editMarkUp" <?php echo $datehover ?>">
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown
 		. JText::_('COM_KUNENA_BY') . ' ' . ($this->config->username ? $this->msg->modified_username : $this->msg->modified_name) . '.'; ?>
-	<?php if ($this->msg->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( stripslashes ( $this->msg->modified_reason ) ); ?>
+	<?php if ($this->msg->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->msg->modified_reason ); ?>
 	</span>
 	<?php endif ?>
 	<?php if ($this->config->reportmsg && $this->my->id) :?>

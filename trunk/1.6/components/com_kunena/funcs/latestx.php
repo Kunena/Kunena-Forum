@@ -89,19 +89,19 @@ class CKunenaLatestX {
 				SELECT m.thread, MAX(m.hits) AS threadhits, MAX(f.userid IS NOT null AND f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount,
 					COUNT(DISTINCT a.id) AS threadattachments, COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->user->id}, m.id, NULL)) AS mycount,
 					MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
-				FROM #__fb_messages AS m";
-				if ($this->config->allowfavorites) $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = m.thread";
-				else $query .= " LEFT JOIN #__fb_favorites AS f ON f.thread = 0";
+				FROM #__kunena_messages AS m";
+				if ($this->config->allowfavorites) $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = m.thread";
+				else $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = 0";
 				$query .= "
 				LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.id
 				WHERE m.hold IN ({$this->hold}) AND m.moved='0' AND m.thread IN ({$idstr})
 				GROUP BY thread
 			) AS l
-			INNER JOIN #__fb_messages AS a ON a.thread = l.thread
-			INNER JOIN #__fb_messages_text AS t ON a.id = t.mesid
+			INNER JOIN #__kunena_messages AS a ON a.thread = l.thread
+			INNER JOIN #__kunena_messages_text AS t ON a.id = t.mesid
 			LEFT JOIN #__users AS j ON j.id = a.userid
-			LEFT JOIN #__fb_users AS u ON u.userid = j.id
-			LEFT JOIN #__fb_categories AS c ON c.id = a.catid
+			LEFT JOIN #__kunena_users AS u ON u.userid = j.id
+			LEFT JOIN #__kunena_categories AS c ON c.id = a.catid
 			LEFT JOIN #__kunena_attachments AS aa ON aa.mesid = a.id
 			WHERE (a.parent='0' OR a.id=l.lastid {$loadstr})
 			GROUP BY a.id
@@ -137,7 +137,7 @@ class CKunenaLatestX {
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
-				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__fb_messages " . "WHERE hold IN ({$this->hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
+				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages " . "WHERE hold IN ({$this->hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
 				check_dberror ( "Unable to get unread messages count and first id." );
 
@@ -152,19 +152,19 @@ class CKunenaLatestX {
 	protected function _getMyLatest($posts = true, $fav = true, $sub = false) {
 		$subquery = array();
 		if (!$posts && !$fav && !$sub) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
-			FROM #__fb_messages
+			FROM #__kunena_messages
 			WHERE userid='{$this->user->id}' AND parent='0' AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})";
 		if ($posts) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
-			FROM #__fb_messages
+			FROM #__kunena_messages
 			WHERE userid='{$this->user->id}' AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})
 			GROUP BY thread";
-		if ($fav) $subquery[] = "SELECT thread, 1 AS fav, 0 AS sub FROM #__fb_favorites WHERE userid='{$this->user->id}'";
-		if ($sub)  $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__fb_subscriptions WHERE userid='{$this->user->id}'";
+		if ($fav) $subquery[] = "SELECT thread, 1 AS fav, 0 AS sub FROM #__kunena_favorites WHERE userid='{$this->user->id}'";
+		if ($sub)  $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__kunena_subscriptions WHERE userid='{$this->user->id}'";
 		if (empty($subquery)) return;
 		$subqueries = implode("\n	UNION ALL \n", $subquery);
 
 		$query = "SELECT COUNT(DISTINCT m.thread) FROM ({$subqueries}) AS t
-		INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		INNER JOIN #__kunena_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})";
 
 		$this->db->setQuery ( $query );
@@ -176,7 +176,7 @@ class CKunenaLatestX {
 		else $this->order = "lastid DESC";
 
 		$query = "SELECT m.thread, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(t.fav) AS myfavorite, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
-		INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		INNER JOIN #__kunena_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
 		GROUP BY thread
 		ORDER BY {$this->order}";
@@ -220,16 +220,16 @@ class CKunenaLatestX {
 		$where[] = "mm.catid IN ({$this->session->allowed})";
 		$where = implode(' AND ', $where);
 
-		$query = "SELECT COUNT(*) FROM #__fb_messages AS m
-		INNER JOIN #__fb_messages AS mm ON m.thread = mm.id
+		$query = "SELECT COUNT(*) FROM #__kunena_messages AS m
+		INNER JOIN #__kunena_messages AS mm ON m.thread = mm.id
 		WHERE {$where}";
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		check_dberror ( 'Unable to count total threads' );
 
 		$query = "SELECT m.thread, m.id
-		FROM #__fb_messages AS m
-		INNER JOIN #__fb_messages AS mm ON m.thread = mm.id
+		FROM #__kunena_messages AS m
+		INNER JOIN #__kunena_messages AS mm ON m.thread = mm.id
 		WHERE {$where}
 		ORDER BY m.time DESC";
 
@@ -324,8 +324,8 @@ class CKunenaLatestX {
 			}
 		}
 
-		$query = "Select COUNT(DISTINCT t.thread) FROM #__fb_messages AS t
-			INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		$query = "Select COUNT(DISTINCT t.thread) FROM #__kunena_messages AS t
+			INNER JOIN #__kunena_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
 		AND t.time >'{$this->querytime}' AND t.hold IN ({$this->hold}) AND t.moved=0 AND t.catid IN ({$this->session->allowed})" . $latestcats; // if categories are limited apply filter
 
@@ -336,8 +336,8 @@ class CKunenaLatestX {
 		$offset = ($this->page - 1) * $this->threads_per_page;
 
 		$this->order = "lastid DESC";
-		$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__fb_messages AS t
-			INNER JOIN #__fb_messages AS m ON m.id=t.thread
+		$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__kunena_messages AS t
+			INNER JOIN #__kunena_messages AS m ON m.id=t.thread
 			WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
 			AND t.time>'{$this->querytime}' AND t.hold IN ({$this->hold}) AND t.moved='0' AND t.catid IN ({$this->session->allowed}) {$latestcats}
 			GROUP BY t.thread
@@ -356,9 +356,9 @@ class CKunenaLatestX {
 		$this->title = JText::_('COM_KUNENA_NO_REPLIES');
 		$query = "SELECT COUNT(DISTINCT tmp.thread) FROM
 			(SELECT m.thread, count(*) AS posts
-				FROM #__fb_messages as m
+				FROM #__kunena_messages as m
 				JOIN (SELECT thread
-					FROM #__fb_messages
+					FROM #__kunena_messages
 					WHERE time >'$this->querytime' AND parent=0 AND
 						hold=0 AND moved=0 AND catid IN ({$this->session->allowed})
 				) as t ON m.thread = t.thread
@@ -375,9 +375,9 @@ class CKunenaLatestX {
 		$this->order = "lastid DESC";
 		$query = "SELECT thread, thread as lastid FROM
 			(SELECT m.thread, count(*) AS posts
-				FROM #__fb_messages as m
+				FROM #__kunena_messages as m
 				JOIN (SELECT thread
-					FROM #__fb_messages
+					FROM #__kunena_messages
 					WHERE time >'{$this->querytime}' AND parent=0 AND
 						hold=0 AND moved=0 AND catid IN ({$this->session->allowed})
 				) as t ON m.thread = t.thread
@@ -509,8 +509,8 @@ class CKunenaLatestX {
 		}
 
 		//meta description and keywords
-		$metaKeys = $this->header . kunena_htmlspecialchars ( stripslashes ( ", {$this->config->board_title}, " ) ) . $this->app->getCfg ( 'sitename' );
-		$metaDesc = $this->header . kunena_htmlspecialchars ( stripslashes ( " ({$this->page}/{$this->totalpages}) - {$this->config->board_title}" ) );
+		$metaKeys = $this->header . kunena_htmlspecialchars ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+		$metaDesc = $this->header . kunena_htmlspecialchars ( " ({$this->page}/{$this->totalpages}) - {$this->config->board_title}" );
 
 		$cur = $this->document->get ( 'description' );
 		$metaDesc = $cur . '. ' . $metaDesc;
@@ -519,7 +519,7 @@ class CKunenaLatestX {
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $metaDesc );
 
-		$this->document->setTitle ( $this->title . ' - ' . stripslashes ( $this->config->board_title ) );
+		$this->document->setTitle ( $this->title . ' - ' . $this->config->board_title );
 
 		CKunenaTools::loadTemplate('/threads/latestx.php');
 	}

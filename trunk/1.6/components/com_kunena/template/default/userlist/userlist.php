@@ -28,7 +28,7 @@ form.filter_order_Dir.value=dir;
 document.adminForm.submit( task );}' );
 $option=JRequest::getCmd ( 'option' );
 
-$document->setTitle(JText::_('COM_KUNENA_USRL_USERLIST') . ' - ' . stripslashes($this->config->board_title));
+$document->setTitle(JText::_('COM_KUNENA_USRL_USERLIST') . ' - ' . $this->config->board_title);
 
 $document->addScriptDeclaration( "document.addEvent('domready', function() {
 		// Attach auto completer to the following ids:

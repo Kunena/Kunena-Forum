@@ -23,7 +23,7 @@ require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
 class CKunenaTables {
 	var $tables = array ();
-	var $_tables = array ('#__fb_announcement', '#__kunena_attachments', '#__fb_categories', '#__fb_favorites', '#__fb_groups', '#__fb_messages', '#__fb_messages_text', '#__fb_moderation', '#__fb_ranks', '#__fb_sessions', '#__fb_smileys', '#__fb_subscriptions', '#__fb_users', '#__kunena_version', '#__fb_whoisonline' );
+	var $_tables = array ('#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_favorites', '#__kunena_groups', '#__kunena_messages', '#__kunena_messages_text', '#__kunena_moderation', '#__kunena_ranks', '#__kunena_sessions', '#__kunena_smileys', '#__kunena_subscriptions', '#__kunena_users', '#__kunena_version', '#__kunena_whoisonline' );
 
 	function __construct() {
 		$kunena_db = &JFactory::getDBO ();
@@ -142,8 +142,7 @@ abstract class CKunenaConfigBase {
 		foreach ( $vars as $name => $value ) {
 			// Exclude internal class vars e.g. _db
 			if ($name [0] != '_' && array_key_exists ( $name, $this->GetClassVars () )) {
-				$value = addslashes ( $value );
-				$fields [] = "`$name`='$value'";
+				$fields [] = "{$this->_db->nameQuote($name)}={$this->_db->quote($value)}";
 			}
 		}
 
@@ -420,7 +419,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	}
 
 	protected function GetConfigTableName() {
-		return "#__fb_config";
+		return "#__kunena_config";
 	}
 
 	public function DoUserOverrides($userinfo) {

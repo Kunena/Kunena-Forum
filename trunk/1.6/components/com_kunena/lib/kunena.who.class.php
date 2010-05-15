@@ -57,9 +57,9 @@ class CKunenaWhoIsOnline {
 		if ($users) return $users;
 		$query
         = "SELECT w.userip, w.time, w.what, u.{$this->name} AS username, u.id, k.moderator, k.showOnline "
-        . " FROM #__fb_whoisonline AS w"
+        . " FROM #__kunena_whoisonline AS w"
         . " LEFT JOIN #__users AS u ON u.id=w.userid "
-        . " LEFT JOIN #__fb_users AS k ON k.userid=w.userid "
+        . " LEFT JOIN #__kunena_users AS k ON k.userid=w.userid "
 		# filter real public session logouts
         . " INNER JOIN #__session AS s ON s.guest='0' AND s.userid=w.userid "
         . " WHERE w.userid!='0' "
@@ -78,7 +78,7 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getTotalGuestUsers () {
-		$query = "SELECT COUNT(*) FROM #__fb_whoisonline WHERE user='0'";
+		$query = "SELECT COUNT(*) FROM #__kunena_whoisonline WHERE user='0'";
     	$this->db->setQuery($query);
     	$totalguests = $this->db->loadResult();
     	check_dberror ( "Unable to load who is online." );
@@ -106,9 +106,9 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getUsersList () {
-		$query = "SELECT w.*, u.id, u.{$this->name}, f.showOnline FROM #__fb_whoisonline AS w
+		$query = "SELECT w.*, u.id, u.{$this->name}, f.showOnline FROM #__kunena_whoisonline AS w
         LEFT JOIN #__users AS u ON u.id=w.userid
-        LEFT JOIN #__fb_users AS f ON u.id=f.userid
+        LEFT JOIN #__kunena_users AS f ON u.id=f.userid
         ORDER BY w.time DESC";
         $this->db->setQuery($query);
         $users = $this->db->loadObjectList();
@@ -119,13 +119,13 @@ class CKunenaWhoIsOnline {
 
 	protected function _deleteUsersOnline () {
 		$past = $this->datenow - $this->config->fbsessiontimeout;
-		$this->db->setQuery("DELETE FROM #__fb_whoisonline WHERE time < '{$past}'");
+		$this->db->setQuery("DELETE FROM #__kunena_whoisonline WHERE time < '{$past}'");
 		$this->db->query();
 		check_dberror ( "Unable to delete users from whoisonline." );
 	}
 
 	protected function _getOnlineUsers () {
-		$this->db->setQuery("SELECT COUNT(*) FROM #__fb_whoisonline WHERE userip='{$this->myip}' AND userid='{$this->my->id}'");
+		$this->db->setQuery("SELECT COUNT(*) FROM #__kunena_whoisonline WHERE userip='{$this->myip}' AND userid='{$this->my->id}'");
 		$online = $this->db->loadResult();
 		check_dberror ( "Unable to load online count." );
 
@@ -155,7 +155,7 @@ class CKunenaWhoIsOnline {
 		$online = $this->_getOnlineUsers();
 
 		if ( $func == 'showcat') {
-    		$this->db->setQuery("SELECT name FROM #__fb_categories WHERE id='{$catid}'");
+    		$this->db->setQuery("SELECT name FROM #__kunena_categories WHERE id='{$catid}'");
     		$what = JText::_('COM_KUNENA_WHO_VIEW_SHOWCAT').' '.$this->db->loadResult();
     		check_dberror ( "Unable to load category name." );
 		} else if ($func == 'listcat') {
@@ -165,15 +165,15 @@ class CKunenaWhoIsOnline {
     	} else if ($func == 'mylatest') {
     		$what = JText::_('COM_KUNENA_WHO_MY_DISCUSSIONS');
     	} else if ($func == 'view') {
-    		$this->db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$id}'");
+    		$this->db->setQuery("SELECT subject FROM #__kunena_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_VIEW_TOPIC').' '.$this->db->loadResult();
     		check_dberror ( "Unable to load subject of message." );
     	} else if ($func == 'post' && $do == 'reply') {
-    		$this->db->setQuery("SELECT subject FROM #__fb_messages WHERE id='{$id}'");
+    		$this->db->setQuery("SELECT subject FROM #__kunena_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_REPLY_TOPIC').' '.$this->db->loadResult();
     		check_dberror ( "Unable to load subject of message." );
     	} else if ($func == 'post' && $do == 'edit') {
-    		$this->db->setQuery("SELECT name FROM #__fb_messages WHERE id='{$id}'");
+    		$this->db->setQuery("SELECT name FROM #__kunena_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_POST_EDIT').' '.$this->db->loadResult();
     		check_dberror ( "Unable to load name of author of the message." );
     	} else if ($func == 'who') {
@@ -190,10 +190,10 @@ class CKunenaWhoIsOnline {
   			$what = JText::_('COM_KUNENA_WHO_MAINPAGE');
 		}
 
-		$link = addslashes(JURI::current());
+		$link = JURI::current();
 
 		if ($online == 1) {
-    		$sql = "UPDATE #__fb_whoisonline SET ".
+    		$sql = "UPDATE #__kunena_whoisonline SET ".
     		" time=".$this->db->quote($this->datenow).", ".
     		" what=".$this->db->quote($what).", ".
     		" do=".$this->db->quote($do).", ".
@@ -205,7 +205,7 @@ class CKunenaWhoIsOnline {
     		$this->db->setQuery($sql);
     	} else {
     		$this->_deleteUsersOnline();
-    		$sql = "INSERT INTO #__fb_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
+    		$sql = "INSERT INTO #__kunena_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
             . " VALUES (".
             $this->db->quote($this->my->id).",".
             $this->db->quote($this->datenow).",".

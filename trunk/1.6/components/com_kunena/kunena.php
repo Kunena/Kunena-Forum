@@ -183,7 +183,7 @@ if ($func == "json") {
 
 if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// if the board is offline
-	echo stripslashes ( $kunena_config->offline_message );
+	echo $kunena_config->offline_message;
 } else if ($kunena_config->regonly && ! $kunena_my->id) {
 	// if we only allow registered users
 	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
@@ -287,7 +287,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$this->prevCheck = CKunenaTimeformat::internalTime()+60;
 	}
 
-	//Get the topics this user has already read this session from #__fb_sessions
+	//Get the topics this user has already read this session from #__kunena_sessions
 	$this->read_topics = explode ( ',', $kunena_session->readtopics );
 
 
@@ -305,7 +305,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	if ($func == "showcat") {
 		if ($catid != 0) {
-			$kunena_db->setQuery ( "SELECT parent FROM #__fb_categories WHERE id='{$catid}'" );
+			$kunena_db->setQuery ( "SELECT parent FROM #__kunena_categories WHERE id='{$catid}'" );
 			$catParent = intval($kunena_db->loadResult ());
 			check_dberror ( 'Unable to load categories.' );
 		}
@@ -474,11 +474,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'markthisread' :
 			// Mark all unread topics in the category to read
 			$readTopics = $kunena_session->readtopics;
-			$kunena_db->setQuery ( "SELECT thread FROM #__fb_messages WHERE catid='{$catid}' AND parent=0 AND thread NOT IN ({$readTopics})" );
+			$kunena_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE catid='{$catid}' AND parent=0 AND thread NOT IN ({$readTopics})" );
 			$readForum = $kunena_db->loadResultArray ();
 			check_dberror ( "Unable to load messages." );
 			$readTopics = implode(',', array_merge(explode(',', $readTopics), $readForum));
-			$kunena_db->setQuery ( "UPDATE #__fb_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id" );
+			$kunena_db->setQuery ( "UPDATE #__kunena_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id" );
 			$kunena_db->query ();
 			check_dberror ( 'Unable to update readtopics in session table.' );
 
@@ -490,7 +490,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$success_msg = '';
 
 			if ( $catid && $kunena_my->id ) {
-				$query = "INSERT INTO #__fb_subscriptions_categories (catid, userid) VALUES ('$catid','$kunena_my->id')";
+				$query = "INSERT INTO #__kunena_subscriptions_categories (catid, userid) VALUES ('$catid','$kunena_my->id')";
 				$kunena_db->setQuery ( $query );
 
 				if (@$kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
@@ -506,7 +506,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			$success_msg = '';
 			if ($catid && $kunena_my->id ) {
-				$query = "DELETE FROM #__fb_subscriptions_categories WHERE catid=$catid AND userid=$kunena_my->id";
+				$query = "DELETE FROM #__kunena_subscriptions_categories WHERE catid=$catid AND userid=$kunena_my->id";
 				$kunena_db->setQuery ( $query );
 
 				if ($kunena_db->query () && $kunena_db->getAffectedRows () == 1) {

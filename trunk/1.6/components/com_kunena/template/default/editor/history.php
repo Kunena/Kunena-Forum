@@ -32,12 +32,12 @@ $k = 0;
 	<?php foreach ( $this->messages as $mes ):?>
 	<tr>
 		<td class="kreview_body<?php echo $k = 1 - $k?>" valign="top">
-			<?php echo kunena_htmlspecialchars ( stripslashes ( $mes->name ) )?>
+			<?php echo kunena_htmlspecialchars ( $mes->name )?>
 		</td>
 
 		<td class="kreview_body<?php echo $k?>">
 			<div class="msgtext">
-				<?php echo KunenaParser::parseBBCode( stripslashes($mes->message) )?>
+				<?php echo KunenaParser::parseBBCode( $mes->message )?>
 			</div>
 			<?php if ( !empty($this->attachmentslist[$mes->id]) ) $this->displayAttachments($this->attachmentslist[$mes->id]); ?>
 		</td>

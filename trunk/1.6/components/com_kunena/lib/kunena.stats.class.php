@@ -77,7 +77,7 @@ class CKunenaStats {
 				SUM(time >= '{$yesterdaystart}' AND time < '{$todaystart}' AND parent='0') AS yesterdayopen,
 				SUM(time >= '{$todaystart}' AND parent>'0') AS todayanswer,
 				SUM(time >= '{$yesterdaystart}' AND time < '{$todaystart}' AND parent>'0') AS yesterdayanswer
-				FROM #__fb_messages WHERE time >= '{$yesterdaystart}' AND hold='0'" );
+				FROM #__kunena_messages WHERE time >= '{$yesterdaystart}' AND hold='0'" );
 
 			$totaltmp = $this->_db->loadObject ();
 			CKunenaTools::checkDatabaseError();
@@ -90,7 +90,7 @@ class CKunenaStats {
 
 	public function loadTotalTopics() {
 		if ($this->totaltitles === null) {
-			$this->_db->setQuery ( "SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__fb_categories WHERE parent='0' AND published=1" );
+			$this->_db->setQuery ( "SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__kunena_categories WHERE parent='0' AND published=1" );
 			$totaltmp = $this->_db->loadObject ();
 			CKunenaTools::checkDatabaseError();
 			$this->totaltitles = ! empty ( $totaltmp->titles ) ? $totaltmp->titles : 0;
@@ -100,7 +100,7 @@ class CKunenaStats {
 
 	public function loadTotalCategories() {
 		if ($this->totalsections === null) {
-			$this->_db->setQuery ( "SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__fb_categories WHERE published=1" );
+			$this->_db->setQuery ( "SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__kunena_categories WHERE published=1" );
 			$totaltmp = $this->_db->loadObject ();
 			CKunenaTools::checkDatabaseError();
 			$this->totalsections = ! empty ( $totaltmp->totalsections ) ? $totaltmp->totalsections : 0;
@@ -124,7 +124,7 @@ class CKunenaStats {
 			$PopUserCount = $this->_config->popusercount;
 		if (count($this->topposters) < $PopUserCount) {
 			$queryName = $this->_config->username ? "username" : "name";
-			$this->_db->setQuery ( "SELECT p.userid, p.posts, u.id, u.{$queryName} AS username FROM #__fb_users AS p
+			$this->_db->setQuery ( "SELECT p.userid, p.posts, u.id, u.{$queryName} AS username FROM #__kunena_users AS p
 				INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' AND u.block=0 ORDER BY p.posts DESC", 0, $PopUserCount );
 
 			$this->topposters = $this->_db->loadObjectList ();
@@ -151,7 +151,7 @@ class CKunenaStats {
 					INNER JOIN #__users AS u ON u.id = a.userid
 					WHERE u.profileviews>'0' ORDER BY u.profileviews DESC", 0, $PopUserCount );
 			} else {
-				$this->_db->setQuery ( "SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$queryName} AS user FROM #__fb_users AS u
+				$this->_db->setQuery ( "SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$queryName} AS user FROM #__kunena_users AS u
 					INNER JOIN #__users AS j ON j.id = u.userid
 					WHERE u.uhits>'0' AND j.block=0 ORDER BY u.uhits DESC", 0, $PopUserCount );
 			}
@@ -190,7 +190,7 @@ class CKunenaStats {
 
 		if (count($this->toptitles) < $PopSubjectCount) {
 			$kunena_session = & KunenaFactory::getSession ();
-			$this->_db->setQuery ( "SELECT * FROM #__fb_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunena_session->allowed)
+			$this->_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunena_session->allowed)
 				ORDER BY hits DESC", 0, $PopSubjectCount );
 
 			$this->toptitles = $this->_db->loadObjectList ();

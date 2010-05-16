@@ -35,8 +35,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 16-May-2010 Matias
-^ [#15886] Merged revision 2477 from /branches/1.6-@quila-bugfix with changes
+^ [#15886] Merged revisions 2477, 2494 from /branches/1.6-@quila-bugfix with changes
 ^ [#15886] Merged revision 2481 from /branches/1.6-810-bugfix with changes
+# [#19288] Install Mootools 1.2 if Joomla doesn't already have it
 
 15-May-2010 Matias
 ^ [#20444] Convert our database tables to jos_kunena

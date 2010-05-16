@@ -497,20 +497,6 @@
 				ADD `BEBO` VARCHAR( 50 )  NULL AFTER `FLICKR` ;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` 
 				ADD `allow_polls` tinyint(4) NOT NULL default '0' AFTER `class_sfx` ;</query>
-	        <query>CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
-                    `id` int(11) NOT NULL auto_increment,
-                    `mesid` int(11) NOT NULL default '0',
-                    `userid` int(11) NOT NULL default '0',
-                    `hash` char(32) NULL,
-                    `size` int(11) NULL,
-                    `folder` varchar(255) NOT NULL,
-                    `filetype` varchar(20) NOT NULL,
-                    `filename` varchar(255) NOT NULL,
-	                PRIMARY KEY (`id`),                
-	                KEY `mesid` (`mesid`),
-	                KEY `userid` (`userid`),
-	                KEY `hash` (`hash`),
-	                KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `review` ,
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
 			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>

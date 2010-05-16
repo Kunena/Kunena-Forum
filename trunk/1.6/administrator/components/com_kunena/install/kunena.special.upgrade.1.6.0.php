@@ -13,7 +13,7 @@
 
 defined ( '_JEXEC' ) or die ();
 
-include_once (KUNENA_PATH .DS. "class.kunena.php");
+include_once (KUNENA_PATH . DS . "class.kunena.php");
 
 //Import filesystem libraries.
 jimport ( 'joomla.filesystem.folder' );
@@ -23,8 +23,7 @@ $templatedeprecatedlist = array ('default_ex', 'default_green', 'default_red', '
 $kunena_db = & JFactory::getDBO ();
 $kunena_db->setQuery ( "SELECT template FROM #__kunena_config" );
 $kactualtemplate = $kunena_db->loadResult ();
-if ($kunena_db->getErrorNum() != 0)
-{
+if ($kunena_db->getErrorNum () != 0) {
 	if (in_array ( $kactualtemplate, $templatedeprecatedlist )) {
 		$kunena_db->setQuery ( "UPDATE #__kunena_config SET template='default',templateimagepath='default'" );
 		$kunena_db->query ();
@@ -38,38 +37,50 @@ foreach ( $templatedeprecatedlist as $template ) {
 
 // Convert attachments table to support new multi file attachments
 
-// First check if new attachments table is empty. This either means this is the first
-// time the upgrade is executed, or the table has been manually reset to force another
-// upgrade of the old structure.
-$query = 'SELECT count(*) FROM #__kunena_attachments;';
-$kunena_db->setQuery ( $query );
-$attachcount = (int) $kunena_db->loadResult ();
 
-if ($attachcount==0){
-	// New attachments table is empty - assume we have to convert attachments
-
+// First check if attachments table has legacy field
+$fields = array_pop($this->db->getTableFields('#__kunena_attachments'));
+if (isset($fields['filelocation'])) {
+	// Attachments table has filelocation - assume we have to convert attachments
 	// hash and size ommited -> NULL
-	// FIXME!!!
+	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";
+	$kunena_db->setQuery ( $query );
+	$kunena_db->query ();
+	$query = "CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
+				`id` int(11) NOT NULL auto_increment,
+				`mesid` int(11) NOT NULL default '0',
+				`userid` int(11) NOT NULL default '0',
+				`hash` char(32) NULL,
+				`size` int(11) NULL,
+				`folder` varchar(255) NOT NULL,
+				`filetype` varchar(20) NOT NULL,
+				`filename` varchar(255) NOT NULL,
+					PRIMARY KEY (`id`),
+					KEY `mesid` (`mesid`),
+					KEY `userid` (`userid`),
+					KEY `hash` (`hash`),
+					KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8;";
+	$kunena_db->setQuery ( $query );
+	$kunena_db->query ();
 	$query = "INSERT INTO #__kunena_attachments (mesid, userid, folder, filetype, filename)
 				SELECT a.mesid, m.userid,
 					SUBSTRING_INDEX(SUBSTRING_INDEX(a.filelocation, '/', -4), '/', 3) AS folder,
 					SUBSTRING_INDEX(a.filelocation, '.', -1) AS filetype,
 					SUBSTRING_INDEX(a.filelocation, '/', -1) AS filename
-				FROM #__fb_attachments AS a
+				FROM #__kunena_attachments_bak AS a
 				JOIN #__kunena_messages AS m ON a.mesid = m.id";
-
-	if(JDEBUG == 1 && defined('JFIREPHP')){
-		FB::log($query, 'Attachment Upgrade');
+	
+	if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
+		FB::log ( $query, 'Attachment Upgrade' );
 	}
-
+	
 	$kunena_db->setQuery ( $query );
-	$kunena_db->query();
-
-	// By now the old attachmets table has been converted to the new Kunena 1.6 format
-	// with the exception of file size and file hash that cannot be calculated inside
-	// the database. Both of these columns are set to null. As we could be dealing with
-	// thousands of medium to large size images, we cannot afford to iterate over all
-	// of them to calculate this values. A seperate maintenance task will have to be
-	// created and executed outside of the upgrade itself.
+	$kunena_db->query ();
+	
+// By now the old attachmets table has been converted to the new Kunena 1.6 format
+// with the exception of file size and file hash that cannot be calculated inside
+// the database. Both of these columns are set to null. As we could be dealing with
+// thousands of medium to large size images, we cannot afford to iterate over all
+// of them to calculate this values. A seperate maintenance task will have to be
+// created and executed outside of the upgrade itself.
 }
-

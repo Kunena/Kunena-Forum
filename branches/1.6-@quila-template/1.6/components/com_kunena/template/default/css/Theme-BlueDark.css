@@ -94,14 +94,14 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 #Kunena .divider {color:#999999;}
 #Kunena a:link,
 #Kunena a:visited,
-#Kunena a:active {color: #191970/*c*/;}
+#Kunena a:active {color: #193970/*c*/;}
 #Kunena a:hover {color: #ffffff;}
 
 #Kunena div.kblock {
 	border-bottom:4px solid #333333;
 }
 #Kunena div.kblock div.ktitle {
-	background: #191970/*c*/;
+	background: #193970/*c*/;
 	/*border:1px solid #333333;*/
 	color: #999999;
 }
@@ -139,7 +139,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 #Kunena table.kblock td,
 #Kunena table.kblock th {
-	border: 1px solid #191970/*c*/;
+	border: 1px solid #193970/*c*/;
 	background: #111111;
 }
 
@@ -153,7 +153,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 }
 #Kunena table.kblocktable thead tr th,
 #Kunena table.kblocktablehalf thead tr th  {
-	background: #191970/*c*/;
+	background: #193970/*c*/;
 	color: #999999;
 	border-color: #333333;
 	border-style: solid;
@@ -411,8 +411,8 @@ FORUM HEADER DESCRIPTION
 
 #Kunena h1,
 #Kunena h2 {
-	background: #191970/*c*/;
-	border-bottom:2px solid #191970/*c*/;
+	background: #193970/*c*/;
+	border-bottom:2px solid #193970/*c*/;
 	color: #ffffff/*ct*/;
 }
 
@@ -721,8 +721,8 @@ THREAD VIEW
 }
 
 #Kunena table#kflattable th {
-	background: #191970/*c*/;
-	border-color: #191970/*c*/ #191970/*c*/ #333333;
+	background: #193970/*c*/;
+	border-color: #193970/*c*/ #193970/*c*/ #333333;
 	border-style: solid;
 	border-width: 1px;
 }
@@ -972,7 +972,7 @@ NEW PROFILE
 }
 
 #Kunena #kviews th.left {
-	background:#191970/*c*/;
+	background:#193970/*c*/;
 }
 
 #Kunena td.k-msgview-left {

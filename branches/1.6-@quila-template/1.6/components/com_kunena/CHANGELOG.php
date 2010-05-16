@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 + [#19345] Restyle Default template - Added configuration for Template Color chooser
 + [#19345] Restyle Default template - Possibility to choose between Image Based and CSS Based buttons in the Configuration
 + [#19345] Restyle Default template - Added 10 Template Theme
++ [#19345] Restyle Default template - Change color of BlueDark and BlueLight Theme
 
 
 14-May-2010 Matias

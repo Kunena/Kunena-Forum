@@ -149,15 +149,9 @@
 	<target name="copy" depends="build">
 		<mkdir dir="${build_dir}/archive" />
 
-		<zip destfile="${build_dir}/archive/admin.zip" basedir="${tmp_dir}">
-			<include name="${kunena.backend}/**"/>
-		</zip>
-		<zip destfile="${build_dir}/archive/site.zip" basedir="${tmp_dir}">
-			<include name="${kunena.frontend}/**"/>
-		</zip>
-		<zip destfile="${build_dir}/archive/media.zip" basedir="${tmp_dir}">
-			<include name="${kunena.media}/**"/>
-		</zip>
+		<zip destfile="${build_dir}/archive/admin.zip" basedir="${tmp_dir}/${kunena.backend}" />
+		<zip destfile="${build_dir}/archive/site.zip" basedir="${tmp_dir}/${kunena.frontend}" />
+		<zip destfile="${build_dir}/archive/media.zip" basedir="${tmp_dir}/${kunena.media}" />
 	</target>
 
 	<target name="tar" depends="copy" if="do.tar">

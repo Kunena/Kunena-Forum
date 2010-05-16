@@ -44,6 +44,7 @@ Kunena 1.6.0-DEV
 # [#19288] No Replies page showed only less than a month old threads
 # [#19288] CSS tweaks
 # [#19288] Improve installer to better handle errors
+# [#19288] Change internal ZIP files so that installation works with older Joomla releases
 
 15-May-2010 Matias
 ^ [#20444] Convert our database tables to jos_kunena

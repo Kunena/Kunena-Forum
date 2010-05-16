@@ -118,13 +118,13 @@ class KunenaControllerInstall extends JController {
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
 		$file = 'admin.zip';
 		if (file_exists ( $path . DS . $file ))
-			$this->model->extract ( $path, $file, JPATH_ROOT );
+			$this->model->extract ( $path, $file, KPATH_ADMIN );
 		$file = 'site.zip';
 		if (file_exists ( $path . DS . $file ))
-			$this->model->extract ( $path, $file, JPATH_ROOT );
+			$this->model->extract ( $path, $file, KPATH_SITE );
 		$file = 'media.zip';
 		if (file_exists ( $path . DS . $file ))
-			$this->model->extract ( $path, $file, JPATH_ROOT );
+			$this->model->extract ( $path, $file, KPATH_MEDIA );
 		if (! $this->model->getError ())
 			$this->model->setStep ( ++ $this->step );
 	}

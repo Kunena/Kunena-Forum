@@ -12,7 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 $options = array ();
 $options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
-$lists ['parent'] = CKunenaTools::forumSelectList ( 'forumjump', $this->catid, $options, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', true );
+$lists ['parent'] = CKunenaTools::forumSelectList ( 'forumjump', isset($this->catid) ? $this->catid : 0, $options, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', true );
 ?>
 <form id="jumpto" name="jumpto" method="post" target="_self" action="<?php echo CKunenaLink::GetKunenaURL ();?>">
 	<span class="right">

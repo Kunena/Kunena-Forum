@@ -2154,7 +2154,7 @@ table.kadmin-stat caption {
 		<table class="kadmin-sort">
 			<tr>
 				<td align="left"><?php echo JText::_('COM_KUNENA_USRL_SEARCH_BUTTON'); ?>:
-				<input type="text" name="search" value="<?php echo $search; ?>" class="inputbox" onChange="document.adminForm.submit();" /></td>
+				<input type="text" name="search" value="<?php echo $search; ?>" class="inputbox" onChange="document.adminForm.submit();" /><input type="submit" value="<?php echo JText::_('COM_KUNENA_GO') ?>"></td>
 				<td align="right"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNavSP->getLimitBox (); ?></td>
 			</tr>
 			<tr>
@@ -2178,7 +2178,6 @@ table.kadmin-stat caption {
 				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
 				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
 				<th align="left" width="15"><?php echo JText::_('COM_KUNENA_VIEW_MODERATOR'); ?></th>
-				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_VIEW'); ?></th>
 				<th align="left" width="*"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?></th>
 			</tr>
 			<?php
@@ -2219,11 +2218,11 @@ table.kadmin-stat caption {
 					onclick="return listItemTask('cb<?php echo $i;
 						?>','userprofile')"><?php echo kescape($pl->name);
 						?></a></td>
-				<td width="100" align="center"><?php echo $userLogged;
+				<td width="60" align="center"><?php echo $userLogged;
 						?>&nbsp;</td>
-				<td width="100" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
+				<td width="10" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBlockTask; ?>')">
 						<img src="images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" /></a>&nbsp;</td>
-				<td width="100" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
+				<td width="10" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
 						<img src="images/<?php echo $userbanned;?>" width="16" height="16" border="0" alt="<?php echo $altUserBanned; ?>" /></a>&nbsp;</td>
 				<td width="100"><?php echo kescape($pl->email);
 						?>&nbsp;</td>
@@ -2237,8 +2236,6 @@ table.kadmin-stat caption {
 						;
 						?>
 				&nbsp;</td>
-				<td align="center" width="10"><?php echo kescape($pl->view);
-						?>&nbsp;</td>
 				<td width="*"><?php echo kescape ( $pl->signature );
 						?>&nbsp;
 				</td>
@@ -2432,14 +2429,13 @@ function textCounter(field, target) {
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 				<tr>
-				<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_MOD_NEW'); ?></th>
+				<th colspan="2" class="title"><?php echo JText::_('COM_KUNENA_UAVATAR'); ?></th>
 			</tr>
 			<tr>
 				<td width="150" class="contentpane">
 				<?php
 				if ($editavatar) {
 					?>
-				<?php echo JText::_('COM_KUNENA_UAVATAR'); ?>
 				<?php echo $avatar; ?>
 					<p><input type="checkbox" value="1"
 					name="deleteAvatar"> <em><?php echo JText::_('COM_KUNENA_DELAV'); ?></em></p></td>

@@ -35,7 +35,8 @@ Legend:
 Kunena 1.6.0-DEV
 
 16-May-2010 Matias
-^ [#15886] Merged revisions 2477 from /branches/1.6-@quila-bugfix with changes
+^ [#15886] Merged revision 2477 from /branches/1.6-@quila-bugfix with changes
+^ [#15886] Merged revision 2481 from /branches/1.6-810-bugfix with changes
 
 15-May-2010 Matias
 ^ [#20444] Convert our database tables to jos_kunena
@@ -43,6 +44,11 @@ Kunena 1.6.0-DEV
 ^ [#20444] Strip slashes from DB and remove all calls for addslashes() and stripslashes()
 # [#20038] Basic Joomla 1.6 support: Installer now redirects to our own installer
 # [#20444] Fix migration from J1.5: Attachments table conversion failed
+
+14-May-2010 810
+# [#19288] Fix regression: help/rules page Undefined property: KunenaApp::$catid
+^ [#19312] Missing language strings added
+^ [#19356] Minor HTML/CSS fixes in the backend
 
 14-May-2010 @quila
 # [#19288] Fix regression in language file - Who page.

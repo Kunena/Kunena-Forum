@@ -135,6 +135,7 @@ class KunenaModelInstall extends JModel {
 		$this->steps = array (array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
 			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
 			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
+			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_COMPLETE') ) );
@@ -161,6 +162,29 @@ class KunenaModelInstall extends JModel {
 			$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
 		}
 		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $error, $text );
+	}
+	
+	function installPlugin($path, $file, $name) {
+		$error = false;
+		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
+		
+		$query = "SELECT * FROM #__plugins WHERE element='$name'";
+		$this->db->setQuery ( $query );
+		$plugin = $this->db->loadObject ();
+		if (!is_object($plugin)) {
+			jimport('joomla.installer.installer');
+			$this->extract ( $path, $file, $dest );
+			$installer = new JInstaller ( );
+			if ($installer->install ( $dest )) {
+				// publish plugin
+				$query = "UPDATE #__plugins SET published='1' WHERE element='$name'";
+				$this->db->setQuery ( $query );
+				$this->db->query ();
+				$error = true;
+			}
+			JFolder::delete($dest);
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', $name), $error);
+		}
 	}
 
 	public function beginInstall() {

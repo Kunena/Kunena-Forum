@@ -120,6 +120,17 @@ class KunenaControllerInstall extends JController {
 		if (! $this->model->getError ())
 			$this->model->setStep ( ++ $this->step );
 	}
+	
+	function stepPlugins() {
+		jimport('joomla.filesystem.folder');
+		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
+		$file = 'plgSystemMootools12.zip';
+		if (!class_exists('JHTMLBehavior') && is_file ( $path . DS . $file )) {
+			$this->model->installPlugin ( $path, $file, 'mootools12' );
+		}
+		if (! $this->model->getError ())
+			$this->model->setStep ( ++ $this->step );
+	}
 
 	function stepDatabase() {
 		$this->model->migrateDatabase ();

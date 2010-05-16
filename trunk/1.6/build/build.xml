@@ -136,6 +136,9 @@
 				<include name="install/**"/>
 			</fileset>
 		</move>
+		<move todir="${build_dir}/archive" includeEmptyDirs="no">
+			<fileset dir="${tmp_dir}/${kunena.backend}/archive" />
+		</move>
 		<move todir="${build_dir}/languages" flatten="yes" includeEmptyDirs="no">
 			<fileset dir="${tmp_dir}/${kunena.backend}/language">
 				<include name="**/*install*"/>

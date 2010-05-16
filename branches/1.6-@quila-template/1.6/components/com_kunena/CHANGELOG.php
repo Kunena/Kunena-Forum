@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-DEV
 
++ [#19345] Restyle Default template - Added configuration for Template Color chooser
++ [#19345] Restyle Default template - Possibility to choose between Image Based and CSS Based buttons in the Configuration
++ [#19345] Restyle Default template - Added 10 Template Theme
+
+
 14-May-2010 Matias
 ^ [#15886] Merged revisions 2437-2450 from /branches/1.6-xillibit with changes
 ^ [#20038] Basic Joomla 1.6 support: Move kunena.files.distribution to media/kunena

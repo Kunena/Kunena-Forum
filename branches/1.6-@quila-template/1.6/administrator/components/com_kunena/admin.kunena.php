@@ -892,6 +892,7 @@ function showConfig($option) {
 
 	$templatelist = array();
 	$imagesetlist = array();
+
 	$dir = @opendir ( KUNENA_PATH_TEMPLATE );
 	if ($dir) {
 		while ( ($file = readdir ( $dir )) !== false ) {
@@ -921,10 +922,28 @@ function showConfig($option) {
 	foreach ( $imagesetlist as $key => $val ) {
 		$imagesetlistitems [] = JHTML::_ ( 'select.option', $val, $val );
 	}
+    // New for 1.6 -> Theme Color
+	$dir = KUNENA_PATH_TEMPLATE . DS. 'default' . DS . 'css';
+    $themelist = array();
+        if($handler = opendir($dir)) {
+            while (($theme = readdir($handler)) !== false) {
+                if ($theme != "." && $theme != ".." && $theme != "Thumb.db") {
+                    if (strpos($theme, '-',1)){
+                    $themelist[] = substr($theme, 0, (strlen ($theme)) - (strlen (strrchr($theme,'.'))));
+                    }
+                }
+            }   
+        closedir($handler);
+        }
+	asort ( $themelist );
+
+    foreach ( $themelist as $key => $val ) {
+        $themelistitems [] = JHTML::_ ( 'select.option', $val, $val );
+    }
 
 	$lists ['jmambot'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->jmambot );
 	$lists ['disemoticons'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->disemoticons );
-	$lists ['template'] = JHTML::_ ( 'select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->template );
+	$lists ['template'] = JHTML::_ ( 'select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->template );	
 	$lists ['templateimagepath'] = JHTML::_ ( 'select.genericlist', $imagesetlistitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templateimagepath );
 	$lists ['regonly'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->regonly );
 	$lists ['board_offline'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->board_offline );
@@ -1070,6 +1089,14 @@ function showConfig($option) {
 	$lists['onlineusers'] = JHTML::_('select.genericlist', $yesno, 'cfg_onlineusers', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->onlineusers);
 
 	$lists['debug'] = JHTML::_('select.genericlist', $yesno, 'cfg_debug', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->debug);
+
+    // New for 1.6 -> Theme Color	
+	$lists ['theme'] = JHTML::_ ( 'select.genericlist', $themelistitems, 'cfg_theme', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->theme );
+    // New for 1.6 -> Template Button Style
+    $buttonstyle = array ();
+	$buttonstyle[] = JHTML::_('select.option', 'images',JText::_('COM_KUNENA_TEMPLATE_BUTTONSTYLE_IMAGES'));
+	$buttonstyle[] = JHTML::_('select.option', 'css',JText::_('COM_KUNENA_TEMPLATE_BUTTONSTYLE_CSS'));
+    $lists['buttonstyle'] = JHTML::_('select.genericlist', $buttonstyle, 'cfg_buttonstyle', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->buttonstyle);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }

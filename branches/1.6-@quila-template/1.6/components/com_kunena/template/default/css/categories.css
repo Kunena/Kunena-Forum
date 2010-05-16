@@ -1,0 +1,294 @@
+@CHARSET "UTF-8";
+/**
+* @version $Id: kunena.forum.css 2442 2010-05-11 18:20:48Z dragan $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/
+
+/*
+FORUM HEADER DESCRIPTION
+-------------------------------------------------------------------- */
+#Kunena .kforum-headerdesc {
+	padding: 3px;
+	line-height: 18px;
+	margin: -1px 0 0 0;
+}
+#Kunena .kforum-headerdesc td{
+	padding: 8px;
+}
+
+
+/* CATEGORY LIST
+----------------------------------------------------------------------------------------------- */
+
+#Kunena #kblock4,
+#Kunena #kblock1,
+#Kunena .k_bt_cvr1 {
+	margin-top: 5px; 
+}
+
+#Kunena table.kblocktable {
+	border-style: solid;
+	border-width: 0px 0px 4px 0px;
+	text-align: left;
+}
+
+#Kunena table.kblocktablehalf {
+	width: 48%;
+	margin: 5px 0;
+	margin-right: 15px;	
+	border-style: solid;
+	border-width: 0px 0px 4px 0px;
+	text-align: left;
+}
+
+#Kunena h1,
+#Kunena h2 {
+	text-align: left;
+	display: block;
+	width:100%;
+	line-height: 1.9em;
+	font-size:1.333em;
+	text-indent: 10px;
+	padding-top: 2px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+#Kunena h1 span.right {
+	float: right;
+	margin: 0 10px;
+}
+
+#Kunena div.ktitle_cover {
+	float: left;
+	text-align: left;
+	font-weight: normal;
+	padding: 5px;
+	margin-left: 3px;
+	display: block;
+	width: 90%;
+}
+
+#Kunena div.ktitle_cover a { 
+	font-weight:bold;
+}
+#Kunena div.ktitle_cover a:hover { 
+	text-decoration: underline;
+}
+
+#Kunena div.ktitle_cover p,
+#Kunena div.ktitle_desc {
+	clear:left;
+}
+#Kunena .kcheckbox {
+	float:right;
+	margin-right: 8px;
+	width: 20px;
+}
+
+#Kunena div.kfavorite {
+	height: 18px;
+	width: 18px;
+	display: inline-block;
+	margin: 0 4px;
+}
+
+#Kunena .ktitle,
+#Kunena a.ktitle {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	display: block;
+	text-decoration: none;
+	float:left;
+}
+
+#Kunena .ktitle a {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#Kunena img.hideshow {
+	float: right;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+	position: relative;
+	z-index: 1;
+}
+
+#Kunena th.ksectiontableheader {
+	/* height: 25px; */
+}
+
+#Kunena div.kthead-title a {
+	font-family: Lucida Grande, Lucida, Arial, Helvetica, sans-serif;
+	font-size: .917em;
+	display: inline-block;
+	float: left;
+	padding-bottom: 0;
+	margin-bottom: 3px;
+	font-weight: bold;
+}
+#Kunena div.kthead-desc,
+#Kunena div.kthead-moderators  {
+	clear: left;
+	line-height: 1.2em;
+}
+
+#Kunena div.kthead-moderators  {
+	margin-top: 5px;
+	font-size: .833em;
+}
+
+#Kunena div.kthead-desc a {
+	font-weight:bold;
+}
+
+#Kunena div.kthead-desc a:hover {
+	text-decoration:underline;
+}
+
+#Kunena div.kthead-child {
+	clear: left;
+	margin-top: 4px;
+}
+
+#Kunena div.kcc-childcat-title {
+	width: 100%;
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 4px;
+	line-height: 2em;
+	text-transform: uppercase;
+	font-size: .833em;
+}
+
+#Kunena div.kcc-table {
+	display: inline;
+}
+
+#Kunena tr.kcc-sectiontableentry1 {
+	
+}
+
+#Kunena tr.kcc-sectiontableentry2 {
+	
+}
+
+#Kunena span.kchildcount {
+	margin-left: 2px;
+	margin-right: 6px;
+	display: inline;
+	/* position: relative;
+	bottom: 2px;
+	letter-spacing: 1px; */
+	font-size: 0.833em;
+}
+
+#Kunena div.klatest-subject a {
+	
+}
+
+#Kunena div.klatest-subject-by {
+	
+}
+
+#Kunena span.newchar {
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .75em;
+	margin-left: 3px;
+}
+
+#Kunena div.kcc-subcat {
+	float: left;
+	display: inline-block;
+	vertical-align: top;
+}
+
+#Kunena div.kcc-subcat a {
+	font-size: .917em;
+}
+
+
+
+/* SHOW CATEGORY 
+----------------------------------------------------------------------------------------------- */
+
+#Kunena img.stickyicon,
+#Kunena img.attachicon {
+	float: right;
+	border: 0;
+	margin: 2px;
+}
+
+#Kunena img.catavatar {
+	width: 20px;
+	height: 20px;
+	margin-left: 4px;
+}
+
+#Kunena .kcontentheading {
+	font-weight: bold;
+	height: 25px;
+}
+
+#Kunena .kcontentheading span {
+	padding-left: 16px;
+}
+
+#Kunena .kcontenttablespacer {
+	border-left: 0px;
+	border-right: 0px;
+	line-height:0.5em;
+}
+
+#Kunena tr.ksectiontableentry1_stickymsg td,
+#Kunena tr.ksectiontableentry2_stickymsg td	{
+	text-align:left;
+	padding: 4px 8px;
+	vertical-align: middle;
+}
+#Kunena tr.ksectiontableentry1_stickymsg td.td-4,
+#Kunena tr.ksectiontableentry2_stickymsg td.td-4 {
+	text-align:center;
+}
+
+#Kunena td.td-1.center ,
+#Kunena td.td-2.center,
+#Kunena td.td-3.center,
+#Kunena td.td-4.center,
+#Kunena td.td-5.center,
+#Kunena td.td-6.center,
+#Kunena td.td-7.center {
+	text-align:center;
+	vertical-align:middle;
+}
+
+
+#Kunena table#kflattable tr.ksectiontableentry1 td.td-2,
+#Kunena table#kflattable tr.ksectiontableentry2 td.td-2,
+#Kunena table#kflattable tr.ksectiontableentry1 td.td-4,
+#Kunena table#kflattable tr.ksectiontableentry2 td.td-4,
+#Kunena table#kflattable tr.ksectiontableentry1 td.td-7,
+#Kunena table#kflattable tr.ksectiontableentry2 td.td-7 {
+	width: 1%;
+}
+
+#Kunena table#kflattable tr.ksectiontableentry1 td.td-6,
+#Kunena table#kflattable tr.ksectiontableentry2 td.td-6 {
+	width: 28%;
+}
+

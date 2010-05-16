@@ -352,6 +352,12 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 <!-- /Kunena Header --> <?php
 	CKunenaTools::loadTemplate('/profilebox.php');
 
+	$theme = $this->config->theme;
+	$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/'.$theme.'.css' );
+	
+	$buttonstyle = $kunena_config->buttonstyle;
+	$document->addStyleSheet ( KUNENA_TMPLTURL .'/css/button_'.$buttonstyle.'.css' );
+
 	switch ($func) {
 		case 'who' :
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');

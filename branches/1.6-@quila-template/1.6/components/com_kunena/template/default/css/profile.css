@@ -1,0 +1,328 @@
+@CHARSET "UTF-8";
+/**
+* @version $Id: kunena.forum.css 2442 2010-05-11 18:20:48Z dragan $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/
+
+
+/*
+USER PROFILE
+-------------------------------------------------------------------- */
+#Kunena .kprofile-left {
+	padding-right: 5px;
+}
+
+#Kunena .k-usrprofile-misc {
+	text-align: center;
+	margin: 0 auto;
+}
+
+
+/*
+MY PROFILE
+-------------------------------------------------------------------- */
+
+#Kunena .kmyprofile_menu a {
+	display: block;
+	padding: 2px 5px 3px 10px;
+	text-decoration: none;
+}
+#Kunena .kmyprofile_menu a:hover {
+	text-decoration: underline;
+}
+#Kunena .kmyprofile_menu_title {
+	font-weight: bold;
+}
+#Kunena .kmyprofile_menu_staff {
+	padding: 5px 10px;
+}
+#Kunena .kmyprofile_general td {
+	padding: 3px 5px;
+}
+
+/*
+NEW PROFILE
+-------------------------------------------------------------------- */
+#Kunena div#kprofile-container {padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
+#Kunena div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
+#Kunena div.avatar-lg { 
+	width: 200px; 
+	height: 200px; 
+	display: table-cell;
+	vertical-align:middle;
+	text-align:center;
+}
+#Kunena div.avatar-lg img {	 }
+#Kunena div#kprofile-stats { margin-top: 15px;}
+#Kunena div#kprofile-stats ul { margin: 0 0 0 3px; padding: 0;}
+#Kunena div#kprofile-stats ul li { list-style-type: none; padding-top: 5px; clear:both; font-size:.917em ;}
+#Kunena div#kprofile-stats ul li span.online-status-yes {
+	display:block; 
+	height: 16px; 
+	width: 70px;
+}
+#Kunena div#kprofile-stats ul li span.online-status-no {
+	display:block;  
+	height: 16px; 
+	width: 70px;
+}	
+div#kprofile-stats ul li span.rankname {
+	display:block; 
+	margin-right: 5px;
+	font-weight:bold;
+	float:left;
+}
+div#kprofile-stats ul li span.rank-admin {
+	display:block; 
+	height: 16px; 
+	width: 70px;
+	margin-right: 5px;
+	float:right;
+	margin-top: 0;
+}
+#Kunena div#kprofile-rightcol  { 
+	display: table;
+	margin-right: 10px;
+	margin-left: 210px;
+}
+#Kunena div#kprofile-rightcoltop  {width: 100%;}
+#Kunena div.kprofile-rightcol1 { 
+	width: 45%;
+}
+#Kunena div.kprofile-rightcol1 ul {margin: 0;padding: 0;}
+#Kunena div.kprofile-rightcol1 ul li,
+#Kunena div.kprofile-rightcol2 ul li { 
+	list-style-type: none !important; 
+	background: 0 none; 
+	padding-bottom: 8px;
+	padding-left: 0;
+}
+#Kunena div#kprofile-stats ul li { 
+	list-style-type: none !important; 
+	background: 0 none; 
+	padding-left: 0;
+}
+#Kunena span.location { 
+	display:block;  
+	height: 16px; 
+	width: 16px;
+}
+#Kunena span.gender-male { 
+	display:block; 
+	height: 16px; 
+	width: 16px;
+	margin:0 5px 5px 0;
+}
+#Kunena span.gender-female { 
+	display:block; 
+	height: 16px; 
+	width: 16px;
+	margin:0 5px 5px 0;
+}
+#Kunena span.gender-unknown { 
+	display:block; 
+	height: 16px; 
+	width: 16px;
+	margin:0 5px 5px 0;
+}
+#Kunena span.birthdate { 
+	display:block; 
+	height: 16px; 
+	width: 16px;
+}
+#Kunena span.website {
+	display:block; 
+	height: 16px; 
+	width: 16px;
+}
+#Kunena span.private {
+	display:block; 
+	height: 16px; 
+	width: 16px;
+}
+#Kunena span.email {
+	display:block;  
+	height: 16px; 
+	width: 16px;
+}
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.location { 
+	float:left;
+	display:block; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 10px;
+}
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-male { 
+	float:left;
+	margin-right: 10px;
+}
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-female { 
+	float:left;
+	margin-right: 10px;
+}
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.gender-unknown { 
+	float:left;
+	margin-right: 10px;
+}
+#Kunena div#kprofile-rightcol div.kprofile-rightcol1 ul li span.birthdate { 
+	float:left;
+	margin-right: 10px;
+}
+#Kunena div.kprofile-rightcol1 ul li span.bday-remind { 
+	display:inline-block; 
+	height: 16px; 
+	width: 16px;
+	vertical-align:middle;
+}
+#Kunena li.bd a {
+	margin-left: 10px;
+}
+#Kunena div.iconrow {
+	width: 121px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	float:left;
+}
+#Kunena div.iconrow span {
+	display:block;
+	width: 16px;
+	height: 16px;
+	float:left;
+	margin: 0 5px 5px 0;
+	border: 0 none;
+}
+
+
+#Kunena div.clrline {
+	clear:both; 
+	margin: 15px 0 20px 0; 
+	line-height: 10px;
+}
+#Kunena div#kprofile-rightcolbot { }
+#Kunena div.kprofile-rightcol1 h4 { margin:10px 0 0 0; padding: 0; font-size: 1em; font-weight:bold;}
+#Kunena div.kprofile-rightcol1 p { margin:0; padding: 0;}
+#Kunena div.kprofile-rightcol2 { float:right; width: 45%; margin-left: 10px;}
+#Kunena div.kprofile-rightcol2 ul {margin: 0;padding: 0;}
+#Kunena div.kprofile-rightcol2 ul li {list-style-type: none !important; padding-bottom: 8px;}
+#Kunena div.kprofile-rightcol2 ul li span.email {
+	float:left;
+	display:block; 
+	height: 16px; 
+	width: 16px;
+	margin-right: 5px;
+}
+#Kunena div.kprofile-rightcol2 ul li span.website {
+	float:left;
+	margin-right: 5px;
+}
+#Kunena dd.kprofile-modtools h4 {
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+#Kunena dd.kprofile-modtools ul li span {
+	margin-right: 15px;
+}
+#Kunena dd.kprofile-modtools ul li {
+	padding-bottom: 5px;
+}
+#Kunena li.usertype {
+	font-weight:bold;
+}
+#Kunena li.kprofile-rank {
+	line-height: 16px;
+	height: 16px;
+}
+#Kunena li.kprofile-rank img {
+	/* vertical-align:middle;
+	float:right;
+	padding-bottom: 2px; */
+}
+
+	
+/* Tabs
+----------------------------------*/
+
+#Kunena #kprofile-tabs {
+	width: 100%;
+	margin-top: 0px;
+}
+#Kunena dl.tabs {
+	float: left;
+	margin: 10px 0 -1px 0;
+	z-index: 50;
+}
+#Kunena dl.tabs dt {
+	float: left;
+	padding: 4px 10px;
+	margin-left: 3px;
+}
+#Kunena dl.tabs dt.open {
+	z-index: 100;
+}
+#Kunena div.current {
+	clear: both;
+	padding: 10px 10px;
+	overflow: auto;
+}
+#Kunena div.current dd {
+	padding: 0;
+	margin: 0;
+}
+
+#Kunena dd.kprofile-modtools ul {
+	margin:0;
+	padding:0;
+	margin-left: 5px;
+}
+#Kunena dd.kprofile-modtools ul li {
+	list-style-type:none;
+}
+#Kunena dd.kprofile-modtools .kcheckbox {
+	float:left;
+	clear:left;
+}
+#Kunena dd.kprofile-modtools label {
+	float:left;
+	clear:right;
+	margin: 3px 10px 10px 5px;
+}
+#Kunena input.kbutton {
+	margin: 10px 0 0 5px;
+}
+#Kunena form#jumpto input.kbutton {
+	margin: 5px;
+}
+#Kunena table.klist_top td.klist_markallcatsread input.kbutton {
+	margin-top: 0;
+}
+	
+/* SLIDERS
+----------------------------------------------------------------------------------------------- */
+
+#Kunena span#kprofilebox_status {
+	font-weight:bold;
+	display:block;
+	height: 14px; 
+	width: 15px;
+}
+#Kunena #kprofilebox_toggle {
+	display:block;
+	height: 15px;
+	width: 15px;
+	margin-right: 1px;
+	margin-top: -14px;
+}
+
+
+

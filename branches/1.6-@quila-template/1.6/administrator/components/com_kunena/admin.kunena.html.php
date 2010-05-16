@@ -915,6 +915,26 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH_DESC') ?>
 						</td>
 					</tr>
+					<?php if ($kunena_config->template == 'default') { ?>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_COLOR_SELECT') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['theme'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_COLOR_SELECT_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_BUTTONSTYLE_SELECT') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['buttonstyle'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_BUTTONSTYLE_SELECT_DESC') ?>
+						</td>
+					</tr>
+					<?php } ?>
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AV_POSITION') ?>
 						</td>

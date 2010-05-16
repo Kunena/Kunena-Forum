@@ -1,0 +1,270 @@
+@CHARSET "UTF-8";
+/**
+* @version $Id: kunena.forum.css 2442 2010-05-11 18:20:48Z dragan $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+* Based on FireBoard Component
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/
+
+
+/* FORUM BUTTONS IMAGES BASED
+----------------------------------------------------------------------------------------------- */
+
+/* Goto Up/down buttons */
+
+#Kunena a.buttongoto {
+}
+
+#Kunena a.buttongoto span.top {
+	background: url("../images/icons/top_arrow.gif") no-repeat left top;
+	height: 18px;
+	width: 18px;
+	display: block;
+}
+
+#Kunena a.buttongoto span.bottom {
+	background: url("../images/icons/bottom_arrow.gif") no-repeat left top;
+	height: 18px;
+	width: 18px;
+	display: block;
+}
+
+#Kunena a.buttoncomm,
+#Kunena a.buttonuser,
+#Kunena a.buttonmod,
+#Kunena a.buttongen,
+#Kunena span.buttononline-yes,
+#Kunena span.buttononline-no {
+	/*color: #FFF;*/
+	text-transform: uppercase;
+	font-size: .917em;
+	font-family: Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	float: right;
+	cursor: pointer;
+	line-height: 145%;
+	border: none;
+}
+
+#Kunena a.buttoncomm.btn-left,
+#Kunena a.buttonuser.btn-left,
+#Kunena a.buttongen.btn-left,
+#Kunena span.buttononline-yes.btn-left,
+#Kunena span.buttononline-no.btn-left,
+#Kunena a.buttoncomm span,
+#Kunena a.buttonuser span,
+#Kunena a.buttongen span,
+#Kunena span.buttononline-yes span,
+#Kunena span.buttononline-no span {
+	float: left;
+	background: #bbbbbb;
+	text-shadow: -1px 1px 1px #dddddd;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+#Kunena a.buttonmod.btn-left,
+#Kunena a.buttonmod span {
+	float: left;
+	background: #777777;
+	text-shadow: -1px -1px 1px #888888;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+
+#Kunena a.buttoncomm.btn-left:hover,
+#Kunena a.buttonuser.btn-left:hover,
+#Kunena a.buttongen.btn-left:hover,
+#Kunena span.buttononline-yes.btn-left:hover,
+#Kunena span.buttononline-no.btn-left:hover,
+#Kunena a.buttoncomm span:hover,
+#Kunena a.buttonuser span:hover,
+#Kunena a.buttongen span:hover,
+#Kunena span.buttononline-yes span:hover,
+#Kunena span.buttononline-no span:hover {
+	background: #666666;
+	color: #ffffff;
+	text-shadow: -1px 1px 1px #cccccc;
+}
+
+#Kunena a.buttonmod.btn-left:hover,
+#Kunena a.buttonmod span:hover {
+	background: #bbbbbb;
+	color: #ffffff;
+	text-shadow: -1px 1px 1px #999999;
+}
+
+#Kunena a.buttoncomm span span,
+#Kunena a.buttonuser span span,
+#Kunena a.buttonmod span span,
+#Kunena a.buttongen span span,
+#Kunena span.buttononline-yes span span,
+#Kunena span.buttononline-no span span {
+	height: 15px;
+	padding: 0 7px 0 7px;
+}
+
+#Kunena a.buttoncomm span span:hover,
+#Kunena a.buttonuser span span:hover,
+#Kunena a.buttonmod span span:hover {
+	text-decoration: none;
+}
+
+/* Communication buttons */
+
+#Kunena a.buttoncomm {
+	/*background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;*/
+}
+
+#Kunena a.buttoncomm span.reply {
+	float: left;
+	/*background: url("../images/buttons/btn-left-reply.gif") no-repeat left top;*/
+}
+#Kunena a.buttoncomm span.quote {
+	float: left;
+	/*background: url("../images/buttons/btn-left-quote.gif") no-repeat left top;*/
+}
+#Kunena a.buttoncomm span.newtopic {
+	float: left;
+/*	background: url("../images/buttons/btn-left-newtopic.gif") no-repeat left top;*/
+}
+
+#Kunena a.buttoncomm span span {
+	/*background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;*/
+}
+
+
+/* User Action buttons */
+
+#Kunena a.buttonuser {
+	/*background: url("../images/buttons/btn-bg-user.gif") repeat-x left top;*/
+}
+
+#Kunena a.buttonuser span.favorite {
+	float: left;
+	/*background: url("../images/buttons/btn-left-favorite.gif") no-repeat left top;*/
+}
+#Kunena a.buttonuser span.subscribe {
+	float: left;
+	/*background: url("../images/buttons/btn-left-subscribe.gif") no-repeat left top;*/
+}
+#Kunena a.buttonuser span.markread {
+	float: left;
+	/*background: url("../images/buttons/btn-left-markread.gif") no-repeat left top;*/
+}
+#Kunena a.buttonuser span.report {
+	float: left;
+	/*background: url("../images/buttons/btn-left-report.gif") no-repeat left top;*/
+}
+#Kunena a.buttonuser span span {
+/*	background: url("../images/buttons/btn-right-user.gif") no-repeat right top;*/
+}
+
+/* Moderator Action buttons */
+
+#Kunena a.buttonmod {
+	/*background: url("../images/buttons/btn-bg-mod.gif") repeat-x left top;*/
+}
+
+#Kunena a.buttonmod span.merge {
+	float: left;
+	/*background: url("../images/buttons/btn-left-merge.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.edit {
+	float: left;
+	/*background: url("../images/buttons/btn-left-edit.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.delete {
+	float: left;
+	/*background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.permdelete {
+	float: left;
+	/*background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.undelete {
+	float: left;
+	/*background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.move {
+	float: left;
+	/*background: url("../images/buttons/btn-left-move.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.sticky {
+	float: left;
+	/*background: url("../images/buttons/btn-left-sticky.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.lock {
+	float: left;
+	/*background: url("../images/buttons/btn-left-lock.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.split {
+	float: left;
+	/*background: url("../images/buttons/btn-left-split.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span.approve {
+	float: left;
+	/*background: url("../images/buttons/btn-left-moderate.gif") no-repeat left top;*/
+}
+
+#Kunena a.buttonmod span.moderate {
+	float: left;
+	/*background: url("../images/buttons/btn-left-moderate.gif") no-repeat left top;*/
+}
+#Kunena a.buttonmod span span {
+	/*background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;*/
+}
+
+
+/* Generic Buttons */
+#Kunena a.buttongen {
+	/*background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;*/
+}
+
+#Kunena a.buttongen span.gen {
+	float: left;
+/*	background: url("../images/buttons/btn-left-gen.gif") no-repeat left top;*/
+}
+#Kunena a.buttongen span span {
+	/*background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;*/
+}
+
+
+/* Online Indicator */
+#Kunena span.buttononline-yes {
+/*	background: url("../images/buttons/btn-bg-mod.gif") repeat-x left top;*/
+}
+
+#Kunena span.buttononline-yes span.online-yes {
+	float: left;
+	/*background: url("../images/buttons/btn-left-modgen.gif") no-repeat left top;*/
+}
+#Kunena span.buttononline-yes span span {
+	/*background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;*/
+}
+
+#Kunena span.buttononline-no {
+	/*background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;*/
+}
+
+#Kunena span.buttononline-no span.online-no {
+	float: left;
+/*	background: url("../images/buttons/btn-left-gen.gif") no-repeat left top;*/
+}
+#Kunena span.buttononline-no span span {
+	/*background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;*/
+}

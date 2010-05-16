@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+15-May-2010 810
+^ [#19356] css change part 2
+
 14-May-2010 810
 ^ [#19356] Minor CSS change, menu grey changed to light blue
 ^ [#19356] Grey Images changed to blue color

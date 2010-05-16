@@ -21,7 +21,7 @@ Dark blue color: 			#5388B4			RGB: 83/136/180
 Medium blue color: 			#609FBF			RGB: 96/159/191
 Light grey color:			#F2F1EE 		RGB: 242/241/238
 Medium grey color:			#999999 		RGB: 153/153/153
-Dark grey color:			#737373 		RGB: 115/115/115
+Dark grey color:			#9dbad2 		RGB: 115/115/115
 Border grey color:			#BFC3C6 		RGB: 191/195/198
 Yellow highlight:			#FFFFCC 		RGB: 255/255/204
 Grey text color:			#999999 		RGB: 153/153/153
@@ -241,7 +241,7 @@ PX		EM			PCT			PT
 	display: block;
 }
 #Kunena div.kblock div.kactions {
-	background: #737373;
+	background: #9dbad2;
 	color:#FFFFFF;
 	padding: 5px 10px;
 }
@@ -354,7 +354,7 @@ PX		EM			PCT			PT
 	text-align:center;
 }
 #Kunena tr.ksth {
-	background: #737373;
+	background: #9dbad2;
 	/* background: #8CABC8 url("../images/backgrounds/cat_title_head_bg.gif") repeat-x top left; */
 	color: #fff;
 	font-size: 1em;
@@ -524,13 +524,31 @@ PX		EM			PCT			PT
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .admin {
-	color: #FF0000 !important;
-	font-weight: bold;
+	color: #A95618 !important;
+}
+
+#Kunena .globalmoderator {
+	color: #008000 !important;
 }
 
 #Kunena .moderator {
 	color: #84618B !important;
-	font-weight: bold;
+}
+
+#Kunena .user {
+	color: #5388B4 !important;
+}
+
+#Kunena .guest {
+	color: #666666 !important;
+}
+
+#Kunena .banned {
+	color: #A39D49 !important;
+}
+
+#Kunena .banned-red {
+	color: #ff0000 !important;
 }
 
 /* MENU
@@ -621,10 +639,11 @@ PX		EM			PCT			PT
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em; 
 	color: #FFF;
-	/* font-weight: bold; */
+	font-weight: bold; 
 	line-height: 2.3em;
 	text-indent: 0;
 }
+
 
 #Kunena #Kunena_tab a:hover,
 #Kunena #Kunena_tab li.Kunena_item_active a	{
@@ -1505,7 +1524,7 @@ PX		EM			PCT			PT
 #Kunena .kcontentheading {
 	background: #f2f1ee;
 	font-weight: bold;
-	color: #737373;
+	color: #9dbad2;
 	border-bottom: 3px solid #BFC3C6;
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
@@ -1591,7 +1610,7 @@ PX		EM			PCT			PT
 #Kunena tr.ksth th.view-th {
 	text-align: right;
 	padding-right: 10px;
-	background: #737373;
+	background: #9dbad2;
 }
 
 #Kunena th.ksectiontableheader {
@@ -1676,7 +1695,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.smallicons {
-	color: #737373;
+	color: #9dbad2;
 	text-align: center;
 	margin: 20px;
 }
@@ -1711,7 +1730,7 @@ PX		EM			PCT			PT
 
 #Kunena span.msgkarma {
 	font-weight: bold;
-	color: #737373;
+	color: #9dbad2;
 	text-decoration: none;
 	white-space: nowrap;
 	float: right;
@@ -1815,6 +1834,20 @@ PX		EM			PCT			PT
 
 #Kunena div.kmsgtext_code {
 	overflow: auto;
+	margin: 10px;
+}
+
+#Kunena div.kmsgtext_code-header {
+	margin:0;
+	padding: 10px 0 5px;
+	border-bottom: 1px solid #555555;
+}
+#Kunena div.kmsgtext_code-header span {
+	font-weight:bold;
+}
+#Kunena div.kmsgtext_code-body {
+	padding: 10px 0;
+	border-bottom: 1px solid #555555;
 }
 
 #Kunena div.msgtext pre,
@@ -1839,7 +1872,7 @@ PX		EM			PCT			PT
 
 #Kunena div.kfile_attachment {
 	background: #BFC3C6;
-	border: 1px dotted #737373;
+	border: 1px dotted #9dbad2;
 	padding: 10px;
 	margin-bottom: 10px;
 }
@@ -3305,7 +3338,7 @@ FORUM TOOLS
 	position: absolute;
 	right: 0px;
 	top: 20px;
-	background: #737373;
+	background: #9dbad2;
 	overflow: hidden;
 	width: 150px;
 }
@@ -3389,6 +3422,35 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 }
 #Kunena .kcredits_more {
 	padding: 10px 0 10px 20px;
+}
+
+#Kunena .statsicon {
+	background: url("../images/icons/stats.png") no-repeat center top;
+	min-width: 32px;
+	min-height: 32px;
+}
+
+/* 		WHO IS ONLINE
+------------------------------------------------------------------- */
+
+#Kunena .whoicon {
+	background: url("../images/icons/who_is_online.png") no-repeat center top;
+	min-width: 32px;
+	min-height: 32px;
+}
+
+#Kunena .wholegend {
+	border-top: 1px dotted #CCCCCC;
+	width: 100%;
+	margin-top: 5px;
+	padding-top: 5px;
+}
+
+#Kunena .whoonline {
+	border-bottom: 1px dotted #CCCCCC;
+	width: 100%;
+	/*margin-top: 5px;*/
+	padding-bottom: 5px;
 }
 
 /*

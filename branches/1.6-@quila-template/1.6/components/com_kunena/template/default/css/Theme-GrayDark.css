@@ -186,7 +186,7 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena #Kunena_top td {
-	background: #252525;
+	background: transparent;
 	color: #666666;
 	border-color: #111111;
 }

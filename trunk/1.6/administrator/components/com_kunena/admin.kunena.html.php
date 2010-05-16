@@ -2684,7 +2684,7 @@ function textCounter(field, target) {
 				echo $type ? '<a href="' . $attach_live_path . '" target="_blank" title="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_ENLARGE') . '"><img src="' . kescape($attach_live_path) . '" width="80" heigth="80" border="0"></a>' : '<a href="' . kescape($attach_live_path) . '" title="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '" alt="' . JText::_('COM_KUNENA_A_IMGB_DOWNLOAD') . '"><img src="../administrator/components/com_kunena/images/kfile.png" border="0"></a>';
 				echo '</td></tr><tr><td style="text-align: center">';
 				echo '<br /><small>';
-				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . kescape($filename) . '<br />';
+				echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_NAME') . ': </strong> ' . kescape(CKunenaTools::shortenFileName($filename)) . '<br />';
 				if (is_file($attach_path)) {
 					echo '<strong>' . JText::_('COM_KUNENA_A_IMGB_SIZE') . ': </strong> ' . @filesize ( $attach_path ) . ' bytes<br />';
 					$type ? list ( $width, $height ) = @getimagesize ( $attach_path ) : '';

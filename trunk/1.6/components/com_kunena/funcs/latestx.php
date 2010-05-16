@@ -359,8 +359,7 @@ class CKunenaLatestX {
 				FROM #__kunena_messages as m
 				JOIN (SELECT thread
 					FROM #__kunena_messages
-					WHERE time >'$this->querytime' AND parent=0 AND
-						hold=0 AND moved=0 AND catid IN ({$this->session->allowed})
+					WHERE parent=0 AND hold=0 AND moved=0 AND catid IN ({$this->session->allowed})
 				) as t ON m.thread = t.thread
 				WHERE m.hold=0 AND m.moved=0
 				GROUP BY 1
@@ -378,8 +377,7 @@ class CKunenaLatestX {
 				FROM #__kunena_messages as m
 				JOIN (SELECT thread
 					FROM #__kunena_messages
-					WHERE time >'{$this->querytime}' AND parent=0 AND
-						hold=0 AND moved=0 AND catid IN ({$this->session->allowed})
+					WHERE parent=0 AND hold=0 AND moved=0 AND catid IN ({$this->session->allowed})
 				) as t ON m.thread = t.thread
 				WHERE m.hold=0 AND m.moved=0
 				GROUP BY 1

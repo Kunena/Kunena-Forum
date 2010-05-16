@@ -44,9 +44,9 @@ $kunena_config =& CKunenaConfig::getInstance();
                           <li class="kteammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> Kunena developer and admin of the world largest Yamaha Star VMax community at <a href="http://www.starVmax.com/forum/" target='_blank' rel='follow'>www.starVmax.com/forum/</a></li>
                           <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2171" target='_blank' rel='follow'>LDA</a> Kunena moderator</li>
                           <li class="kteammember"><a href="http://www.herppi.net" target='_blank' rel='follow'>Matias</a> Kunena developer</li>
+                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2198" target='_blank' rel='follow'>Rich</a> Kunena moderator</li>
                           <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=114" target='_blank' rel='follow'>severdia</a> Kunena developer</li>
                           <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=997" target='_blank' rel='follow'>sozzled</a> Kunena moderator</li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=314" target='_blank' rel='follow'>Spock</a> Kunena moderator</li>
                           <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=1288" target='_blank' rel='follow'>xillibit</a> Kunena developer</li>
                           <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=447" target='_blank' rel='follow'>@quila</a> Kunena contributor</li>
                           <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=634" target='_blank' rel='follow'>810</a> Kunena contributor</li>

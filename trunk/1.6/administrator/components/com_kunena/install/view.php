@@ -62,6 +62,9 @@ class KunenaViewInstall extends JView
 		if (!empty($this->requirements->fail)) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_FAILED'), 'error');
 		else if (!empty($this->versionWarning)) $app->enqueueMessage($this->versionWarning, 'notice');
 		JRequest::setVar('hidemainmenu', 1);
+
+		$this->assign('go', JRequest::getCmd('go', ''));
+		
 		parent::display($tpl);
 	}
 
@@ -92,6 +95,7 @@ class KunenaViewInstall extends JView
 	}
 
 	function getActionURL() {
+		if ($this->error) return "location.replace('index.php?option=com_kunena&view=install&task=restart');";
 		return "location.replace('index.php?option=com_kunena&view=install&task=install');";
 	}
 

@@ -61,6 +61,11 @@ class KunenaControllerInstall extends JController {
 		}
 	}
 
+	public function restart() {
+		$this->model->setStep ( 0 );
+		$this->install();
+	}
+	
 	public function install() {
 		// Check requirements
 		$this->checkTimeout ();
@@ -84,8 +89,11 @@ class KunenaControllerInstall extends JController {
 			$this->next ();
 			$error = $this->model->getError ();
 			$stop = ($this->checkTimeout () || $this->step <= 2 || ($this->step >= count ( $this->steps ) - 1));
-			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
 		} while ( ! $stop && ! $error );
+		if ( ( $this->step < count ( $this->steps ) - 1) && ! $error ) 
+			$this->setRedirect ( 'index.php?option=com_kunena&view=install&go=next' );
+		else 
+			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
 	}
 	
 	function abort() {

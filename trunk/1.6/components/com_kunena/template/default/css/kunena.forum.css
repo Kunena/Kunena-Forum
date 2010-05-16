@@ -818,7 +818,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena .klist_pages_all {
-	width: 20%;
+	width: 10%;
 	border-left: 1px solid #BFC3C6;
 	color: #666666;
 	font-family: Arial, Helvetica, sans-serif;
@@ -927,7 +927,7 @@ PX		EM			PCT			PT
 	border:0; 
 	margin:0; 
 	padding:0 5px 0 0;
-	width: 70px;
+	width: 240px;
 	
 }
 #Kunena .kpagination li{
@@ -3788,8 +3788,6 @@ div#kprofile-stats ul li span.rank-admin {
 	font-weight:bold;
 }
 #Kunena li.kprofile-rank {
-	line-height: 16px;
-	height: 16px;
 }
 #Kunena li.kprofile-rank img {
 	/* vertical-align:middle;

@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$catid = JRequest::getInt ( 'catid', 0 );
+$catid = isset($this->catid) ? $this->catid : 0;
 
 $options = array ();
 $options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );

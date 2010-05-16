@@ -35,6 +35,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 14-May-2010 810
+^ [#19356] css fixes pagination
+
+14-May-2010 810
 # [#19288] Fix regression: help/rules page Undefined property: KunenaApp::$catid
 ^ [#19312] Language string added
 ^ [#19356] Minor HTML/CSS fixes in the backend

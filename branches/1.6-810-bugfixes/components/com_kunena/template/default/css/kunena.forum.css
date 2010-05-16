@@ -524,13 +524,31 @@ PX		EM			PCT			PT
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .admin {
-	color: #FF0000 !important;
-	font-weight: bold;
+	color: #A95618 !important;
+}
+
+#Kunena .globalmoderator {
+	color: #008000 !important;
 }
 
 #Kunena .moderator {
 	color: #84618B !important;
-	font-weight: bold;
+}
+
+#Kunena .user {
+	color: #5388B4 !important;
+}
+
+#Kunena .guest {
+	color: #666666 !important;
+}
+
+#Kunena .banned {
+	color: #A39D49 !important;
+}
+
+#Kunena .banned-red {
+	color: #ff0000 !important;
 }
 
 /* MENU
@@ -800,7 +818,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena .klist_pages_all {
-	width: 20%;
+	width: 10%;
 	border-left: 1px solid #BFC3C6;
 	color: #666666;
 	font-family: Arial, Helvetica, sans-serif;
@@ -909,7 +927,7 @@ PX		EM			PCT			PT
 	border:0; 
 	margin:0; 
 	padding:0 5px 0 0;
-	width: 70px;
+	width: 240px;
 	
 }
 #Kunena .kpagination li{
@@ -1815,6 +1833,20 @@ PX		EM			PCT			PT
 
 #Kunena div.kmsgtext_code {
 	overflow: auto;
+	margin: 10px;
+}
+
+#Kunena div.kmsgtext_code-header {
+	margin:0;
+	padding: 10px 0 5px;
+	border-bottom: 1px solid #555555;
+}
+#Kunena div.kmsgtext_code-header span {
+	font-weight:bold;
+}
+#Kunena div.kmsgtext_code-body {
+	padding: 10px 0;
+	border-bottom: 1px solid #555555;
 }
 
 #Kunena div.msgtext pre,
@@ -3389,6 +3421,35 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 }
 #Kunena .kcredits_more {
 	padding: 10px 0 10px 20px;
+}
+
+#Kunena .statsicon {
+	background: url("../images/icons/stats.png") no-repeat center top;
+	min-width: 32px;
+	min-height: 32px;
+}
+
+/* 		WHO IS ONLINE
+------------------------------------------------------------------- */
+
+#Kunena .whoicon {
+	background: url("../images/icons/who_is_online.png") no-repeat center top;
+	min-width: 32px;
+	min-height: 32px;
+}
+
+#Kunena .wholegend {
+	border-top: 1px dotted #CCCCCC;
+	width: 100%;
+	margin-top: 5px;
+	padding-top: 5px;
+}
+
+#Kunena .whoonline {
+	border-bottom: 1px dotted #CCCCCC;
+	width: 100%;
+	/*margin-top: 5px;*/
+	padding-bottom: 5px;
 }
 
 /*

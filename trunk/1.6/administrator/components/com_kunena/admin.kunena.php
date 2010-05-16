@@ -319,6 +319,11 @@ switch ($task) {
 		showsmilies ( $option );
 
 		break;
+		
+	case "uploadsmilies" :
+		uploadsmilies ( $option, $cid [0] );
+
+		break;
 
 	case "editsmiley" :
 		editsmiley ( $option, $cid [0] );
@@ -342,6 +347,11 @@ switch ($task) {
 
 	case 'ranks' :
 		showRanks ( $option );
+
+		break;
+		
+	case "uploadranks" :
+		uploadranks ( $option, $cid [0] );
 
 		break;
 
@@ -1838,6 +1848,108 @@ function showsmilies($option) {
 
 }
 
+
+	/* *
+	 * upload smilies
+	 */
+	function uploadsmilies()
+	{
+		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_app = & JFactory::getApplication ();
+		// load language fo component media
+		JPlugin::loadLanguage( 'com_media' );
+		$params =& JComponentHelper::getParams('com_media');
+		require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_media'.DS.'helpers'.DS.'media.php' );
+		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.DS.'components'.DS.'com_kunena'.DS.'template'.DS.$kunena_config->template.DS.'images');
+		// Check for request forgeries
+		JRequest::checkToken( 'request' ) or jexit( 'Invalid Token' );
+
+		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
+		$foldersmiley	= JRequest::getVar( 'foldersmiley', 'emoticons', '', 'path' );
+		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
+		$return			= JRequest::getVar( 'return-url', null, 'post', 'base64' );
+		$err			= null;
+
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+
+		// Make the filename safe
+		jimport('joomla.filesystem.file');
+		$file['name']	= JFile::makeSafe($file['name']);
+
+		if (isset($file['name'])) {
+			$filepathsmiley = JPath::clean(COM_KUNENA_MEDIA_BASE.DS.$foldersmiley.DS.strtolower($file['name']));
+
+			if (!MediaHelper::canUpload( $file, $err )) {
+				if ($format == 'json') {
+					jimport('joomla.error.log');
+					$log = &JLog::getInstance('upload.error.php');
+					$log->addEntry(array('comment' => 'Invalid: '.$filepathsmiley.': '.$err));
+					header('HTTP/1.0 415 Unsupported Media Type');
+					jexit('Error. Unsupported Media Type!');
+				} else {
+					JError::raiseNotice(100, JText::_($err));
+					// REDIRECT
+					if ($return) {
+						$kunena_app->redirect(base64_decode($return));
+					}
+					return;
+				}
+			}
+
+			if (JFile::exists($filepathsmiley)) {
+				if ($format == 'json') {
+					jimport('joomla.error.log');
+					$log = &JLog::getInstance('upload.error.php');
+					$log->addEntry(array('comment' => 'File already exists: '.$filepathsmiley));
+					header('HTTP/1.0 409 Conflict');
+					jexit('Error. File already exists');
+				} else {
+					JError::raiseNotice(100, JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_EXIST'));
+					// REDIRECT
+					if ($return) {
+						$kunena_app->redirect(base64_decode($return));
+					}
+					return;
+				}
+			}
+
+			if (!JFile::upload($file['tmp_name'], $filepathsmiley)) {
+				if ($format == 'json') {
+					jimport('joomla.error.log');
+					$log = &JLog::getInstance('upload.error.php');
+					$log->addEntry(array('comment' => 'Cannot upload: '.$filepathsmiley));
+					header('HTTP/1.0 400 Bad Request');
+					jexit('Error. Unable to upload file');
+				} else {
+					JError::raiseWarning(100, JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_ERROR_UNABLE'));
+					// REDIRECT
+					if ($return) {
+						$kunena_app->redirect(base64_decode($return));
+					}
+					return;
+				}
+			} else {
+				if ($format == 'json') {
+					jimport('joomla.error.log');
+					$log = &JLog::getInstance();
+					$log->addEntry(array('comment' => $foldersmiley));
+					jexit('Upload complete');
+				} else {
+					$kunena_app->enqueueMessage(JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD_SUCCESS'));
+					// REDIRECT
+					if ($return) {
+						$kunena_app->redirect(base64_decode($return));
+					}
+					return;
+				}
+			}
+		} else {
+			$kunena_app->redirect('index.php', 'Invalid Request', 'error');
+		}
+	}
+
 function editsmiley($option, $id) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_db->setQuery ( "SELECT * FROM #__kunena_smileys WHERE id = $id" );
@@ -1986,6 +2098,109 @@ function showRanks($option) {
 	html_Kunena::showRanks ( $option, $ranks, $pageNavSP, $order, $rankpath );
 
 }
+
+
+	/* *
+	 * upload ranks
+	 */
+	function uploadranks()
+	{
+		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_app = & JFactory::getApplication ();
+		// load language fo component media
+		JPlugin::loadLanguage( 'com_media' );
+		$params =& JComponentHelper::getParams('com_media');
+		require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_media'.DS.'helpers'.DS.'media.php' );
+		define('COM_KUNENA_MEDIA_BASE', JPATH_ROOT.DS.'components'.DS.'com_kunena'.DS.'template'.DS.$kunena_config->template.DS.'images');
+		// Check for request forgeries
+		JRequest::checkToken( 'request' ) or jexit( 'Invalid Token' );
+
+		$file 			= JRequest::getVar( 'Filedata', '', 'files', 'array' );
+		$folderranks	= JRequest::getVar( 'folderranks', 'ranks', '', 'path' );
+		$format			= JRequest::getVar( 'format', 'html', '', 'cmd');
+		$return			= JRequest::getVar( 'return-url', null, 'post', 'base64' );
+		$err			= null;
+
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+
+		// Make the filename safe
+		jimport('joomla.filesystem.file');
+		$file['name']	= JFile::makeSafe($file['name']);
+
+		if (isset($file['name'])) {
+			$filepathranks = JPath::clean(COM_KUNENA_MEDIA_BASE.DS.$folderranks.DS.strtolower($file['name']));
+
+			if (!MediaHelper::canUpload( $file, $err )) {
+				if ($format == 'json') {
+					jimport('joomla.error.log');
+					$log = &JLog::getInstance('upload.error.php');
+					$log->addEntry(array('comment' => 'Invalid: '.$filepathranks.': '.$err));
+					header('HTTP/1.0 415 Unsupported Media Type');
+					jexit('Error. Unsupported Media Type!');
+				} else {
+					JError::raiseNotice(100, JText::_($err));
+					// REDIRECT
+					if ($return) {
+						$kunena_app->redirect(base64_decode($return));
+					}
+					return;
+				}
+			}
+
+			if (JFile::exists($filepathranks)) {
+				if ($format == 'json') {
+					jimport('joomla.error.log');
+					$log = &JLog::getInstance('upload.error.php');
+					$log->addEntry(array('comment' => 'File already exists: '.$filepathranks));
+					header('HTTP/1.0 409 Conflict');
+					jexit('Error. File already exists');
+				} else {
+					JError::raiseNotice(100, JText::_('COM_KUNENA_A_RANKS_UPLOAD_ERROR_EXIST'));
+					// REDIRECT
+					if ($return) {
+						$kunena_app->redirect(base64_decode($return));
+					}
+					return;
+				}
+			}
+
+			if (!JFile::upload($file['tmp_name'], $filepathranks)) {
+				if ($format == 'json') {
+					jimport('joomla.error.log');
+					$log = &JLog::getInstance('upload.error.php');
+					$log->addEntry(array('comment' => 'Cannot upload: '.$filepathranks));
+					header('HTTP/1.0 400 Bad Request');
+					jexit('Error. Unable to upload file');
+				} else {
+					JError::raiseWarning(100, JText::_('COM_KUNENA_A_RANKS_UPLOAD_ERROR_UNABLE'));
+					// REDIRECT
+					if ($return) {
+						$kunena_app->redirect(base64_decode($return));
+					}
+					return;
+				}
+			} else {
+				if ($format == 'json') {
+					jimport('joomla.error.log');
+					$log = &JLog::getInstance();
+					$log->addEntry(array('comment' => $filepathranks));
+					jexit('Upload complete');
+				} else {
+					$kunena_app->enqueueMessage(JText::_('COM_KUNENA_A_RANKS_UPLOAD_SUCCESS'));
+					// REDIRECT
+					if ($return) {
+						$kunena_app->redirect(base64_decode($return));
+					}
+					return;
+				}
+			}
+		} else {
+			$kunena_app->redirect('index.php', 'Invalid Request', 'error');
+		}
+	}
+
 
 function rankpath() {
 	$rankpath ['live'] = KUNENA_URLRANKSPATH;

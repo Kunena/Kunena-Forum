@@ -205,6 +205,6 @@ endif;
 ?>
 <div class="clr"></div>
 <?php
-$this->displayStats ();
 $this->displayWhoIsOnline ();
+$this->displayStats ();
 ?>

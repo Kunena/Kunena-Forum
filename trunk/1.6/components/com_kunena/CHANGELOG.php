@@ -34,12 +34,33 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+16-May-2010 Matias
+^ [#15886] Merged revisions 2477 from /branches/1.6-@quila-bugfix with changes
+
 15-May-2010 Matias
 ^ [#20444] Convert our database tables to jos_kunena
 ^ [#20444] Add jos_fb to jos_kunena migration to installer, while keeping backup for K1.5
 ^ [#20444] Strip slashes from DB and remove all calls for addslashes() and stripslashes()
 # [#20038] Basic Joomla 1.6 support: Installer now redirects to our own installer
 # [#20444] Fix migration from J1.5: Attachments table conversion failed
+
+14-May-2010 @quila
+# [#19288] Fix regression in language file - Who page.
+# [#19288] Fix regression - Avatar is too large in top and bottom avatar position.
+# [#19288] Fix regression - Number of Popular Polls in statistics.
+# [#19288] Fix regression in profile: UddeIM Integration - PM Icon messed up in IE8.
+# [#19288] Fix regression - List of Allowed file exstensions is not in tooltip in post page.
+^ [#19345] Increased maxlenth for Poll Title (25 -> 100) and Options (25 -> 50), and added size to input.
+# [#19356] Fixed template listcat.php. Aligment issue if there are no posts.
++ [#19345] Restyled Frontstats plugin - added stats icon.
++ [#19345] Restyled Who Is Online plugin.
++ [#19345] Added User Color Code Legend in Who Is Online plugin.
++ [#19345] Added more Color Code for Global Moderator, Users and Guests (not working).
++ [#19758] Added function for upload Emoticons in the backend Emoticon Manager.
++ [#19758] Added function for upload Rank Image in the backend Rank Manager.
+^ [#19288] Kunena Header table moved from kunena.php to profilebox.php to improve template design.
+^ [#19288] Added rss icon in the icons.php to improve template design.
+^ [#19288] Removed rigid table from "Code" in kunena.parser.php and added class to improve template design.
 
 14-May-2010 Matias
 ^ [#15886] Merged revisions 2437-2450 from /branches/1.6-xillibit with changes

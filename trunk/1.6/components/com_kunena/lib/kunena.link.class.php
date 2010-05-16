@@ -181,12 +181,18 @@ class CKunenaLink {
 
 	function GetProfileLink($userid, $name, $title ='', $rel = 'nofollow', $class = '') {
 		if ($userid > 0) {
-			if (CKunenaTools::isAdmin ( $userid )) {
+					if (CKunenaTools::isAdmin ( $userid )) {
 				$class = 'admin';
+// TODO: make this to work
+//			} else if (CKunenaTools::isModerator ( $userid, true )) {
+//				$class = 'globalmoderator';
 			} else if (CKunenaTools::isModerator ( $userid )) {
 				$class = 'moderator';
+			} else if ($userid != 0) {
+				$class = 'user';
 			} else {
-				$class = '';
+// TODO: doesn't work
+				$class = 'guest';
 			}
 			$link = CKunenaLink::GetProfileURL ( $userid );
 			if (! empty ( $link ))

@@ -131,7 +131,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			<div id="kpoll_hide_not_allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
 			<?php echo JText::_('COM_KUNENA_POLL_TITLE');
 			?>&nbsp;<input type="text" id="kpolltitle" name="poll_title"
-				maxlength="25"
+				maxlength="100" size="40"
 				value="<?php if(isset($this->polldatasedit[0]->title)) { echo $this->polldatasedit[0]->title; } ?>"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />

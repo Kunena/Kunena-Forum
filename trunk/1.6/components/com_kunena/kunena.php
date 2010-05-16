@@ -314,7 +314,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		}
 	}
 	?>
-<!-- Kunena Header -->
+
 <div id="Kunena"><?php
 	if ($kunena_config->board_offline) {
 		?>
@@ -322,34 +322,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		echo JText::_('COM_KUNENA_FORUM_IS_OFFLINE')?></span> <?php
 	}
 	?>
-<table width="100%" border="0" cellspacing="0" cellpadding="0"
-	id="Kunena_top">
-	<tr>
-		<td align="left"><?php
-	// display Kunena menu if present
-	if (JDocumentHTML::countModules ( 'kunena_menu' )) {
-		?>
-		<!-- Kunena Menu position: kunena_menu -->
-		<div id="ktopmenu">
-		<div id="Kunena_tab"><?php
-		$document = &JFactory::getDocument ();
-		$renderer = $document->loadRenderer ( 'modules' );
-		$options = array ('style' => 'xhtml' );
-		$position = 'kunena_menu';
-		echo $renderer->render ( $position, $options, null );
-		?>
-		</div>
-		</div>
-		<!-- /Kunena Menu position: kunena_menu -->
-		<?php
-	}
-	?></td>
-		<td align="right" width="1%"><span id="kprofilebox_status"><a
-			class="ktoggler close" rel="kprofilebox"></a></span>
-		</td>
-	</tr>
-</table>
-<!-- /Kunena Header --> <?php
+ <?php
 	CKunenaTools::loadTemplate('/profilebox.php');
 
 	switch ($func) {
@@ -644,7 +617,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	if ($kunena_config->enablerss) {
 		$rss_params = ((int) $catid > 0 ? '&amp;catid=' . (int) $catid : '');
 		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
-		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . 'rss.gif" border="0" alt="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" />', 'follow', $rss_params );
+		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . $kunena_icons ['rss'] .'" border="0" alt="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" />', 'follow', $rss_params );
 	}
 	echo '</div>';
 

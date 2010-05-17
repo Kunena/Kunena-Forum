@@ -37,7 +37,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 	}
 
 	public function getUnreadCount ($userid) {
-		return $this->uddeim->getInboxTotalMessages($userid);
+		return $this->uddeim->getInboxUnreadMessages($userid);
 	}
 
 	public function getInboxLink ($text) {

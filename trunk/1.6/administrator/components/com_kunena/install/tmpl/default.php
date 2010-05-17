@@ -8,10 +8,10 @@
  * @link		http://www.kunena.com
  */
 defined('_JEXEC') or die;
-JHtml::stylesheet('install.css', 'administrator/components/com_kunena/install/media/');
+$this->document->addStyleSheet ( JURI::base().'components/com_kunena/install/media/install.css' );
 if ($this->go == 'next') {
-	$document =& JFactory::getDocument();
-	$document->addScriptDeclaration("window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=install', false)."';});");
+	$this->document =& JFactory::getDocument();
+	$this->document->addScriptDeclaration("window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=install', false)."';});");
 }
 ?>
 <div id="stepbar">

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+17-May-2010 Matias
+# [#20038] Fix Joomla 1.6 issues in the installer (status: no menus, 3 queries still fail)
+
 16-May-2010 fxstein
 + [#19251] Re-implement JomSocial user caching to reduce sql queries
 

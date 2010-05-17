@@ -280,7 +280,7 @@ class CKunenaTools {
             else $cats[0]->children[] = $c->id;
         }
 
-        CKunenaTools::reCountBoardsRecursion($cats, 0);
+        if (!empty($cats)) CKunenaTools::reCountBoardsRecursion($cats, 0);
 
         // now back to db
         foreach ($cats as $c)
@@ -617,6 +617,9 @@ class CKunenaTools {
 		 *  and if not, adds a forum link in the mainmenu.
 		 */
 		function createMenu($update = true) {
+			jimport('joomla.version');
+			if (is_dir(JPATH_LIBRARIES.'/joomla/access')) return;
+			
 			$kunena_db =& JFactory::getDBO();
 
 			// First we need to get the componentid of the install Kunena component

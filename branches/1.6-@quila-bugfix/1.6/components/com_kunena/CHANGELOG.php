@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+18-May-2010 @quila
+# [#19288] Fix regression - small template fixes.
+
 14-May-2010 @quila
 # [#19288] Fix regression in language file - Who page.
 # [#19288] Fix regression - too big avatar show in top and bottom avatar position.

@@ -24,6 +24,13 @@ class KunenaAvatarJomSocial extends KunenaAvatar
 		$this->priority = 50;
 	}
 
+	public function load($userlist)
+	{
+//FB::log($userlist, 'Preload JomSocial Userlist');
+
+		CFactory::loadUsers(array_unique($userlist));
+	}
+
 	public function getEditURL()
 	{
 		return CRoute::_('index.php?option=com_community&view=profile&task=uploadAvatar');

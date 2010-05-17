@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+16-May-2010 fxstein
++ [#19251] Re-implement JomSocial user caching to reduce sql queries
+
 16-May-2010 810
 ^ [#19356] Fix pagination layout
 

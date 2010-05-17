@@ -90,6 +90,8 @@ class CKunenaListcat {
 
 		$subcats = array ();
 		$routerlist = array ();
+		$userlist = array();
+
 		foreach ( $allsubcats as $i => $subcat ) {
 			if ($subcat->mesid)
 				$routerlist [$subcat->thread] = $subcat->subject;
@@ -124,6 +126,9 @@ class CKunenaListcat {
 					$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '"/>' : $this->config->newchar;
 				}
 			}
+
+			// collect user ids for avatar prefetch when integrated
+			$userlist[$subcat->userid] = $subcat->userid;
 		}
 
 		require_once (KUNENA_PATH . DS . 'router.php');
@@ -182,6 +187,16 @@ class CKunenaListcat {
 					}
 				}
 			}
+		}
+
+		// Preload avatars if configured
+		if ($this->config->avataroncat > 0)
+		{
+// FB::log($userlist, 'Need to preload uerlist for avatars');
+
+			// Prefetch all users/avatars to avoid user by user queries during template iterations
+			$avatars = KunenaFactory::getAvatarIntegration();
+			$avatars->load($userlist);
 		}
 	}
 

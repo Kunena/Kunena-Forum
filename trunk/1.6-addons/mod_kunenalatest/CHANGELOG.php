@@ -30,6 +30,11 @@ Legend:
 
 KunenaLatest 1.0
 
+18-May-2010 Xillibit
+# [#20081] Leverage directly the CKunenaLatestX instead to have a copy of the class
+# [#20081] Put configuration setting to choose vertical or horizontal display type (need css)
+# [#20081] Strip BBCodes when you over the thread title
+
 29-Apr-2010 Xillibit
 # [#20081] Add option to choose between topic icon or avatar
 # [#20081] Add option for choose which categories shows

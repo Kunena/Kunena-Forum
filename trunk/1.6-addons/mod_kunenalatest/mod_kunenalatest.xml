@@ -38,6 +38,10 @@
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="sh_moduleshowtype" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_DISPLAYTYPE" description="MOD_KUNENALATEST_PARAM_DISPLAYTYPE_DESC">
+			<option value="kmodhorizontal">MOD_KUNENALATEST_PARAM_DISPLAYTYPE_HORIZONTAL</option>
+			<option value="kmodvertical">MOD_KUNENALATEST_PARAM_DISPLAYTYPE_VERTICAL</option>
+		</param>
     	<param name="avatarwidth" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH" description="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH_DESC" />
     		<param name="avatarheight" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT" description="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT_DESC" />
     <param name="@spacer" type="spacer" default="" label="" description="" />		

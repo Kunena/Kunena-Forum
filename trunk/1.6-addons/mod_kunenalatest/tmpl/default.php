@@ -17,7 +17,7 @@ $params = (object) $params;
 $document = & JFactory::getDocument ();
 $document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klatest.css' );
 ?>
-<div class="klatest<?php echo $params->get ( 'moduleclass_sfx' )?>" id="klatestmodule">
+<div class="<?php echo $params->get ( 'moduleclass_sfx' )?> klatest <?php echo $params->get ( 'sh_moduleshowtype' )?>" id="klatestmodule">
 
 <ul id="klatest-items">
 <?php
@@ -40,7 +40,7 @@ if (is_array ( $klistpost )) {
 					echo '<img src="' . JURI::root () . 'modules/mod_kunenalatest/tmpl/sticky.png" alt="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" />';
 				}
 			}
-			echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, substr ( htmlspecialchars ( stripslashes ( $item->subject ) ), '0', $params->get ( 'titlelength' ) ), substr ( htmlspecialchars ( stripslashes ( $item->messagetext ) ), '0', $params->get ( 'messagelength' ) ), 'follow' );
+			echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, substr ( htmlspecialchars ( stripslashes ( $item->subject ) ), '0', $params->get ( 'titlelength' ) ), substr ( htmlspecialchars ( stripslashes ( KunenaParser::stripBBCode($item->message) ) ), '0', $params->get ( 'messagelength' ) ), 'follow' );
 			if ($item->unread) {
 				echo $params->get ( 'unreadindicator' );
 			}
@@ -59,11 +59,11 @@ if (is_array ( $klistpost )) {
 				}
 			}
 			?></li>
-		<?php 
+		<?php
      if ( $params->get ( 'sh_topiciconoravatar' )) { ?>
 		<li class="klatest-avatar">
-			<?php			
-			
+			<?php
+
 			echo modKunenaLatestHelper::userAvatar( $item->userid,$params );
 			?>
 		</li>

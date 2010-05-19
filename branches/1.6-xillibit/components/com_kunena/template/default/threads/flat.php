@@ -142,7 +142,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			</div>
-			
+
 			<?php
 			if ($leaf->msgcount > $this->config->messages_per_page) {
 				echo '<ul class="kpagination">';
@@ -169,7 +169,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</span> <!-- /Locked --> <?php
 		}
 		?>
-			
+
 			<div class="ktopic-details ks">
 			<!-- By -->
 				<?php
@@ -225,7 +225,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		?> <!--  /Sticky   --> <!-- Avatar --> <?php
 		if ($this->config->avataroncat > 0) :
 			$profile = KunenaFactory::getUser((int)$this->lastreply [$leaf->thread]->userid);
-			$useravatar = $profile->getAvatarLink('klist_avatar', 'lastpost');
+			$useravatar = $profile->getAvatarLink('klist_avatar', '36', '36');
 			if ($useravatar) :
 			?>
 			<span class="topic_latest_post_avatar"> <?php

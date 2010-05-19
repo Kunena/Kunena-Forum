@@ -37,6 +37,7 @@ Kunena 1.6.0-DEV
 19-May-2010 Xillibit
 # [#19288] Little change in CKunenaLastestX to be used properly with kunenalatest module
 # [#19288] Fix Kunena stats to use proper configuration setting to check which profile integration is enabled
+# [#19288] Fix issue which doens't diplay avatar in correct size with AUP integration
 
 17-May-2010 Xillibit
 # [#19288] Fix issue with UddeIM integration which doesn't show the unread messages but total messages

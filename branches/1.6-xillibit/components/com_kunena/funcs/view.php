@@ -130,9 +130,9 @@ class CKunenaViewMessage {
 		}
 
 		if ($this->config->avposition == 'left' || $this->config->avposition == 'right') {
-		$avatar = $this->profile->getAvatarLink ('', 'reply');
+			$avatar = $this->profile->getAvatarLink ('reply', '90', '90');
 		} else {
-		$avatar = $this->profile->getAvatarLink ('', 'welcome');
+			$avatar = $this->profile->getAvatarLink ('welcome', '90', '90');
 		}
 		if ($avatar) {
 			$this->avatar = '<span class="kavatar">' . $avatar . '</span>';

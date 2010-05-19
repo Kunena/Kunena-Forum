@@ -255,7 +255,7 @@ else {
 			<!-- Avatar --> <?php
 			if ($this->config->avataroncat > 0) :
 				$profile = KunenaFactory::getUser((int)$subcat->userid);
-				$useravatar = $profile->getAvatarLink('klist_avatar', 'lastpost');
+				$useravatar = $profile->getAvatarLink('klist_avatar', '36', '36');
 				if ($useravatar) :
 				?>
 				<span class="klatest-avatar"> <?php

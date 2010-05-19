@@ -43,7 +43,7 @@ class CKunenaLogin {
 				$this->kunena_username = $juserinfo->name;
 		}
 
-		return $profile->getAvatarLink('', 'welcome');
+		return $profile->getAvatarLink('welcome', '90', '90');
 	}
 
 	function getloginFields() {

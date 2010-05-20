@@ -35,7 +35,7 @@ Legend:
 Kunena 1.6.0-DEV
 
 20-May-2010 Matias
-# [#20038] Fix Joomla 1.6 issues in the installer
+# [#20038] Fix misc Joomla 1.6 issues in the installer
 
 17-May-2010 Matias
 # [#20038] Fix Joomla 1.6 issues in the installer (status: no menus, 3 queries still fail)

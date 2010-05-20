@@ -12,16 +12,20 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-function com_install() {
-	// Redirect to Kunena Installer
-	ignore_user_abort ( true );
-	header ( "HTTP/1.1 303 See Other" );
-	header ( "Location: ".JURI::base () . "index.php?option=com_kunena&view=install" );
-	Com_KunenaInstallerScript::install(null);
-}
+jimport ( 'joomla.version' );
+$jversion = new JVersion ();
+if ($jversion->RELEASE == 1.5) {
+	function com_install() {
+		// Redirect to Kunena Installer
+		ignore_user_abort ( true );
+		header ( "HTTP/1.1 303 See Other" );
+		header ( "Location: " . JURI::base () . "index.php?option=com_kunena&view=install" );
+		Com_KunenaInstallerScript::install ( null );
+	}
 
-function com_uninstall() {
-	Com_KunenaInstallerScript::uninstall(null);
+	function com_uninstall() {
+		Com_KunenaInstallerScript::uninstall ( null );
+	}
 }
 
 class Com_KunenaInstallerScript {

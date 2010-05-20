@@ -13,6 +13,9 @@ background-image:url("kunena-logo-48.png");
 div.header {
 padding-left:148px !important;
 }
+div.pagetitle {
+padding-left:148px !important;
+}
 
 #header-box{display:none}
 /* installer */

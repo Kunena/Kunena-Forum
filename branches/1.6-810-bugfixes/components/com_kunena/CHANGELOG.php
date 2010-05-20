@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+20-May-2010 810
+^ [#19356] css fix frontend
+
 14-May-2010 810
 ^ [#19356] css fixes pagination
 

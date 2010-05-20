@@ -142,7 +142,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			</div>
-			
+
 			<?php
 			if ($leaf->msgcount > $this->config->messages_per_page) {
 				echo '<ul class="kpagination">';
@@ -169,8 +169,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</span> <!-- /Locked --> <?php
 		}
 		?>
-			
-			<div class="ktopic-details ks">
+
+			<div class="ktopic-details-ks">
 			<!-- By -->
 				<?php
 		if ($this->func != 'showcat') {

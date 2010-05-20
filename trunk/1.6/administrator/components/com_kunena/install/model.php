@@ -112,9 +112,10 @@ class KunenaModelInstall extends JModel {
 		$app->setUserState ( 'com_kunena.install.step', ( int ) $step );
 	}
 
-	public function addStatus($step, $result = false, $msg = '') {
+	public function addStatus($task, $result = false, $msg = '') {
 		$status = $this->getState ( 'status' );
-		$status [] = array ('step' => $step, 'success' => $result, 'msg' => $msg );
+		$step = $this->getStep();
+		$status [] = array ('step' => $step, 'task'=>$task, 'success' => $result, 'msg' => $msg );
 		$this->setState ( 'status', $status );
 		$app = JFactory::getApplication ();
 		$app->setUserState ( 'com_kunena.install.status', $status );
@@ -163,11 +164,11 @@ class KunenaModelInstall extends JModel {
 		}
 		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $error, $text );
 	}
-	
+
 	function installPlugin($path, $file, $name) {
 		$error = false;
 		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
-		
+
 		$query = "SELECT * FROM #__plugins WHERE element='$name'";
 		$this->db->setQuery ( $query );
 		$plugin = $this->db->loadObject ();
@@ -189,7 +190,7 @@ class KunenaModelInstall extends JModel {
 
 	public function beginInstall() {
 		$results = array ();
-		
+
 		// Migrate version table from old installation
 		$versionprefix = $this->getVersionPrefix ();
 		if (! empty ( $versionprefix )) {
@@ -241,7 +242,7 @@ class KunenaModelInstall extends JModel {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', KUNENA_PATH);
 		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
-		
+
 		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
 		$curversion = $this->getInstalledVersion();
 
@@ -256,10 +257,10 @@ class KunenaModelInstall extends JModel {
 				if ($version['version'] == '@'.'kunenaversion'.'@') {
 					$svn = 1;
 				}
-				if(isset($svn) || 
-						($version['date'] > $curversion->date) || 
-						(version_compare($version['version'], $curversion->version, '>')) || 
-						(version_compare($version['version'], $curversion->version, '==') && 
+				if(isset($svn) ||
+						($version['date'] > $curversion->date) ||
+						(version_compare($version['version'], $curversion->version, '>')) ||
+						(version_compare($version['version'], $curversion->version, '==') &&
 						$version['build'] > $curversion->build)) {
 					foreach ($version as $action) {
 						$results [] = $this->processUpgradeXMLNode($action);
@@ -271,7 +272,7 @@ class KunenaModelInstall extends JModel {
 			if ($r)
 				$this->addStatus ( $r ['action'] . ' ' . $r ['name'], $r ['success'] );
 	}
-	
+
 	function processUpgradeXMLNode($action)
 	{
 		$nodeName = $action->getName();
@@ -328,18 +329,21 @@ class KunenaModelInstall extends JModel {
 		require_once (KPATH_ADMIN . '/api.php');
 		require_once (KPATH_SITE . '/class.kunena.php');
 
-		$kunena_db = JFactory::getDBO();
-		//change fb menu icon
-		$kunena_db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
-		$id = $kunena_db->loadResult();
-		check_dberror("Unable to find component.");
+		jimport( 'joomla.version' );
+		$jversion = new JVersion();
+		if ($jversion->RELEASE == 1.5) {
+			//	change fb menu icon
+			$this->db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
+			$id = $this->db->loadResult();
+			check_dberror("Unable to find component.");
 
-		//add new admin menu images
-		$kunena_db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
-		$kunena_db->query();
-		check_dbwarning("Unable to set admin menu image.");
+			//	add new admin menu images
+			$this->db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+			$this->db->query();
+			check_dbwarning("Unable to set admin menu image.");
 
-		CKunenaTools::createMenu(false);
+			CKunenaTools::createMenu(false);
+		}
 
 		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
 		$this->updateVersionState ( '' );
@@ -419,7 +423,7 @@ class KunenaModelInstall extends JModel {
 				unset ( $version );
 		}
 
-		if (! isset ( $version ) && !$versionprefix) {
+		if (!isset ( $version )) {
 			// No version found -- try to detect version by searching some missing fields
 			$match = $this->detectTable ( $this->_versionarray );
 
@@ -549,7 +553,7 @@ class KunenaModelInstall extends JModel {
 		}
 		return array ();
 	}
-	
+
 	function selectWithStripslashes($table) {
 		$fields = array_pop($this->db->getTableFields($table));
 		$select = array();

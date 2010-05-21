@@ -379,7 +379,7 @@ class KunenaUser extends JObject
 			'friendfeed' => array( 'name'=>'FRIENDFEED', 'url'=>'http://friendfeed.com/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED'),'nourl'=>'0' ),
 			'digg' => array( 'name'=>'DIGG', 'url'=>'http://www.digg.com/users/##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_DIGG'),'nourl'=>'0' ),
 
-			'skype' => array( 'name'=>'SKYPE', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_SKYPE'),'nourl'=>'1' ),
+			'skype' => array( 'name'=>'SKYPE', 'url'=>'skype:##VALUE##?chat', 'title'=>JText::_('COM_KUNENA_MYPROFILE_SKYPE'),'nourl'=>'0' ),
 			'yim' => array( 'name'=>'YIM', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_YIM'),'nourl'=>'1' ),
 			'aim' => array( 'name'=>'AIM', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_AIM'),'nourl'=>'1' ),
 			'gtalk' => array( 'name'=>'GTALK', 'url'=>'##VALUE##', 'title'=>JText::_('COM_KUNENA_MYPROFILE_GTALK'),'nourl'=>'1' ),

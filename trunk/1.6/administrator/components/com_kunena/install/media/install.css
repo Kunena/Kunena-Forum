@@ -9,14 +9,8 @@
 
 div.icon-48-kunena {
 background-image:url("kunena-logo-48.png");
-}
-div.header {
 padding-left:148px !important;
 }
-div.pagetitle {
-padding-left:148px !important;
-}
-
 #header-box{display:none}
 /* installer */
 #header1 {
@@ -139,48 +133,21 @@ span.step {
 }
 
 .button1-left {
-	background:url(../../../../templates/khepri/images/j_button1_left.png) no-repeat;
+	background:url(j_button1_left.png) no-repeat;
 	float: left;
 	margin-left: 5px;
 }
 
 .button1-right {
-	background:url(../../../../templates/khepri/images/j_button1_right.png) 100% 0 no-repeat;
+	background:url(j_button1_right.png) 100% 0 no-repeat;
 	float: left;
 	margin-left: 5px;
 }
 
-.button1-left .refresh {
-	float: left;
-	background:url(../../../../templates/khepri/images/j_button1_refresh.png) 100% 0 no-repeat;
-}
-
-.button1-right .prev {
-	float: left;
-	background:url(../../../../templates/khepri/images/j_button1_prev.png) no-repeat;
-}
-
 .button1-left .next {
 	float: left;
-	background:url(../../../../templates/khepri/images/j_button1_next.png) 100% 0 no-repeat;
+	background:url(j_button1_next.png) 100% 0 no-repeat;
 }
-
-.button1-left .site {
-	float: left;
-	background:url(../../../../templates/khepri/images/j_button1_site.png) 100% 0 no-repeat;
-}
-
-.button1-left .admin {
-	float: left;
-	background:url(../../../../templates/khepri/images/j_button1_admin.png) 100% 0 no-repeat;
-}
-
-.button1-left .collate {
-	float: left;
-	background:url(../../../../templates/khepri/images/j_button1_collate.png) 100% 0 no-repeat;
-}
-
-
 
 .button1-left a,
 .button1-right a {
@@ -269,25 +236,6 @@ span.step {
 	color: #c00;
 }
 
-h3.uitle-smenu, h3.moofx-toggler {
-	margin: 0;
-	border: 1px solid #ccc;
-	padding: 4px;
-	background-color: #EBEBEB;
-	margin-bottom: 1px;
-	font-size: 12px;
-	color: #666;
-	cursor: pointer;
-}
-
-h3.moofx-toggler      { background: #EBEBEBurl(../../../../templates/khepri/images/j_arrow.png) 5px 50% no-repeat; text-indent: 15px; }
-h3.moofx-toggler-down { background-image:url(../../../../templates/khepri/images/j_arrow_down.png); }
-
-/* hack to stop ugly aliasing in IE */
-div.noofx-slider {
-  background: #fbfbfb;
-}
-
 .final-table { width: 100%; }
 
 td em {
@@ -367,27 +315,27 @@ div#element-box div.b div.b div.b {
 }
 
 div#stepbar div.u {
-  background: url(../../../../templates/khepri/images/j_border.png) 0 0 repeat-x;
+  background: url(j_border.png) 0 0 repeat-x;
 }
 
 div#stepbar div.u div.u {
-   background:url(../../../../templates/khepri/images/j_crn_tr_dark.png) 100% 0 no-repeat;
+   background:url(j_crn_tr_dark.png) 100% 0 no-repeat;
 }
 
 div#stepbar div.u div.u div.u {
-   background:url(../../../../templates/khepri/images/j_crn_tl_dark.png) 0 0 no-repeat;
+   background:url(j_crn_tl_dark.png) 0 0 no-repeat;
 }
 
 div#stepbar div.c {
-  background:url(../../../../templates/khepri/images/j_border.png) 0 100% repeat-x;
+  background:url(j_border.png) 0 100% repeat-x;
 }
 
 div#stepbar div.c div.c {
-   background:url(../../../../templates/khepri/images/j_crn_br_dark.png) 100% 0 no-repeat;
+   background:url(j_crn_br_dark.png) 100% 0 no-repeat;
 }
 
 div#stepbar div.c div.c div.c {
-   background:url(../../../../templates/khepri/images/j_crn_bl_dark.png) 0 0 no-repeat;
+   background:url(j_crn_bl_dark.png) 0 0 no-repeat;
 }
 
 div#step,
@@ -397,54 +345,54 @@ div#installer div.install-body {
 
 div#step div.u,
 div#installer div.install-body div.u {
-  background:url(../../../../templates/khepri/images/j_border.png) 0 0 repeat-x;
+  background:url(j_border.png) 0 0 repeat-x;
 }
 
 div#step div.u div.u,
 div#installer div.install-body div.u div.u {
-   background:url(../../../../templates/khepri/images/j_crn_tr_med.png) 100% 0 no-repeat;
+   background:url(j_crn_tr_med.png) 100% 0 no-repeat;
 }
 
 div#step div.u div.u div.u,
 div#installer div.install-body div.u div.u div.u {
-   background:url(../../../../templates/khepri/images/j_crn_tl_med.png) 0 0 no-repeat;
+   background:url(j_crn_tl_med.png) 0 0 no-repeat;
 }
 
 div#step div.c,
 div#installer div.install-body div.c {
-  background:url(../../../../templates/khepri/images/j_border.png) 0 100% repeat-x;
+  background:url(j_border.png) 0 100% repeat-x;
 }
 
 div#step div.c div.c,
 div#installer div.install-body div.c div.c {
-   background:url(../../../../templates/khepri/images/j_crn_br_med.png) 100% 0 no-repeat;
+   background:url(j_crn_br_med.png) 100% 0 no-repeat;
 }
 
 div#step div.c div.c div.c,
 div#installer div.install-body div.c div.c div.c {
-   background:url(../../../../templates/khepri/images/j_crn_bl_med.png) 0 0 no-repeat;
+   background:url(j_crn_bl_med.png) 0 0 no-repeat;
 }
 
 div#installer div.u {
-  background:url(../../../../templates/khepri/images/j_border.png) 0 0 repeat-x;
+  background:url(j_border.png) 0 0 repeat-x;
 }
 
 div#installer div.u div.u {
-   background:url(../../../../templates/khepri/images/j_crn_tr_light.png) 100% 0 no-repeat;
+   background:url(j_crn_tr_light.png) 100% 0 no-repeat;
 }
 
 div#installer div.u div.u div.u {
-   background:url(../../../../templates/khepri/images/j_crn_tl_light.png) 0 0 no-repeat;
+   background:url(j_crn_tl_light.png) 0 0 no-repeat;
 }
 
 div#installer div.c {
-  background:url(../../../../templates/khepri/images/j_border.png) 0 100% repeat-x;
+  background:url(j_border.png) 0 100% repeat-x;
 }
 
 div#installer div.c div.c {
-   background:url(../../../../templates/khepri/images/j_crn_br_light.png) 100% 0 no-repeat;
+   background:url(j_crn_br_light.png) 100% 0 no-repeat;
 }
 
 div#installer div.c div.c div.c {
-   background:url(../../../../templates/khepri/images/j_crn_bl_light.png) 0 0 no-repeat;
+   background:url(j_crn_bl_light.png) 0 0 no-repeat;
 }

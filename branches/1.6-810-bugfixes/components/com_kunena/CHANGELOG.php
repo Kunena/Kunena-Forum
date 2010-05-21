@@ -35,6 +35,9 @@ Legend:
 Kunena 1.6.0-DEV
 
 20-May-2010 810
+# [#19288] all icon links programs
+
+20-May-2010 810
 # [#19288] Skype icon link
 ^ [#19356] css refixed frontend
 

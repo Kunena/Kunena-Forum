@@ -29,6 +29,8 @@ class CKunenaLatestX {
 		$this->session = KunenaFactory::getSession ();
 		$this->config = CKunenaConfig::getInstance ();
 
+		$this->latestcategory = $this->config->latestcategory;
+		$this->latestcategory_in = $this->config->latestcategory_in;
 		$this->page = $page < 1 ? 1 : $page;
 		$this->threads_per_page = $this->config->threads_per_page;
 		$this->offset = ($this->page - 1) * $this->threads_per_page;
@@ -83,7 +85,7 @@ class CKunenaLatestX {
 			if (empty($this->loadids)) $loadstr = '';
 			else $loadstr = 'OR a.id IN ('.implode ( ",", $this->loadids ).')';
 
-			$query = "SELECT a.*, j.id AS userid, t.message, l.myfavorite, l.favcount, l.threadhits, l.threadattachments, COUNT(aa.id) AS attachments,
+			$query = "SELECT a.*, j.id AS userid, t.message, l.myfavorite, l.favcount, l.threadhits, l.lasttime, l.threadattachments, COUNT(aa.id) AS attachments,
 				l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.name AS catname, c.class_sfx
 			FROM (
 				SELECT m.thread, MAX(m.hits) AS threadhits, MAX(f.userid IS NOT null AND f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount,
@@ -309,7 +311,7 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$lookcats = explode ( ',', $this->config->latestcategory );
+		$lookcats = explode ( ',', $this->latestcategory );
 		$catlist = array ();
 		foreach ( $lookcats as $catnum ) {
 			$catlist [] = ( int ) $catnum;
@@ -317,7 +319,7 @@ class CKunenaLatestX {
 		$latestcats = '';
 		if ( !empty($catlist) && !in_array(0, $catlist)) {
 			$catlist = implode ( ',', $catlist );
-			if ( $this->config->latestcategory_in == '1' ) {
+			if ( $this->latestcategory_in == '1' ) {
 				$latestcats = ' AND m.catid IN ('.$catlist.') ';
 			} else {
 				$latestcats = ' AND m.catid NOT IN ('.$catlist.') ';

@@ -34,8 +34,19 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+21-May-2010 Matias
+^ [#15886] Merged revisions 2508-2513 from /branches/1.6-xillibit with changes
+
 20-May-2010 Matias
 # [#20038] Fix misc Joomla 1.6 issues in the installer
+
+19-May-2010 Xillibit
+# [#19288] Little change in CKunenaLastestX to be used properly with kunenalatest module
+# [#19288] Fix Kunena stats to use proper configuration setting to check which profile integration is enabled
+# [#19288] Fix issue which doens't diplay avatar in correct size with AUP integration
+
+17-May-2010 Xillibit
+# [#19288] Fix issue with UddeIM integration which doesn't show the unread messages but total messages
 
 17-May-2010 Matias
 # [#20038] Fix Joomla 1.6 issues in the installer (status: no menus, 3 queries still fail)

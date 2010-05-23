@@ -617,9 +617,10 @@ class CKunenaTools {
 		 *  and if not, adds a forum link in the mainmenu.
 		 */
 		function createMenu($update = true) {
-			jimport('joomla.version');
-			if (is_dir(JPATH_LIBRARIES.'/joomla/access')) return;
-			
+			jimport ( 'joomla.version' );
+			$jversion = new JVersion ();
+			if ($jversion->RELEASE == 1.6) return;
+
 			$kunena_db =& JFactory::getDBO();
 
 			// First we need to get the componentid of the install Kunena component
@@ -841,6 +842,10 @@ class CKunenaTools {
 		}
 
 		function DeleteMenu() {
+			jimport ( 'joomla.version' );
+			$jversion = new JVersion ();
+			if ($jversion->RELEASE == 1.6) return;
+
 			$db = JFactory::getDBO();
 			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 			$db->setQuery ($query);

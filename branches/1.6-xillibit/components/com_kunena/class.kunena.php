@@ -984,9 +984,9 @@ class CKunenaTools {
 				$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banmessage, '');
 
 				if (!$banthisuser) {
-					$this->_app->enqueueMessage( $usermod->getErrorMessage());
+					$kunena_app->enqueueMessage( $usermod->getErrorMessage());
 				} else {
-					$this->_app->enqueueMessage ( JText::_ ( 'COM_A_KUNENA_USER_BANNED_DONE' ) );
+					$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' ) );
 				}
 
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );

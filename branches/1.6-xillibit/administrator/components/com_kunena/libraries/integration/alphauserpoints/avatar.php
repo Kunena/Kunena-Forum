@@ -32,10 +32,15 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 		trigger_error(__CLASS__.'::'.__FUNCTION__.'() not implemented');
 	}
 
-	public function getLink($user, $class='', $sizex=90, $sizey=90)
+	public function getLink($user, $class='', $sizex, $sizey)
 	{
 		$user = KunenaFactory::getUser($user);
-		$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $sizex, $sizey  );
+		if ( $sizex == $sizey ) {
+			$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $sizex, $sizey  );
+		} else {
+			require_once(KUNENA_PATH_TEMPLATE_DEFAULT . '/settings.php');
+			$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $this->avatarSizes[$sizex][0], $this->avatarSizes[$sizex][1] );
+		}
 		return $avatar;
 	}
 }

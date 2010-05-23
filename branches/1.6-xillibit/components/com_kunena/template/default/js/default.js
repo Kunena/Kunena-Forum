@@ -836,7 +836,7 @@ window.addEvent('domready', function(){
 	if($('postcatid') != undefined) {
 		$('postcatid').getElements('option').each( function( catid ) {
 			catid.addEvent('click', function(e) {
-				var url = "/kunena_1.6.0_branch/index.php?option=com_kunena&func=json&action=anynomousallowed";
+				var url = kunena_anonymous_check_url;
 				var request = new Request.JSON({
 					url: url,
 					onComplete: function(jsonObj) {	
@@ -849,6 +849,7 @@ window.addEvent('domready', function(){
 				}).send();		
 			})
 		});
+	}
 	
 	/* Quick reply */
 	$$('.kqreply').each(function(el){

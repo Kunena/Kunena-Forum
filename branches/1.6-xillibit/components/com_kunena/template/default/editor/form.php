@@ -27,7 +27,13 @@ $kunena_poll->call_javascript_form();
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
-
+JApplication::addCustomHeadTag('
+      <script type="text/javascript">
+	   <!--
+	   var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed', '', false).'";
+     //-->
+     </script>
+		');
 $this->setTitle ( $this->title );
 
 $this->k=0;

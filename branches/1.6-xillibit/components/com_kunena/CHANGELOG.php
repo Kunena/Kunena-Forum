@@ -39,6 +39,7 @@ Kunena 1.6.0-DEV
 # [#19288] Fix issues when anynomous option is enabled, on new topic the checkbox isn't displayed
 # [#19288] Fix undefined variable $this->_app on ban function in class.kunena
 # [#19288] Fix issue which doens't diplay avatar in correct size with AUP integration (Part 2)
+# [#19288] Remove hard-coded url in anonymous check in new topic tab
 
 21-May-2010 Matias
 ^ [#15886] Merged revisions 2508-2513 from /branches/1.6-xillibit with changes

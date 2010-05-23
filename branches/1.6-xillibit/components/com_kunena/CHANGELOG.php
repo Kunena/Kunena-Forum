@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+23-May-2010 Xillibit
+# [#20038] Function to delete menu on joomla 1.6 when kunena is uninstallated
+
 21-May-2010 Matias
 ^ [#15886] Merged revisions 2508-2513 from /branches/1.6-xillibit with changes
 # [#20038] Added our own images to installer

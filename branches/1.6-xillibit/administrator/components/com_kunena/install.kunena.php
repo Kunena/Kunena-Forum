@@ -46,7 +46,11 @@ class Com_KunenaInstallerScript {
 
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', JPATH_COMPONENT);
-		CKunenaTools::DeleteMenu();
+		if ($jversion->RELEASE == 1.5) {
+			CKunenaTools::DeleteMenu();
+		} else if ($jversion->RELEASE == 1.6) {
+			CKunenaTools::DeleteMenu_six();
+		}
 	}
 
 	function preflight($type, $parent) {}

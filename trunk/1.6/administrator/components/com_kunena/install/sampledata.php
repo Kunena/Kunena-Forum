@@ -107,7 +107,7 @@ function installSampleData()
 	$queries[] = array ('kunena_smileys', $query);
 
 	$query="INSERT INTO `#__kunena_categories`
-	(`id`, `parent`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `thread_count`, `message_count`) VALUES
+	(`id`, `parent`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`) VALUES
 	(1, 0, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE')).", 1, 1, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER')).", 0, 0),
 	(2, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_TITLE')).", 1, 1, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_HEADER')).",1 ,1),
 	(3, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_TITLE')).", 1, 2, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_HEADER')).",0 ,0);";
@@ -115,8 +115,8 @@ function installSampleData()
 	$queries[] = array ('kunena_categories', $query);
 
 	$query="INSERT INTO `#__kunena_messages`
-	(`id`, `parent`, `thread`, `userid`, `subject`, `time`, `ip`) VALUES
-	(1, 0, 1, 62, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_SUBJECT')).", ".$posttime.", '127.0.0.1');";
+	(`id`, `parent`, `thread`, `catid`, `userid`, `subject`, `time`, `ip`) VALUES
+	(1, 0, 1, 2, 62, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_SUBJECT')).", ".$posttime.", '127.0.0.1');";
 
 	$queries[] = array ('kunena_messages', $query);
 
@@ -124,7 +124,7 @@ function installSampleData()
 	(`mesid`, `message`) VALUES
 	(1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_TEXT')).");";
 
-	$queries[] = array ('kunena_messages', $query);
+	$queries[] = array ('kunena_messages_text', $query);
 
 	foreach ($queries as $query)
 	{

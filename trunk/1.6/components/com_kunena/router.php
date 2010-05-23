@@ -42,6 +42,7 @@ class KunenaRouter {
 	 * @param $msgs Messages in form of array ('1'=>'subject', ...))
 	 */
 	function loadMessages($msglist) {
+		if (!is_array($msglist)) return;
 		self::$msgidcache = self::$msgidcache + $msglist;
 	}
 

@@ -130,8 +130,10 @@ class CKunenaLatestX {
 			}
 
 			// Load threads to Kunena router to avoid extra SQL queries
-			include_once (KUNENA_PATH . DS . 'router.php');
-			KunenaRouter::loadMessages ( $routerlist );
+			if (!empty($routerlist)) {
+				include_once (KUNENA_PATH . DS . 'router.php');
+				KunenaRouter::loadMessages ( $routerlist );
+			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
 			$avatars = KunenaFactory::getAvatarIntegration();

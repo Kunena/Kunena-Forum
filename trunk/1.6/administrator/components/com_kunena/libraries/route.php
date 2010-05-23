@@ -91,7 +91,7 @@ abstract class KunenaRoute {
 				if (! is_object ( $item ))
 					continue;
 				// FIXME: Joomla 1.5 only!
-				if ($item->published && (!isset ( $item->access ) || $item->access <= $my->aid)) {
+				if (!empty($item->published) && (!isset ( $item->access ) || $item->access <= $my->aid)) {
 					self::$childlist[$item->menutype][$item->parent][$item->id] = $item->id;
 				}
 			}

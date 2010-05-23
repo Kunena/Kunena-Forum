@@ -22,6 +22,7 @@ jimport('joomla.utilities.string');
 // Joomla absolute path
 define('KUNENA_JLIVEURL', JURI::root());
 
+require_once (KPATH_SITE . '/lib/kunena.defines.php');
 require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
 
 $kunena_app =& JFactory::getApplication();

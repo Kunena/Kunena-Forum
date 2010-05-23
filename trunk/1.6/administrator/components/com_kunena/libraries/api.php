@@ -12,7 +12,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-require_once (KPATH_SITE . DS . 'lib' . DS . 'kunena.defines.php');
+$file = JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php';
+if (is_file($file))
+	require_once ($file);
 
 class Kunena implements iKunena {
 	protected static $version = false;
@@ -20,7 +22,7 @@ class Kunena implements iKunena {
 	protected static $version_name = false;
 	protected static $version_build = false;
 
-	public static function version() {
+	public static function buildVersion() {
 		if (self::$version === false) {
 			if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
 				$changelog = file_get_contents ( KPATH_SITE . '/CHANGELOG.php', NULL, NULL, 0, 1000 );
@@ -35,12 +37,40 @@ class Kunena implements iKunena {
 		return self::$version;
 	}
 
+	public static function version() {
+		if (self::$version === false) {
+			self::buildVersion();
+		}
+		return self::$version;
+	}
+
+	public static function versionDate() {
+		if (self::$version_date === false) {
+			self::buildVersion();
+		}
+		return self::$version_date;
+	}
+
+	public static function versionName() {
+		if (self::$version_name === false) {
+			self::buildVersion();
+		}
+		return self::$version_name;
+	}
+
+	public static function versionBuild() {
+		if (self::$version_build === false) {
+			self::buildVersion();
+		}
+		return self::$version_build;
+	}
+
 	public static function getVersionInfo() {
 		$version = new stdClass();
 		$version->version = self::version();
-		$version->date = self::$version_date;
-		$version->name = self::$version_name;
-		$version->build = self::$version_build;
+		$version->date = self::versionDate();
+		$version->name = self::versionName();
+		$version->build = self::versionBuild();
 		return $version;
 	}
 

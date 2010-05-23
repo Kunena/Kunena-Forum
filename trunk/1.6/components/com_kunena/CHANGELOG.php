@@ -40,6 +40,7 @@ Kunena 1.6.0-ALPHA
 # [#20038] Move sample data into it's own file, make it more robust
 # [#20038] Simplify kunena.install.upgrade.xml by running always install tables
 # [#20038] Fix uninstall in Joomla 1.6
+# [#20038] Remove dependencies to frontend during installation
 
 21-May-2010 Matias
 ^ [#15886] Merged revisions 2508-2513 from /branches/1.6-xillibit with changes

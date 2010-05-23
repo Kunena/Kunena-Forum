@@ -53,7 +53,7 @@ class KunenaViewInstall extends JView
 		$this->assign('link', JURI::root().'administrator/index.php?option=com_kunena&view=install&task=install');
 
 		$search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#BUILD_OLD#','#VERSION#','#BUILD#');
-		$replace = array ($this->installedVersion->component, $this->installedVersion->version, $this->installedVersion->build, KUNENA_VERSION, KUNENA_VERSION_BUILD);
+		$replace = array ($this->installedVersion->component, $this->installedVersion->version, $this->installedVersion->build, Kunena::version(), Kunena::versionBuild());
 		$this->assign('txt_action', str_replace($search, $replace, JText::_('COM_KUNENA_INSTALL_LONG_'.$this->installAction)));
 		$this->assign('txt_install', str_replace($search, $replace, JText::_('COM_KUNENA_INSTALL_'.$this->installAction)));
 
@@ -78,7 +78,7 @@ class KunenaViewInstall extends JView
 	function setToolBar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title('<span>'.KUNENA_VERSION.'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );
+		JToolBarHelper::title('<span>'.Kunena::version().'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );
 
 	}
 

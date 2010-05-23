@@ -33,25 +33,25 @@ class KunenaVersion
 	 */
 	public function getVersionWarning($msg='COM_KUNENA_VERSION_WARNING')
 	{
-		if (strpos(KUNENA_VERSION, 'SVN') !== false) {
+		if (strpos(Kunena::version(), 'SVN') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_SVN');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_SVN_WARNING');
-		} else if (strpos(KUNENA_VERSION, 'RC') !== false) {
+		} else if (strpos(Kunena::version(), 'RC') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_RC');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_RC_WARNING');
-		} else if (strpos(KUNENA_VERSION, 'BETA') !== false) {
+		} else if (strpos(Kunena::version(), 'BETA') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_BETA');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_BETA_WARNING');
-		} else if (strpos(KUNENA_VERSION, 'ALPHA') !== false) {
+		} else if (strpos(Kunena::version(), 'ALPHA') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_ALPHA');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_ALPHA_WARNING');
-		} else if (strpos(KUNENA_VERSION, 'DEV') !== false) {
+		} else if (strpos(Kunena::version(), 'DEV') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_DEV');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
 		}
 		if (!empty($kn_version_warning))
 		{
-			return JText::sprintf($msg, KUNENA_VERSION, $kn_version_type).' '.$kn_version_warning;
+			return JText::sprintf($msg, Kunena::version(), $kn_version_type).' '.$kn_version_warning;
 		}
 		return '';
 	}
@@ -60,8 +60,8 @@ class KunenaVersion
 		$version = $this->getDBVersion();
 		if (!isset($version->version)) return false;
 		if ($version->state) return false;
-		if ($version->version != KUNENA_VERSION) return false;
-		if ($version->build != KUNENA_VERSION_BUILD) return false;
+		if ($version->version != Kunena::version()) return false;
+		if ($version->build != Kunena::versionBuild()) return false;
 		return true;
 	}
 
@@ -87,7 +87,7 @@ class KunenaVersion
 		}
 		else if (!empty($version->state))
 		{
-			if ($version->version != KUNENA_VERSION || $version->build != KUNENA_VERSION_BUILD) $version->state = '';
+			if ($version->version != Kunena::version() || $version->build != Kunena::versionBuild()) $version->state = '';
 		}
 		return $version;
 	}
@@ -99,7 +99,7 @@ class KunenaVersion
 	*/
 	function getVersionHTML()
 	{
-		return 'Kunena '.KUNENA_VERSION.' | '.KUNENA_VERSION_DATE.' | '.KUNENA_VERSION_BUILD.' [ '.KUNENA_VERSION_NAME.' ]';
+		return 'Kunena '.Kunena::version().' | '.Kunena::versionDate().' | '.Kunena::versionBuild().' [ '.Kunena::versionName().' ]';
 	}
 
 	/**

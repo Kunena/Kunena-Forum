@@ -544,7 +544,7 @@ class KunenaModelInstall extends JModel {
 
 	protected function insertVersion($state = 'beginInstall') {
 		// Insert data from the new version
-		$this->insertVersionData ( KUNENA_VERSION, KUNENA_VERSION_DATE, KUNENA_VERSION_BUILD, KUNENA_VERSION_NAME, $state );
+		$this->insertVersionData ( Kunena::version(), Kunena::versionDate(), Kunena::versionBuild(), Kunena::versionName(), $state );
 	}
 
 	protected function updateVersionState($state) {
@@ -565,13 +565,13 @@ class KunenaModelInstall extends JModel {
 			$this->_action = 'INSTALL';
 		else if (version_compare ( $version->version, '1.5.99', '<=' ))
 			$this->_action = 'MIGRATE';
-		else if (version_compare ( KUNENA_VERSION, $version->version, '>' ))
+		else if (version_compare ( Kunena::version(), $version->version, '>' ))
 			$this->_action = 'UPGRADE';
-		else if (version_compare ( KUNENA_VERSION, $version->version, '<' ))
+		else if (version_compare ( Kunena::version(), $version->version, '<' ))
 			$this->_action = 'DOWNGRADE';
-		else if (KUNENA_VERSION_BUILD && KUNENA_VERSION_BUILD > $version->build)
+		else if (Kunena::versionBuild() && Kunena::versionBuild() > $version->build)
 			$this->_action = 'UP_BUILD';
-		else if (KUNENA_VERSION_BUILD && KUNENA_VERSION_BUILD < $version->build)
+		else if (Kunena::versionBuild() && Kunena::versionBuild() < $version->build)
 			$this->_action = 'DOWN_BUILD';
 		else
 			$this->_action = 'REINSTALL';

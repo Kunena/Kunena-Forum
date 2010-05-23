@@ -21,24 +21,23 @@
 
 defined( '_JEXEC' ) or die();
 
-// Kunena wide defines
-require_once (JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
-
 JToolBarHelper::title('&nbsp;', 'kunena.png');
 
 $view = JRequest::getCmd ( 'view' );
 $task = JRequest::getCmd ( 'task' );
 
+require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php');
 require_once(KPATH_ADMIN.'/install/version.php');
 $kn_version = new KunenaVersion();
 if ($view == 'install' || $task == 'install' || !$kn_version->checkVersion()) {
-	require_once (KUNENA_PATH_ADMIN_INSTALL . DS . 'controller.php');
+	require_once (KPATH_ADMIN . '/install/controller.php');
 	$controller = new KunenaControllerInstall();
 	$controller->execute( $task );
 	$controller->redirect();
 	return;
 }
 
+require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
 $lang->load('com_kunena', KUNENA_PATH);
 $lang->load('com_kunena', KUNENA_PATH_ADMIN);
@@ -319,7 +318,7 @@ switch ($task) {
 		showsmilies ( $option );
 
 		break;
-		
+
 	case "uploadsmilies" :
 		uploadsmilies ( $option, $cid [0] );
 
@@ -349,7 +348,7 @@ switch ($task) {
 		showRanks ( $option );
 
 		break;
-		
+
 	case "uploadranks" :
 		uploadranks ( $option, $cid [0] );
 

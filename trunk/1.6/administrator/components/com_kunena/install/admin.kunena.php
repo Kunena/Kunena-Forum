@@ -28,10 +28,23 @@ define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
 define ( 'KPATH_MEDIA_LEGACY', JPATH_ROOT . DS . 'images/fbfiles/' );
 
 // Version information
-define ('KUNENA_VERSION', '@kunenaversion@');
-define ('KUNENA_VERSION_DATE', '@kunenaversiondate@');
-define ('KUNENA_VERSION_NAME', '@kunenaversionname@');
-define ('KUNENA_VERSION_BUILD', '@kunenaversionbuild@');
+class Kunena {
+	public static function version() {
+		return '@kunenaversion@';
+	}
+
+	public static function versionDate() {
+		return '@kunenaversiondate@';
+	}
+
+	public static function versionName() {
+		return '@kunenaversionname@';
+	}
+
+	public static function versionBuild() {
+		return '@kunenaversionbuild@';
+	}
+}
 
 JToolBarHelper::title('&nbsp;', 'kunena.png');
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install type="component" version="1.5.0" method="upgrade">
+	<name>Kunena</name>
+	<version>1.6.0-ALPHA</version>
+	<versionname>Gespraech</versionname>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>www.Kunena.com</author>
+	<authorEmail>Kunena@Kunena.com</authorEmail>
+	<authorUrl>http://www.Kunena.com</authorUrl>
+	<copyright>www.Kunena.com</copyright>
+	<license>GNU/GPL</license>
+	<description>Kunena Forum</description>
+	<installfile>install.kunena.php</installfile>
+	<uninstallfile>install.kunena.php</uninstallfile>
+	<scriptfile>install.kunena.php</scriptfile>
+	<files>
+		<filename>CHANGELOG.php</filename>
+		<filename>COPYRIGHT.php</filename>
+	</files>
+	<administration>
+		<files>
+			<filename>admin.kunena.php</filename>
+			<folder>install</folder>
+			<folder>archive</folder>
+		</files>
+		<menu>Kunena Forum</menu>
+		<languages folder="languages">
+			<language tag="en-GB">en-GB.com_kunena.install.ini</language>
+		</languages>
+	</administration>
+	<params />
+</install>

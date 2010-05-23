@@ -82,15 +82,13 @@ $this->k=0;
 			</td>
 		</tr>
 
-		<?php if ($this->allow_anonymous): ?>
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
+		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check" <?php if (!$this->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 			<td class="kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong></td>
 
 			<td>
 			<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 			</td>
 		</tr>
-		<?php endif; ?>
 
 		<?php
 		if ($this->config->askemail && !$this->my->id) {

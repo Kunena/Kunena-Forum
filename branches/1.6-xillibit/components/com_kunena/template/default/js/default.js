@@ -832,6 +832,24 @@ window.addEvent('domready', function(){
 		});
 	}
 	
+	// to select if anynomous option is allowed on new topic tab
+	if($('postcatid') != undefined) {
+		$('postcatid').getElements('option').each( function( catid ) {
+			catid.addEvent('click', function(e) {
+				var url = "/kunena_1.6.0_branch/index.php?option=com_kunena&func=json&action=anynomousallowed";
+				var request = new Request.JSON({
+					url: url,
+					onComplete: function(jsonObj) {	
+						if (jsonObj.allowed_anonymous != null && jsonObj.allowed_anonymous.indexOf(catid.value) >= 0) {
+							$('kanynomous_check').removeProperty('style');
+						} else {
+							$('kanynomous_check').setStyle('display','none');
+						}
+					}
+				}).send();		
+			})
+		});
+	
 	/* Quick reply */
 	$$('.kqreply').each(function(el){
 		el.addEvent('click', function(e){

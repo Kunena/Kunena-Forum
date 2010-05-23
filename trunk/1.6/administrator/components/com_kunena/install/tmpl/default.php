@@ -21,7 +21,7 @@ if ($this->go == 'next') {
 		</div>
 	</div>
 	<div class="n">
-			<h1>Steps</h1>
+			<h1><?php echo JText::_('COM_KUNENA_INSTALL_STEPS') ?></h1>
 			<?php $this->showSteps(); ?>
 	</div>
 	<div class="c">

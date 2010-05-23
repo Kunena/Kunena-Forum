@@ -32,7 +32,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0-DEV
+Kunena 1.6.0-ALPHA
+
+23-May-2010 Matias
+# [#20038] Split installer steps into tasks to avoid timeouts
+# [#20038] Fix misc Joomla 1.6 issues in the installer
+# [#20038] Move sample data into it's own file, make it more robust
+# [#20038] Simplify kunena.install.upgrade.xml by running always install tables
 
 21-May-2010 Matias
 ^ [#15886] Merged revisions 2508-2513 from /branches/1.6-xillibit with changes

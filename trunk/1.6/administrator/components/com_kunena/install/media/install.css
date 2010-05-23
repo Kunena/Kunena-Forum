@@ -81,7 +81,7 @@ padding-left:148px !important;
 	font-size: 20px;
 	color: #0B55C4;
 	font-weight: bold;
-	background:url(../../../../templates/khepri/images/j_divider.png) 0 100% repeat-x;
+	background:url(j_divider.png) 0 100% repeat-x;
 }
 
 .step-on, .step-off, .step-grey {
@@ -89,7 +89,7 @@ padding-left:148px !important;
 	padding-bottom: 12px;
 	font-size: 12px;
 	font-weight: bold;
-	background:url(../../../../templates/khepri/images/j_divider.png) 0 100% repeat-x;
+	background:url(j_divider.png) 0 100% repeat-x;
 }
 
 .step-off {

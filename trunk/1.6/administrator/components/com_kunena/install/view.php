@@ -38,7 +38,7 @@ class KunenaViewInstall extends JView
 		$this->assignRef('state', $this->get('State'));
 		$this->assign('step', $this->get('Step'));
 		$this->assignRef('steps', $this->get('Steps'));
-		$this->assignRef('status', $this->state->status);
+		$this->assignRef('status', $this->get('Status'));
 		$this->assign('error', $this->get('Error'));
 
 		$this->assignRef('requirements', $this->get('Requirements'));
@@ -64,7 +64,7 @@ class KunenaViewInstall extends JView
 		JRequest::setVar('hidemainmenu', 1);
 
 		$this->assign('go', JRequest::getCmd('go', ''));
-		
+
 		parent::display($tpl);
 	}
 
@@ -78,7 +78,7 @@ class KunenaViewInstall extends JView
 	function setToolBar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title('<span>'.KUNENA_VERSION.'</span> '. JText::_( 'Installer' ), 'kunena.png' );
+		JToolBarHelper::title('<span>'.KUNENA_VERSION.'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );
 
 	}
 
@@ -90,8 +90,8 @@ class KunenaViewInstall extends JView
 	}
 
 	function getAction() {
-		if (!$this->step) return "Install";
-		return $this->error ? "Retry" : ($this->step == count($this->steps)-1 ? "Finish" : "Next");
+		if (!$this->step) return JText::_('COM_KUNENA_BUTTON_INSTALL');
+		return JText::_($this->error ? 'COM_KUNENA_BUTTON_RETRY' : ($this->step == count($this->steps)-1 ? 'COM_KUNENA_BUTTON_FINISH' : 'COM_KUNENA_BUTTON_NEXT'));
 	}
 
 	function getActionURL() {

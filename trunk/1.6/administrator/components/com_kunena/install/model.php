@@ -45,6 +45,8 @@ class KunenaModelInstall extends JModel {
 	protected $_versiontablearray = null;
 	protected $_versionarray = null;
 
+	public $steps = null;
+
 	public function __construct() {
 		parent::__construct ();
 		$this->db = JFactory::getDBO ();
@@ -55,8 +57,24 @@ class KunenaModelInstall extends JModel {
 		$this->setState ( 'max_time', @ini_get ( 'max_execution_time' ) );
 
 		$this->_versiontablearray = array (array ('prefix' => 'kunena_', 'table' => 'kunena_version' ), array ('prefix' => 'fb_', 'table' => 'fb_version' ) );
-		$this->_versionarray = array (array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.4', 'date' => '2007-12-23', 'table' => 'fb_sessions', 'column' => 'currvisit' ), array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04', 'table' => 'fb_categories', 'column' => 'headerdesc' ), array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.2', 'date' => '2007-08-03', 'table' => 'fb_users', 'column' => 'rank' ), array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.1', 'date' => '2007-05-20', 'table' => 'fb_users', 'column' => 'uhits' ), array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_categories', 'column' => 'image' ), array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '0.9.9', 'date' => '0000-00-00', 'table' => 'fb_messages' ), //array('component'=>'JoomlaBoard','prefix'=>'sb_', 'version'=>'v1.1', 'date'=>'0000-00-00', 'table'=>'sb_messages'),
-		array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
+		$this->_versionarray = array (
+			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.4', 'date' => '2007-12-23', 'table' => 'fb_sessions', 'column' => 'currvisit' ),
+			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04', 'table' => 'fb_categories', 'column' => 'headerdesc' ),
+			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.2', 'date' => '2007-08-03', 'table' => 'fb_users', 'column' => 'rank' ),
+			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.1', 'date' => '2007-05-20', 'table' => 'fb_users', 'column' => 'uhits' ),
+			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_categories', 'column' => 'image' ),
+			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '0.9.9', 'date' => '0000-00-00', 'table' => 'fb_messages' ),
+			// array('component'=>'JoomlaBoard','prefix'=>'sb_', 'version'=>'v1.1', 'date'=>'0000-00-00', 'table'=>'sb_messages'),
+			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
+
+		$this->steps = array (
+			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
+			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
+			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
+			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
+			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
+			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
+			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_COMPLETE') ) );
 	}
 
 	/**
@@ -89,11 +107,11 @@ class KunenaModelInstall extends JModel {
 		// if the model state is uninitialized lets set some values we will need from the request.
 		if ($this->__state_set === false) {
 			$app = JFactory::getApplication ();
-			$this->setState ( 'step', $step = $app->getUserState ( 'com_kunena.install.step' ) );
+			$this->setState ( 'step', $step = $app->getUserState ( 'com_kunena.install.step', 0 ) );
+			$this->setState ( 'task', $task = $app->getUserState ( 'com_kunena.install.task', 0 ) );
 			if ($step == 0)
 				$app->setUserState ( 'com_kunena.install.status', array () );
-			else
-				$this->setState ( 'status', $app->getUserState ( 'com_kunena.install.status' ) );
+			$this->setState ( 'status', $app->getUserState ( 'com_kunena.install.status' ) );
 
 			$this->__state_set = true;
 		}
@@ -102,14 +120,29 @@ class KunenaModelInstall extends JModel {
 		return (is_null ( $value ) ? $default : $value);
 	}
 
+	public function getStatus() {
+		return $this->getState ( 'status', array() );
+	}
+
 	public function getStep() {
 		return $this->getState ( 'step', 0 );
+	}
+
+	public function getTask() {
+		return $this->getState ( 'task', 0 );
 	}
 
 	public function setStep($step) {
 		$this->setState ( 'step', ( int ) $step );
 		$app = JFactory::getApplication ();
 		$app->setUserState ( 'com_kunena.install.step', ( int ) $step );
+		$this->setTask(0);
+	}
+
+	public function setTask($task) {
+		$this->setState ( 'task', ( int ) $task );
+		$app = JFactory::getApplication ();
+		$app->setUserState ( 'com_kunena.install.task', ( int ) $task );
 	}
 
 	public function addStatus($task, $result = false, $msg = '') {
@@ -133,13 +166,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function getSteps() {
-		$this->steps = array (array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
-			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
-			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
-			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
-			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
-			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
-			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_COMPLETE') ) );
 		return $this->steps;
 	}
 
@@ -188,7 +214,7 @@ class KunenaModelInstall extends JModel {
 		}
 	}
 
-	public function beginInstall() {
+	public function stepPrepare() {
 		$results = array ();
 
 		// Migrate version table from old installation
@@ -218,6 +244,87 @@ class KunenaModelInstall extends JModel {
 				$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], true );
 		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true );
 		$this->insertVersion ( 'migrateDatabase' );
+		if (! $this->getError ())
+			$this->setStep ( $this->getStep()+1 );
+	}
+
+	public function stepExtract() {
+		static $files = array(
+			array('name'=>'admin.zip', 'dest'=>KPATH_ADMIN),
+			array('name'=>'site.zip', 'dest'=>KPATH_SITE),
+			array('name'=>'media.zip', 'dest'=>KPATH_MEDIA)
+		);
+		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
+		$task = $this->getTask();
+		if (isset($files[$task])) {
+			$file = $files[$task];
+			if (file_exists ( $path . DS . $file['name'] )) {
+				$this->extract ( $path, $file['name'], $file['dest'] );
+			}
+			$this->setTask($task+1);
+		} else {
+			if (! $this->getError ())
+				$this->setStep($this->getStep()+1);
+		}
+	}
+
+	public function stepPlugins() {
+		jimport('joomla.filesystem.folder');
+		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
+		$file = 'plgSystemMootools12.zip';
+		if (!class_exists('JHTMLBehavior') && is_file ( $path . DS . $file )) {
+			$this->installPlugin ( $path, $file, 'mootools12' );
+		}
+		if (! $this->getError ())
+			$this->setStep ( $this->getStep()+1 );
+	}
+
+	public function stepDatabase() {
+		$task = $this->getTask();
+		$this->setTask($task+1);
+		switch ($task) {
+			case 0:
+				$this->migrateDatabase ();
+			case 1:
+				$this->installDatabase ();
+			case 2:
+				$this->upgradeDatabase ();
+			default:
+				if (! $this->getError ())
+					$this->setStep ( $this->getStep()+1 );
+		}
+	}
+
+	public function stepFinish() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', KUNENA_PATH);
+		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
+		require_once (KPATH_ADMIN . '/api.php');
+		require_once (KPATH_SITE . '/class.kunena.php');
+
+		jimport( 'joomla.version' );
+		$jversion = new JVersion();
+		if ($jversion->RELEASE == 1.5) {
+			//	change fb menu icon
+			$this->db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
+			$id = $this->db->loadResult();
+			check_dberror("Unable to find component.");
+
+			//	add new admin menu images
+			$this->db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
+			$this->db->query();
+			check_dbwarning("Unable to set admin menu image.");
+
+			CKunenaTools::createMenu(false);
+			CKunenaTools::reCountBoards();
+		}
+
+		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
+		$this->updateVersionState ( '' );
+
+		if (! $this->getError ()) {
+			$this->setStep ( $this->getStep()+1 );
+		}
 	}
 
 	public function migrateDatabase() {
@@ -238,6 +345,23 @@ class KunenaModelInstall extends JModel {
 		$this->updateVersionState ( 'upgradeDatabase' );
 	}
 
+	public function installDatabase() {
+		$lang = JFactory::getLanguage();
+		$lang->load('com_kunena', KUNENA_PATH);
+		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
+
+		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
+
+		// Allow queries to fail
+		$this->db->debug(0);
+		foreach ($xml->install[0] as $action) {
+			$results [] = $this->processUpgradeXMLNode($action);
+		}
+		foreach ( $results as $i => $r )
+			if ($r)
+				$this->addStatus ( $r ['action'] . ' ' . $r ['name'], $r ['success'] );
+	}
+
 	public function upgradeDatabase() {
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', KUNENA_PATH);
@@ -248,17 +372,13 @@ class KunenaModelInstall extends JModel {
 
 		// Allow queries to fail
 		$this->db->debug(0);
-		if (!$curversion->id) {
-			foreach ($xml->install[0] as $action) {
-				$results [] = $this->processUpgradeXMLNode($action);
-			}
-		} else {
+		if ($curversion->id) {
 			foreach ($xml->upgrade[0] as $version) {
 				if ($version['version'] == '@'.'kunenaversion'.'@') {
 					$svn = 1;
 				}
 				if(isset($svn) ||
-						($version['date'] > $curversion->date) ||
+						($version['versiondate'] > $curversion->versiondate) ||
 						(version_compare($version['version'], $curversion->version, '>')) ||
 						(version_compare($version['version'], $curversion->version, '==') &&
 						$version['build'] > $curversion->build)) {
@@ -297,7 +417,10 @@ class KunenaModelInstall extends JModel {
 				if (!$this->db->getErrorNum()) {
 					$error = true;
 				}
-				if ($mode!='silenterror') $result = array('action'=>'SQL Query', 'name'=>'', 'success'=>$error);
+				if ($action['mode'] == 'silenterror' || !$this->db->getAffectedRows())
+					$result = null;
+				else
+					$result = array('action'=>'SQL Query', 'name'=>'', 'success'=>$error);
 				break;
 			default:
 				$result = array('action'=>'fail', 'name'=>$nodeName, 'success'=>false);
@@ -322,32 +445,6 @@ class KunenaModelInstall extends JModel {
 		$this->updateVersionState ( '' );
 	}
 */
-	public function installFinish() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', KUNENA_PATH);
-		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
-		require_once (KPATH_ADMIN . '/api.php');
-		require_once (KPATH_SITE . '/class.kunena.php');
-
-		jimport( 'joomla.version' );
-		$jversion = new JVersion();
-		if ($jversion->RELEASE == 1.5) {
-			//	change fb menu icon
-			$this->db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
-			$id = $this->db->loadResult();
-			check_dberror("Unable to find component.");
-
-			//	add new admin menu images
-			$this->db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
-			$this->db->query();
-			check_dbwarning("Unable to set admin menu image.");
-
-			CKunenaTools::createMenu(false);
-		}
-
-		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
-		$this->updateVersionState ( '' );
-	}
 
 	public function getRequirements() {
 		if ($this->_req !== false) {

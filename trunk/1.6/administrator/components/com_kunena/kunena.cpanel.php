@@ -158,10 +158,10 @@ div.icon-container {
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=ranks" title = "<?php echo JText::_('COM_KUNENA_RANK_MANAGER');?>"> <img src = "components/com_kunena/images/kranks.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?> </span></a> </div>
 					  </div>
 					   <div class="icon-container">
-						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=createmenu" title = "<?php echo JText::_('COM_KUNENA_CREATE_MENU');?>"> <img src = "images/menu.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_CREATE_MENU'); ?> </span></a> </div>
+						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=createmenu" title = "<?php echo JText::_('COM_KUNENA_CREATE_MENU');?>"> <img src = "components/com_kunena/images/menu.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_CREATE_MENU'); ?> </span></a> </div>
 					  </div>
 					   <div class="icon-container">
-						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showtrashview" title = "<?php echo JText::_('COM_KUNENA_TRASH_VIEW');?>"> <img src = "images/trash.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?> </span></a> </div>
+						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showtrashview" title = "<?php echo JText::_('COM_KUNENA_TRASH_VIEW');?>"> <img src = "components/com_kunena/images/trash.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?> </span></a> </div>
 					  </div>
 					  <div class="icon-container">
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showsystemreport" title = "<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM');?>"> <img src = "components/com_kunena/images/report_conf.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?> </span></a> </div>

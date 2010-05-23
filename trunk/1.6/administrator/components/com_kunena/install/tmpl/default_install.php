@@ -15,8 +15,8 @@ defined('_JEXEC') or die;
 		<td><?php echo $status['step']; ?>: <?php echo $status['task']; ?></td>
 		<td style="color: <?php echo $status['success'] ? "green" : "red"; ?>">
 		... <?php echo $status['success'] ? "OK" : "Failed"; ?></td>
+		<td><?php echo $status['msg']; ?></td>
 	</tr>
 	<?php endforeach; ?>
 </table>
 <br />
-	<?php echo $status['msg']; ?>

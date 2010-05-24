@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+24-May-2010 Matias
+# [#20038] Create virtual view to have menu item for Joomla 1.6
+
 23-May-2010 Matias
 # [#20038] Split installer steps into tasks to avoid timeouts
 # [#20038] Fix misc Joomla 1.6 issues in the installer

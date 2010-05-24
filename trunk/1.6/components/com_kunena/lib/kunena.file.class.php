@@ -49,6 +49,7 @@ class CKunenaPath extends JPath
 			// Create the test file
 			JFile::write($test, '');
 			// Test ownership
+			clearstatcache();
 			$owner = fileowner($test);
 			$group = filegroup($test);
 			// Delete the test file

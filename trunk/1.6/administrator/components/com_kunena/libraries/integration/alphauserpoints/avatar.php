@@ -35,7 +35,8 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	public function getLink($user, $class='', $sizex=90, $sizey=90)
 	{
 		$user = KunenaFactory::getUser($user);
-		$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $sizex, $sizey  );
+		$size = $this->getSize($sizex, $sizey);
+		$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $size->x, $size->y  );
 		return $avatar;
 	}
 }

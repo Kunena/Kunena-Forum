@@ -36,6 +36,11 @@ Kunena 1.6.0-ALPHA
 
 24-May-2010 Matias
 # [#20038] Create virtual view to have menu item for Joomla 1.6
+^ [#15886] Merged revisions 2525-2532 from /branches/1.6-xillibit with changes
+
+24-May-2010 Xillibit
+# [#19288] Fix regression caused by undefined variables on AUP avatar integration class
+# [#19288] Add clearstatcache() in kunena.file.class to avoid issues
 
 23-May-2010 Matias
 # [#20038] Split installer steps into tasks to avoid timeouts
@@ -44,6 +49,13 @@ Kunena 1.6.0-ALPHA
 # [#20038] Simplify kunena.install.upgrade.xml by running always install tables
 # [#20038] Fix uninstall in Joomla 1.6
 # [#20038] Remove dependencies to frontend during installation
+
+23-May-2010 Xillibit
+# [#20038] Function to delete menu on joomla 1.6 when kunena is uninstallated
+# [#19288] Fix issues when anynomous option is enabled, on new topic the checkbox isn't displayed
+# [#19288] Fix undefined variable $this->_app on ban function in class.kunena
+# [#19288] Fix issue which doens't diplay avatar in correct size with AUP integration (Part 2)
+# [#19288] Remove hard-coded url in anonymous check in new topic tab
 
 21-May-2010 Matias
 ^ [#15886] Merged revisions 2508-2513 from /branches/1.6-xillibit with changes

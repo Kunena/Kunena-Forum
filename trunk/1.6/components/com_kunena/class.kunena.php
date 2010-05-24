@@ -842,11 +842,29 @@ class CKunenaTools {
 			MenusHelper::cleanCache();
 		}
 
-		function DeleteMenu() {
-			jimport ( 'joomla.version' );
-			$jversion = new JVersion ();
-			if ($jversion->RELEASE == 1.6) return;
+		function DeleteMenuJ16() {
+			$db = JFactory::getDBO();
+			$query = "SELECT id,menutype FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
+			$db->setQuery ($query);
+			$menudetails = $db->loadObject ();
+			check_dberror ( "Unable to load kunena menu." );
 
+			if ($menudetails) {
+				// Delete kunena menu type
+				$query = "DELETE FROM `#__menu_types` WHERE `id`='".$menudetails->id."';";
+				$db->setQuery ($query);
+				$db->Query();
+				check_dberror ( "Unable to delete kunena menu." );
+
+				// Delete kunena menu (index, profile...)
+				$query = "DELETE FROM `#__menu` WHERE `menutype`='".$menudetails->menutype."';";
+				$db->setQuery ($query);
+				$db->Query();
+				check_dberror ( "Unable to delete kunena menu." );
+			}
+		}
+
+		function DeleteMenuJ15() {
 			$db = JFactory::getDBO();
 			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 			$db->setQuery ($query);
@@ -967,9 +985,9 @@ class CKunenaTools {
 				$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banmessage, '');
 
 				if (!$banthisuser) {
-					$this->_app->enqueueMessage( $usermod->getErrorMessage());
+					$kunena_app->enqueueMessage( $usermod->getErrorMessage());
 				} else {
-					$this->_app->enqueueMessage ( JText::_ ( 'COM_A_KUNENA_USER_BANNED_DONE' ) );
+					$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' ) );
 				}
 
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );

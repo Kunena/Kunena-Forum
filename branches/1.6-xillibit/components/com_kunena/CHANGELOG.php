@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-DEV
 
+24-May-2010 Xillibit
+# [#19288] Fix regression caused bby undefined variables on AUP avatar integration class
+# [#19288] Add clearstatcache() in kunena.file.class to avoid issues
+
 23-May-2010 Xillibit
 # [#20038] Function to delete menu on joomla 1.6 when kunena is uninstallated
 # [#19288] Fix issues when anynomous option is enabled, on new topic the checkbox isn't displayed

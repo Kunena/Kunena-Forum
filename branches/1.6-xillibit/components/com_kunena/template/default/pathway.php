@@ -22,9 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-$kunena_config = &CKunenaConfig::getInstance ();
-$kunena_db = &JFactory::getDBO ();
+require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
+$pathway = new CKunenaPathway();
 
 global $kunena_icons;
 
@@ -43,10 +42,7 @@ if ($func != "") {
 
 	$fr_title_name = JText::_('COM_KUNENA_CATEGORIES');
 	while ( $catids > 0 ) {
-		$query = "SELECT * FROM #__kunena_categories WHERE id='{$catids}' AND published='1'";
-		$kunena_db->setQuery ( $query );
-		$results = $kunena_db->loadObject ();
-		check_dberror ( "Unable to load categories." );
+		$results = $pathway->getCatsDetails($catids);
 
 		if (! $results)
 			break;
@@ -71,10 +67,7 @@ if ($func != "") {
 	//attach topic name
 	$this->kunena_topic_title = '';
 	if ($sfunc == "view" and $id) {
-		$sql = "SELECT subject, id FROM #__kunena_messages WHERE id='{$id}'";
-		$kunena_db->setQuery ( $sql );
-		$this->kunena_topic_title = KunenaParser::parseText ($kunena_db->loadResult () );
-		check_dberror ( "Unable to load subject." );
+		$this->kunena_topic_title = $pathway->getMessagesTitles($id);
 		$jr_path_menu [] = $this->kunena_topic_title;
 	}
 
@@ -94,7 +87,7 @@ if ($func != "") {
 		$moderatedForum = 1;
 	}
 
-	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( kunena_htmlspecialchars ( $kunena_config->board_title ) ) . '</div>';
+	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( kunena_htmlspecialchars ( $this->config->board_title ) ) . '</div>';
 
 	$firelast = '';
 	for($i = 0; $i < $jr_forum_count; $i ++) {
@@ -107,48 +100,18 @@ if ($func != "") {
 
 	//get viewing
 	$fireonline = '';
-	if ( $kunena_config->onlineusers ) {
-		$fb_queryName = $kunena_config->username ? "username" : "name";
-		$query = "SELECT w.userid, u.$fb_queryName AS username, k.showOnline FROM #__kunena_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__kunena_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . $kunena_db->getEscaped ( JURI::current () ) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
-		$kunena_db->setQuery ( $query );
-		$users = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to load who is online." );
-		$total_viewing = count ( $users );
-
+	if ( $this->config->onlineusers ) {
 		if ($sfunc == "userprofile") {
 			$fireonline .= JText::_('COM_KUNENA_USER_PROFILE');
 			$fireonline .= $this->kunena_username;
 		} else {
-			$fireonline .= "<div class=\"path-element-users\">($total_viewing " . JText::_('COM_KUNENA_PATHWAY_VIEWING') . ")&nbsp;";
-			$totalguest = 0;
-			$divider = ', ';
-			$lastone = end ( $users );
-			foreach ( $users as $user ) {
-				if ($user->userid != 0) {
-					if ($user == $lastone && ! $totalguest) {
-						$divider = '';
-					}
-					if ($user->showOnline > 0) {
-						$fireonline .= CKunenaLink::GetProfileLink ( $user->userid, $user->username ) . $divider;
-					}
-				} else {
-					$totalguest = $totalguest + 1;
-				}
-			}
-			if ($totalguest > 0) {
-				if ($totalguest == 1) {
-					$fireonline .= '(' . $totalguest . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUEST');
-				} else {
-					$fireonline .= '(' . $totalguest . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUESTS');
-				}
-			}
+			$fireonline .= "<div class=\"path-element-users\">(".$pathway->getTotalViewing(). ' ' . JText::_('COM_KUNENA_PATHWAY_VIEWING') . ")&nbsp;";
+			$fireonline .= $pathway->getUsersOnlineList();
 		}
 		$fireonline .= '</div>';
 	}
 
-
-	$document = & JFactory::getDocument ();
-	$document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name ) . ' - ' . $kunena_config->board_title );
+	$this->document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name ) . ' - ' . $this->config->board_title );
 
 	$this->kunena_pathway1 = $firepath . $fireinfo;
 	$this->kunena_pathway2 = $firelast . $fireonline;

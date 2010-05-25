@@ -1043,6 +1043,20 @@ class CKunenaTools {
 			}
 		}
 
+		/**
+		 * This function load datas for rules or help page
+		 *
+		 */
+		function getRulesHelpDatas($id) {
+			$kunena_db = &JFactory::getDBO ();
+
+			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$id}'" );
+			$introtext = $kunena_db->loadResult ();
+			check_dberror ( "Unable to load introtext." );
+
+			return $introtext;
+		}
+
     } // end of class
 
 class fbForum

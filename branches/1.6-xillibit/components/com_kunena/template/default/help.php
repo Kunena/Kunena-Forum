@@ -22,32 +22,26 @@ $kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_
 $introtext = $kunena_db->loadResult ();
 check_dberror ( "Unable to load introtext." );
 ?>
-<table class="kblock" id="kforumhelp">
-	<thead>
-		<tr>
-			<th>
-				<h1><?php echo JText::_('COM_KUNENA_FORUM_HELP'); ?></h1>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td class="khelpdesc">
-				<?php echo $introtext; ?>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<div class="kblock">
+	<div class="ktitle">
+		<h1><?php echo JText::_('COM_KUNENA_FORUM_HELP'); ?></h1>
+	</div>
+	<div class="kcontainer">
+		<div class="khelprulescontent">
+			<?php echo $introtext; ?>
+		</div>
+	</div>
+</div>
 <!-- Begin: Forum Jump -->
-<table class="kblock" id="kbottomarea">
-	<tr>
-		<th class="th-right">
+<div class="kblock">
+	<div class="kcontainer">
+		<div class="khelprulesjump">
 		<?php
 		if ($kunena_config->enableforumjump) {
 			CKunenaTools::loadTemplate('/forumjump.php');
 		}
 		?>
-		</th>
-	</tr>
-</table>
+		</div>
+	</div>
+</div>
 <!-- Finish: Forum Jump -->

@@ -44,6 +44,7 @@ Kunena 1.6.0-ALPHA
 # [#19288] Fixed coloring for guests and global moderators
 # [#19288] Fixed missing avatar sometimes when file cannot be found
 # [#20038] Joomla 1.6: Make javascript to work (except for shrink/expand)
+# [#20038] Joomla 1.6: Make editor to work again
 
 24-May-2010 Matias
 # [#20038] Create virtual view to have menu item for Joomla 1.6

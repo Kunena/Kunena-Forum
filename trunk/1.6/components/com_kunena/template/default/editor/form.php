@@ -22,18 +22,13 @@
 global $topic_emoticons;
 
 require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
-$kunena_poll =& CKunenaPolls::getInstance();
+$kunena_poll = CKunenaPolls::getInstance();
 $kunena_poll->call_javascript_form();
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
-JApplication::addCustomHeadTag('
-      <script type="text/javascript">
-	   <!--
-	   var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed', '', false).'";
-     //-->
-     </script>
-		');
+$document = JFactory::getDocument ();
+$document->addScriptDeclaration('var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed', '', false).'";');
 $this->setTitle ( $this->title );
 
 $this->k=0;

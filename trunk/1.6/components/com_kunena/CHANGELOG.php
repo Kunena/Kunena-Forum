@@ -39,6 +39,11 @@ Kunena 1.6.0-ALPHA
 # [#19288] Remove all but one dependency to frontend files during installation
 # [#19288] Fix undefined variable during uninstall
 ^ [#20038] Improve installer, make admin menu image to work in J1.6
+# [#20038] Joomla 1.6: Use correct author for sample message (= user who installed Kunena)
+# [#20038] Joomla 1.6: Implement isAdmin(), getAllowedCategories() and getSubscribers()
+# [#19288] Fixed coloring for guests and global moderators
+# [#19288] Fixed missing avatar sometimes when file cannot be found
+# [#20038] Joomla 1.6: Make javascript to work (except for shrink/expand)
 
 24-May-2010 Matias
 # [#20038] Create virtual view to have menu item for Joomla 1.6

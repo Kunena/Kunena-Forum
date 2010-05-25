@@ -59,7 +59,7 @@ class KunenaViewInstall extends JView
 
 		// Render the layout.
 		$app =& JFactory::getApplication();
-		if (!empty($this->requirements->fail)) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_FAILED'), 'error');
+		if (!empty($this->requirements->fail) || !empty($this->error)) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_FAILED'), 'error');
 		else if ($this->step && isset($this->steps[$this->step+1])) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_DO_NOT_INTERRUPT'), 'notice');
 		else if (!isset($this->steps[$this->step+1])) $app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_SUCCESS'));
 		else if (!empty($this->versionWarning)) $app->enqueueMessage($this->versionWarning, 'notice');

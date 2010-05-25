@@ -774,32 +774,6 @@ function kRequestGetTopics(el)
 //----------------- New Mootools based behaviors ----------------------
 
 window.addEvent('domready', function(){	
-	// Get the kunena settings cookie data.
-	KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});
-
-	// Setup the behavior for all kunena toggler elements.
-	$$('a.ktoggler').each(function(link){
-		// Auto-hide if the cookie is set.
-		if (KCookie.get('hide_'+link.getProperty('rel'))) {
-			link.removeClass('close').addClass('open');
-			document.id(link.getProperty('rel')).setStyle('display', 'none');
-		}
-		
-		// Add the onclick event.
-		link.addEvent('click', function(){
-			if (this.hasClass('close')) {
-				this.removeClass('close').addClass('open');
-				document.id(this.getProperty('rel')).setStyle('display', 'none');
-				KCookie.set('hide_'+this.getProperty('rel'), true);
-			}
-			else {
-				this.removeClass('open').addClass('close');
-				document.id(this.getProperty('rel')).setStyle('display', '');
-				KCookie.set('hide_'+this.getProperty('rel'), false);
-			}
-		});
-	});
-	
 	//for hide or show polls if category is allowed
 	if($('postcatid') != undefined) {
 		$('postcatid').getElements('option').each( function( catid ) {
@@ -955,4 +929,30 @@ window.addEvent('domready', function(){
 			alert( $('ban-user-fields').getChildren('input') );
 		});
 	}
+	
+	// Get the kunena settings cookie data.
+	KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});
+
+	// Setup the behavior for all kunena toggler elements.
+	$$('a.ktoggler').each(function(link){
+		// Auto-hide if the cookie is set.
+		if (KCookie.get('hide_'+link.getProperty('rel'))) {
+			link.removeClass('close').addClass('open');
+			document.id(link.getProperty('rel')).setStyle('display', 'none');
+		}
+		
+		// Add the onclick event.
+		link.addEvent('click', function(){
+			if (this.hasClass('close')) {
+				this.removeClass('close').addClass('open');
+				document.id(this.getProperty('rel')).setStyle('display', 'none');
+				KCookie.set('hide_'+this.getProperty('rel'), true);
+			}
+			else {
+				this.removeClass('open').addClass('close');
+				document.id(this.getProperty('rel')).setStyle('display', '');
+				KCookie.set('hide_'+this.getProperty('rel'), false);
+			}
+		});
+	});
 });

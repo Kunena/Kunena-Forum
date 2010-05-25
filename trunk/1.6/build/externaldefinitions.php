@@ -38,3 +38,6 @@ class Cezpdf {}
 
 // UddeIM
 class uddeIMAPI {}
+
+// Joomla 1.6
+class JAccess {}

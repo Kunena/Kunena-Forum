@@ -18,6 +18,7 @@ function installSampleData()
 
 	$db = JFactory::getDBO();
 	$posttime = new JDate();
+	$my = JFactory::getUser();
 	$queries = array();
 
 	$query = "INSERT INTO `#__kunena_ranks`
@@ -114,8 +115,8 @@ function installSampleData()
 	$queries[] = array ('kunena_categories', $query);
 
 	$query="INSERT INTO `#__kunena_messages`
-	(`id`, `parent`, `thread`, `catid`, `userid`, `subject`, `time`, `ip`) VALUES
-	(1, 0, 1, 2, 62, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_SUBJECT')).", ".$posttime->toUnix().", '127.0.0.1');";
+	(`id`, `parent`, `thread`, `catid`, `userid`, `name`, `subject`, `time`, `ip`) VALUES
+	(1, 0, 1, 2, ".$db->quote($my->id).", 'Kunena', ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_SUBJECT')).", ".$posttime->toUnix().", '127.0.0.1');";
 
 	$queries[] = array ('kunena_messages', $query);
 

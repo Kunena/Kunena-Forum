@@ -180,25 +180,23 @@ class CKunenaLink {
 	}
 
 	function GetProfileLink($userid, $name, $title ='', $rel = 'nofollow', $class = '') {
+		if ($userid == 0) {
+			$uclass = 'guest';
+		} else if (CKunenaTools::isAdmin ( $userid )) {
+			$uclass = 'admin';
+		} else if (CKunenaTools::isModerator ( $userid, true )) {
+			$uclass = 'globalmoderator';
+		} else if (CKunenaTools::isModerator ( $userid )) {
+			$uclass = 'moderator';
+		} else {
+			$uclass = 'user';
+		}
 		if ($userid > 0) {
-					if (CKunenaTools::isAdmin ( $userid )) {
-				$class = 'admin';
-// TODO: make this to work
-//			} else if (CKunenaTools::isModerator ( $userid, true )) {
-//				$class = 'globalmoderator';
-			} else if (CKunenaTools::isModerator ( $userid )) {
-				$class = 'moderator';
-			} else if ($userid != 0) {
-				$class = 'user';
-			} else {
-// TODO: doesn't work
-				$class = 'guest';
-			}
 			$link = CKunenaLink::GetProfileURL ( $userid );
 			if (! empty ( $link ))
-				return CKunenaLink::GetHrefLink ( $link, $name, $title, $rel, $class );
+				return CKunenaLink::GetHrefLink ( $link, $name, $title, $rel, $uclass );
 		}
-		return $name;
+		return "<span class=\"{$uclass}\">{$name}</span>";
 	}
 
 	function GetProfileURL($userid, $xhtml = true) {

@@ -30,28 +30,27 @@ class KunenaAvatarKunena extends KunenaAvatar
 		$avatar = $user->avatar;
 		$config = KunenaFactory::getConfig();
 
-		$path = KPATH_MEDIA ."/avatars/users";
-		if ( $avatar && file_exists("{$path}/{$avatar}" ) ) {
+		$path = KPATH_MEDIA ."/avatars";
+		if ($avatar &&  preg_match('`gallery/`',$avatar)){
+			// Do nothing
+		} else if ( $avatar && is_file("{$path}/users/{$avatar}" ) ) {
 			if ($sizex == $sizey) {
 				$resized = "size{$sizex}";
 			} else {
 				$resized = "size{$sizex}x{$sizey}";
 			}
 			$rzavatar = "{$resized}_{$avatar}";
-			if ( !file_exists( "{$path}/{$rzavatar}" ) ) {
+			if ( !is_file( "{$path}/users/{$rzavatar}" ) ) {
 				require_once(KUNENA_PATH_LIB.DS.'kunena.image.class.php');
 				CKunenaImageHelper::version($path .DS. $avatar, $path, $rzavatar, $sizex, $sizey, intval($config->avatarquality));
 			}
-			$avatar = KURL_MEDIA."/avatars/users/{$rzavatar}";
-		} else if ($avatar &&  preg_match('`gallery`',$avatar)){
-			$avatar = KURL_MEDIA . "avatars/{$avatar}";
-		} else {
+			$avatar = "users/{$rzavatar}";
+		}
+		if ( !is_file("{$path}/{$avatar}")) {
 			// If avatar does not exist use default image
 			if ($sizex <= 90) $avatar = 's_nophoto.jpg';
 			else $avatar = 'nophoto.jpg';
-
-			$avatar = KURL_MEDIA . "avatars/{$avatar}";
 		}
-		return $avatar;
+		return KURL_MEDIA . "avatars/$avatar";
 	}
 }

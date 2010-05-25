@@ -63,8 +63,8 @@ class KunenaModelInstall extends JModel {
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.2', 'date' => '2007-08-03', 'table' => 'fb_users', 'column' => 'rank' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.1', 'date' => '2007-05-20', 'table' => 'fb_users', 'column' => 'uhits' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_categories', 'column' => 'image' ),
-			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '0.9.9', 'date' => '0000-00-00', 'table' => 'fb_messages' ),
-			// array('component'=>'JoomlaBoard','prefix'=>'sb_', 'version'=>'v1.1', 'date'=>'0000-00-00', 'table'=>'sb_messages'),
+			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0-DEV', 'date' => '0000-00-00', 'table' => 'fb_messages' ),
+			// array('component'=>'JoomlaBoard','prefix'=>'sb_', 'version'=>'v1.0.5', 'date'=>'0000-00-00', 'table'=>'sb_messages'),
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
 
 		$this->steps = array (
@@ -297,27 +297,18 @@ class KunenaModelInstall extends JModel {
 
 	public function stepFinish() {
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', KUNENA_PATH);
-		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
-		require_once (KPATH_ADMIN . '/api.php');
+		$lang->load('com_kunena', KPATH_SITE);
+		$lang->load('com_kunena', KPATH_ADMIN);
+
+		// TODO: remove dependence
 		require_once (KPATH_SITE . '/class.kunena.php');
 
 		jimport( 'joomla.version' );
 		$jversion = new JVersion();
 		if ($jversion->RELEASE == 1.5) {
-			//	change fb menu icon
-			$this->db->setQuery("SELECT id FROM #__components WHERE admin_menu_link = 'option=com_kunena'");
-			$id = $this->db->loadResult();
-			check_dberror("Unable to find component.");
-
-			//	add new admin menu images
-			$this->db->setQuery("UPDATE #__components SET admin_menu_img  = 'components/com_kunena/images/kunenafavicon.png'" . ",   admin_menu_link = 'option=com_kunena' " . "WHERE id='".$id."'");
-			$this->db->query();
-			check_dbwarning("Unable to set admin menu image.");
-
 			CKunenaTools::createMenu(false);
-			CKunenaTools::reCountBoards();
 		}
+		CKunenaTools::reCountBoards();
 
 		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
 		$this->updateVersionState ( '' );
@@ -347,8 +338,8 @@ class KunenaModelInstall extends JModel {
 
 	public function installDatabase() {
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', KUNENA_PATH);
-		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
+		$lang->load('com_kunena', KPATH_SITE);
+		$lang->load('com_kunena', KPATH_ADMIN);
 
 		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
 
@@ -364,8 +355,8 @@ class KunenaModelInstall extends JModel {
 
 	public function upgradeDatabase() {
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', KUNENA_PATH);
-		$lang->load('com_kunena', KUNENA_PATH_ADMIN);
+		$lang->load('com_kunena', KPATH_SITE);
+		$lang->load('com_kunena', KPATH_ADMIN);
 
 		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
 		$curversion = $this->getInstalledVersion();
@@ -674,7 +665,7 @@ class KunenaModelInstall extends JModel {
 		`state` varchar(32) NOT NULL,
 		PRIMARY KEY (`id`)
 		) DEFAULT CHARSET=utf8;";
-	    $this->db->setQuery($query);
+		$this->db->setQuery($query);
 		$this->db->query();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );

@@ -25,7 +25,7 @@
 			<folder>install</folder>
 			<folder>archive</folder>
 		</files>
-		<menu>Kunena Forum</menu>
+		<menu img="components/com_kunena/images/kunenafavicon.png">Kunena Forum</menu>
 		<languages folder="languages">
 			<language tag="en-GB">en-GB.com_kunena.install.ini</language>
 		</languages>

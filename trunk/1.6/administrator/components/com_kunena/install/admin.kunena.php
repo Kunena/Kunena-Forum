@@ -27,6 +27,9 @@ define ( 'KPATH_ADMIN', JPATH_ADMINISTRATOR . DS . KPATH_COMPONENT_RELATIVE );
 define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
 define ( 'KPATH_MEDIA_LEGACY', JPATH_ROOT . DS . 'images/fbfiles/' );
 
+// Kunena has been initialized
+define ( 'KUNENA_LOADED', 1 );
+
 // Version information
 class Kunena {
 	public static function version() {

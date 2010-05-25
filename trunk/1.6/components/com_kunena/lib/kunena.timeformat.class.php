@@ -23,6 +23,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.utilities.date' );
+require_once(KPATH_SITE . '/lib/kunena.config.class.php');
 
 class CKunenaTimeformat {
 

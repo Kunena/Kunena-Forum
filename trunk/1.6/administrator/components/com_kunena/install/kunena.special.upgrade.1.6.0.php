@@ -13,14 +13,12 @@
 
 defined ( '_JEXEC' ) or die ();
 
-include_once (KUNENA_PATH . DS . "class.kunena.php");
-
 //Import filesystem libraries.
 jimport ( 'joomla.filesystem.folder' );
 
 $templatedeprecatedlist = array ('default_ex', 'default_green', 'default_red', 'default_gray' );
 
-$kunena_db = & JFactory::getDBO ();
+$kunena_db = JFactory::getDBO ();
 $kunena_db->setQuery ( "SELECT template FROM #__kunena_config" );
 $kactualtemplate = $kunena_db->loadResult ();
 if ($kunena_db->getErrorNum () != 0) {
@@ -37,10 +35,9 @@ foreach ( $templatedeprecatedlist as $template ) {
 
 // Convert attachments table to support new multi file attachments
 
-
 // First check if attachments table has legacy field
-$fields = array_pop($this->db->getTableFields('#__kunena_attachments'));
-if (isset($fields['filelocation'])) {
+$fields = array_pop ( $kunena_db->getTableFields ( '#__kunena_attachments' ) );
+if (isset ( $fields ['filelocation'] )) {
 	// Attachments table has filelocation - assume we have to convert attachments
 	// hash and size ommited -> NULL
 	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";
@@ -69,14 +66,14 @@ if (isset($fields['filelocation'])) {
 					SUBSTRING_INDEX(a.filelocation, '/', -1) AS filename
 				FROM #__kunena_attachments_bak AS a
 				JOIN #__kunena_messages AS m ON a.mesid = m.id";
-	
+
 	if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
 		FB::log ( $query, 'Attachment Upgrade' );
 	}
-	
+
 	$kunena_db->setQuery ( $query );
 	$kunena_db->query ();
-	
+
 // By now the old attachmets table has been converted to the new Kunena 1.6 format
 // with the exception of file size and file hash that cannot be calculated inside
 // the database. Both of these columns are set to null. As we could be dealing with

@@ -12,13 +12,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // This file contains initial sample data for the forum
 
-include_once (KUNENA_PATH .DS. "class.kunena.php");
-include_once (KUNENA_PATH_LIB .DS. "kunena.timeformat.class.php");
-
 function installSampleData()
 {
-	$db = &JFactory::getDBO();
-	$posttime = CKunenaTimeformat::internalTime ();
+	jimport ( 'joomla.utilities.date' );
+
+	$db = JFactory::getDBO();
+	$posttime = new JDate();
 	$queries = array();
 
 	$query = "INSERT INTO `#__kunena_ranks`
@@ -116,7 +115,7 @@ function installSampleData()
 
 	$query="INSERT INTO `#__kunena_messages`
 	(`id`, `parent`, `thread`, `catid`, `userid`, `subject`, `time`, `ip`) VALUES
-	(1, 0, 1, 2, 62, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_SUBJECT')).", ".$posttime.", '127.0.0.1');";
+	(1, 0, 1, 2, 62, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_SUBJECT')).", ".$posttime->toUnix().", '127.0.0.1');";
 
 	$queries[] = array ('kunena_messages', $query);
 

@@ -78,8 +78,6 @@ class KunenaControllerInstall extends JController {
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
 			return;
 		}
-		if (! $this->step)
-			$this->model->setStep ( ++ $this->step );
 		if (!isset($this->steps[$this->step+1])) {
 			// Installation complete: reset and exit installer
 			$this->model->setStep ( 0 );
@@ -88,10 +86,14 @@ class KunenaControllerInstall extends JController {
 		}
 
 		do {
-			$this->step = $this->model->getStep ();
+			if ($this->step == 0) {
+				$this->model->setStep ( ++ $this->step );
+				break;
+			}
 			$this->runStep ();
 			$error = $this->model->getError ();
-			$stop = ($this->checkTimeout () || $this->step <= 1 || !isset($this->steps[$this->step+1]));
+			$this->step = $this->model->getStep ();
+			$stop = ($this->checkTimeout () || !isset($this->steps[$this->step+1]));
 		} while ( ! $stop && ! $error );
 		if ( isset($this->steps[$this->step+1]) && ! $error ) {
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install&go=next' );
@@ -109,27 +111,7 @@ class KunenaControllerInstall extends JController {
 	function runStep() {
 		if (empty ( $this->steps [$this->step] ['step'] ))
 			return;
-		return call_user_func ( array ($this, "step" . $this->steps [$this->step] ['step'] ) );
-	}
-
-	function stepPrepare() {
-		$this->model->stepPrepare ();
-	}
-
-	function stepExtract() {
-		$this->model->stepExtract();
-	}
-
-	function stepPlugins() {
-		$this->model->stepPlugins();
-	}
-
-	function stepDatabase() {
-		$this->model->stepDatabase ();
-	}
-
-	function stepFinish() {
-		$this->model->stepFinish ();
+		return call_user_func ( array ($this->model, "step" . $this->steps [$this->step] ['step'] ) );
 	}
 
 	function checkTimeout() {

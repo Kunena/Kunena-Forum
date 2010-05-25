@@ -46,6 +46,9 @@ class Com_KunenaInstallerScript {
 
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', JPATH_COMPONENT);
+
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
 		if ($jversion->RELEASE == 1.5) {
 			CKunenaTools::DeleteMenuJ15();
 		} else {

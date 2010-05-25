@@ -208,6 +208,11 @@ class CKunenaModerationTools {
 					$this->_db->setQuery ( $query );
 					$this->_db->query ();
 					check_dberror ( 'Unable to insert user state.' );
+				} else {
+					$query = "UPDATE #__kunena_banned_users SET `enabled`=1 WHERE `userid`=$UserID";
+					$this->_db->setQuery ( $query );
+					$this->_db->query ();
+					check_dberror ( 'Unable to insert user state.' );
 				}
 				break;
 			case KN_USER_BLOCK:
@@ -525,6 +530,11 @@ class CKunenaModerationTools {
 			$this->_db->setQuery ( $sql );
 			$this->_db->Query ();
 			check_dberror ( 'Unable to insert new element in ip table.' );
+		} else {
+			$query = "UPDATE #__kunena_banned_ips SET `enabled`=1 WHERE `ip`=$ip";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			check_dberror ( 'Unable to insert user state.' );
 		}
 	}
 

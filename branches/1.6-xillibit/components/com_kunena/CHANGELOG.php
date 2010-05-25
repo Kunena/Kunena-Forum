@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+25-May-2010 Xillibit
+# [#19288] Fix regression on userban and enable user in kunena user manager
+
 25-May-2010 Matias
 # [#19288] Fix a few bugs in installer that cause clean installation to fail in some environments
 # [#19288] Remove all but one dependency to frontend files during installation

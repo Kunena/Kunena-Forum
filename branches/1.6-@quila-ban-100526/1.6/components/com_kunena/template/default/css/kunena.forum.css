@@ -339,6 +339,39 @@ PX		EM			PCT			PT
 	width: 20%;
 }
 
+/*			BAN
+------------------------------------------*/
+
+#Kunena table.kblock .kcol-addban-left {
+	width: 40%;
+	text-align: left;
+	padding: 5px 10px;
+}
+#Kunena table.kblock .kcol-addban-right {
+	width: 59%;
+	text-align: left;
+	padding: 5px 10px;
+}
+#Kunena table.kblock .kcol-addban-center {
+	width: 100%;
+	text-align: center;
+	padding: 5px 10px;
+}
+#Kunena table.kblock .kcol-addban-left .blueban {
+	color: blue;
+}
+#Kunena table.kblock .kcol-addban-left .redban {
+	color: red;
+}
+#Kunena table.kblock .kcol-addban-right textarea {
+	width:60%;
+	height:5em;
+}
+
+
+
+
+
 #Kunena .kheader {
 	background: #3B3B3B url("../images/backgrounds/cat_title_bg.gif") repeat-x top left;
 	height: 30px;
@@ -381,7 +414,7 @@ PX		EM			PCT			PT
 	color: #333333;
 	padding: 4px 8px;
 	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #FFFFFF;
+	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 	vertical-align: middle;
 }
@@ -3829,6 +3862,7 @@ div#kprofile-stats ul li span.rank-admin {
 	border: 1px solid #BFC3C6;
 	padding: 10px 10px;
 	overflow: auto;
+	min-width: 700px;
 }
 #Kunena div.current dd {
 	padding: 0;

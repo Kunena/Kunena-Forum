@@ -107,10 +107,10 @@ function installSampleData()
 	$queries[] = array ('kunena_smileys', $query);
 
 	$query="INSERT INTO `#__kunena_categories`
-	(`id`, `parent`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`) VALUES
-	(1, 0, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE')).", 1, 1, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER')).", 0, 0),
-	(2, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_TITLE')).", 1, 1, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_HEADER')).",1 ,1),
-	(3, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_TITLE')).", 1, 2, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_HEADER')).",0 ,0);";
+	(`id`, `parent`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`) VALUES
+	(1, 0, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE')).", 0, 1, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER')).", 0, 0, 0),
+	(2, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_TITLE')).", 0, 1, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_HEADER')).",1 ,1, 0),
+	(3, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_TITLE')).", 0, 2, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_HEADER')).",0 ,0, 1);";
 
 	$queries[] = array ('kunena_categories', $query);
 
@@ -135,7 +135,8 @@ function installSampleData()
 		if (!$count) {
 			$db->setQuery($query[1]);
 			$db->query();
-			if ($db->getErrorNum()) trigger_error('Sample data for '.$query[0].' could not be added: '.$db->getErrorMsg(), E_USER_WARNING);
+			if ($db->getErrorNum ())
+				throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
 		}
 	}
 }

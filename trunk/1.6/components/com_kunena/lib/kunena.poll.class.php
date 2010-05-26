@@ -37,7 +37,7 @@ class CKunenaPolls {
 		static $instance = NULL;
 		if (! $instance) {
 			$kunena_db = & JFactory::getDBO ();
-			$kunena_config = & CKunenaConfig::getInstance ();
+			$kunena_config = KunenaFactory::getConfig ();
 
 			$instance = new CKunenaPolls ( $kunena_db, $kunena_config );
 		}
@@ -56,7 +56,7 @@ class CKunenaPolls {
     				WHERE a.threadid=$threadid";
     	$this->_db->setQuery($query);
     	$polldata = $this->_db->loadObjectList();
-    	check_dberror('Unable to load poll data');
+    	KunenaError::checkDatabaseError();
 
     	return $polldata;
 	}
@@ -74,7 +74,7 @@ class CKunenaPolls {
 					WHERE pollid=$threadid";
     	$this->_db->setQuery($query);
     	$uservotedata = $this->_db->loadObjectList();
-    	check_dberror('Unable to load users voted');
+    	KunenaError::checkDatabaseError();
 
     	return $uservotedata;
 	}
@@ -87,7 +87,7 @@ class CKunenaPolls {
     	$query = "SELECT SUM(votes) FROM #__kunena_polls_users WHERE pollid=$pollid";
     	$this->_db->setQuery($query);
     	$numvotes = $this->_db->loadResult();
-    	check_dberror('Unable to count votes');
+    	KunenaError::checkDatabaseError();
 
     	return $numvotes;
 	}
@@ -100,7 +100,7 @@ class CKunenaPolls {
     	$query = "SELECT COUNT(*) FROM #__kunena_polls_options WHERE pollid=$pollid";
     	$this->_db->setQuery($query);
     	$numoptions = $this->_db->loadResult();
-    	check_dberror('Unable to count poll options');
+    	KunenaError::checkDatabaseError();
 
     	return $numoptions;
 	}
@@ -210,7 +210,7 @@ class CKunenaPolls {
 						VALUES(".$this->_db->quote($polltitle).",'$pid','$polltimetolive')";
     		$this->_db->setQuery($query);
     		$this->_db->query();
-    		check_dberror('Unable to insert poll data');
+    		if (KunenaError::checkDatabaseError()) return;
 
     		for ($i = 0; $i < sizeof($optionvalue); $i++)
     		{
@@ -218,7 +218,7 @@ class CKunenaPolls {
     						VALUES(".$this->_db->quote($optionvalue[$i]).",'$pid','0')";
         		$this->_db->setQuery($query);
         		$this->_db->query();
-    			check_dberror('Unable to insert poll options');
+    			if (KunenaError::checkDatabaseError()) return;
     		}
 		}
    }
@@ -234,7 +234,7 @@ class CKunenaPolls {
 					WHERE pollid=$threadid AND userid=$userid";
 		$this->_db->setQuery($query);
 		$polluserdata = $this->_db->loadObjectList();
-		check_dberror('Unable to load poll user data');
+		KunenaError::checkDatabaseError();
 
 		return $polluserdata;
    }
@@ -252,7 +252,7 @@ class CKunenaPolls {
 					DESC ";
 		$this->_db->setQuery($query,0,$PopPollsCount);
 		$votecount = $this->_db->loadResult();
-		check_dberror('Unable to count votes');
+		KunenaError::checkDatabaseError();
 
 		return $votecount;
    }
@@ -270,7 +270,7 @@ class CKunenaPolls {
     				ORDER BY total DESC";
     	$this->_db->setQuery($query,0,$PopPollsCount);
 	    $toppolls = $this->_db->loadObjectList();
-	    check_dberror('Unable to count top five votes');
+	    KunenaError::checkDatabaseError();
 
     	return $toppolls;
    }
@@ -304,26 +304,26 @@ class CKunenaPolls {
         		$query = "SELECT * FROM #__kunena_polls_options WHERE pollid=$pollid AND id=$vote";
         		$this->_db->setQuery($query);
         		$polloption = $this->_db->loadObject();
-        		check_dberror('Unable to load poll options');
+        		if (KunenaError::checkDatabaseError()) return;
 
         		if (!$polloption) break; // OPTION DOES NOT EXIST
 
         		$query = "SELECT votes FROM #__kunena_polls_users WHERE pollid=$pollid AND userid=$userid";
         		$this->_db->setQuery($query);
           		$votes = $this->_db->loadResult();
-          		check_dberror('Unable to load votes');
+          		if (KunenaError::checkDatabaseError()) return;
 
           		if (empty($votes))
           		{
           			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote) VALUES('$pollid','{$userid}',1,'{$vote}')";
             		$this->_db->setQuery($query);
             		$this->_db->query();
-            		check_dberror('Unable to insert poll user');
+            		if (KunenaError::checkDatabaseError()) return;
 
             		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id=$vote";
              		$this->_db->setQuery($query);
              		$this->_db->query();
-            		check_dberror('Unable to update poll options');
+            		if (KunenaError::checkDatabaseError()) return;
 
             		$data['results'] = '1';
           		}
@@ -332,12 +332,12 @@ class CKunenaPolls {
          			$query = "UPDATE #__kunena_polls_users SET votes=votes+1,lastvote=$vote WHERE pollid=$pollid AND userid={$userid}";
             		$this->_db->setQuery($query);
             		$this->_db->query();
-            		check_dberror('Unable to ubdate poll users');
+            		if (KunenaError::checkDatabaseError()) return;
 
             		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id=$vote";
             		$this->_db->setQuery($query);
             		$this->_db->query();
-            		check_dberror('Unable to update poll options');
+            		if (KunenaError::checkDatabaseError()) return;
 
 					$data['results'] = '1';
          		}
@@ -367,12 +367,12 @@ class CKunenaPolls {
 			$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id=$vote";
         	$this->_db->setQuery($query);
         	$this->_db->query();
-        	check_dberror('Unable to update poll options');
+        	if (KunenaError::checkDatabaseError()) return;
 
         	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lasttime=now() WHERE pollid=$threadid AND userid=$userid";
         	$this->_db->setQuery($query);
         	$this->_db->query();
-        	check_dberror('Unable to update poll users');
+        	if (KunenaError::checkDatabaseError()) return;
 
         	$data['results'] = '1';
       	}
@@ -396,7 +396,7 @@ class CKunenaPolls {
     				WHERE threadid=$threadid";
     	$this->_db->setQuery($query);
     	$this->_db->query();
-    	check_dberror('Unable to Update Polls');
+    	if (KunenaError::checkDatabaseError()) return;
 
     	if ($polloptions == $optionsnumbers)//When users just do an update of the polls fields
     	{
@@ -407,7 +407,7 @@ class CKunenaPolls {
       						WHERE id={$pollsdatas[$i]->id} AND pollid={$threadid}";
          		$this->_db->setQuery($query);
          		$this->_db->query();
-             	check_dberror('Unable to Update Polls Options');
+             	if (KunenaError::checkDatabaseError()) return;
       		}
     	}
     	elseif($optionsnumbers > $polloptions)//When users add new polls options
@@ -421,7 +421,7 @@ class CKunenaPolls {
         						WHERE id={$pollsdatas[$i]->id} AND pollid={$threadid}";
           			$this->_db->setQuery($query);
           			$this->_db->query();
-          	    	check_dberror('Unable to Update Polls Options');
+          	    	if (KunenaError::checkDatabaseError()) return;
         		}
         		else
         		{
@@ -429,7 +429,7 @@ class CKunenaPolls {
 								VALUES(".$this->_db->quote($optvalue[$i]).",'$threadid','0')";
         			$this->_db->setQuery($query);
           			$this->_db->query();
-          	    	check_dberror('Unable to Insert Polls Options');
+          	    	if (KunenaError::checkDatabaseError()) return;
         		}
       		}
     	}
@@ -444,7 +444,7 @@ class CKunenaPolls {
         						WHERE id={$pollsdatas[$i]->id} AND pollid=$threadid";
           			$this->_db->setQuery($query);
           			$this->_db->query();
-          			check_dberror('Unable to Update Polls Options');
+          			if (KunenaError::checkDatabaseError()) return;
         		}
         		else
         		{
@@ -452,7 +452,7 @@ class CKunenaPolls {
         						WHERE pollid=$threadid AND id={$pollsdatas[$i]->id}";
           			$this->_db->setQuery($query);
           			$this->_db->query();
-          			check_dberror('Unable to Delete Polls Options');
+          			if (KunenaError::checkDatabaseError()) return;
         		}
       		}
     	}
@@ -467,7 +467,7 @@ class CKunenaPolls {
 				WHERE pollid=$pollid AND userid=$userid";
     	$this->_db->setQuery($query);
     	$id_last_vote = $this->_db->loadResult();
-    	check_dberror('Unable to load last vote id from kunena users');
+    	KunenaError::checkDatabaseError();
 
     	return $id_last_vote;
    }
@@ -481,7 +481,7 @@ class CKunenaPolls {
 				WHERE a.pollid=$threadid";
     	$this->_db->setQuery($query);
     	$poll_options_user = $this->_db->loadObjectList();
-		check_dberror('Unable to load Polls Options');
+		if (KunenaError::checkDatabaseError()) return;
 
 		foreach ($poll_options_user as $row) {
 			if ($row->id == $row->lastvote) {
@@ -489,12 +489,12 @@ class CKunenaPolls {
 					$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id=$lastvote AND pollid=$threadid";
     				$this->_db->setQuery($query);
     				$this->_db->query();
-					check_dberror('Unable to Update Polls Options');
+					if (KunenaError::checkDatabaseError()) return;
 
 					$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid=$userid AND pollid=$threadid";
     				$this->_db->setQuery($query);
     				$this->_db->query();
-					check_dberror('Unable to Update Polls Users');
+					if (KunenaError::checkDatabaseError()) return;
 				}
 			}
 		}
@@ -507,17 +507,17 @@ class CKunenaPolls {
     	$query = "DELETE FROM #__kunena_polls WHERE threadid=$threadid";
     	$this->_db->setQuery($query);
     	$this->_db->query();
-    	check_dberror('Unable to Delete Poll');
+    	if (KunenaError::checkDatabaseError()) return;
 
     	$query = "DELETE FROM #__kunena_polls_options WHERE pollid=$threadid";
     	$this->_db->setQuery($query);
     	$this->_db->query();
-    	check_dberror('Unable to Delete Poll Options');
+    	if (KunenaError::checkDatabaseError()) return;
 
     	$query = "DELETE FROM #__kunena_polls_users WHERE pollid=$threadid";
     	$this->_db->setQuery($query);
     	$this->_db->query();
-    	check_dberror('Unable to Delete Poll Users');
+    	if (KunenaError::checkDatabaseError()) return;
    }
 
    /**

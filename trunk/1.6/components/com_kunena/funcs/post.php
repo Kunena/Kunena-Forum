@@ -19,7 +19,7 @@ class CKunenaPost {
 		$this->action = JRequest::getCmd ( 'action', '' );
 
 		$this->_app = & JFactory::getApplication ();
-		$this->config = & CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = &JFactory::getDBO ();
 		$this->document = JFactory::getDocument ();
@@ -64,9 +64,8 @@ class CKunenaPost {
 
 			$this->_db->setQuery ( $query );
 			$this->msg_cat = $this->_db->loadObject ();
-			check_dberror ( 'Unable to check message.' );
-
 			if (! $this->msg_cat) {
+				KunenaError::checkDatabaseError();
 				echo JText::_ ( 'COM_KUNENA_POST_INVALID' );
 				return false;
 			}
@@ -79,8 +78,8 @@ class CKunenaPost {
 			// Check that category exists and fill some information for later use
 			$this->_db->setQuery ( "SELECT 0 AS id, 0 AS thread, id AS catid, name AS catname, parent AS catparent, pub_access, locked, locked AS catlocked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls FROM #__kunena_categories WHERE id='{$this->catid}'" );
 			$this->msg_cat = $this->_db->loadObject ();
-			check_dberror ( 'Unable to load category.' );
 			if (! $this->msg_cat) {
+				KunenaError::checkDatabaseError();
 				echo JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 				return false;
 			}
@@ -171,7 +170,7 @@ class CKunenaPost {
 		// TODO: replace this with better solution
 		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread='{$thread}'" );
 		$result = $this->_db->loadObject ();
-		check_dberror ( "Unable to load messages." );
+		KunenaError::checkDatabaseError();
 		$threadPages = ceil ( $result->totalmessages / $this->config->messages_per_page );
 		//construct a useable URL (for plaintext - so no &amp; encoding!)
 		jimport ( 'joomla.environment.uri' );
@@ -271,9 +270,7 @@ class CKunenaPost {
 			if ($this->msg_cat && $this->msg_cat->thread) {
 				$this->_db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->msg_cat->thread}'" );
 				$subscribed = $this->_db->loadResult ();
-				check_dberror ( "Unable to load subscriptions." );
-
-				if ($subscribed) {
+				if (KunenaError::checkDatabaseError() || $subscribed) {
 					$this->cansubscribe = 0;
 				}
 			}
@@ -415,8 +412,9 @@ class CKunenaPost {
 		$query = "SELECT id FROM #__kunena_attachments WHERE mesid={$this->id} AND id NOT IN ({$attachkeeplist})";
 		$this->_db->setQuery ( $query );
 		$attachmentlist = $this->_db->loadResultArray ();
-		check_dberror ( "Unable to load attachments." );
-		$attachments->deleteAttachment($attachmentlist);
+		if (!KunenaError::checkDatabaseError()) {
+			$attachments->deleteAttachment($attachmentlist);
+		}
 
 		//$attachments->assign ( $this->id );
 		$fileinfos = $attachments->multiupload ( $this->id );
@@ -526,7 +524,7 @@ class CKunenaPost {
 		$query = "SELECT id,subject FROM #__kunena_messages WHERE catid={$this->catid} AND parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
-		check_dberror ( "Unable to load messages." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		// Get thread and reply count from current message:
 		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM #__kunena_messages AS m
@@ -536,7 +534,7 @@ class CKunenaPost {
 			GROUP BY m.thread";
 		$this->_db->setQuery ( $query, 0, 1 );
 		$this->threadmsg = $this->_db->loadObject ();
-		check_dberror ( "Unable to load messages." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		$messages =array ();
 		if ($this->moderateTopic) {
@@ -754,7 +752,7 @@ class CKunenaPost {
 			ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();
-		check_dberror ( "Unable to load messages." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		//get attachments
 		$mesids = array();
@@ -812,7 +810,7 @@ class CKunenaPost {
 		$sql = "SELECT enabled, expiry, userid, bantype FROM #__kunena_banned_users WHERE enabled=1 AND userid='$userid' AND bantype=2";
 		$this->_db->setQuery ( $sql );
 		$isUserbanned = $this->_db->loadObject ();
-		check_dberror ( 'Unable to load datas from this user.' );
+		KunenaError::checkDatabaseError();
 
 		if ( is_object($isUserbanned) ) {
 			if ( date( 'Y-m-d H:i:s') < $isUserbanned->expiry && $isUserbanned->expiry != '0000-00-00 00:00:00' ) {
@@ -832,7 +830,7 @@ class CKunenaPost {
 		$sql = "SELECT expiry FROM #__kunena_banned_ips WHERE ip='{$_SERVER['REMOTE_ADDR']}' AND enabled=1";
 		$this->_db->setQuery ( $sql );
 		$isIPbanned = $this->_db->loadObject ();
-		check_dberror ( 'Unable to load datas from this user.' );
+		KunenaError::checkDatabaseError();
 
 		if ( is_object($isIPbanned) ) {
 			if (date( 'Y-m-d H:i:s') < $isUserbanned->expiry && $isIPbanned->expiry != '0000-00-00 00:00:00' ) {
@@ -855,7 +853,7 @@ class CKunenaPost {
 		if ($this->config->floodprotection && ! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip='{$ip}'" );
 			$lastPostTime = $this->_db->loadResult ();
-			check_dberror ( "Unable to load max time for current request from IP: {$ip}" );
+			if (KunenaError::checkDatabaseError()) return false;
 
 			if ($lastPostTime + $this->config->floodprotection > CKunenaTimeformat::internalTime ()) {
 				echo JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD1' ) . ' ' . $this->config->floodprotection . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD2' ) . '<br />';

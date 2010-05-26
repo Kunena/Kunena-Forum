@@ -16,7 +16,7 @@
 
 defined( '_JEXEC' ) or die();
 
-$kunena_config =& CKunenaConfig::getInstance();
+$kunena_config = KunenaFactory::getConfig ();
 
 // Team credits page is not translated
 ?>

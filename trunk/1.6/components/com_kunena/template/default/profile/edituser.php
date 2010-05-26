@@ -10,7 +10,7 @@
  *
  **/
 defined( '_JEXEC' ) or die();
-$kunena_config =& CKunenaConfig::getInstance();
+$kunena_config = KunenaFactory::getConfig ();
 ?>
 <h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE') ?></h2>
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '' ?>" id="kflattable">

@@ -48,7 +48,7 @@ class CKunenaUpload {
 		$this->_db = &JFactory::getDBO ();
 		$this->_my = &JFactory::getUser ();
 		$this->_session = &KunenaFactory::getSession ();
-		$this->_config = &CKunenaConfig::getInstance ();
+		$this->_config = KunenaFactory::getConfig ();
 		$this->_isimage = false;
 		$this->_isfile = false;
 		if (($this->_my->id && $this->_config->allowimageregupload) || (!$this->_my->id && $this->_config->allowimageupload)) {

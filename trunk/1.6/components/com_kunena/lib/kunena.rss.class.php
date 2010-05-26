@@ -61,7 +61,7 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 		parent::__construct();
 
 		$this->app		= JFactory::getApplication();
-		$this->config	= CKunenaConfig::getInstance();
+		$this->config	= KunenaFactory::getConfig ();
 
 		if (!$this->config->enablerss) {
 			die();
@@ -560,13 +560,12 @@ abstract class CKunenaRSSDatasource {
 	 *
 	 * @access private
 	 * @param string $query
-	 * @see check_dberror()
 	 * @return objectlist
 	 */
 	private function getQueryResult($query = '') {
 		$this->db->setQuery($query);
 		$results = $this->db->loadObjectList();
-		check_dberror("Unable to get rss data.");
+		KunenaError::checkDatabaseError();
 
 		return $results;
 	}

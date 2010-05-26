@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die();
 
 
-$kunena_config =& CKunenaConfig::getInstance();
+$kunena_config = KunenaFactory::getConfig ();
 $document =& JFactory::getDocument();
 
 $document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $kunena_config->board_title);

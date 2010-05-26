@@ -65,7 +65,7 @@ function dofreePDF()
 	$kunena_db  = &JFactory::getDBO();
     $kunena_acl = &JFactory::getACL();
     $kunena_my = &JFactory::getUser();
-    $kunena_config =& CKunenaConfig::getInstance();
+    $kunena_config = KunenaFactory::getConfig ();
 
     $catid = JRequest::getInt('catid', 0);
 	$id = JRequest::getInt('id', 0);
@@ -80,11 +80,11 @@ function dofreePDF()
         //first get the thread id for the current post to later on determine the parent post
         $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE id='{$id}' AND catid='{$catid}'");
         $threadid = $kunena_db->loadResult();
-        check_dberror("Unable to load thread.");
+        if (KunenaError::checkDatabaseError()) return;
         //load topic post and details
         $kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0' AND a.id=b.mesid");
         $row = $kunena_db->loadObjectList();
-                check_dberror("Unable to load message details.");
+        if (KunenaError::checkDatabaseError()) return;
 
         if (file_exists(KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php')) {
 			include (KUNENA_ROOT_PATH .DS. 'includes/class.ezpdf.php');
@@ -140,7 +140,7 @@ function dofreePDF()
         	//now let's try to see if there's more...
         	$kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
         	$replies = $kunena_db->loadObjectList();
-                check_dberror("Unable to load messages & detail.");
+            if (KunenaError::checkDatabaseError()) return;
 
         	$countReplies = count($replies);
 

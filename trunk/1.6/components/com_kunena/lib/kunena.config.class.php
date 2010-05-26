@@ -17,9 +17,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-
-require_once (JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
-require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
+kimport('error');
 
 class CKunenaTables {
 	var $tables = array ();
@@ -29,7 +27,7 @@ class CKunenaTables {
 		$kunena_db = &JFactory::getDBO ();
 		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."%'" );
 		$tables = $kunena_db->loadResultArray ();
-		check_dberror ( 'Unable to check for existing tables.' );
+		KunenaError::checkDatabaseError();
 		$prelen = strlen ( $kunena_db->getPrefix () );
 		foreach ( $tables as $table )
 			$this->tables ['#__' . JString::substr ( $table, $prelen )] = 1;
@@ -59,7 +57,7 @@ class CKunenaTables {
 
 abstract class CKunenaConfigBase {
 	public function __construct() {
-		$this->_db = &JFactory::getDBO ();
+		$this->_db = JFactory::getDBO ();
 	}
 
 	//
@@ -132,7 +130,7 @@ abstract class CKunenaConfigBase {
 
 		$this->_db->setQuery ( "CREATE TABLE " . $this->GetConfigTableName () . " (" . implode ( ', ', $fields ) . ", PRIMARY KEY (`id`) ) DEFAULT CHARSET=utf8" );
 		$this->_db->query ();
-		check_dberror ( "Unable to create configuration table." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		// Insert current Settings
 		$vars = get_object_vars ( $this ); // for the actual values we must not use the class vars funtion
@@ -148,7 +146,7 @@ abstract class CKunenaConfigBase {
 
 		$this->_db->setQuery ( "INSERT INTO " . $this->GetConfigTableName () . " SET " . implode ( ', ', $fields ) );
 		$this->_db->query ();
-		check_dberror ( "Unable to insert configuration data." );
+		KunenaError::checkDatabaseError();
 	}
 
 	//
@@ -158,7 +156,7 @@ abstract class CKunenaConfigBase {
 		// remove old backup if one exists
 		$this->_db->setQuery ( "DROP TABLE IF EXISTS " . $this->GetConfigTableName () . "_backup" );
 		$this->_db->query ();
-		check_dberror ( "Unable to drop old configuration backup table." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		// Only create backup if config table already exists
 		$tables = CKunenaTables::getInstance ();
@@ -166,7 +164,7 @@ abstract class CKunenaConfigBase {
 			// backup current settings
 			$this->_db->setQuery ( "CREATE TABLE " . $this->GetConfigTableName () . "_backup SELECT * FROM " . $this->GetConfigTableName () );
 			$this->_db->query ();
-			check_dberror ( "Unable to create new configuration backup table." );
+			if (KunenaError::checkDatabaseError()) return;
 		}
 	}
 
@@ -176,7 +174,7 @@ abstract class CKunenaConfigBase {
 	public function remove() {
 		$this->_db->setQuery ( "DROP TABLE IF EXISTS " . $this->GetConfigTableName () );
 		$this->_db->query ();
-		check_dberror ( "Unable to drop existing configuration table." );
+		KunenaError::checkDatabaseError();
 	}
 
 	//
@@ -187,7 +185,7 @@ abstract class CKunenaConfigBase {
 		if ($tables->check ( $this->GetConfigTableName () )) {
 			$this->_db->setQuery ( "SELECT * FROM " . $this->GetConfigTableName () );
 			$config = $this->_db->loadAssoc ();
-			check_dberror ( "Unable to load configuration table." );
+			KunenaError::checkDatabaseError();
 
 			if ($config != null) {
 				$this->bind ( $config );

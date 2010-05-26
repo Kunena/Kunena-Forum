@@ -26,7 +26,7 @@ if ($this->showgenstats > 0)
 {
 	$this->loadGenStats();
 
-	$kunena_config =& CKunenaConfig::getInstance();
+	$kunena_config = KunenaFactory::getConfig ();
 
 	$userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
 	$userlist2 = CKunenaLink::GetUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');

@@ -12,9 +12,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
-require_once (KUNENA_PATH . DS . 'class.kunena.php');
-
 /**
 
 * Kunena Users Table Class
@@ -194,25 +191,32 @@ class KunenaUser extends JObject
 	}
 
 	public function isOnline($yesno=false) {
+
 		$my = JFactory::getUser ();
-		if ($this->_online === null && ($this->showOnline || CKunenaTools::isModerator($my->id))) {
+		if ($this->_online === null && ($this->showOnline || $this->isModerator())) {
+			kimport('error');
 			$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->userid . ' AND s.client_id = 0 GROUP BY s.userid';
 			$this->_db->setQuery ( $query );
 			$lastseen = $this->_db->loadResult ();
-			CKunenaTools::checkDatabaseError();
-			$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
-			$this->_online = ($lastseen + $timeout) > time ();
+			if (KunenaError::checkDatabaseError()) {
+				$this->_online = false;
+			} else {
+				$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
+				$this->_online = ($lastseen + $timeout) > time ();
+			}
 		}
 		if ($yesno) return $this->_online ? 'yes' : 'no';
 		return $this->_online;
 	}
 
 	public function isAdmin() {
-		return CKunenaTools::isAdmin($this->userid);
+		$acl = KunenaFactory::getAccessControl();
+		return $acl->isAdmin($this->userid);
 	}
 
 	public function isModerator($catid=0) {
-		return CKunenaTools::isModerator($this->userid, $catid);
+		$acl = KunenaFactory::getAccessControl();
+		return $acl->isModerator($this->userid, $catid);
 	}
 
 	public function getName($visitorname = '') {
@@ -255,12 +259,13 @@ class KunenaUser extends JObject
 		$rank->rank_special = 0;
 		$rank->rank_image = null;
 
-		$config = CKunenaConfig::getInstance ();
+		$config = KunenaFactory::getConfig ();
 		if (!$config->showranking) return;
 		if (self::$_ranks === null) {
+			kimport('error');
 			$this->_db->setQuery ( "SELECT * FROM #__kunena_ranks" );
 			self::$_ranks = $this->_db->loadObjectList ('rank_id');
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 		}
 
 		$rank->rank_title = JText::_('COM_KUNENA_RANK_USER');
@@ -274,7 +279,7 @@ class KunenaUser extends JObject
 		else if ($this->rank != 0 && isset(self::$_ranks[$this->rank])) {
 			$rank = self::$_ranks[$this->rank];
 		}
-		else if ($this->rank == 0 && self::isAdmin()) {
+		else if ($this->rank == 0 && $this->isAdmin()) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_ADMINISTRATOR');
 			$rank->rank_special = 1;
@@ -287,7 +292,7 @@ class KunenaUser extends JObject
 				}
 			}
 		}
-		else if ($this->rank == 0 && self::isModerator($catid)) {
+		else if ($this->rank == 0 && $this->isModerator($catid)) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_MODERATOR');
 			$rank->rank_special = 1;

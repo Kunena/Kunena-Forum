@@ -79,7 +79,7 @@ class CKunenaAttachments {
 		if (!$mesid) return;
 		$this->_db->setQuery ( "UPDATE #__kunena_attachments SET mesid=".(int)$mesid." WHERE userid=".(int)$this->_my->id." AND mesid=0" );
 		$this->_db->query ();
-		check_dberror ( "Unable to assign attachments to message ".$mesid );
+		if (KunenaError::checkDatabaseError()) return;
 		*/
 	}
 
@@ -93,7 +93,7 @@ class CKunenaAttachments {
 		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ($mesids)";
 		$this->_db->setQuery ( $query );
 		$attachments = $this->_db->loadObjectList ();
-		check_dberror ( 'Unable to load attachments' );
+		if (KunenaError::checkDatabaseError()) return $ret;
 		foreach ($attachments as $attachment) {
 			// Check if file has been pre-processed
 			if (is_null ( $attachment->hash )) {
@@ -126,17 +126,15 @@ class CKunenaAttachments {
 		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.folder=b.folder AND a.filename=b.filename
 			WHERE a.mesid IN ({$mesids}) AND (a.folder LIKE '%media/kunena/attachments%' OR a.folder LIKE '%images/fbfiles%') AND b.filename IS NULL" );
 		$fileList = $this->_db->loadObjectlist ();
-		check_dberror ( "Unable to load attachments." );
-		if ( is_array($fileList) ) {
-			foreach ( $fileList as $file ) {
-				$this->deleteFile($file);
-			}
+		if (KunenaError::checkDatabaseError()) return;
+		foreach ( $fileList as $file ) {
+			$this->deleteFile($file);
 		}
 		// Delete attachments in the messages
 		$sql = "DELETE FROM #__kunena_attachments WHERE mesid IN ({$mesids})";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
-		check_dberror ( "Unable to delete attachments." );
+		KunenaError::checkDatabaseError();
 	}
 
 	function deleteAttachment($attachids) {
@@ -151,7 +149,7 @@ class CKunenaAttachments {
 		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.folder=b.folder AND a.filename=b.filename
 			WHERE a.id IN ({$attachids}) AND (a.folder LIKE '%media/kunena/attachments%' OR a.folder LIKE '%images/fbfiles%') AND b.filename IS NULL" );
 		$fileList = $this->_db->loadObjectlist ();
-		check_dberror ( "Unable to load attachments." );
+		if (KunenaError::checkDatabaseError()) return;
 		if ( is_array($fileList) ) {
 			foreach ( $fileList as $file ) {
 				$this->deleteFile($file);
@@ -161,7 +159,7 @@ class CKunenaAttachments {
 		$sql = "DELETE FROM #__kunena_attachments WHERE id IN ({$attachids})";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
-		check_dberror ( "Unable to delete attachments." );
+		KunenaError::checkDatabaseError();
 	}
 
 	protected function deleteFile($file) {

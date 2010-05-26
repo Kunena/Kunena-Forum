@@ -23,7 +23,7 @@ class CKunenaListcat {
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 
 		if ($this->catid && ! $this->session->canRead ( $this->catid ))
 			return;
@@ -45,7 +45,7 @@ class CKunenaListcat {
 		$this->categories = array ();
 		$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE {$where} published='1' AND id IN ({$catlist}) ORDER BY ordering" );
 		$this->categories [0] = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load categories." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		//meta description and keywords
 		$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
@@ -83,7 +83,7 @@ class CKunenaListcat {
 			WHERE c.parent IN ({$catlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY ordering";
 		$this->db->setQuery ( $query );
 		$allsubcats = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load categories." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		global $kunena_icons;
 		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
@@ -154,7 +154,7 @@ class CKunenaListcat {
 			WHERE c.parent IN ({$subcatlist}) AND c.published='1' ORDER BY ordering";
 			$this->db->setQuery ($query);
 			$childforums = $this->db->loadObjectList ();
-			check_dberror ( "Unable to load categories." );
+			KunenaError::checkDatabaseError();
 			foreach ( $childforums as $cat ) {
 				$this->childforums [$cat->parent] [] = $cat;
 			}
@@ -166,7 +166,7 @@ class CKunenaListcat {
 			$modcatlist = implode ( ',', $modcats );
 			$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
 			$modlist = $this->db->loadObjectList ();
-			check_dberror ( "Unable to load moderators." );
+			KunenaError::checkDatabaseError();
 			foreach ( $modlist as $mod ) {
 				$this->modlist [$mod->catid] [] = $mod;
 			}
@@ -180,7 +180,7 @@ class CKunenaListcat {
 					$modcatlist = implode ( ',', $modcats );
 					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count FROM #__kunena_messages WHERE catid IN ($modcatlist) AND hold='1' GROUP BY catid" );
 					$pending = $this->db->loadAssocList ();
-					check_dberror ( "Unable to load pending messages." );
+					KunenaError::checkDatabaseError();
 					foreach ( $pending as $i ) {
 						if ($i ['count'])
 							$this->pending [$i ['catid']] = $i ['count'];

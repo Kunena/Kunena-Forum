@@ -19,7 +19,6 @@ defined( '_JEXEC' ) or die();
 
 
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
-require_once (KUNENA_PATH_LIB . DS . 'kunena.debug.php');
 
 class CKunenaVersion {
 	/**
@@ -51,7 +50,7 @@ class CKunenaVersion {
 			$versionTable = '#__kunena_version';
 			$kunena_db->setQuery("SELECT version, versiondate, installdate, build, versionname FROM `{$versionTable}` ORDER BY id DESC", 0, 1);
 			$kunenaversion = $kunena_db->loadObject();
-			check_dberror ( 'Unable to load version.' );
+			KunenaError::checkDatabaseError();
 
 			if(!$kunenaversion) {
 				$kunenaversion = new StdClass();
@@ -113,7 +112,7 @@ class CKunenaVersion {
 			$kunena_db = &JFactory::getDBO();
 			$kunena_db->setQuery("SELECT VERSION() AS mysql_version");
 			$mysqlversion = $kunena_db->loadResult();
-			check_dberror ( 'Unable to load MySQL version.' );
+			KunenaError::checkDatabaseError();
 
 			if (!$mysqlversion) $mysqlversion = 'unknown';
 		}

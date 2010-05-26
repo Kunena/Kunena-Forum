@@ -45,7 +45,7 @@ class CKunenaModeration {
 		static $instance = NULL;
 		if (! $instance) {
 			$kunena_db = & JFactory::getDBO ();
-			$kunena_config = & CKunenaConfig::getInstance ();
+			$kunena_config = KunenaFactory::getConfig ();
 
 			$instance = new CKunenaModeration ( $kunena_db, $kunena_config );
 		}
@@ -89,7 +89,7 @@ class CKunenaModeration {
 		$query = 'SELECT `id`, `catid`, `parent`, `thread`, `subject` FROM #__kunena_messages WHERE `id`='.$MessageID;
 		$this->_db->setQuery ( $query );
 		$currentMessage = $this->_db->loadObject ();
-		check_dberror ( "Unable to load current message." );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		// Check that message to be moved actually exists
 		if ( !is_object($currentMessage) ) {
@@ -107,7 +107,7 @@ class CKunenaModeration {
 		$query = 'SELECT `parent` FROM #__kunena_categories WHERE `id`='.$TargetCatID;
 		$this->_db->setQuery ( $query );
 		$catParent = $this->_db->loadResult ();
-		check_dberror ( "Unable to load category detail." );
+		if (KunenaError::checkDatabaseError()) return false;
 		if ( $catParent == '0' ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION');
 			return false;
@@ -129,7 +129,7 @@ class CKunenaModeration {
 			// Check that target message actually exists
 			$this->_db->setQuery ( "SELECT `id`, `catid`, `parent`, `thread`, `subject` FROM #__kunena_messages WHERE `id`='$TargetMessageID'" );
 			$targetMessage = $this->_db->loadObject ();
-			check_dberror ( "Unable to load message." );
+			if (KunenaError::checkDatabaseError()) return false;
 
 			if ( !is_object( $targetMessage )) {
 				// Target message not found. Cannot proceed with move
@@ -173,7 +173,7 @@ class CKunenaModeration {
 		$sql = "UPDATE #__kunena_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}', `parent`='{$TargetParentID}' {$subjectupdatesql} WHERE `id`='{$MessageID}'";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
-		check_dberror ( 'Unable to perform move.' );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		// Assemble move logic based on $mode
 		switch ($mode) {
@@ -185,7 +185,7 @@ class CKunenaModeration {
 					$sqlnewparent = "SELECT `id` FROM #__kunena_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
 					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
 					$newParentID = $this->_db->loadResult ();
-					check_dberror ( 'Unable to select new message for promote parent.' );
+					if (KunenaError::checkDatabaseError()) return false;
 
 					if ( $newParentID ) {
 						$this->_Move ( $newParentID, $currentMessage->catid, '', 0, KN_MOVE_NEWER );
@@ -224,7 +224,7 @@ class CKunenaModeration {
 		if (isset($sql)) {
 			$this->_db->setQuery ( $sql );
 			$this->_db->query ();
-			check_dberror ( 'Unable to perform move.' );
+			if (KunenaError::checkDatabaseError()) return false;
 		}
 
 		// When done log the action
@@ -260,7 +260,7 @@ class CKunenaModeration {
 
 		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`='$MessageID'" );
 		$currentMessage = $this->_db->loadObject ();
-		check_dberror ( "Unable to load message." );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		// Check that message to be moved actually exists
 		if ( !is_object($currentMessage) ) {
@@ -289,7 +289,7 @@ class CKunenaModeration {
 				$query = "DELETE FROM #__kunena_messages_text WHERE `mesid`='$MessageID'; ";
 				$this->_db->setQuery ($query);
 				$this->_db->query ();
-				check_dberror ( "Unable to delete messages text." );
+				if (KunenaError::checkDatabaseError()) return false;
 
 				if ( $currentMessage->parent == 0 ) {
 					$this->_setSecondMessageParent ($MessageID, $currentMessage);
@@ -299,14 +299,14 @@ class CKunenaModeration {
 					$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid`='$MessageID'; ";
 					$this->_db->setQuery ($query);
 					$this->_db->query ();
-					check_dberror ( "Unable to update users posts." );
+					if (KunenaError::checkDatabaseError()) return false;
 				}
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
 				$sql1 = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`='$MessageID';";
 				$this->_db->setQuery ( $sql1 );
 				$this->_db->query ();
-				check_dberror ( 'Unable to perform delete.' );
+				if (KunenaError::checkDatabaseError()) return false;
 				$sql = "UPDATE #__kunena_messages SET `hold`=3 WHERE hold IN (0,1) AND `thread`='{$currentMessage->thread}' AND `id`!='$MessageID' ;";
 				break;
 			case KN_DEL_ATTACH : //Delete only the attachments
@@ -324,7 +324,7 @@ class CKunenaModeration {
 		if (isset($sql)) {
 			$this->_db->setQuery ( $sql );
 			$this->_db->query ();
-			check_dberror ( 'Unable to perform delete.' );
+			if (KunenaError::checkDatabaseError()) return false;
 		}
 
 		// Remember to delete ghost post
@@ -332,12 +332,12 @@ class CKunenaModeration {
 		$this->_db->setQuery ( "SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.`id`=t.`mesid`
 			WHERE `moved`=1;" );
 		$ghostMessageID = $this->_db->loadResult ();
-		check_dberror ( "Unable to load ghost message." );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		if ( !empty($ghostMessageID) ) {
 			$this->_db->setQuery ( "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`='$ghostMessageID' AND `moved`=1;" );
 			$this->_db->query ();
-			check_dberror ( "Unable to perform delete ghost message." );
+			if (KunenaError::checkDatabaseError()) return false;
 		}
 
 		// Check result to see if we need to abord and set error message
@@ -406,7 +406,7 @@ class CKunenaModeration {
 		$sqlnewparent = "SELECT `id` FROM #__kunena_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
 		$this->_db->setQuery ( $sqlnewparent, 0, 1 );
 		$newParent = $this->_db->loadObject ();
-		check_dberror ( 'Unable to select new message for promote parent.' );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		if ( is_object( $newParent ) ) {
 			$sql1 = "UPDATE #__kunena_messages SET `thread`='$newParent->id', `parent`=0 WHERE `id`='$newParent->id';";
@@ -417,6 +417,7 @@ class CKunenaModeration {
 			$this->_db->setQuery ( $sql2 );
 			$this->_db->query ();
 		}
+		return true;
 	}
 
 	protected function _createGhostThread($MessageID,$currentMessage) {
@@ -424,7 +425,7 @@ class CKunenaModeration {
 		$sql="SELECT `time` AS timestamp FROM #__kunena_messages WHERE `thread`='$MessageID' ORDER BY id DESC";
 		$this->_db->setQuery ( $sql, 0, 1 );
 		$lastTimestamp = $this->_db->loadResult ();
-		check_dberror ( "Unable to load last timestamp." );
+		if (KunenaError::checkDatabaseError()) return false;
 		if ($lastTimestamp == "") {
 			$lastTimestamp = $currentMessage->timestamp;
 		}
@@ -436,7 +437,7 @@ class CKunenaModeration {
 		$sql = "INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','{$currentMessage->subject}','$lastTimestamp','{$currentMessage->catid}','1', '{$this->_my->id}', " . $this->_db->Quote ( $myname ) . ")";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
-		check_dberror ( 'Unable to insert ghost message.' );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		//determine the new location for link composition
 		$newId = $this->_db->insertid ();
@@ -445,14 +446,16 @@ class CKunenaModeration {
 		$sql = "UPDATE #__kunena_messages SET `thread`='$newId' WHERE `id`='$newId'";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
-		check_dberror ( 'Unable to update thread id of ghost thread.' );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		// TODO: we need to fix all old ghost messages and change behaviour of them
 		$newURL = "id=" . $currentMessage->id;
 		$sql = "INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
-		check_dberror ( 'Unable to insert ghost message.' );
+		if (KunenaError::checkDatabaseError()) return false;
+
+		return true;
 	}
 
 	public function createGhostThread($MessageID,$currentMessage) {
@@ -465,7 +468,7 @@ class CKunenaModeration {
 
 		$this->_db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=$UserID GROUP BY ip" );
 		$ipslist = $this->_db->loadObjectList ();
-		check_dberror ( 'Unable to load ip for user.' );
+		KunenaError::checkDatabaseError();
 
 		return $ipslist;
 	}
@@ -480,7 +483,7 @@ class CKunenaModeration {
 		foreach ($ipslist as $ip) {
 			$this->_db->setQuery ( "SELECT name,userid FROM #__kunena_messages WHERE ip='$ip->ip' GROUP BY name" );
 			$useridslist[$ip->ip] = $this->_db->loadObjectList ();
-			check_dberror ( 'Unable to load ip for user.' );
+			KunenaError::checkDatabaseError();
 		}
 
 		return $useridslist;

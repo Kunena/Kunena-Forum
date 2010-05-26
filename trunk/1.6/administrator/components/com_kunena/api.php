@@ -41,7 +41,8 @@ define ( 'KURL_MEDIA_LEGACY', JURI::Root () . 'images/fbfiles/' );
  */
 function kimport($path)
 {
-	return JLoader::import($path, KPATH_ADMIN.'/libraries');
+	//return JLoader::import($path, KPATH_ADMIN.'/libraries');
+	require_once(KPATH_ADMIN.'/libraries/'.str_replace( '.', '/', $path).'.php');
 }
 
 // Give access to all KunenaTables

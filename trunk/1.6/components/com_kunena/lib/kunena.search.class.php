@@ -58,7 +58,7 @@ class CKunenaSearch {
 		$this->app = JFactory::getApplication ();
 		$this->doc = JFactory::getDocument ();
 		$this->db = JFactory::getDBO ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		$this->session = KunenaFactory::getSession ();
 
 		// TODO: started_by
@@ -257,7 +257,7 @@ class CKunenaSearch {
 		/* get total */
 		$this->db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}" );
 		$this->total = $this->db->loadResult ();
-		check_dberror ( "Unable to count messages." );
+		KunenaError::checkDatabaseError();
 
 		/* if there are no forums to search in, set error and return */
 		if ($this->total == 0) {
@@ -276,7 +276,7 @@ class CKunenaSearch {
         		WHERE {$where} {$groupby} ORDER BY {$orderby}";
 		$this->db->setQuery ( $sql, $this->limitstart, $this->limit );
 		$rows = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load messages." );
+		KunenaError::checkDatabaseError();
 
 		$this->str_kunena_errormsg = $sql . '<br />' . $this->db->getErrorMsg ();
 
@@ -318,7 +318,7 @@ class CKunenaSearch {
 		}
 		$this->db->setQuery ( "SELECT id, parent FROM #__kunena_categories WHERE {$allowed_string}" );
 		$allowed_forums = $this->db->loadAssocList ( 'id' );
-		check_dberror ( "Unable to get public categories." );
+		if (KunenaError::checkDatabaseError()) return array();
 
 		$allow_list = array ();
 		foreach ( $allowed_forums as $forum ) {

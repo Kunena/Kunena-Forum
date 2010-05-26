@@ -84,7 +84,7 @@ switch ($action)
 
         $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
         $allMes = $kunena_db->loadObjectList();
-        	check_dberror("Unable to load messages.");
+        KunenaError::checkDatabaseError();
 
         if (count($allMes) > 0)
             jbListMessages($allMes, $catid);
@@ -100,7 +100,7 @@ switch ($action)
  */
 function jbListMessages($allMes, $catid)
 {
-    $kunena_config =& CKunenaConfig::getInstance();
+    $kunena_config = KunenaFactory::getConfig ();
 ?>
 
    <form action="<?php echo CKunenaLink::GetReviewURL(); ?>" name="moderation" method="post">
@@ -201,7 +201,7 @@ function jbDeletePosts($kunena_db, $cid)
         else
             return -1;
     }
-    check_dberror ( "Unable to delete post." );
+    KunenaError::checkDatabaseError();
 
     return 0;
 }
@@ -223,12 +223,12 @@ function jbApprovePosts($kunena_db, $cid)
         $kunena_db->setQuery($newQuery, 0, 1);
         $msg = null;
         $msg = $kunena_db->loadObject();
-        check_dberror ( "Unable to load message." );
+        if (KunenaError::checkDatabaseError()) return 0;
         if(!$msg) { continue; }
         // continue stats
         $kunena_db->setQuery("UPDATE `#__kunena_messages` SET hold='0' WHERE id='{$id}'");
         $kunena_db->query();
-		check_dberror ( "Unable to approve posts." );
+		if (KunenaError::checkDatabaseError()) return 0;
         CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
     }
     return $ret;

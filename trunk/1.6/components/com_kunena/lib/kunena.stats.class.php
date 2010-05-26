@@ -52,7 +52,7 @@ class CKunenaStats {
 
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
-		$this->_config = & CKunenaConfig::getInstance ();
+		$this->_config = KunenaFactory::getConfig ();
 
 		$show = $this->_config->showstats;
 		$this->showgenstats = $show ? $this->_config->showgenstats : 0;
@@ -65,7 +65,7 @@ class CKunenaStats {
 		if ($this->totalmembers === null) {
 			$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );
 			$this->totalmembers = $this->_db->loadResult ();
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 		}
 	}
 
@@ -80,7 +80,7 @@ class CKunenaStats {
 				FROM #__kunena_messages WHERE time >= '{$yesterdaystart}' AND hold='0'" );
 
 			$totaltmp = $this->_db->loadObject ();
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 			$ret['todayopen'] = $this->todayopen = ! empty ( $totaltmp->todayopen ) ? $totaltmp->todayopen : 0;
 			$ret['yesterdayopen'] = $this->yesterdayopen = ! empty ( $totaltmp->yesterdayopen ) ? $totaltmp->yesterdayopen : 0;
 			$ret['todayanswer'] = $this->todayanswer = ! empty ( $totaltmp->todayanswer ) ? $totaltmp->todayanswer : 0;
@@ -92,7 +92,7 @@ class CKunenaStats {
 		if ($this->totaltitles === null) {
 			$this->_db->setQuery ( "SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__kunena_categories WHERE parent='0' AND published=1" );
 			$totaltmp = $this->_db->loadObject ();
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 			$this->totaltitles = ! empty ( $totaltmp->titles ) ? $totaltmp->titles : 0;
 			$this->totalmsgs = ! empty ( $totaltmp->msgs ) ? $totaltmp->msgs + $this->totaltitles : $this->totaltitles;
 		}
@@ -102,7 +102,7 @@ class CKunenaStats {
 		if ($this->totalsections === null) {
 			$this->_db->setQuery ( "SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__kunena_categories WHERE published=1" );
 			$totaltmp = $this->_db->loadObject ();
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 			$this->totalsections = ! empty ( $totaltmp->totalsections ) ? $totaltmp->totalsections : 0;
 			$this->totalcats = ! empty ( $totaltmp->totalcats ) ? $totaltmp->totalcats : 0;
 		}
@@ -113,7 +113,7 @@ class CKunenaStats {
 			$queryName = $this->_config->username ? "username" : "name";
 			$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM #__users WHERE block='0' OR activation='' ORDER BY id DESC", 0, 1 );
 			$_lastestmember = $this->_db->loadObject ();
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 			$this->lastestmember = $_lastestmember->username;
 			$this->lastestmemberid = $_lastestmember->id;
 		}
@@ -128,7 +128,7 @@ class CKunenaStats {
 				INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' AND u.block=0 ORDER BY p.posts DESC", 0, $PopUserCount );
 
 			$this->topposters = $this->_db->loadObjectList ();
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 			$this->topmessage = ! empty ( $this->topposters [0]->posts ) ? $this->topposters [0]->posts : 0;
 		}
 	}
@@ -157,7 +157,7 @@ class CKunenaStats {
 			}
 
 			$this->topprofiles = $this->_db->loadObjectList ();
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 			$this->topprofilehits = ! empty ( $this->topprofiles [0]->hits ) ? $this->topprofiles [0]->hits : 0;
 		}
 	}
@@ -194,7 +194,7 @@ class CKunenaStats {
 				ORDER BY hits DESC", 0, $PopSubjectCount );
 
 			$this->toptitles = $this->_db->loadObjectList ();
-			CKunenaTools::checkDatabaseError();
+			KunenaError::checkDatabaseError();
 			$this->toptitlehits = ! empty ( $this->toptitles [0]->hits ) ? $this->toptitles [0]->hits : 0;
 		}
 	}

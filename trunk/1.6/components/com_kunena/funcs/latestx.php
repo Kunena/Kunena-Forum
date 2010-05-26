@@ -27,7 +27,7 @@ class CKunenaLatestX {
 		$this->user = $this->my = JFactory::getUser ();
 		$this->myprofile = KunenaFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 
 		$this->latestcategory = $this->config->latestcategory;
 		$this->latestcategory_in = $this->config->latestcategory_in;
@@ -111,7 +111,7 @@ class CKunenaLatestX {
 
 			$this->db->setQuery ( $query );
 			$this->messages = $this->db->loadObjectList ('id');
-			check_dberror ( "Unable to load messages." );
+			KunenaError::checkDatabaseError();
 			// collect user ids for avatar prefetch when integrated
 			$userlist = array();
 			foreach ( $this->messages as $message ) {
@@ -143,7 +143,7 @@ class CKunenaLatestX {
 				$readlist = $this->session->readtopics;
 				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages " . "WHERE hold IN ({$this->hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
-				check_dberror ( "Unable to get unread messages count and first id." );
+				KunenaError::checkDatabaseError();
 
 				foreach ( $msgidlist as $msgid ) {
 					$this->messages[$msgid->thread]->lastread = $msgid->lastread;
@@ -173,7 +173,7 @@ class CKunenaLatestX {
 
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
-		check_dberror ( 'Unable to count total threads' );
+		if (KunenaError::checkDatabaseError() || !$this->total) return;
 
 		if ($this->func == 'mylatest') $this->order = "myfavorite DESC, lastid DESC";
 		else if ($this->func == 'usertopics') $this->order = "mylastid DESC";
@@ -187,7 +187,7 @@ class CKunenaLatestX {
 
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
 		$this->threadids = $this->db->loadResultArray ();
-		check_dberror ( "Unable to load thread list." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		$this->_common();
 	}
@@ -229,7 +229,7 @@ class CKunenaLatestX {
 		WHERE {$where}";
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
-		check_dberror ( 'Unable to count total threads' );
+		if (KunenaError::checkDatabaseError() || !$this->total) return;
 
 		$query = "SELECT m.thread, m.id
 		FROM #__kunena_messages AS m
@@ -239,7 +239,7 @@ class CKunenaLatestX {
 
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
 		$idlist = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load post list." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		$this->threadids = array();
 		$this->loadids = array();
@@ -336,7 +336,7 @@ class CKunenaLatestX {
 
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
-		check_dberror ( 'Unable to count total threads' );
+		if (KunenaError::checkDatabaseError() || !$this->total) return;
 		$offset = ($this->page - 1) * $this->threads_per_page;
 
 		$this->order = "lastid DESC";
@@ -350,7 +350,8 @@ class CKunenaLatestX {
 
 		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
 		$this->threadids = $this->db->loadResultArray ();
-		check_dberror ( "Unable to load thread list." );
+		if (KunenaError::checkDatabaseError()) return;
+
 		$this->_common();
 	}
 
@@ -372,7 +373,7 @@ class CKunenaLatestX {
 
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
-		check_dberror ( 'Unable to count total threads' );
+		if (KunenaError::checkDatabaseError() || !$this->total) return;
 		$offset = ($this->page - 1) * $this->threads_per_page;
 
 		$this->order = "lastid DESC";
@@ -392,7 +393,8 @@ class CKunenaLatestX {
 
 		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
 		$this->threadids = $this->db->loadResultArray ();
-		check_dberror ( "Unable to load thread list." );
+		if (KunenaError::checkDatabaseError()) return;
+
 		$this->_common();
 	}
 

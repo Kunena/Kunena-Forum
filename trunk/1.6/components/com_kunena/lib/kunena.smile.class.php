@@ -95,7 +95,7 @@ class smile {
 
 		$kunena_db->setQuery ( $sql );
 		$smilies = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to load smilies." );
+		KunenaError::checkDatabaseError();
 
 		$smileyArray = array ();
 		foreach ( $smilies as $smiley ) { // We load all smileys in array, so we can sort them

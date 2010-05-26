@@ -28,7 +28,7 @@ require_once(KPATH_SITE . '/lib/kunena.config.class.php');
 class CKunenaTimeformat {
 
 	function internalTime() {
-		$kunena_config = CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		return time() + ($kunena_config->board_ofset * 3600);
 	}
 
@@ -89,14 +89,14 @@ class CKunenaTimeformat {
 	}
 
 	function diffToJoomla() {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		return (float) (date('Z')/3600) + (float) $kunena_config->board_ofset;
 	}
 
 	// Format a time to make it look purdy.
 	function showDate($time, $mode = 'datetime_today', $tz = 'kunena', $offset=false) {
 		$app = & JFactory::getApplication ();
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 
 		switch (strtolower ( $tz )) {
 			case 'utc' :

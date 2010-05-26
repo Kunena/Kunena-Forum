@@ -29,6 +29,8 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
 class KunenaApp {
 
 	function __construct() {
+		kimport('error');
+
 // Display time it took to create the entire page in the footer
 jimport( 'joomla.error.profiler' );
 $__kstarttime = JProfiler::getmicrotime();
@@ -104,14 +106,9 @@ if (isset ( $_POST ['func'] ) && $func == "showcat") {
 	$kunena_app->close ();
 }
 
-// Debug helpers
-include_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.debug.php");
-// get Kunenas configuration params in
-
-require_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.config.class.php");
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
-$kunena_config = &CKunenaConfig::getInstance ();
+$kunena_config = KunenaFactory::getConfig ();
 if ($kunena_config->debug) {
 	@ini_set('display_errors', 1);
 	@error_reporting(E_ALL);
@@ -302,12 +299,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	//Check if the catid requested is a parent category, because if it is
 	//the only thing we can do with it is 'listcat' and nothing else
-
 	if ($func == "showcat") {
 		if ($catid != 0) {
 			$kunena_db->setQuery ( "SELECT parent FROM #__kunena_categories WHERE id='{$catid}'" );
 			$catParent = intval($kunena_db->loadResult ());
-			check_dberror ( 'Unable to load categories.' );
+			if (KunenaError::checkDatabaseError()) return;
 		}
 		if ($catid == 0 || $catParent == 0) {
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, false) );
@@ -449,11 +445,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$readTopics = $kunena_session->readtopics;
 			$kunena_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE catid='{$catid}' AND parent=0 AND thread NOT IN ({$readTopics})" );
 			$readForum = $kunena_db->loadResultArray ();
-			check_dberror ( "Unable to load messages." );
+			if (KunenaError::checkDatabaseError()) return;
 			$readTopics = implode(',', array_merge(explode(',', $readTopics), $readForum));
 			$kunena_db->setQuery ( "UPDATE #__kunena_sessions set readtopics='$readTopics' WHERE userid=$kunena_my->id" );
 			$kunena_db->query ();
-			check_dberror ( 'Unable to update readtopics in session table.' );
+			if (KunenaError::checkDatabaseError()) return;
 
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
 			break;
@@ -469,7 +465,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				if (@$kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
 					$success_msg = JText::_('COM_KUNENA_GEN_CATEGORY_SUBCRIBED');
 				}
-				check_dberror ( "Unable to subscribe to category." );
+				KunenaError::checkDatabaseError();
 			}
 
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
@@ -485,7 +481,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				if ($kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
 					$success_msg = JText::_('COM_KUNENA_GEN_CATEGORY_UNSUBCRIBED');
 				}
-				check_dberror ( "Unable to unsubscribe from category." );
+				KunenaError::checkDatabaseError();
 			}
 
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );

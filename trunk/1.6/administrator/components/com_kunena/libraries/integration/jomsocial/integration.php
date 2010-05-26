@@ -36,7 +36,7 @@ class KunenaIntegrationJomSocial extends KunenaIntegration {
 	 * Current events: profileIntegration=0/1, avatarIntegration=0/1
 	 **/
 	public function trigger($event, &$params) {
-		$kconfig = CKunenaConfig::getInstance ();
+		$kconfig = KunenaFactory::getConfig ();
 		$params ['config'] = & $kconfig;
 		// TODO: jomsocial trigger
 	}

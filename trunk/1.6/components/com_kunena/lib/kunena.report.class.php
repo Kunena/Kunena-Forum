@@ -33,7 +33,7 @@ class CKunenaReport {
 		$this->catid = JRequest::getInt('catid', 0);
 		$this->_db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		$this->app = JFactory::getApplication ();
 	}
 
@@ -64,7 +64,7 @@ class CKunenaReport {
 		$name = $this->config->username ? "username" : "name";
 		$this->_db->setQuery("SELECT {$name} FROM #__users WHERE id={$this->my->id}");
     	$sender = $this->_db->loadResult();
-		check_dberror ( "Unable to load username." );
+		KunenaError::checkDatabaseError();
 
 		return $sender;
 	}
@@ -78,7 +78,7 @@ class CKunenaReport {
     								. " LEFT JOIN #__kunena_messages_text AS b ON b.mesid = a.id LEFT JOIN #__users AS c ON c.id=a.userid"
     								. " WHERE a.id='{$this->id}'");
 	   			$row = $this->_db->loadObject();
-    			check_dberror ( "Unable to load message." );
+    			if (KunenaError::checkDatabaseError()) return;
 
     			if ($this->reason) {
         			$subject = "[".$this->config->board_title." ".JText::_('COM_KUNENA_GEN_FORUM')."] ".JText::_('COM_KUNENA_REPORT_MSG') . ": " . $this->reason;

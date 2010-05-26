@@ -43,6 +43,9 @@ if (isset ( $fields ['filelocation'] )) {
 	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";
 	$kunena_db->setQuery ( $query );
 	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
 	$query = "CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
 				`id` int(11) NOT NULL auto_increment,
 				`mesid` int(11) NOT NULL default '0',
@@ -59,6 +62,9 @@ if (isset ( $fields ['filelocation'] )) {
 					KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8;";
 	$kunena_db->setQuery ( $query );
 	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
 	$query = "INSERT INTO #__kunena_attachments (mesid, userid, folder, filetype, filename)
 				SELECT a.mesid, m.userid,
 					SUBSTRING_INDEX(SUBSTRING_INDEX(a.filelocation, '/', -4), '/', 3) AS folder,
@@ -66,13 +72,14 @@ if (isset ( $fields ['filelocation'] )) {
 					SUBSTRING_INDEX(a.filelocation, '/', -1) AS filename
 				FROM #__kunena_attachments_bak AS a
 				JOIN #__kunena_messages AS m ON a.mesid = m.id";
+	$kunena_db->setQuery ( $query );
+	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 	if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
 		FB::log ( $query, 'Attachment Upgrade' );
 	}
-
-	$kunena_db->setQuery ( $query );
-	$kunena_db->query ();
 
 // By now the old attachmets table has been converted to the new Kunena 1.6 format
 // with the exception of file size and file hash that cannot be calculated inside

@@ -12,15 +12,15 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-$kunena_db = &JFactory::getDBO ();
-$kunena_config = & CKunenaConfig::getInstance ();
-$document = & JFactory::getDocument ();
+$kunena_db = JFactory::getDBO ();
+$kunena_config = KunenaFactory::getConfig ();
+$document = JFactory::getDocument ();
 
 $document->setTitle ( JText::_('COM_KUNENA_GEN_HELP') . ' - ' . $kunena_config->board_title );
 
 $kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->help_cid}'" );
 $introtext = $kunena_db->loadResult ();
-check_dberror ( "Unable to load introtext." );
+KunenaError::checkDatabaseError();
 ?>
 <table class="kblock" id="kforumhelp">
 	<thead>

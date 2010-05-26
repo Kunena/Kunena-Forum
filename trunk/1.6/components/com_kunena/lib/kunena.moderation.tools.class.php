@@ -29,9 +29,9 @@ class CKunenaModerationTools {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->_db		= & JFactory::getDBO ();
-		$this->_my		= & JFactory::getUser ();
-		$this->_config	= & CKunenaConfig::getInstance ();
+		$this->_db		= JFactory::getDBO ();
+		$this->_my		= JFactory::getUser ();
+		$this->_config	= KunenaFactory::getConfig ();
 
 		$this->_ResetErrorMessage ();
 	}
@@ -201,13 +201,13 @@ class CKunenaModerationTools {
 				$sql = "SELECT userid FROM #__kunena_banned_users WHERE userid='$UserID'";
 				$this->_db->setQuery ( $sql );
 				$userbannedexist = $this->_db->loadResult ();
-				check_dberror ( 'Unable to load users banned.' );
+				if (KunenaError::checkDatabaseError()) return false;
 
 				if ( !$userbannedexist ) {
 					$query = "INSERT INTO #__kunena_banned_users (`id`, `enabled`, `userid`, `bantype`, `expiry`, `message`, `created`, `created_userid`, `comment`) VALUES (DEFAULT, 1, '{$UserID}', '{$mode}', '{$expiry}', '" . $this->_db->Quote ( $message ) . "', NOW(), '{$this->_my->id}', '" . $this->_db->Quote ( $comment ) . "')";
 					$this->_db->setQuery ( $query );
 					$this->_db->query ();
-					check_dberror ( 'Unable to insert user state.' );
+					if (KunenaError::checkDatabaseError()) return false;
 				}
 				break;
 			case KN_USER_BLOCK:
@@ -254,7 +254,7 @@ class CKunenaModerationTools {
 				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=2 AND `userid`='{$UserID}' AND `enabled`=1";
 				$this->_db->setQuery ( $query );
 				$this->_db->query ();
-				check_dberror ( 'Unable to delete user state.' );
+				if (KunenaError::checkDatabaseError()) return false;
 				break;
 			case KN_USER_BLOCK:
 				$user->block = 0;
@@ -384,7 +384,7 @@ class CKunenaModerationTools {
 		$user->delete();
 		$this->_db->setQuery ( "DELETE FROM #__kunena_users WHERE `userid`='$UserID';" );
 		$this->_db->query ();
-		check_dberror ( "Unable to delete user from kunena." );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		return true;
 	}
@@ -408,7 +408,7 @@ class CKunenaModerationTools {
 
 		$this->_db->setQuery ( $sql );
 		$blocklist = $this->_db->loadObjectList ();
-		check_dberror ( 'Unable to load blocks for user.' );
+		KunenaError::checkDatabaseError();
 
 		return $blocklist;
 	}
@@ -443,7 +443,7 @@ class CKunenaModerationTools {
 
 			$this->_db->setQuery ( $sql );
 			$blocklist = $this->_db->loadObjectList ();
-			check_dberror ( 'Unable to load blocks for user.' );
+			if (KunenaError::checkDatabaseError()) return array();
 		}
 		else {
 			$blocklist = array();
@@ -473,7 +473,7 @@ class CKunenaModerationTools {
 
 		$this->_db->setQuery ( $sql );
 		$ipslist = $this->_db->loadObjectList ();
-		check_dberror ( 'Unable to load ips for user.' );
+		KunenaError::checkDatabaseError();
 
 		return $ipslist;
 	}
@@ -505,7 +505,7 @@ class CKunenaModerationTools {
 
 			$this->_db->setQuery ( $sql );
 			$useridslist[ $entry->ip ] = $this->_db->loadObjectList ();
-			check_dberror ( 'Unable to load usernames for ip.' );
+			KunenaError::checkDatabaseError();
 		}
 
 		return $useridslist;
@@ -518,14 +518,15 @@ class CKunenaModerationTools {
 		$sql = "SELECT ip FROM #__kunena_banned_ips WHERE ip='$ip'";
 		$this->_db->setQuery ( $sql );
 		$ipexist = $this->_db->loadResult ();
-		check_dberror ( 'Unable to load usernames for ip.' );
+		if (KunenaError::checkDatabaseError()) return false;
 
 		if ( !$ipexist ) {
 			$sql = "INSERT INTO #__kunena_banned_ips (enabled,ip,expiry,message,comment) VALUES ('1',$ip', '$expiry', '$message', '$comment')";
 			$this->_db->setQuery ( $sql );
 			$this->_db->Query ();
-			check_dberror ( 'Unable to insert new element in ip table.' );
+			if (KunenaError::checkDatabaseError()) return false;
 		}
+		return true;
 	}
 
 	/**
@@ -536,7 +537,8 @@ class CKunenaModerationTools {
 		$sql = "UPDATE #__kunena_banned_ips SET enabled=0 WHERE ip=$ip";
 		$this->_db->setQuery ( $sql );
 		$this->_db->Query ();
-		check_dberror ( 'Unable to disable ban ip.' );
+		if (KunenaError::checkDatabaseError()) return false;
+		return true;
 	}
 
 	// Public interface - Users

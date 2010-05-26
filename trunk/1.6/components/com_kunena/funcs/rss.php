@@ -57,15 +57,13 @@ class CKunenaRSSView extends CKunenaRSS {
 		if ($catid > 0) {
 			$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id = {$catid} ORDER BY ordering LIMIT 1" );
 			$category = $this->db->loadObject();
-			check_dberror("Unable to load category info.");
-
-			if ($category->published != 1) {
+			if (KunenaError::checkDatabaseError()) {
+				// internal error
+			} else if ($category->published != 1) {
 				// forbidden
-			}
-			else if (in_array($catid, $excl_cat)) {
+			} else if (in_array($catid, $excl_cat)) {
 				// forbidden
-			}
-			else {
+			} else {
 				$this->setQueryOption('incl_cat', array((int) $catid));
 
 				$title = $this->getLabel('name') .' - '. $category->name;

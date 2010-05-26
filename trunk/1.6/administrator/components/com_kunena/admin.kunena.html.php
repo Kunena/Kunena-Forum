@@ -268,7 +268,7 @@ table.kadmin-stat caption {
 
 			// Begin: FOOTER FUNC
 			function showFbFooter() {
-				$kunena_config = & CKunenaConfig::getInstance ();
+				$kunena_config = KunenaFactory::getConfig ();
 				require_once (KUNENA_PATH_LIB . DS . 'kunena.version.php'); ?>
 	</div>
 	<div class="kadmin-footer">
@@ -2354,7 +2354,7 @@ table.kadmin-stat caption {
 			//      include ('components/com_kunena/moderate_user.php');
 			//   }
 			function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $useriplist) {
-				$kunena_config = & CKunenaConfig::getInstance ();
+				$kunena_config = KunenaFactory::getConfig ();
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
 				$signature = $user->signature;
@@ -2501,7 +2501,7 @@ function textCounter(field, target) {
 				foreach ( $subslist as $subs ) { //get all message details for each subscription
 					$kunena_db->setQuery ( "select * from #__kunena_messages where id=$subs->thread" );
 					$subdet = $kunena_db->loadObjectList ();
-					check_dberror ( "Unable to load subscription messages." );
+					if (KunenaError::checkDatabaseError()) break;
 
 					foreach ( $subdet as $sub ) {
 						$k = 1 - $k;

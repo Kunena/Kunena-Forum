@@ -31,7 +31,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 				." WHERE u.block='0' "
 				." AND u.usertype IN ('Administrator', 'Super Administrator')");
 			self::$admins = $db->loadResultArray();
-			if (CKunenaTools::checkDatabaseError()) return;
+			KunenaError::checkDatabaseError();
 		}
 	}
 
@@ -45,7 +45,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 				." LEFT JOIN #__kunena_categories AS c ON m.catid=c.id"
 				." WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
 			$list = $db->loadObjectList();
-			if (CKunenaTools::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
 			foreach ($list as $item) self::$moderators[$item->uid][] = $item->catid;
 		}
 	}
@@ -109,33 +109,33 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 			$gid = 0;
 		}
 
-		function _has_rights(&$acl, $gid, $access, $recurse) {
-			if ($gid == $access)
-				return 1;
-			if ($recurse) {
-				$childs = $acl->get_group_children ( $access, 'ARO', 'RECURSE' );
-				return (is_array ( $childs ) and in_array ( $gid, $childs ));
-			}
-			return 0;
-		}
-
 		$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
 				FROM #__kunena_categories c
 				WHERE published='1'";
 		$db->setQuery ( $query );
 		$rows = $db->loadObjectList ();
-		if (CKunenaTools::checkDatabaseError()) return array();
+		if (KunenaError::checkDatabaseError()) return array();
 		$catlist = array();
 		foreach ( $rows as $row ) {
 			if (($row->pub_access == 0)
 				or ($row->pub_access == - 1 && $userid > 0)
 				or (self::isModerator($userid, $row->id))
-				or ($row->pub_access > 0 && _has_rights ( $acl, $gid, $row->pub_access, $row->pub_recurse ))
-				or ($row->admin_access > 0 && _has_rights ( $acl, $gid, $row->admin_access, $row->admin_recurse ))) {
+				or ($row->pub_access > 0 && self::_has_rights ( $acl, $gid, $row->pub_access, $row->pub_recurse ))
+				or ($row->admin_access > 0 && self::_has_rights ( $acl, $gid, $row->admin_access, $row->admin_recurse ))) {
 				$catlist[] = $row->id;
 			}
 		}
 		return implode(',', $catlist);
+	}
+
+	protected function _has_rights(&$acl, $gid, $access, $recurse) {
+		if ($gid == $access)
+			return 1;
+		if ($recurse) {
+			$childs = $acl->get_group_children ( $access, 'ARO', 'RECURSE' );
+			return (is_array ( $childs ) and in_array ( $gid, $childs ));
+		}
+		return 0;
 	}
 
 	function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
@@ -149,7 +149,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__kunena_categories WHERE id={$catid}";
 		$db->setQuery ($query);
 		$access = $db->loadObject ();
-		if (CKunenaTools::checkDatabaseError() || !$access) return array();
+		if (KunenaError::checkDatabaseError() || !$access) return array();
 
 		$arogroups = '';
 		if ($subscriptions) {
@@ -199,7 +199,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ($excludeList) $where GROUP BY u.id";
 			$db->setQuery ( $query );
 			$subsList = $db->loadObjectList ();
-			if (CKunenaTools::checkDatabaseError()) return array();
+			if (KunenaError::checkDatabaseError()) return array();
 		}
 		return $subsList;
 	}

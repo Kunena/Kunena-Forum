@@ -23,7 +23,7 @@
 defined( '_JEXEC' ) or die();
 
 
-$kunena_config = &CKunenaConfig::getInstance ();
+$kunena_config = KunenaFactory::getConfig ();
 $kunena_db = &JFactory::getDBO ();
 
 global $kunena_icons;
@@ -46,7 +46,7 @@ if ($func != "") {
 		$query = "SELECT * FROM #__kunena_categories WHERE id='{$catids}' AND published='1'";
 		$kunena_db->setQuery ( $query );
 		$results = $kunena_db->loadObject ();
-		check_dberror ( "Unable to load categories." );
+		KunenaError::checkDatabaseError();
 
 		if (! $results)
 			break;
@@ -74,7 +74,7 @@ if ($func != "") {
 		$sql = "SELECT subject, id FROM #__kunena_messages WHERE id='{$id}'";
 		$kunena_db->setQuery ( $sql );
 		$this->kunena_topic_title = KunenaParser::parseText ($kunena_db->loadResult () );
-		check_dberror ( "Unable to load subject." );
+		KunenaError::checkDatabaseError();
 		$jr_path_menu [] = $this->kunena_topic_title;
 	}
 
@@ -112,7 +112,7 @@ if ($func != "") {
 		$query = "SELECT w.userid, u.$fb_queryName AS username, k.showOnline FROM #__kunena_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__kunena_users AS k ON k.userid=w.userid WHERE w.link LIKE '%" . $kunena_db->getEscaped ( JURI::current () ) . "%' GROUP BY w.userid ORDER BY u.{$fb_queryName} ASC";
 		$kunena_db->setQuery ( $query );
 		$users = $kunena_db->loadObjectList ();
-		check_dberror ( "Unable to load who is online." );
+		KunenaError::checkDatabaseError();
 		$total_viewing = count ( $users );
 
 		if ($sfunc == "userprofile") {

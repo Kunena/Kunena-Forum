@@ -22,7 +22,7 @@ class CKunenaProfile {
 		kimport('html.parser');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		$this->my = JFactory::getUser ();
 		$this->do = $do;
 
@@ -391,7 +391,7 @@ class CKunenaProfile {
 			websitename={$this->_db->Quote($websitename)},websiteurl={$this->_db->Quote($websiteurl)},signature={$this->_db->Quote($signature)}
 			WHERE userid={$this->_db->Quote($this->profile->userid)}" );
 		$this->_db->query ();
-		check_dberror ( 'Unable to update kunena user profile.' );
+		KunenaError::checkDatabaseError();
 	}
 
 	protected function saveAvatar() {
@@ -437,11 +437,11 @@ class CKunenaProfile {
 			//set default avatar
 			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar='' WHERE userid='{$this->profile->userid}'" );
 			$this->_db->query ();
-			check_dberror ( 'Unable to set default avatar.' );
+			if (KunenaError::checkDatabaseError()) return;
 		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false) {
 			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar={$this->_db->quote($action)} WHERE userid='{$this->profile->userid}'" );
 			$this->_db->query ();
-			check_dberror ( 'Unable to set avatar from gallery.' );
+			if (KunenaError::checkDatabaseError()) return;
 		}
 	}
 
@@ -454,7 +454,7 @@ class CKunenaProfile {
 		$this->_db->setQuery ( "UPDATE #__kunena_users SET ordering='$messageordering', hideEmail='$hidemail', showOnline='$showonline'
 							WHERE userid='{$this->profile->userid}'" );
 		$this->_db->query ();
-		check_dberror ( 'Unable to update kunena user profile.' );
+		KunenaError::checkDatabaseError();
 	}
 
 	function save()

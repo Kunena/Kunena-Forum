@@ -54,7 +54,7 @@ class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
 
 	protected function detectErrors() {
 		global $ueConfig;
-		$kunenaConfig = & CKunenaConfig::getInstance ();
+		$kunenaConfig = KunenaFactory::getConfig ();
 
 		if (! isset ( $ueConfig ['version'] )) {
 			self::$errormsg = JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_INSTALL', '1.2' );
@@ -87,7 +87,7 @@ class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
 	 **/
 	public function trigger($event, &$params) {
 		global $_PLUGINS;
-		$kunenaConfig = CKunenaConfig::getInstance ();
+		$kunenaConfig = KunenaFactory::getConfig ();
 		$params ['config'] = & $kunenaConfig;
 		$_PLUGINS->loadPluginGroup ( 'user' );
 		$_PLUGINS->trigger ( 'kunenaIntegration', array ($event, &$kunenaConfig, &$params ) );

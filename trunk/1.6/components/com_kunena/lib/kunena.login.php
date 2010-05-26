@@ -31,7 +31,7 @@ class CKunenaLogin {
 
 		$this->my = JFactory::getUser();
 		$profile = KunenaFactory::getUser();
-		$this->config = & CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		//first we gather some information about this person
 		$juserinfo = JUser::getInstance ( $this->my->id );
 

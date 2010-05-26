@@ -14,7 +14,7 @@
 defined ( '_JEXEC' ) or die ();
 require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
 $this->user = JFactory::getUser();
-$this->config = & CKunenaConfig::getInstance ();
+$this->config = KunenaFactory::getConfig ();
 $type = CKunenaLogin::getType ();
 $return = CKunenaLogin::getReturnURL ( $type );
 $avatar = CKunenaLogin::getMyAvatar();

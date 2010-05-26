@@ -25,7 +25,7 @@ class CKunenaShowcat {
 		$this->my = JFactory::getUser ();
 		$this->myprofile = KunenaFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 
 		if (! $this->catid)
 			return;
@@ -48,11 +48,11 @@ class CKunenaShowcat {
 
 		$this->db->setQuery ( $query );
 		$this->objCatInfo = $this->db->loadObject ();
-		check_dberror ( 'Unable to get categories.' );
+		if (KunenaError::checkDatabaseError()) return;
 		//Get the Category's parent category name for breadcrumb
 		$this->db->setQuery ( "SELECT name, id FROM #__kunena_categories WHERE id='{$this->objCatInfo->parent}'" );
 		$objCatParentInfo = $this->db->loadObject ();
-		check_dberror ( 'Unable to get parent category.' );
+		if (KunenaError::checkDatabaseError()) return;
 
 		//check if this forum is locked
 		$this->kunena_forum_locked = $this->objCatInfo->locked;
@@ -70,7 +70,7 @@ class CKunenaShowcat {
 		$row_count = $this->page * $threads_per_page;
 		$this->db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE parent='0' AND catid='{$this->catid}' AND hold IN ({$hold})" );
 		$this->total = ( int ) $this->db->loadResult ();
-		check_dberror ( 'Unable to get message count.' );
+		KunenaError::checkDatabaseError();
 		$this->totalpages = ceil ( $this->total / $threads_per_page );
 
 		$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__kunena_messages AS t
@@ -79,7 +79,7 @@ class CKunenaShowcat {
 	GROUP BY m.thread ORDER BY t.ordering DESC, lastid DESC";
 		$this->db->setQuery ( $query, $offset, $threads_per_page );
 		$threadids = $this->db->loadResultArray ();
-		check_dberror ( "Unable to load thread list." );
+		KunenaError::checkDatabaseError();
 		$idstr = implode ( ",", $threadids );
 
 		$this->messages = array ();
@@ -110,7 +110,7 @@ class CKunenaShowcat {
 
 			$this->db->setQuery ( $query );
 			$this->messages = $this->db->loadObjectList ('id');
-			check_dberror ( "Unable to load messages." );
+			KunenaError::checkDatabaseError();
 
 			// collect user ids for avatar prefetch when integrated
 			$userlist = array();
@@ -137,7 +137,7 @@ class CKunenaShowcat {
 				$readlist = $this->session->readtopics;
 				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages " . "WHERE hold IN ({$hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
-				check_dberror ( "Unable to get unread messages count and first id." );
+				KunenaError::checkDatabaseError();
 
 				foreach ( $msgidlist as $msgid ) {
 					$this->messages[$msgid->thread]->lastread = $msgid->lastread;
@@ -189,7 +189,7 @@ class CKunenaShowcat {
 		//get the Moderator list for display
 		$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$this->catid}' AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load moderators." );
+		KunenaError::checkDatabaseError();
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 		$this->showposts = 0;

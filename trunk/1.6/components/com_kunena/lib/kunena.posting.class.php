@@ -18,7 +18,7 @@ class CKunenaPosting {
 	private $errors = array ();
 
 	function __construct() {
-		$this->_config = CKunenaConfig::getInstance ();
+		$this->_config = KunenaFactory::getConfig ();
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = JFactory::getDBO ();
 		$this->_my = JFactory::getUser ();
@@ -29,15 +29,8 @@ class CKunenaPosting {
 	}
 
 	protected function checkDatabaseError() {
-		if ($this->_db->getErrorNum ()) {
-			if (CKunenaTools::isAdmin ()) {
-				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.com/">ww.kunena.com</a>' ), 'error' );
-			} else {
-				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' ), 'error' );
-			}
-			return true;
-		}
-		return false;
+		kimport('error');
+		return KunenaError::checkDatabaseError();
 	}
 
 	public function getErrors() {
@@ -617,7 +610,7 @@ class CKunenaPosting {
 		if ($this->_config->floodprotection && ! CKunenaTools::isModerator ( $this->_my->id, $this->parent->catid )) {
 			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip='{$this->ip}'" );
 			$lastPostTime = $this->_db->loadResult ();
-			check_dberror ( "Unable to load max time for current request from IP: {$this->ip}" );
+			if (KunenaError::checkDatabaseError()) return;
 
 			if ($lastPostTime + $this->_config->floodprotection > CKunenaTimeformat::internalTime ()) {
 				echo JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD1' ) . ' ' . $this->_config->floodprotection . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_FLOOD2' ) . '<br />';

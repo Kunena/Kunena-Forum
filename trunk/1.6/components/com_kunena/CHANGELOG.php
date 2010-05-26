@@ -35,6 +35,10 @@ Legend:
 Kunena 1.6.0-ALPHA
 
 25-May-2010 Matias
+# [#19288] Replace old white error screen by less intrusive error messages
+# [#19288] Fix regression: Bad category permissions in sample data
+
+25-May-2010 Matias
 # [#19288] Fix a few bugs in installer that cause clean installation to fail in some environments
 # [#19288] Remove all but one dependency to frontend files during installation
 # [#19288] Fix undefined variable during uninstall

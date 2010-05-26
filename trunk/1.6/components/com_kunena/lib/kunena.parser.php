@@ -98,7 +98,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	}
 
 	function PostProcessing(&$task) {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		if ($kunena_config->trimlongurls) {
 			// shorten URL text if they are too long (>65chars)
 			$task->text = preg_replace ( '/<a href=(\"|\')((http(s?):\/\/)?(([^\'\"]{' . $kunena_config->trimlongurlsfront . '})([^\'\"]{4,})([^\'\"]{' . $kunena_config->trimlongurlsback . '})))\1(.*)>\3?\5<\/a>/u', '<a href="\2" \9>\6...\8</a>', $task->text );
@@ -349,7 +349,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 		# Function replaces TAGs with corresponding
 
 		# Encode was already been called for between
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		$kunena_my = &JFactory::getUser ();
 		if ($task->in_code) {
 			switch (JString::strtolower ( $tag->name )) {

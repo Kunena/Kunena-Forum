@@ -113,7 +113,7 @@ class CKunenaLink {
 	}
 
 	function GetThreadPageLink($func, $catid, $threadid, $page, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		if ($page == 1 || ! is_numeric ( $page ) || ! is_numeric ( $limit )) {
 			// page 1 is identical to a link to the top of the thread
 			$pagelink = CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . '&id=' . $threadid, $name, '', $rel, $class, $anker );
@@ -285,19 +285,19 @@ class CKunenaLink {
 	}
 
 	function GetRulesLink($name, $rel = 'nofollow') {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		$ruleslink = $kunena_config->rules_infb ? KUNENA_LIVEURLREL . '&func=rules' : $kunena_config->rules_link;
 		return CKunenaLink::GetSefHrefLink ( $ruleslink, $name, '', $rel );
 	}
 
 	function GetHelpLink($name, $rel = 'nofollow') {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		$helplink = $kunena_config->help_infb ? KUNENA_LIVEURLREL . '&func=help' : $kunena_config->help_link;
 		return CKunenaLink::GetSefHrefLink ( $helplink, $name, '', $rel );
 	}
 
 	function GetSearchURL($func, $searchword='', $limitstart=0, $limit=0, $params = '') {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		$limitstr = "";
 		if ($limitstart > 0)
 			$limitstr .= "&limitstart=$limitstart";
@@ -313,7 +313,7 @@ class CKunenaLink {
 	}
 
 	function GetSearchLink($func, $searchword, $limitstart, $limit, $name, $params = '', $rel = 'nofollow') {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		$limitstr = "";
 		if ($limitstart > 0)
 			$limitstr .= "&limitstart=$limitstart";
@@ -386,7 +386,7 @@ class CKunenaLink {
 	// latest post of that thread and number of pages based on the supplied page limit.
 	//
 	function GetLatestPostAutoRedirectHTML($pid, $limit, $catid = 0) {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		$kunena_db = &JFactory::getDBO ();
 		// First determine the thread, latest post and number of posts for the post supplied
 		$where = '';
@@ -398,7 +398,7 @@ class CKunenaLink {
                              WHERE a.thread = b.thread AND a.hold='0' {$where}
                              GROUP BY a.thread" );
 		$result = $kunena_db->loadObject ();
-		check_dberror ( "Unable to retrieve latest post." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		// Now Calculate the number of pages for this particular thread
 		if (is_object ( $result )) {
@@ -423,7 +423,7 @@ class CKunenaLink {
 	}
 
 	function GetLatestPageAutoRedirectURL($pid, $limit = 0, $catid = 0) {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		if (!$limit) $limit = $kunena_config->messages_per_page;
 		$kunena_db = &JFactory::getDBO ();
 		// First determine the thread, latest post and number of posts for the post supplied
@@ -436,7 +436,7 @@ class CKunenaLink {
                              WHERE a.thread = b.thread AND a.hold='0' {$where}
                              GROUP BY a.thread" );
 		$result = $kunena_db->loadObject ();
-		check_dberror ( "Unable to retrieve latest post." );
+		if (KunenaError::checkDatabaseError()) return;
 		if (! is_object ( $result ))
 			return htmlspecialchars_decode ( KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid ) );
 
@@ -449,7 +449,7 @@ class CKunenaLink {
 	}
 
 	function GetMessageURL($pid, $limit = 0) {
-		$kunena_config = & CKunenaConfig::getInstance ();
+		$kunena_config = KunenaFactory::getConfig ();
 		if ($limit < 1) $limit = $kunena_config->messages_per_page;
 		$kunena_db = &JFactory::getDBO ();
 		// First determine the thread, latest post and number of posts for the post supplied
@@ -458,7 +458,7 @@ class CKunenaLink {
                              WHERE a.thread = b.thread AND a.hold='0' AND a.id <= {$pid}
                              GROUP BY a.thread" );
 		$result = $kunena_db->loadObject ();
-		check_dberror ( "Unable to retrieve latest post." );
+		if (KunenaError::checkDatabaseError()) return;
 		if (! is_object ( $result ))
 			return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=showcat&catid=' . $result->catid );
 		return CKunenaLink::GetThreadPageURL ( 'view', $result->catid, $result->thread, ceil ( $result->totalmessages / $limit ), $limit );

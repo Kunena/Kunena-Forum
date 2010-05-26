@@ -67,7 +67,7 @@ class CKunenaViewMessage {
 		$this->msg = $message;
 
 		$this->my = JFactory::getUser ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		$this->db = JFactory::getDBO ();
 	}
 
@@ -151,7 +151,7 @@ class CKunenaViewMessage {
 		if ($this->config->alphauserpoints && file_exists ( $api_AUP )) {
 			$this->db->setQuery ( "SELECT points FROM #__alpha_userpoints WHERE `userid`='" . ( int ) $message->userid . "'" );
 			$this->userpoints = $this->db->loadResult ();
-			check_dberror ( "Unable to load AUP points." );
+			KunenaError::checkDatabaseError();
 		}
 		// End Integration AlphaUserPoints
 
@@ -268,7 +268,7 @@ class CKunenaView {
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 
 		$this->db = JFactory::getDBO ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		$this->session = KunenaFactory::getSession ();
 		$this->my = JFactory::getUser ();
 		$this->myprofile = KunenaFactory::getUser ();
@@ -310,10 +310,9 @@ class CKunenaView {
 			WHERE a.id='{$this->id}' AND {$where}";
 		$this->db->setQuery ( $query );
 		$this->first_message = $this->db->loadObject ();
-		check_dberror ( 'Unable to load current message.' );
 
 		// Invalid message id (deleted, on hold?)
-		if (! $this->first_message)
+		if (KunenaError::checkDatabaseError() || ! $this->first_message)
 			return;
 
 		// Is user allowed to see the forum specified in the message?
@@ -334,7 +333,7 @@ class CKunenaView {
 				$query = "SELECT catid, thread FROM #__kunena_messages AS a WHERE a.id='{$this->id}'";
 				$this->db->setQuery ( $query );
 				$newpos = $this->db->loadObject ();
-				check_dberror ( 'Unable to calculate location of current message.' );
+				if (KunenaError::checkDatabaseError()) return;
 				$this->thread = $newpos->thread;
 				$this->catid = $newpos->catid;
 			}
@@ -343,7 +342,7 @@ class CKunenaView {
 			$query = "SELECT COUNT(*) FROM #__kunena_messages AS a WHERE a.thread='{$this->thread}' AND {$where} AND a.id<='{$this->id}'";
 			$this->db->setQuery ( $query );
 			$replyCount = $this->db->loadResult ();
-			check_dberror ( 'Unable to calculate location of current message.' );
+			if (KunenaError::checkDatabaseError()) return;
 
 			$replyPage = $replyCount > $this->config->messages_per_page ? ceil ( $replyCount / $this->config->messages_per_page ) : 1;
 
@@ -353,11 +352,11 @@ class CKunenaView {
 		//Get the category name for breadcrumb
 		$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id='{$this->catid}'" );
 		$this->catinfo = $this->db->loadObject ();
-		check_dberror ( 'Unable to load category info' );
+		if (KunenaError::checkDatabaseError()) return;
 		//Get Parent's cat.name for breadcrumb
 		$this->db->setQuery ( "SELECT id, name FROM #__kunena_categories WHERE id='{$this->catinfo->parent}'" );
 		$objCatParentInfo = $this->db->loadObject ();
-		check_dberror ( 'Unable to load parent category info' );
+		if (KunenaError::checkDatabaseError()) return;
 
 		// START
 		$this->emoticons = smile::getEmoticons ( 0 );
@@ -381,13 +380,13 @@ class CKunenaView {
 		if ($this->my->id == 0 || $this->first_message->userid != $this->my->id) {
 			$this->db->setQuery ( "UPDATE #__kunena_messages SET hits=hits+1 WHERE id='{$this->thread}' AND parent='0'" );
 			$this->db->query ();
-			check_dberror ( 'Unable to update message hits.' );
+			KunenaError::checkDatabaseError();
 		}
 
 		$query = "SELECT COUNT(*) FROM #__kunena_messages AS a WHERE a.thread='{$this->thread}' AND {$where}";
 		$this->db->setQuery ( $query );
 		$this->total_messages = $this->db->loadResult ();
-		check_dberror ( 'Unable to calculate message count.' );
+		KunenaError::checkDatabaseError();
 
 		// If page does not exist, redirect to the last page
 		if ($this->total_messages <= $this->limitstart) {
@@ -416,7 +415,7 @@ class CKunenaView {
 					ORDER BY id {$ordering}";
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
 		$posts = $this->db->loadObjectList ();
-		check_dberror ( 'Unable to load replies' );
+		KunenaError::checkDatabaseError();
 
 		// Load attachments
 
@@ -469,7 +468,7 @@ class CKunenaView {
 		if ($this->config->allowsubscriptions && $this->my->id) {
 			$this->db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->thread}'" );
 			$fb_subscribed = $this->db->loadResult ();
-			check_dberror ( 'Unable to load subscription' );
+			KunenaError::checkDatabaseError();
 
 			if ($fb_subscribed == "") {
 				$fb_cansubscribe = 1;
@@ -479,7 +478,7 @@ class CKunenaView {
 		$fb_canfavorite = 0;
 		$this->db->setQuery ( "SELECT MAX(userid={$this->my->id}) AS favorited, COUNT(*) AS totalfavorited FROM #__kunena_favorites WHERE thread='{$this->thread}'" );
 		list ( $this->favorited, $this->totalfavorited ) = $this->db->loadRow ();
-		check_dberror ( 'Unable to load favorite' );
+		KunenaError::checkDatabaseError();
 		if ($this->config->allowfavorites && $this->my->id) {
 			if (! $this->favorited) {
 				$fb_canfavorite = 1;
@@ -489,7 +488,8 @@ class CKunenaView {
 		//get the Moderator list for display
 		$this->db->setQuery ( "SELECT m.*, u.* FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->catid} AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load moderators." );
+		KunenaError::checkDatabaseError();
+
 		$this->catModerators = array();
 		foreach ($this->modslist as $mod) {
 			$this->catModerators[] = $mod->userid;
@@ -604,8 +604,6 @@ class CKunenaView {
 	}
 
 	function getPagination($catid, $threadid, $page, $totalpages, $maxpages) {
-		$kunena_config = & CKunenaConfig::getInstance ();
-
 		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
 		$endpage = $startpage + $maxpages;
 		if ($endpage > $totalpages) {
@@ -619,7 +617,7 @@ class CKunenaView {
 		if ($startpage > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, 1, $kunena_config->messages_per_page, 1, '', $rel = 'follow' ) . '</li>';
+			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, 1, $this->config->messages_per_page, 1, '', $rel = 'follow' ) . '</li>';
 			if ($startpage > 2) {
 				$output .= '<li class="more">...</li>';
 			}
@@ -629,7 +627,7 @@ class CKunenaView {
 			if ($page == $i) {
 				$output .= '<li class="active">' . $i . '</li>';
 			} else {
-				$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $i, $kunena_config->messages_per_page, $i, '', $rel = 'follow' ) . '</li>';
+				$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $i, $this->config->messages_per_page, $i, '', $rel = 'follow' ) . '</li>';
 			}
 		}
 
@@ -638,7 +636,7 @@ class CKunenaView {
 				$output .= '<li class="more">...</li>';
 			}
 
-			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $totalpages, $kunena_config->messages_per_page, $totalpages, '', $rel = 'follow' ) . '</li>';
+			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $totalpages, $this->config->messages_per_page, $totalpages, '', $rel = 'follow' ) . '</li>';
 		}
 
 		$output .= '</ul>';

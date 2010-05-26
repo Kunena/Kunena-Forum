@@ -44,7 +44,7 @@ class CKunenaWhoIsOnline {
 		static $instance = NULL;
 		if (! $instance) {
 			$kunena_db = & JFactory::getDBO ();
-			$kunena_config = & CKunenaConfig::getInstance ();
+			$kunena_config = KunenaFactory::getConfig ();
 			$kunena_app = & JFactory::getApplication ();
 
 			$instance = new CKunenaWhoIsOnline ( $kunena_db, $kunena_config, $kunena_app );
@@ -67,7 +67,7 @@ class CKunenaWhoIsOnline {
         . " ORDER BY username ASC";
     	$this->db->setQuery($query);
     	$users = $this->db->loadObjectList();
-    	check_dberror ( "Unable to load online users." );
+    	KunenaError::checkDatabaseError();
 
     	return $users;
 	}
@@ -81,7 +81,7 @@ class CKunenaWhoIsOnline {
 		$query = "SELECT COUNT(*) FROM #__kunena_whoisonline WHERE user='0'";
     	$this->db->setQuery($query);
     	$totalguests = $this->db->loadResult();
-    	check_dberror ( "Unable to load who is online." );
+    	KunenaError::checkDatabaseError();
 
     	return $totalguests;
 	}
@@ -112,7 +112,7 @@ class CKunenaWhoIsOnline {
         ORDER BY w.time DESC";
         $this->db->setQuery($query);
         $users = $this->db->loadObjectList();
-        check_dberror ( "Unable to load online users." );
+        KunenaError::checkDatabaseError();
 
         return $users;
 	}
@@ -121,13 +121,13 @@ class CKunenaWhoIsOnline {
 		$past = $this->datenow - $this->config->fbsessiontimeout;
 		$this->db->setQuery("DELETE FROM #__kunena_whoisonline WHERE time < '{$past}'");
 		$this->db->query();
-		check_dberror ( "Unable to delete users from whoisonline." );
+		KunenaError::checkDatabaseError();
 	}
 
 	protected function _getOnlineUsers () {
 		$this->db->setQuery("SELECT COUNT(*) FROM #__kunena_whoisonline WHERE userip='{$this->myip}' AND userid='{$this->my->id}'");
 		$online = $this->db->loadResult();
-		check_dberror ( "Unable to load online count." );
+		KunenaError::checkDatabaseError();
 
 		return $online;
 	}
@@ -157,7 +157,7 @@ class CKunenaWhoIsOnline {
 		if ( $func == 'showcat') {
     		$this->db->setQuery("SELECT name FROM #__kunena_categories WHERE id='{$catid}'");
     		$what = JText::_('COM_KUNENA_WHO_VIEW_SHOWCAT').' '.$this->db->loadResult();
-    		check_dberror ( "Unable to load category name." );
+    		KunenaError::checkDatabaseError();
 		} else if ($func == 'listcat') {
     		$what = JText::_('COM_KUNENA_WHO_VIEW_LISCAT');
 		} else if ($func == 'latest') {
@@ -167,15 +167,15 @@ class CKunenaWhoIsOnline {
     	} else if ($func == 'view') {
     		$this->db->setQuery("SELECT subject FROM #__kunena_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_VIEW_TOPIC').' '.$this->db->loadResult();
-    		check_dberror ( "Unable to load subject of message." );
+    		KunenaError::checkDatabaseError();
     	} else if ($func == 'post' && $do == 'reply') {
     		$this->db->setQuery("SELECT subject FROM #__kunena_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_REPLY_TOPIC').' '.$this->db->loadResult();
-    		check_dberror ( "Unable to load subject of message." );
+    		KunenaError::checkDatabaseError();
     	} else if ($func == 'post' && $do == 'edit') {
     		$this->db->setQuery("SELECT name FROM #__kunena_messages WHERE id='{$id}'");
     		$what = JText::_('COM_KUNENA_WHO_POST_EDIT').' '.$this->db->loadResult();
-    		check_dberror ( "Unable to load name of author of the message." );
+    		KunenaError::checkDatabaseError();
     	} else if ($func == 'who') {
     		$what = JText::_('COM_KUNENA_WHO_VIEW_WHO');
     	} else if ($func== 'search') {
@@ -221,7 +221,7 @@ class CKunenaWhoIsOnline {
     	}
 
 		$this->db->query();
-		check_dberror ( "Unable to insert user into whoisonline." );
+		KunenaError::checkDatabaseError();
 	}
 
 	public function displayWho () {

@@ -23,11 +23,11 @@ jimport('joomla.utilities.string');
 define('KUNENA_JLIVEURL', JURI::root());
 
 require_once (KPATH_SITE . '/lib/kunena.defines.php');
-require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
+kimport('error');
 
 $kunena_app =& JFactory::getApplication();
 $document =& JFactory::getDocument();
-$kunena_config =& CKunenaConfig::getInstance();
+$kunena_config = KunenaFactory::getConfig ();
 $kunena_db = &JFactory::getDBO();
 $kunena_my = &JFactory::getUser();
 
@@ -51,7 +51,7 @@ define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena/');
 
 if (!defined("KUNENA_JCSSURL")) {
     $current_stylesheet = $kunena_app->getTemplate();
-    check_dberror ( "Unable to load template." );
+    if (KunenaError::checkDatabaseError()) return;
     define('KUNENA_JCSSURL', KUNENA_JLIVEURL . 'templates/' . $current_stylesheet . '/css/template_css.css');
 }
 
@@ -163,17 +163,8 @@ class CKunenaTools {
     var $id = null;
 
 	function checkDatabaseError() {
-		$app = JFactory::getApplication();
-		$db = JFactory::getDBO();
-		if ($db->getErrorNum ()) {
-			if (CKunenaTools::isAdmin ()) {
-				$app->enqueueMessage ( 'Kunena '.JText::sprintf ( 'COM_KUNENA_INTERNAL_ERROR_ADMIN', '<a href="http:://www.kunena.com/">ww.kunena.com</a>' ), 'error' );
-			} else {
-				$app->enqueueMessage ( 'Kunena '.JText::_ ( 'COM_KUNENA_INTERNAL_ERROR' ), 'error' );
-			}
-			return true;
-		}
-		return false;
+		kimport('error');
+		return KunenaError::checkDatabaseError();
 	}
 
 	function showButton($name, $text) {
@@ -220,7 +211,7 @@ class CKunenaTools {
         // Reset category counts as next query ignores users which have written no messages
         $kunena_db->setQuery("UPDATE #__kunena_users SET posts=0");
         $kunena_db->query();
-          	check_dberror("Unable to reset category post counts.");
+        if (KunenaError::checkDatabaseError()) return;
 
           	// Update user post count (ignore unpublished categories and hidden messages)
     	$kunena_db->setQuery("INSERT INTO #__kunena_users (userid, posts)"
@@ -231,7 +222,7 @@ class CKunenaTools {
     		." GROUP BY m.userid"
     		." ON DUPLICATE KEY UPDATE posts=VALUES(posts)");
     	$kunena_db->query();
-        check_dberror("Unable to update user posts.");
+        KunenaError::checkDatabaseError();
     }
 
     function reCountBoardsRecursion(&$array, $current)
@@ -257,7 +248,7 @@ class CKunenaTools {
         // Reset category counts as next query ignores empty categories
         $kunena_db->setQuery("UPDATE #__kunena_categories SET numTopics=0, numPosts=0");
         $kunena_db->query();
-          	check_dberror("Unable to reset category post counts.");
+        if (KunenaError::checkDatabaseError()) return;
 
         // Update category post count
         $kunena_db->setQuery("INSERT INTO #__kunena_categories (id, numTopics, numPosts, id_last_msg, time_last_msg)"
@@ -268,12 +259,12 @@ class CKunenaTools {
         	." GROUP BY catid "
         	." ON DUPLICATE KEY UPDATE numTopics=VALUES(numTopics), numPosts=VALUES(numPosts), id_last_msg=VALUES(id_last_msg), time_last_msg=VALUES(time_last_msg)");
     	$kunena_db->query();
-    		check_dberror("Unable to update categories post count.");
+    	if (KunenaError::checkDatabaseError()) return;
 
     	// Load categories to be counted
         $kunena_db->setQuery("SELECT id, parent, published, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories");
         $cats = $kunena_db->loadObjectList('id');
-        	check_dberror("Unable to load categories.");
+        if (KunenaError::checkDatabaseError()) return;
 
         foreach ($cats as $c)
         {
@@ -294,14 +285,14 @@ class CKunenaTools {
             	.", time_last_msg=" . intval($c->time_last_msg)
             	." WHERE id=" . intval($c->id));
             $kunena_db->query();
-            	check_dberror("Unable to update categories.");
+            if (KunenaError::checkDatabaseError()) return;
         }
     }
 
     function updateNameInfo()
     {
         $kunena_db = &JFactory::getDBO();
-        $kunena_config =& CKunenaConfig::getInstance();
+        $kunena_config = KunenaFactory::getConfig ();
 
         $fb_queryName = $kunena_config->username ? "username" : "name";
 
@@ -310,7 +301,7 @@ class CKunenaTools {
 					WHERE m.userid = u.id";
         $kunena_db->setQuery($query);
         $kunena_db->query();
-        	check_dberror ("Unable to update user name information");
+        KunenaError::checkDatabaseError();
         return $kunena_db->getAffectedRows();
     }
 
@@ -318,7 +309,7 @@ class CKunenaTools {
         $kunena_db = &JFactory::getDBO();
         $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories ORDER BY id ASC");
         $cats = $kunena_db->loadObjectList();
-        	check_dberror("Unable to load categories.");
+        if (KunenaError::checkDatabaseError()) return;
 
         foreach ($cats as $c) {
             $ctg[$c->id] = $c;
@@ -345,14 +336,12 @@ class CKunenaTools {
                 .",`numPosts`='" . $ctg[$msg_cat]->numPosts . "'"
                 ." WHERE (`id`='" . $ctg[$msg_cat]->id . "') ");
             $kunena_db->query();
-            check_dberror("Unable to update category stats.");
+            if (KunenaError::checkDatabaseError()) return;
 
             // parent
             $msg_cat = $ctg[$msg_cat]->parent;
-            }
-
-        return;
         }
+    }
 
     // FIXME: broken function, bad implementation
     function decreaseCategoryStats($msg_id, $msg_cat) {
@@ -360,7 +349,7 @@ class CKunenaTools {
         $kunena_db = &JFactory::getDBO();
         $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories ORDER BY id ASC");
         $cats = $kunena_db->loadObjectList();
-        	check_dberror("Unable to load categories.");
+        if (KunenaError::checkDatabaseError()) return;
 
         foreach ($cats as $c) {
             $ctg[$c->id] = $c;
@@ -369,7 +358,7 @@ class CKunenaTools {
         $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE id='{$msg_id}' OR thread='{$msg_id}'");
 
         $msg_ids = $kunena_db->loadResultArray();
-        	check_dberror("Unable to load messages.");
+        if (KunenaError::checkDatabaseError()) return;
 
         $cntTopics = 0;
         $cntPosts = 0;
@@ -389,7 +378,7 @@ class CKunenaTools {
         {
             $kunena_db->setQuery("SELECT id, time FROM #__kunena_messages WHERE catid='{$msg_cat}' AND (thread!='{$msg_id}' AND id!='{$msg_id}') ORDER BY time DESC LIMIT 1;");
             $lastMsgInCat = $kunena_db->loadObject();
-            	check_dberror("Unable to load messages.");
+            if (KunenaError::checkDatabaseError()) return;
 
             $ctg[$msg_cat]->numTopics = (int) ($ctg[$msg_cat]->numTopics - $cntTopics);
             $ctg[$msg_cat]->numPosts = (int) ($ctg[$msg_cat]->numPosts - $cntPosts);
@@ -405,7 +394,7 @@ class CKunenaTools {
         {
             $kunena_db->setQuery("UPDATE `#__kunena_categories` SET `time_last_msg`='" . $cc->time_last_msg . "',`id_last_msg`='" . $cc->id_last_msg . "',`numTopics`='" . $cc->numTopics . "',`numPosts`='" . $cc->numPosts . "' WHERE `id`='" . $cc->id . "' ");
             $kunena_db->query();
-            	check_dberror("Unable to update categories.");
+            if (KunenaError::checkDatabaseError()) return;
             }
 
         return;
@@ -431,7 +420,7 @@ class CKunenaTools {
 		if ($readTopics) {
 			$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET readtopics='{$readTopics}' WHERE userid='{$userid}'" );
 			$kunena_db->query ();
-			check_dberror ( "Unable to update session." );
+			KunenaError::checkDatabaseError();
 		}
 	}
 
@@ -474,7 +463,7 @@ class CKunenaTools {
         }
 
 	function topicIcon($topic) {
-		$config = & CKunenaConfig::getInstance ();
+		$config = KunenaFactory::getConfig ();
 		if ($config->topicicons) {
 			global $topic_emoticons;
 			$icon = isset($topic_emoticons [$topic->topic_emoticon]) ? $topic_emoticons [$topic->topic_emoticon] : $topic_emoticons [0];
@@ -628,13 +617,13 @@ class CKunenaTools {
 			$query = "SELECT id FROM `#__components` WHERE `option`='com_kunena';";
 			$kunena_db->setQuery ($query);
 			$componentid = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to get component id." );
+			if (KunenaError::checkDatabaseError()) return;
 
 			// Create new Joomla menu for Kunena
 			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$moduleid = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load kunena menu." );
+			if (KunenaError::checkDatabaseError()) return;
 
 			// Check if it exsits, if not create it
 			if (!$moduleid || $update) {
@@ -643,166 +632,166 @@ class CKunenaTools {
 							($moduleid, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_TITLE') . "', 'This is the default Kunena menu. It is used as the top navigation for Kunena. It can be publish in any module position. Simply unpublish items that are not required.');";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create menu." );
+				if (KunenaError::checkDatabaseError()) return;
 
 				// Now get the menu id again, we need it, in order to publish the menu module
 				$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 				$kunena_db->setQuery ($query);
 				$moduleid = (int)$kunena_db->loadResult ();
-				check_dberror ( "Unable to load kunena menu." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// Forum
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$parentid = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load Category Index." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$parentid || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($parentid, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_FORUM') . "', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 4, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create Category Index." );
+				if (KunenaError::checkDatabaseError()) return;
 				$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena' AND `menutype`='kunenamenu';";
 				$kunena_db->setQuery ($query);
 				$parentid = $kunena_db->loadResult ();
-				check_dberror ( "Unable to load Category Index." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// Category Index
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=listcat' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load Category Index." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_LISTCAT') . "', 'listcat', 'index.php?option=com_kunena&func=listcat', 'component', 1, $parentid, $componentid, 1, 0, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create Category Index." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// Recent Topics
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=latest' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load Recent Topics." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_LATEST') . "', 'latest', 'index.php?option=com_kunena&func=latest', 'component', 1, $parentid, $componentid, 1, 1, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create Recent Topics." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// Welcome
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=showcat&catid=2' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load Welcome." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_WELCOME') . "', 'welcome', 'index.php?option=com_kunena&func=showcat&catid=2', 'component', 1, $parentid, $componentid, 1, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create Welcome." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// New Topic
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=post&do=new' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load New Topic." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_NEWTOPIC') . "', 'newtopic', 'index.php?option=com_kunena&func=post&do=new', 'component', 1, $parentid, $componentid, 1, 3, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create New Topic." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// No Replies
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=noreplies' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load No Replies." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_NOREPLIES') . "', 'noreplies', 'index.php?option=com_kunena&func=noreplies', 'component', 1, $parentid, $componentid, 1, 4, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create No Replies." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// My latest
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=mylatest' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load My latest." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_MYLATEST') . "', 'mylatest', 'index.php?option=com_kunena&func=mylatest', 'component', 1, $parentid, $componentid, 1, 5, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create My latest." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// My Profile
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=profile' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load My Profile." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_PROFILE') . "', 'profile', 'index.php?option=com_kunena&func=profile', 'component', 1, $parentid, $componentid, 1, 6, 0, '0000-00-00 00:00:00', 0, 0, 1, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create My Profile." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// Rules
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=rules' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load Rules." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_RULES') . "', 'rules', 'index.php?option=com_kunena&func=rules', 'component', 1, $parentid, $componentid, 1, 7, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create Rules." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// Help
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=help' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load Help." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_HELP') . "', 'help', 'index.php?option=com_kunena&func=help', 'component', 1, $parentid, $componentid, 1, 8, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create Help." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// Search
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena&func=search' AND `menutype`='kunenamenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load Search." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'kunenamenu', '" . JText::_('COM_KUNENA_MENU_SEARCH') . "', 'search', 'index.php?option=com_kunena&func=search', 'component', 1, $parentid, $componentid, 1, 9, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create Search." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			$query = "SELECT id FROM `#__modules` WHERE `position`='kunena_menu';";
 			$kunena_db->setQuery ($query);
 			$moduleid = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load module id." );
+			if (KunenaError::checkDatabaseError()) return;
 
 			// Check if it exsits, if not create it
 			if (!$moduleid || $update) {
@@ -811,32 +800,32 @@ class CKunenaTools {
 					($moduleid, '" . JText::_('COM_KUNENA_MENU_TITLE') . "', '', 0, 'kunena_menu', 0, '0000-00-00 00:00:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=kunenamenu\nmenu_style=list\nstartLevel=1\nendLevel=2\nshowAllChildren=1\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 0, 0, '');";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create menu." );
+				if (KunenaError::checkDatabaseError()) return;
 
 				// Now get the module id again, we need it, in order to publish the menu module
 				$query = "SELECT id FROM `#__modules` WHERE `position`='kunena_menu';";
 				$kunena_db->setQuery ($query);
 				$moduleid = (int)$kunena_db->loadResult ();
-				check_dberror ( "Unable to load menu." );
+				if (KunenaError::checkDatabaseError()) return;
 
 				// Now publish the module
 				$query = "REPLACE INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to publish menu." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 
 			// Finally add Kunena to mainmenu if it does not exist somewhere
 			$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena' AND `menutype`='mainmenu';";
 			$kunena_db->setQuery ($query);
 			$id = (int)$kunena_db->loadResult ();
-			check_dberror ( "Unable to load main menu." );
+			if (KunenaError::checkDatabaseError()) return;
 			if (!$id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($id, 'mainmenu', '" . JText::_('COM_KUNENA_MENU_FORUM') . "', 'forum', 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 2, 0, '0000-00-00 00:00:00', 0, 0, 0, 0, 'page_title=\nshow_page_title=1\npageclass_sfx=\nmenu_image=-1\nsecure=0\n\n', 0, 0, 0);";
 				$kunena_db->setQuery ($query);
 				$kunena_db->query ();
-				check_dberror ( "Unable to create item into main menu." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 			require_once(JPATH_ADMINISTRATOR.'/components/com_menus/helpers/helper.php');
 			MenusHelper::cleanCache();
@@ -847,20 +836,20 @@ class CKunenaTools {
 			$query = "SELECT id,menutype FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 			$db->setQuery ($query);
 			$menudetails = $db->loadObject ();
-			check_dberror ( "Unable to load kunena menu." );
+			if (KunenaError::checkDatabaseError()) return;
 
 			if ($menudetails) {
 				// Delete kunena menu type
 				$query = "DELETE FROM `#__menu_types` WHERE `id`='".$menudetails->id."';";
 				$db->setQuery ($query);
 				$db->Query();
-				check_dberror ( "Unable to delete kunena menu." );
+				if (KunenaError::checkDatabaseError()) return;
 
 				// Delete kunena menu (index, profile...)
 				$query = "DELETE FROM `#__menu` WHERE `menutype`='".$menudetails->menutype."';";
 				$db->setQuery ($query);
 				$db->Query();
-				check_dberror ( "Unable to delete kunena menu." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 		}
 
@@ -869,7 +858,7 @@ class CKunenaTools {
 			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 			$db->setQuery ($query);
 			$menuid = $db->loadResult ();
-			check_dberror ( "Unable to load kunena menu." );
+			if (KunenaError::checkDatabaseError()) return;
 
 			require_once(JPATH_ADMINISTRATOR.'/components/com_menus/helpers/helper.php');
 			require_once(JPATH_ADMINISTRATOR.'/components/com_menus/models/menutype.php');
@@ -916,7 +905,7 @@ class CKunenaTools {
 		 * @param timestamp $messagetime			Actual message time
 		 */
 		function editTimeCheck ($messagemodifiedtime, $messagetime) {
-			$kunena_config = & CKunenaConfig::getInstance ();
+			$kunena_config = KunenaFactory::getConfig ();
 			if (intval($kunena_config->useredit) != 1) return false;
 			if (intval($kunena_config->useredittime) == 0) {
 					return true;
@@ -999,9 +988,10 @@ class CKunenaTools {
 
 				$kunena_db->setQuery ( "UPDATE #__kunena_users SET avatar=null WHERE userid=$thisuserid" );
 				$kunena_db->Query ();
-				check_dberror ( "Unable to remove user avatar." );
+				if (KunenaError::checkDatabaseError()) return;
 
 				// Delete avatar from file system
+				// FIXME: do not delete other avatars than uploaded!!!
 				if ( JFile::exists(KUNENA_PATH_AVATAR_UPLOADED.DS.$userprofile->avatar) ) {
 					JFile::delete(KUNENA_PATH_AVATAR_UPLOADED.DS.$userprofile->avatar);
 				}
@@ -1012,7 +1002,7 @@ class CKunenaTools {
 			if ( !empty($DelSignature) ) {
 				$kunena_db->setQuery ( "UPDATE #__kunena_users SET signature=null WHERE userid=$thisuserid" );
 				$kunena_db->Query ();
-				check_dberror ( "Unable to remove user singature." );
+				if (KunenaError::checkDatabaseError()) return;
 
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
@@ -1020,7 +1010,7 @@ class CKunenaTools {
 			if ( !empty($DelProfileInfo) ) {
 				$kunena_db->setQuery ( "UPDATE #__kunena_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid=$thisuserid" );
 				$kunena_db->Query ();
-				check_dberror ( "Unable to remove user profile information." );
+				if (KunenaError::checkDatabaseError()) return;
 
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
@@ -1034,7 +1024,7 @@ class CKunenaTools {
 					//select only the messages which aren't already in the trash
 					$kunena_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE hold!=2 AND userid=$thisuserid" );
 					$idusermessages = $kunena_db->loadObjectList ();
-					check_dberror ( "Unable to load message id from fb_messages." );
+					if (KunenaError::checkDatabaseError()) return;
 
 					$kunena_mod->deleteMessage($thisuserid, $DeleteAttachments = false);
 				}
@@ -1101,7 +1091,7 @@ class fbForum
 			$query = "SELECT id, parent FROM #__kunena_categories";
 			$this->_db->setQuery($query);
 			$list = $this->_db->loadObjectList('id');
-			check_dberror("Unable to access categories.");
+			if (KunenaError::checkDatabaseError()) return;
 			$recurse = array();
 			while ($id) {
 				if (in_array($id, $recurse)) {
@@ -1129,7 +1119,8 @@ class fbForum
 			// we must reset fbSession (allowed), when forum record was changed
 
 			$this->_db->setQuery("UPDATE #__kunena_sessions SET allowed='na'");
-			$this->_db->query() or check_dberror("Unable to update sessions.");
+			$this->_db->query();
+			KunenaError::checkDatabaseError();
 		}
 		return $ret;
 	}
@@ -1153,7 +1144,7 @@ function JJ_categoryArray($admin=0) {
     $query .= " ORDER BY ordering, name";
     $kunena_db->setQuery($query);
     $items = $kunena_db->loadObjectList();
-    	check_dberror("Unable to load categories.");
+    KunenaError::checkDatabaseError();
     // establish the hierarchy of the menu
     $children = array ();
 
@@ -1212,7 +1203,7 @@ function generate_smilies() {
 
     $kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id");
         $set = $kunena_db->loadAssocList();
-        check_dberror("Unable to fetch smilies.");
+        KunenaError::checkDatabaseError();
 
         $num_smilies = 0;
         $num_iconbar = 0;

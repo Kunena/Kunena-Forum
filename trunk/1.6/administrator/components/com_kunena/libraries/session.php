@@ -173,7 +173,7 @@ class KunenaSession extends JObject
 
 	function isNewSession()
 	{
-		$kunena_config =& CKunenaConfig::getInstance();
+		$kunena_config = KunenaFactory::getConfig ();
 
 		// perform session timeout check
 		$this->_sessiontimeout = ($this->currvisit + $kunena_config->fbsessiontimeout < CKunenaTimeformat::internalTime());

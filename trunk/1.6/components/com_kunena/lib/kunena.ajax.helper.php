@@ -149,7 +149,6 @@ class CKunenaAjaxHelper {
 
 				$this->_db->setQuery ( $query );
 				$result = $this->_db->loadResultArray ();
-				check_dberror ( "Unable to lookup categories by name." );
 
 				break;
 			case 'gettopic' :
@@ -162,11 +161,10 @@ class CKunenaAjaxHelper {
 
 				$this->_db->setQuery ( $query );
 				$result = $this->_db->loadResultArray ();
-				check_dberror ( "Unable to lookup topics by subject." );
 
 				break;
 			case 'getuser' :
-				$kunena_config = &CKunenaConfig::getInstance ();
+				$kunena_config = KunenaFactory::getConfig ();
 
 				// User the configured display name
 				$queryname = $kunena_config->username ? 'username' : 'name';
@@ -176,7 +174,6 @@ class CKunenaAjaxHelper {
 
 				$this->_db->setQuery ( $query );
 				$result = $this->_db->loadResultArray ();
-				check_dberror ( "Unable to lookup users by $queryname." );
 
 				break;
 			default :
@@ -186,16 +183,18 @@ class CKunenaAjaxHelper {
 					'error' => JText::_('COM_KUNENA_AJAX_INVALID_OPERATION')
 				);
 
-
 		}
 
+		if ($this->_db->getErrorNum ()) {
+			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
+		}
 		return $result;
 	}
 
 	protected function _getPreview($data) {
 		$result = array ();
 
-		$config = & CKunenaConfig::getInstance ();
+		$config = KunenaFactory::getConfig ();
 
 		require_once(JPATH_ROOT  .DS . '/libraries/joomla/document/html/html.php');
 
@@ -213,9 +212,12 @@ class CKunenaAjaxHelper {
 							WHERE allow_polls=1;";
 		$this->_db->setQuery ( $query );
 		$allow_polls = $this->_db->loadResultArray ();
-		check_dberror ( "Unable to lookup categories by name." );
-		$result['status'] = '1';
-		$result['allowed_polls'] = $allow_polls;
+		if ($this->_db->getErrorNum ()) {
+			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
+		} else {
+			$result['status'] = '1';
+			$result['allowed_polls'] = $allow_polls;
+		}
 
 		return $result;
 	}
@@ -248,9 +250,12 @@ class CKunenaAjaxHelper {
 							WHERE allow_anonymous=1;";
 		$this->_db->setQuery ( $query );
 		$allow_anonymous = $this->_db->loadResultArray ();
-		check_dberror ( "Unable to lookup categories by where allow anonymous is true." );
-		$result['status'] = '1';
-		$result['allowed_anonymous'] = $allow_anonymous;
+		if ($this->_db->getErrorNum ()) {
+			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
+		} else {
+			$result['status'] = '1';
+			$result['allowed_anonymous'] = $allow_anonymous;
+		}
 
 		return $result;
 	}
@@ -278,7 +283,10 @@ class CKunenaAjaxHelper {
 
 		$this->_db->setQuery ( $query );
 		$attachment = $this->_db->loadObject ();
-		check_dberror ( "Unable to load attachment." );
+		if ($this->_db->getErrorNum ()) {
+			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
+			return $result;
+		}
 
 		// Verify permissions, user must be author of the message this
 		// attachment is attached to or be a moderator or admin of the site
@@ -311,13 +319,14 @@ class CKunenaAjaxHelper {
 
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
-		check_dberror ( "Unable to delete attachment." );
-
-		$result = array(
-			'status' => '1',
-			'error' => JText::_('COM_KUNENA_AJAX_ATTACHMENT_DELETED')
-		);
-
+		if ($this->_db->getErrorNum ()) {
+			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
+		} else {
+			$result = array(
+				'status' => '1',
+				'error' => JText::_('COM_KUNENA_AJAX_ATTACHMENT_DELETED')
+			);
+		}
 
 		return $result;
 	}
@@ -334,9 +343,12 @@ class CKunenaAjaxHelper {
 							ORDER BY id DESC";
 			$this->_db->setQuery ( $query, 0, 15 );
 			$topics_list = $this->_db->loadObjectlist ();
-			check_dberror ( "Unable to get topics list name." );
-			$result['status'] = '1';
-			$result['topiclist'] = $topics_list;
+			if ($this->_db->getErrorNum ()) {
+				$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
+			} else {
+				$result['status'] = '1';
+				$result['topiclist'] = $topics_list;
+			}
 
 		} else {
 			$result['status'] = '0';

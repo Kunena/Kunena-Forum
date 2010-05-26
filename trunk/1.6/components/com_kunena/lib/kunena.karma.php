@@ -22,7 +22,7 @@
 defined( '_JEXEC' ) or die();
 
 
-$kunena_config =& CKunenaConfig::getInstance();
+$kunena_config = KunenaFactory::getConfig ();
 $kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
 
@@ -33,7 +33,7 @@ $pid = JRequest::getInt ( 'pid', 0 );
 if ($pid) {
 	$kunena_db->setQuery("SELECT catid, thread FROM #__kunena_messages WHERE id='{$pid}'");
 	$kmsg = $kunena_db->loadObject();
-	check_dberror("Unable to load message.");
+	if (KunenaError::checkDatabaseError()) return;
 	if (is_object($kmsg)) {
 		$catid = $kmsg->catid;
 		$thread = $kmsg->thread;
@@ -75,10 +75,10 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             {
                                 $kunena_db->setQuery('UPDATE #__kunena_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
 							    $kunena_db->query();
-							    check_dberror("Unable to update karma.");
+							    if (KunenaError::checkDatabaseError()) return;
 							    $kunena_db->setQuery('UPDATE #__kunena_users SET karma=karma+1 WHERE userid=' . $userid . '');
 							    $kunena_db->query();
-							    check_dberror("Unable to update karma.");
+							    if (KunenaError::checkDatabaseError()) return;
 							    echo JText::_('COM_KUNENA_KARMA_INCREASED') . '<br />';
                            	 	if ($pid) {
 								    $kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_INCREASED'));
@@ -92,10 +92,10 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             {
                                 $kunena_db->setQuery('UPDATE #__kunena_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
                                 $kunena_db->query();
-                                check_dberror("Unable to update karma.");
+                                if (KunenaError::checkDatabaseError()) return;
                                 $kunena_db->setQuery('UPDATE #__kunena_users SET karma=karma-1 WHERE userid=' . $userid . '');
                                 $kunena_db->query();
-                                check_dberror("Unable to update karma.");
+                                if (KunenaError::checkDatabaseError()) return;
                                 echo JText::_('COM_KUNENA_KARMA_DECREASED') . '<br />';
                             	if ($pid) {
 									$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_DECREASED'));
@@ -126,7 +126,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         {
                             $kunena_db->setQuery('UPDATE #__kunena_users SET karma=karma-10, karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
                             $kunena_db->query();
-                            check_dberror("Unable to update karma.");
+                            if (KunenaError::checkDatabaseError()) return;
                         	if ($pid) {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_INCREASE'));
                         		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
@@ -140,7 +140,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         {
                             $kunena_db->setQuery('UPDATE #__kunena_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
                             $kunena_db->query();
-                            check_dberror("Unable to update karma.");
+                            if (KunenaError::checkDatabaseError()) return;
                         	if ($pid) {
                             	$kunena_app->enqueueMessage(JText::_('COM_KUNENA_KARMA_SELF_DECREASE'));
                         		$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );

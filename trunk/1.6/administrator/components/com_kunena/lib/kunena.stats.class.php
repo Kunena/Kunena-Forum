@@ -78,7 +78,7 @@ class jbStats {
 		$kunena_db->setQuery('SELECT * FROM #__kunena_messages WHERE parent = 0 ' .
 				'AND hits > 0  ORDER BY hits DESC LIMIT 5');
 		$results=$kunena_db->loadObjectList();
-		        check_dberror("Unable to load messages.");
+		KunenaError::checkDatabaseError();
 
 		return count($results) > 0 ? $results : array();
 	}
@@ -101,7 +101,7 @@ class jbStats {
 		$kunena_db->setQuery('SELECT catid,COUNT(id) as totalmsg FROM #__kunena_messages' .
 				' GROUP BY c.id ORDER BY catid LIMIT 5');
 		$results=$kunena_db->loadObjectList();
-		        check_dberror("Unable to load messages.");
+		KunenaError::checkDatabaseError();
 
 		if (count($results)>0) {
 				$ids=implode(',',$results);

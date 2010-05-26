@@ -11,7 +11,7 @@
 
 defined( '_JEXEC' ) or die();
 
-$kunena_config = & CKunenaConfig::getInstance ();
+$kunena_config = KunenaFactory::getConfig ();
 require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll =& CKunenaPolls::getInstance();
 $document =& JFactory::getDocument();

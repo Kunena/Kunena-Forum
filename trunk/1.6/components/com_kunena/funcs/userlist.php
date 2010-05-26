@@ -22,7 +22,7 @@ class CKunenaUserlist {
 
 	function __construct() {
 		$this->app = JFactory::getApplication ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		$this->db = JFactory::getDBO ();
 
 		$this->search = JRequest::getVar ( 'search', '' );
@@ -39,7 +39,7 @@ class CKunenaUserlist {
 		// Total
 		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0" );
 		$this->total = $this->db->loadResult ();
-		check_dberror ( "Unable to load user count." );
+		KunenaError::checkDatabaseError();
 
 		// Search total
 		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid";
@@ -49,7 +49,7 @@ class CKunenaUserlist {
 
 		$this->db->setQuery ( $query );
 		$total = $this->db->loadResult ();
-		check_dberror ( "Unable to load search user count." );
+		KunenaError::checkDatabaseError();
 		if ($this->limit > $total) {
 			$this->limitstart = 0;
 		}
@@ -68,7 +68,7 @@ class CKunenaUserlist {
 
 		$this->db->setQuery ( $query );
 		$this->users = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load search result." );
+		KunenaError::checkDatabaseError();
 
 		// table ordering
 		$this->order_dir = $filter_order_dir;

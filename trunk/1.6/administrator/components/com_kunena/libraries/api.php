@@ -76,7 +76,7 @@ class Kunena implements iKunena {
 
 	public static function getConfig() {
 		require_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.config.class.php");
-		return CKunenaConfig::getInstance();
+		return KunenaFactory::getConfig ();
 	}
 
 	public static function getUserAPI() {
@@ -105,6 +105,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 	protected $_session = null;
 
 	public function __construct() {
+		kimport('error');
 		$this->_db = JFactory::getDBO ();
 		$this->_my = JFactory::getUser ();
 		$this->_session = KunenaFactory::getSession( true );
@@ -207,8 +208,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 			WHERE m.id IN ($threads) AND m.parent=0 AND m.catid IN ($allowed) AND m.hold=0 AND m.moved=0 AND s.thread IS NULL";
 		$this->_db->setQuery ($query);
 		$threads = $this->_db->loadResultArray();
-		check_dberror("Unable to load threads to be subscribed.");
-		if (empty($threads)) return;
+		if (KunenaError::checkDatabaseError() || empty($threads)) return;
 
 		foreach ($threads as $thread) {
 			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
@@ -216,7 +216,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$query = "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES " . implode(',', $subquery);
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
-		check_dberror('Unable to subscribe '.implode(',', $threads).'.');
+		if (KunenaError::checkDatabaseError()) return;
 		return $this->_db->getAffectedRows ();
 	}
 	public function unsubscribeThreads($userid, $threads = false) {
@@ -233,7 +233,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$query = "DELETE FROM #__kunena_subscriptions WHERE userid=".(int)$userid . $where;
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
-		check_dberror("Unable to unsubscribe $threads.");
+		if (KunenaError::checkDatabaseError()) return;
 		return $this->_db->getAffectedRows ();
 	}
 	public function subscribeCategories($userid, $catids) {
@@ -252,8 +252,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$this->_db->setQuery ($query);
 		echo $query;
 		$catids = $this->_db->loadResultArray();
-		check_dberror("Unable to load threads to be subscribed.");
-		if (empty($catids)) return;
+		if (KunenaError::checkDatabaseError() || empty($catids)) return;
 
 		foreach ($catids as $thread) {
 			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
@@ -261,8 +260,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$query = "INSERT INTO #__kunena_subscriptions_categories (catid,userid) VALUES " . implode(',', $subquery);
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
-		echo $query;
-		check_dberror('Unable to subscribe '.implode(',', $catids).'.');
+		if (KunenaError::checkDatabaseError()) return;
 		return $this->_db->getAffectedRows ();
 	}
 	public function unsubscribeCategories($userid, $catids = false) {
@@ -279,9 +277,8 @@ class KunenaUserAPI implements iKunenaUserAPI {
 
 		$query = "DELETE FROM #__kunena_subscriptions_categories WHERE userid=".(int)$userid . $where;
 		$this->_db->setQuery ($query);
-		echo $query;
 		$this->_db->query ();
-		check_dberror("Unable to unsubscribe $catids.");
+		if (KunenaError::checkDatabaseError()) return;
 		return $this->_db->getAffectedRows ();
 	}
 	public function favoriteThreads($userid, $threads) {
@@ -298,8 +295,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 			WHERE m.id IN ($threads) AND m.parent=0 AND m.catid IN ($allowed) AND m.hold=0 AND m.moved=0 AND f.thread IS NULL";
 		$this->_db->setQuery ($query);
 		$threads = $this->_db->loadResultArray();
-		check_dberror("Unable to load threads to be favorited.");
-		if (empty($threads)) return;
+		if (KunenaError::checkDatabaseError() || empty($threads)) return;
 
 		foreach ($threads as $thread) {
 			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
@@ -307,7 +303,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$query = "INSERT INTO #__kunena_favorites (thread,userid) VALUES " . implode(',', $subquery);
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
-		check_dberror('Unable to favorite '.implode(',', $threads).'.');
+		if (KunenaError::checkDatabaseError()) return;
 		return $this->_db->getAffectedRows ();
 
 	}
@@ -325,7 +321,7 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$query = "DELETE FROM #__kunena_favorites WHERE userid=".(int)$userid . $where;
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
-		check_dberror("Unable to unfavorite $threads.");
+		if (KunenaError::checkDatabaseError()) return;
 		return $this->_db->getAffectedRows ();
 	}
 
@@ -349,7 +345,7 @@ class KunenaStatsAPI {
 	public function __construct() {
 		$this->_db = JFactory::getDBO ();
 		$this->_session = KunenaFactory::getSession( true );
-		$this->_config = CKunenaConfig::getInstance();
+		$this->_config = KunenaFactory::getConfig ();
 		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 		$this->_stats = new CKunenaStats ( );
 	}

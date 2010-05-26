@@ -10,8 +10,8 @@
  *
  **/
 
-require_once (JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php');
-require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
+require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
+kimport('error');
 
 class KunenaRouter {
 	static $catidcache = null;
@@ -33,7 +33,7 @@ class KunenaRouter {
 		$query = 'SELECT id, name, parent FROM #__kunena_categories WHERE published=1';
 		$db->setQuery ( $query );
 		self::$catidcache = $db->loadAssocList ( 'id' );
-		check_dberror ( "Unable to load categories." );
+		if (KunenaError::checkDatabaseError()) return;
 	}
 
 	/**
@@ -58,7 +58,7 @@ class KunenaRouter {
 	}
 
 	function stringURLSafe($str) {
-		$kconfig = & CKunenaConfig::getInstance ();
+		$kconfig =  KunenaFactory::getConfig ();
 		if ($kconfig->sefutf8) {
 			$str = self::filterOutput ( $str );
 			return urlencode ( $str );
@@ -86,7 +86,7 @@ class KunenaRouter {
 		$parsevars = array ('task', 'id', 'userid', 'page', 'sel' );
 		$segments = array ();
 
-		$kconfig = CKunenaConfig::getInstance ();
+		$kconfig = KunenaFactory::getConfig ();
 		if (! $kconfig->sef)
 			return $segments;
 
@@ -145,7 +145,7 @@ class KunenaRouter {
 				$quesql = 'SELECT subject, id FROM #__kunena_messages WHERE id=' . ( int ) $id;
 				$db->setQuery ( $quesql );
 				self::$msgidcache [$id] = $db->loadResult ();
-				check_dberror ( "Unable to load subject." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 			$suf = self::stringURLSafe ( self::$msgidcache [$id] );
 			if (empty ( $suf ))
@@ -184,7 +184,7 @@ class KunenaRouter {
 		$funcpos = $dopos = 0;
 		$vars = array ();
 
-		$kconfig =  CKunenaConfig::getInstance ();
+		$kconfig =  KunenaFactory::getConfig ();
 
 		// Get current menu item
 		$menu = JSite::getMenu ();
@@ -262,7 +262,7 @@ class KunenaRouter {
 				$quesql = 'SELECT parent FROM #__kunena_categories WHERE id=' . ( int ) $vars ['catid'];
 				$db->setQuery ( $quesql );
 				$parent = $db->loadResult ();
-				check_dberror ( "Unable to load category parent." );
+				if (KunenaError::checkDatabaseError()) return;
 			}
 			if (! $parent)
 				$vars ['func'] = 'listcat';

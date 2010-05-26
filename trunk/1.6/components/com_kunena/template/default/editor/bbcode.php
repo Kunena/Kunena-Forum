@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 // Kunena bbcode editor
 require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll =& CKunenaPolls::getInstance();
-$kunena_config = & CKunenaConfig::getInstance ();
+$kunena_config = KunenaFactory::getConfig ();
 ?>
 <tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
 	<?php //if ($kunena_config->enablehelppage) {
@@ -264,7 +264,7 @@ $kunena_config = & CKunenaConfig::getInstance ();
 			$kunena_db = &JFactory::getDBO ();
 			$kunena_db->setQuery ( "SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id" );
 			$set = $kunena_db->loadAssocList ();
-			check_dberror ( "Unable to fetch smileys." );
+			KunenaError::checkDatabaseError();
 			$this->kunena_emoticons_rowset = array ();
 			foreach ( $set as $smilies ) {
 				$key_exists = false;

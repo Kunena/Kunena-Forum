@@ -48,7 +48,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 				." LEFT JOIN #__kunena_categories AS c ON m.catid=c.id"
 				." WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
 			$list = $db->loadObjectList();
-			if (CKunenaTools::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
 			foreach ($list as $item) self::$moderators[$item->uid][] = $item->catid;
 		}
 	}
@@ -108,7 +108,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 				WHERE published='1'";
 		$db->setQuery ( $query );
 		$rows = $db->loadObjectList ();
-		if (CKunenaTools::checkDatabaseError()) return array();
+		if (KunenaError::checkDatabaseError()) return array();
 
 		$groups_r = JAccess::getGroupsByUser($userid, true);
 		$groups = JAccess::getGroupsByUser($userid, false);
@@ -139,7 +139,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__kunena_categories WHERE id={$catid}";
 		$db->setQuery ($query);
 		$access = $db->loadObject ();
-		if (CKunenaTools::checkDatabaseError() || !$access) return array();
+		if (KunenaError::checkDatabaseError() || !$access) return array();
 
 		if ($admins) {
 			self::loadAdmins();
@@ -209,7 +209,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ({$excludeList}) {$where} GROUP BY u.id";
 			$db->setQuery ( $query );
 			$subsList = $db->loadObjectList ();
-			if (CKunenaTools::checkDatabaseError()) return array();
+			if (KunenaError::checkDatabaseError()) return array();
 		}
 		return $subsList;
 	}

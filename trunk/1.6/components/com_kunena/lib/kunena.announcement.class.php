@@ -25,7 +25,7 @@ class CKunenaAnnouncement {
 	function __construct() {
 		$this->my = JFactory::getUser ();
 		$this->db = JFactory::getDBO ();
-		$this->config = CKunenaConfig::getInstance ();
+		$this->config = KunenaFactory::getConfig ();
 		$this->app = JFactory::getApplication ();
 
 		$annmods = @explode ( ',', $this->config->annmodid );
@@ -84,7 +84,7 @@ class CKunenaAnnouncement {
 		if ($this->db->query ()) {
 			$this->app->redirect ( CKunenaLink::GetAnnouncementURL ( 'show', null, false ), $msg );
 		}
-		check_dberror ( "Unable to update announcement." );
+		if (KunenaError::checkDatabaseError()) return;
 	}
 
 	function delete($id) {
@@ -94,7 +94,7 @@ class CKunenaAnnouncement {
 		$query = "DELETE FROM #__kunena_announcement WHERE id=$id ";
 		$this->db->setQuery ( $query );
 		$this->db->query ();
-		check_dberror ( "Unable to delete announcement." );
+		if (KunenaError::checkDatabaseError()) return;
 
 		$this->app->redirect ( CKunenaLink::GetAnnouncementURL ( 'show', null, false ), JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
 	}
@@ -107,7 +107,7 @@ class CKunenaAnnouncement {
 		}
 		$this->db->setQuery ( $query, 0, 1 );
 		$announcement = $this->db->loadObject ();
-		check_dberror ( "Unable to load announcements." );
+		if (KunenaError::checkDatabaseError()) return;
 		if (! $announcement) {
 			return;
 		}
@@ -126,7 +126,7 @@ class CKunenaAnnouncement {
 		$query = "SELECT * FROM #__kunena_announcement ORDER BY created DESC";
 		$this->db->setQuery ( $query, $start, $limit );
 		$this->announcements = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load announcements." );
+		if (KunenaError::checkDatabaseError()) return;
 		if (empty ( $this->announcement )) {
 			return;
 		}

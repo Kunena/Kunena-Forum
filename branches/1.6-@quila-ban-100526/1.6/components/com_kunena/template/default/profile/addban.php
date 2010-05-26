@@ -24,15 +24,15 @@ JHTML::_('behavior.calendar');
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : ''; ?> kblock">
 	<tbody>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><?php //echo $this->id; ?><b>Username</b></td>
+		<td class="kcol-addban-left"><?php //echo $this->id; ?><b><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></b></td>
 		<td class="kcol-addban-right" width="600"><?php echo $this->profile->username; ?> </td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('User ID'); ?></b></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_USERID'); ?></b></td>
 		<td class="kcol-addban-right"> <?php echo $this->profile->userid; ?> </td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('Latest user IP'); ?></b><br /><span class="ks">Please select IP if you want to block</span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_LATESTIP'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_LATESTIP_DESC'); ?></span></td>
 		<td class="kcol-addban-right">
 				<?php
 				$ipselect = array();
@@ -46,17 +46,17 @@ JHTML::_('behavior.calendar');
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left" ><b><?php echo JText::_('Ban Level'); ?></b><br /><span class="blueban ks">Blue ban = Ban in Kunena (read-only mode).</span><br /><span class="redban ks">Red ban = Block in Joomla (even block login).</span></td>
+		<td class="kcol-addban-left" ><b><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></b><br /><span class="blueban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE_DESC'); ?></span><br /><span class="redban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_RED_DESC'); ?></span></td>
 		<td class="kcol-addban-right"><?php
 					// make the select list for the view type
-					$gender[] = JHTML::_('select.option', 0, JText::_('Blue ban '));
-					$gender[] = JHTML::_('select.option', 1, JText::_('Red ban '));
+					$gender[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE '));
+					$gender[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_RED '));
 					// build the html select list
 					echo JHTML::_('select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text', $this->profile->gender);
 					?></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('Start Time'); ?></b><br /><span class="ks">YYYY-MM-DD - HH:MM:SS</span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME_DESC'); ?></span></td>
 		<td class="kcol-addban-right">
 			<input class="inputbox" type="text" maxlength="15" name="Start_Time" id="Start_Time" value="" />
 				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('Start_Time','%Y-%m-%d');$('Start_Time').removeProperty('style');"
@@ -64,7 +64,7 @@ JHTML::_('behavior.calendar');
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('Expire Time'); ?></b><br /><span class="ks">YYYY-MM-DD - HH:MM:SS</span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME_DESC'); ?></span></td>
 		<td class="kcol-addban-right">
 			<input class="inputbox" type="text" maxlength="15" name="Expire_Time" id="Expire_Time" value="" />
 				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('Expire_Time','%Y-%m-%d');$('Expire_Time').removeProperty('style');"
@@ -72,27 +72,27 @@ JHTML::_('behavior.calendar');
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('Public Reason'); ?></b><br /><span class="ks">Viewable Public reason of ban</span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON_DESC'); ?></span></td>
 		<td class="kcol-addban-right">
 			<textarea class=" required" name="public_reason" id="public_reason" ><?php //echo ; ?></textarea>
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('Private Reason'); ?></b><br /><span class="ks">Admin viewable Private reason of ban</span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON_DESC'); ?></span></td>
 		<td class="kcol-addban-right">
 			<textarea class="required" name="private_reason" id="private_reason"><?php //echo ; ?></textarea>
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('On Profile ?'); ?></b><br /><span class="ks">Show banlevel info or image on user profile page?</span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE_DESC'); ?></span></td>
 		<td class="kcol-addban-right"><input id="konprofile_keep" type="checkbox" name="onprofile" value="keep" /></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('On Message ?'); ?></b><br /><span class="ks">Show banlevel info or image on user message?</span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE_DESC'); ?></span></td>
 		<td class="kcol-addban-right"><input id="konmessage_keep" type="checkbox" name="onmessage" value="keep" /></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('Follow IPs'); ?></b><br /><span class="ks">Find other users that might use the same IP</span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS_DESC'); ?></span></td>
 		<td class="kcol-addban-right">
 			<ul>
 				<?php

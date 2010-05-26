@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA
 
 26-May-2010 @quila
 + [#19244] Moderation feature: add Ban Manager, Ban History and Add Ban tabs in profile page
++ [#19244] Moderation feature: add some icons and small fix
 
 25-May-2010 Matias
 # [#19288] Fix a few bugs in installer that cause clean installation to fail in some environments

@@ -256,7 +256,7 @@ class CKunenaProfile {
 	
 	function displayUsersBanned()
 	{
-		$this->app = JFactory::getApplication ();
+		/*$this->app = JFactory::getApplication ();
 		$this->config = CKunenaConfig::getInstance ();
 		$this->db = JFactory::getDBO ();
 		$this->search = JRequest::getVar ( 'search', '' );
@@ -300,7 +300,7 @@ class CKunenaProfile {
 		}
 		$query .= $orderby;
 		$query .= " LIMIT $this->limitstart, $this->limit";
-		$this->pageNav = new JPagination ( $total, $this->limitstart, $this->limit );
+		$this->pageNav = new JPagination ( $total, $this->limitstart, $this->limit );*/
 
 		CKunenaTools::loadTemplate('/profile/banned.php');
 	}

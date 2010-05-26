@@ -230,7 +230,7 @@ $this->k=0;
 		</tr>
 
 		<?php if ($this->hasThreadHistory ()) : ?>
-		<tr>
+		<tr class="ksectiontableentry2">
 			<td colspan="2">
 				<?php $this->displayThreadHistory (); ?>
 			</td>

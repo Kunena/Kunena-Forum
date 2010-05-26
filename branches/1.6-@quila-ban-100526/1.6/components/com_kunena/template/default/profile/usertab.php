@@ -70,17 +70,35 @@ JHTML::_('behavior.calendar');
 		<dd style="display: none;">
 			<?php $this->displaySubscriptions(); ?>
 		</dd>
-		<?php endif; ?>
-		<?php if ($this->config->allowfavorites) : ?>
+		<?php endif; if ($this->config->allowfavorites) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayFavorites(); ?>
 		</dd>
-		<?php endif; ?>
+		<?php endif;?>
+		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id == $this->user->id || CKunenaTools::isModerator($this->my->id)): ?>
+		<dt class="closed"><?php echo JText::_('Ban Manager'); ?></dt>
+		<dd style="display: none;">
+			<?php $this->displayUsersBanned(); ?>
+		</dd>
+		<?php endif;  if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id):?>
+		<dt class="closed"><?php echo JText::_('Ban History'); ?></dt>
+		<dd style="display: none;">
+			<?php $this->displayUserBanHistory(); ?>
+		</dd>
+		<?php endif; if ((CKunenaTools::isModerator($this->my->id) &&
+						($this->my->id != $this->user->id)) &&
+						(!CKunenaTools::isModerator($this->user->id)) ||
+						(CKunenaTools::isAdmin($this->my->id)) &&
+						(!CKunenaTools::isAdmin($this->user->id))) : ?>
+		<dt class="closed"><?php echo JText::_('Add Ban'); ?></dt>
+		<dd style="display: none;">
+			<?php $this->displayAddBan(); ?>
+		</dd>
 
 		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id): ?>
 		<!-- Only visible to moderators and admins -->
-		<dt class="kprofile-modbtn"><?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?></dt>
+		<!--<dt class="kprofile-modbtn"><?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?></dt>
 		<dd class="kprofile-modtools">
 			<?php
 			$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
@@ -137,12 +155,12 @@ JHTML::_('behavior.calendar');
 				<li>
 				<span><?php echo JText::_('COM_KUNENA_BAN_MESSAGE'); ?></span>
 				<input type="text" name="banmessage" /></li>
-				</ul></label>
+				</ul></label>-->
 				<!--<label for="ban-email"><input type="checkbox" id="ban-email" name="banemail" value="banemail" class="kcheckbox" />
 				<span onclick="document.kformban.banemail.checked=(! document.kformban.banemail.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANEMAIL'); ?></span></label>
 				<label for="ban-username"><input type="checkbox" id="ban-username" name="banusername" value="banusername" class="kcheckbox" />
 				<span onclick="document.kformban.banusername.checked=(! document.kformban.banusername.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BANUSERNAME'); ?></span></label>-->
-				<label for="ban-delsignature"><input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="kcheckbox" />
+				<!--<label for="ban-delsignature"><input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="kcheckbox" />
 				<span onclick="document.kformban.bandelposts.checked=(! document.kformban.bandelposts.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_SIGNATURE'); ?></span></label>
 				<label for="ban-user"><input type="checkbox" id="ban-user" name="banuser" value="banuser" class="kcheckbox" />
 				<span id="ban-user-text" onclick="document.kformban.banuser.checked=(! document.kformban.banuser.checked);"><?php echo JText::_('COM_KUNENA_MODERATE_BAN_USER'); ?></span></label>
@@ -157,7 +175,7 @@ JHTML::_('behavior.calendar');
 				type="hidden" name="func" value="banactions" /> <input
 				type="hidden" name="thisuserid" value="<?php echo $this->user->id; ?>" />
 			</form>
-	</dd>
+	</dd>-->
 	<?php endif; ?>
 	</dl>
 </div>

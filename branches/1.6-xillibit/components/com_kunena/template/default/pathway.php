@@ -111,7 +111,7 @@ if ($func != "") {
 		$fireonline .= '</div>';
 	}
 
-	$this->document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name ) . ' - ' . $this->config->board_title );
+	$pathway->document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name ) . ' - ' . $this->config->board_title );
 
 	$this->kunena_pathway1 = $firepath . $fireinfo;
 	$this->kunena_pathway2 = $firelast . $fireonline;

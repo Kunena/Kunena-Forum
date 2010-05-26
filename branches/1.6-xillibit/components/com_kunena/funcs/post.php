@@ -829,7 +829,7 @@ class CKunenaPost {
 	}
 
 	protected function isIPBanned() {
-		$sql = "SELECT expiry FROM #__kunena_banned_ips WHERE ip='{$_SERVER['REMOTE_ADDR']}' AND enabled=1";
+		$sql = "SELECT expiry FROM #__kunena_banned_users WHERE ip='{$_SERVER['REMOTE_ADDR']}' AND enabled=1 AND bantype=3";
 		$this->_db->setQuery ( $sql );
 		$isIPbanned = $this->_db->loadObject ();
 		check_dberror ( 'Unable to load datas from this user.' );

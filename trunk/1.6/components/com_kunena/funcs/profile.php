@@ -142,6 +142,14 @@ class CKunenaProfile {
 	}
 
 	function displayEditUser() {
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		// FIXME: not implemented in J1.6
+		if ($jversion->RELEASE == 1.6) {
+			echo 'Not implemented in J1.6!';
+			return;
+		}
+
 		$this->user = JFactory::getUser();
 
 		// check to see if Frontend User Params have been enabled

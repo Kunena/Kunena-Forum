@@ -22,70 +22,31 @@ class CKunenaPath extends JPath
 		static $tmpdir=false;
 		if ($tmpdir) return realpath($tmpdir);
 
-		$temp=tempnam(JPATH_ROOT . DS . 'tmp','');
-		if (file_exists($temp)) {
-			unlink($temp);
-			$tmpdir = dirname($temp);
+		jimport('joomla.filesystem.file');
+		jimport('joomla.user.helper');
+
+		$tmp = md5(JUserHelper::genRandomPassword(16));
+		$ssp = ini_get('session.save_path');
+		$jtp = JPATH_SITE.DS.'tmp';
+
+		// Try to find a writable directory
+		$tmpdir = is_writable('/tmp') ? '/tmp' : false;
+//		$tmpdir = (!$tmpdir && is_writable($ssp)) ? $ssp : false;
+		$tmpdir = (!$tmpdir && is_writable($jtp)) ? $jtp : false;
+
+		if (!$tmpdir) {
+			$temp=tempnam(JPATH_ROOT . DS . 'tmp','');
+			if (file_exists($temp)) {
+				unlink($temp);
+				$tmpdir = dirname($temp);
+			}
 		}
 		return realpath($tmpdir);
 	}
 
-	function _owner($getgroup = false)
-	{
-		static $owner=false;
-		static $group=false;
-
-		if ($getgroup === false && !empty($owner)) return $owner;
-		if ($getgroup === true  && !empty($group)) return $group;
-
-		jimport('joomla.user.helper');
-
-		$tmp = md5(JUserHelper::genRandomPassword(16));
-		$dir = self::tmpdir();
-
-		if ($dir)
-		{
-			$test = $dir.DS.$tmp;
-			// Create the test file
-			JFile::write($test, '');
-			// Test ownership
-			clearstatcache();
-			$owner = fileowner($test);
-			$group = filegroup($test);
-			// Delete the test file
-			JFile::delete($test);
-		}
-		return ($getgroup ? $group : $owner);
-	}
-
-	function owner()
-	{
-		return self::_owner();
-	}
-
-	function group()
-	{
-		return self::_owner(true);
-	}
-
-	function isOwner($path)
-	{
-		$owner = self::owner();
-		return ($owner == fileowner($path));
-	}
-
 	function isWritable($path)
 	{
-		if (is_writable($path)) return true;
-		$owner = self::owner();
-		$group = self::group();
-		$perms = self::getPermissions($path);
-		if ($owner == fileowner($path)) {
-			if ($perms[1] == 'w') return true;
-		}
-		if ($group == filegroup($path)) {
-			if ($perms[4] == 'w') return true;
-		}
+		if (is_writable($path) || self::isOwner($path)) return true;
 		return false;
 	}
 }

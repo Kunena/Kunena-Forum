@@ -450,13 +450,25 @@ function showAdministration($option) {
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$levellimit = $kunena_app->getUserStateFromRequest ( "{$option}.limit", 'levellimit', 10, 'int' );
 
-	$kunena_db->setQuery ( "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
-		FROM #__kunena_categories AS a
-		LEFT JOIN #__users AS u ON u.id = a.checked_out
-		LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
-		LEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access
-		ORDER BY a.ordering, a.name" );
-
+	jimport ( 'joomla.version' );
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE == 1.5) {
+		// Joomla 1.5
+		$kunena_db->setQuery ( "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
+			FROM #__kunena_categories AS a
+			LEFT JOIN #__users AS u ON u.id = a.checked_out
+			LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
+			LEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access
+			ORDER BY a.ordering, a.name" );
+	} else {
+		// Joomla 1.6
+		$kunena_db->setQuery ( "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.title AS groupname, h.title AS admingroup
+			FROM #__kunena_categories AS a
+			LEFT JOIN #__users AS u ON u.id = a.checked_out
+			LEFT JOIN #__usergroups AS g ON g.id = a.pub_access
+			LEFT JOIN #__usergroups AS h ON h.id = a.admin_access
+			ORDER BY a.ordering, a.name" );
+	}
 	$rows = $kunena_db->loadObjectList ('id');
 	KunenaError::checkDatabaseError();
 
@@ -547,13 +559,18 @@ function editForum($uid, $option) {
 	$accessLists = array ();
 	//create custom group levels to include into the public group selectList
 	$pub_groups = array ();
+	$adm_groups = array ();
 	$pub_groups [] = JHTML::_ ( 'select.option', 1, JText::_('COM_KUNENA_NOBODY') );
 	$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_EVERYBODY') );
 	$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_('COM_KUNENA_ALLREGISTERED') );
-	$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, 'Registered', true ) );
-	//create admin groups array for use in selectList:
-	$adm_groups = array ();
-	$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, 'Public Backend', true ) );
+	jimport ( 'joomla.version' );
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE == 1.5) {
+		// FIXME: not implemented in J1.6
+		$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, 'Registered', true ) );
+		// create admin groups array for use in selectList:
+		$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, 'Public Backend', true ) );
+	}
 	// Anonymous posts default
 	$post_anonymous = array ();
 	$post_anonymous [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG') );

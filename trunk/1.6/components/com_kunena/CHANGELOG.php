@@ -36,14 +36,15 @@ Kunena 1.6.0-ALPHA
 
 27-May-2010 Xillibit
 # [#19288] Fix issues when anynomous option is enabled, on new topic the checkbox isn't displayed (Part 2)
+# [#19288] Remove queries in rules and help pages and call function instead
 
 27-May-2010 Matias
 # [#20038] Minimum Joomla version is 1.5.15
 # [#20038] Make forum administration to work in J1.6 (except for ACL)
 # [#20038] Edit Profile: Hide edit user information in J1.6 for now
 # [#20038] Fix J1.6 incompatibilities in CKunenaPath class
-^ [#15886] Merged revisions 2538-2563 from /branches/1.6-xillibit with changes
-^ [#15886] Merged revision 2550 from /branches/1.6-@quila-fix
+^ [#15886] Merged revisions 2538-2565 from /branches/1.6-xillibit with changes
+^ [#15886] Merged revision 2550 from /branches/1.6-@quila-fix-100526
 
 26-May-2010 @quila
 # [#19288] Fix regression - CSS and template fixes.

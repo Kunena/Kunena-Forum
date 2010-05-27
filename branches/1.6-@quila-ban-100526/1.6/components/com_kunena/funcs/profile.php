@@ -254,54 +254,8 @@ class CKunenaProfile {
 		CKunenaTools::loadTemplate('/profile/banhistory.php');
 	}
 
-	function displayUsersBanned()
+	function displayUserBanManager()
 	{
-		/*$this->app = JFactory::getApplication ();
-		$this->config = CKunenaConfig::getInstance ();
-		$this->db = JFactory::getDBO ();
-		$this->search = JRequest::getVar ( 'search', '' );
-		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
-		$this->limit = JRequest::getInt ( 'limit', (int)$this->config->userlist_rows );
-		$this->name = $this->config->username ? "username" : "name";
-
-		$filter_order = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order', 'filter_order', 'registerDate', 'cmd' );
-		$filter_order_dir = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order_dir', 'filter_order_Dir', 'asc', 'word' );
-		$order = JRequest::getVar ( 'order', '' );
-		$orderby = ' ORDER BY ' . $filter_order . ' ' . $filter_order_dir;
-		jimport ( 'joomla.html.pagination' );
-		// Search total
-		$query = "SELECT COUNT(*) FROM #__kunena_banned_users AS bu INNER JOIN #__kunena_users AS ku ON bu.id=ku.userid";
-		if ($this->search != "") {
-			$query .= " WHERE (ku.name LIKE '%{$this->search}%' OR ku.username LIKE '%{$this->search}%')";
-		}
-		$this->db->setQuery ( $query );
-		$total = $this->db->loadResult ();
-		check_dberror ( "Unable to load search user count." );
-		if ($this->limit > $total) {
-			$this->limitstart = 0;
-		}
-		$query = "SELECT bu.id, bu.enabled, bu.userid, bu.bantype, bu.expiry, bu.message, bu.created, bu.created_userid, bu.comment, bu.private_reason, bu.public_reason, bu.modified_by, bu.modified_date, bu.ip, u.name, u.{$this->name} AS username " .
-				" FROM #__kunena_banned_users AS bu " .
-				" INNER JOIN #__kunena_users AS ku " .
-				" ON ku.userid = bu.userid " .
-				" INNER JOIN #__users AS u " .
-				" ON u.id = bu.userid " .
-				" WHERE enabled=1" .
-				" GROUP BY bu.id ";
-		$this->db->setQuery ( $query );
-		$this->ban = $this->db->loadObjectList ();
-		check_dberror ( "Unable to load search result." );
-		$this->searchuri = "";
-		if ($this->search != "") {
-			$query .= " AND (name LIKE '%{$this->search}%' OR username LIKE '%{$this->search}%') AND bu.userid NOT IN (62)";
-			$this->searchuri .= "&search=" . $this->search;
-		} else {
-			$query .= " AND bu.id NOT IN (62)";
-		}
-		$query .= $orderby;
-		$query .= " LIMIT $this->limitstart, $this->limit";
-		$this->pageNav = new JPagination ( $total, $this->limitstart, $this->limit );*/
-
 		CKunenaTools::loadTemplate('/profile/banned.php');
 	}
 
@@ -545,6 +499,57 @@ class CKunenaProfile {
 	function cancel()
 	{
 		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', false) );
+	}
+
+	function displayUsersBanned()
+	{
+		$this->search = JRequest::getVar ( 'search', '' );
+		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
+		$this->limit = JRequest::getInt ( 'limit', (int)$this->config->userlist_rows );
+		$this->name = $this->config->username ? "username" : "name";
+
+		$filter_order = $this->_app->getUserStateFromRequest ( 'kunena.userlist.filter_order', 'filter_order', 'registerDate', 'cmd' );
+		$filter_order_dir = $this->_app->getUserStateFromRequest ( 'kunena.userlist.filter_order_dir', 'filter_order_Dir', 'asc', 'word' );
+		$order = JRequest::getVar ( 'order', '' );
+		$orderby = ' ORDER BY ' . $filter_order . ' ' . $filter_order_dir;
+		jimport ( 'joomla.html.pagination' );
+		// Search total
+		$query = "SELECT COUNT(*) FROM #__kunena_banned_users AS bu INNER JOIN #__kunena_users AS ku ON bu.id=ku.userid";
+		if ($this->search != "") {
+			$query .= " WHERE (ku.name LIKE '%{$this->search}%' OR ku.username LIKE '%{$this->search}%')";
+		}
+		$this->_db->setQuery ( $query );
+		$total = $this->_db->loadResult ();
+		check_dberror ( "Unable to load search user count." );
+		if ($this->limit > $total) {
+			$this->limitstart = 0;
+		}
+		$query = "SELECT bu.*, b.id, b.name, b.username, c.id, c.name AS creatorname, c.username AS creatorusername, d.id, d.name AS modifiedname, d.username AS modifiedusername " .
+				" FROM #__kunena_banned_users AS bu " .
+				" LEFT JOIN #__users AS b ON bu.userid=b.id " .
+				" LEFT JOIN #__users AS c ON bu.created_userid=c.id " .
+				" LEFT JOIN #__users AS d ON bu.modified_by=d.id " .
+				" WHERE enabled=1" .
+				" GROUP BY bu.id ";
+		$this->_db->setQuery ( $query );
+		$this->ban = $this->_db->loadObjectList ();
+		check_dberror ( "Unable to load search result." );
+		$this->searchuri = "";
+		if ($this->search != "") {
+			$query .= " AND (name LIKE '%{$this->search}%' OR username LIKE '%{$this->search}%') AND bu.userid NOT IN (62)";
+			$this->searchuri .= "&search=" . $this->search;
+		} else {
+			$query .= " AND bu.id NOT IN (62)";
+		}
+		$query .= $orderby;
+		$query .= " LIMIT $this->limitstart, $this->limit";
+		$this->pageNav = new JPagination ( $total, $this->limitstart, $this->limit );
+
+	if ( is_array($this->ban) ) {
+			return $this->ban;
+		} else {
+			return;
+		}
 	}
 
 	function getBanHistory()

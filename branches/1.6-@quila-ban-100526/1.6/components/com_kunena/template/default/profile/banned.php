@@ -12,13 +12,13 @@
 defined( '_JEXEC' ) or die();
 JHTML::_('behavior.tooltip');
 $i=1;
+$j=1;
 ?>
 
 <h2><?php echo JText::_('Actually banned users'); ?></h2>
 	<?php
-		$kid = 0;
-		//foreach ($this->ban as $banned) {
-			if ( ($banned->created != '0000-00-00 00:00:00') && $banned->enabled = 1 ) {
+		if ( $this->displayUsersBanned() ) {
+			foreach ($this->displayUsersBanned() as $userban) {
 	?>
 <table border="0" cellpadding="5" class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : ''; ?>">
 	<thead>
@@ -34,16 +34,16 @@ $i=1;
 	</thead>
 	<tbody>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-			<td style="text-align:center;padding: 1px 5px;" width="1%"><a href="#"> <?php echo $banned->id; ?> </a></td>
-			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;"><a href="#"><?php echo CKunenaLink::GetProfileLink ( $banned->userid, $banned->username ); ?> </a></td>
+			<td style="text-align:center;padding: 1px 5px;" width="1%"><a href="#"> <?php echo $j++; ?> </a></td>
+			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;"><a href="#"><?php echo CKunenaLink::GetProfileLink ( $userban->userid, $this->config->username ? $userban->name : $userban->username ); ?> </a></td>
 			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;;">
-				<span><?php if ($banned->bantype == '1') { echo JText::_('Blue Ban'); } else { echo JText::_('Red Ban'); } ?></span>
+				<span><?php if ($userban->bantype == '1') { echo JText::_('Blue Ban'); } else { echo JText::_('Red Ban'); } ?></span>
 			</td>
-			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;"><span><?php echo $banned->created; ?></span></td>
-			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;"><span><?php echo $banned->expiry; ?></span></td>
-			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;"><span><a href="#"><?php echo $banned->ip; ?></a></span></td>
+			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;"><span><?php echo $userban->created; ?></span></td>
+			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;"><span><?php echo $userban->expiry; ?></span></td>
+			<td style="white-space:nowrap;text-align:center;padding: 1px 5px;"><span><a href="#"><?php if ( !empty($userban->ip) ) echo $userban->ip; ?></a></span></td>
 			<td style="text-align:center;padding: 5px;">
-				<?php if ($banned->bantype == '1') { ?>
+				<?php if ($userban->bantype == '1') { ?>
 				<img class="" src="<?php echo KUNENA_URLICONSPATH . 'banned.png'; ?>"  alt="<?php echo JText::_('Banned'); ?>" title="<?php echo JText::_('Banned in Kunena (read-only mode)'); ?>" />
 				<?php } else { ?>
 				<img class="" src="<?php echo KUNENA_URLICONSPATH . 'banned_red.png'; ?>"  alt="<?php echo JText::_('Blocked'); ?>" title="<?php echo JText::_('Blocked in Joomla (even blocked login)'); ?>" />
@@ -64,27 +64,31 @@ $i=1;
 		</tr>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td style="text-align:left;" width="100%" colspan="11">
-				<b><?php echo JText::_('Created by'); ?></b> : <?php echo CKunenaLink::GetProfileLink ( $banned->created_userid, $banned->username ); ?>
-				<?php if (!empty ($banned->modified_by)):?> | <b><?php echo JText::_('Modified by'); ?></b> : <?php echo CKunenaLink::GetProfileLink ( $banned->modified_by, $banned->username ); ?> - <?php echo $banned->modified_date; ?><?php endif; ?>
+				<b><?php echo JText::_('Created by'); ?></b> : <?php echo CKunenaLink::GetProfileLink ( $userban->created_userid, $this->config->username ? $userban->creatorname : $userban->creatorusername ); ?>
+				<?php if (!empty ($userban->modified_by)):?> | <b><?php echo JText::_('Modified by'); ?></b> : <?php echo CKunenaLink::GetProfileLink ( $userban->modified_by, $this->config->username ? $userban->modifiedname : $userban->modifiedusername ); ?> - <?php echo $banned->modified_date; ?><?php endif; ?>
 			</td>
 		</tr>
+		<?php if($userban->public_reason) { ?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td style="text-align:left;" width="100%" colspan="11">
-				<b><?php echo JText::_('Public Reason'); ?></b> : <?php echo KunenaParser::parseText ($banned->public_reason); ?>
+				<b><?php echo JText::_('Public Reason'); ?></b> : <?php echo KunenaParser::parseText ($userban->public_reason); ?>
 			</td>
 		</tr>
+		<?php } ?>
+		<?php if ( CKunenaTools::isModerator($this->my->id) && $userban->private_reason ) { ?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td style="text-align:left;" width="100%" colspan="11">
-				<b><?php echo JText::_('Private Reason'); ?></b> : <?php echo KunenaParser::parseText ($banned->private_reason); ?>
+				<b><?php echo JText::_('Private Reason'); ?></b> : <?php echo KunenaParser::parseText ($userban->private_reason); ?>
 			</td>
-		<?php $kid++; ?>
-	<?php //} else { ?>
+		<?php } ?>
+		<?php }
+ } else { ?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td style="text-align:center;" width="100%" colspan="11">
 				<?php echo JText::_('Actually No Banned Users'); ?>
 			</td>
 		</tr>
-	<?php } 
-	//} ?>
+	<?php }
+	 ?>
 	</tbody>
 </table>

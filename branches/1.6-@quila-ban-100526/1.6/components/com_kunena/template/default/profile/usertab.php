@@ -76,10 +76,10 @@ JHTML::_('behavior.calendar');
 			<?php $this->displayFavorites(); ?>
 		</dd>
 		<?php endif;?>
-		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id == $this->user->id || CKunenaTools::isModerator($this->my->id)): ?>
+		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id == $this->profile->userid ): ?>
 		<dt class="closed"><?php echo JText::_('Ban Manager'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayUsersBanned(); ?>
+			<?php $this->displayUserBanManager(); ?>
 		</dd>
 		<?php endif;  if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id):?>
 		<dt class="closed"><?php echo JText::_('Ban History'); ?></dt>
@@ -150,7 +150,7 @@ JHTML::_('behavior.calendar');
 				<ul id="ban-fields" style="display:none;">
 				<li>
 				<span><?php echo JText::_('COM_KUNENA_BAN_EXPIRY'); ?></span>
-				<input class="inputbox" type="text" maxlength="15" name="banexpiry" id="banexpiry" /> 
+				<input class="inputbox" type="text" maxlength="15" name="banexpiry" id="banexpiry" />
 				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('banexpiry','%Y-%m-%d');" /></li>
 				<li>
 				<span><?php echo JText::_('COM_KUNENA_BAN_MESSAGE'); ?></span>

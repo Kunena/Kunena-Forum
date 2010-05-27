@@ -34,8 +34,12 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+27-May-2010 Xillibit
+# [#19288] Fix issues when anynomous option is enabled, on new topic the checkbox isn't displayed (Part 2)
+
 26-May-2010 Xillibit
 ^ [#19288] Combine #__kunena_banned_users and #_kunena_banned_ips table
+# [#19288] Fix issues on javascript in profile moderation
 
 25-May-2010 Xillibit
 # [#19288] Fix regression on userban and enable user in kunena user manager

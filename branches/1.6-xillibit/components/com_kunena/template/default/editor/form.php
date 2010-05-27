@@ -88,7 +88,7 @@ $this->k=0;
 			</td>
 		</tr>
 
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check" <?php if (!$this->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
+		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check" <?php if (!$this->allow_anonymous && $this->catid != 0 || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong></td>
 
 			<td>

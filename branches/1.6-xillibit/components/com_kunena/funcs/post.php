@@ -84,6 +84,11 @@ class CKunenaPost {
 				echo JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 				return false;
 			}
+		} else {
+			//get default category
+			$this->_db->setQuery ( "SELECT allow_anonymous FROM `#__kunena_categories` WHERE `parent`>0 LIMIT 1" );
+			$this->cat_default_allow = $this->_db->loadResult ();
+			check_dberror ( 'Unable to load category.' );
 		}
 
 		// Check if anonymous user needs to log in

@@ -12,15 +12,12 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-$kunena_db = JFactory::getDBO ();
 $kunena_config = CKunenaConfig::getInstance ();
 $document = JFactory::getDocument ();
 
 $document->setTitle ( JText::_('COM_KUNENA_GEN_RULES') . ' - ' . $kunena_config->board_title );
 
-$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$kunena_config->rules_cid}'" );
-$introtext = $kunena_db->loadResult ();
-check_dberror ( "Unable to load introtext." );
+$introtext= CKunenaTools::getRulesHelpDatas($kunena_config->rules_cid);
 ?>
 <div class="kblock">
 	<div class="ktitle">

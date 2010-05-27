@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA
 
 27-May-2010 Xillibit
 # [#19288] Fix issues when anynomous option is enabled, on new topic the checkbox isn't displayed (Part 2)
+# [#19288] Remove queries in rules and help pages and call function isntead
 
 26-May-2010 Xillibit
 ^ [#19288] Combine #__kunena_banned_users and #_kunena_banned_ips table

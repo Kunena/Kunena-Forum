@@ -49,10 +49,10 @@ JHTML::_('behavior.calendar');
 		<td class="kcol-addban-left" ><b><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></b><br /><span class="blueban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE_DESC'); ?></span><br /><span class="redban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_RED_DESC'); ?></span></td>
 		<td class="kcol-addban-right"><?php
 					// make the select list for the view type
-					$gender[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE '));
-					$gender[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_RED '));
+					$bantype[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE'));
+					$bantype[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_RED'));
 					// build the html select list
-					echo JHTML::_('select.genericlist', $gender, 'gender', 'class="inputbox" size="1"', 'value', 'text', $this->profile->gender);
+					echo JHTML::_('select.genericlist', $bantype, 'bantype', 'class="inputbox" size="1"', 'value', 'text');
 					?></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
@@ -85,11 +85,11 @@ JHTML::_('behavior.calendar');
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE_DESC'); ?></span></td>
-		<td class="kcol-addban-right"><input id="konprofile_keep" type="checkbox" name="onprofile" value="keep" /></td>
+		<td class="kcol-addban-right"><input id="konprofile_keep" type="checkbox" name="onprofile" value="1" /></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE_DESC'); ?></span></td>
-		<td class="kcol-addban-right"><input id="konmessage_keep" type="checkbox" name="onmessage" value="keep" /></td>
+		<td class="kcol-addban-right"><input id="konmessage_keep" type="checkbox" name="onmessage" value="1" /></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS_DESC'); ?></span></td>
@@ -145,7 +145,7 @@ JHTML::_('behavior.calendar');
 			<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('Add ban'); ?>" name="Submit" />
 			<input type="hidden" name="option" value="com_kunena" />
 			<input type="hidden" name="func" value="banactions" />
-			<input type="hidden" name="thisuserid" value="<?php echo $this->user->id; ?>" />
+			<input type="hidden" name="thisuserid" value="<?php echo $this->profile->userid; ?>" />
 		</td>
 	</tr>
 </tbody>

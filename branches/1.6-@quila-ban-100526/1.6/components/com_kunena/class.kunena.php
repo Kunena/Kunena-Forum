@@ -940,30 +940,22 @@ class CKunenaTools {
 			$kunena_db =& JFactory::getDBO();
 			$kunena_app = JFactory::getApplication ();
 
+			/* Variables for ban function */
 			$thisuserid = JRequest::getInt ( 'thisuserid', '' );
-			$banuser = JRequest::getString('banuser', '');
-			$banmessage = JRequest::getString('banmessage', '');
-			$banexpiry = JRequest::getString('banexpiry', '');
+			$bantype = JRequest::getInt ('bantype', '');
+			$banpublic_reason = JRequest::getString ('public_reason', '');
+			$banprivate_reason = JRequest::getString ('private_reason', '');
+			$banexpiry = JRequest::getString ('Expire_Time', '');
 			$banIP = JRequest::getVar ( 'prof_ip_select', '' );
+			$banon_profile = JRequest::getInt ('onprofile', '');
+			$banon_message = JRequest::getInt ('onmessage', '');
+
 			$banEmail = JRequest::getVar ( 'banemail', '' );
 			$banUsername = JRequest::getVar ( 'banusername', '' );
 			$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
 			$DelAvatar = JRequest::getVar ( 'delavatar', '' );
 			$DelSignature = JRequest::getVar ( 'delsignature', '' );
 			$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
-
-			if ( !empty($banIP) ) {
-				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
-				$usermod = new CKunenaModerationTools();
-				$banthisip=$usermod->banIP($banIP, $banexpiry, $banmessage, '');
-
-				if (!$banthisip) {
-					$this->_app->enqueueMessage( $usermod->getErrorMessage());
-				} else {
-					$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_IP_BANNED_DONE' ) );
-				}
-				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
-			}
 
 			if ( !empty($banEmail) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
@@ -979,10 +971,15 @@ class CKunenaTools {
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
-			if ( !empty($thisuserid) && !empty($banuser) ) {
+			if ( !empty($thisuserid) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
 				$usermod = new CKunenaModerationTools();
-				$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banmessage, '');
+
+				if ( $bantype == 0 ) {
+					$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+				} else {
+					$banthisuser = $usermod->blockUser($thisuserid, $banexpiry, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+				}
 
 				if (!$banthisuser) {
 					$kunena_app->enqueueMessage( $usermod->getErrorMessage());

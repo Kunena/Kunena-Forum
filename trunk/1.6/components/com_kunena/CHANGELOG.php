@@ -43,6 +43,10 @@ Kunena 1.6.0-ALPHA
 # [#20038] Edit Profile: Hide edit user information in J1.6 for now
 # [#20038] Fix J1.6 incompatibilities in CKunenaPath class
 ^ [#15886] Merged revisions 2538-2563 from /branches/1.6-xillibit with changes
+^ [#15886] Merged revision 2550 from /branches/1.6-@quila-fix
+
+26-May-2010 @quila
+# [#19288] Fix regression - CSS and template fixes.
 
 26-May-2010 Xillibit
 ^ [#19288] Combine #__kunena_banned_users and #_kunena_banned_ips table

@@ -946,6 +946,7 @@ class CKunenaTools {
 			$banpublic_reason = JRequest::getString ('public_reason', '');
 			$banprivate_reason = JRequest::getString ('private_reason', '');
 			$banexpiry = JRequest::getString ('Expire_Time', '');
+			$banstart = JRequest::getString ('Start_Time', '');
 			$banIP = JRequest::getVar ( 'prof_ip_select', '' );
 			$banon_profile = JRequest::getInt ('onprofile', '');
 			$banon_message = JRequest::getInt ('onmessage', '');
@@ -976,9 +977,9 @@ class CKunenaTools {
 				$usermod = new CKunenaModerationTools();
 
 				if ( $bantype == 0 ) {
-					$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+					$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
 				} else {
-					$banthisuser = $usermod->blockUser($thisuserid, $banexpiry, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+					$banthisuser = $usermod->blockUser($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
 				}
 
 				if (!$banthisuser) {

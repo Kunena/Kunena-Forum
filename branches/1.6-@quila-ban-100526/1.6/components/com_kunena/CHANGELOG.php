@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA
 
 27-May-2010 Xillibit
 ^ [#19244] Tab add ban works with moderation.tools.class, new fields on table banned_users, little changes
+^ [#19244] Tab ban history working now
 
 26-May-2010 @quila
 + [#19244] Moderation feature: add Ban Manager, Ban History and Add Ban tabs in profile page

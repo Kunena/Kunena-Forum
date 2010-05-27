@@ -71,7 +71,7 @@ class CKunenaModerationTools {
 	 * @uses self::_canChangeUserstate()
 	 * @uses self::_addUserstate()
 	 */
-	protected function _banUser($UserID, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip) {
+	protected function _banUser($UserID, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip) {
 		// sub functions sanitizes input
 
 		$this->_ResetErrorMessage ();
@@ -80,7 +80,7 @@ class CKunenaModerationTools {
 			return false;
 		}
 
-		if ( !$this->_addUserstate( $UserID, KN_USER_BAN, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip ) ) {
+		if ( !$this->_addUserstate( $UserID, KN_USER_BAN, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip ) ) {
 			return false;
 		}
 
@@ -127,7 +127,7 @@ class CKunenaModerationTools {
 	 * @uses self::_canChangeUserstate()
 	 * @uses self::_addUserstate()
 	 */
-	protected function _blockUser($UserID, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip) {
+	protected function _blockUser($UserID, $public_reason, $private_reason, $on_profile, $on_message, $ip) {
 		// sub functions sanitizes input
 
 		$this->_ResetErrorMessage ();
@@ -136,7 +136,7 @@ class CKunenaModerationTools {
 			return false;
 		}
 
-		if ( !$this->_addUserstate( $UserID, KN_USER_BLOCK, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip ) ) {
+		if ( !$this->_addUserstate( $UserID, KN_USER_BLOCK, '', '', $public_reason, $private_reason, $on_profile, $on_message, $ip ) ) {
 			return false;
 		}
 
@@ -183,11 +183,12 @@ class CKunenaModerationTools {
 	 * @return boolean
 	 * @todo Implement config defaults for expiry, message and comment
 	 */
-	private function _addUserstate($UserID, $mode, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip) {
+	private function _addUserstate($UserID, $mode, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip) {
 		// Sanitize parameters!
 		$UserID		= intval ( $UserID );
 		$mode		= intval ( $mode );
-		$expiry		= intval ( $expiry );
+		$expiry		= trim ( $expiry );
+		$banstart		= trim ( $banstart );
 		$public_reason	= trim ( $public_reason );
 		$private_reason	= trim ( $private_reason );
 		$on_profile	= intval ( $on_profile );
@@ -226,9 +227,9 @@ class CKunenaModerationTools {
 				return false;
 		}
 
-		/*if ( !$userbannedexist ) {
-			$query = "INSERT INTO #__kunena_banned_users ( `enabled`, `userid`, `bantype`, `expiry`, `created`, `created_userid`, `on_profile`, `on_message`,`private_reason`,`public_reason`,`ip`)
-					VALUES ( 1, '$UserID', '$mode', '$expiry', NOW(), '{$this->_my->id}', '$on_profile', '$on_message', {$this->_db->Quote($public_reason)}, {$this->_db->Quote($private_reason)},'$ip')";
+		if ( !$userbannedexist ) {
+			$query = "INSERT INTO #__kunena_banned_users ( `enabled`, `userid`, `bantype`, `expiry`,  `ban_start` , `created`, `created_userid`, `on_profile`, `on_message`,`private_reason`,`public_reason`,`ip`)
+					VALUES ( 1, '$UserID', '$mode', '$expiry', '$banstart' , NOW(), '{$this->_my->id}', '$on_profile', '$on_message', {$this->_db->Quote($public_reason)}, {$this->_db->Quote($private_reason)},'$ip')";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			check_dberror ( 'Unable to insert user state.' );
@@ -237,7 +238,7 @@ class CKunenaModerationTools {
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			check_dberror ( 'Unable to insert user state.' );
-		}*/
+		}
 
 		return true;
 	}
@@ -571,8 +572,8 @@ class CKunenaModerationTools {
 		return $this->_unblockUser( $UserID );
 	}
 
-	public function banUser($UserID, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip ) {
-		return $this->_banUser( $UserID, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip );
+	public function banUser($UserID, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip ) {
+		return $this->_banUser( $UserID, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip );
 	}
 
 	public function unbanUser($UserID) {

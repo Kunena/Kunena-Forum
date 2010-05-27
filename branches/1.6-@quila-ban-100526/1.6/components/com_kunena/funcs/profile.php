@@ -243,17 +243,17 @@ class CKunenaProfile {
 		$obj->displayFlat();
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
-	
+
 	function displayAddBan()
 	{
 		CKunenaTools::loadTemplate('/profile/addban.php');
 	}
-	
+
 	function displayUserBanHistory()
 	{
 		CKunenaTools::loadTemplate('/profile/banhistory.php');
 	}
-	
+
 	function displayUsersBanned()
 	{
 		/*$this->app = JFactory::getApplication ();
@@ -263,7 +263,7 @@ class CKunenaProfile {
 		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
 		$this->limit = JRequest::getInt ( 'limit', (int)$this->config->userlist_rows );
 		$this->name = $this->config->username ? "username" : "name";
-		
+
 		$filter_order = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order', 'filter_order', 'registerDate', 'cmd' );
 		$filter_order_dir = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order_dir', 'filter_order_Dir', 'asc', 'word' );
 		$order = JRequest::getVar ( 'order', '' );
@@ -545,5 +545,23 @@ class CKunenaProfile {
 	function cancel()
 	{
 		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', false) );
+	}
+
+	function getBanHistory()
+	{
+		$query = "SELECT a.*, b.id, b.name, b.username, c.id, c.name AS creatorname, c.username AS creatorusername, d.id, d.name AS modifiedname, d.username AS modifiedusername FROM #__kunena_banned_users AS a
+			LEFT JOIN #__users AS b ON a.userid=b.id
+			LEFT JOIN #__users AS c ON a.created_userid=c.id
+			LEFT JOIN #__users AS d ON a.modified_by=d.id
+			WHERE `userid`={$this->profile->userid}";
+		$this->_db->setQuery ( $query );
+		$banhistory = $this->_db->loadObjectList ();
+		check_dberror ( 'Unable to load ban history.' );
+
+		if ( is_array($banhistory) ) {
+			return $banhistory;
+		} else {
+			return;
+		}
 	}
 }

@@ -14,6 +14,7 @@ defined( '_JEXEC' ) or die();
 
 define ( 'KN_USER_BLOCK',1);	// block in joomla (even block login)
 define ( 'KN_USER_BAN',2);	// ban in kunena (read-only mode)
+define ( 'KN_USER_BAN_IP',3);	// ban IP in kunena (read-only mode)
 
 class CKunenaModerationTools {
 	// Private data and functions
@@ -208,6 +209,11 @@ class CKunenaModerationTools {
 					$this->_db->setQuery ( $query );
 					$this->_db->query ();
 					if (KunenaError::checkDatabaseError()) return false;
+				} else {
+					$query = "UPDATE #__kunena_banned_users SET `enabled`=1 WHERE `userid`=$UserID";
+					$this->_db->setQuery ( $query );
+					$this->_db->query ();
+					KunenaError::checkDatabaseError();
 				}
 				break;
 			case KN_USER_BLOCK:
@@ -435,9 +441,9 @@ class CKunenaModerationTools {
 			$ips = substr($ips, 0, -1);	// remove last comma
 
 			$sql = "SELECT ban.id, ban.enabled, ban.ip, ban.expiry, ban.message, ban.created, ban.created_userid, user.username AS created_name, ban.comment ".
-				"FROM #__kunena_banned_ips ban ".
+				"FROM #__kunena_banned_users ban ".
 				"LEFT JOIN #__users user ON (user.id = ban.created_userid) ".
-				"WHERE ban.ip IN (". $ips .") ".
+				"WHERE ban.ip IN (". $ips .") AND bantype=3 ".
 				"ORDER BY ban.created ASC ".
 				"LIMIT 0, ". $limit;
 
@@ -465,8 +471,8 @@ class CKunenaModerationTools {
 
 		$sql = "SELECT msgs.ip AS ip, MAX(ban.enabled) AS enabled ".
 				"FROM #__kunena_messages msgs ".
-				"LEFT JOIN #__kunena_banned_ips ban ON (ban.ip = msgs.ip) ".
-				"WHERE msgs.userid = '". $UserID ."' ".
+				"LEFT JOIN #__kunena_banned_users ban ON (ban.ip = msgs.ip) ".
+				"WHERE msgs.userid = '". $UserID ."' AND bantype=3 ".
 				"GROUP BY msgs.ip ".
 				"ORDER BY msgs.time ASC ".
 				"LIMIT 0, ". $limit;
@@ -521,10 +527,15 @@ class CKunenaModerationTools {
 		if (KunenaError::checkDatabaseError()) return false;
 
 		if ( !$ipexist ) {
-			$sql = "INSERT INTO #__kunena_banned_ips (enabled,ip,expiry,message,comment) VALUES ('1',$ip', '$expiry', '$message', '$comment')";
+			$sql = "INSERT INTO #__kunena_banned_users (enabled,ip,expiry,message,comment) VALUES ('1',$ip', '$expiry', '$message', '$comment')";
 			$this->_db->setQuery ( $sql );
 			$this->_db->Query ();
 			if (KunenaError::checkDatabaseError()) return false;
+		} else {
+			$query = "UPDATE #__kunena_banned_users SET `enabled`=1 WHERE `ip`=$ip AND `bantype`=3";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			KunenaError::checkDatabaseError();
 		}
 		return true;
 	}
@@ -534,7 +545,7 @@ class CKunenaModerationTools {
 	 * @param int $UserID
 	 */
 	protected function _unbanIP($ip) {
-		$sql = "UPDATE #__kunena_banned_ips SET enabled=0 WHERE ip=$ip";
+		$sql = "UPDATE #__kunena_banned_users SET `enabled`=0 WHERE `ip`=$ip AND `bantype`=3";
 		$this->_db->setQuery ( $sql );
 		$this->_db->Query ();
 		if (KunenaError::checkDatabaseError()) return false;

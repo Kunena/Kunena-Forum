@@ -240,6 +240,19 @@ PX		EM			PCT			PT
 	clear: both;
 	display: block;
 }
+#Kunena div.kblock div.khelprulescontent {
+	vertical-align: top;
+	padding: 15px;
+	border: 1px solid #BFC3C6;
+	background: #FFFFFF;
+	color: #000000;
+}
+#Kunena div.kblock div.khelprulesjump {
+	vertical-align: left;	
+	border: 1px solid #BFC3C6;
+	background: #FFFFFF;
+	color: #000000;
+}
 #Kunena div.kblock div.kactions {
 	background: #737373;
 	color:#FFFFFF;

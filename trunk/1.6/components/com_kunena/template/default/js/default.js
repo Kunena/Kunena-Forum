@@ -906,6 +906,7 @@ window.addEvent('domready', function(){
 		$('prof_ip_select').addEvent('change', function(e){
 			if ($('ban-fields').getStyle('display') != undefined ) {
 				$('ban-fields').removeProperty('style');
+				$('ban-user').removeProperty('checked');
 			} else {
 				$('ban-fields').setStyle('display', 'none');
 			}
@@ -926,7 +927,6 @@ window.addEvent('domready', function(){
 			if ($('ban-user-fields').getStyle('display') != undefined ) {
 				$('ban-user-fields').removeProperty('style');
 			}
-			alert( $('ban-user-fields').getChildren('input') );
 		});
 	}
 	

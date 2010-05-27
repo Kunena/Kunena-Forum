@@ -83,6 +83,11 @@ class CKunenaPost {
 				echo JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 				return false;
 			}
+		} else {
+			//get default category
+			$this->_db->setQuery ( "SELECT allow_anonymous FROM `#__kunena_categories` WHERE `parent`>0 AND id IN ($this->_session->allowed) ORDER BY ordering, name LIMIT 1" );
+			$this->cat_default_allow = $this->_db->loadResult ();
+			KunenaError::checkDatabaseError();
 		}
 
 		// Check if anonymous user needs to log in
@@ -827,7 +832,7 @@ class CKunenaPost {
 	}
 
 	protected function isIPBanned() {
-		$sql = "SELECT expiry FROM #__kunena_banned_ips WHERE ip='{$_SERVER['REMOTE_ADDR']}' AND enabled=1";
+		$sql = "SELECT expiry FROM #__kunena_banned_users WHERE ip='{$_SERVER['REMOTE_ADDR']}' AND enabled=1 AND bantype=3";
 		$this->_db->setQuery ( $sql );
 		$isIPbanned = $this->_db->loadObject ();
 		KunenaError::checkDatabaseError();

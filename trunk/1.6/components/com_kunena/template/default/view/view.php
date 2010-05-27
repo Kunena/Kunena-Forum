@@ -16,13 +16,9 @@ global $kunena_icons;
 ?>
 <div><?php $this->displayPathway(); ?></div>
 <?php if ($this->headerdesc) : ?>
-<table id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->catinfo->class_sfx : '' ?>">
-	<tr>
-		<td>
-			<?php echo $this->headerdesc ?>
-		</td>
-	</tr>
-</table>
+<div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->catinfo->class_sfx : '' ?>">
+	<?php echo $this->headerdesc ?>
+</div>
 <?php endif ?>
 <?php
 $this->displayPoll();

@@ -977,15 +977,19 @@ class CKunenaTools {
 				$usermod = new CKunenaModerationTools();
 
 				if ( $bantype == 0 ) {
-					$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
-				} else {
 					$banthisuser = $usermod->blockUser($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+					$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
+				} elseif ($bantype == 1 ) {
+					$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+					$message = JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' );
+				} else {
+					// Not implemented
 				}
 
 				if (!$banthisuser) {
 					$kunena_app->enqueueMessage( $usermod->getErrorMessage());
 				} else {
-					$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' ) );
+					$kunena_app->enqueueMessage ( $message );
 				}
 
 				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );

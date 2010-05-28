@@ -127,7 +127,7 @@ class CKunenaModerationTools {
 	 * @uses self::_canChangeUserstate()
 	 * @uses self::_addUserstate()
 	 */
-	protected function _blockUser($UserID, $public_reason, $private_reason, $on_profile, $on_message, $ip) {
+	protected function _blockUser($UserID, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip) {
 		// sub functions sanitizes input
 
 		$this->_ResetErrorMessage ();
@@ -136,7 +136,7 @@ class CKunenaModerationTools {
 			return false;
 		}
 
-		if ( !$this->_addUserstate( $UserID, KN_USER_BLOCK, '', '', $public_reason, $private_reason, $on_profile, $on_message, $ip ) ) {
+		if ( !$this->_addUserstate( $UserID, KN_USER_BLOCK, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip ) ) {
 			return false;
 		}
 
@@ -203,17 +203,31 @@ class CKunenaModerationTools {
 
 		switch ( $mode ) {
 			case KN_USER_BAN:
-				$sql = "SELECT userid FROM #__kunena_banned_users WHERE `userid`='$UserID' AND `bantype`=2";
+				$sql = "SELECT userid FROM #__kunena_banned_users WHERE `userid`='$UserID' AND `enabled`=1 AND `bantype`=2";
 				$this->_db->setQuery ( $sql );
 				$userbannedexist = $this->_db->loadResult ();
 				check_dberror ( 'Unable to load users banned.' );
 
+				if ( $userbannedexist ) {
+					$query = "UPDATE #__kunena_banned_users SET `enabled`=0 WHERE `userid`='$UserID' AND `bantype`=2";
+					$this->_db->setQuery ( $query );
+					$this->_db->query ();
+					check_dberror ( 'Unable to insert user state.' );
+				}
+
 				break;
 			case KN_USER_BLOCK:
-				$sql = "SELECT userid FROM #__kunena_banned_users WHERE `userid`='$UserID' AND `bantype`=1";
+				$sql = "SELECT userid FROM #__kunena_banned_users WHERE `userid`='$UserID' AND `enabled`=1 AND `bantype`=1";
 				$this->_db->setQuery ( $sql );
 				$userbannedexist = $this->_db->loadResult ();
 				check_dberror ( 'Unable to load users banned.' );
+
+				if ( $userbannedexist ) {
+					$query = "UPDATE #__kunena_banned_users SET `enabled`=0 WHERE `userid`='$UserID' AND `bantype`=1";
+					$this->_db->setQuery ( $query );
+					$this->_db->query ();
+					check_dberror ( 'Unable to insert user state.' );
+				}
 
 				$user->block = 1;
 				$user->save();
@@ -227,18 +241,11 @@ class CKunenaModerationTools {
 				return false;
 		}
 
-		if ( !$userbannedexist ) {
-			$query = "INSERT INTO #__kunena_banned_users ( `enabled`, `userid`, `bantype`, `expiry`,  `ban_start` , `created`, `created_userid`, `on_profile`, `on_message`,`private_reason`,`public_reason`,`ip`)
+		$query = "INSERT INTO #__kunena_banned_users ( `enabled`, `userid`, `bantype`, `expiry`,  `ban_start` , `created`, `created_userid`, `on_profile`, `on_message`,`private_reason`,`public_reason`,`ip`)
 					VALUES ( 1, '$UserID', '$mode', '$expiry', '$banstart' , NOW(), '{$this->_my->id}', '$on_profile', '$on_message', {$this->_db->Quote($private_reason)}, {$this->_db->Quote($public_reason)},'$ip')";
-			$this->_db->setQuery ( $query );
-			$this->_db->query ();
-			check_dberror ( 'Unable to insert user state.' );
-		} else {
-			$query = "UPDATE #__kunena_banned_users SET `enabled`=1 WHERE `userid`=$UserID";
-			$this->_db->setQuery ( $query );
-			$this->_db->query ();
-			check_dberror ( 'Unable to insert user state.' );
-		}
+		$this->_db->setQuery ( $query );
+		$this->_db->query ();
+		check_dberror ( 'Unable to insert user state.' );
 
 		return true;
 	}
@@ -566,8 +573,8 @@ class CKunenaModerationTools {
 	// Public interface - Users
 
 
-	public function blockUser($UserID, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip ) {
-		return $this->_blockUser( $UserID, $expiry, $public_reason, $private_reason, $on_profile, $on_message, $ip );
+	public function blockUser($UserID, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip ) {
+		return $this->_blockUser( $UserID, $expiry, $banstart, $public_reason, $private_reason, $on_profile, $on_message, $ip );
 	}
 
 	public function unblockUser($UserID) {

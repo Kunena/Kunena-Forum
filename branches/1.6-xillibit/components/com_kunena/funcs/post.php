@@ -38,6 +38,7 @@ class CKunenaPost {
 		}
 		$this->catid = JRequest::getInt ( 'catid', 0 );
 
+		$this->cat_default_allow = null;
 		$this->msg_cat = null;
 
 		$this->allow = 1;

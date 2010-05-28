@@ -229,7 +229,7 @@ class CKunenaModerationTools {
 
 		if ( !$userbannedexist ) {
 			$query = "INSERT INTO #__kunena_banned_users ( `enabled`, `userid`, `bantype`, `expiry`,  `ban_start` , `created`, `created_userid`, `on_profile`, `on_message`,`private_reason`,`public_reason`,`ip`)
-					VALUES ( 1, '$UserID', '$mode', '$expiry', '$banstart' , NOW(), '{$this->_my->id}', '$on_profile', '$on_message', {$this->_db->Quote($public_reason)}, {$this->_db->Quote($private_reason)},'$ip')";
+					VALUES ( 1, '$UserID', '$mode', '$expiry', '$banstart' , NOW(), '{$this->_my->id}', '$on_profile', '$on_message', {$this->_db->Quote($private_reason)}, {$this->_db->Quote($public_reason)},'$ip')";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			check_dberror ( 'Unable to insert user state.' );
@@ -264,11 +264,11 @@ class CKunenaModerationTools {
 		}
 
 		// appended this extra text to comment
-		$extra = "(Disabled by ". $this->_my->id ." at ". date('r') .")";
+		//$extra = "(Disabled by ". $this->_my->id ." at ". date('r') .")";
 
 		switch ( $mode ) {
 			case KN_USER_BAN:
-				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=2 AND `userid`='{$UserID}' AND `enabled`=1";
+				$query = "UPDATE #__kunena_banned_users SET `enabled`=0 WHERE bantype=2 AND `userid`='{$UserID}' AND `enabled`=1";
 
 				break;
 			case KN_USER_BLOCK:

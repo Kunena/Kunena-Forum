@@ -19,12 +19,12 @@ JHTML::_('behavior.calendar');
 	$useriplist = $kunena_mod->getUsernameMatchingIPs($this->user->id);
 ?>
 
-<h2><?php echo JText::_('Add new ban for '); ?> <?php echo $this->profile->name; ?></h2>
+<h2><?php echo JText::_('COM_KUNENA_BAN_ADDBANFOR'); ?> <?php echo $this->profile->name; ?></h2>
 <form id="kform-ban" name="kformban" action="index.php" method="post">
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : ''; ?> kblock">
 	<tbody>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><?php //echo $this->id; ?><b><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></b></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></b></td>
 		<td class="kcol-addban-right" width="600"><?php echo $this->profile->username; ?> </td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
@@ -32,7 +32,9 @@ JHTML::_('behavior.calendar');
 		<td class="kcol-addban-right"> <?php echo $this->profile->userid; ?> </td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_LATESTIP'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_LATESTIP_DESC'); ?></span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_LATESTIP'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_LATESTIP_DESC'); ?></span>
+		</td>
 		<td class="kcol-addban-right">
 				<?php
 				$ipselect = array();
@@ -46,53 +48,74 @@ JHTML::_('behavior.calendar');
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left" ><b><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></b><br /><span class="blueban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE_DESC'); ?></span><br /><span class="redban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_RED_DESC'); ?></span></td>
+		<td class="kcol-addban-left" ><b><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></b><br />
+			<span class="blueban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE_DESC'); ?></span><br />
+			<span class="grayban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_GRAY_DESC'); ?></span><br />
+			<span class="redban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_RED_DESC'); ?></span>
+		</td>
 		<td class="kcol-addban-right"><?php
 					// make the select list for the view type
-					$bantype[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE'));
-					$bantype[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_RED'));
+					$bantype[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_RED'));
+					$bantype[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_BAN_BANLEVEL_GRAY'));
+					$bantype[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE'));
 					// build the html select list
 					echo JHTML::_('select.genericlist', $bantype, 'bantype', 'class="inputbox" size="1"', 'value', 'text');
 					?></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME_DESC'); ?></span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></span>
+		</td>
 		<td class="kcol-addban-right">
-			<input class="inputbox" type="text" maxlength="15" name="Start_Time" id="Start_Time" value="" />
-				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('Start_Time','%Y-%m-%d');$('Start_Time').removeProperty('style');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN'); ?>')" />
+			<input class="inputbox" type="text" maxlength="15" name="Start_Time" id="Start_Time" />
+				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('Start_Time','%Y-%m-%d');$('Start_Time').removeProperty('style');" />
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME_DESC'); ?></span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></span>
+		</td>
 		<td class="kcol-addban-right">
-			<input class="inputbox" type="text" maxlength="15" name="Expire_Time" id="Expire_Time" value="" />
-				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('Expire_Time','%Y-%m-%d');$('Expire_Time').removeProperty('style');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN'); ?>')" />
+			<input class="inputbox" type="text" maxlength="15" name="Expire_Time" id="Expire_Time" />
+				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('Expire_Time','%Y-%m-%d');$('Expire_Time').removeProperty('style');" />
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON_DESC'); ?></span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON_DESC'); ?></span>
+		</td>
 		<td class="kcol-addban-right">
-			<textarea class=" required" name="public_reason" id="public_reason" ><?php //echo ; ?></textarea>
+			<textarea class=" required" name="public_reason" id="public_reason" ></textarea>
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON_DESC'); ?></span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON_DESC'); ?></span>
+		</td>
 		<td class="kcol-addban-right">
-			<textarea class="required" name="private_reason" id="private_reason"><?php //echo ; ?></textarea>
+			<textarea class="required" name="private_reason" id="private_reason"></textarea>
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE_DESC'); ?></span></td>
-		<td class="kcol-addban-right"><input id="konprofile_keep" type="checkbox" name="onprofile" value="1" /></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE_DESC'); ?></span>
+		</td>
+		<td class="kcol-addban-right">
+			<input id="konprofile_keep" type="checkbox" name="onprofile" value="1" />
+		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE_DESC'); ?></span></td>
-		<td class="kcol-addban-right"><input id="konmessage_keep" type="checkbox" name="onmessage" value="1" /></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE_DESC'); ?></span>
+		</td>
+		<td class="kcol-addban-right">
+			<input id="konmessage_keep" type="checkbox" name="onmessage" value="1" />
+		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS'); ?></b><br /><span class="ks"><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS_DESC'); ?></span></td>
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS_DESC'); ?></span>
+		</td>
 		<td class="kcol-addban-right">
 			<ul>
 				<?php
@@ -104,7 +127,6 @@ JHTML::_('behavior.calendar');
 						$username[] = CKunenalink::GetProfileLink($user->userid, $user->name);
 					}
 					$username=implode(', ',$username);
-
 					if (!empty($useriplist[$ip->ip])) {
 				?>
 				<li><span>
@@ -142,7 +164,7 @@ JHTML::_('behavior.calendar');
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-center" style="text-align:center;" width="100%" colspan="2">
-			<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('Add ban'); ?>" name="Submit" />
+			<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_BAN_ADDBAN'); ?>" name="Submit" />
 			<input type="hidden" name="option" value="com_kunena" />
 			<input type="hidden" name="func" value="banactions" />
 			<input type="hidden" name="thisuserid" value="<?php echo $this->profile->userid; ?>" />

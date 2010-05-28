@@ -74,7 +74,6 @@ PX		EM			PCT			PT
 /* MAIN STYLES
 ----------------------------------------------------------------------------------------------- */
 #Kunena {
-	word-wrap: break-word;
 	padding: 0;
 	margin: 0;
 }
@@ -170,15 +169,15 @@ PX		EM			PCT			PT
 }
 
 #Kunena .newchar {
-	font-size: .583em;
 	color: #009900;
 	font-weight: bold;
 	font-family: Arial, Helvetica, sans-serif;
-	/*  font-size: .75em;  */
 	margin-left: 3px;
 }
 
-
+#Kunena table.kblocktable .newchar {
+	font-size: .583em;
+}
 
 #Kunena table {
 	width :100%;
@@ -440,7 +439,7 @@ PX		EM			PCT			PT
 	display: block;
 	font-size: 2.091em;
 	font-weight: normal;
-	margin: 5px 0;
+	margin: 4px 0;
 	/* line-height: 21px; */
 }
 
@@ -487,7 +486,7 @@ PX		EM			PCT			PT
 	height: auto;
 	width: 36px;
 	padding: 1px;
-	margin: 4px 6px 2px 0;
+	margin: 0px 6px 6px 0;
 	border: 1px solid #BFC3C6;
 	float: left;
 }
@@ -531,6 +530,10 @@ PX		EM			PCT			PT
 
 #Kunena .kfooter-time {
 	color: #999999;
+}
+
+#Kunena .kalert {
+	color: #FF0000;
 }
 
 /* COLOR ADMINISTRATOR AND MODERATOR
@@ -1043,12 +1046,12 @@ PX		EM			PCT			PT
 #Kunena span.topic_posted_time {
 	display: block;
 	float:left;
-	clear:left;
-	/* text-align:left; */
+	/* clear:left;
+	 text-align:left; */
 }
 #Kunena span.topic_category {
-	/* display: block;
-	float:left; */
+	/* display: block;*/
+	float:left; 
 	clear:left;
 }
 #Kunena span.topic_views {
@@ -1068,6 +1071,7 @@ PX		EM			PCT			PT
 	/* display: block;
 	margin-left: 3px;
 	text-align: left; */
+	float:left;
 }
 
 #Kunena span.topic_locked { 
@@ -1501,7 +1505,7 @@ PX		EM			PCT			PT
 
 #Kunena div.klatest-subject,
 #Kunena div.klatest-subject-by {
-	margin-left: 5px;
+	margin-left: 50px;
 }
 
 #Kunena div.kcc-subcat {
@@ -1767,7 +1771,7 @@ PX		EM			PCT			PT
 #Kunena div.msgtext {
 	width: 100%;
 	overflow: hidden;
-	word-wrap: break-word; /*  Internet Explorer 5.5+ */
+	/* word-wrap: break-word;  Internet Explorer 5.5+ */
 	/*border-top: 1px solid #BFC3C6;*/
 	padding: 10px 0 0 0;
 	margin-top: 5px;
@@ -1845,7 +1849,6 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.kmsgtext_code {
-	overflow: auto;
 	margin: 10px;
 }
 
@@ -1860,6 +1863,8 @@ PX		EM			PCT			PT
 #Kunena div.kmsgtext_code-body {
 	padding: 10px 0;
 	border-bottom: 1px solid #555555;
+	overflow: auto;
+	width: 750px;
 }
 
 #Kunena div.msgtext pre,
@@ -4001,12 +4006,12 @@ div#kprofile-stats ul li span.rank-admin {
 }
 #Kunena tr.ksectiontableentry1-red td.td-0,
 #Kunena tr.ksectiontableentry2-red td.td-0	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 #Kunena tr.ksectiontableentry1-red td.td-1,
 #Kunena tr.ksectiontableentry2-red td.td-1	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 
@@ -4024,12 +4029,12 @@ div#kprofile-stats ul li span.rank-admin {
 }
 #Kunena tr.ksectiontableentry1-green td.td-0,
 #Kunena tr.ksectiontableentry2-green td.td-0	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 #Kunena tr.ksectiontableentry1-green td.td-1,
 #Kunena tr.ksectiontableentry2-green td.td-1	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 
@@ -4048,12 +4053,12 @@ div#kprofile-stats ul li span.rank-admin {
 }
 #Kunena tr.ksectiontableentry1-yellow td.td-0,
 #Kunena tr.ksectiontableentry2-yellow td.td-0	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 #Kunena tr.ksectiontableentry1-yellow td.td-1,
 #Kunena tr.ksectiontableentry2-yellow td.td-1	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 
@@ -4072,12 +4077,12 @@ div#kprofile-stats ul li span.rank-admin {
 }
 #Kunena tr.ksectiontableentry1-blue td.td-0,
 #Kunena tr.ksectiontableentry2-blue td.td-0	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 #Kunena tr.ksectiontableentry1-blue td.td-1,
 #Kunena tr.ksectiontableentry2-blue td.td-1	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 
@@ -4096,12 +4101,12 @@ div#kprofile-stats ul li span.rank-admin {
 }
 #Kunena tr.ksectiontableentry1-grey td.td-0,
 #Kunena tr.ksectiontableentry2-grey td.td-0	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 #Kunena tr.ksectiontableentry1-grey td.td-1,
 #Kunena tr.ksectiontableentry2-grey td.td-1	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 
@@ -4120,12 +4125,12 @@ div#kprofile-stats ul li span.rank-admin {
 }
 #Kunena tr.ksectiontableentry1-pink td.td-0,
 #Kunena tr.ksectiontableentry2-pink td.td-0	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 #Kunena tr.ksectiontableentry1-pink td.td-1,
 #Kunena tr.ksectiontableentry2-pink td.td-1	{
-	background: #EEEEEE;
+	/* background: #EEEEEE; */
 	color: #999999;
 }
 

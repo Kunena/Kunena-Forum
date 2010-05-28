@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+28-May-2010 Severdia
+# [#19356] CSS fixes for broken layouts caused by no breaks in code tags, new images
+
 28-May-2010 Matias
 # [#19288] Regression in Installer: Fix migration when #__kunena_version gets created
 # [#19288] Bug in Installer: Upgrade fails if #_kunena_attachments_bak exists and attachments haven't been converted

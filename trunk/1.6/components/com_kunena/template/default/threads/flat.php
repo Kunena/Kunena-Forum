@@ -138,7 +138,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			<?php
 			if ($leaf->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup><span class="newchar">&nbsp;(' . $leaf->unread . ' ' . $this->config->newchar . ')</span></sup>', $leaf->lastread );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup class="newchar">(' . $leaf->unread . ' ' . $this->config->newchar . ')</sup>', $leaf->lastread );
 			}
 			?>
 			</div>
@@ -179,7 +179,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, kunena_htmlspecialchars ( $leaf->catname ) );
 			?>
 			</span> <!-- /Category -->
-			<span class="divider">|</span>
+			<span class="divider fltlft">|</span>
 <?php 	} ?>
 			<span class="topic_posted_time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>">
 			<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') ?>

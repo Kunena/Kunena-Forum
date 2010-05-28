@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+28-May-2010 Xillibit
+# [#19288] Replace buttons (reply, quote, edit) by png and emoticons too (thanks cerberus)
+
 27-May-2010 Xillibit
 # [#19288] Fix issues when anynomous option is enabled, on new topic the checkbox isn't displayed (Part 2)
 # [#19288] Remove queries in rules and help pages and call function isntead

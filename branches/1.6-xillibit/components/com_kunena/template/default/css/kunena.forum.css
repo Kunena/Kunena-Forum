@@ -2513,7 +2513,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-comm.png") repeat-x left top;
 	border: none;
 }
 
@@ -2525,20 +2525,20 @@ POST PAGE
 }
 #Kunena a.buttoncomm span.reply {
 	float: left;
-	background: url("../images/buttons/btn-left-reply.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-reply.png") no-repeat left top;
 }
 #Kunena a.buttoncomm span.quote {
 	float: left;
-	background: url("../images/buttons/btn-left-quote.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-quote.png") no-repeat left top;
 }
 #Kunena a.buttoncomm span.newtopic {
 	float: left;
-	background: url("../images/buttons/btn-left-newtopic.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-newtopic.png") no-repeat left top;
 }
 #Kunena a.buttoncomm span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-comm.png") no-repeat right top;
 }
 #Kunena a.buttoncomm span span:hover {
 	text-decoration: underline;
@@ -2555,7 +2555,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("../images/buttons/btn-bg-user.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-user.png") repeat-x left top;
 	border: none;
 }
 
@@ -2567,24 +2567,24 @@ POST PAGE
 }
 #Kunena a.buttonuser span.favorite {
 	float: left;
-	background: url("../images/buttons/btn-left-favorite.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-favorite.png") no-repeat left top;
 }
 #Kunena a.buttonuser span.subscribe {
 	float: left;
-	background: url("../images/buttons/btn-left-subscribe.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-subscribe.png") no-repeat left top;
 }
 #Kunena a.buttonuser span.markread {
 	float: left;
-	background: url("../images/buttons/btn-left-markread.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-markread.png") no-repeat left top;
 }
 #Kunena a.buttonuser span.report {
 	float: left;
-	background: url("../images/buttons/btn-left-report.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-report.png") no-repeat left top;
 }
 #Kunena a.buttonuser span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("../images/buttons/btn-right-user.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-user.png") no-repeat right top;
 }
 #Kunena a.buttonuser span span:hover {
 	text-decoration: underline;
@@ -2630,7 +2630,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("../images/buttons/btn-bg-mod.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-mod.png") repeat-x left top;
 	border: none;
 }
 
@@ -2644,53 +2644,53 @@ POST PAGE
 
 #Kunena a.buttonmod span.merge {
 	float: left;
-	background: url("../images/buttons/btn-left-merge.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-merge.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.edit {
 	float: left;
-	background: url("../images/buttons/btn-left-edit.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-edit.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.delete {
 	float: left;
-	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-delete.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.permdelete {
 	float: left;
-	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-delete.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.undelete {
 	float: left;
-	background: url("../images/buttons/btn-left-delete.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-delete.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.move {
 	float: left;
-	background: url("../images/buttons/btn-left-move.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-move.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.sticky {
 	float: left;
-	background: url("../images/buttons/btn-left-sticky.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-sticky.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.lock {
 	float: left;
-	background: url("../images/buttons/btn-left-lock.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-lock.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.split {
 	float: left;
-	background: url("../images/buttons/btn-left-split.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-split.png") no-repeat left top;
 }
 #Kunena a.buttonmod span.approve {
 	float: left;
-	background: url("../images/buttons/btn-left-moderate.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-moderate.png") no-repeat left top;
 }
 
 #Kunena a.buttonmod span.moderate {
 	float: left;
-	background: url("../images/buttons/btn-left-moderate.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-moderate.png") no-repeat left top;
 }
 #Kunena a.buttonmod span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-mod.png") no-repeat right top;
 }
 #Kunena a.buttonmod span span:hover {
 	text-decoration: underline;
@@ -2706,7 +2706,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-comm.png") repeat-x left top;
 	border: none;
 }
 
@@ -2718,12 +2718,12 @@ POST PAGE
 }
 #Kunena a.buttongen span.gen {
 	float: left;
-	background: url("../images/buttons/btn-left-gen.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-gen.png") no-repeat left top;
 }
 #Kunena a.buttongen span span {
 	height: 18px;
 	padding: 0 7px 0 20px;
-	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-comm.png") no-repeat right top;
 }
 
 
@@ -2737,7 +2737,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("../images/buttons/btn-bg-mod.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-mod.png") repeat-x left top;
 	border: none;
 }
 
@@ -2749,12 +2749,12 @@ POST PAGE
 }
 #Kunena span.buttononline-yes span.online-yes {
 	float: left;
-	background: url("../images/buttons/btn-left-modgen.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-modgen.png") no-repeat left top;
 }
 #Kunena span.buttononline-yes span span {
 	height: 18px;
 	padding: 0 7px 0 7px;
-	background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-mod.png") no-repeat right top;
 }
 
 #Kunena span.buttononline-no {
@@ -2766,7 +2766,7 @@ POST PAGE
 	float: right;
 	cursor: pointer;
 	line-height: 145%;
-	background: url("../images/buttons/btn-bg-comm.gif") repeat-x left top;
+	background: url("../images/buttons/btn-bg-comm.png") repeat-x left top;
 	border: none;
 }
 
@@ -2778,12 +2778,12 @@ POST PAGE
 }
 #Kunena span.buttononline-no span.online-no {
 	float: left;
-	background: url("../images/buttons/btn-left-gen.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-gen.png") no-repeat left top;
 }
 #Kunena span.buttononline-no span span {
 	height: 18px;
 	padding: 0 7px 0 7px;
-	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
+	background: url("../images/buttons/btn-right-comm.png") no-repeat right top;
 }
 
 /*

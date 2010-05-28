@@ -37,6 +37,7 @@ if ($this->my->id == $this->user->id) {
 			<?php endif; ?>
 			<div id="kprofile-stats">
 				<ul>
+					<?php if ( !empty($this->banInfo) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong> <?php echo $this->banInfo->public_reason; ?></li><?php } ?>
 					<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo $this->personalText; ?></li><?php } ?>
 					<li><span class="buttononline-<?php echo $this->online ? 'yes':'no'; ?> btn-left"><span class="online-<?php echo $this->online ? 'yes':'no'; ?>"><span><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></span></span></li>
 					<!-- Check this: -->

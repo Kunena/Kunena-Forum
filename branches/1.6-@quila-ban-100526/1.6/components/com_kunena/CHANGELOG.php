@@ -45,6 +45,7 @@ Kunena 1.6.0-ALPHA
 ^ [#19244] Make working actions buttons in ban manager except for edit ban
 # [#19288] Replace PM icon by better one (thanks cerberus)
 # [#19288] Issue on block user the data aren't insered in the right place
+# [#19244] Little change on ban ip and now show baninfo in userprofile
 
 27-May-2010 Xillibit
 ^ [#19244] Tab add ban works with moderation.tools.class, new fields on table banned_users, little changes

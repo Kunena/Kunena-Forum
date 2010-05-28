@@ -982,8 +982,9 @@ class CKunenaTools {
 				} elseif ($bantype == 1 ) {
 					$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
 					$message = JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' );
-				} else {
-					// Not implemented
+				} elseif ($bantype == 2) {
+					$banthisuser = $usermod->banIP($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+					$message = JText::_ ( 'COM_KUNENA_IP_BANNED_DONE' );
 				}
 
 				if (!$banthisuser) {

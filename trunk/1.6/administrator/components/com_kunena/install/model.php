@@ -616,7 +616,7 @@ class KunenaModelInstall extends JModel {
 
 	// helper function to migrate table
 	protected function migrateTable($oldtable, $newtable) {
-		$tables = $this->listTables ( 'kunena_' );
+		$tables = $this->listTables ( 'kunena_', true );
 		if ($oldtable == $newtable || empty ( $oldtable ) || isset ( $tables [$newtable] ))
 			return; // Nothing to migrate
 

@@ -28,8 +28,8 @@ require_once(KPATH_SITE . '/lib/kunena.config.class.php');
 class CKunenaTimeformat {
 
 	function internalTime() {
-		$kunena_config = KunenaFactory::getConfig ();
-		return time() + ($kunena_config->board_ofset * 3600);
+		$now = new JDate();
+		return $now->toUnix();
 	}
 
 	function showTimeSince($older_date, $newer_date = false) {
@@ -46,7 +46,7 @@ class CKunenaTimeformat {
 
 		// no negatives!
 		if ($since < 0) {
-			return '?';
+			return '???';
 		}
 
 		// we only want to output two chunks of time here, eg:
@@ -88,11 +88,6 @@ class CKunenaTimeformat {
 		return sprintf('%+d:%02d', $timezone, ($timezone*60)%60);
 	}
 
-	function diffToJoomla() {
-		$kunena_config = KunenaFactory::getConfig ();
-		return (float) (date('Z')/3600) + (float) $kunena_config->board_ofset;
-	}
-
 	// Format a time to make it look purdy.
 	function showDate($time, $mode = 'datetime_today', $tz = 'kunena', $offset=false) {
 		$app = & JFactory::getApplication ();
@@ -103,8 +98,7 @@ class CKunenaTimeformat {
 				$date = new JDate ( $time, 0 );
 				break;
 			default :
-				if ($time == 'now') $time = self::internalTime();
-				$date = new JDate ( $time, ( float ) $offset + self::diffToJoomla() );
+				$date = new JDate ( $time, ( float ) $offset );
 				break;
 		}
 		if ($date->toFormat('%Y')<1902) return JText::_('COM_KUNENA_DT_DATETIME_UNKNOWN');

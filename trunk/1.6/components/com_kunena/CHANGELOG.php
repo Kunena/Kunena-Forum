@@ -34,6 +34,12 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+28-May-2010 Matias
+# [#19288] Regression in Installer: Fix migration when #__kunena_version gets created
+# [#19288] Bug in Installer: Upgrade fails if #_kunena_attachments_bak exists and attachments haven't been converted
+# [#19288] Fix regression (db error) when user tries to post a message
+# [#19288] Upgrade Kunena database tables to use UTC instead of offset in Kunena configuration
+
 27-May-2010 Xillibit
 # [#19288] Fix issues when anynomous option is enabled, on new topic the checkbox isn't displayed (Part 2)
 # [#19288] Remove queries in rules and help pages and call function instead

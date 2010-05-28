@@ -85,7 +85,7 @@ class CKunenaPost {
 			}
 		} else {
 			//get default category
-			$this->_db->setQuery ( "SELECT allow_anonymous FROM `#__kunena_categories` WHERE `parent`>0 AND id IN ($this->_session->allowed) ORDER BY ordering, name LIMIT 1" );
+			$this->_db->setQuery ( "SELECT allow_anonymous FROM `#__kunena_categories` WHERE `parent`>0 AND id IN ({$this->_session->allowed}) ORDER BY ordering, name LIMIT 1" );
 			$this->cat_default_allow = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}

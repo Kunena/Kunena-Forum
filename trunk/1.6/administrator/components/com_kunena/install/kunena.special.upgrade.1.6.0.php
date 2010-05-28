@@ -16,11 +16,43 @@ defined ( '_JEXEC' ) or die ();
 //Import filesystem libraries.
 jimport ( 'joomla.filesystem.folder' );
 
-$templatedeprecatedlist = array ('default_ex', 'default_green', 'default_red', 'default_gray' );
-
 $kunena_db = JFactory::getDBO ();
+
+// If board offset was set, we need to fix all timestamps to UTC
+$kunena_db->setQuery ( "SELECT board_ofset FROM #__kunena_config" );
+$offset = $kunena_db->loadResult ();
+if ($offset) {
+	$timeshift = (float) date('Z') + ((float) $offset * 3600);
+
+	$kunena_db->setQuery ( "UPDATE #__kunena_categories SET time_last_msg = time_last_msg - {$timeshift}" );
+	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
+	$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET lasttime = lasttime - {$timeshift}, currvisit  = currvisit  - {$timeshift}" );
+	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
+	$kunena_db->setQuery ( "UPDATE #__kunena_whoisonline SET time = time - {$timeshift}" );
+	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
+	$kunena_db->setQuery ( "UPDATE #__kunena_messages SET time = time - {$timeshift}, modified_time = modified_time - {$timeshift}" );
+	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
+	$kunena_db->setQuery ( "UPDATE #__kunena_config SET board_ofset=0" );
+	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+}
+
 $kunena_db->setQuery ( "SELECT template FROM #__kunena_config" );
 $kactualtemplate = $kunena_db->loadResult ();
+$templatedeprecatedlist = array ('default_ex', 'default_green', 'default_red', 'default_gray' );
 if ($kunena_db->getErrorNum () != 0) {
 	if (in_array ( $kactualtemplate, $templatedeprecatedlist )) {
 		$kunena_db->setQuery ( "UPDATE #__kunena_config SET template='default',templateimagepath='default'" );
@@ -38,6 +70,9 @@ foreach ( $templatedeprecatedlist as $template ) {
 // First check if attachments table has legacy field
 $fields = array_pop ( $kunena_db->getTableFields ( '#__kunena_attachments' ) );
 if (isset ( $fields ['filelocation'] )) {
+	$query = "DROP TABLE `#__kunena_attachments_bak`";
+	$kunena_db->setQuery ( $query );
+	$kunena_db->query ();
 	// Attachments table has filelocation - assume we have to convert attachments
 	// hash and size ommited -> NULL
 	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";

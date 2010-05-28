@@ -264,7 +264,7 @@ class CKunenaModerationTools {
 		}
 
 		// appended this extra text to comment
-		//$extra = "(Disabled by ". $this->_my->id ." at ". date('r') .")";
+		$extra = "Disabled by ". $this->_my->id ." at ". date('r') ."";
 
 		switch ( $mode ) {
 			case KN_USER_BAN:
@@ -272,7 +272,7 @@ class CKunenaModerationTools {
 
 				break;
 			case KN_USER_BLOCK:
-				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=1 AND `userid`='{$UserID}' AND `enabled`=1";
+				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, private_reason=CONCAT(private_reason, '". $extra ."') WHERE bantype=1 AND `userid`='{$UserID}' AND `enabled`=1";
 
 				$user->block = 0;
 				$user->save();

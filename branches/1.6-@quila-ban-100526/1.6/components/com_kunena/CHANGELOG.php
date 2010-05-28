@@ -39,6 +39,7 @@ Kunena 1.6.0-ALPHA
 ^ [#19244] Moderation feature: new language strings for new ban system
 # [#19244] Moderation feature: fixed some bugs in ban manager
 + [#19244] Moderation feature: new icons in ban manager
+# [#19244] Moderation feature: fixed bug in unban/unblock user when extra text is added in database
 
 28-May-2010 Xillibit
 ^ [#19244] Make working actions buttons in ban manager except for edit ban

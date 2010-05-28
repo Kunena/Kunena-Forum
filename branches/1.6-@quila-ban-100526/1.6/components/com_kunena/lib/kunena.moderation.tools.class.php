@@ -269,11 +269,11 @@ class CKunenaModerationTools {
 		switch ( $mode ) {
 			case KN_USER_BAN:
 				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=2 AND `userid`='{$UserID}' AND `enabled`=1";
-				$this->_db->setQuery ( $query );
-				$this->_db->query ();
-				check_dberror ( 'Unable to delete user state.' );
+
 				break;
 			case KN_USER_BLOCK:
+				$query = "UPDATE #__kunena_banned_users SET `enabled`=0, comment=CONCAT(comment, '". $extra ."') WHERE bantype=1 AND `userid`='{$UserID}' AND `enabled`=1";
+
 				$user->block = 0;
 				$user->save();
 
@@ -285,7 +285,9 @@ class CKunenaModerationTools {
 				return false;
 		}
 
-
+		$this->_db->setQuery ( $query );
+		$this->_db->query ();
+		check_dberror ( 'Unable to delete user state.' );
 
 		return true;
 	}

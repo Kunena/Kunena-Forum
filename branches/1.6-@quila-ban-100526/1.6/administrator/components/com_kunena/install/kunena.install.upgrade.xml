@@ -236,6 +236,7 @@
                 `created_userid` int(11) NOT NULL default '0',                
                 `on_profile` int(11) default NULL,
                 `on_message` int(11) default NULL,
+                `comment` text default NULL,
                 `private_reason` text default NULL,
                 `public_reason` text default NULL,
                 `modified_by` int(11) default NULL,

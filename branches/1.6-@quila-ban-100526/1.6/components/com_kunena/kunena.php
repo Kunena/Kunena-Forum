@@ -544,6 +544,83 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			CKunenaTools::KModerateUser ();
 
 			break;
+		case 'banprofileactions' :
+			$thisuserid = JRequest::getInt ( 'thisuserid', 0 );
+			if ( $thisuserid != 0 ) {
+				switch ($do) {
+					case 'blockuser':
+						require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
+						$usermod = new CKunenaModerationTools();
+
+						$banthisuser = $usermod->blockUser($thisuserid, '', '', '', '', '', '' );
+
+						if (!$banthisuser) {
+							$kunena_app->enqueueMessage( $usermod->getErrorMessage());
+						} else {
+							$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' ) );
+						}
+
+						$kunena_app->redirect ( $kunena_app->getUserState('com_kunena.banreturnurl') );
+						break;
+					case 'banuser':
+						require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
+						$usermod = new CKunenaModerationTools();
+
+						$banthisuser = $usermod->banUser($thisuserid, '', '', '', '', '', '' );
+
+						if (!$banthisuser) {
+							$kunena_app->enqueueMessage( $usermod->getErrorMessage());
+						} else {
+							$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' ) );
+						}
+
+						$kunena_app->redirect ( $kunena_app->getUserState('com_kunena.banreturnurl') );
+						break;
+					case 'logoutuser':
+						require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
+						$usermod = new CKunenaModerationTools();
+
+						$banthisuser = $usermod->logoutUser($thisuserid);
+
+						if (!$banthisuser) {
+							$kunena_app->enqueueMessage( $usermod->getErrorMessage());
+						} else {
+							$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_LOGOUT_DONE' ) );
+						}
+
+						$kunena_app->redirect ( $kunena_app->getUserState('com_kunena.banreturnurl') );
+						break;
+					case 'unbanuser':
+						require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
+						$usermod = new CKunenaModerationTools();
+
+						$banthisuser = $usermod->unbanUser($thisuserid);
+
+						if (!$banthisuser) {
+							$kunena_app->enqueueMessage( $usermod->getErrorMessage());
+						} else {
+							$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_UNBAN_DONE' ) );
+						}
+
+						$kunena_app->redirect ( $kunena_app->getUserState('com_kunena.banreturnurl') );
+						break;
+					case 'unblock':
+						require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
+						$usermod = new CKunenaModerationTools();
+
+						$banthisuser = $usermod->unblockUser($thisuserid);
+
+						if (!$banthisuser) {
+							$kunena_app->enqueueMessage( $usermod->getErrorMessage());
+						} else {
+							$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USER_UNBLOCK_DONE' ) );
+						}
+
+						$kunena_app->redirect ( $kunena_app->getUserState('com_kunena.banreturnurl') );
+						break;
+				}
+			}
+			break;
 
 		case 'templatechooser' :
 			$fb_user_template = strval ( JRequest::getVar ( 'kunena_user_template', '', 'COOKIE' ) );

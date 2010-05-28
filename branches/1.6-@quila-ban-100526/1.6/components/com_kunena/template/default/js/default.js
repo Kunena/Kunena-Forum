@@ -900,35 +900,15 @@ window.addEvent('domready', function(){
 			}
 			$('kmod_targetid').set('value', targetid);
 		});
-	}
+	}	
 	
-	if($('prof_ip_select') != undefined){
-		$('prof_ip_select').addEvent('change', function(e){
-			if ($('ban-fields').getStyle('display') != undefined ) {
-				$('ban-fields').removeProperty('style');
-			} else {
-				$('ban-fields').setStyle('display', 'none');
-			}
-			if ($('ban-user-fields').getStyle('display') != undefined ) {
-				$('ban-user-fields').setStyle('display', 'none');
-			}
+	$$('.profilebanactions').each(function(link){
+		link.addEvent('click', function(el){
+			var actionvalue = link.getProperty('id');
+			$('kbanprofileinputdo').set('value', actionvalue);
+			$('kBanActionsProfile').submit();
 		});
-	}
-	
-	if($('ban-user') != undefined){
-		$('ban-user').addEvent('change', function(e){
-			if ($('ban-user-fields') == undefined ) {
-				$('ban-fields').clone().inject('ban-user-text','after').setProperty('id','ban-user-fields');
-			}	
-			if ($('ban-fields').getStyle('display') != undefined ) {
-				$('ban-fields').setStyle('display', 'none');
-			}
-			if ($('ban-user-fields').getStyle('display') != undefined ) {
-				$('ban-user-fields').removeProperty('style');
-			}
-			alert( $('ban-user-fields').getChildren('input') );
-		});
-	}
+	});
 	
 	// Get the kunena settings cookie data.
 	KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});

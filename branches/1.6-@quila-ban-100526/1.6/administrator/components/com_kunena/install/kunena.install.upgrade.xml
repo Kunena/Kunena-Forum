@@ -232,9 +232,7 @@
                 `bantype` int(1) NOT NULL,
                 `expiry` datetime NOT NULL default '0000-00-00 00:00:00',                                
                 `creation_time` datetime NOT NULL default '0000-00-00 00:00:00',
-                `created_userid` int(11) NOT NULL default '0',                
-                `on_profile` int(11) default NULL,
-                `on_message` int(11) default NULL,
+                `created_userid` int(11) NOT NULL default '0',               
                 `comment` text default NULL,
                 `private_reason` text default NULL,
                 `public_reason` text default NULL,
@@ -365,6 +363,8 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD INDEX ( `currvisit` )</query>
 			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
 			<query mode="silenterror">UPDATE `#__kunena_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_banned_users` ADD `private_reason` text default NULL AFTER `comment`, ADD `public_reason` text default NULL AFTER `comment`, 
+                      ADD `modified_by` int(11) default NULL AFTER `comment`, ADD `modified_date` datetime NOT NULL default '0000-00-00 00:00:00' AFTER `comment`, DROP `message`, CHANGE `created` `creation_time` datetime NOT NULL default '0000-00-00 00:00:00'</query>
 		</version>
 	</upgrade>
 </comupgrade>

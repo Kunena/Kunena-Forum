@@ -37,6 +37,7 @@ Kunena 1.6.0-ALPHA
 29-May-2010 Xillibit
 # [#19244] Escape all database column, little change on database structure
 # [#19244] Add configuration setting to display ban reaon in profile, set ban rank when an user is banned
+# [#19244] Add upgrade things for kunena_banned_users table
 
 28-May-2010 @quila
 ^ [#19244] Moderation feature: cleanup ban manager, ban history and add ban pages

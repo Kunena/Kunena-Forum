@@ -195,6 +195,7 @@ PX		EM			PCT			PT
 	clear: both;
 	border-bottom:4px solid #BFC3C6;
 }
+
 #Kunena div.kblock div.ktitle {
 	background: #5388B4;
 	text-align: left;
@@ -1746,6 +1747,12 @@ PX		EM			PCT			PT
 	padding: 10px 0 0 0;
 	margin-top: 5px;
 	min-height: 180px;
+}
+#Kunena td.kmessage-right div {
+	display: table;
+	table-layout:fixed;
+	width: 100%;	
+	word-wrap:break-word;
 }
 
 #Kunena div.kmsgattach {

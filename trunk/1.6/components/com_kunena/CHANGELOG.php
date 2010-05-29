@@ -35,6 +35,9 @@ Legend:
 Kunena 1.6.0-ALPHA
 
 29-May-2010 Severdia
+# [#19356] Fixed IE/FF word wrap bug
+
+29-May-2010 Severdia
 ^ [#19312] Cleanup English language file
 
 29-May-2010 Matias

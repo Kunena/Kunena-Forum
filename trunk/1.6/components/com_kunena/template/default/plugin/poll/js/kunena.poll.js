@@ -64,8 +64,8 @@ window.addEvent('domready', function() {
 			span.set('text', textString);
 		}		
 			
-	if($('kbutton_poll_add') != undefined) {
-		$('kbutton_poll_add').onclick = function () {
+	if($('kbutton-poll-add') != undefined) {
+		$('kbutton-poll-add').onclick = function () {
 			var nboptionsmax = $('nb_options_allowed').get('value');			
 			if(nboptionsmax == "0") {				
 				if(number_field == '1') {
@@ -90,8 +90,8 @@ window.addEvent('domready', function() {
 			}
 		};
 	}
-	if($('kbutton_poll_rem') != undefined) {
-		$('kbutton_poll_rem').onclick = function () {
+	if($('kbutton-poll-rem') != undefined) {
+		$('kbutton-poll-rem').onclick = function () {
 			if($('option_error')){
 				$('option_error').dispose();
 			}

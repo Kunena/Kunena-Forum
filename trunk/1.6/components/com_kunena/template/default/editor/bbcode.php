@@ -31,37 +31,37 @@ $kunena_config = KunenaFactory::getConfig ();
 	?></strong></td>
 	<?php //} 	?>
 	<td>
-	<table class="k-postbuttonset">
+	<table class="kpostbuttonset">
 		<tr>
-			<td class="k-postbuttons">
+			<td class="kpostbuttons">
 			<ul id="kbbcode-toolbar"></ul>
 			</td>
 		</tr>
 		<!-- Start extendable secondary toolbar -->
 		<tr>
-			<td class="k-postbuttons">
+			<td class="kpostbuttons">
 			<div id="kbbcode-size-options" style="display: none;"><span
-				class="kmsgtext_xs" title='[size=1]'
+				class="kmsgtext-xs" title='[size=1]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XS');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext_s" title='[size=2]'
+				?>&nbsp;</span> <span class="kmsgtext-s" title='[size=2]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_S');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext_m" title='[size=3]'
+				?>&nbsp;</span> <span class="kmsgtext-m" title='[size=3]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_M');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext_l" title='[size=4]'
+				?>&nbsp;</span> <span class="kmsgtext-l" title='[size=4]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_L');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext_xl" title='[size=5]'
+				?>&nbsp;</span> <span class="kmsgtext-xl" title='[size=5]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XL');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext_xxl" title='[size=6]'
+				?>&nbsp;</span> <span class="kmsgtext-xxl" title='[size=6]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XXL');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
@@ -127,8 +127,8 @@ $kunena_config = KunenaFactory::getConfig ();
 				$kunena_poll->call_js_poll_edit($this->kunena_editmode, $this->id);
 				$html_poll_edit = $kunena_poll->get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
 				JHTML::_('behavior.calendar');
-			?><span id="kpoll_not_allowed"><?php if(!$display_poll) { echo JText::_('The polls are not allowed in this category'); } ?></span>
-			<div id="kpoll_hide_not_allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
+			?><span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('The polls are not allowed in this category'); } ?></span>
+			<div id="kpoll-hide-not-allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
 			<?php echo JText::_('COM_KUNENA_POLL_TITLE');
 			?>&nbsp;<input type="text" id="kpolltitle" name="poll_title"
 				maxlength="100" size="40"
@@ -137,16 +137,16 @@ $kunena_config = KunenaFactory::getConfig ();
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />
 			<?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?>&nbsp;
 			<input class="inputbox" type="text" maxlength="15"
-				name="poll_time_to_live" id="poll_time_to_live"
+				name="kpoll-time-to-live" id="kpoll-time-to-live"
 				style="display: none"
 				value="<?php echo $this->polldatasedit[0]->polltimetolive; ?>" /> <img
 				src="templates/system/images/calendar.png" alt="Calendar"
-				onclick="showCalendar('poll_time_to_live','%Y-%m-%d');$('poll_time_to_live').removeProperty('style');"
+				onclick="showCalendar('kpoll-time-to-live','%Y-%m-%d');$('kpoll-time-to-live').removeProperty('style');"
 				onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN'); ?>')" />
-			<img id="kbutton_poll_add"
+			<img id="kbutton-poll-add"
 				src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/karmaplus.png"
 				onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>')" />
-			<img id="kbutton_poll_rem"
+			<img id="kbutton-poll-rem"
 				src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/karmaminus.png"
 				onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" />
 			</div>
@@ -259,7 +259,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		</tr>
 		<?php if (!$this->config->disemoticons) : ?>
 		<tr>
-			<td class="k-postbuttons">
+			<td class="kpostbuttons">
 			<div id="smilie"><?php
 			$kunena_db = &JFactory::getDBO ();
 			$kunena_db->setQuery ( "SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id" );

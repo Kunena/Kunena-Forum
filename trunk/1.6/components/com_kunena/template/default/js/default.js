@@ -60,12 +60,12 @@ window.addEvent('domready', function() {
 		'false': '<span class="open"></span>'
 	};
 	var myVerticalSlide = new Fx.Slide('kprofilebox');
-	$('kprofilebox_toggle').addEvent('click', function(e){
+	$('kprofilebox-toggle').addEvent('click', function(e){
 		e.stop();
 		myVerticalSlide.toggle();
 	});
 	myVerticalSlide.addEvent('complete', function() {
-		$('kprofilebox_status').set('html', status[myVerticalSlide.open]);
+		$('kprofilebox-status').set('html', status[myVerticalSlide.open]);
 	});
 
 });
@@ -784,22 +784,22 @@ window.addEvent('domready', function(){
 						url: url,
 						onComplete: function(jsonObj) {
 							if (jsonObj.allowed_polls != null && jsonObj.allowed_polls.indexOf(catid.value) >= 0) {
-								$('kpoll_hide_not_allowed').removeProperty('style');
+								$('kpoll-hide-not-allowed').removeProperty('style');
 								$('kbbcode-separator5').removeProperty('style');
-								$('kbbcode-poll_button').removeProperty('style');
-								$('kpoll_not_allowed').set('text', ' ');
+								$('kbbcode-poll-button').removeProperty('style');
+								$('kpoll-not-allowed').set('text', ' ');
 							} else {								
 								$('kbbcode-separator5').setStyle('display','none');
-								$('kbbcode-poll_button').setStyle('display','none');
-								$('kpoll_hide_not_allowed').setStyle('display','none');
-								if (jsonObj.allowed_polls != null) $('kpoll_not_allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
-								else if (jsonObj.error) $('kpoll_not_allowed').set('text', jsonObj.error);
-								else $('kpoll_not_allowed').set('text', 'Unknown error!');
+								$('kbbcode-poll-button').setStyle('display','none');
+								$('kpoll-hide-not-allowed').setStyle('display','none');
+								if (jsonObj.allowed_polls != null) $('kpoll-not-allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
+								else if (jsonObj.error) $('kpoll-not-allowed').set('text', jsonObj.error);
+								else $('kpoll-not-allowed').set('text', 'Unknown error!');
 							}
 						},
 						onFailure: function(){
-							$('kpoll_hide_not_allowed').setStyle('display','none');
-							$('kpoll_not_allowed').set('text', 'Cannot contact server!');
+							$('kpoll-hide-not-allowed').setStyle('display','none');
+							$('kpoll-not-allowed').set('text', 'Cannot contact server!');
 						}
 				}).send();				
 			})
@@ -832,13 +832,13 @@ window.addEvent('domready', function(){
 			e.stop();
 			var kreply = el.getProperty('id');
 			var kstate = $(kreply+'_form').getStyle('display');
-			$$('.kreply_form').setStyle('display', 'none');
+			$$('.kreply-form').setStyle('display', 'none');
 			if (kstate == 'none') $(kreply+'_form').removeProperty('style');
 		});
 	});
 	
-	$$('.kreply_cancel').addEvent('click', function(e){
-		$$('.kreply_form').setStyle('display', 'none');
+	$$('.kreply-cancel').addEvent('click', function(e){
+		$$('.kreply-form').setStyle('display', 'none');
 	});
 	
 	/* Javascript with mootools logic for bulkactions

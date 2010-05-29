@@ -55,18 +55,18 @@ if ($this->objCatInfo->headerdesc) {
 
 <!-- B: List Actions -->
 
-<table class="klist_actions">
+<table class="klist-actions">
 	<tr>
-		<td class="klist_actions_goto"><?php
+		<td class="klist-actions-goto"><?php
 		//go to bottom
 		echo '<a name="forumtop" /> ';
 		echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_GOTOBOTTOM') . '" title="' . JText::_('COM_KUNENA_GEN_GOTOBOTTOM') . '"/>' : JText::_('COM_KUNENA_GEN_GOTOBOTTOM') );
 		?>
 		</td>
-		<td class="klist_actions_forum" width="100%">
+		<td class="klist-actions-forum" width="100%">
 		<?php
 		if (isset ( $this->forum_new ) || isset ( $this->forum_markread ) || isset ( $this->thread_subscribecat )) {
-			echo '<div class="kmessage_buttons_row">';
+			echo '<div class="kmessage-buttons-row">';
 			if (isset ( $this->forum_new ))
 				echo $this->forum_new;
 			if (isset ( $this->forum_markread ))
@@ -77,7 +77,7 @@ if ($this->objCatInfo->headerdesc) {
 		}
 		?>
 		</td>
-		<td class="klist_pages_all nowrap">
+		<td class="klist-pages-all nowrap">
 		<?php
 		//pagination 1
 		if (count ( $this->messages ) > 0) {
@@ -97,9 +97,9 @@ if ($this->objCatInfo->headerdesc) {
 
 <!-- B: List Actions Bottom -->
 
-<table class="klist_actions_bottom" >
+<table class="klist-actions-bottom" >
 	<tr>
-		<td class="klist_actions_goto"><?php
+		<td class="klist-actions-goto"><?php
 		//go to top
 		echo '<a name="forumbottom" />';
 		echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', isset ( $kunena_icons ['toparrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['toparrow'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_GOTOTOP') . '" title="' . JText::_('COM_KUNENA_GEN_GOTOTOP') . '"/>' : JText::_('COM_KUNENA_GEN_GOTOTOP') );
@@ -108,7 +108,7 @@ if ($this->objCatInfo->headerdesc) {
 		</td>
 		<td class="klist_actions_forum" width="100%"><?php
 		if (isset ( $this->forum_new ) || isset ( $this->forum_markread ) || isset ( $this->thread_subscribecat )) {
-			echo '<div class="kmessage_buttons_row">';
+			echo '<div class="kmessage-buttons-row">';
 			if (isset ( $this->forum_new ))
 				echo $this->forum_new;
 			if (isset ( $this->forum_markread ))
@@ -120,7 +120,7 @@ if ($this->objCatInfo->headerdesc) {
 		?>
 
 		</td>
-		<td class="klist_pages_all nowrap"><?php
+		<td class="klist-pages-all nowrap"><?php
 		//pagination 2
 		if (count ( $this->messages ) > 0) {
 			echo $pagination;
@@ -139,9 +139,9 @@ echo '</div>';
 
 <!-- B: Category List Bottom -->
 
-<table class="klist_bottom">
+<table class="klist-bottom">
 	<tr>
-		<td class="klist_moderators"><!-- Mod List --> <?php
+		<td class="klist-moderators"><!-- Mod List --> <?php
 
 		if (count ( $this->modslist ) > 0) :
 			?>
@@ -158,7 +158,7 @@ echo '</div>';
 
 		<?php endif;
 		?> <!-- /Mod List --></td>
-		<td class="klist_categories"><?php
+		<td class="klist-categories"><?php
 		$this->displayForumJump ();
 		?>
 		</td>

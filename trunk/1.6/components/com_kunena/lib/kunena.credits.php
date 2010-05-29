@@ -28,7 +28,7 @@ $kunena_config = KunenaFactory::getConfig ();
           <table class = "kblocktable" id ="kforumcredits" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
               <tr>
-                <th> <div class = "ktitle_cover"> <span class="ktitle kl" >Team credits</span> </div>
+                <th> <div class = "ktitle-cover"> <span class="ktitle kl" >Team credits</span> </div>
               </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@ $kunena_config = KunenaFactory::getConfig ();
                 <td class = "kcreditsdesc"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr valign="top">
                       <td width="170"><img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
-                      <td><div  class="kcredits_intro"> An open source project like Kunena requires the dedication and investment of personal time from various contributors.
+                      <td><div  class="kcredits-intro"> An open source project like Kunena requires the dedication and investment of personal time from various contributors.
                           This version of Kunena Forum has been made possible by the following contributors (in alphabetical ordering):</div></td>
                     </tr>
                     <tr valign="top">
@@ -53,7 +53,7 @@ $kunena_config = KunenaFactory::getConfig ();
                         </ul></td>
                     </tr>
                     <tr valign="top">
-                      <td colspan="2"><div  class="kcredits_more">Special thanks go to Beat and the CB Testing team, Ida and JoniJnm for significant contributions to Kunena. In addition many members of <a href="http://www.kunena.com" target='_blank' rel='follow'>www.Kunena.com</a> have contributed and helped make this a more stable and bugfree version.
+                      <td colspan="2"><div  class="kcredits-more">Special thanks go to Beat and the CB Testing team, Ida and JoniJnm for significant contributions to Kunena. In addition many members of <a href="http://www.kunena.com" target='_blank' rel='follow'>www.Kunena.com</a> have contributed and helped make this a more stable and bugfree version.
                           Our Thanks go out to all contributors of Kunena! Greetings from the global Kunena forum team! <br />
                           <br />
                           <?php

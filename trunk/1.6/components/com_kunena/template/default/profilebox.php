@@ -26,8 +26,7 @@ if ($type == 'logout') :
 	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 ?>
 <!-- Kunena Header -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0"
-	id="Kunena_top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="ktop">
 	<tr>
 		<td align="left"><?php
 	// display Kunena menu if present
@@ -35,7 +34,7 @@ if ($type == 'logout') :
 		?>
 		<!-- Kunena Menu position: kunena_menu -->
 		<div id="ktopmenu">
-		<div id="Kunena_tab"><?php
+		<div id="ktab"><?php
 		$document = &JFactory::getDocument ();
 		$renderer = $document->loadRenderer ( 'modules' );
 		$options = array ('style' => 'xhtml' );
@@ -48,7 +47,7 @@ if ($type == 'logout') :
 		<?php
 	}
 	?></td>
-		<td align="right" width="1%"><span id="kprofilebox_status"><a
+		<td align="right" width="1%"><span id="kprofilebox-status"><a
 			class="ktoggler close" rel="kprofilebox"></a></span>
 		</td>
 	</tr>
@@ -63,7 +62,7 @@ if ($type == 'logout') :
 			</td>
 			<?php endif; ?>
 			<td class="kprofileboxcnt left">
-				<ul class="kprofilebox_link">
+				<ul class="kprofilebox-link">
 					<?php if ($PMlink) : ?>
 						<li><?php echo $PMlink; ?></li>
 					<?php endif ?>
@@ -75,7 +74,7 @@ if ($type == 'logout') :
 						<li><a href="<?php echo CKunenaLink::GetAnnouncementURL ( 'show' ); ?>"><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?></a></li>
 					<?php endif; ?>
 				</ul>
-				<ul class="kprofilebox_welcome">
+				<ul class="kprofilebox-welcome">
 					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->user->id, $this->kunena_username ); ;?></strong></li>
 					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 					<?php if ($logout) : ?>
@@ -92,7 +91,7 @@ if ($type == 'logout') :
 			</td>
 				<?php if (JDocumentHTML::countModules ( 'kunena_profilebox' )) : ?>
 			<td class = "kprofilebox-right">
-				<div class="kprofilebox_modul">
+				<div class="kprofilebox-modul">
 					<?php CKunenaTools::showModulePosition( 'kunena_profilebox' ); ?>
 				</div>
 			</td>
@@ -106,7 +105,7 @@ $login = CKunenaLogin::getloginFields();
 ?>
 <!-- Kunena Header -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0"
-	id="Kunena_top">
+	id="ktop">
 	<tr>
 		<td align="left"><?php
 	// display Kunena menu if present
@@ -114,7 +113,7 @@ $login = CKunenaLogin::getloginFields();
 		?>
 		<!-- Kunena Menu position: kunena_menu -->
 		<div id="ktopmenu">
-		<div id="Kunena_tab"><?php
+		<div id="ktab"><?php
 		$document = &JFactory::getDocument ();
 		$renderer = $document->loadRenderer ( 'modules' );
 		$options = array ('style' => 'xhtml' );
@@ -127,7 +126,7 @@ $login = CKunenaLogin::getloginFields();
 		<?php
 	}
 	?></td>
-		<td align="right" width="1%"><span id="kprofilebox_status"><a
+		<td align="right" width="1%"><span id="kprofilebox-status"><a
 			class="ktoggler close" rel="kprofilebox"></a></span>
 		</td>
 	</tr>
@@ -159,16 +158,16 @@ $login = CKunenaLogin::getloginFields();
 						</span>
 					</div>
 					<div class="link_block">
-						<span class="kprofilebox_link">
+						<span class="kprofilebox-link">
 							<?php echo CKunenaLogin::getLostPasswordLink (); ?>
 						</span>
-						<span class="kprofilebox_link">
+						<span class="kprofilebox-link">
 							<?php echo CKunenaLogin::getLostUserLink ();?>
 						</span>
 						<?php
 						$registration = CKunenaLogin::getRegisterLink ();
 						if ($registration) : ?>
-						<span class="kprofilebox_link">
+						<span class="kprofilebox-link">
 							<?php echo $registration ?>
 						</span>
 						<?php endif; ?>
@@ -178,7 +177,7 @@ $login = CKunenaLogin::getloginFields();
 			</td>
 				<?php if (JDocumentHTML::countModules ( 'kunena_profilebox' )) : ?>
 			<td class = "kprofilebox-right">
-				<div class="kprofilebox_modul">
+				<div class="kprofilebox-modul">
 					<?php CKunenaTools::showModulePosition( 'kunena_profilebox' ); ?>
 				</div>
 			</td>

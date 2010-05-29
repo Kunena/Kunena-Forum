@@ -20,7 +20,7 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 		</li>
 		<?php if ($this->usertype) : ?>
 		<li class="kpost-usertype">
-			<span class = "msgusertype">( <?php echo $this->usertype ?> )</span>
+			<span class = "kmsgusertype">( <?php echo $this->usertype ?> )</span>
 		</li>
 		<?php endif ?>
 		<li class="kpost-avatar">
@@ -48,7 +48,7 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 
 		<li class="kpost-online-status-<?php echo $this->profile->isOnline(true); ?>"> </li>
 		<li class="kpost-smallicons">
-			<div class="iconrow">
+			<div class="kiconrow">
 				<?php echo $this->profile->profileIcon('gender'); ?>
 				<?php echo $this->profile->profileIcon('birthdate'); ?>
 				<?php echo $this->profile->profileIcon('location'); ?>
@@ -71,7 +71,7 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 	<ul id="kpost-profiletop">
 		<?php if ($this->profile->userid): ?>
 		<li class="kpost-smallicons">
-			<div class="iconrow">
+			<div class="kiconrow">
 			<?php echo $this->profile->profileIcon('gender'); ?>
 			<?php echo $this->profile->profileIcon('birthdate'); ?>
 			<?php echo $this->profile->profileIcon('location'); ?>
@@ -97,7 +97,7 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 		</li>
 		<?php if ($this->usertype) : ?>
 		<li class="kpost-usertype">
-			<span class = "msgusertype">( <?php echo $this->usertype ?> )</span>
+			<span class = "kmsgusertype">( <?php echo $this->usertype ?> )</span>
 		</li>
 		<?php endif ?>
 

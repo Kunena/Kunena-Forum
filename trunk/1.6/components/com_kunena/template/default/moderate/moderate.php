@@ -36,23 +36,23 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 <br />
 	<?php if (!$this->moderateTopic) : ?>
 	<div><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_SELECTED'); ?>:</div>
-	<div class="kmoderate_message">
+	<div class="kmoderate-message">
 		<h4><?php echo kunena_htmlspecialchars ( $this->message->subject ); ?></h4>
-		<div class="kmessage_timeby"><span class="kmessage_time" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover'); ?>">
+		<div class="kmessage-timeby"><span class="kmessage-time" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover'); ?>">
 		<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat'); ?></span>
-		<span class="kmessage_by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->message->userid, $this->message->name ); ?></span></div>
-		<div class="kmessage_avatar"><?php echo $this->user->getAvatarLink('', 'lastpost'); ?></div>
-		<div class="kmessage_msgtext"><?php echo KunenaParser::stripBBCode ($this->message->message, 300) ?></div>
+		<span class="kmessage-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->message->userid, $this->message->name ); ?></span></div>
+		<div class="kmessage-avatar"><?php echo $this->user->getAvatarLink('', 'lastpost'); ?></div>
+		<div class="kmessage-msgtext"><?php echo KunenaParser::stripBBCode ($this->message->message, 300) ?></div>
 	</div>
 	<?php if ($this->threadmsg->replies) : ?>
 	<ul>
-		<li><input id="kmoderate_mode_selected" type="radio" name="mode" checked="checked" value="<?php echo KN_MOVE_MESSAGE ?>" /><?php echo JText::_ ( 'COM_KUNENA_MODERATION_MOVE_SELECTED' ); ?></li>
-		<li><input id="kmoderate_mode_newer" type="radio" name="mode" value="<?php echo KN_MOVE_NEWER ?>" ><?php echo JText::sprintf ( 'COM_KUNENA_MODERATION_MOVE_NEWER', $this->threadmsg->replies ); ?></li>
+		<li><input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked" value="<?php echo KN_MOVE_MESSAGE ?>" /><?php echo JText::_ ( 'COM_KUNENA_MODERATION_MOVE_SELECTED' ); ?></li>
+		<li><input id="kmoderate-mode-newer" type="radio" name="mode" value="<?php echo KN_MOVE_NEWER ?>" ><?php echo JText::sprintf ( 'COM_KUNENA_MODERATION_MOVE_NEWER', $this->threadmsg->replies ); ?></li>
 	</ul>
 	<?php endif; ?>
 	<br />
 <?php else : ?>
-	<input id="kmoderate_mode_topic" type="hidden" name="mode" value="<?php echo KN_MOVE_THREAD ?>" />
+	<input id="kmoderate-mode-topic" type="hidden" name="mode" value="<?php echo KN_MOVE_THREAD ?>" />
 <?php endif; ?>
 
 	<div><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST' );?>:

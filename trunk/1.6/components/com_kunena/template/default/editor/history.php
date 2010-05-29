@@ -19,24 +19,24 @@ $k = 0;
 <?php echo $this->subject ?><br />
 <?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->config->historylimit . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?><br />
 <table border="0" cellspacing="1" cellpadding="3" width="100%"
-	class="kreview_table">
+	class="kreview-table">
 	<tr>
-		<td class="kreview_header" width="20%" align="center">
+		<td class="kreview-header" width="20%" align="center">
 			<strong><?php echo JText::_ ( 'COM_KUNENA_GEN_AUTHOR' )?></strong>
 		</td>
 
-		<td class="kreview_header" align="center">
+		<td class="kreview-header" align="center">
 			<strong><?php echo JText::_ ( 'COM_KUNENA_GEN_MESSAGE' )?></strong>
 		</td>
 	</tr>
 	<?php foreach ( $this->messages as $mes ):?>
 	<tr>
-		<td class="kreview_body<?php echo $k = 1 - $k?>" valign="top">
+		<td class="kreview-body<?php echo $k = 1 - $k?>" valign="top">
 			<?php echo kunena_htmlspecialchars ( $mes->name )?>
 		</td>
 
-		<td class="kreview_body<?php echo $k?>">
-			<div class="msgtext">
+		<td class="kreview-body<?php echo $k?>">
+			<div class="kmsgtext">
 				<?php echo KunenaParser::parseBBCode( $mes->message )?>
 			</div>
 			<?php if ( !empty($this->attachmentslist[$mes->id]) ) $this->displayAttachments($this->attachmentslist[$mes->id]); ?>

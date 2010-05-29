@@ -30,7 +30,7 @@ $this->displayThreadActions(0);
 	<thead>
 		<tr>
 			<th class="left">
-				<div class="ktitle_cover km">
+				<div class="ktitle-cover km">
 					<span class="ktitle kl"><?php echo JText::_('COM_KUNENA_TOPIC') ?>
 						<?php echo $this->kunena_topic_title ?>
 					</span>
@@ -60,9 +60,9 @@ $this->displayThreadActions(0);
 <!-- F: List Actions Bottom -->
 
 <!-- B: Category List Bottom -->
-<table class="klist_bottom">
+<table class="klist-bottom">
 	<tr>
-		<td class="klist_moderators">
+		<td class="klist-moderators">
 		<!-- Mod List -->
 		<?php
 		if (count ( $this->modslist ) > 0) {
@@ -82,7 +82,7 @@ $this->displayThreadActions(0);
 		?>
 		<!-- /Mod List -->
 		</td>
-		<td class="klist_categories">
+		<td class="klist-categories">
 		<?php $this->displayForumJump();
 		?>
 		</td>

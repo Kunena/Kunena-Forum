@@ -11,12 +11,12 @@
 window.addEvent('domready', function() {
 	function insert_text(textString,nb)
 	{	
-		var polltexthelp = $('poll_text_help');
+		var polltexthelp = $('kpoll-text-help');
 		//Remove the content of the html tag <p></p> before to add something else
 		//i don't know if it's possible to use something else than innerHTML() function for do this purpose
 		polltexthelp.innerHTML='';
 		var newinfo = document.createElement("p");
-		newinfo.setAttribute('id','poll_text_infos');
+		newinfo.setAttribute('id','kpoll-text-infos');
 		var image = document.createElement("img");	
 		if(nb == '1'){				
 			image.setAttribute('src',KUNENA_ICON_ERROR);		
@@ -30,12 +30,12 @@ window.addEvent('domready', function() {
 		newinfo.appendChild(texte);
 	}
 	
-	if($('kpoll_form_vote') != undefined) {
-		$('kpoll_form_vote').addEvent('submit', function(e) {
+	if($('kpoll-form-vote') != undefined) {
+		$('kpoll-form-vote').addEvent('submit', function(e) {
 			//Prevents the default submit event from loading a new page.
 			e.stop();
 			var datano = '0';
-			$$('.kpoll_boxvote').each(function(el){
+			$$('.kpoll-boxvote').each(function(el){
 				if(el.checked==true){
 					datano = "1";
 				}

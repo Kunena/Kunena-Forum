@@ -13,32 +13,32 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kunena-msgtitle left">
-	<span class="msgtitle<?php echo $this->msgsuffix ?>">
+<div class="kmsgtitle left">
+	<span class="kmsgtitle<?php echo $this->msgsuffix ?>">
 		<?php echo $this->subject ?>
 	</span>
-	<span class="msgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+	<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 		<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 	</span>
-	<span class="msgkarma">
+	<span class="kmsgkarma">
 		<?php echo $this->userkarma ?>
 	</span>
 </div>
 <div>
-	<div class="msgtext">
+	<div class="kmsgtext">
 		<?php echo $this->message ?>
 	</div>
 </div>
 <?php $this->displayAttachments() ?>
 <div>
 	<?php if ($this->signature) : ?>
-	<div class="msgsignature">
+	<div class="kmsgsignature">
 		<?php echo $this->signature ?>
 	</div>
 	<?php endif ?>
 </div>
 <?php if ( $this->message_quickreply ) : ?>
-<div id="kreply<?php echo $this->id ?>_form" class="kreply_form" style="display: none">
+<div id="kreply<?php echo $this->id ?>_form" class="kreply-form" style="display: none">
 	<?php
 	?>
 	<form action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post" name="postform" enctype="multipart/form-data">
@@ -54,8 +54,8 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif; ?>
 		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo $this->config->maxsubject; ?>" value="<?php echo  $this->escape($this->resubject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
-		<input type="reset" class="kbutton kreply_cancel" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" />
-		<input type="submit" class="kbutton kreply_submit" name="submit" value="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?>" />
+		<input type="reset" class="kbutton kreply-cancel" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" />
+		<input type="submit" class="kbutton kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?>" />
 		<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>
 	</form>
 </div>

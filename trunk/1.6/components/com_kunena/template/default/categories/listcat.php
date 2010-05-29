@@ -28,9 +28,9 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 $this->displayPathway ();
 ?>
 <!-- B: Cat list Top -->
-<table class="klist_top">
+<table class="klist-top">
 	<tr>
-		<td class="klist_markallcatsread"><?php
+		<td class="klist-markallcatsread"><?php
 		if ($this->my->id != 0) {
 			?>
 
@@ -47,7 +47,7 @@ $this->displayPathway ();
 		<?php
 		}
 		?></td>
-		<td class="klist_categories"><?php
+		<td class="klist-categories"><?php
 		$this->displayForumJump ();
 		?>
 		</td>

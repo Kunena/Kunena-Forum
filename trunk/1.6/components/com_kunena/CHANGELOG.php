@@ -35,6 +35,9 @@ Legend:
 Kunena 1.6.0-ALPHA
 
 28-May-2010 Severdia
+^ [#19356] Changed CSS styles to format using k and dashes
+
+28-May-2010 Severdia
 # [#19356] CSS fixes for broken layouts caused by no breaks in code tags, new images
 
 28-May-2010 Matias

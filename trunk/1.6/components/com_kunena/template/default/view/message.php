@@ -18,7 +18,7 @@ if ($this->config->avposition == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="view-th ksectiontableheader">
+			<th colspan="2" class="kview-th ksectiontableheader">
 				<a name="<?php echo $this->id ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>
@@ -26,17 +26,17 @@ if ($this->config->avposition == 'top') : ?>
 	</thead>
 	<tbody>
 		<tr>
-			<td valign="top" class="kunena-profile-top">
+			<td valign="top" class="kprofile-top">
 				<?php $this->displayProfile() ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="kunena-message-top">
+			<td class="kmessage-top">
 				<?php $this->displayContents() ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="buttonbar-top">
+			<td class="kbuttonbar-top">
 				<?php $this->displayActions() ?>
 			</td>
 		</tr>
@@ -48,7 +48,7 @@ if ($this->config->avposition == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="view-th ksectiontableheader">
+			<th colspan="2" class="kview-th ksectiontableheader">
 				<a name="<?php echo $this->id ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>
@@ -56,17 +56,17 @@ if ($this->config->avposition == 'top') : ?>
 	</thead>
 	<tbody>
 		<tr>
-			<td class="kunena-message-bottom">
+			<td class="kmessage-bottom">
 				<?php $this->displayContents() ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="buttonbar-bottom">
+			<td class="kbuttonbar-bottom">
 				<?php $this->displayActions() ?>
 			</td>
 		</tr>
 		<tr>
-			<td valign="top" class="kunena-profile-bottom">
+			<td valign="top" class="kprofile-bottom">
 				<?php $this->displayProfile() ?>
 			</td>
 		</tr>
@@ -78,7 +78,7 @@ if ($this->config->avposition == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="view-th ksectiontableheader">
+			<th colspan="2" class="kview-th ksectiontableheader">
 				<a name="<?php echo $this->id ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>
@@ -86,15 +86,15 @@ if ($this->config->avposition == 'top') : ?>
 	</thead>
 	<tbody>
 		<tr>
-			<td rowspan="2" valign="top" class="kunena-profile-left">
+			<td rowspan="2" valign="top" class="kprofile-left">
 				<?php $this->displayProfile() ?>
 			</td>
-			<td class="kunena-message-left">
+			<td class="kmessage-left">
 				<?php $this->displayContents() ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="buttonbar-left">
+			<td class="kbuttonbar-left">
 				<?php $this->displayActions() ?>
 			</td>
 		</tr>
@@ -106,7 +106,7 @@ if ($this->config->avposition == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="view-th ksectiontableheader">
+			<th colspan="2" class="kview-th ksectiontableheader">
 				<a name="<?php echo $this->id ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>
@@ -114,15 +114,15 @@ if ($this->config->avposition == 'top') : ?>
 	</thead>
 	<tbody>
 		<tr>
-			<td class="kunena-message-right">
+			<td class="kmessage-right">
 				<?php $this->displayContents() ?>
 			</td>
-			<td rowspan="2" class="kunena-profile-right">
+			<td rowspan="2" class="kprofile-right">
 				<?php $this->displayProfile() ?>
 			</td>
 		</tr>
 		<tr>
-			<td class="buttonbar-right">
+			<td class="kbuttonbar-right">
 				<?php $this->displayActions() ?>
 			</td>
 		</tr>

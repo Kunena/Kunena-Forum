@@ -39,7 +39,7 @@ if ($this->config->showwhoisonline)
     <table class = "kblocktable" id ="kwhoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
-                <th class="left" colspan="3"><div class = "ktitle_cover km">
+                <th class="left" colspan="3"><div class = "ktitle-cover km">
 							<?php 
 							$who_online = JText::_('COM_KUNENA_WHO_WHOIS_ONLINE');
 							if (CKunenaTools::isModerator($this->my->id)) {
@@ -49,21 +49,21 @@ if ($this->config->showwhoisonline)
 							}
 							?></div>
                    <div class="fltrt">
-						<span id="kwhoisonline_status"><a class="ktoggler close" rel="whoisonline_tbody"></a></span>
+						<span id="kwhoisonline-status"><a class="ktoggler close" rel="kwhoisonline-tbody"></a></span>
 					</div>
                 </th>
 
             </tr>
         </thead>
 
-        <tbody id = "whoisonline_tbody">
+        <tbody id = "kwhoisonline-tbody">
             <tr class = "ksectiontableentry1">
                <td class = "td-1" width="1%">
-					<div class="whoicon"></div>
+					<div class="kwhoicon"></div>
                 </td>
                 <td class = "td-1 km" align="left">
 					
-                    <div class="whoonline ks">
+                    <div class="kwhoonline ks">
                         <?php 
 							//$totalhiden = '';
 							$totalusers = ($totaluser + $totalguests);
@@ -96,13 +96,13 @@ if ($this->config->showwhoisonline)
 							<?php } } 
 						?>
 					</div>
-                    <div class="wholegend ks">
+                    <div class="kwholegend ks">
 						<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?> :: </span>&nbsp;
-						<span class = "admin" title = "<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></span>,&nbsp;
-						<span class = "globalmoderator" title = "<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></span>,&nbsp;
-						<span class = "moderator" title = "<?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></span>,&nbsp;
-						<span class = "user" title = "<?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></span>,&nbsp;
-						<span class = "guest" title = "<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></span>
+						<span class = "kwho-admin" title = "<?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_ADMINISTRATOR'); ?></span>,&nbsp;
+						<span class = "kwho-globalmoderator" title = "<?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GLOBAL_MODERATOR'); ?></span>,&nbsp;
+						<span class = "kwho-moderator" title = "<?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_MODERATOR'); ?></span>,&nbsp;
+						<span class = "kwho-user" title = "<?php echo JText::_('COM_KUNENA_COLOR_USER'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_USER'); ?></span>,&nbsp;
+						<span class = "kwho-guest" title = "<?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?>"> <?php echo JText::_('COM_KUNENA_COLOR_GUEST'); ?></span>
                     </div>
                 </td>
             </tr>

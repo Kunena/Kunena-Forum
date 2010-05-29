@@ -1,15 +1,23 @@
 <?php
 /**
+
  * @version $Id$
+
  * Kunena Component
+
  * @package Kunena
+
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
+
  *
+
  **/
 defined( '_JEXEC' ) or die();
+
+
 
 
 $document = & JFactory::getDocument ();
@@ -33,12 +41,12 @@ if ($this->my->id == $this->user->id) {
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
 			<?php if ($this->avatarlink) : ?>
-			<div class="avatar-lg"><?php echo $this->avatarlink; ?></div>
+			<div class="kavatar-lg"><?php echo $this->avatarlink; ?></div>
 			<?php endif; ?>
 			<div id="kprofile-stats">
 				<ul>
 					<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo $this->personalText; ?></li><?php } ?>
-					<li><span class="buttononline-<?php echo $this->online ? 'yes':'no'; ?> btn-left"><span class="online-<?php echo $this->online ? 'yes':'no'; ?>"><span><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></span></span></li>
+					<li><span class="kbuttononline-<?php echo $this->online ? 'yes':'no'; ?> btn-left"><span class="online-<?php echo $this->online ? 'yes':'no'; ?>"><span><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></span></span></li>
 					<!-- Check this: -->
 					<?php if (!empty($this->usertype)): ?><li class="usertype"><?php echo $this->usertype; ?></li><?php endif; ?>
 					<!-- The class on the span below should be rank then hyphen then the rank name -->

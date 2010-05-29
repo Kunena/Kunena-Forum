@@ -56,7 +56,7 @@ $this->k=0;
 	<thead>
 		<tr>
 			<th colspan="2">
-				<div class="ktitle_cover km">
+				<div class="ktitle-cover km">
 					<span class="ktitle kl">
 						<?php echo $this->title?>
 					</span>
@@ -65,11 +65,11 @@ $this->k=0;
 		</tr>
 	</thead>
 
-	<tbody id="kpost_message">
+	<tbody id="kpost-message">
 		<?php if (isset($this->selectcatlist)): ?>
 		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
 			<td class="kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY')?></strong></td>
-			<td class="k-topicicons"><?php echo $this->selectcatlist?></td>
+			<td class="ktopicicons"><?php echo $this->selectcatlist?></td>
 		</tr>
 		<?php endif; ?>
 
@@ -124,7 +124,7 @@ $this->k=0;
 			echo JText::_('COM_KUNENA_GEN_TOPIC_ICON');
 			?></strong></td>
 
-			<td class="k-topicicons">
+			<td class="ktopicicons">
 				<?php foreach ($topic_emoticons as $emoid=>$emoimg): ?>
 					<input type="radio" name="topic_emoticon" value="<?php echo $emoid; ?>"
 						<?php echo $this->emoid == $emoid ? ' checked="checked" ':'' ?> />
@@ -208,8 +208,8 @@ $this->k=0;
 		endif;
 		// Finish captcha
 		?>
-		<tr id="kpost_buttons_tr" class="ksectiontableentry1">
-			<td id="kpost_buttons" colspan="2" style="text-align: center;">
+		<tr id="kpost-buttons_tr" class="ksectiontableentry1">
+			<td id="kpost-buttons" colspan="2" style="text-align: center;">
 				<input type="button" name="cancel" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"
 				onclick="javascript:window.history.back();"

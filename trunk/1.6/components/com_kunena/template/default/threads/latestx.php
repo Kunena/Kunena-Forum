@@ -27,22 +27,22 @@ $this->displayAnnouncement ();
 CKunenaTools::showModulePosition ( 'kunena_announcement' );
 ?>
 <!-- B: List Actions -->
-<table class="klist_actions">
+<table class="klist-actions">
 	<tr>
 <?php if ($this->mode=='posts') : ?>
-		<td class="klist_actions_info_all"><strong><?php
+		<td class="klist-actions-info-all"><strong><?php
 		echo $this->total?></strong>
 		<?php echo $this->header; ?>
 		</td>
 <?php else: ?>
-		<td class="klist_actions_info_all"><strong><?php
+		<td class="klist-actions-info-all"><strong><?php
 		echo $this->total?></strong> <?php
 		echo JText::_('COM_KUNENA_DISCUSSIONS')?>
 		</td>
 		<?php
 		if ($this->func != 'mylatest' && $this->func != 'noreplies') :
 			?>
-		<td class="klist_times_all"><select class="inputboxusl"
+		<td class="klist-times-all"><select class="inputboxusl"
 			onchange="document.location.href=this.options[this.selectedIndex].value;"
 			size="1" name="select">
 			<?php
@@ -153,7 +153,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 		<?php
 		endif;
 		?>
-<td class="klist_jump_all">
+<td class="klist-jump-all">
 
 <?php
 $this->displayForumJump ();
@@ -164,7 +164,7 @@ $this->displayForumJump ();
 <?php
 //pagination 1
 if (count ( $this->messages ) > 0) :
-	echo '<td class="klist_pages_all">';
+	echo '<td class="klist-pages-all">';
 	$maxpages = 5 - 2; // odd number here (# - 2)
 	echo $pagination = $this->getPagination ( $this->func, $this->show_list_time, $this->page, $this->totalpages, $maxpages );
 	echo '</td>';
@@ -180,9 +180,9 @@ if (count ( $this->threadids ) > 0) :
 	$this->displayItems ();
 	?>
 <!-- B: List Actions -->
-<table class="klist_actions">
+<table class="klist-actions">
 	<tr>
-		<td class="klist_actions_info_all"><strong><?php
+		<td class="klist-actions-info-all"><strong><?php
 	echo $this->total?></strong> <?php
 	echo $this->mode=='posts' ? $this->header : JText::_('COM_KUNENA_DISCUSSIONS')?>
 			</td>
@@ -190,7 +190,7 @@ if (count ( $this->threadids ) > 0) :
 			<?php
 	//pagination 1
 	if (count ( $this->messages ) > 0) :
-		echo '<td class="klist_pages_all nowrap">';
+		echo '<td class="klist-pages-all nowrap">';
 		echo $pagination;
 		echo '</td>';
 

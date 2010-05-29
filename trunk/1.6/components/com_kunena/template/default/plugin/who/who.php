@@ -35,7 +35,7 @@ if ($this->config->showwhoisonline)
         <thead>
             <tr>
                 <th colspan = "4">
-                   <div class = "ktitle_cover">
+                   <div class = "ktitle-cover">
                         <span class="ktitle"><?php echo $this->app->getCfg('sitename'); ?> - <?php echo JText::_('COM_KUNENA_WHO_WHOIS_ONLINE'); ?></span>
                     </div>
             </tr>

@@ -1,8 +1,12 @@
 <?php
 /**
+
  * @version $Id$
+
  * Kunena Component
+
  * @package Kunena
+
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -778,7 +782,7 @@ if( $poll_allowed ){ ?>
 
 kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");
-}, {'id': 'kbbcode-poll_button',
+}, {'id': 'kbbcode-poll-button',
 <?php
 if ($this->msg_cat->allow_polls == '0') {
 	echo '\'style\':\'display: none;\',';
@@ -917,14 +921,19 @@ function kGrowShrinkMessage(change){
 	var currentheight = parseInt(m.getStyle('height'));
 	var newheight = currentheight + change;
 
+
 	if (newheight > 100) {
 		m.setStyle( 'height', newheight + 'px');
+
 		p.setStyle( 'height', newheight + 'px');
 	} else {
+
 		m.setStyle( 'height', '100px');
 		p.setStyle( 'height', '100px');
 	}
+
 }
+
 
 function myValidate(f) {
    if (document.formvalidator.isValid(f)) {
@@ -933,9 +942,13 @@ function myValidate(f) {
    return false;
 }
 
+
 function cancelForm() {
+
    document.forms['postform'].action.value = "cancel";
+
    return true;
+
 }
 
 function newAttachment() {

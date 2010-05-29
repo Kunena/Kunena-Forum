@@ -43,8 +43,8 @@ global $kunena_icons;
 	<thead>
 		<tr>
 			<th colspan="5">
-			<div class="ktitle_cover<?php
-		echo isset ( $cat->class_sfx ) ? ' ktitle_cover' . $cat->class_sfx : '';
+			<div class="ktitle-cover<?php
+		echo isset ( $cat->class_sfx ) ? ' ktitle-cover' . $cat->class_sfx : '';
 		?> km"><?php
 		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $cat->name ), 'follow', $class = 'ktitle kl' );
 
@@ -118,7 +118,7 @@ global $kunena_icons;
 				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $subcat->name ) );
 
 				if ($subcat->new && $this->my->id > 0) {
-					echo '<sup class="newchar">(' . $subcat->new . ' ' . $this->config->newchar . ")</sup>";
+					echo '<sup class="knewchar">(' . $subcat->new . ' ' . $this->config->newchar . ")</sup>";
 				}
 
 				if ($subcat->locked) {
@@ -232,18 +232,18 @@ else {
 			</td>
 
 			<td class="td-3 km center" width="5%"><!-- Number of Topics -->
-			<span class="cat_topics_number"><?php
+			<span class="kcat-topics-number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numTopics );
 				?>
-			</span> <span class="cat_topics"> <?php
+			</span> <span class="kcat-topics"> <?php
 				echo JText::_('COM_KUNENA_GEN_TOPICS');
 				?> </span> <!-- /Number of Replies --></td>
 
 			<td class="td-4 km center" width="5%"><!-- Number of Topics -->
-			<span class="cat_replies_number"><?php
+			<span class="kcat-replies-number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numPosts );
 				?>
-			</span> <span class="cat_replies"> <?php
+			</span> <span class="kcat-replies"> <?php
 				echo JText::_('COM_KUNENA_GEN_REPLIES');
 				?> </span> <!-- /Number of Replies --></td>
 

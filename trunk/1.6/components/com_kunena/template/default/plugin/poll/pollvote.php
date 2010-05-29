@@ -34,7 +34,7 @@ if ( $this->changevote ) {
         <thead>
             <tr>
                 <th align="left">
-                    <div class = "ktitle_cover km">
+                    <div class = "ktitle-cover km">
                         <span class = "ktitle kl"><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ( $dataspollresult[0]->title ); ?></span>
                     </div>
 
@@ -45,9 +45,9 @@ if ( $this->changevote ) {
         <tbody id = "polls_tbody">
                 <tr class = "ksectiontableentry2">
                     <td class = "td-1 km" align="left">
-                        <div class = "polldesc">
-                        <div id="poll_text_help"></div>
-                        <form id="kpoll_form_vote" method="post" action="<?php echo CKunenaLink::GetJsonURL($json_action); ?>">
+                        <div class = "kpolldesc">
+                        <div id="kpoll-text-help"></div>
+                        <form id="kpoll-form-vote" method="post" action="<?php echo CKunenaLink::GetJsonURL($json_action); ?>">
                         <fieldset><legend style="font-size: 14px;"><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
                         <ul>
 	<?php
@@ -55,20 +55,20 @@ if ( $this->changevote ) {
     {
     	if ( $this->changevote ) {
     		if($dataspollresult[$i]->id == $id_last_vote){
-       			echo "<li><input class=\"kpoll_boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" checked />".KunenaParser::parseText ( $dataspollresult[$i]->text )."</li>";
+       			echo "<li><input class=\"kpoll-boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" checked />".KunenaParser::parseText ( $dataspollresult[$i]->text )."</li>";
     		}else {
-				echo "<li><input class=\"kpoll_boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".KunenaParser::parseText ( $dataspollresult[$i]->text )."</li>";
+				echo "<li><input class=\"kpoll-boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".KunenaParser::parseText ( $dataspollresult[$i]->text )."</li>";
     		}
     	} else {
-			echo "<li><input class=\"kpoll_boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".KunenaParser::parseText ( $dataspollresult[$i]->text )."</li>";
+			echo "<li><input class=\"kpoll-boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".KunenaParser::parseText ( $dataspollresult[$i]->text )."</li>";
     	}
     }
        ?>
        	</ul>
-    	<input type="hidden" name="kpoll_id" value="<?php echo $this->id; ?>">
+    	<input type="hidden" name="kpoll-id" value="<?php echo $this->id; ?>">
     	</fieldset>
-		<div class="poll_center" id="poll_buttons">
-       <input id="k_poll_button_vote" type="submit" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
+		<div class="kpoll-center" id="kpoll-buttons">
+       <input id="kpoll-button-vote" type="submit" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
 
        <?php
 		echo '	'.CKunenaLink::GetThreadLink('view',$this->catid,$this->id,JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), 'follow');

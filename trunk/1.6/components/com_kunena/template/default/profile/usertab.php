@@ -41,7 +41,7 @@ JHTML::_('behavior.calendar');
 	</div>
 	<div class="kprofile-rightcol1">
 		<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></h4>
-		<div class="msgsignature"><div><?php echo $this->signature; ?></div></div>
+		<div class="kmsgsignature"><div><?php echo $this->signature; ?></div></div>
 	</div>
 
 </div>

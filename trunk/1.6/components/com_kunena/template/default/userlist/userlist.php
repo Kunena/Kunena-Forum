@@ -65,7 +65,7 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td align="left">
-								<div class="ktitle_cover km">
+								<div class="ktitle-cover km">
 									<span class="ktitle kl"> <?php echo JText::_('COM_KUNENA_USRL_USERLIST'); ?></span>&nbsp;
 
 									<?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), $this->total);?>

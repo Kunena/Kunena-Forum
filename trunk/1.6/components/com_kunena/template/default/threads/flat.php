@@ -94,13 +94,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			class="k<?php
 		echo $this->tabclass [$k^=1];
 		if ($leaf->ordering != 0 || ($leaf->myfavorite && $this->func == 'mylatest')) {
-			echo '_stickymsg';
+			echo '-stickymsg';
 		}
 
 		if ($leaf->class_sfx) {
 			echo ' k' . $this->tabclass [$k^1];
 			if ($leaf->ordering != 0 || ($leaf->myfavorite && $this->func == 'mylatest')) {
-				echo '_stickymsg';
+				echo '-stickymsg';
 			}
 			echo $leaf->class_sfx;
 		}

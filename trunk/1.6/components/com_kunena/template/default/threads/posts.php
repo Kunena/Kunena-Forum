@@ -77,13 +77,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			class="k<?php
 		echo $this->tabclass [$k^=1];
 		if ($firstpost->ordering != 0) {
-			echo '_stickymsg';
+			echo '-stickymsg';
 		}
 
 		if ($firstpost->class_sfx) {
 			echo ' k' . $this->tabclass [$k^1];
 			if ($firstpost->ordering != 0) {
-				echo '_stickymsg';
+				echo '-stickymsg';
 			}
 			echo $firstpost->class_sfx;
 		}

@@ -47,8 +47,8 @@ class KunenaAvatarKunena extends KunenaAvatar
 			$avatar = KURL_MEDIA . "avatars/{$avatar}";
 		} else {
 			// If avatar does not exist use default image
-			if ($sizex <= 90) $avatar = 's_nophoto.jpg';
-			else $avatar = 'nophoto.jpg';
+			if ($sizex <= 90) $avatar = 's_nophoto.png';
+			else $avatar = 'nophoto.png';
 
 			$avatar = KURL_MEDIA . "avatars/{$avatar}";
 		}

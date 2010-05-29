@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+29-May-2010 Xillibit
+# [#19288] Replace emoticons and default by others one (thanks cerberus)
+
 28-May-2010 Xillibit
 # [#19288] Replace buttons (reply, quote, edit) by png and emoticons too (thanks cerberus)
 # [#19288] Replace icons (thanks cerberus)

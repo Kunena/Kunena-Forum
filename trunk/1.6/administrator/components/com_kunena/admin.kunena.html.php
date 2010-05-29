@@ -1167,7 +1167,7 @@ table.kadmin-stat caption {
 				<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
 				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 					<tr align="center" valign="middle">
-						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_USERNAME') ?>
+						<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_DISPLAY_NAME') ?>
 						</td>
 								<td align="left" valign="top" width="25%"><?php echo $lists ['username'];
 						?>

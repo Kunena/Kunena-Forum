@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+29-May-2010 Matias
+# [#19312] Cleanup English language file: Use sections/categories instead of categories/forum
+
 28-May-2010 Severdia
 ^ [#19356] Changed CSS styles to format using k and dashes
 

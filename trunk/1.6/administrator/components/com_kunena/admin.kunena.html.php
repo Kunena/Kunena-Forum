@@ -312,7 +312,7 @@ table.kadmin-stat caption {
 		?>);" /></th>
 
 		<th class="title"><?php
-		echo JText::_('COM_KUNENA_CATFOR');
+		echo JText::_('COM_KUNENA_CATEGORY');
 		?></th>
 
 		<th><small><?php
@@ -526,7 +526,7 @@ table.kadmin-stat caption {
 			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			?>
 	<dl class="tabs" id="pane">
-	<dt><?php echo $row->id ? JText::_('COM_KUNENA_EDIT') : JText::_('COM_KUNENA_ADD'); ?> <?php echo JText::_('COM_KUNENA_CATFOR'); ?></dt>
+	<dt><?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?></dt>
 <dd>
 	<fieldset>
 			<legend><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></legend>

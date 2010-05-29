@@ -41,7 +41,7 @@ $this->_app->setUserState('com_kunena.banreturnurl', CKunenaLink::GetProfileURL(
 			<td class="firstrow">
 				<span><?php if ( $userban->bantype == 1) { echo JText::_('COM_KUNENA_BAN_BANLEVEL_RED'); } elseif ( $userban->bantype == 2 ) { echo JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE'); } ?></span>
 			</td>
-			<td class="firstrow"><span><?php echo $userban->created; ?></span></td>
+			<td class="firstrow"><span><?php echo $userban->creation_time; ?></span></td>
 			<td class="firstrow"><span><?php echo $userban->expiry == '0000-00-00 00:00:00' ? JText::_('COM_KUNENA_BAN_LIFETIME') : $userban->expiry; ?></span></td>
 			<td class="firstrow"><span><?php if ( !empty($userban->ip) ) echo $userban->ip; ?></span></td>
 			<td class="iconrow">

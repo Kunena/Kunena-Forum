@@ -63,15 +63,6 @@ JHTML::_('behavior.calendar');
 					?></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></b><br />
-			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></span>
-		</td>
-		<td class="kcol-addban-right">
-			<input class="inputbox" type="text" maxlength="15" name="Start_Time" id="Start_Time" />
-				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('Start_Time','%Y-%m-%d');$('Start_Time').removeProperty('style');" />
-		</td>
-	</tr>
-	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></b><br />
 			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></span>
 		</td>

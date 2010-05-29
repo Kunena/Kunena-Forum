@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+29-May-2010 Xillibit
+# [#19244] Escape all database column, little change on database structure
+
 28-May-2010 @quila
 ^ [#19244] Moderation feature: cleanup ban manager, ban history and add ban pages
 ^ [#19244] Moderation feature: new language strings for new ban system

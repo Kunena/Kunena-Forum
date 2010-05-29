@@ -42,18 +42,18 @@ $j=1;
 			<span><?php if ( $userban->bantype == 1 ) { echo JText::_('COM_KUNENA_BAN_BLOCKED'); } elseif ( $userban->bantype == 2 ) { echo JText::_('COM_KUNENA_BAN_BANNED'); } ?> </span>
 		</td>
 		<td class="firstrow">
-			<span><?php  if( $userban->ban_start != '0000-00-00 00:00:00' ) echo $userban->ban_start; ?> </span>
+			<span><?php  if( $userban->creation_time != '0000-00-00 00:00:00' ) echo $userban->creation_time; ?> </span>
 		</td>
 		<td class="firstrow">
 			<span><?php echo $userban->expiry == '0000-00-00 00:00:00' ? JText::_('COM_KUNENA_BAN_LIFETIME') : $userban->expiry; ?> </span>
 		</td>
 		<td class="firstrow">
 			<span><?php if (!empty($userban->ip)) echo $userban->ip; ?> </span>
-		</td>	
+		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td colspan="9">
-			<b><?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?></b> : <?php echo CKunenaLink::GetProfileLink ( $userban->created_userid, $this->config->username ? $userban->creatorusername : $userban->creatorname ); ?>  <?php echo $userban->created; ?>
+			<b><?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?></b> : <?php echo CKunenaLink::GetProfileLink ( $userban->created_userid, $this->config->username ? $userban->creatorusername : $userban->creatorname ); ?>  <?php echo $userban->creation_time; ?>
 			<?php if ( $userban->modified_by && $userban->modified_date) { ?>&nbsp;|&nbsp;
 			<b><?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?></b> : <?php echo CKunenaLink::GetProfileLink ( $userban->modified_by, $this->config->username ? $userban->modifiedusername : $userban->modifiedname ); ?>  <?php echo $userban->modified_date; } ?>
 		</td>

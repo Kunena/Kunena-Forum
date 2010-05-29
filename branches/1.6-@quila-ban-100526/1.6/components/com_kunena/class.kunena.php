@@ -946,7 +946,6 @@ class CKunenaTools {
 			$banpublic_reason = JRequest::getString ('public_reason', '');
 			$banprivate_reason = JRequest::getString ('private_reason', '');
 			$banexpiry = JRequest::getString ('Expire_Time', '');
-			$banstart = JRequest::getString ('Start_Time', '');
 			$banIP = JRequest::getVar ( 'prof_ip_select', '' );
 			$banon_profile = JRequest::getInt ('onprofile', '');
 			$banon_message = JRequest::getInt ('onmessage', '');
@@ -977,13 +976,13 @@ class CKunenaTools {
 				$usermod = new CKunenaModerationTools();
 
 				if ( $bantype == 0 ) {
-					$banthisuser = $usermod->blockUser($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+					$banthisuser = $usermod->blockUser($thisuserid, $banexpiry, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
 					$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
 				} elseif ($bantype == 1 ) {
-					$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+					$banthisuser = $usermod->banUser($thisuserid, $banexpiry, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
 					$message = JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' );
 				} elseif ($bantype == 2) {
-					$banthisuser = $usermod->banIP($thisuserid, $banexpiry, $banstart, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
+					$banthisuser = $usermod->banIP($thisuserid, $banexpiry, $banpublic_reason, $banprivate_reason, $banon_profile, $banon_message, $banIP);
 					$message = JText::_ ( 'COM_KUNENA_IP_BANNED_DONE' );
 				}
 
@@ -993,7 +992,7 @@ class CKunenaTools {
 					$kunena_app->enqueueMessage ( $message );
 				}
 
-				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
+				//$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
 			}
 
 			if ( !empty($DelAvatar) ) {

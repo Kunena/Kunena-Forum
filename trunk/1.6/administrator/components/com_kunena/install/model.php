@@ -272,7 +272,7 @@ class KunenaModelInstall extends JModel {
 		jimport('joomla.filesystem.folder');
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
 		$file = 'plgSystemMootools12.zip';
-		if (!class_exists('JHTMLBehavior') && is_file ( $path . DS . $file )) {
+		if (is_file ( $path . DS . $file )) {
 			$this->installPlugin ( $path, $file, 'mootools12' );
 		}
 		if (! $this->getError ())

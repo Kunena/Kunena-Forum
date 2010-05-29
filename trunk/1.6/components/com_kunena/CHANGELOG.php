@@ -35,16 +35,13 @@ Legend:
 Kunena 1.6.0-ALPHA
 
 29-May-2010 Severdia
-# [#19356] Fixed IE/FF word wrap bug
-
-29-May-2010 Severdia
+^ [#19356] Changed CSS styles to format using k and dashes
 ^ [#19312] Cleanup English language file
+# [#19356] Fixed IE/FF word wrap bug
 
 29-May-2010 Matias
 # [#19312] Cleanup English language file: Use sections/categories instead of categories/forum
-
-29-May-2010 Severdia
-^ [#19356] Changed CSS styles to format using k and dashes
+# [#19288] Regression in Installer: Mootools 1.2 did not get installed
 
 28-May-2010 Severdia
 # [#19356] CSS fixes for broken layouts caused by no breaks in code tags, new images

@@ -301,6 +301,8 @@ class KunenaModelInstall extends JModel {
 		$lang->load('com_kunena', KPATH_ADMIN);
 
 		// TODO: remove dependence
+		require_once (KPATH_ADMIN . '/api.php');
+		kimport('factory');
 		require_once (KPATH_SITE . '/class.kunena.php');
 
 		jimport( 'joomla.version' );

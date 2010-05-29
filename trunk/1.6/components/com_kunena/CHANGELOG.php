@@ -42,6 +42,7 @@ Kunena 1.6.0-ALPHA
 29-May-2010 Matias
 # [#19312] Cleanup English language file: Use sections/categories instead of categories/forum
 # [#19288] Regression in Installer: Mootools 1.2 did not get installed
+# [#19288] Regression in Installer: If server is too fast, KunenaFactory does not get loaded
 
 28-May-2010 Severdia
 # [#19356] CSS fixes for broken layouts caused by no breaks in code tags, new images

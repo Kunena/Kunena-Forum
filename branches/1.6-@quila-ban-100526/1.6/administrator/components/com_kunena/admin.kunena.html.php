@@ -1274,6 +1274,14 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_GHOSTMESSAGE_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWBANNEDREASON_PROFILE') ?></td>
+								<td align="left" valign="top"><?php echo $lists ['showbannedreason'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWBANNEDREASON_PROFILE_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			</dd>

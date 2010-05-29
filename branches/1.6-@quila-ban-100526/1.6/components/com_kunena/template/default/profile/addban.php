@@ -88,22 +88,6 @@ JHTML::_('behavior.calendar');
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE'); ?></b><br />
-			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONPROFILE_DESC'); ?></span>
-		</td>
-		<td class="kcol-addban-right">
-			<input id="konprofile_keep" type="checkbox" name="onprofile" value="1" />
-		</td>
-	</tr>
-	<!--  <tr class="ksectiontableentry<?php //echo ($i^=1)+1;?>">
-		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE'); ?></b><br />
-			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ONMESSAGE_DESC'); ?></span>
-		</td>
-		<td class="kcol-addban-right">
-			<input id="konmessage_keep" type="checkbox" name="onmessage" value="1" />
-		</td>
-	</tr>-->
-	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS'); ?></b><br />
 			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_FOLLOWIPS_DESC'); ?></span>
 		</td>

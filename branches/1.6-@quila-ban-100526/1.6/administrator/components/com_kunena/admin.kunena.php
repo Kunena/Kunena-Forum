@@ -1080,6 +1080,8 @@ function showConfig($option) {
 
 	$lists['debug'] = JHTML::_('select.genericlist', $yesno, 'cfg_debug', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->debug);
 
+	$lists['showbannedreason'] = JHTML::_('select.genericlist', $yesno, 'cfg_showbannedreason', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showbannedreason);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

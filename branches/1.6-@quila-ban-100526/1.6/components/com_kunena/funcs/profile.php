@@ -83,7 +83,7 @@ class CKunenaProfile {
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
 
-		$this->banInfo = $this->showBanInfo();
+		if ( $this->config->showbannedreason ) $this->banInfo = $this->showBanInfo();
 	}
 
 	/**
@@ -573,7 +573,7 @@ class CKunenaProfile {
 	}
 
 	function showBanInfo() {
-		$query = "SELECT userid, public_reason FROM #__kunena_banned_users AS a WHERE `enabled`=1 AND `bantype`=2  AND `on_profile`=1 AND `userid`={$this->profile->userid};";
+		$query = "SELECT userid, public_reason FROM #__kunena_banned_users AS a WHERE `enabled`=1 AND `bantype`=2 AND `userid`={$this->profile->userid};";
 		$this->_db->setQuery ( $query );
 		$banInfo = $this->_db->loadObject ();
 		check_dberror ( 'Unable to load ban info.' );

@@ -215,6 +215,10 @@ class KunenaUser extends JObject
 		return CKunenaTools::isModerator($this->userid, $catid);
 	}
 
+	public function isUserBanned() {
+		return CKunenaTools::isUserBanned($this->userid);
+	}
+
 	public function getName($visitorname = '') {
 		if (! $this->userid) {
 			$name = $visitorname;
@@ -241,6 +245,8 @@ class KunenaUser extends JObject
 			$type = JText::_('COM_KUNENA_VIEW_ADMIN');
 		} elseif ($this->isModerator ($catid)) {
 			$type = JText::_('COM_KUNENA_VIEW_MODERATOR');
+		} elseif ($this->isUserBanned ()) {
+			$type = JText::_('COM_KUNENA_VIEW_BANNED');
 		} else {
 			$type = JText::_('COM_KUNENA_VIEW_USER');
 		}
@@ -295,6 +301,19 @@ class KunenaUser extends JObject
 			jimport ('joomla.filesystem.file');
 			foreach (self::$_ranks as $cur) {
 				if ($cur->rank_special == 1 && JFile::stripExt($cur->rank_image) == 'rankadmin') {
+					$rank = $cur;
+					break;
+				}
+			}
+		}
+		else if ($this->rank == 0 && self::isUserBanned()) {
+			$rank->rank_id = 0;
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_BANNED');
+			$rank->rank_special = 1;
+			$rank->rank_image = 'rankbanned.gif';
+			jimport ('joomla.filesystem.file');
+			foreach (self::$_ranks as $cur) {
+				if ($cur->rank_special == 1 && JFile::stripExt($cur->rank_image) == 'rankbanned') {
 					$rank = $cur;
 					break;
 				}

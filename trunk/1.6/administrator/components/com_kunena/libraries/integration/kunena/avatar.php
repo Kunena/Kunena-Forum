@@ -42,7 +42,7 @@ class KunenaAvatarKunena extends KunenaAvatar
 			$rzavatar = "{$resized}_{$avatar}";
 			if ( !is_file( "{$path}/users/{$rzavatar}" ) ) {
 				require_once(KUNENA_PATH_LIB.DS.'kunena.image.class.php');
-				CKunenaImageHelper::version($path .DS. $avatar, $path, $rzavatar, $sizex, $sizey, intval($config->avatarquality));
+				CKunenaImageHelper::version("{$path}/users/{$avatar}", "$path/users", $rzavatar, $sizex, $sizey, intval($config->avatarquality));
 			}
 			$avatar = "users/{$rzavatar}";
 		}

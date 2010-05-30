@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+30-May-2010 Matias
+# [#20038] Installer: Keep forum offline until installation is complete
+# [#19288] Fix regression: uploaded avatars do not show up
+
 29-May-2010 Severdia
 ^ [#19356] Changed CSS styles to format using k and dashes
 ^ [#19312] Cleanup English language file

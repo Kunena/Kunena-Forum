@@ -312,8 +312,13 @@ class KunenaModelInstall extends JModel {
 		}
 		CKunenaTools::reCountBoards();
 
-		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
 		$this->updateVersionState ( '' );
+
+		jimport ( 'joomla.filesystem.file' );
+		JFile::move(KPATH_ADMIN.'/admin.kunena.new.php', KPATH_ADMIN.'/admin.kunena.php');
+		JFile::move(KPATH_SITE.'/kunena.new.php', KPATH_SITE.'/kunena.php');
+
+		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
 
 		if (! $this->getError ()) {
 			$this->setStep ( $this->getStep()+1 );

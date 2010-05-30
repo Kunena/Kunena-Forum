@@ -16,6 +16,7 @@
 	<uninstallfile>install.kunena.php</uninstallfile>
 	<scriptfile>install.kunena.php</scriptfile>
 	<files>
+		<filename>kunena.php</filename>
 		<filename>CHANGELOG.php</filename>
 		<filename>COPYRIGHT.php</filename>
 	</files>

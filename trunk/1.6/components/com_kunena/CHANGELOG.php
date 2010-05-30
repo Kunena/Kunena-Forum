@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+30-May-2010 Severdia
+^ [#19356] CSS updates for Chrome, etc.
+
 30-May-2010 Matias
 # [#20038] Installer: Keep forum offline until installation is complete
 # [#19288] Fix regression: uploaded avatars do not show up

@@ -150,7 +150,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				echo '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, 1, $this->config->messages_per_page, 1 ) . '</li>';
 
 				if ($threadPages > 3) {
-					echo ('<li>...</li>');
+					echo ('<li class="more">...</li>');
 					$startPage = $threadPages - 2;
 				} else {
 					$startPage = 2;

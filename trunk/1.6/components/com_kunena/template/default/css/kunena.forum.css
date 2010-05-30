@@ -173,6 +173,9 @@ PX		EM			PCT			PT
 	font-weight: bold;
 	font-family: Arial, Helvetica, sans-serif;
 	margin-left: 3px;
+	font-size: .75em;
+	vertical-align:top;
+	white-space:nowrap;
 }
 
 #Kunena table.kblocktable .knewchar {
@@ -392,7 +395,7 @@ PX		EM			PCT			PT
 #Kunena tr.ksectiontableentry2 td {
 	/* background: #F2F1EE; */
 	color: #333333;
-	padding: 4px 8px;
+	padding: 6px 8px;
 	border-bottom: 1px solid #BFC3C6;
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
@@ -460,11 +463,9 @@ PX		EM			PCT			PT
 	color: #999999;
 }
 
-#Kunena .ktopic-latest-post{
-	font-size: 1.083em;
-}
+#Kunena .ktopic-latest-post,
 #Kunena .ktopic-date {
-	font-size: 1em;
+	font-size: .917em;
 }
 
 #Kunena a.ktopic-title {
@@ -477,7 +478,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.ktopic-details {
-	white-space: nowrap;
+	/* white-space: nowrap; */
 	clear:left;
 }
 	
@@ -1043,11 +1044,13 @@ PX		EM			PCT			PT
 #Kunena span.ktopic-posted-time {
 	display: block;
 	float:left;
+	font-size: .917em;
 }
 #Kunena span.ktopic-category {
 	/* display: block;*/
 	float:left; 
 	clear:left;
+	font-size: .917em;
 }
 #Kunena span.ktopic-views {
 	color:#999999;
@@ -1581,7 +1584,7 @@ PX		EM			PCT			PT
 
 #Kunena table#kflattable tr.ksectiontableentry1 td.td-6,
 #Kunena table#kflattable tr.ksectiontableentry2 td.td-6 {
-	width: 28%;
+	width: 22%;
 }
 
 

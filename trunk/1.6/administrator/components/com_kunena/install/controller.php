@@ -70,7 +70,7 @@ class KunenaControllerInstall extends JController {
 		//set_error_handler('kunenaInstallerErrorHandler');
 
 		// Check requirements
-		$this->checkTimeout ();
+		$this->model->checkTimeout ();
 		$reqs = $this->model->getRequirements ();
 		if (! empty ( $reqs->fail )) {
 			// If requirements are not met, do not install
@@ -85,15 +85,14 @@ class KunenaControllerInstall extends JController {
 			return;
 		}
 
+		if ($this->step == 0) {
+			$this->model->setStep ( ++ $this->step );
+		}
 		do {
-			if ($this->step == 0) {
-				$this->model->setStep ( ++ $this->step );
-				break;
-			}
 			$this->runStep ();
 			$error = $this->model->getError ();
 			$this->step = $this->model->getStep ();
-			$stop = ($this->checkTimeout () || !isset($this->steps[$this->step+1]));
+			$stop = ($this->model->checkTimeout () || !isset($this->steps[$this->step+1]));
 		} while ( ! $stop && ! $error );
 		if ( isset($this->steps[$this->step+1]) && ! $error ) {
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install&go=next' );
@@ -112,17 +111,6 @@ class KunenaControllerInstall extends JController {
 		if (empty ( $this->steps [$this->step] ['step'] ))
 			return;
 		return call_user_func ( array ($this->model, "step" . $this->steps [$this->step] ['step'] ) );
-	}
-
-	function checkTimeout() {
-		static $start = null;
-		$time = microtime (true);
-		if ($start === null) {
-			$start = $time;
-		}
-		if ($time - $start < 1)
-			return false;
-		return true;
 	}
 }
 

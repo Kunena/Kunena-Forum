@@ -410,26 +410,31 @@ class CKunenaProfile {
 		$upload->setAllowedExtensions('gif, jpeg, jpg, png');
 
 		if ( $upload->uploaded('avatarfile') ) {
-			$uploadpath = 'users';
-			$path = KUNENA_PATH_AVATAR_UPLOADED .DS. $uploadpath;
+			$filename = 'avatar'.$this->profile->userid;
 
-			// Delete old uploaded avatars:
-			if ( JFolder::exists( $path ) ) {
-				$deletelist = JFolder::files($path, 'user'.$this->profile->userid, false, true);
-				foreach ($deletelist as $delete) {
-					JFile::delete($delete);
+			if (preg_match('|^users/|' , $this->profile->avatar)) {
+				// Delete old uploaded avatars:
+				if ( JFolder::exists( KPATH_MEDIA.'/avatars/resized' ) ) {
+					$deletelist = JFolder::folders(KPATH_MEDIA.'/avatars/resized', '.', false, true);
+					foreach ($deletelist as $delete) {
+						if (is_file($delete.'/'.$this->profile->avatar))
+							JFile::delete($delete.'/'.$this->profile->avatar);
+					}
+				}
+				if ( JFile::exists( KPATH_MEDIA.'/avatars/'.$this->profile->avatar ) ) {
+					JFile::delete(KPATH_MEDIA.'/avatars/'.$this->profile->avatar);
 				}
 			}
-			$upload->setImageResize(intval($this->config->avatarsize)*1024, 200, 200, $this->config->avatarquality);
 
-			$upload->uploadFile($path , 'avatarfile', 'user'.$this->profile->userid, false);
+			$upload->setImageResize(intval($this->config->avatarsize)*1024, 200, 200, $this->config->avatarquality);
+			$upload->uploadFile(KPATH_MEDIA . '/avatars/users' , 'avatarfile', $filename, false);
 			$fileinfo = $upload->getFileInfo();
 
 			if ($fileinfo['ready'] === true) {
 				if(JDEBUG == 1 && defined('JFIREPHP')){
 					FB::log('Kunena save avatar: ' . $fileinfo['name']);
 				}
-				$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar={$this->_db->quote($fileinfo['name'])} WHERE userid='{$this->profile->userid}'" );
+				$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar={$this->_db->quote('users/'.$fileinfo['name'])} WHERE userid='{$this->profile->userid}'" );
 
 				if (! $this->_db->query () || $this->_db->getErrorNum()) {
 					$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_AVATAR_DATABASE_STORE'));

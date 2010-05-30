@@ -39,7 +39,13 @@ Kunena 1.6.0-ALPHA
 
 30-May-2010 Matias
 # [#20038] Installer: Keep forum offline until installation is complete
-# [#19288] Fix regression: uploaded avatars do not show up
+# [#19288] Fix regression: Uploaded avatars do not show up
+# [#19288] Fix regression: Undefined property: CKunenaLatestX::$threads
+# [#19288] Installer: Fix a bug in table migration code
+# [#19288] Installer: Add logic to migrate avatars from Kunena / FB
+# [#19288] Installer: Fix a bug where upgrade on larger forum does not get reloaded on DB upgrade
+# [#19288] Change logic on how we save avatars to be uniform (no quessing)
+# [#19288] Change logic on how we save resized avatars, should be a lot faster in large forums
 
 29-May-2010 Severdia
 ^ [#19356] Changed CSS styles to format using k and dashes

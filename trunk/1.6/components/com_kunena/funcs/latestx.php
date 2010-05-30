@@ -15,6 +15,10 @@ require_once (KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
 
 class CKunenaLatestX {
 	public $allow = 0;
+	public $messages = array();
+	public $threads = array();
+	public $lastreply = array ();
+	public $customreply = array ();
 
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );
@@ -74,11 +78,6 @@ class CKunenaLatestX {
 
 	protected function _common() {
 		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
-
-		$this->messages = array ();
-		$this->threads = array ();
-		$this->lastreply = array ();
-		$this->customreply = array ();
 
 		if (!empty ( $this->threadids ) ) {
 			$idstr = implode ( ",", $this->threadids );

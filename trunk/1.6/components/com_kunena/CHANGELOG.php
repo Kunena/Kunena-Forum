@@ -43,6 +43,8 @@ Kunena 1.6.0-ALPHA
 # [#19312] Cleanup English language file: Use sections/categories instead of categories/forum
 # [#19288] Regression in Installer: Mootools 1.2 did not get installed
 # [#19288] Regression in Installer: If server is too fast, KunenaFactory does not get loaded
+# [#20038] Minimum Joomla version is 1.5.18 (older ones have bug in redirect)
+# [#19288] Regression in pathway: Undefined variable: onlineUsersList
 
 28-May-2010 Severdia
 # [#19356] CSS fixes for broken layouts caused by no breaks in code tags, new images

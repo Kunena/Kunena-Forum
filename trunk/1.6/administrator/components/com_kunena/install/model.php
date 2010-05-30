@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 // Minimum version requirements
 DEFINE('KUNENA_MIN_PHP',   '5.0.3');
 DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
-DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.15' );
+DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.18' );
 
 jimport ( 'joomla.application.component.model' );
 

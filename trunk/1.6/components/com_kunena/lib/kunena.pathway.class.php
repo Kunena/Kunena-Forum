@@ -51,7 +51,7 @@ class CkunenaPathway {
 		$this->_db->setQuery ( $query );
 		$results = $this->_db->loadObject ();
 		KunenaError::checkDatabaseError();
-		
+
 		return $results;
 	}
 
@@ -64,6 +64,7 @@ class CkunenaPathway {
 	public function getUsersOnlineList() {
 		$users = $this->_getOnlineUsers();
 
+		$onlineUsersList = '';
 		$totalguest = 0;
 		$divider = ', ';
 		$lastone = end ( $users );

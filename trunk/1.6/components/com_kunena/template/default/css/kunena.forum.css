@@ -2500,6 +2500,7 @@ POST PAGE
 	height: 18px;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
+	color: #ffffff;
 }
 #Kunena a.kbuttoncomm span span:hover {
 	text-decoration: underline;
@@ -2546,6 +2547,7 @@ POST PAGE
 	height: 18px;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-user.gif") no-repeat right top;
+	color: #ffffff;
 }
 #Kunena a.kbuttonuser span span:hover {
 	text-decoration: underline;
@@ -2651,6 +2653,7 @@ POST PAGE
 	height: 18px;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-mod.gif") no-repeat right top;
+	color: #ffffff;
 }
 #Kunena a.kbuttonmod span span:hover {
 	text-decoration: underline;
@@ -2684,6 +2687,7 @@ POST PAGE
 	height: 18px;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-comm.gif") no-repeat right top;
+	color: #ffffff;
 }
 
 

@@ -21,7 +21,10 @@
 #Kunena div, 
 #Kunena p, 
 #Kunena span {
-	font-family:Arial, Helvetica, sans-serif;
+	border-collapse:separate;
+	font-family:Arial,Helvetica,sans-serif;
+	margin:0;
+	padding:0;
 }
 #Kunena .fb_header {
 	background: #3B3B3B url(images/cat_title_bg.gif) repeat-x top left;

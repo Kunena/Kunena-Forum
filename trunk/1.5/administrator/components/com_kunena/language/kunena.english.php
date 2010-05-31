@@ -39,7 +39,6 @@ define('_KUNENA_CATEGORY_ANONYMOUS_DEFAULT',"By default post replies as");
 define('_KUNENA_CATEGORY_ANONYMOUS_DEFAULT_DESC',"If anonymous messages have been enabled, this option selects default choice for the user. Regular users can later edit their own posts to be anonymous, but only moderators have the ability to edit anonymous posts.");
 define('_KUNENA_CATEGORY_ANONYMOUS_X_REG',"Registered user");
 define('_KUNENA_CATEGORY_ANONYMOUS_X_ANO',"Anonymous user");
-define('_KUNENA_BACK',"Back");
 define('_KUNENA_POST_AS_ANONYMOUS',"Anonymous Post");
 define('_KUNENA_POST_AS_ANONYMOUS_DESC',"This post contains sensitive information. Remove all user information from this post.");
 define('_KUNENA_POST_ERROR_NO_CATEGORY',"No category was chosen to save your message.");

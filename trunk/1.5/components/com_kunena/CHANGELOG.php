@@ -35,6 +35,7 @@ Kunena 1.5.12-DEV
 
 31-May-2010 Matias
 # [#20222] Do Not Use Category IDs: Router cannot decide which catid to use if categories have the same name
+# [#20058] Regression: Language string _KUNENA_BACK is defined twice
 
 22-Apr-2010 Matias
 # [#20203] Administrator has full moderator permissions, but that does not mean that he has to be one

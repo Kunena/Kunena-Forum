@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+31-May-2010 Xillibit
+# [#19288] Replace some icons by png one (thanks cerberus)
+
 29-May-2010 Xillibit
 # [#19288] Replace emoticons and default by others one (thanks cerberus)
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="Default page">
+		<message>Entry Page</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Default Page</name>
+		<description>Show entry page</description>
+	</state>
+</metadata>

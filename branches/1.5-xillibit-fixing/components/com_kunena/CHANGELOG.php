@@ -36,6 +36,7 @@ Kunena 1.5.12-DEV
 01-Jun-2010 Xillibit
 # [#20759] Fix some syntax errors
 # [#20769] Queries for sample datas during installation are broken
+# [#20368] JFTP chmod Bad Response Error when upload image
 
 31-May-2010 Xillibit
 # [#20108] When you try to change the username with one already existing you have a blank page

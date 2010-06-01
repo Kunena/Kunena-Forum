@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+01-Jun-2010 Xillibit
+# [#20759] Fix some syntax errors
+
 31-May-2010 Xillibit
 # [#20108] When you try to change the username with one already existing you have a blank page
 # [#20121] Path for icons up and down in userlist.php has an extra slash

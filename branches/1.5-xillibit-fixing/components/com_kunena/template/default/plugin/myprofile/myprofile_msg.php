@@ -193,10 +193,10 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 		<tr>
 			<td colspan = "6" class = "<?php echo $boardclass ;?>profile-bottomnav">
-<?php echo _KUNENA_USRL_DISPLAY_NR; ?>
+<?php //echo _KUNENA_USRL_DISPLAY_NR; ?>
 
 <?php
-// echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX);
+ //echo $pageNav->getLimitBox("index.php?option=com_kunena&amp;func=myprofile&amp;do=showmsg" . KUNENA_COMPONENT_ITEMID_SUFFIX);
 ?>
 
 <?php

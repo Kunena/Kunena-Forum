@@ -60,7 +60,7 @@ if ($fbConfig->showwhoisonline > 0)
             </tr>
 
             <?php
-            $query = "SELECT w.*, u.id, u.username, f.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS f ON u.id=f.userid ORDER BY w.time DESC";
+            $query = "SELECT w.*, u.id, u.name, u.username, f.showOnline FROM #__fb_whoisonline AS w LEFT JOIN #__users AS u ON u.id=w.userid LEFT JOIN #__fb_users AS f ON u.id=f.userid ORDER BY w.time DESC";
             $kunena_db->setQuery($query);
             $users = $kunena_db->loadObjectList();
             $k = 0; //for alternating rows
@@ -96,7 +96,7 @@ if ($fbConfig->showwhoisonline > 0)
                         }
                         else
                         {
-				echo CKunenaLink::GetProfileLink($fbConfig, $user->userid, $user->username);
+				echo CKunenaLink::GetProfileLink($fbConfig, $user->userid, $fbConfig->username ? $user->username : $user->name);
                         }
                         ?>
 

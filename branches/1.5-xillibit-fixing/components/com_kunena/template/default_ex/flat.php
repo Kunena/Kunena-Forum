@@ -132,7 +132,7 @@ if (count($messages[0]) > 0)
                     if ($is_Moderator)
                     {
                     ?>
-                        <th class = "th-7 <?php echo $boardclass ?>sectiontableheader" width="1%" align="center">[X]</th>
+                        <th class = "th-7 <?php echo $boardclass ?>sectiontableheader" width="1%" align="center">[x]</th>
                     <?php
                     }
                     ?>

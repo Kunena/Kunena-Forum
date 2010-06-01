@@ -239,7 +239,6 @@
                 KEY `enabled` (`enabled`),
                 KEY `userid` (`userid`),
                 KEY `expiry` (`expiry`) ) DEFAULT CHARSET=utf8;</query>
-		<phpfile name="sampledata.php" />
 	</install>
 	<upgrade>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
@@ -335,12 +334,12 @@
 			<query mode="silenterror">UPDATE `#__kunena_config` SET `latestcategory`=''</query>
 			<query>UPDATE `#__kunena_users` SET `view`='flat'</query>
 			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "com_fireboard", "com_kunena")</query>
-            <query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
+			<query>UPDATE `#__kunena_users` SET `signature` = REPLACE(`signature`, "com_fireboard", "com_kunena")</query>
 		</version>
 		<version version="1.0.10" versiondate="2009-05-21" build="1344" versionname="Parier!">
 			<query mode="silenterror">UPDATE `#__kunena_config` SET `jmambot`='0'</query>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		<version version="1.6.0-ALPHA" versiondate="2010-05-30" build="2587" versionname="Gespraech">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` 
 				ADD `TWITTER` VARCHAR( 50 ) NULL AFTER `SKYPE` ,
 				ADD `FACEBOOK` VARCHAR( 50 ) NULL AFTER `TWITTER` ,
@@ -356,12 +355,14 @@
 				ADD `allow_polls` tinyint(4) NOT NULL default '0' AFTER `class_sfx` ;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `review` ,
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
-			<phpfile name="kunena.special.upgrade.1.6.0.php"></phpfile>
+			<phpfile name="kunena.special.upgrade.1.6.0a.php"></phpfile>
 			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD INDEX ( `currvisit` )</query>
 			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
 			<query mode="silenterror">UPDATE `#__kunena_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
 			<query mode="silenterror">DROP TABLE `#__kunena_banned_ips`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_banned_users` ADD `ip` VARCHAR( 32 ) NOT NULL AFTER `userid`</query>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

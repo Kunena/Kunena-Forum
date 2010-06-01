@@ -176,7 +176,7 @@ endif;
 </table>
 <!-- F: List Actions -->
 <?php
-if (count ( $this->threadids ) > 0) :
+if (count ( $this->threads ) > 0) :
 	$this->displayItems ();
 	?>
 <!-- B: List Actions -->

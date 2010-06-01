@@ -282,6 +282,7 @@ class CKunenaProfile {
 	}
 
 	function displayKarma() {
+		$userkarma = '';
 		if ($this->config->showkarma && $this->profile->userid) {
 			$userkarma = '<strong>'. JText::_('COM_KUNENA_KARMA') . "</strong>: " . $this->profile->karma;
 

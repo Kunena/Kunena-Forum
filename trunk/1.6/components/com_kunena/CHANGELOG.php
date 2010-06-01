@@ -32,6 +32,16 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-ALPHA2
+
+1-June-2010 Matias
+^ [#20729] Update version info to 1.6.0-ALPHA2
+# [#19288] Replace router.php in the beginning of the installation to prevent error messages in frontend during installation
+# [#19288] Installer: Better error detection
+# [#19288] Installer: Sample data gets inserted too early - installation fails if there were no messages or categories
+# [#19288] Undefined variables in CKunenaLatestX class if there are no threads to be shown
+# [#19288] Undefined variable userkarma in CKunenaProfile class if karma is disabled
+
 Kunena 1.6.0-ALPHA
 
 30-May-2010 Severdia

@@ -19,6 +19,8 @@ class CKunenaLatestX {
 	public $threads = array();
 	public $lastreply = array ();
 	public $customreply = array ();
+	public $page = 1;
+	public $totalpages = 1;
 
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );

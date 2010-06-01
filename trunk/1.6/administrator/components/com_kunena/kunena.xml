@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>1.6.0-ALPHA</version>
+	<version>1.6.0-ALPHA2</version>
 	<versionname>Gespraech</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
@@ -17,6 +17,7 @@
 	<scriptfile>install.kunena.php</scriptfile>
 	<files>
 		<filename>kunena.php</filename>
+		<filename>router.php</filename>
 		<filename>CHANGELOG.php</filename>
 		<filename>COPYRIGHT.php</filename>
 	</files>

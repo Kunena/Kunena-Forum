@@ -181,18 +181,18 @@ class KunenaModelInstall extends JModel {
 		$text = '';
 
 		if (file_exists ( $file )) {
-			$error = JArchive::extract ( $file, $dest );
-			if (! $error)
+			$success = JArchive::extract ( $file, $dest );
+			if (! $success)
 				$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
 		} else {
-			$error = true;
+			$success = true;
 			$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
 		}
-		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $error, $text );
+		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text );
 	}
 
 	function installPlugin($path, $file, $name) {
-		$error = false;
+		$success = false;
 		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
 
 		$query = "SELECT * FROM #__plugins WHERE element='$name'";
@@ -207,10 +207,10 @@ class KunenaModelInstall extends JModel {
 				$query = "UPDATE #__plugins SET published='1' WHERE element='$name'";
 				$this->db->setQuery ( $query );
 				$this->db->query ();
-				$error = true;
+				$success = true;
 			}
 			JFolder::delete($dest);
-			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', $name), $error);
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', $name), $success);
 		}
 	}
 
@@ -295,6 +295,10 @@ class KunenaModelInstall extends JModel {
 					$this->setTask($task+1);
 				break;
 			case 3:
+				if ($this->installSampleData ())
+					$this->setTask($task+1);
+				break;
+			case 4:
 				if ($this->migrateAvatars ())
 					$this->setTask($task+1);
 				break;
@@ -305,6 +309,12 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function stepFinish() {
+		$entryfiles = array(
+			array(KPATH_ADMIN, 'admin.kunena', 'php'),
+			array(KPATH_SITE, 'kunena', 'php'),
+			array(KPATH_SITE, 'router', 'php'),
+		);
+
 		$lang = JFactory::getLanguage();
 		$lang->load('com_kunena', KPATH_SITE);
 		$lang->load('com_kunena', KPATH_ADMIN);
@@ -321,17 +331,19 @@ class KunenaModelInstall extends JModel {
 		}
 		CKunenaTools::reCountBoards();
 
-		$this->updateVersionState ( '' );
-
 		jimport ( 'joomla.filesystem.file' );
-		if (is_file(KPATH_ADMIN.'/admin.kunena.new.php'))
-			JFile::move(KPATH_ADMIN.'/admin.kunena.new.php', KPATH_ADMIN.'/admin.kunena.php');
-		if (is_file(KPATH_SITE.'/kunena.new.php'))
-			JFile::move(KPATH_SITE.'/kunena.new.php', KPATH_SITE.'/kunena.php');
-
-		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
+		foreach ($entryfiles as $fileparts) {
+			list($path, $filename, $ext) = $fileparts;
+			if (is_file("{$path}/{$filename}.new.{$ext}")) {
+				$success = JFile::move("{$path}/{$filename}.new.{$ext}", "{$path}/{$filename}.{$ext}");
+				if (!$success) $this->addStatus ( "Moving file {$filename}.{$ext}", false, '' );
+			}
+		}
 
 		if (! $this->getError ()) {
+			$this->updateVersionState ( '' );
+			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SUCCESS'), true, '' );
+
 			$this->setStep ( $this->getStep()+1 );
 		}
 	}
@@ -409,7 +421,7 @@ class KunenaModelInstall extends JModel {
 	{
 		$nodeName = $action->getName();
 		$mode = strtolower((string) $action['mode']);
-		$error = false;
+		$success = false;
 		switch($nodeName) {
 			case 'phpfile':
 				$fileName = $action['name'];
@@ -418,21 +430,21 @@ class KunenaModelInstall extends JModel {
 					ob_start();
 					require( $include );
 					ob_end_clean();
-					$error = true;
+					$success = true;
 				}
-				$result = array('action'=>'Include', 'name'=>$fileName, 'success'=>$error);
+				$result = array('action'=>'Include', 'name'=>$fileName, 'success'=>$success);
 				break;
 			case 'query':
 				$query = (string)$action;
 				$this->db->setQuery($query);
 				$this->db->query();
 				if (!$this->db->getErrorNum()) {
-					$error = true;
+					$success = true;
 				}
 				if ($action['mode'] == 'silenterror' || !$this->db->getAffectedRows())
 					$result = null;
 				else
-					$result = array('action'=>'SQL Query', 'name'=>'', 'success'=>$error);
+					$result = array('action'=>'SQL Query', 'name'=>'', 'success'=>$success);
 				break;
 			default:
 				$result = array('action'=>'fail', 'name'=>$nodeName, 'success'=>false);
@@ -449,14 +461,14 @@ class KunenaModelInstall extends JModel {
 				$this->addStatus ( $r ['action'] . ' ' . $r ['name'], true );
 		$this->updateVersionState ( 'installSampleData' );
 	}
+*/
 
 	public function installSampleData() {
-		kimport ( 'install.sampledata', 'admin' );
-		installSampleData ();
-		$this->addStatus ( "Install Sample Data", true );
-		$this->updateVersionState ( '' );
+		require_once ( KPATH_ADMIN.'/install/sampledata.php' );
+		if (installSampleData ())
+			$this->addStatus ( "Install Sample Data", true );
+		return true;
 	}
-*/
 
 	public function migrateAvatars() {
 		jimport ( 'joomla.filesystem.file' );

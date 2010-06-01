@@ -130,6 +130,7 @@
 		<!-- Move files needed by the installer -->
 		<move file="${tmp_dir}/${kunena.backend}/install/admin.kunena.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.backend}/install/kunena.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/install/router.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.backend}/install/kunena.install.upgrade.xml" todir="${build_dir}/install" overwrite="true" filtering="true" />
 		<move todir="${build_dir}">
 			<fileset dir="${tmp_dir}/${kunena.backend}">
@@ -140,6 +141,7 @@
 		<!-- Rename component entry files so that they replace the old ones just before the end of the installation process, thus keeping forum offline while installing. -->
 		<move file="${tmp_dir}/${kunena.backend}/admin.kunena.php" tofile="${tmp_dir}/${kunena.backend}/admin.kunena.new.php" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/${kunena.frontend}/kunena.php" tofile="${tmp_dir}/${kunena.frontend}/kunena.new.php" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/${kunena.frontend}/router.php" tofile="${tmp_dir}/${kunena.frontend}/router.new.php" overwrite="true" filtering="false" />
 		<move todir="${build_dir}/archive" includeEmptyDirs="no">
 			<fileset dir="${tmp_dir}/${kunena.backend}/archive" />
 		</move>

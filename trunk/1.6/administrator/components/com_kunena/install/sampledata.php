@@ -126,6 +126,7 @@ function installSampleData()
 
 	$queries[] = array ('kunena_messages_text', $query);
 
+	$counter = 0;
 	foreach ($queries as $query)
 	{
 		// Only insert sample/default data if table is empty
@@ -137,8 +138,8 @@ function installSampleData()
 			$db->query();
 			if ($db->getErrorNum ())
 				throw new KunenaInstallerException ( $db->getErrorMsg (), $db->getErrorNum () );
+			$counter++;
 		}
 	}
+	return $counter;
 }
-
-installSampleData();

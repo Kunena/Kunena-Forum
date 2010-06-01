@@ -279,4 +279,3 @@ function KunenaBuildRoute(&$query) {
 function KunenaParseRoute($segments) {
 	return KunenaRouter::ParseRoute ( $segments );
 }
-?>

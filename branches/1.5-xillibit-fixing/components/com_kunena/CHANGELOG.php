@@ -37,6 +37,7 @@ Kunena 1.5.12-DEV
 # [#20759] Fix some syntax errors
 # [#20769] Queries for sample datas during installation are broken
 # [#20368] JFTP chmod Bad Response Error when upload image
+# [#20775] When post a new message, the link to go back to the topic doesn't take care of ordering
 
 31-May-2010 Xillibit
 # [#20108] When you try to change the username with one already existing you have a blank page

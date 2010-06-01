@@ -196,11 +196,11 @@ class CKunenaLink
     			$kunenaProfile =& CKunenaCBProfile::getInstance();
     			return $kunenaProfile->getProfileURL($userid);
     		}
-    		elseif ($fbConfig->fb_profile == 'jomsocial') 
+    		elseif ($fbConfig->fb_profile == 'jomsocial')
     		{
    				return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid);
     		}
-    		elseif ($fbConfig->fb_profile == 'aup') 
+    		elseif ($fbConfig->fb_profile == 'aup')
     		{
 				$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 				if ( file_exists($api_AUP)) {
@@ -362,11 +362,19 @@ class CKunenaLink
         // Finally build output block
 
         $Output  = '<div align="center">';
-        if (is_object($result)) $Output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
-        $Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
-        $Output .= '</div>';
-        if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
-        else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
+        if ($fbConfig->default_sort == 'asc'){
+        	if (is_object($result)) $Output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
+        	$Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
+        	$Output .= '</div>';
+        	if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id), 3500);
+        	else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
+        } else {
+			if (is_object($result)) $Output .= CKunenaLink::GetThreadPageLink($fbConfig, 'view', $catid, $result->thread, 1, $limit, _POST_SUCCESS_VIEW, $result->latest_id) .'<br />';
+        	$Output .= CKunenaLink::GetCategoryLink('showcat', $catid, _POST_SUCCESS_FORUM).'<br />';
+        	$Output .= '</div>';
+        	if (is_object($result)) $Output .= CKunenaLink::GetAutoRedirectHTML(CKunenaLink::GetThreadPageURL($fbConfig, 'view', $catid, $result->thread, 1, $limit, $result->latest_id), 3500);
+        	else $Output .= CKunenaLink::GetAutoRedirectHTML(JRoute::_(KUNENA_LIVEURLREL.'&amp;func=showcat&amp;catid='.$catid), 3500);
+        }
 
         return $Output;
     }

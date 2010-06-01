@@ -1000,6 +1000,42 @@ if (empty($objCatInfo)) {
             <?php
                     }
                 }
+             else if ($do == "deletetopic")
+                {
+                    if (!$is_Moderator) {
+			$app->redirect(htmlspecialchars_decode(JRoute::_(KUNENA_LIVEURLREL)), _POST_NOT_MODERATOR);
+                    }
+
+                    $id = (int)$id;
+                    $kunena_db->setQuery("SELECT * FROM #__fb_messages WHERE id='{$id}'");
+                    $message = $kunena_db->loadObjectList();
+                    	check_dberror("Unable to load messages.");
+
+                    foreach ($message as $mes)
+                    {
+                        ?>
+
+                        <form action = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;catid=$catid&amp;func=post"); ?>" method = "post" name = "myform">
+                            <input type = "hidden" name = "do" value = "deletepostnow"/>
+
+                            <input type = "hidden" name = "id" value = "<?php echo $mes->id;?>"/> <?php echo _POST_ABOUT_TO_DELETE; ?>: <strong><?php echo stripslashes(kunena_htmlspecialchars($mes->subject)); ?></strong>.
+
+    <br/>
+
+    <br/>
+
+    <input type = "checkbox" checked name = "delAttachments" value = "delAtt"/> <?php echo _POST_DELETE_ATT; ?>
+
+    <br/>
+
+    <br/>
+
+    <a href = "javascript:document.myform.submit();"><?php echo _GEN_CONTINUE; ?></a> | <a href = "<?php echo JRoute::_(KUNENA_LIVEURLREL."&amp;func=view&amp;catid=$catid;&amp;id=$id");?>"><?php echo _GEN_CANCEL; ?></a>
+                        </form>
+
+            <?php
+                    }
+                }
                 else if ($do == "deletepostnow")
                 {
                     if (!$is_Moderator) {

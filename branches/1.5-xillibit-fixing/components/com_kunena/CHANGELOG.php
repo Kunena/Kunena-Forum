@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+31-May-2010 Xillibit
+# [#20108] When you try to change the username with one already existing you have a blank page
+# [#20121] Path for icons up and down in userlist.php has an extra slash
+# [#20295] When you delete message or topic, the delete text is still the same
+# [#20281] When deleting an user delete too, the item in #__fb_moderation if exist
+
 31-May-2010 Matias
 # [#20222] Do Not Use Category IDs: Router cannot decide which catid to use if categories have the same name
 # [#20058] Regression: Language string _KUNENA_BACK is defined twice

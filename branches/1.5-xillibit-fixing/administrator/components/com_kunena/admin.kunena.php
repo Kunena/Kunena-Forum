@@ -727,6 +727,9 @@ function showConfig($option)
 
     if ($dir = @opendir(KUNENA_PATH_TEMPLATE))
     {
+    	$templatelist = array();
+		$imagesetlist = array();
+
         while (($file = readdir($dir)) !== false)
         {
             if ($file != ".." && $file != ".")
@@ -1360,7 +1363,7 @@ function douserssync($kunena_db, $option)
     }
     if ($userdel)
     {
-    	$kunena_db->setQuery("DELETE a FROM #__fb_users AS a LEFT JOIN #__users AS b ON a.userid=b.id WHERE b.username IS NULL");
+    	$kunena_db->setQuery("DELETE a FROM #__fb_users AS a LEFT JOIN #__users AS b ON a.userid=b.id LEFT JOIN #__fb_moderation AS c ON a.userid=c.userid WHERE b.username IS NULL");
     	$kunena_db->query();
     	check_dberror("Unable to delete user profiles.");
     	$app->enqueueMessage(_KUNENA_SYNC_USERS_DO_DEL.' '.$kunena_db->getAffectedRows());

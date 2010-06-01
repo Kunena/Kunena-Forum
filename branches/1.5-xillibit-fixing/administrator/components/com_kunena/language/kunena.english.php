@@ -45,6 +45,11 @@ define('_KUNENA_POST_ERROR_NO_CATEGORY',"No category was chosen to save your mes
 define('_KUNENA_POST_ERROR_IS_SECTION',"You are not allowed to post messages into section.");
 define('_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN',"This category does not allow you to write anonymous posts. To keep your privacy, message was not sent.");
 define('_KUNENA_USERNAME_ANONYMOUS',"Anonymous");
+DEFINE('_POST_ABOUT_DELETE', '<strong>NOTES:</strong><br/>
+-if you delete a Forum Thread (the first post in a thread) all children will be deleted as well!
+..Consider blanking the post and poster\'s name if only the contents should be removed..
+<br/>
+- All children of a deleted normal post will be moved up 1 rank in the thread hierarchy.');
 
 // 1.5.10
 DEFINE('_KUNENA_PARENTDESC', 'Note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can only be created within a category by selecting an existing category as the parent for the forum.<br /> Messages can only be posted to forums, not categories.');
@@ -1527,11 +1532,6 @@ DEFINE('_LISTCAT_PENDING', 'pending message(s)');
 DEFINE('_MODERATION_MESSAGES', 'There are no pending messages in this forum.');
 // post.php
 DEFINE('_POST_ABOUT_TO_DELETE', 'You are about to delete the message');
-DEFINE('_POST_ABOUT_DELETE', '<strong>NOTES:</strong><br/>
--if you delete a Forum Topic (the first post in a thread) all children will be deleted as well!
-..Consider blanking the post and poster\'s name if only the contents should be removed..
-<br/>
-- All children of a deleted normal post will be moved up 1 rank in the thread hierarchy.');
 DEFINE('_POST_CLICK', 'click here');
 DEFINE('_POST_ERROR', 'Could not find username/e-mail. Severe database error not listed');
 DEFINE('_POST_ERROR_MESSAGE', 'An unknown SQL error occured and your message was not posted. If the problem persists, please contact the administrator.');

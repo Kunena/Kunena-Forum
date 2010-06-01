@@ -49,15 +49,13 @@ JHTML::_('behavior.calendar');
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left" ><b><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></b><br />
-			<span class="blueban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE_DESC'); ?></span><br />
-			<span class="grayban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_GRAY_DESC'); ?></span><br />
-			<span class="redban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_RED_DESC'); ?></span>
+			<span class="kunenaban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA_DESC'); ?></span><br />
+			<span class="joomlaban ks"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA_DESC'); ?></span>
 		</td>
 		<td class="kcol-addban-right"><?php
 					// make the select list for the view type
-					$bantype[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_RED'));
-					$bantype[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_BAN_BANLEVEL_GRAY'));
-					$bantype[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_BLUE'));
+					$bantype[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
+					$bantype[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
 					// build the html select list
 					echo JHTML::_('select.genericlist', $bantype, 'bantype', 'class="inputbox" size="1"', 'value', 'text');
 					?></td>

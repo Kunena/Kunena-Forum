@@ -70,23 +70,27 @@ JHTML::_('behavior.calendar');
 		<dd style="display: none;">
 			<?php $this->displaySubscriptions(); ?>
 		</dd>
-		<?php endif; if ($this->config->allowfavorites) : ?>
+		<?php endif;?>
+		<?php if ($this->config->allowfavorites) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayFavorites(); ?>
 		</dd>
 		<?php endif;?>
-		<?php endif; if (CKunenaTools::isModerator($this->my->id) && $this->my->id == $this->profile->userid ): ?>
+		<?php endif;?>
+		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id == $this->profile->userid ): ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayUserBanManager(); ?>
 		</dd>
-		<?php endif;  if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id):?>
+		<?php endif;?>
+		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id):?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayUserBanHistory(); ?>
 		</dd>
-		<?php endif; if ((CKunenaTools::isModerator($this->my->id) &&
+		<?php endif;?>
+		<?php if ((CKunenaTools::isModerator($this->my->id) &&
 						($this->my->id != $this->user->id)) &&
 						(!CKunenaTools::isModerator($this->user->id)) ||
 						(CKunenaTools::isAdmin($this->my->id)) &&

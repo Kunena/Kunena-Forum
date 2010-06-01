@@ -357,14 +357,11 @@ PX		EM			PCT			PT
 	text-align: center;
 	padding: 5px 10px;
 }
-#Kunena table.kblock .kcol-addban-left .blueban {
+#Kunena table.kblock .kcol-addban-left .kunenaban {
 	color: blue;
 }
-#Kunena table.kblock .kcol-addban-left .redban {
+#Kunena table.kblock .kcol-addban-left .joomlaban {
 	color: red;
-}
-#Kunena table.kblock .kcol-addban-left .grayban {
-	color: gray;
 }
 #Kunena table.kblock .kcol-addban-right textarea {
 	width:60%;

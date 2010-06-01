@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+01-Jun-2010 @quila
+^ [#19244] Moderation feature: cleanup ban manager
+
 29-May-2010 Xillibit
 # [#19244] Escape all database column, little change on database structure
 # [#19244] Add configuration setting to display ban reaon in profile, set ban rank when an user is banned

@@ -281,7 +281,7 @@ class CKunenaModerationTools {
 		}
 
 		// appended this extra text to comment
-		$extra = "Disabled by ". $this->_my->id ." at ". date('r') ."";
+		$extra = JText::_( 'COM_KUNENA_BAN_DISABLED_BY' ) . " " . $this->_my->id . " " . JText::_( 'COM_KUNENA_BAN_AT' ) . " " . date('r');
 
 		switch ( $mode ) {
 			case KN_USER_BAN:

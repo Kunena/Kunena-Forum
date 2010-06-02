@@ -33,6 +33,24 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+02-Jun-2010 Matias
+# [#20107] Merge changes from 1.5-xillibit-fixing
+
+02-Jun-2010 Xillibit
+^ [#20799] Backport BBCode tags confidential and table from K1.6
+^ [#20803] Configuration settings to define the maxlength for url on links and images
+
+01-Jun-2010 Xillibit
+# [#20759] Fix some syntax errors
+# [#20769] Queries for sample datas during installation are broken
+# [#20775] When post a new message, the link to go back to the topic doesn't take care of ordering
+
+31-May-2010 Xillibit
+# [#20108] When you try to change the username with one already existing you have a blank page
+# [#20121] Path for icons up and down in userlist.php has an extra slash
+# [#20295] When you delete message or topic, the delete text is still the same
+# [#20281] When deleting an user delete too, the item in #__fb_moderation if exist
+
 31-May-2010 Matias
 # [#20222] Do Not Use Category IDs: Router cannot decide which catid to use if categories have the same name
 # [#20058] Regression: Language string _KUNENA_BACK is defined twice

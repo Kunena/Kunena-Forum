@@ -148,7 +148,7 @@ $k = 0;
        <a href = "<?php echo $link;?>"><?php echo kunena_htmlspecialchars(stripslashes($toptitle->subject)); ?></a>
       </td>
       <td  class="td-2">
-       <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+       <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
       </td>
       <td  class="td-3">
 	  <?php echo $toptitle->hits; ?>
@@ -214,7 +214,7 @@ $k = 0;
 
 </td>
       <td  class="td-2">
-         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
                                     </td>
       <td  class="td-3">
 	  <?php echo $poster->posts; ?>
@@ -277,7 +277,7 @@ $barwidth = round(($topprofile->hits * 100) / $topprofil);
         <?php echo CKunenaLink::GetProfileLink($fbConfig, $topprofile->user_id, $topprofile->user); ?>
 </td>
       <td  class="td-2">
-         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.gif';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
                                     </td>
       <td  class="td-3">
 	  <?php echo $topprofile->hits; ?>

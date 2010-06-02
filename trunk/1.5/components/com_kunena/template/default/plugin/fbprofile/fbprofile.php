@@ -31,26 +31,21 @@ if ($fbConfig->fb_profile == 'cb') {
 $document=& JFactory::getDocument();
 $document->setTitle(_KUNENA_USERPROFILE_PROFILE . ' - ' . stripslashes($fbConfig->board_title));
 
-if ($kunena_my->id) //registered only
+require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
+require_once(KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
+
+$task = JRequest::getCmd('task', 'showprf');
+
+switch ($task)
 {
-    require_once(KUNENA_PATH_LIB .DS. 'kunena.authentication.php');
-    require_once(KUNENA_PATH_LIB .DS. 'kunena.statsbar.php');
+	case "showprf":
+    	$userid = JRequest::getInt('userid', 0);
 
-    $task = JRequest::getCmd('task', 'showprf');
-
-    switch ($task)
-    {
-        case "showprf":
-            $userid = JRequest::getInt('userid', 0);
-
-            $page = 0;
-            showprf((int)$userid, $page);
-            break;
-    }
+        $page = 0;
+        showprf((int)$userid, $page);
+        break;
 }
-else {
-    echo '<h3>' . _COM_A_REGISTERED_ONLY . '</h3>';
-}
+
 
 function showprf($userid, $page)
 {
@@ -146,8 +141,8 @@ function showprf($userid, $page)
 			if ( file_exists($api_AUP)) {
 				( $fbConfig->fb_profile=='aup' ) ? $showlink=1 : $showlink=0;
 				$msg_avatar = '<span class="fb_avatar">'.AlphaUserPointsHelper::getAupAvatar( $userinfo->userid, $showlink ).'</span>';
-			}										
-		}		
+			}
+		}
         else
         {
         	$avatar = $userinfo->avatar;
@@ -278,19 +273,19 @@ function showprf($userid, $page)
             }
         }
     }
-    
+
 	// Start Integration AlphaUserPoints
 	// *********************************
-	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php'; 	
+	$api_AUP = JPATH_SITE.DS.'components'.DS.'com_alphauserpoints'.DS.'helper.php';
 	if ($fbConfig->alphauserpoints && file_exists($api_AUP)) {
 		//Get the max# of points for any one user
-		$database  =& JFactory::getDBO();	
+		$database  =& JFactory::getDBO();
 		$database->setQuery("SELECT max(points) from #__alpha_userpoints");
 		$maxPoints = $database->loadResult();
-		
+
 		$database->setQuery("SELECT points from #__alpha_userpoints WHERE `userid`='".$userid."'");
 		$numPoints = $database->loadResult();
-	
+
 		$myGraphAUP = new phpGraph;
 		$myGraphAUP->AddValue(_KUNENA_AUP_POINTS, $numPoints);
 		$myGraphAUP->SetRowSortMode(0);
@@ -302,8 +297,8 @@ function showprf($userid, $page)
 		$myGraphAUP->SetBorderColor("#333333");
 		$myGraphAUP->SetBarBorderWidth(0);
 		$myGraphAUP->SetGraphWidth(120); //should match column width in the <TD> above -5 pixels
-		$useGraph = 1;	
-	}	
+		$useGraph = 1;
+	}
 	// End Integration AlphaUserPoints
 	// *******************************
 

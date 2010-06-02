@@ -94,8 +94,8 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
 
                         <div style="line-height: 28px">
                             <?php echo _KUNENA_SEARCH_UNAME; ?>:
-                            <label for="exactname"><input type="checkbox" name="exactname" value="1" <?php if ($exactname) echo $checked; ?> />
-                            <?php echo _KUNENA_SEARCH_EXACT; ?></label>
+                            <input type="checkbox" name="exactname" value="1" <?php if ($exactname) echo $checked; ?> />
+                            <label for="exactname"><?php echo _KUNENA_SEARCH_EXACT; ?></label>
                         </div>
                         <div id="userfield" style="line-height: 28px">
                             <input class="fbs input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($searchuser); ?>" style="width:250px"/>
@@ -230,8 +230,8 @@ if(isset($fb_advsearch_hide) && $fb_advsearch_hide==1)
                             </div>
 
                             <div>
-                                <label for="childforums"><input type="checkbox" name="childforums" value="1" <?php if ($childforums) echo 'checked="checked"'; ?> />
-                                <?php echo _KUNENA_SEARCH_SEARCHIN_CHILDREN; ?></label>
+                                <input type="checkbox" name="childforums" value="1" <?php if ($childforums) echo 'checked="checked"'; ?> />
+                                <label for="childforums"><?php echo _KUNENA_SEARCH_SEARCHIN_CHILDREN; ?></label>
                             </div>
                         </div>
                     </fieldset>

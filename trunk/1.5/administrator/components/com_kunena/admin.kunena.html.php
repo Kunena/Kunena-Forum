@@ -1500,6 +1500,17 @@ require_once (KUNENA_PATH_LIB .DS. 'kunena.version.php');
                     <td align = "left" valign = "top"><?php echo _COM_A_SIGNATURE_DESC ?>
                     </td>
                 </tr>
+                <tr align = "center" valign = "middle">
+                    <td align = "left" valign = "top"><?php echo _COM_A_URLLENGHT ?>
+                    </td>
+
+                    <td align = "left" valign = "top">
+                        <input type = "text" name = "cfg_maxurllength" value = "<?php echo $fbConfig->maxurllength;?>"/>
+                    </td>
+
+                    <td align = "left" valign = "top"><?php echo _COM_A_URLLENGHT_DESC ?>
+                    </td>
+                </tr>
             </table>
 	</fieldset>
 			<div class="fbfuncsubtitle"><?php echo _COM_A_SECURITY ?>  <a name="security" id="security" > </a></div>

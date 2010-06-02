@@ -556,7 +556,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     if (!$row->bind($_POST))
                     {
-                        echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
+                        $app->redirect(CKunenaLink::GetProfileURL($user_id),$row->getError());
                         $app->close();
                     }
                     if (in_array($app->getCfg( "frontend_userparams" ), array( '1', null)))
@@ -579,7 +579,7 @@ if ($kunena_my->id != "" && $kunena_my->id != 0)
 
                     if (!$row->save(TRUE))
                     {
-                        echo "<script> alert('" . $row->getError() . "'); window.history.go(-1); </script>\n";
+                        $app->redirect(CKunenaLink::GetProfileURL($user_id),$row->getError());
                         $app->close();
                     }
 

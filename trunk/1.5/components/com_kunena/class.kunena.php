@@ -462,26 +462,30 @@ class CKunenaTools {
         $cats = $kunena_db->loadObjectList('id');
         	check_dberror("Unable to load categories.");
 
-        foreach ($cats as $c)
-        {
-            if (isset($cats[$c->parent])) $cats[$c->parent]->children[] = $c->id;
-            else $cats[0]->children[] = $c->id;
-        }
+        if ( !empty ($cats) ) {
 
-        CKunenaTools::reCountBoardsRecursion($cats, 0);
+        	foreach ($cats as $c)
+        	{
+            	if (isset($cats[$c->parent])) $cats[$c->parent]->children[] = $c->id;
+            	else $cats[0]->children[] = $c->id;
+        	}
 
-        // now back to db
-        foreach ($cats as $c)
-        {
-        	if (!isset($c->id)) continue;
-            $kunena_db->setQuery("UPDATE #__fb_categories SET"
+        	CKunenaTools::reCountBoardsRecursion($cats, 0);
+
+       	 	// now back to db
+        	foreach ($cats as $c)
+        	{
+        		if (!isset($c->id)) continue;
+            	$kunena_db->setQuery("UPDATE #__fb_categories SET"
             	."  numTopics=" . intval($c->numTopics)
             	.", numPosts=" . intval($c->numPosts)
             	.", id_last_msg=" . intval($c->id_last_msg)
             	.", time_last_msg=" . intval($c->time_last_msg)
             	." WHERE id=" . intval($c->id));
-            $kunena_db->query();
+            	$kunena_db->query();
             	check_dberror("Unable to update categories.");
+        	}
+
         }
     }
 

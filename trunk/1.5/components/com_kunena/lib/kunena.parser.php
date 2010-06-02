@@ -242,6 +242,26 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 $tns = "<blockquote>"; $tne = '</blockquote>';
                 return TAGPARSER_RET_REPLACED;
                 break;
+            case 'table' :
+				$tns = "<table>";
+				$tne = '</table>';
+				return TAGPARSER_RET_REPLACED;
+				break;
+			case 'tr' :
+				$tns = "<tr>";
+				$tne = '</tr>';
+				return TAGPARSER_RET_REPLACED;
+				break;
+			case 'th' :
+				$tns = "<th>";
+				$tne = '</th>';
+				return TAGPARSER_RET_REPLACED;
+				break;
+			case 'td' :
+				$tns = "<td>";
+				$tne = '</td>';
+				return TAGPARSER_RET_REPLACED;
+				break;
             case 'email':
                 $task->autolink_disable--;
                 if(isset($tag->options['default'])) {
@@ -656,6 +676,17 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 return TAGPARSER_RET_NOTHING;
 
                 break;
+            case 'confidential' :
+				if ($between) {
+					if (CKunenaTools::isModOrAdmin($kunena_my->id)) {
+						// Display but highlight the fact that it is hidden from everyone except admins and mods
+						$tag_new = '<b>' . COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT . '</b><br /><span class="kmsgtext-confidential">' . $between . '</span>';
+					}
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
             case 'spoiler':
                 if($between) {
 

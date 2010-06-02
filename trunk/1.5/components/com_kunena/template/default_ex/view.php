@@ -1003,7 +1003,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 }
 
                                 if ($userinfo->ICQ != '') {
-                                    $msg_icq = '<a href="http://www.icq.com/people/cmd.php?uin='.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'&action=message"><img src="http://status.icq.com/online.gif?icq='.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'&img=5" title="ICQ#: '.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'" alt="ICQ#: '.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'" /></a>';
+                                    $msg_icq = '<a href="http://www.icq.com/people/cmd.php?uin='.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'&action=message">'.isset($fbIcons['msgicq']) ? '<img src="'. KUNENA_URLICONSPATH . $fbIcons['msgicq'] . '" border="0" alt="'.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'" title="ICQ: '.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'" />' : 'ICQ: '.kunena_htmlspecialchars(stripslashes($userinfo->ICQ)).'</a>';
                                 }
                                 if ($userinfo->location != '') {
                                     $msg_location = isset($fbIcons['msglocation']) ? '<img src="'. KUNENA_URLICONSPATH . $fbIcons['msglocation'] . '" border="0" alt="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" title="'._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'" />' : ' '._KUNENA_MYPROFILE_LOCATION.': '.kunena_htmlspecialchars(stripslashes($userinfo->location)).'';
@@ -1097,7 +1097,7 @@ if ((in_array($catid, $allow_forum)) || (isset($this_message->catid) && in_array
                                 //Offer an moderator the delete link
                                 if ($is_Moderator)
                                 {
-                                    $msg_delete = CKunenaLink::GetTopicPostLink('delete', $catid, $fmessage->id , isset($fbIcons['delete']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
+                                    $msg_delete = CKunenaLink::GetTopicPostLink('deletetopic', $catid, $fmessage->id , isset($fbIcons['delete']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['delete'] . '" alt="Delete" border="0" title="' . _VIEW_DELETE . '" />':_GEN_DELETE);
                                     $msg_merge = CKunenaLink::GetTopicPostLink('merge', $catid, $fmessage->id , isset($fbIcons['merge']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['merge'] . '" alt="' . _GEN_MERGE . '" border="0" title="' . _GEN_MERGE . '" />':_GEN_MERGE);
 									// TODO: Enable split when it's fixed
                                     // $msg_split = CKunenaLink::GetTopicPostLink('split', $catid, $fmessage->id , isset($fbIcons['split']) ? '<img src="' . KUNENA_URLICONSPATH . $fbIcons['split'] . '" alt="' . _GEN_SPLIT . '" border="0" title="' . _GEN_SPLIT . '" />':_GEN_SPLIT);

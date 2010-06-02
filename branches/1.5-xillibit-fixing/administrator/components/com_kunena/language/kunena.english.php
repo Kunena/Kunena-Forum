@@ -23,6 +23,8 @@
 defined( '_JEXEC' ) or defined ('_VALID_MOS') or die('Restricted access');
 
 // 1.5.12
+define('_COM_A_URLLENGHT','Max length for url and image links');
+define('_COM_A_URLLENGHT_DESC','Maximum length for url and image links in input field in the boardcode editor');
 define('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT','Confidential information:');
 define('_KUNENA_CATEGORY_ORPHAN','ORPHAN');
 define('_KUNENA_CATEGORY_ORPHAN_DESC','You have orphaned or lost categories! Please change their parent to be a valid category.');

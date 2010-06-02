@@ -35,6 +35,7 @@ Kunena 1.5.12-DEV
 
 02-Jun-2010 Xillibit
 ^ [#20799] Backport BBCode tags confidential and table from K1.6
+^ [#20803] Configuration settings to define the maxlength for url on links and images
 
 01-Jun-2010 Xillibit
 # [#20759] Fix some syntax errors

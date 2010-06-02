@@ -368,35 +368,40 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 	if (!in_array(strtolower($matches[1]), $file_ext)) break;
 
                 	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
-                    $task->autolink_disable--; # continue autolink conversion
-                    // Make sure we add image size if specified and while we are
-                    // at it also set maximum image width from text width config.
-                    //
-                    // NOTICE: image max variables from config are not intended
-                    // for formating but to limit the size of uploads, which can
-                    // be larger than the available post area to support super-
-                    // sized popups.
-                    $imgmaxsize = (int)(($fbConfig->rtewidth * 9) / 10); // 90% of text width
-                    $imgtagsize = isset($tag->options["size"]) ? (int)kunena_htmlspecialchars($tag->options["size"]) : 0;
+                	if ($kunena_my->id==0 && $fbConfig->showimgforguest) {
+                    	// Hide between content from non registered users
+                     	$tag_new = '<br/><b>' . _KUNENA_BBCODE_HIDEIMG . '</b>';
+                    } else {
+                    	$task->autolink_disable--; # continue autolink conversion
+                    	// Make sure we add image size if specified and while we are
+                    	// at it also set maximum image width from text width config.
+                    	//
+                    	// NOTICE: image max variables from config are not intended
+                    	// for formating but to limit the size of uploads, which can
+                    	// be larger than the available post area to support super-
+                    	// sized popups.
+                    	$imgmaxsize = (int)(($fbConfig->rtewidth * 9) / 10); // 90% of text width
+                    	$imgtagsize = isset($tag->options["size"]) ? (int)kunena_htmlspecialchars($tag->options["size"]) : 0;
 
-                    if($imgtagsize>0 && $imgtagsize<$imgmaxsize)
-                    {
-                    	$imgmaxsize = $imgtagsize;
+                    	if($imgtagsize>0 && $imgtagsize<$imgmaxsize)
+                    	{
+                    		$imgmaxsize = $imgtagsize;
+                    	}
+
+                    	// Need to check if we are nested inside a URL code
+						if($task->autolink_disable == 0)
+						{
+							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
+
+							$tag_new = "<a href='".$tempstr."' rel=\"lightbox\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
+                		} else {
+						 	// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
+
+						 	$tag_new = "<img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
+						}
+
+
                     }
-
-                    // Need to check if we are nested inside a URL code
-					if($task->autolink_disable == 0)
-					{
-						 // This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-
-						$tag_new = "<a href='".$tempstr."' rel=\"lightbox\"><img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
-                	} else {
-						 // This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-
-						 $tag_new = "<img src='".$tempstr.($imgtagsize ?"' width='".$imgmaxsize:'')."' style='max-width:".$imgmaxsize."px; ' alt='' />";
-					}
-
-
                     return TAGPARSER_RET_REPLACED;
                 }
                 return TAGPARSER_RET_NOTHING;
@@ -404,9 +409,14 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
             case 'file':
                 if($between) {
                 	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
-                	$task->autolink_disable--; # continue autolink conversion
-                    $tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._KUNENA_FILEATTACH."</span><br>"._KUNENA_FILENAME
-                    ."<a href='".$tempstr."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?kunena_htmlspecialchars($tag->options["name"]):$tempstr)."</a><br>"._KUNENA_FILESIZE.kunena_htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
+               		if ($kunena_my->id==0 && $fbConfig->showfileforguest) {
+                     	// Hide between content from non registered users
+                     	$tag_new = '<br /><b>' . _KUNENA_BBCODE_HIDEFILE . '</b>';
+                    } else {
+                		$task->autolink_disable--; # continue autolink conversion
+                    	$tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">"._KUNENA_FILEATTACH."</span><br>"._KUNENA_FILENAME
+                    	."<a href='".$tempstr."' target=\"_blank\" rel=\"nofollow\">".(($tag->options["name"])?kunena_htmlspecialchars($tag->options["name"]):$tempstr)."</a><br>"._KUNENA_FILESIZE.kunena_htmlspecialchars($tag->options["size"], ENT_QUOTES)."</div>";
+                    }
                     return TAGPARSER_RET_REPLACED;
                 }
                 return TAGPARSER_RET_NOTHING;

@@ -858,6 +858,11 @@ function showConfig($option)
 	//New for 1.5.10: Disable userlist
 	$lists['userlist_enable'] = JHTML::_('select.genericlist', $yesno, 'cfg_userlist_enable', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->userlist_enable);
 
+	$hideshow = array ();
+	$hideshow[] = JHTML::_('select.option','0', _COM_A_SHOW);
+	$hideshow[] = JHTML::_('select.option', '1', _COM_A_HIDE);
+	$lists['showimgforguest'] = JHTML::_('select.genericlist', $hideshow, 'cfg_showimgforguest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showimgforguest);
+	$lists['showfileforguest'] = JHTML::_('select.genericlist', $hideshow, 'cfg_showfileforguest', 'class="inputbox" size="1"', 'value', 'text', $fbConfig->showfileforguest);
     html_Kunena::showConfig($fbConfig, $lists, $option);
 }
 

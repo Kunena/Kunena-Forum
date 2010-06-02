@@ -35,6 +35,7 @@ Kunena 1.5.12-DEV
 
 02-Jun-2010 Matias
 # [#20107] Merge changes from 1.5-xillibit-fixing
+# [#20797] Small improvement to the router
 
 02-Jun-2010 Xillibit
 ^ [#20799] Backport BBCode tags confidential and table from K1.6

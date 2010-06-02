@@ -195,7 +195,6 @@ function ParseRoute($segments)
 		if (is_numeric($var)) // Numeric value is always listcat, showcat or view
 		{
 			if ($funcpos > count($funcitems)) continue; // Unknown parameter
-			$vars['func'] = $funcitems[$funcpos]['func'];
 			$value = $var;
 			$var = $funcitems[$funcpos++]['var'];
 		} else if ($value === null) // Value must be either func or do
@@ -205,6 +204,11 @@ function ParseRoute($segments)
 			$var = $doitems[$dopos++];
 		}
 		$vars[$var] = $value;
+	}
+	if (!isset($vars['func'])) {
+		if (!isset($vars['catid'])) $vars['func'] = 'listcat';
+		elseif (!isset($vars['id'])) $vars['func'] = 'showcat';
+		else $vars['func'] = 'view';
 	}
 	// Check if we should use listcat instead of showcat
 	if (isset($vars['func']) && $vars['func'] == 'showcat')

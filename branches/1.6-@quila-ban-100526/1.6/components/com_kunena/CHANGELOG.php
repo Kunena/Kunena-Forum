@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+02-Jun-2010 Xillibit
+^ [#19244] Allow the user in banner manager to edit some field
+
 01-Jun-2010 @quila
 ^ [#19244] Moderation feature: cleanup ban manager
 

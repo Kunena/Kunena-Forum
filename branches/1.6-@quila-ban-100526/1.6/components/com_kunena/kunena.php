@@ -618,6 +618,22 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 						$kunena_app->redirect ( $kunena_app->getUserState('com_kunena.banreturnurl') );
 						break;
+					case 'validatechanges':
+						$thisvalue = JRequest::getInt ( 'kbanvaluedo', 0 );
+						$bantype = JRequest::getInt ( 'kbantype'.$thisvalue, 0 );
+						$expiretime = JRequest::getString ( 'kban_expireTime'.$thisvalue, '0000-00-00 00:00:00' );
+						$publicreason = JRequest::getString ( 'kban_publicreason'.$thisvalue, '' );
+						$privatereason = JRequest::getString ( 'kban_privatereason'.$thisvalue, '' );
+
+						if ( $thisvalue != 0 && $bantype !=0 ) {
+							$query = "UPDATE #__kunena_banned_users SET expiry={$kunena_db->Quote($expiretime)} , private_reason={$kunena_db->Quote($privatereason)} ,public_reason={$kunena_db->Quote($publicreason)} WHERE enabled=1 AND bantype=$bantype AND userid=$thisuserid";
+							$kunena_db->setQuery ( $query );
+							$kunena_db->query ();
+							check_dberror ( 'Unable to apply changes on banned user.' );
+
+							$kunena_app->redirect ( $kunena_app->getUserState('com_kunena.banreturnurl') );
+						}
+						break;
 				}
 			}
 			break;

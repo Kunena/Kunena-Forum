@@ -522,6 +522,16 @@ if ($editmode) {
         $text = preg_replace('/\[color=(.*?)\](.*?)\[\/color\]/s', '\\2', $text);
         $text = preg_replace('/\[video\](.*?)\[\/video\]/s', '\\1', $text);
         $text = preg_replace('/\[ebay\](.*?)\[\/ebay\]/s', '\\1', $text);
+        $text = preg_replace('/(\[confidential\])/', ' ', $text);
+        $text = preg_replace('/(\[\/confidential\])/', ' ', $text);
+         $text = preg_replace('/(\[table\])/', ' ', $text);
+        $text = preg_replace('/(\[\/table\])/', ' ', $text);
+         $text = preg_replace('/(\[th\])/', ' ', $text);
+        $text = preg_replace('/(\[\/th\])/', ' ', $text);
+         $text = preg_replace('/(\[td\])/', ' ', $text);
+        $text = preg_replace('/(\[\/tdl\])/', ' ', $text);
+         $text = preg_replace('/(\[tr\])/', ' ', $text);
+        $text = preg_replace('/(\[\/tr\])/', ' ', $text);
         $text = preg_replace('#/n#s', ' ', $text);
         $text = strip_tags($text);
         //$text = stripslashes(kunena_htmlspecialchars($text));

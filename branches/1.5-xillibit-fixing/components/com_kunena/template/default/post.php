@@ -590,6 +590,7 @@ if (empty($objCatInfo)) {
                             //$message->message=smile::smileReplace($message->message,0);
                             $table = array_flip(get_html_translation_table(HTML_ENTITIES, ENT_QUOTES));
                             //$quote = strtr($message->message, $table);
+                            $message->message = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $message->message );
                             $quote = stripslashes($message->message);
 
                             $htmlText = "[b]" . stripslashes($message->name) . " " . _POST_WROTE . ":[/b]\n";

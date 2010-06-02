@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+02-Jun-2010 Xillibit
+^ [#20799] Backport BBCode tags confidential and table from K1.6
+
 01-Jun-2010 Xillibit
 # [#20759] Fix some syntax errors
 # [#20769] Queries for sample datas during installation are broken

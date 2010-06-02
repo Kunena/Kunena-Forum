@@ -53,6 +53,15 @@ DEFINE('_POST_ABOUT_DELETE', '<strong>NOTES:</strong><br/>
 ..Consider blanking the post and poster\'s name if only the contents should be removed..
 <br/>
 - All children of a deleted normal post will be moved up 1 rank in the thread hierarchy.');
+// Hide image/attachments for unregistred users
+define('_COM_A_SHOWIMGFORGUEST', 'Visibility of images for guests');
+define('_COM_A_SHOWIMGFORGUEST_DESC', 'Choose if you want show or hide attachment images for guests.');
+define('_KUNENA_BBCODE_HIDEIMG', 'This image is hidden for guests. Please login or register to see it.');
+define('_COM_A_SHOWFILEFORGUEST', 'Visibility of attachments for guests');
+define('_COM_A_SHOWFILEFORGUEST_DESC', 'Choose if you want show or hide attachments for guests.');
+define('_KUNENA_BBCODE_HIDEFILE', 'This attachment is hidden for guests. Please login or register to see it.');
+DEFINE('_COM_A_HIDE', 'Hide');
+DEFINE('_COM_A_SHOW', 'Show');
 
 // 1.5.10
 DEFINE('_KUNENA_PARENTDESC', 'Note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can only be created within a category by selecting an existing category as the parent for the forum.<br /> Messages can only be posted to forums, not categories.');

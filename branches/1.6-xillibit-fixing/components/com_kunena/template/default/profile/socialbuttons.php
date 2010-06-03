@@ -12,7 +12,8 @@
 defined( '_JEXEC' ) or die();
 if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 
-JHTML::_('behavior.tooltip');
+$doc =& JFactory::getDocument();
+$doc->addScript( JURI::root().'/plugins/system/mootools12/tips.js' );
 ?>
 
 <div class="kiconrow">

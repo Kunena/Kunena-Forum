@@ -41,6 +41,7 @@ Kunena 1.6.0-ALPHA2
 # [#19288] AUP avatar can't be rezised below 100x100px
 ^ [#19288] Configuration settings to define the maxlength for url on links and images
 # [#19288] Show joomla! tooltip on social icons in message profilebox and in profile
+# [#19288] Fix issue which prevent to save poll vote and fix conflict with JHTML::_('behavior.tooltip') which load a new time MT library
 
 1-June-2010 Matias
 ^ [#20729] Update version info to 1.6.0-ALPHA2

@@ -78,14 +78,14 @@ class CKunenaAjaxHelper {
 					break;
 				case 'pollvote' :
 					$vote	= JRequest::getInt('kpollradio', '');
-					$id = JRequest::getInt ( 'kpoll_id', 0 );
+					$id = JRequest::getInt ( 'kpoll-id', 0 );
 
 					$response = $this->_addPollVote ($vote, $id, $this->_my->id);
 
 					break;
 				case 'pollchangevote' :
 					$vote	= JRequest::getInt('kpollradio', '');
-					$id = JRequest::getInt ( 'kpoll_id', 0 );
+					$id = JRequest::getInt ( 'kpoll-id', 0 );
 
 					$response = $this->_changePollVote ($vote, $id, $this->_my->id);
 

@@ -403,7 +403,7 @@ class KunenaUser extends JObject
 		if ( $social[$name]['nourl'] == '0') {
 			if (!empty($this->$item)) return '<a href="'.kunena_htmlspecialchars($url).'" target="_blank" title="'.$title.'"><span class="'.$name.'"></span></a>';
 		} else {
-			if (!empty($this->$item)) return '<a href="#" target="_blank" title="'.$title.': '.$url.'"><span class="'.$name.'"></span></a>';
+			if (!empty($this->$item)) return '<span class="'.$name.' hasTip" title="'.$title.'::'.$value.'"></span>';
 		}
 		if ($gray) return '<span class="'.$name.'_off"></span>';
 		else return '';

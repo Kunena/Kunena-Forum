@@ -10,7 +10,9 @@
  *
  **/
 defined( '_JEXEC' ) or die();
-if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false
+if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
+
+JHTML::_('behavior.tooltip');
 ?>
 
 <div class="kiconrow">

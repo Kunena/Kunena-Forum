@@ -11,6 +11,7 @@
  **/
 defined( '_JEXEC' ) or die();
 JHTML::_('behavior.calendar');
+JHTML::_('behavior.tooltip');
 ?>
 <div id="kprofile-rightcoltop">
 	<div class="kprofile-rightcol2">
@@ -132,7 +133,7 @@ JHTML::_('behavior.calendar');
 				<ul id="ban-fields" style="display:none;">
 				<li>
 				<span><?php echo JText::_('COM_KUNENA_BAN_EXPIRY'); ?></span>
-				<input class="inputbox" type="text" maxlength="15" name="banexpiry" id="banexpiry" /> 
+				<input class="inputbox" type="text" maxlength="15" name="banexpiry" id="banexpiry" />
 				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('banexpiry','%Y-%m-%d');" /></li>
 				<li>
 				<span><?php echo JText::_('COM_KUNENA_BAN_MESSAGE'); ?></span>

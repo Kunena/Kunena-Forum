@@ -38,6 +38,9 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix to avoid the issue rename failed at the end of installation
 # [#19288] Remove email adress from report settings to avoid spam
 # [#19288] Fix undefined variable on form.php line 86
+# [#19288] AUP avatar can't be rezised below 100x100px
+^ [#19288] Configuration settings to define the maxlength for url on links and images
+# [#19288] Show joomla! tooltip on social icons in message profilebox and in profile
 
 1-June-2010 Matias
 ^ [#20729] Update version info to 1.6.0-ALPHA2

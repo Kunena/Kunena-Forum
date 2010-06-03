@@ -335,8 +335,10 @@ class KunenaModelInstall extends JModel {
 		foreach ($entryfiles as $fileparts) {
 			list($path, $filename, $ext) = $fileparts;
 			if (is_file("{$path}/{$filename}.new.{$ext}")) {
+				$success1 = JFile::delete("{$path}/{$filename}.{$ext}");
 				$success = JFile::move("{$path}/{$filename}.new.{$ext}", "{$path}/{$filename}.{$ext}");
-				if (!$success) $this->addStatus ( "Moving file {$filename}.{$ext}", false, '' );
+				if (!$success1) $this->addStatus ( "Deleting file {$filename}.{$ext}", false, '' );
+				if (!$success) $this->addStatus ( "Renamming file {$filename}.new.{$ext}", false, '' );
 			}
 		}
 

@@ -41,6 +41,8 @@ class CKunenaPost {
 		$this->msg_cat = null;
 
 		$this->allow = 1;
+
+		$this->cat_default_allow = null;
 	}
 
 	// Temporary function to handle old style permission handling

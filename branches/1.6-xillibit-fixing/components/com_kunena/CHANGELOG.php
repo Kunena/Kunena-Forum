@@ -36,6 +36,8 @@ Kunena 1.6.0-ALPHA2
 
 3-June-2010 Xillibit
 # [#19288] Fix to avoid the issue rename failed at the end of installation
+# [#19288] Remove email adress from report settings to avoid spam
+# [#19288] Fix undefined variable on form.php line 86
 
 1-June-2010 Matias
 ^ [#20729] Update version info to 1.6.0-ALPHA2

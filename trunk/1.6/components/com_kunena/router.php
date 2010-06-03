@@ -22,7 +22,7 @@ class KunenaRouter {
 		'profile', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'rules', 'report',
 		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'userposts', 'unapproved',
 		'deleted', 'search', 'advsearch', 'markthisread', 'subscribecat', 'unsubscribecat', 'karma',
-		'bulkactions', 'banactions', 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'fb_pdf' );
+		'bulkactions', 'banactions', 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'fb_pdf', 'article' );
 
 	function loadCategories() {
 		if (self::$catidcache !== null)
@@ -101,6 +101,10 @@ class KunenaRouter {
 					if (isset ( $query [$var] ) && $value == $query [$var]) {
 						unset ( $query [$var] );
 					}
+				}
+				if (isset ( $query ['view'] )) {
+					$query ['func'] = $query ['view'];
+					unset ($query ['view']);
 				}
 			}
 		}
@@ -194,6 +198,10 @@ class KunenaRouter {
 		$menuquery = isset ( $active->query ) ? $active->query : array ();
 		foreach ( $menuquery as $var => $value ) {
 			$vars [$var] = $value;
+		}
+		if (isset ( $vars ['view'] )) {
+			$vars ['func'] = $vars ['view'];
+			unset ( $vars ['view'] );
 		}
 
 		while ( ($segment = array_shift ( $segments )) !== null ) {

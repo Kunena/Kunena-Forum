@@ -58,7 +58,7 @@ $email = JRequest::getVar ( 'email', '' );
 $favoriteMe = JRequest::getVar ( 'favoriteMe', '' );
 $fb_authorname = JRequest::getVar ( 'fb_authorname', '' );
 $fb_thread = JRequest::getInt ( 'fb_thread', 0 );
-$func = JString::strtolower ( JRequest::getCmd ( 'func', '' ) );
+$func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
 $id = JRequest::getInt ( 'id', 0 );
 $limit = JRequest::getInt ( 'limit', 0 );
 $limitstart = JRequest::getInt ( 'limitstart', 0 );
@@ -321,6 +321,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
  <?php
 	CKunenaTools::loadTemplate('/profilebox.php');
 
+	// Handle help / rules menuitems
+	if ($func == 'article') {
+		$func = $do;
+	}
+
 	switch ($func) {
 		case 'who' :
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
@@ -382,11 +387,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case 'help' :
-			CKunenaTools::loadTemplate('/help.php');
-
-			break;
-
 		case 'showcat' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'showcat.php');
 			$page = new CKunenaShowcat($catid, $page);
@@ -407,7 +407,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'rules' :
-			CKunenaTools::loadTemplate('/rules.php');
+		case 'help' :
+			CKunenaTools::loadTemplate('/'.$func.'.php');
 
 			break;
 
@@ -427,6 +428,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'unapproved' :
 		case 'deleted' :
 			require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+			if ($do) $func = $do;
 			$page = new CKunenaLatestX($func, $page);
 			$page->display();
 

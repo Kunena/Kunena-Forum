@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+3-June-2010 Matias
+# [#20071] Make menu items visible in Joomla Menu Manager
+
 1-June-2010 Matias
 ^ [#20729] Update version info to 1.6.0-ALPHA2
 # [#19288] Replace router.php in the beginning of the installation to prevent error messages in frontend during installation

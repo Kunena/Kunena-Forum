@@ -141,6 +141,9 @@ abstract class KunenaRoute {
 			$catid = true;
 		}
 		foreach ( $item->query as $var => $value ) {
+			if ($var == 'view') {
+				$var = 'func';
+			}
 			if (!isset ( $query [$var] ) || $value != $query [$var]) {
 				if ($catid && $var=='func') continue;
 				return false;

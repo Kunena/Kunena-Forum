@@ -512,7 +512,14 @@ class KunenaModelInstall extends JModel {
 				if ($match) {
 					$ext = JString::strtolower($matches[1]);
 					$newfile = "users/avatar{$userid}.{$ext}";
-					JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
+					if ( is_writable(KPATH_MEDIA ."/avatars/{$newfile}") ) {
+						echo "The directory ".KPATH_MEDIA ."/avatars/".$newfile." is not writable":
+						JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
+					} else {
+						chmod(KPATH_MEDIA ."/avatars/{$newfile}", 0777);
+						JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
+						$this->addStatus ( "The directory ".KPATH_MEDIA ."/avatars/{$newfile} is not writable, the permissions has been changed" , true );
+					}
 				}
 			}
 			$query = "UPDATE #__kunena_users SET avatar={$this->db->quote($newfile)} WHERE userid={$userid}";

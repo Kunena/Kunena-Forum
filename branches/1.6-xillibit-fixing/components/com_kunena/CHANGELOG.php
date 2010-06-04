@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+4-June-2010 Xillibit
+# [#19288] Check directory permissions on avatar upload and change it if needed
+
 3-June-2010 Xillibit
 # [#19288] Fix to avoid the issue rename failed at the end of installation
 # [#19288] Remove email adress from report settings to avoid spam

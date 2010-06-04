@@ -73,14 +73,14 @@ $kunena_config = KunenaFactory::getConfig ();
 			<div id="kbbcode-link-options" style="display: none;"><?php
 			echo JText::_('COM_KUNENA_EDITOR_LINK_URL');
 			?>&nbsp;<input id="kbbcode-link_url" name="url" type="text" size="40"
-				maxlength="255" value="http://"
+				maxlength="<?php echo $this->config->maxurllength; ?>" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKURL');
 				?>')" />
 			<?php
 			echo JText::_('COM_KUNENA_EDITOR_LINK_TEXT');
 			?>&nbsp;<input name="text2" id="kbbcode-link_text" type="text"
-				size="30" maxlength="100"
+				size="30" maxlength="150"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT');
 				?>')" /> <input type="button" name="insterLink"
@@ -102,7 +102,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			<?php
 			echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_URL');
 			?>&nbsp;<input name="url2" id="kbbcode-image_url" type="text"
-				size="40" maxlength="250" value="http://"
+				size="40" maxlength="<?php echo $this->config->maxurllength; ?>" value="http://"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKURL');
 				?>')" />&nbsp; <input type="button" name="Link"

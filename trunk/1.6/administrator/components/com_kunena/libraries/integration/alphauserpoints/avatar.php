@@ -36,7 +36,11 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 	{
 		$user = KunenaFactory::getUser($user);
 		$size = $this->getSize($sizex, $sizey);
-		$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $size->x, $size->y  );
+		if ($size->y > 100) {
+			$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, 100*(float)$size->x/(float)$size->y, '100'  );
+		} else {
+			$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $size->x, $size->y  );
+		}
 		return $avatar;
 	}
 }

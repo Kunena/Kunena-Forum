@@ -38,9 +38,22 @@ Kunena 1.6.0-ALPHA2
 # [#20071] Change logic how Kunena detects current menu, fixing issues with missing tab menu in Kunena
 # [#20071] Add new entry menuitem for Kunena, which can be used to make unlimited menus for Kunena anywhere in menu trees
 # [#20071] Add support for arbitary default pages; fix issue with parameters
+^ [#15886] Merged revisions 2619-2626 from /branches/1.6-xillibit with changes
+
+4-June-2010 Xillibit
+# [#19288] Check directory permissions on avatar upload and change it if needed
 
 4-June-2010 fxstein
 ^ [#20841] Change logic for who is online stats to match Joomla
+
+3-June-2010 Xillibit
+# [#19288] Fix to avoid the issue rename failed at the end of installation
+# [#19288] Remove email adress from report settings to avoid spam
+# [#19288] Fix undefined variable on form.php line 86
+# [#19288] AUP avatar can't be rezised below 100x100px
+^ [#19288] Configuration settings to define the maxlength for url on links and images
+# [#19288] Show joomla! tooltip on social icons in message profilebox and in profile
+# [#19288] Fix issue which prevent to save poll vote and fix conflict with JHTML::_('behavior.tooltip') which load a new time MT library
 
 3-June-2010 Matias
 # [#20071] Make menu items visible in Joomla Menu Manager

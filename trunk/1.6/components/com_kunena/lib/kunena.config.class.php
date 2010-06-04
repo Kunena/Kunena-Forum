@@ -392,6 +392,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $onlineusers = 1;
 	var $debug = 0;
 	var $catsautosubscribed = 0;
+	var $maxurllength = 150;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

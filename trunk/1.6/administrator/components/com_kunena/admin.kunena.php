@@ -2540,7 +2540,7 @@ function generateSystemReport () {
 	$kunenaVersionInfo = CKunenaVersion::versionArray ();
 
 	//get all the config settings for Kunena
-	$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."fb_config'" );
+	$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."kunena_config'" );
 	$table_config = $kunena_db->loadResult ();
 	if (KunenaError::checkDatabaseError()) return;
 
@@ -2550,8 +2550,9 @@ function generateSystemReport () {
     	if (KunenaError::checkDatabaseError()) return;
 
     	$kconfigsettings = '[table]';
+    	$kconfigsettings .= '[th]Kunena config settings:[/th]';
     	foreach ($kconfig[0] as $key => $value ) {
-    		if ($key != 'id') {
+    		if ($key != 'id' && $key != 'email') {
 				$kconfigsettings .= '[tr][td]'.$key.'[/td][td]'.$value.'[/td][/tr]';
     		}
     	}
@@ -2565,7 +2566,7 @@ function generateSystemReport () {
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';
 	foreach($tableslist as $table) {
-		if (preg_match('`_fb_`',$table)) {
+		if (preg_match('`_kunena_`',$table)) {
 			$kunena_db->setQuery("SHOW FULL FIELDS FROM " .$table. "");
 			$fullfields = $kunena_db->loadObjectList ();
             	if (KunenaError::checkDatabaseError()) return;
@@ -2587,9 +2588,8 @@ function generateSystemReport () {
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' | [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][quote]
-		 [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
-	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [b]Kunena config settings:[/b][spoiler] '.$kconfigsettings.'[/spoiler][/quote]';
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
+	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->versionname.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]';
 
     return $report;
 }

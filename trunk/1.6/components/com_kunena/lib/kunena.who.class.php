@@ -56,15 +56,14 @@ class CKunenaWhoIsOnline {
 		static $users = null;
 		if ($users) return $users;
 		$query
-        = "SELECT w.userip, w.time, w.what, u.{$this->name} AS username, u.id, k.moderator, k.showOnline "
-        . " FROM #__kunena_whoisonline AS w"
-        . " LEFT JOIN #__users AS u ON u.id=w.userid "
-        . " LEFT JOIN #__kunena_users AS k ON k.userid=w.userid "
+        = "SELECT u.{$this->name} AS username, u.id, k.moderator, k.showOnline "
+        . " FROM #__users AS u "
+        . " LEFT JOIN #__kunena_users AS k ON k.userid=u.id "
 		# filter real public session logouts
-        . " INNER JOIN #__session AS s ON s.guest='0' AND s.userid=w.userid "
-        . " WHERE w.userid!='0' "
+        . " INNER JOIN #__session AS s ON s.guest='0' AND s.userid=u.id "
         . " GROUP BY u.id "
         . " ORDER BY username ASC";
+
     	$this->db->setQuery($query);
     	$users = $this->db->loadObjectList();
     	KunenaError::checkDatabaseError();
@@ -78,7 +77,7 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getTotalGuestUsers () {
-		$query = "SELECT COUNT(*) FROM #__kunena_whoisonline WHERE user='0'";
+		$query = "SELECT COUNT(*) FROM #__session WHERE guest='1'";
     	$this->db->setQuery($query);
     	$totalguests = $this->db->loadResult();
     	KunenaError::checkDatabaseError();

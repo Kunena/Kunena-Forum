@@ -40,10 +40,10 @@ if ($this->config->showwhoisonline)
         <thead>
             <tr>
                 <th class="left" colspan="3"><div class = "ktitle-cover km">
-							<?php 
+							<?php
 							$who_online = JText::_('COM_KUNENA_WHO_WHOIS_ONLINE');
 							if (CKunenaTools::isModerator($this->my->id)) {
-                            echo CKunenaLink::GetWhoIsOnlineLink($who_online,'ktitle kl'); } 
+                            echo CKunenaLink::GetWhoIsOnlineLink($who_online,'ktitle kl'); }
 							else {
 							echo '<span class="ktitle kl">'.$who_online.'</span>';
 							}
@@ -62,9 +62,9 @@ if ($this->config->showwhoisonline)
 					<div class="kwhoicon"></div>
                 </td>
                 <td class = "td-1 km" align="left">
-					
+
                     <div class="kwhoonline ks">
-                        <?php 
+                        <?php
 							//$totalhiden = '';
 							$totalusers = ($totaluser + $totalguests);
 						    $who_name = JText::_('COM_KUNENA_WHO_TOTAL') ;
@@ -76,13 +76,12 @@ if ($this->config->showwhoisonline)
                             $who_name .= JText::_('COM_KUNENA_WHO_AND');
                             $who_name .= '<strong> '. $totalguests.' </strong>';
                             if($totalguests==1) { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUEST').'&nbsp;'; } else { $who_name .= JText::_('COM_KUNENA_WHO_ONLINE_GUESTS').'&nbsp;'; }
-							echo $who_name; 
+							echo $who_name;
 						?>
                     </div>
 					<div>
                         <?php
 							foreach ($users as $user) {
-							$time = date("H:i:s", $user->time);
 							if ( $user->showOnline > 0 ){
 							echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ?> &nbsp;
 							<?php } }
@@ -90,10 +89,9 @@ if ($this->config->showwhoisonline)
 							<br /> <span class="ks"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span><br />
 							<?php }
 							foreach ($users as $user) {
-							$time = date("H:i:s", $user->time);
 							if ( CKunenaTools::isModerator($this->my->id) && $user->showOnline =='0' ) {
 							echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ;?> &nbsp;
-							<?php } } 
+							<?php } }
 						?>
 					</div>
                     <div class="kwholegend ks">

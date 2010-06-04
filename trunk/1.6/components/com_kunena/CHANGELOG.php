@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+4-June-2010 fxstein
+^ [#20841] Change logic for who is online stats to match Joomla
+
 3-June-2010 Matias
 # [#20071] Make menu items visible in Joomla Menu Manager
 

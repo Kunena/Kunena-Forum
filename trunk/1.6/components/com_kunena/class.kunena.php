@@ -600,6 +600,27 @@ class CKunenaTools {
 			return $output;
 		}
 
+	function displayMenu() {
+		jimport ( 'joomla.application.module.helper' );
+		$position = "kunena_menu";
+		$options = array ('style' => 'xhtml' );
+		$modules = JModuleHelper::getModules ( $position );
+		foreach ( $modules as $module ) {
+			if ($module->module == 'mod_mainmenu') {
+				$basemenu = KunenaRoute::getBaseMenu ();
+				if ($basemenu) {
+					$module = clone $module;
+					// FIXME: J1.5 only
+					$search = array ('/menutype=(.*)(\s)/', '/startLevel=(.*)(\s)/', '/endLevel=(.*)(\s)/' );
+					$replace = array ("menutype={$basemenu->menutype}\\2", 'startLevel=' . ($basemenu->sublevel + 1) . '\2', 'endLevel=' . ($basemenu->sublevel + 2) . '\2' );
+					$module->params = preg_replace ( $search, $replace, $module->params );
+				}
+			}
+			echo JModuleHelper::renderModule ( $module, $options );
+		}
+	}
+
+
 		/**
 		 *  createMenu() does just that. It creates a Joomla menu for the main
 		 *  navigation tab and publishes it in the Kunena module position kunena_menu.

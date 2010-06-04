@@ -34,13 +34,8 @@ if ($type == 'logout') :
 		?>
 		<!-- Kunena Menu position: kunena_menu -->
 		<div id="ktopmenu">
-		<div id="ktab"><?php
-		$document = &JFactory::getDocument ();
-		$renderer = $document->loadRenderer ( 'modules' );
-		$options = array ('style' => 'xhtml' );
-		$position = 'kunena_menu';
-		echo $renderer->render ( $position, $options, null );
-		?>
+		<div id="ktab">
+		<?php CKunenaTools::displayMenu() ?>
 		</div>
 		</div>
 		<!-- /Kunena Menu position: kunena_menu -->
@@ -113,13 +108,8 @@ $login = CKunenaLogin::getloginFields();
 		?>
 		<!-- Kunena Menu position: kunena_menu -->
 		<div id="ktopmenu">
-		<div id="ktab"><?php
-		$document = &JFactory::getDocument ();
-		$renderer = $document->loadRenderer ( 'modules' );
-		$options = array ('style' => 'xhtml' );
-		$position = 'kunena_menu';
-		echo $renderer->render ( $position, $options, null );
-		?>
+		<div id="ktab">
+		<?php CKunenaTools::displayMenu() ?>
 		</div>
 		</div>
 		<!-- /Kunena Menu position: kunena_menu -->

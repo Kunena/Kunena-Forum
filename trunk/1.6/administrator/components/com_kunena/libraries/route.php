@@ -17,6 +17,7 @@ abstract class KunenaRoute {
 	static $active = false;
 	static $childlist = array();
 	static $subtree = array();
+	static $parent = array();
 	static $menu = null;
 
 	public static function getItemID($uri = null) {
@@ -25,7 +26,9 @@ abstract class KunenaRoute {
 			$link = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )));
 			$link->delVar ( 'Itemid' );
 		}
-		else {
+		else if (is_numeric($uri)) {
+			return intval($uri);
+		} else {
 			$link = new JURI ( $uri );
 		}
 		$query = $link->getQuery ( true );
@@ -80,6 +83,24 @@ abstract class KunenaRoute {
 		return $retval;
 	}
 
+	public static function getBaseMenu() {
+		self::buildMenuTree();
+
+		$Itemid = 0;
+		// Search current tree
+
+		if (self::$active) {
+			$root = self::getKunenaRoot(self::$active);
+			$list = self::getSubMenus($root);
+			if (count($list) > 1) {
+				$Itemid = $root;
+			}
+		}
+		if ($Itemid)
+			return self::$menu[$Itemid];
+		return null;
+	}
+
 	protected static function buildMenuTree() {
 		if (self::$menu === null) {
 			$my = JFactory::getUser ();
@@ -116,6 +137,21 @@ abstract class KunenaRoute {
 
 	}
 
+	protected static function getKunenaRoot($Itemid) {
+		if (!isset(self::$parent[$Itemid])) {
+			self::$parent[$Itemid] = 0;
+			$current = $Itemid;
+			while ($current) {
+				$item = self::$menu[$current];
+				if ($item->type == 'component' && $item->component == 'com_kunena') {
+					self::$parent[$Itemid] = $current;
+				}
+				$current = $item->parent;
+			}
+		}
+		return self::$parent[$Itemid];
+	}
+
 	protected static function getSubMenus($Itemid) {
 		if (!isset(self::$subtree[$Itemid])) {
 			self::$subtree[$Itemid] = array();
@@ -140,10 +176,12 @@ abstract class KunenaRoute {
 		if (isset($item->query['catid'])) {
 			$catid = true;
 		}
+		if (isset($item->query['view'])) {
+			if (!isset($item->query['func'])) $item->query['func'] = $item->query['view'];
+			unset ($item->query['view']);
+		}
+		if (isset($item->query['func']) && $item->query['func'] == 'entrypage') return 0;
 		foreach ( $item->query as $var => $value ) {
-			if ($var == 'view') {
-				$var = 'func';
-			}
 			if (!isset ( $query [$var] ) || $value != $query [$var]) {
 				if ($catid && $var=='func') continue;
 				return false;
@@ -155,12 +193,12 @@ abstract class KunenaRoute {
 	}
 
 	protected static function findItemID($list, $query) {
-		$bestmatch = 0;
+		$bestmatch = -1;
 		$Itemid = 0;
 		foreach ($list as $id) {
 			$current = self::$menu[$id];
 			$matchcount = self::isMatch ( $current, $query );
-			if ($matchcount > $bestmatch) {
+			if ($matchcount !== false && $matchcount > $bestmatch) {
 				// Match! This is our best candidate this far
 				$Itemid = $current->id;
 				if ($matchcount == count ( $query )) {
@@ -186,13 +224,15 @@ abstract class KunenaRoute {
 
 		$Itemid = 0;
 		// Search current tree
-/*
+
 		if (self::$active) {
-			$menutype = self::$menu[self::$active]->menutype;
-			$list = self::getMenuItems($menutype);
-			$Itemid = self::findItemID($list, $query);
+			$root = self::getKunenaRoot(self::$active);
+			$list = self::getSubMenus($root);
+			if (count($list) > 1) {
+				$Itemid = self::findItemID($list, $query);
+			}
 		}
-*/
+
 		if (!$Itemid) {
 			$menutype = 'kunenamenu';
 			$list = self::getMenuItems($menutype);

@@ -45,11 +45,37 @@ if(JDEBUG){
 	$__profiler->mark('Start');
 }
 
+$func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
+
+require_once(KUNENA_PATH . DS . 'router.php');
+if ($func && !in_array($func, KunenaRouter::$functions)) {
+	// If func is not legal, raise joomla error
+	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
+}
+
+// Set active menuitem so that Kunena menu shows up
+$basemenu = KunenaRoute::getBaseMenu ();
+if (!is_object($basemenu) || !$func || $func == 'entrypage') {
+	$defaultmenu = 0;
+	if (is_object($basemenu) && isset($basemenu->query['defaultmenu'])) {
+		$defaultmenu = $basemenu->query['defaultmenu'];
+	}
+	$menu = JSite::getMenu ();
+	$menu->setActive(KunenaRoute::getItemID($defaultmenu));
+	$active = $menu->getActive();
+	if (is_object($active)) {
+		foreach ($active->query as $var => $value) {
+			JRequest::setVar($var, $value);
+		}
+	}
+}
+
 global $message;
 global $kunena_this_cat;
 
 // Get all the variables we need and strip them in case
 
+$func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
 $action = JRequest::getCmd ( 'action', '' );
 $catid = JRequest::getInt ( 'catid', 0 );
 $contentURL = JRequest::getVar ( 'contentURL', '' );
@@ -58,7 +84,6 @@ $email = JRequest::getVar ( 'email', '' );
 $favoriteMe = JRequest::getVar ( 'favoriteMe', '' );
 $fb_authorname = JRequest::getVar ( 'fb_authorname', '' );
 $fb_thread = JRequest::getInt ( 'fb_thread', 0 );
-$func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
 $id = JRequest::getInt ( 'id', 0 );
 $limit = JRequest::getInt ( 'limit', 0 );
 $limitstart = JRequest::getInt ( 'limitstart', 0 );
@@ -83,20 +108,6 @@ $kunena_app = JFactory::getApplication ();
 // If JFirePHP is installed and enabled, leave a trace of the Kunena startup
 if(JDEBUG == 1 && defined('JFIREPHP')){
 	// FB::trace("Kunena Startup");
-}
-
-require_once(KUNENA_PATH . DS . 'router.php');
-if ($func && !in_array($func, KunenaRouter::$functions)) {
-	// If func is not legal, raise joomla error
-	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
-}
-
-// Set active menuitem so that Kunena menu shows up
-$menu = JSite::getMenu ();
-$active = $menu->getActive ();
-if (empty($active) || !$active->menutype != 'kunenamenu' || !$func) {
-	$menu->setActive(KunenaRoute::getItemID());
-	if (!$func) $func = KunenaRoute::getDefaultFunc();
 }
 
 // Redirect Forum Jump

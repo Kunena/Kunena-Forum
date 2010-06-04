@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+04-Jun-2010 Xillibit
+# [#20838] Alert the user on new ranks and new smilies when the directory : 'french, spanish' isn't here
+
 02-Jun-2010 Xillibit
 ^ [#20799] Backport BBCode tags confidential and table from K1.6
 ^ [#20803] Configuration settings to define the maxlength for url on links and images

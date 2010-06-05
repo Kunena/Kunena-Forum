@@ -782,7 +782,7 @@ if( $poll_allowed ){ ?>
 
 kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");
-}, {'id': 'kbbcode-poll-button',
+}, {'id': 'kbbcode-poll_button',
 <?php
 if ($this->msg_cat->allow_polls == '0') {
 	echo '\'style\':\'display: none;\',';

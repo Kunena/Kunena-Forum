@@ -155,12 +155,16 @@ abstract class KunenaRoute {
 	protected static function getSubMenus($Itemid) {
 		if (!isset(self::$subtree[$Itemid])) {
 			self::$subtree[$Itemid] = array();
-			$menutype = self::$menu[$Itemid]->menutype;
+			$menutype = '';
+			if ( !empty($menutype) ) $menutype = self::$menu[$Itemid]->menutype;
 			$todo = array(intval($Itemid));
 			while (($id = array_shift($todo)) !== null) {
-				$item = self::$menu[$id];
-				if ($item->type == 'component' && $item->component == 'com_kunena') {
-					self::$subtree[$Itemid][$id] = $id;
+				$item = '';
+				if ( !empty( $item ) ) {
+					$item = self::$menu[$id];
+					if ($item->type == 'component' && $item->component == 'com_kunena') {
+						self::$subtree[$Itemid][$id] = $id;
+					}
 				}
 				if (!empty(self::$childlist[$menutype][$id])) {
 					$todo = $todo + self::$childlist[$menutype][$id];

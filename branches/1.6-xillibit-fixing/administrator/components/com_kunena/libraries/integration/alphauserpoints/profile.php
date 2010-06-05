@@ -24,7 +24,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 
 	public function getUserListURL($action='')
 	{
-		return JRoute::_('index.php?option=com_alphauserpoints&view=users');
+		return AlphaUserPointsHelper::getAupUsersURL();
 	}
 
 	public function getProfileURL($user, $task='')

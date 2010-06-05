@@ -392,6 +392,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $onlineusers = 1;
 	var $debug = 0;
 	var $catsautosubscribed = 0;
+	//New for 1.6: choose if you want a Thank you function
+	var $showthankyou = 1;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

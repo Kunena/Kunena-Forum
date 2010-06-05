@@ -23,6 +23,9 @@ defined ( '_JEXEC' ) or die ();
 	<span class="kmsgkarma">
 		<?php echo $this->userkarma ?>
 	</span>
+	<span class="kmsgthankyou">
+		<?php echo $this->thankyoubutton; ?>
+	</span>
 </div>
 <div>
 	<div class="kmsgtext">

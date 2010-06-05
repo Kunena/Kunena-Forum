@@ -34,6 +34,19 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+04-June-2010 Sven
+^ [#20833] moved thank you button to subject
++ [#20833] language string in front and backend
++ [#20833] Option to deaktivate thank you in backend
+^ [#20833] function getThankyouUser so it also can show realname
+^ [#20833] added showthankyou row in #__kunena_config
+
+03-June-2010 Sven
++ [#20833] kunena.thankyou.php
++ [#20833] CKunenaThankYou class
++ [#20833] Thankyou button right beside Quote
++ [#20833] sql table #__kunena_thankyou
+
 30-May-2010 Severdia
 ^ [#19356] CSS updates for Chrome, etc.
 

@@ -1741,6 +1741,12 @@ PX		EM			PCT			PT
 	display: inline-block;
 	margin: -2px 0;
 }
+#Kunena span.kthankyou {
+	background: url("../images/icons/thankyou.png") no-repeat left top;
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+}
 
 #Kunena div.kmsgtext {
 	width: 100%;
@@ -1930,6 +1936,10 @@ PX		EM			PCT			PT
 #Kunena div.kmessage-buttons-row  a {
 	margin-right: 5px;
 
+}
+#Kunena div.kmessage-thankyou{
+	border-top: 1px dotted #BFC3C6;
+	clear: both;
 }
 #Kunena td.kmsgview-left-b {
 	background: #EFF0F4;

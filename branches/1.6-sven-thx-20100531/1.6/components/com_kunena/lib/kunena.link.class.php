@@ -284,6 +284,10 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=karma&do=' . $do . '&userid=' . $userid . '&pid=' . $pid . '&catid=' . $catid, $name, '', $rel );
 	}
 
+	function GetThankYouLink( $catid, $pid, $targetuserid , $name, $title, $class) {
+		return CKunenaLink::GetSefHrefLink (KUNENA_LIVEURLREL.'&func=thankyou&pid='.$pid.'&catid='.$catid.'&targetuserid='.$targetuserid, $name, $title, 'nofollow', $class);
+	}
+
 	function GetRulesLink($name, $rel = 'nofollow') {
 		$kunena_config = KunenaFactory::getConfig ();
 		$ruleslink = $kunena_config->rules_infb ? KUNENA_LIVEURLREL . '&func=rules' : $kunena_config->rules_link;

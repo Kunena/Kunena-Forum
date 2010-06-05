@@ -239,6 +239,14 @@
                 KEY `enabled` (`enabled`),
                 KEY `userid` (`userid`),
                 KEY `expiry` (`expiry`) ) DEFAULT CHARSET=utf8;</query>
+        <query>CREATE TABLE IF NOT EXISTS `jos_kunena_thankyou` (
+ 				`id` int(11) NOT NULL AUTO_INCREMENT,
+ 				`postid` int(11) NOT NULL,
+				`catid` int(11) NOT NULL,
+				`userid` int(11) NOT NULL,
+				`targetuserid` int(11) NOT NULL,
+				`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+				PRIMARY KEY (`id`) )</query>
 		<phpfile name="sampledata.php" />
 	</install>
 	<upgrade>

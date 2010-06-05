@@ -26,7 +26,7 @@ if ($this->config->showwhoisonline)
 {
 	$users=$this->getUsersList();
 ?>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">

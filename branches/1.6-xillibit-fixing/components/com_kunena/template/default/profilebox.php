@@ -147,7 +147,7 @@ $login = CKunenaLogin::getloginFields();
 							<input type="hidden" name="<?php echo $login['field_return']; ?>" value="<?php echo $return; ?>" /> <?php echo JHTML::_ ( 'form.token' ); ?>
 						</span>
 					</div>
-					<div class="link_block">
+					<div class="link-block">
 						<span class="kprofilebox-link">
 							<?php echo CKunenaLogin::getLostPasswordLink (); ?>
 						</span>

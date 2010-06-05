@@ -53,7 +53,7 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 	}
 	//-->
 </script>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
@@ -262,7 +262,7 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 </div>
 		<?php $this->displayWhoIsOnline(); ?>
 <!-- Begin: Forum Jump -->
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">

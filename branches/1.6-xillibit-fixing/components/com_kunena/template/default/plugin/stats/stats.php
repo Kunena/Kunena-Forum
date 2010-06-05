@@ -43,7 +43,7 @@ $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
 
         <!-- BEGIN: GENERAL STATS -->
 <?php if($kunena_config->showgenstats): ?>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
@@ -103,7 +103,7 @@ $k = 0;
 
 <!-- B: Pop Subject -->
 <?php if($this->showpopsubjectstats): ?>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
@@ -114,12 +114,12 @@ $k = 0;
       <th colspan="3">
       <div class = "ktitle-cover km"> <span class="ktitle kl"><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popsubjectcount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_KGSG'); ?></span> </div>
       <div class="fltrt">
-						<span id="kpopsubmorestat_head"><a class="ktoggler close" rel="kpopsubstats_tbody"></a></span>
+						<span id="kpopsubmorestat_head"><a class="ktoggler close" rel="kpopsubstats-tbody"></a></span>
 		</div>
       </th>
     </tr>
   </thead>
-  <tbody id = "kpopsubstats_tbody">
+  <tbody id = "kpopsubstats-tbody">
    <tr  class = "ksth" >
       <th class = "th-1 ksectiontableheader" align="left" width="50%"> <?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ;?></th>
       <th class = "th-2 ksectiontableheader" width="40%">&nbsp;  </th>
@@ -161,7 +161,7 @@ $k = 0;
 
 <!-- B: Pop Poll -->
 <?php if($this->showpoppollstats): ?>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
@@ -225,7 +225,7 @@ $k = 0;
 
 <!-- B: User Messages -->
 <?php if($this->showpopuserstats): ?>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">
@@ -289,7 +289,7 @@ $k = 0;
 
 <!-- B: Pop User  -->
 <?php if($this->showpopuserstats): ?>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">

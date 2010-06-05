@@ -24,7 +24,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 	$dataspollusers[0]->pollid = null;
 }
   ?>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
 <div class="k_bt_cvr2">
 <div class="k_bt_cvr3">
 <div class="k_bt_cvr4">

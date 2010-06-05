@@ -660,13 +660,13 @@ PX		EM			PCT			PT
 }
 
 #Kunena #ktab a:hover,
-#Kunena #ktab li.Kunena_item_active a	{
+#Kunena #ktab li.Kunena-item-active a	{
 	background-position: right bottom;
 	background-color: #5388B4;
 }
 
 #Kunena #ktab a:hover span,
-#Kunena #ktab li.Kunena_item_active a span	{
+#Kunena #ktab li.Kunena-item-active a span	{
 	background-position: left bottom;
 	color: #FFFFFF;
 	font-style: normal;
@@ -800,8 +800,8 @@ PX		EM			PCT			PT
 	padding-right: 10px;
 }
 
-#Kunena a.klist-pages_link:link,
-#Kunena a.klist-pages_link:visited {
+#Kunena a.klist-pages-link:link,
+#Kunena a.klist-pages-link:visited {
 	text-decoration: underline;
 }
 
@@ -1079,7 +1079,7 @@ PX		EM			PCT			PT
 /* HEADER
 ----------------------------------------------------------------------------------------------- */
 
-#Kunena .kheader_th_1 {
+#Kunena .kheader-th-1 {
 	padding: 5px;
 }
 
@@ -1193,7 +1193,7 @@ PX		EM			PCT			PT
 	padding-left: 5px;
 }
 
-#Kunena table#kforumsearch_adv td {
+#Kunena table#kforumsearch-adv td {
 	vertical-align:top;
 	padding: 15px 10px;
 
@@ -1273,7 +1273,7 @@ PX		EM			PCT			PT
 	padding: 15px;
 }
 
-#Kunena .link_block {
+#Kunena .klink-block {
 	padding-top: 5px;
 }
 
@@ -1294,7 +1294,7 @@ PX		EM			PCT			PT
 
 #Kunena #kblock4,
 #Kunena #kblock1,
-#Kunena .k_bt_cvr1 {
+#Kunena .k-bt-cvr1 {
 	margin-top: 5px; 
 }
 
@@ -1365,7 +1365,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.ktitle-cover p,
-#Kunena div.ktitle_desc {
+#Kunena div.ktitle-desc {
 	clear:left;
 }
 #Kunena .kcheckbox {
@@ -1483,7 +1483,7 @@ PX		EM			PCT			PT
 
 #Kunena div.klatest-subject,
 #Kunena div.klatest-subject-by {
-	margin-left: 50px;
+	margin-left: 5px;
 }
 
 #Kunena div.kcc-subcat {
@@ -1718,7 +1718,7 @@ PX		EM			PCT			PT
 	white-space: nowrap;
 }
 
-#Kunena span.kkmsgkarma {
+#Kunena span.kmsgkarma {
 	font-weight: bold;
 	color: #737373;
 	text-decoration: none;
@@ -1745,7 +1745,7 @@ PX		EM			PCT			PT
 #Kunena div.kmsgtext {
 	width: 100%;
 	overflow: hidden;
-	/* word-wrap: break-word;  Internet Explorer 5.5+ */
+	/* word-wrap: break-word; Internet Explorer 5.5+ */
 	/*border-top: 1px solid #BFC3C6;*/
 	padding: 10px 0 0 0;
 	margin-top: 5px;
@@ -2270,12 +2270,12 @@ THREAD VIEW
 	margin: 0;
 }
 
-#Kunena .kthreadview_row td {
+#Kunena .kthreadview-row td {
 	border-top: 1px dotted #BFC3C6;
 	padding: 2px 0;
 }
 
-#Kunena .kthreadview_row td table tr td {
+#Kunena .kthreadview-row td table tr td {
 	border-top: 0px solid #BFC3C6;
 }
 
@@ -2300,12 +2300,12 @@ THREAD VIEW
 }
 
 /*  Stats page  */
-#Kunena tbody#kpopsubstats_tbody tr.ksectiontableentry1 td.td-3,
-#Kunena tbody#kpopsubstats_tbody tr.ksectiontableentry2 td.td-3, 
-#Kunena tbody#kpopusermsgstats_tbody tr.ksectiontableentry1 td.td-3,
-#Kunena tbody#kpopusermsgstats_tbody tr.ksectiontableentry2 td.td-3,
-#Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3,
-#Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3	{
+#Kunena tbody#kpopsubstats-tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopsubstats-tbody tr.ksectiontableentry2 td.td-3, 
+#Kunena tbody#kpopusermsgstats-tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopusermsgstats-tbody tr.ksectiontableentry2 td.td-3,
+#Kunena tbody#kpopuserhitstats-tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopuserhitstats-tbody tr.ksectiontableentry1 td.td-3	{
 	text-align:center;
 }
 
@@ -2391,14 +2391,14 @@ POST PAGE
 	overflow: scroll;
 	background: #F2F1EE;
 }
-#Kunena div.kbbcode-preview_bottom {
+#Kunena div.kbbcode-preview-bottom {
 	/* IMPORTANT: do not set height - controlled by js */
 	float:left;
 	clear:left;
 	width: 95%;
 	margin-top: 10px;
 }
-#Kunena div.kbbcode-preview_right {
+#Kunena div.kbbcode-preview-right {
 	/* IMPORTANT: do not set height - controlled by js */
 	float:right;
 	width: 48%;
@@ -2410,7 +2410,7 @@ POST PAGE
 	border-bottom: 0px solid #BFC3C6;
 }
 
-#Kunena #kpost_message td.kleftcolumn {
+#Kunena #kpost-message td.kleftcolumn {
 	width: 15%;
 	text-align: right;
 	vertical-align: middle;
@@ -2553,7 +2553,7 @@ POST PAGE
 	text-decoration: underline;
 }
 #Kunena a.kbuttonuser span span:hover {
-	text-decoration: underline;
+	text-decoration: underline;	
 }
 #Kunena div#kreport-container {
 	border:1px solid #BFC3C6;
@@ -2966,15 +2966,15 @@ BBCODE BUTTONS
 	background-position:-72px -18px;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-attach-button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-attach_button {
 	background-position:-36px -18px;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-gallery-button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-gallery_button {
 	background-position:-54px -18px;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-poll-button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-poll_button {
 	background-position:-90px -18px;
 }
 
@@ -3500,26 +3500,26 @@ USER PROFILE
 /*
 MY PROFILE
 -------------------------------------------------------------------- */
-#Kunena .kmyprofile_menu td {
+#Kunena .kmyprofile-menu td {
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 }
-#Kunena .kmyprofile_menu a {
+#Kunena .kmyprofile-menu a {
 	display: block;
 	padding: 2px 5px 3px 10px;
 	text-decoration: none;
 }
-#Kunena .kmyprofile_menu a:hover {
+#Kunena .kmyprofile-menu a:hover {
 	text-decoration: underline;
 }
-#Kunena .kmyprofile_menu_title {
+#Kunena .kmyprofile-menu-title {
 	font-weight: bold;
 }
-#Kunena .kmyprofile_menu_staff {
+#Kunena .kmyprofile-menu-staff {
 	padding: 5px 10px;
 	border-bottom: 4px solid #BFC3C6;
 }
-#Kunena .kmyprofile_general td {
+#Kunena .kmyprofile-general td {
 	padding: 3px 5px;
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;

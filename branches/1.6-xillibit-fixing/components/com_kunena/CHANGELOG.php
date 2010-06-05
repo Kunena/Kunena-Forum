@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA2
 
 5-June-2010 Xillibit
 # [#19288] Fix issue with AUP integration which doesn't provide the correct link for userlist with sef
+# [#19288] Naming changes into CSS (thanks cerberus)
 
 4-June-2010 Matias
 # [#20071] Change logic how Kunena detects current menu, fixing issues with missing tab menu in Kunena

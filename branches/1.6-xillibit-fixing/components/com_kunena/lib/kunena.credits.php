@@ -20,7 +20,7 @@ $kunena_config = KunenaFactory::getConfig ();
 
 // Team credits page is not translated
 ?>
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
   <div class="k_bt_cvr2">
     <div class="k_bt_cvr3">
       <div class="k_bt_cvr4">
@@ -81,7 +81,7 @@ $kunena_config = KunenaFactory::getConfig ();
 </div>
 
 <!-- Begin: Forum Jump -->
-<div class="k_bt_cvr1">
+<div class="k-bt-cvr1">
   <div class="k_bt_cvr2">
     <div class="k_bt_cvr3">
       <div class="k_bt_cvr4">

@@ -143,7 +143,7 @@ function kToggleOrSwapPreview(kunenaclass)
 		if (e.getStyle('display') == "none" || e.getProperty('class') != kunenaclass){
 	    	e.setStyle('display', 'block');
 
-			if (kunenaclass=="kbbcode-preview_right"){
+			if (kunenaclass=="kbbcode-preview-right"){
 	    		f.setStyle('width', '47%');
 	    	} else {
 		    	f.setStyle('width', '95%');
@@ -845,14 +845,14 @@ kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator6'});
 
 kbbcode.addFunction('PreviewBottom', function() {
-	kToggleOrSwapPreview("kbbcode-preview_bottom");
+	kToggleOrSwapPreview("kbbcode-preview-bottom");
 }, {'id': 'kbbcode-previewbottom_button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_PREVIEWBOTTOM');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWBOTTOM');?>")'});
 
 kbbcode.addFunction('PreviewRight', function() {
-	kToggleOrSwapPreview("kbbcode-preview_right");
+	kToggleOrSwapPreview("kbbcode-preview-right");
 }, {'id': 'kbbcode-previewright_button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_PREVIEWRIGHT');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_PREVIEWRIGHT');?>',

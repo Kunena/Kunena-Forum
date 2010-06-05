@@ -28,7 +28,7 @@ $this->catid 		= JRequest::getInt('catid', 0);
 ?>
 
  <h1><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></h1>
-<div class = "k_bt_cvr1">
+<div class = "k-bt-cvr1">
     <div class = "k_bt_cvr2">
         <div class = "k_bt_cvr3">
             <div class = "k_bt_cvr4">

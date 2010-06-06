@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+6-June-2010 Xillibit
+# [#19288] Fix misplaced moderate button, whne kunena is in full width (thanks cerberus)
+
 5-June-2010 Xillibit
 # [#19288] Fix issue with AUP integration which doesn't provide the correct link for userlist with sef
 # [#19288] Naming changes into CSS (thanks cerberus)

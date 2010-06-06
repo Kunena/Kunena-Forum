@@ -35,8 +35,9 @@ Legend:
 Kunena 1.6.0-ALPHA2
 
 6-June-2010 Xillibit
-# [#19288] Fix misplaced moderate button, whne kunena is in full width (thanks cerberus)
+# [#19288] Fix misplaced moderate button, when kunena is in full width (thanks cerberus)
 # [#19288] Fix undefined variables in libraries/route.php (Part 2)
+# [#19288] Fix issue in notification mail, the word Subject is tripped by JMailHelper::cleanBody()
 
 5-June-2010 Xillibit
 # [#19288] Fix issue with AUP integration which doesn't provide the correct link for userlist with sef

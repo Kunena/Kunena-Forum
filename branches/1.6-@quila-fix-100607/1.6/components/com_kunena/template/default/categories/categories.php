@@ -50,7 +50,7 @@ global $kunena_icons;
 
 		if ($cat->description != "") {
 			?>
-			<div class="ktitle_desc km"><?php
+			<div class="ktitle-desc km"><?php
 			echo KunenaParser::parseBBCode ( $cat->description );
 			?>
 			</div>

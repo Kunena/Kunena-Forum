@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA2
 
 7-June-2010 810
 # [#19288] Fix regression - Css Thread action
+# [#19288] Fix regression - Css Threads showcat
 
 7-June-2010 severdia
 # [#19356] Fixed rest of CSS underscores to dashes (consistent naming), synchronized styles

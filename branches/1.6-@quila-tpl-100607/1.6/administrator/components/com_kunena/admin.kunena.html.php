@@ -1173,22 +1173,22 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAMBOT_SUPPORT_DESC') ?>
 						</td>
 					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE') ?></td>
-								<td align="left" valign="top"><?php echo $lists ['template'];
+					<!--<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_A_TEMPLATE') ?></td>
+								<td align="left" valign="top"><?php //echo $lists ['template'];
 						?></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_DESC') ?>
+								<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_A_TEMPLATE_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH') ?>
+						<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH') ?>
 						</td>
-								<td align="left" valign="top"><?php echo $lists ['templateimagepath'];
+								<td align="left" valign="top"><?php //echo $lists ['templateimagepath'];
 						?>
 						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH_DESC') ?>
+								<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH_DESC') ?>
 						</td>
-					</tr>
+					</tr>-->
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AV_POSITION') ?>
 						</td>

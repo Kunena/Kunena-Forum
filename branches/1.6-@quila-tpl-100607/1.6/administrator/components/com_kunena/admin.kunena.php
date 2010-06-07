@@ -1259,7 +1259,7 @@ function showConfig($option) {
 	// This function was modified from the one posted to PHP.net by rockinmusicgv
 	// It is available under the readdir() entry in the PHP online manual
 	//function get_dirs($directory, $select_name, $selected = "") {
-	$listitems [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_SELECTTEMPLATE') );
+	/*$listitems [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_SELECTTEMPLATE') );
 
 	$templatelist = array();
 	$imagesetlist = array();
@@ -1291,12 +1291,12 @@ function showConfig($option) {
 
 	foreach ( $imagesetlist as $key => $val ) {
 		$imagesetlistitems [] = JHTML::_ ( 'select.option', $val, $val );
-	}
+	}*/
 
 	$lists ['jmambot'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->jmambot );
 	$lists ['disemoticons'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->disemoticons );
-	$lists ['template'] = JHTML::_ ( 'select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->template );
-	$lists ['templateimagepath'] = JHTML::_ ( 'select.genericlist', $imagesetlistitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templateimagepath );
+	/*$lists ['template'] = JHTML::_ ( 'select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->template );
+	$lists ['templateimagepath'] = JHTML::_ ( 'select.genericlist', $imagesetlistitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templateimagepath );*/
 	$lists ['regonly'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->regonly );
 	$lists ['board_offline'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->board_offline );
 	$lists ['pubwrite'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pubwrite );

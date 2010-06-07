@@ -255,7 +255,58 @@ class CKunenaToolbar
 	function _SYSTEMREPORT_MENU()
     {
         JToolBarHelper::back();
+    }
+    
+	function _SHOWTEMPLATES_MENU()
+    {
+		JToolBarHelper::spacer();
+        JToolBarHelper::custom('publishTemplate', 'default.png', 'default_f2.png', JText::_('Default'));
+        JToolBarHelper::spacer();
+        JToolBarHelper::addNew('addKTemplate', JText::_('Add'));
+		JToolBarHelper::spacer();
+        JToolBarHelper::custom('editKTemplate', 'edit.png', 'edit_f2.png', JText::_('COM_KUNENA_EDIT'));
+        JToolBarHelper::spacer();
+        JToolBarHelper::back();
+		JToolBarHelper::spacer();
+    }
 
+	function _EDITKTEMPLATE_MENU()
+    {
+        JToolBarHelper::spacer();
+		JToolBarHelper::save('saveTemplate');
+		JToolBarHelper::spacer();
+		JToolBarHelper::apply('saveTemplate');
+        JToolBarHelper::spacer();
+        JToolBarHelper::apply('chooseCSSTemplate', 'css.png','css_f2.png', JText::_('Edit CSS'));
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('cancelTemplate');
+		JToolBarHelper::spacer();
+        JToolBarHelper::back();
+        JToolBarHelper::spacer();
+    }
+	
+	function _CHOOSECSS_MENU()
+    {
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('editTemplateCSS', 'css.png', 'css_f2.png', JText::_('Edit CSS'));
+        JToolBarHelper::spacer();
+		JToolBarHelper::spacer();
+        JToolBarHelper::cancel('cancelTemplate');
+		JToolBarHelper::spacer();
+        JToolBarHelper::back();
+		JToolBarHelper::spacer();
+    }
+	
+	function _EDITCSS_MENU()
+    {
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('saveTemplateCSS');
+        JToolBarHelper::spacer();
+		JToolBarHelper::spacer();
+        JToolBarHelper::cancel('cancelTemplate');
+		JToolBarHelper::spacer();
+        JToolBarHelper::back();
+		JToolBarHelper::spacer();
     }
 }
 ?>

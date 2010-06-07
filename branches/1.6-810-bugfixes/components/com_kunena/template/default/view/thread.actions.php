@@ -38,7 +38,7 @@ defined ( '_JEXEC' ) or die ();
 
 		<td class="klist-actions-forum">
 		<?php if (isset ( $this->thread_new )) : ?>
-			<div class="kmessage_buttons_row">
+			<div class="kmessage-buttons-row">
 			<?php echo $this->thread_new; ?>
 			</div>
 		<?php endif ?>

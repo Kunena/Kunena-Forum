@@ -134,7 +134,7 @@ class CKunenaViewMessage {
 			$this->username = $message->name;
 		}
 
-		if ($this->config->avposition == 'left' || $this->config->avposition == 'right') {
+		if ($this->tplParams['avatarPosition'] == 'left' || $this->tplParams['avatarPosition'] == 'right') {
 			$avatar = $this->profile->getAvatarLink ('kavatar', 'reply');
 		} else {
 			$avatar = $this->profile->getAvatarLink ('kavatar', 'welcome');

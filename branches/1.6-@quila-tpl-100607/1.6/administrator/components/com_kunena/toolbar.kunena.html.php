@@ -277,7 +277,7 @@ class CKunenaToolbar
 		JToolBarHelper::spacer();
 		JToolBarHelper::apply('saveTemplate');
         JToolBarHelper::spacer();
-        JToolBarHelper::apply('chooseCSSTemplate', 'css.png','css_f2.png', JText::_('Edit CSS'));
+        JToolBarHelper::custom('chooseCSSTemplate', 'css.png','css_f2.png', JText::_('Edit CSS'));
         JToolBarHelper::spacer();
         JToolBarHelper::cancel('cancelTemplate');
 		JToolBarHelper::spacer();

@@ -1380,12 +1380,12 @@ function showConfig($option) {
 	// New for 1.6 -> Check Image MIME types
 	$lists['checkmimetypes'] = JHTML::_('select.genericlist', $yesno, 'cfg_checkmimetypes', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->checkmimetypes);
     // New for 1.6 -> Avatar Position
-    $avpos = array ();
+    /*$avpos = array ();
 	$avpos[] = JHTML::_('select.option', 'top',JText::_('COM_KUNENA_AV_TOP'));
 	$avpos[] = JHTML::_('select.option', 'left',JText::_('COM_KUNENA_AV_LEFT'));
 	$avpos[] = JHTML::_('select.option', 'right',JText::_('COM_KUNENA_AV_RIGHT'));
 	$avpos[] = JHTML::_('select.option', 'bottom',JText::_('COM_KUNENA_AV_BOTTOM'));
-    $lists['avposition'] = JHTML::_('select.genericlist', $avpos, 'cfg_avposition', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avposition);
+    $lists['avposition'] = JHTML::_('select.genericlist', $avpos, 'cfg_avposition', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avposition);*/
 	//New for 1.6 -> Poll
 	$lists['pollallowvoteone'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollallowvoteone', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollallowvoteone);
   	$lists['pollenabled'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollenabled', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollenabled);

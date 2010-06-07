@@ -12,7 +12,7 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-if ($this->config->avposition == 'left' || $this->config->avposition == 'right') :
+if ($this->tplParams['avatarPosition'] == 'left' || $this->tplParams['avatarPosition'] == 'right') :
 ?>
 	<ul id="kpost-profile">
 		<li class="kpost-username">

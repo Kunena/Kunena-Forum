@@ -44,6 +44,7 @@ Kunena 1.6.0-ALPHA2
 + [#19345] Template Manager - added variable for reading template parameters from params.ini.
 + [#19345] Template Manager - added files templateDetails.xml, params.ini and image template_thumbnail.png
 ^ [#19345] Template Manager - moved template and templateimagepath configuration from kunena to template manager
+^ [#19345] Template Manager - moved Avatar Position configuration from kunena to template manager
 
 6-June-2010 fxstein
 # [#19251] Fix for user caching: exclude empty userids from cache to avoid sql error

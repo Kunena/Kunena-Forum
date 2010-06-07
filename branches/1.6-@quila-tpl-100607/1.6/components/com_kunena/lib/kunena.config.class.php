@@ -347,7 +347,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	// New for 1.6 -> Hide images and files for guests
 	var $showimgforguest = 1;
 	var $showfileforguest = 1;
-	var $avposition = 'right';
+	//var $avposition = 'right';
 	//New for 1.6 -> Poll
 	var $pollnboptions = 4; //For poll integration, set the number maximum of options
     var $pollallowvoteone = 1; //For poll integration, set if yes or no the user can vote one or more time for a poll

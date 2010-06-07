@@ -32,8 +32,13 @@ defined( '_JEXEC' ) or die();
 				<?php if ($this->showdate) : ?>
 				<div class="anncreated"><?php echo CKunenaTimeformat::showDate($this->created, 'date_today'); ?></div>
 				<?php endif; ?>
-				<?php if (!empty($this->description)) : ?>
-				<div class="anndesc"><?php echo $this->sdescription; ?> <?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></div>
+				<?php if (!empty($this->sdescription)) : ?>
+					<div class="anndesc">
+						<?php echo $this->sdescription; ?>
+						<?php if (!empty($this->description)) : ?>
+						&nbsp;&nbsp;<?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
+						<?php endif; ?>
+					</div>
 				<?php endif; ?>
 			</div>
 		</div>

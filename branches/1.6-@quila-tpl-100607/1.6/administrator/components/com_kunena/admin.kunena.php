@@ -409,6 +409,69 @@ switch ($task) {
 		pollunpublish ( $option, $cid, 0 );
 
 		break;
+		
+//###########################################
+//
+//			START TEMPLATE MANAGER
+//
+//###########################################
+		
+	case "showTemplates" :
+		showTemplates ( $option );
+
+		break;
+		
+	case "publishTemplate" :
+		publishTemplate ();
+
+		break;
+		
+	case "editKTemplate" :
+		editKTemplate ();
+
+		break;
+		
+	case "saveTemplate" :
+		saveTemplate();
+
+		break;
+		
+	case "chooseCSSTemplate" :
+		chooseCSSTemplate();
+
+		break;
+		
+	case "editTemplateCSS" :
+		editTemplateCSS();
+
+		break;
+		
+	case "saveTemplateCSS" :
+		saveTemplateCSS();
+
+		break;
+		
+	case "cancelTemplate" :
+		cancelTemplate();
+
+		break;
+		
+	case "previewTemplate" :
+		previewTemplate();
+
+		break;
+		
+	case "addKTemplate" :
+		addKTemplate();
+
+		break;
+
+		
+//###########################################
+//
+//			END TEMPLATE MANAGER
+//
+//###########################################
 
 	case "createmenu" :
 		CKunenaTools::createMenu();
@@ -441,6 +504,298 @@ if (is_object ( $kunenaProfile )) {
 */
 
 html_Kunena::showFbFooter ();
+
+//###########################################
+//
+//			START TEMPLATE MANAGER
+//
+//###########################################
+
+    function addKTemplate($path, $filename, $dest = null) {
+		jimport ( 'joomla.filesystem.archive' );
+		$filename		= JRequest::getVar('filename', '', 'post', 'cmd');
+		//$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
+		//$file = 'xxx-6_test.zip';
+		$dest = KPATH_SITE.'/template/';
+		if (! $dest)
+			$dest = $path;
+		$file = $path . DS . $filename;
+		$text = '';
+		if (file_exists ( $file )) {
+			$error = JArchive::extract ( $file, $dest );
+			if (! $error)
+				$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
+		} else {
+			$error = true;
+			$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
+		}
+		//$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $error, $text );
+		html_Kunena::installKTemplate();
+	}
+
+	function isTemplateDefault($template)
+	{
+		$kunena_config = & CKunenaConfig::getInstance ();
+		$defaultemplate = $kunena_config->template;
+		return $defaultemplate == $template ? 1 : 0;
+	}
+
+	function parseXMLTemplateFiles($templateBaseDir)
+	{
+		// Read the template folder to find templates
+		jimport('joomla.filesystem.folder');
+		$templateDirs = JFolder::folders($templateBaseDir);
+		$rows = array();
+		// Check that the directory contains an xml file
+		foreach ($templateDirs as $templateDir)
+		{
+			if(!$data = parseXMLTemplateFile($templateBaseDir, $templateDir)){
+				continue;
+			} else {
+				$rows[] = $data;
+			}
+		}
+		return $rows;
+	}
+
+	function parseXMLTemplateFile($templateBaseDir, $templateDir)
+	{
+		// Check if the xml file exists
+		if(!is_file($templateBaseDir.DS.$templateDir.DS.'templateDetails.xml')) {
+			return false;
+		}
+		$xml = JApplicationHelper::parseXMLInstallFile($templateBaseDir.DS.$templateDir.DS.'templateDetails.xml');
+		if ($xml['type'] != 'template') {
+			return false;
+		}
+		$data = new StdClass();
+		$data->directory = $templateDir;
+		foreach($xml as $key => $value) {
+			$data->$key = $value;
+		}
+		$data->checked_out = 0;
+		$data->mosname = JString::strtolower(str_replace(' ', '_', $data->name));
+		return $data;
+	}
+
+	function showTemplates($option)
+	{
+		$kunena_app = & JFactory::getApplication ();
+		$kunena_db = &JFactory::getDBO ();
+		$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
+		$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
+		$levellimit = $kunena_app->getUserStateFromRequest ( "{$option}.limit", 'levellimit', 10, 'int' );
+		$tBaseDir = KUNENA_PATH_TEMPLATE;
+		//get template xml file info
+		$rows = array();
+		$rows = parseXMLTemplateFiles($tBaseDir);
+		// set dynamic template information
+		for($i = 0; $i < count($rows); $i++)  {
+			$rows[$i]->published = isTemplateDefault($rows[$i]->directory);
+		}
+		jimport('joomla.html.pagination');
+		$page = new JPagination(count($rows), $limitstart, $limit);
+		$rows = array_slice($rows, $page->limitstart, $page->limit);
+		html_Kunena::showTemplates($rows, $lists, $page, $option);
+	}
+
+	function editKTemplate()
+	{
+		jimport('joomla.filesystem.path');
+		$kunena_db	= & JFactory::getDBO();
+		$cid		= JRequest::getVar('cid', array(), 'method', 'array');
+		$cid		= array(JFilterInput::clean(@$cid[0], 'cmd'));
+		$template	= $cid[0];
+		$option		= JRequest::getCmd('option');
+		if (!$cid[0]) {
+			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
+		}
+		$tBaseDir	= JPath::clean(KUNENA_PATH_TEMPLATE);
+		if (!is_dir( $tBaseDir . DS . $template )) {
+			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
+		}
+		$lang =& JFactory::getLanguage();
+		$lang->load( 'tpl_'.$template, JPATH_ADMINISTRATOR );
+		$ini	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
+		$xml	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'templateDetails.xml';
+		$row	= parseXMLTemplateFile($tBaseDir, $template);
+		jimport('joomla.filesystem.file');
+		// Read the ini file
+		if (JFile::exists($ini)) {
+			$content = JFile::read($ini);
+		} else {
+			$content = null;
+		}
+		$params = new JParameter($content, $xml, 'template');
+		$default = isTemplateDefault($row->directory);
+		if ($default) {
+			$row->pages = 'all';
+		} else {
+			$row->pages = null;
+		}
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		$ftp =& JClientHelper::setCredentialsFromRequest('ftp');
+		html_Kunena::editKTemplate($row, $params, $option, $ftp, $template);
+	}
+
+	function saveTemplate()
+	{
+		$kunena_app = & JFactory::getApplication ();
+		$kunena_db	= & JFactory::getDBO();
+		$template	= JRequest::getVar('id', '', 'method', 'cmd');
+		$option		= JRequest::getVar('option', '', '', 'cmd');
+		$menus		= JRequest::getVar('selections', array(), 'post', 'array');
+		$params		= JRequest::getVar('params', array(), 'post', 'array');
+		$default	= JRequest::getBool('default');
+		JArrayHelper::toInteger($menus);
+		if (!$template) {
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED'));
+		}
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp = JClientHelper::getCredentials('ftp');
+		$file = KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
+		jimport('joomla.filesystem.file');
+		if (JFile::exists($file) && count($params))
+		{
+			$registry = new JRegistry();
+			$registry->loadArray($params);
+			$txt = $registry->toString();
+			// Try to make the params file writeable
+			if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
+				JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_WRITABLE'));
+			}
+			$return = JFile::write($file, $txt);
+			// Try to make the params file unwriteable
+			if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0555')) {
+				JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_UNWRITABLE'));
+			}
+			if (!$return) {
+				$kunena_app->redirect('index.php?option='.$option, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+			}
+		}
+		$task = JRequest::getCmd('task');
+		if($task == 'apply') {
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=editKTemplate&cid[]='.$template);
+		} else {
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
+		}
+	}
+
+	function publishTemplate()
+	{
+		$kunena_app = & JFactory::getApplication ();
+		$kunena_db	= & JFactory::getDBO();
+		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
+		$cid	= array(JFilterInput::clean(@$cid[0], 'cmd'));
+		$option	= JRequest::getCmd('option');
+		if ($cid[0])
+		{
+		$kunena_db->setQuery ( 'UPDATE #__kunena_config SET template = '.$kunena_db->Quote($cid[0]).', templateimagepath = '.$kunena_db->Quote($cid[0]).'' );
+		$kunena_db->query ();
+		KunenaError::checkDatabaseError();
+		$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
+		$kunena_db->query ();
+		KunenaError::checkDatabaseError();
+		}
+		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT_SELECTED'));
+	}
+
+	function chooseCSSTemplate()
+	{
+		$kunena_app = & JFactory::getApplication ();
+		$option 	= JRequest::getCmd('option');
+		$template	= JRequest::getVar('id', '', 'method', 'cmd');
+		// Determine template CSS directory
+		$dir = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css';
+		// List template .css files
+		jimport('joomla.filesystem.folder');
+		$files = JFolder::files($dir, '\.css$', false, false);
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+		html_Kunena::chooseCSSFiles($template, $dir, $files, $option);
+	}
+
+	function editTemplateCSS()
+	{
+		$kunena_app = & JFactory::getApplication ();
+		$option		= JRequest::getCmd('option');
+		$template	= JRequest::getVar('id', '', 'method', 'cmd');
+		$filename	= JRequest::getVar('filename', '', 'method', 'cmd');
+		jimport('joomla.filesystem.file');
+		if (JFile::getExt($filename) !== 'css') {
+			$msg = JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_WRONG_CSS');
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=chooseCSSTemplate&id='.$template, $msg, 'error');
+		}
+		$content = JFile::read(KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename);
+		if ($content !== false)
+		{
+			// Set FTP credentials, if given
+			jimport('joomla.client.helper');
+			$ftp =& JClientHelper::setCredentialsFromRequest('ftp');
+			$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
+			html_Kunena::editCSSSource($template, $filename, $content, $option, $ftp);
+		}
+		else
+		{
+			$msg = JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_COULD_NOT_OPEN'.$filename);
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.$msg);
+		}
+	}
+
+	function saveTemplateCSS()
+	{
+		$kunena_app = & JFactory::getApplication ();
+		$option			= JRequest::getCmd('option');
+		$template		= JRequest::getVar('id', '', 'post', 'cmd');
+		$filename		= JRequest::getVar('filename', '', 'post', 'cmd');
+		$filecontent	= JRequest::getVar('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		if (!$template) {
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option. JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED.'));
+		}
+		if (!$filecontent) {
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option. JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONTENT_EMPTY'));
+		}
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+		$ftp = JClientHelper::getCredentials('ftp');
+		$file = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename;
+		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
+			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_WRITABLE'));
+		}
+		jimport('joomla.filesystem.file');
+		$return = JFile::write($file, $filecontent);
+		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0555')) {
+			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_UNWRITABLE'));
+		}
+		if ($return) {
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=editKTemplate&cid[]='.$template, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+		} else {
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&id='.$template.'&task=chooseCSSTemplate', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+		}
+	}
+
+	function cancelTemplate()
+	{
+		$kunena_app = & JFactory::getApplication ();;
+		$option	= JRequest::getCmd('option');
+		// Set FTP credentials, if given
+		jimport('joomla.client.helper');
+		JClientHelper::setCredentialsFromRequest('ftp');
+		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option);
+	}
+
+
+
+//###########################################
+//
+//			END TEMPLATE MANAGER
+//
+//###########################################
 
 function showAdministration($option) {
 	$kunena_app = & JFactory::getApplication ();

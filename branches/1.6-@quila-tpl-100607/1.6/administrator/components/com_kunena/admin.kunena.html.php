@@ -305,7 +305,7 @@ table.kadmin-stat caption {
 	function installKTemplate() 
 	{ ?>
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></div><br />
-		<form enctype="multipart/form-data" action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showTemplates" method="post" name="adminForm">
+		<form enctype="multipart/form-data" action="index.php" method="post" name="adminForm">
 			<table class="adminform">
 				<tr>
 					<th colspan="2"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD' ); ?></th>
@@ -315,7 +315,7 @@ table.kadmin-stat caption {
 						<label for="install_package"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PACKAGE_FILE' ); ?>:</label>
 					</td>
 					<td>
-						<input class="input_box" id="file-upload" name="Filedata" type="file" size="57" />
+						<input class="input_box" id="file-upload" name="filename" type="file" size="57" />
 						<input class="button" type="submit" name=""submit value="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE' ); ?> &amp; <?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL' ); ?>" />
 					</td>
 				</tr>

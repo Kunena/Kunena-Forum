@@ -38,6 +38,7 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix regression - active tab menu not working.
 # [#19288] Fix regression - announcement don't show.
 # [#19288] Fix regression - CSS fix for category description.
+# [#19288] Fix regression - klist-avatar rules CSS.
 
 4-June-2010 Matias
 # [#20071] Change logic how Kunena detects current menu, fixing issues with missing tab menu in Kunena

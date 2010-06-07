@@ -41,4 +41,5 @@ abstract class KunenaProfile
 	abstract public function getProfileURL($userid);
 	abstract public function showProfile($userid, &$msg_params);
 	public function getUserMedals($userid) {}
+	public function getProfileView() {}
 }

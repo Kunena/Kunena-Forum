@@ -136,28 +136,10 @@ class CKunenaStats {
 	function loadTopProfiles($PopUserCount=0) {
 		if (!$PopUserCount)
 			$PopUserCount = $this->_config->popusercount;
-		if (count($this->topprofiles) < $PopUserCount) {
-			$queryName = $this->_config->username ? "username" : "name";
-			if ($this->_config->integration_profile == "jomsocial") {
-				$this->_db->setQuery ( "SELECT u.id AS user_id, c.view AS hits, u.{$queryName} AS user FROM #__community_users as c
-					LEFT JOIN #__users as u on u.id=c.userid
-					WHERE c.view>'0' ORDER BY c.view DESC", 0, $PopUserCount );
-			} elseif ($this->_config->integration_profile == "cb") {
-				$this->_db->setQuery ( "SELECT c.hits AS hits, u.id AS user_id, u.{$queryName} AS user FROM #__comprofiler AS c
-					INNER JOIN #__users AS u ON u.id = c.user_id
-					WHERE c.hits>'0' ORDER BY c.hits DESC", 0, $PopUserCount );
-			} elseif ($this->_config->integration_profile == "aup") {
-				$this->_db->setQuery ( "SELECT a.profileviews AS hits, u.id AS user_id, u.{$queryName} AS user FROM #__alpha_userpoints AS a
-					INNER JOIN #__users AS u ON u.id = a.userid
-					WHERE u.profileviews>'0' ORDER BY u.profileviews DESC", 0, $PopUserCount );
-			} else {
-				$this->_db->setQuery ( "SELECT u.uhits AS hits, u.userid AS user_id, j.id, j.{$queryName} AS user FROM #__kunena_users AS u
-					INNER JOIN #__users AS j ON j.id = u.userid
-					WHERE u.uhits>'0' AND j.block=0 ORDER BY u.uhits DESC", 0, $PopUserCount );
-			}
 
-			$this->topprofiles = $this->_db->loadObjectList ();
-			KunenaError::checkDatabaseError();
+		if (count($this->topprofiles) < $PopUserCount) {
+			$profile = KunenaFactory::getProfile();
+			$this->topprofiles = $profile->getProfileView();
 			$this->topprofilehits = ! empty ( $this->topprofiles [0]->hits ) ? $this->topprofiles [0]->hits : 0;
 		}
 	}

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+7-June-2010 Xillibit
+# [#19288] Use integration classes to show in stats the total number of profile views
+
 6-June-2010 Xillibit
 # [#19288] Fix misplaced moderate button, when kunena is in full width (thanks cerberus)
 # [#19288] Fix undefined variables in libraries/route.php (Part 2)

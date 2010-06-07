@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="template" method="upgrade">
+	<name>Default Kunena Template</name>
+	<version>1.6.0</version>
+	<creationDate>01/06/10</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>team@kunena.com</authorEmail>
+	<authorUrl>http://www.kunena.com</authorUrl>
+	<copyright></copyright>
+	<license>GNU/GPL version 1.6</license>
+	<description>
+				<![CDATA[
+			<img src="../components/com_kunena/template/default/images/template_thumbnail.png" style="float:left;margin-bottom:10px;border:4px solid #ccc;padding:2px" /><p style="clear:left;margin:10px 0;font-size:110%;">Default Template is the new Kunena Template by Kunena Team. It is free for public.  This template come with default Kunena installation.  For additional information visit the <a href="http://www.kunena,com">Default review page</a>.
+
+			<h3>Changelog</h3>
+            </p>
+			]]> 
+	</description>
+	<params>
+		<param name="avatarPosition" type="list" default="left" label="Avatar Position" description="AVATAR POSITION DESCRIPTION">
+			<option value="left">Left</option>
+			<option value="top">Top</option>
+			<option value="right">Right</option>
+			<option value="bottom">Bottom</option>
+		</param>
+
+	</params>
+</install>

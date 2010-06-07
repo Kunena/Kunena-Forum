@@ -127,8 +127,10 @@ class CKunenaListcat {
 				}
 			}
 
-			// collect user ids for avatar prefetch when integrated
-			$userlist[$subcat->userid] = $subcat->userid;
+			// collect user ids for avatar prefetch when integrated - but only if not empty
+			if (!empty($subcat->userid)) {
+				$userlist[$subcat->userid] = $subcat->userid;
+			}
 		}
 
 		require_once (KUNENA_PATH . DS . 'router.php');

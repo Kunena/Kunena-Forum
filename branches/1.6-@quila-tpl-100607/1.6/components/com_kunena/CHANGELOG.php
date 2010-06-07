@@ -38,6 +38,7 @@ Kunena 1.6.0-ALPHA2
 + [#19345] Template Manager - added toolbar menu buttons.
 + [#19345] Template Manager - added tasks for toolbar menu.
 + [#19345] Template Manager - added functions for display templates in backend.
++ [#19345] Template Manager - added language string for html file.
 
 6-June-2010 fxstein
 # [#19251] Fix for user caching: exclude empty userids from cache to avoid sql error

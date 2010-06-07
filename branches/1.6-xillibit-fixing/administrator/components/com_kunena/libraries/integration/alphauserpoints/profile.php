@@ -37,5 +37,19 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		return JRoute::_('index.php?option=com_alphauserpoints&view=account'.$userid);
 	}
 
+	public function getUserMedals($userid) {
+		if ($userid == 0) return false;
+
+		if(!defined("_AUP_MEDALS_LIVE_PATH")) {
+			define('_AUP_MEDALS_LIVE_PATH', JURI::base(true) .
+			'/components/com_alphauserpoints/assets/images/awards/icons/');
+		}
+
+		$aupmedals = '';
+		$aupmedals = AlphaUserPointsHelper::getUserMedals ( '', $userid ) ;
+
+		return $aupmedals;
+	}
+
 	public function showProfile($userid, &$msg_params) {}
 }

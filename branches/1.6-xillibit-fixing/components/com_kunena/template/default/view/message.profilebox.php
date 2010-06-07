@@ -34,7 +34,7 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 		</li>
 		<?php endif ?>
 		<?php if ($this->userrankimage) : ?>
-		<li class="kpost-userrank-img">
+		<li class="kpost-userposts">
 			<?php echo $this->userrankimage ?>
 		</li>
 		<?php endif ?>
@@ -44,6 +44,14 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 		<?php endif ?>
 		<?php if ($this->userpoints) : ?>
 		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . $this->userpoints; ?></li>
+		<?php endif ?>
+		<?php if ( $this->aupmedals ) : ?>
+			<div class="kiconrow">
+			<?php foreach ( $this->aupmedals as $medal ) : ?>
+			<?php echo '<img src="' . _AUP_MEDALS_LIVE_PATH.$medal->icon. '" alt="'.$medal->rank.'" title="'.$medal->rank.'" />'; ?>
+			<?php endforeach ?>
+			</div>
+			<div class="clr"></div>
 		<?php endif ?>
 
 		<li class="kpost-online-status-<?php echo $this->profile->isOnline(true); ?>"> </li>
@@ -121,6 +129,14 @@ if ($this->config->avposition == 'left' || $this->config->avposition == 'right')
 		<?php endif ?>
 		<?php if ($this->userpoints) : ?>
 		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . $this->userpoints; ?></li>
+		<?php endif ?>
+		<?php if ( $this->aupmedals ) : ?>
+			<li class="kpost-userposts">
+			<?php foreach ( $this->aupmedals as $medal ) : ?>
+			<?php echo '<img src="' . _AUP_MEDALS_LIVE_PATH.$medal->icon. '" alt="'.$medal->rank.'" title="'.$medal->rank.'" />'; ?>
+			<?php endforeach ?>
+			</li>
+
 		<?php endif ?>
 
 		<?php endif; ?>

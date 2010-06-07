@@ -104,6 +104,11 @@ class CKunenaViewMessage {
 		if ($message->new) {
 			$this->msgsuffix = '_new';
 		}
+		
+			$ini = KUNENA_PATH_TEMPLATE.DS.$this->config->template.DS.'params.ini';
+		if (file_exists ( $ini )) {
+			$this->tplParams = parse_ini_file($ini);
+		}
 
 		$subject = $message->subject;
 		$this->resubject = JString::strtolower ( JString::substr ( $subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $subject;
@@ -659,6 +664,12 @@ class CKunenaView {
 			echo JText::_('COM_KUNENA_MODERATION_INVALID_ID');
 			return;
 		}
+		
+			$ini = KUNENA_PATH_TEMPLATE.DS.$this->config->template.DS.'params.ini';
+		if (file_exists ( $ini )) {
+			$this->tplParams = parse_ini_file($ini);
+		}
+		
 		CKunenaTools::loadTemplate('/view/view.php', false, $this->templatepath);
 	}
 

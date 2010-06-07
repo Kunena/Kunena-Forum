@@ -886,6 +886,11 @@ class CKunenaPost {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_SUBMIT_CANCEL' ) );
 			return;
 		}
+		
+			$ini = KUNENA_PATH_TEMPLATE.DS.$this->config->template.DS.'params.ini';
+		if (file_exists ( $ini )) {
+			$this->tplParams = parse_ini_file($ini);
+		}
 
 		switch ($this->do) {
 			case 'new' :

@@ -288,6 +288,12 @@ class CKunenaShowcat {
 			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
+		
+			$ini = KUNENA_PATH_TEMPLATE.DS.$this->config->template.DS.'params.ini';
+		if (file_exists ( $ini )) {
+			$this->tplParams = parse_ini_file($ini);
+		}
+		
 		CKunenaTools::loadTemplate('/threads/showcat.php');
 	}
 }

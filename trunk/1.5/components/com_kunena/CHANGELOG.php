@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.12-RC1
 
+04-Jun-2010 Xillibit
+# [#20838] Alert the user on new ranks and new smilies when the directory : 'french, spanish' isn't here
+
 02-Jun-2010 Matias
 # [#20107] Merge changes from 1.5-xillibit-fixing
 # [#20797] Small improvement to the router

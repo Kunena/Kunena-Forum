@@ -1725,20 +1725,27 @@ function editsmiley($option, $id)
 function newsmiley($option)
 {
 	$kunena_db = &JFactory::getDBO();
+	$app =& JFactory::getApplication();
 
     $smileypath = smileypath();
     $smileypathabs = $smileypath ['abs'];
     $smileypath = $smileypath['live'];
 
-    $smiley_images = collect_smilies_ranks ($smileypathabs);
+    if ( JFolder::exists($smileypathabs) ) {
 
-    $filename_list = "";
-	for( $i = 0; $i < count($smiley_images); $i++ )
-	{
-		$filename_list .= '<option value="' . $smiley_images[$i] . '">' . $smiley_images[$i] . '</option>'."\n";
+    	$smiley_images = collect_smilies_ranks ($smileypathabs);
+
+    	$filename_list = "";
+		for( $i = 0; $i < count($smiley_images); $i++ )
+		{
+			$filename_list .= '<option value="' . $smiley_images[$i] . '">' . $smiley_images[$i] . '</option>'."\n";
+    	}
+
+    	html_Kunena::newsmiley($option, $filename_list, $smileypath);
+    } else {
+		$app->enqueueMessage(_KUNENA_LANGUAGE_DIRECTORY_NOT_PRESENT, 'error');
+		$app->redirect( JURI::base() ."index.php?option=$option&task=showsmilies");
     }
-
-    html_Kunena::newsmiley($option, $filename_list, $smileypath);
 }
 
 function savesmiley($option, $id = NULL)
@@ -1881,21 +1888,28 @@ function rankpath()
 function newRank($option)
 {
 	$kunena_db = &JFactory::getDBO();
+	$app =& JFactory::getApplication();
 
 	$rankpath = rankpath();
 	$rankpathabs = $rankpath ['abs'];
 	$rankpath = $rankpath['live'];
 
-	$rank_images = collect_smilies_ranks($rankpathabs);
+	if ( JFolder::exists($rankpathabs) ) {
 
-	$filename_list = "";
-	$i = 0;
-	foreach ($rank_images as $id=>$row)
-	{
-		$filename_list .= '<option value="' . $rank_images[$id] . '">' . $rank_images[$id] . '</option>'."\n";
+		$rank_images = collect_smilies_ranks($rankpathabs);
+
+		$filename_list = "";
+		$i = 0;
+		foreach ($rank_images as $id=>$row)
+		{
+			$filename_list .= '<option value="' . $rank_images[$id] . '">' . $rank_images[$id] . '</option>'."\n";
+		}
+
+    	html_Kunena::newRank($option, $filename_list, $rankpath);
+	} else {
+		$app->enqueueMessage(_KUNENA_LANGUAGE_DIRECTORY_NOT_PRESENT, 'error');
+		$app->redirect( JURI::base() ."index.php?option=$option&task=ranks");
 	}
-
-    html_Kunena::newRank($option, $filename_list, $rankpath);
 }
 
 function deleteRank($option, $cid = null)

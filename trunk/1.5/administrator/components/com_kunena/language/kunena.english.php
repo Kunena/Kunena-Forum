@@ -62,6 +62,7 @@ define('_COM_A_SHOWFILEFORGUEST_DESC', 'Choose if you want show or hide attachme
 define('_KUNENA_BBCODE_HIDEFILE', 'This attachment is hidden for guests. Please login or register to see it.');
 DEFINE('_COM_A_HIDE', 'Hide');
 DEFINE('_COM_A_SHOW', 'Show');
+DEFINE('_KUNENA_LANGUAGE_DIRECTORY_NOT_PRESENT', 'Please check that you have a directory in your template nammed like the default language in your system');
 
 // 1.5.10
 DEFINE('_KUNENA_PARENTDESC', 'Note: To create a category, choose <em>Top Level Category</em> as the parent. A category serves as a container for forums.<br />A forum can only be created within a category by selecting an existing category as the parent for the forum.<br /> Messages can only be posted to forums, not categories.');

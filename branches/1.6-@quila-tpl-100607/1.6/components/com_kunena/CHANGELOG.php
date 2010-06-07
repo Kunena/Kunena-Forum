@@ -40,6 +40,7 @@ Kunena 1.6.0-ALPHA2
 + [#19345] Template Manager - added functions for display templates in backend.
 + [#19345] Template Manager - added language strings for html file.
 + [#19345] Template Manager - added functions for template and language strings.
++ [#19345] Template Manager - added icons and images.
 
 6-June-2010 fxstein
 # [#19251] Fix for user caching: exclude empty userids from cache to avoid sql error

@@ -143,7 +143,7 @@ function kToggleOrSwapPreview(kunenaclass)
 		if (e.getStyle('display') == "none" || e.getProperty('class') != kunenaclass){
 	    	e.setStyle('display', 'block');
 
-			if (kunenaclass=="kbbcode-preview_right"){
+			if (kunenaclass=="kbbcode-preview-right"){
 	    		f.setStyle('width', '47%');
 	    	} else {
 		    	f.setStyle('width', '95%');

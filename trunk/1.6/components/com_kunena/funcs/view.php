@@ -51,6 +51,7 @@ class CKunenaViewMessage {
 	public $profilelink = null;
 	public $personaltext = null;
 	public $signature = null;
+	public $aupmedals = null;
 
 	public $attachments = array();
 
@@ -235,6 +236,9 @@ class CKunenaViewMessage {
 				}
 			}
 		}
+
+		$profile = KunenaFactory::getProfile();
+ 		$this->aupmedals = $profile->getUserMedals($this->profile->userid);
 
 		CKunenaTools::loadTemplate('/view/message.php', false, $this->templatepath);
 	}

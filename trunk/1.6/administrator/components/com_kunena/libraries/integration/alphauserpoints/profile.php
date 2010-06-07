@@ -24,7 +24,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 
 	public function getUserListURL($action='')
 	{
-		return JRoute::_('index.php?option=com_alphauserpoints&view=users');
+		return AlphaUserPointsHelper::getAupUsersURL();
 	}
 
 	public function getProfileURL($user, $task='')
@@ -35,6 +35,36 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		if ($user === false) return false;
 		$userid = $my->id != $user->userid ? '&userid='.AlphaUserPointsHelper::getAnyUserReferreID($user->userid) : '';
 		return JRoute::_('index.php?option=com_alphauserpoints&view=account'.$userid);
+	}
+
+	public function getUserMedals($userid) {
+		if ($userid == 0) return false;
+
+		if(!defined("_AUP_MEDALS_LIVE_PATH")) {
+			define('_AUP_MEDALS_LIVE_PATH', JURI::base(true) .
+			'/components/com_alphauserpoints/assets/images/awards/icons/');
+		}
+
+		$aupmedals = '';
+		$aupmedals = AlphaUserPointsHelper::getUserMedals ( '', $userid ) ;
+
+		return $aupmedals;
+	}
+
+	public function getProfileView() {
+		$_db = &JFactory::getDBO ();
+		$_config = KunenaFactory::getConfig ();
+
+		$queryName = $_config->username ? "username" : "name";
+		$PopUserCount = $_config->popusercount;
+		$query = "SELECT a.profileviews AS hits, u.id AS user_id, u.{$queryName} AS user FROM #__alpha_userpoints AS a
+					INNER JOIN #__users AS u ON u.id = a.userid
+					WHERE a.profileviews>'0' ORDER BY a.profileviews DESC";
+		$_db->setQuery ( $query, 0, $PopUserCount );
+		$topAUPProfileView = $_db->loadObjectList ();
+		KunenaError::checkDatabaseError();
+
+		return $topAUPProfileView;
 	}
 
 	public function showProfile($userid, &$msg_params) {}

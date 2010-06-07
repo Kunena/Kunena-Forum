@@ -813,7 +813,7 @@ class CKunenaPosting {
 
 				$msg = "$emailTo->name,\n\n";
 				$msg .= $msg1 . " " . $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "\n\n";
-				$msg .= JText::_ ( 'COM_KUNENA_GEN_SUBJECT' ) . ": " . $subject . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . ": " . $subject . "\n";
 				$msg .= JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ": " . $this->parent->catname . "\n";
 				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . $authorname . "\n\n";
 				$msg .= $msg2 . "\n";

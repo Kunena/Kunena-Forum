@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die();
 if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 
 $doc =& JFactory::getDocument();
-$doc->addScript( JURI::root().'/plugins/system/mootools12/tips.js' );
+$doc->addScript( JURI::root().'plugins/system/mootools12/tips.js' );
 ?>
 
 <div class="kiconrow">

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+7-June-2010 Matias
+^ [#15886] Merged revisions 2634-2659 from /branches/1.6-xillibit with changes
+
 7-June-2010 severdia
 # [#19356] Fixed rest of CSS underscores to dashes (consistent naming), synchronized styles
 
@@ -46,8 +49,23 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix regression - CSS fix for category description.
 # [#19288] Fix regression - klist-avatar rules CSS.
 
+7-June-2010 Xillibit
+# [#19288] Use integration classes to show in stats the total number of profile views
+
+6-June-2010 Xillibit
+# [#19288] Fix misplaced moderate button, when kunena is in full width (thanks cerberus)
+# [#19288] Fix undefined variables in libraries/route.php (Part 2)
+# [#19288] Fix issue in notification mail, the word Subject is tripped by JMailHelper::cleanBody()
+^ [#19288] Show AUP users medals on kunena profilebox
+
 6-June-2010 fxstein
 # [#19251] Fix for user caching: exclude empty userids from cache to avoid sql error
+
+5-June-2010 Xillibit
+# [#19288] Fix issue with AUP integration which doesn't provide the correct link for userlist with sef
+# [#19288] Naming changes into CSS (thanks cerberus)
+# [#19288] Fix undefined variables in libraries/route.php
+# [#19288] Fix issues with jomsocial integration on loadusers, remove empty values to avoid failed query
 
 4-June-2010 Matias
 # [#20071] Change logic how Kunena detects current menu, fixing issues with missing tab menu in Kunena

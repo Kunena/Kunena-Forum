@@ -127,8 +127,8 @@ class CKunenaListcat {
 				}
 			}
 
-			// collect user ids for avatar prefetch when integrated - but only if not empty
-			if (!empty($subcat->userid)) {
+			// collect user ids for avatar prefetch when integrated - but only if userid > 0
+			if ( $subcat->userid > 0 ) {
 				$userlist[$subcat->userid] = $subcat->userid;
 			}
 		}

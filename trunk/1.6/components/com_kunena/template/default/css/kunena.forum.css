@@ -1484,7 +1484,7 @@ PX		EM			PCT			PT
 
 #Kunena div.klatest-subject,
 #Kunena div.klatest-subject-by {
-	/* margin-left: 50px; */
+	margin-left: 5px;
 }
 
 #Kunena div.kcc-subcat {
@@ -1719,7 +1719,7 @@ PX		EM			PCT			PT
 	white-space: nowrap;
 }
 
-#Kunena span.kkmsgkarma {
+#Kunena span.kmsgkarma {
 	font-weight: bold;
 	color: #737373;
 	text-decoration: none;
@@ -1746,7 +1746,7 @@ PX		EM			PCT			PT
 #Kunena div.kmsgtext {
 	width: 100%;
 	overflow: hidden;
-	/* word-wrap: break-word;  Internet Explorer 5.5+ */
+	/* word-wrap: break-word; Internet Explorer 5.5+ */
 	/*border-top: 1px solid #BFC3C6;*/
 	padding: 10px 0 0 0;
 	margin-top: 5px;

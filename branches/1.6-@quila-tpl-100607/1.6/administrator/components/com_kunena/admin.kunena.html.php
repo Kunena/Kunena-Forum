@@ -88,6 +88,7 @@ a.icon-recount-sm { background: url('components/com_kunena/images/icons/icon_rec
 a.icon-trash-sm { background: url('components/com_kunena/images/icons/icon_trash.png') 5px 5px no-repeat; }
 a.icon-systemreport-sm { background: url('components/com_kunena/images/icons/icon_reportconfig.png') 5px 5px no-repeat; }
 a.icon-support-sm { background: url('components/com_kunena/images/icons/icon_supportsite.png') 5px 5px no-repeat; }
+a.icon-template-sm { background: url('components/com_kunena/images/icons/icon_templatemanager.png') 5px 5px no-repeat; }
 
 /* Large icons */
 div.kadmin-functitle.icon-cpanel { background: url('components/com_kunena/images/kcontrolpanel.png') 5px 5px no-repeat; }
@@ -104,6 +105,7 @@ div.kadmin-functitle.icon-syncusers { background: url('components/com_kunena/ima
 div.kadmin-functitle.icon-trash { background: url('components/com_kunena/images/trash.png') 5px 5px no-repeat; }
 div.kadmin-functitle.icon-systemreport { background: url('components/com_kunena/images/report_conf.png') 5px 5px no-repeat; }
 div.kadmin-functitle.icon-support { background: url('components/com_kunena/images/ktechsupport.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-template { background: url('components/com_kunena/images/templatemanager.png') 5px 5px no-repeat; }
 
 div.kadmin-functitle.no-icon { text-indent: 5px !important; }
 
@@ -248,12 +250,13 @@ table.kadmin-stat caption {
 				<a class="kadmin-mainmenu icon-cp-sm" href="index.php?option=com_kunena"><?php echo JText::_('COM_KUNENA_CP'); ?></a>
 				<a class="kadmin-mainmenu icon-config-sm" href="index.php?option=com_kunena&task=showconfig"><?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?></a>
 				<a class="kadmin-mainmenu icon-adminforum-sm" href="index.php?option=com_kunena&task=showAdministration"><?php echo JText::_('COM_KUNENA_C_FORUM'); ?></a>
+				<a class="kadmin-mainmenu icon-template-sm" href="index.php?option=com_kunena&task=showTemplates"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a>
 				<a class="kadmin-mainmenu icon-profiles-sm" href="index.php?option=com_kunena&task=showprofiles"><?php echo JText::_('COM_KUNENA_C_USER'); ?></a>
 				<a class="kadmin-mainmenu icon-smilies-sm" href="index.php?option=com_kunena&task=showsmilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></a>
 				<a class="kadmin-mainmenu icon-ranks-sm" href="index.php?option=com_kunena&task=ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
 				<a class="kadmin-mainmenu icon-files-sm" href="index.php?option=com_kunena&task=browseFiles"><?php echo JText::_('COM_KUNENA_C_FILES'); ?></a>
 				<a class="kadmin-mainmenu icon-images-sm" href="index.php?option=com_kunena&task=browseImages"><?php echo JText::_('COM_KUNENA_C_IMAGES'); ?></a>
-				<a class="kadmin-mainmenu icon-editcss-sm" href="index.php?option=com_kunena&task=showCss"><?php echo JText::_('COM_KUNENA_C_CSS'); ?></a>
+				<!--<a class="kadmin-mainmenu icon-editcss-sm" href="index.php?option=com_kunena&task=showCss"><?php //echo JText::_('COM_KUNENA_C_CSS'); ?></a>-->
 				<a class="kadmin-mainmenu icon-prune-sm" href="index.php?option=com_kunena&task=pruneforum"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a>
 				<a class="kadmin-mainmenu icon-syncusers-sm" href="index.php?option=com_kunena&task=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
 				<a class="kadmin-mainmenu icon-recount-sm" href="index.php?option=com_kunena&task=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
@@ -292,6 +295,292 @@ table.kadmin-stat caption {
 			echo '<br />mcap==: ' . JPATH_COMPONENT_ADMINISTRATOR . ' .... help!!';
 		}
 	}
+	
+//*****************************************/
+/*
+/*			START TEMPLATE MANAGER
+/*
+/******************************************/
+	
+	
+
+	function installKTemplate() { ?>
+
+<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></div><br />
+
+		<form action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showTemplates" id="uploadForm" method="post" enctype="multipart/form-data" >
+		<div style="padding:10px;">
+			<?php echo JHTML::_( 'form.token' ); ?>
+			<input type="file" id="file-upload" name="Filedata" />
+			<input type="submit" id="file-upload-submit" value="<?php echo JText::_('COM_KUNENA_A_START_UPLOAD'); ?>"/>
+			<span id="upload-clear"></span>
+		</div>
+		<input type="hidden" name="return-url" value="<?php echo base64_encode('index.php?option=com_kunena&task=newsmiley'); ?>" />
+		</form>
+
+<!--<form enctype="multipart/form-data" action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showTemplates" method="post" name="adminForm">
+	<table class="adminform">
+	<tr>
+		<th colspan="2"><?php echo JText::_( 'Upload Package File' ); ?></th>
+	</tr>
+	<tr>
+		<td width="120">
+			<label for="install_package"><?php echo JText::_( 'Package File' ); ?>:</label>
+		</td>
+		<td>
+			<input class="input_box" id="file-upload" name="Filedta" type="file" size="57" />
+			<input class="button" type="submit" name=""submit value="<?php echo JText::_( 'Upload File' ); ?> &amp; <?php echo JText::_( 'Install' ); ?>" />
+		</td>
+	</tr>
+	</table>
+	<input type="hidden" name="type" value="" />
+	<input type="hidden" name="installtype" value="upload" />
+	<input type="hidden" name="option" value="com_kunena" />
+	<input type="hidden" name="task" value="addKTemplates" />
+	<?php echo JHTML::_( 'form.token' ); ?>
+</form>-->
+
+
+<?php
+}
+
+	function showTemplates(& $rows, & $lists, & $page, $option)
+	{
+		$kunena_app = & JFactory::getApplication ();
+		$limitstart = JRequest :: getVar('limitstart', '0', '', 'int');
+		$user = & JFactory :: getUser();
+        if (isset($row->authorUrl) && $row->authorUrl != '') {
+            $row->authorUrl = str_replace('http://', '', $row->authorUrl);
+        }
+		JHTML::_('behavior.tooltip');?>
+	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></div><br />
+		<form action="index.php" method="post" name="adminForm">
+			<table class="adminlist">
+			<thead>
+				<tr>
+					<th width="5" class="title"><?php echo JText::_( 'Num' ); ?></th>
+					<th class="title" colspan="2"><?php echo JText::_( 'Template Name' ); ?></th>
+					<th width="5%"><?php echo JText::_( 'Default' ); ?></th>
+					<th width="20%"  class="title"><?php echo JText::_( 'Author' ); ?></th>
+					<th width="5%" align="center"><?php echo JText::_( 'Version' ); ?></th>
+					<th width="5%" class="title"><?php echo JText::_( 'Date' ); ?></th>
+					<th width="20%"  class="title"><?php echo JText::_( 'Author URL' ); ?></th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="8"><?php echo $page->getListFooter(); ?></td>
+				</tr>
+			</tfoot>
+			<tbody>
+			<?php
+				$k = 0;
+				for ($i = 0, $n = count($rows); $i < $n; $i++) {
+				$row = & $rows[$i];
+			?>
+				<tr <?php echo 'class = "row' . $k . '"'; ?>>
+					<td> <?php echo $page->getRowOffset( $i ); ?></td>
+					<td width="5">
+						<?php if ( JTable::isCheckedOut($user->get ('id'), $row->checked_out )) { ?>&nbsp;
+						<?php } else { ?>
+							<input type="radio" id="cb<?php echo $i;?>" name="cid[]" value="<?php echo $row->directory; ?>" onclick="isChecked(this.checked);" />
+						<?php } ?>
+					</td>
+					<td><?php $img_path = $kunena_app->getSiteURL().'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
+						<span class="editlinktip hasTip" title="<?php echo $row->name;?>::<img border=&quot;1&quot; src=&quot;<?php echo $img_path; ?>&quot; name=&quot;imagelib&quot; alt=&quot;<?php echo JText::_( 'No preview available' ); ?>&quot; width=&quot;200&quot; height=&quot;145&quot; />">
+							<a href="index.php?option=com_kunena&amp;task=editKTemplate&amp;cid[]=<?php echo $row->directory;?>"><?php echo $row->name;?></a>
+						</span>
+					</td>
+					<td align="center">
+						<?php if ($row->published == 1) { ?>
+							<img src="components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'Default' ); ?>" />
+						<?php } else { ?>
+							<a href="index.php?option=com_kunena&amp;task=publishTemplate&amp;cid[]=<?php echo $row->directory;?>">
+								<img src="components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'Non Default' ); ?>" /></a>
+						<?php } ?>
+					</td>
+					<td align="center">
+						<span class="editlinktip" title="">
+							<?php echo $row->authorEmail ? '<a href="mailto:' . $row->authorEmail . '">' . $row->author . '</a>' : $row->author; ?>
+						</span>
+					</td>
+					<td align="center">
+						<?php echo $row->version; ?>
+					</td>
+					<td align="center">
+						<?php echo $row->creationdate; ?>
+					</td>
+					<td align="center">
+						<span class="editlinktip" title="">
+							<a href="<?php echo substr($row->authorUrl, 0, 7) == 'http://' ? $row->authorUrl : 'http://' . $row->authorUrl; ?>" target="_blank"><?php echo $row->authorUrl; ?></a>
+						</span>
+					</td>
+				</tr>
+				<?php $k = 1 - $k; } ?>
+			</tbody>
+			</table>
+	<input type="hidden" name="option" value="<?php echo $option;?>" />
+	<input type="hidden" name="client" value="" />
+	<input type="hidden" name="task" value="" />
+	<input type="hidden" name="boxchecked" value="0" />
+	<?php echo JHTML::_( 'form.token' ); ?>
+	</form>
+	<?php
+	}
+
+	function editKTemplate($row, & $params, $option, & $ftp, & $template)
+	{
+		JHTML::_('behavior.tooltip');?>
+		<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_EDIT_TEMPLATE'); ?> - <?php echo JText::_($row->name); ?></div><br />
+		<div style="border: 1px solid #ccc; padding: 10px 0 0;">
+		<form action="index.php" method="post" name="adminForm">
+		<div class="col width-50">
+			<fieldset class="adminform">
+				<legend><?php echo JText::_( 'Details' ); ?></legend>
+				<table class="admintable">
+				<tr>
+					<td colspan="2" class="key" style="text-align:left; padding: 10px 0 0 10px;"><h1><?php echo JText::_($row->name); ?></h1></td>
+				</tr>
+				<tr>
+					<td valign="top" class="key"><?php echo JText::_( 'Author' ); ?>:</td>
+					<td><strong><?php echo JText::_($row->author); ?></strong></td>
+				</tr>
+				<tr>
+					<td valign="top" class="key"><?php echo JText::_( 'Description' ); ?>:</td>
+					<td><?php echo JText::_($row->description); ?></td>
+				</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="col width-50">
+			<fieldset class="adminform">
+				<legend><?php echo JText::_( 'Parameters' ); ?></legend>
+				<table class="admintable">
+				<tr>
+					<td colspan="2" class="key" style="text-align:left; padding: 10px">
+						<?php $templatefile = KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
+							echo is_writable($templatefile) ? JText::sprintf('PARAMSWRITABLE', $templatefile):JText::sprintf('PARAMSUNWRITABLE', $templatefile);
+						?>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<?php
+							if (!is_null($params)) {
+								echo $params->render();
+							} else {
+								echo '<i>' . JText :: _('No Parameters') . '</i>'; }
+						?>
+					</td>
+				</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="clr"></div>
+		<input type="hidden" name="id" value="<?php echo $row->directory; ?>" />
+		<input type="hidden" name="option" value="<?php echo $option;?>" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="client" value="" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+		</form>
+		</div>
+		<?php
+	}
+	
+
+	function chooseCSSFiles($template, $t_dir, $t_files, $option)
+	{
+ ?>
+<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_CHOOSE_CSS_TEMPLATE'); ?></div><br />
+	<form action="index.php" method="post" name="adminForm">
+		<table cellpadding="1" cellspacing="1" border="0" width="100%">
+		<tr>
+			<td width="220"><span class="componentheading">&nbsp;</span></td>
+		</tr>
+		</table>
+		<table class="adminlist">
+		<tr>
+			<th width="5%" align="left"><?php echo JText::_( 'Num' ); ?></th>
+			<th width="85%" align="left"><?php echo $t_dir; ?></th>
+			<th width="10%"><?php echo JText::_( 'Writable' ); ?>/<?php echo JText::_( 'Unwritable' ); ?></th>
+		</tr>
+		<?php
+		$k = 0;
+		for ($i = 0, $n = count($t_files); $i < $n; $i++) {
+			$file = & $t_files[$i]; ?>
+			<tr class="<?php echo 'row'. $k; ?>">
+				<td width="5%"><input type="radio" id="cb<?php echo $i;?>" name="filename" value="<?php echo htmlspecialchars( $file, ENT_COMPAT, 'UTF-8' ); ?>" onClick="isChecked(this.checked);" /></td>
+				<td width="85%"><?php echo $file; ?></td>
+				<td width="10%"><?php echo is_writable($t_dir.DS.$file) ? '<font color="green"> '. JText::_( 'Writable' ) .'</font>' : '<font color="red"> '. JText::_( 'Unwritable' ) .'</font>' ?></td>
+			</tr>
+		<?php
+			$k = 1 - $k; } ?>
+		</table>
+		<input type="hidden" name="id" value="<?php echo $template; ?>" />
+		<input type="hidden" name="cid[]" value="<?php echo $template; ?>" />
+		<input type="hidden" name="option" value="<?php echo $option;?>" />
+		<input type="hidden" name="task" value="chooseCSSFiles" />
+		<input type="hidden" name="boxchecked" value="0" />
+		<input type="hidden" name="client" value="" />
+	</form>
+		<?php
+
+	}
+	
+	function editCSSSource($template, $filename, & $content, $option, & $ftp)
+	{
+		$css_path = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename; ?>
+<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_EDIT_CSS_TEMPLATE'); ?></div><br />
+		<form action="index.php" method="post" name="adminForm">
+		<?php if($ftp): ?>
+		<fieldset title="<?php echo JText::_('DESCFTPTITLE'); ?>">
+			<legend><?php echo JText::_('DESCFTPTITLE'); ?></legend>
+			<?php echo JText::_('DESCFTP'); ?>
+			<?php if(JError::isError($ftp)): ?>
+				<p><?php echo JText::_($ftp->message); ?></p>
+			<?php endif; ?>
+			<table class="adminform nospace">
+			<tbody>
+			<tr>
+				<td width="120"><label for="username"><?php echo JText::_('Username'); ?>:</label></td>
+				<td><input type="text" id="username" name="username" class="input_box" size="70" value="" /></td>
+			</tr>
+			<tr>
+				<td width="120"><label for="password"><?php echo JText::_('Password'); ?>:</label></td>
+				<td><input type="password" id="password" name="password" class="input_box" size="70" value="" /></td>
+			</tr>
+			</tbody>
+			</table>
+		</fieldset>
+		<?php endif; ?>
+		<table class="adminform">
+		<tr>
+			<th>
+				<?php echo $css_path; ?>
+			</th>
+		</tr>
+		<tr>
+			<td><textarea style="width:100%;height:500px" cols="110" rows="25" name="filecontent" class="inputbox"><?php echo $content; ?></textarea></td>
+		</tr>
+		</table>
+		<input type="hidden" name="id" value="<?php echo $template; ?>" />
+		<input type="hidden" name="cid[]" value="<?php echo $template; ?>" />
+		<input type="hidden" name="filename" value="<?php echo $filename; ?>" />
+		<input type="hidden" name="option" value="<?php echo $option;?>" />
+		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="client" value="" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+		</form>
+		<?php
+	}
+	
+	
+	
+//*****************************************/
+/*
+//*			END TEMPLATE MANAGER
+/*
+/******************************************/
 
 	function showAdministration($rows, $children, $pageNav, $option) {
 		?>

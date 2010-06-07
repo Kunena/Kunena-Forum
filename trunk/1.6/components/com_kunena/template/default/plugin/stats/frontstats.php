@@ -33,10 +33,10 @@ if ($this->showgenstats > 0)
 
     	?>
         <!-- BEGIN: GENERAL STATS -->
-<div class="k_bt_cvr1">
-<div class="k_bt_cvr2">
-<div class="k_bt_cvr3">
-<div class="k_bt_cvr4">
+<div class="k-bt-cvr1">
+<div class="k-bt-cvr2">
+<div class="k-bt-cvr3">
+<div class="k-bt-cvr4">
 <div class="k_bt_cvr5">
         <table class = "kblocktable" id ="kfrontstats">
             <thead>

@@ -14,7 +14,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div>
-	<div class="msgattach">
+	<div class="kmsgattach">
 	<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
 
 			<ul class="kfile-attach-editing">

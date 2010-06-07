@@ -25,10 +25,10 @@ if ( $this->changevote ) {
 <div>
 <?php CKunenaTools::loadTemplate ( '/pathway.php' ); ?>
 </div>
-<div class="k_bt_cvr1">
-<div class="k_bt_cvr2">
-<div class="k_bt_cvr3">
-<div class="k_bt_cvr4">
+<div class="k-bt-cvr1">
+<div class="k-bt-cvr2">
+<div class="k-bt-cvr3">
+<div class="k-bt-cvr4">
 <div class="k_bt_cvr5">
     <table class = "kblocktable" id = "kpoll" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>

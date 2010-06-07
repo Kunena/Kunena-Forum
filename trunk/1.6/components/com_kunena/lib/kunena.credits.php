@@ -20,10 +20,10 @@ $kunena_config = KunenaFactory::getConfig ();
 
 // Team credits page is not translated
 ?>
-<div class="k_bt_cvr1">
-  <div class="k_bt_cvr2">
-    <div class="k_bt_cvr3">
-      <div class="k_bt_cvr4">
+<div class="k-bt-cvr1">
+  <div class="k-bt-cvr2">
+    <div class="k-bt-cvr3">
+      <div class="k-bt-cvr4">
         <div class="k_bt_cvr5">
           <table class = "kblocktable" id ="kforumcredits" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
@@ -81,10 +81,10 @@ $kunena_config = KunenaFactory::getConfig ();
 </div>
 
 <!-- Begin: Forum Jump -->
-<div class="k_bt_cvr1">
-  <div class="k_bt_cvr2">
-    <div class="k_bt_cvr3">
-      <div class="k_bt_cvr4">
+<div class="k-bt-cvr1">
+  <div class="k-bt-cvr2">
+    <div class="k-bt-cvr3">
+      <div class="k-bt-cvr4">
         <div class="k_bt_cvr5">
           <table  class = "kblocktable" id="kbottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
               <tr>

@@ -53,10 +53,10 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 	}
 	//-->
 </script>
-<div class="k_bt_cvr1">
-<div class="k_bt_cvr2">
-<div class="k_bt_cvr3">
-<div class="k_bt_cvr4">
+<div class="k-bt-cvr1">
+<div class="k-bt-cvr2">
+<div class="k-bt-cvr3">
+<div class="k-bt-cvr4">
 <div class="k_bt_cvr5">
 	<table class="kblocktable" id ="kuserlist" border="0" cellspacing="0" cellpadding="0" width="100%">
 		<thead>
@@ -262,10 +262,10 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 </div>
 		<?php $this->displayWhoIsOnline(); ?>
 <!-- Begin: Forum Jump -->
-<div class="k_bt_cvr1">
-<div class="k_bt_cvr2">
-<div class="k_bt_cvr3">
-<div class="k_bt_cvr4">
+<div class="k-bt-cvr1">
+<div class="k-bt-cvr2">
+<div class="k-bt-cvr3">
+<div class="k-bt-cvr4">
 <div class="k_bt_cvr5">
 		<table class="kblocktable" id="kbottomarea" border="0" cellspacing="0" cellpadding="0">
 			<thead>

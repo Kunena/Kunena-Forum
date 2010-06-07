@@ -31,11 +31,11 @@ if ($this->my->id == $this->user->id) {
 }
 ?>
 
-<div class="kbt_cvr1">
-<div class="kbt_cvr2">
-<div class="kbt_cvr3">
-<div class="kbt_cvr4">
-<div class="kbt_cvr5">
+<div class="k-bt-cvr1">
+<div class="k-bt-cvr2">
+<div class="k-bt-cvr3">
+<div class="k-bt-cvr4">
+<div class="k-bt-cvr5">
 <h1><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->name; ?>
 <?php if (!empty($this->editlink)) echo '<span class="right">'.$this->editlink.'</span>';?></h1>
 	<div id="kprofile-container">
@@ -45,7 +45,6 @@ if ($this->my->id == $this->user->id) {
 			<?php endif; ?>
 			<div id="kprofile-stats">
 				<ul>
-					<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo $this->personalText; ?></li><?php } ?>
 					<li><span class="kbuttononline-<?php echo $this->online ? 'yes':'no'; ?> btn-left"><span class="online-<?php echo $this->online ? 'yes':'no'; ?>"><span><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></span></span></li>
 					<!-- Check this: -->
 					<?php if (!empty($this->usertype)): ?><li class="usertype"><?php echo $this->usertype; ?></li><?php endif; ?>
@@ -64,6 +63,7 @@ if ($this->my->id == $this->user->id) {
 							?>
 						<li><?php echo $PMlink; ?></li>
 					<?php  } ?>
+					<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo $this->personalText; ?></li><?php } ?>
 				</ul>
 			</div>
 		</div>

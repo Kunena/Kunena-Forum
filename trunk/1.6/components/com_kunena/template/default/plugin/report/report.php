@@ -28,10 +28,10 @@ $this->catid 		= JRequest::getInt('catid', 0);
 ?>
 
  <h1><?php echo JText::_('COM_KUNENA_COM_A_REPORT') ?></h1>
-<div class = "k_bt_cvr1">
-    <div class = "k_bt_cvr2">
-        <div class = "k_bt_cvr3">
-            <div class = "k_bt_cvr4">
+<div class = "k-bt-cvr1">
+    <div class = "k-bt-cvr2">
+        <div class = "k-bt-cvr3">
+            <div class = "k-bt-cvr4">
                 <div class = "k_bt_cvr5">
 	                <div id="kreport-container">
 		                 <form method = "post" action = "<?php echo CKunenaLink::GetReportURL(); ?>" class="kform-report">

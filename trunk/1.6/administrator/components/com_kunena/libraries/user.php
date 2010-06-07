@@ -405,7 +405,7 @@ class KunenaUser extends JObject
 		} else {
 			if (!empty($this->$item)) return '<span class="'.$name.' hasTip" title="'.$title.'::'.$value.'"></span>';
 		}
-		if ($gray) return '<span class="'.$name.'_off"></span>';
+		if ($gray) return '<span class="'.$name.'-off"></span>';
 		else return '';
 	}
 }

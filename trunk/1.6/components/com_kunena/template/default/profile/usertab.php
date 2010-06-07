@@ -47,7 +47,7 @@ JHTML::_('behavior.tooltip');
 
 </div>
 
-<div class="clr"></div>
+<div class="clrline"></div>
 
 <div id="kprofile-tabs">
 	<dl class="tabs">

@@ -107,21 +107,21 @@ class CKunenaListcat {
 				if ($subcat->new) {
 					// Check Unread    Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_on.gif" )) {
-						$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_on.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+						$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 					} else {
 						$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['unreadforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['unreadforum'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') . '"/>' : $this->config->newchar;
 					}
 				} else {
 					// Check Read Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_off.gif" )) {
-						$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_off.gif\" border=\"0\" class='forum-cat-image' alt=\" \"  />";
+						$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
 					} else {
 						$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['readforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['readforum'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '"/>' : $this->config->newchar;
 					}
 				}
 			} else {
 				if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_notlogin.gif" )) {
-					$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_notlogin.gif\" border=\"0\" class='forum-cat-image' alt=\" \" />";
+					$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
 					$allsubcats [$i]->categoryicon .= isset ( $kunena_icons ['notloginforum'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['notloginforum'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '" title="' . JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') . '"/>' : $this->config->newchar;
 				}

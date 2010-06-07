@@ -30,10 +30,10 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 	?>
-<div class="k_bt_cvr1">
-<div class="k_bt_cvr2">
-<div class="k_bt_cvr3">
-<div class="k_bt_cvr4">
+<div class="k-bt-cvr1">
+<div class="k-bt-cvr2">
+<div class="k-bt-cvr3">
+<div class="k-bt-cvr4">
 <div class="k_bt_cvr5">
 <form action="index.php" method="post" name="kBulkActionForm">
 

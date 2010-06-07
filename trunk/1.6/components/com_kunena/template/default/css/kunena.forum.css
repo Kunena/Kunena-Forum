@@ -660,13 +660,13 @@ PX		EM			PCT			PT
 }
 
 #Kunena #ktab a:hover,
-#Kunena #ktab li.Kunena_item_active a	{
+#Kunena #ktab li.Kunena-item-active a	{
 	background-position: right bottom;
 	background-color: #5388B4;
 }
 
 #Kunena #ktab a:hover span,
-#Kunena #ktab li.Kunena_item_active a span	{
+#Kunena #ktab li.Kunena-item-active a span	{
 	background-position: left bottom;
 	color: #FFFFFF;
 	font-style: normal;
@@ -800,8 +800,8 @@ PX		EM			PCT			PT
 	padding-right: 10px;
 }
 
-#Kunena a.klist-pages_link:link,
-#Kunena a.klist-pages_link:visited {
+#Kunena a.klist-pages-link:link,
+#Kunena a.klist-pages-link:visited {
 	text-decoration: underline;
 }
 
@@ -1079,7 +1079,7 @@ PX		EM			PCT			PT
 /* HEADER
 ----------------------------------------------------------------------------------------------- */
 
-#Kunena .kheader_th_1 {
+#Kunena .kheader-th-1 {
 	padding: 5px;
 }
 
@@ -1193,7 +1193,7 @@ PX		EM			PCT			PT
 	padding-left: 5px;
 }
 
-#Kunena table#kforumsearch_adv td {
+#Kunena table#kforumsearch-adv td {
 	vertical-align:top;
 	padding: 15px 10px;
 
@@ -1273,7 +1273,7 @@ PX		EM			PCT			PT
 	padding: 15px;
 }
 
-#Kunena .link_block {
+#Kunena .klink-block {
 	padding-top: 5px;
 }
 
@@ -1294,7 +1294,7 @@ PX		EM			PCT			PT
 
 #Kunena #kblock4,
 #Kunena #kblock1,
-#Kunena .k_bt_cvr1 {
+#Kunena .k-bt-cvr1 {
 	margin-top: 5px; 
 }
 
@@ -1340,6 +1340,7 @@ PX		EM			PCT			PT
 #Kunena h1 span.right {
 	float: right;
 	margin: 0 10px;
+	font-size:.833em;
 }
 
 #Kunena div.ktitle-cover {
@@ -1483,7 +1484,7 @@ PX		EM			PCT			PT
 
 #Kunena div.klatest-subject,
 #Kunena div.klatest-subject-by {
-	margin-left: 50px;
+	/* margin-left: 50px; */
 }
 
 #Kunena div.kcc-subcat {
@@ -1862,7 +1863,7 @@ PX		EM			PCT			PT
 	overflow: auto;
 }
 
-#Kunena div.kfile_attachment {
+#Kunena div.kfile-attachment {
 	background: #BFC3C6;
 	border: 1px dotted #737373;
 	padding: 10px;
@@ -2270,12 +2271,12 @@ THREAD VIEW
 	margin: 0;
 }
 
-#Kunena .kthreadview_row td {
+#Kunena .kthreadview-row td {
 	border-top: 1px dotted #BFC3C6;
 	padding: 2px 0;
 }
 
-#Kunena .kthreadview_row td table tr td {
+#Kunena .kthreadview-row td table tr td {
 	border-top: 0px solid #BFC3C6;
 }
 
@@ -2300,12 +2301,12 @@ THREAD VIEW
 }
 
 /*  Stats page  */
-#Kunena tbody#kpopsubstats_tbody tr.ksectiontableentry1 td.td-3,
-#Kunena tbody#kpopsubstats_tbody tr.ksectiontableentry2 td.td-3, 
-#Kunena tbody#kpopusermsgstats_tbody tr.ksectiontableentry1 td.td-3,
-#Kunena tbody#kpopusermsgstats_tbody tr.ksectiontableentry2 td.td-3,
-#Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3,
-#Kunena tbody#kpopuserhitstats_tbody tr.ksectiontableentry1 td.td-3	{
+#Kunena tbody#kpopsubstats-tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopsubstats-tbody tr.ksectiontableentry2 td.td-3, 
+#Kunena tbody#kpopusermsgstats-tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopusermsgstats-tbody tr.ksectiontableentry2 td.td-3,
+#Kunena tbody#kpopuserhitstats-tbody tr.ksectiontableentry1 td.td-3,
+#Kunena tbody#kpopuserhitstats-tbody tr.ksectiontableentry1 td.td-3	{
 	text-align:center;
 }
 
@@ -2391,14 +2392,14 @@ POST PAGE
 	overflow: scroll;
 	background: #F2F1EE;
 }
-#Kunena div.kbbcode-preview_bottom {
+#Kunena div.kbbcode-preview-bottom {
 	/* IMPORTANT: do not set height - controlled by js */
 	float:left;
 	clear:left;
 	width: 95%;
 	margin-top: 10px;
 }
-#Kunena div.kbbcode-preview_right {
+#Kunena div.kbbcode-preview-right {
 	/* IMPORTANT: do not set height - controlled by js */
 	float:right;
 	width: 48%;
@@ -2410,7 +2411,7 @@ POST PAGE
 	border-bottom: 0px solid #BFC3C6;
 }
 
-#Kunena #kpost_message td.kleftcolumn {
+#Kunena #kpost-message td.kleftcolumn {
 	width: 15%;
 	text-align: right;
 	vertical-align: middle;
@@ -2831,43 +2832,43 @@ BBCODE BUTTONS
 	display:none;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-bold_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-bold-button {
 	background-position:0 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-italic_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-italic-button {
 	background-position:-18px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-underline_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-underline-button {
 	background-position:-36px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-strike_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-strike-button {
 	background-position:-54px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-sub_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-sub-button {
 	background-position:-72px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-sup_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-sup-button {
 	background-position:-90px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-size_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-size-button {
 	background-position:-108px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-color_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-color-button {
 	background-position:-126px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-spoiler_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-spoiler-button {
 	background-position:-144px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-hide_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-hide-button {
 	background-position:-162px 0;
 }
 
@@ -2878,27 +2879,27 @@ BBCODE BUTTONS
 	cursor: default;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-ulist_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-ulist-button {
 	background-position:-180px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-olist_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-olist-button {
 	background-position:-198px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-list_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-list-button {
 	background-position:-216px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-left_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-left-button {
 	background-position:-234px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-center_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-center-button {
 	background-position:-252px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-right_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-right-button {
 	background-position:-270px 0;
 }
 
@@ -2909,11 +2910,11 @@ BBCODE BUTTONS
 	cursor: default;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-quote_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-quote-button {
 	background-position:-288px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-code_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-code-button {
 	background-position:-306px 0;
 }
 
@@ -2924,11 +2925,11 @@ BBCODE BUTTONS
 	cursor: default;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-image_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-image-button {
 	background-position:-324px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-link_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-link-button {
 	background-position:-342px 0;
 }
 
@@ -2939,11 +2940,11 @@ BBCODE BUTTONS
 	cursor: default;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-table_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-table-button {
 	background-position:0 -18px;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-module_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-module-button {
 	background-position:-18px -18px;
 }
 
@@ -2954,15 +2955,15 @@ BBCODE BUTTONS
 	cursor: default;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-ebay_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-ebay-button {
 	background-position:-360px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-video_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-video-button {
 	background-position:-378px 0;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-map_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-map-button {
 	background-position:-72px -18px;
 }
 
@@ -2985,11 +2986,11 @@ BBCODE BUTTONS
 	cursor: default;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-previewbottom_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-previewbottom-button {
 	background-position:-252px -18px;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-previewright_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-previewright-button {
 	background-position:-270px -18px;
 }
 
@@ -3000,7 +3001,7 @@ BBCODE BUTTONS
 	cursor: default;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-help_button {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-help-button {
 	background-position:-396px -18px;
 }
 
@@ -3267,7 +3268,7 @@ POST HISTORY
 	padding: 0;
 }
 
-#Kunena .kbottom_pathway {
+#Kunena .kbottom-pathway {
 	display: none;
 }
 
@@ -3428,6 +3429,11 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	padding-bottom: 5px;
 }
 
+#Kunena #kwhoispage td.td-3 {
+	text-align:left;
+}
+
+
 /*
 MODERATOR PAGE
 -------------------------------------------------------------------- */
@@ -3497,29 +3503,30 @@ USER PROFILE
 	border-right: 1px solid #BFC3C6;
 }
 
+
 /*
 MY PROFILE
 -------------------------------------------------------------------- */
-#Kunena .kmyprofile_menu td {
+#Kunena .kmyprofile-menu td {
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 }
-#Kunena .kmyprofile_menu a {
+#Kunena .kmyprofile-menu a {
 	display: block;
 	padding: 2px 5px 3px 10px;
 	text-decoration: none;
 }
-#Kunena .kmyprofile_menu a:hover {
+#Kunena .kmyprofile-menu a:hover {
 	text-decoration: underline;
 }
-#Kunena .kmyprofile_menu_title {
+#Kunena .kmyprofile-menu-title {
 	font-weight: bold;
 }
-#Kunena .kmyprofile_menu_staff {
+#Kunena .kmyprofile-menu-staff {
 	padding: 5px 10px;
 	border-bottom: 4px solid #BFC3C6;
 }
-#Kunena .kmyprofile_general td {
+#Kunena .kmyprofile-general td {
 	padding: 3px 5px;
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
@@ -3575,7 +3582,8 @@ div#kprofile-stats ul li span.krank-admin {
 #Kunena div#kprofile-rightcol  { 
 	display: table;
 	margin-right: 10px;
-	margin-left: 210px;
+	margin-left: 220px;
+	width: 75%;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}
 #Kunena div.kprofile-rightcol1 { 
@@ -3711,22 +3719,22 @@ div#kprofile-stats ul li span.krank-admin {
 #Kunena span.msn 		{ background: url("../images/social/msn.png") no-repeat; }
 #Kunena span.icq 		{ background: url("../images/social/icq.png") no-repeat; }
 
-#Kunena span.twitter_off 	{ background: url("../images/social/twitter_off.png") no-repeat; }
-#Kunena span.facebook_off 	{ background: url("../images/social/facebook_off.png") no-repeat; }
-#Kunena span.myspace_off 	{ background: url("../images/social/myspace_off.png") no-repeat; }
-#Kunena span.linkedin_off	{ background: url("../images/social/linkedin_off.png") no-repeat; }			
-#Kunena span.delicious_off	{ background: url("../images/social/delicious_off.png") no-repeat; }
-#Kunena span.friendfeed_off	{ background: url("../images/social/friendfeed_off.png") no-repeat; }
-#Kunena span.digg_off		{ background: url("../images/social/digg_off.png") no-repeat; }
-#Kunena span.skype_off		{ background: url("../images/social/skype_off.png") no-repeat; }
-#Kunena span.yim_off		{ background: url("../images/social/yahoo_off.png") no-repeat; }
-#Kunena span.aim_off 		{ background: url("../images/social/aim_off.png") no-repeat; }
-#Kunena span.gtalk_off 		{ background: url("../images/social/googletalk_off.png") no-repeat; }
-#Kunena span.blogspot_off 	{ background: url("../images/social/blogger_off.png") no-repeat; }
-#Kunena span.flickr_off 	{ background: url("../images/social/flickr_off.png") no-repeat; }
-#Kunena span.bebo_off 		{ background: url("../images/social/bebo_off.png") no-repeat; }
-#Kunena span.msn_off 		{ background: url("../images/social/msn_off.png") no-repeat; }
-#Kunena span.icq_off 		{ background: url("../images/social/icq_off.png") no-repeat; }
+#Kunena span.twitter-off 	{ background: url("../images/social/twitter_off.png") no-repeat; }
+#Kunena span.facebook-off 	{ background: url("../images/social/facebook_off.png") no-repeat; }
+#Kunena span.myspace-off 	{ background: url("../images/social/myspace_off.png") no-repeat; }
+#Kunena span.linkedin-off	{ background: url("../images/social/linkedin_off.png") no-repeat; }			
+#Kunena span.delicious-off	{ background: url("../images/social/delicious_off.png") no-repeat; }
+#Kunena span.friendfeed-off	{ background: url("../images/social/friendfeed_off.png") no-repeat; }
+#Kunena span.digg-off		{ background: url("../images/social/digg_off.png") no-repeat; }
+#Kunena span.skype-off		{ background: url("../images/social/skype_off.png") no-repeat; }
+#Kunena span.yim-off		{ background: url("../images/social/yahoo_off.png") no-repeat; }
+#Kunena span.aim-off 		{ background: url("../images/social/aim_off.png") no-repeat; }
+#Kunena span.gtalk-off 		{ background: url("../images/social/googletalk_off.png") no-repeat; }
+#Kunena span.blogspot-off 	{ background: url("../images/social/blogger_off.png") no-repeat; }
+#Kunena span.flickr-off 	{ background: url("../images/social/flickr_off.png") no-repeat; }
+#Kunena span.bebo-off 		{ background: url("../images/social/bebo_off.png") no-repeat; }
+#Kunena span.msn-off 		{ background: url("../images/social/msn_off.png") no-repeat; }
+#Kunena span.icq-off 		{ background: url("../images/social/icq_off.png") no-repeat; }
 #Kunena div.clrline {
 	clear:both; 
 	border-top: 1px solid #BFC3C6; 

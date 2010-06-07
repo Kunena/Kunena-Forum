@@ -13,11 +13,11 @@ defined ( '_JEXEC' ) or die ();
 $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';");
 ?>
 
-<div class="kbt_cvr1">
-<div class="kbt_cvr2">
-<div class="kbt_cvr3">
-<div class="kbt_cvr4">
-<div class="kbt_cvr5">
+<div class="k-bt-cvr1">
+<div class="k-bt-cvr2">
+<div class="k-bt-cvr3">
+<div class="k-bt-cvr4">
+<div class="k-bt-cvr5">
 <h1><?php echo $this->moderateTopic ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></h1>
 	<div id="kmod-container">
 <form action="<?php echo CKunenaLink::GetPostURL (); ?>" method="post" name="myform"><input type="hidden" name="do" value="domoderate" />

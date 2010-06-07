@@ -35,6 +35,7 @@ Legend:
 Kunena 1.6.0-ALPHA2
 
 7-June-2010 810
+# [#19288] Small Css fix - Boardcode
 # [#19288] Fix regression - Css Thread action
 # [#19288] Fix regression - Css Threads showcat
 

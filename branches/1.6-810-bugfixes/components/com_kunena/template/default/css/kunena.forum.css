@@ -2361,6 +2361,7 @@ POST PAGE
 #Kunena .kpostbuttonset {
 	width: 95%;
 	margin: 2px;
+	border: 1px solid #BFC3C6
 }
 
 #Kunena tr.ksectiontableentry1 .kpostbuttons {

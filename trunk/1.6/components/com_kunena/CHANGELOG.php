@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+7-June-2010 fxstein
+# [#19288] Fix regression - CSS fix for category description.
+
 7-June-2010 @quila
 # [#19288] Fix regression - active tab menu not working.
 # [#19288] Fix regression - announcement don't show.

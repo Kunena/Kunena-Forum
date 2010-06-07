@@ -50,7 +50,7 @@ global $kunena_icons;
 
 		if ($cat->description != "") {
 			?>
-			<div class="ktitle_desc km"><?php
+			<div class="ktitle-desc km"><?php
 			echo KunenaParser::parseBBCode ( $cat->description );
 			?>
 			</div>
@@ -255,7 +255,7 @@ else {
 			<!-- Avatar --> <?php
 			if ($this->config->avataroncat > 0) :
 				$profile = KunenaFactory::getUser((int)$subcat->userid);
-				$useravatar = $profile->getAvatarLink('klist_avatar', 'lastpost');
+				$useravatar = $profile->getAvatarLink('klist-avatar', 'lastpost');
 				if ($useravatar) :
 				?>
 				<span class="klatest-avatar"> <?php

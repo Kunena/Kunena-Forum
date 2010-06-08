@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+8-June-2010 810
+# [#19288] Small Css fix - Boardcode
+
 7-June-2010 810
 # [#19288] Small Css fix - Boardcode
 # [#19288] Fix regression - Css Thread action

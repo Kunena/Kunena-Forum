@@ -2409,7 +2409,7 @@ POST PAGE
 
 #Kunena #kpostmessage tr.ksectiontableentry1 .kpostbuttonset td,
 #Kunena #kpostmessage tr.ksectiontableentry2 .kpostbuttonset td	{
-	border-bottom: 0px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
 }
 
 #Kunena #kpost-message td.kleftcolumn {

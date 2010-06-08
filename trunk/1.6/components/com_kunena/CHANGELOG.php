@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+8-June-2010 fxstein
++ [#20916] Add YUI Compressor libraries to build files
+
 7-June-2010 Matias
 ^ [#15886] Merged revisions 2634-2659 from /branches/1.6-xillibit with changes
 

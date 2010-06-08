@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="Category">
+		<message>Category</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Category</name>
+		<description>Show individual category</description>
+		<url>
+			<param name="catid" type="text" default="0" label="Category ID" />
+		</url>
+	</state>
+</metadata>

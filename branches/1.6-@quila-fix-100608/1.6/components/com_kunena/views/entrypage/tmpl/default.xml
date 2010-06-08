@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="Entry Page">
+		<message>Entry page for Kunena</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Entry Page</name>
+		<description>This page can be used to highlight menuitem in Kunena</description>
+		<url>
+			<param name="defaultmenu" type="text" default="0" label="Default menu item" />
+		</url>
+		
+	</state>
+</metadata>

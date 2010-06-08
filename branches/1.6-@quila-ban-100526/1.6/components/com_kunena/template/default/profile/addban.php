@@ -19,13 +19,13 @@ JHTML::_('behavior.calendar');
 	$useriplist = $kunena_mod->getUsernameMatchingIPs($this->user->id);
 ?>
 
-<h2><?php echo JText::_('COM_KUNENA_BAN_ADDBANFOR'); ?> <?php echo $this->profile->name; ?></h2>
+<h2><?php echo JText::sprintf('COM_KUNENA_BAN_ADDBANFOR', $this->escape($this->profile->name)); ?></h2>
 <form id="kform-ban" name="kformban" action="index.php" method="post">
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : ''; ?> kblock">
 	<tbody>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></b></td>
-		<td class="kcol-addban-right" width="600"><?php echo $this->profile->username; ?> </td>
+		<td class="kcol-addban-right"><?php echo $this->profile->username; ?> </td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_USERID'); ?></b></td>

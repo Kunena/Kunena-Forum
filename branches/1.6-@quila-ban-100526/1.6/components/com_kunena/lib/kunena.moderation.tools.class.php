@@ -12,10 +12,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-define ( 'KN_USER_BLOCK',1);	// block in joomla (even block login)
-define ( 'KN_USER_BAN',2);	// ban in kunena (read-only mode)
-define ( 'KN_USER_BAN_IP',3);	// ban IP in kunena (read-only mode)
-
 class CKunenaModerationTools {
 	// Private data and functions
 	protected	$_db				= null;

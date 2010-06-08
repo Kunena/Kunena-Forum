@@ -20,6 +20,7 @@ class CKunenaProfile {
 
 	function __construct($userid, $do='') {
 		kimport('html.parser');
+		require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->config = CKunenaConfig::getInstance ();
@@ -251,17 +252,35 @@ class CKunenaProfile {
 		CKunenaTools::loadTemplate('/profile/addban.php');
 	}
 
-	function displayUserBanHistory()
+	function displayBanHistory()
 	{
+		$this->banhistory = $this->getBanHistory();
 		CKunenaTools::loadTemplate('/profile/banhistory.php');
 	}
 
-	function displayUserBanManager()
+	function displayBanManager()
 	{
-		CKunenaTools::loadTemplate('/profile/banned.php');
+		$this->bannedusers = $this->getBannedUsers();
+		CKunenaTools::loadTemplate('/profile/banmanager.php');
 	}
 
-	function displayTab() {
+	function getBannedUsers() {
+		kimport('userban');
+		$banned = KunenaUserBan::getBannedUsers();
+		return $banned;
+	}
+
+	function getBanHistory() {
+		kimport('userban');
+		$user_history = KunenaUserBan::getUserHistory($this->profile->userid);
+		return $user_history;
+	}
+
+	function showBanInfo() {
+		kimport('userban');
+		$banned = KunenaUserBan::getInstanceByUserid($this->profile->userid);
+		return $banned;
+	}	function displayTab() {
 		switch ($this->do) {
 			case 'edit':
 				$user = JFactory::getUser();
@@ -501,55 +520,5 @@ class CKunenaProfile {
 	function cancel()
 	{
 		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', false) );
-	}
-
-	function displayUsersBanned() {
-		$this->name = $this->config->username ? "username" : "name";
-		$query = "SELECT bu.*, b.id, b.name, b.username, c.id, c.name AS creatorname, c.username AS creatorusername, d.id, d.name AS modifiedname, d.username AS modifiedusername " .
-				" FROM #__kunena_banned_users AS bu " .
-				" LEFT JOIN #__users AS b ON bu.userid=b.id " .
-				" LEFT JOIN #__users AS c ON bu.created_userid=c.id " .
-				" LEFT JOIN #__users AS d ON bu.modified_by=d.id " .
-				" WHERE enabled=1" .
-				" GROUP BY bu.id ";
-		$this->_db->setQuery ( $query );
-		$this->ban = $this->_db->loadObjectList ();
-		check_dberror ( "Unable to load search result." );
-
-	if ( is_array($this->ban) ) {
-			return $this->ban;
-		} else {
-			return;
-		}
-	}
-
-	function getBanHistory() {
-		$query = "SELECT a.*, b.id, b.name, b.username, c.id, c.name AS creatorname, c.username AS creatorusername, d.id, d.name AS modifiedname, d.username AS modifiedusername FROM #__kunena_banned_users AS a
-			LEFT JOIN #__users AS b ON a.userid=b.id
-			LEFT JOIN #__users AS c ON a.created_userid=c.id
-			LEFT JOIN #__users AS d ON a.modified_by=d.id
-			WHERE `userid`={$this->profile->userid}";
-		$this->_db->setQuery ( $query );
-		$banhistory = $this->_db->loadObjectList ();
-		check_dberror ( 'Unable to load ban history.' );
-
-		if ( is_array($banhistory) ) {
-			return $banhistory;
-		} else {
-			return;
-		}
-	}
-
-	function showBanInfo() {
-		$query = "SELECT userid, public_reason FROM #__kunena_banned_users AS a WHERE `enabled`=1 AND `bantype`=2 AND `userid`={$this->profile->userid};";
-		$this->_db->setQuery ( $query );
-		$banInfo = $this->_db->loadObject ();
-		check_dberror ( 'Unable to load ban info.' );
-
-		if ( !empty($banInfo) ) {
-			return $banInfo;
-		} else {
-			return null;
-		}
 	}
 }

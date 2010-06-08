@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+08-Jun-2010 Matias
+^ [#19244] Major changes on how ban works internally
+
 02-Jun-2010 Xillibit
 ^ [#19244] Allow the user in banner manager to edit some field
 

@@ -626,7 +626,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 						$privatereason = JRequest::getString ( 'kban_privatereason'.$thisvalue, '' );
 
 						if ( $thisvalue != 0 && $bantype !=0 ) {
-							$query = "UPDATE #__kunena_banned_users SET expiry={$kunena_db->Quote($expiretime)} , private_reason={$kunena_db->Quote($privatereason)} ,public_reason={$kunena_db->Quote($publicreason)} WHERE enabled=1 AND bantype=$bantype AND userid=$thisuserid";
+							$query = "UPDATE #__kunena_banned_users SET expiration={$kunena_db->Quote($expiretime)} , reason_private={$kunena_db->Quote($privatereason)} ,reason_public={$kunena_db->Quote($publicreason)} WHERE userid=$thisuserid";
 							$kunena_db->setQuery ( $query );
 							$kunena_db->query ();
 							check_dberror ( 'Unable to apply changes on banned user.' );

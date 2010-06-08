@@ -42,6 +42,12 @@ class TableKunenaUser extends TableKunena
 	var $moderator = null;
 
 	/**
+	* Is silenced?
+	* @var int
+	**/
+	var $silenced = null;
+	
+	/**
 	* Ordering of posts
 	* @var int
 	**/
@@ -222,15 +228,6 @@ class TableKunenaUser extends TableKunena
 		parent::__construct('#__kunena_users', 'userid', $db);
 	}
 
-	/**
-	 * Method to load a user, user groups, and any other necessary data
-	 * from the database so that it can be bound to the user object.
-	 *
-	 * @access	public
-	 * @param	integer		$userid		An optional user id.
-	 * @return	boolean		True on success, false on failure.
-	 * @since	1.0
-	 */
 	function load($userid = null)
 	{
 		$this->_exists = false;
@@ -250,7 +247,10 @@ class TableKunenaUser extends TableKunena
 		}
 
 		// Load the user data.
-		$query = 'SELECT u.name, u.username, ku.* FROM #__users AS u LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid WHERE u.id = '.$this->$k;
+		$query = "SELECT u.name, u.username, u.block, ku.*
+			FROM #__users AS u
+			LEFT JOIN {$this->_tbl} AS ku ON u.id = ku.userid
+			WHERE u.id = {$this->$k}";
 		$this->_db->setQuery($query);
 		$data = $this->_db->loadAssoc();
 

@@ -504,21 +504,6 @@ class CKunenaTools {
 		return $acl->isModerator($uid, $catid);
 	}
 
-	function isUserBanned($uid = null) {
-		$kunena_db =& JFactory::getDBO();
-
-		$query = "SELECT id FROM `#__kunena_banned_users` WHERE `userid`='$uid' AND `enabled`=1 OR `bantype`=1 OR `bantype`=2;";
-		$kunena_db->setQuery ($query);
-		$userBanned = $kunena_db->loadObject ();
-		check_dberror ( "Unable to load user banned." );
-
-		if ( !empty($userBanned)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
 		$acl = KunenaFactory::getAccessControl();
 		return $acl->getSubscribers($catid, $thread, $subscriptions, $moderators, $admins, $excludeList);
@@ -963,19 +948,11 @@ class CKunenaTools {
 			$banexpiry = JRequest::getString ('Expire_Time', '');
 			$banIP = JRequest::getVar ( 'prof_ip_select', '' );
 
-			$banEmail = JRequest::getVar ( 'banemail', '' );
 			$banUsername = JRequest::getVar ( 'banusername', '' );
 			$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
 			$DelAvatar = JRequest::getVar ( 'delavatar', '' );
 			$DelSignature = JRequest::getVar ( 'delsignature', '' );
 			$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
-
-			if ( !empty($banEmail) ) {
-				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');
-				//future feature
-
-				$kunena_app->redirect ( CKunenaLink::GetProfileURL($thisuserid, false) );
-			}
 
 			if ( !empty($banUsername) ) {
 				require_once(KUNENA_PATH_LIB .DS. 'kunena.moderation.tools.class.php');

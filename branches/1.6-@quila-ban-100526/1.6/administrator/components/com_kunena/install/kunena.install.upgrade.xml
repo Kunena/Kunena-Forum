@@ -107,17 +107,18 @@
                 UNIQUE KEY `thread` (`catid`,`userid`),
                 KEY `userid` (`userid`) ) DEFAULT CHARSET=utf8</query>
 		<query>CREATE TABLE IF NOT EXISTS `#__kunena_users` (
- 			 `userid` int(11) NOT NULL default '0',
- 			 `view` varchar(8) NOT NULL default 'flat',
- 			 `signature` text,
- 			 `moderator` int(11) default '0',
- 			 `ordering` int(11) default '0',
- 			 `posts` int(11) default '0',
-  			 `avatar` varchar(50) default NULL,
-  			 `karma` int(11) default '0',
-  			 `karma_time` int(11) default '0',
- 			 `group_id` int(4) default '1',
-  			 `uhits` int(11) default '0',
+			`userid` int(11) NOT NULL default '0',
+			`view` varchar(8) NOT NULL default 'flat',
+			`signature` text,
+			`moderator` int(11) default '0',
+			`banned` datetime DEFAULT NULL,
+			`ordering` int(11) default '0',
+			`posts` int(11) default '0',
+			`avatar` varchar(50) default NULL,
+			`karma` int(11) default '0',
+			`karma_time` int(11) default '0',
+			`group_id` int(4) default '1',
+			`uhits` int(11) default '0',
 		     `personalText` tinytext,
              `gender` tinyint(4) NOT NULL default '0',
              `birthdate` date NOT NULL default '0001-01-01',
@@ -224,24 +225,25 @@
 			`lastvote` int(11) default NULL,
 			UNIQUE KEY `pollid` (`pollid`,`userid`)
 		) DEFAULT CHARSET=utf8;</query>
-		<query>CREATE TABLE IF NOT EXISTS `#__kunena_banned_users` (
-                `id` int(11) NOT NULL auto_increment,
-                `enabled` int(1) NOT NULL default '0',
-                `userid` int(11) NOT NULL default '0',
-                `ip` varchar(32) NOT NULL,
-                `bantype` int(1) NOT NULL,
-                `expiry` datetime NOT NULL default '0000-00-00 00:00:00',                                
-                `creation_time` datetime NOT NULL default '0000-00-00 00:00:00',
-                `created_userid` int(11) NOT NULL default '0',               
-                `comment` text default NULL,
-                `private_reason` text default NULL,
-                `public_reason` text default NULL,
-                `modified_by` int(11) default NULL,
-                `modified_date` datetime NOT NULL default '0000-00-00 00:00:00',
-                PRIMARY KEY (`id`),
-                KEY `enabled` (`enabled`),
-                KEY `userid` (`userid`),
-                KEY `expiry` (`expiry`) ) DEFAULT CHARSET=utf8;</query>		
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_users_banned` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`userid` int(11) DEFAULT NULL,
+			`ip` varchar(128) DEFAULT NULL,
+			`blocked` tinyint(4) DEFAULT NULL,
+			`expiration` timestamp NULL DEFAULT NULL,
+			`created_by` int(11) NOT NULL,
+			`created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`reason_private` text,
+			`reason_public` text,
+			`modified_by` int(11) DEFAULT NULL,
+			`modified_time` timestamp NULL DEFAULT NULL,
+			`comments` text,
+			`params` text,
+			PRIMARY KEY (`id`),
+			KEY `userid` (`userid`),
+			KEY `ip` (`ip`),
+			KEY `expiration` (`expiration`)
+		) DEFAULT CHARSET=utf8;</query>
 		<phpfile name="sampledata.php" />
 	</install>
 	<upgrade>
@@ -363,8 +365,10 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD INDEX ( `currvisit` )</query>
 			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
 			<query mode="silenterror">UPDATE `#__kunena_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_banned_users` ADD `private_reason` text default NULL AFTER `comment`, ADD `public_reason` text default NULL AFTER `comment`, 
-                      ADD `modified_by` int(11) default NULL AFTER `comment`, ADD `modified_date` datetime NOT NULL default '0000-00-00 00:00:00' AFTER `comment`, DROP `message`, CHANGE `created` `creation_time` datetime NOT NULL default '0000-00-00 00:00:00'</query>
+			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_banned_users`</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` 
+				ADD `banned` DATETIME NULL DEFAULT NULL AFTER `moderator` ,
+				ADD INDEX ( `banned` )</query>
 		</version>
 	</upgrade>
 </comupgrade>

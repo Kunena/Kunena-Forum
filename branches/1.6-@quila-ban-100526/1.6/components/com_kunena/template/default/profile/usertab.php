@@ -81,20 +81,18 @@ JHTML::_('behavior.calendar');
 		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id == $this->profile->userid ): ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayUserBanManager(); ?>
+			<?php $this->displayBanManager(); ?>
 		</dd>
 		<?php endif;?>
 		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id):?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayUserBanHistory(); ?>
+			<?php $this->displayBanHistory(); ?>
 		</dd>
 		<?php endif;?>
 		<?php if ((CKunenaTools::isModerator($this->my->id) &&
-						($this->my->id != $this->user->id)) &&
-						(!CKunenaTools::isModerator($this->user->id)) ||
-						(CKunenaTools::isAdmin($this->my->id)) &&
-						(!CKunenaTools::isAdmin($this->user->id))) : ?>
+				$this->my->id != $this->user->id) && !CKunenaTools::isAdmin($this->user->id) &&
+				( CKunenaTools::isAdmin($this->my->id) || !CKunenaTools::isModerator($this->user->id) )) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_ADDBAN'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayAddBan(); ?>

@@ -1,7 +1,7 @@
 <?php
 /**
 * @version $Id$
-* Kunena Component - CKunenaUser class
+* Kunena Component - KunenaUser class
 * @package Kunena
 *
 * @Copyright (C) 2010 www.kunena.com All rights reserved
@@ -56,6 +56,8 @@ class KunenaUser extends JObject
 	 */
 	static public function getInstance($identifier = null, $reset = false)
 	{
+		$c = __CLASS__;
+
 		if ($identifier instanceof KunenaUser) {
 			return $identifier;
 		}
@@ -66,14 +68,16 @@ class KunenaUser extends JObject
 		if ($identifier instanceof JUser) {
 			$id = $identifier->id;
 		} else if (is_numeric($identifier)) {
-			$id = $identifier;
+			$id = intval($identifier);
 		} else {
 			jimport('joomla.user.helper');
 			$id = JUserHelper::getUserId((string)$identifier);
 		}
+		if ($id < 1)
+			return new $c();
 
 		if (!$reset && empty(self::$_instances[$id])) {
-			self::$_instances[$id] = new KunenaUser($id);
+			self::$_instances[$id] = new $c($id);
 		}
 
 		return self::$_instances[$id];
@@ -168,7 +172,10 @@ class KunenaUser extends JObject
 		}
 
 		// Set the id for the KunenaUser object in case we created a new user.
-		if ($result && $isnew) $this->load($table->get('userid'));
+		if ($result && $isnew) {
+			$this->load($table->get('userid'));
+			self::$_instances[$table->get('id')] = $this;
+		}
 
 		return $result;
 	}
@@ -215,8 +222,13 @@ class KunenaUser extends JObject
 		return CKunenaTools::isModerator($this->userid, $catid);
 	}
 
-	public function isUserBanned() {
-		return CKunenaTools::isUserBanned($this->userid);
+	public function isBanned() {
+		if (!$this->silenced) return false;
+
+		jimport ('utilities.date');
+		$ban = new JDate($this->silenced);
+		$now = new JDate();
+		return (!$this->block || $ban->toUnix() > $now->toUnix());
 	}
 
 	public function getName($visitorname = '') {
@@ -245,7 +257,7 @@ class KunenaUser extends JObject
 			$type = JText::_('COM_KUNENA_VIEW_ADMIN');
 		} elseif ($this->isModerator ($catid)) {
 			$type = JText::_('COM_KUNENA_VIEW_MODERATOR');
-		} elseif ($this->isUserBanned ()) {
+		} elseif ($this->isBanned ()) {
 			$type = JText::_('COM_KUNENA_VIEW_BANNED');
 		} else {
 			$type = JText::_('COM_KUNENA_VIEW_USER');
@@ -306,7 +318,7 @@ class KunenaUser extends JObject
 				}
 			}
 		}
-		else if ($this->rank == 0 && self::isUserBanned()) {
+		else if ($this->rank == 0 && $this->isBanned()) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_BANNED');
 			$rank->rank_special = 1;

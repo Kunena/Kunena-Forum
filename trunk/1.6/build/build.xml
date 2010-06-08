@@ -48,7 +48,7 @@
 	<property name="kunena.backend" value="administrator/components/com_kunena" />
 	<property name="kunena.media" value="media/kunena" />
 
-	<target name="dist" depends="mkdir,archive,init,build,copy,tar,zip,gzip,bz2,info,cleanup" />
+	<target name="dist" depends="mkdir,archive,init,build,minify,copy,tar,zip,gzip,bz2,info,cleanup" />
 
 	<target name="mkdir">
 		<mkdir dir="${tmp_dir}" />
@@ -151,8 +151,37 @@
 			</fileset>
 		</move>
 	</target>
+
+	<target name="minify" depends="build">
+	<!--
+	YUI Compressor implementation
+	See link below for details, documentations and samples
+	http://javaflight.blogspot.com/2008/01/introducing-yui-compressor-ant-task.html
+	-->
+		<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
+			<classpath>
+				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.2.jar" />
+				<pathelement path="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
+			</classpath>
+		</taskdef>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+    		fromdir="${project_dir}/${kunena.frontend}/js/slimbox/" 
+    		todir="${tmp_dir}/${kunena.frontend}/js/slimbox/">
+		</yui-compressor>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+    		fromdir="${project_dir}/${kunena.frontend}/template/default/css" 
+    		todir="${tmp_dir}/${kunena.frontend}/template/default/css">
+		</yui-compressor>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+    		fromdir="${project_dir}/${kunena.frontend}/template/default/js" 
+    		todir="${tmp_dir}/${kunena.frontend}/template/default/js">
+		</yui-compressor>
+	</target>
 	
-	<target name="copy" depends="build">
+	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
 
 		<zip destfile="${build_dir}/archive/admin.zip" basedir="${tmp_dir}/${kunena.backend}" />

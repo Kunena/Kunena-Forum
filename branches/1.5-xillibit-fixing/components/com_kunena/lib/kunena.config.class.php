@@ -385,8 +385,8 @@ class CKunenaConfig extends CKunenaConfigBase
 	var $userlist_enable = 1;
 	var $maxurllength = 200;
 	// New for 1.5.12 -> hide images/attachments for unregistred users
-	var $showimgforguest = 1;
-	var $showfileforguest = 1;
+	var $showimgforguest = 0;
+	var $showfileforguest = 0;
 
     public function __construct($KunenaUser=null)
     {

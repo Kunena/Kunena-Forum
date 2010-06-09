@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+09-Jun-2010 Xillibit
+^ [#20817] Set default configuration settings on show for hide attachments for guests
+
 04-Jun-2010 Xillibit
 # [#20838] Alert the user on new ranks and new smilies when the directory : 'french, spanish' isn't here
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="Index">
+		<message>Category index</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Category Index</name>
+		<description>Show category index</description>
+		<url>
+			<param name="catid" type="text" default="0" label="Parent Category ID" />
+		</url>
+	</state>
+</metadata>

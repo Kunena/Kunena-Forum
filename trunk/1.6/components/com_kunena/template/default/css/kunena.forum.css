@@ -1762,7 +1762,8 @@ PX		EM			PCT			PT
 #Kunena div.kmsgattach {
 	overflow: hidden;
 	padding: 8px;
-	margin-top: 8px;
+	margin-top: 120px;
+	/* margin-top: 8px; */
 	background:#F8F7EF none repeat scroll 0 0;
 	border:1px dotted #BFC3C6;
 	display:block;

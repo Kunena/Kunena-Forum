@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+9-June-2010 severdia
+# [#19356] Fixed top margin on attachment section
+
 8-June-2010 fxstein
 + [#20916] Add css and js minification logic to build process
 + [#20916] Add YUI Compressor libraries to build files

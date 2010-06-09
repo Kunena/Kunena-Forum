@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA2
 
 9-June-2010 Xillibit
 ^ [#19288] Check new of versions of kunena with xml things
+- [#19288] Remove the useless maxlength on links and images links
 
 9-June-2010 severdia
 # [#19356] Fixed top margin on attachment section

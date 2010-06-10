@@ -43,7 +43,7 @@ class CKunenaLink {
 
 
 	function GetCreditsLink() {
-		return CKunenaLink::GetSefHrefLink ( 'http://www.kunena.com', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"' );
+		return CKunenaLink::GetHrefLink ( 'http://www.kunena.com', 'Kunena', 'Kunena', 'follow', NULL, NULL, 'target="_blank"' );
 	}
 
 	function GetTeamCreditsLink($catid, $name = '') {

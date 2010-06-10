@@ -622,7 +622,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	// Credits
 
-	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
+	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' <a href="http://www.kunena.com/" target="_blank">Kunena</a> ';
 	if ($kunena_config->enablerss) {
 		$rss_params = ((int) $catid > 0 ? '&amp;catid=' . (int) $catid : '');
 		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );

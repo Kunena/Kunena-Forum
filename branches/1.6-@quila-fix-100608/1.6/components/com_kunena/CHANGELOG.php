@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+10-June-2010 @quila
+# [#19288] Fix regression - Kunena in the footer don't point to kunena official site.
+# [#19288] Fix regression - Correction of text in subscription email.
+
 8-June-2010 @quila
 # [#19288] Fix regression - subject message suffix wrong for new post.
 

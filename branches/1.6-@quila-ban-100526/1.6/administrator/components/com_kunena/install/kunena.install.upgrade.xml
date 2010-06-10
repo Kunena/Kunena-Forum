@@ -229,7 +229,7 @@
 			`id` int(11) NOT NULL AUTO_INCREMENT,
 			`userid` int(11) DEFAULT NULL,
 			`ip` varchar(128) DEFAULT NULL,
-			`blocked` tinyint(4) DEFAULT NULL,
+			`blocked` tinyint(4) NOT NULL DEFAULT '0',
 			`expiration` timestamp NULL DEFAULT NULL,
 			`created_by` int(11) NOT NULL,
 			`created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -369,6 +369,7 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` 
 				ADD `banned` DATETIME NULL DEFAULT NULL AFTER `moderator` ,
 				ADD INDEX ( `banned` )</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users_banned` CHANGE `blocked` `blocked` TINYINT( 4 ) NOT NULL DEFAULT '0'</query>
 		</version>
 	</upgrade>
 </comupgrade>

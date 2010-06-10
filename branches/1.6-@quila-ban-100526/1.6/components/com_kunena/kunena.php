@@ -540,10 +540,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case 'banactions' :
-			CKunenaTools::KModerateUser ();
-
-			break;
 		case 'banprofileactions' :
 			$thisuserid = JRequest::getInt ( 'thisuserid', 0 );
 			if ( $thisuserid != 0 ) {

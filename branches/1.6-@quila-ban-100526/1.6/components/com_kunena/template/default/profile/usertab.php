@@ -95,7 +95,7 @@ JHTML::_('behavior.calendar');
 				( CKunenaTools::isAdmin($this->my->id) || !CKunenaTools::isModerator($this->user->id) )) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_ADDBAN'); ?></dt>
 		<dd style="display: none;">
-			<?php $this->displayAddBan(); ?>
+			<?php $this->displayBanUser(); ?>
 		</dd>
 		<?php endif; ?>
 	</dl>

@@ -29,6 +29,8 @@ class KunenaUserBan extends JObject
 	protected static $_my = null;
 
 	protected $_db = null;
+	protected $_exists = false;
+
 
 	const ANY = 0;
 	const ACTIVE = 1;
@@ -38,13 +40,13 @@ class KunenaUserBan extends JObject
 	*
 	* @access	protected
 	*/
-	public function __construct($identifier = 0)
+	public function __construct($identifier = null)
 	{
-		if (self::$now === null) {
-			self::$now = new JDate();
+		if (self::$_now === null) {
+			self::$_now = new JDate();
 		}
-		if (self::$my === null) {
-			self::$my = JFactory::gerUser();
+		if (self::$_my === null) {
+			self::$_my = JFactory::getUser();
 		}
 
 		// Always load the data -- if item does not exist: fill empty data
@@ -249,21 +251,21 @@ class KunenaUserBan extends JObject
 		}
 
 		if ($this->_exists && $set) {
-			$this->modified_time = self::$now->toMysql();
-			$this->modified_by = self::$my->id;
+			$this->modified_time = self::$_now->toMysql();
+			$this->modified_by = self::$_my->id;
 		}
 	}
 
 	public function isEnabled() {
-		if (!$this->expiration) true;
+		if (!$this->expiration) return true;
 		$expiration = new JDate($this->expiration);
-		if ($expiration->toUnix() > self::$now->toUnix()) return true;
+		if ($expiration->toUnix() > self::$_now->toUnix()) return true;
 		return false;
 	}
 
 	public function setComment($comment) {
 		if (is_string($comment) && !empty($comment)) {
-			$this->comments[] = array ('userid'=>self::$my->id, 'time'=>self::$now->toMysql(), 'comment'=>$comment);
+			$this->comments[] = array ('userid'=>self::$_my->id, 'time'=>self::$_now->toMysql(), 'comment'=>$comment);
 		}
 	}
 
@@ -271,30 +273,39 @@ class KunenaUserBan extends JObject
 		// Cannot change expiration if ban is not enabled
 		if (!$this->isEnabled()) return;
 
-		if ($expiration === null) {
+		if (!$expiration) {
 			$this->expiration = null;
 		} else {
 			$date = new JDate($expiration);
-			$this->expiration = $date->toUnix() > self::$now->toUnix() ? $date->toMysql() : self::$now->toMysql();
+			$this->expiration = $date->toUnix() > self::$_now->toUnix() ? $date->toMysql() : self::$_now->toMysql();
 		}
 		if ($this->_exists) {
-			$this->modified_time = self::$now->toMysql();
-			$this->modified_by = self::$my->id;
+			$this->modified_time = self::$_now->toMysql();
+			$this->modified_by = self::$_my->id;
 		}
 		if (is_string($comment) && !empty($comment)) {
-			$this->comments[] = array ('userid'=>self::$my->id, 'time'=>self::$now->toMysql(), 'comment'=>$comment);
+			$this->comments[] = array ('userid'=>self::$_my->id, 'time'=>self::$_now->toMysql(), 'comment'=>$comment);
 		}
+	}
+
+	public function ban($userid=null, $ip=null, $block=0, $expiration=null, $reason_private='', $reason_public='') {
+		$this->userid = intval($userid) > 0 ? (int)$userid : null;
+		$this->ip = $ip ? (string)$ip : null;
+		$this->blocked = (int)$block;
+		$this->setExpiration($expiration);
+		$this->reason_private = (string)$reason_private;
+		$this->reason_public = (string)$reason_public;
 	}
 
 	public function unBan($comment = '') {
 		// Cannot change expiration if ban is not enabled
 		if (!$this->isEnabled()) return;
 
-		$this->expiration = self::$now->toMysql();
-		$this->modified_time = self::$now->toMysql();
-		$this->modified_by = self::$my->id;
+		$this->expiration = self::$_now->toMysql();
+		$this->modified_time = self::$_now->toMysql();
+		$this->modified_by = self::$_my->id;
 		if (is_string($comment) && !empty($comment)) {
-			$this->comments[] = array ('userid'=>self::$my->id, 'time'=>self::$now->toMysql(), 'comment'=>$comment);
+			$this->comments[] = array ('userid'=>self::$_my->id, 'time'=>self::$_now->toMysql(), 'comment'=>$comment);
 		}
 	}
 
@@ -320,6 +331,7 @@ class KunenaUserBan extends JObject
 	}
 
 	function getUserHistory($userid) {
+		if (!$userid) return array();
 		$config = KunenaFactory::getConfig();
 		$namefield = $config->username ? "username" : "name";
 		$query = "SELECT b.*, u.{$namefield} as username, c.{$namefield} AS created_username, m.{$namefield} AS modified_username
@@ -349,8 +361,20 @@ class KunenaUserBan extends JObject
 	 */
 	function save($updateOnly = false)
 	{
+		if (!$this->id) {
+			// If we have new ban, add creation date and user if they do not exist
+			if (!$this->created_time) {
+				$now = new JDate();
+				$this->created_time = $now->toMysql();
+			}
+			if (!$this->created_by) {
+				$my = JFactory::getUser();
+				$this->created_by = $my->id;
+			}
+		}
+
 		// Create the user table object
-		$table	= &$this->getTable();
+		$table	= $this->getTable();
 		$table->bind($this->getProperties());
 
 		// Check and store the object.
@@ -363,8 +387,21 @@ class KunenaUserBan extends JObject
 		$isnew = !$this->_exists;
 
 		// If we aren't allowed to create new ban, return
-		if (!$this->id || ($isnew && $updateOnly)) {
+		if ($isnew && $updateOnly) {
 			return true;
+		}
+
+		if ($this->userid) {
+			// Change user block also in Joomla
+			$user = JFactory::getUser($this->userid);
+			if (!$user) {
+				$this->setError("User {$this->userid} does not exist!");
+				return false;
+			}
+			if ($user->block != $this->blocked) {
+				$user->block = $this->blocked;
+				$user->save();
+			}
 		}
 
 		//Store the ban data in the database

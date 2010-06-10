@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.12-DEV
 
+10-Jun-2010 Xillibit
+- [#20803] Remove configuration settings to define the maxlength for url on links and images
+
 09-Jun-2010 Xillibit
 ^ [#20817] Set default configuration settings on show for hide attachments for guests
 

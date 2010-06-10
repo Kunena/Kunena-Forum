@@ -383,7 +383,6 @@ class CKunenaConfig extends CKunenaConfigBase
 	var $js_actstr_integration = 1;
 	//New for 1.5.11 -> disable/enable the userlist
 	var $userlist_enable = 1;
-	var $maxurllength = 200;
 	// New for 1.5.12 -> hide images/attachments for unregistred users
 	var $showimgforguest = 0;
 	var $showfileforguest = 0;

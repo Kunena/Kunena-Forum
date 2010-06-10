@@ -66,7 +66,7 @@ $j=count($this->banhistory);
 	<?php endif; ?>
 	<?php if (is_array($userban->comments)) foreach ($userban->comments as $comment) : ?>
 	<tr class="ksectiontableentry2">
-		<td colspan="2"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT', CKunenaTimeFormat::showDate($comment->time), CKunenaLink::GetProfileLink ( $comment->userid, $this->escape($comment->username) )); ?></b> :</td>
+		<td colspan="2"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT', CKunenaTimeFormat::showDate($comment->time), CKunenaLink::GetProfileLink ( $comment->userid, null )); ?></b> :</td>
 		<td colspan="4"><?php echo KunenaParser::parseText ($comment->comment); ?></td>
 	</tr>
 	<?php endforeach; ?>

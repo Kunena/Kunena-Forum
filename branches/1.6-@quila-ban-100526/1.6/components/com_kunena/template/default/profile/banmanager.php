@@ -26,8 +26,7 @@ $this->_app->setUserState('com_kunena.banreturnurl', CKunenaLink::GetProfileURL(
 			<th width="20%"><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></th>
 			<th width="32%"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></th>
 			<th width="32%"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></th>
-			<th width="10%"><?php echo JText::_('COM_KUNENA_BAN_LASTIP'); ?></th>
-			<th width="5%"><?php echo JText::_('COM_KUNENA_BAN_BANACTION'); ?></th>
+			<th width="5%" colspan="5"><?php echo JText::_('COM_KUNENA_BAN_BANACTIONS'); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -42,7 +41,7 @@ $this->_app->setUserState('com_kunena.banreturnurl', CKunenaLink::GetProfileURL(
 			<td class="firstrow">
 				<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); } ?></span>
 			</td>
-			<td class="firstrow"><span><?php echo CKunenaTimeFormat::showDate($userban->creation_time); ?></span></td>
+			<td class="firstrow"><span><?php echo CKunenaTimeFormat::showDate($userban->created_time); ?></span></td>
 			<td class="firstrow">
 				<span>
 					<input class="inputbox keditenable<?php echo $j; ?>" type="text" maxlength="15" disabled="disabled" name="kban_expireTime<?php echo $j; ?>"
@@ -50,14 +49,11 @@ $this->_app->setUserState('com_kunena.banreturnurl', CKunenaLink::GetProfileURL(
 					<img class="keditenable<?php echo $j; ?>" src="templates/system/images/calendar.png" style="display:none;" alt="Calendar" onclick="showCalendar('Expire_Time','%Y-%m-%d');$('Expire_Time').removeProperty('style');" />
 				</span>
 			</td>
-			<td class="firstrow"><span><?php if ( $userban->ip ) echo $userban->ip; ?></span></td>
 			<td class="iconrow">
 				<?php if ($userban->blocked) { ?>
 				<img src="<?php echo KUNENA_URLICONSPATH . 'banned_red.png'; ?>"  alt="<?php echo JText::_('COM_KUNENA_BAN_BLOCKED'); ?>" title="<?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA_DESC'); ?>" />
 				<?php } elseif (!$userban->blocked) { ?>
 				<img class="" src="<?php echo KUNENA_URLICONSPATH . 'banned.png'; ?>"  alt="<?php echo JText::_('COM_KUNENA_BAN_BANNED'); ?>" title="<?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA_DESC'); ?>" />
-				<?php } else { ?>
-				<img src="<?php echo KUNENA_URLICONSPATH . 'banned_gray.png'; ?>"  alt="<?php echo JText::_('COM_KUNENA_BAN_BANNED_IP'); ?>" title="<?php echo JText::_('COM_KUNENA_BAN_BANLEVEL_GRAY_DESC'); ?>" />
 				<?php } ?>
 			</td>
 			 <td style="text-align:center;padding: 5px;" id="kbanedititem">
@@ -113,7 +109,7 @@ $this->_app->setUserState('com_kunena.banreturnurl', CKunenaLink::GetProfileURL(
 			</td>
 		</tr>
 		<?php } ?>
-		<?php if ( CKunenaTools::isModerator($this->my->id) && $userban->private_reason ) { ?>
+		<?php if ( CKunenaTools::isModerator($this->my->id) && $userban->reason_private ) { ?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td colspan="11">
 				<b><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b> : <input class="keditenable<?php echo $j; ?>" type="text" name="kban_privatereason<?php echo $j; ?>" disabled="disabled" value="<?php echo KunenaParser::parseText ($userban->reason_private); ?>" />

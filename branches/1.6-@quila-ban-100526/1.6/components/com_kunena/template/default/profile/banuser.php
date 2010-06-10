@@ -61,6 +61,14 @@ JHTML::_('behavior.calendar');
 			<textarea class="required" name="reason_private" id="reason_private"><?php echo $this->escape($this->baninfo->reason_private) ?></textarea>
 		</td>
 	</tr>
+		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_ADDCOMMENT'); ?></b><br />
+			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_ADDCOMMENT_DESC'); ?></span>
+		</td>
+		<td class="kcol-addban-right">
+			<textarea class="required" name="comment" id="comment"></textarea>
+		</td>
+	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_SIGNATURE'); ?></b></td>
 		<td class="kcol-addban-right"><input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="" /></td>

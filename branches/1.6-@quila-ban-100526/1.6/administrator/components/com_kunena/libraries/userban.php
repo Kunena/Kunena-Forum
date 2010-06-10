@@ -263,9 +263,13 @@ class KunenaUserBan extends JObject
 		return false;
 	}
 
-	public function setComment($comment) {
+	public function addComment($comment) {
 		if (is_string($comment) && !empty($comment)) {
-			$this->comments[] = array ('userid'=>self::$_my->id, 'time'=>self::$_now->toMysql(), 'comment'=>$comment);
+			$c = new stdClass();
+			$c->userid = self::$_my->id;
+			$c->time = self::$_now->toMysql();
+			$c->comment = $comment;
+			$this->comments[] = $c;
 		}
 	}
 
@@ -283,18 +287,17 @@ class KunenaUserBan extends JObject
 			$this->modified_time = self::$_now->toMysql();
 			$this->modified_by = self::$_my->id;
 		}
-		if (is_string($comment) && !empty($comment)) {
-			$this->comments[] = array ('userid'=>self::$_my->id, 'time'=>self::$_now->toMysql(), 'comment'=>$comment);
-		}
+		$this->addComment($comment);
 	}
 
-	public function ban($userid=null, $ip=null, $block=0, $expiration=null, $reason_private='', $reason_public='') {
+	public function ban($userid=null, $ip=null, $block=0, $expiration=null, $reason_private='', $reason_public='', $comment='') {
 		$this->userid = intval($userid) > 0 ? (int)$userid : null;
 		$this->ip = $ip ? (string)$ip : null;
 		$this->blocked = (int)$block;
 		$this->setExpiration($expiration);
 		$this->reason_private = (string)$reason_private;
 		$this->reason_public = (string)$reason_public;
+		$this->addComment($comment);
 	}
 
 	public function unBan($comment = '') {
@@ -304,9 +307,7 @@ class KunenaUserBan extends JObject
 		$this->expiration = self::$_now->toMysql();
 		$this->modified_time = self::$_now->toMysql();
 		$this->modified_by = self::$_my->id;
-		if (is_string($comment) && !empty($comment)) {
-			$this->comments[] = array ('userid'=>self::$_my->id, 'time'=>self::$_now->toMysql(), 'comment'=>$comment);
-		}
+		$this->addComment($comment);
 	}
 
 	function getBannedUsers() {
@@ -345,8 +346,16 @@ class KunenaUserBan extends JObject
 		check_dberror ( 'Unable to load ban history.' );
 
 		foreach ($user_history as $key=>$ban) {
-			$banned_users[$key]->comments = !empty($ban->comments) ? json_decode($ban->comments) : array();
-			$banned_users[$key]->params = !empty($ban->params) ? json_decode($ban->params) : array();
+			$user_history[$key]->comments = array_reverse(!empty($ban->comments) ? (array)json_decode($ban->comments) : array());
+			$user_history[$key]->params = array_reverse(!empty($ban->params) ? (array)json_decode($ban->params) : array());
+
+			// TODO: Fill user cache
+			$users[$ban->userid] = $ban->userid;
+			$users[$ban->created_by] = $ban->created_by;
+			if (!empty($ban->modified_by)) $users[$ban->modified_by] = $ban->modified_by;
+			foreach ($ban->comments as $cid=>$comment) {
+				if (!empty($comment->userid)) $users[$comment->userid] = $comment->userid;
+			}
 		}
 		return $user_history;
 	}
@@ -405,7 +414,7 @@ class KunenaUserBan extends JObject
 		}
 
 		//Store the ban data in the database
-		$result = $table->store();
+		$result = $table->store(true);
 		if (!$result) {
 			$this->setError($table->getError());
 		}

@@ -532,6 +532,7 @@ class CKunenaProfile {
 		$expiration = JRequest::getString ( 'expiration', null );
 		$reason_private = JRequest::getString ( 'reason_private', '' );
 		$reason_public = JRequest::getString ( 'reason_public', '' );
+		$comment = JRequest::getString ( 'comment', '' );
 
 		$myprofile = KunenaFactory::getUser();
 		$userprofile = KunenaFactory::getUser($userid);
@@ -542,11 +543,11 @@ class CKunenaProfile {
 		$ban = KunenaUserBan::getInstanceByUserid($userid);
 		if (!$ban) {
 			$ban = new KunenaUserBan();
-			$ban->ban($userid, $ip, $block, $expiration, $reason_private, $reason_public);
+			$ban->ban($userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
 			$success = $ban->save();
 		} else {
 			$ban->blocked = $block;
-			$ban->setExpiration($expiration);
+			$ban->setExpiration($expiration, $comment);
 			$ban->setReason($reason_private, $reason_public);
 			$success = $ban->save();
 		}

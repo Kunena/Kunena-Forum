@@ -148,7 +148,7 @@ class KunenaUser extends JObject
 	{
 		// Create the user table object
 		$table	= &$this->getTable();
-		$ignore = array('name','username');
+		$ignore = array('name','username','blocked');
 		$table->bind($this->getProperties(), $ignore);
 		$table->exists($this->_exists);
 
@@ -223,12 +223,18 @@ class KunenaUser extends JObject
 	}
 
 	public function isBanned() {
-		if (!$this->silenced) return false;
+		if (!$this->banned) return false;
+		if ($this->blocked || $this->banned == $this->_db->getNullDate()) return true;
 
-		jimport ('utilities.date');
-		$ban = new JDate($this->silenced);
+		jimport ('joomla.utilities.date');
+		$ban = new JDate($this->banned);
 		$now = new JDate();
-		return (!$this->block || $ban->toUnix() > $now->toUnix());
+		return ($ban->toUnix() > $now->toUnix());
+	}
+
+	public function isBlocked() {
+		if ($this->blocked) return true;
+		return false;
 	}
 
 	public function getName($visitorname = '') {
@@ -253,12 +259,12 @@ class KunenaUser extends JObject
 	public function getType($catid=0) {
 		if ($this->userid == 0) {
 			$type = JText::_('COM_KUNENA_VIEW_VISITOR');
+		} elseif ($this->isBanned ()) {
+			$type = JText::_('COM_KUNENA_VIEW_BANNED');
 		} elseif ($this->isAdmin ()) {
 			$type = JText::_('COM_KUNENA_VIEW_ADMIN');
 		} elseif ($this->isModerator ($catid)) {
 			$type = JText::_('COM_KUNENA_VIEW_MODERATOR');
-		} elseif ($this->isBanned ()) {
-			$type = JText::_('COM_KUNENA_VIEW_BANNED');
 		} else {
 			$type = JText::_('COM_KUNENA_VIEW_USER');
 		}
@@ -284,7 +290,12 @@ class KunenaUser extends JObject
 		$rank->rank_title = JText::_('COM_KUNENA_RANK_USER');
 		$rank->rank_image = 'rank0.gif';
 
-		if ($this->rank == 0 && $this->isBanned()) {
+		if ($this->userid == 0) {
+			$rank->rank_id = 0;
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_VISITOR');
+			$rank->rank_special = 1;
+		}
+		else if ($this->isBanned()) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_BANNED');
 			$rank->rank_special = 1;
@@ -296,11 +307,6 @@ class KunenaUser extends JObject
 					break;
 				}
 			}
-		}
-		else if ($this->userid == 0) {
-			$rank->rank_id = 0;
-			$rank->rank_title = JText::_('COM_KUNENA_RANK_VISITOR');
-			$rank->rank_special = 1;
 		}
 		else if ($this->rank != 0 && isset(self::$_ranks[$this->rank])) {
 			$rank = self::$_ranks[$this->rank];

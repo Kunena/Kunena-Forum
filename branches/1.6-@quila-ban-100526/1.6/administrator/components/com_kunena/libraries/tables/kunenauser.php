@@ -42,11 +42,11 @@ class TableKunenaUser extends TableKunena
 	var $moderator = null;
 
 	/**
-	* Is silenced?
+	* Banned until timestamp
 	* @var int
 	**/
-	var $silenced = null;
-	
+	var $banned = null;
+
 	/**
 	* Ordering of posts
 	* @var int
@@ -247,7 +247,7 @@ class TableKunenaUser extends TableKunena
 		}
 
 		// Load the user data.
-		$query = "SELECT u.name, u.username, u.block, ku.*
+		$query = "SELECT u.name, u.username, u.block as blocked, ku.*
 			FROM #__users AS u
 			LEFT JOIN {$this->_tbl} AS ku ON u.id = ku.userid
 			WHERE u.id = {$this->$k}";
@@ -274,7 +274,7 @@ class TableKunenaUser extends TableKunena
 
 	public function reset(){
 		parent::reset();
-		$fields = array('name', 'username');
+		$fields = array('name', 'username', 'blocked');
 		foreach ($fields as $field) {
 			$this->$field = '';
 		}
@@ -282,7 +282,7 @@ class TableKunenaUser extends TableKunena
 
 	public function bind($data, $ignore=array()) {
 		parent::bind($data, $ignore);
-		$fields = array('name', 'username');
+		$fields = array('name', 'username', 'blocked');
 		foreach ($fields as $field) {
 			if (isset($data[$field]) && !in_array($field, $ignore)) $this->$field = $data[$field];
 		}

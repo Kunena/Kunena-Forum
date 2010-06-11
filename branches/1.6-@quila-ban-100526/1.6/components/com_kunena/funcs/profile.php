@@ -84,7 +84,10 @@ class CKunenaProfile {
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
 
-		if ( $this->config->showbannedreason ) $this->banInfo = $this->showBanInfo();
+		kimport('userban');
+		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
+		$this->canBan = $this->banInfo->canBan();
+		if ( $this->config->showbannedreason ) $this->banReason = $this->banInfo->reason_public;
 	}
 
 	/**
@@ -249,8 +252,7 @@ class CKunenaProfile {
 
 	function displayBanUser()
 	{
-		$this->baninfo = KunenaUserBan::getInstanceByUserid($this->profile->userid);
-		if (!$this->baninfo) $this->baninfo = new KunenaUserBan();
+		$this->baninfo = KunenaUserBan::getInstanceByUserid($this->profile->userid, true);
 		CKunenaTools::loadTemplate('/profile/banuser.php');
 	}
 
@@ -278,11 +280,7 @@ class CKunenaProfile {
 		return $user_history;
 	}
 
-	function showBanInfo() {
-		kimport('userban');
-		$banned = KunenaUserBan::getInstanceByUserid($this->profile->userid);
-		return $banned;
-	}	function displayTab() {
+	function displayTab() {
 		switch ($this->do) {
 			case 'edit':
 				$user = JFactory::getUser();
@@ -529,33 +527,33 @@ class CKunenaProfile {
 		$userid = JRequest::getInt ( 'userid', 0 );
 		$ip = JRequest::getVar ( 'ip', '' );
 		$block = JRequest::getInt ( 'block', 0 );
-		$expiration = JRequest::getString ( 'expiration', null );
+		$expiration = JRequest::getString ( 'expiration', '' );
 		$reason_private = JRequest::getString ( 'reason_private', '' );
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
-		$myprofile = KunenaFactory::getUser();
-		$userprofile = KunenaFactory::getUser($userid);
-		if (!$myprofile->isModerator()) return false;
-		if ($userprofile->isModerator() && !$myprofile->isAdmin()) return false;
-
-		kimport('userban');
-		$ban = KunenaUserBan::getInstanceByUserid($userid);
-		if (!$ban) {
-			$ban = new KunenaUserBan();
-			$ban->ban($userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment);
-			$success = $ban->save();
+		kimport ( 'userban' );
+		$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
+		if (! $ban->id) {
+			$ban->ban ( $userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
+			$success = $ban->save ();
 		} else {
 			$ban->blocked = $block;
-			$ban->setExpiration($expiration, $comment);
-			$ban->setReason($reason_private, $reason_public);
-			$success = $ban->save();
+			$ban->setExpiration ( $expiration, $comment );
+			$ban->setReason ( $reason_private, $reason_public );
+			$success = $ban->save ();
 		}
 
 		if ($block) {
-			$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
+			if ($ban->isEnabled ())
+				$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
+			else
+				$message = JText::_ ( 'COM_KUNENA_USER_UNBLOCKED_DONE' );
 		} else {
-			$message = JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' );
+			if ($ban->isEnabled ())
+				$message = JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' );
+			else
+				$message = JText::_ ( 'COM_KUNENA_USER_UNBANNED_DONE' );
 		}
 
 		if (! $success) {

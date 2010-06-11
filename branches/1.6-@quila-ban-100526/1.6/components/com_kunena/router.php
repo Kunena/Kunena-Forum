@@ -22,7 +22,7 @@ class KunenaRouter {
 		'profile', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'rules', 'report',
 		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'userposts', 'unapproved',
 		'deleted', 'search', 'advsearch', 'markthisread', 'subscribecat', 'unsubscribecat', 'karma',
-		'bulkactions', 'banactions', 'banprofileactions' , 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'fb_pdf' );
+		'bulkactions', 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'fb_pdf' );
 
 	function loadCategories() {
 		if (self::$catidcache !== null)

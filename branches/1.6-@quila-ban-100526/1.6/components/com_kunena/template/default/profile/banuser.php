@@ -14,7 +14,7 @@ $i=0;
 JHTML::_('behavior.calendar');
 ?>
 
-<h2><?php echo JText::sprintf('COM_KUNENA_BAN_ADDBANFOR', $this->escape($this->profile->name)); ?></h2>
+<h2><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></h2>
 <form id="kform-ban" name="kformban" action="index.php" method="post">
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : ''; ?> kblock">
 	<tbody>
@@ -87,7 +87,7 @@ JHTML::_('behavior.calendar');
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-center" style="text-align:center;" width="100%" colspan="2">
-			<input class="kbutton kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_BAN_ADDBAN'); ?>" name="Submit" />
+			<input class="kbutton kbutton ks" type="submit" value="<?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?>" name="Submit" />
 			<input type="hidden" name="option" value="com_kunena" />
 			<input type="hidden" name="func" value="profile" />
 			<input type="hidden" name="do" value="ban" />

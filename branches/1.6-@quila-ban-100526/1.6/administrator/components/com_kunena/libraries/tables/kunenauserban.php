@@ -52,10 +52,11 @@ class TableKunenaUserBan extends JTable
 			return false;
 		}
 
+		$now = new JDate();
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE userid = {$this->_db->quote($userid)}
-			" . ($mode == self::ACTIVE ? 'AND expiration IS NULL OR expiration > NOW()': '') . "
+			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toMysql())})": '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 		$data = $this->_db->loadAssoc();
@@ -66,8 +67,10 @@ class TableKunenaUserBan extends JTable
 			return false;
 		}
 
-		if (empty($data))
+		if (empty($data)) {
+			$this->userid = $userid;
 			return false;
+		}
 
 		// Bind the data to the table.
 		$this->bind($data);
@@ -86,10 +89,11 @@ class TableKunenaUserBan extends JTable
 			return false;
 		}
 
+		$now = new JDate();
 		// Load the user data.
 		$query = "SELECT * FROM {$this->_tbl}
 			WHERE ip = {$this->_db->quote($ip)}
-			" . ($mode == self::ACTIVE ? 'AND expiration IS NULL OR expiration > NOW()': '') . "
+			" . ($mode == self::ACTIVE ? "AND (expiration = {$this->_db->quote($this->_db->getNullDate())} OR expiration > {$this->_db->quote($now->toMysql())})": '') . "
 			ORDER BY id DESC";
 		$this->_db->setQuery($query, 0, 1);
 		$data = $this->_db->loadAssoc();
@@ -100,8 +104,10 @@ class TableKunenaUserBan extends JTable
 			return false;
 		}
 
-		if (empty($data))
+		if (empty($data)) {
+			$this->ip = $ip;
 			return false;
+		}
 
 		// Bind the data to the table.
 		$this->bind($data);

@@ -90,10 +90,8 @@ JHTML::_('behavior.calendar');
 			<?php $this->displayBanHistory(); ?>
 		</dd>
 		<?php endif;?>
-		<?php if ((CKunenaTools::isModerator($this->my->id) &&
-				$this->my->id != $this->user->id) && !CKunenaTools::isAdmin($this->user->id) &&
-				( CKunenaTools::isAdmin($this->my->id) || !CKunenaTools::isModerator($this->user->id) )) : ?>
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_ADDBAN'); ?></dt>
+		<?php if ($this->canBan) : ?>
+		<dt class="closed"><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayBanUser(); ?>
 		</dd>

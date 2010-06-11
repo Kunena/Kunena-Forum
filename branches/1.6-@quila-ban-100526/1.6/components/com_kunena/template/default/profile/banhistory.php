@@ -23,7 +23,7 @@ $j=count($this->banhistory);
 		<th width="20%"><?php echo JText::_('COM_KUNENA_BAN_STARTTIME'); ?></th>
 		<th width="20%"><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></th>
 		<th width="20%"><?php echo JText::_('COM_KUNENA_BAN_CREATEDBY'); ?></th>
-		<th width="20%"><?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?></th>
+		<th width="24%"><?php echo JText::_('COM_KUNENA_BAN_MODIFIEDBY'); ?></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -42,14 +42,14 @@ $j=count($this->banhistory);
 			<span><?php  if( $userban->created_time ) echo CKunenaTimeFormat::showDate($userban->created_time, 'datetime'); ?> </span>
 		</td>
 		<td class="firstrow">
-			<span><?php echo !$userban->expiration ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?> </span>
+			<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?> </span>
 		</td>
 		<td>
-			<span><?php echo CKunenaLink::GetProfileLink ( $userban->created_by, $this->escape($userban->created_username) ); ?></span>
+			<span><?php echo CKunenaLink::GetProfileLink ( $userban->created_by ); ?></span>
 		</td>
 		<td>
 			<?php if ( $userban->modified_by && $userban->modified_time) { ?>
-			<span><?php echo CKunenaLink::GetProfileLink ( $userban->modified_by, $this->escape($userban->modified_username) ); ?>  <?php echo CKunenaTimeFormat::showDate($userban->modified_time, 'datetime'); } ?></span>
+			<span><?php echo CKunenaLink::GetProfileLink ( $userban->modified_by ); ?>  <?php echo CKunenaTimeFormat::showDate($userban->modified_time, 'datetime'); } ?></span>
 		</td>
 	</tr>
 	<?php if($userban->reason_public) : ?>
@@ -66,8 +66,9 @@ $j=count($this->banhistory);
 	<?php endif; ?>
 	<?php if (is_array($userban->comments)) foreach ($userban->comments as $comment) : ?>
 	<tr class="ksectiontableentry2">
-		<td colspan="2"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT', CKunenaTimeFormat::showDate($comment->time), CKunenaLink::GetProfileLink ( $comment->userid, null )); ?></b> :</td>
-		<td colspan="4"><?php echo KunenaParser::parseText ($comment->comment); ?></td>
+		<td colspan="2"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT_BY', CKunenaLink::GetProfileLink ( $comment->userid )); ?></b> :</td>
+		<td colspan="1"><?php echo CKunenaTimeFormat::showDate($comment->time); ?></td>
+		<td colspan="3"><?php echo KunenaParser::parseText ($comment->comment); ?></td>
 	</tr>
 	<?php endforeach; ?>
 	<?php endforeach; ?>

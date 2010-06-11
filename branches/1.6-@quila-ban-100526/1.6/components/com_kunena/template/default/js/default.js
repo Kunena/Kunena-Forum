@@ -902,27 +902,6 @@ window.addEvent('domready', function(){
 		});
 	}	
 	
-	$$('.profilebanactions').each(function(link){
-		link.addEvent('click', function(el){
-			var actionvalue = link.getProperty('id');
-			$('kbanprofileinputdo').set('value', actionvalue);
-			$('kBanActionsProfile').submit();
-		});
-	});
-	
-	$$('.keditbango').each(function(image){
-		image.addEvent('click', function(el){
-			var val = image.getProperty('id');
-			$$('.keditenable'+val).each(function(item){
-				item.removeProperty('disabled');
-				item.removeProperty('style');
-			});
-			$('kbanedititem').setStyle('display','none');
-			$('kbanprofileinputdo').set('value', 'applychanges');
-			$('kbanprofilevaluedo').set('value', val);
-		});
-	});
-	
 	// Get the kunena settings cookie data.
 	KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});
 

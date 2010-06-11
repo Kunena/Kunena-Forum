@@ -59,7 +59,8 @@ class CKunenaThankyou {
 			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
 
 		}else{
-			return false;
+			$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
+			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
 		}
 	}
 

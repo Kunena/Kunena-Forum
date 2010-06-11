@@ -218,6 +218,12 @@ div.icon-container {
         <td><strong><?php echo jbStats::get_latest_member() ;?></strong></td>
       </tr>
       <tr>
+      	<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_THANKYOU'); ?></td>
+        <td><strong><?php echo jbStats::get_total_thankyou() ;?></strong></td>
+        <td><?php echo JText::_('COM_KUNENA_STATS_TODAY_THANKYOU'); ?> </td>
+        <td><strong><?php echo jbStats::get_total_thankyou(date("Y-m-d 00:00:01"),date("Y-m-d 23:59:59")) ;?></strong></td>
+      </tr>
+      <tr>
         <td><?php echo JText::_('COM_KUNENA_STATS_TODAY_TOPICS'); ?></td>
         <td><strong><?php echo jbStats::get_total_topics(date("Y-m-d 00:00:01"),date("Y-m-d 23:59:59")) ;?></strong></td>
         <td><?php echo JText::_('COM_KUNENA_STATS_YESTERDAY_TOPICS'); ?> </td>
@@ -306,39 +312,160 @@ div.icon-container {
     </tr>
   </table>
   <!-- F: UserStat -->
-  <!-- Begin : Top popular topics -->
-  <table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
-    <caption><?php echo JText::_('COM_KUNENA_STATS_POPULAR_TOPICS'); ?></caption>
-    <col class="col1">
-    <col class="col2">
-    <col class="col2">
-    <thead>
-      <tr>
-        <th><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
-        <th></th>
-        <th><?php echo JText::_('COM_KUNENA_USRL_HITS');?></th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-		$KUNENA_top_posts=jbStats::get_top_topics();
-		foreach ($KUNENA_top_posts as $KUNENA_post) {
-			if ($KUNENA_post->hits == $KUNENA_top_posts[0]->hits) {
-				$barwidth = 100;
-			}
-			else {
-				$barwidth = round(($KUNENA_post->hits * 100) / $KUNENA_top_posts[0]->hits);
-			}
-			$link = KUNENA_LIVEURL.'&func=view&id='.$KUNENA_post->id.'&catid='.$KUNENA_post->catid;
-		?>
-      <tr>
-        <td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
-        <td ><img src="<?php echo KUNENA_DIRECTURL.'/template/default/images/backgrounds/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
-        <td ><?php echo $KUNENA_post->hits;?></td>
-      </tr>
-      <?php } ?>
-    </tbody>
+  <!-- Thank you stat -->
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="49%" valign="top">
+        <table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
+          <caption><?php echo JText::_('COM_KUNENA_STATS_TOP_GOT_THANKYOU'); ?></caption>
+          <col class="col1">
+          <col class="col2">
+          <col class="col2">
+          <thead>
+            <tr>
+              <th><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
+              <th></th>
+              <th><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+				$KUNENA_top_thankyous=jbStats::get_most_thankyou();
+				foreach ($KUNENA_top_thankyous as $KUNENA_thankyou) {
+					if ($KUNENA_thankyou->countid == $KUNENA_top_thankyous[0]->countid) {
+						$barwidth = 100;
+					}
+					else {
+						$barwidth = round(($KUNENA_thankyou->countid * 100) / $KUNENA_top_thankyous[0]->countid);
+					}
+			?>
+            <tr>
+              <td><?php echo $KUNENA_thankyou->username;?> </td>
+              <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/backgrounds/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+              <td ><?php echo $KUNENA_thankyou->countid;?></td>
+            </tr>
+            <?php
+				}
+				?>
+          </tbody>
+        </table>
+      </td>
+      <td width="1%">&nbsp;</td>
+      <td width="49%" valign="top">
+        <table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
+          <caption><?php echo  JText::_('COM_KUNENA_STATS_TOP_SAID_THANKYOU'); ?></caption>
+          <col class="col1">
+          <col class="col2">
+          <col class="col2">
+          <thead>
+            <tr>
+              <th><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
+              <th></th>
+              <th><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+		$KUNENA_top_said_thankyous=jbStats::get_said_most_thankyou();
+				foreach ($KUNENA_top_said_thankyous as $KUNENA_said_thankyou) {
+					if ($KUNENA_said_thankyou->countid == $KUNENA_top_said_thankyous[0]->countid) {
+						$barwidth = 100;
+					}
+					else {
+						$barwidth = round(($KUNENA_said_thankyou->countid * 100) / $KUNENA_top_said_thankyous[0]->countid);
+					}
+			?>
+            <tr>
+              <td><?php echo $KUNENA_said_thankyou->username;?> </td>
+              <td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'/template/default/images/backgrounds/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+              <td ><?php echo $KUNENA_said_thankyou->countid;?></td>
+            </tr>
+            <?php
+				}
+			?>
+          </tbody>
+        </table>
+      </td>
+    </tr>
   </table>
-  <!-- Finish : Top popular topics -->
+  <!-- Thank you stat -->
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="49%" valign="top">
+		  <!-- Begin : Top popular topics -->
+		  <table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
+		    <caption><?php echo JText::_('COM_KUNENA_STATS_POPULAR_TOPICS'); ?></caption>
+		    <col class="col1">
+		    <col class="col2">
+		    <col class="col2">
+		    <thead>
+		      <tr>
+		        <th><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
+		        <th></th>
+		        <th><?php echo JText::_('COM_KUNENA_USRL_HITS');?></th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <?php
+				$KUNENA_top_posts=jbStats::get_top_topics();
+				foreach ($KUNENA_top_posts as $KUNENA_post) {
+					if ($KUNENA_post->hits == $KUNENA_top_posts[0]->hits) {
+						$barwidth = 100;
+					}
+					else {
+						$barwidth = round(($KUNENA_post->hits * 100) / $KUNENA_top_posts[0]->hits);
+					}
+					$link = KUNENA_LIVEURL.'&func=view&id='.$KUNENA_post->id.'&catid='.$KUNENA_post->catid;
+				?>
+		      <tr>
+		        <td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
+		        <td ><img src="<?php echo KUNENA_DIRECTURL.'/template/default/images/backgrounds/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
+		        <td ><?php echo $KUNENA_post->hits;?></td>
+		      </tr>
+		      <?php } ?>
+		    </tbody>
+		  </table>
+		  <!-- Finish : Top popular topics -->
+		</td>
+		<td width="1%">&nbsp;</td>
+      	<td width="49%" valign="top">
+      		<!-- Begin: Top Thank you topics -->
+      		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
+		    <caption><?php echo JText::_('COM_KUNENA_STATS_THANKYOU_TOPICS'); ?></caption>
+		    <col class="col1">
+		    <col class="col2">
+		    <col class="col2">
+		    <thead>
+		      <tr>
+		        <th><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
+		        <th></th>
+		        <th><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <?php
+				$KUNENA_top_posts=jbStats::get_top_thankyou_topics();
+				foreach ($KUNENA_top_posts as $KUNENA_post) {
+					if ($KUNENA_post->countid == $KUNENA_top_posts[0]->countid) {
+						$barwidth = 100;
+					}
+					else {
+						$barwidth = round(($KUNENA_post->countid * 100) / $KUNENA_top_posts[0]->countid);
+					}
+					$link = KUNENA_LIVEURL.'&func=view&id='.$KUNENA_post->postid.'&catid='.$KUNENA_post->catid;
+				?>
+		      <tr>
+		        <td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
+		        <td ><img src="<?php echo KUNENA_DIRECTURL.'/template/default/images/backgrounds/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
+		        <td ><?php echo $KUNENA_post->countid;?></td>
+		      </tr>
+		      <?php } ?>
+		    </tbody>
+		  </table>
+		  <!-- Fnish : Top Thank you topics  -->
+      	</td>
+	</tr>
+</table>
+
 </div>
 <!-- FINISH: STATS -->

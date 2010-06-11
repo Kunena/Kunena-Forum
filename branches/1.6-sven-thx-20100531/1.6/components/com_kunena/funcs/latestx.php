@@ -251,10 +251,41 @@ class CKunenaLatestX {
 		$this->_common();
 	}
 
+	function _getThankyouPosts($saidgot){
+		if($saidgot == 'got'){
+			$query = "SELECT m.thread, m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_thankyou AS t ON m.id=t.postid WHERE t.targetuserid={$this->user->id}";
+		}else if($saidgot == 'said'){
+			$query = "SELECT m.thread, m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_thankyou AS t ON m.id=t.postid WHERE t.userid={$this->user->id}";
+		}else{
+			return;
+		}
+		$this->db->setQuery( $query, $this->offset, $this->threads_per_page );
+		$idlist = $this->db->loadObjectList();
+		if(KunenaError::checkDatabaseError()) return;
+
+		$this->threadids = array();
+		$this->loadids = array();
+		foreach( $idlist as $item){
+			$this->threadids[$item->thread] = $item->thread;
+			$this->loadids[$item->id] = $item->id;
+		}
+
+		$this->order = 'field(a.id,'.implode ( ",", $this->loadids ).')';
+		$this->_common();
+	}
+
 	function getUserPosts() {
 		if (isset($this->total)) return;
 		$this->header = $this->title = JText::_('COM_KUNENA_USERPOSTS');
 		$this->_getPosts('user');
+	}
+
+	function getGotThankyouPosts() {
+		$this->_getThankyouPosts('got');
+	}
+
+	function getSaidThankyouPosts(){
+		$this->_getThankyouPosts('said');
 	}
 
 	function getUnapprovedPosts() {

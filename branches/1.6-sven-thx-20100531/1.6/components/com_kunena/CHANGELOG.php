@@ -33,6 +33,15 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.0-ALPHA
+11-June-2010 Sven
+^ [#20833] redirect with right message when user not loged in or session expired
++ [#20833] Thank You statistic in kunena cpanel
++ [#20833] Language strings for statistic
++ [#20833] Where got thx, where said thx in Profile Tab
+
+05-June-2010 Sven
++ [#20833] usertab gotthankyou and saidthankyou
++ [#20833] language strings
 
 04-June-2010 Sven
 ^ [#20833] moved thank you button to subject

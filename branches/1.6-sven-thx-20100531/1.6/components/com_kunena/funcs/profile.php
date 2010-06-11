@@ -212,6 +212,23 @@ class CKunenaProfile {
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
+	function displayGotThankYou()
+	{
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('userposts',0);
+		$obj->user = $this->user;
+		$obj->getGotThankyouPosts();
+		$obj->displayPosts();
+	}
+
+	function displaySaidThankYou()
+	{
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('userposts',0);
+		$obj->user = $this->user;
+		$obj->getSaidThankyouPosts();
+		$obj->displayPosts();
+	}
 	function displayOwnTopics()
 	{
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');

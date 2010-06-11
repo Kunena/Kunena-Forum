@@ -54,6 +54,14 @@ JHTML::_('behavior.calendar');
 		<dd style="display: none;">
 			<?php $this->displayUserPosts(); ?>
 		</dd>
+		<dt class="closed"><?php echo JText::_('COM_KUNENA_THANKYOU_GOT'); ?></dt>
+		<dd style="display: none;">
+			<?php $this->displayGotThankYou(); ?>
+		</dd>
+		<dt class="closed"><?php echo JText::_('COM_KUNENA_THANKYOU_SAID'); ?></dt>
+		<dd style="display: none;">
+			<?php $this->displaySaidThankYou(); ?>
+		</dd>
 		<?php if ($this->my->id == $this->user->id): ?>
 		<!--
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?></dt>

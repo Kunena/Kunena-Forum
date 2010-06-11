@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+11-June-2010 Matias
+# [#19288] Fix regression: Fix file upload (wrong permissions) in some environments
+
 9-June-2010 severdia
 # [#19356] Fixed top margin on attachment section
 

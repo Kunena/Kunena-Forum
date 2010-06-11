@@ -250,6 +250,7 @@ class CKunenaUpload {
 					$this->fail(JText::_ ( 'COM_KUNENA_UPLOAD_ERROR_NO_INPUT' ));
 				}
 
+				clearstatcache();
 				$fileInfo = fstat($out);
 				$this->fileSize = $fileInfo['size'];
 				fclose ( $out );
@@ -324,6 +325,7 @@ class CKunenaUpload {
 				$type = $imageRaw->getType();
 				unset($imageRaw);
 				$image->toFile($this->fileTemp,$type,$options);
+				clearstatcache();
 
 				// Re-calculate physical file size: image has been shrunk
 				$stat = stat($this->fileTemp);
@@ -359,10 +361,13 @@ class CKunenaUpload {
 		$this->fileName = $newFileName;
 
 		// All the processing is complete - now we need to move the file(s) into the final location
-		if (! CKunenaFile::move ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
+		@chmod($this->fileTemp, 0644);
+		if (! JFile::move ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
 			$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/'.$this->fileName));
+			unlink($this->fileTemp);
 			return false;
 		}
+		JPath::setPermissions($uploadPath.'/'.$this->fileName);
 
 		$this->ready = true;
 		return $this->status = true;

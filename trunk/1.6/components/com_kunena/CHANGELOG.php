@@ -40,6 +40,7 @@ Kunena 1.6.0-ALPHA2
 ^ [#15886] Merged revisions 2677, 2687 and 2688 from /branches/1.6-@quila-fix-100608
 ^ [#15886] Merged revisions  2685 and 2686 from /branches/1.6-xillibit-fix
 # [#19288] Fix regression - Admin: Undefined variables in report configuration if configuration hasn't been saved
+^ [#15886] Merged revisions 2662-2674 from /branches/1.6-810-bugfixes
 
 11-Jun-2010 Matias
 # [#19244] Add basis for user caching in KunenaUserBan class
@@ -64,6 +65,9 @@ Kunena 1.6.0-ALPHA2
 9-June-2010 severdia
 # [#19356] Fixed top margin on attachment section
 
+8-June-2010 810
+# [#19288] Small Css fix - Boardcode
+
 8-June-2010 @quila
 # [#19288] Fix regression - subject message suffix wrong for new post.
 
@@ -76,6 +80,9 @@ Kunena 1.6.0-ALPHA2
 8-June-2010 fxstein
 + [#20916] Add css and js minification logic to build process
 + [#20916] Add YUI Compressor libraries to build files
+
+7-June-2010 810
+# [#19288] Small Css fix - Thread action, Threads showcat, Boardcode
 
 7-June-2010 Matias
 ^ [#15886] Merged revisions 2634-2659 from /branches/1.6-xillibit with changes

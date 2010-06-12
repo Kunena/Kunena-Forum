@@ -106,7 +106,7 @@ if ($this->objCatInfo->headerdesc) {
 		?>
 
 		</td>
-		<td class="klist_actions_forum" width="100%"><?php
+		<td class="klist-actions-forum" width="100%"><?php
 		if (isset ( $this->forum_new ) || isset ( $this->forum_markread ) || isset ( $this->thread_subscribecat )) {
 			echo '<div class="kmessage-buttons-row">';
 			if (isset ( $this->forum_new ))

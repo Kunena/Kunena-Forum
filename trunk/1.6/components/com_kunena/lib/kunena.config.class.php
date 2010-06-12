@@ -392,7 +392,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $onlineusers = 1;
 	var $debug = 0;
 	var $catsautosubscribed = 0;
-	var $maxurllength = 150;
 	var $showbannedreason = 0;
 
     public function __construct($userinfo = null) {

@@ -36,8 +36,10 @@ Kunena 1.6.0-ALPHA2
 
 12-Jun-2010 Matias
 - [#19244] Remove deprecated ban logic from lib/kunena.moderation.tools.class.php
-^ [#15886] Merged branch /branches/1.6-@quila-ban-100526
+^ [#15886] Merged feature branch /branches/1.6-@quila-ban-100526
 ^ [#15886] Merged revisions 2677, 2687 and 2688 from /branches/1.6-@quila-fix-100608
+^ [#15886] Merged revisions  2685 and 2686 from /branches/1.6-xillibit-fix
+# [#19288] Fix regression - Admin: Undefined variables in report configuration if configuration hasn't been saved
 
 11-Jun-2010 Matias
 # [#19244] Add basis for user caching in KunenaUserBan class
@@ -54,6 +56,10 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix regression: Fix file upload (wrong permissions) in some environments
 ^ [#19244] Simplify ban templates as much as possible -- remove extra functionality to get everything to work
 + [#19244] Add new features to ban classes, make them more robust
+
+9-June-2010 Xillibit
+^ [#19288] Check new of versions of kunena with xml things
+- [#19288] Remove the useless maxlength on links and images links
 
 9-June-2010 severdia
 # [#19356] Fixed top margin on attachment section

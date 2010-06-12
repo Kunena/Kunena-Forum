@@ -374,12 +374,15 @@ class CKunenaPolls {
 
 		if ($pollusers[0]->timediff > $this->config->polltimebtvotes)
       	{
+      		// call reset vote
+      		$this->reset_vote($userid,$threadid);
+
 			$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id='$vote';";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
 
-        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lasttime=now() WHERE pollid='$threadid' AND userid='$userid';";
+        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote='$vote', lasttime=now() WHERE pollid='$threadid' AND userid='$userid';";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
@@ -474,7 +477,7 @@ class CKunenaPolls {
    {
 
 		$query = "SELECT lastvote FROM #__kunena_polls_users
-				WHERE pollid=$pollid AND userid=$userid";
+				WHERE pollid='$pollid' AND userid='$userid';";
     	$this->_db->setQuery($query);
     	$id_last_vote = $this->_db->loadResult();
     	KunenaError::checkDatabaseError();
@@ -484,7 +487,7 @@ class CKunenaPolls {
    /**
 	* For the user can vote a new once, need to remove one vote
 	*/
-   function change_vote($userid,$threadid,$lastvote)
+   function reset_vote($userid,$threadid)
    {
 		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM #__kunena_polls_options AS a
 				INNER JOIN #__kunena_polls_users AS b ON a.pollid=b.pollid
@@ -496,12 +499,12 @@ class CKunenaPolls {
 		foreach ($poll_options_user as $row) {
 			if ($row->id == $row->lastvote) {
 				if($row->option_votes > '0' && $row->user_votes > '0') {
-					$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id=$lastvote AND pollid=$threadid";
+					$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id={$row->lastvote} AND pollid='$threadid';";
     				$this->_db->setQuery($query);
     				$this->_db->query();
 					if (KunenaError::checkDatabaseError()) return;
 
-					$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid=$userid AND pollid=$threadid";
+					$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid='$userid' AND pollid='$threadid';";
     				$this->_db->setQuery($query);
     				$this->_db->query();
 					if (KunenaError::checkDatabaseError()) return;

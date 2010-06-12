@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+12-Jun-2010 Xillibit
+# [#19288] Fix issue on changevote in poll which decreased everytime the poll votes
+
 12-Jun-2010 Matias
 - [#19244] Remove deprecated ban logic from lib/kunena.moderation.tools.class.php
 ^ [#15886] Merged feature branch /branches/1.6-@quila-ban-100526

@@ -17,8 +17,7 @@ $json_action = 'pollvote';
 if ( $this->changevote ) {
 	// Get the $id of the last vote
 	$id_last_vote = $this->get_last_vote_id($this->my->id,$this->id);
-	// Reset last vote
-	$this->change_vote($this->my->id,$this->id,$id_last_vote);
+
 	$json_action = 'pollchangevote';
 }
 ?>

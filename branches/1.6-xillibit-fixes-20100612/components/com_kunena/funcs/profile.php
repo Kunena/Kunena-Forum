@@ -549,10 +549,17 @@ class CKunenaProfile {
 			$ban->ban ( $userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
 			$success = $ban->save ();
 		} else {
-			$ban->blocked = $block;
-			$ban->setExpiration ( $expiration, $comment );
-			$ban->setReason ( $reason_private, $reason_public );
-			$success = $ban->save ();
+			$delban = JRequest::getString ( 'delban', '' );
+
+			if ( $delban ) {
+				$ban->unBan($comment);
+				$success = $ban->save ();
+			} else {
+				$ban->blocked = $block;
+				$ban->setExpiration ( $expiration, $comment );
+				$ban->setReason ( $reason_private, $reason_public );
+				$success = $ban->save ();
+			}
 		}
 
 		if ($block) {
@@ -611,7 +618,7 @@ class CKunenaProfile {
 			check_dberror ( "Unable to load message id from fb_messages." );
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetProfileURL($this->profile->userid, false) );
+		//$this->_app->redirect ( CKunenaLink::GetProfileURL($this->profile->userid, false) );
 	}
 
 	function cancel()

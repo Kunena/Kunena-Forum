@@ -332,14 +332,14 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
  <?php
 	CKunenaTools::loadTemplate('/profilebox.php');
 	
-	$ini = KUNENA_PATH_TEMPLATE.DS.$kunena_config->template.DS.'params.ini';
+	/*$ini = KUNENA_PATH_TEMPLATE.DS.$kunena_config->template.DS.'params.ini';
 	$tplParams=parse_ini_file($ini);
 
 	$theme = $tplParams['themeColour'];
 	$document->addStyleSheet ( KUNENA_TMPLTURL .'css/'.$theme.'.css' );
 
 	$button = $tplParams['buttonStyle'];
-	$document->addStyleSheet ( KUNENA_TMPLTURL .'css/'.$button.'.css' );
+	$document->addStyleSheet ( KUNENA_TMPLTURL .'css/'.$button.'.css' );*/
 
 	// Handle help / rules menuitems
 	if ($func == 'article') {

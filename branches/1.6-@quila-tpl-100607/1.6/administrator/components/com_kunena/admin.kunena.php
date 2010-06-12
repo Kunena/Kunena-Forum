@@ -456,10 +456,10 @@ switch ($task) {
 
 		break;
 		
-	case "previewTemplate" :
+	/*case "previewTemplate" :
 		previewTemplate();
 
-		break;
+		break;*/
 		
 	case "addKTemplate" :
 		addKTemplate();
@@ -511,26 +511,32 @@ html_Kunena::showFbFooter ();
 //
 //###########################################
 
-    function addKTemplate($path, $filename, $dest = null) {
+    function addKTemplate()
+    {
+		html_Kunena::installKTemplate();
+	}
+
+	function extractKTemplate($path, $filename, $dest)
+	{
+		jimport ( 'joomla.filesystem.folder' );
+		jimport ( 'joomla.filesystem.file' );
 		jimport ( 'joomla.filesystem.archive' );
-		$filename		= JRequest::getVar('filename', '', 'post', 'cmd');
-		//$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
-		//$file = 'xxx-6_test.zip';
-		$dest = KPATH_SITE.'/template/';
+		$path = KPATH_SITE . '/template/';
+		$filename = JRequest::getVar( 'install_package', '', 'files', 'array' );
+
 		if (! $dest)
 			$dest = $path;
 		$file = $path . DS . $filename;
 		$text = '';
 		if (file_exists ( $file )) {
-			$error = JArchive::extract ( $file, $dest );
-			if (! $error)
+			$success = JArchive::extract ( $file, $dest );
+			if (! $success)
 				$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
 		} else {
-			$error = true;
+			$success = true;
 			$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
 		}
-		//$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $error, $text );
-		html_Kunena::installKTemplate();
+		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text );
 	}
 
 	function isTemplateDefault($template)
@@ -773,7 +779,7 @@ html_Kunena::showFbFooter ();
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_UNWRITABLE'));
 		}
 		if ($return) {
-			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=editKTemplate&cid[]='.$template, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=chooseKTemplate&cid[]='.$template, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
 		} else {
 			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&id='.$template.'&task=chooseCSSTemplate', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
 		}

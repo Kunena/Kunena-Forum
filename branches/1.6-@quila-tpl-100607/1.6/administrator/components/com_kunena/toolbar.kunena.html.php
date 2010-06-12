@@ -260,9 +260,9 @@ class CKunenaToolbar
 	function _SHOWTEMPLATES_MENU()
     {
 		JToolBarHelper::spacer();
-        JToolBarHelper::custom('publishTemplate', 'default.png', 'default_f2.png', JText::_('Default'));
+        JToolBarHelper::custom('publishTemplate', 'default.png', 'default_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'));
         JToolBarHelper::spacer();
-        JToolBarHelper::addNew('addKTemplate', JText::_('Add'));
+        JToolBarHelper::addNew('addKTemplate', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_ADD'));
 		JToolBarHelper::spacer();
         JToolBarHelper::custom('editKTemplate', 'edit.png', 'edit_f2.png', JText::_('COM_KUNENA_EDIT'));
         JToolBarHelper::spacer();
@@ -273,11 +273,11 @@ class CKunenaToolbar
 	function _EDITKTEMPLATE_MENU()
     {
         JToolBarHelper::spacer();
-		JToolBarHelper::save('saveTemplate');
-		JToolBarHelper::spacer();
 		JToolBarHelper::apply('saveTemplate');
+		JToolBarHelper::spacer();
+		JToolBarHelper::save('saveTemplate');
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('chooseCSSTemplate', 'css.png','css_f2.png', JText::_('Edit CSS'));
+        JToolBarHelper::custom('chooseCSSTemplate', 'css.png','css_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS'));
         JToolBarHelper::spacer();
         JToolBarHelper::cancel('cancelTemplate');
 		JToolBarHelper::spacer();
@@ -288,7 +288,7 @@ class CKunenaToolbar
 	function _CHOOSECSS_MENU()
     {
         JToolBarHelper::spacer();
-        JToolBarHelper::custom('editTemplateCSS', 'css.png', 'css_f2.png', JText::_('Edit CSS'));
+        JToolBarHelper::custom('editTemplateCSS', 'css.png', 'css_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS'));
         JToolBarHelper::spacer();
 		JToolBarHelper::spacer();
         JToolBarHelper::cancel('cancelTemplate');

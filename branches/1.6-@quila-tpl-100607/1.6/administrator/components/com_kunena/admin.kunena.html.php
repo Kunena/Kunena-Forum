@@ -304,8 +304,8 @@ table.kadmin-stat caption {
 
 	function installKTemplate() 
 	{ ?>
-	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></div><br />
-		<form enctype="multipart/form-data" action="index.php" method="post" name="adminForm">
+	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div><br />
+		<form enctype="multipart/form-data" action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=extractKTemplate" method="post" name="adminForm">
 			<table class="adminform">
 				<tr>
 					<th colspan="2"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD' ); ?></th>
@@ -315,15 +315,11 @@ table.kadmin-stat caption {
 						<label for="install_package"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PACKAGE_FILE' ); ?>:</label>
 					</td>
 					<td>
-						<input class="input_box" id="file-upload" name="filename" type="file" size="57" />
-						<input class="button" type="submit" name=""submit value="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE' ); ?> &amp; <?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL' ); ?>" />
+						<input class="input_box" name="install_package" type="file" size="57" />
+						<input class="button" type="submit" name="submit" value="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD_FILE' ); ?> &amp; <?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL' ); ?>" />
 					</td>
 				</tr>
 			</table>
-			<input type="hidden" name="type" value="" />
-			<input type="hidden" name="installtype" value="upload" />
-			<input type="hidden" name="option" value="com_kunena" />
-			<input type="hidden" name="task" value="addKTemplates" />
 			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 	<?php
@@ -1189,15 +1185,15 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH_DESC') ?>
 						</td>
 					</tr>-->
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AV_POSITION') ?>
+							<!--<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_AV_POSITION') ?>
 						</td>
-								<td align="left" valign="top"><?php echo $lists ['avposition'];
+								<td align="left" valign="top"><?php //echo $lists ['avposition'];
 						?>
 						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AV_POSITION_DESC') ?>
+								<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_AV_POSITION_DESC') ?>
 						</td>
-					</tr>
+					</tr>-->
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FBDEFAULT_PAGE') ?>
 						</td>

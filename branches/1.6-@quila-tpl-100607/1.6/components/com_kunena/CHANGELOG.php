@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+12-June-2010 Matias
+# [#19345] Template Manager - Make extract template to work
+
 12-June-2010 @quila
 + [#19345] Template Manager - some more changes.
 

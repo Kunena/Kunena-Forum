@@ -295,17 +295,17 @@ table.kadmin-stat caption {
 			echo '<br />mcap==: ' . JPATH_COMPONENT_ADMINISTRATOR . ' .... help!!';
 		}
 	}
-	
+
 //*****************************************/
 /*
 /*			START TEMPLATE MANAGER
 /*
 /******************************************/
 
-	function installKTemplate() 
+	function installKTemplate()
 	{ ?>
 	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div><br />
-		<form enctype="multipart/form-data" action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=extractKTemplate" method="post" name="adminForm">
+		<form enctype="multipart/form-data" action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=installTemplate" method="post" name="adminForm">
 			<table class="adminform">
 				<tr>
 					<th colspan="2"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_UPLOAD' ); ?></th>
@@ -324,7 +324,7 @@ table.kadmin-stat caption {
 		</form>
 	<?php
 	}
-	
+
 	function showTemplates(& $rows, & $lists, & $page, $option)
 	{
 		$kunena_app = & JFactory::getApplication ();
@@ -467,7 +467,7 @@ table.kadmin-stat caption {
 		</div>
 		<?php
 	}
-	
+
 
 	function chooseCSSFiles($template, $t_dir, $t_files, $option)
 	{
@@ -507,7 +507,7 @@ table.kadmin-stat caption {
 		<?php
 
 	}
-	
+
 	function editCSSSource($template, $filename, & $content, $option, & $ftp)
 	{
 		$css_path = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename; ?>
@@ -554,9 +554,9 @@ table.kadmin-stat caption {
 		</form>
 		<?php
 	}
-	
-	
-	
+
+
+
 //*****************************************/
 /*
 //*			END TEMPLATE MANAGER

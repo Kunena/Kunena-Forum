@@ -409,64 +409,67 @@ switch ($task) {
 		pollunpublish ( $option, $cid, 0 );
 
 		break;
-		
+
 //###########################################
 //
 //			START TEMPLATE MANAGER
 //
 //###########################################
-		
+
 	case "showTemplates" :
 		showTemplates ( $option );
 
 		break;
-		
+
 	case "publishTemplate" :
 		publishTemplate ();
 
 		break;
-		
+
 	case "editKTemplate" :
 		editKTemplate ();
 
 		break;
-		
+
 	case "saveTemplate" :
 		saveTemplate();
 
 		break;
-		
+
 	case "chooseCSSTemplate" :
 		chooseCSSTemplate();
 
 		break;
-		
+
 	case "editTemplateCSS" :
 		editTemplateCSS();
 
 		break;
-		
+
 	case "saveTemplateCSS" :
 		saveTemplateCSS();
 
 		break;
-		
+
 	case "cancelTemplate" :
 		cancelTemplate();
 
 		break;
-		
+
 	/*case "previewTemplate" :
 		previewTemplate();
 
 		break;*/
-		
+
 	case "addKTemplate" :
 		addKTemplate();
 
 		break;
 
-		
+	case "installTemplate" :
+		extractKTemplate ();
+
+
 //###########################################
 //
 //			END TEMPLATE MANAGER
@@ -516,27 +519,27 @@ html_Kunena::showFbFooter ();
 		html_Kunena::installKTemplate();
 	}
 
-	function extractKTemplate($path, $filename, $dest)
+	function extractKTemplate()
 	{
+		$app = JFactory::getApplication ();
+
 		jimport ( 'joomla.filesystem.folder' );
 		jimport ( 'joomla.filesystem.file' );
 		jimport ( 'joomla.filesystem.archive' );
-		$path = KPATH_SITE . '/template/';
-		$filename = JRequest::getVar( 'install_package', '', 'files', 'array' );
+		$dest = KPATH_SITE . '/template/';
+		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
-		if (! $dest)
-			$dest = $path;
-		$file = $path . DS . $filename;
-		$text = '';
-		if (file_exists ( $file )) {
-			$success = JArchive::extract ( $file, $dest );
-			if (! $success)
-				$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
-		} else {
-			$success = true;
-			$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
+		if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
 		}
-		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text );
+		else {
+			$success = JArchive::extract ( $file ['tmp_name'], $dest );
+			if (! $success)
+				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
+			else
+				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
+		}
+		// TODO: redirect back
 	}
 
 	function isTemplateDefault($template)

@@ -355,6 +355,50 @@ PX		EM			PCT			PT
 	width: 20%;
 }
 
+/*			BAN
+------------------------------------------*/
+
+#Kunena table.kblock .kcol-addban-left {
+	width: 40%;
+	text-align: left;
+	padding: 5px 10px;
+}
+#Kunena table.kblock .kcol-addban-right {
+	width: 59%;
+	text-align: left;
+	padding: 5px 10px;
+}
+#Kunena table.kblock .kcol-addban-center {
+	width: 100%;
+	text-align: center;
+	padding: 5px 10px;
+}
+#Kunena table.kblock .kcol-addban-right textarea {
+	width:60%;
+	height:5em;
+}
+#Kunena table.kblock-ban th {
+	text-align:center;
+	font-weight: normal;
+	white-space:nowrap;
+}
+#Kunena table.kblock-ban td.firstrow {
+	text-align:center;
+	font-weight: normal;
+	white-space:nowrap;
+	padding: 5px 10px;
+}
+#Kunena table.kblock-ban td {
+	text-align:left;
+	font-weight: normal;
+	white-space:nowrap;
+	padding: 5px 10px;
+}
+#Kunena table.kblock-ban td.iconrow {
+	padding: 5px;
+}
+
+
 #Kunena .kheader {
 	background: #3B3B3B url("../images/backgrounds/cat_title_bg.gif") repeat-x top left;
 	height: 30px;

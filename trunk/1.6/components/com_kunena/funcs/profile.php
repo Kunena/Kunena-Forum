@@ -20,6 +20,7 @@ class CKunenaProfile {
 
 	function __construct($userid, $do='') {
 		kimport('html.parser');
+		require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
@@ -82,6 +83,11 @@ class CKunenaProfile {
 
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
+
+		kimport('userban');
+		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
+		$this->canBan = $this->banInfo->canBan();
+		if ( $this->config->showbannedreason ) $this->banReason = $this->banInfo->reason_public;
 	}
 
 	/**
@@ -252,6 +258,36 @@ class CKunenaProfile {
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
+	function displayBanUser()
+	{
+		$this->baninfo = KunenaUserBan::getInstanceByUserid($this->profile->userid, true);
+		CKunenaTools::loadTemplate('/profile/banuser.php');
+	}
+
+	function displayBanHistory()
+	{
+		$this->banhistory = $this->getBanHistory();
+		CKunenaTools::loadTemplate('/profile/banhistory.php');
+	}
+
+	function displayBanManager()
+	{
+		$this->bannedusers = $this->getBannedUsers();
+		CKunenaTools::loadTemplate('/profile/banmanager.php');
+	}
+
+	function getBannedUsers() {
+		kimport('userban');
+		$banned = KunenaUserBan::getBannedUsers();
+		return $banned;
+	}
+
+	function getBanHistory() {
+		kimport('userban');
+		$user_history = KunenaUserBan::getUserHistory($this->profile->userid);
+		return $user_history;
+	}
+
 	function displayTab() {
 		switch ($this->do) {
 			case 'edit':
@@ -301,6 +337,9 @@ class CKunenaProfile {
 		switch ($this->do) {
 			case 'save':
 				$this->save();
+				break;
+			case 'ban':
+				$this->ban();
 				break;
 			case 'cancel':
 				$this->cancel();
@@ -493,6 +532,86 @@ class CKunenaProfile {
 
 		$msg = JText::_( 'COM_KUNENA_PROFILE_SAVED' );
 		$this->_app->redirect ( $return, $msg );
+	}
+
+	function ban() {
+		$userid = JRequest::getInt ( 'userid', 0 );
+		$ip = JRequest::getVar ( 'ip', '' );
+		$block = JRequest::getInt ( 'block', 0 );
+		$expiration = JRequest::getString ( 'expiration', '' );
+		$reason_private = JRequest::getString ( 'reason_private', '' );
+		$reason_public = JRequest::getString ( 'reason_public', '' );
+		$comment = JRequest::getString ( 'comment', '' );
+
+		kimport ( 'userban' );
+		$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
+		if (! $ban->id) {
+			$ban->ban ( $userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );
+			$success = $ban->save ();
+		} else {
+			$ban->blocked = $block;
+			$ban->setExpiration ( $expiration, $comment );
+			$ban->setReason ( $reason_private, $reason_public );
+			$success = $ban->save ();
+		}
+
+		if ($block) {
+			if ($ban->isEnabled ())
+				$message = JText::_ ( 'COM_KUNENA_USER_BLOCKED_DONE' );
+			else
+				$message = JText::_ ( 'COM_KUNENA_USER_UNBLOCKED_DONE' );
+		} else {
+			if ($ban->isEnabled ())
+				$message = JText::_ ( 'COM_KUNENA_USER_BANNED_DONE' );
+			else
+				$message = JText::_ ( 'COM_KUNENA_USER_UNBANNED_DONE' );
+		}
+
+		if (! $success) {
+			$this->_app->enqueueMessage ( $ban->getError (), 'error' );
+		} else {
+			$this->_app->enqueueMessage ( $message );
+		}
+
+		$banDelPosts = JRequest::getVar ( 'bandelposts', '' );
+		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
+		$DelSignature = JRequest::getVar ( 'delsignature', '' );
+		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
+
+		if (! empty ( $DelAvatar )) {
+			jimport ( 'joomla.filesystem.file' );
+			$userprofile = KunenaFactory::getUser ( $userid );
+
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar=null WHERE userid=$userid" );
+			$this->_db->Query ();
+			check_dberror ( "Unable to remove user avatar." );
+
+			// Delete avatar from file system
+			if (JFile::exists ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar )) {
+				JFile::delete ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar );
+			}
+		}
+
+		if (! empty ( $DelSignature )) {
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null WHERE userid=$userid" );
+			$this->_db->Query ();
+			check_dberror ( "Unable to remove user singature." );
+		}
+
+		if (! empty ( $DelProfileInfo )) {
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid=$userid" );
+			$this->_db->Query ();
+			check_dberror ( "Unable to remove user profile information." );
+		}
+
+		if (! empty ( $banDelPosts )) {
+			//select only the messages which aren't already in the trash
+			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=2 WHERE hold!=2 AND userid=$userid" );
+			$idusermessages = $this->_db->loadObjectList ();
+			check_dberror ( "Unable to load message id from fb_messages." );
+		}
+
+		$this->_app->redirect ( CKunenaLink::GetProfileURL($this->profile->userid, false) );
 	}
 
 	function cancel()

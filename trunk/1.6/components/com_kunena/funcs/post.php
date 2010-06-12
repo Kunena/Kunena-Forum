@@ -113,7 +113,7 @@ class CKunenaPost {
 			return false;
 		if ($this->floodProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -230,7 +230,7 @@ class CKunenaPost {
 			return false;
 		if ($this->floodProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -296,7 +296,7 @@ class CKunenaPost {
 			return false;
 		if ($this->lockProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -355,6 +355,10 @@ class CKunenaPost {
 
 	protected function editpostnow() {
 		if ($this->tokenProtection ())
+			return false;
+		if ($this->isUserBanned() )
+			return false;
+		if ($this->isIPBanned())
 			return false;
 
 		$fields ['name'] = JRequest::getString ( 'authorname', $this->getAuthorName () );
@@ -435,7 +439,7 @@ class CKunenaPost {
 	}
 
 	protected function delete() {
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -457,6 +461,11 @@ class CKunenaPost {
 	}
 
 	protected function undelete() {
+		if ($this->isUserBanned() )
+			return false;
+		if ($this->isIPBanned())
+			return false;
+
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
 		$success = $message->undelete ( $this->id );
@@ -479,6 +488,10 @@ class CKunenaPost {
 		// FIXME: we need better permission control
 		if ($this->moderatorProtection ())
 			return false;
+		if ($this->isUserBanned() )
+			return false;
+		if ($this->isIPBanned())
+			return false;
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = CKunenaModeration::getInstance ();
@@ -497,6 +510,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
+			return false;
+		if ($this->isUserBanned() )
+			return false;
+		if ($this->isIPBanned())
 			return false;
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
@@ -517,7 +534,7 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -567,6 +584,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
+			return false;
+		if ($this->isUserBanned() )
+			return false;
+		if ($this->isIPBanned())
 			return false;
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
@@ -657,7 +678,7 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -675,7 +696,7 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -693,7 +714,7 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -711,7 +732,7 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -729,7 +750,7 @@ class CKunenaPost {
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
-		if ($this->isUserBanned($this->my->id) )
+		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
 			return false;
@@ -813,18 +834,18 @@ class CKunenaPost {
 		return false;
 	}
 
-	protected function isUserBanned($userid) {
-		$sql = "SELECT enabled, expiry, userid, bantype FROM #__kunena_banned_users WHERE enabled=1 AND userid='$userid' AND bantype=2";
-		$this->_db->setQuery ( $sql );
-		$isUserbanned = $this->_db->loadObject ();
-		KunenaError::checkDatabaseError();
-
-		if ( is_object($isUserbanned) ) {
-			if ( date( 'Y-m-d H:i:s') < $isUserbanned->expiry && $isUserbanned->expiry != '0000-00-00 00:00:00' ) {
-				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', $isUserbanned->expiry ), 'error' );
+	protected function isUserBanned() {
+		$profile = KunenaFactory::getUser();
+		$banned = $profile->isBanned();
+		if ($banned) {
+			kimport('userban');
+			$banned = KunenaUserBan::getInstanceByUserid($profile->userid, true);
+			if (!$banned->isLifetime()) {
+				require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS_EXPIRY', CKunenaTimeformat::showDate($banned->expiration)), 'error' );
 				$this->redirectBack();
 				return true;
-			} else if ( $isUserbanned->expiry == '0000-00-00 00:00:00' ) {
+			} else {
 				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ), 'error' );
 				$this->redirectBack();
 				return true;
@@ -834,17 +855,19 @@ class CKunenaPost {
 	}
 
 	protected function isIPBanned() {
-		$sql = "SELECT expiry FROM #__kunena_banned_users WHERE ip='{$_SERVER['REMOTE_ADDR']}' AND enabled=1 AND bantype=3";
-		$this->_db->setQuery ( $sql );
-		$isIPbanned = $this->_db->loadObject ();
-		KunenaError::checkDatabaseError();
+		// Disabled for now..
+		return false;
 
-		if ( is_object($isIPbanned) ) {
-			if (date( 'Y-m-d H:i:s') < $isUserbanned->expiry && $isIPbanned->expiry != '0000-00-00 00:00:00' ) {
-				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_IP_BANNED_NOACCESS_EXPIRY', $isUserbanned->expiry ), 'error' );
+		kimport('userban');
+		$banned = KunenaUserBan::getInstanceByIP($_SERVER['REMOTE_ADDR']);
+
+		if ( $banned ) {
+			if (!$banned->isLifetime()) {
+				require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_IP_BANNED_NOACCESS_EXPIRY', CKunenaTimeformat::showDate( $banned->expiration) ), 'error' );
 				$this->redirectBack();
 				return true;
-			} else if ( $isIPbanned->expiry == '0000-00-00 00:00:00' ) {
+			} else {
 				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_IP_BANNED_NOACCESS' ), 'error' );
 				$this->redirectBack();
 				return true;

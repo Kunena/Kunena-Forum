@@ -160,7 +160,11 @@ class CKunenaLink {
 	}
 
 	// Returns always link to Kunena profile
-	function GetMyProfileLink($userid, $name, $rel = 'nofollow', $task = '') {
+	function GetMyProfileLink($userid, $name = null, $rel = 'nofollow', $task = '') {
+		if (!$name) {
+			$profile = KunenaFactory::getUser($userid);
+			$name = htmlspecialchars($profile->getName(), ENT_COMPAT, 'UTF-8');
+		}
 		return CKunenaLink::GetHrefLink ( CKunenaLink::GetMyProfileURL ( $userid, $task ), $name, '', $rel );
 	}
 
@@ -179,7 +183,11 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . "&func=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 
-	function GetProfileLink($userid, $name, $title ='', $rel = 'nofollow', $class = '') {
+	function GetProfileLink($userid, $name = null, $title ='', $rel = 'nofollow', $class = '') {
+		if (!$name) {
+			$profile = KunenaFactory::getUser($userid);
+			$name = htmlspecialchars($profile->getName(), ENT_COMPAT, 'UTF-8');
+		}
 		if ($userid == 0) {
 			$uclass = 'kwho-guest';
 		} else if (CKunenaTools::isAdmin ( $userid )) {

@@ -1283,6 +1283,14 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_GHOSTMESSAGE_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWBANNEDREASON_PROFILE') ?></td>
+								<td align="left" valign="top"><?php echo $lists ['showbannedreason'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWBANNEDREASON_PROFILE_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			</dd>
@@ -2184,8 +2192,10 @@ table.kadmin-stat caption {
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_ENABLED'); ?></th>
 				<th align="left" width="10"><?php echo JText::_('COM_KUNENA_USRL_BANNED'); ?></th>
+<?php /*
 				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
 				<th align="left" width="100"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
+*/ ?>
 				<th align="left" width="15"><?php echo JText::_('COM_KUNENA_VIEW_MODERATOR'); ?></th>
 				<th align="left" width="*"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?></th>
 			</tr>
@@ -2195,37 +2205,38 @@ table.kadmin-stat caption {
 					//foreach ($profileList as $pl)
 					$i = 0;
 					for($i = 0, $n = count ( $profileList ); $i < $n; $i ++) {
+						$kunena_user = KunenaFactory::getUser($profileList [$i]);
+
 						$pl = &$profileList [$i];
 						$k = 1 - $k;
-						$userLogged = $pl->session_id ? '<img src="images/tick.png" width="16" height="16" border="0" alt="" />': '';
-						$userEnabled = $pl->block ? 'publish_x.png' : 'tick.png';
-						$altUserEnabled = $pl->block ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
-						$userBlockTask = $pl->block ? 'userunblock' : 'userblock';
-						$userbanned = ($pl->usersbanenabled && $pl->bantype==2) ? 'tick.png' : 'publish_x.png';
-						$userBannedTask = ($pl->usersbanenabled && $pl->bantype==2) ? 'userunban' : 'userban';
-						$altUserBanned = ($pl->usersbanenabled && $pl->bantype==2) ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
-						$kunena_user = KunenaFactory::getUser($pl->userid);
+						$userLogged = $kunena_user->isOnline() ? '<img src="images/tick.png" width="16" height="16" border="0" alt="" />': '';
+						$userEnabled = $kunena_user->isBlocked() ? 'publish_x.png' : 'tick.png';
+						$altUserEnabled = $kunena_user->isBlocked() ? JText::_( 'Blocked' ) : JText::_( 'Enabled' );
+						$userBlockTask =  $kunena_user->isBlocked() ? 'userunblock' : 'userblock';
+						$userbanned = $kunena_user->isBanned() ? 'tick.png' : 'publish_x.png';
+						$userBannedTask = $kunena_user->isBanned() ? 'userunban' : 'userban';
+						$altUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
 					?>
 			<tr class="row<?php echo $k;
 						?>">
 				<td width="20"><input type="checkbox" id="cb<?php echo $i;
 						?>"
-					name="uid[]" value="<?php echo $pl->id;
+					name="uid[]" value="<?php echo $kunena_user->userid;
 						?>"
 					onClick="isChecked(this.checked);"></td>
 				<td width="10"><a href="#edit"
 					onclick="return listItemTask('cb<?php echo $i;
-						?>','userprofile')"><?php echo kescape($pl->userid);
+						?>','userprofile')"><?php echo kescape($kunena_user->userid);
 						?></a></td>
 					<td width="100"><?php echo $kunena_user->getAvatarLink('', '48' ,'48');
 						?></td>
 				<td width="100"><a href="#edit"
 					onclick="return listItemTask('cb<?php echo $i;
-						?>','userprofile')"><?php echo kescape($pl->username);
+						?>','userprofile')"><?php echo kescape($kunena_user->username);
 						?></a></td>
 				<td width="100"><a href="#edit"
 					onclick="return listItemTask('cb<?php echo $i;
-						?>','userprofile')"><?php echo kescape($pl->name);
+						?>','userprofile')"><?php echo kescape($kunena_user->name);
 						?></a></td>
 				<td width="60" align="center"><?php echo $userLogged;
 						?>&nbsp;</td>
@@ -2233,11 +2244,13 @@ table.kadmin-stat caption {
 						<img src="images/<?php echo $userEnabled;?>" width="16" height="16" border="0" alt="<?php echo $altUserEnabled; ?>" /></a>&nbsp;</td>
 				<td width="10" align="center"><a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $userBannedTask; ?>')">
 						<img src="images/<?php echo $userbanned;?>" width="16" height="16" border="0" alt="<?php echo $altUserBanned; ?>" /></a>&nbsp;</td>
-				<td width="100"><?php echo kescape($pl->email);
+<?php /*
+				<td width="100"><?php echo kescape($kunena_user->email);
 						?>&nbsp;</td>
-				<td width="100"><?php echo kescape($pl->usertype);
+				<td width="100"><?php echo kescape($kunena_user->usertype);
 						?>&nbsp;</td>
-				<td align="center" width="15"><?php 		if ($pl->moderator) {
+*/ ?>
+				<td align="center" width="15"><?php 		if ($kunena_user->moderator) {
 							echo JText::_('COM_KUNENA_ANN_YES');
 						} else {
 							echo JText::_('COM_KUNENA_ANN_NO');
@@ -2245,7 +2258,7 @@ table.kadmin-stat caption {
 						;
 						?>
 				&nbsp;</td>
-				<td width="*"><?php echo kescape ( $pl->signature );
+				<td width="*"><?php echo kescape ( $kunena_user->signature );
 						?>&nbsp;
 				</td>
 			</tr>

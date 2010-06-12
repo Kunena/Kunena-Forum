@@ -1,7 +1,7 @@
 <?php
 /**
 * @version $Id$
-* Kunena Component - CKunenaUser class
+* Kunena Component - KunenaUser class
 * @package Kunena
 *
 * @Copyright (C) 2010 www.kunena.com All rights reserved
@@ -53,6 +53,8 @@ class KunenaUser extends JObject
 	 */
 	static public function getInstance($identifier = null, $reset = false)
 	{
+		$c = __CLASS__;
+
 		if ($identifier instanceof KunenaUser) {
 			return $identifier;
 		}
@@ -63,14 +65,16 @@ class KunenaUser extends JObject
 		if ($identifier instanceof JUser) {
 			$id = $identifier->id;
 		} else if (is_numeric($identifier)) {
-			$id = $identifier;
+			$id = intval($identifier);
 		} else {
 			jimport('joomla.user.helper');
 			$id = JUserHelper::getUserId((string)$identifier);
 		}
+		if ($id < 1)
+			return new $c();
 
 		if (!$reset && empty(self::$_instances[$id])) {
-			self::$_instances[$id] = new KunenaUser($id);
+			self::$_instances[$id] = new $c($id);
 		}
 
 		return self::$_instances[$id];
@@ -141,7 +145,7 @@ class KunenaUser extends JObject
 	{
 		// Create the user table object
 		$table	= &$this->getTable();
-		$ignore = array('name','username');
+		$ignore = array('name','username','blocked');
 		$table->bind($this->getProperties(), $ignore);
 		$table->exists($this->_exists);
 
@@ -165,7 +169,10 @@ class KunenaUser extends JObject
 		}
 
 		// Set the id for the KunenaUser object in case we created a new user.
-		if ($result && $isnew) $this->load($table->get('userid'));
+		if ($result && $isnew) {
+			$this->load($table->get('userid'));
+			self::$_instances[$table->get('id')] = $this;
+		}
 
 		return $result;
 	}
@@ -219,6 +226,21 @@ class KunenaUser extends JObject
 		return $acl->isModerator($this->userid, $catid);
 	}
 
+	public function isBanned() {
+		if (!$this->banned) return false;
+		if ($this->blocked || $this->banned == $this->_db->getNullDate()) return true;
+
+		jimport ('joomla.utilities.date');
+		$ban = new JDate($this->banned);
+		$now = new JDate();
+		return ($ban->toUnix() > $now->toUnix());
+	}
+
+	public function isBlocked() {
+		if ($this->blocked) return true;
+		return false;
+	}
+
 	public function getName($visitorname = '') {
 		if (! $this->userid) {
 			$name = $visitorname;
@@ -241,6 +263,8 @@ class KunenaUser extends JObject
 	public function getType($catid=0) {
 		if ($this->userid == 0) {
 			$type = JText::_('COM_KUNENA_VIEW_VISITOR');
+		} elseif ($this->isBanned ()) {
+			$type = JText::_('COM_KUNENA_VIEW_BANNED');
 		} elseif ($this->isAdmin ()) {
 			$type = JText::_('COM_KUNENA_VIEW_ADMIN');
 		} elseif ($this->isModerator ($catid)) {
@@ -275,6 +299,19 @@ class KunenaUser extends JObject
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_('COM_KUNENA_RANK_VISITOR');
 			$rank->rank_special = 1;
+		}
+		else if ($this->isBanned()) {
+			$rank->rank_id = 0;
+			$rank->rank_title = JText::_('COM_KUNENA_RANK_BANNED');
+			$rank->rank_special = 1;
+			$rank->rank_image = 'rankbanned.gif';
+			jimport ('joomla.filesystem.file');
+			foreach (self::$_ranks as $cur) {
+				if ($cur->rank_special == 1 && JFile::stripExt($cur->rank_image) == 'rankbanned') {
+					$rank = $cur;
+					break;
+				}
+			}
 		}
 		else if ($this->rank != 0 && isset(self::$_ranks[$this->rank])) {
 			$rank = self::$_ranks[$this->rank];

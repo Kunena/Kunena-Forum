@@ -34,11 +34,30 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
-11-June-2010 Matias
+12-Jun-2010 Matias
+- [#19244] Remove deprecated ban logic from lib/kunena.moderation.tools.class.php
+^ [#15886] Merged branch /branches/1.6-@quila-ban-100526
+
+11-Jun-2010 Matias
+# [#19244] Add basis for user caching in KunenaUserBan class
+# [#19244] Fix user manager in administration and simplify code
+# [#19244] Fix many bugs in ban (classes, profile, templates)
+# [#19244] Modify link functions so that they do not need username (simplifies ban template/logic)
+# [#19244] Add html escapes to the fields in the profile pages (prevents XSS attacks)
+
+10-Jun-2010 Matias
 # [#19288] Fix regression: Fix file upload (wrong permissions) in some environments
+^ [#19244] Simplify ban templates as much as possible -- remove extra functionality to get everything to work
++ [#19244] Add new features to ban classes, make them more robust
 
 9-June-2010 severdia
 # [#19356] Fixed top margin on attachment section
+
+8-Jun-2010 Matias
+^ [#19244] Major changes on how ban works internally (JTable)
+^ [#19244] Start using new ban class in the code
+^ [#19244] Move ban tasks into profile (from class.kunena.php and kunena.php)
+^ [#19244] Change minimum PHP requirement to 5.2.3 (we are using json functions)
 
 8-June-2010 fxstein
 + [#20916] Add css and js minification logic to build process
@@ -46,6 +65,7 @@ Kunena 1.6.0-ALPHA2
 
 7-June-2010 Matias
 ^ [#15886] Merged revisions 2634-2659 from /branches/1.6-xillibit with changes
+^ [#19244] Moderation feature: Rework ban tables, add banned field into user table
 
 7-June-2010 severdia
 # [#19356] Fixed rest of CSS underscores to dashes (consistent naming), synchronized styles
@@ -108,6 +128,28 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Installer: Sample data gets inserted too early - installation fails if there were no messages or categories
 # [#19288] Undefined variables in CKunenaLatestX class if there are no threads to be shown
 # [#19288] Undefined variable userkarma in CKunenaProfile class if karma is disabled
+
+01-Jun-2010 @quila
+^ [#19244] Moderation feature: cleanup ban manager
+
+29-May-2010 Xillibit
+# [#19244] Escape all database columns, little change on database structure
+# [#19244] Add configuration setting to display ban reason in profile, set ban rank when an user is banned
+
+28-May-2010 @quila
+^ [#19244] Moderation feature: cleanup ban manager, ban history and add ban pages
+^ [#19244] Moderation feature: new language strings for new ban system
+# [#19244] Moderation feature: fixed some bugs in ban manager
++ [#19244] Moderation feature: new icons in ban manager
+
+27-May-2010 Xillibit
+^ [#19244] Tab ban history is working now
+^ [#19244] Tab ban manager is working now and it's displayed only in mod profiles
+
+26-May-2010 @quila
++ [#19244] Moderation feature: add Ban Manager, Ban History and Add Ban tabs in profile page
+# [#19244] Moderation feature: improved template in "Add Ban" tab (rules in kunena.forum.css)
+# [#19244] Moderation feature: created all language string in "Add Ban" tab
 
 Kunena 1.6.0-ALPHA
 

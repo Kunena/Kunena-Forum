@@ -526,6 +526,7 @@ html_Kunena::showFbFooter ();
 		jimport ( 'joomla.filesystem.folder' );
 		jimport ( 'joomla.filesystem.file' );
 		jimport ( 'joomla.filesystem.archive' );
+		$tmp = JPATH_ROOT . '/tmp/kinstall/';
 		$dest = KPATH_SITE . '/template/';
 		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
@@ -533,7 +534,8 @@ html_Kunena::showFbFooter ();
 			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
 		}
 		else {
-			$success = JArchive::extract ( $file ['tmp_name'], $dest );
+			$success = JFile::upload($file ['tmp_name'], $tmp . $file ['name']);
+			$success = JArchive::extract ( $tmp . $file ['name'], $dest );
 			if (! $success)
 				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
 			else

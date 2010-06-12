@@ -359,6 +359,13 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
             break;
 
+		case 'polls':
+  			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
+  			$kunena_polls =& CKunenaPolls::getInstance();
+			$kunena_polls->polldo();
+
+            break;
+
 		case 'stats' :
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
 			$kunena_stats = new CKunenaStats ( );

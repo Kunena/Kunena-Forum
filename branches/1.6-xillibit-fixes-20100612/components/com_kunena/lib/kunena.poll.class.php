@@ -18,13 +18,16 @@ defined( '_JEXEC' ) or die();
  */
 class CKunenaPolls {
 	protected $_db = null;
+	protected $_app = null;
 	public $config = null;
 	public $my = null;
 	public $document = null;
 
 	protected function __construct($db, $config) {
+		$this->do = JRequest::getCmd ( 'do', '' );
 		$this->_db = $db;
 		$this->my = $this->my = &JFactory::getUser ();
+		$this->_app = & JFactory::getApplication ();
 		$this->config = $config;
 		$this->document =& JFactory::getDocument();
 
@@ -531,6 +534,46 @@ class CKunenaPolls {
     	$this->_db->setQuery($query);
     	$this->_db->query();
     	if (KunenaError::checkDatabaseError()) return;
+   }
+
+   /*
+    *  Function to do things without json
+    */
+
+   public function polldo() {
+   		$vote	= JRequest::getInt('kpollradio', '');
+		$id = JRequest::getInt ( 'kpoll-id', 0 );
+		$catid = JRequest::getInt ( 'catid', 0 );
+
+   		switch ( $this->do ) {
+			case 'vote' :
+			case 'pollvote' :
+				$result = $this->save_results($id,$this->my->id,$vote);
+
+				if ($result['results'] == 1) {
+					$message = JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK');
+				} elseif($result['results'] == 2) {
+					$message = JText::_('COM_KUNENA_POLL_SAVE_VOTE_ALREADY');
+				} elseif($result['results'] == 3) {
+					$message = JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE');
+				}
+
+				$this->_app->enqueueMessage ( $message );
+				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, $id, false) );
+				break;
+			case 'pollchangevote' :
+				$result = $this->save_changevote($id,$this->my->id,$vote);
+
+   				if($result['results'] == 1) {
+					$message = JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK');
+				} elseif($result['results'] == 3) {
+					$message = JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE');
+				}
+
+				$this->_app->enqueueMessage ( $message );
+				$this->_app->redirect ( CKunenaLink::GetThreadPageURL(CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, $id, false)) );
+				break;
+   		}
    }
 
    /**

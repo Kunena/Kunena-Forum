@@ -32,6 +32,8 @@ window.addEvent('domready', function() {
 	
 	if($('kpoll-form-vote') != undefined) {
 		$('kpoll-form-vote').addEvent('submit', function(e) {
+			var jsonurl = $('kpollvotejsonurl').getProperty('value');
+			$('kpoll-form-vote').setProperty('action',jsonurl)
 			//Prevents the default submit event from loading a new page.
 			e.stop();
 			var datano = '0';

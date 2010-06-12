@@ -10,7 +10,6 @@
 **/
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
-
 $this->call_javascript_vote();
 $dataspollresult = $this->get_poll_data($this->id);
 //To show the number total of votes for the poll
@@ -95,7 +94,7 @@ if ( $dataspollusers[0]->userid == $this->my->id || $this->my->id == "0") {//if 
 } elseif ((strftime("%Y-%m-%d %H:%M:%S",time()) <= $dataspollresult[0]->polltimetolive) || $dataspollresult[0]->polltimetolive == "0000-00-00 00:00:00") {
 	?>
 	<div id="kpoll-text-help"></div>
-	<form id="kpoll-form-vote" method="post" action="<?php echo CKunenaLink::GetJsonURL('pollvote'); ?>">
+	<form id="kpoll-form-vote" method="post" action="<?php echo CKunenaLink::GetPollsURL('vote', $this->catid); ?>">
 	<fieldset><legend id="kpoll-xd" style="font-size: 14px;"><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
 	<ul>
 
@@ -119,6 +118,7 @@ if ( $dataspollusers[0]->userid == $this->my->id || $this->my->id == "0") {//if 
        <?php
        }
        ?>
+       <input type="hidden" id="kpollvotejsonurl" value="<?php echo CKunenaLink::GetJsonURL('pollvote'); ?>" />
        </form>
        <?php
 } else {

@@ -31,7 +31,17 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.12-RC1
+Kunena 1.5.12-RC2
+
+12-Jun-2010 Matias
+# [#20107] Merge changes from 1.5-xillibit-fixing
+^ [#20106] Updated version info to 1.5.12-RC2
+
+10-Jun-2010 Xillibit
+- [#20803] Remove configuration settings to define the maxlength for url on links and images
+
+09-Jun-2010 Xillibit
+^ [#20817] Set default configuration settings on show for hide attachments for guests
 
 04-Jun-2010 Xillibit
 # [#20838] Alert the user on new ranks and new smilies when the directory : 'french, spanish' isn't here

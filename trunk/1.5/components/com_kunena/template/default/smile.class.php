@@ -313,7 +313,7 @@ class smile
 						</div>
 
 						<div id="link" style="display: none;">
-							<?php @print(_KUNENA_EDITOR_LINK_URL); ?><input name="url" type="text" size="40" maxlength="<?php echo $fbConfig->maxurllength; ?>" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKURL);?>')" />
+							<?php @print(_KUNENA_EDITOR_LINK_URL); ?><input name="url" type="text" size="40" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKURL);?>')" />
 							<?php @print(_KUNENA_EDITOR_LINK_TEXT); ?><input name="text2" type="text" size="30" maxlength="100" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKTEXT);?>')" />
 							<input type="button" name="Link" accesskey = "w" value="<?php @print(_KUNENA_EDITOR_LINK_INSERT); ?>""
 								onclick="bbfontstyle('[url=' + this.form.url.value + ']'+ this.form.text2.value,'[/url]')" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_LINKAPPLY);?>')" />
@@ -321,7 +321,7 @@ class smile
 
 						<div id="image" style="display: none;">
 							<?php @print(_KUNENA_EDITOR_IMAGE_SIZE); ?><input name="size" type="text" size="10" maxlength="10" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE);?>')" />
-							<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="40" maxlength="<?php $fbConfig->maxurllength; ?>" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')" />
+							<?php @print(_KUNENA_EDITOR_IMAGE_URL); ?><input name="url2" type="text" size="40" value="http://" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKURL);?>')" />
 							<input type="button" name="Link" accesskey = "p" value="<?php @print(_KUNENA_EDITOR_IMAGE_INSERT); ?>" onclick="check_image()" onmouseover = "javascript:kunenaShowHelp('<?php @print(_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY);?>')" />
 							<script type="text/javascript">
 								function check_image() {

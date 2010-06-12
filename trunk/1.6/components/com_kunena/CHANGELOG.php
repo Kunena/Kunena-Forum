@@ -37,6 +37,7 @@ Kunena 1.6.0-ALPHA2
 12-Jun-2010 Matias
 - [#19244] Remove deprecated ban logic from lib/kunena.moderation.tools.class.php
 ^ [#15886] Merged branch /branches/1.6-@quila-ban-100526
+^ [#15886] Merged revisions 2677, 2687 and 2688 from /branches/1.6-@quila-fix-100608
 
 11-Jun-2010 Matias
 # [#19244] Add basis for user caching in KunenaUserBan class
@@ -45,6 +46,10 @@ Kunena 1.6.0-ALPHA2
 # [#19244] Modify link functions so that they do not need username (simplifies ban template/logic)
 # [#19244] Add html escapes to the fields in the profile pages (prevents XSS attacks)
 
+10-June-2010 @quila
+# [#19288] Fix regression - Kunena in the footer don't point to kunena official site.
+# [#19288] Fix regression - Correction of text in subscription email.
+
 10-Jun-2010 Matias
 # [#19288] Fix regression: Fix file upload (wrong permissions) in some environments
 ^ [#19244] Simplify ban templates as much as possible -- remove extra functionality to get everything to work
@@ -52,6 +57,9 @@ Kunena 1.6.0-ALPHA2
 
 9-June-2010 severdia
 # [#19356] Fixed top margin on attachment section
+
+8-June-2010 @quila
+# [#19288] Fix regression - subject message suffix wrong for new post.
 
 8-Jun-2010 Matias
 ^ [#19244] Major changes on how ban works internally (JTable)

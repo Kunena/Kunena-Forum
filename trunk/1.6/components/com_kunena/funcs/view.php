@@ -103,7 +103,7 @@ class CKunenaViewMessage {
 		}
 		// New post suffix for class
 		if ($message->new) {
-			$this->msgsuffix = '_new';
+			$this->msgsuffix = '-new';
 		}
 
 		$subject = $message->subject;

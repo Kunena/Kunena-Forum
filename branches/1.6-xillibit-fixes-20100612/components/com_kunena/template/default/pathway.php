@@ -105,8 +105,8 @@ if ($func != "") {
 			$fireonline .= JText::_('COM_KUNENA_USER_PROFILE');
 			$fireonline .= $this->kunena_username;
 		} else {
-			$fireonline .= "<div class=\"path-element-users\">(".$pathway->getTotalViewing(). ' ' . JText::_('COM_KUNENA_PATHWAY_VIEWING') . ")&nbsp;";
-			$fireonline .= $pathway->getUsersOnlineList();
+			$fireonline .= "<div class=\"path-element-users\">(".$pathway->getTotalViewing($sfunc). ' ' . JText::_('COM_KUNENA_PATHWAY_VIEWING') . ")&nbsp;";
+			$fireonline .= $pathway->getUsersOnlineList($sfunc);
 		}
 		$fireonline .= '</div>';
 	}

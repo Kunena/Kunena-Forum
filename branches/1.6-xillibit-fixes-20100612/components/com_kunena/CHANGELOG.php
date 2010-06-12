@@ -38,6 +38,7 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix issue on changevote in poll which decreased everytime the poll votes
 # [#19288] Put version check datas in joomla session and put a configuration setting for disable version check
 # [#19288] On edit ban, allow to remove the ban
+# [#19288] Select only the item with func for show online user in pathway
 
 12-Jun-2010 Matias
 - [#19244] Remove deprecated ban logic from lib/kunena.moderation.tools.class.php

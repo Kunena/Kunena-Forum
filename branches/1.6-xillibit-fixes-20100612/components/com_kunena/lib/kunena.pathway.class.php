@@ -23,12 +23,12 @@ class CkunenaPathway {
 		$this->document = & JFactory::getDocument ();
 	}
 
-	private function _getOnlineUsers() {
+	private function _getOnlineUsers($sfunc = '') {
 		$queryName = $this->config->username ? "username" : "name";
-		$query = "SELECT w.userid, u.$queryName AS username, k.showOnline FROM #__kunena_whoisonline AS w
+		$query = "SELECT w.userid, w.func, u.$queryName AS username, k.showOnline FROM #__kunena_whoisonline AS w
 				LEFT JOIN #__users AS u ON u.id=w.userid
 				LEFT JOIN #__kunena_users AS k ON k.userid=w.userid
-				WHERE w.link LIKE '%" . $this->_db->getEscaped ( JURI::current () ) . "%'
+				WHERE w.link LIKE '%" . $this->_db->getEscaped ( JURI::current () ) . "%' AND w.func LIKE '%$sfunc%'
 				GROUP BY w.userid ORDER BY u.{$queryName} ASC";
 		$this->_db->setQuery ( $query );
 		$users = $this->_db->loadObjectList ();
@@ -55,14 +55,14 @@ class CkunenaPathway {
 		return $results;
 	}
 
-	public function getTotalViewing() {
-		$users = $this->_getOnlineUsers();
+	public function getTotalViewing($sfunc) {
+		$users = $this->_getOnlineUsers($sfunc);
 
 		return $total_viewing = count ( $users );
 	}
 
-	public function getUsersOnlineList() {
-		$users = $this->_getOnlineUsers();
+	public function getUsersOnlineList($sfunc) {
+		$users = $this->_getOnlineUsers($sfunc);
 
 		$onlineUsersList = '';
 		$totalguest = 0;

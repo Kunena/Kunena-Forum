@@ -393,6 +393,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $debug = 0;
 	var $catsautosubscribed = 0;
 	var $showbannedreason = 0;
+	var $version_check = 1;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

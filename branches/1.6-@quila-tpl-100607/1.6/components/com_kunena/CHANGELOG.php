@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+14-June-2010 @quila
+# [#19345] Template Manager - some more changes
+
 13-June-2010 @quila
 # [#19345] Template Manager - fixed "Edit CSS" button
 # [#19345] Template Manager - delete tmp "kinstall" folder after installation

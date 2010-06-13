@@ -256,7 +256,6 @@ table.kadmin-stat caption {
 				<a class="kadmin-mainmenu icon-ranks-sm" href="index.php?option=com_kunena&task=ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
 				<a class="kadmin-mainmenu icon-files-sm" href="index.php?option=com_kunena&task=browseFiles"><?php echo JText::_('COM_KUNENA_C_FILES'); ?></a>
 				<a class="kadmin-mainmenu icon-images-sm" href="index.php?option=com_kunena&task=browseImages"><?php echo JText::_('COM_KUNENA_C_IMAGES'); ?></a>
-				<!--<a class="kadmin-mainmenu icon-editcss-sm" href="index.php?option=com_kunena&task=showCss"><?php //echo JText::_('COM_KUNENA_C_CSS'); ?></a>-->
 				<a class="kadmin-mainmenu icon-prune-sm" href="index.php?option=com_kunena&task=pruneforum"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a>
 				<a class="kadmin-mainmenu icon-syncusers-sm" href="index.php?option=com_kunena&task=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
 				<a class="kadmin-mainmenu icon-recount-sm" href="index.php?option=com_kunena&task=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
@@ -297,14 +296,12 @@ table.kadmin-stat caption {
 	}
 
 //*****************************************/
-/*
-/*			START TEMPLATE MANAGER
-/*
-/******************************************/
+//			START TEMPLATE MANAGER
+//*****************************************/
 
 	function installKTemplate()
 	{ ?>
-	<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div><br />
+		<div class="kadmin-functitle icon-template"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> - <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_NEW'); ?></div><br />
 		<form enctype="multipart/form-data" action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=installTemplate" method="post" name="adminForm">
 			<table class="adminform">
 				<tr>
@@ -339,7 +336,7 @@ table.kadmin-stat caption {
 			<table class="adminlist">
 			<thead>
 				<tr>
-					<th width="5" class="title"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NUM' ); ?></th>
+					<th width="5" class="title"> # </th>
 					<th class="title" colspan="2"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NAME' ); ?></th>
 					<th width="5%"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?></th>
 					<th width="20%"  class="title"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR' ); ?></th>
@@ -473,7 +470,7 @@ table.kadmin-stat caption {
 	function chooseCSSFiles($template, $t_dir, $t_files, $option)
 	{
  ?>
-<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_CSS_TEMPLATE'); ?></div><br />
+	<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CHOOSE_CSS_TEMPLATE'); ?></div><br />
 	<form action="index.php" method="post" name="adminForm">
 		<table cellpadding="1" cellspacing="1" border="0" width="100%">
 		<tr>
@@ -512,7 +509,7 @@ table.kadmin-stat caption {
 	function editCSSSource($template, $filename, & $content, $option, & $ftp)
 	{
 		$css_path = KUNENA_PATH_TEMPLATE.DS.$template.DS.'css'.DS.$filename; ?>
-<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_CSS_TEMPLATE'); ?></div><br />
+	<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDIT_CSS_TEMPLATE'); ?></div><br />
 		<form action="index.php" method="post" name="adminForm">
 		<?php if($ftp): ?>
 		<fieldset title="<?php echo JText::_('DESCFTPTITLE'); ?>">
@@ -556,13 +553,9 @@ table.kadmin-stat caption {
 		<?php
 	}
 
-
-
 //*****************************************/
-/*
-//*			END TEMPLATE MANAGER
-/*
-/******************************************/
+//			END TEMPLATE MANAGER
+//******************************************/
 
 	function showAdministration($rows, $children, $pageNav, $option) {
 		?>

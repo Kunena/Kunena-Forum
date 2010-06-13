@@ -411,9 +411,7 @@ switch ($task) {
 		break;
 
 //###########################################
-//
 //			START TEMPLATE MANAGER
-//
 //###########################################
 
 	case "showTemplates" :
@@ -477,9 +475,7 @@ switch ($task) {
 
 		break;
 //###########################################
-//
 //			END TEMPLATE MANAGER
-//
 //###########################################
 
 	case "createmenu" :
@@ -515,9 +511,7 @@ if (is_object ( $kunenaProfile )) {
 html_Kunena::showFbFooter ();
 
 //###########################################
-//
 //			START TEMPLATE MANAGER
-//
 //###########################################
 
     function addKTemplate()
@@ -539,13 +533,13 @@ html_Kunena::showFbFooter ();
 		$file = JRequest::getVar ( 'install_package', NULL, 'FILES', 'array' );
 
 		if (!$file || !is_uploaded_file ( $file ['tmp_name'])) {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_MISSING', $file ['name']), 'notice' );
 		}
 		else {
 			$success = JFile::upload($file ['tmp_name'], $tmp . $file ['name']);
 			$success = JArchive::extract ( $tmp . $file ['name'], $dest );
 			if (! $success)
-				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
+				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
 			else
 				// Delete the tmp install directory
 				if (JFolder::exists($tmp)) {
@@ -554,7 +548,7 @@ html_Kunena::showFbFooter ();
 					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
 					$retval = false;
 				}
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
 		}
 		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates');
 	}
@@ -852,9 +846,7 @@ html_Kunena::showFbFooter ();
 
 
 //###########################################
-//
 //			END TEMPLATE MANAGER
-//
 //###########################################
 
 function showAdministration($option) {

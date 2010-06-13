@@ -546,7 +546,7 @@ abstract class CKunenaRSSDatasource {
 			";
 		}
 
-		if (isset($columns['limit']) && $options['limit'] > 0) {
+		if ($options['limit'] > 0) {
 			$query .= "		LIMIT 0, ". $options['limit'] ."
 			";
 		}

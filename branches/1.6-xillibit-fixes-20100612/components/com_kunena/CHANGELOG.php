@@ -41,6 +41,7 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix for videos with missing parameter in array which throw an error (thanks JoniJnm)
 # [#19288] Fix for select template by user cookie (thanks JoniJnm)
 # [#19288] Fix issue with AUP integration on kimport undefined when you want see the userlist
+# [#19288] Uniform tooltips on social icons
 
 12-Jun-2010 Xillibit
 # [#19288] Fix issue on changevote in poll which decreased everytime the poll votes

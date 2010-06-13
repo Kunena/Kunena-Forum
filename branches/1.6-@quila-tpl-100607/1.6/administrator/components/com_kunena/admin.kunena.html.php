@@ -325,7 +325,7 @@ table.kadmin-stat caption {
 	<?php
 	}
 
-	function showTemplates(& $rows, & $lists, & $page, $option)
+	function showTemplates(& $rows, & $page, $option)
 	{
 		$kunena_app = & JFactory::getApplication ();
 		$limitstart = JRequest :: getVar('limitstart', '0', '', 'int');

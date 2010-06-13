@@ -470,7 +470,12 @@ switch ($task) {
 	case "installTemplate" :
 		extractKTemplate ();
 
+		break;
+		
+	case "uninstallKTemplate" :
+		uninstallKTemplate();
 
+		break;
 //###########################################
 //
 //			END TEMPLATE MANAGER
@@ -542,9 +547,47 @@ html_Kunena::showFbFooter ();
 			if (! $success)
 				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
 			else
-				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
+				// Delete the tmp install directory
+				if (JFolder::exists($tmp)) {
+					$retval = JFolder::delete($tmp);
+				} else {
+					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
+					$retval = false;
+				}
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
 		}
 		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates');
+	}
+	
+	function uninstallKTemplate()
+	{
+		$app = JFactory::getApplication ();
+		$kunena_app = & JFactory::getApplication ();
+		$cid		= JRequest::getVar('cid', array(), 'method', 'array');
+		$cid		= array(JFilterInput::clean(@$cid[0], 'cmd'));
+		$template	= $cid[0];
+		$option		= JRequest::getVar('option', '', '', 'cmd');
+		// Initialize variables
+		$retval	= true;
+		if (!$cid[0]) {
+			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
+		}
+		if (isTemplateDefault($template)) {
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_CANNOT_DEFAULT', $file ['name']), 'error' );
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates');
+			return;		
+		}
+		$tpl = KPATH_SITE . '/template/'.$template;
+		// Delete the template directory
+		if (JFolder::exists($tpl)) {
+			$retval = JFolder::delete($tpl);
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $file ['name']), 'notice' );
+		} else {
+			JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
+			$retval = false;
+		}
+		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates');
+		return $retval;
 	}
 
 	function isTemplateDefault($template)
@@ -610,7 +653,7 @@ html_Kunena::showFbFooter ();
 		jimport('joomla.html.pagination');
 		$page = new JPagination(count($rows), $limitstart, $limit);
 		$rows = array_slice($rows, $page->limitstart, $page->limit);
-		html_Kunena::showTemplates($rows, $lists, $page, $option);
+		html_Kunena::showTemplates($rows, $page, $option);
 	}
 
 	function editKTemplate()
@@ -763,7 +806,7 @@ html_Kunena::showFbFooter ();
 		}
 	}
 
-	function saveTemplateCSS()
+		function saveTemplateCSS()
 	{
 		$kunena_app = & JFactory::getApplication ();
 		$option			= JRequest::getCmd('option');
@@ -790,7 +833,7 @@ html_Kunena::showFbFooter ();
 			JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_CSS_UNWRITABLE'));
 		}
 		if ($return) {
-			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=chooseKTemplate&cid[]='.$template, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=editKTemplate&cid[]='.$template, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_FILE_SAVED'));
 		} else {
 			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&id='.$template.'&task=chooseCSSTemplate', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
 		}

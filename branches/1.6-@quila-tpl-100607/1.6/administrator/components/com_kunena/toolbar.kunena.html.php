@@ -273,7 +273,7 @@ class CKunenaToolbar
 	function _EDITKTEMPLATE_MENU()
     {
         JToolBarHelper::spacer();
-		JToolBarHelper::apply('saveTemplate');
+		JToolBarHelper::apply('applyTemplate');
 		JToolBarHelper::spacer();
 		JToolBarHelper::save('saveTemplate');
         JToolBarHelper::spacer();

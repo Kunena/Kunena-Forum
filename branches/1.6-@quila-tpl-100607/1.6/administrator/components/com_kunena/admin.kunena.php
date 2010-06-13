@@ -432,6 +432,7 @@ switch ($task) {
 		break;
 
 	case "saveTemplate" :
+	case "applyTemplate" :
 		saveTemplate();
 
 		break;
@@ -522,6 +523,8 @@ html_Kunena::showFbFooter ();
 	function extractKTemplate()
 	{
 		$app = JFactory::getApplication ();
+		$kunena_app = & JFactory::getApplication ();
+		$option		= JRequest::getVar('option', '', '', 'cmd');
 
 		jimport ( 'joomla.filesystem.folder' );
 		jimport ( 'joomla.filesystem.file' );
@@ -541,7 +544,7 @@ html_Kunena::showFbFooter ();
 			else
 				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
 		}
-		// TODO: redirect back
+		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates');
 	}
 
 	function isTemplateDefault($template)
@@ -688,8 +691,8 @@ html_Kunena::showFbFooter ();
 			}
 		}
 		$task = JRequest::getCmd('task');
-		if($task == 'apply') {
-			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=editKTemplate&cid[]='.$template);
+			if($task == 'applyTemplate') {
+			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=editKTemplate&cid[]='.$template, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
 		} else {
 			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_CONFIGURATION_SAVED'));
 		}

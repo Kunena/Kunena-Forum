@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+13-June-2010 @quila
+# [#19345] Template Manager - language strings, Apply button works, some more fix
+
 12-June-2010 Matias
 # [#19345] Template Manager - Make extract template to work
 

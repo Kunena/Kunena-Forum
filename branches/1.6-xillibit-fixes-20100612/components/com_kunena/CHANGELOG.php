@@ -37,6 +37,7 @@ Kunena 1.6.0-ALPHA2
 12-Jun-2010 Xillibit
 # [#19288] Make configuration setting working for disable version check
 # [#19288] Function getRulesHelpDatas removed during merge
+^ [#19288] New png icons which replace old gif icons (thanks DTP2)
 
 12-Jun-2010 Xillibit
 # [#19288] Fix issue on changevote in poll which decreased everytime the poll votes

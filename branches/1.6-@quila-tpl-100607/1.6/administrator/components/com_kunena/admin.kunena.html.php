@@ -368,7 +368,8 @@ table.kadmin-stat caption {
 						<?php } ?>
 					</td>
 					<td><?php $img_path = $kunena_app->getSiteURL().'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
-						<span class="editlinktip hasTip" title="<?php echo $row->name;?>::<img border=&quot;1&quot; src=&quot;<?php echo $img_path; ?>&quot; name=&quot;imagelib&quot; alt=&quot;<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW' ); ?>&quot; width=&quot;200&quot; height=&quot;145&quot; />">
+						<span class="editlinktip hasTip" title="<?php
+							echo kescape($row->name . '::<img border="1" src="' . $img_path . '" name="imagelib" alt="' . JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW' ) . '" width="200" height="145" />'); ?> ">
 							<a href="index.php?option=com_kunena&amp;task=editKTemplate&amp;cid[]=<?php echo $row->directory;?>"><?php echo $row->name;?></a>
 						</span>
 					</td>

@@ -37,6 +37,7 @@ Kunena 1.6.0-ALPHA2
 13-June-2010 Matias
 # [#19345] Template Manager - Change template even if configuration didn't exist
 - [#19293] Remove deprecated configuration option templateimagepath
+^ [#19345] Template Manager - Load javascript and css from the template (initialize.php)
 
 13-June-2010 @quila
 # [#19345] Template Manager - language strings, Apply button works, some more fix

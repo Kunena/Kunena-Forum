@@ -197,7 +197,7 @@ $fb_user_template = JRequest::getString('fb_user_template', '', 'COOKIE');
 $fb_user_img_template = JRequest::getString('fb_user_img_template', '', 'COOKIE');
 // don't allow directory travelling
 $fb_user_template = strtr($fb_user_template, '\\/', '');
-$fb_user_img_template = strtr($fb_user_template, '\\/', '');
+$fb_user_img_template = strtr($fb_user_img_template, '\\/', '');
 
 if (strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template))
 {
@@ -212,7 +212,7 @@ else
     $fb_cur_template = 'default_ex';
     }
 
-if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'images'))
+if (strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_img_template .DS. 'images'))
 {
     $fb_cur_img_template = $fb_user_img_template;
     }

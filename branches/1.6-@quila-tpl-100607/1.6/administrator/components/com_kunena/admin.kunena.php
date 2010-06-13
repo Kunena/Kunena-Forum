@@ -702,17 +702,20 @@ html_Kunena::showFbFooter ();
 	{
 		$kunena_app = & JFactory::getApplication ();
 		$kunena_db	= & JFactory::getDBO();
+		$kunena_config = KunenaFactory::getConfig();
 		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
 		$cid	= array(JFilterInput::clean(@$cid[0], 'cmd'));
 		$option	= JRequest::getCmd('option');
 		if ($cid[0])
 		{
-		$kunena_db->setQuery ( 'UPDATE #__kunena_config SET template = '.$kunena_db->Quote($cid[0]).', templateimagepath = '.$kunena_db->Quote($cid[0]).'' );
-		$kunena_db->query ();
-		KunenaError::checkDatabaseError();
-		$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
-		$kunena_db->query ();
-		KunenaError::checkDatabaseError();
+			$kunena_config->template = $cid[0];
+			$kunena_config->backup ();
+			$kunena_config->remove ();
+			$kunena_config->create ();
+
+			$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
+			$kunena_db->query ();
+			KunenaError::checkDatabaseError();
 		}
 		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT_SELECTED'));
 	}
@@ -1309,8 +1312,7 @@ function showConfig($option) {
 
 	$lists ['jmambot'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_jmambot', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->jmambot );
 	$lists ['disemoticons'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_disemoticons', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->disemoticons );
-	/*$lists ['template'] = JHTML::_ ( 'select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->template );
-	$lists ['templateimagepath'] = JHTML::_ ( 'select.genericlist', $imagesetlistitems, 'cfg_templateimagepath', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->templateimagepath );*/
+	/*$lists ['template'] = JHTML::_ ( 'select.genericlist', $templatelistitems, 'cfg_template', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->template );*/
 	$lists ['regonly'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_regonly', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->regonly );
 	$lists ['board_offline'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_board_offline', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->board_offline );
 	$lists ['pubwrite'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_pubwrite', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pubwrite );

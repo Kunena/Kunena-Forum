@@ -1175,15 +1175,6 @@ table.kadmin-stat caption {
 						?></td>
 								<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_A_TEMPLATE_DESC') ?>
 						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH') ?>
-						</td>
-								<td align="left" valign="top"><?php //echo $lists ['templateimagepath'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_A_TEMPLATE_IMAGE_PATH_DESC') ?>
-						</td>
 					</tr>-->
 							<!--<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php //echo JText::_('COM_KUNENA_AV_POSITION') ?>

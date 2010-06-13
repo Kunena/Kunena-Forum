@@ -55,7 +55,7 @@ $kactualtemplate = $kunena_db->loadResult ();
 $templatedeprecatedlist = array ('default_ex', 'default_green', 'default_red', 'default_gray' );
 if ($kunena_db->getErrorNum () != 0) {
 	if (in_array ( $kactualtemplate, $templatedeprecatedlist )) {
-		$kunena_db->setQuery ( "UPDATE #__kunena_config SET template='default',templateimagepath='default'" );
+		$kunena_db->setQuery ( "UPDATE #__kunena_config SET template='default'" );
 		$kunena_db->query ();
 	}
 }

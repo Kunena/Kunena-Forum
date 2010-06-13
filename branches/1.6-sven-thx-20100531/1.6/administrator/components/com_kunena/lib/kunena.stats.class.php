@@ -180,54 +180,6 @@ class jbStats {
 			. "\n WHERE p.hits > 0 ORDER BY p.hits DESC LIMIT 10");
 		return count($kunena_db->loadObjectList()) > 0 ? $kunena_db->loadObjectList() : array();
 	 }
-
-	 /**
-	  * # of Thank you
-	  * @param start unix time
-	  * @param end unix time
-	  * @return int
-	  */
-	  function get_total_thankyou($start='',$end=''){
-	  	$kunena_db = &JFactory::getDBO();
-	  	$where=array();
-		if (!empty($start))
-			$where[]='time > UNIX_TIMESTAMP(\'' . $start. '\')';
-		if (!empty($end))
-			$where[]='time < UNIX_TIMESTAMP(\'' . $end . '\')';
-		$query='SELECT count(*) FROM #__kunena_thankyou';
-		if (count($where)>0)
-			$query.=' AND '.implode(' AND ',$where);
-		$kunena_db->setQuery($query);
-	  	return intval($kunena_db->loadresult() );
-	  }
-	  /**
-	   * most got thank you
-	   * @return array
-	   */
-	   function get_most_thankyou(){
-	   	$kunena_db = &JFactory::getDBO();
-		$kunena_db->setQuery("SELECT count(s.targetuserid) AS countid, u.username FROM #__kunena_thankyou AS s INNER JOIN #__users AS u WHERE s.targetuserid=u.id GROUP BY s.targetuserid ORDER BY countid DESC LIMIT 10");
-		return $kunena_db->loadObjectList();
-	   }
-	   /**
-	   * most said thank you
-	   * @return array
-	   */
-	   function get_said_most_thankyou(){
-	   	$kunena_db = &JFactory::getDBO();
-		$kunena_db->setQuery("SELECT count(s.userid) AS countid, u.username FROM #__kunena_thankyou AS s INNER JOIN #__users AS u WHERE s.userid=u.id GROUP BY s.userid ORDER BY countid DESC LIMIT 10");
-		return $kunena_db->loadObjectList();
-	   }
-
-	   /**
-	    * topics with most thank you
-	    */
-	    function get_top_thankyou_topics(){
-	    	$kunena_db = &JFactory::getDBO();
-	    	$kunena_db->setQuery("SELECT s.postid, count(s.postid) AS countid, u.id, u.catid,u.subject FROM #__kunena_thankyou AS s INNER JOIN #__kunena_messages AS u WHERE s.postid=u.id GROUP BY s.postid ORDER BY countid DESC LIMIT 10");
-	    	return $kunena_db->loadObjectList();
-	    }
-
 }
 
 ?>

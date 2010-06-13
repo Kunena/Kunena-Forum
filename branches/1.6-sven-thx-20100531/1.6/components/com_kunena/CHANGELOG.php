@@ -33,8 +33,17 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.0-ALPHA
+
+13-June-2010 Sven
+^ [#20833] moved backend statistic to libraries/thankyou.php and libraries/table/kunenathankyou.php
+^ [#20833] killed catid and id in #__kunena_thankyou
+^ [#20833] unique (postid,uid)
+^ [#20833] KEY `userid` (`userid`),	KEY `targetuserid` (`targetuserid`)
+^ [#20833] language renamed strings thread/post -> message
+^ [#20833] all querys using JTable
+
 11-June-2010 Sven
-^ [#20833] redirect with right message when user not loged in or session expired
+# [#20833] redirect with right message when user not loged in or session expired
 + [#20833] Thank You statistic in kunena cpanel
 + [#20833] Language strings for statistic
 + [#20833] Where got thx, where said thx in Profile Tab

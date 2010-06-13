@@ -252,16 +252,9 @@ class CKunenaLatestX {
 	}
 
 	function _getThankyouPosts($saidgot){
-		if($saidgot == 'got'){
-			$query = "SELECT m.thread, m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_thankyou AS t ON m.id=t.postid WHERE t.targetuserid={$this->user->id}";
-		}else if($saidgot == 'said'){
-			$query = "SELECT m.thread, m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_thankyou AS t ON m.id=t.postid WHERE t.userid={$this->user->id}";
-		}else{
-			return;
-		}
-		$this->db->setQuery( $query, $this->offset, $this->threads_per_page );
-		$idlist = $this->db->loadObjectList();
-		if(KunenaError::checkDatabaseError()) return;
+		kimport('thankyou');
+
+		$idlist = KunenaThankYou::getthankyouposts($this->user->id, $saidgot);
 
 		$this->threadids = array();
 		$this->loadids = array();

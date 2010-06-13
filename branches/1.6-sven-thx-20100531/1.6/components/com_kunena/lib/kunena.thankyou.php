@@ -23,6 +23,11 @@ defined( '_JEXEC' ) or die();
 
 class CKunenaThankyou {
 
+	/**
+	 * Contructor
+	 *
+	 * @since 1.6
+	 */
 	function __construct(){
 		$this->pid			= JRequest::getInt('pid', '');
 		$this->catid		= JRequest::getInt('catid','');
@@ -33,27 +38,27 @@ class CKunenaThankyou {
 		$this->config = KunenaFactory::getConfig ();
 		$this->_db = &JFactory::getDBO();
 		$this->_app =& JFactory::getApplication();
+
+		kimport('thankyou');
 	}
 
+	/**
+	 * Write the ThankYou into the table
+	 *
+	 * @since 1.6
+	 */
 	function setThankyou(){
 		if($this->config->showthankyou && $this->my->id){
 			//Check if the user already said thank you to this post
-			$query = "SELECT userid FROM #__kunena_thankyou WHERE postid={$this->pid} AND userid={$this->my->id}";
-			$this->_db->setQuery ( $query );
-			$saidit = $this->_db->loadObject ();
-
-			if( KunenaError::checkDatabaseError() ) return false;
-
-			if($saidit->userid){
+			$saidit = KunenaThankYou::checkifthx($this->pid,$this->my->id);
+			if(!empty($saidit)){
 				$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
 				$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
 				return;
 			}
 
-			$query = "INSERT INTO #__kunena_thankyou SET postid={$this->pid} , catid={$this->catid} , userid={$this->my->id} , targetuserid={$this->targetuserid}";
-			$this->_db->setQuery( $query );
-			$this->_db->query();
-			if(KunenaError::checkDatabaseError()) return false;
+			//Perform the insert
+			if(KunenaThankYou::insertthankyou($this->pid, $this->my->id, $this->targetuserid) !== true) KunenaError::checkDatabaseError();
 
 			$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
 			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
@@ -65,25 +70,22 @@ class CKunenaThankyou {
 	}
 
 	function getThankyouUser($pid){
-		if($this->config->username){
-			$query	= "SELECT #__users.username, #__users.id FROM #__users LEFT JOIN #__kunena_thankyou ON #__users.id = #__kunena_thankyou.userid WHERE #__kunena_thankyou.postid={$pid}";
-		} else {
-			$query	= "SELECT #__users.name AS username, #__users.id FROM #__users LEFT JOIN #__kunena_thankyou ON #__users.id = #__kunena_thankyou.userid WHERE #__kunena_thankyou.postid={$pid}";
-		}
-		$this->_db->setQuery($query);
-		$res	= $this->_db->loadObjectList();
+		if($this->config->showthankyou){
+			if(!$this->config->username) $named = 'name';
+			$res = KunenaThankYou::getthxusers($pid,$named);
 
-		if( KunenaError::checkDatabaseError() ) return false;
+			if( KunenaError::checkDatabaseError() ) return false;
 
-		foreach( $res as $k=>$w){
-			if($k === 0){
-				$thank_string .= CKunenaLink::GetProfileLink($w->id, $w->username);
-			} else {
-				$thank_string .= ', '.CKunenaLink::GetProfileLink($w->id, $w->username);
+			foreach( $res as $k=>$w){
+				if($k === 0){
+					$thank_string .= CKunenaLink::GetProfileLink($w->id, $w->username);
+				} else {
+					$thank_string .= ', '.CKunenaLink::GetProfileLink($w->id, $w->username);
+				}
 			}
-		}
 
-		return $thank_string;
+			return $thank_string;
+		}
 	}
 }
 

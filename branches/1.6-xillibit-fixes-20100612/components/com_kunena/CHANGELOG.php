@@ -42,6 +42,8 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix for select template by user cookie (thanks JoniJnm)
 # [#19288] Fix issue with AUP integration on kimport undefined when you want see the userlist
 # [#19288] Uniform tooltips on social icons
+# [#19288] Fix issue in RSS (thanks JoniJnm)
+^ [#19288] Put png icons for lightbox and group attachments in lightbox on each message
 
 12-Jun-2010 Xillibit
 # [#19288] Fix issue on changevote in poll which decreased everytime the poll votes

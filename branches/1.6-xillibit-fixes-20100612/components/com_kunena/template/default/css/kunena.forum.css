@@ -4195,7 +4195,7 @@ div#kprofile-stats ul li span.krank-admin {
 }
 
 #lbPrevLink:hover {
-	background: transparent url(../images/prevlabel.gif) no-repeat 0 15%;
+	background: transparent url(../images/prevlabel.png) no-repeat 0 15%;
 }
 
 #lbNextLink {
@@ -4203,7 +4203,7 @@ div#kprofile-stats ul li span.krank-admin {
 }
 
 #lbNextLink:hover {
-	background: transparent url(../images/nextlabel.gif) no-repeat 100% 15%;
+	background: transparent url(../images/nextlabel.png) no-repeat 100% 15%;
 }
 
 #lbBottom {
@@ -4221,7 +4221,7 @@ div#kprofile-stats ul li span.krank-admin {
 	float: right;
 	width: 66px;
 	height: 22px;
-	background: transparent url(../images/closelabel.gif) no-repeat center;
+	background: transparent url(../images/closelabel.png) no-repeat center;
 	margin: 5px 0;
 	outline: none;
 }

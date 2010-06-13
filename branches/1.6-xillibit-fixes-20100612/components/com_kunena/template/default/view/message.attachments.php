@@ -34,7 +34,7 @@ defined ( '_JEXEC' ) or die ();
 					}
 
 					$img = '<img title="'.$attachment->filename.'" '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
-					$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments');
+					$html = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments'.$this->id);
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon

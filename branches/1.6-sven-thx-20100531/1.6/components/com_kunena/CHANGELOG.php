@@ -35,6 +35,7 @@ Legend:
 Kunena 1.6.0-ALPHA
 
 13-June-2010 Sven
+# [#20833] correct wrong headers
 ^ [#20833] moved backend statistic to libraries/thankyou.php and libraries/table/kunenathankyou.php
 ^ [#20833] killed catid and id in #__kunena_thankyou
 ^ [#20833] unique (postid,uid)

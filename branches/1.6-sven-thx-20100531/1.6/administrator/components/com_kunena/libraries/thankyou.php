@@ -1,7 +1,7 @@
 <?php
 /**
 * @version $Id$
-* Kunena Component - KunenaUserBan class
+* Kunena Component - Thank You class
 * @package Kunena
 *
 * @Copyright (C) 2010 www.kunena.com All rights reserved

@@ -38,6 +38,8 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Make configuration setting working for disable version check
 # [#19288] Function getRulesHelpDatas removed during merge
 ^ [#19288] New png icons which replace old gif icons (thanks DTP2)
+# [#19288] Fix for videos with missing parameter in array which throw an error (thanks JoniJnm)
+# [#19288] Fix for select template by user cookie (thanks JoniJnm)
 
 12-Jun-2010 Xillibit
 # [#19288] Fix issue on changevote in poll which decreased everytime the poll votes

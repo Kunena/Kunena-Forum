@@ -17,7 +17,12 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-kimport('error');
+if ( function_exists ('kimport') ) {
+	kimport('error');
+} else {
+	require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
+	kimport('error');
+}
 
 class CKunenaTables {
 	var $tables = array ();

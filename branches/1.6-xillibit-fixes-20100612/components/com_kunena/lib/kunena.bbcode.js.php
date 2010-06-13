@@ -1048,7 +1048,7 @@ Selectors.Pseudo.selected = function(){
 };
 
 function kInsertVideo1() {
-	var videosize = $('kvideosize').get('value');
+	var videosize = $('kvideosize').get('value') ? ' size='+$('kvideosize').get('value') : '';
 	var videowidth = $('kvideowidth').get('value');
 	if ( videowidth == '') {
 		videowidth = '425';

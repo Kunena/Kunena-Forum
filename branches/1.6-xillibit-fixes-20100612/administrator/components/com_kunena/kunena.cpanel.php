@@ -180,9 +180,11 @@ div.icon-container {
    		 </tr>
   	</table>
 </div>
+<?php if ($kunena_config->version_check) : ?>
 <div class="kadmin-welcome">
 	<?php echo checkLatestVersion(); ?>
 </div>
+<?php endif; ?>
 <!-- BEGIN: STATS -->
 <div class="kadmin-statscover">
   <?php include_once (JPATH_COMPONENT_ADMINISTRATOR .'/lib/kunena.stats.class.php'); ?>

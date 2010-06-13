@@ -280,6 +280,7 @@ table.kadmin-stat caption {
 	} // Finish: FOOTER FUNC
 
 	function controlPanel() {
+		$kunena_config = KunenaFactory::getConfig ();
 		?>
 
 	<div class="kadmin-functitle icon-cpanel"><?php echo JText::_('COM_KUNENA_CP'); ?></div>

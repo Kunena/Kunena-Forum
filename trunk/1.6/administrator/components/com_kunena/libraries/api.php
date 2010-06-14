@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+if (class_exists('Kunena')) return;
+
 $file = JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php';
 if (is_file($file))
 	require_once ($file);

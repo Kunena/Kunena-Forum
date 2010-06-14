@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA2
 
 14-Jun-2010 Matias
 ^ [#15886] Merged revisions  2703-2722 from /branches/1.6-xillibit-fixes-20100612
+# [#19288] Fix regression - Installation failed
 
 13-Jun-2010 Xillibit
 # [#19288] Make configuration setting working for disable version check

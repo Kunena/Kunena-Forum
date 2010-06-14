@@ -66,6 +66,7 @@ class CKunenaThankyou {
 
 			if( KunenaError::checkDatabaseError() ) return false;
 
+			$thank_string = '';
 			foreach( $res as $k=>$w){
 				if($k === 0){
 					$thank_string .= CKunenaLink::GetProfileLink($w->id, $w->username);

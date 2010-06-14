@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+14-June-2010 Sven
+# [#20833] undefined variable
+
 13-June-2010 Sven
 # [#20833] correct wrong headers
 ^ [#20833] moved backend statistic to libraries/thankyou.php and libraries/table/kunenathankyou.php

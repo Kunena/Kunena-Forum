@@ -100,7 +100,7 @@ class KunenaThankYou extends JObject
 	 * @return Objectlist List of users
 	 * @since 1.6
 	 */
-	 function getthxusers($pid , $named ){
+	 function getthxusers($pid , $named='' ){
 	 	$table = self::getTable();
 	 	return $table->getthxusers($pid,$named);
 	 }

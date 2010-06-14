@@ -280,6 +280,7 @@ table.kadmin-stat caption {
 	} // Finish: FOOTER FUNC
 
 	function controlPanel() {
+		$kunena_config = KunenaFactory::getConfig ();
 		?>
 
 	<div class="kadmin-functitle icon-cpanel"><?php echo JText::_('COM_KUNENA_CP'); ?></div>
@@ -786,6 +787,15 @@ table.kadmin-stat caption {
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_VERSION_CHECK') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['version_check'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_VERSION_CHECK_DESC') ?>
 						</td>
 					</tr>
 				</table>

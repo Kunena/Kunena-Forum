@@ -17,8 +17,7 @@ $json_action = 'pollvote';
 if ( $this->changevote ) {
 	// Get the $id of the last vote
 	$id_last_vote = $this->get_last_vote_id($this->my->id,$this->id);
-	// Reset last vote
-	$this->change_vote($this->my->id,$this->id,$id_last_vote);
+
 	$json_action = 'pollchangevote';
 }
 ?>
@@ -47,7 +46,7 @@ if ( $this->changevote ) {
                     <td class = "td-1 km" align="left">
                         <div class = "kpolldesc">
                         <div id="kpoll-text-help"></div>
-                        <form id="kpoll-form-vote" method="post" action="<?php echo CKunenaLink::GetJsonURL($json_action); ?>">
+                        <form id="kpoll-form-vote" method="post" action="<?php echo CKunenaLink::GetPollsURL($json_action, $this->catid); ?>">
                         <fieldset><legend style="font-size: 14px;"><?php echo JText::_('COM_KUNENA_POLL_OPTIONS'); ?></legend>
                         <ul>
 	<?php
@@ -74,6 +73,7 @@ if ( $this->changevote ) {
 		echo '	'.CKunenaLink::GetThreadLink('view',$this->catid,$this->id,JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), 'follow');
 		?>
 		</div>
+		<input type="hidden" id="kpollvotejsonurl" value="<?php echo CKunenaLink::GetJsonURL($json_action); ?>" />
 		</form>
        </div>
                 	  </td>

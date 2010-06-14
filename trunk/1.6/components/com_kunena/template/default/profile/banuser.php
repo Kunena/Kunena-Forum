@@ -69,6 +69,12 @@ JHTML::_('behavior.calendar');
 			<textarea class="required" name="comment" id="comment"></textarea>
 		</td>
 	</tr>
+	<?php if($this->banInfo->id): ?>
+	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
+		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_MODERATE_REMOVE_BAN'); ?></b></td>
+		<td class="kcol-addban-right"><input type="checkbox" id="ban-delban" name="delban" value="delban" class="" /></td>
+	</tr>
+	<?php endif; ?>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_MODERATE_DELETE_BAD_SIGNATURE'); ?></b></td>
 		<td class="kcol-addban-right"><input type="checkbox" id="ban-delsignature" name="delsignature" value="delsignature" class="" /></td>

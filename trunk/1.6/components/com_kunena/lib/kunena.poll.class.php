@@ -18,13 +18,16 @@ defined( '_JEXEC' ) or die();
  */
 class CKunenaPolls {
 	protected $_db = null;
+	protected $_app = null;
 	public $config = null;
 	public $my = null;
 	public $document = null;
 
 	protected function __construct($db, $config) {
+		$this->do = JRequest::getCmd ( 'do', '' );
 		$this->_db = $db;
 		$this->my = $this->my = &JFactory::getUser ();
+		$this->_app = & JFactory::getApplication ();
 		$this->config = $config;
 		$this->document =& JFactory::getDocument();
 
@@ -374,12 +377,15 @@ class CKunenaPolls {
 
 		if ($pollusers[0]->timediff > $this->config->polltimebtvotes)
       	{
+      		// call reset vote
+      		$this->reset_vote($userid,$threadid);
+
 			$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id='$vote';";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
 
-        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lasttime=now() WHERE pollid='$threadid' AND userid='$userid';";
+        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote='$vote', lasttime=now() WHERE pollid='$threadid' AND userid='$userid';";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
@@ -474,7 +480,7 @@ class CKunenaPolls {
    {
 
 		$query = "SELECT lastvote FROM #__kunena_polls_users
-				WHERE pollid=$pollid AND userid=$userid";
+				WHERE pollid='$pollid' AND userid='$userid';";
     	$this->_db->setQuery($query);
     	$id_last_vote = $this->_db->loadResult();
     	KunenaError::checkDatabaseError();
@@ -484,7 +490,7 @@ class CKunenaPolls {
    /**
 	* For the user can vote a new once, need to remove one vote
 	*/
-   function change_vote($userid,$threadid,$lastvote)
+   function reset_vote($userid,$threadid)
    {
 		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM #__kunena_polls_options AS a
 				INNER JOIN #__kunena_polls_users AS b ON a.pollid=b.pollid
@@ -496,12 +502,12 @@ class CKunenaPolls {
 		foreach ($poll_options_user as $row) {
 			if ($row->id == $row->lastvote) {
 				if($row->option_votes > '0' && $row->user_votes > '0') {
-					$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id=$lastvote AND pollid=$threadid";
+					$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id={$row->lastvote} AND pollid='$threadid';";
     				$this->_db->setQuery($query);
     				$this->_db->query();
 					if (KunenaError::checkDatabaseError()) return;
 
-					$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid=$userid AND pollid=$threadid";
+					$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid='$userid' AND pollid='$threadid';";
     				$this->_db->setQuery($query);
     				$this->_db->query();
 					if (KunenaError::checkDatabaseError()) return;
@@ -529,6 +535,46 @@ class CKunenaPolls {
     	$this->_db->query();
     	if (KunenaError::checkDatabaseError()) return;
    }
+
+	/*
+	 * Function to do things without json
+	*/
+
+	public function polldo() {
+		$vote	= JRequest::getInt('kpollradio', '');
+		$id = JRequest::getInt ( 'kpoll-id', 0 );
+		$catid = JRequest::getInt ( 'catid', 0 );
+
+		switch ( $this->do ) {
+			case 'vote' :
+			case 'pollvote' :
+				$result = $this->save_results($id,$this->my->id,$vote);
+
+				if ($result['results'] == 1) {
+					$message = JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK');
+				} elseif($result['results'] == 2) {
+					$message = JText::_('COM_KUNENA_POLL_SAVE_VOTE_ALREADY');
+				} elseif($result['results'] == 3) {
+					$message = JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE');
+				}
+
+				$this->_app->enqueueMessage ( $message );
+				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, $id, false) );
+				break;
+			case 'pollchangevote' :
+				$result = $this->save_changevote($id,$this->my->id,$vote);
+
+				if($result['results'] == 1) {
+					$message = JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK');
+				} elseif($result['results'] == 3) {
+					$message = JText::_('COM_KUNENA_POLL_WAIT_BEFORE_VOTE');
+				}
+
+				$this->_app->enqueueMessage ( $message );
+				$this->_app->redirect ( CKunenaLink::GetThreadPageURL(CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, $id, false)) );
+				break;
+		}
+	}
 
    /**
     *  Show pollbox

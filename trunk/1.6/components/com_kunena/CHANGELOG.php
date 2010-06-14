@@ -34,6 +34,27 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+14-Jun-2010 Matias
+^ [#15886] Merged revisions  2703-2722 from /branches/1.6-xillibit-fixes-20100612
+
+13-Jun-2010 Xillibit
+# [#19288] Make configuration setting working for disable version check
+# [#19288] Function getRulesHelpDatas removed during merge
+^ [#19288] New png icons which replace old gif icons (thanks DTP2)
+# [#19288] Fix for videos with missing parameter in array which throw an error (thanks JoniJnm)
+# [#19288] Fix for select template by user cookie (thanks JoniJnm)
+# [#19288] Fix issue with AUP integration on kimport undefined when you want see the userlist
+# [#19288] Uniform tooltips on social icons
+# [#19288] Fix issue in RSS (thanks JoniJnm)
+^ [#19288] Put png icons for lightbox and group attachments in lightbox on each message
+
+12-Jun-2010 Xillibit
+# [#19288] Fix issue on changevote in poll which decreased everytime the poll votes
+# [#19288] Put version check data in joomla session and put a configuration setting for disable version check
+# [#19288] On edit ban, allow to remove the ban
+# [#19288] Select only the item with func for show online user in pathway
+# [#19288] Make working poll vote and change vote without ajax
+
 12-Jun-2010 Matias
 - [#19244] Remove deprecated ban logic from lib/kunena.moderation.tools.class.php
 ^ [#15886] Merged feature branch /branches/1.6-@quila-ban-100526

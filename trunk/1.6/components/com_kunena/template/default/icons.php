@@ -46,7 +46,7 @@ $kunena_icons['notloginforum_s'] = 'folder_nonew_sm.png';
 $kunena_icons['toparrow'] = 'top_arrow.gif';
 $kunena_icons['bottomarrow'] = 'bottom_arrow.gif';
 $kunena_icons['latestpost'] = 'tlatest.gif';
-$kunena_icons['topicsticky'] = 'tsticky.gif';
+$kunena_icons['topicsticky'] = 'tsticky.png';
 $kunena_icons['topiclocked'] = 'lock_xsm.png';
 $kunena_icons['userprofile'] ='profile.gif';
 $kunena_icons['pms2'] ='pm.png';
@@ -74,7 +74,7 @@ $kunena_icons['myspace'] ='myspace.png';
 $kunena_icons['skype'] ='skype.png';
 $kunena_icons['twitter'] ='twitter.png';
 $kunena_icons['yahoo'] ='yahoo.png';
-$kunena_icons['rss'] ='rss.gif';
+$kunena_icons['rss'] ='rss.png';
 
 // Topic icons
 $topic_emoticons = array ();
@@ -83,6 +83,6 @@ $topic_emoticons [1] = KUNENA_URLICONSPATH . 'topic-exclamation.png';
 $topic_emoticons [2] = KUNENA_URLICONSPATH . 'topic-question.png';
 $topic_emoticons [3] = KUNENA_URLICONSPATH . 'topic-arrow.png';
 $topic_emoticons [4] = KUNENA_URLICONSPATH . 'topic-love.png';
-$topic_emoticons [5] = KUNENA_URLICONSPATH . 'topic-grin.gif';
-$topic_emoticons [6] = KUNENA_URLICONSPATH . 'topic-shock.gif';
-$topic_emoticons [7] = KUNENA_URLICONSPATH . 'topic-smile.gif';
+$topic_emoticons [5] = KUNENA_URLICONSPATH . 'topic-grin.png';
+$topic_emoticons [6] = KUNENA_URLICONSPATH . 'topic-shock.png';
+$topic_emoticons [7] = KUNENA_URLICONSPATH . 'topic-smile.png';

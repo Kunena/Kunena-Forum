@@ -66,7 +66,7 @@ $fb_user_template = JRequest::getString('fb_user_template', '', 'COOKIE');
 $fb_user_img_template = JRequest::getString('fb_user_img_template', '', 'COOKIE');
 // don't allow directory travelling
 $fb_user_template = strtr($fb_user_template, '\\/', '');
-$fb_user_img_template = strtr($fb_user_template, '\\/', '');
+$fb_user_img_template = strtr($fb_user_img_template, '\\/', '');
 
 if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'css'))
 {
@@ -81,7 +81,7 @@ else
     $fb_cur_template = 'default';
     }
 
-if (JString::strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'images'))
+if (JString::strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_img_template .DS. 'images'))
 {
     $fb_cur_img_template = $fb_user_img_template;
     }
@@ -940,6 +940,20 @@ class CKunenaTools {
 					return true;
 				}
 			}
+		}
+
+		/**
+		 * This function load datas for rules or help page
+		 *
+		 */
+		function getRulesHelpDatas($id) {
+			$kunena_db = &JFactory::getDBO ();
+
+			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$id}'" );
+			$introtext = $kunena_db->loadResult ();
+			KunenaError::checkDatabaseError();
+
+			return $introtext;
 		}
 
     } // end of class

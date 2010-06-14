@@ -37,6 +37,9 @@ Kunena 1.5.12-RC2
 # [#20107] Merge changes from 1.5-xillibit-fixing
 ^ [#20106] Updated version info to 1.5.12-RC2
 
+13-Jun-2010 Xillibit
+# [#19288] Fix for select template by user cookie (thanks JoniJnm)
+
 10-Jun-2010 Xillibit
 - [#20803] Remove configuration settings to define the maxlength for url on links and images
 

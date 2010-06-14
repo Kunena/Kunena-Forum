@@ -33,14 +33,14 @@ class CKunenaThankyou {
 	}
 
 	/**
-	 * Write the ThankYou into the table
+	 * Store ThankYou into the table
 	 *
 	 * @since 1.6
 	 */
 	function setThankyou(){
 		if($this->config->showthankyou && $this->my->id){
 			//Check if the user already said thank you to this post
-			$saidit = KunenaThankYou::checkifthx($this->pid,$this->my->id);
+			$saidit = KunenaThankYou::checkIfThankYouAllready($this->pid,$this->my->id);
 			if(!empty($saidit)){
 				$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
 				$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
@@ -48,7 +48,7 @@ class CKunenaThankyou {
 			}
 
 			//Perform the insert
-			if(KunenaThankYou::insertthankyou($this->pid, $this->my->id, $this->targetuserid) !== true) KunenaError::checkDatabaseError();
+			if(KunenaThankYou::storeThankYou($this->pid, $this->my->id, $this->targetuserid) !== true) KunenaError::checkDatabaseError();
 
 			$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
 			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
@@ -59,20 +59,23 @@ class CKunenaThankyou {
 		}
 	}
 
-	function getThankyouUser($pid){
+	/**
+	 * Get Thank You User by Message ID
+	 * @param int $pid
+	 * @return array usernames with profillink
+	 * @since 1.6
+	 */
+	function getThankYouUser($pid){
 		if($this->config->showthankyou){
+			$named='';
 			if(!$this->config->username) $named = 'name';
-			$res = KunenaThankYou::getthxusers($pid,$named);
+			$res = KunenaThankYou::getThankYouUsers($pid,$named);
 
 			if( KunenaError::checkDatabaseError() ) return false;
 
 			$thank_string = '';
 			foreach( $res as $k=>$w){
-				if($k === 0){
-					$thank_string .= CKunenaLink::GetProfileLink($w->id, $w->username);
-				} else {
-					$thank_string .= ', '.CKunenaLink::GetProfileLink($w->id, $w->username);
-				}
+				$thank_string[$k]= CKunenaLink::GetProfileLink($w->id, $w->username);
 			}
 
 			return $thank_string;

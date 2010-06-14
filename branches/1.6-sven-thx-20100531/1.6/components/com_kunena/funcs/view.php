@@ -178,8 +178,8 @@ class CKunenaViewMessage {
 		if ($this->config->showthankyou && $this->profile->userid) {
 			require_once(JPATH_COMPONENT.DS.'lib'.DS.'kunena.thankyou.php');
 			$thankyou = new CKunenaThankyou();
-			$thxstring = $thankyou->getThankyouUser($this->id);
-			$this->thankyou = ($thxstring) ? JText::_('COM_KUNENA_THANKYOU') . ": ".$thxstring : NULL ;
+			$this->thankyou = $thankyou->getThankYouUser($this->id);
+
 
 			if($this->my->id && $this->my->id != $this->profile->userid) {
 				$this->thankyoubutton = CKunenaLink::GetThankYouLink ( $this->catid, $this->id , $this->userid , '<span class="kthankyou" alt="'.JText::_('COM_KUNENA_BUTTON_TANKYOU').'"> </span>' , JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), '' );

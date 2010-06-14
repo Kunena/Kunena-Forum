@@ -183,7 +183,10 @@ div.icon-container {
 </div>
 <!-- BEGIN: STATS -->
 <div class="kadmin-statscover">
-  <?php include_once (JPATH_COMPONENT_ADMINISTRATOR .'/lib/kunena.stats.class.php'); ?>
+  <?php include_once (JPATH_COMPONENT_ADMINISTRATOR .'/lib/kunena.stats.class.php');
+  jimport ( 'joomla.utilities.date' );
+  $datem = new JDate(date("Y-m-d 00:00:01"));
+  $datee = new JDate(date("Y-m-d 23:59:59"));?>
   <table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
     <caption><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></caption>
     <col class="col1">
@@ -220,9 +223,9 @@ div.icon-container {
       </tr>
       <tr>
       	<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_THANKYOU'); ?></td>
-        <td><strong><?php echo KunenaThankYou::get_total_thankyou();?></strong></td>
+        <td><strong><?php echo KunenaThankYou::getTotalThankYou();?></strong></td>
         <td><?php echo JText::_('COM_KUNENA_STATS_TODAY_THANKYOU'); ?> </td>
-        <td><strong><?php echo KunenaThankYou::get_total_thankyou(date("Y-m-d 00:00:01"),date("Y-m-d 23:59:59")) ;?></strong></td>
+        <td><strong><?php echo KunenaThankYou::getTotalThankYou($datem->toMySQL(),$datee->toMySQL()) ;?></strong></td>
       </tr>
       <tr>
         <td><?php echo JText::_('COM_KUNENA_STATS_TODAY_TOPICS'); ?></td>
@@ -331,7 +334,7 @@ div.icon-container {
           </thead>
           <tbody>
             <?php
-				$KUNENA_top_thankyous=KunenaThankYou::get_most_thankyou();
+				$KUNENA_top_thankyous=KunenaThankYou::getMostThankYou();
 				foreach ($KUNENA_top_thankyous as $KUNENA_thankyou) {
 					if ($KUNENA_thankyou->countid == $KUNENA_top_thankyous[0]->countid) {
 						$barwidth = 100;
@@ -367,7 +370,7 @@ div.icon-container {
           </thead>
           <tbody>
             <?php
-		$KUNENA_top_said_thankyous=KunenaThankYou::get_most_thankyou('said');
+		$KUNENA_top_said_thankyous=KunenaThankYou::getMostThankYou('said');
 				foreach ($KUNENA_top_said_thankyous as $KUNENA_said_thankyou) {
 					if ($KUNENA_said_thankyou->countid == $KUNENA_top_said_thankyous[0]->countid) {
 						$barwidth = 100;
@@ -445,7 +448,7 @@ div.icon-container {
 		    </thead>
 		    <tbody>
 		      <?php
-				$KUNENA_top_posts=KunenaThankYou::get_top_thankyou_topics();
+				$KUNENA_top_posts=KunenaThankYou::getTopThankYouTopics();
 				foreach ($KUNENA_top_posts as $KUNENA_post) {
 					if ($KUNENA_post->countid == $KUNENA_top_posts[0]->countid) {
 						$barwidth = 100;

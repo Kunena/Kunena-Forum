@@ -39,7 +39,7 @@ class TableKunenaThankYou extends JTable{
 	  * @return int
 	  * @since 1.6
 	  */
-	function loadtotalthankyou($start,$end){
+	function loadTotalThankYou($start,$end){
 		$where=array();
 		if (!empty($start))
 			$where[]="time > UNIX_TIMESTAMP('{$start}')";
@@ -61,17 +61,23 @@ class TableKunenaThankYou extends JTable{
 	}
 
 	/**
-	 * Get 10 user with most thankyou or said thankyou
+	 * Get user with most thankyou or said thankyou
 	 * @param string $saidgot empty or 'said'
+	 * @param string $limit how much ThankYou Users you want to view - default 10
 	 * @return ObjectList returns a list of user
 	 * @since 1.6
 	 */
-	function getmostthankyou($saidgot){
+	function getMostThankYou($saidgot, $limit="10"){
 		$uid = 'targetuserid';
 		if($saidgot === 'said') $uid = 'userid';
 
-		$query = "SELECT count(s.{$uid}) AS countid, u.username FROM {$this->_tbl} AS s INNER JOIN #__users AS u WHERE s.{$uid}=u.id GROUP BY s.{$uid} ORDER BY countid DESC LIMIT 10";
-		$this->_db->setQuery($query);
+		$query = "SELECT count(s.{$uid}) AS countid, u.username " .
+				"FROM {$this->_tbl} AS s " .
+				"INNER JOIN #__users AS u " .
+				"WHERE s.{$uid}=u.id " .
+				"GROUP BY s.{$uid} " .
+				"ORDER BY countid DESC";
+		$this->_db->setQuery($query, "0", $limit);
 		$res = $this->_db->loadObjectList();
 
 		// Check for an error message.
@@ -85,14 +91,19 @@ class TableKunenaThankYou extends JTable{
 
 	/**
 	 * Get the Messages with the most thankyous
-	 *
+	 * @param string number of messages you want to show
 	 * @return Objectlist List of messages
 	 * @since 1.6
 	 */
-	function gettopthankyoutopics(){
-		$query = "SELECT s.postid, count(s.postid) AS countid, u.id, u.catid,u.subject FROM {$this->_tbl} AS s INNER JOIN #__kunena_messages AS u WHERE s.postid=u.id GROUP BY s.postid ORDER BY countid DESC LIMIT 10";
+	function getTopThankYouTopics($limit="10"){
+		$query = "SELECT s.postid, count(s.postid) AS countid, u.id, u.catid,u.subject " .
+				"FROM {$this->_tbl} AS s " .
+				"INNER JOIN #__kunena_messages AS u " .
+				"WHERE s.postid=u.id " .
+				"GROUP BY s.postid " .
+				"ORDER BY countid DESC";
 
-		$this->_db->setQuery($query);
+		$this->_db->setQuery($query, "0" , $limit);
 		$res = $this->_db->loadObjectList();
 
 		// Check for an error message.
@@ -111,9 +122,12 @@ class TableKunenaThankYou extends JTable{
 	 * @return int userid if hes in table else empty
 	 * @since 1.6
 	 */
-	function checkifthx($pid,$userid){
-		$query = "SELECT userid FROM {$this->_tbl} WHERE postid={$pid} AND userid={$userid}";
-		$this->_db->setQuery ( $query );
+	function checkIfThankYouAllready($pid,$userid){
+		$query = "SELECT userid " .
+				"FROM {$this->_tbl} " .
+				"WHERE postid={$pid} " .
+				"AND userid={$userid}";
+		$this->_db->setQuery ( $query , '0' , '1');
 
 		$res = $this->_db->loadResult();
 
@@ -134,7 +148,7 @@ class TableKunenaThankYou extends JTable{
 	 * @return bool true if succes
 	 * @since 1.6
 	 */
-	function insertthankyou($pid, $userid, $targetid){
+	function storeThankYou($pid, $userid, $targetid){
 		$query = "INSERT INTO {$this->_tbl} SET postid={$pid} , userid={$userid} , targetuserid={$targetid}";
 		$this->_db->setQuery( $query );
 		$this->_db->query();
@@ -152,14 +166,19 @@ class TableKunenaThankYou extends JTable{
 	 * Get the users who thank youd to that message
 	 * @param int $pid
 	 * @param string $named
+	 * @param string number how much users you will show
 	 * @return Objectlist List of users
 	 * @since 1.6
 	 */
-	 function getthxusers($pid, $named=''){
+	 function getThankYouUsers($pid, $named='', $limit='10'){
 	 	$name = 'username';
 	 	if($named === 'name') $name = $named.' AS username';
-	 	$query	= "SELECT u.{$name}, u.id FROM #__users AS u LEFT JOIN {$this->_tbl} AS s ON u.id = s.userid WHERE s.postid={$pid}";
-	 	$this->_db->setQuery($query);
+	 	$query	= "SELECT u.{$name}, u.id " .
+	 			"FROM #__users AS u " .
+	 			"LEFT JOIN {$this->_tbl} AS s " .
+	 			"ON u.id = s.userid " .
+	 			"WHERE s.postid={$pid}";
+	 	$this->_db->setQuery($query, '0', $limit);
 	 	$res = $this->_db->loadObjectList();
 
 	 	// Check for an error message.
@@ -171,11 +190,22 @@ class TableKunenaThankYou extends JTable{
 		return $res;
 	 }
 
-	 function getthankyouposts($userid,$saidgot){
+	/**
+	 * Get the Messages where a user said Thank You or got Thank You
+	 * @param int $userid
+	 * @param string $saidgot have value 'said' or empty
+	 * @param string $limit number of messages you want default 10
+	 * @return Objectlist List of the wanted messages
+	 */
+	 function getThankYouPosts($userid,$saidgot,$limit="10"){
 	 	$sg = 'targetuserid';
 	 	if($saidgot === 'said') $sg= 'userid';
-	 	$query = "SELECT m.thread, m.id FROM #__kunena_messages AS m INNER JOIN {$this->_tbl} AS t ON m.id=t.postid WHERE t.{$sg}={$userid}";
-	 	$this->_db->setQuery($query);
+	 	$query = "SELECT m.thread, m.id " .
+	 			"FROM #__kunena_messages AS m " .
+	 			"INNER JOIN {$this->_tbl} AS t " .
+	 			"ON m.id=t.postid " .
+	 			"WHERE t.{$sg}={$userid}";
+	 	$this->_db->setQuery($query, '0' , $limit);
 
 	 	$res = $this->_db->loadObjectList();
 

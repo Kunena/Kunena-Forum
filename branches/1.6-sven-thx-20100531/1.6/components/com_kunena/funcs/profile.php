@@ -217,7 +217,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('userposts',0);
 		$obj->user = $this->user;
-		$obj->getGotThankyouPosts();
+		$obj->getGotThankYouPosts();
 		$obj->displayPosts();
 	}
 
@@ -226,7 +226,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('userposts',0);
 		$obj->user = $this->user;
-		$obj->getSaidThankyouPosts();
+		$obj->getSaidThankYouPosts();
 		$obj->displayPosts();
 	}
 	function displayOwnTopics()

@@ -251,10 +251,13 @@ class CKunenaLatestX {
 		$this->_common();
 	}
 
-	function _getThankyouPosts($saidgot){
+	function _getThankYouPosts($saidgot){
 		kimport('thankyou');
 
-		$idlist = KunenaThankYou::getthankyouposts($this->user->id, $saidgot);
+		$this->total = 10;//$limit default is on 10 TODO make adjustable
+		$this->threads_per_page = 10;
+
+		$idlist = KunenaThankYou::getThankYouPosts($this->user->id, $saidgot);
 
 		$this->threadids = array();
 		$this->loadids = array();
@@ -273,12 +276,12 @@ class CKunenaLatestX {
 		$this->_getPosts('user');
 	}
 
-	function getGotThankyouPosts() {
-		$this->_getThankyouPosts('got');
+	function getGotThankYouPosts() {
+		$this->_getThankYouPosts('got');
 	}
 
-	function getSaidThankyouPosts(){
-		$this->_getThankyouPosts('said');
+	function getSaidThankYouPosts(){
+		$this->_getThankYouPosts('said');
 	}
 
 	function getUnapprovedPosts() {

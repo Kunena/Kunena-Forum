@@ -36,6 +36,10 @@ Kunena 1.6.0-ALPHA
 
 14-June-2010 Sven
 # [#20833] undefined variable
+^ [#20833] naming of the functions (camelCase)
+^ [#20833] moved code for more flexible into message.thankyou.php
+^ [#20833] limit all querys with a default limit value of 10
+# [#20833] Undefined property
 
 13-June-2010 Sven
 # [#20833] correct wrong headers

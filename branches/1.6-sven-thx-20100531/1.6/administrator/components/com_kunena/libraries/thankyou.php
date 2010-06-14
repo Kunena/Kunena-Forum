@@ -44,10 +44,10 @@ class KunenaThankYou extends JObject
 	  * @return int
 	  * @since 1.6
 	  */
-	public function get_total_thankyou($start='',$end=''){
+	public function getTotalThankYou($start='',$end=''){
 	  	// Create the user table object
 		$table = self::getTable();
-		return $table->loadtotalthankyou($start,$end);
+		return $table->loadTotalThankYou($start,$end);
 	  }
 
 	/**
@@ -56,9 +56,9 @@ class KunenaThankYou extends JObject
 	* @return array
 	* @since 1.6
 	*/
-	public function get_most_thankyou($saidgot=''){
+	public function getMostThankYou($saidgot=''){
 	   	$table = self::getTable();
-	   	return $table->getmostthankyou($saidgot);
+	   	return $table->getMostThankYou($saidgot);
 	}
 
 	/**
@@ -66,9 +66,9 @@ class KunenaThankYou extends JObject
 	* @return array
 	* @since 1.6
 	*/
-	function get_top_thankyou_topics(){
+	function getTopThankYouTopics(){
 		$table = self::getTable();
-		return $table->gettopthankyoutopics();
+		return $table->getTopThankYouTopics();
 	}
 	/**
 	 * Check if thx already
@@ -77,9 +77,9 @@ class KunenaThankYou extends JObject
 	 * @return int userid if its in table else empty
 	 * @since 1.6
 	 */
-	function checkifthx($pid,$userid){
+	function checkIfThankYouAllready($pid,$userid){
 		$table = self::getTable();
-		return $table->checkifthx($pid,$userid);
+		return $table->checkIfThankYouAllready($pid,$userid);
 	}
 	/**
 	 * Write thx
@@ -89,9 +89,9 @@ class KunenaThankYou extends JObject
 	 * @return bool true if success
 	 * @since 1.6
 	 */
-	function insertthankyou($pid, $userid, $targetid){
+	function storeThankYou($pid, $userid, $targetid){
 		$table = self::getTable();
-		return $table->insertthankyou($pid, $userid, $targetid);
+		return $table->storeThankYou($pid, $userid, $targetid);
 	}
 
 	/**
@@ -100,14 +100,14 @@ class KunenaThankYou extends JObject
 	 * @return Objectlist List of users
 	 * @since 1.6
 	 */
-	 function getthxusers($pid , $named='' ){
+	 function getThankYouUsers($pid , $named='' ){
 	 	$table = self::getTable();
-	 	return $table->getthxusers($pid,$named);
+	 	return $table->getThankYouUsers($pid,$named);
 	 }
 
-	 function getthankyouposts($userid,$saidgot){
+	 function getThankYouPosts($userid,$saidgot){
 	 	$table= self::getTable();
-	 	return $table->getThankyouPosts($userid, $saidgot);
+	 	return $table->getThankYouPosts($userid, $saidgot);
 	 }
 
 }

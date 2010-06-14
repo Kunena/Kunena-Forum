@@ -234,8 +234,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	$document = & JFactory::getDocument ();
 
-	if (file_exists ( KUNENA_PATH_TEMPLATE .DS. 'initialize.php' )) {
-		require_once (KUNENA_PATH_TEMPLATE .DS. 'initialize.php');
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/initialize.php' )) {
+		require_once ( KUNENA_ABSTMPLTPATH . '/initialize.php' );
 	} else {
 		require_once (KPATH_SITE . '/template/default/initialize.php');
 	}
@@ -320,15 +320,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	?>
  <?php
 	CKunenaTools::loadTemplate('/profilebox.php');
-
-	/*$ini = KUNENA_PATH_TEMPLATE.DS.$kunena_config->template.DS.'params.ini';
-	$tplParams=parse_ini_file($ini);
-
-	$theme = $tplParams['themeColour'];
-	$document->addStyleSheet ( KUNENA_TMPLTURL .'css/'.$theme.'.css' );
-
-	$button = $tplParams['buttonStyle'];
-	$document->addStyleSheet ( KUNENA_TMPLTURL .'css/'.$button.'.css' );*/
 
 	// Handle help / rules menuitems
 	if ($func == 'article') {

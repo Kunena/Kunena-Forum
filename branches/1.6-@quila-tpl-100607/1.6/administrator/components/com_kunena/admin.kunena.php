@@ -800,7 +800,7 @@ html_Kunena::showFbFooter ();
 		}
 	}
 
-		function saveTemplateCSS()
+	function saveTemplateCSS()
 	{
 		$kunena_app = & JFactory::getApplication ();
 		$option			= JRequest::getCmd('option');

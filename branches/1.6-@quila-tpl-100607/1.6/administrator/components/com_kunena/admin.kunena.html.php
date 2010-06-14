@@ -226,6 +226,16 @@ select#admin_access {
 select#kforums {
 	width: 200px;
 }
+div.tpl-thumbnail img {
+	float:left;
+	margin-bottom:10px;
+	border:4px solid #ccc;
+	padding:2px
+	max-width: 300px;
+}
+div.tpl-desc {
+	clear: left;
+}
 
 </style>
 
@@ -426,7 +436,12 @@ table.kadmin-stat caption {
 				</tr>
 				<tr>
 					<td valign="top" class="key"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DESCRIPTION' ); ?>:</td>
-					<td><?php echo JText::_($row->description); ?></td>
+					<td><?php $path = KUNENA_PATH_TEMPLATE.DS.$template . '/images/template_thumbnail.png';
+						if (file_exists ( $path )) : ?>
+						<div class="tpl-thumbnail"><img src ="<?php echo JURI::root (); ?>/components/com_kunena/template/<?php echo $template; ?>/images/template_thumbnail.png" /></div>
+						<?php endif; ?>
+						<div class="tpl-desc"><?php echo JText::_($row->description); ?></div>
+					</td>
 				</tr>
 				</table>
 			</fieldset>
@@ -479,7 +494,7 @@ table.kadmin-stat caption {
 		</table>
 		<table class="adminlist">
 		<tr>
-			<th width="5%" align="left"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NUM' ); ?></th>
+			<th width="1%" align="left"> </th>
 			<th width="85%" align="left"><?php echo $t_dir; ?></th>
 			<th width="10%"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE' ); ?>/<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE' ); ?></th>
 		</tr>

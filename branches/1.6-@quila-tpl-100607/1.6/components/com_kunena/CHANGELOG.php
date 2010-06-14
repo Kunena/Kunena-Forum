@@ -36,6 +36,8 @@ Kunena 1.6.0-ALPHA2
 
 14-June-2010 @quila
 # [#19345] Template Manager - some more changes
+# [#19345] Template Manager - initialize.php now loaded from published template
+# [#19345] Template Manager - fixed location for template_thumbnail.png (images folder of template)
 
 13-June-2010 @quila
 # [#19345] Template Manager - fixed "Edit CSS" button

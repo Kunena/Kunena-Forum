@@ -53,8 +53,6 @@ class KunenaTemplate extends JObject
 		foreach ($this->params->_xml['_default']->children() as $param)  {
 			if ($param->attributes('type') != 'spacer') $this->params->def($param->attributes('name'), $param->attributes('default'));
 		}
-
-		echo "<pre>";print_r($this->params);echo "</pre>";
 	}
 
 	/**

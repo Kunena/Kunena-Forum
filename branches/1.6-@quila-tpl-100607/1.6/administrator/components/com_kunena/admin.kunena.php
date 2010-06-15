@@ -547,7 +547,11 @@ html_Kunena::showFbFooter ();
 				foreach ($templates as $template) {
 					// Never overwrite default template
 					if ($template->directory == 'default') continue;
-					if (is_dir($dest.$template->directory)) JFolder::delete($dest.$template->directory);
+					if (is_dir($dest.$template->directory)) {
+						if (is_file($dest.$template->directory.'/params.ini'))
+							JFolder::move($dest.$template->directory.'/params.ini', $tmp.$template->directory);
+						JFolder::delete($dest.$template->directory);
+					}
 					$error = JFolder::move($tmp.$template->directory, $dest.$template->directory);
 					if ($error !== true) $app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').': ' . $error, 'notice' );
 				}

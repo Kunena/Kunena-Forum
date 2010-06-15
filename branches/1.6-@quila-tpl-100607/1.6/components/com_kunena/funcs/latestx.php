@@ -525,11 +525,9 @@ class CKunenaLatestX {
 		$this->document->setDescription ( $metaDesc );
 
 		$this->document->setTitle ( $this->title . ' - ' . $this->config->board_title );
-		
-			$ini = KUNENA_PATH_TEMPLATE.DS.$this->config->template.DS.'params.ini';
-		if (file_exists ( $ini )) {
-			$this->tplParams = parse_ini_file($ini);
-		}
+
+		$template = KunenaFactory::getTemplate();
+		$this->tplParams = $template->params;
 
 		CKunenaTools::loadTemplate('/threads/latestx.php');
 	}

@@ -755,7 +755,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		$ftp = JClientHelper::getCredentials('ftp');
 		$file = KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
 		jimport('joomla.filesystem.file');
-		if (JFile::exists($file) && count($params))
+		if (count($params))
 		{
 			$registry = new JRegistry();
 			$registry->loadArray($params);
@@ -770,6 +770,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 				JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_UNWRITABLE'));
 			}
 			if (!$return) {
+				// FIXME: write failed, not read
 				$kunena_app->redirect('index.php?option='.$option, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
 			}
 		}

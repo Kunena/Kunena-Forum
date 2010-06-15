@@ -1741,12 +1741,6 @@ PX		EM			PCT			PT
 	display: inline-block;
 	margin: -2px 0;
 }
-#Kunena span.kthankyou {
-	background: url("../images/icons/thankyou.png") no-repeat left top;
-	height: 16px;
-	width: 16px;
-	display: inline-block;
-}
 
 #Kunena div.kmsgtext {
 	width: 100%;
@@ -2536,6 +2530,10 @@ POST PAGE
 }
 #Kunena a.kbuttonuser span {
 	float: left;
+}
+#Kunena a.kbuttonuser span.thankyou {
+	float: left;
+	background: url("../images/buttons/btn-left-favorite.gif") no-repeat left top;
 }
 #Kunena a.kbuttonuser span.favorite {
 	float: left;

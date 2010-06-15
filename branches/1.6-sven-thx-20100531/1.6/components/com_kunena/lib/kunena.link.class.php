@@ -284,7 +284,7 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=karma&do=' . $do . '&userid=' . $userid . '&pid=' . $pid . '&catid=' . $catid, $name, '', $rel );
 	}
 
-	function GetThankYouLink( $catid, $pid, $targetuserid , $name, $title, $class) {
+	function GetThankYouLink( $catid, $pid, $targetuserid, $name, $title, $class) {
 		return CKunenaLink::GetSefHrefLink (KUNENA_LIVEURLREL.'&func=thankyou&pid='.$pid.'&catid='.$catid.'&targetuserid='.$targetuserid, $name, $title, 'nofollow', $class);
 	}
 

@@ -1,30 +1,28 @@
 <?php
 /**
-* @version $Id$
-* Kunena Component - Thank You class
-* @package Kunena
-*
-* @Copyright (C) 2010 www.kunena.com All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
-**/
+ * @version $Id$
+ * Kunena Component - Thank You class
+ * @package Kunena
+ *
+ * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ **/
 
 // Dont allow direct linking
-defined( '_JEXEC' ) or die();
+defined ( '_JEXEC' ) or die ();
 
 /**
-* Kunena Thank You
-*
-*/
-class KunenaThankYou extends JObject
-{
+ * Kunena Thank You
+ *
+ */
+class KunenaThankYou extends JObject {
 	/**
-	* Constructor
-	*
-	* @access	protected
-	*/
-	public function __construct()
-	{
+	 * Constructor
+	 *
+	 * @access	protected
+	 */
+	public function __construct() {
 		$this->_db = JFactory::getDBO ();
 	}
 	/**
@@ -32,43 +30,42 @@ class KunenaThankYou extends JObject
 	 * @return A database object
 	 * @since 1.6
 	 */
-	public function getTable()
-	{
+	public function getTable() {
 		// Create the user table object
-		return JTable::getInstance('KunenaThankYou', 'Table');
+		return JTable::getInstance ( 'KunenaThankYou', 'Table' );
 	}
-	 /**
-	  * Total number of Thank you
-	  * @param start unix time
-	  * @param end unix time
-	  * @return int
-	  * @since 1.6
-	  */
-	public function getTotalThankYou($start='',$end=''){
-	  	// Create the user table object
-		$table = self::getTable();
-		return $table->loadTotalThankYou($start,$end);
-	  }
-
 	/**
-	* most thank you
-	* @param string $saidgot
-	* @return array
-	* @since 1.6
-	*/
-	public function getMostThankYou($saidgot=''){
-	   	$table = self::getTable();
-	   	return $table->getMostThankYou($saidgot);
+	 * Total number of Thank you
+	 * @param start unix time
+	 * @param end unix time
+	 * @return int
+	 * @since 1.6
+	 */
+	public function getTotalThankYou($start = null, $end = null) {
+		// Create the user table object
+		$table = self::getTable ();
+		return $table->getTotal ( $start, $end );
 	}
 
 	/**
-	* topics with most thank you
-	* @return array
-	* @since 1.6
-	*/
-	function getTopThankYouTopics(){
-		$table = self::getTable();
-		return $table->getTopThankYouTopics();
+	 * most thank you
+	 * @param string $saidgot
+	 * @return array
+	 * @since 1.6
+	 */
+	public function getMostThankYou($saidgot = '') {
+		$table = self::getTable ();
+		return $table->getTopUsers ( $saidgot );
+	}
+
+	/**
+	 * topics with most thank you
+	 * @return array
+	 * @since 1.6
+	 */
+	public function getTopThankYouTopics() {
+		$table = self::getTable ();
+		return $table->getTopTopics ();
 	}
 	/**
 	 * Check if thx already
@@ -77,9 +74,9 @@ class KunenaThankYou extends JObject
 	 * @return int userid if its in table else empty
 	 * @since 1.6
 	 */
-	function checkIfThankYouAllready($pid,$userid){
-		$table = self::getTable();
-		return $table->checkIfThankYouAllready($pid,$userid);
+	public function checkIfThankYouAllready($pid, $userid) {
+		$table = self::getTable ();
+		return $table->checkIfExists ( $pid, $userid );
 	}
 	/**
 	 * Write thx
@@ -89,9 +86,9 @@ class KunenaThankYou extends JObject
 	 * @return bool true if success
 	 * @since 1.6
 	 */
-	function storeThankYou($pid, $userid, $targetid){
-		$table = self::getTable();
-		return $table->storeThankYou($pid, $userid, $targetid);
+	public function storeThankYou($pid, $userid, $targetid) {
+		$table = self::getTable ();
+		return $table->storeThankYou ( $pid, $userid, $targetid );
 	}
 
 	/**
@@ -100,15 +97,13 @@ class KunenaThankYou extends JObject
 	 * @return Objectlist List of users
 	 * @since 1.6
 	 */
-	 function getThankYouUsers($pid , $named='' ){
-	 	$table = self::getTable();
-	 	return $table->getThankYouUsers($pid,$named);
-	 }
+	public function getThankYouUsers($pid, $named = '') {
+		$table = self::getTable ();
+		return $table->getUsers ( $pid, $named );
+	}
 
-	 function getThankYouPosts($userid,$saidgot){
-	 	$table= self::getTable();
-	 	return $table->getThankYouPosts($userid, $saidgot);
-	 }
-
+	public function getThankYouPosts($userid, $saidgot) {
+		$table = self::getTable ();
+		return $table->getPosts ( $userid, $saidgot );
+	}
 }
-?>

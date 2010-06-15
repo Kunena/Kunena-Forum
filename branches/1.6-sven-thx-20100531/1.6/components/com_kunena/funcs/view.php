@@ -16,6 +16,7 @@ class CKunenaViewMessage {
 	public $message_quickreply = null;
 	public $message_reply = null;
 	public $message_quote = null;
+	public $message_thankyou = null;
 	public $message_edit = null;
 	public $message_merge = null;
 	public $message_split = null;
@@ -182,7 +183,7 @@ class CKunenaViewMessage {
 
 
 			if($this->my->id && $this->my->id != $this->profile->userid) {
-				$this->thankyoubutton = CKunenaLink::GetThankYouLink ( $this->catid, $this->id , $this->userid , '<span class="kthankyou" alt="'.JText::_('COM_KUNENA_BUTTON_TANKYOU').'"> </span>' , JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), '' );
+				$this->message_thankyou = CKunenaLink::GetThankYouLink ( $this->catid, $this->id , $this->userid , CKunenaTools::showButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kbuttonuser btn-left');
 			}
 		}
 

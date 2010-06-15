@@ -16,16 +16,11 @@ defined ( '_JEXEC' ) or die ();
 if(!empty($this->thankyou)):
 ?>
 <div class="kmessage-thankyou">
-	<?php echo JText::_('COM_KUNENA_THANKYOU').': ';
-	foreach($this->thankyou as $k=>$w){
-		if($k === 0){
-			echo $w;
-		}elseif ( $k === 9){ //9 because deafult $limit is on 10 in sql query TODO make it in backend adjustable? then put in here variable
-			echo ', '.$w.' ...';
-		}else{
-			echo ', '.$w;
-		}
-	}?>
+<?php
+	echo JText::_('COM_KUNENA_THANKYOU').': ';
+	echo implode(', ', $this->thankyou);
+	if (count($this->thankyou) > 9) echo '...';
+?>
 </div>
 <?php
 	endif;

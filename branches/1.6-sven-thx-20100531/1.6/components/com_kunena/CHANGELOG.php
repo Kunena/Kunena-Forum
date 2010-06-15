@@ -34,44 +34,49 @@ Legend:
 
 Kunena 1.6.0-ALPHA
 
+15-June-2010 Matias
+# [#20833] Thank You: Escape variables inside queries
+# [#20833] Thank You: Make button similar to others, place it into message actions list
+# [#20833] Thank You: Simplify thank you list
+
 14-June-2010 Sven
-# [#20833] undefined variable
-^ [#20833] naming of the functions (camelCase)
-^ [#20833] moved code for more flexible into message.thankyou.php
-^ [#20833] limit all querys with a default limit value of 10
-# [#20833] Undefined property
+# [#20833] Thank You: undefined variable
+^ [#20833] Thank You: naming of the functions (camelCase)
+^ [#20833] Thank You: moved code for more flexible into message.thankyou.php
+^ [#20833] Thank You: limit all querys with a default limit value of 10
+# [#20833] Thank You: Undefined property
 
 13-June-2010 Sven
-# [#20833] correct wrong headers
-^ [#20833] moved backend statistic to libraries/thankyou.php and libraries/table/kunenathankyou.php
-^ [#20833] killed catid and id in #__kunena_thankyou
-^ [#20833] unique (postid,uid)
-^ [#20833] KEY `userid` (`userid`),	KEY `targetuserid` (`targetuserid`)
-^ [#20833] language renamed strings thread/post -> message
-^ [#20833] all querys using JTable
+# [#20833] Thank You: correct wrong headers
+^ [#20833] Thank You: moved backend statistic to libraries/thankyou.php and libraries/table/kunenathankyou.php
+^ [#20833] Thank You: killed catid and id in #__kunena_thankyou
+^ [#20833] Thank You: unique (postid,uid)
+^ [#20833] Thank You: KEY `userid` (`userid`),	KEY `targetuserid` (`targetuserid`)
+^ [#20833] Thank You: language renamed strings thread/post -> message
+^ [#20833] Thank You: all querys using JTable
 
 11-June-2010 Sven
-# [#20833] redirect with right message when user not loged in or session expired
-+ [#20833] Thank You statistic in kunena cpanel
-+ [#20833] Language strings for statistic
-+ [#20833] Where got thx, where said thx in Profile Tab
+# [#20833] Thank You: redirect with right message when user not loged in or session expired
++ [#20833] Thank You: Thank You statistic in kunena cpanel
++ [#20833] Thank You: Language strings for statistic
++ [#20833] Thank You: Where got thx, where said thx in Profile Tab
 
 05-June-2010 Sven
-+ [#20833] usertab gotthankyou and saidthankyou
-+ [#20833] language strings
++ [#20833] Thank You: usertab gotthankyou and saidthankyou
++ [#20833] Thank You: language strings
 
 04-June-2010 Sven
-^ [#20833] moved thank you button to subject
-+ [#20833] language string in front and backend
-+ [#20833] Option to deaktivate thank you in backend
-^ [#20833] function getThankyouUser so it also can show realname
-^ [#20833] added showthankyou row in #__kunena_config
+^ [#20833] Thank You: moved thank you button to subject
++ [#20833] Thank You: language string in front and backend
++ [#20833] Thank You: Option to deaktivate thank you in backend
+^ [#20833] Thank You: function getThankyouUser so it also can show realname
+^ [#20833] Thank You: added showthankyou row in #__kunena_config
 
 03-June-2010 Sven
-+ [#20833] kunena.thankyou.php
-+ [#20833] CKunenaThankYou class
-+ [#20833] Thankyou button right beside Quote
-+ [#20833] sql table #__kunena_thankyou
++ [#20833] Thank You: kunena.thankyou.php
++ [#20833] Thank You: CKunenaThankYou class
++ [#20833] Thank You: Thankyou button right beside Quote
++ [#20833] Thank You: sql table #__kunena_thankyou
 
 30-May-2010 Severdia
 ^ [#19356] CSS updates for Chrome, etc.

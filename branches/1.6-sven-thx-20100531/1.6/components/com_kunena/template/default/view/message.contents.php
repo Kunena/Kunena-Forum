@@ -23,11 +23,6 @@ defined ( '_JEXEC' ) or die ();
 	<span class="kmsgkarma">
 		<?php echo $this->userkarma ?>
 	</span>
-	<?php if($this->config->showthankyou): ?>
-	<span class="kmsgthankyou">
-		<?php echo $this->thankyoubutton; ?>
-	</span>
-	<?php endif; ?>
 </div>
 <div>
 	<div class="kmsgtext">

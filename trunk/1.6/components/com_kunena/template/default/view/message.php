@@ -38,6 +38,7 @@ if ($this->config->avposition == 'top') : ?>
 		<tr>
 			<td class="kbuttonbar-top">
 				<?php $this->displayActions() ?>
+				<?php $this->displayThankyou() ?>
 			</td>
 		</tr>
 	</tbody>
@@ -63,6 +64,7 @@ if ($this->config->avposition == 'top') : ?>
 		<tr>
 			<td class="kbuttonbar-bottom">
 				<?php $this->displayActions() ?>
+				<?php $this->displayThankyou() ?>
 			</td>
 		</tr>
 		<tr>
@@ -96,6 +98,7 @@ if ($this->config->avposition == 'top') : ?>
 		<tr>
 			<td class="kbuttonbar-left">
 				<?php $this->displayActions() ?>
+				<?php $this->displayThankyou() ?>
 			</td>
 		</tr>
 	</tbody>
@@ -124,6 +127,7 @@ if ($this->config->avposition == 'top') : ?>
 		<tr>
 			<td class="kbuttonbar-right">
 				<?php $this->displayActions() ?>
+				<?php $this->displayThankyou() ?>
 			</td>
 		</tr>
 	</tbody>

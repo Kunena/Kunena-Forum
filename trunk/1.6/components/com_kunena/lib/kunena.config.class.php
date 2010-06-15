@@ -395,6 +395,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $catsautosubscribed = 0;
 	var $showbannedreason = 0;
 	var $version_check = 1;
+	//New for 1.6: choose if you want a Thank you function
+	var $showthankyou = 1;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

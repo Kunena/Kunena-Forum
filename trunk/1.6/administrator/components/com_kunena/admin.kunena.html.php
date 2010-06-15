@@ -1216,6 +1216,13 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_KARMA_DESC') ?></td>
 					</tr>
 							<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_THANKYOU') ?></td>
+								<td align="left" valign="top"><?php echo $lists ['showthankyou'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_THANKYOU_DESC') ?></td>
+					</tr>
+							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_USER_EDIT') ?></td>
 								<td align="left" valign="top"><?php echo $lists ['useredit'];
 						?></td>

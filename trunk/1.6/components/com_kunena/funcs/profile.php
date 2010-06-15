@@ -218,6 +218,23 @@ class CKunenaProfile {
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
+	function displayGotThankYou()
+	{
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('userposts',0);
+		$obj->user = $this->user;
+		$obj->getGotThankYouPosts();
+		$obj->displayPosts();
+	}
+
+	function displaySaidThankYou()
+	{
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('userposts',0);
+		$obj->user = $this->user;
+		$obj->getSaidThankYouPosts();
+		$obj->displayPosts();
+	}
 	function displayOwnTopics()
 	{
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
@@ -591,7 +608,7 @@ class CKunenaProfile {
 
 			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar=null WHERE userid=$userid" );
 			$this->_db->Query ();
-			check_dberror ( "Unable to remove user avatar." );
+			KunenaError::checkDatabaseError();
 
 			// Delete avatar from file system
 			if (JFile::exists ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar )) {
@@ -602,20 +619,20 @@ class CKunenaProfile {
 		if (! empty ( $DelSignature )) {
 			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null WHERE userid=$userid" );
 			$this->_db->Query ();
-			check_dberror ( "Unable to remove user singature." );
+			KunenaError::checkDatabaseError();
 		}
 
 		if (! empty ( $DelProfileInfo )) {
 			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid=$userid" );
 			$this->_db->Query ();
-			check_dberror ( "Unable to remove user profile information." );
+			KunenaError::checkDatabaseError();
 		}
 
 		if (! empty ( $banDelPosts )) {
 			//select only the messages which aren't already in the trash
 			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=2 WHERE hold!=2 AND userid=$userid" );
 			$idusermessages = $this->_db->loadObjectList ();
-			check_dberror ( "Unable to load message id from fb_messages." );
+			KunenaError::checkDatabaseError();
 		}
 
 		//$this->_app->redirect ( CKunenaLink::GetProfileURL($this->profile->userid, false) );

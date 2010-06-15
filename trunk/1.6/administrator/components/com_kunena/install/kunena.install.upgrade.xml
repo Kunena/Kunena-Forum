@@ -244,6 +244,14 @@
 			KEY `ip` (`ip`),
 			KEY `expiration` (`expiration`)
 		) DEFAULT CHARSET=utf8;</query>
+		<query>CREATE TABLE IF NOT EXISTS `#__kunena_thankyou` (
+				`postid` int(11) NOT NULL,
+				`userid` int(11) NOT NULL,
+				`targetuserid` int(11) NOT NULL,
+				`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+				UNIQUE KEY `postid` (`postid`,`userid`),
+				KEY `userid` (`userid`),
+				KEY `targetuserid` (`targetuserid`)) DEFAULT CHARSET=utf8;</query>
 		<phpfile name="sampledata.php" />
 	</install>
 	<upgrade>

@@ -34,9 +34,31 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+15-June-2010 Matias
+# [#20833] Thank You: Escape variables inside queries
+# [#20833] Thank You: Make button similar to others, place it into message actions list
+# [#20833] Thank You: Simplify thank you list
+^ [#15886] Merged /branches/1.6-sven-thx-20100531
+
+14-June-2010 Sven
+# [#20833] Thank You: undefined variable
+^ [#20833] Thank You: naming of the functions (camelCase)
+^ [#20833] Thank You: moved code for more flexible into message.thankyou.php
+^ [#20833] Thank You: limit all querys with a default limit value of 10
+# [#20833] Thank You: Undefined property
+
 14-Jun-2010 Matias
 ^ [#15886] Merged revisions  2703-2722 from /branches/1.6-xillibit-fixes-20100612
 # [#19288] Fix regression - Installation failed
+
+13-June-2010 Sven
+# [#20833] Thank You: correct wrong headers
+^ [#20833] Thank You: moved backend statistic to libraries/thankyou.php and libraries/table/kunenathankyou.php
+^ [#20833] Thank You: killed catid and id in #__kunena_thankyou
+^ [#20833] Thank You: unique (postid,uid)
+^ [#20833] Thank You: KEY `userid` (`userid`),	KEY `targetuserid` (`targetuserid`)
+^ [#20833] Thank You: language renamed strings thread/post -> message
+^ [#20833] Thank You: all querys using JTable
 
 13-Jun-2010 Xillibit
 # [#19288] Make configuration setting working for disable version check
@@ -63,6 +85,12 @@ Kunena 1.6.0-ALPHA2
 ^ [#15886] Merged revisions  2685 and 2686 from /branches/1.6-xillibit-fix
 # [#19288] Fix regression - Admin: Undefined variables in report configuration if configuration hasn't been saved
 ^ [#15886] Merged revisions 2662-2674 from /branches/1.6-810-bugfixes
+
+11-June-2010 Sven
+# [#20833] Thank You: redirect with right message when user not loged in or session expired
++ [#20833] Thank You: Thank You statistic in kunena cpanel
++ [#20833] Thank You: Language strings for statistic
++ [#20833] Thank You: Where got thx, where said thx in Profile Tab
 
 11-Jun-2010 Matias
 # [#19244] Add basis for user caching in KunenaUserBan class
@@ -134,11 +162,22 @@ Kunena 1.6.0-ALPHA2
 6-June-2010 fxstein
 # [#19251] Fix for user caching: exclude empty userids from cache to avoid sql error
 
+5-June-2010 Sven
++ [#20833] Thank You: usertab gotthankyou and saidthankyou
++ [#20833] Thank You: language strings
+
 5-June-2010 Xillibit
 # [#19288] Fix issue with AUP integration which doesn't provide the correct link for userlist with sef
 # [#19288] Naming changes into CSS (thanks cerberus)
 # [#19288] Fix undefined variables in libraries/route.php
 # [#19288] Fix issues with jomsocial integration on loadusers, remove empty values to avoid failed query
+
+4-June-2010 Sven
+^ [#20833] Thank You: moved thank you button to subject
++ [#20833] Thank You: language string in front and backend
++ [#20833] Thank You: Option to deaktivate thank you in backend
+^ [#20833] Thank You: function getThankyouUser so it also can show realname
+^ [#20833] Thank You: added showthankyou row in #__kunena_config
 
 4-June-2010 Matias
 # [#20071] Change logic how Kunena detects current menu, fixing issues with missing tab menu in Kunena
@@ -151,6 +190,12 @@ Kunena 1.6.0-ALPHA2
 
 4-June-2010 fxstein
 ^ [#20841] Change logic for who is online stats to match Joomla
+
+3-June-2010 Sven
++ [#20833] Thank You: kunena.thankyou.php
++ [#20833] Thank You: CKunenaThankYou class
++ [#20833] Thank You: Thankyou button right beside Quote
++ [#20833] Thank You: sql table #__kunena_thankyou
 
 3-June-2010 Xillibit
 # [#19288] Fix to avoid the issue rename failed at the end of installation

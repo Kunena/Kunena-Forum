@@ -1057,6 +1057,8 @@ function showConfig($option) {
 	$lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->js_actstr_integration);
 	//New for 1.6: choose if you want that ghost message box checked by default
 	$lists['boxghostmessage'] = JHTML::_('select.genericlist', $yesno, 'cfg_boxghostmessage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->boxghostmessage);
+	// New for 1.6 -> Thank you button
+	$lists ['showthankyou'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showthankyou', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showthankyou );
 
 	kimport('integration.integration');
 	$lists['integration_access'] = KunenaIntegration::getConfigOptions('access');

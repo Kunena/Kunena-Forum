@@ -16,6 +16,7 @@ class CKunenaViewMessage {
 	public $message_quickreply = null;
 	public $message_reply = null;
 	public $message_quote = null;
+	public $message_thankyou = null;
 	public $message_edit = null;
 	public $message_merge = null;
 	public $message_split = null;
@@ -52,6 +53,7 @@ class CKunenaViewMessage {
 	public $personaltext = null;
 	public $signature = null;
 	public $aupmedals = null;
+	public $thankyoubutton = null;
 
 	public $attachments = array();
 
@@ -74,6 +76,10 @@ class CKunenaViewMessage {
 
 	function displayActions() {
 		CKunenaTools::loadTemplate('/view/message.actions.php');
+	}
+
+	function displayThankyou() {
+		CKunenaTools::loadTemplate('/view/message.thankyou.php');
 	}
 
 	function displayContents() {
@@ -169,6 +175,18 @@ class CKunenaViewMessage {
 		$this->profilelink = $this->profile->profileIcon('profile');
 		$this->personaltext = KunenaParser::parseText ($this->profile->personalText);
 		$this->signature = KunenaParser::parseBBCode ($this->profile->signature);
+
+		//Thankyou info and buttons
+		if ($this->config->showthankyou && $this->profile->userid) {
+			require_once(JPATH_COMPONENT.DS.'lib'.DS.'kunena.thankyou.php');
+			$thankyou = new CKunenaThankyou();
+			$this->thankyou = $thankyou->getThankYouUser($this->id);
+
+
+			if($this->my->id && $this->my->id != $this->profile->userid) {
+				$this->message_thankyou = CKunenaLink::GetThankYouLink ( $this->catid, $this->id , $this->userid , CKunenaTools::showButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kbuttonuser btn-left');
+			}
+		}
 
 		// Add attachments
 		if (isset($message->attachments)) {

@@ -512,6 +512,13 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
+		case 'thankyou':
+			require_once(JPATH_COMPONENT.DS.'lib'.DS.'kunena.thankyou.php');
+			$thankyou = new CKunenaThankyou ();
+			$thankyou->setThankyou();
+
+			break;
+
 		case 'bulkactions' :
 			switch ($do) {
 				case "bulkDel" :

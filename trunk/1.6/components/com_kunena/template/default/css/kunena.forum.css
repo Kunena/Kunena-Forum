@@ -1977,6 +1977,10 @@ PX		EM			PCT			PT
 	margin-right: 5px;
 
 }
+#Kunena div.kmessage-thankyou{
+	border-top: 1px dotted #BFC3C6;
+	clear: both;
+}
 #Kunena td.kmsgview-left-b {
 	background: #EFF0F4;
 	vertical-align: top;
@@ -2573,6 +2577,10 @@ POST PAGE
 }
 #Kunena a.kbuttonuser span {
 	float: left;
+}
+#Kunena a.kbuttonuser span.thankyou {
+	float: left;
+	background: url("../images/buttons/btn-left-favorite.gif") no-repeat left top;
 }
 #Kunena a.kbuttonuser span.favorite {
 	float: left;

@@ -39,6 +39,7 @@ if ($this->msg->modified_time) {
 				<?php echo $this->message_quickreply; ?>
 				<?php echo $this->message_reply; ?>
 				<?php echo $this->message_quote; ?>
+				<?php echo $this->message_thankyou; ?>
 				<?php echo $this->message_edit; ?>
 				<?php echo $this->message_moderate; ?>
 				<?php echo $this->message_move; ?>

@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+15-June-2010 Matias
+# [#19345] Template Manager - Check that archive contains templates and install all of them (ignoring the rest)
+# [#19345] Template Manager - Delete old version of the template before installing new one
+
 14-June-2010 @quila
 # [#19345] Template Manager - some more changes
 # [#19345] Template Manager - initialize.php now loaded from published template

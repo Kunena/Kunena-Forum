@@ -469,7 +469,7 @@ switch ($task) {
 		extractKTemplate ();
 
 		break;
-		
+
 	case "uninstallKTemplate" :
 		uninstallKTemplate();
 
@@ -537,22 +537,30 @@ html_Kunena::showFbFooter ();
 		}
 		else {
 			$success = JFile::upload($file ['tmp_name'], $tmp . $file ['name']);
-			$success = JArchive::extract ( $tmp . $file ['name'], $dest );
-			if (! $success)
+			$success = JArchive::extract ( $tmp . $file ['name'], $tmp );
+			if (! $success) {
 				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_FAILED', $file ['name']), 'notice' );
-			else
-				// Delete the tmp install directory
-				if (JFolder::exists($tmp)) {
-					$retval = JFolder::delete($tmp);
-				} else {
-					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
-					$retval = false;
+			}
+			// Delete the tmp install directory
+			if (JFolder::exists($tmp)) {
+				$templates = parseXMLTemplateFiles($tmp);
+				foreach ($templates as $template) {
+					// Never overwrite default template
+					if ($template->directory == 'default') continue;
+					if (is_dir($dest.$template->directory)) JFolder::delete($dest.$template->directory);
+					$error = JFolder::move($tmp.$template->directory, $dest.$template->directory);
+					if ($error !== true) $app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').': ' . $error, 'notice' );
 				}
+				$retval = JFolder::delete($tmp);
+			} else {
+				JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
+				$retval = false;
+			}
 			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
 		}
 		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates');
 	}
-	
+
 	function uninstallKTemplate()
 	{
 		$app = JFactory::getApplication ();
@@ -567,15 +575,15 @@ html_Kunena::showFbFooter ();
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_SPECIFIED') );
 		}
 		if (isTemplateDefault($template)) {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_CANNOT_DEFAULT', $file ['name']), 'error' );
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_CANNOT_DEFAULT', $cid), 'error' );
 			$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates');
-			return;		
+			return;
 		}
 		$tpl = KPATH_SITE . '/template/'.$template;
 		// Delete the template directory
 		if (JFolder::exists($tpl)) {
 			$retval = JFolder::delete($tpl);
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $file ['name']), 'notice' );
+			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL_SUCCESS', $cid), 'notice' );
 		} else {
 			JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
 			$retval = false;
@@ -609,23 +617,61 @@ html_Kunena::showFbFooter ();
 		return $rows;
 	}
 
-	function parseXMLTemplateFile($templateBaseDir, $templateDir)
+function parseKunenaInstallFile($path) {
+	// Read the file to see if it's a valid component XML file
+	$xml = JFactory::getXMLParser ( 'Simple' );
+	if (! $xml->loadFile ( $path )) {
+		unset ( $xml );
+		return false;
+	}
+	if (! is_object ( $xml->document ) || ($xml->document->name () != 'install')) {
+		unset ( $xml );
+		return false;
+	}
+
+	$data = new stdClass ();
+	$element = & $xml->document->name [0];
+	$data->name = $element ? $element->data () : '';
+	$data->type = $element ? $xml->document->attributes ( "type" ) : '';
+
+	$element = & $xml->document->creationDate [0];
+	$data->creationdate = $element ? $element->data () : JText::_ ( 'Unknown' );
+
+	$element = & $xml->document->author [0];
+	$data->author = $element ? $element->data () : JText::_ ( 'Unknown' );
+
+	$element = & $xml->document->copyright [0];
+	$data->copyright = $element ? $element->data () : '';
+
+	$element = & $xml->document->authorEmail [0];
+	$data->authorEmail = $element ? $element->data () : '';
+
+	$element = & $xml->document->authorUrl [0];
+	$data->authorUrl = $element ? $element->data () : '';
+
+	$element = & $xml->document->version [0];
+	$data->version = $element ? $element->data () : '';
+
+	$element = & $xml->document->description [0];
+	$data->description = $element ? $element->data () : '';
+
+	$element = & $xml->document->thumbnail [0];
+	$data->thumbnail = $element ? $element->data () : '';
+
+	return $data;
+}
+
+function parseXMLTemplateFile($templateBaseDir, $templateDir)
 	{
 		// Check if the xml file exists
-		if(!is_file($templateBaseDir.DS.$templateDir.DS.'templateDetails.xml')) {
+		if(!is_file($templateBaseDir.DS.$templateDir.DS.'template.xml')) {
 			return false;
 		}
-		$xml = JApplicationHelper::parseXMLInstallFile($templateBaseDir.DS.$templateDir.DS.'templateDetails.xml');
-		if ($xml['type'] != 'template') {
+		$data = parseKunenaInstallFile($templateBaseDir.DS.$templateDir.DS.'template.xml');
+		if ($data->type != 'kunena-template') {
 			return false;
 		}
-		$data = new StdClass();
-		$data->directory = $templateDir;
-		foreach($xml as $key => $value) {
-			$data->$key = $value;
-		}
-		$data->checked_out = 0;
-		$data->mosname = JString::strtolower(str_replace(' ', '_', $data->name));
+		$data->directory = basename($templateDir);
 		return $data;
 	}
 
@@ -668,7 +714,7 @@ html_Kunena::showFbFooter ();
 		$lang =& JFactory::getLanguage();
 		$lang->load( 'tpl_'.$template, JPATH_ADMINISTRATOR );
 		$ini	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
-		$xml	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'templateDetails.xml';
+		$xml	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'template.xml';
 		$row	= parseXMLTemplateFile($tBaseDir, $template);
 		jimport('joomla.filesystem.file');
 		// Read the ini file

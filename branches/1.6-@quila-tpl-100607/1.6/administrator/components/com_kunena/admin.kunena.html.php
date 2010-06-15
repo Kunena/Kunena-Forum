@@ -369,10 +369,7 @@ table.kadmin-stat caption {
 				<tr <?php echo 'class = "row' . $k . '"'; ?>>
 					<td> <?php echo $page->getRowOffset( $i ); ?></td>
 					<td width="5">
-						<?php if ( JTable::isCheckedOut($user->get ('id'), $row->checked_out )) { ?>&nbsp;
-						<?php } else { ?>
-							<input type="radio" id="cb<?php echo $i;?>" name="cid[]" value="<?php echo $row->directory; ?>" onclick="isChecked(this.checked);" />
-						<?php } ?>
+						<input type="radio" id="cb<?php echo $i;?>" name="cid[]" value="<?php echo $row->directory; ?>" onclick="isChecked(this.checked);" />
 					</td>
 					<td><?php $img_path = $kunena_app->getSiteURL().'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
 						<span class="editlinktip hasTip" title="<?php

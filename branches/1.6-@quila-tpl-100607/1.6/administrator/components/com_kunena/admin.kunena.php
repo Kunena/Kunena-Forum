@@ -548,8 +548,12 @@ html_Kunena::showFbFooter ();
 					// Never overwrite default template
 					if ($template->directory == 'default') continue;
 					if (is_dir($dest.$template->directory)) {
-						if (is_file($dest.$template->directory.'/params.ini'))
-							JFolder::move($dest.$template->directory.'/params.ini', $tmp.$template->directory);
+						if (is_file($dest.$template->directory.'/params.ini')) {
+							if (is_file($tmp.$template->directory.'/params.ini')) {
+								JFile::delete($tmp.$template->directory.'/params.ini');
+							}
+							JFile::move($dest.$template->directory.'/params.ini', $tmp.$template->directory.'/params.ini');
+						}
 						JFolder::delete($dest.$template->directory);
 					}
 					$error = JFolder::move($tmp.$template->directory, $dest.$template->directory);

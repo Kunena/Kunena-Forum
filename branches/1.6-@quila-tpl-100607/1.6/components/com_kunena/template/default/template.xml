@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
-<install type="kunena-template" version="1.6">
+<kinstall type="kunena-template" version="1.6">
 	<name>Default Template</name>
 	<version>1.6.0</version>
 	<creationDate>2010-06-15</creationDate>
@@ -32,4 +32,4 @@
 		<param name="avatarProfileSizeX" type="hidden" default="200" />
 		<param name="avatarProfileSizeY" type="hidden" default="200" />
 	</params>
-</install>
+</kinstall>

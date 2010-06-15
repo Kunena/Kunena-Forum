@@ -632,7 +632,7 @@ function parseKunenaInstallFile($path) {
 		unset ( $xml );
 		return false;
 	}
-	if (! is_object ( $xml->document ) || ($xml->document->name () != 'install')) {
+	if (! is_object ( $xml->document ) || ($xml->document->name () != 'kinstall')) {
 		unset ( $xml );
 		return false;
 	}

@@ -13,7 +13,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-if ($this->tplParams['avatarPosition'] == 'top') : ?>
+if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <table <?php echo $this->class ?>>
 	<thead>
@@ -43,7 +43,7 @@ if ($this->tplParams['avatarPosition'] == 'top') : ?>
 	</tbody>
 </table>
 
-<?php elseif ($this->tplParams['avatarPosition'] == 'bottom') : ?>
+<?php elseif ($this->params->get('avatarPosition') == 'bottom') : ?>
 
 <table <?php echo $this->class ?>>
 	<thead>
@@ -73,7 +73,7 @@ if ($this->tplParams['avatarPosition'] == 'top') : ?>
 	</tbody>
 </table>
 
-<?php elseif ($this->tplParams['avatarPosition'] == 'left') : ?>
+<?php elseif ($this->params->get('avatarPosition') == 'left') : ?>
 
 <table <?php echo $this->class ?>>
 	<thead>

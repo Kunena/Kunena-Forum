@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+15-June-2010 @quila
+# [#19345] Template Manager - some more changes
+# [#19288] Fix regression: Moderate Topic buton aligned
+
 15-June-2010 Xillibit
 # [#19345] Template Manager - Change xml name installer to kinstaller
 

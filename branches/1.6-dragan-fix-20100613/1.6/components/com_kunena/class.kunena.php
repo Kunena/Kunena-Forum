@@ -170,6 +170,10 @@ class CKunenaTools {
 	function showButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
 	}
+	
+	function showIcon($name, $alt, $title) {
+		return '<span class="'.$name.'" alt="'.$alt.'" title="'.$title.'"></span>';
+	}
 
 	function showModulePosition($position) {
 		$html = '';

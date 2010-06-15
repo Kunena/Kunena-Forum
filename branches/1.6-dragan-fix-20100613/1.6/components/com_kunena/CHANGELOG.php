@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+16-June-2010 @quila
++ [#19288]  Add serbian and serbian latin language files
+# [#19288]  Added function to load icons in default template
+
 12-Jun-2010 Matias
 - [#19244] Remove deprecated ban logic from lib/kunena.moderation.tools.class.php
 ^ [#15886] Merged feature branch /branches/1.6-@quila-ban-100526

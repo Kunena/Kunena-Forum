@@ -601,12 +601,6 @@ html_Kunena::showFbFooter ();
 		return $retval;
 	}
 
-	function isTemplateLocked($template)
-	{
-		$xml = parseXMLTemplateFile(KUNENA_PATH_TEMPLATE, $template);
-		return $defaultemplate == $template ? 1 : 0;
-	}
-
 	function isTemplateDefault($template)
 	{
 		$kunena_config = & CKunenaConfig::getInstance ();
@@ -2994,7 +2988,7 @@ function generateSystemReport () {
 //===============================
 
 /* Get latest kunena version
- * 
+ *
  * Code originally taken from AlphaUserPoints
  * copyright Copyright (C) 2008-2010 Bernard Gilly
  * license : GNU/GPL

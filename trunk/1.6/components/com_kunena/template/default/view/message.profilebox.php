@@ -46,12 +46,11 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . $this->userpoints; ?></li>
 		<?php endif ?>
 		<?php if ( $this->aupmedals ) : ?>
-			<div class="kiconrow">
+		<li class="kiconrow">
 			<?php foreach ( $this->aupmedals as $medal ) : ?>
 			<?php echo '<img src="' . _AUP_MEDALS_LIVE_PATH.$medal->icon. '" alt="'.$medal->rank.'" title="'.$medal->rank.'" />'; ?>
 			<?php endforeach ?>
-			</div>
-			<div class="clr"></div>
+		</li>
 		<?php endif ?>
 
 		<li class="kpost-online-status-<?php echo $this->profile->isOnline(true); ?>"> </li>

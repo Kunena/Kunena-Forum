@@ -30,6 +30,11 @@ Legend:
 
 KunenaLatest 1.0
 
+16-Jun-2010 Matias
+# [#20081] Better detection for K1.6
+# [#20081] Fix Zend warnings
+^ [#20081] Cleanup files
+
 18-May-2010 Xillibit
 # [#20081] Leverage directly the CKunenaLatestX instead to have a copy of the class
 # [#20081] Put configuration setting to choose vertical or horizontal display type (need css)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
- <!DOCTYPE install>
+<!DOCTYPE install>
 <install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Latest</name>
 	<version>1.6-DEV</version>
@@ -19,7 +19,7 @@
 		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<filename>elements/kunenacats.php</filename>
-    <filename>elements/index.html</filename>
+		<filename>elements/index.html</filename>
 	</files>
 
 	<languages>
@@ -27,13 +27,13 @@
 	</languages>
 
 	<params addpath="/modules/mod_kunenalatest/elements">
-	   <param name="category_id" type="kunenacats" default="0" label="MOD_KUNENALATEST_PARAM_CAT_IDS" description="MOD_KUNENALATEST_PARAM_CAT_IDS_DESC"  multiple="true" size="5" />
+		<param name="category_id" type="kunenacats" default="0" label="MOD_KUNENALATEST_PARAM_CAT_IDS" description="MOD_KUNENALATEST_PARAM_CAT_IDS_DESC"  multiple="true" size="5" />
 		<param name="nbpost" type="text" default="5" label="MOD_KUNENALATEST_PARAM_NUMBERPOSTS" description="MOD_KUNENALATEST_PARAM_NUMBERPOSTS_DESC" />
 		<param name="titlelength" type="text" default="50" label="MOD_KUNENALATEST_PARAM_TITLELENGTH" description="MOD_KUNENALATEST_PARAM_TITLELENGTH_DESC" />
 		<param name="messagelength" type="text" default="150" label="MOD_KUNENALATEST_PARAM_MESSAGELENGTH" description="MOD_KUNENALATEST_PARAM_MESSAGELENGTH_DESC" />
 		<param name="unreadindicator" type="text" default="!" label="MOD_KUNENALATEST_PARAM_UNREADINDICATOR" description="MOD_KUNENALATEST_PARAM_UNREADINDICATOR_DESC" />
 		<param name="dateformat" type="text" default="%Y-%m-%d %H:%M" label="MOD_KUNENALATEST_PARAM_DATEFORMAT" description="MOD_KUNENALATEST_PARAM_DATEFORMAT_DESC" />
-			<param name="sh_topiciconoravatar" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR" description="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR_DESC">
+		<param name="sh_topiciconoravatar" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR" description="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_AVATAR</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
 		</param>
@@ -42,9 +42,9 @@
 			<option value="kmodhorizontal">MOD_KUNENALATEST_PARAM_DISPLAYTYPE_HORIZONTAL</option>
 			<option value="kmodvertical">MOD_KUNENALATEST_PARAM_DISPLAYTYPE_VERTICAL</option>
 		</param>
-    	<param name="avatarwidth" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH" description="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH_DESC" />
-    		<param name="avatarheight" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT" description="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT_DESC" />
-    <param name="@spacer" type="spacer" default="" label="" description="" />		
+		<param name="avatarwidth" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH" description="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH_DESC" />
+		<param name="avatarheight" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT" description="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT_DESC" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />		
 		<param name="sh_favorite" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWFAVORITE" description="MOD_KUNENALATEST_PARAM_SHOWFAVORITE_DESC">
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>

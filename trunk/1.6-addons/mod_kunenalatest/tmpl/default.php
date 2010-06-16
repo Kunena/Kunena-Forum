@@ -12,39 +12,31 @@
 // no direct access
 defined ( '_JEXEC' ) or die ( '' );
 
-$params = (object) $params;
-
-$document = & JFactory::getDocument ();
+$document = JFactory::getDocument ();
 $document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klatest.css' );
 ?>
-<div class="<?php echo $params->get ( 'moduleclass_sfx' )?> klatest <?php echo $params->get ( 'sh_moduleshowtype' )?>" id="klatestmodule">
+<div class="<?php echo $this->params->get ( 'moduleclass_sfx' )?> klatest <?php echo $this->params->get ( 'sh_moduleshowtype' )?>" id="klatestmodule">
 
 <ul id="klatest-items">
 <?php
-
-if (is_array ( $klistpost )) {
-	foreach ( $klistpost as $item ) {
-		//construct the date
-		$date = JFactory::getDate ( $item->lasttime, $tzoffset );
-		$date = $date->toFormat ( $params->get ( 'dateformat' ) );
-
-		?>
-
+if (is_array ( $this->klistpost )) {
+	foreach ( $this->klistpost as $item ) {
+?>
 
 <li class="klatest-item">
 	<ul class="klatest-itemdetails">
 		<li class="klatest-subject">
 		<?php
-			if ($params->get ( 'sh_sticky' )) {
+			if ($this->params->get ( 'sh_sticky' )) {
 				if ($item->ordering) {
 					echo '<img src="' . JURI::root () . 'modules/mod_kunenalatest/tmpl/sticky.png" alt="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" />';
 				}
 			}
-			echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, substr ( htmlspecialchars ( stripslashes ( $item->subject ) ), '0', $params->get ( 'titlelength' ) ), substr ( htmlspecialchars ( stripslashes ( KunenaParser::stripBBCode($item->message) ) ), '0', $params->get ( 'messagelength' ) ), 'follow' );
+			echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0', $this->params->get ( 'messagelength' ) ), 'follow' );
 			if ($item->unread) {
-				echo $params->get ( 'unreadindicator' );
+				echo $this->params->get ( 'unreadindicator' );
 			}
-			if ($params->get ( 'sh_favorite' )) {
+			if ($this->params->get ( 'sh_favorite' )) {
 				if ($item->favcount) {
 					if ($item->myfavorite) {
 						echo '<img class="favoritestar" src="' . KUNENA_URLICONSPATH . 'favoritestar.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
@@ -53,28 +45,25 @@ if (is_array ( $klistpost )) {
 					}
 				}
 			}
-			if ($params->get ( 'sh_locked' )) {
+			if ($this->params->get ( 'sh_locked' )) {
 				if ($item->locked) {
 					echo '<img src="' . KUNENA_URLICONSPATH . 'lock_sm.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_GEN_LOCKED_TOPIC' ) . '" />';
 				}
 			}
 			?></li>
 		<?php
-     if ( $params->get ( 'sh_topiciconoravatar' )) { ?>
+		if ( $this->params->get ( 'sh_topiciconoravatar' )) { ?>
 		<li class="klatest-avatar">
-			<?php
-
-			echo modKunenaLatestHelper::userAvatar( $item->userid,$params );
-			?>
+			<?php echo modKunenaLatestHelper::userAvatar( $item->userid, $this->params ); ?>
 		</li>
 		<?php } else {  ?>
 		<li class="klatest-avatar">
-		<?php echo '<img src="' . $topic_emoticons[$item->topic_emoticon]  . '" />'; ?>
+		<?php echo '<img src="' . $this->topic_emoticons[$item->topic_emoticon]  . '" />'; ?>
 		</li>
 		<?php } ?>
 		<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $item->catid, $item->catname ); ?></li>
 		<li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_LAST_POST_BY' ) .' '. CKunenaLink::GetProfileLink ( $item->userid, $item->name ); ?></li>
-		<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo $date; ?></li>
+		<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo CKunenaTimeformat::showDate($item->lasttime); ?></li>
 	</ul>
 </li>
 <?php

@@ -43,6 +43,9 @@ class CKunenaPost {
 		$this->allow = 1;
 
 		$this->cat_default_allow = null;
+
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
 	}
 
 	// Temporary function to handle old style permission handling

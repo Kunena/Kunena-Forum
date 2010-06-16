@@ -234,21 +234,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	$document = & JFactory::getDocument ();
 
-	// We require Mootools 1.2 framework
-	// On systems running < J1.5.18 this requires the mootools12 system plugin
-	JHTML::_ ( 'behavior.framework' );
-
-	// We load smoothbox library
-	CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox-min.js' );
-
-	// New Kunena JS for default template
-	// TODO: Need to check if selected template has an override
-	CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/default-min.js' );
-
-	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum-min.css' )) {
-		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum-min.css' );
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/initialize.php' )) {
+		require_once ( KUNENA_ABSTMPLTPATH . '/initialize.php' );
 	} else {
-		CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
+		require_once (KPATH_SITE . '/template/default/initialize.php');
 	}
 
 	// Insert WhoIsOnlineDatas

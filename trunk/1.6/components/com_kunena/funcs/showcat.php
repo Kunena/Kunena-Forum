@@ -21,6 +21,9 @@ class CKunenaShowcat {
 		$this->page = $page;
 		$this->hasSubCats = '';
 
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
+
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
 		$this->myprofile = KunenaFactory::getUser ();

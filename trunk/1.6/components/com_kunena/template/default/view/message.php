@@ -13,7 +13,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-if ($this->config->avposition == 'top') : ?>
+if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <table <?php echo $this->class ?>>
 	<thead>
@@ -44,7 +44,7 @@ if ($this->config->avposition == 'top') : ?>
 	</tbody>
 </table>
 
-<?php elseif ($this->config->avposition == 'bottom') : ?>
+<?php elseif ($this->params->get('avatarPosition') == 'bottom') : ?>
 
 <table <?php echo $this->class ?>>
 	<thead>
@@ -75,7 +75,7 @@ if ($this->config->avposition == 'top') : ?>
 	</tbody>
 </table>
 
-<?php elseif ($this->config->avposition == 'left') : ?>
+<?php elseif ($this->params->get('avatarPosition') == 'left') : ?>
 
 <table <?php echo $this->class ?>>
 	<thead>

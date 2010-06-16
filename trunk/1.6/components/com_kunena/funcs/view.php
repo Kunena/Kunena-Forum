@@ -72,6 +72,9 @@ class CKunenaViewMessage {
 		$this->my = JFactory::getUser ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->db = JFactory::getDBO ();
+
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
 	}
 
 	function displayActions() {
@@ -136,7 +139,7 @@ class CKunenaViewMessage {
 			$this->username = $message->name;
 		}
 
-		if ($this->config->avposition == 'left' || $this->config->avposition == 'right') {
+		if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatarPosition') == 'right') {
 			$avatar = $this->profile->getAvatarLink ('kavatar', 'reply');
 		} else {
 			$avatar = $this->profile->getAvatarLink ('kavatar', 'welcome');
@@ -307,7 +310,10 @@ class CKunenaView {
 		$this->limit = $limit;
 		if ($this->limit < 1)
 			$this->limit = $this->config->messages_per_page;
-}
+
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
+	}
 
 	function setTemplate($path) {
 		$this->templatepath = $path;

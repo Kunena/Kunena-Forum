@@ -57,6 +57,9 @@ class CKunenaListcat {
 		$document = JFactory::getDocument ();
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
+
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
 	}
 
 	function loadCategories() {

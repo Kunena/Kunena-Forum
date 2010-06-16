@@ -129,6 +129,9 @@ div.icon-container {
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showAdministration" title = "<?php echo JText::_('COM_KUNENA_C_FORUMDESC');?>"> <img src = "components/com_kunena/images/kforumadm.png" align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_FORUM'); ?> </span></a> </div>
 					  </div>
 					  <div class="icon-container">
+						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showTemplates" title = "<?php echo JText::_('COM_KUNENA_REPORT_SYSTEM');?>"> <img src = "components/com_kunena/images/templatemanager.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?> </span></a> </div>
+					  </div>
+					  <div class="icon-container">
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showprofiles" title = "<?php echo JText::_('COM_KUNENA_C_USERDESC');?>"> <img src = "components/com_kunena/images/kuser.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_USER'); ?> </span> </a> </div>
 					  </div>
 					  <div class="icon-container">
@@ -136,9 +139,6 @@ div.icon-container {
 					  </div>
 					  <div class="icon-container">
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=browseImages" title = "<?php echo JText::_('COM_KUNENA_C_IMAGESDESC');?>"> <img src = "components/com_kunena/images/kimages.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_IMAGES'); ?> </span></a> </div>
-					  </div>
-					   <div class="icon-container">
-						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=showCss" title = "<?php echo JText::_('COM_KUNENA_C_CSSDESC');?>"> <img src = "components/com_kunena/images/kcss.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_CSS'); ?> </span></a> </div>
 					  </div>
 					   <div class="icon-container">
 						<div class = "icon"> <a href = "index.php?option=com_kunena&amp;task=pruneforum" title = "<?php echo JText::_('COM_KUNENA_C_PRUNETABDESC');?>"> <img src = "components/com_kunena/images/ktable.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?> </span></a> </div>

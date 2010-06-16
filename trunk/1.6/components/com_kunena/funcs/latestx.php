@@ -76,6 +76,9 @@ class CKunenaLatestX {
 
 		$access = KunenaFactory::getAccessControl();
 		$this->hold = $access->getAllowedHold($this->myprofile, $this->catid);
+
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
 	}
 
 	protected function _common() {

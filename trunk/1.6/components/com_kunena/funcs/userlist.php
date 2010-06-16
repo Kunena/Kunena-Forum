@@ -80,6 +80,9 @@ class CKunenaUserlist {
 		$this->pageNav = new JPagination ( $total, $this->limitstart, $this->limit );
 
 		$this->allow = true;
+
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
 	}
 
 	function displayWhoIsOnline() {

@@ -88,6 +88,9 @@ class CKunenaProfile {
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan = $this->banInfo->canBan();
 		if ( $this->config->showbannedreason ) $this->banReason = $this->banInfo->reason_public;
+
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
 	}
 
 	/**

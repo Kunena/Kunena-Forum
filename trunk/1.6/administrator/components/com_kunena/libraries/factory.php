@@ -29,6 +29,19 @@ abstract class KunenaFactory {
 	}
 
 	/**
+	 * Get a Kunena template object
+	 *
+	 * Returns the global {@link KunenaTemplate} object, only creating it if it doesn't already exist.
+	 *
+	 * @return object KunenaTemplate
+	 */
+	public static function getTemplate($name = null)
+	{
+		kimport('template');
+		return KunenaTemplate::getInstance($name);
+	}
+
+	/**
 	 * Get Kunena user object
 	 *
 	 * Returns the global {@link KunenaUser} object, only creating it if it doesn't already exist.

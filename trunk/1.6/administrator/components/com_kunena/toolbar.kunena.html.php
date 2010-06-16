@@ -255,7 +255,59 @@ class CKunenaToolbar
 	function _SYSTEMREPORT_MENU()
     {
         JToolBarHelper::back();
+    }
+    
+	function _SHOWTEMPLATES_MENU()
+    {
+		JToolBarHelper::spacer();
+        JToolBarHelper::custom('publishTemplate', 'default.png', 'default_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT'));
+        JToolBarHelper::spacer();
+        JToolBarHelper::addNew('addKTemplate', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_ADD'));
+		JToolBarHelper::spacer();
+        JToolBarHelper::custom('editKTemplate', 'edit.png', 'edit_f2.png', JText::_('COM_KUNENA_EDIT'));
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('uninstallKTemplate', 'delete.png','delete_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL'));
+        JToolBarHelper::spacer();
+        JToolBarHelper::back();
+    }
 
+	function _EDITKTEMPLATE_MENU()
+    {
+        JToolBarHelper::spacer();
+		JToolBarHelper::apply('applyTemplate');
+		JToolBarHelper::spacer();
+		JToolBarHelper::save('saveTemplate');
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('chooseCSSTemplate', 'css.png','css_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS'), false, false );
+        JToolBarHelper::spacer();
+        JToolBarHelper::cancel('cancelTemplate');
+		JToolBarHelper::spacer();
+        JToolBarHelper::back();
+        JToolBarHelper::spacer();
+    }
+	
+	function _CHOOSECSS_MENU()
+    {
+        JToolBarHelper::spacer();
+        JToolBarHelper::custom('editTemplateCSS', 'css.png', 'css_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS'));
+        JToolBarHelper::spacer();
+		JToolBarHelper::spacer();
+        JToolBarHelper::cancel('cancelTemplate');
+		JToolBarHelper::spacer();
+        JToolBarHelper::back();
+		JToolBarHelper::spacer();
+    }
+	
+	function _EDITCSS_MENU()
+    {
+        JToolBarHelper::spacer();
+        JToolBarHelper::save('saveTemplateCSS');
+        JToolBarHelper::spacer();
+		JToolBarHelper::spacer();
+        JToolBarHelper::cancel('cancelTemplate');
+		JToolBarHelper::spacer();
+        JToolBarHelper::back();
+		JToolBarHelper::spacer();
     }
 }
 ?>

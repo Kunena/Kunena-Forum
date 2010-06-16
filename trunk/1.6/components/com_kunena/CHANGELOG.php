@@ -34,6 +34,17 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+16-June-2010 Matias
+^ [#15886] Merged /branches/1.6-@quila-tpl-100607
+# [#19345] Template Manager - Make loading template configuration more robust
+
+15-June-2010 @quila
+# [#19345] Template Manager - some more changes
+# [#19288] Fix regression: Moderate Topic buton aligned
+
+15-June-2010 Xillibit
+# [#19345] Template Manager - Change xml name installer to kinstaller
+
 15-June-2010 fxstein
 + [#20916] New helper functions to load minified css and js or full version when in forum debug
 # [#21032] Fix manifest error that leads to Joomla 1.6 install error message
@@ -44,6 +55,16 @@ Kunena 1.6.0-ALPHA2
 # [#20833] Thank You: Make button similar to others, place it into message actions list
 # [#20833] Thank You: Simplify thank you list
 ^ [#15886] Merged /branches/1.6-sven-thx-20100531
+# [#19345] Template Manager - Check that archive contains templates and install all of them (ignoring the rest)
+# [#19345] Template Manager - Delete old version of the template before installing new one
+# [#19345] Template Manager - Add class KunenaTemplate (and KunenaFactory::getTemplate()), which loads template configuration
+# [#19345] Template Manager - Keep template configuration when installing new version of the template
+# [#19345] Template Manager - Do not allow anyone to delete our default template (Blue Eagle)
+
+14-June-2010 @quila
+# [#19345] Template Manager - some more changes
+# [#19345] Template Manager - initialize.php now loaded from published template
+# [#19345] Template Manager - fixed location for template_thumbnail.png (images folder of template)
 
 14-June-2010 Sven
 # [#20833] Thank You: undefined variable
@@ -55,6 +76,17 @@ Kunena 1.6.0-ALPHA2
 14-Jun-2010 Matias
 ^ [#15886] Merged revisions  2703-2722 from /branches/1.6-xillibit-fixes-20100612
 # [#19288] Fix regression - Installation failed
+
+13-June-2010 Matias
+# [#19345] Template Manager - Change template even if configuration didn't exist
+- [#19293] Remove deprecated configuration option templateimagepath
+^ [#19345] Template Manager - Load javascript and css from the template (initialize.php)
+
+13-June-2010 @quila
+# [#19345] Template Manager - language strings, Apply button works, some more fix
+# [#19345] Template Manager - fixed "Edit CSS" button
+# [#19345] Template Manager - delete tmp "kinstall" folder after installation
++ [#19345] Template Manager - added "Uninstall" template function
 
 13-June-2010 Sven
 # [#20833] Thank You: correct wrong headers
@@ -76,6 +108,9 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix issue in RSS (thanks JoniJnm)
 ^ [#19288] Put png icons for lightbox and group attachments in lightbox on each message
 
+12-June-2010 @quila
++ [#19345] Template Manager - some more changes.
+
 12-Jun-2010 Xillibit
 # [#19288] Fix issue on changevote in poll which decreased everytime the poll votes
 # [#19288] Put version check data in joomla session and put a configuration setting for disable version check
@@ -90,6 +125,7 @@ Kunena 1.6.0-ALPHA2
 ^ [#15886] Merged revisions  2685 and 2686 from /branches/1.6-xillibit-fix
 # [#19288] Fix regression - Admin: Undefined variables in report configuration if configuration hasn't been saved
 ^ [#15886] Merged revisions 2662-2674 from /branches/1.6-810-bugfixes
+# [#19345] Template Manager - Make extract template to work
 
 11-June-2010 Sven
 # [#20833] Thank You: redirect with right message when user not loged in or session expired
@@ -135,6 +171,19 @@ Kunena 1.6.0-ALPHA2
 8-June-2010 fxstein
 + [#20916] Add css and js minification logic to build process
 + [#20916] Add YUI Compressor libraries to build files
+
+7-June-2010 @quila
++ [#19345] Template Manager - added toolbar menu buttons.
++ [#19345] Template Manager - added tasks for toolbar menu.
++ [#19345] Template Manager - added functions for display templates in backend.
++ [#19345] Template Manager - added language strings for html file.
++ [#19345] Template Manager - added functions for template and language strings.
++ [#19345] Template Manager - added icons and images.
++ [#19345] Template Manager - added variable for reading template parameters from params.ini.
++ [#19345] Template Manager - added files templateDetails.xml, params.ini and image template_thumbnail.png
+^ [#19345] Template Manager - moved template and templateimagepath configuration from kunena to template manager
+^ [#19345] Template Manager - moved Avatar Position configuration from kunena to template manager
+^ [#19345] Template Manager - added button in kunena control panel
 
 7-June-2010 810
 # [#19288] Small Css fix - Thread action, Threads showcat, Boardcode

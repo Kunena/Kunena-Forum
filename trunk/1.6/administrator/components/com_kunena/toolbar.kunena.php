@@ -139,6 +139,26 @@ switch ($task)
         CKunenaToolbar::_SYSTEMREPORT_MENU();
 
         break;
+        
+	case "showTemplates":
+        CKunenaToolbar::_SHOWTEMPLATES_MENU();
+
+        break;
+
+	case "editKTemplate":
+        CKunenaToolbar::_EDITKTEMPLATE_MENU();
+
+        break;
+		
+	case "chooseCSSTemplate":
+        CKunenaToolbar::_CHOOSECSS_MENU();
+
+        break;
+		
+	case "editTemplateCSS":
+        CKunenaToolbar::_EDITCSS_MENU();
+
+        break;
 
     default:
 

@@ -85,9 +85,9 @@ if (JString::strlen($fb_user_img_template) > 0 && file_exists(KUNENA_PATH_TEMPLA
 {
     $fb_cur_img_template = $fb_user_img_template;
     }
-else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->templateimagepath .DS. 'images'))
+else if (file_exists(KUNENA_PATH_TEMPLATE .DS. $kunena_config->template .DS. 'images'))
 {
-    $fb_cur_img_template = $kunena_config->templateimagepath;
+    $fb_cur_img_template = $kunena_config->template;
     }
 else
 {

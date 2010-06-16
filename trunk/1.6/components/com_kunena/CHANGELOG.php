@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+15-June-2010 fxstein
+# [#21032] Fix manifest error that leads to Joomla 1.6 install error message
++ [#21032] Add admin menu definition to manifest for Joomla 1.6 install
+
 15-June-2010 Matias
 # [#20833] Thank You: Escape variables inside queries
 # [#20833] Thank You: Make button similar to others, place it into message actions list

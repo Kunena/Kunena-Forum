@@ -11,7 +11,13 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
+jimport('joomla.html.parameter');
 
+class KunenaParameter extends JParameter {
+	public function getXml() {
+		return $this->_xml;
+	}
+}
 /**
 
 * Kunena Users Table Class
@@ -48,9 +54,10 @@ class KunenaTemplate extends JObject
 			$content = file_get_contents($ini);
 		}
 		$this->name = $name;
-		$this->params = new JParameter($content, $xml);
+		$this->params = new KunenaParameter($content, $xml);
 
-		foreach ($this->params->_xml['_default']->children() as $param)  {
+		$xml = $this->params->getXml();
+		foreach ($xml['_default']->children() as $param)  {
 			if ($param->attributes('type') != 'spacer') $this->params->def($param->attributes('name'), $param->attributes('default'));
 		}
 	}

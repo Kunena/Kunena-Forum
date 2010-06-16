@@ -41,6 +41,7 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix regression - Minified CSS does not exist in Kunena SVN version
 # [#20038] Joomla 1.6 Admin: Fix template manager, control panel, side panel
 # [#20038] Joomla 1.6: Fix KunenaRoute
+# [#20038] Joomla 1.6: Frontend should work again
 
 15-June-2010 @quila
 # [#19345] Template Manager - some more changes

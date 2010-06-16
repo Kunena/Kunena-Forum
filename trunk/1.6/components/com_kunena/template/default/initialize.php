@@ -24,11 +24,11 @@ CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/default-min.js
 
 if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum-min.css' )) {
 	// Load css from Joomla template
-	CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum-min.css' );
+	CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.forum-min.css' );
 } else if (file_exists ( KUNENA_PATH_TEMPLATE .DS. 'css' .DS. 'kunena.forum-min.css' )){
 	// Load css from the current template
 	CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
 } else {
 	// Load css from default template
-	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . '/template/default/css/kunena.forum-min.css' );
+	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.forum-min.css' );
 }

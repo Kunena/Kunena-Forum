@@ -179,6 +179,12 @@
     		fromdir="${project_dir}/${kunena.frontend}/template/default/js" 
     		todir="${tmp_dir}/${kunena.frontend}/template/default/js">
 		</yui-compressor>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+    		fromdir="${project_dir}/${kunena.frontend}/template/default/plugin/poll/js" 
+    		todir="${tmp_dir}/${kunena.frontend}/template/default/plugin/poll/js">
+		</yui-compressor>
+		
 	</target>
 	
 	<target name="copy" depends="minify">

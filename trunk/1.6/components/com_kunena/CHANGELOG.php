@@ -35,6 +35,7 @@ Legend:
 Kunena 1.6.0-ALPHA2
 
 15-June-2010 fxstein
++ [#20916] New helper functions to load minified css and js or full version when in forum debug
 # [#21032] Fix manifest error that leads to Joomla 1.6 install error message
 + [#21032] Add admin menu definition to manifest for Joomla 1.6 install
 

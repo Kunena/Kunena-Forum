@@ -194,10 +194,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	echo $kunena_config->offline_message;
 } else if ($kunena_config->regonly && ! $kunena_my->id) {
 	// if we only allow registered users
-	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
-		$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
+	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum-min.css' )) {
+		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum-min.css' );
 	} else {
-		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
+		CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
 	}
 	echo '<div id="Kunena">';
 	CKunenaTools::loadTemplate('/login.php');
@@ -239,16 +239,16 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	JHTML::_ ( 'behavior.framework' );
 
 	// We load smoothbox library
-	$document->addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox.js' );
+	CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox-min.js' );
 
 	// New Kunena JS for default template
 	// TODO: Need to check if selected template has an override
-	$document->addScript ( KUNENA_DIRECTURL . 'template/default/js/default.js' );
+	CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/default-min.js' );
 
-	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
-		$document->addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum.css' );
+	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum-min.css' )) {
+		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum-min.css' );
 	} else {
-		$document->addStyleSheet ( KUNENA_TMPLTCSSURL );
+		CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
 	}
 
 	// Insert WhoIsOnlineDatas

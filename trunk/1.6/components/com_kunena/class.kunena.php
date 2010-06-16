@@ -117,7 +117,7 @@ define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/");
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$fb_cur_img_template}/");
 
 // IMAGES URL PATH
-define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum.css');
+define('KUNENA_TMPLTCSSURL', KUNENA_TMPLTURL . 'css/kunena.forum-min.css');
 
 define('KUNENA_URLIMAGESPATH', KUNENA_TMPLTMAINIMGURL . 'images/');
 
@@ -954,6 +954,41 @@ class CKunenaTools {
 			KunenaError::checkDatabaseError();
 
 			return $introtext;
+		}
+
+
+		/**
+		 * Wrapper to addStyleSheet
+		 *
+		 */
+		function addStyleSheet($filename) {
+
+			$document = & JFactory::getDocument ();
+			$kunena_config = KunenaFactory::getConfig ();
+
+			if ($kunena_config->debug) {
+				// If we are in debug more, make sure we load the unpacked css
+				$filename = preg_replace ( '/\-min\./u', '.', $filename );
+			}
+
+			return $document->addStyleSheet ( $filename );
+		}
+
+		/**
+		 * Wrapper to addScript
+		 *
+		 */
+		function addScript($filename) {
+
+			$document = & JFactory::getDocument ();
+			$kunena_config = KunenaFactory::getConfig ();
+
+			if ($kunena_config->debug) {
+				// If we are in debug more, make sure we load the unpacked css
+				$filename = preg_replace ( '/\-min\./u', '.', $filename );
+			}
+
+			return $document->addScript ( $filename );
 		}
 
     } // end of class

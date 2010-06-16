@@ -129,7 +129,7 @@ class CKunenaPolls {
 	*/
    function call_javascript_vote()
    {
-    	$this->document->addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll.ajax.js');
+    	CKunenaTools::addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll.ajax-min.js');
 		JApplication::addCustomHeadTag('
       <script type="text/javascript">
 	   <!--
@@ -193,7 +193,7 @@ class CKunenaPolls {
 	*/
    function call_javascript_form()
    {
-    	$this->document->addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll.js');
+    	CKunenaTools::addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll-min.js');
 		$this->document->addScriptDeclaration('
 	   var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
 	   var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";

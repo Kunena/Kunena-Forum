@@ -141,12 +141,13 @@ abstract class KunenaRoute {
 		if (!isset(self::$parent[$Itemid])) {
 			self::$parent[$Itemid] = 0;
 			$current = $Itemid;
-			while ($current) {
+			while (isset(self::$menu[$current])) {
 				$item = self::$menu[$current];
 				if ($item->type == 'component' && $item->component == 'com_kunena') {
 					self::$parent[$Itemid] = $current;
 				}
-				$current = $item->parent;
+				// Support J1.6 and J1.5
+				$current = isset($item->parent_id) ? $item->parent_id : $item->parent;
 			}
 		}
 		return self::$parent[$Itemid];

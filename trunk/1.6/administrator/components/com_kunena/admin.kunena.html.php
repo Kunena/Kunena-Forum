@@ -257,21 +257,21 @@ table.kadmin-stat caption {
 	<div class="kadmin-left">
 		<div id="kadmin-menu">
 			<?php $stask = JRequest::getVar ( 'task', null ); ?>
-				<a class="kadmin-mainmenu icon-cp-sm" href="index.php?option=com_kunena"><?php echo JText::_('COM_KUNENA_CP'); ?></a>
-				<a class="kadmin-mainmenu icon-config-sm" href="index.php?option=com_kunena&task=showconfig"><?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?></a>
-				<a class="kadmin-mainmenu icon-adminforum-sm" href="index.php?option=com_kunena&task=showAdministration"><?php echo JText::_('COM_KUNENA_C_FORUM'); ?></a>
-				<a class="kadmin-mainmenu icon-template-sm" href="index.php?option=com_kunena&task=showTemplates"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a>
-				<a class="kadmin-mainmenu icon-profiles-sm" href="index.php?option=com_kunena&task=showprofiles"><?php echo JText::_('COM_KUNENA_C_USER'); ?></a>
-				<a class="kadmin-mainmenu icon-smilies-sm" href="index.php?option=com_kunena&task=showsmilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></a>
-				<a class="kadmin-mainmenu icon-ranks-sm" href="index.php?option=com_kunena&task=ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
-				<a class="kadmin-mainmenu icon-files-sm" href="index.php?option=com_kunena&task=browseFiles"><?php echo JText::_('COM_KUNENA_C_FILES'); ?></a>
-				<a class="kadmin-mainmenu icon-images-sm" href="index.php?option=com_kunena&task=browseImages"><?php echo JText::_('COM_KUNENA_C_IMAGES'); ?></a>
-				<a class="kadmin-mainmenu icon-prune-sm" href="index.php?option=com_kunena&task=pruneforum"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a>
-				<a class="kadmin-mainmenu icon-syncusers-sm" href="index.php?option=com_kunena&task=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
-				<a class="kadmin-mainmenu icon-recount-sm" href="index.php?option=com_kunena&task=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
-				<a class="kadmin-mainmenu icon-trash-sm" href="index.php?option=com_kunena&task=showtrashview"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>
-				<a class="kadmin-mainmenu icon-systemreport-sm" href="index.php?option=com_kunena&task=showsystemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
-				<a class="kadmin-mainmenu icon-support-sm" href="http://www.kunena.com" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
+				<a class="kadmin-mainmenu icon-cp-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena"><?php echo JText::_('COM_KUNENA_CP'); ?></a>
+				<a class="kadmin-mainmenu icon-config-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showconfig"><?php echo JText::_('COM_KUNENA_C_FBCONFIG'); ?></a>
+				<a class="kadmin-mainmenu icon-adminforum-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showAdministration"><?php echo JText::_('COM_KUNENA_C_FORUM'); ?></a>
+				<a class="kadmin-mainmenu icon-template-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showTemplates"><?php echo JText::_('COM_KUNENA_A_TEMPLATE_MANAGER'); ?></a>
+				<a class="kadmin-mainmenu icon-profiles-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showprofiles"><?php echo JText::_('COM_KUNENA_C_USER'); ?></a>
+				<a class="kadmin-mainmenu icon-smilies-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showsmilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></a>
+				<a class="kadmin-mainmenu icon-ranks-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></a>
+				<a class="kadmin-mainmenu icon-files-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=browseFiles"><?php echo JText::_('COM_KUNENA_C_FILES'); ?></a>
+				<a class="kadmin-mainmenu icon-images-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=browseImages"><?php echo JText::_('COM_KUNENA_C_IMAGES'); ?></a>
+				<a class="kadmin-mainmenu icon-prune-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=pruneforum"><?php echo JText::_('COM_KUNENA_C_PRUNETAB'); ?></a>
+				<a class="kadmin-mainmenu icon-syncusers-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
+				<a class="kadmin-mainmenu icon-recount-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
+				<a class="kadmin-mainmenu icon-trash-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showtrashview"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>
+				<a class="kadmin-mainmenu icon-systemreport-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showsystemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
+				<a class="kadmin-mainmenu icon-support-sm" href="<?php echo JURI::base(); ?>http://www.kunena.com" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
 		</div>
 	</div>
 	<div class="kadmin-right">
@@ -372,18 +372,18 @@ table.kadmin-stat caption {
 					<td width="5">
 						<input type="radio" id="cb<?php echo $i;?>" name="cid[]" value="<?php echo $row->directory; ?>" onclick="isChecked(this.checked);" />
 					</td>
-					<td><?php $img_path = $kunena_app->getSiteURL().'/components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
+					<td><?php $img_path = JURI::root().'components/com_kunena/template/'.$row->directory.'/images/template_thumbnail.png'; ?>
 						<span class="editlinktip hasTip" title="<?php
 							echo kescape($row->name . '::<img border="1" src="' . $img_path . '" name="imagelib" alt="' . JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_PREVIEW' ) . '" width="200" height="145" />'); ?> ">
-							<a href="index.php?option=com_kunena&amp;task=editKTemplate&amp;cid[]=<?php echo $row->directory;?>"><?php echo $row->name;?></a>
+							<a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=editKTemplate&amp;cid[]=<?php echo $row->directory;?>"><?php echo $row->name;?></a>
 						</span>
 					</td>
 					<td align="center">
 						<?php if ($row->published == 1) { ?>
-							<img src="components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
+							<img src="<?php echo JURI::base(); ?>components/com_kunena/images/icons/default.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?>" />
 						<?php } else { ?>
-							<a href="index.php?option=com_kunena&amp;task=publishTemplate&amp;cid[]=<?php echo $row->directory;?>">
-								<img src="components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" /></a>
+							<a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=publishTemplate&amp;cid[]=<?php echo $row->directory;?>">
+								<img src="<?php echo JURI::base(); ?>components/com_kunena/images/icons/default_off.png" alt="<?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_NO_DEFAULT' ); ?>" /></a>
 						<?php } ?>
 					</td>
 					<td align="center">
@@ -2435,7 +2435,7 @@ table.kadmin-stat caption {
 			</tr>
 			<tr>
 				<td colspan="4" nowrap>
-					<a href="index.php?option=com_kunena&task=profiles&order=0"><?php echo JText::_('COM_KUNENA_SORTID'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=2"><?php echo JText::_('COM_KUNENA_SORTNAME'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=3"><?php echo JText::_('COM_KUNENA_SORTREALNAME'); ?></a> | <a href="index.php?option=com_kunena&task=profiles&order=1"><?php echo JText::_('COM_KUNENA_SORTMOD'); ?></a>
+					<a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=profiles&order=0"><?php echo JText::_('COM_KUNENA_SORTID'); ?></a> | <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=profiles&order=2"><?php echo JText::_('COM_KUNENA_SORTNAME'); ?></a> | <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=profiles&order=3"><?php echo JText::_('COM_KUNENA_SORTREALNAME'); ?></a> | <a href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=profiles&order=1"><?php echo JText::_('COM_KUNENA_SORTMOD'); ?></a>
 				</td>
 			</tr>
 		</table>
@@ -2581,7 +2581,7 @@ table.kadmin-stat caption {
 						?>"
 					onClick="isChecked(this.checked);"></td>
 				<td width="20"><a
-					href="index.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo kescape($pl->id);
+					href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=userprofile&do=show&user_id=<?php echo kescape($pl->id);
 						?>"><?php echo kescape($pl->id);
 						?></a>&nbsp;</td>
 				<td><?php echo kescape($pl->name);

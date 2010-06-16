@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

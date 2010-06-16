@@ -966,7 +966,7 @@ class CKunenaTools {
 			$document = & JFactory::getDocument ();
 			$kunena_config = KunenaFactory::getConfig ();
 
-			if ($kunena_config->debug) {
+			if ($kunena_config->debug || Kunena::isSvn()) {
 				// If we are in debug more, make sure we load the unpacked css
 				$filename = preg_replace ( '/\-min\./u', '.', $filename );
 			}
@@ -983,7 +983,7 @@ class CKunenaTools {
 			$document = & JFactory::getDocument ();
 			$kunena_config = KunenaFactory::getConfig ();
 
-			if ($kunena_config->debug) {
+			if ($kunena_config->debug || Kunena::isSvn()) {
 				// If we are in debug more, make sure we load the unpacked css
 				$filename = preg_replace ( '/\-min\./u', '.', $filename );
 			}

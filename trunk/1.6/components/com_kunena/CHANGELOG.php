@@ -38,6 +38,7 @@ Kunena 1.6.0-ALPHA2
 ^ [#15886] Merged /branches/1.6-@quila-tpl-100607
 # [#19345] Template Manager - Make loading template configuration more robust
 # [#19288] Fix regression - Remove some Zend warnings (also move javascript out of php file)
+# [#19288] Fix regression - Minified CSS does not exist in Kunena SVN version
 
 15-June-2010 @quila
 # [#19345] Template Manager - some more changes

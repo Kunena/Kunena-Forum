@@ -39,6 +39,13 @@ class Kunena implements iKunena {
 		return self::$version;
 	}
 
+	public static function isSvn() {
+		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
+			return true;
+		}
+		return false;
+	}
+
 	public static function version() {
 		if (self::$version === false) {
 			self::buildVersion();

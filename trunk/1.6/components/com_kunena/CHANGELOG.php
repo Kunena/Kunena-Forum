@@ -42,6 +42,7 @@ Kunena 1.6.0-ALPHA2
 # [#20038] Joomla 1.6 Admin: Fix template manager, control panel, side panel
 # [#20038] Joomla 1.6: Fix KunenaRoute
 # [#20038] Joomla 1.6: Frontend should work again
+# [#20038] Joomla 1.6: Split install.kunena.php into three parts
 
 15-June-2010 @quila
 # [#19345] Template Manager - some more changes

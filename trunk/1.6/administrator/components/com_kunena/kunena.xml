@@ -14,7 +14,7 @@
 	<description>Kunena Forum</description>
 	<installfile>install.kunena.php</installfile>
 	<uninstallfile>uninstall.kunena.php</uninstallfile>
-	<scriptfile>install.kunena.php</scriptfile>
+	<scriptfile>install.script.php</scriptfile>
 	<files>
 		<filename>kunena.php</filename>
 		<filename>router.php</filename>

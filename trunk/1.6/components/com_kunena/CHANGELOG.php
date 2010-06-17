@@ -46,6 +46,7 @@ Kunena 1.6.0-ALPHA2
 # [#19251] Implement user caching to greatly reduce number of SQL queries
 ^ [#19295] Rename FbForum class to TableKunenaCategory
 ^ [#19295] Clean up code: Deprecate html_entity_decode_utf8(), remove utf8_urldecode(), fbReturnDashed()
+# [#19345] Some CSS fixes for Beez2 (J1.6)
 
 16-June-2010 Matias
 ^ [#15886] Merged /branches/1.6-@quila-tpl-100607

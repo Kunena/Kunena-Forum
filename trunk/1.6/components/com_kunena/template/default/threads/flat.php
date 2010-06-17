@@ -64,7 +64,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	$k = 0;
 	$counter = 0;
 	if (!count ( $this->threads ) && !$this->hasSubCats) {
-		echo '<tr class="ksectiontableentry2"><td class="td-0 km center">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
+		echo '<tr class="ksectiontableentry2"><td class="td-0 km kcenter">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
 	} else
 	foreach ( $this->threads as $leaf ) {
 		$leaf->name = kunena_htmlspecialchars ( $leaf->name );
@@ -108,14 +108,14 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		else if ($leaf->hold) echo ' kdeleted';
 
 		?>">
-			<td class="td-0 km center"><strong> <?php
+			<td class="td-0 km kcenter"><strong> <?php
 		echo CKunenaTools::formatLargeNumber ( $leaf->msgcount-1 );
 		?>
 			</strong><?php
 		echo JText::_('COM_KUNENA_GEN_REPLIES');
 		?></td>
 
-			<td class="td-2 center">
+			<td class="td-2 kcenter">
 			<?php echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, CKunenaTools::topicIcon($leaf), $leaf->lastread ) ?>
 		</td>
 
@@ -197,7 +197,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<!-- /By -->
 		</div>
 			</td>
-			<td class="td-4 center">
+			<td class="td-4 kcenter">
 			<!-- Views -->
 			<span class="ktopic-views-number"><?php
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
@@ -205,7 +205,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		echo JText::_('COM_KUNENA_GEN_HITS');
 		?> </span> <!-- /Views --></td>
 		<?php if ($this->showposts):?>
-			<td class="td-4 center">
+			<td class="td-4 kcenter">
 			<!-- Posts -->
 			<span class="ktopic-views-number"><?php
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->mycount );
@@ -259,7 +259,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			?>
 
-			<td class="td-7 center">
+			<td class="td-7 kcenter">
 				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo $leaf->id?>]" value="0"  />
 			</td>
 

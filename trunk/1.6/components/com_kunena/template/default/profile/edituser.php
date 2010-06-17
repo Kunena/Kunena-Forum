@@ -16,7 +16,7 @@ $kunena_config = KunenaFactory::getConfig ();
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '' ?>" id="kflattable">
 	<tbody class="kmyprofile_general">
 	<tr class="ksectiontableentry2">
-		<td class="td-0 km center">
+		<td class="td-0 km kcenter">
 			<label for="username">
 				<?php echo JText::_( 'COM_KUNENA_UNAME' ); ?>
 			</label>
@@ -26,7 +26,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		</td>
 	</tr>
 	<tr class="ksectiontableentry1">
-		<td class="td-0 km center" width="120">
+		<td class="td-0 km kcenter" width="120">
 			<label for="name">
 				<?php echo JText::_( 'COM_KUNENA_USRL_NAME' ); ?>
 			</label>
@@ -36,7 +36,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		</td>
 	</tr>
 	<tr class="ksectiontableentry2">
-		<td class="td-0 km center">
+		<td class="td-0 km kcenter">
 			<label for="email">
 				<?php echo JText::_( 'COM_KUNENA_USRL_EMAIL' ); ?>
 			</label>
@@ -47,7 +47,7 @@ $kunena_config = KunenaFactory::getConfig ();
 	</tr>
 	<?php if($this->user->get('password')) : ?>
 	<tr class="ksectiontableentry1">
-		<td class="td-0 km center">
+		<td class="td-0 km kcenter">
 			<label for="password">
 				<?php echo JText::_( 'COM_KUNENA_PASS' ); ?>
 			</label>
@@ -57,7 +57,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		</td>
 	</tr>
 	<tr class="ksectiontableentry2">
-		<td class="td-0 km center">
+		<td class="td-0 km kcenter">
 			<label for="password2">
 				<?php echo JText::_( 'COM_KUNENA_VPASS' ); ?>
 			</label>
@@ -76,7 +76,7 @@ $kunena_config = KunenaFactory::getConfig ();
 	<tbody class="kmyprofile_params">
 	<?php $i=0; foreach ($this->userparams as $userparam): ?>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="td-0 km center" width="120">
+		<td class="td-0 km kcenter" width="120">
 			<label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>">
 				<?php echo $userparam[0] ?>
 			</label>

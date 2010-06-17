@@ -29,7 +29,7 @@ $this->displayThreadActions(0);
 <table class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kblocktable' . $this->catinfo->class_sfx : '' ?>" id="kviews">
 	<thead>
 		<tr>
-			<th class="left">
+			<th class="kleft">
 				<div class="ktitle-cover km">
 					<span class="ktitle kl"><?php echo JText::_('COM_KUNENA_TOPIC') ?>
 						<?php echo $this->kunena_topic_title ?>

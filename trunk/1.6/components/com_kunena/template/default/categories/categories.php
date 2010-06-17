@@ -82,7 +82,7 @@ global $kunena_icons;
 				?>"
 			id="kcat<?php
 				echo $subcat->id?>">
-			<td class="td-1 center" width="1%"><?php
+			<td class="td-1 kcenter" width="1%"><?php
 				$tmpIcon = '';
 				if ($this->config->shownew && $this->my->id != 0) {
 					if ($subcat->new) {
@@ -112,7 +112,7 @@ global $kunena_icons;
 				?>
 			</td>
 
-			<td class="td-2 left">
+			<td class="td-2 kleft">
 			<div class="kthead-title kl"><?php
 				//new posts available
 				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $subcat->name ) );
@@ -231,7 +231,7 @@ else {
 				?>
 			</td>
 
-			<td class="td-3 km center" width="5%"><!-- Number of Topics -->
+			<td class="td-3 km kcenter" width="5%"><!-- Number of Topics -->
 			<span class="kcat-topics-number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numTopics );
 				?>
@@ -239,7 +239,7 @@ else {
 				echo JText::_('COM_KUNENA_GEN_TOPICS');
 				?> </span> <!-- /Number of Replies --></td>
 
-			<td class="td-4 km center" width="5%"><!-- Number of Topics -->
+			<td class="td-4 km kcenter" width="5%"><!-- Number of Topics -->
 			<span class="kcat-replies-number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numPosts );
 				?>
@@ -251,7 +251,7 @@ else {
 				if ($subcat->numTopics != 0) {
 					?>
 
-			<td class="td-5 left" width="25%">
+			<td class="td-5 kleft" width="25%">
 			<!-- Avatar --> <?php
 			if ($this->config->avataroncat > 0) :
 				$profile = KunenaFactory::getUser((int)$subcat->userid);
@@ -290,7 +290,7 @@ else {
 				} else {
 					?>
 
-			<td class="td-5 center" width="25%"><?php
+			<td class="td-5 kcenter" width="25%"><?php
 					echo JText::_('COM_KUNENA_NO_POSTS');
 					?></td>
 

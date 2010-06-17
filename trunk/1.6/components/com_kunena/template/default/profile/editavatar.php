@@ -20,14 +20,14 @@ $i=0;
 	?>" id="kflattable">
 <?php if ($this->profile->avatar): ?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-			<td class="td-0 km center">
+			<td class="td-0 km kcenter">
 				<label for="kavatar_keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP');?></label>
 			</td><td>
 				<input id="kavatar_keep" type="radio" name="avatar" value="keep" checked="checked" />
 			</td>
 		</tr>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-			<td class="td-0 km center">
+			<td class="td-0 km kcenter">
 				<label for="kavatar_delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE');?></label>
 			</td><td>
 				<input id="kavatar_delete" type="radio" name="avatar" value="delete"/>
@@ -36,7 +36,7 @@ $i=0;
 <?php endif; ?>
 <?php if ($this->config->allowavatarupload):?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-			<td class="td-0 km center">
+			<td class="td-0 km kcenter">
 				<label for="kavatar_upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
 			</td><td>
 				<div><input id="kavatar_upload" type="file" class="button" name="avatarfile" /></div>
@@ -45,7 +45,7 @@ $i=0;
 <?php endif; ?>
 <?php if ($this->config->allowavatargallery):?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-			<td class="td-0 km center">
+			<td class="td-0 km kcenter">
 				<label for="kavatar_gallery"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
 			</td><td>
 				<table class="kblocktable" id ="kforumua_gal" border="0" cellspacing="0" cellpadding="0" width="100%">

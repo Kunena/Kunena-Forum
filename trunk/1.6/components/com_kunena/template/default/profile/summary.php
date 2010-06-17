@@ -29,7 +29,7 @@ if ($this->my->id == $this->user->id) {
 <div class="k-bt-cvr4">
 <div class="k-bt-cvr5">
 <h1><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?>
-<?php if (!empty($this->editlink)) echo '<span class="right">'.$this->editlink.'</span>';?></h1>
+<?php if (!empty($this->editlink)) echo '<span class="kright">'.$this->editlink.'</span>';?></h1>
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
 			<?php if ($this->avatarlink) : ?>

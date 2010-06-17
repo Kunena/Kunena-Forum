@@ -222,8 +222,8 @@ class KunenaUser extends JObject {
 	}
 
 	public function isOnline($yesno = false) {
-		$my = JFactory::getUser ();
-		if (! $this->showOnline && ! $my->isModerator ()) {
+		$myprofile = KunenaFactory::getUser ();
+		if (! $this->showOnline && ! $myprofile->isModerator ()) {
 			$this->_online [$this->userid] = false;
 		} else if (! isset ( self::$_online [$this->userid] )) {
 			kimport ( 'error' );
@@ -248,16 +248,16 @@ class KunenaUser extends JObject {
 				$this->_db->setQuery ( $query );
 				$lastseen = $this->_db->loadResult ();
 				if (KunenaError::checkDatabaseError ()) {
-					$this->_online [$this->userid] = false;
+					self::$_online [$this->userid] = false;
 				} else {
 					$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
-					$this->_online [$this->userid] = ($lastseen + $timeout) > time ();
+					self::$_online [$this->userid] = ($lastseen + $timeout) > time ();
 				}
 			}
 		}
 		if ($yesno)
-			return $this->_online [$this->userid] ? 'yes' : 'no';
-		return $this->_online [$this->userid];
+			return self::$_online [$this->userid] ? 'yes' : 'no';
+		return self::$_online [$this->userid];
 	}
 
 	public function isAdmin() {

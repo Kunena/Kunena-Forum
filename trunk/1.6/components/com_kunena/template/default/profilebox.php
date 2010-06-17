@@ -52,11 +52,11 @@ if ($type == 'logout') :
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">
 			<?php if ($avatar) : ?>
-			<td class="kprofilebox-left center" width="1%">
+			<td class="kprofilebox-left kcenter" width="1%">
 				<?php echo $avatar; ?>
 			</td>
 			<?php endif; ?>
-			<td class="kprofileboxcnt left">
+			<td class="kprofileboxcnt kleft">
 				<ul class="kprofilebox-link">
 					<?php if ($PMlink) : ?>
 						<li><?php echo $PMlink; ?></li>

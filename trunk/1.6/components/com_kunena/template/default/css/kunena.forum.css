@@ -96,9 +96,9 @@ PX		EM			PCT			PT
 #Kunena .clr { clear:both; height:1px; overflow:hidden;}
 #Kunena .fltlft {float:left;}
 #Kunena .fltrt {float:right; }
-#Kunena .right {text-align:right;}
-#Kunena .left {text-align:left;}
-#Kunena .center {text-align:center;}
+#Kunena .kright {text-align:right;}
+#Kunena .kleft {text-align:left;}
+#Kunena .kcenter {text-align:center;}
 #Kunena .nowrap {white-space:nowrap;}
 #Kunena .divider {margin:0 3px;color:#999999;}
 
@@ -3637,7 +3637,6 @@ div#kprofile-stats ul li span.krank-admin {
 	display: table;
 	margin-right: 10px;
 	margin-left: 220px;
-	width: 75%;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}
 #Kunena div.kprofile-rightcol1 { 

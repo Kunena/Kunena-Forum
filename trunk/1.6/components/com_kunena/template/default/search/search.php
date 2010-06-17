@@ -53,7 +53,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 		<?php endforeach; ?>
 
 		<tr class="ksth">
-			<th colspan="3" class="center">
+			<th colspan="3" class="kcenter">
 			<?php
 			$resStart = $this->limitstart + 1;
 			$resStop = $this->limitstart + count ( $this->results );

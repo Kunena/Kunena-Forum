@@ -39,7 +39,7 @@ if ($this->config->showwhoisonline)
     <table class = "kblocktable" id ="kwhoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
         <thead>
             <tr>
-                <th class="left" colspan="3"><div class = "ktitle-cover km">
+                <th class="kleft" colspan="3"><div class = "ktitle-cover km">
 							<?php
 							$who_online = JText::_('COM_KUNENA_WHO_WHOIS_ONLINE');
 							if (CKunenaTools::isModerator($this->my->id)) {

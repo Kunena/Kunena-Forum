@@ -13,7 +13,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmsgtitle left">
+<div class="kmsgtitle kleft">
 	<span class="kmsgtitle<?php echo $this->msgsuffix ?>">
 		<?php echo $this->subject ?>
 	</span>

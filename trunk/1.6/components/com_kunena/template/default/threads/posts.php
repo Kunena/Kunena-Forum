@@ -64,7 +64,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	$k = 0;
 	$counter = 0;
 	if (!count ( $this->customreply )) {
-		echo '<tr class="ksectiontableentry2"><td class="td-0 km center">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
+		echo '<tr class="ksectiontableentry2"><td class="td-0 km kcenter">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
 	} else
 	foreach ( $this->customreply as $message ) {
 		$lastreply = $this->lastreply[$message->thread];
@@ -90,7 +90,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($message->hold == 1) echo ' kunapproved';
 		else if ($message->hold) echo ' kdeleted';
 		?>">
-			<td class="td-0 center">
+			<td class="td-0 kcenter">
 			<?php echo CKunenaTools::topicIcon($message) ?>
 		</td>
 
@@ -184,7 +184,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			?>
 
-			<td class="td-7 center">
+			<td class="td-7 kcenter">
 				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo $message->id?>]" value="0"  />
 			</td>
 

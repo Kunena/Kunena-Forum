@@ -621,7 +621,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	if ($kunena_config->enablerss) {
 		$rss_params = ((int) $catid > 0 ? '&amp;catid=' . (int) $catid : '');
 		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
-		echo CKunenaLink::GetRSSLink ( '<img class="rsslink" src="' . KUNENA_URLICONSPATH . $kunena_icons ['rss'] .'" border="0" alt="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" />', 'follow', $rss_params );
+		echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS'), JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
 	}
 	echo '</div>';
 

@@ -4282,3 +4282,126 @@ ul.autocompleter-choices span.autocompleter-queried {
 ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 	color:#9FCFFF;
 }
+
+/* SHOW ICONS 
+----------------------------------------------------------------------------------------------- */
+
+#Kunena span.ktopicattach {
+	background: url("../images/icons/attachment.png") no-repeat left center;
+	float: right;
+	border: 0;
+	margin: 2px;
+	width: 32px;
+	height: 32px;
+}
+#Kunena span.kfavoritestar {
+	background: url("../images/icons/favoritestar.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 16px;
+	height: 16px;
+	float: right;
+}
+#Kunena span.kfavoritestar-grey {
+	background: url("../images/icons/favoritestar-grey.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 16px;
+	height: 16px;
+	float: right;
+}
+#Kunena span.ktopiclocked,
+#Kunena span.kforumlocked {
+	background: url("../images/icons/lock_xsm.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 16px;
+	height: 16px;
+	float: right;
+}
+#Kunena span.ktopicsticky {
+	background: url("../images/icons/tsticky.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 27px;
+	height: 44px;
+	float: right;
+}
+#Kunena span.kforumbottom {
+	background: url("../images/icons/bottom_arrow.gif") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 18px;
+	height: 15px;
+	float: left;
+}
+#Kunena span.kforumtop {
+	background: url("../images/icons/top_arrow.gif") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 18px;
+	height: 15px;
+	float: left;
+}
+#Kunena span.krss {
+	background: url("../images/icons/rss.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 24px;
+	height: 24px;
+	float: right;
+}
+#Kunena span.kforummoderated {
+	background: url("../images/icons/tmoder.gif") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 16px;
+	height: 16px;
+	float: right;
+}
+#Kunena span.kreadforum,
+#Kunena span.knotloginforum {
+	background: url("../images/icons/folder_nonew.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 32px;
+	height: 32px;
+	float: left;
+}
+#Kunena span.kunreadforum {
+	background: url("../images/icons/folder.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 32px;
+	height: 32px;
+	float: left;
+}
+#Kunena span.kreadforum-sm,
+#Kunena span.knotloginforum-sm {
+	background: url("../images/icons/folder_nonew_sm.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 12px;
+	height: 12px;
+	float: left;
+}
+#Kunena span.kunreadforum-sm {
+	background: url("../images/icons/folder_sm.png") no-repeat left center;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 12px;
+	height: 12px;
+	float: left;
+}

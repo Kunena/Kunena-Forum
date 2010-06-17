@@ -885,13 +885,6 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWNEW_DESC') ?></td>
 					</tr>
 							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_NEWCHAR') ?></td>
-								<td align="left" valign="top"><input type="text" name="cfg_newchar"
-							value="<?php echo kescape ( $kunena_config->newchar );
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_NEWCHAR_DESC') ?></td>
-					</tr>
-							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAMBOT_SUPPORT') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $lists ['jmambot'];

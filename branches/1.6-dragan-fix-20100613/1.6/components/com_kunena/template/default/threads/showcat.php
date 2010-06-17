@@ -60,7 +60,7 @@ if ($this->objCatInfo->headerdesc) {
 		<td class="klist-actions-goto"><?php
 		//go to bottom
 		echo '<a name="forumtop" /> ';
-		echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', isset ( $kunena_icons ['bottomarrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['bottomarrow'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_GOTOBOTTOM') . '" title="' . JText::_('COM_KUNENA_GEN_GOTOBOTTOM') . '"/>' : JText::_('COM_KUNENA_GEN_GOTOBOTTOM') );
+		echo CKunenaTools::showIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM'), JText::_('COM_KUNENA_GEN_GOTOBOTTOM') );
 		?>
 		</td>
 		<td class="klist-actions-forum" width="100%">
@@ -102,7 +102,7 @@ if ($this->objCatInfo->headerdesc) {
 		<td class="klist-actions-goto"><?php
 		//go to top
 		echo '<a name="forumbottom" />';
-		echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', isset ( $kunena_icons ['toparrow'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['toparrow'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_GOTOTOP') . '" title="' . JText::_('COM_KUNENA_GEN_GOTOTOP') . '"/>' : JText::_('COM_KUNENA_GEN_GOTOTOP') );
+		echo CKunenaTools::showIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOTOP'), JText::_('COM_KUNENA_GEN_GOTOTOP') );
 		?>
 
 		</td>

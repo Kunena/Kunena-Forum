@@ -121,7 +121,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 			<td class="td-3"><?php
 			if ($leaf->attachments) {
-				echo isset ( $kunena_icons ['topicattach'] ) ? '<img  class="attachicon" src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicattach'] . '" border="0" alt="' . JText::_('COM_KUNENA_ATTACH') . '" />' : '<img class="attachicon" src="' . KUNENA_URLICONSPATH . 'attachment.gif"  alt="' . JText::_('COM_KUNENA_ATTACH') . '" title="' . JText::_('COM_KUNENA_ATTACH') . '" />';
+				echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH'), JText::_('COM_KUNENA_ATTACH') );
 			}
 			?>
 			<div class="ktopic-title-cover"><?php
@@ -130,15 +130,18 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<?php
 			if ($leaf->favcount ) {
 				if ($leaf->myfavorite) {
-					echo isset ( $kunena_icons ['favoritestar'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar'] . '" border="0" alt="' . JText::_('COM_KUNENA_FAVORITE') . '" />' : '<img class="favoritestar" src="' . KUNENA_URLICONSPATH . 'favoritestar.png"  alt="' . JText::_('COM_KUNENA_FAVORITE') . '" title="' . JText::_('COM_KUNENA_FAVORITE') . '" />';
-				} else if (array_key_exists ( 'favoritestar_grey', $kunena_icons )) {
-					echo isset ( $kunena_icons ['favoritestar_grey'] ) ? '<img  class="favoritestar" src="' . KUNENA_URLICONSPATH . $kunena_icons ['favoritestar_grey'] . '" border="0" alt="' . JText::_('COM_KUNENA_FAVORITE') . '" />' : '<img class="favoritestar" src="' . KUNENA_URLICONSPATH . 'favoritestar.png"  alt="' . JText::_('COM_KUNENA_FAVORITE') . '" title="' . JText::_('COM_KUNENA_FAVORITE') . '" />';
+					echo CKunenaTools::showIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE'), JText::_('COM_KUNENA_FAVORITE') );
+				} else {
+					echo CKunenaTools::showIcon ( 'kfavoritestar-grey', JText::_('COM_KUNENA_FAVORITE'), JText::_('COM_KUNENA_FAVORITE') );
 				}
 			}
 			?>
 			<?php
 			if ($leaf->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup class="knewchar">(' . $leaf->unread . ' ' . $this->config->newchar . ')</sup>', $leaf->lastread );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, '<sup class="knewchar">(' . $leaf->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', $leaf->lastread );
+			}
+			if ($leaf->locked != 0) {
+				echo CKunenaTools::showIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC'), JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
 			}
 			?>
 			</div>
@@ -162,13 +165,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 				echo ("</ul>");
 			}
-		if ($leaf->locked != 0) {
-			?> <!-- Locked --> <span class="ktopic-locked"> <?php
-			echo isset ( $kunena_icons ['topiclocked'] ) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons ['topiclocked'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" />' : '<img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  alt="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" title="' . JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') . '" />';
 			?>
-			</span> <!-- /Locked --> <?php
-		}
-		?>
 			
 			<div class="ktopic-details ks">
 			<!-- By -->
@@ -217,10 +214,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<div class="klatest-post-info"><!--  Sticky   --> <?php
 		if ($leaf->ordering != 0) {
 			?>
-			<span class="ktopic-sticky"> <?php
-			echo isset ( $kunena_icons ['topicsticky'] ) ? '<img  src="' . KUNENA_URLICONSPATH . $kunena_icons ['topicsticky'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_ISSTICKY') . '" />' : '<img class="stickyicon" src="' . KUNENA_URLICONSPATH . 'tsticky.gif"  alt="' . JText::_('COM_KUNENA_GEN_ISSTICKY') . '" title="' . JText::_('COM_KUNENA_GEN_ISSTICKY') . '" />';
+			<?php
+			echo CKunenaTools::showIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY'), JText::_('COM_KUNENA_GEN_ISSTICKY') );
 			?>
-			</span> <?php
+			<?php
 		}
 		?> <!--  /Sticky   --> <!-- Avatar --> <?php
 		if ($this->config->avataroncat > 0) :

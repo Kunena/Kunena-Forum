@@ -34,6 +34,11 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+18-June-2010 @quila
+# [#19288]  replace all icons from icons.php to css icons
+# [#19288]  remove deprecated configuration New Indicator
+# [#19288]  New Indicator moved to language file
+
 16-June-2010 @quila
 + [#19288]  Add serbian and serbian latin language files
 # [#19288]  Added function to load icons in default template

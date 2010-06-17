@@ -27,6 +27,11 @@ class TableKunenaSession extends TableKunena
 	function __construct($db) {
 		parent::__construct('#__kunena_sessions', 'userid', $db);
 	}
+
+	function load($oid = null) {
+		if (!$oid) return false;
+		return parent::load($oid);
+	}
 }
 
 ?>

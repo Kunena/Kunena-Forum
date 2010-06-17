@@ -41,6 +41,8 @@ Kunena 1.6.0-ALPHA2
 - [#19295] Clean up code: we do not need to check if all tables exists, new installer should fix that issue
 # [#19288] Fix regression - Too strict permissions in template ini file - Kunena fails to install
 # [#19288] Fix regression - Do not include template ini file into distribution as it resets configuration
+# [#19251] Reduce 1 SQL call / page in KunenaSession if user has not logged in
+# [#19251] Reduce 1 SQL call / page in CKunenaPathway
 
 16-June-2010 Matias
 ^ [#15886] Merged /branches/1.6-@quila-tpl-100607

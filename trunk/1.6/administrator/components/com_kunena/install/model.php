@@ -271,9 +271,14 @@ class KunenaModelInstall extends JModel {
 	public function stepPlugins() {
 		jimport('joomla.filesystem.folder');
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
-		$file = 'plgSystemMootools12.zip';
-		if (is_file ( $path . DS . $file )) {
-			$this->installPlugin ( $path, $file, 'mootools12' );
+
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == 1.5) {
+			$file = 'plgSystemMTUpgrade.zip';
+			if (is_file ( $path . DS . $file )) {
+				$this->installPlugin ( $path, $file, 'mtupgrade' );
+			}
 		}
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );
@@ -323,6 +328,9 @@ class KunenaModelInstall extends JModel {
 		require_once (KPATH_ADMIN . '/api.php');
 		kimport('factory');
 		require_once (KPATH_SITE . '/class.kunena.php');
+		$config = KunenaFactory::getConfig();
+		$config->remove ();
+		$config->create ();
 
 		jimport( 'joomla.version' );
 		$jversion = new JVersion();
@@ -516,9 +524,9 @@ class KunenaModelInstall extends JModel {
 						echo "The directory ".KPATH_MEDIA ."/avatars/".$newfile." is not writable";
 						JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
 					} else {
+						// Todo: we have to do this better!
 						@chmod(KPATH_MEDIA ."/avatars/{$newfile}", 0777);
 						JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
-						$this->addStatus ( "The directory ".KPATH_MEDIA ."/avatars/{$newfile} is not writable, the permissions has been changed" , true );
 					}
 				}
 			}

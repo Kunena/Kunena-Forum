@@ -20,42 +20,6 @@ defined( '_JEXEC' ) or die();
 require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
 kimport('error');
 
-class CKunenaTables {
-	var $tables = array ();
-	var $_tables = array ('#__kunena_announcement', '#__kunena_attachments', '#__kunena_categories', '#__kunena_favorites', '#__kunena_messages', '#__kunena_messages_text', '#__kunena_moderation', '#__kunena_ranks', '#__kunena_sessions', '#__kunena_smileys', '#__kunena_subscriptions', '#__kunena_users', '#__kunena_version', '#__kunena_whoisonline' );
-
-	function __construct() {
-		$kunena_db = &JFactory::getDBO ();
-		$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."%'" );
-		$tables = $kunena_db->loadResultArray ();
-		KunenaError::checkDatabaseError();
-		$prelen = strlen ( $kunena_db->getPrefix () );
-		foreach ( $tables as $table )
-			$this->tables ['#__' . JString::substr ( $table, $prelen )] = 1;
-	}
-
-	function &getInstance() {
-		static $instance = NULL;
-
-		if (! $instance) {
-			$instance = new CKunenaTables ( );
-		}
-		return $instance;
-	}
-
-	function check($table) {
-		return isset ( $this->tables [$table] );
-	}
-
-	function installed() {
-		foreach ( $this->_tables as $table ) {
-			if (! isset ( $this->tables [$table] ))
-				return false;
-		}
-		return true;
-	}
-}
-
 abstract class CKunenaConfigBase {
 	public function __construct() {
 		$this->_db = JFactory::getDBO ();
@@ -159,14 +123,9 @@ abstract class CKunenaConfigBase {
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		// Only create backup if config table already exists
-		$tables = CKunenaTables::getInstance ();
-		if ($tables->check ( $this->GetConfigTableName () )) {
-			// backup current settings
-			$this->_db->setQuery ( "CREATE TABLE " . $this->GetConfigTableName () . "_backup SELECT * FROM " . $this->GetConfigTableName () );
-			$this->_db->query ();
-			if (KunenaError::checkDatabaseError()) return;
-		}
+		$this->_db->setQuery ( "CREATE TABLE " . $this->GetConfigTableName () . "_backup SELECT * FROM " . $this->GetConfigTableName () );
+		$this->_db->query ();
+		if (KunenaError::checkDatabaseError()) return;
 	}
 
 	//
@@ -182,15 +141,12 @@ abstract class CKunenaConfigBase {
 	// Load config settings from database table
 	//
 	public function load($userinfo = null) {
-		$tables = CKunenaTables::getInstance ();
-		if ($tables->check ( $this->GetConfigTableName () )) {
-			$this->_db->setQuery ( "SELECT * FROM " . $this->GetConfigTableName () );
-			$config = $this->_db->loadAssoc ();
-			KunenaError::checkDatabaseError();
+		$this->_db->setQuery ( "SELECT * FROM " . $this->GetConfigTableName () );
+		$config = $this->_db->loadAssoc ();
+		KunenaError::checkDatabaseError();
 
-			if ($config != null) {
-				$this->bind ( $config );
-			}
+		if ($config != null) {
+			$this->bind ( $config );
 		}
 
 		// Perform custom validation of config data before we let anybody access it.

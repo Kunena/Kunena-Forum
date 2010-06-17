@@ -128,11 +128,6 @@ if ($kunena_config->debug) {
 
 global $lang, $kunena_icons, $topic_emoticons;
 
-$kn_tables = & CKunenaTables::getInstance ();
-if ($kn_tables->installed () === false) {
-	$kunena_config->board_offline = 1;
-}
-
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (JPATH_COMPONENT . DS . 'class.kunena.php');
 

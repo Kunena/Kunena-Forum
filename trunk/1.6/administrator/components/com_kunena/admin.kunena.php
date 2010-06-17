@@ -56,19 +56,6 @@ $kunena_db = JFactory::getDBO ();
 require_once (KUNENA_PATH . DS . 'class.kunena.php');
 require_once (KUNENA_PATH_ADMIN . DS . 'admin.kunena.html.php');
 
-$kn_tables = CKunenaTables::getInstance ();
-if ($kn_tables->installed () === false) {
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_ERROR'), 'error' );
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_OFFLINE'), 'notice' );
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_REASONS') );
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_1') );
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_2') );
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_3') );
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_SUPPORT') . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
-	html_Kunena::showFbFooter ();
-	return;
-}
-
 $cid = JRequest::getVar ( 'cid', array (0 ) );
 
 if (! is_array ( $cid )) {
@@ -769,15 +756,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 			$registry = new JRegistry();
 			$registry->loadArray($params);
 			$txt = $registry->toString();
-			// Try to make the params file writeable
-			if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
-				JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_WRITABLE'));
-			}
 			$return = JFile::write($file, $txt);
-			// Try to make the params file unwriteable
-			if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0555')) {
-				JError::raiseNotice('SOME_ERROR_CODE', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_COULD_NOT_UNWRITABLE'));
-			}
 			if (!$return) {
 				// FIXME: write failed, not read
 				$kunena_app->redirect('index.php?option='.$option, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
@@ -802,7 +781,6 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		if ($cid[0])
 		{
 			$kunena_config->template = $cid[0];
-			$kunena_config->backup ();
 			$kunena_config->remove ();
 			$kunena_config->create ();
 

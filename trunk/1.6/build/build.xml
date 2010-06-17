@@ -103,7 +103,9 @@
 			<fileset dir="${project_dir}/administrator" />
 		</copy>	
 		<copy todir="${tmp_dir}/components">
-			<fileset dir="${project_dir}/components" />
+			<fileset dir="${project_dir}/components">
+				<exclude name="com_kunena/template/**/params.ini"/>
+			</fileset>
 		</copy>	
 		<copy todir="${tmp_dir}/media">
 			<fileset dir="${project_dir}/media" />

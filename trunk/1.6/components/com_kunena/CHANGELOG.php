@@ -34,6 +34,14 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+17-June-2010 Matias
+^ [#19380] Update Mootools plugin to latest plgSystemMTUpgrade, uninstall old plugin
+# [#20038] Do not install Mootools plugin in J1.6
+# [#19251] Reduce 1 SQL call / page in CKunenaConfig; move table creation to installer
+- [#19295] Clean up code: we do not need to check if all tables exists, new installer should fix that issue
+# [#19288] Fix regression - Too strict permissions in template ini file - Kunena fails to install
+# [#19288] Fix regression - Do not include template ini file into distribution as it resets configuration
+
 16-June-2010 Matias
 ^ [#15886] Merged /branches/1.6-@quila-tpl-100607
 # [#19345] Template Manager - Make loading template configuration more robust

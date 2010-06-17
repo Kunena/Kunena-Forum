@@ -391,8 +391,6 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			return TAGPARSER_RET_NOTHING;
 		}
 		switch (JString::strtolower ( $tag->name )) {
-			# call html_entity_decode_utf8 if Encode() did not already!!!
-
 			# in general $between was already Encoded (if not explicitly suppressed!)
 
 			case 'email' :

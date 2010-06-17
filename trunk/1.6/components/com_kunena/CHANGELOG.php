@@ -43,6 +43,9 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix regression - Do not include template ini file into distribution as it resets configuration
 # [#19251] Reduce 1 SQL call / page in KunenaSession if user has not logged in
 # [#19251] Reduce 1 SQL call / page in CKunenaPathway
+# [#19251] Implement user caching to greatly reduce number of SQL queries
+^ [#19295] Rename FbForum class to TableKunenaCategory
+^ [#19295] Clean up code: Deprecate html_entity_decode_utf8(), remove utf8_urldecode(), fbReturnDashed()
 
 16-June-2010 Matias
 ^ [#15886] Merged /branches/1.6-@quila-tpl-100607

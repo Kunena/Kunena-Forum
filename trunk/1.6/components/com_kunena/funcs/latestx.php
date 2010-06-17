@@ -130,7 +130,8 @@ class CKunenaLatestX {
 				if (isset($this->loadids) && in_array($message->id, $this->loadids)) {
 					$this->customreply [$message->id] = $message;
 				}
-				$userlist[$message->userid] = $message->userid;
+				$userlist[intval($message->userid)] = intval($message->userid);
+				$userlist[intval($message->modified_by)] = intval($message->modified_by);
 			}
 
 			// Load threads to Kunena router to avoid extra SQL queries
@@ -140,6 +141,7 @@ class CKunenaLatestX {
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
+			KunenaUser::loadUsers($userlist);
 			$avatars = KunenaFactory::getAvatarIntegration();
 			$avatars->load($userlist);
 

@@ -130,10 +130,8 @@ class CKunenaListcat {
 				}
 			}
 
-			// collect user ids for avatar prefetch when integrated - but only if userid > 0
-			if ( $subcat->userid > 0 ) {
-				$userlist[$subcat->userid] = $subcat->userid;
-			}
+			// collect user ids for avatar prefetch when integrated
+			$userlist[intval($subcat->userid)] = intval($subcat->userid);
 		}
 
 		require_once (KUNENA_PATH . DS . 'router.php');
@@ -174,6 +172,7 @@ class CKunenaListcat {
 			KunenaError::checkDatabaseError();
 			foreach ( $modlist as $mod ) {
 				$this->modlist [$mod->catid] [] = $mod;
+				$userlist[intval($mod->userid)] = intval($mod->userid);
 			}
 
 			if (CKunenaTools::isModerator ( $this->my->id )) {
@@ -200,6 +199,7 @@ class CKunenaListcat {
 // FB::log($userlist, 'Need to preload uerlist for avatars');
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
+			KunenaUser::loadUsers($userlist);
 			$avatars = KunenaFactory::getAvatarIntegration();
 			$avatars->load($userlist);
 		}

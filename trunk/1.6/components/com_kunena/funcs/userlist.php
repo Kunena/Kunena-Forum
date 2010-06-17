@@ -70,6 +70,15 @@ class CKunenaUserlist {
 		$this->users = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 
+		$userlist = array();
+		foreach ($this->users as $user) {
+			$userlist[intval($user->userid)] = intval($user->userid);
+		}
+		// Prefetch all users/avatars to avoid user by user queries during template iterations
+		KunenaUser::loadUsers($userlist);
+		$avatars = KunenaFactory::getAvatarIntegration();
+		$avatars->load($userlist);
+
 		// table ordering
 		$this->order_dir = $filter_order_dir;
 		$this->order = $filter_order;

@@ -41,7 +41,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
 						<label class="searchlabel" for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
-						<input id="keywords" type="text" class="ks input" name="q" size="35" value="<?php echo html_entity_decode_utf8($this->q); ?>"/>
+						<input id="keywords" type="text" class="ks input" name="q" size="35" value="<?php echo $this->escape($this->q); ?>"/>
 						<select id="keywordfilter" class="ks" name="titleonly">
 							<option value="0"<?php if ($this->params['titleonly']==0) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_POSTS'); ?></option>
 							<option value="1"<?php if ($this->params['titleonly']==1) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SEARCH_TITLES'); ?></option>
@@ -52,7 +52,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
 						<label class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
-							<input id="kusername" class="ks input" type="text" name="searchuser" value="<?php echo html_entity_decode_utf8($this->params['searchuser']); ?>" />
+							<input id="kusername" class="ks input" type="text" name="searchuser" value="<?php echo $this->escape($this->params['searchuser']); ?>" />
 						</label>
 						<?php /*
 						<select class="ks" name="starteronly">

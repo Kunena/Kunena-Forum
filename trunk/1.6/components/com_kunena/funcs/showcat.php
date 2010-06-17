@@ -127,14 +127,11 @@ class CKunenaShowcat {
 				if ($message->id == $message->lastid) {
 					$this->lastreply [$message->thread] = $message;
 				}
-				$userlist[$message->userid] = $message->userid;
+				$userlist[intval($message->userid)] = intval($message->userid);
+				$userlist[intval($message->modified_by)] = intval($message->modified_by);
 			}
 			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
-
-			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			$avatars = KunenaFactory::getAvatarIntegration();
-			$avatars->load($userlist);
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
@@ -193,6 +190,14 @@ class CKunenaShowcat {
 		$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$this->catid}' AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
+		foreach ($this->modslist as $mod) {
+			$userlist[intval($mod->userid)] = intval($mod->userid);
+		}
+
+		// Prefetch all users/avatars to avoid user by user queries during template iterations
+		KunenaUser::loadUsers($userlist);
+		$avatars = KunenaFactory::getAvatarIntegration();
+		$avatars->load($userlist);
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 		$this->showposts = 0;

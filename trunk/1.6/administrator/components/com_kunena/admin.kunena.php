@@ -966,7 +966,8 @@ function editForum($uid, $option) {
 	$kunena_my = &JFactory::getUser ();
 	$kunena_config = KunenaFactory::getConfig ();
 
-	$row = new fbForum ( $kunena_db );
+	kimport('tables.kunenacategory');
+	$row = new TableKunenaCategory ( $kunena_db );
 	// load the row from the db table
 	if ($uid) $row->load ( $uid );
 	$uid = $row->id;
@@ -1045,7 +1046,8 @@ function saveForum($option) {
 	$kunena_app = & JFactory::getApplication ();
 
 	$kunena_my = &JFactory::getUser ();
-	$row = new fbForum ( $kunena_db );
+	kimport('tables.kunenacategory');
+	$row = new TableKunenaCategory ( $kunena_db );
 	$id = JRequest::getInt ( 'id', 0, 'post' );
 	if ($id) {
 		$row->load ( $id );
@@ -1079,7 +1081,8 @@ function publishForum($cid = null, $publish = 1, $option) {
 	if (KunenaError::checkDatabaseError()) return;
 
 	if (count ( $cid ) == 1) {
-		$row = new fbForum ( $kunena_db );
+		kimport('tables.kunenacategory');
+		$row = new TableKunenaCategory ( $kunena_db );
 		$row->checkin ( $cid [0] );
 	}
 
@@ -1140,7 +1143,8 @@ function cancelForum($option) {
 	$kunena_app = & JFactory::getApplication ();
 
 	$kunena_db = &JFactory::getDBO ();
-	$row = new fbForum ( $kunena_db );
+	kimport('tables.kunenacategory');
+	$row = new TableKunenaCategory ( $kunena_db );
 	$row->bind ( JRequest::get('post', JREQUEST_ALLOWRAW) );
 	$row->checkin ();
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
@@ -1149,7 +1153,8 @@ function cancelForum($option) {
 function orderForum($uid, $inc, $option) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
-	$row = new fbForum ( $kunena_db );
+	kimport('tables.kunenacategory');
+	$row = new TableKunenaCategory ( $kunena_db );
 	$row->load ( $uid );
 
 	// Ensure that we have the right ordering
@@ -1177,7 +1182,8 @@ function pollpublish ( $option, $cid = null, $publish = 1 ) {
 	if (KunenaError::checkDatabaseError()) return;
 
 	if (count ( $cid ) == 1) {
-		$row = new fbForum ( $kunena_db );
+		kimport('tables.kunenacategory');
+		$row = new TableKunenaCategory ( $kunena_db );
 		$row->checkin ( $cid [0] );
 	}
 
@@ -1200,7 +1206,8 @@ function pollunpublish ( $option, $cid = null, $unpublish = 0 ) {
 	if (KunenaError::checkDatabaseError()) return;
 
 	if (count ( $cid ) == 1) {
-		$row = new fbForum ( $kunena_db );
+		kimport('tables.kunenacategory');
+		$row = new TableKunenaCategory ( $kunena_db );
 		$row->checkin ( $cid [0] );
 	}
 
@@ -1686,7 +1693,8 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 		}
 	}
 
-	$row = new fbForum ( $kunena_db );
+	kimport('tables.kunenacategory');
+	$row = new TableKunenaCategory ( $kunena_db );
 	$row->checkin ( $id );
 
 	$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );

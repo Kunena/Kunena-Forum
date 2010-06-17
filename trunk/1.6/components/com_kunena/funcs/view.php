@@ -449,9 +449,15 @@ class CKunenaView {
 
 		// First collect the message ids of the first message and all replies
 		$messageids = array();
-		foreach($posts AS $post){
-			$messageids[] = $post->id;
+		$this->messages = array ();
+		$userlist = array();
+		foreach($posts AS $message){
+			$messageids[] = $message->id;
+			$this->messages [] = $message;
+			$userlist[intval($message->userid)] = intval($message->userid);
+			$userlist[intval($message->modified_by)] = intval($message->modified_by);
 		}
+		unset ( $posts );
 
 		// create a list of ids we can use for our sql
 		$idstr = @join ( ",", $messageids );
@@ -459,11 +465,6 @@ class CKunenaView {
 		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance();
 		$message_attachments = $attachments->get($idstr);
-
-		$this->messages = array ();
-		foreach ( $posts as $message )
-			$this->messages [] = $message;
-		unset ( $posts );
 
 		// Now that we have all relevant messages in messages, asign any matching attachments
 		foreach ( $this->messages as $message ){
@@ -521,7 +522,13 @@ class CKunenaView {
 		$this->catModerators = array();
 		foreach ($this->modslist as $mod) {
 			$this->catModerators[] = $mod->userid;
+			$userlist[intval($mod->userid)] = intval($mod->userid);
 		}
+
+		// Prefetch all users/avatars to avoid user by user queries during template iterations
+		KunenaUser::loadUsers($userlist);
+		$avatars = KunenaFactory::getAvatarIntegration();
+		$avatars->load($userlist);
 
 		//data ready display now
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0)) {

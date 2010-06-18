@@ -619,9 +619,7 @@ class CKunenaView {
 		static $locations = array('top', 'bottom');
 		$this->goto = '<a name="forum'.$locations[$location].'"></a>';
 		$location ^= 1;
-		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location],
-		CKunenaTools::showButton ( $locations[$location], '&nbsp;' ), 'nofollow', 'kbuttongoto', JText::_('COM_KUNENA_GEN_GOTO'.$locations[$location]));
-
+		$this->goto .= CKunenaLink::GetSamePageAnkerLink ( 'forum'.$locations[$location], CKunenaTools::showIcon ( 'kforum'.$locations[$location], JText::_('COM_KUNENA_GEN_GOTO'.$locations[$location] ) ), 'nofollow', 'kbuttongoto');
 		CKunenaTools::loadTemplate('/view/thread.actions.php');
 	}
 

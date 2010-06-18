@@ -36,6 +36,13 @@ Kunena 1.6.0-ALPHA2
 
 18-June-2010 Matias
 ^ [#15886] Merged revision 2737 from /branches/1.6-xillibit-fixes-20100612
+^ [#15886] Merged revisions 2744 and 2765 from /branches/1.6-dragan-fix-20100613 with changes
+# [#19288] Fix regression - CKunenaLink::GetSamePageAnkerLink() broken
+
+18-June-2010 @quila
+# [#19288] Replace all icons from icons.php to css icons
+# [#19288] Remove deprecated configuration New Indicator
+# [#19288] New Indicator moved to language file
 
 17-June-2010 Matias
 ^ [#19380] Update Mootools plugin to latest plgSystemMTUpgrade, uninstall old plugin
@@ -50,6 +57,10 @@ Kunena 1.6.0-ALPHA2
 ^ [#19295] Rename FbForum class to TableKunenaCategory
 ^ [#19295] Clean up code: Deprecate html_entity_decode_utf8(), remove utf8_urldecode(), fbReturnDashed()
 # [#19345] Some CSS fixes for Beez2 (J1.6)
+
+16-June-2010 @quila
++ [#19288] Add serbian and serbian latin language files
+# [#19288] Added function to load icons in default template
 
 16-June-2010 Matias
 ^ [#15886] Merged /branches/1.6-@quila-tpl-100607

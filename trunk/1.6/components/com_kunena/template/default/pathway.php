@@ -77,15 +77,6 @@ if ($func != "") {
 	$jr_forum_count = count ( $jr_path_menu );
 
 	$fireinfo = '';
-	if (! empty ( $this->kunena_forum_locked )) {
-		$fireinfo = isset ( $kunena_icons ['forumlocked'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forumlocked'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_LOCKED_FORUM') . '" title="' . JText::_('COM_KUNENA_GEN_LOCKED_FORUM') . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'lock.gif"  border="0"  alt="' . JText::_('COM_KUNENA_GEN_LOCKED_FORUM') . '" title="' . JText::_('COM_KUNENA_GEN_LOCKED_FORUM') . '">';
-		$lockedForum = 1;
-	}
-
-	if (! empty ( $this->kunena_forum_reviewed )) {
-		$fireinfo = isset ( $kunena_icons ['forummoderated'] ) ? ' <img src="' . KUNENA_URLICONSPATH . $kunena_icons ['forummoderated'] . '" border="0" alt="' . JText::_('COM_KUNENA_GEN_MODERATED') . '" title="' . JText::_('COM_KUNENA_GEN_MODERATED') . '"/>' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'review.gif" border="0"  alt="' . JText::_('COM_KUNENA_GEN_MODERATED') . '" title="' . JText::_('COM_KUNENA_GEN_MODERATED') . '">';
-		$moderatedForum = 1;
-	}
 
 	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( kunena_htmlspecialchars ( $this->config->board_title ) ) . '</div>';
 

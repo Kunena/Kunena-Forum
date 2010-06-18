@@ -4289,3 +4289,84 @@ ul.autocompleter-choices span.autocompleter-queried {
 ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 	color:#9FCFFF;
 }
+
+/* SHOW ICONS 
+----------------------------------------------------------------------------------------------- */
+
+#Kunena span.kicon {
+	background: none;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+#Kunena span.ktopicattach {
+	background: url("../images/icons/attachment.png") no-repeat left center;
+	margin: 2px;
+	width: 32px;
+	height: 32px;
+}
+#Kunena span.kfavoritestar {
+	background: url("../images/icons/favoritestar.png") no-repeat left center;
+	width: 16px;
+	height: 16px;
+}
+#Kunena span.kfavoritestar-grey {
+	background: url("../images/icons/favoritestar-grey.png") no-repeat left center;
+	width: 16px;
+	height: 16px;
+}
+#Kunena span.ktopiclocked,
+#Kunena span.kforumlocked {
+	background: url("../images/icons/lock_xsm.png") no-repeat left center;
+	width: 16px;
+	height: 16px;
+}
+#Kunena span.ktopicsticky {
+	background: url("../images/icons/tsticky.png") no-repeat left center;
+	width: 27px;
+	height: 44px;
+}
+#Kunena span.kforumbottom {
+	background: url("../images/icons/bottom_arrow.gif") no-repeat left center;
+	width: 18px;
+	height: 15px;
+}
+#Kunena span.kforumtop {
+	background: url("../images/icons/top_arrow.gif") no-repeat left center;
+	width: 18px;
+	height: 15px;
+}
+#Kunena span.krss {
+	background: url("../images/icons/rss.png") no-repeat left center;
+	width: 24px;
+	height: 24px;
+}
+#Kunena span.kforummoderated {
+	background: url("../images/icons/tmoder.gif") no-repeat left center;
+	width: 16px;
+	height: 16px;
+}
+#Kunena span.kreadforum,
+#Kunena span.knotloginforum {
+	background: url("../images/icons/folder_nonew.png") no-repeat left center;
+	width: 32px;
+	height: 32px;
+}
+#Kunena span.kunreadforum {
+	background: url("../images/icons/folder.png") no-repeat left center;
+	width: 32px;
+	height: 32px;
+}
+#Kunena span.kreadforum-sm,
+#Kunena span.knotloginforum-sm {
+	background: url("../images/icons/folder_nonew_sm.png") no-repeat left center;
+	width: 12px;
+	height: 12px;
+}
+#Kunena span.kunreadforum-sm {
+	background: url("../images/icons/folder_sm.png") no-repeat left center;
+	width: 12px;
+	height: 12px;
+}

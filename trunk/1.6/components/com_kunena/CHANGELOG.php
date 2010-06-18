@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+18-June-2010 Matias
+^ [#15886] Merged revision 2737 from /branches/1.6-xillibit-fixes-20100612
+
 17-June-2010 Matias
 ^ [#19380] Update Mootools plugin to latest plgSystemMTUpgrade, uninstall old plugin
 # [#20038] Do not install Mootools plugin in J1.6
@@ -57,6 +60,9 @@ Kunena 1.6.0-ALPHA2
 # [#20038] Joomla 1.6: Fix KunenaRoute
 # [#20038] Joomla 1.6: Frontend should work again
 # [#20038] Joomla 1.6: Split install.kunena.php into three parts
+
+15-Jun-2010 Xillibit
++ [#19288] Add french language files
 
 15-June-2010 @quila
 # [#19345] Template Manager - some more changes
@@ -127,6 +133,7 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Uniform tooltips on social icons
 # [#19288] Fix issue in RSS (thanks JoniJnm)
 ^ [#19288] Put png icons for lightbox and group attachments in lightbox on each message
++ [#19288] Add code to have higlighted code with geshi (thanks JoniJnm)
 
 12-June-2010 @quila
 + [#19345] Template Manager - some more changes.

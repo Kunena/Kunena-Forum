@@ -31,7 +31,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.5.12-RC2
+Kunena 1.5.12
+
+18-Jun-2010 Matias
+^ [#20106] Updated version info to 1.5.12
 
 18-Jun-2010 Xillibit
 # [#21050] Post bar isn't centered

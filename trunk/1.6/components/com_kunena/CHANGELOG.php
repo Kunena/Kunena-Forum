@@ -43,6 +43,7 @@ Kunena 1.6.0-ALPHA2
 # [#19356] Fixed profile tab widths
 # [#19356] Poll cleanup
 # [#19356] More poll fixes, semantic markup
++ [#19356] Added source PSD files
 
 19-June-2010 fxstein
 ^ [#19251] Enhanced user caching

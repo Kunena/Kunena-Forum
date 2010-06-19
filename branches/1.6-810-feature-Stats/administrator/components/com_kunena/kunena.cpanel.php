@@ -21,8 +21,6 @@
 **/
 /** ensure this file is being included by a parent file */
 defined( '_JEXEC' ) or die();
-
-kimport ( 'thankyou' );
 ?>
 <style>
 .kadmin-welcome {
@@ -66,44 +64,6 @@ table.thisform th {
 table.thisform td {
 	padding: 3px;
 	text-align: left;
-}
-.kadmin-statscover {
-	padding:0px;
-}
-table.kadmin-stat {
-	background-color:#FFFFFF;
-	border:1px solid #ddd;
-	padding:1px;
-	width:100%;
-}
-table.kadmin-stat th {
-	background:#EEE;
-	border-bottom:1px solid #CCC;
-	border-top:1px solid #EEE;
-	color:#666;
-	font-size:11px;
-	padding:3px 4px;
-	text-align:left;
-}
-table.kadmin-stat td {
-	font-size:11px;
-	line-height:140%;
-	padding:4px;
-	text-align:left;
-}
-table.kadmin-stat caption {
-	clear:both;
-	font-size:14px;
-	font-weight:bold;
-	margin:10px 0 2px 0;
-	padding:2px;
-	text-align:left;
-}
-table.kadmin-stat .col1 {
-	background-color:#F1F3F5;
-}
-table.kadmin-stat .col2 {
-	background-color: #FBFBFB;
 }
 div.icon a {
 	text-decoration:none;
@@ -189,4 +149,3 @@ div.icon-container {
 	<?php echo checkLatestVersion(); ?>
 </div>
 <?php endif; ?>
-

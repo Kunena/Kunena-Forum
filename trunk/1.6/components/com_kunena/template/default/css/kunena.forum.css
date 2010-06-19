@@ -3637,6 +3637,7 @@ div#kprofile-stats ul li span.krank-admin {
 	display: table;
 	margin-right: 10px;
 	margin-left: 220px;
+	min-width: 740px;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}
 #Kunena div.kprofile-rightcol1 { 
@@ -4328,6 +4329,8 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 	background: url("../images/icons/tsticky.png") no-repeat left center;
 	width: 27px;
 	height: 44px;
+	float:left;
+	margin-right: 15px;
 }
 #Kunena span.kforumbottom {
 	background: url("../images/icons/bottom_arrow.gif") no-repeat left center;

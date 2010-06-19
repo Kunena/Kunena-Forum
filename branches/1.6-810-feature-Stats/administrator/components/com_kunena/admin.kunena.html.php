@@ -3624,7 +3624,7 @@ function textCounter(field, target) {
 			//Start stats
 			function showstats($option) {
 			?>
-            <div class="kadmin-functitle icon-stats"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
+            <div class="kadmin-functitle icon-stats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS');?></div>
 
 
 <?php

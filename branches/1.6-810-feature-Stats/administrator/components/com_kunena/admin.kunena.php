@@ -457,6 +457,11 @@ switch ($task) {
 
 		break;
 
+	case "showstats" :
+		showstats($option);
+
+		break;
+
 	case "uninstallKTemplate" :
 		uninstallKTemplate();
 
@@ -2972,6 +2977,10 @@ function generateSystemReport () {
 //===============================
 // FINISH report system
 //===============================
+
+function showstats($option) {
+ html_Kunena::showstats ( $option );
+}
 
 /* Get latest kunena version
  *

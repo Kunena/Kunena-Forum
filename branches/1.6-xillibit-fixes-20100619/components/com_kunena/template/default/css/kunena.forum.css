@@ -2579,7 +2579,7 @@ POST PAGE
 }
 #Kunena a.kbuttonuser span.thankyou {
 	float: left;
-	background: url("../images/buttons/btn-left-favorite.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-favorite.png") no-repeat left top;
 }
 #Kunena a.kbuttonuser span.favorite {
 	float: left;

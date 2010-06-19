@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+19-June-2010 Xillibit
++ [#19288] Add code to have higlighted code with geshi (thanks JoniJnm)
+
 19-June-2010 fxstein
 ^ [#19251] Enhanced user caching
 

@@ -172,7 +172,35 @@ $kunena_config = KunenaFactory::getConfig ();
 			}
 			?>
 			</div>
-
+			<?php
+			if ($kunena_config->highlightcode) {
+				$path = $kunena_config->highlightcode_path;
+				if (!$path) $path = '/libraries/geshi';
+				$path = JPATH_ROOT.str_replace('/', DS, str_replace("\\", DS, $path));
+				if (file_exists($path.DS."geshi.php")) {
+					$path .= DS."geshi";
+					$files = JFolder::files($path, ".php"); ?>
+					<div id="kbbcode-code-options" style="display: none;"><?php
+					echo JText::_('COM_KUNENA_EDITOR_CODE_TYPE');
+					?> <select id="kcodetype"
+						name="kcode_type" class="kbutton"
+						onmouseover="javascript:$('helpbox').set('value', '<?php
+						echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE');
+						?>')">
+						<?php
+						foreach ($files as $file)
+							echo '<option value = "'.substr($file,0,-4).'">'.substr($file,0,-4).'</option>';
+						?>
+					</select>
+					<input id="kbutton_addcode" type="button" name="Code" onclick="kInsertCode()"
+					value="<?php echo JText::_('COM_KUNENA_EDITOR_CODE_INSERT'); ?>"
+					onmouseover="javascript:$('helpbox').set('value', '<?php
+					echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODEAPPLY');
+					?>')" />
+					</div>
+			<?php }
+			}
+			?>
 			<div id="kbbcode-video-options" style="display: none;"><?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_SIZE');
 			?><input id="kvideosize"

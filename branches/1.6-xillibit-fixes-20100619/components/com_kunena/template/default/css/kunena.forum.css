@@ -1902,9 +1902,8 @@ PX		EM			PCT			PT
 	font-family: "Courier News", Courier, monospace;
 	font-weight: normal;
 	line-height: 1.5;
-	margin: 5px 0pt 15px;
-	padding: 10px 15px;
-	width: 100%;
+	margin: 3px 0 10px 0;
+	padding: 10px 15px;	
 	overflow: auto;
 }
 

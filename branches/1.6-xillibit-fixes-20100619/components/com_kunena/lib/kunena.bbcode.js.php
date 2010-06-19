@@ -192,12 +192,26 @@ kbbcode.addFunction('Quote', function() {
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_QUOTE');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_QUOTE');?>")'});
 
+<?php
+if ($kunena_config->highlightcode) { ?>
+kbbcode.addFunction('Code', function() {
+	kToggleOrSwap("kbbcode-code-options");
+}, {'id': 'kbbcode-code-button',
+	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_CODE');?>',
+	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>',
+	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>")'});
+<?php
+} else {
+?>
 kbbcode.addFunction('Code', function() {
 	this.replaceSelection('[code]' + this.getSelection() + '[/code]');
 }, {'id': 'kbbcode-code-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_CODE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODE');?>")'});
+<?php
+}
+?>
 
 kbbcode.addFunction("Table", function() {
 	selection = this.getSelection();

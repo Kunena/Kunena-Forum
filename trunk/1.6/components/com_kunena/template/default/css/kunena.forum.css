@@ -3457,8 +3457,8 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 
 #Kunena .kstatsicon {
 	background: url("../images/icons/stats.png") no-repeat center top;
-	min-width: 32px;
-	min-height: 32px;
+	width: 32px;
+	height: 32px;
 }
 
 /* 		WHO IS ONLINE
@@ -3466,8 +3466,8 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 
 #Kunena .kwhoicon {
 	background: url("../images/icons/who_is_online.png") no-repeat center top;
-	min-width: 32px;
-	min-height: 32px;
+	width: 32px;
+	height: 32px;
 }
 
 #Kunena .kwholegend {

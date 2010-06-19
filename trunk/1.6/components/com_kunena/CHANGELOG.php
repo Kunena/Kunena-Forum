@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+19-June-2010 Matias
+^ [#19345] Template Manager - Move avatar size configuration to template
+- [#19345] Remove some unused CSS rules and images
+
 19-June-2010 Severdia
 # [#19356] Fixed RSS icon, moved outside credits
 # [#19356] Fixed profile tab widths
@@ -157,7 +161,6 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Uniform tooltips on social icons
 # [#19288] Fix issue in RSS (thanks JoniJnm)
 ^ [#19288] Put png icons for lightbox and group attachments in lightbox on each message
-+ [#19288] Add code to have higlighted code with geshi (thanks JoniJnm)
 
 12-June-2010 @quila
 + [#19345] Template Manager - some more changes.

@@ -268,7 +268,7 @@ class KunenaUser extends JObject {
 					if (!isset($lastseen [$userid]))
 						self::$_online [$userid] = false;
 					else
-						self::$_online [$userid] = ($lastseen->time + $timeout) > time ();
+						self::$_online [$userid] = ($lastseen [$userid]->time + $timeout) > time ();
 				}
 			} else {
 				$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->userid . ' AND s.client_id = 0 GROUP BY s.userid';

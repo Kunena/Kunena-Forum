@@ -41,7 +41,7 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 		<div class="kmessage-timeby"><span class="kmessage-time" title="<?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat_hover'); ?>">
 		<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat'); ?></span>
 		<span class="kmessage-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->message->userid, $this->message->name ); ?></span></div>
-		<div class="kmessage-avatar"><?php echo $this->user->getAvatarLink('', 'lastpost'); ?></div>
+		<div class="kmessage-avatar"><?php echo $this->user->getAvatarLink('', 'list'); ?></div>
 		<div class="kmessage-msgtext"><?php echo KunenaParser::stripBBCode ($this->message->message, 300) ?></div>
 	</div>
 	<?php if ($this->threadmsg->replies) : ?>

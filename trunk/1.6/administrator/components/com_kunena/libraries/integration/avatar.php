@@ -39,15 +39,14 @@ abstract class KunenaAvatar {
 	abstract protected function _getURL($user, $sizex, $sizey);
 
 	public function getSize($sizex=90, $sizey=90) {
-		if (!$this->avatarSizes) {
-			CKunenaTools::loadTemplate('/settings.php');
-		}
 		$size = new StdClass();
 		$size->x = intval($sizex);
 		$size->y = intval($sizey);
-		if (!intval($sizex) && isset($this->avatarSizes[$sizex])) {
-			$size->x = intval($this->avatarSizes[$sizex][0]);
-			$size->y = intval($this->avatarSizes[$sizex][1]);
+		if (!intval($sizex)) {
+			$template = KunenaFactory::getTemplate();
+			$name = ucfirst(strtolower($sizex));
+			$size->x = intval($template->params->get('avatarSizeX'.$name, 90));
+			$size->y = intval($template->params->get('avatarSizeY'.$name, 90));
 		}
 		return $size;
 	}

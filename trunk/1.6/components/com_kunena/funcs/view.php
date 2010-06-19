@@ -140,7 +140,7 @@ class CKunenaViewMessage {
 		}
 
 		if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatarPosition') == 'right') {
-			$avatar = $this->profile->getAvatarLink ('kavatar', 'reply');
+			$avatar = $this->profile->getAvatarLink ('kavatar', 'post');
 		} else {
 			$avatar = $this->profile->getAvatarLink ('kavatar', 'welcome');
 		}

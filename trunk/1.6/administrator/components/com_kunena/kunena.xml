@@ -22,7 +22,7 @@
 		<filename>COPYRIGHT.php</filename>
 	</files>
 	<administration>
-		<menu link="option=com_kunena" img="components/com_kunena/media/icons/kunena-favicon.png">Kunena Forum</menu>
+		<menu view="cpanel" img="components/com_kunena/media/icons/kunena-favicon.png">Kunena Forum</menu>
 		<submenu>
 			<menu link="option=com_kunena&amp;task=showconfig" img="components/com_kunena/media/icons/config-favicon.png">Configuration</menu>
 			<menu link="option=com_kunena&amp;task=showAdministration" img="components/com_kunena/media/icons/forums-favicon.png">Category Manager</menu>

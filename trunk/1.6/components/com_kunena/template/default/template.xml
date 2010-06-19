@@ -21,15 +21,15 @@
 			<option value="bottom">Bottom</option>
 		</param>
 		<!-- Required avatar sizes -->
-		<param name="avatarThumbSizeX" type="hidden" default="36" />
-		<param name="avatarThumbSizeY" type="hidden" default="36" />
-		<param name="avatarWelcomeSizeX" type="hidden" default="72" />
-		<param name="avatarWelcomeSizeY" type="hidden" default="72" />
-		<param name="avatarIndexSizeX" type="hidden" default="36" />
-		<param name="avatarIndexSizeY" type="hidden" default="36" />
-		<param name="avatarPostSizeX" type="hidden" default="144" />
-		<param name="avatarPostSizeY" type="hidden" default="144" />
-		<param name="avatarProfileSizeX" type="hidden" default="200" />
-		<param name="avatarProfileSizeY" type="hidden" default="200" />
+		<param name="avatarSizeXThumb" type="hidden" default="36" />
+		<param name="avatarSizeYThumb" type="hidden" default="36" />
+		<param name="avatarSizeXWelcome" type="hidden" default="72" />
+		<param name="avatarSizeYWelcome" type="hidden" default="72" />
+		<param name="avatarSizeXIndex" type="hidden" default="36" />
+		<param name="avatarSizeYIndex" type="hidden" default="36" />
+		<param name="avatarSizeXPost" type="hidden" default="144" />
+		<param name="avatarSizeYPost" type="hidden" default="144" />
+		<param name="avatarSizeXProfile" type="hidden" default="200" />
+		<param name="avatarSizeYProfile" type="hidden" default="200" />
 	</params>
 </kinstall>

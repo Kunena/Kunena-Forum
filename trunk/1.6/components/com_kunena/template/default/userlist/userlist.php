@@ -158,7 +158,7 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 							$nr=$i + $this->limitstart;
 
 							$profile=KunenaFactory::getUser($user->id);
-							$uslavatar=$profile->getAvatarLink('usl_avatar');
+							$uslavatar=$profile->getAvatarLink('usl_avatar', 'list');
 ?>
 
 						<tr class="k<?php echo $usrl_class ;?> km">

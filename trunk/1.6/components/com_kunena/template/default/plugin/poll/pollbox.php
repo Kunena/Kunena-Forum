@@ -37,11 +37,11 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
                         <span class = "ktitle kl"><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ($dataspollresult[0]->title); ?></span>
                     </div>
 
-                    <img id = "BoxSwitch_polls__polls_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/>
+					<span class="fltrt ktoggler"><a class="ktoggler close" rel="kpolls_tbody"></a></span>
                 </th>
             </tr>
         </thead>
-        <tbody id = "polls_tbody">
+        <tbody id = "kpolls_tbody">
                 <tr class = "ksectiontableentry2">
                     <td class = "td-1 km" align="left">
                         <div class = "kpolldesc">

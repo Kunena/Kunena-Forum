@@ -147,7 +147,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		?> <!--  /Sticky   --> <!-- Avatar --> <?php
 		if ($this->config->avataroncat > 0) :
 			$profile = KunenaFactory::getUser((int)$this->messages[$message->id]->userid);
-			$useravatar = $profile->getAvatarLink('klist-avatar', 'lastpost');
+			$useravatar = $profile->getAvatarLink('klist-avatar', 'list');
 			if ($useravatar) :
 			?>
 			<span class="ktopic-latest-post-avatar"> <?php

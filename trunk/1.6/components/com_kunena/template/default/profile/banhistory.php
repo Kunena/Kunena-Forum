@@ -32,16 +32,16 @@ $j=count($this->banhistory);
 			foreach ($this->banhistory as $userban) :
 	?>
 	<tr class="ksectiontableentry1">
-		<td class="firstrow" width="1%">
+		<td width="1%">
 			<?php echo $j--; ?>
 		</td>
-		<td class="firstrow">
+		<td>
 			<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?> </span>
 		</td>
-		<td class="firstrow">
+		<td>
 			<span><?php  if( $userban->created_time ) echo CKunenaTimeFormat::showDate($userban->created_time, 'datetime'); ?> </span>
 		</td>
-		<td class="firstrow">
+		<td>
 			<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?> </span>
 		</td>
 		<td>
@@ -74,7 +74,7 @@ $j=count($this->banhistory);
 	<?php endforeach; ?>
 <?php else : ?>
 	<tr class="ksectiontableentry1">
-		<td class="firstrow" colspan="6"><?php echo JText::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->name)); ?></td>
+		<td colspan="6"><?php echo JText::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->name)); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>

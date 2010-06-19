@@ -48,7 +48,6 @@ if ($this->showgenstats > 0)
                         <div class="fltrt">
 							<span id="kstats_status"><a class="ktoggler close" rel="frontstats_tbody"></a></span>
 						</div>
-                        <!-- <img id = "BoxSwitch_frontstats__frontstats_tbody" class = "hideshow" src = "<?php echo KUNENA_URLIMAGESPATH . 'shrink.gif' ; ?>" alt = ""/> -->
                     </th>
                 </tr>
             </thead>

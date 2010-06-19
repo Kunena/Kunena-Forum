@@ -31,6 +31,7 @@ defined( '_JEXEC' ) or die();
 	color:#536482;
 	line-height:140%;
 	border:1px solid #ddd;
+	margin-bottom: 25px;
 }
 .kadmin-welcome h3 {
 	margin:0;

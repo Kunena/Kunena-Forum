@@ -4306,6 +4306,7 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 	margin: 2px;
 	width: 32px;
 	height: 32px;
+	float:right;
 }
 #Kunena span.kfavoritestar {
 	background: url("../images/icons/favoritestar.png") no-repeat left center;

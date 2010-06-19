@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+18-June-2010 Severdia
+# [#19356] Fix attachment icon on category list page
+
 18-June-2010 Matias
 ^ [#15886] Merged revision 2737 from /branches/1.6-xillibit-fixes-20100612
 ^ [#15886] Merged revisions 2744 and 2765 from /branches/1.6-dragan-fix-20100613 with changes

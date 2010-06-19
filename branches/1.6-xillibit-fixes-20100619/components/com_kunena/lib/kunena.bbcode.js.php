@@ -294,7 +294,7 @@ kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");
 }, {'id': 'kbbcode-poll-button',
 <?php
-if ($this->msg_cat->allow_polls == '0') {
+if ($this->msg_cat->allow_polls == '0' || empty($this->msg_cat->allow_polls)) {
 	echo '\'style\':\'display: none;\',';
 } ?>
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_POLL');?>',
@@ -304,7 +304,7 @@ if ($this->msg_cat->allow_polls == '0') {
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator5'
 <?php
-if ($this->msg_cat->allow_polls == '0') {
+if ($this->msg_cat->allow_polls == '0' || empty($this->msg_cat->allow_polls)) {
 	echo ',\'style\':\'display: none;\'';
 } ?>
 });

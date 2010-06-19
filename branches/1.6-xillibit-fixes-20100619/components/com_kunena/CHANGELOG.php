@@ -42,6 +42,8 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Button thank you dosesn't display the favorite icon (thanks cerberus)
 # [#19288] Make french translation for kunena installer
 # [#19288] tsticky icon doesn't placed at the right place (thanks cerberus)
+# [#19288] Fix Notice: Undefined variable: userlist in funcs\showcat.php line 198
+# [#19288] Hide poll icon on new topic by default
 
 19-June-2010 fxstein
 ^ [#19251] Enhanced user caching

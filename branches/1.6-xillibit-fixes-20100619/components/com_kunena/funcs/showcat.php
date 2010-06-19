@@ -195,6 +195,7 @@ class CKunenaShowcat {
 		}
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
+		if ( empty($userlist) ) $userlist = '';
 		KunenaUser::loadUsers($userlist);
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;

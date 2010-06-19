@@ -356,7 +356,7 @@ class KunenaStatsAPI {
 		$this->_session = KunenaFactory::getSession( true );
 		$this->_config = KunenaFactory::getConfig ();
 		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-		$this->_stats = new CKunenaStats ( );
+		$this->_stats = CKunenaStats::getInstance ( );
 	}
 
 	public function getTotalMembers() {

@@ -196,8 +196,6 @@ class CKunenaShowcat {
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
 		KunenaUser::loadUsers($userlist);
-		$avatars = KunenaFactory::getAvatarIntegration();
-		$avatars->load($userlist);
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 		$this->showposts = 0;
@@ -240,7 +238,7 @@ class CKunenaShowcat {
 	function displayStats() {
 		if ($this->config->showstats > 0) {
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-			$kunena_stats = new CKunenaStats ( );
+			$kunena_stats = CKunenaStats::getInstance ( );
 			$kunena_stats->showFrontStats ();
 		}
 	}

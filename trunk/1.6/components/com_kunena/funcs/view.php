@@ -527,8 +527,6 @@ class CKunenaView {
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
 		KunenaUser::loadUsers($userlist);
-		$avatars = KunenaFactory::getAvatarIntegration();
-		$avatars->load($userlist);
 
 		//data ready display now
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0)) {

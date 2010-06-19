@@ -83,8 +83,29 @@ class KunenaUser extends JObject {
 
 	static public function loadUsers($userids = array()) {
 
-		$userids = implode ( ',', $userids );
-		if (empty ( $userids ))
+//FB::log($userids, 'Need to preload uerlist for avatars');
+
+		// Before we do anything to cache the users, check if we should add active users
+		$who = CKunenaWhoIsOnline::GetInstance();
+
+		$users = $who->getActiveUsersList();
+		foreach($users as $user){
+			$userids[intval($user->id)] = intval($user->id);
+		}
+
+		// Also get latest user and add to the list
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+		$kunena_stats = CKunenaStats::getInstance ( );
+		$kunena_stats->loadLastUser();
+		$userids[intval($kunena_stats->lastestmemberid)] = intval($kunena_stats->lastestmemberid);
+
+		// Now that we have all users to cache, dedup the list
+		unset($userids[0]);
+		$userids = array_unique($userids);
+
+		$userlist = implode ( ',', $userids );
+
+		if (empty ( $userlist ))
 			return array ();
 
 		$c = __CLASS__;
@@ -92,7 +113,7 @@ class KunenaUser extends JObject {
 		$query = "SELECT u.name, u.username, u.block as blocked, ku.*
 			FROM #__users AS u
 			LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
-			WHERE u.id IN ({$userids})";
+			WHERE u.id IN ({$userlist})";
 		$db->setQuery ( $query );
 		$results = $db->loadAssocList ();
 		KunenaError::checkDatabaseError ();
@@ -104,6 +125,12 @@ class KunenaUser extends JObject {
 			self::$_instances [$instance->userid] = $instance;
 			$list [$instance->userid] = $instance;
 		}
+
+		// Finally call integration preload as well
+		// Preload avatars if configured
+		$avatars = KunenaFactory::getAvatarIntegration();
+		$avatars->load($userids);
+
 		return $list;
 	}
 

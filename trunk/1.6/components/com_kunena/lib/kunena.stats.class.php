@@ -61,6 +61,18 @@ class CKunenaStats {
 		$this->showpoppollstats = $show ? $this->_config->showpoppollstats : 0;
 	}
 
+	public function &getInstance()
+	{
+		static $instance = NULL;
+
+		if (!isset($instance)) {
+			$instance = new CKunenaStats();
+		}
+
+		return $instance;
+	}
+
+
 	public function loadTotalMembers() {
 		if ($this->totalmembers === null) {
 			$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );

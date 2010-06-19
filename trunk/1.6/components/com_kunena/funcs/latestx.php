@@ -142,8 +142,6 @@ class CKunenaLatestX {
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
 			KunenaUser::loadUsers($userlist);
-			$avatars = KunenaFactory::getAvatarIntegration();
-			$avatars->load($userlist);
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
@@ -474,7 +472,7 @@ class CKunenaLatestX {
 	function displayStats() {
 		if ($this->config->showstats > 0) {
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-			$kunena_stats = new CKunenaStats ( );
+			$kunena_stats = CKunenaStats::getInstance ( );
 			$kunena_stats->showFrontStats ();
 		}
 	}

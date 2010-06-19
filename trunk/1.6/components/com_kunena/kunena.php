@@ -252,6 +252,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		include_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'icons.php');
 	}
 
+	if(JDEBUG){
+		$__profiler->mark('Session Start');
+	}
+
 	// We only save session for registered users
 	$kunena_session = KunenaFactory::getSession ( true );
 	if ($kunena_my->id > 0) {
@@ -277,6 +281,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	} else {
 		// For guests we don't show new posts
 		$this->prevCheck = CKunenaTimeformat::internalTime()+60;
+	}
+
+	if(JDEBUG){
+		$__profiler->mark('Session End');
 	}
 
 	//Get the topics this user has already read this session from #__kunena_sessions
@@ -314,11 +322,23 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	}
 	?>
  <?php
+	if(JDEBUG){
+		$__profiler->mark('Profilebox Start');
+	}
+
 	CKunenaTools::loadTemplate('/profilebox.php');
+
+ 	if(JDEBUG){
+		$__profiler->mark('Profilebox End');
+	}
 
 	// Handle help / rules menuitems
 	if ($func == 'article') {
 		$func = $do;
+	}
+
+	if(JDEBUG){
+		$__profiler->mark('$func Start');
 	}
 
 	switch ($func) {
@@ -608,6 +628,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$page->display();
 
 			break;
+	}
+
+	if(JDEBUG){
+		$__profiler->mark('$func End');
 	}
 
 	// Bottom Module

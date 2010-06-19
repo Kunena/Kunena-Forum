@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+19-June-2010 fxstein
+^ [#19251] Enhanced user caching
+
 18-June-2010 Severdia
 # [#19356] Fix attachment icon on category list page
 

@@ -76,8 +76,6 @@ class CKunenaUserlist {
 		}
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
 		KunenaUser::loadUsers($userlist);
-		$avatars = KunenaFactory::getAvatarIntegration();
-		$avatars->load($userlist);
 
 		// table ordering
 		$this->order_dir = $filter_order_dir;

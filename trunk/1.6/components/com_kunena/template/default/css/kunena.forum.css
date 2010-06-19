@@ -1769,7 +1769,7 @@ PX		EM			PCT			PT
 	font-size: .917em;
 }
 #Kunena div.kmessage-buttons-row a {
-	margin-right: 5px;
+	margin-right: 8px;
 
 }
 #Kunena div.kmessage-thankyou{
@@ -2286,12 +2286,14 @@ POST PAGE
 	line-height: 145%;
 	background: url("../images/buttons/btn-bg-comm.png") repeat-x left top;
 	border: none;
+	margin:0 0 0 19px;
 }
 
 #Kunena a.kbuttoncomm.btn-left {
 	float: left;
 }
 #Kunena a.kbuttoncomm span {
+	margin-left:-19px;
 	float: left;
 }
 #Kunena a.kbuttoncomm span.reply {
@@ -2308,6 +2310,7 @@ POST PAGE
 }
 #Kunena a.kbuttoncomm span span {
 	height: 18px;
+	margin:0 -5px 0 0;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-comm.png") no-repeat right top;
 	color: #ffffff;
@@ -2329,12 +2332,14 @@ POST PAGE
 	line-height: 145%;
 	background: url("../images/buttons/btn-bg-user.png") repeat-x left top;
 	border: none;
+	margin:0 0 0 19px;
 }
 
 #Kunena a.kbuttonuser.btn-left {
 	float: left;
 }
 #Kunena a.kbuttonuser span {
+	margin-left:-19px;
 	float: left;
 }
 #Kunena a.kbuttonuser span.thankyou {
@@ -2359,6 +2364,7 @@ POST PAGE
 }
 #Kunena a.kbuttonuser span span {
 	height: 18px;
+	margin:0 -5px 0 0;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-user.png") no-repeat right top;
 	color: #ffffff;
@@ -2409,6 +2415,7 @@ POST PAGE
 	line-height: 145%;
 	background: url("../images/buttons/btn-bg-mod.png") repeat-x left top;
 	border: none;
+	margin-left:19px;
 }
 
 #Kunena a.kbuttonmod.btn-left {
@@ -2416,6 +2423,7 @@ POST PAGE
 }
 
 #Kunena a.kbuttonmod span {
+	margin-left:-19px;
 	float: left;
 }
 
@@ -2465,6 +2473,7 @@ POST PAGE
 }
 #Kunena a.kbuttonmod span span {
 	height: 18px;
+	margin:0 -5px 0 0;
 	padding: 0 7px 0 20px;
 	background: url("../images/buttons/btn-right-mod.png") no-repeat right top;
 	color: #ffffff;

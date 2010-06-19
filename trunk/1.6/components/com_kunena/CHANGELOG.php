@@ -37,6 +37,7 @@ Kunena 1.6.0-ALPHA2
 19-June-2010 Matias
 ^ [#19345] Template Manager - Move avatar size configuration to template
 - [#19345] Remove some unused CSS rules and images
+# [#19288] Fix regression - Fix CSS for rounded buttons
 
 19-June-2010 Severdia
 # [#19356] Fixed RSS icon, moved outside credits

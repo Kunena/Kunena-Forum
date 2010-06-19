@@ -3138,11 +3138,34 @@ Multi file upload for bbcode editor
 POLLS
 -------------------------------------------------------------------- */
 
-#Kunena div#kpoll-text-help {
+#kpoll-text-help {
 	font-weight:bold;
 }
-	
-	
+
+#kpoll-form-vote fieldset {
+	background-color:#FFFFFF;
+	border: 0 none;
+	margin:0;
+	padding:0;
+}
+
+#kpoll-form-vote legend {
+	text-indent: -9999px;
+}
+
+#kpoll-form-vote ul {
+	margin:0;
+	padding: 0;
+}
+
+#kpoll-form-vote ul li {
+	list-style-type:none;
+	line-height: 30px;
+}
+#kpoll-btns {
+	margin: 15px 0;
+}
+
 /*
 POST HISTORY
 -------------------------------------------------------------------- */

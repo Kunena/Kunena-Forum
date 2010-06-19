@@ -37,6 +37,7 @@ Kunena 1.6.0-ALPHA2
 19-June-2010 Severdia
 # [#19356] Fixed RSS icon, moved outside credits
 # [#19356] Fixed profile tab widths
+# [#19356] Poll cleanup
 
 19-June-2010 fxstein
 ^ [#19251] Enhanced user caching

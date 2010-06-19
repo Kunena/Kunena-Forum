@@ -39,7 +39,9 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Minor change to tooltips
 # [#19288] Fix Class 'CKunenaWhoIsOnline' not found in libraries\user.php line 90
 # [#19288] Fix Notice: Trying to get property of non-object in libraries\user.php line 272
-# [#19288] Button thank you dosesn't display the favorite icon
+# [#19288] Button thank you dosesn't display the favorite icon (thanks cerberus)
+# [#19288] Make french translation for kunena installer
+# [#19288] tsticky icon doesn't placed at the right place (thanks cerberus)
 
 19-June-2010 fxstein
 ^ [#19251] Enhanced user caching

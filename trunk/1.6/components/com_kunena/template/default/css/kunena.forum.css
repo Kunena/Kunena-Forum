@@ -3077,15 +3077,6 @@ BBCODE BUTTONS
 }
 
 /*
-POLLS
--------------------------------------------------------------------- */
-
-#Kunena div#kpoll-text-help {
-	font-weight:bold;
-}
-	
-
-/*
 Multi file upload for bbcode editor
 -------------------------------------------------------------------- */
 
@@ -3134,10 +3125,20 @@ Multi file upload for bbcode editor
 	background-image: url(../../assets/progress-bar/progress.gif);
 }
 
+
 /*
 POLLS
 -------------------------------------------------------------------- */
 
+
+label.kpoll-title-lbl {
+	display:inline-block;
+	margin: 10px 15px 10px 5px;
+}
+label.kpoll-term-lbl {
+	display:inline-block;
+	margin: 10px 15px 10px 30px;
+}
 #kpoll-text-help {
 	font-weight:bold;
 }

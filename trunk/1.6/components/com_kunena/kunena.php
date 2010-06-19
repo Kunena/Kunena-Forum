@@ -636,15 +636,18 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	// Bottom Module
 	CKunenaTools::showModulePosition( 'kunena_bottom' );
-
-	// Credits
-
-	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
+	
+	// RSS
 	if ($kunena_config->enablerss) {
+		echo '<div id="krss-block">';
 		$rss_params = ((int) $catid > 0 ? '&amp;catid=' . (int) $catid : '');
 		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
 		echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
+		echo '</div>';
 	}
+	
+	// Credits
+	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
 	echo '</div>';
 
 	// display footer

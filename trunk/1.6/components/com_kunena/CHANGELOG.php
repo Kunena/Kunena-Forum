@@ -34,11 +34,15 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+19-June-2010 Severdia
+# [#19356] Fixed RSS icon, moved outside credits
+
 19-June-2010 fxstein
 ^ [#19251] Enhanced user caching
 
 18-June-2010 Severdia
-# [#19356] Fix attachment icon on category list page
+# [#19356] Fixed attachment icon on category list page
+# [#19356] Fixed whois & stats icons
 
 18-June-2010 Matias
 ^ [#15886] Merged revision 2737 from /branches/1.6-xillibit-fixes-20100612

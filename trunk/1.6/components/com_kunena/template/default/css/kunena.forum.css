@@ -4343,6 +4343,7 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 	background: url("../images/icons/rss.png") no-repeat left center;
 	width: 24px;
 	height: 24px;
+	float: right;
 }
 #Kunena span.kforummoderated {
 	background: url("../images/icons/tmoder.gif") no-repeat left center;

@@ -86,6 +86,7 @@ a.icon-prune-sm { background: url('components/com_kunena/images/icons/icon_prune
 a.icon-syncusers-sm { background: url('components/com_kunena/images/icons/icon_syncusers.png') 5px 5px no-repeat; }
 a.icon-recount-sm { background: url('components/com_kunena/images/icons/icon_recountstats.png') 5px 5px no-repeat; }
 a.icon-trash-sm { background: url('components/com_kunena/images/icons/icon_trash.png') 5px 5px no-repeat; }
+a.icon-stats-sm { background: url('components/com_kunena/images/icons/icon_stats.png') 5px 5px no-repeat; }
 a.icon-systemreport-sm { background: url('components/com_kunena/images/icons/icon_reportconfig.png') 5px 5px no-repeat; }
 a.icon-support-sm { background: url('components/com_kunena/images/icons/icon_supportsite.png') 5px 5px no-repeat; }
 a.icon-template-sm { background: url('components/com_kunena/images/icons/icon_templatemanager.png') 5px 5px no-repeat; }
@@ -103,6 +104,7 @@ div.kadmin-functitle.icon-editcss { background: url('components/com_kunena/image
 div.kadmin-functitle.icon-prune { background: url('components/com_kunena/images/ktable.png') 5px 5px no-repeat; }
 div.kadmin-functitle.icon-syncusers { background: url('components/com_kunena/images/kusers.png') 5px 5px no-repeat; }
 div.kadmin-functitle.icon-trash { background: url('components/com_kunena/images/trash.png') 5px 5px no-repeat; }
+div.kadmin-functitle.icon-stats { background: url('components/com_kunena/images/stats.png') 5px 5px no-repeat; }
 div.kadmin-functitle.icon-systemreport { background: url('components/com_kunena/images/report_conf.png') 5px 5px no-repeat; }
 div.kadmin-functitle.icon-support { background: url('components/com_kunena/images/ktechsupport.png') 5px 5px no-repeat; }
 div.kadmin-functitle.icon-template { background: url('components/com_kunena/images/templatemanager.png') 5px 5px no-repeat; }
@@ -270,6 +272,7 @@ table.kadmin-stat caption {
 				<a class="kadmin-mainmenu icon-syncusers-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=syncusers"><?php echo JText::_('COM_KUNENA_SYNC_USERS'); ?></a>
 				<a class="kadmin-mainmenu icon-recount-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=recount"><?php echo JText::_('COM_KUNENA_RECOUNTFORUMS'); ?></a>
 				<a class="kadmin-mainmenu icon-trash-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showtrashview"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>
+                <a class="kadmin-mainmenu icon-stats-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showstats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></a>
 				<a class="kadmin-mainmenu icon-systemreport-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&task=showsystemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
 				<a class="kadmin-mainmenu icon-support-sm" href="<?php echo JURI::base(); ?>http://www.kunena.com" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
 		</div>
@@ -352,7 +355,7 @@ table.kadmin-stat caption {
 					<th width="5%"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DEFAULT' ); ?></th>
 					<th width="20%"  class="title"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR' ); ?></th>
 					<th width="5%" align="center"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_VERSION' ); ?></th>
-					<th width="5%" class="title"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DATE' ); ?></th>
+					<th width="7%" class="title"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_DATE' ); ?></th>
 					<th width="20%"  class="title"><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_AUTHOR_URL' ); ?></th>
 				</tr>
 			</thead>
@@ -1169,6 +1172,13 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo $lists ['shownew'];
 						?></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_SHOWNEW_DESC') ?></td>
+					</tr>
+							<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_NEWCHAR') ?></td>
+								<td align="left" valign="top"><input type="text" name="cfg_newchar"
+							value="<?php echo kescape ( $kunena_config->newchar );
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_NEWCHAR_DESC') ?></td>
 					</tr>
 							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_MAMBOT_SUPPORT') ?>
@@ -3611,6 +3621,14 @@ function textCounter(field, target) {
 		<?php
 			}
 			//End trash view
+			//Start stats
+			function showstats($option) {
+			?>
+            <div class="kadmin-functitle icon-stats"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></div>
+
+
+<?php
+	}//End Stats
 			//Start report system
 			function showSystemReport($option, $report) {
 		?>

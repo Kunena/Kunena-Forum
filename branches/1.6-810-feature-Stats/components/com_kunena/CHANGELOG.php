@@ -34,6 +34,13 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+19-June-2010 810
++ [#19288] Add Dutch language file (Admin)
++ [#19288] Add showstats
+^ [#19288] Cpanel changed
+^ [#19288] Fixed css template date on showtemplates
+
+
 18-June-2010 Severdia
 # [#19356] Fix attachment icon on category list page
 

@@ -38,6 +38,7 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Update translation of fr-FR.com_kunena.install.ini
 # [#19288] Fix undefined constant KUNENA_PATH_TEMPALTE during install
 # [#19288] Use form validation instead alert when you edit announcements
+# [#19288] Upgrade poll tables structure when migrate from k1.5.x
 
 20-June-2010 Matias
 ^ [#15886] Merged revisions 2782-2793 from /branches/1.6-xillibit-fixes-20100619

@@ -300,6 +300,16 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
      |                     them                      |
      +----------------------------------------------*/
 
+	if ($kunena_config->highlightcode) {
+		$document =& JFactory::getDocument();
+		$document->addStyleDeclaration('
+			div.highlight pre {
+				width: '.(($kunena_config->rtewidth * 9) / 10).'px;
+				max-height: '.$kunena_config->rteheight.'px
+			}
+		');
+	}
+
 	//Check if the catid requested is a parent category, because if it is
 	//the only thing we can do with it is 'listcat' and nothing else
 	if ($func == "showcat") {

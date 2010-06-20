@@ -355,34 +355,40 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			switch (JString::strtolower ( $tag->name )) {
 				case 'code:1' : // fb ancient compatibility
 
-				case 'code' :
-
-					$types = array ("php", "mysql", "html", "js", "javascript" );
-
-					$code_start_html = '<div class="kmsgtext-code"><div class="kmsgtext-code-header"><span>' . JText::_('COM_KUNENA_MSG_CODE') . '</span></div><div class="kmsgtext-code-body">';
-
-					if (! empty ( $tag->options ["type"] ) && in_array ( $tag->options ["type"], $types )) {
-						$t_type = $tag->options ["type"];
-					} else {
-						$t_type = "php";
+				case 'code':
+					$kunena_config = KunenaFactory::getConfig();
+					if ($kunena_config->highlightcode) {
+						$path = $kunena_config->highlightcode_path;
+						if (!$path) $path = '/libraries/geshi';
+						$path = JPATH_ROOT.str_replace('/', DS, str_replace("\\", DS, $path));
+						if (file_exists($path.DS."geshi.php")) {
+							if (substr(JVERSION, 0, 3) == 1.5)
+								jimport('geshi.geshi');
+							else
+								require_once($path.DS."geshi.php");
+							$path .= DS."geshi";
+							$type = isset($tag->options["type"]) ? $tag->options["type"] : "php";
+							if ($type == "js") $type = "javascript";
+							else if ($type == "html") $type = "html4strict";
+							if (!file_exists($path.DS.$type.".php"))
+								$type = "php";
+							$code = str_replace("\t", "	", $between);
+							$geshi = new GeSHi($code, $type);
+							//$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS,37);
+							$geshi->enable_keyword_links(false);
+							//$geshi->set_header_type(GESHI_HEADER_PRE_TABLE);
+							$code = $geshi->parse_code();
+							$code = str_replace("\n","<br />",$code);
+							//$code = ereg_replace(">([0-9]+)<br \/","><b>\\1.<\/b><br \/",$code);
+							$tag_new = '<div class="highlight">'.$code.'</div>';
+							$task->in_code = FALSE;
+						}
+						else
+							return TAGPARSER_RET_NOTHING;
+						return TAGPARSER_RET_REPLACED;
 					}
-
-					// make sure we show line breaks
-
-					$code_start_html .= "<code class=\"{$t_type}\">";
-					$code_end_html = '</code></div></div>';
-
-					// Preserve spaces and tabs in code
-					$codetext = str_replace ( "\t", "__FBTAB__", $between );
-
-					$codetext = kunena_htmlspecialchars ( $codetext, ENT_QUOTES );
-					$codetext = str_replace ( " ", "&nbsp;", $codetext );
-
-					$tag_new = $code_start_html . $codetext . $code_end_html;
-					#reenter regular replacements
-
-					$task->in_code = FALSE;
-					return TAGPARSER_RET_REPLACED;
+					else
+						return TAGPARSER_RET_NOTHING;
 					break;
 
 				default :

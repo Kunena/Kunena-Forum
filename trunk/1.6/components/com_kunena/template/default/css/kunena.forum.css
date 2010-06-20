@@ -1710,9 +1710,8 @@ PX		EM			PCT			PT
 	font-family: "Courier News", Courier, monospace;
 	font-weight: normal;
 	line-height: 1.5;
-	margin: 5px 0pt 15px;
-	padding: 10px 15px;
-	width: 100%;
+	margin: 3px 0 10px 0;
+	padding: 10px 15px;	
 	overflow: auto;
 }
 
@@ -2344,7 +2343,7 @@ POST PAGE
 }
 #Kunena a.kbuttonuser span.thankyou {
 	float: left;
-	background: url("../images/buttons/btn-left-favorite.gif") no-repeat left top;
+	background: url("../images/buttons/btn-left-favorite.png") no-repeat left top;
 }
 #Kunena a.kbuttonuser span.favorite {
 	float: left;
@@ -3924,7 +3923,7 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 	width: 27px;
 	height: 44px;
 	float:left;
-	margin-right: 15px;
+	margin-right: -5px;
 }
 #Kunena span.kforumbottom {
 	background: url("../images/icons/bottom_arrow.gif") no-repeat left center;

@@ -34,6 +34,20 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+20-June-2010 Matias
+^ [#15886] Merged revisions 2782-2793 from /branches/1.6-xillibit-fixes-20100619
+
+19-June-2010 Xillibit
++ [#19288] Add code to have higlighted code with geshi (thanks JoniJnm)
+# [#19288] Minor change to tooltips
+# [#19288] Fix Class 'CKunenaWhoIsOnline' not found in libraries/user.php line 90
+# [#19288] Fix Notice: Trying to get property of non-object in libraries/user.php line 272
+# [#19288] Button thank you dosesn't display the favorite icon (thanks cerberus)
+# [#19288] Make french translation for kunena installer
+# [#19288] tsticky icon doesn't placed at the right place (thanks cerberus)
+# [#19288] Fix Notice: Undefined variable: userlist in funcs\showcat.php line 198
+# [#19288] Hide poll icon on new topic by default
+
 19-June-2010 Matias
 ^ [#19345] Template Manager - Move avatar size configuration to template
 - [#19345] Remove some unused CSS rules and images

@@ -38,6 +38,7 @@
 		<menu img="components/com_kunena/images/kunenafavicon.png">Kunena Forum</menu>
 		<languages folder="languages">
 			<language tag="en-GB">en-GB.com_kunena.install.ini</language>
+			<language tag="fr-FR">fr-FR.com_kunena.install.ini</language>
 		</languages>
 	</administration>
 	<params />

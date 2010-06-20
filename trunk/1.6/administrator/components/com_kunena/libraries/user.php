@@ -86,6 +86,7 @@ class KunenaUser extends JObject {
 //FB::log($userids, 'Need to preload uerlist for avatars');
 
 		// Before we do anything to cache the users, check if we should add active users
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
 		$who = CKunenaWhoIsOnline::GetInstance();
 
 		$users = $who->getActiveUsersList();
@@ -501,10 +502,10 @@ class KunenaUser extends JObject {
 		$url = strtr ( $social [$name] ['url'], array ('##VALUE##' => $value ) );
 		if ($social [$name] ['nourl'] == '0') {
 			if (! empty ( $this->$item ))
-				return '<a href="' . kunena_htmlspecialchars ( $url ) . '" class="kTip" target="_blank" title="' . $title . ' ' . $value . '"><span class="' . $name . '"></span></a>';
+				return '<a href="' . kunena_htmlspecialchars ( $url ) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="' . $name . '"></span></a>';
 		} else {
 			if (! empty ( $this->$item ))
-				return '<span class="' . $name . ' kTip" title="' . $title . ' ' . $value . '"></span>';
+				return '<span class="' . $name . ' kTip" title="' . $title . ': ' . $value . '"></span>';
 		}
 		if ($gray)
 			return '<span class="' . $name . '-off"></span>';

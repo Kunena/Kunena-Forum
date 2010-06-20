@@ -89,11 +89,3 @@ $this->displayThreadActions(0);
 	</tr>
 </table>
 <!-- F: Category List Bottom -->
-
-<?php
-
-if ($this->config->highlightcode) {
-	// TODO: Implement new code hhighlighter based on mootools or similar - prior chili removed
-}
-
-?>

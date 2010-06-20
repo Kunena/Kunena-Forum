@@ -34,11 +34,21 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+20-June-2010 Xillibit
+# [#19288] Update translation of fr-FR.com_kunena.install.ini
+# [#19288] Fix undefined constant KUNENA_PATH_TEMPLATE during install
+# [#19288] Use form validation instead alert when you edit announcements
+# [#19288] Upgrade poll tables structure when migrate from k1.5.x
+# [#19288] Fix issue in trash manager: can't delete topics with polls
+# [#19288] Fix issue in template.xml: wrong avatar sizes
+# [#19288] Show in trash manager the messages on hold=3 when you delete your own message
+# [#19288] Add function in configuration panel to revert configuration to previous state
+
 20-June-2010 Matias
 ^ [#15886] Merged revisions 2782-2793 from /branches/1.6-xillibit-fixes-20100619
 # [#19345] Move JavaScript to the header in announcement/edit.php
 # [#19345] Simplify #ktop (Kunena header) to div instead of table and remove duplicated html
-
+^ [#15886] Merged revisions 2802-2806 from /branches/1.6-xillibit-fixes-20100620
 
 19-June-2010 Xillibit
 + [#19288] Add code to have higlighted code with geshi (thanks JoniJnm)

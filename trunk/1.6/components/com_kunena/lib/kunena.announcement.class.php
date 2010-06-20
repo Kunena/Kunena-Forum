@@ -53,6 +53,9 @@ class CKunenaAnnouncement {
 		if (! $this->canEdit) {
 			$this->app->redirect ( CKunenaLink::GetKunenaURL ( false ), JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
 		}
+		if ($this->tokenProtection ())
+			return false;
+
 		$title = JRequest::getVar ( "title", "" );
 		$description = JRequest::getVar ( 'description', '', 'string', JREQUEST_ALLOWRAW );
 		$sdescription = JRequest::getVar ( 'sdescription', '', 'string', JREQUEST_ALLOWRAW );
@@ -172,5 +175,14 @@ class CKunenaAnnouncement {
 	function escape($var)
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	function tokenProtection() {
+		// get the token put in the message form to check that the form has been valided successfully
+		if (JRequest::checkToken () == false) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			return true;
+		}
+		return false;
 	}
 }

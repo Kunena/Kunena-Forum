@@ -148,6 +148,11 @@ switch ($task) {
 
 		break;
 
+	case "revertconfig" :
+		revertConfig ( $option );
+
+		break;
+
 	case "newmoderator" :
 		newModerator ( $option, $id );
 
@@ -1512,6 +1517,25 @@ function defaultConfig($option) {
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIG_DEFAULT') );
 }
 
+function revertConfig($option) {
+	$kunena_app = JFactory::getApplication ();
+	$kunena_db = &JFactory::getDBO ();
+
+	$isExistTableConfigBackup = $kunena_db->getTableFields('#__kunena_config_backup');
+	if ( $isExistTableConfigBackup ) {
+		$kunena_config = KunenaFactory::getConfig ();
+		$kunena_config->remove ();
+
+		$kunena_db->setQuery ( "ALTER TABLE #__kunena_config_backup RENAME #__kunena_config" );
+		$kunena_db->query ();
+		KunenaError::checkDatabaseError();
+
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIG_REVERT_CONFIG_DONE') );
+	} else {
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIG_REVERT_CONFIG_CANNOT') );
+	}
+}
+
 function saveConfig($option) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_config = KunenaFactory::getConfig ();
@@ -2715,7 +2739,7 @@ function showtrashview($option) {
 	$order = JRequest::getVar ( 'order', '' );
 	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
-	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE hold=2" );
+	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE hold=2 AND hold=3" );
 	$total = $kunena_db->loadResult ();
 	if (KunenaError::checkDatabaseError()) return;
 	if ($limitstart >= $total)
@@ -2783,7 +2807,7 @@ function deleteitemsnow ( $option, $cid ) {
 				if ($mes[0]->parent == '0' && !empty($mes[0]->threadid) ) {
 					//remove of poll
 					require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-					$poll = new CKunenaPolls();
+					$poll = CKunenaPolls::getInstance();
 					$poll->delete_poll($mes[0]->threadid);
 				}
 			}

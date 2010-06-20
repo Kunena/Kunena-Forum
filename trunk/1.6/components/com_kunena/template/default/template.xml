@@ -25,8 +25,8 @@
 		<param name="avatarSizeYThumb" type="hidden" default="36" />
 		<param name="avatarSizeXWelcome" type="hidden" default="72" />
 		<param name="avatarSizeYWelcome" type="hidden" default="72" />
-		<param name="avatarSizeXIndex" type="hidden" default="36" />
-		<param name="avatarSizeYIndex" type="hidden" default="36" />
+		<param name="avatarSizeXList" type="hidden" default="36" />
+		<param name="avatarSizeYList" type="hidden" default="36" />
 		<param name="avatarSizeXPost" type="hidden" default="144" />
 		<param name="avatarSizeYPost" type="hidden" default="144" />
 		<param name="avatarSizeXProfile" type="hidden" default="200" />

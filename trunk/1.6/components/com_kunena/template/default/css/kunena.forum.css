@@ -600,7 +600,7 @@ PX		EM			PCT			PT
 /* MENU
 ----------------------------------------------------------------------------------------------- */
 
-#Kunena #ktop td {
+#Kunena #ktop {
 	background: #FFFFFF;
 	color: #000000;
 	margin: 0;
@@ -613,17 +613,19 @@ PX		EM			PCT			PT
 	vertical-align: bottom;
 }
 
-#Kunena #ktop td img.hideshow {
+#Kunena #ktop span.ktoggler {
 	background: #5388B4;
-	padding:2px 2px 0;
+	margin:-16px 0;
+	padding:1px 1px 0;
 }
 
 #Kunena #ktopmenu {
 	margin:0.33em 0;
+	display: inline;
 }
 
 #Kunena #ktab {
-	margin: 0;
+	margin:0 20px 0 0;
 	top: 0;
 }
 
@@ -631,7 +633,7 @@ PX		EM			PCT			PT
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	float: left;
+	display: inline-block;
 }
 
 #Kunena #ktab ul ul {

@@ -18,36 +18,26 @@ $this->config = KunenaFactory::getConfig ();
 $type = CKunenaLogin::getType ();
 $return = CKunenaLogin::getReturnURL ( $type );
 $avatar = CKunenaLogin::getMyAvatar();
-
+?>
+<!-- Kunena Header -->
+<div id="ktop">
+	<?php if (JDocumentHTML::countModules ( 'kunena_menu' )) : ?>
+		<!-- Kunena Module Position: kunena_menu -->
+		<div id="ktopmenu">
+			<div id="ktab"><?php CKunenaTools::displayMenu() ?></div>
+		</div>
+		<!-- /Kunena Module Position: kunena_menu -->
+	<?php endif; ?>
+	<span class="ktoggler fltrt"><a class="ktoggler close" rel="kprofilebox"></a></span>
+</div>
+<!-- /Kunena Header -->
+<?php
 if ($type == 'logout') :
 	$logout = CKunenaLogin::getlogoutFields();
 	$private = KunenaFactory::getPrivateMessaging();
 	$PMCount = $private->getUnreadCount($this->my->id);
 	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 ?>
-<!-- Kunena Header -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0" id="ktop">
-	<tr>
-		<td align="left"><?php
-	// display Kunena menu if present
-	if (JDocumentHTML::countModules ( 'kunena_menu' )) {
-		?>
-		<!-- Kunena Menu position: kunena_menu -->
-		<div id="ktopmenu">
-		<div id="ktab">
-		<?php CKunenaTools::displayMenu() ?>
-		</div>
-		</div>
-		<!-- /Kunena Menu position: kunena_menu -->
-		<?php
-	}
-	?></td>
-		<td align="right" width="1%"><span id="kprofilebox-status"><a
-			class="ktoggler close" rel="kprofilebox"></a></span>
-		</td>
-	</tr>
-</table>
-<!-- /Kunena Header -->
 <table class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">
@@ -98,30 +88,6 @@ if ($type == 'logout') :
 else :
 $login = CKunenaLogin::getloginFields();
 ?>
-<!-- Kunena Header -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0"
-	id="ktop">
-	<tr>
-		<td align="left"><?php
-	// display Kunena menu if present
-	if (JDocumentHTML::countModules ( 'kunena_menu' )) {
-		?>
-		<!-- Kunena Menu position: kunena_menu -->
-		<div id="ktopmenu">
-		<div id="ktab">
-		<?php CKunenaTools::displayMenu() ?>
-		</div>
-		</div>
-		<!-- /Kunena Menu position: kunena_menu -->
-		<?php
-	}
-	?></td>
-		<td align="right" width="1%"><span id="kprofilebox-status"><a
-			class="ktoggler close" rel="kprofilebox"></a></span>
-		</td>
-	</tr>
-</table>
-<!-- /Kunena Header -->
 <table class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
 		<tr class="ksectiontableentry1">

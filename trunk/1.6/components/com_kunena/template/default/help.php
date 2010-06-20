@@ -14,9 +14,7 @@ defined ( '_JEXEC' ) or die ();
 
 $kunena_config = KunenaFactory::getConfig ();
 $document = JFactory::getDocument ();
-
 $document->setTitle ( JText::_('COM_KUNENA_GEN_HELP') . ' - ' . $kunena_config->board_title );
-
 $introtext = CKunenaTools::getRulesHelpDatas($kunena_config->help_cid);
 ?>
 <div class="kblock">

@@ -148,6 +148,11 @@ switch ($task) {
 
 		break;
 
+	case "revertconfig" :
+		revertConfig ( $option );
+
+		break;
+
 	case "newmoderator" :
 		newModerator ( $option, $id );
 
@@ -1510,6 +1515,25 @@ function defaultConfig($option) {
 	KunenaError::checkDatabaseError();
 
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIG_DEFAULT') );
+}
+
+function revertConfig($option) {
+	$kunena_app = JFactory::getApplication ();
+	$kunena_db = &JFactory::getDBO ();
+
+	$isExistTableConfigBackup = $kunena_db->getTableFields('#__kunena_config_backup');
+	if ( $isExistTableConfigBackup ) {
+		$kunena_config = KunenaFactory::getConfig ();
+		$kunena_config->remove ();
+
+		$kunena_db->setQuery ( "ALTER TABLE #__kunena_config_backup RENAME #__kunena_config" );
+		$kunena_db->query ();
+		KunenaError::checkDatabaseError();
+
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIG_REVERT_CONFIG_DONE') );
+	} else {
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIG_REVERT_CONFIG_CANNOT') );
+	}
 }
 
 function saveConfig($option) {

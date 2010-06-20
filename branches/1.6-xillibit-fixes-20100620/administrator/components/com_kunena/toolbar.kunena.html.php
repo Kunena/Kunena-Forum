@@ -74,7 +74,10 @@ class CKunenaToolbar
 
         JToolBarHelper::spacer();
         JToolBarHelper::save('saveconfig');
+        JToolBarHelper::spacer();
         JToolBarHelper::trash('defaultconfig', JText::_('COM_KUNENA_RESET_CONFIG'), false);
+        JToolBarHelper::spacer();
+        JToolBarHelper::customX('revertconfig','restore.png','restore_f2.png', JText::_('COM_KUNENA_REVERT_PREVIOUS_CONFIG'), false);
         JToolBarHelper::spacer();
         JToolBarHelper::back();
         JToolBarHelper::spacer();
@@ -256,7 +259,7 @@ class CKunenaToolbar
     {
         JToolBarHelper::back();
     }
-    
+
 	function _SHOWTEMPLATES_MENU()
     {
 		JToolBarHelper::spacer();
@@ -285,7 +288,7 @@ class CKunenaToolbar
         JToolBarHelper::back();
         JToolBarHelper::spacer();
     }
-	
+
 	function _CHOOSECSS_MENU()
     {
         JToolBarHelper::spacer();
@@ -297,7 +300,7 @@ class CKunenaToolbar
         JToolBarHelper::back();
 		JToolBarHelper::spacer();
     }
-	
+
 	function _EDITCSS_MENU()
     {
         JToolBarHelper::spacer();

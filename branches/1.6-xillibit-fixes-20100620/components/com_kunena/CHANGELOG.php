@@ -42,6 +42,7 @@ Kunena 1.6.0-ALPHA2
 # [#19288] Fix issue in trash manager can't delete topics with polls
 # [#19288] Fix issue in template.xml which are wrong name and display in wrong size avatars
 # [#19288] Show now in trash manager the messages on hold=3 when you delete your own message
+# [#19288] Add function in configuration panel to revert configuration to previous state
 
 20-June-2010 Matias
 ^ [#15886] Merged revisions 2782-2793 from /branches/1.6-xillibit-fixes-20100619

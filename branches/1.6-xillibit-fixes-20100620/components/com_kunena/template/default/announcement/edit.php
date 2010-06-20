@@ -14,20 +14,15 @@ defined( '_JEXEC' ) or die();
 $document = JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 $calendar = JHTML::_('calendar', $this->created, 'created', 'addcreated');
-// FIXME: do not use alert, missing translations
+JHTML::_('behavior.formvalidation');
+
 $document->addScriptDeclaration('
-	function validate_form() {
-		valid=true;
-		if (document.editform.title.value == "") {
-			alert("Please fill in the \'Title\' box.");
-			valid=false;
-		}
-		if (document.editform.sdescription.value == "") {
-			alert("Please fill in the \'Short Desc\' box.");
-			valid=false;
-		}
-		return valid;
+	function myValidate(f) {
+	if (document.formvalidator.isValid(f)) {
+		return true;
 	}
+	return false;
+}
 ');
 ?>
 <div class="kblock kannouncement">
@@ -38,14 +33,15 @@ $document->addScriptDeclaration('
 		<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
 		<div class="kbody">
 			<div class="kanndesc">
-				<form action="<?php echo CKunenaLink::GetAnnouncementURL('doedit'); ?>" method="post" name="editform" onsubmit="return validate_form ( );">
+				<form class="form-validate" action="<?php echo CKunenaLink::GetAnnouncementURL('doedit'); ?>" method="post" name="editform" onsubmit="return myValidate(this);">
+					<?php echo JHTML::_( 'form.token' ); ?>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>:
-						<input class="klarge" type="text" name="title" value="<?php echo $this->escape($this->announcement->title) ;?>"/>
+						<input class="klarge required" type="text" name="title" value="<?php echo $this->escape($this->announcement->title) ;?>"/>
 					</label>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>:
-						<textarea class="ksmall" rows="80" cols="4" name="sdescription"><?php echo $this->escape($this->announcement->sdescription); ?></textarea>
+						<textarea class="ksmall required" rows="80" cols="4" name="sdescription"><?php echo $this->escape($this->announcement->sdescription); ?></textarea>
 					</label>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>:

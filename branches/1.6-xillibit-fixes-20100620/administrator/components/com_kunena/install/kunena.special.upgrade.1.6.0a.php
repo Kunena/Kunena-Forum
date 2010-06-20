@@ -60,8 +60,8 @@ if ($kunena_db->getErrorNum () != 0) {
 	}
 }
 foreach ( $templatedeprecatedlist as $template ) {
-	if (file_exists ( KUNENA_PATH_TEMPLATE . DS . $template )) {
-		JFolder::delete ( KUNENA_PATH_TEMPLATE . DS . $template );
+	if (file_exists ( JPATH_SITE.'/components/com_kunena/template/' . $template )) {
+		JFolder::delete ( JPATH_SITE.'/components/com_kunena/template/' . $template );
 	}
 }
 

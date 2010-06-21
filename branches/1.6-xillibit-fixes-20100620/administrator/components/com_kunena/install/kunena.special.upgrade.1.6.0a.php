@@ -129,7 +129,7 @@ $tablelist = $kunena_db->getTableList();
 foreach( $tablelist as $table ) {
 	if ( $table == $kunena_db->getPrefix().'kunena_polls' ) {
 		$fields = array_pop ( $kunena_db->getTableFields ( $kunena_db->getPrefix().'kunena_polls' ) );
-		if (isset ( $fields ['catid'] )) {
+		if (isset ( $fields ['catid'] ) && isset ( $fields ['polltimetolive'] )) {
 			$query = "ALTER TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls')} DROP COLUMN catid, MODIFY title varchar(50)";
 			$kunena_db->setQuery ( $query );
 			$kunena_db->query ();
@@ -139,6 +139,13 @@ foreach( $tablelist as $table ) {
 			if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
 				FB::log ( $query, 'kunena_polls Upgrade, removing catid field' );
 			}
+		}
+		if (isset ( $fields ['catid'] ) && !isset ( $fields ['polltimetolive'] )) {
+			$query = "ALTER TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls')} DROP COLUMN catid, MODIFY title varchar(50),ADD `polltimetolive` timestamp";
+			$kunena_db->setQuery ( $query );
+			$kunena_db->query ();
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 		if (isset ( $fields ['topicid'] ) && isset ( $fields ['voters'] ) && isset ( $fields ['options'] )) {
 			$query = "ALTER TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls')} DROP COLUMN voters, DROP COLUMN options,CHANGE topicid threadid int(11), ADD polltimetolive timestamp";
@@ -151,6 +158,32 @@ foreach( $tablelist as $table ) {
 				FB::log ( $query, 'kunena_polls Upgrade, renaming topicid field' );
 			}
 		}
+	}
+
+	if ( $table == $kunena_db->getPrefix().'kunena_polls_datas' ) {
+		$query = "DROP TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls_options')}";
+		$kunena_db->setQuery ( $query );
+		$kunena_db->query ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
+		$query = "ALTER TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls_datas')} MODIFY `id` int(11), MODIFY `text` varchar(100), CHANGE `hits` `votes` int(11)";
+		$kunena_db->setQuery ( $query );
+		$kunena_db->query ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
+		$query = "ALTER TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls_users')} DROP COLUMN `id`, ADD `votes` int(11), ADD `lasttime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP, ADD `lastvote` int(11), ADD UNIQUE KEY `pollid` (pollid,userid)";
+		$kunena_db->setQuery ( $query );
+		$kunena_db->query ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
+		$query = "ALTER TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls_datas')} RENAME TO {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls_options')}";
+		$kunena_db->setQuery ( $query );
+		$kunena_db->query ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 	}
 
 	if ( $table == $kunena_db->getPrefix().'kunena_polls_options' ) {
@@ -167,8 +200,8 @@ foreach( $tablelist as $table ) {
 	}
 
 	if ( $table == $kunena_db->getPrefix().'kunena_polls_users' ) {
-		$fields = array_pop ( $kunena_db->getTableFields ( $kunena_db->getPrefix().'fb_polls_users' ) );
-		if (!isset ( $fields ['id'] )) {
+		$fields = array_pop ( $kunena_db->getTableFields ( $kunena_db->getPrefix().'kunena_polls_users' ) );
+		if (!isset ( $fields ['id'] ) && !isset ( $fields ['lastvote'] )) {
 			$query = "ALTER TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls_users')} MODIFY votes int(11), ADD lastvote int(11)";
 			$kunena_db->setQuery ( $query );
 			$kunena_db->query ();
@@ -177,16 +210,6 @@ foreach( $tablelist as $table ) {
 
 			if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
 				FB::log ( $query, 'kunena_polls_users Upgrade without field id' );
-			}
-		} else {
-			$query = "ALTER TABLE {$kunena_db->nameQuote($kunena_db->getPrefix().'kunena_polls_users')} DROP COLUMN id, ADD votes int(11), ADD lasttime timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP, ADD lastvote int(11), ADD UNIQUE KEY pollid (pollid,userid)";
-			$kunena_db->setQuery ( $query );
-			$kunena_db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-
-			if (JDEBUG == 1 && defined ( 'JFIREPHP' )) {
-				FB::log ( $query, 'kunena_polls_users Upgrade with field id' );
 			}
 		}
 	}

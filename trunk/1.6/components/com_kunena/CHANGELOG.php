@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+21-June-2010 Severdia
+# [#21131] Removed inline styles on avatars in topics
+
 20-June-2010 Xillibit
 # [#19288] Update translation of fr-FR.com_kunena.install.ini
 # [#19288] Fix undefined constant KUNENA_PATH_TEMPLATE during install

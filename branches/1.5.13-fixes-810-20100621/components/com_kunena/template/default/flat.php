@@ -137,12 +137,12 @@ if (count($messages[0]) > 0)
 						if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
 						{
 							// Get CUser object
-							$user =& CFactory::getUser($last_reply[$leaf->id]->userid);
+							$user =& CFactory::getUser((int)$last_reply[$leaf->id]->userid);
 							$bof_avatar = '<img class="catavatar" src="' . $user->getThumbAvatar() . '" alt=" " />';
 						}
 						else if ($fbConfig->avatar_src == "cb")
 						{
-							$bof_avatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'catavatar');
+							$bof_avatar = $kunenaProfile->showAvatar((int)$last_reply[$leaf->id]->userid, 'catavatar');
 						} else {
 							//first we gather some information about this person
 							unset($CatUser);

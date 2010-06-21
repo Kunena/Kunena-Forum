@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.12
 
+21-Jun-2010 810
+# [#19288] Avatar id conflict
+
 18-Jun-2010 Matias
 ^ [#20106] Updated version info to 1.5.12
 

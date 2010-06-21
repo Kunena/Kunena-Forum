@@ -36,6 +36,8 @@ Kunena 1.6.0-ALPHA2
 
 21-June-2010 Xillibit
 # [#19288] Upgrade poll tables structure when migrate from k1.5.x for all versions of hack
+# [#19288] Don't hide the time to live input because doesn't work well with calendar
+# [#19288] Put in stats the top thanks you received and added a part in api
 
 20-June-2010 Xillibit
 # [#19288] Update translation of fr-FR.com_kunena.install.ini

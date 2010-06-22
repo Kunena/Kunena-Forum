@@ -65,10 +65,10 @@ abstract class KunenaAvatar {
 		if ($class) $class=' class="'.$class.'"';
 		
 		// Why in the world do you need to have CSS here????
-		// $link = '<img'.$class.' src="'.$avatar.'" alt="" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
+		$link = '<img'.$class.' src="'.$avatar.'" alt="" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
 		
 		// Correcting that...but leaving that line above just in case...
-		$link = '<img'.$class.' src="'.$avatar.'" alt="User Avatar" />';
+		//$link = '<img'.$class.' src="'.$avatar.'" alt="User Avatar" />';
 		
 		return $link;
 	}

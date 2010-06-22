@@ -103,6 +103,7 @@ class KunenaUser extends JObject {
 		// Now that we have all users to cache, dedup the list
 		unset($userids[0]);
 		$userids = array_unique($userids);
+		JArrayHelper::toInteger($userids);
 
 		$userlist = implode ( ',', $userids );
 
@@ -251,13 +252,14 @@ class KunenaUser extends JObject {
 
 	public function isOnline($yesno = false) {
 		$myprofile = KunenaFactory::getUser ();
-		if (! $this->showOnline && ! $myprofile->isModerator ()) {
+		if (intval($this->userid) < 1 || (! $this->showOnline && ! $myprofile->isModerator ())) {
 			$this->_online [$this->userid] = false;
 		} else if (! isset ( self::$_online [$this->userid] )) {
 			kimport ( 'error' );
 			// If online information is not already loaded and user has been saved, pre-fetch information for all users
 			if (empty ( self::$_online ) && isset (self::$_instances[$this->userid])) {
 				$userids = array_keys ( self::$_instances );
+				JArrayHelper::toInteger($userids);
 				$userlist = implode(',', $userids);
 				$query = 'SELECT s.userid, MAX(s.time) AS time FROM #__session AS s WHERE s.userid IN (' . $userlist . ') AND s.client_id = 0 GROUP BY s.userid';
 				$this->_db->setQuery ( $query );
@@ -272,7 +274,7 @@ class KunenaUser extends JObject {
 						self::$_online [$userid] = ($lastseen [$userid]->time + $timeout) > time ();
 				}
 			} else {
-				$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . $this->userid . ' AND s.client_id = 0 GROUP BY s.userid';
+				$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . intval($this->userid) . ' AND s.client_id = 0 GROUP BY s.userid';
 				$this->_db->setQuery ( $query );
 				$lastseen = $this->_db->loadResult ();
 				if (KunenaError::checkDatabaseError ()) {

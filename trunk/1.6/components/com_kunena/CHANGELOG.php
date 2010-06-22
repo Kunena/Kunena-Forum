@@ -36,6 +36,15 @@ Kunena 1.6.0-ALPHA2
 
 22-June-2010 Matias
 # [#19288] Make sure that all KunenaUser instances have key > 0
++ [#20071] KunenaRoute: Add support for menu links, allow menu to be restricted to one category
+# [#20071] KunenaRoute: If no menu item matches, use /component/com_kunena instead of current menu item
+# [#20071] KunenaRoute: No need to look for more menu parents when getKunenaRoot() sees view=entrypage
+# [#20071] Ignore default menu item detection if we see HTTP POST request in kunena.php
+# [#20071] Menu item without children: Find closest match in Kunena Menu and use it instead menu item itself
++ [#20071] Add new class JElementKunenaCategories
++ [#20071] Menu: Change text field to category list to all catid configuration options
+# [#19288] Fix undefined offset in lib/kunena.parser.php on line 430
+# [#19288] KunenaUser: Fix fatal SQL error when loading online status
 
 21-June-2010 Severdia
 # [#21131] Removed inline styles on avatars in topics

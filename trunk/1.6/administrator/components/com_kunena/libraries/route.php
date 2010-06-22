@@ -29,11 +29,11 @@ abstract class KunenaRoute {
 		else if (is_numeric($uri)) {
 			return intval($uri);
 		} else {
-			$link = new JURI ( $uri );
+			$link = new JURI ( (string)$uri );
 		}
 		$query = $link->getQuery ( true );
 
-		if (!isset($query['func'])) {
+		if (!isset($query['func']) && !isset($query['view'])) {
 			// Handle default page
 			$link->setVar ( 'func', self::getDefaultFunc() );
 			$query = $link->getQuery ( true );
@@ -59,8 +59,7 @@ abstract class KunenaRoute {
 			$query = $link->getQuery ( true );
 		}
 		$Itemid = self::_getItemID ( $query );
-		if ($Itemid > 0) $link->setVar ( 'Itemid', $Itemid );
-		else $link->delVar ( 'Itemid' );
+		$link->setVar ( 'Itemid', $Itemid );
 
 		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml, $ssl );
 	}
@@ -127,6 +126,12 @@ abstract class KunenaRoute {
 				$item = self::$menu[$id];
 				if ($item->type == 'component' && $item->component == 'com_kunena') {
 					self::$subtree[$menutype][$id] = $id;
+				} else if ($item->type == 'menulink' && !empty($item->query['Itemid'])) {
+					// Jump to link
+					$link_id = $item->query['Itemid'];
+					if (!empty(self::$menu[$link_id]) && self::$menu[$link_id]->type == 'component' && self::$menu[$link_id]->component == 'com_kunena') {
+						self::$subtree[$menutype][$id] = $link_id;
+					}
 				}
 				if (!empty(self::$childlist[$menutype][$id])) {
 					$todo = $todo + self::$childlist[$menutype][$id];
@@ -145,6 +150,7 @@ abstract class KunenaRoute {
 				$item = self::$menu[$current];
 				if ($item->type == 'component' && $item->component == 'com_kunena') {
 					self::$parent[$Itemid] = $current;
+					if (isset($item->query['view']) && $item->query['view'] == 'entrypage') break;
 				}
 				// Support J1.6 and J1.5
 				$current = isset($item->parent_id) ? $item->parent_id : $item->parent;
@@ -164,6 +170,12 @@ abstract class KunenaRoute {
 					$item = self::$menu[$id];
 					if ($item->type == 'component' && $item->component == 'com_kunena') {
 						self::$subtree[$Itemid][$id] = $id;
+					} else if ($item->type == 'menulink' && !empty($item->query['Itemid'])) {
+						// Jump to link
+						$link_id = $item->query['Itemid'];
+						if (!empty(self::$menu[$link_id]) && self::$menu[$link_id]->type == 'component' && self::$menu[$link_id]->component == 'com_kunena') {
+							self::$subtree[$Itemid][$id] = $link_id;
+						}
 					}
 				}
 				if (!empty(self::$childlist[$menutype][$id])) {
@@ -174,17 +186,33 @@ abstract class KunenaRoute {
 		return self::$subtree[$Itemid];
 	}
 
+	protected static function checkEntryPage($item, $query) {
+		jimport('joomla.html.parameter');
+		$params = new JParameter($item->params);
+		$func = isset($item->query['func']) ? $item->query['func'] : '';
+		if ($params->get('catids')) {
+			$catids = explode(',', $params->get('catids'));
+			if (empty ( $query ['catid'] )) return;
+			if (!in_array($query ['catid'], $catids)) return;
+		}
+		return 0;
+	}
+
 	protected static function isMatch($item, $query) {
 		$hits = 0;
 		$catid = false;
-		if (isset($item->query['catid'])) {
+		if (!empty($item->query['catid'])) {
 			$catid = true;
 		}
 		if (isset($item->query['view'])) {
 			if (!isset($item->query['func'])) $item->query['func'] = $item->query['view'];
 			unset ($item->query['view']);
 		}
-		if (isset($item->query['func']) && $item->query['func'] == 'entrypage') return 0;
+		if (isset($query['view'])) {
+			if (!isset($query['func'])) $query['func'] = $query['view'];
+			unset ($query['view']);
+		}
+		if (isset($item->query['func']) && $item->query['func'] == 'entrypage') return self::checkEntryPage($item, $query);
 		foreach ( $item->query as $var => $value ) {
 			if (!isset ( $query [$var] ) || $value != $query [$var]) {
 				if ($catid && $var=='func') continue;

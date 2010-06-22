@@ -53,19 +53,26 @@ if ($func && !in_array($func, KunenaRouter::$functions)) {
 	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
 }
 
-// Set active menuitem so that Kunena menu shows up
-$basemenu = KunenaRoute::getBaseMenu ();
-if (!is_object($basemenu) || !$func || $func == 'entrypage') {
-	$defaultmenu = 0;
-	if (is_object($basemenu) && isset($basemenu->query['defaultmenu'])) {
-		$defaultmenu = $basemenu->query['defaultmenu'];
-	}
-	$menu = JSite::getMenu ();
-	$menu->setActive(KunenaRoute::getItemID($defaultmenu));
-	$active = $menu->getActive();
-	if (is_object($active)) {
-		foreach ($active->query as $var => $value) {
-			JRequest::setVar($var, $value);
+if (empty($_POST)) {
+	// Set active menuitem so that Kunena menu shows up
+	$basemenu = KunenaRoute::getBaseMenu ();
+	if (! is_object ( $basemenu ) || ! $func || $func == 'entrypage') {
+		$defaultmenu = 0;
+		if (is_object ( $basemenu ) && isset ( $basemenu->query ['defaultmenu'] )) {
+			$defaultmenu = $basemenu->query ['defaultmenu'];
+		}
+		$menu = JSite::getMenu ();
+		$menu->setActive ( KunenaRoute::getItemID ( $defaultmenu ) );
+		$active = $menu->getActive ();
+		if (is_object ( $active )) {
+			foreach ( $active->query as $var => $value ) {
+				if ($var == 'view')
+					$var = 'func';
+				if ($var == 'func' && $value == 'entrypage')
+					$value = $func;
+				JRequest::setVar ( $var, $value );
+			}
+			$func = JRequest::getCmd ( 'func' );
 		}
 	}
 }
@@ -75,7 +82,6 @@ global $kunena_this_cat;
 
 // Get all the variables we need and strip them in case
 
-$func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
 $action = JRequest::getCmd ( 'action', '' );
 $catid = JRequest::getInt ( 'catid', 0 );
 $contentURL = JRequest::getVar ( 'contentURL', '' );
@@ -646,7 +652,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	// Bottom Module
 	CKunenaTools::showModulePosition( 'kunena_bottom' );
-	
+
 	// RSS
 	if ($kunena_config->enablerss) {
 		echo '<div class="krss-block">';
@@ -655,7 +661,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
 		echo '</div>';
 	}
-	
+
 	// Credits
 	echo '<div class="kcredits"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
 	echo '</div>';

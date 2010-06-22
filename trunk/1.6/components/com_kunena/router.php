@@ -197,11 +197,10 @@ class KunenaRouter {
 		// Fill data from the menu item
 		$menuquery = isset ( $active->query ) ? $active->query : array ();
 		foreach ( $menuquery as $var => $value ) {
+			if ($var == 'view') {
+				$var = 'func';
+			}
 			$vars [$var] = $value;
-		}
-		if (isset ( $vars ['view'] )) {
-			$vars ['func'] = $vars ['view'];
-			unset ( $vars ['view'] );
 		}
 		if (isset ( $vars ['func']) && $vars ['func'] == 'entrypage') {
 			unset ( $vars ['func'] );

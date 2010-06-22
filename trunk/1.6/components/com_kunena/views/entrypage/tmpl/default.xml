@@ -7,9 +7,12 @@
 	<state>
 		<name>Kunena Forum: Entry Page</name>
 		<description>This page can be used to highlight menuitem in Kunena</description>
-		<url>
-			<param name="defaultmenu" type="text" default="0" label="Default menu item" />
+		<url addpath="/administrator/components/com_kunena/elements">
+			<param name="defaultmenu" type="menuitem" default="0" state="1" label="Default Menu Item" />
 		</url>
+		<params addpath="/administrator/components/com_kunena/elements">
+			<param name="catids" type="kunenacategories" default="0" sections="0" none="All Categories" label="Allowed Category" />
+		</params>
 		
 	</state>
 </metadata>

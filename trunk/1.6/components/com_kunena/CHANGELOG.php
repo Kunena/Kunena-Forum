@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+22-June-2010 Matias
+# [#19288] Make sure that all KunenaUser instances have key > 0
+
 21-June-2010 Severdia
 # [#21131] Removed inline styles on avatars in topics
 

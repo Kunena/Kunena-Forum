@@ -60,12 +60,12 @@ class KunenaUser extends JObject {
 		}
 		// Find the user id
 		if ($identifier instanceof JUser) {
-			$id = $identifier->id;
+			$id = intval ( $identifier->id );
 		} else if (is_numeric ( $identifier )) {
 			$id = intval ( $identifier );
 		} else {
 			jimport ( 'joomla.user.helper' );
-			$id = JUserHelper::getUserId ( ( string ) $identifier );
+			$id = intval ( JUserHelper::getUserId ( ( string ) $identifier ) );
 		}
 		if ($id < 1)
 			return new $c ();

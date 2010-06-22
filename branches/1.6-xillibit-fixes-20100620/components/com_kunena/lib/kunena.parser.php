@@ -443,8 +443,17 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$file_ext = explode ( ',', $params->get ( 'upload_extensions' ) );
 					}
 					preg_match ( '/\.([\w\d]+)$/', $between, $matches );
-					if (! in_array ( JString::strtolower ( $matches [1] ), $file_ext ))
-						break;
+					if ( !$matches || !in_array ( JString::strtolower ( $matches [1] ), $file_ext )) {
+						// if the image has not exentions return it like a link
+						$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
+						if (! preg_match ( "`^(https?://)`", $tempstr )) {
+							$tempstr = 'http://' . $tempstr;
+						}
+						$tag_new = "<a href='" . $tempstr . "' rel=\"nofollow\" target=\"_blank\">" . $between . '</a>';
+						return TAGPARSER_RET_REPLACED;
+					break;
+					}
+
 
 					$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
 					if ($kunena_my->id == 0 && $kunena_config->showimgforguest == 0) {

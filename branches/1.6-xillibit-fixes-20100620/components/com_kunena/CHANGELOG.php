@@ -37,6 +37,7 @@ Kunena 1.6.0-ALPHA2
 22-June-2010 Xillibit
 # [#19288] Add configuration settings for thanks you stats
 # [#19288] Put old code back for code when user disable code highligthing
+# [#19288] Fix Notice: Undefined offset: 1  on kunena.parser.php when the image has no extensions
 
 21-June-2010 Xillibit
 # [#19288] Upgrade poll tables structure when migrate from k1.5.x for all versions of hack

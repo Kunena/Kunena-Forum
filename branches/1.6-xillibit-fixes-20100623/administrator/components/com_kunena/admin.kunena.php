@@ -536,27 +536,32 @@ html_Kunena::showFbFooter ();
 			// Delete the tmp install directory
 			if (JFolder::exists($tmp)) {
 				$templates = parseXMLTemplateFiles($tmp);
-				foreach ($templates as $template) {
-					// Never overwrite default template
-					if ($template->directory == 'default') continue;
-					if (is_dir($dest.$template->directory)) {
-						if (is_file($dest.$template->directory.'/params.ini')) {
-							if (is_file($tmp.$template->directory.'/params.ini')) {
-								JFile::delete($tmp.$template->directory.'/params.ini');
+				if (!empty($templates)) {
+					foreach ($templates as $template) {
+						// Never overwrite default template
+						if ($template->directory == 'default') continue;
+						if (is_dir($dest.$template->directory)) {
+							if (is_file($dest.$template->directory.'/params.ini')) {
+								if (is_file($tmp.$template->directory.'/params.ini')) {
+									JFile::delete($tmp.$template->directory.'/params.ini');
+								}
+								JFile::move($dest.$template->directory.'/params.ini', $tmp.$template->directory.'/params.ini');
 							}
-							JFile::move($dest.$template->directory.'/params.ini', $tmp.$template->directory.'/params.ini');
+							JFolder::delete($dest.$template->directory);
 						}
-						JFolder::delete($dest.$template->directory);
+						$error = JFolder::move($tmp.$template->directory, $dest.$template->directory);
+						if ($error !== true) $app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').': ' . $error, 'notice' );
 					}
-					$error = JFolder::move($tmp.$template->directory, $dest.$template->directory);
-					if ($error !== true) $app->enqueueMessage ( JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').': ' . $error, 'notice' );
+					$retval = JFolder::delete($tmp);
+					$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
+				} else {
+					JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_MISSING_FILE'));
+					$retval = false;
 				}
-				$retval = JFolder::delete($tmp);
 			} else {
 				JError::raiseWarning(100, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE').' '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_UNINSTALL').': '.JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_DIR_NOT_EXIST'));
 				$retval = false;
 			}
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_INSTALL_EXTRACT_SUCCESS', $file ['name']) );
 		}
 		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option.'&task=showTemplates');
 	}

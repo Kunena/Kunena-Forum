@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+23-June-2010 Xillibit
+# [#19288] Update french translation in backend and frontend
+# [#19288] Check that the file exist template.xml and if don't exist abort the installation of template
+
 23-June-2010 Matias
 ^ [#15886] Merged revisions 2810-2817 from /branches/1.6-xillibit-fixes-20100620
 ^ [#20729] Update version info to 1.6.0-ALPHA3

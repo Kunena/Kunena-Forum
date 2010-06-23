@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA3
 
 23-June-2010 Matias
 ^ [#15886] Merged revisions 2810-2817 from /branches/1.6-xillibit-fixes-20100620
+^ [#20729] Update version info to 1.6.0-ALPHA3
 
 22-June-2010 Xillibit
 # [#19288] Add configuration settings for thank you stats

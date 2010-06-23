@@ -377,12 +377,14 @@
 			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
 			<query mode="silenterror">UPDATE `#__kunena_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		<version version="1.6.0-ALPHA2" versiondate="2010-06-21" build="2806" versionname="Gespraech">
 			<query mode="silenterror">DROP TABLE IF EXISTS `#__kunena_banned_users`</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` 
 				ADD `banned` DATETIME NULL DEFAULT NULL AFTER `moderator` ,
 				ADD INDEX ( `banned` )</query>
 			<phpfile name="kunena.special.upgrade.1.6.0a2.php"></phpfile>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

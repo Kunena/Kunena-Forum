@@ -13,12 +13,10 @@
 defined ( '_JEXEC' ) or die ( '' );
 
 // Detect and load Kunena 1.6+
-if (! JComponentHelper::isEnabled ( 'com_kunena', true )) {
-	return JError::raiseError ( JText::_ ( 'Kunena Error' ), JText::_ ( 'Kunena is not installed on your system' ) );
-}
 $kunena_api = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php';
-if (! is_file ( $kunena_api ))
-	return;
+if (! JComponentHelper::isEnabled ( 'com_kunena', true ) || ! is_file ( $kunena_api ))
+	return JError::raiseError ( JText::_ ( 'Kunena Error' ), JText::_ ( 'Kunena 1.6 is not installed on your system' ) );
+
 require_once ($kunena_api);
 
 $params = ( object ) $params;
@@ -44,7 +42,7 @@ class modKunenaLatest
 		$topic_emoticons [7] = KUNENA_URLICONSPATH . 'topic-smile.gif';
 
 		// Include the kunenalatest functions only once
-		require_once (dirname ( __FILE__ ) . DS . 'helper.php');
+		require_once (dirname ( __FILE__ ) . '/helper.php');
 
 		$this->params = $params;
 		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $params );

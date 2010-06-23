@@ -130,30 +130,29 @@ $kunena_config = KunenaFactory::getConfig ();
 			?>
 			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('The polls are not allowed in this category'); } ?></span>
 			<div id="kpoll-hide-not-allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
-			
+
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 					maxlength="100" size="40"
 					value="<?php if(isset($this->polldatasedit[0]->title)) { echo $this->polldatasedit[0]->title; } ?>"
 					onmouseover="javascript:$('helpbox').set('value', '<?php
 					echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />
-				
+
 				<img id="kbutton-poll-add"
 					src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/karmaplus.png"
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>')" />
 				<img id="kbutton-poll-rem"
 					src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/karmaminus.png"
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" />
-				
+
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 				<input class="inputbox" type="text" maxlength="15"
 					name="kpoll-time-to-live" id="kpoll-time-to-live"
-					style="display: none"
 					value="<?php echo $this->polldatasedit[0]->polltimetolive; ?>" /> <img
 					src="templates/system/images/calendar.png" alt="Calendar"
-					onclick="showCalendar('kpoll-time-to-live','%Y-%m-%d');$('kpoll-time-to-live').removeProperty('style');"
+					onclick="showCalendar('kpoll-time-to-live','%Y-%m-%d');"
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN'); ?>')" />
-				
+
 			</div>
 			<?php
 			if(!empty( $html_poll_edit )) {

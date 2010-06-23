@@ -2300,6 +2300,26 @@ table.kadmin-stat caption {
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_POLLSPOP');
 							?></td>
 						</tr>
+						<tr align="center" valign="middle">
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_THANKSSTATS');
+							?></td>
+							<td align="left" valign="top"><?php echo $lists ['showpopthankysoustats'];
+							?>
+							</td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_THANKSSTATSDESC');
+							?>
+							</td>
+						</tr>
+						<tr align="center" valign="middle">
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_THANKSPOP');
+							?></td>
+							<td align="left" valign="top"><input type="text"
+								name="cfg_poppollscount"
+								value="<?php echo kescape($kunena_config->popthankscount);
+							?>" /></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_THANKSPOP');
+							?></td>
+						</tr>
 					</table>
 				</fieldset>
 				<fieldset>

@@ -465,4 +465,16 @@ class KunenaStatsAPI {
 		$toppollvotes = $kunena_poll->get_top_five_votes ( (int)$PollCount );
 		return $toppollvotes;
 	}
+
+	public function getTopThanks($thanksCount) {
+		if ((int)$thanksCount<0) return;
+		$this->_stats->loadThanksStats((int)$thanksCount);
+		return $this->_stats->topthanks;
+	}
+
+	public function getTopUserThanks($thanksCount) {
+		if ((int)$thanksCount<0) return;
+		$this->_stats->loadThanksStats((int)$thanksCount);
+		return $this->_stats->topuserthanks;
+	}
 }

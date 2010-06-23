@@ -351,6 +351,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $version_check = 1;
 	//New for 1.6: choose if you want a Thank you function
 	var $showthankyou = 1;
+	var $showpopthankysoustats = 1;
+	var $popthankscount = 5;
 
     public function __construct($userinfo = null) {
 		parent::__construct ();

@@ -34,6 +34,7 @@ $this->loadGenStats();
 $this->loadUserStats();
 $this->loadTopicStats();
 $this->loadPollStats();
+$this->loadThanksStats();
 
 $forumurl = 'index.php?option=com_kunena';
 
@@ -345,6 +346,65 @@ $barwidth = round(($topprofile->hits * 100) / $this->topprofilehits);
 </div>
 <?php endif; ?>
 <!-- F: User User -->
+
+<!-- B: Pop Thank you  -->
+<?php if($this->showpopthankysoustats): ?>
+<div class="k-bt-cvr1">
+<div class="k-bt-cvr2">
+<div class="k-bt-cvr3">
+<div class="k-bt-cvr4">
+<div class="k_bt_cvr5">
+<table class = "kblocktable " id="kpopuserhitmorestat"  cellpadding = "0" cellspacing = "0" border = "0" width = "100%">
+  <thead>
+    <tr>
+      <th colspan="3">
+      <div class = "ktitle-cover km"> <span class="ktitle kl"><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popthankscount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_THANKS_YOU'); ?></span> </div>
+      <div class="fltrt">
+						<span id="kpopuserhitmorestat_head"><a class="ktoggler close" rel="kpopuserhitstats_tbody"></a></span>
+		</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody id = "kpopuserhitstats_tbody">
+   <tr  class = "ksth ks" >
+      <th class = "th-1 ksectiontableheader"  align="left" width="50%"> <?php echo JText::_('COM_KUNENA_USRL_USERNAME') ;?></th>
+      <th class = "th-2 ksectiontableheader" width="40%">&nbsp;  </th>
+      <th class = "th-3 ksectiontableheader" align="center" width="10%"></th>
+    </tr>
+
+<?php
+foreach ($this->topuserthanks as $topthanks)
+{
+$k = 1 - $k;
+if ($topthanks->receivedthanks == $this->topthanks) {
+$barwidth = 100;
+}
+else {
+$barwidth = round(($topthanks->receivedthanks * 100) / $this->topthanks);
+}
+?>
+
+    <tr class = "k<?php echo $tabclass[$k]; ?>">
+      <td  class="td-1"  align="left">
+        <?php echo CKunenaLink::GetProfileLink($topthanks->id, $topthanks->username); ?>
+</td>
+      <td  class="td-2">
+         <img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/>
+                                    </td>
+      <td  class="td-3">
+	  <?php echo $topthanks->receivedthanks; ?> <?php echo JText::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED') ;?>
+       </td>
+    </tr>
+<?php }   ?>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<?php endif; ?>
+<!-- F: Thank you -->
 
 
 <?php

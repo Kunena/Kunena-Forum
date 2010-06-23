@@ -386,9 +386,25 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						else
 							return TAGPARSER_RET_NOTHING;
 						return TAGPARSER_RET_REPLACED;
+					} else {
+						$types = array ("php", "mysql", "html", "js", "javascript" );
+						$code_start_html = '<div class="kmsgtext-code"><div class="kmsgtext-code-header"><span>' . JText::_('COM_KUNENA_MSG_CODE') . '</span></div><div class="kmsgtext-code-body">';
+						if (! empty ( $tag->options ["type"] ) && in_array ( $tag->options ["type"], $types )) {
+							 $t_type = $tag->options ["type"];
+						} else {
+							$t_type = "php";
+						}
+						 // make sure we show line breaks
+						 $code_start_html .= "<code class=\"{$t_type}\">";
+						 $code_end_html = '</code></div></div>';
+						 // Preserve spaces and tabs in code
+						 $codetext = str_replace ( "\t", "__FBTAB__", $between );
+						 $codetext = kunena_htmlspecialchars ( $codetext, ENT_QUOTES );
+						 $codetext = str_replace ( " ", "&nbsp;", $codetext );
+						 $tag_new = $code_start_html . $codetext . $code_end_html;
+						 $task->in_code = FALSE;
+						  return TAGPARSER_RET_REPLACED;
 					}
-					else
-						return TAGPARSER_RET_NOTHING;
 					break;
 
 				default :
@@ -427,8 +443,17 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$file_ext = explode ( ',', $params->get ( 'upload_extensions' ) );
 					}
 					preg_match ( '/\.([\w\d]+)$/', $between, $matches );
-					if (!isset($matches [1]) || ! in_array ( JString::strtolower ( $matches [1] ), $file_ext ))
-						break;
+					if ( !isset($matches [1] ) || !in_array ( JString::strtolower ( $matches [1] ), $file_ext )) {
+						// if the image has not exentions return it like a link
+						$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
+						if (! preg_match ( "`^(https?://)`", $tempstr )) {
+							$tempstr = 'http://' . $tempstr;
+						}
+						$tag_new = "<a href='" . $tempstr . "' rel=\"nofollow\" target=\"_blank\">" . $between . '</a>';
+						return TAGPARSER_RET_REPLACED;
+					break;
+					}
+
 
 					$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
 					if ($kunena_my->id == 0 && $kunena_config->showimgforguest == 0) {

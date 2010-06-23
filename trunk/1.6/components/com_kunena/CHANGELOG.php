@@ -32,7 +32,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0-ALPHA2
+Kunena 1.6.0-ALPHA3
+
+23-June-2010 Matias
+^ [#15886] Merged revisions 2810-2817 from /branches/1.6-xillibit-fixes-20100620
+
+22-June-2010 Xillibit
+# [#19288] Add configuration settings for thank you stats
+# [#19288] Put old code back for code when user disable code highlighting
+# [#19288] Fix Notice: Undefined offset: 1  on kunena.parser.php when the image has no extensions
 
 22-June-2010 Matias
 # [#19288] Make sure that all KunenaUser instances have key > 0
@@ -43,11 +51,17 @@ Kunena 1.6.0-ALPHA2
 # [#20071] Menu item without children: Find closest match in Kunena Menu and use it instead menu item itself
 + [#20071] Add new class JElementKunenaCategories
 + [#20071] Menu: Change text field to category list to all catid configuration options
-# [#19288] Fix undefined offset in lib/kunena.parser.php on line 430
 # [#19288] KunenaUser: Fix fatal SQL error when loading online status
+
+21-June-2010 Xillibit
+# [#19288] Upgrade poll tables structure when migrate from k1.5.x for all versions of hack
+# [#19288] Don't hide the time to live input because doesn't work well with calendar
+# [#19288] Put in stats the top thank you received and added a part in api
 
 21-June-2010 Severdia
 # [#21131] Removed inline styles on avatars in topics
+
+Kunena 1.6.0-ALPHA2
 
 20-June-2010 Xillibit
 # [#19288] Update translation of fr-FR.com_kunena.install.ini

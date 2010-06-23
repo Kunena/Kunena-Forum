@@ -44,11 +44,14 @@ class CKunenaStats {
 	public $toptitles = null;
 	public $toptitlehits = null;
 	public $toppolls = null;
+	public $topthanks = null;
+	public $topuserthanks = null;
 
 	public $showgenstats = false;
 	public $showpopuserstats = false;
 	public $showpopsubjectstats = false;
 	public $showpoppollstats = false;
+	public $showpopthankysoustats = false;
 
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
@@ -59,6 +62,7 @@ class CKunenaStats {
 		$this->showpopuserstats = $show ? $this->_config->showpopuserstats : 0;
 		$this->showpopsubjectstats = $show ? $this->_config->showpopsubjectstats : 0;
 		$this->showpoppollstats = $show ? $this->_config->showpoppollstats : 0;
+		$this->showpopthankysoustats = $show ? $this->_config->showpopthankysoustats : 0;
 	}
 
 	public function &getInstance()
@@ -206,6 +210,22 @@ class CKunenaStats {
 		if (count($this->toppolls) < $PopPollsCount) {
 			$this->toppolls = $kunena_polls->get_top_five_polls ( $PopPollsCount );
 			$this->toppollvotes = $kunena_polls->get_top_five_votes ( $PopPollsCount );
+		}
+	}
+
+	function loadThanksStats($override=false) {
+		if (! $this->showpopthankysoustats && ! $override)
+			return;
+
+		if (!$override) $thanksCount = $this->_config->popthankscount;
+		else $thanksCount = $override;
+
+		if (count($this->topthanks) < $thanksCount) {
+			$queryName = $this->_config->username ? "username" : "name";
+			$this->_db->setQuery ( "SELECT a.*,b.id,b.{$queryName} AS username,COUNT(a.targetuserid) AS receivedthanks FROM `#__kunena_thankyou` AS a LEFT JOIN #__users AS b ON a.targetuserid=b.id GROUP BY a.targetuserid ASC ORDER BY COUNT(a.targetuserid) DESC", 0, $thanksCount );
+			$this->topuserthanks = $this->_db->loadObjectList ();
+			KunenaError::checkDatabaseError();
+			$this->topthanks = ! empty ( $this->topuserthanks [0]->receivedthanks ) ? $this->topuserthanks [0]->receivedthanks : 0;
 		}
 	}
 

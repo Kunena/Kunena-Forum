@@ -22,12 +22,12 @@ abstract class KunenaParser {
 		return $txt;
 	}
 
-	function parseBBCode($txt) {
+	function parseBBCode($txt, $parent=null) {
 		if (!$txt) return;
 		if (!self::$emoticons) self::$emoticons = smile::getEmoticons ( 0 );
 
 		$config = KunenaFactory::getConfig ();
-		$txt = smile::smileReplace ( $txt, 0, $config->disemoticons, self::$emoticons );
+		$txt = smile::smileReplace ( $txt, 0, $config->disemoticons, self::$emoticons, $parent );
 		$txt = nl2br ( $txt );
 		$txt = str_replace ( "__FBTAB__", "&#009;", $txt ); // For [code]
 		$txt = self::prepareContent ( $txt );

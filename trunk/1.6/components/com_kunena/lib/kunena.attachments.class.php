@@ -90,9 +90,9 @@ class CKunenaAttachments {
 	function get($mesids) {
 		$ret = array();
 		if (empty($mesids)) return $ret;
-		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ($mesids)";
+		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ($mesids) ORDER BY id";
 		$this->_db->setQuery ( $query );
-		$attachments = $this->_db->loadObjectList ();
+		$attachments = $this->_db->loadObjectList ('id');
 		if (KunenaError::checkDatabaseError()) return $ret;
 		foreach ($attachments as $attachment) {
 			// Check if file has been pre-processed
@@ -109,7 +109,7 @@ class CKunenaAttachments {
 			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) continue;
 			if ($attachment->shorttype != 'image' && !$this->_my->id && !$this->_config->showfileforguest) continue;
 
-			$ret[$attachment->mesid][] = $attachment;
+			$ret[$attachment->mesid][$attachment->id] = $attachment;
 		}
 		return $ret;
 	}

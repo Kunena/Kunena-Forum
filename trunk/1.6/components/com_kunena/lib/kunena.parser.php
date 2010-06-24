@@ -1,12 +1,8 @@
-<?PHP
+<?php
 /**
-
  * @version $Id$
-
  * Kunena Component
-
  * @package Kunena
-
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -14,68 +10,46 @@
  *
  * Based on FireBoard Component
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
-
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-
  * @link http://www.bestofjoomla.com
-
  **/
-############################################################################
 
+/*
+############################################################################
 # CATEGORY: Parser.TagParser                 DEVELOPMENT DATUM: 13.11.2007 #
-
 # VERSION:  00.08.00                         LAST EDIT   DATUM: 12.12.2007 #
-
 # FILENAME: interpreter.Kunena.inc.php                                  #
-
 # AUTOR:    Miro Dietiker, MD Systems, All rights reserved                 #
-
 # LICENSE:  http://www.gnu.org/copyleft/gpl.html GNU/GPL                   #
-
-# CONTACT: m.dietiker@md-systems.ch        � 2007 Miro Dietiker 13.11.2007 #
-
+# CONTACT: m.dietiker@md-systems.ch        (c) 2007 Miro Dietiker 13.11.2007 #
 ############################################################################
-
 # This parser is based on an earlier CMS parser implementation.
-
 # It has been completely rewritten and generalized for Kunena and
-
 # was also heavily tested.
-
 # However it should be: extensible, fast, ungreedy regarding resources
-
 # stateful, enforcing strict output rules as defined
-
 # Hope it works ;-)
-
 ############################################################################
 
-
-
-# implement further extended links (username, ...)
-
-
+implement further extended links (username, ...)
+*/
 
 defined( '_JEXEC' ) or die();
-
 
 include_once (KUNENA_PATH_LIB . DS . "kunena.parser.bbcode.php");
 
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {
-	# these are samples... we used the parser to refer to files!
-
-	# did here a local caching, but using also database lookups - removed
+	// these are samples... we used the parser to refer to files!
+	// did here a local caching, but using also database lookups - removed
 	var $spoilerid = 0;
 
 	function &NewTask() {
+		/*
 		# Builds new Task
-
 		# RET
-
 		# object: the task object
-
 		# TAGPARSER_RET_ERR
-
+		*/
 		$task = new KunenaBBCodeParserTask ( $this );
 		return $task;
 	}
@@ -125,19 +99,15 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	}
 
 	function Encode(&$text_new, &$task, $text_old, $context) {
+		/*
 		# Encode strings for output
-
 		# Regard interpreter mode if needed
-
 		# context: 'text'
-
 		# context: 'tagremove'
-
 		# RET:
-
 		# TAGPARSER_RET_NOTHING: No Escaping done
-
 		# TAGPARSER_RET_REPLACED: Escaping done
+		*/
 
 		// special states are liable for encoding (Extended Tag hit)
 
@@ -174,7 +144,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	}
 
 	function TagStandard(&$tns, &$tne, &$task, $tag) {
-		# Function replaces TAGs with corresponding
+		// Function replaces TAGs with corresponding
 
 		if ($task->in_code) {
 			return TAGPARSER_RET_NOTHING;
@@ -188,7 +158,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 					$tns = "";
 					$tne = '';
-					#reenter regular replacements
+					//reenter regular replacements
 
 					$task->in_noparse = FALSE;
 					return TAGPARSER_RET_REPLACED;
@@ -346,9 +316,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	}
 
 	function TagExtended(&$tag_new, &$task, $tag, $between) {
+		/*
 		# Function replaces TAGs with corresponding
-
 		# Encode was already been called for between
+		*/
 		$kunena_config = KunenaFactory::getConfig ();
 		$kunena_my = &JFactory::getUser ();
 		if ($task->in_code) {
@@ -413,7 +384,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			return TAGPARSER_RET_NOTHING;
 		}
 		switch (JString::strtolower ( $tag->name )) {
-			# in general $between was already Encoded (if not explicitly suppressed!)
+			// in general $between was already Encoded (if not explicitly suppressed!)
 
 			case 'email' :
 				$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
@@ -461,20 +432,14 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 						$tag_new = '<b>' . JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG') . '</b>';
 					} else {
-						$task->autolink_disable --; # continue autolink conversion
+						$task->autolink_disable --; // continue autolink conversion
 
 						// Make sure we add image size if specified and while we are
-
 						// at it also set maximum image width from text width config.
-
 						//
-
 						// NOTICE: image max variables from config are not intended
-
 						// for formating but to limit the size of uploads, which can
-
 						// be larger than the available post area to support super-
-
 						// sized popups.
 
 						$imgmaxsize = ( int ) (($kunena_config->rtewidth * 9) / 10); // 90% of text width
@@ -506,14 +471,45 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 						$tag_new = '<b>' . JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE') . '</b>';
 					} else {
-						$task->autolink_disable --; # continue autolink conversion
+						$task->autolink_disable --; // continue autolink conversion
 
-						$tag_new = "<div class=\"fb_file_attachment\"><span class=\"contentheading\">" . JText::_('COM_KUNENA_FILEATTACH') . "</span><br>" . JText::_('COM_KUNENA_FILENAME') . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . (($tag->options ["name"]) ? kunena_htmlspecialchars ( $tag->options ["name"] ) : $tempstr) . "</a><br>" . JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( $tag->options ["size"], ENT_QUOTES ) . "</div>";
+						$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>" . JText::_('COM_KUNENA_FILENAME') . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . kunena_htmlspecialchars ( !empty($tag->options ["name"]) ? $tag->options ["name"] : $tempstr) . "</a><br>" . JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( $tag->options ["size"] ? $tag->options ["size"] : '?' ) . "</div>";
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
 				return TAGPARSER_RET_NOTHING;
 
+				break;
+			case 'attachment':
+				if (! is_object ( $this->parent ) && ! isset ( $this->parent->attachments )) {
+					return TAGPARSER_RET_REPLACED;
+				}
+				$attid = intval ( $between );
+				$attachments = &$this->parent->attachments;
+				$attachment = null;
+				if (! $attid) {
+					$attachment = array_shift ( $attachments );
+				} else if (isset ( $attachments [$attid] )) {
+					$attachment = $attachments [$attid];
+					unset ( $attachments [$attid] );
+				} else if (isset ( $this->parent->inline_attachments [$attid] )) {
+					$attachment = $this->parent->inline_attachments [$attid];
+				}
+
+				if ($kunena_my->id == 0 && $kunena_config->showfileforguest == 0) {
+					// Hide between content from non registered users
+					$tag_new = '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' ) . '</b>';
+				} else {
+					$task->autolink_disable --; // continue autolink conversion
+					if (is_object ( $attachment ) && is_file(JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}")) {
+						$this->parent->inline_attachments[$attachment->id] = $attachment;
+						$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
+						$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br>" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . $attachment->size . "</div>";
+					} else {
+						$tag_new = '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', kunena_htmlspecialchars ($between) ) . '</h4></div>';
+					}
+				}
+				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'quote' :
 				$tag_new = '<span class="kmsgtext-quote">' . $between . '</span>';
@@ -751,7 +747,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				break;
 			case 'ebay' :
 				if ($between) {
-					$task->autolink_disable --; # continue autolink conversion
+					$task->autolink_disable --; // continue autolink conversion
 
 
 					$tage_new = "";
@@ -770,7 +766,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				break;
 			case 'map' :
 				if ($between) {
-					$task->autolink_disable --; # continue autolink conversion
+					$task->autolink_disable --;  // continue autolink conversion
 
 					$map_maxwidth = ( int ) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
 					$map_maxheight = 480; // max. display size
@@ -836,7 +832,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 	function TagSingle(&$tag_new, &$task, $tag) {
 
-		# Function replaces TAGs with corresponding
+		// Function replaces TAGs with corresponding
 
 		// trace states (for parsing & encoding)
 
@@ -851,12 +847,12 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 			case 'code' :
 				$task->in_code = TRUE;
-				return TAGPARSER_RET_NOTHING; # treat it as unprocessed (to push on stack)!
+				return TAGPARSER_RET_NOTHING; // treat it as unprocessed (to push on stack)!
 
 				break;
 			case 'noparse' :
 				$task->in_noparse = TRUE;
-				return TAGPARSER_RET_NOTHING; # treat it as unprocessed!
+				return TAGPARSER_RET_NOTHING; // treat it as unprocessed!
 
 				break;
 			case 'email' :
@@ -865,7 +861,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			case 'file' :
 			case 'video' :
 			case 'ebay' :
-				$task->autolink_disable ++; # stop autolink conversion
+				$task->autolink_disable ++; // stop autolink conversion
 
 				return TAGPARSER_RET_NOTHING;
 				break;
@@ -889,7 +885,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	}
 
 	function TagSingleLate(&$tag_new, &$task, $tag) {
-		# Function replaces TAGs with corresponding
+		// Function replaces TAGs with corresponding
 
 		if ($task->in_code) {
 			return TAGPARSER_RET_NOTHING;
@@ -901,7 +897,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			// Replace unclosed img tag
 
 			case 'img' :
-				$task->autolink_disable --; # continue autolink conversion
+				$task->autolink_disable --; // continue autolink conversion
 
 				// kunena_htmlspecialchars($tag->options['default'], ENT_QUOTES)
 
@@ -933,17 +929,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 }
 
 class KunenaBBCodeParserTask extends BBCodeParserTask {
-	# stateful task for parser runs
-
-	# inside link used for autolinkdetection outside
+	// stateful task for parser runs
+	// inside link used for autolinkdetection outside
 
 	var $autolink_disable = 0;
 	// ERROR autolinking don't work after wrong nested elements..
-
 	// reason is internal state is wrong after dropping tags (where start occured stateful)
-
 	// so we should trace this too :-S
-
 	//emoticon things!
 
 	var $history = 0; // 1=grey
@@ -955,9 +947,9 @@ class KunenaBBCodeParserTask extends BBCodeParserTask {
 }
 
 class KunenaBBCodeInterpreterPlain extends BBCodeInterpreter {
-	# This class uses standardinterpreter, but removes all formatting outputs!
+	// This class uses standardinterpreter, but removes all formatting outputs!
 
-	# directly derivated from KunenaBBCodeInterpreter after extensive testing
+	// directly derivated from KunenaBBCodeInterpreter after extensive testing
 
 
 

@@ -53,13 +53,13 @@ class smile {
 		return $fb_message_txt;
 	}
 
-	function smileReplace($fb_message, $history, $emoticons, $iconList = null) {
+	function smileReplace($fb_message, $history, $emoticons, $iconList = null, $parent = null) {
 
 		$fb_message_txt = $fb_message;
 
 		//implement the new parser
 		$parser = new TagParser ( );
-		$interpreter = new KunenaBBCodeInterpreter ( $parser );
+		$interpreter = new KunenaBBCodeInterpreter ( $parser, $parent );
 		$task = $interpreter->NewTask ();
 		$task->SetText ( $fb_message_txt . ' _EOP_' );
 		$task->dry = FALSE;
@@ -69,7 +69,7 @@ class smile {
 		$task->iconList = $iconList;
 		$task->Parse ();
 
-		return JString::substr ( $task->text, 0, - 6 );
+		return JString::trim( JString::substr ( $task->text, 0, - 6 ) );
 	}
 
 	/**

@@ -115,10 +115,15 @@ class CKunenaViewMessage {
 			$this->msgsuffix = '-new';
 		}
 
+		// Add attachments
+		if (!empty($message->attachments)) {
+			$this->attachments = $message->attachments;
+		}
+
 		$subject = $message->subject;
 		$this->resubject = JString::strtolower ( JString::substr ( $subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $subject;
 		$this->subject = KunenaParser::parseText ( $subject );
-		$this->message = KunenaParser::parseBBCode ( $message->message );
+		$this->message = KunenaParser::parseBBCode ( $message->message, $this );
 
 		//Show admins the IP address of the user:
 		if ($message->ip && (CKunenaTools::isAdmin () || (CKunenaTools::isModerator ( $this->my->id, $this->catid ) && !$this->config->hide_ip))) {
@@ -188,26 +193,6 @@ class CKunenaViewMessage {
 
 			if($this->my->id && $this->my->id != $this->profile->userid) {
 				$this->message_thankyou = CKunenaLink::GetThankYouLink ( $this->catid, $this->id , $this->userid , CKunenaTools::showButton ( 'thankyou', JText::_('COM_KUNENA_BUTTON_THANKYOU') ), JText::_('COM_KUNENA_BUTTON_THANKYOU_LONG'), 'kbuttonuser btn-left');
-			}
-		}
-
-		// Add attachments
-		if (isset($message->attachments)) {
-			foreach($message->attachments as $attachment)
-			{
-				// Check if file has been pre-processed
-				if (is_null($attachment->hash)){
-					// This attachment has not been processed.
-					// It migth be a legacy file, or the settings might have been reset.
-					// Force recalculation ...
-
-					// TODO: Perform image re-prosessing
-				}
-
-				// shorttype based on MIME type to determine if image for displaying purposes
-				$attachment->shorttype = (stripos($attachment->filetype, 'image/') !== false) ? 'image' : $attachment->filetype;
-
-				$this->attachments[] = $attachment;
 			}
 		}
 
@@ -445,8 +430,6 @@ class CKunenaView {
 		$posts = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 
-		// Load attachments
-
 		// First collect the message ids of the first message and all replies
 		$messageids = array();
 		$this->messages = array ();
@@ -462,6 +445,7 @@ class CKunenaView {
 		// create a list of ids we can use for our sql
 		$idstr = @join ( ",", $messageids );
 
+		// Load attachments
 		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance();
 		$message_attachments = $attachments->get($idstr);

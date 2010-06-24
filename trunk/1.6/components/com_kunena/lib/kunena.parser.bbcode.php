@@ -13,6 +13,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 **/
+/*
 ############################################################################
 # CATEGORY: Parser.TagParser                 DEVELOPMENT DATUM: 13.11.2007 #
 # VERSION:  00.08.00                         LAST EDIT   DATUM: 12.12.2007 #
@@ -43,10 +44,11 @@
 # implement self-link parsing (on Encode)
 #
 #
+*/
 defined( '_JEXEC' ) or die();
 
 
-# parser states
+// parser states
 define('BBCODE_PARSE_START',      'start');
 define('BBCODE_PARSE_NAME',       'name');
 define('BBCODE_PARSE_SPACE',      'space');
@@ -60,27 +62,27 @@ function fb_stripos($haystack , $needle , $offset=0) {
 }
 
 class BBCodeInterpreter extends TagInterpreter {
-    # Extension for TagParser to interprete BBCode (with noparse, code state)
+    // Extension for TagParser to interprete BBCode (with noparse, code state)
     var $tag_start = '[';
     var $tag_end = ']';
 
     function &NewTask() {
-        # Builds new Task
-        # RET
-        # object: the task object
-        # TAGPARSER_RET_ERR
+        // Builds new Task
+        // RET
+        // object: the task object
+        // TAGPARSER_RET_ERR
         $task = new BBCodeParserTask($this);
         return $task;
     }
 
 
     function ParseNext(&$task) {
-        #  function ParseNext($text, &$pos_act) {
-        # Parse next candidate for execution
-        # Candidate could be cancelled later on!
-        # $text:     the full text
-        # &$pos_act: position to begin parsing
-        # RET: TAGPARSER_RET_OK found, TAGPARSER_RET_ERR end
+        //  function ParseNext($text, &$pos_act) {
+        // Parse next candidate for execution
+        // Candidate could be cancelled later on!
+        // $text:     the full text
+        // &$pos_act: position to begin parsing
+        // RET: TAGPARSER_RET_OK found, TAGPARSER_RET_ERR end
         $text =& $task->text;
         $pos_act =& $task->pos_act;
 
@@ -128,8 +130,8 @@ class BBCodeInterpreter extends TagInterpreter {
     }
 
     function UnEscape(&$task) {
-        # Check if current tag is escaped, unescape
-        # RET: 0 continue,
+        // Check if current tag is escaped, unescape
+        // RET: 0 continue,
         $text =& $task->text;
         $pos_act =& $task->pos_act;
         $nextchar = substr($text, $pos_act+1, 1);
@@ -150,11 +152,11 @@ class BBCodeInterpreter extends TagInterpreter {
     }
 
     function ParseTag(&$tag, &$task) {
-        # Parse Tag content and create construct
-        # logs error itself to task
-        # RET:
-        # TAGPARSER_RET_OK continue
-        # TAGPARSER_RET_ERR tag parse error, skip
+        // Parse Tag content and create construct
+        // logs error itself to task
+        // RET:
+        // TAGPARSER_RET_OK continue
+        // TAGPARSER_RET_ERR tag parse error, skip
         // this is a real char-by-char parser!
         $text =& $task->text;
         $pos =& $task->pos_act;
@@ -168,11 +170,11 @@ class BBCodeInterpreter extends TagInterpreter {
         $isend = FALSE; // TRUE if endtag
         $mode = BBCODE_PARSE_START;
         // scan through string
-        #echo 'POS:'.$pos."\n";
+        //echo 'POS:'.$pos."\n";
         $textlen = strlen($text);
         while(++$pos<$textlen) {
             $char = substr($text, $pos, 1);
-            #echo 'CHAR:'.$mode.':'.$char."\n";
+            //echo 'CHAR:'.$mode.':'.$char."\n";
             // missing tag end, overflow prevention!
             if($char===FALSE) {
                 // cancel this tag
@@ -221,7 +223,7 @@ class BBCodeInterpreter extends TagInterpreter {
                 }
                 // build tagname
                 $tagname .= JString::strtolower($char);
-                #echo 'TAG:'.$tagname."\n";
+                //echo 'TAG:'.$tagname."\n";
                 continue;
             }
             if($mode==BBCODE_PARSE_SPACE) {
@@ -288,7 +290,7 @@ class BBCodeInterpreter extends TagInterpreter {
                 }
                 if($char=='\\') {
                     // ONE backspace
-                    #echo 'ESCAPE'."\n";
+                    //echo 'ESCAPE'."\n";
                     $isesc = TRUE;
                     continue;
                 }
@@ -317,15 +319,15 @@ class BBCodeInterpreter extends TagInterpreter {
             }
         }
         // end position points to tag closing
-        #$pos_end = $pos;
+        //$pos_end = $pos;
         // create tag object
         if($isend) {
             // no reference!
-            #echo 'TAGEND:'.$tagname.':'.$pos_start.":".$pos_end."\n";
+            //echo 'TAGEND:'.$tagname.':'.$pos_start.":".$pos_end."\n";
             $tag = new ParserEventTagEnd($pos_start, $pos, $tagname);
         } else {
             // no reference!
-            #echo 'TAG:'.$tagname.':'.$pos_start.":".$pos_end."\n";
+            //echo 'TAG:'.$tagname.':'.$pos_start.":".$pos_end."\n";
             $tag = new ParserEventTag($pos_start, $pos, $tagname);
             $tag->setOptions($arr);
         }
@@ -336,8 +338,8 @@ class BBCodeInterpreter extends TagInterpreter {
     }
 
     function CheckTag(&$task, $tag) {
-        # Parse Tag content and create construct
-        # RET: 0 OK, errorinfo
+        // Parse Tag content and create construct
+        // RET: 0 OK, errorinfo
         // check tagname regexp
         // $tag->name
         // dropping [*] here would lead to remove! so it goes to stack!
@@ -352,10 +354,10 @@ class BBCodeInterpreter extends TagInterpreter {
 }
 
 class BBCodeParserTask extends ParserTask {
-    # stateful task for parser runs
-    # parse state in_code in [code]
+    // stateful task for parser runs
+    // parse state in_code in [code]
     var $in_code = FALSE;
-    # parse state in_noparse in [noparse]
+    // parse state in_noparse in [noparse]
     var $in_noparse = FALSE;
 }
 ?>

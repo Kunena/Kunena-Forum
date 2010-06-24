@@ -362,11 +362,12 @@ class CKunenaUpload {
 
 		// All the processing is complete - now we need to move the file(s) into the final location
 		@chmod($this->fileTemp, 0644);
-		if (! JFile::move ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
+		if (! JFile::copy ( $this->fileTemp, $uploadPath.'/'.$this->fileName )) {
 			$this->fail(JText::sprintf('COM_KUNENA_UPLOAD_ERROR_NOT_MOVED', $uploadPath.'/'.$this->fileName));
 			unlink($this->fileTemp);
 			return false;
 		}
+		unlink($this->fileTemp);
 		JPath::setPermissions($uploadPath.'/'.$this->fileName);
 
 		$this->ready = true;

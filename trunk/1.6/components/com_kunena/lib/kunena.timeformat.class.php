@@ -106,8 +106,8 @@ class CKunenaTimeformat {
 			$option = substr ( $mode, 7 );
 			$mode = $kunena_config->$option;
 		}
-		$mode = explode ( '_', $mode );
-		switch (strtolower ( $mode [0] )) {
+		$modearr = explode ( '_', $mode );
+		switch (strtolower ( $modearr [0] )) {
 			case 'none' :
 				return '';
 			case 'time' :
@@ -123,11 +123,16 @@ class CKunenaTimeformat {
 			case 'ago' :
 				return CKunenaTimeformat::showTimeSince ( $date->toUnix() );
 				break;
-			default :
+			case 'datetime':
 				$usertime_format = JText::_('COM_KUNENA_DT_DATETIME_FMT');
 				$today_format = JText::_('COM_KUNENA_DT_DATETIME_TODAY_FMT');
 				$yesterday_format = JText::_('COM_KUNENA_DT_DATETIME_YESTERDAY_FMT');
 				break;
+			default:
+				$usertime_format = $mode;
+				$today_format = $mode;
+				$yesterday_format = $mode;
+
 		}
 
 		if ($offset === false) {
@@ -137,7 +142,7 @@ class CKunenaTimeformat {
 		}
 		$date->setOffset($offset);
 		// Today and Yesterday?
-		if ($mode [count ( $mode ) - 1] == 'today') {
+		if ($modearr [count ( $modearr ) - 1] == 'today') {
 			$now = new JDate();
 			$now->setOffset($offset);
 			$now = @getdate ( $now->toUnix() );

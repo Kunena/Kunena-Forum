@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+24-June-2010 Matias
+# [#19288] Minor fix in CKunenaDateformat class for KunenaLatest module
+
 23-June-2010 Matias
 ^ [#15886] Merged revisions 2810-2817 from /branches/1.6-xillibit-fixes-20100620
 ^ [#20729] Update version info to 1.6.0-ALPHA3

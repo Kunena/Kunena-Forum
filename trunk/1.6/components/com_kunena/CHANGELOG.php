@@ -39,6 +39,7 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Fix error during saving attachments: cannot move file
 + [#21161] Add new [attachment] BBCode (sequential order, id and filename supported)
 # [#19288] A few small fixes: # comments in PHP, trim message etc
++ [#16390] Add language files: Finnish translation for the installer
 
 23-June-2010 Matias
 ^ [#15886] Merged revisions 2810-2817 from /branches/1.6-xillibit-fixes-20100620

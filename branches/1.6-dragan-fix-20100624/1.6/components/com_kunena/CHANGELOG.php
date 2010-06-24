@@ -34,6 +34,12 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+24-June-2010 @quila
+# [#19288] Untranslated "Delete" in multiattachment
+^ [#19288] Removed deprecated configuration for enable rules and help page
++ [#19288] Added serbian languages for installation
++ [#19288] Set keywords for serbian language files
+
 24-June-2010 Matias
 # [#19288] Minor fix in CKunenaDateformat class for KunenaLatest module
 # [#19288] Fix error during saving attachments: cannot move file

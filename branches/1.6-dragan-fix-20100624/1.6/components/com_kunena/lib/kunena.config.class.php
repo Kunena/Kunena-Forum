@@ -190,7 +190,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $annmodid = '62';
 	var $rtewidth = 450;
 	var $rteheight = 300;
-	var $enablerulespage = 1;
 	var $enableforumjump = 1;
 	var $reportmsg = 1;
 	var $username = 1;
@@ -259,7 +258,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $rules_infb = 1;
 	var $rules_cid = 1;
 	var $rules_link = 'http://www.kunena.com/';
-	var $enablehelppage = 1;
 	var $help_infb = 1;
 	var $help_cid = 1;
 	var $help_link = 'http://www.kunena.com/';

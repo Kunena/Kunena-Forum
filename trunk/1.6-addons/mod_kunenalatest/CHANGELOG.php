@@ -30,6 +30,11 @@ Legend:
 
 KunenaLatest 1.0
 
+24-Jun-2010 Severdia
+^ [#20081] Vertical position change, new CSS
+^ [#20081] Languages fixes
+^ [#20081] Changed date format
+
 24-Jun-2010 Matias
 # [#20081] Get date format from configuration option
 

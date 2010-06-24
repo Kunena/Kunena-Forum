@@ -25,6 +25,16 @@ if (is_array ( $this->klistpost )) {
 
 <li class="klatest-item">
 	<ul class="klatest-itemdetails">
+		<?php
+		if ( $this->params->get ( 'sh_topiciconoravatar' )) { ?>
+		<li class="klatest-avatar">
+			<?php echo modKunenaLatestHelper::userAvatar( $item->userid, $this->params ); ?>
+		</li>
+		<?php } else {  ?>
+		<li class="klatest-avatar">
+		<?php echo '<img src="' . $this->topic_emoticons[$item->topic_emoticon]  . '" />'; ?>
+		</li>
+		<?php } ?>
 		<li class="klatest-subject">
 		<?php
 			if ($this->params->get ( 'sh_sticky' )) {
@@ -50,17 +60,8 @@ if (is_array ( $this->klistpost )) {
 					echo '<img src="' . KUNENA_URLICONSPATH . 'lock_sm.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_GEN_LOCKED_TOPIC' ) . '" />';
 				}
 			}
-			?></li>
-		<?php
-		if ( $this->params->get ( 'sh_topiciconoravatar' )) { ?>
-		<li class="klatest-avatar">
-			<?php echo modKunenaLatestHelper::userAvatar( $item->userid, $this->params ); ?>
+			?>
 		</li>
-		<?php } else {  ?>
-		<li class="klatest-avatar">
-		<?php echo '<img src="' . $this->topic_emoticons[$item->topic_emoticon]  . '" />'; ?>
-		</li>
-		<?php } ?>
 		<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $item->catid, $item->catname ); ?></li>
 		<li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_LAST_POST_BY' ) .' '. CKunenaLink::GetProfileLink ( $item->userid, $item->name ); ?></li>
 		<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo CKunenaTimeformat::showDate($item->lasttime, $this->params->get ( 'dateformat' )); ?></li>

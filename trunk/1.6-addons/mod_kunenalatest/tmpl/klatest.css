@@ -20,7 +20,7 @@ div.klatest ul li {
 }
 #klatest-items li.klatest-item {
 	list-style: none;
-	margin: 0;
+	margin: 5px 0;
 	padding: 0 0 3px;
 	clear: both;
 }
@@ -39,10 +39,9 @@ li.klatest-subject a {
 li.klatest-avatar {
 	float:left;
 	display: block;
+	margin-right: 10px;
 }
 li.klatest-avatar img {
-	height: 36px;
-	width: 36px;
 	margin: 3px 5px 3px 0;
 	border: 1px solid #CCCCCC;
 	padding: 1px;
@@ -56,4 +55,8 @@ p#klatest-more {
 	margin: 0;
 	padding: 0;
 	clear: both;
+}
+ul.klatest-itemdetails li.klatest-author,
+ul.klatest-itemdetails li.klatest-posttime {
+	display:inline;
 }

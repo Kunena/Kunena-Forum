@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.0
 
+24-Jun-2010 Matias
+# [#20081] Get date format from configuration option
+
 23-Jun-2010 Matias
 # [#20081] Better detection for K1.6
 # [#20081] Fix Zend warnings

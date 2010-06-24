@@ -37,7 +37,7 @@ Kunena 1.6.0-ALPHA3
 24-June-2010 Matias
 # [#19288] Minor fix in CKunenaDateformat class for KunenaLatest module
 # [#19288] Fix error during saving attachments: cannot move file
-+ [#21161] Add new [attachment] BBCode (sequential order and id supported)
++ [#21161] Add new [attachment] BBCode (sequential order, id and filename supported)
 # [#19288] A few small fixes: # comments in PHP, trim message etc
 
 23-June-2010 Matias

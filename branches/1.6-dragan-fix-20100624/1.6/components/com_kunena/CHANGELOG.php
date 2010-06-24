@@ -39,6 +39,7 @@ Kunena 1.6.0-ALPHA3
 ^ [#19288] Removed deprecated configuration for enable rules and help page
 + [#19288] Added serbian languages for installation
 + [#19288] Set keywords for serbian language files
+# [#19288] Fixed two problems with resize image in [img] tag
 
 24-June-2010 Matias
 # [#19288] Minor fix in CKunenaDateformat class for KunenaLatest module

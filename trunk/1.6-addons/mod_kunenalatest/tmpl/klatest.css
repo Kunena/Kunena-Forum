@@ -60,3 +60,7 @@ ul.klatest-itemdetails li.klatest-author,
 ul.klatest-itemdetails li.klatest-posttime {
 	display:inline;
 }
+ul.klatest-preview-content li {
+	margin-bottom: 0 !important;
+	display: block;
+}

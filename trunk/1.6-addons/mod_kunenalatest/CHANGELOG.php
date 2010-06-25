@@ -32,6 +32,7 @@ KunenaLatest 1.0
 
 25-Jun-2010 Xillibit
 # [#20081] Fix issues on topic icons and remove all contants depencies
+# [#20081] Sow first part of content and add configuration settings for this
 
 24-Jun-2010 Severdia
 ^ [#20081] Vertical position change, new CSS

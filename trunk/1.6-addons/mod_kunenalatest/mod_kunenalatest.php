@@ -28,10 +28,11 @@ class modKunenaLatest
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.image.class.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
+		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
 
 		// Load topic icons
 		$this->topic_emoticons = array ();
-    	$this->topic_emoticons [0] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-default.png';
+    	$this->topic_emoticons [0] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-default.gif';
     	$this->topic_emoticons [1] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-exclamation.png';
     	$this->topic_emoticons [2] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-question.png';
     	$this->topic_emoticons [3] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-arrow.png';

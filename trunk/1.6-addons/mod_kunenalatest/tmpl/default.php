@@ -65,6 +65,9 @@ if (is_array ( $this->klistpost )) {
 		<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $item->catid, $item->catname ); ?></li>
 		<li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_LAST_POST_BY' ) .' '. CKunenaLink::GetProfileLink ( $item->userid, $item->name ); ?></li>
 		<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo CKunenaTimeformat::showDate($item->lasttime, $this->params->get ( 'dateformat' )); ?></li>
+		<?php if ($this->params->get ( 'sh_firstcontentcharacter' )) : ?>
+    		<li class="klatest-preview-content"><?php echo substr(KunenaParser::stripBBCode($item->message), '0', $this->params->get ( 'lengthcontentcharacters' )); ?></li>
+    	<?php endif; ?>
 	</ul>
 </li>
 <?php

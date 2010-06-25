@@ -25,21 +25,20 @@ $klatest = new modKunenaLatest($params);
 class modKunenaLatest
 {
 	public function __construct($params) {
-		require_once (KUNENA_PATH . DS . 'class.kunena.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.image.class.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 
 		// Load topic icons
-		$topic_emoticons = array ();
-		$topic_emoticons [0] = KUNENA_URLICONSPATH . 'topic-default.gif';
-		$topic_emoticons [1] = KUNENA_URLICONSPATH . 'topic-exclamation.png';
-		$topic_emoticons [2] = KUNENA_URLICONSPATH . 'topic-question.png';
-		$topic_emoticons [3] = KUNENA_URLICONSPATH . 'topic-arrow.png';
-		$topic_emoticons [4] = KUNENA_URLICONSPATH . 'topic-love.png';
-		$topic_emoticons [5] = KUNENA_URLICONSPATH . 'topic-grin.gif';
-		$topic_emoticons [6] = KUNENA_URLICONSPATH . 'topic-shock.gif';
-		$topic_emoticons [7] = KUNENA_URLICONSPATH . 'topic-smile.gif';
+		$this->topic_emoticons = array ();
+    	$this->topic_emoticons [0] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-default.png';
+    	$this->topic_emoticons [1] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-exclamation.png';
+    	$this->topic_emoticons [2] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-question.png';
+    	$this->topic_emoticons [3] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-arrow.png';
+    	$this->topic_emoticons [4] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-love.png';
+    	$this->topic_emoticons [5] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-grin.png';
+    	$this->topic_emoticons [6] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-shock.png';
+    	$this->topic_emoticons [7] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-smile.png';
 
 		// Include the kunenalatest functions only once
 		require_once (dirname ( __FILE__ ) . '/helper.php');

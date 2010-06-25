@@ -49,15 +49,15 @@ if (is_array ( $this->klistpost )) {
 			if ($this->params->get ( 'sh_favorite' )) {
 				if ($item->favcount) {
 					if ($item->myfavorite) {
-						echo '<img class="favoritestar" src="' . KUNENA_URLICONSPATH . 'favoritestar.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
+						echo '<img class="favoritestar" src="' . JURI::root () . 'components/com_kunena/template/default/images/icons/favoritestar.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
 					} else {
-						echo '<img class="favoritestar-grey" src="' . KUNENA_URLICONSPATH . 'favoritestar-grey.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
+						echo '<img class="favoritestar-grey" src="' . JURI::root () . 'components/com_kunena/template/default/images/icons/favoritestar-grey.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
 					}
 				}
 			}
 			if ($this->params->get ( 'sh_locked' )) {
 				if ($item->locked) {
-					echo '<img src="' . KUNENA_URLICONSPATH . 'lock_sm.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_GEN_LOCKED_TOPIC' ) . '" />';
+					echo '<img src="' . JURI::root () . 'components/com_kunena/template/default/images/icons/lock_xsm.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_GEN_LOCKED_TOPIC' ) . '" />';
 				}
 			}
 			?>

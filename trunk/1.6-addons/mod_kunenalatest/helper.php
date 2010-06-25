@@ -41,7 +41,8 @@ class modKunenaLatestHelper {
 		KunenaFactory::getSession ( true );
 		$model = modKunenaLatestHelper::getModel ();
 		$model->threads_per_page = $params->get ( 'nbpost' );
-		//if ( !empty( $params->get( 'category_id' ) )) $model->config->latestcategory = $params->get( 'category_id' );
+		$model->latestcategory = $params->get( 'category_id' );
+	   	$model->latestcategory_in = $params->get( 'sh_category_id_in' );
 		$model->getLatest ();
 
 		$result = array ();

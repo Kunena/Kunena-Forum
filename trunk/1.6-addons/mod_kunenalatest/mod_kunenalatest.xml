@@ -28,6 +28,10 @@
 
 	<params addpath="/modules/mod_kunenalatest/elements">
 		<param name="category_id" type="kunenacats" default="0" label="MOD_KUNENALATEST_PARAM_CAT_IDS" description="MOD_KUNENALATEST_PARAM_CAT_IDS_DESC"  multiple="true" size="5" />
+	   <param name="sh_category_id_in" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_CAT_IDS_IN" description="MOD_KUNENALATEST_PARAM_CAT_IDS_IN_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_CAT_IDS_IN_IN</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_CAT_IDS__NOT_IN</option>
+		</param>
 		<param name="nbpost" type="text" default="5" label="MOD_KUNENALATEST_PARAM_NUMBERPOSTS" description="MOD_KUNENALATEST_PARAM_NUMBERPOSTS_DESC" />
 		<param name="titlelength" type="text" default="50" label="MOD_KUNENALATEST_PARAM_TITLELENGTH" description="MOD_KUNENALATEST_PARAM_TITLELENGTH_DESC" />
 		<param name="messagelength" type="text" default="150" label="MOD_KUNENALATEST_PARAM_MESSAGELENGTH" description="MOD_KUNENALATEST_PARAM_MESSAGELENGTH_DESC" />

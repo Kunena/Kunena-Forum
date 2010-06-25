@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.0
 
+25-Jun-2010 Xillibit
+# [#20081] Fix issues on topic icons and remove all contants depencies
+
 24-Jun-2010 Severdia
 ^ [#20081] Vertical position change, new CSS
 ^ [#20081] Languages fixes
@@ -43,6 +46,10 @@ KunenaLatest 1.0
 # [#20081] Fix Zend warnings
 ^ [#20081] Cleanup files
 # [#20081] Fix date to use CKunenaTimeformat
+
+19-May-2010 Xillibit
+# [#20081] Set configuration setting to choose between categories in or not in
+# [#20081] Fix issue after changes which doesn't take care of categories selected
 
 18-May-2010 Xillibit
 # [#20081] Leverage directly the CKunenaLatestX instead to have a copy of the class

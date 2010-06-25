@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA3
 
 25-June-2010 Matias
 # [#20071] KunenaRoute: Fix a small bug in index highlighting
+^ [#15886] Merged revision 2824 from /branches/1.6-xillibit-fixes-20100623
 
 24-June-2010 Matias
 # [#19288] Minor fix in CKunenaDateformat class for KunenaLatest module

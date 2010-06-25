@@ -37,6 +37,7 @@ Kunena 1.6.0-ALPHA3
 25-June-2010 Xillibit
 # [#19288] Make odering categories in backend with numbers like joomla articles
 # [#19288] Fix undefined variable catinfo in libraries/integration/jomsocial/activity.php with jfirephp enabled and when reply topic or new thread
+# [#19288] Make odering categories in backend with numbers like joomla articles (Part 2)
 
 23-June-2010 Xillibit
 # [#19288] Update french translation in backend and frontend

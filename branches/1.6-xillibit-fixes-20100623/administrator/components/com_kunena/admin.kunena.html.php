@@ -674,11 +674,18 @@ table.kadmin-stat caption {
 			echo $row->id;
 			?></td>
 		<?php if (! $row->category): ?>
-		<td colspan="6" align="center"><?php echo JText::_('COM_KUNENA_SECTION') ?>
-			<input type="hidden" name="order[]" size="5" value="<?php echo $row->ordering; ?>" class="text_area" style="text-align: center" />
+		<td align="center">
+			<span><?php echo $pageNav->orderUpIcon ( $i, isset ( $children [$row->parent] [$row->location - 1] ), 'orderup', 'Move Up', 1 );
+			?></span> <span><?php
+			echo $pageNav->orderDownIcon ( $i, $n, isset ( $children [$row->parent] [$row->location + 1] ), 'orderdown', 'Move Down', 1 );
+			?></span>
+			<input type="text" name="order[]" size="5" value="<?php echo $row->ordering; ?>" class="text_area" style="text-align: center" />
+		</td>
+		<td colspan="5 align="center"><?php echo JText::_('COM_KUNENA_SECTION') ?>
 		</td>
 		<?php else: ?>
-		<td align="center"><?php echo $pageNav->orderUpIcon ( $i, isset ( $children [$row->parent] [$row->location - 1] ), 'orderup', 'Move Up', 1 );
+
+		<td align="center"><span><?php echo $pageNav->orderUpIcon ( $i, isset ( $children [$row->parent] [$row->location - 1] ), 'orderup', 'Move Up', 1 );
 			?></span> <span><?php
 			echo $pageNav->orderDownIcon ( $i, $n, isset ( $children [$row->parent] [$row->location + 1] ), 'orderdown', 'Move Down', 1 );
 			?></span>

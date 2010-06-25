@@ -37,7 +37,6 @@ Kunena 1.6.0-ALPHA3
 25-June-2010 Xillibit
 + [#19288] Add kunena_upgrade.xml to check latest kunena version
 # [#19288] Make odering categories in backend with numbers like joomla articles
-# [#19288] Fix undefined variable catinfo in libraries/integration/jomsocial/activity.php with jfirephp enabled and when reply topic or new thread
 
 25-June-2010 Matias
 # [#20071] KunenaRoute: Fix a small bug in index highlighting
@@ -48,6 +47,7 @@ Kunena 1.6.0-ALPHA3
 + [#21161] Add possibility to insert attachment BBCode into message
 ^ [#19448] Move code out of template: Attachments
 # [#19288] Fix some small issues in category configuration
+# [#19288] Fix undefined variable catinfo in libraries/integration/jomsocial/activity.php (thanks Xillibit)
 
 24-June-2010 @quila
 # [#19288] Untranslated "Delete" in multiattachment

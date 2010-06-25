@@ -40,6 +40,8 @@
 			<language tag="en-GB">en-GB.com_kunena.install.ini</language>
 			<language tag="fr-FR">fr-FR.com_kunena.install.ini</language>
 			<language tag="fi-FI">fi-FI.com_kunena.install.ini</language>
+			<language tag="sr-RS">sr-RS.com_kunena.install.ini</language>
+			<language tag="sr-YU">sr-YU.com_kunena.install.ini</language>
 		</languages>
 	</administration>
 	<params />

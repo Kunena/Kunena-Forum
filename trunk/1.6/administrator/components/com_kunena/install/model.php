@@ -386,6 +386,7 @@ class KunenaModelInstall extends JModel {
 
 		// Allow queries to fail
 		$this->db->debug(0);
+		$results = array();
 		foreach ($xml->install[0] as $action) {
 			$results [] = $this->processUpgradeXMLNode($action);
 		}
@@ -405,6 +406,7 @@ class KunenaModelInstall extends JModel {
 
 		// Allow queries to fail
 		$this->db->debug(0);
+		$results = array();
 		if ($curversion->id) {
 			foreach ($xml->upgrade[0] as $version) {
 				if ($version['version'] == '@'.'kunenaversion'.'@') {

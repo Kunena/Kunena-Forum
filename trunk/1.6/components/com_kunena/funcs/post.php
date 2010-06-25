@@ -191,11 +191,14 @@ class CKunenaPost {
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
 		//$attachments->assign ( $id );
-		$fileinfos = $attachments->multiupload ( $id );
+		$fileinfos = $attachments->multiupload ( $id, $fields ['message'] );
 		foreach ( $fileinfos as $fileinfo ) {
 			if (! $fileinfo ['status'])
 				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
 		}
+		// TODO: find better way to do this:
+		$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$id}" );
+		$this->_db->query ();
 
 		$message->emailToSubscribers($LastPostUrl, $this->config->allowsubscriptions && ! $holdPost, $this->config->mailmod || $holdPost, $this->config->mailadmin || $holdPost);
 
@@ -431,11 +434,14 @@ class CKunenaPost {
 		}
 
 		//$attachments->assign ( $this->id );
-		$fileinfos = $attachments->multiupload ( $this->id );
+		$fileinfos = $attachments->multiupload ( $this->id, $fields ['message'] );
 		foreach ( $fileinfos as $fileinfo ) {
 			if (! $fileinfo ['status'])
 				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
 		}
+		// TODO: find better way to do this (not again!):
+		$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$this->id}" );
+		$this->_db->query ();
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page, $this->catid ) );

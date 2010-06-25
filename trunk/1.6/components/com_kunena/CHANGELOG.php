@@ -40,6 +40,7 @@ Kunena 1.6.0-ALPHA3
 ^ [#15886] Merged revisions 2830-2834 from /branches/1.6-dragan-fix-20100624
 + [#16390] Enable Serbian languages during installation process
 # [#19288] Fix undefined variables during installation
++ [#21161] Insert attachment BBCode into message when uploading new attachment
 
 24-June-2010 @quila
 # [#19288] Untranslated "Delete" in multiattachment

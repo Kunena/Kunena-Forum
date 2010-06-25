@@ -33,7 +33,7 @@ class CKunenaAttachments {
 		return $instance;
 	}
 
-	function upload($mesid=0, $key='kattachment', $ajax=true) {
+	function upload($mesid=0, $key='kattachment', $ajax=true, &$message=null) {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.upload.class.php');
 		$path = KUNENA_PATH_UPLOADED . DS . $this->_my->id;
 		$upload = new CKunenaUpload();
@@ -45,6 +45,7 @@ class CKunenaAttachments {
 			if(JDEBUG == 1 && defined('JFIREPHP')){
 				FB::log('Kunena save attachment: ' . $fileinfo['name']);
 			}
+			// FIXME: Warning raised, no MIME in other than images!!!
 			$this->_db->setQuery ( "INSERT INTO #__kunena_attachments (mesid, userid, hash, size, folder, filetype, filename) values (" .
 				(int)$mesid . "," . (int)$this->_my->id . "," . $this->_db->quote ( $fileinfo['hash'] ) . "," .
 				$this->_db->quote ( $fileinfo['size'] ) . "," . $this->_db->quote ( $folder ) . "," . $this->_db->quote ( $fileinfo['mime'] ) . "," .
@@ -59,16 +60,27 @@ class CKunenaAttachments {
 		if ($this->isImage($fileinfo['mime']))
 			CKunenaImageHelper::version($path . DS . $fileinfo['name'], $path .DS. 'thumb', $fileinfo['name'], $this->_config->thumbwidth, $this->_config->thumbheight, intval($this->_config->imagequality));
 
-		if(JDEBUG == 1 && defined('JFIREPHP')){
+			// Fix attachments names inside message
+		$found = preg_match('/\D*(\d)+/', $key, $matches);
+		if (!empty($message) && $found) {
+			$intkey = $matches[1];
+			if (!$fileinfo['error']) {
+				$message = preg_replace('/\[attachment\:'.$intkey.'\].*?\[\/attachment\]/u', '[attachment]'.$fileinfo['name'].'[/attachment]', $message);
+			} else {
+				$message = preg_replace('/\[attachment\:'.$intkey.'\](.*?)\[\/attachment\]/u', '[attachment]\\1[/attachment]', $message);
+			}
+		}
+				if(JDEBUG == 1 && defined('JFIREPHP')){
 			FB::log('Kunena save attachment ready');
 		}
+
 		return $fileinfo;
 	}
 
-	function multiupload($mesid=0) {
+	function multiupload($mesid=0, &$message=null) {
 		$fileinfo = array();
 		foreach ($_FILES as $key=>$file) {
-			if ($file['error'] != UPLOAD_ERR_NO_FILE) $fileinfo[] = $this->upload($mesid, $key, false);
+			if ($file['error'] != UPLOAD_ERR_NO_FILE) $fileinfo[] = $this->upload($mesid, $key, false, $message);
 		}
 		return $fileinfo;
 	}

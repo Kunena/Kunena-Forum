@@ -554,11 +554,11 @@ function newAttachment() {
 	kattachment.store('nextid',id+1);
 	var file = kattachment.clone().inject(kattachment,'before').set('id','kattachment'+id).removeProperty('style');
 	file.getElement('input').set('name', 'kattachment'+id).removeProperty('style');
+	file.getElement('span').set('text', id+'. ');
 	file.addEvent('change', function(el) {
 		this.removeEvents('change');
 		this.getElement('a').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
-		// kbbcode.replaceSelection('[attachment]'+ id +'[/attachment]');
-		// $('attach_list').set('text', id+1+'.');
+		kbbcode.replaceSelection('[attachment:'+ id +']'+ file.getElement('input').get('value') +'[/attachment]');
 		newAttachment();
 	});
 }

@@ -216,6 +216,7 @@ abstract class KunenaRoute {
 		foreach ( $item->query as $var => $value ) {
 			if (!isset ( $query [$var] ) || $value != $query [$var]) {
 				if ($catid && $var=='func') continue;
+				if ($var=='catid' && empty($value)) continue;
 				return false;
 			} else {
 				$hits++;

@@ -34,12 +34,19 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+25-June-2010 Matias
+# [#20071] KunenaRoute: Fix a small bug in index highlighting
+
 24-June-2010 Matias
 # [#19288] Minor fix in CKunenaDateformat class for KunenaLatest module
 # [#19288] Fix error during saving attachments: cannot move file
 + [#21161] Add new [attachment] BBCode (sequential order, id and filename supported)
 # [#19288] A few small fixes: # comments in PHP, trim message etc
 + [#16390] Add language files: Finnish translation for the installer
+
+23-June-2010 Xillibit
+# [#19288] Update french translation in backend and frontend
+# [#19288] Check that the file exist template.xml and if don't exist abort the installation of template
 
 23-June-2010 Matias
 ^ [#15886] Merged revisions 2810-2817 from /branches/1.6-xillibit-fixes-20100620

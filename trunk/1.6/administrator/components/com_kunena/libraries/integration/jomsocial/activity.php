@@ -29,7 +29,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		CUserPoints::assignPoint ( 'com_kunena.thread.new' );
 
 		// Check for permisions of the current category - activity only if public or registered
-		if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1) {
+		if (!empty($catinfo) && ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1)) {
 			if ($this->_config->js_actstr_integration) {
 				//activity stream  - new post
 				$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get('catid'), $message->get('thread'), 1 );
@@ -66,7 +66,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		CUserPoints::assignPoint ( 'com_kunena.thread.reply' );
 
 		// Check for permisions of the current category - activity only if public or registered
-		if ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1 && $this->_config->js_actstr_integration) {
+		if (!empty($catinfo) && ($catinfo->pub_access == 0 || $catinfo->pub_access == - 1 && $this->_config->js_actstr_integration)) {
 			if ($this->_config->js_actstr_integration) {
 				//activity stream - reply post
 				$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get('catid'), $message->get('thread'), 1 );

@@ -299,6 +299,11 @@ switch ($task) {
 
 		break;
 
+	case "saveorder" :
+		saveorder();
+
+		break;
+
 	case 'recount' :
 		CKunenaTools::reCountUserPosts ();
 		CKunenaTools::reCountBoards ();
@@ -897,29 +902,43 @@ function showAdministration($option) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
 
+	$filter_order		= $kunena_app->getUserStateFromRequest( $option.'filter_order',		'filter_order',		'ordering', 'cmd' );
+	$filter_order_Dir	= $kunena_app->getUserStateFromRequest( $option.'filter_order_Dir',	'filter_order_Dir',	'asc',			'word' );
+	if ($filter_order_Dir != 'asc') $filter_order_Dir = 'desc';
 	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$levellimit = $kunena_app->getUserStateFromRequest ( "{$option}.limit", 'levellimit', 10, 'int' );
+
+	$order = '';
+
+	if ($filter_order == 'ordering') {
+		$order = ' ORDER BY a.ordering '. $filter_order_Dir;
+	} else if ($filter_order == 'name') {
+		$order = ' ORDER BY a.name '. $filter_order_Dir ;
+	} else if ($filter_order == 'id') {
+		$order = ' ORDER BY a.id '. $filter_order_Dir ;
+	}
 
 	jimport ( 'joomla.version' );
 	$jversion = new JVersion ();
 	if ($jversion->RELEASE == 1.5) {
 		// Joomla 1.5
-		$kunena_db->setQuery ( "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
+		 $query= "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
 			FROM #__kunena_categories AS a
 			LEFT JOIN #__users AS u ON u.id = a.checked_out
 			LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
 			LEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access
-			ORDER BY a.ordering, a.name" );
+			".$order;
 	} else {
 		// Joomla 1.6
-		$kunena_db->setQuery ( "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.title AS groupname, h.title AS admingroup
+		$query = "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.title AS groupname, h.title AS admingroup
 			FROM #__kunena_categories AS a
 			LEFT JOIN #__users AS u ON u.id = a.checked_out
 			LEFT JOIN #__usergroups AS g ON g.id = a.pub_access
 			LEFT JOIN #__usergroups AS h ON h.id = a.admin_access
-			ORDER BY a.ordering, a.name" );
+			".$order;
 	}
+	$kunena_db->setQuery($query);
 	$rows = $kunena_db->loadObjectList ('id');
 	KunenaError::checkDatabaseError();
 
@@ -964,7 +983,39 @@ function showAdministration($option) {
 	 *@end
 	 */
 
-	html_Kunena::showAdministration ( $list, $children, $pageNav, $option );
+	// table ordering
+	$lists['order_Dir']	= $filter_order_Dir;
+	$lists['order']		= $filter_order;
+
+	html_Kunena::showAdministration ( $list, $children, $pageNav, $option, $lists );
+}
+
+function saveorder() {
+	$kunena_app = & JFactory::getApplication ();
+	$kunena_db	= & JFactory::getDBO();
+
+	$rettask	= JRequest::getVar( 'return', '', 'post', 'cmd' );
+	$order		= JRequest::getVar( 'order', array (0), 'post', 'array' );
+	$cid		= JRequest::getVar( 'cid', array(0), 'post', 'array' );
+	$total		= count($cid);
+
+	$query = "SELECT `id`, `ordering` FROM `#__kunena_categories`;";
+	$kunena_db->setQuery($query);
+	$row = $kunena_db->loadObjectList ();
+	KunenaError::checkDatabaseError();
+
+	for ($i = 0; $i < $total; $i ++) {
+		if ($row[$i]->ordering != $order[$i]) {
+			$query = "UPDATE `#__kunena_categories` SET ordering='$order[$i]' WHERE `id`='$cid[$i]';";
+			$kunena_db->setQuery($query);
+			echo $query;
+			$kunena_db->Query();
+			KunenaError::checkDatabaseError();
+		}
+	}
+
+	$msg = JText::_('COM_KUNENA_NEW_ORDERING_SAVED');
+	$kunena_app->redirect('index.php?option=com_kunena&task='.$rettask, $msg);
 }
 
 //---------------------------------------

@@ -1403,9 +1403,7 @@ function showConfig($option) {
 	$lists ['editmarkup'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_editmarkup', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->editmarkup );
 	$lists ['showkarma'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showkarma', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showkarma );
 	$lists ['enablepdf'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablepdf', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablepdf );
-	$lists ['enablerulespage'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablerulespage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerulespage );
 	$lists ['rules_infb'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_rules_infb', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rules_infb );
-	$lists ['enablehelppage'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enablehelppage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablehelppage );
 	$lists ['help_infb'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_help_infb', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->help_infb );
 	$lists ['enableforumjump'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_enableforumjump', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enableforumjump );
 	$lists ['userlist_online'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_userlist_online', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_online );
@@ -1555,19 +1553,6 @@ function saveConfig($option) {
 				$postvalue = implode(',',$postvalue);
 			}
 			$postname = JString::strtolower ( JString::substr ( $postsetting, 4 ) );
-
-			if ($postname == 'enablerulespage') {
-				$postvalue = intval ( $postvalue );
-				$kunena_db->setQuery ( "UPDATE #__menu SET published={$postvalue} WHERE menutype='kunenamenu' AND link='index.php?option=com_kunena&func=rules'" );
-				$kunena_db->query ();
-				KunenaError::checkDatabaseError();
-			}
-			if ($postname == 'enablehelppage') {
-				$postvalue = intval ( $postvalue );
-				$kunena_db->setQuery ( "UPDATE #__menu SET published={$postvalue} WHERE menutype='kunenamenu' AND link='index.php?option=com_kunena&func=help'" );
-				$kunena_db->query ();
-				KunenaError::checkDatabaseError();
-			}
 
 			// No matter what got posted, we only store config parameters defined
 			// in the config class. Anything else posted gets ignored.

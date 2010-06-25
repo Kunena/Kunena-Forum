@@ -37,6 +37,14 @@ Kunena 1.6.0-ALPHA3
 25-June-2010 Matias
 # [#20071] KunenaRoute: Fix a small bug in index highlighting
 ^ [#15886] Merged revision 2824 from /branches/1.6-xillibit-fixes-20100623
+^ [#15886] Merged revisions 2830-2834 from /branches/1.6-dragan-fix-20100624
+
+24-June-2010 @quila
+# [#19288] Untranslated "Delete" in multiattachment
+^ [#19288] Removed deprecated configuration for enable rules and help page
++ [#19288] Added serbian languages for installation
++ [#19288] Set keywords for serbian language files
+# [#19288] Fixed two problems with resize image in [img] tag
 
 24-June-2010 Matias
 # [#19288] Minor fix in CKunenaDateformat class for KunenaLatest module

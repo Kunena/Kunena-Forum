@@ -18,9 +18,6 @@ $kunena_poll =& CKunenaPolls::getInstance();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
 <tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-	<?php //if ($kunena_config->enablehelppage) {
-	// TODO: Help link need to point by default to a bbcode help page on kunena wiki
-	?>
 	<!--<td class="kleftcolumn" valign="top"><strong><?php
 	echo CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&amp;func=help', JText::_('COM_KUNENA_BOARDCODE') , NULL, 'follow', NULL, 'boardcode', 'target=\'_new\'' );
 	?></strong>:

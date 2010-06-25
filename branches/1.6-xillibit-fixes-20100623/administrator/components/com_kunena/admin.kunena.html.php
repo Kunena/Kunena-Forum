@@ -570,7 +570,8 @@ table.kadmin-stat caption {
 //			END TEMPLATE MANAGER
 //******************************************/
 
-	function showAdministration($rows, $children, $pageNav, $option) {
+	function showAdministration($rows, $children, $pageNav, $option, $lists) {
+		$ordering = ($lists['order'] == 'a.name' || $lists['order'] == 'a.ordering' || $lists['order'] == 'a.id');
 		?>
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
@@ -589,11 +590,16 @@ table.kadmin-stat caption {
 		?>);" /></th>
 
 		<th class="title"><?php
-		echo JText::_('COM_KUNENA_CATEGORY');
+			echo JHTML::_('grid.sort',   JText::_('COM_KUNENA_CATEGORY'), 'a.name', @$lists['order_Dir'], @$lists['order'] );
 		?></th>
 
 		<th><small><?php
-		echo JText::_('COM_KUNENA_CATID');
+		 echo JHTML::_('grid.sort',   JText::_('COM_KUNENA_CATID'), 'a.id', @$lists['order_Dir'], @$lists['order'] );
+		?></small></th>
+
+		<th><small><?php
+			echo JHTML::_('grid.sort',   JText::_('COM_KUNENA_REORDER'), 'a.ordering', @$lists['order_Dir'], @$lists['order'] );
+			if ($ordering) echo JHTML::_('grid.order',  $rows );
 		?></small></th>
 
 		<th><small><?php
@@ -630,10 +636,6 @@ table.kadmin-stat caption {
 
 		<th><small><?php
 		echo JText::_('COM_KUNENA_CHECKEDOUT');
-		?></small></th>
-
-		<th colspan="2"><small><?php
-		echo JText::_('COM_KUNENA_REORDER');
 		?></small></th>
 	</tr>
 	<?php
@@ -672,8 +674,16 @@ table.kadmin-stat caption {
 			echo $row->id;
 			?></td>
 		<?php if (! $row->category): ?>
-		<td colspan="5" align="center"><?php echo JText::_('COM_KUNENA_SECTION') ?></td>
+		<td colspan="6" align="center"><?php echo JText::_('COM_KUNENA_SECTION') ?>
+			<input type="hidden" name="order[]" size="5" value="<?php echo $row->ordering; ?>" class="text_area" style="text-align: center" />
+		</td>
 		<?php else: ?>
+		<td align="center"><?php echo $pageNav->orderUpIcon ( $i, isset ( $children [$row->parent] [$row->location - 1] ), 'orderup', 'Move Up', 1 );
+			?></span> <span><?php
+			echo $pageNav->orderDownIcon ( $i, $n, isset ( $children [$row->parent] [$row->location + 1] ), 'orderdown', 'Move Down', 1 );
+			?></span>
+			<input type="text" name="order[]" size="5" value="<?php echo $row->ordering; ?>" class="text_area" style="text-align: center" />
+		</td>
 		<td align="center"><?php
 			echo ($row->locked == 1 ? "<img src=\"images/tick.png\">" : "<img src=\"images/publish_x.png\">");
 			?>
@@ -738,12 +748,6 @@ table.kadmin-stat caption {
 			echo $row->editor;
 			?>&nbsp;
 		</td>
-		<td class="order" ><span><?php
-			echo $pageNav->orderUpIcon ( $i, isset ( $children [$row->parent] [$row->location - 1] ), 'orderup', 'Move Up', 1 );
-			?></span> <span><?php
-			echo $pageNav->orderDownIcon ( $i, $n, isset ( $children [$row->parent] [$row->location + 1] ), 'orderdown', 'Move Down', 1 );
-			?></span></td>
-
 		<?php
 			$k = 1 - $k;
 		}
@@ -760,9 +764,12 @@ table.kadmin-stat caption {
 	</tr>
 </table>
 
+<input type="hidden" name="return" value="showAdministration" />
+<input type="hidden" name="filter_order" value="<?php echo $lists['order']; ?>" />
+<input type="hidden" name="filter_order_Dir" value="<?php echo $lists['order_Dir']; ?>" />
 <input type="hidden" name="option" value="<?php
 		echo $option;
-		?>"> <input type="hidden" name="task" value="showAdministration"> <input
+		?>"> <input type="hidden" name="task" value=""> <input
 	type="hidden" name="boxchecked" value="0"> <?php
 		echo '<input type = "hidden" name = "limitstart" value = "0">';
 		?>

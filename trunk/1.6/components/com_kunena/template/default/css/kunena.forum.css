@@ -1622,7 +1622,8 @@ PX		EM			PCT			PT
 	border:1px dotted #BFC3C6;
 	display:block;
 }
-#Kunena ul.kfile-attach {
+#Kunena ul.kfile-attach,
+#Kunena ul.kfile-attach-editing {
 	margin:0 0 8px 0;
 	padding:0;
 }
@@ -1641,21 +1642,17 @@ PX		EM			PCT			PT
 	vertical-align:top;
 	font-size: .833em;
 }
-#Kunena ul.kfile-attach-editing {
-	margin:0 0 8px 0;
-	padding:0;
+#Kunena ul.kfile-attach-editing li span {
+	vertical-align:top;
+	padding-left: 2px;
 }
 #Kunena ul.kfile-attach-editing li {
 	list-style-type: none;
 	margin-top: 10px;
 	line-height: 32px;	
 }
-#Kunena ul.kfile-attach-editing li span {
-	padding-left: 10px;
-	vertical-align:top;
-	font-size: .833em;
-}
-#Kunena ul.kfile-attach li a img {
+#Kunena ul.kfile-attach li a img,
+#Kunena ul.kfile-attach-editing li a img {
 	max-width: 32px;
 	max-height: 32px;
 	margin-left: 10px;

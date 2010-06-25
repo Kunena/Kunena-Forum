@@ -15,20 +15,20 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div>
 	<div class="kmsgattach">
-	<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
-
-			<ul class="kfile-attach-editing">
-		<?php
-		foreach($this->attachments as $attachment) :
-		?>
-
-			<li>
-				<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo $attachment->id; ?>" /><span><?php echo $attachment->filename.'&nbsp; ('.number_format(($attachment->size)/1024,0,'',',').'KB)'; ?></span>
+		<ul class="kfile-attach-editing">
+		<?php foreach($this->attachments as $attachment) : ?>
+			<li class="kattachment-old">
+				<span>
+					<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo $attachment->id; ?>" />
+					<a href="#" class="kattachment-insert" style="display: none;"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
+				</span>
+				<?php echo $attachment->thumblink; ?>
+				<span>
+					<span class="kfilename"><?php echo $attachment->filename; ?></span>
+					<span><?php echo '('.number_format(($attachment->size)/1024,0,'',',').'KB)'; ?></span>
+				</span>
 			</li>
-		<?php
-		endforeach;
-		?>
-			</ul>
-
+		<?php endforeach; ?>
+		</ul>
 	</div>
 </div>

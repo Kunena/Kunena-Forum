@@ -563,6 +563,14 @@ function newAttachment() {
 	});
 }
 
+function bindAttachments() {
+	var kattachment = $$('.kattachment-old');
+	if (!kattachment) return;
+	kattachment.each(function(el) {
+		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('[attachment]'+ el.getElement('.kfilename').get('text') +'[/attachment]'); return false; } );
+	});
+}
+
 //
 // kInsertVideo()
 //

@@ -400,6 +400,7 @@ $('kbbcode-message').addEvent('change', function(){
 		});
 	}
 
+	bindAttachments();
 	newAttachment();
 	//This is need to retrieve the video provider selected by the user in the dropdownlist
 	$('kvideoprovider').addEvent('change', function() {

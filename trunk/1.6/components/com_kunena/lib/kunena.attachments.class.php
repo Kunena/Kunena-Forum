@@ -120,7 +120,27 @@ class CKunenaAttachments {
 			$attachment->shorttype = $this->isImage($attachment->filetype) ? 'image' : $attachment->filetype;
 			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) continue;
 			if ($attachment->shorttype != 'image' && !$this->_my->id && !$this->_config->showfileforguest) continue;
+			$attachment->shortname = CKunenaTools::shortenFileName($attachment->filename);
 
+			switch (strtolower($attachment->shorttype)){
+				case 'image' :
+					// Check for thumbnail and if available, use for display
+					if (file_exists(JPATH_ROOT.'/'.$attachment->folder.'/thumb/'.$attachment->filename)){
+						$thumb = $attachment->folder.'/thumb/'.$attachment->filename;
+						$imgsize = '';
+					} else {
+						$thumb = $attachment->folder.'/'.$attachment->filename;
+						$imgsize = 'width="'.$this->_config->thumbwidth.'px" height="'.$this->_config->thumbheight.'px"';
+					}
+
+					$img = '<img title="'.$attachment->filename.'" '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
+					$attachment->thumblink = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments'.$attachment->id);
+					break;
+				default :
+					// Filetype without thumbnail or icon support - use default file icon
+					$img = '<img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />';
+					$attachment->thumblink = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'nofollow');
+			}
 			$ret[$attachment->mesid][$attachment->id] = $attachment;
 		}
 		return $ret;

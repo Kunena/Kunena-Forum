@@ -326,8 +326,8 @@ class CKunenaConfig extends CKunenaConfigBase {
     var $checkmimetypes = 1;
 	var $imagemimetypes = 'image/jpeg,image/jpg,image/gif,image/png';
 	var $imagequality = 50;
-	var $thumbheight = 60;
-	var $thumbwidth = 60;
+	var $thumbheight = 32;
+	var $thumbwidth = 32;
 	// New for 1.6: hide profile info when user is deleted from joomla!
 	var $hideuserprofileinfo = 'put_empty';
 	// New for 1.6 -> New integration options

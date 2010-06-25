@@ -3541,8 +3541,7 @@ div#kprofile-stats ul li span.krank-admin {
 
 /* FOOTER
 ----------------------------------------------------------------------------------------------- */
-#Kunena .kcredits {
-	position: relative;
+#Kunena .kcredits {	
 	text-align: center;
 }
 #Kunena .kfooter {
@@ -3940,7 +3939,9 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 #Kunena span.krss {
 	background: url("../images/icons/rss.png") no-repeat left center;
 	width: 24px;
-	height: 24px;
+	height: 24px;	
+}
+#Kunena div.krss-block {
 	float: right;
 }
 #Kunena span.kforummoderated {

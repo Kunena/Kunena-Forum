@@ -148,16 +148,19 @@ $this->k=0;
 			echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS');
 			?></strong></td>
 		<td>
-			<div id="kattachment">
-				<div class="editlinktip hasTip" title="<?php echo  JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED'); ?>::<?php echo '<b>'.$this->config->imagetypes.'</b><br /><b>'.$this->config->filetypes.'</b>'; ?>" >
-				<span id="attach_list"></span><input id="kupload" name="kattachment" type="file" /><a href="#" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_DELETE'); ?></a></div>
+			<div id="kattachment" class="kattachment">
+				<span id="attach_list"></span>
+				<div class="hasTip" title="<?php echo  JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED'); ?>::<?php echo '<b>'.$this->config->imagetypes.'</b><br /><b>'.$this->config->filetypes.'</b>'; ?>" >
+					<input id="kupload" name="kattachment" type="file" />
 				</div>
+				<a href="#" class="kattachment-insert" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
+				<a href="#" class="kattachment-delete" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_DELETE'); ?></a>
+			</div>
 			<div id="kattachmentsnote"></div>
 
 		<?php
 		// Include attachments template if we have any
 		if ( isset ( $this->attachments ) ) {
-//			CKunenaTools::loadTemplate('/view/message.attachments.php');
 			CKunenaTools::loadTemplate('/editor/attachments.php');
 		}
 		?>

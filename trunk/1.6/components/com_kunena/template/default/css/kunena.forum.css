@@ -2828,6 +2828,10 @@ BBCODE BUTTONS
 	background-position:-396px -18px;
 }
 
+#Kunena .kattachment .hasTip {
+	display: inline;
+}
+
 #Kunena #kattachments {
 	line-height:18px;
 }

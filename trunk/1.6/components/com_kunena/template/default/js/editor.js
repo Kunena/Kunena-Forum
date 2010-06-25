@@ -557,8 +557,8 @@ function newAttachment() {
 	file.getElement('span').set('text', id+'. ');
 	file.addEvent('change', function(el) {
 		this.removeEvents('change');
-		this.getElement('a').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
-		kbbcode.replaceSelection('[attachment:'+ id +']'+ file.getElement('input').get('value') +'[/attachment]');
+		this.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('[attachment:'+ id +']'+ file.getElement('input').get('value') +'[/attachment]'); return false; } );
+		this.getElement('.kattachment-delete').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
 		newAttachment();
 	});
 }

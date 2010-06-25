@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+25-June-2010 Xillibit
++ [#19288] Add kunena_upgrade.xml to check latest kunena version
+
 25-June-2010 Matias
 # [#20071] KunenaRoute: Fix a small bug in index highlighting
 ^ [#15886] Merged revision 2824 from /branches/1.6-xillibit-fixes-20100623

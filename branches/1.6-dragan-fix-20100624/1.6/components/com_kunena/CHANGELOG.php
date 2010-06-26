@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+26-June-2010 @quila
+# [#19288] escaped "categories.php" in the template
+
 24-June-2010 @quila
 # [#19288] Untranslated "Delete" in multiattachment
 ^ [#19288] Removed deprecated configuration for enable rules and help page

@@ -36,7 +36,7 @@ global $kunena_icons;
 <div class="k-bt-cvr5">
 <table
 	class="kblocktable<?php
-		echo isset ( $cat->class_sfx ) ? ' kblocktable' . $cat->class_sfx : '';
+		echo isset ( $cat->class_sfx ) ? ' kblocktable' . $this->escape($cat->class_sfx) : '';
 		?>" id="kcat<?php
 		echo $cat->id;
 		?>" >
@@ -44,14 +44,14 @@ global $kunena_icons;
 		<tr>
 			<th colspan="5">
 			<div class="ktitle-cover<?php
-		echo isset ( $cat->class_sfx ) ? ' ktitle-cover' . $cat->class_sfx : '';
+		echo isset ( $cat->class_sfx ) ? ' ktitle-cover' . $this->escape($cat->class_sfx) : '';
 		?> km"><?php
-		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $cat->name ), 'follow', $class = 'ktitle kl' );
+		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $this->escape($cat->name)), 'follow', $class = 'ktitle kl' );
 
 		if ($cat->description != "") {
 			?>
 			<div class="ktitle-desc km"><?php
-			echo KunenaParser::parseBBCode ( $cat->description );
+			echo KunenaParser::parseBBCode ( $this->escape($cat->description ));
 			?>
 			</div>
 			<?php
@@ -78,7 +78,7 @@ global $kunena_icons;
 				?>
 		<tr
 			class="k<?php
-				echo $this->tabclass [$k ^= 1], isset ( $subcat->class_sfx ) ? ' k' . $this->tabclass [$k] . $subcat->class_sfx : '';
+				echo $this->tabclass [$k ^= 1], isset ( $subcat->class_sfx ) ? ' k' . $this->escape($this->tabclass [$k]) . $this->escape($subcat->class_sfx) : '';
 				?>"
 			id="kcat<?php
 				echo $subcat->id?>">
@@ -115,10 +115,10 @@ global $kunena_icons;
 			<td class="td-2 kleft">
 			<div class="kthead-title kl"><?php
 				//new posts available
-				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $subcat->name ) );
+				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $this->escape($subcat->name )) );
 
 				if ($subcat->new && $this->my->id > 0) {
-					echo '<sup class="knewchar">(' . $subcat->new . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
+					echo '<sup class="knewchar">(' . $this->escape($subcat->new) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}
 
 				if ($subcat->locked) {
@@ -136,7 +136,7 @@ global $kunena_icons;
 					?>
 
 			<div class="kthead-desc km"><?php
-					echo $subcat->forumdesc?>
+					echo $this->escape($subcat->forumdesc)?>
 			</div>
 
 			<?php
@@ -197,8 +197,8 @@ else {
 						?>
 
 			<?php
-						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( $childforum->name ), '','', KunenaParser::stripBBCode ( $childforum->description ) );
-						echo '<span class="kchildcount ks">(' . $childforum->numTopics . "/" . $childforum->numPosts . ')</span>';
+						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( $this->escape($childforum->name )), '','', KunenaParser::stripBBCode ( $this->escape($childforum->description )) );
+						echo '<span class="kchildcount ks">(' . $this->escape($childforum->numTopics) . "/" . $this->escape($childforum->numPosts) . ')</span>';
 						echo "</div>";
 					}
 					?>
@@ -217,7 +217,7 @@ else {
 						if ($mod_cnt)
 							echo ', ';
 						$mod_cnt ++;
-						echo CKunenaLink::GetProfileLink ( $mod->userid, ($this->config->username ? $mod->username : $mod->name) );
+						echo CKunenaLink::GetProfileLink ( $mod->userid, ($this->config->username ? $this->escape($mod->username) : $this->escape($mod->name)) );
 					}
 
 					echo '</div>';
@@ -225,7 +225,7 @@ else {
 
 				if (isset ( $this->pending [$subcat->id] )) {
 					echo '<div class="ks kalert">';
-					echo CKunenaLink::GetCategoryReviewListLink ( $subcat->id, $this->pending [$subcat->id] . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'), 'nofollow' );
+					echo CKunenaLink::GetCategoryReviewListLink ( $subcat->id, $this->escape($this->pending [$subcat->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'), 'nofollow' );
 					echo '</div>';
 				}
 				?>
@@ -233,7 +233,7 @@ else {
 
 			<td class="td-3 km kcenter" width="5%"><!-- Number of Topics -->
 			<span class="kcat-topics-number"><?php
-				echo CKunenaTools::formatLargeNumber ( $subcat->numTopics );
+				echo CKunenaTools::formatLargeNumber ( $this->escape($subcat->numTopics) );
 				?>
 			</span> <span class="kcat-topics"> <?php
 				echo JText::_('COM_KUNENA_GEN_TOPICS');
@@ -241,7 +241,7 @@ else {
 
 			<td class="td-4 km kcenter" width="5%"><!-- Number of Topics -->
 			<span class="kcat-replies-number"><?php
-				echo CKunenaTools::formatLargeNumber ( $subcat->numPosts );
+				echo CKunenaTools::formatLargeNumber ( $this->escape($subcat->numPosts) );
 				?>
 			</span> <span class="kcat-replies"> <?php
 				echo JText::_('COM_KUNENA_GEN_REPLIES');
@@ -269,17 +269,17 @@ else {
 					<?php
 					echo JText::_('COM_KUNENA_GEN_LAST_POST');
 					?>: <?php
-					echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, kunena_htmlspecialchars ( $subcat->subject ), $subcat->id_last_msg );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, kunena_htmlspecialchars ( $this->escape($subcat->subject) ), $subcat->id_last_msg );
 					?>
 			</div>
 
 			<div class="klatest-subject-by ks">
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
-					echo CKunenaLink::GetProfileLink ( $subcat->userid, kunena_htmlspecialchars ( $subcat->mname ) );
+					echo CKunenaLink::GetProfileLink ( $subcat->userid, kunena_htmlspecialchars ( $this->escape($subcat->mname) ) );
 					echo ' ';
 					//echo JText::_('COM_KUNENA_GEN_ON');
-					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $subcat->time_last_msg, 'config_post_dateformat' ) . '</span>';
+					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $this->escape($subcat->time_last_msg), 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $this->escape($subcat->time_last_msg), 'config_post_dateformat' ) . '</span>';
 					?>
 			</div>
 			</td>

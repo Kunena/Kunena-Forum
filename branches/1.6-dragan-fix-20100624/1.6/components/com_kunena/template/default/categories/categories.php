@@ -46,7 +46,7 @@ global $kunena_icons;
 			<div class="ktitle-cover<?php
 		echo isset ( $cat->class_sfx ) ? ' ktitle-cover' . $this->escape($cat->class_sfx) : '';
 		?> km"><?php
-		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $this->escape($cat->name)), 'follow', $class = 'ktitle kl' );
+		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, $this->escape($cat->name), 'follow', $class = 'ktitle kl' );
 
 		if ($cat->description != "") {
 			?>
@@ -115,7 +115,7 @@ global $kunena_icons;
 			<td class="td-2 kleft">
 			<div class="kthead-title kl"><?php
 				//new posts available
-				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $this->escape($subcat->name )) );
+				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, $this->escape($subcat->name ) );
 
 				if ($subcat->new && $this->my->id > 0) {
 					echo '<sup class="knewchar">(' . $this->escape($subcat->new) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
@@ -197,7 +197,7 @@ else {
 						?>
 
 			<?php
-						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, kunena_htmlspecialchars ( $this->escape($childforum->name )), '','', KunenaParser::stripBBCode ( $this->escape($childforum->description )) );
+						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, $this->escape($childforum->name), '','', KunenaParser::stripBBCode ( $this->escape($childforum->description )) );
 						echo '<span class="kchildcount ks">(' . $this->escape($childforum->numTopics) . "/" . $this->escape($childforum->numPosts) . ')</span>';
 						echo "</div>";
 					}
@@ -269,14 +269,14 @@ else {
 					<?php
 					echo JText::_('COM_KUNENA_GEN_LAST_POST');
 					?>: <?php
-					echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, kunena_htmlspecialchars ( $this->escape($subcat->subject) ), $subcat->id_last_msg );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, $this->escape($subcat->subject), $subcat->id_last_msg );
 					?>
 			</div>
 
 			<div class="klatest-subject-by ks">
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
-					echo CKunenaLink::GetProfileLink ( $subcat->userid, kunena_htmlspecialchars ( $this->escape($subcat->mname) ) );
+					echo CKunenaLink::GetProfileLink ( $subcat->userid, $this->escape($subcat->mname) );
 					echo ' ';
 					//echo JText::_('COM_KUNENA_GEN_ON');
 					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $this->escape($subcat->time_last_msg), 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $this->escape($subcat->time_last_msg), 'config_post_dateformat' ) . '</span>';

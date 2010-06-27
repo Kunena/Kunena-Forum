@@ -17,11 +17,7 @@ if(!class_exists('plgCommunityMyKunena'))
 	class plgCommunityMyKunena extends CApplications
 	{
 		var $name 		= "MyKunena Application";
-		var $_name		= 'MyKunena';
-		var $_path		= '';
-		var $_user		= '';
-		var $_my		= '';
-		
+		var $_name		= 'MyKunena';		
 		
 		function onProfileDisplay()
 		{	
@@ -29,11 +25,6 @@ if(!class_exists('plgCommunityMyKunena'))
 			
 			$config	= CFactory::getConfig();
 					
-			if( !$config->get('enablegroups') )
-			{
-				return JText::_('PLG_MYKUNENA GROUP DISABLED');	
-			}
-			
 			
 			$uri	= JURI::base();
 	
@@ -150,7 +141,7 @@ if(!class_exists('plgCommunityMyKunena'))
 							?>
 						    <li>
 						        <div class="icon">
-						            <img src="<?php echo plgCommunityMyKunena::getTopicImoticon($item); ?>" alt="" />
+						            <img src="<?php echo plgCommunityMyKunena::getTopicEmoticon($item); ?>" alt="" />
 						        </div>
 						        <div class="content">
 						            <a href="<?php echo $fbURL;?>">
@@ -221,7 +212,7 @@ if(!class_exists('plgCommunityMyKunena'))
 		 * Return path to topic emoticons
 		 * Sadly, for now, we will only return default, emoticons	 
 		 */	 	
-		function getTopicImoticon(&$item) 
+		function getTopicEmoticon(&$item) 
 		{
 			$emoticonPath = '';
 			if( !defined('JB_URLEMOTIONSPATH' )) {

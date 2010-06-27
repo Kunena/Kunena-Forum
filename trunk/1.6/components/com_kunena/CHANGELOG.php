@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA3
 
 27-June-2010 fxstein
 # [#21203] Workaround for IE8 bug to enable size and color selection in bbcode editor
+^ [#20833] Adjusted english language strings for Thank You feature
 
 25-June-2010 Xillibit
 + [#19288] Add kunena_upgrade.xml to check latest kunena version

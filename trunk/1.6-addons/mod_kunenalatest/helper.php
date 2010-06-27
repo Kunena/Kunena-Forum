@@ -43,9 +43,39 @@ class modKunenaLatestHelper {
 		$model->threads_per_page = $params->get ( 'nbpost' );
 		$model->latestcategory = $params->get( 'category_id' );
 	   	$model->latestcategory_in = $params->get( 'sh_category_id_in' );
-		$model->getLatest ();
+
+	   	switch ( $params->get( 'choosemodel' ) ) {
+      		case '0' :
+        		$model->getLatest ();
+      		break;
+      		case '1' :
+        		$model->getNoReplies();
+      		break;
+      		case '2' :
+        		$model->getSubscriptions();
+      		break;
+      		case '3' :
+        		$model->getFavorites();
+      		break;
+      		case '4' :
+       			$model->getOwnTopics();
+      		break;
+      		case '5' :
+        		$model->getDeletedPosts();
+      		break;
+      		case '6' :
+        		$model->getSaidThankYouPosts();
+      		break;
+      		case '7' :
+        		$model->getGotThankYouPosts();
+      		break;
+      		case '8' :
+        		$model->getUserPosts();
+      		break;
+    }
 
 		$result = array ();
+		if ( empty($model->messages) ) echo JText::_('MOD_KUNENALATEST_NO_MESSAGE');
 		foreach ( $model->messages as $message ) {
 			if ($message->parent == 0) {
 				$result [$message->id] = $message;

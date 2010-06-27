@@ -42,6 +42,18 @@
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="choosemodel" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL" description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
+			<option value="0">MOD_KUNENALATEST_SHOW_LATEST</option>
+			<option value="1">MOD_KUNENALATEST_SHOW_NO_REPLIES</option>
+			<option value="2">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>
+			<option value="3">MOD_KUNENALATEST_SHOW_FAVORITES</option>
+			<option value="4">MOD_KUNENALATEST_SHOW_OWN_TOPICS</option>
+			<option value="5">MOD_KUNENALATEST_SHOW_DELETE_POSTS</option>
+			<option value="6">MOD_KUNENALATEST_SHOW_SAID_THANKYOU_POSTS</option>
+			<option value="7">MOD_KUNENALATEST_SHOW_GOT_THANKYOU_POSTS</option>
+			<option value="8">MOD_KUNENALATEST_SHOW_USER_POSTS</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="sh_firstcontentcharacter" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOW_FIRST_CONTENT_CHARACTER" description="MOD_KUNENALATEST_PARAM_FIRST_CONTENT_CHARACTER_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>

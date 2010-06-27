@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="community" method="upgrade">
+	<name>My Kunena Forum Posts</name>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<author>Kunena Team</author>
+	<authorEmail>kunena@kunena.com</authorEmail>
+	<authorUrl>http://www.kunena.com</authorUrl>
+	<copyright>(c) 2009, 2010 Kunena Team, All rights reserved</copyright>
+	<license>GNU/GPL</license>
+	<version>1.6.0-DEV</version>
+	<versionname>Converse</versionname>
+	<build>@kunenaversionbuild@</build>
+	<isapplication>true</isapplication>
+	<isbrowseable>true</isbrowseable>
+	<description>
+	Kunena forum plugin for JomSocial. Updated for Kunena 1.6.
+	</description>
+	<languages>
+	    <language tag="en-GB">en-GB.mykunena.ini</language>
+	</languages>
+	<files>
+		<file plugin="mykunena">mykunena.php</file>
+		<folder>mykunena</folder>
+	</files>
+	
+	<menuitem>
+		<menu label="Groups" position="toolbar">
+			<link label="Groups">task=groups</link>
+		</menu>
+	</menuitem>
+	
+	<params>
+		<param name="count" type="text" default="5" label="Post count" description="How many forum posts to display" />	
+		<param name="coreapp" type="list" default="0" label="Core Application" description="Causes this application to not appearin the users applications list but it will allow this application to appear in the user profile automatically if selected.">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="cache" type="list" default="1" label="Caching" description="Select whether to cache the content of this plugin">
+			<option value="1">Use global</option>
+			<option value="0">No</option>
+		</param>
+	</params>
+</install>

@@ -34,6 +34,8 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+# [#21203] Workaround for IE8 bug to enable size and color selection in bbcode editor
+
 25-June-2010 Xillibit
 + [#19288] Add kunena_upgrade.xml to check latest kunena version
 # [#19288] Make odering categories in backend with numbers like joomla articles

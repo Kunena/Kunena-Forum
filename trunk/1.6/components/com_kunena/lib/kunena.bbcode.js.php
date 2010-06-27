@@ -409,6 +409,9 @@ $('kbbcode-message').addEvent('change', function(){
 			$('kvideoprovider').store('videoprov',el.value);
 		});
 	});
+
+	// Fianlly apply some screwy IE7 and IE8 fixes to the html...
+	IEcompatibility();
 });
 
 <?php

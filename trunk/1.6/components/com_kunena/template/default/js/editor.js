@@ -21,7 +21,10 @@
 Element.implement({
 
 	getSelectedText: function() {
-		if(Browser.Engine.trident) return document.selection.createRange().text;
+		if(Browser.Engine.trident){
+			this.focus();
+			return document.selection.createRange().text;
+		}
 		return this.get('value').substring(this.selectionStart, this.selectionEnd);
 	},
 
@@ -138,22 +141,20 @@ function kGenerateColorPalette(width, height)
 	var numberList = new Array(6);
 	var color = '';
 	numberList[0] = '00';
-	numberList[1] = '40';
-	numberList[2] = '80';
-	numberList[3] = 'BF';
+	numberList[1] = '44';
+	numberList[2] = '88';
+	numberList[3] = 'BB';
 	numberList[4] = 'FF';
 
 	document.writeln('<table id="kbbcode-colortable" class="kbbcode-colortable" cellspacing="1" cellpadding="0" border="0" style="width: 100%;">');
-
+	
 	for (r = 0; r < 5; r++)
 	{
 		document.writeln('<tr>');
 		for (g = 0; g < 5; g++)	{
 			for (b = 0; b < 5; b++)	{
 				color = String(numberList[r]) + String(numberList[g]) + String(numberList[b]);
-				document.write('<td id="' + color + '" style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">');
-				document.write('&nbsp;');
-				document.writeln('</td>');
+				document.writeln('<td style="background-color:#' + color + '; width: ' + width + '; height: ' + height + ';">&nbsp;</td>');
 			  }
 		}
 		document.writeln('</tr>');
@@ -569,6 +570,20 @@ function bindAttachments() {
 	kattachment.each(function(el) {
 		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('[attachment]'+ el.getElement('.kfilename').get('text') +'[/attachment]'); return false; } );
 	});
+}
+
+// 
+// Helper function for various IE7 and IE8 work arounds
+//
+function IEcompatibility() {
+	// Only do anything if this is IE
+	if(Browser.Engine.trident){
+		var fix = $$("#kbbcode-size-options", "#kbbcode-size-options span", 
+						"#kbbcode-colortable", "#kbbcode-colortable td");
+		if (fix) {
+			fix.setProperty('unselectable', 'on');
+		}
+	}
 }
 
 //

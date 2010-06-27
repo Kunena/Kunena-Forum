@@ -2521,7 +2521,7 @@ table.kadmin-stat caption {
 					onclick="return listItemTask('cb<?php echo $i;
 						?>','userprofile')"><?php echo kescape($kunena_user->userid);
 						?></a></td>
-					<td width="100"><?php echo $kunena_user->getAvatarLink('', 'profile');
+					<td width="100"><?php echo $kunena_user->getAvatarLink('kavatar', 'welcome');
 						?></td>
 				<td width="100"><a href="#edit"
 					onclick="return listItemTask('cb<?php echo $i;

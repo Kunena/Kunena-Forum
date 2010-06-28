@@ -46,9 +46,20 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Undefined property: CKunenaViewMessage::$inline_attachments
 # [#19288] Installer: Detect FB 1.0.0 correctly
 # [#19288] Fix layout issues in message body, [code] BBCode, profile, announcements
+^ [#15886] Merged revisions 2850-2874 from /branches/1.6-xillibit-fixes-20100623
+
+27-June-2010 Xillibit
+# [#19288] Add stings in credits page to the language file to be translated easily
+# [#19288] Add small section for language credits in credits page
+# [#19288] Change a bit CKunenaLatestX class to work properly with kunena latest module
+# [#19288] Add small section for language credits in credits page (add css)
 
 28-June-2010 severdia
 # [#21206] Restyling attachment buttons
+
+27-June-2010 Xillibit
+# [#19288] Update french translation
+# [#19288] In user manager in backend show user avatar a bit small instead of a big one
 
 27-June-2010 fxstein
 # [#21203] Workaround for IE8 bug to enable size and color selection in bbcode editor
@@ -57,10 +68,13 @@ Kunena 1.6.0-ALPHA3
 25-June-2010 Xillibit
 + [#19288] Add kunena_upgrade.xml to check latest kunena version
 # [#19288] Make odering categories in backend with numbers like joomla articles
+# [#19288] Fix undefined variable catinfo in libraries/integration/jomsocial/activity.php with jfirephp enabled and when reply topic or new thread
+# [#19288] Make odering categories in backend with numbers like joomla articles (Part 2)
+# [#19288] Fix issue with RSS icon which have a clikable link
 
 25-June-2010 Matias
 # [#20071] KunenaRoute: Fix a small bug in index highlighting
-^ [#15886] Merged revisions 2824-2850 from /branches/1.6-xillibit-fixes-20100623
+^ [#15886] Merged revisions 2824-2847 from /branches/1.6-xillibit-fixes-20100623
 ^ [#15886] Merged revisions 2830-2834 from /branches/1.6-dragan-fix-20100624
 + [#16390] Enable Serbian languages during installation process
 # [#19288] Fix undefined variables during installation

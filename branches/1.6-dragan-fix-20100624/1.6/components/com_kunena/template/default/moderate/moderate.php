@@ -57,11 +57,11 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 
 	<div><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST' );?>:
 	<div id="modcategorieslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_CATEGORY' );?>:
-	<?php echo $this->escape($this->categorylist) ?></div>
+	<?php echo $this->categorylist ?></div>
 
 
 	<div id="modtopicslist"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_DEST_TOPIC' ); ?>:
-	<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none"/> <?php echo $this->escape($this->messagelist) ?></div>
+	<input id="kmod_targetid" type="text" size="7" name="targetid" value="" style="display: none"/> <?php echo $this->messagelist ?></div>
 
 	<div id="kmod_subject"><?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
 	<input type="text" name="subject" value="<?php echo $this->escape( $this->message->subject ); ?>" /></div>

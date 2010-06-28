@@ -21,9 +21,9 @@ JHTML::_('behavior.tooltip');
 	</div>
 	<div class="kprofile-rightcol1">
 		<ul>
-			<li><span class="location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>:</strong> <?php echo $this->escape($this->location); ?></li>
+			<li><span class="location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>:</strong> <?php echo $this->location; ?></li>
 			<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
-			<li><span class="gender-<?php echo $this->escape($this->genderclass); ?>"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong> <?php echo $this->escape($this->gender); ?></li>
+			<li><span class="gender-<?php echo $this->genderclass; ?>"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong> <?php echo $this->gender; ?></li>
 			<li class="bd"><span class="birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->escape($this->profile->birthdate), 'ago', 'utc', 0); ?>"><?php echo CKunenaTimeformat::showDate($this->escape($this->profile->birthdate), 'date', 'utc', 0); ?></span>
 			<!--  <a href="#" title=""><span class="bday-remind"></span></a> -->
 			</li>
@@ -42,7 +42,7 @@ JHTML::_('behavior.tooltip');
 	</div>
 	<div class="kprofile-rightcol1">
 		<h4><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></h4>
-		<div class="kmsgsignature"><div><?php echo $this->escape($this->signature); ?></div></div>
+		<div class="kmsgsignature"><div><?php echo $this->signature; ?></div></div>
 	</div>
 
 </div>

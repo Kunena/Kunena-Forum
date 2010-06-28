@@ -97,6 +97,20 @@ class CKunenaViewMessage {
 		if ( empty ( $this->attachments ) ) return;
 		CKunenaTools::loadTemplate('/view/message.attachments.php');
 	}
+	
+	/**
+	* Escapes a value for output in a view script.
+	*
+	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
+	* {@link $_encoding} setting.
+	*
+	* @param  mixed $var The output to escape.
+	* @return mixed The escaped value.
+	*/
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
 
 	function display() {
 		$message = $this->msg;
@@ -249,10 +263,6 @@ class CKunenaViewMessage {
 		CKunenaTools::loadTemplate('/view/message.php', false, $this->templatepath);
 	}
 
-	function escape($var)
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
-	}
 }
 
 class CKunenaView {
@@ -302,6 +312,20 @@ class CKunenaView {
 
 	function setTemplate($path) {
 		$this->templatepath = $path;
+	}
+	
+	/**
+	* Escapes a value for output in a view script.
+	*
+	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
+	* {@link $_encoding} setting.
+	*
+	* @param  mixed $var The output to escape.
+	* @return mixed The escaped value.
+	*/
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	function getView() {
@@ -677,8 +701,4 @@ class CKunenaView {
 		CKunenaTools::loadTemplate('/view/view.php', false, $this->templatepath);
 	}
 
-	function escape($var)
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
-	}
 }

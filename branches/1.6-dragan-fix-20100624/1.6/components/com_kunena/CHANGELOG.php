@@ -39,6 +39,7 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Replace online/ofline icons from icons.php to css icons in userlist
 # [#19288] fix small bugs
 ^ [#19288] updated serbian languages
+# [#19288] revert some changes in escape template
 
 26-June-2010 @quila
 # [#19288] escaped "categories.php" in the template

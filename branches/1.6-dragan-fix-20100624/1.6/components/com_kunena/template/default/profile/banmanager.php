@@ -35,15 +35,15 @@ $j=0;
 	?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td><?php echo $j; ?></td>
-			<td><a href="#"><?php echo CKunenaLink::GetProfileLink ( $this->escape($userban->userid) ); ?> </a></td>
+			<td><a href="#"><?php echo CKunenaLink::GetProfileLink ( $userban->userid ); ?> </a></td>
 			<td>
 				<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); } ?></span>
 			</td>
 			<td>
-				<span><?php echo CKunenaTimeFormat::showDate($this->escape($userban->created_time), 'datetime'); ?></span>
+				<span><?php echo CKunenaTimeFormat::showDate($userban->created_time, 'datetime'); ?></span>
 			</td>
 			<td>
-				<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($this->escape($userban->expiration), 'datetime'); ?></span>
+				<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?></span>
 			</td>
 		</tr>
 		<?php } else { ?>

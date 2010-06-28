@@ -59,7 +59,7 @@ if ($this->showgenstats > 0)
                     </td>
                     <td class="td-1 km">
                     	<ul id="kstatslistright" class="fltrt kright">
-                    		<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $this->escape($userlist1); ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<strong> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid, $this->escape($this->lastestmember), '', $rel='nofollow'); ?></strong></li>
+                    		<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $userlist1; ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<strong> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid, $this->escape($this->lastestmember), '', $rel='nofollow'); ?></strong></li>
                     		<li>&nbsp;</li>
                     		<li><?php echo $userlist2; ?></li>
                     		<li><?php if ($kunena_config->showpopuserstats || $kunena_config->showpopsubjectstats) echo CKunenaLink::GetStatsLink(JText::_('COM_KUNENA_STAT_MORE_ABOUT_STATS').' &raquo;');?></li>

@@ -77,12 +77,12 @@ $kunena_config = KunenaFactory::getConfig ();
 	<?php $i=0; foreach ($this->userparams as $userparam): ?>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="td-0 km kcenter" width="120">
-			<label for="params<?php echo $this->escape($userparam[5]) ?>" title="<?php echo $this->escape($userparam[2]) ?>">
-				<?php echo $this->escape($userparam[0]) ?>
+			<label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>">
+				<?php echo $userparam[0] ?>
 			</label>
 		</td>
 		<td>
-			<?php echo $this->escape($userparam[1]) ?>
+			<?php echo $userparam[1] ?>
 		</td>
 	</tr>
 	<?php endforeach; ?>

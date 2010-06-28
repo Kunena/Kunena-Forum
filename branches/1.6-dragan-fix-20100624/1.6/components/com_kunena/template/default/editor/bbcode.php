@@ -134,7 +134,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 					maxlength="100" size="40"
-					value="<?php if(isset($this->polldatasedit[0]->title)) { $this->escape(echo $this->polldatasedit[0]->title); } ?>"
+					value="<?php if(isset($this->polldatasedit[0]->title)) { echo $this->escape( $this->polldatasedit[0]->title); } ?>"
 					onmouseover="javascript:$('helpbox').set('value', '<?php
 					echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />
 

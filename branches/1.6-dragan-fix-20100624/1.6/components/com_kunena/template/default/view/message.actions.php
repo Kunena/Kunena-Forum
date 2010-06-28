@@ -22,7 +22,7 @@ if ($this->msg->modified_time) {
 	<?php if ($this->msg->modified_by) : ?>
 	<span class="kmessage-editmarkup" <?php echo $datehover ?>">
 		<?php echo JText::_('COM_KUNENA_EDITING_LASTEDIT') . ': ' . $dateshown
-		. JText::_('COM_KUNENA_BY') . ' ' . ($this->config->username ? $this->escape($this->msg->modified_username) : $this->escape($this->msg->modified_name)) . '.'; ?>
+		. JText::_('COM_KUNENA_BY') . ' ' . ($this->config->username ? $this->msg->modified_username : $this->msg->modified_name) . '.'; ?>
 	<?php if ($this->msg->modified_reason) echo JText::_('COM_KUNENA_REASON') . ': ' . $this->escape ( $this->msg->modified_reason ); ?>
 	</span>
 	<?php endif ?>
@@ -30,7 +30,7 @@ if ($this->msg->modified_time) {
 	<span class="kmessage-informmarkup"><?php echo CKunenaLink::GetReportMessageLink ( $this->catid, $this->id, JText::_('COM_KUNENA_REPORT') ) ?></span>
 	<?php endif ?>
 	<?php if (!empty ( $this->ipLink )) : ?>
-	<span class="kmessage-informmarkup"><?php echo $this->escape($this->ipLink) ?></span>
+	<span class="kmessage-informmarkup"><?php echo $this->ipLink ?></span>
 	<?php endif ?>
 </div>
 <div class="kmessage-buttons-cover">

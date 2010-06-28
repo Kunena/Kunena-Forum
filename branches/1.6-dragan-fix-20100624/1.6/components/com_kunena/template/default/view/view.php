@@ -17,7 +17,7 @@ global $kunena_icons;
 <div><?php $this->displayPathway(); ?></div>
 <?php if ($this->headerdesc) : ?>
 <div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->catinfo->class_sfx) : '' ?>">
-	<?php echo $this->escape($this->headerdesc) ?>
+	<?php echo $this->headerdesc ?>
 </div>
 <?php endif ?>
 <?php

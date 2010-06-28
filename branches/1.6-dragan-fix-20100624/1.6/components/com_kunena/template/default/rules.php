@@ -23,7 +23,7 @@ $introtext = CKunenaTools::getRulesHelpDatas($kunena_config->rules_cid);
 	</div>
 	<div class="kcontainer">
 		<div class="khelprulescontent">
-				<?php echo $this->escape($introtext); ?>
+				<?php echo $introtext; ?>
 		</div>
 	</div>
 </div>

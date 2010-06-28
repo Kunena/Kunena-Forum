@@ -35,7 +35,7 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 		<?php endif ?>
 		<?php if ($this->userrankimage) : ?>
 		<li class="kpost-userrank-img">
-			<?php echo $this->escape($this->userrankimage) ?>
+			<?php echo $this->userrankimage ?>
 		</li>
 		<?php endif ?>
 

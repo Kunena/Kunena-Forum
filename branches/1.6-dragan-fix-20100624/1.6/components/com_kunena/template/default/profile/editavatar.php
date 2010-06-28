@@ -51,7 +51,7 @@ $i=0;
 				<table class="kblocktable" id ="kforumua_gal" border="0" cellspacing="0" cellpadding="0" width="100%">
 					<tr>
 						<td class="kuadesc">
-						<?php echo $this->escape($this->galleries); ?>
+						<?php echo $this->galleries; ?>
 						</td>
 					</tr>
 					<tr>

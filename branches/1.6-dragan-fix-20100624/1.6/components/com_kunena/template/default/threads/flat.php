@@ -173,7 +173,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($this->func != 'showcat') {
 			?>
 			<!-- Category --> <span class="ktopic-category"> <?php
-			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, $this->escape( $leaf->catname) ) );
+			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $leaf->catid, $this->escape( $leaf->catname) );
 			?>
 			</span> <!-- /Category -->
 			<span class="divider fltlft">|</span>

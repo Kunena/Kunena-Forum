@@ -71,7 +71,7 @@ $userlist1 = CKunenaLink::GetUserlistLink('', $this->totalmembers);
 
                 <tr class = "ksectiontableentry1">
                     <td class = "td-1" align="left">
-<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:<b> <?php echo $this->escape($userlist1);?></b>
+<?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>:<b> <?php echo $userlist1;?></b>
                     &nbsp; <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<b> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid, $this->escape($this->lastestmember)); ?></b>
 
                 <br/> <?php echo JText::_('COM_KUNENA_STAT_TOTAL_MESSAGES'); ?>: <b> <?php echo $this->escape($this->totalmsgs); ?></b> &nbsp;

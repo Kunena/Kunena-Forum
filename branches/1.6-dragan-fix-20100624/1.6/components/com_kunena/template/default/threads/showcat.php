@@ -44,7 +44,7 @@ if ($this->objCatInfo->headerdesc) {
 	>
 	<tr>
 		<td><?php
-	echo $this->escape($this->headerdesc);
+	echo $this->headerdesc;
 	?>
 		</td>
 	</tr>

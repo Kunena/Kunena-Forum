@@ -21,19 +21,19 @@ defined ( '_JEXEC' ) or die ();
 		<?php echo CKunenaTimeformat::showDate($this->escape($this->msg->time), 'config_post_dateformat') ?>
 	</span>
 	<span class="kmsgkarma">
-		<?php echo $this->escape($this->userkarma) ?>
+		<?php echo $this->userkarma ?>
 	</span>
 </div>
 <div>
 	<div class="kmsgtext">
-		<?php echo $this->escape($this->message) ?>
+		<?php echo $this->message ?>
 	</div>
 </div>
 <?php $this->displayAttachments() ?>
 <div>
 	<?php if ($this->signature) : ?>
 	<div class="kmsgsignature">
-		<?php echo $this->escape($this->signature) ?>
+		<?php echo $this->signature ?>
 	</div>
 	<?php endif ?>
 </div>

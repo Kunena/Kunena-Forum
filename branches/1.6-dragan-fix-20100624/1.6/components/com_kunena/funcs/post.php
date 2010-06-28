@@ -1043,6 +1043,20 @@ class CKunenaPost {
         	$dispatcher->trigger( 'onCaptchaView', array( 'kunena.post', 0, '', '<br />' ) );
         }
 	}
+	
+	/**
+	* Escapes a value for output in a view script.
+	*
+	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
+	* {@link $_encoding} setting.
+	*
+	* @param  mixed $var The output to escape.
+	* @return mixed The escaped value.
+	*/
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
 
 	function verifyCaptcha() {
 		if (! $this->hasCaptcha ())

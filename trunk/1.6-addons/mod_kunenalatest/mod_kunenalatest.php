@@ -30,6 +30,12 @@ class modKunenaLatest
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
 
+		$this->latestdo = null;
+
+		 if ($params->get( 'choosemodel' ) != 'latest') {
+        	$this->latestdo = $params->get( 'choosemodel' );
+      	}
+
 		// Load topic icons
 		$this->topic_emoticons = array ();
     	$this->topic_emoticons [0] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-default.gif';

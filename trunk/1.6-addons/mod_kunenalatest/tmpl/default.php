@@ -75,5 +75,5 @@ if (is_array ( $this->klistpost )) {
 }
 ?>
 </ul>
-<p id="klatest-more"><?php echo CKunenaLink::GetShowLatestLink ( JText::_ ( 'MOD_KUNENALATEST_MORE_LINK' ) ); ?></p>
+<p id="klatest-more"><?php echo CKunenaLink::GetShowLatestLink ( JText::_ ( 'MOD_KUNENALATEST_MORE_LINK' ) , $this->latestdo ); ?></p>
 </div>

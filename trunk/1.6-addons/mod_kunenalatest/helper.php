@@ -45,31 +45,31 @@ class modKunenaLatestHelper {
 	   	$model->latestcategory_in = $params->get( 'sh_category_id_in' );
 
 	   	switch ( $params->get( 'choosemodel' ) ) {
-      		case '0' :
+      		case 'latest' :
         		$model->getLatest ();
       		break;
-      		case '1' :
+      		case 'noreplies' :
         		$model->getNoReplies();
       		break;
-      		case '2' :
+      		case 'subscriptions' :
         		$model->getSubscriptions();
       		break;
-      		case '3' :
+      		case 'favorites' :
         		$model->getFavorites();
       		break;
-      		case '4' :
+      		case 'owntopics' :
        			$model->getOwnTopics();
       		break;
-      		case '5' :
+      		case 'deletedposts' :
         		$model->getDeletedPosts();
       		break;
-      		case '6' :
+      		case 'saidthankyouposts' :
         		$model->getSaidThankYouPosts();
       		break;
-      		case '7' :
+      		case 'gotthankyouposts' :
         		$model->getGotThankYouPosts();
       		break;
-      		case '8' :
+      		case 'userposts' :
         		$model->getUserPosts();
       		break;
     }

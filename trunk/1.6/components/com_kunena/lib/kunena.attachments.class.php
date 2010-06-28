@@ -135,6 +135,8 @@ class CKunenaAttachments {
 
 					$img = '<img title="'.$attachment->filename.'" '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
 					$attachment->thumblink = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments'.$attachment->id);
+					$img = '<img title="'.$attachment->filename.'" src="'.JURI::ROOT().$attachment->folder.'/'.$attachment->filename.'" alt="'.$attachment->filename.'" />';
+					$attachment->imagelink = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments'.$attachment->id);
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon

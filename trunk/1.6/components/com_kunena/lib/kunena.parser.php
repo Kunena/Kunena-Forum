@@ -522,7 +522,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					if (is_object ( $attachment ) && is_file(JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}")) {
 						$this->parent->inline_attachments[$attachment->id] = $attachment;
 						$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
-						$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br>" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . $attachment->size . "</div>";
+						if (empty($attachment->imagelink)) {
+							$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br>" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . $attachment->size . "</div>";
+						} else {
+							$tag_new = "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
+						}
 					} else {
 						$tag_new = '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', kunena_htmlspecialchars ($between) ) . '</h4></div>';
 					}

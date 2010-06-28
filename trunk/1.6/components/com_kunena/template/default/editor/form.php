@@ -150,11 +150,15 @@ $this->k=0;
 		<td>
 			<div id="kattachment" class="kattachment">
 				<span id="attach_list"></span>
-				<div class="hasTip" title="<?php echo  JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED'); ?>::<?php echo '<b>'.$this->config->imagetypes.'</b><br /><b>'.$this->config->filetypes.'</b>'; ?>" >
-					<input id="kupload" name="kattachment" type="file" />
+				
+				<input id="kfilename" class="kfile-input-textbox" readonly />
+				<div class="hasTip kfile-hide" title="<?php echo  JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED'); ?>::<?php echo '<strong>'.$this->config->imagetypes.'</strong><br /><strong>'.$this->config->filetypes.'</strong>'; ?>" >
+					<input type="button" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button kbutton" />
+					<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" onchange="javascript: document.getElementById('kfilename').value = this.value" />
 				</div>
-				<a href="#" class="kattachment-insert" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
-				<a href="#" class="kattachment-delete" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_DELETE'); ?></a>
+				<a href="#" class="kattachment-delete kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
+				
+				<a href="#" class="kattachment-insert kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
 			</div>
 			<div id="kattachmentsnote"></div>
 

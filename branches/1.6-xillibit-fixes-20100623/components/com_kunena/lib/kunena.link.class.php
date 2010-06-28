@@ -232,8 +232,9 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=review&action=list&catid=' . $catid, $name, '', $rel );
 	}
 
-	function GetShowLatestLink($name, $rel = 'follow') {
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=latest', $name, '', $rel );
+	function GetShowLatestLink($name, $do = '', $rel = 'follow') {
+		if ($do) $do = "&do=$do";
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . "&func=latest{$do}", $name, '', $rel );
 	}
 
 	function GetShowLatestURL($xhtml = true) {

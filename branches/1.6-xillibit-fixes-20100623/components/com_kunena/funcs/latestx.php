@@ -271,8 +271,44 @@ class CKunenaLatestX {
 			$this->loadids[$item->id] = $item->id;
 		}
 
+		if($saidgot == 'got') {
+			$this->header = $this->title = JText::_('COM_KUNENA_THANKYOU_GOT');
+		} else {
+			$this->header = $this->title = JText::_('COM_KUNENA_THANKYOU_SAID');
+		}
+
 		$this->order = 'field(a.id,'.implode ( ",", $this->loadids ).')';
 		$this->_common();
+	}
+
+	function _getCategories() {
+		if (isset($this->total)) return;
+
+		$this->threads_per_page = 10;
+
+		$subqueries = "SELECT catid, 0 AS fav, 1 AS sub FROM #__kunena_subscriptions_categories WHERE userid='{$this->user->id}'";
+
+		$query = "SELECT COUNT(DISTINCT cat.id) FROM ({$subqueries}) AS t
+		INNER JOIN #__kunena_categories AS cat ON cat.id=t.catid";
+
+		$this->db->setQuery ( $query );
+		$this->total = ( int ) $this->db->loadResult ();
+		if (KunenaError::checkDatabaseError() || !$this->total) return;
+
+		$query = "SELECT cat.name, cat.id ,cat.ordering, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
+		INNER JOIN #__kunena_categories AS cat ON cat.id=t.catid
+		GROUP BY catid
+		ORDER BY ordering";
+		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
+		$catids = $this->db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		$this->threadids = array();
+		$this->loadids = array();
+		foreach( $catids as $item){
+			$this->threadids[$item->id] = $item->name;
+			$this->loadids[$item->id] = $item->id;
+		}
 	}
 
 	function getUserPosts() {
@@ -331,6 +367,14 @@ class CKunenaLatestX {
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
 		$this->_getMyLatest(false, false, true);
+	}
+
+	function getCategoriesSubscriptions() {
+		if (isset($this->total)) return;
+		$this->columns++;
+		$this->showposts = 1;
+		$this->header = $this->title = JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS');
+		$this->_getCategories();
 	}
 
 	function getmyLatest() {
@@ -533,8 +577,11 @@ class CKunenaLatestX {
 		if ($this->func == 'mylatest') $this->getMyLatest();
 		else if ($this->func == 'noreplies') $this->getNoReplies();
 		else if ($this->func == 'subscriptions') $this->getSubscriptions();
+		else if ($this->func == 'catsSubscriptions') $this->getCategoriesSubscriptions();
 		else if ($this->func == 'favorites') $this->getFavorites();
 		else if ($this->func == 'userposts') $this->getUserPosts();
+		else if ($this->func == 'saidthankyouposts') $this->getSaidThankYouPosts();
+		else if ($this->func == 'gotthankyouposts') $this->getUserPosts();
 		else if ($this->func == 'unapproved') $this->getUnapprovedPosts();
 		else if ($this->func == 'deleted') $this->getDeletedPosts();
 		else $this->getLatest();

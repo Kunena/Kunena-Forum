@@ -52,9 +52,20 @@ $kunena_config = KunenaFactory::getConfig ();
                         </ul></td>
                     </tr>
                     <tr valign="top">
-                      <td colspan="2"><div  class="kcredits-more"><?php echo JText::sprintf('COM_KUNENA_CREDITS_THANKS_PART_LONG', 'Beat', 'Ida' ,'JoniJnm', '<a href="http://www.kunena.com" target="_blank" rel="follow">www.Kunena.com</a>'); ?>
-                          <?php echo JText::_('COM_KUNENA_CREDITS_THANKS'); ?> <br />
-                          <br />
+                      <td colspan="2" ><div  class="kcredits-more"><?php echo JText::sprintf('COM_KUNENA_CREDITS_THANKS_PART_LONG', 'Beat', 'Ida' ,'JoniJnm', '<a href="http://www.kunena.com" target="_blank" rel="follow">www.Kunena.com</a>'); ?>
+                          <?php echo JText::_('COM_KUNENA_CREDITS_THANKS'); ?>
+                          </td>
+                    </tr>
+                    <tr valign="top">
+                    	<td colspan="2" style="padding-left:20px;padding-right:20px;"><div  class="kcredits-language">
+                    	 <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?>
+						<br />
+                    	<br />
+                    	<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?> Lavsteph (french <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Alakentu (spanish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), @quilla (serbian <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Mortti (finnish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>)
+                    	</td>
+                    </tr>
+                    <tr valign="top">
+                    	<td colspan="2"><div  class="kcredits-more">
                           <?php
                 $catid = (int)$catid;
 
@@ -62,6 +73,7 @@ $kunena_config = KunenaFactory::getConfig ();
                 echo '<div>'. JText::_('COM_KUNENA_CREDITS_GO_BACK') . ' ' . CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_USER_RETURN_B'), $rel='nofollow') . '<div>';
                 ?>
                         </div></td>
+
                     </tr>
                   </table>
 

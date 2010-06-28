@@ -31,6 +31,10 @@ Legend:
 KunenaLatest 1.0
 
 27-Jun-2010 Xillibit
+# [#20081] Put a list to choose the different views to display
+# [#20081] Add option to show nothing instead to have avatar or topicicons
+
+27-Jun-2010 Xillibit
 # [#20081] Add a configuration setting to choose the view to display (latest post, favorites, subcriptions...)
 
 25-Jun-2010 Xillibit

@@ -40,9 +40,10 @@
 		<param name="sh_topiciconoravatar" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR" description="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_AVATAR</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
+			<option value="2">MOD_KUNENALATEST_PARAM_VALUE_NO_AVATAR_NO_TOPICICONS</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="choosemodel" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL" description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
+		<param name="choosemodel" type="list" default="0" label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL" description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
 			<option value="0">MOD_KUNENALATEST_SHOW_LATEST</option>
 			<option value="1">MOD_KUNENALATEST_SHOW_NO_REPLIES</option>
 			<option value="2">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>

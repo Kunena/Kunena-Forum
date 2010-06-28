@@ -26,11 +26,11 @@ if (is_array ( $this->klistpost )) {
 <li class="klatest-item">
 	<ul class="klatest-itemdetails">
 		<?php
-		if ( $this->params->get ( 'sh_topiciconoravatar' )) { ?>
+		if ( $this->params->get ( 'sh_topiciconoravatar' ) == 1) { ?>
 		<li class="klatest-avatar">
 			<?php echo modKunenaLatestHelper::userAvatar( $item->userid, $this->params ); ?>
 		</li>
-		<?php } else {  ?>
+		<?php } elseif( $this->params->get ( 'sh_topiciconoravatar' ) == 0) {  ?>
 		<li class="klatest-avatar">
 		<?php echo '<img src="' . $this->topic_emoticons[$item->topic_emoticon]  . '" />'; ?>
 		</li>

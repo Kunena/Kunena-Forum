@@ -171,9 +171,9 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 								$isonline=$profile->isOnline();
 
 								if ($isonline && $user->showOnline ==1 ) {
-									echo isset($kunena_icons['onlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['onlineicon'] . '" border="0" alt="' . JText::_('COM_KUNENA_MODLIST_ONLINE') . '" />' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'onlineicon.gif" border="0" alt="' . JText::_('COM_KUNENA_MODLIST_ONLINE') . '" />';
+									echo CKunenaTools::showIcon ( 'konlineicon', JText::_('COM_KUNENA_MODLIST_ONLINE') );
 								} else {
-									echo isset($kunena_icons['offlineicon']) ? '<img src="' . KUNENA_URLICONSPATH . $kunena_icons['offlineicon'] . '" border="0" alt="' . JText::_('COM_KUNENA_MODLIST_OFFLINE') . '" />' : ' <img src="' . KUNENA_URLEMOTIONSPATH . 'offlineicon.gif" border="0" alt="' . JText::_('COM_KUNENA_MODLIST_OFFLINE') . '" />';
+									echo CKunenaTools::showIcon ( 'kofflineicon', JText::_('COM_KUNENA_MODLIST_OFFLINE') );
 								}
 							?>
 							</td>

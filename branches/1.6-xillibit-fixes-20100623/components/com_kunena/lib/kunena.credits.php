@@ -28,7 +28,7 @@ $kunena_config = KunenaFactory::getConfig ();
           <table class = "kblocktable" id ="kforumcredits" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
             <thead>
               <tr>
-                <th> <div class = "ktitle-cover"> <span class="ktitle kl" >Team credits</span> </div>
+                <th> <div class = "ktitle-cover"> <span class="ktitle kl" ><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span> </div>
               </tr>
             </thead>
             <tbody>
@@ -36,31 +36,30 @@ $kunena_config = KunenaFactory::getConfig ();
                 <td class = "kcreditsdesc"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr valign="top">
                       <td width="170"><img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
-                      <td><div  class="kcredits-intro"> An open source project like Kunena requires the dedication and investment of personal time from various contributors.
-                          This version of Kunena Forum has been made possible by the following contributors (in alphabetical ordering):</div></td>
+                      <td><div  class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div></td>
                     </tr>
                     <tr valign="top">
                       <td colspan="2" style="padding-left:20px;padding-right:20px;"><ul  class="kteam">
-                          <li class="kteammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> Kunena developer and admin of the world largest Yamaha Star VMax community at <a href="http://www.starVmax.com/forum/" target='_blank' rel='follow'>www.starVmax.com/forum/</a></li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2171" target='_blank' rel='follow'>LDA</a> Kunena moderator</li>
-                          <li class="kteammember"><a href="http://www.herppi.net" target='_blank' rel='follow'>Matias</a> Kunena developer</li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2198" target='_blank' rel='follow'>Rich</a> Kunena moderator</li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=114" target='_blank' rel='follow'>severdia</a> Kunena developer</li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=997" target='_blank' rel='follow'>sozzled</a> Kunena moderator</li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=1288" target='_blank' rel='follow'>xillibit</a> Kunena developer</li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=447" target='_blank' rel='follow'>@quila</a> Kunena contributor</li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=634" target='_blank' rel='follow'>810</a> Kunena contributor</li>
+                          <li class="kteammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> <?php echo JText::sprintf('COM_KUNENA_CREDITS_DEVELOPER_SPECIAL', 'Yamaha Star VMax' ); ?> <a href="http://www.starVmax.com/forum/" target='_blank' rel='follow'>www.starVmax.com/forum/</a></li>
+                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2171" target='_blank' rel='follow'>LDA</a> <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
+                          <li class="kteammember"><a href="http://www.herppi.net" target='_blank' rel='follow'>Matias</a> <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
+                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2198" target='_blank' rel='follow'>Rich</a> <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
+                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=114" target='_blank' rel='follow'>severdia</a> <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
+                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=997" target='_blank' rel='follow'>sozzled</a> <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
+                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=1288" target='_blank' rel='follow'>xillibit</a> <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
+                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=447" target='_blank' rel='follow'>@quila</a> <?php echo JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR'); ?></li>
+                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=634" target='_blank' rel='follow'>810</a> <?php echo JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR'); ?></li>
                         </ul></td>
                     </tr>
                     <tr valign="top">
-                      <td colspan="2"><div  class="kcredits-more">Special thanks go to Beat and the CB Testing team, Ida and JoniJnm for significant contributions to Kunena. In addition many members of <a href="http://www.kunena.com" target='_blank' rel='follow'>www.Kunena.com</a> have contributed and helped make this a more stable and bugfree version.
-                          Our Thanks go out to all contributors of Kunena! Greetings from the global Kunena forum team! <br />
+                      <td colspan="2"><div  class="kcredits-more"><?php echo JText::sprintf('COM_KUNENA_CREDITS_THANKS_PART_LONG', 'Beat', 'Ida' ,'JoniJnm', '<a href="http://www.kunena.com" target="_blank" rel="follow">www.Kunena.com</a>'); ?>
+                          <?php echo JText::_('COM_KUNENA_CREDITS_THANKS'); ?> <br />
                           <br />
                           <?php
                 $catid = (int)$catid;
 
                 // Add a link to go back to the latest category we where viewing...
-                echo '<div>To return to the forum ' . CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_USER_RETURN_B'), $rel='nofollow') . '<div>';
+                echo '<div>'. JText::_('COM_KUNENA_CREDITS_GO_BACK') . ' ' . CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_USER_RETURN_B'), $rel='nofollow') . '<div>';
                 ?>
                         </div></td>
                     </tr>

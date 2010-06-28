@@ -903,7 +903,7 @@ window.addEvent('domready', function(){
 	}
 	
 	// Get the kunena settings cookie data.
-	KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});
+	var KCookie = new Hash.Cookie('kunena_settings', {duration: 3600});
 
 	// Setup the behavior for all kunena toggler elements.
 	$$('a.ktoggler').each(function(link){

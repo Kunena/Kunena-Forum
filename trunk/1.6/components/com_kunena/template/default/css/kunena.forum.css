@@ -2885,7 +2885,7 @@ Multi file upload for bbcode editor
 	color: #FFFFFF;
 	padding: 0px 4px;
 }
-#Kunena .kattachment-delete,
+#Kunena .kattachment-remove,
 #Kunena .kattachment-insert {
 	background: #F2F1EE none repeat scroll 0 0;
 	font-size: .917em !important;
@@ -2893,7 +2893,7 @@ Multi file upload for bbcode editor
 	color: #000000;
 	padding: 3px 6px;
 }
-#Kunena .kattachment-delete:hover,
+#Kunena .kattachment-remove:hover,
 #Kunena .kattachment-insert:hover {
 	color: #FFFFFF;
 	font-size:0.917em !important;

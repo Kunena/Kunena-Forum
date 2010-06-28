@@ -550,16 +550,20 @@ function cancelForm() {
 function newAttachment() {
 	var kattachment = $('kattachment');
 	if (!kattachment) return;
-	kattachment.setStyle('display', 'none').getElement('input').setProperty('value', '').setStyle('display', 'none');
+	kattachment.setStyle('display', 'none').getElement('input').setProperty('value', '');
 	var id = kattachment.retrieve('nextid',1);
 	kattachment.store('nextid',id+1);
 	var file = kattachment.clone().inject(kattachment,'before').set('id','kattachment'+id).removeProperty('style');
-	file.getElement('input').set('name', 'kattachment'+id).removeProperty('style');
-	file.getElement('span').set('text', id+'. ');
-	file.addEvent('change', function(el) {
+	file.getElement('span.kattachment-id').set('text', id+'. ');
+	var input = file.getElement('input.kfile-input').set('name', 'kattachment'+id).removeProperty('onchange');
+	input.addEvent('change', function() {
 		this.removeEvents('change');
-		this.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('[attachment:'+ id +']'+ file.getElement('input').get('value') +'[/attachment]'); return false; } );
-		this.getElement('.kattachment-delete').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
+		this.addEvent('change', function() {
+			file.getElement('input.kfile-input-textbox').set('value', this.get('value'));
+		});
+		file.getElement('input.kfile-input-textbox').set('value', this.get('value'));
+		file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.insert('\n[attachment:'+ id +']'+ this.get('value') +'[/attachment]\n', 'after', true); return false; } );
+		file.getElement('.kattachment-remove').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
 		newAttachment();
 	});
 }
@@ -568,7 +572,7 @@ function bindAttachments() {
 	var kattachment = $$('.kattachment-old');
 	if (!kattachment) return;
 	kattachment.each(function(el) {
-		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('[attachment]'+ el.getElement('.kfilename').get('text') +'[/attachment]'); return false; } );
+		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('\n[attachment]'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', true); return false; } );
 	});
 }
 

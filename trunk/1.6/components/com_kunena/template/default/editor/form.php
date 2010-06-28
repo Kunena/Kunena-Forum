@@ -149,18 +149,17 @@ $this->k=0;
 			?></strong></td>
 		<td>
 			<div id="kattachment" class="kattachment">
-				<span id="attach_list"></span>
-				
-				<input id="kfilename" class="kfile-input-textbox" readonly />
+				<span class="kattachment-id"></span>
+
+				<input class="kfile-input-textbox" type="text" readonly="readonly" />
 				<div class="hasTip kfile-hide" title="<?php echo  JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED'); ?>::<?php echo '<strong>'.$this->config->imagetypes.'</strong><br /><strong>'.$this->config->filetypes.'</strong>'; ?>" >
 					<input type="button" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button kbutton" />
 					<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" onchange="javascript: document.getElementById('kfilename').value = this.value" />
 				</div>
-				<a href="#" class="kattachment-delete kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
-				
+				<a href="#" class="kattachment-remove kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
+
 				<a href="#" class="kattachment-insert kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
 			</div>
-			<div id="kattachmentsnote"></div>
 
 		<?php
 		// Include attachments template if we have any

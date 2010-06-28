@@ -35,7 +35,7 @@ class CKunenaLatestX {
 		$this->session = KunenaFactory::getSession ();
 		$this->config = KunenaFactory::getConfig ();
 
-		$this->latestcategory = $this->config->latestcategory;
+		$this->latestcategory = explode ( ',', $this->config->latestcategory );
 		$this->latestcategory_in = $this->config->latestcategory_in;
 		$this->page = $page < 1 ? 1 : $page;
 		$this->threads_per_page = $this->config->threads_per_page;
@@ -344,9 +344,8 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
-		$lookcats = explode ( ',', $this->latestcategory );
 		$catlist = array ();
-		foreach ( $lookcats as $catnum ) {
+		foreach ( $this->latestcategory as $catnum ) {
 			$catlist [] = ( int ) $catnum;
 		}
 		$latestcats = '';

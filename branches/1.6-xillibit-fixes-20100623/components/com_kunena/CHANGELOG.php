@@ -38,6 +38,7 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Add stings in credits page to the language file to be translated easily
 # [#19288] Add small section for language credits in credits page
 # [#19288] Change a bit CKunenaLatestX class to work properly with kunena latest module
+# [#19288] Add small section for language credits in credits page (add css)
 
 27-June-2010 Xillibit
 # [#19288] Update french translation

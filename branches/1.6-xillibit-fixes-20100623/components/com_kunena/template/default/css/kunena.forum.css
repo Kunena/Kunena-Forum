@@ -3092,6 +3092,12 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	padding: 10px 0 10px 20px;
 }
 
+#Kunena .kcredits-language {
+	padding: 10px 0 10px 20px;
+	border-top: 1px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
+}
+
 #Kunena .kstatsicon {
 	background: url("../images/icons/stats.png") no-repeat center top;
 	width: 32px;

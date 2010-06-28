@@ -57,6 +57,7 @@ class CKunenaViewMessage {
 	public $thankyoubutton = null;
 
 	public $attachments = array();
+	public $inline_attachments = array();
 
 	function __construct($parent, $message) {
 		kimport('html.parser');

@@ -504,7 +504,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							break;
 						}
 					}
-					if (!$attachment) {
+					if (!$attachment && !empty($this->parent->inline_attachments)) {
 						foreach ($this->parent->inline_attachments as $att) {
 							if ($att->filename == $between) {
 								$attachment = $att;

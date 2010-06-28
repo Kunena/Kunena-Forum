@@ -43,6 +43,7 @@ Kunena 1.6.0-ALPHA3
 # [#19288] AlphaUserPoints integration: Undefined function when getting userlist with older AUP versions
 # [#19288] AlphaUserPoints integration: Missing avatar if user does not exist
 # [#19288] No avatar: Undefined property: CKunenaViewMessage::$avatar
+# [#19288] Undefined property: CKunenaViewMessage::$inline_attachments
 
 28-June-2010 severdia
 # [#21206] Restyling attachment buttons

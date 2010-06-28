@@ -34,9 +34,12 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+28-June-2010 Matias
++ [#19288] Added Spanish language (thanks Alakentu)
+
 28-June-2010 severdia
 # [#21206] Restyling attachment buttons
- 
+
 27-June-2010 fxstein
 # [#21203] Workaround for IE8 bug to enable size and color selection in bbcode editor
 ^ [#20833] Adjusted english language strings for Thank You feature

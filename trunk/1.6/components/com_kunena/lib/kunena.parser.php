@@ -359,22 +359,20 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						return TAGPARSER_RET_REPLACED;
 					} else {
 						$types = array ("php", "mysql", "html", "js", "javascript" );
-						$code_start_html = '<div class="kmsgtext-code"><div class="kmsgtext-code-header"><span>' . JText::_('COM_KUNENA_MSG_CODE') . '</span></div><div class="kmsgtext-code-body">';
 						if (! empty ( $tag->options ["type"] ) && in_array ( $tag->options ["type"], $types )) {
 							 $t_type = $tag->options ["type"];
 						} else {
 							$t_type = "php";
 						}
-						 // make sure we show line breaks
-						 $code_start_html .= "<code class=\"{$t_type}\">";
-						 $code_end_html = '</code></div></div>';
-						 // Preserve spaces and tabs in code
-						 $codetext = str_replace ( "\t", "__FBTAB__", $between );
-						 $codetext = kunena_htmlspecialchars ( $codetext, ENT_QUOTES );
-						 $codetext = str_replace ( " ", "&nbsp;", $codetext );
-						 $tag_new = $code_start_html . $codetext . $code_end_html;
-						 $task->in_code = FALSE;
-						  return TAGPARSER_RET_REPLACED;
+						// Preserve spaces and tabs in code
+						$code = str_replace ( "\t", "__KTAB__", $between );
+						$code = str_replace("\r\n","__KRN__",$code);
+						$code = str_replace("\n","__KRN__",$code);
+						$code = str_replace("\r","__KRN__",$code);
+						$code = kunena_htmlspecialchars ( $code );
+						$tag_new = "<div class=\"highlight\"><pre class=\"{$t_type}\">{$code}</pre></div>";
+						$task->in_code = FALSE;
+						return TAGPARSER_RET_REPLACED;
 					}
 					break;
 

@@ -36,8 +36,10 @@ $k = 0;
 		</td>
 
 		<td class="kreview-body<?php echo $k?>">
-			<div class="kmsgtext">
-				<?php echo KunenaParser::parseBBCode( $mes->message )?>
+			<div class="kmsgbody">
+				<div class="kmsgtext">
+					<?php echo KunenaParser::parseBBCode( $mes->message )?>
+				</div>
 			</div>
 			<?php if ( !empty($this->attachmentslist[$mes->id]) ) $this->displayAttachments($this->attachmentslist[$mes->id]); ?>
 		</td>

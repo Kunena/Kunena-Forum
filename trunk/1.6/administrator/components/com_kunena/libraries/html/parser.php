@@ -29,7 +29,8 @@ abstract class KunenaParser {
 		$config = KunenaFactory::getConfig ();
 		$txt = smile::smileReplace ( $txt, 0, $config->disemoticons, self::$emoticons, $parent );
 		$txt = nl2br ( $txt );
-		$txt = str_replace ( "__FBTAB__", "&#009;", $txt ); // For [code]
+		$txt = str_replace ( "__KTAB__", "&#009;", $txt ); // For [code]
+		$txt = str_replace ( "__KRN__", "\n", $txt ); // For [code]
 		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}

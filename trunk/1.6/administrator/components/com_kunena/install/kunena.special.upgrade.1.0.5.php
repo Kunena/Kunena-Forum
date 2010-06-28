@@ -50,10 +50,4 @@ if ($is_101_version) {
 		if ($kunena_db->getErrorNum ())
 			throw new KunenaInstallerException ( $kunena_db->getErrorMsg (), $kunena_db->getErrorNum () );
 	}
-
-	//backward compatibility . all the cats are by default moderated
-	$kunena_db->setQuery ( "UPDATE `#__kunena_categories` SET `moderated` = '1';" );
-	$kunena_db->query ();
-	if ($kunena_db->getErrorNum ())
-		throw new KunenaInstallerException ( $kunena_db->getErrorMsg (), $kunena_db->getErrorNum () );
 }

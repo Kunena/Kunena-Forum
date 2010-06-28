@@ -258,6 +258,12 @@
 		<phpfile name="sampledata.php" />
 	</install>
 	<upgrade>
+		<version version="1.0.0" versiondate="2007-04-15" build="100" versionname="">
+			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&lt;br>&lt;br>", "\n\n")</query>
+		</version>
+		<version version="1.0.1" versiondate="2007-05-20" build="101" versionname="">
+			<query>UPDATE `#__kunena_categories` SET `moderated` = '1';</query>
+		</version>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
 			<phpfile name="kunena.special.upgrade.1.0.5.php" />
 			<query mode="silenterror">ALTER TABLE `#__kunena_attachments` ADD KEY `mesid`(`mesid`), COMMENT=''</query>

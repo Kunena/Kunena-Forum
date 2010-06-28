@@ -208,6 +208,7 @@ PX		EM			PCT			PT
 	width:100%;
 	color: #FFFFFF;
 	margin: 0;
+	word-wrap: break-word;
 	overflow: hidden;
 }
 #Kunena div.kblock div.ktitle h1,
@@ -239,6 +240,7 @@ PX		EM			PCT			PT
 	border-width:0px 1px;
 	padding: 5px 10px;
 	overflow: auto;
+	word-wrap: break-word;
 }
 #Kunena div.kblock label {
 	clear: both;
@@ -1597,19 +1599,22 @@ PX		EM			PCT			PT
 	margin: -2px 0;
 }
 
-#Kunena div.kmsgtext {
+#Kunena div.kmsgbody {
+	display: table;
+	table-layout: fixed;
 	width: 100%;
-	overflow: hidden;
-	/* word-wrap: break-word; Internet Explorer 5.5+ */
-	/*border-top: 1px solid #BFC3C6;*/
 	padding: 10px 0 0 0;
 	margin-top: 5px;
 	min-height: 180px;
 }
+#Kunena div.kmsgbody div.kmsgtext {
+	overflow: auto;
+	word-wrap:break-word;
+}
 #Kunena td.kmessage-right div {
 	display: table;
 	table-layout:fixed;
-	width: 100%;	
+	width: 100%;
 	word-wrap:break-word;
 }
 
@@ -1681,27 +1686,8 @@ PX		EM			PCT			PT
 	font-size: 2em;
 }
 
-#Kunena div.kmsgtext-code {
-	margin: 10px;
-}
-
-#Kunena div.kmsgtext-code-header {
-	margin:0;
-	padding: 10px 0 5px;
-	border-bottom: 1px solid #555555;
-}
-#Kunena div.kmsgtext-code-header span {
-	font-weight:bold;
-}
-#Kunena div.kmsgtext-code-body {
-	padding: 10px 0;
-	border-bottom: 1px solid #555555;
-	overflow: auto;
-	width: 750px;
-}
-
 #Kunena div.kmsgtext pre,
-#Kunena div.kmsgtext .code {
+#Kunena div.kmsgtext code {
 	border-left: 5px solid #F4A94F;
 	border-right: 1px solid #BFC3C6;
 	border-top: 1px solid #BFC3C6;
@@ -1712,6 +1698,9 @@ PX		EM			PCT			PT
 	margin: 3px 0 10px 0;
 	padding: 10px 15px;	
 	overflow: auto;
+	width: auto;
+	word-wrap:normal;
+	max-height: 25em;
 }
 
 #Kunena div.kmessage-editmarkup-cover {
@@ -3305,11 +3294,11 @@ div#kprofile-stats ul li span.krank-admin {
 	float:right;
 	margin-top: 0;
 }
-#Kunena div#kprofile-rightcol  { 
+#Kunena div#kprofile-rightcol { 
 	display: table;
 	margin-right: 10px;
 	margin-left: 220px;
-	min-width: 740px;
+	width: auto;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}
 #Kunena div.kprofile-rightcol1 { 

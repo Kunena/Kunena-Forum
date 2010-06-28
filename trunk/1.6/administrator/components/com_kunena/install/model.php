@@ -62,9 +62,8 @@ class KunenaModelInstall extends JModel {
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04', 'table' => 'fb_categories', 'column' => 'headerdesc' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.2', 'date' => '2007-08-03', 'table' => 'fb_users', 'column' => 'rank' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.1', 'date' => '2007-05-20', 'table' => 'fb_users', 'column' => 'uhits' ),
-			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_categories', 'column' => 'image' ),
-			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0-DEV', 'date' => '0000-00-00', 'table' => 'fb_messages' ),
-			// array('component'=>'JoomlaBoard','prefix'=>'sb_', 'version'=>'v1.0.5', 'date'=>'0000-00-00', 'table'=>'sb_messages'),
+			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_messages' ),
+			// array('component'=>'JoomlaBoard','prefix'=> 'sb_', 'version' =>'v1.0.5', 'date' => '0000-00-00', 'table' => 'sb_messages'),
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
 
 		$this->steps = array (

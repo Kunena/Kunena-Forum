@@ -44,6 +44,8 @@ Kunena 1.6.0-ALPHA3
 # [#19288] AlphaUserPoints integration: Missing avatar if user does not exist
 # [#19288] No avatar: Undefined property: CKunenaViewMessage::$avatar
 # [#19288] Undefined property: CKunenaViewMessage::$inline_attachments
+# [#19288] Installer: Detect FB 1.0.0 correctly
+# [#19288] Fix layout issues in message body, [code] BBCode, profile, announcements
 
 28-June-2010 severdia
 # [#21206] Restyling attachment buttons

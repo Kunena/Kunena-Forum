@@ -21,7 +21,7 @@ class KunenaPrivateCommunityBuilder extends KunenaPrivate
 		$this->integration = KunenaIntegration::getInstance ('communitybuilder');
 		if (! $this->integration || ! $this->integration->isLoaded())
 			return;
-		$this->priority = 40;
+		$this->priority = 50;
 	}
 
 	protected function getURL($userid) {}

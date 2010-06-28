@@ -34,6 +34,7 @@ class CKunenaViewMessage {
 	public $thread = null;
 	public $subject = null;
 	public $message = null;
+	public $avatar = null;
 	public $class = null;
 
 	public $ipLink = null;

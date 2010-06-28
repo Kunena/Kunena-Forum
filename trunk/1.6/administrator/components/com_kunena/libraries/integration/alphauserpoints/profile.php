@@ -24,7 +24,19 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 
 	public function getUserListURL($action='')
 	{
-		return AlphaUserPointsHelper::getAupUsersURL();
+		if (method_exists('AlphaUserPointsHelper', 'getAupUsersURL'))
+			return AlphaUserPointsHelper::getAupUsersURL();
+		else {
+			// For AUP 1.5.3 etc..
+			static $AUP_itemid = false;
+			if ($AUP_itemid === false) {
+				$db = JFactory::getDBO();
+				$query = "SELECT id FROM #__menu WHERE `link`='index.php?option=com_alphauserpoints&view=users' AND `type`='component' AND `published`='1'";
+				$db->setQuery( $query );
+				$AUP_itemid = intval($db->loadResult());
+			}
+			return JRoute::_('index.php?option=com_alphauserpoints&view=users&Itemid='.$AUP_itemid);
+		}
 	}
 
 	public function getProfileURL($user, $task='')

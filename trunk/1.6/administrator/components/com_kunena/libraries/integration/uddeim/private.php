@@ -24,7 +24,7 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 			return;
 		$this->uddeim = new uddeIMAPI();
 		if ($this->uddeim->version() < 1) return;
-		$this->priority = 50;
+		$this->priority = 40;
 	}
 
 	protected function getURL($userid)

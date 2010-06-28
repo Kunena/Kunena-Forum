@@ -39,6 +39,10 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Fix a bug that prevents latest module from working in the right way
 # [#21203] Fix IE8 bug on multi-file attachments
 + [#21161] Attachments: Show image instead of file if it can be shown
+# [#19288] UddeIM 2.0 integration: Fix language string double definition bug when CB is installed
+# [#19288] AlphaUserPoints integration: Undefined function when getting userlist with older AUP versions
+# [#19288] AlphaUserPoints integration: Missing avatar if user does not exist
+# [#19288] No avatar: Undefined property: CKunenaViewMessage::$avatar
 
 28-June-2010 severdia
 # [#21206] Restyling attachment buttons

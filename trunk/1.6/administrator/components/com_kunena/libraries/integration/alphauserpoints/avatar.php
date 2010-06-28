@@ -41,6 +41,10 @@ class KunenaAvatarAlphaUserPoints extends KunenaAvatar
 		} else {
 			$avatar = AlphaUserPointsHelper::getAupAvatar ( $user->userid, 0, $size->x, $size->y  );
 		}
+		if (!$avatar) {
+			// FIXME: need a better way to do this
+			$avatar = '<img border="0" width="100" height="100" alt="" src="http://kunena16cb/components/com_alphauserpoints/assets/images/avatars/generic_gravatar_grey.gif">';
+		}
 		return $avatar;
 	}
 }

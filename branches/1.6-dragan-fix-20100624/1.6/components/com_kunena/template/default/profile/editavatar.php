@@ -16,7 +16,7 @@ $i=0;
 <h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?></h2>
 <table
 	class="<?php
-	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
+	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '';
 	?>" id="kflattable">
 <?php if ($this->profile->avatar): ?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
@@ -51,7 +51,7 @@ $i=0;
 				<table class="kblocktable" id ="kforumua_gal" border="0" cellspacing="0" cellpadding="0" width="100%">
 					<tr>
 						<td class="kuadesc">
-						<?php echo $this->galleries; ?>
+						<?php echo $this->escape($this->galleries); ?>
 						</td>
 					</tr>
 					<tr>

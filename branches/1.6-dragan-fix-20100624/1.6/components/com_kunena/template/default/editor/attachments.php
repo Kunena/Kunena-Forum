@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ();
 		?>
 
 			<li>
-				<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo $attachment->id; ?>" /><span><?php echo $attachment->filename.'&nbsp; ('.number_format(($attachment->size)/1024,0,'',',').'KB)'; ?></span>
+				<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo $this->escape($attachment->id); ?>" /><span><?php echo $this->escape($attachment->filename).'&nbsp; ('.number_format(($this->escape($attachment->size))/1024,0,'',',').'KB)'; ?></span>
 			</li>
 		<?php
 		endforeach;

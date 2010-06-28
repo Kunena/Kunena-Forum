@@ -28,7 +28,7 @@ form.filter_order_Dir.value=dir;
 document.adminForm.submit( task );}' );
 $option=JRequest::getCmd ( 'option' );
 
-$document->setTitle(JText::_('COM_KUNENA_USRL_USERLIST') . ' - ' . $this->config->board_title);
+$document->setTitle(JText::_('COM_KUNENA_USRL_USERLIST') . ' - ' . $this->escape($this->config->board_title));
 
 $document->addScriptDeclaration( "document.addEvent('domready', function() {
 		// Attach auto completer to the following ids:
@@ -68,14 +68,14 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 								<div class="ktitle-cover km">
 									<span class="ktitle kl"> <?php echo JText::_('COM_KUNENA_USRL_USERLIST'); ?></span>&nbsp;
 
-									<?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), $this->total);?>
+									<?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), $this->escape($this->total));?>
 								</div>
 							</td>
 
 							<td align="right">
 								<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit="return validate()">
 									<input id="kusersearch" type="text" name="search" class="inputbox"
-										value="<?php echo $this->search; ?>" onblur="if(this.value=='') this.value='<?php echo $this->search; ?>';" onfocus="if(this.value=='<?php echo $this->search; ?>') this.value='';" />
+										value="<?php echo $this->search; ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape($this->search); ?>';" onfocus="if(this.value=='<?php echo $this->escape($this->search); ?>') this.value='';" />
 
 									<input type="image" src="<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.png' ;?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;"/>
 								</form>
@@ -185,37 +185,37 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 							<?php } ?>
 
 							<?php if ($this->config->userlist_name) { ?>
-							<td class="td-4 km" align="center"><?php echo CKunenaLink::GetProfileLink($user->id, $user->name); ?></td>
+							<td class="td-4 km" align="center"><?php echo CKunenaLink::GetProfileLink($user->id, $this->escape($user->name)); ?></td>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_username) { ?>
-							<td class="td-5 km" align="center"><?php echo CKunenaLink::GetProfileLink($user->id, $user->username); ?></td>
+							<td class="td-5 km" align="center"><?php echo CKunenaLink::GetProfileLink($user->id, $this->escape($user->username)); ?></td>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_posts) { ?>
-							<td class="td-7 ks" align="center"><?php echo $user->posts; ?></td>
+							<td class="td-7 ks" align="center"><?php echo $this->escape($user->posts); ?></td>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_karma) { ?>
-								<td class="td-7 ks" align="center"><?php echo $user->karma; ?></td>
+								<td class="td-7 ks" align="center"><?php echo $this->escape($user->karma); ?></td>
 							<?php } ?>
 
 							<?php
 							if ($this->config->userlist_email) {
-								echo "\t\t<td class=\"td-8 ks\" align=\"center\"><a href=\"mailto:$user->email\">$user->email</a></td>\n";
+								echo "\t\t<td class=\"td-8 ks\" align=\"center\"><a href=\"mailto:$this->escape($user->email)\">$this->escape($user->email)</a></td>\n";
 							}
 							if ($this->config->userlist_usertype) {
-								echo "\t\t<td class=\"td-9 ks\" align=\"center\">$user->usertype</td>\n";
+								echo "\t\t<td class=\"td-9 ks\" align=\"center\">$this->escape($user->usertype)</td>\n";
 							}
 							if ($this->config->userlist_joindate) {
-								echo "\t\t<td class=\"td-10 ks\" align=\"center\" title=\"".CKunenaTimeformat::showDate($user->registerDate, 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($user->registerDate, 'datetime_today', 'utc') . "</td>\n";
+								echo "\t\t<td class=\"td-10 ks\" align=\"center\" title=\"".CKunenaTimeformat::showDate($this->escape($user->registerDate), 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($this->escape($user->registerDate), 'datetime_today', 'utc') . "</td>\n";
 							}
 							if ($this->config->userlist_lastvisitdate) {
-								echo "\t\t<td class=\"td-11 ks\" align=\"center\" title=\"".CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') . "</td>\n";
+								echo "\t\t<td class=\"td-11 ks\" align=\"center\" title=\"".CKunenaTimeformat::showDate($this->escape($user->lastvisitDate), 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($this->escape($user->lastvisitDate), 'datetime_today', 'utc') . "</td>\n";
 							}
 							?>
 
-							<td class="td-12 lst ks" align="center"><?php if ($this->config->userlist_userhits) { echo $user->uhits; } ?></td>
+							<td class="td-12 lst ks" align="center"><?php if ($this->config->userlist_userhits) { echo $this->escape($user->uhits); } ?></td>
 
 						</tr>
 						<?php

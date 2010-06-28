@@ -74,7 +74,7 @@ if ($this->config->showwhoisonline)
                 }
             ?>
 
-                <tr class = "k<?php echo $tabclass[$k];?>">
+                <tr class = "k<?php echo $this->escape($tabclass[$k]);?>">
                     <td class = "td-1">
                         <div style = "float: right; width: 14ex;">
                         </div>
@@ -83,9 +83,9 @@ if ($this->config->showwhoisonline)
 
                         <?php
                         if ($user->userid == 0) {
-                            echo $user->username;
+                            echo $this->escape($user->username);
                         } else {
-							echo CKunenaLink::GetProfileLink($user->userid, $user->username);
+							echo CKunenaLink::GetProfileLink($user->userid, $this->escape($user->username));
                         }
                         ?>
 
@@ -95,21 +95,21 @@ if ($this->config->showwhoisonline)
                         if (CKunenaTools::isAdmin($this->my->id) && $this->config->hide_ip) {
                         ?>
 
-                            (<?php echo $user->userip; ?>)
+                            (<?php echo $this->escape($user->userip); ?>)
 
                         <?php
                         } elseif (CKunenaTools::isModerator($this->my->id) && !$this->config->hide_ip) {
                        	?>
-							(<?php echo $user->userip; ?>)
+							(<?php echo $this->escape($user->userip); ?>)
 						<?php
                         }
                         ?>
                     </td>
-                    <td class = "td-2" nowrap = "nowrap"><?php echo ' <span title="' . CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat' ) . '</span>'; ?>
+                    <td class = "td-2" nowrap = "nowrap"><?php echo ' <span title="' . CKunenaTimeformat::showDate ( $this->escape($user->time), 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $this->escape($user->time), 'config_post_dateformat' ) . '</span>'; ?>
                     </td>
 
                     <td class = "td-3">
-                        <strong><a href = "<?php echo $user->link;?>" target = "_blank"><?php echo $user->what; ?></a></strong>
+                        <strong><a href = "<?php echo $this->escape($user->link);?>" target = "_blank"><?php echo $this->escape($user->what); ?></a></strong>
                     </td>
                 </tr>
 

@@ -39,10 +39,10 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 				$k=1 - $k;
 		?>
 		<tr class="krow<?php echo $k;?>">
-			<td class="kcol kcol-annid"><?php echo $ann->id; ?></td>
-			<td class="kcol kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
+			<td class="kcol kcol-annid"><?php echo $this->escape($ann->id); ?></td>
+			<td class="kcol kcol-anndate"><?php echo CKunenaTimeformat::showDate($this->escape($ann->created), 'date_today'); ?></td>
 			<td class="kcol kcol-anntitle">
-				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', $ann->id, KunenaParser::parseText ($ann->title), KunenaParser::parseText ($ann->title), 'follow'); ?></div>
+				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', $ann->id, KunenaParser::parseText ($this->escape($ann->title)), KunenaParser::parseText ($this->escape($ann->title)), 'follow'); ?></div>
 			</td>
 			<td class="kcol kcol-annpublish">
 				<?php

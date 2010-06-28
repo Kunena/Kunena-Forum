@@ -15,7 +15,7 @@ defined( '_JEXEC' ) or die();
 <!-- ANNOUNCEMENTS BOX -->
 <div class="kblock kannouncement">
 	<div class="ktitle">
-		<h2><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, $this->title, JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></h2>
+		<h2><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, $this->escape($this->title), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></h2>
 		<span class="ktoggler"><a class="ktoggler close" rel="kannouncement"></a></span>
 	</div>
 	<div class="kcontainer" id="kannouncement">
@@ -30,11 +30,11 @@ defined( '_JEXEC' ) or die();
 		<div class="kbody">
 			<div class="kanndesc">
 				<?php if ($this->showdate) : ?>
-				<div class="anncreated"><?php echo CKunenaTimeformat::showDate($this->created, 'date_today'); ?></div>
+				<div class="anncreated"><?php echo CKunenaTimeformat::showDate($this->escape($this->created), 'date_today'); ?></div>
 				<?php endif; ?>
 				<?php if (!empty($this->sdescription)) : ?>
 					<div class="anndesc">
-						<?php echo $this->sdescription; ?>
+						<?php echo $this->escape($this->sdescription); ?>
 						<?php if (!empty($this->description)) : ?>
 						&nbsp;&nbsp;<?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
 						<?php endif; ?>

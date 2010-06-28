@@ -16,8 +16,8 @@ defined ( '_JEXEC' ) or die ();
 $k = 0;
 ?>
 <b><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY' )?>:</b>
-<?php echo $this->subject ?><br />
-<?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->config->historylimit . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?><br />
+<?php echo $this->escape($this->subject) ?><br />
+<?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->escape($this->config->historylimit) . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?><br />
 <table border="0" cellspacing="1" cellpadding="3" width="100%"
 	class="kreview-table">
 	<tr>
@@ -32,12 +32,12 @@ $k = 0;
 	<?php foreach ( $this->messages as $mes ):?>
 	<tr>
 		<td class="kreview-body<?php echo $k = 1 - $k?>" valign="top">
-			<?php echo kunena_htmlspecialchars ( $mes->name )?>
+			<?php echo $this->escape( $mes->name )?>
 		</td>
 
 		<td class="kreview-body<?php echo $k?>">
 			<div class="kmsgtext">
-				<?php echo KunenaParser::parseBBCode( $mes->message )?>
+				<?php echo KunenaParser::parseBBCode( $this->escape($mes->message) )?>
 			</div>
 			<?php if ( !empty($this->attachmentslist[$mes->id]) ) $this->displayAttachments($this->attachmentslist[$mes->id]); ?>
 		</td>

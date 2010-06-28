@@ -15,7 +15,7 @@ defined( '_JEXEC' ) or die();
 <h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE'); ?></h2>
 <table
 	class="<?php
-	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
+	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '';
 	?>" id="kflattable">
 	<tbody>
 		<tr  class="ksectiontableentry2">
@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die();
 					$mesordering[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 					$mesordering[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
 					$mesordering[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_USER_ORDER_DESC'));
-					echo JHTML::_('select.genericlist', $mesordering, 'messageordering', 'class="inputbox" size="1"', 'value', 'text', $this->profile->ordering);
+					echo JHTML::_('select.genericlist', $mesordering, 'messageordering', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->profile->ordering));
 			?></td>
 		</tr>
 		<tr  class="ksectiontableentry1">
@@ -32,7 +32,7 @@ defined( '_JEXEC' ) or die();
 			<td><?php
 					$hideEmail[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
 					$hideEmail[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
-					echo JHTML::_('select.genericlist', $hideEmail, 'hidemail', 'class="inputbox" size="1"', 'value', 'text', $this->profile->hideEmail);
+					echo JHTML::_('select.genericlist', $hideEmail, 'hidemail', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->profile->hideEmail));
 
 					?></td>
 		</tr>
@@ -41,7 +41,7 @@ defined( '_JEXEC' ) or die();
 			<td><?php
 					$showonline[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
 					$showonline[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
-					echo JHTML::_('select.genericlist', $showonline, 'showonline', 'class="inputbox" size="1"', 'value', 'text', $this->profile->showOnline);
+					echo JHTML::_('select.genericlist', $showonline, 'showonline', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->profile->showOnline));
 
 					?></td>
 		</tr>

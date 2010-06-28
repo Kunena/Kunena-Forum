@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die();
 
 $document = JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
-$calendar = JHTML::_('calendar', $this->created, 'created', 'addcreated');
+$calendar = JHTML::_('calendar', $this->escape($this->created), 'created', 'addcreated');
 JHTML::_('behavior.formvalidation');
 
 $document->addScriptDeclaration('

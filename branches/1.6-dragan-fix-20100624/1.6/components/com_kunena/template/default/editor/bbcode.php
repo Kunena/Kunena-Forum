@@ -128,13 +128,13 @@ $kunena_config = KunenaFactory::getConfig ();
 				$html_poll_edit = $kunena_poll->get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
 				JHTML::_('behavior.calendar');
 			?>
-			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('The polls are not allowed in this category'); } ?></span>
+			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); } ?></span>
 			<div id="kpoll-hide-not-allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
 
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 					maxlength="100" size="40"
-					value="<?php if(isset($this->polldatasedit[0]->title)) { echo $this->polldatasedit[0]->title; } ?>"
+					value="<?php if(isset($this->polldatasedit[0]->title)) { $this->escape(echo $this->polldatasedit[0]->title); } ?>"
 					onmouseover="javascript:$('helpbox').set('value', '<?php
 					echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />
 
@@ -148,7 +148,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 				<input class="inputbox" type="text" maxlength="15"
 					name="kpoll-time-to-live" id="kpoll-time-to-live"
-					value="<?php echo $this->polldatasedit[0]->polltimetolive; ?>" /> <img
+					value="<?php echo $this->escape($this->polldatasedit[0]->polltimetolive); ?>" /> <img
 					src="templates/system/images/calendar.png" alt="Calendar"
 					onclick="showCalendar('kpoll-time-to-live','%Y-%m-%d');"
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN'); ?>')" />
@@ -156,7 +156,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			</div>
 			<?php
 			if(!empty( $html_poll_edit )) {
-							echo $html_poll_edit;
+							echo $this->escape($html_poll_edit);
 						}
 						?>
 			<input type="hidden" name="nb_options_allowed"
@@ -167,7 +167,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				type="hidden" name="number_total_options" id="numbertotal"
 				value="<?php
 						if (! empty ( $this->polloptionstotal )) {
-							echo $this->polloptionstotal;
+							echo $this->escape($this->polloptionstotal);
 						}
 						?>">
 			<?php
@@ -236,7 +236,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				$vid_provider = array ('', 'AnimeEpisodes', 'Biku', 'Bofunk', 'Break', 'Clip.vn', 'Clipfish', 'Clipshack', 'Collegehumor', 'Current', 'DailyMotion', 'DivX,divx]http://', 'DownloadFestival', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'Fliptrack', 'Fliqz', 'Gametrailers', 'Gamevideos', 'Glumbert', 'GMX', 'Google', 'GooglyFoogly', 'iFilm', 'Jumpcut', 'Kewego', 'LiveLeak', 'LiveVideo', 'MediaPlayer,mediaplayer]http://', 'MegaVideo', 'Metacafe', 'Mofile', 'Multiply', 'MySpace', 'MyVideo', 'QuickTime,quicktime]http://', 'Quxiu', 'RealPlayer,realplayer]http://', 'Revver', 'RuTube', 'Sapo', 'Sevenload', 'Sharkle', 'Spikedhumor', 'Stickam', 'Streetfire', 'StupidVideos', 'Toufee', 'Tudou', 'Unf-Unf', 'Uume', 'Veoh', 'VideoclipsDump', 'Videojug', 'VideoTube', 'Vidiac', 'VidiLife', 'Vimeo', 'WangYou', 'WEB.DE', 'Wideo.fr', 'YouKu', 'YouTube' );
 				foreach ( $vid_provider as $vid_type ) {
 					$vid_type = explode ( ',', $vid_type );
-					echo '<option value = "' . (! empty ( $vid_type [1] ) ? $vid_type [1] : JString::strtolower ( $vid_type [0] ) . '') . '">' . $vid_type [0] . '</option>';
+					echo '<option value = "' . (! empty ( $vid_type [1] ) ? $this->escape($vid_type [1]) : JString::strtolower ( $this->escape($vid_type [0]) ) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
 				}
 				?>
 			</select> <?php
@@ -342,7 +342,7 @@ $kunena_config = KunenaFactory::getConfig ();
 
 	<td valign="top"><textarea class="ktxtarea required" name="message"
 		id="kbbcode-message"><?php
-			echo $this->message_text;
+			echo $this->escape($this->message_text);
 			?></textarea>
 	<?php
 	//

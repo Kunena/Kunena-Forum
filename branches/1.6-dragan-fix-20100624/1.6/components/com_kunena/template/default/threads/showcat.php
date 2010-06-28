@@ -39,12 +39,12 @@ if ($this->objCatInfo->headerdesc) {
 	?>
 <table
 	class="kforum-headerdesc<?php
-	echo isset ( $this->objCatInfo->class_sfx ) ? ' kforum-headerdesc' . $this->objCatInfo->class_sfx : '';
+	echo isset ( $this->objCatInfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->objCatInfo->class_sfx) : '';
 	?>"
 	>
 	<tr>
 		<td><?php
-	echo $this->headerdesc;
+	echo $this->escape($this->headerdesc);
 	?>
 		</td>
 	</tr>
@@ -149,7 +149,7 @@ echo '</div>';
 		<div class="kbox-bottomarea-modlist"><?php
 			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 			foreach ( $this->modslist as $mod ) {
-				echo CKunenaLink::GetProfileLink ( $mod->userid, $mod->username ) . '&nbsp; ';
+				echo CKunenaLink::GetProfileLink ( $mod->userid, $this->escape($mod->username) ) . '&nbsp; ';
 			}
 			?>
 		</div>

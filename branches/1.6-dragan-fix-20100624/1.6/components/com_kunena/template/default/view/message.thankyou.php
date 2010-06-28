@@ -18,7 +18,7 @@ if(!empty($this->thankyou)):
 <div class="kmessage-thankyou">
 <?php
 	echo JText::_('COM_KUNENA_THANKYOU').': ';
-	echo implode(', ', $this->thankyou);
+	echo implode(', ', $this->escape($this->thankyou));
 	if (count($this->thankyou) > 9) echo '...';
 ?>
 </div>

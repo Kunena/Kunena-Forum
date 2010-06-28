@@ -16,7 +16,7 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 ?>
 <div class="kblock kannouncement">
 	<div class="ktitle">
-		<h1><?php echo $this->title; ?></h1>
+		<h1><?php echo $this->escape($this->title); ?></h1>
 	</div>
 	<div class="kcontainer" id="kannouncement">
 		<?php if ($this->canEdit) : ?>
@@ -30,11 +30,11 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 		<div class="kbody">
 			<div class="kanndesc">
 				<?php if ($this->showdate > 0) : ?>
-				<div class="anncreated" title="<?php echo CKunenaTimeformat::showDate($this->created, 'ago'); ?>">
-					<?php echo CKunenaTimeformat::showDate($this->created, 'date_today'); ?>
+				<div class="anncreated" title="<?php echo CKunenaTimeformat::showDate($this->escape($this->created), 'ago'); ?>">
+					<?php echo CKunenaTimeformat::showDate($this->escape($this->created), 'date_today'); ?>
 				</div>
 				<?php endif; ?>
-				<div class="anndesc"><?php echo !empty($this->description) ? $this->description : $this->sdescription; ?></div>
+				<div class="anndesc"><?php echo !empty($this->description) ? $this->escape($this->description) : $this->escape($this->sdescription); ?></div>
 			</div>
 		</div>
 	</div>

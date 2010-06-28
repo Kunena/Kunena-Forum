@@ -47,7 +47,7 @@ if ($func != "") {
 		if (! $results)
 			break;
 		$parent_ids = $results->parent;
-		$fr_name = kunena_htmlspecialchars ( JString::trim ( $results->name ) );
+		$fr_name = $this->escape( JString::trim ( $results->name ) );
 		$sname = CKunenaLink::GetCategoryLink ( 'showcat', $catids, $fr_name );
 
 		if ($catid == $catids && $sfunc != "view") {
@@ -68,7 +68,7 @@ if ($func != "") {
 	$this->kunena_topic_title = '';
 	if ($sfunc == "view" and $id) {
 		$this->kunena_topic_title = $pathway->getMessagesTitles($id);
-		$jr_path_menu [] = $this->kunena_topic_title;
+		$jr_path_menu [] = $this->escape($this->kunena_topic_title);
 	}
 
 	// print the list
@@ -78,7 +78,7 @@ if ($func != "") {
 
 	$fireinfo = '';
 
-	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( kunena_htmlspecialchars ( $this->config->board_title ) ) . '</div>';
+	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( $this->escape( $this->config->board_title ) ) . '</div>';
 
 	$firelast = '';
 	for($i = 0; $i < $jr_forum_count; $i ++) {
@@ -94,7 +94,7 @@ if ($func != "") {
 	if ( $this->config->onlineusers ) {
 		if ($sfunc == "userprofile") {
 			$fireonline .= JText::_('COM_KUNENA_USER_PROFILE');
-			$fireonline .= $this->kunena_username;
+			$fireonline .= $this->escape($this->kunena_username);
 		} else {
 			$fireonline .= "<div class=\"path-element-users\">(".$pathway->getTotalViewing($sfunc). ' ' . JText::_('COM_KUNENA_PATHWAY_VIEWING') . ")&nbsp;";
 			$fireonline .= $pathway->getUsersOnlineList($sfunc);
@@ -102,7 +102,7 @@ if ($func != "") {
 		$fireonline .= '</div>';
 	}
 
-	$pathway->document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->kunena_topic_title : $fr_title_name ) . ' - ' . $this->config->board_title );
+	$pathway->document->setTitle ( htmlspecialchars_decode ( $this->kunena_topic_title ? $this->escape($this->kunena_topic_title) : $fr_title_name ) . ' - ' . $this->escape($this->config->board_title) );
 
 	$this->kunena_pathway1 = $firepath . $fireinfo;
 	$this->kunena_pathway2 = $firelast . $fireonline;

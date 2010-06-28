@@ -34,7 +34,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
             <tr>
                 <th align="left">
                     <div class = "ktitle-cover km">
-                        <span class = "ktitle kl"><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ($dataspollresult[0]->title); ?></span>
+                        <span class = "ktitle kl"><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ($this->escape($dataspollresult[0]->title)); ?></span>
                     </div>
 
 					<span class="fltrt ktoggler"><a class="ktoggler close" rel="kpolls_tbody"></a></span>
@@ -52,7 +52,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 	                          <?php foreach ($dataspollresult as $row) {
 	                           ?>
 	                            <tr>
-	                            	<td><?php echo KunenaParser::parseText ( $row->text ); ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/backgrounds/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
+	                            	<td><?php echo KunenaParser::parseText ( $this->escape($row->text) ); ?></td><td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/backgrounds/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($this->escape($row->votes*25)/5); } else { echo "0"; }?>"/></td><td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $this->escape($row->votes); } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
 	                            	<td><?php if($row->votes != '0' && $nbvoters != '0' ) { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td>
 	                            </tr>
 	                          <?php
@@ -67,7 +67,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 	                            		if ( !empty($pollusersvoted) ) {
 	                            			echo " ( ";
 	                            			foreach ( $pollusersvoted as $row ) {
-	                            				echo CKunenaLink::GetProfileLink($row->userid, ($this->config->username ? $row->username : $row->name))." ";
+	                            				echo CKunenaLink::GetProfileLink($row->userid, ($this->config->username ? $this->escape($row->username) : $this->escape($row->name)))." ";
 	                            			}
 	                            			echo " ) ";
 	                            		}
@@ -101,7 +101,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 											<ul>
 												<?php
 											    for ($i=0; $i < sizeof($dataspollresult);$i++) {
-											       echo "<li><input class=\"kpoll-boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".KunenaParser::parseText ($dataspollresult[$i]->text )."</li>";
+											       echo "<li><input class=\"kpoll-boxvote\" type=\"radio\" name=\"kpollradio\" id=\"radio_name".$i."\" value=\"".$dataspollresult[$i]->id."\" />".KunenaParser::parseText ($this->escape($dataspollresult[$i]->text) )."</li>";
 											    }
 											    	?>
 								    		</ul>
@@ -127,8 +127,8 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 									 foreach ( $dataspollresult as $row ) {
 									 ?>
 								     	<tr>
-								     		<td><?php echo KunenaParser::parseText ($row->text); ?></td>
-								     		<td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/backgrounds/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($row->votes*25)/5; } else { echo "0"; }?>"/></td>
+								     		<td><?php echo KunenaParser::parseText ($this->escape($row->text)); ?></td>
+								     		<td><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/backgrounds/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo ($this->escape($row->votes*25)/5); } else { echo "0"; }?>"/></td>
 								     		<td><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
 								     		<td><?php if($row->votes != "0" && $nbvoters != '0') { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td>
 								     	</tr>
@@ -143,7 +143,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								     		if($this->config->pollresultsuserslist){
 								     			if(!empty($pollusersvoted)){
 								     				echo " ( "; foreach($pollusersvoted as $row){
-								     					echo CKunenaLink::GetProfileLink($row->userid, ($this->config->username ? $row->username : $row->name))." ";
+								     					echo CKunenaLink::GetProfileLink($row->userid, ($this->config->username ? $this->escape($row->username) : $this->escape($row->name)))." ";
 								     				} echo " ) ";
 								     			}
 								     		} ?>

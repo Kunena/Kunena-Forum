@@ -52,13 +52,13 @@ $this->k=0;
 <div class="k-bt-cvr3">
 <div class="k-bt-cvr4">
 <div class="k_bt_cvr5">
-<table class="kblocktable<?php echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $msg_cat->class_sfx : ''?>" id="kpostmessage">
+<table class="kblocktable<?php echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $this->escape($msg_cat->class_sfx) : ''?>" id="kpostmessage">
 	<thead>
 		<tr>
 			<th colspan="2">
 				<div class="ktitle-cover km">
 					<span class="ktitle kl">
-						<?php echo $this->title?>
+						<?php echo $this->escape($this->title)?>
 					</span>
 				</div>
 			</th>
@@ -79,7 +79,7 @@ $this->k=0;
 			?></strong></td>
 
 			<td>
-				<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput required" maxlength="35" value="<?php echo $this->authorName;?>" <?php if (!$this->allow_name_change) echo 'disabled="disabled" '; ?>/>
+				<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput required" maxlength="35" value="<?php echo $this->escape($this->authorName);?>" <?php if (!$this->allow_name_change) echo 'disabled="disabled" '; ?>/>
 			</td>
 		</tr>
 
@@ -96,7 +96,7 @@ $this->k=0;
 		?>
 		<tr class = "ksectiontableentry<?php echo 1+ $this->k^=1 ?>">
 			<td class = "kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
-			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php if ( !empty($this->emai) ) { echo $this->email; } ?>" /></td>
+			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php if ( !empty($this->email) ) { echo $this->escape($this->email); } ?>" /></td>
 		</tr>
 		<?php
 		}
@@ -111,10 +111,10 @@ $this->k=0;
 				class="kinputbox postinput required"
 				name="subject" id="subject" size="35"
 				maxlength="<?php
-				echo $this->config->maxsubject;
+				echo $this->escape($this->config->maxsubject);
 				?>"
 				value="<?php
-				echo $this->resubject;
+				echo $this->escape($this->resubject);
 				?>" /></td>
 		</tr>
 

@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
 <h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE') ?></h2>
-<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '' ?>" id="kflattable">
+<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '' ?>" id="kflattable">
 	<tbody class="kmyprofile_general">
 	<tr class="ksectiontableentry2">
 		<td class="td-0 km kcenter">
@@ -22,7 +22,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			</label>
 		</td>
 		<td>
-			<input type="text" name="username" value="<?php echo $this->user->get('username');?>" <?php echo !$this->config->usernamechange ? 'disabled="disabled" ' : ''?>/>
+			<input type="text" name="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->config->usernamechange ? 'disabled="disabled" ' : ''?>/>
 		</td>
 	</tr>
 	<tr class="ksectiontableentry1">
@@ -77,12 +77,12 @@ $kunena_config = KunenaFactory::getConfig ();
 	<?php $i=0; foreach ($this->userparams as $userparam): ?>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="td-0 km kcenter" width="120">
-			<label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>">
-				<?php echo $userparam[0] ?>
+			<label for="params<?php echo $this->escape($userparam[5]) ?>" title="<?php echo $this->escape($userparam[2]) ?>">
+				<?php echo $this->escape($userparam[0]) ?>
 			</label>
 		</td>
 		<td>
-			<?php echo $userparam[1] ?>
+			<?php echo $this->escape($userparam[1]) ?>
 		</td>
 	</tr>
 	<?php endforeach; ?>

@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+28-June-2010 @quila
+# [#19288] escaped whole template
+
 26-June-2010 @quila
 # [#19288] escaped "categories.php" in the template
 

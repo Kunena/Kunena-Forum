@@ -31,12 +31,12 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 	<tr>
 <?php if ($this->mode=='posts') : ?>
 		<td class="klist-actions-info-all"><strong><?php
-		echo $this->total?></strong>
-		<?php echo $this->header; ?>
+		echo $this->escape($this->total)?></strong>
+		<?php echo $this->escape($this->header); ?>
 		</td>
 <?php else: ?>
 		<td class="klist-actions-info-all"><strong><?php
-		echo $this->total?></strong> <?php
+		echo $this->escape($this->total)?></strong> <?php
 		echo JText::_('COM_KUNENA_DISCUSSIONS')?>
 		</td>
 		<?php
@@ -184,7 +184,7 @@ if (count ( $this->threads ) > 0) :
 	<tr>
 		<td class="klist-actions-info-all"><strong><?php
 	echo $this->total?></strong> <?php
-	echo $this->mode=='posts' ? $this->header : JText::_('COM_KUNENA_DISCUSSIONS')?>
+	echo $this->mode=='posts' ? $this->escape($this->header) : JText::_('COM_KUNENA_DISCUSSIONS')?>
 			</td>
 
 			<?php

@@ -39,18 +39,18 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 <table
 	class="<?php
-	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
+	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '';
 	?>" id="kflattable">
 	<thead>
 		<tr>
 			<th
 				colspan="<?php
-	echo $this->columns;
+	echo $this->escape($this->columns);
 	?>">
 
 		<div class="ktitle-cover km"><span class="ktitle kl">
 
-	<?php if (!empty($this->header)) echo $this->header; ?></span></div>
+	<?php if (!empty($this->header)) echo $this->escape($this->header); ?></span></div>
 	<?php if (CKunenaTools::isModerator($this->my->id)) { ?>
 	<div class="kcheckbox select-toggle">
 		<input id="kcbcheckall" type="checkbox" name="toggle" value="" />
@@ -70,8 +70,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		$lastreply = $this->lastreply[$message->thread];
 		$firstpost = $this->threads[$message->thread];
 
-		$message->name = kunena_htmlspecialchars ( $message->name );
-		$message->email = kunena_htmlspecialchars ( $message->email );
+		$message->name = $this->escape( $message->name );
+		$message->email = $this->escape( $message->email );
 ?>
 		<tr
 			class="k<?php
@@ -104,12 +104,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			}
 			?>
 			<div class="ktopic-title-cover"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, KunenaParser::parseText ($message->subject), KunenaParser::stripBBCode ($message->message), 'follow', 'ktopic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $message->catid, $message->id, KunenaParser::parseText ($this->escape($message->subject)), KunenaParser::stripBBCode ($this->escape($message->message)), 'follow', 'ktopic-title km' );
 			?>
-			</div><div style="display:none"><?php echo KunenaParser::parseBBCode ($message->message);?></div>
+			</div><div style="display:none"><?php echo KunenaParser::parseBBCode ($this->escape($message->message));?></div>
 			</td>
 			<td class="td-3"><?php
-			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, KunenaParser::parseText ($firstpost->subject), KunenaParser::stripBBCode ($firstpost->message), 'follow', 'ktopic-title km' );
+			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, KunenaParser::parseText ($this->escape($firstpost->subject)), KunenaParser::stripBBCode ($this->escape($firstpost->message)), 'follow', 'ktopic-title km' );
 			?>
 			<?php
 			if ($message->favcount ) {
@@ -122,7 +122,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			<?php
 			if ($message->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', $message->catid, $message->id, $unreadPage, $this->config->messages_per_page, '<sup class="knewchar">&nbsp;(' . $message->unread . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', $message->lastread );
+					echo CKunenaLink::GetThreadPageLink ( 'view', $message->catid, $message->id, $unreadPage, $this->config->messages_per_page, '<sup class="knewchar">&nbsp;(' . $this->escape($message->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', $this->escape($message->lastread) );
 			}
 			if ($message->locked != 0) {
 			echo CKunenaTools::showIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
@@ -130,7 +130,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			<div class="ks">
 			<!-- Category --> <span class="ktopic-category"> <?php
-			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $message->catid, kunena_htmlspecialchars ( $message->catname ) );
+			echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', $message->catid, $this->escape( $message->catname ) );
 			?>
 			</span> <!-- /Category -->
 		</div>
@@ -159,16 +159,16 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		?> <!-- /Avatar -->
 
 			<!-- By -->
-			<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($message->time, 'config_post_dateformat_hover'); ?>"><?php
+			<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($this->escape($message->time), 'config_post_dateformat_hover'); ?>"><?php
 		echo JText::_('COM_KUNENA_POSTED_AT')?>
 			<?php
-			echo CKunenaTimeformat::showDate($message->time, 'config_post_dateformat');
+			echo CKunenaTimeformat::showDate($this->escape($message->time), 'config_post_dateformat');
 		?>&nbsp;</span>
 
 		<?php
 		if ($message->name) {
 			echo '<br /><span class="ktopic-by">';
-			echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $message->userid, $message->name );
+			echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $message->userid, $this->escape($message->name) );
 			echo '</span>';
 		}
 		?>

@@ -16,8 +16,8 @@ global $kunena_icons;
 ?>
 <div><?php $this->displayPathway(); ?></div>
 <?php if ($this->headerdesc) : ?>
-<div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->catinfo->class_sfx : '' ?>">
-	<?php echo $this->headerdesc ?>
+<div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->catinfo->class_sfx) : '' ?>">
+	<?php echo $this->escape($this->headerdesc) ?>
 </div>
 <?php endif ?>
 <?php
@@ -26,13 +26,13 @@ CKunenaTools::showModulePosition( 'kunena_poll' );
 $this->displayThreadActions(0);
 ?>
 
-<table class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kblocktable' . $this->catinfo->class_sfx : '' ?>" id="kviews">
+<table class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kblocktable' . $this->escape($this->catinfo->class_sfx) : '' ?>" id="kviews">
 	<thead>
 		<tr>
 			<th class="kleft">
 				<div class="ktitle-cover km">
 					<span class="ktitle kl"><?php echo JText::_('COM_KUNENA_TOPIC') ?>
-						<?php echo $this->kunena_topic_title ?>
+						<?php echo $this->escape($this->kunena_topic_title) ?>
 					</span>
 					<?php if ($this->favorited) : ?>
 					<div class="kfavorite"></div>
@@ -72,7 +72,7 @@ $this->displayThreadActions(0);
 			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 			$modlinks = array();
 			foreach ( $this->modslist as $mod ) {
-				$modlinks[] = CKunenaLink::GetProfileLink ( $mod->userid, ($this->config->username ? $mod->username : $mod->name) );
+				$modlinks[] = CKunenaLink::GetProfileLink ( $mod->userid, ($this->config->username ? $this->escape($mod->username) : $this->escape($mod->name)) );
 			}
 			echo implode(', ', $modlinks);
 		?>

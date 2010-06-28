@@ -16,10 +16,10 @@ $document = & JFactory::getDocument ();
 $document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });" );
 $private = KunenaFactory::getPrivateMessaging();
 if ($this->my->id == $this->user->id) {
-	$PMCount = $private->getUnreadCount($this->my->id);
+	$PMCount = $this->escape($private->getUnreadCount($this->my->id));
 	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 } else {
-	$PMlink = $this->profile->profileIcon('private');
+	$PMlink = $this->escape($this->profile->profileIcon('private'));
 }
 ?>
 
@@ -29,11 +29,11 @@ if ($this->my->id == $this->user->id) {
 <div class="k-bt-cvr4">
 <div class="k-bt-cvr5">
 <h1><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?>
-<?php if (!empty($this->editlink)) echo '<span class="kright">'.$this->editlink.'</span>';?></h1>
+<?php if (!empty($this->editlink)) echo '<span class="kright">'.$this->escape($this->editlink).'</span>';?></h1>
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
 			<?php if ($this->avatarlink) : ?>
-			<div class="kavatar-lg"><?php echo $this->avatarlink; ?></div>
+			<div class="kavatar-lg"><?php echo $this->escape($this->avatarlink); ?></div>
 			<?php endif; ?>
 			<div id="kprofile-stats">
 				<ul>
@@ -44,13 +44,13 @@ if ($this->my->id == $this->user->id) {
 					<!-- The class on the span below should be rank then hyphen then the rank name -->
 					<?php if (!empty($this->rank_title)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>: </strong><?php echo $this->escape($this->rank_title); ?></li><?php endif; ?>
 					<?php if (!empty($this->rank_image)): ?><li class="kprofile-rank"><img src="<?php echo $this->rank_image; ?>" alt="<?php echo $this->escape($this->rank_title); ?>" /></li><?php endif; ?>
-					<?php if (!empty($this->registerdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->registerdate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->registerdate, 'date_today', 'utc'); ?></span></li><?php endif; ?>
-					<?php if (!empty($this->lastvisitdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->lastvisitdate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->lastvisitdate, 'date_today', 'utc'); ?></span></li><?php endif; ?>
-					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?>:</strong> GMT <?php echo CKunenaTimeformat::showTimezone($this->timezone); ?></li>
-					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCAL_TIME'); ?>:</strong> <?php echo CKunenaTimeformat::showDate('now', 'time', 'utc', $this->timezone); ?></li>
-					<?php if (!empty($this->posts)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_POSTS'); ?>:</strong> <?php echo $this->posts; ?></li><?php endif; ?>
+					<?php if (!empty($this->registerdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_REGISTERDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->escape($this->registerdate), 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->escape($this->registerdate), 'date_today', 'utc'); ?></span></li><?php endif; ?>
+					<?php if (!empty($this->lastvisitdate)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->escape($this->lastvisitdate), 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->escape($this->lastvisitdate), 'date_today', 'utc'); ?></span></li><?php endif; ?>
+					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_TIMEZONE'); ?>:</strong> GMT <?php echo CKunenaTimeformat::showTimezone($this->escape($this->timezone)); ?></li>
+					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCAL_TIME'); ?>:</strong> <?php echo CKunenaTimeformat::showDate('now', 'time', 'utc', $this->escape($this->timezone)); ?></li>
+					<?php if (!empty($this->posts)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_POSTS'); ?>:</strong> <?php echo $this->escape($this->posts); ?></li><?php endif; ?>
 					<!-- Profile view*s*? -->
-					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW'); ?>:</strong> <?php echo $this->profile->uhits; ?></li>
+					<li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_PROFILEVIEW'); ?>:</strong> <?php echo $this->escape($this->profile->uhits); ?></li>
 					<li><?php echo $this->displayKarma(); ?></li>
 					<?php if ($PMlink) {
 							?>

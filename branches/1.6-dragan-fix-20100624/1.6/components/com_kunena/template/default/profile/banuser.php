@@ -16,7 +16,7 @@ JHTML::_('behavior.calendar');
 
 <h2><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></h2>
 <form id="kform-ban" name="kformban" action="index.php" method="post">
-<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : ''; ?> kblock">
+<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?> kblock">
 	<tbody>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></b></td>
@@ -33,7 +33,7 @@ JHTML::_('behavior.calendar');
 					$block[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
 					$block[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
 					// build the html select list
-					echo JHTML::_('select.genericlist', $block, 'block', 'class="inputbox" size="1"', 'value', 'text', $this->baninfo->blocked);
+					echo JHTML::_('select.genericlist', $block, 'block', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->baninfo->blocked));
 					?></td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
@@ -41,7 +41,7 @@ JHTML::_('behavior.calendar');
 			<span class="ks"><?php echo JText::_('COM_KUNENA_BAN_STARTEXPIRETIME_DESC'); ?></span>
 		</td>
 		<td class="kcol-addban-right">
-			<input class="inputbox" type="text" maxlength="15" name="expiration" id="expiration" value="<?php echo $this->baninfo->expiration ?>" />
+			<input class="inputbox" type="text" maxlength="15" name="expiration" id="expiration" value="<?php echo $this->escape($this->baninfo->expiration) ?>" />
 				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('expiration','%Y-%m-%d');$('expiration').removeProperty('style');" />
 		</td>
 	</tr>

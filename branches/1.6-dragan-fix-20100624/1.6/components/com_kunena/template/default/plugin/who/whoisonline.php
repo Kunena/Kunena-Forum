@@ -83,14 +83,14 @@ if ($this->config->showwhoisonline)
                         <?php
 							foreach ($users as $user) {
 							if ( $user->showOnline > 0 ){
-							echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ?> &nbsp;
+							echo CKunenaLink::GetProfileLink ( $user->id, $this->escape($user->username) ); ?> &nbsp;
 							<?php } }
 							if (CKunenaTools::isModerator($this->my->id)) { ?>
 							<br /> <span class="ks"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span><br />
 							<?php }
 							foreach ($users as $user) {
 							if ( CKunenaTools::isModerator($this->my->id) && $user->showOnline =='0' ) {
-							echo CKunenaLink::GetProfileLink ( $user->id, $user->username ); ;?> &nbsp;
+							echo CKunenaLink::GetProfileLink ( $user->id, $this->escape($user->username) ); ;?> &nbsp;
 							<?php } }
 						?>
 					</div>

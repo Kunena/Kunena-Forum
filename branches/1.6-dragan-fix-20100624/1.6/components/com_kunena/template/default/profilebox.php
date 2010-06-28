@@ -60,7 +60,7 @@ if ($type == 'logout') :
 					<?php endif; ?>
 				</ul>
 				<ul class="kprofilebox-welcome">
-					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->user->id, $this->kunena_username ); ;?></strong></li>
+					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->user->id, $this->escape($this->kunena_username) ); ;?></strong></li>
 					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 					<?php if ($logout) : ?>
 					<li>

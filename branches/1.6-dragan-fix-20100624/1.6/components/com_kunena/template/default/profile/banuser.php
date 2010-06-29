@@ -28,13 +28,15 @@ JHTML::_('behavior.calendar');
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left" ><b><?php echo JText::_('COM_KUNENA_BAN_BANLEVEL'); ?></b></td>
-		<td class="kcol-addban-right"><?php
-					// make the select list for the view type
-					$block[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
-					$block[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
-					// build the html select list
-					echo JHTML::_('select.genericlist', $block, 'block', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->baninfo->blocked));
-					?></td>
+		<td class="kcol-addban-right">
+			<?php
+			// make the select list for the view type
+			$block[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'));
+			$block[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA'));
+			// build the html select list
+			echo JHTML::_('select.genericlist', $block, 'block', 'class="inputbox" size="1"', 'value', 'text', $this->escape($this->baninfo->blocked));
+			?>
+		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 		<td class="kcol-addban-left"><b><?php echo JText::_('COM_KUNENA_BAN_EXPIRETIME'); ?></b><br />
@@ -42,7 +44,8 @@ JHTML::_('behavior.calendar');
 		</td>
 		<td class="kcol-addban-right">
 			<input class="inputbox" type="text" maxlength="15" name="expiration" id="expiration" value="<?php echo $this->escape($this->baninfo->expiration) ?>" />
-				<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('expiration','%Y-%m-%d');$('expiration').removeProperty('style');" />
+			<?php // FIXME: use our own image ?>
+			<img src="templates/system/images/calendar.png" alt="Calendar" onclick="showCalendar('expiration','%Y-%m-%d');$('expiration').removeProperty('style');" />
 		</td>
 	</tr>
 	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
@@ -97,7 +100,7 @@ JHTML::_('behavior.calendar');
 			<input type="hidden" name="option" value="com_kunena" />
 			<input type="hidden" name="func" value="profile" />
 			<input type="hidden" name="do" value="ban" />
-			<input type="hidden" name="userid" value="<?php echo $this->escape($this->profile->userid); ?>" />
+			<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
 		</td>
 	</tr>
 </tbody>

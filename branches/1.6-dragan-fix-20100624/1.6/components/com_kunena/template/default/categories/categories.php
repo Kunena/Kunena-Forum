@@ -21,285 +21,152 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-global $kunena_icons;
+foreach ( $this->categories [0] as $section ) :
+	$htmlClassBlockTable = !empty ( $section->class_sfx ) ? ' kblocktable' . $this->escape($section->class_sfx) : '';
+	$htmlClassTitleCover = !empty ( $section->class_sfx ) ? ' ktitle-cover' . $this->escape($section->class_sfx) : '';
 ?>
-<?php
-	foreach ( $this->categories [0] as $cat ) {
-		?>
 <!-- B: List Cat -->
-<div class="k-bt-cvr1" id="kblock<?php
-		echo $cat->id;
-		?>">
+<div class="k-bt-cvr1" id="kblock<?php echo intval($section->id) ?>">
 <div class="k-bt-cvr2">
 <div class="k-bt-cvr3">
 <div class="k-bt-cvr4">
 <div class="k-bt-cvr5">
-<table
-	class="kblocktable<?php
-		echo isset ( $cat->class_sfx ) ? ' kblocktable' . $this->escape($cat->class_sfx) : '';
-		?>" id="kcat<?php
-		echo $cat->id;
-		?>" >
+<table class="kblocktable<?php echo $htmlClassBlockTable ?>" id="kcat<?php echo intval($section->id) ?>">
 	<thead>
 		<tr>
 			<th colspan="5">
-			<div class="ktitle-cover<?php
-		echo isset ( $cat->class_sfx ) ? ' ktitle-cover' . $this->escape($cat->class_sfx) : '';
-		?> km"><?php
-		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, $this->escape($cat->name), 'follow', $class = 'ktitle kl' );
+				<div class="ktitle-cover<?php echo $htmlClassTitleCover ?> km">
+					<?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($section->id), $this->escape($section->name), 'follow', $class = 'ktitle kl' ); ?>
+					<?php if (!empty($section->description)) : ?>
+					<div class="ktitle-desc km">
+						<?php echo KunenaParser::parseBBCode ( $section->description ); ?>
+					</div>
+					<?php endif; ?>
+				</div>
 
-		if ($cat->description != "") {
-			?>
-			<div class="ktitle-desc km"><?php
-			echo KunenaParser::parseBBCode ( $this->escape($cat->description ));
-			?>
-			</div>
-			<?php
-		}
-		?></div>
-
-			<div class="fltrt"><span id="cat_list"><a class="ktoggler close"
-				rel="catid_<?php
-		echo $cat->id;
-		?>"></a></span></div>
+			<div class="fltrt"><span id="cat_list"><a class="ktoggler close" rel="catid_<?php echo intval($section->id) ?>"></a></span></div>
 			</th>
 		</tr>
 	</thead>
-	<tbody id="catid_<?php
-		echo $cat->id;
-		?>">
+	<tbody id="catid_<?php echo intval($section->id) ?>">
 
-		<?php
-		if (empty ( $this->categories [$cat->id] )) {
-			echo '' . JText::_('COM_KUNENA_GEN_NOFORUMS') . '';
-		} else {
-			$k = 0;
-			foreach ( $this->categories [$cat->id] as $subcat ) {
-				?>
-		<tr
-			class="k<?php
-				echo $this->tabclass [$k ^= 1], isset ( $subcat->class_sfx ) ? ' k' . $this->escape($this->tabclass [$k]) . $this->escape($subcat->class_sfx) : '';
-				?>"
-			id="kcat<?php
-				echo $subcat->id?>">
-			<td class="td-1 kcenter" width="1%"><?php
-				$tmpIcon = '';
-				if ($this->config->shownew && $this->my->id != 0) {
-					if ($subcat->new) {
-						// Check Unread    Cat Images
-						if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_on.gif" )) {
-							$tmpIcon = '<img src="' . KUNENA_URLCATIMAGES . $subcat->id . '_on.gif" border="0" class="kforum-cat-image"alt=" " />';
-						} else {
-							$tmpIcon = CKunenaTools::showIcon ( 'kunreadforum', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') );
-						}
-					} else {
-						// Check Read Cat Images
-						if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_off.gif" )) {
-							$tmpIcon = '<img src="' . KUNENA_URLCATIMAGES . $subcat->id . '_off.gif" border="0" class="kforum-cat-image" alt=" " />';
-						} else {
-							$tmpIcon = CKunenaTools::showIcon ( 'kreadforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
-						}
-					}
-				} else {
-					// Not Login Cat Images
-					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_notlogin.gif" )) {
-						$tmpIcon = '<img src="' . KUNENA_URLCATIMAGES . $subcat->id . '_notlogin.gif" border="0" class="kforum-cat-image" alt=" " />';
-					} else {
-						$tmpIcon = CKunenaTools::showIcon ( 'knotloginforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
-					}
-				}
-				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, $tmpIcon );
-				?>
+	<?php
+	if (empty ( $this->categories [$section->id] )) {
+		echo JText::_('COM_KUNENA_GEN_NOFORUMS');
+	} else {
+		$k = 0;
+		foreach ( $this->categories [$section->id] as $category ) {
+	?>
+		<tr class="k<?php echo $this->tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($this->tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
+			id="kcat<?php echo intval($category->id) ?>">
+			<td class="td-1 kcenter" width="1%">
+				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $category->htmlCategoryIcon ) ?>
 			</td>
 
 			<td class="td-2 kleft">
-			<div class="kthead-title kl"><?php
-				//new posts available
-				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, $this->escape($subcat->name ) );
-
-				if ($subcat->new && $this->my->id > 0) {
-					echo '<sup class="knewchar">(' . $this->escape($subcat->new) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
+			<div class="kthead-title kl">
+			<?php
+				// Show new posts, locked, review
+				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->escape($category->name ) );
+				if ($category->new) {
+					echo '<sup class="knewchar">(' . intval($category->new) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}
-
-				if ($subcat->locked) {
+				if ($category->locked) {
 					echo CKunenaTools::showIcon ( 'kforumlocked', JText::_('COM_KUNENA_GEN_LOCKED_FORUM') );
 				}
-
-				if ($subcat->review) {
+				if ($category->review) {
 					echo CKunenaTools::showIcon ( 'kforummoderated', JText::_('COM_KUNENA_GEN_MODERATED') );
 				}
 				?>
 			</div>
 
-			<?php
-				if ($subcat->forumdesc != "") {
-					?>
-
-			<div class="kthead-desc km"><?php
-					echo $this->escape($subcat->forumdesc)?>
-			</div>
-
-			<?php
-				}
-
-				// loop over subcategories to show them under
-				if (! empty ( $this->childforums [$subcat->id] )) {
-					?>
-
+		<?php if (!empty($category->description)) : ?>
+			<div class="kthead-desc km"><?php echo KunenaParser::parseBBCode ($category->description) ?> </div>
+		<?php endif; ?>
+		<?php
+			// Display subcategories
+			if (! empty ( $this->childforums [$category->id] )) :
+		?>
 			<div class="kthead-child">
-
 			<div class="kcc-table">
-			<div class="kcc-childcat-title"><?php
-					if (count ( $this->childforums [$subcat->id] ) == 1) {
-						echo JText::_('COM_KUNENA_CHILD_BOARD');
-					} else {
-						echo JText::_('COM_KUNENA_CHILD_BOARDS');
-					}
-					?>:
+			<div class="kcc-childcat-title">
+				<?php echo count ( $this->childforums [$category->id] ) == 1 ? JText::_('COM_KUNENA_CHILD_BOARD') : JText::_('COM_KUNENA_CHILD_BOARDS') ?>:
 			</div>
+			<?php foreach ( $this->childforums [$category->id] as $childforum ) : ?>
+			<div class="kcc-subcat km">
 			<?php
-
-					foreach ( $this->childforums [$subcat->id] as $childforum ) {
-						echo "<div class=\"kcc-subcat km\">";
-
-						//Begin: parent read unread iconset
-						if ($this->config->showchildcaticon) {
-							if ($this->config->shownew && $this->my->id != 0) {
-								if ($childforum->new) {
-									// Check Unread    Cat Images
-									if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_on_childsmall.gif" )) {
-										echo "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-									} else {
-										echo CKunenaTools::showIcon ( 'kunreadforum-sm', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') );
-									}
-								} else {
-									// Check Read Cat Images
-									if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_off_childsmall.gif" )) {
-										echo "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-									} else {
-										echo CKunenaTools::showIcon ( 'kreadforum-sm', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
-									}
-								}
-							} // Not Login Cat Images
-else {
-								if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_notlogin_childsmall.gif" )) {
-									echo "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_notlogin_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-								} else {
-									echo CKunenaTools::showIcon ( 'knotloginforum-sm', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
-								}
-								?>
-
-			<?php
-							}
-							//
-						}
-						// end: parent read unread iconset
-						?>
-
-			<?php
-						echo CKunenaLink::GetCategoryLink ( 'showcat', $childforum->id, $this->escape($childforum->name), '','', KunenaParser::stripBBCode ( $this->escape($childforum->description )) );
-						echo '<span class="kchildcount ks">(' . $this->escape($childforum->numTopics) . "/" . $this->escape($childforum->numPosts) . ')</span>';
-						echo "</div>";
-					}
-					?>
+				echo $childforum->htmlCategoryIcon;
+				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($childforum->id), $this->escape($childforum->name), '','', KunenaParser::stripBBCode ( $childforum->description ) );
+				echo '<span class="kchildcount ks">(' . $this->escape($childforum->numTopics) . "/" . $this->escape($childforum->numPosts) . ')</span>';
+			?>
+			</div>
+			<?php endforeach; ?>
 			</div>
 			</div>
-
-			<?php
-				}
-
+		<?php endif; ?>
+		<?php if (! empty ( $this->modlist [$category->id] )) : ?>
+			<div class="kthead-moderators ks">
+		<?php 
 				// get the Moderator list for display
-				if (! empty ( $this->modlist [$subcat->id] )) {
-					echo '<div class="kthead-moderators ks">' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
-
-					$mod_cnt = 0;
-					foreach ( $this->modlist [$subcat->id] as $mod ) {
-						if ($mod_cnt)
-							echo ', ';
-						$mod_cnt ++;
-						echo CKunenaLink::GetProfileLink ( $mod->userid, ($this->config->username ? $this->escape($mod->username) : $this->escape($mod->name)) );
-					}
-
-					echo '</div>';
+				$modslist = array();
+				foreach ( $this->modlist [$category->id] as $mod ) {
+					$modslist[] = CKunenaLink::GetProfileLink ( intval($mod->userid) );
 				}
-
-				if (isset ( $this->pending [$subcat->id] )) {
-					echo '<div class="ks kalert">';
-					echo CKunenaLink::GetCategoryReviewListLink ( $subcat->id, $this->escape($this->pending [$subcat->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'), 'nofollow' );
-					echo '</div>';
-				}
-				?>
+				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
+		?>
+			</div>
+		<?php endif; ?>
+		<?php if (! empty ( $this->pending [$category->id] )) : ?>
+			<div class="ks kalert">
+				<?php echo CKunenaLink::GetCategoryReviewListLink ( intval($category->id), intval($this->pending [$category->id]) . ' ' . JText::_('COM_KUNENA_SHOWCAT_PENDING'), 'nofollow' ); ?>
+			</div>
+		<?php endif; ?>
 			</td>
 
-			<td class="td-3 km kcenter" width="5%"><!-- Number of Topics -->
-			<span class="kcat-topics-number"><?php
-				echo CKunenaTools::formatLargeNumber ( $this->escape($subcat->numTopics) );
-				?>
-			</span> <span class="kcat-topics"> <?php
-				echo JText::_('COM_KUNENA_GEN_TOPICS');
-				?> </span> <!-- /Number of Replies --></td>
+			<td class="td-3 km kcenter" width="5%">
+				<!-- Number of Topics -->
+				<span class="kcat-topics-number"><?php echo CKunenaTools::formatLargeNumber ( intval($category->numTopics) ) ?></span>
+				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_TOPICS');?></span>
+				<!-- /Number of Topics -->
+			</td>
 
-			<td class="td-4 km kcenter" width="5%"><!-- Number of Topics -->
-			<span class="kcat-replies-number"><?php
-				echo CKunenaTools::formatLargeNumber ( $this->escape($subcat->numPosts) );
-				?>
-			</span> <span class="kcat-replies"> <?php
-				echo JText::_('COM_KUNENA_GEN_REPLIES');
-				?> </span> <!-- /Number of Replies --></td>
+			<td class="td-4 km kcenter" width="5%">
+			<!-- Number of Replies -->
+			<span class="kcat-replies-number"><?php echo CKunenaTools::formatLargeNumber ( intval($category->numPosts) ) ?></span>
+			<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
+			<!-- /Number of Replies -->
+			</td>
 
-			<?php
-				if ($subcat->numTopics != 0) {
-					?>
-
+			<?php if ($category->numTopics != 0) { ?>
 			<td class="td-5 kleft" width="25%">
-			<!-- Avatar --> <?php
-			if ($this->config->avataroncat > 0) :
-				$profile = KunenaFactory::getUser((int)$subcat->userid);
+			<?php if ($this->config->avataroncat > 0) : ?>
+			<!-- Avatar --> 
+			<?php
+				$profile = KunenaFactory::getUser((int)$category->userid);
 				$useravatar = $profile->getAvatarLink('klist-avatar', 'list');
-				if ($useravatar) :
-				?>
-				<span class="klatest-avatar"> <?php
-				echo CKunenaLink::GetProfileLink ( $subcat->userid, $useravatar );
-				?>
-				</span> <?php
-				endif;
-			endif;
-			?> <!-- /Avatar -->
+				if ($useravatar) : ?>
+					<span class="klatest-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($category->userid), $useravatar ); ?></span>
+				<?php endif; ?>
+			<!-- /Avatar -->
+			<?php endif; ?>
 			<div class="klatest-subject ks">
-					<?php
-					echo JText::_('COM_KUNENA_GEN_LAST_POST');
-					?>: <?php
-					echo CKunenaLink::GetThreadPageLink ( 'view', $subcat->catid, $subcat->thread, $subcat->page, $this->config->messages_per_page, $this->escape($subcat->subject), $subcat->id_last_msg );
-					?>
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($category->catid), intval($category->thread), intval($category->page), intval($this->config->messages_per_page), KunenaParser::parseText($category->subject), intval($category->id_last_msg) );?>
 			</div>
 
 			<div class="klatest-subject-by ks">
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
-					echo CKunenaLink::GetProfileLink ( $subcat->userid, $this->escape($subcat->mname) );
-					echo ' ';
-					//echo JText::_('COM_KUNENA_GEN_ON');
-					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $this->escape($subcat->time_last_msg), 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $this->escape($subcat->time_last_msg), 'config_post_dateformat' ) . '</span>';
+					echo CKunenaLink::GetProfileLink ( intval($category->userid), $this->escape($category->mname) );
+					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $category->time_last_msg, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $category->time_last_msg, 'config_post_dateformat' ) . '</span>';
 					?>
 			</div>
 			</td>
 
-			<?php
-				} else {
-					?>
-
-			<td class="td-5 kcenter" width="25%"><?php
-					echo JText::_('COM_KUNENA_NO_POSTS');
-					?></td>
-
-			<?php
-				}
-				?>
+			<?php } else { ?>
+			<td class="td-5 kcenter" width="25%"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
+			<?php } ?>
 		</tr>
-		<?php
-			}
-		}
-		?>
+		<?php } } ?>
 	</tbody>
 </table>
 
@@ -310,7 +177,4 @@ else {
 </div>
 </div>
 <!-- F: List Cat -->
-
-<?php
-	}
-
+<?php endforeach; ?>

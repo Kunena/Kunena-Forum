@@ -15,20 +15,14 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div>
 	<div class="kmsgattach">
-	<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
-
-			<ul class="kfile-attach-editing">
-		<?php
-		foreach($this->attachments as $attachment) :
-		?>
-
+		<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
+		<ul class="kfile-attach-editing">
+		<?php foreach($this->attachments as $attachment) : ?>
 			<li>
-				<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo $this->escape($attachment->id); ?>" /><span><?php echo $this->escape($attachment->filename).'&nbsp; ('.number_format(($this->escape($attachment->size))/1024,0,'',',').'KB)'; ?></span>
+				<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo intval($attachment->id); ?>" />
+				<span><?php echo $this->escape($attachment->filename).'&nbsp; ('.number_format($attachment->size / 1024,0,'',',').'KB)'; ?></span>
 			</li>
-		<?php
-		endforeach;
-		?>
-			</ul>
-
+		<?php endforeach; ?>
+		</ul>
 	</div>
 </div>

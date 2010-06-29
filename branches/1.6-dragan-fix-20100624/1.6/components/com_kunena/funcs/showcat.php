@@ -200,7 +200,7 @@ class CKunenaShowcat {
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 		$this->showposts = 0;
 	}
-	
+
 	/**
 	* Escapes a value for output in a view script.
 	*
@@ -245,7 +245,7 @@ class CKunenaShowcat {
 	}
 
 	function displayFlat() {
-		$this->header = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '.kunena_htmlspecialchars ( $this->objCatInfo->name );
+		$this->header = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->escape( $this->objCatInfo->name );
 		CKunenaTools::loadTemplate('/threads/flat.php');
 	}
 

@@ -14,7 +14,6 @@ JHTML::_('behavior.tooltip');
 $i=1;
 $j=0;
 ?>
-
 <h2><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></h2>
 <table border="0" cellpadding="5" class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?> kblock-ban">
 	<thead>
@@ -35,7 +34,7 @@ $j=0;
 	?>
 		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
 			<td><?php echo $j; ?></td>
-			<td><a href="#"><?php echo CKunenaLink::GetProfileLink ( $userban->userid ); ?> </a></td>
+			<td><a href="#"><?php echo CKunenaLink::GetProfileLink ( intval($userban->userid) ); ?> </a></td>
 			<td>
 				<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); } ?></span>
 			</td>
@@ -52,7 +51,6 @@ $j=0;
 				<?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS'); ?>
 			</td>
 		</tr>
-	<?php }
-	 ?>
+	<?php } ?>
 	</tbody>
 </table>

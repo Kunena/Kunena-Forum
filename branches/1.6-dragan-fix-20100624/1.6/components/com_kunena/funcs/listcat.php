@@ -61,7 +61,7 @@ class CKunenaListcat {
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 	}
-	
+
 	/**
 	* Escapes a value for output in a view script.
 	*
@@ -75,7 +75,7 @@ class CKunenaListcat {
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
-	
+
 	function loadCategories() {
 		if ($this->_loaded) return;
 		$this->_loaded = true;
@@ -113,34 +113,29 @@ class CKunenaListcat {
 			if ($subcat->mesid)
 				$routerlist [$subcat->thread] = $subcat->subject;
 
-			$allsubcats [$i]->forumdesc = KunenaParser::parseBBCode ( $subcat->description );
-
 			$subcat->page = ceil ( $subcat->msgcount / $this->config->messages_per_page );
 
-			$categoryicon = '';
-
 			if ($this->config->shownew && $this->my->id != 0) {
-
 				if ($subcat->new) {
 					// Check Unread    Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_on.gif" )) {
-						$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+						$allsubcats [$i]->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 					} else {
-						$allsubcats [$i]->categoryicon .= CKunenaTools::showIcon ( 'kunreadforum', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') );
+						$allsubcats [$i]->htmlCategoryIcon = CKunenaTools::showIcon ( 'kunreadforum', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') );
 					}
 				} else {
 					// Check Read Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_off.gif" )) {
-						$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
+						$allsubcats [$i]->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
 					} else {
-						$allsubcats [$i]->categoryicon .= CKunenaTools::showIcon ( 'kreadforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
+						$allsubcats [$i]->htmlCategoryIcon = CKunenaTools::showIcon ( 'kreadforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
 					}
 				}
 			} else {
 				if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_notlogin.gif" )) {
-					$allsubcats [$i]->categoryicon .= "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					$allsubcats [$i]->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
-					$allsubcats [$i]->categoryicon .= CKunenaTools::showIcon ( 'knotloginforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
+					$allsubcats [$i]->htmlCategoryIcon = CKunenaTools::showIcon ( 'knotloginforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
 				}
 			}
 
@@ -172,8 +167,35 @@ class CKunenaListcat {
 			$this->db->setQuery ($query);
 			$childforums = $this->db->loadObjectList ();
 			KunenaError::checkDatabaseError();
-			foreach ( $childforums as $cat ) {
-				$this->childforums [$cat->parent] [] = $cat;
+			foreach ( $childforums as $i => $childforum ) {
+				//Begin: parent read unread iconset
+				if ($this->config->showchildcaticon) {
+					if ($this->config->shownew && $this->my->id != 0) {
+						if ($childforum->new) {
+							// Check Unread    Cat Images
+							if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_on_childsmall.gif" )) {
+								$childforum->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+							} else {
+								$childforum->htmlCategoryIcon = CKunenaTools::showIcon ( 'kunreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
+							}
+						} else {
+							// Check Read Cat Images
+							if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_off_childsmall.gif" )) {
+								$childforum->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+							} else {
+								$childforum->htmlCategoryIcon = CKunenaTools::showIcon ( 'kreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+							}
+						}
+					} else {
+						// Not Login Cat Images
+						if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_notlogin_childsmall.gif" )) {
+							$childforum->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_notlogin_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+						} else {
+							$childforum->htmlCategoryIcon = CKunenaTools::showIcon ( 'knotloginforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+						}
+					}
+				}
+				$this->childforums [$childforum->parent] [] = $childforum;
 			}
 		}
 

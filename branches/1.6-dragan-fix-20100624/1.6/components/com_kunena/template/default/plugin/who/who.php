@@ -22,8 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-if ($this->config->showwhoisonline)
-{
+if ($this->config->showwhoisonline) {
 	$users=$this->getUsersList();
 ?>
 <div class="k-bt-cvr1">
@@ -31,107 +30,76 @@ if ($this->config->showwhoisonline)
 <div class="k-bt-cvr3">
 <div class="k-bt-cvr4">
 <div class="k_bt_cvr5">
-    <table class = "kblocktable " id="kwhoispage" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-        <thead>
-            <tr>
-                <th colspan = "4">
-                   <div class = "ktitle-cover">
-                        <span class="ktitle"><?php echo $this->app->getCfg('sitename'); ?> - <?php echo JText::_('COM_KUNENA_WHO_WHOIS_ONLINE'); ?></span>
-                    </div>
-            </tr>
-        </thead>
+	<table class = "kblocktable " id="kwhoispage" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+		<thead>
+			<tr>
+				<th colspan = "4">
+					<div class = "ktitle-cover">
+						<span class="ktitle"><?php echo $this->app->getCfg('sitename'); ?> - <?php echo JText::_('COM_KUNENA_WHO_WHOIS_ONLINE'); ?></span>
+					</div>
+				</th>
+			</tr>
+		</thead>
 
-        <tbody>
-            <tr class = "ksth">
-                <th class = "th-1 ksectiontableheader">
-<?php echo JText::_('COM_KUNENA_WHO_ONLINE_USER'); ?>
+		<tbody>
+			<tr class = "ksth">
+				<th class = "th-1 ksectiontableheader"><?php echo JText::_('COM_KUNENA_WHO_ONLINE_USER'); ?></th>
+				<th class = "th-2 ksectiontableheader"><?php echo JText::_('COM_KUNENA_WHO_ONLINE_TIME'); ?></th>
+				<th class = "th-3 ksectiontableheader"><?php echo JText::_('COM_KUNENA_WHO_ONLINE_FUNC'); ?></th>
+			</tr>
 
-                </th>
+			<?php
+			$k = 0; //for alternating rows
+			$tabclass = array ("sectiontableentry1","sectiontableentry2");
 
-                <th class = "th-2 ksectiontableheader"><?php echo JText::_('COM_KUNENA_WHO_ONLINE_TIME'); ?>
-                </th>
+			foreach ($users as $user) :
+				$k = 1 - $k;
 
-                <th class = "th-3 ksectiontableheader"><?php echo JText::_('COM_KUNENA_WHO_ONLINE_FUNC'); ?>
-                </th>
-            </tr>
-
-            <?php
-            $k = 0; //for alternating rows
-            $tabclass = array
-            (
-                "sectiontableentry1",
-                "sectiontableentry2"
-            );
-
-            foreach ($users as $user)
-            {
-                $k = 1 - $k;
-
-                if ($user->userid == 0) {
-                    $user->username = JText::_('COM_KUNENA_GUEST');
-                } else if ($user->showOnline < 1 && !CKunenaTools::isModerator($this->my->id)) {
-                	continue;
-                }
-            ?>
-
-                <tr class = "k<?php echo $this->escape($tabclass[$k]);?>">
-                    <td class = "td-1">
-                        <div style = "float: right; width: 14ex;">
-                        </div>
-
-                        <span>
-
-                        <?php
-                        if ($user->userid == 0) {
-                            echo $this->escape($user->username);
-                        } else {
-							echo CKunenaLink::GetProfileLink($user->userid, $this->escape($user->username));
-                        }
-                        ?>
-
-                        </span>
-
-                        <?php
-                        if (CKunenaTools::isAdmin($this->my->id) && $this->config->hide_ip) {
-                        ?>
-
-                            (<?php echo $this->escape($user->userip); ?>)
-
-                        <?php
-                        } elseif (CKunenaTools::isModerator($this->my->id) && !$this->config->hide_ip) {
-                       	?>
-							(<?php echo $this->escape($user->userip); ?>)
+				if ($user->userid == 0) {
+					$user->username = JText::_('COM_KUNENA_GUEST');
+				} else if ($user->showOnline < 1 && !CKunenaTools::isModerator($this->my->id)) {
+					continue;
+				}
+			?>
+			<tr class = "k<?php echo $this->escape($tabclass[$k]);?>">
+				<td class = "td-1">
+					<div style = "float: right; width: 14ex;"></div>
+					<span>
 						<?php
-                        }
-                        ?>
-                    </td>
-                    <td class = "td-2" nowrap = "nowrap"><?php echo ' <span title="' . CKunenaTimeformat::showDate ( $this->escape($user->time), 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $this->escape($user->time), 'config_post_dateformat' ) . '</span>'; ?>
-                    </td>
+						if ($user->userid == 0) :
+							echo JText::_('COM_KUNENA_GUEST');
+						else :
+							echo CKunenaLink::GetProfileLink(intval($user->userid));
+						endif;
+						?>
+					</span>
+					<?php
+					if (CKunenaTools::isAdmin($this->my->id) && $this->config->hide_ip) :
+						echo '('.$this->escape($user->userip).')';
+					elseif (CKunenaTools::isModerator($this->my->id) && !$this->config->hide_ip) :
+						echo '('.$this->escape($user->userip).')';
+					endif;
+					?>
+					</td>
+					<td class = "td-2" nowrap = "nowrap">
+						<span title="<?php echo CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat_hover' ) ?>">
+							<?php echo CKunenaTimeformat::showDate ( $user->time, 'config_post_dateformat' ) ?>
+						</span>
+					</td>
 
-                    <td class = "td-3">
-                        <strong><a href = "<?php echo $this->escape($user->link);?>" target = "_blank"><?php echo $this->escape($user->what); ?></a></strong>
-                    </td>
-                </tr>
-
-        <?php
-            }
-        ?>
-    </table>
+					<td class = "td-3">
+						<strong><a href = "<?php echo $this->escape($user->link);?>" target = "_blank"><?php echo $this->escape($user->what); ?></a></strong>
+					</td>
+				</tr>
+		<?php endforeach; ?>
+	</table>
 </div>
 </div>
 </div>
 </div>
 </div>
-<?php
-}
-else
-{
-?>
-
-    <div style = "border:1px solid #FF6600; background: #FF9966; padding:20px; text-align:center;">
-        <h1><?php echo JText::_('COM_KUNENA_WHO_IS_ONLINE_NOT_ACTIVE'); ?></h1>
-    </div>
-
-<?php
-}
-?>
+<?php } else { ?>
+	<div style = "border:1px solid #FF6600; background: #FF9966; padding:20px; text-align:center;">
+		<h1><?php echo JText::_('COM_KUNENA_WHO_IS_ONLINE_NOT_ACTIVE'); ?></h1>
+	</div>
+<?php } ?>

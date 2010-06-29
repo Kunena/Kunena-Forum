@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+29-June-2010 Matias
+# [#19288] Cleanup whole template, fix some minor bugs (part 1)
+
 28-June-2010 @quila
 # [#19288] escaped whole template
 # [#19288] Replace online/ofline icons from icons.php to css icons in userlist

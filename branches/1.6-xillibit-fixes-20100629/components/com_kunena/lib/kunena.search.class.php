@@ -172,7 +172,7 @@ class CKunenaSearch {
 		$time = 0;
 		switch ($this->params ['searchdate']) {
 			case 'lastvisit' :
-				$this->db->setQuery ( "SELECT lasttime FROM #__kunena_sessions WHERE userid='{$this->my->id}'" );
+				$this->db->setQuery ( "SELECT lasttime FROM {$this->db->nameQuote('#__kunena_sessions')} WHERE userid={$this->db->Quote($this->my->id)}" );
 				$time = $this->db->loadResult ();
 				break;
 			case 'all' :
@@ -255,7 +255,7 @@ class CKunenaSearch {
 			$groupby = '';
 
 		/* get total */
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE {$where} {$groupby}" );
+		$this->db->setQuery ( "SELECT COUNT(*) FROM {$this->db->nameQuote('#__kunena_messages')} AS m JOIN {$this->db->nameQuote('#__kunena_messages_text')} AS t ON m.id=t.mesid WHERE {$where} {$groupby}" );
 		$this->total = $this->db->loadResult ();
 		KunenaError::checkDatabaseError();
 
@@ -271,8 +271,8 @@ class CKunenaSearch {
 		/* get results */
 		$sql = "SELECT m.id, m.subject, m.catid, m.thread, m.name, m.time, t.mesid, t.message,
 						c.name AS catname, c.class_sfx
-        		FROM #__kunena_messages_text AS t JOIN #__kunena_messages AS m ON m.id=t.mesid
-        		JOIN #__kunena_categories AS c ON m.catid = c.id
+        		FROM {$this->db->nameQuote('#__kunena_messages_text')} AS t JOIN {$this->db->nameQuote('#__kunena_messages')} AS m ON m.id=t.mesid
+        		JOIN {$this->db->nameQuote('#__kunena_categories')} AS c ON m.catid = c.id
         		WHERE {$where} {$groupby} ORDER BY {$orderby}";
 		$this->db->setQuery ( $sql, $this->limitstart, $this->limit );
 		$rows = $this->db->loadObjectList ();
@@ -316,7 +316,7 @@ class CKunenaSearch {
 		} else {
 			$allowed_string = "published='1' AND pub_access='0'";
 		}
-		$this->db->setQuery ( "SELECT id, parent FROM #__kunena_categories WHERE {$allowed_string}" );
+		$this->db->setQuery ( "SELECT id, parent FROM {$this->db->nameQuote('#__kunena_categories')} WHERE {$allowed_string}" );
 		$allowed_forums = $this->db->loadAssocList ( 'id' );
 		if (KunenaError::checkDatabaseError()) return array();
 

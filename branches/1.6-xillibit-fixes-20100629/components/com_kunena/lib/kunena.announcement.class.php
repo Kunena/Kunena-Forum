@@ -64,7 +64,7 @@ class CKunenaAnnouncement {
 		$showdate = JRequest::getVar ( "showdate", "" );
 
 		if (!$id) {
-			$query = "INSERT INTO #__kunena_announcement VALUES ('',
+			$query = "INSERT INTO {$this->db->nameQuote('#__kunena_announcement')} VALUES ('',
 				{$this->db->Quote ( $title )},
 				{$this->db->Quote ( $sdescription )},
 				{$this->db->Quote ( $description )},
@@ -74,7 +74,7 @@ class CKunenaAnnouncement {
 				{$this->db->Quote ( $showdate )})";
 			$msg = JText::_ ( 'COM_KUNENA_ANN_SUCCESS_ADD' );
 		} else {
-			$query = "UPDATE #__kunena_announcement SET title={$this->db->Quote ( $title )},
+			$query = "UPDATE {$this->db->nameQuote('#__kunena_announcement')} SET title={$this->db->Quote ( $title )},
 				description={$this->db->Quote ( $description )},
 				sdescription={$this->db->Quote ( $sdescription )},
 				created={$this->db->Quote ( $created )},
@@ -94,7 +94,7 @@ class CKunenaAnnouncement {
 		if (! $this->canEdit) {
 			$this->app->redirect ( CKunenaLink::GetKunenaURL ( false ), JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
 		}
-		$query = "DELETE FROM #__kunena_announcement WHERE id=$id ";
+		$query = "DELETE FROM {$this->db->nameQuote('#__kunena_announcement')} WHERE id=$id ";
 		$this->db->setQuery ( $query );
 		$this->db->query ();
 		if (KunenaError::checkDatabaseError()) return;
@@ -104,9 +104,9 @@ class CKunenaAnnouncement {
 
 	function getAnnouncement($id = 0) {
 		if (! $id) {
-			$query = "SELECT * FROM #__kunena_announcement WHERE published='1' ORDER BY created DESC";
+			$query = "SELECT * FROM {$this->db->nameQuote('#__kunena_announcement')} WHERE published='1' ORDER BY created DESC";
 		} else {
-			$query = "SELECT * FROM #__kunena_announcement WHERE id='{$id}' AND published='1'";
+			$query = "SELECT * FROM {$this->db->nameQuote('#__kunena_announcement')} WHERE id={$this->db->Quote($id)} AND published='1'";
 		}
 		$this->db->setQuery ( $query, 0, 1 );
 		$announcement = $this->db->loadObject ();
@@ -126,7 +126,7 @@ class CKunenaAnnouncement {
 	}
 
 	function getAnnouncements($start, $limit) {
-		$query = "SELECT * FROM #__kunena_announcement ORDER BY created DESC";
+		$query = "SELECT * FROM {$this->db->nameQuote('#__kunena_announcement')} ORDER BY created DESC";
 		$this->db->setQuery ( $query, $start, $limit );
 		$this->announcements = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;

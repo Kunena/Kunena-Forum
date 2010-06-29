@@ -88,7 +88,7 @@ class smile {
 	function getEmoticons($grayscale, $emoticonbar = 0) {
 		$kunena_db = &JFactory::getDBO ();
 		$grayscale == 1 ? $column = "greylocation" : $column = "location";
-		$sql = "SELECT code, `$column` FROM #__kunena_smileys";
+		$sql = "SELECT code, `$column` FROM {$kunena_db->nameQuote('#__kunena_smileys')}";
 
 		if ($emoticonbar == 1)
 			$sql .= " WHERE emoticonbar='1'";

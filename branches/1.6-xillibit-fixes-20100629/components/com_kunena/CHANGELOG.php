@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+29-June-2010 Matias
+# [#19288] Put nameQuote() and Quote() in each query to be sure that the queries has escaped
+
 28-June-2010 Matias
 + [#19288] Added Spanish language (thanks Alakentu)
 # [#19288] Fix a bug that prevents latest module from working in the right way

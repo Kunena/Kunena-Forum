@@ -170,7 +170,7 @@ class CKunenaTools {
 	function showButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
 	}
-	
+
 	function showIcon($name, $title='') {
 		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
 	}
@@ -218,11 +218,11 @@ class CKunenaTools {
         if (KunenaError::checkDatabaseError()) return;
 
           	// Update user post count (ignore unpublished categories and hidden messages)
-    	$kunena_db->setQuery("INSERT INTO #__kunena_users (userid, posts)"
+    	$kunena_db->setQuery("INSERT INTO {$kunena_db->nameQuote('#__kunena_users')} (userid, posts)"
     		." SELECT m.userid, COUNT(m.userid) "
-    		." FROM #__kunena_messages AS m"
-    		." INNER JOIN #__kunena_users AS u ON u.userid = m.userid"
-    		." WHERE m.hold=0 and m.catid IN (SELECT id FROM #__kunena_categories WHERE published=1)"
+    		." FROM {$kunena_db->nameQuote('#__kunena_messages')} AS m"
+    		." INNER JOIN {$kunena_db->nameQuote('#__kunena_users')} AS u ON u.userid = m.userid"
+    		." WHERE m.hold=0 and m.catid IN (SELECT id FROM {$kunena_db->nameQuote('#__kunena_categories')} WHERE published=1)"
     		." GROUP BY m.userid"
     		." ON DUPLICATE KEY UPDATE posts=VALUES(posts)");
     	$kunena_db->query();
@@ -250,15 +250,15 @@ class CKunenaTools {
         $kunena_db = &JFactory::getDBO();
 
         // Reset category counts as next query ignores empty categories
-        $kunena_db->setQuery("UPDATE #__kunena_categories SET numTopics=0, numPosts=0");
+        $kunena_db->setQuery("UPDATE {$kunena_db->nameQuote('#__kunena_categories')} SET numTopics=0, numPosts=0");
         $kunena_db->query();
         if (KunenaError::checkDatabaseError()) return;
 
         // Update category post count
-        $kunena_db->setQuery("INSERT INTO #__kunena_categories (id, numTopics, numPosts, id_last_msg, time_last_msg)"
+        $kunena_db->setQuery("INSERT INTO {$kunena_db->nameQuote('#__kunena_categories')} (id, numTopics, numPosts, id_last_msg, time_last_msg)"
         	." SELECT c.id, SUM( m.parent=0 ), SUM( m.parent>0 ), MAX( m.id ), MAX( m.time )"
-        	." FROM #__kunena_messages as m"
-        	." INNER JOIN #__kunena_categories AS c ON c.id=m.catid"
+        	." FROM {$kunena_db->nameQuote('#__kunena_messages')} as m"
+        	." INNER JOIN {$kunena_db->nameQuote('#__kunena_categories')} AS c ON c.id=m.catid"
         	." WHERE m.catid>0 AND m.hold=0"
         	." GROUP BY catid "
         	." ON DUPLICATE KEY UPDATE numTopics=VALUES(numTopics), numPosts=VALUES(numPosts), id_last_msg=VALUES(id_last_msg), time_last_msg=VALUES(time_last_msg)");
@@ -266,7 +266,7 @@ class CKunenaTools {
     	if (KunenaError::checkDatabaseError()) return;
 
     	// Load categories to be counted
-        $kunena_db->setQuery("SELECT id, parent, published, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories");
+        $kunena_db->setQuery("SELECT id, parent, published, numTopics, numPosts, id_last_msg, time_last_msg FROM {$kunena_db->nameQuote('#__kunena_categories')}");
         $cats = $kunena_db->loadObjectList('id');
         if (KunenaError::checkDatabaseError()) return;
 
@@ -282,7 +282,7 @@ class CKunenaTools {
         foreach ($cats as $c)
         {
         	if (!isset($c->id)) continue;
-            $kunena_db->setQuery("UPDATE #__kunena_categories SET"
+            $kunena_db->setQuery("UPDATE {$kunena_db->nameQuote('#__kunena_categories')} SET"
             	."  numTopics=" . intval($c->numTopics)
             	.", numPosts=" . intval($c->numPosts)
             	.", id_last_msg=" . intval($c->id_last_msg)
@@ -300,7 +300,7 @@ class CKunenaTools {
 
         $fb_queryName = $kunena_config->username ? "username" : "name";
 
-	    $query = "UPDATE #__kunena_messages AS m, #__users AS u
+	    $query = "UPDATE {$kunena_db->nameQuote('#__kunena_messages')} AS m, #__users AS u
 	    			SET m.name = u.$fb_queryName
 					WHERE m.userid = u.id";
         $kunena_db->setQuery($query);
@@ -311,7 +311,7 @@ class CKunenaTools {
 
     function modifyCategoryStats($msg_id, $msg_parent, $msg_time, $msg_cat) {
         $kunena_db = &JFactory::getDBO();
-        $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories ORDER BY id ASC");
+        $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts, id_last_msg, time_last_msg FROM {$kunena_db->nameQuote('#__kunena_categories')} ORDER BY id ASC");
         $cats = $kunena_db->loadObjectList();
         if (KunenaError::checkDatabaseError()) return;
 
@@ -351,7 +351,7 @@ class CKunenaTools {
     function decreaseCategoryStats($msg_id, $msg_cat) {
         //topic : 1 , message = 0
         $kunena_db = &JFactory::getDBO();
-        $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories ORDER BY id ASC");
+        $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts, id_last_msg, time_last_msg FROM {$kunena_db->nameQuote('#__kunena_categories')} ORDER BY id ASC");
         $cats = $kunena_db->loadObjectList();
         if (KunenaError::checkDatabaseError()) return;
 
@@ -359,7 +359,7 @@ class CKunenaTools {
             $ctg[$c->id] = $c;
             }
 
-        $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE id='{$msg_id}' OR thread='{$msg_id}'");
+        $kunena_db->setQuery("SELECT id FROM {$kunena_db->nameQuote('#__kunena_messages')} WHERE id={$kunena_db->Quote($msg_id)} OR thread={$kunena_db->Quote($msg_id)}");
 
         $msg_ids = $kunena_db->loadResultArray();
         if (KunenaError::checkDatabaseError()) return;
@@ -380,7 +380,7 @@ class CKunenaTools {
 
         while ($msg_cat)
         {
-            $kunena_db->setQuery("SELECT id, time FROM #__kunena_messages WHERE catid='{$msg_cat}' AND (thread!='{$msg_id}' AND id!='{$msg_id}') ORDER BY time DESC LIMIT 1;");
+            $kunena_db->setQuery("SELECT id, time FROM {$kunena_db->nameQuote('#__kunena_messages')} WHERE catid={$kunena_db->Quote($msg_cat)} AND (thread!={$kunena_db->Quote($msg_id)} AND id!={$kunena_db->Quote($msg_id)}) ORDER BY time DESC LIMIT 1;");
             $lastMsgInCat = $kunena_db->loadObject();
             if (KunenaError::checkDatabaseError()) return;
 
@@ -422,7 +422,7 @@ class CKunenaTools {
 		}
 
 		if ($readTopics) {
-			$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET readtopics='{$readTopics}' WHERE userid='{$userid}'" );
+			$kunena_db->setQuery ( "UPDATE {$kunena_db->nameQuote('#__kunena_sessions')} SET readtopics={$kunena_db->Quote($readTopics)} WHERE userid={$kunena_db->nameQuote($userid)}" );
 			$kunena_db->query ();
 			KunenaError::checkDatabaseError();
 		}
@@ -953,7 +953,7 @@ class CKunenaTools {
 		function getRulesHelpDatas($id) {
 			$kunena_db = &JFactory::getDBO ();
 
-			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$id}'" );
+			$kunena_db->setQuery ( "SELECT introtext, id FROM {$kunena_db->nameQuote('#__content')} WHERE id={$kunena_db->Quote($id)}" );
 			$introtext = $kunena_db->loadResult ();
 			KunenaError::checkDatabaseError();
 
@@ -1002,7 +1002,7 @@ function JJ_categoryArray($admin=0) {
     $app = JFactory::getApplication();
 
     // get a list of the menu items
-	$query = "SELECT * FROM #__kunena_categories";
+	$query = "SELECT * FROM {$kunena_db->nameQuote('#__kunena_categories')}";
 	if($app->isSite()) {
 		$kunena_session =& KunenaFactory::getSession();
 		if ($kunena_session && $kunena_session->allowed != 'na') {
@@ -1071,7 +1071,7 @@ function generate_smilies() {
     $inline_columns = 4;
     $inline_rows = 5;
 
-    $kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id");
+    $kunena_db->setQuery("SELECT code, location, emoticonbar FROM {$kunena_db->nameQuote('#__kunena_smileys')} ORDER BY id");
         $set = $kunena_db->loadAssocList();
         KunenaError::checkDatabaseError();
 

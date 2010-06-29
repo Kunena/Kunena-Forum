@@ -484,9 +484,9 @@ abstract class CKunenaRSSDatasource {
 					category.name AS category_name,
 					category.cat_emoticon AS category_emoticon
 				FROM
-					#__kunena_messages AS thread
-				INNER JOIN #__kunena_messages_text AS message ON (message.mesid = thread.id)
-				INNER JOIN #__kunena_categories AS category ON (category.id = thread.catid)
+					{$this->db->nameQuote('#__kunena_messages')} AS thread
+				INNER JOIN {$this->db->nameQuote('#__kunena_messages_text')} AS message ON (message.mesid = thread.id)
+				INNER JOIN {$this->db->nameQuote('#__kunena_categories')} AS category ON (category.id = thread.catid)
 				INNER JOIN (
 					SELECT
 						tmp1.id AS lastpost_id,
@@ -504,8 +504,8 @@ abstract class CKunenaRSSDatasource {
 						tmp1.modified_reason AS lastpost_modified_reason,
 						tmp2.message as lastpost_message
 					FROM
-						#__kunena_messages tmp1,
-						#__kunena_messages_text tmp2
+						{$this->db->nameQuote('#__kunena_messages')} tmp1,
+						{$this->db->nameQuote('#__kunena_messages_text')} tmp2
 					WHERE
 						tmp1.hold = '0'
 						AND tmp1.moved = '0'

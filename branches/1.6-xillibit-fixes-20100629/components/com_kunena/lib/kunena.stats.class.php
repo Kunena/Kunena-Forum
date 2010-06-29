@@ -79,7 +79,7 @@ class CKunenaStats {
 
 	public function loadTotalMembers() {
 		if ($this->totalmembers === null) {
-			$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );
+			$this->_db->setQuery ( "SELECT COUNT(*) FROM {$this->_db->nameQuote('#__users')} WHERE block=0 OR activation=''" );
 			$this->totalmembers = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}
@@ -106,7 +106,7 @@ class CKunenaStats {
 
 	public function loadTotalTopics() {
 		if ($this->totaltitles === null) {
-			$this->_db->setQuery ( "SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__kunena_categories WHERE parent='0' AND published=1" );
+			$this->_db->setQuery ( "SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM {$this->_db->nameQuote('#__kunena_categories')} WHERE parent='0' AND published=1" );
 			$totaltmp = $this->_db->loadObject ();
 			KunenaError::checkDatabaseError();
 			$this->totaltitles = ! empty ( $totaltmp->titles ) ? $totaltmp->titles : 0;
@@ -116,7 +116,7 @@ class CKunenaStats {
 
 	public function loadTotalCategories() {
 		if ($this->totalsections === null) {
-			$this->_db->setQuery ( "SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__kunena_categories WHERE published=1" );
+			$this->_db->setQuery ( "SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM {$this->_db->nameQuote('#__kunena_categories')} WHERE published=1" );
 			$totaltmp = $this->_db->loadObject ();
 			KunenaError::checkDatabaseError();
 			$this->totalsections = ! empty ( $totaltmp->totalsections ) ? $totaltmp->totalsections : 0;
@@ -127,7 +127,7 @@ class CKunenaStats {
 	public function loadLastUser() {
 		if ($this->lastestmember === null) {
 			$queryName = $this->_config->username ? "username" : "name";
-			$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM #__users WHERE block='0' OR activation='' ORDER BY id DESC", 0, 1 );
+			$this->_db->setQuery ( "SELECT id, {$queryName} AS username FROM {$this->_db->nameQuote('#__users')} WHERE block='0' OR activation='' ORDER BY id DESC", 0, 1 );
 			$_lastestmember = $this->_db->loadObject ();
 			KunenaError::checkDatabaseError();
 			$this->lastestmember = $_lastestmember->username;
@@ -140,7 +140,7 @@ class CKunenaStats {
 			$PopUserCount = $this->_config->popusercount;
 		if (count($this->topposters) < $PopUserCount) {
 			$queryName = $this->_config->username ? "username" : "name";
-			$this->_db->setQuery ( "SELECT p.userid, p.posts, u.id, u.{$queryName} AS username FROM #__kunena_users AS p
+			$this->_db->setQuery ( "SELECT p.userid, p.posts, u.id, u.{$queryName} AS username FROM {$this->_db->nameQuote('#__kunena_users')} AS p
 				INNER JOIN #__users AS u ON u.id = p.userid WHERE p.posts > '0' AND u.block=0 ORDER BY p.posts DESC", 0, $PopUserCount );
 
 			$this->topposters = $this->_db->loadObjectList ();
@@ -188,7 +188,7 @@ class CKunenaStats {
 
 		if (count($this->toptitles) < $PopSubjectCount) {
 			$kunena_session = & KunenaFactory::getSession ();
-			$this->_db->setQuery ( "SELECT * FROM #__kunena_messages WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunena_session->allowed)
+			$this->_db->setQuery ( "SELECT * FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE moved='0' AND hold='0' AND parent='0' AND catid IN ($kunena_session->allowed)
 				ORDER BY hits DESC", 0, $PopSubjectCount );
 
 			$this->toptitles = $this->_db->loadObjectList ();
@@ -222,7 +222,7 @@ class CKunenaStats {
 
 		if (count($this->topthanks) < $thanksCount) {
 			$queryName = $this->_config->username ? "username" : "name";
-			$this->_db->setQuery ( "SELECT a.*,b.id,b.{$queryName} AS username,COUNT(a.targetuserid) AS receivedthanks FROM `#__kunena_thankyou` AS a LEFT JOIN #__users AS b ON a.targetuserid=b.id GROUP BY a.targetuserid ASC ORDER BY COUNT(a.targetuserid) DESC", 0, $thanksCount );
+			$this->_db->setQuery ( "SELECT a.*,b.id,b.{$queryName} AS username,COUNT(a.targetuserid) AS receivedthanks FROM {$this->_db->nameQuote('#__kunena_thankyou')} AS a LEFT JOIN {$this->_db->nameQuote('#__users')} AS b ON a.targetuserid=b.id GROUP BY a.targetuserid ASC ORDER BY COUNT(a.targetuserid) DESC", 0, $thanksCount );
 			$this->topuserthanks = $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 			$this->topthanks = ! empty ( $this->topuserthanks [0]->receivedthanks ) ? $this->topuserthanks [0]->receivedthanks : 0;

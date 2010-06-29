@@ -46,7 +46,7 @@ class CKunenaAttachments {
 				FB::log('Kunena save attachment: ' . $fileinfo['name']);
 			}
 			// FIXME: Warning raised, no MIME in other than images!!!
-			$this->_db->setQuery ( "INSERT INTO #__kunena_attachments (mesid, userid, hash, size, folder, filetype, filename) values (" .
+			$this->_db->setQuery ( "INSERT INTO {$this->_db->nameQuote('#__kunena_attachments')} (mesid, userid, hash, size, folder, filetype, filename) values (" .
 				(int)$mesid . "," . (int)$this->_my->id . "," . $this->_db->quote ( $fileinfo['hash'] ) . "," .
 				$this->_db->quote ( $fileinfo['size'] ) . "," . $this->_db->quote ( $folder ) . "," . $this->_db->quote ( $fileinfo['mime'] ) . "," .
 				$this->_db->quote ( $fileinfo['name'] ) . ")" );
@@ -102,7 +102,7 @@ class CKunenaAttachments {
 	function get($mesids) {
 		$ret = array();
 		if (empty($mesids)) return $ret;
-		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ($mesids) ORDER BY id";
+		$query = "SELECT * FROM {$this->_db->nameQuote('#__kunena_attachments')} WHERE mesid IN ($mesids) ORDER BY id";
 		$this->_db->setQuery ( $query );
 		$attachments = $this->_db->loadObjectList ('id');
 		if (KunenaError::checkDatabaseError()) return $ret;
@@ -157,7 +157,7 @@ class CKunenaAttachments {
 		if ($mesids == 0) return;
 
 		// Do not delete files which are used in other attachments or are not really Kunena attachments
-		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.folder=b.folder AND a.filename=b.filename
+		$this->_db->setQuery ( "SELECT a.* FROM {$this->_db->nameQuote('#__kunena_attachments')} AS a LEFT JOIN {$this->db->nameQuote('#__kunena_attachments')} AS b ON a.folder=b.folder AND a.filename=b.filename
 			WHERE a.mesid IN ({$mesids}) AND (a.folder LIKE '%media/kunena/attachments%' OR a.folder LIKE '%images/fbfiles%') AND b.filename IS NULL" );
 		$fileList = $this->_db->loadObjectlist ();
 		if (KunenaError::checkDatabaseError()) return;
@@ -165,7 +165,7 @@ class CKunenaAttachments {
 			$this->deleteFile($file);
 		}
 		// Delete attachments in the messages
-		$sql = "DELETE FROM #__kunena_attachments WHERE mesid IN ({$mesids})";
+		$sql = "DELETE FROM {$this->_db->nameQuote('#__kunena_attachments')} WHERE mesid IN ({$mesids})";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		KunenaError::checkDatabaseError();
@@ -180,7 +180,7 @@ class CKunenaAttachments {
 		if ($attachids == 0) return;
 
 		// Do not delete files which are used in other attachments or are not really Kunena attachments
-		$this->_db->setQuery ( "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_attachments AS b ON a.folder=b.folder AND a.filename=b.filename
+		$this->_db->setQuery ( "SELECT a.* FROM {$this->_db->nameQuote('#__kunena_attachments')} AS a LEFT JOIN {$this->db->nameQuote('#__kunena_attachments')} AS b ON a.folder=b.folder AND a.filename=b.filename
 			WHERE a.id IN ({$attachids}) AND (a.folder LIKE '%media/kunena/attachments%' OR a.folder LIKE '%images/fbfiles%') AND b.filename IS NULL" );
 		$fileList = $this->_db->loadObjectlist ();
 		if (KunenaError::checkDatabaseError()) return;
@@ -190,7 +190,7 @@ class CKunenaAttachments {
 			}
 		}
 		// Delete selected attachments
-		$sql = "DELETE FROM #__kunena_attachments WHERE id IN ({$attachids})";
+		$sql = "DELETE FROM {$this->_db->nameQuote('#__kunena_attachments')} WHERE id IN ({$attachids})";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		KunenaError::checkDatabaseError();

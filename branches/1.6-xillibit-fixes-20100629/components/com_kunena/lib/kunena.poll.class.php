@@ -54,9 +54,9 @@ class CKunenaPolls {
 	function get_poll_data($threadid)
 	{
     	$query = "SELECT *
-    				FROM #__kunena_polls AS a
-    				INNER JOIN #__kunena_polls_options AS b ON a.threadid=b.pollid
-    				WHERE a.threadid=$threadid";
+    				FROM {$this->_db->nameQuote('#__kunena_polls')} AS a
+    				INNER JOIN {$this->_db->nameQuote('#__kunena_polls_options')} AS b ON a.threadid=b.pollid
+    				WHERE a.threadid={$this->_db->Quote($threadid)}";
     	$this->_db->setQuery($query);
     	$polldata = $this->_db->loadObjectList();
     	KunenaError::checkDatabaseError();
@@ -72,9 +72,9 @@ class CKunenaPolls {
 	{
 		//To show the usernames of the users which have voted for this poll
 		$query = "SELECT pollid,userid,name,username
-					FROM #__kunena_polls_users AS a
-					INNER JOIN #__users AS b ON a.userid=b.id
-					WHERE pollid=$threadid";
+					FROM {$this->_db->nameQuote('#__kunena_polls_users')} AS a
+					INNER JOIN {$this->_db->nameQuote('#__users')} AS b ON a.userid=b.id
+					WHERE pollid={$this->_db->Quote($threadid)}";
     	$this->_db->setQuery($query);
     	$uservotedata = $this->_db->loadObjectList();
     	KunenaError::checkDatabaseError();
@@ -87,7 +87,7 @@ class CKunenaPolls {
 	 */
 	function get_number_total_voters($pollid)
 	{
-    	$query = "SELECT SUM(votes) FROM #__kunena_polls_users WHERE pollid=$pollid";
+    	$query = "SELECT SUM(votes) FROM {$this->_db->nameQuote('#__kunena_polls_users')} WHERE pollid={$this->_db->Quote($pollid)}";
     	$this->_db->setQuery($query);
     	$numvotes = $this->_db->loadResult();
     	KunenaError::checkDatabaseError();
@@ -100,7 +100,7 @@ class CKunenaPolls {
 	 */
 	function get_total_options($pollid)
 	{
-    	$query = "SELECT COUNT(*) FROM #__kunena_polls_options WHERE pollid=$pollid";
+    	$query = "SELECT COUNT(*) FROM {$this->_db->nameQuote('#__kunena_polls_options')} WHERE pollid={$this->_db->Quote($pollid)}";
     	$this->_db->setQuery($query);
     	$numoptions = $this->_db->loadResult();
     	KunenaError::checkDatabaseError();
@@ -209,16 +209,16 @@ class CKunenaPolls {
    function save_new_poll($polltimetolive,$polltitle,$pid,$optionvalue)
    {
 		if (isset($polltitle) && sizeof($optionvalue) > '0') {
-			$query = "INSERT INTO #__kunena_polls (title,threadid,polltimetolive)
-						VALUES(".$this->_db->quote($polltitle).",'$pid','$polltimetolive')";
+			$query = "INSERT INTO {$this->_db->nameQuote('#__kunena_polls')} (title,threadid,polltimetolive)
+						VALUES(".$this->_db->quote($polltitle).",{$this->_db->Quote($pid)},{$this->_db->Quote($polltimetolive)})";
     		$this->_db->setQuery($query);
     		$this->_db->query();
     		if (KunenaError::checkDatabaseError()) return;
 
     		for ($i = 0; $i < sizeof($optionvalue); $i++)
     		{
-    			$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
-    						VALUES(".$this->_db->quote($optionvalue[$i]).",'$pid','0')";
+    			$query = "INSERT INTO {$this->_db->nameQuote('#__kunena_polls_options')} (text,pollid,votes)
+    						VALUES(".$this->_db->quote($optionvalue[$i]).",{$this->_db->Quote($pid)},'0')";
         		$this->_db->setQuery($query);
         		$this->_db->query();
     			if (KunenaError::checkDatabaseError()) return;
@@ -233,8 +233,8 @@ class CKunenaPolls {
    {
 		$query = "SELECT pollid,userid,lasttime,votes,
 						TIMEDIFF(CURTIME(),DATE_FORMAT(lasttime, '%H:%i:%s')) AS timediff
-					FROM #__kunena_polls_users
-					WHERE pollid=$threadid AND userid=$userid";
+					FROM {$this->_db->nameQuote('#__kunena_polls_users')}
+					WHERE pollid={$this->_db->Quote($threadid)} AND userid={$this->_db->Quote($userid)}";
 		$this->_db->setQuery($query);
 		$polluserdata = $this->_db->loadObjectList();
 		KunenaError::checkDatabaseError();
@@ -248,8 +248,8 @@ class CKunenaPolls {
    function get_top_five_votes($PopPollsCount)
    {
 		$query = "SELECT SUM(o.votes) AS total
-					FROM #__kunena_polls AS p
-					LEFT JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
+					FROM {$this->_db->nameQuote('#__kunena_polls')} AS p
+					LEFT JOIN {$this->_db->nameQuote('#__kunena_polls_options')} AS o ON p.threadid=o.pollid
 					GROUP BY p.threadid
 					ORDER BY total
 					DESC ";
@@ -266,9 +266,9 @@ class CKunenaPolls {
 	function get_top_five_polls($PopPollsCount)
 	{
     	$query = "SELECT q.catid,p.*, SUM(o.votes) AS total
-    				FROM #__kunena_polls AS p
-    				INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
-    				INNER JOIN #__kunena_messages AS q ON p.threadid = q.thread
+    				FROM {$this->_db->nameQuote('#__kunena_polls')} AS p
+    				INNER JOIN {$this->_db->nameQuote('#__kunena_polls_options')} AS o ON p.threadid=o.pollid
+    				INNER JOIN {$this->_db->nameQuote('#__kunena_messages')} AS q ON p.threadid = q.thread
     				GROUP BY p.threadid
     				ORDER BY total DESC";
     	$this->_db->setQuery($query,0,$PopPollsCount);
@@ -309,26 +309,26 @@ class CKunenaPolls {
     		}
       		if ($poll_timediff || $pollusers[0]->timediff == null)
       		{
-        		$query = "SELECT * FROM #__kunena_polls_options WHERE pollid='$pollid' AND id='$vote';";
+        		$query = "SELECT * FROM {$this->_db->nameQuote('#__kunena_polls_options')} WHERE pollid={$this->_db->Quote($pollid)} AND id={$this->_db->Quote($vote)};";
         		$this->_db->setQuery($query);
         		$polloption = $this->_db->loadObject();
         		if (KunenaError::checkDatabaseError()) return;
 
         		if (!$polloption) break; // OPTION DOES NOT EXIST
 
-        		$query = "SELECT votes FROM #__kunena_polls_users WHERE pollid='$pollid' AND userid='$userid';";
+        		$query = "SELECT votes FROM {$this->_db->nameQuote('#__kunena_polls_users')} WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
         		$this->_db->setQuery($query);
           		$votes = $this->_db->loadResult();
           		if (KunenaError::checkDatabaseError()) return;
 
           		if (empty($votes))
           		{
-          			$query = "INSERT INTO #__kunena_polls_users (pollid,userid,votes,lastvote) VALUES('$pollid','$userid','1','$vote');";
+          			$query = "INSERT INTO {$this->_db->nameQuote('#__kunena_polls_users')} (pollid,userid,votes,lastvote) VALUES({$this->_db->Quote($pollid)},{$this->_db->Quote($userid)},'1',{$this->_db->Quote($vote)});";
             		$this->_db->setQuery($query);
             		$this->_db->query();
             		if (KunenaError::checkDatabaseError()) return;
 
-            		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id='$vote';";
+            		$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_options')} SET votes=votes+1 WHERE id={$this->_db->Quote($vote)};";
              		$this->_db->setQuery($query);
              		$this->_db->query();
             		if (KunenaError::checkDatabaseError()) return;
@@ -337,12 +337,12 @@ class CKunenaPolls {
           		}
          		else if ($votes < $this->config->pollnbvotesbyuser)
          		{
-         			$query = "UPDATE #__kunena_polls_users SET votes=votes+1,lastvote='$vote' WHERE pollid='$pollid' AND userid='$userid';";
+         			$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_users')} SET votes=votes+1,lastvote={$this->_db->Quote($vote)} WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
             		$this->_db->setQuery($query);
             		$this->_db->query();
             		if (KunenaError::checkDatabaseError()) return;
 
-            		$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id='$vote';";
+            		$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_options')} SET votes=votes+1 WHERE id={$this->_db->Quote($vote)};";
             		$this->_db->setQuery($query);
             		$this->_db->query();
             		if (KunenaError::checkDatabaseError()) return;
@@ -380,12 +380,12 @@ class CKunenaPolls {
       		// call reset vote
       		$this->reset_vote($userid,$threadid);
 
-			$query = "UPDATE #__kunena_polls_options SET votes=votes+1 WHERE id='$vote';";
+			$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_options')} SET votes=votes+1 WHERE id={$this->_db->Quote($vote)};";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
 
-        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote='$vote', lasttime=now() WHERE pollid='$threadid' AND userid='$userid';";
+        	$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_users')} SET votes=votes+1, lastvote={$this->_db->Quote($vote)}, lasttime=now() WHERE pollid={$this->_db->Quote($threadid)} AND userid={$this->_db->Quote($userid)};";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
@@ -406,10 +406,10 @@ class CKunenaPolls {
     	$polloptions = $this->get_total_options($threadid);
     	$pollsdatas = $this->get_poll_data($threadid); //Need this to update/delete the right option in the database
 
-    	$query = "UPDATE #__kunena_polls
+    	$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls')}
     				SET title=".$this->_db->quote($polltitle).",
     				polltimetolive=".$this->_db->quote($polltimetolive)."
-    				WHERE threadid=$threadid";
+    				WHERE threadid={$this->_db->Quote($threadid)}";
     	$this->_db->setQuery($query);
     	$this->_db->query();
     	if (KunenaError::checkDatabaseError()) return;
@@ -418,9 +418,9 @@ class CKunenaPolls {
     	{
       		for ($i = 0; $i < sizeof($optvalue); $i++)
       		{
-      			$query = "UPDATE #__kunena_polls_options
+      			$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_options')}
       						SET text=".$this->_db->quote($optvalue[$i])."
-      						WHERE id={$pollsdatas[$i]->id} AND pollid={$threadid}";
+      						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
          		$this->_db->setQuery($query);
          		$this->_db->query();
              	if (KunenaError::checkDatabaseError()) return;
@@ -432,17 +432,17 @@ class CKunenaPolls {
       		{
         		if ($i < $polloptions)
         		{
-        			$query = "UPDATE #__kunena_polls_options
+        			$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_options')}
         						SET text=".$this->_db->quote($optvalue[$i])."
-        						WHERE id={$pollsdatas[$i]->id} AND pollid={$threadid}";
+        						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
           			$this->_db->setQuery($query);
           			$this->_db->query();
           	    	if (KunenaError::checkDatabaseError()) return;
         		}
         		else
         		{
-					$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
-								VALUES(".$this->_db->quote($optvalue[$i]).",'$threadid','0')";
+					$query = "INSERT INTO {$this->_db->nameQuote('#__kunena_polls_options')} (text,pollid,votes)
+								VALUES(".$this->_db->quote($optvalue[$i]).",{$this->_db->Quote($threadid)},'0')";
         			$this->_db->setQuery($query);
           			$this->_db->query();
           	    	if (KunenaError::checkDatabaseError()) return;
@@ -455,17 +455,17 @@ class CKunenaPolls {
       		{
         		if ($i < $optionsnumbers)
         		{
-        			$query = "UPDATE #__kunena_polls_options
+        			$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_options')}
         						SET text=".$this->_db->quote($optvalue[$i])."
-        						WHERE id={$pollsdatas[$i]->id} AND pollid=$threadid";
+        						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
           			$this->_db->setQuery($query);
           			$this->_db->query();
           			if (KunenaError::checkDatabaseError()) return;
         		}
         		else
         		{
-        			$query = "DELETE FROM #__kunena_polls_options
-        						WHERE pollid=$threadid AND id={$pollsdatas[$i]->id}";
+        			$query = "DELETE FROM {$this->_db->nameQuote('#__kunena_polls_options')}
+        						WHERE pollid={$this->_db->Quote($threadid)} AND id={$this->_db->Quote($pollsdatas[$i]->id)}";
           			$this->_db->setQuery($query);
           			$this->_db->query();
           			if (KunenaError::checkDatabaseError()) return;
@@ -479,8 +479,8 @@ class CKunenaPolls {
    function get_last_vote_id($userid,$pollid)
    {
 
-		$query = "SELECT lastvote FROM #__kunena_polls_users
-				WHERE pollid='$pollid' AND userid='$userid';";
+		$query = "SELECT lastvote FROM {$this->_db->nameQuote('#__kunena_polls_users')}
+				WHERE pollid={$this->_db->Quote($pollid)} AND userid={$this->_db->Quote($userid)};";
     	$this->_db->setQuery($query);
     	$id_last_vote = $this->_db->loadResult();
     	KunenaError::checkDatabaseError();
@@ -492,9 +492,9 @@ class CKunenaPolls {
 	*/
    function reset_vote($userid,$threadid)
    {
-		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM #__kunena_polls_options AS a
-				INNER JOIN #__kunena_polls_users AS b ON a.pollid=b.pollid
-				WHERE a.pollid=$threadid";
+		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM {$this->_db->nameQuote('#__kunena_polls_options')} AS a
+				INNER JOIN {$this->_db->nameQuote('#__kunena_polls_users')} AS b ON a.pollid=b.pollid
+				WHERE a.pollid={$this->_db->Quote($threadid)}";
     	$this->_db->setQuery($query);
     	$poll_options_user = $this->_db->loadObjectList();
 		if (KunenaError::checkDatabaseError()) return;
@@ -502,12 +502,12 @@ class CKunenaPolls {
 		foreach ($poll_options_user as $row) {
 			if ($row->id == $row->lastvote) {
 				if($row->option_votes > '0' && $row->user_votes > '0') {
-					$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id={$row->lastvote} AND pollid='$threadid';";
+					$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_options')} SET votes=votes-1 WHERE id={$this->_db->Quote($row->lastvote)} AND pollid={$this->_db->Quote($threadid)};";
     				$this->_db->setQuery($query);
     				$this->_db->query();
 					if (KunenaError::checkDatabaseError()) return;
 
-					$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid='$userid' AND pollid='$threadid';";
+					$query = "UPDATE {$this->_db->nameQuote('#__kunena_polls_users')} SET votes=votes-1 WHERE userid={$this->_db->Quote($userid)} AND pollid={$this->_db->Quote($threadid)};";
     				$this->_db->setQuery($query);
     				$this->_db->query();
 					if (KunenaError::checkDatabaseError()) return;
@@ -520,17 +520,17 @@ class CKunenaPolls {
 	*/
    function delete_poll($threadid)
    {
-    	$query = "DELETE FROM #__kunena_polls WHERE threadid=$threadid";
+    	$query = "DELETE FROM {$this->_db->nameQuote('#__kunena_polls')} WHERE threadid={$this->_db->Quote($threadid)}";
     	$this->_db->setQuery($query);
     	$this->_db->query();
     	if (KunenaError::checkDatabaseError()) return;
 
-    	$query = "DELETE FROM #__kunena_polls_options WHERE pollid=$threadid";
+    	$query = "DELETE FROM {$this->_db->nameQuote('#__kunena_polls_options')} WHERE pollid={$this->_db->Quote($threadid)}";
     	$this->_db->setQuery($query);
     	$this->_db->query();
     	if (KunenaError::checkDatabaseError()) return;
 
-    	$query = "DELETE FROM #__kunena_polls_users WHERE pollid=$threadid";
+    	$query = "DELETE FROM {$this->_db->nameQuote('#__kunena_polls_users')} WHERE pollid={$this->_db->Quote($threadid)}";
     	$this->_db->setQuery($query);
     	$this->_db->query();
     	if (KunenaError::checkDatabaseError()) return;

@@ -44,16 +44,16 @@ class CKunenaShowcat {
 
 		//Get the category information
 		$query = "SELECT c.*, s.catid AS subscribeid
-				FROM #__kunena_categories AS c
-				LEFT JOIN #__kunena_subscriptions_categories AS s ON c.id = s.catid
-				AND s.userid = '{$this->my->id}'
-				WHERE c.id='{$this->catid}'";
+				FROM {$this->db->nameQuote('#__kunena_categories')} AS c
+				LEFT JOIN {$this->db->nameQuote('#__kunena_subscriptions_categories')} AS s ON c.id = s.catid
+				AND s.userid = {$this->db->Quote($this->my->id)}
+				WHERE c.id={$this->db->Quote($this->catid)}";
 
 		$this->db->setQuery ( $query );
 		$this->objCatInfo = $this->db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;
 		//Get the Category's parent category name for breadcrumb
-		$this->db->setQuery ( "SELECT name, id FROM #__kunena_categories WHERE id='{$this->objCatInfo->parent}'" );
+		$this->db->setQuery ( "SELECT name, id FROM {$this->db->nameQuote('#__kunena_categories')} WHERE id={$this->db->Quote($this->objCatInfo->parent)}" );
 		$objCatParentInfo = $this->db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;
 
@@ -71,14 +71,14 @@ class CKunenaShowcat {
 		$this->page = $this->page < 1 ? 1 : $this->page;
 		$offset = ($this->page - 1) * $threads_per_page;
 		$row_count = $this->page * $threads_per_page;
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE parent='0' AND catid='{$this->catid}' AND hold IN ({$hold})" );
+		$this->db->setQuery ( "SELECT COUNT(*) FROM {$this->db->nameQuote('#__kunena_messages')} WHERE parent='0' AND catid={$this->db->Quote($this->catid)} AND hold IN ({$hold})" );
 		$this->total = ( int ) $this->db->loadResult ();
 		KunenaError::checkDatabaseError();
 		$this->totalpages = ceil ( $this->total / $threads_per_page );
 
-		$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__kunena_messages AS t
-	INNER JOIN #__kunena_messages AS m ON t.id = m.thread
-	WHERE t.parent='0' AND t.hold IN ({$hold}) AND t.catid='{$this->catid}' AND m.hold IN ({$hold}) AND m.catid='{$this->catid}'
+		$query = "SELECT t.id, MAX(m.id) AS lastid FROM {$this->db->nameQuote('#__kunena_messages')} AS t
+	INNER JOIN {$this->db->nameQuote('#__kunena_messages')} AS m ON t.id = m.thread
+	WHERE t.parent='0' AND t.hold IN ({$hold}) AND t.catid={$this->db->Quote($this->catid)} AND m.hold IN ({$hold}) AND m.catid={$this->db->Quote($this->catid)}
 	GROUP BY m.thread ORDER BY t.ordering DESC, lastid DESC";
 		$this->db->setQuery ( $query, $offset, $threads_per_page );
 		$threadids = $this->db->loadResultArray ();
@@ -95,19 +95,19 @@ class CKunenaShowcat {
 	FROM (
 		SELECT m.thread, MAX(f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
-		FROM #__kunena_messages AS m";
-			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = m.thread";
-			else $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = 0";
+		FROM {$this->db->nameQuote('#__kunena_messages')} AS m";
+			if ($this->config->allowfavorites) $query .= " LEFT JOIN {$this->db->nameQuote('#__kunena_favorites')} AS f ON f.thread = m.thread";
+			else $query .= " LEFT JOIN {$this->db->nameQuote('#__kunena_favorites')} AS f ON f.thread = 0";
 			$query .= "
-		LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.thread
+		LEFT JOIN {$this->db->nameQuote('#__kunena_attachments')} AS a ON a.mesid = m.thread
 		WHERE m.hold IN ({$hold}) AND m.thread IN ({$idstr})
 		GROUP BY thread
 	) AS l
-	INNER JOIN #__kunena_messages AS a ON a.thread = l.thread
-	INNER JOIN #__kunena_messages_text AS t ON a.thread = t.mesid
-	LEFT JOIN #__users AS j ON j.id = a.userid
-	LEFT JOIN #__kunena_users AS u ON u.userid = j.id
-	LEFT JOIN #__kunena_categories AS c ON c.id = a.catid
+	INNER JOIN {$this->db->nameQuote('#__kunena_messages')} AS a ON a.thread = l.thread
+	INNER JOIN {$this->db->nameQuote('#__kunena_messages_text')} AS t ON a.thread = t.mesid
+	LEFT JOIN {$this->db->nameQuote('#__users')} AS j ON j.id = a.userid
+	LEFT JOIN {$this->db->nameQuote('#__kunena_users')} AS u ON u.userid = j.id
+	LEFT JOIN {$this->db->nameQuote('#__kunena_categories')} AS c ON c.id = a.catid
 	WHERE (a.parent='0' OR a.id=l.lastid)
 	ORDER BY ordering DESC, lastid DESC";
 
@@ -135,7 +135,7 @@ class CKunenaShowcat {
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
-				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages " . "WHERE hold IN ({$hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
+				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM {$this->db->nameQuote('#__kunena_messages')} " . "WHERE hold IN ({$hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$this->db->Quote($this->prevCheck)} GROUP BY thread" );
 				$msgidlist = $this->db->loadObjectList ();
 				KunenaError::checkDatabaseError();
 
@@ -187,7 +187,7 @@ class CKunenaShowcat {
 			$this->thread_subscribecat = CKunenaLink::GetCategoryLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
 		}
 		//get the Moderator list for display
-		$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid='{$this->catid}' AND u.block=0" );
+		$this->db->setQuery ( "SELECT * FROM {$this->db->nameQuote('#__kunena_moderation')} AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->db->Quote($this->catid)} AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 		foreach ($this->modslist as $mod) {

@@ -86,7 +86,7 @@ class CKunenaModeration {
 			return false;
 		}
 
-		$query = 'SELECT `id`, `catid`, `parent`, `thread`, `subject` FROM #__kunena_messages WHERE `id`='.$MessageID;
+		$query = "SELECT `id`, `catid`, `parent`, `thread`, `subject` FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE `id`={$this->_db->Quote($MessageID)}";
 		$this->_db->setQuery ( $query );
 		$currentMessage = $this->_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return false;
@@ -104,7 +104,7 @@ class CKunenaModeration {
 		}
 
 		// Check that thread can't be move into a section
-		$query = 'SELECT `parent` FROM #__kunena_categories WHERE `id`='.$TargetCatID;
+		$query = "SELECT `parent` FROM {$this->_db->nameQuote('#__kunena_categories')} WHERE `id`={$this->_db->Quote($TargetCatID)}";
 		$this->_db->setQuery ( $query );
 		$catParent = $this->_db->loadResult ();
 		if (KunenaError::checkDatabaseError()) return false;
@@ -127,7 +127,7 @@ class CKunenaModeration {
 
 		if ($TargetMessageID != 0) {
 			// Check that target message actually exists
-			$this->_db->setQuery ( "SELECT `id`, `catid`, `parent`, `thread`, `subject` FROM #__kunena_messages WHERE `id`='$TargetMessageID'" );
+			$this->_db->setQuery ( "SELECT `id`, `catid`, `parent`, `thread`, `subject` FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE `id`={$this->_db->Quote($TargetMessageID)}" );
 			$targetMessage = $this->_db->loadObject ();
 			if (KunenaError::checkDatabaseError()) return false;
 
@@ -170,7 +170,7 @@ class CKunenaModeration {
 		// partial logic to update target subject if specified
 		$subjectupdatesql = !empty($TargetSubject) ? ",`subject`={$this->_db->quote($TargetSubject)}" : "";
 
-		$sql = "UPDATE #__kunena_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}', `parent`='{$TargetParentID}' {$subjectupdatesql} WHERE `id`='{$MessageID}'";
+		$sql = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)}, `parent`={$this->_db->Quote($TargetParentID)} {$subjectupdatesql} WHERE `id`={$this->_db->Quote($MessageID)}";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return false;
@@ -182,7 +182,7 @@ class CKunenaModeration {
 				if ( $currentMessage->parent == 0 ) {
 					// We are about to pull the thread starter from the original thread.
 					// Need to promote the second post of the original thread as the new starter.
-					$sqlnewparent = "SELECT `id` FROM #__kunena_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
+					$sqlnewparent = "SELECT `id` FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE `id`!={$this->_db->Quote($MessageID)} AND `thread`={$this->_db->Quote($currentMessage->thread)} ORDER BY `id` ASC";
 					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
 					$newParentID = $this->_db->loadResult ();
 					if (KunenaError::checkDatabaseError()) return false;
@@ -195,7 +195,7 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_THREAD :
 				// Move entire Thread
-				$sql = "UPDATE #__kunena_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}' WHERE `thread`='{$currentMessage->thread}'";
+				$sql = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
 
 				// Create ghost thread if requested
 				if ($GhostThread == true) {
@@ -205,12 +205,12 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_NEWER :
 				// Move message and all newer messages of thread
-				$sql = "UPDATE #__kunena_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}' WHERE `thread`='{$currentMessage->thread}' AND `id`>'{$MessageID}'";
+				$sql = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `id`>{$this->_db->Quote($MessageID)}";
 
 				break;
 			case KN_MOVE_REPLIES :
 				// Move message and all replies and quotes - 1 level deep for now
-				$sql = "UPDATE #__kunena_messages SET `catid`='{$TargetCatID}', `thread`='{$TargetThreadID}' WHERE `thread`='{$currentMessage->thread}' AND `parent`='{$MessageID}'";
+				$sql = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `parent`={$this->_db->Quote($MessageID)}";
 
 				break;
 			default :
@@ -258,7 +258,7 @@ class CKunenaModeration {
 			return false;
 		}
 
-		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`='$MessageID'" );
+		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE `id`={$this->_db->Quote($MessageID)}" );
 		$currentMessage = $this->_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return false;
 
@@ -277,16 +277,16 @@ class CKunenaModeration {
 		// Assemble delete logic based on $mode
 		switch ($mode) {
 			case KN_DEL_MESSAGE : //Delete only the actual message
-				$sql = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`='$MessageID';";
+				$sql = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `hold`=2 WHERE `id`={$this->_db->Quote($MessageID)};";
 				if ( $currentMessage->parent == 0 ) {
 					$this->_setSecondMessageParent ($MessageID, $currentMessage);
 				}
 				break;
 			case KN_DEL_MESSAGE_PERMINANTLY : // Delete the message from the database
 				// FIXME: if only admins are allowed to do this, add restriction (and make it general/changeble)
-				$sql = "DELETE FROM #__kunena_messages WHERE `id`='$MessageID';";
+				$sql = "DELETE FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE `id`={$this->_db->Quote($MessageID)};";
 
-				$query = "DELETE FROM #__kunena_messages_text WHERE `mesid`='$MessageID'; ";
+				$query = "DELETE FROM {$this->_db->nameQuote('#__kunena_messages_text')} WHERE `mesid`={$this->_db->Quote($MessageID)}; ";
 				$this->_db->setQuery ($query);
 				$this->_db->query ();
 				if (KunenaError::checkDatabaseError()) return false;
@@ -296,18 +296,18 @@ class CKunenaModeration {
 				}
 
 				if ( $currentMessage->userid > 0) {
-					$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid`='$MessageID'; ";
+					$query = "UPDATE {$this->_db->nameQuote('#__kunena_users')} SET posts=posts-1 WHERE `userid`={$this->_db->Quote($MessageID)}; ";
 					$this->_db->setQuery ($query);
 					$this->_db->query ();
 					if (KunenaError::checkDatabaseError()) return false;
 				}
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
-				$sql1 = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`='$MessageID';";
+				$sql1 = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `hold`=2 WHERE `id`={$this->_db->Quote($MessageID)};";
 				$this->_db->setQuery ( $sql1 );
 				$this->_db->query ();
 				if (KunenaError::checkDatabaseError()) return false;
-				$sql = "UPDATE #__kunena_messages SET `hold`=3 WHERE hold IN (0,1) AND `thread`='{$currentMessage->thread}' AND `id`!='$MessageID' ;";
+				$sql = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `hold`=3 WHERE hold IN (0,1) AND `thread`={$this->_db->Quote($currentMessage->thread)} AND `id`!={$this->_db->Quote($MessageID)} ;";
 				break;
 			case KN_DEL_ATTACH : //Delete only the attachments
 				require_once (KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
@@ -329,13 +329,13 @@ class CKunenaModeration {
 
 		// Remember to delete ghost post
 		// FIXME: replies may have ghosts, too. What to do with them?
-		$this->_db->setQuery ( "SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.`id`=t.`mesid`
+		$this->_db->setQuery ( "SELECT m.id FROM {$this->_db->nameQuote('#__kunena_messages')} AS m INNER JOIN #__kunena_messages_text AS t ON m.`id`=t.`mesid`
 			WHERE `moved`=1;" );
 		$ghostMessageID = $this->_db->loadResult ();
 		if (KunenaError::checkDatabaseError()) return false;
 
 		if ( !empty($ghostMessageID) ) {
-			$this->_db->setQuery ( "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`='$ghostMessageID' AND `moved`=1;" );
+			$this->_db->setQuery ( "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `hold`=2 WHERE `id`={$this->_db->Quote($ghostMessageID)} AND `moved`=1;" );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError()) return false;
 		}
@@ -403,17 +403,17 @@ class CKunenaModeration {
 	protected function _setSecondMessageParent ($MessageID, $currentMessage){
 		// We are about to pull the thread starter from the original thread.
 		// Need to promote the second post of the original thread as the new starter.
-		$sqlnewparent = "SELECT `id` FROM #__kunena_messages WHERE `id`!={$MessageID} AND `thread`='{$currentMessage->thread}' ORDER BY `id` ASC";
+		$sqlnewparent = "SELECT `id` FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE `id`!={$this->_db->Quote($MessageID)} AND `thread`={$this->_db->Quote($currentMessage->thread)} ORDER BY `id` ASC";
 		$this->_db->setQuery ( $sqlnewparent, 0, 1 );
 		$newParent = $this->_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return false;
 
 		if ( is_object( $newParent ) ) {
-			$sql1 = "UPDATE #__kunena_messages SET `thread`='$newParent->id', `parent`=0 WHERE `id`='$newParent->id';";
+			$sql1 = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `thread`={$this->_db->Quote($newParent->id)}, `parent`=0 WHERE `id`={$this->_db->Quote($newParent->id)};";
 			$this->_db->setQuery ( $sql1 );
 			$this->_db->query ();
 			// TODO: leave parent alone after checking that it's possible in our code..
-			$sql2 = "UPDATE #__kunena_messages SET `thread`='$newParent->id', `parent`='$newParent->id' WHERE `thread`='{$currentMessage->thread}' AND `id`!='$newParent->id';";
+			$sql2 = "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET `thread`={$this->_db->Quote($newParent->id)}, `parent`={$this->_db->Quote($newParent->id)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `id`!={$this->_db->Quote($newParent->id)};";
 			$this->_db->setQuery ( $sql2 );
 			$this->_db->query ();
 		}
@@ -422,7 +422,7 @@ class CKunenaModeration {
 
 	protected function _createGhostThread($MessageID,$currentMessage) {
 		// Post time in ghost message is the same as in the last message of the thread
-		$sql="SELECT `time` AS timestamp FROM #__kunena_messages WHERE `thread`='$MessageID' ORDER BY id DESC";
+		$sql="SELECT `time` AS timestamp FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE `thread`={$this->_db->Quote($MessageID)} ORDER BY id DESC";
 		$this->_db->setQuery ( $sql, 0, 1 );
 		$lastTimestamp = $this->_db->loadResult ();
 		if (KunenaError::checkDatabaseError()) return false;
@@ -434,7 +434,7 @@ class CKunenaModeration {
 		// @Oliver: I'd like to get rid of it and add it while rendering..
 		$myname = $this->_config->username ? $this->_my->username : $this->_my->name;
 
-		$sql = "INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0','{$currentMessage->subject}','$lastTimestamp','{$currentMessage->catid}','1', '{$this->_my->id}', " . $this->_db->Quote ( $myname ) . ")";
+		$sql = "INSERT INTO {$this->_db->nameQuote('#__kunena_messages')} (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',{$this->_db->Quote($currentMessage->subject)},{$this->_db->Quote($lastTimestamp)},{$this->_db->Quote($currentMessage->catid)},'1', {$this->_db->Quote($this->_my->id)}, " . $this->_db->Quote ( $myname ) . ")";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return false;
@@ -443,14 +443,14 @@ class CKunenaModeration {
 		$newId = $this->_db->insertid ();
 
 		// and update the thread id on the 'moved' post for the right ordering when viewing the forum..
-		$sql = "UPDATE #__kunena_messages SET `thread`='$newId' WHERE `id`='$newId'";
+		$sql = "UPDATE {$this->_db->nameQuote('#__kunena_message')} SET `thread`={$this->_db->Quote($newId)} WHERE `id`={$this->_db->Quote($newId)}";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return false;
 
 		// TODO: we need to fix all old ghost messages and change behaviour of them
 		$newURL = "id=" . $currentMessage->id;
-		$sql = "INSERT INTO #__kunena_messages_text (`mesid`, `message`) VALUES ('$newId', '$newURL')";
+		$sql = "INSERT INTO {$this->_db->nameQuote('#__kunena_messages_text')} (`mesid`, `message`) VALUES ({$this->_db->Quote($newId)}, {$this->_db->Quote($newURL)})";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return false;
@@ -466,7 +466,7 @@ class CKunenaModeration {
 		// Sanitize parameters!
 		$UserID = intval ( $UserID );
 
-		$this->_db->setQuery ( "SELECT ip FROM #__kunena_messages WHERE userid=$UserID GROUP BY ip" );
+		$this->_db->setQuery ( "SELECT ip FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE userid={$this->_db->Quote($UserID)} GROUP BY ip" );
 		$ipslist = $this->_db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 
@@ -481,7 +481,7 @@ class CKunenaModeration {
 
 		$useridslist = array();
 		foreach ($ipslist as $ip) {
-			$this->_db->setQuery ( "SELECT name,userid FROM #__kunena_messages WHERE ip='$ip->ip' GROUP BY name" );
+			$this->_db->setQuery ( "SELECT name,userid FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE ip={$this->_db->Quote($ip->ip)} GROUP BY name" );
 			$useridslist[$ip->ip] = $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 		}

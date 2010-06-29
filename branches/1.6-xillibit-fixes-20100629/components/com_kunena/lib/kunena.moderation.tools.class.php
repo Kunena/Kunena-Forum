@@ -90,7 +90,7 @@ class CKunenaModerationTools {
 		}
 
 		$user->delete();
-		$this->_db->setQuery ( "DELETE FROM #__kunena_users WHERE `userid`='$UserID';" );
+		$this->_db->setQuery ( "DELETE FROM {$this->_db->nameQuote('#__kunena_users')} WHERE `userid`={$this->_db->Quote($UserID)};" );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return false;
 
@@ -108,9 +108,9 @@ class CKunenaModerationTools {
 		$limit	= intval ( $limit );
 
 		$sql = "SELECT msgs.ip AS ip, MAX(ban.enabled) AS enabled ".
-				"FROM #__kunena_messages msgs ".
-				"LEFT JOIN #__kunena_banned_users ban ON (ban.ip = msgs.ip) ".
-				"WHERE msgs.userid = '". $UserID ."' AND bantype=3 ".
+				"FROM {$this->_db->nameQuote('#__kunena_messages msgs')} ".
+				"LEFT JOIN {$this->_db->nameQuote('#__kunena_banned_users')} ban ON (ban.ip = msgs.ip) ".
+				"WHERE msgs.userid = {$this->_db->Quote( $UserID )} AND bantype=3 ".
 				"GROUP BY msgs.ip ".
 				"ORDER BY msgs.time ASC ".
 				"LIMIT 0, ". $limit;
@@ -140,9 +140,9 @@ class CKunenaModerationTools {
 		$useridslist = array();
 		foreach ($iplist as $entry) {
 			$sql = "SELECT msgs.name, msgs.userid, MAX(ban.enabled) AS enabled ".
-				"FROM #__kunena_messages msgs ".
-				"LEFT JOIN #__kunena_banned_users ban ON (msgs.userid = ban.userid) ".
-				"WHERE msgs.ip = '". $entry->ip ."' ".
+				"FROM {$this->_db->nameQuote('#__kunena_messages')} msgs ".
+				"LEFT JOIN {$this->_db->nameQuote('#__kunena_banned_users')} ban ON (msgs.userid = ban.userid) ".
+				"WHERE msgs.ip = {$this->_db->Quote( $entry->ip )} ".
 				"GROUP BY msgs.name, msgs.userid ".
 				"ORDER BY msgs.time ASC ".
 				"LIMIT 0, ". $usernamelimit;

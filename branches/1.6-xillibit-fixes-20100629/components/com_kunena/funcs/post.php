@@ -60,12 +60,12 @@ class CKunenaPost {
 					c.name AS catname, c.parent AS catparent, c.pub_access,
 					c.review, c.class_sfx, p.id AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
-				FROM #__kunena_messages AS m
-				INNER JOIN #__kunena_messages AS mm ON mm.id=m.thread
-				INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
-				INNER JOIN #__kunena_categories AS c ON c.id=m.catid
-				LEFT JOIN #__kunena_polls AS p ON m.id=p.threadid
-				WHERE m.id='" . $this->id . "'";
+				FROM {$this->_db->nameQuote('#__kunena_messages')} AS m
+				INNER JOIN {$this->_db->nameQuote('#__kunena_messages')} AS mm ON mm.id=m.thread
+				INNER JOIN {$this->_db->nameQuote('#__kunena_messages_text')} AS t ON t.mesid=m.id
+				INNER JOIN {$this->_db->nameQuote('#__kunena_categories')} AS c ON c.id=m.catid
+				LEFT JOIN {$this->_db->nameQuote('#__kunena_polls')} AS p ON m.id=p.threadid
+				WHERE m.id={$this->_db->Quote($this->id)}";
 
 			$this->_db->setQuery ( $query );
 			$this->msg_cat = $this->_db->loadObject ();
@@ -81,7 +81,7 @@ class CKunenaPost {
 			}
 		} else if ($this->catid) {
 			// Check that category exists and fill some information for later use
-			$this->_db->setQuery ( "SELECT 0 AS id, 0 AS thread, id AS catid, name AS catname, parent AS catparent, pub_access, locked, locked AS catlocked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls FROM #__kunena_categories WHERE id='{$this->catid}'" );
+			$this->_db->setQuery ( "SELECT 0 AS id, 0 AS thread, id AS catid, name AS catname, parent AS catparent, pub_access, locked, locked AS catlocked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls FROM {$this->_db->nameQuote('#__kunena_categories')} WHERE id={$this->_db->Quote($this->catid)}" );
 			$this->msg_cat = $this->_db->loadObject ();
 			if (! $this->msg_cat) {
 				KunenaError::checkDatabaseError();
@@ -90,7 +90,7 @@ class CKunenaPost {
 			}
 		} else {
 			//get default category
-			$this->_db->setQuery ( "SELECT allow_anonymous FROM `#__kunena_categories` WHERE `parent`>0 AND id IN ({$this->_session->allowed}) ORDER BY ordering, name LIMIT 1" );
+			$this->_db->setQuery ( "SELECT allow_anonymous FROM {$this->_db->nameQuote('#__kunena_categories')} WHERE `parent`>0 AND id IN ({$this->_session->allowed}) ORDER BY ordering, name LIMIT 1" );
 			$this->cat_default_allow = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}
@@ -178,7 +178,7 @@ class CKunenaPost {
 		}
 
 		// TODO: replace this with better solution
-		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread='{$thread}'" );
+		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE thread={$this->_db->Quote($thread)}" );
 		$result = $this->_db->loadObject ();
 		KunenaError::checkDatabaseError();
 		$threadPages = ceil ( $result->totalmessages / $this->config->messages_per_page );
@@ -197,7 +197,7 @@ class CKunenaPost {
 				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
 		}
 		// TODO: find better way to do this:
-		$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$id}" );
+		$this->_db->setQuery ( "UPDATE {$this->_db->nameQuote('#__kunena_messages_text')} SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$this->_db->Quote($id)}" );
 		$this->_db->query ();
 
 		$message->emailToSubscribers($LastPostUrl, $this->config->allowsubscriptions && ! $holdPost, $this->config->mailmod || $holdPost, $this->config->mailadmin || $holdPost);
@@ -208,7 +208,7 @@ class CKunenaPost {
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($subscribeMe == 1) {
-			$this->_db->setQuery ( "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES ('$thread','{$this->my->id}')" );
+			$this->_db->setQuery ( "INSERT INTO {$this->_db->nameQuote('#__kunena_subscriptions')} (thread,userid) VALUES ({$this->_db->Quote($thread)},{$this->_db->Quote($this->my->id)})" );
 
 			if (@$this->_db->query ()) {
 				$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) . '<br />';
@@ -281,7 +281,7 @@ class CKunenaPost {
 		if ($this->my->id && $this->config->allowsubscriptions == 1) {
 			$this->cansubscribe = 1;
 			if ($this->msg_cat && $this->msg_cat->thread) {
-				$this->_db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->msg_cat->thread}'" );
+				$this->_db->setQuery ( "SELECT thread FROM {$this->_db->nameQuote('#__kunena_subscriptions')} WHERE userid={$this->_db->Quote($this->my->id)} AND thread={$this->_db->Quote($this->msg_cat->thread)}" );
 				$subscribed = $this->_db->loadResult ();
 				if (KunenaError::checkDatabaseError() || $subscribed) {
 					$this->cansubscribe = 0;
@@ -426,7 +426,7 @@ class CKunenaPost {
 		$attachkeeplist = JRequest::getVar('attach-id',array ( 0 ), 'post', 'array');
 		JArrayHelper::toInteger($attachkeeplist, array ( 0 ));
 		$attachkeeplist = implode(',', $attachkeeplist);
-		$query = "SELECT id FROM #__kunena_attachments WHERE mesid={$this->id} AND id NOT IN ({$attachkeeplist})";
+		$query = "SELECT id FROM {$this->_db->nameQuote('#__kunena_attachments')} WHERE mesid={$this->_db->Quote($this->id)} AND id NOT IN ({$attachkeeplist})";
 		$this->_db->setQuery ( $query );
 		$attachmentlist = $this->_db->loadResultArray ();
 		if (!KunenaError::checkDatabaseError()) {
@@ -440,7 +440,7 @@ class CKunenaPost {
 				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
 		}
 		// TODO: find better way to do this (not again!):
-		$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$this->id}" );
+		$this->_db->setQuery ( "UPDATE {$this->_db->nameQuote('#__kunena_messages_text')} SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$this->_db->Quote($this->id)}" );
 		$this->_db->query ();
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
@@ -554,16 +554,16 @@ class CKunenaPost {
 		$this->moderateMultiplesChoices = $modchoices;
 
 		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__kunena_messages WHERE catid={$this->catid} AND parent=0 AND hold=0 AND moved=0 AND thread!='{$this->msg_cat->thread}' ORDER BY id DESC";
+		$query = "SELECT id,subject FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE catid={$this->_db->Quote($this->catid)} AND parent=0 AND hold=0 AND moved=0 AND thread!={$this->_db->Quote($this->msg_cat->thread)} ORDER BY id DESC";
 		$this->_db->setQuery ( $query, 0, 30 );
 		$messagesList = $this->_db->loadObjectlist ();
 		if (KunenaError::checkDatabaseError()) return;
 
 		// Get thread and reply count from current message:
-		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM #__kunena_messages AS m
-			INNER JOIN #__kunena_messages AS t ON m.thread=t.id
-			LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
-			WHERE m.id={$this->id}
+		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM {$this->_db->nameQuote('#__kunena_messages')} AS m
+			INNER JOIN {$this->_db->nameQuote('#__kunena_messages')} AS t ON m.thread=t.id
+			LEFT JOIN {$this->_db->nameQuote('#__kunena_messages')} AS mm ON mm.thread=m.thread AND mm.id > m.id
+			WHERE m.id={$this->_db->Quote($this->id)}
 			GROUP BY m.thread";
 		$this->_db->setQuery ( $query, 0, 1 );
 		$this->threadmsg = $this->_db->loadObject ();
@@ -625,7 +625,7 @@ class CKunenaPost {
 		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id='{$this->id}'" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
 			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES ('{$thread}','{$this->my->id}')" );
+			$this->_db->setQuery ( "INSERT INTO {$this->_db->nameQuote('#__kunena_subscriptions')} (thread,userid) VALUES ({$this->_db->Quote($thread)},{$this->_db->Quote($this->my->id)})" );
 
 			if (@$this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
@@ -638,10 +638,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
-		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$this->id}'" );
+		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
 			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "DELETE FROM #__kunena_subscriptions WHERE thread={$thread} AND userid={$this->my->id}" );
+			$this->_db->setQuery ( "DELETE FROM {$this->_db->nameQuote('#__kunena_subscriptions')} WHERE thread={$this->_db->Quote($thread)} AND userid={$this->_db->Quote($this->my->id)}" );
 
 			if ($this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
@@ -654,10 +654,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id='{$this->id}'" );
+		$this->_db->setQuery ( "SELECT thread FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
 			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "INSERT INTO #__kunena_favorites (thread,userid) VALUES ('{$thread}','{$this->my->id}')" );
+			$this->_db->setQuery ( "INSERT INTO {$this->_db->nameQuote('#__kunena_favorites')} (thread,userid) VALUES ({$this->_db->Quote($thread)},{$this->_db->Quote($this->my->id)})" );
 
 			if (@$this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
@@ -670,10 +670,10 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
-		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$this->id}'" );
+		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->my->id && $this->_db->query ()) {
 			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "DELETE FROM #__kunena_favorites WHERE thread={$thread} AND userid={$this->my->id}" );
+			$this->_db->setQuery ( "DELETE FROM {$this->_db->nameQuote('#__kunena_favorites')} WHERE thread={$this->_db->Quote($thread)} AND userid={$this->_db->Quote($this->my->id)}" );
 
 			if ($this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
@@ -693,7 +693,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' );
-		$this->_db->setQuery ( "update #__kunena_messages set ordering=1 where id={$this->id}" );
+		$this->_db->setQuery ( "update {$this->_db->nameQuote('#__kunena_messages')} set ordering=1 where id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_SET' );
 		}
@@ -711,7 +711,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' );
-		$this->_db->setQuery ( "update #__kunena_messages set ordering=0 where id={$this->id}" );
+		$this->_db->setQuery ( "update {$this->_db->nameQuote('#__kunena_messages')} set ordering=0 where id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' );
 		}
@@ -729,7 +729,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' );
-		$this->_db->setQuery ( "update #__kunena_messages set locked=1 where id={$this->id}" );
+		$this->_db->setQuery ( "update {$this->_db->nameQuote('#__kunena_messages')} set locked=1 where id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_SET' );
 		}
@@ -747,7 +747,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' );
-		$this->_db->setQuery ( "update #__kunena_messages set locked=0 where id={$this->id}" );
+		$this->_db->setQuery ( "update {$this->_db->nameQuote('#__kunena_messages')} set locked=0 where id={$this->_db->Quote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' );
 		}
@@ -765,7 +765,7 @@ class CKunenaPost {
 			return false;
 
 		$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_FAIL' );
-		$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE id={$this->id}" );
+		$this->_db->setQuery ( "UPDATE {$this->_db->nameQuote('#__kunena_messages')} SET hold=0 WHERE id={$this->_db->eQuote($this->id)}" );
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
@@ -783,9 +783,9 @@ class CKunenaPost {
 			return;
 
 		//get all the messages for this thread
-		$query = "SELECT m.*, t.* FROM #__kunena_messages AS m
-			LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid
-			WHERE thread='{$this->msg_cat->thread}' AND hold='0'
+		$query = "SELECT m.*, t.* FROM {$this->_db->nameQuote('#__kunena_messages')} AS m
+			LEFT JOIN {$this->_db->nameQuote('#__kunena_messages_text')} AS t ON m.id=t.mesid
+			WHERE thread={$this->_db->Quote($this->msg_cat->thread)} AND hold='0'
 			ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();
@@ -890,7 +890,7 @@ class CKunenaPost {
 		$ip = $_SERVER ["REMOTE_ADDR"];
 
 		if ($this->config->floodprotection && ! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip='{$ip}'" );
+			$this->_db->setQuery ( "SELECT MAX(time) FROM {$this->_db->nameQuote('#__kunena_messages')} WHERE ip={$this->_db->Quote($ip)}" );
 			$lastPostTime = $this->_db->loadResult ();
 			if (KunenaError::checkDatabaseError()) return false;
 

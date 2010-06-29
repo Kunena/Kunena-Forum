@@ -166,7 +166,7 @@ class CKunenaViewMessage {
 		// ****************************
 		$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
 		if ($this->config->alphauserpoints && file_exists ( $api_AUP )) {
-			$this->db->setQuery ( "SELECT points FROM #__alpha_userpoints WHERE `userid`='" . ( int ) $message->userid . "'" );
+			$this->db->setQuery ( "SELECT points FROM {$this->db->nameQuote('#__alpha_userpoints')} WHERE `userid`='" . ( int ) $message->userid . "'" );
 			$this->userpoints = $this->db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}
@@ -318,10 +318,10 @@ class CKunenaView {
 		$where = implode(' AND ',$where);
 
 		$query = "SELECT a.*, b.*, p.id AS poll_id, modified.name AS modified_name, modified.username AS modified_username
-			FROM #__kunena_messages AS a
-			LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid
-			LEFT JOIN #__users AS modified ON a.modified_by = modified.id
-			LEFT JOIN #__kunena_polls AS p ON a.id=p.threadid
+			FROM {$this->db->nameQuote('#__kunena_messages')} AS a
+			LEFT JOIN {$this->db->nameQuote('#__kunena_messages_text')} AS b ON a.id=b.mesid
+			LEFT JOIN {$this->db->nameQuote('#__users')} AS modified ON a.modified_by = modified.id
+			LEFT JOIN {$this->db->nameQuote('#__kunena_polls')} AS p ON a.id=p.threadid
 			WHERE a.id='{$this->id}' AND {$where}";
 		$this->db->setQuery ( $query );
 		$this->first_message = $this->db->loadObject ();
@@ -345,7 +345,7 @@ class CKunenaView {
 				$newurl = array();
 				parse_str ( $this->first_message->message, $newloc );
 				$this->id = $newloc ['id'];
-				$query = "SELECT catid, thread FROM #__kunena_messages AS a WHERE a.id='{$this->id}'";
+				$query = "SELECT catid, thread FROM {$this->db->nameQuote('#__kunena_messages')} AS a WHERE a.id='{$this->id}'";
 				$this->db->setQuery ( $query );
 				$newpos = $this->db->loadObject ();
 				if (KunenaError::checkDatabaseError()) return;
@@ -354,7 +354,7 @@ class CKunenaView {
 			}
 
 			// This query to calculate the page this reply is sitting on within this thread
-			$query = "SELECT COUNT(*) FROM #__kunena_messages AS a WHERE a.thread='{$this->thread}' AND {$where} AND a.id<='{$this->id}'";
+			$query = "SELECT COUNT(*) FROM {$this->db->nameQuote('#__kunena_messages')} AS a WHERE a.thread={$this->db->Quote($this->thread)} AND {$where} AND a.id<={$this->db->Quote($this->id)}";
 			$this->db->setQuery ( $query );
 			$replyCount = $this->db->loadResult ();
 			if (KunenaError::checkDatabaseError()) return;
@@ -365,11 +365,11 @@ class CKunenaView {
 		}
 
 		//Get the category name for breadcrumb
-		$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id='{$this->catid}'" );
+		$this->db->setQuery ( "SELECT * FROM {$this->db->nameQuote('#__kunena_categories')} WHERE id={$this->db->Quote($this->catid)}" );
 		$this->catinfo = $this->db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;
 		//Get Parent's cat.name for breadcrumb
-		$this->db->setQuery ( "SELECT id, name FROM #__kunena_categories WHERE id='{$this->catinfo->parent}'" );
+		$this->db->setQuery ( "SELECT id, name FROM {$this->db->nameQuote('#__kunena_categories')} WHERE id={$this->db->Quote($this->catinfo->parent)}" );
 		$objCatParentInfo = $this->db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;
 
@@ -393,12 +393,12 @@ class CKunenaView {
 
 		//update the hits counter for this topic & exclude the owner
 		if ($this->my->id == 0 || $this->first_message->userid != $this->my->id) {
-			$this->db->setQuery ( "UPDATE #__kunena_messages SET hits=hits+1 WHERE id='{$this->thread}' AND parent='0'" );
+			$this->db->setQuery ( "UPDATE {$this->db->nameQuote('#__kunena_messages')} SET hits=hits+1 WHERE id={$this->db->Quote($this->thread)} AND parent='0'" );
 			$this->db->query ();
 			KunenaError::checkDatabaseError();
 		}
 
-		$query = "SELECT COUNT(*) FROM #__kunena_messages AS a WHERE a.thread='{$this->thread}' AND {$where}";
+		$query = "SELECT COUNT(*) FROM {$this->db->nameQuote('#__kunena_messages')} AS a WHERE a.thread={$this->db->Quote($this->thread)} AND {$where}";
 		$this->db->setQuery ( $query );
 		$this->total_messages = $this->db->loadResult ();
 		KunenaError::checkDatabaseError();
@@ -423,10 +423,10 @@ class CKunenaView {
 
 		// Get replies of current thread
 		$query = "SELECT a.*, b.*, modified.name AS modified_name, modified.username AS modified_username
-					FROM #__kunena_messages AS a
-					LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid
-					LEFT JOIN #__users AS modified ON a.modified_by = modified.id
-					WHERE a.thread='{$this->thread}' AND {$where}
+					FROM {$this->db->nameQuote('#__kunena_messages')} AS a
+					LEFT JOIN {$this->db->nameQuote('#__kunena_messages_text')} AS b ON a.id=b.mesid
+					LEFT JOIN {$this->db->nameQuote('#__users')} AS modified ON a.modified_by = modified.id
+					WHERE a.thread={$this->db->Quote($this->thread)} AND {$where}
 					ORDER BY id {$ordering}";
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
 		$posts = $this->db->loadObjectList ();
@@ -481,7 +481,7 @@ class CKunenaView {
 		//Perform subscriptions check only once
 		$fb_cansubscribe = 0;
 		if ($this->config->allowsubscriptions && $this->my->id) {
-			$this->db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid='{$this->my->id}' AND thread='{$this->thread}'" );
+			$this->db->setQuery ( "SELECT thread FROM {$this->db->nameQuote('#__kunena_subscriptions')} WHERE userid={$this->db->Quote($this->my->id)} AND thread={$this->db->Quote($this->thread)}" );
 			$fb_subscribed = $this->db->loadResult ();
 			KunenaError::checkDatabaseError();
 
@@ -491,7 +491,7 @@ class CKunenaView {
 		}
 		//Perform favorites check only once
 		$fb_canfavorite = 0;
-		$this->db->setQuery ( "SELECT MAX(userid={$this->my->id}) AS favorited, COUNT(*) AS totalfavorited FROM #__kunena_favorites WHERE thread='{$this->thread}'" );
+		$this->db->setQuery ( "SELECT MAX(userid={$this->db->Quote($this->my->id)}) AS favorited, COUNT(*) AS totalfavorited FROM {$this->db->nameQuote('#__kunena_favorites')} WHERE thread={$this->db->Quote($this->thread)}" );
 		list ( $this->favorited, $this->totalfavorited ) = $this->db->loadRow ();
 		KunenaError::checkDatabaseError();
 		if ($this->config->allowfavorites && $this->my->id) {
@@ -501,7 +501,7 @@ class CKunenaView {
 		}
 
 		//get the Moderator list for display
-		$this->db->setQuery ( "SELECT m.*, u.* FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->catid} AND u.block=0" );
+		$this->db->setQuery ( "SELECT m.*, u.* FROM {$this->db->nameQuote('#__kunena_moderation')} AS m INNER JOIN {$this->db->nameQuote('#__users')} AS u ON u.id=m.userid WHERE m.catid={$this->db->Quote($this->catid)} AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 

@@ -31,7 +31,7 @@ $userid = JRequest::getInt ( 'userid', 0 );
 $pid = JRequest::getInt ( 'pid', 0 );
 
 if ($pid) {
-	$kunena_db->setQuery("SELECT catid, thread FROM #__kunena_messages WHERE id='{$pid}'");
+	$kunena_db->setQuery("SELECT catid, thread FROM {$kunena_db->nameQuote('#__kunena_messages')} WHERE id={$kunena_db->Quote($pid)}");
 	$kmsg = $kunena_db->loadObject();
 	if (KunenaError::checkDatabaseError()) return;
 	if (is_object($kmsg)) {
@@ -73,10 +73,10 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                         {
                             if ($do == "increase")
                             {
-                                $kunena_db->setQuery('UPDATE #__kunena_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
+                                $kunena_db->setQuery("UPDATE {$kunena_db->nameQuote('#__kunena_users')} SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote( $kunena_my->id )} ");
 							    $kunena_db->query();
 							    if (KunenaError::checkDatabaseError()) return;
-							    $kunena_db->setQuery('UPDATE #__kunena_users SET karma=karma+1 WHERE userid=' . $userid . '');
+							    $kunena_db->setQuery("UPDATE {$kunena_db->nameQuote('#__kunena_users')} SET karma=karma+1 WHERE userid={$kunena_db->Quote( $userid )}");
 							    $kunena_db->query();
 							    if (KunenaError::checkDatabaseError()) return;
 							    echo JText::_('COM_KUNENA_KARMA_INCREASED') . '<br />';
@@ -90,10 +90,10 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                             }
                             else if ($do == "decrease")
                             {
-                                $kunena_db->setQuery('UPDATE #__kunena_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
+                                $kunena_db->setQuery("UPDATE {$kunena_db->nameQuote('#__kunena_users')} SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote($kunena_my->id)}");
                                 $kunena_db->query();
                                 if (KunenaError::checkDatabaseError()) return;
-                                $kunena_db->setQuery('UPDATE #__kunena_users SET karma=karma-1 WHERE userid=' . $userid . '');
+                                $kunena_db->setQuery("UPDATE {$kunena_db->nameQuote('#__kunena_users')} SET karma=karma-1 WHERE userid={$kunena_db->Quote($userid)}");
                                 $kunena_db->query();
                                 if (KunenaError::checkDatabaseError()) return;
                                 echo JText::_('COM_KUNENA_KARMA_DECREASED') . '<br />';
@@ -124,7 +124,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
                     {
                         if ($do == "increase")   // Seriously decrease his karma if he tries to increase it
                         {
-                            $kunena_db->setQuery('UPDATE #__kunena_users SET karma=karma-10, karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
+                            $kunena_db->setQuery("UPDATE {$kunena_db->nameQuote('#__kunena_users')} SET karma=karma-10, karma_time={$kunena_db->Quote($time)} WHERE userid='{$kunena_db->Quote($kunena_my->id)}");
                             $kunena_db->query();
                             if (KunenaError::checkDatabaseError()) return;
                         	if ($pid) {
@@ -138,7 +138,7 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 
                         if ($do == "decrease") // Stop him from decreasing his karma but still update karma_time
                         {
-                            $kunena_db->setQuery('UPDATE #__kunena_users SET karma_time=' . $time . ' WHERE userid=' . $kunena_my->id . '');
+                            $kunena_db->setQuery("UPDATE {$kunena_db->nameQuote('#__kunena_users')} SET karma_time={$kunena_db->Quote($time)} WHERE userid={$kunena_db->Quote($kunena_my->id)}");
                             $kunena_db->query();
                             if (KunenaError::checkDatabaseError()) return;
                         	if ($pid) {

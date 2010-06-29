@@ -411,8 +411,8 @@ class CKunenaLink {
 		if ($catid > 0)
 			$where .= " AND a.catid = {$catid} ";
 		$kunena_db->setQuery ( "SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__kunena_messages AS a,
-                                (SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$pid}') AS b
+                             FROM {$kunena_db->nameQuote('#__kunena_messages')} AS a,
+                                (SELECT MAX(thread) AS thread FROM {$kunena_db->nameQuote('#__kunena_messages')} WHERE id={$kunena_db->Quote($pid)}) AS b
                              WHERE a.thread = b.thread AND a.hold='0' {$where}
                              GROUP BY a.thread" );
 		$result = $kunena_db->loadObject ();
@@ -449,8 +449,8 @@ class CKunenaLink {
 		if ($catid > 0)
 			$where .= " AND a.catid = {$catid} ";
 		$kunena_db->setQuery ( "SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__kunena_messages AS a,
-                                (SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id='{$pid}') AS b
+                             FROM {$kunena_db->nameQuote('#__kunena_messages')} AS a,
+                                (SELECT MAX(thread) AS thread FROM {$kunena_db->nameQuote('#__kunena_messages')} WHERE id={$kunena_db->Quote($pid)}) AS b
                              WHERE a.thread = b.thread AND a.hold='0' {$where}
                              GROUP BY a.thread" );
 		$result = $kunena_db->loadObject ();
@@ -472,8 +472,8 @@ class CKunenaLink {
 		$kunena_db = &JFactory::getDBO ();
 		// First determine the thread, latest post and number of posts for the post supplied
 		$kunena_db->setQuery ( "SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__kunena_messages AS a, (SELECT thread FROM #__kunena_messages WHERE id='{$pid}') AS b
-                             WHERE a.thread = b.thread AND a.hold='0' AND a.id <= {$pid}
+                             FROM {$kunena_db->nameQuote('#__kunena_messages')} AS a, (SELECT thread FROM {$kunena_db->nameQuote('#__kunena_messages')} WHERE id={$kunena_db->Quote($pid)}) AS b
+                             WHERE a.thread = b.thread AND a.hold='0' AND a.id <= {$kunena_db->Quote($pid)}
                              GROUP BY a.thread" );
 		$result = $kunena_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;

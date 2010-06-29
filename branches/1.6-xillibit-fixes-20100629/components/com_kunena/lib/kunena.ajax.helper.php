@@ -143,7 +143,7 @@ class CKunenaAjaxHelper {
 		switch ($do) {
 			case 'getcat' :
 				$query = "SELECT c.name, c.id
-							FROM #__kunena_categories AS c
+							FROM {$this->db->nameQuote('#__kunena_categories')} AS c
 							WHERE $allowed AND name LIKE '" . $data . "%'
 							ORDER BY 1 LIMIT 0, 10;";
 
@@ -153,8 +153,8 @@ class CKunenaAjaxHelper {
 				break;
 			case 'gettopic' :
 				$query = "SELECT m.subject
-							FROM #__kunena_messages AS m
-							JOIN #__kunena_categories AS c ON m.catid = c.id
+							FROM {$this->db->nameQuote('#__kunena_messages')} AS m
+							JOIN {$this->db->nameQuote('#__kunena_categories')} AS c ON m.catid = c.id
 							WHERE m.hold=0 AND m.parent=0 AND $allowed
 								AND m.subject LIKE '" . $data . "%'
 							ORDER BY 1 LIMIT 0, 10;";
@@ -169,7 +169,7 @@ class CKunenaAjaxHelper {
 				// User the configured display name
 				$queryname = $kunena_config->username ? 'username' : 'name';
 				// Exclude the main superadmin from the search for security purposes
-				$query = "SELECT `$queryname` FROM #__users WHERE block=0 AND `id` != 62 AND `$queryname`
+				$query = "SELECT `$queryname` FROM {$this->db->nameQuote('#__users')} WHERE block=0 AND `id` != 62 AND `$queryname`
 							LIKE '" . $data . "%' ORDER BY 1 LIMIT 0, 10;";
 
 				$this->_db->setQuery ( $query );
@@ -208,7 +208,7 @@ class CKunenaAjaxHelper {
 		$result = array ();
 
 		$query = "SELECT id
-							FROM #__kunena_categories
+							FROM {$this->db->nameQuote('#__kunena_categories')}
 							WHERE allow_polls=1;";
 		$this->_db->setQuery ( $query );
 		$allow_polls = $this->_db->loadResultArray ();
@@ -246,7 +246,7 @@ class CKunenaAjaxHelper {
 		$result = array ();
 
 		$query = "SELECT id
-							FROM #__kunena_categories
+							FROM {$this->db->nameQuote('#__kunena_categories')}
 							WHERE allow_anonymous=1;";
 		$this->_db->setQuery ( $query );
 		$allow_anonymous = $this->_db->loadResultArray ();
@@ -277,8 +277,8 @@ class CKunenaAjaxHelper {
 		// TODO: Get attachment details
 
 		$query = "SELECT a.*, m.*
-			FROM #__kunena_attachments AS a
-			JOIN #__kunena_messages AS m ON a.mesid = m.id
+			FROM {$this->db->nameQuote('#__kunena_attachments')} AS a
+			JOIN {$this->db->nameQuote('#__kunena_messages')} AS m ON a.mesid = m.id
 			WHERE a.id = '".$data."'";
 
 		$this->_db->setQuery ( $query );
@@ -314,8 +314,8 @@ class CKunenaAjaxHelper {
 			JFile::delete (JPATH_ROOT.$attachment->folder.'/thumb/'.$attachment->filename);
 
 		// Finally delete attachment record from db
-		$query = "DELETE FROM #__kunena_attachments AS a
-					WHERE a.id = '".$data."'";
+		$query = "DELETE FROM {$this->db->nameQuote('#__kunena_attachments')} AS a
+					WHERE a.id = {$this->db->Quote($data)}";
 
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
@@ -338,8 +338,8 @@ class CKunenaAjaxHelper {
 		$user = KunenaFactory::getuser();
 		if ( $catid && $user->isModerator($catid) ) {
 			$query = "SELECT id, subject
-							FROM #__kunena_messages
-							WHERE catid={$catid} AND parent=0 AND moved=0
+							FROM {$this->db->nameQuote('#__kunena_messages')}
+							WHERE catid={$this->db->Quote($catid)} AND parent=0 AND moved=0
 							ORDER BY id DESC";
 			$this->_db->setQuery ( $query, 0, 15 );
 			$topics_list = $this->_db->loadObjectlist ();

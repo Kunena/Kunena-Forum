@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA2
 
+19-June-2010 810
+^ [#19288] Add showstats (part 3)
+
 19-June-2010 Xillibit
 ^ [#19288] Access now at stats page correctly via cpanel
 

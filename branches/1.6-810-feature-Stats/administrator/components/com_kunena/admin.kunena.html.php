@@ -3665,18 +3665,10 @@ function textCounter(field, target) {
 			kimport ( 'thankyou' );
 			?>
             <div class="kadmin-functitle icon-stats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS');?></div>
-<div class="kblock">
-		<div class="kcontainer">
+
 		<div class="kadmin-statscover">
 			<?php include("/libraries/stats.php"); ?>
-
 		</div>
-	</div>
-</div>
-
-</div>
-<!-- FINISH: STATS -->
-
 <?php
 	}//End Stats
 			//Start report system

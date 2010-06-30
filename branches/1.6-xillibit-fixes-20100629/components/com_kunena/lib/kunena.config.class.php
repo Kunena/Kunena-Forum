@@ -274,8 +274,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $ebaylanguagecode = 'en-us';
 	var $fbsessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
-	var $highlightcode = 0;
-	var $highlightcode_path = '/libraries/geshi';
+	var $highlightcode = 0;	
 	// New 1.6 rss config vars
 	var $rss_type = 'thread';
 	var $rss_timelimit = 'month';

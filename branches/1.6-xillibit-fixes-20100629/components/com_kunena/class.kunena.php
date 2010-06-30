@@ -111,7 +111,7 @@ define('KUNENA_ABSEMOTIONSPATH', KUNENA_ABSIMAGESPATH . 'emoticons/');
 define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 
 // absolute catimages path
-define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED .DS. $kunena_config->catimagepath); // Kunena category images absolute path
+define('KUNENA_ABSCATIMAGESPATH', KUNENA_ROOT_PATH.DS.'media'.DS.'kunena'.DS.$kunena_config->catimagepath); // Kunena category images absolute path
 
 define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/");
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$fb_cur_img_template}/");
@@ -422,7 +422,7 @@ class CKunenaTools {
 		}
 
 		if ($readTopics) {
-			$kunena_db->setQuery ( "UPDATE {$kunena_db->nameQuote('#__kunena_sessions')} SET readtopics={$kunena_db->Quote($readTopics)} WHERE userid={$kunena_db->nameQuote($userid)}" );
+			$kunena_db->setQuery ( "UPDATE {$kunena_db->nameQuote('#__kunena_sessions')} SET readtopics={$kunena_db->Quote($readTopics)} WHERE userid={$kunena_db->Quote($userid)}" );
 			$kunena_db->query ();
 			KunenaError::checkDatabaseError();
 		}

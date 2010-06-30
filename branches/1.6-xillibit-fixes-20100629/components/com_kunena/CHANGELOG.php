@@ -36,6 +36,7 @@ Kunena 1.6.0-ALPHA3
 
 30-June-2010 Xillibit
 # [#19288] Change on geshi paths to load the correct things if you use j1.5 or j1.6
+# [#19288] Fix issue with contant KUNENA_ABSCATIMAGESPATH which is wrong
 
 29-June-2010 Xillibit
 # [#19288] Put nameQuote() and Quote() in each query to be sure that the queries has escaped

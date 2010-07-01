@@ -25,8 +25,6 @@ defined( '_JEXEC' ) or die();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
 $pathway = new CKunenaPathway();
 
-global $kunena_icons;
-
 $func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
 $catid = JRequest::getInt ( 'catid', 0 );
 $id = JRequest::getInt ( 'id', 0 );

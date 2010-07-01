@@ -165,7 +165,7 @@ class CKunenaShowcat {
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
 
-		$this->headerdesc = KunenaParser::parseBBCode ( $this->objCatInfo->headerdesc );
+		$this->headerdesc = $this->objCatInfo->headerdesc;
 
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
 			//this user is allowed to post a new topic:

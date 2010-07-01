@@ -11,19 +11,19 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
-
-global $kunena_icons;
 ?>
 <div><?php $this->displayPathway(); ?></div>
+
 <?php if ($this->headerdesc) : ?>
 <div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->catinfo->class_sfx) : '' ?>">
 	<?php echo $this->headerdesc ?>
 </div>
 <?php endif ?>
+
 <?php
-$this->displayPoll();
-CKunenaTools::showModulePosition( 'kunena_poll' );
-$this->displayThreadActions(0);
+	$this->displayPoll();
+	CKunenaTools::showModulePosition( 'kunena_poll' );
+	$this->displayThreadActions(0);
 ?>
 
 <table class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kblocktable' . $this->escape($this->catinfo->class_sfx) : '' ?>" id="kviews">
@@ -44,16 +44,14 @@ $this->displayThreadActions(0);
 	<tbody>
 		<tr>
 			<td>
-			<?php
-			foreach ( $this->messages as $message )
-				$this->displayMessage($message);
-			?>
+				<?php foreach ( $this->messages as $message ) $this->displayMessage($message) ?>
 			</td>
 		</tr>
 	</tbody>
 </table>
 
 <?php $this->displayThreadActions(1); ?>
+
 <div class = "kforum-pathway-bottom">
 	<?php echo $this->kunena_pathway1; ?>
 </div>
@@ -63,28 +61,23 @@ $this->displayThreadActions(0);
 <table class="klist-bottom">
 	<tr>
 		<td class="klist-moderators">
-		<!-- Mod List -->
-		<?php
-		if (count ( $this->modslist ) > 0) {
-		?>
-		<div class="kbox-bottomarea-modlist">
-		<?php
-			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
-			$modlinks = array();
-			foreach ( $this->modslist as $mod ) {
-				$modlinks[] = CKunenaLink::GetProfileLink ( $mod->userid, ($this->config->username ? $this->escape($mod->username) : $this->escape($mod->name)) );
-			}
-			echo implode(', ', $modlinks);
-		?>
-		</div>
-		<?php
-		}
-		?>
-		<!-- /Mod List -->
+			<!-- Mod List -->
+			<?php if (count ( $this->modslist ) > 0) : ?>
+			<div class="kbox-bottomarea-modlist">
+				<?php
+				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
+				$modlinks = array();
+				foreach ( $this->modslist as $mod ) {
+					$modlinks[] = CKunenaLink::GetProfileLink ( intval($mod->userid) );
+				}
+				echo implode(', ', $modlinks);
+				?>
+			</div>
+			<?php endif; ?>
+			<!-- /Mod List -->
 		</td>
 		<td class="klist-categories">
-		<?php $this->displayForumJump();
-		?>
+			<?php $this->displayForumJump() ?>
 		</td>
 	</tr>
 </table>

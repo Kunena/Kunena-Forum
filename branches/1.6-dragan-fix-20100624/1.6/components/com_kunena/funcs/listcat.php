@@ -102,7 +102,6 @@ class CKunenaListcat {
 		$allsubcats = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		global $kunena_icons;
 		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
 
 		$subcats = array ();

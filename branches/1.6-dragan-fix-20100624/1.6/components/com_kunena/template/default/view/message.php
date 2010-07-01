@@ -19,7 +19,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<thead>
 		<tr class="ksth">
 			<th colspan="2" class="kview-th ksectiontableheader">
-				<a name="<?php echo $this->id ?>"></a>
+				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>
 		</tr>
@@ -50,7 +50,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<thead>
 		<tr class="ksth">
 			<th colspan="2" class="kview-th ksectiontableheader">
-				<a name="<?php echo $this->id ?>"></a>
+				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>
 		</tr>
@@ -81,7 +81,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<thead>
 		<tr class="ksth">
 			<th colspan="2" class="kview-th ksectiontableheader">
-				<a name="<?php echo $this->id ?>"></a>
+				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>
 		</tr>
@@ -110,7 +110,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<thead>
 		<tr class="ksth">
 			<th colspan="2" class="kview-th ksectiontableheader">
-				<a name="<?php echo $this->id ?>"></a>
+				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>
 		</tr>

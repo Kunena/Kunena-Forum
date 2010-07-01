@@ -22,14 +22,11 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-global $kunena_icons;
-
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
-
-	?>
+?>
 <div class="k-bt-cvr1">
 <div class="k-bt-cvr2">
 <div class="k-bt-cvr3">

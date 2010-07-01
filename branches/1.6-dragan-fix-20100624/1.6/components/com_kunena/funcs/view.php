@@ -97,7 +97,7 @@ class CKunenaViewMessage {
 		if ( empty ( $this->attachments ) ) return;
 		CKunenaTools::loadTemplate('/view/message.attachments.php');
 	}
-	
+
 	/**
 	* Escapes a value for output in a view script.
 	*
@@ -136,8 +136,8 @@ class CKunenaViewMessage {
 
 		$subject = $message->subject;
 		$this->resubject = JString::strtolower ( JString::substr ( $subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $subject;
-		$this->subject = KunenaParser::parseText ( $subject );
-		$this->message = KunenaParser::parseBBCode ( $message->message, $this );
+		$this->subjectHtml = KunenaParser::parseText ( $subject );
+		$this->messageHtml = KunenaParser::parseBBCode ( $message->message, $this );
 
 		//Show admins the IP address of the user:
 		if ($message->ip && (CKunenaTools::isAdmin () || (CKunenaTools::isModerator ( $this->my->id, $this->catid ) && !$this->config->hide_ip))) {
@@ -195,8 +195,8 @@ class CKunenaViewMessage {
 		}
 
 		$this->profilelink = $this->profile->profileIcon('profile');
-		$this->personaltext = KunenaParser::parseText ($this->profile->personalText);
-		$this->signature = KunenaParser::parseBBCode ($this->profile->signature);
+		$this->personaltext = $this->profile->personalText;
+		$this->signatureHtml = KunenaParser::parseBBCode ($this->profile->signature);
 
 		//Thankyou info and buttons
 		if ($this->config->showthankyou && $this->profile->userid) {
@@ -313,7 +313,7 @@ class CKunenaView {
 	function setTemplate($path) {
 		$this->templatepath = $path;
 	}
-	
+
 	/**
 	* Escapes a value for output in a view script.
 	*

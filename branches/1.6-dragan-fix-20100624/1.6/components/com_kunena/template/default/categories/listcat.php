@@ -21,8 +21,6 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-global $kunena_icons;
-
 $this->displayAnnouncement ();
 CKunenaTools::showModulePosition ( 'kunena_announcement' );
 $this->displayPathway ();

@@ -12,9 +12,9 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-
-if(!empty($this->thankyou)):
 ?>
+
+<?php if(!empty($this->thankyou)): ?>
 <div class="kmessage-thankyou">
 <?php
 	echo JText::_('COM_KUNENA_THANKYOU').': ';
@@ -22,6 +22,4 @@ if(!empty($this->thankyou)):
 	if (count($this->thankyou) > 9) echo '...';
 ?>
 </div>
-<?php
-	endif;
-?>
+<?php endif; ?>

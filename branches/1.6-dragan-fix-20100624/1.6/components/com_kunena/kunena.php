@@ -132,7 +132,7 @@ if ($kunena_config->debug) {
 	$kunena_db->debug(1);
 }
 
-global $lang, $kunena_icons, $topic_emoticons;
+global $lang, $topic_emoticons;
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (JPATH_COMPONENT . DS . 'class.kunena.php');

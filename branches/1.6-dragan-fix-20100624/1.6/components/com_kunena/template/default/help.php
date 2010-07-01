@@ -31,11 +31,7 @@ $introtext = CKunenaTools::getRulesHelpDatas($kunena_config->help_cid);
 <div class="kblock">
 	<div class="kcontainer">
 		<div class="khelprulesjump">
-		<?php
-		if ($kunena_config->enableforumjump) {
-			CKunenaTools::loadTemplate('/forumjump.php');
-		}
-		?>
+			<?php if ($kunena_config->enableforumjump) CKunenaTools::loadTemplate('/forumjump.php') ?>
 		</div>
 	</div>
 </div>

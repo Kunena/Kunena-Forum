@@ -19,18 +19,6 @@
 * @author TSMF & Jan de Graaff
 **/
 
-/*
- * Instructions:
- *
- * Put the file names of your custom Icon Set in this file.
- * If you didn't use a particular Icon, you can comment out the line:
- *
- * // $kunena_icons['delete']='delete.gif';
- *
- * If icon wasn't found from your template, Kunena tries to find alternate icon
- * from default template. If no icon is found, text will be used instead.
- */
-
 // Topic icons
 $topic_emoticons = array ();
 $topic_emoticons [0] = KUNENA_URLICONSPATH . 'topic-default.gif';

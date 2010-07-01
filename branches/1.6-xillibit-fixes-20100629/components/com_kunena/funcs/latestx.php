@@ -284,32 +284,27 @@ class CKunenaLatestX {
 	function _getCategories() {
 		if (isset($this->total)) return;
 
-		$this->threads_per_page = 10;
+		$uname = $this->config->username ? 'name' : 'username';
 
-		// FIXME: change to JOIN instead of using subquery
-		$subqueries = "SELECT catid, 0 AS fav, 1 AS sub FROM {$this->db->nameQuote('#__kunena_subscriptions_categories')} WHERE userid='{$this->user->id}'";
-
-		$query = "SELECT COUNT(DISTINCT cat.id) FROM ({$subqueries}) AS t
-		INNER JOIN {$this->db->nameQuote('#__kunena_categories')} AS cat ON cat.id=t.catid";
+		$query = "SELECT COUNT(DISTINCT cat.id), catid FROM {$this->db->nameQuote('#__kunena_subscriptions_categories')} AS t
+		INNER JOIN {$this->db->nameQuote('#__kunena_categories')} AS cat ON cat.id=t.catid WHERE userid={$this->db->Quote($this->user->id)}";
 
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$this->total) return;
 
-		$query = "SELECT cat.name, cat.id ,cat.ordering, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
+		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
+
+		$query = "SELECT j.id AS userid, j.{$uname} AS uname, cat.*, cat.id AS catid, cat.name AS catname, 0 AS fav, 1 AS sub, msg.thread, msg.id AS msgid, msg.subject,msg.time FROM {$this->db->nameQuote('#__kunena_subscriptions_categories')} AS t
 		INNER JOIN {$this->db->nameQuote('#__kunena_categories')} AS cat ON cat.id=t.catid
-		GROUP BY catid
+		LEFT JOIN {$this->db->nameQuote('#__kunena_messages')} AS msg ON cat.id_last_msg=msg.id
+		LEFT JOIN {$this->db->nameQuote('#__users')} AS j ON j.id = t.userid
+		WHERE t.userid={$this->db->Quote($this->user->id)}
+		GROUP BY t.catid
 		ORDER BY ordering";
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
-		$catids = $this->db->loadObjectList ();
+		$this->sub_categories = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
-
-		$this->threadids = array();
-		$this->loadids = array();
-		foreach( $catids as $item){
-			$this->threadids[$item->id] = $item->name;
-			$this->loadids[$item->id] = $item->id;
-		}
 	}
 
 	function getUserPosts() {
@@ -503,6 +498,14 @@ class CKunenaLatestX {
 			return;
 		}
 		CKunenaTools::loadTemplate('/threads/flat.php');
+	}
+
+	function displayFlatCats() {
+		if (! $this->allow) {
+			echo JText::_('COM_KUNENA_NO_ACCESS');
+			return;
+		}
+		CKunenaTools::loadTemplate('/threads/flat_cats.php');
 	}
 
 	function displayPosts() {

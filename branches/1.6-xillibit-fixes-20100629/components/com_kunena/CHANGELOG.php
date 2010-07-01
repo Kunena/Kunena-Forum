@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+01-July-2010 Xillibit
+# [#19288] Sow categories subscriptions in user profile
+
 30-June-2010 Xillibit
 # [#19288] Change on geshi paths to load the correct things if you use j1.5 or j1.6
 # [#19288] Fix issue with contant KUNENA_ABSCATIMAGESPATH which is wrong

@@ -278,6 +278,16 @@ class CKunenaProfile {
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
+	function displayCategoriesSubscriptions()
+	{
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('catsSubscriptions', 0);
+		$obj->user = $this->user;
+		$obj->getCategoriesSubscriptions();
+		$obj->displayFlatCats();
+		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	}
+
 	function displayBanUser()
 	{
 		$this->baninfo = KunenaUserBan::getInstanceByUserid($this->profile->userid, true);

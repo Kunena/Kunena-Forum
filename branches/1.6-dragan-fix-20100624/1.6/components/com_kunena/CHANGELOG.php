@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+1-July-2010 Matias
+# [#19288] Cleanup whole template, fix some minor bugs (part 3)
+
 30-June-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 2)
 

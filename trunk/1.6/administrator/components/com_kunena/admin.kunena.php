@@ -467,6 +467,11 @@ switch ($task) {
 
 		break;
 
+	case "showstats" :
+		showStats();
+
+		break;
+
 	case "uninstallKTemplate" :
 		uninstallKTemplate();
 
@@ -3039,6 +3044,11 @@ function generateSystemReport () {
 //===============================
 // FINISH report system
 //===============================
+
+function showStats() {
+	kimport ( 'thankyou' );
+	include_once( KPATH_ADMIN . '/html/stats.php' );
+}
 
 /* Get latest kunena version
  *

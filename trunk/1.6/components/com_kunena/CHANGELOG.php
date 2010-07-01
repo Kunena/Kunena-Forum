@@ -38,9 +38,13 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Cleanup whole template, fix some minor bugs (part 3)
 ^ [#15886] Merged revisions 2829-2891 from /branches/1.6-dragan-fix-20100624
 ^ [#15886] Merged revisions 2880-2890 from /branches/1.6-xillibit-fixes-20100629
+^ [#15886] Merged revisions 2873-2885 from /branches/1.6-810-feature-Stats
 
 01-July-2010 Xillibit
-# [#19288] Sow categories subscriptions in user profile
+# [#19288] Show categories subscriptions in user profile
+
+30-June-2010 810
+^ [#19288] Add showstats (part 2)
 
 30-June-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 2)
@@ -159,6 +163,13 @@ Kunena 1.6.0-ALPHA3
 
 21-June-2010 Severdia
 # [#21131] Removed inline styles on avatars in topics
+
+19-June-2010 Xillibit
+^ [#19288] Access now at stats page correctly via cpanel
+
+19-June-2010 810
++ [#19288] Add showstats function, remove it from control panel
+^ [#19288] Fixed css for cpanel, template date on showtemplates
 
 Kunena 1.6.0-ALPHA2
 

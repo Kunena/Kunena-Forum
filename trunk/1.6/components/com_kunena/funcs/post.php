@@ -246,14 +246,15 @@ class CKunenaPost {
 		$message = $this->msg_cat;
 		if ($this->catid && $this->msg_cat->id > 0) {
 			if ($do == 'quote') {
-				$this->message_text = "[b]" . kunena_htmlspecialchars ( $message->name ) . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
+				// FIXME: do better than this
 				$mestext = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $message->message );
-				$this->message_text .= '[quote]' .  kunena_htmlspecialchars ( $mestext ) . "[/quote]";
+				$this->message_text = "[b]" . $message->name . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
+				$this->message_text .= '[quote]' .  $mestext . "[/quote]";
 			} else {
 				$this->message_text = '';
 			}
 			$reprefix = JString::substr ( $message->subject, 0, JString::strlen ( JText::_ ( 'COM_KUNENA_POST_RE' ) ) ) != JText::_ ( 'COM_KUNENA_POST_RE' ) ? JText::_ ( 'COM_KUNENA_POST_RE' ) . ' ' : '';
-			$this->subject = kunena_htmlspecialchars ( $message->subject );
+			$this->subject = $message->subject;
 			$this->resubject = $reprefix . $this->subject;
 			$this->parent = $message->parent;
 		} else {
@@ -265,7 +266,7 @@ class CKunenaPost {
 			if (empty ( $this->msg_cat->allow_anonymous ))
 				$this->selectcatlist = CKunenaTools::forumSelectList ( 'postcatid', $this->catid, $options, '' );
 		}
-		$this->authorName = kunena_htmlspecialchars ( $this->getAuthorName () );
+		$this->authorName = $this->getAuthorName ();
 		$this->emoid = 0;
 		$this->action = 'post';
 
@@ -325,10 +326,10 @@ class CKunenaPost {
 
 			$this->kunena_editmode = 1;
 
-			$this->message_text = kunena_htmlspecialchars ( $message->message );
-			$this->resubject = kunena_htmlspecialchars ( $message->subject );
-			$this->authorName = kunena_htmlspecialchars ( $message->name );
-			$this->email = kunena_htmlspecialchars ( $message->email );
+			$this->message_text = $message->message;
+			$this->resubject = $message->subject;
+			$this->authorName = $message->name;
+			$this->email = $message->email;
 			$this->id = $message->id;
 			$this->catid = $message->catid;
 			$this->parent = $message->parent;
@@ -1048,6 +1049,20 @@ class CKunenaPost {
         if ($results[0]) {
         	$dispatcher->trigger( 'onCaptchaView', array( 'kunena.post', 0, '', '<br />' ) );
         }
+	}
+
+	/**
+	* Escapes a value for output in a view script.
+	*
+	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
+	* {@link $_encoding} setting.
+	*
+	* @param  mixed $var The output to escape.
+	* @return mixed The escaped value.
+	*/
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	function verifyCaptcha() {

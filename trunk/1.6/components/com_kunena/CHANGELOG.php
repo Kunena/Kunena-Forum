@@ -34,6 +34,23 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+1-July-2010 Matias
+# [#19288] Cleanup whole template, fix some minor bugs (part 3)
+^ [#15886] Merged revisions 2829-2891 from /branches/1.6-dragan-fix-20100624
+
+30-June-2010 Matias
+# [#19288] Cleanup whole template, fix some minor bugs (part 2)
+
+29-June-2010 Matias
+# [#19288] Cleanup whole template, fix some minor bugs (part 1)
+
+28-June-2010 @quila
+# [#19288] escaped whole template
+# [#19288] Replace online/ofline icons from icons.php to css icons in userlist
+# [#19288] fix small bugs
+^ [#19288] updated serbian languages
+# [#19288] revert some changes in escape template
+
 28-June-2010 Matias
 + [#19288] Added Spanish language (thanks Alakentu)
 # [#19288] Fix a bug that prevents latest module from working in the right way
@@ -64,6 +81,9 @@ Kunena 1.6.0-ALPHA3
 27-June-2010 fxstein
 # [#21203] Workaround for IE8 bug to enable size and color selection in bbcode editor
 ^ [#20833] Adjusted english language strings for Thank You feature
+
+26-June-2010 @quila
+# [#19288] escaped "categories.php" in the template
 
 25-June-2010 Xillibit
 + [#19288] Add kunena_upgrade.xml to check latest kunena version

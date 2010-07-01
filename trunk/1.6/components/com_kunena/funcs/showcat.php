@@ -165,7 +165,7 @@ class CKunenaShowcat {
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
 
-		$this->headerdesc = KunenaParser::parseBBCode ( $this->objCatInfo->headerdesc );
+		$this->headerdesc = $this->objCatInfo->headerdesc;
 
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
 			//this user is allowed to post a new topic:
@@ -201,6 +201,20 @@ class CKunenaShowcat {
 		$this->showposts = 0;
 	}
 
+	/**
+	* Escapes a value for output in a view script.
+	*
+	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
+	* {@link $_encoding} setting.
+	*
+	* @param  mixed $var The output to escape.
+	* @return mixed The escaped value.
+	*/
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
 	function displayPathway() {
 		CKunenaTools::loadTemplate('/pathway.php');
 	}
@@ -231,7 +245,7 @@ class CKunenaShowcat {
 	}
 
 	function displayFlat() {
-		$this->header = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '.kunena_htmlspecialchars ( $this->objCatInfo->name );
+		$this->header = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->escape( $this->objCatInfo->name );
 		CKunenaTools::loadTemplate('/threads/flat.php');
 	}
 

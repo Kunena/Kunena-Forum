@@ -48,10 +48,10 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		<?php endif ?>
 		<?php if (isset ( $this->thread_merge )) : ?>
- 	                         <div class="kmessage-buttons-row">
- 	                         <?php echo $this->thread_merge; ?>
- 	                         </div>
- 	                 <?php endif ?>
+			<div class="kmessage-buttons-row">
+				<?php echo $this->thread_merge; ?>
+			</div>
+		<?php endif ?>
 		</td>
 
 		<td class="klist-pages-all nowrap">

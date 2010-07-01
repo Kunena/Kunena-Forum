@@ -4,7 +4,7 @@
  * Kunena Component
  * @package Kunena
  *
- * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+ * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  *
@@ -60,7 +60,7 @@ if ($type == 'logout') :
 					<?php endif; ?>
 				</ul>
 				<ul class="kprofilebox-welcome">
-					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( $this->user->id, $this->kunena_username ); ;?></strong></li>
+					<li><?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>, <strong><?php echo CKunenaLink::GetProfileLink ( intval($this->user->id), $this->escape($this->kunena_username) ); ;?></strong></li>
 					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->user->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 					<?php if ($logout) : ?>
 					<li>

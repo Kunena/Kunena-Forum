@@ -115,6 +115,7 @@ class CKunenaAnnouncement {
 			return;
 		}
 
+		// TODO: deprecated
 		$this->id = $announcement->id;
 		$this->title = KunenaParser::parseText ( $announcement->title );
 		$this->sdescription = KunenaParser::parseBBCode ( $announcement->sdescription );
@@ -122,6 +123,8 @@ class CKunenaAnnouncement {
 		$this->created = $announcement->created;
 		$this->published = $announcement->published;
 		$this->showdate = $announcement->showdate;
+		// end deprecated
+
 		$this->announcement = $announcement;
 	}
 

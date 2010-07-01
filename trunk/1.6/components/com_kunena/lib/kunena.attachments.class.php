@@ -117,6 +117,7 @@ class CKunenaAttachments {
 			}
 
 			// combine all images into one type
+			$attachment->shortname = CKunenaTools::shortenFileName($attachment->filename);
 			$attachment->shorttype = $this->isImage($attachment->filetype) ? 'image' : $attachment->filetype;
 			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) continue;
 			if ($attachment->shorttype != 'image' && !$this->_my->id && !$this->_config->showfileforguest) continue;

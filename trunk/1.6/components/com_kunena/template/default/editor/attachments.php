@@ -19,13 +19,13 @@ defined ( '_JEXEC' ) or die ();
 		<?php foreach($this->attachments as $attachment) : ?>
 			<li class="kattachment-old">
 				<span>
-					<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo $attachment->id; ?>" />
+					<input type="checkbox" name="attach-id[]" checked="checked" value="<?php echo intval($attachment->id); ?>" />
 					<a href="#" class="kattachment-insert" style="display: none;"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
 				</span>
 				<?php echo $attachment->thumblink; ?>
 				<span>
-					<span class="kfilename"><?php echo $attachment->filename; ?></span>
-					<span><?php echo '('.number_format(($attachment->size)/1024,0,'',',').'KB)'; ?></span>
+					<span class="kfilename"><?php echo $this->escape($attachment->filename); ?></span>
+					<span><?php echo '('.number_format(intval($attachment->size)/1024,0,'',',').'KB)'; ?></span>
 				</span>
 			</li>
 		<?php endforeach; ?>

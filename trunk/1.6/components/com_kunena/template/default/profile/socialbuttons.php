@@ -27,7 +27,6 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 </div>
 <div class="clr"></div>
 <div class="kiconrow">
-
 	<?php echo $this->profile->socialButton('yim', $this->showUnusedSocial); ?>
 	<?php echo $this->profile->socialButton('aim', $this->showUnusedSocial); ?>
 	<?php echo $this->profile->socialButton('gtalk', $this->showUnusedSocial); ?>

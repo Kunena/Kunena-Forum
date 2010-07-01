@@ -3974,7 +3974,7 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 }
 #Kunena span.ktopiclocked,
 #Kunena span.kforumlocked {
-	background: url("../images/icons/lock_xsm.png") no-repeat left center;
+	background: url("../images/icons/lock_sm.png") no-repeat left center;
 	width: 16px;
 	height: 16px;
 }
@@ -4029,4 +4029,14 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 	background: url("../images/icons/folder_sm.png") no-repeat left center;
 	width: 12px;
 	height: 12px;
+}
+#Kunena span.konlineicon {
+	background: url("../images/icons/online.gif") no-repeat left center;
+	width: 74px;
+	height: 15px;
+}
+#Kunena span.kofflineicon {
+	background: url("../images/icons/offline.gif") no-repeat left center;
+	width: 74px;
+	height: 15px;
 }

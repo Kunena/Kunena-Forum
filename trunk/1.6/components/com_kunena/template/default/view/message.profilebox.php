@@ -16,21 +16,21 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 ?>
 	<ul id="kpost-profile">
 		<li class="kpost-username">
-			<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->escape($this->username) ); ?>
+			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->username) ); ?>
 		</li>
 		<?php if ($this->usertype) : ?>
 		<li class="kpost-usertype">
-			<span class = "kmsgusertype">( <?php echo $this->usertype ?> )</span>
+			<span class = "kmsgusertype">( <?php echo $this->escape($this->usertype) ?> )</span>
 		</li>
 		<?php endif ?>
 		<li class="kpost-avatar">
-		<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->avatar ); ?>
+		<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->avatar ); ?>
 		</li>
 		<?php if ($this->profile->userid): ?>
 
 		<?php if ($this->userranktitle) : ?>
 		<li class="kpost-userrank">
-			<?php echo $this->userranktitle ?>
+			<?php echo $this->escape($this->userranktitle) ?>
 		</li>
 		<?php endif ?>
 		<?php if ($this->userrankimage) : ?>
@@ -40,15 +40,15 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 		<?php endif ?>
 
 		<?php if ($this->userposts) : ?>
-		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . $this->userposts; ?></li>
+		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . intval($this->userposts); ?></li>
 		<?php endif ?>
 		<?php if ($this->userpoints) : ?>
-		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . $this->userpoints; ?></li>
+		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . intval($this->userpoints); ?></li>
 		<?php endif ?>
 		<?php if ( $this->aupmedals ) : ?>
 		<li class="kiconrow">
 			<?php foreach ( $this->aupmedals as $medal ) : ?>
-			<?php echo '<img src="' . _AUP_MEDALS_LIVE_PATH.$medal->icon. '" alt="'.$medal->rank.'" title="'.$medal->rank.'" />'; ?>
+			<?php echo '<img src="' . _AUP_MEDALS_LIVE_PATH.$this->escape($medal->icon). '" alt="'.$this->escape($medal->rank).'" title="'.$this->escape($medal->rank).'" />'; ?>
 			<?php endforeach ?>
 		</li>
 		<?php endif ?>
@@ -63,13 +63,11 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 				<?php echo $this->profile->profileIcon('private'); ?>
 				<?php echo $this->profile->profileIcon('email'); ?>
 			</div>
-			<?php
-			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
-			?>
+			<?php CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
 		</li>
 		<?php if ($this->personaltext) : ?>
 		<li class="kpost-personal">
-			<?php echo $this->escape($this->personaltext) ?>
+			<?php echo KunenaParser::parseText($this->personaltext) ?>
 		</li>
 		<?php endif ?>
 		<?php endif ?>
@@ -86,25 +84,23 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 			<?php echo $this->profile->profileIcon('private'); ?>
 			<?php echo $this->profile->profileIcon('email'); ?>
 			</div><br />
-			<?php
-			CKunenaTools::loadTemplate('/profile/socialbuttons.php');
-			?>
+			<?php CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
 		</li>
 		<?php if ($this->personaltext) : ?>
 		<li class="kpost-personal">
-			<?php echo $this->escape($this->personaltext) ?>
+			<?php echo KunenaParser::parseText($this->personaltext) ?>
 		</li>
 		<?php endif ?>
 		<?php endif; ?>
 		<li class="kpost-avatar">
-		<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->avatar ); ?>
+		<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->avatar ); ?>
 		</li>
 		<li class="kpost-username">
-			<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->escape($this->username) ); ?>
+			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->username) ); ?>
 		</li>
 		<?php if ($this->usertype) : ?>
 		<li class="kpost-usertype">
-			<span class = "kmsgusertype">( <?php echo $this->usertype ?> )</span>
+			<span class = "kmsgusertype">( <?php echo $this->escape($this->usertype) ?> )</span>
 		</li>
 		<?php endif ?>
 
@@ -112,7 +108,7 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 
 		<?php if ($this->userranktitle) : ?>
 		<li class="kpost-userrank">
-			<?php echo $this->userranktitle ?>
+			<?php echo $this->escape($this->userranktitle) ?>
 		</li>
 		<?php endif ?>
 		<?php if ($this->userrankimage) : ?>
@@ -124,18 +120,17 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 		<li class="kpost-online-status-top-<?php echo $this->profile->isOnline(true); ?>"> </li>
 
 		<?php if ($this->userposts) : ?>
-		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . $this->userposts; ?></li>
+		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . intval($this->userposts); ?></li>
 		<?php endif ?>
 		<?php if ($this->userpoints) : ?>
-		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . $this->userpoints; ?></li>
+		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . intval($this->userpoints); ?></li>
 		<?php endif ?>
 		<?php if ( $this->aupmedals ) : ?>
 			<li class="kpost-userposts">
 			<?php foreach ( $this->aupmedals as $medal ) : ?>
-			<?php echo '<img src="' . _AUP_MEDALS_LIVE_PATH.$medal->icon. '" alt="'.$medal->rank.'" title="'.$medal->rank.'" />'; ?>
+			<?php echo '<img src="' . _AUP_MEDALS_LIVE_PATH.$this->escape($medal->icon). '" alt="'.$this->escape($medal->rank).'" title="'.$this->escape($medal->rank).'" />'; ?>
 			<?php endforeach ?>
 			</li>
-
 		<?php endif ?>
 
 		<?php endif; ?>

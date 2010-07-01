@@ -12,10 +12,8 @@
 defined( '_JEXEC' ) or die();
 
 $document = JFactory::getDocument();
-$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
-$calendar = JHTML::_('calendar', $this->created, 'created', 'addcreated');
+$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->escape($this->config->board_title));
 JHTML::_('behavior.formvalidation');
-
 $document->addScriptDeclaration('
 	function myValidate(f) {
 	if (document.formvalidator.isValid(f)) {
@@ -49,24 +47,24 @@ $document->addScriptDeclaration('
 					</label>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>:
-						<?php echo $calendar;?>
+						<?php echo JHTML::_('calendar', $this->escape($this->announcement->created), 'created', 'addcreated');?>
 					</label>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_SHOWDATE'); ?>:
 						<select name="showdate">
-							<option value="1" <?php echo ($this->showdate == 1 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_YES'); ?></option>
-							<option value="0" <?php echo ($this->showdate == 0 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_NO'); ?></option>
+							<option value="1" <?php echo ($this->announcement->showdate == 1 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_YES'); ?></option>
+							<option value="0" <?php echo ($this->announcement->showdate == 0 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_NO'); ?></option>
 						</select>
 					</label>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?>:
 						<select name="published">
-							<option value="1" <?php echo ($this->published == 1 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_YES'); ?></option>
-							<option value="0" <?php echo ($this->published == 0 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_NO'); ?></option>
+							<option value="1" <?php echo ($this->announcement->published == 1 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_YES'); ?></option>
+							<option value="0" <?php echo ($this->announcement->published == 0 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_NO'); ?></option>
 						</select>
 					</label>
 					<input type='hidden' name="do" value="doedit"/>
-					<input type='hidden' name="id" value="<?php echo $this->id ;?>"/>
+					<input type='hidden' name="id" value="<?php echo intval($this->announcement->id) ;?>"/>
 					<input name="submit" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>
 				</form>
 			</div>

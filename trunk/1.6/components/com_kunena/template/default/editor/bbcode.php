@@ -18,105 +18,82 @@ $kunena_poll =& CKunenaPolls::getInstance();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
 <tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-	<!--<td class="kleftcolumn" valign="top"><strong><?php
-	echo CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&amp;func=help', JText::_('COM_KUNENA_BOARDCODE') , NULL, 'follow', NULL, 'boardcode', 'target=\'_new\'' );
-	?></strong>:
-	</td>-->
-	<?php //}else { 	?>
-	<td class="kleftcolumn" valign="top"><strong><?php
-	echo JText::_('COM_KUNENA_BOARDCODE');
-	?></strong></td>
-	<?php //} 	?>
+	<td class="kleftcolumn" valign="top">
+		<strong><?php echo JText::_('COM_KUNENA_BOARDCODE');?></strong></td>
 	<td>
 	<table class="kpostbuttonset">
 		<tr>
 			<td class="kpostbuttons">
-			<ul id="kbbcode-toolbar"></ul>
+				<ul id="kbbcode-toolbar"></ul>
 			</td>
 		</tr>
 		<!-- Start extendable secondary toolbar -->
 		<tr>
 			<td class="kpostbuttons">
-			<div id="kbbcode-size-options" style="display: none;"><span
-				class="kmsgtext-xs" title='[size=1]'
+			<div id="kbbcode-size-options" style="display: none;">
+			<span class="kmsgtext-xs" title='[size=1]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XS');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext-s" title='[size=2]'
+				?>&nbsp;</span>
+			<span class="kmsgtext-s" title='[size=2]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_S');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext-m" title='[size=3]'
+				?>&nbsp;</span>
+			<span class="kmsgtext-m" title='[size=3]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_M');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext-l" title='[size=4]'
+				?>&nbsp;</span>
+			<span class="kmsgtext-l" title='[size=4]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_L');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext-xl" title='[size=5]'
+				?>&nbsp;</span>
+			<span class="kmsgtext-xl" title='[size=5]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XL');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span> <span class="kmsgtext-xxl" title='[size=6]'
+				?>&nbsp;</span>
+			<span class="kmsgtext-xxl" title='[size=6]'
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_FONTSIZE_XXL');?>')">&nbsp;<?php
 				echo JText::_('COM_KUNENA_EDITOR_SIZE_SAMPLETEXT');
-				?>&nbsp;</span></div>
-			<div id="kbbcode-colorpalette" style="display: none;"><script
-				type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
+				?>&nbsp;</span>
+			</div>
+			<div id="kbbcode-colorpalette" style="display: none;">
+				<script type="text/javascript">kGenerateColorPalette('4%', '15px');</script>
 			</div>
 
-			<div id="kbbcode-link-options" style="display: none;"><?php
-			echo JText::_('COM_KUNENA_EDITOR_LINK_URL');
-			?>&nbsp;<input id="kbbcode-link_url" name="url" type="text" size="40"
-				value="http://"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKURL');
-				?>')" />
-			<?php
-			echo JText::_('COM_KUNENA_EDITOR_LINK_TEXT');
-			?>&nbsp;<input name="text2" id="kbbcode-link_text" type="text"
-				size="30" maxlength="150"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT');
-				?>')" /> <input type="button" name="insterLink"
-				value="<?php
-				echo JText::_('COM_KUNENA_EDITOR_INSERT');
-				?>"
-				onclick="kbbcode.replaceSelection('[url=' + $('kbbcode-link_url').get('value') + ']' + $('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKAPPLY');
-				?>')" /></div>
+			<div id="kbbcode-link-options" style="display: none;">
+				<?php echo JText::_('COM_KUNENA_EDITOR_LINK_URL'); ?>&nbsp;
+				<input id="kbbcode-link_url" name="url" type="text" size="40" value="http://"
+					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKURL'); ?>')" />
+				<?php echo JText::_('COM_KUNENA_EDITOR_LINK_TEXT'); ?>&nbsp;
+				<input name="text2" id="kbbcode-link_text" type="text" size="30" maxlength="150"
+					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKTEXT'); ?>')" />
+				<input type="button" name="insterLink" value="<?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?>"
+					onclick="kbbcode.replaceSelection('[url=' + $('kbbcode-link_url').get('value') + ']' + $('kbbcode-link_text').get('value') + '[/url]'); kToggleOrSwap('kbbcode-link-options');"
+					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_LINKAPPLY'); ?>')" />
+			</div>
 
-			<div id="kbbcode-image-options" style="display: none;"><?php
-			echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_SIZE');
-			?>&nbsp;<input id="kbbcode-image_size" name="size" type="text"
-				size="10" maxlength="10"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE');
-				?>')" />
-			<?php
-			echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_URL');
-			?>&nbsp;<input name="url2" id="kbbcode-image_url" type="text"
-				size="40" value="http://"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKURL');
-				?>')" />&nbsp; <input type="button" name="Link"
-				value="<?php
-				echo JText::_('COM_KUNENA_EDITOR_INSERT');
-				?>"
-				onclick="kInsertImageLink()"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY');
-				?>')" /></div>
+			<div id="kbbcode-image-options" style="display: none;">
+				<?php echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_SIZE'); ?>&nbsp;
+				<input id="kbbcode-image_size" name="size" type="text" size="10" maxlength="10"
+					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKSIZE'); ?>')" />
+				<?php echo JText::_('COM_KUNENA_EDITOR_IMAGELINK_URL'); ?>&nbsp;
+				<input name="url2" id="kbbcode-image_url" type="text" size="40" value="http://"
+					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKURL'); ?>')" />&nbsp;
+				<input type="button" name="Link" value="<?php echo JText::_('COM_KUNENA_EDITOR_INSERT'); ?>" onclick="kInsertImageLink()"
+					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_IMAGELINKAPPLY'); ?>')" />
+			</div>
 
 			<div id="kbbcode-poll-options" style="display: none;">
 			<?php
 			//Check if the poll is allowed
 			if ($kunena_config->pollenabled) {
 				if ( empty($this->msg_cat->allow_polls) ) $this->msg_cat->allow_polls = '';
-
 				$display_poll = $kunena_poll->get_poll_allowed($this->id, $this->parent, $this->kunena_editmode, $this->msg_cat->allow_polls);
 				if (!isset($this->polldatasedit[0]->polltimetolive)) {
 					$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
@@ -125,13 +102,13 @@ $kunena_config = KunenaFactory::getConfig ();
 				$html_poll_edit = $kunena_poll->get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
 				JHTML::_('behavior.calendar');
 			?>
-			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('The polls are not allowed in this category'); } ?></span>
+			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); } ?></span>
 			<div id="kpoll-hide-not-allowed" <?php if(!$display_poll) { ?> style="display:none;" <?php } ?> >
 
 				<label class="kpoll-title-lbl" for="kpoll-title"><?php echo JText::_('COM_KUNENA_POLL_TITLE'); ?></label>
 				<input type="text" class="inputbox" name="poll_title" id="kpoll-title"
 					maxlength="100" size="40"
-					value="<?php if(isset($this->polldatasedit[0]->title)) { echo $this->polldatasedit[0]->title; } ?>"
+					value="<?php if(isset($this->polldatasedit[0]->title)) { echo $this->escape( $this->polldatasedit[0]->title); } ?>"
 					onmouseover="javascript:$('helpbox').set('value', '<?php
 					echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />
 
@@ -145,7 +122,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 				<input class="inputbox" type="text" maxlength="15"
 					name="kpoll-time-to-live" id="kpoll-time-to-live"
-					value="<?php echo $this->polldatasedit[0]->polltimetolive; ?>" /> <img
+					value="<?php echo $this->escape($this->polldatasedit[0]->polltimetolive); ?>" /> <img
 					src="templates/system/images/calendar.png" alt="Calendar"
 					onclick="showCalendar('kpoll-time-to-live','%Y-%m-%d');"
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN'); ?>')" />
@@ -153,25 +130,15 @@ $kunena_config = KunenaFactory::getConfig ();
 			</div>
 			<?php
 			if(!empty( $html_poll_edit )) {
-							echo $html_poll_edit;
-						}
-						?>
-			<input type="hidden" name="nb_options_allowed"
-				id="nb_options_allowed"
-				value="<?php
-						echo $kunena_config->pollnboptions;
-						?>"> <input
-				type="hidden" name="number_total_options" id="numbertotal"
-				value="<?php
-						if (! empty ( $this->polloptionstotal )) {
-							echo $this->polloptionstotal;
-						}
-						?>">
-			<?php
-
+				echo $html_poll_edit;
 			}
 			?>
+			<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>">
+			<input type="hidden" name="number_total_options" id="numbertotal"
+				value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>">
+			<?php } ?>
 			</div>
+
 			<?php
 			if ($kunena_config->highlightcode) {
 				$path = $kunena_config->highlightcode_path;
@@ -180,27 +147,22 @@ $kunena_config = KunenaFactory::getConfig ();
 				if (file_exists($path.DS."geshi.php")) {
 					$path .= DS."geshi";
 					$files = JFolder::files($path, ".php"); ?>
-					<div id="kbbcode-code-options" style="display: none;"><?php
-					echo JText::_('COM_KUNENA_EDITOR_CODE_TYPE');
-					?> <select id="kcodetype"
-						name="kcode_type" class="kbutton"
-						onmouseover="javascript:$('helpbox').set('value', '<?php
-						echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE');
-						?>')">
+					<div id="kbbcode-code-options" style="display: none;">
+						<?php echo JText::_('COM_KUNENA_EDITOR_CODE_TYPE'); ?>
+						<select id="kcodetype" name="kcode_type" class="kbutton"
+							onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE'); ?>')">
 						<?php
 						foreach ($files as $file)
 							echo '<option value = "'.substr($file,0,-4).'">'.substr($file,0,-4).'</option>';
 						?>
 					</select>
-					<input id="kbutton_addcode" type="button" name="Code" onclick="kInsertCode()"
-					value="<?php echo JText::_('COM_KUNENA_EDITOR_CODE_INSERT'); ?>"
-					onmouseover="javascript:$('helpbox').set('value', '<?php
-					echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODEAPPLY');
-					?>')" />
+					<input id="kbutton_addcode" type="button" name="Code" onclick="kInsertCode()" value="<?php echo JText::_('COM_KUNENA_EDITOR_CODE_INSERT'); ?>"
+						onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODEAPPLY'); ?>')" />
 					</div>
 			<?php }
 			}
 			?>
+
 			<div id="kbbcode-video-options" style="display: none;"><?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_SIZE');
 			?><input id="kvideosize"
@@ -233,7 +195,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				$vid_provider = array ('', 'AnimeEpisodes', 'Biku', 'Bofunk', 'Break', 'Clip.vn', 'Clipfish', 'Clipshack', 'Collegehumor', 'Current', 'DailyMotion', 'DivX,divx]http://', 'DownloadFestival', 'Flash,flash]http://', 'FlashVars,flashvars param=]http://', 'Fliptrack', 'Fliqz', 'Gametrailers', 'Gamevideos', 'Glumbert', 'GMX', 'Google', 'GooglyFoogly', 'iFilm', 'Jumpcut', 'Kewego', 'LiveLeak', 'LiveVideo', 'MediaPlayer,mediaplayer]http://', 'MegaVideo', 'Metacafe', 'Mofile', 'Multiply', 'MySpace', 'MyVideo', 'QuickTime,quicktime]http://', 'Quxiu', 'RealPlayer,realplayer]http://', 'Revver', 'RuTube', 'Sapo', 'Sevenload', 'Sharkle', 'Spikedhumor', 'Stickam', 'Streetfire', 'StupidVideos', 'Toufee', 'Tudou', 'Unf-Unf', 'Uume', 'Veoh', 'VideoclipsDump', 'Videojug', 'VideoTube', 'Vidiac', 'VidiLife', 'Vimeo', 'WangYou', 'WEB.DE', 'Wideo.fr', 'YouKu', 'YouTube' );
 				foreach ( $vid_provider as $vid_type ) {
 					$vid_type = explode ( ',', $vid_type );
-					echo '<option value = "' . (! empty ( $vid_type [1] ) ? $vid_type [1] : JString::strtolower ( $vid_type [0] ) . '') . '">' . $vid_type [0] . '</option>';
+					echo '<option value = "' . (! empty ( $vid_type [1] ) ? $this->escape($vid_type [1]) : JString::strtolower ( $this->escape($vid_type [0]) ) . '') . '">' . $this->escape($vid_type [0]) . '</option>';
 				}
 				?>
 			</select> <?php
@@ -289,6 +251,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		<tr>
 			<td class="kpostbuttons">
 			<div id="smilie"><?php
+			// FIXME: move out of here!
 			$kunena_db = &JFactory::getDBO ();
 			$kunena_db->setQuery ( "SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id" );
 			$set = $kunena_db->loadAssocList ();
@@ -317,11 +280,8 @@ $kunena_config = KunenaFactory::getConfig ();
 		<?php endif; ?>
 		<!-- end of extendable secondary toolbar -->
 		<tr>
-			<td class="kposthint"><input type="text" name="helpbox" id="helpbox"
-				size="45" class="kinputbox" maxlength="100"
-				value="<?php
-				echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')) ;
-				?>" /></td>
+			<td class="kposthint"><input type="text" name="helpbox" id="helpbox" size="45" class="kinputbox" maxlength="100"
+				value="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_HINT')); ?>" /></td>
 		</tr>
 	</table>
 	</td>
@@ -337,29 +297,19 @@ $kunena_config = KunenaFactory::getConfig ();
 		class="ks" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
-	<td valign="top"><textarea class="ktxtarea required" name="message"
-		id="kbbcode-message"><?php
-			echo $this->message_text;
-			?></textarea>
-	<?php
-	//
-	// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
-	//
-	?>
-			<!-- Hidden preview placeholder -->
-	<div id="kbbcode-preview" style="display: none;"></div>
-	<?php
-	if ($this->kunena_editmode) {
-		// Moderator edit area
+	<td valign="top">
+		<textarea class="ktxtarea required" name="message" id="kbbcode-message"><?php echo $this->escape($this->message_text); ?></textarea>
+		<?php
+		// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
 		?>
-	<div class="clr"> </div>
-	<fieldset><legend><?php
-		echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend> <input class="kinputbox"
-		name="modified_reason" size="40" maxlength="200" type="text" /><br />
-	</fieldset>
-	<?php
-	}
-	?>
-
+		<!-- Hidden preview placeholder -->
+		<div id="kbbcode-preview" style="display: none;"></div>
+		<?php if ($this->kunena_editmode) : ?>
+		<div class="clr"> </div>
+		<fieldset>
+			<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>
+			<input class="kinputbox" name="modified_reason" size="40" maxlength="200" type="text" />
+		</fieldset>
+		<?php endif; ?>
 	</td>
 </tr>

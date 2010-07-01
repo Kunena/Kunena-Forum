@@ -395,8 +395,8 @@ class CKunenaSearch {
 				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
 				$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
-			$this->results [$i]->subject = $ressubject;
-			$this->results [$i]->message = $resmessage;
+			$this->results [$i]->htmlsubject = $ressubject;
+			$this->results [$i]->htmlmessage = $resmessage;
 		}
 
 		CKunenaTools::loadTemplate('/search/search.php');

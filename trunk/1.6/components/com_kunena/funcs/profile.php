@@ -55,8 +55,8 @@ class CKunenaProfile {
 		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
 		$this->avatarlink = $this->profile->getAvatarLink('kavatar','profile');
-		$this->personalText = KunenaParser::parseText($this->profile->personalText);
-		$this->signature = KunenaParser::parseBBCode($this->profile->signature);
+		$this->personalText = $this->profile->personalText;
+		$this->signature = $this->profile->signature;
 		$this->timezone = $this->user->getParam('timezone', 0);
 		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
 		$this->admin = CKunenaTools::isAdmin($this->profile->userid);
@@ -74,9 +74,9 @@ class CKunenaProfile {
 				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN');
 		}
 		if ($this->profile->location)
-			$this->location = '<a href="http://maps.google.com?q='.kunena_htmlspecialchars($this->profile->location).'" target="_blank">'.kunena_htmlspecialchars($this->profile->location).'</a>';
+			$this->locationlink = '<a href="http://maps.google.com?q='.kunena_htmlspecialchars($this->profile->location).'" target="_blank">'.kunena_htmlspecialchars($this->profile->location).'</a>';
 		else
-			$this->location = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
+			$this->locationlink = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 
 		$this->online = $this->profile->isOnline();
 		$this->showUnusedSocial = true;
@@ -422,7 +422,7 @@ class CKunenaProfile {
 	}
 
 	protected function saveProfile() {
-		$personnaltext = JRequest::getVar ( 'personnaltext', '' );
+		$personnaltext = JRequest::getVar ( 'personaltext', '' );
 		$birthdate1 = JRequest::getInt ( 'birthdate1', '' );
 		$birthdate2 = JRequest::getInt ( 'birthdate2', '' );
 		$birthdate3 = JRequest::getInt ( 'birthdate3', '' );

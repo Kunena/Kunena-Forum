@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 			<li>
 				<?php echo $attachment->thumblink; ?>
 				<span>
-					<?php echo CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$attachment->shortname,$attachment->filename, 'nofollow').' ('.number_format(($attachment->size)/1024,0,'',',').'KB)'; ?>
+					<?php echo CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$this->escape($attachment->shortname),$this->escape($attachment->filename), 'nofollow').' ('.number_format(intval($attachment->size)/1024,0,'',',').'KB)'; ?>
 				</span>
 			</li>
 		<?php endforeach; ?>

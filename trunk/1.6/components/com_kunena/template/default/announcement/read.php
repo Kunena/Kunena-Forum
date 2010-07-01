@@ -12,11 +12,11 @@
 defined( '_JEXEC' ) or die();
 
 $document = JFactory::getDocument();
-$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->escape($this->config->board_title));
 ?>
 <div class="kblock kannouncement">
 	<div class="ktitle">
-		<h1><?php echo $this->title; ?></h1>
+		<h1><?php echo KunenaParser::parseText($this->announcement->title); ?></h1>
 	</div>
 	<div class="kcontainer" id="kannouncement">
 		<?php if ($this->canEdit) : ?>
@@ -29,12 +29,12 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 		<?php endif; ?>
 		<div class="kbody">
 			<div class="kanndesc">
-				<?php if ($this->showdate > 0) : ?>
-				<div class="anncreated" title="<?php echo CKunenaTimeformat::showDate($this->created, 'ago'); ?>">
-					<?php echo CKunenaTimeformat::showDate($this->created, 'date_today'); ?>
+				<?php if ($this->announcement->showdate > 0) : ?>
+				<div class="anncreated" title="<?php echo CKunenaTimeformat::showDate($this->announcement->created, 'ago'); ?>">
+					<?php echo CKunenaTimeformat::showDate($this->announcement->created, 'date_today'); ?>
 				</div>
 				<?php endif; ?>
-				<div class="anndesc"><?php echo !empty($this->description) ? $this->description : $this->sdescription; ?></div>
+				<div class="anndesc"><?php echo !empty($this->announcement->description) ? KunenaParser::parseBBCode($this->announcement->description) : KunenaParser::parseBBCode($this->announcement->sdescription); ?></div>
 			</div>
 		</div>
 	</div>

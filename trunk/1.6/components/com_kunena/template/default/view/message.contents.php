@@ -14,8 +14,8 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kmsgtitle kleft">
-	<span class="kmsgtitle<?php echo $this->msgsuffix ?>">
-		<?php echo $this->subject ?>
+	<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
+		<?php echo $this->subjectHtml ?>
 	</span>
 	<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 		<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
@@ -26,33 +26,31 @@ defined ( '_JEXEC' ) or die ();
 </div>
 <div class="kmsgbody">
 	<div class="kmsgtext">
-		<?php echo $this->message ?>
+		<?php echo $this->messageHtml ?>
 	</div>
 </div>
 <?php $this->displayAttachments() ?>
 <div>
-	<?php if ($this->signature) : ?>
+	<?php if ($this->signatureHtml) : ?>
 	<div class="kmsgsignature">
-		<?php echo $this->signature ?>
+		<?php echo $this->signatureHtml ?>
 	</div>
 	<?php endif ?>
 </div>
 <?php if ( $this->message_quickreply ) : ?>
-<div id="kreply<?php echo $this->id ?>_form" class="kreply-form" style="display: none">
-	<?php
-	?>
+<div id="kreply<?php echo intval($this->id) ?>_form" class="kreply-form" style="display: none">
 	<form action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post" name="postform" enctype="multipart/form-data">
-		<input type="hidden" name="parentid" value="<?php echo $this->id ?>" />
-		<input type="hidden" name="catid" value="<?php echo $this->catid ?>" />
+		<input type="hidden" name="parentid" value="<?php echo intval($this->id) ?>" />
+		<input type="hidden" name="catid" value="<?php echo intval($this->catid) ?>" />
 		<input type="hidden" name="action" value="post" />
 		<?php echo JHTML::_( 'form.token' ) ?>
 		<?php if ($this->allow_anonymous): ?>
-		<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->myname ?>" /><br />
+		<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->myname) ?>" /><br />
 		<input type="checkbox" id="kanonymous" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />
 		<?php else: ?>
-		<input type="hidden" name="authorname"  value="<?php echo $this->myname ?>" />
+		<input type="hidden" name="authorname"  value="<?php echo $this->escape($this->myname) ?>" />
 		<?php endif; ?>
-		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo $this->config->maxsubject; ?>" value="<?php echo  $this->escape($this->resubject) ?>" /><br />
+		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->resubject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
 		<input type="reset" class="kbutton kreply-cancel" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" />
 		<input type="submit" class="kbutton kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?>" />

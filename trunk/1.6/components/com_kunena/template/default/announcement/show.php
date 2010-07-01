@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die();
 
 $document=JFactory::getDocument();
-$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
+$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->escape($this->config->board_title));
 ?>
 <table class="kblock kannouncement">
 	<thead>
@@ -39,10 +39,10 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 				$k=1 - $k;
 		?>
 		<tr class="krow<?php echo $k;?>">
-			<td class="kcol kcol-annid"><?php echo $ann->id; ?></td>
+			<td class="kcol kcol-annid"><?php echo intval($ann->id); ?></td>
 			<td class="kcol kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
 			<td class="kcol kcol-anntitle">
-				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', $ann->id, KunenaParser::parseText ($ann->title), KunenaParser::parseText ($ann->title), 'follow'); ?></div>
+				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', intval($ann->id), KunenaParser::parseText ($ann->title), KunenaParser::parseText ($ann->title), 'follow'); ?></div>
 			</td>
 			<td class="kcol kcol-annpublish">
 				<?php
@@ -54,10 +54,10 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 				?>
 			</td>
 			<td class="kcol kcol-annedit">
-				<?php echo CKunenaLink::GetAnnouncementLink('edit', $ann->id, JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
+				<?php echo CKunenaLink::GetAnnouncementLink('edit', intval($ann->id), JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
 			</td>
 			<td class="kcol kcol-anndelete">
-				<?php echo CKunenaLink::GetAnnouncementLink('delete', $ann->id, JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
+				<?php echo CKunenaLink::GetAnnouncementLink('delete', intval($ann->id), JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>

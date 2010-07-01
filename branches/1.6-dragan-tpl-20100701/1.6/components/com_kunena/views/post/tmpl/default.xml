@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="New Topic">
+		<message>Post new topic</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: New Topic</name>
+		<description>Post new topic</description>
+		<url addpath="/administrator/components/com_kunena/elements">
+			<param name="catid" type="kunenacategories" default="0" sections="0" none="Any" label="Category ID" />
+			<param name="do" type="hidden" default="new" />
+		</url>
+	</state>
+</metadata>

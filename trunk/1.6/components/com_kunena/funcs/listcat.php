@@ -87,7 +87,7 @@ class CKunenaListcat {
 		$catlist = implode ( ',', $catids );
 		$readlist = $this->session->readtopics;
 
-		if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__kunena_messages AS mmm WHERE c.id=mmm.catid AND mmm.hold='0' AND mmm.time>'{$this->prevCheck}' AND mmm.thread NOT IN ({$readlist})) AS new";
+		if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__kunena_messages AS mmm WHERE c.id=mmm.catid AND mmm.hold='0' AND mmm.time>{$this->db->Quote($this->prevCheck)} AND mmm.thread NOT IN ({$readlist})) AS new";
 		else $subquery = " 0 AS new";
 
 		// TODO: optimize this query (just combined many queries into one)
@@ -157,7 +157,7 @@ class CKunenaListcat {
 		$this->childforums = array ();
 		if (count ( $subcats )) {
 			$subcatlist = implode ( ',', $subcats );
-			if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__kunena_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>'{$this->prevCheck}' AND m.thread NOT IN ({$readlist})) AS new";
+			if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__kunena_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>{$this->db->Quote($this->prevCheck)} AND m.thread NOT IN ({$readlist})) AS new";
 			else $subquery = " 0 AS new";
 
 			$query = "SELECT id, name, description, parent, numTopics, numPosts, {$subquery}
@@ -202,7 +202,9 @@ class CKunenaListcat {
 		$this->pending = array ();
 		if (count ( $modcats )) {
 			$modcatlist = implode ( ',', $modcats );
-			$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
+			$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m 
+			INNER JOIN #__users AS u ON u.id=m.userid 
+			WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
 			$modlist = $this->db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 			foreach ( $modlist as $mod ) {
@@ -217,7 +219,10 @@ class CKunenaListcat {
 				}
 				if (count ( $modcats )) {
 					$modcatlist = implode ( ',', $modcats );
-					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count FROM #__kunena_messages WHERE catid IN ($modcatlist) AND hold='1' GROUP BY catid" );
+					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count 
+					FROM #__kunena_messages 
+					WHERE catid IN ($modcatlist) AND hold='1' 
+					GROUP BY catid" );
 					$pending = $this->db->loadAssocList ();
 					KunenaError::checkDatabaseError();
 					foreach ( $pending as $i ) {

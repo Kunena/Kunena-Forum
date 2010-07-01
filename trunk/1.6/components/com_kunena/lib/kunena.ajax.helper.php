@@ -169,8 +169,8 @@ class CKunenaAjaxHelper {
 				// User the configured display name
 				$queryname = $kunena_config->username ? 'username' : 'name';
 				// Exclude the main superadmin from the search for security purposes
-				$query = "SELECT `$queryname` FROM #__users WHERE block=0 AND `id` != 62 AND `$queryname`
-							LIKE '" . $data . "%' ORDER BY 1 LIMIT 0, 10;";
+				$query = "SELECT {$this->_db->nameQuote($queryname)} FROM #__users WHERE block=0 AND `id` != 62 AND {$this->_db->nameQuote($queryname)}
+							LIKE {$this->_db->Quote("{$data}%")} ORDER BY 1 LIMIT 0, 10;";
 
 				$this->_db->setQuery ( $query );
 				$result = $this->_db->loadResultArray ();
@@ -315,7 +315,7 @@ class CKunenaAjaxHelper {
 
 		// Finally delete attachment record from db
 		$query = "DELETE FROM #__kunena_attachments AS a
-					WHERE a.id = '".$data."'";
+					WHERE a.id = {$this->db->Quote($data)}";
 
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
@@ -339,7 +339,7 @@ class CKunenaAjaxHelper {
 		if ( $catid && $user->isModerator($catid) ) {
 			$query = "SELECT id, subject
 							FROM #__kunena_messages
-							WHERE catid={$catid} AND parent=0 AND moved=0
+							WHERE catid={$this->db->Quote($catid)} AND parent=0 AND moved=0
 							ORDER BY id DESC";
 			$this->_db->setQuery ( $query, 0, 15 );
 			$topics_list = $this->_db->loadObjectlist ();

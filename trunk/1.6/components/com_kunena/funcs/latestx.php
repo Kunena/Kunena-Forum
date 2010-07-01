@@ -80,7 +80,7 @@ class CKunenaLatestX {
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 	}
-	
+
 	/**
 	* Escapes a value for output in a view script.
 	*
@@ -106,9 +106,9 @@ class CKunenaLatestX {
 			$query = "SELECT a.*, j.id AS userid, t.message, l.myfavorite, l.favcount, l.threadhits, l.lasttime, l.threadattachments, COUNT(aa.id) AS attachments,
 				l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.name AS catname, c.class_sfx
 			FROM (
-				SELECT m.thread, MAX(m.hits) AS threadhits, MAX(f.userid IS NOT null AND f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount,
-					COUNT(DISTINCT a.id) AS threadattachments, COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->user->id}, m.id, NULL)) AS mycount,
-					MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
+				SELECT m.thread, MAX(m.hits) AS threadhits, MAX(f.userid IS NOT null AND f.userid={$this->db->Quote($this->my->id)}) AS myfavorite, COUNT(DISTINCT f.userid) AS favcount,
+					COUNT(DISTINCT a.id) AS threadattachments, COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->db->Quote($this->user->id)}, m.id, NULL)) AS mycount,
+					MAX(m.id) AS lastid, MAX(IF(m.userid={$this->db->Quote($this->user->id)}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
 				FROM #__kunena_messages AS m";
 				if ($this->config->allowfavorites) $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = m.thread";
 				else $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = 0";
@@ -123,7 +123,7 @@ class CKunenaLatestX {
 			LEFT JOIN #__kunena_users AS u ON u.userid = j.id
 			LEFT JOIN #__kunena_categories AS c ON c.id = a.catid
 			LEFT JOIN #__kunena_attachments AS aa ON aa.mesid = a.id
-			WHERE (a.parent='0' OR a.id=l.lastid {$loadstr})
+			WHERE (a.parent='0' OR a.id=l.lastid $loadstr)
 			GROUP BY a.id
 			ORDER BY {$this->order}";
 
@@ -159,7 +159,7 @@ class CKunenaLatestX {
 
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
-				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages " . "WHERE hold IN ({$this->hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>'{$this->prevCheck}' GROUP BY thread" );
+				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages " . "WHERE hold IN ({$this->hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$this->db->Quote($this->prevCheck)} GROUP BY thread" ); // TODO: check input
 				$msgidlist = $this->db->loadObjectList ();
 				KunenaError::checkDatabaseError();
 
@@ -178,10 +178,10 @@ class CKunenaLatestX {
 			WHERE userid='{$this->user->id}' AND parent='0' AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})";
 		if ($posts) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
 			FROM #__kunena_messages
-			WHERE userid='{$this->user->id}' AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})
+			WHERE userid={$this->db->Quote($this->user->id)} AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})
 			GROUP BY thread";
-		if ($fav) $subquery[] = "SELECT thread, 1 AS fav, 0 AS sub FROM #__kunena_favorites WHERE userid='{$this->user->id}'";
-		if ($sub)  $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__kunena_subscriptions WHERE userid='{$this->user->id}'";
+		if ($fav) $subquery[] = "SELECT thread, 1 AS fav, 0 AS sub FROM #__kunena_favorites WHERE userid={$this->db->Quote($this->user->id)}";
+		if ($sub)  $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__kunena_subscriptions WHERE userid={$this->db->Quote($this->user->id)}";
 		if (empty($subquery)) return;
 		$subqueries = implode("\n	UNION ALL \n", $subquery);
 
@@ -197,7 +197,7 @@ class CKunenaLatestX {
 		else if ($this->func == 'usertopics') $this->order = "mylastid DESC";
 		else $this->order = "lastid DESC";
 
-		$query = "SELECT m.thread, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->user->id}, m.id, 0)) AS mylastid, MAX(t.fav) AS myfavorite, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
+		$query = "SELECT m.thread, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->db->Quote($this->user->id)}, m.id, 0)) AS mylastid, MAX(t.fav) AS myfavorite, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
 		INNER JOIN #__kunena_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
 		GROUP BY thread
@@ -298,32 +298,29 @@ class CKunenaLatestX {
 	function _getCategories() {
 		if (isset($this->total)) return;
 
-		$this->threads_per_page = 10;
+		$uname = $this->config->username ? 'name' : 'username';
 
-		// FIXME: change to JOIN instead of using subquery
-		$subqueries = "SELECT catid, 0 AS fav, 1 AS sub FROM #__kunena_subscriptions_categories WHERE userid='{$this->user->id}'";
-
-		$query = "SELECT COUNT(DISTINCT cat.id) FROM ({$subqueries}) AS t
-		INNER JOIN #__kunena_categories AS cat ON cat.id=t.catid";
+		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_subscriptions_categories AS t
+		INNER JOIN #__kunena_categories AS c ON c.id=t.catid WHERE t.userid={$this->db->Quote($this->user->id)}";
 
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$this->total) return;
 
-		$query = "SELECT cat.name, cat.id ,cat.ordering, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
+		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
+
+		$query = "SELECT j.id AS userid, j.{$uname} AS uname, cat.*, cat.id AS catid, cat.name AS catname,
+			0 AS fav, 1 AS sub, msg.thread, msg.id AS msgid, msg.subject,msg.time
+		FROM #__kunena_subscriptions_categories AS t
 		INNER JOIN #__kunena_categories AS cat ON cat.id=t.catid
-		GROUP BY catid
+		LEFT JOIN #__kunena_messages AS msg ON cat.id_last_msg=msg.id
+		LEFT JOIN #__users AS j ON j.id = t.userid
+		WHERE t.userid={$this->db->Quote($this->user->id)}
+		GROUP BY t.catid
 		ORDER BY ordering";
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
-		$catids = $this->db->loadObjectList ();
+		$this->sub_categories = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
-
-		$this->threadids = array();
-		$this->loadids = array();
-		foreach( $catids as $item){
-			$this->threadids[$item->id] = $item->name;
-			$this->loadids[$item->id] = $item->id;
-		}
 	}
 
 	function getUserPosts() {
@@ -420,7 +417,7 @@ class CKunenaLatestX {
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__kunena_messages AS t
 			INNER JOIN #__kunena_messages AS m ON m.id=t.thread
 		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
-		AND t.time >'{$this->querytime}' AND t.hold IN ({$this->hold}) AND t.moved=0 AND t.catid IN ({$this->session->allowed})" . $latestcats; // if categories are limited apply filter
+		AND t.time > {$this->db->Quote($this->querytime)} AND t.hold IN ({$this->hold}) AND t.moved=0 AND t.catid IN ({$this->session->allowed})" . $latestcats; // if categories are limited apply filter
 
 
 		$this->db->setQuery ( $query );
@@ -432,7 +429,7 @@ class CKunenaLatestX {
 		$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__kunena_messages AS t
 			INNER JOIN #__kunena_messages AS m ON m.id=t.thread
 			WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
-			AND t.time>'{$this->querytime}' AND t.hold IN ({$this->hold}) AND t.moved='0' AND t.catid IN ({$this->session->allowed}) {$latestcats}
+			AND t.time > {$this->db->Quote($this->querytime)} AND t.hold IN ({$this->hold}) AND t.moved='0' AND t.catid IN ({$this->session->allowed}) {$latestcats}
 			GROUP BY t.thread
 			ORDER BY {$this->order}
 		";
@@ -517,6 +514,14 @@ class CKunenaLatestX {
 			return;
 		}
 		CKunenaTools::loadTemplate('/threads/flat.php');
+	}
+
+	function displayFlatCats() {
+		if (! $this->allow) {
+			echo JText::_('COM_KUNENA_NO_ACCESS');
+			return;
+		}
+		CKunenaTools::loadTemplate('/threads/flat_cats.php');
 	}
 
 	function displayPosts() {

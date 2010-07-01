@@ -37,12 +37,23 @@ Kunena 1.6.0-ALPHA3
 1-July-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 3)
 ^ [#15886] Merged revisions 2829-2891 from /branches/1.6-dragan-fix-20100624
+^ [#15886] Merged revisions 2880-2890 from /branches/1.6-xillibit-fixes-20100629
+
+01-July-2010 Xillibit
+# [#19288] Sow categories subscriptions in user profile
 
 30-June-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 2)
 
+30-June-2010 Xillibit
+# [#19288] Change on geshi paths to load the correct things if you use j1.5 or j1.6
+# [#19288] Fix issue with contant KUNENA_ABSCATIMAGESPATH which is wrong
+
 29-June-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 1)
+
+29-June-2010 Xillibit
+# [#19288] Put nameQuote() and Quote() in each query to be sure that the queries has escaped
 
 28-June-2010 @quila
 # [#19288] escaped whole template

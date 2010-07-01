@@ -55,7 +55,7 @@ class CKunenaRSSView extends CKunenaRSS {
 		$catid		= (int) $catid;
 
 		if ($catid > 0) {
-			$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id = {$catid} ORDER BY ordering LIMIT 1" );
+			$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id = {$this->db->Quote($catid)} ORDER BY ordering LIMIT 1" );
 			$category = $this->db->loadObject();
 			if (KunenaError::checkDatabaseError()) {
 				// internal error

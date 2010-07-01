@@ -78,11 +78,11 @@ function dofreePDF()
 	if (in_array($catid, $allow_forum) && $id)
     {
         //first get the thread id for the current post to later on determine the parent post
-        $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE id='{$id}' AND catid='{$catid}'");
+        $kunena_db->setQuery("SELECT thread FROM #__kunena_messages WHERE id={$kunena_db->Quote($id)} AND catid={$kunena_db->Quote($catid)}");
         $threadid = $kunena_db->loadResult();
         if (KunenaError::checkDatabaseError()) return;
         //load topic post and details
-        $kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.thread='{$threadid}' AND a.catid='{$catid}' AND a.parent='0' AND a.id=b.mesid");
+        $kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.thread={$kunena_db->Quote($threadid)} AND a.catid={$kunena_db->Quote($catid)} AND a.parent='0' AND a.id=b.mesid");
         $row = $kunena_db->loadObjectList();
         if (KunenaError::checkDatabaseError()) return;
 
@@ -138,7 +138,7 @@ function dofreePDF()
         	$pdf->ezText($txt3, 10);
         	$pdf->ezText("\n============================================================================\n\n", 8);
         	//now let's try to see if there's more...
-        	$kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.catid='{$catid}' AND a.thread='{$threadid}' AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
+        	$kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.catid={$kunena_db->Quote($catid)} AND a.thread={$kunena_db->Quote($threadid)} AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
         	$replies = $kunena_db->loadObjectList();
             if (KunenaError::checkDatabaseError()) return;
 

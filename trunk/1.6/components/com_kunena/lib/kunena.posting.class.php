@@ -372,7 +372,7 @@ class CKunenaPosting {
 		$dberror = $this->checkDatabaseError ();
 		if ($dberror) {
 			// Delete partial message on error
-			$query = "DELETE FROM #__kunena_messages WHERE mesid={$id}";
+			$query = "DELETE FROM #__kunena_messages WHERE mesid={$this->_db->quote($id)}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
@@ -382,7 +382,7 @@ class CKunenaPosting {
 		if ($this->parent->thread == 0) {
 			// For new thread, we now know to where the message belongs
 			$this->set ( 'thread', $id );
-			$query = "UPDATE #__kunena_messages SET thread={$id} WHERE id={$id}";
+			$query = "UPDATE #__kunena_messages SET thread={$this->_db->quote($id)} WHERE id={$this->_db->quote($id)}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 			$dberror = $this->checkDatabaseError ();
@@ -393,7 +393,7 @@ class CKunenaPosting {
 		//update the user posts count
 		$userid = ( int ) $this->get ( 'userid' );
 		if ($userid) {
-			$query = "UPDATE #__kunena_users SET posts=posts+1 WHERE userid={$userid}";
+			$query = "UPDATE #__kunena_users SET posts=posts+1 WHERE userid={$this->_db->quote($userid)}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
 
@@ -411,7 +411,7 @@ class CKunenaPosting {
 
 		// First take care of old sessions to make our job easier and faster
 		$lasttime = $this->get ( 'time' ) - $this->_config->fbsessiontimeout - 60;
-		$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$lasttime}";
+		$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$this->_db->quote($lasttime)}";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
@@ -420,7 +420,7 @@ class CKunenaPosting {
 
 		// Then look at users who have read the thread
 		$thread = $this->get ( 'thread' );
-		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics LIKE '%{$thread}%' AND userid!={$userid}";
+		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics LIKE '%{$thread}%' AND userid!={$this->_db->quote($userid)}";
 		$this->_db->setQuery ( $query );
 		$sessions = $this->_db->loadObjectList ();
 		$dberror = $this->checkDatabaseError ();
@@ -436,7 +436,7 @@ class CKunenaPosting {
 			if ($key !== false) {
 				unset ( $rt [$key] );
 				$readtopics = implode ( ",", $rt );
-				$query = "UPDATE #__kunena_sessions SET readtopics={$this->_db->quote($readtopics)} WHERE userid={$session->userid}";
+				$query = "UPDATE #__kunena_sessions SET readtopics={$this->_db->quote($readtopics)} WHERE userid={$this->_db->quote($session->userid)}";
 				$this->_db->setQuery ( $query );
 				$this->_db->query ();
 				$dberror = $this->checkDatabaseError ();
@@ -535,7 +535,7 @@ class CKunenaPosting {
 
 		if (!CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
 			//need to check that the message is the last of the thread
-			$this->_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE `hold`='0' AND `thread`='{$this->parent->thread}' ORDER BY id DESC LIMIT 0, 1" );
+			$this->_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE `hold`='0' AND `thread`={$this->_db->quote($this->parent->thread)} ORDER BY id DESC LIMIT 0, 1" );
 			$lastMessage = $this->_db->loadResult ();
 			$dberror = $this->checkDatabaseError ();
 			if ($dberror)
@@ -547,7 +547,7 @@ class CKunenaPosting {
 		}
 
 		// Execute delete
-		$query = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`='{$this->parent->id}';";
+		$query = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`={$this->_db->quote($this->parent->id)};";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
@@ -574,7 +574,7 @@ class CKunenaPosting {
 			return false;
 
 		// Execute undelete
-		$query = "UPDATE #__kunena_messages SET `hold`=0 WHERE `id`='{$this->parent->id}';";
+		$query = "UPDATE #__kunena_messages SET `hold`=0 WHERE `id`={$this->_db->quote($this->parent->id)};";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
 		$dberror = $this->checkDatabaseError ();
@@ -608,7 +608,7 @@ class CKunenaPosting {
 	protected function floodProtection() {
 		// Flood protection
 		if ($this->_config->floodprotection && ! CKunenaTools::isModerator ( $this->_my->id, $this->parent->catid )) {
-			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip='{$this->ip}'" );
+			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}" );
 			$lastPostTime = $this->_db->loadResult ();
 			if (KunenaError::checkDatabaseError()) return;
 
@@ -770,7 +770,7 @@ class CKunenaPosting {
 			AND m.subject={$this->_db->quote($this->message['subject'])}
 			AND m.ip={$this->_db->quote($this->message['ip'])}
 			AND t.message={$this->_db->quote($this->message['message'])}
-			AND m.time>='{$duplicatetimewindow}'" );
+			AND m.time>={$this->_db->quote($duplicatetimewindow)}" );
 		$id = $this->_db->loadResult ();
 		$dberror = $this->checkDatabaseError ();
 		if ($dberror)

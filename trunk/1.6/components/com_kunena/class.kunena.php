@@ -111,7 +111,7 @@ define('KUNENA_ABSEMOTIONSPATH', KUNENA_ABSIMAGESPATH . 'emoticons/');
 define('KUNENA_ABSRANKSPATH', KUNENA_ABSIMAGESPATH . 'ranks/');
 
 // absolute catimages path
-define('KUNENA_ABSCATIMAGESPATH', KUNENA_PATH_UPLOADED .DS. $kunena_config->catimagepath); // Kunena category images absolute path
+define('KUNENA_ABSCATIMAGESPATH', KUNENA_ROOT_PATH.DS.'media'.DS.'kunena'.DS.$kunena_config->catimagepath); // Kunena category images absolute path
 
 define('KUNENA_TMPLTURL', KUNENA_DIRECTURL . "template/{$fb_cur_template}/");
 define('KUNENA_TMPLTMAINIMGURL', KUNENA_DIRECTURL . "template/{$fb_cur_img_template}/");
@@ -170,7 +170,7 @@ class CKunenaTools {
 	function showButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
 	}
-	
+
 	function showIcon($name, $title='') {
 		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
 	}
@@ -359,7 +359,7 @@ class CKunenaTools {
             $ctg[$c->id] = $c;
             }
 
-        $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE id='{$msg_id}' OR thread='{$msg_id}'");
+        $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE id={$kunena_db->Quote($msg_id)} OR thread={$kunena_db->Quote($msg_id)}");
 
         $msg_ids = $kunena_db->loadResultArray();
         if (KunenaError::checkDatabaseError()) return;
@@ -380,7 +380,7 @@ class CKunenaTools {
 
         while ($msg_cat)
         {
-            $kunena_db->setQuery("SELECT id, time FROM #__kunena_messages WHERE catid='{$msg_cat}' AND (thread!='{$msg_id}' AND id!='{$msg_id}') ORDER BY time DESC LIMIT 1;");
+            $kunena_db->setQuery("SELECT id, time FROM #__kunena_messages WHERE catid={$kunena_db->Quote($msg_cat)} AND (thread!={$kunena_db->Quote($msg_id)} AND id!={$kunena_db->Quote($msg_id)}) ORDER BY time DESC LIMIT 1;");
             $lastMsgInCat = $kunena_db->loadObject();
             if (KunenaError::checkDatabaseError()) return;
 
@@ -422,7 +422,7 @@ class CKunenaTools {
 		}
 
 		if ($readTopics) {
-			$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET readtopics='{$readTopics}' WHERE userid='{$userid}'" );
+			$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET readtopics={$kunena_db->Quote($readTopics)} WHERE userid={$kunena_db->Quote($userid)}" );
 			$kunena_db->query ();
 			KunenaError::checkDatabaseError();
 		}
@@ -953,7 +953,7 @@ class CKunenaTools {
 		function getRulesHelpDatas($id) {
 			$kunena_db = &JFactory::getDBO ();
 
-			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id='{$id}'" );
+			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id={$kunena_db->Quote($id)}" );
 			$introtext = $kunena_db->loadResult ();
 			KunenaError::checkDatabaseError();
 

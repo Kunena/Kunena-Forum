@@ -132,13 +132,13 @@ class CKunenaWhoIsOnline {
 
 	protected function _deleteUsersOnline () {
 		$past = $this->datenow - $this->config->fbsessiontimeout;
-		$this->db->setQuery("DELETE FROM #__kunena_whoisonline WHERE time < '{$past}'");
+		$this->db->setQuery("DELETE FROM #__kunena_whoisonline WHERE time < {$this->db->Quote($past)}");
 		$this->db->query();
 		KunenaError::checkDatabaseError();
 	}
 
 	protected function _getOnlineUsers () {
-		$this->db->setQuery("SELECT COUNT(*) FROM #__kunena_whoisonline WHERE userip='{$this->myip}' AND userid='{$this->my->id}'");
+		$this->db->setQuery("SELECT COUNT(*) FROM #__kunena_whoisonline WHERE userip={$this->db->Quote($this->myip)} AND userid={$this->db->Quote($this->my->id)}");
 		$online = $this->db->loadResult();
 		KunenaError::checkDatabaseError();
 
@@ -168,7 +168,7 @@ class CKunenaWhoIsOnline {
 		$online = $this->_getOnlineUsers();
 
 		if ( $func == 'showcat') {
-    		$this->db->setQuery("SELECT name FROM #__kunena_categories WHERE id='{$catid}'");
+    		$this->db->setQuery("SELECT name FROM #__kunena_categories WHERE id={$this->db->Quote($catid)}");
     		$what = JText::_('COM_KUNENA_WHO_VIEW_SHOWCAT').' '.$this->db->loadResult();
     		KunenaError::checkDatabaseError();
 		} else if ($func == 'listcat') {
@@ -178,15 +178,15 @@ class CKunenaWhoIsOnline {
     	} else if ($func == 'mylatest') {
     		$what = JText::_('COM_KUNENA_WHO_MY_DISCUSSIONS');
     	} else if ($func == 'view') {
-    		$this->db->setQuery("SELECT subject FROM #__kunena_messages WHERE id='{$id}'");
+    		$this->db->setQuery("SELECT subject FROM #__kunena_messages WHERE id={$this->db->Quote($id)}");
     		$what = JText::_('COM_KUNENA_WHO_VIEW_TOPIC').' '.$this->db->loadResult();
     		KunenaError::checkDatabaseError();
     	} else if ($func == 'post' && $do == 'reply') {
-    		$this->db->setQuery("SELECT subject FROM #__kunena_messages WHERE id='{$id}'");
+    		$this->db->setQuery("SELECT subject FROM #__kunena_messages WHERE id={$this->db->Quote($id)}");
     		$what = JText::_('COM_KUNENA_WHO_REPLY_TOPIC').' '.$this->db->loadResult();
     		KunenaError::checkDatabaseError();
     	} else if ($func == 'post' && $do == 'edit') {
-    		$this->db->setQuery("SELECT name FROM #__kunena_messages WHERE id='{$id}'");
+    		$this->db->setQuery("SELECT name FROM #__kunena_messages WHERE id={$this->db->Quote($id)}");
     		$what = JText::_('COM_KUNENA_WHO_POST_EDIT').' '.$this->db->loadResult();
     		KunenaError::checkDatabaseError();
     	} else if ($func == 'who') {

@@ -502,7 +502,7 @@ var kbbcode = new Class({
 function kInsertCode() {
 	var kcodetype = $('kcodetype').get('value');
 	kbbcode.replaceSelection('[code type='+kcodetype+']' + kbbcode.getSelection() + '[/code]'); 
-	//kToggleOrSwap("kbbcode-code-options");
+	kToggleOrSwap("kbbcode-code-options");
 }
 
 //

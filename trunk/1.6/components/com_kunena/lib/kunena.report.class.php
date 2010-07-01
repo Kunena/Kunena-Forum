@@ -62,7 +62,7 @@ class CKunenaReport {
 
 	protected function _getSenderName() {
 		$name = $this->config->username ? "username" : "name";
-		$this->_db->setQuery("SELECT {$name} FROM #__users WHERE id={$this->my->id}");
+		$this->_db->setQuery("SELECT {$name} FROM #__users WHERE id={$this->_db->Quote($this->my->id)}");
     	$sender = $this->_db->loadResult();
 		KunenaError::checkDatabaseError();
 
@@ -76,7 +76,7 @@ class CKunenaReport {
 			if ( $this->id ) {
     			$this->_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text, c.username, c.id FROM #__kunena_messages AS a"
     								. " LEFT JOIN #__kunena_messages_text AS b ON b.mesid = a.id LEFT JOIN #__users AS c ON c.id=a.userid"
-    								. " WHERE a.id='{$this->id}'");
+    								. " WHERE a.id={$this->_db->Quote($this->id)}");
 	   			$row = $this->_db->loadObject();
     			if (KunenaError::checkDatabaseError()) return;
 

@@ -278,6 +278,16 @@ class CKunenaProfile {
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
+	function displayCategoriesSubscriptions()
+	{
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		$obj = new CKunenaLatestX('catsSubscriptions', 0);
+		$obj->user = $this->user;
+		$obj->getCategoriesSubscriptions();
+		$obj->displayFlatCats();
+		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
+	}
+
 	function displayBanUser()
 	{
 		$this->baninfo = KunenaUserBan::getInstanceByUserid($this->profile->userid, true);
@@ -508,11 +518,11 @@ class CKunenaProfile {
 
 		} else if ( $action == 'delete' ) {
 			//set default avatar
-			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar='' WHERE userid='{$this->profile->userid}'" );
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar='' WHERE userid={$this->_db->Quote($this->profile->userid)}" );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 		} else if ( substr($action, 0, 8) == 'gallery/' && strpos($action, '..') === false) {
-			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar={$this->_db->quote($action)} WHERE userid='{$this->profile->userid}'" );
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar={$this->_db->quote($action)} WHERE userid={$this->_db->Quote($this->profile->userid)}" );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 		}
@@ -524,8 +534,8 @@ class CKunenaProfile {
 		$showonline = JRequest::getInt('showonline', '', 'post', 'showonline');
 
 		//Query on kunena user
-		$this->_db->setQuery ( "UPDATE #__kunena_users SET ordering='$messageordering', hideEmail='$hidemail', showOnline='$showonline'
-							WHERE userid='{$this->profile->userid}'" );
+		$this->_db->setQuery ( "UPDATE #__kunena_users SET ordering={$this->_db->Quote($messageordering)}, hideEmail={$this->_db->Quote($hidemail)}, showOnline={$this->_db->Quote($showonline)}
+							WHERE userid={$this->_db->Quote($this->profile->userid)}" );
 		$this->_db->query ();
 		KunenaError::checkDatabaseError();
 	}
@@ -609,7 +619,7 @@ class CKunenaProfile {
 			jimport ( 'joomla.filesystem.file' );
 			$userprofile = KunenaFactory::getUser ( $userid );
 
-			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar=null WHERE userid=$userid" );
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET avatar=null WHERE userid={$this->_db->Quote($userid)}" );
 			$this->_db->Query ();
 			KunenaError::checkDatabaseError();
 
@@ -620,20 +630,20 @@ class CKunenaProfile {
 		}
 
 		if (! empty ( $DelSignature )) {
-			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null WHERE userid=$userid" );
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null WHERE userid={$this->_db->Quote($userid)}" );
 			$this->_db->Query ();
 			KunenaError::checkDatabaseError();
 		}
 
 		if (! empty ( $DelProfileInfo )) {
-			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid=$userid" );
+			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid={$this->_db->Quote($userid)}" );
 			$this->_db->Query ();
 			KunenaError::checkDatabaseError();
 		}
 
 		if (! empty ( $banDelPosts )) {
 			//select only the messages which aren't already in the trash
-			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=2 WHERE hold!=2 AND userid=$userid" );
+			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=2 WHERE hold!=2 AND userid={$this->_db->Quote($userid)}" );
 			$idusermessages = $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 		}

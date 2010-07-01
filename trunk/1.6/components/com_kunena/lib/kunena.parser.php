@@ -329,15 +329,14 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				case 'code':
 					$kunena_config = KunenaFactory::getConfig();
 					if ($kunena_config->highlightcode) {
-						$path = $kunena_config->highlightcode_path;
-						if (!$path) $path = '/libraries/geshi';
-						$path = JPATH_ROOT.str_replace('/', DS, str_replace("\\", DS, $path));
-						if (file_exists($path.DS."geshi.php")) {
-							if (substr(JVERSION, 0, 3) == 1.5)
-								jimport('geshi.geshi');
-							else
-								require_once($path.DS."geshi.php");
-							$path .= DS."geshi";
+						if (substr(JVERSION, 0, 3) == 1.5) {
+							$path = JPATH_ROOT.'/libraries/geshi';
+							jimport('geshi.geshi');
+						} else {
+							$path = JPATH_ROOT.'/plugins/content/geshi/geshi';
+							require_once($path.'/geshi.php');
+						}
+						if (file_exists($path.'/geshi.php')) {
 							$type = isset($tag->options["type"]) ? $tag->options["type"] : "php";
 							if ($type == "js") $type = "javascript";
 							else if ($type == "html") $type = "html4strict";

@@ -172,7 +172,7 @@ class CKunenaSearch {
 		$time = 0;
 		switch ($this->params ['searchdate']) {
 			case 'lastvisit' :
-				$this->db->setQuery ( "SELECT lasttime FROM #__kunena_sessions WHERE userid='{$this->my->id}'" );
+				$this->db->setQuery ( "SELECT lasttime FROM #__kunena_sessions WHERE userid={$this->db->Quote($this->my->id)}" );
 				$time = $this->db->loadResult ();
 				break;
 			case 'all' :

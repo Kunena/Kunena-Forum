@@ -141,11 +141,13 @@ $kunena_config = KunenaFactory::getConfig ();
 
 			<?php
 			if ($kunena_config->highlightcode) {
-				$path = $kunena_config->highlightcode_path;
-				if (!$path) $path = '/libraries/geshi';
-				$path = JPATH_ROOT.str_replace('/', DS, str_replace("\\", DS, $path));
-				if (file_exists($path.DS."geshi.php")) {
-					$path .= DS."geshi";
+				$kunena_config = KunenaFactory::getConfig();
+				if (substr(JVERSION, 0, 3) == 1.5) {
+					$path = JPATH_ROOT.'/libraries/geshi/geshi';
+				} else {
+					$path = JPATH_ROOT.'/plugins/content/geshi/geshi/geshi';
+				}
+				if ( file_exists($path) ) {
 					$files = JFolder::files($path, ".php"); ?>
 					<div id="kbbcode-code-options" style="display: none;">
 						<?php echo JText::_('COM_KUNENA_EDITOR_CODE_TYPE'); ?>

@@ -42,7 +42,7 @@ class CkunenaPathway {
 	}
 
 	public function getMessagesTitles($id) {
-		$sql = "SELECT subject, id FROM #__kunena_messages WHERE id='{$id}'";
+		$sql = "SELECT subject, id FROM #__kunena_messages WHERE id={$this->_db->Quote($id)}";
 		$this->_db->setQuery ( $sql );
 		$kunena_topic_title = KunenaParser::parseText ($this->_db->loadResult () );
 		KunenaError::checkDatabaseError();
@@ -51,7 +51,7 @@ class CkunenaPathway {
 	}
 
 	public function getCatsDetails($catids) {
-		$query = "SELECT * FROM #__kunena_categories WHERE id='{$catids}' AND published='1'";
+		$query = "SELECT * FROM #__kunena_categories WHERE id={$this->_db->Quote($catids)} AND published='1'";
 		$this->_db->setQuery ( $query );
 		$results = $this->_db->loadObject ();
 		KunenaError::checkDatabaseError();

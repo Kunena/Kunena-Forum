@@ -3682,7 +3682,6 @@ div#kprofile-stats ul li span.krank-admin {
 #Kunena div.current dd {
 	padding: 0;
 	margin: 0;
-	white-space:nowrap;
 }
 #Kunena dt.kprofile-modbtn {
 	background-color:#999999 !important;

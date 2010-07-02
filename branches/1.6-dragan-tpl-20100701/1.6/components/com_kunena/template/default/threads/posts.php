@@ -30,41 +30,25 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 	?>
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
 <form action="index.php" method="post" name="kBulkActionForm">
-
+<div class="kblock">
+	<div class="kheader">
+		<?php if (CKunenaTools::isModerator($this->my->id)) { ?>
+		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
+		<?php } ?>
+		<h2><span><?php if (!empty($this->header)) echo $this->header; ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
 <table
 	class="<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
 	?>" id="kflattable">
-	<thead>
-		<tr>
-			<th
-				colspan="<?php
-	echo $this->columns;
-	?>">
-
-		<div class="ktitle-cover km"><span class="ktitle kl">
-
-	<?php if (!empty($this->header)) echo $this->header; ?></span></div>
-	<?php if (CKunenaTools::isModerator($this->my->id)) { ?>
-	<div class="kcheckbox select-toggle">
-		<input id="kcbcheckall" type="checkbox" name="toggle" value="" />
-	</div>
-	<?php } ?>
-		</th>
-		</tr>
-	</thead>
-	<tbody>
 		<?php
 	$k = 0;
 	$counter = 0;
 	if (!count ( $this->customreply )) {
-		echo '<tr class="ksectiontableentry2"><td class="td-0 km kcenter">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
+		echo '<tr class="krow2"><td class="ktopicicon kfirst km kcenter">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
 	} else
 	foreach ( $this->customreply as $message ) {
 		$lastreply = $this->lastreply[$message->thread];
@@ -90,11 +74,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($message->hold == 1) echo ' kunapproved';
 		else if ($message->hold) echo ' kdeleted';
 		?>">
-			<td class="td-0 kcenter">
+			<td class="ktopicicon kfirst kcenter">
 			<?php echo CKunenaTools::topicIcon($message) ?>
 		</td>
 
-			<td class="td-3"><?php
+			<td class="ktopictittle kmiddle"><?php
 			$curMessageNo = $message->msgcount - ($message->unread ? $message->unread - 1 : 0);
 			$threadPages = ceil ( $message->msgcount / $this->config->messages_per_page );
 			$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
@@ -108,7 +92,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			?>
 			</div><div style="display:none"><?php echo KunenaParser::parseBBCode ($message->message);?></div>
 			</td>
-			<td class="td-3"><?php
+			<td class="ktopictittle kmiddle"><?php
 			echo CKunenaLink::GetThreadLink ( 'view', $firstpost->catid, $firstpost->id, KunenaParser::parseText ($firstpost->subject), KunenaParser::stripBBCode ($firstpost->message), 'follow', 'ktopic-title km' );
 			?>
 			<?php
@@ -135,7 +119,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</span> <!-- /Category -->
 		</div>
 		</td>
-			<td class="td-5 ks">
+			<td class="ktopiclastpost kmiddle ks">
 			<div class="klatest-post-info"><!--  Sticky   --> <?php
 		if ($this->messages[$message->id]->ordering != 0) {
 			?>
@@ -180,7 +164,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			?>
 
-			<td class="td-7 kcenter">
+			<td class="ktopicmoderation kmiddle kcenter">
 				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo $message->id?>]" value="0"  />
 			</td>
 
@@ -194,8 +178,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) {
 		?>
 		<!-- Moderator Bulk Actions -->
-		<tr class="ksectiontableentry1">
-			<td colspan="7" align="right" class="td-1 ks">
+		<tr class="krow1">
+			<td colspan="7" align="right" class="krowmoderation kfirst ks">
 				<select name="do" id="kBulkChooseActions"
 				class="inputbox ks">
 				<option value="">&nbsp;</option>
@@ -216,13 +200,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 	}
 	?>
-	</tbody>
-</table>
 
+</table>
+        </div>
+	</div>
+</div>
 <input type="hidden" name="option" value="com_kunena" /> <input
 	type="hidden" name="func" value="bulkactions" /> </form>
-</div>
-</div>
-</div>
-</div>
-</div>

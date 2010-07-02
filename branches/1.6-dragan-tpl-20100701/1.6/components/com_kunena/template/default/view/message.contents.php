@@ -17,9 +17,9 @@ defined ( '_JEXEC' ) or die ();
 	<span class="kmsgtitle<?php echo $this->msgsuffix ?>">
 		<?php echo $this->subject ?>
 	</span>
-	<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+	<!-- <span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 		<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
-	</span>
+	</span> -->
 	<span class="kmsgkarma">
 		<?php echo $this->userkarma ?>
 	</span>

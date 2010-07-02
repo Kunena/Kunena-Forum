@@ -53,91 +53,81 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 	}
 	//-->
 </script>
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
-	<table class="kblocktable" id ="kuserlist" border="0" cellspacing="0" cellpadding="0" width="100%">
-		<thead>
-			<tr>
-				<th>
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td align="left">
-								<div class="ktitle-cover km">
-									<span class="ktitle kl"> <?php echo JText::_('COM_KUNENA_USRL_USERLIST'); ?></span>&nbsp;
-
-									<?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), $this->total);?>
-								</div>
-							</td>
-
-							<td align="right">
-								<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit="return validate()">
-									<input id="kusersearch" type="text" name="search" class="inputbox"
-										value="<?php echo $this->search; ?>" onblur="if(this.value=='') this.value='<?php echo $this->search; ?>';" onfocus="if(this.value=='<?php echo $this->search; ?>') this.value='';" />
-
-									<input type="image" src="<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.png' ;?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;"/>
-								</form>
-							</td>
-						</tr>
-					</table>
-				</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<tr>
-				<td class="k-userlistinfo">
-					<!-- Begin: Listing -->
-					<form action="<?php echo CKunenaLink::GetUserlistURL(); ?>" method="POST" name="adminForm">
-					<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr class="ksth ks">
-							<th class="th-1 frst ksectiontableheader" align="center">
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="searchuser_tbody"></a></span>
+		<h2><span><?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), $this->total);?></span></h2>
+	</div>
+	<div class="kcontainer" id="searchuser_tbody">
+		<div class="kbody">
+			<div class="search-user">
+				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit="return validate()">
+					<input id="kusersearch" type="text" name="search" class="inputbox"
+						value="<?php echo $this->search; ?>" onblur="if(this.value=='') this.value='<?php echo $this->search; ?>';" onfocus="if(this.value=='<?php echo $this->search; ?>') this.value='';" />
+					<input type="image" src="<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.png' ;?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;"/>
+				</form>
+			</div>
+			<div class="userlist-jump">
+				<?php $this->displayForumJump(); ?>
+			</div>
+        </div>
+	</div>
+</div>
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="userlist_tbody"></a></span>
+		<h2><span><?php echo JText::_('COM_KUNENA_USRL_USERLIST'); ?></span></h2>
+	</div>
+	<div class="kcontainer" id="userlist_tbody">
+		<div class="kbody">
+				<form action="<?php echo CKunenaLink::GetUserlistURL(); ?>" method="POST" name="adminForm">
+					<table>
+						<tr class="ksth ks userlist">
+							<th class="kcol frst ksectiontableheader" align="center">
 							</th>
 
 							<?php if ($this->config->userlist_online) { ?>
-							<th class="th-2 ksectiontableheader" align="center"><?php echo JText::_('COM_KUNENA_USRL_ONLINE'); ?></th>
+							<th align="center"><?php echo JText::_('COM_KUNENA_USRL_ONLINE'); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_avatar) { ?>
-							<th class="th-3 ksectiontableheader" align="center"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
+							<th align="center"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_name) { ?>
-							<th class="th-4 ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_NAME'), 'name', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_NAME'), 'name', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_username) { ?>
-							<th class="th-5 ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERNAME'), 'username', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERNAME'), 'username', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_posts) { ?>
-							<th class="th-7 ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_POSTS'), 'posts', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_POSTS'), 'posts', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_karma) { ?>
-							<th class="th-7 ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_KARMA'), 'karma', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_KARMA'), 'karma', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_email) { ?>
-							<th class="th-8 ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_EMAIL'), 'email', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_EMAIL'), 'email', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_usertype) { ?>
-							<th class="th-9 ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERTYPE'), 'usertype', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERTYPE'), 'usertype', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_joindate) { ?>
-							<th class="th-10 ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_JOIN_DATE'), 'registerDate', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_JOIN_DATE'), 'registerDate', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_lastvisitdate) { ?>
-							<th class="th-11 ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_LAST_LOGIN'), 'lastvisitDate', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_LAST_LOGIN'), 'lastvisitDate', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_userhits) { ?>
-							<th class="th-12 lst ksectiontableheader usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_HITS'), 'uhits', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_HITS'), 'uhits', $this->order_dir, $this->order); ?></th>
 							<?php } ?>
 						</tr>
 
@@ -149,10 +139,10 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 							$evenodd=$i % 2;
 
 							if ($evenodd == 0) {
-								$usrl_class="sectiontableentry1";
+								$usrl_class="row1";
 							}
 							else {
-								$usrl_class="sectiontableentry2";
+								$usrl_class="row2";
 							}
 
 							$nr=$i + $this->limitstart;
@@ -162,11 +152,11 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 ?>
 
 						<tr class="k<?php echo $usrl_class ;?> km">
-							<td class="td-1 frst ks" align="center"><?php echo $nr; ?></td>
+							<td class="kfirst frst ks" align="center"><?php echo $nr; ?></td>
 
 							<?php if ($this->config->userlist_online) { ?>
 
-							<td class="td-2">
+							<td class="kmiddle">
 							<?php // online - ofline status
 								$isonline=$profile->isOnline();
 
@@ -181,41 +171,41 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 							<?php } ?>
 
 							<?php if ($this->config->userlist_avatar) { ?>
-							<td class="td-3" align="center"><?php if(JString::strlen($uslavatar)) { echo CKunenaLink::GetProfileLink($user->id, $uslavatar); } else { echo '&nbsp;'; } ?></td>
+							<td class="kmiddle" align="center"><?php if(JString::strlen($uslavatar)) { echo CKunenaLink::GetProfileLink($user->id, $uslavatar); } else { echo '&nbsp;'; } ?></td>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_name) { ?>
-							<td class="td-4 km" align="center"><?php echo CKunenaLink::GetProfileLink($user->id, $user->name); ?></td>
+							<td class="kmiddle km" align="center"><?php echo CKunenaLink::GetProfileLink($user->id, $user->name); ?></td>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_username) { ?>
-							<td class="td-5 km" align="center"><?php echo CKunenaLink::GetProfileLink($user->id, $user->username); ?></td>
+							<td class="kmiddle km" align="center"><?php echo CKunenaLink::GetProfileLink($user->id, $user->username); ?></td>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_posts) { ?>
-							<td class="td-7 ks" align="center"><?php echo $user->posts; ?></td>
+							<td class="kmiddle ks" align="center"><?php echo $user->posts; ?></td>
 							<?php } ?>
 
 							<?php if ($this->config->userlist_karma) { ?>
-								<td class="td-7 ks" align="center"><?php echo $user->karma; ?></td>
+								<td class="kmiddle ks" align="center"><?php echo $user->karma; ?></td>
 							<?php } ?>
 
 							<?php
 							if ($this->config->userlist_email) {
-								echo "\t\t<td class=\"td-8 ks\" align=\"center\"><a href=\"mailto:$user->email\">$user->email</a></td>\n";
+								echo "\t\t<td class=\"kmiddle ks\" align=\"center\"><a href=\"mailto:$user->email\">$user->email</a></td>\n";
 							}
 							if ($this->config->userlist_usertype) {
-								echo "\t\t<td class=\"td-9 ks\" align=\"center\">$user->usertype</td>\n";
+								echo "\t\t<td class=\"kmiddle ks\" align=\"center\">$user->usertype</td>\n";
 							}
 							if ($this->config->userlist_joindate) {
-								echo "\t\t<td class=\"td-10 ks\" align=\"center\" title=\"".CKunenaTimeformat::showDate($user->registerDate, 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($user->registerDate, 'datetime_today', 'utc') . "</td>\n";
+								echo "\t\t<td class=\"kmiddle ks\" align=\"center\" title=\"".CKunenaTimeformat::showDate($user->registerDate, 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($user->registerDate, 'datetime_today', 'utc') . "</td>\n";
 							}
 							if ($this->config->userlist_lastvisitdate) {
-								echo "\t\t<td class=\"td-11 ks\" align=\"center\" title=\"".CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') . "</td>\n";
+								echo "\t\t<td class=\"kmiddle ks\" align=\"center\" title=\"".CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc')."\">" . CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') . "</td>\n";
 							}
 							?>
 
-							<td class="td-12 lst ks" align="center"><?php if ($this->config->userlist_userhits) { echo $user->uhits; } ?></td>
+							<td class="kmiddle lst ks" align="center"><?php if ($this->config->userlist_userhits) { echo $user->uhits; } ?></td>
 
 						</tr>
 						<?php
@@ -248,38 +238,7 @@ $document->addScriptDeclaration( "document.addEvent('domready', function() {
 			</tr>
 		</table>
 		</form>
-
-		</td>
-	</tr>
- </tbody>
-</table>
-		<!-- Finish: Listing -->
-
+        </div>
+	</div>
 </div>
-</div>
-</div>
-</div>
-</div>
-		<?php $this->displayWhoIsOnline(); ?>
-<!-- Begin: Forum Jump -->
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
-		<table class="kblocktable" id="kbottomarea" border="0" cellspacing="0" cellpadding="0">
-			<thead>
-				<tr>
-					<th class="th-right">
-						<?php $this->displayForumJump(); ?>
-					</th>
-				</tr>
-			</thead>
-			<tbody><tr><td></td></tr></tbody>
-		</table>
-		</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Finish: Forum Jump -->
+<?php $this->displayWhoIsOnline(); ?>

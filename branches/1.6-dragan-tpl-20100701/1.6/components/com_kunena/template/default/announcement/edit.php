@@ -26,8 +26,8 @@ $document->addScriptDeclaration('
 ');
 ?>
 <div class="kblock kannouncement">
-	<div class="ktitle">
-		<h1><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo $this->id ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?></h1>
+	<div class="kheader">
+		<h2><?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>: <?php echo $this->id ? JText::_('COM_KUNENA_ANN_EDIT') : JText::_('COM_KUNENA_ANN_ADD'); ?></h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
 		<div class="kactions"><?php echo CKunenaLink::GetAnnouncementLink('show',NULL, JText::_('COM_KUNENA_ANN_CPANEL'), JText::_('COM_KUNENA_ANN_CPANEL')); ?></div>
@@ -67,7 +67,7 @@ $document->addScriptDeclaration('
 					</label>
 					<input type='hidden' name="do" value="doedit"/>
 					<input type='hidden' name="id" value="<?php echo $this->id ;?>"/>
-					<input name="submit" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>
+					<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>
 				</form>
 			</div>
 		</div>

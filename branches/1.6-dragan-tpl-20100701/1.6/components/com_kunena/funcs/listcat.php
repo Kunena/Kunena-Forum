@@ -89,7 +89,7 @@ class CKunenaListcat {
 		if (KunenaError::checkDatabaseError()) return;
 
 		global $kunena_icons;
-		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
+		$this->tabclass = array ("row1", "row2" );
 
 		$subcats = array ();
 		$routerlist = array ();

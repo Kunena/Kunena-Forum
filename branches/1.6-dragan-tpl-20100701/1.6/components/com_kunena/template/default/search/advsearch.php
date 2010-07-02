@@ -24,20 +24,18 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 		new Autocompleter.Request.JSON('kusername', '" . CKunenaLink::GetJsonURL('autocomplete', 'getuser', false) . "', { 'postVar': 'value' });
 });");
 ?>
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler <?php echo $advsearch_class; ?>"  rel="advsearch"></a></span>
+		<h2><span><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
 <form action="<?php echo CKunenaLink::GetSearchURL('advsearch'); ?>" method="post" id="searchform" name="adminForm">
-	<table id="kforumsearch" class="kblock">
-		<thead>
-			<tr>
-				<th colspan="2">
-					<h1><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?></h1>
-					<span class="ktoggler" id="search_status"><a class="ktoggler <?php echo $advsearch_class; ?>" rel="advsearch"></a></span>
-				</th>
-			</tr>
-		</thead>
-
+	<table id="kforumsearch">
 		<tbody id="advsearch"<?php echo $advsearch_style; ?>>
-			<tr class="ksectiontableentry1">
-				<td class="td-1" width="50%">
+			<tr class="krow1">
+				<td class="kfirst" width="50%">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
 						<label class="searchlabel" for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
@@ -48,7 +46,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 						</select>
 					</fieldset>
 				</td>
-				<td class="td-1" width="50%">
+				<td class="kmiddle" width="50%">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
 						<label class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
@@ -70,12 +68,14 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 			</tr>
 			<tr>
 				<th colspan="2">
-					<h2><?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?></h2>
-					<span class="ktoggler" id="search_opt_status"><a class="ktoggler close" rel="advsearch_options"></a></span>
+					<div class="kheader">
+						<span class="ktoggler" id="search_opt_status"><a class="ktoggler close"  rel="advsearch_options"></a></span>
+						<h2><span><?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?></span></h2>
+					</div>
 				</th>
 			</tr>
-			<tr class="ksectiontableentry1" id="advsearch_options">
-				<td class="td-1" width="50%">
+			<tr class="krow1" id="advsearch_options">
+				<td class="kfirst" width="50%">
 <?php /*
 					<fieldset class="fieldset">
 						<legend style="padding:0px">
@@ -153,7 +153,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 						</select>
 					</fieldset>
 				</td>
-				<td class="td-1" width="50%">
+				<td class="kmiddle" width="50%">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
 						<?php echo $this->categorylist; ?>
@@ -184,5 +184,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 		</tbody>
 	</table>
 </form>
-
+        </div>
+	</div>
+</div>
 

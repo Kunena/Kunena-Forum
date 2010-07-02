@@ -15,9 +15,16 @@ defined ( '_JEXEC' ) or die ();
 
 $k = 0;
 ?>
-<b><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY' )?>:</b>
-<?php echo $this->subject ?><br />
-<?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->config->historylimit . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?><br />
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="history"></a></span>
+		<h2><span><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY' )?>: <?php echo $this->subject ?></span></h2>
+		<div class="ktitle-desc km">
+			<?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->config->historylimit . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?>
+		</div>
+	</div>
+	<div class="kcontainer" id="history">
+		<div class="kbody">
 <table border="0" cellspacing="1" cellpadding="3" width="100%"
 	class="kreview-table">
 	<tr>
@@ -31,11 +38,11 @@ $k = 0;
 	</tr>
 	<?php foreach ( $this->messages as $mes ):?>
 	<tr>
-		<td class="kreview-body<?php echo $k = 1 - $k?>" valign="top">
+		<td class="kreview-body<?php echo $k = 1 - $k?> kfirst" valign="top">
 			<?php echo kunena_htmlspecialchars ( $mes->name )?>
 		</td>
 
-		<td class="kreview-body<?php echo $k?>">
+		<td class="kreview-body<?php echo $k?> kmiddle">
 			<div class="kmsgbody">
 				<div class="kmsgtext">
 					<?php echo KunenaParser::parseBBCode( $mes->message )?>
@@ -46,3 +53,6 @@ $k = 0;
 	</tr>
 	<?php endforeach; ?>
 </table>
+        </div>
+	</div>
+</div>

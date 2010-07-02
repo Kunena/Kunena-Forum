@@ -34,24 +34,21 @@ $this->displayPathway ();
 $this->displaySubCategories ();
 ?>
 
-<?php
-if ($this->objCatInfo->headerdesc) {
-	?>
-<table
-	class="kforum-headerdesc<?php
-	echo isset ( $this->objCatInfo->class_sfx ) ? ' kforum-headerdesc' . $this->objCatInfo->class_sfx : '';
-	?>"
-	>
-	<tr>
-		<td><?php
-	echo $this->headerdesc;
-	?>
-		</td>
-	</tr>
-</table>
-<?php
-}
-?>
+<?php if ($this->objCatInfo->headerdesc) { ?>
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="frontstats_tbody"></a></span>
+		<h2><span><?php echo JText::_('Forum Header'); ?></span></h2>
+	</div>
+	<div class="kcontainer" id="frontstats_tbody">
+		<div class="kbody">
+			<div class="khelprulescontent">
+				<?php echo $this->headerdesc; ?>
+			</div>
+        </div>
+	</div>
+</div>
+<?php } ?>
 
 <!-- B: List Actions -->
 
@@ -136,33 +133,19 @@ echo '</div>';
 ?>
 
 <!-- F: List Actions Bottom -->
-
-<!-- B: Category List Bottom -->
-
-<table class="klist-bottom">
-	<tr>
-		<td class="klist-moderators"><!-- Mod List --> <?php
-
-		if (count ( $this->modslist ) > 0) :
-			?>
-
-		<div class="kbox-bottomarea-modlist"><?php
+<div class="kcontainer" id="moderatorslist">
+	<div class="kbody">
+		<div class="moderatorslist-list">
+			<?php
 			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 			foreach ( $this->modslist as $mod ) {
 				echo CKunenaLink::GetProfileLink ( $mod->userid, $mod->username ) . '&nbsp; ';
 			}
 			?>
 		</div>
+		<div class="moderatorslist-jump">
+				<?php $this->displayForumJump (); ?>
+		</div>
+    </div>
+</div>
 
-
-
-		<?php endif;
-		?> <!-- /Mod List --></td>
-		<td class="klist-categories"><?php
-		$this->displayForumJump ();
-		?>
-		</td>
-	</tr>
-</table>
-
-<!-- F: Category List Bottom -->

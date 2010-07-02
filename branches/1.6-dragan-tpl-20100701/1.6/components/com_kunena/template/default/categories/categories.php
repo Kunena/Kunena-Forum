@@ -22,53 +22,23 @@
 defined ( '_JEXEC' ) or die ();
 
 global $kunena_icons;
+foreach ( $this->categories [0] as $cat ) :
+	$htmlClassBlockTable = !empty ( $cat->class_sfx ) ? ' kblocktable' . $cat->class_sfx : '';
+	$htmlClassTitleCover = !empty ( $cat->class_sfx ) ? ' ktitle-cover' . $cat->class_sfx : '';
 ?>
-<?php
-	foreach ( $this->categories [0] as $cat ) {
-		?>
-<!-- B: List Cat -->
-<div class="k-bt-cvr1" id="kblock<?php
-		echo $cat->id;
-		?>">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k-bt-cvr5">
-<table
-	class="kblocktable<?php
-		echo isset ( $cat->class_sfx ) ? ' kblocktable' . $cat->class_sfx : '';
-		?>" id="kcat<?php
-		echo $cat->id;
-		?>" >
-	<thead>
-		<tr>
-			<th colspan="5">
-			<div class="ktitle-cover<?php
-		echo isset ( $cat->class_sfx ) ? ' ktitle-cover' . $cat->class_sfx : '';
-		?> km"><?php
-		echo CKunenaLink::GetCategoryLink ( 'listcat', $cat->id, kunena_htmlspecialchars ( $cat->name ), 'follow', $class = 'ktitle kl' );
-
-		if ($cat->description != "") {
-			?>
-			<div class="ktitle-desc km"><?php
-			echo KunenaParser::parseBBCode ( $cat->description );
-			?>
-			</div>
-			<?php
-		}
-		?></div>
-
-			<div class="fltrt"><span id="cat_list"><a class="ktoggler close"
-				rel="catid_<?php
-		echo $cat->id;
-		?>"></a></span></div>
-			</th>
-		</tr>
-	</thead>
-	<tbody id="catid_<?php
-		echo $cat->id;
-		?>">
-
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="catid_<?php echo intval($cat->id) ?>"></a></span>
+		<h2><span><?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($cat->id), $cat->name, 'follow', $class = '' ); ?></span></h2>
+		<?php if (!empty($cat->description)) : ?>
+		<div class="ktitle-desc km">
+			<?php echo KunenaParser::parseBBCode ( $cat->description ); ?>
+		</div>
+		<?php endif; ?>
+	</div>
+	<div class="kcontainer" id="catid_<?php echo intval($cat->id) ?>">
+		<div class="kbody">
+<table class="kblocktable<?php echo $htmlClassBlockTable ?>" id="kcat<?php echo intval($cat->id) ?>">
 		<?php
 		if (empty ( $this->categories [$cat->id] )) {
 			echo '' . JText::_('COM_KUNENA_GEN_NOFORUMS') . '';
@@ -82,7 +52,7 @@ global $kunena_icons;
 				?>"
 			id="kcat<?php
 				echo $subcat->id?>">
-			<td class="td-1 kcenter" width="1%"><?php
+			<td class="kcaticon kfirst kcenter" width="1%"><?php
 				$tmpIcon = '';
 				if ($this->config->shownew && $this->my->id != 0) {
 					if ($subcat->new) {
@@ -112,7 +82,7 @@ global $kunena_icons;
 				?>
 			</td>
 
-			<td class="td-2 kleft">
+			<td class="kcattitle kmiddle kleft">
 			<div class="kthead-title kl"><?php
 				//new posts available
 				echo CKunenaLink::GetCategoryLink ( 'showcat', $subcat->id, kunena_htmlspecialchars ( $subcat->name ) );
@@ -231,7 +201,7 @@ else {
 				?>
 			</td>
 
-			<td class="td-3 km kcenter" width="5%"><!-- Number of Topics -->
+			<td class="ktopics kmiddle km kcenter" width="5%"><!-- Number of Topics -->
 			<span class="kcat-topics-number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numTopics );
 				?>
@@ -239,7 +209,7 @@ else {
 				echo JText::_('COM_KUNENA_GEN_TOPICS');
 				?> </span> <!-- /Number of Replies --></td>
 
-			<td class="td-4 km kcenter" width="5%"><!-- Number of Topics -->
+			<td class="kreplies kmiddle km kcenter" width="5%"><!-- Number of Topics -->
 			<span class="kcat-replies-number"><?php
 				echo CKunenaTools::formatLargeNumber ( $subcat->numPosts );
 				?>
@@ -251,7 +221,7 @@ else {
 				if ($subcat->numTopics != 0) {
 					?>
 
-			<td class="td-5 kleft" width="25%">
+			<td class="klastpost kmiddle kleft" width="25%">
 			<!-- Avatar --> <?php
 			if ($this->config->avataroncat > 0) :
 				$profile = KunenaFactory::getUser((int)$subcat->userid);
@@ -288,7 +258,7 @@ else {
 				} else {
 					?>
 
-			<td class="td-5 kcenter" width="25%"><?php
+			<td class="knoposts kmiddle kcenter" width="25%"><?php
 					echo JText::_('COM_KUNENA_NO_POSTS');
 					?></td>
 
@@ -300,17 +270,11 @@ else {
 			}
 		}
 		?>
-	</tbody>
 </table>
-
-
+		</div>
+	</div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<!-- F: List Cat -->
 
 <?php
-	}
+	endforeach; ?>
 

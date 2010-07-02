@@ -12,14 +12,12 @@
 defined ( '_JEXEC' ) or die ();
 $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';");
 ?>
-
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k-bt-cvr5">
-<h1><?php echo $this->moderateTopic ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></h1>
-	<div id="kmod-container">
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo $this->moderateTopic ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody" id="kmod-container">
 <form action="<?php echo CKunenaLink::GetPostURL (); ?>" method="post" name="myform"><input type="hidden" name="do" value="domoderate" />
 <input type="hidden" name="id" value="<?php echo $this->id; ?>" />
 <input type="hidden" name="catid" value="<?php echo $this->catid; ?>" />
@@ -72,9 +70,6 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 	</div>
 	<div><input type="submit" class="button" value="<?php echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' ); ?>" /></div>
 </form>
-</div>
-</div>
-</div>
-</div>
-</div>
+        </div>
+	</div>
 </div>

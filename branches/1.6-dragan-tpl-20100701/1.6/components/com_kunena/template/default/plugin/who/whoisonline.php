@@ -30,38 +30,26 @@ if ($this->config->showwhoisonline)
 	$who_name = 	$this->getTitleWho ($totaluser,$totalguests);
 ?>
 
-<!-- WHOIS ONLINE -->
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
-    <table class = "kblocktable" id ="kwhoisonline"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-        <thead>
-            <tr>
-                <th class="kleft" colspan="3"><div class = "ktitle-cover km">
-							<?php
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="kwhoisonline"></a></span>
+		<h2><span><?php
 							$who_online = JText::_('COM_KUNENA_WHO_WHOIS_ONLINE');
 							if (CKunenaTools::isModerator($this->my->id)) {
-                            echo CKunenaLink::GetWhoIsOnlineLink($who_online,'ktitle kl'); }
+                            echo CKunenaLink::GetWhoIsOnlineLink($who_online,''); }
 							else {
-							echo '<span class="ktitle kl">'.$who_online.'</span>';
+							echo '<span class="ktitle km">'.$who_online.'</span>';
 							}
-							?></div>
-                   <div class="fltrt">
-						<span id="kwhoisonline-status"><a class="ktoggler close" rel="kwhoisonline-tbody"></a></span>
-					</div>
-                </th>
-
-            </tr>
-        </thead>
-
-        <tbody id = "kwhoisonline-tbody">
-            <tr class = "ksectiontableentry1">
-               <td class = "td-1" width="1%">
+							?></span></h2>
+	</div>
+	<div class="kcontainer" id="kwhoisonline">
+		<div class="kbody">
+    <table class = "kblocktable"  border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+            <tr class = "krow2">
+               <td class = "kfirst" width="1%">
 					<div class="kwhoicon"></div>
                 </td>
-                <td class = "td-1 km" align="left">
+                <td class = "kmiddle km" align="left">
 
                     <div class="kwhoonline ks">
                         <?php
@@ -104,14 +92,10 @@ if ($this->config->showwhoisonline)
                     </div>
                 </td>
             </tr>
-        </tbody>
     </table>
+        </div>
+	</div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<!-- WHOIS ONLINE -->
 
 <?php
 }

@@ -14,8 +14,12 @@ JHTML::_('behavior.tooltip');
 $i=1;
 $j=0;
 ?>
-
-<h2><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></h2>
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
 <table border="0" cellpadding="5" class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : ''; ?> kblock-ban">
 	<thead>
 		<tr class="ksth">
@@ -33,22 +37,22 @@ $j=0;
 				$bantext = $userban->blocked ? JText::_('COM_KUNENA_BAN_UNBLOCK_USER') : JText::_('COM_KUNENA_BAN_UNBAN_USER');
 				$j++;
 	?>
-		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-			<td><?php echo $j; ?></td>
-			<td><a href="#"><?php echo CKunenaLink::GetProfileLink ( $userban->userid ); ?> </a></td>
-			<td>
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kfirst"><?php echo $j; ?></td>
+			<td class="kmiddle"><a href="#"><?php echo CKunenaLink::GetProfileLink ( $userban->userid ); ?> </a></td>
+			<td class="kmiddle">
 				<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA'); } ?></span>
 			</td>
-			<td>
+			<td class="kmiddle">
 				<span><?php echo CKunenaTimeFormat::showDate($userban->created_time, 'datetime'); ?></span>
 			</td>
-			<td>
+			<td class="kmiddle">
 				<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?></span>
 			</td>
 		</tr>
 		<?php } else { ?>
-		<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-			<td colspan="5">
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td colspan="5" class="kfirst">
 				<?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS'); ?>
 			</td>
 		</tr>
@@ -56,3 +60,6 @@ $j=0;
 	 ?>
 	</tbody>
 </table>
+        </div>
+	</div>
+</div>

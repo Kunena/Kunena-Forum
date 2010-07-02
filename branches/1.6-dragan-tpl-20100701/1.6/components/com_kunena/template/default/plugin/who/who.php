@@ -59,8 +59,8 @@ if ($this->config->showwhoisonline)
             $k = 0; //for alternating rows
             $tabclass = array
             (
-                "sectiontableentry1",
-                "sectiontableentry2"
+                "row1",
+                "row2"
             );
 
             foreach ($users as $user)

@@ -32,32 +32,19 @@ if ($this->showgenstats > 0)
 	$userlist2 = CKunenaLink::GetUserlistLink('', JText::_('COM_KUNENA_STAT_USERLIST').' &raquo;');
 
     	?>
-        <!-- BEGIN: GENERAL STATS -->
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
-        <table class = "kblocktable" id ="kfrontstats">
-            <thead>
-                <tr>
-                    <th align="left" colspan="2">
-                        <div class = "ktitle-cover km">
-                            <?php echo CKunenaLink::GetStatsLink($kunena_config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), 'ktitle kl'); ?>
-                        </div>
-                        <div class="fltrt">
-							<span id="kstats_status"><a class="ktoggler close" rel="frontstats_tbody"></a></span>
-						</div>
-                    </th>
-                </tr>
-            </thead>
-
-            <tbody id="frontstats_tbody">
-                <tr class="ksectiontableentry1">
-                    <td class = "td-1" width="1%">
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="frontstats_tbody"></a></span>
+		<h2><span><?php echo CKunenaLink::GetStatsLink($kunena_config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), ''); ?></span></h2>
+	</div>
+	<div class="kcontainer" id="frontstats_tbody">
+		<div class="kbody">
+        	<table class = "kblocktable" id ="kfrontstats">
+                <tr class="krow1">
+                    <td class = "kfirst" width="1%">
 						<div class="kstatsicon"></div>
                     </td>
-                    <td class="td-1 km">
+                    <td class="kmiddle km">
                     	<ul id="kstatslistright" class="fltrt kright">
                     		<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $userlist1; ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<strong> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid, $this->lastestmember, '', $rel='nofollow'); ?></strong></li>
                     		<li>&nbsp;</li>
@@ -72,14 +59,10 @@ if ($this->showgenstats > 0)
                     	</ul>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+        	</table>
         </div>
+	</div>
 </div>
-</div>
-</div>
-</div>
-<!-- FINISH: GENERAL STATS -->
 
 <?php
 }

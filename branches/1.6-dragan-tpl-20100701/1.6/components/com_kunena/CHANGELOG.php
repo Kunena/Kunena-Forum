@@ -33,6 +33,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.0-ALPHA3
+2-July-2010 @quila
+# [#19288] Cleanup whole template, fix some minor bugs (part 4)
 
 28-June-2010 Matias
 + [#19288] Added Spanish language (thanks Alakentu)

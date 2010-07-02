@@ -573,7 +573,7 @@ class CKunenaView {
 
 		$this->headerdesc = nl2br ( smile::smileReplace ( $this->catinfo->headerdesc, 0, $this->config->disemoticons, $this->emoticons ) );
 
-		$tabclass = array ("sectiontableentry1", "sectiontableentry2" );
+		$tabclass = array ("row1", "row2" );
 
 		$this->mmm = 0;
 		$this->replydir = $this->config->default_sort == 'desc' ? -1 : 1;

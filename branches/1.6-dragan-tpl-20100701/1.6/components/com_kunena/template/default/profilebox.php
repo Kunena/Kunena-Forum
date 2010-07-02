@@ -38,9 +38,12 @@ if ($type == 'logout') :
 	$PMCount = $private->getUnreadCount($this->my->id);
 	$PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX_NEW', $PMCount) : JText::_('COM_KUNENA_PMS_INBOX'));
 ?>
+<div class="kblock kpbox">
+	<div class="kcontainer" id="topprofilebox_tbody">
+		<div class="kbody">
 <table class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
-		<tr class="ksectiontableentry1">
+		<tr class="krow1">
 			<?php if ($avatar) : ?>
 			<td class="kprofilebox-left kcenter" width="1%">
 				<?php echo $avatar; ?>
@@ -84,13 +87,19 @@ if ($type == 'logout') :
 		</tr>
 	</tbody>
 </table>
+        </div>
+	</div>
+</div>
 <?php
 else :
 $login = CKunenaLogin::getloginFields();
 ?>
+<div class="kblock kpbox">
+	<div class="kcontainer" id="topprofilebox_tbody">
+		<div class="kbody">
 <table class="kprofilebox" id="kprofilebox">
 	<tbody id="topprofilebox_tbody">
-		<tr class="ksectiontableentry1">
+		<tr class="krow1">
 			<td valign="top" class="kprofileboxcnt" align="left">
 				<div class="k_guest">
 					<?php echo JText::_('COM_KUNENA_PROFILEBOX_WELCOME'); ?>,
@@ -141,4 +150,7 @@ $login = CKunenaLogin::getloginFields();
 		</tr>
 	</tbody>
 </table>
+        </div>
+	</div>
+</div>
 <?php endif; ?>

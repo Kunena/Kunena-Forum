@@ -15,7 +15,7 @@ $document = JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 ?>
 <div class="kblock kannouncement">
-	<div class="ktitle">
+	<div class="kheader">
 		<h1><?php echo $this->title; ?></h1>
 	</div>
 	<div class="kcontainer" id="kannouncement">

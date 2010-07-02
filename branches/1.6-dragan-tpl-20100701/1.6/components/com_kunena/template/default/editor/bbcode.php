@@ -17,17 +17,17 @@ require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll =& CKunenaPolls::getInstance();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
-<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
+<tr class="krow<?php echo 1 + $this->k^=1;?>">
 	<!--<td class="kleftcolumn" valign="top"><strong><?php
 	echo CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&amp;func=help', JText::_('COM_KUNENA_BOARDCODE') , NULL, 'follow', NULL, 'boardcode', 'target=\'_new\'' );
 	?></strong>:
 	</td>-->
 	<?php //}else { 	?>
-	<td class="kleftcolumn" valign="top"><strong><?php
+	<td class="kleftcolumn kfirst" valign="top"><strong><?php
 	echo JText::_('COM_KUNENA_BOARDCODE');
 	?></strong></td>
 	<?php //} 	?>
-	<td>
+	<td class="kmiddle">
 	<table class="kpostbuttonset">
 		<tr>
 			<td class="kpostbuttons">
@@ -327,8 +327,8 @@ $kunena_config = KunenaFactory::getConfig ();
 	</td>
 </tr>
 
-<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-	<td valign="top" class="kleftcolumn"><strong><?php
+<tr class="krow<?php echo 1 + $this->k^=1;?>">
+	<td valign="top" class="kleftcolumn kfirst"><strong><?php
 		echo (JText::_('COM_KUNENA_MESSAGE')) ;
 	// TODO: Replace Enlarge and Shrink with icons
 	?></strong><br />
@@ -337,7 +337,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		class="ks" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
-	<td valign="top"><textarea class="ktxtarea required" name="message"
+	<td valign="top" class="kmiddle"><textarea class="ktxtarea required" name="message"
 		id="kbbcode-message"><?php
 			echo $this->message_text;
 			?></textarea>

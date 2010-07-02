@@ -30,41 +30,22 @@ $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 	?>
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
 <form action="index.php" method="post" name="kBulkActionForm">
-
-<table
-	class="<?php
-	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : '';
-	?>" id="kflattable">
-	<thead>
-		<tr>
-			<th
-				colspan="<?php
-	echo $this->columns;
-	?>">
-
-		<div class="ktitle-cover km"><span class="ktitle kl">
-
-	<?php if (!empty($this->header)) echo $this->header; ?></span></div>
-	<?php if (CKunenaTools::isModerator($this->my->id)) { ?>
-	<div class="kcheckbox select-toggle">
-		<input id="kcbcheckall" type="checkbox" name="toggle" value="" />
+<div class="kblock">
+	<div class="kheader">
+		<?php if (CKunenaTools::isModerator($this->my->id)) { ?>
+		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
+		<?php } ?>
+		<h2><span><?php if (!empty($this->header)) echo $this->header; ?></span></h2>
 	</div>
-	<?php } ?>
-		</th>
-		</tr>
-	</thead>
-	<tbody>
+	<div class="kcontainer">
+		<div class="kbody">
+<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->objCatInfo->class_sfx : ''; ?>" id="kflattable">
 		<?php
 	$k = 0;
 	$counter = 0;
 	if (!count ( $this->threads ) && !$this->hasSubCats) {
-		echo '<tr class="ksectiontableentry2"><td class="td-0 km kcenter">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
+		echo '<tr class="krow2"><td class="td-0 km kcenter">' . ($this->func=='showcat'?JText::_('COM_KUNENA_VIEW_NO_POSTS'):JText::_('COM_KUNENA_NO_POSTS')) . '</td></tr>';
 	} else
 	foreach ( $this->threads as $leaf ) {
 		$leaf->name = kunena_htmlspecialchars ( $leaf->name );
@@ -78,10 +59,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			$k = 0;
 			?>
 		<tr>
-			<td class="kcontenttablespacer"
-				colspan="<?php
-			echo $this->columns;
-			?>">&nbsp;
+			<td class="kcontenttablespacer" colspan="<?php echo $this->columns; ?>">&nbsp;
 			</td>
 		</tr>
 
@@ -108,18 +86,18 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		else if ($leaf->hold) echo ' kdeleted';
 
 		?>">
-			<td class="td-0 km kcenter"><strong> <?php
+			<td class="kreply kfirst km kcenter"><strong> <?php
 		echo CKunenaTools::formatLargeNumber ( $leaf->msgcount-1 );
 		?>
 			</strong><?php
 		echo JText::_('COM_KUNENA_GEN_REPLIES');
 		?></td>
 
-			<td class="td-2 kcenter">
+			<td class="ktopicicon kmiddle kcenter">
 			<?php echo CKunenaLink::GetThreadPageLink ( 'view', $leaf->catid, $leaf->id, $unreadPage, $this->config->messages_per_page, CKunenaTools::topicIcon($leaf), $leaf->lastread ) ?>
 		</td>
 
-			<td class="td-3"><?php
+			<td class="ktopictitle kmiddle"><?php
 			if ($leaf->attachments) {
 				echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
 			}
@@ -194,7 +172,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<!-- /By -->
 		</div>
 			</td>
-			<td class="td-4 kcenter">
+			<td class="ktopicviews kmiddle kcenter">
 			<!-- Views -->
 			<span class="ktopic-views-number"><?php
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );
@@ -202,7 +180,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		echo JText::_('COM_KUNENA_GEN_HITS');
 		?> </span> <!-- /Views --></td>
 		<?php if ($this->showposts):?>
-			<td class="td-4 kcenter">
+			<td class="kmycount kmiddle kcenter">
 			<!-- Posts -->
 			<span class="ktopic-views-number"><?php
 		echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->mycount );
@@ -210,7 +188,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		echo JText::_('COM_KUNENA_MY_POSTS');
 		?> </span> <!-- /Posts --></td>
 		<?php endif; ?>
-			<td class="td-6 ks">
+			<td class="ktopiclastpost kmiddle ks">
 			<div class="klatest-post-info"><!--  Sticky   --> <?php
 		if ($leaf->ordering != 0) {
 			?>
@@ -258,7 +236,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			?>
 
-			<td class="td-7 kcenter">
+			<td class="ktopicmoderation kmiddle kcenter">
 				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo $leaf->id?>]" value="0"  />
 			</td>
 
@@ -273,8 +251,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		$appfunc = JRequest::getCmd('func');
 		?>
 		<!-- Moderator Bulk Actions -->
-		<tr class="ksectiontableentry1">
-			<td colspan="7" align="right" class="td-1 ks">
+		<tr class="krow1">
+			<td colspan="7" align="right" class="krowmoderation kfirst ks">
 				<select name="do" id="kBulkChooseActions"
 				class="inputbox ks">
 				<option value="">&nbsp;</option>
@@ -310,14 +288,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 	}
 	?>
-	</tbody>
 </table>
-
+        </div>
+	</div>
+</div>
 <input type="hidden" name="option" value="com_kunena" />
 <input type="hidden" name="func" value="bulkactions" />
 </form>
-</div>
-</div>
-</div>
-</div>
-</div>

@@ -42,39 +42,7 @@ class CKunenaVersion {
 	*/
 	function versionArray()
 	{
-		static $kunenaversion=NULL;
-
-		if (!$kunenaversion)
-		{
-			$kunena_db = &JFactory::getDBO();
-			$versionTable = '#__kunena_version';
-			$kunena_db->setQuery("SELECT version, versiondate, installdate, build, versionname FROM `{$versionTable}` ORDER BY id DESC", 0, 1);
-			$kunenaversion = $kunena_db->loadObject();
-			KunenaError::checkDatabaseError();
-
-			if(!$kunenaversion) {
-				$kunenaversion = new StdClass();
-				$kunenaversion->version = CKunenaVersion::versionXML();
-				$kunenaversion->versiondate = 'UNKNOWN';
-				$kunenaversion->installdate = '0000-00-00';
-				$kunenaversion->build = '0000';
-				$kunenaversion->versionname = 'NOT INSTALLED';
-			}
-			$xmlversion = CKunenaVersion::versionXML();
-
-			// Special check for svn test installs as the version name in the xml is not set
-			if ( JString::strpos ( $kunenaversion->version, '-SVN' ) !== false ){
-				//$kunenaversion->version = JString::substr ( $kunenaversion->version, 0, -4 );
-				$xmlversion = $xmlversion . '-SVN';
-			}
-
-			if( $kunenaversion->version != $xmlversion) {
-				$kunenaversion->version = CKunenaVersion::versionXML();
-				$kunenaversion->versionname = 'NOT UPGRADED';
-			}
-			$kunenaversion->version = JString::strtoupper($kunenaversion->version);
-		}
-		return $kunenaversion;
+		return Kunena::getVersionInfo();
 	}
 
 	/**
@@ -85,7 +53,7 @@ class CKunenaVersion {
 	function version()
 	{
 		$version = CKunenaVersion::versionArray();
-		return 'Kunena '.$version->version.' | '.$version->versiondate.' | '.$version->build.' [ '.$version->versionname.' ]';
+		return 'Kunena '.$version->version.' | '.$version->date.' | '.$version->build.' [ '.$version->name.' ]';
 	}
 
 	/**
@@ -97,36 +65,6 @@ class CKunenaVersion {
 	{
 		$version = CKunenaVersion::version();
 		return JText::_('COM_KUNENA_INSTALLED_VERSION').': '.$version.' | '.JText::_('COM_KUNENA_COPYRIGHT').': &copy; 2008-2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>  | '.JText::_('COM_KUNENA_LICENSE').': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a>';
-	}
-
-	/**
-	* Retrieve MySQL Server version.
-	*
-	* @return string MySQL version
-	*/
-	function MySQLVersion()
-	{
-		static $mysqlversion=NULL;
-		if (!$mysqlversion)
-		{
-			$kunena_db = &JFactory::getDBO();
-			$kunena_db->setQuery("SELECT VERSION() AS mysql_version");
-			$mysqlversion = $kunena_db->loadResult();
-			KunenaError::checkDatabaseError();
-
-			if (!$mysqlversion) $mysqlversion = 'unknown';
-		}
-		return $mysqlversion;
-	}
-
-	/**
-	* Retrieve PHP Server version.
-	*
-	* @return string PHP version
-	*/
-	function PHPVersion()
-	{
-		return phpversion();
 	}
 }
 ?>

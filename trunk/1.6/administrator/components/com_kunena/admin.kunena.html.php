@@ -322,8 +322,7 @@ table.kadmin-stat caption {
 
 			// Begin: FOOTER FUNC
 			function showFbFooter() {
-				$kunena_config = KunenaFactory::getConfig ();
-				require_once (KUNENA_PATH_LIB . DS . 'kunena.version.php'); ?>
+?>
 	</div>
 	<div class="kadmin-footer">
 		<?php echo CKunenaVersion::versionHTML (); ?>

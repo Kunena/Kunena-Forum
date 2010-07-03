@@ -37,5 +37,6 @@ Kunena Site Template based on Rocket Theme Afterburner
 13-Feb-2010 fxstein
 + [#19707] New kunena style
 ^ [#19707] Rename language file
+^ [#19707] Updated logos and images
 
 -->

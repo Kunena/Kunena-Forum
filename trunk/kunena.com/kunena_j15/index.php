@@ -19,6 +19,19 @@ $mootools_enabled       = ($this->params->get("mootools_enabled", 1)  == 0)?"fal
 $caption_enabled        = ($this->params->get("caption_enabled", 1)  == 0)?"false":"true";
 $rockettheme_logo       = ($this->params->get("rocketthemeLogo", 1)  == 0)?"false":"true";
 
+// Move javascript to bottom of body tag
+// First we need to get all scripts
+$kHeaderScripts = array();
+$kHeaderScript = array();
+//$kHeader = $this->getHeadData();
+//$kHeaderScripts = array_merge($kHeader['scripts']);
+//$kHeaderScript = array_merge($kHeader['script']);
+// Now that we have a copy of the scripts, clear them out in the original header
+//$kHeader['scripts'] = array();
+//$kHeader['script'] = array();
+//$this->setHeadData($kHeader);
+
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
@@ -121,10 +134,17 @@ require(YOURBASEPATH . DS . "rt_utils.php");
 		<?php endif; ?>
 		<?php if ($rockettheme_logo=="true") : ?>
 		<a href="http://www.rockettheme.com"><span id="logo2"></span></a>
+		<a href="http://www.kunena.com"><span id="logo3"></span></a>
 		<?php endif; ?>
 		<jdoc:include type="modules" name="footer" style="afterburner" />
 		<jdoc:include type="modules" name="debug" style="none" />
 	</div>
 </div>
+<?php
+// Add all scripts that we removed from the header
+foreach ($kHeaderScripts as $kScript => $kScriptType) {
+	echo '<script type="'.$kScriptType.'" src="'.$kScript.'"></script>';
+}
+?>
 </body>
 </html>

@@ -59,8 +59,8 @@ p {margin-top:10px;margin-bottom:10px;}
 #nav ul {margin:0 0 0 15px;}
 #nav li {list-style:none;float:left;padding-left:3px;height:34px;position:relative;}
 #nav li a {display:block;padding:0 10px;line-height:30px;color:#fff;font-weight:bold;}
-#nav li.active a {background:#fff;color:#34647F;}
-#nav li a:hover, #nav li:hover a, #nav li.sfHover a {background:#34647F;color:#fff;text-decoration:none;}
+#nav li.active a {background:#5388B4;color:#fff;}
+#nav li a:hover, #nav li:hover a, #nav li.sfHover a {background:#5388B4;color:#fff;text-decoration:none;}
 #nav li ul {position:absolute;width:170px;left:-999em;margin-left:-1px;border:1px solid #295770;border-top:0;}
 #nav li ul ul {margin:-31px 0 0 170px;}
 #nav li:hover ul ul, #nav li:hover ul ul ul, #nav li:hover ul ul ul ul, #nav li.sfHover ul ul, #nav li.sfHover ul ul ul, #nav li.sfHover ul ul ul ul {left:-999em;}
@@ -134,6 +134,7 @@ span.attention {display:block;margin:15px 0;padding:8px 10px 8px 10px;background
 /* Footer */
 #footer {background:#f7f7f7;border-top:1px solid #fff;}
 .footer-pad {padding:10px 15px;overflow:hidden;}
-#logo2 {width:165px;height:20px;background:url(../images/kunena.png) 5px -646px no-repeat;display:block;float:right;margin-left:15px;margin-top:15px;}
+#logo2 {width:165px;height:20px;background:url(../images/kunena.png) 5px -76px no-repeat;display:block;float:right;margin-left:15px;margin-top:15px;width:18px;}
+#logo3 {width:165px;height:20px;background:url(../images/kunena.png) 5px -646px no-repeat;display:block;float:right;margin-left:15px;margin-top:15px;width:72px;}
 #footer ul {margin:0;}
 #footer li {list-style:none;float:left;padding-right:20px;font-weight:bold;}

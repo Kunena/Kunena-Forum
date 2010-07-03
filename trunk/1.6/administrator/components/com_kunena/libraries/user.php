@@ -431,7 +431,12 @@ class KunenaUser extends JObject {
 		if ($type == 'image') {
 			if (! $config->rankimages)
 				return;
-			return '<img src="' . KUNENA_URLRANKSPATH . $rank->rank_image . '" alt="" />';
+			if (is_file(KUNENA_ABSTMPLTPATH . '/images/ranks/'.$rank->rank_image)) {
+				$iconurl = KUNENA_TMPLTMAINIMGURL . 'images/ranks/'.$rank->rank_image;
+			} else {
+				$iconurl = KUNENA_DIRECTURL . 'template/default/images/ranks/'.$rank->rank_image;
+			}
+			return '<img src="' . $iconurl . '" alt="" />';
 		}
 		if (! $config->rankimages) {
 			$rank->rank_image = null;

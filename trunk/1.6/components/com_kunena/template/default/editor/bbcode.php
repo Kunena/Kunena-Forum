@@ -253,26 +253,9 @@ $kunena_config = KunenaFactory::getConfig ();
 		<tr>
 			<td class="kpostbuttons">
 			<div id="smilie"><?php
-			// FIXME: move out of here!
-			$kunena_db = &JFactory::getDBO ();
-			$kunena_db->setQuery ( "SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id" );
-			$set = $kunena_db->loadAssocList ();
-			KunenaError::checkDatabaseError();
-			$this->kunena_emoticons_rowset = array ();
-			foreach ( $set as $smilies ) {
-				$key_exists = false;
-				foreach ( $this->kunena_emoticons_rowset as $check ) { //checks if the smiley (location) already exists with another code
-					if ($check ['location'] == $smilies ['location']) {
-						$key_exists = true;
-					}
-				}
-				if ($key_exists == false) {
-					$this->kunena_emoticons_rowset [] = array ('code' => $smilies ['code'], 'location' => $smilies ['location'], 'emoticonbar' => $smilies ['emoticonbar'] );
-				}
-			}
-			reset ( $this->kunena_emoticons_rowset );
-			foreach ( $this->kunena_emoticons_rowset as $data ) {
-				echo '<img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data ['location'] . '" border="0" alt="' . $data ['code'] . ' " title="' . $data ['code'] . ' " onclick="kbbcode.insert(\''. $data ['code'] .' \', \'after\', true);" style="cursor:pointer"/> ';
+			$emoticons = smile::getEmoticons(0, 1);
+			foreach ( $emoticons as $emo_code=>$emo_url ) {
+				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.insert(\''. $emo_code .' \', \'after\', true);" style="cursor:pointer"/> ';
 			}
 			?>
 			</div>

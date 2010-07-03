@@ -66,14 +66,6 @@
 	<params>
 		<param name="colorStyle" type="list" default="kunena" label="COLOR_STYLE" description="COLOR_STYLE_DESC">
 			<option value="kunena">KUNENA</option>
-			<option value="light">LIGHT</option>
-			<option value="light2">LIGHT2</option>
-			<option value="light3">LIGHT3</option>
-			<option value="light4">LIGHT4</option>
-			<option value="dark">DARK</option>
-			<option value="dark2">DARK2</option>
-			<option value="dark3">DARK3</option>
-			<option value="dark4">DARK4</option>
 		</param>
 		<param name="templateWidth" type="text" default="962" label="TEMPLATE_WIDTH" description="TEMPLATE_WIDTH_DESC" />
 		<param name="leftcolumnWidth" type="text" default="210" label="LEFTCOLUMN_WIDTH" description="LEFTCOLUMN_WIDTH_DESC" />

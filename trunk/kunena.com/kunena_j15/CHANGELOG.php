@@ -34,6 +34,9 @@ Legend:
 
 Kunena Site Template based on Rocket Theme Afterburner
 
+4-July-2010 fxstein
+- [#19707] Remove unsupported css color choices
+
 13-Feb-2010 fxstein
 + [#19707] New kunena style
 ^ [#19707] Rename language file

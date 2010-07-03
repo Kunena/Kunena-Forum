@@ -68,7 +68,7 @@ $fb_user_img_template = JRequest::getString('fb_user_img_template', '', 'COOKIE'
 $fb_user_template = strtr($fb_user_template, '\\/', '');
 $fb_user_img_template = strtr($fb_user_img_template, '\\/', '');
 
-if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'css'))
+if (JString::strlen($fb_user_template) > 0 && file_exists(KUNENA_PATH_TEMPLATE .DS. $fb_user_template .DS. 'template.xml'))
 {
     $fb_cur_template = $fb_user_template;
     }

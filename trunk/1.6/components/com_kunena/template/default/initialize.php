@@ -22,10 +22,10 @@ CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox-min.js' );
 // TODO: Need to check if selected template has an override
 CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/default-min.js' );
 
-if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum-min.css' )) {
+if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
 	// Load css from Joomla template
 	CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.forum-min.css' );
-} else if (file_exists ( KUNENA_PATH_TEMPLATE .DS. 'css' .DS. 'kunena.forum-min.css' )){
+} else if (file_exists ( KUNENA_ABSTMPLTPATH .DS. 'css' .DS. 'kunena.forum.css' )){
 	// Load css from the current template
 	CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
 } else {

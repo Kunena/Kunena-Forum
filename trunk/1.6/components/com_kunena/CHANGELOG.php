@@ -41,6 +41,9 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Use [attachment=123]filename.zip[/attachment] to make it easier to resolve attachment quote
 # [#19288] Fix small bug in editor.js: attachment name was undefined
 # [#19288] Fix wrong version information in administration
+# [#19288] Fixed bug which prevented loading css from the selected template without copying initialize.php into template
+# [#19288] Accept only K1.6 templates in frontend
++ [#21301] Create example template
 
 1-July-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 3)

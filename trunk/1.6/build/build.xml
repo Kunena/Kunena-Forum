@@ -178,6 +178,11 @@
 		</yui-compressor>
 
 		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+			fromdir="${project_dir}/${kunena.frontend}/template/example/css" 
+			todir="${tmp_dir}/${kunena.frontend}/template/example/css">
+		</yui-compressor>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
 			fromdir="${project_dir}/${kunena.frontend}/template/default/js" 
 			todir="${tmp_dir}/${kunena.frontend}/template/default/js">
 		</yui-compressor>

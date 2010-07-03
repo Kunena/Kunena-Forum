@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <kinstall type="kunena-template" version="1.6">
-	<name>Blue Eagle (default)</name>
+	<name>Example Template</name>
 	<version>1.6.0</version>
 	<creationDate>2010-07-04</creationDate>
 	<author>Kunena Team</author>
@@ -10,7 +10,8 @@
 	<copyright>Kunena Team</copyright>
 	<license>GNU/GPL</license>
 	<description>
-	Blue Eagle is the new default template by Kunena Team. It is free for public. This template comes with default Kunena installation. For additional information visit the http://www.kunena.com
+	Example template can be used as a base when you start designing your own template. To get started: copy everything in /components/com_kunena/template/example into your own directory and edit template.xml.
+	This template uses images from Blue Eagle (default) template.
 	</description>
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>

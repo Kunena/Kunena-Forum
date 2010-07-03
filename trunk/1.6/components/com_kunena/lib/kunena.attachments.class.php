@@ -51,10 +51,11 @@ class CKunenaAttachments {
 				$this->_db->quote ( $fileinfo['size'] ) . "," . $this->_db->quote ( $folder ) . "," . $this->_db->quote ( $fileinfo['mime'] ) . "," .
 				$this->_db->quote ( $fileinfo['name'] ) . ")" );
 
-				if (! $this->_db->query () || $this->_db->getErrorNum()) {
+			if (! $this->_db->query () || $this->_db->getErrorNum()) {
 				$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_ATTACHMENT_DATABASE_STORE'));
 				$fileinfo = $upload->fileInfo();
 			}
+			$fileinfo['id'] = $this->_db->insertId();
 		}
 
 		if ($this->isImage($fileinfo['mime']))
@@ -65,7 +66,7 @@ class CKunenaAttachments {
 		if (!empty($message) && $found) {
 			$intkey = $matches[1];
 			if (!$fileinfo['error']) {
-				$message = preg_replace('/\[attachment\:'.$intkey.'\].*?\[\/attachment\]/u', '[attachment]'.$fileinfo['name'].'[/attachment]', $message);
+				$message = preg_replace('/\[attachment\:'.$intkey.'\].*?\[\/attachment\]/u', '[attachment='.$fileinfo['id'].']'.$fileinfo['name'].'[/attachment]', $message);
 			} else {
 				$message = preg_replace('/\[attachment\:'.$intkey.'\](.*?)\[\/attachment\]/u', '[attachment]\\1[/attachment]', $message);
 			}

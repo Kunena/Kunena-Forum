@@ -248,8 +248,7 @@ class CKunenaPost {
 			if ($do == 'quote') {
 				// FIXME: do better than this
 				$mestext = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $message->message );
-				$this->message_text = "[b]" . $message->name . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":[/b]\n";
-				$this->message_text .= '[quote]' .  $mestext . "[/quote]";
+				$this->message_text .= "[quote=\"{$message->name}\" post={$message->id}]" .  $mestext . "[/quote]";
 			} else {
 				$this->message_text = '';
 			}

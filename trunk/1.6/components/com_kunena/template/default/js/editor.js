@@ -558,11 +558,13 @@ function newAttachment() {
 	var input = file.getElement('input.kfile-input').set('name', 'kattachment'+id).removeProperty('onchange');
 	input.addEvent('change', function() {
 		this.removeEvents('change');
+		var filename = this.get('value');
 		this.addEvent('change', function() {
-			file.getElement('input.kfile-input-textbox').set('value', this.get('value'));
+			file.getElement('input.kfile-input-textbox').set('value', filename);
 		});
-		file.getElement('input.kfile-input-textbox').set('value', this.get('value'));
-		file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.insert('\n[attachment:'+ id +']'+ this.get('value') +'[/attachment]\n', 'after', true); return false; } );
+		file.getElement('input.kfile-input-textbox').set('value', filename);
+		
+		file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.insert('\n[attachment:'+ id +']'+ filename +'[/attachment]\n', 'after', true); return false; } );
 		file.getElement('.kattachment-remove').removeProperty('style').addEvent('click', function() {file.dispose(); return false; } );
 		newAttachment();
 	});
@@ -572,7 +574,7 @@ function bindAttachments() {
 	var kattachment = $$('.kattachment-old');
 	if (!kattachment) return;
 	kattachment.each(function(el) {
-		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('\n[attachment]'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', true); return false; } );
+		el.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.replaceSelection('\n[attachment='+ el.getElement('input').get('value') +']'+ el.getElement('.kfilename').get('text') +'[/attachment]\n', 'after', true); return false; } );
 	});
 }
 

@@ -37,6 +37,9 @@ Kunena 1.6.0-ALPHA3
 3-July-2010 Matias
 ^ [#19380] Update Mootools plugin to latest version
 # [#19288] Fix warnings in editor.js
+# [#19288] Use [quote="username" post=1234] instead of [b]username[/b][quote]
+# [#19288] Use [attachment=123]filename.zip[/attachment] to make it easier to resolve attachment quote
+# [#19288] Fix small bug in editor.js: attachment name was undefined
 
 1-July-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 3)

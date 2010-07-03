@@ -37,6 +37,7 @@ Kunena Site Template based on Rocket Theme Afterburner
 4-July-2010 fxstein
 ^ [#19707] Update template version info to 1.6.0
 - [#19707] Remove unsupported css color choices
+^ [#19707] Move tenmplate files into a j15.template folder
 
 13-Feb-2010 fxstein
 + [#19707] New kunena style

@@ -3974,7 +3974,7 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 }
 #Kunena span.ktopiclocked,
 #Kunena span.kforumlocked {
-	background: url("../images/icons/lock_sm.png") no-repeat left center;
+	background: url("../images/icons/lock_xsm.png") no-repeat left center;
 	width: 16px;
 	height: 16px;
 }

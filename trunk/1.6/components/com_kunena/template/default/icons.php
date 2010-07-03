@@ -21,11 +21,11 @@
 
 // Topic icons
 $topic_emoticons = array ();
-$topic_emoticons [0] = KUNENA_URLICONSPATH . 'topic-default.gif';
-$topic_emoticons [1] = KUNENA_URLICONSPATH . 'topic-exclamation.png';
-$topic_emoticons [2] = KUNENA_URLICONSPATH . 'topic-question.png';
-$topic_emoticons [3] = KUNENA_URLICONSPATH . 'topic-arrow.png';
-$topic_emoticons [4] = KUNENA_URLICONSPATH . 'topic-love.png';
-$topic_emoticons [5] = KUNENA_URLICONSPATH . 'topic-grin.png';
-$topic_emoticons [6] = KUNENA_URLICONSPATH . 'topic-shock.png';
-$topic_emoticons [7] = KUNENA_URLICONSPATH . 'topic-smile.png';
+$topic_emoticons [0] = 'topic-default.gif';
+$topic_emoticons [1] = 'topic-exclamation.png';
+$topic_emoticons [2] = 'topic-question.png';
+$topic_emoticons [3] = 'topic-arrow.png';
+$topic_emoticons [4] = 'topic-love.png';
+$topic_emoticons [5] = 'topic-grin.png';
+$topic_emoticons [6] = 'topic-shock.png';
+$topic_emoticons [7] = 'topic-smile.png';

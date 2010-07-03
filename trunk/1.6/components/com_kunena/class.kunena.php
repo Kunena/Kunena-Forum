@@ -471,6 +471,11 @@ class CKunenaTools {
 		if ($config->topicicons) {
 			global $topic_emoticons;
 			$icon = isset($topic_emoticons [$topic->topic_emoticon]) ? $topic_emoticons [$topic->topic_emoticon] : $topic_emoticons [0];
+			if (is_file(KUNENA_ABSTMPLTPATH . '/images/icons/'.$icon)) {
+				$iconurl = KUNENA_TMPLTMAINIMGURL . 'images/icons/'.$icon;
+			} else {
+				$iconurl = KUNENA_DIRECTURL . 'template/default/images/icons/'.$icon;
+			}
 		} else {
 			$icon = 'normal';
 			if ($topic->msgcount < 2) $icon = 'unanswered';
@@ -481,9 +486,13 @@ class CKunenaTools {
 			if ($topic->hold == 1) $icon = 'unapproved';
 			if ($topic->hold == 2) $icon = 'deleted';
 			if ($topic->unread) $icon .= '_new';
-			$icon =  KUNENA_TMPLTMAINIMGURL ."images/topicicons/icon_{$icon}.png";
+			if (is_file(KUNENA_ABSTMPLTPATH . "images/topicicons/icon_{$icon}.png")) {
+				$iconurl = KUNENA_TMPLTMAINIMGURL . "images/topicicons/icon_{$icon}.png";
+			} else {
+				$iconurl = KUNENA_DIRECTURL . "template/default/images/topicicons/icon_{$icon}.png";
+			}
 		}
-		$html = '<img src="'.$icon.'" alt="emo" />';
+		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
 	}
 

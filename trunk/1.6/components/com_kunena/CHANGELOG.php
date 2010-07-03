@@ -32,7 +32,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0-ALPHA3
+Kunena 1.6.0-BETA1
+
+4-July-2010 fxstein
+^ [#21302] Update version info for 1.6.0 Beta 1 release
 
 4-July-2010 Matias
 # [#19288] Fix topic icons and broken lock image in custom templates

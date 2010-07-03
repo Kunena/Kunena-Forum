@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <install version="1.5" type="template" method="upgrade">
     <name>kunena_j15</name>
-    <version>1.5.0</version>
+    <version>1.6.0</version>
     <creationDate>02/13/2010</creationDate>
     <author>Kunena</author>
     <authorEmail>support@kunena.com</authorEmail>

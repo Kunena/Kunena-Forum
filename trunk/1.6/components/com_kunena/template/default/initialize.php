@@ -12,8 +12,8 @@
 $document = JFactory::getDocument();
 
 // Template requires Mootools 1.2 framework
-// On systems running < J1.5.18 this requires the mootools12 system plugin
-JHTML::_ ( 'behavior.framework' );
+// On systems running < J1.5.19 this requires the mootools12 system plugin
+JHTML::_ ( 'behavior.mootools' );
 
 // We load smoothbox library
 CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox-min.js' );

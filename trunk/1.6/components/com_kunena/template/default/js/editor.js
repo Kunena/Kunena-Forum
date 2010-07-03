@@ -29,7 +29,7 @@ Element.implement({
 	},
 
 	replaceSelectedText: function(newtext, isLast) {
-		var isLast = (isLast == null) ? true : isLast;
+		isLast = (isLast == null) ? true : isLast;
 
 		var scroll_top = this.scrollTop;
 
@@ -276,7 +276,7 @@ var kbbcode = new Class({
 		if(this.options.interceptTabs) {
 
 			this.el.addEvent('keypress', function(event){
-				var event = new Event(event);
+				event = new Event(event);
 				if(event.key == "tab") {
 					event.preventDefault();
 					this.replaceSelection("\t");
@@ -349,7 +349,7 @@ var kbbcode = new Class({
 			>//selection will become: **selection**
 	*/
 	wrapSelection: function(wrapper, isLast) {
-		var isLast = (isLast == null) ? true : isLast;
+		isLast = (isLast == null) ? true : isLast;
 		this.el.replaceSelectedText(wrapper + this.el.getSelectedText() + wrapper, isLast);
 	},
 
@@ -367,7 +367,7 @@ var kbbcode = new Class({
 			>//selection will become: Hello selection
 	*/
 	insert: function(insertText, where, isLast) {
-		var isLast = (isLast == null) ? true : isLast;
+		isLast = (isLast == null) ? true : isLast;
 		where = (where == "") ? 'after' : where;
 		var newText = (where == "before") ? insertText + this.el.getSelectedText() : this.el.getSelectedText() + insertText;
 		this.el.replaceSelectedText(newText, isLast);
@@ -386,7 +386,7 @@ var kbbcode = new Class({
 			>//selection will become: Hello World
 	*/
 	replaceSelection: function(newText, isLast) {
-		var isLast = (isLast == null) ? true : isLast;
+		isLast = (isLast == null) ? true : isLast;
 		this.el.replaceSelectedText(newText, isLast);
 	},
 
@@ -409,7 +409,7 @@ var kbbcode = new Class({
 	*/
 
 	processEachLine: function(callback, isLast) {
-		var isLast = (isLast == null) ? true : isLast;
+		isLast = (isLast == null) ? true : isLast;
 		var lines = this.el.getSelectedText().split("\n");
 		var newlines = [];
 		lines.each(function(line) {

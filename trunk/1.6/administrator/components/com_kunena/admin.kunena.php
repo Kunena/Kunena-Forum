@@ -2505,6 +2505,7 @@ function deletesmiley($option, $cid) {
 
 function smileypath() {
 	$kunena_config = KunenaFactory::getConfig ();
+	// FIXME: deprecated, do not exist anymore
 	$smiley_live_path = KUNENA_URLEMOTIONSPATH;
 	$smiley_abs_path = KUNENA_ABSEMOTIONSPATH;
 
@@ -2655,6 +2656,7 @@ function showRanks($option) {
 
 
 function rankpath() {
+	// FIXME: deprecated, do not exist anymore
 	$rankpath ['live'] = KUNENA_URLRANKSPATH;
 	$rankpath ['abs'] = KUNENA_ABSRANKSPATH;
 

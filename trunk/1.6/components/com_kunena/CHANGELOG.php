@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+3-July-2010 Matias
+^ [#19380] Update Mootools plugin to latest version
+# [#19288] Fix warnings in editor.js
+
 1-July-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 3)
 ^ [#15886] Merged revisions 2829-2891 from /branches/1.6-dragan-fix-20100624

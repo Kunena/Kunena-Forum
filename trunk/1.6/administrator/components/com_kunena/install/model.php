@@ -191,26 +191,28 @@ class KunenaModelInstall extends JModel {
 	}
 
 	function installPlugin($path, $file, $name) {
+		jimport('joomla.installer.installer');
 		$success = false;
 		$dest = JPATH_ROOT.'/tmp/kinstall_plugin';
 
 		$query = "SELECT * FROM #__plugins WHERE element='$name'";
 		$this->db->setQuery ( $query );
 		$plugin = $this->db->loadObject ();
-		if (!is_object($plugin)) {
-			jimport('joomla.installer.installer');
-			$this->extract ( $path, $file, $dest );
+		if (is_object($plugin)) {
 			$installer = new JInstaller ( );
-			if ($installer->install ( $dest )) {
-				// publish plugin
-				$query = "UPDATE #__plugins SET published='1' WHERE element='$name'";
-				$this->db->setQuery ( $query );
-				$this->db->query ();
-				$success = true;
-			}
-			JFolder::delete($dest);
-			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', $name), $success);
+			$installer->uninstall ( 'plugin', $plugin->id );
 		}
+		$this->extract ( $path, $file, $dest );
+		$installer = new JInstaller ( );
+		if ($installer->install ( $dest )) {
+			// publish plugin
+			$query = "UPDATE #__plugins SET published='1' WHERE element='$name'";
+			$this->db->setQuery ( $query );
+			$this->db->query ();
+			$success = true;
+		}
+		JFolder::delete($dest);
+		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', $name), $success);
 	}
 
 	public function stepPrepare() {

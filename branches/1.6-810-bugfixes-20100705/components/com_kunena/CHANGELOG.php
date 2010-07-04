@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+4-July-2010 810
+^ [#19288] Change copyright in credits
+
 4-July-2010 fxstein
 ^ [#21302] Update version info for 1.6.0 Beta 1 release
 

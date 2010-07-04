@@ -43,6 +43,10 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix ranks and emoticons from administration
 # [#19288] Set max width 100% for images inside message body / signature, limit height
 # [#19288] Fix bug in installer where BETA < ALPHA
+# [#19288] Fix undefined variable in Category Subscriptions
+# [#19288] Simplify profile merging both subscriptions tabs and both thank you tabs
+# [#19288] Better layout/information for category subscriptions
+# [#19288] Disable unsubscribe category in profile as it didn't work
 
 3-July-2010 Matias
 ^ [#19380] Update Mootools plugin to latest version

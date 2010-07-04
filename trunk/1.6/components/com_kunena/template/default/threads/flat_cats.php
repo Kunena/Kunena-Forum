@@ -51,77 +51,27 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		</tr>
 	</thead>
 	<tbody>
-		<?php
-		$k = 0;
-		$counter = 0;
-		if (!count ( $this->sub_categories ) ) {
-		?>
+		<?php if (!count ( $this->categories ) ) { ?>
 		<tr class="ksectiontableentry2">
 			<td class="td-0 km kcenter">
-				<?php echo $this->func=='showcat' ? JText::_('COM_KUNENA_VIEW_NO_POSTS') : JText::_('COM_KUNENA_NO_POSTS') ?>
+				<?php echo JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS_NONE') ?>
 			</td>
 		</tr>
 		<?php
 		} else
-			foreach ( $this->sub_categories as $leaf ) :
-				$leaf->name = kunena_htmlspecialchars ( $leaf->name );
-				$threadPages = ceil ( $leaf->numTopics / $this->config->messages_per_page );
-
-				if ($this->highlight && $counter == $this->highlight) :
-					$k = 0;
-		?>
-		<tr>
-			<td class="kcontenttablespacer" colspan="<?php echo intval($this->columns) ?>">&nbsp;</td>
-		</tr>
-		<?php endif; ?>
+			$k = 0;
+			foreach ( $this->categories as $leaf ) : ?>
 		<tr class="k<?php echo $this->tabclass [$k^=1] ?>">
-			<td class="td-0 km kcenter">
-				<strong><?php echo $leaf->numTopics > 0 ? CKunenaTools::formatLargeNumber ( $leaf->numTopics -1 ) : 0; ?></strong>
-				<?php echo JText::_('COM_KUNENA_DISCUSSIONS') ?>
-			</td>
-
-			<td class="td-2 kcenter">
-				<?php echo CKunenaLink::GetCategoryPageLink('showcat', intval($leaf->catid), 1, $this->escape($leaf->catname), 'follow') ?>
-			</td>
-
-			<td class="td-3">
-				<?php  if($leaf->id_last_msg != 0) : ?>
+			<td class="td-0 kcenter">
 				<div class="ktopic-title-cover">
-					<?php echo CKunenaLink::GetThreadLink ( 'view', intval($leaf->catid), intval($leaf->id_last_msg), KunenaParser::parseText ($leaf->subject), '', 'follow', 'ktopic-title km' ); ?>
+				<?php echo CKunenaLink::GetCategoryPageLink('showcat', intval($leaf->catid), 1, $this->escape($leaf->catname), 'follow', 'ktopic-title km' ) ?>
 				</div>
-
-				<?php if ($leaf->numPosts > $this->config->messages_per_page) : ?>
-				<ul class="kpagination">
-					<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
-					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), 1, intval($this->config->messages_per_page), 1 ) ?></li>
-					<?php if ($threadPages > 3) : ?>
-					<li class="more">...</li>
-					<?php $startPage = $threadPages - 2 ?>
-				<?php else : $startPage = 2; endif; ?>
-				</ul>
-				<?php endif; ?>
-
-				<div class="ktopic-details ks">
-					<!-- By -->
-					<span class="divider fltlft">|</span>
-					<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>">
-						<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') ?>
-						<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat'); ?>&nbsp;
-					</span>
-					<?php if ($leaf->uname) : ?>
-					<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->uname) ); ?></span>
-					<?php endif; ?>
-					<!-- /By -->
-				</div>
-			<?php else :
-				echo JText::_('COM_KUNENA_VIEW_NO_POSTS');
-			endif; ?>
 			</td>
 
 			<td class="td-4 kcenter">
 				<!-- Views -->
-				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->hits );?></span>
-				<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_GEN_HITS'); ?> </span>
+				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->numTopics );?></span>
+				<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_DISCUSSIONS'); ?> </span>
 				<!-- /Views -->
 			</td>
 
@@ -134,7 +84,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 			<?php endif; ?>
 
-			<td class="td-6 ks">
+			<td class="td-5 ks">
 				<div class="klatest-post-info">
 					<!-- Avatar -->
 					<?php if ($this->config->avataroncat > 0) :
@@ -150,9 +100,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<span class="ktopic-latest-post">
 						<?php
 						if ($this->config->default_sort == 'asc') {
-							echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $threadPages, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->id) );
+							$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
+							echo JText::_('COM_KUNENA_GEN_LAST_POST').': '.CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $threadPages, intval($this->config->messages_per_page), KunenaParser::parseText ($leaf->subject), intval($leaf->msgid) );
 						} else {
-							echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), 1, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->id) );
+							echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), 1, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->msgid) );
 						}
 						if ($leaf->uname) echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->uname), '', 'nofollow' );
 						?>
@@ -180,6 +131,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			$appfunc = JRequest::getCmd('func');
 		?>
 		<!-- Moderator Bulk Actions -->
+<?php /*
 		<tr class="ksectiontableentry1">
 			<td colspan="7" align="right" class="td-1 ks">
 				<select name="do" id="kBulkChooseActions" class="inputbox ks">
@@ -188,14 +140,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<option value="bulkMove"><?php echo JText::_('COM_KUNENA_MOVE_SELECTED'); ?></option>
 					<?php if ( $this->func == 'favorites' ) : ?>
 					<option value="bulkFavorite"><?php echo JText::_('COM_KUNENA_DELETE_FAVORITE'); ?></option>
-					<?php elseif ( $this->func == 'subscriptions' ) : ?>
-					<option value="bulkSub"><?php echo JText::_('COM_KUNENA_DELETE_SUBSCRIPTION'); ?></option>
 					<?php endif; ?>
 				</select>
 				<?php CKunenaTools::showBulkActionCats (); ?>
 				<input type="submit" name="kBulkActionsGo" class="kbutton ks" value="<?php echo JText::_('COM_KUNENA_GO'); ?>" />
 			</td>
 		</tr>
+	*/ ?>
 		<!-- /Moderator Bulk Actions -->
 		<?php endif; ?>
 	</tbody>

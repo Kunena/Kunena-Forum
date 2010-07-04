@@ -295,7 +295,8 @@ class CKunenaLatestX {
 		$this->_common();
 	}
 
-	function _getCategories() {
+	function _getSubCategories() {
+		$this->categories = array();
 		if (isset($this->total)) return;
 
 		$uname = $this->config->username ? 'name' : 'username';
@@ -310,16 +311,17 @@ class CKunenaLatestX {
 		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
 
 		$query = "SELECT j.id AS userid, j.{$uname} AS uname, cat.*, cat.id AS catid, cat.name AS catname,
-			0 AS fav, 1 AS sub, msg.thread, msg.id AS msgid, msg.subject,msg.time
+			0 AS fav, 1 AS sub, msg.thread, msg.id AS msgid, msg.subject,msg.time, COUNT(mmm.id) AS msgcount
 		FROM #__kunena_subscriptions_categories AS t
 		INNER JOIN #__kunena_categories AS cat ON cat.id=t.catid
 		LEFT JOIN #__kunena_messages AS msg ON cat.id_last_msg=msg.id
+		LEFT JOIN #__kunena_messages AS mmm ON msg.thread=mmm.thread AND mmm.hold=0
 		LEFT JOIN #__users AS j ON j.id = t.userid
 		WHERE t.userid={$this->db->Quote($this->user->id)}
 		GROUP BY t.catid
 		ORDER BY ordering";
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
-		$this->sub_categories = $this->db->loadObjectList ();
+		$this->categories = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 	}
 
@@ -383,10 +385,10 @@ class CKunenaLatestX {
 
 	function getCategoriesSubscriptions() {
 		if (isset($this->total)) return;
-		$this->columns++;
+		$this->columns--;
 		$this->showposts = 1;
-		$this->header = $this->title = JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS');
-		$this->_getCategories();
+		$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+		$this->_getSubCategories();
 	}
 
 	function getmyLatest() {

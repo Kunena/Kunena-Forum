@@ -170,7 +170,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $board_title = 'Kunena';
 	var $email = 'change@me.com';
 	var $board_offline = 0;
-	var $board_ofset = '0';
 	var $offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
 	var $enablerss = 1;
 	var $enablepdf = 1;
@@ -274,7 +273,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $ebaylanguagecode = 'en-us';
 	var $fbsessiontimeout = 1800; // in seconds
 	// New 1.0.5RC2 config variables
-	var $highlightcode = 0;	
+	var $highlightcode = 0;
 	// New 1.6 rss config vars
 	var $rss_type = 'thread';
 	var $rss_timelimit = 'month';

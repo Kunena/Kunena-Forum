@@ -19,10 +19,12 @@ jimport ( 'joomla.filesystem.folder' );
 $kunena_db = JFactory::getDBO ();
 
 // If board offset was set, we need to fix all timestamps to UTC
-$kunena_db->setQuery ( "SELECT board_ofset FROM #__kunena_config" );
-$offset = $kunena_db->loadResult ();
-if ($offset) {
-	$timeshift = (float) date('Z') + ((float) $offset * 3600);
+$kunena_db->setQuery ( "SELECT * FROM #__kunena_config" );
+$config = $kunena_db->loadObject ();
+$noconfig = !isset($config->board_title);
+if ($noconfig || (isset($config->board_ofset) && $config->board_ofset != 99)) {
+	if (!isset($config->board_ofset)) $config->board_ofset = 0;
+	$timeshift = (float) date('Z') + ((float) $config->board_ofset * 3600);
 
 	$kunena_db->setQuery ( "UPDATE #__kunena_categories SET time_last_msg = time_last_msg - {$timeshift}" );
 	$kunena_db->query ();
@@ -44,10 +46,12 @@ if ($offset) {
 	if ($this->db->getErrorNum ())
 		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
-	$kunena_db->setQuery ( "UPDATE #__kunena_config SET board_ofset=0" );
-	$kunena_db->query ();
-	if ($this->db->getErrorNum ())
-		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+	if (!$noconfig) {
+		$kunena_db->setQuery ( "UPDATE #__kunena_config SET board_ofset=99" );
+		$kunena_db->query ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+	}
 }
 
 $kunena_db->setQuery ( "SELECT template FROM #__kunena_config" );

@@ -96,6 +96,7 @@ else
 
 // only for preview module - maybe used later by users to change template
 
+define('KUNENA_RELTMPLTPATH', $fb_cur_template);
 define('KUNENA_ABSTMPLTPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_template);
 define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_img_template);
 
@@ -466,16 +467,20 @@ class CKunenaTools {
         echo $lists['parent'];
         }
 
+	function getTemplateImage($image) {
+		if (is_file(KUNENA_ABSTMPLTPATH . '/images/'.$image)) {
+			return 'components/com_kunena/' . KUNENA_RELTMPLTPATH . '/images/'.$image;
+		} else {
+			return 'components/com_kunena/template/default/images/'.$image;
+		}
+	}
+
 	function topicIcon($topic) {
 		$config = KunenaFactory::getConfig ();
 		if ($config->topicicons) {
 			global $topic_emoticons;
 			$icon = isset($topic_emoticons [$topic->topic_emoticon]) ? $topic_emoticons [$topic->topic_emoticon] : $topic_emoticons [0];
-			if (is_file(KUNENA_ABSTMPLTPATH . '/images/icons/'.$icon)) {
-				$iconurl = KUNENA_TMPLTMAINIMGURL . 'images/icons/'.$icon;
-			} else {
-				$iconurl = KUNENA_DIRECTURL . 'template/default/images/icons/'.$icon;
-			}
+			$iconurl = JURI::Root() . self::getTemplateImage("icons/{$icon}");
 		} else {
 			$icon = 'normal';
 			if ($topic->msgcount < 2) $icon = 'unanswered';
@@ -486,11 +491,7 @@ class CKunenaTools {
 			if ($topic->hold == 1) $icon = 'unapproved';
 			if ($topic->hold == 2) $icon = 'deleted';
 			if ($topic->unread) $icon .= '_new';
-			if (is_file(KUNENA_ABSTMPLTPATH . "images/topicicons/icon_{$icon}.png")) {
-				$iconurl = KUNENA_TMPLTMAINIMGURL . "images/topicicons/icon_{$icon}.png";
-			} else {
-				$iconurl = KUNENA_DIRECTURL . "template/default/images/topicicons/icon_{$icon}.png";
-			}
+			$iconurl = JURI::Root() . self::getTemplateImage("topicicons/icon_{$icon}.png");
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;

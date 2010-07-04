@@ -3094,7 +3094,7 @@ function textCounter(field, target) {
 						echo $i;
 						?>','editsmiley')"><img
 						src="<?php
-						echo kescape($smileypath ['live'] . $s->location);
+						echo kescape( JURI::Root() . CKunenaTools::getTemplateImage("emoticons/{$s->location}") )
 						?>"
 						alt="<?php
 						echo kescape($s->location);
@@ -3322,7 +3322,7 @@ function textCounter(field, target) {
 						echo $id;
 						?>','editRank')"><img
 						src="<?php
-						echo kescape($rankpath ['live'] . $row->rank_image);
+						echo kescape(JURI::Root() . CKunenaTools::getTemplateImage("ranks/{$row->rank_image}"))
 						?>"
 						alt="<?php
 						echo kescape($row->rank_image);

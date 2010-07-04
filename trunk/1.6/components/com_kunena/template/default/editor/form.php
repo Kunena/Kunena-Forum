@@ -118,7 +118,7 @@ $this->k=0;
 			<td class="ktopicicons">
 				<?php foreach ($topic_emoticons as $emoid=>$emoimg): ?>
 				<input type="radio" name="topic_emoticon" value="<?php echo intval($emoid); ?>" <?php echo $this->emoid == $emoid ? ' checked="checked" ':'' ?> />
-				<img src="<?php echo $this->escape($emoimg);?>" alt="" border="0" />
+				<img src="<?php echo $this->escape(JURI::Root() . CKunenaTools::getTemplateImage("icons/{$emoimg}"));?>" alt="" border="0" />
 				<?php endforeach; ?>
 			</td>
 		</tr>

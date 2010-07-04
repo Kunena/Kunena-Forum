@@ -99,12 +99,7 @@ class smile {
 
 		$smileyArray = array ();
 		foreach ( $smilies as $smiley ) { // We load all smileys in array, so we can sort them
-			if (is_file(KUNENA_ABSTMPLTPATH . '/images/emoticons/'.$smiley->$column)) {
-				$iconurl = KUNENA_TMPLTMAINIMGURL . 'images/emoticons/'.$smiley->$column;
-			} else {
-				$iconurl = KUNENA_DIRECTURL . 'template/default/images/emoticons/'.$smiley->$column;
-			}
-
+			$iconurl = JURI::Root() . CKunenaTools::getTemplateImage("emoticons/{$smiley->$column}");
 			$smileyArray [$smiley->code] = '' . $iconurl; // This makes sure that for example :pinch: gets translated before :p
 		}
 

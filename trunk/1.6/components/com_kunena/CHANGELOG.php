@@ -40,6 +40,7 @@ Kunena 1.6.0-BETA1
 4-July-2010 Matias
 # [#19288] Fix topic icons and broken lock image in custom templates
 # [#19288] Fix ranks, emoicons in custom templates
+# [#19288] Fix ranks and emoticons from administration
 
 3-July-2010 Matias
 ^ [#19380] Update Mootools plugin to latest version

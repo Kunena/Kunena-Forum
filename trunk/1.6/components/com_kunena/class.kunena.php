@@ -469,7 +469,7 @@ class CKunenaTools {
 
 	function getTemplateImage($image) {
 		if (is_file(KUNENA_ABSTMPLTPATH . '/images/'.$image)) {
-			return 'components/com_kunena/' . KUNENA_RELTMPLTPATH . '/images/'.$image;
+			return 'components/com_kunena/template/' . KUNENA_RELTMPLTPATH . '/images/'.$image;
 		} else {
 			return 'components/com_kunena/template/default/images/'.$image;
 		}

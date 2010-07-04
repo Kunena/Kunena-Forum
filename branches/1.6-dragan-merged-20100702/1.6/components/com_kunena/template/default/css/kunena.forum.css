@@ -404,7 +404,7 @@ PX		EM			PCT			PT
 }
 #Kunena table.kblock {
 	width: 100%;
-	border-bottom:4px solid #BFC3C6;
+	/*border-bottom:4px solid #BFC3C6;*/
 	margin: 5px 0 0 0;
 	clear: both;
 	border-spacing: 0;
@@ -723,9 +723,16 @@ PX		EM			PCT			PT
 }
 
 #Kunena #ktop span.ktoggler {
-	background: #5388B4;
+	/*background: #5388B4;
 	margin:-16px 0;
-	padding:1px 1px 0;
+	padding:1px 1px 0;*/
+	background:none repeat scroll 0 0 #5388B4;
+	height:28px;
+	margin:-30px 0 0;
+	padding:5px 0px 0px 12px;
+	width:25px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
 }
 
 #Kunena #ktopmenu {

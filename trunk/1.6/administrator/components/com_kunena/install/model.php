@@ -415,8 +415,8 @@ class KunenaModelInstall extends JModel {
 				}
 				if(isset($svn) ||
 						($version['versiondate'] > $curversion->versiondate) ||
-						(version_compare($version['version'], $curversion->version, '>')) ||
-						(version_compare($version['version'], $curversion->version, '==') &&
+						(version_compare(strtolower($version['version']), strtolower($curversion->version), '>')) ||
+						(version_compare(strtolower($version['version']), strtolower($curversion->version), '==') &&
 						$version['build'] > $curversion->build)) {
 					foreach ($version as $action) {
 						$results [] = $this->processUpgradeXMLNode($action);
@@ -607,8 +607,8 @@ class KunenaModelInstall extends JModel {
 					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 			}
 			if ($version) {
-				$version->version = strtoupper ( $version->version );
-				if (version_compare ( $version->version, '1.6.0-DEV', ">" ))
+				$version->version = strtolower ( $version->version );
+				if (version_compare ( $version->version, '1.6.0-dev', ">" ))
 					$version->prefix = 'kunena_';
 				else
 					$version->prefix = 'fb_';
@@ -616,6 +616,7 @@ class KunenaModelInstall extends JModel {
 					$version->component = 'Kunena';
 				else
 					$version->component = 'FireBoard';
+				$version->version = strtoupper ( $version->version );
 			}
 
 			// Version table may contain dummy version.. Ignore it
@@ -666,11 +667,11 @@ class KunenaModelInstall extends JModel {
 		$version = $this->getInstalledVersion ();
 		if ($version->component === null)
 			$this->_action = 'INSTALL';
-		else if (version_compare ( $version->version, '1.5.99', '<=' ))
+		else if (version_compare ( strtolower($version->version), '1.5.99', '<=' ))
 			$this->_action = 'MIGRATE';
-		else if (version_compare ( Kunena::version(), $version->version, '>' ))
+		else if (version_compare ( strtolower(Kunena::version()), strtolower($version->version), '>' ))
 			$this->_action = 'UPGRADE';
-		else if (version_compare ( Kunena::version(), $version->version, '<' ))
+		else if (version_compare ( strtolower(Kunena::version()), strtolower($version->version), '<' ))
 			$this->_action = 'DOWNGRADE';
 		else if (Kunena::versionBuild() && Kunena::versionBuild() > $version->build)
 			$this->_action = 'UP_BUILD';

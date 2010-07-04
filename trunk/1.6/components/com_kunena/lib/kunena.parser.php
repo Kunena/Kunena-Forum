@@ -431,13 +431,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					} else {
 						$task->autolink_disable --; // continue autolink conversion
 
+						// Make sure we add image size if specified
+						$imgtagsize = isset ( $tag->options ["size"] ) ? ( int ) kunena_htmlspecialchars ( $tag->options ["size"] ) : 0;
+
 						// Need to check if we are nested inside a URL code
 						if ($task->autolink_disable == 0) {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = "<a title='' rel=\"lightbox\" href='".$tempstr."'><img src='".$tempstr."' alt='' /></a>";
+							$tag_new = '<a title="" rel="lightbox" href="'.$tempstr.'"><img src="'.$tempstr.'" '.($imgtagsize ? "' width='" . $imgtagsize : '').'alt="" /></a>';
 						} else {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = "<img src='" . $tempstr . "' alt='' />";
+							$tag_new = "<img src='" . $tempstr . ($imgtagsize ? "' width='" . $imgtagsize : '') . "' alt='' />";
 						}
 
 					}

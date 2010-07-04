@@ -431,28 +431,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					} else {
 						$task->autolink_disable --; // continue autolink conversion
 
-						// Make sure we add image size if specified and while we are
-						// at it also set maximum image width from text width config.
-						//
-						// NOTICE: image max variables from config are not intended
-						// for formating but to limit the size of uploads, which can
-						// be larger than the available post area to support super-
-						// sized popups.
-
-						$imgmaxsize = ( int ) (($kunena_config->rtewidth * 9) / 10); // 90% of text width
-						$imgtagsize = isset ( $tag->options ["size"] ) ? ( int ) kunena_htmlspecialchars ( $tag->options ["size"] ) : 0;
-
-						if ($imgtagsize > 0 && $imgtagsize < $imgmaxsize) {
-							$imgmaxsize = $imgtagsize;
-						}
-
 						// Need to check if we are nested inside a URL code
 						if ($task->autolink_disable == 0) {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = "<a title='' rel=\"lightbox\" href='".$tempstr."'><img src='".$tempstr."' style='max-width:".$imgmaxsize."px; ' alt='' /></a>";
+							$tag_new = "<a title='' rel=\"lightbox\" href='".$tempstr."'><img src='".$tempstr."' alt='' /></a>";
 						} else {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = "<img src='" . $tempstr . ($imgtagsize ? "' width='" . $imgmaxsize : '') . "' style='max-width:" . $imgmaxsize . "px; ' alt='' />";
+							$tag_new = "<img src='" . $tempstr . "' alt='' />";
 						}
 
 					}

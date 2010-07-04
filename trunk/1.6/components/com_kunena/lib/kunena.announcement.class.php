@@ -36,9 +36,13 @@ class CKunenaAnnouncement {
 		}
 
 		$this->announcement = new stdClass();
+		$this->announcement->id = 0;
 		$this->announcement->title = '';
 		$this->announcement->description = '';
 		$this->announcement->sdescription = '';
+		$this->announcement->created = '';
+		$this->announcement->published = 1;
+		$this->announcement->showdate = 1;
 	}
 
 	public function &getInstance() {
@@ -56,12 +60,14 @@ class CKunenaAnnouncement {
 		if ($this->tokenProtection ())
 			return false;
 
+		$now = new JDate();
 		$title = JRequest::getVar ( "title", "" );
 		$description = JRequest::getVar ( 'description', '', 'string', JREQUEST_ALLOWRAW );
 		$sdescription = JRequest::getVar ( 'sdescription', '', 'string', JREQUEST_ALLOWRAW );
-		$created = JRequest::getVar ( "created", "NOW()" );
-		$published = JRequest::getVar ( "published", 0 );
-		$showdate = JRequest::getVar ( "showdate", "" );
+		$created = JRequest::getVar ( "created", $now->toMysql() );
+		if (!$created) $created = $now->toMysql();
+		$published = JRequest::getInt ( "published", 1 );
+		$showdate = JRequest::getInt ( "showdate", 1 );
 
 		if (!$id) {
 			$query = "INSERT INTO #__kunena_announcement VALUES ('',

@@ -47,6 +47,7 @@ Kunena 1.6.0-BETA1
 # [#19288] Simplify profile merging both subscriptions tabs and both thank you tabs
 # [#19288] Better layout/information for category subscriptions
 # [#19288] Disable unsubscribe category in profile as it didn't work
+# [#19288] Add/Edit Announcement does not work
 
 3-July-2010 Matias
 ^ [#19380] Update Mootools plugin to latest version

@@ -102,7 +102,7 @@ class CKunenaListcat {
 		$allsubcats = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
+		$this->tabclass = array ("row1", "row2" );
 
 		$subcats = array ();
 		$routerlist = array ();

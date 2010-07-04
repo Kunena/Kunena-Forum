@@ -34,6 +34,12 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+4-July-2010 @quila
+# [#19288] Cleanup whole template, fix some minor bugs (part 5)
+
+2-July-2010 @quila
+# [#19288] Cleanup whole template, fix some minor bugs (part 4)
+
 1-July-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 3)
 ^ [#15886] Merged revisions 2829-2891 from /branches/1.6-dragan-fix-20100624

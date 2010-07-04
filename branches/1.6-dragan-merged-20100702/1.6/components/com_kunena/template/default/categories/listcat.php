@@ -25,33 +25,28 @@ $this->displayAnnouncement ();
 CKunenaTools::showModulePosition ( 'kunena_announcement' );
 $this->displayPathway ();
 ?>
-<!-- B: Cat list Top -->
-<table class="klist-top">
-	<tr>
-		<td class="klist-markallcatsread"><?php
-		if ($this->my->id != 0) {
-			?>
 
-		<form action="<?php
-			echo KUNENA_LIVEURLREL;
-			?>"
-			name="markAllForumsRead" method="post"><input type="hidden"
-			name="markaction" value="allread" /> <input type="submit"
-			class="kbutton button ks"
-			value="<?php
-			echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ');
-			?>" /></form>
+<div class="klist-markallcatsread kcontainer">
+	<div class="ksectionbody">
+		<div class="fltlft">
+			<?php if ($this->my->id != 0) : ?>
+				<form action="<?php
+					echo KUNENA_LIVEURLREL;
+					?>"
+					name="markAllForumsRead" method="post"><input type="hidden"
+					name="markaction" value="allread" /> <input type="submit"
+					class="kbutton button ks"
+					value="<?php
+					echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ');
+					?>" /></form>
+			<?php endif; ?>
+			</div>
+			<div class="fltrt">
+			<?php $this->displayForumJump (); ?>
+		</div>
+       </div>
+</div>
 
-		<?php
-		}
-		?></td>
-		<td class="klist-categories"><?php
-		$this->displayForumJump ();
-		?>
-		</td>
-	</tr>
-</table>
-<!-- F: Cat list Top -->
 
 
 <?php

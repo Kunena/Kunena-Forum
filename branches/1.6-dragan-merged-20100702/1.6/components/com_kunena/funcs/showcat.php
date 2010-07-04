@@ -37,7 +37,7 @@ class CKunenaShowcat {
 
 		$this->allow = 1;
 
-		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
+		$this->tabclass = array ("row1", "row2" );
 		$this->prevCheck = $this->session->lasttime;
 
 		$this->app = & JFactory::getApplication ();

@@ -26,44 +26,27 @@ defined( '_JEXEC' ) or die();
 	$this->displayThreadActions(0);
 ?>
 
-<table class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kblocktable' . $this->escape($this->catinfo->class_sfx) : '' ?>" id="kviews">
-	<thead>
-		<tr>
-			<th class="kleft">
-				<div class="ktitle-cover km">
-					<span class="ktitle kl"><?php echo JText::_('COM_KUNENA_TOPIC') ?>
-						<?php echo $this->escape($this->kunena_topic_title) ?>
-					</span>
-					<?php if ($this->favorited) : ?>
-					<div class="kfavorite"></div>
-					<?php endif ?>
-				</div>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>
-				<?php foreach ( $this->messages as $message ) $this->displayMessage($message) ?>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->kunena_topic_title) ?></span></h2>
+		<?php if ($this->favorited) : ?><div class="kfavorite"></div><?php endif ?>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
+			<?php foreach ( $this->messages as $message ) $this->displayMessage($message) ?>
+		</div>
+	</div>
+</div>
 <?php $this->displayThreadActions(1); ?>
 
 <div class = "kforum-pathway-bottom">
 	<?php echo $this->kunena_pathway1; ?>
 </div>
 <!-- F: List Actions Bottom -->
-
-<!-- B: Category List Bottom -->
-<table class="klist-bottom">
-	<tr>
-		<td class="klist-moderators">
-			<!-- Mod List -->
-			<?php if (count ( $this->modslist ) > 0) : ?>
-			<div class="kbox-bottomarea-modlist">
+<div class="kcontainer" id="moderatorslist">
+	<div class="kbody">
+		<?php if (!empty ( $this->modslist ) ) : ?>
+		<div class="moderatorslist-list">
 				<?php
 				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 				$modlinks = array();
@@ -72,13 +55,11 @@ defined( '_JEXEC' ) or die();
 				}
 				echo implode(', ', $modlinks);
 				?>
-			</div>
-			<?php endif; ?>
-			<!-- /Mod List -->
-		</td>
-		<td class="klist-categories">
-			<?php $this->displayForumJump() ?>
-		</td>
-	</tr>
-</table>
-<!-- F: Category List Bottom -->
+		</div>
+		<?php endif; ?>
+		<div class="moderatorslist-jump">
+				<?php $this->displayForumJump (); ?>
+		</div>
+    </div>
+</div>
+<!-- B: Category List Bottom -->

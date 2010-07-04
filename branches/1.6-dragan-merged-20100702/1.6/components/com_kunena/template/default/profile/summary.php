@@ -23,13 +23,13 @@ if ($this->my->id == $this->user->id) {
 }
 ?>
 
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k-bt-cvr5">
-<h1><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?>
-<?php if (!empty($this->editlink)) echo '<span class="kright">'.$this->editlink.'</span>';?></h1>
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?></span>
+		<?php if (!empty($this->editlink)) echo '<span class="kright">'.$this->editlink.'</span>';?></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
 	<div id="kprofile-container">
 		<div id="kprofile-leftcol">
 			<?php if ($this->avatarlink) : ?>
@@ -64,8 +64,6 @@ if ($this->my->id == $this->user->id) {
 			<div class="clr"></div>
 		</div>
 	</div>
-</div>
-</div>
-</div>
-</div>
+		</div>
+	</div>
 </div>

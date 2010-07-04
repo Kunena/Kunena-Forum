@@ -17,10 +17,10 @@ require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll =& CKunenaPolls::getInstance();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
-<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-	<td class="kleftcolumn" valign="top">
+<tr class="krow<?php echo 1 + $this->k^=1;?>">
+	<td class="kleftcolumn ktd-kcol-first">
 		<strong><?php echo JText::_('COM_KUNENA_BOARDCODE');?></strong></td>
-	<td>
+	<td class="ktd-kcol-other">
 	<table class="kpostbuttonset">
 		<tr>
 			<td class="kpostbuttons">
@@ -289,8 +289,8 @@ $kunena_config = KunenaFactory::getConfig ();
 	</td>
 </tr>
 
-<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-	<td valign="top" class="kleftcolumn"><strong><?php
+<tr class="krow<?php echo 1 + $this->k^=1;?>">
+	<td class="kleftcolumn ktd-kcol-first"><strong><?php
 		echo (JText::_('COM_KUNENA_MESSAGE')) ;
 	// TODO: Replace Enlarge and Shrink with icons
 	?></strong><br />
@@ -299,7 +299,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		class="ks" onclick="kGrowShrinkMessage(-100);"
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
-	<td valign="top">
+	<td class="ktd-kcol-other">
 		<textarea class="ktxtarea required" name="message" id="kbbcode-message"><?php echo $this->escape($this->message_text); ?></textarea>
 		<?php
 		// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split

@@ -87,24 +87,24 @@ if (count ( $this->threads ) > 0) :
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-info-all">
-			<strong><?php echo $this->total?></strong>
-			<?php echo $this->mode=='posts' ? $this->escape($this->header) : JText::_('COM_KUNENA_DISCUSSIONS') ?>
+			<strong>
+				<?php echo $this->total?>
+			</strong>
+				<?php echo $this->mode=='posts' ? $this->escape($this->header) : JText::_('COM_KUNENA_DISCUSSIONS')?>
 		</td>
-
-<?php
-	//pagination 2
-	if (count ( $this->messages ) > 0) :
-		echo '<td class="klist-pages-all nowrap">';
-		echo $pagination;
-		echo '</td>';
-	endif;
-?>
+			<?php
+				//pagination 1
+				if (count ( $this->messages ) > 0) :
+					echo '<td class="klist-pages-all nowrap">';
+					echo $pagination;
+					echo '</td>';	
+				endif;
+			?>
 	</tr>
 </table>
 <!-- F: List Actions -->
 
 <?php endif; ?>
-<div class="clr"></div>
 
 <?php
 $this->displayWhoIsOnline ();

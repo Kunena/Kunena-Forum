@@ -14,14 +14,13 @@ defined( '_JEXEC' ) or die();
 $document=JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->escape($this->config->board_title));
 ?>
-<table class="kblock kannouncement">
-	<thead>
-		<tr>
-			<th colspan="6">
-				<h1><?php echo $this->app->getCfg('sitename'); ?> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?> | <?php echo CKunenaLink::GetAnnouncementLink('add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?></h1>
-			</th>
-		</tr>
-	</thead>
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo $this->app->getCfg('sitename'); ?> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?> | <?php echo CKunenaLink::GetAnnouncementLink('add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
+<table class="kannouncement">
 	<tbody id="kannouncement_body">
 		<tr class="ksth ks">
 			<th class="kcol kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
@@ -39,12 +38,12 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 				$k=1 - $k;
 		?>
 		<tr class="krow<?php echo $k;?>">
-			<td class="kcol kcol-annid"><?php echo intval($ann->id); ?></td>
-			<td class="kcol kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
-			<td class="kcol kcol-anntitle">
+			<td class="ktd-kcol-first kcol kcol-annid"><?php echo intval($ann->id); ?></td>
+			<td class="ktd-kcol-other kcol kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
+			<td class="ktd-kcol-other kcol kcol-anntitle">
 				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', intval($ann->id), KunenaParser::parseText ($ann->title), KunenaParser::parseText ($ann->title), 'follow'); ?></div>
 			</td>
-			<td class="kcol kcol-annpublish">
+			<td class="ktd-kcol-other kcol kcol-annpublish">
 				<?php
 				if ($ann->published > 0) {
 					echo JText::_('COM_KUNENA_ANN_PUBLISHED');
@@ -53,13 +52,16 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 				}
 				?>
 			</td>
-			<td class="kcol kcol-annedit">
+			<td class="ktd-kcol-other kcol kcol-annedit">
 				<?php echo CKunenaLink::GetAnnouncementLink('edit', intval($ann->id), JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
 			</td>
-			<td class="kcol kcol-anndelete">
+			<td class="ktd-kcol-other kcol kcol-anndelete">
 				<?php echo CKunenaLink::GetAnnouncementLink('delete', intval($ann->id), JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
 </table>
+        </div>
+	</div>
+</div>

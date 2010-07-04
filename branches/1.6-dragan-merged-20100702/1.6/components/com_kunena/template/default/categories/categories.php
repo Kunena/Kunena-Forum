@@ -25,45 +25,31 @@ foreach ( $this->categories [0] as $section ) :
 	$htmlClassBlockTable = !empty ( $section->class_sfx ) ? ' kblocktable' . $this->escape($section->class_sfx) : '';
 	$htmlClassTitleCover = !empty ( $section->class_sfx ) ? ' ktitle-cover' . $this->escape($section->class_sfx) : '';
 ?>
-<!-- B: List Cat -->
-<div class="k-bt-cvr1" id="kblock<?php echo intval($section->id) ?>">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k-bt-cvr5">
+<div class="kblock kcategories-<?php echo intval($section->id) ?>">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="catid_<?php echo intval($section->id) ?>"></a></span>
+		<h2><span><?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($section->id), $this->escape($section->name), 'follow', $class = '' ); ?></span></h2>
+		<?php if (!empty($section->description)) : ?>
+		<div class="ktitle-desc km">
+			<?php echo KunenaParser::parseBBCode ( $section->description ); ?>
+		</div>
+		<?php endif; ?>
+	</div>
+	<div class="kcontainer" id="catid_<?php echo intval($section->id) ?>">
+		<div class="kbody">
 <table class="kblocktable<?php echo $htmlClassBlockTable ?>" id="kcat<?php echo intval($section->id) ?>">
-	<thead>
-		<tr>
-			<th colspan="5">
-				<div class="ktitle-cover<?php echo $htmlClassTitleCover ?> km">
-					<?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($section->id), $this->escape($section->name), 'follow', $class = 'ktitle kl' ); ?>
-					<?php if (!empty($section->description)) : ?>
-					<div class="ktitle-desc km">
-						<?php echo KunenaParser::parseBBCode ( $section->description ); ?>
-					</div>
-					<?php endif; ?>
-				</div>
-
-			<div class="fltrt"><span id="cat_list"><a class="ktoggler close" rel="catid_<?php echo intval($section->id) ?>"></a></span></div>
-			</th>
-		</tr>
-	</thead>
-	<tbody id="catid_<?php echo intval($section->id) ?>">
-
-	<?php
-	if (empty ( $this->categories [$section->id] )) {
-		echo JText::_('COM_KUNENA_GEN_NOFORUMS');
-	} else {
+		<?php if (empty ( $this->categories [$section->id] )) { echo '' . JText::_('COM_KUNENA_GEN_NOFORUMS') . '';
+		} else {
 		$k = 0;
 		foreach ( $this->categories [$section->id] as $category ) {
 	?>
 		<tr class="k<?php echo $this->tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($this->tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
 			id="kcat<?php echo intval($category->id) ?>">
-			<td class="td-1 kcenter" width="1%">
+			<td class="kcol-kcaticon ktd-kcol-first">
 				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $category->htmlCategoryIcon ) ?>
 			</td>
 
-			<td class="td-2 kleft">
+			<td class="kcol-kcattitle ktd-kcol-other">
 			<div class="kthead-title kl">
 			<?php
 				// Show new posts, locked, review
@@ -123,14 +109,14 @@ foreach ( $this->categories [0] as $section ) :
 		<?php endif; ?>
 			</td>
 
-			<td class="td-3 km kcenter" width="5%">
+			<td class="kcol-kcattopics ktd-kcol-other">
 				<!-- Number of Topics -->
 				<span class="kcat-topics-number"><?php echo CKunenaTools::formatLargeNumber ( intval($category->numTopics) ) ?></span>
 				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_TOPICS');?></span>
 				<!-- /Number of Topics -->
 			</td>
 
-			<td class="td-4 km kcenter" width="5%">
+			<td class="kcol-kcatreplies ktd-kcol-other">
 			<!-- Number of Replies -->
 			<span class="kcat-replies-number"><?php echo CKunenaTools::formatLargeNumber ( intval($category->numPosts) ) ?></span>
 			<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
@@ -138,7 +124,7 @@ foreach ( $this->categories [0] as $section ) :
 			</td>
 
 			<?php if ($category->numTopics != 0) { ?>
-			<td class="td-5 kleft" width="25%">
+			<td class="kcol-kcatlastpost ktd-kcol-other">
 			<?php if ($this->config->avataroncat > 0) : ?>
 			<!-- Avatar --> 
 			<?php
@@ -163,16 +149,11 @@ foreach ( $this->categories [0] as $section ) :
 			</td>
 
 			<?php } else { ?>
-			<td class="td-5 kcenter" width="25%"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
+			<td class="knoposts ktd-kcol-other"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
 			<?php } ?>
 		</tr>
 		<?php } } ?>
-	</tbody>
 </table>
-
-
-</div>
-</div>
 </div>
 </div>
 </div>

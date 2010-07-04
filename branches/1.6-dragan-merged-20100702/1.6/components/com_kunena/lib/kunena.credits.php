@@ -25,7 +25,7 @@ $kunena_config = KunenaFactory::getConfig ();
     <div class="k-bt-cvr3">
       <div class="k-bt-cvr4">
         <div class="k_bt_cvr5">
-          <table class = "kblocktable" id ="kforumcredits" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+          <table class = "kblocktable" id ="kforumcredits">
             <thead>
               <tr>
                 <th> <div class = "ktitle-cover"> <span class="ktitle kl" ><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span> </div>
@@ -33,7 +33,7 @@ $kunena_config = KunenaFactory::getConfig ();
             </thead>
             <tbody>
               <tr>
-                <td class = "kcreditsdesc"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <td class = "kcreditsdesc"><table>
                     <tr valign="top">
                       <td width="170"><img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
                       <td><div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div></td>
@@ -97,7 +97,7 @@ $kunena_config = KunenaFactory::getConfig ();
     <div class="k-bt-cvr3">
       <div class="k-bt-cvr4">
         <div class="k_bt_cvr5">
-          <table  class = "kblocktable" id="kbottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
+          <table  class = "kblocktable" id="kbottomarea">
               <tr>
                 <th class = "th-right"> <?php
                 //(JJ) FINISH: CAT LIST BOTTOM

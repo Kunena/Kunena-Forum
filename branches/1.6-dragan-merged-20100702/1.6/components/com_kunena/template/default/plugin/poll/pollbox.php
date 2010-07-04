@@ -24,29 +24,19 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 	$dataspollusers[0]->pollid = null;
 }
 ?>
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
-	<table class = "kblocktable" id = "kpoll" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-		<thead>
-			<tr>
-				<th align="left">
-					<div class = "ktitle-cover km">
-						<span class = "ktitle kl"><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ($dataspollresult[0]->title); ?></span>
+<div class="kblock kpollbox">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="kpolls_tbody"></a></span>
+		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ($dataspollresult[0]->title); ?></span></h2>
 					</div>
-
-					<span class="fltrt ktoggler"><a class="ktoggler close" rel="kpolls_tbody"></a></span>
-				</th>
-			</tr>
-		</thead>
-		<tbody id = "kpolls_tbody">
-				<tr class = "ksectiontableentry2">
-					<td class = "td-1 km" align="left">
+	<div class="kcontainer" id="kpolls_tbody">
+		<div class="kbody">
+    <table class = "kblocktable" id = "kpoll">
+                <tr class = "krow2">
+                    <td class = "ktd-kcol-first km">
 						<div class = "kpolldesc">
 							<?php if ( $dataspollusers[0]->userid == $this->my->id || $this->my->id == "0") { //if the user has already voted for this poll ?>
-							<table border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+							<table>
 								<?php foreach ($dataspollresult as $row) : ?>
 								<tr>
 									<td><?php echo KunenaParser::parseText ( $row->text ); ?></td>
@@ -118,7 +108,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 						<?php
 						} else {
 						?>
-						<table border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+						<table>
 							<?php foreach ( $dataspollresult as $row ) : ?>
 							<tr>
 								<td><?php echo KunenaParser::parseText ($row->text); ?></td>
@@ -167,10 +157,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 					</div>
 				</td>
 			</tr>
-		</tbody>
 	</table>
-</div>
-</div>
 </div>
 </div>
 </div>

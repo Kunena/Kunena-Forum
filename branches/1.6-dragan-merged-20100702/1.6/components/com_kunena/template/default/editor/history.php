@@ -15,31 +15,53 @@ defined ( '_JEXEC' ) or die ();
 
 $k = 0;
 ?>
-<b><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY' )?>:</b>
-<?php echo $this->escape($this->subject) ?><br />
-<?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->escape($this->config->historylimit) . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?><br />
-<table border="0" cellspacing="1" cellpadding="3" width="100%" class="kreview-table">
-	<tr>
-		<td class="kreview-header" width="20%" align="center">
-			<strong><?php echo JText::_ ( 'COM_KUNENA_GEN_AUTHOR' )?></strong>
-		</td>
-		<td class="kreview-header" align="center">
-			<strong><?php echo JText::_ ( 'COM_KUNENA_GEN_MESSAGE' )?></strong>
-		</td>
-	</tr>
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="history"></a></span>
+		<h2><span><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY' )?>: <?php echo $this->escape($this->subject) ?></span></h2>
+		<div class="ktitle-desc km">
+			<?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->escape($this->config->historylimit) . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?>
+		</div>
+	</div>
+	<div class="kcontainer" id="history">
+		<div class="kbody">
 	<?php foreach ( $this->messages as $mes ):?>
-	<tr>
-		<td class="kreview-body<?php echo $k = 1 - $k?>" valign="top">
-			<?php echo $this->escape( $mes->name ) ?>
-		</td>
-		<td class="kreview-body<?php echo $k?>">
+<table>
+	<thead>
+		<tr class="ksth">
+			<th colspan="2" class="kview-th ksectiontableheader">
+				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat_hover') ?>">
+					<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat') ?>
+				</span>
+				<a name="<?php echo intval($this->id) ?>"></a>
+				<?php //echo $mes->numLink ?>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="2" valign="top" class="kprofile-left  kauthor">
+				<p><?php echo $this->escape( $mes->name ) ?></p>
+				<p><?php
+					$profile = KunenaFactory::getUser(intval($mes->userid));
+					$useravatar = $profile->getAvatarLink('','','profile');
+					if ($useravatar) :
+					echo CKunenaLink::GetProfileLink ( intval($mes->userid), $useravatar );
+					endif;
+				?></p>
+			</td>
+			<td class="kmessage-left khistorymsg">
 			<div class="kmsgbody">
 				<div class="kmsgtext">
 					<?php echo KunenaParser::parseBBCode( $mes->message ) ?>
 				</div>
 			</div>
 			<?php if ( !empty($this->attachmentslist[$mes->id]) ) $this->displayAttachments($this->attachmentslist[$mes->id]); ?>
-		</td>
-	</tr>
-	<?php endforeach; ?>
+			</td>
+		</tr>
+	</tbody>
 </table>
+	<?php endforeach; ?>
+        </div>
+	</div>
+</div>

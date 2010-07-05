@@ -138,3 +138,93 @@ span.attention {display:block;margin:15px 0;padding:8px 10px 8px 10px;background
 #logo3 {width:165px;height:20px;background:url(../images/kunena.png) 5px -646px no-repeat;display:block;float:right;margin-left:15px;margin-top:15px;width:72px;}
 #footer ul {margin:0;}
 #footer li {list-style:none;float:left;padding-right:20px;font-weight:bold;}
+
+/* System messages */ /* NO NEED TO COMPRESS - YUICOMPRESSOR WILL DO THAT FOR US! */
+#system-message {
+margin-bottom:10px;
+padding-bottom:0;
+padding-left:0;
+padding-right:0;
+padding-top:0;
+}
+#system-message dt {
+font-weight:bold;
+}
+#system-message dd {
+font-weight:bold;
+margin-bottom:0;
+margin-left:0;
+margin-right:0;
+margin-top:0;
+text-indent:30px;
+}
+#system-message dd ul {
+border-bottom-color:#84A7DB;
+border-bottom-style:solid;
+border-bottom-width:3px;
+border-top-color:#84A7DB;
+border-top-style:solid;
+border-top-width:3px;
+color:#0055BB;
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin-bottom:10px;
+padding-bottom:10px;
+padding-left:10px;
+padding-right:10px;
+padding-top:10px;
+}
+#system-message dt.message {
+display:none;
+}
+#system-message dd.message {
+}
+#system-message dt.error {
+display:none;
+}
+#system-message dd.error ul {
+background-color:#E6C0C0;
+border-bottom-color:#DE7A7B;
+border-bottom-style:solid;
+border-bottom-width:3px;
+border-top-color:#DE7A7B;
+border-top-style:solid;
+border-top-width:3px;
+color:#CC0000;
+}
+#system-message dt.notice {
+display:none;
+}
+#system-message dd.notice ul {
+-moz-background-clip:border;
+-moz-background-origin:padding;
+-moz-background-size:auto auto;
+background-attachment:scroll;
+background-color:#EFE7B8;
+background-image:none;
+background-position:0 0;
+background-repeat:repeat;
+border-bottom-color:#F0DC7E;
+border-bottom-style:solid;
+border-bottom-width:3px;
+border-top-color:#F0DC7E;
+border-top-style:solid;
+border-top-width:3px;
+color:#CC0000;
+}
+#system-debug {
+background-color:#FFFFFF;
+color:#CCCCCC;
+margin-bottom:10px;
+margin-left:10px;
+margin-right:10px;
+margin-top:10px;
+padding-bottom:10px;
+padding-left:10px;
+padding-right:10px;
+padding-top:10px;
+}
+#system-debug div {
+font-size:11px;
+}

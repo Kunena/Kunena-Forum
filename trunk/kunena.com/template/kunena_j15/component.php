@@ -19,7 +19,11 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>">
 <head>
 	<jdoc:include type="head" />
+	<?php if (JDEBUG==1):?>
 	<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/styles.css" type="text/css" />
+	<?php else: ?>
+	<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/css/styles-min.css" type="text/css" />
+	<?php endif; ?>
 </head>
 <body class="contentpane">
 	<jdoc:include type="message" />

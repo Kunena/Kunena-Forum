@@ -34,6 +34,9 @@ Legend:
 
 Kunena Site Template based on Rocket Theme Afterburner
 
+5-July-2010 fxstein
++ [#19707] Added missing build files and updated builder config
+
 4-July-2010 fxstein
 ^ [#19707] Update template version info to 1.6.0
 - [#19707] Remove unsupported css color choices

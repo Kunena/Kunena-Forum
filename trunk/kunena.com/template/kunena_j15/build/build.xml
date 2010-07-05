@@ -44,9 +44,6 @@
 		</not>
 	</condition>
 	<property file="build.config.ini" />
-	<property name="kunena.frontend" value="components/com_kunena" />
-	<property name="kunena.backend" value="administrator/components/com_kunena" />
-	<property name="kunena.media" value="media/kunena" />
 
 	<target name="dist" depends="mkdir,archive,init,build,minify,copy,tar,zip,gzip,bz2,info,cleanup" />
 
@@ -66,7 +63,7 @@
 	</target>
 
 	<target name="init" depends="mkdir">
-		<xmlproperty file="${project_dir}/${kunena.backend}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<xmlproperty file="${project_dir}/templateDetails.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<buildnumber />
 		<tstamp>
 			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
@@ -99,19 +96,23 @@
 			<istrue value="${cfg.bz2}" />
 		</condition>
 
-		<copy todir="${tmp_dir}/administrator">
-			<fileset dir="${project_dir}/administrator" />
+		<copy todir="${tmp_dir}/admin">
+			<fileset dir="${project_dir}/admin" />
 		</copy>	
-		<copy todir="${tmp_dir}/components">
-			<fileset dir="${project_dir}/components">
-				<exclude name="com_kunena/template/**/params.ini"/>
-			</fileset>
+		<copy todir="${tmp_dir}/css">
+			<fileset dir="${project_dir}/css" />
 		</copy>	
-		<copy todir="${tmp_dir}/media">
-			<fileset dir="${project_dir}/media" />
+		<copy todir="${tmp_dir}/html">
+			<fileset dir="${project_dir}/html" />
+		</copy>	
+		<copy todir="${tmp_dir}/images">
+			<fileset dir="${project_dir}/images" />
+		</copy>	
+		<copy todir="${tmp_dir}/js">
+			<fileset dir="${project_dir}/js" />
 		</copy>	
 		<copy todir="${tmp_dir}">
-			<fileset file="${project_dir}/README.txt" />
+			<fileset file="${project_dir}/*.*" />
 		</copy>	
 	</target>
 
@@ -122,36 +123,10 @@
 		<filter token="kunenaversionbuild" value="${build.number}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
 
-		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.frontend}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.frontend}/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/templateDetails.xml" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.frontend}/lib/kunena.defines.php" todir="${tmp_dir}/${kunena.frontend}/lib" overwrite="true" filtering="true" />
-		<copy file="${project_dir}/${kunena.backend}/libraries/api.php" todir="${tmp_dir}/${kunena.backend}/libraries" overwrite="true" filtering="true" />
-
-		<!-- Move files needed by the installer -->
-		<move file="${tmp_dir}/${kunena.backend}/install/admin.kunena.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/install/kunena.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/install/router.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/install/kunena.install.upgrade.xml" todir="${build_dir}/install" overwrite="true" filtering="true" />
-		<move todir="${build_dir}">
-			<fileset dir="${tmp_dir}/${kunena.backend}">
-				<include name="*install*"/>
-				<include name="install/**"/>
-			</fileset>
-		</move>
-		<!-- Rename component entry files so that they replace the old ones just before the end of the installation process, thus keeping forum offline while installing. -->
-		<move file="${tmp_dir}/${kunena.backend}/admin.kunena.php" tofile="${tmp_dir}/${kunena.backend}/admin.kunena.new.php" overwrite="true" filtering="false" />
-		<move file="${tmp_dir}/${kunena.frontend}/kunena.php" tofile="${tmp_dir}/${kunena.frontend}/kunena.new.php" overwrite="true" filtering="false" />
-		<move file="${tmp_dir}/${kunena.frontend}/router.php" tofile="${tmp_dir}/${kunena.frontend}/router.new.php" overwrite="true" filtering="false" />
-		<move todir="${build_dir}/archive" includeEmptyDirs="no">
-			<fileset dir="${tmp_dir}/${kunena.backend}/archive" />
-		</move>
-		<move todir="${build_dir}/languages" flatten="yes" includeEmptyDirs="no">
-			<fileset dir="${tmp_dir}/${kunena.backend}/language">
-				<include name="**/*install*"/>
-			</fileset>
-		</move>
 	</target>
 
 	<target name="minify" depends="build">
@@ -168,38 +143,19 @@
 		</taskdef>
 
 		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/js/slimbox/" 
-			todir="${tmp_dir}/${kunena.frontend}/js/slimbox/">
+			fromdir="${project_dir}/js" 
+			todir="${tmp_dir}/js">
 		</yui-compressor>
 
 		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/template/default/css" 
-			todir="${tmp_dir}/${kunena.frontend}/template/default/css">
+			fromdir="${project_dir}/css" 
+			todir="${tmp_dir}/css">
 		</yui-compressor>
-
-		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/template/example/css" 
-			todir="${tmp_dir}/${kunena.frontend}/template/example/css">
-		</yui-compressor>
-
-		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/template/default/js" 
-			todir="${tmp_dir}/${kunena.frontend}/template/default/js">
-		</yui-compressor>
-
-		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/template/default/plugin/poll/js" 
-			todir="${tmp_dir}/${kunena.frontend}/template/default/plugin/poll/js">
-		</yui-compressor>
-		
 	</target>
 	
 	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
 
-		<zip destfile="${build_dir}/archive/admin.zip" basedir="${tmp_dir}/${kunena.backend}" />
-		<zip destfile="${build_dir}/archive/site.zip" basedir="${tmp_dir}/${kunena.frontend}" />
-		<zip destfile="${build_dir}/archive/media.zip" basedir="${tmp_dir}/${kunena.media}" />
 	</target>
 
 	<target name="tar" depends="copy" if="do.tar">

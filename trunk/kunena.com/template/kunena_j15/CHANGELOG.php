@@ -39,6 +39,7 @@ Kunena Site Template based on Rocket Theme Afterburner
 + [#19707] Add svn:kewords:id to all files
 # [#19707] Added missing builder file copies
 + [#19707] Added styling for system messages
++ [#19707] Add google analytics and quantcast js tags
 
 4-July-2010 fxstein
 ^ [#19707] Update template version info to 1.6.0

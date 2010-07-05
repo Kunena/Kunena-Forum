@@ -19,19 +19,6 @@ $mootools_enabled       = ($this->params->get("mootools_enabled", 1)  == 0)?"fal
 $caption_enabled        = ($this->params->get("caption_enabled", 1)  == 0)?"false":"true";
 $rockettheme_logo       = ($this->params->get("rocketthemeLogo", 1)  == 0)?"false":"true";
 
-// Move javascript to bottom of body tag
-// First we need to get all scripts
-$kHeaderScripts = array();
-$kHeaderScript = array();
-//$kHeader = $this->getHeadData();
-//$kHeaderScripts = array_merge($kHeader['scripts']);
-//$kHeaderScript = array_merge($kHeader['script']);
-// Now that we have a copy of the scripts, clear them out in the original header
-//$kHeader['scripts'] = array();
-//$kHeader['script'] = array();
-//$this->setHeadData($kHeader);
-
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" >
@@ -140,11 +127,26 @@ require(YOURBASEPATH . DS . "rt_utils.php");
 		<jdoc:include type="modules" name="debug" style="none" />
 	</div>
 </div>
-<?php
-// Add all scripts that we removed from the header
-foreach ($kHeaderScripts as $kScript => $kScriptType) {
-	echo '<script type="'.$kScriptType.'" src="'.$kScript.'"></script>';
-}
-?>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-627996-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!-- Start Quantcast tag -->
+<script type="text/javascript">
+_qoptions={
+qacct:"p-5cn07UfLolaZQ"
+};
+</script>
+<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+<noscript>
+<img src="http://pixel.quantserve.com/pixel/p-5cn07UfLolaZQ.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+</noscript>
+<!-- End Quantcast tag -->
 </body>
 </html>

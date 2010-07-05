@@ -1,5 +1,5 @@
 /**
-* @version $Id: README.txt 1654 2010-01-14 21:55:54Z fxstein $
+* @version $Id$
 * Kunena Joomla 1.5 site template
 * @package Kunena
 * @Copyright (C) 2010 Kunena All rights reserved

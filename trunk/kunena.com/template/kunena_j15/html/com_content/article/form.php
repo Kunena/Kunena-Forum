@@ -1,4 +1,4 @@
-<?php // @version: $Id: form.php 12389 2009-07-01 00:34:45Z ian $
+<?php // @version: $Id$
 defined('_JEXEC') or die('Restricted access');
 $config =& JFactory::getConfig();
 $publish_up =& JFactory::getDate($this->article->publish_up);

@@ -1,4 +1,4 @@
-<?php // @version $Id: blog.php 11917 2009-05-29 19:37:05Z ian $
+<?php // @version $Id$
 defined('_JEXEC') or die('Restricted access');
 $cparams = JComponentHelper::getParams ('com_media');
 ?>

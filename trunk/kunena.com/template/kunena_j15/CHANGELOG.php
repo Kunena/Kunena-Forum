@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 1916 2010-02-12 19:09:45Z severdia $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *
@@ -36,6 +36,7 @@ Kunena Site Template based on Rocket Theme Afterburner
 
 5-July-2010 fxstein
 + [#19707] Added missing build files and updated builder config
++ [#19707] Add svn:kewords:id to all files
 
 4-July-2010 fxstein
 ^ [#19707] Update template version info to 1.6.0

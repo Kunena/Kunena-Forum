@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+5-July-2010 @quila
+# [#19288] Cleanup whole template, fix some minor bugs (part 6)
+
 4-July-2010 @quila
 # [#19288] Cleanup whole template, fix some minor bugs (part 5)
 

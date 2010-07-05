@@ -77,7 +77,9 @@ $id = JRequest::getInt ( 'id', 0 );
 
 	for($i = 0; $i < $jr_forum_count; $i ++) {
 		if ($i == $jr_forum_count - 1) {
+			if ( $this->config->onlineusers ) :
 			$firelast .= '<br /><div class="path-element-last">' . $jr_path_menu [$i] . $fireinfo . '</div>';
+			endif;
 		} else {
 			$firepath .= '<div class="path-element">' . $jr_path_menu [$i] . '</div>';
 		}

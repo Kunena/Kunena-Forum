@@ -15,45 +15,70 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 	return;
 }
 ?>
-<table class="kblock" id="kforumsearch" >
-	<thead>
-		<tr>
-			<th colspan="3">
-				<h2><?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?></h2>
-				<span><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->q) ); ?></span>
-			</th>
-		</tr>
-	</thead>
-
+<div class="kblock ksearchresult">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="ksearchresult"></a></span>
+		<h2>
+			<span>
+				<?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?>
+			</span>
+		</h2>
+		<div class="ksearchresult-desc km">
+			<span><?php echo JText::sprintf ('COM_KUNENA_FORUM_SEARCH', $this->escape($this->q) ); ?></span>
+		</div>
+	</div>
+	<div class="kcontainer" id="ksearchresult">
+		<div class="kbody">
+<table>
 	<tbody>
-		<tr class="ksth">
-			<th class="kcol kcol-search-subject"><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></th>
-			<th class="kcol kcol-search-author"><?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?></th>
-			<th class="kcol kcol-search-date"><?php echo JText::_('COM_KUNENA_GEN_DATE'); ?></th>
-		</tr>
-
-		<?php $k = 0;
-		if ($this->total == 0 && $this->int_kunena_errornr) : ?>
-		<tr class="k<?php echo $this->tabclass [$k] ?>" ><td colspan="3" style="text-align:center;font-weight:bold"><?php echo $this->escape($this->str_kunena_errormsg) ?></td></tr>
-		<?php endif; ?>
-
-		<?php foreach ( $this->results as $result ) : ?>
-		<tr class="krow<?php echo $k ^= 1 . (isset ( $result->class_sfx ) ? ' krow' . $k ^ 1 . $this->escape($result->class_sfx) : '')?>">
-			<td class="kcol kcol-search-subject">
-			<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($result->catid), intval($result->id), NULL, NULL, $result->htmlsubject, intval($result->id) )?>
-			<br />
-			<?php echo $result->htmlmessage ?>
-			<br />
-			<span style="font-size: x-small;"><?php
-				echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($result->catid), $this->escape($result->catname), $rel = 'follow', $class = '', $title = '' )?></span>
+		<tr>
+			<td>
+				<?php foreach ( $this->results as $result ) : ?>
+					<table>
+						<thead>
+							<tr class="ksth">
+								<th colspan="2" class="kview-th ksectiontableheader">
+									<span class="kmsgdate">
+										<?php echo CKunenaTimeformat::showDate ( $result->time )?>
+									</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php $k = 0; if ($this->total == 0 && $this->int_kunena_errornr) : ?>
+							<tr class="k<?php echo $this->tabclass [$k] ?>" >
+								<td>
+									<?php echo $this->escape($this->str_kunena_errormsg) ?>
+								</td>
+							</tr>
+							<?php endif; ?>
+							<tr>
+								<td rowspan="2" valign="top" class="kprofile-left kresultauthor">
+								<p><?php echo $this->escape($result->name) ?></p>
+								</td>
+								<td class="kmessage-left resultmsg">
+									<div class="kmsgbody">
+										<div class="kmsgtitle kleft">
+											<span class="kmsgtitle">
+												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($result->catid), intval($result->id), NULL, NULL, $result->htmlsubject, intval($result->id) )?>
+											</span>
+										</div>
+										<div class="kmsgtext resultmsg">
+											<?php echo $result->htmlmessage ?>
+										</div>
+										<div class="resultcat">
+											<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($result->catid), $this->escape($result->catname), $rel = 'follow', $class = '', $title = '' )?>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				<?php endforeach; ?>
 			</td>
-			<td class="kcol kcol-search-author"><?php echo $this->escape($result->name) ?></td>
-			<td class="kcol kcol-search-date"><?php echo CKunenaTimeformat::showDate ( $result->time )?></td>
 		</tr>
-		<?php endforeach; ?>
-
 		<tr class="ksth">
-			<th colspan="3" class="kcenter">
+			<th colspan="3" class="kcenter sectiontableheader">
 			<?php
 			$resStart = $this->limitstart + 1;
 			$resStop = $this->limitstart + count ( $this->results );
@@ -71,3 +96,6 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 		</tr>
 	</tbody>
 </table>
+</div>
+</div>
+</div>

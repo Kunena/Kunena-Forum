@@ -69,17 +69,20 @@ PX		EM			PCT			PT
 /* 
 ----------------------------------------------------------------------------------------------- */
 #Kunena div.kannouncement h2 {
-	/*background: red;*/
+	background: red;
+	display:table;
+	table-layout:fixed;
+	word-wrap:break-word;
 }
 #Kunena div#kannouncement .kanndesc {
 	padding: 5px 10px;
-	/*background: yellow;*/
+	background: #FFFFAA;
 }
 #Kunena div.kfrontstats h2 {
-	/*background: black;*/
+	background: black;
 }
 #Kunena div.kwhoisonline h2 {
-	/*background: green;*/
+	background: green;
 }
 
 
@@ -133,6 +136,9 @@ PX		EM			PCT			PT
 	width: 25%;
 	vertical-align: middle;
 }
+#Kunena td.kcol-kcaticon {
+	width: 1%;
+}
 
 #Kunena td.ktd-kcol-first {
 	border-left: none;
@@ -140,7 +146,7 @@ PX		EM			PCT			PT
 	padding: 4px 8px;
 	vertical-align: middle;
 	white-space:nowrap;
-	width: 1%;
+	/*width: 1%;*/
 }
 #Kunena td.ktd-kcol-other {
 	border-left: 1px solid #BFC3C6;
@@ -187,14 +193,48 @@ PX		EM			PCT			PT
 	width: 15%;
 	text-align: center;
 }
-#Kunena div#history td.kauthor {
+#Kunena div#history td.kauthor,
+#Kunena div#ksearchresult td.kresultauthor {
 	text-align:center;
 }
 #Kunena div#history td.khistorymsg {
 	text-align:left;
 	padding: 10px;
 }
-
+#Kunena div.ksearchresult-desc {
+	padding: 5px;
+}
+#Kunena div#ksearchresult div.resultmsg {
+	padding: 15px 0;
+}
+#Kunena div#ksearchresult span.kmsgtitle a {
+	font-weight: bold;
+}
+#Kunena div#ksearchresult td.resultmsg {
+	padding: 0 10px 10px;
+}
+#Kunena div#ksearchresult div.resultcat {
+	padding: 5px 0 0 0;
+	border-top: 1px dotted #BFC3C6;
+}
+#Kunena h1 a:hover,
+#Kunena h2 a:hover {
+	text-decoration: underline;
+}
+#Kunena div.kpolldesc td.kpoption {
+	text-align: left;
+	width: 60%;
+	padding: 3px 8px;
+}
+#Kunena div.kpolldesc td.kpbar {
+	text-align: left;
+	width: 20%;
+}
+#Kunena div.kpolldesc td.kpnumber,
+#Kunena div.kpolldesc td.kppercent {
+	text-align: center;
+	width: 10%;
+}
 
 /* MAIN STYLES
 ----------------------------------------------------------------------------------------------- */
@@ -723,16 +763,9 @@ PX		EM			PCT			PT
 }
 
 #Kunena #ktop span.ktoggler {
-	/*background: #5388B4;
+	background: #5388B4;
 	margin:-16px 0;
-	padding:1px 1px 0;*/
-	background:none repeat scroll 0 0 #5388B4;
-	height:28px;
-	margin:-30px 0 0;
-	padding:5px 0px 0px 12px;
-	width:25px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-topright:5px;
+	padding:1px 1px 0;
 }
 
 #Kunena #ktopmenu {
@@ -1421,7 +1454,7 @@ PX		EM			PCT			PT
 	text-indent: 10px;
 	padding-top: 2px;
 	color: #FFFFFF;
-	margin-top: 5px;
+	margin-top: 0px;
 	margin-bottom: 0px;
 	height:1.8em;
 	font-weight:bold;
@@ -3137,13 +3170,14 @@ label.kpoll-term-lbl {
 }
 
 #kpoll-form-vote ul {
-	margin:0;
+	margin:0 0 0 20px;
 	padding: 0;
 }
 
 #kpoll-form-vote ul li {
 	list-style-type:none;
 	line-height: 30px;
+	list-style: none !important;
 }
 #kpoll-btns {
 	margin: 15px 0;

@@ -144,7 +144,7 @@ $document->addScriptDeclaration( "function validate() {
 							<td class="ktd-kcol-first ks" align="center"><?php echo $nr; ?></td>
 
 							<?php if ($this->config->userlist_online) : ?>
-							<td class="ktd-kcol-other">
+							<td class="ktd-kcol-other" style="width:1%;">
 								<?php // online - ofline status
 								$isonline=$profile->isOnline();
 								if ($isonline && $user->showOnline ==1 ) {
@@ -202,24 +202,20 @@ $document->addScriptDeclaration( "function validate() {
 					<input type="hidden" name="filter_order" value="<?php echo intval($this->order); ?>" />
 					<input type="hidden" name="filter_order_dir" value="<?php echo intval($this->order_dir); ?>" />
 				</form>
-
 				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit="return false;">
-					<table class="kuserlist_pagenav">
-						<tr class="ksth km">
-							<th class="th-1" align="center" style="text-align:center;">
-								<?php
-								// TODO: fxstein - Need to perform SEO cleanup
-								echo $this->pageNav->getPagesLinks(CKunenaLink::GetUserlistURL($this->searchuri));
-								?>
-							</th>
-						</tr>
-					</table>
-
 					<table class="kblocktable" id="kuserlist_bottom">
 						<tr>
-							<th class="th-right km" style="text-align:right">
-							<?php echo $this->pageNav->getPagesCounter(); ?> | <?php echo JText::_('COM_KUNENA_USRL_DISPLAY_NR'); ?> <?php echo $this->pageNav->getLimitBox(CKunenaLink::GetUserlistURL($this->searchuri)); ?>
-							</th>
+							<td>
+								<div style="text-align:center">
+									<?php
+									// TODO: fxstein - Need to perform SEO cleanup
+									echo $this->pageNav->getPagesLinks(CKunenaLink::GetUserlistURL($this->searchuri));
+									?>
+								<span style="float:right">
+									<?php echo $this->pageNav->getPagesCounter(); ?> | <?php echo JText::_('COM_KUNENA_USRL_DISPLAY_NR'); ?> <?php echo $this->pageNav->getLimitBox(CKunenaLink::GetUserlistURL($this->searchuri)); ?>
+								</span>
+								</div>
+							</td>
 						</tr>
 					</table>
 				</form>

@@ -89,9 +89,6 @@ foreach ( $this->categories [0] as $section ) :
 		?>
 			<div class="kthead-child">
 			<div class="kcc-table">
-			<div class="kcc-childcat-title">
-				<?php echo count ( $this->childforums [$category->id] ) == 1 ? JText::_('COM_KUNENA_CHILD_BOARD') : JText::_('COM_KUNENA_CHILD_BOARDS') ?>:
-			</div>
 			<?php foreach ( $this->childforums [$category->id] as $childforum ) : ?>
 			<div class="kcc-subcat km">
 			<?php
@@ -106,7 +103,7 @@ foreach ( $this->categories [0] as $section ) :
 		<?php endif; ?>
 		<?php if (! empty ( $this->modlist [$category->id] )) : ?>
 			<div class="kthead-moderators ks">
-		<?php 
+		<?php
 				// get the Moderator list for display
 				$modslist = array();
 				foreach ( $this->modlist [$category->id] as $mod ) {
@@ -140,7 +137,7 @@ foreach ( $this->categories [0] as $section ) :
 			<?php if ($category->numTopics != 0) { ?>
 			<td class="td-5 kleft" width="25%">
 			<?php if ($this->config->avataroncat > 0) : ?>
-			<!-- Avatar --> 
+			<!-- Avatar -->
 			<?php
 				$profile = KunenaFactory::getUser((int)$category->userid);
 				$useravatar = $profile->getAvatarLink('klist-avatar', 'list');

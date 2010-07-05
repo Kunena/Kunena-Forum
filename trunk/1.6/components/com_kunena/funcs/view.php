@@ -494,11 +494,28 @@ class CKunenaView {
 
 		//meta description and keywords
 		$metaKeys = kunena_htmlspecialchars ( "{$this->first_message->subject}, {$objCatParentInfo->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
-		$metaDesc = kunena_htmlspecialchars ( "{$this->first_message->subject} ({$page}/{$totalpages}) - {$objCatParentInfo->name} - {$this->catinfo->name} - {$this->config->board_title} " . JText::_('COM_KUNENA_GEN_FORUM') );
+
+		// Create Meta Description form the content of the first message
+		// better for search results display but NOT for search ranking!
+		$metaDesc = KunenaParser::stripBBCode($this->first_message->message);
+		$metaDesc = strip_tags($metaDesc); // Now remove all tags
+		$metaDesc = preg_replace('/\s+/', ' ', $metaDesc); // remove newlines
+		$metaDesc = preg_replace('/^[^\w0-9]+/', '', $metaDesc); // remove characters at the beginning that are not letters or numbers
+		$metaDesc = trim($metaDesc); // Remove trailing spaces and beginning
+
+		// remove multiple spaces
+		while (strpos($metaDesc, '  ') !== false){
+			$metaDesc = str_replace('  ', ' ', $metaDesc);
+		}
+
+		// limit to 185 characters - google will cut off at ~150
+		if (strlen($metaDesc) > 185){
+			$metaDesc = rtrim(substr($metaDesc, 0, 182)).'...';
+		}
+
+		$metaDesc = htmlspecialchars($metaDesc);
 
 		$document = & JFactory::getDocument ();
-		$cur = $document->get ( 'description' );
-		$metaDesc = $cur . '. ' . $metaDesc;
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
 

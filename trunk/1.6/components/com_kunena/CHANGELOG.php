@@ -18,9 +18,8 @@ defined( '_JEXEC' ) or die();
 Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
-the Kunena 1.x, including beta and release candidate versions.
-The Kunena 1.x is based on the FireBoard releases but includes some
-drastic technical changes.
+Kunena 1.6.x, including beta and release candidate versions.
+
 Legend:
 
 * -> Security Fix
@@ -36,6 +35,7 @@ Kunena 1.6.0-BETA1
 
 5-July-2010 fxstein
 - [#21302] Remove Child Board header
+^ [#21314] Updated Meta Description Logic - Thx JoniJnm
 
 4-July-2010 fxstein
 ^ [#21302] Update version info for 1.6.0 Beta 1 release

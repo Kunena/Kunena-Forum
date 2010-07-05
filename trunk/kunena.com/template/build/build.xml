@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
 <!--
-  Kunena ant build file
+  Kunena Joomla 1.5 template ant build file
 
   @version      $Id: build.xml 2902 2010-07-03 22:04:12Z mahagr $
   @package		Kunena

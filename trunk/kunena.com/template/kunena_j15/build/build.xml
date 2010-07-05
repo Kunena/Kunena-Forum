@@ -154,8 +154,24 @@
 	</target>
 	
 	<target name="copy" depends="minify">
-		<mkdir dir="${build_dir}/archive" />
-
+		<copy todir="${build_dir}/admin">
+			<fileset dir="${tmp_dir}/admin" />
+		</copy>	
+		<copy todir="${build_dir}/css">
+			<fileset dir="${tmp_dir}/css" />
+		</copy>	
+		<copy todir="${build_dir}/html">
+			<fileset dir="${tmp_dir}/html" />
+		</copy>	
+		<copy todir="${build_dir}/images">
+			<fileset dir="${tmp_dir}/images" />
+		</copy>	
+		<copy todir="${build_dir}/js">
+			<fileset dir="${tmp_dir}/js" />
+		</copy>	
+		<copy todir="${build_dir}">
+			<fileset file="${tmp_dir}/*.*" />
+		</copy>	
 	</target>
 
 	<target name="tar" depends="copy" if="do.tar">

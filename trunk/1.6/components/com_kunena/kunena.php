@@ -46,6 +46,7 @@ if(JDEBUG){
 }
 
 $func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
+JRequest::setVar ( 'func', $func );
 
 require_once(KUNENA_PATH . DS . 'router.php');
 if ($func && !in_array($func, KunenaRouter::$functions)) {

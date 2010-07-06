@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+6-July-2010 Matias
+# [#19288] Fix showcat in menu item acting like listcat
+
 5-July-2010 fxstein
 - [#21302] Remove Child Board header
 ^ [#21314] Updated Meta Description Logic - Thx JoniJnm

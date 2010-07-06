@@ -39,7 +39,11 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix missing manifest (kunena.xml) file in administration
 # [#19288] Remove old manifest.xml during upgrade -- Joomla cannot decide which one it should use
 # [#20038] Joomla 1.6: Workaround J! feature that loads both old and new installer
-# [#20038] Joomla 1.6: Fix missing admin menus in J1.6 Beta5+ (needs a fix in Joomla)
+# [#20038] Joomla 1.6: Fix missing admin menus in J1.6 Beta5+ (needs a fix in Joomla, thanks Sam!)
+# [#19288] Fix fatal error when uploading attachments: undefined method CKunenaUpload::fileInfo()
+# [#19288] Fix PHP Notice: Undefined index: mime, when uploading attachments
+# [#19288] Fix PHP Notice: Undefined index: index in KunenaUser class
+# [#19288] Fix PHP Notice: Use of undefined constant name - assumed 'name', when uploading attachment fails
 
 5-July-2010 fxstein
 - [#21302] Remove Child Board header

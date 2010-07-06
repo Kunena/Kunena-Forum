@@ -45,15 +45,14 @@ class CKunenaAttachments {
 			if(JDEBUG == 1 && defined('JFIREPHP')){
 				FB::log('Kunena save attachment: ' . $fileinfo['name']);
 			}
-			// FIXME: Warning raised, no MIME in other than images!!!
 			$this->_db->setQuery ( "INSERT INTO #__kunena_attachments (mesid, userid, hash, size, folder, filetype, filename) values (" .
 				(int)$mesid . "," . (int)$this->_my->id . "," . $this->_db->quote ( $fileinfo['hash'] ) . "," .
-				$this->_db->quote ( $fileinfo['size'] ) . "," . $this->_db->quote ( $folder ) . "," . $this->_db->quote ( $fileinfo['mime'] ) . "," .
+				$this->_db->quote ( $fileinfo['size'] ) . "," . $this->_db->quote ( $folder ) . "," . $this->_db->quote ( isset($fileinfo['mime']) ? $fileinfo['mime'] : '' ) . "," .
 				$this->_db->quote ( $fileinfo['name'] ) . ")" );
 
-			if (! $this->_db->query () || $this->_db->getErrorNum()) {
+			if (KunenaError::checkDatabaseError() || ! $this->_db->query ()) {
 				$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_ATTACHMENT_DATABASE_STORE'));
-				$fileinfo = $upload->fileInfo();
+				$fileinfo = $upload->getFileInfo();
 			}
 			$fileinfo['id'] = $this->_db->insertId();
 		}

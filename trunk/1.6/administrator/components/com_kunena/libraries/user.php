@@ -253,7 +253,7 @@ class KunenaUser extends JObject {
 	public function isOnline($yesno = false) {
 		$myprofile = KunenaFactory::getUser ();
 		if (intval($this->userid) < 1 || (! $this->showOnline && ! $myprofile->isModerator ())) {
-			$this->_online [$this->userid] = false;
+			self::$_online [$this->userid] = false;
 		} else if (! isset ( self::$_online [$this->userid] )) {
 			kimport ( 'error' );
 			// If online information is not already loaded and user has been saved, pre-fetch information for all users

@@ -437,7 +437,7 @@ class CKunenaPost {
 		$fileinfos = $attachments->multiupload ( $this->id, $fields ['message'] );
 		foreach ( $fileinfos as $fileinfo ) {
 			if (! $fileinfo ['status'])
-				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo [name] ) . ': ' . $fileinfo ['error'], 'error' );
+				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo ['name'] ) . ': ' . $fileinfo ['error'], 'error' );
 		}
 		// TODO: find better way to do this (not again!):
 		$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$this->_db->Quote($this->id)}" );

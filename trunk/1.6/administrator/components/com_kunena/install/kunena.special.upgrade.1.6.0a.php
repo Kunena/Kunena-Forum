@@ -74,9 +74,12 @@ foreach ( $templatedeprecatedlist as $template ) {
 // First check if attachments table has legacy field
 $fields = array_pop ( $kunena_db->getTableFields ( '#__kunena_attachments' ) );
 if (isset ( $fields ['filelocation'] )) {
-	$query = "DROP TABLE `#__kunena_attachments_bak`";
+	$query = "DROP TABLE IF EXISTS `#__kunena_attachments_bak`";
 	$kunena_db->setQuery ( $query );
 	$kunena_db->query ();
+	if ($this->db->getErrorNum ())
+		throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
 	// Attachments table has filelocation - assume we have to convert attachments
 	// hash and size ommited -> NULL
 	$query = "RENAME TABLE `#__kunena_attachments` TO `#__kunena_attachments_bak`";

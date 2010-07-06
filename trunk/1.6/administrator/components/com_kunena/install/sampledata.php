@@ -12,6 +12,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 // This file contains initial sample data for the forum
 
+class KText {
+	function _($param) {
+		return JText::_(str_replace('\n', "\n", $param));
+	}
+}
+
 function installSampleData()
 {
 	jimport ( 'joomla.utilities.date' );
@@ -23,15 +29,15 @@ function installSampleData()
 
 	$query = "INSERT INTO `#__kunena_ranks`
 	(`rank_id`, `rank_title`, `rank_min`, `rank_special`, `rank_image`) VALUES
-	(1, 'Fresh Boarder', 0, 0, 'rank1.gif'),
-	(2, 'Junior Boarder', 20, 0, 'rank2.gif'),
-	(3, 'Senior Boarder', 40, 0, 'rank3.gif'),
-	(4, 'Expert Boarder', 80, 0, 'rank4.gif'),
-	(5, 'Gold Boarder', 160, 0, 'rank5.gif'),
-	(6, 'Platinum Boarder', 320, 0, 'rank6.gif'),
-	(7, 'Administrator', 0, 1, 'rankadmin.gif'),
-	(8, 'Moderator', 0, 1, 'rankmod.gif'),
-	(9, 'Spammer', 0, 1, 'rankspammer.gif');";
+	(1, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK1'))}, 0, 0, 'rank1.gif'),
+	(2, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK2'))}, 20, 0, 'rank2.gif'),
+	(3, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK3'))}, 40, 0, 'rank3.gif'),
+	(4, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK4'))}, 80, 0, 'rank4.gif'),
+	(5, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK5'))}, 160, 0, 'rank5.gif'),
+	(6, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK6'))}, 320, 0, 'rank6.gif'),
+	(7, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK_ADMIN'))}, 0, 1, 'rankadmin.gif'),
+	(8, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR'))}, 0, 1, 'rankmod.gif'),
+	(9, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER'))}, 0, 1, 'rankspammer.gif');";
 
 	$queries[] = array ('kunena_ranks', $query);
 
@@ -108,21 +114,21 @@ function installSampleData()
 
 	$query="INSERT INTO `#__kunena_categories`
 	(`id`, `parent`, `name`, `pub_access`, `ordering`, `published`, `description`, `headerdesc`, `numTopics`, `numPosts`, `allow_polls`) VALUES
-	(1, 0, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_TITLE')).", 0, 1, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_MAIN_CATEGORY_HEADER')).", 0, 0, 0),
-	(2, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_TITLE')).", 0, 1, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM1_HEADER')).",1 ,1, 0),
-	(3, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_TITLE')).", 0, 2, 1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_DESC')).", ".$db->quote(JText::_('COM_KUNENA_SAMPLE_FORUM2_HEADER')).",0 ,0, 1);";
+	(1, 0, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_TITLE')).", 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_SECTION_HEADER')).", 0, 0, 0),
+	(2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_TITLE')).", 0, 1, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY1_HEADER')).",1 ,1, 0),
+	(3, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_TITLE')).", 0, 2, 1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_DESC')).", ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_CATEGORY2_HEADER')).",0 ,0, 1);";
 
 	$queries[] = array ('kunena_categories', $query);
 
 	$query="INSERT INTO `#__kunena_messages`
 	(`id`, `parent`, `thread`, `catid`, `userid`, `name`, `subject`, `time`, `ip`) VALUES
-	(1, 0, 1, 2, ".$db->quote($my->id).", 'Kunena', ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_SUBJECT')).", ".$posttime->toUnix().", '127.0.0.1');";
+	(1, 0, 1, 2, ".$db->quote($my->id).", 'Kunena', ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_SUBJECT')).", ".$posttime->toUnix().", '127.0.0.1');";
 
 	$queries[] = array ('kunena_messages', $query);
 
 	$query="INSERT INTO `#__kunena_messages_text`
 	(`mesid`, `message`) VALUES
-	(1, ".$db->quote(JText::_('COM_KUNENA_SAMPLE_POST1_TEXT')).");";
+	(1, ".$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_POST1_TEXT')).");";
 
 	$queries[] = array ('kunena_messages_text', $query);
 

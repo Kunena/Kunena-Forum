@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+7-July-2010 Matias
+# [#19288] Move sample data translations into en-GB.com_kunena.install.ini to be able to translate it without main language files
+# [#19288] Sample data: Fix truncated multi-line translations to work around J1.5 limitation
+# [#19288] Sample data: Add missing translations for ranks
+
 6-July-2010 Matias
 # [#19288] Fix showcat in menu item acting like listcat
 # [#19288] Installer script didn't get copied in J1.5

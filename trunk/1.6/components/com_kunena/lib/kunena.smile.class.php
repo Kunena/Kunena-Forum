@@ -166,6 +166,7 @@ class smile {
 		$text = preg_replace ( '/(\[right\])/', ' ', $text );
 		$text = preg_replace ( '/(\[\/right\])/', ' ', $text );
 		$text = preg_replace ( '/(\[code:1\])(.*?)(\[\/code:1\])/', '\\2', $text );
+		$text = preg_replace ( '/(\[code.*?\])(.*?)(\[\/code\])/', '\\2', $text );
 		$text = preg_replace ( '/(\[ul\])(.*?)(\[\/ul\])/s', '\\2', $text );
 		$text = preg_replace ( '/(\[li\])(.*?)(\[\/li\])/s', '\\2', $text );
 		$text = preg_replace ( '/(\[ol\])(.*?)(\[\/ol\])/s', '\\2', $text );
@@ -176,12 +177,27 @@ class smile {
 		$text = preg_replace ( '/\[url=(.*?)\](.*?)\[\/url\]/s', '\\2 (\\1)', $text );
 		$text = preg_replace ( '/<A (.*)>(.*)<\/A>/i', '\\2', $text );
 		$text = preg_replace ( '/\[file(.*?)\](.*?)\[\/file\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[attachment(.*?)\](.*?)\[\/attachment\]/s', '\\2', $text );
 		$text = preg_replace ( '/\[hide(.*?)\](.*?)\[\/hide\]/s', ' ', $text );
 		$text = preg_replace ( '/\[spoiler(.*?)\](.*?)\[\/spoiler\]/s', ' ', $text );
 		$text = preg_replace ( '/\[size=([1-7])\](.+?)\[\/size\]/s', '\\2', $text );
 		$text = preg_replace ( '/\[color=(.*?)\](.*?)\[\/color\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[highlight(.*?)\](.*?)\[\/highlight\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[indent(.*?)\](.*?)\[\/indent\]/s', '\\2', $text );
 		$text = preg_replace ( '/\[video\](.*?)\[\/video\]/s', '\\1', $text );
 		$text = preg_replace ( '/\[ebay\](.*?)\[\/ebay\]/s', '\\1', $text );
+		$text = preg_replace ( '/\[table(.*?)\](.*?)\[\/table\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[tr(.*?)\](.*?)\[\/tr\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[th(.*?)\](.*?)\[\/th\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[td(.*?)\](.*?)\[\/td\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[email(.*?)\](.*?)\[\/email\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[quote=(.*?)\](.*?)\[\/quote\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[module(.*?)\](.*?)\[\/module\]/s', ' ', $text );
+		$text = preg_replace ( '/\[article(.*?)\](.*?)\[\/article\]/s', ' ', $text );
+		$text = preg_replace ( '/\[list(.*?)\](.*?)\[\/list\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[map(.*?)\](.*?)\[\/map\]/s', '\\2', $text );
+		$text = preg_replace ( '/\[indent(.*?)\](.*?)\[\/indent\]/s', '\\2', $text );
+
 		$text = preg_replace ( '#/n#s', ' ', $text );
 		$text = strip_tags ( $text );
 		return (trim($text));

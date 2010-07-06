@@ -50,14 +50,15 @@ class CKunenaAttachments {
 				$this->_db->quote ( $fileinfo['size'] ) . "," . $this->_db->quote ( $folder ) . "," . $this->_db->quote ( isset($fileinfo['mime']) ? $fileinfo['mime'] : '' ) . "," .
 				$this->_db->quote ( $fileinfo['name'] ) . ")" );
 
-			if (KunenaError::checkDatabaseError() || ! $this->_db->query ()) {
+			$this->_db->query();
+			$fileinfo['id'] = $this->_db->insertId();
+			if (KunenaError::checkDatabaseError() || ! $fileinfo['id']) {
 				$upload->fail(JText::_('COM_KUNENA_UPLOAD_ERROR_ATTACHMENT_DATABASE_STORE'));
 				$fileinfo = $upload->getFileInfo();
 			}
-			$fileinfo['id'] = $this->_db->insertId();
 		}
 
-		if ($this->isImage($fileinfo['mime']))
+		if (!empty($fileinfo['mime']) && $this->isImage($fileinfo['mime']))
 			CKunenaImageHelper::version($path . DS . $fileinfo['name'], $path .DS. 'thumb', $fileinfo['name'], $this->_config->thumbwidth, $this->_config->thumbheight, intval($this->_config->imagequality));
 
 			// Fix attachments names inside message

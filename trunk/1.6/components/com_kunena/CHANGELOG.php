@@ -44,6 +44,7 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix PHP Notice: Undefined index: mime, when uploading attachments
 # [#19288] Fix PHP Notice: Undefined index: index in KunenaUser class
 # [#19288] Fix PHP Notice: Use of undefined constant name - assumed 'name', when uploading attachment fails
+# [#19288] Fix "Failed to store attachment into database."
 
 5-July-2010 fxstein
 - [#21302] Remove Child Board header

@@ -35,6 +35,11 @@ Kunena 1.6.0-BETA1
 
 6-July-2010 Matias
 # [#19288] Fix showcat in menu item acting like listcat
+# [#19288] Installer script didn't get copied in J1.5
+# [#19288] Fix missing manifest (kunena.xml) file in administration
+# [#19288] Remove old manifest.xml during upgrade -- Joomla cannot decide which one it should use
+# [#20038] Joomla 1.6: Workaround J! feature that loads both old and new installer
+# [#20038] Joomla 1.6: Fix missing admin menus in J1.6 Beta5+ (needs a fix in Joomla)
 
 5-July-2010 fxstein
 - [#21302] Remove Child Board header

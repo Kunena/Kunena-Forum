@@ -17,6 +17,8 @@ $jversion = new JVersion ();
 if ($jversion->RELEASE != '1.5') return;
 
 function com_uninstall() {
-	require_once(basename(dirname(__FILE__)).'/install.script.php');
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE != '1.5') return;
+	include_once(dirname(__FILE__).'/install.script.php');
 	Com_KunenaInstallerScript::uninstall ( null );
 }

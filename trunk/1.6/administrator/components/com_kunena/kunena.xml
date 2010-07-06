@@ -22,20 +22,20 @@
 		<filename>COPYRIGHT.php</filename>
 	</files>
 	<administration>
-		<menu view="cpanel" img="components/com_kunena/media/icons/kunena-favicon.png">Kunena Forum</menu>
+		<menu task="cpanel" img="components/com_kunena/media/icons/kunena-favicon.png">Kunena Forum</menu>
 		<submenu>
-			<menu link="option=com_kunena&amp;task=showconfig" img="components/com_kunena/media/icons/config-favicon.png">Configuration</menu>
-			<menu link="option=com_kunena&amp;task=showAdministration" img="components/com_kunena/media/icons/forums-favicon.png">Category Manager</menu>
-			<menu link="option=com_kunena&amp;task=showprofiles" img="components/com_kunena/media/icons/users-favicon.png">User Manager</menu>
-			<menu link="option=com_kunena&amp;task=showsmilies" img="components/com_kunena/media/icons/smilies-favicon.png">Emoticon Manager</menu>
-			<menu link="option=com_kunena&amp;task=ranks" img="components/com_kunena/media/icons/ranks-favicon.png">Rank Manager</menu>
+			<menu task="showconfig" img="components/com_kunena/media/icons/config-favicon.png">Configuration</menu>
+			<menu task="showAdministration" img="components/com_kunena/media/icons/forums-favicon.png">Category Manager</menu>
+			<menu task="showprofiles" img="components/com_kunena/media/icons/users-favicon.png">User Manager</menu>
+			<menu task="showsmilies" img="components/com_kunena/media/icons/smilies-favicon.png">Emoticon Manager</menu>
+			<menu task="ranks" img="components/com_kunena/media/icons/ranks-favicon.png">Rank Manager</menu>
 		</submenu>
 		<files>
+			<filename>install.script.php</filename>
 			<filename>admin.kunena.php</filename>
 			<folder>install</folder>
 			<folder>archive</folder>
 		</files>
-		<menu img="components/com_kunena/images/kunenafavicon.png">Kunena Forum</menu>
 		<languages folder="languages">
 			<language tag="en-GB">en-GB.com_kunena.install.ini</language>
 			<language tag="es-ES">es-ES.com_kunena.install.ini</language>

@@ -40,7 +40,14 @@ class Com_KunenaInstallerScript {
 		}
 	}
 
-	function preflight($type, $parent) {}
+	function preflight($type, $parent) {
+		// Remove deprecated manifest.xml (K1.5)
+		$manifest = JPATH_ADMINISTRATOR . '/components/com_kunena/manifest.xml';
+		if (is_file($manifest)) {
+			jimport( 'joomla.filesystem.file' );
+			JFile::delete($manifest);
+		}
+	}
 
 	function postflight($type, $parent) {
 		$parent->getParent()->set('redirect_url', JURI::base () . 'index.php?option=com_kunena&view=install');

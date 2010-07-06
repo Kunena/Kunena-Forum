@@ -65,7 +65,7 @@ class CKunenaAttachments {
 		$found = preg_match('/\D*(\d)+/', $key, $matches);
 		if (!empty($message) && $found) {
 			$intkey = $matches[1];
-			if (!$fileinfo['error']) {
+			if (empty($fileinfo['error'])) {
 				$message = preg_replace('/\[attachment\:'.$intkey.'\].*?\[\/attachment\]/u', '[attachment='.$fileinfo['id'].']'.$fileinfo['name'].'[/attachment]', $message);
 			} else {
 				$message = preg_replace('/\[attachment\:'.$intkey.'\](.*?)\[\/attachment\]/u', '[attachment]\\1[/attachment]', $message);

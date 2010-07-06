@@ -47,6 +47,7 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix "Failed to store attachment into database."
 # [#19288] Fix Undefined offset in many BBCode video types
 # [#19288] Remove new BBCode tags when stripping BBCode
+# [#19288] Fix PHP Notice: Undefined index, when uploading attachments
 
 5-July-2010 fxstein
 - [#21302] Remove Child Board header

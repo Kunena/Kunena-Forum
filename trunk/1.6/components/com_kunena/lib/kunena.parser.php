@@ -854,7 +854,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$tag_new = JText::_('COM_KUNENA_BBCODE_HIDDENTEXT');
 					} else {
 						// Display but highlight the fact that it is hidden from guests
-						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<span class="kmsgtext-quote">' . $between . '</span>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<span class="kmsgtext-hide">' . $between . '</span>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}

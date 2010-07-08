@@ -41,10 +41,10 @@ if ($this->showgenstats > 0)
 		<div class="kbody">
 			<table class = "kblocktable" id ="kfrontstats">
 				<tr class="krow1">
-					<td class = "ktd-kcol-first">
+					<td class = "kcol-first">
 						<div class="kstatsicon"></div>
 					</td>
-					<td class="ktd-kcol-other km">
+					<td class="kcol-mid km">
 						<ul id="kstatslistright" class="fltrt kright">
 							<li><?php echo JText::_('COM_KUNENA_STAT_TOTAL_USERS'); ?>: <strong><?php echo $userlist1; ?></strong> <span class="divider">|</span> <?php echo JText::_('COM_KUNENA_STAT_LATEST_MEMBERS'); ?>:<strong> <?php echo CKunenaLink::GetProfileLink($this->lastestmemberid); ?></strong></li>
 							<li>&nbsp;</li>

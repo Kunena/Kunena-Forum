@@ -316,6 +316,10 @@ class CKunenaListcat {
 		$output .= '</ul>';
 		return $output;
 	}
+	
+	function displayNotification() {
+		CKunenaTools::loadTemplate('/categories/infomessage.php');
+	}
 
 	function display() {
 		if (! $this->allow) {

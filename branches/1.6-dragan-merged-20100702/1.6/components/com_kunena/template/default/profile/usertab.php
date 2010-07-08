@@ -55,10 +55,13 @@ JHTML::_('behavior.tooltip');
 		<dd style="display: none;">
 			<?php $this->displayUserPosts(); ?>
 		</dd>
-		<dt class="open"><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS'); ?></dt>
+		<?php if ($this->config->allowsubscriptions) :?>
+		<dt class="open"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayCategoriesSubscriptions(); ?>
+			<?php $this->displaySubscriptions(); ?>
 		</dd>
+		<?php endif; ?>
 		<?php if($this->config->showthankyou) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_THANKYOU_GOT'); ?></dt>
 		<dd style="display: none;">
@@ -80,12 +83,6 @@ JHTML::_('behavior.tooltip');
 			<?php //$this->displayUserTopics(); ?>
 		</dd>
 		-->
-		<?php if ($this->config->allowsubscriptions) :?>
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
-		<dd style="display: none;">
-			<?php $this->displaySubscriptions(); ?>
-		</dd>
-		<?php endif; ?>
 		<?php if ($this->config->allowfavorites) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
 		<dd style="display: none;">

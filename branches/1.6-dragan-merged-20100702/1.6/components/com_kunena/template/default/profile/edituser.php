@@ -21,43 +21,43 @@ $kunena_config = KunenaFactory::getConfig ();
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '' ?>" id="kflattable">
 	<tbody class="kmyprofile_general">
 		<tr class="krow2">
-			<td class="ktd-kcol-first">
+			<td class="kcol-first">
 				<label for="username"><?php echo JText::_( 'COM_KUNENA_UNAME' ); ?></label>
 			</td>
-			<td class="ktd-kcol-other">
+			<td class="kcol-mid">
 				<input type="text" name="username" value="<?php echo $this->escape($this->user->get('username'));?>" <?php echo !$this->config->usernamechange ? 'disabled="disabled" ' : ''?>/>
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first">
+			<td class="kcol-first">
 				<label for="name"><?php echo JText::_( 'COM_KUNENA_USRL_NAME' ); ?></label>
 			</td>
-					<td class="ktd-kcol-other">
+					<td class="kcol-mid">
 				<input class="inputbox required" type="text" id="name" name="name" value="<?php echo $this->escape($this->user->get('name'));?>" size="40" />
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first">
+			<td class="kcol-first">
 				<label for="email"><?php echo JText::_( 'COM_KUNENA_USRL_EMAIL' ); ?></label>
 			</td>
-					<td class="ktd-kcol-other">
+					<td class="kcol-mid">
 				<input class="inputbox required validate-email" type="text" id="email" name="email" value="<?php echo $this->escape($this->user->get('email'));?>" size="40" />
 			</td>
 		</tr>
 		<?php if($this->user->get('password')) : ?>
 		<tr class="krow1">
-			<td class="ktd-kcol-first">
+			<td class="kcol-first">
 				<label for="password"><?php echo JText::_( 'COM_KUNENA_PASS' ); ?></label>
 			</td>
-					<td class="ktd-kcol-other">
+					<td class="kcol-mid">
 				<input class="inputbox validate-password" type="password" id="password" name="password" value="" size="40" />
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first">
+			<td class="kcol-first">
 				<label for="password2"><?php echo JText::_( 'COM_KUNENA_VPASS' ); ?></label>
 			</td>
-					<td class="ktd-kcol-other">
+					<td class="kcol-mid">
 				<input class="inputbox validate-passverify" type="password" id="password2" name="password2" value="" size="40" />
 			</td>
 		</tr>
@@ -78,10 +78,10 @@ $kunena_config = KunenaFactory::getConfig ();
 				<tbody class="kmyprofile_params">
 					<?php $i=0; foreach ($this->userparams as $userparam): ?>
 					<tr class="krow<?php echo ($i^=1)+1;?>">
-						<td class="ktd-kcol-first">
+						<td class="kcol-first">
 							<label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>"><?php echo $userparam[0] ?></label>
 						</td>
-						<td class="ktd-kcol-other">
+						<td class="kcol-mid">
 							<?php echo $userparam[1] ?>
 						</td>
 					</tr>

@@ -28,7 +28,7 @@ foreach ( $this->categories [0] as $section ) :
 <div class="kblock kcategories-<?php echo intval($section->id) ?>">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close"  rel="catid_<?php echo intval($section->id) ?>"></a></span>
-		<h2><span><?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($section->id), $this->escape($section->name), 'follow', $class = '' ); ?></span></h2>
+		<h2><span><?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($section->id), $this->escape($section->name), 'follow' ); ?></span></h2>
 		<?php if (!empty($section->description)) : ?>
 		<div class="ktitle-desc km">
 			<?php echo KunenaParser::parseBBCode ( $section->description ); ?>
@@ -38,18 +38,18 @@ foreach ( $this->categories [0] as $section ) :
 	<div class="kcontainer" id="catid_<?php echo intval($section->id) ?>">
 		<div class="kbody">
 <table class="kblocktable<?php echo $htmlClassBlockTable ?>" id="kcat<?php echo intval($section->id) ?>">
-		<?php if (empty ( $this->categories [$section->id] )) { echo '' . JText::_('COM_KUNENA_GEN_NOFORUMS') . '';
+		<?php if (empty ( $this->categories [$section->id] )) { echo JText::_('COM_KUNENA_GEN_NOFORUMS');
 		} else {
 		$k = 0;
 		foreach ( $this->categories [$section->id] as $category ) {
 	?>
 		<tr class="k<?php echo $this->tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($this->tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
 			id="kcat<?php echo intval($category->id) ?>">
-			<td class="kcol-kcaticon ktd-kcol-first">
+			<td class="kcol-first kcol-category-icon">
 				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $category->htmlCategoryIcon ) ?>
 			</td>
 
-			<td class="kcol-kcattitle ktd-kcol-other">
+			<td class="kcol-mid kcol-kcattitle">
 			<div class="kthead-title kl">
 			<?php
 				// Show new posts, locked, review
@@ -109,14 +109,14 @@ foreach ( $this->categories [0] as $section ) :
 		<?php endif; ?>
 			</td>
 
-			<td class="kcol-kcattopics ktd-kcol-other">
+			<td class="kcol-mid kcol-kcattopics">
 				<!-- Number of Topics -->
 				<span class="kcat-topics-number"><?php echo CKunenaTools::formatLargeNumber ( intval($category->numTopics) ) ?></span>
 				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_TOPICS');?></span>
 				<!-- /Number of Topics -->
 			</td>
 
-			<td class="kcol-kcatreplies ktd-kcol-other">
+			<td class="kcol-mid kcol-kcatreplies">
 			<!-- Number of Replies -->
 			<span class="kcat-replies-number"><?php echo CKunenaTools::formatLargeNumber ( intval($category->numPosts) ) ?></span>
 			<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
@@ -124,7 +124,7 @@ foreach ( $this->categories [0] as $section ) :
 			</td>
 
 			<?php if ($category->numTopics != 0) { ?>
-			<td class="kcol-kcatlastpost ktd-kcol-other">
+			<td class="kcol-mid kcol-kcatlastpost">
 			<?php if ($this->config->avataroncat > 0) : ?>
 			<!-- Avatar --> 
 			<?php
@@ -149,7 +149,7 @@ foreach ( $this->categories [0] as $section ) :
 			</td>
 
 			<?php } else { ?>
-			<td class="knoposts ktd-kcol-other"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
+			<td class="kcol-mid knoposts"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
 			<?php } ?>
 		</tr>
 		<?php } } ?>

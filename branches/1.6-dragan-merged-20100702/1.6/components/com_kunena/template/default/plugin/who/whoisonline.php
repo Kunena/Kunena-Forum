@@ -48,10 +48,10 @@ if ($this->config->showwhoisonline)
 		<div class="kbody">
 	<table class = "kblocktable">
 		<tr class = "krow2">
-			<td class = "ktd-kcol-first">
+			<td class = "kcol-first">
 				<div class="kwhoicon"></div>
 			</td>
-			<td class = "ktd-kcol-other km">
+			<td class = "kcol-mid km">
 				<div class="kwhoonline ks">
 					<?php
 					//$totalhiden = '';

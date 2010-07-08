@@ -35,7 +35,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 	<table id="kforumsearch">
 		<tbody id="advsearch"<?php echo $advsearch_style; ?>>
 			<tr class="krow1">
-				<td class="ktd-kcol-first">
+				<td class="kcol-first">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_KEYWORD'); ?></legend>
 						<label class="searchlabel" for="keywords"><?php echo JText::_('COM_KUNENA_SEARCH_KEYWORDS'); ?>:</label>
@@ -46,7 +46,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 						</select>
 					</fieldset>
 				</td>
-				<td class="ktd-kcol-other">
+				<td class="kcol-mid">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHBY_USER'); ?></legend>
 						<label class="searchlabel"><?php echo JText::_('COM_KUNENA_SEARCH_UNAME'); ?>:
@@ -75,7 +75,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 				</th>
 			</tr>
 			<tr class="krow1" id="advsearch_options">
-				<td class="ktd-kcol-first">
+				<td class="kcol-first">
 <?php /*
 					<fieldset class="fieldset">
 						<legend style="padding:0px">
@@ -153,7 +153,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 						</select>
 					</fieldset>
 				</td>
-				<td class="ktd-kcol-other">
+				<td class="kcol-mid">
 					<fieldset class="fieldset">
 						<legend><?php echo JText::_('COM_KUNENA_SEARCH_SEARCHIN'); ?></legend>
 						<?php echo $this->categorylist; ?>

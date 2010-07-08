@@ -23,17 +23,17 @@ $introtext = CKunenaTools::getRulesHelpDatas($kunena_config->help_cid);
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-		<div class="khelprulescontent">
-			<?php echo $introtext; ?>
+			<div class="khelprulescontent">
+				<?php echo $introtext; ?>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!-- Begin: Forum Jump -->
 <?php if ($kunena_config->enableforumjump) : ?>
 <div class="kblock">
 	<div class="kheader">
-		<h2><span><?php echo JText::_('Go to Category'); ?></span></h2>
+		<h2><span><?php echo JText::_('COM_KUNENA_GO_TO_CATEGORY'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="khelprulesjump">

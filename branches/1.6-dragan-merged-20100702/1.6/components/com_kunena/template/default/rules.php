@@ -33,7 +33,7 @@ $introtext = CKunenaTools::getRulesHelpDatas($kunena_config->rules_cid);
 <?php if ($kunena_config->enableforumjump) : ?>
 <div class="kblock">
 	<div class="kheader">
-		<h2><span><?php echo JText::_('Go to Category'); ?></span></h2>
+		<h2><span><?php echo JText::_('COM_KUNENA_GO_TO_CATEGORY'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="khelprulesjump">

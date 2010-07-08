@@ -33,7 +33,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.0-ALPHA3
-# [#19288] Fix float of sticky icon in post.php
+
+9-July-2010 @quila
+# [#19288] Review template and change class names in some files
+# [#19288] Added infomessage.php and function to call when in the forum no categories
+# [#19288] Added lock_sm.png and delete lock_xsm.png file
+
 8-July-2010 Matias
 # [#19345] Simplify initialize.php in default template
 

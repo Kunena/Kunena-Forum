@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+ //FIXME: replace with working solution
 
 $kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();

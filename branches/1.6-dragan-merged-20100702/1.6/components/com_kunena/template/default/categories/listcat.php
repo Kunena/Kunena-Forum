@@ -44,30 +44,20 @@ $this->displayPathway ();
 			<div class="fltrt">
 			<?php $this->displayForumJump (); ?>
 		</div>
-       </div>
+	</div>
 </div>
 
 
 
 <?php
-if (count ( $this->categories [0] ) > 0) {
+	if (count ( $this->categories [0] ) > 0) {
 	$this->displayCategories ();
 	$this->displayWhoIsOnline ();
 	$this->displayStats ();
-	?>
+?>
 
 <?php
 } else {
-	?>
-
-<div><?php
-	echo JText::_('COM_KUNENA_LISTCAT_NO_CATS') . '<br />';
-	echo JText::_('COM_KUNENA_LISTCAT_ADMIN') . '<br />';
-	echo JText::_('COM_KUNENA_LISTCAT_PANEL') . '<br /><br />';
-	echo JText::_('COM_KUNENA_LISTCAT_INFORM') . '<br /><br />';
-	echo JText::_('COM_KUNENA_LISTCAT_DO') . ' <img src="' . KUNENA_URLEMOTIONSPATH . 'wink.png"  alt="" border="0" />';
-	?>
-</div>
-
-<?php
+	$this->displayNotification ();
 }
+?>

@@ -141,10 +141,10 @@ $document->addScriptDeclaration( "function validate() {
 						?>
 
 						<tr class="k<?php echo $usrl_class ;?>">
-							<td class="ktd-kcol-first"><?php echo $nr; ?></td>
+							<td class="kcol-first"><?php echo $nr; ?></td>
 
 							<?php if ($this->config->userlist_online) : ?>
-							<td class="ktd-kcol-other">
+							<td class="kcol-mid">
 								<?php // online - ofline status
 								$isonline=$profile->isOnline();
 								if ($isonline && $user->showOnline ==1 ) {
@@ -157,43 +157,43 @@ $document->addScriptDeclaration( "function validate() {
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_avatar) : ?>
-							<td class="ktd-kcol-other"><?php echo !empty($uslavatar) ? CKunenaLink::GetProfileLink(intval($user->id), $uslavatar) : '&nbsp;' ?></td>
+							<td class="kcol-mid"><?php echo !empty($uslavatar) ? CKunenaLink::GetProfileLink(intval($user->id), $uslavatar) : '&nbsp;' ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_name) : ?>
-							<td class="ktd-kcol-other"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->name)); ?></td>
+							<td class="kcol-mid"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->name)); ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_username) : ?>
-							<td class="ktd-kcol-other"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->username)); ?></td>
+							<td class="kcol-mid"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->username)); ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_posts) : ?>
-							<td class="ktd-kcol-other"><?php echo intval($user->posts); ?></td>
+							<td class="kcol-mid"><?php echo intval($user->posts); ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_karma) : ?>
-							<td class="ktd-kcol-other"><?php echo intval($user->karma); ?></td>
+							<td class="kcol-mid"><?php echo intval($user->karma); ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_email) : ?>
-							<td class="ktd-kcol-other"><a href=mailto:"<?php echo $this->escape($user->email) ?>"><?php echo $this->escape($user->email) ?></a></td>
+							<td class="kcol-mid"><a href=mailto:"<?php echo $this->escape($user->email) ?>"><?php echo $this->escape($user->email) ?></a></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_usertype) : ?>
-							<td class="ktd-kcol-other"><?php echo $this->escape($user->usertype) ?></td>
+							<td class="kcol-mid"><?php echo $this->escape($user->usertype) ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_joindate) : ?>
-							<td class="ktd-kcol-other" title="<?php echo CKunenaTimeformat::showDate($user->registerDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->registerDate, 'datetime_today', 'utc') ?></td>
+							<td class="kcol-mid" title="<?php echo CKunenaTimeformat::showDate($user->registerDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->registerDate, 'datetime_today', 'utc') ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_lastvisitdate) : ?>
-							<td class="ktd-kcol-other" title="<?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') ?></td>
+							<td class="kcol-mid" title="<?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_userhits) : ?>
-							<td class="ktd-kcol-other"><?php echo $this->escape($user->uhits) ?></td>
+							<td class="kcol-mid"><?php echo $this->escape($user->uhits) ?></td>
 							<?php endif; ?>
 						</tr>
 						<?php endforeach; ?>

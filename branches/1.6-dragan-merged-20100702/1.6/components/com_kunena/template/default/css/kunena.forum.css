@@ -132,19 +132,18 @@ PX		EM			PCT			PT
 	width: 25%;
 	vertical-align: middle;
 }
-#Kunena td.kcol-kcaticon {
+#Kunena td.kcol-category-icon {
 	width: 1%;
 }
 
-#Kunena td.ktd-kcol-first {
+#Kunena td.kcol-first {
 	border-left: none;
 	border-bottom: 1px solid #BFC3C6;
 	padding: 4px 8px;
 	vertical-align: middle;
 	white-space:nowrap;
-	/*width: 1%;*/
 }
-#Kunena td.ktd-kcol-other {
+#Kunena td.kcol-mid {
 	border-left: 1px solid #BFC3C6;
 	border-bottom: 1px solid #BFC3C6;
 	padding: 4px 8px;
@@ -160,10 +159,10 @@ PX		EM			PCT			PT
 #Kunena div#searchuser_tbody div.userlist-jump {
 	float: right;
 }
-#Kunena table#addban td.ktd-kcol-first {
+#Kunena table#addban td.kcol-first {
 	width: 35%;
 }
-#Kunena table#addban td.ktd-kcol-other textarea {
+#Kunena table#addban td.kcol-mid textarea {
 	width: 250px;
 	height: 50px;
 }
@@ -217,17 +216,17 @@ PX		EM			PCT			PT
 #Kunena h2 a:hover {
 	text-decoration: underline;
 }
-#Kunena div.kpolldesc td.kpoption {
+#Kunena div.kpolldesc td.kcol-option {
 	text-align: left;
 	width: 60%;
 	padding: 3px 8px;
 }
-#Kunena div.kpolldesc td.kpbar {
+#Kunena div.kpolldesc td.kcol-bar {
 	text-align: left;
 	width: 20%;
 }
-#Kunena div.kpolldesc td.kpnumber,
-#Kunena div.kpolldesc td.kppercent {
+#Kunena div.kpolldesc td.kcol-number,
+#Kunena div.kpolldesc td.kcol-percent {
 	text-align: center;
 	width: 10%;
 }
@@ -262,27 +261,29 @@ PX		EM			PCT			PT
 #Kunena div.banhistory th.kbanmodify {
 	width:24%;
 }
-#Kunena div.kwhoisonline td.ktd-kcol-first,
-#Kunena div.kgenstats td.ktd-kcol-first,
-#Kunena div.kfrontstats td.ktd-kcol-first {
+#Kunena div.kwhoisonline td.kcol-first,
+#Kunena div.kgenstats td.kcol-first,
+#Kunena div.kfrontstats td.kcol-first {
 	width: 1%;
 }
 #Kunena div.kgenstats th {
 	text-align: left !important;
 }
-#Kunena div.kadvsearch td.ktd-kcol-first,
-#Kunena div.kadvsearch td.ktd-kcol-other {
+#Kunena div.kadvsearch td.kcol-first,
+#Kunena div.kadvsearch td.kcol-mid {
 	width: 50%;
 	vertical-align: top;
 }
-#Kunena div.kedituser td.ktd-kcol-first,
-#Kunena div.keditavatar td.ktd-kcol-first,
-#Kunena div.keditprofile td.ktd-kcol-first,
-#Kunena div.keditsettings td.ktd-kcol-first {
+#Kunena div.kedituser td.kcol-first,
+#Kunena div.keditavatar td.kcol-first,
+#Kunena div.keditprofile td.kcol-first,
+#Kunena div.keditsettings td.kcol-first {
 	width: 120px;
 }
-#Kunena div.klogin div.kbody {
+#Kunena div.klogin div.kbody,
+#Kunena div.kinfomessage div.kbody {
 	padding: 15px;
+	text-align: center;
 }
 
 /* MAIN STYLES
@@ -2244,7 +2245,7 @@ POST PAGE
 	border-bottom: 1px solid #BFC3C6;
 }
 
-#Kunena #kpost-message td.kleftcolumn {
+#Kunena #kpost-message td.kcol-first {
 	width: 15%;
 	text-align: right;
 	vertical-align: middle;

@@ -32,7 +32,7 @@ if ( $this->changevote ) {
 		<div class="kbody">
 			<table class = "kblocktable" id = "kpoll">
 				<tr class="krow2">
-					<td class="ktd-kcol-first km">
+					<td class="kcol-first km">
 						<div class="kpolldesc">
 						<div id="kpoll-text-help"></div>
 						<form id="kpoll-form-vote" method="post" action="<?php echo CKunenaLink::GetPollsURL($json_action, intval($this->catid)); ?>">

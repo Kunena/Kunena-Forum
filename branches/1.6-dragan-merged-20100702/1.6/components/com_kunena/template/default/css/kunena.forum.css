@@ -2045,7 +2045,7 @@ PX		EM			PCT			PT
 	background: #EFF0F4;
 	vertical-align: top;
 	border-left: 1px solid #BFC3C6;
-	border-right: 1px solid #BFC3C6;
+	/*border-right: 1px solid #BFC3C6;*/
 	border-bottom: 1px solid #DDDDDD;
 	padding: 5px;
 }
@@ -2053,7 +2053,7 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-top {
 	width: 100%;
 	padding: 10px 10px 0px 10px;
-	border-right: 1px solid #BFC3C6;
+	/*border-right: 1px solid #BFC3C6;*/
 	border-left: 1px solid #BFC3C6;
 }
 
@@ -2061,7 +2061,7 @@ PX		EM			PCT			PT
 	width: 100%;
 	margin: 3px;
 	border-bottom: 1px solid #BFC3C6;
-	border-right: 1px solid #BFC3C6;
+	/*border-right: 1px solid #BFC3C6;*/
 	border-left: 1px solid #BFC3C6;
 	padding: 3px 10px;
 }

@@ -85,6 +85,14 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 			<?php echo $this->profile->profileIcon('private'); ?>
 			<?php echo $this->profile->profileIcon('email'); ?>
 			</div><br />
+			<div>
+			<?php if ($this->userposts) : ?>
+				<span class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . intval($this->userposts); ?></span>
+			<?php endif ?>
+			<?php if ($this->userpoints) : ?>
+				<span class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . intval($this->userpoints); ?></span>
+			<?php endif ?>
+			</div>
 			<?php //CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
 		</li>
 		<?php if ($this->personaltext) : ?>
@@ -104,9 +112,7 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 			<span class = "kmsgusertype">( <?php echo $this->escape($this->usertype) ?> )</span>
 		</li>
 		<?php endif ?>
-
 		<?php if ($this->profile->userid): ?>
-
 		<?php if ($this->userranktitle) : ?>
 		<li class="kpost-userrank">
 			<?php echo $this->escape($this->userranktitle) ?>
@@ -117,15 +123,7 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 			<?php echo $this->userrankimage ?>
 		</li>
 		<?php endif ?>
-
 		<li class="kpost-online-status-top-<?php echo $this->profile->isOnline(true); ?>"> </li>
-
-		<?php if ($this->userposts) : ?>
-		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . intval($this->userposts); ?></li>
-		<?php endif ?>
-		<?php if ($this->userpoints) : ?>
-		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . intval($this->userpoints); ?></li>
-		<?php endif ?>
 		<?php if ( $this->aupmedals ) : ?>
 			<li class="kpost-userposts">
 			<?php foreach ( $this->aupmedals as $medal ) : ?>
@@ -133,7 +131,6 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 			<?php endforeach ?>
 			</li>
 		<?php endif ?>
-
 		<?php endif; ?>
 	</ul>
 <?php endif; ?>

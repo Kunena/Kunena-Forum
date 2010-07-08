@@ -12,10 +12,11 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatarPosition') == 'right') :
 ?>
 	<ul id="kpost-profile">
-		<li class="kpost-username">
+		<li class="kpost-username kl">
 			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->username) ); ?>
 		</li>
 		<?php if ($this->usertype) : ?>
@@ -63,7 +64,7 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 				<?php echo $this->profile->profileIcon('private'); ?>
 				<?php echo $this->profile->profileIcon('email'); ?>
 			</div>
-			<?php CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
+			<?php //CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
 		</li>
 		<?php if ($this->personaltext) : ?>
 		<li class="kpost-personal">
@@ -84,7 +85,7 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 			<?php echo $this->profile->profileIcon('private'); ?>
 			<?php echo $this->profile->profileIcon('email'); ?>
 			</div><br />
-			<?php CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
+			<?php //CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
 		</li>
 		<?php if ($this->personaltext) : ?>
 		<li class="kpost-personal">
@@ -95,7 +96,7 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 		<li class="kpost-avatar">
 		<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->avatar ); ?>
 		</li>
-		<li class="kpost-username">
+		<li class="kpost-username kl">
 			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->username) ); ?>
 		</li>
 		<?php if ($this->usertype) : ?>
@@ -112,7 +113,7 @@ if ($this->params->get('avatarPosition') == 'left' || $this->params->get('avatar
 		</li>
 		<?php endif ?>
 		<?php if ($this->userrankimage) : ?>
-		<li class="kpost-userrank-img">
+		<br /><li class="kpost-userrank-img">
 			<?php echo $this->userrankimage ?>
 		</li>
 		<?php endif ?>

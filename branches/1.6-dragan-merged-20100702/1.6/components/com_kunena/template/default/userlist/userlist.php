@@ -65,59 +65,59 @@ $document->addScriptDeclaration( "function validate() {
 </div>
 <div class="kblock">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="userlist_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close"  rel="userlist-tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_USRL_USERLIST'); ?></span></h2>
 	</div>
-	<div class="kcontainer" id="userlist_tbody">
+	<div class="kcontainer" id="userlist-tbody">
 		<div class="kbody">
 				<form action="<?php echo CKunenaLink::GetUserlistURL(); ?>" method="post" name="adminForm">
 					<table>
-						<tr class="ksth ks userlist">
-							<th class="kcol frst ksectiontableheader" align="center">
+						<tr class="ksth userlist">
+							<th class="frst"> # 
 							</th>
 
 							<?php if ($this->config->userlist_online) : ?>
-							<th align="center"><?php echo JText::_('COM_KUNENA_USRL_ONLINE'); ?></th>
+							<th><?php echo JText::_('COM_KUNENA_USRL_ONLINE'); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_avatar) : ?>
-							<th align="center"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
+							<th><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_name) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_NAME'), 'name', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_NAME'), 'name', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_username) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERNAME'), 'username', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERNAME'), 'username', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_posts) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_POSTS'), 'posts', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_POSTS'), 'posts', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_karma) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_KARMA'), 'karma', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_KARMA'), 'karma', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_email) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_EMAIL'), 'email', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_EMAIL'), 'email', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_usertype) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERTYPE'), 'usertype', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERTYPE'), 'usertype', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_joindate) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_JOIN_DATE'), 'registerDate', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_JOIN_DATE'), 'registerDate', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_lastvisitdate) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_LAST_LOGIN'), 'lastvisitDate', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_LAST_LOGIN'), 'lastvisitDate', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_userhits) : ?>
-							<th class="usersortable" align="center"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_HITS'), 'uhits', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_HITS'), 'uhits', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 						</tr>
 
@@ -140,11 +140,11 @@ $document->addScriptDeclaration( "function validate() {
 							$uslavatar=$profile->getAvatarLink('usl_avatar', 'list');
 						?>
 
-						<tr class="k<?php echo $usrl_class ;?> ks">
-							<td class="ktd-kcol-first ks" align="center"><?php echo $nr; ?></td>
+						<tr class="k<?php echo $usrl_class ;?>">
+							<td class="ktd-kcol-first"><?php echo $nr; ?></td>
 
 							<?php if ($this->config->userlist_online) : ?>
-							<td class="ktd-kcol-other" style="width:1%;">
+							<td class="ktd-kcol-other">
 								<?php // online - ofline status
 								$isonline=$profile->isOnline();
 								if ($isonline && $user->showOnline ==1 ) {
@@ -157,43 +157,43 @@ $document->addScriptDeclaration( "function validate() {
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_avatar) : ?>
-							<td class="ktd-kcol-other" align="center"><?php echo !empty($uslavatar) ? CKunenaLink::GetProfileLink(intval($user->id), $uslavatar) : '&nbsp;' ?></td>
+							<td class="ktd-kcol-other"><?php echo !empty($uslavatar) ? CKunenaLink::GetProfileLink(intval($user->id), $uslavatar) : '&nbsp;' ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_name) : ?>
-							<td class="ktd-kcol-other" align="center"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->name)); ?></td>
+							<td class="ktd-kcol-other"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->name)); ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_username) : ?>
-							<td class="ktd-kcol-other" align="center"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->username)); ?></td>
+							<td class="ktd-kcol-other"><?php echo CKunenaLink::GetProfileLink(intval($user->id), $this->escape($user->username)); ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_posts) : ?>
-							<td class="ktd-kcol-other" align="center"><?php echo intval($user->posts); ?></td>
+							<td class="ktd-kcol-other"><?php echo intval($user->posts); ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_karma) : ?>
-							<td class="ktd-kcol-other" align="center"><?php echo intval($user->karma); ?></td>
+							<td class="ktd-kcol-other"><?php echo intval($user->karma); ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_email) : ?>
-							<td class="ktd-kcol-other" align="center"><a href=mailto:"<?php echo $this->escape($user->email) ?>"><?php echo $this->escape($user->email) ?></a></td>
+							<td class="ktd-kcol-other"><a href=mailto:"<?php echo $this->escape($user->email) ?>"><?php echo $this->escape($user->email) ?></a></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_usertype) : ?>
-							<td class="ktd-kcol-other" align="center"><?php echo $this->escape($user->usertype) ?></td>
+							<td class="ktd-kcol-other"><?php echo $this->escape($user->usertype) ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_joindate) : ?>
-							<td class="ktd-kcol-other" align="center" title="<?php echo CKunenaTimeformat::showDate($user->registerDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->registerDate, 'datetime_today', 'utc') ?></td>
+							<td class="ktd-kcol-other" title="<?php echo CKunenaTimeformat::showDate($user->registerDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->registerDate, 'datetime_today', 'utc') ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_lastvisitdate) : ?>
-							<td class="ktd-kcol-other" align="center" title="<?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') ?></td>
+							<td class="ktd-kcol-other" title="<?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'ago', 'utc') ?>"><?php echo CKunenaTimeformat::showDate($user->lastvisitDate, 'datetime_today', 'utc') ?></td>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_userhits) : ?>
-							<td class="ktd-kcol-other" align="center"><?php echo $this->escape($user->uhits) ?></td>
+							<td class="ktd-kcol-other"><?php echo $this->escape($user->uhits) ?></td>
 							<?php endif; ?>
 						</tr>
 						<?php endforeach; ?>
@@ -203,10 +203,10 @@ $document->addScriptDeclaration( "function validate() {
 					<input type="hidden" name="filter_order_dir" value="<?php echo intval($this->order_dir); ?>" />
 				</form>
 				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit="return false;">
-					<table class="kblocktable" id="kuserlist_bottom">
+					<table class="kblocktable" id="kuserlist-bottom">
 						<tr>
 							<td>
-								<div style="text-align:center">
+								<div>
 									<?php
 									// TODO: fxstein - Need to perform SEO cleanup
 									echo $this->pageNav->getPagesLinks(CKunenaLink::GetUserlistURL($this->searchuri));

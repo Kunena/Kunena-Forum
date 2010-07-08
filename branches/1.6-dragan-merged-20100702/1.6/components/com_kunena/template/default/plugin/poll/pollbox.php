@@ -22,7 +22,7 @@ $dataspollusers = $this->get_data_poll_users($this->my->id,$this->id);
 if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 	$dataspollusers[0]->userid = null;
 	$dataspollusers[0]->pollid = null;
-	$i = 1;
+	$i = 0;
 }
 ?>
 <div class="kblock kpollbox">
@@ -39,7 +39,6 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 							<?php if ( $dataspollusers[0]->userid == $this->my->id || $this->my->id == "0") { //if the user has already voted for this poll ?>
 							<table>
 								<?php foreach ($dataspollresult as $row) : 
-									
 								?>
 								<tr class="krow<?php echo ($i^=1)+1;?>">
 									<td class="kpoption"><?php echo KunenaParser::parseText ( $row->text ); ?></td>
@@ -63,18 +62,18 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								</tr>
 
 								<?php if ($this->my->id == '0') : ?>
-								<tr class="krow<?php echo ($i^=1)+1;?>">
-									<td colspan="4"><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?> </td>
+								<tr class="krow2">
+									<td colspan="4"><strong><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?></strong> </td>
 								</tr>
 								<?php elseif ( !$this->config->pollallowvoteone ) : ?>
-								<tr>
+								<tr class="krow2">
 									<td colspan="4">
 										<a href = "<?php echo CKunenaLink::GetPollURL('vote', intval($this->id), intval($this->catid));?>">
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?></a>
 									</td>
 								</tr>
 								<?php else : ?>
-								<tr class="krow<?php echo ($i^=1)+1;?>">
+								<tr class="krow2">
 									<td colspan="4">
 										<a href = "<?php echo CKunenaLink::GetPollURL('changevote', intval($this->id), intval($this->catid)); ?>">
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?></a>
@@ -133,11 +132,11 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								</td>
 							</tr>
 							<?php if ($this->my->id == "0") : ?>
-							<tr class="krow<?php echo ($i^=1)+1;?>">
-								<td colspan="4"><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?> </td>
+							<tr class="krow2">
+								<td colspan="4"><strong><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?></strong> </td>
 							</tr>
 							<?php elseif (!$this->config->pollallowvoteone) : ?>
-							<tr>
+							<tr class="krow2">
 								<td colspan="4">
 									<a href = "<?php echo CKunenaLink::GetPollURL('vote', $this->id, $this->catid);?>">
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
@@ -145,7 +144,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								</td>
 							</tr>
 							<?php else : ?>
-							<tr class="krow<?php echo ($i^=1)+1;?>">
+							<tr class="krow2">
 								<td colspan="4">
 									<a href = <?php echo CKunenaLink::GetPollURL('changevote', $this->id, $this->catid); ?>>
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>

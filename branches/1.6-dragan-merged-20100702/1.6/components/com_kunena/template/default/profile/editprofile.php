@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die();
 JHTML::_('behavior.tooltip');
 ?>
 
-<div class="kblock">
+<div class="kblock keditprofile">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_PROFILE_TITLE'); ?></span></h2>
 	</div>
@@ -27,11 +27,11 @@ JHTML::_('behavior.tooltip');
 	<tbody>
 		<!-- Kunena specific settings -->
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_PERSONALTEXT'); ?></td>
 			<td class="ktd-kcol-other"><input type="text" maxlength="<?php echo intval($this->config->maxpersotext) ?>" name="personaltext" value="<?php echo $this->escape($this->profile->personalText); ?>" /></td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?></td>
 			<?php $bithdate = explode('-',$this->profile->birthdate); ?>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE_DESC'); ?>" >
@@ -42,11 +42,11 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?></td>
 			<td class="ktd-kcol-other"><input type="text" name="location" value="<?php echo $this->profile->location; ?>" /></td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?></td>
 			<td class="ktd-kcol-other">
 				<?php
 				// make the select list for the view type
@@ -59,10 +59,10 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?></td><td class="ktd-kcol-other"><input type="text" name="websitename" value="<?php echo $this->escape($this->profile->websitename); ?>" /></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?></td><td class="ktd-kcol-other"><input type="text" name="websitename" value="<?php echo $this->escape($this->profile->websitename); ?>" /></td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL_DESC'); ?>" >
 					<input type="text" name="websiteurl" value="<?php echo $this->profile->websiteurl; ?>" />
@@ -70,7 +70,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_TWITTER'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_TWITTER'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_TWITTER'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_TWITTER_DESC'); ?>" >
 					<input type="text" name="twitter" value="<?php echo $this->profile->TWITTER; ?>" />
@@ -78,7 +78,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_FACEBOOK'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_FACEBOOK_DESC'); ?>" >
 					<input type="text" name="facebook" value="<?php echo $this->profile->FACEBOOK; ?>" />
@@ -86,7 +86,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_MYSPACE'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_MYSPACE'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_MYSPACE'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_MYSPACE_DESC'); ?>" >
 					<input type="text" name="myspace" value="<?php echo $this->profile->MYSPACE; ?>" />
@@ -94,7 +94,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_SKYPE'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_SKYPE'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SKYPE'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_SKYPE_DESC'); ?>" >
 					<input type="text" name="skype" value="<?php echo $this->profile->SKYPE; ?>" />
@@ -102,7 +102,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_LINKEDIN'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_LINKEDIN'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_LINKEDIN'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_LINKEDIN_DESC'); ?>" >
 					<input type="text" name="linkedin" value="<?php echo $this->profile->LINKEDIN; ?>" />
@@ -110,7 +110,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_DELICIOUS'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_DELICIOUS'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_DELICIOUS'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_DELICIOUS_DESC'); ?>" >
 					<input type="text" name="delicious" value="<?php echo $this->profile->DELICIOUS; ?>" />
@@ -118,7 +118,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_FRIENDFEED_DESC'); ?>" >
 					<input type="text" name="friendfeed" value="<?php echo $this->profile->FRIENDFEED; ?>" />
@@ -126,7 +126,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_DIGG'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_DIGG'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_DIGG'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_DIGG_DESC'); ?>" >
 					<input type="text" name="digg" value="<?php echo $this->profile->DIGG; ?>" />
@@ -134,7 +134,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_YIM'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_YIM'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_YIM'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_YIM_DESC'); ?>" >
 					<input type="text" name="yim" value="<?php echo $this->profile->YIM; ?>" />
@@ -142,7 +142,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_AIM'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_AIM'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_AIM'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_AIM_DESC'); ?>" >
 					<input type="text" name="aim" value="<?php echo $this->profile->AIM; ?>" />
@@ -150,7 +150,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_GTALK'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_GTALK'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_GTALK'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_GTALK_DESC'); ?>" >
 					<input type="text" name="gtalk" value="<?php echo $this->profile->GTALK; ?>" />
@@ -158,7 +158,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_ICQ'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_ICQ'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_ICQ'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_ICQ_DESC'); ?>" >
 					<input type="text" name="icq" value="<?php echo $this->profile->ICQ; ?>" />
@@ -166,7 +166,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_MSN'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_MSN'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_MSN'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_MSN_DESC'); ?>" >
 					<input type="text" name="msn" value="<?php echo $this->profile->MSN; ?>" />
@@ -174,7 +174,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_BLOGSPOT_DESC'); ?>" >
 					<input type="text" name="blogspot" value="<?php echo $this->profile->BLOGSPOT; ?>" />
@@ -182,7 +182,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_FLICKR'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_FLICKR'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_FLICKR'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_FLICKR_DESC'); ?>" >
 					<input type="text" name="flickr" value="<?php echo $this->profile->FLICKR; ?>" />
@@ -190,7 +190,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_BEBO'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_BEBO'); ?></td>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_BEBO'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_BEBO_DESC'); ?>" >
 					<input type="text" name="bebo" value="<?php echo $this->profile->BEBO; ?>" />
@@ -198,7 +198,7 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?></td>
 			<?php // TODO: Add some bbcode functions ?>
 			<td class="ktd-kcol-other">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>" >

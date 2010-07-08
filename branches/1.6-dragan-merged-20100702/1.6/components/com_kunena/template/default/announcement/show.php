@@ -22,13 +22,13 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 		<div class="kbody">
 <table class="kannouncement">
 	<tbody id="kannouncement_body">
-		<tr class="ksth ks">
-			<th class="kcol kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
-			<th class="kcol kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
-			<th class="kcol kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
-			<th class="kcol kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
-			<th class="kcol kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
-			<th class="kcol kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
+		<tr class="ksth">
+			<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
+			<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
+			<th class="kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
+			<th class="kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
+			<th class="kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
+			<th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
 		</tr>
 
 		<?php
@@ -38,12 +38,12 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 				$k=1 - $k;
 		?>
 		<tr class="krow<?php echo $k;?>">
-			<td class="ktd-kcol-first kcol kcol-annid"><?php echo intval($ann->id); ?></td>
-			<td class="ktd-kcol-other kcol kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
-			<td class="ktd-kcol-other kcol kcol-anntitle">
+			<td class="ktd-kcol-first kcol-annid"><?php echo intval($ann->id); ?></td>
+			<td class="ktd-kcol-other kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
+			<td class="ktd-kcol-other kcol-anntitle">
 				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', intval($ann->id), KunenaParser::parseText ($ann->title), KunenaParser::parseText ($ann->title), 'follow'); ?></div>
 			</td>
-			<td class="ktd-kcol-other kcol kcol-annpublish">
+			<td class="ktd-kcol-other kcol-annpublish">
 				<?php
 				if ($ann->published > 0) {
 					echo JText::_('COM_KUNENA_ANN_PUBLISHED');
@@ -52,10 +52,10 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 				}
 				?>
 			</td>
-			<td class="ktd-kcol-other kcol kcol-annedit">
+			<td class="ktd-kcol-other kcol-annedit">
 				<?php echo CKunenaLink::GetAnnouncementLink('edit', intval($ann->id), JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
 			</td>
-			<td class="ktd-kcol-other kcol kcol-anndelete">
+			<td class="ktd-kcol-other kcol-anndelete">
 				<?php echo CKunenaLink::GetAnnouncementLink('delete', intval($ann->id), JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
 			</td>
 		</tr>

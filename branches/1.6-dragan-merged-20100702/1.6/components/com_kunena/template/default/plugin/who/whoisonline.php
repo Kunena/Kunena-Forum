@@ -36,9 +36,9 @@ if ($this->config->showwhoisonline)
 		<h2><span><?php
 				$who_online = JText::_('COM_KUNENA_WHO_WHOIS_ONLINE');
 				if (CKunenaTools::isModerator($this->my->id)) {
-                            echo CKunenaLink::GetWhoIsOnlineLink($who_online,''); }
+					echo CKunenaLink::GetWhoIsOnlineLink($who_online,''); }
 				else {
-							echo '<span class="ktitle km">'.$who_online.'</span>';
+					echo '<span class="ktitle km">'.$who_online.'</span>';
 				}
 				?>
 			</span>
@@ -46,12 +46,12 @@ if ($this->config->showwhoisonline)
 	</div>
 	<div class="kcontainer" id="kwhoisonline">
 		<div class="kbody">
-    <table class = "kblocktable">
-            <tr class = "krow2">
-               <td class = "ktd-kcol-first" width="1%">
+	<table class = "kblocktable">
+		<tr class = "krow2">
+			<td class = "ktd-kcol-first">
 				<div class="kwhoicon"></div>
 			</td>
-			<td class = "ktd-kcol-other km" align="left">
+			<td class = "ktd-kcol-other km">
 				<div class="kwhoonline ks">
 					<?php
 					//$totalhiden = '';

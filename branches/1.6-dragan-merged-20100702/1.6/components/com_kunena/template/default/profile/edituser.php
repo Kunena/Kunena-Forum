@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
-<div class="kblock">
+<div class="kblock kedituser">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_USER_TITLE') ?></span></h2>
 	</div>
@@ -21,7 +21,7 @@ $kunena_config = KunenaFactory::getConfig ();
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '' ?>" id="kflattable">
 	<tbody class="kmyprofile_general">
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter">
+			<td class="ktd-kcol-first">
 				<label for="username"><?php echo JText::_( 'COM_KUNENA_UNAME' ); ?></label>
 			</td>
 			<td class="ktd-kcol-other">
@@ -29,7 +29,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter" width="120">
+			<td class="ktd-kcol-first">
 				<label for="name"><?php echo JText::_( 'COM_KUNENA_USRL_NAME' ); ?></label>
 			</td>
 					<td class="ktd-kcol-other">
@@ -37,7 +37,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter">
+			<td class="ktd-kcol-first">
 				<label for="email"><?php echo JText::_( 'COM_KUNENA_USRL_EMAIL' ); ?></label>
 			</td>
 					<td class="ktd-kcol-other">
@@ -46,7 +46,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		</tr>
 		<?php if($this->user->get('password')) : ?>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter">
+			<td class="ktd-kcol-first">
 				<label for="password"><?php echo JText::_( 'COM_KUNENA_PASS' ); ?></label>
 			</td>
 					<td class="ktd-kcol-other">
@@ -54,7 +54,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter">
+			<td class="ktd-kcol-first">
 				<label for="password2"><?php echo JText::_( 'COM_KUNENA_VPASS' ); ?></label>
 			</td>
 					<td class="ktd-kcol-other">
@@ -68,26 +68,26 @@ $kunena_config = KunenaFactory::getConfig ();
 	</div>
 </div>
 <?php if(!empty($this->userparams)) : ?>
-<div class="kblock">
+<div class="kblock kedituser">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_GLOBAL_SETTINGS'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '' ?>" id="kflattable">
-	<tbody class="kmyprofile_params">
-		<?php $i=0; foreach ($this->userparams as $userparam): ?>
-		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="ktd-kcol-first km kcenter" width="120">
-				<label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>"><?php echo $userparam[0] ?></label>
-			</td>
+			<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '' ?>" id="kflattable">
+				<tbody class="kmyprofile_params">
+					<?php $i=0; foreach ($this->userparams as $userparam): ?>
+					<tr class="krow<?php echo ($i^=1)+1;?>">
+						<td class="ktd-kcol-first">
+							<label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>"><?php echo $userparam[0] ?></label>
+						</td>
 						<td class="ktd-kcol-other">
-				<?php echo $userparam[1] ?>
-			</td>
-		</tr>
-		<?php endforeach; ?>
-	</tbody>
-</table>
+							<?php echo $userparam[1] ?>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

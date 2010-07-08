@@ -41,7 +41,7 @@ if ($this->showgenstats > 0)
 		<div class="kbody">
 			<table class = "kblocktable" id ="kfrontstats">
 				<tr class="krow1">
-					<td class = "ktd-kcol-first" width="1%">
+					<td class = "ktd-kcol-first">
 						<div class="kstatsicon"></div>
 					</td>
 					<td class="ktd-kcol-other km">

@@ -15,9 +15,9 @@ defined( '_JEXEC' ) or die();
 <div><?php $this->displayPathway(); ?></div>
 
 <?php if ($this->headerdesc) : ?>
-<div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->catinfo->class_sfx) : '' ?>">
-	<?php echo $this->headerdesc ?>
-</div>
+	<div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->catinfo->class_sfx) : '' ?>">
+		<?php echo $this->headerdesc ?>
+	</div>
 <?php endif ?>
 
 <?php
@@ -60,6 +60,6 @@ defined( '_JEXEC' ) or die();
 		<div class="moderatorslist-jump">
 				<?php $this->displayForumJump (); ?>
 		</div>
-    </div>
+	</div>
 </div>
 <!-- B: Category List Bottom -->

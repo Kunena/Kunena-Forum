@@ -87,7 +87,7 @@ if ($type == 'logout') :
 		</tr>
 	</tbody>
 </table>
-        </div>
+		</div>
 	</div>
 </div>
 <?php
@@ -150,7 +150,7 @@ $login = CKunenaLogin::getloginFields();
 		</tr>
 	</tbody>
 </table>
-        </div>
+		</div>
 	</div>
 </div>
 <?php endif; ?>

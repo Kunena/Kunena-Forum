@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die();
 ?>
 
-<div class="kblock">
+<div class="kblock keditsettings">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE'); ?></span></h2>
 	</div>
@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die();
 	?>" id="kflattable">
 	<tbody>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_USER_ORDER'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_USER_ORDER'); ?></td>
 			<td class="ktd-kcol-other">
 				<?php
 				$mesordering[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
@@ -35,7 +35,7 @@ defined( '_JEXEC' ) or die();
 			</td>
 		</tr>
 		<tr class="krow1">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_USER_HIDEEMAIL'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_USER_HIDEEMAIL'); ?></td>
 			<td class="ktd-kcol-other">
 				<?php
 				$hideEmail[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
@@ -45,7 +45,7 @@ defined( '_JEXEC' ) or die();
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="ktd-kcol-first km kcenter"><?php echo JText::_('COM_KUNENA_USER_SHOWONLINE'); ?></td>
+			<td class="ktd-kcol-first"><?php echo JText::_('COM_KUNENA_USER_SHOWONLINE'); ?></td>
 			<td class="ktd-kcol-other">
 				<?php
 				$showonline[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));

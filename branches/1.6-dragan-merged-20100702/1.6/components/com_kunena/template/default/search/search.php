@@ -37,7 +37,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 					<table>
 						<thead>
 							<tr class="ksth">
-								<th colspan="2" class="kview-th ksectiontableheader">
+								<th colspan="2">
 									<span class="kmsgdate">
 										<?php echo CKunenaTimeformat::showDate ( $result->time )?>
 									</span>
@@ -78,7 +78,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 			</td>
 		</tr>
 		<tr class="ksth">
-			<th colspan="3" class="kcenter sectiontableheader">
+			<th colspan="3">
 			<?php
 			$resStart = $this->limitstart + 1;
 			$resStop = $this->limitstart + count ( $this->results );

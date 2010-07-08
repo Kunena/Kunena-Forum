@@ -13,7 +13,7 @@ defined( '_JEXEC' ) or die();
 $i=0;
 ?>
 
-<div class="kblock">
+<div class="kblock keditavatar">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?></span></h2>
 	</div>
@@ -22,7 +22,7 @@ $i=0;
 <table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
 <?php if ($this->profile->avatar): ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="ktd-kcol-first km kcenter">
+			<td class="ktd-kcol-first">
 			<label for="kavatar_keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP');?></label>
 		</td>
 		<td class="ktd-kcol-other">
@@ -30,7 +30,7 @@ $i=0;
 		</td>
 	</tr>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="ktd-kcol-first km kcenter">
+			<td class="ktd-kcol-first">
 			<label for="kavatar_delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE');?></label>
 		</td>
 		<td class="ktd-kcol-other">
@@ -40,7 +40,7 @@ $i=0;
 <?php endif; ?>
 <?php if ($this->config->allowavatarupload):?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="ktd-kcol-first km kcenter">
+			<td class="ktd-kcol-first">
 			<label for="kavatar_upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
 			</td><td class="ktd-kcol-other">
 			<div><input id="kavatar_upload" type="file" class="button" name="avatarfile" /></div>
@@ -49,7 +49,7 @@ $i=0;
 <?php endif; ?>
 <?php if ($this->config->allowavatargallery):?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="ktd-kcol-first km kcenter">
+			<td class="ktd-kcol-first">
 			<label for="kavatar_gallery"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
 		</td>
 		<td class="ktd-kcol-other">

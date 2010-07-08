@@ -19,12 +19,12 @@ JHTML::_('behavior.tooltip');
 	CKunenaTools::loadTemplate('/profile/socialbuttons.php');
 ?>
 	</div>
-	<div class="kprofile-rightcol1">
+	<div class="kprofile-rightcol1 kiconprofile">
 		<ul>
-			<li><span class="location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>:</strong> <?php echo $this->locationlink; ?></li>
+			<li><span class="sprite-location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>:</strong> <?php echo $this->locationlink; ?></li>
 			<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->
-			<li><span class="gender-<?php echo $this->genderclass; ?>"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong> <?php echo $this->gender; ?></li>
-			<li class="bd"><span class="birthdate"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'ago', 'utc', 0); ?>"><?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'date', 'utc', 0); ?></span>
+			<li><span class="sprite-<?php echo $this->genderclass; ?>"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_GENDER'); ?>:</strong> <?php echo $this->gender; ?></li>
+			<li class="bd"><span class="sprite-birthdate"></span><strong><span class ="birthday"><?php echo JText::_('COM_KUNENA_MYPROFILE_BIRTHDATE'); ?>:</span> </strong> <span class ="birthday" title="<?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'ago', 'utc', 0); ?>"><?php echo CKunenaTimeformat::showDate($this->profile->birthdate, 'date', 'utc', 0); ?></span>
 			<!--  <a href="#" title=""><span class="bday-remind"></span></a> -->
 			</li>
 		</ul>
@@ -33,11 +33,11 @@ JHTML::_('behavior.tooltip');
 
 <div class="clrline"></div>
 <div id="kprofile-rightcolbot">
-	<div class="kprofile-rightcol2">
+	<div class="kprofile-rightcol2 kiconprofile">
 		<ul>
-			<?php if ($this->config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="email"></span><a href="mailto:<?php echo $this->escape($this->user->email); ?>"><?php echo $this->escape($this->user->email); ?></a></li><?php endif; ?>
+			<?php if ($this->config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="sprite-email"></span><a href="mailto:<?php echo $this->escape($this->user->email); ?>"><?php echo $this->escape($this->user->email); ?></a></li><?php endif; ?>
 			<?php // FIXME: we need a better way to add http/https ?>
-			<li><span class="website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaParser::parseText($this->profile->websitename); ?></a></li>
+			<li><span class="sprite-website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaParser::parseText($this->profile->websitename); ?></a></li>
 		</ul>
 	</div>
 	<div class="kprofile-rightcol1">

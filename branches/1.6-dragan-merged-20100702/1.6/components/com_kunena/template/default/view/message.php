@@ -18,7 +18,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+			<th colspan="2">
 				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 				</span>
@@ -52,7 +52,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+			<th colspan="2">
 				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 				</span>
@@ -86,7 +86,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+			<th colspan="2">
 				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 				</span>
@@ -118,7 +118,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+			<th colspan="2">
 				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 				</span>
@@ -148,5 +148,5 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <?php endif ?>
 
 <!-- Begin: Message Module Position -->
-<?php CKunenaTools::showModulePosition('kunena_msg_' . $this->mmm) ?>
+	<?php CKunenaTools::showModulePosition('kunena_msg_' . $this->mmm) ?>
 <!-- Finish: Message Module Position -->

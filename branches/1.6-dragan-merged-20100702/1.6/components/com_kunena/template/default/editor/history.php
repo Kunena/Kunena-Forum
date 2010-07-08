@@ -29,7 +29,7 @@ $k = 0;
 <table>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+			<th colspan="2">
 				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat') ?>
 				</span>

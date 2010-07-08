@@ -213,7 +213,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<!-- Actions -->
 		<tr class="krow1">
 			<td colspan="7" class="krowmoderation ktd-kcol-first">
-				<select name="do" id="kBulkChooseActions" class="inputbox ks">
+				<select name="do" id="kBulkChooseActions" class="inputbox">
 				<option value="">&nbsp;</option>
 				<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>
 				<option value="bulkMove"><?php echo JText::_('COM_KUNENA_MOVE_SELECTED'); ?></option>
@@ -224,7 +224,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				<?php endif; ?>
 			</select>
 			<?php CKunenaTools::showBulkActionCats (); ?>
-			<input type="submit" name="kBulkActionsGo" class="kbutton ks" value="<?php echo JText::_('COM_KUNENA_GO'); ?>" /></td>
+			<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO'); ?>" /></td>
 		</tr>
 		<!-- /Actions -->
 		<?php endif; ?>

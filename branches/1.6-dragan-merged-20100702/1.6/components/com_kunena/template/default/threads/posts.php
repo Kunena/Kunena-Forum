@@ -119,9 +119,9 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				<div class="klatest-post-info">
 					<!--  Sticky   -->
 					<?php
-					if ($this->messages[$message->id]->ordering != 0) {
+					if ($this->messages[$message->id]->ordering != 0) :
 						echo CKunenaTools::showIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') );
-					}
+					endif
 					?>
 					<!--  /Sticky   -->
 					<!-- Avatar -->

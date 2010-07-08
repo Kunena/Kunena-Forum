@@ -681,9 +681,9 @@ PX		EM			PCT			PT
 }
 
 #Kunena .ktopic-sticky {
-	margin-left: 5px;
+	/*margin-left: 5px;
 	float:right;
-	display:block;
+	display:block;*/
 }
 
 #Kunena .klatest-post-info {
@@ -1630,7 +1630,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-minus {
-	background: url("../images/icons/karmaminus.png") no-repeat left top;
+	background: url("../media/iconsets/profile/default/default.png") no-repeat left -294px;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -1638,7 +1638,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-plus {
-	background: url("../images/icons/karmaplus.png") no-repeat left top;
+	background: url("../media/iconsets/profile/default/default.png") no-repeat left -313px;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -2310,7 +2310,6 @@ POST PAGE
 	height: 18px;
 	margin:0 -19px 0 0;
 	padding: 0 7px 0 20px;
-	/*background: url("../images/buttons/button-set-01.png") no-repeat right -200px;*/
 	background-repeat: no-repeat;
 	background-position: right -200px;
 	color: #ffffff;
@@ -2320,7 +2319,6 @@ POST PAGE
 	height: 18px;
 	margin:0 -19px 0 0;
 	padding: 0 7px 0 20px;
-	/*background: url("../images/buttons/button-set-01.png") no-repeat right -340px;*/
 	background-repeat: no-repeat;
 	background-position: right -340px;
 	color: #ffffff;
@@ -2331,7 +2329,6 @@ POST PAGE
 	height: 18px;
 	margin:0 -19px 0 0;
 	padding: 0 7px 0 20px;
-	/*background: url("../images/buttons/button-set-01.png") no-repeat right -460px;*/
 	background-repeat: no-repeat;
 	background-position: right -460px;
 	color: #ffffff;
@@ -2362,7 +2359,6 @@ POST PAGE
 #Kunena a.kbuttonmod span.approve,
 #Kunena a.kbuttonmod span.moderate {
 	float: left;
-	/*background-image: url("../images/buttons/button-set-01.png");*/
 	background-repeat: no-repeat;
 	margin:0 2px 0 -7px;
 }
@@ -2594,7 +2590,6 @@ BBCODE BUTTONS
 }
 
 #Kunena #kbbcode-toolbar li a {
-	/*background:url("../images/editor/editor_buttons.png") no-repeat;*/
 	background-repeat: no-repeat;
 	display:block;
 	height:18px;
@@ -2799,7 +2794,6 @@ BBCODE BUTTONS
 }
 
 #Kunena #kattachments a {
-	/*background:url("../images/editor/editor_buttons.png") no-repeat;*/
 	background-repeat: no-repeat;
 	display:inline-block;
 	height:18px;
@@ -2884,7 +2878,6 @@ Multi file upload for bbcode editor
 	color: #514721;
 	padding-left: 48px;
 	line-height: 24px;
-	background: url(assets/error.png) no-repeat 24px 5px;
 	margin-bottom: 1px;
 }
 #Kunena #kbbcode-filelist .file-invalid span {
@@ -2895,7 +2888,6 @@ Multi file upload for bbcode editor
 #Kunena #kbbcode-filelist .file {
 	line-height: 2em;
 	padding-left: 22px;
-	background: url(assets/attach.png) no-repeat 1px 50%;
 }
  
 #Kunena #kbbcode-filelist .file span,
@@ -2915,7 +2907,6 @@ Multi file upload for bbcode editor
 	width: 125px;
 	height: 12px;
 	vertical-align: middle;
-	background-image: url(../../assets/progress-bar/progress.gif);
 }
 
 
@@ -3310,7 +3301,6 @@ div#kprofile-stats ul li span.krank-admin {
 }
 #Kunena div.kiconrow span,
 #Kunena div.kiconprofile span {
-	/*background-image: url("../media/iconsets/profile/default.png");*/
 	background-repeat: no-repeat;
 	display:block;
 	float:left;

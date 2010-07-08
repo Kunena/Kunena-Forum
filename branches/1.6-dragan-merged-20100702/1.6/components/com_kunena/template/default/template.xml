@@ -35,10 +35,10 @@
 		</param>
 <param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="forumHeadercolor" type="text" default="#5388B4" label="Forum Header Background" description="Default #5388B4" />
-		<param name="announcementHeadercolor" type="text" default="#990000" label="Announcement Header Background" description="Default #990000" />
-		<param name="announcementBoxbgcolor" type="text" default="#FFFFAA" label="Announcement Box Background" description="Default #FFFFAA" />
-		<param name="frontstatsHeadercolor" type="text" default="#000000" label="Frontstats Header Background" description="Default #000000" />
-		<param name="whoisonlineHeadercolor" type="text" default="#3B5323" label="WhoIsOnline Header Background" description="Default #3B5323" />
+		<param name="announcementHeadercolor" type="text" default="" label="Announcement Header Background" description="Default #990000" />
+		<param name="announcementBoxbgcolor" type="text" default="" label="Announcement Box Background" description="Default #FFFFAA" />
+		<param name="frontstatsHeadercolor" type="text" default="" label="Frontstats Header Background" description="Default #000000" />
+		<param name="whoisonlineHeadercolor" type="text" default="" label="WhoIsOnline Header Background" description="Default #3B5323" />
 
 		<!-- Required avatar sizes -->
 		<param name="avatarSizeXThumb" type="hidden" default="36" />

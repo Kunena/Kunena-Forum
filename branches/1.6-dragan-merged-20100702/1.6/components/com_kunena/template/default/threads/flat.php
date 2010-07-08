@@ -157,11 +157,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<?php endif; ?>
 			<td class="kcol-ktopiclastpost ktd-kcol-other">
 				<div class="klatest-post-info">
-					<!--  Sticky   -->
-					<?php if ($leaf->ordering != 0) : ?>
-					<span class="ktopic-sticky"><?php echo CKunenaTools::showIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') ) ?></span>
-					<?php endif; ?>
-					<!--  /Sticky   -->
+					<?php 
+					if ($leaf->ordering != 0) :
+						echo CKunenaTools::showIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') );
+					endif; ?>
 					<!-- Avatar -->
 					<?php
 					if ($this->config->avataroncat > 0) :

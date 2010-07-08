@@ -34,6 +34,9 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+8-July-2010 Matias
+# [#19345] Simplify initialize.php in default template
+
 8-July-2010 @quila
 # [#19288] Cleanup whole template, fix some minor bugs (part 8)
 

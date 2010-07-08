@@ -69,7 +69,6 @@ if ( $this->changevote ) {
 					</div>
 				</td>
 			</tr>
-		</tbody>
 	</table>
 		</div>
 	</div>

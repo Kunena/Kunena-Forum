@@ -33,10 +33,15 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+8-July-2010 Matias
++ [#19288] Added Russian language (thanks ZARKOS)
+
 7-July-2010 Matias
 # [#19288] Move sample data translations into en-GB.com_kunena.install.ini to be able to translate it without main language files
 # [#19288] Sample data: Fix truncated multi-line translations to work around J1.5 limitation
 # [#19288] Sample data: Add missing translations for ranks
+# [#19288] Fix PHP Notice: Trying to get property of non-object, when trying to locate moved message that does not exist (view)
+# [#19288] Fix urls like ../../default/../default in example template
 
 6-July-2010 fxstein
 + [#19288] New CSS class for hidden text - separate background color

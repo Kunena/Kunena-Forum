@@ -372,6 +372,10 @@ class CKunenaView {
 				$query = "SELECT catid, thread FROM #__kunena_messages AS a WHERE a.id='{$this->id}'";
 				$this->db->setQuery ( $query );
 				$newpos = $this->db->loadObject ();
+				if (!$newpos) {
+					$this->allow = 0;
+					return;
+				}
 				if (KunenaError::checkDatabaseError()) return;
 				$this->thread = $newpos->thread;
 				$this->catid = $newpos->catid;

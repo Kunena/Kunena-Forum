@@ -1208,7 +1208,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena ul.kprofilebox-link li {
-	background: url("../../default/../default/images/icons/arrow.png") no-repeat left !important;
+	background: url("../../default/images/icons/arrow.png") no-repeat left !important;
 	padding-left: 12px;
 	display: inline;
 	padding-right:10px;
@@ -1322,7 +1322,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.kfavorite {
-	background: url("../../default/../default/images/icons/favoritestar.png") no-repeat left top;
+	background: url("../../default/images/icons/favoritestar.png") no-repeat left top;
 	height: 18px;
 	width: 18px;
 	display: inline-block;
@@ -1556,14 +1556,14 @@ PX		EM			PCT			PT
 #Kunena span.kmsgtitle-new {
 	font-weight: bold;
 	text-decoration: none;
-	background: url("../../default/../default/images/msgtitleicon.gif") no-repeat left center;
+	background: url("../../default/images/msgtitleicon.gif") no-repeat left center;
 	padding-left: 25px;
 	line-height: 26px;
 	font-size: 1.333em;
 }
 
 #Kunena span.kmsgtitle-new {
-	background: url("../../default/../default/images/msgtitlenew.gif") no-repeat left center;
+	background: url("../../default/images/msgtitlenew.gif") no-repeat left center;
 }
 
 #Kunena span.kmsgdate {
@@ -1584,7 +1584,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-minus {
-	background: url("../../default/../default/images/icons/karmaminus.png") no-repeat left top;
+	background: url("../../default/images/icons/karmaminus.png") no-repeat left top;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -1592,7 +1592,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-plus {
-	background: url("../../default/../default/images/icons/karmaplus.png") no-repeat left top;
+	background: url("../../default/images/icons/karmaplus.png") no-repeat left top;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -1640,7 +1640,7 @@ PX		EM			PCT			PT
 	list-style-type: none;
 	margin-top: 10px;
 	padding-left: 30px;
-	background:url("../../default/../default/images/icons/attachment.png") no-repeat;
+	background:url("../../default/images/icons/attachment.png") no-repeat;
 	height: 32px;
 	line-height: 32px;
 	width: 200px;
@@ -1799,7 +1799,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena div.khide {
-	background: #F2F1EE url("../../default/../default/images/bullet-tips.gif") no-repeat scroll 5px center;
+	background: #F2F1EE url("../../default/images/bullet-tips.gif") no-repeat scroll 5px center;
 	border: 1px dotted #F2CAB7;
 	font-size: 1.3em;
 	padding: 10px 10px 10px 25px;
@@ -1929,14 +1929,14 @@ PX		EM			PCT			PT
 #Kunena li.kpost-online-status-yes {
 	margin:10px auto;
 	display:block; 
-	background: url("../../default/../default/images/icons/online.gif") no-repeat; 
+	background: url("../../default/images/icons/online.gif") no-repeat; 
 	height: 15px; 
 	width: 74px;
 }
 #Kunena li.kpost-online-status-no {
 	margin:10px auto;
 	display:block;
-	background: url("../../default/../default/images/icons/offline.gif") no-repeat; 
+	background: url("../../default/images/icons/offline.gif") no-repeat; 
 	height: 15px; 
 	width: 74px;
 }
@@ -1945,7 +1945,7 @@ PX		EM			PCT			PT
 	display:block;
 	float: left;
 	padding-right:5px;
-	background: url("../../default/../default/images/icons/online.gif") no-repeat; 
+	background: url("../../default/images/icons/online.gif") no-repeat; 
 	height: 15px; 
 	width: 74px;
 }
@@ -1953,7 +1953,7 @@ PX		EM			PCT			PT
 	display:block;
 	float: left;
 	padding-right:5px;	
-	background: url("../../default/../default/images/icons/offline.gif") no-repeat; 
+	background: url("../../default/images/icons/offline.gif") no-repeat; 
 	height: 15px; 
 	width: 74px;
 }
@@ -2255,14 +2255,14 @@ POST PAGE
 }
 
 #Kunena a.kbuttongoto span.top {
-	background: url("../../default/../default/images/icons/top_arrow.gif") no-repeat left top;
+	background: url("../../default/images/icons/top_arrow.gif") no-repeat left top;
 	height: 18px;
 	width: 18px;
 	display: block;
 }
 
 #Kunena a.kbuttongoto span.bottom {
-	background: url("../../default/../default/images/icons/bottom_arrow.gif") no-repeat left top;
+	background: url("../../default/images/icons/bottom_arrow.gif") no-repeat left top;
 	height: 18px;
 	width: 18px;
 	display: block;

@@ -115,7 +115,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetThreadLink( 'view', intval($toptitle->catid), intval($toptitle->id), KunenaParser::parseText ($toptitle->subject), '' ); ?>
 						</td>
 						<td class="ktd-kcol-other">
-							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
+							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
 						</td>
 						<td class="ktd-kcol-other">
 							<?php echo intval($toptitle->hits); ?> <?php echo JText::_('COM_KUNENA_USRL_HITS') ;?>
@@ -160,7 +160,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetThreadLink( 'view', intval($toppoll->catid), intval($toppoll->threadid), $this->escape($toppoll->title), '' ); ?>
 						</td>
 						<td class="ktd-kcol-other">
-							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
+							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="ktd-kcol-other">
 							<?php echo intval($toppoll->total); ?> <?php echo JText::_('COM_KUNENA_USRL_VOTES') ;?>
@@ -205,7 +205,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetProfileLink(intval($poster->userid)); ?>
 						</td>
 						<td class="ktd-kcol-other">
-							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
+							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
 						</td>
 						<td class="ktd-kcol-other">
 							<?php echo intval($poster->posts); ?> <?php echo JText::_('COM_KUNENA_USRL_POSTS') ;?>
@@ -250,7 +250,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetProfileLink(intval($topprofile->user_id)); ?>
 						</td>
 						<td class="ktd-kcol-other">
-							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
+							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="ktd-kcol-other">
 							<?php echo intval($topprofile->hits); ?> <?php echo JText::_('COM_KUNENA_USRL_HITS') ;?>
@@ -295,7 +295,7 @@ $k = 0;
 							<?php echo CKunenaLink::GetProfileLink(intval($topthanks->id)); ?>
 						</td>
 						<td class="ktd-kcol-other">
-							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
+							<img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'/images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="ktd-kcol-other">
 							<?php echo intval($topthanks->receivedthanks); ?> <?php echo JText::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED') ;?>

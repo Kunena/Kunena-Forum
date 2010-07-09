@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+
+9-July-2010 810
+^ [#19388] w00t.png fix in spoiler
+
+
 9-July-2010 Matias
 ^ [#19380] Update Mootools plugin to latest version, fixes bug with Window.onDomReady()
 # [#19288] Polls: Fix wrong URL when you change your vote (non-AJAX version)

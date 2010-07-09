@@ -11,7 +11,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-$this->call_javascript_vote();
+// FIXME: AJAX Javascript does not work, it needs different logic
+//$this->call_javascript_vote();
 $dataspollresult = $this->get_poll_data($this->id);
 //To show the number total of votes for the poll
 $nbvoters = $this->get_number_total_voters($this->id);

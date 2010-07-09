@@ -33,8 +33,13 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+9-July-2010 Matias
+^ [#19380] Update Mootools plugin to latest version, fixes bug with Window.onDomReady()
+# [#19288] Polls: Fix wrong URL when you change your vote (non-AJAX version)
+# [#19288] Polls: Disable AJAX for now as it does not work
+
 8-July-2010 Matias
-+ [#19288] Added Russian language (thanks ZARKOS)
++ [#16390] Added Russian language (thanks ZARKOS)
 
 7-July-2010 Matias
 # [#19288] Move sample data translations into en-GB.com_kunena.install.ini to be able to translate it without main language files
@@ -123,11 +128,11 @@ Kunena 1.6.0-BETA1
 # [#19288] escaped whole template
 # [#19288] Replace online/ofline icons from icons.php to css icons in userlist
 # [#19288] fix small bugs
-^ [#19288] updated serbian languages
+^ [#16390] updated serbian languages
 # [#19288] revert some changes in escape template
 
 28-June-2010 Matias
-+ [#19288] Added Spanish language (thanks Alakentu)
++ [#16390] Added Spanish language (thanks Alakentu)
 # [#19288] Fix a bug that prevents latest module from working in the right way
 # [#21203] Fix IE8 bug on multi-file attachments
 + [#21161] Attachments: Show image instead of file if it can be shown

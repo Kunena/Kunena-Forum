@@ -11,7 +11,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-$this->call_javascript_vote();
+// FIXME: AJAX Javascript does not work, it needs different logic
+//$this->call_javascript_vote();
 $dataspollresult = $this->get_poll_data($this->id);
 $json_action = 'pollvote';
 if ( $this->changevote ) {

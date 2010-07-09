@@ -46,7 +46,7 @@ class CKunenaPolls {
 		}
 		return $instance;
 	}
-	
+
 	/**
 	* Escapes a value for output in a view script.
 	*
@@ -574,7 +574,7 @@ class CKunenaPolls {
 				}
 
 				$this->_app->enqueueMessage ( $message );
-				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, $id, false) );
+				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, '', false) );
 				break;
 			case 'pollchangevote' :
 				$result = $this->save_changevote($id,$this->my->id,$vote);
@@ -586,7 +586,7 @@ class CKunenaPolls {
 				}
 
 				$this->_app->enqueueMessage ( $message );
-				$this->_app->redirect ( CKunenaLink::GetThreadPageURL(CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, $id, false)) );
+				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, '', false) );
 				break;
 		}
 	}

@@ -60,7 +60,7 @@ $j=0;
 							<?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS'); ?>
 						</td>
 					</tr>
-				<?php } ?>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>

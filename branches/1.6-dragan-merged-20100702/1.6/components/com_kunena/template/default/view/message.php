@@ -19,8 +19,8 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<thead>
 		<tr class="ksth">
 			<th colspan="2">
-				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
-					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+				<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
+					<?php echo $this->subjectHtml ?>
 				</span>
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
@@ -53,8 +53,8 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<thead>
 		<tr class="ksth">
 			<th colspan="2">
-				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
-					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+				<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
+					<?php echo $this->subjectHtml ?>
 				</span>
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
@@ -86,9 +86,14 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2">
+			<th class="kmsg-date">
 				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+				</span>
+			</th>
+			<th>
+				<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
+					<?php echo $this->subjectHtml ?>
 				</span>
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
@@ -121,6 +126,11 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 			<th colspan="2">
 				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+				</span>
+			</th>
+			<th>
+				<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
+					<?php echo $this->subjectHtml ?>
 				</span>
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>

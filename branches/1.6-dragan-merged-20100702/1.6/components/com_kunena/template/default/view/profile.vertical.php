@@ -66,6 +66,11 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 			</div>
 			<?php //CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
 		</li>
+		<li class="kpost-karma">
+			<span class="kmsgkarma">
+				<?php echo $this->userkarma ?>
+			</span>
+		</li>
 		<?php if ($this->personaltext) : ?>
 		<li class="kpost-personal">
 			<?php echo KunenaParser::parseText($this->personaltext) ?>

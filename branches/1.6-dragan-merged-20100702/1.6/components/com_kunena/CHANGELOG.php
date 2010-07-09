@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+10-July-2010 @quila
+# [#19288] Moved button thank you and subject in other place
+# [#19288] Changed colors of users
+
 9-July-2010 Matias
 # [#19345] Change layout logic to use individual files in message profilebox
 # [#19345] Separate menu, login and logout to their own template files in default/loginbox

@@ -55,6 +55,8 @@ $styles = <<<EOF
 #Kunena div.kiconprofile span {
 	background-image: url("{$mediaurl}/iconsets/profile/{$this->params->get('profileIconset')}/default.png");
 }
+#Kunena span.kbuttononline-yes,
+#Kunena span.kbuttononline-no,
 #Kunena a.kbuttoncomm span,
 #Kunena a.kbuttonuser span,
 #Kunena a.kbuttonmod span,

@@ -999,7 +999,7 @@ kwho-total {
 
 #Kunena .klist-actions-info-all {
 	font-weight: bold;
-	height: 25px;
+	height: 28px;
 	line-height: 28px;
 	padding-left: 15px;
 	padding-right: 10px;
@@ -1008,16 +1008,18 @@ kwho-total {
 }
 
 #Kunena .klist-actions-goto {
-	height: 25px;
+	height: 28px;
 	padding: 0px 2px 0px 2px;
 	width: 1%;
+	vertical-align: middle;
 }
 
 #Kunena .klist-actions-forum {
 	border-left: 1px solid #BFC3C6;
-	height: 25px;
+	height: 28px;
 	padding: 1px 4px 1px 4px;
 	white-space: nowrap;
+	vertical-align: middle;
 }
 
 #Kunena .klist-pages-all {
@@ -1031,6 +1033,7 @@ kwho-total {
 	line-height: 28px;
 	padding-left: 5px;
 	padding-right: 3px;
+	vertical-align: middle;
 }
 
 #Kunena .klist-times-all {
@@ -1816,7 +1819,7 @@ kwho-total {
 	text-align: right;
 	height: 15px;
 	line-height: 15px;
-	margin: 4px 0px 3px -12px;
+	margin: 2px 0px 3px -12px;
 	line-height: 14px;
 	white-space: nowrap;
 	font-size: .917em;

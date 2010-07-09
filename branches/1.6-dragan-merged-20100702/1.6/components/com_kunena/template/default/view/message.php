@@ -18,7 +18,10 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2">
+			<th class="kmsg-date">
+				<span class="kmsgdate ktopbottom" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+				</span>
 				<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
 					<?php echo $this->subjectHtml ?>
 				</span>
@@ -52,7 +55,10 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2">
+			<th class="kmsg-date">
+				<span class="kmsgdate ktopbottom" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+				</span>
 				<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
 					<?php echo $this->subjectHtml ?>
 				</span>
@@ -123,7 +129,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <table <?php echo $this->class ?>>
 	<thead>
 		<tr class="ksth">
-			<th colspan="2">
+			<th class="kmsg-date">
 				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 				</span>

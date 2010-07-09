@@ -68,237 +68,6 @@ PX		EM			PCT			PT
 
 /* 
 ----------------------------------------------------------------------------------------------- */
-#Kunena div.kannouncement h2 {
-	/*background: red;*/
-	display:table;
-	table-layout:fixed;
-	word-wrap:break-word;
-}
-#Kunena div.kfrontstats h2 {
-	/*background: black;*/
-}
-#Kunena div.kwhoisonline h2 {
-	/*background: green;*/
-}
-#Kunena div#kannouncement .kanndesc {
-	padding: 5px 10px;
-	/*background: #FFFFAA;*/
-}
-#Kunena h2 a {
-	color: #FFFFFF !important;
-	font-weight: bold;
-}
-#Kunena table.kmsg th a {
-	color: #FFFFFF;
-	float: right;
-}
-#Kunena .klist-markallcatsread input.kbutton {
-	padding:0;
-	margin: 4px;
-}
-#Kunena .kblock div.kheader {
-	background: #BFC3C6;
-}
-#Kunena .kpbox {
-	margin: 0!important;
-	padding:0;
-}
-/*#Kunena td.kviews,*/
-#Kunena td.kcol-kcattopics,
-#Kunena td.kcol-kcatreplies,
-#Kunena td.kcol-ktopicicon,
-#Kunena td.kcol-ktopicviews {
-	white-space:nowrap;
-	text-align:center;
-	width: 1%;
-	vertical-align: middle;
-}
-#Kunena td.kcol-kcatlastpost {
-	width: 25%;
-	text-align:left;
-	vertical-align: middle;
-}
-#Kunena td.kcol-knoposts {
-	width: 25%;
-	text-align:center;
-	vertical-align: middle;
-}
-#Kunena td.ktopicmoderation {
-	width: 1%;
-	vertical-align: middle;
-}
-#Kunena td.kcol-ktopiclastpost {
-	font-size: .917em;
-	width: 25%;
-	vertical-align: middle;
-}
-#Kunena td.kcol-category-icon {
-	width: 1%;
-}
-
-#Kunena td.kcol-first {
-	border-left: none;
-	border-bottom: 1px solid #BFC3C6;
-	padding: 4px 8px;
-	vertical-align: middle;
-	white-space:nowrap;
-}
-#Kunena td.kcol-mid {
-	border-left: 1px solid #BFC3C6;
-	border-bottom: 1px solid #BFC3C6;
-	padding: 4px 8px;
-	vertical-align: middle;
-}
-#Kunena td.kcol-last {
-	border-left: 1px solid #BFC3C6;
-	border-bottom: 1px solid #BFC3C6;
-	padding: 4px 8px;
-	vertical-align: middle;
-}
-#Kunena td.krowmoderation input.kbutton {
-	margin: 0 0 0 5px;;
-}
-#Kunena div#searchuser_tbody div.search-user {
-	padding:5px 10px;
-	float: left;
-}
-#Kunena div#searchuser_tbody div.userlist-jump {
-	float: right;
-}
-#Kunena table#addban td.kcol-first {
-	width: 35%;
-}
-#Kunena table#addban td.kcol-mid textarea {
-	width: 250px;
-	height: 50px;
-}
-#Kunena table#kforumsearch th {
-	padding: 0px;
-}
-#Kunena tr.userlist th {
-	padding: 3px;
-	text-align: center;
-}
-#Kunena tr.userlist th a {
-	color: #FFFFFF;
-}
-#Kunena div#userlist_tbody td,
-#Kunena table#kuserlist_bottom th {
-	padding: 4px 8px;
-}
-#Kunena td.krowmoderation {
-	text-align: right;
-}
-
-#Kunena table.kreview-table td.author {
-	width: 15%;
-	text-align: center;
-}
-#Kunena div#history td.kauthor,
-#Kunena div#ksearchresult td.kresultauthor {
-	text-align:center;
-}
-#Kunena div#history td.khistorymsg {
-	text-align:left;
-	padding: 10px;
-}
-#Kunena div.ksearchresult-desc {
-	padding: 5px;
-}
-#Kunena div#ksearchresult div.resultmsg {
-	padding: 15px 0;
-}
-#Kunena div#ksearchresult span.kmsgtitle a {
-	font-weight: bold;
-}
-#Kunena div#ksearchresult td.resultmsg {
-	padding: 0 10px 10px;
-}
-#Kunena div#ksearchresult div.resultcat {
-	padding: 5px 0 0 0;
-	border-top: 1px dotted #BFC3C6;
-}
-#Kunena h1 a:hover,
-#Kunena h2 a:hover {
-	text-decoration: underline;
-}
-#Kunena div.kpolldesc td.kpoll-option {
-	text-align: left;
-	width: 60%;
-	padding: 3px 8px;
-}
-#Kunena div.kpolldesc td.kpoll-bar {
-	text-align: left;
-	width: 20%;
-}
-#Kunena div.kpolldesc td.kpoll-number,
-#Kunena div.kpolldesc td.kpoll-percent {
-	text-align: center;
-	width: 10%;
-}
-#Kunena div#userlist-tbody td {
-	text-align: center;
-}
-#Kunena table#kuserlist-bottom div {
-	text-align: center;
-	padding: 3px;
-}
-#Kunena tr.ksth th.kname {
-	width: 50%;
-	text-align: left;
-}
-#Kunena tr.ksth th.kbar {
-	width: 40%;
-}
-#Kunena tr.ksth th.knr {
-	width: 10%;
-}
-#Kunena div.banhistory th.kid {
-	width:2%;
-}
-#Kunena div.banhistory th.kbanfrom {
-	width:14%;
-}
-#Kunena div.banhistory th.kbanstart,
-#Kunena div.banhistory th.kbanexpire,,
-#Kunena div.banhistory th.kbancreate {
-	width:20%;
-}
-#Kunena div.banhistory th.kbanmodify {
-	width:24%;
-}
-#Kunena div.kwhoisonline td.kcol-first,
-#Kunena div.kgenstats td.kcol-first,
-#Kunena div.kfrontstats td.kcol-first {
-	width: 1%;
-}
-#Kunena div.kgenstats th {
-	text-align: left !important;
-}
-#Kunena div.kadvsearch td.kcol-first,
-#Kunena div.kadvsearch td.kcol-mid {
-	width: 50%;
-	vertical-align: top;
-}
-#Kunena div.kedituser td.kcol-first,
-#Kunena div.keditavatar td.kcol-first,
-#Kunena div.keditprofile td.kcol-first,
-#Kunena div.keditsettings td.kcol-first {
-	width: 120px;
-}
-#Kunena div.klogin div.kbody,
-#Kunena div.kinfomessage div.kbody {
-	padding: 15px;
-	text-align: center;
-}
-
-khidden-ktitle {
-	
-}
-kwho-total {
-	
-}
-
 
 /* MAIN STYLES
 ----------------------------------------------------------------------------------------------- */
@@ -429,7 +198,9 @@ kwho-total {
 	border-bottom:4px solid #BFC3C6;
 	background: #FFFFFF;
 }
-
+#Kunena .kblock div.kheader {
+	background: #BFC3C6;
+}
 #Kunena div.kblock div.ktitle {
 	background: #5388B4;
 	text-align: left;
@@ -510,46 +281,7 @@ kwho-total {
 	clear: both;
 	border-spacing: 0;
 }
-#Kunena table.kblock thead th {
-	/*background: #5388B4;
-	text-align: left;
-	border-bottom:1px solid #BFC3C6;
-	width:100%;
-	color: #FFFFFF;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;*/
-}
-#Kunena table.kblock h1,
-#Kunena table.kblock h2 {
-	/*border: none;
-	display: block;
-	line-height: 1.9em;
-	font-size:1.333em;
-	text-indent: 0px;
-	color: #FFFFFF;
-	margin: 0;
-	padding: 4px 8px;
-	width: auto;*/
-}
-#Kunena table.kblock span.ktoggler {
-	/*float: right;
-	bottom: 16px;
-	right: 1px;
-	height: 0;
-	position: relative;*/
-}
-#Kunena table.kblock td,
-#Kunena table.kblock th {
-	/*text-align: left;
-	overflow: hidden;
-	padding: 4px 10px;
-	border: 1px solid #BFC3C6;
-	vertical-align: middle;*/
-}
-#Kunena table.kblock th {
-	/*padding: 0;*/
-}
+
 #Kunena tr.krow1 td {
 	background: #F2F1EE;
 	padding: 4px 8px;
@@ -584,25 +316,7 @@ kwho-total {
 	text-align: center;
 	width: 10%;
 }
-#Kunena table.kblock .kcol-search-subject {
-	width: 70%;
-}
-#Kunena table.kblock .kcol-search-author {
-	width: 10%;
-}
-#Kunena table.kblock .kcol-search-date {
-	width: 20%;
-}
 
-#Kunena table.kblocktable thead tr th,
-#Kunena table.kblocktablehalf thead tr th {
-	/*background: #5388b4;
-	color: #ffffff;
-	padding: 2px;
-	font-weight: normal;
-	border-bottom: 1px solid #d9d9d9;
-	text-align:center;*/
-}
 
 #Kunena table.kblocktable .knewchar {
 	font-size: .583em;
@@ -617,13 +331,6 @@ kwho-total {
 #Kunena tr.ksth th{
 	padding: 3px 5px;
 	text-align: center;
-}
-#Kunena th.ksectiontableheader {
-	/* padding: 3px 5px; */
-	/*padding: 4px 8px;
-	font-weight: normal;
-	font-size: 1em;
-	font-family: Arial, Helvetica, sans-serif;*/
 }
 
 #Kunena td#kpost-buttons {
@@ -700,12 +407,6 @@ kwho-total {
 	border: 0px
 }
 
-#Kunena .ktopic-sticky {
-	/*margin-left: 5px;
-	float:right;
-	display:block;*/
-}
-
 #Kunena .klatest-post-info {
 	display:block;
 }
@@ -727,6 +428,35 @@ kwho-total {
 #Kunena .kalert {
 	color: #FF0000;
 }
+#Kunena td.kcol-first {
+	border-left: none;
+	border-bottom: 1px solid #BFC3C6;
+	padding: 4px 8px;
+	vertical-align: middle;
+	white-space:nowrap;
+}
+#Kunena td.kcol-mid {
+	border-left: 1px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
+	padding: 4px 8px;
+	vertical-align: middle;
+}
+#Kunena td.kcol-last {
+	border-left: 1px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
+	padding: 4px 8px;
+	vertical-align: middle;
+}
+#Kunena td.ktopicmoderation {
+	width: 1%;
+	vertical-align: middle;
+}
+#Kunena td.kcol-ktopiclastpost {
+	font-size: .917em;
+	width: 25%;
+	vertical-align: middle;
+}
+
 
 /* COLOR ADMINISTRATOR AND MODERATOR
 ----------------------------------------------------------------------------------------------- */
@@ -1119,6 +849,10 @@ kwho-total {
 	border: 1px solid #BFC3C6;
 	background: #FFFFFF;
 }
+#Kunena .klist-markallcatsread input.kbutton {
+	padding:0;
+	margin: 4px;
+}
 
 #Kunena .klist-categories {
 	border-left: 1px solid #BFC3C6;
@@ -1286,6 +1020,10 @@ kwho-total {
 #Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton {
 	margin: 0;
 }
+#Kunena .kpbox {
+	margin: 0!important;
+	padding:0;
+}
 #Kunena div#kforum-head {
 	padding: 5px 10px;
 	vertical-align:middle;
@@ -1316,6 +1054,15 @@ kwho-total {
 }
 #Kunena div.kmoderatorslist-jump form#jumpto  {
 	margin:0;
+}
+#Kunena table.kblock .kcol-search-subject {
+	width: 70%;
+}
+#Kunena table.kblock .kcol-search-author {
+	width: 10%;
+}
+#Kunena table.kblock .kcol-search-date {
+	width: 20%;
 }
 
 /* SEARCH
@@ -1367,6 +1114,27 @@ kwho-total {
 #Kunena fieldset#search-posts-start select {
 	margin-left: 10px;
 }
+#Kunena div.ksearchresult-desc {
+	padding: 5px;
+}
+#Kunena div#ksearchresult div.resultmsg {
+	padding: 15px 0;
+}
+#Kunena div#ksearchresult span.kmsgtitle a {
+	font-weight: bold;
+}
+#Kunena div#ksearchresult td.resultmsg {
+	padding: 0 10px 10px;
+}
+#Kunena div#ksearchresult div.resultcat {
+	padding: 5px 0 0 0;
+	border-top: 1px dotted #BFC3C6;
+}
+#Kunena div.kadvsearch td.kcol-first,
+#Kunena div.kadvsearch td.kcol-mid {
+	width: 50%;
+	vertical-align: top;
+}
 
 /* PROFILEBOX AND LOGINBOX
 ----------------------------------------------------------------------------------------------- */
@@ -1401,7 +1169,28 @@ kwho-total {
 
 /* CATEGORY LIST
 ----------------------------------------------------------------------------------------------- */
-
+#Kunena td.kcol-kcattopics,
+#Kunena td.kcol-kcatreplies,
+#Kunena td.kcol-ktopicicon,
+#Kunena td.kcol-ktopicviews {
+	white-space:nowrap;
+	text-align:center;
+	width: 1%;
+	vertical-align: middle;
+}
+#Kunena td.kcol-kcatlastpost {
+	width: 25%;
+	text-align:left;
+	vertical-align: middle;
+}
+#Kunena td.kcol-knoposts {
+	width: 25%;
+	text-align:center;
+	vertical-align: middle;
+}
+#Kunena td.kcol-category-icon {
+	width: 1%;
+}
 #Kunena #kblock4,
 #Kunena #kblock1,
 #Kunena .k-bt-cvr1 {
@@ -1415,19 +1204,8 @@ kwho-total {
 	text-align: left;
 }
 
-#Kunena table.kblocktablehalf {
-	/*width: 48%;
-	margin: 5px 0;
-	margin-right: 15px;	
-	border-style: solid;
-	border-color: #BFC3C6;
-	border-width: 0px 0px 4px 0px;
-	text-align: left;*/
-}
-
 #Kunena h1,
 #Kunena h2 {
-	/*background: #5388B4;*/
 	text-align: left;
 	border-bottom:2px solid #D9D9D9;
 	display: block;
@@ -1443,6 +1221,14 @@ kwho-total {
 	font-weight:bold;
 	text-transform: none;
 }
+#Kunena h2 a {
+	color: #FFFFFF !important;
+	font-weight: bold;
+}
+#Kunena h1 a:hover,
+#Kunena h2 a:hover {
+	text-decoration: underline;
+}
 
 #Kunena h1 a:link,
 #Kunena h1 a:active,
@@ -1453,11 +1239,9 @@ kwho-total {
 #Kunena h2 span.kright {
 	float: right;
 	margin: 0 10px;
-	/*font-size:.833em;*/
 }
 
 #Kunena div.ktitle-desc {
-	/*clear:left;*/
 	padding:5px;
 }
 #Kunena .kcheckbox {
@@ -1643,6 +1427,10 @@ kwho-total {
 #Kunena table.kmsg th.kmsg-date {
 	vertical-align: middle !important;
 }
+#Kunena th.kmsg-date span.ktopbottom {
+	float: left;
+	margin:2px 25px;
+}
 
 #Kunena span.kmsgdate {
 	font-weight: normal;
@@ -1760,6 +1548,11 @@ kwho-total {
 	width: auto;
 	word-wrap:normal;
 	max-height: 25em;
+}
+
+#Kunena table.kmsg th a {
+	color: #FFFFFF;
+	float: right;
 }
 
 #Kunena div.kmessage-editmarkup-cover {
@@ -2181,9 +1974,6 @@ kwho-total {
 /*
 POST PAGE
 -------------------------------------------------------------------- */
-#Kunena #kpostmessage {
-	/*border-left: 1px solid #BFC3C6;*/
-}
 
 #Kunena #kpost-message .postinput {
 	width: 94%;
@@ -2242,12 +2032,24 @@ POST PAGE
 	border: 1px solid #BFC3C6;
 }
 
+#Kunena table.kreview-table td.author {
+	width: 15%;
+	text-align: center;
+}
+
 #Kunena td.kcaptcha {
 	text-align: left;
 	vertical-align:middle;
 	height: 35px;
 }
-
+#Kunena div#history td.kauthor,
+#Kunena div#ksearchresult td.kresultauthor {
+	text-align:center;
+}
+#Kunena div#history td.khistorymsg {
+	text-align:left;
+	padding: 10px;
+}
 /* ---- Post Previews ---- */
 
 #Kunena textarea#kbbcode-message {
@@ -3003,6 +2805,20 @@ label.kpoll-term-lbl {
 #kpoll-btns {
 	margin: 15px 0;
 }
+#Kunena div.kpolldesc td.kpoll-option {
+	text-align: left;
+	width: 60%;
+	padding: 3px 8px;
+}
+#Kunena div.kpolldesc td.kpoll-bar {
+	text-align: left;
+	width: 20%;
+}
+#Kunena div.kpolldesc td.kpoll-number,
+#Kunena div.kpolldesc td.kpoll-percent {
+	text-align: center;
+	width: 10%;
+}
 
 /* PATHWAY 
 ----------------------------------------------------------------------------------------------- */
@@ -3094,6 +2910,15 @@ FORUM HEADER DESCRIPTION
 /*
 HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 -------------------------------------------------------------------- */
+#Kunena div.kannouncement h2 {
+	display:table;
+	table-layout:fixed;
+	word-wrap:break-word;
+}
+#Kunena div#kannouncement .kanndesc {
+	padding: 5px 10px;
+}
+
 #Kunena td.kuadesc,
 #Kunena td.kcreditsdesc	{
 	vertical-align: top;
@@ -3137,6 +2962,65 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	height: 32px;
 }
 
+#Kunena div#searchuser_tbody div.search-user {
+	padding:5px 10px;
+	float: left;
+}
+#Kunena div#searchuser_tbody div.userlist-jump {
+	float: right;
+}
+#Kunena tr.userlist th {
+	padding: 3px;
+	text-align: center;
+}
+#Kunena tr.userlist th a {
+	color: #FFFFFF;
+}
+#Kunena div#userlist_tbody td,
+#Kunena table#kuserlist_bottom th {
+	padding: 4px 8px;
+}
+#Kunena div#userlist-tbody td {
+	text-align: center;
+}
+#Kunena table#kuserlist-bottom div {
+	text-align: center;
+	padding: 3px;
+}
+
+/* 		STATISTICS PAGE
+------------------------------------------------------------------- */
+
+#Kunena tr.ksth th.kname {
+	width: 50%;
+	text-align: left;
+}
+#Kunena tr.ksth th.kbar {
+	width: 40%;
+}
+#Kunena tr.ksth th.knr {
+	width: 10%;
+}
+#Kunena div.kwhoisonline td.kcol-first,
+#Kunena div.kgenstats td.kcol-first,
+#Kunena div.kfrontstats td.kcol-first {
+	width: 1%;
+}
+#Kunena div.kgenstats th {
+	text-align: left !important;
+}
+#Kunena div.kedituser td.kcol-first,
+#Kunena div.keditavatar td.kcol-first,
+#Kunena div.keditprofile td.kcol-first,
+#Kunena div.keditsettings td.kcol-first {
+	width: 120px;
+}
+#Kunena div.klogin div.kbody,
+#Kunena div.kinfomessage div.kbody {
+	padding: 15px;
+	text-align: center;
+}
+
 /* 		WHO IS ONLINE
 ------------------------------------------------------------------- */
 
@@ -3145,6 +3029,8 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	width: 32px;
 	height: 32px;
 }
+#Kunena khidden-ktitle {}
+#Kunena kwho-total {}
 
 #Kunena .kwholegend {
 	border-top: 1px dotted #CCCCCC;
@@ -3211,6 +3097,38 @@ MODERATOR PAGE
 	margin-left: 42px;
 }
 
+#Kunena td.krowmoderation input.kbutton {
+	margin: 0 0 0 5px;;
+}
+
+#Kunena table#kaddban td.kcol-first {
+	width: 35%;
+}
+#Kunena table#kaddban td.kcol-mid textarea {
+	width: 250px;
+	height: 50px;
+}
+#Kunena table#kforumsearch th {
+	padding: 0px;
+}
+
+#Kunena td.krowmoderation {
+	text-align: right;
+}
+#Kunena div.banhistory th.kid {
+	width:2%;
+}
+#Kunena div.banhistory th.kbanfrom {
+	width:14%;
+}
+#Kunena div.banhistory th.kbanstart,
+#Kunena div.banhistory th.kbanexpire,,
+#Kunena div.banhistory th.kbancreate {
+	width:20%;
+}
+#Kunena div.banhistory th.kbanmodify {
+	width:24%;
+}
 /*
 PROFILE
 -------------------------------------------------------------------- */
@@ -3518,9 +3436,6 @@ div#kprofile-stats ul li span.krank-admin {
 	float:right;
 	margin-top: 10px;
 	margin-right: 3px;
-}
-#Kunena table#kforumsearch tr.krow1 td.td-1 fieldset.fieldset {
-	background-image:none!important;
 }
 
 /* Mootools Autocompleter CSS classes

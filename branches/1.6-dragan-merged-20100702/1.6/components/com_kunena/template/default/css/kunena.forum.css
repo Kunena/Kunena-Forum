@@ -1950,7 +1950,7 @@ kwho-total {
 }
 
 #Kunena ul#kpost-profile {
-	margin:8px 0 0 0;
+	margin:8px 0;
 	padding: 0;
 	text-align:center;
 	line-height: 1.5em;
@@ -3230,7 +3230,7 @@ PROFILE
 #Kunena .kicon-profile-digg { background-position: 0 -105px; } 
 #Kunena .kicon-profile-email { background-position: 0 -126px; } 
 #Kunena .kicon-profile-facebook { background-position: 0 -147px; } 
-#Kunena .kicon-profile-female { background-position: 0 -168px; } 
+#Kunena .kicon-profile-gender-female { background-position: 0 -168px; } 
 #Kunena .kicon-profile-flickr { background-position: 0 -189px; } 
 #Kunena .kicon-profile-friendfeed { background-position: 0 -210px; } 
 #Kunena .kicon-profile-gender-unknown { background-position: 0 -231px; } 
@@ -3240,7 +3240,7 @@ PROFILE
 #Kunena .kicon-profile-karmaplus { background-position: 0 -313px; } 
 #Kunena .kicon-profile-linkedin { background-position: 0 -332px; } 
 #Kunena .kicon-profile-location { background-position: 0 -353px; } 
-#Kunena .kicon-profile-male { background-position: 0 -374px; } 
+#Kunena .kicon-profile-gender-male { background-position: 0 -374px; } 
 #Kunena .kicon-profile-msn { background-position: 0 -395px; } 
 #Kunena .kicon-profile-myspace { background-position: 0 -416px; } 
 #Kunena .kicon-profile-pm { background-position: 0 -437px; } 

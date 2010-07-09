@@ -20,17 +20,13 @@ $kunena_config = KunenaFactory::getConfig ();
 
 // Team credits page is not translated
 ?>
-<div class="k-bt-cvr1">
-  <div class="k-bt-cvr2">
-    <div class="k-bt-cvr3">
-      <div class="k-bt-cvr4">
-        <div class="k_bt_cvr5">
+<div class="kblock kcredits">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
           <table class = "kblocktable" id ="kforumcredits">
-            <thead>
-              <tr>
-                <th> <div class = "ktitle-cover"> <span class="ktitle kl" ><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span> </div>
-              </tr>
-            </thead>
             <tbody>
               <tr>
                 <td class = "kcreditsdesc"><table>
@@ -85,32 +81,19 @@ $kunena_config = KunenaFactory::getConfig ();
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-    </div>
-  </div>
+		</div>
+	</div>
 </div>
 
 <!-- Begin: Forum Jump -->
-<div class="k-bt-cvr1">
-  <div class="k-bt-cvr2">
-    <div class="k-bt-cvr3">
-      <div class="k-bt-cvr4">
-        <div class="k_bt_cvr5">
-          <table  class = "kblocktable" id="kbottomarea">
-              <tr>
-                <th class = "th-right"> <?php
-                //(JJ) FINISH: CAT LIST BOTTOM
-				if ($kunena_config->enableforumjump) {
-					CKunenaTools::loadTemplate('/forumjump.php');
-				}
-                ?>
-                </th>
-              </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_GO_TO_CATEGORY'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="khelprulesjump">
+			<?php CKunenaTools::loadTemplate('/forumjump.php') ?>
+		</div>
+	</div>
 </div>
 <!-- Finish: Forum Jump -->

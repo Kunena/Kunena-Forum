@@ -41,6 +41,8 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Split profilebox.php
 # [#19288] Split message.profilebox.php
 # [#19288] Renaming of some classes
+# [#19288] Redesign for credits page
+# [#19288] Fixes for top/bottom profilbox in message post
 
 8-July-2010 Matias
 # [#19345] Simplify initialize.php in default template

@@ -709,7 +709,7 @@ kwho-total {
 #Kunena .kcredits {
 	height: 31px;
 	line-height: 26px;
-	font-size: .833em;
+	/*font-size: .833em;*/
 }
 
 #Kunena .kfooter {
@@ -1950,6 +1950,11 @@ kwho-total {
 ----------------------------------------*/
 
 /* Left and right layouts */
+
+#Kunena ul#kpost-profile li {
+	padding: 0px;
+}
+
 #Kunena ul#kpost-profile {
 	margin:8px 0 0 0;
 	padding: 0;
@@ -2025,7 +2030,7 @@ kwho-total {
 	padding: 0;
 }
 #Kunena ul#kpost-profiletop li.kpost-username {
-	padding-top: 5px;
+	/*padding-top: 5px;*/
 }
 
 #Kunena ul#kpost-profiletop li.kpost-avatar{
@@ -2034,7 +2039,7 @@ kwho-total {
 	margin-right: 5px;
 }
 #Kunena ul#kpost-profiletop li.kpost-userrank{
-	float:left;
+	/*float:left;*/
 	padding-right: 5px;
 }
 #Kunena ul#kpost-profiletop li.kpost-smallicons{
@@ -2056,6 +2061,9 @@ kwho-total {
 
 /* top
 ----------------------------------------*/
+#Kunena ul#kpost-profiletop li.kpost-userrank-img {
+	display: block;
+}
 
 #Kunena td.kprofile-top {
 	background: #EFF0F4;

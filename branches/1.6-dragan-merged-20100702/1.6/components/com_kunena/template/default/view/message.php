@@ -12,7 +12,7 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-
+//TODO: Split this file
 if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <table <?php echo $this->class ?>>

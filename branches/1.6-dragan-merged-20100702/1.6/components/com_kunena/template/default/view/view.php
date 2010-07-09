@@ -43,10 +43,10 @@ defined( '_JEXEC' ) or die();
 	<?php echo $this->kunena_pathway1; ?>
 </div>
 <!-- F: List Actions Bottom -->
-<div class="kcontainer" id="moderatorslist">
+<div class="kcontainer" id="kmoderatorslist">
 	<div class="kbody">
 		<?php if (!empty ( $this->modslist ) ) : ?>
-		<div class="moderatorslist-list">
+		<div class="kmoderatorslist-list">
 				<?php
 				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 				$modlinks = array();
@@ -57,7 +57,7 @@ defined( '_JEXEC' ) or die();
 				?>
 		</div>
 		<?php endif; ?>
-		<div class="moderatorslist-jump">
+		<div class="kmoderatorslist-jump">
 				<?php $this->displayForumJump (); ?>
 		</div>
 	</div>

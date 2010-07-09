@@ -34,6 +34,7 @@ if ($this->config->showwhoisonline)
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close"  rel="kwhoisonline"></a></span>
 		<h2><span><?php
+				//FIXME: remove link to who.php page
 				$who_online = JText::_('COM_KUNENA_WHO_WHOIS_ONLINE');
 				if (CKunenaTools::isModerator($this->my->id)) {
 					echo CKunenaLink::GetWhoIsOnlineLink($who_online,''); }
@@ -52,7 +53,7 @@ if ($this->config->showwhoisonline)
 				<div class="kwhoicon"></div>
 			</td>
 			<td class = "kcol-mid km">
-				<div class="kwhoonline ks">
+				<div class="kwhoonline kwho-total ks">
 					<?php
 					//$totalhiden = '';
 					$totalusers = ($totaluser + $totalguests);
@@ -75,7 +76,7 @@ if ($this->config->showwhoisonline)
 					}
 					if (CKunenaTools::isModerator($this->my->id)) : ?>
 						<br />
-						<span class="ks"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span>
+						<span class="khidden-ktitle ks"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span>
 						<br />
 						<?php
 						foreach ($users as $user) {

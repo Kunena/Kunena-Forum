@@ -149,7 +149,7 @@ foreach ( $this->categories [0] as $section ) :
 			</td>
 
 			<?php } else { ?>
-			<td class="kcol-mid knoposts"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
+			<td class="kcol-mid kcol-knoposts"><?php echo JText::_('COM_KUNENA_NO_POSTS'); ?></td>
 			<?php } ?>
 		</tr>
 		<?php } } ?>

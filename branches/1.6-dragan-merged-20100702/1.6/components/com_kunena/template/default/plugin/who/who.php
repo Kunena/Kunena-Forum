@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
-
+// FIXME: get rid of this page
 if ($this->config->showwhoisonline) {
 	$users=$this->getUsersList();
 ?>

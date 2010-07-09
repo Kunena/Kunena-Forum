@@ -23,7 +23,7 @@ JHTML::_('behavior.tooltip');
 <table
 	class="<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '';
-	?>" id="kflattable">
+	?>">
 	<tbody>
 		<!-- Kunena specific settings -->
 		<tr class="krow2">

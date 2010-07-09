@@ -20,7 +20,7 @@ JHTML::_('behavior.calendar');
 	<div class="kcontainer">
 		<div class="kbody">
 			<form id="kform-ban" name="kformban" action="index.php" method="post">
-			<table id="addban" class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>">
+			<table id="kaddban" class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>">
 				<tbody>
 				<tr class="krow<?php echo ($i^=1)+1;?>">
 					<td class="kcol-first"><b><?php echo JText::_('COM_KUNENA_BAN_USERNAME'); ?></b></td>

@@ -17,13 +17,13 @@ $k = 0;
 ?>
 <div class="kblock khistory">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="history"></a></span>
+		<span class="ktoggler"><a class="ktoggler close"  rel="khistory"></a></span>
 		<h2><span><?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY' )?>: <?php echo $this->escape($this->subject) ?></span></h2>
 		<div class="ktitle-desc km">
 			<?php echo JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_MAX' ) . ' ' . $this->escape($this->config->historylimit) . ' ' . JText::_ ( 'COM_KUNENA_POST_TOPIC_HISTORY_LAST' )?>
 		</div>
 	</div>
-	<div class="kcontainer" id="history">
+	<div class="kcontainer" id="khistory">
 		<div class="kbody">
 			<?php foreach ( $this->messages as $mes ):?>
 			<table>

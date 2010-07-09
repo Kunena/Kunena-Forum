@@ -40,13 +40,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 <table
 	class="<?php
 	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '';
-	?>" id="kflattable">
+	?>">
 		<?php
 		$k = 0;
 		$counter = 0;
 		if (!count ( $this->customreply )) { ?>
 		<tr class="krow2">
-			<td class="kcol-ktopicicon kcol-first km kcenter"><?php echo $this->func=='showcat' ? JText::_('COM_KUNENA_VIEW_NO_POSTS') : JText::_('COM_KUNENA_NO_POSTS') ?></td>
+			<td class="kcol-first kcol-ktopicicon"><?php echo $this->func=='showcat' ? JText::_('COM_KUNENA_VIEW_NO_POSTS') : JText::_('COM_KUNENA_NO_POSTS') ?></td>
 		</tr>
 		<?php
 		} else
@@ -68,11 +68,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($message->hold == 1) echo ' kunapproved';
 		else if ($message->hold) echo ' kdeleted';
 		?>">
-			<td class="kcol-ktopicicon kcol-first kcenter">
+			<td class="kcol-first kcol-ktopicicon">
 				<?php echo CKunenaTools::topicIcon($message) ?>
 			</td>
 
-			<td class="ktopictittle kcol-mid">
+			<td class="kcol-mid ktopictittle">
 			<?php
 				$curMessageNo = $message->msgcount - ($message->unread ? $message->unread - 1 : 0);
 				$threadPages = ceil ( $message->msgcount / $this->config->messages_per_page );
@@ -88,7 +88,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				<div style="display:none"><?php echo KunenaParser::parseBBCode ($message->message);?></div>
 			</td>
 
-			<td class="ktopictittle kcol-mid">
+			<td class="kcol-mid ktopictittle">
 				<?php echo CKunenaLink::GetThreadLink ( 'view', intval($firstpost->catid), intval($firstpost->id), KunenaParser::parseText ($firstpost->subject), KunenaParser::stripBBCode ($firstpost->message), 'follow', 'ktopic-title km' ) ?>
 				<?php
 				if ($message->favcount ) {
@@ -115,7 +115,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- /Category -->
 				</div>
 			</td>
-			<td class="kcol-ktopiclastpost kcol-mid ks">
+			<td class="kcol-mid kcol-ktopiclastpost">
 				<div class="klatest-post-info">
 					<!--  Sticky   -->
 					<?php
@@ -153,7 +153,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 
 			<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
-			<td class="ktopicmoderation kcol-mid kcenter">
+			<td class="kcol-mid ktopicmoderation">
 				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($message->id) ?>]" value="0" />
 			</td>
 			<?php endif; ?>
@@ -163,7 +163,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php  if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) : ?>
 		<!-- Moderator Bulk Actions -->
 		<tr class="krow1">
-			<td colspan="7" class="krowmoderation kcol-first">
+			<td colspan="7" class="kcol-first krowmoderation">
 				<select name="do" id="kBulkChooseActions" class="inputbox">
 					<option value="">&nbsp;</option>
 					<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>

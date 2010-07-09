@@ -14,11 +14,11 @@ defined ( '_JEXEC' ) or die ();
 ?>
 <div class="kblock kinfomessage">
 	<div class="kheader">
-		<h2><span><?php echo JText::_('COM_KUNENA_FORUM_INFORMATION'); ?></span></h2>
+		<h2><span><?php echo $this->header; ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<?php echo JText::_('COM_KUNENA_LISTCAT_NO_CATS'); ?>
+			<?php echo $this->contents; ?>
 		</div>
 	</div>
 </div>

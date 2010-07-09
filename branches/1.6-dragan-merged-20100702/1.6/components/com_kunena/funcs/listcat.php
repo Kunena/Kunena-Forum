@@ -317,7 +317,9 @@ class CKunenaListcat {
 		return $output;
 	}
 	
-	function displayNotification() {
+	function displayInfoMessage($header, $contents) {
+			$header = JText::_('COM_KUNENA_FORUM_INFORMATION');
+			$contents = JText::_('COM_KUNENA_LISTCAT_NO_CATS');
 		CKunenaTools::loadTemplate('/categories/infomessage.php');
 	}
 

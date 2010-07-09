@@ -61,7 +61,7 @@ $kunena_config = KunenaFactory::getConfig ();
                     	 <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?>
 						<br />
                     	<br />
-                    	<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?> Lavsteph (french <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Alakentu (spanish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), @quilla (serbian <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Mortti (finnish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>)
+                    	<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?> Lavsteph (french <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Alakentu (spanish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), kmilos (serbian <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Mortti (finnish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>)
                     	</div></td>
                     </tr>
                     <tr valign="top">

@@ -97,6 +97,7 @@ $this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
 					<fieldset class="fieldset" id="search-posts-date">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
+							<?php //TODO: Use JHTML ?>
 						</legend>
 						<select class="ks" name="searchdate">
 							<option value="lastvisit"<?php if ($this->params['searchdate']=="lastvisit") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT'); ?></option>

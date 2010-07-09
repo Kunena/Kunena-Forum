@@ -42,10 +42,10 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								<?php foreach ($dataspollresult as $row) : 
 								?>
 								<tr class="krow<?php echo ($i^=1)+1;?>">
-									<td class="kcol-option"><?php echo KunenaParser::parseText ( $row->text ); ?></td>
-									<td class="kcol-bar"><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo (intval($row->votes*25)/5); } else { echo "0"; }?>"/></td>
-									<td class="kcol-number"><?php if(isset($row->votes) && ($row->votes > 0)) { echo intval($row->votes); } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
-									<td class="kcol-percent"><?php if($row->votes != '0' && $nbvoters != '0' ) { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td>
+									<td class="kpoll-option"><?php echo KunenaParser::parseText ( $row->text ); ?></td>
+									<td class="kpoll-bar"><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo (intval($row->votes*25)/5); } else { echo "0"; }?>"/></td>
+									<td class="kpoll-number"><?php if(isset($row->votes) && ($row->votes > 0)) { echo intval($row->votes); } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
+									<td class="kpoll-percent"><?php if($row->votes != '0' && $nbvoters != '0' ) { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td>
 								</tr>
 								<?php endforeach ?>
 								<tr class="krow<?php echo ($i^=1)+1;?>">
@@ -64,7 +64,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 
 								<?php if ($this->my->id == '0') : ?>
 								<tr class="krow2">
-									<td colspan="4"><strong><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?></strong> </td>
+									<td colspan="4" class="kpoll-info"><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?></td>
 								</tr>
 								<?php elseif ( !$this->config->pollallowvoteone ) : ?>
 								<tr class="krow2">
@@ -135,7 +135,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 							</tr>
 							<?php if ($this->my->id == "0") : ?>
 							<tr class="krow2">
-								<td colspan="4"><strong><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?></strong> </td>
+								<td colspan="4" class="kpoll-info"><?php echo JText::_('COM_KUNENA_POLL_NOT_LOGGED'); ?></td>
 							</tr>
 							<?php elseif (!$this->config->pollallowvoteone) : ?>
 							<tr class="krow2">

@@ -50,7 +50,7 @@ $this->displayPathway ();
 
 
 <?php
-	if (count ( $this->categories [0] ) > 0) {
+	if (count ( $this->categories [0] )) {
 	$this->displayCategories ();
 	$this->displayWhoIsOnline ();
 	$this->displayStats ();
@@ -58,6 +58,6 @@ $this->displayPathway ();
 
 <?php
 } else {
-	$this->displayNotification ();
+	$this->displayInfoMessage ();
 }
 ?>

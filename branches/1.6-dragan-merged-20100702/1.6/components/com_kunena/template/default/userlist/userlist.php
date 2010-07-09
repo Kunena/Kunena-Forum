@@ -53,7 +53,7 @@ $document->addScriptDeclaration( "function validate() {
 				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit="return validate()">
 					<input id="kusersearch" type="text" name="search" class="inputbox"
 						value="<?php echo $this->escape($this->search); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape($this->search); ?>';" onfocus="if(this.value=='<?php echo $this->escape($this->search); ?>') this.value='';" />
-					<?php // FIXME: fixed image ?>
+					<?php // FIXME: fixed image css sprite ?>
 						<input type="image" src="<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.png' ;?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />
 				</form>
 			</div>

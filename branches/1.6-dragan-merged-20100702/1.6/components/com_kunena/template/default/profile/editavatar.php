@@ -19,7 +19,7 @@ $i=0;
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
+<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>">
 <?php if ($this->profile->avatar): ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
@@ -59,7 +59,7 @@ $i=0;
 				</tr>
 				<tr>
 					<td class="kuadesc">
-
+					<?php //FIXME: move to js folder ?>
 					<script type="text/javascript">
 						<!--
 						function switch_avatar_category(gallery)

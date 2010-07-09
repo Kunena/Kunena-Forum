@@ -18,7 +18,7 @@ $kunena_config = KunenaFactory::getConfig ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '' ?>" id="kflattable">
+<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '' ?>">
 	<tbody class="kmyprofile_general">
 		<tr class="krow2">
 			<td class="kcol-first">

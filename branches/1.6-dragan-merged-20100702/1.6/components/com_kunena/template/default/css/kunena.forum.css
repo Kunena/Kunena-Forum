@@ -118,7 +118,7 @@ PX		EM			PCT			PT
 	text-align:left;
 	vertical-align: middle;
 }
-#Kunena td.knoposts {
+#Kunena td.kcol-knoposts {
 	width: 25%;
 	text-align:center;
 	vertical-align: middle;
@@ -144,6 +144,12 @@ PX		EM			PCT			PT
 	white-space:nowrap;
 }
 #Kunena td.kcol-mid {
+	border-left: 1px solid #BFC3C6;
+	border-bottom: 1px solid #BFC3C6;
+	padding: 4px 8px;
+	vertical-align: middle;
+}
+#Kunena td.kcol-last {
 	border-left: 1px solid #BFC3C6;
 	border-bottom: 1px solid #BFC3C6;
 	padding: 4px 8px;
@@ -216,17 +222,17 @@ PX		EM			PCT			PT
 #Kunena h2 a:hover {
 	text-decoration: underline;
 }
-#Kunena div.kpolldesc td.kcol-option {
+#Kunena div.kpolldesc td.kpoll-option {
 	text-align: left;
 	width: 60%;
 	padding: 3px 8px;
 }
-#Kunena div.kpolldesc td.kcol-bar {
+#Kunena div.kpolldesc td.kpoll-bar {
 	text-align: left;
 	width: 20%;
 }
-#Kunena div.kpolldesc td.kcol-number,
-#Kunena div.kpolldesc td.kcol-percent {
+#Kunena div.kpolldesc td.kpoll-number,
+#Kunena div.kpolldesc td.kpoll-percent {
 	text-align: center;
 	width: 10%;
 }
@@ -237,14 +243,14 @@ PX		EM			PCT			PT
 	text-align: center;
 	padding: 3px;
 }
-#Kunena tr.ksth th.name {
+#Kunena tr.ksth th.kname {
 	width: 50%;
 	text-align: left;
 }
-#Kunena tr.ksth th.bar {
+#Kunena tr.ksth th.kbar {
 	width: 40%;
 }
-#Kunena tr.ksth th.nr {
+#Kunena tr.ksth th.knr {
 	width: 10%;
 }
 #Kunena div.banhistory th.kid {
@@ -285,6 +291,14 @@ PX		EM			PCT			PT
 	padding: 15px;
 	text-align: center;
 }
+
+khidden-ktitle {
+	
+}
+kwho-total {
+	
+}
+
 
 /* MAIN STYLES
 ----------------------------------------------------------------------------------------------- */
@@ -662,6 +676,7 @@ PX		EM			PCT			PT
 
 #Kunena div.ktopic-details {
 	clear:left;
+	font-size: .977em;
 }
 	
 #Kunena .klatest-avatar,
@@ -1273,7 +1288,7 @@ PX		EM			PCT			PT
 #Kunena table#kforumsearch input.kbutton {
 	margin: 10px;
 }
-#Kunena div#moderatorslist div.kbody {
+#Kunena div#kmoderatorslist div.kbody {
 	border:1px solid #CCCCCC;
 	height:25px;
 	line-height:25px;
@@ -1281,17 +1296,17 @@ PX		EM			PCT			PT
 	padding:5px;
 	background: #FFFFFF;
 }
-#Kunena div#moderatorslist div.moderatorslist-list {
+#Kunena div#kmoderatorslist div.kmoderatorslist-list {
 	float: left; 
 	width: 49%;
 	text-align: left;
 }
-#Kunena div#moderatorslist div.moderatorslist-jump {
+#Kunena div#kmoderatorslist div.kmoderatorslist-jump {
 	float: right; 
 	width: 49%;
 	text-align: right;
 }
-#Kunena div.moderatorslist-jump form#jumpto  {
+#Kunena div.kmoderatorslist-jump form#jumpto  {
 	margin:0;
 }
 
@@ -1947,7 +1962,7 @@ PX		EM			PCT			PT
 	padding-bottom: 1px;
 }
 
-#Kunena ul#kpost-profile li.kpost-username {}
+#Kunena ul#kpost-profile li.kpost-username {font-size: 1.333em;}
 #Kunena ul#kpost-profile li.kpost-usertype {}
 #Kunena ul#kpost-profile li.kpost-avatar{}
 #Kunena ul#kpost-profile li.kpost-userrank{}

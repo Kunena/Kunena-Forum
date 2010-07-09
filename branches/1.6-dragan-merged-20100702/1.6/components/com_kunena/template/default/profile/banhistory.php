@@ -36,22 +36,22 @@ $j=count($this->banhistory);
 						foreach ($this->banhistory as $userban) :
 				?>
 				<tr class="krow1">
-					<td class="kcol-first">
+					<td class="kcol-first kid">
 						<?php echo $j--; ?>
 					</td>
-					<td class="kcol-mid">
+					<td class="kcol-mid  kbanfrom">
 						<span><?php echo $userban->blocked ? JText::_('COM_KUNENA_BAN_BANLEVEL_JOOMLA') : JText::_('COM_KUNENA_BAN_BANLEVEL_KUNENA') ?></span>
 					</td>
-					<td class="kcol-mid">
+					<td class="kcol-mid kbanstart">
 						<span><?php  if( $userban->created_time ) echo CKunenaTimeFormat::showDate($userban->created_time, 'datetime'); ?></span>
 					</td>
-					<td class="kcol-mid">
+					<td class="kcol-mid kbanexpire">
 						<span><?php echo $userban->isLifetime() ? JText::_('COM_KUNENA_BAN_LIFETIME') : CKunenaTimeFormat::showDate($userban->expiration, 'datetime'); ?></span>
 					</td>
-					<td class="kcol-mid">
+					<td class="kcol-mid kbancreate">
 						<span><?php echo CKunenaLink::GetProfileLink ( intval($userban->created_by) ); ?></span>
 					</td>
-					<td class="kcol-mid">
+					<td class="kcol-mid kbanmodify">
 						<?php if ( $userban->modified_by && $userban->modified_time) { ?>
 						<span>
 							<?php echo CKunenaLink::GetProfileLink ( intval($userban->modified_by) ); ?>
@@ -61,27 +61,27 @@ $j=count($this->banhistory);
 				</tr>
 				<?php if($userban->reason_public) : ?>
 				<tr class="krow2">
-					<td colspan="2" class="kcol-first"><b><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b> :</td>
-					<td colspan="4" class="kcol-mid"><?php echo KunenaParser::parseText ($userban->reason_public); ?></td>
+					<td colspan="2" class="kcol-first kpublic-reason-label"><b><?php echo JText::_('COM_KUNENA_BAN_PUBLICREASON'); ?></b> :</td>
+					<td colspan="4" class="kcol-mid  kpublic-reason-field"><?php echo KunenaParser::parseText ($userban->reason_public); ?></td>
 				</tr>
 				<?php endif; ?>
 				<?php if($userban->reason_private) : ?>
 				<tr class="krow2">
-					<td colspan="2" class="kcol-first"><b><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b> :</td>
-					<td colspan="4" class="kcol-mid"><?php echo KunenaParser::parseText ($userban->reason_private); ?></td>
+					<td colspan="2" class="kcol-first kprivate-reason-label"><b><?php echo JText::_('COM_KUNENA_BAN_PRIVATEREASON'); ?></b> :</td>
+					<td colspan="4" class="kcol-mid kprivate-reason-field"><?php echo KunenaParser::parseText ($userban->reason_private); ?></td>
 				</tr>
 				<?php endif; ?>
 				<?php if (is_array($userban->comments)) foreach ($userban->comments as $comment) : ?>
 				<tr class="krow2">
-					<td colspan="2" class="kcol-first"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT_BY', CKunenaLink::GetProfileLink ( intval($comment->userid) )); ?></b> :</td>
-					<td colspan="1" class="kcol-mid"><?php echo CKunenaTimeFormat::showDate($comment->time); ?></td>
-					<td colspan="3" class="kcol-mid"><?php echo KunenaParser::parseText ($comment->comment); ?></td>
+					<td colspan="2" class="kcol-first kcommentby-label"><b><?php echo JText::sprintf('COM_KUNENA_BAN_COMMENT_BY', CKunenaLink::GetProfileLink ( intval($comment->userid) )); ?></b> :</td>
+					<td colspan="1" class="kcol-mid kcommenttime-field"><?php echo CKunenaTimeFormat::showDate($comment->time); ?></td>
+					<td colspan="3" class="kcol-mid kcomment-field"><?php echo KunenaParser::parseText ($comment->comment); ?></td>
 				</tr>
 				<?php endforeach; ?>
 				<?php endforeach; ?>
 				<?php else : ?>
-				<tr class="krow1 kcol-first">
-					<td colspan="6"><?php echo JText::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->name)); ?></td>
+				<tr class="krow1">
+					<td colspan="6" class="kcol-first"><?php echo JText::sprintf('COM_KUNENA_BAN_USER_NOHISTORY', $this->escape($this->profile->name)); ?></td>
 				</tr>
 				<?php endif; ?>
 				</tbody>

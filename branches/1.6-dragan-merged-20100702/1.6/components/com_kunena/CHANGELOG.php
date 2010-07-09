@@ -38,6 +38,9 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Review template and change class names in some files
 # [#19288] Added infomessage.php and function to call when in the forum no categories
 # [#19288] Added lock_sm.png and delete lock_xsm.png file
+# [#19288] Split profilebox.php
+# [#19288] Split message.profilebox.php
+# [#19288] Renaming of some classes
 
 8-July-2010 Matias
 # [#19345] Simplify initialize.php in default template

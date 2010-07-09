@@ -27,7 +27,7 @@ $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
 $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 ?>
-<div class="kblock">
+<div class="kblock kflat">
 	<div class="kheader">
 		<?php if (CKunenaTools::isModerator($this->my->id)) : ?>
 		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
@@ -43,7 +43,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	$counter = 0;
 	if (!count ( $this->threads ) && !$this->hasSubCats) { ?>
 		<tr class="krow2">
-			<td class="first">
+			<td class="kcol-first">
 				<?php echo $this->func=='showcat' ? JText::_('COM_KUNENA_VIEW_NO_POSTS') : JText::_('COM_KUNENA_NO_POSTS') ?>
 			</td>
 		</tr>
@@ -79,15 +79,15 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($leaf->hold == 1) echo ' kunapproved';
 		else if ($leaf->hold) echo ' kdeleted';
 		?>">
-			<td class="kcol-ktopicreplies kcol-first">
+			<td class="kcol-first kcol-ktopicreplies">
 				<strong> <?php echo CKunenaTools::formatLargeNumber ( $leaf->msgcount-1 ); ?> </strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
 			</td>
 
-			<td class="kcol-ktopicicon kcol-mid">
+			<td class="kcol-mid kcol-ktopicicon">
 				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), CKunenaTools::topicIcon($leaf), intval($leaf->lastread) ) ?>
 			</td>
 
-			<td class="kcol-ktopictitle kcol-mid">
+			<td class="kcol-mid kcol-ktopictitle">
 				<?php if ($leaf->attachments) echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
 				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($leaf->catid), intval($leaf->id), KunenaParser::parseText ($leaf->subject), KunenaParser::stripBBCode ( $leaf->message, 500), 'follow', 'ktopic-title km' ); ?>
 				<?php
@@ -122,7 +122,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				</ul>
 				<?php endif; ?>
 
-				<div class="ktopic-details ks">
+				<div class="ktopic-details">
 					<!-- By -->
 					<?php if ($this->func != 'showcat') : ?>
 					<!-- Category -->
@@ -141,21 +141,21 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- /By -->
 				</div>
 			</td>
-			<td class="kcol-ktopicviews kcol-mid">
+			<td class="kcol-mid kcol-ktopicviews">
 				<!-- Views -->
 				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( intval($leaf->hits) );?></span>
 				<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_GEN_HITS');?> </span>
 				<!-- /Views -->
 			</td>
 			<?php if ($this->showposts):?>
-			<td class="kmycount kcol-mid">
+			<td class="kcol-mid kmycount">
 				<!-- Posts -->
 				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( intval($leaf->mycount) ); ?></span>
 				<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_MY_POSTS'); ?> </span>
 				<!-- /Posts -->
 			</td>
 			<?php endif; ?>
-			<td class="kcol-ktopiclastpost kcol-mid">
+			<td class="kcol-mid kcol-ktopiclastpost">
 				<div class="klatest-post-info">
 					<?php 
 					if ($leaf->ordering != 0) :
@@ -201,7 +201,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 
 			<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
-			<td class="ktopicmoderation kcol-mid">
+			<td class="kcol-mid ktopicmoderation">
 				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($leaf->id)?>]" value="0" />
 			</td>
 			<?php endif; ?>
@@ -211,7 +211,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) : ?>
 		<!-- Actions -->
 		<tr class="krow1">
-			<td colspan="7" class="krowmoderation kcol-first">
+			<td colspan="7" class="kcol-first krowmoderation">
 				<select name="do" id="kBulkChooseActions" class="inputbox">
 				<option value="">&nbsp;</option>
 				<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>

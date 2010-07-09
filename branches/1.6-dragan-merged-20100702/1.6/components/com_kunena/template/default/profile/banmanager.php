@@ -55,7 +55,7 @@ $j=0;
 						</td>
 					</tr>
 					<?php } else { ?>
-					<tr class="krow2>
+					<tr class="krow2">
 						<td colspan="5" class="kcol-first">
 							<?php echo JText::_('COM_KUNENA_BAN_NO_BANNED_USERS'); ?>
 						</td>

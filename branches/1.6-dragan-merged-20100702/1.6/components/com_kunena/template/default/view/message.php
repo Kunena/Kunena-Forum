@@ -30,7 +30,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<tbody>
 		<tr>
 			<td valign="top" class="kprofile-top">
-				<?php $this->displayProfile() ?>
+				<?php $this->displayProfile('horizontal') ?>
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +75,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 		</tr>
 		<tr>
 			<td valign="top" class="kprofile-bottom">
-				<?php $this->displayProfile() ?>
+				<?php $this->displayProfile('horizontal') ?>
 			</td>
 		</tr>
 	</tbody>
@@ -98,7 +98,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<tbody>
 		<tr>
 			<td rowspan="2" valign="top" class="kprofile-left">
-				<?php $this->displayProfile() ?>
+				<?php $this->displayProfile('vertical') ?>
 			</td>
 			<td class="kmessage-left">
 				<?php $this->displayContents() ?>
@@ -133,7 +133,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 				<?php $this->displayContents() ?>
 			</td>
 			<td rowspan="2" class="kprofile-right">
-				<?php $this->displayProfile() ?>
+				<?php $this->displayProfile('vertical') ?>
 			</td>
 		</tr>
 		<tr>

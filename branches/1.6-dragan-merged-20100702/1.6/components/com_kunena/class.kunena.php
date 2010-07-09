@@ -624,6 +624,17 @@ class CKunenaTools {
 		}
 	}
 
+	function displayLoginBox() {
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
+		$type = CKunenaLogin::getType ();
+		if ($type == 'login') {
+			CKunenaTools::loadTemplate('/loginbox/login.php');
+		} else {
+			CKunenaTools::loadTemplate('/loginbox/logout.php');
+		}
+	}
+
+
 
 		/**
 		 *  createMenu() does just that. It creates a Joomla menu for the main

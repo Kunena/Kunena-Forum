@@ -91,8 +91,9 @@ class CKunenaViewMessage {
 		CKunenaTools::loadTemplate('/view/message.contents.php');
 	}
 
-	function displayProfile() {
-		CKunenaTools::loadTemplate('/view/message.profilebox.php');
+	function displayProfile($layout='') {
+		if ($layout) $layout = '.' . $layout;
+		CKunenaTools::loadTemplate("/view/profile{$layout}.php");
 	}
 
 	function displayAttachments() {

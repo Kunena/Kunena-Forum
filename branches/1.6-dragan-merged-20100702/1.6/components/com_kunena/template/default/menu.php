@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: profilebox.php 2948 2010-07-08 00:23:46Z dragan $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -13,7 +13,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 ?>
-<!-- Kunena Header -->
+<!-- Kunena Menu -->
 <div id="ktop">
 	<?php if (JDocumentHTML::countModules ( 'kunena_menu' )) : ?>
 		<!-- Kunena Module Position: kunena_menu -->
@@ -24,4 +24,4 @@ defined ( '_JEXEC' ) or die ();
 	<?php endif; ?>
 	<span class="ktoggler fltrt"><a class="ktoggler close" rel="kprofilebox"></a></span>
 </div>
-<!-- /Kunena Header -->
+<!-- /Kunena Menu -->

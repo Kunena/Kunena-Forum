@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: profilebox.php 2948 2010-07-08 00:23:46Z dragan $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -18,6 +18,7 @@ $this->config = KunenaFactory::getConfig ();
 $type = CKunenaLogin::getType ();
 $return = CKunenaLogin::getReturnURL ( $type );
 $avatar = CKunenaLogin::getMyAvatar();
+$login = CKunenaLogin::getloginFields();
 ?>
 <div class="kblock kpbox">
 	<div class="kcontainer" id="kprofilebox">

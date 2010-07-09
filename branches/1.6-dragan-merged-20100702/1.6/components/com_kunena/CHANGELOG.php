@@ -39,6 +39,7 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Changed colors of users
 # [#19288] Fix top/bottom message header
 # [#19288] Reorder css file
+# [#19288] Fix right message header
 
 9-July-2010 Matias
 # [#19345] Change layout logic to use individual files in message profilebox

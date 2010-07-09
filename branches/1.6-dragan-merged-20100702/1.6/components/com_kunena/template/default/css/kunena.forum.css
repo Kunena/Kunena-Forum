@@ -1427,7 +1427,8 @@ PX		EM			PCT			PT
 #Kunena table.kmsg th.kmsg-date {
 	vertical-align: middle !important;
 }
-#Kunena th.kmsg-date span.ktopbottom {
+#Kunena th.kmsg-date span.ktopbottom,
+#Kunena th.kmsg-date span.kheader-right {
 	float: left;
 	margin:2px 25px;
 }

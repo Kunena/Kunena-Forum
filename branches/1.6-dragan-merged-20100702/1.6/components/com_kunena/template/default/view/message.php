@@ -130,14 +130,14 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 	<thead>
 		<tr class="ksth">
 			<th class="kmsg-date">
-				<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+				<span class="kmsgdate kheader-right" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 					<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 				</span>
-			</th>
-			<th>
 				<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
 					<?php echo $this->subjectHtml ?>
 				</span>
+			</th>
+			<th>
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
 			</th>

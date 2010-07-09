@@ -40,11 +40,23 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 		</li>
 		<?php endif ?>
 
+		<?php if ($this->personaltext) : ?>
+		<li class="kpost-personal">
+			<?php echo KunenaParser::parseText($this->personaltext) ?>
+		</li>
+		<?php endif ?>
 		<?php if ($this->userposts) : ?>
-		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . intval($this->userposts); ?></li>
+		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') .' '. intval($this->userposts); ?></li>
 		<?php endif ?>
 		<?php if ($this->userpoints) : ?>
-		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . intval($this->userpoints); ?></li>
+		<li class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') .' '. intval($this->userpoints); ?></li>
+		<?php endif ?>
+		<?php if ( $this->userkarma ) : ?>
+		<li class="kpost-karma">
+			<span class="kmsgkarma">
+				<?php echo $this->userkarma ?>
+			</span>
+		</li>
 		<?php endif ?>
 		<?php if ( $this->aupmedals ) : ?>
 		<li class="kiconrow">
@@ -54,27 +66,14 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 		</li>
 		<?php endif ?>
 
-		<li class="kpost-online-status-<?php echo $this->profile->isOnline(true); ?>"> </li>
+		<li class="kpost-online-img"> <span class="kpost-online-status-<?php echo $this->profile->isOnline(true); ?>"></span> </li>
 		<li class="kpost-smallicons">
-			<div class="kiconrow">
-				<?php echo $this->profile->profileIcon('gender'); ?>
-				<?php echo $this->profile->profileIcon('birthdate'); ?>
-				<?php echo $this->profile->profileIcon('location'); ?>
-				<?php echo $this->profile->profileIcon('website'); ?>
-				<?php echo $this->profile->profileIcon('private'); ?>
-				<?php echo $this->profile->profileIcon('email'); ?>
-			</div>
-			<?php //CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
+			<?php echo $this->profile->profileIcon('gender'); ?>
+			<?php echo $this->profile->profileIcon('birthdate'); ?>
+			<?php echo $this->profile->profileIcon('location'); ?>
+			<?php echo $this->profile->profileIcon('website'); ?>
+			<?php echo $this->profile->profileIcon('private'); ?>
+			<?php echo $this->profile->profileIcon('email'); ?>
 		</li>
-		<li class="kpost-karma">
-			<span class="kmsgkarma">
-				<?php echo $this->userkarma ?>
-			</span>
-		</li>
-		<?php if ($this->personaltext) : ?>
-		<li class="kpost-personal">
-			<?php echo KunenaParser::parseText($this->personaltext) ?>
-		</li>
-		<?php endif ?>
 		<?php endif ?>
 </ul>

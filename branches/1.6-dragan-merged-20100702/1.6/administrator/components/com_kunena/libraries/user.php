@@ -453,15 +453,15 @@ class KunenaUser extends JObject {
 						$gender = 'unknown';
 				}
 				$title = JText::_ ( 'COM_KUNENA_MYPROFILE_GENDER' ) . ': ' . JText::_ ( 'COM_KUNENA_MYPROFILE_GENDER_' . $gender );
-				return '<span class="kicon-profile-' . $gender . '" title="' . $title . '"></span>';
+				return '<span class="kicon-profile kicon-profile-gender-' . $gender . '" title="' . $title . '"></span>';
 				break;
 			case 'birthdate' :
 				if ($this->birthdate)
-					return '<span class="kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . CKunenaTimeformat::showDate ( $this->birthdate, 'date', 'utc', 0 ) . '"></span>';
+					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . CKunenaTimeformat::showDate ( $this->birthdate, 'date', 'utc', 0 ) . '"></span>';
 				break;
 			case 'location' :
 				if ($this->location)
-					return '<span class="kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . kunena_htmlspecialchars ( $this->location ) . '"></span>';
+					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . kunena_htmlspecialchars ( $this->location ) . '"></span>';
 				break;
 			case 'website' :
 				$url = 'http://' . $this->websiteurl;
@@ -470,7 +470,7 @@ class KunenaUser extends JObject {
 				else
 					$websitename = $this->websitename;
 				if ($this->websiteurl)
-					return '<a href="' . kunena_htmlspecialchars ( $url ) . '" target="_blank"><span class="kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . kunena_htmlspecialchars ( $websitename ) . '"></span></a>';
+					return '<a href="' . kunena_htmlspecialchars ( $url ) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . kunena_htmlspecialchars ( $websitename ) . '"></span></a>';
 				break;
 			case 'private' :
 				$pms = KunenaFactory::getPrivateMessaging ();
@@ -504,13 +504,13 @@ class KunenaUser extends JObject {
 		$url = strtr ( $social [$name] ['url'], array ('##VALUE##' => $value ) );
 		if ($social [$name] ['nourl'] == '0') {
 			if (! empty ( $this->$item ))
-				return '<a href="' . kunena_htmlspecialchars ( $url ) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile-' . $name . '"></span></a>';
+				return '<a href="' . kunena_htmlspecialchars ( $url ) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
 		} else {
 			if (! empty ( $this->$item ))
-				return '<span class="kicon-profile-' . $name . ' kTip" title="' . $title . ': ' . $value . '"></span>';
+				return '<span class="kicon-profile kicon-profile-' . $name . ' kTip" title="' . $title . ': ' . $value . '"></span>';
 		}
 		if ($gray)
-			return '<span class="kicon-profile-' . $name . '-off"></span>';
+			return '<span class="kicon-profile kicon-profile-' . $name . '-off"></span>';
 		else
 			return '';
 	}

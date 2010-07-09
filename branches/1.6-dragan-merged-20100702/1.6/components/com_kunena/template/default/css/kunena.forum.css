@@ -324,8 +324,8 @@ kwho-total {
 }
 
 #Kunena .clr { clear:both; height:1px; overflow:hidden;}
-#Kunena .fltlft {float:left; clear: none;}
-#Kunena .fltrt {float:right; }
+#Kunena .fltlft {float:left;}
+#Kunena .fltrt {float:right;}
 #Kunena .kright {text-align:right;}
 #Kunena .kleft {text-align:left;}
 #Kunena .kcenter {text-align:center;}
@@ -409,16 +409,15 @@ kwho-total {
 	white-space:nowrap;
 }
 
-#Kunena table.kblocktable .knewchar {
-	font-size: .583em;
-}
-
 #Kunena table {
 	width :100%;
 	border-collapse:collapse;
 	padding:0;
 	margin:0;
 }
+
+/* Block styling
+----------------------------------------------------------------------------------------------- */
 
 #Kunena div.kblock {
 	display: table;
@@ -604,6 +603,11 @@ kwho-total {
 	border-bottom: 1px solid #d9d9d9;
 	text-align:center;*/
 }
+
+#Kunena table.kblocktable .knewchar {
+	font-size: .583em;
+}
+
 #Kunena tr.ksth {
 	background: #737373;
 	color: #fff;
@@ -1651,30 +1655,6 @@ kwho-total {
 	color: #FFFFFF;
 }
 
-#Kunena span.kmsgkarma {
-	font-weight: bold;
-	color: #737373;
-	text-decoration: none;
-	white-space: nowrap;
-	/*float: right;*/
-}
-
-#Kunena span.kkarma-minus {
-	background: url("../media/iconsets/profile/default/default.png") no-repeat left -294px;
-	height: 14px;
-	width: 14px;
-	display: inline-block;
-	margin: -2px 0;
-}
-
-#Kunena span.kkarma-plus {
-	background: url("../media/iconsets/profile/default/default.png") no-repeat left -313px;
-	height: 14px;
-	width: 14px;
-	display: inline-block;
-	margin: -2px 0;
-}
-
 #Kunena div.kmsgbody {
 	display: table;
 	table-layout: fixed;
@@ -1973,6 +1953,7 @@ kwho-total {
 	margin:8px 0 0 0;
 	padding: 0;
 	text-align:center;
+	line-height: 1.5em;
 }
 
 #Kunena ul#kpost-profile li {
@@ -1986,34 +1967,54 @@ kwho-total {
 #Kunena ul#kpost-profile li.kpost-avatar{}
 #Kunena ul#kpost-profile li.kpost-userrank{}
 #Kunena ul#kpost-profile li.kpost-userrank-img {}
+#Kunena ul#kpost-profile li.kpost-userrank-img img{vertical-align: text-top;}
 #Kunena ul#kpost-profile li.kpost-online-img{}
+#Kunena ul#kpost-profile li.kpost-online-img img {vertical-align: text-top;}
+#Kunena ul#kpost-profile li.kpost-karma {}
+
+#Kunena li.kpost-karma span.kmsgkarma {
+}
+
+#Kunena span.kkarma-minus {
+	background: url("../media/iconsets/profile/default/default.png") no-repeat left -294px;
+	height: 14px;
+	width: 14px;
+	display: inline-block;
+	margin: -2px 0;
+}
+
+#Kunena span.kkarma-plus {
+	background: url("../media/iconsets/profile/default/default.png") no-repeat left -313px;
+	height: 14px;
+	width: 14px;
+	display: inline-block;
+	margin: -2px 0;
+}
 
 #Kunena li.kpost-userposts{
 	margin : 0px;	
 }
-
 #Kunena ul#kpost-profile li.kpost-smallicons{
 	margin: 0px auto;
-	width: 80px;
+	width: 90%;
 }
 #Kunena ul#kpost-profile li.kpost-personal{
 	text-align: center;
 	font-style:italic;
-	line-height: 32px;
 }
-#Kunena li.kpost-online-status-yes {
-	margin:10px auto;
-	display:block; 
+#Kunena span.kpost-online-status-yes {
+	display:inline-block; 
 	background: url("../images/icons/online.gif") no-repeat; 
 	height: 15px; 
 	width: 74px;
+	vertical-align: text-top;
 }
-#Kunena li.kpost-online-status-no {
-	margin:10px auto;
-	display:block;
+#Kunena span.kpost-online-status-no {
+	display:inline-block;
 	background: url("../images/icons/offline.gif") no-repeat; 
 	height: 15px; 
 	width: 74px;
+	vertical-align: text-top;
 }
 
 #Kunena li.kpost-online-status-top-yes {
@@ -2060,10 +2061,6 @@ kwho-total {
 	float:right;
 	width: auto;
 	padding-top: 5px;
-}
-#Kunena ul#kpost-profiletop li.kpost-smallicons div.kiconrow{
-	width: auto;
-	padding-right: 0;
 }
 #Kunena ul#kpost-profiletop li.kpost-personal{
 	text-align: center;
@@ -3218,54 +3215,61 @@ MODERATOR PAGE
 PROFILE
 -------------------------------------------------------------------- */
 
-#Kunena .kicon-profile-aim { background-position: 0 0; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-bebo { background-position: 0 -21px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-birthdate { background-position: 0 -42px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-blogspot { background-position: 0 -63px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-delicious { background-position: 0 -84px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-digg { background-position: 0 -105px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-email { background-position: 0 -126px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-facebook { background-position: 0 -147px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-female { background-position: 0 -168px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-flickr { background-position: 0 -189px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-friendfeed { background-position: 0 -210px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-gender-unknown { background-position: 0 -231px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-gtalk { background-position: 0 -252px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-icq { background-position: 0 -273px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-karmaminus { background-position: 0 -294px; width: 14px; height: 14px; } 
-#Kunena .kicon-profile-karmaplus { background-position: 0 -313px; width: 14px; height: 14px; } 
-#Kunena .kicon-profile-linkedin { background-position: 0 -332px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-location { background-position: 0 -353px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-male { background-position: 0 -374px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-msn { background-position: 0 -395px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-myspace { background-position: 0 -416px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-pm { background-position: 0 -437px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-remind { background-position: 0 -458px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-skype { background-position: 0 -479px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-twitter { background-position: 0 -500px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-website { background-position: 0 -521px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-yim { background-position: 0 -542px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-aim-off { background-position: 0 -563px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-bebo-off { background-position: 0 -584px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-birthday-off { background-position: 0 -605px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-blogspot-off { background-position: 0 -626px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-delicious-off { background-position: 0 -647px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-digg-off { background-position: 0 -668px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-facebook-off { background-position: 0 -689px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-flickr-off { background-position: 0 -710px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-friendfeed-off { background-position: 0 -731px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-gender-off { background-position: 0 -752px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-gtalk-off { background-position: 0 -773px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-icq-off { background-position: 0 -794px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-linkedin-off { background-position: 0 -815px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-msn-off { background-position: 0 -836px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-myspace-off { background-position: 0 -857px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-pm-off { background-position: 0 -878px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-remind-off { background-position: 0 -899px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-skype-off { background-position: 0 -920px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-twitter-off { background-position: 0 -941px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-website-off { background-position: 0 -962px; width: 16px; height: 16px; } 
-#Kunena .kicon-profile-yim-off { background-position: 0 -983px; width: 16px; height: 16px; }
+#Kunena .kicon-profile { 
+	background-image: url("../media/iconsets/profile/default/default.png"); 
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	vertical-align: text-top;
+} 
+#Kunena .kicon-profile-aim { background-position: 0 0; } 
+#Kunena .kicon-profile-bebo { background-position: 0 -21px; } 
+#Kunena .kicon-profile-birthdate { background-position: 0 -42px; } 
+#Kunena .kicon-profile-blogspot { background-position: 0 -63px; } 
+#Kunena .kicon-profile-delicious { background-position: 0 -84px; } 
+#Kunena .kicon-profile-digg { background-position: 0 -105px; } 
+#Kunena .kicon-profile-email { background-position: 0 -126px; } 
+#Kunena .kicon-profile-facebook { background-position: 0 -147px; } 
+#Kunena .kicon-profile-female { background-position: 0 -168px; } 
+#Kunena .kicon-profile-flickr { background-position: 0 -189px; } 
+#Kunena .kicon-profile-friendfeed { background-position: 0 -210px; } 
+#Kunena .kicon-profile-gender-unknown { background-position: 0 -231px; } 
+#Kunena .kicon-profile-gtalk { background-position: 0 -252px; } 
+#Kunena .kicon-profile-icq { background-position: 0 -273px; } 
+#Kunena .kicon-profile-karmaminus { background-position: 0 -294px; } 
+#Kunena .kicon-profile-karmaplus { background-position: 0 -313px; } 
+#Kunena .kicon-profile-linkedin { background-position: 0 -332px; } 
+#Kunena .kicon-profile-location { background-position: 0 -353px; } 
+#Kunena .kicon-profile-male { background-position: 0 -374px; } 
+#Kunena .kicon-profile-msn { background-position: 0 -395px; } 
+#Kunena .kicon-profile-myspace { background-position: 0 -416px; } 
+#Kunena .kicon-profile-pm { background-position: 0 -437px; } 
+#Kunena .kicon-profile-remind { background-position: 0 -458px; } 
+#Kunena .kicon-profile-skype { background-position: 0 -479px; } 
+#Kunena .kicon-profile-twitter { background-position: 0 -500px; } 
+#Kunena .kicon-profile-website { background-position: 0 -521px; } 
+#Kunena .kicon-profile-yim { background-position: 0 -542px; } 
+#Kunena .kicon-profile-aim-off { background-position: 0 -563px; } 
+#Kunena .kicon-profile-bebo-off { background-position: 0 -584px; } 
+#Kunena .kicon-profile-birthday-off { background-position: 0 -605px; } 
+#Kunena .kicon-profile-blogspot-off { background-position: 0 -626px; } 
+#Kunena .kicon-profile-delicious-off { background-position: 0 -647px; } 
+#Kunena .kicon-profile-digg-off { background-position: 0 -668px; } 
+#Kunena .kicon-profile-facebook-off { background-position: 0 -689px; } 
+#Kunena .kicon-profile-flickr-off { background-position: 0 -710px; } 
+#Kunena .kicon-profile-friendfeed-off { background-position: 0 -731px; } 
+#Kunena .kicon-profile-gender-off { background-position: 0 -752px; } 
+#Kunena .kicon-profile-gtalk-off { background-position: 0 -773px; } 
+#Kunena .kicon-profile-icq-off { background-position: 0 -794px; } 
+#Kunena .kicon-profile-linkedin-off { background-position: 0 -815px; } 
+#Kunena .kicon-profile-msn-off { background-position: 0 -836px; } 
+#Kunena .kicon-profile-myspace-off { background-position: 0 -857px; } 
+#Kunena .kicon-profile-pm-off { background-position: 0 -878px; } 
+#Kunena .kicon-profile-remind-off { background-position: 0 -899px; } 
+#Kunena .kicon-profile-skype-off { background-position: 0 -920px; } 
+#Kunena .kicon-profile-twitter-off { background-position: 0 -941px; } 
+#Kunena .kicon-profile-website-off { background-position: 0 -962px; } 
+#Kunena .kicon-profile-yim-off { background-position: 0 -983px; }
 
 #Kunena div#kprofile-container { /*border: 1px solid #BFC3C6;*/ padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
 #Kunena div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}

@@ -41,6 +41,9 @@ Kunena 1.6.0-ALPHA3
 9-July-2010 Matias
 # [#19345] Change layout logic to use individual files in message profilebox
 # [#19345] Separate menu, login and logout to their own template files in default/loginbox
+# [#19345] Simplify CSS for kicon-profile
+# [#19345] Modify profile next to message have same height in all rows
+# [#19345] Change order of profile info (vertical) to look better
 
 9-July-2010 @quila
 # [#19288] Review template and change class names in some files

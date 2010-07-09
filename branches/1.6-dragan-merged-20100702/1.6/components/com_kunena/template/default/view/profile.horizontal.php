@@ -18,14 +18,13 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 	<ul id="kpost-profiletop">
 		<?php if ($this->profile->userid): ?>
 		<li class="kpost-smallicons">
-			<div class="kiconrow">
 			<?php echo $this->profile->profileIcon('gender'); ?>
 			<?php echo $this->profile->profileIcon('birthdate'); ?>
 			<?php echo $this->profile->profileIcon('location'); ?>
 			<?php echo $this->profile->profileIcon('website'); ?>
 			<?php echo $this->profile->profileIcon('private'); ?>
 			<?php echo $this->profile->profileIcon('email'); ?>
-			</div><br />
+			<br />
 			<div>
 			<?php if ($this->userposts) : ?>
 				<span class="kpost-userposts"><?php echo JText::_('COM_KUNENA_POSTS') . intval($this->userposts); ?></span>
@@ -64,7 +63,7 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 			<?php echo $this->userrankimage ?>
 		</li>
 		<?php endif ?>
-		<li class="kpost-online-status-top-<?php echo $this->profile->isOnline(true); ?>"> </li>
+		<li class="kpost-online-img"> <span class="kpost-online-status-<?php echo $this->profile->isOnline(true); ?>"></span> </li>
 		<?php if ( $this->aupmedals ) : ?>
 			<li class="kpost-userposts">
 			<?php foreach ( $this->aupmedals as $medal ) : ?>

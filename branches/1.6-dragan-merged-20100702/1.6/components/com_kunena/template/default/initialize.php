@@ -51,8 +51,7 @@ $styles = <<<EOF
 #Kunena div.kwhoisonline h2 {
 	background: {$this->params->get('whoisonlineHeadercolor')}
 }
-#Kunena div.kiconrow span,
-#Kunena div.kiconprofile span {
+#Kunena .kicon-profile {
 	background-image: url("{$mediaurl}/iconsets/profile/{$this->params->get('profileIconset')}/default.png");
 }
 #Kunena span.kbuttononline-yes,

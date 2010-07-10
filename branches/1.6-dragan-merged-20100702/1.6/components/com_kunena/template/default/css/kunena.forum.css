@@ -2143,8 +2143,7 @@ POST PAGE
 	padding-bottom: 5px;
 }
 	
-
-/* FORUM BUTTONS
+/* FORUM ICON BUTTONS
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .kicon-button {
@@ -2166,6 +2165,7 @@ POST PAGE
 }
 #Kunena .kicon-button span {
 	float: left;
+	background-image: inherit;
 	background-repeat: no-repeat;
 	margin:0 2px 0 -7px;
 }
@@ -2213,70 +2213,27 @@ POST PAGE
 	padding: 0 7px !important;
 	margin:0 -7px 0 0 !important;
 }
-#Kunena span.kbuttononline-yes span.online-yes {
-	background-position: 0 0px;
-}
-#Kunena span.kbuttononline-no span.online-no {
-	background-position: 0 -360px;
-}
-#Kunena a.kbuttoncomm span.reply {
-	background-position: 0 -420px;
-}
-#Kunena a.kbuttoncomm span.quote {
-	background-position: 0 -400px;
-}
-#Kunena a.kbuttoncomm span.newtopic {
-	background-position: 0 -380px;
-}
-#Kunena a.kbuttonuser span.thankyou {
-	background-position: 0 -240px;
-}
-#Kunena a.kbuttonuser span.favorite {
-	background-position: 0 -240px;
-}
-#Kunena a.kbuttonuser span.subscribe {
-	background-position: 0 -300px;
-}
-#Kunena a.kbuttonuser span.markread {
-	background-position: 0 -260px;
-}
-#Kunena a.kbuttonuser span.report {
-	background-position: 0 -280px;
-}
-#Kunena a.kbuttonmod span.merge {
-	background-position: 0 -80px;
-}
-#Kunena a.kbuttonmod span.edit {
-	background-position: 0 -40px;
-}
-#Kunena a.kbuttonmod span.delete {
-	background-position: 0 -20px;
-}
-#Kunena a.kbuttonmod span.permdelete {
-	background-position: 0 -20px;
-}
-#Kunena a.kbuttonmod span.undelete {
-	background-position: 0 -20px;
-}
-#Kunena a.kbuttonmod span.move {
-	background-position: 0 -120px;
-}
-#Kunena a.kbuttonmod span.sticky {
-	background-position: 0 -160px;
-}
-#Kunena a.kbuttonmod span.lock {
-	background-position: 0 -60px;
-}
-#Kunena a.kbuttonmod span.split {
-	background-position: 0 -140px;
-}
-#Kunena a.kbuttonmod span.approve {
-	background-position: 0 -160px;
-}
-#Kunena a.kbuttonmod span.moderate {
-	background-position: 0 -100px;
-}
-
+#Kunena span.kbuttononline-yes span.online-yes {background-position: 0 0px;}
+#Kunena span.kbuttononline-no span.online-no {background-position: 0 -360px;}
+#Kunena a.kbuttoncomm span.reply {background-position: 0 -420px;}
+#Kunena a.kbuttoncomm span.quote {background-position: 0 -400px;}
+#Kunena a.kbuttoncomm span.newtopic {background-position: 0 -380px;}
+#Kunena a.kbuttonuser span.thankyou {background-position: 0 -240px;}
+#Kunena a.kbuttonuser span.favorite {background-position: 0 -240px;}
+#Kunena a.kbuttonuser span.subscribe {background-position: 0 -300px;}
+#Kunena a.kbuttonuser span.markread {background-position: 0 -260px;}
+#Kunena a.kbuttonuser span.report {background-position: 0 -280px;}
+#Kunena a.kbuttonmod span.merge {background-position: 0 -80px;}
+#Kunena a.kbuttonmod span.edit {background-position: 0 -40px;}
+#Kunena a.kbuttonmod span.delete {background-position: 0 -20px;}
+#Kunena a.kbuttonmod span.permdelete {background-position: 0 -20px;}
+#Kunena a.kbuttonmod span.undelete {background-position: 0 -20px;}
+#Kunena a.kbuttonmod span.move {background-position: 0 -120px;}
+#Kunena a.kbuttonmod span.sticky {background-position: 0 -160px;}
+#Kunena a.kbuttonmod span.lock {background-position: 0 -60px;}
+#Kunena a.kbuttonmod span.split {background-position: 0 -140px;}
+#Kunena a.kbuttonmod span.approve {background-position: 0 -160px;}
+#Kunena a.kbuttonmod span.moderate {background-position: 0 -100px;}
 
 /* Goto Up/down buttons */
 
@@ -2405,178 +2362,50 @@ BBCODE BUTTONS
 	display:none;
 }
 
-#Kunena ul#kbbcode-toolbar li a#kbbcode-bold-button {
-	background-position:0 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-italic-button {
-	background-position:-18px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-underline-button {
-	background-position:-36px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-strike-button {
-	background-position:-54px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-sub-button {
-	background-position:-72px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-sup-button {
-	background-position:-90px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-size-button {
-	background-position:-108px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-color-button {
-	background-position:-126px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-spoiler-button {
-	background-position:-144px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-hide-button {
-	background-position:-162px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator1 {
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator1,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator2,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator3,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator4,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator5,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator6,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator7,
+#Kunena ul#kbbcode-toolbar li a#kbbcode-separator8 {
 	background-position:-400px 0;
 	width: 8px;
 	background-color: #eeeeee;
 	cursor: default;
 }
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-ulist-button {
-	background-position:-180px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-olist-button {
-	background-position:-198px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-list-button {
-	background-position:-216px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-left-button {
-	background-position:-234px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-center-button {
-	background-position:-252px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-right-button {
-	background-position:-270px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator2 {
-	background-position:-400px 0;
-	width: 8px;
-	background-color: #eeeeee;
-	cursor: default;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-quote-button {
-	background-position:-288px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-code-button {
-	background-position:-306px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator3 {
-	background-position:-400px 0;
-	width: 8px;
-	background-color: #eeeeee;
-	cursor: default;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-image-button {
-	background-position:-324px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-link-button {
-	background-position:-342px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator4 {
-	background-position:-400px 0;
-	width: 8px;
-	background-color: #eeeeee;
-	cursor: default;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-table-button {
-	background-position:0 -18px;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-module-button {
-	background-position:-18px -18px;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator5 {
-	background-position:-400px 0;
-	width: 8px;
-	background-color: #eeeeee;
-	cursor: default;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-ebay-button {
-	background-position:-360px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-video-button {
-	background-position:-378px 0;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-map-button {
-	background-position:-72px -18px;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-attach-button {
-	background-position:-36px -18px;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-gallery-button {
-	background-position:-54px -18px;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-poll-button {
-	background-position:-90px -18px;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator6 {
-	background-position:-400px 0;
-	width: 8px;
-	background-color: #eeeeee;
-	cursor: default;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-previewbottom-button {
-	background-position:-252px -18px;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-previewright-button {
-	background-position:-270px -18px;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-separator7 {
-	background-position:-400px 0;
-	width: 8px;
-	background-color: #eeeeee;
-	cursor: default;
-}
-
-#Kunena ul#kbbcode-toolbar li a#kbbcode-help-button {
-	background-position:-396px -18px;
-}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-bold-button {background-position:0 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-italic-button {background-position:-18px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-underline-button {background-position:-36px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-strike-button {background-position:-54px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-sub-button {background-position:-72px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-sup-button {background-position:-90px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-size-button {background-position:-108px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-color-button {background-position:-126px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-spoiler-button {background-position:-144px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-hide-button {background-position:-162px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-ulist-button {background-position:-180px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-olist-button {background-position:-198px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-list-button {background-position:-216px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-left-button {background-position:-234px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-center-button {background-position:-252px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-right-button {background-position:-270px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-quote-button {background-position:-288px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-code-button {background-position:-306px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-image-button {background-position:-324px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-link-button {background-position:-342px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-table-button {background-position:0 -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-module-button {background-position:-18px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-ebay-button {background-position:-360px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-video-button {background-position:-378px 0;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-map-button {background-position:-72px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-attach-button {background-position:-36px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-gallery-button {background-position:-54px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-poll-button {background-position:-90px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-previewbottom-button {background-position:-252px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-previewright-button {background-position:-270px -18px;}
+#Kunena ul#kbbcode-toolbar li a#kbbcode-help-button {background-position:-396px -18px;}
 
 #Kunena .kattachment .hasTip {
 	display: inline;

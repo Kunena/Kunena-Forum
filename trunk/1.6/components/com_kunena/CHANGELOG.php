@@ -35,6 +35,7 @@ Kunena 1.6.0-BETA1
 
 10-July-2010 fxstein
 # [#19345] Updated credits page copyright years
++ [#19064] Added google maps api key config setting for map and earth bbcode
 
 9-July-2010 Matias
 ^ [#19380] Update Mootools plugin to latest version, fixes bug with Window.onDomReady()

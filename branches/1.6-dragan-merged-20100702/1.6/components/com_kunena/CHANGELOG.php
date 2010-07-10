@@ -40,6 +40,7 @@ Kunena 1.6.0-ALPHA3
 # [#19345] Simplify CSS for kicon-editor
 # [#19288] Change Online/Offline buttons to text, making it possible to translate them
 # [#19345] Better layout for pagination
+# [#19345] Small layout tweaks in many pages
 
 10-July-2010 @quila
 # [#19288] Moved button thank you and subject in other place

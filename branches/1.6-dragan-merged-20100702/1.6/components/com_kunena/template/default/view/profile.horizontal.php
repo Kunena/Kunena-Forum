@@ -33,7 +33,6 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 				<span class="kpost-userposts"><?php echo JText::_('COM_KUNENA_AUP_POINTS') . intval($this->userpoints); ?></span>
 			<?php endif ?>
 			</div>
-			<?php //CKunenaTools::loadTemplate('/profile/socialbuttons.php') ?>
 		</li>
 		<?php if ($this->personaltext) : ?>
 		<li class="kpost-personal">

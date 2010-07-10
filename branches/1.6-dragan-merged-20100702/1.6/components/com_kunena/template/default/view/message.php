@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 //TODO: Split this file
 if ($this->params->get('avatarPosition') == 'top') : ?>
 
-	<div class="kheader kmsg-header-top">
+	<div class="kmsg-header kmsg-header-top">
 		<h2>
 			<span class="kmsgdate kmsgdate-top" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
@@ -52,7 +52,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php elseif ($this->params->get('avatarPosition') == 'bottom') : ?>
 
-		<div class="kheader kmsg-header-bottom">
+		<div class="kmsg-header kmsg-header-bottom">
 		<h2>
 			<span class="kmsgdate kmsgdate-bottom" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
@@ -89,7 +89,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php elseif ($this->params->get('avatarPosition') == 'left') : ?>
 
-	<div class="kheader kmsg-header-left">
+	<div class="kmsg-header kmsg-header-left">
 		<h2>
 			<span class="kmsgdate kmsgdate-left" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
@@ -124,7 +124,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php else : ?>
 
-	<div class="kheader kmsg-header-right">
+	<div class="kmsg-header kmsg-header-right">
 		<h2>
 			<span class="kmsgdate  kmsgdate-right" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>

@@ -114,11 +114,14 @@ echo '<div class = "kforum-pathway-bottom">';
 echo $this->kunena_pathway1;
 echo '</div>';
 ?>
-<!-- F: List Actions Bottom -->
-<div class="kcontainer" id="moderatorslist">
+<!-- B: List Actions Bottom -->
+<div class="kcontainer klist-bottom">
 	<div class="kbody">
+		<div class="kmoderatorslist-jump fltrt">
+				<?php $this->displayForumJump (); ?>
+		</div>
 		<?php if (!empty ( $this->modslist ) ) : ?>
-		<div class="moderatorslist-list">
+		<div class="klist-moderators">
 			<?php
 			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 			foreach ( $this->modslist as $mod ) {
@@ -127,9 +130,6 @@ echo '</div>';
 			?>
 		</div>
 		<?php endif; ?>
-		<div class="moderatorslist-jump">
-				<?php $this->displayForumJump (); ?>
-		</div>
 	</div>
 </div>
-
+<!-- F: List Actions Bottom -->

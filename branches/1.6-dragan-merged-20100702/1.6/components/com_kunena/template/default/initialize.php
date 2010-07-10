@@ -35,20 +35,20 @@ if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum-min.css' ))
 }
 $mediaurl = JURI::base() . "components/com_kunena/template/default/media";
 $styles = <<<EOF
-#Kunena h1,
-#Kunena h2 {
+#Kunena div.kheader ,
+#Kunena div.kheader {
 	background: {$this->params->get('forumHeadercolor')}
 }
-#Kunena div.kannouncement h2 {
+#Kunena div.kannouncement div.kheader {
 	background: {$this->params->get('announcementHeadercolor')}
 }
 #Kunena div#kannouncement .kanndesc {
 	background: {$this->params->get('announcementBoxbgcolor')}
 }
-#Kunena div.kfrontstats h2 {
+#Kunena div.kfrontstats div.kheader {
 	background: {$this->params->get('frontstatsHeadercolor')}
 }
-#Kunena div.kwhoisonline h2 {
+#Kunena div.kwhoisonline div.kheader {
 	background: {$this->params->get('whoisonlineHeadercolor')}
 }
 #Kunena .kicon-profile {

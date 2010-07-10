@@ -136,7 +136,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					</span>
 
 					<?php if ($leaf->name) : ?>
-					<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->name) ); ?></span>
+					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->name) ); ?></span>
 					<?php endif; ?>
 					<!-- /By -->
 				</div>
@@ -157,7 +157,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<?php endif; ?>
 			<td class="kcol-mid kcol-ktopiclastpost">
 				<div class="klatest-post-info">
-					<?php 
+					<?php
 					if ($leaf->ordering != 0) :
 						echo CKunenaTools::showIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') );
 					endif; ?>

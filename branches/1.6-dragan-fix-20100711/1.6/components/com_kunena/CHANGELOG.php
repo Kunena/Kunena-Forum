@@ -37,6 +37,9 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix Regression: Pagination in recent discussions page
 # [#19288] Fix Regression: "Powered by Kunena" text smaller
 # [#19288] Fix Regression: Changed member name coloring
+# [#19288] Fix Regression: Removed pathway header
+# [#19288] Fix Regression: Position of "check all" checkbox
+# [#19288] Fix Regression: Added padding to message area and aligned date of message
 
 10-July-2010 Matias
 # [#19288] Fix Regression: Some profile icons missing from profile page

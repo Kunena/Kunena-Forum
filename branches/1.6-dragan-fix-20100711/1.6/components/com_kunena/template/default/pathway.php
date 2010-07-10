@@ -104,10 +104,6 @@ $id = JRequest::getInt ( 'id', 0 );
 	$this->kunena_pathway2 = $firelast . $fireonline;
 ?>
 <div class="kblock kpathway">
-	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="pathway_tbody"></a></span>
-		<h2><span><?php echo JText::_('COM_KUNENA_YOU_ARE_HERE'); ?></span></h2>
-	</div>
 	<div class="kcontainer" id="pathway_tbody">
 		<div class="ksectionbody">
 			<div class = "kforum-pathway">

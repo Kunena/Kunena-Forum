@@ -237,7 +237,7 @@ PX		EM			PCT			PT
 #Kunena div.kblock span.select-toggle {
 	float: right;
 	top: 5px;
-	right: 2px;
+	right: -18px;
 	height: 1px;
 	position: relative;
 }
@@ -1167,6 +1167,9 @@ PX		EM			PCT			PT
 #Kunena .klink-block {
 	padding-top: 5px;
 }
+#Kunena div.kpbox {
+	border-bottom: 1px solid #BFC3C6;
+}
 
 /* CATEGORY LIST
 ----------------------------------------------------------------------------------------------- */
@@ -2090,10 +2093,15 @@ POST PAGE
 #Kunena div#ksearchresult td.kresultauthor {
 	text-align:center;
 }
-#Kunena div#history td.khistorymsg {
+#Kunena div#khistory td.khistorymsg {
 	text-align:left;
 	padding: 10px;
 }
+#Kunena div#khistory span.khistory-msgdate {
+	float:left;
+	padding-left: 10px;
+}
+
 /* ---- Post Previews ---- */
 
 #Kunena textarea#kbbcode-message {
@@ -2618,7 +2626,7 @@ label.kpoll-term-lbl {
 #Kunena .kforum-pathway {
 	padding: 5px;
 	line-height: 18px;
-	margin: 0;
+	margin: -5px 0 0;
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 	color: #000000;

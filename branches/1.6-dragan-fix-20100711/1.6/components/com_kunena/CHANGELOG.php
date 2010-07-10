@@ -36,6 +36,7 @@ Kunena 1.6.0-BETA1
 11-July-2010 @quila
 # [#19288] Fix Regression: Pagination in recent discussions page
 # [#19288] Fix Regression: "Powered by Kunena" text smaller
+# [#19288] Fix Regression: Changed member name coloring
 
 10-July-2010 Matias
 # [#19288] Fix Regression: Some profile icons missing from profile page

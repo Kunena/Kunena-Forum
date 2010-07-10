@@ -15,7 +15,6 @@ defined ( '_JEXEC' ) or die ();
 //TODO: Split this file
 if ($this->params->get('avatarPosition') == 'top') : ?>
 
-<table <?php echo $this->class ?>>
 	<div class="kheader kmsg-header-top">
 		<h2>
 			<span class="kmsgdate kmsgdate-top" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
@@ -30,6 +29,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 			</span>
 		</h2>
 	</div>
+<table <?php echo $this->class ?>>
 	<tbody>
 		<tr>
 			<td valign="top" class="kprofile-top">
@@ -52,7 +52,6 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php elseif ($this->params->get('avatarPosition') == 'bottom') : ?>
 
-<table <?php echo $this->class ?>>
 		<div class="kheader kmsg-header-bottom">
 		<h2>
 			<span class="kmsgdate kmsgdate-bottom" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
@@ -67,6 +66,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 			</span>
 		</h2>
 	</div>
+<table <?php echo $this->class ?>>
 	<tbody>
 		<tr>
 			<td class="kmessage-bottom">
@@ -89,7 +89,6 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php elseif ($this->params->get('avatarPosition') == 'left') : ?>
 
-<table <?php echo $this->class ?>>
 	<div class="kheader kmsg-header-left">
 		<h2>
 			<span class="kmsgdate kmsgdate-left" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
@@ -104,6 +103,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 			</span>
 		</h2>
 	</div>
+<table <?php echo $this->class ?>>
 	<tbody>
 		<tr>
 			<td rowspan="2" valign="top" class="kprofile-left">
@@ -124,7 +124,6 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php else : ?>
 
-<table <?php echo $this->class ?>>
 	<div class="kheader kmsg-header-right">
 		<h2>
 			<span class="kmsgdate  kmsgdate-right" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
@@ -139,6 +138,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 			</span>
 		</h2>
 	</div>
+<table <?php echo $this->class ?>>
 	<tbody>
 		<tr>
 			<td class="kmessage-right">

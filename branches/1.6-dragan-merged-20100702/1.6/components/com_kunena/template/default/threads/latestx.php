@@ -95,9 +95,9 @@ if (count ( $this->threads ) > 0) :
 			<?php
 				//pagination 1
 				if (count ( $this->messages ) > 0) :
-					echo '<td class="klist-pages-all nowrap">';
+					echo '<td class="klist-pages-all">';
 					echo $pagination;
-					echo '</td>';	
+					echo '</td>';
 				endif;
 			?>
 	</tr>

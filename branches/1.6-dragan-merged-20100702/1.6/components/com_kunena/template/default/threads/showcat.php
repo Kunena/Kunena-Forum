@@ -63,7 +63,7 @@ defined ( '_JEXEC' ) or die ();
 			}
 			?>
 		</td>
-		<td class="klist-pages-all nowrap">
+		<td class="klist-pages-all">
 			<?php
 			// pagination 1
 			if (count ( $this->messages ) > 0) {
@@ -99,7 +99,7 @@ defined ( '_JEXEC' ) or die ();
 			}
 			?>
 		</td>
-		<td class="klist-pages-all nowrap">
+		<td class="klist-pages-all">
 			<?php
 			// pagination 2
 			if (count ( $this->messages ) > 0) {

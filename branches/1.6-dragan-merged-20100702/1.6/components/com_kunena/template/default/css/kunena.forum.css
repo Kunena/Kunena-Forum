@@ -199,7 +199,8 @@ PX		EM			PCT			PT
 	background: #FFFFFF;
 }
 #Kunena .kblock div.kheader {
-	background: #BFC3C6;
+	background: #737373;
+	color: #FFFFFF;
 }
 #Kunena div.kblock div.ktitle {
 	background: #5388B4;
@@ -758,7 +759,6 @@ PX		EM			PCT			PT
 }
 
 #Kunena .klist-pages-all {
-	width: 10%;
 	border-left: 1px solid #BFC3C6;
 	color: #666666;
 	font-family: Arial, Helvetica, sans-serif;
@@ -874,8 +874,6 @@ PX		EM			PCT			PT
 	border:0; 
 	margin:0; 
 	padding:0 5px 0 0;
-	width: 240px;
-	
 }
 #Kunena .kpagination li{
 	border:0; 
@@ -883,10 +881,8 @@ PX		EM			PCT			PT
 	padding:0;
 	font-size: .667em;
 	list-style-type:none;
-	margin-right:2px;
 	line-height: .667em;
-	/* display:inline-block; */
-	float:left;
+	display:inline-block;
 }
 
 #Kunena #kflattable ul.kpagination { 
@@ -897,28 +893,34 @@ PX		EM			PCT			PT
 
 #Kunena .kpagination a {
 	border:solid 1px #5388B4;
-	margin-right:2px;
 	background: #ffffff;
 }
 #Kunena .kpagination li.page {
 	margin-right:2px;
-	padding:4px 4px 3px 0;
 } 
 #Kunena .kpagination li.more {
+	padding:4px 2px;
 	font-weight:bold;
 } 
 #Kunena .kpagination .active {
+	border:solid 1px #5388B4;
 	background:#5388B4;
 	color:#FFFFFF;
 	font-weight:bold;
-	padding:4px 6px;
+	padding:3px 5px;
+	margin: 2px;
 }
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited {
 	color:#5388B4;
 	display:block;
-	padding:3px 6px;
+	padding:3px 5px;
+	margin: 2px;
 	text-decoration:none;
+}
+#Kunena #kflattable .kpagination a:link,
+#Kunena #kflattable .kpagination a:visited { 
+	margin: 0;
 }
 #Kunena .kpagination a:hover{
 	border:solid 1px #5388B4;
@@ -1650,7 +1652,7 @@ PX		EM			PCT			PT
 	text-align: left;
 	height: 15px;
 	line-height: 15px;
-	margin: 3px -1px;
+	margin: 3px 0px;
 	line-height: 14px;
 	white-space: nowrap;
 	font-size: .917em;

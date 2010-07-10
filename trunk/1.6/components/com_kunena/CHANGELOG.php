@@ -41,6 +41,7 @@ Kunena 1.6.0-BETA1
 # [#19345] Better layout for pagination
 # [#19345] Small layout tweaks in many pages
 ^ [#15886] Merged revisions 2898-2978 from /branches/1.6-dragan-merged-20100702
+^ [#19380] Update Mootools plugin to latest version, fixes bug in modal.js
 
 10-July-2010 @quila
 # [#19288] Moved button thank you and subject in other place

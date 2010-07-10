@@ -1119,9 +1119,18 @@ PX		EM			PCT			PT
 }
 #Kunena div#ksearchresult div.resultmsg {
 	padding: 15px 0;
+	clear:left;
 }
 #Kunena div#ksearchresult span.kmsgtitle a {
 	font-weight: bold;
+}
+#Kunena div#ksearchresult span.kmsgdate {
+	float: left;
+}
+#Kunena div#ksearchresult div.kresult-title {
+	border-bottom: 1px solid #DDDDDD;
+	overflow:hidden;
+	padding-bottom:5px;
 }
 #Kunena div#ksearchresult td.resultmsg {
 	padding: 0 10px 10px;
@@ -1388,6 +1397,44 @@ PX		EM			PCT			PT
 /* VIEW PAGE
 -------------------------------------------------------------------- */
 
+#Kunena div.kmsg-header-top h2,
+#Kunena div.kmsg-header-bottom h2,
+#Kunena div.kmsg-header-left h2,
+#Kunena div.kmsg-header-right h2 {
+	background-color: #737373;
+	font-size:1em;
+	padding:3px 0;
+}
+#Kunena div.kmsg-header-top span.kmsgdate-top,
+#Kunena div.kmsg-header-bottom span.kmsgdate-bottom,
+#Kunena div.kmsg-header-right span.kmsgdate-right {
+	width: 170px; 
+	text-align: center;
+	line-height:1.8em;
+}
+#Kunena div.kmsg-header-left span.kmsgdate-left {
+	width: 170px; 
+	text-align: center;
+	float: left;
+	line-height:1.8em;
+	padding: 0
+}
+#Kunena div.kmsg-header-top span.kmsg-title-top,
+#Kunena div.kmsg-header-bottom span.kmsg-title-bottom,
+#Kunena div.kmsg-header-left span.kmsg-title-left,
+#Kunena div.kmsg-header-right span.kmsg-title-right {
+	padding-left:15px;
+	margin-left:5px;
+}
+#Kunena div.kmsg-header-top span.kmsg-id-top,
+#Kunena div.kmsg-header-bottom span.kmsg-id-bottom,
+#Kunena div.kmsg-header-left span.kmsg-id-left,
+#Kunena div.kmsg-header-right span.kmsg-id-lright {
+	float: right;
+	margin:0 10px 0 0;
+	padding: 0
+}
+	
 #Kunena span.kpost-thankyou {
 	float: right;
 	margin-right: 15px;
@@ -1838,9 +1885,6 @@ PX		EM			PCT			PT
 	display:block;
 	padding: 0;
 }
-#Kunena ul#kpost-profiletop li.kpost-username {
-	/*padding-top: 5px;*/
-}
 
 #Kunena ul#kpost-profiletop li.kpost-avatar{
 	float:left;
@@ -1848,7 +1892,6 @@ PX		EM			PCT			PT
 	margin-right: 5px;
 }
 #Kunena ul#kpost-profiletop li.kpost-userrank{
-	/*float:left;*/
 	padding-right: 5px;
 }
 #Kunena ul#kpost-profiletop li.kpost-smallicons{
@@ -1873,8 +1916,6 @@ PX		EM			PCT			PT
 #Kunena td.kprofile-top {
 	background: #EFF0F4;
 	vertical-align: top;
-	border-left: 1px solid #BFC3C6;
-	/*border-right: 1px solid #BFC3C6;*/
 	border-bottom: 1px solid #DDDDDD;
 	padding: 5px;
 }
@@ -1882,16 +1923,12 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-top {
 	width: 100%;
 	padding: 10px 10px 0px 10px;
-	/*border-right: 1px solid #BFC3C6;*/
-	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena td.kbuttonbar-top {
 	width: 100%;
 	margin: 3px;
 	border-bottom: 1px solid #BFC3C6;
-	/*border-right: 1px solid #BFC3C6;*/
-	border-left: 1px solid #BFC3C6;
 	padding: 3px 10px;
 }
 
@@ -1929,8 +1966,6 @@ PX		EM			PCT			PT
 #Kunena td.kprofile-bottom {
 	background: #EFF0F4;
 	vertical-align: bottom;
-	border-left: 1px solid #BFC3C6;
-	border-right: 1px solid #BFC3C6;
 	border-bottom: 1px solid #BFC3C6;
 	border-top: 1px solid #DDDDDD;
 	padding: 5px;
@@ -1940,15 +1975,11 @@ PX		EM			PCT			PT
 	width: 100%;
 	overflow: hidden;
 	padding: 10px 10px 0px 10px;
-	border-right: 1px solid #BFC3C6;
-	border-left: 1px solid #BFC3C6;
 }
 
 #Kunena td.kbuttonbar-bottom {
 	width: 100%;
 	margin: 3px;
-	border-right: 1px solid #BFC3C6;
-	border-left: 1px solid #BFC3C6;
 	padding: 3px 10px;
 }
 
@@ -2043,7 +2074,7 @@ POST PAGE
 	vertical-align:middle;
 	height: 35px;
 }
-#Kunena div#history td.kauthor,
+#Kunena div#khistory td.kauthor,
 #Kunena div#ksearchresult td.kresultauthor {
 	text-align:center;
 }
@@ -3135,7 +3166,8 @@ PROFILE
 -------------------------------------------------------------------- */
 
 #Kunena .kicon-profile { 
-	background-image: url("../media/iconsets/profile/default/default.png"); 
+	background-image: url("../media/iconsets/profile/default/default.png");
+	background-repeat: no-repeat;
 	width: 16px;
 	height: 16px;
 	display: inline-block;
@@ -3190,7 +3222,7 @@ PROFILE
 #Kunena .kicon-profile-website-off { background-position: 0 -962px; } 
 #Kunena .kicon-profile-yim-off { background-position: 0 -983px; }
 
-#Kunena div#kprofile-container { /*border: 1px solid #BFC3C6;*/ padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
+#Kunena div#kprofile-container { padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
 #Kunena div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
 #Kunena div.kavatar-lg { 
 	width: 200px; 

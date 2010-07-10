@@ -40,6 +40,10 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Fix top/bottom message header
 # [#19288] Reorder css file
 # [#19288] Fix right message header
+# [#19288] Fix configuration 5 thank you received
+# [#19288] Changed table header in message.php with divs
+# [#19288] Fixed small css bugs
+# [#19288] Changed Avatar Position to Profile Position in template configuration
 
 9-July-2010 Matias
 # [#19345] Change layout logic to use individual files in message profilebox

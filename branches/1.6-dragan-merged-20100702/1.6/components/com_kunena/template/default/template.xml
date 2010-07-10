@@ -14,7 +14,7 @@
 	</description>
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>
-		<param name="avatarPosition" type="list" default="left" label="Avatar Position" description="AVATAR POSITION DESCRIPTION">
+		<param name="avatarPosition" type="list" default="left" label="Profile Position" description="PROFILE POSITION DESCRIPTION">
 			<option value="left">Left</option>
 			<option value="top">Top</option>
 			<option value="right">Right</option>

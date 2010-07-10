@@ -58,7 +58,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 								</td>
 								<td class="kmessage-left resultmsg">
 									<div class="kmsgbody">
-										<div class="kmsgtitle kleft">
+										<div class="kmsgtitle kresult-title">
 											<span class="kmsgtitle">
 												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($result->catid), intval($result->id), NULL, NULL, $result->htmlsubject, intval($result->id) )?>
 											</span>

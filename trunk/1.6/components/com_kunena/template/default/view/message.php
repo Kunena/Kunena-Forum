@@ -12,22 +12,28 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-
+//TODO: Split this file
 if ($this->params->get('avatarPosition') == 'top') : ?>
 
-<table <?php echo $this->class ?>>
-	<thead>
-		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+	<div class="kmsg-header kmsg-header-top">
+		<h2>
+			<span class="kmsgdate kmsgdate-top" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+			</span>
+			<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-top">
+				<?php echo $this->subjectHtml ?>
+			</span>
+			<span class="kmsg-id-top">
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
-			</th>
-		</tr>
-	</thead>
+			</span>
+		</h2>
+	</div>
+<table <?php echo $this->class ?>>
 	<tbody>
 		<tr>
 			<td valign="top" class="kprofile-top">
-				<?php $this->displayProfile() ?>
+				<?php $this->displayProfile('horizontal') ?>
 			</td>
 		</tr>
 		<tr>
@@ -46,15 +52,21 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php elseif ($this->params->get('avatarPosition') == 'bottom') : ?>
 
-<table <?php echo $this->class ?>>
-	<thead>
-		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+		<div class="kmsg-header kmsg-header-bottom">
+		<h2>
+			<span class="kmsgdate kmsgdate-bottom" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+			</span>
+			<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>  kmsg-title-bottom">
+				<?php echo $this->subjectHtml ?>
+			</span>
+			<span class="kmsg-id-bottom">
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
-			</th>
-		</tr>
-	</thead>
+			</span>
+		</h2>
+	</div>
+<table <?php echo $this->class ?>>
 	<tbody>
 		<tr>
 			<td class="kmessage-bottom">
@@ -69,7 +81,7 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 		</tr>
 		<tr>
 			<td valign="top" class="kprofile-bottom">
-				<?php $this->displayProfile() ?>
+				<?php $this->displayProfile('horizontal') ?>
 			</td>
 		</tr>
 	</tbody>
@@ -77,19 +89,25 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php elseif ($this->params->get('avatarPosition') == 'left') : ?>
 
-<table <?php echo $this->class ?>>
-	<thead>
-		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+	<div class="kmsg-header kmsg-header-left">
+		<h2>
+			<span class="kmsgdate kmsgdate-left" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+			</span>
+			<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-left">
+				<?php echo $this->subjectHtml ?>
+			</span>
+			<span class="kmsg-id-left">
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
-			</th>
-		</tr>
-	</thead>
+			</span>
+		</h2>
+	</div>
+<table <?php echo $this->class ?>>
 	<tbody>
 		<tr>
 			<td rowspan="2" valign="top" class="kprofile-left">
-				<?php $this->displayProfile() ?>
+				<?php $this->displayProfile('vertical') ?>
 			</td>
 			<td class="kmessage-left">
 				<?php $this->displayContents() ?>
@@ -106,22 +124,28 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <?php else : ?>
 
-<table <?php echo $this->class ?>>
-	<thead>
-		<tr class="ksth">
-			<th colspan="2" class="kview-th ksectiontableheader">
+	<div class="kmsg-header kmsg-header-right">
+		<h2>
+			<span class="kmsgdate  kmsgdate-right" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
+			</span>
+			<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-right">
+				<?php echo $this->subjectHtml ?>
+			</span>
+			<span class="kmsg-id-right">
 				<a name="<?php echo intval($this->id) ?>"></a>
 				<?php echo $this->numLink ?>
-			</th>
-		</tr>
-	</thead>
+			</span>
+		</h2>
+	</div>
+<table <?php echo $this->class ?>>
 	<tbody>
 		<tr>
 			<td class="kmessage-right">
 				<?php $this->displayContents() ?>
 			</td>
 			<td rowspan="2" class="kprofile-right">
-				<?php $this->displayProfile() ?>
+				<?php $this->displayProfile('vertical') ?>
 			</td>
 		</tr>
 		<tr>
@@ -136,5 +160,5 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <?php endif ?>
 
 <!-- Begin: Message Module Position -->
-<?php CKunenaTools::showModulePosition('kunena_msg_' . $this->mmm) ?>
+	<?php CKunenaTools::showModulePosition('kunena_msg_' . $this->mmm) ?>
 <!-- Finish: Message Module Position -->

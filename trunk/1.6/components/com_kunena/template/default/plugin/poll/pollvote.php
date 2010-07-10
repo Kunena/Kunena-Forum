@@ -24,26 +24,17 @@ if ( $this->changevote ) {
 <div>
 <?php CKunenaTools::loadTemplate ( '/pathway.php' ); ?>
 </div>
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
-	<table class = "kblocktable" id = "kpoll" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-		<thead>
-			<tr>
-				<th align="left">
-					<div class = "ktitle-cover km">
-						<span class = "ktitle kl"><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ( $dataspollresult[0]->title ); ?></span>
-					</div>
-					<span class="fltrt ktoggler"><a class="ktoggler close" rel="kpolls_tbody"></a></span>
-				</th>
-			</tr>
-		</thead>
-		<tbody id="kpolls_tbody">
-			<tr class="ksectiontableentry2">
-				<td class="td-1 km" align="left">
-					<div class="kpolldesc">
+<div class="kblock kpollvote">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="kpolls_tbody"></a></span>
+		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ( $dataspollresult[0]->title ); ?></span></h2>
+	</div>
+	<div class="kcontainer" id="kpolls_tbody">
+		<div class="kbody">
+			<table class = "kblocktable" id = "kpoll">
+				<tr class="krow2">
+					<td class="kcol-first km">
+						<div class="kpolldesc">
 						<div id="kpoll-text-help"></div>
 						<form id="kpoll-form-vote" method="post" action="<?php echo CKunenaLink::GetPollsURL($json_action, intval($this->catid)); ?>">
 							<fieldset class="fieldset">
@@ -79,10 +70,7 @@ if ( $this->changevote ) {
 					</div>
 				</td>
 			</tr>
-		</tbody>
 	</table>
+		</div>
 	</div>
-</div>
-</div>
-</div>
 </div>

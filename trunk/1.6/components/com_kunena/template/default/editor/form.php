@@ -47,75 +47,64 @@ $this->k=0;
 	<?php endif; ?>
 	<?php echo JHTML::_( 'form.token' ); ?>
 
-<div class="k-bt-cvr1">
-<div class="k-bt-cvr2">
-<div class="k-bt-cvr3">
-<div class="k-bt-cvr4">
-<div class="k_bt_cvr5">
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo $this->title?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
 <table class="kblocktable<?php echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $this->escape($msg_cat->class_sfx) : ''?>" id="kpostmessage">
-	<thead>
-		<tr>
-			<th colspan="2">
-				<div class="ktitle-cover km">
-					<span class="ktitle kl">
-						<?php echo $this->escape($this->title) ?>
-					</span>
-				</div>
-			</th>
-		</tr>
-	</thead>
-
 	<tbody id="kpost-message">
 		<?php if (isset($this->selectcatlist)): ?>
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
-			<td class="kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY')?></strong></td>
-			<td class="ktopicicons"><?php echo $this->selectcatlist ?></td>
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
+			<td class="kcol-first"><strong><?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY')?></strong></td>
+			<td class="kcol-mid"><?php echo $this->selectcatlist?></td>
 		</tr>
 		<?php endif; ?>
 
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
-			<td class="kleftcolumn">
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
+			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 			</td>
-			<td>
+			<td class="kcol-mid">
 				<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput required" maxlength="35" value="<?php echo $this->escape($this->authorName);?>" <?php echo !$this->allow_name_change ? 'disabled="disabled" ' : ''; ?> />
 			</td>
 		</tr>
 
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check" <?php if (!$this->allow_anonymous && $this->catid != 0 || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
-			<td class="kleftcolumn">
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check" <?php if (!$this->allow_anonymous && $this->catid != 0 || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
+			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong>
 			</td>
-			<td>
+			<td class="kcol-mid">
 				<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->anonymous) echo 'checked="checked"'; ?> />
 				<label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 			</td>
 		</tr>
 
 		<?php if ($this->config->askemail && !$this->my->id) : ?>
-		<tr class = "ksectiontableentry<?php echo 1+ $this->k^=1 ?>">
-			<td class = "kleftcolumn"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
-			<td><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo !empty($this->email) ? $this->escape($this->email) : '' ?>" /></td>
+		<tr class = "krow<?php echo 1+ $this->k^=1 ?>">
+			<td class = "kcol-first"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
+			<td class="kcol-mid"><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo !empty($this->email) ? $this->escape($this->email) : '' ?>" /></td>
 		</tr>
 		<?php endif; ?>
 
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
-			<td class="kleftcolumn">
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
+			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></strong>
 			</td>
 
-			<td><input type="text" class="kinputbox postinput required" name="subject" id="subject" size="35"
+			<td class="kcol-mid"><input type="text" class="kinputbox postinput required" name="subject" id="subject" size="35"
 				maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->resubject); ?>" />
 			</td>
 		</tr>
 
 		<?php if ($this->parent == 0 && $this->config->topicicons) : ?>
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1 ?>">
-			<td class="kleftcolumn">
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
+			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></strong>
 			</td>
 
-			<td class="ktopicicons">
+			<td class="kcol-mid">
 				<?php foreach ($topic_emoticons as $emoid=>$emoimg): ?>
 				<input type="radio" name="topic_emoticon" value="<?php echo intval($emoid); ?>" <?php echo $this->emoid == $emoid ? ' checked="checked" ':'' ?> />
 				<img src="<?php echo $this->escape(JURI::Root() . CKunenaTools::getTemplateImage("icons/{$emoimg}"));?>" alt="" border="0" />
@@ -136,11 +125,11 @@ $this->k=0;
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 			?>
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-			<td class="kleftcolumn">
+		<tr class="krow<?php echo 1 + $this->k^=1;?>">
+			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS') ?></strong>
 			</td>
-			<td>
+			<td class="kcol-mid">
 				<div id="kattachment" class="kattachment">
 					<span class="kattachment-id"></span>
 
@@ -162,11 +151,11 @@ $this->k=0;
 		<?php endif; ?>
 
 		<?php if (!empty($this->cansubscribe)) : ?>
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-			<td class="kleftcolumn">
+		<tr class="krow<?php echo 1 + $this->k^=1;?>">
+			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></strong>
 			</td>
-			<td>
+			<td class="kcol-mid">
 				<?php if ($this->config->subscriptionschecked == 1) : ?>
 				<input type="checkbox" name="subscribeMe" value="1" checked="checked" />
 				<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
@@ -180,19 +169,19 @@ $this->k=0;
 		<?php
 		//Begin captcha
 		if ($this->hasCaptcha()) : ?>
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-			<td class="kleftcolumn">
+		<tr class="krow<?php echo 1 + $this->k^=1;?>">
+			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></strong>
 			</td>
-			<td align="left" valign="middle" height="35px">
+			<td class="kcol-mid">
 				<?php $this->displayCaptcha() ?>
 			</td>
 		</tr>
 		<?php endif;
 		// Finish captcha
 		?>
-		<tr id="kpost-buttons_tr" class="ksectiontableentry1">
-			<td id="kpost-buttons" colspan="2" style="text-align: center;">
+		<tr id="kpost-buttons_tr" class="krow1">
+			<td id="kpost-buttons" colspan="2">
 				<input type="button" name="cancel" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"
 				onclick="javascript:window.history.back();"
@@ -200,30 +189,19 @@ $this->k=0;
 				<input type="submit" name="ksubmit" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
-				</td>
+			</td>
 		</tr>
 
-		<tr class="ksectiontableentry<?php echo 1 + $this->k^=1;?>">
-			<td colspan="2"><?php
+		<tr class="krow<?php echo 1 + $this->k^=1;?>">
+			<td colspan="2" class="kcol-first"><?php
 			if ($this->config->askemail) {
 				echo $this->config->showemail == '0' ? "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_NEVER') . "</em>" : "<em>* - " . JText::_('COM_KUNENA_POST_EMAIL_REGISTERED') . "</em>";
 			}
 			?>
 			</td>
 		</tr>
-
-		<?php if ($this->hasThreadHistory ()) : ?>
-		<tr class="ksectiontableentry2">
-			<td colspan="2">
-				<?php $this->displayThreadHistory (); ?>
-			</td>
-		</tr>
-		<?php endif; ?>
-
 	</tbody>
 </table>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -236,4 +214,6 @@ if (!$this->authorName) {
 	echo '<script type="text/javascript">document.postform.message.focus();</script>';
 }
 ?>
-</form>
+</form><?php if ($this->hasThreadHistory ()) : ?>
+<?php $this->displayThreadHistory (); ?>
+<?php endif; ?>

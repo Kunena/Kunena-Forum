@@ -54,7 +54,7 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif ?>
 		</td>
 
-		<td class="klist-pages-all nowrap">
+		<td class="klist-pages-all">
 			<?php echo $this->pagination; ?>
 		</td>
 	</tr>

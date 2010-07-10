@@ -26,13 +26,20 @@ defined ( '_JEXEC' ) or die ();
 <!-- / Pathway -->
 
 <?php $this->displaySubCategories () ?>
-
 <?php if ($this->objCatInfo->headerdesc) : ?>
-<table class="kforum-headerdesc<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->objCatInfo->class_sfx) : '';?>">
-	<tr>
-		<td><?php echo KunenaParser::parseBBCode ( $this->headerdesc ); ?></td>
-	</tr>
-</table>
+<div class="kblock">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="frontstats_tbody"></a></span>
+		<h2><span><?php echo JText::_('COM_KUNENA_FORUM_HEADER'); ?></span></h2>
+	</div>
+	<div class="kcontainer" id="frontstats_tbody">
+		<div class="kbody">
+			<div class="kfheadercontent">
+				<?php echo KunenaParser::parseBBCode ( $this->headerdesc ); ?>
+			</div>
+		</div>
+	</div>
+</div>
 <?php endif; ?>
 
 <!-- B: List Actions -->
@@ -42,7 +49,7 @@ defined ( '_JEXEC' ) or die ();
 			<a name="forumtop"> </a>
 			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumbottom', CKunenaTools::showIcon ( 'kforumbottom', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
-		<td class="klist-actions-forum" width="100%">
+		<td class="klist-actions-forum">
 			<?php
 			if (isset ( $this->forum_new ) || isset ( $this->forum_markread ) || isset ( $this->thread_subscribecat )) {
 				echo '<div class="kmessage-buttons-row">';
@@ -56,7 +63,7 @@ defined ( '_JEXEC' ) or die ();
 			}
 			?>
 		</td>
-		<td class="klist-pages-all nowrap">
+		<td class="klist-pages-all">
 			<?php
 			// pagination 1
 			if (count ( $this->messages ) > 0) {
@@ -78,7 +85,7 @@ defined ( '_JEXEC' ) or die ();
 			<a name="forumbottom"> </a>
 			<?php echo CKunenaLink::GetSamePageAnkerLink ( 'forumtop', CKunenaTools::showIcon ( 'kforumtop', JText::_('COM_KUNENA_GEN_GOTOBOTTOM') ), 'nofollow', 'kbuttongoto') ?>
 		</td>
-		<td class="klist-actions-forum" width="100%">
+		<td class="klist-actions-forum">
 			<?php
 			if (isset ( $this->forum_new ) || isset ( $this->forum_markread ) || isset ( $this->thread_subscribecat )) {
 				echo '<div class="kmessage-buttons-row">';
@@ -92,7 +99,7 @@ defined ( '_JEXEC' ) or die ();
 			}
 			?>
 		</td>
-		<td class="klist-pages-all nowrap">
+		<td class="klist-pages-all">
 			<?php
 			// pagination 2
 			if (count ( $this->messages ) > 0) {
@@ -107,26 +114,22 @@ echo '<div class = "kforum-pathway-bottom">';
 echo $this->kunena_pathway1;
 echo '</div>';
 ?>
+<!-- B: List Actions Bottom -->
+<div class="kcontainer klist-bottom">
+	<div class="kbody">
+		<div class="kmoderatorslist-jump fltrt">
+				<?php $this->displayForumJump (); ?>
+		</div>
+		<?php if (!empty ( $this->modslist ) ) : ?>
+		<div class="klist-moderators">
+			<?php
+			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
+			foreach ( $this->modslist as $mod ) {
+				echo CKunenaLink::GetProfileLink ( intval($mod->userid), $this->escape($mod->username) ) . '&nbsp; ';
+			}
+			?>
+		</div>
+		<?php endif; ?>
+	</div>
+</div>
 <!-- F: List Actions Bottom -->
-
-<!-- B: Category List Bottom -->
-<table class="klist-bottom">
-	<tr>
-		<td class="klist-moderators">
-			<!-- Mod List -->
-			<?php if (!empty ( $this->modslist ) ) : ?>
-			<div class="kbox-bottomarea-modlist">
-				<?php
-				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
-				foreach ( $this->modslist as $mod ) {
-					echo CKunenaLink::GetProfileLink ( intval($mod->userid), $this->escape($mod->username) ) . '&nbsp; ';
-				}
-				?>
-			</div>
-			<?php endif; ?>
-			<!-- /Mod List -->
-		</td>
-		<td class="klist-categories"><?php $this->displayForumJump () ?></td>
-	</tr>
-</table>
-<!-- F: Category List Bottom -->

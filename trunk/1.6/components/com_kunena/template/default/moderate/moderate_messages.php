@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+ //FIXME: replace with working solution
 
 $kunena_db = &JFactory::getDBO();
 $kunena_app =& JFactory::getApplication();
@@ -114,7 +115,7 @@ function jbListMessages($allMes, $catid)
         }
     </script>
 
-    <table width = "100%" border = 0 cellspacing = 1 cellpadding = 3>
+    <table>
         <tr height = "10" class = "ktable_header">
             <th align = "center">
                 <b><?php echo JText::_('COM_KUNENA_GEN_DATE'); ?></b>

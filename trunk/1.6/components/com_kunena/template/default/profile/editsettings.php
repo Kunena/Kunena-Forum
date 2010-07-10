@@ -12,12 +12,20 @@
 defined( '_JEXEC' ) or die();
 ?>
 
-<h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE'); ?></h2>
-<table	class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '' ?>" id="kflattable">
+<div class="kblock keditsettings">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_SETTINGS_TITLE'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
+<table
+	class="<?php
+	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '';
+	?>" id="kflattable">
 	<tbody>
-		<tr class="ksectiontableentry2">
-			<td class="td-0 km kcenter"><?php echo JText::_('COM_KUNENA_USER_ORDER'); ?></td>
-			<td>
+		<tr class="krow2">
+			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_USER_ORDER'); ?></td>
+			<td class="kcol-mid">
 				<?php
 				$mesordering[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_USER_ORDER_KUNENA_GLOBAL'));
 				$mesordering[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_USER_ORDER_ASC'));
@@ -26,9 +34,9 @@ defined( '_JEXEC' ) or die();
 				?>
 			</td>
 		</tr>
-		<tr class="ksectiontableentry1">
-			<td class="td-0 km kcenter"><?php echo JText::_('COM_KUNENA_USER_HIDEEMAIL'); ?></td>
-			<td>
+		<tr class="krow1">
+			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_USER_HIDEEMAIL'); ?></td>
+			<td class="kcol-mid">
 				<?php
 				$hideEmail[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
 				$hideEmail[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
@@ -36,9 +44,9 @@ defined( '_JEXEC' ) or die();
 				?>
 			</td>
 		</tr>
-		<tr class="ksectiontableentry2">
-			<td class="td-0 km kcenter"><?php echo JText::_('COM_KUNENA_USER_SHOWONLINE'); ?></td>
-			<td>
+		<tr class="krow2">
+			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_USER_SHOWONLINE'); ?></td>
+			<td class="kcol-mid">
 				<?php
 				$showonline[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_A_NO'));
 				$showonline[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_A_YES'));
@@ -48,3 +56,6 @@ defined( '_JEXEC' ) or die();
 		</tr>
 	</tbody>
 </table>
+		</div>
+	</div>
+</div>

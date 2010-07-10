@@ -20,20 +20,16 @@ $kunena_config = KunenaFactory::getConfig ();
 
 // Team credits page is not translated
 ?>
-<div class="k-bt-cvr1">
-  <div class="k-bt-cvr2">
-    <div class="k-bt-cvr3">
-      <div class="k-bt-cvr4">
-        <div class="k_bt_cvr5">
-          <table class = "kblocktable" id ="kforumcredits" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
-            <thead>
-              <tr>
-                <th> <div class = "ktitle-cover"> <span class="ktitle kl" ><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span> </div>
-              </tr>
-            </thead>
+<div class="kblock kcredits">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_CREDITS_PAGE_TITLE'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
+          <table class = "kblocktable" id ="kforumcredits">
             <tbody>
               <tr>
-                <td class = "kcreditsdesc"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <td class = "kcreditsdesc"><table>
                     <tr valign="top">
                       <td width="170"><img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
                       <td><div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div></td>
@@ -61,7 +57,7 @@ $kunena_config = KunenaFactory::getConfig ();
                     	 <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?>
 						<br />
                     	<br />
-                    	<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?> Lavsteph (french <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Alakentu (spanish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), @quilla (serbian <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Mortti (finnish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>)
+                    	<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?> Lavsteph (french <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Alakentu (spanish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), kmilos (serbian <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Mortti (finnish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>)
                     	</div></td>
                     </tr>
                     <tr valign="top">
@@ -85,32 +81,19 @@ $kunena_config = KunenaFactory::getConfig ();
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-    </div>
-  </div>
+		</div>
+	</div>
 </div>
 
 <!-- Begin: Forum Jump -->
-<div class="k-bt-cvr1">
-  <div class="k-bt-cvr2">
-    <div class="k-bt-cvr3">
-      <div class="k-bt-cvr4">
-        <div class="k_bt_cvr5">
-          <table  class = "kblocktable" id="kbottomarea"  border = "0" cellspacing = "0" cellpadding = "0">
-              <tr>
-                <th class = "th-right"> <?php
-                //(JJ) FINISH: CAT LIST BOTTOM
-				if ($kunena_config->enableforumjump) {
-					CKunenaTools::loadTemplate('/forumjump.php');
-				}
-                ?>
-                </th>
-              </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_GO_TO_CATEGORY'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="khelprulesjump">
+			<?php CKunenaTools::loadTemplate('/forumjump.php') ?>
+		</div>
+	</div>
 </div>
 <!-- Finish: Forum Jump -->

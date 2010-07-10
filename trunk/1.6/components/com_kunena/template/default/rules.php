@@ -18,21 +18,28 @@ $document->setTitle ( JText::_('COM_KUNENA_GEN_RULES') . ' - ' . $kunena_config-
 $introtext = CKunenaTools::getRulesHelpDatas($kunena_config->rules_cid);
 ?>
 <div class="kblock">
-	<div class="ktitle">
-				<h1><?php echo JText::_('COM_KUNENA_FORUM_RULES'); ?></h1>
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_FORUM_RULES'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
-		<div class="khelprulescontent">
+		<div class="kbody">
+			<div class="khelprulescontent">
 				<?php echo $introtext; ?>
+			</div>
 		</div>
 	</div>
 </div>
 <!-- Begin: Forum Jump -->
+<?php if ($kunena_config->enableforumjump) : ?>
 <div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_GO_TO_CATEGORY'); ?></span></h2>
+	</div>
 	<div class="kcontainer">
 		<div class="khelprulesjump">
-			<?php if ($kunena_config->enableforumjump) CKunenaTools::loadTemplate('/forumjump.php') ?>
+			<?php CKunenaTools::loadTemplate('/forumjump.php') ?>
 		</div>
 	</div>
 </div>
+<?php endif; ?>
 <!-- Finish: Forum Jump -->

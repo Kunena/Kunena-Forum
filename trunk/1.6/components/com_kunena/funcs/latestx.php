@@ -56,7 +56,7 @@ class CKunenaLatestX {
 		$this->allow = 1;
 		$this->highlight = 0;
 
-		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
+		$this->tabclass = array ("row1", "row2" );
 
 		if (! $this->my->id && $this->show_list_time == 0) {
 			$this->show_list_time = "720";

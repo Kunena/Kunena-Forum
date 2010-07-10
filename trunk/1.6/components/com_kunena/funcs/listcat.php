@@ -102,7 +102,7 @@ class CKunenaListcat {
 		$allsubcats = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		$this->tabclass = array ("sectiontableentry1", "sectiontableentry2" );
+		$this->tabclass = array ("row1", "row2" );
 
 		$subcats = array ();
 		$routerlist = array ();
@@ -315,6 +315,12 @@ class CKunenaListcat {
 
 		$output .= '</ul>';
 		return $output;
+	}
+	
+	function displayInfoMessage($header, $contents) {
+			$header = JText::_('COM_KUNENA_FORUM_INFORMATION');
+			$contents = JText::_('COM_KUNENA_LISTCAT_NO_CATS');
+		CKunenaTools::loadTemplate('/categories/infomessage.php');
 	}
 
 	function display() {

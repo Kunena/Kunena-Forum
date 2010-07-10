@@ -77,7 +77,9 @@ $id = JRequest::getInt ( 'id', 0 );
 
 	for($i = 0; $i < $jr_forum_count; $i ++) {
 		if ($i == $jr_forum_count - 1) {
+			if ( $this->config->onlineusers ) :
 			$firelast .= '<br /><div class="path-element-last">' . $jr_path_menu [$i] . $fireinfo . '</div>';
+			endif;
 		} else {
 			$firepath .= '<div class="path-element">' . $jr_path_menu [$i] . '</div>';
 		}
@@ -100,7 +102,17 @@ $id = JRequest::getInt ( 'id', 0 );
 
 	$this->kunena_pathway1 = $firepath . $fireinfo;
 	$this->kunena_pathway2 = $firelast . $fireonline;
-
-	echo '<div class = "kforum-pathway">';
-	echo $this->kunena_pathway1 . $this->kunena_pathway2;
-	echo '</div>';
+?>
+<div class="kblock kpathway">
+	<div class="kheader">
+		<span class="ktoggler"><a class="ktoggler close"  rel="pathway_tbody"></a></span>
+		<h2><span><?php echo JText::_('COM_KUNENA_YOU_ARE_HERE'); ?></span></h2>
+	</div>
+	<div class="kcontainer" id="pathway_tbody">
+		<div class="ksectionbody">
+			<div class = "kforum-pathway">
+			<?php echo $this->kunena_pathway1 . $this->kunena_pathway2; ?>
+			</div>
+		</div>
+	</div>
+</div>

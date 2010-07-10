@@ -12,11 +12,13 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kblock">
-	<div class="ktitle">
-		<h1><?php echo JText::_('COM_KUNENA_LOGIN_NOTIFICATION'); ?></h1>
+<div class="kblock klogin">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_LOGIN_NOTIFICATION'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
-		<?php echo JText::_('COM_KUNENA_LOGIN_FORUM') ?>
+		<div class="kbody">
+			<?php echo JText::_('COM_KUNENA_LOGIN_FORUM') ?>
+		</div>
 	</div>
 </div>

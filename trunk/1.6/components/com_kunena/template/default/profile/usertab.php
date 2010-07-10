@@ -19,7 +19,7 @@ JHTML::_('behavior.tooltip');
 	CKunenaTools::loadTemplate('/profile/socialbuttons.php');
 ?>
 	</div>
-	<div class="kprofile-rightcol1">
+	<div class="kprofile-rightcol1 kicon-profile">
 		<ul>
 			<li><span class="location"></span><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LOCATION'); ?>:</strong> <?php echo $this->locationlink; ?></li>
 			<!--  The gender determines the suffix on the span class- gender-male & gender-female  -->

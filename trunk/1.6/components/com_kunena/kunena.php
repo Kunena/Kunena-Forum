@@ -343,7 +343,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$__profiler->mark('Profilebox Start');
 	}
 
-	CKunenaTools::loadTemplate('/profilebox.php');
+	CKunenaTools::loadTemplate('/menu.php');
+	CKunenaTools::displayLoginBox();
 
  	if(JDEBUG){
 		$__profiler->mark('Profilebox End');

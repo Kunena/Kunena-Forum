@@ -14,12 +14,32 @@
 	</description>
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>
-		<param name="avatarPosition" type="list" default="left" label="Avatar Position" description="AVATAR POSITION DESCRIPTION">
+		<param name="avatarPosition" type="list" default="left" label="Profile Position" description="PROFILE POSITION DESCRIPTION">
 			<option value="left">Left</option>
 			<option value="top">Top</option>
 			<option value="right">Right</option>
 			<option value="bottom">Bottom</option>
 		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="buttonIconset" type="list" default="default" label="Button Set" description="BUTTON SET">
+			<option value="default">Default</option>
+			<option value="dtp2nl">dtp2.nl</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="profileIconset" type="list" default="default" label="Profile Icon Set" description="PROFILE ICON SET">
+			<option value="default">Default</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="editorIconset" type="list" default="default" label="Editor Icon Set" description="EDITOR ICON SET">
+			<option value="default">Default</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="forumHeadercolor" type="text" default="#5388B4" label="Forum Header Background" description="Default #5388B4" />
+		<param name="announcementHeadercolor" type="text" default="" label="Announcement Header Background" description="Default #990000" />
+		<param name="announcementBoxbgcolor" type="text" default="" label="Announcement Box Background" description="Default #FFFFAA" />
+		<param name="frontstatsHeadercolor" type="text" default="" label="Frontstats Header Background" description="Default #000000" />
+		<param name="whoisonlineHeadercolor" type="text" default="" label="WhoIsOnline Header Background" description="Default #3B5323" />
+
 		<!-- Required avatar sizes -->
 		<param name="avatarSizeXThumb" type="hidden" default="36" />
 		<param name="avatarSizeYThumb" type="hidden" default="36" />

@@ -13,23 +13,23 @@ defined( '_JEXEC' ) or die();
 
 $document=JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->escape($this->config->board_title));
+//FIXME: announcement show only 5 ann. in table
 ?>
-<table class="kblock kannouncement">
-	<thead>
-		<tr>
-			<th colspan="6">
-				<h1><?php echo $this->app->getCfg('sitename'); ?> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?> | <?php echo CKunenaLink::GetAnnouncementLink('add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?></h1>
-			</th>
-		</tr>
-	</thead>
+<div class="kblock">
+	<div class="kheader">
+		<h2><span><?php echo $this->app->getCfg('sitename'); ?> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?> | <?php echo CKunenaLink::GetAnnouncementLink('add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
+<table class="kannouncement">
 	<tbody id="kannouncement_body">
-		<tr class="ksth ks">
-			<th class="kcol kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
-			<th class="kcol kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
-			<th class="kcol kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
-			<th class="kcol kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
-			<th class="kcol kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
-			<th class="kcol kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
+		<tr class="ksth">
+			<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
+			<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
+			<th class="kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
+			<th class="kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
+			<th class="kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
+			<th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
 		</tr>
 
 		<?php
@@ -39,12 +39,12 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 				$k=1 - $k;
 		?>
 		<tr class="krow<?php echo $k;?>">
-			<td class="kcol kcol-annid"><?php echo intval($ann->id); ?></td>
-			<td class="kcol kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
-			<td class="kcol kcol-anntitle">
+			<td class="kcol-first kcol-annid"><?php echo intval($ann->id); ?></td>
+			<td class="kcol-mid kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
+			<td class="kcol-mid kcol-anntitle">
 				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', intval($ann->id), KunenaParser::parseText ($ann->title), KunenaParser::parseText ($ann->title), 'follow'); ?></div>
 			</td>
-			<td class="kcol kcol-annpublish">
+			<td class="kcol-mid kcol-annpublish">
 				<?php
 				if ($ann->published > 0) {
 					echo JText::_('COM_KUNENA_ANN_PUBLISHED');
@@ -53,13 +53,16 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 				}
 				?>
 			</td>
-			<td class="kcol kcol-annedit">
+			<td class="kcol-mid kcol-annedit">
 				<?php echo CKunenaLink::GetAnnouncementLink('edit', intval($ann->id), JText::_('COM_KUNENA_ANN_EDIT'),JText::_('COM_KUNENA_ANN_EDIT')); ?>
 			</td>
-			<td class="kcol kcol-anndelete">
+			<td class="kcol-mid kcol-anndelete">
 				<?php echo CKunenaLink::GetAnnouncementLink('delete', intval($ann->id), JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
 </table>
+		</div>
+	</div>
+</div>

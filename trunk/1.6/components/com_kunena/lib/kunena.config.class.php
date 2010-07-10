@@ -311,7 +311,7 @@ class CKunenaConfig extends CKunenaConfigBase {
     // New for 1.6 -> Max length for personnal text
     var $maxpersotext = 50;
     // New for 1.6 -> Choose ordering system
-    var $ordering_system = 'new_ord';
+    var $ordering_system = 'old_ord';
     // New for 1.6 -> dateformat
     var $post_dateformat         = 'ago'; // See CKunenaTimeformat::showDate()
     var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()

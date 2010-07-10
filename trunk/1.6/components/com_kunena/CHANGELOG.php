@@ -33,14 +33,59 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+10-July-2010 Matias
+# [#19288] Fix Regression: Some profile icons missing from profile page
+# [#19345] Simplify CSS for kicon-button
+# [#19345] Simplify CSS for kicon-editor
+# [#19288] Change Online/Offline buttons to text, making it possible to translate them
+# [#19345] Better layout for pagination
+# [#19345] Small layout tweaks in many pages
+^ [#15886] Merged revisions 2898-2978 from /branches/1.6-dragan-merged-20100702
+
+10-July-2010 @quila
+# [#19288] Moved button thank you and subject in other place
+# [#19288] Changed colors of users
+# [#19288] Fix top/bottom message header
+# [#19288] Reorder css file
+# [#19288] Fix right message header
+# [#19288] Fix configuration 5 thank you received
+# [#19288] Changed table header in message.php with divs
+# [#19288] Fixed small css bugs
+# [#19288] Changed Avatar Position to Profile Position in template configuration
+
 10-July-2010 fxstein
 # [#19345] Updated credits page copyright years
 + [#19064] Added google maps api key config setting for map and earth bbcode
 
 9-July-2010 Matias
+# [#19345] Change layout logic to use individual files in message profilebox
+# [#19345] Separate menu, login and logout to their own template files in default/loginbox
+# [#19345] Simplify CSS for kicon-profile
+# [#19345] Modify profile next to message have same height in all rows
+# [#19345] Change order of profile info (vertical) to look better
+
+9-July-2010 @quila
+# [#19288] Review template and change class names in some files
+# [#19288] Added infomessage.php and function to call when in the forum no categories
+# [#19288] Added lock_sm.png and delete lock_xsm.png file
+# [#19288] Split profilebox.php
+# [#19288] Split message.profilebox.php
+# [#19288] Renaming of some classes
+# [#19288] Redesign for credits page
+# [#19288] Fixes for top/bottom profilbox in message post
+# [#19288] CSS fixes for bottom button row in showcat page
+
+9-July-2010 Matias
 ^ [#19380] Update Mootools plugin to latest version, fixes bug with Window.onDomReady()
 # [#19288] Polls: Fix wrong URL when you change your vote (non-AJAX version)
 # [#19288] Polls: Disable AJAX for now as it does not work
+
+8-July-2010 Matias
+# [#19345] Simplify initialize.php in default template
+
+8-July-2010 @quila
+# [#19288] Cleanup whole template, fix some minor bugs (parts 7-8)
+# [#19288] Fix float of sticky icon in post.php, more clean in css file
 
 8-July-2010 Matias
 + [#16390] Added Russian language (thanks ZARKOS)
@@ -72,6 +117,9 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix PHP Notice: Undefined index, when uploading attachments
 # [#19288] Installer: Minor fix/improvement when importing attachments
 
+5-July-2010 @quila
+# [#19288] Cleanup whole template, fix some minor bugs (part 6)
+
 5-July-2010 fxstein
 - [#21302] Remove Child Board header
 ^ [#21314] Updated Meta Description Logic - Thx JoniJnm
@@ -92,6 +140,9 @@ Kunena 1.6.0-BETA1
 # [#19288] Add/Edit Announcement does not work
 # [#19288] Fix bug in date offset normalization during migration
 
+4-July-2010 @quila
+# [#19288] Cleanup whole template, fix some minor bugs (part 5)
+
 3-July-2010 Matias
 ^ [#19380] Update Mootools plugin to latest version
 # [#19288] Fix warnings in editor.js
@@ -102,6 +153,9 @@ Kunena 1.6.0-BETA1
 # [#19288] Fixed bug which prevented loading css from the selected template without copying initialize.php into template
 # [#19288] Accept only K1.6 templates in frontend
 + [#21301] Create example template
+
+2-July-2010 @quila
+# [#19288] Cleanup whole template, fix some minor bugs (part 4)
 
 1-July-2010 Matias
 # [#19288] Cleanup whole template, fix some minor bugs (part 3)

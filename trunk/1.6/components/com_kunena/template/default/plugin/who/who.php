@@ -21,7 +21,7 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
-
+// FIXME: get rid of this page
 if ($this->config->showwhoisonline) {
 	$users=$this->getUsersList();
 ?>
@@ -30,7 +30,7 @@ if ($this->config->showwhoisonline) {
 <div class="k-bt-cvr3">
 <div class="k-bt-cvr4">
 <div class="k_bt_cvr5">
-	<table class = "kblocktable " id="kwhoispage" border = "0" cellspacing = "0" cellpadding = "0" width="100%">
+	<table class = "kblocktable " id="kwhoispage">
 		<thead>
 			<tr>
 				<th colspan = "4">
@@ -50,7 +50,7 @@ if ($this->config->showwhoisonline) {
 
 			<?php
 			$k = 0; //for alternating rows
-			$tabclass = array ("sectiontableentry1","sectiontableentry2");
+			$tabclass = array ("row1","row2");
 
 			foreach ($users as $user) :
 				$k = 1 - $k;

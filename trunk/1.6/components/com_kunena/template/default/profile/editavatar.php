@@ -13,48 +13,53 @@ defined( '_JEXEC' ) or die();
 $i=0;
 ?>
 
-<h2><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?></h2>
-<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
+<div class="kblock keditavatar">
+	<div class="kheader">
+		<h2><span><?php echo JText::_('COM_KUNENA_PROFILE_EDIT_AVATAR_TITLE'); ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
+<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>">
 <?php if ($this->profile->avatar): ?>
-	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="td-0 km kcenter">
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first">
 			<label for="kavatar_keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP');?></label>
 		</td>
-		<td>
+		<td class="kcol-mid">
 			<input id="kavatar_keep" type="radio" name="avatar" value="keep" checked="checked" />
 		</td>
 	</tr>
-	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="td-0 km kcenter">
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first">
 			<label for="kavatar_delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE');?></label>
 		</td>
-		<td>
+		<td class="kcol-mid">
 			<input id="kavatar_delete" type="radio" name="avatar" value="delete" />
 		</td>
 	</tr>
 <?php endif; ?>
 <?php if ($this->config->allowavatarupload):?>
-	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="td-0 km kcenter">
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first">
 			<label for="kavatar_upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
-		</td><td>
+			</td><td class="kcol-mid">
 			<div><input id="kavatar_upload" type="file" class="button" name="avatarfile" /></div>
 		</td>
 	</tr>
 <?php endif; ?>
 <?php if ($this->config->allowavatargallery):?>
-	<tr class="ksectiontableentry<?php echo ($i^=1)+1;?>">
-		<td class="td-0 km kcenter">
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first">
 			<label for="kavatar_gallery"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
 		</td>
-		<td>
-			<table class="kblocktable" id ="kforumua_gal" border="0" cellspacing="0" cellpadding="0" width="100%">
+		<td class="kcol-mid">
+			<table class="kblocktable" id ="kforumua_gal">
 				<tr>
 					<td class="kuadesc"><?php echo $this->galleries; ?></td>
 				</tr>
 				<tr>
 					<td class="kuadesc">
-
+					<?php //FIXME: move to js folder ?>
 					<script type="text/javascript">
 						<!--
 						function switch_avatar_category(gallery)
@@ -83,3 +88,6 @@ $i=0;
 	</tr>
 <?php endif; ?>
 </table>
+		</div>
+	</div>
+</div>

@@ -13,15 +13,9 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmsgtitle kleft">
-	<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?>">
-		<?php echo $this->subjectHtml ?>
-	</span>
-	<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
-		<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
-	</span>
-	<span class="kmsgkarma">
-		<?php echo $this->userkarma ?>
+<div class="kmsgtitle kcontentheader">
+	<span class="kpost-thankyou">
+		<?php echo $this->message_thankyou; ?>
 	</span>
 </div>
 <div class="kmsgbody">

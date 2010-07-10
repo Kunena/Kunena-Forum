@@ -44,7 +44,7 @@ if ($pid) {
 $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 ?>
 
-<table border = 0 cellspacing = 0 cellpadding = 0 width = "100%" align = "center">
+<table>
     <tr>
         <td>
             <br>

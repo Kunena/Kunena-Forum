@@ -66,7 +66,7 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 		</li>
 		<?php endif ?>
 
-		<li class="kpost-online-img"> <span class="kpost-online-status-<?php echo $this->profile->isOnline(true); ?>"></span> </li>
+		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
 		<li class="kpost-smallicons">
 			<?php echo $this->profile->profileIcon('gender'); ?>
 			<?php echo $this->profile->profileIcon('birthdate'); ?>

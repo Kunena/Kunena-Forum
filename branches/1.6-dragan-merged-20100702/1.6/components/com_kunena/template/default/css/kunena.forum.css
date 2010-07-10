@@ -2149,12 +2149,13 @@ POST PAGE
 #Kunena .kicon-button {
 	color: #FFF;
 	text-transform: uppercase;
-	font-size: .917em;
+	/* We need to use fixed font size: button does not grow */
+	font-size: 11px;
 	font-family: Arial, Helvetica, sans-serif;
 	text-decoration: none;
-	float: right;
 	cursor: pointer;
 	line-height: 145%;
+	display: inline-block;
 	background-image: url("../media/iconsets/buttons/default/default.png");
 	background-repeat: repeat-x;
 	border: none;
@@ -2162,6 +2163,9 @@ POST PAGE
 }
 #Kunena .kicon-button.btn-left {
 	float: left;
+}
+#Kunena .kicon-button.btn-right {
+	float: right;
 }
 #Kunena .kicon-button span {
 	float: left;
@@ -2180,60 +2184,62 @@ POST PAGE
 #Kunena a.kicon-button span span:hover {
 	text-decoration: underline;
 }
-#Kunena a.kbuttonuser {
+#Kunena .kbuttonuser {
 	background-position: 0 -320px;
 }
-#Kunena span.kbuttononline-yes,
-#Kunena a.kbuttonmod {
+#Kunena .kbuttononline-yes,
+#Kunena .kbuttonmod {
 	background-position: 0 -180px;
 }
-#Kunena span.kbuttononline-no,
-#Kunena a.kbuttongen,
-#Kunena a.kbuttoncomm {
+#Kunena .kbuttononline-no,
+#Kunena .kbuttongen,
+#Kunena .kbuttoncomm {
 	background-position: 0 -440px;
 }
-#Kunena span.kbuttononline-yes,
-#Kunena span.kbuttononline-no {
+#Kunena .kbuttononline-yes,
+#Kunena .kbuttononline-no {
+	height: 15px;
 	margin:0 0 0 7px;
 }
-#Kunena span.kbuttononline-yes span span,
-#Kunena a.kbuttonmod span span {
+#Kunena .kbuttononline-yes span span,
+#Kunena .kbuttonmod span span {
 	background-position: right -200px;
 }
-#Kunena a.kbuttonuser span span {
+#Kunena .kbuttonuser span span {
 	background-position: right -340px;
 }
-#Kunena span.kbuttononline-no span span,
-#Kunena a.kbuttongen span span,
-#Kunena a.kbuttoncomm span span {
+#Kunena .kbuttononline-no span span,
+#Kunena .kbuttongen span span,
+#Kunena .kbuttoncomm span span {
 	background-position: right -460px;
 }
-#Kunena span.kbuttononline-yes span span,
-#Kunena span.kbuttononline-no span span {
-	padding: 0 7px !important;
-	margin:0 -7px 0 0 !important;
+#Kunena .kbuttononline-yes span span,
+#Kunena .kbuttononline-no span span {
+	padding: 0 7px;
+	margin:0 -7px 0 0;
+	height: 15px;
 }
-#Kunena span.kbuttononline-yes span.online-yes {background-position: 0 0px;}
-#Kunena span.kbuttononline-no span.online-no {background-position: 0 -360px;}
-#Kunena a.kbuttoncomm span.reply {background-position: 0 -420px;}
-#Kunena a.kbuttoncomm span.quote {background-position: 0 -400px;}
-#Kunena a.kbuttoncomm span.newtopic {background-position: 0 -380px;}
-#Kunena a.kbuttonuser span.thankyou {background-position: 0 -240px;}
-#Kunena a.kbuttonuser span.favorite {background-position: 0 -240px;}
-#Kunena a.kbuttonuser span.subscribe {background-position: 0 -300px;}
-#Kunena a.kbuttonuser span.markread {background-position: 0 -260px;}
-#Kunena a.kbuttonuser span.report {background-position: 0 -280px;}
-#Kunena a.kbuttonmod span.merge {background-position: 0 -80px;}
-#Kunena a.kbuttonmod span.edit {background-position: 0 -40px;}
-#Kunena a.kbuttonmod span.delete {background-position: 0 -20px;}
-#Kunena a.kbuttonmod span.permdelete {background-position: 0 -20px;}
-#Kunena a.kbuttonmod span.undelete {background-position: 0 -20px;}
-#Kunena a.kbuttonmod span.move {background-position: 0 -120px;}
-#Kunena a.kbuttonmod span.sticky {background-position: 0 -160px;}
-#Kunena a.kbuttonmod span.lock {background-position: 0 -60px;}
-#Kunena a.kbuttonmod span.split {background-position: 0 -140px;}
-#Kunena a.kbuttonmod span.approve {background-position: 0 -160px;}
-#Kunena a.kbuttonmod span.moderate {background-position: 0 -100px;}
+#Kunena .kbuttononline-yes span.online-yes {background-position: 0 0px;}
+#Kunena .kbuttononline-no span.online-no {background-position: 0 -360px;}
+#Kunena .kbuttoncomm span.reply {background-position: 0 -420px;}
+#Kunena .kbuttoncomm span.quote {background-position: 0 -400px;}
+#Kunena .kbuttoncomm span.newtopic {background-position: 0 -380px;}
+#Kunena .kbuttonuser span.thankyou {background-position: 0 -240px;}
+#Kunena .kbuttonuser span.favorite {background-position: 0 -240px;}
+#Kunena .kbuttonuser span.subscribe {background-position: 0 -300px;}
+#Kunena .kbuttonuser span.markread {background-position: 0 -260px;}
+#Kunena .kbuttonuser span.report {background-position: 0 -280px;}
+#Kunena .kbuttonmod span.merge {background-position: 0 -80px;}
+#Kunena .kbuttonmod span.edit {background-position: 0 -40px;}
+#Kunena .kbuttonmod span.delete {background-position: 0 -20px;}
+#Kunena .kbuttonmod span.permdelete {background-position: 0 -20px;}
+#Kunena .kbuttonmod span.undelete {background-position: 0 -20px;}
+#Kunena .kbuttonmod span.move {background-position: 0 -120px;}
+#Kunena .kbuttonmod span.sticky {background-position: 0 -160px;}
+#Kunena .kbuttonmod span.lock {background-position: 0 -60px;}
+#Kunena .kbuttonmod span.split {background-position: 0 -140px;}
+#Kunena .kbuttonmod span.approve {background-position: 0 -160px;}
+#Kunena .kbuttonmod span.moderate {background-position: 0 -100px;}
 
 /* Goto Up/down buttons */
 
@@ -3523,14 +3529,4 @@ div#kprofile-stats ul li span.krank-admin {
 	background: url("../images/icons/folder_sm.png") no-repeat left center;
 	width: 12px;
 	height: 12px;
-}
-#Kunena span.konlineicon {
-	background: url("../images/icons/online.gif") no-repeat left center;
-	width: 74px;
-	height: 15px;
-}
-#Kunena span.kofflineicon {
-	background: url("../images/icons/offline.gif") no-repeat left center;
-	width: 74px;
-	height: 15px;
 }

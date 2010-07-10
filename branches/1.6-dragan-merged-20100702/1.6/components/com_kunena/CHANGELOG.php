@@ -38,6 +38,7 @@ Kunena 1.6.0-ALPHA3
 # [#19288] Fix Regression: Some profile icons missing from profile page
 # [#19345] Simplify CSS for kicon-button
 # [#19345] Simplify CSS for kicon-editor
+# [#19288] Change Online/Offline buttons to text, making it possible to translate them
 
 10-July-2010 @quila
 # [#19288] Moved button thank you and subject in other place

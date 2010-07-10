@@ -38,8 +38,7 @@ if ($this->my->id == $this->user->id) {
 			<div id="kprofile-stats">
 				<ul>
 					<?php if ( !empty($this->banReason) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_BANINFO'); ?>:</strong> <?php echo $this->escape($this->banReason); ?></li><?php } ?>
-					<?php // FIXME: add translation: NOW ONLINE, OFFLINE ?>
-					<li><span class="kicon-button kbuttononline-<?php echo $this->online ? 'yes':'no'; ?> btn-left"><span class="online-<?php echo $this->online ? 'yes':'no'; ?>"><span><?php echo $this->online ? 'NOW ONLINE' : 'OFFLINE'; ?></span></span></span></li>
+					<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
 					<?php if (!empty($this->usertype)): ?><li class="usertype"><?php echo $this->escape($this->usertype); ?></li><?php endif; ?>
 					<?php if (!empty($this->rank_title)): ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_RANK'); ?>: </strong><?php echo $this->escape($this->rank_title); ?></li><?php endif; ?>
 					<?php if (!empty($this->rank_image)): ?><li class="kprofile-rank"><img src="<?php echo $this->rank_image; ?>" alt="<?php echo $this->escape($this->rank_title); ?>" /></li><?php endif; ?>

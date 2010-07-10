@@ -679,6 +679,7 @@ PX		EM			PCT			PT
 #Kunena .klist-actions td {
 	vertical-align:middle;
 	padding: 0 5px;
+	white-space:nowrap;
 }
 
 #Kunena .klist-actions-bottom {

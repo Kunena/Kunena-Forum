@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-ALPHA3
 
+10-July-2010 Matias
+# [#19288] Fix Regression: Some profile icons missing from profile page
+# [#19345] Simplify CSS for kicon-button
+
 10-July-2010 @quila
 # [#19288] Moved button thank you and subject in other place
 # [#19288] Changed colors of users

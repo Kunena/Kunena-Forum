@@ -54,15 +54,8 @@ $styles = <<<EOF
 #Kunena .kicon-profile {
 	background-image: url("{$mediaurl}/iconsets/profile/{$this->params->get('profileIconset')}/default.png");
 }
-#Kunena span.kbuttononline-yes,
-#Kunena span.kbuttononline-no,
-#Kunena a.kbuttoncomm span,
-#Kunena a.kbuttonuser span,
-#Kunena a.kbuttonmod span,
-#Kunena a.kbuttonuser,
-#Kunena a.kbuttoncomm,
-#Kunena a.kbuttonmod,
-#Kunena a.kbuttongen {
+#Kunena .kicon-button,
+#Kunena .kicon-button span {
 	background-image: url("{$mediaurl}/iconsets/buttons/{$this->params->get('buttonIconset')}/default.png");
 }
 #Kunena #kbbcode-toolbar li a,

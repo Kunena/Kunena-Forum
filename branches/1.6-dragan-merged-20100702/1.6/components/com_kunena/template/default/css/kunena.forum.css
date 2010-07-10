@@ -1644,21 +1644,16 @@ PX		EM			PCT			PT
 
 #Kunena div.kmessage-buttons-cover {
 	float: right;
-	margin-right: 10px;
 }
 
 #Kunena div.kmessage-buttons-row {
-	text-align: right;
+	text-align: left;
 	height: 15px;
 	line-height: 15px;
-	margin: 2px 0px 3px -12px;
+	margin: 3px -1px;
 	line-height: 14px;
 	white-space: nowrap;
 	font-size: .917em;
-}
-#Kunena div.kmessage-buttons-row a {
-	margin-right: 8px;
-
 }
 #Kunena div.kmessage-thankyou{
 	border-top: 1px dotted #BFC3C6;
@@ -2159,24 +2154,26 @@ POST PAGE
 	background-image: url("../media/iconsets/buttons/default/default.png");
 	background-repeat: repeat-x;
 	border: none;
-	margin:0 0 0 19px;
+	margin:0 5px;
 }
+/*
 #Kunena .kicon-button.btn-left {
 	float: left;
 }
 #Kunena .kicon-button.btn-right {
 	float: right;
 }
+*/
 #Kunena .kicon-button span {
-	float: left;
 	background-image: inherit;
 	background-repeat: no-repeat;
-	margin:0 2px 0 -7px;
+	display: inline-block;
+	margin:0 -5px;
 }
 #Kunena .kicon-button span span {
-	float: right;
 	height: 18px;
-	margin:0 -19px 0 0;
+	display: inline-block;
+	margin: 0;
 	padding: 0 7px 0 20px;
 	background-repeat: no-repeat;
 	color: #ffffff;
@@ -2196,11 +2193,6 @@ POST PAGE
 #Kunena .kbuttoncomm {
 	background-position: 0 -440px;
 }
-#Kunena .kbuttononline-yes,
-#Kunena .kbuttononline-no {
-	height: 15px;
-	margin:0 0 0 7px;
-}
 #Kunena .kbuttononline-yes span span,
 #Kunena .kbuttonmod span span {
 	background-position: right -200px;
@@ -2216,7 +2208,6 @@ POST PAGE
 #Kunena .kbuttononline-yes span span,
 #Kunena .kbuttononline-no span span {
 	padding: 0 7px;
-	margin:0 -7px 0 0;
 	height: 15px;
 }
 #Kunena .kbuttononline-yes span.online-yes {background-position: 0 0px;}

@@ -29,6 +29,8 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 		</li>
 		<?php if ($this->profile->userid): ?>
 
+		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
+
 		<?php if ($this->userranktitle) : ?>
 		<li class="kpost-userrank">
 			<?php echo $this->escape($this->userranktitle) ?>
@@ -66,7 +68,6 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 		</li>
 		<?php endif ?>
 
-		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
 		<li class="kpost-smallicons">
 			<?php echo $this->profile->profileIcon('gender'); ?>
 			<?php echo $this->profile->profileIcon('birthdate'); ?>

@@ -13,7 +13,9 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 ?>
-
+<div class="kpost-thankyou">
+	<?php echo $this->message_thankyou; ?>
+</div>
 <?php if(!empty($this->thankyou)): ?>
 <div class="kmessage-thankyou">
 <?php

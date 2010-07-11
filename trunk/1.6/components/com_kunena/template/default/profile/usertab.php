@@ -37,7 +37,7 @@ JHTML::_('behavior.tooltip');
 		<ul>
 			<?php if ($this->config->showemail && (!$this->profile->hideEmail || CKunenaTools::isModerator($this->my->id))): ?><li><span class="kicon-profile kicon-profile-email"></span><a href="mailto:<?php echo $this->escape($this->user->email); ?>"><?php echo $this->escape($this->user->email); ?></a></li><?php endif; ?>
 			<?php // FIXME: we need a better way to add http/https ?>
-			<li><span class="kicon-profile kicon-profile-website"></span><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaParser::parseText($this->profile->websitename); ?></a></li>
+			<li><?php if (!empty($this->profile->websiteurl)):?><span class="kicon-profile kicon-profile-website"></span><?php endif;?><a href="http://<?php echo $this->escape($this->profile->websiteurl); ?>" target="_blank"><?php echo KunenaParser::parseText($this->profile->websitename); ?></a></li>
 		</ul>
 	</div>
 	<div class="kprofile-rightcol1">

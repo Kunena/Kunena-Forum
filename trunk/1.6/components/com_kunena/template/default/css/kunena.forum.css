@@ -237,7 +237,7 @@ PX		EM			PCT			PT
 #Kunena div.kblock span.select-toggle {
 	float: right;
 	top: 5px;
-	right: 2px;
+	right: -18px;
 	height: 1px;
 	position: relative;
 }
@@ -418,6 +418,10 @@ PX		EM			PCT			PT
 	line-height: 26px;
 	/*font-size: .833em;*/
 }
+#Kunena td.kcredits-kintro {
+	vertical-align: middle;
+	padding: 0 15px;
+}
 
 #Kunena .kfooter {
 	font-size: .833em;
@@ -464,7 +468,7 @@ PX		EM			PCT			PT
 ----------------------------------------------------------------------------------------------- */
 
 #Kunena .kwho-admin {
-	color: #A95618 !important;
+	color: #FF0000 !important;
 }
 
 #Kunena .kwho-globalmoderator {
@@ -472,7 +476,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena .kwho-moderator {
-	color: #84618B !important;
+	color: #0000FF !important;
 }
 
 #Kunena .kwho-user {
@@ -679,6 +683,7 @@ PX		EM			PCT			PT
 #Kunena .klist-actions td {
 	vertical-align:middle;
 	padding: 0 5px;
+	white-space:nowrap;
 }
 
 #Kunena .klist-actions-bottom {
@@ -1084,7 +1089,7 @@ PX		EM			PCT			PT
 
 #Kunena input#keywords,
 #Kunena input#username {
-	width:250px;
+	/*width:250px;*/
 	margin-right: 10px;
 }
 
@@ -1165,6 +1170,9 @@ PX		EM			PCT			PT
 
 #Kunena .klink-block {
 	padding-top: 5px;
+}
+#Kunena div.kpbox {
+	border-bottom: 1px solid #BFC3C6;
 }
 
 /* CATEGORY LIST
@@ -1496,15 +1504,14 @@ PX		EM			PCT			PT
 	word-wrap:break-word;
 }
 #Kunena td.kmessage-right div,
-#Kunena td.kmessage-leftt div,
+#Kunena td.kmessage-left div,
 #Kunena td.kmessage-top div,
 #Kunena td.kmessage-bottom div {
 	display: table;
 	table-layout: fixed;
 	width: 100%;
-	padding: 10px 0 0 0;
+	padding: 10px 0 10px 0;
 	margin-top: 5px;
-	min-height: 180px;
 }
 #Kunena div.kmsgbody div.kmsgtext {
 	overflow: auto;
@@ -1741,7 +1748,6 @@ PX		EM			PCT			PT
 #Kunena td.kbuttonbar-right {
 	width: 100%;
 	margin: 3px;
-	border-left: 1px solid #BFC3C6;
 	border-bottom: 1px solid #BFC3C6;
 	padding: 3px 10px;
 }
@@ -1755,7 +1761,6 @@ PX		EM			PCT			PT
 	width: 170px;
 	min-width: 170px;
 	border-bottom: 1px solid #BFC3C6;
-	/*border-left: 1px solid #BFC3C6;*/
 	border-right: 1px solid #DDDDDD;
 }
 
@@ -1784,11 +1789,6 @@ PX		EM			PCT			PT
 #Kunena div.kprofile {
 	text-align: center;
 	padding: 5px;
-}
-
-#Kunena table#kviews tr td table tr td.kprofile-right div.kiconrow {
-	/*text-align: center;
-	padding-bottom: 0px;*/
 }
 
 
@@ -2089,10 +2089,15 @@ POST PAGE
 #Kunena div#ksearchresult td.kresultauthor {
 	text-align:center;
 }
-#Kunena div#history td.khistorymsg {
+#Kunena div#khistory td.khistorymsg {
 	text-align:left;
 	padding: 10px;
 }
+#Kunena div#khistory span.khistory-msgdate {
+	float:left;
+	padding-left: 10px;
+}
+
 /* ---- Post Previews ---- */
 
 #Kunena textarea#kbbcode-message {
@@ -2617,7 +2622,7 @@ label.kpoll-term-lbl {
 #Kunena .kforum-pathway {
 	padding: 5px;
 	line-height: 18px;
-	margin: 0;
+	margin: -5px 0 0;
 	border-left: 1px solid #BFC3C6;
 	border-right: 1px solid #BFC3C6;
 	color: #000000;
@@ -2926,12 +2931,13 @@ PROFILE
 -------------------------------------------------------------------- */
 
 #Kunena .kicon-profile { 
-	background-image: url("../media/iconsets/profile/default/default.png");
+	/*background-image: url("../media/iconsets/profile/default/default.png");*/
 	background-repeat: no-repeat;
 	width: 16px;
 	height: 16px;
 	display: inline-block;
 	vertical-align: text-top;
+	margin-right: 5px;
 } 
 #Kunena .kicon-profile-aim { background-position: 0 0; } 
 #Kunena .kicon-profile-bebo { background-position: 0 -21px; } 
@@ -3027,14 +3033,9 @@ div#kprofile-stats ul li span.krank-admin {
 	margin-top: 0;
 }
 #Kunena div#kprofile-rightcol { 
-	/*display: table;
-	margin-right: 10px;
-	margin-left: 220px;
-	width: auto;*/
 	display:inline-block;
 	float:left;
 	margin-left:10px;
-	margin-right:10px;
 	width:75%;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}

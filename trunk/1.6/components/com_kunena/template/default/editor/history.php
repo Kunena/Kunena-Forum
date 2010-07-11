@@ -30,7 +30,7 @@ $k = 0;
 				<thead>
 					<tr class="ksth">
 						<th colspan="2">
-							<span class="kmsgdate" title="<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat_hover') ?>">
+							<span class="kmsgdate khistory-msgdate" title="<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat_hover') ?>">
 								<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat') ?>
 							</span>
 							<a name="<?php echo intval($mes->id) ?>"></a>

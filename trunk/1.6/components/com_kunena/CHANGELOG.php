@@ -33,6 +33,27 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+11-July-2010 fxstein
+^ [#15886] Merged /branches/1.6-dragan-fix-20100711
+
+11-July-2010 @quila
+# [#19288] Fix Regression: Pagination in recent discussions page
+# [#19288] Fix Regression: "Powered by Kunena" text smaller
+# [#19288] Fix Regression: Changed member name coloring
+# [#19288] Fix Regression: Removed pathway header
+# [#19288] Fix Regression: Position of "check all" checkbox
+# [#19288] Fix Regression: Added padding to message area and aligned date of message in history page
+^ [#16390] Updated serbian language
+# [#19288] Fix Regression: Correction in thank you language string
++ [#16390] Added template language files for english, serbian and serbian latin
+# [#19288] Fix Regression: missing " in installation language file (english and russian)
+# [#19288] Fix Regression: missing tip on website name in editprofile.php
+# [#19288] Fix Regression: right column margin in profile page
+# [#19288] Fix Regression: icon show in profile page
+# [#19288] Fix Regression: alignement in credit page
+# [#19288] Fix Regression: width of search page when left module is active
+# [#19288] Fix Regression: message body too height in IE, Chrome, Opera
+
 10-July-2010 Matias
 # [#19288] Fix Regression: Some profile icons missing from profile page
 # [#19345] Simplify CSS for kicon-button

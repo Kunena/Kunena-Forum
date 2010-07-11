@@ -32,10 +32,10 @@ $kunena_config = KunenaFactory::getConfig ();
                 <td class = "kcreditsdesc"><table>
                     <tr valign="top">
                       <td width="170"><img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
-                      <td><div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div></td>
+                      <td class="kcredits-kintro"><div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div></td>
                     </tr>
                     <tr valign="top">
-                      <td colspan="2" style="padding-left:20px;padding-right:20px;"><ul  class="kteam">
+                      <td colspan="2" style="padding: 20px 20px 0;"><ul  class="kteam">
                           <li class="kteammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> <?php echo JText::sprintf('COM_KUNENA_CREDITS_DEVELOPER_SPECIAL', 'Yamaha Star VMax' ); ?> <a href="http://www.starVmax.com/forum/" target='_blank' rel='follow'>www.starVmax.com/forum/</a></li>
                           <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2171" target='_blank' rel='follow'>LDA</a> <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
                           <li class="kteammember"><a href="http://www.herppi.net" target='_blank' rel='follow'>Matias</a> <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>

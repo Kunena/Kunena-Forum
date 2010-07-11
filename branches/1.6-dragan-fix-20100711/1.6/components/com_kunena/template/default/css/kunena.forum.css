@@ -472,11 +472,11 @@ PX		EM			PCT			PT
 }
 
 #Kunena .kwho-globalmoderator {
-	color: #0000FF !important;
+	color: #800000 !important;
 }
 
 #Kunena .kwho-moderator {
-	color: #84618B !important;
+	color: #0000FF !important;
 }
 
 #Kunena .kwho-user {

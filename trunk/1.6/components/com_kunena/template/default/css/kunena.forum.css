@@ -1253,7 +1253,7 @@ PX		EM			PCT			PT
 }
 #Kunena .kcheckbox {
 	float:right;
-	margin-right: 8px;
+	margin-right: -14px;
 	width: 20px;
 }
 

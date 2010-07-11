@@ -3035,7 +3035,7 @@ div#kprofile-stats ul li span.krank-admin {
 #Kunena div#kprofile-rightcol { 
 	display:inline-block;
 	float:left;
-	margin-left:10px;
+	margin-right:10px;
 	width:75%;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}

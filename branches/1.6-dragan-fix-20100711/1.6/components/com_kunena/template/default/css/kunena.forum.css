@@ -1504,15 +1504,14 @@ PX		EM			PCT			PT
 	word-wrap:break-word;
 }
 #Kunena td.kmessage-right div,
-#Kunena td.kmessage-leftt div,
+#Kunena td.kmessage-left div,
 #Kunena td.kmessage-top div,
 #Kunena td.kmessage-bottom div {
 	display: table;
 	table-layout: fixed;
 	width: 100%;
-	padding: 10px 0 0 0;
+	padding: 10px 0 10px 0;
 	margin-top: 5px;
-	min-height: 180px;
 }
 #Kunena div.kmsgbody div.kmsgtext {
 	overflow: auto;
@@ -1749,7 +1748,6 @@ PX		EM			PCT			PT
 #Kunena td.kbuttonbar-right {
 	width: 100%;
 	margin: 3px;
-	border-left: 1px solid #BFC3C6;
 	border-bottom: 1px solid #BFC3C6;
 	padding: 3px 10px;
 }
@@ -1763,7 +1761,6 @@ PX		EM			PCT			PT
 	width: 170px;
 	min-width: 170px;
 	border-bottom: 1px solid #BFC3C6;
-	/*border-left: 1px solid #BFC3C6;*/
 	border-right: 1px solid #DDDDDD;
 }
 
@@ -1792,11 +1789,6 @@ PX		EM			PCT			PT
 #Kunena div.kprofile {
 	text-align: center;
 	padding: 5px;
-}
-
-#Kunena table#kviews tr td table tr td.kprofile-right div.kiconrow {
-	/*text-align: center;
-	padding-bottom: 0px;*/
 }
 
 

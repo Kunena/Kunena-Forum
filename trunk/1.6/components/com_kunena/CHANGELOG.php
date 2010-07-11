@@ -35,6 +35,7 @@ Kunena 1.6.0-BETA1
 
 11-July-2010 fxstein
 ^ [#15886] Merged /branches/1.6-dragan-fix-20100711
++ [#19064] Scaffolding for google maps integration
 
 11-July-2010 @quila
 # [#19288] Fix Regression: Pagination in recent discussions page
@@ -79,6 +80,8 @@ Kunena 1.6.0-BETA1
 10-July-2010 fxstein
 # [#19345] Updated credits page copyright years
 + [#19064] Added google maps api key config setting for map and earth bbcode
+^ [#19064] Resize ebay widget inside of text based on config settings
++ [#19064] Embed google maps inside of text
 
 9-July-2010 Matias
 # [#19345] Change layout logic to use individual files in message profilebox

@@ -38,6 +38,8 @@ defined( '_JEXEC' ) or die();
 
 include_once (KUNENA_PATH_LIB . DS . "kunena.parser.bbcode.php");
 
+include_once (KUNENA_PATH_LIB . DS . "kunena.google.maps.class.php");
+
 class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 	// these are samples... we used the parser to refer to files!
 	// did here a local caching, but using also database lookups - removed
@@ -818,14 +820,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				if ($between) {
 					$task->autolink_disable --; // continue autolink conversion
 
+					$ebay_maxwidth = (int) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
+					$ebay_maxheight = (int) ($kunena_config->rteheight); // max. display size
 
-					$tage_new = "";
+					$tag_new = "";
 					if (is_numeric ( $between )) {
 						// Numeric: we have to assume this is an item id
-						$tag_new .= '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=' . $between . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=' . $between . '&campid=5336042350"></embed></object>';
+						$tag_new .= '<object width="'.$ebay_maxwidth.'" height="'.$ebay_maxheight.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=' . $between . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=normal&itemid=' . $between . '&campid=5336042350"></embed></object>';
 					} else {
 						// Non numeric: we have to assume this is a search
-						$tag_new .= '<object width="355" height="300"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=search&query=' . $between . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=search&query=' . $between . '&campid=5336042350"></embed></object>';
+						$tag_new .= '<object width="'.$ebay_maxwidth.'" height="'.$ebay_maxheight.'"><param name="movie" value="http://togo.ebay.com/togo/togo.swf?2008013100" /><param name="flashvars" value="base=http://togo.ebay.com/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=search&query=' . $between . '&campid=5336042350" /><embed src="http://togo.ebay.com/togo/togo.swf?2008013100" type="application/x-shockwave-flash" width="355" height="300" flashvars="base=http://togo.ebay.com/togo/&lang=' . $kunena_config->ebaylanguagecode . '&mode=search&query=' . $between . '&campid=5336042350"></embed></object>';
 					}
 
 					return TAGPARSER_RET_REPLACED;
@@ -837,16 +841,41 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				if ($between) {
 					$task->autolink_disable --;  // continue autolink conversion
 
-					$map_maxwidth = ( int ) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
-					$map_maxheight = 480; // max. display size
+					$map_maxwidth = (int) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
+					$map_maxheight = (int) ($kunena_config->rteheight); // max. display size
 
-					$tag_new = '<a href="http://maps.google.com/?q='.$between.'" rel="nofollow" target="_blank">'.$between.'</a>';
+					if (empty($kunena_config->googlemapsapikey)) {
+						$tag_new = '<a href="http://maps.google.com/?q='.$between.'" rel="nofollow" target="_blank">'.$between.'</a>';
+					} else {
+						$kmap = & KunenaGoogleMaps::getInstance ();
+						$tag_new = $kmap->addMap($between);
+					}
 
 					return TAGPARSER_RET_REPLACED;
 				}
 				return TAGPARSER_RET_NOTHING;
 
 				break;
+//			case 'tableau' :
+//				if ($between) {
+//					$task->autolink_disable --;  // continue autolink conversion
+//
+//					$map_maxwidth = (int) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
+//					$map_maxheight = (int) ($kunena_config->rteheight); // max. display size
+//
+//						$tag_new = '<a href="http://maps.google.com/?q='.$between.'" rel="nofollow" target="_blank">'.$between.'</a>';
+//					$tag_new = '<script type="text/javascript" src="http://public.tableausoftware.com/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="604" height="969" style="display:none;"><param name="name" value="WorldCup/WorldCupWinningPercentages" /><param name="toolbar" value="yes" /></object><noscript>World Cup Winning Percentages <br /><a href="#"><img alt="World Cup Winning Percentages " src="http://public.tableausoftware.com/static/images/WorldCup-WorldCupWinningPercentages_rss.png" height="100%" /></a></noscript><div style="width:604px;height:22px;padding:0px 10px 0px 0px; color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;"><div style="float:right; padding-right:8px;"><a href="http://www.tableausoftware.com/public?ref=http://public.tableausoftware.com/views/WorldCup/WorldCupWinningPercentages" target="_blank">Powered by Tableau</a></div></div>';
+//
+// <script type="text/javascript" src="http://public.tableausoftware.com/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="604" height="969" style="display:none;"><param name="name" value="WorldCup/WorldCupWinningPercentages" /><param name="toolbar" value="yes" /></object><noscript>World Cup Winning Percentages <br /><a href="#"><img alt="World Cup Winning Percentages " src="http://public.tableausoftware.com/static/images/WorldCup-WorldCupWinningPercentages_rss.png" height="100%" /></a></noscript><div style="width:604px;height:22px;padding:0px 10px 0px 0px; color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;"><div style="float:right; padding-right:8px;"><a href="http://www.tableausoftware.com/public?ref=http://public.tableausoftware.com/views/WorldCup/WorldCupWinningPercentages" target="_blank">Powered by Tableau</a></div></div>
+// http://public.tableausoftware.com/views/WorldCup/WorldCupWinningPercentages?:embed=y&:toolbar=yes
+//
+//
+//					return TAGPARSER_RET_REPLACED;
+//				}
+//				return TAGPARSER_RET_NOTHING;
+//
+//				break;
+
 			case 'hide' :
 				if ($between) {
 					if ($kunena_my->id == 0) {

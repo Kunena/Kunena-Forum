@@ -40,6 +40,10 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix Regression: Removed pathway header
 # [#19288] Fix Regression: Position of "check all" checkbox
 # [#19288] Fix Regression: Added padding to message area and aligned date of message
+^ [#16390] Updated serbian language
+# [#19288] Fix Regression: Correction in thank you language string
++ [#16390] Added template language files for english, serbian and serbian latin
+# [#19288] Fix Regression: missing " in installation language file (english and russian)
 
 10-July-2010 Matias
 # [#19288] Fix Regression: Some profile icons missing from profile page

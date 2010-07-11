@@ -279,10 +279,10 @@ class CKunenaPolls {
 	*/
 	function get_top_five_polls($PopPollsCount)
 	{
-    	$query = "SELECT q.catid,p.*, SUM(o.votes) AS total
+    	$query = "SELECT q.catid, q.id,p.*, SUM(o.votes) AS total
     				FROM #__kunena_polls AS p
     				INNER JOIN #__kunena_polls_options AS o ON p.threadid=o.pollid
-    				INNER JOIN #__kunena_messages AS q ON p.threadid = q.thread
+    				INNER JOIN #__kunena_messages AS q ON p.threadid = q.id
     				GROUP BY p.threadid
     				ORDER BY total DESC";
     	$this->_db->setQuery($query,0,$PopPollsCount);

@@ -36,6 +36,7 @@ Kunena 1.6.0-BETA1
 11-July-2010 Xillibit
 # [#19288] Fix issue with polls stats which doesn't count the right number of poll votes
 # [#19288] Little change on thank you part of API to get correct datas
++ [#19288] Search filter in category manager with cat name or cat id
 
 10-July-2010 Matias
 # [#19288] Fix Regression: Some profile icons missing from profile page

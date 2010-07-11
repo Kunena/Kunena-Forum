@@ -13,11 +13,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 ?>
-<div class="kmsgtitle kcontentheader">
-	<span class="kpost-thankyou">
-		<?php echo $this->message_thankyou; ?>
-	</span>
-</div>
+
 <div class="kmsgbody">
 	<div class="kmsgtext">
 		<?php echo $this->messageHtml ?>

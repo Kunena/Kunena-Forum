@@ -254,7 +254,7 @@ PX		EM			PCT			PT
 }
 #Kunena div.kblock label {
 	clear: both;
-	display: block;
+	/*display: block;*/
 }
 #Kunena div.kblock div.khelprulescontent,
 #Kunena div.kblock div.kfheadercontent {
@@ -1439,6 +1439,9 @@ PX		EM			PCT			PT
 	float: right;
 	margin-right: 15px;
 	font-size:0.917em;
+}
+#Kunena div.kpost-thankyou {
+	margin-top:4px;
 }
 
 #Kunena span.kmsgusertype {
@@ -2931,14 +2934,18 @@ PROFILE
 -------------------------------------------------------------------- */
 
 #Kunena .kicon-profile { 
-	/*background-image: url("../media/iconsets/profile/default/default.png");*/
 	background-repeat: no-repeat;
 	width: 16px;
 	height: 16px;
 	display: inline-block;
 	vertical-align: text-top;
-	margin-right: 5px;
-} 
+	margin-right: 3px;
+}
+#Kunena span.kicon-profile-website,
+#Kunena span.kicon-profile-pm {
+	vertical-align: top;
+	margin-top: 3px;
+}
 #Kunena .kicon-profile-aim { background-position: 0 0; } 
 #Kunena .kicon-profile-bebo { background-position: 0 -21px; } 
 #Kunena .kicon-profile-birthdate { background-position: 0 -42px; } 

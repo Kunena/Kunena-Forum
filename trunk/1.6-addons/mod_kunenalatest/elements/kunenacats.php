@@ -27,7 +27,7 @@ class JElementKunenaCats extends JElement {
 		$items = JJ_categoryArray ();
 
 		$options = Array ();
-		$options [] = JHTML::_ ( 'select.option', 'all', JText::_ ( 'MOD_KUNENALATEST_CATEGORY_ALL' ) );
+		$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'MOD_KUNENALATEST_CATEGORY_ALL' ) );
 
 		foreach ( $items as $cat ) {
 			$options [] = JHTML::_ ( 'select.option', $cat->id, $cat->treename, 'value', 'text', $cat->section );

@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.0
 
+11-July-2010 Xillibit
++ [#20081] Add setting to show latest messages or topics
+
 28-Jun-2010 Xillibit
 # [#20081] Change link more recent topics when you change view in module config
 

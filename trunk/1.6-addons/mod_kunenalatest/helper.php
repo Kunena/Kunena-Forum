@@ -40,6 +40,8 @@ class modKunenaLatestHelper {
 	function getKunenaLatestList($params) {
 		KunenaFactory::getSession ( true );
 		$model = modKunenaLatestHelper::getModel ();
+		if ( $params->get ( 'sh_topicsormessages' ) == '0' ) $model->limit_messages = $params->get ( 'nbpost' );
+		$model->limit_messages = $params->get ( 'nbpost' );
 		$model->threads_per_page = $params->get ( 'nbpost' );
 		$model->latestcategory = $params->get( 'category_id' );
 	   	$model->latestcategory_in = $params->get( 'sh_category_id_in' );
@@ -77,9 +79,13 @@ class modKunenaLatestHelper {
 		$result = array ();
 		if ( empty($model->messages) ) echo JText::_('MOD_KUNENALATEST_NO_MESSAGE');
 		foreach ( $model->messages as $message ) {
-			if ($message->parent == 0) {
-				$result [$message->id] = $message;
-			}
+			if ( $params->get ( 'sh_topicsormessages' ) ) {
+				if ($message->parent == 0) {
+					$result [$message->id] = $message;
+			 	}
+			} else {
+        		$result [$message->id] = $message;
+       		}
 		}
 
 		return $result;

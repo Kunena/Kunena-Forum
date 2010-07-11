@@ -418,6 +418,10 @@ PX		EM			PCT			PT
 	line-height: 26px;
 	/*font-size: .833em;*/
 }
+#Kunena td.kcredits-kintro {
+	vertical-align: middle;
+	padding: 0 15px;
+}
 
 #Kunena .kfooter {
 	font-size: .833em;
@@ -2935,12 +2939,13 @@ PROFILE
 -------------------------------------------------------------------- */
 
 #Kunena .kicon-profile { 
-	background-image: url("../media/iconsets/profile/default/default.png");
+	/*background-image: url("../media/iconsets/profile/default/default.png");*/
 	background-repeat: no-repeat;
 	width: 16px;
 	height: 16px;
 	display: inline-block;
 	vertical-align: text-top;
+	margin-right: 5px;
 } 
 #Kunena .kicon-profile-aim { background-position: 0 0; } 
 #Kunena .kicon-profile-bebo { background-position: 0 -21px; } 
@@ -3036,14 +3041,9 @@ div#kprofile-stats ul li span.krank-admin {
 	margin-top: 0;
 }
 #Kunena div#kprofile-rightcol { 
-	/*display: table;
-	margin-right: 10px;
-	margin-left: 220px;
-	width: auto;*/
 	display:inline-block;
 	float:left;
 	margin-left:10px;
-	margin-right:10px;
 	width:75%;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}

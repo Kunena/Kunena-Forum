@@ -59,7 +59,12 @@ JHTML::_('behavior.tooltip');
 			</td>
 		</tr>
 		<tr class="krow2">
-			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?></td><td class="kcol-mid"><input type="text" name="websitename" value="<?php echo $this->escape($this->profile->websitename); ?>" /></td>
+			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?></td>
+			<td class="kcol-mid">
+				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_NAME_DESC'); ?>" >
+					<input type="text" name="websitename" value="<?php echo $this->escape($this->profile->websitename); ?>" />
+				</span>
+			</td>
 		</tr>
 		<tr class="krow1">
 			<td class="kcol-first"><?php echo JText::_('COM_KUNENA_MYPROFILE_WEBSITE_URL'); ?></td>

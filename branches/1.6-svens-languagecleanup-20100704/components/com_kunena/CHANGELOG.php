@@ -34,6 +34,10 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+11-July-2010 Sven
++ [#16390] Language file backend added
+^ [#16390] 3 language string in added model.php
+
 4-July-2010 fxstein
 ^ [#21302] Update version info for 1.6.0 Beta 1 release
 

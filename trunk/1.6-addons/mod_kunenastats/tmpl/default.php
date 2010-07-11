@@ -30,7 +30,7 @@ defined('_JEXEC') or die('Restricted access');
       ?>
       <tr>
       <td><?php echo $klink->GetThreadLink('view', $stat->catid, $stat->thread,  stripslashes($stat->subject), stripslashes($stat->subject));  ?></td>
-      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
+      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
       <?php } ?>
 
@@ -52,7 +52,7 @@ defined('_JEXEC') or die('Restricted access');
       ?>
       <tr>
       <td><?php echo $klink->GetThreadLink('view', $stat->catid, $stat->threadid, $stat->title, $stat->title);  ?></td>
-      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
+      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
       <?php } ?>
 
@@ -74,7 +74,7 @@ defined('_JEXEC') or die('Restricted access');
       ?>
       <tr>
       <td><?php echo $klink->GetProfileLink($stat->userid, stripslashes($stat->username));  ?></td>
-      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
+      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
       <?php } ?>
 
@@ -96,7 +96,29 @@ defined('_JEXEC') or die('Restricted access');
       ?>
       <tr>
       <td><?php echo $klink->GetProfileLink($stat->user_id, stripslashes($stat->user));  ?></td>
-      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/backgrounds/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
+      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
+      </tr>
+      <?php }  ?>
+
+  </table>
+  <?php } elseif ( $this->statsType == '5' ) { ?>
+  <table>
+    <tr>
+      <th><?php echo JText::_('MOD_STATS_USER'); ?></th>
+      <th><?php echo JText::_('MOD_STATS_TOP_THANKYOU'); ?></th>
+    </tr>
+
+      <?php
+      foreach ( $stats as $stat) {
+        if ($stat->receivedthanks == modKStatisticsHelper::getTopUserThanks($this->nbItems)) {
+          $barwidth = 100;
+        } else {
+          $barwidth = round(($stat->receivedthanks * 100) / modKStatisticsHelper::getTopUserThanks($this->nbItems));
+        }
+      ?>
+      <tr>
+      <td><?php echo $klink->GetProfileLink($stat->userid, stripslashes($stat->username));  ?></td>
+      <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
       <?php }  ?>
 

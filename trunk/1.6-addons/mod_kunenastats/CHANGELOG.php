@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.0
 
+11-July 2010 Xillibit
+# [#20095] Lot of changes to show thank you, some fixes and changes on language file
+
 9-Apr 2010 Xillibit
 ^ [#20095] Removed $kunena_config variable from CKunenaLink functions
 

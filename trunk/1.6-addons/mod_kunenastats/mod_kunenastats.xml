@@ -9,7 +9,7 @@
 	<authorEmail>florian@kunena.com</authorEmail>
 	<authorUrl>www.kunena.com</authorUrl>
 	<version>1.0.0</version>
-	<description>Kunena Stats is an official module from Kunena Dev team designed for Kunena 1.6.0 which allow you to show the statistics from kunena forum in a module</description>
+	<description>MOD_STATS_DESCRIPTION</description>
 	
 	<files>        
                 <filename module="mod_kunenastats">mod_kunenastats.php</filename>
@@ -25,20 +25,21 @@
  
     
         <params>
-          <param name="stats_type" type="list" default="0" label="Statistics type" description="PARAMSTATSTYPE">          
-			     <option value="0">Popular topics</option>
-			     <option value="1">Popular polls</option>
-			     <option value="2">Popular users</option>
-			     <option value="3">Popular users profiles</option>
-			     <option value="4">General stats</option>
+          <param name="stats_type" type="list" default="0" label="MOD_STATS_PARAMSTATSTYPE" description="MOD_STATS_PARAMSTATSTYPE_DESC">          
+			     <option value="0">MOD_STATS_DISPLAY_TYPE_TOPICS</option>
+			     <option value="1">MOD_STATS_DISPLAY_TYPE_POLLS</option>
+			     <option value="2">MOD_STATS_DISPLAY_TYPE_USERS</option>
+			     <option value="3">MOD_STATS_DISPLAY_TYPE_USERS_PROFILES</option>
+			     <option value="5">MOD_STATS_DISPLAY_TYPE_THANK_YOU</option>
+			     <option value="4">MOD_STATS_DISPLAY_TYPE_GENERAL</option>
 		      </param>
-		      <param name="nb_items" type="text" default="5" label="Number items which will be displayed" description="PARAMNBITEMS" />	
-		      <param name="sh_statslink" type="radio" default="0" label="Show Kunena stats link" description="PARAMSHOWSTATSLINK">          
-			     <option value="0">No</option>
-			     <option value="1">Yes</option>
+		      <param name="nb_items" type="text" default="5" label="MOD_STATS_PARAMNBITEMS" description="MOD_STATS_PARAMNBITEMS_DESC" />	
+		      <param name="sh_statslink" type="radio" default="0" label="MOD_STATS_PARAMSHOWSTATSLINK" description="MOD_STATS_PARAMSHOWSTATSLINK_DESC">          
+			     <option value="0">MOD_STATS_PARAM_VALUE_NO</option>
+			     <option value="1">MOD_STATS_PARAM_VALUE_YES</option>
 		      </param>
 		      <param name="@spacer" type="spacer" default="" label="" description="" />
-          <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+          <param name="moduleclass_sfx" type="text" default="" label="MOD_STATS_PARAM_MODULECLASSSUFFIX" description="MOD_STATS_PARAMMODULECLASSSUFFIX_DESC" />
           
           
 		          

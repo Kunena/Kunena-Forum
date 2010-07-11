@@ -16,13 +16,13 @@ class modKStatisticsHelper
 {
   public $statsType = '';
   public $nbItems = '';
-  	
+
 	function getModel()
 	{
 		if (!class_exists( 'KunenaStatsAPI' ))
 		{
 			// Build the path to the model based upon a supplied base path
-			$path = JPATH_ADMINISTRATOR.DS.'components'.DS.'com_kunena'.DS.'libraries'.DS.'api.php';			
+			$path = JPATH_ADMINISTRATOR.DS.'components'.DS.'com_kunena'.DS.'libraries'.DS.'api.php';
 			$false = false;
 
 			// If the model file exists include it and try to instantiate the object
@@ -41,7 +41,7 @@ class modKStatisticsHelper
 		$model = new KunenaStatsAPI();
 		return $model;
 	}
-	
+
 	function getKunenaLinkClass()
 	{
 		$path = JPATH_SITE.DS.'components'.DS.'com_kunena'.DS.'lib'.DS.'kunena.link.class.php';;
@@ -58,7 +58,7 @@ class modKStatisticsHelper
 
 		return $return;
 	}
-	
+
 	function getKunenaConfigClass()
 	{
 		$path = JPATH_SITE.DS.'components'.DS.'com_kunena'.DS.'lib'.DS.'kunena.config.class.php';;
@@ -75,20 +75,20 @@ class modKStatisticsHelper
 
 		return $return;
 	}
-	
-	function getDatas (&$params) {	 
+
+	function getDatas (&$params) {
     $model		= modKStatisticsHelper::getModel();
-    
+
     $this->statsType	= (int) $params->get( 'stats_type' );
-    $this->nbItems	= (int) $params->get( 'nb_items' );    
-    
+    $this->nbItems	= (int) $params->get( 'nb_items' );
+
     if ( $this->statsType == '0' ) {
       	// Popular topics
 		    $toptitle = $model->getTopicsStats($this->nbItems);
-		    
+
 		    return $toptitle;
     } elseif ( $this->statsType == '1' ) {
-      // Popular polls       
+      // Popular polls
        $toppolls = $model->getTopPollStats($this->nbItems);
         return $toppolls;
     } elseif ( $this->statsType == '2' ) {
@@ -96,42 +96,54 @@ class modKStatisticsHelper
       $topusers = $model->getPostersStats($this->nbItems);
       return $topusers;
     } elseif ( $this->statsType == '3' ) {
-       // Popular users profiles 
+       // Popular users profiles
        $topprofiles = $model->getProfileStats($this->nbItems);
        return $topprofiles;
+    } elseif ( $this->statsType == '5' ) {
+       // Popular thank you
+       $topthankyou = $model->getTopThanks($this->nbItems);
+       return $topthankyou;
     }
   }
-  
+
   function getTopTitlesHits($nbItems) {
     $model		= modKStatisticsHelper::getModel();
-  
+
     $topTitlesHits = $model->getTopTitlesHits($nbItems);
-    
+
     return $topTitlesHits;
   }
-  
+
   function getTopPollVotesStats($nbItems) {
     $model		= modKStatisticsHelper::getModel();
-    
+
     $topPollVotes = $model->getTopPollVotesStats($nbItems);
-    
+
     return $topPollVotes;
   }
-  
+
   function getTopMessage($nbItems) {
     $model		= modKStatisticsHelper::getModel();
-    
+
     $topMessage = $model->getTopMessage($nbItems);
-    
+
     return $topMessage;
   }
-  
+
   function getTopProfileHits($nbItems) {
     $model		= modKStatisticsHelper::getModel();
-    
+
     $topMessage = $model->getTopTitlesHits($nbItems);
-    
+
     return $topMessage;
   }
-	
+
+  function getTopUserThanks($nbItems) {
+    $model		= modKStatisticsHelper::getModel();
+
+    $topUserThanks = $model->getTopUserThanks($nbItems);
+
+    return $topUserThanks;
+  }
+
 }

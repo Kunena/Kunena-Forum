@@ -35,6 +35,7 @@ Kunena 1.6.0-BETA1
 
 12-July-2010 Severdia
 # [#20081] Google maps fix
++ [#19356] Added Thank You icon to PSD source file (needs to be added to sprite)
 
 12-July-2010 Xillibit
 # [#19288] Add french language file in template languages

@@ -101,11 +101,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				?>
 				<?php
 				if ($leaf->unread) {
-					if ($this->config->default_sort == 'asc') :
-						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $threadPages, intval($this->config->messages_per_page), '<sup class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($this->lastreply [$leaf->thread]->id) );
-					else :
-						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), 1, intval($this->config->messages_per_page), '<sup class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($this->lastreply [$leaf->thread]->id) );
-					endif;
+					echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), '<sup class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($leaf->lastread) );
 				}
 				if ($leaf->locked != 0) {
 					echo CKunenaTools::showIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );

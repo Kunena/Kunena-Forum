@@ -113,10 +113,10 @@ $kunena_config = KunenaFactory::getConfig ();
 					echo JText::_('COM_KUNENA_EDITOR_HELPLINE_POLLTITLE'); ?>')" />
 
 				<img id="kbutton-poll-add"
-					src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/karmaplus.png"
+					src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/poll_add_options.png"
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>')" />
 				<img id="kbutton-poll-rem"
-					src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/karmaminus.png"
+					src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/poll_rem_options.png"
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>

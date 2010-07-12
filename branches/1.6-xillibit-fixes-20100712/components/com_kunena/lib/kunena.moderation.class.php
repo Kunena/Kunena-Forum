@@ -286,7 +286,7 @@ class CKunenaModeration {
 				// FIXME: if only admins are allowed to do this, add restriction (and make it general/changeble)
 				$sql = "DELETE FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)};";
 
-				$query = "DELETE FROM '#__kunena_messages_text WHERE `mesid`={$this->_db->Quote($MessageID)}; ";
+				$query = "DELETE FROM #__kunena_messages_text WHERE `mesid`={$this->_db->Quote($MessageID)}; ";
 				$this->_db->setQuery ($query);
 				$this->_db->query ();
 				if (KunenaError::checkDatabaseError()) return false;

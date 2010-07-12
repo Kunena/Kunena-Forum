@@ -53,7 +53,10 @@ Kunena 1.6.0-BETA1
 * [#19288] Fix regression: XSS vulnerability when posting reply
 # [#19288] Editor: Keep selection in order to allow users to chain actions (all simple BBCodes)
 # [#19288] Fix sup and sub BBCode layout in some Joomla templates
-# [#19288] Add missing index.html files
+# [#19288] Add missing index.html files (thanks Etusha2)
+# [#19288] SQL syntax error when user is trying to delete his own post (thanks Etusha2)
+# [#19345] New version of dtp2.nl buttons
+^ [#19345] Update example template CSS
 
 11-July-2010 Xillibit
 # [#19288] Fix issue with polls stats which doesn't count the right number of poll votes

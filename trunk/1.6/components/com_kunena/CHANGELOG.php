@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+12-July-2010 fxstein
++ [#19064] Basic geocoding for google maps added; map size increased
+
 12-July-2010 Severdia
 # [#20081] Google maps fix
 + [#19356] Added Thank You icon to PSD source file (needs to be added to sprite)

@@ -30,7 +30,7 @@ class KunenaGoogleMaps {
 		$this->_document =& JFactory::getDocument();
 		$this->_mapid = 1;
 
-		$this->_initJS();
+		$this->_initJS(true);
 	}
 
 	public function &getInstance() {
@@ -46,20 +46,43 @@ class KunenaGoogleMaps {
     	$this->_document->addScript('http://maps.google.com/maps/api/js?sensor='.($sensor == true ? 'true' : 'false'));
    }
 
-   public function addMap($search)
+   public function addMap($address)
    {
    		$mapid = 'kgooglemap'.$this->_mapid;
 
    		$this->_document->addScriptDeclaration("
+   		  	var geocoder;
+  			var $mapid;
+
    			window.addEvent('domready', function() {
-				var latlng = new google.maps.LatLng(-34.397, 150.644);
+   			    geocoder = new google.maps.Geocoder();
+				var latlng = new google.maps.LatLng(37.333586,-121.894684);
 				var myOptions = {
 					zoom: 8,
-					center: latlng,
+      				center: latlng,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				};
-				var map = new google.maps.Map($('".$mapid."'), myOptions);
-   			});"
+				$mapid = new google.maps.Map($('".$mapid."'), myOptions);
+   			});
+
+   			window.addEvent('domready', function() {
+			    var address = '$address';
+			    if (geocoder) {
+			      geocoder.geocode( { 'address': address}, function(results, status) {
+			        if (status == google.maps.GeocoderStatus.OK) {
+			          $mapid.setCenter(results[0].geometry.location);
+			          var marker = new google.maps.Marker({
+			              map: $mapid,
+			              position: results[0].geometry.location
+			          });
+			        } else {
+			          alert('Geocode was not successful for the following reason: ' + status);
+			        }
+			      });
+			    }
+      		});
+
+   			"
    		);
 
    		$html = '<div id="'.$mapid.'" class="kgooglemap"></div>';

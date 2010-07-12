@@ -33,10 +33,19 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+12-July-2010 Xillibit
+# [#19288] Add french language file in template languages
+# [#19288] Fix issue show &amp; instead & in message title
+# [#19288] Indicator New doesn't take you to the last post of the thread
+# [#19288] The checkbox for select all item is out of horizontal alignment
+# [#19288] Fix issue when insering a map, the emoticons insered after aren't interpreted
+# [#19288] Fix Notice: Undefined property: stdClass::$numLink in history.php line 37
+
 12-July-2010 Matias
 ^ [#15886] Merged revisions 2992-3001 from /branches/1.6-xillibit-fixes-20100711
 # [#19288] Preview filters everything between < and > (thanks JoniJnm)
 # [#19288] Installer: XML Parsing Error at 1:0. Error 4: not well-formed (invalid token)
+^ [#15886] Merged revisions 3013-3016 from /branches/1.6-xillibit-fixes-20100712
 
 11-July-2010 Xillibit
 # [#19288] Fix issue with polls stats which doesn't count the right number of poll votes

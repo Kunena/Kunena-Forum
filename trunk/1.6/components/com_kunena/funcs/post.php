@@ -46,6 +46,9 @@ class CKunenaPost {
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
+
+		$this->numLink = null;
+		$this->replycount= null;
 	}
 
 	// Temporary function to handle old style permission handling
@@ -791,6 +794,8 @@ class CKunenaPost {
 		$this->messages = $this->_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
+		$this->replycount = count($this->messages);
+
 		//get attachments
 		$mesids = array();
 		foreach ($this->messages as $mes) {
@@ -804,6 +809,16 @@ class CKunenaPost {
 		$this->subject = $this->msg_cat->subject;
 
 		CKunenaTools::loadTemplate ( '/editor/history.php' );
+	}
+
+	public function getNumLink($mesid ,$replycnt) {
+		if ($this->config->ordering_system == 'old_ord') {
+			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $mesid );
+		} else {
+			$this->numLink = CKunenaLink::GetSamePageAnkerLink( $mesid, '#' .$replycnt );
+		}
+
+		return $this->numLink;
 	}
 
 	protected function getAuthorName() {

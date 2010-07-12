@@ -34,7 +34,7 @@ $k = 0;
 								<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat') ?>
 							</span>
 							<a name="<?php echo intval($mes->id) ?>"></a>
-							<?php echo $mes->numLink ?>
+							<?php echo $this->getNumLink($mes->id,$this->replycount--) ?>
 						</th>
 					</tr>
 				</thead>

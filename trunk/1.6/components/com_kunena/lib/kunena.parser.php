@@ -957,6 +957,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			case 'url' :
 			case 'img' :
 			case 'file' :
+			case 'map' :
 			case 'video' :
 			case 'ebay' :
 				$task->autolink_disable ++; // stop autolink conversion

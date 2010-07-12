@@ -66,7 +66,7 @@ class CKunenaAjaxHelper {
 
 					break;
 				case 'preview' :
-					$body = JRequest::getVar ( 'body', '' );
+					$body = JRequest::getVar('body', '', 'post', 'string', JREQUEST_ALLOWRAW);
 
 					$response = $this->_getPreview ( $body );
 

@@ -38,6 +38,8 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix issue show &amp; instead & in message title
 # [#19288] Indicator New doesn't take you to the last post of the thread
 # [#19288] The checkbox for select all item is out of horizontal alignment
+# [#19288] Fix issue when insering a map, the emoticons insered after aren't interpreted
+# [#19288] Fix Notice: Undefined property: stdClass::$numLink in history.php line 37
 
 12-July-2010 Matias
 ^ [#15886] Merged revisions 2992-3001 from /branches/1.6-xillibit-fixes-20100711

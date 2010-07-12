@@ -39,6 +39,7 @@ Kunena 1.6.0-BETA1
 11-July-2010 fxstein
 ^ [#15886] Merged /branches/1.6-dragan-fix-20100711
 + [#19064] Scaffolding for google maps integration
++ [#19064] basic css setup for embedded google maps
 # [#19288] Fix Regression: profile page formatting (thanks cerberus)
 # [#19288] Fix: misaligned checkbox (thanks cerberus)
 

@@ -48,7 +48,7 @@ class KunenaGoogleMaps {
 
    public function addMap($search)
    {
-   		$mapid = 'kunena_google_map'.$this->_mapid;
+   		$mapid = 'kgooglemap'.$this->_mapid;
 
    		$this->_document->addScriptDeclaration("
    			window.addEvent('domready', function() {
@@ -62,7 +62,7 @@ class KunenaGoogleMaps {
    			});"
    		);
 
-   		$html = '<div id="'.$mapid.'" class="kunena_google_map"></div>';
+   		$html = '<div id="'.$mapid.'" class="kgooglemap"></div>';
 
    		$this->_mapid ++;
 

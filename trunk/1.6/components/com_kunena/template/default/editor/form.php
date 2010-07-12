@@ -49,7 +49,7 @@ $this->k=0;
 
 <div class="kblock">
 	<div class="kheader">
-		<h2><span><?php echo $this->title?></span></h2>
+		<h2><span><?php echo $this->escape($this->title)?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">

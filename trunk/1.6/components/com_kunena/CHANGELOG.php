@@ -49,6 +49,10 @@ Kunena 1.6.0-BETA1
 # [#19288] Preview filters everything between < and > (thanks JoniJnm)
 # [#19288] Installer: XML Parsing Error at 1:0. Error 4: not well-formed (invalid token)
 ^ [#15886] Merged revisions 3013-3016 from /branches/1.6-xillibit-fixes-20100712
+# [#19288] Allow saving <foo> into signature
+* [#19288] Fix regression: XSS vulnerability when posting reply
+# [#19288] Editor: Keep selection in order to allow users to chain actions (all simple BBCodes)
+# [#19288] Fix sup and sub BBCode layout in some Joomla templates
 
 11-July-2010 Xillibit
 # [#19288] Fix issue with polls stats which doesn't count the right number of poll votes

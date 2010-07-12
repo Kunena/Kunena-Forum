@@ -614,13 +614,13 @@ function kInsertVideo1() {
 		videoheigth = '344';
 	}
 	var videoid = $('kvideoid').get('value');
-	kbbcode.replaceSelection('[video size='+videosize+' width='+videowidth+' height='+videoheigth+' type='+$('kvideoprovider').retrieve('videoprov')+']'+videoid+'[/video]');
+	kbbcode.replaceSelection('[video size='+videosize+' width='+videowidth+' height='+videoheigth+' type='+$('kvideoprovider').retrieve('videoprov')+']'+videoid+'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 
 function kInsertVideo2() {
 	var videourl = $("kvideourl").get("value");
-	kbbcode.replaceSelection('[video]'+ videourl +'[/video]');
+	kbbcode.replaceSelection('[video]'+ videourl +'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 
@@ -631,6 +631,6 @@ function kInsertVideo2() {
 //
 function kInsertMapLink() {
 	var mapurl = $("kbbcode-map_url").get("value");
-	kbbcode.replaceSelection('[map]'+ mapurl +'[/map]');
+	kbbcode.replaceSelection('[map]'+ mapurl +'[/map]', false);
 	kToggleOrSwap("kbbcode-map-options");
 }

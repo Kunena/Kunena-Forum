@@ -457,7 +457,7 @@ class CKunenaProfile {
 		$bebo = trim(JRequest::getVar ( 'bebo', '' ));
 		$websitename = JRequest::getVar ( 'websitename', '' );
 		$websiteurl = JRequest::getVar ( 'websiteurl', '' );
-		$signature = JRequest::getVar ( 'signature', '' );
+		$signature = JRequest::getVar ( 'signature', '', 'post', 'string', JREQUEST_ALLOWRAW );
 
 		//Query on kunena user
 		$this->_db->setQuery ( "UPDATE #__kunena_users SET personalText={$this->_db->Quote($personnaltext)},birthdate={$this->_db->Quote($birthdate)},

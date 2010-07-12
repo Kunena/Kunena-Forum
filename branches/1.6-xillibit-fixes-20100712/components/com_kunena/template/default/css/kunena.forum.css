@@ -237,7 +237,7 @@ PX		EM			PCT			PT
 #Kunena div.kblock span.select-toggle {
 	float: right;
 	top: 5px;
-	right: -19px;
+	right: 5px;
 	height: 1px;
 	position: relative;
 }
@@ -1749,6 +1749,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena td.kbuttonbar-right {
+	vertical-align:bottom;
 	width: 100%;
 	margin: 3px;
 	border-bottom: 1px solid #BFC3C6;

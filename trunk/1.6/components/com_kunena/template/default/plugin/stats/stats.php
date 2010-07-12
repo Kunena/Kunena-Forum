@@ -142,7 +142,7 @@ $k = 0;
 			<table class = "kblocktable">
 				<tbody>
 					<tr  class = "ksth" >
-						<th class="kname"> <?php echo JText::_('COM_KUNENA_POLL_NAME');?></th>
+						<th class="kname"> <?php echo JText::_('COM_KUNENA_POLL_STATS_NAME');?></th>
 						<th class="kbar">&nbsp;  </th>
 						<th class="knr"></th>
 					</tr>

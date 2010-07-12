@@ -34,10 +34,10 @@ Legend:
 Kunena 1.6.0-BETA1
 
 11-July-2010 Matias
-^ [#15886] Merged revision 3001 from /branches/1.6-dragan-fix-20100711
+^ [#15886] Merged revisions 3006-3007 from /branches/1.6-dragan-fix-20100711
 
 11-July-2010 fxstein
-^ [#15886] Merged /branches/1.6-dragan-fix-20100711
+^ [#15886] Merged revisions 2984-2998 /branches/1.6-dragan-fix-20100711
 + [#19064] Scaffolding for google maps integration
 + [#19064] basic css setup for embedded google maps
 # [#19288] Fix Regression: profile page formatting (thanks cerberus)
@@ -57,11 +57,12 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix Regression: missing tip on website name in editprofile.php
 # [#19288] Fix Regression: right column margin in profile page
 # [#19288] Fix Regression: icon show in profile page
-# [#19288] Fix Regression: alignement in credit page
+# [#19288] Fix Regression: alignment in credit page
 # [#19288] Fix Regression: width of search page when left module is active
 # [#19288] Fix Regression: message body too height in IE, Chrome, Opera
 # [#19288] Fix Regression: vertical alignment of website and pm icons
 # [#19288] Fix Regression: changed position of Thank You button
+# [#19288] Fix Regression: new language string for poll statistic
 
 10-July-2010 Matias
 # [#19288] Fix Regression: Some profile icons missing from profile page

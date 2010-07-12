@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+12-July-2010 Xillibit
+# [#19288] Add french language file in template languages
+# [#19288] Fix issue show &amp; instead & in message title
+
 12-July-2010 Matias
 ^ [#15886] Merged revisions 2992-3001 from /branches/1.6-xillibit-fixes-20100711
 

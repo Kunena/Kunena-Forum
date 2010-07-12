@@ -63,7 +63,7 @@ $id = JRequest::getInt ( 'id', 0 );
 	$this->kunena_topic_title = '';
 	if ($func == "view" and $id) {
 		$this->kunena_topic_title = $pathway->getMessagesTitles($id);
-		$jr_path_menu [] = $this->escape($this->kunena_topic_title);
+		$jr_path_menu [] = $this->kunena_topic_title;
 	}
 
 	// print the list

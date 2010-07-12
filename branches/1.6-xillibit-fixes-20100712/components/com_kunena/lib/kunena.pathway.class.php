@@ -44,7 +44,7 @@ class CkunenaPathway {
 	public function getMessagesTitles($id) {
 		$sql = "SELECT subject, id FROM #__kunena_messages WHERE id={$this->_db->Quote($id)}";
 		$this->_db->setQuery ( $sql );
-		$kunena_topic_title = KunenaParser::parseText ($this->_db->loadResult () );
+		$kunena_topic_title = $this->_db->loadResult ();
 		KunenaError::checkDatabaseError();
 
 		return $kunena_topic_title;

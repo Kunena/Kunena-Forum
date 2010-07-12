@@ -3537,3 +3537,8 @@ div#kprofile-stats ul li span.krank-admin {
 	width: 12px;
 	height: 12px;
 }
+/* Google Maps  */
+#Kunena .kgooglemap,
+#Kunena .kgooglemap > div {
+	display:block !important;
+}

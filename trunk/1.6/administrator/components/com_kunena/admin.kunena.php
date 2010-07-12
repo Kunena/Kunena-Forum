@@ -914,6 +914,9 @@ function showAdministration($option) {
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
 	$levellimit = $kunena_app->getUserStateFromRequest ( "{$option}.limit", 'levellimit', 10, 'int' );
 
+	$search				= $kunena_app->getUserStateFromRequest( $option.'search',						'search', 			'',			'string' );
+	$search				= JString::strtolower( $search );
+
 	$order = '';
 
 	if ($filter_order == 'ordering') {
@@ -922,6 +925,12 @@ function showAdministration($option) {
 		$order = ' ORDER BY a.name '. $filter_order_Dir ;
 	} else if ($filter_order == 'id') {
 		$order = ' ORDER BY a.id '. $filter_order_Dir ;
+	}
+
+	$where = '';
+
+	if ($search) {
+		$where .= ' WHERE LOWER( a.name ) LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false ). ' OR LOWER( a.id ) LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false );
 	}
 
 	jimport ( 'joomla.version' );
@@ -933,7 +942,8 @@ function showAdministration($option) {
 			LEFT JOIN #__users AS u ON u.id = a.checked_out
 			LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
 			LEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access
-			".$order;
+			".$where
+		 	.$order;
 	} else {
 		// Joomla 1.6
 		$query = "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.title AS groupname, h.title AS admingroup
@@ -941,7 +951,8 @@ function showAdministration($option) {
 			LEFT JOIN #__users AS u ON u.id = a.checked_out
 			LEFT JOIN #__usergroups AS g ON g.id = a.pub_access
 			LEFT JOIN #__usergroups AS h ON h.id = a.admin_access
-			".$order;
+			".$where
+			.$order;
 	}
 	$kunena_db->setQuery($query);
 	$rows = $kunena_db->loadObjectList ('id');
@@ -961,6 +972,8 @@ function showAdministration($option) {
 		if ($vv->parent) {
 			$v->parent = -1;
 			$v->published = 0;
+
+			if ( empty($search))
 			$v->name = JText::_('COM_KUNENA_CATEGORY_ORPHAN').' : '.$v->name;
 		}
 		$children [$v->parent][] = $v;
@@ -969,6 +982,7 @@ function showAdministration($option) {
 
 	if (isset($children [-1])) {
 		$children [0] = array_merge($children [-1], $children [0]);
+		if ( empty($search))
 		$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_CATEGORY_ORPHAN_DESC'), 'notice' );
 	}
 
@@ -991,6 +1005,8 @@ function showAdministration($option) {
 	// table ordering
 	$lists['order_Dir']	= $filter_order_Dir;
 	$lists['order']		= $filter_order;
+
+	$lists['search']= $search;
 
 	html_Kunena::showAdministration ( $list, $children, $pageNav, $option, $lists );
 }

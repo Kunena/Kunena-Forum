@@ -469,12 +469,12 @@ class KunenaStatsAPI {
 	public function getTopThanks($thanksCount) {
 		if ((int)$thanksCount<0) return;
 		$this->_stats->loadThanksStats((int)$thanksCount);
-		return $this->_stats->topthanks;
+		return $this->_stats->topuserthanks;
 	}
 
 	public function getTopUserThanks($thanksCount) {
 		if ((int)$thanksCount<0) return;
 		$this->_stats->loadThanksStats((int)$thanksCount);
-		return $this->_stats->topuserthanks;
+		return $this->_stats->topthanks;
 	}
 }

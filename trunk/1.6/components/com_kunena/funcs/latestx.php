@@ -79,6 +79,8 @@ class CKunenaLatestX {
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
+
+		$this->limit_messages = '';
 	}
 
 	/**
@@ -97,6 +99,9 @@ class CKunenaLatestX {
 
 	protected function _common() {
 		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
+
+		$limit = '';
+		if ( $this->limit_messages ) $limit = " LIMIT {$this->limit_messages}";
 
 		if (!empty ( $this->threadids ) ) {
 			$idstr = implode ( ",", $this->threadids );
@@ -125,7 +130,8 @@ class CKunenaLatestX {
 			LEFT JOIN #__kunena_attachments AS aa ON aa.mesid = a.id
 			WHERE (a.parent='0' OR a.id=l.lastid $loadstr)
 			GROUP BY a.id
-			ORDER BY {$this->order}";
+			ORDER BY {$this->order}
+			".$limit;
 
 			$this->db->setQuery ( $query );
 			$this->messages = $this->db->loadObjectList ('id');
@@ -403,6 +409,8 @@ class CKunenaLatestX {
 		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 		$catlist = array ();
+		// need this becuse with kunena latest module when there is only one item selected in the list, it isn't saved in array
+		if(!is_array($this->latestcategory)) $this->latestcategory = array($this->latestcategory);
 		foreach ( $this->latestcategory as $catnum ) {
 			$catlist [] = ( int ) $catnum;
 		}
@@ -435,7 +443,6 @@ class CKunenaLatestX {
 			GROUP BY t.thread
 			ORDER BY {$this->order}
 		";
-
 		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
 		$this->threadids = $this->db->loadResultArray ();
 		if (KunenaError::checkDatabaseError()) return;

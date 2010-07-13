@@ -58,7 +58,7 @@ class KunenaGoogleMaps {
    			    geocoder = new google.maps.Geocoder();
 				var latlng = new google.maps.LatLng(37.333586,-121.894684);
 				var myOptions = {
-					zoom: 8,
+					zoom: 10,
       				center: latlng,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				};
@@ -76,7 +76,9 @@ class KunenaGoogleMaps {
 			              position: results[0].geometry.location
 			          });
 			        } else {
-			          alert('Geocode was not successful for the following reason: ' + status);
+			        	var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$address</i></strong></p>';
+			        	var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
+  						infowindow$mapid.open($mapid);
 			        }
 			      });
 			    }
@@ -85,7 +87,7 @@ class KunenaGoogleMaps {
    			"
    		);
 
-   		$html = '<div id="'.$mapid.'" class="kgooglemap"></div>';
+   		$html = '<div id="'.$mapid.'" class="kgooglemap">'.JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE').'</div>';
 
    		$this->_mapid ++;
 

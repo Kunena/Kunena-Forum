@@ -728,7 +728,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
 		}
 		$lang =& JFactory::getLanguage();
-		$lang->load( 'tpl_'.$template, JPATH_ADMINISTRATOR );
+		$lang->load( 'tpl_'.$template, KUNENA_PATH_TEMPLATE.DS.$template );
 		$ini	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
 		$xml	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'template.xml';
 		$row	= parseXMLTemplateFile($tBaseDir, $template);

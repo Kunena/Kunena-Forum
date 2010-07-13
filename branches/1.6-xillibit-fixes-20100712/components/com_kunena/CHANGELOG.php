@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+13-July-2010 Xillibit
+^ [#19288] Update french translation
+# [#19288] On edit template, the path for language file (xx-XX.tpl_default.ini) is incorrect
+
 12-July-2010 Xillibit
 # [#19288] Add french language file in template languages
 # [#19288] Fix issue show &amp; instead & in message title

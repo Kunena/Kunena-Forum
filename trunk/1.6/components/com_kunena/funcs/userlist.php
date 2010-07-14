@@ -34,17 +34,17 @@ class CKunenaUserlist {
 		$filter_order = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order', 'filter_order', 'registerDate', 'cmd' );
 		$filter_order_dir = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order_dir', 'filter_order_Dir', 'asc', 'word' );
 		$order = JRequest::getVar ( 'order', '' );
-		$orderby = ' ORDER BY ' . $filter_order . ' ' . $filter_order_dir;
+		$orderby = " ORDER BY {$this->db->quote($filter_order)} {$this->db->quote($filter_order_dir)}";
 
 		// Total
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0" );
+		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );
 		$this->total = $this->db->loadResult ();
 		KunenaError::checkDatabaseError();
 
 		// Search total
-		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid";
+		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE (block=0 OR activation='')";
 		if ($this->search != "") {
-			$query .= " WHERE (u.name LIKE '%{$this->search}%' OR u.username LIKE '%{$this->search}%')";
+			$query .= " AND (u.name LIKE '%{$this->db->getEscaped($this->search)}%' OR u.username LIKE '%{{$this->db->getEscaped($this->search)}%')";
 		}
 
 		$this->db->setQuery ( $query );
@@ -55,10 +55,10 @@ class CKunenaUserlist {
 		}
 
 		// Select query
-		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE block=0";
+		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE (block=0 OR activation!='')";
 		$this->searchuri = "";
 		if ($this->search != "") {
-			$query .= " AND (name LIKE '%{$this->search}%' OR username LIKE '%{$this->search}%') AND u.id NOT IN (62)";
+			$query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN (62)";
 			$this->searchuri .= "&search=" . $this->search;
 		} else {
 			$query .= " AND u.id NOT IN (62)";
@@ -91,7 +91,7 @@ class CKunenaUserlist {
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 	}
-	
+
 	/**
 	* Escapes a value for output in a view script.
 	*

@@ -35,6 +35,7 @@ Kunena 1.6.0-BETA1
 
 13-July-2010 Matias
 ^ [#16390] Updated Spanish (thanks Alakentu) and Russian (thanks ZARKOS) languages
+# [#19288] Escape variables in userlist
 
 12-July-2010 fxstein
 + [#19064] Basic geocoding for google maps added; map size increased

@@ -351,6 +351,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $popthankscount = 5;
 	//New for 1.6: choose if you want a Thank you function
 	var $googlemapsapikey = '';
+	var $seen_deleted_messages = 0;
 
 
     public function __construct($userinfo = null) {

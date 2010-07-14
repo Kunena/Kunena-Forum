@@ -39,6 +39,7 @@ Kunena 1.6.0-BETA1
 # [#19288] Fix issue in kunena installer which create tables without used UTF8
 # [#19288] Add remember me input field in login box
 # [#19288] When topic to another category, you aren't redirected to the target category
+^ [#19288] Configuration setting to let moderators to see deleted messages in frontend
 
 13-July-2010 Xillibit
 ^ [#19288] Update french translation

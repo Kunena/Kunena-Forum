@@ -1423,6 +1423,15 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPCIICONS_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_WHO_CAN_SEEN_DELETED_MESSAGES') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['seen_deleted_messages'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A__WHO_CAN_SEEN_DELETED_MESSAGES_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

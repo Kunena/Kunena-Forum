@@ -1577,6 +1577,8 @@ function showConfig($option) {
 
 	$lists['showpopthankysoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankysoustats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopthankysoustats);
 
+	$lists ['seen_deleted_messages'] =JHTML::_('select.genericlist', $yesno, 'cfg_seen_deleted_messages', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->seen_deleted_messages);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

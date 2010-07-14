@@ -734,7 +734,7 @@ class KunenaModelInstall extends JModel {
 			return; // Nothing to migrate
 
 		// Make identical copy from the table with new name
-		$create = array_pop($this->db->getTableCreate($this->db->getPrefix () . $oldtable));
+		$create = array_pop($this->db->getTableCreate($this->db->getPrefix () . $oldtable)).' DEFAULT CHARSET=utf8';
 		if (!$create) return;
 		$sql = preg_replace('/'.$this->db->getPrefix () . $oldtable.'/', $this->db->getPrefix () . $newtable, $create);
 		$this->db->setQuery ( $sql );

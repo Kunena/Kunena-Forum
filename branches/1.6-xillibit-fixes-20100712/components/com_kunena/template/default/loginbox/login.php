@@ -42,6 +42,10 @@ $login = CKunenaLogin::getloginFields();
 							<?php echo JText::_('COM_KUNENA_PASS'); ?>
 							<input type="password" name="<?php echo $login['field_password']; ?>" class="inputbox ks" size="18" alt="password" /></span>
 						<span>
+							<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
+							<?php echo JText::_('COM_KUNENA_LOGIN_REMEMBER_ME');  ?>
+							<input type="checkbox" name="remember" alt="" value="yes" />
+							<?php endif; ?>
 							<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
 							<input type="hidden" name="option" value="<?php echo $login['option']; ?>" />
 							<input type="hidden" name="task" value="<?php echo $login['task']; ?>" />

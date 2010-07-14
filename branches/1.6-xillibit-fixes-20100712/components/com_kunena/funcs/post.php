@@ -618,7 +618,12 @@ class CKunenaPost {
 		} else {
 			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ));
 		}
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ) );
+
+		if ($targetCat != $this->catid) {
+			$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $targetCat, true ) );
+		} else {
+			$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ) );
+		}
 	}
 
 	protected function subscribe() {

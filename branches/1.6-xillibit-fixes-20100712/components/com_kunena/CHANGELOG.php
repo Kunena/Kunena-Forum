@@ -36,6 +36,9 @@ Kunena 1.6.0-BETA1
 14-July-2010 Xillibit
 # [#19288] Little change on translation on credit page
 # [#19288] Change on profile to let enough place when you add ban, to put complete expire time
+# [#19288] Fix issue in kunena installer which create tables without used UTF8
+# [#19288] Add remember me input field in login box
+# [#19288] When topic to another category, you aren't redirected to the target category
 
 13-July-2010 Xillibit
 ^ [#19288] Update french translation

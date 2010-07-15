@@ -28,7 +28,7 @@ Element.implement({
 		return this.get('value').substring(this.selectionStart, this.selectionEnd);
 	},
 
-	replaceSelectedText: function(newtext, isLast) {
+	wrapSelectedText: function(newtext, wrapperLeft, wrapperRight, isLast) {
 		isLast = (isLast == null) ? true : isLast;
 
 		var scroll_top = this.scrollTop;
@@ -41,21 +41,26 @@ Element.implement({
 				range.select();
 				this.scrollTop = scroll_top;
 			}
-
 		}
 		else {
 			originalStart = this.selectionStart;
 			originalEnd = this.selectionEnd;
-			this.value = this.get('value').substring(0, originalStart) + newtext + this.get('value').substring(originalEnd);
+			this.value = this.get('value').substring(0, originalStart) + wrapperLeft + newtext + wrapperRight + this.get('value').substring(originalEnd);
 			if(isLast == false) {
-				this.setSelectionRange(originalStart, originalStart + newtext.length);
+				this.setSelectionRange(originalStart + wrapperLeft.length, originalStart + wrapperLeft.length + newtext.length);
 			}
 			else {
-				this.setSelectionRange(originalStart + newtext.length, originalStart + newtext.length);
+				var position = originalStart + newtext.length + wrapperLeft.length +  wrapperRight.length;
+				this.setSelectionRange(position, position);
 				this.scrollTop = scroll_top;
 			}
 			this.focus();
 		}
+	},
+
+	replaceSelectedText: function(newtext, isLast) {
+		isLast = (isLast == null) ? true : isLast;
+		this.wrapSelectedText(newtext, '', '', isLast);
 	}
 });
 
@@ -345,12 +350,12 @@ var kbbcode = new Class({
 			isLast - see information at the top
 
 		Example:
-			>this.wrapSelection("**");
-			>//selection will become: **selection**
+			>this.wrapSelection("-+", "+-");
+			>//selection will become: -+selection+-
 	*/
-	wrapSelection: function(wrapper, isLast) {
+	wrapSelection: function(wrapperLeft, wrapperRight, isLast) {
 		isLast = (isLast == null) ? true : isLast;
-		this.el.replaceSelectedText(wrapper + this.el.getSelectedText() + wrapper, isLast);
+		this.el.wrapSelectedText(this.el.getSelectedText(), wrapperLeft, wrapperRight, isLast);
 	},
 
 	/*
@@ -368,9 +373,11 @@ var kbbcode = new Class({
 	*/
 	insert: function(insertText, where, isLast) {
 		isLast = (isLast == null) ? true : isLast;
+		var wrapperLeft = '';
+		var wrapperRight = '';
 		where = (where == "") ? 'after' : where;
-		var newText = (where == "before") ? insertText + this.el.getSelectedText() : this.el.getSelectedText() + insertText;
-		this.el.replaceSelectedText(newText, isLast);
+		var newText = (where == "before") ? wrapperLeft = insertText : wrapperRight = insertText;
+		this.el.wrapSelectedText(this.el.getSelectedText(), wrapperLeft, wrapperRight, isLast);
 	},
 
 	/*
@@ -501,7 +508,8 @@ var kbbcode = new Class({
 
 function kInsertCode() {
 	var kcodetype = $('kcodetype').get('value');
-	kbbcode.replaceSelection('[code type='+kcodetype+']' + kbbcode.getSelection() + '[/code]'); 
+	if (kcodetype != '') kcodetype = ' type='+kcodetype;
+	kbbcode.wrapSelection('[code'+kcodetype+']', '[/code]', false); 
 	kToggleOrSwap("kbbcode-code-options");
 }
 
@@ -622,15 +630,4 @@ function kInsertVideo2() {
 	var videourl = $("kvideourl").get("value");
 	kbbcode.replaceSelection('[video]'+ videourl +'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
-}
-
-//
-// kInsertMapLink()
-//
-// Helper function to insert the map link bbcode into the message
-//
-function kInsertMapLink() {
-	var mapurl = $("kbbcode-map_url").get("value");
-	kbbcode.replaceSelection('[map]'+ mapurl +'[/map]', false);
-	kToggleOrSwap("kbbcode-map-options");
 }

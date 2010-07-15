@@ -1782,6 +1782,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena td.kbuttonbar-left {
+	vertical-align:bottom;
 	width: 100%;
 	height: 1em;
 	margin: 3px;

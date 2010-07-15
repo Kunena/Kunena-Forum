@@ -33,6 +33,14 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+14-July-2010 Matias
++ [#16390] Add Kunena 1.5 to 1.6 language converter into scripts/
+# [#19288] Fixed editor to act like the old one when there was no selection
+# [#19288] Fixed editor to be easier to use and covering more different ways to use it
+# [#19288] After creating/editing a message, show message that was just created or edited (if possible)
+# [#19288] After moderating a message, show message that was just moved
+# [#19288] After approving/deleting/restoring a message, show that message (if possible)
+
 13-July-2010 Matias
 ^ [#16390] Updated Spanish (thanks Alakentu) and Russian (thanks ZARKOS) languages
 # [#19288] Escape variables in userlist

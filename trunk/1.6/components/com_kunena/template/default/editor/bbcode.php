@@ -154,6 +154,7 @@ $kunena_config = KunenaFactory::getConfig ();
 						<select id="kcodetype" name="kcode_type" class="kbutton"
 							onmouseover="javascript:$('helpbox').set('value', '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_CODETYPE'); ?>')">
 						<?php
+						echo '<option value = ""></option>';
 						foreach ($files as $file)
 							echo '<option value = "'.substr($file,0,-4).'">'.substr($file,0,-4).'</option>';
 						?>
@@ -229,22 +230,6 @@ $kunena_config = KunenaFactory::getConfig ();
 						?>"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_VIDEOAPPLY2');
-				?>')" />
-			</div>
-			<div id="kbbcode-map-options" style="display: none;"><?php
-			echo JText::_('COM_KUNENA_EDITOR_MAP');
-			?>&nbsp;<input name="map-url"
-				id="kbbcode-map_url" type="text" size="40" maxlength="250" value=""
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');
-				?>')" />&nbsp;
-			<input type="button" name="Link"
-				value="<?php
-				echo JText::_('COM_KUNENA_EDITOR_INSERT');
-				?>"
-				onclick="kInsertMapLink()"
-				onmouseover="javascript:$('helpbox').set('value', '<?php
-				echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAPAPPLY');
 				?>')" />
 			</div>
 			</td>

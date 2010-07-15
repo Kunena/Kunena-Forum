@@ -225,7 +225,7 @@ class CKunenaPost {
 		} else {
 			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $id, $this->config->messages_per_page, $this->catid ), $redirectmsg );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $id, $this->catid), $redirectmsg );
 	}
 
 	protected function newtopic($do) {
@@ -447,7 +447,7 @@ class CKunenaPost {
 		$this->_db->query ();
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page, $this->catid ) );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
 	}
 
 	protected function delete() {
@@ -469,7 +469,7 @@ class CKunenaPost {
 		} else {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE') );
 		}
-		$this->redirectBack ();
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
 	}
 
 	protected function undelete() {
@@ -491,7 +491,7 @@ class CKunenaPost {
 		} else {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE') );
 		}
-		$this->redirectBack ();
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
 	}
 
 	protected function permdelete() {
@@ -515,7 +515,10 @@ class CKunenaPost {
 			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ));
 		}
 
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ) );
+		if ($this->parent)
+			$this->redirectBack ();
+		else
+			$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ));
 	}
 
 	protected function deletethread() {
@@ -618,7 +621,7 @@ class CKunenaPost {
 		} else {
 			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ));
 		}
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, true ) );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
 	}
 
 	protected function subscribe() {
@@ -772,7 +775,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetMesageURL ( $this->id, $this->catid ), $success_msg );
 	}
 
 	function hasThreadHistory() {

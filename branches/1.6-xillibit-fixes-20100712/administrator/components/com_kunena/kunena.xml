@@ -22,14 +22,7 @@
 		<filename>COPYRIGHT.php</filename>
 	</files>
 	<administration>
-		<menu task="cpanel" img="components/com_kunena/media/icons/kunena-favicon.png">Kunena Forum</menu>
-		<submenu>
-			<menu task="showconfig" img="components/com_kunena/media/icons/config-favicon.png">Configuration</menu>
-			<menu task="showAdministration" img="components/com_kunena/media/icons/forums-favicon.png">Category Manager</menu>
-			<menu task="showprofiles" img="components/com_kunena/media/icons/users-favicon.png">User Manager</menu>
-			<menu task="showsmilies" img="components/com_kunena/media/icons/smilies-favicon.png">Emoticon Manager</menu>
-			<menu task="ranks" img="components/com_kunena/media/icons/ranks-favicon.png">Rank Manager</menu>
-		</submenu>
+		<menu task="cpanel" img="components/com_kunena/media/icons/kunena-favicon.png">Kunena Forum</menu>		
 		<files>
 			<filename>install.script.php</filename>
 			<filename>admin.kunena.php</filename>

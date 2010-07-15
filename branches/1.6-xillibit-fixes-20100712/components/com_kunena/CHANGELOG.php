@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+15-July-2010 Xillibit
+# [#19288] Remove backend submenu in kunena.xml because it's useless
+
 14-July-2010 Xillibit
 # [#19288] Little change on translation on credit page
 # [#19288] Change on profile to let enough place when you add ban, to put complete expire time

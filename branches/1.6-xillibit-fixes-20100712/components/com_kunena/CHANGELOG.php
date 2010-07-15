@@ -40,6 +40,7 @@ Kunena 1.6.0-BETA1
 # [#19288] Add remember me input field in login box
 # [#19288] When topic to another category, you aren't redirected to the target category
 ^ [#19288] Configuration setting to let moderators to see deleted messages in frontend
+# [#19288] When a post has been edited or when you have wrote a preply redirect to the view of message which has been just edited
 
 13-July-2010 Xillibit
 ^ [#19288] Update french translation

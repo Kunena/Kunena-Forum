@@ -47,7 +47,6 @@ abstract class KunenaAccess {
 		if ($this->isAdmin ( $user->userid, $catid ) )
 			$hold [] = 2;
 		if ($string) $hold = implode ( ',', $hold );
-		print_r($hold);
 		return $hold;
 	}
 

@@ -225,7 +225,7 @@ class CKunenaPost {
 		} else {
 			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $id, $this->config->messages_per_page, $this->catid ), $redirectmsg );
+		$this->_app->redirect ( $LastPostUrl );
 	}
 
 	protected function newtopic($do) {
@@ -363,6 +363,8 @@ class CKunenaPost {
 	}
 
 	protected function editpostnow() {
+		if (!$this->load())
+			return false;
 		if ($this->tokenProtection ())
 			return false;
 		if ($this->isUserBanned() )
@@ -447,7 +449,14 @@ class CKunenaPost {
 		$this->_db->query ();
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page, $this->catid ) );
+
+		$this->_db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE thread={$this->_db->Quote($this->msg_cat->thread)} AND id<={$this->_db->Quote($this->id)}" );
+		$total_messages = $this->_db->loadResult ();
+		KunenaError::checkDatabaseError();
+
+		$returnPage = $total_messages > $this->config->messages_per_page ? ceil ( $total_messages / $this->config->messages_per_page ) : 1;
+
+		$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $returnPage, $this->config->messages_per_page, $this->id, false) );
 	}
 
 	protected function delete() {

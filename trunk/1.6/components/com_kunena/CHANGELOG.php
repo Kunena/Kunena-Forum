@@ -35,6 +35,9 @@ Kunena 1.6.0-BETA1
 
 16-July-2010 Matias
 ^ [#15886] Merged revisions 3030-3037 from /branches/1.6-xillibit-fixes-20100712
+# [#19288] Fix online/offline status in userlist
+# [#19288] Fix autocompleter (css issues)
+# [#19288] Fix Editor / Add file from changing size on hover
 
 15-July-2010 Matias
 ^ [#19244] Change minimum Joomla requirement to 1.5.19 (Mootools 1.2)

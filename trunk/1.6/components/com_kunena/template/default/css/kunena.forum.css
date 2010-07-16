@@ -2478,9 +2478,9 @@ Multi file upload for bbcode editor
 	height: 23px; 
 	overflow: hidden;
 }
-#Kunena .kfile-input-button {
-	/*  width: 100px; 
-	position: absolute; */
+#Kunena .kfile-input-button,
+#Kunena .kfile-input-button:hover,
+#Kunena .kfile-input-button:focus {
 	top: 0px;
 	background: #F2F1EE none repeat scroll 0 0;
 	font-size: .833em !important;
@@ -2491,10 +2491,8 @@ Multi file upload for bbcode editor
 #Kunena .kfile-input-button:hover,
 #Kunena .kfile-input-button:focus {
 	background: #609FBF none repeat scroll 0 0;
-	font-size: .833em;
 	border: 1px solid #5388B4;
 	color: #FFFFFF;
-	padding: 0px 4px;
 }
 #Kunena .kattachment-remove,
 #Kunena .kattachment-insert {
@@ -3250,8 +3248,8 @@ div#kprofile-stats ul li span.krank-admin {
 
 /* Mootools Autocompleter CSS classes
 ----------------------------------------------------------------------------------------------- */
-
-#Kunena ul.autocompleter-choices {
+/* DO NOT ADD #Kunena into these rules! */
+ul.autocompleter-choices {
 	position:				absolute;
 	margin:					0;
 	padding:				0;
@@ -3266,7 +3264,7 @@ div#kprofile-stats ul li span.krank-admin {
 	z-index:				50;
 	background-color:		#fff;
 }
-#Kunena ul.autocompleter-choices li {
+ul.autocompleter-choices li {
 	position:				relative;
 	margin:					-2px 0 0 0;
 	padding:				0.2em 1.5em 0.2em 1em;
@@ -3278,18 +3276,18 @@ div#kprofile-stats ul li span.krank-admin {
 	font-size:				1em;
 	line-height:			1.5em;
 }
-#Kunena ul.autocompleter-choices li.kautocompleter-selected {
+ul.autocompleter-choices li.kautocompleter-selected {
 	background-color:		#444;
 	color:					#fff;
 }
-#Kunena ul.autocompleter-choices span.kautocompleter-queried {
+ul.autocompleter-choices span.kautocompleter-queried {
 	display:				inline;
 	float:					none;
 	font-weight:			bold;
 	margin:					0;
 	padding:				0;
 }
-#Kunena ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried {
+ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried {
 	color:					#9FCFFF;
 }
 

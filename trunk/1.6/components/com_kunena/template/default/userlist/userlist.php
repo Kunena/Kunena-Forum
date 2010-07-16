@@ -73,7 +73,7 @@ $document->addScriptDeclaration( "function validate() {
 				<form action="<?php echo CKunenaLink::GetUserlistURL(); ?>" method="post" name="adminForm">
 					<table>
 						<tr class="ksth userlist">
-							<th class="frst"> # 
+							<th class="frst"> #
 							</th>
 
 							<?php if ($this->config->userlist_online) : ?>
@@ -145,14 +145,7 @@ $document->addScriptDeclaration( "function validate() {
 
 							<?php if ($this->config->userlist_online) : ?>
 							<td class="kcol-mid">
-								<?php // online - ofline status
-								$isonline=$profile->isOnline();
-								if ($isonline && $user->showOnline ==1 ) {
-									echo CKunenaTools::showIcon ( 'konlineicon', JText::_('COM_KUNENA_MODLIST_ONLINE') );
-								} else {
-									echo CKunenaTools::showIcon ( 'kofflineicon', JText::_('COM_KUNENA_MODLIST_OFFLINE') );
-								}
-								?>
+								<span class="kicon-button kbuttononline-<?php echo $profile->isOnline(true) ?>"><span class="online-<?php echo $profile->isOnline(true) ?>"><span><?php echo $profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span>
 							</td>
 							<?php endif; ?>
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+17-July-2010 810
+# [#19288] Fix select bug IE
+
 16-July-2010 Matias
 ^ [#15886] Merged revisions 3030-3037 from /branches/1.6-xillibit-fixes-20100712
 # [#19288] Fix online/offline status in userlist

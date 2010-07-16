@@ -2288,7 +2288,7 @@ function deleteAttachment($id, $redirect, $message) {
 // Read a listing of uploaded smilies for use in the add or edit smiley code...
 //
 function collect_smilies_ranks($path) {
-  $smiley_rank_images = JFolder::Files($path,false,false,false,array('index.php'));
+  $smiley_rank_images = (array)JFolder::Files($path,false,false,false,array('index.php','index.html'));
   return $smiley_rank_images;
 }
 
@@ -2428,11 +2428,9 @@ function editsmiley($option, $id) {
 	if (KunenaError::checkDatabaseError()) return;
 	$smileycfg = $smileytmp [0];
 
-	$smileypath = smileypath ();
-	$smileypathabs = $smileypath ['abs'];
-	$smileypath = $smileypath ['live'];
-
-	$smiley_images = collect_smilies_ranks ($smileypathabs);
+	$template = KunenaFactory::getTemplate();
+	$smileypath = $template->getSmileyPath();
+	$smiley_images = collect_smilies_ranks(KPATH_SITE.DS.$smileypath);
 
 	$smiley_edit_img = '';
 
@@ -2440,7 +2438,7 @@ function editsmiley($option, $id) {
 	for($i = 0; $i < count ( $smiley_images ); $i ++) {
 		if ($smiley_images [$i] == $smileycfg ['location']) {
 			$smiley_selected = "selected=\"selected\"";
-			$smiley_edit_img = $smileypath . $smiley_images [$i];
+			$smiley_edit_img = $template->getSmileyPath($smiley_images [$i]);
 		} else {
 			$smiley_selected = "";
 		}
@@ -2451,13 +2449,9 @@ function editsmiley($option, $id) {
 }
 
 function newsmiley($option) {
-	$kunena_db = &JFactory::getDBO ();
-
-	$smileypath = smileypath ();
-	$smileypathabs = $smileypath ['abs'];
-	$smileypath = $smileypath ['live'];
-
-	$smiley_images = collect_smilies_ranks ($smileypathabs);
+	$template = KunenaFactory::getTemplate();
+	$smileypath = $template->getSmileyPath();
+	$smiley_images = collect_smilies_ranks(KPATH_SITE.DS.$smileypath);
 
 	$filename_list = "";
 	for($i = 0; $i < count ( $smiley_images ); $i ++) {
@@ -2562,11 +2556,9 @@ function showRanks($option) {
 	$ranks = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
 
-	$rankpath = rankpath ();
-
 	jimport ( 'joomla.html.pagination' );
 	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
-	html_Kunena::showRanks ( $option, $ranks, $pageNavSP, $order, $rankpath );
+	html_Kunena::showRanks ( $option, $ranks, $pageNavSP, $order );
 
 }
 
@@ -2674,6 +2666,7 @@ function showRanks($option) {
 
 
 function rankpath() {
+
 	// FIXME: deprecated, do not exist anymore
 	$rankpath ['live'] = KUNENA_URLRANKSPATH;
 	$rankpath ['abs'] = KUNENA_ABSRANKSPATH;
@@ -2685,11 +2678,9 @@ function rankpath() {
 function newRank($option) {
 	$kunena_db = &JFactory::getDBO ();
 
-	$rankpath = rankpath ();
-	$rankpathabs = $rankpath ['abs'];
-	$rankpath = $rankpath ['live'];
-
-	$rank_images = collect_smilies_ranks($rankpathabs);
+	$template = KunenaFactory::getTemplate();
+	$rankpath = $template->getRankPath();
+	$rank_images = collect_smilies_ranks(KPATH_SITE.DS.$rankpath);
 
 	$filename_list = "";
 	$i = 0;
@@ -2758,21 +2749,17 @@ function editRank($option, $id) {
 	$ranks = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
 
-	$path = rankpath ();
-	$pathabs = $path ['abs'];
-	$path = $path ['live'];
-
-	$rank_images = collect_smilies_ranks($pathabs);
+	$template = KunenaFactory::getTemplate();
+	$rankpath = $template->getRankPath();
+	$rank_images = collect_smilies_ranks(KPATH_SITE.DS.$rankpath);
 
 	$edit_img = $filename_list = '';
 
 	foreach ( $ranks as $row ) {
 		foreach ( $rank_images as $img ) {
-			$image = $path . $img;
-
 			if ($img == $row->rank_image) {
 				$selected = ' selected="selected"';
-				$edit_img = $path . $img;
+				$edit_img = $template->getRankPath($img);
 			} else {
 				$selected = '';
 			}
@@ -2785,7 +2772,7 @@ function editRank($option, $id) {
 		}
 	}
 
-	html_Kunena::editRank ( $option, $edit_img, $filename_list, $path, $row );
+	html_Kunena::editRank ( $option, $edit_img, $filename_list, $rankpath, $row );
 }
 
 //===============================

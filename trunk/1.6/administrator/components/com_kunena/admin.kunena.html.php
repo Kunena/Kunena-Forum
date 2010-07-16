@@ -3074,6 +3074,7 @@ function textCounter(field, target) {
 			// Show Smilies
 			//***************************************
 		function showsmilies($option, &$smileytmp, $pageNavSP, $smileypath) {
+			$template = KunenaFactory::getTemplate();
 		?>
 		<div class="kadmin-functitle icon-smilies"><?php echo JText::_('COM_KUNENA_EMOTICONS_EMOTICON_MANAGER'); ?></div>
 		<?php jimport('joomla.html.pane');
@@ -3124,7 +3125,7 @@ function textCounter(field, target) {
 						echo $i;
 						?>','editsmiley')"><img
 						src="<?php
-						echo kescape( JURI::Root() . CKunenaTools::getTemplateImage("emoticons/{$s->location}") )
+						echo kescape( KURL_SITE . $template->getSmileyPath($s->location) )
 						?>"
 						alt="<?php
 						echo kescape($s->location);
@@ -3178,7 +3179,7 @@ function textCounter(field, target) {
 			function update_smiley(newimage)
 			{
 				document.smiley_image.src = "<?php
-				echo $smileypath;
+				echo KURL_SITE . $smileypath;
 				?>" + newimage;
 			}
 			//-->
@@ -3196,7 +3197,7 @@ function textCounter(field, target) {
 					?>" /></td>
 					<td rowspan="3" width="50"><img name="smiley_image"
 						src="<?php
-					echo $smiley_edit_img;
+					echo KURL_SITE . $smiley_edit_img;
 					?>" border="0" alt="" /> &nbsp;</td>
 					<td rowspan="3">&nbsp;</td>
 				</tr>
@@ -3205,7 +3206,7 @@ function textCounter(field, target) {
 					echo JText::_('COM_KUNENA_EMOTICONS_URL');
 					?></td>
 					<td><select name="smiley_url"
-						onchange="update_smiley(this.options[selectedIndex].value);">
+						onchange="update_smiley(this.options[selectedIndex].value);" onmousemove="update_smiley(this.options[selectedIndex].value);">
 						<?php
 					echo $filename_list;
 					?>
@@ -3243,7 +3244,7 @@ function textCounter(field, target) {
 			function update_smiley(newimage)
 			{
 				document.smiley_image.src = "<?php
-				echo $smileypath;
+				echo KURL_SITE . $smileypath;
 				?>" + newimage;
 			}
 		//-->
@@ -3290,8 +3291,9 @@ function textCounter(field, target) {
 		<?php
 			} //end function newsmilies
 			/// Rank Administration
-			function showRanks($option, &$ranks, $pageNavSP, $order, $rankpath) {
+			function showRanks($option, &$ranks, $pageNavSP, $order) {
 			$kunena_db = &JFactory::getDBO ();
+			$template = KunenaFactory::getTemplate();
 		?>
 		<div class="kadmin-functitle icon-ranks"><?php echo JText::_('COM_KUNENA_RANK_MANAGER'); ?></div>
 		<?php jimport('joomla.html.pane');
@@ -3352,7 +3354,7 @@ function textCounter(field, target) {
 						echo $id;
 						?>','editRank')"><img
 						src="<?php
-						echo kescape(JURI::Root() . CKunenaTools::getTemplateImage("ranks/{$row->rank_image}"))
+						echo kescape(KURL_SITE . $template->getRankPath($row->rank_image))
 						?>"
 						alt="<?php
 						echo kescape($row->rank_image);
@@ -3412,14 +3414,15 @@ function textCounter(field, target) {
 		</dl>
 		<?php
 			} //end function showRanks
-			function newRank($option, $filename_list, $rankpath) {
+
+		function newRank($option, $filename_list, $rankpath) {
 		?>
 		<script language="javascript" type="text/javascript">
 			<!--
 			function update_rank(newimage)
 			{
 				document.rank_image.src = "<?php
-				echo $rankpath;
+				echo KURL_SITE . $rankpath;
 				?>" + newimage;
 			}
 			//-->
@@ -3476,7 +3479,7 @@ function textCounter(field, target) {
 			function update_rank(newimage)
 			{
 				document.rank_image.src = "<?php
-				echo $path;
+				echo KURL_SITE . $path;
 				?>" + newimage;
 			}
 			//-->
@@ -3498,13 +3501,13 @@ function textCounter(field, target) {
 					echo JText::_('COM_KUNENA_RANKSIMAGE');
 					?></td>
 					<td><select name="rank_image"
-						onchange="update_rank(this.options[selectedIndex].value);">
+						onchange="update_rank(this.options[selectedIndex].value);" onmousemove="update_rank(this.options[selectedIndex].value);">
 						<?php
 					echo $filename_list;
 					?>
 					</select> &nbsp; <img name="rank_image"
 						src="<?php
-					echo $edit_img;
+					echo KURL_SITE . $edit_img;
 					?>" border="0" alt="" /></td>
 				</tr>
 				<tr>

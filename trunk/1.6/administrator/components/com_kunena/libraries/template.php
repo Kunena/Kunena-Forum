@@ -33,6 +33,9 @@ class KunenaTemplate extends JObject
 	public $name = null;
 	public $params = null;
 
+	protected $smileyPath = array();
+	protected $rankPath = array();
+
 	/**
 	* Constructor
 	*
@@ -60,6 +63,32 @@ class KunenaTemplate extends JObject
 		foreach ($xml['_default']->children() as $param)  {
 			if ($param->attributes('type') != 'spacer') $this->params->def($param->attributes('name'), $param->attributes('default'));
 		}
+	}
+
+	public function getPath() {
+		return "template/{$this->name}";
+	}
+
+	public function getSmileyPath($filename='') {
+		if (!isset($this->smileyPath[$filename])) {
+			$path = "template/{$this->name}/images/emoticons/{$filename}";
+			if (($filename && !is_file(KPATH_SITE . $path)) || !is_dir(KPATH_SITE . $path)) {
+				$path = "template/default/images/emoticons/{$filename}";
+			}
+			$this->smileyPath[$filename] = $path;
+		}
+		return $this->smileyPath[$filename];
+	}
+
+	public function getRankPath($filename='') {
+		if (!isset($this->rankPath[$filename])) {
+			$path = "template/{$this->name}/images/ranks/{$filename}";
+			if (($filename && !is_file(KPATH_SITE . $path)) || !is_dir(KPATH_SITE . $path)) {
+				$path = "template/default/images/ranks/{$filename}";
+			}
+			$this->rankPath[$filename] = $path;
+		}
+		return $this->rankPath[$filename];
 	}
 
 	/**

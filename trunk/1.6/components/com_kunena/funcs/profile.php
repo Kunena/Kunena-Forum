@@ -35,6 +35,10 @@ class CKunenaProfile {
 		}
 		if ($this->user->id == 0) return;
 		$this->allow = true;
+
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
+
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
 		if ($this->profile->posts === null) {
 			$this->profile->save();
@@ -47,9 +51,8 @@ class CKunenaProfile {
 		if ($this->config->userlist_name) $this->name = $this->user->name . ' (' . $this->name . ')';
 		if ($this->config->showuserstats) {
 			if ($this->config->userlist_usertype) $this->usertype = $this->user->usertype;
-			$rank = $this->profile->getRank();
-			if ($rank->rank_title) $this->rank_title = $rank->rank_title;
-			if ($rank->rank_image) $this->rank_image = KUNENA_URLRANKSPATH . $rank->rank_image;
+			$this->rank_image = $this->profile->getRank (0, 'image');
+			$this->rank_title = $this->profile->getRank (0, 'title');
 			$this->posts = $this->profile->posts;
 		}
 		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
@@ -88,9 +91,6 @@ class CKunenaProfile {
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan = $this->banInfo->canBan();
 		if ( $this->config->showbannedreason ) $this->banReason = $this->banInfo->reason_public;
-
-		$template = KunenaFactory::getTemplate();
-		$this->params = $template->params;
 	}
 
 	/**

@@ -41,7 +41,8 @@ Kunena 1.6.0-BETA1
 # [#19288] Hide Birthdate from the message when its unknown
 # [#19288] Ranks Admin: fixed missing rank icons if template does not have ranks directory
 # [#19288] Smiley Admin: fixed missing smiley icons if template does not have ranks directory
-^ [#16390] Move lancguage credits translation into top of the file with a comment how to fill it
+^ [#16390] Move language credits translation into top of the file with a comment how to fill it
+# [#19288] Profile page: rank icon was missing if template did not have ranks directory
 
 15-July-2010 Matias
 ^ [#19244] Change minimum Joomla requirement to 1.5.19 (Mootools 1.2)

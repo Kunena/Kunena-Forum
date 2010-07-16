@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 // Minimum version requirements
 DEFINE('KUNENA_MIN_PHP', '5.2.3');
 DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
-DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.18' );
+DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.19' );
 
 jimport ( 'joomla.application.component.model' );
 
@@ -276,10 +276,16 @@ class KunenaModelInstall extends JModel {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == 1.5) {
-			$file = 'plgSystemMTUpgrade.zip';
+			$query = "UPDATE #__plugins SET published='1' WHERE element='mtupgrade'";
+			$this->db->setQuery ( $query );
+			$this->db->query ();
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_MOOTOOLS12'), true);
+			/* $file = 'plgSystemMTUpgrade.zip';
 			if (is_file ( $path . DS . $file )) {
 				$this->installPlugin ( $path, $file, 'mtupgrade' );
-			}
+			}*/
 		}
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );

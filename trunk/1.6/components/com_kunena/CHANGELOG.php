@@ -36,6 +36,10 @@ Kunena 1.6.0-BETA1
 16-July-2010 Matias
 ^ [#15886] Merged revisions 3030-3037 from /branches/1.6-xillibit-fixes-20100712
 
+15-July-2010 Matias
+^ [#19244] Change minimum Joomla requirement to 1.5.19 (Mootools 1.2)
+- [#19380] Remove Mootools plugin archive; we do not need it anymore
+
 15-July-2010 Xillibit
 ^ [#19288] Hide backend submenu, because of we have our own navigation
 

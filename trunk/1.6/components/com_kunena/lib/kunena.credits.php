@@ -17,8 +17,6 @@
 defined( '_JEXEC' ) or die();
 
 $kunena_config = KunenaFactory::getConfig ();
-
-// Team credits page is not translated
 ?>
 <div class="kblock kcredits">
 	<div class="kheader">
@@ -57,7 +55,7 @@ $kunena_config = KunenaFactory::getConfig ();
                     	 <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?>
 						<br />
                     	<br />
-                    	<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?> Lavsteph (french <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Alakentu (spanish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), kmilos (serbian <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>), Mortti (finnish <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_TRANSLATION'); ?>)
+                    	<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?>
                     	</div></td>
                     </tr>
                     <tr valign="top">

@@ -648,7 +648,7 @@ class CKunenaProfile {
 			KunenaError::checkDatabaseError();
 		}
 
-		//$this->_app->redirect ( CKunenaLink::GetProfileURL($this->profile->userid, false) );
+		$this->_app->redirect ( CKunenaLink::GetProfileURL($this->profile->userid, false) );
 	}
 
 	function cancel()

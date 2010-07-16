@@ -37,12 +37,17 @@ abstract class KunenaAccess {
 		// hold = 1: unapproved
 		// hold = 2: deleted
 		$user = KunenaFactory::getUser($user);
+		$config = KunenaFactory::getConfig ();
 
 		$hold [] = 0;
-		if ($this->isModerator ( $user->userid, $catid ))
+		if ($this->isModerator ( $user->userid, $catid )) {
 			$hold [] = 1;
-		if ($this->isAdmin ( $user->userid, $catid ))
+		}
+		if ($this->isAdmin ( $user->userid, $catid )
+			|| ($config->mod_see_deleted && $this->isModerator( $user->userid, $catid ))) {
 			$hold [] = 2;
+			$hold [] = 3;
+	}
 		if ($string) $hold = implode ( ',', $hold );
 		return $hold;
 	}

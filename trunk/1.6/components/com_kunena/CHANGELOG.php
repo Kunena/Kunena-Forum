@@ -33,6 +33,19 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+16-July-2010 Matias
+^ [#15886] Merged revisions 3030-3037 from /branches/1.6-xillibit-fixes-20100712
+
+15-July-2010 Xillibit
+^ [#19288] Hide backend submenu, because of we have our own navigation
+
+14-July-2010 Xillibit
+# [#19288] Little change on translation on credit page
+# [#19288] Fix profile / ban to have enough room to have complete expire date and time
+# [#19288] Fix Kunena installer creating non-UTF8 tables in some servers
++ [#19288] Add remember me input field in login box
++ [#19288] Add configuration setting to let moderators to see/restore deleted messages in frontend
+
 14-July-2010 Matias
 + [#16390] Add Kunena 1.5 to 1.6 language converter into scripts/
 # [#19288] Fixed editor to act like the old one when there was no selection
@@ -40,6 +53,10 @@ Kunena 1.6.0-BETA1
 # [#19288] After creating/editing a message, show message that was just created or edited (if possible)
 # [#19288] After moderating a message, show message that was just moved
 # [#19288] After approving/deleting/restoring a message, show that message (if possible)
+
+13-July-2010 Xillibit
+^ [#19288] Update french translation
+# [#19288] On edit template, the path for language file (xx-XX.tpl_default.ini) is incorrect
 
 13-July-2010 Matias
 ^ [#16390] Updated Spanish (thanks Alakentu) and Russian (thanks ZARKOS) languages

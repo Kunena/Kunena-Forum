@@ -39,6 +39,10 @@ div.icon-48-kunena {
 	visibility: hidden;
 }
 
+#submenu-box {
+	display: none !important;
+}
+
 #kadmin {
 	text-align: left;
 	width: 100%;
@@ -1421,6 +1425,15 @@ table.kadmin-stat caption {
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPCIICONS_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['mod_see_deleted'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED_DESC') ?>
 						</td>
 					</tr>
 				</table>

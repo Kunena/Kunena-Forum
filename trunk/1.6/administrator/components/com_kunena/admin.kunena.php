@@ -728,7 +728,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
 		}
 		$lang =& JFactory::getLanguage();
-		$lang->load( 'tpl_'.$template, JPATH_ADMINISTRATOR );
+		$lang->load( 'tpl_'.$template, KUNENA_PATH_TEMPLATE.DS.$template );
 		$ini	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
 		$xml	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'template.xml';
 		$row	= parseXMLTemplateFile($tBaseDir, $template);
@@ -1576,6 +1576,8 @@ function showConfig($option) {
 	$lists['version_check'] = JHTML::_('select.genericlist', $yesno, 'cfg_version_check', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->version_check);
 
 	$lists['showpopthankysoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankysoustats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopthankysoustats);
+
+	$lists ['mod_see_deleted'] =JHTML::_('select.genericlist', $yesno, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }

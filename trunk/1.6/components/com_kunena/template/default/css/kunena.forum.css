@@ -2914,7 +2914,7 @@ MODERATOR PAGE
 	width: 35%;
 }
 #Kunena table#kaddban td.kcol-mid textarea {
-	width: 250px;
+	width: 80%;
 	height: 50px;
 }
 #Kunena table#kforumsearch th {
@@ -3052,7 +3052,7 @@ div#kprofile-stats ul li span.krank-admin {
 	display:inline-block;
 	float:left;
 	margin-right:10px;
-	width:75%;
+	width:85%;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}
 #Kunena div.kprofile-rightcol1 { 

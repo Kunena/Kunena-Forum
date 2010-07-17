@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+17-July-2010 Matias
+# [#19288] Move configuration setting "Allow to moderator to view and restore deleted messages" into security tab
+# [#19288] Admin: move inline css into its own file (media/css/admin.css) for easier styling
+# [#19288] My Topics does not show latest postings from user
+# [#19288] User Points/Medals are not shown in the profile page
+# [#19288] AUP integration is not always using API
+
 16-July-2010 fxstein
 - [#19064] Remove google maps API key setting - not needed for API V3
 

@@ -53,7 +53,7 @@ class CKunenaViewMessage {
 	public $profilelink = null;
 	public $personaltext = null;
 	public $signature = null;
-	public $aupmedals = null;
+	public $usermedals = null;
 	public $thankyoubutton = null;
 
 	public $attachments = array();
@@ -171,21 +171,13 @@ class CKunenaViewMessage {
 		}
 
 		if ($this->config->showuserstats) {
-			$this->userposts = $this->profile->posts;
 			if ($this->config->userlist_usertype) $this->usertype = $this->profile->getType($this->catid);
 			$this->userrankimage = $this->profile->getRank ($this->catid, 'image');
 			$this->userranktitle = $this->profile->getRank ($this->catid, 'title');
+			$this->userposts = $this->profile->posts;
+			$this->userpoints = $integration->getUserPoints($this->profile->userid);
+			$this->usermedals = $integration->getUserMedals($this->profile->userid);
 		}
-
-		// Start Integration AlphaUserPoints
-		// ****************************
-		$api_AUP = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-		if ($this->config->alphauserpoints && file_exists ( $api_AUP )) {
-			$this->db->setQuery ( "SELECT points FROM #__alpha_userpoints WHERE `userid`='" . ( int ) $message->userid . "'" );
-			$this->userpoints = $this->db->loadResult ();
-			KunenaError::checkDatabaseError();
-		}
-		// End Integration AlphaUserPoints
 
 		//karma points and buttons
 		if ($this->config->showkarma && $this->profile->userid) {
@@ -259,9 +251,6 @@ class CKunenaViewMessage {
 				}
 			}
 		}
-
-		$profile = KunenaFactory::getProfile();
- 		$this->aupmedals = $profile->getUserMedals($this->profile->userid);
 
 		CKunenaTools::loadTemplate('/view/message.php', false, $this->templatepath);
 	}

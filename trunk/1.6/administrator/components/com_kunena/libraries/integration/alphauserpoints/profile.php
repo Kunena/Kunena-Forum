@@ -53,14 +53,26 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		if ($userid == 0) return false;
 
 		if(!defined("_AUP_MEDALS_LIVE_PATH")) {
-			define('_AUP_MEDALS_LIVE_PATH', JURI::base(true) .
-			'/components/com_alphauserpoints/assets/images/awards/icons/');
+			define('_AUP_MEDALS_LIVE_PATH', JURI::base(true) . '/components/com_alphauserpoints/assets/images/awards/icons/');
 		}
 
-		$aupmedals = '';
 		$aupmedals = AlphaUserPointsHelper::getUserMedals ( '', $userid ) ;
+		$medals = array();
+		foreach ( $aupmedals as $medal ) {
+			$medals[] = '<img src="' . _AUP_MEDALS_LIVE_PATH .$this->escape($medal->icon). '" alt="'.$this->escape($medal->rank).'" title="'.$this->escape($medal->rank).'" />';
+		}
 
-		return $aupmedals;
+		return $medals;
+	}
+
+	public function getUserPoints($userid) {
+		if ($userid == 0) return false;
+		$_db = &JFactory::getDBO ();
+
+		$_db->setQuery ( "SELECT points FROM #__alpha_userpoints WHERE `userid`='" . ( int ) $userid . "'" );
+		$userpoints = $_db->loadResult ();
+		KunenaError::checkDatabaseError();
+		return $userpoints;
 	}
 
 	public function getProfileView() {
@@ -80,4 +92,10 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 	}
 
 	public function showProfile($userid, &$msg_params) {}
+
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
 }

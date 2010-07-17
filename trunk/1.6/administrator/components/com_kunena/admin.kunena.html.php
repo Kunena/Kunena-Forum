@@ -25,265 +25,9 @@ defined( '_JEXEC' ) or die();
 class html_Kunena {
 	// Begin: HEADER FUNC
 	function showFbHeader() {
+		$this->document = JFactory::getDocument();
+		$this->document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 		?>
-<style type="text/css">
-div.header {
-	padding-left:148px !important;
-}
-div.icon-48-kunena {
-	background-image:url(components/com_kunena/images/kunena-logo-48.png);
-}
-
-.hideable {
-	position: relative;
-	visibility: hidden;
-}
-
-#submenu-box {
-	display: none !important;
-}
-
-#kadmin {
-	text-align: left;
-	width: 100%;
-	min-height: 500px;
-}
-
-#kadmin-header {
-	clear: both;
-	width: 100%;
-	margin-bottom: 15px;
-}
-
-.kadmin-container {
-	width: 100%;
-}
-.kadmin-left {
-	width: 190px;
-	float:left;
-	border-right: 1px solid #ccc;
-	margin-right: 20px;
-	position: absolute;
-}
-
-#kadmin table {
-	margin: 0;
-	padding 0;
-	width:100%;
-	border: collapse;
-}
-#kadmin table td {
-	padding 5px;
-}
-
-/* Small icons  */
-a.icon-cp-sm { background: url('components/com_kunena/images/icons/icon_controlpanel.png') 5px 5px no-repeat; }
-a.icon-config-sm { background: url('components/com_kunena/images/icons/icon_config.png') 5px 5px no-repeat; }
-a.icon-adminforum-sm { background: url('components/com_kunena/images/icons/icon_forumadmin.png') 5px 5px no-repeat; }
-a.icon-profiles-sm { background: url('components/com_kunena/images/icons/icon_useradmin.png') 5px 5px no-repeat; }
-a.icon-smilies-sm{ background: url('components/com_kunena/images/icons/icon_smilies.png') 5px 5px no-repeat; }
-a.icon-ranks-sm { background: url('components/com_kunena/images/icons/icon_ranks.png') 5px 5px no-repeat; }
-a.icon-files-sm { background: url('components/com_kunena/images/icons/icon_uploadedfiles.png') 5px 5px no-repeat; }
-a.icon-images-sm { background: url('components/com_kunena/images/icons/icon_uploadedimages.png') 5px 5px no-repeat; }
-a.icon-editcss-sm { background: url('components/com_kunena/images/icons/icon_editcss.png') 5px 5px no-repeat; }
-a.icon-prune-sm { background: url('components/com_kunena/images/icons/icon_pruneforums.png') 5px 5px no-repeat; }
-a.icon-syncusers-sm { background: url('components/com_kunena/images/icons/icon_syncusers.png') 5px 5px no-repeat; }
-a.icon-recount-sm { background: url('components/com_kunena/images/icons/icon_recountstats.png') 5px 5px no-repeat; }
-a.icon-trash-sm { background: url('components/com_kunena/images/icons/icon_trash.png') 5px 5px no-repeat; }
-a.icon-stats-sm { background: url('components/com_kunena/images/icons/icon_stats.png') 5px 5px no-repeat; }
-a.icon-systemreport-sm { background: url('components/com_kunena/images/icons/icon_reportconfig.png') 5px 5px no-repeat; }
-a.icon-support-sm { background: url('components/com_kunena/images/icons/icon_supportsite.png') 5px 5px no-repeat; }
-a.icon-template-sm { background: url('components/com_kunena/images/icons/icon_templatemanager.png') 5px 5px no-repeat; }
-
-/* Large icons */
-div.kadmin-functitle.icon-cpanel { background: url('components/com_kunena/images/kcontrolpanel.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-config { background: url('components/com_kunena/images/kconfig.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-adminforum { background: url('components/com_kunena/images/kforumadm.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-profiles { background: url('components/com_kunena/images/kuser.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-smilies{ background: url('components/com_kunena/images/ksmiley.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-ranks { background: url('components/com_kunena/images/kranks.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-files { background: url('components/com_kunena/images/kfiles.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-images { background: url('components/com_kunena/images/kimages.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-editcss { background: url('components/com_kunena/images/kcss.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-prune { background: url('components/com_kunena/images/ktable.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-syncusers { background: url('components/com_kunena/images/kusers.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-trash { background: url('components/com_kunena/images/trash.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-stats { background: url('components/com_kunena/images/stats.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-systemreport { background: url('components/com_kunena/images/report_conf.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-support { background: url('components/com_kunena/images/ktechsupport.png') 5px 5px no-repeat; }
-div.kadmin-functitle.icon-template { background: url('components/com_kunena/images/templatemanager.png') 5px 5px no-repeat; }
-
-div.kadmin-functitle.no-icon { text-indent: 5px !important; }
-
-table.adminform,
-form.adminform{
-	margin-top: 10px !important;
-}
-
-#kadmin-menu {
-	border-top: 1px solid #ccc;
-}
-
-#kadmin-menu a {
-	display: block;
-	font-size: 11px;
-	border-left: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	height: 25px;
-	line-height: 25px;
-	text-indent: 30px;
-}
-
-.kadmin-mainmenu {
-	background: #FBFBFB;
-	padding: 3px;
-}
-
-.kadmin-activemenu {
-	background: #fff;
-	padding: 5px;
-}
-
-.kadmin-submenu {
-	background: #fff;
-	padding-left: 10px;
-	padding: 5px 5px 5px 15px;
-}
-
-.kadmin-right {
-	background: #fff;
-	padding: 5px 5px 5px 220px;
-}
-
-.kadmin-footer {
-	clear:both;
-	font-size: 10px;
-	text-align: right;
-	padding: 5px;
-	background: #FBFBFB;
-}
-
-.kadmin-functitle {
-	font-size: 16px;
-	text-align: left;
-	padding: 5px;
-	border: 1px solid #CCC;
-	font-weight: bold;
-	clear: both;
-	display: block;
-	height: 48px;
-	line-height: 44px;
-	text-indent: 60px;
-}
-
-.kadmin-funcsubtitle {
-	font-size: 14px;
-	text-align: left;
-	padding: 5px;
-	border-bottom: 3px solid #7F9DB9;
-	font-weight: bold;
-	color: #7F9DB9;
-	margin: 10px 0 10px 0;
-}
-
-.krow0 td {
-	padding: 8px 5px;
-	text-align: left;
-	border-bottom: 1px dotted #ccc;
-}
-
-.krow1 td {
-	padding: 8px 5px;
-	text-align: left;
-	border-bottom: 1px dotted #ccc;
-}
-
-td.kadmin-tdtitle {
-	font-weight: bold;
-	padding-left: 10px;
-	color: #666;
-}
-
-#kcongifcover fieldset {
-	border: 1px solid #CFDCEB;
-}
-
-#kcongifcover fieldset legend {
-	color: #666;
-}
-
-table.kadmin-sort td {
-	height: 35px;
-}
-
-td.kadmin-paging {
-	margin: 0 auto;
-	background: #F3F3F3 !important;
-}
-
-select#pub_access,
-select#latestcategory,
-select#kforums {
-	height: 110px;
-}
-select#admin_access {
-	height: 70px;
-}
-select#kforums {
-	width: 200px;
-}
-div.tpl-thumbnail img {
-	float:left;
-	margin-bottom:10px;
-	border:4px solid #ccc;
-	padding:2px
-	max-width: 300px;
-}
-div.tpl-desc {
-	clear: left;
-}
-
-.kadmin-statscover {
-	padding:0px;
-}
-table.kadmin-stat {
-	background-color:#FFFFFF;
-	border:1px solid #ddd;
-	padding:1px;
-	width:100%;
-}
-table.kadmin-stat th {
-	background:#EEE;
-	border-bottom:1px solid #CCC;
-	border-top:1px solid #EEE;
-	color:#666;
-	font-size:11px;
-	padding:3px 4px;
-	text-align:left;
-}
-table.kadmin-stat td {
-	font-size:11px;
-	line-height:140%;
-	padding:4px;
-	text-align:left;
-}
-table.kadmin-stat caption {
-	clear:both;
-	font-size:14px;
-	font-weight:bold;
-	margin:10px 0 2px 0;
-	padding:2px;
-	text-align:left;
-}
-table.kadmin-stat .col1 {
-	background-color:#F1F3F5;
-}
-table.kadmin-stat .col2 {
-	background-color: #FBFBFB;
-}
-
-</style>
-
 <!--[if IE]>
 <style type="text/css">
 
@@ -295,8 +39,6 @@ table.kadmin-stat caption {
 
 </style>
 <![endif]-->
-
-
 
 <div id="kadmin">
 	<div class="kadmin-left">
@@ -1427,15 +1169,6 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPCIICONS_DESC') ?>
 						</td>
 					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $lists ['mod_see_deleted'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED_DESC') ?>
-						</td>
-					</tr>
 				</table>
 			</fieldset>
 			<fieldset>
@@ -1631,6 +1364,15 @@ table.kadmin-stat caption {
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_DELETEMESSAGE_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['mod_see_deleted'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_MOD_SEE_DELETED_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">

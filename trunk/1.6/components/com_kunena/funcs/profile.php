@@ -36,6 +36,7 @@ class CKunenaProfile {
 		if ($this->user->id == 0) return;
 		$this->allow = true;
 
+		$integration = KunenaFactory::getProfile();
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 
@@ -54,6 +55,8 @@ class CKunenaProfile {
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
 			$this->posts = $this->profile->posts;
+			$this->userpoints = $integration->getUserPoints($this->profile->userid);
+			$this->usermedals = $integration->getUserMedals($this->profile->userid);
 		}
 		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;

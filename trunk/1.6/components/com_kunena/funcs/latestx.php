@@ -187,12 +187,12 @@ class CKunenaLatestX {
 			WHERE userid={$this->db->Quote($this->user->id)} AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})
 			GROUP BY thread";
 		if ($fav) $subquery[] = "SELECT thread, 1 AS fav, 0 AS sub FROM #__kunena_favorites WHERE userid={$this->db->Quote($this->user->id)}";
-		if ($sub)  $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__kunena_subscriptions WHERE userid={$this->db->Quote($this->user->id)}";
+		if ($sub) $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__kunena_subscriptions WHERE userid={$this->db->Quote($this->user->id)}";
 		if (empty($subquery)) return;
 		$subqueries = implode("\n	UNION ALL \n", $subquery);
 
 		$query = "SELECT COUNT(DISTINCT m.thread) FROM ({$subqueries}) AS t
-		INNER JOIN #__kunena_messages AS m ON m.id=t.thread
+		INNER JOIN #__kunena_messages AS m ON m.thread=t.thread
 		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})";
 
 		$this->db->setQuery ( $query );
@@ -203,10 +203,11 @@ class CKunenaLatestX {
 		else if ($this->func == 'usertopics') $this->order = "mylastid DESC";
 		else $this->order = "lastid DESC";
 
-		$query = "SELECT m.thread, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->db->Quote($this->user->id)}, m.id, 0)) AS mylastid, MAX(t.fav) AS myfavorite, MAX(t.sub) AS mysubscribe FROM ({$subqueries}) AS t
-		INNER JOIN #__kunena_messages AS m ON m.id=t.thread
+		$query = "SELECT m.thread, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->db->Quote($this->user->id)}, m.id, 0)) AS mylastid, MAX(t.fav) AS myfavorite, MAX(t.sub) AS mysubscribe
+		FROM ({$subqueries}) AS t
+		INNER JOIN #__kunena_messages AS m ON m.thread=t.thread
 		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
-		GROUP BY thread
+		GROUP BY m.thread
 		ORDER BY {$this->order}";
 
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );

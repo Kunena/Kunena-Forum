@@ -63,10 +63,10 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 		</li>
 		<?php endif ?>
 		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
-		<?php if ( $this->aupmedals ) : ?>
-			<li class="kpost-userposts">
-			<?php foreach ( $this->aupmedals as $medal ) : ?>
-			<?php echo '<img src="' . _AUP_MEDALS_LIVE_PATH.$this->escape($medal->icon). '" alt="'.$this->escape($medal->rank).'" title="'.$this->escape($medal->rank).'" />'; ?>
+		<?php if ( $this->usermedals ) : ?>
+			<li class="kpost-usermedals">
+			<?php foreach ( $this->usermedals as $medal ) : ?>
+				<?php echo $medal; ?>
 			<?php endforeach ?>
 			</li>
 		<?php endif ?>

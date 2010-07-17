@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+17-July-2010 810
+# [#19288] Fix select bug IE
+^ [#19388] w00t.png fix in spoiler
+
 17-July-2010 Matias
 # [#19288] Move configuration setting "Allow to moderator to view and restore deleted messages" into security tab
 # [#19288] Admin: move inline css into its own file (media/css/admin.css) for easier styling
@@ -47,6 +51,7 @@ Kunena 1.6.0-BETA1
 # [#19288] Administrator: Create menu now destroys Kunena Menu and creates it from scratch
 # [#19288] Administrator, Create menu: Do not modify Forum in main menu if it already exists
 # [#19288] Installer: Use English if current language haven't been fully translated
+^ [#15886] Merged revisions 3045-3049 from /branches/1.6-810-bugfixes-16-07-2010
 
 16-July-2010 fxstein
 - [#19064] Remove google maps API key setting - not needed for API V3

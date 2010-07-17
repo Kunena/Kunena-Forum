@@ -1515,11 +1515,7 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-left div,
 #Kunena td.kmessage-top div,
 #Kunena td.kmessage-bottom div {
-	display: table;
-	table-layout: fixed;
 	width: 100%;
-	padding: 10px 0 10px 0;
-	margin-top: 5px;
 }
 #Kunena div.kmsgbody div.kmsgtext {
 	overflow: auto;
@@ -1529,13 +1525,6 @@ PX		EM			PCT			PT
 	max-width:100%;
 	max-height: 800px;
 }
-#Kunena td.kmessage-right div {
-	display: table;
-	table-layout:fixed;
-	width: 100%;
-	word-wrap:break-word;
-}
-
 #Kunena div.kmsgattach {
 	overflow: hidden;
 	padding: 8px;

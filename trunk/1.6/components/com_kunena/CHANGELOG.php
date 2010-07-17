@@ -39,6 +39,7 @@ Kunena 1.6.0-BETA1
 # [#19288] My Topics does not show latest postings from user
 # [#19288] User Points/Medals are not shown in the profile page
 # [#19288] AUP integration is not always using API
+# [#19288] Fix regression: BBCode and smileys do not work in IE7-9
 
 16-July-2010 fxstein
 - [#19064] Remove google maps API key setting - not needed for API V3

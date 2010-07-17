@@ -36,15 +36,15 @@ Element.implement({
 		if(Browser.Engine.trident) {
 			this.focus();
 			var range = document.selection.createRange();
-			range.text = newtext;
+			range.text = wrapperLeft + newtext + wrapperRight;
 			if(isLast) {
 				range.select();
 				this.scrollTop = scroll_top;
 			}
 		}
 		else {
-			originalStart = this.selectionStart;
-			originalEnd = this.selectionEnd;
+			var originalStart = this.selectionStart;
+			var originalEnd = this.selectionEnd;
 			this.value = this.get('value').substring(0, originalStart) + wrapperLeft + newtext + wrapperRight + this.get('value').substring(originalEnd);
 			if(isLast == false) {
 				this.setSelectionRange(originalStart + wrapperLeft.length, originalStart + wrapperLeft.length + newtext.length);

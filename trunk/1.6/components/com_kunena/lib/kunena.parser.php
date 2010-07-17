@@ -844,12 +844,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					$map_maxwidth = (int) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
 					$map_maxheight = (int) ($kunena_config->rteheight); // max. display size
 
-					if (empty($kunena_config->googlemapsapikey)) {
-						$tag_new = '<a href="http://maps.google.com/?q='.$between.'" rel="nofollow" target="_blank">'.$between.'</a>';
-					} else {
-						$kmap = & KunenaGoogleMaps::getInstance ();
-						$tag_new = $kmap->addMap($between);
-					}
+					$kmap = & KunenaGoogleMaps::getInstance ();
+					$tag_new = $kmap->addMap($between);
 
 					return TAGPARSER_RET_REPLACED;
 				}

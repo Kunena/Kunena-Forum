@@ -2048,17 +2048,6 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_HIGHLIGHTCODE_DESC') ?>
 						</td>
 					</tr>
-							<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_GOOGLEMAPSAPIKEY') ?>
-						</td>
-								<td align="left" valign="top"><input type="text"
-							name="cfg_googlemapsapikey"
-							value="<?php echo kescape($kunena_config->googlemapsapikey);
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_GOOGLEMAPSAPIKEY_DESC') ?>
-						</td>
-					</tr>
-
 				</table>
 			</fieldset>
 			</dd>

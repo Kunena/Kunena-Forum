@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+16-July-2010 fxstein
+- [#19064] Remove google maps API key setting - not needed for API V3
+
 16-July-2010 Matias
 ^ [#15886] Merged revisions 3030-3037 from /branches/1.6-xillibit-fixes-20100712
 # [#19288] Fix online/offline status in userlist

@@ -40,6 +40,13 @@ Kunena 1.6.0-BETA1
 # [#19288] User Points/Medals are not shown in the profile page
 # [#19288] AUP integration is not always using API
 # [#19288] Fix regression: BBCode and smileys do not work in IE7-9
+# [#19288] Installer: Translate all menu items (move code into installer)
+# [#19288] Installer: Simplify menu creation logic in J1.5
+# [#19288] Menu: Update Kunena Menu to use real views instead of funcs
+# [#19288] Menu: Do not add menu item for "Welcome"
+# [#19288] Administrator: Create menu now destroys Kunena Menu and creates it from scratch
+# [#19288] Administrator, Create menu: Do not modify Forum in main menu if it already exists
+# [#19288] Installer: Use English if current language haven't been fully translated
 
 16-July-2010 fxstein
 - [#19064] Remove google maps API key setting - not needed for API V3

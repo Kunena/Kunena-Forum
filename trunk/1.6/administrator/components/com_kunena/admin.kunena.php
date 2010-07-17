@@ -481,7 +481,17 @@ switch ($task) {
 //###########################################
 
 	case "createmenu" :
-		CKunenaTools::createMenu();
+		$lang = JFactory::getLanguage();
+
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
+		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
+		$lang->load('com_kunena.install',KPATH_ADMIN);
+
+		require_once(KPATH_ADMIN . '/install/model.php');
+		$installer = new KunenaModelInstall();
+		$installer->deleteMenu();
+		$installer->createMenu();
 
 		$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_MENU_CREATED') );
 		// No break! Need to display the control panel

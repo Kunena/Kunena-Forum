@@ -24,20 +24,14 @@ class Com_KunenaInstallerScript {
 	}
 
 	function uninstall($parent) {
-		// Kunena wide defines
-		require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');
-		require_once (KUNENA_PATH .DS. 'class.kunena.php');
-
+		require_once (JPATH_ADMINISTRATOR .DS. 'components' .DS. 'com_kunena' .DS. 'api.php');
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', JPATH_COMPONENT);
+		$lang->load('com_kunena.install');
+		$lang->load('com_kunena.install',KPATH_ADMIN);
 
-		jimport ( 'joomla.version' );
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.5) {
-			CKunenaTools::DeleteMenuJ15();
-		} else {
-			CKunenaTools::DeleteMenuJ16();
-		}
+		require_once(KPATH_ADMIN . '/install/model.php');
+		$installer = new KunenaModelInstall();
+		$installer->deleteMenu();
 	}
 
 	function preflight($type, $parent) {

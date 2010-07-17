@@ -25,8 +25,8 @@ defined( '_JEXEC' ) or die();
 class html_Kunena {
 	// Begin: HEADER FUNC
 	function showFbHeader() {
-		$this->document = JFactory::getDocument();
-		$this->document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+		$document = JFactory::getDocument();
+		$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 		?>
 <!--[if IE]>
 <style type="text/css">

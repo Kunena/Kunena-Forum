@@ -26,7 +26,9 @@ class KunenaControllerInstall extends JController {
 
 	public function __construct() {
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.install');
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
+		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 		$lang->load('com_kunena.install',KPATH_ADMIN);
 
 		parent::__construct ();

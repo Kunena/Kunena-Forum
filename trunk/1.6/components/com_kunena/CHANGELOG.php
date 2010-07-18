@@ -34,7 +34,7 @@ Legend:
 Kunena 1.6.0-BETA1
 
 18-July-2010 @quila
-^ [#16390] Update serbian and serbian latin languages (install)
+^ [#16390] Update serbian and serbian latin languages
 
 18-July-2010 Xillibit
 ^ [#19388] Update french language file
@@ -42,7 +42,7 @@ Kunena 1.6.0-BETA1
 18-July-2010 Matias
 # [#19288] Simplify online status logic and move the code into KunenaUsers
 # [#19288] Fix bug in online stats showing too many users as being online
-^ [#15886] Merged revisions 3058-3059 from /branches/1.6-dragan-update-18.07.2010
+^ [#15886] Merged revisions 3058-3066 from /branches/1.6-dragan-update-18.07.2010
 + [#16390] Add German locale de-DE (thanks LDA)
 + [#16390] Add Italian locate it-IT (thanks rinuccio sp)
 ^ [#16390] Languages updated: es-ES (Alakentu), fi-FI (Mortti), ru-RU (ZARKOS)

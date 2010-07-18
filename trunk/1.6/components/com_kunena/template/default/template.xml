@@ -22,6 +22,7 @@
 		<param name="buttonIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_BUTTON_SET" description="COM_KUNENA_TEMPLATE_BUTTON_SET_DESC">
 			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 			<option value="dtp2nl">dtp2.nl</option>
+			<option value="dtp2nl-highblack">dtp2.nl High Contrast</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">

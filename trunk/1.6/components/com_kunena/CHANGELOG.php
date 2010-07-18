@@ -46,6 +46,8 @@ Kunena 1.6.0-BETA1
 + [#16390] Add German locale de-DE (thanks LDA)
 + [#16390] Add Italian locate it-IT (thanks rinuccio sp)
 ^ [#16390] Languages updated: es-ES (Alakentu), fi-FI (Mortti), ru-RU (ZARKOS)
++ [#19345] Add own icon for Thank You button
++ [#19345] Add high contrast buttons
 
 17-July-2010 810
 # [#19288] Fix select bug IE

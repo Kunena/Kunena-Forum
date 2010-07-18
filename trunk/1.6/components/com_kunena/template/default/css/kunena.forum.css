@@ -2204,7 +2204,7 @@ POST PAGE
 	text-decoration: underline;
 }
 #Kunena .kbuttonuser {
-	background-position: 0 -320px;
+	background-position: 0 -340px;
 }
 #Kunena .kbuttononline-yes,
 #Kunena .kbuttonmod {
@@ -2213,19 +2213,19 @@ POST PAGE
 #Kunena .kbuttononline-no,
 #Kunena .kbuttongen,
 #Kunena .kbuttoncomm {
-	background-position: 0 -440px;
+	background-position: 0 -460px;
 }
 #Kunena .kbuttononline-yes span span,
 #Kunena .kbuttonmod span span {
 	background-position: right -200px;
 }
 #Kunena .kbuttonuser span span {
-	background-position: right -340px;
+	background-position: right -360px;
 }
 #Kunena .kbuttononline-no span span,
 #Kunena .kbuttongen span span,
 #Kunena .kbuttoncomm span span {
-	background-position: right -460px;
+	background-position: right -480px;
 }
 #Kunena .kbuttononline-yes span span,
 #Kunena .kbuttononline-no span span {
@@ -2233,15 +2233,15 @@ POST PAGE
 	height: 15px;
 }
 #Kunena .kbuttononline-yes span.online-yes {background-position: 0 0px;}
-#Kunena .kbuttononline-no span.online-no {background-position: 0 -360px;}
-#Kunena .kbuttoncomm span.reply {background-position: 0 -420px;}
-#Kunena .kbuttoncomm span.quote {background-position: 0 -400px;}
-#Kunena .kbuttoncomm span.newtopic {background-position: 0 -380px;}
-#Kunena .kbuttonuser span.thankyou {background-position: 0 -240px;}
+#Kunena .kbuttononline-no span.online-no {background-position: 0 -380px;}
+#Kunena .kbuttoncomm span.reply {background-position: 0 -440px;}
+#Kunena .kbuttoncomm span.quote {background-position: 0 -420px;}
+#Kunena .kbuttoncomm span.newtopic {background-position: 0 -400px;}
+#Kunena .kbuttonuser span.thankyou {background-position: 0 -320px;}
 #Kunena .kbuttonuser span.favorite {background-position: 0 -240px;}
 #Kunena .kbuttonuser span.subscribe {background-position: 0 -300px;}
-#Kunena .kbuttonuser span.markread {background-position: 0 -260px;}
-#Kunena .kbuttonuser span.report {background-position: 0 -280px;}
+#Kunena .kbuttonuser span.markread {background-position: 0 -280px;}
+#Kunena .kbuttonuser span.report {background-position: 0 -300px;}
 #Kunena .kbuttonmod span.merge {background-position: 0 -80px;}
 #Kunena .kbuttonmod span.edit {background-position: 0 -40px;}
 #Kunena .kbuttonmod span.delete {background-position: 0 -20px;}

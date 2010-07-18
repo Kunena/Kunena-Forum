@@ -25,6 +25,7 @@
 		<param name="buttonIconset" type="list" default="default" label="Button Set" description="BUTTON SET">
 			<option value="default">Default</option>
 			<option value="dtp2nl">dtp2.nl</option>
+			<option value="dtp2nl-highblack">dtp2.nl High Contrast</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="profileIconset" type="list" default="default" label="Profile Icon Set" description="PROFILE ICON SET">

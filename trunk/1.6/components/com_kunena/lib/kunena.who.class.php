@@ -29,7 +29,6 @@ class CKunenaWhoIsOnline {
 	public $config = null;
 	protected $myip = null;
 	protected $name = null;
-	protected $datenow = null;
 
 	protected function __construct($db, $config, $app) {
 		$this->db = $db;
@@ -37,7 +36,8 @@ class CKunenaWhoIsOnline {
 		$this->config = $config;
 		$this->app = $app;
 		$this->name = $this->config->username ? "username" : "name";
-		$this->datenow = CKunenaTimeformat::internalTime();
+		$this->now = JFactory::getDate();
+		$this->timeout = $this->now->toUnix() - $this->app->getCfg ( 'lifetime', 15 ) * 60;
 	}
 
 	public function &getInstance() {
@@ -69,14 +69,13 @@ class CKunenaWhoIsOnline {
 	public function getActiveUsersList() {
 		static $users = null;
 		if ($users) return $users;
-		$query
-        = "SELECT u.{$this->name} AS username, u.id, k.moderator, k.showOnline "
-        . " FROM #__users AS u "
-        . " LEFT JOIN #__kunena_users AS k ON k.userid=u.id "
-		# filter real public session logouts
-        . " INNER JOIN #__session AS s ON s.guest='0' AND s.userid=u.id "
-        . " GROUP BY u.id "
-        . " ORDER BY username ASC";
+		$query = "SELECT s.userid, u.{$this->name} AS username, u.id, k.moderator, k.showOnline
+			FROM #__users AS u
+			LEFT JOIN #__kunena_users AS k ON k.userid=u.id
+			INNER JOIN #__session AS s ON s.client_id=0 AND s.userid=u.id
+			WHERE s.time > {$this->timeout}
+			GROUP BY s.userid
+			ORDER BY username ASC";
 
     	$this->db->setQuery($query);
     	$users = $this->db->loadObjectList();
@@ -91,12 +90,7 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getTotalGuestUsers () {
-		$query = "SELECT COUNT(*) FROM #__session WHERE guest='1'";
-    	$this->db->setQuery($query);
-    	$totalguests = $this->db->loadResult();
-    	KunenaError::checkDatabaseError();
-
-    	return $totalguests;
+    	return KunenaUser::getOnlineGuestsCount();
 	}
 
 	public function getTitleWho ($totaluser,$totalguests) {
@@ -119,10 +113,14 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getUsersList () {
-		$query = "SELECT w.*, u.id, u.{$this->name}, f.showOnline FROM #__kunena_whoisonline AS w
-        LEFT JOIN #__users AS u ON u.id=w.userid
-        LEFT JOIN #__kunena_users AS f ON u.id=f.userid
-        ORDER BY w.time DESC";
+		$query = "SELECT w.*, u.id, u.{$this->name} AS username, k.showOnline
+			FROM #__kunena_whoisonline AS w
+			LEFT JOIN #__users AS u ON w.userid=u.id
+			LEFT JOIN #__kunena_users AS k ON k.userid=u.id
+			LEFT JOIN #__session AS s ON s.client_id=0 AND s.userid=u.id
+			WHERE w.time > {$this->timeout}
+			GROUP BY s.userid
+			ORDER BY w.time DESC";
         $this->db->setQuery($query);
         $users = $this->db->loadObjectList();
         KunenaError::checkDatabaseError();
@@ -131,7 +129,7 @@ class CKunenaWhoIsOnline {
 	}
 
 	protected function _deleteUsersOnline () {
-		$past = $this->datenow - $this->config->fbsessiontimeout;
+		$past = $this->now->toUnix() - $this->config->fbsessiontimeout;
 		$this->db->setQuery("DELETE FROM #__kunena_whoisonline WHERE time < {$this->db->Quote($past)}");
 		$this->db->query();
 		KunenaError::checkDatabaseError();
@@ -207,7 +205,7 @@ class CKunenaWhoIsOnline {
 
 		if ($online == 1) {
     		$sql = "UPDATE #__kunena_whoisonline SET ".
-    		" time=".$this->db->quote($this->datenow).", ".
+    		" time=".$this->db->quote($this->now->toUnix()).", ".
     		" what=".$this->db->quote($what).", ".
     		" do=".$this->db->quote($do).", ".
     		" task=".$this->db->quote($task).", ".
@@ -221,7 +219,7 @@ class CKunenaWhoIsOnline {
     		$sql = "INSERT INTO #__kunena_whoisonline (`userid` , `time`, `what`, `task`, `do`, `func`,`link`, `userip`, `user`) "
             . " VALUES (".
             $this->db->quote($this->my->id).",".
-            $this->db->quote($this->datenow).",".
+            $this->db->quote($this->now->toUnix()).",".
             $this->db->quote($what).",".
             $this->db->quote($task).",".
             $this->db->quote($do).",".

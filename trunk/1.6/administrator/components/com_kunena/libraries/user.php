@@ -23,7 +23,7 @@ class KunenaUser extends JObject {
 	// Global for every instance
 	protected static $_instances = array ();
 	protected static $_ranks = null;
-	protected static $_online = array();
+	protected static $_online = null;
 
 	protected $_exists = false;
 	protected $_db = null;
@@ -250,44 +250,55 @@ class KunenaUser extends JObject {
 
 	}
 
+	public static function getOnlineUsers() {
+		if (self::$_online === null) {
+			kimport ( 'error' );
+			$db = JFactory::getDBO ();
+			$app = JFactory::getApplication ();
+			$now = JFactory::getDate();
+			$timeout = $now->toUnix() - $app->getCfg ( 'lifetime', 15 ) * 60;
+			$myprofile = KunenaFactory::getUser ();
+			$showonline = $myprofile->isModerator () ? '' : 'AND k.showOnline=1';
+			$query = "SELECT s.userid, s.time
+				FROM #__session AS s
+				INNER JOIN #__kunena_users AS k ON k.userid=s.userid
+				WHERE s.client_id=0 AND s.time > {$timeout} {$showonline}
+				GROUP BY s.userid
+				ORDER BY s.time DESC";
+
+			$db->setQuery($query);
+			self::$_online = $db->loadObjectList('userid');
+			KunenaError::checkDatabaseError();
+		}
+		return self::$_online;
+	}
+
+	public static function getOnlineGuestsCount () {
+		static $guests = null;
+		if ($guests === null) {
+			kimport ( 'error' );
+			$db = JFactory::getDBO ();
+			$app = JFactory::getApplication ();
+			$now = JFactory::getDate();
+			$timeout = $now->toUnix() - $app->getCfg ( 'lifetime', 15 ) * 60;
+			$query = "SELECT COUNT(*) FROM #__session WHERE client_id=0 AND guest='1' AND time > {$timeout}";
+			$db->setQuery($query);
+			$guests = $db->loadResult();
+			KunenaError::checkDatabaseError();
+		}
+		return $guests;
+	}
+
 	public function isOnline($yesno = false) {
 		$myprofile = KunenaFactory::getUser ();
 		if (intval($this->userid) < 1 || (! $this->showOnline && ! $myprofile->isModerator ())) {
-			self::$_online [$this->userid] = false;
-		} else if (! isset ( self::$_online [$this->userid] )) {
-			kimport ( 'error' );
-			// If online information is not already loaded and user has been saved, pre-fetch information for all users
-			if (empty ( self::$_online ) && isset (self::$_instances[$this->userid])) {
-				$userids = array_keys ( self::$_instances );
-				JArrayHelper::toInteger($userids);
-				$userlist = implode(',', $userids);
-				$query = 'SELECT s.userid, MAX(s.time) AS time FROM #__session AS s WHERE s.userid IN (' . $userlist . ') AND s.client_id = 0 GROUP BY s.userid';
-				$this->_db->setQuery ( $query );
-				$lastseen = $this->_db->loadObjectList('userid');
-				KunenaError::checkDatabaseError ();
-
-				$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
-				foreach ($userids as $userid) {
-					if (!isset($lastseen [$userid]))
-						self::$_online [$userid] = false;
-					else
-						self::$_online [$userid] = ($lastseen [$userid]->time + $timeout) > time ();
-				}
-			} else {
-				$query = 'SELECT MAX(s.time) FROM #__session AS s WHERE s.userid = ' . intval($this->userid) . ' AND s.client_id = 0 GROUP BY s.userid';
-				$this->_db->setQuery ( $query );
-				$lastseen = $this->_db->loadResult ();
-				if (KunenaError::checkDatabaseError ()) {
-					self::$_online [$this->userid] = false;
-				} else {
-					$timeout = $this->_app->getCfg ( 'lifetime', 15 ) * 60;
-					self::$_online [$this->userid] = ($lastseen + $timeout) > time ();
-				}
-			}
+			if ($yesno) return 'no';
+			return false;
+		} else if (self::$_online === null) {
+			self::getOnlineUsers();
 		}
-		if ($yesno)
-			return self::$_online [$this->userid] ? 'yes' : 'no';
-		return self::$_online [$this->userid];
+		if ($yesno) return isset(self::$_online [$this->userid]) ? 'yes' : 'no';
+		return isset(self::$_online [$this->userid]) ? true : false;
 	}
 
 	public function isAdmin() {

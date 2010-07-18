@@ -39,6 +39,7 @@
 		<languages folder="languages">
 			<language tag="en-GB">en-GB.com_kunena.install.ini</language>
 			<language tag="es-ES">es-ES.com_kunena.install.ini</language>
+			<language tag="de-DE">de-DE.com_kunena.install.ini</language>
 			<language tag="fi-FI">fi-FI.com_kunena.install.ini</language>
 			<language tag="fr-FR">fr-FR.com_kunena.install.ini</language>
 			<language tag="ru-RU">ru-RU.com_kunena.install.ini</language>

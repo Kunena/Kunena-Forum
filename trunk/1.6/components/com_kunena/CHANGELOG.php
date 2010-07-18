@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+18-July-2010 Xillibit
+^ [#19388] Update french language file
+
 18-July-2010 Matias
 # [#19288] Simplify online status logic and move the code into KunenaUsers
 # [#19288] Fix bug in online stats showing too many users as being online

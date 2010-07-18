@@ -36,6 +36,7 @@ Kunena 1.6.0-BETA1
 19-July-2010 810
 + [#19388] Add dutch install language (finished)
 + [#19388] Add dutch language frontend and backend
+^ [#19388] Update dutch install language file
 
 
 18-July-2010 @quila

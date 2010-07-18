@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+18-July-2010 @quila
+^ [#16390] Update serbian and serbian latin languages (install)
+
 17-July-2010 Matias
 # [#19288] Move configuration setting "Allow to moderator to view and restore deleted messages" into security tab
 # [#19288] Admin: move inline css into its own file (media/css/admin.css) for easier styling

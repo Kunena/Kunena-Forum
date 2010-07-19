@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+19-July-2010 fxstein
+# [#19345] Updated credits page - contributor/developer and moderator grouping.
+
 18-July-2010 Matias
 ^ [#15886] Merged revisions 3070-3075 from /branches/1.6-810-bugfixes-19-07-2010
 # [#19288] Changed Windows linefeeds (\r\n) into unix (\n) in templates

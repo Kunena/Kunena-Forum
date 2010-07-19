@@ -33,6 +33,14 @@ Legend:
 
 Kunena 1.6.0-BETA1
 
+18-July-2010 Matias
+^ [#15886] Merged revisions 3070-3075 from /branches/1.6-810-bugfixes-19-07-2010
+# [#19288] Changed Windows linefeeds (\r\n) into unix (\n) in templates
+
+19-July-2010 810
++ [#19388] Add Dutch language nl-NL
+^ [#19288] Double slashes in frontend and backend stats
+
 18-July-2010 @quila
 ^ [#16390] Update serbian and serbian latin languages
 

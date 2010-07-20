@@ -33,7 +33,7 @@ class KunenaProfileJomSocial extends KunenaProfile
 	{
 		if ($userid == 0) return false;
 		// Get CUser object
-		$user =& CFactory::getUser($userid);
+		$user = CFactory::getUser($userid);
 		if($user === null) return false;
 		return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid);
 	}

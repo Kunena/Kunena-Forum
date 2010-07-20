@@ -29,6 +29,7 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
 class KunenaApp {
 
 	function __construct() {
+		ob_start();
 		kimport('error');
 
 // Display time it took to create the entire page in the footer
@@ -698,7 +699,7 @@ if(JDEBUG == 1){
 		}
 	}
 }
-
+	ob_end_flush();
 	}
 	/**
 	* Escapes a value for output in a view script.

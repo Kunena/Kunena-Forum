@@ -40,7 +40,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 						<div class = "kpolldesc">
 							<?php if ( $dataspollusers[0]->userid == $this->my->id || $this->my->id == "0") { //if the user has already voted for this poll ?>
 							<table>
-								<?php foreach ($dataspollresult as $row) : 
+								<?php foreach ($dataspollresult as $row) :
 								?>
 								<tr class="krow<?php echo ($i^=1)+1;?>">
 									<td class="kpoll-option"><?php echo KunenaParser::parseText ( $row->text ); ?></td>
@@ -129,7 +129,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')."<b>".$nbvoters."</b> ";
 									if($this->config->pollresultsuserslist && !empty($pollusersvoted)) :
 										echo " ( ";
-										foreach($pollusersvoted as $row) echo CKunenaLink::GetProfileLink($row->userid)." ";
+										foreach($pollusersvoted as $row) echo CKunenaLink::GetProfileLink(intval($row->userid))." ";
 										echo " ) ";
 									endif; ?>
 								</td>

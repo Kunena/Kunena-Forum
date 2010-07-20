@@ -33,13 +33,18 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+19-July-2010 Matias
+# [#19288] Uninstall fails because of missing class KunenaError
+# [#19288] Broken HTML with several templates when Kunena Menu is activated
+
 19-July-2010 fxstein
-^ [#21472] Updated version info
+^ [#21302] Update version info for 1.6.0 Beta 2 release (Kuongea = chat, converse in Swahili)
 
 Kunena 1.6.0-BETA1
 
 19-July-2010 fxstein
 # [#19345] Updated credits page - contributor/developer and moderator grouping.
+^ [#21302] Update version info for 1.6.0 Beta 2 release (Kuongea = chat, converse in Swahili)
 
 18-July-2010 Matias
 ^ [#15886] Merged revisions 3070-3075 from /branches/1.6-810-bugfixes-19-07-2010

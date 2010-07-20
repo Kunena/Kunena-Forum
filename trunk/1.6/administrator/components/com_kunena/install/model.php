@@ -844,15 +844,15 @@ class KunenaModelInstall extends JModel {
 		$query = "SELECT id FROM `#__components` WHERE `option`='com_kunena';";
 		$this->db->setQuery ( $query );
 		$componentid = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError ())
-			return;
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 		// Create new Joomla menu for Kunena
 		$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 		$this->db->setQuery ( $query );
 		$moduleid = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError ())
-			return;
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 		// Do not touch existing menu during installation
 		if ($moduleid || ! $update) {
@@ -866,30 +866,30 @@ class KunenaModelInstall extends JModel {
 							($moduleid, 'kunenamenu', '" . JText::_ ( 'COM_KUNENA_MENU_TITLE' ) . "', '".JText::_ ( 'COM_KUNENA_MENU_TITLE_DESC' )."')";
 			$this->db->setQuery ( $query );
 			$this->db->query ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 			// Now get the menu id again, we need it, in order to publish the menu module
 			$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 			$this->db->setQuery ( $query );
 			$moduleid = ( int ) $this->db->loadResult ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 
 		// Forum
 		$query = "SELECT id FROM `#__menu` WHERE `link`={$this->db->quote($menu['link'])} AND `menutype`='kunenamenu';";
 		$this->db->setQuery ( $query );
 		$parentid = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError ())
-			return;
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		if (! $parentid || $update) {
 			$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 							($parentid, 'kunenamenu', {$this->db->quote($menu['name'])}, {$this->db->quote($menu['alias'])}, {$this->db->quote($menu['link'])}, 'component', 1, 0, $componentid, 0, 1, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 			$this->db->setQuery ( $query );
 			$this->db->query ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 			$parentid = ( int ) $this->_db->insertId ();
 		}
 
@@ -900,15 +900,15 @@ class KunenaModelInstall extends JModel {
 			$query = "SELECT id FROM `#__menu` WHERE `link`={$this->db->quote($menuitem['link'])} AND `menutype`='kunenamenu';";
 			$this->db->setQuery ( $query );
 			$id = ( int ) $this->db->loadResult ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 			if (! $id || $update) {
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 								($id, 'kunenamenu', {$this->db->quote($menuitem['name'])}, {$this->db->quote($menuitem['alias'])}, {$this->db->quote($menuitem['link'])},'component', 1, $parentid, $componentid, 1, $ordering, 0, '0000-00-00 00:00:00', 0, 0, {$menuitem['access']}, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 				$this->db->setQuery ( $query );
 				$this->db->query ();
-				if (KunenaError::checkDatabaseError ())
-					return;
+				if ($this->db->getErrorNum ())
+					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 				$id = ( int ) $this->_db->insertId ();
 			}
 			if (!$defaultmenu) $defaultmenu = $id;
@@ -917,15 +917,15 @@ class KunenaModelInstall extends JModel {
 			$query = "UPDATE `#__menu` SET `link`={$this->db->quote($menu['link']."&defaultmenu=$defaultmenu")} WHERE id={$parentid}";
 			$this->db->setQuery ( $query );
 			$this->db->query ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 
 		$query = "SELECT id FROM `#__modules` WHERE `position`='kunena_menu';";
 		$this->db->setQuery ( $query );
 		$moduleid = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError ())
-			return;
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 		// Check if it exists, if not create it
 		if (! $moduleid || $update) {
@@ -934,37 +934,37 @@ class KunenaModelInstall extends JModel {
 					($moduleid, '" . JText::_ ( 'COM_KUNENA_MENU_TITLE' ) . "', '', 0, 'kunena_menu', 0, '0000-00-00 00:00:00', 1, 'mod_mainmenu', 0, 0, 0, 'menutype=kunenamenu\nmenu_style=list\nstartLevel=1\nendLevel=2\nshowAllChildren=1\nwindow_open=\nshow_whitespace=0\ncache=1\ntag_id=\nclass_sfx=\nmoduleclass_sfx=\nmaxdepth=10\nmenu_images=0\nmenu_images_align=0\nmenu_images_link=0\nexpand_menu=0\nactivate_parent=0\nfull_active_id=0\nindent_image=0\nindent_image1=\nindent_image2=\nindent_image3=\nindent_image4=\nindent_image5=\nindent_image6=\nspacer=\nend_spacer=\n\n', 0, 0, '');";
 			$this->db->setQuery ( $query );
 			$this->db->query ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 			// Now get the module id again, we need it, in order to publish the menu module
 			$query = "SELECT id FROM `#__modules` WHERE `position`='kunena_menu';";
 			$this->db->setQuery ( $query );
 			$moduleid = ( int ) $this->db->loadResult ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 			// Now publish the module
 			$query = "REPLACE INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES ($moduleid, 0);";
 			$this->db->setQuery ( $query );
 			$this->db->query ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 
 		// Finally add Kunena to mainmenu if it does not exist somewhere
 		$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena' AND `menutype`='mainmenu';";
 		$this->db->setQuery ( $query );
 		$id = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError ())
-			return;
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		if (! $id ) {
 			$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
 								($id, 'mainmenu', {$this->db->quote($menu['name'])}, {$this->db->quote($menu['alias'])}, 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
 			$this->db->setQuery ( $query );
 			$this->db->query ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/helpers/helper.php');
 		MenusHelper::cleanCache ();
@@ -984,23 +984,23 @@ class KunenaModelInstall extends JModel {
 		$query = "SELECT id,menutype FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 		$this->db->setQuery ( $query );
 		$menudetails = $this->db->loadObject ();
-		if (KunenaError::checkDatabaseError ())
-			return;
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 		if ($menudetails) {
 			// Delete kunena menu type
 			$query = "DELETE FROM `#__menu_types` WHERE `id`='" . $menudetails->id . "';";
 			$this->db->setQuery ( $query );
 			$this->db->Query ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 			// Delete kunena menu (index, profile...)
 			$query = "DELETE FROM `#__menu` WHERE `menutype`='" . $menudetails->menutype . "';";
 			$this->db->setQuery ( $query );
 			$this->db->Query ();
-			if (KunenaError::checkDatabaseError ())
-				return;
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 	}
 
@@ -1008,8 +1008,8 @@ class KunenaModelInstall extends JModel {
 		$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
 		$this->db->setQuery ( $query );
 		$menuid = $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError ())
-			return;
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/helpers/helper.php');
 		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/models/menutype.php');

@@ -36,6 +36,7 @@ Kunena 1.6.0-BETA2
 19-July-2010 Matias
 # [#19288] Uninstall fails because of missing class KunenaError
 # [#19288] Broken HTML with several templates when Kunena Menu is activated
+# [#19288] Changed Windows linefeeds (\r\n) into unix (\n) in all php, js and xml files
 
 19-July-2010 fxstein
 ^ [#21302] Update version info for 1.6.0 Beta 2 release (Kuongea = chat, converse in Swahili)

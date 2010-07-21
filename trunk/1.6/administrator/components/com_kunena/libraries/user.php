@@ -39,6 +39,8 @@ class KunenaUser extends JObject {
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = KunenaFactory::getConfig ();
+		$now = JFactory::getDate();
+		$this->_session_timeout = $now->toUnix() - $this->_app->getCfg ( 'lifetime', 15 ) * 60;
 	}
 
 	/**
@@ -254,15 +256,10 @@ class KunenaUser extends JObject {
 		if (self::$_online === null) {
 			kimport ( 'error' );
 			$db = JFactory::getDBO ();
-			$app = JFactory::getApplication ();
-			$now = JFactory::getDate();
-			$timeout = $now->toUnix() - $app->getCfg ( 'lifetime', 15 ) * 60;
-			$myprofile = KunenaFactory::getUser ();
-			$showonline = $myprofile->isModerator () ? '' : 'AND k.showOnline=1';
 			$query = "SELECT s.userid, s.time
 				FROM #__session AS s
 				INNER JOIN #__kunena_users AS k ON k.userid=s.userid
-				WHERE s.client_id=0 AND s.time > {$timeout} {$showonline}
+				WHERE s.client_id=0
 				GROUP BY s.userid
 				ORDER BY s.time DESC";
 
@@ -279,9 +276,11 @@ class KunenaUser extends JObject {
 			kimport ( 'error' );
 			$db = JFactory::getDBO ();
 			$app = JFactory::getApplication ();
-			$now = JFactory::getDate();
-			$timeout = $now->toUnix() - $app->getCfg ( 'lifetime', 15 ) * 60;
-			$query = "SELECT COUNT(*) FROM #__session WHERE client_id=0 AND guest='1' AND time > {$timeout}";
+			// TODO: make stats configurable by freely defined timeout (15 min, 30 min, Joomla session, all...)
+			//$now = JFactory::getDate();
+			//$session_timeout = $now->toUnix() - $app->getCfg ( 'lifetime', 15 ) * 60;
+			//$query = "SELECT COUNT(*) FROM #__session WHERE client_id=0 AND guest='1' AND time > {$session_timeout}";
+			$query = "SELECT COUNT(*) FROM #__session WHERE client_id=0 AND guest='1'";
 			$db->setQuery($query);
 			$guests = $db->loadResult();
 			KunenaError::checkDatabaseError();
@@ -290,15 +289,16 @@ class KunenaUser extends JObject {
 	}
 
 	public function isOnline($yesno = false) {
+		$online = false;
 		$myprofile = KunenaFactory::getUser ();
-		if (intval($this->userid) < 1 || (! $this->showOnline && ! $myprofile->isModerator ())) {
-			if ($yesno) return 'no';
-			return false;
-		} else if (self::$_online === null) {
-			self::getOnlineUsers();
+		if (intval($this->userid) > 0 && ($this->showOnline || $myprofile->isModerator ())) {
+			if (self::$_online === null) {
+				self::getOnlineUsers();
+			}
+			$online = isset(self::$_online [$this->userid]) ? (self::$_online [$this->userid]->time > $this->_session_timeout) : false;
 		}
-		if ($yesno) return isset(self::$_online [$this->userid]) ? 'yes' : 'no';
-		return isset(self::$_online [$this->userid]) ? true : false;
+		if ($yesno) return $online ? 'yes' : 'no';
+		return $online;
 	}
 
 	public function isAdmin() {

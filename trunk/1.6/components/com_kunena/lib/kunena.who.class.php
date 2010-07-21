@@ -69,11 +69,11 @@ class CKunenaWhoIsOnline {
 	public function getActiveUsersList() {
 		static $users = null;
 		if ($users) return $users;
+		// TODO: make this configurable: WHERE s.time > {$this->timeout}
 		$query = "SELECT s.userid, u.{$this->name} AS username, u.id, k.moderator, k.showOnline
 			FROM #__users AS u
 			LEFT JOIN #__kunena_users AS k ON k.userid=u.id
 			INNER JOIN #__session AS s ON s.client_id=0 AND s.userid=u.id
-			WHERE s.time > {$this->timeout}
 			GROUP BY s.userid
 			ORDER BY username ASC";
 
@@ -113,12 +113,12 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getUsersList () {
+		// TODO: make this configurable: WHERE s.time > {$this->timeout}
 		$query = "SELECT w.*, u.id, u.{$this->name} AS username, k.showOnline
 			FROM #__kunena_whoisonline AS w
 			LEFT JOIN #__users AS u ON w.userid=u.id
 			LEFT JOIN #__kunena_users AS k ON k.userid=u.id
 			LEFT JOIN #__session AS s ON s.client_id=0 AND s.userid=u.id
-			WHERE w.time > {$this->timeout}
 			GROUP BY s.userid
 			ORDER BY w.time DESC";
         $this->db->setQuery($query);

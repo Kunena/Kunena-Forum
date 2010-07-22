@@ -351,9 +351,9 @@ class KunenaModelInstall extends JModel {
 			list($path, $filename, $ext) = $fileparts;
 			if (is_file("{$path}/{$filename}.new.{$ext}")) {
 				$success = JFile::delete("{$path}/{$filename}.{$ext}");
-				if (!$success) $this->addStatus ( "Deleting file {$filename}.{$ext}", false, '' );
+				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_DELETE_STATUS_FAIL')." {$filename}.{$ext}", false, '' );
 				$success = JFile::move("{$path}/{$filename}.new.{$ext}", "{$path}/{$filename}.{$ext}");
-				if (!$success) $this->addStatus ( "Renamming file {$filename}.new.{$ext}", false, '' );
+				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_RENAMING_FAIL')." {$filename}.new.{$ext}", false, '' );
 			}
 		}
 
@@ -449,7 +449,7 @@ class KunenaModelInstall extends JModel {
 					ob_end_clean();
 					$success = true;
 				}
-				$result = array('action'=>'Include', 'name'=>$fileName, 'success'=>$success);
+				$result = array('action'=> JText::_('COM_KUNENA_INSTALL_INCLUDE_STATUS'), 'name'=>$fileName, 'success'=>$success);
 				break;
 			case 'query':
 				$query = (string)$action;

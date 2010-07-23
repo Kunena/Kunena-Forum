@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+23-July-2010 Matias
+# [#19288] User online detection is using wrong timezone
+
 20-July-2010 Matias
 # [#19288] Revert online status back to showing too many users (=same numbers as Joomla stats module)
 

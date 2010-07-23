@@ -39,8 +39,7 @@ class KunenaUser extends JObject {
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
 		$this->_config = KunenaFactory::getConfig ();
-		$now = JFactory::getDate();
-		$this->_session_timeout = $now->toUnix() - $this->_app->getCfg ( 'lifetime', 15 ) * 60;
+		$this->_session_timeout = time() - $this->_app->getCfg ( 'lifetime', 15 ) * 60;
 	}
 
 	/**

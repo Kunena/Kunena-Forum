@@ -15,6 +15,12 @@ defined( '_JEXEC' ) or die('Restricted access');
 abstract class KunenaParser {
 	static $emoticons = null;
 
+	function KText($txt) {
+		$txt = JText::_($txt);
+		$txt = preg_replace('`\'`','\\\\\'', $txt);
+		return $txt;
+	}
+
 	function parseText($txt) {
 		if (!$txt) return;
 		$txt = self::escape ( $txt );

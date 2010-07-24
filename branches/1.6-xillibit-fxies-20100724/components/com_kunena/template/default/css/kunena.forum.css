@@ -1515,7 +1515,7 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-left div,
 #Kunena td.kmessage-top div,
 #Kunena td.kmessage-bottom div {
-	width: 100%;
+	width: 97%;
 }
 #Kunena div.kmsgbody div.kmsgtext {
 	overflow: auto;
@@ -1829,7 +1829,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-minus {
-	background: url("../media/iconsets/profile/default/default.png") no-repeat left -294px;
+	background: url("../media/iconsets/profile/default/default.png") no-repeat 0px -294px;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -1837,7 +1837,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-plus {
-	background: url("../media/iconsets/profile/default/default.png") no-repeat left -313px;
+	background: url("../media/iconsets/profile/default/default.png") no-repeat 0px -313px;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -3037,7 +3037,7 @@ div#kprofile-stats ul li span.krank-admin {
 }
 #Kunena div#kprofile-rightcol { 
 	display:inline-block;
-	float:left;
+	float:right;
 	margin-right:10px;
 	width:85%;
 }

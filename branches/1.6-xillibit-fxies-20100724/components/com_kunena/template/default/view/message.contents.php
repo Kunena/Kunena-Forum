@@ -20,13 +20,6 @@ defined ( '_JEXEC' ) or die ();
 	</div>
 </div>
 <?php $this->displayAttachments() ?>
-<div>
-	<?php if ($this->signatureHtml) : ?>
-	<div class="kmsgsignature">
-		<?php echo $this->signatureHtml ?>
-	</div>
-	<?php endif ?>
-</div>
 <?php if ( $this->message_quickreply ) : ?>
 <div id="kreply<?php echo intval($this->id) ?>_form" class="kreply-form" style="display: none">
 	<form action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post" name="postform" enctype="multipart/form-data">

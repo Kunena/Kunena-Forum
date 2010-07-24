@@ -18,6 +18,13 @@ if ($this->msg->modified_time) {
 	$dateshown =  CKunenaTimeformat::showDate($this->msg->modified_time, 'config_post_dateformat' ).' ';
 }
 ?>
+<div>
+	<?php if ($this->signatureHtml) : ?>
+	<div class="kmsgsignature">
+		<?php echo $this->signatureHtml ?>
+	</div>
+	<?php endif ?>
+</div>
 <div class="kmessage-editmarkup-cover">
 	<?php if ($this->msg->modified_by) : ?>
 	<span class="kmessage-editmarkup" <?php echo $datehover ?>">

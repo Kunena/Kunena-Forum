@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.0
 
+24-July-2010 Xillibit
+^ [#20081] Not display posts when the forum is offline (thanks etusha)
+
 11-July-2010 Xillibit
 + [#20081] Add setting to show latest messages or topics
 

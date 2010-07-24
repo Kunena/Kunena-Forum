@@ -11,15 +11,12 @@
 
 // no direct access
 defined ( '_JEXEC' ) or die ( '' );
-
-$document = JFactory::getDocument ();
-$document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klatest.css' );
 ?>
 <div class="<?php echo $this->params->get ( 'moduleclass_sfx' )?> klatest <?php echo $this->params->get ( 'sh_moduleshowtype' )?>" id="klatestmodule">
 
 <ul id="klatest-items">
 <?php
-if (is_array ( $this->klistpost )) {
+if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 	foreach ( $this->klistpost as $item ) {
 ?>
 
@@ -72,8 +69,11 @@ if (is_array ( $this->klistpost )) {
 </li>
 <?php
 	} //end foreach
-}
 ?>
 </ul>
 <p id="klatest-more"><?php echo CKunenaLink::GetShowLatestLink ( JText::_ ( 'MOD_KUNENALATEST_MORE_LINK' ) , $this->latestdo ); ?></p>
+<?php
+} else {
+	echo JText::_('MOD_KUNENALATEST_OFFLINE');
+} ?>
 </div>

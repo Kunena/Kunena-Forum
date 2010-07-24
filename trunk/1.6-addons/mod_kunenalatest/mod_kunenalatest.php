@@ -29,6 +29,9 @@ class modKunenaLatest
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.image.class.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
+		$this->kunena_config = KunenaFactory::getConfig ();
+		$this->document = JFactory::getDocument ();
+		$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klatest.css' );
 
 		$this->latestdo = null;
 

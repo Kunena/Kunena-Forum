@@ -41,6 +41,7 @@ Kunena 1.6.0-BETA2
 # [#19288] Function to escape language strings because breaks some languages when you using quote with javascript editor functions
 # [#19288] Missing banned rank in sampledatas
 # [#19288] Wrong slash in ranks and smileys which prevent to display them in ranks and smileys manager
+# [#19288] Don't show the name input when you are not anonymous
 
 23-July-2010 Matias
 # [#19288] User online detection is using wrong timezone

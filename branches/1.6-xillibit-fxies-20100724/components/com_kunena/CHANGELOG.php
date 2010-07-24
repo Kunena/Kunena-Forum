@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+24-July-2010
+# [#19288] Prevent to give thank you to yourself
+# [#19288] Fix wrong geshi path in kunena.parser (thanks jonijnm)
+
 23-July-2010 Matias
 # [#19288] User online detection is using wrong timezone
 

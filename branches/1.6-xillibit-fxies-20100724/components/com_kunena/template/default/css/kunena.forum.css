@@ -2901,8 +2901,11 @@ MODERATOR PAGE
 	width: 35%;
 }
 #Kunena table#kaddban td.kcol-mid textarea {
-	width: 80%;
+	width: 100%;
 	height: 50px;
+}
+#Kunena table#kaddban td.kcol-mid input {
+	width: 100%;	
 }
 #Kunena table#kforumsearch th {
 	padding: 0px;
@@ -2992,7 +2995,7 @@ PROFILE
 #Kunena .kicon-profile-yim-off { background-position: 0 -983px; }
 
 #Kunena div#kprofile-container { padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
-#Kunena div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
+#Kunena div#kprofile-leftcol { width: 20%; font-size: 1em; float:left; margin-right: 10px;}
 #Kunena div.kavatar-lg { 
 	width: 200px; 
 	height: 200px; 
@@ -3039,7 +3042,7 @@ div#kprofile-stats ul li span.krank-admin {
 	display:inline-block;
 	float:right;
 	margin-right:10px;
-	width:85%;
+	width:75%;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}
 #Kunena div.kprofile-rightcol1 { 

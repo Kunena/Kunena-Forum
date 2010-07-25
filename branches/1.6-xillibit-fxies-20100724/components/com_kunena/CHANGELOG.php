@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+25-July-2010 Xillibit
+# [#19288] Profile CSS fixes (thanks alakentu)
+# [#19288] Some language strings missing when set status on install/model.php
+
 24-July-2010 Xillibit
 # [#19288] Prevent to give thank you to yourself
 # [#19288] Fix wrong geshi path in kunena.parser (thanks jonijnm)

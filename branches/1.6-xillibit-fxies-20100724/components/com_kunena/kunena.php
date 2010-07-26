@@ -269,6 +269,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	if ($kunena_my->id > 0) {
 		// new indicator handling
 		if ($markaction == "allread") {
+			if (!JRequest::checkToken()) {
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat', $catid, false) );
+			}
 			$kunena_session->markAllCategoriesRead ();
 		}
 		if (!$kunena_session->save ()) $kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_SESSION_SAVE_FAILED'), 'error' );
@@ -554,6 +558,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 					break;
 
 				case "bulkFavorite" :
+					if (!JRequest::checkToken()) {
+						$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+						$kunena_app->redirect ( CKunenaLink::GetProfileURL($kunena_my->id, false) );
+					}
 					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
 					$KunenaUserAPI = new KunenaUserAPI();
 					$cb = KGetArrayReverseInts ( "cb" );
@@ -569,6 +577,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 					break;
 
 				case "bulkSub" :
+					if (!JRequest::checkToken()) {
+						$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+						$kunena_app->redirect ( CKunenaLink::GetProfileURL($kunena_my->id, false) );
+					}
 					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
 					$KunenaUserAPI = new KunenaUserAPI();
 					$cb = KGetArrayReverseInts ( "cb" );

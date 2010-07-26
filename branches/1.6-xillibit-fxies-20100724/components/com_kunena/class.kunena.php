@@ -520,6 +520,11 @@ class CKunenaTools {
 	function KDeletePosts() {
 		$kunena_app = JFactory::getApplication ();
 
+		if (!JRequest::checkToken()) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$kunena_app->redirect ( $backUrl );
+		}
+
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = CKunenaModeration::getInstance ();
 
@@ -546,6 +551,11 @@ class CKunenaTools {
 		$catid = ( int ) $catid;
 
 		$kunena_app = JFactory::getApplication ();
+
+		if (!JRequest::checkToken()) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$kunena_app->redirect ( $backUrl );
+		}
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = CKunenaModeration::getInstance ();

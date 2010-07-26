@@ -141,6 +141,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 </table>
 <input type="hidden" name="option" value="com_kunena" />
 <input type="hidden" name="func" value="bulkactions" />
+<?php echo JHTML::_( 'form.token' ); ?>
 </form>
 </div>
 </div>

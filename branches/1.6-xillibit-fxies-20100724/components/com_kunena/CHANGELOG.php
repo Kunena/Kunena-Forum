@@ -36,6 +36,7 @@ Kunena 1.6.0-BETA2
 26-July-2010 Xillibit
 # [#19288] Put tokens on some forms
 # [#19288] Put tokens on some forms (Part 2)
+# [#19288] Update french language file and little on english language file
 
 25-July-2010 Xillibit
 # [#19288] Profile CSS fixes (thanks alakentu)

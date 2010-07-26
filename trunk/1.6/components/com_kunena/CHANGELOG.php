@@ -37,6 +37,7 @@ Kunena 1.6.0-BETA2
 ^ [#15886] Merged revisions 3092-3100 from /branches/1.6-xillibit-fxies-20100724
 # [#19288] Admin: If installer needs to be run, redirect to installer instead of using current URL
 # [#19288] Installer: Avatar migration fails because of missing directory
+# [#19288] Installer: Improve avatar migration not to use default avatar if file copy failed
 
 25-July-2010 Matias
 # [#19288] Installer: Add options to install/upgrade, migrate and uninstall

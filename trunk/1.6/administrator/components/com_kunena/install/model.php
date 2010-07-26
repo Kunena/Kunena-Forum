@@ -252,6 +252,7 @@ class KunenaModelInstall extends JModel {
 	public function stepPrepare() {
 		$results = array ();
 
+		$this->setAvatarStatus();
 		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true );
 		$action = $this->getAction();
 		if ($action == 'install' || $action == 'migrate') {
@@ -526,75 +527,106 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
+	protected function setAvatarStatus($stats = null) {
+		if (!$stats) {
+			$stats = new stdClass();
+			$stats->current = $stats->migrated = $stats->failed = $stats->missing = $stats->unsupported = 0;
+		}
+		$app = JFactory::getApplication ();
+		$app->setUserState ( 'com_kunena.install.avatars', $stats );
+	}
+
+	protected function getAvatarStatus() {
+		$app = JFactory::getApplication ();
+		$stats = new stdClass();
+		$stats->current = $stats->migrated = $stats->failed = $stats->missing = $stats->unsupported = 0;
+		$stats = $app->getUserState ( 'com_kunena.install.avatars', $stats );
+		return $stats;
+	}
+
 	public function migrateAvatars() {
 		jimport ( 'joomla.filesystem.file' );
 		jimport ( 'joomla.filesystem.path' );
+		$app = JFactory::getApplication ();
+		$stats = $this->getAvatarStatus();
 
 		static $dirs = array (
+			'media/kunena/avatars',
 			'images/fbfiles/avatars',
 			'components/com_fireboard/avatars'
 		);
-		$imported = false;
 
-		$query = "SELECT COUNT(*) FROM #__kunena_users WHERE avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
+		$query = "SELECT COUNT(*) FROM #__kunena_users
+			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
 		$this->db->setQuery ( $query );
 		$count = $this->db->loadResult ();
-		$count = $count > 1023 ? $count - 1023 : 0;
+		if (!$stats->current && !$count) return true;
 
-		$query = "SELECT userid, avatar FROM #__kunena_users WHERE avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
+		$query = "SELECT userid, avatar FROM #__kunena_users
+			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
 		$this->db->setQuery ( $query, 0, 1023 );
 		$users = $this->db->loadObjectList ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		foreach ($users as $user) {
-			$userid = $user->userid;
+			$userid = $stats->current = $user->userid;
 			$avatar = $user->avatar;
+			$count--;
 
-			$file = '';
-			$newfile = '';
-			if (is_file(KPATH_MEDIA ."/avatars/users/{$avatar}")) {
-				// Old format in K1.6 DEV
-				$file = KPATH_MEDIA ."/avatars/users/{$avatar}";
-			} else {
-				foreach ($dirs as $dir) {
-					if (!JFile::exists(JPATH_ROOT . "/$dir/$avatar")) continue;
-					$file = JPATH_ROOT . "/$dir/$avatar";
-					break;
-				}
+			$file = $newfile = '';
+			foreach ($dirs as $dir) {
+				if (!JFile::exists(JPATH_ROOT . "/$dir/$avatar")) continue;
+				$file = JPATH_ROOT . "/$dir/$avatar";
+				break;
 			}
+			$success = false;
 			if ($file) {
 				$file = JPath::clean($file);
 				// Make sure to copy only supported fileformats
 				$match = preg_match('/\.(gif|jpg|jpeg|png)$/ui', $file, $matches);
 				if ($match) {
 					$ext = JString::strtolower($matches[1]);
+					// Use new format: users/avatar62.jpg
 					$newfile = "users/avatar{$userid}.{$ext}";
 					$destpath = (KPATH_MEDIA ."/avatars/{$newfile}");
-					if (!JFile::exists($destpath)) {
+					if (JFile::exists($destpath)) {
+						$success = true;
+					} else {
 						@chmod($file, 0644);
 						$success = JFile::copy($file, $destpath);
-						if (!$success) $this->addStatus ( "User: {$userid}, Avatar copy failed: {$file} to {$destpath}", true );
+						if (!$success) {
+							$this->addStatus ( "User: {$userid}, Avatar copy failed: {$file} to {$destpath}", true );
+							$stats->failed++;
+						}
+					}
+					if ($success) {
+						$stats->migrated++;
 					}
 				} else {
-					$this->addStatus ( "User: {$userid}, Avatar file is not image: {$file}", true );
+					$this->addStatus ( "User: {$userid}, Avatar type not supported: {$file}", true );
+					$stats->unsupported++;
+					$success = true;
 				}
 			} else {
 				// $this->addStatus ( "User: {$userid}, Avatar file was not found: {$avatar}", true );
+				$stats->missing++;
+				$success = true;
 			}
-			$query = "UPDATE #__kunena_users SET avatar={$this->db->quote($newfile)} WHERE userid={$userid}";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-			$imported = true;
+			if ($success) {
+				$query = "UPDATE #__kunena_users SET avatar={$this->db->quote($newfile)} WHERE userid={$this->db->quote($userid)}";
+				$this->db->setQuery ( $query );
+				$this->db->query ();
+				if ($this->db->getErrorNum ())
+					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+			}
 		}
-		if ($imported) {
-			if ($count)
-				$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS',$count), true );
-			else
-				$this->addStatus ( JText::_('COM_KUNENA_MIGRATE_AVATARS_DONE'), true );
+		$this->setAvatarStatus($stats);
+		if ($count) {
+			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS',$count), true );
+		} else {
+			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS_DONE', $stats->migrated, $stats->missing, $stats->unsupported, $stats->failed), true );
 		}
-		return !$imported;
+		return !$count;
 	}
 
 	public function getRequirements() {

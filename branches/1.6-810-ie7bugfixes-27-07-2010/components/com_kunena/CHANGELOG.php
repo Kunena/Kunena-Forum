@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+27-July-2010 810
+# [#19288] ie7/8/9 Support (part 1)
+
 26-July-2010 Xillibit
 # [#19288] Add missing tokens to forms
 # [#19288] Update french language file and little on english language file

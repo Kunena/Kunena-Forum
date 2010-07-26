@@ -208,16 +208,14 @@ PX		EM			PCT			PT
 	background: #5388B4;
 	color: #FFFFFF;
 	padding:0 20px 0 10px;
-}
+	}
 #Kunena div.kblock div.ktitle {
 	background: #5388B4;
 	text-align: left;
-	display: table-row;
 	width:100%;
 	color: #FFFFFF;
 	margin: 0;
 	word-wrap: break-word;
-	overflow: hidden;
 }
 #Kunena div.kblock div.ktitle h1,
 #Kunena div.kblock div.ktitle h2 {
@@ -880,18 +878,19 @@ PX		EM			PCT			PT
 /*---------- Pagination ------------- */
 
 #Kunena ul.kpagination{ 
-	border:0; 
-	margin:0; 
-	padding:0 5px 0 0;
-}
-#Kunena .kpagination li{
-	border:0; 
 	margin:0; 
 	padding:0;
+	float:  right;
+	list-style: none;
+}
+#Kunena .kpagination li{
+	margin: 0; 
+	padding: 0 4px;
 	font-size: .667em;
-	list-style-type:none;
-	line-height: .667em;
-	display:inline-block;
+	list-style: none;
+	display:block;
+	float: left;
+	
 }
 
 #Kunena #kflattable ul.kpagination { 
@@ -916,16 +915,15 @@ PX		EM			PCT			PT
 	background:#5388B4;
 	color:#FFFFFF;
 	font-weight:bold;
-	padding:3px 5px;
-	margin: 2px;
+	margin: 4px;
 }
 #Kunena .kpagination a:link,
 #Kunena .kpagination a:visited {
 	color:#5388B4;
 	display:block;
-	padding:3px 5px;
+	padding:1px 2px;
 	margin: 2px;
-	text-decoration:none;
+	font-weight:bold;
 }
 #Kunena #kflattable .kpagination a:link,
 #Kunena #kflattable .kpagination a:visited { 

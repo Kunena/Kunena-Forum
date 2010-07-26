@@ -815,9 +815,11 @@ window.addEvent('domready', function(){
 					url: url,
 					onComplete: function(jsonObj) {
 						if (jsonObj.allowed_anonymous != null && jsonObj.allowed_anonymous.indexOf(catid.value) >= 0) {
-							$('kanynomous_check').removeProperty('style');
+							$('kanynomous_check').removeProperty('style');	
+							$('kanynomous_check_name').removeProperty('style');
 						} else {
 							$('kanynomous_check').setStyle('display','none');
+							$('kanynomous_check_name').setStyle('display','none');
 						}
 					}
 				}).send();

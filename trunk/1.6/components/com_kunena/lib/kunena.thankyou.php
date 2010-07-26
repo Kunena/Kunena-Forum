@@ -46,6 +46,11 @@ class CKunenaThankyou {
 				$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
 				return;
 			}
+			if ( $this->my->id == $this->targetuserid ) {
+				$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
+				$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
+				return;
+			}
 
 			//Perform the insert
 			if(KunenaThankYou::storeThankYou($this->pid, $this->my->id, $this->targetuserid) !== true) KunenaError::checkDatabaseError();

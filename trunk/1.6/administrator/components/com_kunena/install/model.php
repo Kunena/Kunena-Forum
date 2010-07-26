@@ -483,7 +483,7 @@ class KunenaModelInstall extends JModel {
 	public function installSampleData() {
 		require_once ( KPATH_ADMIN.'/install/sampledata.php' );
 		if (installSampleData ())
-			$this->addStatus ( "Install Sample Data", true );
+			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true );
 		return true;
 	}
 
@@ -546,9 +546,9 @@ class KunenaModelInstall extends JModel {
 		}
 		if ($imported) {
 			if ($count)
-				$this->addStatus ( "Migrate avatars ({$count} left to go)", true );
+				$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS',$count), true );
 			else
-				$this->addStatus ( "Migrate avatars (done!)", true );
+				$this->addStatus ( JText::_('COM_KUNENA_MIGRATE_AVATARS_DONE'), true );
 		}
 		return !$imported;
 	}

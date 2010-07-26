@@ -33,6 +33,24 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+26-July-2010 Matias
+^ [#15886] Merged revisions 3092-3100 from /branches/1.6-xillibit-fxies-20100724
+
+25-July-2010 Xillibit
+# [#19288] Some language strings missing when set status on install/model.php
+
+24-July-2010 Xillibit
+# [#19288] Prevent to give thank you to yourself
+# [#19288] Fix wrong geshi path in kunena.parser (thanks jonijnm)
+# [#19288] Fix issue in report configuration and add details on mail configuration
+# [#19288] Fix some language strings
+# [#19288] Function to escape language strings because breaks some languages when you using quote with javascript editor functions
+# [#19288] Missing banned rank in sampledatas
+# [#19288] Wrong slash in ranks and smileys which prevent to display them in ranks and smileys manager
+# [#19288] Don't show the name input when you are not anonymous
+# [#19288] Some CSS fixes (thanks Cerberus)
+# [#19288] Update French language
+
 23-July-2010 Matias
 # [#19288] User online detection is using wrong timezone
 

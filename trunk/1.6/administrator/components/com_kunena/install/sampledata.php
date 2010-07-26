@@ -37,7 +37,8 @@ function installSampleData()
 	(6, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK6'))}, 320, 0, 'rank6.gif'),
 	(7, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK_ADMIN'))}, 0, 1, 'rankadmin.gif'),
 	(8, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK_MODERATOR'))}, 0, 1, 'rankmod.gif'),
-	(9, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER'))}, 0, 1, 'rankspammer.gif');";
+	(9, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK_SPAMMER'))}, 0, 1, 'rankspammer.gif'),
+	(10, {$db->quote(KText::_('COM_KUNENA_SAMPLEDATA_RANK_BANNED'))}, 0, 1, 'rankbanned.gif');";
 
 	$queries[] = array ('kunena_ranks', $query);
 

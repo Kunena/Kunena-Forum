@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+26-July-2010 Xillibit
+# [#19288] Put tokens on some forms
+
 25-July-2010 Xillibit
 # [#19288] Profile CSS fixes (thanks alakentu)
 # [#19288] Some language strings missing when set status on install/model.php

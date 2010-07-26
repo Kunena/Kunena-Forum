@@ -80,12 +80,20 @@ class CKunenaAjaxHelper {
 					$vote	= JRequest::getInt('kpollradio', '');
 					$id = JRequest::getInt ( 'kpoll-id', 0 );
 
+					if (!JRequest::checkToken()) {
+						return false;
+					}
+
 					$response = $this->_addPollVote ($vote, $id, $this->_my->id);
 
 					break;
 				case 'pollchangevote' :
 					$vote	= JRequest::getInt('kpollradio', '');
 					$id = JRequest::getInt ( 'kpoll-id', 0 );
+
+					if (!JRequest::checkToken()) {
+						return false;
+					}
 
 					$response = $this->_changePollVote ($vote, $id, $this->_my->id);
 

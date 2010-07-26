@@ -598,6 +598,8 @@ class CKunenaPost {
 	protected function domoderate() {
 		if (!$this->load())
 			return false;
+		if ($this->tokenProtection ())
+			return false;
 		if ($this->moderatorProtection ())
 			return false;
 		if ($this->isUserBanned() )

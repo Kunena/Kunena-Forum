@@ -72,6 +72,11 @@ class CKunenaReport {
 	protected function _sendPrepareReport( $type ) {
 		if ( !$this->reportAllowed () ) return false;
 
+		if(!JRequest::checkToken()) {
+			$this->app->redirect ( CKunenaLink::GetThreadPageURL('view',$this->catid, $this->id,NULL,NULL,$this->id,false), COM_KUNENA_ERROR_TOKEN, 'error' );
+			return false;
+		}
+
 		if (!empty($this->reason) && !empty($this->text)) {
 			if ( $this->id ) {
     			$this->_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text, c.username, c.id FROM #__kunena_messages AS a"

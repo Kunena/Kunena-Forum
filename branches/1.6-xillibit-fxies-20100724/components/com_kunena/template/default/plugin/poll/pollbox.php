@@ -109,6 +109,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								<?php endif; ?>
 							</div>
 							<input type="hidden" id="kpollvotejsonurl" value="<?php echo CKunenaLink::GetJsonURL('pollvote'); ?>" />
+							<?php echo JHTML::_( 'form.token' ); ?>
 						</form>
 						<?php
 						} else {

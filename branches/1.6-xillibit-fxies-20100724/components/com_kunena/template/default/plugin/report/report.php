@@ -41,6 +41,7 @@ $this->catid = JRequest::getInt('catid', 0);
 					<input type = "hidden" name = "id" value = "<?php echo intval($this->id); ?>"/>
 					<input type = "hidden" name = "catid" value = "<?php echo intval($this->catid); ?>"/>
 					<input type = "hidden" name = "do" value = "sendreport"/>
+					<?php echo JHTML::_( 'form.token' ); ?>
 					<input class="kbutton ks" type = "submit" name = "Submit" value = "<?php echo JText::_('COM_KUNENA_REPORT_SEND') ?>"/>
 				</form>
 			</div>

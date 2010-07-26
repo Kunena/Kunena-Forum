@@ -135,7 +135,7 @@ div.icon-container {
 						 if (JString::strpos ( KUNENA_VERSION, 'SVN' ) !== false) {
 					  ?>
 					  <div class="icon-container">
-						<div class = "icon"> <a href = "<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=install" title = "<?php echo JText::_('COM_KUNENA_SVN_INSTALL');?>"> <img src = "<?php echo JURI::base(); ?>components/com_kunena/images/install.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_SVN_INSTALL'); ?> </span></a> </div>
+						<div class = "icon"> <a href = "<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;view=install" title = "<?php echo JText::_('COM_KUNENA_SVN_INSTALL');?>"> <img src = "<?php echo JURI::base(); ?>components/com_kunena/images/install.png"  align = "middle" border = "0"/> <span> <?php echo JText::_('COM_KUNENA_SVN_INSTALL'); ?> </span></a> </div>
 					  </div>
 					  <?php
 						}

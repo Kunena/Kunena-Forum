@@ -35,6 +35,7 @@ class KunenaViewInstall extends JView
 		$user = JFactory::getUser();
 
 		// Load the view data.
+		$this->assign('model', $this->get('Model'));
 		$this->assignRef('state', $this->get('State'));
 		$this->assign('step', $this->get('Step'));
 		$this->assignRef('steps', $this->get('Steps'));
@@ -42,20 +43,11 @@ class KunenaViewInstall extends JView
 		$this->assign('error', $this->get('Error'));
 
 		$this->assignRef('requirements', $this->get('Requirements'));
-		$this->assign('installedVersion', $this->get('InstalledVersion'));
-		$this->assign('installAction', $this->get('InstallAction'));
+		$this->assign('versions', $this->get('DetectVersions'));
 
 		require_once(KPATH_ADMIN.'/install/version.php');
 		$version = new KunenaVersion();
 		$this->assignRef('versionWarning', $version->getVersionWarning('COM_KUNENA_INSTALL_WARNING'));
-
-		// Push out the view data.
-		$this->assign('link', JURI::root().'administrator/index.php?option=com_kunena&view=install&task=install');
-
-		$search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#BUILD_OLD#','#VERSION#','#BUILD#');
-		$replace = array ($this->installedVersion->component, $this->installedVersion->version, $this->installedVersion->build, Kunena::version(), Kunena::versionBuild());
-		$this->assign('txt_action', str_replace($search, $replace, JText::_('COM_KUNENA_INSTALL_LONG_'.$this->installAction)));
-		$this->assign('txt_install', str_replace($search, $replace, JText::_('COM_KUNENA_INSTALL_'.$this->installAction)));
 
 		// Render the layout.
 		$app =& JFactory::getApplication();
@@ -97,8 +89,12 @@ class KunenaViewInstall extends JView
 	}
 
 	function getActionURL() {
-		if ($this->error) return "location.replace('index.php?option=com_kunena&view=install&task=restart');";
-		return "location.replace('index.php?option=com_kunena&view=install&task=install');";
+		if ($this->error) return "location.replace('index.php?option=com_kunena&view=install&task=restart&".JUtility::getToken()."=1');";
+		return "location.replace('index.php?option=com_kunena&view=install&task=continue&".JUtility::getToken()."=1');";
+	}
+
+	function getActionText($version, $type='', $action=null) {
+		return $this->model->getActionText($version, $type, $action);
 	}
 
 }

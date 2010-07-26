@@ -255,7 +255,6 @@
 				UNIQUE KEY `postid` (`postid`,`userid`),
 				KEY `userid` (`userid`),
 				KEY `targetuserid` (`targetuserid`)) DEFAULT CHARSET=utf8;</query>
-		<phpfile name="sampledata.php" />
 	</install>
 	<upgrade>
 		<version version="1.0.0" versiondate="2007-04-15" build="100" versionname="">

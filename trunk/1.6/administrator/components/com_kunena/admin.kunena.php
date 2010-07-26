@@ -31,7 +31,7 @@ kimport('error');
 
 require_once(KPATH_ADMIN.'/install/version.php');
 $kn_version = new KunenaVersion();
-if ($view == 'install' || $task == 'install' || !$kn_version->checkVersion()) {
+if ($view == 'install' || !$kn_version->checkVersion()) {
 	require_once (KPATH_ADMIN . '/install/controller.php');
 	$controller = new KunenaControllerInstall();
 	$controller->execute( $task );

@@ -32,6 +32,7 @@ class KunenaControllerInstall extends JController {
 		$lang->load('com_kunena.install',KPATH_ADMIN);
 
 		parent::__construct ();
+		$this->registerTask( 'continue', 'doInstall' );
 		require_once(KPATH_ADMIN.'/install/model.php');
 		$this->model = $this->getModel ( 'Install' );
 		$this->step = $this->model->getStep ();
@@ -62,26 +63,26 @@ class KunenaControllerInstall extends JController {
 			$app = JFactory::getApplication ();
 	}
 
-	public function restart() {
-		$this->model->setStep ( 0 );
-		$this->install();
-	}
+	protected function doInstall() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 
-	public function install() {
 		set_exception_handler('kunenaInstallerExceptionHandler');
 		//set_error_handler('kunenaInstallerErrorHandler');
 
 		// Check requirements
 		$this->model->checkTimeout ();
 		$reqs = $this->model->getRequirements ();
-		if (! empty ( $reqs->fail )) {
+		$action = $this->model->getAction();
+		if (! empty ( $reqs->fail ) || !$action) {
 			// If requirements are not met, do not install
+			$this->model->setAction ( null );
 			$this->model->setStep ( 0 );
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
 			return;
 		}
 		if (!isset($this->steps[$this->step+1])) {
 			// Installation complete: reset and exit installer
+			$this->model->setAction ( null );
 			$this->model->setStep ( 0 );
 			$this->setRedirect ( 'index.php?option=com_kunena' );
 			return;
@@ -101,6 +102,72 @@ class KunenaControllerInstall extends JController {
 		} else {
 			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
 		}
+	}
+
+	public function restart() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setStep ( 0 );
+		$this->doInstall();
+	}
+	function install() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setAction ( 'install' );
+		$this->doInstall();
+	}
+	function upgrade() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setAction ( 'upgrade' );
+		$this->doInstall();
+	}
+	function downgrade() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setAction ( 'downgrade' );
+		$this->doInstall();
+	}
+	function up_build() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setAction ( 'up_build' );
+		$this->doInstall();
+	}
+	function down_build() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setAction ( 'down_build' );
+		$this->doInstall();
+	}
+	function reinstall() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setAction ( 'reinstall' );
+		$this->doInstall();
+	}
+	function migrate() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setAction ( 'migrate' );
+		$this->doInstall();
+	}
+	function uninstall() {
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->model->setAction ( 'uninstall' );
+		$this->model->deleteTables('kunena_');
+		$this->model->deleteMenu();
+		$app = JFactory::getApplication();
+		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
+		if (!Kunena::isSvn()) {
+			jimport('joomla.filesystem.folder');
+			JFolder::delete(KPATH_MEDIA);
+			jimport('joomla.installer.installer');
+			$installer = new JInstaller ( );
+			jimport('joomla.application.component.helper');
+			$component = JComponentHelper::getComponent('com_kunena');
+			$installer->uninstall ( 'component', $component->id );
+			$this->setRedirect ( 'index.php?option=com_installer' );
+		} else {
+			$this->setRedirect ( 'index.php?option=com_kunena&view=install' );
+		}
+	}
+	function restore() {
+		$this->model->setAction ( 'restore' );
+		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
+		$this->uninstall();
 	}
 
 	function abort() {

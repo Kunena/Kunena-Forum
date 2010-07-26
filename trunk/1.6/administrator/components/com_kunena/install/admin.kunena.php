@@ -32,6 +32,13 @@ define ( 'KUNENA_LOADED', 1 );
 
 // Version information
 class Kunena {
+	public static function isSvn() {
+		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
+			return true;
+		}
+		return false;
+	}
+
 	public static function version() {
 		return '@kunenaversion@';
 	}

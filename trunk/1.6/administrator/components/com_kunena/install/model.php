@@ -37,7 +37,8 @@ class KunenaModelInstall extends JModel {
 
 	protected $_req = false;
 	protected $_versionprefix = false;
-	protected $_installed = false;
+	protected $_installed = array();
+	protected $_versions = array();
 	protected $_action = false;
 
 	protected $_errormsg = null;
@@ -57,13 +58,20 @@ class KunenaModelInstall extends JModel {
 		$this->setState ( 'max_time', @ini_get ( 'max_execution_time' ) );
 
 		$this->_versiontablearray = array (array ('prefix' => 'kunena_', 'table' => 'kunena_version' ), array ('prefix' => 'fb_', 'table' => 'fb_version' ) );
-		$this->_versionarray = array (
+
+		$this->_kVersions = array (
+			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
+
+		$this->_fbVersions = array (
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.4', 'date' => '2007-12-23', 'table' => 'fb_sessions', 'column' => 'currvisit' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.3', 'date' => '2007-09-04', 'table' => 'fb_categories', 'column' => 'headerdesc' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.2', 'date' => '2007-08-03', 'table' => 'fb_users', 'column' => 'rank' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.1', 'date' => '2007-05-20', 'table' => 'fb_users', 'column' => 'uhits' ),
 			array ('component' => 'FireBoard', 'prefix' => 'fb_', 'version' => '1.0.0', 'date' => '2007-04-15', 'table' => 'fb_messages' ),
-			// array('component'=>'JoomlaBoard','prefix'=> 'sb_', 'version' =>'v1.0.5', 'date' => '0000-00-00', 'table' => 'sb_messages'),
+			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
+
+		$this->_sbVersions = array (
+			array('component'=>'JoomlaBoard','prefix'=> 'sb_', 'version' =>'v1.0.5', 'date' => '0000-00-00', 'table' => 'sb_messages'),
 			array ('component' => null, 'prefix' => null, 'version' => null, 'date' => null ) );
 
 		$this->steps = array (
@@ -94,6 +102,10 @@ class KunenaModelInstall extends JModel {
 	public function cleanup() {
 	}
 
+	public function getModel() {
+		return $this;
+	}
+
 	/**
 	 * Overridden method to get model state variables.
 	 *
@@ -106,8 +118,10 @@ class KunenaModelInstall extends JModel {
 		// if the model state is uninitialized lets set some values we will need from the request.
 		if ($this->__state_set === false) {
 			$app = JFactory::getApplication ();
+			$this->setState ( 'action', $step = $app->getUserState ( 'com_kunena.install.action', null ) );
 			$this->setState ( 'step', $step = $app->getUserState ( 'com_kunena.install.step', 0 ) );
 			$this->setState ( 'task', $task = $app->getUserState ( 'com_kunena.install.task', 0 ) );
+			$this->setState ( 'version', $task = $app->getUserState ( 'com_kunena.install.version', null ) );
 			if ($step == 0)
 				$app->setUserState ( 'com_kunena.install.status', array () );
 			$this->setState ( 'status', $app->getUserState ( 'com_kunena.install.status' ) );
@@ -123,12 +137,26 @@ class KunenaModelInstall extends JModel {
 		return $this->getState ( 'status', array() );
 	}
 
+	public function getAction() {
+		return $this->getState ( 'action', null );
+	}
+
 	public function getStep() {
 		return $this->getState ( 'step', 0 );
 	}
 
 	public function getTask() {
 		return $this->getState ( 'task', 0 );
+	}
+
+	public function getVersion() {
+		return $this->getState ( 'version', null );
+	}
+
+	public function setAction($action) {
+		$this->setState ( 'action', $action );
+		$app = JFactory::getApplication ();
+		$app->setUserState ( 'com_kunena.install.action', $action );
 	}
 
 	public function setStep($step) {
@@ -142,6 +170,12 @@ class KunenaModelInstall extends JModel {
 		$this->setState ( 'task', ( int ) $task );
 		$app = JFactory::getApplication ();
 		$app->setUserState ( 'com_kunena.install.task', ( int ) $task );
+	}
+
+	public function setVersion($version) {
+		$this->setState ( 'version', $version );
+		$app = JFactory::getApplication ();
+		$app->setUserState ( 'com_kunena.install.version', $version );
 	}
 
 	public function addStatus($task, $result = false, $msg = '') {
@@ -218,13 +252,22 @@ class KunenaModelInstall extends JModel {
 	public function stepPrepare() {
 		$results = array ();
 
-		// Migrate version table from old installation
-		$versionprefix = $this->getVersionPrefix ();
-		if (! empty ( $versionprefix )) {
-			$results [] = $this->migrateTable ( $versionprefix . 'version', 'kunena_version' );
+		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true );
+		$action = $this->getAction();
+		if ($action == 'install' || $action == 'migrate') {
+			// Let's start from clean database
+			$this->deleteTables('kunena_');
+			$this->deleteMenu();
+		}
+		$installed = $this->getDetectVersions();
+		if ($action == 'migrate' && $installed['fb']->component) {
+			$version = $installed['fb'];
+			$results [] = $this->migrateTable ( $version->prefix . 'version', 'kunena_version' );
 		} else {
+			$version = $installed['kunena'];
 			$results [] = $this->createVersionTable ( );
 		}
+		$this->setVersion($version);
 		$fields = array_pop($this->db->getTableFields($this->db->getPrefix () . 'kunena_version'));
 		if (!isset($fields['state'])) {
 			$sql = "ALTER TABLE " . $this->db->nameQuote ( $this->db->getPrefix () . 'kunena_version' ) . "  ADD `state` VARCHAR( 32 ) NOT NULL AFTER `versionname`";
@@ -235,14 +278,12 @@ class KunenaModelInstall extends JModel {
 		}
 
 		// Insert data from the old version, if it does not exist in the version table
-		$version = $this->getInstalledVersion ();
 		if ($version->id == 0 && $version->component)
 			$this->insertVersionData ( $version->version, $version->versiondate, $version->build, $version->versionname, null );
 
 		foreach ( $results as $i => $r )
 			if ($r)
 				$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], true );
-		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true );
 		$this->insertVersion ( 'migrateDatabase' );
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );
@@ -276,12 +317,15 @@ class KunenaModelInstall extends JModel {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == 1.5) {
-			$query = "UPDATE #__plugins SET published='1' WHERE element='mtupgrade'";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_MOOTOOLS12'), true);
+			jimport('joomla.plugin.helper');
+			if (!JPluginHelper::isEnabled('system', 'mtupgrade')) {
+				$query = "UPDATE #__plugins SET published='1' WHERE element='mtupgrade'";
+				$this->db->setQuery ( $query );
+				$this->db->query ();
+				if ($this->db->getErrorNum ())
+					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+				$this->addStatus ( JText::_('COM_KUNENA_INSTALL_MOOTOOLS12'), true);
+			}
 			/* $file = 'plgSystemMTUpgrade.zip';
 			if (is_file ( $path . DS . $file )) {
 				$this->installPlugin ( $path, $file, 'mtupgrade' );
@@ -339,11 +383,7 @@ class KunenaModelInstall extends JModel {
 		$config->remove ();
 		$config->create ();
 
-		jimport( 'joomla.version' );
-		$jversion = new JVersion();
-		if ($jversion->RELEASE == 1.5) {
-			$this->createMenu(false);
-		}
+		$this->createMenu(false);
 		CKunenaTools::reCountBoards();
 
 		jimport ( 'joomla.filesystem.file' );
@@ -367,7 +407,7 @@ class KunenaModelInstall extends JModel {
 
 	public function migrateDatabase() {
 		$results = array ();
-		$version = $this->getInstalledVersion ();
+		$version = $this->getVersion();
 		if (! empty ( $version->prefix )) {
 
 			// Migrate all tables from old installation
@@ -407,8 +447,7 @@ class KunenaModelInstall extends JModel {
 		$lang->load('com_kunena', KPATH_ADMIN);
 
 		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
-		$curversion = $this->getInstalledVersion();
-
+		$curversion = $this->getVersion();
 		// Allow queries to fail
 		$this->db->debug(0);
 		$results = array();
@@ -527,14 +566,8 @@ class KunenaModelInstall extends JModel {
 				if ($match) {
 					$ext = JString::strtolower($matches[1]);
 					$newfile = "users/avatar{$userid}.{$ext}";
-					if ( is_writable(KPATH_MEDIA ."/avatars/{$newfile}") ) {
-						echo "The directory ".KPATH_MEDIA ."/avatars/".$newfile." is not writable";
-						JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
-					} else {
-						// Todo: we have to do this better!
-						@chmod(KPATH_MEDIA ."/avatars/{$newfile}", 0777);
-						JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
-					}
+					@chmod($file, 0644);
+					JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
 				}
 			}
 			$query = "UPDATE #__kunena_users SET avatar={$this->db->quote($newfile)} WHERE userid={$userid}";
@@ -589,12 +622,70 @@ class KunenaModelInstall extends JModel {
 		return $this->_versionprefix;
 	}
 
-	public function getInstalledVersion() {
-		if ($this->_installed !== false) {
-			return $this->_installed;
+	public function getDetectVersions() {
+		if (!empty($this->_versions)) {
+			return $this->_versions;
+		}
+		$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions);
+		$fireboard = $this->getInstalledVersion('fb_', $this->_fbVersions);
+		$migrate = $this->isMigration($kunena, $fireboard);
+		if ($kunena->component) $this->_versions['kunena'] = $kunena;
+		if ($fireboard->component) $this->_versions['fb'] = $fireboard;
+		if (!$kunena->component) $this->_versions['kunena'] = $kunena;
+		else if ($fireboard->component) {
+			$uninstall = clone $fireboard;
+			$uninstall->action = 'RESTORE';
+			$this->_versions['uninstall'] = $uninstall;
+		} else {
+			$uninstall = clone $kunena;
+			$uninstall->action = 'UNINSTALL';
+			$this->_versions['uninstall'] = $uninstall;
+		}
+		foreach ($this->_versions as $version) {
+			$version->label = $this->getActionText($version);
+			$version->description = $this->getActionText($version, 'desc');
+			$version->hint = $this->getActionText($version, 'hint');
+			$version->warning = $this->getActionText($version, 'warn');
+			$version->link = JURI::root().'administrator/index.php?option=com_kunena&view=install&task='.strtolower($version->action).'&'.JUtility::getToken() .'=1';
+		}
+		if ($migrate) {
+			$kunena->warning = $this->getActionText($fireboard, 'warn', 'upgrade');
+		} else {
+			$kunena->warning = '';
 		}
 
-		$versionprefix = $this->getVersionPrefix ();
+		return $this->_versions;
+	}
+
+	public function isMigration($new, $old) {
+		// If K1.6 not installed: migrate
+		if (!$new->component || !$this->detectTable ( $new->prefix . 'messages' )) return true;
+		// If old not installed: upgrade
+		if (!$old->component || !$this->detectTable ( $old->prefix . 'messages' )) return false;
+		// If K1.6 is installed and old is not Kunena: upgrade
+		if ($old->component != 'Kunena') return false;
+		// User is currently using K1.6: upgrade
+		if (strtotime($new->installdate) > strtotime($old->installdate)) return false;
+		// User is currently using K1.0/K1.5: migrate
+		if (strtotime($new->installdate) < strtotime($old->installdate)) return true;
+		// Both K1.5 and K1.6 were installed during the same day.. Not going to be easy choice..
+
+		// Let's assume that this could be migration
+		return true;
+	}
+
+	public function getInstalledVersion($prefix, $versionlist) {
+		if (isset($this->_installed[$prefix])) {
+			return $this->_installed[$prefix];
+		}
+
+		if ($prefix === null) {
+			$versionprefix = $this->getVersionPrefix ();
+		} else if ($this->detectTable ( $prefix . 'version') ) {
+			$versionprefix = $prefix;
+		} else {
+			$versionprefix = null;
+		}
 
 		if ($versionprefix) {
 			// Version table exists, try to get installed version
@@ -603,34 +694,25 @@ class KunenaModelInstall extends JModel {
 			if ($this->db->getErrorNum ())
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
-			if (isset ( $version->state ) && $version->state != '') {
-				// We have new version of the table and installation process running, so try again
-				$this->db->setQuery ( "SELECT * FROM " . $this->db->nameQuote ( $this->db->getPrefix () . $versionprefix . 'version' ) . " WHERE `state`='' ORDER BY `id` DESC", 0, 1 );
-				$version = $this->db->loadObject ();
-				if ($this->db->getErrorNum ())
-					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-			}
 			if ($version) {
 				$version->version = strtolower ( $version->version );
-				if (version_compare ( $version->version, '1.6.0-dev', ">" ))
-					$version->prefix = 'kunena_';
-				else
-					$version->prefix = 'fb_';
+				$version->prefix = $versionprefix;
 				if (version_compare ( $version->version, '1.0.5', ">" ))
 					$version->component = 'Kunena';
 				else
 					$version->component = 'FireBoard';
 				$version->version = strtoupper ( $version->version );
+
+				// Version table may contain dummy version.. Ignore it
+				if (! $version || version_compare ( $version->version, '0.1.0', "<" ))
+					unset ( $version );
 			}
 
-			// Version table may contain dummy version.. Ignore it
-			if (! $version || version_compare ( $version->version, '0.1.0', "<" ))
-				unset ( $version );
 		}
 
 		if (!isset ( $version )) {
 			// No version found -- try to detect version by searching some missing fields
-			$match = $this->detectTable ( $this->_versionarray );
+			$match = $this->detectTable ( $versionlist );
 
 			// Clean install
 			if (empty ( $match ))
@@ -647,7 +729,8 @@ class KunenaModelInstall extends JModel {
 			$version->versionname = '';
 			$version->prefix = $match ['prefix'];
 		}
-		return $this->_installed = $version;
+		$version->action = $this->getInstallAction($version);
+		return $this->_installed[$prefix] = $version;
 	}
 
 	protected function insertVersion($state = 'beginInstall') {
@@ -663,15 +746,23 @@ class KunenaModelInstall extends JModel {
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 	}
 
-	public function getInstallAction() {
-		if ($this->_action !== false) {
-			return $this->_action;
+	function getActionText($version, $type='', $action=null) {
+		static $search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#BUILD_OLD#','#VERSION#','#BUILD#');
+		$replace = array ($version->component, $version->version, $version->build, Kunena::version(), Kunena::versionBuild());
+		if (!$action) $action = $version->action;
+		$str = '';
+		if ($type == 'hint' || $type == 'warn') {
+			$str .= '<strong class="k'.$type.'">'.JText::_('COM_KUNENA_INSTALL_'.$type).'</strong> ';
 		}
+		if ($action && $type) $type = '_'.$type;
+		$str .= str_replace($search, $replace, JText::_('COM_KUNENA_INSTALL_'.$action.$type));
+		return $str;
+	}
 
-		$version = $this->getInstalledVersion ();
+	public function getInstallAction($version = null) {
 		if ($version->component === null)
 			$this->_action = 'INSTALL';
-		else if (version_compare ( strtolower($version->version), '1.5.99', '<=' ))
+		else if ($version->prefix != 'kunena_')
 			$this->_action = 'MIGRATE';
 		else if (version_compare ( strtolower(Kunena::version()), strtolower($version->version), '>' ))
 			$this->_action = 'UPGRADE';
@@ -693,6 +784,7 @@ class KunenaModelInstall extends JModel {
 		static $fields = array ();
 
 		$found = 0;
+		if (is_string($detectlist)) $detectlist = array(array('table'=>$detectlist));
 		foreach ( $detectlist as $detect ) {
 			// If no detection is needed, return current item
 			if (! isset ( $detect ['table'] ))
@@ -715,7 +807,7 @@ class KunenaModelInstall extends JModel {
 			// Match if column in a table exists
 			if ($found && isset ( $detect ['column'] )) {
 				if (! isset ( $fields [$table] )) // Not cached
-{
+				{
 					$this->db->setQuery ( "SHOW COLUMNS FROM " . $this->db->nameQuote ( $table ) );
 					$result = $this->db->loadObjectList ( 'Field' );
 					if ($this->db->getErrorNum ())
@@ -815,6 +907,17 @@ class KunenaModelInstall extends JModel {
 		return $this->tables [$prefix];
 	}
 
+	function deleteTables($prefix) {
+		$tables = $this->listTables($prefix);
+		foreach ($tables as $table) {
+			$this->db->setQuery ( "DROP TABLE IF EXISTS " . $this->db->nameQuote ( $this->db->getPrefix () . $table ) );
+			$this->db->query ();
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+		}
+		unset($this->tables [$prefix]);
+	}
+
 	/**
 	 * Create a Joomla menu for the main
 	 * navigation tab and publish it in the Kunena module position kunena_menu.
@@ -841,11 +944,9 @@ class KunenaModelInstall extends JModel {
 			return;
 
 		// First we need to get the componentid of the install Kunena component
-		$query = "SELECT id FROM `#__components` WHERE `option`='com_kunena';";
-		$this->db->setQuery ( $query );
-		$componentid = ( int ) $this->db->loadResult ();
-		if ($this->db->getErrorNum ())
-			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+		jimport('joomla.application.component.helper');
+		$component = JComponentHelper::getComponent('com_kunena');
+		$componentid = $component->id;
 
 		// Create new Joomla menu for Kunena
 		$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";
@@ -855,7 +956,7 @@ class KunenaModelInstall extends JModel {
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 		// Do not touch existing menu during installation
-		if ($moduleid || ! $update) {
+		if ($moduleid && ! $update) {
 			return;
 		}
 
@@ -1010,6 +1111,7 @@ class KunenaModelInstall extends JModel {
 		$menuid = $this->db->loadResult ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+		if (!$menuid) return;
 
 		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/helpers/helper.php');
 		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/models/menutype.php');

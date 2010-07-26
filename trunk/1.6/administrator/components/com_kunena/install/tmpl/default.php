@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 $this->document->addStyleSheet ( JURI::base().'components/com_kunena/install/media/install.css' );
 if ($this->go == 'next') {
 	$this->document =& JFactory::getDocument();
-	$this->document->addScriptDeclaration("window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=install', false)."';});");
+	$this->document->addScriptDeclaration("window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=continue&'.JUtility::getToken() .'=1', false)."';});");
 }
 ?>
 <div id="stepbar">
@@ -40,12 +40,13 @@ if ($this->go == 'next') {
 				</div>
 			</div>
 			<div class="n">
-
+<?php if ($this->step) :?>
 				<div class="far-right">
 
 							<div class="button1-left"><div class="next"><a onclick="<?php echo $this->getActionURL(); ?>"><?php echo $this->getAction(); ?></a></div></div>
 
 				</div>
+<?php endif; ?>
 				<span class="step"><?php echo $this->steps[$this->step]['menu']; ?></span>
 
 			</div>

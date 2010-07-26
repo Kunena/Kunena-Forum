@@ -35,11 +35,12 @@ Kunena 1.6.0-BETA2
 
 26-July-2010 Matias
 ^ [#15886] Merged revisions 3092-3100 from /branches/1.6-xillibit-fxies-20100724
+# [#19288] Admin: If installer needs to be run, redirect to installer instead of using current URL
+# [#19288] Installer: Avatar migration fails because of missing directory
 
 25-July-2010 Matias
 # [#19288] Installer: Add options to install/upgrade, migrate and uninstall
 # [#19288] Installer: Make installation more robust
-# [#19288] Installer: Fix avatar import
 # [#19288] Installer: Hide load sample data status text when no sample data gets inserted
 # [#19288] Installer: Hide enabling Mootools 1.2 status text if it is already enabled
 

@@ -528,6 +528,7 @@ class KunenaModelInstall extends JModel {
 
 	public function migrateAvatars() {
 		jimport ( 'joomla.filesystem.file' );
+		jimport ( 'joomla.filesystem.path' );
 
 		static $dirs = array (
 			'images/fbfiles/avatars',
@@ -552,23 +553,33 @@ class KunenaModelInstall extends JModel {
 			$file = '';
 			$newfile = '';
 			if (is_file(KPATH_MEDIA ."/avatars/users/{$avatar}")) {
+				// Old format in K1.6 DEV
 				$file = KPATH_MEDIA ."/avatars/users/{$avatar}";
 			} else {
 				foreach ($dirs as $dir) {
-					if (!is_file(JPATH_ROOT . "/$dir/$avatar")) continue;
+					if (!JFile::exists(JPATH_ROOT . "/$dir/$avatar")) continue;
 					$file = JPATH_ROOT . "/$dir/$avatar";
 					break;
 				}
 			}
 			if ($file) {
+				$file = JPath::clean($file);
 				// Make sure to copy only supported fileformats
 				$match = preg_match('/\.(gif|jpg|jpeg|png)$/ui', $file, $matches);
 				if ($match) {
 					$ext = JString::strtolower($matches[1]);
 					$newfile = "users/avatar{$userid}.{$ext}";
-					@chmod($file, 0644);
-					JFile::copy($file, KPATH_MEDIA ."/avatars/{$newfile}");
+					$destpath = (KPATH_MEDIA ."/avatars/{$newfile}");
+					if (!JFile::exists($destpath)) {
+						@chmod($file, 0644);
+						$success = JFile::copy($file, $destpath);
+						if (!$success) $this->addStatus ( "User: {$userid}, Avatar copy failed: {$file} to {$destpath}", true );
+					}
+				} else {
+					$this->addStatus ( "User: {$userid}, Avatar file is not image: {$file}", true );
 				}
+			} else {
+				// $this->addStatus ( "User: {$userid}, Avatar file was not found: {$avatar}", true );
 			}
 			$query = "UPDATE #__kunena_users SET avatar={$this->db->quote($newfile)} WHERE userid={$userid}";
 			$this->db->setQuery ( $query );

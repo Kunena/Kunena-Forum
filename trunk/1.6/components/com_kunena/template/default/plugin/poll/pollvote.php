@@ -60,6 +60,7 @@ if ( $this->changevote ) {
 								?>
 								</ul>
 								<input type="hidden" name="kpoll-id" value="<?php echo intval($this->id); ?>">
+								<?php echo JHTML::_( 'form.token' ); ?>
 							</fieldset>
 							<div class="kpoll-btns">
 								<input id="kpoll-button-vote" class="kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />

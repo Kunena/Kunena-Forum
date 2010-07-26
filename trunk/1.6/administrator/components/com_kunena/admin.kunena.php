@@ -1140,6 +1140,10 @@ function editForum($uid, $option) {
 function saveForum($option) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
+	}
 
 	$kunena_my = &JFactory::getUser ();
 	kimport('tables.kunenacategory');
@@ -1165,6 +1169,10 @@ function publishForum($cid = null, $publish = 1, $option) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_my = &JFactory::getUser ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
+	}
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
 		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTANITEMTO') . " $action'); window.history.go(-1);</script>\n";
@@ -1194,6 +1202,10 @@ function deleteForum($cid = null, $option) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_my = &JFactory::getUser ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
+	}
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		$action = 'delete';
 		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTANITEMTO') . " $action'); window.history.go(-1);</script>\n";
@@ -1266,6 +1278,10 @@ function pollpublish ( $option, $cid = null, $publish = 1 ) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_my = &JFactory::getUser ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
+	}
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		$action = $publish ? 'publish' : 'unpublish';
 		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTANITEMTO') . " $action'); window.history.go(-1);</script>\n";
@@ -1290,6 +1306,10 @@ function pollunpublish ( $option, $cid = null, $unpublish = 0 ) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_my = &JFactory::getUser ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
+	}
 	if (! is_array ( $cid ) || count ( $cid ) < 1) {
 		$action = $unpublish ? 'unpublish' : 'publish';
 		echo "<script> alert('" . JText::_('COM_KUNENA_SELECTANITEMTO') . " $action'); window.history.go(-1);</script>\n";
@@ -1954,6 +1974,12 @@ function editUserProfile($option, $uid) {
 function saveUserProfile($option) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
+
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showprofiles" );
+	}
+
 	$newview = JRequest::getVar ( 'newview' );
 	$newrank = JRequest::getVar ( 'newrank' );
 	$signature = JRequest::getVar ( 'message' );
@@ -2004,6 +2030,11 @@ function trashUserMessages ( $option, $uid ) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
 
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=profiles" );
+	}
+
 	$path = KUNENA_PATH_LIB.'/kunena.moderation.class.php';
 	require_once ($path);
 	$kunena_mod = CKunenaModeration::getInstance();
@@ -2042,9 +2073,13 @@ function moveUserMessages ( $option, $uid ){
 }
 
 function moveUserMessagesNow ( $option, $cid ) {
-	$kunena_mod = CKunenaModeration::getInstance();
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
+
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=profiles" );
+	}
 
 	$path = KUNENA_PATH_LIB  .'/kunena.moderation.class.php';
 	require_once ($path);
@@ -2066,15 +2101,23 @@ function moveUserMessagesNow ( $option, $cid ) {
 
 function logout ( $option, $userid ) {
 	$app = JFactory::getApplication ();
+	if (!JRequest::checkToken()) {
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$app->redirect ( JURI::base () . "index.php?option=$option&task=showprofiles" );
+	}
 	$options = array();
 	$options['clientid'][] = 0; // site
-	$app->logout( (int) $userid, $options);
+	$app->logout( (int) $userid[0], $options);
 
 	$app->redirect ( JURI::base () . "index.php?option=com_kunena&task=profiles", JText::_('COM_A_KUNENA_USER_LOGOUT_DONE') );
 }
 
 function deleteUser ( $option, $uid ) {
 	$kunena_app = & JFactory::getApplication ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showprofiles" );
+	}
 	$path = KUNENA_PATH_LIB  .'/kunena.moderation.tools.class.php';
 	require_once ($path);
 	$user_mod = new CKunenaModerationTools();
@@ -2092,6 +2135,12 @@ function deleteUser ( $option, $uid ) {
 }
 
 function userban($option, $userid, $block = 0) {
+	$kunena_app = & JFactory::getApplication ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showprofiles" );
+	}
+
 	kimport ( 'userban' );
 	$userid = array_shift($userid);
 	$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
@@ -2143,6 +2192,11 @@ function pruneforum($kunena_db, $option) {
 function doprune($kunena_db, $option) {
 	require_once (KUNENA_PATH_LIB.'/kunena.timeformat.class.php');
 	$kunena_app = & JFactory::getApplication ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum" );
+		return;
+	}
 
 	$catid = JRequest::getInt ( 'prune_forum', - 1 );
 	$deleted = 0;
@@ -2216,6 +2270,11 @@ function douserssync($kunena_db, $option) {
 
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=syncusers" );
+		return;
+	}
 
 	if ($usercache) {
 		//reset access rights
@@ -2478,6 +2537,11 @@ function newsmiley($option) {
 function savesmiley($option, $id = NULL) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies" );
+		return;
+	}
 
 	$smiley_code = JRequest::getVar ( 'smiley_code' );
 	$smiley_location = JRequest::getVar ( 'smiley_url' );
@@ -2517,6 +2581,11 @@ function savesmiley($option, $id = NULL) {
 function deletesmiley($option, $cid) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showsmilies" );
+		return;
+	}
 
 	$cids = implode ( ',', $cid );
 
@@ -2708,6 +2777,11 @@ function newRank($option) {
 function deleteRank($option, $cid = null) {
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_app = & JFactory::getApplication ();
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks" );
+		return;
+	}
 
 	$cids = implode ( ',', $cid );
 	if ($cids) {
@@ -2722,6 +2796,12 @@ function deleteRank($option, $cid = null) {
 function saveRank($option, $id = NULL) {
 	$kunena_app = & JFactory::getApplication ();
 	$kunena_db = &JFactory::getDBO ();
+
+	if (!JRequest::checkToken()) {
+		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=ranks" );
+		return;
+	}
 
 	$rank_title = JRequest::getVar ( 'rank_title' );
 	$rank_image = JRequest::getVar ( 'rank_image' );
@@ -2761,6 +2841,7 @@ function editRank($option, $id) {
 
 	$kunena_db->setQuery ( "SELECT * FROM #__kunena_ranks WHERE rank_id = '$id'" );
 	$ranks = $kunena_db->loadObjectList ();
+
 	if (KunenaError::checkDatabaseError()) return;
 
 	$template = KunenaFactory::getTemplate();

@@ -44,6 +44,11 @@ class CKunenaUserlist {
 		// Search total
 		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE (block=0 OR activation='')";
 		if ($this->search != "") {
+			if (!JRequest::checkToken()) {
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				$this->app->redirect ( CKunenaLink::GetUserlistURL() );
+				return false;
+			}
 			$query .= " AND (u.name LIKE '%{$this->db->getEscaped($this->search)}%' OR u.username LIKE '%{{$this->db->getEscaped($this->search)}%')";
 		}
 

@@ -79,6 +79,7 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 	<div>
 		<input type="submit" class="button" value="<?php echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' ); ?>" />
 	</div>
+	<?php echo JHTML::_( 'form.token' ); ?>
 </form>
         </div>
 	</div>

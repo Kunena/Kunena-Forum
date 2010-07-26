@@ -576,6 +576,11 @@ class CKunenaProfile {
 		$reason_public = JRequest::getString ( 'reason_public', '' );
 		$comment = JRequest::getString ( 'comment', '' );
 
+		if(!JRequest::checkToken()) {
+			$this->_app->redirect ( CKunenaLink::GetProfileURL($this->profile->userid, false), COM_KUNENA_ERROR_TOKEN, 'error' );
+			return false;
+		}
+
 		kimport ( 'userban' );
 		$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
 		if (! $ban->id) {

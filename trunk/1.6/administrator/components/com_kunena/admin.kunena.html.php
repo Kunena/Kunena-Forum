@@ -572,6 +572,7 @@ table.kadmin-stat caption {
 	type="hidden" name="boxchecked" value="0"> <?php
 		echo '<input type = "hidden" name = "limitstart" value = "0">';
 		?>
+		<?php echo JHTML::_( 'form.token' ); ?>
 </form>
 
 <?php
@@ -780,6 +781,7 @@ table.kadmin-stat caption {
 	</fieldset>
 </dd>
 </dl>
+<?php echo JHTML::_( 'form.token' ); ?>
 </form>
 
 
@@ -2347,6 +2349,7 @@ table.kadmin-stat caption {
 		<input type="hidden" name="task" value="showprofiles" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<input type="hidden" name="limitstart" value="0" />
+		<?php echo JHTML::_( 'form.token' ); ?>
 	</form>
 	<?php
 		} //end function showProfiles
@@ -2651,6 +2654,7 @@ function textCounter(field, target) {
 	</fieldset>
 </dd>
 </dl>
+<?php echo JHTML::_( 'form.token' ); ?>
 </form>
 	<?php
 		}
@@ -2666,6 +2670,7 @@ function textCounter(field, target) {
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="option" value="<?php echo $option; ?>" />
 			<input type="hidden" name="uid" value="<?php echo $uid[0]; ?>" />
+			<?php echo JHTML::_( 'form.token' ); ?>
 			</form>
 	<?php
 		}
@@ -2693,7 +2698,9 @@ function textCounter(field, target) {
 			</tr>
 		</table>
 		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="option" value="<?php echo $option; ?>" /></form>
+		<input type="hidden" name="option" value="<?php echo $option; ?>" />
+		<?php echo JHTML::_( 'form.token' ); ?>
+		</form>
 		<?php
 			}
 
@@ -2732,6 +2739,7 @@ function textCounter(field, target) {
 				</fieldset>
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="option" value="<?php echo $option; ?>" />
+				<?php echo JHTML::_( 'form.token' ); ?>
 			</form>
 		</div>
 		<?php
@@ -2882,6 +2890,7 @@ function textCounter(field, target) {
 			<input type="hidden" name="task" value="showsmilies">
 			<input type="hidden" name="boxchecked" value="0">
 			<?php echo '<input type = "hidden" name = "limitstart" value = "0">'; ?>
+			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</dd>
 		<dt><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></dt>
@@ -2965,6 +2974,7 @@ function textCounter(field, target) {
 					?>"></td>
 				</tr>
 			</table>
+			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		<?php
 			} //end function editmilies
@@ -3018,6 +3028,7 @@ function textCounter(field, target) {
 						type="hidden" name="boxchecked" value="0"></td>
 				</tr>
 			</table>
+			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		<?php
 			} //end function newsmilies
@@ -3125,6 +3136,7 @@ function textCounter(field, target) {
 			<input type="hidden" name="option" value="<?php echo $option; ?>">
 			<input type="hidden" name="boxchecked" value="0">
 			<input type="hidden" name="task" value="ranks"> <input type="hidden" name="limitstart" value="0">
+			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</dd>
 		<dt><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></dt>
@@ -3200,6 +3212,7 @@ function textCounter(field, target) {
 						type="hidden" name="boxchecked" value="0"></td>
 				</tr>
 			</table>
+			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		<?php
 			} //end function edit rank
@@ -3272,6 +3285,7 @@ function textCounter(field, target) {
 					?>"></td>
 				</tr>
 			</table>
+			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		<?php
 			} //end function newrank

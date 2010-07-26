@@ -104,6 +104,7 @@ JHTML::_('behavior.calendar');
 						<input type="hidden" name="func" value="profile" />
 						<input type="hidden" name="do" value="ban" />
 						<input type="hidden" name="userid" value="<?php echo intval($this->profile->userid); ?>" />
+						<?php echo JHTML::_( 'form.token' ); ?>
 					</td>
 				</tr>
 				</tbody>

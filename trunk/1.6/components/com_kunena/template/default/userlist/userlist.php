@@ -55,6 +55,7 @@ $document->addScriptDeclaration( "function validate() {
 						value="<?php echo $this->escape($this->search); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape($this->search); ?>';" onfocus="if(this.value=='<?php echo $this->escape($this->search); ?>') this.value='';" />
 					<?php // FIXME: fixed image css sprite ?>
 						<input type="image" src="<?php echo KUNENA_TMPLTMAINIMGURL .'/images/usl_search_icon.png' ;?>" alt="<?php echo JText::_('COM_KUNENA_USRL_SEARCH'); ?>" align="top" style="border: 0px;" />
+						<?php echo JHTML::_( 'form.token' ); ?>
 				</form>
 			</div>
 			<div class="userlist-jump">

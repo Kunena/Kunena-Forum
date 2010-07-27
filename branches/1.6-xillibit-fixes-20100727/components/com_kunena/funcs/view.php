@@ -232,7 +232,7 @@ class CKunenaViewMessage {
 				$this->message_publish = CKunenaLink::GetTopicPostReplyLink ( 'approve', $this->catid, $this->id, CKunenaTools::showButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
 				$this->class = 'class="kmsg kunapproved"';
 			}
-			if ($message->hold == 2) {
+			if ($message->hold == 2 || $message->hold == 3) {
 				$this->class = 'class="kmsg kunapproved"';
 				$this->message_undelete = CKunenaLink::GetTopicPostLink ( 'undelete', $this->catid, $this->id, CKunenaTools::showButton ( 'undelete', JText::_('COM_KUNENA_BUTTON_UNDELETE') ), 'nofollow', JUtility::getToken(), 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG') );
 				$this->message_permdelete = CKunenaLink::GetTopicPostLink ( 'permdelete', $this->catid, $this->id, CKunenaTools::showButton ( 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE') ), 'nofollow', JUtility::getToken(), 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG') );

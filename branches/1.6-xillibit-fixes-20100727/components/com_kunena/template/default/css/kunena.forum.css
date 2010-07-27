@@ -654,6 +654,10 @@ PX		EM			PCT			PT
 	margin-right: 10px;
 }
 
+#Kunena .button-not-link {
+	color: #000000;
+}
+
 #Kunena input.kinput {
 	border: 1px solid #999999;
 }

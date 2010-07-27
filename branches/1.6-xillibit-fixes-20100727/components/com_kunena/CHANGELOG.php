@@ -35,7 +35,9 @@ Kunena 1.6.0-BETA2
 
 27-July-2010 Xillibit
 # [#19288] Update language file
-# [#19288] Put tokens on some forms (Part 2)
+# [#19288] Add missing tokens on some urls (subscribe, favorite...) (Part 2)
+# [#19288] When you delete a topic, only the first message is in gray
+# [#19288] Put a button back in moderate template page
 
 26-July-2010 Xillibit
 # [#19288] Add missing tokens to forms

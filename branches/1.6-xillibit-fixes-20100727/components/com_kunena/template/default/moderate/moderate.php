@@ -78,6 +78,7 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 	</div>
 	<div>
 		<input type="submit" class="button" value="<?php echo JText::_ ( 'COM_KUNENA_POST_MODERATION_PROCEED' ); ?>" />
+		<a href="javascript:history.back();" class="button" ><span class="button-not-link"><?php echo JText::_ ( 'COM_KUNENA_BACK' ); ?></span></a>
 	</div>
 	<?php echo JHTML::_( 'form.token' ); ?>
 </form>

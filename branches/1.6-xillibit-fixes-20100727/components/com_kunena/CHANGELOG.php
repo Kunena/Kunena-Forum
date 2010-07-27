@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+27-July-2010 Xillibit
+# [#19288] Update language file
+# [#19288] Put tokens on some forms (Part 2)
+
 26-July-2010 Xillibit
 # [#19288] Add missing tokens to forms
 # [#19288] Update french language file and little on english language file

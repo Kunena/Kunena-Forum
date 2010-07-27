@@ -38,6 +38,11 @@ class CKunenaThankyou {
 	 * @since 1.6
 	 */
 	function setThankyou(){
+		if (JRequest::checkToken ( 'get' ) == false) {
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
+				return;
+		}
 		if($this->config->showthankyou && $this->my->id){
 			//Check if the user already said thank you to this post
 			$saidit = KunenaThankYou::checkIfThankYouAllready($this->pid,$this->my->id);

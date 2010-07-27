@@ -61,6 +61,15 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 
                     if ($kunena_my->id != $userid)
                     {
+                    	if (JRequest::checkToken ( 'get' ) == false) {
+							$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+                    		if ($pid) {
+								$kunena_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $pid, $kunena_config->messages_per_page, $catid) );
+							} else {
+								$kunena_app->redirect ( CKunenaLink::GetMyProfileURL ( $userid) );
+                            }
+							return;
+						}
                         // This checkes to see if it's not too soon for a new karma change
                         if (!CKunenaTools::isModerator($kunena_my->id, $catid))
                         {

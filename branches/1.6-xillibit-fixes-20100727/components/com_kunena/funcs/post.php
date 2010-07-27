@@ -115,7 +115,7 @@ class CKunenaPost {
 	protected function post() {
 		$this->verifyCaptcha ();
 
-		if ($this->tokenProtection ())
+		if ($this->tokenProtection (0))
 			return false;
 		if ($this->floodProtection ())
 			return false;
@@ -363,7 +363,7 @@ class CKunenaPost {
 	}
 
 	protected function editpostnow() {
-		if ($this->tokenProtection ())
+		if ($this->tokenProtection (0))
 			return false;
 		if ($this->isUserBanned() )
 			return false;
@@ -451,6 +451,8 @@ class CKunenaPost {
 	}
 
 	protected function delete() {
+		if ($this->tokenProtection (1))
+			return false;
 		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
@@ -473,6 +475,8 @@ class CKunenaPost {
 	}
 
 	protected function undelete() {
+		if ($this->tokenProtection (1))
+			return false;
 		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
@@ -495,6 +499,8 @@ class CKunenaPost {
 	}
 
 	protected function permdelete() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		// FIXME: we need better permission control
@@ -522,6 +528,8 @@ class CKunenaPost {
 	}
 
 	protected function deletethread() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -598,7 +606,7 @@ class CKunenaPost {
 	protected function domoderate() {
 		if (!$this->load())
 			return false;
-		if ($this->tokenProtection ())
+		if ($this->tokenProtection (0))
 			return false;
 		if ($this->moderatorProtection ())
 			return false;
@@ -627,6 +635,8 @@ class CKunenaPost {
 	}
 
 	protected function subscribe() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' );
@@ -643,6 +653,8 @@ class CKunenaPost {
 	}
 
 	protected function unsubscribe() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
@@ -659,6 +671,8 @@ class CKunenaPost {
 	}
 
 	protected function favorite() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
@@ -675,6 +689,8 @@ class CKunenaPost {
 	}
 
 	protected function unfavorite() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
@@ -691,6 +707,8 @@ class CKunenaPost {
 	}
 
 	protected function sticky() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -709,6 +727,8 @@ class CKunenaPost {
 	}
 
 	protected function unsticky() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -727,6 +747,8 @@ class CKunenaPost {
 	}
 
 	protected function lock() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -745,6 +767,8 @@ class CKunenaPost {
 	}
 
 	protected function unlock() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -843,11 +867,18 @@ class CKunenaPost {
 		return false;
 	}
 
-	protected function tokenProtection() {
+	protected function tokenProtection($get='') {
 		// get the token put in the message form to check that the form has been valided successfully
-		if (JRequest::checkToken () == false) {
-			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			return true;
+		if ( !$get ) {
+			if (JRequest::checkToken () == false) {
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				return true;
+			}
+		} else {
+			if (JRequest::checkToken ( 'get' ) == false) {
+				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				return true;
+			}
 		}
 		return false;
 	}

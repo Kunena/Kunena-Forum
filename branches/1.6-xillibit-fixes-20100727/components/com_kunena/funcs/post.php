@@ -787,6 +787,8 @@ class CKunenaPost {
 	}
 
 	protected function approve() {
+		if ($this->tokenProtection (1))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -801,7 +803,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetMesageURL ( $this->id, $this->catid ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ), $success_msg );
 	}
 
 	function hasThreadHistory() {

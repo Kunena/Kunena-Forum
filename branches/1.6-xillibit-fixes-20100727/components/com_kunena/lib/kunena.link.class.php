@@ -282,8 +282,9 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=post&do=' . $do . '&catid=' . $catid . '&id=' . $id.$token, $name, $title, $rel, $class );
 	}
 
-	function GetTopicPostReplyLink($do, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=post&do=' . $do . '&catid=' . $catid . '&id=' . $id, $name, $title, $rel, $class, '', $attr );
+	function GetTopicPostReplyLink($do, $catid, $id, $name, $token ='', $rel = 'nofollow', $class = '', $title = '', $attr = '') {
+		if (!empty($token))$token = '&'.$token.'=1';
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=post&do=' . $do . '&catid=' . $catid . '&id=' . $id.$token, $name, $title, $rel, $class, '', $attr );
 	}
 
 	function GetEmailLink($email, $name) {

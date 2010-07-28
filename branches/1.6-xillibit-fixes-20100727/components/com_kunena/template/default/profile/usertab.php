@@ -51,6 +51,12 @@ JHTML::_('behavior.tooltip');
 
 <div id="kprofile-tabs">
 	<dl class="tabs">
+		<?php if (CKunenaTools::isModerator($this->my->id)): ?>
+		<dt class="open"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></dt>
+		<dd style="display: none;">
+			<?php $this->displayReviewPosts(); ?>
+		</dd>
+		<?php endif; ?>
 		<dt class="open"><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayUserPosts(); ?>

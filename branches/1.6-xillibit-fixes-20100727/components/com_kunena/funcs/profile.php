@@ -224,6 +224,13 @@ class CKunenaProfile {
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
 	}
 
+	function displayReviewPosts()
+	{
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
+		$review = new CKunenaReview(1);
+		$review->display();
+	}
+
 	function displayGotThankYou()
 	{
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+28-July-2010 Xillibit
+# [#19288] Re-write of review to use a class and put a new tab in profile
+
 27-July-2010 Xillibit
 # [#19288] Update language file
 # [#19288] Add missing tokens on some urls (subscribe, favorite...) (Part 2)

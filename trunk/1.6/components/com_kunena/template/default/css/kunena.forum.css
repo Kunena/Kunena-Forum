@@ -654,6 +654,10 @@ PX		EM			PCT			PT
 	margin-right: 10px;
 }
 
+#Kunena .kbutton-back {
+	color: #000000;
+}
+
 #Kunena input.kinput {
 	border: 1px solid #999999;
 }
@@ -3488,7 +3492,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 }
 #Kunena span.ktopiclocked,
 #Kunena span.kforumlocked {
-	background: url("../images/icons/lock_xsm.png") no-repeat left center;
+	background: url("../images/icons/lock_sm.png") no-repeat left center;
 	width: 16px;
 	height: 16px;
 }

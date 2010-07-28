@@ -520,6 +520,7 @@ class CKunenaTools {
 	function KDeletePosts() {
 		$kunena_app = JFactory::getApplication ();
 
+		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
 		if (!JRequest::checkToken()) {
 			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$kunena_app->redirect ( $backUrl );
@@ -527,8 +528,6 @@ class CKunenaTools {
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
 
 		$items = KGetArrayInts ( "cb" );
 
@@ -552,6 +551,7 @@ class CKunenaTools {
 
 		$kunena_app = JFactory::getApplication ();
 
+		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
 		if (!JRequest::checkToken()) {
 			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			$kunena_app->redirect ( $backUrl );
@@ -559,8 +559,6 @@ class CKunenaTools {
 
 		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
 		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
 
 		$items = KGetArrayInts ( "cb" );
 

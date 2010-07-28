@@ -277,10 +277,12 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=post&do=new&catid=' . $catid, $name, $title, $rel, $class );
 	}
 
-	function GetTopicPostLink($do, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '') {
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=post&do=' . $do . '&catid=' . $catid . '&id=' . $id, $name, $title, $rel, $class );
+	// Get actions: favorite, subscribe, delete, approve etc
+	function GetTopicPostLink($do, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=post&do=' . $do . '&catid=' . $catid . '&id=' . $id . '&'.JUtility::getToken().'=1', $name, $title, $rel, $class, '', $attr );
 	}
 
+	// Post actions: post, edit, moderate etc
 	function GetTopicPostReplyLink($do, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=post&do=' . $do . '&catid=' . $catid . '&id=' . $id, $name, $title, $rel, $class, '', $attr );
 	}
@@ -290,11 +292,13 @@ class CKunenaLink {
 	}
 
 	function GetKarmaLink($do, $catid, $pid, $userid, $name, $rel = 'nofollow') {
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=karma&do=' . $do . '&userid=' . $userid . '&pid=' . $pid . '&catid=' . $catid, $name, '', $rel );
+		$token = '&'.JUtility::getToken().'=1';
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=karma&do=' . $do . '&userid=' . $userid . '&pid=' . $pid . '&catid=' . $catid.$token, $name, '', $rel );
 	}
 
 	function GetThankYouLink( $catid, $pid, $targetuserid, $name, $title, $class) {
-		return CKunenaLink::GetSefHrefLink (KUNENA_LIVEURLREL.'&func=thankyou&pid='.$pid.'&catid='.$catid.'&targetuserid='.$targetuserid, $name, $title, 'nofollow', $class);
+		$token = '&'.JUtility::getToken().'=1';
+		return CKunenaLink::GetSefHrefLink (KUNENA_LIVEURLREL.'&func=thankyou&pid='.$pid.'&catid='.$catid.'&targetuserid='.$targetuserid.$token, $name, $title, 'nofollow', $class);
 	}
 
 	function GetRulesLink($name, $rel = 'nofollow') {

@@ -654,6 +654,10 @@ PX		EM			PCT			PT
 	margin-right: 10px;
 }
 
+#Kunena .kbutton-back {
+	color: #000000;
+}
+
 #Kunena input.kinput {
 	border: 1px solid #999999;
 }
@@ -1515,7 +1519,7 @@ PX		EM			PCT			PT
 #Kunena td.kmessage-left div,
 #Kunena td.kmessage-top div,
 #Kunena td.kmessage-bottom div {
-	width: 100%;
+	width: 97%;
 }
 #Kunena div.kmsgbody div.kmsgtext {
 	overflow: auto;
@@ -1829,7 +1833,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-minus {
-	background: url("../../default/media/iconsets/profile/default/default.png") no-repeat left -294px;
+	background: url("../../default/media/iconsets/profile/default/default.png") no-repeat 0px -294px;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -1837,7 +1841,7 @@ PX		EM			PCT			PT
 }
 
 #Kunena span.kkarma-plus {
-	background: url("../../default/media/iconsets/profile/default/default.png") no-repeat left -313px;
+	background: url("../../default/media/iconsets/profile/default/default.png") no-repeat 0px -313px;
 	height: 14px;
 	width: 14px;
 	display: inline-block;
@@ -2901,8 +2905,11 @@ MODERATOR PAGE
 	width: 35%;
 }
 #Kunena table#kaddban td.kcol-mid textarea {
-	width: 80%;
+	width: 100%;
 	height: 50px;
+}
+#Kunena table#kaddban td.kcol-mid input {
+	width: 100%;	
 }
 #Kunena table#kforumsearch th {
 	padding: 0px;
@@ -3485,7 +3492,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 }
 #Kunena span.ktopiclocked,
 #Kunena span.kforumlocked {
-	background: url("../../default/images/icons/lock_xsm.png") no-repeat left center;
+	background: url("../../default/images/icons/lock_sm.png") no-repeat left center;
 	width: 16px;
 	height: 16px;
 }

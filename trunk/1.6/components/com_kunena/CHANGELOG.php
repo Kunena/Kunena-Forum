@@ -33,6 +33,16 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+26-July-2010 Matias
+^ [#15886] Merged revisions 3113-3115 from /branches/branches/1.6-xillibit-fixes-20100727
+
+27-July-2010 Xillibit
+# [#19288] Update language file
+# [#19288] Add missing tokens on some urls (subscribe, favorite...)
+# [#19288] When you delete a topic, only the first message is in gray
+# [#19288] Put a button back in moderate template page
+# [#19288] Locked icon renamed to lock_sm.png because old name can cause issues when upgrading Kunena
+
 26-July-2010 Xillibit
 # [#19288] Add missing tokens to forms
 # [#19288] Update french language file and little on english language file

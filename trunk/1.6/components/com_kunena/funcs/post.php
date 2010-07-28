@@ -451,6 +451,8 @@ class CKunenaPost {
 	}
 
 	protected function delete() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
@@ -473,6 +475,8 @@ class CKunenaPost {
 	}
 
 	protected function undelete() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if ($this->isUserBanned() )
 			return false;
 		if ($this->isIPBanned())
@@ -495,6 +499,8 @@ class CKunenaPost {
 	}
 
 	protected function permdelete() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		// FIXME: we need better permission control
@@ -522,6 +528,8 @@ class CKunenaPost {
 	}
 
 	protected function deletethread() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -627,6 +635,8 @@ class CKunenaPost {
 	}
 
 	protected function subscribe() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' );
@@ -643,6 +653,8 @@ class CKunenaPost {
 	}
 
 	protected function unsubscribe() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
@@ -659,6 +671,8 @@ class CKunenaPost {
 	}
 
 	protected function favorite() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
@@ -675,6 +689,8 @@ class CKunenaPost {
 	}
 
 	protected function unfavorite() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
@@ -691,6 +707,8 @@ class CKunenaPost {
 	}
 
 	protected function sticky() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -709,6 +727,8 @@ class CKunenaPost {
 	}
 
 	protected function unsticky() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -727,6 +747,8 @@ class CKunenaPost {
 	}
 
 	protected function lock() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -745,6 +767,8 @@ class CKunenaPost {
 	}
 
 	protected function unlock() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -763,6 +787,8 @@ class CKunenaPost {
 	}
 
 	protected function approve() {
+		if ($this->tokenProtection ('get'))
+			return false;
 		if (!$this->load())
 			return false;
 		if ($this->moderatorProtection ())
@@ -777,7 +803,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetMesageURL ( $this->id, $this->catid ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ), $success_msg );
 	}
 
 	function hasThreadHistory() {
@@ -843,9 +869,9 @@ class CKunenaPost {
 		return false;
 	}
 
-	protected function tokenProtection() {
+	protected function tokenProtection($method='post') {
 		// get the token put in the message form to check that the form has been valided successfully
-		if (JRequest::checkToken () == false) {
+		if (JRequest::checkToken ($method) == false) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return true;
 		}

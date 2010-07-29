@@ -130,9 +130,9 @@
 		<copy file="${project_dir}/${kunena.backend}/libraries/api.php" todir="${tmp_dir}/${kunena.backend}/libraries" overwrite="true" filtering="true" />
 
 		<!-- Move files needed by the installer -->
-		<move file="${tmp_dir}/${kunena.backend}/install/admin.kunena.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/install/kunena.php" todir="${build_dir}" overwrite="true" filtering="true" />
-		<move file="${tmp_dir}/${kunena.backend}/install/router.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/admin.kunena.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/kunena.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/router.php" todir="${build_dir}" overwrite="true" filtering="true" />
 		<move file="${tmp_dir}/${kunena.backend}/install/kunena.install.upgrade.xml" todir="${build_dir}/install" overwrite="true" filtering="true" />
 		<move todir="${build_dir}">
 			<fileset dir="${tmp_dir}/${kunena.backend}">

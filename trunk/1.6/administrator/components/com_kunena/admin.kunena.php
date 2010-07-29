@@ -87,6 +87,14 @@ if (! $no_html) {
 $option = JRequest::getCmd ( 'option' );
 
 switch ($task) {
+	case 'schema' :
+		showSchema();
+		break;
+
+	case 'schemadiff' :
+		showSchemaDiff();
+		break;
+
 	case "new" :
 		editForum ( 0, $option );
 
@@ -526,6 +534,30 @@ if (is_object ( $kunenaProfile )) {
 
 html_Kunena::showFbFooter ();
 
+function showSchema() {
+	require_once KPATH_ADMIN . '/install/schema.php';
+	$schema = new KunenaModelSchema ();
+	echo '<textarea cols="80" rows="50">';
+	echo kunena_htmlspecialchars($schema->getSchema()->saveXML());
+	echo '</textarea>';
+
+}
+
+function showSchemaDiff() {
+	require_once KPATH_ADMIN . '/install/schema.php';
+	$schema = new KunenaModelSchema ();
+	$diff = $schema->getDiffSchema();
+	$sql = $schema->getSchemaSQL($diff);
+	echo '<textarea cols="80" rows="20">';
+	echo kunena_htmlspecialchars($diff->saveXML());
+	echo '</textarea>';
+	echo '<textarea cols="80" rows="20">';
+	foreach ($sql as $item) {
+		echo $item['sql']."\n\n";
+	}
+	echo '</textarea>';
+
+}
 //###########################################
 //			START TEMPLATE MANAGER
 //###########################################

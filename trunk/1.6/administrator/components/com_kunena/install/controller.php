@@ -32,7 +32,6 @@ class KunenaControllerInstall extends JController {
 		$lang->load('com_kunena.install',KPATH_ADMIN);
 
 		parent::__construct ();
-		$this->registerTask( 'continue', 'doInstall' );
 		require_once(KPATH_ADMIN.'/install/model.php');
 		$this->model = $this->getModel ( 'Install' );
 		$this->step = $this->model->getStep ();
@@ -63,7 +62,7 @@ class KunenaControllerInstall extends JController {
 			$app = JFactory::getApplication ();
 	}
 
-	protected function doInstall() {
+	public function run() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 
 		set_exception_handler('kunenaInstallerExceptionHandler');
@@ -107,42 +106,42 @@ class KunenaControllerInstall extends JController {
 	public function restart() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setStep ( 0 );
-		$this->doInstall();
+		$this->run();
 	}
 	function install() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setAction ( 'install' );
-		$this->doInstall();
+		$this->run();
 	}
 	function upgrade() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setAction ( 'upgrade' );
-		$this->doInstall();
+		$this->run();
 	}
 	function downgrade() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setAction ( 'downgrade' );
-		$this->doInstall();
+		$this->run();
 	}
 	function up_build() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setAction ( 'up_build' );
-		$this->doInstall();
+		$this->run();
 	}
 	function down_build() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setAction ( 'down_build' );
-		$this->doInstall();
+		$this->run();
 	}
 	function reinstall() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setAction ( 'reinstall' );
-		$this->doInstall();
+		$this->run();
 	}
 	function migrate() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );
 		$this->model->setAction ( 'migrate' );
-		$this->doInstall();
+		$this->run();
 	}
 	function uninstall() {
 		JRequest::checkToken( 'get' ) or die( 'Invalid Token' );

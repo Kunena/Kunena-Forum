@@ -170,6 +170,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $board_title = 'Kunena';
 	var $email = 'change@me.com';
 	var $board_offline = 0;
+	var $board_ofset = '0.00'; // DEPRECATED, needed in installer
 	var $offline_message = "<h2>The Forum is currently offline for maintenance.</h2>\n<div>Check back soon!</div>";
 	var $enablerss = 1;
 	var $enablepdf = 1;
@@ -213,7 +214,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $mailadmin = 0;
 	var $captcha = 0;
 	var $mailfull = 1;
-	var $allowavatar = 1; // deprecated
+	var $allowavatar = 1; // DEPRECATED, needed in installer
 	var $allowavatarupload = 1;
 	var $allowavatargallery = 1;
 	var $imageprocessor = 'gd2';
@@ -230,9 +231,9 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $filesize = 120;
 	var $showranking = 1;
 	var $rankimages = 1;
-	var $avatar_src = 'fb'; // deprecated
-	var $fb_profile = 'fb'; // deprecated
-	var $pm_component = 'no';
+	var $avatar_src = 'fb'; // DEPRECATED, needed in installer
+	var $fb_profile = 'fb'; // DEPRECATED, needed in installer
+	var $pm_component = 'no'; // DEPRECATED, needed in installer
 	var $userlist_rows = 30;
 	var $userlist_online = 1;
 	var $userlist_avatar = 1;
@@ -318,7 +319,7 @@ class CKunenaConfig extends CKunenaConfigBase {
     // New for 1.6 -> hide IP
     var $hide_ip = 1;
     // New for 1.6 -> disable/enable activity stream
-    var $js_actstr_integration = 0;
+    var $js_actstr_integration = 0; // DEPRECATED, used in installer
     // New for 1.6 -> image file types
 	var $imagetypes = 'jpg,jpeg,gif,png';
     var $checkmimetypes = 1;

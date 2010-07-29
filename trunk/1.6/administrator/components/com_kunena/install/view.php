@@ -40,8 +40,8 @@ class KunenaViewInstall extends JView
 		$this->assign('step', $this->get('Step'));
 		$this->assignRef('steps', $this->get('Steps'));
 		$this->assignRef('status', $this->get('Status'));
-		$this->assign('error', $this->get('Error'));
 
+		$this->assign('error', $this->get('Error'));
 		$this->assignRef('requirements', $this->get('Requirements'));
 		$this->assign('versions', $this->get('DetectVersions'));
 
@@ -90,7 +90,7 @@ class KunenaViewInstall extends JView
 
 	function getActionURL() {
 		if ($this->error) return "location.replace('index.php?option=com_kunena&view=install&task=restart&".JUtility::getToken()."=1');";
-		return "location.replace('index.php?option=com_kunena&view=install&task=continue&".JUtility::getToken()."=1');";
+		return "location.replace('index.php?option=com_kunena&view=install&task=run&".JUtility::getToken()."=1');";
 	}
 
 	function getActionText($version, $type='', $action=null) {

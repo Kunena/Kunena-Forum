@@ -33,7 +33,21 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
-26-July-2010 Matias
+29-July-2010 Matias
+# [#19288] Installer: Keep integration settings from older versions
+# [#19288] Installer: Split upgrade php files by meaning and improve error detection during installation
+# [#19288] Installer: Reset version information when starting installation
+# [#19288] Installer: Use new XML schema to create tables
+# [#19288] Installer: Fix stalled install in J1.6
+
+28-July-2010 Matias
+# [#19288] Installer: Add KunenaSchema class and install.xml to check current database schema against XML file (run manually)
+# [#19288] Installer: Move SQL queries from version 1.0.5 to 1.0.0-1.0.4 to avoid DB errors
+# [#19288] Installer: Make sure that clean installations from FB1.0.0 to FB1.5.2RC2 generate identical DB schema to the new installation
+# [#19288] Installer: Migrate configuration from FB <= 1.0.4 (no more external tools needed)
+# [#19288] Installer: Move/rename files to make installer easier to understand
+
+28-July-2010 Matias
 ^ [#15886] Merged revisions 3113-3115 from /branches/branches/1.6-xillibit-fixes-20100727
 
 27-July-2010 Xillibit

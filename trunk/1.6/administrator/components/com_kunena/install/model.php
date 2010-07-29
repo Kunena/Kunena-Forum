@@ -252,7 +252,9 @@ class KunenaModelInstall extends JModel {
 	public function stepPrepare() {
 		$results = array ();
 
+		$this->setVersion(null);
 		$this->setAvatarStatus();
+		$this->setAttachmentStatus();
 		$this->addStatus ( JText::_('COM_KUNENA_INSTALL_STEP_PREPARE'), true );
 		$action = $this->getAction();
 		if ($action == 'install' || $action == 'migrate') {
@@ -263,24 +265,20 @@ class KunenaModelInstall extends JModel {
 		$installed = $this->getDetectVersions();
 		if ($action == 'migrate' && $installed['fb']->component) {
 			$version = $installed['fb'];
-			$results [] = $this->migrateTable ( $version->prefix . 'version', 'kunena_version' );
+			$results [] = $this->migrateTable ( $version->prefix, $version->prefix . 'version', 'kunena_version' );
 		} else {
 			$version = $installed['kunena'];
-			$results [] = $this->createVersionTable ( );
 		}
 		$this->setVersion($version);
-		$fields = array_pop($this->db->getTableFields($this->db->getPrefix () . 'kunena_version'));
-		if (!isset($fields['state'])) {
-			$sql = "ALTER TABLE " . $this->db->nameQuote ( $this->db->getPrefix () . 'kunena_version' ) . "  ADD `state` VARCHAR( 32 ) NOT NULL AFTER `versionname`";
-			$this->db->setQuery ( $sql );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		}
+
+		require_once KPATH_ADMIN.'/install/schema.php';
+		$schema = new KunenaModelSchema();
+		$results[] = $schema->updateSchemaTable('kunena_version');
 
 		// Insert data from the old version, if it does not exist in the version table
-		if ($version->id == 0 && $version->component)
+		if ($version->id == 0 && $version->component) {
 			$this->insertVersionData ( $version->version, $version->versiondate, $version->build, $version->versionname, null );
+		}
 
 		foreach ( $results as $i => $r )
 			if ($r)
@@ -380,9 +378,6 @@ class KunenaModelInstall extends JModel {
 		require_once (KPATH_ADMIN . '/api.php');
 		kimport('factory');
 		require_once (KPATH_SITE . '/class.kunena.php');
-		$config = KunenaFactory::getConfig();
-		$config->remove ();
-		$config->create ();
 
 		$this->createMenu(false);
 		CKunenaTools::reCountBoards();
@@ -415,31 +410,57 @@ class KunenaModelInstall extends JModel {
 			$tables = $this->listTables ( $version->prefix );
 			foreach ( $tables as $oldtable ) {
 				$newtable = preg_replace ( '/^' . $version->prefix . '/', 'kunena_', $oldtable );
-				$results [] = $this->migrateTable ( $oldtable, $newtable );
+				$results [] = $this->migrateTable ( $version->prefix, $oldtable, $newtable );
 			}
 			foreach ( $results as $i => $r )
 				if ($r)
-					$this->addStatus ( $r ['action'] . ' ' . $r ['name'], true );
+					$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], true );
 		}
 		$this->updateVersionState ( 'upgradeDatabase' );
 		return true;
 	}
 
 	public function installDatabase() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', KPATH_SITE);
-		$lang->load('com_kunena', KPATH_ADMIN);
-
-		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
-
+		require_once KPATH_ADMIN.'/install/schema.php';
+		$schema = new KunenaModelSchema();
+		$create = $schema->getCreateSQL();
+		$tables = $this->listTables ( 'kunena_', true );
 		$results = array();
-		foreach ($xml->install[0] as $action) {
-			$results [] = $this->processUpgradeXMLNode($action);
+		foreach ( $create as $table=>$query ) {
+			if (!isset($tables[$table])) {
+				$results[] = $schema->updateSchemaTable($table);
+			}
 		}
 		foreach ( $results as $i => $r )
 			if ($r)
-				$this->addStatus ( $r ['action'] . ' ' . $r ['name'], $r ['success'] );
+				$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], $r ['success'] );
 		return true;
+	}
+
+	function migrateConfig() {
+		require_once KPATH_ADMIN.'/api.php';
+		kimport('factory');
+		$config = KunenaFactory::getConfig();
+		$version = $this->getVersion();
+		if (version_compare ( $version->version, '1.0.4', "<=" ) ) {
+			$file = JPATH_ADMINISTRATOR . '/components/com_fireboard/fireboard_config.php';
+			if (is_file($file)) {
+				require_once $file;
+				$fbConfig = (array)$fbConfig;
+				$keys = $config->GetClassVars ();
+				foreach ($fbConfig as $key=>$value) {
+					if (isset ( $keys[$key] )) {
+						if (is_string ( $config->$key )) {
+							$config->$key = $value;
+						} else {
+							$config->$key = (int)$value;
+						}
+					}
+				}
+			}
+		}
+		$config->remove ();
+		$config->create ();
 	}
 
 	public function upgradeDatabase() {
@@ -447,24 +468,26 @@ class KunenaModelInstall extends JModel {
 		$lang->load('com_kunena', KPATH_SITE);
 		$lang->load('com_kunena', KPATH_ADMIN);
 
+		$results [] = $this->migrateConfig();
+
 		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
 		$curversion = $this->getVersion();
+		if (!$curversion->component) return true;
+
 		// Allow queries to fail
 		$this->db->debug(0);
 		$results = array();
-		if ($curversion->id) {
-			foreach ($xml->upgrade[0] as $version) {
-				if ($version['version'] == '@'.'kunenaversion'.'@') {
-					$svn = 1;
-				}
-				if(isset($svn) ||
-						($version['versiondate'] > $curversion->versiondate) ||
-						(version_compare(strtolower($version['version']), strtolower($curversion->version), '>')) ||
-						(version_compare(strtolower($version['version']), strtolower($curversion->version), '==') &&
-						$version['build'] > $curversion->build)) {
-					foreach ($version as $action) {
-						$results [] = $this->processUpgradeXMLNode($action);
-					}
+		foreach ($xml->upgrade[0] as $version) {
+			if ($version['version'] == '@'.'kunenaversion'.'@') {
+				$svn = 1;
+			}
+			if(isset($svn) ||
+					($version['versiondate'] > $curversion->versiondate) ||
+					(version_compare(strtolower($version['version']), strtolower($curversion->version), '>')) ||
+					(version_compare(strtolower($version['version']), strtolower($curversion->version), '==') &&
+					$version['build'] > $curversion->build)) {
+				foreach ($version as $action) {
+					$results [] = $this->processUpgradeXMLNode($action);
 				}
 			}
 		}
@@ -476,20 +499,26 @@ class KunenaModelInstall extends JModel {
 
 	function processUpgradeXMLNode($action)
 	{
+		$result = null;
 		$nodeName = $action->getName();
 		$mode = strtolower((string) $action['mode']);
 		$success = false;
 		switch($nodeName) {
 			case 'phpfile':
-				$fileName = $action['name'];
-				$include = KPATH_ADMIN . "/install/$fileName";
+				$filename = $action['name'];
+				$include = KPATH_ADMIN . "/install/upgrade/$filename.php";
+				$function = 'kunena_'.strtr($filename, array('.'=>'', '-'=>'_'));
 				if(file_exists($include)) {
-					ob_start();
 					require( $include );
-					ob_end_clean();
-					$success = true;
+					if (is_callable($function)) {
+						$result = call_user_func($function, $this);
+						if (is_array($result)) $success = $result['success'];
+						else $success = true;
+					}
 				}
-				$result = array('action'=>'Include', 'name'=>$fileName, 'success'=>$success);
+				if (!$success && !$result) {
+					$result = array('action'=>'Include', 'name'=>$filename.'.php', 'success'=>$success);
+				}
 				break;
 			case 'query':
 				$query = (string)$action;
@@ -501,7 +530,7 @@ class KunenaModelInstall extends JModel {
 				if ($action['mode'] == 'silenterror' || !$this->db->getAffectedRows())
 					$result = null;
 				else
-					$result = array('action'=>'SQL Query', 'name'=>'', 'success'=>$success);
+					$result = array('action'=>'SQL Query: '.$query, 'name'=>'', 'success'=>$success);
 				break;
 			default:
 				$result = array('action'=>'fail', 'name'=>$nodeName, 'success'=>false);
@@ -521,7 +550,7 @@ class KunenaModelInstall extends JModel {
 */
 
 	public function installSampleData() {
-		require_once ( KPATH_ADMIN.'/install/sampledata.php' );
+		require_once ( KPATH_ADMIN.'/install/data/sampledata.php' );
 		if (installSampleData ())
 			$this->addStatus ( JText::_('COM_KUNENA_INSTALL_SAMPLEDATA'), true );
 		return true;
@@ -629,6 +658,106 @@ class KunenaModelInstall extends JModel {
 		return !$count;
 	}
 
+	protected function setAttachmentStatus($stats = null) {
+		if (!$stats) {
+			$stats = new stdClass();
+			$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
+		}
+		$app = JFactory::getApplication ();
+		$app->setUserState ( 'com_kunena.install.attachments', $stats );
+	}
+
+	protected function getAttachmentStatus() {
+		$app = JFactory::getApplication ();
+		$stats = new stdClass();
+		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
+		$stats = $app->getUserState ( 'com_kunena.install.attachments', $stats );
+		return $stats;
+	}
+/*
+	public function migrateAttachments() {
+		jimport ( 'joomla.filesystem.file' );
+		jimport ( 'joomla.filesystem.path' );
+		$app = JFactory::getApplication ();
+		$stats = $this->getAttachmentStatus();
+
+		static $dirs = array (
+			'images/fbfiles/attachments',
+			'components/com_fireboard/attachments'
+		);
+
+		$query = "SELECT COUNT(*) FROM #__kunena_attachments
+			WHERE id>{$this->db->quote($stats->current)} AND hash=''";
+		$this->db->setQuery ( $query );
+		$count = $this->db->loadResult ();
+		if (!$stats->current && !$count) return true;
+
+		$query = "SELECT userid, attachment FROM #__kunena_users
+			WHERE id>{$this->db->quote($stats->current)} AND hash=''";
+		$this->db->setQuery ( $query, 0, 113 );
+		$attachments = $this->db->loadObjectList ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+		foreach ($attachments as $attachment) {
+			$stats->current = $attachment->id;
+			$count--;
+
+			$file = $newfile = '';
+			foreach ($dirs as $dir) {
+				if (!JFile::exists(JPATH_ROOT . "/$dir/$attachment")) continue;
+				$file = JPATH_ROOT . "/$dir/$attachment";
+				break;
+			}
+			$success = false;
+			if ($file) {
+				$file = JPath::clean($file);
+				// Make sure to copy only supported fileformats
+				$match = preg_match('/\.(gif|jpg|jpeg|png)$/ui', $file, $matches);
+				if ($match) {
+					$ext = JString::strtolower($matches[1]);
+					// Use new format: users/attachment62.jpg
+					$newfile = "users/attachment{$userid}.{$ext}";
+					$destpath = (KPATH_MEDIA ."/attachments/{$newfile}");
+					if (JFile::exists($destpath)) {
+						$success = true;
+					} else {
+						@chmod($file, 0644);
+						$success = JFile::copy($file, $destpath);
+						if (!$success) {
+							$this->addStatus ( "User: {$userid}, Attachment copy failed: {$file} to {$destpath}", true );
+							$stats->failed++;
+						}
+					}
+					if ($success) {
+						$stats->migrated++;
+					}
+				} else {
+					$this->addStatus ( "User: {$userid}, Attachment type not supported: {$file}", true );
+					$stats->unsupported++;
+					$success = true;
+				}
+			} else {
+				// $this->addStatus ( "User: {$userid}, Attachment file was not found: {$attachment}", true );
+				$stats->missing++;
+				$success = true;
+			}
+			if ($success) {
+				$query = "UPDATE #__kunena_users SET attachment={$this->db->quote($newfile)} WHERE userid={$this->db->quote($userid)}";
+				$this->db->setQuery ( $query );
+				$this->db->query ();
+				if ($this->db->getErrorNum ())
+					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+			}
+		}
+		$this->setAttachmentStatus($stats);
+		if ($count) {
+			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS',$count), true );
+		} else {
+			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS_DONE', $stats->migrated, $stats->missing, $stats->unsupported, $stats->failed), true );
+		}
+		return !$count;
+	}
+*/
 	public function getRequirements() {
 		if ($this->_req !== false) {
 			return $this->_req;
@@ -867,14 +996,16 @@ class KunenaModelInstall extends JModel {
 	}
 
 	// helper function to migrate table
-	protected function migrateTable($oldtable, $newtable) {
+	protected function migrateTable($oldprefix, $oldtable, $newtable) {
 		$tables = $this->listTables ( 'kunena_' );
-		if ($oldtable == $newtable || empty ( $oldtable ) || isset ( $tables [$newtable] ))
+		$oldtables = $this->listTables ( $oldprefix );
+		if ($oldtable == $newtable || !isset ( $oldtables [$oldtable] ) || isset ( $tables [$newtable] ))
 			return; // Nothing to migrate
 
 		// Make identical copy from the table with new name
-		$create = array_pop($this->db->getTableCreate($this->db->getPrefix () . $oldtable)).' DEFAULT CHARSET=utf8';
+		$create = array_pop($this->db->getTableCreate($this->db->getPrefix () . $oldtable));
 		if (!$create) return;
+		$create .= ' DEFAULT CHARSET=utf8';
 		$sql = preg_replace('/'.$this->db->getPrefix () . $oldtable.'/', $this->db->getPrefix () . $newtable, $create);
 		$this->db->setQuery ( $sql );
 		$this->db->query ();

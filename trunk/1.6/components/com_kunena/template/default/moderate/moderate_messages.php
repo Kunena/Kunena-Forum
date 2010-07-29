@@ -21,217 +21,87 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
- //FIXME: replace with working solution
-
-$kunena_db = &JFactory::getDBO();
-$kunena_app =& JFactory::getApplication();
-$kunena_my = &JFactory::getUser();
-//securing form elements
-$catid = (int)$catid;
-
-if (!CKunenaTools::isModerator($kunena_my->id, $catid)) {
-    die ("You are not a moderator!!<br />This error is logged and your IP address has been sent to the SuperAdmin(s) of this site; sorry..");
-}
-
-//but we don't send the email; we might do that in the future, but for now we just want to scare 'em off..
-// determine what to do
-$action = JRequest::getVar('action', 'list');
-$cid = JRequest::getVar('cid', array ());
-
-switch ($action)
-{
-    case JText::_('COM_KUNENA_MOD_DELETE'):
-        switch (jbDeletePosts($kunena_db, $cid))
-        {
-            case -1:
-                $kunena_app->redirect(KUNENA_LIVEURL . 'func=review&amp;catid=' . $catid, "ERROR: The post has been deleted but the text could not be deleted\n Check the #__kunena_messages_text table for mesid IN " . explode(',', $cid));
-
-                break;
-
-            case 0:
-                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, JText::_('COM_KUNENA_MODERATION_DELETE_ERROR'));
-
-                break;
-
-            case 1:
-            default:
-                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, JText::_('COM_KUNENA_MODERATION_DELETE_SUCCESS'));
-
-                break;
-        }
-
-        break;
-
-    case JText::_('COM_KUNENA_MOD_APPROVE'):
-        switch (jbApprovePosts($kunena_db, $cid))
-        {
-            case 0:
-                $kunena_app->redirect(KUNENA_LIVEURL . 'amp;func=review&amp;catid=' . $catid, JText::_('COM_KUNENA_MODERATION_APPROVE_ERROR'));
-
-                break;
-
-            default:
-            case 1:
-                $kunena_app->redirect(KUNENA_LIVEURL . '&amp;func=review&amp;catid=' . $catid, JText::_('COM_KUNENA_MODERATION_APPROVE_SUCCESS'));
-
-                break;
-        }
-
-        break;
-
-    default:
-    case 'list':
-        echo '<p class="sectionname">' . JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION') .'</p>';
-
-        $kunena_db->setQuery("SELECT m.id, m.time, m.name, m.subject, m.hold, t.message FROM #__kunena_messages AS m JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE hold='1' AND catid='{$catid}' ORDER BY id ASC");
-        $allMes = $kunena_db->loadObjectList();
-        KunenaError::checkDatabaseError();
-
-        if (count($allMes) > 0)
-            jbListMessages($allMes, $catid);
-        else
-            echo '<p style="text-align:center">' . JText::_('COM_KUNENA_MODERATION_MESSAGES') . '</p>';
-
-        break;
-}
-/**
- * Lists messages to be moderated
- * @param array    allMes list of object
- * @param string fbs action string
- */
-function jbListMessages($allMes, $catid)
-{
-    $kunena_config = KunenaFactory::getConfig ();
+$Breturn = $this->uri->toString ( array ('path', 'query', 'fragment' ) );
+$this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 ?>
+<div class="kblock kflat">
+	<div class="kheader">
+		<?php if (CKunenaTools::isModerator($this->my->id)) : ?>
+		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
+		<?php endif; ?>
+		<h2><span><?php if (!empty($this->header)) echo $this->header; ?></span></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
+			<form action="index.php" method="post" name="kApproveMessagesForm">
+			<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
+			<?php if (!count ( $this->MessagesToApprove )) { ?>
+		<tr class="krow2">
+			<td class="kcol-first">
+				<?php echo JText::_('COM_KUNENA_MOD_NOTHING') ?>
+			</td>
+		</tr>
+	<?php } else {
+		$k = 0;
+		foreach ( $this->MessagesToApprove as $mes ) { ?>
+			<tr class="k<?php echo $this->tabclass [$k^=1];?>" >
+				<td class="kcol-mid kcol-ktopicicon">
+				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($mes->catid), intval($mes->id), '1', intval($this->config->messages_per_page), CKunenaTools::topicIcon($mes), '' ) ?>
+				</td>
+				<td class="kcol-mid kcol-ktopictitle">
+				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($mes->catid), intval($mes->id), KunenaParser::parseText ($mes->subject), KunenaParser::stripBBCode ( $mes->message, 500), 'follow', 'ktopic-title km' ); ?>
 
-   <form action="<?php echo CKunenaLink::GetReviewURL(); ?>" name="moderation" method="post">
-    <script>
-        function ConfirmDelete()
-        {
-            if (confirm("<?php echo JText::_('COM_KUNENA_MODERATION_DELETE_MESSAGE'); ?>"))
-                document.moderation.submit();
-            else
-                return false;
-        }
-    </script>
+				</div>
 
-    <table>
-        <tr height = "10" class = "ktable_header">
-            <th align = "center">
-                <b><?php echo JText::_('COM_KUNENA_GEN_DATE'); ?></b>
-            </th>
+				<div class="ktopic-details">
+					<!-- By -->
+					<!-- Category -->
+					<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($mes->catid), $this->escape( $mes->catname) ) ?></span>
+					<!-- /Category -->
+					<span class="divider fltlft">|</span>
+					<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>">
+						<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') ?>
+						<?php echo CKunenaTimeformat::showDate($mes->time, 'config_post_dateformat');?>&nbsp;
+					</span>
 
-            <th width = "8%" align = "center">
-                <b><?php echo JText::_('COM_KUNENA_GEN_AUTHOR'); ?></b>
-            </th>
+					<?php if ($mes->name) : ?>
+					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($mes->userid), $this->escape($mes->name) ); ?></span>
+					<?php endif; ?>
+					<!-- /By -->
+				</div>
+				</td>
+				<td class="kcol-mid kcol-ktopicviews">
+					<!-- Views -->
+					<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( intval($mes->hits) );?></span>
+					<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_GEN_HITS');?> </span>
+					<!-- /Views -->
+				</td>
+				<td class="kcol-mid">
+					<?php echo smile::smileReplace($mes->message, 0, $this->config->disemoticons, smile::getEmoticons("")); ?>
+				</td>
+				<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
+				<td class="kcol-mid ktopicmoderation">
+					<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($mes->id)?>]" value="0" />
+				</td>
+				<?php endif; ?>
+			</tr>
+	<?php }
+	} ?>
+			<tr class="krow1">
+			<td colspan="7" class="kcol-first krowmoderation">
+				<select name="do" id="kApproveChooseActions" class="inputbox">
+					<option value="">&nbsp;</option>
+					<option value="modapprove"><?php echo JText::_('COM_KUNENA_APPROVE_SELECTED'); ?></option>
+					<option value="moddelete"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>
+				</select>
 
-            <th width = "13%" align = "center">
-                <b><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></b>
-            </th>
-
-            <th width = "55%" align = "center">
-                <b><?php echo JText::_('COM_KUNENA_GEN_MESSAGE'); ?></b>
-            </th>
-
-            <th width = "13%" align = "center">
-                <b><?php echo JText::_('COM_KUNENA_GEN_ACTION'); ?></b>
-            </th>
-        </tr>
-
-        <?php
-        $i = 1;
-        //avoid calling it each time
-        $kunena_emoticons = smile::getEmoticons("");
-
-        foreach ($allMes as $message)
-        {
-            $i = 1 - $i;
-            echo '<tr class="kmessage' . $i . '">';
-            echo '<td valign="top">' . CKunenaTimeformat::showDate($message->time) . '</td>';
-            echo '<td valign="top">' . $message->name . '</td>';
-            echo '<td valign="top"><b>' . $message->subject . '<b></td>';
-
-
-            $fb_message_txt = $message->message;
-            echo '<td valign="top">' . smile::smileReplace($fb_message_txt, 0, $kunena_config->disemoticons, $kunena_emoticons) . '</td>';
-            echo '<td valign="top"><input type="checkbox" name="cid[]" value="' . $message->id . '" /></td>';
-            echo '</tr>';
-        }
-        ?>
-
-<tr>
-    <td colspan = "5" align = "center" valign = "top" style = "text-align:center">
-        <input type = "hidden" name = "catid" value = "<?php echo $catid; ?>"/>
-
-        <input type = "submit"
-            class = "button" name = "action" value = "<?php echo JText::_('COM_KUNENA_MOD_APPROVE'); ?>" border = "0"> <input type = "submit" class = "button" name = "action" onclick = "ConfirmDelete()" value = "<?php echo JText::_('COM_KUNENA_MOD_DELETE'); ?>" border = "0">
-    </td>
-</tr>
-
-<tr height = "10" bgcolor = "#e2e2e2">
-    <td colspan = "5">
-        &nbsp;
-    </td>
-</tr>
-    </table>
-
-    </form>
-
-<?php
-}
-/**
- * delete selected messages
- * @param object database
- * @param array    cid post ids
- * @param string fbs action string
- */
-function jbDeletePosts($kunena_db, $cid)
-{
-    if (count($cid) == 0)
-        return 0;
-
-    $ids = implode(',', $cid);
-    $kunena_db->setQuery('DELETE FROM `#__kunena_messages` WHERE `id` IN (' . $ids . ')');
-
-    if ($kunena_db->query())
-    {
-        $kunena_db->setQuery('DELETE FROM `#__kunena_messages_text` WHERE `mesid` IN (' . $ids . ')');
-
-        if ($kunena_db->query())
-            return 1;
-        else
-            return -1;
-    }
-    KunenaError::checkDatabaseError();
-
-    return 0;
-}
-/**
- * approve selected messages
- * @param object database
- * @param array cid post ids
- */
-function jbApprovePosts($kunena_db, $cid)
-{
-    if (count($cid) == 0)
-        return 0;
-
-    $ret = 1;
-    reset($cid);
-    foreach($cid as $id) {
-    	$id = (int)$id;
-        $newQuery = "SELECT * FROM #__kunena_messages WHERE id='{$id}'";
-        $kunena_db->setQuery($newQuery, 0, 1);
-        $msg = null;
-        $msg = $kunena_db->loadObject();
-        if (KunenaError::checkDatabaseError()) return 0;
-        if(!$msg) { continue; }
-        // continue stats
-        $kunena_db->setQuery("UPDATE `#__kunena_messages` SET hold='0' WHERE id='{$id}'");
-        $kunena_db->query();
-		if (KunenaError::checkDatabaseError()) return 0;
-        CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
-    }
-    return $ret;
-}
-?>
+			<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO'); ?>" /></td>
+			</tr>
+			</table>
+			<input type="hidden" name="option" value="com_kunena" />
+			<input type="hidden" name="func" value="review" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+			</form>
+		</div>
+	</div>
+</div>

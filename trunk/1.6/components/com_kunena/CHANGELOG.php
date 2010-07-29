@@ -40,16 +40,19 @@ Kunena 1.6.0-BETA2
 # [#19288] Installer: Use new XML schema to create tables
 # [#19288] Installer: Fix stalled install in J1.6
 # [#19288] Enable redirect when viewing messages (fixes search and moved messages)
+^ [#15886] Merged revisions 3116-3118 from /branches/branches/1.6-xillibit-fixes-20100727
+
+28-July-2010 Xillibit
+# [#19288] Re-write of review to use a class and put a new tab in profile
+# [#19288] Escape strings when create a menu because the query fail with commas in some language
 
 28-July-2010 Matias
+^ [#15886] Merged revisions 3113-3115 from /branches/branches/1.6-xillibit-fixes-20100727
 # [#19288] Installer: Add KunenaSchema class and install.xml to check current database schema against XML file (run manually)
 # [#19288] Installer: Move SQL queries from version 1.0.5 to 1.0.0-1.0.4 to avoid DB errors
 # [#19288] Installer: Make sure that clean installations from FB1.0.0 to FB1.5.2RC2 generate identical DB schema to the new installation
 # [#19288] Installer: Migrate configuration from FB <= 1.0.4 (no more external tools needed)
 # [#19288] Installer: Move/rename files to make installer easier to understand
-
-28-July-2010 Matias
-^ [#15886] Merged revisions 3113-3115 from /branches/branches/1.6-xillibit-fixes-20100727
 
 27-July-2010 Xillibit
 # [#19288] Update language file

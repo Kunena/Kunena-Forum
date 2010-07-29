@@ -446,7 +446,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'review' :
-			CKunenaTools::loadTemplate('/moderate/moderate_messages.php');
+			require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
+			$review = new CKunenaReview($catid);
+			$review->display();
 
 			break;
 

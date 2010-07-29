@@ -39,6 +39,7 @@ Kunena 1.6.0-BETA2
 # [#19288] Installer: Reset version information when starting installation
 # [#19288] Installer: Use new XML schema to create tables
 # [#19288] Installer: Fix stalled install in J1.6
+# [#19288] Enable redirect when viewing messages (fixes search and moved messages)
 
 28-July-2010 Matias
 # [#19288] Installer: Add KunenaSchema class and install.xml to check current database schema against XML file (run manually)

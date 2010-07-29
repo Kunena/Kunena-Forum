@@ -700,8 +700,9 @@ class CKunenaView {
 			$this->app->redirect($this->redirect);
 		}
 	}
-	function display() {
+	function display($redirect = false) {
 		$this->getView();
+		if ($redirect) $this->redirect();
 
 		if (! $this->allow) {
 			echo JText::_('COM_KUNENA_NO_ACCESS');

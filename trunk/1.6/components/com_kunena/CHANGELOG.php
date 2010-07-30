@@ -38,7 +38,8 @@ Kunena 1.6.0-BETA2
 # [#19288] Installer: Do not show backup tables in schema
 # [#19288] Installer: Minor fix in schema to detect difference between NULL, 0 and ''
 # [#19288] Installer: Schema: Do not use timestamps where they are not well suited
-^ [#16390] Updated Russian language (thanks ZARKOS)
+^ [#16390] Updated ru-RU (thanks ZARKOS), es-ES (thanks Alakentu)
+^ [#16390] Added ca-ES (Catalan) and mk-MK (Macedonian) languages
 
 29-July-2010 Matias
 # [#19288] Installer: Keep integration settings from older versions

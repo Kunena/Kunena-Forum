@@ -289,7 +289,7 @@
     <field primary_key="yes" name="id" type="int(11)" null="0" extra="auto_increment"/>
     <field name="title" type="varchar(100)" null="0"/>
     <field name="threadid" type="int(11)" null="0"/>
-    <field name="polltimetolive" type="timestamp" null="0" extra="on update CURRENT_TIMESTAMP"/>
+    <field name="polltimetolive" type="datetime" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
     <key name="threadid" columns="threadid"/>
   </table>
@@ -311,10 +311,10 @@
   </table>
   <table name="kunena_ranks">
     <field primary_key="yes" name="rank_id" type="mediumint(8) unsigned" null="0" extra="auto_increment"/>
-    <field name="rank_title" type="varchar(255)" null="0"/>
+    <field name="rank_title" type="varchar(255)" null="0" default=""/>
     <field name="rank_min" type="mediumint(8) unsigned" null="0" default="0"/>
     <field name="rank_special" type="tinyint(1) unsigned" null="0" default="0"/>
-    <field name="rank_image" type="varchar(255)" null="0"/>
+    <field name="rank_image" type="varchar(255)" null="0" default=""/>
     <key name="PRIMARY" unique="1" columns="rank_id"/>
   </table>
   <table name="kunena_sessions">
@@ -328,9 +328,9 @@
   </table>
   <table name="kunena_smileys">
     <field primary_key="yes" name="id" type="int(4)" null="0" extra="auto_increment"/>
-    <field name="code" type="varchar(12)" null="0"/>
-    <field name="location" type="varchar(50)" null="0"/>
-    <field name="greylocation" type="varchar(60)" null="0"/>
+    <field name="code" type="varchar(12)" null="0" default=""/>
+    <field name="location" type="varchar(50)" null="0" default=""/>
+    <field name="greylocation" type="varchar(60)" null="0" default=""/>
     <field name="emoticonbar" type="tinyint(4)" null="0" default="0"/>
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
@@ -352,7 +352,7 @@
     <field primary_key="yes" name="postid" type="int(11)" null="0"/>
     <field primary_key="yes" name="userid" type="int(11)" null="0"/>
     <field name="targetuserid" type="int(11)" null="0"/>
-    <field name="time" type="timestamp" null="0" extra="on update CURRENT_TIMESTAMP"/>
+    <field name="time" type="timestamp" null="0"/>
     <key name="postid" unique="1" columns="postid,userid"/>
     <key name="userid" columns="userid"/>
     <key name="targetuserid" columns="targetuserid"/>
@@ -396,23 +396,23 @@
     <field name="hideEmail" type="tinyint(1)" null="0" default="1"/>
     <field name="showOnline" type="tinyint(1)" null="0" default="1"/>
     <key name="PRIMARY" unique="1" columns="userid"/>
-    <key name="banned" columns="banned"/>
     <key name="group_id" columns="group_id"/>
     <key name="posts" columns="posts"/>
     <key name="uhits" columns="uhits"/>
+    <key name="banned" columns="banned"/>
   </table>
   <table name="kunena_users_banned">
     <field primary_key="yes" name="id" type="int(11)" null="0" extra="auto_increment"/>
     <field name="userid" type="int(11)" null="1"/>
     <field name="ip" type="varchar(128)" null="1"/>
     <field name="blocked" type="tinyint(4)" null="0" default="0"/>
-    <field name="expiration" type="timestamp" null="1"/>
+    <field name="expiration" type="datetime" null="1"/>
     <field name="created_by" type="int(11)" null="0"/>
-    <field name="created_time" type="timestamp" null="0"/>
+    <field name="created_time" type="datetime" null="0"/>
     <field name="reason_private" type="text" null="1"/>
     <field name="reason_public" type="text" null="1"/>
     <field name="modified_by" type="int(11)" null="1"/>
-    <field name="modified_time" type="timestamp" null="1"/>
+    <field name="modified_time" type="datetime" null="1"/>
     <field name="comments" type="text" null="1"/>
     <field name="params" type="text" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
@@ -440,7 +440,7 @@
     <field name="do" type="varchar(50)" null="1"/>
     <field name="task" type="varchar(50)" null="1"/>
     <field name="link" type="text" null="1"/>
-    <field name="userip" type="varchar(20)" null="0"/>
+    <field name="userip" type="varchar(20)" null="0" default=""/>
     <field name="user" type="tinyint(2)" null="0" default="0"/>
     <key name="PRIMARY" unique="1" columns="id"/>
     <key name="userid" columns="userid"/>

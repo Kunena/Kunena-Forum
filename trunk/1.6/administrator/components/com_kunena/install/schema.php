@@ -222,7 +222,7 @@ class KunenaModelSchema extends JModel
 		$schema = $this->createSchema();
 		$schemaNode = $schema->documentElement;
 		foreach ($tables as $table) {
-			if (preg_match('/_bak(up)?$/', $table)) continue;
+			if (preg_match('/_(bak|backup)$/', $table)) continue;
 
 			$tableNode = $schema->createElement("table");
 			$schemaNode->appendChild($tableNode);
@@ -240,7 +240,7 @@ class KunenaModelSchema extends JModel
 				$fieldNode->setAttribute("name", $row->Field);
 				$fieldNode->setAttribute("type", $row->Type);
 				$fieldNode->setAttribute("null", (strtolower($row->Null)=='yes') ? '1' : '0');
-				if ($row->Default != '') $fieldNode->setAttribute("default", $row->Default);
+				if ($row->Default !== null) $fieldNode->setAttribute("default", $row->Default);
 				if ($row->Extra != '') $fieldNode->setAttribute("extra", $row->Extra);
 			}
 
@@ -357,7 +357,7 @@ class KunenaModelSchema extends JModel
 		// Primary key is always unique
 		if ($loc['new']->tagName == 'key' && $loc['new']->getAttribute('name') == 'PRIMARY') $loc['new']->setAttribute('unique','1');
 		// Remove default='' from a field
-		if ($loc['new']->tagName == 'field' && $loc['new']->getAttribute('default') == '') $loc['new']->removeAttribute('default');
+		if ($loc['new']->tagName == 'field' && $loc['new']->getAttribute('default') === null) $loc['new']->removeAttribute('default');
 
 		$attributes = array();
 		$attrAll = $this->listAllNodes(array('new'=>$loc['new']->attributes, 'old'=>$loc['old']->attributes));

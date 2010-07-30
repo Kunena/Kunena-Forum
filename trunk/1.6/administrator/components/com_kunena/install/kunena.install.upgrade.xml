@@ -132,7 +132,7 @@
 				ADD `allow_polls` tinyint(4) NOT NULL default '0' AFTER `class_sfx` ;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `allow_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `review` ,
 				ADD `post_anonymous` TINYINT NOT NULL DEFAULT '0' AFTER `allow_anonymous` </query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD INDEX ( `currvisit` )</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_sessions` ADD KEY `currvisit` ( `currvisit` )</query>
 			<query>UPDATE `#__kunena_messages` SET thread=id WHERE parent=0</query>
 			<query mode="silenterror">UPDATE `#__kunena_users` AS u, `#__users` AS j SET u.moderator='0' WHERE j.id=u.userid AND j.gid IN (24, 25)</query>
 			<phpfile name="upgrade-1.6.0_attachments"></phpfile>
@@ -147,8 +147,13 @@
 			<phpfile name="upgrade-1.6.0_old_mt12"></phpfile>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
-			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD INDEX ( `banned` )</query>
-			<query>ALTER TABLE `jos_kunena_polls_options` MODIFY `text` varchar(100) NULL AFTER `pollid`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `banned` ( `banned` )</query>
+			<query>ALTER TABLE `#__kunena_polls` MODIFY `polltimetolive` DATETIME NULL DEFAULT NULL;</query>
+			<query>ALTER TABLE `#__kunena_polls_options` MODIFY `text` varchar(100) NULL;</query>
+			<query>ALTER TABLE `#__kunena_thankyou` MODIFY `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;</query>
+			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `expiration` DATETIME NULL;</query>
+			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `created_time` DATETIME NOT NULL;</query>
+			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `modified_time` DATETIME NULL;</query>
 		</version>
 	</upgrade>
 </comupgrade>

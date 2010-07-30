@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+30-July-2010 Matias
+^ [#19288] Installer: Add layout=schema to show current schema and diff during installation
+# [#19288] Installer: Do not show backup tables in schema
+# [#19288] Installer: Minor fix in schema to detect difference between NULL, 0 and ''
+# [#19288] Installer: Schema: Do not use timestamps where they are not well suited
+^ [#16390] Updated Russian language (thanks ZARKOS)
+
 29-July-2010 Matias
 # [#19288] Installer: Keep integration settings from older versions
 # [#19288] Installer: Split upgrade php files by meaning and improve error detection during installation

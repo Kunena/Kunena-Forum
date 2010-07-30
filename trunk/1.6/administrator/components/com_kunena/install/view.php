@@ -31,6 +31,10 @@ class KunenaViewInstall extends JView
 	 */
 	public function display($tpl = null)
 	{
+		if ($this->getLayout() == 'schema') {
+			parent::display($tpl);
+			return;
+		}
 		// Initialize variables.
 		$user = JFactory::getUser();
 
@@ -97,4 +101,36 @@ class KunenaViewInstall extends JView
 		return $this->model->getActionText($version, $type, $action);
 	}
 
+	function displaySchema() {
+		require_once KPATH_ADMIN . '/install/schema.php';
+		$schema = new KunenaModelSchema ();
+		$create = $schema->getCreateSQL();
+		echo '<textarea cols="80" rows="50">';
+		echo $this->escape ( $schema->getSchema ()->saveXML () );
+		echo '</textarea>';
+		if (Kunena::isSvn()) {
+			echo '<textarea cols="80" rows="20">';
+			foreach ( $create as $item ) {
+				echo $this->escape($item ['sql']) . "\n\n";
+			}
+			echo '</textarea>';
+		}
+	}
+
+	function displaySchemaDiff() {
+		require_once KPATH_ADMIN . '/install/schema.php';
+		$schema = new KunenaModelSchema ();
+		$diff = $schema->getDiffSchema ();
+		$sql = $schema->getSchemaSQL ( $diff );
+		echo '<textarea cols="80" rows="20">';
+		echo $this->escape ( $diff->saveXML () );
+		echo '</textarea>';
+		if (Kunena::isSvn()) {
+			echo '<textarea cols="80" rows="20">';
+			foreach ( $sql as $item ) {
+				echo $this->escape($item ['sql']) . "\n\n";
+			}
+			echo '</textarea>';
+		}
+	}
 }

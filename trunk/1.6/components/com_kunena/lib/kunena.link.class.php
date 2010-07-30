@@ -472,10 +472,11 @@ class CKunenaLink {
 
 	function GetMessageURL($pid, $catid=0, $limit = 0) {
 		$kunena_config = KunenaFactory::getConfig ();
+		$myprofile = KunenaFactory::getUser ();
 		if ($limit < 1) $limit = $kunena_config->messages_per_page;
 		$access = KunenaFactory::getAccessControl();
-		$hold = $access->getAllowedHold($this->myprofile, $catid);
-		$kunena_db = &JFactory::getDBO ();
+		$hold = $access->getAllowedHold($myprofile, $catid);
+		$kunena_db = JFactory::getDBO ();
 		// First determine the thread, latest post and number of posts for the post supplied
 		$kunena_db->setQuery ( "SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
                              FROM #__kunena_messages AS a, (SELECT thread FROM #__kunena_messages WHERE id={$kunena_db->Quote($pid)}) AS b

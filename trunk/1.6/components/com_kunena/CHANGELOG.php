@@ -40,6 +40,8 @@ Kunena 1.6.0-BETA2
 # [#19288] Installer: Schema: Do not use timestamps where they are not well suited
 ^ [#16390] Updated ru-RU (thanks ZARKOS), es-ES (thanks Alakentu)
 ^ [#16390] Added ca-ES (Catalan) and mk-MK (Macedonian) languages
+^ [#19288] Fix some random language mistakes
+# [#19288] CKunenaLink::GetMessageURL() Undefined property: CKunenaPost::$myprofile
 
 29-July-2010 Matias
 # [#19288] Installer: Keep integration settings from older versions

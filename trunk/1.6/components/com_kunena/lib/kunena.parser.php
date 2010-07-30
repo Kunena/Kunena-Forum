@@ -526,7 +526,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$user = isset($tag->options["default"]) ? $tag->options["default"] : false;
 				$tag_new = '';
 				if ($user) $tag_new .= "<b>" . $user . " " . JText::_ ( 'COM_KUNENA_POST_WROTE' ) . ":</b>\n";
-				$tag_new .= '<span class="kmsgtext-quote">' . $between . '</span>';
+				$tag_new .= '<div class="kmsgtext-quote">' . $between . '</div>';
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'module' :
@@ -880,7 +880,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$tag_new = JText::_('COM_KUNENA_BBCODE_HIDDENTEXT');
 					} else {
 						// Display but highlight the fact that it is hidden from guests
-						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<span class="kmsgtext-hide">' . $between . '</span>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_HIDE') . '</b>' . '<div class="kmsgtext-hide">' . $between . '</div>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -891,7 +891,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				if ($between) {
 					if (CKunenaTools::isModerator($kunena_my->id)) {
 						// Display but highlight the fact that it is hidden from everyone except admins and mods
-						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><span class="kmsgtext-confidential">' . $between . '</span>';
+						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><div class="kmsgtext-confidential">' . $between . '</div>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}

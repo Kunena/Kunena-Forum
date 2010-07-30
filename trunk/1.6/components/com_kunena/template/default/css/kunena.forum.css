@@ -1691,9 +1691,9 @@ PX		EM			PCT			PT
 	margin: 2px 0px;
 }
 
-#Kunena span.kmsgtext-quote,
-#Kunena span.kmsgtext-hide,
-#Kunena span.kmsgtext-confidential {
+#Kunena div.kmsgtext-quote,
+#Kunena div.kmsgtext-hide,
+#Kunena div.kmsgtext-confidential {
 	display: block;
 	border: 1px dotted #BFC3C6;
 	margin: 5px 0pt;
@@ -1703,11 +1703,11 @@ PX		EM			PCT			PT
 	background: #F2F1EE;
 }
 
-#Kunena span.kmsgtext-hide {
+#Kunena div.kmsgtext-hide {
 	background: #FFFFCC;
 }
 
-#Kunena span.kmsgtext-confidential {
+#Kunena div.kmsgtext-confidential {
 	background: #FAE0F8;
 }
 

@@ -440,7 +440,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						// Need to check if we are nested inside a URL code
 						if ($task->autolink_disable == 0) {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = '<a title="" rel="lightbox" href="'.$tempstr.'"><img src="'.$tempstr.'" '.($imgtagsize ? "' width='" . $imgtagsize : '').'alt="" /></a>';
+							$tag_new = '<a title="" rel="lightbox" href="'.$tempstr.'"><img src="'.$tempstr.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '').' alt="" /></a>';
 						} else {
 							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
 							$tag_new = "<img src='" . $tempstr . ($imgtagsize ? "' width='" . $imgtagsize : '') . "' alt='' />";

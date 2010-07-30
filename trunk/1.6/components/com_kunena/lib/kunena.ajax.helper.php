@@ -323,7 +323,7 @@ class CKunenaAjaxHelper {
 
 		// Finally delete attachment record from db
 		$query = "DELETE FROM #__kunena_attachments AS a
-					WHERE a.id = {$this->db->Quote($data)}";
+					WHERE a.id = {$this->_db->Quote($data)}";
 
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();
@@ -347,7 +347,7 @@ class CKunenaAjaxHelper {
 		if ( $catid && $user->isModerator($catid) ) {
 			$query = "SELECT id, subject
 							FROM #__kunena_messages
-							WHERE catid={$this->db->Quote($catid)} AND parent=0 AND moved=0
+							WHERE catid={$this->_db->Quote($catid)} AND parent=0 AND moved=0
 							ORDER BY id DESC";
 			$this->_db->setQuery ( $query, 0, 15 );
 			$topics_list = $this->_db->loadObjectlist ();

@@ -393,7 +393,8 @@ class CKunenaSearch {
 				if (empty ( $searchword ))
 					continue;
 				$ressubject = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $ressubject );
-				$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
+				// FIXME: enable highlighting, but only after we can be sure that we do not break html
+				//$resmessage = preg_replace ( "/" . preg_quote ( $searchword, '/' ) . "/iu", '<span  class="searchword" >' . $searchword . '</span>', $resmessage );
 			}
 			$this->results [$i]->htmlsubject = $ressubject;
 			$this->results [$i]->htmlmessage = $resmessage;

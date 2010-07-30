@@ -42,6 +42,9 @@ Kunena 1.6.0-BETA2
 ^ [#16390] Added ca-ES (Catalan) and mk-MK (Macedonian) languages
 ^ [#19288] Fix some random language mistakes
 # [#19288] CKunenaLink::GetMessageURL() Undefined property: CKunenaPost::$myprofile
+# [#19288] Search: disable search word highlighting from message body as it breaks html and causes white screens
+# [#19288] CKunenaAjaxHelper: PHP Fatal error: Call to a member function Quote() on a non-object (and few others)
+# [#19288] BBCode parser: Fix HTML issue in img tag (Lightbox code)
 
 29-July-2010 Matias
 # [#19288] Installer: Keep integration settings from older versions

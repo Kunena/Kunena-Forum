@@ -33,6 +33,12 @@ if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
 	// Load css from default template
 	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.forum-min.css' );
 }
+$cssurl = JURI::base() . "components/com_kunena/template/default/css";
+?>
+<!--[if IE 7]>
+<link rel="stylesheet" href="<?php echo $cssurl; ?>/ie7-fix.css" type="text/css" />
+<![endif]-->
+<?php
 $mediaurl = JURI::base() . "components/com_kunena/template/default/media";
 $styles = <<<EOF
 #Kunena div.kheader ,

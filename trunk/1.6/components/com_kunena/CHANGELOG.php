@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+31-July-2010 @quila
+# [#19288] Added IE7 fixes
+# [#19288] Fixed moderation page display in Chrome and Safari
+# [#19288] Fixed profile page display
+# [#19288] Added Template Designer Credits option in the footer
+# [#19288] Centered Credits link
+
 31-July-2010 Matias
 # [#19288] CKunenaPost::post(): Use of undefined constant name - assumed 'name'
 # [#19288] BBCode parser: Undefined index: size in file tag
@@ -40,6 +47,7 @@ Kunena 1.6.0-BETA2
 - [#19293] Remove deprecated configuration option fbdefaultpage
 # [#20071] KunenaRoute: Simplify default page handling (and fix unexpected behavior)
 # [#19288] Create menu: Use default menu item from K1.5 configuration
+^ [#15886] Merged revisions 3130-3132 from /branches/1.6-dragan-IE7fix-31.07.2010
 
 30-July-2010 Matias
 ^ [#19288] Installer: Add layout=schema to show current schema and diff during installation
@@ -62,7 +70,7 @@ Kunena 1.6.0-BETA2
 # [#19288] Installer: Use new XML schema to create tables
 # [#19288] Installer: Fix stalled install in J1.6
 # [#19288] Enable redirect when viewing messages (fixes search and moved messages)
-^ [#15886] Merged revisions 3116-3118 from /branches/branches/1.6-xillibit-fixes-20100727
+^ [#15886] Merged revisions 3116-3118 from /branches/1.6-xillibit-fixes-20100727
 
 28-July-2010 Xillibit
 # [#19288] Re-write of review to use a class and put a new tab in profile

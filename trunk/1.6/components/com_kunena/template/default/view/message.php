@@ -17,11 +17,11 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <div class="kmsg-header kmsg-header-top">
 	<h2>
-		<span class="kmsgdate kmsgdate-top" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
-			<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
-		</span>
 		<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-top">
 			<?php echo $this->subjectHtml ?>
+		</span>
+		<span class="kmsgdate kmsgdate-top" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+			<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 		</span>
 		<span class="kmsg-id-top">
 			<a name="<?php echo intval($this->id) ?>"></a>

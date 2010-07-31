@@ -1186,6 +1186,7 @@ PX		EM			PCT			PT
 
 /* CATEGORY LIST
 ----------------------------------------------------------------------------------------------- */
+#Kunena td.kmycount,
 #Kunena td.kcol-kcattopics,
 #Kunena td.kcol-kcatreplies,
 #Kunena td.kcol-ktopicicon,
@@ -2858,7 +2859,7 @@ MODERATOR PAGE
 	/*border: 1px solid #BFC3C6;*/ 
 	margin: 0; 
 	padding: 10px 10px 30px 10px; 
-	overflow:auto; 
+	overflow:hidden;
 	height: 1%;
 	clear:left;
 }
@@ -3045,8 +3046,8 @@ div#kprofile-stats ul li span.krank-admin {
 #Kunena div#kprofile-rightcol { 
 	display:inline-block;
 	float:left;
-	margin-right:10px;
-	width:85%;
+	margin-left:10px;
+	width:75%;
 }
 #Kunena div#kprofile-rightcoltop  {width: 100%;}
 #Kunena div.kprofile-rightcol1 { 
@@ -3161,7 +3162,7 @@ div#kprofile-stats ul li span.krank-admin {
 	clear: both;
 	border: 1px solid #BFC3C6;
 	padding: 10px 10px;
-	overflow: auto;
+	overflow: hidden;
 }
 #Kunena div.current dd {
 	padding: 0;
@@ -3517,6 +3518,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	background: url("../images/icons/rss.png") no-repeat left center;
 	width: 24px;
 	height: 24px;
+	margin: 5px 5px 0 -29px;
 }
 #Kunena div.krss-block {
 	float: right;

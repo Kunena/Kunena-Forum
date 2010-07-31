@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+31-July-2010 @quila
+# [#19288] Added IE7 fixes
+# [#19288] Fixed moderation page display in Chrome and Safari
+# [#19288] Fixed profile page display
+
 31-July-2010 Matias
 # [#19288] CKunenaPost::post(): Use of undefined constant name - assumed 'name'
 # [#19288] BBCode parser: Undefined index: size in file tag

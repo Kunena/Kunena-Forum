@@ -677,9 +677,13 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
 		echo '</div>';
 	}
-
+	$template = KunenaFactory::getTemplate();
+	$this->params = $template->params;
 	// Credits
 	echo '<div class="kcredits kms"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
+	if ($this->params->get('templatebyText') !=''):
+	echo ' :: <a href ="'. $this->params->get('templatebyLink').'" rel="follow">' . $this->params->get('templatebyText') .' '. $this->params->get('templatebyName') .'</a>';
+	endif;
 	echo '</div>';
 
 	// display footer

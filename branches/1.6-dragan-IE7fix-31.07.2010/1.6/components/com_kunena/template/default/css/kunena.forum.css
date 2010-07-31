@@ -3518,6 +3518,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	background: url("../images/icons/rss.png") no-repeat left center;
 	width: 24px;
 	height: 24px;
+	margin: 5px 5px 0 -29px;
 }
 #Kunena div.krss-block {
 	float: right;

@@ -39,6 +39,9 @@
 		<param name="frontstatsHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 		<param name="whoisonlineHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 
+		<param name="templatebyText" type="hidden" default="" />
+		<param name="templatebyName" type="hidden" default="" />
+		<param name="templatebyLink" type="hidden" default="" />
 		<!-- Required avatar sizes -->
 		<param name="avatarSizeXThumb" type="hidden" default="36" />
 		<param name="avatarSizeYThumb" type="hidden" default="36" />

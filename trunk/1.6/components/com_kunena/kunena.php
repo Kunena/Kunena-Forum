@@ -57,14 +57,22 @@ if ($func && !in_array($func, KunenaRouter::$functions)) {
 
 if (empty($_POST)) {
 	// Set active menuitem so that Kunena menu shows up
-	$basemenu = KunenaRoute::getBaseMenu ();
-	if (! is_object ( $basemenu ) || ! $func || $func == 'entrypage') {
-		$defaultmenu = 0;
-		if (is_object ( $basemenu ) && isset ( $basemenu->query ['defaultmenu'] )) {
-			$defaultmenu = $basemenu->query ['defaultmenu'];
+	$menu = JSite::getMenu ();
+	$active = $menu->getActive ();
+
+	// Legacy menu item support (get best match from Kunena Menu)
+	if (empty($active->query ['view'])) {
+		$menu->setActive ( KunenaRoute::getItemID () );
+		$active = $menu->getActive ();
+	}
+
+	// If we are currently in entry page, we need to show and highlight default menu item
+	if (! $func || $func == 'entrypage') {
+		$defaultitem = 0;
+		if (!empty ( $active->query ['defaultmenu'] )) {
+			$defaultitem = $active->query ['defaultmenu'];
 		}
-		$menu = JSite::getMenu ();
-		$menu->setActive ( KunenaRoute::getItemID ( $defaultmenu ) );
+		$menu->setActive ( KunenaRoute::getItemID ( $defaultitem ) );
 		$active = $menu->getActive ();
 		if (is_object ( $active )) {
 			foreach ( $active->query as $var => $value ) {

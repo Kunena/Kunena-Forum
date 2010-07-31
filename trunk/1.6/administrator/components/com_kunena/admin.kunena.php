@@ -1341,18 +1341,6 @@ function showConfig($option) {
 
 	$lists = array ();
 
-	// the default page when entering Kunena
-	$defpagelist = array ();
-
-	$defpagelist [] = JHTML::_ ( 'select.option', 'recent', JText::_('COM_KUNENA_A_FBDEFAULT_PAGE_RECENT') );
-	$defpagelist [] = JHTML::_ ( 'select.option', 'my', JText::_('COM_KUNENA_A_FBDEFAULT_PAGE_MY') );
-	$defpagelist [] = JHTML::_ ( 'select.option', 'categories', JText::_('COM_KUNENA_A_FBDEFAULT_PAGE_CATEGORIES') );
-
-	// build the html select list
-	$lists ['fbdefaultpage'] = JHTML::_ ( 'select.genericlist', $defpagelist, 'cfg_fbdefaultpage', 'class="inputbox" size="1" ', 'value', 'text', $kunena_config->fbdefaultpage );
-
-	// build the html select list
-
 	// RSS
 	{
 		// options to be used later

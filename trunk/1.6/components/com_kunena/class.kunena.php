@@ -629,7 +629,7 @@ class CKunenaTools {
 		$modules = JModuleHelper::getModules ( $position );
 		foreach ( $modules as $module ) {
 			if ($module->module == 'mod_mainmenu') {
-				$basemenu = KunenaRoute::getBaseMenu ();
+				$basemenu = KunenaRoute::getMenu ();
 				if ($basemenu) {
 					$module = clone $module;
 					// FIXME: J1.5 only

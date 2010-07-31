@@ -987,15 +987,6 @@ table.kadmin-stat caption {
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FBDEFAULT_PAGE') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $lists ['fbdefaultpage'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FBDEFAULT_PAGE_DESC') ?>
-						</td>
-					</tr>
-							<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT') ?>
 						</td>
 								<td align="left" valign="top"><?php echo $lists ['showannouncement'];

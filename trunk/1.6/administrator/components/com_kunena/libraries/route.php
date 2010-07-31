@@ -32,12 +32,6 @@ abstract class KunenaRoute {
 			$link = new JURI ( (string)$uri );
 		}
 		$query = $link->getQuery ( true );
-
-		if (!isset($query['func']) && !isset($query['view'])) {
-			// Handle default page
-			$link->setVar ( 'func', self::getDefaultFunc() );
-			$query = $link->getQuery ( true );
-		}
 		$itemid = self::_getItemID ( $query );
 		return $itemid;
 	}
@@ -49,55 +43,54 @@ abstract class KunenaRoute {
 			$link->delVar ( 'Itemid' );
 		}
 		else {
-			$link = new JURI ( $uri );
+			$link = new JURI ( (string)$uri );
 		}
 		$query = $link->getQuery ( true );
-
-		if (!isset($query['func'])) {
-			// Handle default page
-			$link->setVar ( 'func', self::getDefaultFunc() );
-			$query = $link->getQuery ( true );
-		}
 		$Itemid = self::_getItemID ( $query );
 		$link->setVar ( 'Itemid', $Itemid );
 
 		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml, $ssl );
 	}
 
-	public static function getDefaultFunc() {
-		// Handle default page
-		$retval = 'listcat';
-		$config = KunenaFactory::getConfig ();
-		$my = JFactory::getUser ();
-		switch ($config->fbdefaultpage) {
-			case 'my' :
-				if ($my->id) {
-					$retval = 'mylatest';
-					break;
-				}
-			case 'recent' :
-				$retval = 'latest';
-				break;
-		}
-		return $retval;
-	}
-
-	public static function getBaseMenu() {
+	public static function getCurrentMenu() {
 		self::buildMenuTree();
 
 		$Itemid = 0;
-		// Search current tree
-
 		if (self::$active) {
+			// Find Kunena entry page from current menu
 			$root = self::getKunenaRoot(self::$active);
 			$list = self::getSubMenus($root);
 			if (count($list) > 1) {
+				// Current root contains Kunena menu
 				$Itemid = $root;
 			}
 		}
 		if ($Itemid)
 			return self::$menu[$Itemid];
+
 		return null;
+	}
+
+	public function getKunenaMenu() {
+		self::buildMenuTree();
+
+		$Itemid = 0;
+		if (isset(self::$childlist['kunenamenu'][0])) {
+			// Use first item in kunenamenu
+			$Itemid = reset(self::$childlist['kunenamenu'][0]);
+		}
+		if ($Itemid)
+			return self::$menu[$Itemid];
+
+		return null;
+	}
+
+	public function getMenu() {
+		$menu = self::getCurrentMenu();
+		if (!$menu) {
+			$menu = self::getKunenaMenu();
+		}
+		return $menu;
 	}
 
 	protected static function buildMenuTree() {
@@ -143,6 +136,7 @@ abstract class KunenaRoute {
 	}
 
 	protected static function getKunenaRoot($Itemid) {
+		if (!$Itemid) return 0;
 		if (!isset(self::$parent[$Itemid])) {
 			self::$parent[$Itemid] = 0;
 			$current = $Itemid;

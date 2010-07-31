@@ -1101,11 +1101,11 @@ class KunenaModelInstall extends JModel {
 	function createMenu($update = true) {
 		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=entrypage', 'access'=>0);
 		$submenu = array(
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=listcat', 'access'=>0),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=latest', 'access'=>0),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=listcat', 'access'=>0, 'default'=>'categories'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=latest', 'access'=>0, 'default'=>'recent'),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=post&do=new', 'access'=>1),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=latest&do=noreplies', 'access'=>1),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=latest&do=mylatest', 'access'=>1),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=latest&do=mylatest', 'access'=>1, 'default'=>'my'),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=profile', 'access'=>1),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=rules', 'access'=>0),
 			array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=help', 'access'=>0),
@@ -1168,6 +1168,9 @@ class KunenaModelInstall extends JModel {
 			$parentid = ( int ) $this->_db->insertId ();
 		}
 
+		kimport ('factory');
+		$config = KunenaFactory::getConfig();
+
 		// Submenu (shown in Kunena)
 		$defaultmenu = 0;
 		foreach ($submenu as $ordering=>$menuitem) {
@@ -1185,8 +1188,10 @@ class KunenaModelInstall extends JModel {
 				if ($this->db->getErrorNum ())
 					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 				$id = ( int ) $this->_db->insertId ();
+				if (!$defaultmenu || (isset($menuitem['default']) && $config->fbdefaultpage == $menuitem['default'])) {
+					$defaultmenu = $id;
+				}
 			}
-			if (!$defaultmenu) $defaultmenu = $id;
 		}
 		if ($defaultmenu) {
 			$query = "UPDATE `#__menu` SET `link`={$this->db->quote($menu['link']."&defaultmenu=$defaultmenu")} WHERE id={$parentid}";

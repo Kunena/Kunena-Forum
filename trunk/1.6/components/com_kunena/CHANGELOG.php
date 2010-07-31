@@ -37,6 +37,9 @@ Kunena 1.6.0-BETA2
 # [#19288] CKunenaPost::post(): Use of undefined constant name - assumed 'name'
 # [#19288] BBCode parser: Undefined index: size in file tag
 # [#19288] Who is online: use mod_whosonline (from Joomla) to count users and guests
+- [#19293] Remove deprecated configuration option fbdefaultpage
+# [#20071] KunenaRoute: Simplify default page handling (and fix unexpected behavior)
+# [#19288] Create menu: Use default menu item from K1.5 configuration
 
 30-July-2010 Matias
 ^ [#19288] Installer: Add layout=schema to show current schema and diff during installation

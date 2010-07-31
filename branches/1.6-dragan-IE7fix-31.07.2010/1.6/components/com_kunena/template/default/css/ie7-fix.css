@@ -59,17 +59,7 @@
 #Kunena td.kmessage-right div,
 #Kunena td.kmessage-left div,
 #Kunena td.kmessage-top div,
-#Kunena td.kmessage-bottom div {
-	width: 700px;
-}
+#Kunena td.kmessage-bottom div { width: 700px; }
 #Kunena div.kmsgtext-quote,
 #Kunena div.kmsgtext-hide,
-#Kunena div.kmsgtext-confidential {
-	overflow: hidden;
-}
-#Kunena span.kreply span {
-	overflow: visible;
-}
-#Kunena .kreply-form {
-	overflow: visible;
-}
+#Kunena div.kmsgtext-confidential { overflow: hidden; }

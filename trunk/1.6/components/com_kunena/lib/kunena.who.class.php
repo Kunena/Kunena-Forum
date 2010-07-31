@@ -85,12 +85,13 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getTotalRegistredUsers () {
-		$users =$this->getActiveUsersList();
-		return $totaluser = count($users);
+		$count = KunenaUser::getOnlineCount();
+		return $count['user'];
 	}
 
 	public function getTotalGuestUsers () {
-    	return KunenaUser::getOnlineGuestsCount();
+		$count = KunenaUser::getOnlineCount();
+		return $count['guest'];
 	}
 
 	public function getTitleWho ($totaluser,$totalguests) {

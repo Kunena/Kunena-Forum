@@ -461,7 +461,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					} else {
 						$task->autolink_disable --; // continue autolink conversion
 
-						$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>" . JText::_('COM_KUNENA_FILENAME') . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . kunena_htmlspecialchars ( !empty($tag->options ["name"]) ? $tag->options ["name"] : $tempstr) . "</a><br>" . JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( $tag->options ["size"] ? $tag->options ["size"] : '?' ) . "</div>";
+						$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>" . JText::_('COM_KUNENA_FILENAME') . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . kunena_htmlspecialchars ( !empty($tag->options ["name"]) ? $tag->options ["name"] : $tempstr) . "</a><br>" . JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( isset($tag->options ["size"]) ? $tag->options ["size"] : '?' ) . "</div>";
 					}
 					return TAGPARSER_RET_REPLACED;
 				}

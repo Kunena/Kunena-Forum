@@ -269,22 +269,14 @@ class KunenaUser extends JObject {
 		return self::$_online;
 	}
 
-	public static function getOnlineGuestsCount () {
-		static $guests = null;
-		if ($guests === null) {
-			kimport ( 'error' );
-			$db = JFactory::getDBO ();
-			$app = JFactory::getApplication ();
-			// TODO: make stats configurable by freely defined timeout (15 min, 30 min, Joomla session, all...)
-			//$now = JFactory::getDate();
-			//$session_timeout = $now->toUnix() - $app->getCfg ( 'lifetime', 15 ) * 60;
-			//$query = "SELECT COUNT(*) FROM #__session WHERE client_id=0 AND guest='1' AND time > {$session_timeout}";
-			$query = "SELECT COUNT(*) FROM #__session WHERE client_id=0 AND guest='1'";
-			$db->setQuery($query);
-			$guests = $db->loadResult();
-			KunenaError::checkDatabaseError();
+	public static function getOnlineCount () {
+		// TODO: make stats configurable by freely defined timeout (15 min, 30 min, Joomla session, all...)
+		static $count = null;
+		if ($count === null) {
+			require_once JPATH_ROOT.'/modules/mod_whosonline/helper.php';
+			$count = modWhosonlineHelper::getOnlineCount();
 		}
-		return $guests;
+		return $count;
 	}
 
 	public function isOnline($yesno = false) {

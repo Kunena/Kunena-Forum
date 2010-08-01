@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+01-August-2010 Xillibit
+# [#19288] Pathway : move most of the code out of the template
+
 31-July-2010 @quila
 # [#19288] Added IE7 fixes
 # [#19288] Fixed moderation page display in Chrome and Safari

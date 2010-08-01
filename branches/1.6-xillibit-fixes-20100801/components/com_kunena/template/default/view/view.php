@@ -12,7 +12,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 ?>
-<div><?php $this->displayPathway(); ?></div>
+<div><?php $this->displayPathway(1); ?></div>
 
 <?php if ($this->headerdesc) : ?>
 	<div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->catinfo->class_sfx) : '' ?>">
@@ -40,7 +40,7 @@ defined( '_JEXEC' ) or die();
 <?php $this->displayThreadActions(1); ?>
 
 <div class = "kforum-pathway-bottom">
-	<?php echo $this->kunena_pathway1; ?>
+	<?php echo $this->displayPathway(0);; ?>
 </div>
 <!-- B: List Actions Bottom -->
 <div class="kcontainer klist-bottom">

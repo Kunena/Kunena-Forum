@@ -33,7 +33,9 @@ $this->setTitle ( $this->escape($this->title) );
 
 $this->k=0;
 ?>
-<?php CKunenaTools::loadTemplate ( '/pathway.php' )?>
+<?php require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
+	$pathway = new CKunenaPathway(1);
+	$pathway->display();?>
 
 <form class="postform form-validate" id="postform" action="<?php echo CKunenaLink::GetPostURL()?>"
 	method="post" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">

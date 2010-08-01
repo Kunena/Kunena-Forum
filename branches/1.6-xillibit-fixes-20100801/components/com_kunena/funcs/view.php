@@ -620,8 +620,11 @@ class CKunenaView {
 		$this->anonymous = ($this->allow_anonymous && !empty($this->catinfo->post_anonymous));
 	}
 
-	function displayPathway() {
-		CKunenaTools::loadTemplate('/pathway.php');
+	function displayPathway($show_online_users) {
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
+		$pathway = new CKunenaPathway($show_online_users);
+		$this->kunena_topic_title = $pathway->kunena_topic_title;
+		$pathway->display();
 	}
 
 	function displayPoll() {

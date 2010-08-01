@@ -215,8 +215,10 @@ class CKunenaShowcat {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
-	function displayPathway() {
-		CKunenaTools::loadTemplate('/pathway.php');
+	function displayPathway($show_online_users) {
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
+		$pathway = new CKunenaPathway($show_online_users);
+		$pathway->display();
 	}
 
 	function displayAnnouncement() {

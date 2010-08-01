@@ -202,8 +202,8 @@ class CKunenaListcat {
 		$this->pending = array ();
 		if (count ( $modcats )) {
 			$modcatlist = implode ( ',', $modcats );
-			$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m 
-			INNER JOIN #__users AS u ON u.id=m.userid 
+			$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m
+			INNER JOIN #__users AS u ON u.id=m.userid
 			WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
 			$modlist = $this->db->loadObjectList ();
 			KunenaError::checkDatabaseError();
@@ -219,9 +219,9 @@ class CKunenaListcat {
 				}
 				if (count ( $modcats )) {
 					$modcatlist = implode ( ',', $modcats );
-					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count 
-					FROM #__kunena_messages 
-					WHERE catid IN ($modcatlist) AND hold='1' 
+					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count
+					FROM #__kunena_messages
+					WHERE catid IN ($modcatlist) AND hold='1'
 					GROUP BY catid" );
 					$pending = $this->db->loadAssocList ();
 					KunenaError::checkDatabaseError();
@@ -238,7 +238,9 @@ class CKunenaListcat {
 	}
 
 	function displayPathway() {
-		CKunenaTools::loadTemplate('/pathway.php');
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
+		$pathway = new CKunenaPathway(1);
+		$pathway->display();
 	}
 
 	function displayAnnouncement() {
@@ -316,7 +318,7 @@ class CKunenaListcat {
 		$output .= '</ul>';
 		return $output;
 	}
-	
+
 	function displayInfoMessage($header, $contents) {
 			$header = JText::_('COM_KUNENA_FORUM_INFORMATION');
 			$contents = JText::_('COM_KUNENA_LISTCAT_NO_CATS');

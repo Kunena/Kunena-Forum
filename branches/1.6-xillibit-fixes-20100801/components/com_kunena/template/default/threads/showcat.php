@@ -22,7 +22,7 @@
 defined ( '_JEXEC' ) or die ();
 ?>
 <!-- Pathway -->
-<?php $this->displayPathway () ?>
+<?php $this->displayPathway (1) ?>
 <!-- / Pathway -->
 
 <?php $this->displaySubCategories () ?>
@@ -111,7 +111,7 @@ defined ( '_JEXEC' ) or die ();
 </table>
 <?php
 echo '<div class = "kforum-pathway-bottom">';
-echo $this->kunena_pathway1;
+echo $this->displayPathway (0);
 echo '</div>';
 ?>
 <!-- B: List Actions Bottom -->

@@ -495,7 +495,9 @@ class CKunenaLatestX {
 	}
 
 	function displayPathway() {
-		CKunenaTools::loadTemplate('/pathway.php');
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
+		$pathway = new CKunenaPathway(1);
+		$pathway->display();
 	}
 
 	function displayAnnouncement() {

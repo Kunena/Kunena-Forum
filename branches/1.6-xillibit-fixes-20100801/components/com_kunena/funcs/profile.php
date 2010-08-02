@@ -234,7 +234,7 @@ class CKunenaProfile {
 	function displayGotThankYou()
 	{
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('userposts',0);
+		$obj = new CKunenaLatestX('gotthankyouposts',0);
 		$obj->user = $this->user;
 		$obj->getGotThankYouPosts();
 		$obj->displayPosts();
@@ -243,7 +243,7 @@ class CKunenaProfile {
 	function displaySaidThankYou()
 	{
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		$obj = new CKunenaLatestX('userposts',0);
+		$obj = new CKunenaLatestX('saidthankyouposts',0);
 		$obj->user = $this->user;
 		$obj->getSaidThankYouPosts();
 		$obj->displayPosts();

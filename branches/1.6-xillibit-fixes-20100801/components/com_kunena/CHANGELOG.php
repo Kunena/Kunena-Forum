@@ -38,6 +38,7 @@ Kunena 1.6.0-BETA2
 # [#19288] Fix issue in review class which prevent to show only the messages from a specific category
 # [#19288] When change vote in poll get datenow from JDate
 # [#19288] Add check token on mark read and subscricat in showcat
+# [#19288] In profile when you want check all items, nothing happens because the id is not unique
 
 01-August-2010 Xillibit
 # [#19288] Pathway : move most of the code out of the template

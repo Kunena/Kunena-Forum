@@ -30,7 +30,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 <div class="kblock kflat">
 	<div class="kheader">
 		<?php if (CKunenaTools::isModerator($this->my->id)) : ?>
+		<?php if ($this->func == 'favorites') { ?>
+		<span class="kcheckbox select-toggle"><input id="kcbcheckall_favorites" type="checkbox" name="toggle" value="" /></span>
+		<?php } elseif ($this->func == 'subscriptions') { ?>
+		<span class="kcheckbox select-toggle"><input id="kcbcheckall_subscriptions" type="checkbox" name="toggle" value="" /></span>
+		<?php } else { ?>
 		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
+		<?php } ?>
 		<?php endif; ?>
 		<h2><span><?php if (!empty($this->header)) echo $this->header; ?></span></h2>
 	</div>
@@ -202,7 +208,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 			<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
 			<td class="kcol-mid ktopicmoderation">
-				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($leaf->id)?>]" value="0" />
+				<?php if ($this->func == 'favorites') { ?>
+					<input class ="kDelete_bulkcheckboxes_favorites" type="checkbox" name="cb[<?php echo intval($leaf->id)?>]" value="0" />
+				<?php } elseif ($this->func == 'subscriptions') { ?>
+					<input class ="kDelete_bulkcheckboxes_subscriptions" type="checkbox" name="cb[<?php echo intval($leaf->id)?>]" value="0" />
+				<?php } else { ?>
+					<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($leaf->id)?>]" value="0" />
+				<?php } ?>
 			</td>
 			<?php endif; ?>
 		</tr>

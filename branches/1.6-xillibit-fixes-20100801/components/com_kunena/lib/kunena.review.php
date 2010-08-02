@@ -82,8 +82,7 @@ class CKunenaReview {
 
 	public function GetApprovedMessageList() {
 		$queryCatid = '';
-		// TODO: uncomment and make to work
-		// if ( !empty($catid) ) $queryCatid = " AND catid='{$this->catid}'";
+		if ( !empty($this->catid) ) $queryCatid = " AND catid='{$this->catid}'";
 		$this->_db->setQuery ( "SELECT m.*, t.message,cat.name AS catname FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid LEFT JOIN #__kunena_categories AS cat ON cat.id=m.catid WHERE hold='1' " . $queryCatid . " ORDER BY id ASC" );
 		$MesNeedReview = $this->_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError ())

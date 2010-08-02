@@ -227,7 +227,7 @@ class CKunenaProfile {
 	function displayReviewPosts()
 	{
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
-		$review = new CKunenaReview(1);
+		$review = new CKunenaReview('');
 		$review->display();
 	}
 

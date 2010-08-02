@@ -22,6 +22,8 @@ class CKunenaPolls {
 	public $config = null;
 	public $my = null;
 	public $document = null;
+	public $datenow = null;
+	public $jconfig = null;
 
 	protected function __construct($db, $config) {
 		$this->do = JRequest::getCmd ( 'do', '' );
@@ -34,6 +36,11 @@ class CKunenaPolls {
 		$this->id = JRequest::getInt ( 'id', 0 );
 		$this->catid = JRequest::getInt ( 'catid', 0 );
 		$this->do = JRequest::getCmd ( 'do', '' );
+
+		jimport( 'joomla.utilities.date' );
+		$this->jconfig =& JFactory::getConfig();
+		$tzoffset = $this->jconfig->getValue('config.offset');
+		$this->datenow = new JDate('now', $tzoffset);
 	}
 
 	public function &getInstance() {
@@ -399,8 +406,7 @@ class CKunenaPolls {
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
 
-        	// TODO: We need to check if NOW() is always in UTC (if Joomla sets MySQL timezone)
-        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$this->_db->Quote($vote)}, lasttime=now() WHERE pollid={$this->_db->Quote($threadid)} AND userid={$this->_db->Quote($userid)};";
+        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$this->_db->Quote($vote)}, lasttime={$this->_db->Quote($this->datenow->toMySQL())} WHERE pollid={$this->_db->Quote($threadid)} AND userid={$this->_db->Quote($userid)};";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;

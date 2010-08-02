@@ -11,10 +11,6 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-jimport( 'joomla.utilities.date' );
-
-$datenow = new JDate();
-
 // FIXME: AJAX Javascript does not work, it needs different logic
 //$this->call_javascript_vote();
 $dataspollresult = $this->get_poll_data($this->id);
@@ -88,7 +84,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								<?php endif; ?>
 						</table>
 						<?php
-						} elseif (($datenow->toFormat('%Y-%m-%d %H:%M:%S') <= $dataspollresult[0]->polltimetolive)
+						} elseif (($this->datenow->toFormat('%Y-%m-%d %H:%M:%S') <= $dataspollresult[0]->polltimetolive)
 							|| $dataspollresult[0]->polltimetolive == "0000-00-00 00:00:00") {
 						?>
 						<div id="kpoll-text-help"></div>

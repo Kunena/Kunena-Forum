@@ -144,6 +144,11 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=report', $xhtml );
 	}
 
+	function GetUnsuscribeCategoryLink($name, $catid, $userid = '', $rel = 'nofollow') {
+		if ( !empty($userid) ) $userid='&userid='.$userid;
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=unsubscribecat&catid=' . $catid .$userid, $name, '', $rel );
+	}
+
 	function GetReportMessageLink($catid, $id, $name, $rel = 'nofollow') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=report&catid=' . $catid . '&id=' . $id, $name, '', $rel );
 	}

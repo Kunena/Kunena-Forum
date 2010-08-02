@@ -540,7 +540,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				KunenaError::checkDatabaseError();
 			}
 
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
+			if ($userid == 0) {
+				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
+			} else {
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($userid, false), $success_msg );
+			}
 			break;
 
 		case 'karma' :

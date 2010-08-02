@@ -31,9 +31,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 ?>
 <div class="kblock">
 	<div class="kheader">
-		<?php if (CKunenaTools::isModerator($this->my->id)) : ?>
-		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
-		<?php endif; ?>
+
 		<h2><span><?php if (!empty($this->header)) echo $this->escape($this->header); ?></span></h2>
 	</div>
 	<div class="kcontainer">
@@ -107,11 +105,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				</div>
 			</td>
 
-			<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
-			<td class="kcol-first krowmoderation">
-				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($leaf->id) ?>]" value="0"  />
+
+			<td class="kcol-mid">
+				<?php echo CKunenaLink::GetUnsuscribeCategoryLink(JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY'), $leaf->catid, $this->my->id, 'nofollow'); ?>
 			</td>
-			<?php endif; ?>
+
 		</tr>
 		<?php endforeach; ?>
 

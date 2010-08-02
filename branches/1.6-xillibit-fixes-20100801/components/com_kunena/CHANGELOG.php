@@ -33,12 +33,16 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+02-August-2010 Xillibit
+# [#19288] Now you can unsuscribe the categories in your profile
+
 01-August-2010 Xillibit
 # [#19288] Pathway : move most of the code out of the template
 # [#19288] Little changes to fix some FIXME
 # [#19288] Update french language file
 # [#19288] Wrong link to support website in backend
 # [#19288] Redirect on the correct message when you use karma and thank you functions
+# [#19288] When edit a message in a category in review, show that the message is gonna to be moderated
 
 31-July-2010 @quila
 # [#19288] Added IE7 fixes

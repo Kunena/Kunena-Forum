@@ -499,6 +499,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'markthisread' :
+			if (!JRequest::checkToken('get')) {
+				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), JText::_('COM_KUNENA_GEN_FORUM_MARKED') );
+			}
 			// Mark all unread topics in the category to read
 			$readTopics = $kunena_session->readtopics;
 			$kunena_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE catid='{$catid}' AND parent=0 AND thread NOT IN ({$readTopics})" );
@@ -513,6 +517,14 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'subscribecat' :
+			if (!JRequest::checkToken('get')) {
+				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				if ($userid == 0) {
+					$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ) );
+				} else {
+					$kunena_app->redirect ( CKunenaLink::GetProfileURL($userid, false) );
+				}
+			}
 
 			$success_msg = '';
 
@@ -530,7 +542,14 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'unsubscribecat' :
-
+			if (!JRequest::checkToken('get')) {
+				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				if ($userid == 0) {
+					$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
+				} else {
+					$kunena_app->redirect ( CKunenaLink::GetProfileURL($userid, false), $success_msg );
+				}
+			}
 			$success_msg = '';
 			if ($catid && $kunena_my->id ) {
 				$query = "DELETE FROM #__kunena_subscriptions_categories WHERE catid=$catid AND userid=$kunena_my->id";
@@ -542,7 +561,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				KunenaError::checkDatabaseError();
 			}
 
-			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
+			if ($userid == 0) {
+				$kunena_app->redirect ( CKunenaLink::GetCategoryURL('showcat' , $catid, false ), $success_msg );
+			} else {
+				$kunena_app->redirect ( CKunenaLink::GetProfileURL($userid, false), $success_msg );
+			}
 			break;
 
 		case 'karma' :

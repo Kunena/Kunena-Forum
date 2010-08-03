@@ -31,7 +31,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 <div class="kblock">
 	<div class="kheader">
 		<?php if (CKunenaTools::isModerator($this->my->id)) { ?>
-		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
+			<span class="kcheckbox select-toggle"><input id="kcbcheckall_<?php echo $this->func ?>" type="checkbox" name="toggle" value="" /></span>
 		<?php } ?>
 		<h2><span><?php if (!empty($this->header)) echo $this->escape($this->header); ?></span></h2>
 	</div>
@@ -154,7 +154,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 			<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
 			<td class="kcol-mid ktopicmoderation">
-				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($message->id) ?>]" value="0" />
+				<input class ="kDelete_bulkcheckboxes_<?php echo $this->func ?>" type="checkbox" name="cb[<?php echo intval($message->id) ?>]" value="0" />
 			</td>
 			<?php endif; ?>
 		</tr>

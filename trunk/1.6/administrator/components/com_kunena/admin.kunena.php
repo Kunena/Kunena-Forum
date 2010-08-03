@@ -811,8 +811,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 			$txt = $registry->toString();
 			$return = JFile::write($file, $txt);
 			if (!$return) {
-				// FIXME: write failed, not read
-				$kunena_app->redirect('index.php?option='.$option, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_OPEN_FILE.', $file));
+				$kunena_app->redirect('index.php?option='.$option, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_OPERATION_FAILED').': '.JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_FAILED_WRITE_FILE.', $file));
 			}
 		}
 		$task = JRequest::getCmd('task');

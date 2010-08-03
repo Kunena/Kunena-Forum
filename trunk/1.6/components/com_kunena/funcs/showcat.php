@@ -172,19 +172,19 @@ class CKunenaShowcat {
 			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
 		}
 		if ($this->my->id != 0 && $this->total) {
-			$this->forum_markread = CKunenaLink::GetCategoryLink ( 'markThisRead', $this->catid, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
+			$this->forum_markread = CKunenaLink::GetCategoryActionLink ( 'markthisread', $this->catid, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
 		}
 
 		// Thread Subscription
 		if ($kunena_cansubscribecat == 1) {
 			// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
-			$this->thread_subscribecat = CKunenaLink::GetCategoryLink ( 'subscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
+			$this->thread_subscribecat = CKunenaLink::GetCategoryActionLink ( 'subscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
 		}
 
 		if ($this->my->id != 0 && $this->config->allowsubscriptions && $kunena_cansubscribecat == 0) {
 			// this user is allowed to unsubscribe
-			$this->thread_subscribecat = CKunenaLink::GetCategoryLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
+			$this->thread_subscribecat = CKunenaLink::GetCategoryActionLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
 		}
 		//get the Moderator list for display
 		$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->db->Quote($this->catid)} AND u.block=0" );

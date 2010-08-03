@@ -18,13 +18,13 @@ class CKunenaReview {
 	public $config;
 	public $app;
 
-	function __construct($catid = '') {
+	function __construct($catid = 0) {
 		$this->_db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->app = JFactory::getApplication ();
 		$this->uri = JURI::getInstance ();
-		$this->catid = $catid;
+		$this->catid = intval($catid);
 		$this->tabclass = array ("row1", "row2" );
 		$this->MessagesToApprove = $this->GetApprovedMessageList ();
 		$this->do = JRequest::getCmd ( 'do', '' );
@@ -82,8 +82,8 @@ class CKunenaReview {
 
 	public function GetApprovedMessageList() {
 		$queryCatid = '';
-		// TODO: uncomment and make to work
-		// if ( !empty($catid) ) $queryCatid = " AND catid='{$this->catid}'";
+		if ( $this->catid > 0 ) $queryCatid = " AND catid='{$this->catid}'";
+		// FIXME: only show unapproved messages from categories where user has moderator rights
 		$this->_db->setQuery ( "SELECT m.*, t.message,cat.name AS catname FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid LEFT JOIN #__kunena_categories AS cat ON cat.id=m.catid WHERE hold='1' " . $queryCatid . " ORDER BY id ASC" );
 		$MesNeedReview = $this->_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError ())
@@ -93,6 +93,7 @@ class CKunenaReview {
 	}
 
 	protected function _moderatorProtection() {
+		// FIXME: only allow action in categories where user has moderator rights
 		if (! CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ), 'notice' );
 			return true;

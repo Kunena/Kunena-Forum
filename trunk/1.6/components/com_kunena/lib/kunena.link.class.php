@@ -78,6 +78,10 @@ class CKunenaLink {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid, $catname, $title, $rel, $class );
 	}
 
+	function GetCategoryActionLink($func, $catid, $catname, $rel = 'follow', $class = '', $title = '', $extra = '') {
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=' . $func . '&catid=' . $catid . $extra . '&'.JUtility::getToken().'=1', $catname, $title, $rel, $class );
+	}
+
 	function GetCategoryURL($func, $catid = '', $xhtml = true) {
 		$strcatid = '';
 		if ($catid != '')

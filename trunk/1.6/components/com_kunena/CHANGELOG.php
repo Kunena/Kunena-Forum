@@ -33,6 +33,28 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+3-July-2010 Matias
+# [#19288] Add installable language packs support for Kunena
+^ [#15886] Merged revisions 3137-3142 from /branches/1.6-xillibit-fixes-20100801
+
+2-July-2010 Matias
+# [#19288] Template manager: Make it possible to translate example template parameters
+# [#19288] Template manager: Use English language is current language is not complete
+# [#19288] Templates: Rename all language files to xx-XX.com_kunena.tpl_foldername.ini
+
+02-August-2010 Xillibit
+# [#19288] Now you can unsuscribe the categories in your profile
+# [#19288] Fix issue in review class which prevents to show only the messages from a specific category
+# [#19288] Add check token on mark read and subscricat in showcat
+# [#19288] In profile when you want check all items, nothing happens because the id is not unique
+
+01-August-2010 Xillibit
+# [#19288] Little changes to fix some FIXMEs
+# [#19288] Update French language file
+# [#19288] Wrong link to support website in backend
+# [#19288] Redirect on the correct message when you use karma and thank you functions
+# [#19288] When edit a message in a category in review, show that the message is gonna to be moderated
+
 31-July-2010 @quila
 # [#19288] Added IE7 fixes
 # [#19288] Fixed moderation page display in Chrome and Safari

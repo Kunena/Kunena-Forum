@@ -31,15 +31,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 ?>
 <div class="kblock">
 	<div class="kheader">
-		<?php if (CKunenaTools::isModerator($this->my->id)) : ?>
-		<span class="kcheckbox select-toggle"><input id="kcbcheckall" type="checkbox" name="toggle" value="" /></span>
-		<?php endif; ?>
+
 		<h2><span><?php if (!empty($this->header)) echo $this->escape($this->header); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<form action="index.php" method="post" name="kBulkActionForm">
-<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
+		<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
 		<?php if (!count ( $this->categories ) ) { ?>
 		<tr class="krow2">
 			<td class="kcol-first">
@@ -107,42 +104,14 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				</div>
 			</td>
 
-			<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
-			<td class="kcol-first krowmoderation">
-				<input class ="kDelete_bulkcheckboxes" type="checkbox" name="cb[<?php echo intval($leaf->id) ?>]" value="0"  />
+			<td class="kcol-mid">
+				<?php echo CKunenaLink::GetCategoryActionLink ( 'unsubscribecat', $leaf->catid, JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY'), 'nofollow', '', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG'), '&userid='.$this->my->id ); ?>
 			</td>
-			<?php endif; ?>
+
 		</tr>
 		<?php endforeach; ?>
 
-		<?php
-		if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) :
-			$appfunc = JRequest::getCmd('func');
-		?>
-		<!-- Moderator Bulk Actions -->
-<?php /*
-		<tr class="ksectiontableentry1">
-			<td colspan="7" class="kcol-first krowmoderation">
-				<select name="do" id="kBulkChooseActions" class="inputbox">
-					<option value="">&nbsp;</option>
-					<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>
-					<option value="bulkMove"><?php echo JText::_('COM_KUNENA_MOVE_SELECTED'); ?></option>
-					<?php if ( $this->func == 'favorites' ) : ?>
-					<option value="bulkFavorite"><?php echo JText::_('COM_KUNENA_DELETE_FAVORITE'); ?></option>
-					<?php endif; ?>
-				</select>
-				<?php CKunenaTools::showBulkActionCats (); ?>
-				<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO'); ?>" />
-			</td>
-		</tr>
-	*/ ?>
-		<!-- /Moderator Bulk Actions -->
-		<?php endif; ?>
 </table>
-<input type="hidden" name="option" value="com_kunena" />
-<input type="hidden" name="func" value="bulkactions" />
-<?php echo JHTML::_( 'form.token' ); ?>
-</form>
 </div>
 </div>
 </div>

@@ -11,6 +11,10 @@ defined('_JEXEC') or die;
 $version = reset($this->versions);
 ?>
 <table style="text-align: center; border: 1px solid #FFCC99; background: #FFFFCC; padding: 5px; margin: 0 0 20px 20px; clear: both; width: 50em;">
+	<?php if (!empty($version->state)) : array_shift($this->versions); ?>
+	<tr><th style="font-size: 1.5em; color: #CC0000;"><?php echo JText::_('COM_KUNENA_INSTALL_DETECT_FAILED') ?></th></tr>
+	<tr><td><?php echo JText::sprintf('COM_KUNENA_INSTALL_DETECT_FAILED_DESC',$version->version, $version->build) ?></td></tr>
+	<?php else: ?>
 	<tr><th style="font-size: 1.5em;"><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_WARNING') ?></th></tr>
 	<?php if ($version->action != 'REINSTALL') : ?>
 	<tr><td><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_WARNING_DESC') ?></td></tr>
@@ -18,6 +22,7 @@ $version = reset($this->versions);
 	<tr><td><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_WARNING_DESC_REINSTALL') ?></td></tr>
 	<?php endif; ?>
 	<tr><td><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_WARNING_BACKUP') ?></td></tr>
+	<?php endif; ?>
 </table>
 
 <?php foreach ($this->versions as $type=>$version) :

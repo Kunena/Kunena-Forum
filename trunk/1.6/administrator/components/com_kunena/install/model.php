@@ -800,11 +800,16 @@ class KunenaModelInstall extends JModel {
 		}
 		$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions);
 		$fireboard = $this->getInstalledVersion('fb_', $this->_fbVersions);
+		if (!empty($kunena->state)) {
+			$this->_versions['failed'] = $kunena;
+			$kunena = $this->getInstalledVersion('kunena_', $this->_kVersions, true);
+			if (version_compare ( $kunena->version, '1.6.0-ALPHA', "<" ) ) $kunena->ignore = true;
+		}
 		$migrate = $this->isMigration($kunena, $fireboard);
-		if ($kunena->component) $this->_versions['kunena'] = $kunena;
-		if ($fireboard->component) $this->_versions['fb'] = $fireboard;
-		if (!$kunena->component) $this->_versions['kunena'] = $kunena;
-		else if ($fireboard->component) {
+		if ($kunena->component && empty($kunena->ignore)) $this->_versions['kunena'] = $kunena;
+		if (!empty($fireboard->component)) $this->_versions['fb'] = $fireboard;
+		if (empty($kunena->component)) $this->_versions['kunena'] = $kunena;
+		else if (!empty($fireboard->component)) {
 			$uninstall = clone $fireboard;
 			$uninstall->action = 'RESTORE';
 			$this->_versions['uninstall'] = $uninstall;
@@ -846,8 +851,8 @@ class KunenaModelInstall extends JModel {
 		return true;
 	}
 
-	public function getInstalledVersion($prefix, $versionlist) {
-		if (isset($this->_installed[$prefix])) {
+	public function getInstalledVersion($prefix, $versionlist, $state = false) {
+		if (!$state && isset($this->_installed[$prefix])) {
 			return $this->_installed[$prefix];
 		}
 
@@ -861,7 +866,8 @@ class KunenaModelInstall extends JModel {
 
 		if ($versionprefix) {
 			// Version table exists, try to get installed version
-			$this->db->setQuery ( "SELECT * FROM " . $this->db->nameQuote ( $this->db->getPrefix () . $versionprefix . 'version' ) . " ORDER BY `id` DESC", 0, 1 );
+			$state = $state ? " WHERE state=''" : "";
+			$this->db->setQuery ( "SELECT * FROM " . $this->db->nameQuote ( $this->db->getPrefix () . $versionprefix . 'version' ) . $state . " ORDER BY `id` DESC", 0, 1 );
 			$version = $this->db->loadObject ();
 			if ($this->db->getErrorNum ())
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
@@ -879,7 +885,6 @@ class KunenaModelInstall extends JModel {
 				if (! $version || version_compare ( $version->version, '0.1.0', "<" ))
 					unset ( $version );
 			}
-
 		}
 
 		if (!isset ( $version )) {

@@ -26,8 +26,9 @@ class Com_KunenaInstallerScript {
 	function uninstall($parent) {
 		require_once (JPATH_ADMINISTRATOR .DS. 'components' .DS. 'com_kunena' .DS. 'api.php');
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.install');
-		$lang->load('com_kunena.install',KPATH_ADMIN);
+		if (!$lang->load('com_kunena.install',JPATH_ADMINISTRATOR)) {
+			$lang->load('com_kunena.install',KPATH_ADMIN);
+		}
 
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();

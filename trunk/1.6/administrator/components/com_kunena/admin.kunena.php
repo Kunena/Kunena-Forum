@@ -47,8 +47,12 @@ if (!$kn_version->checkVersion() && $task!='schema' && $task!='schemadiff') {
 
 require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
-$lang->load('com_kunena', KUNENA_PATH);
-$lang->load('com_kunena', KUNENA_PATH_ADMIN);
+if (!$lang->load('com_kunena',JPATH_SITE)) {
+	$lang->load('com_kunena',KPATH_SITE);
+}
+if (!$lang->load('com_kunena',JPATH_ADMINISTRATOR, null, true)) {
+	$lang->load('com_kunena',KPATH_ADMIN);
+}
 
 // Now that we have the global defines we can use shortcut defines
 require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
@@ -487,11 +491,17 @@ switch ($task) {
 
 	case "createmenu" :
 		$lang = JFactory::getLanguage();
-
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
-		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
-		$lang->load('com_kunena.install',KPATH_ADMIN);
+		// Start by loading English strings and override them by current locale
+		if (Kunena::isSVN()) {
+			$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
+		} else {
+			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
+		}
+		if (Kunena::isSVN()) {
+			$lang->load('com_kunena.install',KPATH_ADMIN);
+		} else {
+			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
+		}
 
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();
@@ -742,8 +752,16 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		if (!is_dir( $tBaseDir . DS . $template )) {
 			return JError::raiseWarning( 500, JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_TEMPLATE_NOT_FOUND') );
 		}
-		$lang =& JFactory::getLanguage();
-		$lang->load( 'tpl_'.$template, KUNENA_PATH_TEMPLATE.DS.$template );
+		$lang = JFactory::getLanguage();
+		// Start by loading strings for default template and override with current template
+		if (!$lang->load('com_kunena.tpl_default', JPATH_SITE)) {
+			$lang->load('com_kunena.tpl_default', KUNENA_PATH_TEMPLATE.DS.'default');
+		}
+		if ($template != 'default') {
+			if (!$lang->load('com_kunena.tpl_'.$template, JPATH_SITE)) {
+				$lang->load('com_kunena.tpl_'.$template, KUNENA_PATH_TEMPLATE.DS.$template);
+			}
+		}
 		$ini	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
 		$xml	= KUNENA_PATH_TEMPLATE.DS.$template.DS.'template.xml';
 		$row	= parseXMLTemplateFile($tBaseDir, $template);

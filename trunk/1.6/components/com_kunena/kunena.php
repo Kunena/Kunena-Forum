@@ -37,7 +37,9 @@ jimport( 'joomla.error.profiler' );
 $__kstarttime = JProfiler::getmicrotime();
 
 $lang = JFactory::getLanguage();
-$lang->load('com_kunena', KUNENA_PATH);
+if (!$lang->load('com_kunena', JPATH_SITE, null, true)) {
+	$lang->load('com_kunena', KPATH_SITE);
+}
 
 // First of all take a profiling information snapshot for JFirePHP
 if(JDEBUG){

@@ -26,11 +26,18 @@ class KunenaControllerInstall extends JController {
 
 	public function __construct() {
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
-		$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
-		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
-		$lang->load('com_kunena.install',KPATH_ADMIN);
-
+		// Start by loading English strings and override them by current locale
+		if (Kunena::isSVN()) {
+			$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
+		} else {
+			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
+		}
+		if (Kunena::isSVN()) {
+			$lang->load('com_kunena.install',KPATH_ADMIN);
+		} else {
+			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
+		}
+		
 		parent::__construct ();
 		require_once(KPATH_ADMIN.'/install/model.php');
 		$this->model = $this->getModel ( 'Install' );

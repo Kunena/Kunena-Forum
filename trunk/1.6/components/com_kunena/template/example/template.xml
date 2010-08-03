@@ -9,39 +9,40 @@
 	<authorUrl>http://www.kunena.com</authorUrl>
 	<copyright>Kunena Team</copyright>
 	<license>GNU/GPL</license>
-	<description>
-	Example template can be used as a base when you start designing your own template. To get started: copy everything in /components/com_kunena/template/example into your own directory and edit template.xml.
-	This template uses images from Blue Eagle (default) template.
-	</description>
+	<description>COM_KUNENA_TEMPLATE_EXAMPLE_TEMPLATE_DESC</description>
 	<thumbnail>template_thumbnail.png</thumbnail>
 	<params>
-		<param name="avatarPosition" type="list" default="left" label="Profile Position" description="PROFILE POSITION DESCRIPTION">
-			<option value="left">Left</option>
-			<option value="top">Top</option>
-			<option value="right">Right</option>
-			<option value="bottom">Bottom</option>
+		<param name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
+			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
+			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
+			<option value="right">COM_KUNENA_TEMPLATE_RIGHT</option>
+			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="buttonIconset" type="list" default="default" label="Button Set" description="BUTTON SET">
-			<option value="default">Default</option>
-			<option value="dtp2nl">dtp2.nl</option>
-			<option value="dtp2nl-highblack">dtp2.nl High Contrast</option>
+		<param name="buttonIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_BUTTON_SET" description="COM_KUNENA_TEMPLATE_BUTTON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+			<option value="dtp2nl">COM_KUNENA_TEMPLATE_BUTTON_SET_DTP2DEFAULT</option>
+			<option value="dtp2nl-highblack">COM_KUNENA_TEMPLATE_BUTTON_SET_DTP2HIGHBACK</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="profileIconset" type="list" default="default" label="Profile Icon Set" description="PROFILE ICON SET">
-			<option value="default">Default</option>
+		<param name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="editorIconset" type="list" default="default" label="Editor Icon Set" description="EDITOR ICON SET">
-			<option value="default">Default</option>
+		<param name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="forumHeadercolor" type="text" default="#5388B4" label="Forum Header Background" description="Default #5388B4" />
-		<param name="announcementHeadercolor" type="text" default="#990000" label="Announcement Header Background" description="Default #990000" />
-		<param name="announcementBoxbgcolor" type="text" default="#FFFFAA" label="Announcement Box Background" description="Default #FFFFAA" />
-		<param name="frontstatsHeadercolor" type="text" default="#000000" label="Frontstats Header Background" description="Default #000000" />
-		<param name="whoisonlineHeadercolor" type="text" default="#3B5323" label="WhoIsOnline Header Background" description="Default #3B5323" />
+		<param name="forumHeadercolor" type="text" default="#5388B4" label="COM_KUNENA_TEMPLATE_FORUM_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="announcementHeadercolor" type="text" default="#990000" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="announcementBoxbgcolor" type="text" default="#FFFFAA" label="COM_KUNENA_TEMPLATE_ANNOUNCEMENT_BOX_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="frontstatsHeadercolor" type="text" default="#000000" label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
+		<param name="whoisonlineHeadercolor" type="text" default="#3B5323" label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 
+		<param name="templatebyText" type="hidden" default="" />
+		<param name="templatebyName" type="hidden" default="" />
+		<param name="templatebyLink" type="hidden" default="" />
+		
 		<!-- Required avatar sizes -->
 		<param name="avatarSizeXThumb" type="hidden" default="36" />
 		<param name="avatarSizeYThumb" type="hidden" default="36" />

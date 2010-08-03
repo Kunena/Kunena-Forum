@@ -371,9 +371,13 @@ class KunenaModelInstall extends JModel {
 		);
 
 		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', KPATH_SITE);
-		$lang->load('com_kunena', KPATH_ADMIN);
-
+		if (!$lang->load('com_kunena',JPATH_SITE)) {
+			$lang->load('com_kunena',KPATH_SITE);
+		}
+		if (!$lang->load('com_kunena',JPATH_ADMINISTRATOR)) {
+			$lang->load('com_kunena',KPATH_ADMIN);
+		}
+		
 		// TODO: remove dependence
 		require_once (KPATH_ADMIN . '/api.php');
 		kimport('factory');
@@ -464,10 +468,6 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function upgradeDatabase() {
-		$lang = JFactory::getLanguage();
-		$lang->load('com_kunena', KPATH_SITE);
-		$lang->load('com_kunena', KPATH_ADMIN);
-
 		$results [] = $this->migrateConfig();
 
 		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');

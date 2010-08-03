@@ -54,11 +54,11 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <div class="kmsg-header kmsg-header-bottom">
 	<h2>
-		<span class="kmsgdate kmsgdate-bottom" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
-			<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
-		</span>
 		<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-bottom">
 			<?php echo $this->subjectHtml ?>
+		</span>
+		<span class="kmsgdate kmsgdate-bottom" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+			<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 		</span>
 		<span class="kmsg-id-bottom">
 			<a name="<?php echo intval($this->id) ?>"></a>
@@ -126,11 +126,11 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 
 <div class="kmsg-header kmsg-header-right">
 	<h2>
-		<span class="kmsgdate kmsgdate-right" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
-			<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
-		</span>
 		<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-right">
 			<?php echo $this->subjectHtml ?>
+		</span>
+		<span class="kmsgdate kmsgdate-right" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+			<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 		</span>
 		<span class="kmsg-id-right">
 			<a name="<?php echo intval($this->id) ?>"></a>

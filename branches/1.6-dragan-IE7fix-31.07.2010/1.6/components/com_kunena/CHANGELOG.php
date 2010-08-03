@@ -33,14 +33,21 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+02-August-2010 @quila
+# [#19288] IE7 css fix - removed scrollbar in quote message
+# [#19288] IE7 css fix - width of profile position in topic view page
+# [#19288] IE7 css fix - show date before topic subject in right, top and bottom position
+# [#19288] IE7 css fix - removed black border on submit button
+# [#19288] IE7 css fix - aligned insert and remove buttons in attachment function
+# [#19288] IE7 css fix - two js error with multi-attachment
+# [#19288] IE7 css fix - scroll bar on quote in history of reply
+
 31-July-2010 @quila
 # [#19288] Added IE7 fixes
 # [#19288] Fixed moderation page display in Chrome and Safari
 # [#19288] Fixed profile page display
 # [#19288] Added Template Designer Credits option in the footer
 # [#19288] Centered Credits link
-
-
 
 31-July-2010 Matias
 # [#19288] CKunenaPost::post(): Use of undefined constant name - assumed 'name'

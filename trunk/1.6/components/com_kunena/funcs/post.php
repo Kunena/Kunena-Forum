@@ -23,7 +23,7 @@ class CKunenaPost {
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = &JFactory::getDBO ();
 		$this->document = JFactory::getDocument ();
-		require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+		require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
 		$this->poll =& CKunenaPolls::getInstance();
 
 		$this->my = &JFactory::getUser ();

@@ -42,6 +42,7 @@ Kunena 1.6.0-BETA2
 # [#19288] Updated fi-FI (thanks Mortti)
 ^ [#15886] Merged revisions 3129-3144 from /branches/1.6-dragan-IE7fix-31.07.2010
 ^ [#15886] Merged revisions 3149-3151 from /branches/1.6-dragan-fix-04.08.2010
+# [#19288] Use KPATH_SITE instead of JPATH_COMPONENT, which doesn't work in modules/plugins/integration
 
 3-August-2010 Severdia
 + [#20081] Added missing error styles

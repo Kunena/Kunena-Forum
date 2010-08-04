@@ -84,7 +84,7 @@ class Kunena implements iKunena {
 	}
 
 	public static function getConfig() {
-		require_once (JPATH_COMPONENT . DS . 'lib' . DS . "kunena.config.class.php");
+		require_once (KPATH_SITE . DS . 'lib' . DS . "kunena.config.class.php");
 		return KunenaFactory::getConfig ();
 	}
 

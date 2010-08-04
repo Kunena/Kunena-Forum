@@ -195,7 +195,7 @@ class CKunenaViewMessage {
 
 		//Thankyou info and buttons
 		if ($this->config->showthankyou && $this->profile->userid) {
-			require_once(JPATH_COMPONENT.DS.'lib'.DS.'kunena.thankyou.php');
+			require_once(KPATH_SITE .DS. 'lib'.DS.'kunena.thankyou.php');
 			$thankyou = new CKunenaThankyou();
 			$this->thankyou = $thankyou->getThankYouUser($this->id);
 
@@ -627,7 +627,7 @@ class CKunenaView {
 	function displayPoll() {
 		if ($this->config->pollenabled == "1" && $this->first_message->poll_id) {
 			if ( $this->catinfo->allow_polls ) {
-				require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+				require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
   				$kunena_polls =& CKunenaPolls::getInstance();
   				$kunena_polls->showPollbox();
 			}

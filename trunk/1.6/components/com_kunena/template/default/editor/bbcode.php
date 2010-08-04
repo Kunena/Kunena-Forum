@@ -13,7 +13,7 @@
 defined ( '_JEXEC' ) or die ();
 
 // Kunena bbcode editor
-require_once (JPATH_COMPONENT . DS . 'lib' .DS. 'kunena.poll.class.php');
+require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll =& CKunenaPolls::getInstance();
 $kunena_config = KunenaFactory::getConfig ();
 ?>

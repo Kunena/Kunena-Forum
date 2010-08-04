@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+4-August-2010 Matias
+# [#19288] Updated fi-FI (thanks Mortti)
+
 3-August-2010 Severdia
 + [#20081] Added missing error styles
 

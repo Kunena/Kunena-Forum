@@ -35,6 +35,7 @@ Kunena 1.6.0-BETA2
 
 4-August-2010 Matias
 # [#19288] Updated fi-FI (thanks Mortti)
+^ [#15886] Merged revisions 3129-3144 from /branches/1.6-dragan-IE7fix-31.07.2010
 
 3-August-2010 Severdia
 + [#20081] Added missing error styles
@@ -43,6 +44,15 @@ Kunena 1.6.0-BETA2
 # [#19288] Add installable language packs support for Kunena
 ^ [#15886] Merged revisions 3137-3142 from /branches/1.6-xillibit-fixes-20100801
 # [#19288] Installer: better detection and handling for failed installs
+
+02-August-2010 @quila
+# [#19288] IE7 css fix - removed scrollbar in quote message
+# [#19288] IE7 css fix - width of profile position in topic view page
+# [#19288] IE7 css fix - show date before topic subject in right, top and bottom position
+# [#19288] IE7 css fix - removed black border on submit button
+# [#19288] IE7 css fix - aligned insert and remove buttons in attachment function
+# [#19288] IE7 css fix - two js error with multi-attachment
+# [#19288] IE7 css fix - scroll bar on quote in history of reply
 
 2-August-2010 Matias
 # [#19288] Template manager: Make it possible to translate example template parameters

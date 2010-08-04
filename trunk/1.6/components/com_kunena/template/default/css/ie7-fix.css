@@ -54,12 +54,14 @@
 #Kunena td.kmessage-right { width: 81%; }
 #Kunena td.kprofile-left { width: 19%; }
 #Kunena td.kmessage-left { width: 81%; }
+#Kunena td.kbuttonbar-right { width: 81%; }
+#Kunena td.kbuttonbar-left { width: 81%; }
 #Kunena div.keditavatar tr td.kcol-first label { white-space: nowrap; }
 #Kunena div.keditavatar tr td.kcol-mid td.kuadesc span { float:left; }
-#Kunena td.kmessage-right div,
-#Kunena td.kmessage-left div,
-#Kunena td.kmessage-top div,
-#Kunena td.kmessage-bottom div { width: 700px; }
 #Kunena div.kmsgtext-quote,
 #Kunena div.kmsgtext-hide,
 #Kunena div.kmsgtext-confidential { overflow: hidden; }
+#Kunena input.kbutton { filter:chroma(color=#000000); border:none; color: #111111 !important; border: 1px solid #999999;}
+#Kunena .kattachment-remove,#Kunena .kattachment-insert { padding: 8px 6px 0px;}
+#Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover { padding: 8px 6px 0px;}
+#Kunena div.kmsgbody div.kmsgtext { overflow:hidden; }

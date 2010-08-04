@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+04-August-2010 @quila
+# [#19288] Fixed Profile page, replaced div with table
+# [#19288] Fix regression - id message in history page
+# [#19288] Fix regression - announcement layout
+
 3-July-2010 Matias
 # [#19288] Add installable language packs support for Kunena
 ^ [#15886] Merged revisions 3137-3142 from /branches/1.6-xillibit-fixes-20100801

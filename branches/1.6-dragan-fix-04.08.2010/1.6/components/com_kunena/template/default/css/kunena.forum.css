@@ -2103,6 +2103,11 @@ POST PAGE
 	float:left;
 	padding-left: 10px;
 }
+#Kunena div#khistory tr.ksth a {
+	float:right;
+	padding-right: 10px;
+	color: #ffffff;
+}
 
 /* ---- Post Previews ---- */
 
@@ -2719,6 +2724,9 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena div#kannouncement .kanndesc {
 	padding: 5px 10px;
 }
+#Kunena img.calendar {
+	margin: 5px 0 -5px 5px;
+}
 
 #Kunena td.kuadesc,
 #Kunena td.kcreditsdesc	{
@@ -2999,8 +3007,7 @@ PROFILE
 #Kunena .kicon-profile-website-off { background-position: 0 -962px; } 
 #Kunena .kicon-profile-yim-off { background-position: 0 -983px; }
 
-#Kunena div#kprofile-container { padding: 10px 10px 30px 10px; overflow:auto; height: 1%;}
-#Kunena div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; margin-right: 10px;}
+#Kunena div#kprofile-leftcol { width: 200px; font-size: 1em; float:left; /*margin-right: 10px;*/}
 #Kunena div.kavatar-lg { 
 	width: 200px; 
 	height: 200px; 
@@ -3044,11 +3051,21 @@ div#kprofile-stats ul li span.krank-admin {
 	margin-top: 0;
 }
 #Kunena div#kprofile-rightcol { 
-	display:inline-block;
+	/*display:inline-block;
 	float:left;
 	margin-left:10px;
-	width:75%;
+	width:75%;*/
 }
+#Kunena table#kprofile td.kcol-left {
+	padding: 10px 10px 30px;
+	vertical-align: top;
+}
+#Kunena table#kprofile td.kcol-right {
+	border-left: 0;
+	padding: 10px 10px 30px;
+	vertical-align: top;
+}
+
 #Kunena div#kprofile-rightcoltop  {width: 100%;}
 #Kunena div.kprofile-rightcol1 { 
 	width: 45%;

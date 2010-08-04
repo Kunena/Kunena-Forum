@@ -4,14 +4,14 @@
  * Kunena Discuss Plugin
  * @package Kunena Discuss
  *
- * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ * @Copyright (C) 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
 defined( '_JEXEC' ) or die ( '' );
 ?>
 <div class="kdiscuss-item kdiscuss-item<?php echo $this->mmm & 1 ? 1 : 2 ?>">
-<a name="<?php echo $this->id ?>" id="id<?php echo $this->id ?>" > </a>
+<a name="<?php echo intval($this->id) ?>" id="id<?php echo intval($this->id) ?>" > </a>
 <table>
 	<tr>
 		<?php if ($this->config->allowavatar) : ?>
@@ -25,11 +25,11 @@ defined( '_JEXEC' ) or die ( '' );
 				<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat'); ?>
 			</span>
 			<span class="kdiscuss-username">
-				<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->username ) ?>
+				<?php echo CKunenaLink::GetProfileLink ( $this->profile->userid, $this->escape($this->username) ) ?>
 			</span>
-			<div class="kdiscuss-text"><?php echo $this->escape($this->message); ?></div>
+			<div class="kdiscuss-text"><?php echo $this->messageHtml; ?></div>
 		</td>
-		<td valign="top" class="kdiscuss-itemid-cover">#<?php echo $this->id ?></td>
+		<td valign="top" class="kdiscuss-itemid-cover">#<?php echo intval($this->id) ?></td>
 	</tr>
 </table>
 </div>

@@ -4,7 +4,7 @@
  * Kunena Discuss Plugin
  * @package Kunena Discuss
  *
- * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ * @Copyright (C) 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
@@ -46,9 +46,10 @@ class plgContentKunenaDiscuss extends JPlugin {
 		$lang->load ( 'com_kunena', KPATH_SITE );
 
 		// Create discussbot table if doesn't exist
-		$query = "SHOW TABLES LIKE '{$this->_db->_table_prefix}kunena_discuss'";
+		$query = "SHOW TABLES LIKE '{$this->_db->getPrefix()}kunenadiscuss'";
 		$this->_db->setQuery ( $query );
-		if ($this->_db->loadResult () === null) {
+		if (!$this->_db->loadResult ()) {
+			CKunenaTools::checkDatabaseError ();
 			$query = "CREATE TABLE IF NOT EXISTS `#__kunenadiscuss`
 					(`content_id` int(11) NOT NULL default '0',
 					 `thread_id` int(11) NOT NULL default '0',
@@ -197,17 +198,18 @@ class plgContentKunenaDiscuss extends JPlugin {
 		$subject = $row->title;
 
 		$query = "SELECT b.*, m.thread AS thread FROM #__kunenadiscuss AS b
-			LEFT JOIN #__fb_messages AS m ON b.thread_id = m.id AND hold=0
+			LEFT JOIN #__kunena_messages AS m ON b.thread_id = m.id AND hold=0
 			WHERE b.content_id = {$row->id}";
 		$this->_db->setQuery ( $query );
 		$result = $this->_db->loadObject ();
 		CKunenaTools::checkDatabaseError ();
 
-		if ($result && (! $result->thread || $result->thread != $thread)) {
+		if ($result && $result->thread_id == $thread) $thread = 0;
+		if ($result && ($result->thread != $result->thread_id || $thread)) {
 			$this->debug ( "showPlugin: Removing cross reference record pointing to a non-existent or wrong topic" );
 			$query = "DELETE FROM #__kunenadiscuss WHERE content_id={$result->content_id}";
-			$this->_db->setQuery ( $query );
-			$this->_db->query ();
+			//$this->_db->setQuery ( $query );
+			//$this->_db->query ();
 			CKunenaTools::checkDatabaseError ();
 			$result = null;
 		}
@@ -226,7 +228,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		if ($linkOnly) {
 			$this->debug ( "showPlugin: Displaying only link to the topic" );
 
-			$sql = "SELECT count(*) FROM #__fb_messages WHERE hold=0 AND parent!=0 AND thread=$thread";
+			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread=$thread";
 			$this->_db->setQuery ( $sql );
 			$postCount = $this->_db->loadResult ();
 			CKunenaTools::checkDatabaseError ();
@@ -278,19 +280,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 	}
 
 	/******************************************************************************
-	 * Get user information from Kunena
-	 *****************************************************************************/
-
-	function getAuthorName() {
-		if (! $this->_my->id) {
-			$name = '';
-		} else {
-			$name = $this->_config->username ? $this->_my->username : $this->_my->name;
-		}
-		return $name;
-	}
-
-	/******************************************************************************
 	 * Output
 	 *****************************************************************************/
 
@@ -311,8 +300,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 	}
 
 	function showForm($row) {
+		$myprofile = KunenaFactory::getUser();
 		$this->open = $this->params->get ( 'quickpost_open', false );
-		$this->name = $this->config->username ? $this->_my->username : $this->_my->name;
+		$this->name = $myprofile->getName();
 		ob_start ();
 		include (JPATH_ROOT . '/plugins/content/kunenadiscuss/form.php');
 		$str = ob_get_contents ();
@@ -370,14 +360,14 @@ class plgContentKunenaDiscuss extends JPlugin {
 	function replyTopic($row, $catid, $thread, $subject) {
 		// TODO: handle captcha, token, flood
 
-
 		require_once (KPATH_SITE . '/lib/kunena.posting.class.php');
 
 		if (intval ( $thread ) == 0) {
 			$thread = $this->createTopic ( $row, $catid, $subject );
 		}
 		$message = new CKunenaPosting ( );
-		$fields ['name'] = JRequest::getString ( 'name', $this->getAuthorName (), 'POST' );
+		$myprofile = KunenaFactory::getUser();
+		$fields ['name'] = JRequest::getString ( 'name', $myprofile->getName (), 'POST' );
 		$fields ['email'] = JRequest::getString ( 'email', null, 'POST' );
 		$fields ['subject'] = $subject;
 		$fields ['message'] = JRequest::getString ( 'message', null, 'POST' );
@@ -398,7 +388,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// TODO: Handle User subscrtiptions and Moderator notifications.
 		// $message->emailToSubscribers('index.php');
-
 
 		if ($message->get ( 'hold' )) {
 			$result = JText::_ ( 'PLG_KUNENADISCUSS_PENDING_MODERATOR_APPROVAL' );

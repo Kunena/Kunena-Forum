@@ -33,6 +33,7 @@ $document->addScriptDeclaration('
 			<div class="kanndesc">
 				<form class="form-validate" action="<?php echo CKunenaLink::GetAnnouncementURL('doedit'); ?>" method="post" name="editform" onsubmit="return myValidate(this);">
 					<?php echo JHTML::_( 'form.token' ); ?>
+				<div>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?>:
 						<input class="klarge required" type="text" name="title" value="<?php echo $this->escape($this->announcement->title) ;?>"/>
@@ -41,10 +42,14 @@ $document->addScriptDeclaration('
 						<?php echo JText::_('COM_KUNENA_ANN_SORTTEXT'); ?>:
 						<textarea class="ksmall required" rows="80" cols="4" name="sdescription"><?php echo $this->escape($this->announcement->sdescription); ?></textarea>
 					</label>
+				</div>
+				<div>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_LONGTEXT'); ?>:
 						<textarea class="klarge" rows="80" cols="16" name="description"><?php echo $this->escape($this->announcement->description); ?></textarea>
 					</label>
+				</div>
+				<div>
 					<label>
 						<?php echo JText::_('COM_KUNENA_ANN_DATE'); ?>:
 						<?php echo JHTML::_('calendar', $this->escape($this->announcement->created), 'created', 'addcreated');?>
@@ -63,6 +68,7 @@ $document->addScriptDeclaration('
 							<option value="0" <?php echo ($this->announcement->published == 0 ? 'selected="selected"' : ''); ?>><?php echo JText::_('COM_KUNENA_ANN_NO'); ?></option>
 						</select>
 					</label>
+				</div>
 					<input type='hidden' name="do" value="doedit"/>
 					<input type='hidden' name="id" value="<?php echo intval($this->announcement->id) ;?>"/>
 					<input name="submit" class="kbutton" type="submit" value="<?php echo JText::_('COM_KUNENA_ANN_SAVE'); ?>"/>

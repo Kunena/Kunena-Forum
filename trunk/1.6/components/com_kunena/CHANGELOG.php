@@ -33,9 +33,15 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
+04-August-2010 @quila
+# [#19288] Fixed Profile page, replaced div with table
+# [#19288] Fix regression - id message in history page
+# [#19288] Fix regression - announcement layout
+
 4-August-2010 Matias
 # [#19288] Updated fi-FI (thanks Mortti)
 ^ [#15886] Merged revisions 3129-3144 from /branches/1.6-dragan-IE7fix-31.07.2010
+^ [#15886] Merged revisions 3149-3151 from /branches/1.6-dragan-fix-04.08.2010
 
 3-August-2010 Severdia
 + [#20081] Added missing error styles

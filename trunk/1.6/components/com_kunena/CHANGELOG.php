@@ -33,12 +33,15 @@ Legend:
 
 Kunena 1.6.0-BETA2
 
-3-July-2010 Matias
+3-August-2010 Severdia
++ [#20081] Added missing error styles
+
+3-August-2010 Matias
 # [#19288] Add installable language packs support for Kunena
 ^ [#15886] Merged revisions 3137-3142 from /branches/1.6-xillibit-fixes-20100801
 # [#19288] Installer: better detection and handling for failed installs
 
-2-July-2010 Matias
+2-August-2010 Matias
 # [#19288] Template manager: Make it possible to translate example template parameters
 # [#19288] Template manager: Use English language is current language is not complete
 # [#19288] Templates: Rename all language files to xx-XX.com_kunena.tpl_foldername.ini

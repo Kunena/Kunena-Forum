@@ -429,7 +429,7 @@ abstract class CKunenaRSSDatasource {
 			'timelimit' =>	'thread.time',
 			'incl_cat'	=>	'thread.catid',
 			'excl_cat'	=>	'thread.catid',
-			'group_by'	=>	'thread.id',
+			'group_by'	=>	'post.lastpost_id',
 			'order_by'	=>	'post.lastpost_time'
 		);
 

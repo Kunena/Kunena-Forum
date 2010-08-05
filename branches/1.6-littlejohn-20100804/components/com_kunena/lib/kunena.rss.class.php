@@ -78,6 +78,7 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 		$this->setOption('specification',		strtolower(str_replace('rss', '', $this->config->rss_specification)));
 		$this->setOption('allow_html', 			(bool) $this->config->rss_allow_html);
 		$this->setOption('author_format', 		strtolower($this->config->rss_author_format));
+		$this->setOption('author_in_title',		strtolower($this->config->rss_author_in_title));
 		$this->setOption('word_count', 			(int) $this->config->rss_word_count);
 		$this->setOption('old_titles', 			(bool) $this->config->rss_old_titles);
 

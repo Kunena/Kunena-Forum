@@ -31,7 +31,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.0-BETA2
+Kunena 1.6.0-RC1
+
+5-August-2010 fxstein
+^ [#21727] Update version info to 1.6.0 RC1
 
 04-August-2010 @quila
 # [#19288] Fixed Profile page, replaced div with table

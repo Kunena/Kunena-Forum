@@ -35,6 +35,7 @@ Kunena 1.6.0-RC1
 
 5-August-2010 fxstein
 ^ [#21727] Update version info to 1.6.0 RC1
+- [#20081] Reverted changes to Joomla error styles
 
 04-August-2010 @quila
 # [#19288] Fixed Profile page, replaced div with table

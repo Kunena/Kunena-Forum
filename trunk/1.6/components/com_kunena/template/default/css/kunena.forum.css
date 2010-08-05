@@ -190,26 +190,6 @@ PX		EM			PCT			PT
 	margin:0;
 }
 
-/* System errors & notices  */
-dl#system-message {
-	display:block;
-	border: 1px solid #FF0000;
-	background-color: #ffefb1;
-}
-dt.message {	display:none;	}
-dd.message ul {
-	padding: 15px;
-	margin: 0;
-}
-dd.message ul li {
-	font-weight:bold;
-	font-size: 14px;
-	list-style-type: none;
-	margin:0 0 0 -40px;
-	padding:0;
-	text-align:center;
-}
-
 /* Block styling
 ----------------------------------------------------------------------------------------------- */
 

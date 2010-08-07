@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC1
 
+7-August-2010 fxstein
++ [#19288] Add internal moderate this user link to message moderation page
+
 5-August-2010 Matias
 # [#19288] Updated fi-FI (thanks Mortti), ru-RU (thanks ZARKOS)
 

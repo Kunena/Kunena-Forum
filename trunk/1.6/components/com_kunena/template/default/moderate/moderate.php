@@ -42,6 +42,11 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 		<div class="kmessage-avatar"><?php echo $this->user->getAvatarLink('', 'list'); ?></div>
 		<div class="kmessage-msgtext"><?php echo KunenaParser::stripBBCode ($this->message->message, 300) ?></div>
 	</div>
+	<div>
+		<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?>:
+		<strong><?php echo CKunenaLink::GetHrefLink ( KunenaProfileKunena::GetProfileURL(intval($this->message->userid)),
+		$this->escape($this->message->name).' ('.intval($this->message->userid).')' ); ?></strong>
+	</div>
 	<?php if ($this->threadmsg->replies) : ?>
 	<ul>
 		<li><input id="kmoderate-mode-selected" type="radio" name="mode" checked="checked" value="<?php echo KN_MOVE_MESSAGE ?>" /><?php echo JText::_ ( 'COM_KUNENA_MODERATION_MOVE_SELECTED' ); ?></li>

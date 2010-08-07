@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.0-RC1
 
+7-August-2010 810
+^ [#19288] IE7 css fix - Menu
+^ [#19288] Css - Fix Stats Backend
+^ [#19288] Css - Fix some backend bugs
+
+
 5-August-2010 Matias
 # [#19288] Updated fi-FI (thanks Mortti), ru-RU (thanks ZARKOS)
 

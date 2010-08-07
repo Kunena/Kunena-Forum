@@ -90,7 +90,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			?>
 			<tr>
 			<td><?php echo $KUNENA_poster->username;?> </td>
-			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/backgrounds/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
 			<td ><?php echo $KUNENA_poster->posts;?></td>
 			</tr>
 			<?php
@@ -124,7 +124,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			?>
 			<tr>
 			<td><?php echo $fb_profile->username; ?></td>
-			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/backgrounds/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
 			<td ><?php echo $fb_profile->uhits;?></td>
 			</tr>
 			<?php
@@ -147,12 +147,12 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 		<col class="col2">
 		<thead>
 			<tr>
-			<th><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
+			<th width="32%"><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
 			<th></th>
-			<th><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+			<th width="15%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
 			</tr>
 		</thead>
-		<tbody>
+        <tbody>
 			<?php
 				$KUNENA_top_thankyous=KunenaThankYou::getMostThankYou();
 				foreach ($KUNENA_top_thankyous as $KUNENA_thankyou) {
@@ -165,7 +165,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			?>
 			<tr>
 			<td><?php echo $KUNENA_thankyou->username;?> </td>
-			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/backgrounds/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
 			<td ><?php echo $KUNENA_thankyou->countid;?></td>
 			</tr>
 			<?php
@@ -183,9 +183,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 		<col class="col2">
 		<thead>
 			<tr>
-			<th><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
+			<th width="32%"><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
 			<th></th>
-			<th><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+			<th width="15%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -201,7 +201,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			?>
 			<tr>
 			<td><?php echo $KUNENA_said_thankyou->username;?> </td>
-			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/backgrounds/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
 			<td ><?php echo $KUNENA_said_thankyou->countid;?></td>
 			</tr>
 			<?php
@@ -243,7 +243,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 				?>
 			<tr>
 				<td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
-				<td ><img src="<?php echo KUNENA_DIRECTURL.'template/default/images/backgrounds/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
+				<td ><img src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
 				<td ><?php echo $KUNENA_post->hits;?></td>
 			</tr>
 			<?php } ?>
@@ -261,9 +261,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			<col class="col2">
 			<thead>
 			<tr>
-				<th><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
+				<th width="32%"><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
 				<th></th>
-				<th><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+				<th width="15%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -280,7 +280,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 				?>
 			<tr>
 				<td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
-				<td ><img src="<?php echo KUNENA_DIRECTURL.'template/default/images/backgrounds/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
+				<td ><img src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
 				<td ><?php echo $KUNENA_post->countid;?></td>
 			</tr>
 			<?php } ?>

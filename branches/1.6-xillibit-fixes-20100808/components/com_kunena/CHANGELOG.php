@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.0-RC1
 
+03-August-2010 Xillibit
+# [#19288] Wrong way for ordering system display
+# [#19288] Issue with poll migration with first version of hack which don't set auto_increment
+# [#19288] Add link in profile to show the full view
+
 8-August-2010 fxstein
 + [#19288] Add moderateuser link func to bypass profile integration for moderator access
 

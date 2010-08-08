@@ -65,7 +65,7 @@ function kunena_upgrade_160_polls($parent) {
 			if ($parent->db->getErrorNum ())
 				throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
 
-			$query = "ALTER TABLE {$parent->db->nameQuote($parent->db->getPrefix().'kunena_polls_datas')} MODIFY `id` int(11), MODIFY `text` varchar(100), CHANGE `hits` `votes` int(11)";
+			$query = "ALTER TABLE {$parent->db->nameQuote($parent->db->getPrefix().'kunena_polls_datas')} MODIFY `id` int(11) AUTO_INCREMENT, MODIFY `text` varchar(100), CHANGE `hits` `votes` int(11)";
 			$parent->db->setQuery ( $query );
 			$parent->db->query ();
 			if ($parent->db->getErrorNum ())

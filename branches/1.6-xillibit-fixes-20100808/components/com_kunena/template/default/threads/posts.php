@@ -164,6 +164,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<!-- Moderator Bulk Actions -->
 		<tr class="krow1">
 			<td colspan="7" class="kcol-first krowmoderation">
+				<?php echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_ANN_READMORE'), $this->func , 'follow'); ?>
 				<select name="do" id="kBulkChooseActions" class="inputbox">
 					<option value="">&nbsp;</option>
 					<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>

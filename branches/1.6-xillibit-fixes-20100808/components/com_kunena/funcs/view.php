@@ -122,10 +122,10 @@ class CKunenaViewMessage {
 		$this->thread = $message->thread;
 
 		// Link to individual message
-		if ($this->config->ordering_system == 'old_ord') {
-			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $this->id, '#' . $this->id );
-		} else {
+		if ($this->config->ordering_system == 'real_post_id') {
 			$this->numLink = CKunenaLink::GetSamePageAnkerLink( $this->id, '#' . $this->replynum );
+		} else {
+			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $this->id, '#' . $this->id );
 		}
 		// New post suffix for class
 		if ($message->new) {

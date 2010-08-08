@@ -44,7 +44,7 @@ $this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonU
 	</div>
 	<div>
 		<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?>:
-		<strong><?php echo CKunenaLink::GetHrefLink ( KunenaProfileKunena::GetProfileURL(intval($this->message->userid)),
+		<strong><?php echo CKunenaLink::GetModerateUserLink( intval($this->message->userid),
 		$this->escape($this->message->name).' ('.intval($this->message->userid).')' ); ?></strong>
 	</div>
 	<?php if ($this->threadmsg->replies) : ?>

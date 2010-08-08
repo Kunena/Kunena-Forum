@@ -223,6 +223,10 @@ class CKunenaLink {
 		return $xhtml == true ? $link : htmlspecialchars_decode ( $link );
 	}
 
+	function GetModerateUserLink($userid, $name = null, $title ='', $rel = 'nofollow', $class = '') {
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=moderateuser&userid=' . $userid, $name, $title, $rel, $class );
+	}
+
 	function GetUserlistLink($action, $name, $rel = 'nofollow', $class = '') {
 		$link = self::GetUserlistURL ( $action );
 		return self::GetHrefLink ( $link, $name, '', $rel, $class );

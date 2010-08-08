@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC1
 
+8-August-2010 fxstein
++ [#19288] Add moderateuser link func to bypass profile integration for moderator access
+
 7-August-2010 fxstein
 + [#19288] Add internal moderate this user link to message moderation page
 

@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.0
 
+08-August 2010 Xillibit
+# [#20095] Show messages no datas when there is nothing ot display
+
 11-July 2010 Xillibit
 # [#20095] Lot of changes to show thank you, some fixes and changes on language file
 

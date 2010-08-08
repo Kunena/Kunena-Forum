@@ -21,18 +21,26 @@ defined('_JEXEC') or die('Restricted access');
     </tr>
 
       <?php
-      foreach ( $stats as $stat) {
-        if ($stat->hits == modKStatisticsHelper::getTopTitlesHits($this->nbItems)) {
+      if (!empty($stats)) {
+      	foreach ( $stats as $stat) {
+        	if ($stat->hits == modKStatisticsHelper::getTopTitlesHits($this->nbItems)) {
 		      $barwidth = 100;
 		    } else {
 		      $barwidth = round(($stat->hits * 100) / modKStatisticsHelper::getTopTitlesHits($this->nbItems));
 		    }
+
       ?>
       <tr>
       <td><?php echo $klink->GetThreadLink('view', $stat->catid, $stat->thread,  stripslashes($stat->subject), stripslashes($stat->subject));  ?></td>
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
-      <?php } ?>
+      <?php }
+      } else {
+         ?><tr><td>
+         <?php  echo JText::_('MOD_KUNENA_STATS_NO_DATAS'); ?>
+          </td></tr>
+       <?php
+       } ?>
 
   </table>
   <?php } elseif ( $this->statsType == '1' ) { ?>
@@ -43,18 +51,26 @@ defined('_JEXEC') or die('Restricted access');
     </tr>
 
       <?php
-      foreach ( $stats as $stat) {
-        if ($stat->total == modKStatisticsHelper::getTopPollVotesStats($this->nbItems)) {
+      if (!empty($stats)) {
+      	foreach ( $stats as $stat) {
+        	if ($stat->total == modKStatisticsHelper::getTopPollVotesStats($this->nbItems)) {
 		      $barwidth = 100;
 		    } else {
 		      $barwidth = round(($stat->total * 100) / modKStatisticsHelper::getTopPollVotesStats($this->nbItems));
 		    }
+
       ?>
       <tr>
       <td><?php echo $klink->GetThreadLink('view', $stat->catid, $stat->threadid, $stat->title, $stat->title);  ?></td>
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
-      <?php } ?>
+      <?php }
+      } else {
+          ?><tr><td>
+         <?php  echo JText::_('MOD_KUNENA_STATS_NO_DATAS'); ?>
+          </td></tr>
+       <?php
+       } ?>
 
   </table>
   <?php } elseif ( $this->statsType == '2' ) { ?>
@@ -65,18 +81,26 @@ defined('_JEXEC') or die('Restricted access');
     </tr>
 
       <?php
-      foreach ( $stats as $stat) {
-        if ($stat->posts == modKStatisticsHelper::getTopMessage($this->nbItems)) {
-	       $barwidth = 100;
-	     } else {
-	       $barwidth = round(($stat->posts * 100) / modKStatisticsHelper::getTopMessage($this->nbItems));
-	     }
+      if (!empty($stats)) {
+      	foreach ( $stats as $stat) {
+        	if ($stat->posts == modKStatisticsHelper::getTopMessage($this->nbItems)) {
+	       		$barwidth = 100;
+	     	} else {
+	       		$barwidth = round(($stat->posts * 100) / modKStatisticsHelper::getTopMessage($this->nbItems));
+	     	}
+
       ?>
       <tr>
       <td><?php echo $klink->GetProfileLink($stat->userid, stripslashes($stat->username));  ?></td>
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
-      <?php } ?>
+      <?php }
+      } else {
+          ?><tr><td>
+         <?php  echo JText::_('MOD_KUNENA_STATS_NO_DATAS'); ?>
+          </td></tr>
+       <?php
+       } ?>
 
   </table>
   <?php } elseif ( $this->statsType == '3' ) { ?>
@@ -87,18 +111,24 @@ defined('_JEXEC') or die('Restricted access');
     </tr>
 
       <?php
-      foreach ( $stats as $stat) {
-        if ($stat->hits == modKStatisticsHelper::getTopProfileHits($this->nbItems)) {
-          $barwidth = 100;
-        } else {
-          $barwidth = round(($stat->hits * 100) / modKStatisticsHelper::getTopProfileHits($this->nbItems));
-        }
+      if (!empty($stats)) {
+      	foreach ( $stats as $stat) {
+        	if ($stat->hits == modKStatisticsHelper::getTopProfileHits($this->nbItems)) {
+          		$barwidth = 100;
+        	} else {
+          		$barwidth = round(($stat->hits * 100) / modKStatisticsHelper::getTopProfileHits($this->nbItems));
+        	}
+
       ?>
       <tr>
       <td><?php echo $klink->GetProfileLink($stat->user_id, stripslashes($stat->user));  ?></td>
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
-      <?php }  ?>
+      <?php }
+      } else { ?><tr><td>
+         <?php  echo JText::_('MOD_KUNENA_STATS_NO_DATAS'); ?>
+          </td></tr>
+       <?php }  ?>
 
   </table>
   <?php } elseif ( $this->statsType == '5' ) { ?>
@@ -109,18 +139,26 @@ defined('_JEXEC') or die('Restricted access');
     </tr>
 
       <?php
-      foreach ( $stats as $stat) {
-        if ($stat->receivedthanks == modKStatisticsHelper::getTopUserThanks($this->nbItems)) {
-          $barwidth = 100;
-        } else {
-          $barwidth = round(($stat->receivedthanks * 100) / modKStatisticsHelper::getTopUserThanks($this->nbItems));
-        }
+      if (!empty($stats)) {
+      	foreach ( $stats as $stat) {
+        	if ($stat->receivedthanks == modKStatisticsHelper::getTopUserThanks($this->nbItems)) {
+          		$barwidth = 100;
+        	} else {
+          		$barwidth = round(($stat->receivedthanks * 100) / modKStatisticsHelper::getTopUserThanks($this->nbItems));
+        	}
+
       ?>
       <tr>
       <td><?php echo $klink->GetProfileLink($stat->userid, stripslashes($stat->username));  ?></td>
       <td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
       </tr>
-      <?php }  ?>
+      <?php }
+      } else {
+          ?><tr><td>
+         <?php  echo JText::_('MOD_KUNENA_STATS_NO_DATAS'); ?>
+          </td></tr>
+       <?php
+        }  ?>
 
   </table>
   <?php } elseif ( $this->statsType == '4' ) { ?>
@@ -147,6 +185,8 @@ defined('_JEXEC') or die('Restricted access');
   </table>
   <?php }
     if ($params->get( 'sh_statslink' )) {
-      echo $klink->GetStatsLink('See full Stats details');
+    	?>
+      <br />
+      <?php echo $klink->GetStatsLink('See full Stats details');
    } ?>
 </div>

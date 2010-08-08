@@ -54,7 +54,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 			}
 			if ($this->params->get ( 'sh_locked' )) {
 				if ($item->locked) {
-					echo '<img src="' . JURI::root () . 'components/com_kunena/template/default/images/icons/lock_xsm.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_GEN_LOCKED_TOPIC' ) . '" />';
+					echo '<img src="' . JURI::root () . 'components/com_kunena/template/default/images/icons/lock_sm.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" />';
 				}
 			}
 			?>

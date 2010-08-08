@@ -30,6 +30,10 @@ Legend:
 
 KunenaLatest 1.0
 
+08-August-2010 Xillibit
+^ [#20081] Wrong image link for locked icon
+# [#20081] Show messages in right way when you want show only messages
+
 24-July-2010 Xillibit
 ^ [#20081] Not display posts when the forum is offline (thanks etusha)
 

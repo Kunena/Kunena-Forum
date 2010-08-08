@@ -41,6 +41,7 @@ class modKunenaLatestHelper {
 		KunenaFactory::getSession ( true );
 		$model = modKunenaLatestHelper::getModel ();
 		if ( $params->get ( 'sh_topicsormessages' ) == '0' ) $model->limit_messages = $params->get ( 'nbpost' );
+		if($params->get ( 'sh_topicsormessages' )) $model->show_messages = 1;
 		$model->limit_messages = $params->get ( 'nbpost' );
 		$model->threads_per_page = $params->get ( 'nbpost' );
 		$model->latestcategory = $params->get( 'category_id' );

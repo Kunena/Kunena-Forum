@@ -36,6 +36,7 @@ Kunena 1.6.0-RC1
 08-August-2010 Xillibit
 # [#19288] Select topic icons are showed even on reply page
 # [#19288] Little for kunena latest module to allow show only messages in right way
+# [#19288] Update french language file (fr-FR)
 
 03-August-2010 Xillibit
 # [#19288] Wrong way for ordering system display

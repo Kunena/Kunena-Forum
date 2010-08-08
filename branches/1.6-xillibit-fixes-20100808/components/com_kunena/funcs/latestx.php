@@ -80,7 +80,8 @@ class CKunenaLatestX {
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 
-		$this->limit_messages = '';
+		$this->limit_messages = null;
+		$this->show_messages = null;
 	}
 
 	/**
@@ -100,8 +101,10 @@ class CKunenaLatestX {
 	protected function _common() {
 		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
 
-		$limit = '';
-		if ( $this->limit_messages ) $limit = " LIMIT {$this->limit_messages}";
+		$orderby = '';
+		if ( $this->limit_messages ) $orderby = " ORDER BY lasttime DESC LIMIT {$this->limit_messages} ";
+    	elseif ($this->show_messages) $orderby = " ORDER BY {$this->order} ";
+    	else $orderby = " ORDER BY {$this->order} ";
 
 		if (!empty ( $this->threadids ) ) {
 			$idstr = implode ( ",", $this->threadids );
@@ -130,8 +133,7 @@ class CKunenaLatestX {
 			LEFT JOIN #__kunena_attachments AS aa ON aa.mesid = a.id
 			WHERE (a.parent='0' OR a.id=l.lastid $loadstr)
 			GROUP BY a.id
-			ORDER BY {$this->order}
-			".$limit;
+			".$orderby;
 
 			$this->db->setQuery ( $query );
 			$this->messages = $this->db->loadObjectList ('id');

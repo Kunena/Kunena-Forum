@@ -98,7 +98,7 @@ $this->k=0;
 			</td>
 		</tr>
 
-		<?php if ($this->parent == 0 && $this->config->topicicons) : ?>
+		<?php if (($this->allow_topic_icons && $this->config->topicicons) || ($this->catid == 0 && $this->config->topicicons)) : ?>
 		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></strong>

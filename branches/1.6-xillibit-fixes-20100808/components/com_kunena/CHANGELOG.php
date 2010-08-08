@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC1
 
+08-August-2010 Xillibit
+# [#19288] Select topic icons are showed even on reply page
+# [#19288] Little for kunena latest module to allow show only messages in right way
+
 03-August-2010 Xillibit
 # [#19288] Wrong way for ordering system display
 # [#19288] Issue with poll migration with first version of hack which don't set auto_increment

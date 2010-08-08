@@ -43,6 +43,7 @@ class CKunenaPost {
 		$this->allow = 1;
 
 		$this->cat_default_allow = null;
+		$this->allow_topic_icons = null;
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
@@ -96,6 +97,11 @@ class CKunenaPost {
 			$this->_db->setQuery ( "SELECT allow_anonymous FROM `#__kunena_categories` WHERE `parent`>0 AND id IN ({$this->_session->allowed}) ORDER BY ordering, name LIMIT 1" );
 			$this->cat_default_allow = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
+		}
+
+		// Special check to verify if topic icons are allowed when do new post and when catid is true
+		if ( isset($this->msg_cat->id)) {
+			if ($this->msg_cat->id == 0) $this->allow_topic_icons = 1;
 		}
 
 		// Check if anonymous user needs to log in

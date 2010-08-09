@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC1
 
+9-August-2010 fxstein
+^ [#21727] Update package README.txt
+
 8-August-2010 fxstein
 + [#19288] Add moderateuser link func to bypass profile integration for moderator access
 

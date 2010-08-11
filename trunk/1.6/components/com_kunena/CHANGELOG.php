@@ -35,6 +35,7 @@ Kunena 1.6.0-RC2
 
 11-August-2010 fxstein
 ^ [#21803] Update Version info to 1.6.0 RC2
+# [#19333] Regression: Fix category subscription email generation bug
 
 Kunena 1.6.0-RC1
 

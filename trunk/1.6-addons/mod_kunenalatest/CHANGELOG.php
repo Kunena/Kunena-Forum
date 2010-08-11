@@ -28,9 +28,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaLatest 1.0
+KunenaLatest 1.6.0-RC1
 
-08-August-2010 Xillibit
+11-Aug-2010 Matias
+^ [#20081] Change version to 1.6.0-RC1
+^ [#20081] Remove elements from module and use the ones in Kunena
+^ [#20081] Format php files
+
+08-Aug-2010 Xillibit
 ^ [#20081] Wrong image link for locked icon
 # [#20081] Show messages in right way when you want show only messages
 

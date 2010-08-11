@@ -29,7 +29,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Discuss Plugin 1.6.0-BETA2
+Kunena Discuss Plugin 1.6.0-RC1
+
+11-Aug-2010 Matias
+^ [#20084] Change version to 1.6.0-RC1
 
 04-Aug-2010 Matias
 ^ [#20084] Use some new API functions from Kunena 1.6

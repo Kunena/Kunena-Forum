@@ -35,6 +35,7 @@ Kunena 1.6.0-RC2
 
 12-August-2010 fxstein
 ^ [#21818] Update keywords:ID on all source files
+# [#19333] Regression: Fix category subscription email generation bug
 
 11-August-2010 fxstein
 ^ [#21803] Update Version info to 1.6.0 RC2

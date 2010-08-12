@@ -1,6 +1,6 @@
 <?php
 /**
-* @version $Id: kunena.google.maps.class.php 2958 2010-07-09 03:01:13Z mahagr $
+* @version $Id$
 * Kunena Component
 * @package Kunena
 *

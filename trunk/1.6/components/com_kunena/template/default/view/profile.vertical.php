@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: message.profilebox.php 2955 2010-07-08 11:01:14Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

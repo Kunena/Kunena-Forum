@@ -35,7 +35,7 @@ foreach ($dirs as $dir) {
 	}
 }
 
-$header = '; $Id: $
+$header = '; $Id$
 ; License GNU General Public License version 2 or later; see LICENSE.txt, see LICENSE.php
 ; Note : All ini files need to be saved as UTF-8 - No BOM
 

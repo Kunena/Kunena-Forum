@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: editavatar.php 2406 2010-05-04 06:16:56Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

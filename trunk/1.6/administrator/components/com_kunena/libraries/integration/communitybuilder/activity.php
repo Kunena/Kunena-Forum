@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: activity.php 2183 2010-04-09 02:03:01Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+13-August-2010 Matias
+^ [#15886] Merged revisions 3087-3089 from /branches/1.6-b2-language-svens-20100721
+
+
 12-August-2010 fxstein
 ^ [#21818] Update keywords:ID on all source files
 # [#19333] Regression: Fix category subscription email generation bug
@@ -40,6 +44,9 @@ Kunena 1.6.0-RC2
 11-August-2010 fxstein
 ^ [#21803] Update Version info to 1.6.0 RC2
 # [#19333] Regression: Fix category subscription email generation bug
+
+21-July-2010 Sven
+^ [#16390] Update German language files
 
 Kunena 1.6.0-RC1
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version $Id$
  * Kunena Component
@@ -7,8 +8,7 @@
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
- **/
-
+ * */
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
@@ -21,6 +21,7 @@ class CKunenaAnnouncement {
 	public $published = 1;
 	public $showdate = 1;
 	public $announcement = null;
+	public $canedit = null;
 
 	function __construct() {
 		$this->my = JFactory::getUser ();
@@ -55,7 +56,8 @@ class CKunenaAnnouncement {
 
 	function edit($id) {
 		if (! $this->canEdit) {
-			$this->app->redirect ( CKunenaLink::GetKunenaURL ( false ), JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
+			$this->app->redirect ( CKunenaLink::GetKunenaURL( false ), JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
+			return;
 		}
 		if ($this->tokenProtection ())
 			return false;
@@ -78,16 +80,16 @@ class CKunenaAnnouncement {
 				{$this->db->Quote ( $published )},
 				0,
 				{$this->db->Quote ( $showdate )})";
-			$msg = JText::_ ( 'COM_KUNENA_ANN_SUCCESS_ADD' );
+			$msg = JText::_( 'COM_KUNENA_ANN_SUCCESS_ADD' );
 		} else {
-			$query = "UPDATE #__kunena_announcement SET title={$this->db->Quote ( $title )},
+			$query = "UPDATE #__kunena_announcement SET title={$this->db->Quote( $title )},
 				description={$this->db->Quote ( $description )},
 				sdescription={$this->db->Quote ( $sdescription )},
 				created={$this->db->Quote ( $created )},
 				published={$this->db->Quote ( $published )},
 				showdate={$this->db->Quote ( $showdate )}
 				WHERE id=$id";
-			$msg = JText::_ ( 'COM_KUNENA_ANN_SUCCESS_EDIT' );
+			$msg = JText::_( 'COM_KUNENA_ANN_SUCCESS_EDIT' );
 		}
 		$this->db->setQuery ( $query );
 		if ($this->db->query ()) {
@@ -98,14 +100,15 @@ class CKunenaAnnouncement {
 
 	function delete($id) {
 		if (! $this->canEdit) {
-			$this->app->redirect ( CKunenaLink::GetKunenaURL ( false ), JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
+			$this->app->redirect ( CKunenaLink::GetKunenaURL( false ), JText::_( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
+			return;
 		}
 		$query = "DELETE FROM #__kunena_announcement WHERE id={$this->db->Quote ($id)} ";
 		$this->db->setQuery ( $query );
 		$this->db->query ();
 		if (KunenaError::checkDatabaseError()) return;
 
-		$this->app->redirect ( CKunenaLink::GetAnnouncementURL ( 'show', null, false ), JText::_ ( 'COM_KUNENA_ANN_DELETED' ) );
+		$this->app->redirect ( CKunenaLink::GetAnnouncementURL ( 'show', null, false ), JText::_( 'COM_KUNENA_ANN_DELETED' ) );
 	}
 
 	function getAnnouncement($id = 0) {
@@ -167,9 +170,17 @@ class CKunenaAnnouncement {
 				CKunenaTools::loadTemplate ( '/announcement/show.php' );
 				break;
 			case 'edit' :
+				if (!$this->canEdit) {
+					$this->app->redirect ( CKunenaLink::GetKunenaURL( false ), JText::_( 'COM_KUNENA_POST_NOT_MODERATOR' ));
+					return;
+				}
 				$this->getAnnouncement ( $id );
 			// Continue
 			case 'add' :
+				if (!$this->canEdit) {
+					$this->app->redirect(CKunenaLink::GetKunenaURL(false), JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
+					return;
+				}
 				CKunenaTools::loadTemplate ( '/announcement/edit.php' );
 				break;
 			case 'delete' :
@@ -178,18 +189,20 @@ class CKunenaAnnouncement {
 			case 'doedit' :
 				$this->edit ( $id );
 				break;
+			default :
+				$this->getAnnouncements(0, 5);
+				CKunenaTools::loadTemplate ( '/announcement/show.php' );
 		}
 	}
 
-	function escape($var)
-	{
+	function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	function tokenProtection() {
 		// get the token put in the message form to check that the form has been valided successfully
 		if (JRequest::checkToken () == false) {
-			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$this->app->enqueueMessage ( JText::_( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 			return true;
 		}
 		return false;

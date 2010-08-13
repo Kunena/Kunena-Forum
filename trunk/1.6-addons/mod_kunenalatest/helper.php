@@ -40,56 +40,56 @@ class modKunenaLatestHelper {
 	function getKunenaLatestList($params) {
 		KunenaFactory::getSession ( true );
 		$model = self::getModel ();
-		if ($params->get ( 'sh_topicsormessages' ) == '0')
-			$model->limit_messages = $params->get ( 'nbpost' );
-		if ($params->get ( 'sh_topicsormessages' ))
-			$model->show_messages = 1;
-		$model->limit_messages = $params->get ( 'nbpost' );
 		$model->threads_per_page = $params->get ( 'nbpost' );
 		$model->latestcategory = $params->get ( 'category_id' );
 		$model->latestcategory_in = $params->get ( 'sh_category_id_in' );
 
-		switch ($params->get ( 'choosemodel' )) {
-			case 'latest' :
-				$model->getLatest ();
-				break;
-			case 'noreplies' :
-				$model->getNoReplies ();
-				break;
-			case 'subscriptions' :
-				$model->getSubscriptions ();
-				break;
-			case 'favorites' :
-				$model->getFavorites ();
-				break;
-			case 'owntopics' :
-				$model->getOwnTopics ();
-				break;
-			case 'deletedposts' :
-				$model->getDeletedPosts ();
-				break;
-			case 'saidthankyouposts' :
-				$model->getSaidThankYouPosts ();
-				break;
-			case 'gotthankyouposts' :
-				$model->getGotThankYouPosts ();
-				break;
-			case 'userposts' :
-				$model->getUserPosts ();
-				break;
-		}
+	   	switch ( $params->get( 'choosemodel' ) ) {
+      		case 'latestPosts' :
+        		$model->getLatest ();
+          	break;
+      		case 'latestMessages' :
+        		$model->getLatestPosts();
+      		break;
+      		case 'noreplies' :
+        		$model->getNoReplies();
+      		break;
+      		case 'subscriptions' :
+        		$model->getSubscriptions();
+      		break;
+      		case 'favorites' :
+        		$model->getFavorites();
+      		break;
+      		case 'owntopics' :
+       			$model->getOwnTopics();
+      		break;
+      		case 'deletedposts' :
+        		$model->getDeletedPosts();
+      		break;
+      		case 'saidthankyouposts' :
+        		$model->getSaidThankYouPosts();
+      		break;
+      		case 'gotthankyouposts' :
+        		$model->getGotThankYouPosts();
+      		break;
+      		case 'userposts' :
+        		$model->getUserPosts();
+      		break;
+    }
+
+
 
 		$result = array ();
 		if (empty ( $model->messages ))
 			echo JText::_ ( 'MOD_KUNENALATEST_NO_MESSAGE' );
 		foreach ( $model->messages as $message ) {
-			if ($params->get ( 'sh_topicsormessages' )) {
+			if ( $params->get( 'choosemodel' ) == 'latestPosts' ) {
 				if ($message->parent == 0) {
 					$result [$message->id] = $message;
 				}
-			} else {
-				$result [$message->id] = $message;
-			}
+			} elseif( $params->get( 'choosemodel' ) == 'latestMessages' ) {
+          		$result [$message->id] = $message;
+        	}
 		}
 
 		return $result;

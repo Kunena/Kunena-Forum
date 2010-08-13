@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC1
 
+13-Aug-2010 Xillibit
+^ [#20081] Little change to show properly the latest messages
+
 11-Aug-2010 Matias
 ^ [#20081] Change version to 1.6.0-RC1
 ^ [#20081] Remove elements from module and use the ones in Kunena

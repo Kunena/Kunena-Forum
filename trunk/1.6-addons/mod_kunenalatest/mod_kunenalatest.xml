@@ -39,14 +39,11 @@
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_AVATAR</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
 			<option value="2">MOD_KUNENALATEST_PARAM_VALUE_NO_AVATAR_NO_TOPICICONS</option>
-		</param>
-		<param name="sh_topicsormessages" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWTOPICS_OR_MESSAGES" description="MOD_KUNENALATEST_PARAM_SHOWTOPICS_OR_MESSAGES_DESC">
-			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOWTOPICS</option>
-			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_SHOWMESSAGES</option>
-		</param>
+		</param>		
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="choosemodel" type="list" default="latest" label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL" description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
-			<option value="latest">MOD_KUNENALATEST_SHOW_LATEST</option>
+			<option value="latestPosts">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>
+			<option value="latestMessages">MOD_KUNENALATEST_SHOW_LATEST_MESSAGES</option>
 			<option value="noreplies">MOD_KUNENALATEST_SHOW_NO_REPLIES</option>
 			<option value="subscriptions">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>
 			<option value="favorites">MOD_KUNENALATEST_SHOW_FAVORITES</option>

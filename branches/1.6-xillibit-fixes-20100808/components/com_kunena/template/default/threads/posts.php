@@ -160,11 +160,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		</tr>
 
 		<?php } ?>
-		<?php  if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) : ?>
 		<!-- Moderator Bulk Actions -->
 		<tr class="krow1">
 			<td colspan="7" class="kcol-first krowmoderation">
-				<?php echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_ANN_READMORE'), $this->func , 'follow'); ?>
+				<?php echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_ANN_READMORE'), $this->func , 'follow');
+				if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) : ?>
 				<select name="do" id="kBulkChooseActions" class="inputbox">
 					<option value="">&nbsp;</option>
 					<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>
@@ -172,10 +172,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				</select>
 				<?php CKunenaTools::showBulkActionCats (); ?>
 				<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
+				<?php endif; ?>
 			</td>
 		</tr>
 		<!-- /Moderator Bulk Actions -->
-		<?php endif; ?>
 </table>
 </div>
 </div>

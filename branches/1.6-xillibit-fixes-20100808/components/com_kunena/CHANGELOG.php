@@ -35,6 +35,7 @@ Kunena 1.6.0-RC1
 
 13-August-2010 Xillibit
 # [#19288] Fix small bugs on announcements (thanks etusha)
+# [#19288] Use _getPosts function from CKunenaLatest to show only latest messages with KLatest module
 
 08-August-2010 Xillibit
 # [#19288] Select topic icons are showed even on reply page

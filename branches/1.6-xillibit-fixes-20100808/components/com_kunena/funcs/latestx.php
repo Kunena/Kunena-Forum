@@ -79,9 +79,6 @@ class CKunenaLatestX {
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
-
-		$this->limit_messages = null;
-		$this->show_messages = null;
 	}
 
 	/**
@@ -100,11 +97,6 @@ class CKunenaLatestX {
 
 	protected function _common() {
 		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
-
-		$orderby = '';
-		if ( $this->limit_messages ) $orderby = " ORDER BY lasttime DESC LIMIT {$this->limit_messages} ";
-    	elseif ($this->show_messages) $orderby = " ORDER BY {$this->order} ";
-    	else $orderby = " ORDER BY {$this->order} ";
 
 		if (!empty ( $this->threadids ) ) {
 			$idstr = implode ( ",", $this->threadids );
@@ -133,7 +125,7 @@ class CKunenaLatestX {
 			LEFT JOIN #__kunena_attachments AS aa ON aa.mesid = a.id
 			WHERE (a.parent='0' OR a.id=l.lastid $loadstr)
 			GROUP BY a.id
-			".$orderby;
+			ORDER BY {$this->order}";
 
 			$this->db->setQuery ( $query );
 			$this->messages = $this->db->loadObjectList ('id');
@@ -223,7 +215,6 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->mode = 'posts';
 
-		$this->threads_per_page = 10;
 		$myhold = explode(',', $this->hold);
 		$hold = $this->hold;
 		switch ($type) {
@@ -241,6 +232,10 @@ class CKunenaLatestX {
 				break;
 			case 'user':
 				$user = 1;
+				break;
+			case 'latest':
+				$this->threads_per_page = $this->threads_per_page - 1;
+				echo $this->threads_per_page;
 				break;
 		}
 		if (isset($user)) $where[] = "m.userid='{$this->user->id}'";
@@ -338,6 +333,12 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->header = $this->title = JText::_('COM_KUNENA_USERPOSTS');
 		$this->_getPosts('user');
+	}
+
+	function getLatestPosts() {
+		if (isset($this->total)) return;
+		$this->header = $this->title = JText::_('COM_KUNENA_LATESTPOSTS');
+		$this->_getPosts('latest');
 	}
 
 	function getGotThankYouPosts() {

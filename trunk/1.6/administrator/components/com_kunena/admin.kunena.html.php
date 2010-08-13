@@ -363,7 +363,7 @@ table.kadmin-stat caption {
 	<form action="index.php" method="post" name="adminForm">
 		<table class="kadmin-sort">
 			<tr>
-				<td align="left" width="100%">
+				<td align="left" width="90%">
 					<?php echo JText::_( 'Filter' ); ?>:
 					<input type="text" name="search" id="search" value="<?php echo $lists['search'];?>" class="text_area" onchange="document.adminForm.submit();" />
 					<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>

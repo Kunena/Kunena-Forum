@@ -35,7 +35,7 @@ Kunena 1.6.0-RC2
 
 13-August-2010 Matias
 ^ [#15886] Merged revisions 3087-3089 from /branches/1.6-b2-language-svens-20100721
-
+^ [#15886] Merged revision 3166 from /branches/1.6-810-bugfixes-07-08-2010
 
 12-August-2010 fxstein
 ^ [#21818] Update keywords:ID on all source files
@@ -44,6 +44,10 @@ Kunena 1.6.0-RC2
 11-August-2010 fxstein
 ^ [#21803] Update Version info to 1.6.0 RC2
 # [#19333] Regression: Fix category subscription email generation bug
+
+7-August-2010 810
+^ [#19288] IE7 CSS fix - Menu
+^ [#19288] Css - Fix layout on backend statistics
 
 21-July-2010 Sven
 ^ [#16390] Update German language files

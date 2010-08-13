@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+﻿﻿@charset "UTF-8";
 /**
 * @version $Id$
 * Kunena Component
@@ -65,3 +65,4 @@
 #Kunena .kattachment-remove,#Kunena .kattachment-insert { padding: 8px 6px 0px;}
 #Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover { padding: 8px 6px 0px;}
 #Kunena div.kmsgbody div.kmsgtext { overflow:hidden; }
+#Kunena #ktop { overflow:hidden; }

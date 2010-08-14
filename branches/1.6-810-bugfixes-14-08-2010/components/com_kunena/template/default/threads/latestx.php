@@ -55,8 +55,8 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			$timesel[] = JHTML::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
 			// build the html select list
 			// FIXME: time selection does not work
-			echo JHTML::_('select.genericlist', $timesel, 'ktime-selection', 'class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1"', 'value', 'text', $this->escape($this->show_list_time));
-			?>
+			echo JHTML::_('select.genericlist', $timesel, 'ktime-selection', 'class="inputboxusl" onchange="document.location.href=\'index.php?option=com_kunena&view=latest&sel=\'+this.options[this.selectedIndex].value;" size="1"', 'value', 'text', $this->escape($this->show_list_time));
+						?>
 		</td>
 		<?php endif; ?>
 

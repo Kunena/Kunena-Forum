@@ -1816,6 +1816,7 @@ PX		EM			PCT			PT
 	list-style-type: none;
 	display:block;
 	padding-bottom: 1px;
+	text-align: center;
 }
 
 #Kunena ul#kpost-profile li.kpost-username {font-size: 1.333em;}

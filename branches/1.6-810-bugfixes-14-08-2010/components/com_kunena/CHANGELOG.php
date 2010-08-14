@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+14-August-2010 810
+^ [#19288] Automatic recount when restore posts
+
 13-August-2010 Matias
 ^ [#15886] Merged revisions 3087-3089 from /branches/1.6-b2-language-svens-20100721
 ^ [#15886] Merged revision 3166 from /branches/1.6-810-bugfixes-07-08-2010

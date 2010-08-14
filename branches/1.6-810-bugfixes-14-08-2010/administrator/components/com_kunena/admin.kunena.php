@@ -3015,6 +3015,9 @@ function trashrestore($option, $cid) {
 			$kunena_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE hold IN (2,3) AND thread=$mes->thread " );
 			$kunena_db->query ();
 			if (KunenaError::checkDatabaseError()) return;
+
+			CKunenaTools::reCountUserPosts ();
+			CKunenaTools::reCountBoards ();
 		}
 	}
 

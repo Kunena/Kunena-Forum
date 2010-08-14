@@ -182,13 +182,13 @@ $this->k=0;
 		?>
 		<tr id="kpost-buttons_tr" class="krow1">
 			<td id="kpost-buttons" colspan="2">
+				<input type="submit" name="ksubmit" class="kbutton"
+				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"
+				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
 				<input type="button" name="cancel" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"
 				onclick="javascript:window.history.back();"
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
-				<input type="submit" name="ksubmit" class="kbutton"
-				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"
-				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
 			</td>
 		</tr>
 

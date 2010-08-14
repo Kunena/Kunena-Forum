@@ -33,10 +33,14 @@ Legend:
 
 Kunena 1.6.0-RC1
 
+14-August-2010 Xillibit
+^ [#21844] Button submit and back - order is reversed from k1.5
+
 13-August-2010 Xillibit
 # [#19288] Fix small bugs on announcements (thanks etusha)
 # [#19288] Use _getPosts function from CKunenaLatest to show only latest messages with KLatest module
 # [#19288] Add link in profile to show the full view (show only when needed)
+# [#19288] Cancel / Submit buttons - order is reversed from K 1.5
 
 08-August-2010 Xillibit
 # [#19288] Select topic icons are showed even on reply page

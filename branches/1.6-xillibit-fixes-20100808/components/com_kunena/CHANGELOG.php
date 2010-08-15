@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC1
 
+15-August-2010 Xillibit
+# [#19288] Update french language file (fr-FR)
+# [#21847] Sort items in userlist give javascript error
+
 14-August-2010 Xillibit
 ^ [#21844] Button submit and back - order is reversed from k1.5
 

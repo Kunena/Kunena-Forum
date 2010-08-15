@@ -62,7 +62,7 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check_name" <?php if (!$this->allow_anonymous && $this->catid != 0 || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check_name" <?php if (!$this->allow_anonymous && $this->catid != 0 && $this->my->id != 0 || !$this->cat_default_allow && $this->my->id != 0 ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 			</td>

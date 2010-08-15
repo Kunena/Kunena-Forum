@@ -36,6 +36,9 @@ Kunena 1.6.0-RC1
 15-August-2010 Xillibit
 # [#19288] Update french language file (fr-FR)
 # [#21847] Sort items in userlist give javascript error
+# [#21849] Not possible to write anonymously a message
+# [#21851] Moderated topic - Missing warning info
+# [#21850] One separator in frontstat has not the same color that the others
 
 14-August-2010 Xillibit
 ^ [#21844] Button submit and back - order is reversed from k1.5
@@ -113,7 +116,7 @@ Kunena 1.6.0-RC1
 # [#19288] Update French language file
 # [#19288] Wrong link to support website in backend
 # [#19288] Redirect on the correct message when you use karma and thank you functions
-# [#19288] When edit a message in a category in review, show that the message is gonna to be moderated
+# [#21851] When edit a message in a category in review, show that the message is gonna to be moderated
 
 31-July-2010 @quila
 # [#19288] Added IE7 fixes

@@ -455,7 +455,7 @@ class CKunenaPost {
 		$this->_db->query ();
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		if ($this->msg_cat->review) {
+		if ($this->msg_cat->review && CKunenaTools::isModerator($this->my>-id,$this->catid)) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );

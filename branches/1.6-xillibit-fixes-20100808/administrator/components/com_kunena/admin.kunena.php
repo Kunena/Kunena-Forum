@@ -1617,7 +1617,9 @@ function showConfig($option) {
 
 	$lists['showpopthankysoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankysoustats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopthankysoustats);
 
-	$lists ['mod_see_deleted'] =JHTML::_('select.genericlist', $yesno, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
+	$lists ['mod_see_deleted'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
+
+	$lists ['imagelink_without_ext'] = JHTML::_('select.genericlist', $yesno, 'cfg_imagelink_without_ext', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->imagelink_without_ext);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }

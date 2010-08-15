@@ -1162,6 +1162,15 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPCIICONS_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_SHOW_IMAGE_LINK_WITHOUT_EXTENSION') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['imagelink_without_ext'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_SHOW_IMAGE_LINK_WITHOUT_EXTENSION_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>

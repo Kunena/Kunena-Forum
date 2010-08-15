@@ -352,6 +352,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $popthankscount = 5;
 	//New for 1.6: choose to allow moderators to see deleted messages
 	var $mod_see_deleted = 0;
+	//New for 1.6: choose if the images without extensions can be displayed like a link
+	var $imagelink_without_ext = 0;
 
 
     public function __construct($userinfo = null) {

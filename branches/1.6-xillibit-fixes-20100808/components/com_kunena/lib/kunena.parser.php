@@ -415,13 +415,19 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					}
 					preg_match ( '/\.([\w\d]+)$/', $between, $matches );
 					if ( !isset($matches [1] ) || !in_array ( JString::strtolower ( $matches [1] ), $file_ext )) {
-						// if the image has not exentions return it like a link
-						$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
-						if (! preg_match ( "`^(https?://)`", $tempstr )) {
-							$tempstr = 'http://' . $tempstr;
+						// if the image has not exentions return it like a link and if it's allowed in configuration
+						if ($kunena_config->imagelink_without_ext) {
+							$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
+							if (! preg_match ( "`^(https?://)`", $tempstr )) {
+								$tempstr = 'http://' . $tempstr;
+							}
+
+							$tag_new = "<a href='" . $tempstr . "' rel=\"nofollow\" target=\"_blank\">" . $between . '</a>';
+							return TAGPARSER_RET_REPLACED;
+						} else {
+							$tag_new = $between;
+							return TAGPARSER_RET_REPLACED;
 						}
-						$tag_new = "<a href='" . $tempstr . "' rel=\"nofollow\" target=\"_blank\">" . $between . '</a>';
-						return TAGPARSER_RET_REPLACED;
 					break;
 					}
 

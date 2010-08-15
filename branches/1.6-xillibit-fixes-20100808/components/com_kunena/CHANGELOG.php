@@ -38,7 +38,9 @@ Kunena 1.6.0-RC1
 # [#21847] Sort items in userlist give javascript error
 # [#21849] Not possible to write anonymously a message
 # [#21851] Moderated topic - Missing warning info
-# [#21850] One separator in frontstat has not the same color that the others
+# [#21850] One separator in frontstat has not the same color that the others (thanks etusha)
+# [#21855] When a moderator ban an user with the deletion of avatar, this one is deleted from filesystem
+# [#21857] New configuration setting to choose if the images without extensions need to be displayed or not
 
 14-August-2010 Xillibit
 ^ [#21844] Button submit and back - order is reversed from k1.5
@@ -47,11 +49,10 @@ Kunena 1.6.0-RC1
 # [#19288] Fix small bugs on announcements (thanks etusha)
 # [#19288] Use _getPosts function from CKunenaLatest to show only latest messages with KLatest module
 # [#19288] Add link in profile to show the full view (show only when needed)
-# [#19288] Cancel / Submit buttons - order is reversed from K 1.5
 
 08-August-2010 Xillibit
 # [#19288] Select topic icons are showed even on reply page
-# [#19288] Little for kunena latest module to allow show only messages in right way
+# [#19288] Little change for kunena latest module to allow show only messages in right way
 # [#19288] Update french language file (fr-FR)
 
 03-August-2010 Xillibit

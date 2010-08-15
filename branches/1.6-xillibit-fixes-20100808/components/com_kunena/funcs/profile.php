@@ -37,6 +37,7 @@ class CKunenaProfile {
 		$this->allow = true;
 
 		$integration = KunenaFactory::getProfile();
+		$activityIntegration = KunenaFactory::getActivityIntegration();
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 
@@ -55,8 +56,8 @@ class CKunenaProfile {
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
 			$this->posts = $this->profile->posts;
-			$this->userpoints = $integration->getUserPoints($this->profile->userid);
-			$this->usermedals = $integration->getUserMedals($this->profile->userid);
+			$this->userpoints = $activityIntegration->getUserPoints($this->profile->userid);
+			$this->usermedals = $activityIntegration->getUserMedals($this->profile->userid);
 		}
 		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
@@ -629,7 +630,7 @@ class CKunenaProfile {
 		$DelAvatar = JRequest::getVar ( 'delavatar', '' );
 		$DelSignature = JRequest::getVar ( 'delsignature', '' );
 		$DelProfileInfo = JRequest::getVar ( 'delprofileinfo', '' );
-		
+
 		if (! empty ( $DelAvatar )) {
 			jimport ( 'joomla.filesystem.file' );
 			$userprofile = KunenaFactory::getUser ( $userid );

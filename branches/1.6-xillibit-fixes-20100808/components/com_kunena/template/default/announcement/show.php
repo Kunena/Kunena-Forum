@@ -14,12 +14,6 @@ defined ( '_JEXEC' ) or die();
 $document = JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->escape($this->config->board_title));
 //FIXME: announcement show only 5 ann. in table
-$annmods = @explode(',', $this->config->annmodid);
-if (in_array($this->my->id, $annmods) || CKunenaTools::isAdmin ()) {
-	$this->canEdit = true;
-} else {
-	$this->canEdit = false;
-}
 ?>
 <div class="kblock">
 	<div class="kheader">
@@ -36,9 +30,6 @@ if (in_array($this->my->id, $annmods) || CKunenaTools::isAdmin ()) {
 <table class="kannouncement">
 	<tbody id="kannouncement_body">
 		<tr class="ksth">
-			<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
-			<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
-			<th class="kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
 			<?php if ($this->canEdit): ?>
 				<th class="kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
 				<th class="kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>

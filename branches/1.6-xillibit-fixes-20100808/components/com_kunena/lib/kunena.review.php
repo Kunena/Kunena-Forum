@@ -35,24 +35,25 @@ class CKunenaReview {
 		if ($this->_checkToken ())
 			return false;
 
-		$backUrl = $this->app->getUserState ( "com_kunena.ReviewURL" );
-		require_once (JPATH_SITE . '/components/com_kunena/class.kunena.php');
-		$items = KGetArrayInts ( "cb" );
+		$array = JRequest::getVar('cb', array ( 0 ), 'post', 'array');
 
-		$message = '';
-		foreach ( $items as $id => $value ) {
-			$this->_db->setQuery ( "UPDATE `#__kunena_messages` SET hold='0' WHERE id='{$id}'" );
+		$backUrl = $this->app->getUserState ( "com_kunena.ReviewURL" );
+
+		foreach ( $array as $id => $value ) {
+			$this->_db->setQuery ( "UPDATE `#__kunena_messages` SET hold='0' WHERE id={$this->_db->Quote($id)}" );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError ())
 				return;
-		} //end foreach
 
+			$this->_db->setQuery ( "SELECT catid,id,parent,time FROM `#__kunena_messages` WHERE id={$this->_db->Quote($id)}" );
+			$mesincat = $this->_db->loadObject ();
+			KunenaError::checkDatabaseError ();
+
+			CKunenaTools::modifyCategoryStats($id, $mesincat->parent, $mesincat->time, $mesincat->catid);
+		} //end foreach
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ), 'notice' );
 		$this->app->redirect ( $backUrl );
-
-	// Is this is really needed ?
-	//CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
 	}
 
 	public function DeleteMessage() {

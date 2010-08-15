@@ -33,6 +33,8 @@ abstract class KunenaActivity
 		return self::$instance;
 	}
 
+	public function getUserMedals($userid) {}
+	public function getUserPoints($userid) {}
 
 	public function onAfterPost($message) {}
 	public function onAfterReply($message) {}

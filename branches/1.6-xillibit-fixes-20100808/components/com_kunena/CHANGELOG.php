@@ -41,6 +41,9 @@ Kunena 1.6.0-RC1
 # [#21850] One separator in frontstat has not the same color that the others (thanks etusha)
 # [#21855] When a moderator ban an user with the deletion of avatar, this one is deleted from filesystem
 # [#21857] New configuration setting to choose if the images without extensions need to be displayed or not
+# [#19288] Fix small bugs on announcements (Part 2)
+# [#21860] Category not updated when approving messages (need add support for subscritpions)
+# [#21859] AUP points in profile needs to use activity integration
 
 14-August-2010 Xillibit
 ^ [#21844] Button submit and back - order is reversed from k1.5

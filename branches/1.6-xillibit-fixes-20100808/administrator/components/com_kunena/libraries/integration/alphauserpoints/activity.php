@@ -31,6 +31,37 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		}
 	}
 
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
+
+	public function getUserMedals($userid) {
+		if ($userid == 0) return false;
+
+		if(!defined("_AUP_MEDALS_LIVE_PATH")) {
+			define('_AUP_MEDALS_LIVE_PATH', JURI::base(true) . '/components/com_alphauserpoints/assets/images/awards/icons/');
+		}
+
+		$aupmedals = AlphaUserPointsHelper::getUserMedals ( '', $userid ) ;
+		$medals = array();
+		foreach ( $aupmedals as $medal ) {
+			$medals[] = '<img src="' . _AUP_MEDALS_LIVE_PATH .$this->escape($medal->icon). '" alt="'.$this->escape($medal->rank).'" title="'.$this->escape($medal->rank).'" />';
+		}
+
+		return $medals;
+	}
+
+	public function getUserPoints($userid) {
+		if ($userid == 0) return false;
+		$_db = &JFactory::getDBO ();
+
+		$_db->setQuery ( "SELECT points FROM #__alpha_userpoints WHERE `userid`='" . ( int ) $userid . "'" );
+		$userpoints = $_db->loadResult ();
+		KunenaError::checkDatabaseError();
+		return $userpoints;
+	}
+
 	public function onAfterReply($message) {
 		if ($this->_config->alphauserpointsrules) {
 			$datareference = '<a href="' . CKunenaLink::GetMessageURL($message->get('id'), $message->get('catid')) . '">' . $message->get('subject') . '</a>';

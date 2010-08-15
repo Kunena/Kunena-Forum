@@ -171,12 +171,13 @@ class CKunenaViewMessage {
 		}
 
 		if ($this->config->showuserstats) {
+			$activityIntegration = KunenaFactory::getActivityIntegration();
 			if ($this->config->userlist_usertype) $this->usertype = $this->profile->getType($this->catid);
 			$this->userrankimage = $this->profile->getRank ($this->catid, 'image');
 			$this->userranktitle = $this->profile->getRank ($this->catid, 'title');
 			$this->userposts = $this->profile->posts;
-			$this->userpoints = $integration->getUserPoints($this->profile->userid);
-			$this->usermedals = $integration->getUserMedals($this->profile->userid);
+			$this->userpoints = $activityIntegration->getUserPoints($this->profile->userid);
+			$this->usermedals = $activityIntegration->getUserMedals($this->profile->userid);
 		}
 
 		//karma points and buttons

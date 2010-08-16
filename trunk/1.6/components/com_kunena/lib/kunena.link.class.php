@@ -104,6 +104,10 @@ class CKunenaLink {
 		return $pagelink;
 	}
 
+	function GetReviewLink($name, $rel = 'nofollow', $class = '') {
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=review', $name, '', $rel, $class );
+	}
+
 	function GetReviewURL($xhtml = true) {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=review', $xhtml );
 	}

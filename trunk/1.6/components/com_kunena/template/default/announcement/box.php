@@ -36,7 +36,7 @@ defined( '_JEXEC' ) or die();
 					<div class="anndesc">
 						<?php echo KunenaParser::parseBBCode($this->announcement->sdescription); ?>
 						<?php if (!empty($this->announcement->description)) : ?>
-						&nbsp;&nbsp;<?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
+						...<br><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
 						<?php endif; ?>
 					</div>
 				<?php endif; ?>

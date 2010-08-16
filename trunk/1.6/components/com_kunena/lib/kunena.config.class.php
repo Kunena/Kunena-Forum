@@ -313,7 +313,7 @@ class CKunenaConfig extends CKunenaConfigBase {
     // New for 1.6 -> Max length for personnal text
     var $maxpersotext = 50;
     // New for 1.6 -> Choose ordering system
-    var $ordering_system = 'old_ord';
+    var $ordering_system = 'mesid';
     // New for 1.6 -> dateformat
     var $post_dateformat         = 'ago'; // See CKunenaTimeformat::showDate()
     var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()
@@ -353,6 +353,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $popthankscount = 5;
 	//New for 1.6: choose to allow moderators to see deleted messages
 	var $mod_see_deleted = 0;
+	//New for 1.6: allow only secure image extensions (jpg/gif/png) in IMG tag
+	var $bbcode_img_secure = 'text';
 
 
     public function __construct($userinfo = null) {

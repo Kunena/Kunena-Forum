@@ -1566,8 +1566,8 @@ function showConfig($option) {
   	$lists['pollresultsuserslist'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollresultsuserslist', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollresultsuserslist);
   	//New for 1.6 -> Choose ordering system
   	$ordering_system_list = array ();
-  	$ordering_system_list[] = JHTML::_('select.option', 'new_ord', JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_NEW'));
-  	$ordering_system_list[] = JHTML::_('select.option', 'old_ord',JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD'));
+  	$ordering_system_list[] = JHTML::_('select.option', 'mesid',JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD'));
+  	$ordering_system_list[] = JHTML::_('select.option', 'replyid', JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_NEW'));
   	$lists['ordering_system'] = JHTML::_('select.genericlist', $ordering_system_list, 'cfg_ordering_system', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->ordering_system);
 	// New for 1.6: datetime
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');
@@ -1623,7 +1623,13 @@ function showConfig($option) {
 
 	$lists['showpopthankysoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankysoustats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopthankysoustats);
 
-	$lists ['mod_see_deleted'] =JHTML::_('select.genericlist', $yesno, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
+	$lists ['mod_see_deleted'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
+
+	$listBbcodeImgSecure = array();
+	$listBbcodeImgSecure[] = JHTML::_('select.option', 'text', JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_TEXT'));
+	$listBbcodeImgSecure[] = JHTML::_('select.option', 'link', JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_LINK'));
+	$listBbcodeImgSecure[] = JHTML::_('select.option', 'image', JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_IMAGE'));
+	$lists ['bbcode_img_secure'] = JHTML::_('select.genericlist', $listBbcodeImgSecure, 'cfg_bbcode_img_secure', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->bbcode_img_secure);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }

@@ -17,7 +17,16 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 ?>
 <div class="kblock">
 	<div class="kheader">
-		<h2><span><?php echo $this->app->getCfg('sitename'); ?> <?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?> | <?php echo CKunenaLink::GetAnnouncementLink('add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD')); ?></span></h2>
+		<h2>
+			<span>
+				<?php echo $this->app->getCfg('sitename'); ?>
+				<?php echo JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS'); ?>
+				<?php
+				if ($this->canEdit)
+					echo "| " . CKunenaLink::GetAnnouncementLink('add', NULL, JText::_('COM_KUNENA_ANN_ADD'), JText::_('COM_KUNENA_ANN_ADD'));
+				?>
+			</span>
+		</h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
@@ -27,9 +36,11 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 			<th class="kcol-annid"><?php echo JText::_('COM_KUNENA_ANN_ID'); ?></th>
 			<th class="kcol-anndate"><?php echo JText::_('COM_KUNENA_ANN_DATE'); ?></th>
 			<th class="kcol-anntitle"><?php echo JText::_('COM_KUNENA_ANN_TITLE'); ?></th>
-			<th class="kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
-			<th class="kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
-			<th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
+			<?php if ($this->canEdit): ?>
+				<th class="kcol-annpublish"><?php echo JText::_('COM_KUNENA_ANN_PUBLISH'); ?></th>
+				<th class="kcol-annedit"><?php echo JText::_('COM_KUNENA_ANN_EDIT'); ?></th>
+				<th class="kcol-anndelete"><?php echo JText::_('COM_KUNENA_ANN_DELETE'); ?></th>
+			<?php endif; ?>
 		</tr>
 
 		<?php
@@ -44,6 +55,7 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 			<td class="kcol-mid kcol-anntitle">
 				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', intval($ann->id), KunenaParser::parseText ($ann->title), KunenaParser::parseText ($ann->title), 'follow'); ?></div>
 			</td>
+			<?php if ($this->canEdit): ?>
 			<td class="kcol-mid kcol-annpublish">
 				<?php
 				if ($ann->published > 0) {
@@ -59,6 +71,7 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->es
 			<td class="kcol-mid kcol-anndelete">
 				<?php echo CKunenaLink::GetAnnouncementLink('delete', intval($ann->id), JText::_('COM_KUNENA_ANN_DELETE'), JText::_('COM_KUNENA_ANN_DELETE')); ?>
 			</td>
+			<?php endif; ?>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

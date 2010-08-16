@@ -35,24 +35,26 @@ class CKunenaReview {
 		if ($this->_checkToken ())
 			return false;
 
-		$backUrl = $this->app->getUserState ( "com_kunena.ReviewURL" );
-		require_once (JPATH_SITE . '/components/com_kunena/class.kunena.php');
-		$items = KGetArrayInts ( "cb" );
+		$array = JRequest::getVar('cb', array ( 0 ), 'post', 'array');
 
-		$message = '';
-		foreach ( $items as $id => $value ) {
-			$this->_db->setQuery ( "UPDATE `#__kunena_messages` SET hold='0' WHERE id='{$id}'" );
+		$backUrl = $this->app->getUserState ( "com_kunena.ReviewURL" );
+
+		foreach ( $array as $id => $value ) {
+			// FIXME: add check that moderator really has permission to approve current message (not all mods are global)
+			$this->_db->setQuery ( "UPDATE `#__kunena_messages` SET hold='0' WHERE id={$this->_db->Quote($id)}" );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError ())
 				return;
-		} //end foreach
 
+			$this->_db->setQuery ( "SELECT catid,id,parent,time FROM `#__kunena_messages` WHERE id={$this->_db->Quote($id)}" );
+			$mesincat = $this->_db->loadObject ();
+			KunenaError::checkDatabaseError ();
+
+			CKunenaTools::modifyCategoryStats($id, $mesincat->parent, $mesincat->time, $mesincat->catid);
+		} //end foreach
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' ), 'notice' );
 		$this->app->redirect ( $backUrl );
-
-	// Is this is really needed ?
-	//CKunenaTools::modifyCategoryStats($id, $msg->parent, $msg->time, $msg->catid);
 	}
 
 	public function DeleteMessage() {
@@ -68,6 +70,7 @@ class CKunenaReview {
 
 		$message = '';
 		foreach ( $items as $id => $value ) {
+			// TODO: make sure that that this action is allowed only if moderator really has rights to do this
 			$delete = $kunena_mod->deleteThread ( $id, $DeleteAttachments = false );
 			if (! $delete) {
 				$this->app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );

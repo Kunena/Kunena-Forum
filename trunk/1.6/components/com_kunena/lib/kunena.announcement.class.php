@@ -21,6 +21,7 @@ class CKunenaAnnouncement {
 	public $published = 1;
 	public $showdate = 1;
 	public $announcement = null;
+	public $canEdit = false;
 
 	function __construct() {
 		$this->my = JFactory::getUser ();
@@ -167,9 +168,17 @@ class CKunenaAnnouncement {
 				CKunenaTools::loadTemplate ( '/announcement/show.php' );
 				break;
 			case 'edit' :
+				if (!$this->canEdit) {
+					$this->app->redirect ( CKunenaLink::GetKunenaURL( false ), JText::_( 'COM_KUNENA_POST_NOT_MODERATOR' ));
+					return;
+				}
 				$this->getAnnouncement ( $id );
 			// Continue
 			case 'add' :
+				if (!$this->canEdit) {
+					$this->app->redirect(CKunenaLink::GetKunenaURL(false), JText::_('COM_KUNENA_POST_NOT_MODERATOR'));
+					return;
+				}
 				CKunenaTools::loadTemplate ( '/announcement/edit.php' );
 				break;
 			case 'delete' :
@@ -178,11 +187,13 @@ class CKunenaAnnouncement {
 			case 'doedit' :
 				$this->edit ( $id );
 				break;
+			default :
+				$this->getAnnouncements(0, 5);
+				CKunenaTools::loadTemplate ( '/announcement/show.php' );
 		}
 	}
 
-	function escape($var)
-	{
+	function escape($var) {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 

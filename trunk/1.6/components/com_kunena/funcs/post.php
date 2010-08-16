@@ -43,6 +43,7 @@ class CKunenaPost {
 		$this->allow = 1;
 
 		$this->cat_default_allow = null;
+		$this->allow_topic_icons = null;
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
@@ -96,6 +97,11 @@ class CKunenaPost {
 			$this->_db->setQuery ( "SELECT allow_anonymous FROM `#__kunena_categories` WHERE `parent`>0 AND id IN ({$this->_session->allowed}) ORDER BY ordering, name LIMIT 1" );
 			$this->cat_default_allow = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
+		}
+
+		// Special check to verify if topic icons are allowed when do new post and when catid is true
+		if ( isset($this->msg_cat->id)) {
+			if ($this->msg_cat->id == 0) $this->allow_topic_icons = 1;
 		}
 
 		// Check if anonymous user needs to log in
@@ -449,7 +455,7 @@ class CKunenaPost {
 		$this->_db->query ();
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		if ($this->msg_cat->review) {
+		if ($this->msg_cat->review && !CKunenaTools::isModerator($this->my>-id,$this->catid)) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
@@ -848,10 +854,10 @@ class CKunenaPost {
 	}
 
 	public function getNumLink($mesid ,$replycnt) {
-		if ($this->config->ordering_system == 'old_ord') {
-			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $mesid );
-		} else {
+		if ($this->config->ordering_system == 'replyid') {
 			$this->numLink = CKunenaLink::GetSamePageAnkerLink( $mesid, '#' .$replycnt );
+		} else {
+			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $mesid );
 		}
 
 		return $this->numLink;

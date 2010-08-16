@@ -37,6 +37,7 @@ class CKunenaProfile {
 		$this->allow = true;
 
 		$integration = KunenaFactory::getProfile();
+		$activityIntegration = KunenaFactory::getActivityIntegration();
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 
@@ -55,8 +56,8 @@ class CKunenaProfile {
 			$this->rank_image = $this->profile->getRank (0, 'image');
 			$this->rank_title = $this->profile->getRank (0, 'title');
 			$this->posts = $this->profile->posts;
-			$this->userpoints = $integration->getUserPoints($this->profile->userid);
-			$this->usermedals = $integration->getUserMedals($this->profile->userid);
+			$this->userpoints = $activityIntegration->getUserPoints($this->profile->userid);
+			$this->usermedals = $activityIntegration->getUserMedals($this->profile->userid);
 		}
 		if ($this->config->userlist_joindate || CKunenaTools::isModerator($this->my->id)) $this->registerdate = $this->user->registerDate;
 		if ($this->config->userlist_lastvisitdate || CKunenaTools::isModerator($this->my->id)) $this->lastvisitdate = $this->user->lastvisitDate;
@@ -638,22 +639,27 @@ class CKunenaProfile {
 			$this->_db->Query ();
 			KunenaError::checkDatabaseError();
 
+			$avatar_deleted = '';
 			// Delete avatar from file system
-			if (JFile::exists ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar )) {
+			if (JFile::exists ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar ) && !stristr($userprofile->avatar,'gallery/')) {
 				JFile::delete ( KUNENA_PATH_AVATAR_UPLOADED . DS . $userprofile->avatar );
+				$avatar_deleted = $this->_app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR_FILESYSTEM') );
 			}
+			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_AVATAR') . $avatar_deleted );
 		}
 
 		if (! empty ( $DelSignature )) {
 			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null WHERE userid={$this->_db->Quote($userid)}" );
 			$this->_db->Query ();
 			KunenaError::checkDatabaseError();
+			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_SIGNATURE') );
 		}
 
 		if (! empty ( $DelProfileInfo )) {
 			$this->_db->setQuery ( "UPDATE #__kunena_users SET signature=null,avatar=null,karma=null,personalText=null,gender=0,birthdate=0000-00-00,location=null,ICQ=null,AIM=null,YIM=null,MSN=null,SKYPE=null,GTALK=null,websitename=null,websiteurl=null,rank=0,TWITTER=null,FACEBOOK=null,MYSPACE=null,LINKEDIN=null,DELICIOUS=null,FRIENDFEED=null,DIGG=null,BLOGSPOT=null,FLICKR=null,BEBO=null WHERE userid={$this->_db->Quote($userid)}" );
 			$this->_db->Query ();
 			KunenaError::checkDatabaseError();
+			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_PROFILEINFO') );
 		}
 
 		if (! empty ( $banDelPosts )) {
@@ -661,6 +667,7 @@ class CKunenaProfile {
 			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=2 WHERE hold!=2 AND userid={$this->_db->Quote($userid)}" );
 			$idusermessages = $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
+			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_MODERATE_DELETED_BAD_MESSAGES') );
 		}
 
 		$this->_app->redirect ( CKunenaLink::GetProfileURL($this->profile->userid, false) );

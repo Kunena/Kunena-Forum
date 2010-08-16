@@ -62,7 +62,8 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check_name" <?php if (!$this->allow_anonymous && $this->catid != 0 || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check_name" 
+		<?php if ($this->my->id && ((!$this->allow_anonymous && $this->catid != 0) || !$this->cat_default_allow) ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 			</td>
@@ -98,7 +99,7 @@ $this->k=0;
 			</td>
 		</tr>
 
-		<?php if ($this->parent == 0 && $this->config->topicicons) : ?>
+		<?php if (($this->allow_topic_icons && $this->config->topicicons) || ($this->catid == 0 && $this->config->topicicons)) : ?>
 		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></strong>
@@ -182,13 +183,13 @@ $this->k=0;
 		?>
 		<tr id="kpost-buttons_tr" class="krow1">
 			<td id="kpost-buttons" colspan="2">
+				<input type="submit" name="ksubmit" class="kbutton"
+				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"
+				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
 				<input type="button" name="cancel" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"
 				onclick="javascript:window.history.back();"
 				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
-				<input type="submit" name="ksubmit" class="kbutton"
-				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"
-				title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
 			</td>
 		</tr>
 

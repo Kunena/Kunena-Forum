@@ -37,13 +37,33 @@ Kunena 1.6.0-RC2
 ^ [#15886] Merged revisions 3162-3185 from /branches/1.6-littlejohn-20100804
 ^ [#15886] Merged revision 3195 from /branches/1.6-LDAsvens-thankyou-20100813
 ^ [#15886] Merged revisions 3200-3204 from /branches/1.6-810-bugfixes-14-08-2010
+^ [#15886] Merged revisions 3172-3209 from /branches/1.6-xillibit-fixes-20100808
+^ [#21857] Better configuration options for img tag
 
-13-August-2010 svens(LDA)
-* [#21829] Authentication check in profile thank you listing (no not show posts which user cannot see)
+15-August-2010 Xillibit
+# [#19288] Update french language file (fr-FR)
+# [#21847] Sort items in userlist give javascript error
+# [#21849] Not possible to write anonymously a message
+# [#21851] Moderated topic - Missing warning info
+# [#21850] One separator in frontstat has not the same color that the others (thanks etusha)
+# [#21855] When a moderator deletes avatar from the gallery, it gets deleted from the filesystem
+# [#21857] New configuration setting for img tag
+# [#21860] Category statistics not updated when approving messages
+# [#21859] AUP points in profile needs to use activity integration
+
+14-August-2010 Xillibit
+^ [#21844] Button submit and back - order is reversed from k1.5
 
 14-August-2010 810
 # [#19288] Recount statistics when restoring posts from the backend
 # [#19288] Css - Fix Joomla Templates which override the text-align center in the profile box
+
+13-August-2010 Xillibit
+# [#19288] Fix small bugs on announcements (thanks etusha)
+# [#19288] Use _getPosts function from CKunenaLatest to show only latest messages with KLatest module
+
+13-August-2010 svens(LDA)
+* [#21829] Authentication check in profile thank you listing (no not show posts which user cannot see)
 
 13-August-2010 Matias
 ^ [#15886] Merged revisions 3087-3089 from /branches/1.6-b2-language-svens-20100721
@@ -60,6 +80,11 @@ Kunena 1.6.0-RC2
 ^ [#21803] Update Version info to 1.6.0 RC2
 # [#19333] Regression: Fix category subscription email generation bug
 
+08-August-2010 Xillibit
+# [#19288] Select topic icons are showed even on reply page
+# [#19288] Little change for kunena latest module to allow show only messages in right way
+# [#19288] Update french language file (fr-FR)
+
 7-August-2010 810
 ^ [#19288] IE7 CSS fix - Menu
 ^ [#19288] Css - Fix layout on backend statistics
@@ -67,6 +92,11 @@ Kunena 1.6.0-RC2
 5-August-2010 LittleJohn
 ^ [#19399] New RSS feeds: Added admin option author_in_titles and option to allow both username and email in rss author field)
 ^ [#19399] New RSS feeds: Changed labels to more human understandable & corrected 1 bug in getPosts())
+
+03-August-2010 Xillibit
+# [#19288] Wrong way for ordering system display
+# [#19288] Issue with poll migration with first version of hack which don't set auto_increment
+# [#19288] Add link in profile to show the full view
 
 21-July-2010 Sven
 ^ [#16390] Update German language files

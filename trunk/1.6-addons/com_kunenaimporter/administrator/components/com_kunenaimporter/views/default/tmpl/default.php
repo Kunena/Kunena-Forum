@@ -37,7 +37,7 @@ if (!empty($this->errormsg)) $disabled = ' disabled="disabled"';
         </td>
         <td class="info">
             <div class="info">
-                <?php echo $this->messages; ?>
+                <?php if( isset($this->messages) ) echo $this->messages; ?>
             </div>
         </td>
     </tr>
@@ -49,7 +49,7 @@ if (!empty($this->errormsg)) $disabled = ' disabled="disabled"';
 <table class="adminlist">
 	<thead>
 		<tr>
-		<th class="x" width="1%"><input type="checkbox" name="togle" value="" <?php echo $disabled; ?> onclick="checkAll(<?php echo count($this->options); ?>);" /></th>
+		<th class="x" width="1%"><input type="checkbox" name="toggle" value="" <?php echo $disabled; ?> onclick="checkAll(<?php echo count($this->options); ?>);" /></th>
 			<th class="title" width="19%"><?php echo JText::_('Task'); ?></th>
 			<th class="status" width="10%"><?php echo JText::_('Status'); ?></th>
 <!--			<th class="action" width="15%"><?php echo JText::_('Action'); ?></th>-->

@@ -9,7 +9,7 @@
 
 Kunena Importer README
 
-PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING Kunena Discuss @kunenaversion@!
+PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING Kunena Importer @kunenaversion@!
 
 INTRODUCTION
 ============

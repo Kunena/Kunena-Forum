@@ -30,6 +30,9 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+16-August-2010 Xillibit
++ [#20178] Support partial for ccboard and agora
+
 22-Apr-2010 Matias
 # [#20178] Fix [url] tag (contained extra information and were not parsed)
 # [#20178] Some posts were modified 0 minutes ago

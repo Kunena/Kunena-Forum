@@ -5,6 +5,8 @@
 <config>
     <params>
 	<param name='extforum' type='list' default='localhost' label='Forum Type' description='' size='30'>
+	  	<option value='Agora'>Agora</option>
+	  	<option value='ccboard'>ccBoard</option>
 		<option value='kunena'>Kunena</option>
 		<option value='phpbb3'>phpBB3</option>
 		<option value='phpbb2'>phpBB2</option>

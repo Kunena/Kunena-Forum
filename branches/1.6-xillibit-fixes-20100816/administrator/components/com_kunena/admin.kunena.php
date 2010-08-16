@@ -213,7 +213,7 @@ switch ($task) {
 		break;
 
 	case "userban" :
-		userban ($option, $uid, 0 );
+		userban ($option, $uid, 1 );
 		break;
 
 	case "userunban" :

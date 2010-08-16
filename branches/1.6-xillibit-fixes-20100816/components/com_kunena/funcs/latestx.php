@@ -21,6 +21,7 @@ class CKunenaLatestX {
 	public $customreply = array ();
 	public $page = 1;
 	public $totalpages = 1;
+	public $embedded = null;
 
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );
@@ -79,6 +80,9 @@ class CKunenaLatestX {
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
+
+		$view = JRequest::getVar ( 'view', '' );
+		if ($view == 'profile') $this->embedded = 1;
 	}
 
 	/**

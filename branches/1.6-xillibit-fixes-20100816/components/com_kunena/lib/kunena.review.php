@@ -17,6 +17,7 @@ class CKunenaReview {
 	public $my;
 	public $config;
 	public $app;
+	public $embedded = null;
 
 	function __construct($catid = 0) {
 		$this->_db = JFactory::getDBO ();
@@ -29,6 +30,9 @@ class CKunenaReview {
 		$this->MessagesToApprove = $this->GetApprovedMessageList ();
 		$this->do = JRequest::getCmd ( 'do', '' );
 		$this->header = JText::_ ( 'COM_KUNENA_MESSAGE_ADMINISTRATION' );
+
+		$view = JRequest::getVar ( 'view', '' );
+		if ( $view == 'profile' ) $this->embedded = 1;
 	}
 
 	public function ApproveMessage() {

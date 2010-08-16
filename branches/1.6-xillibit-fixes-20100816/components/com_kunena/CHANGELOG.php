@@ -36,6 +36,7 @@ Kunena 1.6.0-RC2
 16-August-2010 Xillibit
 # [#21844] Button submit and back - order is reversed from k1.5 (missing to change order in quick reply)
 # [#21878] Use KunenaParser::JSText in kunena.google.maps.class to escape strings in javascript
+# [#21877] My posts listing in profile - limited to the first n items on one "page"
 
 16-August-2010 Matias
 ^ [#15886] Merged revisions 3162-3185 from /branches/1.6-littlejohn-20100804

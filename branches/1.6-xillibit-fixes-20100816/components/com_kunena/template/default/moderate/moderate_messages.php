@@ -89,6 +89,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 	} ?>
 			<tr class="krow1">
 			<td colspan="7" class="kcol-first krowmoderation">
+				<?php if ($this->embedded) echo CKunenaLink::GetReviewLink(JText::_('COM_KUNENA_ANN_READMORE')); ?>
 				<select name="do" id="kApproveChooseActions" class="inputbox">
 					<option value="">&nbsp;</option>
 					<option value="modapprove"><?php echo JText::_('COM_KUNENA_APPROVE_SELECTED'); ?></option>

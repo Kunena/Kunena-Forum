@@ -76,7 +76,7 @@ class KunenaGoogleMaps {
 			              position: results[0].geometry.location
 			          });
 			        } else {
-			        	var contentString = '<p><strong>".JText::_('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$address</i></strong></p>';
+			        	var contentString = '<p><strong>".KunenaParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$address</i></strong></p>';
 			        	var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
   						infowindow$mapid.open($mapid);
 			        }
@@ -87,7 +87,7 @@ class KunenaGoogleMaps {
    			"
    		);
 
-   		$html = '<div id="'.$mapid.'" class="kgooglemap">'.JText::_('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE').'</div>';
+   		$html = '<div id="'.$mapid.'" class="kgooglemap">'.KunenaParser::JSText('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE').'</div>';
 
    		$this->_mapid ++;
 

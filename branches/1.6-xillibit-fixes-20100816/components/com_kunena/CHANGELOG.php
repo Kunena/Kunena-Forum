@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+16-August-2010 Xillibit
+# [#21844] Button submit and back - order is reversed from k1.5 (missing to change order in quick reply)
+# [#21878] Use KunenaParser::JSText in kunena.google.maps.class to escape strings in javascript
+
 16-August-2010 Matias
 ^ [#15886] Merged revisions 3162-3185 from /branches/1.6-littlejohn-20100804
 ^ [#15886] Merged revision 3195 from /branches/1.6-LDAsvens-thankyou-20100813
@@ -96,7 +100,6 @@ Kunena 1.6.0-RC2
 03-August-2010 Xillibit
 # [#19288] Wrong way for ordering system display
 # [#19288] Issue with poll migration with first version of hack which don't set auto_increment
-# [#19288] Add link in profile to show the full view
 
 21-July-2010 Sven
 ^ [#16390] Update German language files

@@ -1564,8 +1564,8 @@ function showConfig($option) {
   	$lists['pollresultsuserslist'] = JHTML::_('select.genericlist', $yesno, 'cfg_pollresultsuserslist', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pollresultsuserslist);
   	//New for 1.6 -> Choose ordering system
   	$ordering_system_list = array ();
-  	$ordering_system_list[] = JHTML::_('select.option', 'mesid',JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD'));
-  	$ordering_system_list[] = JHTML::_('select.option', 'replyid', JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_NEW'));
+  	$ordering_system_list[] = JHTML::_('select.option', 'mesid',JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_NEW'));
+  	$ordering_system_list[] = JHTML::_('select.option', 'replyid', JText::_('COM_KUNENA_COM_A_ORDERING_SYSTEM_OLD'));
   	$lists['ordering_system'] = JHTML::_('select.genericlist', $ordering_system_list, 'cfg_ordering_system', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->ordering_system);
 	// New for 1.6: datetime
 	require_once(KUNENA_PATH_LIB .DS. 'kunena.timeformat.class.php');

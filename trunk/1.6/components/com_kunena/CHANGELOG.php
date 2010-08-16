@@ -46,6 +46,7 @@ Kunena 1.6.0-RC2
 # [#21884] Minimum required CB version is 1.2.3, do not enable CB integration with older releases (fix crash)
 # [#21885] White page in frontend during upgrade -- Kunena class missing
 # [#21886] Fix crash in JomSocial 1.5 avatar integration
+# [#19288] Regression: Message numbering doesn't work
 
 15-August-2010 Xillibit
 # [#19288] Update french language file (fr-FR)

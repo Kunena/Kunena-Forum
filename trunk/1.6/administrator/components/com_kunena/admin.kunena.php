@@ -1368,9 +1368,9 @@ function showConfig($option) {
 		// ------
 
 		$rss_type = array ();
-		$rss_type [] = JHTML::_ ( 'select.option', 'thread', JText::_('COM_KUNENA_A_RSS_TYPE_THREAD') );
-		$rss_type [] = JHTML::_ ( 'select.option', 'post', JText::_('COM_KUNENA_A_RSS_TYPE_POST') );
 		$rss_type [] = JHTML::_ ( 'select.option', 'recent', JText::_('COM_KUNENA_A_RSS_TYPE_RECENT') );
+		$rss_type [] = JHTML::_ ( 'select.option', 'post', JText::_('COM_KUNENA_A_RSS_TYPE_POST') );
+		$rss_type [] = JHTML::_ ( 'select.option', 'thread', JText::_('COM_KUNENA_A_RSS_TYPE_THREAD') );
 
 		// build the html select list
 		$lists ['rss_type'] = JHTML::_ ( 'select.genericlist', $rss_type, 'cfg_rss_type', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_type );
@@ -1402,9 +1402,15 @@ function showConfig($option) {
 		$rss_author_format = array ();
 		$rss_author_format [] = JHTML::_ ( 'select.option', 'name', JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_NAME') );
 		$rss_author_format [] = JHTML::_ ( 'select.option', 'email', JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_EMAIL') );
+		$rss_author_format [] = JHTML::_ ( 'select.option', 'both', JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_BOTH') );
 
 		// build the html select list
 		$lists ['rss_author_format'] = JHTML::_ ( 'select.genericlist', $rss_author_format, 'cfg_rss_author_format', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_author_format );
+
+		// ------
+
+		// build the html select list
+		$lists ['rss_author_in_title'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_rss_author_in_title', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_author_in_title );
 
 		// ------
 

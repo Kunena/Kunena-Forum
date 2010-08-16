@@ -88,14 +88,15 @@ class CKunenaRSSView extends CKunenaRSS {
 	 * @todo Implement feed caching. Maybe FeedCreator can do this automaticly?
 	 */
 	public function display() {
-		$type		= $this->getOption('type');
-		$html		= $this->getOption('allow_html');
-		$spec		= $this->getOption('specification');
-		$author		= $this->getOption('author_format');
-		$words		= $this->getOption('word_count');
-		$old_titles	= $this->getOption('old_titles');
-		$data		= $this->getData();
-		$feed		= $this->buildFeed($data, $type, $html, $author, $words, $old_titles);
+		$type					= $this->getOption('type');
+		$html					= $this->getOption('allow_html');
+		$spec					= $this->getOption('specification');
+		$author					= $this->getOption('author_format');
+		$author_in_title		= $this->getOption('author_in_title');
+		$words					= $this->getOption('word_count');
+		$old_titles				= $this->getOption('old_titles');
+		$data					= $this->getData();
+		$feed					= $this->buildFeed($data, $type, $html, $author, $author_in_title, $words, $old_titles);
 
 		// On the fly
 		$feed->outputFeed($spec);
@@ -113,7 +114,7 @@ class CKunenaRSSView extends CKunenaRSS {
 	 * @param unknown_type $author_format
 	 * @param unknown_type $message_words
 	 */
-	private function buildFeed($items = array(), $type, $render_html, $author_format, $message_words, $old_titles) {
+	private function buildFeed($items = array(), $type, $render_html, $author_format, $author_in_title, $message_words, $old_titles) {
 		// Get the options and values we'll need
 		$uri		= JURI::getInstance(JURI::base());
 		$uribase	= $uri->toString(array('scheme', 'host', 'port'));
@@ -173,8 +174,6 @@ class CKunenaRSSView extends CKunenaRSS {
 						$tmp['email']		= $data->email;
 						$tmp['name']		= $data->name;
 						$tmp['cat_name']	= $data->category_name;
-						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
 						break;
 					case 'post':
 						$tmp['title']		= $data->lastpost_subject;
@@ -183,8 +182,6 @@ class CKunenaRSSView extends CKunenaRSS {
 						$tmp['email']		= $data->lastpost_email;
 						$tmp['name']		= $data->lastpost_name;
 						$tmp['cat_name']	= $data->category_name;
-						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->lastpost_subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->lastpost_name;
 						break;
 					case 'recent':
 					default:
@@ -194,8 +191,6 @@ class CKunenaRSSView extends CKunenaRSS {
 						$tmp['email']		= $data->lastpost_email;
 						$tmp['name']		= $data->lastpost_name;
 						$tmp['cat_name']	= $data->category_name;
-						if ($old_titles)
-							$tmp['title']	= JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $data->subject .' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $data->name;
 				}
 
 				// Guid is used by aggregators to uniquely identify each item
@@ -205,14 +200,27 @@ class CKunenaRSSView extends CKunenaRSS {
 				$tmp['link']	= $uribase . $url;
 				$tmp['source']	= $uribase . $url;
 
+				// Determine title format
+				if ($old_titles) {
+					$tmp['title'] = JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $tmp['title'];
+				}
+
 				// Determine author format
 				switch ($author_format) {
+					case 'both':
+						$tmp['author'] = $tmp['email'] .' ('. $tmp['name'] .')';
+						break;
 					case 'email':
 						$tmp['author'] = $tmp['email'];
 						break;
 					case 'name':
 					default:
 						$tmp['author'] = $tmp['name'];
+				}
+
+				// Do we want author in item titles?
+				if ($author_in_title) {
+					 $tmp['title'] .= ' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $tmp['name'];
 				}
 
 				// Limit number of words

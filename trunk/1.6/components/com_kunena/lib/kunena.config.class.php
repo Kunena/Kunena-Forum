@@ -284,6 +284,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $rss_specification = 'rss2.0';
 	var $rss_allow_html = 1;
 	var $rss_author_format = 'name';
+	var $rss_author_in_title = 1;
 	var $rss_word_count = '0';
 	var $rss_old_titles = 1;
 	var $fbdefaultpage = 'recent';

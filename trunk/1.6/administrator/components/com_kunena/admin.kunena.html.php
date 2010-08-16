@@ -1908,6 +1908,11 @@ table.kadmin-stat caption {
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_AUTHOR_FORMAT_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_AUTHOR_IN_TITLE') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo $lists ['rss_author_in_title']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_AUTHOR_IN_TITLE_DESC') ?></td>
+						</tr>
+						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT') ?></td>
 							<td align="left" valign="top" width="25%"><?php echo $lists ['rss_word_count']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_WORD_COUNT_DESC') ?></td>

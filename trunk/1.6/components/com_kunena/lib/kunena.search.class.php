@@ -115,7 +115,7 @@ class CKunenaSearch {
 		$this->arr_kunena_searchstrings = array ();
 		foreach ( $arr_searchwords as $q ) {
 			$q = JString::trim ( $q );
-			if (JString::strlen ( $q ) > 2)
+			if (JString::strlen ( $q ) > 1)
 				$do_search = TRUE;
 			$this->arr_kunena_searchstrings [] = $q;
 		}
@@ -147,7 +147,7 @@ class CKunenaSearch {
 			$not = '';
 			$operator = ' OR ';
 
-			if (strstr ( $searchword, '-' ) == $searchword) {
+			if ( substr($searchword, 0, 1) == '-' && strlen($searchword) > 1 ) {
 				$not = 'NOT';
 				$operator = 'AND';
 				$searchword = JString::substr ( $searchword, 1 );

@@ -255,10 +255,10 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $showpopsubjectstats = 1;
 	var $popsubjectcount = 5;
 	var $usernamechange = 0;
-	var $rules_infb = 1;
+	var $rules_infb = 1; // retired in 1.6 controlled via joommla menu
 	var $rules_cid = 1;
 	var $rules_link = 'http://www.kunena.com/';
-	var $help_infb = 1;
+	var $help_infb = 1; // retired in 1.6 controlled via joommla menu
 	var $help_cid = 1;
 	var $help_link = 'http://www.kunena.com/';
 	// New 1.0.5 config variables

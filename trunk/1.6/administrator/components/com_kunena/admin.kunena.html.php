@@ -1047,15 +1047,6 @@ table.kadmin-stat caption {
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_IN_FB') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $lists ['rules_infb'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_IN_KUNENA_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_CID') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_rules_cid"
@@ -1071,15 +1062,6 @@ table.kadmin-stat caption {
 							value="<?php echo kescape($kunena_config->rules_link);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_LINK_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_IN_FB') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $lists ['help_infb'];
-						?>
-						</td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_IN_KUNENA_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">

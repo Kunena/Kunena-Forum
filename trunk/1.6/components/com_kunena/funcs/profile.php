@@ -373,8 +373,11 @@ class CKunenaProfile {
 	}
 
 	function display() {
+		if ($this->do == 'login') {
+			$this->login();
+			return;
+		}
 		if (!$this->allow) return;
-
 		switch ($this->do) {
 			case 'save':
 				$this->save();
@@ -384,6 +387,9 @@ class CKunenaProfile {
 				break;
 			case 'cancel':
 				$this->cancel();
+				break;
+			case 'logout':
+				$this->logout();
 				break;
 			default:
 				$this->displaySummary();
@@ -676,5 +682,31 @@ class CKunenaProfile {
 	function cancel()
 	{
 		$this->_app->redirect ( CKunenaLink::GetMyProfileURL($this->profile->userid, '', false) );
+	}
+
+	function login() {
+		$username = JRequest::getString ( 'username', '', 'POST' );
+		$password = JRequest::getString ( 'passwd', '', 'POST' );
+		$return = JRequest::getString ( 'return', '', 'POST' );
+		if(!JRequest::checkToken()) {
+			$this->_app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+		}
+
+		$login = KunenaFactory::getLogin();
+		$result = $login->loginUser($username, $password, $return);
+		if ($result) $this->_app->enqueueMessage ( $result, 'notice' );
+		$this->_app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ) );
+	}
+
+	function logout() {
+		$return = JRequest::getString ( 'return', '', 'POST' );
+		if(!JRequest::checkToken()) {
+			$this->_app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
+		}
+
+		$login = KunenaFactory::getLogin();
+		$result = $login->logoutUser($return);
+		if ($result) $this->_app->enqueueMessage ( $result, 'notice' );
+		$this->_app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ) );
 	}
 }

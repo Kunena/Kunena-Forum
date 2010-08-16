@@ -48,8 +48,12 @@ $login = CKunenaLogin::getloginFields();
 							<?php endif; ?>
 							<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGIN'); ?>" />
 							<input type="hidden" name="option" value="<?php echo $login['option']; ?>" />
+							<?php if (!empty($login['view'])) : ?>
+							<input type="hidden" name="view" value="<?php echo $login['view']; ?>" />
+							<?php endif; ?>
 							<input type="hidden" name="task" value="<?php echo $login['task']; ?>" />
-							<input type="hidden" name="<?php echo $login['field_return']; ?>" value="<?php echo $return; ?>" /> <?php echo JHTML::_ ( 'form.token' ); ?>
+							<input type="hidden" name="<?php echo $login['field_return']; ?>" value="<?php echo $return; ?>" />
+							<?php echo JHTML::_ ( 'form.token' ); ?>
 						</span>
 					</div>
 					<div class="klink-block">

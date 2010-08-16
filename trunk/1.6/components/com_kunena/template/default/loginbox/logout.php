@@ -56,8 +56,12 @@ $PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX
 					<form action="<?php echo KUNENA_LIVEURLREL ?>" method="post" name="login">
 						<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>" />
 						<input type="hidden" name="option" value="<?php echo $logout['option']; ?>" />
+						<?php if (!empty($logout['view'])) : ?>
+						<input type="hidden" name="view" value="<?php echo $logout['view']; ?>" />
+						<?php endif; ?>
 						<input type="hidden" name="task" value="<?php echo $logout['task']; ?>" />
 						<input type="hidden" name="<?php echo $logout['field_return']; ?>" value="<?php echo $return; ?>" />
+						<?php echo JHTML::_ ( 'form.token' ); ?>
 					</form>
 					</li>
 					<?php endif; ?>

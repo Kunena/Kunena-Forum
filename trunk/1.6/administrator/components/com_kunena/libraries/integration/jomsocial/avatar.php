@@ -28,7 +28,7 @@ class KunenaAvatarJomSocial extends KunenaAvatar
 	{
 //FB::log($userlist, 'Preload JomSocial Userlist');
 
-		CFactory::loadUsers($userlist);
+		if (method_exists('CFactory', 'loadUsers')) CFactory::loadUsers($userlist);
 	}
 
 	public function getEditURL()

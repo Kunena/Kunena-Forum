@@ -21,6 +21,7 @@ function cbSef($var) {}
 function outputCbTemplate($var) {}
 function getLangDefinition($var) {}
 class CBUser {}
+class CBAuthentication {}
 function selectTemplate() {}
 
 // JomSocial dummies

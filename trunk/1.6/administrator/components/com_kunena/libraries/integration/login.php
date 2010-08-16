@@ -32,7 +32,9 @@ abstract class KunenaLogin {
 		return self::$instance;
 	}
 
-	abstract public function getLoginFormFields();
+	public function loginUser($username, $password, $return) {}
+	public function logoutUser($return) {}
+
 	abstract public function getLogoutFormFields();
 	abstract public function getLoginURL();
 	abstract public function getLogoutURL();

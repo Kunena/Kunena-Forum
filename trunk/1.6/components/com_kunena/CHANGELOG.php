@@ -42,6 +42,10 @@ Kunena 1.6.0-RC2
 ^ [#15886] Merged revisions 3200-3204 from /branches/1.6-810-bugfixes-14-08-2010
 ^ [#15886] Merged revisions 3172-3209 from /branches/1.6-xillibit-fixes-20100808
 ^ [#21857] Better configuration options for img tag
+# [#21883] Use Community Builder integration to login/logout from Kunena
+# [#21884] Minimum required CB version is 1.2.3, do not enable CB integration with older releases (fix crash)
+# [#21885] White page in frontend during upgrade -- Kunena class missing
+# [#21886] Fix crash in JomSocial 1.5 avatar integration
 
 15-August-2010 Xillibit
 # [#19288] Update french language file (fr-FR)

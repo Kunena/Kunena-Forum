@@ -25,12 +25,59 @@ class KunenaLoginCommunityBuilder extends KunenaLogin {
 		$this->priority = 50;
 	}
 
+	public function loginUser($username, $password, $return) {
+		cbimport ( 'cb.authentication' );
+
+		$cbAuthenticate = new CBAuthentication ();
+
+		$messagesToUser = array ();
+		$alertmessages = array ();
+		$redirect_url = KunenaRoute::current();
+		$resultError = $cbAuthenticate->login ( $username, $password, 0, 1, $redirect_url, $messagesToUser, $alertmessages, 0 );
+
+		if ($resultError) {
+			return $resultError;
+		} else {
+			return null;
+		}
+	}
+
+	public function logoutUser($return) {
+		cbimport ( 'cb.authentication' );
+
+		$cbAuthenticate = new CBAuthentication ();
+
+		$redirect_url = KunenaRoute::current();
+		$resultError = $cbAuthenticate->logout ( $redirect_url );
+
+		if ($resultError) {
+			return $resultError;
+		} else {
+			return null;
+		}
+	}
+
 	public function getLoginFormFields() {
-		return $this->joomlalogin->getLoginFormFields();
+		return array (
+			'form'=>'login',
+			'field_username'=>'username',
+			'field_password'=>'passwd',
+			'field_remember'=>'remember',
+			'field_return'=>'return',
+			'option'=>'com_kunena',
+			'view'=>'profile',
+			'task'=>'login'
+		);
 	}
 
 	public function getLogoutFormFields() {
-		return $this->joomlalogin->getLogoutFormFields();
+		return array (
+			'form'=>'login',
+			'field_return'=>'return',
+			'option'=>'com_kunena',
+			'view'=>'profile',
+			'task'=>'logout'
+		);
 	}
 
 	public function getLoginURL() {

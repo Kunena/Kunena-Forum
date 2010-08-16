@@ -1,10 +1,10 @@
 <?php
 /**
  * @version $Id$
- * Kunena Component - Kunena Factory
+ * Kunena Component - KunenaRoute
  * @package Kunena
  *
- * @Copyright (C) 2009 www.kunena.com All rights reserved
+ * @Copyright (C) 2010 www.kunena.com All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
@@ -20,10 +20,16 @@ abstract class KunenaRoute {
 	static $parent = array();
 	static $menu = null;
 
+	public static function current($class = false) {
+		$link = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )));
+		if ($class) return $link;
+		return $link->getQuery ();
+	}
+
 	public static function getItemID($uri = null) {
 		jimport ( 'joomla.environment.uri' );
 		if (!$uri) {
-			$link = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )));
+			$link = self::current(true);
 			$link->delVar ( 'Itemid' );
 		}
 		else if (is_numeric($uri)) {
@@ -39,7 +45,7 @@ abstract class KunenaRoute {
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
 		jimport ( 'joomla.environment.uri' );
 		if (!$uri) {
-			$link = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )));
+			$link = self::current(true);
 			$link->delVar ( 'Itemid' );
 		}
 		else {

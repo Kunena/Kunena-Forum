@@ -98,6 +98,7 @@ $action = JRequest::getCmd ( 'action', '' );
 $catid = JRequest::getInt ( 'catid', 0 );
 $contentURL = JRequest::getVar ( 'contentURL', '' );
 $do = JRequest::getCmd ( 'do', '' );
+$task = JRequest::getCmd ( 'task', '' );
 $email = JRequest::getVar ( 'email', '' );
 $favoriteMe = JRequest::getVar ( 'favoriteMe', '' );
 $fb_authorname = JRequest::getVar ( 'fb_authorname', '' );
@@ -155,7 +156,7 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.link.class.php');
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
 
 // Redirect profile (menu item) to the right component
-if ($func == 'profile' && !$do) {
+if ($func == 'profile' && !$do && empty($_POST)) {
 	$profileIntegration = KunenaFactory::getProfile();
 	if (!($profileIntegration instanceof KunenaProfileKunena)) {
 		$url = CKunenaLink::GetProfileURL($kunena_my->id, false);
@@ -416,7 +417,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		case 'profile' :
 		case 'moderateuser' :
 			require_once ( KUNENA_PATH_FUNCS .DS. 'profile.php');
-			$page = new CKunenaProfile($userid, $do);
+			$page = new CKunenaProfile($userid, $task ? $task : $do);
 			$page->display();
 
 			break;

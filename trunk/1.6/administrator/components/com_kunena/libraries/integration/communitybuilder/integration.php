@@ -14,6 +14,8 @@
 defined( '_JEXEC' ) or die('');
 
 class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
+	protected static $error = 0;
+	protected static $errormsg = null;
 	protected $open = false;
 
 	public function __construct() {
@@ -26,7 +28,7 @@ class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
 		cbimport ( 'language.front' );
 		cbimport ( 'cb.tabs' );
 		cbimport ( 'cb.field' );
-		$this->loaded = true;
+		$this->loaded = !self::detectErrors();
 	}
 
 	public function open() {
@@ -60,23 +62,20 @@ class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
 			self::$errormsg = JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_INSTALL', '1.2' );
 			self::$error = 1;
 			return false;
+		} if (version_compare ( $ueConfig ['version'], '1.2.3' ) < 0) {
+			self::$errormsg = JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_UPDATE', '1.2.3' );
+			self::$error = 3;
 		}
-		/*if ($kunenaConfig->kunena_profile != 'cb')
-			return true;*/
-		if (! getCBprofileItemid ()) {
+/*		if (! getCBprofileItemid ()) {
 			self::$errormsg = JText::_('COM_KUNENA_INTEGRATION_CB_WARN_PUBLISH');
 			self::$error = 2;
-		}
-		if (! class_exists ( 'getForumModel' ) && version_compare ( $ueConfig ['version'], '1.2.1' ) < 0) {
-			self::$errormsg = JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_UPDATE', '1.2.1' );
-			self::$error = 3;
 		} else if (isset ( $ueConfig ['xhtmlComply'] ) && $ueConfig ['xhtmlComply'] == 0) {
 			self::$errormsg = JText::_('COM_KUNENA_INTEGRATION_CB_WARN_XHTML');
 			self::$error = 4;
 		} else if (! class_exists ( 'getForumModel' )) {
 			self::$errormsg = JText::_('COM_KUNENA_INTEGRATION_CB_WARN_INTEGRATION');
 			self::$error = 5;
-		}
+		}*/
 		return true;
 	}
 

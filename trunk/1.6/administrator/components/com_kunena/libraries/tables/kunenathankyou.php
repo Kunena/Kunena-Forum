@@ -202,15 +202,17 @@ class TableKunenaThankYou extends JTable {
 	 * @return Objectlist List of the wanted messages
 	 */
 	function getPosts($userid, $saidgot, $limit = 10) {
+		$session	= KunenaFactory::getSession ();
+		$allowed	= $session->allowed;
 		// TODO: accept list of users
 		$field = 'targetuserid';
 		if ($saidgot === 'said')
 			$field = 'userid';
 		$query = "SELECT m.thread, m.id
 	 			FROM #__kunena_messages AS m
-	 			INNER JOIN {$this->_tbl} AS t
-	 			ON m.id=t.postid
-	 			WHERE t.{$field}={$this->_db->quote($userid)}";
+	 			INNER JOIN {$this->_tbl} AS t ON m.id=t.postid
+	 			WHERE t.{$field}={$this->_db->quote($userid)}
+	 			AND m.catid IN ({$allowed}) AND hold=0";
 		$this->_db->setQuery ( $query, 0, $limit );
 		$res = $this->_db->loadObjectList ();
 

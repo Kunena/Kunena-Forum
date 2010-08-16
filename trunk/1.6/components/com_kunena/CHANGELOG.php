@@ -35,6 +35,10 @@ Kunena 1.6.0-RC2
 
 16-August-2010 Matias
 ^ [#15886] Merged revisions 3162-3185 from /branches/1.6-littlejohn-20100804
+^ [#15886] Merged revision 3195 from /branches/1.6-LDAsvens-thankyou-20100813
+
+13-August-2010 svens(LDA)
+* [#21829] Authentication check in profile thank you listing (no not show posts which user cannot see)
 
 13-August-2010 Matias
 ^ [#15886] Merged revisions 3087-3089 from /branches/1.6-b2-language-svens-20100721

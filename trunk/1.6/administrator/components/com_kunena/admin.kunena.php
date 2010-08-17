@@ -1545,9 +1545,6 @@ function showConfig($option) {
 	$lists ['autoembedyoutube'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_autoembedyoutube', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->autoembedyoutube );
 	$lists ['autoembedebay'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_autoembedebay', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->autoembedebay );
 	$lists ['highlightcode'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_highlightcode', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->highlightcode );
-	// New for 1.5.7 -> integration AlphaUserPoints
-	$lists ['alphauserpoints'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_alphauserpoints', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->alphauserpoints );
-	$lists ['alphauserpointsrules'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_alphauserpointsrules', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->alphauserpointsrules );
 	// New for 1.5.8 -> SEF
 	$lists ['sef'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sef', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->sef );
 	$lists ['sefcats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_sefcats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->sefcats );
@@ -1579,8 +1576,6 @@ function showConfig($option) {
 	$lists['post_dateformat_hover'] = JHTML::_('select.genericlist', $dateformatlist, 'cfg_post_dateformat_hover', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->post_dateformat_hover);
 	// New for 1.6: hide ip
 	$lists['hide_ip'] = JHTML::_('select.genericlist', $yesno, 'cfg_hide_ip', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->hide_ip);
-	//New for 1.6: Joomsocial Activity Stream Integration disable/enable
-	$lists['js_actstr_integration'] = JHTML::_('select.genericlist', $yesno, 'cfg_js_actstr_integration', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->js_actstr_integration);
 	//New for 1.6: choose if you want that ghost message box checked by default
 	$lists['boxghostmessage'] = JHTML::_('select.genericlist', $yesno, 'cfg_boxghostmessage', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->boxghostmessage);
 	// New for 1.6 -> Thank you button

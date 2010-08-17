@@ -1818,31 +1818,11 @@ table.kadmin-stat caption {
 					<legend><?php echo JText::_('COM_KUNENA_AUP_ALPHAUSERPOINTS'); ?></legend>
 					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE'); ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['alphauserpoints']; ?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AUP_ENABLED_POINTS_IN_PROFILE_DESC'); ?></td>
-						</tr>
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_AUP_ENABLED_RULES'); ?></td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['alphauserpointsrules']?></td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AUP_ENABLED_RULES_DESC'); ?></td>
-						</tr>
-						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY'); ?></td>
 							<td align="left" valign="top" width="25%"><input type="text"
 								name="cfg_alphauserpointsnumchars"
 								value="<?php echo kescape($kunena_config->alphauserpointsnumchars); ?>" /></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_AUP_MINIMUM_POINTS_ON_REPLY_DESC'); ?></td>
-						</tr>
-					</table>
-				</fieldset>
-				<fieldset>
-					<legend><?php echo JText::_('COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION') ?></legend>
-					<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
-						<tr align="center" valign="middle">
-							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION') ?> </td>
-							<td align="left" valign="top" width="25%"><?php echo $lists ['js_actstr_integration']; ?> </td>
-							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_JS_ACTIVITYSTREAM_INTEGRATION_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>

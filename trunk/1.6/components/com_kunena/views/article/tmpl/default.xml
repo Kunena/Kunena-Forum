@@ -9,8 +9,8 @@
 		<description>Show rules / help</description>
 		<url>
 			<param name="do" type="list" default="rules" label="Select View">
-				<option value="rules">Help Page</option>
-				<option value="help">Rules Page</option>
+				<option value="rules">Rules Page</option>
+				<option value="help">Help Page</option>
 			</param>
 		</url>
 	</state>

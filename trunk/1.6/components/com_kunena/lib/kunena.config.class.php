@@ -291,8 +291,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	// New 1.0.8 config variables
 	var $default_sort = 'asc'; // 'desc' for latest post first
 	// New 1.5.7 config variables
-	var $alphauserpoints = 0; // Integration AlphaUserPoints component
-	var $alphauserpointsrules = 0; // Integration rules for AlphaUserPoints component
 	var $alphauserpointsnumchars = 0; // Integration feature for AlphaUserPoints component
 	// New 1.5.8 config variables
 	var $sef = 1;

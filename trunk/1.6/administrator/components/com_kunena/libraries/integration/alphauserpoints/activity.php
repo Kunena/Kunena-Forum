@@ -18,61 +18,59 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 
 	public function __construct() {
 		$aup = JPATH_SITE . DS . 'components' . DS . 'com_alphauserpoints' . DS . 'helper.php';
-		if (!file_exists ( $aup )) return;
+		if (! file_exists ( $aup ))
+			return;
 		require_once ($aup);
 		$this->priority = 50;
-		$this->_config = KunenaFactory::getConfig();
+		$this->_config = KunenaFactory::getConfig ();
 	}
 
 	public function onAfterPost($message) {
-		if ($this->_config->alphauserpointsrules) {
-			$datareference = '<a href="' . CKunenaLink::GetMessageURL($message->get('id'), $message->get('catid')) . '">' . $message->get('subject') . '</a>';
-			AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $message->get('id'), $datareference );
-		}
+		$datareference = '<a href="' . CKunenaLink::GetMessageURL ( $message->get ( 'id' ), $message->get ( 'catid' ) ) . '">' . $message->get ( 'subject' ) . '</a>';
+		AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $message->get ( 'id' ), $datareference );
 	}
 
-	function escape($var)
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	function escape($var) {
+		return htmlspecialchars ( $var, ENT_COMPAT, 'UTF-8' );
 	}
 
 	public function getUserMedals($userid) {
-		if ($userid == 0) return false;
+		if ($userid == 0)
+			return false;
 
-		if(!defined("_AUP_MEDALS_LIVE_PATH")) {
-			define('_AUP_MEDALS_LIVE_PATH', JURI::base(true) . '/components/com_alphauserpoints/assets/images/awards/icons/');
+		if (! defined ( "_AUP_MEDALS_LIVE_PATH" )) {
+			define ( '_AUP_MEDALS_LIVE_PATH', JURI::base ( true ) . '/components/com_alphauserpoints/assets/images/awards/icons/' );
 		}
 
-		$aupmedals = AlphaUserPointsHelper::getUserMedals ( '', $userid ) ;
-		$medals = array();
+		$aupmedals = AlphaUserPointsHelper::getUserMedals ( '', $userid );
+		$medals = array ();
 		foreach ( $aupmedals as $medal ) {
-			$medals[] = '<img src="' . _AUP_MEDALS_LIVE_PATH .$this->escape($medal->icon). '" alt="'.$this->escape($medal->rank).'" title="'.$this->escape($medal->rank).'" />';
+			$medals [] = '<img src="' . _AUP_MEDALS_LIVE_PATH . $this->escape ( $medal->icon ) . '" alt="' . $this->escape ( $medal->rank ) . '" title="' . $this->escape ( $medal->rank ) . '" />';
 		}
 
 		return $medals;
 	}
 
 	public function getUserPoints($userid) {
-		if ($userid == 0) return false;
+		if ($userid == 0)
+			return false;
 		$_db = JFactory::getDBO ();
 
 		$_db->setQuery ( "SELECT points FROM #__alpha_userpoints WHERE `userid`='" . ( int ) $userid . "'" );
 		$userpoints = $_db->loadResult ();
-		KunenaError::checkDatabaseError();
+		KunenaError::checkDatabaseError ();
 		return $userpoints;
 	}
 
 	public function onAfterReply($message) {
-		if ($this->_config->alphauserpointsrules) {
-			$datareference = '<a href="' . CKunenaLink::GetMessageURL($message->get('id'), $message->get('catid')) . '">' . $message->get('subject') . '</a>';
-			if ($this->_config->alphauserpointsnumchars > 0) {
-				// use if limit chars for a response
-				if (JString::strlen ( $message->get('message') ) > $this->_config->alphauserpointsnumchars) {
-					AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get('id'), $datareference );
-				}
-			} else {
-				AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get('id'), $datareference );
+		$datareference = '<a href="' . CKunenaLink::GetMessageURL ( $message->get ( 'id' ), $message->get ( 'catid' ) ) . '">' . $message->get ( 'subject' ) . '</a>';
+		if ($this->_config->alphauserpointsnumchars > 0) {
+			// use if limit chars for a response
+			if (JString::strlen ( $message->get ( 'message' ) ) > $this->_config->alphauserpointsnumchars) {
+				AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
 			}
+		} else {
+			AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
 		}
 	}
 }

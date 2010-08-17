@@ -40,7 +40,9 @@ Kunena 1.6.0-RC2
 # [#21895] Editing user profile: global settings are not translated (Joomla parameters)
 # [#21896] Pathway fails to list most users
 # [#21898] BBCode parser generates invalid html (ol, ul, table)
-# [#21830] User can "THANK YOU" himself or non-existing message
+* [#21830] User can "THANK YOU" himself or non-existing message
+# [#21901] Rules or Help Page - Select view inverted
+- [#19293] Remove deprecated configuration options: alphauserpoints, alphauserpointsrules, js_actstr_integration
 
 16-August-2010 fxstein
 # [#20100] Removed legacy rules and help settings, updated en-GB language file

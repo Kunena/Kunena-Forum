@@ -13,6 +13,7 @@ defined ( '_JEXEC' ) or die ();
 
 class CKunenaShowcat {
 	public $allow = 0;
+	public $embedded = null;
 
 	function __construct($catid, $page=0) {
 		kimport('html.parser');

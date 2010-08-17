@@ -35,6 +35,9 @@ Kunena 1.6.0-RC2
 
 17-August-2010 Xillibit
 # [#21893] Select topic icons are showed even on reply page (forgot to check under edit)
+# [#19288] Update french language file (fr-FR)
+# [#21877] My posts listing in profile - limited to the first n items on one "page" (fix undefined variable on showcat)
+# [#19288] Update Credits language strings
 
 16-August-2010 Xillibit
 # [#21844] Button submit and back - order is reversed from k1.5 (missing to change order in quick reply)

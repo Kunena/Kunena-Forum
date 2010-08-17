@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+17-August-2010 Xillibit
+# [#21893] Select topic icons are showed even on reply page (forgot to check under edit)
+
 16-August-2010 Xillibit
 # [#21844] Button submit and back - order is reversed from k1.5 (missing to change order in quick reply)
 # [#21878] Use KunenaParser::JSText in kunena.google.maps.class to escape strings in javascript
@@ -88,7 +91,7 @@ Kunena 1.6.0-RC2
 # [#19333] Regression: Fix category subscription email generation bug
 
 08-August-2010 Xillibit
-# [#19288] Select topic icons are showed even on reply page
+# [#21893] Select topic icons are showed even on reply page
 # [#19288] Little change for kunena latest module to allow show only messages in right way
 # [#19288] Update french language file (fr-FR)
 

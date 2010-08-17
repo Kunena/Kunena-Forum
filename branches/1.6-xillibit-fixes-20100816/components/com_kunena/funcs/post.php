@@ -317,6 +317,7 @@ class CKunenaPost {
 			return false;
 
 		$message = $this->msg_cat;
+		if ($message->parent==0) $this->allow_topic_icons = 1;
 
 		$allowEdit = 0;
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {

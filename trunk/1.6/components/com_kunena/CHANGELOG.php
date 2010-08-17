@@ -35,6 +35,7 @@ Kunena 1.6.0-RC2
 
 16-August-2010 fxstein
 # [#20100] Removed legacy rules and help settings, updated en-EN language file
+- [#21890] Remove <em> tags from subscription language strings
 
 16-August-2010 Matias
 ^ [#15886] Merged revisions 3162-3185 from /branches/1.6-littlejohn-20100804

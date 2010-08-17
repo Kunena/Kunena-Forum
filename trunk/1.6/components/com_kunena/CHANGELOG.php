@@ -33,8 +33,14 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+17-August-2010 Matias
+# [#21889] Version Check is broken in Backend
+# [#21892] Clicking BBcode buttons scrolls view to top of message
+# [#21894] Menu, Category Index: cannot select sections
+# [#21895] Editing user profile: global settings are not translated (Joomla parameters)
+
 16-August-2010 fxstein
-# [#20100] Removed legacy rules and help settings, updated en-EN language file
+# [#20100] Removed legacy rules and help settings, updated en-GB language file
 - [#21890] Remove <em> tags from subscription language strings
 
 16-August-2010 Matias

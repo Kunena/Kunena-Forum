@@ -27,7 +27,7 @@ class JElementKunenaCategories extends JElement {
 		$none = $node->attributes ( 'none' );
 		$ctrl = $control_name . '[' . $name . ']';
 		$options = Array ();
-		$options [] = JHTML::_ ( 'select.option', '0', JText::_ ( $none ) );
+		$options [] = JHTML::_ ( 'select.option', '0', $none ? JText::_ ( $none ) : '&nbsp;' );
 		foreach ( $items as $cat ) {
 			$options [] = JHTML::_ ( 'select.option', $cat->id, $cat->treename, 'value', 'text', ! $sections && $cat->section );
 		}

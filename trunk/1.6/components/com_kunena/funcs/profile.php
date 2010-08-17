@@ -162,7 +162,6 @@ class CKunenaProfile {
 			echo 'Not implemented in J1.6!';
 			return;
 		}
-
 		$this->user = JFactory::getUser();
 
 		// check to see if Frontend User Params have been enabled
@@ -172,6 +171,8 @@ class CKunenaProfile {
 		if ($check == 1 || $check == NULL)
 		{
 			if($this->user->authorize( 'com_user', 'edit' )) {
+				$lang = JFactory::getLanguage();
+				$lang->load('com_user', JPATH_SITE);
 				$params = $this->user->getParameters(true);
 				$this->userparams = $params->renderToArray();
 			}

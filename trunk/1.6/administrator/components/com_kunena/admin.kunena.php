@@ -3184,16 +3184,13 @@ function showStats() {
 function getLatestKunenaVersion() {
 	$kunena_app = & JFactory::getApplication ();
 
-	$kunenaversion = CKunenaVersion::versionArray ();
 	$url = 'http://update.kunena.com/kunena_update.xml';
 	$data = '';
 	$check = array();
 	$check['connect'] = 0;
-	$check['current_version'] = $kunenaversion->version;
 
 	$data = $kunena_app->getUserState('com_kunena.version_check', null);
-	if ( $data ) {
-
+	if ( empty($data) ) {
 		//try to connect via cURL
 		if(function_exists('curl_init') && function_exists('curl_exec')) {
 			$ch = @curl_init();
@@ -3267,13 +3264,11 @@ function getLatestKunenaVersion() {
 
 	}
 
-	if( !empty($data) && strstr($data, '<?xml version="1.0" encoding="utf-8"?><update>') ) {
+	if( !empty($data) && strstr($data, '<?xml version="1.0" encoding="utf-8"?>') ) {
 		$xml = & JFactory::getXMLparser('Simple');
 		$xml->loadString($data);
-		$check['version'] = '';
-		$check['released'] = '';
 		$version 				= & $xml->document->version[0];
-		$check['latest_version'] 		= & $version->data();
+		$check['latest_version'] = & $version->data();
 		$released 				= & $xml->document->released[0];
 		$check['released'] 		= & $released->data();
 		$check['connect'] 		= 1;
@@ -3287,8 +3282,8 @@ function checkLatestVersion() {
 	$latestVersion = getLatestKunenaVersion();
 
 	if ( $latestVersion['connect'] ) {
-		if ( $latestVersion['latest_version'] == $latestVersion['current_version'] ) {
-			$needUpgrade = JText::sprintf('COM_KUNENA_COM_A_CHECK_VERSION_CORRECT',$latestVersion['current_version']);
+		if ( version_compare($latestVersion['latest_version'], Kunena::version(), '<=') ) {
+			$needUpgrade = JText::sprintf('COM_KUNENA_COM_A_CHECK_VERSION_CORRECT', Kunena::version());
 		} else {
 			$needUpgrade = JText::sprintf('COM_KUNENA_COM_A_CHECK_VERSION_NEED_UPGRADE',$latestVersion['latest_version'],$latestVersion['released']);
 		}

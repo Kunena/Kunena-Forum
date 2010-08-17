@@ -8,7 +8,7 @@
 		<name>Kunena Forum: Category Index</name>
 		<description>Show category index</description>
 		<url addpath="/administrator/components/com_kunena/elements">
-			<param name="catid" type="kunenacategories" default="0" sections="0" none="" label="Parent Category ID" />
+			<param name="catid" type="kunenacategories" default="0" sections="1" none="" label="Parent Category ID" />
 		</url>
 	</state>
 </metadata>

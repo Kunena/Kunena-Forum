@@ -33,13 +33,12 @@ Element.implement({
 
 		var scroll_top = this.scrollTop;
 
+		this.focus();
 		if(Browser.Engine.trident) {
-			this.focus();
 			var range = document.selection.createRange();
 			range.text = wrapperLeft + newtext + wrapperRight;
 			if(isLast) {
 				range.select();
-				this.scrollTop = scroll_top;
 			}
 		}
 		else {
@@ -52,10 +51,9 @@ Element.implement({
 			else {
 				var position = originalStart + newtext.length + wrapperLeft.length +  wrapperRight.length;
 				this.setSelectionRange(position, position);
-				this.scrollTop = scroll_top;
 			}
-			this.focus();
 		}
+		this.scrollTop = scroll_top;
 	},
 
 	replaceSelectedText: function(newtext, isLast) {

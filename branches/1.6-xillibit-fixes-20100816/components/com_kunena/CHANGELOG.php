@@ -38,6 +38,8 @@ Kunena 1.6.0-RC2
 # [#19288] Update french language file (fr-FR)
 # [#21877] My posts listing in profile - limited to the first n items on one "page" (fix undefined variable on showcat)
 # [#19288] Update Credits language strings
+# [#19288] Little typo for check is user is a moderator to show the warning info for approval
+# [#21911] Attachments list: Use popup image instead of showing image in white page
 
 16-August-2010 Xillibit
 # [#21844] Button submit and back - order is reversed from k1.5 (missing to change order in quick reply)

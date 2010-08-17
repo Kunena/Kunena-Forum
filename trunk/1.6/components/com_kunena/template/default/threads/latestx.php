@@ -42,6 +42,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 
 		<?php if ($this->func != 'mylatest' && $this->func != 'noreplies') : ?>
 		<td class="klist-times-all">
+			<form id="timeselect" name="timeselect" method="post" target="_self" action="<?php echo JURI::current();?>">
 			<?php
 			// make the select list for time
 			$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
@@ -54,9 +55,9 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			$timesel[] = JHTML::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
 			$timesel[] = JHTML::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
 			// build the html select list
-			// FIXME: time selection does not work
-			echo JHTML::_('select.genericlist', $timesel, 'ktime-selection', 'class="inputboxusl" onchange="document.location.href=this.options[this.selectedIndex].value;" size="1"', 'value', 'text', $this->escape($this->show_list_time));
+			echo JHTML::_('select.genericlist', $timesel, 'sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"', 'value', 'text', $this->escape($this->show_list_time));
 			?>
+			</form>
 		</td>
 		<?php endif; ?>
 

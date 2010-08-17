@@ -43,6 +43,7 @@ Kunena 1.6.0-RC2
 * [#21830] User can "THANK YOU" himself or non-existing message
 # [#21901] Rules or Help Page - Select view inverted
 - [#19293] Remove deprecated configuration options: alphauserpoints, alphauserpointsrules, js_actstr_integration
+# [#21907] Recent Topics - time selection does not work
 
 16-August-2010 fxstein
 # [#20100] Removed legacy rules and help settings, updated en-GB language file

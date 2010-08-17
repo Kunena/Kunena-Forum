@@ -310,7 +310,7 @@ class CKunenaLink {
 
 	function GetThankYouLink( $catid, $pid, $targetuserid, $name, $title, $class) {
 		$token = '&'.JUtility::getToken().'=1';
-		return CKunenaLink::GetSefHrefLink (KUNENA_LIVEURLREL.'&func=thankyou&pid='.$pid.'&catid='.$catid.'&targetuserid='.$targetuserid.$token, $name, $title, 'nofollow', $class);
+		return CKunenaLink::GetSefHrefLink (KUNENA_LIVEURLREL.'&func=thankyou&pid='.$pid.'&catid='.$catid.$token, $name, $title, 'nofollow', $class);
 	}
 
 	function GetRulesLink($name, $rel = 'nofollow') {

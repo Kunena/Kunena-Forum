@@ -31,7 +31,7 @@ class CkunenaPathway {
 			$query = "SELECT w.userid, w.func, u.$queryName AS username, k.showOnline FROM #__kunena_whoisonline AS w
 				LEFT JOIN #__users AS u ON u.id=w.userid
 				LEFT JOIN #__kunena_users AS k ON k.userid=w.userid
-				WHERE w.link LIKE '%" . $this->_db->getEscaped ( JURI::current () ) . "%' AND w.func LIKE '%$sfunc%'
+				WHERE w.link LIKE '{$this->_db->getEscaped ( JURI::current () )}%' AND w.func='{$sfunc}'
 				GROUP BY w.userid ORDER BY u.{$queryName} ASC";
 			$this->_db->setQuery ( $query );
 			$users = $this->_db->loadObjectList ();
@@ -68,30 +68,29 @@ class CkunenaPathway {
 	public function getUsersOnlineList($sfunc) {
 		$users = $this->_getOnlineUsers($sfunc);
 
-		$onlineUsersList = '';
-		$totalguest = 0;
-		$divider = ', ';
-		$lastone = end ( $users );
+		$onlineUsersList = array();
+		$totalguests = $totalhidden = 0;
 		foreach ( $users as $user ) {
-			if ($user->userid != 0) {
-				if ($user == $lastone && ! $totalguest) {
-					$divider = '';
-				}
-				if ($user->showOnline > 0) {
-					$onlineUsersList = CKunenaLink::GetProfileLink ( $user->userid, $user->username ) . $divider;
+			if ($user->userid) {
+				if ($user->showOnline) {
+					$onlineUsersList[] = CKunenaLink::GetProfileLink ( $user->userid, $user->username );
+				} else {
+					$totalhidden ++;
 				}
 			} else {
-				$totalguest = $totalguest + 1;
+				$totalguests ++;
 			}
 		}
-		if ($totalguest > 0) {
-			if ($totalguest == 1) {
-				$onlineUsersList .= '(' . $totalguest . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUEST');
+		// Show hidden users as quests:
+		$totalguests += $totalhidden;
+		if ($totalguests > 0) {
+			if ($totalguests == 1) {
+				$onlineUsersList[] = '(' . $totalguests . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUEST');
 			} else {
-				$onlineUsersList .= '(' . $totalguest . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUESTS');
+				$onlineUsersList[] = '(' . $totalguests . ') ' . JText::_('COM_KUNENA_WHO_ONLINE_GUESTS');
 			}
 		}
 
-		return $onlineUsersList;
+		return implode(', ', $onlineUsersList);
 	}
 }

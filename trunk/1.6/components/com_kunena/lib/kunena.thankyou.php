@@ -21,7 +21,6 @@ class CKunenaThankyou {
 	function __construct(){
 		$this->pid			= JRequest::getInt('pid', '');
 		$this->catid		= JRequest::getInt('catid','');
-		$this->targetuserid	= JRequest::getInt('targetuserid','');
 
 		$this->my			= &JFactory::getUser ();
 
@@ -43,30 +42,41 @@ class CKunenaThankyou {
 				$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid) );
 				return;
 		}
-		if($this->config->showthankyou && $this->my->id){
-			//Check if the user already said thank you to this post
-			$saidit = KunenaThankYou::checkIfThankYouAllready($this->pid,$this->my->id);
-			if(!empty($saidit)){
-				$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_ALLREADY'));
-				$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid) );
-				return;
-			}
-			if ( $this->my->id == $this->targetuserid ) {
-				$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_NOT_YOURSELF'));
-				$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid) );
-				return;
-			}
-
-			//Perform the insert
-			if(KunenaThankYou::storeThankYou($this->pid, $this->my->id, $this->targetuserid) !== true) KunenaError::checkDatabaseError();
-
-			$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_SUCCESS'));
-			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid) );
-
-		}else{
+		if (!$this->my->id) {
 			$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_LOGIN'));
-			$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->pid, $this->config->messages_per_page, $this->catid) );
+			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid) );
 		}
+		if(!$this->config->showthankyou) {
+			$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_DISABLED'));
+			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid) );
+		}
+		require_once(KPATH_SITE.'/lib/kunena.posting.class.php');
+		$post = new CKunenaPosting();
+		if (!$post->action($this->pid)) {
+			$errors = $post->getErrors();
+			$this->_app->enqueueMessage(reset($post->getErrors()));
+			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid) );
+		}
+		$this->targetuserid = $post->get('userid');
+		//Check if the user already said thank you to this post
+		if ($this->my->id == $this->targetuserid) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_NOT_YOURSELF' ) );
+			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid ) );
+			return;
+		}
+		$saidit = KunenaThankYou::checkIfThankYouAllready ( $this->pid, $this->my->id );
+		if (! empty ( $saidit )) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_ALLREADY' ) );
+			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid ) );
+			return;
+		}
+
+		//Perform the insert
+		if (KunenaThankYou::storeThankYou ( $this->pid, $this->my->id, $this->targetuserid ) !== true)
+			KunenaError::checkDatabaseError ();
+
+		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid ) );
 	}
 
 	/**

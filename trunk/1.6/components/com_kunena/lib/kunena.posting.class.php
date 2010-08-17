@@ -294,6 +294,26 @@ class CKunenaPosting {
 		return empty ( $this->errors );
 	}
 
+	public function action($mesid) {
+		if (! $this->parent || $this->parent->id != $mesid) {
+			$this->loadMessage ( $mesid );
+		}
+		if (! $this->canRead ())
+			return false;
+
+		// Load all options and fields
+		$this->setOption ( 'action', 'action' );
+
+		// Restrict fields that user can enter
+		$this->setOption ( 'allowed', array ('name', 'email', 'subject', 'message', 'topic_emoticon', 'modified_reason' ) );
+		$this->setOption ( 'required', array () );
+
+		// Load these default values from the edited message
+		$this->loadDefaults ( array ('userid', 'name', 'email', 'subject', 'message', 'topic_emoticon' ) );
+
+		return empty ( $this->errors );
+	}
+
 	protected function savePost() {
 		if (! $this->check ())
 			return false;

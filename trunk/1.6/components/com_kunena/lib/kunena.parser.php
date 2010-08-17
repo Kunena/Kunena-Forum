@@ -217,16 +217,6 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$tne = '</span>';
 				return TAGPARSER_RET_REPLACED;
 				break;
-			case 'ol' :
-				$tns = "<ol>";
-				$tne = '</ol>';
-				return TAGPARSER_RET_REPLACED;
-				break;
-			case 'ul' :
-				$tns = "<ul>";
-				$tne = '</ul>';
-				return TAGPARSER_RET_REPLACED;
-				break;
 			case 'li' :
 				$tns = "<li>";
 				$tne = '</li>';
@@ -263,11 +253,6 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			case 'indent' :
 				$tns = "<blockquote>";
 				$tne = '</blockquote>';
-				return TAGPARSER_RET_REPLACED;
-				break;
-			case 'table' :
-				$tns = "<table>";
-				$tne = '</table>';
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'tr' :
@@ -385,6 +370,22 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 		}
 		switch (JString::strtolower ( $tag->name )) {
 			// in general $between was already Encoded (if not explicitly suppressed!)
+
+			case 'ol' :
+				// <br /> is not allowed inside <ol>
+				$tag_new = "<ol>" . strtr($between, array("\r\n"=>' ', "\n"=>' ', "\r"=>' ')) . '</ol>';
+				return TAGPARSER_RET_REPLACED;
+				break;
+			case 'ul' :
+				// <br /> is not allowed inside <ul>
+				$tag_new = "<ul>" . strtr($between, array("\r\n"=>' ', "\n"=>' ', "\r"=>' ')) . '</ul>';
+				return TAGPARSER_RET_REPLACED;
+				break;
+			case 'table' :
+				// <br /> is not allowed inside <table>
+				$tag_new = "<table>" . strtr($between, array("\r\n"=>' ', "\n"=>' ', "\r"=>' ')) . '</table>';
+				return TAGPARSER_RET_REPLACED;
+				break;
 
 			case 'email' :
 				$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );

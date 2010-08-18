@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+18-August-2010 Xillibit
+# [#21926] Subscriptions are not sent when message gets approved
+
 18-August-2010 Matias
 ^ [#15886] Merged revisions 3217-3231 from /branches/1.6-xillibit-fixes-20100816
 # [#21884] Regression: CommunityBuilder was not detected

@@ -18,25 +18,33 @@ class CKunenaReview {
 	public $config;
 	public $app;
 	public $embedded = null;
+	public $document;
 
 	function __construct($catid = 0) {
 		$this->_db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->app = JFactory::getApplication ();
+		jimport ( 'joomla.environment.uri' );
 		$this->uri = JURI::getInstance ();
+		$this->document = & JFactory::getDocument ();
 		$this->catid = intval($catid);
 		$this->tabclass = array ("row1", "row2" );
 		$this->MessagesToApprove = $this->GetApprovedMessageList ();
 		$this->do = JRequest::getCmd ( 'do', '' );
 		$this->header = JText::_ ( 'COM_KUNENA_MESSAGE_ADMINISTRATION' );
+		$this->func = JString::strtolower ( JRequest::getCmd ( 'func' ) );
 
 		$view = JRequest::getVar ( 'view', '' );
 		if ( $view == 'profile' ) $this->embedded = 1;
+
+		if( $this->func == 'review' ) $this->document->setTitle ( $this->header );
 	}
 
 	public function ApproveMessage() {
 		if ($this->_checkToken ())
+			return false;
+		if ($this->_moderatorProtection ())
 			return false;
 
 		$array = JRequest::getVar('cb', array ( 0 ), 'post', 'array');
@@ -44,15 +52,17 @@ class CKunenaReview {
 		$backUrl = $this->app->getUserState ( "com_kunena.ReviewURL" );
 
 		foreach ( $array as $id => $value ) {
-			// FIXME: add check that moderator really has permission to approve current message (not all mods are global)
 			$this->_db->setQuery ( "UPDATE `#__kunena_messages` SET hold='0' WHERE id={$this->_db->Quote($id)}" );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError ())
 				return;
 
-			$this->_db->setQuery ( "SELECT catid,id,parent,time FROM `#__kunena_messages` WHERE id={$this->_db->Quote($id)}" );
+			$this->_db->setQuery ( "SELECT m.catid,m.name,m.subject,m.thread,m.id,m.parent,m.time,mt.*,cat.name AS catname FROM `#__kunena_messages` AS m INNER JOIN `#__kunena_messages_text` AS mt ON mt.mesid=m.id INNER JOIN `#__kunena_categories` AS cat ON cat.id=m.catid WHERE m.id={$this->_db->Quote($id)}" );
 			$mesincat = $this->_db->loadObject ();
 			KunenaError::checkDatabaseError ();
+
+			$LastPostUrl = $this->_getLastPostUrl($mesincat);
+			$this->_sendSubscription($LastPostUrl, $mesincat, $this->config->allowsubscriptions, $this->config->mailmod, $this->config->mailadmin);
 
 			CKunenaTools::modifyCategoryStats($id, $mesincat->parent, $mesincat->time, $mesincat->catid);
 		} //end foreach
@@ -61,8 +71,77 @@ class CKunenaReview {
 		$this->app->redirect ( $backUrl );
 	}
 
+	private function _getLastPostUrl($message) {
+		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM `#__kunena_messages` WHERE thread={$this->_db->Quote($message->thread)}" );
+		$result = $this->_db->loadObject ();
+		KunenaError::checkDatabaseError();
+		$threadPages = ceil ( $result->totalmessages / $this->config->messages_per_page );
+		//construct a useable URL (for plaintext - so no &amp; encoding!)
+		$LastPostUrl = $this->uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $message->catid, $message->thread, $threadPages, $this->config->messages_per_page, $message->id ) );
+
+		return $LastPostUrl;
+	}
+
+	private function _sendSubscription($LastPostUrl, $message, $mailsubs = false, $mailmods = false, $mailadmins = false) {
+	//get all subscribers, moderators and admins who will get the email
+		$emailToList = CKunenaTools::getEMailToList ( $message->catid, $message->thread, $mailsubs, $mailmods, $mailadmins, $this->my->id );
+
+		if (count ( $emailToList )) {
+			jimport('joomla.mail.helper');
+			if (! $this->config->email || ! JMailHelper::isEmailAddress ( $this->config->email )) {
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'notice' );
+				return false;
+			} else if ($_SERVER ["REMOTE_ADDR"] == '127.0.0.1') {
+				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ), 'notice' );
+				return false;
+			}
+			// clean up the message for review
+			$authorname = $message->name;
+			$message = smile::purify ( $message->message );
+			$subject = $message->subject;
+
+			$mailsender = JMailHelper::cleanAddress ( $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
+			$mailsubject = JMailHelper::cleanSubject ( "[" . $this->config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $subject . " (" . $message->catname . ")" );
+
+			foreach ( $emailToList as $emailTo ) {
+				if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
+					continue;
+
+				if ($emailTo->subscription) {
+					$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' );
+					$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' );
+				} else {
+					$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD1' );
+					$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD2' );
+				}
+
+				$msg = "$emailTo->name,\n\n";
+				$msg .= $msg1 . " " . $this->config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "\n\n";
+				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . ": " . $subject . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ": " . $message->catname . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . $authorname . "\n\n";
+				$msg .= $msg2 . "\n";
+				$msg .= "URL: $LastPostUrl\n\n";
+				if ($this->config->mailfull == 1) {
+					$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . ":\n-----\n";
+					$msg .= $message;
+					$msg .= "\n-----";
+				}
+				$msg .= "\n\n";
+				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
+				$msg .= "\n\n\n\n";
+				$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+				$msg = JMailHelper::cleanBody ( $msg );
+
+				JUtility::sendMail ( $this->config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
+			}
+		}
+	}
+
 	public function DeleteMessage() {
 		if ($this->_checkToken ())
+			return false;
+		if ($this->_moderatorProtection ())
 			return false;
 
 		$backUrl = $this->app->getUserState ( "com_kunena.ReviewURL" );
@@ -74,7 +153,6 @@ class CKunenaReview {
 
 		$message = '';
 		foreach ( $items as $id => $value ) {
-			// TODO: make sure that that this action is allowed only if moderator really has rights to do this
 			$delete = $kunena_mod->deleteThread ( $id, $DeleteAttachments = false );
 			if (! $delete) {
 				$this->app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
@@ -88,9 +166,11 @@ class CKunenaReview {
 	}
 
 	public function GetApprovedMessageList() {
+		if ($this->_moderatorProtection ())
+			return false;
+
 		$queryCatid = '';
 		if ( $this->catid > 0 ) $queryCatid = " AND catid='{$this->catid}'";
-		// FIXME: only show unapproved messages from categories where user has moderator rights
 		$this->_db->setQuery ( "SELECT m.*, t.message,cat.name AS catname FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid LEFT JOIN #__kunena_categories AS cat ON cat.id=m.catid WHERE hold='1' " . $queryCatid . " ORDER BY id ASC" );
 		$MesNeedReview = $this->_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError ())

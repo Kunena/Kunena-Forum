@@ -28,7 +28,7 @@ class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
 		cbimport ( 'language.front' );
 		cbimport ( 'cb.tabs' );
 		cbimport ( 'cb.field' );
-		$this->loaded = !self::detectErrors();
+		$this->loaded = self::detectErrors();
 	}
 
 	public function open() {
@@ -65,6 +65,7 @@ class KunenaIntegrationCommunityBuilder extends KunenaIntegration {
 		} if (version_compare ( $ueConfig ['version'], '1.2.3' ) < 0) {
 			self::$errormsg = JText::sprintf ( 'COM_KUNENA_INTEGRATION_CB_WARN_UPDATE', '1.2.3' );
 			self::$error = 3;
+			return false;
 		}
 /*		if (! getCBprofileItemid ()) {
 			self::$errormsg = JText::_('COM_KUNENA_INTEGRATION_CB_WARN_PUBLISH');

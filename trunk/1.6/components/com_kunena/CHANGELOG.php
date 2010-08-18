@@ -35,6 +35,16 @@ Kunena 1.6.0-RC2
 
 18-August-2010 Matias
 ^ [#15886] Merged revisions 3217-3231 from /branches/1.6-xillibit-fixes-20100816
+# [#21884] Regression: CommunityBuilder was not detected
+# [#19312] English: Gallery path wrong in the configuration option description
+
+17-August-2010 Xillibit
+# [#21893] Select topic icons are showed even on reply page (forgot to check under edit)
+# [#19288] Update french language file (fr-FR)
+# [#21877] My posts listing in profile - limited to the first n items on one "page" (fix undefined variable on showcat)
+# [#19288] Update Credits language strings
+# [#19288] Little typo for check is user is a moderator to show the warning info for approval
+# [#21911] Attachments list: Use popup image instead of showing image in white page
 
 17-August-2010 Matias
 # [#21889] Version Check is broken in Backend
@@ -48,23 +58,15 @@ Kunena 1.6.0-RC2
 - [#19293] Remove deprecated configuration options: alphauserpoints, alphauserpointsrules, js_actstr_integration
 # [#21907] Recent Topics - time selection does not work
 
-17-August-2010 Xillibit
-# [#21893] Select topic icons are showed even on reply page (forgot to check under edit)
-# [#19288] Update french language file (fr-FR)
-# [#21877] My posts listing in profile - limited to the first n items on one "page" (fix undefined variable on showcat)
-# [#19288] Update Credits language strings
-# [#19288] Little typo for check is user is a moderator to show the warning info for approval
-# [#21911] Attachments list: Use popup image instead of showing image in white page
-
-16-August-2010 fxstein
-# [#20100] Removed legacy rules and help settings, updated en-GB language file
-- [#21890] Remove <em> tags from subscription language strings
-
 16-August-2010 Xillibit
 # [#21844] Button submit and back - order is reversed from k1.5 (missing to change order in quick reply)
 # [#21878] Use KunenaParser::JSText in kunena.google.maps.class to escape strings in javascript
 # [#21877] My posts listing in profile - limited to the first n items on one "page"
 # [#21882] Polls - changing a vote loses all other votes cast
+
+16-August-2010 fxstein
+# [#20100] Removed legacy rules and help settings, updated en-GB language file
+- [#21890] Remove <em> tags from subscription language strings
 
 16-August-2010 Matias
 ^ [#15886] Merged revisions 3162-3185 from /branches/1.6-littlejohn-20100804

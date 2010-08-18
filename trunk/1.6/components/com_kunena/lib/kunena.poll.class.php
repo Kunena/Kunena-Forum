@@ -507,28 +507,26 @@ class CKunenaPolls {
 	*/
    function reset_vote($userid,$threadid)
    {
-		$query = "SELECT a.id,a.votes AS option_votes, b.votes AS user_votes, b.lastvote FROM #__kunena_polls_options AS a
-				INNER JOIN #__kunena_polls_users AS b ON a.pollid=b.pollid
-				WHERE a.pollid={$this->_db->Quote($threadid)}";
+		$query = "SELECT a.id, a.pollid,a.votes AS option_votes, b.votes AS user_votes, b.lastvote, b.userid FROM #__kunena_polls_options AS a
+				INNER JOIN #__kunena_polls_users AS b ON a.id=b.lastvote
+				WHERE a.pollid={$this->_db->Quote($threadid)} AND b.userid={$this->_db->Quote($userid)}";
     	$this->_db->setQuery($query);
-    	$poll_options_user = $this->_db->loadObjectList();
+    	$poll_options_user = $this->_db->loadObject();
 		if (KunenaError::checkDatabaseError()) return;
 
-		foreach ($poll_options_user as $row) {
-			if ($row->id == $row->lastvote) {
-				if($row->option_votes > '0' && $row->user_votes > '0') {
-					$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id={$this->_db->Quote($row->lastvote)} AND pollid={$this->_db->Quote($threadid)};";
-    				$this->_db->setQuery($query);
-    				$this->_db->query();
-					if (KunenaError::checkDatabaseError()) return;
 
-					$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid={$this->_db->Quote($userid)} AND pollid={$this->_db->Quote($threadid)};";
-    				$this->_db->setQuery($query);
-    				$this->_db->query();
-					if (KunenaError::checkDatabaseError()) return;
-				}
-			}
+		if($poll_options_user->option_votes > '0' && $poll_options_user->user_votes > '0') {
+			$query = "UPDATE #__kunena_polls_options SET votes=votes-1 WHERE id={$this->_db->Quote($poll_options_user->lastvote)} AND pollid={$this->_db->Quote($threadid)};";
+    		$this->_db->setQuery($query);
+    		$this->_db->query();
+			if (KunenaError::checkDatabaseError()) return;
+
+			$query = "UPDATE #__kunena_polls_users SET votes=votes-1 WHERE userid={$this->_db->Quote($userid)} AND pollid={$this->_db->Quote($threadid)};";
+    		$this->_db->setQuery($query);
+    		$this->_db->query();
+			if (KunenaError::checkDatabaseError()) return;
 		}
+
    }
    /**
 	* Delete a poll

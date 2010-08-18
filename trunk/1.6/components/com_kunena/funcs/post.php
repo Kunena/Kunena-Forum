@@ -317,6 +317,7 @@ class CKunenaPost {
 			return false;
 
 		$message = $this->msg_cat;
+		if ($message->parent==0) $this->allow_topic_icons = 1;
 
 		$allowEdit = 0;
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
@@ -455,7 +456,7 @@ class CKunenaPost {
 		$this->_db->query ();
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
-		if ($this->msg_cat->review && !CKunenaTools::isModerator($this->my>-id,$this->catid)) {
+		if ($this->msg_cat->review && !CKunenaTools::isModerator($this->my->id,$this->catid)) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );

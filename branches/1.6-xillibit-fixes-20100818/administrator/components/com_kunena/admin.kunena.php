@@ -1711,7 +1711,13 @@ function showInstructions($kunena_db, $option) {
 // CSS functions
 //===============================
 function showCss($option) {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
+	jimport ( 'joomla.version' );
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE == 1.6) {
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.1.6.php');
+	} else {
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
+	}
 
 	$kunena_config = KunenaFactory::getConfig ();
 	$file = KUNENA_PATH_TEMPLATE . DS . $kunena_config->template . DS .'css'. DS . "kunena.forum.css";
@@ -1727,7 +1733,13 @@ function showCss($option) {
 }
 
 function saveCss($file, $csscontent, $option) {
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
+	jimport ( 'joomla.version' );
+	$jversion = new JVersion ();
+	if ($jversion->RELEASE == 1.6) {
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.1.6.php');
+	} else {
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
+	}
 
 	$kunena_app = & JFactory::getApplication ();
 	$tmpstr = JText::_('COM_KUNENA_CSS_SAVE');

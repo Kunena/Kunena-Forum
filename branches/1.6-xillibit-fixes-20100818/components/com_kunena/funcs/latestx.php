@@ -528,6 +528,7 @@ class CKunenaLatestX {
 			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
+		$this->dropdownUnsubUnfavActionList = $this->dropdownUnsubUnfavActionList();
 		CKunenaTools::loadTemplate('/threads/flat.php');
 	}
 
@@ -544,6 +545,7 @@ class CKunenaLatestX {
 			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
+		$this->DelMoveActionList = $this->dropdownDelMoveActionList();
 		CKunenaTools::loadTemplate('/threads/posts.php');
 	}
 
@@ -561,6 +563,32 @@ class CKunenaLatestX {
 			$online =& CKunenaWhoIsOnline::getInstance();
 			$online->displayWhoIsOnline();
 		}
+	}
+
+	function dropdownDelMoveActionList() {
+		$action = Array();
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+			$action[] = JHTML::_('select.option', 0, '&nbsp;');
+			$action[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$action[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			// build the html select list
+			return JHTML::_('select.genericlist', $action, 'do', 'class="inputbox" size="1"', 'value', 'text', 0, 'kBulkChooseActions');
+		} else {
+			return null;
+		}
+	}
+
+	function dropdownUnsubUnfavActionList() {
+		$action = Array();
+		$action[] = JHTML::_('select.option', '', '&nbsp;');
+		if ( $this->func == 'subscriptions' )$action[] = JHTML::_('select.option', 'bulkSub', JText::_('COM_KUNENA_DELETE_SUBSCRIPTION'));
+		if ( $this->func == 'favorites' ) $action[] = JHTML::_('select.option', 'bulkFavorite', JText::_('COM_KUNENA_DELETE_FAVORITE'));
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+			$action[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$action[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		}
+		// build the html select list
+		return JHTML::_('select.genericlist', $action, 'do', 'class="inputbox" size="1"', 'value', 'text', 0, 'kBulkChooseActions');
 	}
 
 	function getPagination($func, $sel, $page, $totalpages, $maxpages) {

@@ -37,6 +37,7 @@ Kunena 1.6.0-RC2
 # [#21926] Subscriptions are not sent when message gets approved
 # [#21844] Button search and cancel - order is reversed from k1.5
 # [#21911] Open lightbox even on archive and not only on image files
+# [#21935] Only moderator can use bulk unsubscribe (etc)
 
 18-August-2010 Matias
 ^ [#15886] Merged revisions 3217-3231 from /branches/1.6-xillibit-fixes-20100816

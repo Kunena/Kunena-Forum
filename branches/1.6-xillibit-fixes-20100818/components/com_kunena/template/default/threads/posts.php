@@ -165,15 +165,9 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<tr class="krow1">
 			<td colspan="7" class="kcol-first krowmoderation">
 				<?php if ($this->embedded) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow');
-				if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) : ?>
-				<select name="do" id="kBulkChooseActions" class="inputbox">
-					<option value="">&nbsp;</option>
-					<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>
-					<option value="bulkMove"><?php echo JText::_('COM_KUNENA_MOVE_SELECTED'); ?></option>
-				</select>
+				echo $this->DelMoveActionList; ?>
 				<?php CKunenaTools::showBulkActionCats (); ?>
 				<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-				<?php endif; ?>
 			</td>
 		</tr>
 		<!-- /Moderator Bulk Actions -->

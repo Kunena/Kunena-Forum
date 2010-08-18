@@ -1,0 +1,66 @@
+@charset "UTF-8";
+/**
+* @version $Id$
+* KunenaLatest Module
+* @package Kunena latest
+*
+* @Copyright (C) 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+**/
+
+div.klatest {}
+div.klatest ul li {
+	background: none !important;
+}
+#klatest-items {
+	margin: 0;
+	padding: 0;
+}
+#klatest-items li.klatest-item {
+	list-style: none;
+	margin: 5px 0;
+	padding: 0 0 3px;
+	clear: both;
+}
+#klatest-items ul.klatest-itemdetails {
+	margin: 0;
+	padding: 0;
+}
+ul.klatest-itemdetails li {
+	margin-bottom: 0 !important;
+	display: block;
+}
+li.klatest-subject a {
+	font-weight: bold;
+	font-size: 12px;
+}
+li.klatest-avatar {
+	float:left;
+	display: block;
+	margin-right: 10px;
+}
+li.klatest-avatar img {
+	margin: 3px 5px 3px 0;
+	border: 1px solid #CCCCCC;
+	padding: 1px;
+}
+li.klatest-posttime,
+li.klatest-cat,
+li.klatest-author {
+	font-size: 10px;
+}
+p#klatest-more {
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+ul.klatest-itemdetails li.klatest-author,
+ul.klatest-itemdetails li.klatest-posttime {
+	display:inline;
+}
+ul.klatest-preview-content li {
+	margin-bottom: 0 !important;
+	display: block;
+}

@@ -178,10 +178,14 @@ class KunenaModelInstall extends JModel {
 		$app->setUserState ( 'com_kunena.install.version', $version );
 	}
 
-	public function addStatus($task, $result = false, $msg = '') {
+	public function addStatus($task, $result = false, $msg = '', $id = null) {
 		$status = $this->getState ( 'status' );
 		$step = $this->getStep();
-		$status [] = array ('step' => $step, 'task'=>$task, 'success' => $result, 'msg' => $msg );
+		if ($id === null) {
+			$status [] = array ('step' => $step, 'task'=>$task, 'success' => $result, 'msg' => $msg );
+		} else {
+			$status [$id] = array ('step' => $step, 'task'=>$task, 'success' => $result, 'msg' => $msg );
+		}
 		$this->setState ( 'status', $status );
 		$app = JFactory::getApplication ();
 		$app->setUserState ( 'com_kunena.install.status', $status );
@@ -354,7 +358,19 @@ class KunenaModelInstall extends JModel {
 					$this->setTask($task+1);
 				break;
 			case 4:
+				if ($this->migrateCategoryImages ())
+					$this->setTask($task+1);
+				break;
+			case 5:
 				if ($this->migrateAvatars ())
+					$this->setTask($task+1);
+				break;
+			case 6:
+				if ($this->migrateAvatarGalleries ())
+					$this->setTask($task+1);
+				break;
+			case 7:
+				if ($this->migrateAttachments ())
 					$this->setTask($task+1);
 				break;
 			default:
@@ -377,7 +393,7 @@ class KunenaModelInstall extends JModel {
 		if (!$lang->load('com_kunena',JPATH_ADMINISTRATOR)) {
 			$lang->load('com_kunena',KPATH_ADMIN);
 		}
-		
+
 		// TODO: remove dependence
 		require_once (KPATH_ADMIN . '/api.php');
 		kimport('factory');
@@ -527,7 +543,7 @@ class KunenaModelInstall extends JModel {
 				if (!$this->db->getErrorNum()) {
 					$success = true;
 				}
-				if ($action['mode'] == 'silenterror' || !$this->db->getAffectedRows())
+				if ($action['mode'] == 'silenterror' || !$this->db->getAffectedRows() || $success)
 					$result = null;
 				else
 					$result = array('action'=>'SQL Query: '.$query, 'name'=>'', 'success'=>$success);
@@ -559,7 +575,7 @@ class KunenaModelInstall extends JModel {
 	protected function setAvatarStatus($stats = null) {
 		if (!$stats) {
 			$stats = new stdClass();
-			$stats->current = $stats->migrated = $stats->failed = $stats->missing = $stats->unsupported = 0;
+			$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
 		}
 		$app = JFactory::getApplication ();
 		$app->setUserState ( 'com_kunena.install.avatars', $stats );
@@ -568,13 +584,14 @@ class KunenaModelInstall extends JModel {
 	protected function getAvatarStatus() {
 		$app = JFactory::getApplication ();
 		$stats = new stdClass();
-		$stats->current = $stats->migrated = $stats->failed = $stats->missing = $stats->unsupported = 0;
+		$stats->current = $stats->migrated = $stats->failed = $stats->missing = 0;
 		$stats = $app->getUserState ( 'com_kunena.install.avatars', $stats );
 		return $stats;
 	}
 
 	public function migrateAvatars() {
 		jimport ( 'joomla.filesystem.file' );
+		jimport ( 'joomla.filesystem.folder' );
 		jimport ( 'joomla.filesystem.path' );
 		$app = JFactory::getApplication ();
 		$stats = $this->getAvatarStatus();
@@ -589,6 +606,8 @@ class KunenaModelInstall extends JModel {
 			WHERE userid>{$this->db->quote($stats->current)} AND avatar != '' AND avatar NOT LIKE 'gallery/%' AND avatar NOT LIKE 'users/%'";
 		$this->db->setQuery ( $query );
 		$count = $this->db->loadResult ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		if (!$stats->current && !$count) return true;
 
 		$query = "SELECT userid, avatar FROM #__kunena_users
@@ -610,7 +629,7 @@ class KunenaModelInstall extends JModel {
 			}
 			$success = false;
 			if ($file) {
-				$file = JPath::clean($file);
+				$file = JPath::clean($file, '/');
 				// Make sure to copy only supported fileformats
 				$match = preg_match('/\.(gif|jpg|jpeg|png)$/ui', $file, $matches);
 				if ($match) {
@@ -623,17 +642,16 @@ class KunenaModelInstall extends JModel {
 					} else {
 						@chmod($file, 0644);
 						$success = JFile::copy($file, $destpath);
-						if (!$success) {
-							$this->addStatus ( "User: {$userid}, Avatar copy failed: {$file} to {$destpath}", true );
-							$stats->failed++;
-						}
 					}
 					if ($success) {
 						$stats->migrated++;
+					} else {
+						$this->addStatus ( "User: {$userid}, Avatar copy failed: {$file} to {$destpath}", true );
+						$stats->failed++;
 					}
 				} else {
 					$this->addStatus ( "User: {$userid}, Avatar type not supported: {$file}", true );
-					$stats->unsupported++;
+					$stats->failed++;
 					$success = true;
 				}
 			} else {
@@ -648,14 +666,49 @@ class KunenaModelInstall extends JModel {
 				if ($this->db->getErrorNum ())
 					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 			}
+			if ($this->checkTimeout()) break;
 		}
 		$this->setAvatarStatus($stats);
 		if ($count) {
-			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS',$count), true );
+			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS',$count), true, '', 'avatar' );
 		} else {
-			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS_DONE', $stats->migrated, $stats->missing, $stats->unsupported, $stats->failed), true );
+			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS_DONE', $stats->migrated, $stats->missing, $stats->failed), true, '', 'avatar' );
 		}
 		return !$count;
+	}
+
+	public function migrateAvatarGalleries() {
+		$action = $this->getAction();
+		if ($action != 'migrate') return true;
+
+		jimport ( 'joomla.filesystem.folder' );
+		$srcpath = JPATH_ROOT.'/images/fbfiles/avatars/gallery';
+		$dstpath = KPATH_MEDIA.'/avatars/gallery';
+		if (JFolder::exists($srcpath)) {
+			if (!JFolder::delete($dstpath) || !JFolder::copy($srcpath, $dstpath)) {
+				$this->addStatus ( "Could not copy avatar galleries from $srcpath to $dstpath", true );
+			} else {
+				$this->addStatus ( JText::_('COM_KUNENA_MIGRATE_AVATAR_GALLERY'), true );
+			}
+		}
+		return true;
+	}
+
+	public function migrateCategoryImages() {
+		$action = $this->getAction();
+		if ($action != 'migrate') return true;
+
+		jimport ( 'joomla.filesystem.folder' );
+		$srcpath = JPATH_ROOT.'/images/fbfiles/category_images';
+		$dstpath = KPATH_MEDIA.'/category_images';
+		if (JFolder::exists($srcpath)) {
+			if (!JFolder::delete($dstpath) || !JFolder::copy($srcpath, $dstpath)) {
+				$this->addStatus ( "Could not copy category images from $srcpath to $dstpath", true );
+			} else {
+				$this->addStatus ( JText::_('COM_KUNENA_MIGRATE_CATEGORY_IMAGES'), true );
+			}
+		}
+		return true;
 	}
 
 	protected function setAttachmentStatus($stats = null) {
@@ -674,90 +727,123 @@ class KunenaModelInstall extends JModel {
 		$stats = $app->getUserState ( 'com_kunena.install.attachments', $stats );
 		return $stats;
 	}
-/*
+
 	public function migrateAttachments() {
 		jimport ( 'joomla.filesystem.file' );
+		jimport ( 'joomla.filesystem.folder' );
 		jimport ( 'joomla.filesystem.path' );
 		$app = JFactory::getApplication ();
 		$stats = $this->getAttachmentStatus();
 
 		static $dirs = array (
 			'images/fbfiles/attachments',
-			'components/com_fireboard/attachments'
-		);
+			'components/com_fireboard/uploaded',
+			'media/kunena/attachments/legacy',
+			);
 
 		$query = "SELECT COUNT(*) FROM #__kunena_attachments
-			WHERE id>{$this->db->quote($stats->current)} AND hash=''";
+			WHERE id>{$this->db->quote($stats->current)} AND hash IS NULL";
 		$this->db->setQuery ( $query );
 		$count = $this->db->loadResult ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		if (!$stats->current && !$count) return true;
 
-		$query = "SELECT userid, attachment FROM #__kunena_users
-			WHERE id>{$this->db->quote($stats->current)} AND hash=''";
-		$this->db->setQuery ( $query, 0, 113 );
+		$destpath = KPATH_MEDIA . '/attachments/legacy';
+		if (!JFolder::exists($destpath.'/images')) {
+			if (!JFolder::create($destpath.'/images')) {
+				$this->addStatus ( "Could not create directory for legacy attachments in {$destpath}/images", true );
+				return true;
+			}
+		}
+		if (!JFolder::exists($destpath.'/files')) {
+			if (!JFolder::create($destpath.'/files')) {
+				$this->addStatus ( "Could not create directory for legacy attachments in {$destpath}/files", true );
+				return true;
+			}
+		}
+
+		$query = "SELECT * FROM #__kunena_attachments
+			WHERE id>{$this->db->quote($stats->current)} AND hash IS NULL";
+		$this->db->setQuery ( $query, 0, 251 );
 		$attachments = $this->db->loadObjectList ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+
 		foreach ($attachments as $attachment) {
 			$stats->current = $attachment->id;
 			$count--;
 
-			$file = $newfile = '';
-			foreach ($dirs as $dir) {
-				if (!JFile::exists(JPATH_ROOT . "/$dir/$attachment")) continue;
-				$file = JPATH_ROOT . "/$dir/$attachment";
-				break;
+			if (preg_match('|/images$|', $attachment->folder)) {
+				$lastpath = 'images';
+				$attachment->filetype = 'image/'.strtolower($attachment->filetype);
+			} else if (preg_match('|/files$|', $attachment->folder)) {
+				$lastpath = 'files';
+			} else {
+				// Only process files in legacy locations, either in original folders or manually copied into /media/kunena/attachments/legacy
+				continue;
+			}
+
+			$file = '';
+			if (JFile::exists(JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}")) {
+				$file = JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}";
+			} else {
+				foreach ($dirs as $dir) {
+					if (JFile::exists(JPATH_ROOT . "/{$dir}/{$lastpath}/{$attachment->filename}")) {
+						$file = JPATH_ROOT . "/{$dir}/{$lastpath}/{$attachment->filename}";
+						break;
+					}
+				}
 			}
 			$success = false;
 			if ($file) {
-				$file = JPath::clean($file);
-				// Make sure to copy only supported fileformats
-				$match = preg_match('/\.(gif|jpg|jpeg|png)$/ui', $file, $matches);
-				if ($match) {
-					$ext = JString::strtolower($matches[1]);
-					// Use new format: users/attachment62.jpg
-					$newfile = "users/attachment{$userid}.{$ext}";
-					$destpath = (KPATH_MEDIA ."/attachments/{$newfile}");
-					if (JFile::exists($destpath)) {
-						$success = true;
-					} else {
-						@chmod($file, 0644);
-						$success = JFile::copy($file, $destpath);
-						if (!$success) {
-							$this->addStatus ( "User: {$userid}, Attachment copy failed: {$file} to {$destpath}", true );
-							$stats->failed++;
-						}
-					}
-					if ($success) {
-						$stats->migrated++;
-					}
-				} else {
-					$this->addStatus ( "User: {$userid}, Attachment type not supported: {$file}", true );
-					$stats->unsupported++;
+				$file = JPath::clean ( $file, '/' );
+				$destfile = "{$destpath}/{$lastpath}/{$attachment->filename}";
+				if (JFile::exists ( $destfile )) {
 					$success = true;
+				} else {
+					@chmod ( $file, 0644 );
+					$success = JFile::copy ( $file, $destfile );
+				}
+				if ($success) {
+					$stats->migrated ++;
+				} else {
+					$this->addStatus ( "Attachment copy failed: {$file} to {$destfile}", true );
+					$stats->failed ++;
 				}
 			} else {
-				// $this->addStatus ( "User: {$userid}, Attachment file was not found: {$attachment}", true );
+				// $this->addStatus ( "Attachment file was not found: {$file}", true );
 				$stats->missing++;
-				$success = true;
 			}
 			if ($success) {
-				$query = "UPDATE #__kunena_users SET attachment={$this->db->quote($newfile)} WHERE userid={$this->db->quote($userid)}";
+				clearstatcache();
+				$stat = stat($destfile);
+				$size = (int)$stat['size'];
+				$hash = md5_file ( $destfile );
+				$query = "UPDATE #__kunena_attachments SET folder='media/kunena/attachments/legacy/{$lastpath}', size={$this->db->quote($size)}, hash={$this->db->quote($hash)}, filetype={$this->db->quote($attachment->filetype)}
+					WHERE id={$this->db->quote($attachment->id)}";
 				$this->db->setQuery ( $query );
 				$this->db->query ();
 				if ($this->db->getErrorNum ())
 					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 			}
+			if ($this->checkTimeout()) break;
 		}
 		$this->setAttachmentStatus($stats);
 		if ($count) {
-			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS',$count), true );
+			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_ATTACHMENTS',$count), true, '', 'attach' );
 		} else {
-			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_AVATARS_DONE', $stats->migrated, $stats->missing, $stats->unsupported, $stats->failed), true );
+			// Note: com_fireboard has been replaced by com_kunena during 1.0.8 upgrade, use it instead
+			$query = "UPDATE #__kunena_messages_text SET message = REPLACE(REPLACE(message, '/images/fbfiles', '/media/kunena/attachments/legacy'), '/components/com_kunena/uploaded', '/media/kunena/attachments/legacy');";
+			$this->db->setQuery ( $query );
+			$this->db->query ();
+			if ($this->db->getErrorNum ())
+				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+			$this->addStatus ( JText::sprintf('COM_KUNENA_MIGRATE_ATTACHMENTS_DONE', $stats->migrated, $stats->missing, $stats->failed), true, '', 'attach' );
 		}
 		return !$count;
 	}
-*/
+
 	public function getRequirements() {
 		if ($this->_req !== false) {
 			return $this->_req;

@@ -33,10 +33,17 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+19-August-2010 Matias
+# [#21939] Attachments not migrated to new directory structure, file size 0 bytes
+# [#21940] Avatar galleries and category images are not migrated
+# [#21942] JomSocial activity stream integration works only if auto detected
+
 18-August-2010 Matias
 ^ [#15886] Merged revisions 3217-3231 from /branches/1.6-xillibit-fixes-20100816
 # [#21884] Regression: CommunityBuilder was not detected
 # [#19312] English: Gallery path wrong in the configuration option description
+# [#21911] Fix regression in attachments list: all files open in lightbox
+# [#21933] New indication layout is broken if text is written in RTL language (thanks Cerberus)
 
 17-August-2010 Xillibit
 # [#21893] Select topic icons are showed even on reply page (forgot to check under edit)

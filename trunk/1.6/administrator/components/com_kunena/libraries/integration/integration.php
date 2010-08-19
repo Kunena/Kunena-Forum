@@ -51,11 +51,11 @@ abstract class KunenaIntegration extends JObject {
 		if (is_file ( $file )) {
 			require_once ($file);
 			$class = 'Kunena' . ucfirst ( $name ) . ucfirst ( $integration );
-			if (! class_exists ( $class ))
-				return null;
-			return new $class ( );
+			if (class_exists ( $class ))
+				return new $class ( );
 		}
-		return null;
+		// If integration does not exist, use autodetection
+		return self::initialize($name, 'auto');
 	}
 
 	static protected function detectJoomla() {

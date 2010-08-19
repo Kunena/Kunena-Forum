@@ -63,7 +63,6 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_announcement` MODIFY `title` tinytext NOT NULL AFTER `id`;</query>
 		</version>
 		<version version="1.0.5" versiondate="2008-12-1" build="855" versionname="Redwood">
-			<phpfile name="upgrade-1.0.5_attachments" />
 		    <query>UPDATE `#__kunena_sessions` SET `allowed`='na'</query>
 			<query>UPDATE `#__kunena_users` SET `rank`=8 WHERE `moderator`=1 AND `rank`=0</query>
 			<query>UPDATE `#__kunena_messages_text` SET `message` = REPLACE(`message`, "&amp;amp;#039;", "'")</query>
@@ -146,7 +145,7 @@
 				ADD `banned` DATETIME NULL DEFAULT NULL AFTER `moderator`</query>
 			<phpfile name="upgrade-1.6.0_old_mt12"></phpfile>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		<version version="1.6.0-RC1" versiondate="2010-08-09" build="3173" versionname="Kujadili">
 			<query mode="silenterror">ALTER TABLE `#__kunena_users` ADD KEY `banned` ( `banned` )</query>
 			<query>ALTER TABLE `#__kunena_polls` MODIFY `polltimetolive` DATETIME NULL DEFAULT NULL;</query>
 			<query>ALTER TABLE `#__kunena_polls_options` MODIFY `text` varchar(100) NULL;</query>
@@ -154,6 +153,8 @@
 			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `expiration` DATETIME NULL;</query>
 			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `created_time` DATETIME NOT NULL;</query>
 			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `modified_time` DATETIME NULL;</query>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

@@ -21,7 +21,7 @@ defined ( '_JEXEC' ) or die ();
 			<li>
 				<?php echo $attachment->thumblink; ?>
 				<span>
-					<?php echo CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$this->escape($attachment->shortname),$this->escape($attachment->filename), 'lightbox nofollow').' ('.number_format(intval($attachment->size)/1024,0,'',',').'KB)'; ?>
+					<?php echo CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$this->escape($attachment->shortname),$this->escape($attachment->filename), $attachment->shorttype == 'image' ? 'lightbox-attachments'.$attachment->id : 'nofollow').' ('.number_format(intval($attachment->size)/1024,0,'',',').'KB)'; ?>
 				</span>
 			</li>
 		<?php endforeach; ?>

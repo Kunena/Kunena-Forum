@@ -105,7 +105,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				?>
 				<?php
 				if ($leaf->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), '<sup class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($leaf->lastread) );
+					echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), '<sup dir="ltr" class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($leaf->lastread) );
 				}
 				if ($leaf->locked != 0) {
 					echo CKunenaTools::showIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );

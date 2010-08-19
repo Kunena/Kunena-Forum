@@ -625,13 +625,8 @@ class CKunenaImageHelper
 	}
 
 	function version($file, $newpath, $newfile, $maxwidth = 800, $maxheight = 800, $quality = 70, $scale = CKunenaImage::SCALE_INSIDE) {
-		jimport ( 'joomla.version' );
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.6) {
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.1.6.php');
-		} else {
-			require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
-		}
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.file.class.php');
+
 		// create upload directory if it does not exist
 		$imageinfo = self::getProperties($file);
 		if (!$imageinfo) return false;

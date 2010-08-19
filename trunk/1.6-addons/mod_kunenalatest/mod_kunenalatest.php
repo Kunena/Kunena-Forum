@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ( '' );
 // Detect and load Kunena 1.6+
 $kunena_api = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php';
 if (! JComponentHelper::isEnabled ( 'com_kunena', true ) || ! is_file ( $kunena_api ))
-	return JError::raiseError ( JText::_ ( 'Kunena Error' ), JText::_ ( 'Kunena 1.6 is not installed on your system' ) );
+	return JError::raiseError ( JText::_ ( 'MOD_KUNENALATEST_KUNENA_ERROR' ), JText::_ ( 'MOD_KUNENALATEST_KUNENA_NOT_INSTALLED' ) );
 
 require_once ($kunena_api);
 

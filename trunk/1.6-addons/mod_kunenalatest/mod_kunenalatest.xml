@@ -33,8 +33,8 @@
 		<param name="nbpost" type="text" default="5" label="MOD_KUNENALATEST_PARAM_NUMBERPOSTS" description="MOD_KUNENALATEST_PARAM_NUMBERPOSTS_DESC" />
 		<param name="titlelength" type="text" default="50" label="MOD_KUNENALATEST_PARAM_TITLELENGTH" description="MOD_KUNENALATEST_PARAM_TITLELENGTH_DESC" />
 		<param name="messagelength" type="text" default="150" label="MOD_KUNENALATEST_PARAM_MESSAGELENGTH" description="MOD_KUNENALATEST_PARAM_MESSAGELENGTH_DESC" />
-		<param name="unreadindicator" type="text" default="!" label="MOD_KUNENALATEST_PARAM_UNREADINDICATOR" description="MOD_KUNENALATEST_PARAM_UNREADINDICATOR_DESC" />
-		<param name="dateformat" type="text" default="at %H:%M on %b %d, %Y (%Z)" label="MOD_KUNENALATEST_PARAM_DATEFORMAT" description="MOD_KUNENALATEST_PARAM_DATEFORMAT_DESC" />
+		<param name="unreadindicator" type="text" default="MOD_KUNENALATEST_PARAM_UNREADINDICATOR_DEFAULT" label="MOD_KUNENALATEST_PARAM_UNREADINDICATOR" description="MOD_KUNENALATEST_PARAM_UNREADINDICATOR_DESC" />
+		<param name="dateformat" type="text" default="" label="MOD_KUNENALATEST_PARAM_DATEFORMAT" description="MOD_KUNENALATEST_PARAM_DATEFORMAT_DESC" />
 		<param name="sh_topiciconoravatar" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR" description="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_AVATAR</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
@@ -42,16 +42,19 @@
 		</param>		
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="choosemodel" type="list" default="latest" label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL" description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
-			<option value="latestPosts">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>
-			<option value="latestMessages">MOD_KUNENALATEST_SHOW_LATEST_MESSAGES</option>
+			<option value="latestposts">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>
+			<option value="latestmessages">MOD_KUNENALATEST_SHOW_LATEST_MESSAGES</option>
+<!-- Remove currently not supported view types
 			<option value="noreplies">MOD_KUNENALATEST_SHOW_NO_REPLIES</option>
-			<option value="subscriptions">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>
+ 			<option value="subscriptions">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>
+			<option value="categorysubscriptions">MOD_KUNENALATEST_SHOW_CATEGORY_SUBSCRIPTIONS</option>
 			<option value="favorites">MOD_KUNENALATEST_SHOW_FAVORITES</option>
 			<option value="owntopics">MOD_KUNENALATEST_SHOW_OWN_TOPICS</option>
 			<option value="deletedposts">MOD_KUNENALATEST_SHOW_DELETE_POSTS</option>
 			<option value="saidthankyouposts">MOD_KUNENALATEST_SHOW_SAID_THANKYOU_POSTS</option>
 			<option value="gotthankyouposts">MOD_KUNENALATEST_SHOW_GOT_THANKYOU_POSTS</option>
 			<option value="userposts">MOD_KUNENALATEST_SHOW_USER_POSTS</option>
+-->
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="sh_firstcontentcharacter" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOW_FIRST_CONTENT_CHARACTER" description="MOD_KUNENALATEST_PARAM_FIRST_CONTENT_CHARACTER_DESC">

@@ -32,7 +32,16 @@ KunenaLatest 1.6.0-RC2
 
 19-Aug-2010 fxstein
 ^ [#20081] Change version to 1.6.0-RC2
-# [#20081] Fix: English langugae file updated
+# [#20081] Fix: English language file updated
++ [#20081] Add default display model if none of the valid ones have been selected.
+^ [#20081] Default NEW indicator moved to language file
+^ [#20081] Default NEW indicator changed to (NEW) - like Kunena
+^ [#20081] Default date format override move to language file
+^ [#20081] Default date format override changed to empty - sample moved to tooltip
+^ [#20081] All displaymodel options lowercase
++ [#20081] Additional language strings for various errors
++ [#20081] Add category subscriptions view
+- [#20081] Disabled unsupported view types for now
 
 KunenaLatest 1.6.0-RC1
 

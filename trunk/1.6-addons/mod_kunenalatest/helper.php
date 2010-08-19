@@ -23,11 +23,11 @@ class modKunenaLatestHelper {
 			if (file_exists ( $path )) {
 				require_once ($path);
 				if (! class_exists ( 'CKunenaLatestX' )) {
-					JError::raiseWarning ( 0, 'Model class CKunenaLatestX not found in file.' );
+					JError::raiseWarning ( 0, JText::_ ('MOD_KUNENALATEST_CKUNENALATEST_CLASS_NOT_FOUND') );
 					return $false;
 				}
 			} else {
-				JError::raiseWarning ( 0, 'Model CKunenaLatestX not supported. File not found.' );
+				JError::raiseWarning ( 0, JText::_ ('MOD_KUNENALATEST_CKUNENALATEST_FILE_NOT_FOUND') );
 				return $false;
 			}
 		}
@@ -45,10 +45,7 @@ class modKunenaLatestHelper {
 		$model->latestcategory_in = $params->get ( 'sh_category_id_in' );
 
 	   	switch ( $params->get( 'choosemodel' ) ) {
-      		case 'latestPosts' :
-        		$model->getLatest ();
-          	break;
-      		case 'latestMessages' :
+      		case 'latestmessages' :
         		$model->getLatestPosts();
       		break;
       		case 'noreplies' :
@@ -56,6 +53,9 @@ class modKunenaLatestHelper {
       		break;
       		case 'subscriptions' :
         		$model->getSubscriptions();
+      		break;
+      		case 'categorysubscriptions' :
+        		$model->getCategorySubscriptions();
       		break;
       		case 'favorites' :
         		$model->getFavorites();
@@ -75,21 +75,23 @@ class modKunenaLatestHelper {
       		case 'userposts' :
         		$model->getUserPosts();
       		break;
-    }
-
-
+      		case 'latestposts' :
+      		default :
+        		$model->getLatest ();
+          	break;
+	   	}
 
 		$result = array ();
 		if (empty ( $model->messages ))
 			echo JText::_ ( 'MOD_KUNENALATEST_NO_MESSAGE' );
 		foreach ( $model->messages as $message ) {
-			if ( $params->get( 'choosemodel' ) == 'latestPosts' ) {
+			if ( $params->get( 'choosemodel' ) == 'latestposts' ) {
 				if ($message->parent == 0) {
 					$result [$message->id] = $message;
 				}
-			} elseif( $params->get( 'choosemodel' ) == 'latestMessages' ) {
+			} elseif( $params->get( 'choosemodel' ) == 'latestmessages' ) {
           		$result [$message->id] = $message;
-        	}
+       	}
 		}
 
 		return $result;

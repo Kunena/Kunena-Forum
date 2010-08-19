@@ -29,7 +29,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 ?>
 <div class="kblock kflat">
 	<div class="kheader">
-		<?php if (CKunenaTools::isModerator($this->my->id)) : ?>
+		<?php if (count($this->actionDropdown) > 1) : ?>
 		<?php if ($this->func == 'favorites' || $this->func == 'subscriptions') { ?>
 		<span class="kcheckbox select-toggle"><input id="kcbcheckall_<?php echo $this->func ?>" type="checkbox" name="toggle" value="" /></span>
 		<?php } else { ?>
@@ -204,7 +204,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				</div>
 			</td>
 
-			<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
+			<?php if (count($this->actionDropdown) > 1) : ?>
 			<td class="kcol-mid ktopicmoderation">
 				<?php if ($this->func == 'favorites' || $this->func == 'subscriptions') { ?>
 					<input class ="kDelete_bulkcheckboxes_<?php echo $this->func ?>" type="checkbox" name="cb[<?php echo intval($leaf->id)?>]" value="0" />
@@ -216,29 +216,20 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		</tr>
 
 		<?php } ?>
-		<!-- Actions -->
-		<?php if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) || $this->embedded ) : ?>
+		<?php  if ( count($this->actionDropdown) > 1 || $this->embedded ) : ?>
+		<!-- Bulk Actions -->
 		<tr class="krow1">
 			<td colspan="7" class="kcol-first krowmoderation">
-			<?php if ($this->embedded) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
-			<?php if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) : ?>
-				<select name="do" id="kBulkChooseActions" class="inputbox">
-				<option value="">&nbsp;</option>
-				<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>
-				<option value="bulkMove"><?php echo JText::_('COM_KUNENA_MOVE_SELECTED'); ?></option>
-				<?php if ( $this->func == 'favorites' ) : ?>
-				<option value="bulkFavorite"><?php echo JText::_('COM_KUNENA_DELETE_FAVORITE'); ?></option>
-				<?php elseif ( $this->func == 'subscriptions' ) : ?>
-				<option value="bulkSub"><?php echo JText::_('COM_KUNENA_DELETE_SUBSCRIPTION'); ?></option>
+				<?php if ($this->embedded) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
+				<?php if (count($this->actionDropdown) > 1) : ?>
+				<?php echo JHTML::_('select.genericlist', $this->actionDropdown, 'do', 'class="inputbox" size="1"', 'value', 'text', 0, 'kBulkChooseActions'); ?>
+				<?php if ($this->actionMove) CKunenaTools::showBulkActionCats (); ?>
+				<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 				<?php endif; ?>
-			</select>
-			<?php CKunenaTools::showBulkActionCats (); ?>
-			<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO'); ?>" />
-			<?php endif; ?>
 			</td>
 		</tr>
+		<!-- /Bulk Actions -->
 		<?php endif; ?>
-		<!-- /Actions -->
 </table>
 <input type="hidden" name="option" value="com_kunena" />
 <input type="hidden" name="func" value="bulkactions" />

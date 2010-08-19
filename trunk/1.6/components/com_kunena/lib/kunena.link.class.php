@@ -482,7 +482,7 @@ class CKunenaLink {
 		return htmlspecialchars_decode ( CKunenaLink::GetThreadPageURL ( 'view', $catid, $result->thread, $threadPages, $limit, $pid ) );
 	}
 
-	function GetMessageURL($pid, $catid=0, $limit = 0) {
+	function GetMessageURL($pid, $catid=0, $limit = 0, $xhtml = true) {
 		$kunena_config = KunenaFactory::getConfig ();
 		$myprofile = KunenaFactory::getUser ();
 		if ($limit < 1) $limit = $kunena_config->messages_per_page;
@@ -497,8 +497,8 @@ class CKunenaLink {
 		$result = $kunena_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;
 		if (! is_object ( $result ))
-			return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=showcat&catid=' . $result->catid );
-		return CKunenaLink::GetThreadPageURL ( 'view', $result->catid, $result->thread, ceil ( $result->totalmessages / $limit ), $limit, $result->latest_id );
+			return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=showcat&catid=' . $result->catid, $xhtml );
+		return CKunenaLink::GetThreadPageURL ( 'view', $result->catid, $result->thread, ceil ( $result->totalmessages / $limit ), $limit, $result->latest_id, $xhtml );
 	}
 
 	function GetLatestCategoryAutoRedirectHTML($catid) {

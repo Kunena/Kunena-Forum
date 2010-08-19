@@ -221,6 +221,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('userposts', 0);
 		$obj->user = $this->user;
+		$obj->embedded = 1;
 		$obj->getUserPosts();
 		$obj->displayPosts();
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
@@ -230,6 +231,7 @@ class CKunenaProfile {
 	{
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
 		$review = new CKunenaReview();
+		$obj->embedded = 1;
 		$review->display();
 	}
 
@@ -238,6 +240,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('gotthankyouposts',0);
 		$obj->user = $this->user;
+		$obj->embedded = 1;
 		$obj->getGotThankYouPosts();
 		$obj->displayPosts();
 	}
@@ -247,6 +250,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('saidthankyouposts',0);
 		$obj->user = $this->user;
+		$obj->embedded = 1;
 		$obj->getSaidThankYouPosts();
 		$obj->displayPosts();
 	}
@@ -255,6 +259,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('owntopics', 0);
 		$obj->user = $this->user;
+		$obj->embedded = 1;
 		$obj->getOwnTopics();
 		$obj->displayFlat();
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
@@ -265,6 +270,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('usertopics', 0);
 		$obj->user = $this->user;
+		$obj->embedded = 1;
 		$obj->getUserTopics();
 		$obj->displayFlat();
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
@@ -275,6 +281,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('favorites', 0);
 		$obj->user = $this->user;
+		$obj->embedded = 1;
 		$obj->getFavorites();
 		$obj->displayFlat();
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
@@ -285,6 +292,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);
 		$obj->user = $this->user;
+		$obj->embedded = 1;
 		$obj->getSubscriptions();
 		$obj->displayFlat();
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
@@ -295,6 +303,7 @@ class CKunenaProfile {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('catsSubscriptions', 0);
 		$obj->user = $this->user;
+		$obj->embedded = 1;
 		$obj->getCategoriesSubscriptions();
 		$obj->displayFlatCats();
 		//echo $obj->getPagination ( $obj->func, $obj->show_list_time, $obj->page, $obj->totalpages, 3 );
@@ -688,13 +697,14 @@ class CKunenaProfile {
 	function login() {
 		$username = JRequest::getString ( 'username', '', 'POST' );
 		$password = JRequest::getString ( 'passwd', '', 'POST' );
+		$remember = JRequest::getInt ( 'remember', 0, 'POST');
 		$return = JRequest::getString ( 'return', '', 'POST' );
 		if(!JRequest::checkToken()) {
 			$this->_app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ), COM_KUNENA_ERROR_TOKEN, 'error' );
 		}
 
 		$login = KunenaFactory::getLogin();
-		$result = $login->loginUser($username, $password, $return);
+		$result = $login->loginUser($username, $password, $remember, $return);
 		if ($result) $this->_app->enqueueMessage ( $result, 'notice' );
 		$this->_app->redirect ( JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' ) );
 	}

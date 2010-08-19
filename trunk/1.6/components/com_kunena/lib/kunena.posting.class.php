@@ -148,7 +148,7 @@ class CKunenaPosting {
 		return true;
 	}
 
-	function canReply($action = 'reply') {
+	function canReply($action = '-reply-') {
 		return $this->canPost ($action);
 	}
 
@@ -208,11 +208,11 @@ class CKunenaPosting {
 		}
 		// User must be author of the message
 		if ($this->parent->userid != $this->_my->id) {
-			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_DELETE_NOT_ALLOWED' ) );
 		}
 		// User is only allowed to delete post within time specified in the configuration
 		if (! CKunenaTools::editTimeCheck ( $this->parent->modified_time, $this->parent->time )) {
-			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_DELETE_NOT_ALLOWED' ) );
 		}
 		// Posts cannot be deleted in locked topics
 		if ($this->parent->topiclocked) {
@@ -222,15 +222,52 @@ class CKunenaPosting {
 		if ($this->parent->catlocked) {
 			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 		}
+		// Post cannot be marked as deleted
+		if ($this->parent->hold <= 1) {
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ALREADY_DELETED' ) );
+		}
 
 		return true;
 	}
 
-	function canUndelete($action = '-undelete-') {
-		// User must be able to delete message
-		if (! $this->canDelete ($action)) {
+	function canApprove($action = '-approve-') {
+		// User must be moderator in order to approve message
+		if (!CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
+		}
+		// User must see topic in order to approve messages in it
+		if (! $this->canRead ($action)) {
 			return false;
 		}
+		// Categories cannot be approved - verify that post exists
+		if (! $this->parent->id) {
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
+		}
+		// Post must be on hold
+		if ($this->parent->hold != 1) {
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_NOT_UNAPPROVED' ) );
+		}
+		return true;
+	}
+
+	function canUndelete($action = '-undelete-') {
+		// User must be moderator in order to restore message
+		if (!CKunenaTools::isModerator ( $this->_my, $this->parent->catid )) {
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
+		}
+		// User must see topic in order to restore messages in it
+		if (! $this->canRead ($action)) {
+			return false;
+		}
+		// Categories cannot be restored - verify that post exists
+		if (! $this->parent->id) {
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
+		}
+		// Post must be marked as deleted
+		if ($this->parent->hold != 2 || $this->parent->hold != 3) {
+			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_NOT_DELETED' ) );
+		}
+		// TODO: check that topic is not on hold, otherwise we get orphan message
 		return true;
 	}
 
@@ -305,11 +342,11 @@ class CKunenaPosting {
 		$this->setOption ( 'action', 'action' );
 
 		// Restrict fields that user can enter
-		$this->setOption ( 'allowed', array ('name', 'email', 'subject', 'message', 'topic_emoticon', 'modified_reason' ) );
+		$this->setOption ( 'allowed', array ('hold' ) );
 		$this->setOption ( 'required', array () );
 
-		// Load these default values from the edited message
-		$this->loadDefaults ( array ('userid', 'name', 'email', 'subject', 'message', 'topic_emoticon' ) );
+		// Load these default values from the message
+		$this->loadDefaults ( array ('id', 'catid', 'parent', 'thread', 'userid', 'name', 'email', 'subject', 'message', 'topic_emoticon', 'time' ) );
 
 		return empty ( $this->errors );
 	}
@@ -654,6 +691,7 @@ class CKunenaPosting {
 	}
 
 	public function setOption($name, $value) {
+		if ($name == 'anonymous' && !$this->parent->allow_anonymous) return;
 		$this->options [$name] = $value;
 	}
 
@@ -798,7 +836,10 @@ class CKunenaPosting {
 		return ( bool ) $id;
 	}
 
-	public function emailToSubscribers($LastPostUrl, $mailsubs = false, $mailmods = false, $mailadmins = false) {
+	public function emailToSubscribers($LastPostUrl = false, $mailsubs = false, $mailmods = false, $mailadmins = false) {
+		if ($LastPostUrl === false) {
+			$LastPostUrl = CKunenaLink::GetMessageURL($this->get ( 'id' ), $this->get ( 'catid' ), 0, false);
+		}
 		//get all subscribers, moderators and admins who will get the email
 		$emailToList = CKunenaTools::getEMailToList ( $this->get ( 'catid' ), $this->get ( 'thread' ), $mailsubs, $mailmods, $mailadmins, $this->_my->id );
 

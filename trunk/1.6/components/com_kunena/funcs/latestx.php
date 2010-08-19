@@ -22,6 +22,8 @@ class CKunenaLatestX {
 	public $page = 1;
 	public $totalpages = 1;
 	public $embedded = null;
+	public $actionDropdown = array();
+	public $actionMove = false;
 
 	function __construct($func, $page = 0) {
 		$this->func = JString::strtolower ($func );
@@ -81,8 +83,7 @@ class CKunenaLatestX {
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 
-		$view = JRequest::getVar ( 'view', '' );
-		if ($view == 'profile') $this->embedded = 1;
+		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 	}
 
 	/**
@@ -384,6 +385,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_FAVORITES');
+		$this->actionDropdown[] = JHTML::_('select.option', 'bulkFavorite', JText::_('COM_KUNENA_DELETE_FAVORITE'));
 		$this->_getMyLatest(false, true, false);
 	}
 
@@ -392,6 +394,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
+		$this->actionDropdown[] = JHTML::_('select.option', 'bulkSub', JText::_('COM_KUNENA_DELETE_SUBSCRIPTION'));
 		$this->_getMyLatest(false, false, true);
 	}
 
@@ -527,6 +530,11 @@ class CKunenaLatestX {
 		if (! $this->allow) {
 			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
+		}
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
 		}
 		CKunenaTools::loadTemplate('/threads/flat.php');
 	}

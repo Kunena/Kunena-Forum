@@ -135,15 +135,17 @@ class CKunenaAttachments {
 						$imgsize = 'width="'.$this->_config->thumbwidth.'px" height="'.$this->_config->thumbheight.'px"';
 					}
 
-					$img = '<img title="'.$attachment->filename.'" '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$attachment->filename.'" />';
-					$attachment->thumblink = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments'.$attachment->mesid);
-					$img = '<img title="'.$attachment->filename.'" src="'.JURI::ROOT().$attachment->folder.'/'.$attachment->filename.'" alt="'.$attachment->filename.'" />';
-					$attachment->imagelink = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'lightbox-attachments'.$attachment->id);
+					$img = '<img title="'.$this->escape($attachment->filename).'" '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$this->escape($attachment->filename).'" />';
+					$attachment->thumblink = CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$img,$this->escape($attachment->filename), 'lightbox-attachments'.intval($attachment->mesid));
+					$img = '<img title="'.$this->escape($attachment->filename).'" src="'.JURI::ROOT().$this->escape($attachment->folder).'/'.$this->escape($attachment->filename).'" alt="'.$this->escape($attachment->filename).'" />';
+					$attachment->imagelink = CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$img,$this->escape($attachment->filename), 'lightbox-attachments'.intval($attachment->id));
+					$attachment->textLink =CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$this->escape($attachment->shortname),$this->escape($attachment->filename), 'lightbox'.$attachment->mesid.' nofollow').' ('.number_format(intval($attachment->size)/1024,0,'',',').'KB)';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
 					$img = '<img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />';
-					$attachment->thumblink = CKunenaLink::GetAttachmentLink($attachment->folder,$attachment->filename,$img,$attachment->filename, 'nofollow');
+					$attachment->thumblink = CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$img,$this->escape($attachment->filename), 'nofollow');
+					$attachment->textLink = CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$this->escape($attachment->shortname),$this->escape($attachment->filename), 'nofollow').' ('.number_format(intval($attachment->size)/1024,0,'',',').'KB)';
 			}
 			$ret[$attachment->mesid][$attachment->id] = $attachment;
 		}
@@ -213,5 +215,19 @@ class CKunenaAttachments {
 		if (JFile::exists($filetoDelete)) {
 			JFile::delete($filetoDelete);
 		}
+	}
+
+	/**
+	* Escapes a value for output in a view script.
+	*
+	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
+	* {@link $_encoding} setting.
+	*
+	* @param  mixed $var The output to escape.
+	* @return mixed The escaped value.
+	*/
+	protected function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 }

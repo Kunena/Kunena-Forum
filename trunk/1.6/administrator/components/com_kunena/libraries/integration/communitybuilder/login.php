@@ -25,15 +25,18 @@ class KunenaLoginCommunityBuilder extends KunenaLogin {
 		$this->priority = 50;
 	}
 
-	public function loginUser($username, $password, $return) {
+	public function loginUser($username, $password, $rememberme, $return) {
 		cbimport ( 'cb.authentication' );
+		global $ueConfig;
 
 		$cbAuthenticate = new CBAuthentication ();
 
 		$messagesToUser = array ();
 		$alertmessages = array ();
 		$redirect_url = KunenaRoute::current();
-		$resultError = $cbAuthenticate->login ( $username, $password, 0, 1, $redirect_url, $messagesToUser, $alertmessages, 0 );
+
+		$loginType = ( isset( $ueConfig['login_type'] ) ? $ueConfig['login_type'] : 0 );
+		$resultError = $cbAuthenticate->login ( $username, $password, $rememberme, 1, $redirect_url, $messagesToUser, $alertmessages, $loginType );
 
 		if ($resultError) {
 			return $resultError;

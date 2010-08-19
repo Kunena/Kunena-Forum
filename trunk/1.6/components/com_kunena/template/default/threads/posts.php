@@ -30,9 +30,6 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 <form action="index.php" method="post" name="kBulkActionForm">
 <div class="kblock">
 	<div class="kheader">
-		<?php if (CKunenaTools::isModerator($this->my->id)) { ?>
-			<span class="kcheckbox select-toggle"><input id="kcbcheckall_<?php echo $this->func ?>" type="checkbox" name="toggle" value="" /></span>
-		<?php } ?>
 		<h2><span><?php if (!empty($this->header)) echo $this->escape($this->header); ?></span></h2>
 	</div>
 	<div class="kcontainer">
@@ -151,32 +148,17 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- /By -->
 				</div>
 			</td>
-
-			<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
-			<td class="kcol-mid ktopicmoderation">
-				<input class ="kDelete_bulkcheckboxes_<?php echo $this->func ?>" type="checkbox" name="cb[<?php echo intval($message->id) ?>]" value="0" />
-			</td>
-			<?php endif; ?>
 		</tr>
 
 		<?php } ?>
-		<?php  if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) || $this->embedded ) : ?>
-		<!-- Moderator Bulk Actions -->
+		<?php  if ( $this->embedded ) : ?>
+		<!-- Bulk Actions -->
 		<tr class="krow1">
 			<td colspan="7" class="kcol-first krowmoderation">
-				<?php if ($this->embedded) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow');
-				if ( CKunenaTools::isModerator ( $this->my->id, $this->catid ) ) : ?>
-				<select name="do" id="kBulkChooseActions" class="inputbox">
-					<option value="">&nbsp;</option>
-					<option value="bulkDel"><?php echo JText::_('COM_KUNENA_DELETE_SELECTED'); ?></option>
-					<option value="bulkMove"><?php echo JText::_('COM_KUNENA_MOVE_SELECTED'); ?></option>
-				</select>
-				<?php CKunenaTools::showBulkActionCats (); ?>
-				<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
-				<?php endif; ?>
+				<?php echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
 			</td>
 		</tr>
-		<!-- /Moderator Bulk Actions -->
+		<!-- /Bulk Actions -->
 		<?php endif; ?>
 </table>
 </div>

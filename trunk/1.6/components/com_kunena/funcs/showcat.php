@@ -14,6 +14,7 @@ defined ( '_JEXEC' ) or die ();
 class CKunenaShowcat {
 	public $allow = 0;
 	public $embedded = null;
+	public $actionDropdown = array();
 
 	function __construct($catid, $page=0) {
 		kimport('html.parser');
@@ -200,6 +201,8 @@ class CKunenaShowcat {
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 		$this->showposts = 0;
+
+		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 	}
 
 	/**
@@ -247,6 +250,11 @@ class CKunenaShowcat {
 
 	function displayFlat() {
 		$this->header = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->escape( $this->objCatInfo->name );
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
+			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
+		}
 		CKunenaTools::loadTemplate('/threads/flat.php');
 	}
 

@@ -28,6 +28,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaLatest 1.6.0-RC2
+
+19-Aug-2010 fxstein
+^ [#20081] Change version to 1.6.0-RC2
+# [#20081] Fix: English langugae file updated
+
 KunenaLatest 1.6.0-RC1
 
 13-Aug-2010 Xillibit

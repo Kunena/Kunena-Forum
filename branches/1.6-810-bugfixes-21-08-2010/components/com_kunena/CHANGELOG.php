@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+21-August-2010 810
+# [#19288] Css -Google Maps formatting issues in various browsers
+
 19-August-2010 Matias
 # [#21939] Attachments not migrated to new directory structure, file size 0 bytes
 # [#21940] Avatar galleries and category images are not migrated

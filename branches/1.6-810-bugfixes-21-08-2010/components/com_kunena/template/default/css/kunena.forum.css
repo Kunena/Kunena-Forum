@@ -1525,7 +1525,7 @@ PX		EM			PCT			PT
 	word-wrap:break-word;
 }
 #Kunena div.kmsgbody div.kmsgtext img {
-	max-width:100%;
+	max-width:auto;
 	max-height: 800px;
 }
 #Kunena div.kmsgattach {
@@ -3567,7 +3567,7 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 .kgooglemap {
 	width: 100%;
 	background-color:#E5E3DF;
-	display:inline-block;
+	display:block;
 	height:480px;
 	overflow:hidden;
 	position:relative;

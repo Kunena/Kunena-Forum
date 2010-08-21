@@ -29,11 +29,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Discuss Plugin 1.6.0-RC1
+Kunena Discuss Plugin 1.6.0-RC2
 
 21-Aug-2010 Matias
 ^ [#20084] Change version to 1.6.0-RC2
 ^ [#20084] Better detection on Kunena, minimum required version is Kunena 1.6.0-RC2
+
+Kunena Discuss Plugin 1.6.0-RC1
 
 11-Aug-2010 Matias
 ^ [#20084] Change version to 1.6.0-RC1

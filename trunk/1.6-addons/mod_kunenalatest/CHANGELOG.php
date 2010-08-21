@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC2
 
+21-Aug-2010 Matias
+^ [#20084] Better detection on Kunena, minimum required version is Kunena 1.6.0-RC2
+
 19-Aug-2010 fxstein
 ^ [#20081] Change version to 1.6.0-RC2
 # [#20081] Fix: English language file updated

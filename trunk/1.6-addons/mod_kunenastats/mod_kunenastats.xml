@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
  <!DOCTYPE install>
-<install type="module" version="1.5.0">
-	<name>Kunena Stats</name>
-	<author>Kunena team</author>
+<install type="module" version="1.5.0" method="upgrade">
+	<name>Kunena Statistics</name>
+	<author>Kunena Team</author>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
@@ -15,9 +15,9 @@
 	<files>
 		<filename module="mod_kunenastats">mod_kunenastats.php</filename>
 		<filename>index.html</filename>
-		<filename>helper.php</filename>
-		<filename>tmpl/default.php</filename>
-		<filename>tmpl/index.html</filename>
+		<filename>CHANGELOG.php</filename>
+		<filename>class.php</filename>
+		<folder>tmpl</folder>
 	</files>
 
 	<languages>
@@ -25,15 +25,15 @@
 	</languages>
 
 	<params>
-		<param name="stats_type" type="list" default="0" label="MOD_KUNENASTATS_PARAMSTATSTYPE" description="MOD_KUNENASTATS_PARAMSTATSTYPE_DESC">
-			<option value="0">MOD_KUNENASTATS_DISPLAY_TYPE_TOPICS</option>
-			<option value="1">MOD_KUNENASTATS_DISPLAY_TYPE_POLLS</option>
-			<option value="2">MOD_KUNENASTATS_DISPLAY_TYPE_USERS</option>
-			<option value="3">MOD_KUNENASTATS_DISPLAY_TYPE_USERS_PROFILES</option>
-			<option value="5">MOD_KUNENASTATS_DISPLAY_TYPE_THANK_YOU</option>
-			<option value="4">MOD_KUNENASTATS_DISPLAY_TYPE_GENERAL</option>
+		<param name="type" type="list" default="general" label="MOD_KUNENASTATS_PARAMSTATSTYPE" description="MOD_KUNENASTATS_PARAMSTATSTYPE_DESC">
+			<option value="general">MOD_KUNENASTATS_GENERALSTATS</option>
+			<option value="topics">MOD_KUNENASTATS_TOPTOPICS</option>
+			<option value="posters">MOD_KUNENASTATS_TOPPOSTERS</option>
+			<option value="profiles">MOD_KUNENASTATS_TOPPROFILES</option>
+			<option value="polls">MOD_KUNENASTATS_TOPPOLLS</option>
+			<option value="thanks">MOD_KUNENASTATS_TOPTHANKS</option>
 		</param>
-		<param name="nb_items" type="text" default="5" label="MOD_KUNENASTATS_PARAMNBITEMS" description="MOD_KUNENASTATS_PARAMNBITEMS_DESC" />	
+		<param name="items" type="text" default="5" label="MOD_KUNENASTATS_PARAMNBITEMS" description="MOD_KUNENASTATS_PARAMNBITEMS_DESC" />	
 		<param name="sh_statslink" type="radio" default="0" label="MOD_KUNENASTATS_PARAMSHOWSTATSLINK" description="MOD_KUNENASTATS_PARAMSHOWSTATSLINK_DESC">
 			<option value="0">MOD_KUNENASTATS_PARAM_VALUE_NO</option>
 			<option value="1">MOD_KUNENASTATS_PARAM_VALUE_YES</option>

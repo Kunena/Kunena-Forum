@@ -34,6 +34,7 @@ KunenaStats 1.6.0-RC1
 # [#20095] Changed language strings to obey J1.6 naming convensions
 # [#20095] Better formatting in php and html files
 # [#20095] Updated version to 1.6.0-RC1
+# [#20095] Simplify code, better API usage
 
 08-August 2010 Xillibit
 # [#20095] Show messages no datas when there is nothing ot display
@@ -47,6 +48,5 @@ KunenaStats 1.6.0-RC1
 3-Apr 2010 Xillibit
 ^ [#20095] Set keyword ID on all files
 + [#20095] Create initial structure
-
 
 -->

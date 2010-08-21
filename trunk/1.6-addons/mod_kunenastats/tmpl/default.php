@@ -12,176 +12,73 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 ?>
-<div class="kstatistics<?php echo $params->get( 'moduleclass_sfx' ) ?>">
-	<?php if ( $this->statsType == '0' ) { ?>
+<div class="mod-kunenastats mod-kunenastats<?php echo $this->params->get( 'moduleclass_sfx' ) ?>">
+	<?php if ( $this->type == 'general' ) : ?>
+	<ul>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALUSERS'); ?> <b><?php echo $this->api->getToTalMembers(); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_LATESTMEMBER'); ?> <b><?php echo CKunenaLink::GetProfileLink($this->api->getLastestMemberid(), $this->api->getLastestMember()); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALPOSTS'); ?> <b><?php echo $this->api->getTotalMessages(); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALTOPICS'); ?> <b><?php echo $this->api->getTotalTitles(); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALSECTIONS'); ?> <b><?php echo $this->api->getTotalSections(); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALCATEGORIES'); ?> <b><?php echo $this->api->getTotalCats(); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TODAYOPEN'); ?> <b><?php echo $this->api->getTodayOpen(); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_YESTERDAYOPEN'); ?> <b><?php echo $this->api->getYesterdayOpen(); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TODAYTOTANSW'); ?> <b><?php echo $this->api->getTodayAnswer(); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_YESTERDAYTOTANSW'); ?> <b><?php echo $this->api->getYesterdayAnswer(); ?></b></li>
+	</ul>
+	<?php else : ?>
 	<table>
 		<tr>
-			<th><?php echo JText::_('MOD_KUNENASTATS_SUBJECT'); ?></th>
-			<th><?php echo JText::_('MOD_KUNENASTATS_HIT'); ?></th>
+			<th><?php echo $this->titleHeader ?></th>
+			<th><?php echo $this->valueHeader ?></th>
 		</tr>
-
-			<?php
-			if (!empty($stats)) {
-				foreach ( $stats as $stat) {
-					if ($stat->hits == modKStatisticsHelper::getTopTitlesHits($this->nbItems)) {
-					$barwidth = 100;
-				} else {
-					$barwidth = round(($stat->hits * 100) / modKStatisticsHelper::getTopTitlesHits($this->nbItems));
-				}
-
-			?>
-			<tr>
-			<td><?php echo $klink->GetThreadLink('view', $stat->catid, $stat->thread,	stripslashes($stat->subject), stripslashes($stat->subject));	?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
-			</tr>
-			<?php }
-			} else {
-				?><tr><td>
-				<?php	echo JText::_('MOD_KUNENASTATS_NO_DATA'); ?>
-					</td></tr>
-			<?php } ?>
-
-	</table>
-	<?php } elseif ( $this->statsType == '1' ) { ?>
-	<table>
+		<?php if (empty($this->stats)) : ?>
+		<tr><td><?php echo JText::_('MOD_KUNENASTATS_NO_ITEMS'); ?></td></tr>
+		<?php else : ?>
+	<?php if ( $this->type == 'topics' ) : ?>
+		<?php foreach ( $this->stats as $stat) : ?>
 		<tr>
-			<th><?php echo JText::_('MOD_KUNENASTATS_POLL'); ?></th>
-			<th><?php echo JText::_('MOD_KUNENASTATS_VOTES'); ?></th>
+			<td><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->thread, $stat->subject, $stat->subject); ?></td>
+			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->hits);?>%"/></td>
 		</tr>
+		<?php endforeach; ?>
 
-			<?php
-			if (!empty($stats)) {
-				foreach ( $stats as $stat) {
-					if ($stat->total == modKStatisticsHelper::getTopPollVotesStats($this->nbItems)) {
-					$barwidth = 100;
-				} else {
-					$barwidth = round(($stat->total * 100) / modKStatisticsHelper::getTopPollVotesStats($this->nbItems));
-				}
-			?>
-			<tr>
-			<td><?php echo $klink->GetThreadLink('view', $stat->catid, $stat->threadid, $stat->title, $stat->title);	?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
-			</tr>
-			<?php }
-			} else {
-					?><tr><td>
-				<?php	echo JText::_('MOD_KUNENASTATS_NO_DATA'); ?>
-					</td></tr>
-			<?php } ?>
-
-	</table>
-	<?php } elseif ( $this->statsType == '2' ) { ?>
-	<table>
+	<?php elseif ( $this->type == 'polls' ) : ?>
+		<?php foreach ( $this->stats as $stat) : ?>
 		<tr>
-			<th><?php echo JText::_('MOD_KUNENASTATS_USER'); ?></th>
-			<th><?php echo JText::_('MOD_KUNENASTATS_HIT'); ?></th>
+			<td><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->threadid, $stat->title, $stat->title); ?></td>
+			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->total);?>%"/></td>
 		</tr>
+		<?php endforeach; ?>
 
-			<?php
-			if (!empty($stats)) {
-				foreach ( $stats as $stat) {
-					if ($stat->posts == modKStatisticsHelper::getTopMessage($this->nbItems)) {
-						$barwidth = 100;
-				} else {
-						$barwidth = round(($stat->posts * 100) / modKStatisticsHelper::getTopMessage($this->nbItems));
-				}
-
-			?>
-			<tr>
-			<td><?php echo $klink->GetProfileLink($stat->userid, stripslashes($stat->username));	?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
-			</tr>
-			<?php }
-			} else {
-					?><tr><td>
-				<?php	echo JText::_('MOD_KUNENASTATS_NO_DATA'); ?>
-					</td></tr>
-			<?php } ?>
-
-	</table>
-	<?php } elseif ( $this->statsType == '3' ) { ?>
-	<table>
+	<?php elseif ( $this->type == 'posters' ) : ?>
+		<?php foreach ( $this->stats as $stat) : ?>
 		<tr>
-			<th><?php echo JText::_('MOD_KUNENASTATS_USERPROFILE'); ?></th>
-			<th><?php echo JText::_('MOD_KUNENASTATS_HIT'); ?></th>
+			<td><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
+			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->posts);?>%"/></td>
 		</tr>
+		<?php endforeach; ?>
 
-			<?php
-			if (!empty($stats)) {
-				foreach ( $stats as $stat) {
-					if ($stat->hits == modKStatisticsHelper::getTopProfileHits($this->nbItems)) {
-							$barwidth = 100;
-					} else {
-							$barwidth = round(($stat->hits * 100) / modKStatisticsHelper::getTopProfileHits($this->nbItems));
-					}
-
-			?>
-			<tr>
-			<td><?php echo $klink->GetProfileLink($stat->user_id, stripslashes($stat->user));	?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
-			</tr>
-			<?php }
-			} else { ?><tr><td>
-				<?php	echo JText::_('MOD_KUNENASTATS_NO_DATA'); ?>
-					</td></tr>
-			<?php }	?>
-
-	</table>
-	<?php } elseif ( $this->statsType == '5' ) { ?>
-	<table>
+	<?php elseif ( $this->type == 'profiles' ) : ?>
+		<?php foreach ( $this->stats as $stat) : ?>
 		<tr>
-			<th><?php echo JText::_('MOD_KUNENASTATS_USER'); ?></th>
-			<th><?php echo JText::_('MOD_KUNENASTATS_TOP_THANKYOU'); ?></th>
+			<td><?php echo CKunenaLink::GetProfileLink($stat->user_id, $stat->user); ?></td>
+			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->hits);?>%"/></td>
 		</tr>
+		<?php endforeach; ?>
 
-			<?php
-			if (!empty($stats)) {
-				foreach ( $stats as $stat) {
-					if ($stat->receivedthanks == modKStatisticsHelper::getTopUserThanks($this->nbItems)) {
-							$barwidth = 100;
-					} else {
-							$barwidth = round(($stat->receivedthanks * 100) / modKStatisticsHelper::getTopUserThanks($this->nbItems));
-					}
-
-			?>
-			<tr>
-			<td><?php echo $klink->GetProfileLink($stat->userid, stripslashes($stat->username));	?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $barwidth;?>%"/></td>
-			</tr>
-			<?php }
-			} else {
-					?><tr><td>
-				<?php	echo JText::_('MOD_KUNENASTATS_NO_DATA'); ?>
-					</td></tr>
-			<?php } ?>
-
-	</table>
-	<?php } elseif ( $this->statsType == '4' ) { ?>
-	<table>
+	<?php elseif ( $this->type == 'thanks' ) : ?>
+		<?php foreach ( $this->stats as $stat) : ?>
 		<tr>
-			<th><?php echo JText::_('MOD_KUNENASTATS_GENERALSTATS'); ?></th>
+			<td><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
+			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->hits);?>%"/></td>
 		</tr>
-			<tr>
-			<td><?php echo JText::_('MOD_KUNENASTATS_TOTALUSERS'); ?><b><?php echo $model->getToTalMembers(); ?></b></td>
-			<td><?php echo JText::_('MOD_KUNENASTATS_LATESTMEMBER'); ?><b><?php echo $klink->GetProfileLink($model->getLastestMemberid(), $model->getLastestMember()); ?></b></td>
-			</tr><tr>
-			<td><?php echo JText::_('MOD_KUNENASTATS_TOTALMESSAGES'); ?><b><?php echo $model->getTotalMessages(); ?></b></td>
-			<td><?php echo JText::_('MOD_KUNENASTATS_TOTALSUBJECTS'); ?><b><?php echo $model->getTotalTitles(); ?></b></td>
-			</tr><tr>
-			<td><?php echo JText::_('MOD_KUNENASTATS_TOTALSECTIONS'); ?><b><?php echo $model->getTotalSections(); ?></b></td>
-			<td><?php echo JText::_('MOD_KUNENASTATS_TOTALCATS'); ?><b><?php echo $model->getTotalCats(); ?></b></td>
-			</tr><tr>
-			<td><?php echo JText::_('MOD_KUNENASTATS_TODAYOPEN'); ?><b><?php echo $model->getTodayOpen(); ?></b></td>
-			<td><?php echo JText::_('MOD_KUNENASTATS_YESTERDAYOPEN'); ?><b><?php echo $model->getYesterdayOpen(); ?></b></td>
-			</tr><tr>
-			<td><?php echo JText::_('MOD_KUNENASTATS_TODAYTOTANSW'); ?><b><?php echo $model->getTodayAnswer(); ?></b></td>
-			<td><?php echo JText::_('MOD_KUNENASTATS_YESTERDAYTOTANSW'); ?><b><?php echo $model->getYesterdayAnswer(); ?></b></td>
-			</tr>
+		<?php endforeach; ?>
+	<?php endif; ?>
+	<?php endif; ?>
 	</table>
-	<?php }
-		if ($params->get( 'sh_statslink' )) {
-			?>
-			<br />
-			<?php echo $klink->GetStatsLink('See full Stats details');
-		} ?>
+	<?php endif; ?>
+	<?php if ($this->params->get( 'sh_statslink' )) : ?>
+	<div><?php echo CKunenaLink::GetStatsLink(JText::_('MOD_KUNENASTATS_LINK')); ?></div>
+	<?php endif; ?>
 </div>

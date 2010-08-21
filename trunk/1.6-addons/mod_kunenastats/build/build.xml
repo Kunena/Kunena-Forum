@@ -36,7 +36,7 @@
 			<isset property="tmp_dir" />
 		</not>
 	</condition>
-	<property file="kunenastats.build.config.ini" />
+	<property file="build.config.ini" />
 	<property name="kunena.directory" value="${project_dir}/" />
 	<property name="kunena.directory.list" value="" />
 

@@ -18,6 +18,7 @@ DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
 DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.19' );
 
 jimport ( 'joomla.application.component.model' );
+require_once KPATH_ADMIN . '/api.php';
 
 /**
  * Install Model for Kunena
@@ -228,6 +229,21 @@ class KunenaModelInstall extends JModel {
 		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text );
 	}
 
+	function publishPlugin($folder, $name, $enable = 1) {
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == 1.5) {
+			$query = "UPDATE #__plugins SET published='{$enable}' WHERE folder='{$folder}' AND element='{$name}'";
+		} else {
+			$query = "UPDATE #__extensions SET enabled='{$enable}' WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
+		}
+		$this->db->setQuery ( $query );
+		$this->db->query ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
+		return true;
+	}
+
 	function installPlugin($path, $file, $name) {
 		jimport('joomla.installer.installer');
 		$success = false;
@@ -243,14 +259,37 @@ class KunenaModelInstall extends JModel {
 		$this->extract ( $path, $file, $dest );
 		$installer = new JInstaller ( );
 		if ($installer->install ( $dest )) {
-			// publish plugin
-			$query = "UPDATE #__plugins SET published='1' WHERE element='$name'";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			$success = true;
+			// TODO: fix this when needed again
+			$success = $this->publishPlugin('', $name);
 		}
 		JFolder::delete($dest);
 		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', $name), $success);
+	}
+
+	function uninstallPlugin($folder, $name) {
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == 1.5) {
+			$query = "SELECT id FROM #__plugins WHERE folder='{$folder}' AND element='{$name}'";
+		} else {
+			$query = "SELECT id FROM #__extensions WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
+		}
+		$this->db->setQuery ( $query );
+		$pluginid = $this->db->loadResult ();
+		if ($pluginid) {
+			jimport('joomla.installer.installer');
+			$installer = new JInstaller ( );
+			$installer->uninstall ( 'plugin', $pluginid );
+		}
+	}
+
+	function installSystemPlugin() {
+		jimport('joomla.installer.installer');
+		$installer = new JInstaller ( );
+		if ($installer->install ( KPATH_ADMIN . '/install/system' )) {
+			$success = $this->publishPlugin('system', 'kunena');
+		}
+		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', 'System - Kunena'), $success);
 	}
 
 	public function stepPrepare() {
@@ -317,6 +356,8 @@ class KunenaModelInstall extends JModel {
 		jimport('joomla.filesystem.folder');
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
 
+		$this->installSystemPlugin();
+
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		if ($jversion->RELEASE == 1.5) {
@@ -329,10 +370,6 @@ class KunenaModelInstall extends JModel {
 					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 				$this->addStatus ( JText::_('COM_KUNENA_INSTALL_MOOTOOLS12'), true);
 			}
-			/* $file = 'plgSystemMTUpgrade.zip';
-			if (is_file ( $path . DS . $file )) {
-				$this->installPlugin ( $path, $file, 'mtupgrade' );
-			}*/
 		}
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );
@@ -381,9 +418,10 @@ class KunenaModelInstall extends JModel {
 
 	public function stepFinish() {
 		$entryfiles = array(
+			array(KPATH_ADMIN, 'api', 'php'),
 			array(KPATH_ADMIN, 'admin.kunena', 'php'),
-			array(KPATH_SITE, 'kunena', 'php'),
 			array(KPATH_SITE, 'router', 'php'),
+			array(KPATH_SITE, 'kunena', 'php'),
 		);
 
 		$lang = JFactory::getLanguage();

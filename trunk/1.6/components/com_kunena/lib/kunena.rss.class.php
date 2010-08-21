@@ -89,7 +89,7 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 		$this->setLabel('link',					JURI::root());
 		$this->setLabel('lastBuildDate',		date('r'));
 		$this->setLabel('pubDate',				date('r'));
-		$this->setLabel('generator',			'Kunena ' . KUNENA_VERSION);
+		$this->setLabel('generator',			'Kunena ' . Kunena::version());
 
 		$this->setLabel('image_url',			KUNENA_URLICONSPATH . 'rss.png');
 		$this->setLabel('image_title',			$this->getLabel('name') .' - Forum');

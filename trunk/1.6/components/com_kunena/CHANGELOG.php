@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+20-August-2010 Matias
++ [#21955] Kunena system plugin: Create basic structure and logic into administrator/com_kunena/install/system
++ [#21955] Kunena system plugin: Add logic to install and uninstall plugin during installation
+^ [#21955] Replace api.php with temporal file during installation to improve site stability on modules/plugins, add Kunena::enabled()
+^ [#21955] Get rid of some legacy API features that have not been needed since K1.5, use new API in some other places
+# [#16390] Updated fi-FI (thanks Mortti), ru-RU (thanks ZARKOS), es-ES (thanks Alakentu)
+
 19-August-2010 Matias
 # [#21939] Attachments not migrated to new directory structure, file size 0 bytes
 # [#21940] Avatar galleries and category images are not migrated
@@ -170,7 +177,7 @@ Kunena 1.6.0-RC1
 + [#19288] Add internal moderate this user link to message moderation page
 
 5-August-2010 Matias
-# [#19288] Updated fi-FI (thanks Mortti), ru-RU (thanks ZARKOS)
+# [#16390] Updated fi-FI (thanks Mortti), ru-RU (thanks ZARKOS)
 
 5-August-2010 fxstein
 ^ [#21727] Update version info to 1.6.0 RC1
@@ -182,7 +189,7 @@ Kunena 1.6.0-RC1
 # [#19288] Fix regression - announcement layout
 
 4-August-2010 Matias
-# [#19288] Updated fi-FI (thanks Mortti)
+# [#16390] Updated fi-FI (thanks Mortti)
 ^ [#15886] Merged revisions 3129-3144 from /branches/1.6-dragan-IE7fix-31.07.2010
 ^ [#15886] Merged revisions 3149-3151 from /branches/1.6-dragan-fix-04.08.2010
 # [#19288] Use KPATH_SITE instead of JPATH_COMPONENT, which doesn't work in modules/plugins/integration

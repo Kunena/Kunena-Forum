@@ -32,6 +32,7 @@ class Com_KunenaInstallerScript {
 
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();
+		$installer->uninstallPlugin('system', 'kunena');
 		$installer->deleteMenu();
 	}
 

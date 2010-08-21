@@ -11,50 +11,7 @@
 
 defined( '_JEXEC' ) or die();
 
-// Kunena wide defines
-
-// Component name amd database prefix
-define ( 'KUNENA_COMPONENT_NAME', basename ( dirname ( __FILE__ ) ) );
-define ( 'KUNENA_NAME', substr ( KUNENA_COMPONENT_NAME, 4 ) );
-
-// Component location
-define ( 'KUNENA_COMPONENT_LOCATION', basename ( dirname ( dirname ( __FILE__ ) ) ) );
-
-// Component paths
-define ( 'KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . DS . KUNENA_COMPONENT_NAME );
-define ( 'KPATH_SITE', JPATH_ROOT . DS . KPATH_COMPONENT_RELATIVE );
-define ( 'KPATH_ADMIN', JPATH_ADMINISTRATOR . DS . KPATH_COMPONENT_RELATIVE );
-define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
-define ( 'KPATH_MEDIA_LEGACY', JPATH_ROOT . DS . 'images/fbfiles/' );
-
-// Version information
-class Kunena {
-	public static function isSvn() {
-		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
-			return true;
-		}
-		return false;
-	}
-
-	public static function version() {
-		return '@kunenaversion@';
-	}
-
-	public static function versionDate() {
-		return '@kunenaversiondate@';
-	}
-
-	public static function versionName() {
-		return '@kunenaversionname@';
-	}
-
-	public static function versionBuild() {
-		return '@kunenaversionbuild@';
-	}
-}
-
-// Kunena has been initialized
-define ( 'KUNENA_LOADED', 1 );
+require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 $lang = JFactory::getLanguage();
 if (Kunena::isSVN()) {

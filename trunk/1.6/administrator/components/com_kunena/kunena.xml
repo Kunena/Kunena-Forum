@@ -31,8 +31,9 @@
 			<menu task="ranks" img="components/com_kunena/media/icons/ranks-favicon.png">Rank Manager</menu>
 		</submenu>
 		<files>
-			<filename>install.script.php</filename>
+			<filename>api.php</filename>
 			<filename>admin.kunena.php</filename>
+			<filename>install.script.php</filename>
 			<folder>install</folder>
 			<folder>archive</folder>
 		</files>

@@ -521,9 +521,9 @@ if (! empty ( $kn_version_warning )) {
 	$kunena_app->enqueueMessage ( $kn_version_warning, 'notice' );
 }
 if (!$kn_version->checkVersion()) {
-	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE'), KUNENA_VERSION ), 'notice' );
+	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE'), Kunena::version() ), 'notice' );
 	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_UPGRADE_WARN') );
-	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE_AGAIN'), KUNENA_VERSION ) );
+	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE_AGAIN'), Kunena::version() ) );
 	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_SUPPORT') . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
 }
 

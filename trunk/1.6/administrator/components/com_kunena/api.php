@@ -8,8 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  */
-
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined ( '_JEXEC' ) or die ();
 if (defined ( 'KUNENA_LOADED' ))
 	return;
 
@@ -25,13 +24,11 @@ define ( 'KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . '/' . KUNENA_CO
 define ( 'KPATH_SITE', JPATH_ROOT . DS . KPATH_COMPONENT_RELATIVE );
 define ( 'KPATH_ADMIN', JPATH_ADMINISTRATOR . DS . KPATH_COMPONENT_RELATIVE );
 define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
-define ( 'KPATH_MEDIA_LEGACY', JPATH_ROOT . DS . 'images/fbfiles/' );
 
 // URLs
 define ( 'KURL_COMPONENT', 'index.php?option=' . KUNENA_COMPONENT_NAME );
 define ( 'KURL_SITE', JURI::Root () . KPATH_COMPONENT_RELATIVE . '/' );
 define ( 'KURL_MEDIA', JURI::Root () . 'media/' . KUNENA_NAME . '/' );
-define ( 'KURL_MEDIA_LEGACY', JURI::Root () . 'images/fbfiles/' );
 
 /**
  * Intelligent library importer.
@@ -95,6 +92,7 @@ interface iKunena {
 	 *
 	 * @return	KunenaUserAPI
 	 */
+	// TODO: will be deprecated!
 	public static function getUserAPI();
 
 	/**
@@ -115,6 +113,7 @@ interface iKunena {
 	//public static function getPostAPI();
 }
 
+// TODO: will be deprecated!
 interface iKunenaUserAPI {
 	public function __construct();
 	public static function version();

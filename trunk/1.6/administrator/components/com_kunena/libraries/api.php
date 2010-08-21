@@ -14,10 +14,6 @@ defined( '_JEXEC' ) or die();
 
 if (class_exists('Kunena')) return;
 
-$file = JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . DS . 'kunena.defines.php';
-if (is_file($file))
-	require_once ($file);
-
 class Kunena implements iKunena {
 	protected static $version = false;
 	protected static $version_date = false;
@@ -81,6 +77,14 @@ class Kunena implements iKunena {
 		$version->name = self::versionName();
 		$version->build = self::versionBuild();
 		return $version;
+	}
+
+	public static function enabled() {
+		if (!JComponentHelper::isEnabled ( 'com_kunena', true )) {
+			return false;
+		}
+		$config = self::getConfig();
+		return !$config->board_offline;
 	}
 
 	public static function getConfig() {
@@ -478,3 +482,8 @@ class KunenaStatsAPI {
 		return $this->_stats->topthanks;
 	}
 }
+
+// Legacy support
+$file = JPATH_ROOT . '/components/com_kunena/lib/kunena.defines.php';
+if (is_file($file))
+	require_once ($file);

@@ -19,23 +19,29 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 	// *** initialization ***
 	function plgContentKunenaDiscuss(&$subject, $params) {
-		// Initialize variables
-		$this->_db = JFactory::getDbo ();
-		$this->_app = JFactory::getApplication ( 'site' );
-		$this->_my = JFactory::getUser ();
 
 		// If plugin is not enabled in current scope, do not register it
 		if (! $this->enabled ())
 			return null;
 
+		// Kunena detection and version check
+		$minKunenaVersion = '1.6.0-RC2';
+		if (!class_exists('Kunena') || Kunena::versionBuild() < 3251) {
+			return;
+		}
+		// Kunena online check
+		if (!Kunena::enabled()) {
+			return;
+		}
+
 		// Initialize plugin
 		parent::__construct ( $subject, $params );
 
-		// Detect and load Kunena 1.6+
-		$kunena_api = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php';
-		if (! is_file ( $kunena_api ))
-			return;
-		require_once ($kunena_api);
+		// Initialize variables
+		$this->_db = JFactory::getDbo ();
+		$this->_app = JFactory::getApplication ( 'site' );
+		$this->_my = JFactory::getUser ();
+
 		require_once (KUNENA_PATH . DS . 'class.kunena.php');
 
 		$this->config = KunenaFactory::getConfig ();

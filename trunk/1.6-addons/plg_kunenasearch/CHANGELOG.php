@@ -1,16 +1,14 @@
 <?php
 /**
-* @version $Id: CHANGELOG.php 2159 2010-04-03 09:32:04Z xillibit $
-* KunenaSearch Plugin
+* @version $Id$
+* Kunena Search Plugin
 * @package Kunena Search
 *
-* @Copyright (C) 2009 www.kunena.com All rights reserved
+* @Copyright (C) 2010 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 */
-
-// no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+die();
 ?>
 <!--
 Changelog
@@ -28,10 +26,16 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaSearch 1.0
+KunenaSearch 1.6.0-RC1
 
-01-May 2010 Xillibit
-+ [#20138] Initial plugin structure 
+21-August-2010 Matias
+^ [#20138] Update version to 1.6.0-RC1
+# [#20138] Format all files, change naming conventions to Kunena/Joomla
+# [#20138] Use new Kunena API, remove a lot of code
+# [#20138] Fix results ordering
+* [#20138] Show posts only from allowed categories
 
+01-May-2010 Xillibit
++ [#20138] Initial plugin structure
 
 -->

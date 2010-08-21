@@ -28,7 +28,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaStats 1.0
+KunenaStats 1.6.0-RC1
+
+21-August-2010 Matias
+# [#20095] Changed language strings to obey J1.6 naming convensions
+# [#20095] Better formatting in php and html files
+# [#20095] Updated version to 1.6.0-RC1
 
 08-August 2010 Xillibit
 # [#20095] Show messages no datas when there is nothing ot display

@@ -32,6 +32,7 @@ KunenaLatest 1.6.0-RC2
 
 22-Aug-2010 fxstein
 ^ [#20081] Simplified latest logic
+^ [#20081] Updated formatting
 
 22-Aug-2010 Matias
 ^ [#20081] Use KunenaTemplate class to load correct icons

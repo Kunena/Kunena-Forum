@@ -58,7 +58,7 @@ class modKunenaLatestHelper {
 			case 'userposts' :
 				$model->getUserPosts();
 				break;
-			case 'latestposts' :
+			case 'latesttopics' :
 			default :
 				$model->getLatest ();
 		}
@@ -70,16 +70,6 @@ class modKunenaLatestHelper {
 		else {
 			$result = $model->messages;
 		}
-
-//		foreach ( $model->messages as $message ) {
-//			if ( $params->get( 'choosemodel' ) == 'latestposts' ) {
-//				if ($message->parent == 0) {
-//					$result [$message->id] = $message;
-//				}
-//			} elseif( $params->get( 'choosemodel' ) == 'latestmessages' ) {
-//				$result [$message->id] = $message;
-//			}
-//		}
 
 		return $result;
 	}

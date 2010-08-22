@@ -42,7 +42,7 @@
 		</param>		
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="choosemodel" type="list" default="latest" label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL" description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
-			<option value="latestposts">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>
+			<option value="latesttopics">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>
 			<option value="latestmessages">MOD_KUNENALATEST_SHOW_LATEST_MESSAGES</option>
 			<option value="noreplies">MOD_KUNENALATEST_SHOW_NO_REPLIES</option>
  			<option value="subscriptions">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>

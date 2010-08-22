@@ -42,8 +42,8 @@ li.klatest-avatar {
 	margin-right: 10px;
 }
 li.klatest-avatar img {
-	margin: 3px 5px 3px 0;
-	border: 1px solid #CCCCCC;
+	margin: 3px 3px 3px 0;
+/*	border: 1px solid #CCCCCC;*/
 	padding: 1px;
 }
 li.klatest-posttime,

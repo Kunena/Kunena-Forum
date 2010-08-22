@@ -33,7 +33,7 @@ Legend:
 
 Kunena 1.6.0-RC2
 
-22.August-2010 Matias
+22-August-2010 Matias
 + [#20084] Add function to fetch icons and topic icons to KunenaTemplate class
 
 20-August-2010 Matias

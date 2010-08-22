@@ -265,9 +265,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	// Kunena Current Template Icons Pack
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/icons.php' )) {
-		include_once (KUNENA_ABSTMPLTPATH . '/icons.php');
+		include (KUNENA_ABSTMPLTPATH . '/icons.php');
 	} else {
-		include_once (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'icons.php');
+		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'icons.php');
 	}
 
 	if(JDEBUG){

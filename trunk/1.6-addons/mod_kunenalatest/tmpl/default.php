@@ -29,7 +29,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 		</li>
 		<?php } elseif( $this->params->get ( 'sh_topiciconoravatar' ) == 0) {  ?>
 		<li class="klatest-avatar">
-		<?php echo '<img src="' . $this->topic_emoticons[$item->topic_emoticon]  . '" />'; ?>
+		<?php echo $this->ktemplate->getTopicIcon($item); ?>
 		</li>
 		<?php } ?>
 		<li class="klatest-subject">
@@ -46,15 +46,15 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 			if ($this->params->get ( 'sh_favorite' )) {
 				if ($item->favcount) {
 					if ($item->myfavorite) {
-						echo '<img class="favoritestar" src="' . JURI::root () . 'components/com_kunena/template/default/images/icons/favoritestar.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
+						echo '<img class="favoritestar" src="'.$this->ktemplate->getImagePath('icons/favoritestar.png').'"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
 					} else {
-						echo '<img class="favoritestar-grey" src="' . JURI::root () . 'components/com_kunena/template/default/images/icons/favoritestar-grey.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
+						echo '<img class="favoritestar-grey" src="'.$this->ktemplate->getImagePath('icons/favoritestar-grey.png').'"  alt="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_FAVORITE' ) . '" />';
 					}
 				}
 			}
 			if ($this->params->get ( 'sh_locked' )) {
 				if ($item->locked) {
-					echo '<img src="' . JURI::root () . 'components/com_kunena/template/default/images/icons/lock_sm.png"  alt="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" />';
+					echo '<img src="'.$this->ktemplate->getImagePath('icons/lock_sm.png').'"  alt="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_LOCKED_TOPIC' ) . '" />';
 				}
 			}
 			?>

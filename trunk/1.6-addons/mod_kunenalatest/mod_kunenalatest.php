@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ( '' );
 
 // Kunena detection and version check
 $minKunenaVersion = '1.6.0-RC2';
-if (!class_exists('Kunena') || Kunena::versionBuild() < 3251) {
+if (!class_exists('Kunena') || Kunena::versionBuild() < 3258) {
 	echo JText::sprintf ( 'MOD_KUNENALATEST_KUNENA_NOT_INSTALLED', $minKunenaVersion );
 	return;
 }
@@ -43,21 +43,11 @@ class modKunenaLatest {
 			$this->latestdo = $params->get ( 'choosemodel' );
 		}
 
-		// Load topic icons
-		$this->topic_emoticons = array ();
-		$this->topic_emoticons [0] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-default.gif';
-		$this->topic_emoticons [1] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-exclamation.png';
-		$this->topic_emoticons [2] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-question.png';
-		$this->topic_emoticons [3] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-arrow.png';
-		$this->topic_emoticons [4] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-love.png';
-		$this->topic_emoticons [5] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-grin.png';
-		$this->topic_emoticons [6] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-shock.png';
-		$this->topic_emoticons [7] = JURI::root () . 'components/com_kunena/template/default/images/icons/topic-smile.png';
-
 		// Include the kunenalatest functions only once
 		require_once (dirname ( __FILE__ ) . '/helper.php');
 
 		$this->params = $params;
+		$this->ktemplate = KunenaFactory::getTemplate();
 		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $params );
 
 		require (JModuleHelper::getLayoutPath ( 'mod_kunenalatest' ));

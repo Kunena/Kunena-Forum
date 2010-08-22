@@ -44,42 +44,41 @@ class modKunenaLatestHelper {
 		$model->latestcategory = $params->get ( 'category_id' );
 		$model->latestcategory_in = $params->get ( 'sh_category_id_in' );
 
-	   	switch ( $params->get( 'choosemodel' ) ) {
-      		case 'latestmessages' :
-        		$model->getLatestPosts();
-      		break;
-      		case 'noreplies' :
-        		$model->getNoReplies();
-      		break;
-      		case 'subscriptions' :
-        		$model->getSubscriptions();
-      		break;
-      		case 'categorysubscriptions' :
-        		$model->getCategorySubscriptions();
-      		break;
-      		case 'favorites' :
-        		$model->getFavorites();
-      		break;
-      		case 'owntopics' :
-       			$model->getOwnTopics();
-      		break;
-      		case 'deletedposts' :
-        		$model->getDeletedPosts();
-      		break;
-      		case 'saidthankyouposts' :
-        		$model->getSaidThankYouPosts();
-      		break;
-      		case 'gotthankyouposts' :
-        		$model->getGotThankYouPosts();
-      		break;
-      		case 'userposts' :
-        		$model->getUserPosts();
-      		break;
-      		case 'latestposts' :
-      		default :
-        		$model->getLatest ();
-          	break;
-	   	}
+		switch ( $params->get( 'choosemodel' ) ) {
+			case 'latestmessages' :
+				$model->getLatestPosts();
+				break;
+			case 'noreplies' :
+				$model->getNoReplies();
+				break;
+			case 'subscriptions' :
+				$model->getSubscriptions();
+				break;
+			case 'categorysubscriptions' :
+				$model->getCategorySubscriptions();
+				break;
+			case 'favorites' :
+				$model->getFavorites();
+				break;
+			case 'owntopics' :
+				$model->getOwnTopics();
+				break;
+			case 'deletedposts' :
+				$model->getDeletedPosts();
+				break;
+			case 'saidthankyouposts' :
+				$model->getSaidThankYouPosts();
+				break;
+			case 'gotthankyouposts' :
+				$model->getGotThankYouPosts();
+				break;
+			case 'userposts' :
+				$model->getUserPosts();
+				break;
+			case 'latestposts' :
+			default :
+				$model->getLatest ();
+		}
 
 		$result = array ();
 		if (empty ( $model->messages ))
@@ -90,8 +89,8 @@ class modKunenaLatestHelper {
 					$result [$message->id] = $message;
 				}
 			} elseif( $params->get( 'choosemodel' ) == 'latestmessages' ) {
-          		$result [$message->id] = $message;
-       	}
+				$result [$message->id] = $message;
+			}
 		}
 
 		return $result;

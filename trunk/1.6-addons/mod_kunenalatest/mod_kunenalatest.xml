@@ -55,7 +55,7 @@
 
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param name="sh_firstcontentcharacter" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOW_FIRST_CONTENT_CHARACTER" description="MOD_KUNENALATEST_PARAM_FIRST_CONTENT_CHARACTER_DESC">
+		<param name="sh_firstcontentcharacter" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOW_CONTENT" description="MOD_KUNENALATEST_PARAM_SHOW_CONTENT_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
 		</param>

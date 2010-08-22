@@ -65,6 +65,8 @@
 		<copy todir="${tmp_dir}/admin">
 			<fileset dir="${kunena.directory}/administrator/components/com_kunenaimporter/">
 				<exclude name="build/" />
+				<exclude name="*install.kunenaimporter.php" />
+				<exclude name="language/" />
 				<exclude name="kunenaimporter.xml" />
 			</fileset>
 		</copy>
@@ -111,8 +113,15 @@
 		<filter token="kunenaversiondate" value="${version.date}" />
 		<filter token="kunenaversionbuild" value="${build.number}" />
 		<filter token="kunenaversionname" value="${xml.versionname}" />
+		<copy file="${project_dir}/administrator/components/com_kunenaimporter/install.kunenaimporter.php" todir="${tmp_dir}" overwrite="true" filtering="false" />
+		<copy file="${project_dir}/administrator/components/com_kunenaimporter/uninstall.kunenaimporter.php" todir="${tmp_dir}" overwrite="true" filtering="false" />
 		<copy file="${project_dir}/administrator/components/com_kunenaimporter/kunenaimporter.xml" todir="${tmp_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/README.txt" todir="${tmp_dir}" overwrite="true" filtering="true" />
+		<copy todir="${tmp_dir}/languages" flatten="yes" includeEmptyDirs="no">
+			<fileset dir="${project_dir}/administrator/components/com_kunenaimporter/language">
+				<include name="**/*.ini"/>
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="tar" depends="package" if="do.tar">

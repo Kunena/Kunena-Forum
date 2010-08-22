@@ -1,46 +1,41 @@
 <?php
 /**
- * Joomla! 1.5 component: Kunena Forum Importer
- *
  * @version $Id$
- * @author Kunena Team
- * @package Joomla
- * @subpackage Kunena Forum Importer
- * @license GNU/GPL
+ * Kunena Forum Importer Component
+ * @package com_kunenaimporter
  *
  * Imports forum data into Kunena
  *
- * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+ * @Copyright (C) 2009 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  *
  */
-
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die();
 
 $disabled = '';
 if (!empty($this->errormsg)) $disabled = ' disabled="disabled"';
 ?>
 <form action="index.php" method="post" name="adminForm">
-    <input type="hidden" name="option" value="com_kunenaimporter" />
-    <input type="hidden" name="task" value="" />
-    <input type="hidden" name="form" value="1" />
+	<input type="hidden" name="option" value="com_kunenaimporter" />
+	<input type="hidden" name="task" value="" />
+	<input type="hidden" name="form" value="1" />
 	<input type="hidden" name="boxchecked" value="0" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 
 <h1><?php echo JText::_('External Database Configuration'); ?></h1>
 
 <table class="kunenaimporter">
-    <tr valign="top">
-        <td class="config">
-    <?php echo $this->params->render('params'); ?>
-        </td>
-        <td class="info">
-            <div class="info">
-                <?php if( isset($this->messages) ) echo $this->messages; ?>
-            </div>
-        </td>
-    </tr>
+	<tr valign="top">
+		<td class="config">
+			<?php echo $this->params->render('params'); ?>
+		</td>
+		<td class="info">
+			<div class="info">
+				<?php if( isset($this->messages) ) echo $this->messages; ?>
+			</div>
+		</td>
+	</tr>
 </table>
 
 <br />
@@ -80,14 +75,12 @@ foreach($this->options as $item=>$option):
 
 	$id = '<input type="checkbox" id="cb'.$rowNum.'" name="cid[]" value="'.$option['name'].'" onclick="isChecked(this.checked);" $checked />';
 ?>
-	   <tr class="row<?php echo $rowNum++ % 2; ?>">
-		<td class="x"><?php echo $id; ?></td>
-	        <td class="title"><?php echo JText::_($option['task']); ?></td>
-	        <td class="action"><?php echo $statusmsg; ?></td>
-<!--	        <td class="status <?php echo $this->status; ?>"><?php echo $this->statusmsg; ?></td>-->
-<!--	        <td class="action"><?php echo $this->action; ?></td>-->
-	        <td class="notes"><?php echo JText::_($option['desc']); ?></td>
-	   </tr>
+		<tr class="row<?php echo $rowNum++ % 2; ?>">
+			<td class="x"><?php echo $id; ?></td>
+			<td class="title"><?php echo JText::_($option['task']); ?></td>
+			<td class="action"><?php echo $statusmsg; ?></td>
+			<td class="notes"><?php echo JText::_($option['desc']); ?></td>
+		</tr>
 <?php endforeach; ?>
 <?php else: ?>
 		<tr><td style="color: red; text-align: left;" colspan="5">Import is currently not possible because of the above errors.</td></tr>
@@ -95,4 +88,3 @@ foreach($this->options as $item=>$option):
 	</tbody>
 </table>
 </form>
-

@@ -1,6 +1,20 @@
-<?php defined('_JEXEC') or die('Restricted access'); ?>
+<?php
+/**
+ * @version $Id$
+ * Kunena Forum Importer Component
+ * @package com_kunenaimporter
+ *
+ * Imports forum data into Kunena
+ *
+ * @Copyright (C) 2009 - 2010 Kunena Team All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ *
+ */
+defined('_JEXEC') or die();
 
-<?php JHTML::_('behavior.tooltip'); ?>
+JHTML::_('behavior.tooltip');
+?>
 
 <form action="index.php?option=com_kunenaimporter" method="post" name="adminForm">
 	<table class="adminlist" cellpadding="1">
@@ -44,12 +58,12 @@
 		<tbody>
 			<tr class="<?php echo "row"; ?>">
 			<?php
-				$img 	= $this->user->block ? 'publish_x.png' : 'tick.png';
-				$alt 	= $this->user->block ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
+				$img = $this->user->block ? 'publish_x.png' : 'tick.png';
+				$alt = $this->user->block ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
 				if ($this->user->lastvisitDate == "0000-00-00 00:00:00") {
 					$lvisit = JText::_( 'Never' );
 				} else {
-					$lvisit	= JHTML::_('date', $this->user->lastvisitDate, '%Y-%m-%d %H:%M:%S');
+					$lvisit = JHTML::_('date', $this->user->lastvisitDate, '%Y-%m-%d %H:%M:%S');
 				}
 				$rdate = JHTML::_('date', $this->user->registerDate, '%Y-%m-%d %H:%M:%S');
 			?>
@@ -89,15 +103,15 @@
 			$i = 0;
 			foreach ($this->items as $row)
 			{
-				$img 	= $row->block ? 'publish_x.png' : 'tick.png';
-				$task 	= $row->block ? 'unblock' : 'block';
-				$alt 	= $row->block ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
-				$link 	= 'index.php?option=com_kunenaimporter&amp;view=user&amp;task=edit&amp;cid[]='. $row->id. '';
+				$img = $row->block ? 'publish_x.png' : 'tick.png';
+				$task = $row->block ? 'unblock' : 'block';
+				$alt = $row->block ? JText::_( 'Enabled' ) : JText::_( 'Blocked' );
+				$link = 'index.php?option=com_kunenaimporter&amp;view=user&amp;task=edit&amp;cid[]='. $row->id. '';
 
 				if ($row->lastvisitDate == "0000-00-00 00:00:00") {
 					$lvisit = JText::_( 'Never' );
 				} else {
-					$lvisit	= JHTML::_('date', $row->lastvisitDate, '%Y-%m-%d %H:%M:%S');
+					$lvisit = JHTML::_('date', $row->lastvisitDate, '%Y-%m-%d %H:%M:%S');
 				}
 				$rdate = JHTML::_('date', $row->registerDate, '%Y-%m-%d %H:%M:%S');
 			?>

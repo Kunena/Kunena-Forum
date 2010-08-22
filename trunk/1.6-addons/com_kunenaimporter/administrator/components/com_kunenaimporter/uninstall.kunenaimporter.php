@@ -1,3 +1,4 @@
+<?php
 /**
  * @version $Id$
  * Kunena Forum Importer Component
@@ -10,17 +11,8 @@
  * @link http://www.kunena.com
  *
  */
+defined ( '_JEXEC' ) or die ();
 
-Kunena Importer README
-
-PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING Kunena Importer @kunenaversion@!
-
-INTRODUCTION
-============
-
-Kunena Importer lets you import data from other forums
-
-Requirements: Joomla 1.5, Kunena Forum 1.6
-
-END OF README
-=============
+// Set a simple message
+$application = JFactory::getApplication ();
+$application->enqueueMessage ( JText::_ ( 'NOTE: Database tables were NOT removed to allow for upgrades' ), 'notice' );

@@ -1,16 +1,17 @@
 <?php
 /**
-* @version $Id$
-* Kunena Component
-* @package Kunena
-*
-* @Copyright (C) 2009 www.kunena.com All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
-*/
-
-// no access
-die('Restricted access');
+ * @version $Id$
+ * Kunena Forum Importer Component
+ * @package com_kunenaimporter
+ *
+ * Imports forum data into Kunena
+ *
+ * @Copyright (C) 2009 - 2010 Kunena Team All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ *
+ */
+die();
 ?>
 <!--
 
@@ -29,6 +30,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+22-August-2010 Matias
+^ [#20178] Cleanup all files, remove empty directories, files, improve installer etc
 
 16-August-2010 Xillibit
 + [#20178] Support partial for ccboard and agora

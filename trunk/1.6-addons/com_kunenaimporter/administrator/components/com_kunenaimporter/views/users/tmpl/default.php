@@ -1,6 +1,20 @@
-<?php defined('_JEXEC') or die('Restricted access'); ?>
+<?php
+/**
+ * @version $Id$
+ * Kunena Forum Importer Component
+ * @package com_kunenaimporter
+ *
+ * Imports forum data into Kunena
+ *
+ * @Copyright (C) 2009 - 2010 Kunena Team All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ *
+ */
+defined('_JEXEC') or die();
 
-<?php JHTML::_('behavior.tooltip'); ?>
+JHTML::_('behavior.tooltip');
+?>
 
 <form action="index.php?option=com_kunenaimporter" method="post" name="adminForm">
 	<table>

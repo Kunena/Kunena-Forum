@@ -1,23 +1,17 @@
 <?php
 /**
- * Joomla! 1.5 component: Kunena Forum Importer
+ * @version $Id$
+ * Kunena Forum Importer Component
+ * @package com_kunenaimporter
  *
- * @version $Id: export_agora.php 2311 2010-04-18 10:43:48Z mahagr $
- * @author Kunena Team
- * @package Joomla
- * @subpackage Kunena Forum Importer
- * @license GNU/GPL
+ * Imports forum data into Kunena
  *
- * Imports forum data from Agora
- *
- * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+ * @Copyright (C) 2009 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  *
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined ( '_JEXEC' ) or die ();
 
 // Import Joomla! libraries
 jimport('joomla.application.component.model');

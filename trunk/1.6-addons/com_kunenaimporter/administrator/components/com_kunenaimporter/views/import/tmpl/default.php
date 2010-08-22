@@ -1,27 +1,21 @@
 <?php
 /**
- * Joomla! 1.5 component: Kunena Forum Importer
- *
  * @version $Id$
- * @author Kunena Team
- * @package Joomla
- * @subpackage Kunena Forum Importer
- * @license GNU/GPL
+ * Kunena Forum Importer Component
+ * @package com_kunenaimporter
  *
  * Imports forum data into Kunena
  *
- * @Copyright (C) 2008 - 2009 Kunena Team All rights reserved
+ * @Copyright (C) 2009 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  *
  */
-
-defined('_JEXEC') or die('Restricted access');
-
+defined('_JEXEC') or die();
 ?>
 <form action="index.php" method="post" name="adminForm">
-    <input type="hidden" name="option" value="com_kunenaimporter" />
-    <input type="hidden" name="task" value="" />
+	<input type="hidden" name="option" value="com_kunenaimporter" />
+	<input type="hidden" name="task" value="" />
 
 <h1><?php echo JText::_('Database Import Status'); ?></h1>
 
@@ -56,12 +50,12 @@ foreach($this->options as $option):
 	else if ($option['status'] < $option['total']) $statusmsg = '<font color="#b0b000">'.(int)(100*$option['status']/$option['total']).' %</font>';
 	else $statusmsg = '<font color="green">100 %</font>';
 ?>
-	   <tr>
-		<td class="x"><input type="checkbox" name="<?php echo $option['name']; ?>" <?php echo $disabled.$checked; ?> /></td>
-	        <td class="title"><?php echo JText::_($option['task']); ?></td>
-	        <td class="action"><?php echo $statusmsg; ?></td>
-	        <td class="notes"><?php echo JText::_($option['desc']); ?></td>
-	   </tr>
+		<tr>
+			<td class="x"><input type="checkbox" name="<?php echo $option['name']; ?>" <?php echo $disabled.$checked; ?> /></td>
+			<td class="title"><?php echo JText::_($option['task']); ?></td>
+			<td class="action"><?php echo $statusmsg; ?></td>
+			<td class="notes"><?php echo JText::_($option['desc']); ?></td>
+		</tr>
 <?php endforeach; ?>
 <?php else: ?>
 		<tr><td style="color: red; text-align: left;" colspan="5">Import is currently not possible because of the above errors.</td></tr>
@@ -69,4 +63,3 @@ foreach($this->options as $option):
 	</tbody>
 </table>
 </form>
-

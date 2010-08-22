@@ -13,11 +13,13 @@
 defined ( '_JEXEC' ) or die ( '' );
 
 class modKunenaLatestHelper {
-	function getModel($params) {
+	function getModel() {
 		static $instance = null;
 
 		if ($instance==null){
-			$instance = new CKunenaLatestX ( $params->get( 'choosemodel' ), 0 );
+			// We dont provide a $func to latestX as we leverage the same model for
+			// multiple display options on a single page.
+			$instance = new CKunenaLatestX ( '', 0 );
 		}
 
 		return $instance;

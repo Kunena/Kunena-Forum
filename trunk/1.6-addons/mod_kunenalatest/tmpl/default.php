@@ -64,7 +64,9 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 		<?php endif; ?>
 		<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $item->catid, $item->catname ); ?></li>
 		<li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_LAST_POST_BY' ) .' '. CKunenaLink::GetProfileLink ( $item->userid, $item->name ); ?></li>
-		<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo CKunenaTimeformat::showDate($item->lasttime, $this->params->get ( 'dateformat' )); ?></li>
+		<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php echo CKunenaTimeformat::showDate($item->lasttime, 'config_post_dateformat');
+
+		/*$this->params->get ( 'dateformat' ));*/ ?></li>
 	</ul>
 </li>
 <?php

@@ -35,6 +35,7 @@ KunenaLatest 1.6.0-RC2
 ^ [#20081] Updated formatting
 ^ [#20081] Pickup date/time display format from Kunena config
 ^ [#20081] Time format override - leave empty for Kunena config setting
+^ [#20081] Separate image formating for avatar vs topic icon
 
 22-Aug-2010 Matias
 ^ [#20081] Use KunenaTemplate class to load correct icons

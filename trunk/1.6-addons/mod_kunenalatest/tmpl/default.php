@@ -28,7 +28,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 			<?php echo modKunenaLatestHelper::userAvatar( $item->userid, $this->params ); ?>
 		</li>
 		<?php } elseif( $this->params->get ( 'sh_topiciconoravatar' ) == 0) {  ?>
-		<li class="klatest-avatar">
+		<li class="klatest-topicicon">
 		<?php echo $this->ktemplate->getTopicIcon($item); ?>
 		</li>
 		<?php } ?>

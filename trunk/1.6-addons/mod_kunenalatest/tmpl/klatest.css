@@ -43,7 +43,16 @@ li.klatest-avatar {
 }
 li.klatest-avatar img {
 	margin: 3px 3px 3px 0;
-/*	border: 1px solid #CCCCCC;*/
+	border: 1px solid #CCCCCC;
+	padding: 1px;
+}
+li.klatest-topicicon {
+	float:left;
+	display: block;
+	margin-right: 10px;
+}
+li.klatest-topicicon img {
+	margin: 3px 3px 3px 0;
 	padding: 1px;
 }
 li.klatest-posttime,

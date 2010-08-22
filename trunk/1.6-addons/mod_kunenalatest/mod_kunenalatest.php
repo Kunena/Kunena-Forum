@@ -32,6 +32,7 @@ class modKunenaLatest {
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.image.class.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
 		$this->kunena_config = KunenaFactory::getConfig ();
 		$this->document = JFactory::getDocument ();

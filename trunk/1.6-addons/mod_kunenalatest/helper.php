@@ -13,33 +13,19 @@
 defined ( '_JEXEC' ) or die ( '' );
 
 class modKunenaLatestHelper {
-	function getModel() {
-		if (! class_exists ( 'CKunenaLatestX' )) {
-			// Build the path to the model based upon a supplied base path
-			$path = JPATH_SITE . DS . 'components' . DS . 'com_kunena' . DS . 'funcs' . DS . 'latestx.php';
-			$false = false;
+	function getModel($params) {
+		static $instance = null;
 
-			// If the model file exists include it and try to instantiate the object
-			if (file_exists ( $path )) {
-				require_once ($path);
-				if (! class_exists ( 'CKunenaLatestX' )) {
-					JError::raiseWarning ( 0, JText::_ ('MOD_KUNENALATEST_CKUNENALATEST_CLASS_NOT_FOUND') );
-					return $false;
-				}
-			} else {
-				JError::raiseWarning ( 0, JText::_ ('MOD_KUNENALATEST_CKUNENALATEST_FILE_NOT_FOUND') );
-				return $false;
-			}
+		if ($instance==null){
+			$instance = new CKunenaLatestX ( $params->get( 'choosemodel' ), 0 );
 		}
 
-		$model = new CKunenaLatestX ( '', 0 );
-
-		return $model;
+		return $instance;
 	}
 
 	function getKunenaLatestList($params) {
 		KunenaFactory::getSession ( true );
-		$model = self::getModel ();
+		$model = self::getModel ($params);
 		$model->threads_per_page = $params->get ( 'nbpost' );
 		$model->latestcategory = $params->get ( 'category_id' );
 		$model->latestcategory_in = $params->get ( 'sh_category_id_in' );
@@ -53,9 +39,6 @@ class modKunenaLatestHelper {
 				break;
 			case 'subscriptions' :
 				$model->getSubscriptions();
-				break;
-			case 'categorysubscriptions' :
-				$model->getCategorySubscriptions();
 				break;
 			case 'favorites' :
 				$model->getFavorites();
@@ -81,17 +64,22 @@ class modKunenaLatestHelper {
 		}
 
 		$result = array ();
-		if (empty ( $model->messages ))
+		if (empty ( $model->messages )){
 			echo JText::_ ( 'MOD_KUNENALATEST_NO_MESSAGE' );
-		foreach ( $model->messages as $message ) {
-			if ( $params->get( 'choosemodel' ) == 'latestposts' ) {
-				if ($message->parent == 0) {
-					$result [$message->id] = $message;
-				}
-			} elseif( $params->get( 'choosemodel' ) == 'latestmessages' ) {
-				$result [$message->id] = $message;
-			}
 		}
+		else {
+			$result = $model->messages;
+		}
+
+//		foreach ( $model->messages as $message ) {
+//			if ( $params->get( 'choosemodel' ) == 'latestposts' ) {
+//				if ($message->parent == 0) {
+//					$result [$message->id] = $message;
+//				}
+//			} elseif( $params->get( 'choosemodel' ) == 'latestmessages' ) {
+//				$result [$message->id] = $message;
+//			}
+//		}
 
 		return $result;
 	}

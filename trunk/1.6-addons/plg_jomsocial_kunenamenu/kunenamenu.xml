@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
 <install version="1.5" type="plugin" group="community" method="upgrade">
-	<name>JomSocial - Kunena Forum Menu</name>
+	<name>My Kunena Forum Menu</name>
 	<author>Kunena Team</author>
 	<authorEmail>kunena@kunena.com</authorEmail>
 	<authorUrl>http://www.kunena.com</authorUrl>

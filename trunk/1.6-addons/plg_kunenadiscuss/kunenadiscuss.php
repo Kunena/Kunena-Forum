@@ -27,11 +27,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// Kunena detection and version check
 		$minKunenaVersion = '1.6.0-RC2';
 		if (!class_exists('Kunena') || Kunena::versionBuild() < 3251) {
-			return;
+			return null;
 		}
 		// Kunena online check
 		if (!Kunena::enabled()) {
-			return;
+			return null;
 		}
 
 		// Initialize plugin

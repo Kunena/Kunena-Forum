@@ -35,6 +35,7 @@ class KunenaTemplate extends JObject
 
 	protected $smileyPath = array();
 	protected $rankPath = array();
+	public $topicIcons = array();
 
 	/**
 	* Constructor
@@ -63,6 +64,7 @@ class KunenaTemplate extends JObject
 		foreach ($xml['_default']->children() as $param)  {
 			if ($param->attributes('type') != 'spacer') $this->params->def($param->attributes('name'), $param->attributes('default'));
 		}
+		$this->getTopicIconPath(0);
 	}
 
 	public function getPath() {
@@ -91,12 +93,59 @@ class KunenaTemplate extends JObject
 		return $this->rankPath[$filename];
 	}
 
+	public function getImagePath($image, $url = true) {
+		$path = $this->getPath();
+		if (!is_file(KPATH_SITE . "/{$path}/images/{$image}")) {
+			$path = 'template/default';
+		}
+		$base = '';
+		if ($url) $base = KURL_SITE;
+		return $base."{$path}/images/{$image}";
+	}
+
+	public function getTopicIconPath($index, $url = false) {
+		if (empty($this->topicIcons)) {
+			$path = $this->getPath();
+			if (!file_exists ( KPATH_SITE . "/{$path}/icons.php" )) {
+				$path = 'template/default';
+			}
+			$topic_emoticons = array();
+			include KPATH_SITE . "/{$path}/icons.php";
+			foreach ($topic_emoticons as $id=>$icon) {
+				$this->topicIcons[$id] = "{$path}/images/icons/{$icon}";
+			}
+		}
+		$base = '';
+		if ($url) $base = KURL_SITE;
+		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : $this->topicIcons[0]);
+	}
+
+	public function getTopicIcon($topic) {
+		$config = KunenaFactory::getConfig ();
+		if ($config->topicicons) {
+			$iconurl = $this->getTopicIconPath($topic->topic_emoticon, true);
+		} else {
+			$icon = 'normal';
+			if ($topic->msgcount < 2) $icon = 'unanswered';
+			if ($topic->ordering) $icon = 'sticky';
+			//if ($topic->myfavorite) $icon = 'favorite';
+			if ($topic->locked) $icon = 'locked';
+			if ($topic->moved) $icon = 'moved';
+			if ($topic->hold == 1) $icon = 'unapproved';
+			if ($topic->hold == 2) $icon = 'deleted';
+			if ($topic->unread) $icon .= '_new';
+			$iconurl = $this->getImagePath("topicicons/icon_{$icon}.png");
+		}
+		$html = '<img src="'.$iconurl.'" alt="emo" />';
+		return $html;
+	}
+
 	/**
-	 * Returns the global KunenaUser object, only creating it if it doesn't already exist.
+	 * Returns the global KunenaTemplate object, only creating it if it doesn't already exist.
 	 *
 	 * @access	public
-	 * @param	int	$id	The user to load - Can be an integer or string - If string, it is converted to ID automatically.
-	 * @return	JUser			The User object.
+	 * @param	int	$name		Template name or null for default/selected template in your configuration
+	 * @return	KunenaTemplate	The template object.
 	 * @since	1.6
 	 */
 	static public function getInstance($name=null)

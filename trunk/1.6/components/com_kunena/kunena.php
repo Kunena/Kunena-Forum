@@ -264,7 +264,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	jimport('joomla.template.template');
 
 	// Kunena Current Template Icons Pack
-	$kunena_icons = array ();
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/icons.php' )) {
 		include_once (KUNENA_ABSTMPLTPATH . '/icons.php');
 	} else {

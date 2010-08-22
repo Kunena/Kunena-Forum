@@ -467,34 +467,16 @@ class CKunenaTools {
         echo $lists['parent'];
         }
 
+	// TODO: deprecated
 	function getTemplateImage($image) {
-		if (is_file(KUNENA_ABSTMPLTPATH . '/images/'.$image)) {
-			return 'components/com_kunena/template/' . KUNENA_RELTMPLTPATH . '/images/'.$image;
-		} else {
-			return 'components/com_kunena/template/default/images/'.$image;
-		}
+		$template = KunenaFactory::getTemplate ();
+		return 'components/com_kunena/' . $template->getImagePath($image, false);
 	}
 
+	// TODO: deprecated
 	function topicIcon($topic) {
-		$config = KunenaFactory::getConfig ();
-		if ($config->topicicons) {
-			global $topic_emoticons;
-			$icon = isset($topic_emoticons [$topic->topic_emoticon]) ? $topic_emoticons [$topic->topic_emoticon] : $topic_emoticons [0];
-			$iconurl = JURI::Root() . self::getTemplateImage("icons/{$icon}");
-		} else {
-			$icon = 'normal';
-			if ($topic->msgcount < 2) $icon = 'unanswered';
-			if ($topic->ordering) $icon = 'sticky';
-			//if ($topic->myfavorite) $icon = 'favorite';
-			if ($topic->locked) $icon = 'locked';
-			if ($topic->moved) $icon = 'moved';
-			if ($topic->hold == 1) $icon = 'unapproved';
-			if ($topic->hold == 2) $icon = 'deleted';
-			if ($topic->unread) $icon .= '_new';
-			$iconurl = JURI::Root() . self::getTemplateImage("topicicons/icon_{$icon}.png");
-		}
-		$html = '<img src="'.$iconurl.'" alt="emo" />';
-		return $html;
+		$template = KunenaFactory::getTemplate ();
+		return $template->getTopicIcon($topic);
 	}
 
 	function isAdmin($uid = null) {

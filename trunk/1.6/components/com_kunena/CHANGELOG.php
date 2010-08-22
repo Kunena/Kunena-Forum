@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+22.August-2010 Matias
++ [#20084] Add function to fetch icons and topic icons to KunenaTemplate class
+
 20-August-2010 Matias
 + [#21955] Kunena system plugin: Create basic structure and logic into administrator/com_kunena/install/system
 + [#21955] Kunena system plugin: Add logic to install and uninstall plugin during installation

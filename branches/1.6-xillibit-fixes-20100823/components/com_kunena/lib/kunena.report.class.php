@@ -79,19 +79,21 @@ class CKunenaReport {
 
 		if (!empty($this->reason) && !empty($this->text)) {
 			if ( $this->id ) {
-    			$this->_db->setQuery("SELECT a.*, b.mesid, b.message AS msg_text, c.username, c.id FROM #__kunena_messages AS a"
-    								. " LEFT JOIN #__kunena_messages_text AS b ON b.mesid = a.id LEFT JOIN #__users AS c ON c.id=a.userid"
-    								. " WHERE a.id={$this->_db->Quote($this->id)}");
+				$query =  "SELECT a.id,a.thread, a.name,a.catid,a.userid,a.subject, b.mesid, b.message AS msg_text, c.name, c.id AS userid FROM #__kunena_messages AS a
+							INNER JOIN #__kunena_messages_text AS b ON b.mesid = a.id
+							LEFT JOIN #__users AS c ON c.id = a.userid
+							WHERE a.id={$this->_db->Quote($this->id)}";
+    			$this->_db->setQuery( $query );
 	   			$row = $this->_db->loadObject();
     			if (KunenaError::checkDatabaseError()) return;
+
+    			$baduser = $this->config->username ? $row->username : $row->name;
 
     			if ($this->reason) {
         			$subject = "[".$this->config->board_title." ".JText::_('COM_KUNENA_GEN_FORUM')."] ".JText::_('COM_KUNENA_REPORT_MSG') . ": " . $this->reason;
         		} else {
         			$subject = "[".$this->config->board_title." ".JText::_('COM_KUNENA_GEN_FORUM')."] ".JText::_('COM_KUNENA_REPORT_MSG') . ": " . $row->subject;
         		}
-
-        		$baduser = $this->config->username ? $row->username : $row->name;
 
 				jimport('joomla.environment.uri');
 				$uri =& JURI::getInstance(JURI::base());

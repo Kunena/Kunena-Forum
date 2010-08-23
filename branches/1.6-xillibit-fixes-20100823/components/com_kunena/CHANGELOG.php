@@ -36,6 +36,7 @@ Kunena 1.6.0-RC2
 23-August-2010 Xillibit
 ^ [#22015] Topics cannot be deleted/purged or restored from showcat
 # [#21994] Date of move on shadow topics is incorrect
+# [#22017] Link in report message email go to the wrong message
 
 22-August-2010 Matias
 + [#20084] Add function to fetch icons and topic icons to KunenaTemplate class

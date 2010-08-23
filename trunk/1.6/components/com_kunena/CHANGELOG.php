@@ -35,6 +35,7 @@ Kunena 1.6.0-RC2
 
 22-August-2010 Matias
 + [#20084] Add function to fetch icons and topic icons to KunenaTemplate class
+# [#22008] Pathway doesn't work well if SEF is turned off
 
 20-August-2010 Matias
 + [#21955] Kunena system plugin: Create basic structure and logic into administrator/com_kunena/install/system

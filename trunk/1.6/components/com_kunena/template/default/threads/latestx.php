@@ -42,7 +42,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 
 		<?php if ($this->func != 'mylatest' && $this->func != 'noreplies') : ?>
 		<td class="klist-times-all">
-			<form id="timeselect" name="timeselect" method="post" target="_self" action="<?php echo JURI::current();?>">
+			<form id="timeselect" name="timeselect" method="post" target="_self" action="<?php echo JURI::getInstance()->toString();?>">
 			<?php
 			// make the select list for time
 			$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));

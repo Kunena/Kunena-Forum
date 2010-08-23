@@ -31,7 +31,7 @@ class CkunenaPathway {
 			$query = "SELECT w.userid, w.func, u.$queryName AS username, k.showOnline FROM #__kunena_whoisonline AS w
 				LEFT JOIN #__users AS u ON u.id=w.userid
 				LEFT JOIN #__kunena_users AS k ON k.userid=w.userid
-				WHERE w.link LIKE '{$this->_db->getEscaped ( JURI::current () )}%' AND w.func='{$sfunc}'
+				WHERE w.link LIKE '{$this->_db->getEscaped ( JURI::getInstance()->toString() )}%' AND w.func='{$sfunc}'
 				GROUP BY w.userid ORDER BY u.{$queryName} ASC";
 			$this->_db->setQuery ( $query );
 			$users = $this->_db->loadObjectList ();

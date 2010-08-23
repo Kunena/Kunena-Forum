@@ -202,7 +202,7 @@ class CKunenaWhoIsOnline {
   			$what = JText::_('COM_KUNENA_WHO_MAINPAGE');
 		}
 
-		$link = JURI::current();
+		$link = JURI::getInstance()->toString();
 
 		if ($online == 1) {
     		$sql = "UPDATE #__kunena_whoisonline SET ".

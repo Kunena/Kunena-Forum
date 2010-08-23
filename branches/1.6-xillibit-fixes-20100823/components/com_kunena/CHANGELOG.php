@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+23-August-2010 Xillibit
+^ [#22015] Topics cannot be deleted/purged or restored from showcat
+
 22-August-2010 Matias
 + [#20084] Add function to fetch icons and topic icons to KunenaTemplate class
 # [#22008] Pathway doesn't work well if SEF is turned off

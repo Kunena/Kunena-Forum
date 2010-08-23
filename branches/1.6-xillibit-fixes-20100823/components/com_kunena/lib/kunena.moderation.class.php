@@ -258,7 +258,7 @@ class CKunenaModeration {
 			return false;
 		}
 
-		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)}" );
+		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `hold`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)}" );
 		$currentMessage = $this->_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return false;
 
@@ -284,22 +284,25 @@ class CKunenaModeration {
 				break;
 			case KN_DEL_MESSAGE_PERMINANTLY : // Delete the message from the database
 				// FIXME: if only admins are allowed to do this, add restriction (and make it general/changeble)
-				$sql = "DELETE FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)};";
+				$sql = null;
+				if ( $currentMessage->hold == 2 ) {
+					$sql = "DELETE FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)};";
 
-				$query = "DELETE FROM #__kunena_messages_text WHERE `mesid`={$this->_db->Quote($MessageID)}; ";
-				$this->_db->setQuery ($query);
-				$this->_db->query ();
-				if (KunenaError::checkDatabaseError()) return false;
-
-				if ( $currentMessage->parent == 0 ) {
-					$this->_setSecondMessageParent ($MessageID, $currentMessage);
-				}
-
-				if ( $currentMessage->userid > 0) {
-					$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid`={$this->_db->Quote($MessageID)}; ";
+					$query = "DELETE FROM #__kunena_messages_text WHERE `mesid`={$this->_db->Quote($MessageID)}; ";
 					$this->_db->setQuery ($query);
 					$this->_db->query ();
 					if (KunenaError::checkDatabaseError()) return false;
+
+					if ( $currentMessage->parent == 0 ) {
+						$this->_setSecondMessageParent ($MessageID, $currentMessage);
+					}
+
+					if ( $currentMessage->userid > 0) {
+						$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid`={$this->_db->Quote($MessageID)}; ";
+						$this->_db->setQuery ($query);
+						$this->_db->query ();
+						if (KunenaError::checkDatabaseError()) return false;
+					}
 				}
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread

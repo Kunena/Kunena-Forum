@@ -425,7 +425,7 @@ class CKunenaModeration {
 
 	protected function _createGhostThread($MessageID,$currentMessage) {
 		// Post time in ghost message is the same as in the last message of the thread
-		$sql="SELECT `time` AS timestamp FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($MessageID)} ORDER BY id DESC";
+		$sql="SELECT `time` AS timestamp FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($MessageID)} AND `parent`=0 ORDER BY id DESC";
 		$this->_db->setQuery ( $sql, 0, 1 );
 		$lastTimestamp = $this->_db->loadResult ();
 		if (KunenaError::checkDatabaseError()) return false;

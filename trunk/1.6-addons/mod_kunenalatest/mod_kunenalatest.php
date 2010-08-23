@@ -51,6 +51,8 @@ class modKunenaLatest {
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $params );
 
+		$this->username = $params->get ( 'sh_usernameorrealname');
+
 		require (JModuleHelper::getLayoutPath ( 'mod_kunenalatest' ));
 	}
 }

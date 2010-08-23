@@ -39,7 +39,11 @@
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_AVATAR</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
 			<option value="2">MOD_KUNENALATEST_PARAM_VALUE_NO_AVATAR_NO_TOPICICONS</option>
-		</param>		
+		</param>
+    <param name="sh_usernameorrealname" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_USERNAME_OR_REALNAME" description="MOD_KUNENALATEST_PARAM_USERNAME_OR_REALNAME_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_USERNAME</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_REALNAME</option>			
+		</param>				
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="choosemodel" type="list" default="latest" label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL" description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
 			<option value="latesttopics">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>

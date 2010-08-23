@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC2
 
+23-Aug-2010 Xillibit
++ [#20081] Add configuration setting to choose between name or real name
+
 22-Aug-2010 fxstein
 ^ [#20081] Simplified latest logic
 ^ [#20081] Updated formatting

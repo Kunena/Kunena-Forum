@@ -78,7 +78,8 @@ class modKunenaLatestHelper {
 
 	function userAvatar($userid, $params) {
 		$kunena_user = KunenaFactory::getUser ( ( int ) $userid );
+		$username = $params->get ( 'sh_usernameorrealname') ? $kunena_user->username : $kunena_user->name;
 		$avatarlink = $kunena_user->getAvatarLink ( '', $params->get ( 'avatarwidth' ), $params->get ( 'avatarheight' ) );
-		return CKunenaLink::GetProfileLink ( $userid, $avatarlink, $kunena_user->name );
+		return CKunenaLink::GetProfileLink ( $userid, $avatarlink, $username );
 	}
 }

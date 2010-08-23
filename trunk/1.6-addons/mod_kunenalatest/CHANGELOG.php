@@ -30,6 +30,10 @@ Legend:
 
 KunenaLatest 1.6.0-RC2
 
+23-Aug-2010 fxstein
++ [#20081] Load Kunena language file to have access to all Kunena strings in frontend
+- [#20081] remove all COM_KUNENA_XXX language string replicas from local language file
+
 23-Aug-2010 Xillibit
 + [#20081] Add configuration setting to choose between name or real name
 

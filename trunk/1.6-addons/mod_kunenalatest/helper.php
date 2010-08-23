@@ -32,45 +32,52 @@ class modKunenaLatestHelper {
 		$model->latestcategory = $params->get ( 'category_id' );
 		$model->latestcategory_in = $params->get ( 'sh_category_id_in' );
 
+		$result = array ();
+
 		switch ( $params->get( 'choosemodel' ) ) {
 			case 'latestmessages' :
 				$model->getLatestPosts();
+				$result = $model->customreply;
 				break;
 			case 'noreplies' :
 				$model->getNoReplies();
+				$result = $model->threads;
 				break;
 			case 'subscriptions' :
 				$model->getSubscriptions();
+				$result = $model->threads;
 				break;
 			case 'favorites' :
 				$model->getFavorites();
+				$result = $model->threads;
 				break;
 			case 'owntopics' :
 				$model->getOwnTopics();
+				$result = $model->threads;
 				break;
 			case 'deletedposts' :
 				$model->getDeletedPosts();
+				$result = $model->customreply;
 				break;
 			case 'saidthankyouposts' :
 				$model->getSaidThankYouPosts();
+				$result = $model->customreply;
 				break;
 			case 'gotthankyouposts' :
 				$model->getGotThankYouPosts();
+				$result = $model->customreply;
 				break;
 			case 'userposts' :
 				$model->getUserPosts();
+				$result = $model->customreply;
 				break;
 			case 'latesttopics' :
 			default :
 				$model->getLatest ();
 		}
 
-		$result = array ();
-		if (empty ( $model->messages )){
+		if (empty ( $result )){
 			echo JText::_ ( 'MOD_KUNENALATEST_NO_MESSAGE' );
-		}
-		else {
-			$result = $model->messages;
 		}
 
 		return $result;

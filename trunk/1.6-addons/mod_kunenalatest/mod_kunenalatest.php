@@ -14,7 +14,7 @@ defined ( '_JEXEC' ) or die ( '' );
 
 // Kunena detection and version check
 $minKunenaVersion = '1.6.0-RC2';
-if (!class_exists('Kunena') || Kunena::versionBuild() < 3258) {
+if (!class_exists('Kunena') || Kunena::versionBuild() < 3260) {
 	echo JText::sprintf ( 'MOD_KUNENALATEST_KUNENA_NOT_INSTALLED', $minKunenaVersion );
 	return;
 }
@@ -35,6 +35,10 @@ class modKunenaLatest {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
 		$this->kunena_config = KunenaFactory::getConfig ();
+
+		// load Kunena main language file so we can leverage langaueg strings from it
+		KunenaFactory::loadLanguage();
+
 		$this->document = JFactory::getDocument ();
 		$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klatest.css' );
 

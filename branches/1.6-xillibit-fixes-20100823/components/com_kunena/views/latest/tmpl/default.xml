@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="Recent Topics">
+		<message>Show recent topics</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Recent Topics</name>
+		<description>Show recent topics</description>
+		<url>
+			<param name="do" type="list" default="latest" label="Select View">
+				<option value="latest">Recent Topics</option>
+				<option value="mylatest">My Topics</option>
+				<option value="noreplies">No Replies</option>
+				<option value="subscriptions">My subscriptions</option>
+				<option value="favorites">My Favorites</option>
+				<option value="userposts">My Posts</option>
+				<option value="unapproved">Unapproved Posts</option>
+				<option value="deleted">Deleted Posts</option>
+			</param>
+		</url>
+	</state>
+</metadata>

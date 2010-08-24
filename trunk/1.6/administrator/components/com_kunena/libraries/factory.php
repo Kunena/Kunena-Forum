@@ -149,4 +149,22 @@ abstract class KunenaFactory {
 		kimport('integration.access');
 		return KunenaAccess::getInstance();
 	}
+
+	/**
+	 * Load Kunena language file
+	 *
+	 * Helper function for external modules and plugins to load the main Kunena language file(s)
+	 *
+	 */
+	public static function loadLanguage( $file = 'com_kunena', $reload = false )
+	{
+		static $lang = null;
+
+		if ($lang == null or $reload == true) {
+			$lang = JFactory::getLanguage();
+			if (!$lang->load($file, JPATH_SITE, null, true)) {
+				$lang->load($file, KPATH_SITE, null, $reload);
+			}
+		}
+	}
 }

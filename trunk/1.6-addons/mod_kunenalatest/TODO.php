@@ -15,6 +15,5 @@ die( '' );
 <!--
 TODO list
 ------------
-.) move name/realname setting out of module and leverage Kunena config setting
 .) Add option to include css in site template
 -->

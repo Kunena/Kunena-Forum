@@ -36,6 +36,7 @@ KunenaLatest 1.6.0-RC2
 ^ [#20081] New threaded mode logic to merge topic and latest post info for correct display
 ^ [#20081] Match up new indicator formatting with Kunena default template styling
 ^ [#20081] Move time display into new line to avoid line breaks
+- [#20081] Remove username vs real name config setting as Kunena core is handling this
 
 23-Aug-2010 fxstein
 + [#20081] Load Kunena language file to have access to all Kunena strings in frontend

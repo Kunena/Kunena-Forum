@@ -33,47 +33,63 @@ class modKunenaLatestHelper {
 		$model->latestcategory_in = $params->get ( 'sh_category_id_in' );
 
 		$result = array ();
+		$threadmode = true;
 
 		switch ( $params->get( 'choosemodel' ) ) {
 			case 'latestmessages' :
 				$model->getLatestPosts();
-				$result = $model->customreply;
+				$threadmode = false;
 				break;
 			case 'noreplies' :
 				$model->getNoReplies();
-				$result = $model->threads;
 				break;
 			case 'subscriptions' :
 				$model->getSubscriptions();
-				$result = $model->threads;
 				break;
 			case 'favorites' :
 				$model->getFavorites();
-				$result = $model->threads;
 				break;
 			case 'owntopics' :
 				$model->getOwnTopics();
-				$result = $model->threads;
 				break;
 			case 'deletedposts' :
 				$model->getDeletedPosts();
-				$result = $model->customreply;
+				$threadmode = false;
 				break;
 			case 'saidthankyouposts' :
 				$model->getSaidThankYouPosts();
-				$result = $model->customreply;
+				$threadmode = false;
 				break;
 			case 'gotthankyouposts' :
 				$model->getGotThankYouPosts();
-				$result = $model->customreply;
+				$threadmode = false;
 				break;
 			case 'userposts' :
 				$model->getUserPosts();
-				$result = $model->customreply;
+				$threadmode = false;
 				break;
 			case 'latesttopics' :
 			default :
 				$model->getLatest ();
+		}
+
+		if ($threadmode == true) {
+			// for thread mode we merge the thread data with the latestreply data
+			// we want to keep the subject from the thread, but userinfo and lastest post info
+			// from the lastest posts array - by doing so we can leverage a single template for
+			// thread and message mode
+			$result = $model->threads;
+
+			foreach ($result as $message) {
+				$message->id = $model->lastreply[$message->thread]->id;
+				$message->message = $model->lastreply[$message->thread]->message;
+				$message->userid = $model->lastreply[$message->thread]->userid;
+				$message->name = $model->lastreply[$message->thread]->name;
+				$message->lasttime = $model->lastreply[$message->thread]->lasttime;
+			}
+
+		} else {
+			$result = $model->customreplies;
 		}
 
 		if (empty ( $result )){

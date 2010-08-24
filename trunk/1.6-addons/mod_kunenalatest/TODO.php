@@ -15,7 +15,6 @@ die( '' );
 <!--
 TODO list
 ------------
-.) parse message array for topic display mode
 .) add css styling for (NEW) indicator to mimic Kunena
 .) move name/realname setting out of module and leverage Kunena config setting
 .) Add option to include css in site template

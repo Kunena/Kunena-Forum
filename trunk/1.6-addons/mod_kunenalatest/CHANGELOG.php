@@ -33,6 +33,7 @@ KunenaLatest 1.6.0-RC2
 24-Aug-2010 fxstein
 ^ [#20081] Update minimum required Kunena build number to sync up API
 + [#20081] Add TODO list for outstanding work
+^ [#20081] New threaded mode logic to merge topic and latest post info for correct display
 
 23-Aug-2010 fxstein
 + [#20081] Load Kunena language file to have access to all Kunena strings in frontend

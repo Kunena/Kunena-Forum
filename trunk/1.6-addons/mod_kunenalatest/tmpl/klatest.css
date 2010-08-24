@@ -20,8 +20,8 @@ div.klatest ul li {
 }
 #klatest-items li.klatest-item {
 	list-style: none;
-	margin: 5px 0;
-	padding: 0 0 3px;
+	margin: 2px 0;
+	padding: 0 0 1px;
 	clear: both;
 }
 #klatest-items ul.klatest-itemdetails {
@@ -49,20 +49,20 @@ li.klatest-subject a {
 li.klatest-avatar {
 	float:left;
 	display: block;
-	margin-right: 10px;
+	margin-right: 5px;
 }
 li.klatest-avatar img {
-	margin: 3px 3px 3px 0;
+	margin: 2px 2px 2px 0;
 	border: 1px solid #CCCCCC;
 	padding: 1px;
 }
 li.klatest-topicicon {
 	float:left;
 	display: block;
-	margin-right: 10px;
+	margin-right: 5px;
 }
 li.klatest-topicicon img {
-	margin: 3px 3px 3px 0;
+	margin: 2px 2px 2px 0;
 	padding: 1px;
 }
 li.klatest-posttime,
@@ -75,10 +75,13 @@ p#klatest-more {
 	padding: 0;
 	clear: both;
 }
-ul.klatest-itemdetails li.klatest-author,
-ul.klatest-itemdetails li.klatest-posttime {
+ul.klatest-itemdetails li.klatest-author {
 	display:inline;
 }
+ul.klatest-itemdetails li.klatest-posttime {
+	display:block;
+}
+	
 ul.klatest-preview-content li {
 	margin-bottom: 0 !important;
 	display: block;

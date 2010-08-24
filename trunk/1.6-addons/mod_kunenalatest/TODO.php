@@ -15,7 +15,6 @@ die( '' );
 <!--
 TODO list
 ------------
-.) add css styling for (NEW) indicator to mimic Kunena
 .) move name/realname setting out of module and leverage Kunena config setting
 .) Add option to include css in site template
 -->

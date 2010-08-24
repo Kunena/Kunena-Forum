@@ -28,6 +28,16 @@ div.klatest ul li {
 	margin: 0;
 	padding: 0;
 }
+
+#klatest-items .knewchar {
+	color: #009900;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 3px;
+	font-size: .75em;
+	vertical-align:top;
+	white-space:nowrap;
+}
 ul.klatest-itemdetails li {
 	margin-bottom: 0 !important;
 	display: block;

@@ -79,7 +79,7 @@ class CKunenaReport {
 
 		if (!empty($this->reason) && !empty($this->text)) {
 			if ( $this->id ) {
-				$query =  "SELECT a.id,a.thread, a.name,a.catid,a.userid,a.subject, b.mesid, b.message AS msg_text, c.name, c.id AS userid FROM #__kunena_messages AS a
+				$query =  "SELECT a.id,a.thread, a.name AS username,a.catid,a.userid,a.subject, b.mesid, b.message AS msg_text, c.name, c.id AS userid FROM #__kunena_messages AS a
 							INNER JOIN #__kunena_messages_text AS b ON b.mesid = a.id
 							LEFT JOIN #__users AS c ON c.id = a.userid
 							WHERE a.id={$this->_db->Quote($this->id)}";
@@ -87,7 +87,8 @@ class CKunenaReport {
 	   			$row = $this->_db->loadObject();
     			if (KunenaError::checkDatabaseError()) return;
 
-    			$baduser = $this->config->username ? $row->username : $row->name;
+    			if ( $row->userid != 0 ) $baduser = $this->config->username ? $row->username : $row->name;
+    			else $baduser = $row->username;
 
     			if ($this->reason) {
         			$subject = "[".$this->config->board_title." ".JText::_('COM_KUNENA_GEN_FORUM')."] ".JText::_('COM_KUNENA_REPORT_MSG') . ": " . $this->reason;

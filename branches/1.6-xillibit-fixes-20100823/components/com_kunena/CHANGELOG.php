@@ -36,6 +36,8 @@ Kunena 1.6.0-RC2
 25-August-2010 Xillibit
 # [#19288] Update french translation (fr-FR)
 # [#19288] Update some english strings
+# [#22017] Link in report message email go to the wrong message (check if userid =0)
+# [#22015] Topics cannot be deleted/purged or restored from showcat (check if a message is on hold = 2 and delete the thread)
 
 23-August-2010 Xillibit
 ^ [#22015] Topics cannot be deleted/purged or restored from showcat

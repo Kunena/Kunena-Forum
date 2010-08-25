@@ -21,8 +21,9 @@ define ( 'KN_MOVE_REPLIES', 3 );
 //Defines for deletes
 define ( 'KN_DEL_MESSAGE', 0 );
 define ( 'KN_DEL_MESSAGE_PERMINANTLY', 1 );
-define ( 'KN_DEL_THREAD', 2 );
-define ( 'KN_DEL_ATTACH', 3 );
+define ( 'KN_DEL_THREAD_PERMINANTLY', 2 );
+define ( 'KN_DEL_THREAD', 3 );
+define ( 'KN_DEL_ATTACH',4 );
 
 class CKunenaModeration {
 	// Private data and functions
@@ -284,26 +285,26 @@ class CKunenaModeration {
 				break;
 			case KN_DEL_MESSAGE_PERMINANTLY : // Delete the message from the database
 				// FIXME: if only admins are allowed to do this, add restriction (and make it general/changeble)
-				$sql = null;
-				if ( $currentMessage->hold == 2 ) {
-					$sql = "DELETE FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)};";
+				$sql = "DELETE FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)};";
 
-					$query = "DELETE FROM #__kunena_messages_text WHERE `mesid`={$this->_db->Quote($MessageID)}; ";
+				$query = "DELETE FROM #__kunena_messages_text WHERE `mesid`={$this->_db->Quote($MessageID)}; ";
+				$this->_db->setQuery ($query);
+				$this->_db->query ();
+				if (KunenaError::checkDatabaseError()) return false;
+
+				if ( $currentMessage->parent == 0 ) {
+					$this->_setSecondMessageParent ($MessageID, $currentMessage);
+				}
+
+				if ( $currentMessage->userid > 0) {
+					$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid`={$this->_db->Quote($MessageID)}; ";
 					$this->_db->setQuery ($query);
 					$this->_db->query ();
 					if (KunenaError::checkDatabaseError()) return false;
-
-					if ( $currentMessage->parent == 0 ) {
-						$this->_setSecondMessageParent ($MessageID, $currentMessage);
-					}
-
-					if ( $currentMessage->userid > 0) {
-						$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid`={$this->_db->Quote($MessageID)}; ";
-						$this->_db->setQuery ($query);
-						$this->_db->query ();
-						if (KunenaError::checkDatabaseError()) return false;
-					}
 				}
+				break;
+			case KN_DEL_THREAD_PERMINANTLY : //Delete a complete thread from the databases
+				$sql = "DELETE FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($currentMessage->thread)};";
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
 				$sql1 = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`={$this->_db->Quote($MessageID)};";
@@ -388,6 +389,10 @@ class CKunenaModeration {
 
 	public function deleteMessagePerminantly($MessageID, $DeleteAttachments = false) {
 		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE_PERMINANTLY );
+	}
+
+	public function deleteThreadPerminantly($MessageID, $DeleteAttachments = false) {
+		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_THREAD_PERMINANTLY );
 	}
 
 	public function deleteMessage($MessageID, $DeleteAttachments = false) {

@@ -560,6 +560,7 @@ class CKunenaTools {
 
 	function KDeletePerm() {
 		$kunena_app = JFactory::getApplication ();
+		$kunena_db = & JFactory::getDBO ();
 
 		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
 		if (!JRequest::checkToken()) {
@@ -574,16 +575,25 @@ class CKunenaTools {
 
 		// start iterating here
 		foreach ( $items as $id => $value ) {
-			$delete = $kunena_mod->deleteMessagePerminantly ( $id, true );
-			if (! $delete) {
-				$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
-			} else {
-				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' ) );
+			$query = "SELECT `hold` FROM #__kunena_messages WHERE `thread`={$kunena_db->quote($id)};";
+			$kunena_db->setQuery ( $query );
+			$messagesHold = $kunena_db->loadObjectList ();
+			KunenaError::checkDatabaseError();
+
+			foreach ( $messagesHold as $messageHold ) {
+				if ($messageHold->hold == 2) {
+					$delete = $kunena_mod->deleteThreadPerminantly ( $id, true );
+					if (! $delete) {
+						$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
+					} else {
+						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' ) );
+					}
+				}
 			}
 
 		} //end foreach
 
-		$kunena_app->redirect ( $backUrl );
+		//$kunena_app->redirect ( $backUrl );
 	}
 
 	function KUndelete() {

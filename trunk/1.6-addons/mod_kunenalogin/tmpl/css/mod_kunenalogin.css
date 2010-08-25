@@ -1,0 +1,207 @@
+/**
+ * @version $Id$
+ * Kunenalogin Module
+ * @package Kunena login
+ *
+ * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ */
+
+/*					VERTICAL STYLE
+----------------------------------------------------------*/
+#Klogin-vert li a {
+	text-decoration: none;
+	line-height: 1.5em;
+}
+
+#Klogin-vert ul#loginlink li.myprofile,#Klogin-vert ul#loginlink li.mypost,#Klogin-vert ul#loginlink li.mypm,#Klogin-vert ul#loginlink li.recent
+	{
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	text-decoration: none;
+	list-style: none;
+}
+
+#Klogin-vert ul#logoutlink li.forgotpass,#Klogin-vert ul#logoutlink li.forgotname,#Klogin-vert ul#logoutlink li.register
+	{
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	list-style: none;
+}
+
+#Klogin-vert ul#jslink li.friends,#Klogin-vert ul#jslink li.photos,#Klogin-vert ul#jslink li.videos,#Klogin-vert ul#jslink li.groups
+	{
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	list-style: none;
+	line-height: 18px;
+}
+
+#Klogin-vert div.links {
+	text-align: center;
+}
+
+#Klogin-vert div.avatar {
+	text-align: center !important;
+	padding: 5px;
+}
+
+#Klogin-vert ul#perslink li.pers {
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	list-style: none;
+}
+#Klogin-vert div.k_lastvisit ul {
+	padding: 0;
+}
+#Klogin-vert div.k_lastvisit li {
+	background: none;
+	list-style: none;
+}
+#Klogin-vert div.k_lastvisit {
+	text-align: center;
+}
+#Klogin-vert span.k_lasttext {
+	font-weight: bold;
+}
+#Klogin-vert span.k_lastdate {
+	clear: both;
+}
+#Klogin-vert div.k_hiname {
+	text-align: center;
+}
+
+/*					HORIZONTAL STYLE
+----------------------------------------------------------*/
+#Klogin-horiz {
+	display: block;
+}
+
+#Klogin-horiz #form-login .button {
+	margin: 2px 0 !important;
+}
+
+#Klogin-horiz li a {
+	text-decoration: none;
+	line-height: 1.3em;
+}
+
+#Klogin-horiz div.k_lastvisit {
+	text-align: center;
+}
+
+#Klogin-horiz ul#greeting,#Klogin-horiz ul#logoutlink {
+	float: left;
+	display: inline;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+#Klogin-horiz ul#logoutform li {
+	padding: 0;
+	margin: 0;
+}
+
+#Klogin-horiz ul#logoutform input#modlgn_username,#Klogin-horiz ul#logoutform input#modlgn_passwd
+	{
+	width: 100px;
+	padding: 0;
+	margin: 0;
+}
+
+#Klogin-horiz ul#logoutform input.button {
+	padding: 1px 5px;;
+	margin: 0;
+}
+
+#Klogin-horiz ul#jslink,#Klogin-horiz ul#perslink,#Klogin-horiz ul#loginlink
+	{
+	float: left;
+	display: inline;
+	padding: 0 0 0 10px !important;
+	margin: 0 !important;
+}
+
+#Klogin-horiz ul#loginlink li.myprofile,#Klogin-horiz ul#loginlink li.mypost,#Klogin-horiz ul#loginlink li.mypm,#Klogin-horiz ul#loginlink li.recent
+	{
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	text-decoration: none;
+	list-style: none;
+}
+
+#Klogin-horiz ul#logoutlink li.forgotpass,#Klogin-horiz ul#logoutlink li.forgotname,#Klogin-horiz ul#logoutlink li.register
+	{
+	display: inline;
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	list-style: none;
+}
+
+#Klogin-horiz ul#jslink li.friends,#Klogin-horiz ul#jslink li.photos,#Klogin-horiz ul#jslink li.videos,#Klogin-horiz ul#jslink li.groups
+	{
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	list-style: none;
+}
+
+#Klogin-horiz ul#perslink li.pers {
+	margin: 0;
+	padding: 0 0 0 10px;
+	background: transparent url(../images/arrow.png) no-repeat left center;
+	list-style: none;
+}
+
+#Klogin-horiz div.avatar {
+	background: transparent;
+	float: left;
+	margin-right: 0px;
+	text-align: center;
+	padding: 1px;
+}
+
+#Klogin-horiz div.info {
+	background: transparent;
+	float: left;
+	margin-right: 0px;
+	text-align: left;
+	padding: 1px;
+}
+
+#Klogin-horiz div.k_avatar_right {
+	background: transparent;
+	float: right;
+	margin-right: 15px;
+	text-align: center;
+	padding: 1px;
+}
+
+#Klogin-horiz ul#greeting li {
+	background: none;
+	list-style-image: none !important;
+	list-style-type: none;
+}
+
+#Klogin-horiz img {
+	margin: 0 10px 0;
+}
+
+/*					FLAT STYLE
+----------------------------------------------------------*/
+#Klogin-flat .login-button {
+	padding: 5px;
+	display: inline;
+	text-align: left;
+}
+
+#Klogin-flat span.login-username {
+	display: block;
+}

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install type="module" version="1.5.0" method="upgrade">
+	<name>Kunena Login</name>
+	<version>1.6.0-RC2</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>www.Kunena.com</author>
+	<authorEmail>info@templatekunena.com</authorEmail>
+	<authorUrl>http://www.kunena.com</authorUrl>
+	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
+	<license>GNU/GPL</license>
+	<description>MOD_KUNENALOGIN_DESCRIPTION</description>
+	<files>
+		<filename module="mod_kunenalogin">mod_kunenalogin.php</filename>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<filename>mod_kunenalogin.xml</filename>
+		<folder>tmpl</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">languages/en-GB.mod_kunenalogin.ini</language>
+	</languages>
+	<params>
+	<!-- 
+		<param name="template" type="list" default="0"
+			label="MOD_KUNENALOGIN_STYLE" description="MOD_KUNENALOGIN_STYLE_DESC">
+			<option value="0">MOD_KUNENALOGIN_VERTICAL</option>
+		</param>
+	 -->
+		<param name="pretext" type="textarea" cols="30" rows="3"
+			default="" label="MOD_KUNENALOGIN_PRE_TEXT" description="MOD_KUNENALOGIN_PRE_TEXT_DESC" />
+		<param name="posttext" type="textarea" cols="30" rows="3"
+			label="MOD_KUNENALOGIN_POST_TEXT" description="MOD_KUNENALOGIN_POST_TEXT_DESC" />
+		<param name="login" type="menuitem" default="" disable="separator"
+			label="MOD_KUNENALOGIN_LOGIN_REDIRECTION_URL" description="MOD_KUNENALOGIN_LOGIN_REDIRECTION_URL_DESC" />
+		<param name="logout" type="menuitem" default="" disable="separator"
+			label="MOD_KUNENALOGIN_LOGOUT_REDIRECTION_URL" description="MOD_KUNENALOGIN_LOGOUT_REDIRECTION_URL_DESC" />
+		<param name="greeting" type="radio" default="1"
+			label="MOD_KUNENALOGIN_GREETING" description="MOD_KUNENALOGIN_GREETING_DESC">
+			<option value="0">MOD_KUNENALOGIN_HIDE</option>
+			<option value="1">MOD_KUNENALOGIN_SHOW</option>
+		</param>
+		<param name="name" type="list" default="0"
+			label="MOD_KUNENALOGIN_NAME_USERNAME" description="MOD_KUNENALOGIN_NAME_USERNAME_DESC">
+			<option value="0">MOD_KUNENALOGIN_USERNAME</option>
+			<option value="1">MOD_KUNENALOGIN_NAME</option>
+		</param>
+		<param name="lastlog" type="radio" default="1"
+			label="MOD_KUNENALOGIN_LASTVISIT" description="MOD_KUNENALOGIN_LASTVISIT_DESC">
+			<option value="0">MOD_KUNENALOGIN_HIDE</option>
+			<option value="1">MOD_KUNENALOGIN_SHOW</option>
+		</param>
+		<param name="showav" type="radio" default="1"
+			label="MOD_KUNENALOGIN_SHOW_AVATAR" description="MOD_KUNENALOGIN_SHOW_AVATAR_DESC">
+			<option value="0">MOD_KUNENALOGIN_HIDE</option>
+			<option value="1">MOD_KUNENALOGIN_SHOW</option>
+		</param>
+		<param name="avatar_w" type="text" label="MOD_KUNENALOGIN_AVATAR_WIDTH"
+			default="128" description="MOD_KUNENALOGIN_AVATAR_WIDTH_DESC" />
+		<param name="avatar_h" type="text" label="MOD_KUNENALOGIN_AVATAR_HEIGHT"
+			default="128" description="MOD_KUNENALOGIN_AVATAR_HEIGHT_DESC" />
+
+		<param name="showprofile" type="radio" default="1"
+			label="MOD_KUNENALOGIN_MYPROFILE" description="MOD_KUNENALOGIN_MYPROFILE_DESC">
+			<option value="0">MOD_KUNENALOGIN_HIDE</option>
+			<option value="1">MOD_KUNENALOGIN_SHOW</option>
+		</param>
+		<param name="showmyposts" type="radio" default="1"
+			label="MOD_KUNENALOGIN_MYPOSTS" description="MOD_KUNENALOGIN_MYPOSTS_DESC">
+			<option value="0">MOD_KUNENALOGIN_HIDE</option>
+			<option value="1">MOD_KUNENALOGIN_SHOW</option>
+		</param>
+		<param name="showrecent" type="radio" default="1"
+			label="MOD_KUNENALOGIN_RECENT" description="MOD_KUNENALOGIN_RECENT_DESC">
+			<option value="0">MOD_KUNENALOGIN_HIDE</option>
+			<option value="1">MOD_KUNENALOGIN_SHOW</option>
+		</param>
+		<param name="showmessage" type="radio" default="0"
+			label="MOD_KUNENALOGIN_MYMESSAGE" description="MOD_KUNENALOGIN_MYMESSAGE_DESC">
+			<option value="0">MOD_KUNENALOGIN_HIDE</option>
+			<option value="1">MOD_KUNENALOGIN_SHOW</option>
+		</param>
+	</params>
+	<params group="advanced">
+		<param name="cache" type="list" default="1"
+			label="MOD_KUNENALOGIN_CACHING" description="MOD_KUNENALOGIN_CACHING_DESC">
+			<option value="0">MOD_KUNENALOGIN_NEVER</option>
+		</param>
+		<param name="moduleclass_sfx" type="text" default=""
+			label="MOD_KUNENALOGIN_CLASS_SUFFIX" description="MOD_KUNENALOGIN_CLASS_SUFFIX_DESC" />
+	</params>
+</install>

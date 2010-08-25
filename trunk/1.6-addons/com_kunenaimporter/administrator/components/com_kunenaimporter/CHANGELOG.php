@@ -31,6 +31,14 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaImporter 1.6.0-RC1
+
+24-August-2010 Matias
+^ [#20178] phpBB3: Update exporter for Kunena 1.6 (add some missing fields, do not add slashes)
++ [#20178] phpBB3: Use rokbridge to map users between phpBB and Joomla (most reliable way)
+# [#20178] phpBB3: Use right field for username if migrated from SMF
+^ [#20178] Minimum Kunena version requirement: 1.6.0RC2 build 3251
+
 22-August-2010 Matias
 ^ [#20178] Cleanup all files, remove empty directories, files, improve installer etc
 

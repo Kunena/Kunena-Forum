@@ -20,11 +20,6 @@ jimport ( 'joomla.error.profiler' );
  * Kunena importer Controller
  */
 class KunenaImporterController extends JController {
-	/**
-	 * Constructor
-	 * @access private
-	 * @subpackage Kunena phpBB3 importer
-	 */
 	function __construct() {
 		//Get View
 		if (JRequest::getCmd ( 'view' ) == '') {
@@ -227,6 +222,10 @@ class KunenaImporterController extends JController {
 					$timeout = $this->checkTimeout ();
 					unset ( $data );
 				} while ( $count && ! $timeout );
+			}
+			$map = 'map'.$option;
+			if (! $timeout && method_exists($exporter, $map)) {
+				$exporter->$map();
 			}
 			if ($timeout)
 				break;

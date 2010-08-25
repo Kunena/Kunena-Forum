@@ -63,7 +63,7 @@
 			</fileset>
 		</copy>
 		<copy todir="${tmp_dir}/admin">
-			<fileset dir="${kunena.directory}/administrator/components/com_kunenaimporter/">
+			<fileset dir="${kunena.directory}/administrator/components/com_kunenaimporter">
 				<exclude name="build/" />
 				<exclude name="*install.kunenaimporter.php" />
 				<exclude name="language/" />

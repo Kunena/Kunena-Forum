@@ -17,7 +17,7 @@ require_once (JPATH_ROOT . DS . 'components' . DS . 'com_kunena' . DS . 'lib' . 
 require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
 
 class CKunenaTable extends JTable {
-	public $_exists;
+	protected $_exists;
 
 	function store($updateNulls = false) {
 		if (! $this->_exists)
@@ -28,6 +28,19 @@ class CKunenaTable extends JTable {
 			$this->setError ( get_class ( $this ) . '::store failed - ' . $this->_db->getErrorMsg () );
 		}
 
+		return $ret;
+	}
+
+	function exists($exists = null) {
+		$return = $this->_exists;
+		if ($exists !== null) $this->_exists = $exists;
+		return $return;
+	}
+
+	function load($oid = null) {
+		$ret = parent::load ( $oid );
+		if ($ret === true)
+			$this->_exists = true;
 		return $ret;
 	}
 }
@@ -65,16 +78,22 @@ class CKunenaTableAnnouncements extends CKunenaTable {
 	var $showdate = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_announcement', 'id', $database );
+		parent::__construct ( '#__kunena_announcement', 'id', $database );
 	}
 }
 
 class CKunenaTableAttachments extends CKunenaTable {
+	var $id = null;
 	var $mesid = null;
-	var $filelocation = null;
+	var $userid = null;
+	var $hash = null;
+	var $size = null;
+	var $folder = null;
+	var $filetype = null;
+	var $filename = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_attachments', 'mesid', $database );
+		parent::__construct ( '#__kunena_attachments', 'mesid', $database );
 	}
 }
 
@@ -97,24 +116,27 @@ class CKunenaTableCategories extends CKunenaTable {
 	var $checked_out = null;
 	var $checked_out_time = null;
 	var $review = null;
+	var $allow_anonymous = null;
+	var $post_anonymous = null;
 	var $hits = null;
 	var $description = null;
 	var $headerdesc = null;
 	var $class_sfx = null;
+	var $allow_polls = null;
 	var $id_last_msg = null;
 	var $numTopics = null;
 	var $numPosts = null;
 	var $time_last_msg = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_categories', 'id', $database );
+		parent::__construct ( '#__kunena_categories', 'id', $database );
 	}
 
 	function store($updateNulls = false) {
 		$ret = parent::store ( $updateNulls );
 		if ($ret) {
 			// we must reset fbSession (allowed), when forum record was changed
-			$this->_db->setQuery ( "UPDATE #__fb_sessions SET allowed='na'" );
+			$this->_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
 			$this->_db->query () or trigger_dberror ( "Unable to update sessions." );
 		}
 		return $ret;
@@ -148,7 +170,7 @@ class CKunenaTableFavorites extends CKunenaTable {
 	var $userid = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_favorites', 'thread', $database );
+		parent::__construct ( '#__kunena_favorites', 'thread', $database );
 	}
 }
 
@@ -174,7 +196,7 @@ class CKunenaTableMessages extends CKunenaTable {
 	var $modified_reason = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_messages', 'id', $database );
+		parent::__construct ( '#__kunena_messages', 'id', $database );
 	}
 }
 
@@ -183,7 +205,7 @@ class CKunenaTableMessages_Text extends CKunenaTable {
 	var $message = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_messages_text', 'mesid', $database );
+		parent::__construct ( '#__kunena_messages_text', 'mesid', $database );
 	}
 }
 
@@ -194,7 +216,41 @@ class CKunenaTableModeration extends CKunenaTable {
 	var $future2 = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_moderation', 'catid', $database );
+		parent::__construct ( '#__kunena_moderation', 'catid', $database );
+	}
+}
+
+class CKunenaTablePolls extends CKunenaTable {
+	var $id = null;
+	var $title = null;
+	var $threadid = null;
+	var $polltimetolive = null;
+
+	function __construct(&$database) {
+		parent::__construct ( '#__kunena_polls', 'id', $database );
+	}
+}
+
+class CKunenaTablePolls_Options extends CKunenaTable {
+	var $id = null;
+	var $pollid = null;
+	var $text = null;
+	var $votes = null;
+
+	function __construct(&$database) {
+		parent::__construct ( '#__kunena_polls_options', 'id', $database );
+	}
+}
+
+class CKunenaTablePolls_Users extends CKunenaTable {
+	var $pollid = null;
+	var $userid = null;
+	var $votes = null;
+	var $lasttime = null;
+	var $lastvote = null;
+
+	function __construct(&$database) {
+		parent::__construct ( '#__kunena_polls_users', 'id', $database );
 	}
 }
 
@@ -206,7 +262,7 @@ class CKunenaTableRanks extends CKunenaTable {
 	var $rank_image = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_ranks', 'rank_id', $database );
+		parent::__construct ( '#__kunena_ranks', 'rank_id', $database );
 	}
 }
 
@@ -218,7 +274,7 @@ class CKunenaTableSessions extends CKunenaTable {
 	var $currvisit = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_sessions', 'userid', $database );
+		parent::__construct ( '#__kunena_sessions', 'userid', $database );
 	}
 }
 
@@ -230,7 +286,7 @@ class CKunenaTableSmilies extends CKunenaTable {
 	var $emoticonbar = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_smileys', 'id', $database );
+		parent::__construct ( '#__kunena_smileys', 'id', $database );
 	}
 }
 
@@ -240,7 +296,28 @@ class CKunenaTableSubscriptions extends CKunenaTable {
 	var $future1 = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_subscriptions', 'thread', $database );
+		parent::__construct ( '#__kunena_subscriptions', 'thread', $database );
+	}
+}
+
+class CKunenaTableSubscriptions_Categories extends CKunenaTable {
+	var $thread = null;
+	var $userid = null;
+	var $future1 = null;
+
+	function __construct(&$database) {
+		parent::__construct ( '#__kunena_subscriptions_categories', 'thread', $database );
+	}
+}
+
+class CKunenaTableThankYou extends CKunenaTable {
+	var $postid = null;
+	var $userid = null;
+	var $targetuserid = null;
+	var $time = null;
+
+	function __construct(&$database) {
+		parent::__construct ( '#__kunena_thankyou', 'thread', $database );
 	}
 }
 
@@ -249,6 +326,7 @@ class CKunenaTableUserProfile extends CKunenaTable {
 	var $view = null;
 	var $signature = null;
 	var $moderator = null;
+	var $banned = null;
 	var $ordering = null;
 	var $posts = null;
 	var $avatar = null;
@@ -265,7 +343,17 @@ class CKunenaTableUserProfile extends CKunenaTable {
 	var $YIM = null;
 	var $MSN = null;
 	var $SKYPE = null;
+	var $TWITTER = null;
+	var $FACEBOOK = null;
 	var $GTALK = null;
+	var $MYSPACE = null;
+	var $LINKEDIN = null;
+	var $DELICIOUS = null;
+	var $FRIENDFEED = null;
+	var $DIGG = null;
+	var $BLOGSPOT = null;
+	var $FLICKR = null;
+	var $BEBO = null;
 	var $websitename = null;
 	var $websiteurl = null;
 	var $rank = null;
@@ -273,7 +361,27 @@ class CKunenaTableUserProfile extends CKunenaTable {
 	var $showOnline = null;
 
 	function __construct($database) {
-		parent::__construct ( '#__fb_users', 'userid', $database );
+		parent::__construct ( '#__kunena_users', 'userid', $database );
+	}
+}
+
+class CKunenaTableUsersBanned extends CKunenaTable {
+	var $id = null;
+	var $userid = null;
+	var $ip = null;
+	var $blocked = null;
+	var $expiration = null;
+	var $created_by = null;
+	var $created_time = null;
+	var $reason_private = null;
+	var $reason_public = null;
+	var $modified_by = null;
+	var $modified_time = null;
+	var $comments = null;
+	var $params = null;
+
+	function __construct(&$database) {
+		parent::__construct ( '#__kunena_users_banned', 'id', $database );
 	}
 }
 
@@ -284,9 +392,10 @@ class CKunenaTableVersion extends CKunenaTable {
 	var $installdate = null;
 	var $build = null;
 	var $versionname = null;
+	var $state = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_version', 'id', $database );
+		parent::__construct ( '#__kunena_version', 'id', $database );
 	}
 }
 
@@ -304,6 +413,6 @@ class CKunenaTableWhoIsOnline extends CKunenaTable {
 	var $user = null;
 
 	function __construct(&$database) {
-		parent::__construct ( '#__fb_whoisonline', 'id', $database );
+		parent::__construct ( '#__kunena_whoisonline', 'id', $database );
 	}
 }

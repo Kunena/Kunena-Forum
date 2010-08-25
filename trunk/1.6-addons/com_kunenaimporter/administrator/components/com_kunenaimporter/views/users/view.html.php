@@ -65,7 +65,7 @@ class KunenaImporterViewUsers extends JView {
 		jimport ( 'joomla.html.pagination' );
 		$pagination = new JPagination ( $total, $limitstart, $limit );
 
-		$query = 'SELECT a.*, g.name AS groupname' . ' FROM #__kunenaimporter_users AS a' . ' INNER JOIN #__core_acl_aro_groups AS g ON g.id = a.gid' . $filter . $where . $orderby;
+		$query = 'SELECT a.*, g.name AS groupname' . ' FROM #__kunenaimporter_users AS a LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.gid' . $filter . $where . $orderby;
 		$db->setQuery ( $query, $pagination->limitstart, $pagination->limit );
 		$rows = $db->loadObjectList ();
 

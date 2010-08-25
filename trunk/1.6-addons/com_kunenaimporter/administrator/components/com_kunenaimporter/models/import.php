@@ -32,7 +32,7 @@ class KunenaimporterModelImport extends JModel {
 
 	function getImportOptions() {
 		// version
-		$options = array ('config', 'userprofile', 'categories', 'messages', 'attachments', 'favorites', 'subscriptions', 'moderation', 'ranks', 'smilies', 'announcements', 'sessions', 'whoisonline' );
+		$options = array ('users','config', 'userprofile', 'categories', 'messages', 'attachments', 'favorites', 'subscriptions', 'moderation', 'ranks', 'smilies', 'announcements', 'sessions', 'whoisonline' );
 		return $options;
 	}
 
@@ -74,7 +74,11 @@ class KunenaimporterModelImport extends JModel {
 
 	function findPotentialUsers($extuserid, $username = null, $email = null, $registerDate = null) {
 		// Check if user exists in Joomla
-		$query = "SELECT u.*, g.name AS groupname FROM `#__users` AS u INNER JOIN #__core_acl_aro_groups AS g ON g.id = u.gid WHERE u.username LIKE " . $this->db->quote ( $this->getUsername ( $username ) ) . " OR u.email LIKE " . $this->db->quote ( $email ) . " OR u.registerDate=" . $this->db->quote ( $registerDate );
+		$query = "SELECT u.*, g.name AS groupname
+		FROM `#__users` AS u
+		INNER JOIN #__core_acl_aro_groups AS g ON g.id = u.gid
+		WHERE u.username LIKE {$this->db->quote($username)} OR u.username LIKE {$this->db->quote($this->getUsername($username))}
+		OR u.email LIKE {$this->db->quote($email)} OR u.registerDate={$this->db->quote($registerDate)}";
 		$this->db->setQuery ( $query );
 		$userlist = $this->db->loadObjectList ( 'id' );
 
@@ -87,11 +91,9 @@ class KunenaimporterModelImport extends JModel {
 				$points += 2;
 			if ($this->getUsername ( $username ) == $user->username)
 				$points ++;
-			if ($registerDate == $user->registerDate)
+			if (strtolower($email) == strtolower($user->email))
 				$points += 2;
-			if ("0000-00-00 00:00:00" == $user->registerDate)
-				$points += 1;
-			if ($email == $user->email)
+			if ($registerDate == $user->registerDate)
 				$points += 2;
 
 			$user->points = $points;
@@ -103,7 +105,6 @@ class KunenaimporterModelImport extends JModel {
 
 	function mapUser($extuserid, $username = null, $email = null, $registerDate = null) {
 		//if ($this->auth_method == 'joomla') return $extuserid;
-
 
 		// Check if we have already mapped our user
 		$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
@@ -156,7 +157,7 @@ class KunenaimporterModelImport extends JModel {
 
 	function UpdateCatStats() {
 		// Update last message time from all categories.
-		$query = "UPDATE `#__fb_categories`, `#__fb_messages` SET `#__fb_categories`.time_last_msg=`#__fb_messages`.time WHERE `#__fb_categories`.id_last_msg=`#__fb_messages`.id AND `#__fb_categories`.id_last_msg>0";
+		$query = "UPDATE `#__kunena_categories`, `#__kunena_messages` SET `#__kunena_categories`.time_last_msg=`#__kunena_messages`.time WHERE `#__kunena_categories`.id_last_msg=`#__kunena_messages`.id AND `#__kunena_categories`.id_last_msg>0";
 		$this->db->setQuery ( $query );
 		$result = $this->db->query () or die ( "<br />Invalid query:<br />$query<br />" . $this->db->errorMsg () );
 		unset ( $query );
@@ -165,10 +166,12 @@ class KunenaimporterModelImport extends JModel {
 	function truncateData($option) {
 		if ($option == 'config')
 			return;
+		if ($option == 'users')
+			$option = 'extuser';
 		if ($option == 'messages')
 			$this->truncateData ( $option . '_text' );
-		$this->db = & JFactory::getDBO ();
-		$table = & JTable::getInstance ( $option, 'CKunenaTable' );
+		$this->db = JFactory::getDBO ();
+		$table = JTable::getInstance ( $option, 'CKunenaTable' );
 		$query = "TRUNCATE TABLE " . $this->db->nameQuote ( $table->getTableName () );
 		$this->db->setQuery ( $query );
 		$result = $this->db->query () or die ( "<br />Invalid query:<br />$query<br />" . $this->db->errorMsg () );
@@ -212,13 +215,15 @@ class KunenaimporterModelImport extends JModel {
 			case 'favorites' :
 				$this->importUnique ( $option, $data );
 				break;
+			case 'users':
+				$option = 'extuser';
 			default :
 				$this->importDefault ( $option, $data );
 		}
 	}
 
 	function importUnique($option, &$data) {
-		$table = & JTable::getInstance ( $option, 'CKunenaTable' );
+		$table = JTable::getInstance ( $option, 'CKunenaTable' );
 		if (! $table)
 			die ( $option );
 		$this->commitStart ();
@@ -232,7 +237,7 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function importDefault($option, &$data) {
-		$table = & JTable::getInstance ( $option, 'CKunenaTable' );
+		$table = JTable::getInstance ( $option, 'CKunenaTable' );
 		if (! $table)
 			die ( $option );
 		$this->commitStart ();
@@ -245,9 +250,9 @@ class KunenaimporterModelImport extends JModel {
 
 	function importMessages(&$messages) {
 		$this->commitStart ();
-		$msgtable = & JTable::getInstance ( 'messages', 'CKunenaTable' );
-		$txttable = & JTable::getInstance ( 'messages_text', 'CKunenaTable' );
 		foreach ( $messages as $message ) {
+			$msgtable = JTable::getInstance ( 'messages', 'CKunenaTable' );
+			$txttable = JTable::getInstance ( 'messages_text', 'CKunenaTable' );
 			$message->mesid = $message->id;
 			if (! isset ( $message->extuserid ))
 				$message->extuserid = $message->userid;
@@ -269,21 +274,4 @@ class KunenaimporterModelImport extends JModel {
 
 		$this->updateCatStats ();
 	}
-
-	function importUsers(&$users) {
-		foreach ( $users as $userdata ) {
-			$conflict = 0;
-			$error = '';
-			$userdata->extname = $userdata->username;
-			$userdata->username = $this->getUsername ( $userdata->username );
-			$uid = $this->mapUser ( $userdata->extuserid, $userdata->extname, $userdata->email, $userdata->registerDate );
-
-			if ($uid > 0) {
-				$query = "INSERT INTO `#__fb_users` (userid, posts, signature) VALUES ('$uid', '$userdata->user_posts', '$userdata->user_sig')";
-				$this->db->setQuery ( $query );
-				$result = $this->db->query () or die ( "<br />Invalid query ($userdata->username):<br />$query<br />" . $this->db->errorMsg () );
-			}
-		}
-	}
-
 }

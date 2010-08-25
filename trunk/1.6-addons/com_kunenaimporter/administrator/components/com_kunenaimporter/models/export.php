@@ -32,7 +32,7 @@ class KunenaimporterModelExport extends JModel {
 	var $auth_method;
 
 	function __construct() {
-		$app = & JFactory::getApplication ();
+		$app = JFactory::getApplication ();
 		parent::__construct ();
 
 		$component = JComponentHelper::getComponent ( 'com_kunenaimporter' );
@@ -42,7 +42,7 @@ class KunenaimporterModelExport extends JModel {
 			$db_name = $params->get ( 'db_name' );
 			$db_tableprefix = $params->get ( 'db_tableprefix' );
 			if (empty ( $db_name )) {
-				$this->ext_database = & JFactory::getDBO ();
+				$this->ext_database = JFactory::getDBO ();
 				$this->ext_same = 1;
 			} else {
 				$option ['driver'] = $app->getCfg ( 'dbtype' );
@@ -61,14 +61,19 @@ class KunenaimporterModelExport extends JModel {
 	}
 
 	function getExportOptions($importer) {
-		$app = & JFactory::getApplication ();
+		$app = JFactory::getApplication ();
 
 		$options = $importer->getImportOptions ();
 		$exportOpt = array ();
 		foreach ( $options as $option ) {
 			$count = $this->countData ( $option );
 			if ($count !== false)
-				$exportOpt [] = array ('name' => $option, 'task' => 'KnImporter_Task_' . $option, 'desc' => 'KnImporter_Description_' . $option, 'status' => ( int ) $app->getUserState ( 'com_kunenaimporter.' . $option ), 'total' => $count );
+				$exportOpt [] = array (
+				'name' => $option,
+				'task' => 'KnImporter_Task_' . $option,
+				'desc' => 'KnImporter_Description_' . $option,
+				'status' => ( int ) $app->getUserState ( 'com_kunenaimporter.' . $option ),
+				'total' => $count );
 		}
 		return $exportOpt;
 	}
@@ -76,9 +81,11 @@ class KunenaimporterModelExport extends JModel {
 	function checkConfig() {
 		$this->addMessage ( '<h2>Importer Status</h2>' );
 
-		if (! defined ( 'KUNENA_VERSION' )) {
+		// Kunena detection and version check
+		$minKunenaVersion = '1.6.0-RC2';
+		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
 			$this->addMessage ( '<div>Kunena version: <b style="color:red">FAILED</b></div>' );
-			$this->addMessage ( '<br /><div><b>You need to install Kunena 1.5!</b></div><div><b>Error:</b> Kunena 1.5 not detected</div>' );
+			$this->addMessage ( '<br /><div><b>You need to install Kunena 1.6!</b></div><div><b>Error:</b> Kunena 1.6 not detected</div>' );
 			return false;
 		}
 		$this->addMessage ( '<div>Kunena version: <b style="color:green">' . KUNENA_VERSION . '</b></div>' );
@@ -161,6 +168,26 @@ class KunenaimporterModelExport extends JModel {
 		} else if (! empty ( $info ['export'] ))
 			$result = $this->$info ['export'] ( $start, $limit );
 		return $result;
+	}
+
+	function mapUsers($start = 0, $limit = 0) {
+		$db = JFactory::getDBO();
+		$query = "SELECT id, username FROM #__users";
+		$db->setQuery ( $query, $start, $limit );
+		$users = $db->loadObjectList ( 'id' );
+		foreach ($users as $user) {
+			$extid = $this->mapJoomlaUser($user);
+			if ($extid) {
+				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+				$extuser->load ( $extid );
+				if ($extuser->exists() && !$extuser->id) {
+					$extuser->id = $user->id;
+					if ($extuser->store () === false) {
+						die("ERROR: Saving external data for $user->username failed: " . $extuser->getError () . "<br />");
+					}
+				}
+			}
+		}
 	}
 
 	function &exportJoomlaUsers($start = 0, $limit = 0) {

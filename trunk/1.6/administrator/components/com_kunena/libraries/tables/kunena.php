@@ -18,6 +18,7 @@ abstract class TableKunena extends JTable {
 	function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
+		return $return;
 	}
 
 	function load($oid = null) {

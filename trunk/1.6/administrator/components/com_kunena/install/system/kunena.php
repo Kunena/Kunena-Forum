@@ -8,16 +8,16 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
-defined('_JEXEC') or die();
+defined ( '_JEXEC' ) or die ();
 
 class plgSystemKunena extends JPlugin {
 
 	function __construct(& $subject, $config) {
-		parent::__construct($subject, $config);
+		parent::__construct ( $subject, $config );
 
-		jimport('joomla.application.component.helper');
+		jimport ( 'joomla.application.component.helper' );
 		// Check if Kunena component is installed/enabled
-		if (!JComponentHelper::isEnabled ( 'com_kunena', true )) {
+		if (! JComponentHelper::isEnabled ( 'com_kunena', true )) {
 			return;
 		}
 
@@ -30,4 +30,19 @@ class plgSystemKunena extends JPlugin {
 		require_once ($kunena_api);
 	}
 
+	/*
+	function onAfterStoreUser($user, $isnew, $succes, $msg) {
+		//Don't continue if the user wasn't stored succesfully
+		if (! $succes) {
+			return false;
+		}
+		if (! $isnew) {
+			return true;
+		}
+		// Set the db function
+		$db = JFactory::getDBO ();
+		$db->setQuery ( "INSERT INTO #__kunena_users (userid) VALUES ('" . intval($user ['id']) . "')" );
+		$db->query ();
+	}
+	*/
 }

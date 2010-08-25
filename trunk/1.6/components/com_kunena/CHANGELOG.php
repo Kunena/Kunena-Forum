@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+25-August-2010 Matias
+# [#19288] Fix TableKunena::exists() returning null
+^ [#21955] Kunena system plugin: Include code to sync users on registration (not enabled)
+
 24-August-2010 fxstein
 + [#21955] Kunena Factory helper to load language files - support for modules and plugins
 ^ [#21955] Change backend language file to reflect unsername vs realname selection

@@ -36,6 +36,7 @@ Kunena 1.6.0-RC2
 25-August-2010 Matias
 # [#19288] Fix TableKunena::exists() returning null
 ^ [#21955] Kunena system plugin: Include code to sync users on registration (not enabled)
+# [#22073] CKunenaLink: Fix links to myprofile/noreplies pages to use &func=latest&do=x format that works with menu
 
 24-August-2010 fxstein
 + [#21955] Kunena Factory helper to load language files - support for modules and plugins

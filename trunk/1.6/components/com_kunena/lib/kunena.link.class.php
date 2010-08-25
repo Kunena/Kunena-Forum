@@ -254,15 +254,15 @@ class CKunenaLink {
 	}
 
 	function GetShowMyLatestLink($name, $rel = 'nofollow') {
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=mylatest', $name, '', $rel );
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=latest&do=mylatest', $name, '', $rel );
 	}
 
 	function GetShowMyLatestURL() {
-		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=mylatest');
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=latest&do=mylatest');
 	}
 
 	function GetShowNoRepliesLink($name, $rel = 'nofollow') {
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=noreplies', $name, '', $rel );
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=latest&do=noreplies', $name, '', $rel );
 	}
 
 	function GetShowLatestThreadsLink($period, $name, $rel = 'nofollow') {

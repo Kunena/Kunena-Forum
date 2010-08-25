@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<kinstall type="kunena-template" version="1.6">
+	<name>Evolution Slate</name>
+	<version>1.6.1</version>
+	<creationDate>2010-08-09</creationDate>
+	<author>TemplateKunena Team</author>
+	<authorEmail>info@templatekunena.com</authorEmail>
+	<authorUrl>http://www.templatekunena.com</authorUrl>
+	<copyright>TemplateKunena Team</copyright>
+	<license>GNU/GPL</license>
+	<description>COM_KUNENA_TEMPLATE_EVOLUTION_TEMPLATE_DESC</description>
+	<thumbnail>template_thumbnail.png</thumbnail>
+	<params>
+		<param name="avatarPosition" type="list" default="left" label="COM_KUNENA_TEMPLATE_PROFILE_POSITION" description="COM_KUNENA_TEMPLATE_PROFILEPOSITION_DESC">
+			<option value="left">COM_KUNENA_TEMPLATE_LEFT</option>
+			<option value="top">COM_KUNENA_TEMPLATE_TOP</option>
+			<option value="right">COM_KUNENA_TEMPLATE_RIGHT</option>
+			<option value="bottom">COM_KUNENA_TEMPLATE_BOTTOM</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="topheaderShow" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_TOPHEADER" description="COM_KUNENA_TEMPLATE_SHOW_TOPHEADER_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="kunenamenuShow" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_KUNENA_MENU" description="COM_KUNENA_TEMPLATE_SHOW_KUNENA_MENU_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="toppathwayShow" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_TOP_PATHWAY" description="COM_KUNENA_TEMPLATE_SHOW_TOP_PATHWAY_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="loginboxShow" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_LOGINBOX" description="COM_KUNENA_TEMPLATE_SHOW_LOGINBOX_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="avatarcatShow" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_AVATARCAT" description="COM_KUNENA_TEMPLATE_SHOW_AVATARCAT_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="showWoisonlineavatar" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE" description="COM_KUNENA_TEMPLATE_SHOW_AVATAR_WHOISONLINE_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="birthdaysShow" type="list" default="1" label="COM_KUNENA_TEMPLATE_SHOW_BIRTHDAYS" description="COM_KUNENA_TEMPLATE_SHOW_BIRTHDAYS_DESC">
+			<option value="1">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="0">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="timefooterShow" type="list" default="" label="COM_KUNENA_TEMPLATE_SHOW_TIMELOAD_FOOTER" description="COM_KUNENA_TEMPLATE_SHOW_TIMELOAD_FOOTER_DESC">
+			<option value="">COM_KUNENA_TEMPLATE_YES</option>
+			<option value="none">COM_KUNENA_TEMPLATE_NO</option>
+		</param>
+		
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="buttonIconset" type="list" default="slate-style" label="COM_KUNENA_TEMPLATE_BUTTON_SET" description="COM_KUNENA_TEMPLATE_BUTTON_SET_DESC">
+			<option value="slate-style">COM_KUNENA_TEMPLATE_SLATE</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="profileIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET" description="COM_KUNENA_TEMPLATE_PROFILE_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="editorIconset" type="list" default="default" label="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET" description="COM_KUNENA_TEMPLATE_EDITOR_ICON_SET_DESC">
+			<option value="default">COM_KUNENA_TEMPLATE_DEFAULT</option>
+		</param>
+<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="homeID" type="text" default="65" label="COM_KUNENA_TEMPLATE_HOME_ID" description="COM_KUNENA_TEMPLATE_HOME_ID_DESC" />
+		<param name="userpanelID" type="text" default="66" label="COM_KUNENA_TEMPLATE_USERPANEL_ID" description="COM_KUNENA_TEMPLATE_USERPANEL_ID_DESC" />
+		<param name="favoritesID" type="text" default="70" label="COM_KUNENA_TEMPLATE_FAVORITES_ID" description="COM_KUNENA_TEMPLATE_FAVORITES_ID_DESC" />
+		<param name="helpID" type="text" default="68" label="COM_KUNENA_TEMPLATE_RULES_ID" description="COM_KUNENA_TEMPLATE_RULES_ID_DESC" />
+		<param name="playID" type="text" default="69" label="COM_KUNENA_TEMPLATE_PLAY_ID" description="COM_KUNENA_TEMPLATE_PLAY_ID_DESC" />
+
+		<!-- Required avatar sizes -->
+		<param name="avatarSizeXThumb" type="hidden" default="36" />
+		<param name="avatarSizeYThumb" type="hidden" default="36" />
+		<param name="avatarSizeXWelcome" type="hidden" default="72" />
+		<param name="avatarSizeYWelcome" type="hidden" default="72" />
+		<param name="avatarSizeXList" type="hidden" default="36" />
+		<param name="avatarSizeYList" type="hidden" default="36" />
+		<param name="avatarSizeXPost" type="hidden" default="100" />
+		<param name="avatarSizeYPost" type="hidden" default="100" />
+		<param name="avatarSizeXProfile" type="hidden" default="200" />
+		<param name="avatarSizeYProfile" type="hidden" default="200" />
+		<param name="templatebyText" type="hidden" default="Template by" />
+		<param name="templatebyName" type="hidden" default="TK" />
+		<param name="templatebyLink" type="hidden" default="http://www.templatekunena.com" />
+	</params>
+</kinstall>

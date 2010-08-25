@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+25-August-2010 Xillibit
+# [#19288] Update french translation (fr-FR)
+# [#19288] Update some english strings
+
 23-August-2010 Xillibit
 ^ [#22015] Topics cannot be deleted/purged or restored from showcat
 # [#21994] Date of move on shadow topics is incorrect

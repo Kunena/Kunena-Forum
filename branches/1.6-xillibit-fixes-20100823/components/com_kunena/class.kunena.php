@@ -593,7 +593,7 @@ class CKunenaTools {
 
 		} //end foreach
 
-		//$kunena_app->redirect ( $backUrl );
+		$kunena_app->redirect ( $backUrl );
 	}
 
 	function KUndelete() {

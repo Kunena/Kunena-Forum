@@ -32,6 +32,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.0-RC2
+25-August-2010 svens(LDA)
+# [#16390] Update language files german
 
 13-August-2010 svens(LDA)
 * [#21829] Auth check in profile thank you listing

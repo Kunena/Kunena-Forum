@@ -52,9 +52,9 @@
 			<option value="1">MOD_KUNENALOGIN_SHOW</option>
 		</param>
 		<param name="avatar_w" type="text" label="MOD_KUNENALOGIN_AVATAR_WIDTH"
-			default="128" description="MOD_KUNENALOGIN_AVATAR_WIDTH_DESC" />
+			default="128px" description="MOD_KUNENALOGIN_AVATAR_WIDTH_DESC" />
 		<param name="avatar_h" type="text" label="MOD_KUNENALOGIN_AVATAR_HEIGHT"
-			default="128" description="MOD_KUNENALOGIN_AVATAR_HEIGHT_DESC" />
+			default="128px" description="MOD_KUNENALOGIN_AVATAR_HEIGHT_DESC" />
 
 		<param name="showprofile" type="radio" default="1"
 			label="MOD_KUNENALOGIN_MYPROFILE" description="MOD_KUNENALOGIN_MYPROFILE_DESC">

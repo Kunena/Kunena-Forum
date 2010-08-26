@@ -32,6 +32,7 @@ KunenaLogin 1.6.0-RC2
 + [#22073] Load Kunena language file during init to allow full access to API and language strings
 # [#22073] Updated language strings
 - [#22073] Remove realname vs username display setting and leverage Kunena and its own config
+^ [#22073] update default avatar size to 128px
 
 26-Aug-2010 Matias
 ^ [#22073] Fix fatal error when module is loaded twice (mode code into ModKunenaLogin class)

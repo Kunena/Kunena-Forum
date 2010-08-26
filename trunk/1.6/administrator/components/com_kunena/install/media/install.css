@@ -8,10 +8,11 @@
 @CHARSET "UTF-8";
 
 div.icon-48-kunena {
-background-image:url("kunena-logo-48.png");
-padding-left:148px !important;
+	background-image:url("kunena-logo-48.png");
+	padding-left:148px !important;
 }
 #header-box{display:none}
+
 /* installer */
 #header1 {
 	background:url(../../../../templates/khepri/images/j_header_middle.png) repeat-x;
@@ -78,7 +79,7 @@ padding-left:148px !important;
 #stepbar h1 {
 	margin: 0;
 	padding-bottom: 8px;
-	font-size: 20px;
+	font-size: 16px;
 	color: #0B55C4;
 	font-weight: bold;
 	background:url(j_divider.png) 0 100% repeat-x;
@@ -103,6 +104,17 @@ padding-left:148px !important;
 .step-grey {
   color: #a7a7a7
 }
+
+.center {
+	text-align:center;
+}
+.left {
+	text-align:left;
+}
+.right {
+	text-align:right;
+}
+
 
 #right, #warning {
 	margin-left: 210px;
@@ -396,3 +408,57 @@ div#installer div.c div.c {
 div#installer div.c div.c div.c {
    background:url(j_crn_bl_light.png) 0 0 no-repeat;
 }
+
+table.kinstaller {
+	text-align: center; 
+	border: 1px solid #FFCC99; 
+	background: #FFFFCC; 
+	padding: 5px; 
+	margin: 0 0 20px 20px; 
+	clear: both; 
+	width: 50em;
+}
+
+table.kinstaller-btn {
+	border: 1px solid #ccc; 
+	background: #F2F2F2; 
+	padding: 5px; 
+	margin: 0 0 20px 20px; 
+	clear: both; 
+	width: 50em;
+}
+
+.kbutton {
+	padding: 10px; 
+	text-align: center; 
+	font-weight: bold;
+	cursor: pointer;
+	margin: 15px 0;
+}
+.kbutton:hover {
+	color: #fff;
+}
+table.kinstaller-btn th {
+	font-size: 1.2em;
+}
+.klarge {
+	font-size: 1.5em;
+}
+.btn-style-green {
+	background: #aadd44; 
+	border: solid 1px #669900;
+}
+.btn-style-yellow {
+	background: #ffff33; 
+	border: solid 1px #888800;
+}
+.btn-style-red {
+	background: #ff7777; 
+	border: solid 1px #993333;
+}
+.btn-style-yellow:hover {
+	color: #ff7777;
+}
+
+
+

@@ -9,8 +9,7 @@
  */
 defined('_JEXEC') or die;
 ?>
-<table
-	style="border: 1px solid #FFCC99; background: #FFFFCC; padding: 5px; margin: 0 0 20px 20px; clear: both;">
+<table class="kinstaller">
 	<tr>
 		<th colspan="3"><?php echo JText::_('COM_KUNENA_INSTALL_REQ_CHECK') ?>: <font color="red"><?php echo JText::_('COM_KUNENA_INSTALL_REQ_FAILED') ?></font> -
 		<a href="http://docs.kunena.com/index.php/Technical_Requirements"><?php echo JText::_('COM_KUNENA_INSTALL_REQ_FAILED_DESC') ?></a></th>

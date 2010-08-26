@@ -10,12 +10,12 @@
 defined('_JEXEC') or die;
 $version = reset($this->versions);
 ?>
-<table style="text-align: center; border: 1px solid #FFCC99; background: #FFFFCC; padding: 5px; margin: 0 0 20px 20px; clear: both; width: 50em;">
+<table class="kinstaller">
 	<?php if (!empty($version->state)) : array_shift($this->versions); ?>
 	<tr><th style="font-size: 1.5em; color: #CC0000;"><?php echo JText::_('COM_KUNENA_INSTALL_DETECT_FAILED') ?></th></tr>
 	<tr><td><?php echo JText::sprintf('COM_KUNENA_INSTALL_DETECT_FAILED_DESC',$version->version, $version->build) ?></td></tr>
 	<?php else: ?>
-	<tr><th style="font-size: 1.5em;"><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_WARNING') ?></th></tr>
+	<tr><th class="klarge"><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_WARNING') ?></th></tr>
 	<?php if ($version->action != 'REINSTALL') : ?>
 	<tr><td><?php echo JText::_('COM_KUNENA_INSTALL_OFFLINE_WARNING_DESC') ?></td></tr>
 	<?php else: ?>
@@ -28,29 +28,28 @@ $version = reset($this->versions);
 <?php foreach ($this->versions as $type=>$version) :
 switch ($type) {
 	case 'kunena':
-		$style = 'background: #aadd44; border: solid 1px #669900;';
+		$style = 'btn-style-green';
 		break;
 	case 'uninstall':
-		$style = 'background: #ff7777; border: solid 1px #993333;';
+		$style = 'btn-style-red';
 		break;
 	default:
-		$style = 'background: #ffff33; border: solid 1px #888800;';
+		$style = 'btn-style-yellow';
 }
 ?>
-<table
-	style="border: 1px solid #FFCC99; background: #FFFFCC; padding: 5px; margin: 0 0 20px 20px; clear: both; width: 50em;">
+<table class="kinstaller-btn">
 	<tr>
-		<th style="font-size: 1.25em; text-align: center;"><?php echo $version->description; ?></th>
+		<th class="left"><?php echo $version->description; ?></th>
 	</tr>
 	<tr>
-		<td style="text-align: center;"><input type="button"
+		<td class="left"><input type="button"
 			onclick="window.location='<?php echo $version->link; ?>'"
 			value="<?php echo $version->label; ?>"
-			style="padding: 10px; text-align: center; font-weight: bold; <?php echo $style ?> cursor: pointer;" />
+			 class="kbutton <?php echo $style ?>" />
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align: center;">
+		<td class="left">
 			<div><?php echo $version->hint ?></div>
 			<?php if (!empty($version->warning)) : ?><br /><div><?php echo $version->warning ?></div><?php endif; ?>
 		</td>

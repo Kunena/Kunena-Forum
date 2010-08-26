@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+25-August-2010 Severdia
+# [#19356] Language cleanup in admin backend
+^ [#19356] CSS cleanup in installer/upgrader
+
 25-August-2010 Matias
 # [#19288] Fix TableKunena::exists() returning null
 ^ [#21955] Kunena system plugin: Include code to sync users on registration (not enabled)

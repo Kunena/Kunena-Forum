@@ -32,6 +32,7 @@ KunenaLatest 1.6.0-RC2
 
 25-Aug-2010 fxstein
 # [#20081] Display correct name format as avatar tooltip
++ [#20081] Make category, author and time information display optional
 
 24-Aug-2010 fxstein
 ^ [#20081] Update minimum required Kunena build number to sync up API

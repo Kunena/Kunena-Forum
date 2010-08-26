@@ -55,6 +55,18 @@
 
 		</param>
 		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="sh_category" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY" description="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+		</param>
+		<param name="sh_author" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR" description="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+		</param>
+		<param name="sh_time" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_SHOW_TIME" description="MOD_KUNENALATEST_PARAM_SHOW_TIME_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+		</param>
 		<param name="sh_firstcontentcharacter" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOW_CONTENT" description="MOD_KUNENALATEST_PARAM_SHOW_CONTENT_DESC">
 			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
 			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>

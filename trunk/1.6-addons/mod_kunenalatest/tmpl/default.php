@@ -69,7 +69,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 			<li class="klatest-author"><?php echo JText::_ ( 'MOD_KUNENALATEST_LAST_POST_BY' ) .' '. CKunenaLink::GetProfileLink ( $item->userid, $item->name ); ?></li>
 		<?php endif; ?>
 		<?php if ($this->params->get ( 'sh_time' )) : ?>
-			<li class="klatest-posttime"><?php echo JText::_ ( 'MOD_KUNENALATEST_POSTED_AT' ); ?> <?php $override = $this->params->get ( 'dateformat' ); echo CKunenaTimeformat::showDate($item->lasttime, $override ? $override : 'config_post_dateformat');?></li>
+			<li class="klatest-posttime"><?php $override = $this->params->get ( 'dateformat' ); echo CKunenaTimeformat::showDate($item->lasttime, $override ? $override : 'config_post_dateformat');?></li>
 		<?php endif; ?>
 	</ul>
 </li>

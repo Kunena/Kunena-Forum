@@ -28,6 +28,10 @@ Legend:
 
 KunenaLogin 1.6.0-RC2
 
+26-Aug-2010 fxstein
++ [#22073] Load Kunena language file during init to allow full access to API and language strings
+# [#22073] Updated language strings
+
 26-Aug-2010 Matias
 ^ [#22073] Fix fatal error when module is loaded twice (mode code into ModKunenaLogin class)
 

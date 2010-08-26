@@ -19,6 +19,9 @@ class ModKunenaLogin {
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 		$this->params = $params;
+
+		// load Kunena main language file so we can leverage langaueg strings from it
+		KunenaFactory::loadLanguage();
 	}
 
 	function display() {
@@ -31,7 +34,7 @@ class ModKunenaLogin {
 		$this->my = JFactory::getUser ();
 		$this->private = KunenaFactory::getPrivateMessaging ();
 		$this->PMCount = $this->private->getUnreadCount ( $this->my->id );
-		$this->PMlink = $this->private->getInboxLink ( $this->PMCount ? JText::sprintf ( 'MOD_KUNENALOGIN_NEW_MESSAGE', $this->PMCount ) : JText::_ ( 'MOD_KUNENALOGIN_MYMESSAGE' ) );
+		$this->PMlink = $this->private->getInboxLink ( $this->PMCount ? JText::sprintf ( 'MOD_KUNENALOGIN_NEW_MESSAGE', $this->PMCount ) : JText::_ ( 'MOD_KUNENALOGIN_MYMESSAGES' ) );
 
 		$this->params->def ( 'greeting', 1 );
 		$this->type = $this->getType ();

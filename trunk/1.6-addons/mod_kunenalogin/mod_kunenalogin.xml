@@ -77,7 +77,7 @@
 			<option value="1">MOD_KUNENALOGIN_SHOW</option>
 		</param>
 		<param name="showmessage" type="radio" default="0"
-			label="MOD_KUNENALOGIN_MYMESSAGE" description="MOD_KUNENALOGIN_MYMESSAGE_DESC">
+			label="MOD_KUNENALOGIN_MYMESSAGES" description="MOD_KUNENALOGIN_MYMESSAGES_DESC">
 			<option value="0">MOD_KUNENALOGIN_HIDE</option>
 			<option value="1">MOD_KUNENALOGIN_SHOW</option>
 		</param>

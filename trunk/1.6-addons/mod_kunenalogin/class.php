@@ -41,7 +41,8 @@ class ModKunenaLogin {
 		$this->return = $this->getReturnURL ();
 
 		$this->loadCSS = $this->loadCSS ( 'mod_kunenalogin' ); // load CSS stylesheet
-		$this->user = JFactory::getUser ();
+		$this->user = KunenaFactory::getUser ();
+		// JFactory::getUser ();
 		require (JModuleHelper::getLayoutPath ( 'mod_kunenalogin' ));
 	}
 
@@ -61,7 +62,7 @@ class ModKunenaLogin {
 	}
 
 	function getType() {
-		$user = JFactory::getUser ();
+		$user = KunenaFactory::getUser ();
 		return (! $user->get ( 'guest' )) ? 'logout' : 'login';
 	}
 

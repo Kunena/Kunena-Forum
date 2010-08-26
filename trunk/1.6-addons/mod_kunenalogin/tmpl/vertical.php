@@ -15,7 +15,7 @@ defined('_JEXEC') or die();
 		<form action="index.php" method="post" name="login">
 		<?php if ($this->params->get('greeting')) : ?>
 			<div class="k_hiname">
-			<?php echo JText::sprintf('MOD_KUNENALOGIN_HINAME','<strong>'.CKunenaLink::GetProfileLink ( $this->my->id, $this->my->getName()).'</strong>' ); ?>
+			<?php echo JText::sprintf('MOD_KUNENALOGIN_HINAME','<strong>'.CKunenaLink::GetProfileLink ( $this->my->id, $this->user->getName()).'</strong>' ); ?>
 			</div>
 		<?php endif; ?>
 	<div class="avatar">

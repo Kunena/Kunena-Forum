@@ -47,15 +47,9 @@ class modKunenaLatest {
 
 class modKunenaLatestHelper {
 	function getModel() {
-		static $instance = null;
+		$model = new CKunenaLatestX ( '', 0 );
 
-		if ($instance==null){
-			// We dont provide a $func to latestX as we leverage the same model for
-			// multiple display options on a single page.
-			$instance = new CKunenaLatestX ( '', 0 );
-		}
-
-		return $instance;
+		return $model;
 	}
 
 	function getKunenaLatestList($params) {

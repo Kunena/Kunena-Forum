@@ -41,11 +41,6 @@
 			<option value="0">MOD_KUNENALOGIN_HIDE</option>
 			<option value="1">MOD_KUNENALOGIN_SHOW</option>
 		</param>
-		<param name="name" type="list" default="0"
-			label="MOD_KUNENALOGIN_NAME_USERNAME" description="MOD_KUNENALOGIN_NAME_USERNAME_DESC">
-			<option value="0">MOD_KUNENALOGIN_USERNAME</option>
-			<option value="1">MOD_KUNENALOGIN_NAME</option>
-		</param>
 		<param name="lastlog" type="radio" default="1"
 			label="MOD_KUNENALOGIN_LASTVISIT" description="MOD_KUNENALOGIN_LASTVISIT_DESC">
 			<option value="0">MOD_KUNENALOGIN_HIDE</option>

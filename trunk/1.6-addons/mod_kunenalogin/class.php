@@ -75,7 +75,8 @@ class ModKunenaLogin {
 
 	function kunenaAvatar($userid) {
 		$kunena_user = KunenaFactory::getUser ( ( int ) $userid );
+		$username = $kunena_user->getName(); // Takes care of realname vs username setting
 		$avatarlink = $kunena_user->getAvatarLink ( '', $this->params->get ( 'avatar_w' ), $this->params->get ( 'avatar_h' ) );
-		return CKunenaLink::GetProfileLink ( $userid, $avatarlink, $kunena_user->name );
+		return CKunenaLink::GetProfileLink ( $userid, $avatarlink, $username );
 	}
 }

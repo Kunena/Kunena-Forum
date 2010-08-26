@@ -149,7 +149,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			<tr>
 			<th width="32%"><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
 			<th></th>
-			<th width="15%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+			<th width="18%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOUS');?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -185,7 +185,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			<tr>
 			<th width="32%"><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
 			<th></th>
-			<th width="15%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+			<th width="18%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOUS');?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -263,7 +263,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			<tr>
 				<th width="32%"><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
 				<th></th>
-				<th width="15%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOU');?></th>
+				<th width="18%"><?php echo JText::_('COM_KUNENA_USRL_THANKYOUS');?></th>
 			</tr>
 			</thead>
 			<tbody>

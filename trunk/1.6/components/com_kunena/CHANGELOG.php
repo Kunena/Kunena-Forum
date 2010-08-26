@@ -36,6 +36,7 @@ Kunena 1.6.0-RC2
 25-August-2010 Severdia
 # [#19356] Language cleanup in admin backend
 ^ [#19356] CSS cleanup in installer/upgrader
+^ [#19356] Language fixes and missing strings
 
 25-August-2010 Matias
 # [#19288] Fix TableKunena::exists() returning null

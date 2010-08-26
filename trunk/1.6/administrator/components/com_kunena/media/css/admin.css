@@ -56,6 +56,10 @@ div.icon-48-kunena {
 	padding 5px;
 }
 
+table.kadmin-adminform td {
+	vertical-align:top;
+}
+
 /* Small icons  */
 a.icon-cp-sm { background: url(../../images/icons/icon_controlpanel.png) 5px 5px no-repeat; }
 a.icon-config-sm { background: url(../../images/icons/icon_config.png) 5px 5px no-repeat; }
@@ -94,6 +98,11 @@ div.kadmin-functitle.icon-support { background: url(../../images/ktechsupport.pn
 div.kadmin-functitle.icon-template { background: url(../../images/templatemanager.png) 5px 5px no-repeat; }
 
 div.kadmin-functitle.no-icon { text-indent: 5px !important; }
+
+.left 	{ text-align:left; }
+.right 	{ text-align:right; }
+.center { text-align:center; }
+.nowrap { white-space: nowrap; }
 
 table.adminform,
 form.adminform{
@@ -222,7 +231,9 @@ div.tpl-thumbnail img {
 div.tpl-desc {
 	clear: left;
 }
-
+input.ksm-field {
+	width: 50px;
+}
 .kadmin-statscover {
 	padding:0px;
 }

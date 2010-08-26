@@ -11,6 +11,39 @@
 
 // no direct access
 defined ( '_JEXEC' ) or die ( '' );
+class modKunenaLatest {
+	public function __construct($params) {
+		static $cssadded = false;
+
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.image.class.php');
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
+		$this->kunena_config = KunenaFactory::getConfig ();
+
+		// load Kunena main language file so we can leverage langaueg strings from it
+		KunenaFactory::loadLanguage();
+
+		$this->document = JFactory::getDocument ();
+		if ($cssadded == false) {
+			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klatest.css' );
+			$cssadded = true;
+		}
+
+		$this->latestdo = null;
+
+		if ($params->get ( 'choosemodel' ) != 'latest') {
+			$this->latestdo = $params->get ( 'choosemodel' );
+		}
+
+		$this->params = $params;
+		$this->ktemplate = KunenaFactory::getTemplate();
+		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $params );
+
+		require (JModuleHelper::getLayoutPath ( 'mod_kunenalatest' ));
+	}
+}
 
 class modKunenaLatestHelper {
 	function getModel() {

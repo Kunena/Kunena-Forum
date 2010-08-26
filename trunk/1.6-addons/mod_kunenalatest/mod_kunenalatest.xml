@@ -16,7 +16,7 @@
 		<filename module="mod_kunenalatest">mod_kunenalatest.php</filename>
 		<filename>index.html</filename>
 		<filename>tmpl/index.html</filename>
-		<filename>helper.php</filename>
+		<filename>class.php</filename>
 		<folder>tmpl</folder>
 	</files>
 

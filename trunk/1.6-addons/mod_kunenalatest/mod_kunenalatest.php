@@ -24,37 +24,9 @@ if (!Kunena::enabled()) {
 	return;
 }
 
+// Include the kunenalatest functions only once
+require_once (dirname ( __FILE__ ) . '/class.php');
+
 $params = ( object ) $params;
 $klatest = new modKunenaLatest ( $params );
 
-class modKunenaLatest {
-	public function __construct($params) {
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.image.class.php');
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
-		$this->kunena_config = KunenaFactory::getConfig ();
-
-		// load Kunena main language file so we can leverage langaueg strings from it
-		KunenaFactory::loadLanguage();
-
-		$this->document = JFactory::getDocument ();
-		$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klatest.css' );
-
-		$this->latestdo = null;
-
-		if ($params->get ( 'choosemodel' ) != 'latest') {
-			$this->latestdo = $params->get ( 'choosemodel' );
-		}
-
-		// Include the kunenalatest functions only once
-		require_once (dirname ( __FILE__ ) . '/helper.php');
-
-		$this->params = $params;
-		$this->ktemplate = KunenaFactory::getTemplate();
-		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $params );
-
-		require (JModuleHelper::getLayoutPath ( 'mod_kunenalatest' ));
-	}
-}

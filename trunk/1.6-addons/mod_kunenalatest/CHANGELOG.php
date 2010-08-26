@@ -35,6 +35,7 @@ KunenaLatest 1.6.0-RC2
 + [#20081] Make category, author and time information display optional
 - [#20081] Remove retired language string
 # [#20081] Convert css ID into classes - modify css
+# [#20081] Move main class and helper into class.php to allow for multiple instances on same page
 
 24-Aug-2010 fxstein
 ^ [#20081] Update minimum required Kunena build number to sync up API

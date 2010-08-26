@@ -12,9 +12,9 @@
 // no direct access
 defined ( '_JEXEC' ) or die ( '' );
 ?>
-<div class="<?php echo $this->params->get ( 'moduleclass_sfx' )?> klatest <?php echo $this->params->get ( 'sh_moduleshowtype' )?>" id="klatestmodule">
+<div class="<?php echo $this->params->get ( 'moduleclass_sfx' )?> klatest <?php echo $this->params->get ( 'sh_moduleshowtype' )?>">
 
-<ul id="klatest-items">
+<ul class="klatest-items">
 <?php
 if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 	foreach ( $this->klistpost as $item ) {
@@ -77,7 +77,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 	} //end foreach
 ?>
 </ul>
-<p id="klatest-more"><?php echo CKunenaLink::GetShowLatestLink ( JText::_ ( 'MOD_KUNENALATEST_MORE_LINK' ) , $this->latestdo ); ?></p>
+<p class="klatest-more"><?php echo CKunenaLink::GetShowLatestLink ( JText::_ ( 'MOD_KUNENALATEST_MORE_LINK' ) , $this->latestdo ); ?></p>
 <?php
 } else {
 	echo JText::_('MOD_KUNENALATEST_OFFLINE');

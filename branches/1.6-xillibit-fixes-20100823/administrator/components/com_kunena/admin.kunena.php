@@ -3148,6 +3148,75 @@ function generateSystemReport () {
 		$collation = 'The collation of your table fields are correct';
 	}
 
+	// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
+	jimport( 'joomla.plugin.helper' );
+	jimport( 'joomla.application.module.helper' );
+	$xml = & JFactory::getXMLparser('Simple');
+	if ( JPluginHelper::isEnabled('system', 'mtupgrade') ) 	$mtupgrade = '[u]System - Mootools Upgrade:[/u] Enabled';
+	else $mtupgrade = '[u]System - Mootools Upgrade:[/u] Disabled';
+
+	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] Enabled';
+	else $plg_mt = '[u]System - Mootools12:[/u] [color=#FF0000]Disabled[/color]';
+
+	if ( JPluginHelper::isEnabled('system', 'jfirephp') ) {
+		$xml->loadFile(JPATH_SITE.'/plugins/system/jfirephp.xml');
+		$version = $xml->document->version[0];
+		$plg_jfirephp = '[u]JFirePHP:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$plg_jfirephp = '[u]JFirePHP:[/u] Disabled or not installed';
+	}
+
+	if ( JPluginHelper::isEnabled('kunena', 'search') ) {
+
+		// Need to remane the Kunena Search file from kunena.xml and kunena.php to ksearch.xml and ksearch.php
+		/*$xml->loadFile(JPATH_SITE.'/plugins/search/kunena.xml');
+		$version = $xml->document->version[0];
+		$plg_ksearch_version = $version->data();*/
+		$plg_ksearch = '[u]Kunena Search:[/u] Enabled (Version : Remimder)';
+	} else {
+		$plg_ksearch = '[u]Kunena Search:[/u] Disabled or not installed';
+	}
+
+	if ( JPluginHelper::isEnabled('content', 'kunenadiscuss') ) {
+		$xml->loadFile(JPATH_SITE.'/plugins/content/kunenadiscuss.xml');
+		$version = $xml->document->version[0];
+		$plg_kdiscuss = '[u]Kunena Discuss:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$plg_kdiscuss = '[u]Kunena Discuss:[/u] Disabled or not installed';
+	}
+
+	if ( JPluginHelper::isEnabled('community', 'kunenamenu ') ) {
+		$xml->loadFile(JPATH_SITE.'/plugins/community/kunenamenu.xml');
+		$version = $xml->document->version[0];
+		$plg_kjomsocialmenu = '[u]My Kunena Forum Menu:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$plg_kjomsocialmenu = '[u]My Kunena Forum Menu:[/u] Disabled or not installed';
+	}
+
+	if ( JModuleHelper::isEnabled('mod_kunenalatest') ) {
+		$xml->loadFile(JPATH_SITE.'/modules/mod_kunenalatest/mod_kunenalatest.xml');
+		$version = $xml->document->version[0];
+		$mod_kunenalatest = '[u]Kunena Latest:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$mod_kunenalatest = '[u]Kunena Latest:[/u] Disabled or not installed';
+	}
+
+	if ( JModuleHelper::isEnabled('mod_kunenastats') ) {
+		$xml->loadFile(JPATH_SITE.'/mdoules/mod_kunenastats/mod_kunenastats.xml');
+		$version = $xml->document->version[0];
+		$mod_kunenastats = '[u]Kunena Stats:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$mod_kunenastats = '[u]Kunena Stats:[/u] Disabled or not installed';
+	}
+
+	if ( JModuleHelper::isEnabled('mod_kunenalogin') ) {
+		$xml->loadFile(JPATH_SITE.'/mdoules/mod_kunenalogin/mod_kunenalogin.xml');
+		$version = $xml->document->version[0];
+		$mod_kunenalogin = '[u]Kunena Login:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$mod_kunenalogin = '[u]Kunena Login:[/u] Disabled or not installed';
+	}
+
     $report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'
@@ -3155,7 +3224,7 @@ function generateSystemReport () {
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
-	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]';
+	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
 
     return $report;
 }

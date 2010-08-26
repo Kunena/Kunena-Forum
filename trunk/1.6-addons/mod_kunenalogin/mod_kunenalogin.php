@@ -22,40 +22,8 @@ if (! Kunena::enabled ()) {
 	return;
 }
 
+require_once (dirname ( __FILE__ ) . DS . 'class.php');
+
 $params = ( object ) $params;
 $modKunenaLogin = new ModKunenaLogin ( $params );
 $modKunenaLogin->display();
-
-class ModKunenaLogin {
-	function __construct($params) {
-		// Include the syndicate functions only once
-		require_once (dirname ( __FILE__ ) . DS . 'helper.php');
-		require_once (KUNENA_PATH . DS . 'class.kunena.php');
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.image.class.php');
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
-		$this->params = $params;
-	}
-
-	function display() {
-		$this->login = CKunenaLogin::getloginFields ();
-		$this->logout = CKunenaLogin::getlogoutFields ();
-
-		// load Kunena main language file so we can leverage langaueg strings from it
-		KunenaFactory::loadLanguage ();
-
-		$this->my = JFactory::getUser ();
-		$this->private = KunenaFactory::getPrivateMessaging ();
-		$this->PMCount = $this->private->getUnreadCount ( $this->my->id );
-		$this->PMlink = $this->private->getInboxLink ( $this->PMCount ? JText::sprintf ( 'MOD_KUNENALOGIN_NEW_MESSAGE', $this->PMCount ) : JText::_ ( 'MOD_KUNENALOGIN_MYMESSAGE' ) );
-
-		$this->params->def ( 'greeting', 1 );
-		$this->type = modKunenaLoginHelper::getType ();
-		$this->return = modKunenaLoginHelper::getReturnURL ( $this->params, $this->type );
-
-		$this->loadCSS = modKunenaLoginHelper::loadCSS ( 'mod_kunenalogin' ); // load CSS stylesheet
-		$this->user = JFactory::getUser ();
-		require (JModuleHelper::getLayoutPath ( 'mod_kunenalogin' ));
-	}
-}

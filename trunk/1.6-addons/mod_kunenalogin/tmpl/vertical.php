@@ -24,7 +24,7 @@ defined('_JEXEC') or die();
 		<?php endif; ?>
 	<div class="avatar">
 		<?php if ($this->params->get('showav')) :
-			$avatar =  modKunenaLoginHelper::kunenaAvatar( $this->my->id, $this->params ) ;
+			$avatar =  $this->kunenaAvatar( $this->my->id ) ;
 			echo $avatar;
 		endif; ?>
 	</div>

@@ -12,7 +12,7 @@
 	<version>1.6.0-RC1</version>
 	<description>PLG_KUNENASEARCH_DESCRIPTION</description>
 	<files>
-		<filename plugin="kunena">kunena.php</filename>
+		<filename plugin="kunena">kunenasearch.php</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">en-GB.plg_search_kunena.ini</language>

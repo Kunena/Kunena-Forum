@@ -28,6 +28,9 @@ Legend:
 
 KunenaSearch 1.6.0-RC1
 
+27-August-2010 Xillibit
+^ [#20138] Rename the files kunena.xml and kunena.php to kunenasearch.xml and kunenasearch.php
+
 21-August-2010 Matias
 ^ [#20138] Update version to 1.6.0-RC1
 # [#20138] Format all files, change naming conventions to Kunena/Joomla

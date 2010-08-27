@@ -35,6 +35,7 @@ Kunena 1.6.0-RC2
 
 27-August-2010 Xillibit
 ^ [#22092] Add in report configuration settings version of JS, CB, AUP and UddeIm
+# [#19288] Update french translation (fr-FR) (thanks lavsteph)
 
 26-August-2010 Xillibit
 # [#19288] Missing index.php in /components/com_kunena/funcs/

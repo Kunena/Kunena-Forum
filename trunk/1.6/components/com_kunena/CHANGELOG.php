@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+28-August-2010 fxstein
+# [#16390] Updated fi-FI (thanks Mortti)
+
 25-August-2010 Severdia
 # [#19356] Language cleanup in admin backend
 ^ [#19356] CSS cleanup in installer/upgrader

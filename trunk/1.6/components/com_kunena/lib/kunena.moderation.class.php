@@ -23,6 +23,7 @@ define ( 'KN_DEL_MESSAGE', 0 );
 define ( 'KN_DEL_MESSAGE_PERMINANTLY', 1 );
 define ( 'KN_DEL_THREAD', 2 );
 define ( 'KN_DEL_ATTACH', 3 );
+define ( 'KN_DEL_THREAD_PERMINANTLY', 4 );
 
 class CKunenaModeration {
 	// Private data and functions
@@ -258,7 +259,7 @@ class CKunenaModeration {
 			return false;
 		}
 
-		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)}" );
+		$this->_db->setQuery ( "SELECT `id`, `userid`, `catid`, `hold`, `parent`, `thread`, `subject`, `time` AS timestamp FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)}" );
 		$currentMessage = $this->_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return false;
 
@@ -301,6 +302,9 @@ class CKunenaModeration {
 					$this->_db->query ();
 					if (KunenaError::checkDatabaseError()) return false;
 				}
+				break;
+			case KN_DEL_THREAD_PERMINANTLY : //Delete a complete thread from the databases
+				$sql = "DELETE FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($currentMessage->thread)};";
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
 				$sql1 = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`={$this->_db->Quote($MessageID)};";
@@ -387,6 +391,11 @@ class CKunenaModeration {
 		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE_PERMINANTLY );
 	}
 
+	public function deleteThreadPerminantly($MessageID, $DeleteAttachments = false) {
+		// TODO: delete all attachments, too
+		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_THREAD_PERMINANTLY );
+	}
+
 	public function deleteMessage($MessageID, $DeleteAttachments = false) {
 		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_MESSAGE );
 	}
@@ -422,7 +431,7 @@ class CKunenaModeration {
 
 	protected function _createGhostThread($MessageID,$currentMessage) {
 		// Post time in ghost message is the same as in the last message of the thread
-		$sql="SELECT `time` AS timestamp FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($MessageID)} ORDER BY id DESC";
+		$sql="SELECT `time` AS timestamp FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($MessageID)} AND `parent`=0 ORDER BY id DESC";
 		$this->_db->setQuery ( $sql, 0, 1 );
 		$lastTimestamp = $this->_db->loadResult ();
 		if (KunenaError::checkDatabaseError()) return false;

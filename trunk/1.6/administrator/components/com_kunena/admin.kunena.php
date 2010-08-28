@@ -235,11 +235,6 @@ switch ($task) {
 
 		break;
 
-	case "showinstructions" :
-		showInstructions ( $kunena_db, $option );
-
-		break;
-
 	case "showCss" :
 		showCss ( $option );
 
@@ -250,11 +245,6 @@ switch ($task) {
 		$csscontent = JRequest::getVar ( 'csscontent', 1 );
 
 		saveCss ( $file, $csscontent, $option );
-
-		break;
-
-	case "instructions" :
-		showInstructions ( $kunena_db, $option );
 
 		break;
 
@@ -1702,11 +1692,6 @@ function saveConfig($option) {
 	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showconfig", JText::_('COM_KUNENA_CONFIGSAVED') );
 }
 
-function showInstructions($kunena_db, $option) {
-	$kunena_db = &JFactory::getDBO ();
-	html_Kunena::showInstructions ( $kunena_db, $option );
-}
-
 //===============================
 // CSS functions
 //===============================
@@ -3148,6 +3133,121 @@ function generateSystemReport () {
 		$collation = 'The collation of your table fields are correct';
 	}
 
+	// Check if Mootools plugins and others kunena plugins are enabled, and get the version of this modules
+	jimport( 'joomla.plugin.helper' );
+	jimport( 'joomla.application.module.helper' );
+	jimport( 'joomla.application.component.helper' );
+	jimport('joomla.filesystem.file');
+
+	if ( JPluginHelper::isEnabled('system', 'mtupgrade') ) 	$mtupgrade = '[u]System - Mootools Upgrade:[/u] Enabled';
+	else $mtupgrade = '[u]System - Mootools Upgrade:[/u] Disabled';
+
+	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] Enabled';
+	else $plg_mt = '[u]System - Mootools12:[/u] [color=#FF0000]Disabled[/color]';
+
+	if ( JPluginHelper::isEnabled('system', 'jfirephp') && JFile::exists(JPATH_SITE.'/plugins/system/jfirephp.php') ) {
+		$xml_jfireftp = JFactory::getXMLparser('Simple');
+		$xml_jfireftp->loadFile(JPATH_SITE.'/plugins/system/jfirephp.xml');
+		$version = $xml_jfireftp->document->version[0];
+		$plg_jfirephp = '[u]JFirePHP:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$plg_jfirephp = '[u]JFirePHP:[/u] Disabled or not installed';
+	}
+
+	if ( JPluginHelper::isEnabled('kunena', 'search') && JFile::exists(JPATH_SITE.'/plugins/search/kunenasearch.php') ) {
+		$xml_ksearch = JFactory::getXMLparser('Simple');
+		$xml_ksearch->loadFile(JPATH_SITE.'/plugins/search/kunenasearch.xml');
+		$version = $xml_ksearch->document->version[0];
+		$plg_ksearch_version = $version->data();
+		$plg_ksearch = '[u]Kunena Search:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$plg_ksearch = '[u]Kunena Search:[/u] Disabled or not installed';
+	}
+
+	if ( JPluginHelper::isEnabled('content', 'kunenadiscuss') && JFile::exists(JPATH_SITE.'/plugins/content/kunenadiscuss.php') ) {
+		$xml_kdiscuss = JFactory::getXMLparser('Simple');
+		$xml_kdiscuss->loadFile(JPATH_SITE.'/plugins/content/kunenadiscuss.xml');
+		$version = $xml_kdiscuss->document->version[0];
+		$plg_kdiscuss = '[u]Kunena Discuss:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$plg_kdiscuss = '[u]Kunena Discuss:[/u] Disabled or not installed';
+	}
+
+	if ( JPluginHelper::isEnabled('community', 'kunenamenu ') && JFile::exists(JPATH_SITE.'/plugins/community/kunenamenu.php') ) {
+		$xml_kunenamenu = JFactory::getXMLparser('Simple');
+		$xml_kunenamenu->loadFile(JPATH_SITE.'/plugins/community/kunenamenu.xml');
+		$version = $xml_kunenamenu->document->version[0];
+		$plg_kjomsocialmenu = '[u]My Kunena Forum Menu:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$plg_kjomsocialmenu = '[u]My Kunena Forum Menu:[/u] Disabled or not installed';
+	}
+
+	if ( JModuleHelper::isEnabled('mod_kunenalatest') && JFile::exists(JPATH_SITE.'/modules/mod_kunenalatest/mod_kunenalatest.php') ) {
+		$xml_klatest = JFactory::getXMLparser('Simple');
+		$xml_klatest->loadFile(JPATH_SITE.'/modules/mod_kunenalatest/mod_kunenalatest.xml');
+		$version = $xml_klatest->document->version[0];
+		$mod_kunenalatest = '[u]Kunena Latest:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$mod_kunenalatest = '[u]Kunena Latest:[/u] Disabled or not installed';
+	}
+
+	if ( JModuleHelper::isEnabled('mod_kunenastats') && JFile::exists(JPATH_SITE.'/modules/mod_kunenastats/mod_kunenastats.php') ) {
+		$xml_kstats = JFactory::getXMLparser('Simple');
+		$xml_kstats->loadFile(JPATH_SITE.'/modules/mod_kunenastats/mod_kunenastats.xml');
+		$version = $xml_kstats->document->version[0];
+		$mod_kunenastats = '[u]Kunena Stats:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$mod_kunenastats = '[u]Kunena Stats:[/u] Disabled or not installed';
+	}
+
+	if ( JModuleHelper::isEnabled('mod_kunenalogin') && JFile::exists(JPATH_SITE.'/modules/mod_kunenalogin/mod_kunenalogin.php') ) {
+	 	$xml_klogin = JFactory::getXMLparser('Simple');
+		$xml_klogin->loadFile(JPATH_SITE.'/modules/mod_kunenalogin/mod_kunenalogin.xml');
+		$version = $xml_klogin->document->version[0];
+		$mod_kunenalogin = '[u]Kunena Login:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$mod_kunenalogin = '[u]Kunena Login:[/u] Disabled or not installed';
+	}
+
+	if ( JComponentHelper::isEnabled('AlphaUserPoints') && JFile::exists(JPATH_SITE.'/components/com_alphauserpoints/alphauserpoints.php') ) {
+		$xml_aup = JFactory::getXMLparser('Simple');
+		$xml_aup->loadFile(JPATH_ADMINISTRATOR.'/components/com_alphauserpoints/alphauserpoints.xml');
+		$version = $xml_aup->document->version[0];
+		$aup = '[u]AlphaUserPoints:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$aup = '[u]AlphaUserPoints:[/u] Disabled or not installed';
+	}
+
+	if ( JComponentHelper::isEnabled('comprofiler') && JFile::exists(JPATH_SITE.'/components/com_comprofiler/comprofiler.php') ) {
+		$xml_cb = JFactory::getXMLparser('Simple');
+		$xml_cb->loadFile(JPATH_ADMINISTRATOR.'/components/com_comprofiler/comprofilej.xml');
+		$version = $xml_cb->document->version[0];
+		$cb = '[u]CommunityBuilder:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$cb = '[u]CommunityBuilder:[/u] Disabled or not installed';
+	}
+
+	if ( JComponentHelper::isEnabled('Community') && JFile::exists(JPATH_SITE.'/components/com_community/community.php') ) {
+		$xml_jomsocial = JFactory::getXMLparser('Simple');
+		$xml_jomsocial->loadFile(JPATH_ADMINISTRATOR.'/components/com_community/community.xml');
+		$version = $xml_jomsocial->document->version[0];
+		$jomsocial = '[u]Jomsocial:[/u] Enabled (Version : '.$version->data().')';
+	} else {
+		$jomsocial = '[u]Jomsocial:[/u] Disabled or not installed';
+	}
+
+	if ( JComponentHelper::isEnabled('uddeim') && JFile::exists(JPATH_SITE.'/components/com_uddeim/uddeim.php') ) {
+		if ( JFile::exists(JPATH_SITE.'/components/com_uddeim/uddeim.api.php') ) {
+			require_once(JPATH_SITE.'/components/com_uddeim/uddeim.api.php');
+			$uddeImAPI = new uddeIMAPI();
+			$uddeim = '[u]UddeIm:[/u] Enabled (Version : '.$uddeImAPI->version().')';
+		} else {
+			$uddeim = '[u]UddeIm:[/u] Enabled (Version : UddeIm API not present)';
+		}
+	} else {
+		$uddeim = '[u]UddeIm:[/u] Disabled or not installed';
+	}
+
     $report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'
@@ -3155,7 +3255,7 @@ function generateSystemReport () {
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
 	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
-	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote]';
+	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
 
     return $report;
 }

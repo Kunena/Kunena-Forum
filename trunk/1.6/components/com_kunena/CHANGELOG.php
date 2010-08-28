@@ -33,10 +33,28 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+28-August-2010 Matias
+^ [#15886] Merged revisions 3273-3317 from /branches/1.6-xillibit-fixes-20100823
+
 28-August-2010 fxstein
 # [#16390] Updated fi-FI (thanks Mortti)
 # [#19064] Google maps img styling for certain browsers (810 fix variation)
 # [#16390] Minor modification to english admin language file to clarify guest access settings
+
+27-August-2010 Xillibit
+^ [#22092] Add in report configuration settings version of JS, CB, AUP and UddeIm
+# [#19288] Update french translation (fr-FR) (thanks lavsteph)
+
+26-August-2010 Xillibit
+# [#19288] Missing index.php in /components/com_kunena/funcs/
+^ [#22092] Add in report configuration settings the list of kunena modules/plugins and the versions
+
+25-August-2010 Xillibit
+# [#19288] Update french translation (fr-FR)
+# [#19288] Update some english strings
+# [#22017] Link in report message email go to the wrong message (check if userid =0)
+# [#22015] Topics cannot be deleted/purged or restored from showcat (check if a message is on hold = 2 and delete the thread)
+^ [#22041] Add Trash Manager to Kunena Submenu & other changes
 
 25-August-2010 Severdia
 # [#19356] Language cleanup in admin backend
@@ -51,6 +69,11 @@ Kunena 1.6.0-RC2
 24-August-2010 fxstein
 + [#21955] Kunena Factory helper to load language files - support for modules and plugins
 ^ [#21955] Change backend language file to reflect unsername vs realname selection
+
+23-August-2010 Xillibit
+^ [#22015] Topics cannot be deleted/purged or restored from showcat
+# [#21994] Date of move on shadow topics is incorrect
+# [#22017] Link in report message email go to the wrong message
 
 22-August-2010 Matias
 + [#20084] Add function to fetch icons and topic icons to KunenaTemplate class

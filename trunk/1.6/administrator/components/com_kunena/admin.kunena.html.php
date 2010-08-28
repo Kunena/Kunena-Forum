@@ -2162,25 +2162,6 @@ table.kadmin-stat caption {
 		</div>
 		<?php
 			}
-			function showInstructions($kunena_db, $option) {
-		?>
-		<table width="100%" border="0" cellpadding="2" cellspacing="2" class="adminheading">
-			<tr>
-				<th class="info">&nbsp;<?php echo JText::_('COM_KUNENA_INSTRUCTIONS'); ?></th>
-			</tr>
-		</table>
-
-		<table width="100%" border="0" cellpadding="2" cellspacing="2" class="adminform">
-			<tr>
-				<th><?php echo JText::_('COM_KUNENA_FINFO'); ?></th>
-			</tr>
-			<tr>
-				<td><?php echo JText::_('COM_KUNENA_INFORMATION'); ?></td>
-			</tr>
-		</table>
-		<?php
-			} //end function showInstructions
-
 			function showCss($file, $option) {
 				$f = fopen ( $file, "r" );
 				$content = fread ( $f, filesize ( $file ) );
@@ -2534,7 +2515,7 @@ function textCounter(field, target) {
 						<td><?php echo JText::_('COM_KUNENA_MODCATS'); ?></td>
 					</tr>
 					<tr>
-						<td width="150" class="contentpane"><?php 
+						<td width="150" class="contentpane"><?php
 						echo $selectMod;
 						?>
 						</td>
@@ -2547,7 +2528,7 @@ function textCounter(field, target) {
 				<input type="hidden" name="boxchecked" value="1" />
 			</fieldset>
 		</dd>
-		
+
 <dt><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>
@@ -2564,14 +2545,14 @@ function textCounter(field, target) {
 					<?php
 						$enum = 1; //reset value
 						$k = 0; //value for alternating rows
-	
-		
+
+
 					if ($csubslist > 0) {
 						foreach ( $subslist as $subs ) { //get all message details for each subscription
 							$kunena_db->setQuery ( "select * from #__kunena_messages where id=$subs->thread" );
 							$subdet = $kunena_db->loadObjectList ();
 							if (KunenaError::checkDatabaseError()) break;
-		
+
 							foreach ( $subdet as $sub ) {
 								$k = 1 - $k;
 								echo "<tr class=\"row$k\">";
@@ -2603,7 +2584,7 @@ function textCounter(field, target) {
 					<?php
 					$i = 0;
 					$k = 0; //value for alternating rows
-			
+
 					$userids='';
 					foreach ($useriplist as $ip => $list) {
 						$k = 1 - $k;

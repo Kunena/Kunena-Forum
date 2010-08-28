@@ -558,6 +558,93 @@ class CKunenaTools {
 		$kunena_app->redirect ( $backUrl, $message );
 	}
 
+	function KDeletePerm() {
+		$kunena_app = JFactory::getApplication ();
+		$kunena_db = JFactory::getDBO ();
+
+		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
+		if (!JRequest::checkToken()) {
+			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$kunena_app->redirect ( $backUrl );
+		}
+
+		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
+		$kunena_mod = CKunenaModeration::getInstance ();
+
+		$items = KGetArrayInts ( "cb" );
+
+		// start iterating here
+		foreach ( $items as $id => $value ) {
+			$query = "SELECT `hold` FROM #__kunena_messages WHERE `thread`={$kunena_db->quote($id)};";
+			$kunena_db->setQuery ( $query );
+			$messagesHold = $kunena_db->loadObjectList ();
+			KunenaError::checkDatabaseError();
+
+			foreach ( $messagesHold as $messageHold ) {
+				if ($messageHold->hold == 2) {
+					$delete = $kunena_mod->deleteThreadPerminantly ( $id, true );
+					if (! $delete) {
+						$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
+					} else {
+						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' ) );
+					}
+				}
+			}
+
+		} //end foreach
+
+		$kunena_app->redirect ( $backUrl );
+	}
+
+	function KUndelete() {
+		$kunena_app = JFactory::getApplication ();
+		$kunena_db = JFactory::getDBO ();
+
+		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
+		if (!JRequest::checkToken()) {
+			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			$kunena_app->redirect ( $backUrl );
+		}
+
+		// Need to check if the user has moderation rights
+
+		$items = KGetArrayInts ( "cb" );
+
+		// start iterating here
+		foreach ( $items as $id => $value  ) {
+			// Need to get hold value to check if the message is right deleted
+			$query = "SELECT `hold` FROM #__kunena_messages WHERE `id`={$kunena_db->quote($id)};";
+			$kunena_db->setQuery ( $query );
+			$messageHold = $kunena_db->loadResult ();
+			KunenaError::checkDatabaseError();
+
+			if ( $messageHold == 2 ) {
+				// Execute undelete
+				$query = "UPDATE #__kunena_messages SET `hold`=0 WHERE `id`={$kunena_db->quote($id)};";
+				$kunena_db->setQuery ( $query );
+				$kunena_db->query ();
+				$dberror = 0;
+				if (KunenaError::checkDatabaseError()) $dberror = KunenaError::getDatabaseError();
+				if ($dberror) {
+					$kunena_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_ERROR_UNDELETE' ) , 'notice' );
+				} else {
+					$kunena_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE') );
+				}
+
+				// Last but not least update forum stats
+				CKunenaTools::reCountBoards();
+
+				// Activity integration
+				$activity = KunenaFactory::getActivityIntegration();
+				$activity->onAfterUndelete($this);
+			} else {
+				$kunena_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_UNDELETE_NOT_DELETED' ) , 'notice' );
+			}
+		} //end foreach
+
+		//$kunena_app->redirect ( $backUrl );
+	}
+
 		/**
 		 * This function formats a number to n significant digits when above
 		 * 10,000. Starting at 10,0000 the out put changes to 10k, starting

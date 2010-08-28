@@ -629,6 +629,13 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id, false),$message);
 					break;
+				case "bulkDelPerm" :
+					CKunenaTools::KDeletePerm ( );
+					break;
+
+				case "bulkRestore" :
+					CKunenaTools::KUndelete ( );
+					break;
 			}
 
 			break;

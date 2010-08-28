@@ -36,6 +36,7 @@ Kunena 1.6.0-RC2
 28-August-2010 fxstein
 # [#16390] Updated fi-FI (thanks Mortti)
 # [#19064] Google maps img styling for certain browsers (810 fix variation)
+# [#16390] Minor modification to english admin language file to clarify guest access settings
 
 25-August-2010 Severdia
 # [#19356] Language cleanup in admin backend

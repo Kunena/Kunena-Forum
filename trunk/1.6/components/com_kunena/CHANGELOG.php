@@ -35,6 +35,7 @@ Kunena 1.6.0-RC2
 
 28-August-2010 Matias
 ^ [#15886] Merged revisions 3273-3317 from /branches/1.6-xillibit-fixes-20100823
+# [#22107] Menu creation: menu alias into default menu
 
 28-August-2010 fxstein
 # [#16390] Updated fi-FI (thanks Mortti)

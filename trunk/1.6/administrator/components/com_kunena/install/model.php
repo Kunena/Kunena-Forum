@@ -1361,20 +1361,20 @@ class KunenaModelInstall extends JModel {
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		}
 
-		// Finally add Kunena to mainmenu if it does not exist somewhere
-		$query = "SELECT id FROM `#__menu` WHERE `link`='index.php?option=com_kunena' AND `menutype`='mainmenu';";
+		// Finally add forum menu link to default menu
+		$jmenu = JMenu::getInstance('site');
+		$dmenu = $jmenu->getDefault();
+		$query = "SELECT id FROM `#__menu` WHERE `alias`={$this->db->quote($menu['alias'])} AND `menutype`={$this->db->quote($dmenu->menutype)};";
 		$this->db->setQuery ( $query );
 		$id = ( int ) $this->db->loadResult ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		if (! $id ) {
-			$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-								($id, 'mainmenu', {$this->db->quote($menu['name'])}, {$this->db->quote($menu['alias'])}, 'index.php?option=com_kunena', 'component', 1, 0, $componentid, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_image=-1\r\n\r\n', 0, 0, 0);";
-			$this->db->setQuery ( $query );
-			$this->db->query ();
-			if ($this->db->getErrorNum ())
-				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-		}
+		$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
+							($id, {$this->db->quote($dmenu->menutype)}, {$this->db->quote($menu['name'])}, {$this->db->quote($menu['alias'])}, 'index.php?Itemid=$parentid', 'menulink', 1, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, {$menu['access']}, 0, 'menu_item=$parentid', 0, 0, 0);";
+		$this->db->setQuery ( $query );
+		$this->db->query ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 		require_once (JPATH_ADMINISTRATOR . '/components/com_menus/helpers/helper.php');
 		MenusHelper::cleanCache ();
 	}

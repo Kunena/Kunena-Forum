@@ -116,7 +116,7 @@ class modKunenaLatestHelper {
 			}
 
 		} else {
-			$result = $model->customreplies;
+			$result = $model->customreply;
 		}
 
 		if (empty ( $result )){

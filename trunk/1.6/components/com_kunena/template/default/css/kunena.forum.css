@@ -3567,8 +3567,11 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 .kgooglemap {
 	width: 100%;
 	background-color:#E5E3DF;
-	display:inline-block;
+	display:block;
 	height:480px;
 	overflow:hidden;
 	position:relative;
+}
+.kgooglemap img {
+	max-width:auto;
 }

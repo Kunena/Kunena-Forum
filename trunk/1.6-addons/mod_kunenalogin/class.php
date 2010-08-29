@@ -63,7 +63,7 @@ class ModKunenaLogin {
 
 	function getType() {
 		$user = KunenaFactory::getUser ();
-		return (! $user->get ( 'guest' )) ? 'logout' : 'login';
+		return ($user->userid) ? 'logout' : 'login';
 	}
 
 	function loadCSS($name) {

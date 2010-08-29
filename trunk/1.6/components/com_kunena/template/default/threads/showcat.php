@@ -125,7 +125,7 @@ echo '</div>';
 			<?php
 			echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 			foreach ( $this->modslist as $mod ) {
-				echo CKunenaLink::GetProfileLink ( intval($mod->userid), $this->escape($mod->username) ) . '&nbsp; ';
+				echo CKunenaLink::GetProfileLink ( intval($mod->userid) ) . '&nbsp; ';
 			}
 			?>
 		</div>

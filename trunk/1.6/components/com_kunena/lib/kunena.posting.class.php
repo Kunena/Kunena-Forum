@@ -264,7 +264,7 @@ class CKunenaPosting {
 			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_INVALID' ) );
 		}
 		// Post must be marked as deleted
-		if ($this->parent->hold != 2 || $this->parent->hold != 3) {
+		if ($this->parent->hold != 2 && $this->parent->hold != 3) {
 			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_NOT_DELETED' ) );
 		}
 		// TODO: check that topic is not on hold, otherwise we get orphan message

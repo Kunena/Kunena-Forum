@@ -33,12 +33,22 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+29-August-2010 Xillibit
+# [#19288] Update french translation (fr-FR)
+# [#22120] Error displaying names of moderators
+# [#22015] Logic to restore posts now restore all thread to be sure
+# [#22015] Not possible to restore a message directly in message view
+^ [#21993] Usability issue- Moved Icon
+# [#22128] New category permdelete/restore function not present in showcat
+# [#22129] Admin sub menu strings incorrect
+
 29-August-2010 Matias
 # [#22119] Fix PHP Notice: Undefined variable: items in KGetArrayInts() and KGetArrayReverseInts()
 # [#22119] Fix PHP Warning: Offset not contained in string in kunena.parser.bbcode.php on fb_stripos()
 # [#22119] Fix PHP Warnings when SQL query in routing fails
 # [#22108] Fix white page when integration fails because of failed requirements
 # [#19255] Fix XHTML validation errors: br tag not closed
+^ [#15886] Merged revisions 3327-3337 from /branches/1.6-xillibit-fixes-20100829
 
 28-August-2010 Matias
 ^ [#15886] Merged revisions 3273-3317 from /branches/1.6-xillibit-fixes-20100823

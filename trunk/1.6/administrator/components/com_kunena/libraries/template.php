@@ -120,10 +120,20 @@ class KunenaTemplate extends JObject
 		return $base.(isset($this->topicIcons[$index]) ? $this->topicIcons[$index] : $this->topicIcons[0]);
 	}
 
-	public function getTopicIcon($topic) {
+	public function getMovedIconPath($url = false) {
+		$path = $this->getPath();
+		$topiciconmoved =  "/{$path}/images/icons/topic-arrow.png";
+
+		$base = '';
+		if ($url) $base = KURL_SITE;
+		return $base.$topiciconmoved;
+	}
+
+	public function getTopicIcon($topic ) {
 		$config = KunenaFactory::getConfig ();
 		if ($config->topicicons) {
-			$iconurl = $this->getTopicIconPath($topic->topic_emoticon, true);
+			if ( $topic->moved == 0 ) $iconurl = $this->getTopicIconPath($topic->topic_emoticon, true);
+			else $iconurl = $this->getMovedIconPath(true);
 		} else {
 			$icon = 'normal';
 			if ($topic->msgcount < 2) $icon = 'unanswered';

@@ -28,6 +28,10 @@ Legend:
 
 KunenaLogin 1.6.0-RC2
 
+29-Aug-2010 @quila
+- [#22073] Removed hardcoded ID
++ [#22073] Added horizontal style
+
 29-Aug-2010 Matias
 # [#22073] Fix logout showing up even if not logged in
 

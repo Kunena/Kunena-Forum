@@ -10,165 +10,143 @@
 
 /*					VERTICAL STYLE
 ----------------------------------------------------------*/
-#Klogin-vert li a {
+.Klogin-vert li a {
 	text-decoration: none;
 	line-height: 1.5em;
 }
 
-#Klogin-vert ul#loginlink li.myprofile,#Klogin-vert ul#loginlink li.mypost,#Klogin-vert ul#loginlink li.mypm,#Klogin-vert ul#loginlink li.recent
-	{
+.Klogin-vert ul.loginlink li {
 	margin: 0;
 	padding: 0 0 0 10px;
 	background: transparent url(../images/arrow.png) no-repeat left center;
 	text-decoration: none;
-	list-style: none;
+	list-style: none !important;
 }
 
-#Klogin-vert ul#logoutlink li.forgotpass,#Klogin-vert ul#logoutlink li.forgotname,#Klogin-vert ul#logoutlink li.register
-	{
+.Klogin-vert ul.logoutlink li {
 	margin: 0;
 	padding: 0 0 0 10px;
 	background: transparent url(../images/arrow.png) no-repeat left center;
-	list-style: none;
+	list-style: none !important;
 }
 
-#Klogin-vert ul#jslink li.friends,#Klogin-vert ul#jslink li.photos,#Klogin-vert ul#jslink li.videos,#Klogin-vert ul#jslink li.groups
-	{
-	margin: 0;
-	padding: 0 0 0 10px;
-	background: transparent url(../images/arrow.png) no-repeat left center;
-	list-style: none;
-	line-height: 18px;
-}
-
-#Klogin-vert div.links {
+.Klogin-vert div.links {
 	text-align: center;
 }
 
-#Klogin-vert div.avatar {
+.Klogin-vert div.avatar {
 	text-align: center !important;
 	padding: 5px;
 }
-
-#Klogin-vert ul#perslink li.pers {
-	margin: 0;
-	padding: 0 0 0 10px;
-	background: transparent url(../images/arrow.png) no-repeat left center;
-	list-style: none;
-}
-#Klogin-vert div.k_lastvisit ul {
+.Klogin-vert div.k_lastvisit ul,
+.Klogin-vert ul.logoutlink {
 	padding: 0;
+	margin: 10px 0;
 }
-#Klogin-vert div.k_lastvisit li {
+.Klogin-vert div.k_lastvisit li {
 	background: none;
-	list-style: none;
+	list-style: none !important;
 }
-#Klogin-vert div.k_lastvisit {
+.Klogin-vert div.k_lastvisit {
 	text-align: center;
 }
-#Klogin-vert span.k_lasttext {
+.Klogin-vert span.k_lasttext {
 	font-weight: bold;
 }
-#Klogin-vert span.k_lastdate {
+.Klogin-vert span.k_lastdate {
 	clear: both;
 }
-#Klogin-vert div.k_hiname {
+.Klogin-vert div.k_hiname {
 	text-align: center;
 }
 
 /*					HORIZONTAL STYLE
 ----------------------------------------------------------*/
-#Klogin-horiz {
+.Klogin-horiz {
 	display: block;
+	/*overflow:hidden;*/
+	padding:0;
 }
 
-#Klogin-horiz #form-login .button {
-	margin: 2px 0 !important;
-}
-
-#Klogin-horiz li a {
+.Klogin-horiz li a {
 	text-decoration: none;
 	line-height: 1.3em;
 }
 
-#Klogin-horiz div.k_lastvisit {
+.Klogin-horiz div.k_lastvisit {
 	text-align: center;
 }
 
-#Klogin-horiz ul#greeting,#Klogin-horiz ul#logoutlink {
+.Klogin-horiz ul.greeting,.Klogin-horiz ul.logoutlink {
 	float: left;
 	display: inline;
 	padding: 0 !important;
 	margin: 0 !important;
 }
 
-#Klogin-horiz ul#logoutform li {
+.Klogin-horiz ul.logoutform li {
 	padding: 0;
 	margin: 0;
 }
 
-#Klogin-horiz ul#logoutform input#modlgn_username,#Klogin-horiz ul#logoutform input#modlgn_passwd
-	{
+.Klogin-horiz ul.logoutform input.modlgn_username,.Klogin-horiz ul.logoutform input.modlgn_passwd {
 	width: 100px;
 	padding: 0;
 	margin: 0;
 }
 
-#Klogin-horiz ul#logoutform input.button {
-	padding: 1px 5px;;
-	margin: 0;
-}
-
-#Klogin-horiz ul#jslink,#Klogin-horiz ul#perslink,#Klogin-horiz ul#loginlink
-	{
-	float: left;
-	display: inline;
-	padding: 0 0 0 10px !important;
+.Klogin-horiz ul {
+	padding: 0 !important;
 	margin: 0 !important;
+	float:left;
 }
-
-#Klogin-horiz ul#loginlink li.myprofile,#Klogin-horiz ul#loginlink li.mypost,#Klogin-horiz ul#loginlink li.mypm,#Klogin-horiz ul#loginlink li.recent
-	{
+.Klogin-horiz div.middle li {
+	background: none;
+	margin-right:10px;
+	text-align:left;
+}
+.Klogin-horiz div.middle li.logout-button {
+	padding-top:10px;
+}
+.Klogin-horiz ul li {
 	margin: 0;
-	padding: 0 0 0 10px;
+	padding-left: 10px !important;
 	background: transparent url(../images/arrow.png) no-repeat left center;
 	text-decoration: none;
-	list-style: none;
+	list-style: none !important;
+	float:none !important;
+}
+.Klogin-horiz ul.logoutfield li {
+	padding-left: 0px !important;
+	background: none !important;
+}
+.Klogin-horiz ul.logoutfield li.klogout-pwd {
+	padding: 5px 0 0 0;
+}
+.Klogin-horiz ul.logoutfield li.klogout-uname {
+	padding: 0 5px 0 0;
+}
+.Klogin-horiz ul.logoutfield input.button {
+	margin: 0 5px;
 }
 
-#Klogin-horiz ul#logoutlink li.forgotpass,#Klogin-horiz ul#logoutlink li.forgotname,#Klogin-horiz ul#logoutlink li.register
-	{
-	display: inline;
+.Klogin-horiz ul.logoutlink li.forgotpass,.Klogin-horiz ul.logoutlink li.forgotname,.Klogin-horiz ul.logoutlink li.register {
+	/*display: inline;*/
 	margin: 0;
-	padding: 0 0 0 10px;
+	padding: 0 0 0 10px !important;
 	background: transparent url(../images/arrow.png) no-repeat left center;
-	list-style: none;
+	list-style: none !important;
 }
 
-#Klogin-horiz ul#jslink li.friends,#Klogin-horiz ul#jslink li.photos,#Klogin-horiz ul#jslink li.videos,#Klogin-horiz ul#jslink li.groups
-	{
-	margin: 0;
-	padding: 0 0 0 10px;
-	background: transparent url(../images/arrow.png) no-repeat left center;
-	list-style: none;
-}
-
-#Klogin-horiz ul#perslink li.pers {
-	margin: 0;
-	padding: 0 0 0 10px;
-	background: transparent url(../images/arrow.png) no-repeat left center;
-	list-style: none;
-}
-
-#Klogin-horiz div.avatar {
+.Klogin-horiz div.avatar,
+.Klogin-horiz div.middle {
 	background: transparent;
 	float: left;
 	margin-right: 0px;
-	text-align: center;
 	padding: 1px;
 }
 
-#Klogin-horiz div.info {
+.Klogin-horiz div.info {
 	background: transparent;
 	float: left;
 	margin-right: 0px;
@@ -176,7 +154,7 @@
 	padding: 1px;
 }
 
-#Klogin-horiz div.k_avatar_right {
+.Klogin-horiz div.k_avatar_right {
 	background: transparent;
 	float: right;
 	margin-right: 15px;
@@ -184,14 +162,23 @@
 	padding: 1px;
 }
 
-#Klogin-horiz ul#greeting li {
+.Klogin-horiz ul.greeting li {
 	background: none;
 	list-style-image: none !important;
 	list-style-type: none;
 }
 
-#Klogin-horiz img {
+.Klogin-horiz img {
 	margin: 0 10px 0;
+}
+.Klogin-horiz div.links {
+	float: left;
+}
+.Klogin-horiz span.k_lasttext {
+	font-weight: bold;
+}
+.Klogin-horiz span.k_lastdate {
+	font-weight: normal;
 }
 
 /*					FLAT STYLE

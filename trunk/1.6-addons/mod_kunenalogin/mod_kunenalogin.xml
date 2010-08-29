@@ -22,12 +22,11 @@
 		<language tag="en-GB">languages/en-GB.mod_kunenalogin.ini</language>
 	</languages>
 	<params>
-	<!-- 
-		<param name="template" type="list" default="0"
+		<param name="template" type="list" default="vertical"
 			label="MOD_KUNENALOGIN_STYLE" description="MOD_KUNENALOGIN_STYLE_DESC">
-			<option value="0">MOD_KUNENALOGIN_VERTICAL</option>
+			<option value="vertical">MOD_KUNENALOGIN_VERTICAL</option>
+			<option value="horizontal">MOD_KUNENALOGIN_HORIZONTAL</option>
 		</param>
-	 -->
 		<param name="pretext" type="textarea" cols="30" rows="3"
 			default="" label="MOD_KUNENALOGIN_PRE_TEXT" description="MOD_KUNENALOGIN_PRE_TEXT_DESC" />
 		<param name="posttext" type="textarea" cols="30" rows="3"

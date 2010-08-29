@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: vertical.php 3313 2010-08-26 16:27:58Z fxstein $
  * Kunenalogin Module
  * @package Kunena login
  *
@@ -10,37 +10,36 @@
  */
 defined('_JEXEC') or die();
 ?>
-<div class="Klogin-vert">
+<div class="Klogin-horiz">
 	<?php if($this->type == 'logout') : ?>
-		<form action="index.php" method="post" name="login">
-		<?php if ($this->params->get('greeting')) : ?>
-			<div class="k_hiname">
-			<?php echo JText::sprintf('MOD_KUNENALOGIN_HINAME','<strong>'.CKunenaLink::GetProfileLink ( $this->my->id, $this->user->getName()).'</strong>' ); ?>
-			</div>
-		<?php endif; ?>
+	<form action="index.php" method="post" name="login">
 	<div class="avatar">
 		<?php if ($this->params->get('showav')) :
 			$avatar =  $this->kunenaAvatar( $this->my->id ) ;
 			echo $avatar;
 		endif; ?>
 	</div>
-	<div>
-	<?php if ($this->params->get('lastlog')) : ?>
-	<div class="k_lastvisit">
+	<div class="middle">
 		<ul>
-			<li class="kms">
+		<?php if ($this->params->get('greeting')) : ?>
+			<li class="k_hiname">
+			<?php echo JText::sprintf('MOD_KUNENALOGIN_HINAME','<strong>'.CKunenaLink::GetProfileLink ( $this->my->id, $this->user->getName()).'</strong>' ); ?>
+			</li>
+		<?php endif; ?>
+		<?php if ($this->params->get('lastlog')) : ?>
+			<li>
 				<span class="k_lasttext"><?php echo JText::_('MOD_KUNENALOGIN_LASTVISIT'); ?></span>
 				<span class="k_lastdate" title="<?php echo CKunenaTimeformat::showDate($this->my->lastvisitDate, 'date_today', 'utc'); ?>">
 					<?php echo CKunenaTimeformat::showDate($this->my->lastvisitDate, 'ago', 'utc'); ?>
 				</span>
 			</li>
+		<?php endif; ?>
+			<li class="logout-button">
+				<input type="submit" name="Submit" class="button" value="<?php echo JText::_('MOD_KUNENALOGIN_BUTTON_LOGOUT'); ?>" />
+			</li>
 		</ul>
 	</div>
-	<?php endif; ?>
-	</div>
-	<div class="links">
-		<input type="submit" name="Submit" class="button" value="<?php echo JText::_('MOD_KUNENALOGIN_BUTTON_LOGOUT'); ?>" /></div>
-		<div>
+		<div class="links">
 			<ul class="loginlink">
 			<?php	if ($this->params->get('showmessage')) : ?>
 				<?php if ($this->PMlink) : ?>
@@ -65,29 +64,35 @@ defined('_JEXEC') or die();
 	<input type="hidden" name="task" value="<?php echo $this->logout['task']; ?>" />
 	<input type="hidden" name="<?php echo $this->logout['field_return']; ?>" value="<?php echo $this->return; ?>" />
 	<?php echo JHTML::_( 'form.token' ); ?>
-</form>
+	</form>
 
 <?php else : ?>
 
 <form action="index.php" method="post" name="login" class="form-login" >
 	<?php echo $this->params->get('pretext'); ?>
-	<fieldset class="input">
-	<p class="form-login-username">
-		<label for="modlgn_username"><?php echo JText::_('MOD_KUNENALOGIN_USERNAME') ?></label>
-		<input class="modlgn_username" type="text" name="<?php echo $this->login['field_username']; ?>" class="inputbox" alt="username" size="18" />
-	</p>
-	<p class="form-login-password">
-		<label for="modlgn_passwd"><?php echo JText::_('MOD_KUNENALOGIN_PASSWORD') ?></label>
-		<input class="modlgn_passwd" type="password" name="<?php echo $this->login['field_password']; ?>" class="inputbox" size="18" alt="password" />
-	</p>
+
+	<ul class="logoutfield">
+	<li class="klogout-uname">
+	<span class="form-login-username">
+		<label for="modlgn_username"><?php //echo JText::_('MOD_KUNENALOGIN_USERNAME') ?></label>
+		<input class="modlgn_username" type="text" name="<?php echo $this->login['field_username']; ?>" class="inputbox" alt="username" size="18" value="<?php echo JText::_('MOD_KUNENALOGIN_USERNAME'); ?>" onblur = "if(this.value=='') this.value='<?php echo JText::_('MOD_KUNENALOGIN_USERNAME'); ?>';" onfocus = "if(this.value=='<?php echo JText::_('MOD_KUNENALOGIN_USERNAME'); ?>') this.value='';" />
+	</span>
 	<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
-	<p class="form-login-remember"><label for="modlgn_remember">
+	<span class="form-login-remember"><label for="modlgn_remember">
 	<input class="modlgn_remember" type="checkbox" name="remember" value="yes" alt="<?php echo JText::_('MOD_KUNENALOGIN_REMEMBER_ME') ?>" />
 		<?php echo JText::_('MOD_KUNENALOGIN_REMEMBER_ME') ?></label>
-	</p>
+	</span>
 	<?php endif; ?>
+	</li>
+	<li class="klogout-pwd">
+	<span class="form-login-password">
+		<label for="modlgn_passwd"><?php //echo JText::_('MOD_KUNENALOGIN_PASSWORD') ?></label>
+		<input class="modlgn_passwd" type="password" name="<?php echo $this->login['field_password']; ?>" class="inputbox" size="18" alt="password"  value="<?php echo JText::_('MOD_KUNENALOGIN_PASSWORD'); ?>" onblur = "if(this.value=='') this.value='<?php echo JText::_('MOD_KUNENALOGIN_PASSWORD'); ?>';" onfocus = "if(this.value=='<?php echo JText::_('MOD_KUNENALOGIN_PASSWORD'); ?>') this.value='';"/>
+	</span>
 	<input type="submit" name="Submit" class="button" value="<?php echo JText::_('MOD_KUNENALOGIN_BUTTON_LOGIN') ?>" />
-	</fieldset>
+	</li>
+	</ul>
+
 	<ul class="logoutlink">
 		<li class="forgotpass"><?php echo CKunenaLogin::getLostPasswordLink (); ?></li>
 		<li class="forgotname"><?php echo CKunenaLogin::getLostUserLink ();?></li>

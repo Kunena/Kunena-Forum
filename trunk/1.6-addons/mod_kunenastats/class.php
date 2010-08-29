@@ -55,7 +55,7 @@ class ModuleKunenaStats {
 				break;
 			case 'posters':
 				$this->titleHeader = JText::_('MOD_KUNENASTATS_TOPPOSTERS');
-				$this->valueHeader = JText::_('MOD_KUNENASTATS_HITS');
+				$this->valueHeader = JText::_('MOD_KUNENASTATS_POSTS');
 				$items = $this->api->getPostersStats ( $this->items );
 				if (!empty($items)) $this->top = $items[0]->posts;
 				break;

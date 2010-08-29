@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.6.0-RC1
 
+29-Aug-2010 fxstein
++ [#20095] Additional language string for posts as table header for top posters
+
 29-Aug-2010 @quila
 + [#20095] Added images arrow and bar
 + [#20095] Added mod_kunenastats.css file

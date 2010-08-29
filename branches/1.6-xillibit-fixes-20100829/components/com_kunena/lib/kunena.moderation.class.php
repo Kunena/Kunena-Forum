@@ -24,6 +24,7 @@ define ( 'KN_DEL_MESSAGE_PERMINANTLY', 1 );
 define ( 'KN_DEL_THREAD', 2 );
 define ( 'KN_DEL_ATTACH', 3 );
 define ( 'KN_DEL_THREAD_PERMINANTLY', 4 );
+define ( 'KN_UNDELETE_THREAD', 5 );
 
 class CKunenaModeration {
 	// Private data and functions
@@ -305,6 +306,13 @@ class CKunenaModeration {
 				break;
 			case KN_DEL_THREAD_PERMINANTLY : //Delete a complete thread from the databases
 				$sql = "DELETE FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($currentMessage->thread)};";
+
+				if ($DeleteAttachments) {
+					$this->deleteAttachments($MessageID);
+				}
+				break;
+			case KN_UNDELETE_THREAD :
+				$sql = "UPDATE #__kunena_messages SET `hold`=0 WHERE `id`={$this->_db->Quote($currentMessage->thread)};";
 				break;
 			case KN_DEL_THREAD : //Delete a complete thread
 				$sql1 = "UPDATE #__kunena_messages SET `hold`=2 WHERE `id`={$this->_db->Quote($MessageID)};";
@@ -392,8 +400,11 @@ class CKunenaModeration {
 	}
 
 	public function deleteThreadPerminantly($MessageID, $DeleteAttachments = false) {
-		// TODO: delete all attachments, too
 		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_DEL_THREAD_PERMINANTLY );
+	}
+
+	public function undeleteThread($MessageID, $DeleteAttachments = false) {
+		return $this->_Delete ( $MessageID, $DeleteAttachments, KN_UNDELETE_THREAD );
 	}
 
 	public function deleteMessage($MessageID, $DeleteAttachments = false) {

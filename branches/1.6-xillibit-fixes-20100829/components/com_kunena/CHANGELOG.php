@@ -36,6 +36,8 @@ Kunena 1.6.0-RC2
 29-August-2010 Xillibit
 # [#19288] Update french translation (fr-FR)
 # [#22120] Error displaying names of moderators
+# [#22015] Logic to restore posts now restore all thread to be sure
+# [#22015] Not possible to restore a message directly in message view
 
 28-August-2010 Matias
 ^ [#15886] Merged revisions 3273-3317 from /branches/1.6-xillibit-fixes-20100823

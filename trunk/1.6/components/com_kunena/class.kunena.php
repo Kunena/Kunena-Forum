@@ -985,6 +985,7 @@ function generate_smilies() {
 function KGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
 
+    $items = array();
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
     }
@@ -1000,6 +1001,7 @@ function KGetArrayInts($name) {
 function KGetArrayReverseInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
 
+    $items = array();
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = (int)$item;
     }

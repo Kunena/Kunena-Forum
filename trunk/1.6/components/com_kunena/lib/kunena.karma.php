@@ -47,7 +47,6 @@ $karma_min_seconds = '14400'; // 14400 seconds = 6 hours
 <table>
     <tr>
         <td>
-            <br>
             <center>
                 <?php
                 //This checks:

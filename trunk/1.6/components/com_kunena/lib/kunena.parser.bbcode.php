@@ -58,7 +58,8 @@ define('BBCODE_PARSE_VAL',        'val');
 define('BBCODE_PARSE_VALQUOT',    'valquot');
 
 function fb_stripos($haystack , $needle , $offset=0) {
-    return stripos($haystack, $needle, $offset);
+	if (strlen($haystack) <= $offset) return false;
+	return stripos($haystack, $needle, $offset);
 }
 
 class BBCodeInterpreter extends TagInterpreter {

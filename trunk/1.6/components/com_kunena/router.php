@@ -268,11 +268,11 @@ class KunenaRouter {
 			if (empty ( $vars ['catid'] )) {
 				$parent = 0;
 			} else {
-				$db = & JFactory::getDBO ();
+				$db = JFactory::getDBO ();
 				$quesql = 'SELECT parent FROM #__kunena_categories WHERE id=' . ( int ) $vars ['catid'];
 				$db->setQuery ( $quesql );
 				$parent = $db->loadResult ();
-				if (KunenaError::checkDatabaseError()) return;
+				KunenaError::checkDatabaseError();
 			}
 			if (! $parent)
 				$vars ['func'] = 'listcat';

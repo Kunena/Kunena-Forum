@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+29-August-2010 Matias
+# [#22119] Fix PHP Notice: Undefined variable: items in KGetArrayInts() and KGetArrayReverseInts()
+# [#22119] Fix PHP Warning: Offset not contained in string in kunena.parser.bbcode.php on fb_stripos()
+# [#22119] Fix PHP Warnings when SQL query in routing fails
+# [#22108] Fix white page when integration fails because of failed requirements
+# [#19255] Fix XHTML validation errors: br tag not closed
+
 28-August-2010 Matias
 ^ [#15886] Merged revisions 3273-3317 from /branches/1.6-xillibit-fixes-20100823
 # [#22107] Menu creation: menu alias into default menu

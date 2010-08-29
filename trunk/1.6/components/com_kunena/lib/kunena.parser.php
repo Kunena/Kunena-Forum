@@ -469,7 +469,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					} else {
 						$task->autolink_disable --; // continue autolink conversion
 
-						$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>" . JText::_('COM_KUNENA_FILENAME') . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . kunena_htmlspecialchars ( !empty($tag->options ["name"]) ? $tag->options ["name"] : $tempstr) . "</a><br>" . JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( isset($tag->options ["size"]) ? $tag->options ["size"] : '?' ) . "</div>";
+						$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>" . JText::_('COM_KUNENA_FILENAME') . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . kunena_htmlspecialchars ( !empty($tag->options ["name"]) ? $tag->options ["name"] : $tempstr) . "</a><br />" . JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( isset($tag->options ["size"]) ? $tag->options ["size"] : '?' ) . "</div>";
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -519,7 +519,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$this->parent->inline_attachments[$attachment->id] = $attachment;
 						$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
 						if (empty($attachment->imagelink)) {
-							$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br>" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . $attachment->size . "</div>";
+							$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . $attachment->size . "</div>";
 						} else {
 							$tag_new = "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
 						}

@@ -9,8 +9,6 @@
  * @link http://www.kunena.com
  *
  **/
-//
-// Dont allow direct linking
 defined ( '_JEXEC' ) or die ( '' );
 
 // Abstract base class for various 3rd party integration classes
@@ -40,6 +38,12 @@ abstract class KunenaIntegration extends JObject {
 	}
 
 	static public function initialize($name, $integration) {
+		$object = self::_initialize($name, $integration);
+		if (!$object) $object = self::_initialize($name, 'auto');
+		return $object;
+	}
+
+	static protected function _initialize($name, $integration) {
 		if (! $integration)
 			$integration = 'none';
 		if ($integration == 'auto')
@@ -51,11 +55,12 @@ abstract class KunenaIntegration extends JObject {
 		if (is_file ( $file )) {
 			require_once ($file);
 			$class = 'Kunena' . ucfirst ( $name ) . ucfirst ( $integration );
-			if (class_exists ( $class ))
-				return new $class ( );
+			if (class_exists ( $class )) {
+				$object = new $class ( );
+				if ($object->priority)
+					return $object;
+			}
 		}
-		// If integration does not exist, use autodetection
-		return self::initialize($name, 'auto');
 	}
 
 	static protected function detectJoomla() {
@@ -75,7 +80,7 @@ abstract class KunenaIntegration extends JObject {
 			$file = "$dir/$integration/$name.php";
 			if (is_file ( $file )) {
 				kimport("integration.$name");
-				$obj = self::initialize ( $name, $integration );
+				$obj = self::_initialize ( $name, $integration );
 				$priority = 0;
 				if ($obj)
 					$priority = $obj->priority;

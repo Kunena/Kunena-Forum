@@ -40,7 +40,7 @@ $i=0;
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first"><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->thread, $stat->subject, $stat->subject); ?></td>
-			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->hits);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->hits, 3);?></span></td>
+			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->hits);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->hits, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
 
@@ -48,7 +48,7 @@ $i=0;
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first"><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->threadid, $stat->title, $stat->title); ?></td>
-			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->total);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->total, 3);?></span></td>
+			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->total);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->total, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
 
@@ -56,7 +56,7 @@ $i=0;
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
-			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->posts);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->posts, 3);?></span></td>
+			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->posts);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->posts, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
 
@@ -64,7 +64,7 @@ $i=0;
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->user_id, $stat->user); ?></td>
-			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->hits);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->hits, 3);?></span></td>
+			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->hits);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->hits, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
 
@@ -72,7 +72,7 @@ $i=0;
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
-			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->receivedthanks);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->receivedthanks, 3);?></span></td>
+			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->receivedthanks);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->receivedthanks, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
 	<?php endif; ?>

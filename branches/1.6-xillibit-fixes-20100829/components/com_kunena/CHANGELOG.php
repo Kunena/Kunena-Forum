@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+29-August-2010 Xillibit
+# [#19288] Update french translation (fr-FR)
+# [#22120] Error displaying names of moderators
+
 28-August-2010 Matias
 ^ [#15886] Merged revisions 3273-3317 from /branches/1.6-xillibit-fixes-20100823
 # [#22107] Menu creation: menu alias into default menu

@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.6.0-RC1
 
+29-August-2010 Matias
+# [#20095] Fix Undefined property in Top Thank You
+
 21-August-2010 Matias
 # [#20095] Changed language strings to obey J1.6 naming convensions
 # [#20095] Better formatting in php and html files

@@ -73,7 +73,7 @@ class ModuleKunenaStats {
 				$this->titleHeader = JText::_('MOD_KUNENASTATS_TOPTHANKS');
 				$this->valueHeader = JText::_('MOD_KUNENASTATS_THANKS');
 				$items = $this->api->getTopThanks ( $this->items );
-				if (!empty($items)) $this->top = $items[0]->hits;
+				if (!empty($items)) $this->top = $items[0]->receivedthanks;
 				break;
 			default:
 				$items = array();

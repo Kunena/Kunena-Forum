@@ -71,7 +71,7 @@ defined('_JEXEC') or die('Restricted access');
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr>
 			<td><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->hits);?>%"/></td>
+			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->receivedthanks);?>%"/></td>
 		</tr>
 		<?php endforeach; ?>
 	<?php endif; ?>

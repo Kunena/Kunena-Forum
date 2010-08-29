@@ -20,6 +20,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 	// *** initialization ***
 	function plgContentKunenaDiscuss(&$subject, $params) {
 
+		$this->_app = JFactory::getApplication ( 'site' );
+
 		// If plugin is not enabled in current scope, do not register it
 		if (! $this->enabled ())
 			return null;
@@ -39,7 +41,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// Initialize variables
 		$this->_db = JFactory::getDbo ();
-		$this->_app = JFactory::getApplication ( 'site' );
 		$this->_my = JFactory::getUser ();
 
 		require_once (KUNENA_PATH . DS . 'class.kunena.php');
@@ -255,7 +256,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 				$this->debug ( "showPlugin: Public posting is not permitted, show login instead" );
 				$login = KunenaFactory::getLogin ();
 				$loginlink = $login->getLoginURL ();
-				$registerlink = $login->getRegisterURL ();
+				$registerlink = $login->getRegistrationURL ();
 				$quickPost = JText::sprintf ( 'PLG_KUNENADISCUSS_LOGIN_OR_REGISTER', '"' . $loginlink . '"', '"' . $registerlink . '"' );
 			} else if ($canPost) {
 				$this->debug ( "showPlugin: You can discuss this item" );
@@ -455,15 +456,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		if (count ( $categoryMap ) > 0 && isset ( $categoryMap [$catid] )) {
 			$this->debug ( "onPrepareContent.Allow: Category {$catid} is in the category map using Kunena category {$categoryMap[$catid]}" );
-			return $categoryMap [$catid];
-		}
-		if ($allowCategories && (in_array ( $catid, $allowCategories ) || in_array ( 0, $allowCategories ))) {
-			$this->debug ( "onPrepareContent.Allow: Category {$catid} is in the include list using Kunena category {$default}" );
-			return $default;
-		}
-		if ($denyCategories && (in_array ( $catid, $denyCategories ) || in_array ( 0, $denyCategories ))) {
-			$this->debug ( "onPrepareContent.Deny: Category {$catid} is in the exclude list" );
-			return false;
+			if (!$categoryMap [$catid]) $this->debug ( "onPrepareContent.Allow: ERROR: category map should have pairs of values: 1,3;2,4;3,5" );
 		}
 		$this->debug ( "onPrepareContent.Allow: Category {$catid} using Kunena category {$default}" );
 		return $default;

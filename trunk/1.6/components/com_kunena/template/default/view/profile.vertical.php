@@ -24,9 +24,11 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 			<span class = "kmsgusertype">( <?php echo $this->escape($this->usertype) ?> )</span>
 		</li>
 		<?php endif ?>
+		<?php if ($this->avatar) : ?>
 		<li class="kpost-avatar">
 		<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->avatar ); ?>
 		</li>
+		<?php endif; ?>
 		<?php if ($this->profile->userid): ?>
 
 		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>

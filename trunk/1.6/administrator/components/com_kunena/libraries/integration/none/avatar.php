@@ -9,11 +9,9 @@
  * @link http://www.kunena.com
  *
  **/
-//
-// Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
-class KunenaAvatarNone
+class KunenaAvatarNone extends KunenaAvatar
 {
 	public function __construct() {
 		$this->priority = 5;

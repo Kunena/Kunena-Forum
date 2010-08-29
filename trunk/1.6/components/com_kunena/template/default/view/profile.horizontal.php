@@ -40,9 +40,11 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 		</li>
 		<?php endif ?>
 		<?php endif; ?>
+		<?php if ($this->avatar): ?>
 		<li class="kpost-avatar">
 		<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->avatar ); ?>
 		</li>
+		<?php endif; ?>
 		<li class="kpost-username">
 			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->username) ); ?>
 		</li>

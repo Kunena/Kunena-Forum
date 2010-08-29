@@ -25,10 +25,10 @@
 		<menu task="cpanel" img="components/com_kunena/media/icons/kunena-favicon.png">Kunena Forum</menu>
 		<submenu>
 			<menu task="showconfig" img="components/com_kunena/media/icons/config-favicon.png">Configuration</menu>
-			<menu task="showAdministration" img="components/com_kunena/media/icons/forums-favicon.png">Trash Manager</menu>
+			<menu task="showAdministration" img="components/com_kunena/media/icons/forums-favicon.png">Category Manager</menu>
 			<menu task="showprofiles" img="components/com_kunena/media/icons/users-favicon.png">User Manager</menu>
-			<menu task="showtrashview" img="components/com_kunena/media/icons/trash-favicon.png">User Manager</menu>
-			<menu task="ranks" img="components/com_kunena/media/icons/ranks-favicon.png">Rank Manager</menu>
+			<menu task="showtrashview" img="components/com_kunena/media/icons/trash-favicon.png">Trash Manager</menu>
+			<menu task="templates" img="components/com_kunena/media/icons/templates-favicon.png">Template Manager</menu>			
 		</submenu>
 		<files>
 			<filename>api.php</filename>

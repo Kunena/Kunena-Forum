@@ -39,6 +39,8 @@ Kunena 1.6.0-RC2
 # [#22015] Logic to restore posts now restore all thread to be sure
 # [#22015] Not possible to restore a message directly in message view
 ^ [#21993] Usability issue- Moved Icon
+# [#22128] New category permdelete/restore function not present in showcat
+# [#22129] Admin sub menu strings incorrect
 
 28-August-2010 Matias
 ^ [#15886] Merged revisions 3273-3317 from /branches/1.6-xillibit-fixes-20100823

@@ -133,7 +133,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		} else {
 			// Get fulltext from frontpage articles (tag can be inside fulltext)
 			if ($isFrontPage) {
-				$query = "SELECT fulltext FROM #__content WHERE id ={$article->id}";
+				$query = "SELECT `fulltext` FROM #__content WHERE id ={$this->_db->quote($article->id)}";
 				$this->_db->setQuery ( $query );
 				$fulltext = $this->_db->loadResult ();
 				CKunenaTools::checkDatabaseError ();
@@ -206,7 +206,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		$query = "SELECT b.*, m.thread AS thread FROM #__kunenadiscuss AS b
 			LEFT JOIN #__kunena_messages AS m ON b.thread_id = m.id AND hold=0
-			WHERE b.content_id = {$row->id}";
+			WHERE b.content_id = {$this->_db->quote($row->id)}";
 		$this->_db->setQuery ( $query );
 		$result = $this->_db->loadObject ();
 		CKunenaTools::checkDatabaseError ();
@@ -214,7 +214,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		if ($result && $result->thread_id == $thread) $thread = 0;
 		if ($result && ($result->thread != $result->thread_id || $thread)) {
 			$this->debug ( "showPlugin: Removing cross reference record pointing to a non-existent or wrong topic" );
-			$query = "DELETE FROM #__kunenadiscuss WHERE content_id={$result->content_id}";
+			$query = "DELETE FROM #__kunenadiscuss WHERE content_id={$this->_db->quote($result->content_id)}";
 			//$this->_db->setQuery ( $query );
 			//$this->_db->query ();
 			CKunenaTools::checkDatabaseError ();
@@ -235,7 +235,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		if ($linkOnly) {
 			$this->debug ( "showPlugin: Displaying only link to the topic" );
 
-			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread=$thread";
+			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread={$this->_db->quote($thread)}";
 			$this->_db->setQuery ( $sql );
 			$postCount = $this->_db->loadResult ();
 			CKunenaTools::checkDatabaseError ();

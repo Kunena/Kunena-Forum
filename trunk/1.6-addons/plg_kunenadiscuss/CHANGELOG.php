@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC2
 
+29-Aug-2010 Xillibit
+# [#20084] Put db->quote() on some values in queries to avoid issues
+
 29-Aug-2010 Matias
 # [#20084] Fix application scope detection
 ^ [#20084] Added error message when mapping category to 0

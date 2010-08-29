@@ -31,6 +31,7 @@ Legend:
 KunenaStats 1.6.0-RC1
 
 29-Aug-2010 @quila
++ [#20095] Added images arrow and bar
 + [#20095] Added mod_kunenastats.css file
 + [#20095] Added style to various display type
 

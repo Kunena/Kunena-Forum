@@ -11,6 +11,7 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
+$i=0;
 ?>
 <div class="mod-kunenastats mod-kunenastats<?php echo $this->params->get( 'moduleclass_sfx' ) ?>">
 	<?php if ( $this->type == 'general' ) : ?>
@@ -33,45 +34,45 @@ defined('_JEXEC') or die('Restricted access');
 			<th><?php echo $this->valueHeader ?></th>
 		</tr>
 		<?php if (empty($this->stats)) : ?>
-		<tr><td><?php echo JText::_('MOD_KUNENASTATS_NO_ITEMS'); ?></td></tr>
+		<tr class="krow<?php echo ($i^=1)+1;?>"><td><?php echo JText::_('MOD_KUNENASTATS_NO_ITEMS'); ?></td></tr>
 		<?php else : ?>
 	<?php if ( $this->type == 'topics' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
-		<tr>
-			<td><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->thread, $stat->subject, $stat->subject); ?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->hits);?>%"/></td>
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first"><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->thread, $stat->subject, $stat->subject); ?></td>
+			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->hits);?>%;"><?php echo $stat->hits;?></span></td>
 		</tr>
 		<?php endforeach; ?>
 
 	<?php elseif ( $this->type == 'polls' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
-		<tr>
-			<td><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->threadid, $stat->title, $stat->title); ?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->total);?>%"/></td>
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first"><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->threadid, $stat->title, $stat->title); ?></td>
+			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->total);?>%;"><?php echo $stat->total;?></span></td>
 		</tr>
 		<?php endforeach; ?>
 
 	<?php elseif ( $this->type == 'posters' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
-		<tr>
-			<td><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->posts);?>%"/></td>
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
+			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->posts);?>%;"><?php echo $stat->posts;?></span></td>
 		</tr>
 		<?php endforeach; ?>
 
 	<?php elseif ( $this->type == 'profiles' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
-		<tr>
-			<td><?php echo CKunenaLink::GetProfileLink($stat->user_id, $stat->user); ?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->hits);?>%"/></td>
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->user_id, $stat->user); ?></td>
+			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->hits);?>%;"><?php echo $stat->hits;?></span></td>
 		</tr>
 		<?php endforeach; ?>
 
 	<?php elseif ( $this->type == 'thanks' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
-		<tr>
-			<td><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
-			<td><img class = "jr-forum-stat-bar" src = "<?php echo JURI::Root().'components/com_kunena/template/default/images/bar.png';?>" alt = "" height = "10" width = "<?php echo $this->getBarWidth($stat->receivedthanks);?>%"/></td>
+		<tr class="krow<?php echo ($i^=1)+1;?>">
+			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
+			<td class="kcol-last"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->receivedthanks);?>%;"><?php echo $stat->receivedthanks;?></span></td>
 		</tr>
 		<?php endforeach; ?>
 	<?php endif; ?>
@@ -79,6 +80,6 @@ defined('_JEXEC') or die('Restricted access');
 	</table>
 	<?php endif; ?>
 	<?php if ($this->params->get( 'sh_statslink' )) : ?>
-	<div><?php echo CKunenaLink::GetStatsLink(JText::_('MOD_KUNENASTATS_LINK')); ?></div>
+	<div class="kstats-all"><?php echo CKunenaLink::GetStatsLink(JText::_('MOD_KUNENASTATS_LINK')); ?></div>
 	<?php endif; ?>
 </div>

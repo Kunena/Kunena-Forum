@@ -1,0 +1,58 @@
+@charset "UTF-8";
+/**
+* @version $Id: mod_kunenastats.css 3305 2010-08-26 07:21:10Z fxstein $
+* KunenaStats Module
+* @package Kunena stats
+*
+* @Copyright (C) 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.com
+*
+**/
+div.mod-kunenastats ul {
+	margin: 0;
+	padding:0;
+}
+div.mod-kunenastats ul li {
+	background: url("arrow.png") no-repeat left center;
+	padding-left: 10px;
+	list-style: none !important;
+}
+div.mod-kunenastats ul li b {
+	float: right;
+}
+div.mod-kunenastats table {
+	width: 100%;
+}
+div.mod-kunenastats table th {
+	background: #D4DEE3;
+	padding: 4px 8px;
+	text-align:left;
+}
+div.mod-kunenastats td.kcol-first {
+	width: 70%;
+}
+div.mod-kunenastats tr.krow1 td {
+	background: #EEEEEE;
+	padding: 4px 8px;
+}
+div.mod-kunenastats tr.krow2 td {
+	padding: 4px 8px;
+	background: #E7E7E7;
+}
+div.mod-kunenastats div.kstats-all {
+	padding: 4px 8px;
+}
+div.mod-kunenastats  img.jr-forum-stat-bar {
+	min-width:15px;
+	min-height: 12px;
+}
+div.mod-kunenastats span.kstats-hits {
+	background: url("bar.png") repeat-x left center;
+	color: #FFFFFF;
+	font-size:.833em;
+	display:block;
+	text-align: center;
+	min-width:15px;
+	padding:0 0 0 1px;
+}

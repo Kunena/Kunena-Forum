@@ -30,6 +30,10 @@ Legend:
 
 KunenaStats 1.6.0-RC1
 
+29-Aug-2010 @quila
++ [#20095] Added mod_kunenastats.css file
++ [#20095] Added style to various display type
+
 29-August-2010 Matias
 # [#20095] Fix Undefined property in Top Thank You
 

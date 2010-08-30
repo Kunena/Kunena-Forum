@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+<!--
+  Kunena ant build file
+
+  @version      $Id$
+  @package		Kunena
+  @subpackage	com_kunena
+  @copyright	Copyright (C) 2008 - 2010 Kunena Team. All rights reserved.
+  				portions (C) 2007 MjazTools. All rights reserved.
+  @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
+  @link			http://www.kunena.com
+  
+  The following parameters can be defined inside the Eclipse build task as Arguments. They
+  allow the build file to be platform independent as not path information resides within
+  any of the build files.
+
+  Parameters: (with default values - adjust the directories in Eclispe to your individual setup)
+  	-Dproject_dir=..				(= workspace/kunena)
+  	-Dpackage_dir=../../packages	(= workspace/packages)
+  	-Dtmp_dir=tmp					(= workspace/kunena/build/tmp)
+  	-Dbuild_dir=package				(= workspace/kunena/build/package)
+-->
+<project name="Kunena" default="dist" basedir=".">
+	<description>Ant Build File for Kunena</description>
+	<condition property="project_dir" value="..">
+		<not>
+			<isset property="project_dir" />
+		</not>
+	</condition>
+	<condition property="package_dir" value="../../packages">
+		<not>
+			<isset property="package_dir" />
+		</not>
+	</condition>
+	<condition property="tmp_dir" value="tmp">
+		<not>
+			<isset property="tmp_dir" />
+		</not>
+	</condition>
+	<condition property="build_dir" value="package">
+		<not>
+			<isset property="build_dir" />
+		</not>
+	</condition>
+	<property file="build.config.ini" />
+	<property name="kunena.frontend" value="components/com_kunena" />
+	<property name="kunena.backend" value="administrator/components/com_kunena" />
+	<property name="kunena.media" value="media/kunena" />
+
+	<target name="dist" depends="mkdir,archive,init,build,minify,copy,tar,zip,gzip,bz2,info,cleanup" />
+
+	<target name="mkdir">
+		<mkdir dir="${tmp_dir}" />
+		<mkdir dir="${build_dir}" />
+		<mkdir dir="${package_dir}" />
+		<mkdir dir="${package_dir}/archive" />
+	</target>
+
+	<target name="archive">
+		<move todir="${package_dir}/archive" preservelastmodified="yes" includeEmptyDirs="no">
+			<fileset dir="${package_dir}">
+				<exclude name="archive/" />
+			</fileset>
+		</move>
+	</target>
+
+	<target name="init" depends="mkdir">
+		<xmlproperty file="${project_dir}/${kunena.backend}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
+		<buildnumber />
+		<tstamp>
+			<format property="str.datefmt" pattern="${cfg.datefmt}" locale="${cfg.dateloc}" />
+		</tstamp>
+		<condition property="version.date" value="${str.datefmt}" else="">
+			<istrue value="${cfg.adddate}" />
+		</condition>
+
+		<condition property="str.build" value="_${cfg.buildprefix}${build.number}" else="">
+			<istrue value="${cfg.addbuild}" />
+		</condition>
+		<condition property="str.version" value="_${cfg.versionprefix}${xml.version}" else="">
+			<istrue value="${cfg.addversion}" />
+		</condition>
+		<condition property="str.date" value="_${str.datefmt}" else="">
+			<istrue value="${cfg.adddate}" />
+		</condition>
+		<property name="str.destfile" value="${package_dir}/${cfg.prefix}${cfg.name}${str.version}${str.build}${str.date}" />
+
+		<condition property="do.tar">
+			<istrue value="${cfg.tar}" />
+		</condition>
+		<condition property="do.zip">
+			<istrue value="${cfg.zip}" />
+		</condition>
+		<condition property="do.gzip">
+			<istrue value="${cfg.gzip}" />
+		</condition>
+		<condition property="do.bz2">
+			<istrue value="${cfg.bz2}" />
+		</condition>
+
+		<copy todir="${tmp_dir}/administrator">
+			<fileset dir="${project_dir}/administrator" />
+		</copy>	
+		<copy todir="${tmp_dir}/components">
+			<fileset dir="${project_dir}/components">
+				<exclude name="com_kunena/template/**/params.ini"/>
+			</fileset>
+		</copy>	
+		<copy todir="${tmp_dir}/media">
+			<fileset dir="${project_dir}/media" />
+		</copy>	
+		<copy todir="${tmp_dir}">
+			<fileset file="${project_dir}/README.txt" />
+		</copy>	
+	</target>
+
+	<target name="build" depends="init">
+		<!-- Move files that contain version tags again and perform token replacement -->
+		<filter token="kunenaversion" value="${xml.version}" />
+		<filter token="kunenaversiondate" value="${version.date}" />
+		<filter token="kunenaversionbuild" value="${build.number}" />
+		<filter token="kunenaversionname" value="${xml.versionname}" />
+
+		<move file="${tmp_dir}/${kunena.backend}/${cfg.name}.xml" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.frontend}/COPYRIGHT.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.frontend}/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.frontend}/lib/kunena.defines.php" todir="${tmp_dir}/${kunena.frontend}/lib" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.backend}/libraries/api.php" todir="${tmp_dir}/${kunena.backend}/libraries" overwrite="true" filtering="true" />
+
+		<!-- Move files needed by the installer -->
+		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/api.php" todir="${build_dir}" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/admin.kunena.php" todir="${build_dir}" overwrite="true" filtering="flse" />
+		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/kunena.php" todir="${build_dir}" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/router.php" todir="${build_dir}" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/${kunena.backend}/install/system/kunena.xml" todir="${build_dir}/install/system" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/install/kunena.install.upgrade.xml" todir="${build_dir}/install" overwrite="true" filtering="true" />
+		<move todir="${build_dir}">
+			<fileset dir="${tmp_dir}/${kunena.backend}">
+				<include name="*install*"/>
+				<include name="install/**"/>
+			</fileset>
+		</move>
+		<!-- Rename component entry files so that they replace the old ones just before the end of the installation process, thus keeping forum offline while installing. -->
+		<move file="${tmp_dir}/${kunena.backend}/api.php" tofile="${tmp_dir}/${kunena.backend}/api.new.php" overwrite="true" filtering="true" />
+		<move file="${tmp_dir}/${kunena.backend}/admin.kunena.php" tofile="${tmp_dir}/${kunena.backend}/admin.kunena.new.php" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/${kunena.frontend}/kunena.php" tofile="${tmp_dir}/${kunena.frontend}/kunena.new.php" overwrite="true" filtering="false" />
+		<move file="${tmp_dir}/${kunena.frontend}/router.php" tofile="${tmp_dir}/${kunena.frontend}/router.new.php" overwrite="true" filtering="false" />
+		<move todir="${build_dir}/archive" includeEmptyDirs="no">
+			<fileset dir="${tmp_dir}/${kunena.backend}/archive" />
+		</move>
+		<move todir="${build_dir}/languages" flatten="yes" includeEmptyDirs="no">
+			<fileset dir="${tmp_dir}/${kunena.backend}/language">
+				<include name="**/*install*"/>
+			</fileset>
+		</move>
+	</target>
+
+	<target name="minify" depends="build">
+	<!--
+	YUI Compressor implementation
+	See link below for details, documentations and samples
+	http://javaflight.blogspot.com/2008/01/introducing-yui-compressor-ant-task.html
+	-->
+		<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
+			<classpath>
+				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.2.jar" />
+				<pathelement path="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
+			</classpath>
+		</taskdef>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+			fromdir="${project_dir}/${kunena.frontend}/js/slimbox/" 
+			todir="${tmp_dir}/${kunena.frontend}/js/slimbox/">
+		</yui-compressor>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+			fromdir="${project_dir}/${kunena.frontend}/template/default/css" 
+			todir="${tmp_dir}/${kunena.frontend}/template/default/css">
+		</yui-compressor>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+			fromdir="${project_dir}/${kunena.frontend}/template/example/css" 
+			todir="${tmp_dir}/${kunena.frontend}/template/example/css">
+		</yui-compressor>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+			fromdir="${project_dir}/${kunena.frontend}/template/default/js" 
+			todir="${tmp_dir}/${kunena.frontend}/template/default/js">
+		</yui-compressor>
+
+		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
+			fromdir="${project_dir}/${kunena.frontend}/template/default/plugin/poll/js" 
+			todir="${tmp_dir}/${kunena.frontend}/template/default/plugin/poll/js">
+		</yui-compressor>
+		
+	</target>
+	
+	<target name="copy" depends="minify">
+		<mkdir dir="${build_dir}/archive" />
+
+		<zip destfile="${build_dir}/archive/admin.zip" basedir="${tmp_dir}/${kunena.backend}" />
+		<zip destfile="${build_dir}/archive/site.zip" basedir="${tmp_dir}/${kunena.frontend}" />
+		<zip destfile="${build_dir}/archive/media.zip" basedir="${tmp_dir}/${kunena.media}" />
+	</target>
+
+	<target name="tar" depends="copy" if="do.tar">
+		<tar destfile="${str.destfile}.tar" basedir="${build_dir}" />
+	</target>
+
+	<target name="zip" depends="copy" if="do.zip">
+		<zip destfile="${str.destfile}.zip" basedir="${build_dir}" />
+	</target>
+
+	<target name="gzip" depends="copy" if="do.gzip">
+		<tar destfile="${str.destfile}.tar.gz" basedir="${build_dir}" compression="gzip" />
+	</target>
+
+	<target name="bz2" depends="copy" if="do.bz2">
+		<tar destfile="${str.destfile}.tar.bz2" basedir="${build_dir}" compression="bzip2" />
+	</target>
+
+	<target name="info" depends="copy">
+		<echo message="Ant Version:     ${ant.version}" />
+		<echo message="Project:         ${cfg.name}" />
+		<echo message="XML Name:        ${xml.name}" />
+		<echo message="XML Version:     ${xml.version}" />
+		<echo message="XML Author:      ${xml.author}" />
+		<echo message="XML Copyright:   ${xml.copyright}" />
+		<echo message="XML License:     ${xml.license}" />
+		<echo message="XML Description: ${xml.description}" />
+		<echo message="Build:           ${build.number}" />
+		<echo message="Date:            ${TODAY}" />
+	</target>
+
+	<target name="cleanup" depends="info">
+		<delete dir="${tmp_dir}" />
+		<delete dir="${build_dir}" />
+	</target>
+</project>

@@ -39,7 +39,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 					echo '<img src="' . JURI::root () . 'modules/mod_kunenalatest/tmpl/sticky.png" alt="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" />';
 				}
 			}
-			echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0', $this->params->get ( 'messagelength' ) ), 'follow' );
+			echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0', $this->params->get ( 'messagelength' ) ), 'follow' );
 			if ($item->unread) {
 				echo '<sup class="knewchar">(' . $this->params->get ( 'unreadindicator' ) . ")</sup>";
 			}
@@ -60,7 +60,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 			?>
 		</li>
 		<?php if ($this->params->get ( 'sh_firstcontentcharacter' )) : ?>
-			<li class="klatest-preview-content"><?php echo substr(KunenaParser::stripBBCode($item->message), '0', $this->params->get ( 'lengthcontentcharacters' )); ?></li>
+			<li class="klatest-preview-content"><?php echo JString::substr(KunenaParser::stripBBCode($item->message), '0', $this->params->get ( 'lengthcontentcharacters' )); ?></li>
 		<?php endif; ?>
 		<?php if ($this->params->get ( 'sh_category' )) : ?>
 			<li class="klatest-cat"><?php echo JText::_ ( 'MOD_KUNENALATEST_IN_CATEGORY' ).' '.CKunenaLink::GetCategoryLink ( 'showcat', $item->catid, $item->catname ); ?></li>

@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC2
 
+30-Aug-2010 fxstein
+# [#20081] Use JString:substr to be UTF8 aware
+
 28-Aug-2010 fxstein
 # [#20081] Fixed undefined variable error in custom reply mode
 

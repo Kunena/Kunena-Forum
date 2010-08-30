@@ -118,10 +118,12 @@ class CKunenaAttachments {
 			}
 
 			// combine all images into one type
+			$attachment->disabledimgforguest = 0;
+			$attachment->disabledfileforguest = 0;
 			$attachment->shortname = CKunenaTools::shortenFileName($attachment->filename);
 			$attachment->shorttype = $this->isImage($attachment->filetype) ? 'image' : $attachment->filetype;
-			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) continue;
-			if ($attachment->shorttype != 'image' && !$this->_my->id && !$this->_config->showfileforguest) continue;
+			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) $attachment->disabledimgforguest =1;
+			if ($attachment->shorttype != 'image' && !$this->_my->id && !$this->_config->showfileforguest) $attachment->disabledfileforguest=1;
 			$attachment->shortname = CKunenaTools::shortenFileName($attachment->filename);
 
 			switch (strtolower($attachment->shorttype)){

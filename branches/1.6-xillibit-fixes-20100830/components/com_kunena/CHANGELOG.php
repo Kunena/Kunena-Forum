@@ -35,6 +35,7 @@ Kunena 1.6.0-RC2
 
 30-August-2010 Xillibit
 ^ [#22151] Characters, units in files and images in browse uploaded files in backend and in frontend
+# [#22160] Show images for guests doesn't work for all attachements
 
 30-August-2010 fxstein
 - [#19064] Disable [module] bbcode to avoid security risk due to public misuse - need to limit access

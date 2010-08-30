@@ -17,14 +17,20 @@ defined ( '_JEXEC' ) or die ();
 	<div class="kmsgattach">
 	<?php echo JText::_('COM_KUNENA_ATTACHMENTS');?>
 		<ul class="kfile-attach">
-		<?php foreach($this->attachments as $attachment) : ?>
+		<?php foreach($this->attachments as $attachment) :
+			if(!$attachment->disabledimgforguest && !$attachment->disabledfileforguest) {?>
 			<li>
 				<?php echo $attachment->thumblink; ?>
 				<span>
 					<?php echo $attachment->textLink; ?>
 				</span>
 			</li>
-		<?php endforeach; ?>
+		<?php } elseif( $attachment->disabledimgforguest) {
+			echo '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' ) . '</b>';
+		 } elseif($attachment->disabledfileforguest) {
+			 echo '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' ) . '</b>';
+		 }
+		 endforeach; ?>
 		</ul>
 	</div>
 </div>

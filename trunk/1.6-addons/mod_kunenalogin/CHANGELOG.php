@@ -28,6 +28,9 @@ Legend:
 
 KunenaLogin 1.6.0-RC2
 
+26-Aug-2010 fxstein
+- [#22073] Remove duplicate language load call in display()
+
 29-Aug-2010 @quila
 - [#22073] Removed hardcoded ID
 + [#22073] Added horizontal style

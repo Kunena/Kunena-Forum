@@ -28,9 +28,6 @@ class ModKunenaLogin {
 		$this->login = CKunenaLogin::getloginFields ();
 		$this->logout = CKunenaLogin::getlogoutFields ();
 
-		// load Kunena main language file so we can leverage langaueg strings from it
-		KunenaFactory::loadLanguage ();
-
 		$this->my = JFactory::getUser ();
 		$this->private = KunenaFactory::getPrivateMessaging ();
 		$this->PMCount = $this->private->getUnreadCount ( $this->my->id );
@@ -42,7 +39,7 @@ class ModKunenaLogin {
 
 		$this->loadCSS = $this->loadCSS ( 'mod_kunenalogin' ); // load CSS stylesheet
 		$this->user = KunenaFactory::getUser ();
-		// JFactory::getUser ();
+
 		require (JModuleHelper::getLayoutPath ( 'mod_kunenalogin' ));
 	}
 

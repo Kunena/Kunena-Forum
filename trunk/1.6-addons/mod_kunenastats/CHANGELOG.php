@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.6.0-RC1
 
+30-Aug-2010 fxstein
++ [#20095] New parameter to limit title output (topic subject or username)
+
 29-Aug-2010 fxstein
 + [#20095] Additional language string for posts as table header for top posters
 + [#20095] Format large numbers

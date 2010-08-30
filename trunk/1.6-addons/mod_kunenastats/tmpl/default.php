@@ -12,12 +12,16 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 $i=0;
+
+
+//JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) )
+
 ?>
 <div class="mod-kunenastats mod-kunenastats<?php echo $this->params->get( 'moduleclass_sfx' ) ?>">
 	<?php if ( $this->type == 'general' ) : ?>
 	<ul>
 		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALUSERS'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getToTalMembers(), 4); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_LATESTMEMBER'); ?> <b><?php echo CKunenaLink::GetProfileLink($this->api->getLastestMemberid(), $this->api->getLastestMember()); ?></b></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_LATESTMEMBER'); ?> <b><?php echo CKunenaLink::GetProfileLink($this->api->getLastestMemberid(), JString::substr ( htmlspecialchars ($this->api->getLastestMember()), '0', $this->params->get ( 'titlelength' ) ) ); ?></b></li>
 		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALPOSTS'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTotalMessages(), 3); ?></b></li>
 		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALTOPICS'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTotalTitles(), 3); ?></b></li>
 		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALSECTIONS'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTotalSections(), 3); ?></b></li>
@@ -39,7 +43,7 @@ $i=0;
 	<?php if ( $this->type == 'topics' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="kcol-first"><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->thread, $stat->subject, $stat->subject); ?></td>
+			<td class="kcol-first"><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->thread, JString::substr ( htmlspecialchars ($stat->subject), '0', $this->params->get ( 'titlelength' ) ), htmlspecialchars ($stat->subject) ); ?></td>
 			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->hits);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->hits, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
@@ -47,7 +51,7 @@ $i=0;
 	<?php elseif ( $this->type == 'polls' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="kcol-first"><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->threadid, $stat->title, $stat->title); ?></td>
+			<td class="kcol-first"><?php echo CKunenaLink::GetThreadLink('view', $stat->catid, $stat->threadid, JString::substr ( htmlspecialchars ($stat->title), '0', $this->params->get ( 'titlelength' ) ), $stat->title); ?></td>
 			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->total);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->total, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
@@ -55,7 +59,7 @@ $i=0;
 	<?php elseif ( $this->type == 'posters' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
+			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, JString::substr ( htmlspecialchars ($stat->username), '0', $this->params->get ( 'titlelength' ) )); ?></td>
 			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->posts);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->posts, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
@@ -63,7 +67,7 @@ $i=0;
 	<?php elseif ( $this->type == 'profiles' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->user_id, $stat->user); ?></td>
+			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->user_id, JString::substr ( htmlspecialchars ($stat->user), '0', $this->params->get ( 'titlelength' ) )); ?></td>
 			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->hits);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->hits, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>
@@ -71,7 +75,7 @@ $i=0;
 	<?php elseif ( $this->type == 'thanks' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, $stat->username); ?></td>
+			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, JString::substr ( htmlspecialchars ($stat->username), '0', $this->params->get ( 'titlelength' ) )); ?></td>
 			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->receivedthanks);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->receivedthanks, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>

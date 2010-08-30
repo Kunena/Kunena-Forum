@@ -34,6 +34,7 @@
 			<option value="thanks">MOD_KUNENASTATS_TOPTHANKS</option>
 		</param>
 		<param name="items" type="text" default="5" label="MOD_KUNENASTATS_PARAMNBITEMS" description="MOD_KUNENASTATS_PARAMNBITEMS_DESC" />	
+		<param name="titlelength" type="text" default="50" label="MOD_KUNENASTATS_PARAM_TITLELENGTH" description="MOD_KUNENASTATS_PARAM_TITLELENGTH_DESC" />
 		<param name="sh_statslink" type="radio" default="0" label="MOD_KUNENASTATS_PARAMSHOWSTATSLINK" description="MOD_KUNENASTATS_PARAMSHOWSTATSLINK_DESC">
 			<option value="0">MOD_KUNENASTATS_PARAM_VALUE_NO</option>
 			<option value="1">MOD_KUNENASTATS_PARAM_VALUE_YES</option>

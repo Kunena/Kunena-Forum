@@ -36,6 +36,7 @@ Kunena 1.6.0-RC2
 30-August-2010 Xillibit
 ^ [#22151] Characters, units in files and images in browse uploaded files in backend and in frontend
 # [#22160] Show images for guests doesn't work for all attachements
+# [#22015] When delete a thread perminantly, delete too the items in kunena_messages_text and all attachments in that thread
 
 30-August-2010 fxstein
 - [#19064] Disable [module] bbcode to avoid security risk due to public misuse - need to limit access

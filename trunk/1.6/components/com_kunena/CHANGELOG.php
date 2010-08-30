@@ -36,6 +36,7 @@ Kunena 1.6.0-RC2
 30-August-2010 fxstein
 - [#19064] Disable [module] bbcode to avoid security risk due to public misuse - need to limit access
 ^ [#21993] Updated topic icon - same as moved but different color/saturation to match rest of icon set
++ [#19288] Add form-validation background color for invalid fields
 
 29-August-2010 Xillibit
 # [#19288] Update french translation (fr-FR)

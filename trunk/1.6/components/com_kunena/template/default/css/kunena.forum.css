@@ -3391,7 +3391,10 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 /* for form-validation
 ------------------------------------------------------ */
 	
-#Kunena #kpost-message .invalid { border: 1px solid red !important; }
+#Kunena #kpost-message .invalid { 
+	border: 1px solid red !important;
+	background-color: #FFDDDD !important;
+}
 
 /* SLIMBOX */
 

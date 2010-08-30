@@ -340,12 +340,14 @@ kbbcode.addFunction('Map', function() {
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MAP');?>")'});
 
+<?php if (1==0) { // disable for now TODO: make safe - dont allow public to access modules?>
 kbbcode.addFunction('Module', function() {
 	this.wrapSelection('[module]', '[/module]', false);
 }, {'id': 'kbbcode-module-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_MODULE');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MODULE');?>',
 	'onmouseover' : '$("helpbox").set("value", "<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_MODULE');?>")'});
+<?php } // end disable ?>
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator6'});

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+30-August-2010 fxstein
+- [#19064] Disable [module] bbcode to avoid security risk due to public misuse - need to limit access
+
 29-August-2010 Xillibit
 # [#19288] Update french translation (fr-FR)
 # [#22120] Error displaying names of moderators

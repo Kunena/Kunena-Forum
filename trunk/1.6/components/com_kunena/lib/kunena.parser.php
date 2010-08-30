@@ -537,25 +537,28 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$tag_new .= '<div class="kmsgtext-quote">' . $between . '</div>';
 				return TAGPARSER_RET_REPLACED;
 				break;
-			case 'module' :
-				if ($between) {
-					$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
-
-					if (JDocumentHTML::countModules ( $tempstr )) {
-						$document = &JFactory::getDocument ();
-						$renderer = $document->loadRenderer ( 'modules' );
-						$options = array ('style' => 'xhtml' );
-						$position = $tempstr;
-						$tag_new = $renderer->render ( $position, $options, null );
-					} else {
-						trigger_error ( 'Joomla module: ' . $tempstr . ' does not exist.', E_USER_NOTICE );
-					}
-
-					return TAGPARSER_RET_REPLACED;
-				}
-				return TAGPARSER_RET_NOTHING;
-
-				break;
+//
+// disable module bbcode
+// TODO: make safe to use - prevent public from calling modules that are not allowed
+//			case 'module' :
+//				if ($between) {
+//					$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
+//
+//					if (JDocumentHTML::countModules ( $tempstr )) {
+//						$document = &JFactory::getDocument ();
+//						$renderer = $document->loadRenderer ( 'modules' );
+//						$options = array ('style' => 'xhtml' );
+//						$position = $tempstr;
+//						$tag_new = $renderer->render ( $position, $options, null );
+//					} else {
+//						trigger_error ( 'Joomla module: ' . $tempstr . ' does not exist.', E_USER_NOTICE );
+//					}
+//
+//					return TAGPARSER_RET_REPLACED;
+//				}
+//				return TAGPARSER_RET_NOTHING;
+//
+//				break;
 			case 'article' :
 				if ($between) {
 					$articleid = (int)$between;

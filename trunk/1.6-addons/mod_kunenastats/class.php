@@ -27,6 +27,9 @@ class ModuleKunenaStats {
 
 		$this->type = $this->params->get ( 'type', 'general' );
 		$this->items = ( int ) $this->params->get ( 'items', 5 );
+
+		// load Kunena main language file so we can leverage langaueg strings from it
+		KunenaFactory::loadLanguage();
 	}
 
 	function display() {

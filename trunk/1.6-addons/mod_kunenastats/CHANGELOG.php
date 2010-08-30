@@ -28,10 +28,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaStats 1.6.0-RC1
+KunenaStats 1.6.0-RC2
 
 30-Aug-2010 fxstein
 + [#20095] New parameter to limit title output (topic subject or username)
+^ [#20095] Update module description
+^ [#20095] Update version info to 1.6.0RC2
 
 29-Aug-2010 fxstein
 + [#20095] Additional language string for posts as table header for top posters

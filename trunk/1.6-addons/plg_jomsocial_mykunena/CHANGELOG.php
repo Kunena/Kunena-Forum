@@ -26,7 +26,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MyKunena 1.6.0-RC1
+MyKunena 1.6.0-RC2
+
+31-Aug-2010 fxstein
+^ [#19002] Updated build files for RC2 release
 
 31-August-2010 Matias
 # [#19002] Fix white page in JomSocial when Kunena is not fully installed

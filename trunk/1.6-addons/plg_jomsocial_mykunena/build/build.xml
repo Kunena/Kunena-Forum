@@ -41,7 +41,7 @@
 	<property file="build.config.ini" />
 	<property name="mykunena.assets" value="${project_dir}/mykunena/" />
 
-	<target name="dist" depends="mkdir,archive,init,copy,package,zip,gzip,bz2,info,cleanup" />
+	<target name="dist" depends="mkdir,archive,init,copy,package,tar,zip,gzip,bz2,info,cleanup" />
 
 	<target name="mkdir">
 		<mkdir dir="${tmp_dir}" />
@@ -78,6 +78,9 @@
 		</condition>
 		<property name="str.destfile" value="${package_dir}/${cfg.prefix}${cfg.name}${str.version}${str.build}${str.date}" />
 
+		<condition property="do.tar">
+			<istrue value="${cfg.tar}" />
+		</condition>
 		<condition property="do.zip">
 			<istrue value="${cfg.zip}" />
 		</condition>

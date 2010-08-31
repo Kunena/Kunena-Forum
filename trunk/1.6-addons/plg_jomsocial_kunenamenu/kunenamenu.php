@@ -23,16 +23,21 @@ class plgCommunityKunenaMenu extends CApplications {
 		//Load Language file.
 		JPlugin::loadLanguage ( 'plg_community_kunenamenu', JPATH_ADMINISTRATOR );
 
-		// Kunena detection and version check
-		$minKunenaVersion = '1.6.0-RC2';
-		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
-			return null;
-		}
-
 		parent::__construct ( $subject, $config );
 	}
 
+	protected static function kunenaInstalled() {
+		// Kunena detection and version check
+		$minKunenaVersion = '1.6.0-RC2';
+		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
+			return false;
+		}
+		return true;
+	}
+
 	function onSystemStart() {
+		if (! self::kunenaInstalled ()) return;
+
 		//initialize the toolbar object
 		$toolbar = CFactory::getToolbar ();
 

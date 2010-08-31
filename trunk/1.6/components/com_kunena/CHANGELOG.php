@@ -37,6 +37,8 @@ Kunena 1.6.0-RC2
 + [#20084] Allow posting by using different user in CKunenaPosting class (needed in Kunena Discuss plugin)
 # [#20084] White page in Kunena Discuss plugin when it tries to post message with JomSocial and AUP integration
 # [#22173] New installation fails on white screen
+^ [#16390] Updated languages: ca-ES (thanks Neon26), es-ES (Alakentu), fi-FI (Mortti), ru-RU (ZARGOS)
++ [#16390] Added new languages: el-GR (thanks valandis), pl-PL (Randal), th-TH (drlovecat), tr-TR (cumla)
 
 30-August-2010 fxstein
 - [#19064] Disable [module] bbcode to avoid security risk due to public misuse - need to limit access

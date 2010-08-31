@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- $Id$ -->
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
@@ -6,10 +7,10 @@
 	<versionname>Jadili</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
-	<author>www.Kunena.com</author>
-	<authorEmail>Kunena@Kunena.com</authorEmail>
+	<author>Kunena Team</author>
+	<authorEmail>kunena@kunena.com</authorEmail>
 	<authorUrl>http://www.Kunena.com</authorUrl>
-	<copyright>www.Kunena.com</copyright>
+	<copyright>(C) 2008 - 2010 Kunena Team All rights reserved</copyright>
 	<license>GNU/GPL</license>
 	<description>Kunena Forum</description>
 	<installfile>install.kunena.php</installfile>
@@ -40,15 +41,19 @@
 		</files>
 		<languages folder="languages">
 			<language tag="ca-ES">ca-ES.com_kunena.install.ini</language>
+			<language tag="de-DE">de-DE.com_kunena.install.ini</language>
+			<language tag="el-GR">el-GR.com_kunena.install.ini</language>
 			<language tag="en-GB">en-GB.com_kunena.install.ini</language>
 			<language tag="es-ES">es-ES.com_kunena.install.ini</language>
-			<language tag="de-DE">de-DE.com_kunena.install.ini</language>
 			<language tag="fi-FI">fi-FI.com_kunena.install.ini</language>
 			<language tag="fr-FR">fr-FR.com_kunena.install.ini</language>
 			<language tag="nl-NL">nl-NL.com_kunena.install.ini</language>
+			<language tag="pl-PL">pl-PL.com_kunena.install.ini</language>
 			<language tag="ru-RU">ru-RU.com_kunena.install.ini</language>
 			<language tag="sr-RS">sr-RS.com_kunena.install.ini</language>
 			<language tag="sr-YU">sr-YU.com_kunena.install.ini</language>
+			<language tag="th-TH">th-TH.com_kunena.install.ini</language>
+			<language tag="tr-TR">tr-TR.com_kunena.install.ini</language>
 		</languages>
 	</administration>
 	<params />

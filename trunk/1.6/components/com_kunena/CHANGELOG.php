@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC2
 
+31-August-2010 Matias
++ [#20084] Allow posting by using different user in CKunenaPosting class (needed in Kunena Discuss plugin)
+
 30-August-2010 fxstein
 - [#19064] Disable [module] bbcode to avoid security risk due to public misuse - need to limit access
 ^ [#21993] Updated topic icon - same as moved but different color/saturation to match rest of icon set

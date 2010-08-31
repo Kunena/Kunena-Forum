@@ -17,12 +17,12 @@ class CKunenaPosting {
 	private $options = null;
 	private $errors = array ();
 
-	function __construct() {
+	function __construct($userid = null) {
 		$this->_config = KunenaFactory::getConfig ();
 		$this->_session = KunenaFactory::getSession ();
 		$this->_db = JFactory::getDBO ();
-		$this->_my = JFactory::getUser ();
-		$this->_myuser = KunenaFactory::getUser ();
+		$this->_my = JFactory::getUser ($userid);
+		$this->_myuser = KunenaFactory::getUser ($userid);
 		$this->_app = JFactory::getApplication ();
 
 		$this->setError ( '-load-', JText::_ ( 'COM_KUNENA_POSTING_NOT_LOADED' ) );

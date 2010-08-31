@@ -31,6 +31,11 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC2
 
+31-Aug-2010 @quila
+# [#20084] Removed table in message.php
+^ [#20084] Added more css style to show messages
++ [#20084] Added comment.gif
+
 31-Aug-2010 Matias
 + [#20084] Post first message as article owner (or fixed user)
 # [#20084] If category is not allowed, article can still use custom topic

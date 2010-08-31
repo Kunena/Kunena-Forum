@@ -9,21 +9,35 @@
  * @link http://www.kunena.com
  **/
 
+.kdiscuss-reply-header {
+	padding:5px;
+	font-size: 1em;
+	background: #f4f4f4;
+}
+.kdiscuss-id {
+	float:right;
+}
+.kdiscuss-form .kdiscuss-title {
+	margin-bottom:5px;;
+}
 .kdiscuss-item {
-	border-left:1px solid #ddb;
-	border-right:1px solid #ddb;
-	border-bottom:1px solid #ddb;
+	clear:both;
+	display:block;
 }
 .kdiscuss-item1{
 	color:#999999;
 	background: #ffffff;
 }
 .kdiscuss-item2{
-	color:#888888;
-	background: #f0f0f0;
+	color:#999999;
+	background: #ffffff;
 }
-.kdiscuss-avatar-cover {
-	padding:15px;
+.kdiscuss-avatar {
+	float:left;
+}
+.kdiscuss-avatar img {
+	padding:10px 15px 10px 0px;
+	max-width:48px !important;
 }
 .kdiscuss-content-cover{
 	padding:5px 10px 20px 0px;
@@ -34,14 +48,14 @@
 	padding:15px;
 }
 .kdiscuss-title {
-	color: #990000;
 	font-size:14px;
 	font-weight:bold;
-	padding:4px 6px;
+	padding:5px;
 	text-align:left;
-	margin:0px;
+	margin:10px 0px 0px;
 	clear:both;
-	border-bottom:1px solid #ddb;
+	background: #d4dee3;
+	border-bottom: 1px solid #c3d9e1;
 }
 .kdiscuss-subject {
 	font-family:Arial, Helvetica, sans-serif;
@@ -51,18 +65,25 @@
 }
 .kdiscuss-username a {
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:11px;
+	font-size:12px;
 	font-weight:bold;
-	color:#333333;
 }
 .kdiscuss-date {
+	background: url("comment.gif") no-repeat left center;
 	font-family:Arial, Helvetica, sans-serif;
-	font-size:10px;
+	font-size:12px;
 	font-weight:normal;
 	color:#999;
+	padding-left:20px;
 }
 .kdiscuss-text {
 	font-size:11px;
+	padding:5px 0;
+	float:left;
+	width:85%;
+}
+.kdiscuss-text img {
+	max-width:450px;
 }
 div.kdiscuss-content-cover pre, 
 div.kdiscuss-content-cover .code {

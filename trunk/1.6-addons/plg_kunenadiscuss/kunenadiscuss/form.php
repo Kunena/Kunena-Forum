@@ -10,7 +10,7 @@
  **/
 defined( '_JEXEC' ) or die ( '' );
 ?>
-<div id="kdiscuss-quick-post<?php echo $row->id ?>">
+<div id="kdiscuss-quick-post<?php echo $row->id ?>" class="kdiscuss-form">
 <div class="kdiscuss-title"><?php echo JText::_('PLG_KUNENADISCUSS_DISCUSS') ?></div>
 <form method="post" name="postform">
 	<table>

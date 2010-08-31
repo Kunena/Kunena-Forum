@@ -26,8 +26,9 @@ class plgCommunityKunenaMenu extends CApplications {
 		// Kunena detection and version check
 		$minKunenaVersion = '1.6.0-RC2';
 		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
-			return;
+			return null;
 		}
+
 		parent::__construct ( $subject, $config );
 	}
 
@@ -35,13 +36,13 @@ class plgCommunityKunenaMenu extends CApplications {
 		//initialize the toolbar object
 		$toolbar = CFactory::getToolbar ();
 
-		//adding new 'tab' 'Forum Settings' to JomSocial toolbar
-		$toolbar->addGroup ( 'KUNENAMENU', JText::_ ( 'PLG_COMMUNITY_KUNENANENU_FORUM' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile' ) );
 		// Kunena online check
 		if (! Kunena::enabled ()) {
-			$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_OFFLINE', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_KUNENA_OFFLINE' ), KunenaRoute::_ ( 'index.php?option=com_kunena' ) );
+			$toolbar->addGroup ( 'KUNENAMENU', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_KUNENA_OFFLINE' ), JRoute::_ ( 'index.php?option=com_kunena' ) );
 			return;
 		}
+		//adding new 'tab' 'Forum Settings' to JomSocial toolbar
+		$toolbar->addGroup ( 'KUNENAMENU', JText::_ ( 'PLG_COMMUNITY_KUNENANENU_FORUM' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile' ) );
 		$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_EDITPROFILE', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_EDITPROFILE' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile&task=edit' ) );
 		$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_PROFILE', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_PROFILE' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile' ) );
 		$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_POSTS', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_POSTS' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=userposts' ) );

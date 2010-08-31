@@ -29,6 +29,9 @@ Legend:
 
 JomsocialKunenaMenu 1.6.0-RC1
 
+31-August-2010 Matias
+# [#19002] Fix white page in JomSocial when Kunena is being installed
+
 22-August-2010 Matias
 # [#19002] Better formatting in php and html files, renamed most of the files
 # [#19002] Simplify and update code to use K1.6 API

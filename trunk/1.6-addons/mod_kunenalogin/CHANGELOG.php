@@ -28,6 +28,9 @@ Legend:
 
 KunenaLogin 1.6.0-RC2
 
+31-Aug-2010 fxstein
+^ [#22073] Updated build files for RC2 release
+
 26-Aug-2010 fxstein
 - [#22073] Remove duplicate language load call in display()
 

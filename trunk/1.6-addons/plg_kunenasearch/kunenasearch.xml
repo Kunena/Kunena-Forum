@@ -9,7 +9,7 @@
 	<authorEmail>florian@kunena.com</authorEmail>
 	<authorUrl>www.kunena.com</authorUrl>
 	<license>GNU/GPL</license>
-	<version>1.6.0-RC1</version>
+	<version>1.6.0-RC2</version>
 	<description>PLG_KUNENASEARCH_DESCRIPTION</description>
 	<files>
 		<filename plugin="kunena">kunenasearch.php</filename>

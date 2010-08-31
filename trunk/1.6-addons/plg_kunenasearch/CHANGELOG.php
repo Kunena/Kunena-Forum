@@ -26,7 +26,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaSearch 1.6.0-RC1
+KunenaSearch 1.6.0-RC2
+
+31-Aug-2010 fxstein
+^ [#20138] Updated build files for RC2 release
 
 27-August-2010 Xillibit
 ^ [#20138] Rename the files kunena.xml and kunena.php to kunenasearch.xml and kunenasearch.php

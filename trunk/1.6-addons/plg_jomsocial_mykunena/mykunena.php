@@ -19,18 +19,28 @@ class plgCommunityMyKunena extends CApplications {
 	var $_name = 'mykunena';
 
 	function plgCommunityKunenaMenu(& $subject, $config) {
-		//Load Language file.
-		JPlugin::loadLanguage ( 'plg_community_mykunena', JPATH_ADMINISTRATOR );
-
-		// Kunena detection and version check
-		$minKunenaVersion = '1.6.0-RC2';
-		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
-			return;
-		}
 		parent::__construct ( $subject, $config );
 	}
 
+	protected static function kunenaOnline() {
+		// Kunena detection and version check
+		$minKunenaVersion = '1.6.0-RC2';
+		if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
+			return false;
+		}
+		// Kunena online check
+		if (! Kunena::enabled ()) {
+			return false;
+		}
+		return true;
+	}
+
 	function onProfileDisplay() {
+		if (! self::kunenaOnline ()) return;
+
+		//Load Language file.
+		JPlugin::loadLanguage ( 'plg_community_mykunena', JPATH_ADMINISTRATOR );
+
 		$document = JFactory::getDocument ();
 		$document->addStyleSheet ( JURI::base () . 'plugins/community/mykunena/style.css' );
 

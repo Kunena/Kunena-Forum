@@ -28,6 +28,10 @@ Legend:
 
 MyKunena 1.6.0-RC1
 
+31-August-2010 Matias
+# [#19002] Fix white page in JomSocial when Kunena is not fully installed
+# [#19002] Language file was not loaded -- PLG_COMMUNITY_MYKUNENA_NO_POSTS shown insted of text
+
 29-August-2010 Matias
 ^ [#19002] Major cleanup, use new API
 

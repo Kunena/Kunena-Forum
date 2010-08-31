@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install type="module" version="1.5.0" method="upgrade">
+	<name>Kunena Latest</name>
+	<version>1.6.0-RC2</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<author>www.Kunena.com</author>
+	<authorEmail>florian@kunena.com</authorEmail>
+	<authorUrl>http://www.kunena.com</authorUrl>
+	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
+	<license>GNU/GPL</license>
+	<description>MOD_KUNENALATEST_DESCRIPTION</description>
+
+	<files>
+		<filename module="mod_kunenalatest">mod_kunenalatest.php</filename>
+		<filename>index.html</filename>
+		<filename>tmpl/index.html</filename>
+		<filename>class.php</filename>
+		<folder>tmpl</folder>
+	</files>
+
+	<languages>
+		<language tag="en-GB">en-GB.mod_kunenalatest.ini</language>
+	</languages>
+
+	<params addpath="/administrator/components/com_kunena/elements">
+		<param name="category_id" type="kunenacategories" default="0" label="MOD_KUNENALATEST_PARAM_CAT_IDS" description="MOD_KUNENALATEST_PARAM_CAT_IDS_DESC"  multiple="true" size="5" />
+		<param name="sh_category_id_in" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_CAT_IDS_IN" description="MOD_KUNENALATEST_PARAM_CAT_IDS_IN_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_CAT_IDS_IN_IN</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_CAT_IDS__NOT_IN</option>
+		</param>
+		<param name="nbpost" type="text" default="5" label="MOD_KUNENALATEST_PARAM_NUMBERPOSTS" description="MOD_KUNENALATEST_PARAM_NUMBERPOSTS_DESC" />
+		<param name="titlelength" type="text" default="50" label="MOD_KUNENALATEST_PARAM_TITLELENGTH" description="MOD_KUNENALATEST_PARAM_TITLELENGTH_DESC" />
+		<param name="messagelength" type="text" default="150" label="MOD_KUNENALATEST_PARAM_MESSAGELENGTH" description="MOD_KUNENALATEST_PARAM_MESSAGELENGTH_DESC" />
+		<param name="unreadindicator" type="text" default="MOD_KUNENALATEST_PARAM_UNREADINDICATOR_DEFAULT" label="MOD_KUNENALATEST_PARAM_UNREADINDICATOR" description="MOD_KUNENALATEST_PARAM_UNREADINDICATOR_DESC" />
+		<param name="dateformat" type="text" default="" label="MOD_KUNENALATEST_PARAM_DATEFORMAT" description="MOD_KUNENALATEST_PARAM_DATEFORMAT_DESC" />
+		<param name="sh_topiciconoravatar" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR" description="MOD_KUNENALATEST_PARAM_SHOWTOPICICONS_OR_AVATAR_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_AVATAR</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_TOPICICON</option>
+			<option value="2">MOD_KUNENALATEST_PARAM_VALUE_NO_AVATAR_NO_TOPICICONS</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="choosemodel" type="list" default="latest" label="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL" description="MOD_KUNENALATEST_PARAM_CHOOSE_MODEL_DESC">
+			<option value="latesttopics">MOD_KUNENALATEST_SHOW_LATEST_TOPICS</option>
+			<option value="latestmessages">MOD_KUNENALATEST_SHOW_LATEST_MESSAGES</option>
+			<option value="noreplies">MOD_KUNENALATEST_SHOW_NO_REPLIES</option>
+ 			<option value="subscriptions">MOD_KUNENALATEST_SHOW_SUBSCRIPTIONS</option>
+			<option value="favorites">MOD_KUNENALATEST_SHOW_FAVORITES</option>
+			<option value="owntopics">MOD_KUNENALATEST_SHOW_OWN_TOPICS</option>
+			<option value="deletedposts">MOD_KUNENALATEST_SHOW_DELETE_POSTS</option>
+			<option value="saidthankyouposts">MOD_KUNENALATEST_SHOW_SAID_THANKYOU_POSTS</option>
+			<option value="gotthankyouposts">MOD_KUNENALATEST_SHOW_GOT_THANKYOU_POSTS</option>
+			<option value="userposts">MOD_KUNENALATEST_SHOW_USER_POSTS</option>
+
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="sh_category" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY" description="MOD_KUNENALATEST_PARAM_SHOW_CATEGORY_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+		</param>
+		<param name="sh_author" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR" description="MOD_KUNENALATEST_PARAM_SHOW_AUTHOR_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+		</param>
+		<param name="sh_time" type="radio" default="1" label="MOD_KUNENALATEST_PARAM_SHOW_TIME" description="MOD_KUNENALATEST_PARAM_SHOW_TIME_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+		</param>
+		<param name="sh_firstcontentcharacter" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOW_CONTENT" description="MOD_KUNENALATEST_PARAM_SHOW_CONTENT_DESC">
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_SHOW</option>
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NOT_SHOW</option>
+		</param>
+		<param name="lengthcontentcharacters" type="text" default="" label="MOD_KUNENALATEST_PARAM_CONTENT_CHARACTER_LENGHT" description="MOD_KUNENALATEST_PARAM_CONTENT_CHARACTER_LENGHT_DESC" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="sh_moduleshowtype" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_DISPLAYTYPE" description="MOD_KUNENALATEST_PARAM_DISPLAYTYPE_DESC">
+			<option value="kmodhorizontal">MOD_KUNENALATEST_PARAM_DISPLAYTYPE_HORIZONTAL</option>
+			<option value="kmodvertical">MOD_KUNENALATEST_PARAM_DISPLAYTYPE_VERTICAL</option>
+		</param>
+		<param name="avatarwidth" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH" description="MOD_KUNENALATEST_PARAM_AVATAR_WIDTH_DESC" />
+		<param name="avatarheight" type="text" default="36px" label="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT" description="MOD_KUNENALATEST_PARAM_AVATAR_HEIGHT_DESC" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="sh_favorite" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWFAVORITE" description="MOD_KUNENALATEST_PARAM_SHOWFAVORITE_DESC">
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+		</param>
+		<param name="sh_locked" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWLOCKED" description="MOD_KUNENALATEST_PARAM_SHOWLOCKED_DESC">
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+		</param>
+		<param name="sh_sticky" type="radio" default="0" label="MOD_KUNENALATEST_PARAM_SHOWSTICKY" description="MOD_KUNENALATEST_PARAM_SHOWSTICKY_DESC">
+			<option value="0">MOD_KUNENALATEST_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENALATEST_PARAM_VALUE_YES</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="moduleclass_sfx" type="text" default="" label="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX" description="MOD_KUNENALATEST_PARAM_MODULECLASSSUFFIX_DESC" />
+	</params>
+</install>

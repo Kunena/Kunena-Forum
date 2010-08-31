@@ -72,12 +72,12 @@ class KunenaProfileCommunityBuilder extends KunenaProfile
 		return $this->integration->trigger($event, $params);
 	}
 
-	public function getProfileView() {
+	public function getProfileView($PopUserCount=0) {
 		$_db = &JFactory::getDBO ();
 		$_config = KunenaFactory::getConfig ();
 
 		$queryName = $_config->username ? "username" : "name";
-		$PopUserCount = $_config->popusercount;
+		if (!$PopUserCount) $PopUserCount =  $_config->popusercount;
 		$query = "SELECT c.hits AS hits, u.id AS user_id, u.{$queryName} AS user FROM #__comprofiler AS c
 					INNER JOIN #__users AS u ON u.id = c.user_id
 					WHERE c.hits>'0' ORDER BY c.hits DESC";

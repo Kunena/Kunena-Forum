@@ -89,7 +89,7 @@ class CKunenaStats {
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
-	
+
 	public function loadTotalMembers() {
 		if ($this->totalmembers === null) {
 			$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );
@@ -168,7 +168,7 @@ class CKunenaStats {
 
 		if (count($this->topprofiles) < $PopUserCount) {
 			$profile = KunenaFactory::getProfile();
-			$this->topprofiles = $profile->getProfileView();
+			$this->topprofiles = $profile->getProfileView($PopUserCount);
 			$this->topprofilehits = ! empty ( $this->topprofiles [0]->hits ) ? $this->topprofiles [0]->hits : 0;
 		}
 	}

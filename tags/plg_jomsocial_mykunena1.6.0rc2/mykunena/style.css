@@ -1,0 +1,47 @@
+div#community-mykunena-wrap {
+	padding-top: 10px;
+}
+div#community-mykunena-wrap ul.cList {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+div#community-mykunena-wrap ul.cList li {
+	display: inline-block;
+	background: url(favicon.png) no-repeat left center;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 24px;
+	margin-left: 10px;
+}
+div#community-mykunena-wrap div.icon {
+	float: left;
+	height: 22px;
+	padding: 4px 10px 0 5px;
+}
+div#community-mykunena-wrap span.date {
+	text-align: right;
+}
+div#community-mykunena-wrap div.content {
+	margin: 0 10px 0 31px;
+}
+div.content-nopost {
+	margin: 0 10px 0 31px;
+	height: 22px;
+	line-height: 27px;
+}
+div.icon-nopost {
+	float: left;
+	height: 22px;
+	padding: 4px 10px 0 5px;
+}
+div#community-mykunena-wrap .kjsubject {
+	font-weight: bold;
+}
+div#community-mykunena-wrap .kjcategory {}
+div#community-mykunena-wrap .kjdate {
+	font-style: italic;
+}
+div#community-mykunena-wrap .clr {
+	clear:both;
+}

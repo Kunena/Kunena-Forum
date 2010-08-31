@@ -31,6 +31,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		// Check for permisions of the current category - activity only if public or registered
 		if (! empty ( $message->parent ) && ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1)) {
 			//activity stream  - new post
+			require_once KPATH_SITE.'/lib/kunena.link.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
 			$kunena_emoticons = smile::getEmoticons ( 1 );
@@ -66,6 +67,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		// Check for permisions of the current category - activity only if public or registered
 		if (! empty ( $message->parent ) && ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1)) {
 			//activity stream - reply post
+			require_once KPATH_SITE.'/lib/kunena.link.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
 			$kunena_emoticons = smile::getEmoticons ( 1 );

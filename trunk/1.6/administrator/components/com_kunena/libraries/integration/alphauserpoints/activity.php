@@ -26,8 +26,22 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 	}
 
 	public function onAfterPost($message) {
+		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		$datareference = '<a href="' . CKunenaLink::GetMessageURL ( $message->get ( 'id' ), $message->get ( 'catid' ) ) . '">' . $message->get ( 'subject' ) . '</a>';
 		AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $message->get ( 'id' ), $datareference );
+	}
+
+	public function onAfterReply($message) {
+		require_once KPATH_SITE.'/lib/kunena.link.class.php';
+		$datareference = '<a href="' . CKunenaLink::GetMessageURL ( $message->get ( 'id' ), $message->get ( 'catid' ) ) . '">' . $message->get ( 'subject' ) . '</a>';
+		if ($this->_config->alphauserpointsnumchars > 0) {
+			// use if limit chars for a response
+			if (JString::strlen ( $message->get ( 'message' ) ) > $this->_config->alphauserpointsnumchars) {
+				AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
+			}
+		} else {
+			AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
+		}
 	}
 
 	function escape($var) {
@@ -60,17 +74,5 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		$userpoints = $_db->loadResult ();
 		KunenaError::checkDatabaseError ();
 		return $userpoints;
-	}
-
-	public function onAfterReply($message) {
-		$datareference = '<a href="' . CKunenaLink::GetMessageURL ( $message->get ( 'id' ), $message->get ( 'catid' ) ) . '">' . $message->get ( 'subject' ) . '</a>';
-		if ($this->_config->alphauserpointsnumchars > 0) {
-			// use if limit chars for a response
-			if (JString::strlen ( $message->get ( 'message' ) ) > $this->_config->alphauserpointsnumchars) {
-				AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
-			}
-		} else {
-			AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
-		}
 	}
 }

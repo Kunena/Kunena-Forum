@@ -81,14 +81,20 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 	// *** event prepare content ***
 	function onPrepareContent(&$article, &$params, $limitstart) {
+		$customTopics = $this->params->get ( 'custom_topics', 1 );
+
 		$articleCategory = (isset ( $article->catid ) ? $article->catid : 0);
 		$isStaticContent = ! $articleCategory;
 		if ($isStaticContent) {
 			$kunenaCategory = false;
 		} else {
 			$kunenaCategory = $this->getForumCategory ( $articleCategory );
-			if (! $kunenaCategory)
-				return true;
+			if (! $kunenaCategory ) {
+				if ( ! $customTopics)
+					return true;
+				else
+					$this->debug ( "onPrepareContent: Allowing only Custom Topics" );
+			}
 		}
 		$kunenaTopic = false;
 
@@ -127,7 +133,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		$this->debug ( "onPrepareContent: Article {$article->id}" );
 
-		$customTopics = $this->params->get ( 'custom_topics', 1 );
 		if (! $customTopics) {
 			$this->debug ( "onPrepareContent: Custom Topics disabled" );
 		} else {
@@ -161,12 +166,15 @@ class plgContentKunenaDiscuss extends JPlugin {
 					$article->introtext = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->introtext, 1 );
 				if (isset ( $article->fulltext ))
 					$article->fulltext = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->fulltext, 1 );
+				if ($kunenaTopic == 0) {
+					$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Discussion of this article has been disabled." );
+					return true;
+				}
 			}
-			$this->debug ( "onPrepareContent: Custom Topic " . ($kunenaTopic ? "found" : "not found") . ". Searched for {kunena_discuss:#}" );
+			$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Custom Topic " . ($kunenaTopic ? "{$kunenaTopic} found." : "not found.") );
 		}
 
 		if ($kunenaCategory || $kunenaTopic) {
-			$this->debug ( "onPrepareContent: Let's show you something!" );
 			self::$botDisplay [$article->id] = $this->showPlugin ( $kunenaCategory, $kunenaTopic, $article, $show == 1 );
 		}
 		return true;
@@ -204,32 +212,53 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		$subject = $row->title;
 
-		$query = "SELECT b.*, m.thread AS thread FROM #__kunenadiscuss AS b
-			LEFT JOIN #__kunena_messages AS m ON b.thread_id = m.id AND hold=0
-			WHERE b.content_id = {$this->_db->quote($row->id)}";
+		// Find cross reference and the real topic
+		$query = "SELECT d.content_id, d.thread_id, m.id AS mesid, t.thread
+			FROM #__kunenadiscuss AS d
+			LEFT JOIN #__kunena_messages AS m ON d.thread_id = m.id
+			LEFT JOIN #__kunena_messages AS t ON t.id = m.thread
+			WHERE d.content_id = {$this->_db->quote($row->id)}";
 		$this->_db->setQuery ( $query );
 		$result = $this->_db->loadObject ();
 		CKunenaTools::checkDatabaseError ();
 
-		if ($result && $result->thread_id == $thread) $thread = 0;
-		if ($result && ($result->thread != $result->thread_id || $thread)) {
-			$this->debug ( "showPlugin: Removing cross reference record pointing to a non-existent or wrong topic" );
-			$query = "DELETE FROM #__kunenadiscuss WHERE content_id={$this->_db->quote($result->content_id)}";
-			//$this->_db->setQuery ( $query );
-			//$this->_db->query ();
-			CKunenaTools::checkDatabaseError ();
-			$result = null;
+		if ($result) {
+			if ($thread && $thread != $result->mesid) {
+				// Custom Topic is not the same as cross reference, additional check needed
+				$query = "SELECT t.thread
+					FROM #__kunena_messages AS m
+					LEFT JOIN #__kunena_messages AS t ON t.id = m.thread
+					WHERE m.id = {$this->_db->quote($thread)}";
+				$this->_db->setQuery ( $query );
+				$result->thread = $this->_db->loadResult ();
+				CKunenaTools::checkDatabaseError ();
+				if (!$result->thread) {
+					$this->debug ( "showPlugin: Custom Topic does not exist, aborting" );
+					return '';
+				}
+				$this->debug ( "showPlugin: Custom Topic points to new location {$result->thread}" );
+			}
+			if ($result->thread != $result->thread_id) {
+				// Topic has been moved, has been deleted or tag inside message has been changed
+				$this->debug ( "showPlugin: Removing cross reference record pointing to topic {$result->thread_id}" );
+				$query = "DELETE FROM #__kunenadiscuss WHERE content_id={$this->_db->quote($result->content_id)}";
+				$this->_db->setQuery ( $query );
+				$this->_db->query ();
+				CKunenaTools::checkDatabaseError ();
+				// We may need to add new cross reference or create new topic
+				$thread = $result->thread;
+				$result = null;
+			}
 		}
-
 		if (! $result && $thread) {
-			$this->debug ( "showPlugin: First hit to Custom Topic, create cross reference" );
 			$this->createReference ( $row, $thread );
+			$this->debug ( "showPlugin: First hit to Custom Topic, created cross reference to topic {$thread}" );
 		} else if (! $result) {
-			$this->debug ( "showPlugin: First hit, create new topic into forum" );
 			$thread = $this->createTopic ( $row, $catid, $subject );
+			$this->debug ( "showPlugin: First hit, created new topic {$thread} into forum" );
 		} else {
-			$this->debug ( "showPlugin: Topic exists in the forum" );
 			$thread = $result->thread_id;
+			$this->debug ( "showPlugin: Topic {$thread} exists in the forum" );
 		}
 
 		if ($linkOnly) {
@@ -332,9 +361,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 	function createTopic($row, $catid, $subject) {
 		require_once (KPATH_SITE . '/lib/kunena.posting.class.php');
-		$message = new CKunenaPosting ( );
+		$message = new CKunenaPosting ( $this->params->get ( 'topic_owner', $row->created_by ) );
 
-		$options ['authorid'] = $this->params->get ( 'topic_owner', $row->created_by );
+		$options = array();
 		$fields ['subject'] = $subject;
 		$fields ['message'] = "[article]{$row->id}[/article]";
 		$success = $message->post ( $catid, $fields, $options );
@@ -441,7 +470,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$pair = explode ( ',', $pair );
 			$key = isset ( $pair [0] ) ? intval ( $pair [0] ) : 0;
 			$value = isset ( $pair [1] ) ? intval ( $pair [1] ) : 0;
-			if ($key > 0 && $value > 0)
+			if ($key > 0)
 				$categoryMap [$key] = $value;
 		}
 		// Limit bot to the following content catgeories
@@ -454,11 +483,31 @@ class plgContentKunenaDiscuss extends JPlugin {
 			return false;
 		}
 
-		if (count ( $categoryMap ) > 0 && isset ( $categoryMap [$catid] )) {
-			$this->debug ( "onPrepareContent.Allow: Category {$catid} is in the category map using Kunena category {$categoryMap[$catid]}" );
-			if (!$categoryMap [$catid]) $this->debug ( "onPrepareContent.Allow: ERROR: category map should have pairs of values: 1,3;2,4;3,5" );
+		if (!empty ( $categoryMap ) && isset ( $categoryMap [$catid] )) {
+			$forumcatid = $categoryMap [$catid];
+			if (!$forumcatid) {
+				$this->debug ( "onPrepareContent.Deny: Category {$catid} was disabled in the category map." );
+				return false;
+			}
+			$this->debug ( "onPrepareContent.Allow: Category {$catid} is in the category map using Kunena category {$forumcatid}" );
+			return $forumcatid;
 		}
-		$this->debug ( "onPrepareContent.Allow: Category {$catid} using Kunena category {$default}" );
+
+		if (!$default) {
+			$this->debug ( "onPrepareContent.Deny: There is no default Kunena category" );
+			return false;
+		}
+
+		if (in_array('0', $allowCategories ) || in_array($catid, $allowCategories )) {
+			$this->debug ( "onPrepareContent.Allow: Category {$catid} was listed in allow list and is using default Kunena category {$default}" );
+			return $default;
+		}
+		if (in_array('0', $denyCategories ) || in_array($catid, $denyCategories )) {
+			$this->debug ( "onPrepareContent.Deny: Category {$catid} was listed in deny list" );
+			return false;
+		}
+
+		$this->debug ( "onPrepareContent.Allow: Category {$catid} is using default Kunena category {$default}" );
 		return $default;
 	}
 

@@ -31,12 +31,22 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC2
 
+31-Aug-2010 Matias
++ [#20084] Post first message as article owner (or fixed user)
+# [#20084] If category is not allowed, article can still use custom topic
+
+30-Aug-2010 Matias
++ [#20084] Disable discussion by {kunena_discuss:0}
+# [#20084] Fix cross reference logic
+# [#20084] Much improved handling on merged topics and changed custom topics
+# [#20084] Fix category mapping issues
+# [#20084] Fix allow and deny list handling
+
 29-Aug-2010 Xillibit
 # [#20084] Put db->quote() on some values in queries to avoid issues
 
 29-Aug-2010 Matias
 # [#20084] Fix application scope detection
-^ [#20084] Added error message when mapping category to 0
 
 21-Aug-2010 Matias
 ^ [#20084] Change version to 1.6.0-RC2

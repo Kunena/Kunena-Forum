@@ -2478,10 +2478,8 @@ function textCounter(field, target) {
 			</tr>
 			<tr>
 				<td class="contentpane">
-				<?php
-				if ($editavatar) {
-					?>
-				<?php echo $avatar; ?>
+				<?php echo $avatar;
+				if ($editavatar) { ?>
 					<p><input type="checkbox" value="1"
 					name="deleteAvatar"> <em><?php echo JText::_('COM_KUNENA_DELAV'); ?></em></p></td>
 				<?php } else {

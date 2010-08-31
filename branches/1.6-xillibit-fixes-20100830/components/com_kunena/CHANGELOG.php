@@ -35,6 +35,8 @@ Kunena 1.6.0-RC2
 
 31-August-2010 Xillibit
 # [#22175] When you insert an attachment in a message, the smilies aren't interprepted
+^ [#22092] Report configuration detect utf8 but not an exact collation (like utf8_general)
+# [#22179] Others than Kunena avatars aren't showed when you edit a profile in backend
 
 30-August-2010 Xillibit
 ^ [#22151] Characters, units in files and images in browse uploaded files in backend and in frontend

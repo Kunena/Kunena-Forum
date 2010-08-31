@@ -18,7 +18,7 @@ DEFINE('KUNENA_MIN_MYSQL', '4.1.19');
 DEFINE ( 'KUNENA_MIN_JOOMLA', '1.5.19' );
 
 jimport ( 'joomla.application.component.model' );
-require_once KPATH_ADMIN . '/api.php';
+require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 /**
  * Install Model for Kunena

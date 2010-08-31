@@ -27,7 +27,7 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JomsocialKunenaMenu 1.6.0-RC1
+JomsocialKunenaMenu 1.6.0-RC2
 
 31-Aug-2010 fxstein
 ^ [#19002] Updated build files for RC2 release

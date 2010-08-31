@@ -982,6 +982,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			case 'url' :
 			case 'img' :
 			case 'file' :
+			case 'attachment' :
 			case 'map' :
 			case 'video' :
 			case 'ebay' :

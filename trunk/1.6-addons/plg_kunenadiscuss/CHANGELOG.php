@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC2
 
+31-Aug-2010 fxstein
+^ [#20084] Load kunena language through API
+
 31-Aug-2010 @quila
 # [#20084] Removed table in message.php
 ^ [#20084] Added more css style to show messages

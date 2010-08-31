@@ -49,8 +49,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// Load language files
 		$this->loadLanguage ( '', JPATH_ADMINISTRATOR );
-		$lang = JFactory::getLanguage ();
-		$lang->load ( 'com_kunena', KPATH_SITE );
+		// load Kunena main language file so we can leverage langaueg strings from it
+		KunenaFactory::loadLanguage();
 
 		// Create discussbot table if doesn't exist
 		$query = "SHOW TABLES LIKE '{$this->_db->getPrefix()}kunenadiscuss'";

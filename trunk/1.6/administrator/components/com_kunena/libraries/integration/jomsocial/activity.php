@@ -32,6 +32,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		if (! empty ( $message->parent ) && ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1)) {
 			//activity stream  - new post
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
+			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
 			$kunena_emoticons = smile::getEmoticons ( 1 );
@@ -68,6 +69,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 		if (! empty ( $message->parent ) && ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1)) {
 			//activity stream - reply post
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
+			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
 			$kunena_emoticons = smile::getEmoticons ( 1 );

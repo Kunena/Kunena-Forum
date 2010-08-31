@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.6.0-RC2
 
+31-Aug-2010 fxstein
+^ [#20095] Updated build files for RC2 release
+
 30-Aug-2010 fxstein
 + [#20095] Add missing Kunena language load
 + [#20095] New parameter to limit title output (topic subject or username)

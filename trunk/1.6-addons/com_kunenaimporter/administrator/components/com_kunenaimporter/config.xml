@@ -9,11 +9,13 @@
 		<option value='phpbb3'>phpBB3</option>
 		<!-- <option value='phpbb2'>phpBB2</option> -->
 		<!-- <option value='pnphpbb2'>PNphpBB2</option> -->
+		<option value='smf2'>SMF2</option>
 	</param>
-	<param name='db_host' type='text' default='localhost' label='Database Host' description='' size='30' />
+	<param name='path' type='text' default='' label='Relative Path to Forum' description='' size='30' />
+	<!-- <param name='db_host' type='text' default='localhost' label='Database Host' description='' size='30' />
 	<param name='db_user' type='text' default='' label='Database User' description='' size='30' />
 	<param name='db_passwd' type='password' default='' label='Database Password' description='' size='30' />
 	<param name='db_name' type='text' default='' label='Forum Database Name' description='' size='30' />
-	<param name='db_prefix' type='text' default='phpbb_' label='Forum Table Prefix' description='' size='30' />
+	<param name='db_prefix' type='text' default='phpbb_' label='Forum Table Prefix' description='' size='30' /> -->
 	</params>
 </config>

@@ -93,7 +93,6 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 		$importOps ['messages'] = array ('count' => 'countMessages', 'export' => 'exportMessages' );
 		$importOps ['sessions'] = array ('count' => 'countSessions', 'export' => 'exportSessions' );
 		$importOps ['subscriptions'] = array ('count' => 'countSubscriptions', 'export' => 'exportSubscriptions' );
-		//$importOps['smilies'] = array('count'=>'countSmilies', 'export'=>'exportSmilies');
 		$importOps ['userprofile'] = array ('count' => 'countUserProfile', 'export' => 'exportUserProfile' );
 		$this->importOps = & $importOps;
 	}
@@ -377,7 +376,7 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 		$query = "SELECT
 			t.topic_first_post_id AS thread,
 			w.user_id AS userid,
-			0 AS future1,
+			0 AS future1
 		FROM `#__topics_watch` AS w
 		LEFT JOIN `#__topics` AS t ON w.topic_id=t.topic_id";
 		$result = $this->getExportData ( $query, $start, $limit );
@@ -493,19 +492,6 @@ class KunenaimporterModelExport_phpBB3 extends KunenaimporterModelExport {
 
 		$this->ext_database->setQuery( $query );
 		$result = intval($this->ext_database->loadResult());
-		return $result;
-	}
-
-	function countSmilies() {
-		return false;
-
-		$query = "SELECT count(*) FROM #__smilies";
-		return $this->getCount ( $query );
-	}
-
-	function &exportSmilies($start = 0, $limit = 0) {
-		$query = "SELECT smiley_id AS id, code AS code, smiley_url AS location, smiley_url AS greylocation, 1 AS emoticonbar FROM `#__smilies` ORDER BY id";
-		$result = $this->getExportData ( $query, $start, $limit );
 		return $result;
 	}
 

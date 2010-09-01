@@ -31,6 +31,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaImporter 1.6.0-RC2
+
+1-September-2010 Matias
++ [#20178] Create new exporter for SMF2 (standalone)
+# [#20178] phpBB3: Fix subscriptions export
+- [#20178] Remove database options from configuration
+
 KunenaImporter 1.6.0-RC1
 
 24-August-2010 Matias

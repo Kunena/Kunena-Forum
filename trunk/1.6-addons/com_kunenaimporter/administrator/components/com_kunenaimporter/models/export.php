@@ -24,7 +24,6 @@ if (file_exists ( $kunena_defines ))
 
 class KunenaimporterModelExport extends JModel {
 	var $ext_database = null;
-	var $ext_table_prefix;
 	var $ext_same = false;
 	var $messages = array ();
 	var $error = '';
@@ -38,7 +37,7 @@ class KunenaimporterModelExport extends JModel {
 		$component = JComponentHelper::getComponent ( 'com_kunenaimporter' );
 		$params = new JParameter ( $component->params );
 
-		if (! $this->ext_database) {
+		if ($this->ext_database === null) {
 			$db_name = $params->get ( 'db_name' );
 			$db_tableprefix = $params->get ( 'db_tableprefix' );
 			if (empty ( $db_name )) {
@@ -92,6 +91,9 @@ class KunenaimporterModelExport extends JModel {
 
 		if (JError::isError ( $this->ext_database ))
 			$this->error = $this->ext_database->toString ();
+		else if (!$this->ext_database) {
+			$this->error = 'Database not configured.';
+		}
 		if ($this->error) {
 			$this->addMessage ( '<div>Database connection: <b style="color:red">FAILED</b></div>' );
 			$this->addMessage ( '<br /><div><b>Please check that your external database settings are correct!</b></div><div><b>Error:</b> ' . $this->error . '</div>' );

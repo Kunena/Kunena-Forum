@@ -38,6 +38,7 @@ Kunena 1.6.0-RC3
 - [#19295] Cleanup code: remove unused plupload library
 + [#22197] Improve language installation: Create installable language packs
 + [#22197] Improve language installation: Install all enabled languages during installation process
+# [#22201] Kunena packages: use same archiver for every file (zip/tar/tar.gz/tar.bz2)
 # [#22074] Untranslated strings in Administration > Components > Kunena Forum
 ^ [#15886] Merged revisions 3356-3377 from /branches/1.6-xillibit-fixes-20100830
 

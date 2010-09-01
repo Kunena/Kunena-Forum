@@ -217,9 +217,27 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				$tne = '</span>';
 				return TAGPARSER_RET_REPLACED;
 				break;
-			case 'li' :
+			case 'font' :
+				if (! isset ( $tag->options ['default'] ) || empty ( $tag->options ['default'] ) ) {
+					return TAGPARSER_RET_NOTHING;
+				}
+				$tns = '<span style="font-family:'.kunena_htmlspecialchars ( $tag->options ['default'] ).'">';
+				$tne = '</span>';
+				return TAGPARSER_RET_REPLACED;
+				break;
+				case 'li' :
 				$tns = "<li>";
 				$tne = '</li>';
+				return TAGPARSER_RET_REPLACED;
+				break;
+			case 'pre' :
+				$tns = "<pre>";
+				$tne = '</pre>';
+				return TAGPARSER_RET_REPLACED;
+				break;
+			case 'tt' :
+				$tns = "<tt>";
+				$tne = '</tt>';
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'color' :
@@ -296,6 +314,15 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					return TAGPARSER_RET_REPLACED;
 				}
 				break;
+			case 'glow' :
+				//TODO: add support
+				return TAGPARSER_RET_REPLACED;
+			case 'shadow' :
+				//TODO: add support
+				return TAGPARSER_RET_REPLACED;
+			case 'move' :
+				//TODO: add support
+				return TAGPARSER_RET_REPLACED;
 			default :
 				break;
 		}
@@ -603,18 +630,21 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 				break;
 			case 'list' :
-				$tag_new = '<ul>';
-				$tag_new .= "\n";
-				$linearr = explode ( '[*]', $between );
-				for($i = 0; $i < count ( $linearr ); $i ++) {
-					$tmp = JString::trim ( $linearr [$i] );
-					if (strlen ( $tmp )) {
-						$tag_new .= '<li>' . JString::trim ( $linearr [$i] ) . '</li>';
-						$tag_new .= "\n";
+				$type = isset($tag->options['type']) ? $tag->options['type'] : '';
+				$type = ($type == 'decimal' ? 'ol' : 'ul');
+				$tag_new = "<{$type}>";
+				if (strstr($between,'[*]')) {
+					$linearr = explode ( '[*]', $between );
+					for($i = 0; $i < count ( $linearr ); $i ++) {
+						$tmp = JString::trim ( $linearr [$i] );
+						if (strlen ( $tmp )) {
+							$tag_new .= '<li>' . JString::trim ( $linearr [$i] ) . '</li>';
+						}
 					}
+				} else {
+					$tag_new .= strtr($between, array("\r\n"=>' ', "\n"=>' ', "\r"=>' '));
 				}
-				$tag_new .= '</ul>';
-				$tag_new .= "\n";
+				$tag_new .= "</{$type}>";
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'video' :
@@ -984,6 +1014,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 			case '*' :
 				$tag_new = "[*]";
+				return TAGPARSER_RET_REPLACED; // nonrecursive
+
+				break;
+			case 'hr' :
+				$tag_new = "<hr />";
 				return TAGPARSER_RET_REPLACED; // nonrecursive
 
 				break;

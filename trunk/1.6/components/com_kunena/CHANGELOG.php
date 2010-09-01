@@ -41,6 +41,7 @@ Kunena 1.6.0-RC3
 # [#22201] Kunena packages: use same archiver for every file (zip/tar/tar.gz/tar.bz2)
 # [#22074] Untranslated strings in Administration > Components > Kunena Forum
 ^ [#15886] Merged revisions 3356-3377 from /branches/1.6-xillibit-fixes-20100830
++ [#19064] Add new bbcodes: pre, tt, hr -- list fixed
 
 31-August-2010 Xillibit
 # [#22175] When you insert an attachment in a message, the smilies aren't interprepted

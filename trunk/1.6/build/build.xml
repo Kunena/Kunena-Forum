@@ -24,31 +24,23 @@
 <project name="Kunena" default="dist" basedir=".">
 	<description>Ant Build File for Kunena</description>
 	<condition property="project_dir" value="..">
-		<not>
-			<isset property="project_dir" />
-		</not>
+		<not><isset property="project_dir" /></not>
 	</condition>
 	<condition property="package_dir" value="../../packages">
-		<not>
-			<isset property="package_dir" />
-		</not>
+		<not><isset property="package_dir" /></not>
 	</condition>
 	<condition property="tmp_dir" value="tmp">
-		<not>
-			<isset property="tmp_dir" />
-		</not>
+		<not><isset property="tmp_dir" /></not>
 	</condition>
 	<condition property="build_dir" value="package">
-		<not>
-			<isset property="build_dir" />
-		</not>
+		<not><isset property="build_dir" /></not>
 	</condition>
 	<property file="build.config.ini" />
 	<property name="kunena.frontend" value="components/com_kunena" />
 	<property name="kunena.backend" value="administrator/components/com_kunena" />
 	<property name="kunena.media" value="media/kunena" />
 
-	<target name="dist" depends="mkdir,archive,init,build,minify,copy,tar,zip,gzip,bz2,info,cleanup" />
+	<target name="dist" depends="mkdir,archive_old,init,build,minify,copy,info,cleanup" />
 
 	<target name="mkdir">
 		<mkdir dir="${tmp_dir}" />
@@ -57,7 +49,7 @@
 		<mkdir dir="${package_dir}/archive" />
 	</target>
 
-	<target name="archive">
+	<target name="archive_old">
 		<move todir="${package_dir}/archive" preservelastmodified="yes" includeEmptyDirs="no">
 			<fileset dir="${package_dir}">
 				<exclude name="archive/" />
@@ -66,6 +58,24 @@
 	</target>
 
 	<target name="init" depends="mkdir">
+		<!--
+		YUI Compressor implementation
+		See link below for details, documentations and samples
+		http://javaflight.blogspot.com/2008/01/introducing-yui-compressor-ant-task.html
+		-->
+		<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
+			<classpath>
+				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.2.jar" />
+				<pathelement path="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
+			</classpath>
+		</taskdef>
+
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${project_dir}/build/lib/ant-contrib-1.0b3.jar"/>
+			</classpath>
+		</taskdef>
+
 		<xmlproperty file="${project_dir}/${kunena.backend}/${cfg.name}.xml" collapseAttributes="true" prefix="xml" keepRoot="false" />
 		<buildnumber />
 		<tstamp>
@@ -74,7 +84,6 @@
 		<condition property="version.date" value="${str.datefmt}" else="">
 			<istrue value="${cfg.adddate}" />
 		</condition>
-
 		<condition property="str.build" value="_${cfg.buildprefix}${build.number}" else="">
 			<istrue value="${cfg.addbuild}" />
 		</condition>
@@ -150,75 +159,79 @@
 		<move todir="${build_dir}/archive" includeEmptyDirs="no">
 			<fileset dir="${tmp_dir}/${kunena.backend}/archive" />
 		</move>
-		<move todir="${build_dir}/languages" flatten="yes" includeEmptyDirs="no">
-			<fileset dir="${tmp_dir}/${kunena.backend}/language">
-				<include name="**/*install*"/>
-			</fileset>
-		</move>
 	</target>
 
 	<target name="minify" depends="build">
-	<!--
-	YUI Compressor implementation
-	See link below for details, documentations and samples
-	http://javaflight.blogspot.com/2008/01/introducing-yui-compressor-ant-task.html
-	-->
-		<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
-			<classpath>
-				<pathelement path="${project_dir}/build/lib/yuicompressor-2.4.2.jar" />
-				<pathelement path="${project_dir}/build/lib/yui-compressor-ant-task-0.5.jar" />
-			</classpath>
-		</taskdef>
-
-		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/js/slimbox/" 
-			todir="${tmp_dir}/${kunena.frontend}/js/slimbox/">
+		<yui-compressor warn="false" munge="true" charset="UTF-8" fromdir="${tmp_dir}/${kunena.frontend}" todir="${tmp_dir}/${kunena.frontend}">
+			<include name="**/*.js" />
+			<include name="**/*.css" />
 		</yui-compressor>
-
-		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/template/default/css" 
-			todir="${tmp_dir}/${kunena.frontend}/template/default/css">
-		</yui-compressor>
-
-		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/template/example/css" 
-			todir="${tmp_dir}/${kunena.frontend}/template/example/css">
-		</yui-compressor>
-
-		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/template/default/js" 
-			todir="${tmp_dir}/${kunena.frontend}/template/default/js">
-		</yui-compressor>
-
-		<yui-compressor warn="false" munge="true" preserveallsemicolons="false" 
-			fromdir="${project_dir}/${kunena.frontend}/template/default/plugin/poll/js" 
-			todir="${tmp_dir}/${kunena.frontend}/template/default/plugin/poll/js">
-		</yui-compressor>
-		
 	</target>
 	
+	<macrodef name="language">
+		<attribute name="tag" default="en-GB"/>
+		<sequential>
+			<move file="${tmp_dir}/${kunena.backend}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}" overwrite="true" filtering="true" />
+			<move todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
+				<fileset dir="${tmp_dir}/${kunena.backend}">
+					<include name="**/@{tag}.*.ini"/>
+				</fileset>
+			</move>
+			<move todir="${tmp_dir}/languages/@{tag}/site" flatten="yes" includeEmptyDirs="no" overwrite="true">
+				<fileset dir="${tmp_dir}/${kunena.frontend}">
+					<include name="**/@{tag}.*.ini"/>
+				</fileset>
+			</move>
+			<archive destfile="${build_dir}/archive/language.@{tag}" basedir="${tmp_dir}/languages/@{tag}"/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="archive">
+		<attribute name="destfile"/>
+		<attribute name="basedir"/>
+		<sequential>
+			<if>
+				<equals arg1="${do.zip}" arg2="true" />
+				<then>
+					<echo file="${build_dir}/archive/fileformat">.zip</echo>
+					<zip destfile="@{destfile}.zip" basedir="@{basedir}" excludes="**/*.tar,**/*.gz,**/*.bz2"/>
+				</then>
+			</if>
+			<if>
+				<equals arg1="${do.tar}" arg2="true" />
+				<then>
+					<echo file="${build_dir}/archive/fileformat">.tar</echo>
+					<tar destfile="@{destfile}.tar" basedir="@{basedir}" compression="none" excludes="**/*.zip,**/*.gz,**/*.bz2" />
+				</then>
+			</if>
+			<if>
+				<equals arg1="${do.gzip}" arg2="true" />
+				<then>
+					<echo file="${build_dir}/archive/fileformat">.tar.gz</echo>
+					<tar destfile="@{destfile}.tar.gz" basedir="@{basedir}" compression="gzip" excludes="**/*.zip,**/*.tar,**/*.bz2" />
+				</then>
+			</if>
+			<if>
+				<equals arg1="${do.bz2}" arg2="true" />
+				<then>
+					<echo file="${build_dir}/archive/fileformat">.tar.bz2</echo>
+					<tar destfile="@{destfile}.tar.bz2" basedir="@{basedir}" compression="bzip2" excludes="**/*.zip,**/*.tar,**/*.gz" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
-
-		<zip destfile="${build_dir}/archive/admin.zip" basedir="${tmp_dir}/${kunena.backend}" />
-		<zip destfile="${build_dir}/archive/site.zip" basedir="${tmp_dir}/${kunena.frontend}" />
-		<zip destfile="${build_dir}/archive/media.zip" basedir="${tmp_dir}/${kunena.media}" />
-	</target>
-
-	<target name="tar" depends="copy" if="do.tar">
-		<tar destfile="${str.destfile}.tar" basedir="${build_dir}" />
-	</target>
-
-	<target name="zip" depends="copy" if="do.zip">
-		<zip destfile="${str.destfile}.zip" basedir="${build_dir}" />
-	</target>
-
-	<target name="gzip" depends="copy" if="do.gzip">
-		<tar destfile="${str.destfile}.tar.gz" basedir="${build_dir}" compression="gzip" />
-	</target>
-
-	<target name="bz2" depends="copy" if="do.bz2">
-		<tar destfile="${str.destfile}.tar.bz2" basedir="${build_dir}" compression="bzip2" />
+		<language tag="en-GB" />
+		<language tag="es-ES" />
+		<language tag="fi-FI" />
+		<language tag="pl-PL" />
+		<language tag="tr-TR" />
+		<archive destfile="${build_dir}/archive/admin" basedir="${tmp_dir}/${kunena.backend}" />
+		<archive destfile="${build_dir}/archive/site" basedir="${tmp_dir}/${kunena.frontend}" />
+		<archive destfile="${build_dir}/archive/media" basedir="${tmp_dir}/${kunena.media}" />
+		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 	</target>
 
 	<target name="info" depends="copy">

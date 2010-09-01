@@ -79,6 +79,7 @@ class KunenaModelInstall extends JModel {
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_INSTALL') ),
 			array ('step' => 'Prepare', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PREPARE') ),
 			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
+			array ('step' => 'Language', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_LANGUAGES') ),
 			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
@@ -207,7 +208,7 @@ class KunenaModelInstall extends JModel {
 		return $this->steps;
 	}
 
-	public function extract($path, $filename, $dest = null) {
+	public function extract($path, $filename, $dest = null, $silent = false) {
 		jimport ( 'joomla.filesystem.folder' );
 		jimport ( 'joomla.filesystem.file' );
 		jimport ( 'joomla.filesystem.archive' );
@@ -226,7 +227,26 @@ class KunenaModelInstall extends JModel {
 			$success = true;
 			$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
 		}
-		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text );
+		if ($success && !$silent)
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text );
+	}
+
+	function installLanguage($tag, $name = '') {
+		jimport('joomla.installer.installer');
+		$success = false;
+		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
+		$file = "language.{$tag}".file_get_contents("{$path}/fileformat");
+		$dest = JPATH_ROOT."/tmp/kinstall_lang.{$tag}";
+
+		if (!file_exists("$path/$file")) return false;
+		$this->extract ( $path, $file, $dest, true );
+		$installer = new JInstaller ( );
+		if ($installer->install ( $dest )) {
+			$success = true;
+		}
+		JFolder::delete($dest);
+		if ($name) $this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_LANGUAGE', $name), $success);
+		return $success;
 	}
 
 	function publishPlugin($folder, $name, $enable = 1) {
@@ -332,18 +352,29 @@ class KunenaModelInstall extends JModel {
 		$this->checkTimeout(true);
 	}
 
+	public function stepLanguage() {
+		$lang = JFactory::getLanguage();
+		$languages = $lang->getKnownLanguages();
+		foreach ($languages as $language) {
+			$this->installLanguage($language['tag'], $language['name']);
+		}
+		if (! $this->getError ())
+			$this->setStep($this->getStep()+1);
+	}
+
 	public function stepExtract() {
-		static $files = array(
-			array('name'=>'admin.zip', 'dest'=>KPATH_ADMIN),
-			array('name'=>'site.zip', 'dest'=>KPATH_SITE),
-			array('name'=>'media.zip', 'dest'=>KPATH_MEDIA)
-		);
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
+		$ext = file_get_contents("{$path}/fileformat");
+		static $files = array(
+			array('name'=>'admin', 'dest'=>KPATH_ADMIN),
+			array('name'=>'site', 'dest'=>KPATH_SITE),
+			array('name'=>'media', 'dest'=>KPATH_MEDIA)
+		);
 		$task = $this->getTask();
 		if (isset($files[$task])) {
 			$file = $files[$task];
-			if (file_exists ( $path . DS . $file['name'] )) {
-				$this->extract ( $path, $file['name'], $file['dest'] );
+			if (file_exists ( $path . DS . $file['name'] . $ext )) {
+				$this->extract ( $path, $file['name'] . $ext, $file['dest'] );
 			}
 			$this->setTask($task+1);
 		} else {

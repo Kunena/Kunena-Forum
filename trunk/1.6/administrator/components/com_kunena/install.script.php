@@ -17,6 +17,14 @@ class Com_KunenaInstallerScript {
 	function install($parent) {
 		$app = JFactory::getApplication();
 		$app->setUserState('com_kunena.install.step', 0);
+
+		// Install English and default language
+		require_once(JPATH_ADMINISTRATOR . '/components/com_kunena/install/model.php');
+		$installer = new KunenaModelInstall();
+		$installer->installLanguage('en-GB');
+		$lang = JFactory::getLanguage();
+		$tag = $lang->getTag();
+		if ($tag != 'en-GB') $installer->installLanguage($tag);
 	}
 
 	function update($parent) {

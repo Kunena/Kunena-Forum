@@ -18,6 +18,7 @@
 		<files folder="admin">
 			<filename>fi-FI.com_kunena.ini</filename>
 			<filename>fi-FI.com_kunena.install.ini</filename>
+			<filename>fi-FI.com_kunena.menu.ini</filename>
 		</files>
 	</administration>
 

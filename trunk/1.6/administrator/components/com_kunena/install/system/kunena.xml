@@ -14,9 +14,6 @@
 	<files>
 		<filename plugin="kunena">kunena.php</filename>
 	</files>
-	<!-- languages>
-		<language tag="en-GB">en-GB.plg_system_kunena.ini</language>
-	</languages -->
 	<params>
 	</params>
 </install>

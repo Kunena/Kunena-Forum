@@ -31,6 +31,15 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.0-RC3
+
+1-September-2010 Matias
+^ [#22196] Changed version to 1.6.0-RC3
+- [#19295] Cleanup code: remove unused plupload library
++ [#22197] Improve language installation: Create installable language packs
++ [#22197] Improve language installation: Install all enabled languages during installation process
+# [#22074] Untranslated strings in Administration > Components > Kunena Forum
+
 Kunena 1.6.0-RC2
 
 31-August-2010 Matias

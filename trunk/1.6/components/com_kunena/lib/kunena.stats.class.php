@@ -168,7 +168,7 @@ class CKunenaStats {
 
 		if (count($this->topprofiles) < $PopUserCount) {
 			$profile = KunenaFactory::getProfile();
-			$this->topprofiles = $profile->getProfileView();
+			$this->topprofiles = $profile->getProfileView($PopUserCount);
 			$this->topprofilehits = ! empty ( $this->topprofiles [0]->hits ) ? $this->topprofiles [0]->hits : 0;
 		}
 	}

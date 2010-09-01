@@ -305,13 +305,35 @@ class CKunenaModeration {
 				}
 				break;
 			case KN_DEL_THREAD_PERMINANTLY : //Delete a complete thread from the databases
-				// FIXME: delete entry also from #__kunena_messages_text
+				$query = "SELECT `id`,`userid` FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($currentMessage->thread)};";
+				$this->_db->setQuery ($query);
+				$ThreadDatas = $this->_db->loadObjectList ();
+				if (KunenaError::checkDatabaseError()) return false;
+
+				// TODO: remove foreach and use collective queries instead
+				if ( is_array( $ThreadDatas ) ) {
+					foreach ( $ThreadDatas as $mes ) {
+						$sql2 = "DELETE FROM #__kunena_messages_text WHERE `mesid`={$this->_db->Quote($mes->id)};";
+						$this->_db->setQuery ($sql2);
+						$this->_db->query ();
+						if (KunenaError::checkDatabaseError()) return false;
+
+						// Delete all attachments in this thread
+						if ($DeleteAttachments) {
+							$this->deleteAttachments($mes->id);
+						}
+
+						// Need to update number of posts of each users in this thread
+						if ( $mes->userid > 0) {
+							$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid`={$this->_db->Quote($mes->userid)}; ";
+							$this->_db->setQuery ($query);
+							$this->_db->query ();
+							if (KunenaError::checkDatabaseError()) return false;
+						}
+					}
+				}
 				$sql = "DELETE FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($currentMessage->thread)};";
 
-				// FIXME: delete attachments from the whole thread, not just first message
-				if ($DeleteAttachments) {
-					$this->deleteAttachments($MessageID);
-				}
 				break;
 			case KN_UNDELETE_THREAD :
 				$sql1 = "UPDATE #__kunena_messages SET `hold`=0 WHERE `id`={$this->_db->Quote($MessageID)};";

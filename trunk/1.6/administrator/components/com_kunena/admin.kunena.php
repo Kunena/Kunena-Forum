@@ -3123,7 +3123,7 @@ function generateSystemReport () {
             	if (KunenaError::checkDatabaseError()) return;
 
 			foreach ($fullfields as $row) {
-				if(!empty($row->Collation) && !preg_match('`utf8_general`',$row->Collation)) {
+				if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
 					$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
 				}
 			}

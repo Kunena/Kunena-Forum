@@ -49,12 +49,12 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		return JRoute::_('index.php?option=com_alphauserpoints&view=account'.$userid);
 	}
 
-	public function getProfileView() {
+	public function getProfileView($PopUserCount=0) {
 		$_db = &JFactory::getDBO ();
 		$_config = KunenaFactory::getConfig ();
 
 		$queryName = $_config->username ? "username" : "name";
-		$PopUserCount = $_config->popusercount;
+		if (!$PopUserCount) $PopUserCount = $_config->popusercount;
 		$query = "SELECT a.profileviews AS hits, u.id AS user_id, u.{$queryName} AS user FROM #__alpha_userpoints AS a
 					INNER JOIN #__users AS u ON u.id = a.userid
 					WHERE a.profileviews>'0' ORDER BY a.profileviews DESC";

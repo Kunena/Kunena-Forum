@@ -38,12 +38,12 @@ class KunenaProfileJomSocial extends KunenaProfile
 		return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid);
 	}
 
-	public function getProfileView() {
+	public function getProfileView($PopUserCount=0) {
 		$_db = &JFactory::getDBO ();
 		$_config = KunenaFactory::getConfig ();
 
 		$queryName = $_config->username ? "username" : "name";
-		$PopUserCount = $_config->popusercount;
+		if (!$PopUserCount) $PopUserCount = $_config->popusercount;
 		$query = "SELECT u.id AS user_id, c.view AS hits, u.{$queryName} AS user FROM #__community_users as c
 					LEFT JOIN #__users as u on u.id=c.userid
 					WHERE c.view>'0' ORDER BY c.view DESC";

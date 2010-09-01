@@ -118,36 +118,49 @@ class CKunenaAttachments {
 			}
 
 			// combine all images into one type
-			$attachment->shortname = CKunenaTools::shortenFileName($attachment->filename);
 			$attachment->shorttype = $this->isImage($attachment->filetype) ? 'image' : $attachment->filetype;
-			if ($attachment->shorttype == 'image' && !$this->_my->id && !$this->_config->showimgforguest) continue;
-			if ($attachment->shorttype != 'image' && !$this->_my->id && !$this->_config->showfileforguest) continue;
 			$attachment->shortname = CKunenaTools::shortenFileName($attachment->filename);
 
-			switch (strtolower($attachment->shorttype)){
+			switch (strtolower ( $attachment->shorttype )) {
 				case 'image' :
 					// Check for thumbnail and if available, use for display
-					if (file_exists(JPATH_ROOT.'/'.$attachment->folder.'/thumb/'.$attachment->filename)){
-						$thumb = $attachment->folder.'/thumb/'.$attachment->filename;
+					if (file_exists ( JPATH_ROOT . '/' . $attachment->folder . '/thumb/' . $attachment->filename )) {
+						$thumb = $attachment->folder . '/thumb/' . $attachment->filename;
 						$imgsize = '';
 					} else {
-						$thumb = $attachment->folder.'/'.$attachment->filename;
-						$imgsize = 'width="'.$this->_config->thumbwidth.'px" height="'.$this->_config->thumbheight.'px"';
+						$thumb = $attachment->folder . '/' . $attachment->filename;
+						$imgsize = 'width="' . $this->_config->thumbwidth . 'px" height="' . $this->_config->thumbheight . 'px"';
 					}
 
-					$img = '<img title="'.$this->escape($attachment->filename).'" '.$imgsize.' src="'.JURI::ROOT().$thumb.'" alt="'.$this->escape($attachment->filename).'" />';
-					$attachment->thumblink = CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$img,$this->escape($attachment->filename), 'lightbox-attachments'.intval($attachment->mesid));
-					$img = '<img title="'.$this->escape($attachment->filename).'" src="'.JURI::ROOT().$this->escape($attachment->folder).'/'.$this->escape($attachment->filename).'" alt="'.$this->escape($attachment->filename).'" />';
-					$attachment->imagelink = CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$img,$this->escape($attachment->filename), 'lightbox-attachments'.intval($attachment->id));
-					$attachment->textLink =CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$this->escape($attachment->shortname),$this->escape($attachment->filename), 'lightbox'.$attachment->mesid.' nofollow').' ('.number_format(intval($attachment->size)/1024,0,'',',').'KB)';
+					$img = '<img title="' . $this->escape ( $attachment->filename ) . '" ' . $imgsize . ' src="' . JURI::ROOT () . $thumb . '" alt="' . $this->escape ( $attachment->filename ) . '" />';
+					$attachment->thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $img, $this->escape ( $attachment->filename ), 'lightbox-attachments' . intval ( $attachment->mesid ) );
+					$img = '<img title="' . $this->escape ( $attachment->filename ) . '" src="' . JURI::ROOT () . $this->escape ( $attachment->folder ) . '/' . $this->escape ( $attachment->filename ) . '" alt="' . $this->escape ( $attachment->filename ) . '" />';
+					$attachment->imagelink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $img, $this->escape ( $attachment->filename ), 'lightbox-attachments' . intval ( $attachment->id ) );
+					$attachment->textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $this->escape ( $attachment->shortname ), $this->escape ( $attachment->filename ), 'lightbox' . $attachment->mesid . ' nofollow' ) . ' (' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . 'KB)';
 					break;
 				default :
 					// Filetype without thumbnail or icon support - use default file icon
-					$img = '<img src="'.KUNENA_URLICONSPATH.'attach_generic.png" alt="'.JText::_('COM_KUNENA_ATTACH').'" />';
-					$attachment->thumblink = CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$img,$this->escape($attachment->filename), 'nofollow');
-					$attachment->textLink = CKunenaLink::GetAttachmentLink($this->escape($attachment->folder),$this->escape($attachment->filename),$this->escape($attachment->shortname),$this->escape($attachment->filename), 'nofollow').' ('.number_format(intval($attachment->size)/1024,0,'',',').'KB)';
+					$img = '<img src="' . KUNENA_URLICONSPATH . 'attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					$attachment->thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $img, $this->escape ( $attachment->filename ), 'nofollow' );
+					$attachment->textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $this->escape ( $attachment->shortname ), $this->escape ( $attachment->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . 'KB)';
 			}
-			$ret[$attachment->mesid][$attachment->id] = $attachment;
+			$disabled = false;
+			if (! $this->_my->id) {
+				if ($attachment->shorttype == 'image' && ! $this->_config->showimgforguest) {
+					$attachment->disabled = true;
+					$attachment->textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG' );
+				}
+				if ($attachment->shorttype != 'image' && ! $this->_config->showfileforguest) {
+					$attachment->disabled = true;
+					$attachment->textLink = JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' );
+				}
+				if ($attachment->disabled) {
+					$attachment->thumblink = '<img src="' . KUNENA_URLICONSPATH . 'attach_generic.png" alt="' . JText::_ ( 'COM_KUNENA_ATTACH' ) . '" />';
+					unset($attachment->imagelink);
+					$attachment->size = 0;
+				}
+			}
+			$ret [$attachment->mesid] [$attachment->id] = $attachment;
 		}
 		return $ret;
 	}

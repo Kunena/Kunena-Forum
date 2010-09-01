@@ -510,16 +510,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					}
 				}
 
-				if ($kunena_my->id == 0 && $kunena_config->showfileforguest == 0) {
+				$task->autolink_disable --; // continue autolink conversion
+				if (is_object ( $attachment ) && isset($attachment->disabled)) {
 					// Hide between content from non registered users
-					$tag_new = '<b>' . JText::_ ( 'COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE' ) . '</b>';
+					$tag_new = '<div class="kmsgattach">' . $attachment->textLink . '</div>';
 				} else {
-					$task->autolink_disable --; // continue autolink conversion
 					if (is_object ( $attachment ) && is_file(JPATH_ROOT . "/{$attachment->folder}/{$attachment->filename}")) {
 						$this->parent->inline_attachments[$attachment->id] = $attachment;
 						$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
 						if (empty($attachment->imagelink)) {
-							$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . $attachment->size . "</div>";
+							$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' .number_format(intval($attachment->size)/1024,0,'',',').' KB'. "</div>";
 						} else {
 							$tag_new = "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
 						}
@@ -965,6 +965,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 			case 'url' :
 			case 'img' :
 			case 'file' :
+			case 'article' :
+			case 'attachment' :
 			case 'map' :
 			case 'video' :
 			case 'ebay' :

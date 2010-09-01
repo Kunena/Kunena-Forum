@@ -39,6 +39,18 @@ Kunena 1.6.0-RC3
 + [#22197] Improve language installation: Create installable language packs
 + [#22197] Improve language installation: Install all enabled languages during installation process
 # [#22074] Untranslated strings in Administration > Components > Kunena Forum
+^ [#15886] Merged revisions 3356-3377 from /branches/1.6-xillibit-fixes-20100830
+
+31-August-2010 Xillibit
+# [#22175] When you insert an attachment in a message, the smilies aren't interprepted
+^ [#22092] Report configuration detect utf8 but not an exact collation (like utf8_general)
+# [#22179] Others than Kunena avatars aren't showed when you edit a profile in backend
+# [#22184] Top profiles doesn't take care of number of items defined in stats module
+
+30-August-2010 Xillibit
+^ [#22151] Characters, units in files and images in browse uploaded files in backend and in frontend
+# [#22160] Show images for guests doesn't work for all attachements
+# [#22015] When delete a thread perminantly, delete too the items in kunena_messages_text and all attachments in that thread
 
 Kunena 1.6.0-RC2
 

@@ -1622,6 +1622,8 @@ function defaultConfig($option) {
 	$kunena_config = KunenaFactory::getConfig ();
 	$kunena_config->backup ();
 	$kunena_config->remove ();
+	$kunena_config = new CKunenaConfig();
+	$kunena_config->create();
 
 	$kunena_db = &JFactory::getDBO ();
 	$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );

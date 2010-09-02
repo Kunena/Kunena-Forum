@@ -108,11 +108,19 @@ class CKunenaListcat {
 		$routerlist = array ();
 		$userlist = array();
 
+		$myprofile = KunenaFactory::getUser ();
+		if ($myprofile->ordering != '0') {
+			$topic_ordering = $myprofile->ordering == '1' ? true : false;
+		} else {
+			$topic_ordering = $kunena_config->default_sort == 'asc' ? false : true;
+		}
+
 		foreach ( $allsubcats as $i => $subcat ) {
 			if ($subcat->mesid)
 				$routerlist [$subcat->thread] = $subcat->subject;
 
-			$subcat->page = ceil ( $subcat->msgcount / $this->config->messages_per_page );
+			if($topic_ordering) $subcat->page = 1;
+			else $subcat->page = ceil ( $subcat->msgcount / $this->config->messages_per_page );
 
 			if ($this->config->shownew && $this->my->id != 0) {
 				if ($subcat->new) {
@@ -202,8 +210,8 @@ class CKunenaListcat {
 		$this->pending = array ();
 		if (count ( $modcats )) {
 			$modcatlist = implode ( ',', $modcats );
-			$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m 
-			INNER JOIN #__users AS u ON u.id=m.userid 
+			$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m
+			INNER JOIN #__users AS u ON u.id=m.userid
 			WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
 			$modlist = $this->db->loadObjectList ();
 			KunenaError::checkDatabaseError();
@@ -219,9 +227,9 @@ class CKunenaListcat {
 				}
 				if (count ( $modcats )) {
 					$modcatlist = implode ( ',', $modcats );
-					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count 
-					FROM #__kunena_messages 
-					WHERE catid IN ($modcatlist) AND hold='1' 
+					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count
+					FROM #__kunena_messages
+					WHERE catid IN ($modcatlist) AND hold='1'
 					GROUP BY catid" );
 					$pending = $this->db->loadAssocList ();
 					KunenaError::checkDatabaseError();
@@ -316,7 +324,7 @@ class CKunenaListcat {
 		$output .= '</ul>';
 		return $output;
 	}
-	
+
 	function displayInfoMessage($header, $contents) {
 			$header = JText::_('COM_KUNENA_FORUM_INFORMATION');
 			$contents = JText::_('COM_KUNENA_LISTCAT_NO_CATS');

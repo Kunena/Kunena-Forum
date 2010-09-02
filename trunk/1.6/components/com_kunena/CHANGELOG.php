@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+2-September-2010 Matias
+# [#22238] Administration: Resetting to default configuration breaks the forum
+# [#22239] Many links point to wrong page when message ordering is not the default one
+
 1-September-2010 Matias
 ^ [#22196] Changed version to 1.6.0-RC3
 - [#19295] Cleanup code: remove unused plupload library

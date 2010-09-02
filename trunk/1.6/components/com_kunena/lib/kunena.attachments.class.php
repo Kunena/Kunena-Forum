@@ -144,7 +144,7 @@ class CKunenaAttachments {
 					$attachment->thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $img, $this->escape ( $attachment->filename ), 'nofollow' );
 					$attachment->textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $this->escape ( $attachment->shortname ), $this->escape ( $attachment->filename ), 'nofollow' ) . ' (' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . 'KB)';
 			}
-			$disabled = false;
+			$attachment->disabled = false;
 			if (! $this->_my->id) {
 				if ($attachment->shorttype == 'image' && ! $this->_config->showimgforguest) {
 					$attachment->disabled = true;

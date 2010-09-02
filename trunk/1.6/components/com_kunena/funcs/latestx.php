@@ -538,6 +538,12 @@ class CKunenaLatestX {
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE'));
 		}
+		if ($this->myprofile->ordering != '0') {
+			$this->topic_ordering = $this->myprofile->ordering == '1' ? 'DESC' : 'ASC';
+		} else {
+			$this->topic_ordering = $this->config->default_sort == 'asc' ? 'ASC' : 'DESC'; // Just to make sure only valid options make it
+		}
+
 		CKunenaTools::loadTemplate('/threads/flat.php');
 	}
 
@@ -546,6 +552,12 @@ class CKunenaLatestX {
 			echo JText::_('COM_KUNENA_NO_ACCESS');
 			return;
 		}
+		if ($this->myprofile->ordering != '0') {
+			$this->topic_ordering = $this->myprofile->ordering == '1' ? 'DESC' : 'ASC';
+		} else {
+			$this->topic_ordering = $this->config->default_sort == 'asc' ? 'ASC' : 'DESC'; // Just to make sure only valid options make it
+		}
+
 		CKunenaTools::loadTemplate('/threads/flat_cats.php');
 	}
 

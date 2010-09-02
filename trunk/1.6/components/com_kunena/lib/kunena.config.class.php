@@ -15,10 +15,10 @@
  **/
 
 // Dont allow direct linking
-defined( '_JEXEC' ) or die();
+defined ( '_JEXEC' ) or die ();
 
-require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
-kimport('error');
+require_once (JPATH_ROOT . DS . 'administrator/components/com_kunena/libraries/api.php');
+kimport ( 'error' );
 
 abstract class CKunenaConfigBase {
 	public function __construct() {
@@ -31,11 +31,6 @@ abstract class CKunenaConfigBase {
 	abstract public function &getInstance();
 	abstract public function GetClassVars();
 	abstract protected function GetConfigTableName();
-
-	// This function allows for the overload of user specific settings.
-	// All settings can now be user specific. No further code changes
-	// are required inside of Kunena.
-	abstract public function DoUserOverrides($userid);
 
 	// Override this to perform certain custom validations of the config data
 	// Is being executed before save and after load
@@ -52,7 +47,8 @@ abstract class CKunenaConfigBase {
 			return false;
 		} else {
 			foreach ( $array as $k => $v ) {
-				if (isset($this->$k)) $this->$k = $v;
+				if (isset ( $this->$k ))
+					$this->$k = $v;
 			}
 		}
 
@@ -66,7 +62,7 @@ abstract class CKunenaConfigBase {
 		$fields = array ();
 
 		// Perform custom validation of config data before we write it.
-		$this->ValidateConfig();
+		$this->ValidateConfig ();
 
 		$vars = $this->GetClassVars ();
 
@@ -95,7 +91,8 @@ abstract class CKunenaConfigBase {
 
 		$this->_db->setQuery ( "CREATE TABLE " . $this->GetConfigTableName () . " (" . implode ( ', ', $fields ) . ", PRIMARY KEY (`id`) ) DEFAULT CHARSET=utf8" );
 		$this->_db->query ();
-		if (KunenaError::checkDatabaseError()) return;
+		if (KunenaError::checkDatabaseError ())
+			return;
 
 		// Insert current Settings
 		$vars = get_object_vars ( $this ); // for the actual values we must not use the class vars funtion
@@ -111,7 +108,7 @@ abstract class CKunenaConfigBase {
 
 		$this->_db->setQuery ( "INSERT INTO " . $this->GetConfigTableName () . " SET " . implode ( ', ', $fields ) );
 		$this->_db->query ();
-		KunenaError::checkDatabaseError();
+		KunenaError::checkDatabaseError ();
 	}
 
 	//
@@ -121,11 +118,13 @@ abstract class CKunenaConfigBase {
 		// remove old backup if one exists
 		$this->_db->setQuery ( "DROP TABLE IF EXISTS " . $this->GetConfigTableName () . "_backup" );
 		$this->_db->query ();
-		if (KunenaError::checkDatabaseError()) return;
+		if (KunenaError::checkDatabaseError ())
+			return;
 
 		$this->_db->setQuery ( "CREATE TABLE " . $this->GetConfigTableName () . "_backup SELECT * FROM " . $this->GetConfigTableName () );
 		$this->_db->query ();
-		if (KunenaError::checkDatabaseError()) return;
+		if (KunenaError::checkDatabaseError ())
+			return;
 	}
 
 	//
@@ -134,7 +133,7 @@ abstract class CKunenaConfigBase {
 	public function remove() {
 		$this->_db->setQuery ( "DROP TABLE IF EXISTS " . $this->GetConfigTableName () );
 		$this->_db->query ();
-		KunenaError::checkDatabaseError();
+		KunenaError::checkDatabaseError ();
 	}
 
 	//
@@ -143,23 +142,18 @@ abstract class CKunenaConfigBase {
 	public function load($userinfo = null) {
 		$this->_db->setQuery ( "SELECT * FROM " . $this->GetConfigTableName () );
 		$config = $this->_db->loadAssoc ();
-		KunenaError::checkDatabaseError();
+		if ($this->_db->getErrorNum ()) {
+			$app = JFactory::getApplication ();
+			$app->enqueueMessage ( 'Kunena ' . JText::_ ( 'COM_KUNENA_INTERNAL_ERROR_CONFIG' ), 'error' );
+			return;
+		}
 
 		if ($config != null) {
 			$this->bind ( $config );
 		}
 
 		// Perform custom validation of config data before we let anybody access it.
-		$this->ValidateConfig();
-
-		// Check for user specific overrides
-		if (is_object ( $userinfo )) {
-			// overload the settings with user specific ones
-			$this->DoUserOverrides ( $userinfo );
-			// Now the variables of the class contain the global settings
-		// overloaded with the user specific ones
-		// No other code changes required to support user specific settings.
-		}
+		$this->ValidateConfig ();
 	}
 }
 
@@ -301,27 +295,27 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $showfileforguest = 1;
 	//New for 1.6 -> Poll
 	var $pollnboptions = 4; //For poll integration, set the number maximum of options
-    var $pollallowvoteone = 1; //For poll integration, set if yes or no the user can vote one or more time for a poll
-    var $pollenabled = 1; //For poll integration, for disable the poll
-    var $poppollscount = 5;
-    var $showpoppollstats = 1;
-    var $polltimebtvotes = '00:15:00';
-    var $pollnbvotesbyuser = 100;
-    var $pollresultsuserslist = 1;
-    // New for 1.6 -> Max length for personnal text
-    var $maxpersotext = 50;
-    // New for 1.6 -> Choose ordering system
-    var $ordering_system = 'mesid';
-    // New for 1.6 -> dateformat
-    var $post_dateformat         = 'ago'; // See CKunenaTimeformat::showDate()
-    var $post_dateformat_hover   = 'datetime'; // See CKunenaTimeformat::showDate()
-    // New for 1.6 -> hide IP
-    var $hide_ip = 1;
-    // New for 1.6 -> disable/enable activity stream
-    var $js_actstr_integration = 0; // DEPRECATED, used in installer
-    // New for 1.6 -> image file types
+	var $pollallowvoteone = 1; //For poll integration, set if yes or no the user can vote one or more time for a poll
+	var $pollenabled = 1; //For poll integration, for disable the poll
+	var $poppollscount = 5;
+	var $showpoppollstats = 1;
+	var $polltimebtvotes = '00:15:00';
+	var $pollnbvotesbyuser = 100;
+	var $pollresultsuserslist = 1;
+	// New for 1.6 -> Max length for personnal text
+	var $maxpersotext = 50;
+	// New for 1.6 -> Choose ordering system
+	var $ordering_system = 'mesid';
+	// New for 1.6 -> dateformat
+	var $post_dateformat = 'ago'; // See CKunenaTimeformat::showDate()
+	var $post_dateformat_hover = 'datetime'; // See CKunenaTimeformat::showDate()
+	// New for 1.6 -> hide IP
+	var $hide_ip = 1;
+	// New for 1.6 -> disable/enable activity stream
+	var $js_actstr_integration = 0; // DEPRECATED, used in installer
+	// New for 1.6 -> image file types
 	var $imagetypes = 'jpg,jpeg,gif,png';
-    var $checkmimetypes = 1;
+	var $checkmimetypes = 1;
 	var $imagemimetypes = 'image/jpeg,image/jpg,image/gif,image/png';
 	var $imagequality = 50;
 	var $thumbheight = 32;
@@ -354,10 +348,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	//New for 1.6: allow only secure image extensions (jpg/gif/png) in IMG tag
 	var $bbcode_img_secure = 'text';
 
-
-    public function __construct($userinfo = null) {
+	public function __construct($userinfo = null) {
 		parent::__construct ();
-		$this->load ( $userinfo );
 	}
 
 	//
@@ -368,8 +360,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	public function &getInstance() {
 		static $instance = NULL;
 		if (! $instance) {
-			//$userinfo = KunenaFactory::getUser ( );
-			$instance = new CKunenaConfig ( /*$userinfo*/ );
+			$instance = new CKunenaConfig ();
+			$instance->load ();
 		}
 		return $instance;
 	}
@@ -382,21 +374,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 		return "#__kunena_config";
 	}
 
-	public function DoUserOverrides($userinfo) {
-		// Only perform overrides if we got a valid user handed to us
-		if (is_object ( $userinfo ) == FALSE)
-			return FALSE;
-		if ($userinfo->userid == 0)
-			return FALSE;
-
-		$this->default_sort = $userinfo->ordering ? 'desc' : 'asc';
-
-		// Add additional Overrides...
-
-
-		return TRUE;
-	}
-
 	public function ValidateConfig() {
 		// Add anything that requires validation
 
@@ -407,5 +384,3 @@ class CKunenaConfig extends CKunenaConfigBase {
 
 	}
 }
-
-?>

@@ -409,55 +409,14 @@ class CKunenaLink {
 		return KunenaRoute::_ ( 'index.php?option=com_content&task=view&Itemid=' . $rowItemid . '&id=' . $rowid );
 	}
 
-	//
-	// Macro functions that build more complex html output with embedded links
-	//
-
-
-	//
-	// This function builds the auto redirect block to go back to the latest post of a particular thread
-	// It is used for various operations. Input parameter is any post id. It will determine the thread,
-	// latest post of that thread and number of pages based on the supplied page limit.
-	//
-	function GetLatestPostAutoRedirectHTML($pid, $limit, $catid = 0) {
+	function GetLatestPageAutoRedirectURL($pid, $limit = 0, $catid = 0, $xhtml = false) {
 		$kunena_config = KunenaFactory::getConfig ();
-		$kunena_db = &JFactory::getDBO ();
-		// First determine the thread, latest post and number of posts for the post supplied
-		$where = '';
-		if ($catid > 0)
-			$where .= " AND a.catid = {$catid} ";
-		$kunena_db->setQuery ( "SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
-                             FROM #__kunena_messages AS a,
-                                (SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id={$kunena_db->Quote($pid)}) AS b
-                             WHERE a.thread = b.thread AND a.hold='0' {$where}
-                             GROUP BY a.thread" );
-		$result = $kunena_db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		// Now Calculate the number of pages for this particular thread
-		if (is_object ( $result )) {
-			$catid = $result->catid;
-			$threadPages = ceil ( $result->totalmessages / $limit );
+		$myprofile = KunenaFactory::getUser ();
+		if ($myprofile->ordering != '0') {
+			$topic_ordering = $myprofile->ordering == '1' ? true : false;
+		} else {
+			$topic_ordering = $kunena_config->default_sort == 'asc' ? false : true;
 		}
-
-		// Finally build output block
-
-
-		$Output = '<div align="center">';
-		if (is_object ( $result ))
-			$Output .= CKunenaLink::GetThreadPageLink ( 'view', $catid, $result->thread, $threadPages, $limit, JText::_ ( 'COM_KUNENA_POST_SUCCESS_VIEW' ), $result->latest_id ) . '<br />';
-		$Output .= CKunenaLink::GetCategoryLink ( 'showcat', $catid, JText::_ ( 'COM_KUNENA_POST_SUCCESS_FORUM' ) ) . '<br />';
-		$Output .= '</div>';
-		if (is_object ( $result ))
-			$Output .= CKunenaLink::GetAutoRedirectHTML ( CKunenaLink::GetThreadPageURL ( 'view', $catid, $result->thread, $threadPages, $limit, $result->latest_id ), 3500 );
-		else
-			$Output .= CKunenaLink::GetAutoRedirectHTML ( KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid ), 3500 );
-
-		return $Output;
-	}
-
-	function GetLatestPageAutoRedirectURL($pid, $limit = 0, $catid = 0) {
-		$kunena_config = KunenaFactory::getConfig ();
 		if (!$limit) $limit = $kunena_config->messages_per_page;
 		$kunena_db = &JFactory::getDBO ();
 		// First determine the thread, latest post and number of posts for the post supplied
@@ -472,27 +431,33 @@ class CKunenaLink {
 		$result = $kunena_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;
 		if (! is_object ( $result ))
-			return htmlspecialchars_decode ( KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid ) );
+			return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid , $xhtml );
 
 		// Now Calculate the number of pages for this particular thread
-		$catid = $result->catid;
-		$threadPages = ceil ( $result->totalmessages / $limit );
+		if($topic_ordering) $threadPages = 1;
+		else $threadPages = ceil ( $result->totalmessages / $limit );
 
 		// Finally build output block
-		return htmlspecialchars_decode ( CKunenaLink::GetThreadPageURL ( 'view', $catid, $result->thread, $threadPages, $limit, $pid ) );
+		return CKunenaLink::GetThreadPageURL ( 'view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id, $xhtml );
 	}
 
 	function GetMessageURL($pid, $catid=0, $limit = 0, $xhtml = true) {
 		$kunena_config = KunenaFactory::getConfig ();
 		$myprofile = KunenaFactory::getUser ();
+		if ($myprofile->ordering != '0') {
+			$topic_ordering = $myprofile->ordering == '1' ? '>=' : '<=';
+		} else {
+			$topic_ordering = $kunena_config->default_sort == 'asc' ? '<=' : '>=';
+		}
+		$maxmin = $topic_ordering == '<=' ? 'MAX' : 'MIN';
 		if ($limit < 1) $limit = $kunena_config->messages_per_page;
 		$access = KunenaFactory::getAccessControl();
 		$hold = $access->getAllowedHold($myprofile, $catid);
 		$kunena_db = JFactory::getDBO ();
 		// First determine the thread, latest post and number of posts for the post supplied
-		$kunena_db->setQuery ( "SELECT a.thread AS thread, MAX(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
+		$kunena_db->setQuery ( "SELECT a.thread AS thread, {$maxmin}(a.id) AS latest_id, MAX(a.catid) AS catid, COUNT(*) AS totalmessages
                              FROM #__kunena_messages AS a, (SELECT thread FROM #__kunena_messages WHERE id={$kunena_db->Quote($pid)}) AS b
-                             WHERE a.thread = b.thread AND a.hold IN ({$hold}) AND a.id <= {$kunena_db->Quote($pid)}
+                             WHERE a.thread = b.thread AND a.hold IN ({$hold}) AND a.id {$topic_ordering} {$kunena_db->Quote($pid)}
                              GROUP BY a.thread" );
 		$result = $kunena_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return;

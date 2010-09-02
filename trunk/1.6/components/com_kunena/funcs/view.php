@@ -612,7 +612,7 @@ class CKunenaView {
 		$tabclass = array ("row1", "row2" );
 
 		$this->mmm = 0;
-		$this->replydir = $this->config->default_sort == 'desc' ? -1 : 1;
+		$this->replydir = $ordering == 'DESC' ? -1 : 1;
 		if ($this->replydir<0) $this->replynum = $this->total_messages - $this->limitstart + 1;
 		else $this->replynum = $this->limitstart;
 

@@ -83,7 +83,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- Latest Post -->
 					<span class="ktopic-latest-post">
 						<?php
-						if ($this->config->default_sort == 'asc') {
+						if ($this->topic_ordering == 'ASC') {
 							$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
 							echo JText::_('COM_KUNENA_GEN_LAST_POST').': '.CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $threadPages, intval($this->config->messages_per_page), KunenaParser::parseText ($leaf->subject), intval($leaf->msgid) );
 						} else {

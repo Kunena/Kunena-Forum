@@ -183,8 +183,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<?php
 					if ($leaf->moved) :
 						echo JText::_('COM_KUNENA_MOVED');
-					// FIXME: use user setting!
-					elseif ($this->config->default_sort == 'asc') :
+					elseif ($this->topic_ordering == 'ASC') :
 						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $threadPages, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($this->lastreply [$leaf->thread]->id) );
 					else :
 						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), 1, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($this->lastreply [$leaf->thread]->id) );

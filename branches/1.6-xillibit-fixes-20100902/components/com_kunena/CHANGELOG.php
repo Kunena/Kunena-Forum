@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+2-September-2010 Xillibit
+# [#19288] Typo in config with showpopthankysoustats
+# [#19288] Typo in /components/com_kunena/language/ru-RU/ru-RU.com_kunena.ini
+# [#19288] Update french translation (fr-FR)
+
 2-September-2010 Matias
 # [#22238] Administration: Resetting to default configuration breaks the forum
 # [#22239] Many links point to wrong page when message ordering is not the default one

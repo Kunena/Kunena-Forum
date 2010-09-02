@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="language" version="1.5" client="both" method="upgrade">
+	<name>Kunena Forum - Turkish (Turkiye)</name>
+	<tag>tr-TR</tag>
+	<creationdate>Agustos 2010</creationdate>
+	<version>1.6-RC1</version>
+	<build></build>
+	<author>Tolga</author>
+	<authoremail>cumla@windowslive.com</authoremail>
+	<authorurl>http://www.cumla.org</authorurl>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>Kunena bileseni icin Turkce dil dosyalari</description>
+	
+	<administration>
+		<files folder="admin">
+			<filename>tr-TR.com_kunena.ini</filename>
+			<filename>tr-TR.com_kunena.install.ini</filename>
+		</files>
+	</administration>
+	
+	<site>
+		<files folder="site">
+			<filename>tr-TR.com_kunena.ini</filename>
+		</files>
+	</site>
+</install>

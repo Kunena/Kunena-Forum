@@ -23,9 +23,9 @@ class KunenaImporterViewUsers extends JView {
 		$currentUser = JFactory::getUser ();
 		$acl = JFactory::getACL ();
 
-		$filter_order = $mainframe->getUserStateFromRequest ( "$option.filter_order", 'filter_order', 'a.name', 'cmd' );
-		$filter_order_Dir = $mainframe->getUserStateFromRequest ( "$option.filter_order_Dir", 'filter_order_Dir', '', 'word' );
-		$filter_type = $mainframe->getUserStateFromRequest ( "$option.filter_type", 'filter_type', 0, 'string' );
+		$filter_order = $mainframe->getUserStateFromRequest ( "$option.filter_order", 'filter_order', 'a.username', 'cmd' );
+		$filter_order_Dir = $mainframe->getUserStateFromRequest ( "$option.filter_order_Dir", 'filter_order_Dir', 'asc', 'word' );
+		$filter_type = $mainframe->getUserStateFromRequest ( "$option.filter_type", 'filter_type', 'unmapped', 'string' );
 		$search = $mainframe->getUserStateFromRequest ( "$option.search", 'search', '', 'string' );
 		$search = JString::strtolower ( $search );
 
@@ -37,14 +37,14 @@ class KunenaImporterViewUsers extends JView {
 			$searchEscaped = $db->Quote ( '%' . $db->getEscaped ( $search, true ) . '%', false );
 			$where [] = 'a.username LIKE ' . $searchEscaped . ' OR a.email LIKE ' . $searchEscaped . ' OR a.name LIKE ' . $searchEscaped;
 		}
-		if ($filter_type) {
-			if ($filter_type == 'Public Frontend') {
-				$where [] = ' a.usertype = \'Registered\' OR a.usertype = \'Author\' OR a.usertype = \'Editor\' OR a.usertype = \'Publisher\' ';
-			} else if ($filter_type == 'Public Backend') {
-				$where [] = 'a.usertype = \'Manager\' OR a.usertype = \'Administrator\' OR a.usertype = \'Super Administrator\' ';
-			} else {
-				$where [] = 'a.usertype = LOWER( ' . $db->Quote ( $filter_type ) . ' ) ';
-			}
+		switch ($filter_type) {
+			case 'unmapped':
+				$where [] = " (a.id = 0 OR a.id IS NULL) ";
+				break;
+			case 'mapped':
+				$where [] = " a.id > 0 ";
+				break;
+			default:
 		}
 		// exclude any child group id's for this user
 		$pgids = $acl->get_group_children ( $currentUser->get ( 'gid' ), 'ARO', 'RECURSE' );
@@ -58,7 +58,7 @@ class KunenaImporterViewUsers extends JView {
 		$orderby = ' ORDER BY ' . $filter_order . ' ' . $filter_order_Dir;
 		$where = (count ( $where ) ? ' WHERE (' . implode ( ') AND (', $where ) . ')' : '');
 
-		$query = 'SELECT COUNT(a.id)' . ' FROM #__kunenaimporter_users AS a' . $filter . $where;
+		$query = 'SELECT COUNT(*)' . ' FROM #__kunenaimporter_users AS a' . $filter . $where;
 		$db->setQuery ( $query );
 		$total = $db->loadResult ();
 
@@ -72,12 +72,9 @@ class KunenaImporterViewUsers extends JView {
 		$n = count ( $rows );
 
 		// get list of Groups for dropdown filter
-		$query = 'SELECT name AS value, name AS text' . ' FROM #__core_acl_aro_groups' . ' WHERE name != "ROOT"' . ' AND name != "USERS"';
-		$db->setQuery ( $query );
-		$types [] = JHTML::_ ( 'select.option', '0', '- ' . JText::_ ( 'Select Group' ) . ' -' );
-		foreach ( $db->loadObjectList () as $obj ) {
-			$types [] = JHTML::_ ( 'select.option', $obj->value, JText::_ ( $obj->text ) );
-		}
+		$types [] = JHTML::_ ( 'select.option', '', 'All users' );
+		$types [] = JHTML::_ ( 'select.option', 'unmapped', 'Unmapped users' );
+		$types [] = JHTML::_ ( 'select.option', 'mapped', 'Mapped users' );
 		$lists ['type'] = JHTML::_ ( 'select.genericlist', $types, 'filter_type', 'class="inputbox" size="1" onchange="document.adminForm.submit( );"', 'value', 'text', "$filter_type" );
 
 		// get list of Log Status for dropdown filter

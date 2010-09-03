@@ -233,6 +233,11 @@ class KunenaimporterModelImport extends JModel {
 			die ( $option );
 		$this->commitStart ();
 		foreach ( $data as $item ) {
+			if (!empty($item->userid)) {
+				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+				$extuser->load ( $item->userid );
+				$item->userid = $extuser->id ? $extuser->id : -$extuser->extid;
+			}
 			if ($table->save ( $item ) === false) {
 				if (! strstr ( $table->getError (), 'Duplicate entry' ))
 					die ( "<br />ERROR: " . $table->getError () );
@@ -247,6 +252,11 @@ class KunenaimporterModelImport extends JModel {
 			die ( $option );
 		$this->commitStart ();
 		foreach ( $data as $item ) {
+			if (!empty($item->userid)) {
+				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+				$extuser->load ( $item->userid );
+				$item->userid = $extuser->id ? $extuser->id : -$extuser->extid;
+			}
 			if ($table->save ( $item ) === false)
 				die ( "ERROR: " . $table->getError () );
 		}

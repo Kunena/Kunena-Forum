@@ -35,9 +35,11 @@ KunenaImporter 1.6.0-RC2
 
 3-September-2010 Matias
 # [#20178] SMF: Fix subscriptions export
-# [#20178] Import: Fix user mapping into messages
+# [#20178] Import: Map all userids from external to Joomla ids
 # [#20178] Import: Use negative userids if user isn't mapped (allows late mapping)
 # [#20178] User mapping: Fatal error, trying to access protected variable
+# [#20178] User mapping: Fix pagination
+# [#20178] User mapping: Filter by mapped/unmapped/all
 
 2-September-2010 Matias
 # [#20178] SMF: Better version detection

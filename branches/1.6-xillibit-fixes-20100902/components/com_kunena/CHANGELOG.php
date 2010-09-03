@@ -37,6 +37,8 @@ Kunena 1.6.0-RC3
 # [#19288] Typo in config with showpopthankysoustats
 # [#19288] Typo in /components/com_kunena/language/ru-RU/ru-RU.com_kunena.ini
 # [#19288] Update french translation (fr-FR)
+# [#19288] Typo in config.class on the load for js file in the path
+# [#19288] Missing alt in pollbox for bar.png
 
 2-September-2010 Matias
 # [#22238] Administration: Resetting to default configuration breaks the forum

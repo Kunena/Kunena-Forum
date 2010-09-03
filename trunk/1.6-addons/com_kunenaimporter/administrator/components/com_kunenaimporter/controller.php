@@ -179,7 +179,6 @@ class KunenaImporterController extends JController {
 		require_once (JPATH_COMPONENT . DS . 'models' . DS . 'kunena.php');
 		$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
 		$extuser->load ( $extid );
-		$extuser->_exists = true;
 		if ($extuser->save ( $userdata ) === false) {
 			echo "ERROR: Saving external data for $userdata->username failed: " . $extuser->getError () . "<br />";
 		}

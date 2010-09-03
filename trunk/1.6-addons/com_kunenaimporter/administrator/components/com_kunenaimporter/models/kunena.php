@@ -298,6 +298,13 @@ class CKunenaTableSubscriptions extends CKunenaTable {
 	function __construct(&$database) {
 		parent::__construct ( '#__kunena_subscriptions', 'thread', $database );
 	}
+
+	function store($updateNulls = false) {
+		$this->_db->setQuery ( "INSERT INTO #__kunena_subscriptions (thread, userid) VALUES ({$this->thread}, {$this->userid})" );
+		$this->_db->query ();
+		return !$this->_db->getErrorNum ();
+	}
+
 }
 
 class CKunenaTableSubscriptions_Categories extends CKunenaTable {

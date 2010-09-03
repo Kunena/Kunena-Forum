@@ -33,6 +33,17 @@ Legend:
 
 KunenaImporter 1.6.0-RC2
 
+3-September-2010 Matias
+# [#20178] SMF: Fix subscriptions export
+# [#20178] Import: Fix user mapping into messages
+# [#20178] Import: Use negative userids if user isn't mapped (allows late mapping)
+# [#20178] User mapping: Fatal error, trying to access protected variable
+
+2-September-2010 Matias
+# [#20178] SMF: Better version detection
+# [#20178] SMF: Import some configuration options
+# [#20178] SMF: Cleanup text on categories, messages
+
 1-September-2010 Matias
 + [#20178] Create new exporter for SMF2 (standalone)
 # [#20178] phpBB3: Fix subscriptions export

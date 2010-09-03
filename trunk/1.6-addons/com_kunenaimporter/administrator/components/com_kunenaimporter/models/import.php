@@ -155,6 +155,11 @@ class KunenaimporterModelImport extends JModel {
 		}
 	}
 
+	function createUsers(&$users) {
+		foreach ( $users as $userdata ) {
+		}
+	}
+
 	function UpdateCatStats() {
 		// Update last message time from all categories.
 		$query = "UPDATE `#__kunena_categories`, `#__kunena_messages` SET `#__kunena_categories`.time_last_msg=`#__kunena_messages`.time WHERE `#__kunena_categories`.id_last_msg=`#__kunena_messages`.id AND `#__kunena_categories`.id_last_msg>0";
@@ -254,16 +259,23 @@ class KunenaimporterModelImport extends JModel {
 			$msgtable = JTable::getInstance ( 'messages', 'CKunenaTable' );
 			$txttable = JTable::getInstance ( 'messages_text', 'CKunenaTable' );
 			$message->mesid = $message->id;
-			if (! isset ( $message->extuserid ))
-				$message->extuserid = $message->userid;
-			$message->userid = $this->mapUser ( $message->extuserid );
-			if ($message->modified_by)
-				$message->modified_by = $this->mapUser ( $message->modified_by );
-			$user = JUser::getInstance ( $message->userid );
-			if (empty ( $message->email ))
-				$message->email = $user->email;
-			if (empty ( $message->name ))
-				$message->name = $user->username;
+			if ($message->userid) {
+				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+				$extuser->load ( $message->userid );
+				$message->userid = $extuser->id ? $extuser->id : -$extuser->extid;
+			}
+			if ($message->modified_by) {
+				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+				$extuser->load ( $message->modified_by );
+				$message->modified_by = $extuser->id ? $extuser->id : -$extuser->extid;
+			}
+			if ($message->userid > 0) {
+				$user = JUser::getInstance ( $message->userid );
+				if (empty ( $message->email ))
+					$message->email = $user->email;
+				if (empty ( $message->name ))
+					$message->name = $user->username;
+			}
 
 			if ($msgtable->save ( $message ) === false)
 				die ( "ERROR: " . $msgtable->getError () );

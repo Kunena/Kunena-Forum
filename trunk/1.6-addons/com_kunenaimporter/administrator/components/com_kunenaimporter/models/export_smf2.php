@@ -68,9 +68,9 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 			return false;
 		}
 
-		$query = "SELECT data FROM `#__admin_info_files` WHERE `filename` = 'current-version.js'";
+		$query = "SELECT value FROM `#__settings` WHERE `variable` = 'smfVersion'";
 		$this->ext_database->setQuery ( $query );
-		$this->version = preg_replace('/.*?"SMF (.*)".*/', '\\1', $this->ext_database->loadResult ());
+		$this->version = $this->ext_database->loadResult ();
 		if (! $this->version) {
 			$this->error = $this->ext_database->getErrorMsg ();
 			if (! $this->error)
@@ -187,6 +187,11 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 			0 AS time_last_msg
 		FROM #__categories ORDER BY id)";
 		$result = $this->getExportData ( $query, $start, $limit, 'id' );
+		foreach ( $result as $item ) {
+			$row = & $result [$item->id];
+			$row->name = $this->prep ( $row->name );
+			$row->description = $this->prep ( $row->description );
+		}
 		return $result;
 	}
 
@@ -198,12 +203,15 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		$config = array ();
 		if ($start)
 			return $config;
+		$query = "SELECT * FROM `#__settings`";
+		$this->ext_database->setQuery ( $query );
+		$result = $this->ext_database->loadObjectList ();
 
 		$config ['id'] = 1;
 		$config ['board_title'] = $this->config['mbname'];
 		$config ['email'] = $this->config['webmaster_email'];
 		$config ['board_offline'] = (bool)$this->config['maintenance'];
-		// $config ['board_ofset'] = = null;
+		$config ['board_ofset'] = $result->time_offset; // + default_timezone
 		$config ['offline_message'] = "<h1>{$this->config['mmessage']}</h1><p>{$this->config['mmessage']}</p>";
 		// $config ['default_view'] = null;
 		// $config ['enablerss'] = null;
@@ -248,10 +256,10 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		// $config ['wrap'] = null;
 		// $config ['maxsubject'] = null;
 		// $config ['maxsig'] = null;
-		// $config ['regonly'] = null;
+		// $config ['regonly'] = ! allow_guestAccess;
 		// $config ['changename'] = null;
-		// $config ['pubwrite'] = null;
-		// $config ['floodprotection'] = null;
+		// $config ['pubwrite'] = ;
+		// $config ['floodprotection'] = ;
 		// $config ['mailmod'] = null;
 		// $config ['mailadmin'] = null;
 		// $config ['captcha'] = null;
@@ -264,19 +272,19 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		// $config ['avatarsmallwidth'] = null;
 		// $config ['avatarheight'] = null;
 		// $config ['avatarwidth'] = null;
-		// $config ['avatarlargeheight'] = null;
-		// $config ['avatarlargewidth'] = null;
+		$config ['avatarlargeheight'] = $result->avatar_max_height_upload;
+		$config ['avatarlargewidth'] = $result->avatar_max_width_upload;
 		// $config ['avatarquality'] = null;
 		// $config ['avatarsize'] = null;
-		// $config ['allowimageupload'] = null;
+		$config ['allowimageupload'] = $result->attachmentEnable;
 		// $config ['allowimageregupload'] = null;
-		// $config ['imageheight'] = null;
-		// $config ['imagewidth'] = null;
-		// $config ['imagesize'] = null;
-		// $config ['allowfileupload'] = null;
+		$config ['imageheight'] = $result->max_image_height;
+		$config ['imagewidth'] = $result->max_image_width;
+		$config ['imagesize'] = $result->attachmentSizeLimit;
+		$config ['allowfileupload'] = $result->attachmentEnable;
 		// $config ['allowfileregupload'] = null;
 		// $config ['filetypes'] = null;
-		// $config ['filesize'] = null;
+		$config ['filesize'] = $result->attachmentSizeLimit;
 		// $config ['showranking'] = null;
 		// $config ['rankimages'] = null;
 		// $config ['avatar_src'] = null;
@@ -307,7 +315,7 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		// $config ['latestshowhits'] = null;
 		// $config ['latestshowauthor'] = null;
 		// $config ['showstats'] = null;
-		// $config ['showwhoisonline'] = null;
+		$config ['showwhoisonline'] = $result->who_enabled;
 		// $config ['showgenstats'] = null;
 		// $config ['showpopuserstats'] = null;
 		// $config ['popusercount'] = null;
@@ -336,6 +344,53 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		// $config ['rsshistory'] = null;
 		// $config ['fbdefaultpage'] = null;
 		// $config ['default_sort'] = null;
+
+		// $config ['alphauserpointsnumchars'] = null;
+		// $config ['sef'] = null;
+		// $config ['sefcats'] = null;
+		// $config ['sefutf8'] = null;
+		// $config ['showimgforguest'] = null;
+		// $config ['showfileforguest'] = null;
+		// $config ['pollnboptions'] = null;
+		// $config ['pollallowvoteone'] = null;
+		// $config ['pollenabled'] = null;
+		// $config ['poppollscount'] = null;
+		// $config ['showpoppollstats'] = null;
+		// $config ['polltimebtvotes'] = null;
+		// $config ['pollnbvotesbyuser'] = null;
+		// $config ['pollresultsuserslist'] = null;
+		// $config ['maxpersotext'] = null;
+		// $config ['ordering_system'] = null;
+		// $config ['post_dateformat'] = null;
+		// $config ['post_dateformat_hover'] = null;
+		// $config ['hide_ip'] = null;
+		// $config ['imagetypes'] = null;
+		// $config ['checkmimetypes'] = null;
+		// $config ['imagemimetypes'] = null;
+		// $config ['imagequality'] = null;
+		$config ['thumbheight'] = $result->attachmentThumbHeight;
+		$config ['thumbwidth'] = $result->attachmentThumbWidth;
+		// $config ['hideuserprofileinfo'] = null;
+		// $config ['integration_access'] = null;
+		// $config ['integration_login'] = null;
+		// $config ['integration_avatar'] = null;
+		// $config ['integration_profile'] = null;
+		// $config ['integration_private'] = null;
+		// $config ['integration_activity'] = null;
+		// $config ['boxghostmessage'] = null;
+		// $config ['userdeletetmessage'] = null;
+		// $config ['latestcategory_in'] = null;
+		// $config ['topicicons'] = null;
+		// $config ['onlineusers'] = null;
+		// $config ['debug'] = null;
+		// $config ['catsautosubscribed'] = null;
+		// $config ['showbannedreason'] = null;
+		// $config ['version_check'] = null;
+		// $config ['showthankyou'] = null;
+		// $config ['showpopthankysoustats'] = null;
+		// $config ['popthankscount'] = null;
+		// $config ['mod_see_deleted'] = null;
+		// $config ['bbcode_img_secure'] = null;
 		$result = array ('1' => $config );
 		return $result;
 	}
@@ -374,6 +429,7 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		$result = $this->getExportData ( $query, $start, $limit, 'id' );
 		foreach ( $result as $item ) {
 			$row = & $result [$item->id];
+			$row->subject = $this->prep ( $row->subject );
 			$row->message = $this->prep ( $row->message );
 		}
 		return $result;
@@ -406,7 +462,7 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 			s.id_member AS userid,
 			0 AS future1
 		FROM `#__log_notify` AS s
-		LEFT JOIN `#__topics` AS t ON s.id_topic=t.id_topic";
+		INNER JOIN `#__topics` AS t ON s.id_topic=t.id_topic";
 		$result = $this->getExportData ( $query, $start, $limit );
 		return $result;
 	}

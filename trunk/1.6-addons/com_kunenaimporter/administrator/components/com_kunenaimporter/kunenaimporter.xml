@@ -10,7 +10,7 @@
 	<authorUrl>http://www.Kunena.com</authorUrl>
 	<copyright>www.Kunena.com</copyright>
 	<license>GNU/GPL</license>
-	<description>Imports external forum data (Kunena, phpBB3, phpBB2, PNphpBB2) into Kunena Forum.</description>
+	<description>Imports external forum data (phpBB3, SMF2) into Kunena Forum.</description>
 
 	<installfile>install.kunenaimporter.php</installfile>
 	<uninstallfile>uninstall.kunenaimporter.php</uninstallfile>

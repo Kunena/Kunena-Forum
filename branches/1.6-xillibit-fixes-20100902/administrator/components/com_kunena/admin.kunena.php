@@ -3124,9 +3124,19 @@ function generateSystemReport () {
 			$fullfields = $kunena_db->loadObjectList ();
             	if (KunenaError::checkDatabaseError()) return;
 
+            $fieldTypes = array('tinytext','text','char','varchar');
+
 			foreach ($fullfields as $row) {
-				if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
-					$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+				$tmp = strpos ( $row->Type , '(' );
+
+				if ($tmp) {
+					if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
+						$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+					}
+				} else {
+					if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
+						$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+					}
 				}
 			}
 		}

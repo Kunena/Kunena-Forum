@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+3-September-2010 Xillibit
+# [#22254] Configuration report settings : check that the filed are right of type char, vachar, text...
+
 2-September-2010 Xillibit
 # [#19288] Typo in config with showpopthankysoustats
 # [#19288] Typo in /components/com_kunena/language/ru-RU/ru-RU.com_kunena.ini

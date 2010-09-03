@@ -35,6 +35,8 @@ Kunena 1.6.0-RC3
 
 3-September-2010 Xillibit
 # [#22254] Configuration report settings : check that the filed are right of type char, vachar, text...
+# [#22160] Regression the image when insered in message aren't are showed like links instead images
+# [#22258] Prevent to save a poll with some options empty
 
 2-September-2010 Xillibit
 # [#19288] Typo in config with showpopthankysoustats

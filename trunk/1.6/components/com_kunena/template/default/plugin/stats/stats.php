@@ -266,7 +266,7 @@ $k = 0;
 <!-- F: User User -->
 
 <!-- B: Pop Thank you  -->
-<?php if($this->showpopthankysoustats): ?>
+<?php if($this->showpopthankyoustats): ?>
 <div class="kblock kpopthanksstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close"  rel="kpopthankyou_tbody"></a></span>

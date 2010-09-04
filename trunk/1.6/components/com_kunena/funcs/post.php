@@ -178,12 +178,13 @@ class CKunenaPost {
 			//Begin Poll management options
 			$optionvalue = array ();
 			for($ioptions = 0; $ioptions < $optionsnumbers; $ioptions ++) {
-				$optionvalue [] = JRequest::getString ( 'field_option' . $ioptions, null );
+				$tmp_optionvalue = JRequest::getString ( 'field_option' . $ioptions, null );
+				if ( $tmp_optionvalue != null ) {
+					$optionvalue [] = $tmp_optionvalue;
+				}
 			}
-		}
 
-		if (! empty ( $polltitle ) && ! empty ( $optionsnumbers )) {
-			$this->poll->save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
+			if ( is_array($optionvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
 		}
 
 		// TODO: replace this with better solution
@@ -414,13 +415,17 @@ class CKunenaPost {
 		if ($this->config->pollenabled) {
 			$optvalue = array ();
 			for($i = 0; $i < $optionsnumbers; $i ++) {
-				$optvalue [] = JRequest::getString ( 'field_option' . $i, null );
+				$tmp_optvalue = JRequest::getString ( 'field_option' . $i, null );
+				if ( $tmp_optvalue != null) {
+					$optvalue [] = $tmp_optvalue;
+				}
 			}
+
 			//need to check if the poll exist, if it's not the case the poll is insered like new poll
 			if (! $mes->poll_id) {
-				$this->poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
+				 if ( is_array($optvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
 			} else {
-				if (empty ( $polltitle ) && empty ( $optionsnumbers )) {
+				if (empty ( $polltitle ) && empty($optvalue)) {
 					//The poll is deleted because the polltitle and the options are empty
 					$this->poll->delete_poll ( $this->id );
 				} else {

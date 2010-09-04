@@ -538,7 +538,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				}
 
 				$task->autolink_disable --; // continue autolink conversion
-				if (is_object ( $attachment ) && isset($attachment->disabled)) {
+				if (is_object ( $attachment ) && !empty($attachment->disabled)) {
 					// Hide between content from non registered users
 					$tag_new = '<div class="kmsgattach">' . $attachment->textLink . '</div>';
 				} else {

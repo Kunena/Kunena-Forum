@@ -35,6 +35,19 @@ Kunena 1.6.0-RC3
 
 3-September-2010 Matias
 + [#22267] Administration: Add configuration setting to hide moderators in category listing
+^ [#15886] Merged revisions 3408-3414 from /branches/1.6-xillibit-fixes-20100902
+
+3-September-2010 Xillibit
+# [#22254] Configuration report settings : check that the filed are right of type char, vachar, text...
+# [#22160] Regression the image when insered in message aren't are showed like links instead images
+# [#22258] Prevent to save a poll with some options empty
+
+2-September-2010 Xillibit
+# [#19288] Typo in config with showpopthankysoustats
+# [#19288] Typo in /components/com_kunena/language/ru-RU/ru-RU.com_kunena.ini
+# [#19288] Update french translation (fr-FR)
+# [#19288] Typo in config.class on the load for js file in the path
+# [#19288] Missing alt in pollbox for bar.png
 
 2-September-2010 Matias
 # [#22238] Administration: Resetting to default configuration breaks the forum

@@ -1604,7 +1604,7 @@ function showConfig($option) {
 
 	$lists['version_check'] = JHTML::_('select.genericlist', $yesno, 'cfg_version_check', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->version_check);
 
-	$lists['showpopthankysoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankysoustats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopthankysoustats);
+	$lists['showpopthankyoustats'] = JHTML::_('select.genericlist', $yesno, 'cfg_showpopthankyoustats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showpopthankyoustats);
 
 	$lists ['mod_see_deleted'] = JHTML::_('select.genericlist', $yesno, 'cfg_mod_see_deleted', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->mod_see_deleted);
 
@@ -3124,11 +3124,22 @@ function generateSystemReport () {
 		if (preg_match('`_kunena_`',$table)) {
 			$kunena_db->setQuery("SHOW FULL FIELDS FROM " .$table. "");
 			$fullfields = $kunena_db->loadObjectList ();
-            	if (KunenaError::checkDatabaseError()) return;
+			if (KunenaError::checkDatabaseError()) return;
+
+			$fieldTypes = array('tinytext','text','char','varchar');
 
 			foreach ($fullfields as $row) {
-				if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
-					$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+				$tmp = strpos ( $row->Type , '(' );
+
+				// FIXME: $fieldTypes not used, if and else has identical code
+				if ($tmp) {
+					if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
+						$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+					}
+				} else {
+					if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
+						$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+					}
 				}
 			}
 		}

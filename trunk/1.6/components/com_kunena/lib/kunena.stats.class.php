@@ -51,7 +51,7 @@ class CKunenaStats {
 	public $showpopuserstats = false;
 	public $showpopsubjectstats = false;
 	public $showpoppollstats = false;
-	public $showpopthankysoustats = false;
+	public $showpopthankyoustats = false;
 
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
@@ -62,7 +62,7 @@ class CKunenaStats {
 		$this->showpopuserstats = $show ? $this->_config->showpopuserstats : 0;
 		$this->showpopsubjectstats = $show ? $this->_config->showpopsubjectstats : 0;
 		$this->showpoppollstats = $show ? $this->_config->showpoppollstats : 0;
-		$this->showpopthankysoustats = $show ? $this->_config->showpopthankysoustats : 0;
+		$this->showpopthankyoustats = $show ? $this->_config->showpopthankyoustats : 0;
 	}
 
 	public function &getInstance()
@@ -89,7 +89,7 @@ class CKunenaStats {
 	{
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
-	
+
 	public function loadTotalMembers() {
 		if ($this->totalmembers === null) {
 			$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );
@@ -227,7 +227,7 @@ class CKunenaStats {
 	}
 
 	function loadThanksStats($override=false) {
-		if (! $this->showpopthankysoustats && ! $override)
+		if (! $this->showpopthankyoustats && ! $override)
 			return;
 
 		if (!$override) $thanksCount = $this->_config->popthankscount;

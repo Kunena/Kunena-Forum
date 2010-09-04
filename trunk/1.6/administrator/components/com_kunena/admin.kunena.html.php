@@ -2071,7 +2071,7 @@ table.kadmin-stat caption {
 						<tr align="center" valign="middle">
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_THANKSSTATS');
 							?></td>
-							<td align="left" valign="top"><?php echo $lists ['showpopthankysoustats'];
+							<td align="left" valign="top"><?php echo $lists ['showpopthankyoustats'];
 							?>
 							</td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_THANKSSTATSDESC');

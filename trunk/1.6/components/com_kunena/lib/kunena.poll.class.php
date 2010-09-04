@@ -229,8 +229,9 @@ class CKunenaPolls {
     		$this->_db->query();
     		if (KunenaError::checkDatabaseError()) return;
 
-    		for ($i = 0; $i < sizeof($optionvalue); $i++)
-    		{
+			// TODO: move sizeof() outside of the loop (cannot we use foreach?)
+    		for ($i = 0; $i < sizeof($optionvalue); $i++) {
+    			if ( empty($optionvalue[$i]) ) continue;
     			$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
     						VALUES(".$this->_db->quote($optionvalue[$i]).",{$this->_db->Quote($pid)},'0')";
         		$this->_db->setQuery($query);
@@ -429,38 +430,73 @@ class CKunenaPolls {
     	$this->_db->query();
     	if (KunenaError::checkDatabaseError()) return;
 
-    	if ($polloptions == $optionsnumbers)//When users just do an update of the polls fields
+		// FIXME: Underlaying code does not cover all the cases, like removing all options and adding same amount to replace them -Matias
+		// TODO: Much simpler and working way:
+		// Load all existing poll options from the database
+		// foreach poll options:
+		// - update changed options
+		// - remove deleted options
+		// foreach user input
+		// - create missing options
+		// TODO: What happens to the votes for the deleted options?
+		if ($polloptions == $optionsnumbers)//When users just do an update of the polls fields
     	{
+			// TODO: move sizeof() outside of the loop
       		for ($i = 0; $i < sizeof($optvalue); $i++)
       		{
-      			$query = "UPDATE #__kunena_polls_options
+      			if ( !empty($optvalue[$i]) ) {
+      				$query = "UPDATE #__kunena_polls_options
       						SET text=".$this->_db->quote($optvalue[$i])."
       						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
-         		$this->_db->setQuery($query);
-         		$this->_db->query();
-             	if (KunenaError::checkDatabaseError()) return;
+         			$this->_db->setQuery($query);
+         			$this->_db->query();
+             		if (KunenaError::checkDatabaseError()) return;
+      			} else {
+					$query = "DELETE FROM #__kunena_polls_options
+      						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
+         			$this->_db->setQuery($query);
+         			$this->_db->query();
+             		if (KunenaError::checkDatabaseError()) return;
+      			}
       		}
     	}
     	elseif($optionsnumbers > $polloptions)//When users add new polls options
     	{
+			// TODO: move sizeof() outside of the loop (why not foreach()?)
       		for ($i = 0; $i < sizeof($optvalue); $i++)
       		{
         		if ($i < $polloptions)
         		{
-        			$query = "UPDATE #__kunena_polls_options
+        			if ( !empty($optvalue[$i]) ) {
+        				$query = "UPDATE #__kunena_polls_options
         						SET text=".$this->_db->quote($optvalue[$i])."
         						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
-          			$this->_db->setQuery($query);
-          			$this->_db->query();
-          	    	if (KunenaError::checkDatabaseError()) return;
+          				$this->_db->setQuery($query);
+          				$this->_db->query();
+          	    		if (KunenaError::checkDatabaseError()) return;
+        			} else {
+						$query = "DELETE FROM #__kunena_polls_options
+      						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
+         				$this->_db->setQuery($query);
+         				$this->_db->query();
+             			if (KunenaError::checkDatabaseError()) return;
+      				}
         		}
         		else
         		{
-					$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
+        			if ( !empty($optvalue[$i]) ) {
+						$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
 								VALUES(".$this->_db->quote($optvalue[$i]).",{$this->_db->Quote($threadid)},'0')";
-        			$this->_db->setQuery($query);
-          			$this->_db->query();
-          	    	if (KunenaError::checkDatabaseError()) return;
+        				$this->_db->setQuery($query);
+          				$this->_db->query();
+          	    		if (KunenaError::checkDatabaseError()) return;
+        			} else {
+						$query = "DELETE FROM #__kunena_polls_options
+      						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
+         				$this->_db->setQuery($query);
+         				$this->_db->query();
+             			if (KunenaError::checkDatabaseError()) return;
+      				}
         		}
       		}
     	}
@@ -470,12 +506,20 @@ class CKunenaPolls {
       		{
         		if ($i < $optionsnumbers)
         		{
-        			$query = "UPDATE #__kunena_polls_options
+        			if ( !empty($optvalue[$i]) ) {
+        				$query = "UPDATE #__kunena_polls_options
         						SET text=".$this->_db->quote($optvalue[$i])."
         						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
-          			$this->_db->setQuery($query);
-          			$this->_db->query();
-          			if (KunenaError::checkDatabaseError()) return;
+          				$this->_db->setQuery($query);
+          				$this->_db->query();
+          				if (KunenaError::checkDatabaseError()) return;
+        			} else {
+						$query = "DELETE FROM #__kunena_polls_options
+      						WHERE id={$this->_db->Quote($pollsdatas[$i]->id)} AND pollid={$this->_db->Quote($threadid)}";
+         				$this->_db->setQuery($query);
+         				$this->_db->query();
+             			if (KunenaError::checkDatabaseError()) return;
+      				}
         		}
         		else
         		{

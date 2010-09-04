@@ -347,6 +347,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $mod_see_deleted = 0;
 	//New for 1.6: allow only secure image extensions (jpg/gif/png) in IMG tag
 	var $bbcode_img_secure = 'text';
+	var $listcat_show_moderators = 1;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

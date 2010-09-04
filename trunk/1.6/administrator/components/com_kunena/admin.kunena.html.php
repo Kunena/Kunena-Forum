@@ -995,13 +995,20 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_ANNOUNCEMENT_DESC') ?>
 						</td>
 					</tr>
-							<tr align="center" valign="middle">
+					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT') ?>
 						</td>
-								<td align="left" valign="top"><?php echo $lists ['avataroncat'];
-						?>
+								<td align="left" valign="top"><?php echo $lists ['avataroncat']; ?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_SHOW_AVATAR_ON_CAT_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['listcat_show_moderators']; ?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_LISTCAT_SHOW_MODERATORS_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">

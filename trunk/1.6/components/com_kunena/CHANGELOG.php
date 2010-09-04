@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+3-September-2010 Matias
++ [#22267] Administration: Add configuration setting to hide moderators in category listing
+
 2-September-2010 Matias
 # [#22238] Administration: Resetting to default configuration breaks the forum
 # [#22239] Many links point to wrong page when message ordering is not the default one

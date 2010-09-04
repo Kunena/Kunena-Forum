@@ -112,7 +112,7 @@ class CKunenaListcat {
 		if ($myprofile->ordering != '0') {
 			$topic_ordering = $myprofile->ordering == '1' ? true : false;
 		} else {
-			$topic_ordering = $kunena_config->default_sort == 'asc' ? false : true;
+			$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
 		}
 
 		foreach ( $allsubcats as $i => $subcat ) {
@@ -209,17 +209,18 @@ class CKunenaListcat {
 		$this->modlist = array ();
 		$this->pending = array ();
 		if (count ( $modcats )) {
-			$modcatlist = implode ( ',', $modcats );
-			$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m
-			INNER JOIN #__users AS u ON u.id=m.userid
-			WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
-			$modlist = $this->db->loadObjectList ();
-			KunenaError::checkDatabaseError();
-			foreach ( $modlist as $mod ) {
-				$this->modlist [$mod->catid] [] = $mod;
-				$userlist[intval($mod->userid)] = intval($mod->userid);
+			if ($this->config->listcat_show_moderators) {
+				$modcatlist = implode ( ',', $modcats );
+				$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m
+					INNER JOIN #__users AS u ON u.id=m.userid
+					WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
+				$modlist = $this->db->loadObjectList ();
+				KunenaError::checkDatabaseError();
+				foreach ( $modlist as $mod ) {
+					$this->modlist [$mod->catid] [] = $mod;
+					$userlist[intval($mod->userid)] = intval($mod->userid);
+				}
 			}
-
 			if (CKunenaTools::isModerator ( $this->my->id )) {
 				foreach ( $modcats as $i => $catid ) {
 					if (! CKunenaTools::isModerator ( $this->my->id, $catid ))

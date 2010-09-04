@@ -1614,6 +1614,8 @@ function showConfig($option) {
 	$listBbcodeImgSecure[] = JHTML::_('select.option', 'image', JText::_('COM_KUNENA_COM_A_BBCODE_IMG_SECURE_OPTION_IMAGE'));
 	$lists ['bbcode_img_secure'] = JHTML::_('select.genericlist', $listBbcodeImgSecure, 'cfg_bbcode_img_secure', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->bbcode_img_secure);
 
+	$lists ['listcat_show_moderators'] = JHTML::_('select.genericlist', $yesno, 'cfg_listcat_show_moderators', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->listcat_show_moderators);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

@@ -389,44 +389,44 @@ table.kadmin-stat caption {
 		 echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'id', @$lists['order_Dir'], @$lists['order'] );
 		?></small></th>
 
-		<th width="100" class="nowrap"><small><?php
+		<th width="100" class="center nowrap"><small><?php
 			echo JHTML::_('grid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', @$lists['order_Dir'], @$lists['order'] );
 			echo JHTML::_('grid.order',  $rows );
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_LOCKED');
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_MODERATED');
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_REVIEW');
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_CATEGORY_ANONYMOUS');
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_ADMIN_POLLS');
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_PUBLISHED');
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_PUBLICACCESS');
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_ADMINACCESS');
 		?></small></th>
 
-		<th><small><?php
+		<th class="center"><small><?php
 		echo JText::_('COM_KUNENA_CHECKEDOUT');
 		?></small></th>
 	</tr>
@@ -477,7 +477,7 @@ table.kadmin-stat caption {
 		</td>
 		<?php else: ?>
 
-		<td class="center"><span><?php echo $pageNav->orderUpIcon ( $i, isset ( $children [$row->parent] [$row->location - 1] ), 'orderup', 'Move Up', 1 );
+		<td class="center nowrap"><span><?php echo $pageNav->orderUpIcon ( $i, isset ( $children [$row->parent] [$row->location - 1] ), 'orderup', 'Move Up', 1 );
 			?></span> <span><?php
 			echo $pageNav->orderDownIcon ( $i, $n, isset ( $children [$row->parent] [$row->location + 1] ), 'orderdown', 'Move Down', 1 );
 			?></span>

@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+4-September-2010 Severdia
+# [#19356] Fixed table alignments in admin
+^ [#19356] Renamed button sets & fixed corresponding language strings
+^ [#19356] Changed default icon to Joomla 1.6 image
+^ [#19356] Updated topic arrow image
+
 3-September-2010 Matias
 + [#22267] Administration: Add configuration setting to hide moderators in category listing
 ^ [#15886] Merged revisions 3408-3414 from /branches/1.6-xillibit-fixes-20100902

@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+5-September-2010 Severdia
+# [#19356] Removed duplicate CSS in intialize.php, cleaned up
+^ [#19356] Added default initialize.php styles to template CSS file
+
 4-September-2010 Severdia
 # [#19356] Fixed table alignments in admin
 ^ [#19356] Renamed button sets & fixed corresponding language strings

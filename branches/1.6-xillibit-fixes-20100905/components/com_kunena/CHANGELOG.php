@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+5-September-2010 Xillibit
+# [#22254] Configuration report settings : check that the filed are right of type char, vachar, text... (Part 2)
+
 4-September-2010 Severdia
 # [#19356] Fixed table alignments in admin
 ^ [#19356] Renamed button sets & fixed corresponding language strings

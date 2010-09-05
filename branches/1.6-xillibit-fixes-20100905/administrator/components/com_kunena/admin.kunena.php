@@ -3131,14 +3131,17 @@ function generateSystemReport () {
 			foreach ($fullfields as $row) {
 				$tmp = strpos ( $row->Type , '(' );
 
-				// FIXME: $fieldTypes not used, if and else has identical code
 				if ($tmp) {
-					if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
-						$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+					if ( in_array(substr($row->Type,0,$tmp),$fieldTypes) ) {
+						if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
+							$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+						}
 					}
 				} else {
-					if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
-						$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+					if ( in_array($row->Type,$fieldTypes) ) {
+						if(!empty($row->Collation) && !preg_match('`utf8`',$row->Collation)) {
+							$collation .= $table.' [color=#FF0000]have wrong collation of type '.$row->Collation.' [/color] on field '.$row->Field.'  ';
+						}
 					}
 				}
 			}

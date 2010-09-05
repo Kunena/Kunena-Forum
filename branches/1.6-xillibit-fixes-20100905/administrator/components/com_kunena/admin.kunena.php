@@ -926,8 +926,11 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 //###########################################
 
 function showAdministration($option) {
-	$kunena_app = & JFactory::getApplication ();
-	$kunena_db = &JFactory::getDBO ();
+	$kunena_app = JFactory::getApplication ();
+	$kunena_db = JFactory::getDBO ();
+	$kunena_acl = JFactory::getACL ();
+	$kacl_pub =$kunena_acl->get_group_children_tree ( null, 'Registered', false );
+	$kacl_admin =$kunena_acl->get_group_children_tree ( null, 'Public Backend', false );
 
 	$filter_order		= $kunena_app->getUserStateFromRequest( $option.'filter_order',		'filter_order',		'ordering', 'cmd' );
 	$filter_order_Dir	= $kunena_app->getUserStateFromRequest( $option.'filter_order_Dir',	'filter_order_Dir',	'asc',			'word' );
@@ -959,7 +962,7 @@ function showAdministration($option) {
 	$jversion = new JVersion ();
 	if ($jversion->RELEASE == 1.5) {
 		// Joomla 1.5
-		 $query= "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, h.name AS admingroup
+		 $query= "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, g.id AS group_id, h.name AS admingroup
 			FROM #__kunena_categories AS a
 			LEFT JOIN #__users AS u ON u.id = a.checked_out
 			LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
@@ -1030,7 +1033,7 @@ function showAdministration($option) {
 
 	$lists['search']= $search;
 
-	html_Kunena::showAdministration ( $list, $children, $pageNav, $option, $lists );
+	html_Kunena::showAdministration ( $list, $children, $pageNav, $option, $lists, $kacl_pub, $kacl_admin );
 }
 
 function saveorder() {
@@ -1065,9 +1068,9 @@ function saveorder() {
 //-E D I T   F O R U M-------------------
 //---------------------------------------
 function editForum($uid, $option) {
-	$kunena_db = &JFactory::getDBO ();
-	$kunena_acl = &JFactory::getACL ();
-	$kunena_my = &JFactory::getUser ();
+	$kunena_db = JFactory::getDBO ();
+	$kunena_acl = JFactory::getACL ();
+	$kunena_my = JFactory::getUser ();
 	$kunena_config = KunenaFactory::getConfig ();
 
 	kimport('tables.kunenacategory');

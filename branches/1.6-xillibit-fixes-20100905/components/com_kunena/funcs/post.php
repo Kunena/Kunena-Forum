@@ -414,6 +414,8 @@ class CKunenaPost {
 		//update the poll when an user edit his post
 		if ($this->config->pollenabled) {
 			$optvalue = array ();
+			$poll_optionsID = JRequest::getVar('polloptionsID', array (), 'post', 'array');
+
 			for($i = 0; $i < $optionsnumbers; $i ++) {
 				$tmp_optvalue = JRequest::getString ( 'field_option' . $i, null );
 				if ( $tmp_optvalue != null) {
@@ -429,7 +431,7 @@ class CKunenaPost {
 					//The poll is deleted because the polltitle and the options are empty
 					$this->poll->delete_poll ( $this->id );
 				} else {
-					$this->poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers );
+					$this->poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers, $poll_optionsID );
 				}
 			}
 		}

@@ -38,8 +38,14 @@ window.addEvent('domready', function() {
 			  size:'30',
 			  onmouseover: '$("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
 		  });		  
-		  mydiv.injectInside(polldiv).injectBefore(hide_input);		  		  
-		  input.inject(mydiv);		   
+		  mydiv.injectInside(polldiv).injectBefore(hide_input);		
+		  var inputhidden = new Element('input', {
+			  type:'hidden',
+			  name:'polloptionsID[]',
+			  value:'0'			  
+		  });
+		  input.inject(mydiv);	
+		  inputhidden.inject(mydiv);
 		  //regleCSS(number_field); //need to test this on IE
 		  number_field++;
 		}

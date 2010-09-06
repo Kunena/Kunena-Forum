@@ -176,15 +176,13 @@ class CKunenaPost {
 		if (! empty ( $optionsnumbers ) && ! empty ( $polltitle )) {
 			$poll_exist = "1";
 			//Begin Poll management options
-			$optionvalue = array ();
-			for($ioptions = 0; $ioptions < $optionsnumbers; $ioptions ++) {
-				$tmp_optionvalue = JRequest::getString ( 'field_option' . $ioptions, null );
-				if ( $tmp_optionvalue != null ) {
-					$optionvalue [] = $tmp_optionvalue;
-				}
+			$poll_optionsID = JRequest::getVar('polloptionsID', array (), 'post', 'array');
+			$optvalue = array();
+			foreach($poll_optionsID as $opt) {
+				if ( !empty($opt) ) $optvalue[] = $opt;
 			}
 
-			if ( is_array($optionvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $id, $optionvalue );
+			if ( !empty($optvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $id, $optvalue );
 		}
 
 		// TODO: replace this with better solution
@@ -407,31 +405,25 @@ class CKunenaPost {
 
 		$mes = $message->parent;
 
-		$polltitle = JRequest::getString ( 'poll_title', 0 );
-		$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
-		$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
-
-		//update the poll when an user edit his post
 		if ($this->config->pollenabled) {
-			$optvalue = array ();
+			$polltitle = JRequest::getString ( 'poll_title', 0 );
+			$optionsnumbers = JRequest::getInt ( 'number_total_options', '' );
+			$polltimetolive = JRequest::getString ( 'poll_time_to_live', 0 );
 			$poll_optionsID = JRequest::getVar('polloptionsID', array (), 'post', 'array');
-
-			for($i = 0; $i < $optionsnumbers; $i ++) {
-				$tmp_optvalue = JRequest::getString ( 'field_option' . $i, null );
-				if ( $tmp_optvalue != null) {
-					$optvalue [] = $tmp_optvalue;
-				}
+			$optvalue = array();
+			foreach($poll_optionsID as $opt) {
+				if ( !empty($opt) ) $optvalue[] = $opt;
 			}
 
 			//need to check if the poll exist, if it's not the case the poll is insered like new poll
 			if (! $mes->poll_id) {
-				 if ( is_array($optvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
+				if ( !empty($optvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $this->id, $optvalue );
 			} else {
-				if (empty ( $polltitle ) && empty($optvalue)) {
+				if (empty ( $polltitle ) && empty($poll_optionsID)) {
 					//The poll is deleted because the polltitle and the options are empty
 					$this->poll->delete_poll ( $this->id );
 				} else {
-					$this->poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optvalue, $optionsnumbers, $poll_optionsID );
+					$this->poll->update_poll_edit ( $polltimetolive, $this->id, $polltitle, $optionsnumbers, $poll_optionsID );
 				}
 			}
 		}

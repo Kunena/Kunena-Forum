@@ -32,20 +32,14 @@ window.addEvent('domready', function() {
 		  });		  
 		  $('helpbox').set('value',KUNENA_EDITOR_HELPLINE_OPTION );
 		  var input = new Element('input', {
-			  name:'field_option'+numfield,
+			  name:'polloptionsID[newoption'+numfield+']',
 			  id:'field_option'+numfield,
 			  maxlength:'50',
 			  size:'30',
 			  onmouseover: '$("helpbox").set("value", "'+KUNENA_EDITOR_HELPLINE_OPTION+'")'
 		  });		  
-		  mydiv.injectInside(polldiv).injectBefore(hide_input);		
-		  var inputhidden = new Element('input', {
-			  type:'hidden',
-			  name:'polloptionsID[]',
-			  value:'0'			  
-		  });
-		  input.inject(mydiv);	
-		  inputhidden.inject(mydiv);
+		  mydiv.injectInside(polldiv).injectBefore(hide_input);		  
+		  input.inject(mydiv);		  
 		  //regleCSS(number_field); //need to test this on IE
 		  number_field++;
 		}

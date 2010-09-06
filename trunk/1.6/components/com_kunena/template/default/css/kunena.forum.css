@@ -2465,6 +2465,9 @@ BBCODE BUTTONS
 #Kunena ul#kbbcode-toolbar li a#kbbcode-previewright-button {background-position:-270px -18px;}
 #Kunena ul#kbbcode-toolbar li a#kbbcode-help-button {background-position:-396px -18px;}
 
+#Kunena .kspoiler {
+	cursor:pointer;
+}
 #Kunena .kattachment .hasTip {
 	display: inline;
 }

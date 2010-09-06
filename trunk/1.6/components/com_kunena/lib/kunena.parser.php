@@ -952,7 +952,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 					$randomid = 'spoiler_'.rand ();
 
-					$tag_new = '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" style="cursor:pointer;"><img id="' . $randomid . '_img"' . 'src="' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png" border="0" alt=":pinch:" /> <strong>' . (isset ( $tag->options ["title"] ) ? ($tag->options ["title"]) : (JText::_('COM_KUNENA_BBCODE_SPOILER'))) . '</strong></div><div id="' . $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
+					$tag_new = '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" class = "kspoiler" ><img id="' . $randomid . '_img"' . 'src="' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png" border="0" alt=":pinch:" /> <strong>' . (isset ( $tag->options ["title"] ) ? ($tag->options ["title"]) : (JText::_('COM_KUNENA_BBCODE_SPOILER'))) . '</strong></div><div id="' . $randomid . '_details" style="display:none;"><span class="fb_quote">' . $between . '</span></div>';
 
 					return TAGPARSER_RET_REPLACED;
 				}

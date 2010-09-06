@@ -28,7 +28,9 @@ include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 $document = JFactory::getDocument ();
-$document->addScriptDeclaration('var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed', '', false).'";');
+$document->addScriptDeclaration('// <![CDATA[
+var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";
+// ]]>');
 $this->setTitle ( $this->escape($this->title) );
 
 $this->k=0;
@@ -62,7 +64,7 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check_name" 
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check_name"
 		<?php if ($this->my->id && ((!$this->allow_anonymous && $this->catid != 0) || !$this->cat_default_allow) ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>

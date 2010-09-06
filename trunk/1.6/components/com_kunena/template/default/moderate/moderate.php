@@ -10,7 +10,9 @@
  **/
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-$this->document->addScriptDeclaration("kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';");
+$this->document->addScriptDeclaration("// <![CDATA[
+kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';
+// ]]>");
 ?>
 <div class="kblock">
 	<div class="kheader">

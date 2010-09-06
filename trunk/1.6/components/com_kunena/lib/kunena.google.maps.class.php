@@ -51,6 +51,7 @@ class KunenaGoogleMaps {
    		$mapid = 'kgooglemap'.$this->_mapid;
 
    		$this->_document->addScriptDeclaration("
+   		// <![CDATA[
    		  	var geocoder;
   			var $mapid;
 
@@ -84,7 +85,7 @@ class KunenaGoogleMaps {
 			    }
       		});
 
-   			"
+   			// ]]>"
    		);
 
    		$html = '<div id="'.$mapid.'" class="kgooglemap">'.KunenaParser::JSText('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE').'</div>';

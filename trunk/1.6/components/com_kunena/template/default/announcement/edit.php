@@ -14,14 +14,14 @@ defined( '_JEXEC' ) or die();
 $document = JFactory::getDocument();
 $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->escape($this->config->board_title));
 JHTML::_('behavior.formvalidation');
-$document->addScriptDeclaration('
+$document->addScriptDeclaration('// <![CDATA[
 	function myValidate(f) {
 	if (document.formvalidator.isValid(f)) {
 		return true;
 	}
 	return false;
 }
-');
+// ]]>');
 ?>
 <div class="kblock kannouncement">
 	<div class="kheader">

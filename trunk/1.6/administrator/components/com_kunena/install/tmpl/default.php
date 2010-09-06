@@ -11,7 +11,9 @@ defined('_JEXEC') or die;
 $this->document->addStyleSheet ( JURI::base().'components/com_kunena/install/media/install.css' );
 if ($this->go == 'next') {
 	$this->document = JFactory::getDocument();
-	$this->document->addScriptDeclaration("window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=run&'.JUtility::getToken() .'=1', false)."';});");
+	$this->document->addScriptDeclaration(" // <![CDATA[
+window.addEvent('domready', function() {window.location='".JRoute::_('index.php?option=com_kunena&view=install&task=run&'.JUtility::getToken() .'=1', false)."';});
+// ]]>");
 }
 ?>
 <div id="stepbar">

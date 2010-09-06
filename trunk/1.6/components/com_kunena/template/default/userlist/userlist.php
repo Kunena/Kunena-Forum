@@ -22,25 +22,27 @@ $option=JRequest::getCmd ( 'option' );
 
 $document->setTitle(JText::_('COM_KUNENA_USRL_USERLIST') . ' - ' . $this->escape($this->config->board_title));
 
-$document->addScriptDeclaration( 'function tableOrdering( order, dir, task ) {
+$document->addScriptDeclaration( "// <![CDATA[
+function tableOrdering( order, dir, task ) {
 	var form=document.adminForm;
 	form.filter_order.value=order;
 	form.filter_order_Dir.value=dir;
 	document.adminForm.submit( task );
-}' );
-$document->addScriptDeclaration( "document.addEvent('domready', function() {
+}
+document.addEvent('domready', function() {
 	// Attach auto completer to the following ids:
-	new Autocompleter.Request.JSON('kusersearch', '" . CKunenaLink::GetJsonURL('autocomplete', 'getuser', false) . "', { 'postVar': 'value' });
-});");
+	new Autocompleter.Request.JSON('kusersearch', '" . CKunenaLink::GetJsonURL('autocomplete', 'getuser') . "', { 'postVar': 'value' });
+});
 // FIXME: do not use alert:
-$document->addScriptDeclaration( "function validate() {
+function validate() {
 	if ((document.usrlform.search == '') || (document.usrlform.search.value == '')) {
 		alert('" . JText::_('COM_KUNENA_USRL_SEARCH_ALERT') . "');
 		return false;
 	} else {
 		return true;
 	}
-}");
+}
+// ]]>");
 ?>
 <div class="kblock">
 	<div class="kheader">

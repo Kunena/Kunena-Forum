@@ -197,13 +197,13 @@ class CKunenaPolls {
 		$polloptionsstart = $polloptions+1;
 
 		if ($kunena_editmode) {
-			$this->document->addScriptDeclaration('
+			$this->document->addScriptDeclaration('// <![CDATA[
 	   		var number_field = "'.$polloptionsstart.'";
-			');
+			// ]]>');
 		} else {
-			$this->document->addScriptDeclaration('
+			$this->document->addScriptDeclaration('// <![CDATA[
    			var number_field = 1;
-			');
+			// ]]>');
 		}
 	}
    /**
@@ -212,14 +212,14 @@ class CKunenaPolls {
    function call_javascript_form()
    {
     	CKunenaTools::addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll-min.js');
-		$this->document->addScriptDeclaration('
+		$this->document->addScriptDeclaration('// <![CDATA[
 	   var KUNENA_POLL_CATS_NOT_ALLOWED = "'.JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED').'";
 	   var KUNENA_EDITOR_HELPLINE_OPTION = "'.JText::_('COM_KUNENA_EDITOR_HELPLINE_OPTION').'";
 	   var KUNENA_POLL_OPTION_NAME = "'.JText::_('COM_KUNENA_POLL_OPTION_NAME').'";
 	   var KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW = "'.JText::_('COM_KUNENA_POLL_NUMBER_OPTIONS_MAX_NOW').'";
 	   var KUNENA_ICON_ERROR = "'.JURI::root(). 'administrator/images/publish_x.png'.'";
-	   var kunena_ajax_url_poll = "'.CKunenaLink::GetJsonURL('pollcatsallowed', '').'";
-		');
+	   var kunena_ajax_url_poll = "'.CKunenaLink::GetJsonURL('pollcatsallowed').'";
+	// ]]>');
    }
    /**
 	* Save a new poll

@@ -108,7 +108,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								<a href = "<?php echo CKunenaLink::GetPollURL('changevote', $this->id, $this->catid); ?>"><?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?></a>
 								<?php endif; ?>
 							</div>
-							<input type="hidden" id="kpollvotejsonurl" value="<?php echo CKunenaLink::GetJsonURL('pollvote'); ?>" />
+							<input type="hidden" id="kpollvotejsonurl" value="<?php echo CKunenaLink::GetJsonURL('pollvote', '', true); ?>" />
 							<?php echo JHTML::_( 'form.token' ); ?>
 						</form>
 						<?php

@@ -66,7 +66,7 @@ if ( $this->changevote ) {
 								<input id="kpoll-button-vote" class="kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>" />
 								<?php echo '	'.CKunenaLink::GetThreadLink('view',intval($this->catid), intval($this->id), JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), JText::_('COM_KUNENA_POLL_NAME_URL_RESULT'), 'follow'); ?>
 							</div>
-							<input type="hidden" id="kpollvotejsonurl" value="<?php echo CKunenaLink::GetJsonURL($json_action); ?>" />
+							<input type="hidden" id="kpollvotejsonurl" value="<?php echo CKunenaLink::GetJsonURL($json_action, '', true); ?>" />
 						</form>
 					</div>
 				</td>

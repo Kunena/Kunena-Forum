@@ -19,10 +19,12 @@ if(isset($this->advsearch_hide) && $this->advsearch_hide==1)
 	$advsearch_class = ' close';
 	$advsearch_style = '';
 }
-$this->doc->addScriptDeclaration( "document.addEvent('domready', function() {
-		// Attach auto completer to the following ids:
-		new Autocompleter.Request.JSON('kusername', '" . CKunenaLink::GetJsonURL('autocomplete', 'getuser', false) . "', { 'postVar': 'value' });
-});");
+$this->doc->addScriptDeclaration( "// <![CDATA[
+document.addEvent('domready', function() {
+	// Attach auto completer to the following ids:
+	new Autocompleter.Request.JSON('kusername', '" . CKunenaLink::GetJsonURL('autocomplete', 'getuser', false) . "', { 'postVar': 'value' });
+});
+// ]]>");
 ?>
 <div class="kblock kadvsearch">
 	<div class="kheader">

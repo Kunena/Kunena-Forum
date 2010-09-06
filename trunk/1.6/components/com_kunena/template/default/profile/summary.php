@@ -13,7 +13,9 @@ defined( '_JEXEC' ) or die();
 
 
 $document = JFactory::getDocument ();
-$document->addScriptDeclaration ( "window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });" );
+$document->addScriptDeclaration ( "// <![CDATA[
+window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });
+// ]]>" );
 $private = KunenaFactory::getPrivateMessaging();
 if ($this->my->id == $this->user->id) {
 	$PMCount = $private->getUnreadCount($this->my->id);

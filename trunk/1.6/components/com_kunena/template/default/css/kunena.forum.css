@@ -1442,21 +1442,22 @@ PX		EM			PCT			PT
 }
 #Kunena div.kmsg-header h2 {
 	background-color: #737373;
-	font-size:1em;
+	font-size:.917em;
 	padding:3px 0;
 }
 #Kunena div.kmsg-header-top span.kmsgdate-top,
 #Kunena div.kmsg-header-bottom span.kmsgdate-bottom,
 #Kunena div.kmsg-header-right span.kmsgdate-right,
 #Kunena div.kmsg-header-left span.kmsgdate-left {
-	width: 170px; 
+	width: 180px; 
 	text-align: center;
 	line-height:1.8em;
 	padding-left: 10px;
 }
 #Kunena div.kmsg-header-left span.kmsgdate-left {
 	float: left;
-	padding: 0
+	padding: 0;
+	padding-bottom: 5px;
 }
 #Kunena div.kmsg-header-top span.kmsg-title-top,
 #Kunena div.kmsg-header-bottom span.kmsg-title-bottom,
@@ -1506,7 +1507,7 @@ PX		EM			PCT			PT
 	padding-left: 25px;
 	line-height: 22px;
 	font-size: 1.333em;
-	float:left;
+	/* float:left; */
 }
 
 #Kunena span.kmsgtitle-new {

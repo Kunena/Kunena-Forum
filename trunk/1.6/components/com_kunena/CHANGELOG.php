@@ -40,6 +40,7 @@ Kunena 1.6.0-RC3
 # [#19356] Fixed English errors in language strings
 # [#19356] Fixed validation errors on profie and new topic (missing IDs, missing attributes, etc.)
 # [#19356] Fixed class in parser
+# [#19356] Fixed template CSS errors
 
 6-September-2010 Matias
 ^ [#15886] Merged revisions 3419-3424 from /branches/1.6-xillibit-fixes-20100905

@@ -1,4 +1,5 @@
-@charset "UTF-8";
+@charset "utf-8";
+
 /**
 * @version $Id$
 * Kunena Component
@@ -2553,12 +2554,11 @@ Multi file upload for bbcode editor
 	font-size: 23px; 
 	position: absolute; 
 	right: 0px; 
-	top: 0px; 
+	top: 0px;
+	/* CSS3 standard */
 	opacity: 0;
-	filter: alpha(opacity=0); 
-	-ms-filter: "alpha(opacity=0)"; 
-	-khtml-opacity: 0; 
-	-moz-opacity: 0;
+	/* For IE */
+	filter:alpha(opacity=0);
 }
 #Kunena #kbbcode-filelist {
 	padding: 0;
@@ -2972,7 +2972,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	width:14%;
 }
 #Kunena div.banhistory th.kbanstart,
-#Kunena div.banhistory th.kbanexpire,,
+#Kunena div.banhistory th.kbanexpire,
 #Kunena div.banhistory th.kbancreate {
 	width:20%;
 }
@@ -3617,5 +3617,5 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	position:relative;
 }
 .kgooglemap img {
-	max-width:auto;
+	max-width:none;
 }

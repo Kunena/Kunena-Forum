@@ -37,7 +37,11 @@ defined( '_JEXEC' ) or die();
 	<input type="hidden" name="func" value="profile" />
 	<input type="hidden" name="do" value="save" />
 	<?php echo JHTML::_( 'form.token' ); ?>
-	<br />
-	<button class="kbutton ks validate" type="submit"><?php echo JText::_('COM_KUNENA_GEN_SAVE'); ?></button>
+	<div class="kbutton-container">
+		<button class="kbutton ks validate" type="submit"><?php echo JText::_('COM_KUNENA_GEN_SAVE'); ?></button>
+		<input type="button" name="cancel" class="kbutton" value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CANCEL') . ' ');?>"
+			onclick="javascript:window.history.back();"
+			title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
+	</div>
 </div>
 </form>

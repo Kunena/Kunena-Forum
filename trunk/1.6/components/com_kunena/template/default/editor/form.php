@@ -181,7 +181,7 @@ $this->k=0;
 		<?php endif;
 		// Finish captcha
 		?>
-		<tr id="kpost-buttons_tr" class="krow1">
+		<tr id="kpost-buttons-tr" class="krow1">
 			<td id="kpost-buttons" colspan="2">
 				<input type="submit" name="ksubmit" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"

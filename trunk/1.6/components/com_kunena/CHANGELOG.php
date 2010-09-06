@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+6-September-2010 Severdia
+# [#19356] Fixed button styles on profile page, fixed old CSS syntax
+
 6-September-2010 Matias
 ^ [#15886] Merged revisions 3419-3424 from /branches/1.6-xillibit-fixes-20100905
 # [#19255] Fix broken CSS: Use default values for empty configurable variables (initialize.php)

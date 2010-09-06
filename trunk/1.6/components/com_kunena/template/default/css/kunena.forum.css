@@ -207,7 +207,7 @@ PX		EM			PCT			PT
 	border-bottom:2px solid #D9D9D9;
 	background: #5388B4;
 	color: #FFFFFF;
-	padding:0 20px 0 10px;
+	padding:0 10px 0 10px;
 }
 #Kunena div.kblock div.ktitle {
 	background: #5388B4;
@@ -655,7 +655,18 @@ PX		EM			PCT			PT
 #Kunena .kbutton-back {
 	color: #000000;
 }
-
+#Kunena .kbutton-container {
+	margin-top: 20px;
+	text-align:center;
+}
+#Kunena .kbutton-container input.kbutton,
+#Kunena .kbutton-container .kbutton,
+#Kunena .kbutton-container .kbutton:hover,
+#Kunena .kbutton-container .kbutton:focus {
+	font-size:1em;
+	font-weight:bold;
+	padding:4px;
+}
 #Kunena input.kinput {
 	border: 1px solid #999999;
 }
@@ -1031,6 +1042,10 @@ PX		EM			PCT			PT
 
 #Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton {
 	margin: 0;
+	background-color: #fff;
+}
+#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:hover {
+	background-color: #609FBF;
 }
 #Kunena .kpbox {
 	margin: 0!important;
@@ -1254,7 +1269,22 @@ PX		EM			PCT			PT
 	float: right;
 	margin: 0 10px;
 }
-
+#Kunena h2 span.kheadbtn {
+	margin: 0 !important;
+}
+#Kunena h2 span.kheadbtn a {
+	font-size: 12px;
+	line-height: 23px;
+	border: 1px solid #fff;
+	background-color: #609FBF;
+	padding: 3px;
+}
+#Kunena h2 span.kheadbtn:hover a {
+	text-decoration: none;
+	border: 1px solid #609FBF;
+	background-color: #FFF;
+	color: #5388B4 !important;
+}
 #Kunena div.ktitle-desc {
 	margin-top:-3px;
 	padding:0 0 6px;

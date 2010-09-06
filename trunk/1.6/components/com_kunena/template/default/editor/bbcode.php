@@ -24,7 +24,7 @@ $kunena_config = KunenaFactory::getConfig ();
 	<table class="kpostbuttonset">
 		<tr>
 			<td class="kpostbuttons">
-				<ul id="kbbcode-toolbar"></ul>
+				<ul id="kbbcode-toolbar"><li></li></ul>
 			</td>
 		</tr>
 		<!-- Start extendable secondary toolbar -->
@@ -114,10 +114,10 @@ $kunena_config = KunenaFactory::getConfig ();
 
 				<img id="kbutton-poll-add"
 					src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/poll_add_options.png"
-					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>')" />
+					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_ADD_POLL_OPTION'); ?>" />
 				<img id="kbutton-poll-rem"
 					src="<?php echo JURI::root(); ?>/components/com_kunena/template/default/images/icons/poll_rem_options.png"
-					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" />
+					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
 				<input class="inputbox" type="text" maxlength="15"
@@ -133,9 +133,9 @@ $kunena_config = KunenaFactory::getConfig ();
 				echo $html_poll_edit;
 			}
 			?>
-			<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>">
+			<input type="hidden" name="nb_options_allowed" id="nb_options_allowed" value="<?php echo $kunena_config->pollnboptions; ?>" />
 			<input type="hidden" name="number_total_options" id="numbertotal"
-				value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>">
+				value="<?php echo ! empty ( $this->polloptionstotal ) ? $this->escape($this->polloptionstotal) : '' ?>" />
 			<?php } ?>
 			</div>
 
@@ -268,7 +268,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
 	<td class="kcol-last kcol-editor-field">
-		<textarea class="ktxtarea required" name="message" id="kbbcode-message"><?php echo $this->escape($this->message_text); ?></textarea>
+		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50"><?php echo $this->escape($this->message_text); ?></textarea>
 		<?php
 		// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
 		?>

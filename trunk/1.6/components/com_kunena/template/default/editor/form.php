@@ -137,7 +137,7 @@ $this->k=0;
 					<span class="kattachment-id"></span>
 
 					<input class="kfile-input-textbox" type="text" readonly="readonly" />
-					<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape($this->config->imagetypes); ?><br /><?php echo $this->escape($this->config->filetypes); ?>" >
+					<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes); ?>" >
 						<input type="button" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button kbutton" />
 						<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
 					</div>

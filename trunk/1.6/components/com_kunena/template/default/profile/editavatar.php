@@ -23,34 +23,34 @@ $i=0;
 <?php if ($this->profile->avatar): ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
-			<label for="kavatar_keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP');?></label>
+			<label for="kavatar-keep"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_KEEP');?></label>
 		</td>
 		<td class="kcol-mid">
-			<input id="kavatar_keep" type="radio" name="avatar" value="keep" checked="checked" />
+			<input id="kavatar-keep" type="radio" name="avatar" value="keep" checked="checked" />
 		</td>
 	</tr>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
-			<label for="kavatar_delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE');?></label>
+			<label for="kavatar-delete"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_DELETE');?></label>
 		</td>
 		<td class="kcol-mid">
-			<input id="kavatar_delete" type="radio" name="avatar" value="delete" />
+			<input id="kavatar-delete" type="radio" name="avatar" value="delete" />
 		</td>
 	</tr>
 <?php endif; ?>
 <?php if ($this->config->allowavatarupload):?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
-			<label for="kavatar_upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
+			<label for="kavatar-upload"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_UPLOAD');?></label>
 			</td><td class="kcol-mid">
-			<div><input id="kavatar_upload" type="file" class="button" name="avatarfile" /></div>
+			<div><input id="kavatar-upload" type="file" class="button" name="avatarfile" /></div>
 		</td>
 	</tr>
 <?php endif; ?>
 <?php if ($this->config->allowavatargallery):?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
 			<td class="kcol-first">
-			<label for="kavatar_gallery"><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
+			<label><?php echo JText::_('COM_KUNENA_PROFILE_AVATAR_GALLERY');?></label>
 		</td>
 		<td class="kcol-mid">
 			<table class="kblocktable" id ="kforumua_gal">

@@ -37,6 +37,8 @@ Kunena 1.6.0-RC3
 # [#19356] Fixed button styles on profile page, fixed old CSS syntax
 # [#19356] Fixed duplicate ID in post profile info
 # [#19356] Fixed language string on stats page
+# [#19356] Fixed English errors in language strings
+# [#19356] Fixed validation errors on profie and new topic (missing IDs, missing attributes, etc.)
 
 6-September-2010 Matias
 ^ [#15886] Merged revisions 3419-3424 from /branches/1.6-xillibit-fixes-20100905

@@ -207,7 +207,7 @@ JHTML::_('behavior.tooltip');
 			<?php // TODO: Add some bbcode functions ?>
 			<td class="kcol-mid">
 				<span class="editlinktip hasTip" title="<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE'); ?>::<?php echo JText::_('COM_KUNENA_MYPROFILE_SIGNATURE_DESC'); ?>" >
-					<textarea class="ktxtarea required" name="signature" id="kbbcode-message"><?php echo $this->escape($this->profile->signature) ?></textarea>
+					<textarea class="ktxtarea required" name="signature" id="kbbcode-message" rows="10" cols="30"><?php echo $this->escape($this->profile->signature) ?></textarea>
 				</span>
 			</td>
 		</tr>

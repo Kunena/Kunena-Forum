@@ -270,7 +270,7 @@ $k = 0;
 <div class="kblock kpopthanksstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close"  rel="kpopthankyou_tbody"></a></span>
-		<h2><span><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popthankscount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_THANKS_YOU'); ?></span></h2>
+		<h2><span><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popthankscount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_THANKS_YOU'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpopthankyou_tbody">
 		<div class="kbody">

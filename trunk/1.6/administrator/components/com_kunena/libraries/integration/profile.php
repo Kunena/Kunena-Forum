@@ -37,8 +37,8 @@ abstract class KunenaProfile
 	public function close() {}
 	public function trigger($event, &$params) {}
 
-	abstract public function getUserListURL($action='');
-	abstract public function getProfileURL($userid);
+	abstract public function getUserListURL($action='', $xhtml = true);
+	abstract public function getProfileURL($user, $task='', $xhtml = true);
 	abstract public function showProfile($userid, &$msg_params);
 	public function getProfileView($PopUserCount=0) {}
 }

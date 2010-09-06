@@ -41,19 +41,19 @@ class KunenaProfileCommunityBuilder extends KunenaProfile
 	}
 */
 
-	public function getUserListURL($action='')
+	public function getUserListURL($action='', $xhtml = true)
 	{
-		return cbSef( 'index.php?option=com_comprofiler&amp;task=usersList' );
+		return cbSef( 'index.php?option=com_comprofiler&amp;task=usersList', $xhtml );
 	}
 
-	public function getProfileURL($user)
+	public function getProfileURL($user, $task='', $xhtml = true)
 	{
 		$user = KunenaFactory::getUser($user);
 		if ($user->userid == 0) return false;
 		// Get CUser object
 		$cbUser = CBuser::getInstance( $user->userid );
 		if($cbUser === null) return false;
-		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' .$user->userid. getCBprofileItemid() );
+		return cbSef( 'index.php?option=com_comprofiler&task=userProfile&user=' . $user->userid. getCBprofileItemid(), $xhtml );
 	}
 
 	public function showProfile($user, &$msg_params)

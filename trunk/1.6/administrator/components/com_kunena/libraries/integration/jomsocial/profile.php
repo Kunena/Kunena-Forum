@@ -24,18 +24,18 @@ class KunenaProfileJomSocial extends KunenaProfile
 		$this->priority = 50;
 	}
 
-	public function getUserListURL($action='')
+	public function getUserListURL($action='', $xhtml = true)
 	{
-		return CRoute::_('index.php?option=com_community&view=search&task=browse');
+		return CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
 	}
 
-	public function getProfileURL($userid, $thumb=true)
+	public function getProfileURL($userid, $task='', $xhtml = true)
 	{
 		if ($userid == 0) return false;
 		// Get CUser object
 		$user = CFactory::getUser($userid);
 		if($user === null) return false;
-		return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid);
+		return CRoute::_('index.php?option=com_community&view=profile&userid='.$userid, $xhtml);
 	}
 
 	public function getProfileView($PopUserCount=0) {

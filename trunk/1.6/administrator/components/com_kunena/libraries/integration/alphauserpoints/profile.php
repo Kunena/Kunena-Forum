@@ -22,7 +22,7 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 		$this->priority = 60;
 	}
 
-	public function getUserListURL($action='')
+	public function getUserListURL($action='', $xhtml = true)
 	{
 		if (method_exists('AlphaUserPointsHelper', 'getAupUsersURL'))
 			return AlphaUserPointsHelper::getAupUsersURL();
@@ -35,18 +35,18 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile
 				$db->setQuery( $query );
 				$AUP_itemid = intval($db->loadResult());
 			}
-			return JRoute::_('index.php?option=com_alphauserpoints&view=users&Itemid='.$AUP_itemid);
+			return JRoute::_('index.php?option=com_alphauserpoints&view=users&Itemid='.$AUP_itemid, $xhtml);
 		}
 	}
 
-	public function getProfileURL($user, $task='')
+	public function getProfileURL($user, $task='', $xhtml = true)
 	{
 		if ($user == 0) return false;
 		$user = KunenaFactory::getUser($user);
 		$my = JFactory::getUser();
 		if ($user === false) return false;
 		$userid = $my->id != $user->userid ? '&userid='.AlphaUserPointsHelper::getAnyUserReferreID($user->userid) : '';
-		return JRoute::_('index.php?option=com_alphauserpoints&view=account'.$userid);
+		return JRoute::_('index.php?option=com_alphauserpoints&view=account'.$userid, $xhtml);
 	}
 
 	public function getProfileView($PopUserCount=0) {

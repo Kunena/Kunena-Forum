@@ -19,12 +19,12 @@ class KunenaProfileKunena extends KunenaProfile
 		$this->priority = 25;
 	}
 
-	public function getUserListURL($action='')
+	public function getUserListURL($action='', $xhtml = true)
 	{
-		return KunenaRoute::_('index.php?option=com_kunena&func=userlist',$action);
+		return KunenaRoute::_('index.php?option=com_kunena&func=userlist'.$action, $xhtml);
 	}
 
-	public function getProfileURL($user, $task='')
+	public function getProfileURL($user, $task='', $xhtml = true)
 	{
 		if ($user == 0) return false;
 		$user = KunenaFactory::getUser($user);
@@ -32,7 +32,7 @@ class KunenaProfileKunena extends KunenaProfile
 		if ($user === false) return false;
 		$userid = $my->id != $user->userid ? "&userid={$user->userid}" : '';
 		$do = $task ? '&do='.$task : '';
-		return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}");
+		return KunenaRoute::_("index.php?option=com_kunena&func=profile{$do}{$userid}", $xhtml);
 	}
 
 	public function getProfileView($PopUserCount=0) {

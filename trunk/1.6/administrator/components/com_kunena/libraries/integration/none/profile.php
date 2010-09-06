@@ -19,9 +19,9 @@ class KunenaProfileNone extends KunenaProfile
 		$this->priority = 0;
 	}
 
-	public function getUserListURL($action='') {}
+	public function getUserListURL($action='', $xhtml = true) {}
 
-	public function getProfileURL($user, $task='') {}
+	public function getProfileURL($user, $task='', $xhtml = true) {}
 
 	public function showProfile($userid, &$msg_params) {}
 }

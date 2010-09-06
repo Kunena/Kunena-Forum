@@ -64,7 +64,7 @@ class CKunenaProfile {
 		$this->avatarlink = $this->profile->getAvatarLink('kavatar','profile');
 		$this->personalText = $this->profile->personalText;
 		$this->signature = $this->profile->signature;
-		$this->timezone = $this->user->getParam('timezone', 0);
+		$this->timezone = $this->user->getParam('timezone', $this->_app->getCfg ( 'offset', 0 ));
 		$this->moderator = CKunenaTools::isModerator($this->profile->userid);
 		$this->admin = CKunenaTools::isAdmin($this->profile->userid);
 		switch ($this->profile->gender) {

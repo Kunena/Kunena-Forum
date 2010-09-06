@@ -137,7 +137,7 @@ class CKunenaTimeformat {
 
 		if ($offset === false) {
 			$my = JFactory::getUser();
-			if ($my->id) $offset = $my->getParam('timezone', 0);
+			if ($my->id) $offset = $my->getParam('timezone', $app->getCfg ( 'offset', 0 ));
 			else $offset = $app->getCfg ( 'offset', 0 );
 		}
 		$date->setOffset($offset);

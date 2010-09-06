@@ -217,14 +217,12 @@ class CKunenaLink {
 
 	function GetProfileURL($userid, $xhtml = true) {
 		$profile = KunenaFactory::getProfile ();
-		$link = $profile->getProfileURL ( $userid );
-		return $xhtml == true ? $link : htmlspecialchars_decode ( $link );
+		return $profile->getProfileURL ( $userid, '', $xhtml );
 	}
 
 	function GetUserlistURL($action = '', $xhtml = true) {
 		$profile = KunenaFactory::getProfile ();
-		$link = $profile->getUserListURL ( $action );
-		return $xhtml == true ? $link : htmlspecialchars_decode ( $link );
+		return $profile->getUserListURL ( $action, $xhtml );
 	}
 
 	function GetModerateUserLink($userid, $name = null, $title ='', $rel = 'nofollow', $class = '') {
@@ -233,7 +231,10 @@ class CKunenaLink {
 
 	function GetUserlistLink($action, $name, $rel = 'nofollow', $class = '') {
 		$link = self::GetUserlistURL ( $action );
-		return self::GetHrefLink ( $link, $name, '', $rel, $class );
+		if ($link) {
+			return self::GetHrefLink ( $link, $name, '', $rel, $class );
+		}
+		return $name;
 	}
 
 	function GetViewLink($func, $id, $catid, $view, $name, $rel = 'nofollow') {

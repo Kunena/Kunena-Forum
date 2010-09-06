@@ -35,6 +35,10 @@ Kunena 1.6.0-RC3
 
 6-September-2010 Matias
 ^ [#15886] Merged revisions 3419-3424 from /branches/1.6-xillibit-fixes-20100905
+# [#19255] Fix broken CSS: Use default values for empty configurable variables (initialize.php)
+# [#19255] Fix XHTML validation issue in polls
+# [#19255] Fix XHTML validation issue in userlist links
+# [#22286] Show time in site timezone if user hasn't set his own (instead of UTC)
 
 5-September-2010 Xillibit
 # [#22254] Configuration report settings : check that the filed are right of type char, vachar, text... (Part 2)

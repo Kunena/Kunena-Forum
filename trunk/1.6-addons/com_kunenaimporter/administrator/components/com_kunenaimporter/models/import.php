@@ -32,7 +32,7 @@ class KunenaimporterModelImport extends JModel {
 
 	function getImportOptions() {
 		// version
-		$options = array ('users','config', 'userprofile', 'categories', 'messages', 'attachments', 'favorites', 'subscriptions', 'moderation', 'ranks', 'smilies', 'announcements', 'sessions', 'whoisonline' );
+		$options = array ('users','mapusers','config', 'userprofile', 'categories', 'messages', 'attachments', 'favorites', 'subscriptions', 'moderation', 'ranks', 'smilies', 'announcements', 'sessions', 'whoisonline' );
 		return $options;
 	}
 
@@ -103,23 +103,18 @@ class KunenaimporterModelImport extends JModel {
 		return $newlist;
 	}
 
-	function mapUser($extuserid, $username = null, $email = null, $registerDate = null) {
-		//if ($this->auth_method == 'joomla') return $extuserid;
-
-		// Check if we have already mapped our user
-		$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
-		$extuser->load ( $extuserid );
-		if ($extuser->id > 0)
+	function mapUser($extuser) {
+		if ($extuser->id !== null)
 			return $extuser->id;
-		if (empty ( $username ))
-			return 0;
 
-		$userlist = $this->findPotentialUsers ( $extuserid, $username, $email, $registerDate );
+		$userlist = $this->findPotentialUsers ( $extuser->extid, $extuser->extusername, $extuser->email, $extuser->registerDate );
 		$best = array_shift ( $userlist );
 		if ($best->points >= 4)
 			return $best->id;
-		if ($best->points >= 3)
-			return $best->id;
+		if (empty($userlist) && $best->points >= 2)
+			return -$best->id;
+		if (!empty($userlist))
+			return -$best->id;
 		return 0;
 	}
 
@@ -129,30 +124,43 @@ class KunenaimporterModelImport extends JModel {
 		$result = $this->db->query () or die ( "<br />Invalid query:<br />$query<br />" . $this->db->errorMsg () );
 	}
 
-	function mapUsers(&$users) {
+	function mapUsers($result, $limit) {
 		$query = "SELECT id, name FROM `#__core_acl_aro_groups`";
 		$this->db->setQuery ( $query );
 		$groups = $this->db->loadObjectList ( 'name' );
 
+		$query = "SELECT * FROM `#__kunenaimporter_users` WHERE id IS NULL AND extid > ".intval($result['start']);
+		$this->db->setQuery ( $query, 0, $limit );
+		$users = $this->db->loadAssocList ();
+
+		$result['now'] = 0;
 		foreach ( $users as $userdata ) {
-			$userdata->error = '';
-			$userdata->extusername = $userdata->username;
-			$userdata->username = $this->getUsername ( $userdata->username );
-			$uid = $this->mapUser ( $userdata->extid, $userdata->extusername, $userdata->email, $userdata->registerDate );
+			$result['start'] = $userdata['extid'];
+			$result['now']++;
+			$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+			$extuser->bind ( $userdata );
+			$extuser->exists ( true );
+			$extuser->extusername = $extuser->username;
+			$extuser->username = $this->getUsername ( $extuser->username );
+			$uid = $this->mapUser ( $extuser );
+			if (!$uid) {
+				$result['unmapped']++;
+				continue;
+			}
 			if ($uid > 0)
 				$userdata->id = abs ( $uid );
 			if ($uid < 0)
 				$userdata->conflict = abs ( $uid );
-			$userdata->gid = $groups [$userdata->usertype]->id;
-
-			$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
-			$extuser->load ( $userdata->extid );
-			if ($extuser->username === NULL) {
-				if ($extuser->save ( $userdata ) === false) {
-					echo "ERROR: Saving external data for $userdata->username failed: " . $extuser->getError () . "<br />";
-				}
+			$userdata->gid = $groups [$extuser->usertype]->id;
+			if ($extuser->save ( $userdata ) === false) {
+				$result['failed']++;
+				echo "ERROR: Saving external {$extuser->username} failed: " . $extuser->getError () . "<br />";
+			} else {
+				$result['new']++;
 			}
 		}
+		unset($users);
+		return $result;
 	}
 
 	function createUsers(&$users) {
@@ -170,6 +178,8 @@ class KunenaimporterModelImport extends JModel {
 
 	function truncateData($option) {
 		if ($option == 'config')
+			return;
+		if ($option == 'mapusers')
 			return;
 		if ($option == 'users')
 			$option = 'extuser';
@@ -220,6 +230,8 @@ class KunenaimporterModelImport extends JModel {
 			case 'favorites' :
 				$this->importUnique ( $option, $data );
 				break;
+			case 'mapusers':
+				break;
 			case 'users':
 				$option = 'extuser';
 			default :
@@ -231,12 +243,18 @@ class KunenaimporterModelImport extends JModel {
 		$table = JTable::getInstance ( $option, 'CKunenaTable' );
 		if (! $table)
 			die ( $option );
+
+		$extids = array();
+		foreach ( $data as $item ) {
+			if (!empty($item->userid)) $extids[$item->userid] = $item->userid;
+		}
+		$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+		$idmap = $extuser->loadIdMap($extids);
+
 		$this->commitStart ();
 		foreach ( $data as $item ) {
 			if (!empty($item->userid)) {
-				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
-				$extuser->load ( $item->userid );
-				$item->userid = $extuser->id ? $extuser->id : -$extuser->extid;
+				$item->userid = $idmap[$item->userid]->id ? $idmap[$item->userid]->id : -$idmap[$item->userid]->extid;
 			}
 			if ($table->save ( $item ) === false) {
 				if (! strstr ( $table->getError (), 'Duplicate entry' ))
@@ -250,12 +268,18 @@ class KunenaimporterModelImport extends JModel {
 		$table = JTable::getInstance ( $option, 'CKunenaTable' );
 		if (! $table)
 			die ( $option );
+
+		$extids = array();
+		foreach ( $data as $item ) {
+			if (!empty($item->userid)) $extids[$item->userid] = $item->userid;
+		}
+		$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+		$idmap = $extuser->loadIdMap($extids);
+
 		$this->commitStart ();
 		foreach ( $data as $item ) {
-			if (!empty($item->userid)) {
-				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
-				$extuser->load ( $item->userid );
-				$item->userid = $extuser->id ? $extuser->id : -$extuser->extid;
+			if (isset($idmap[$item->userid])) {
+				$item->userid = $idmap[$item->userid]->id ? $idmap[$item->userid]->id : -$idmap[$item->userid]->extid;
 			}
 			if ($table->save ( $item ) === false)
 				die ( "ERROR: " . $table->getError () );
@@ -264,22 +288,33 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function importMessages(&$messages) {
+		$extids = array();
+		foreach ( $messages as $message ) {
+			if (!empty($message->userid)) $extids[$message->userid] = $message->userid;
+			if (!empty($message->modified_by)) $extids[$message->modified_by] = $message->modified_by;
+		}
+		$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+		$idmap = $extuser->loadIdMap($extids);
+
 		$this->commitStart ();
 		foreach ( $messages as $message ) {
 			$msgtable = JTable::getInstance ( 'messages', 'CKunenaTable' );
 			$txttable = JTable::getInstance ( 'messages_text', 'CKunenaTable' );
-			$message->mesid = $message->id;
 			if ($message->userid) {
-				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
-				$extuser->load ( $message->userid );
-				$message->userid = $extuser->id ? $extuser->id : -$extuser->extid;
+				if ($idmap[$message->userid]->extid && $idmap[$message->userid]->lastvisitDate < $message->time - 86400) {
+					// user MUST have been in the forum in the past 24 hours, update last visit..
+					$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
+					$extuser->load($message->userid);
+					$extuser->lastvisitDate = $idmap[$message->userid]->lastvisitDate =$message->time;
+					$extuser->save();
+				}
+				$message->userid = $idmap[$message->userid]->id ? $idmap[$message->userid]->id : -$idmap[$message->userid]->extid;
 			}
 			if ($message->modified_by) {
-				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
-				$extuser->load ( $message->modified_by );
-				$message->modified_by = $extuser->id ? $extuser->id : -$extuser->extid;
+				$message->modified_by = $idmap[$message->modified_by]->id ? $idmap[$message->modified_by]->id : -$idmap[$message->modified_by]->extid;
 			}
-			if ($message->userid > 0) {
+			$message->mesid = $message->id;
+			if ($message->userid > 0 && (empty ( $message->email ) || empty ( $message->name ))) {
 				$user = JUser::getInstance ( $message->userid );
 				if (empty ( $message->email ))
 					$message->email = $user->email;

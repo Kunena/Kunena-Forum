@@ -130,46 +130,26 @@ class KunenaImporterController extends JController {
 		if ($errormsg)
 			return;
 
-		$start = ( int ) $app->getUserState ( 'com_kunenaimporter.Users' );
-		$count = 0;
+		$empty = array('start'=>0, 'unmapped'=>0, 'new'=>0, 'failed'=>0);
+		$result = $app->getUserState ( 'com_kunenaimporter.MapUsersRes', $empty );
 		do {
-			$data = $exporter->exportUsers ( $start, $limit );
-			$importer->mapUsers ( $data );
-			$count = count ( $data );
-			$start += $count;
-			$app->setUserState ( 'com_kunenaimporter.Users', $start );
+			$result = $importer->mapUsers ( $result, $limit );
+			$app->setUserState ( 'com_kunenaimporter.MapUsers', intval($result['all']) );
+			$app->setUserState ( 'com_kunenaimporter.MapUsersRes', $result );
 			$timeout = $this->checkTimeout ();
-			unset ( $data );
-		} while ( $count && ! $timeout );
+		} while ( $result['now'] && ! $timeout );
 
 		//JToolBarHelper::back();
-		if ($timeout)
+		if ($timeout) {
 			$view = '&view=mapusers';
-		else {
+			$app->enqueueMessage ( "Mapped {$result['new']}/{$result['unmapped']} unmapped users. Errors: {$result['failed']}." );
+		} else {
 			$view = '&view=users';
-			$app->enqueueMessage ( "Mapped $start users" );
+			$app->enqueueMessage ( "Mapped {$result['new']}/{$result['unmapped']} unmapped users. Errors: {$result['failed']}." );
+			$app->setUserState ( 'com_kunenaimporter.MapUsers', 0 );
+			$app->setUserState ( 'com_kunenaimporter.MapUsersRes', $empty );
 		}
 		$this->setredirect ( 'index.php?option=com_kunenaimporter' . $view );
-		/*
-		// Check errors
-		$query = "SELECT * FROM `#__kunenaimporter_users` WHERE id=0 OR conflict>0 OR error!=''";
-		$db->setQuery($query);
-		$userlist = $db->loadObjectList();
-		if (count($userlist)) {
-			echo "<ul>";
-			foreach ($userlist as $user) {
-				echo "<li>";
-				if ($user->id == 0) {
-					$error = JText::_($user->error);
-					echo "<b>SAVING USER FAILED:</b> $user->extusername ($user->extid):  $error<br />";
-				} else {
-					echo "<b>USERNAME CONFLICT:</b> $user->extusername ($user->extid): $user->id == $user->conflict<br />";
-				}
-				echo "</li>";
-			}
-			echo "</ul>";
-		}
-		*/
 	}
 
 	function selectuser() {
@@ -221,10 +201,6 @@ class KunenaImporterController extends JController {
 					$timeout = $this->checkTimeout ();
 					unset ( $data );
 				} while ( $count && ! $timeout );
-			}
-			$map = 'map'.$option;
-			if (! $timeout && method_exists($exporter, $map)) {
-				$exporter->$map();
 			}
 			if ($timeout)
 				break;

@@ -33,8 +33,16 @@ Legend:
 
 KunenaImporter 1.6.0-RC2
 
+4-September-2010 Matias
+# [#20178] User mapping: Greatly improve performance by making own task from basic user mapping
+# [#20178] User mapping: Improve performance by preloading needed user mapping when migrating tables
+# [#20178] User mapping: Better user mapping reports
+# [#20178] User mapping: Improve algorithm to map users who have slightly different information in Joomla
+# [#20178] User: Fix last logged in info if user has posts, but has never logged in (lost during previous migration?)
++ [#20178] User mapping: Add filters by ignored users and never logged in
+
 3-September-2010 Matias
-# [#20178] SMF: Fix subscriptions export
+# [#20178] SMF2: Fix subscriptions export
 # [#20178] Import: Map all userids from external to Joomla ids
 # [#20178] Import: Use negative userids if user isn't mapped (allows late mapping)
 # [#20178] User mapping: Fatal error, trying to access protected variable
@@ -42,9 +50,9 @@ KunenaImporter 1.6.0-RC2
 # [#20178] User mapping: Filter by mapped/unmapped/all
 
 2-September-2010 Matias
-# [#20178] SMF: Better version detection
-# [#20178] SMF: Import some configuration options
-# [#20178] SMF: Cleanup text on categories, messages
+# [#20178] SMF2: Better version detection
+# [#20178] SMF2: Import some configuration options
+# [#20178] SMF2: Cleanup text on categories, messages
 
 1-September-2010 Matias
 + [#20178] Create new exporter for SMF2 (standalone)

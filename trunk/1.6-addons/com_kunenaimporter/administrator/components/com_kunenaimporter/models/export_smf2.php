@@ -99,6 +99,7 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		// query: (select, from, where, groupby), functions: (count, export)
 		$importOps = array ();
 		$importOps ['users'] = array ('count' => 'countUsers', 'export' => 'exportUsers' );
+		$importOps ['mapusers'] = array ('count' => 'countMapUsers', 'export' => 'exportMapUsers' );
 		$importOps ['categories'] = array ('count' => 'countCategories', 'export' => 'exportCategories' );
 		$importOps ['config'] = array ('count' => 'countConfig', 'export' => 'exportConfig' );
 		$importOps ['messages'] = array ('count' => 'countMessages', 'export' => 'exportMessages' );

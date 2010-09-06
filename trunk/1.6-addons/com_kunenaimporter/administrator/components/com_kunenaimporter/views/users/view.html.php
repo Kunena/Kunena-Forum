@@ -39,10 +39,16 @@ class KunenaImporterViewUsers extends JView {
 		}
 		switch ($filter_type) {
 			case 'unmapped':
-				$where [] = " (a.id = 0 OR a.id IS NULL) ";
+				$where [] = " (a.id IS NULL) ";
 				break;
 			case 'mapped':
 				$where [] = " a.id > 0 ";
+				break;
+			case 'ignored':
+				$where [] = " (a.id = 0) ";
+				break;
+			case 'never':
+				$where [] = " (a.lastvisitDate = 0 && a.id IS NULL) ";
 				break;
 			default:
 		}
@@ -75,6 +81,8 @@ class KunenaImporterViewUsers extends JView {
 		$types [] = JHTML::_ ( 'select.option', '', 'All users' );
 		$types [] = JHTML::_ ( 'select.option', 'unmapped', 'Unmapped users' );
 		$types [] = JHTML::_ ( 'select.option', 'mapped', 'Mapped users' );
+		$types [] = JHTML::_ ( 'select.option', 'ignored', 'Ignored users' );
+		$types [] = JHTML::_ ( 'select.option', 'never', 'Never visited unmapped users' );
 		$lists ['type'] = JHTML::_ ( 'select.genericlist', $types, 'filter_type', 'class="inputbox" size="1" onchange="document.adminForm.submit( );"', 'value', 'text', "$filter_type" );
 
 		// get list of Log Status for dropdown filter
@@ -94,11 +102,11 @@ class KunenaImporterViewUsers extends JView {
 		$this->assignRef ( 'pagination', $pagination );
 
 		JToolBarHelper::title ( JText::_ ( 'Forum Importer: Migrate Users' ), 'kunenaimporter.png' );
-		JToolBarHelper::custom ( 'mapusers', 'upload', 'upload', JText::_ ( 'Import All' ), false );
+		JToolBarHelper::custom ( 'mapusers', 'upload', 'upload', JText::_ ( 'Map Missing' ), false );
+		//JToolBarHelper::deleteList();
+		JToolBarHelper::divider();
 		JToolBarHelper::custom ( 'truncatemap', 'delete', 'delete', JText::_ ( 'Delete All' ), false );
-		/*		JToolBarHelper::divider();
-		JToolBarHelper::deleteList();
-		JToolBarHelper::editListX();*/
+		/*JToolBarHelper::editListX();*/
 
 		parent::display ( $tpl );
 	}

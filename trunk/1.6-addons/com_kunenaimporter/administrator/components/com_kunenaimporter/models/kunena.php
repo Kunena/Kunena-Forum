@@ -65,6 +65,13 @@ class CKunenaTableExtUser extends CKunenaTable {
 	function __construct(&$database) {
 		parent::__construct ( '#__kunenaimporter_users', 'extid', $database );
 	}
+
+	function loadIdMap($list) {
+		if (empty($list)) return array();
+		$list = implode(',', $list);
+		$this->_db->setQuery ( "SELECT id, extid, lastvisitDate FROM #__kunenaimporter_users WHERE extid IN ({$list})" );
+		return $this->_db->loadObjectList('extid');
+	}
 }
 
 class CKunenaTableAnnouncements extends CKunenaTable {

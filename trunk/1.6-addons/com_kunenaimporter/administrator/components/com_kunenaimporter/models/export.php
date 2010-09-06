@@ -172,12 +172,21 @@ class KunenaimporterModelExport extends JModel {
 		return $result;
 	}
 
-	function mapUsers($start = 0, $limit = 0) {
+	function countMapUsers() {
+		$db = JFactory::getDBO();
+		$query = "SELECT COUNT(*) FROM #__users";
+		$db->setQuery ($query);
+		return $db->loadResult ();
+	}
+
+	function &exportMapUsers($start = 0, $limit = 0) {
 		$db = JFactory::getDBO();
 		$query = "SELECT id, username FROM #__users";
 		$db->setQuery ( $query, $start, $limit );
 		$users = $db->loadObjectList ( 'id' );
+		$count = 0;
 		foreach ($users as $user) {
+			$count++;
 			$extid = $this->mapJoomlaUser($user);
 			if ($extid) {
 				$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
@@ -190,6 +199,7 @@ class KunenaimporterModelExport extends JModel {
 				}
 			}
 		}
+		return $users;
 	}
 
 	function &exportJoomlaUsers($start = 0, $limit = 0) {

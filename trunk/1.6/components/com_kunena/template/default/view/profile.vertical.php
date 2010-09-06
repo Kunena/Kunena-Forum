@@ -15,7 +15,7 @@ defined ( '_JEXEC' ) or die ();
 
 if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 ?>
-	<ul id="kpost-profile">
+	<ul class="kpost-profile">
 		<li class="kpost-username">
 			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->username) ); ?>
 		</li>

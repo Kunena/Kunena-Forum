@@ -1831,33 +1831,33 @@ PX		EM			PCT			PT
 
 /* Left and right layouts */
 
-#Kunena ul#kpost-profile li {
+#Kunena ul.kpost-profile li {
 	padding: 0px;
 }
 
-#Kunena ul#kpost-profile {
+#Kunena ul.kpost-profile {
 	margin:8px 0;
 	padding: 0;
 	text-align:center;
 	line-height: 1.5em;
 }
 
-#Kunena ul#kpost-profile li {
+#Kunena ul.kpost-profile li {
 	list-style-type: none;
 	display:block;
 	padding-bottom: 1px;
 	text-align:center !important;
 }
 
-#Kunena ul#kpost-profile li.kpost-username {font-size: 1.333em;}
-#Kunena ul#kpost-profile li.kpost-usertype {}
-#Kunena ul#kpost-profile li.kpost-avatar{}
-#Kunena ul#kpost-profile li.kpost-userrank{}
-#Kunena ul#kpost-profile li.kpost-userrank-img {}
-#Kunena ul#kpost-profile li.kpost-userrank-img img{vertical-align: text-top;}
-#Kunena ul#kpost-profile li.kpost-online-img{}
-#Kunena ul#kpost-profile li.kpost-online-img img {vertical-align: text-top;}
-#Kunena ul#kpost-profile li.kpost-karma {}
+#Kunena ul.kpost-profile li.kpost-username {font-size: 1.333em;}
+#Kunena ul.kpost-profile li.kpost-usertype {}
+#Kunena ul.kpost-profile li.kpost-avatar{}
+#Kunena ul.kpost-profile li.kpost-userrank{}
+#Kunena ul.kpost-profile li.kpost-userrank-img {}
+#Kunena ul.kpost-profile li.kpost-userrank-img img{vertical-align: text-top;}
+#Kunena ul.kpost-profile li.kpost-online-img{}
+#Kunena ul.kpost-profile li.kpost-online-img img {vertical-align: text-top;}
+#Kunena ul.kpost-profile li.kpost-karma {}
 
 #Kunena li.kpost-karma span.kmsgkarma {
 }
@@ -1881,11 +1881,11 @@ PX		EM			PCT			PT
 #Kunena li.kpost-userposts{
 	margin : 0px;	
 }
-#Kunena ul#kpost-profile li.kpost-smallicons{
+#Kunena ul.kpost-profile li.kpost-smallicons{
 	margin: 0px auto;
 	width: 90%;
 }
-#Kunena ul#kpost-profile li.kpost-personal{
+#Kunena ul.kpost-profile li.kpost-personal{
 	text-align: center;
 	font-style:italic;
 }

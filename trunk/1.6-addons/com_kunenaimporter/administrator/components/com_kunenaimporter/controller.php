@@ -155,16 +155,27 @@ class KunenaImporterController extends JController {
 		$extid = JRequest::getInt ( 'extid', 0 );
 		$cid = JRequest::getVar ( 'cid', array (0 ), 'post', 'array' );
 		$userdata ['id'] = array_shift ( $cid );
+		if ($userdata ['id'] < 0) {
+			$userdata ['id'] = JRequest::getInt ( 'userid', 0 );
+		}
+		$replace = JRequest::getInt ( 'replace', 0 );
+
 		require_once (JPATH_COMPONENT . DS . 'models' . DS . 'kunena.php');
 		$importer = $this->getModel ( 'import' );
 
 		$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
 		$extuser->load ( $extid );
-		if ($extuser->id > 0) $importer->updateUserData($extuser->id, -$extuser->extid);
-		if ($extuser->save ( $userdata ) === false) {
+		$success = true;
+		$oldid = $extuser->id;
+		if ($oldid > 0) $importer->updateUserData($oldid, -$extid);
+		if ($userdata ['id'] > 0) $success = $importer->updateUserData(-$extid, $userdata ['id'], $replace);
+		if ($success && $extuser->save ( $userdata ) === false) {
 			echo "ERROR: Saving external data for $userdata->username failed: " . $extuser->getError () . "<br />";
+			$importer->updateUserData($userdata ['id'], $oldid);
 		}
-		if ($userdata ['id'] > 0) $importer->updateUserData(-$extuser->extid, $userdata ['id']);
+		if (!$success) {
+			$importer->updateUserData(-$extid, $oldid);
+		}
 
 		$app = & JFactory::getApplication ();
 		$this->setredirect ( 'index.php?option=com_kunenaimporter&view=users' );

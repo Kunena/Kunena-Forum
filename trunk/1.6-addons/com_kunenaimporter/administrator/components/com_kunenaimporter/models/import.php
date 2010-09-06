@@ -78,8 +78,13 @@ class KunenaimporterModelImport extends JModel {
 		FROM `#__users` AS u
 		LEFT JOIN `#__kunenaimporter_users` AS e ON e.id=u.id
 		WHERE (u.username LIKE {$this->db->quote($extuser->username)}
-		OR u.email LIKE{$this->db->quote($extuser->email)})";
-		if (!$all) $query .= " AND e.id IS NULL";
+		OR u.email LIKE {$this->db->quote($extuser->email)})";
+		if (!$all) {
+			$query .= " AND e.id IS NULL";
+		}
+		else if ($extuser->id) {
+			$query .= " OR u.id={$this->db->quote($extuser->id)}";
+		}
 		$this->db->setQuery ( $query );
 		$userlist = $this->db->loadObjectList ( 'id' );
 
@@ -330,19 +335,23 @@ class KunenaimporterModelImport extends JModel {
 		$this->updateCatStats ();
 	}
 
-	function updateUserData($oldid, $newid) {
+	function updateUserData($oldid, $newid, $replace = false) {
+		if ($replace) {
+			$this->db->setQuery ( "DELETE FROM `#__kunena_users` WHERE `userid` = {$this->db->quote($oldid)}" );
+			$this->db->query ();
+		}
+		$queries[] = "UPDATE `#__kunena_users` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_attachments` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_favorites` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_messages` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_messages` SET `modified_by` = {$this->db->quote($newid)} WHERE `modified_by` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_moderation` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_polls_users` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
-		$queries[] = "UPDATE `#__kunena_sessions` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		//$queries[] = "UPDATE `#__kunena_sessions` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_subscriptions` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_subscriptions_categories` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_thankyou` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_thankyou` SET `targetuserid` = {$this->db->quote($newid)} WHERE `targetuserid` = {$this->db->quote($oldid)}";
-		$queries[] = "UPDATE `#__kunena_users` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_users_banned` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_users_banned` SET `created_by` = {$this->db->quote($newid)} WHERE `created_by` = {$this->db->quote($oldid)}";
 		$queries[] = "UPDATE `#__kunena_users_banned` SET `modified_by` = {$this->db->quote($newid)} WHERE `modified_by` = {$this->db->quote($oldid)}";
@@ -350,7 +359,13 @@ class KunenaimporterModelImport extends JModel {
 
 		foreach ($queries as $query) {
 			$this->db->setQuery ( $query );
-			$this->db->query () or die ( "<br />Invalid query:<br />$query<br />" . $this->db->errorMsg () );
+			$this->db->query ();
+			if ($this->db->getErrorNum()) {
+				$app = JFactory::getApplication ();
+				$app->enqueueMessage ( "WARNING: Userid {$newid} is already in use! Cannot map user to it." );
+				return false;
+			}
 		}
+		return true;
 	}
 }

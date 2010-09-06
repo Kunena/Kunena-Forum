@@ -153,6 +153,18 @@ JHTML::_('behavior.tooltip');
 				$i++;
 				}
 			?>
+			<tr>
+				<td>
+					<?php echo $i+1;?>
+				</td>
+				<td>
+					<?php echo JHTML::_('grid.id', $i, -1 ); ?>
+				</td>
+				<td></td>
+				<td><input type="text" name="userid" value="" /></td>
+				<td>Enter Joomla user ID</td>
+				<td colspan="5"><input type="checkbox" name="replace" value="1" /> Replace user profile</td>
+			</tr>
 		</tbody>
 	</table>
 

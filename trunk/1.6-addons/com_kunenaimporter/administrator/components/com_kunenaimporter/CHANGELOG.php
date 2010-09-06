@@ -36,6 +36,7 @@ KunenaImporter 1.6.0-RC2
 6-September-2010 Matias
 # [#20178] User mapping: Misc fixes and optimizations
 # [#20178] User mapping: Update all user information when user gets mapped manually (no need to re-run importer)
+# [#20178] User mapping: Map user by manually entering id
 
 4-September-2010 Matias
 # [#20178] User mapping: Greatly improve performance by making own task from basic user mapping

@@ -945,14 +945,14 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					if ($this->spoilerid == 0) {
 						// Only need the script for the first spoiler we find
 						$kunena_app = & JFactory::getApplication ();
-						$kunena_app->addCustomHeadTag ( '<script language = "JavaScript" type = "text/javascript">' . 'function fb_showDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}	</script>' );
+						$kunena_app->addCustomHeadTag ( '<script language = "JavaScript" type = "text/javascript">' . 'function kShowDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}	</script>' );
 					}
 
 					$this->spoilerid ++;
 
-					$randomid = rand ();
+					$randomid = 'spoiler_'.rand ();
 
-					$tag_new = '<div id="' . $randomid . '" onclick="javascript:fb_showDetail(this);" style="cursor:pointer;"><img id="' . $randomid . '_img"' . 'src="' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png" border="0"> <strong>' . (isset ( $tag->options ["title"] ) ? ($tag->options ["title"]) : (JText::_('COM_KUNENA_BBCODE_SPOILER'))) . '</strong></div><div id="' . $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
+					$tag_new = '<div id="' . $randomid . '" onclick="javascript:kShowDetail(this);" style="cursor:pointer;"><img id="' . $randomid . '_img"' . 'src="' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png" border="0" alt=":pinch:" /> <strong>' . (isset ( $tag->options ["title"] ) ? ($tag->options ["title"]) : (JText::_('COM_KUNENA_BBCODE_SPOILER'))) . '</strong></div><div id="' . $randomid . '_details" style="display:None;"><span class="fb_quote">' . $between . '</span></div>';
 
 					return TAGPARSER_RET_REPLACED;
 				}

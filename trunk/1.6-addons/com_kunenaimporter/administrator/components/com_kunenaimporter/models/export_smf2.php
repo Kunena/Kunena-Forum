@@ -515,14 +515,12 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		FROM `#__members` AS u
 		ORDER BY u.id_member";
 		$result = $this->getExportData ( $query, $start, $limit, 'userid' );
-/*
 		foreach ( $result as $item ) {
 			$row = & $result [$item->userid];
 			// Convert bbcode in signature
 			$row->signature = $this->prep ( $row->signature );
 			$row->location = $this->prep ( $row->location );
 		}
-*/
 		return $result;
 	}
 
@@ -555,6 +553,30 @@ class KunenaimporterModelExport_Smf2 extends KunenaimporterModelExport {
 		}
 		return $result;
 	}
+
+	/*
+	function &exportAttachments($start = 0, $limit = 0) {
+		$query = "SELECT
+			id_attach AS id,
+			id_msg AS mesid,
+			id_member AS userid,
+			file_hash AS hash,
+			size AS size,
+			id_folder AS folder,
+			IF(LENGTH(mime_type)>0,mime_type,fileext) AS filetype,
+			filename AS filename
+		FROM `#__attachments`
+		WHERE attachment_type=0
+		ORDER BY a.id_attach";
+		$result = $this->getExportData ( $query, $start, $limit, 'id' );
+		foreach ( $result as $item ) {
+			$row = & $result [$item->extid];
+			$row->folder = 'smf2/'.$row->folder;
+			$row->location = $config->attachmentUploadDir;
+		}
+		return $result;
+	}
+	*/
 
 	function mapJoomlaUser($joomlauser) {
 		$query = "SELECT id_member

@@ -130,7 +130,7 @@ class KunenaImporterController extends JController {
 		if ($errormsg)
 			return;
 
-		$empty = array('start'=>0, 'unmapped'=>0, 'new'=>0, 'failed'=>0);
+		$empty = array('start'=>0, 'all'=>0, 'new'=>0, 'conflict'=>0, 'failed'=>0, 'total'=>0);
 		$result = $app->getUserState ( 'com_kunenaimporter.MapUsersRes', $empty );
 		do {
 			$result = $importer->mapUsers ( $result, $limit );
@@ -142,10 +142,9 @@ class KunenaImporterController extends JController {
 		//JToolBarHelper::back();
 		if ($timeout) {
 			$view = '&view=mapusers';
-			$app->enqueueMessage ( "Mapped {$result['new']}/{$result['unmapped']} unmapped users. Errors: {$result['failed']}." );
 		} else {
 			$view = '&view=users';
-			$app->enqueueMessage ( "Mapped {$result['new']}/{$result['unmapped']} unmapped users. Errors: {$result['failed']}." );
+			$app->enqueueMessage ( "Mapped {$result['new']}/{$result['total']} unmapped users. Conflicts: {$result['conflict']}. Errors: {$result['failed']}." );
 			$app->setUserState ( 'com_kunenaimporter.MapUsers', 0 );
 			$app->setUserState ( 'com_kunenaimporter.MapUsersRes', $empty );
 		}
@@ -157,11 +156,15 @@ class KunenaImporterController extends JController {
 		$cid = JRequest::getVar ( 'cid', array (0 ), 'post', 'array' );
 		$userdata ['id'] = array_shift ( $cid );
 		require_once (JPATH_COMPONENT . DS . 'models' . DS . 'kunena.php');
+		$importer = $this->getModel ( 'import' );
+
 		$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
 		$extuser->load ( $extid );
+		if ($extuser->id > 0) $importer->updateUserData($extuser->id, -$extuser->extid);
 		if ($extuser->save ( $userdata ) === false) {
 			echo "ERROR: Saving external data for $userdata->username failed: " . $extuser->getError () . "<br />";
 		}
+		if ($userdata ['id'] > 0) $importer->updateUserData(-$extuser->extid, $userdata ['id']);
 
 		$app = & JFactory::getApplication ();
 		$this->setredirect ( 'index.php?option=com_kunenaimporter&view=users' );

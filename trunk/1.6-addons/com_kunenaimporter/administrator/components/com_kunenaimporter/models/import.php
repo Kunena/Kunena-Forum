@@ -72,13 +72,14 @@ class KunenaimporterModelImport extends JModel {
 		return strtr ( $name, "<>\"'%;()&", '_________' );
 	}
 
-	function findPotentialUsers($extuserid, $username = null, $email = null, $registerDate = null) {
+	function findPotentialUsers($extuser, $all = false) {
 		// Check if user exists in Joomla
-		$query = "SELECT u.*, g.name AS groupname
+		$query = "SELECT u.*
 		FROM `#__users` AS u
-		INNER JOIN #__core_acl_aro_groups AS g ON g.id = u.gid
-		WHERE u.username LIKE {$this->db->quote($username)} OR u.username LIKE {$this->db->quote($this->getUsername($username))}
-		OR u.email LIKE {$this->db->quote($email)} OR u.registerDate={$this->db->quote($registerDate)}";
+		LEFT JOIN `#__kunenaimporter_users` AS e ON e.id=u.id
+		WHERE (u.username LIKE {$this->db->quote($extuser->username)}
+		OR u.email LIKE{$this->db->quote($extuser->email)})";
+		if (!$all) $query .= " AND e.id IS NULL";
 		$this->db->setQuery ( $query );
 		$userlist = $this->db->loadObjectList ( 'id' );
 
@@ -87,14 +88,10 @@ class KunenaimporterModelImport extends JModel {
 		$newlist = array ();
 		foreach ( $userlist as $user ) {
 			$points = 0;
-			if ($username == $user->username)
+			if (strtolower($extuser->username) == strtolower($user->username))
 				$points += 2;
-			if ($this->getUsername ( $username ) == $user->username)
-				$points ++;
-			if (strtolower($email) == strtolower($user->email))
-				$points += 2;
-			if ($registerDate == $user->registerDate)
-				$points += 2;
+			if (strtolower($extuser->email) == strtolower($user->email))
+				$points += 1;
 
 			$user->points = $points;
 			$newlist [$points] = $user;
@@ -107,15 +104,13 @@ class KunenaimporterModelImport extends JModel {
 		if ($extuser->id !== null)
 			return $extuser->id;
 
-		$userlist = $this->findPotentialUsers ( $extuser->extid, $extuser->extusername, $extuser->email, $extuser->registerDate );
+		$userlist = $this->findPotentialUsers ( $extuser );
 		$best = array_shift ( $userlist );
-		if ($best->points >= 4)
-			return $best->id;
-		if (empty($userlist) && $best->points >= 2)
-			return -$best->id;
+		if (!$best)
+			return 0;
 		if (!empty($userlist))
 			return -$best->id;
-		return 0;
+		return $best->id;
 	}
 
 	function truncateUsersMap() {
@@ -125,10 +120,11 @@ class KunenaimporterModelImport extends JModel {
 	}
 
 	function mapUsers($result, $limit) {
-		$query = "SELECT id, name FROM `#__core_acl_aro_groups`";
-		$this->db->setQuery ( $query );
-		$groups = $this->db->loadObjectList ( 'name' );
-
+		if (!$result['total']) {
+			$query = "SELECT COUNT(*) FROM `#__kunenaimporter_users` WHERE id IS NULL";
+			$this->db->setQuery ( $query );
+			$result['total'] = $this->db->loadResult ();
+		}
 		$query = "SELECT * FROM `#__kunenaimporter_users` WHERE id IS NULL AND extid > ".intval($result['start']);
 		$this->db->setQuery ( $query, 0, $limit );
 		$users = $this->db->loadAssocList ();
@@ -139,24 +135,26 @@ class KunenaimporterModelImport extends JModel {
 			$result['now']++;
 			$extuser = JTable::getInstance ( 'ExtUser', 'CKunenaTable' );
 			$extuser->bind ( $userdata );
+			unset($userdata);
 			$extuser->exists ( true );
-			$extuser->extusername = $extuser->username;
-			$extuser->username = $this->getUsername ( $extuser->username );
 			$uid = $this->mapUser ( $extuser );
+			$result['all']++;
 			if (!$uid) {
-				$result['unmapped']++;
 				continue;
 			}
-			if ($uid > 0)
-				$userdata->id = abs ( $uid );
-			if ($uid < 0)
-				$userdata->conflict = abs ( $uid );
-			$userdata->gid = $groups [$extuser->usertype]->id;
+			$userdata = array();
+			if ($uid > 0) {
+				$userdata['id'] = abs ( $uid );
+				$result['new']++;
+			} else {
+				$userdata['conflict'] = abs ( $uid );
+				$result['conflict']++;
+			}
 			if ($extuser->save ( $userdata ) === false) {
 				$result['failed']++;
 				echo "ERROR: Saving external {$extuser->username} failed: " . $extuser->getError () . "<br />";
-			} else {
-				$result['new']++;
+			} elseif ($uid > 0) {
+				$this->updateUserData(-$extuser->extid, $uid);
 			}
 		}
 		unset($users);
@@ -330,5 +328,29 @@ class KunenaimporterModelImport extends JModel {
 		$this->commitEnd ();
 
 		$this->updateCatStats ();
+	}
+
+	function updateUserData($oldid, $newid) {
+		$queries[] = "UPDATE `#__kunena_attachments` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_favorites` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_messages` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_messages` SET `modified_by` = {$this->db->quote($newid)} WHERE `modified_by` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_moderation` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_polls_users` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_sessions` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_subscriptions` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_subscriptions_categories` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_thankyou` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_thankyou` SET `targetuserid` = {$this->db->quote($newid)} WHERE `targetuserid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_users` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_users_banned` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_users_banned` SET `created_by` = {$this->db->quote($newid)} WHERE `created_by` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_users_banned` SET `modified_by` = {$this->db->quote($newid)} WHERE `modified_by` = {$this->db->quote($oldid)}";
+		$queries[] = "UPDATE `#__kunena_whoisonline` SET `userid` = {$this->db->quote($newid)} WHERE `userid` = {$this->db->quote($oldid)}";
+
+		foreach ($queries as $query) {
+			$this->db->setQuery ( $query );
+			$this->db->query () or die ( "<br />Invalid query:<br />$query<br />" . $this->db->errorMsg () );
+		}
 	}
 }

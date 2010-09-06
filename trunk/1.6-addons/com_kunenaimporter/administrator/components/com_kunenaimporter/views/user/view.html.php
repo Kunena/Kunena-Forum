@@ -35,7 +35,7 @@ class KunenaImporterViewUser extends JView {
 		$user->load ( $cid [0] );
 
 		$importer = $this->getModel ( 'import' );
-		$items = $importer->findPotentialUsers ( $user->extid, $user->extusername, $user->email, $user->registerDate );
+		$items = $importer->findPotentialUsers ( $user, true );
 		$myuser = JFactory::getUser ();
 		$acl = JFactory::getACL ();
 

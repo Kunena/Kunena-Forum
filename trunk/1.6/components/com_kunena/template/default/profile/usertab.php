@@ -61,7 +61,7 @@ JHTML::_('behavior.tooltip');
 		<dd style="display: none;">
 			<?php $this->displayUserPosts(); ?>
 		</dd>
-		<?php if($this->config->showthankyou) : ?>
+		<?php if($this->config->showthankyou && $this->my->id != 0) : ?>
 		<dt class="closed"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayGotThankYou(); ?>

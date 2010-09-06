@@ -33,6 +33,15 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+6-September-2010 Matias
+^ [#15886] Merged revisions 3419-3424 from /branches/1.6-xillibit-fixes-20100905
+
+5-September-2010 Xillibit
+# [#22254] Configuration report settings : check that the filed are right of type char, vachar, text... (Part 2)
+# [#22258] Change logic for save updated polls during edit
+# [#22278] User type need to follow translation in category manager
+# [#22279] Thank you list in profile is showed even for visitors
+
 5-September-2010 Severdia
 # [#19356] Removed duplicate CSS in intialize.php, cleaned up
 ^ [#19356] Added default initialize.php styles to template CSS file

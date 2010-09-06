@@ -357,7 +357,7 @@ table.kadmin-stat caption {
 //			END TEMPLATE MANAGER
 //******************************************/
 
-	function showAdministration($rows, $children, $pageNav, $option, $lists) {
+	function showAdministration($rows, $children, $pageNav, $option, $lists, $kacl_pub, $kacl_admin) {
 		?>
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
@@ -523,10 +523,27 @@ table.kadmin-stat caption {
 			} else if ($row->pub_access == 1) {
 				$groupname = JText::_('COM_KUNENA_NOBODY');
 			} else {
-				$groupname = $row->groupname == "" ? "&nbsp;" : $row->groupname;
+
+				if( ! empty( $row->groupname ) ) {
+					foreach ($kacl_pub as $item) {
+						// need to find a way to remove the &nbsp; in $item->text
+						if ( $item->value == $row->group_id ) $groupname = str_replace('-','',$item->text);
+					}
+				} else {
+					$groupname = "&nbsp;";
+				}
 			}
 
-			$adm_groupname = $row->admingroup == "" ? "&nbsp;" : $row->admingroup;
+			if( ! empty( $row->admingroup ) ) {
+					foreach ($kacl_admin as $item) {
+						// need to find a way to remove the &nbsp; in $item->text
+						if ( $item->value == $row->group_id ) $adm_groupname = str_replace('-','', $item->text);
+					}
+				} else {
+					$adm_groupname = "&nbsp;";
+				}
+
+
 		?>
 		<td width="10%" align="center"><a href="javascript: void(0);"
 			onclick="return listItemTask('cb<?php

@@ -221,8 +221,11 @@ class KunenaModelInstall extends JModel {
 
 		if (file_exists ( $file )) {
 			$success = JArchive::extract ( $file, $dest );
-			if (! $success)
+			if (! $success) {
 				$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_FAILED', $file);
+
+				$text .= $this->_getJoomlaArchiveError($file);
+			}
 		} else {
 			$success = true;
 			$text .= JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_MISSING', $file);
@@ -1470,6 +1473,50 @@ class KunenaModelInstall extends JModel {
 			return false;
 
 		return true;
+	}
+
+	protected function _getJoomlaArchiveError($archive) {
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		$error = '';
+		if ($jversion->RELEASE == 1.5) {
+			// Unfortunately Joomla 1.5 needs this rather ugly hack to get the error message
+			$ext = JFile::getExt(strtolower($archive));
+			$adapter = null;
+
+			switch ($ext)
+			{
+				case 'zip':
+					$adapter =& JArchive::getAdapter('zip');
+					break;
+				case 'tar':
+					$adapter =& JArchive::getAdapter('tar');
+					break;
+				case 'tgz'  :
+				case 'gz'   :	// This may just be an individual file (e.g. sql script)
+				case 'gzip' :
+					$adapter =& JArchive::getAdapter('gzip');
+					break;
+				case 'tbz2' :
+				case 'bz2'  :	// This may just be an individual file (e.g. sql script)
+				case 'bzip2':
+					$adapter =& JArchive::getAdapter('bzip2');
+					break;
+				default:
+					$adapter = null;
+					break;
+			}
+
+			if ($adapter) {
+				$error .= $adapter->get('error.message'). ': ' . $archive;
+			}
+
+			// End of Joomla 1.5 error message hackathon
+		} else {
+			// J1.6 and beyond - Not yet implemented
+		}
+
+		return $error;
 	}
 
 }

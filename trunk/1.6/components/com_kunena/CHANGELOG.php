@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+7-september-2010 fxstein
++ [#22197] Display Joomla 1.5 JArchive error on failed extraction
+
 7-september-2010 Matias
 # [#22300] Fatal error: Class 'KunenaUser' not found in CKunenaListcat->loadCategories()
 ^ [#15886] Merged revision 3435 from /branches/1.6-xillibit-fixes-20100905

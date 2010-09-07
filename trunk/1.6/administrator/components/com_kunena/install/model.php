@@ -377,7 +377,7 @@ class KunenaModelInstall extends JModel {
 		if (isset($files[$task])) {
 			$file = $files[$task];
 			if (file_exists ( $path . DS . $file['name'] . $ext )) {
-				$this->extract ( $path, $file['name'] . $ext, $file['dest'] );
+				$this->extract ( $path, $file['name'] . $ext, $file['dest'], Kunena::isSVN() );
 			}
 			$this->setTask($task+1);
 		} else {
@@ -1284,6 +1284,13 @@ class KunenaModelInstall extends JModel {
 		jimport('joomla.application.component.helper');
 		$component = JComponentHelper::getComponent('com_kunena');
 		$componentid = $component->id;
+
+		// First fix all broken menu items
+		$query = "UPDATE #__menu SET componentid={$this->db->quote($componentid)} WHERE type = 'component' AND link LIKE '%option=com_kunena%'";
+		$this->db->setQuery ( $query );
+		$this->db->query ();
+		if ($this->db->getErrorNum ())
+			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 
 		// Create new Joomla menu for Kunena
 		$query = "SELECT id FROM `#__menu_types` WHERE `menutype`='kunenamenu';";

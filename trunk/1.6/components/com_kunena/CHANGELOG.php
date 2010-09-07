@@ -39,6 +39,8 @@ Kunena 1.6.0-RC3
 7-september-2010 Matias
 # [#22300] Fatal error: Class 'KunenaUser' not found in CKunenaListcat->loadCategories()
 ^ [#15886] Merged revision 3435 from /branches/1.6-xillibit-fixes-20100905
+# [#22309] Installer: Fix broken menu items not pointing to Kunena
++ [#22197] Improve language installation: Add missing languages to the new system
 
 6-September-2010 Xillibit
 # [#22258] Change logic for save updated polls during edit (Part2)

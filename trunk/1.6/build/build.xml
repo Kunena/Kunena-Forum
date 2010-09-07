@@ -109,10 +109,13 @@
 		</condition>
 
 		<copy todir="${tmp_dir}/administrator">
-			<fileset dir="${project_dir}/administrator" />
+			<fileset dir="${project_dir}/administrator">
+				<exclude name="components/com_kunena/language/**"/>
+			</fileset>
 		</copy>	
 		<copy todir="${tmp_dir}/components">
 			<fileset dir="${project_dir}/components">
+				<exclude name="com_kunena/language/**"/>
 				<exclude name="com_kunena/template/**/params.ini"/>
 			</fileset>
 		</copy>	
@@ -171,17 +174,17 @@
 	<macrodef name="language">
 		<attribute name="tag" default="en-GB"/>
 		<sequential>
-			<move file="${tmp_dir}/${kunena.backend}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}" overwrite="true" filtering="true" />
-			<move todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
-				<fileset dir="${tmp_dir}/${kunena.backend}">
+			<copy file="${project_dir}/${kunena.backend}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}" overwrite="true" filtering="true" />
+			<copy todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
+				<fileset dir="${project_dir}/${kunena.backend}">
 					<include name="**/@{tag}.*.ini"/>
 				</fileset>
-			</move>
-			<move todir="${tmp_dir}/languages/@{tag}/site" flatten="yes" includeEmptyDirs="no" overwrite="true">
-				<fileset dir="${tmp_dir}/${kunena.frontend}">
+			</copy>
+			<copy todir="${tmp_dir}/languages/@{tag}/site" flatten="yes" includeEmptyDirs="no" overwrite="true">
+				<fileset dir="${project_dir}/${kunena.frontend}">
 					<include name="**/@{tag}.*.ini"/>
 				</fileset>
-			</move>
+			</copy>
 			<archive destfile="${build_dir}/archive/language.@{tag}" basedir="${tmp_dir}/languages/@{tag}"/>
 		</sequential>
 	</macrodef>
@@ -223,10 +226,21 @@
 
 	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
+		<language tag="ca-ES" />
+		<language tag="de-DE" />
+		<language tag="el-GR" />
 		<language tag="en-GB" />
 		<language tag="es-ES" />
 		<language tag="fi-FI" />
+		<language tag="fr-FR" />
+		<language tag="it-IT" />
+		<language tag="mk-MK" />
+		<language tag="nl-NL" />
 		<language tag="pl-PL" />
+		<language tag="ru-RU" />
+		<language tag="sr-RS" />
+		<language tag="sr-YU" />
+		<language tag="th-TH" />
 		<language tag="tr-TR" />
 		<archive destfile="${build_dir}/archive/admin" basedir="${tmp_dir}/${kunena.backend}" />
 		<archive destfile="${build_dir}/archive/site" basedir="${tmp_dir}/${kunena.frontend}" />

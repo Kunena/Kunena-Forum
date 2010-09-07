@@ -236,14 +236,14 @@ PX		EM			PCT			PT
 #Kunena div.kblock span.ktoggler {
 	float: right;
 	top: 1px;
-	right: -19px;
+	right: -10px;
 	height: 1px;
 	position: relative;
 }
 #Kunena div.kblock span.select-toggle {
 	float: right;
 	top: 5px;
-	right: 5px;
+	right: 13px;
 	height: 1px;
 	position: relative;
 }
@@ -701,7 +701,7 @@ PX		EM			PCT			PT
 
 #Kunena .klist-actions td {
 	vertical-align:middle;
-	padding: 0 5px;
+	padding: 0 10px;
 	white-space:nowrap;
 }
 
@@ -2245,28 +2245,28 @@ POST PAGE
 	text-decoration: underline;
 }
 #Kunena .kbuttonuser {
-	background-position: 0 -340px;
+	background-position: 0 -360px;
 }
 #Kunena .kbuttononline-yes,
 #Kunena .kbuttonmod {
-	background-position: 0 -180px;
+	background-position: 0 -200px;
 }
 #Kunena .kbuttononline-no,
 #Kunena .kbuttongen,
 #Kunena .kbuttoncomm {
-	background-position: 0 -460px;
+	background-position: 0 -480px;
 }
 #Kunena .kbuttononline-yes span span,
 #Kunena .kbuttonmod span span {
-	background-position: right -200px;
+	background-position: right -220px;
 }
 #Kunena .kbuttonuser span span {
-	background-position: right -360px;
+	background-position: right -380px;
 }
 #Kunena .kbuttononline-no span span,
 #Kunena .kbuttongen span span,
 #Kunena .kbuttoncomm span span {
-	background-position: right -480px;
+	background-position: right -500px;
 }
 #Kunena .kbuttononline-yes span span,
 #Kunena .kbuttononline-no span span {
@@ -2274,26 +2274,26 @@ POST PAGE
 	height: 15px;
 }
 #Kunena .kbuttononline-yes span.online-yes {background-position: 0 0px;}
-#Kunena .kbuttononline-no span.online-no {background-position: 0 -380px;}
-#Kunena .kbuttoncomm span.reply {background-position: 0 -440px;}
-#Kunena .kbuttoncomm span.quote {background-position: 0 -420px;}
-#Kunena .kbuttoncomm span.newtopic {background-position: 0 -400px;}
-#Kunena .kbuttonuser span.thankyou {background-position: 0 -320px;}
-#Kunena .kbuttonuser span.favorite {background-position: 0 -240px;}
-#Kunena .kbuttonuser span.subscribe {background-position: 0 -300px;}
-#Kunena .kbuttonuser span.markread {background-position: 0 -280px;}
-#Kunena .kbuttonuser span.report {background-position: 0 -300px;}
-#Kunena .kbuttonmod span.merge {background-position: 0 -80px;}
-#Kunena .kbuttonmod span.edit {background-position: 0 -40px;}
-#Kunena .kbuttonmod span.delete {background-position: 0 -20px;}
-#Kunena .kbuttonmod span.permdelete {background-position: 0 -20px;}
+#Kunena .kbuttononline-no span.online-no {background-position: 0 -400px;}
+#Kunena .kbuttoncomm span.reply {background-position: 0 -460px;}
+#Kunena .kbuttoncomm span.quote {background-position: 0 -440px;}
+#Kunena .kbuttoncomm span.newtopic {background-position: 0 -420px;}
+#Kunena .kbuttonuser span.thankyou {background-position: 0 -340px;}
+#Kunena .kbuttonuser span.favorite {background-position: 0 -260px;}
+#Kunena .kbuttonuser span.subscribe {background-position: 0 -320px;}
+#Kunena .kbuttonuser span.markread {background-position: 0 -300px;}
+#Kunena .kbuttonuser span.report {background-position: 0 -320px;}
+#Kunena .kbuttonmod span.merge {background-position: 0 -100px;}
+#Kunena .kbuttonmod span.edit {background-position: 0 -60px;}
+#Kunena .kbuttonmod span.delete {background-position: 0 -40px;}
+#Kunena .kbuttonmod span.permdelete {background-position: 0 -40px;}
 #Kunena .kbuttonmod span.undelete {background-position: 0 -20px;}
-#Kunena .kbuttonmod span.move {background-position: 0 -120px;}
-#Kunena .kbuttonmod span.sticky {background-position: 0 -160px;}
-#Kunena .kbuttonmod span.lock {background-position: 0 -60px;}
-#Kunena .kbuttonmod span.split {background-position: 0 -140px;}
-#Kunena .kbuttonmod span.approve {background-position: 0 -160px;}
-#Kunena .kbuttonmod span.moderate {background-position: 0 -100px;}
+#Kunena .kbuttonmod span.move {background-position: 0 -140px;}
+#Kunena .kbuttonmod span.sticky {background-position: 0 -180px;}
+#Kunena .kbuttonmod span.lock {background-position: 0 -80px;}
+#Kunena .kbuttonmod span.split {background-position: 0 -160px;}
+#Kunena .kbuttonmod span.approve {background-position: 0 -180px;}
+#Kunena .kbuttonmod span.moderate {background-position: 0 -120px;}
 
 /* Goto Up/down buttons */
 
@@ -2527,6 +2527,7 @@ Multi file upload for bbcode editor
 	border: 1px solid #999999;
 	color: #000000;
 	padding: 3px 6px;
+	cursor:pointer;
 }
 #Kunena .kfile-input-button:hover,
 #Kunena .kfile-input-button:focus {
@@ -2555,7 +2556,7 @@ Multi file upload for bbcode editor
 	font-size: 23px; 
 	position: absolute; 
 	right: 0px; 
-	top: 0px;
+	top: -10px;
 	/* CSS3 standard */
 	opacity: 0;
 	/* For IE */

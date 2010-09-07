@@ -433,7 +433,14 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'img' :
+				$task->autolink_disable --; // continue autolink conversion
 				if ($between) {
+					if ($kunena_my->id == 0 && $kunena_config->showimgforguest == 0) {
+						// Hide between content from non registered users
+						$tag_new = '<b>' . JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG') . '</b>';
+						return TAGPARSER_RET_REPLACED;
+					}
+					$fileurl = $between;
 					if ($kunena_config->bbcode_img_secure != 'image') {
 						static $file_ext = null;
 						$matches = null;
@@ -442,61 +449,107 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							$params = &JComponentHelper::getParams ( 'com_media' );
 							$file_ext = explode ( ',', $params->get ( 'upload_extensions' ) );
 						}
-						preg_match ( '/\.([\w\d]+)$/', $between, $matches );
+						preg_match ( '/\.([\w\d]+)$/', $fileurl, $matches );
 						if (! isset ( $matches [1] ) || ! in_array ( JString::strtolower ( $matches [1] ), $file_ext )) {
 							// if the image has not exentions return it like a link and if it's allowed in configuration
 							if ($kunena_config->bbcode_img_secure == 'link') {
-								$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
-								if (! preg_match ( "`^(https?://)`", $tempstr )) {
-									$tempstr = 'http://' . $tempstr;
+								if (! preg_match ( "`^(https?://)`", $fileurl )) {
+									$fileurl = 'http://' . $fileurl;
 								}
 
-								$tag_new = "<a href='" . $tempstr . "' rel=\"nofollow\" target=\"_blank\">" . $between . '</a>';
+								$fileurl = kunena_htmlspecialchars ( $fileurl, ENT_QUOTES  );
+								$tag_new = "<a href='" . $fileurl . "' rel=\"nofollow\" target=\"_blank\">" . $fileurl . '</a>';
 								return TAGPARSER_RET_REPLACED;
 							} else {
-								$tag_new = $between;
+								$tag_new = kunena_htmlspecialchars ( $fileurl, ENT_QUOTES  );
 								return TAGPARSER_RET_REPLACED;
 							}
 							break;
 						}
 					}
 
-					$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
-					if ($kunena_my->id == 0 && $kunena_config->showimgforguest == 0) {
-						// Hide between content from non registered users
+					// Legacy attachments support (mostly used to remove image from attachments list), but also fixes broken links
+					if (isset ( $this->parent->attachments ) && strpos($fileurl, '/media/kunena/attachments/legacy/images/')) {
+						// Make sure that filename does not contain path or URL
+						$filename = $fileurl;
+						if (($slash = strrpos($filename, '/')) !== false) $filename = substr($filename, $slash + 1);
+						if (($slash = strrpos($filename, '\\')) !== false) $filename = substr($filename, $slash + 1);
 
-						$tag_new = '<b>' . JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEIMG') . '</b>';
-					} else {
-						$task->autolink_disable --; // continue autolink conversion
-
-						// Make sure we add image size if specified
-						$imgtagsize = isset ( $tag->options ["size"] ) ? ( int ) kunena_htmlspecialchars ( $tag->options ["size"] ) : 0;
-
-						// Need to check if we are nested inside a URL code
-						if ($task->autolink_disable == 0) {
-							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = '<a title="" rel="lightbox" href="'.$tempstr.'"><img src="'.$tempstr.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '').' alt="" /></a>';
-						} else {
-							// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-							$tag_new = "<img src='" . $tempstr . ($imgtagsize ? "' width='" . $imgtagsize : '') . "' alt='' />";
+						// Remove attachment from the attachments list and show it if it exists
+						$attachments = &$this->parent->attachments;
+						$attachment = null;
+						foreach ($attachments as $att) {
+							if ($att->filename == $filename && $att->folder == 'media/kunena/attachments/legacy/images') {
+								$attachment = $att;
+								unset ( $attachments [$att->id] );
+								$this->parent->inline_attachments[$attachment->id] = $attachment;
+								$tag_new = "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
+								return TAGPARSER_RET_REPLACED;
+							}
 						}
-
+						// No match -- assume that we have normal img tag
 					}
+
+					// Make sure we add image size if specified
+					$imgtagsize = isset ( $tag->options ["size"] ) ? ( int ) kunena_htmlspecialchars ( $tag->options ["size"] ) : 0;
+
+					// Need to check if we are nested inside a URL code
+					$fileurl = kunena_htmlspecialchars ( $fileurl, ENT_QUOTES );
+					if ($task->autolink_disable == 0) {
+						// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
+						$tag_new = '<a title="" rel="lightbox" href="'.$fileurl.'"><img src="'.$fileurl.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '').' alt="" /></a>';
+					} else {
+						// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
+						$tag_new = "<img src='" . $fileurl . ($imgtagsize ? "' width='" . $imgtagsize : '') . "' alt='' />";
+					}
+
 					return TAGPARSER_RET_REPLACED;
 				}
 				return TAGPARSER_RET_NOTHING;
 				break;
 			case 'file' :
+				$task->autolink_disable --; // continue autolink conversion
 				if ($between) {
-					$tempstr = kunena_htmlspecialchars ( $between, ENT_QUOTES );
 					if ($kunena_my->id == 0 && $kunena_config->showfileforguest == 0) {
 						// Hide between content from non registered users
-
 						$tag_new = '<b>' . JText::_('COM_KUNENA_SHOWIMGFORGUEST_HIDEFILE') . '</b>';
+						return TAGPARSER_RET_REPLACED;
 					} else {
-						$task->autolink_disable --; // continue autolink conversion
+						// Kunena 1.6: Added strict checks to make sure that user is not trying to do anything bad
+						// URL is not used anymore -- we show attachments by using real path and current URL
 
-						$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>" . JText::_('COM_KUNENA_FILENAME') . " <a href='" . $tempstr . "' target=\"_blank\" rel=\"nofollow\">" . kunena_htmlspecialchars ( !empty($tag->options ["name"]) ? $tag->options ["name"] : $tempstr) . "</a><br />" . JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( isset($tag->options ["size"]) ? $tag->options ["size"] : '?' ) . "</div>";
+						jimport('joomla.filesystem.file');
+						$filename = !empty($tag->options ["name"]) ? $tag->options ["name"] : $between;
+						// Make sure that filename does not contain path or URL
+						if (($slash = strrpos($filename, '/')) !== false) $filename = substr($filename, $slash + 1);
+						if (($slash = strrpos($filename, '\\')) !== false) $filename = substr($filename, $slash + 1);
+
+						$filepath = "attachments/legacy/files/{$filename}";
+						if (!is_file(KPATH_MEDIA . '/' . $filepath)) {
+							// File does not exist (or URL was pointing somewhere else)
+							$tag_new = '<div class="kmsgattach"><h4>' . JText::sprintf ( 'COM_KUNENA_ATTACHMENT_DELETED', kunena_htmlspecialchars ( $filename ) ) . '</h4></div>';
+							return TAGPARSER_RET_REPLACED;
+						} else {
+							if (isset ( $this->parent->attachments )) {
+								// Remove attachment from the attachments list
+								$attachments = &$this->parent->attachments;
+								foreach ($attachments as $att) {
+									if ($att->filename == $filename && $att->folder == 'media/kunena/attachments/legacy/files') {
+										$attachment = $att;
+										unset ( $attachments [$att->id] );
+										$this->parent->inline_attachments[$attachment->id] = $attachment;
+										break;
+									}
+								}
+							}
+
+							$fileurl = KURL_MEDIA . $filepath;
+							$filesize = isset($tag->options ["size"]) ? $tag->options ["size"] : filesize(KPATH_MEDIA . '/' . $filepath);
+
+							$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>";
+							$tag_new .= JText::_('COM_KUNENA_FILENAME'). " <a href='" . $fileurl . "' target=\"_blank\" rel=\"nofollow\">" . kunena_htmlspecialchars ( $filename ) . "</a><br />";
+							$tag_new .= JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( $filesize ) . "</div>";
+						}
 					}
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -504,6 +557,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 				break;
 			case 'attachment':
+				$task->autolink_disable --; // continue autolink conversion
 				if (! is_object ( $this->parent ) && ! isset ( $this->parent->attachments )) {
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -537,7 +591,6 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					}
 				}
 
-				$task->autolink_disable --; // continue autolink conversion
 				if (is_object ( $attachment ) && !empty($attachment->disabled)) {
 					// Hide between content from non registered users
 					$tag_new = '<div class="kmsgattach">' . $attachment->textLink . '</div>';

@@ -44,6 +44,11 @@ Kunena 1.6.0-RC3
 ^ [#15886] Merged revision 3435 from /branches/1.6-xillibit-fixes-20100905
 # [#22309] Installer: Fix broken menu items not pointing to Kunena
 + [#22197] Improve language installation: Add missing languages to the new system
+# [#19255] Fix &amp; in redirects: post, edit, delete, undelete, moderate, approve, karma, thankyou
+# [#22316] Fix auto-linking on broken/hidden img, file and attachment tags
+# [#22316] BBcode (file/img): Remove legacy attachments from attachments list if they are included into message
+# [#22316] BBcode (file): Strip URL and use fixed legacy attachments path to the file
+# [#22316] BBcode (file): If file doesn't exist, use the same error as with attachment tag
 
 6-September-2010 Xillibit
 # [#22258] Change logic for save updated polls during edit (Part2)

@@ -230,7 +230,7 @@ class CKunenaPost {
 		} else {
 			$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUCCESS_POSTED' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $id, $this->catid), $redirectmsg );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $id, $this->catid, 0, false ), $redirectmsg );
 	}
 
 	protected function newtopic($do) {
@@ -458,7 +458,7 @@ class CKunenaPost {
 		if ($this->msg_cat->review && !CKunenaTools::isModerator($this->my->id,$this->catid)) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
-		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
 	protected function delete() {
@@ -482,7 +482,7 @@ class CKunenaPost {
 		} else {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE') );
 		}
-		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
 	protected function undelete() {
@@ -506,7 +506,7 @@ class CKunenaPost {
 		} else {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE') );
 		}
-		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
 	protected function permdelete() {
@@ -642,7 +642,7 @@ class CKunenaPost {
 		} else {
 			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ));
 		}
-		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ) );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
 	protected function subscribe() {
@@ -814,7 +814,7 @@ class CKunenaPost {
 		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ), $success_msg );
 	}
 
 	function hasThreadHistory() {

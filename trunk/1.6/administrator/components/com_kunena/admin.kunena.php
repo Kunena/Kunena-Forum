@@ -3161,10 +3161,10 @@ function generateSystemReport () {
 	jimport('joomla.filesystem.file');
 
 	if ( JPluginHelper::isEnabled('system', 'mtupgrade') ) 	$mtupgrade = '[u]System - Mootools Upgrade:[/u] Enabled';
-	else $mtupgrade = '[u]System - Mootools Upgrade:[/u] Disabled';
+	else $mtupgrade = '[u]System - Mootools Upgrade:[/u] [color=#FF0000]Disabled[/color]';
 
-	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] Enabled';
-	else $plg_mt = '[u]System - Mootools12:[/u] [color=#FF0000]Disabled[/color]';
+	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] [color=#FF0000]Enabled[/color]';
+	else $plg_mt = '[u]System - Mootools12:[/u] Disabled';
 
 	if ( JPluginHelper::isEnabled('system', 'jfirephp') && JFile::exists(JPATH_SITE.'/plugins/system/jfirephp.php') ) {
 		$xml_jfireftp = JFactory::getXMLparser('Simple');

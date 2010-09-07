@@ -38,6 +38,7 @@ Kunena 1.6.0-RC3
 + [#19064] Dedicated css styling for [article] bbcode
 ^ [#19064] Display Intro Text with Read More for [article] bbcode
 # [#19064] Proper error handling for invalid articles
+# [#22254] Incorrect color coding in system settings report for mootools12 plugin
 
 7-september-2010 Matias
 # [#22300] Fatal error: Class 'KunenaUser' not found in CKunenaListcat->loadCategories()

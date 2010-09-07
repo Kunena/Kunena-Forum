@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="language" version="1.5" client="both" method="upgrade">
+	<name>Kunena Forum - Spanish</name>
+	<tag>es-ES</tag>
+	<creationDate>2010-08-31</creationDate>
+	<version>1.6.0-RC2</version>
+	<build>3334</build>
+	<author>Alakentu</author>
+	<authorEmail>kunenaspanish@kunenaspanish.com</authorEmail>
+	<authorUrl>www.kunenaspanish.com</authorUrl>
+	<copyright>(C) 2010 Alakentu</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>Spanish translation files for Kunena Forum Component</description>
+
+	<administration>
+		<files folder="admin">
+			<filename>es-ES.com_kunena.ini</filename>
+			<filename>es-ES.com_kunena.install.ini</filename>
+			<!-- filename>es-ES.com_kunena.menu.ini</filename -->
+		</files>
+	</administration>
+
+	<site>
+		<files folder="site">
+			<filename>es-ES.com_kunena.ini</filename>
+			<filename>es-ES.com_kunena.tpl_default.ini</filename>
+			<filename>es-ES.com_kunena.tpl_example.ini</filename>
+		</files>
+	</site>
+</install>

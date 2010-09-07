@@ -43,7 +43,8 @@ Kunena 1.6.0-RC3
 # [#19356] Fixed template CSS validation errors
 # [#19356] Fixed long post title wrapping
 # [#19356] General language fixes, capitalization issues
-+ [#19356] Added missing Restore button to CSS sprite. 
++ [#19356] Added missing Restore button to CSS sprite 
+# [#19356] Fixed buttons on Adv. Search & polls
 
 6-September-2010 Matias
 ^ [#15886] Merged revisions 3419-3424 from /branches/1.6-xillibit-fixes-20100905

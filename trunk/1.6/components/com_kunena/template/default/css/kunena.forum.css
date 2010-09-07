@@ -2650,7 +2650,7 @@ label.kpoll-term-lbl {
 	list-style: none !important;
 }
 #kpoll-btns {
-	margin: 15px 0;
+	margin: 5px 0 20px 20px;
 }
 #Kunena div.kpolldesc td.kpoll-option {
 	text-align: left;
@@ -2666,7 +2666,11 @@ label.kpoll-term-lbl {
 	text-align: center;
 	width: 10%;
 }
-
+#Kunena #kpoll-button-vote {
+	margin: 20px 20px 20px 30px;
+}
+	
+	
 /* PATHWAY 
 ----------------------------------------------------------------------------------------------- */
 #Kunena .kforum-pathway {

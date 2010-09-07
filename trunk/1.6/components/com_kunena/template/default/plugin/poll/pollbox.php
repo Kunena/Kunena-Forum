@@ -127,7 +127,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								<td colspan="4">
 									<?php
 									if(empty($nbvoters)) $nbvoters = "0";
-									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')."<b>".$nbvoters."</b> ";
+									echo JText::_('COM_KUNENA_POLL_VOTERS_TOTAL')." <strong>".$nbvoters."</strong> ";
 									if($this->config->pollresultsuserslist && !empty($pollusersvoted)) :
 										echo " ( ";
 										foreach($pollusersvoted as $row) echo CKunenaLink::GetProfileLink(intval($row->userid))." ";
@@ -142,17 +142,21 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 							<?php elseif (!$this->config->pollallowvoteone) : ?>
 							<tr class="krow2">
 								<td colspan="4">
+								
 									<a href = "<?php echo CKunenaLink::GetPollURL('vote', $this->id, $this->catid);?>">
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 									</a>
+									
 								</td>
 							</tr>
 							<?php else : ?>
 							<tr class="krow2">
 								<td colspan="4">
-									<a href = <?php echo CKunenaLink::GetPollURL('changevote', $this->id, $this->catid); ?>>
-										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
-									</a>
+									
+										<a href = <?php echo CKunenaLink::GetPollURL('changevote', $this->id, $this->catid); ?>>
+											<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
+										</a>
+									
 								</td>
 							</tr>
 							<?php endif; ?>

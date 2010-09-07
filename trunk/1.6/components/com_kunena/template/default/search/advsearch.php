@@ -179,7 +179,7 @@ document.addEvent('domready', function() {
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td colspan="2" class="kcenter">
 					<input class="kbutton ks" type="submit" value="<?php echo JText::_('COM_KUNENA_SEARCH_SEND'); ?>"/>
 					<input class="kbutton ks" type="reset" value="<?php echo JText::_('COM_KUNENA_SEARCH_CANCEL'); ?>" onclick="window.location='<?php echo CKunenaLink::GetKunenaURL();?>';"/>
 				</td>

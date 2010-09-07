@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+7-september-2010 Matias
+# [#22300] Fatal error: Class 'KunenaUser' not found in CKunenaListcat->loadCategories()
+^ [#15886] Merged revision 3435 from /branches/1.6-xillibit-fixes-20100905
+
+6-September-2010 Xillibit
+# [#22258] Change logic for save updated polls during edit (Part2)
+
 6-September-2010 Severdia
 # [#19356] Fixed button styles on profile page, fixed old CSS syntax
 # [#19356] Fixed duplicate ID in post profile info
@@ -43,7 +50,7 @@ Kunena 1.6.0-RC3
 # [#19356] Fixed template CSS validation errors
 # [#19356] Fixed long post title wrapping
 # [#19356] General language fixes, capitalization issues
-+ [#19356] Added missing Restore button to CSS sprite 
++ [#19356] Added missing Restore button to CSS sprite
 # [#19356] Fixed buttons on Adv. Search & polls
 
 6-September-2010 Matias

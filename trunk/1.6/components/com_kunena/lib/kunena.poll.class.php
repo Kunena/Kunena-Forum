@@ -171,16 +171,14 @@ class CKunenaPolls {
 
 			for ($i=0;$i < $polloptions;$i++) {
         			if(empty($html_poll_edit)) {
-						$html_poll_edit = "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
+						$html_poll_edit = "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"polloptionsID[".$polldatasedit[$i]->poll_option_id."]\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
 						javascript:$('helpbox').set('value', '"
 				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). "')\" />
-				<input type=\"hidden\" name=\"polloptionsID[]\" value=\"".$polldatasedit[$i]->poll_option_id."\" />
 				</div>";
         			} else {
-						$html_poll_edit .= "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"field_option".$i."\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
+						$html_poll_edit .= "<div id=\"option".$nboptions."\">Option ".$nboptions."&nbsp;<input type=\"text\" maxlength = \"25\" id=\"field_option".$i."\" name=\"polloptionsID[".$polldatasedit[$i]->poll_option_id."]\" value=\"".$polldatasedit[$i]->text."\" onmouseover=\"
 						javascript:$('helpbox').set('value', '"
 				. JText::_('COM_KUNENA_EDITOR_HELPLINE_ADDPOLLOPTION'). "')\" />
-				<input type=\"hidden\" name=\"polloptionsID[]\" value=\"".$polldatasedit[$i]->poll_option_id."\" />
 				</div>";
         			}
         			$nboptions++;
@@ -233,11 +231,9 @@ class CKunenaPolls {
     		$this->_db->query();
     		if (KunenaError::checkDatabaseError()) return;
 
-			// TODO: move sizeof() outside of the loop (cannot we use foreach?)
-    		for ($i = 0; $i < sizeof($optionvalue); $i++) {
-    			if ( empty($optionvalue[$i]) ) continue;
+			foreach ($optionvalue as $key => $value) {
     			$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
-    						VALUES(".$this->_db->quote($optionvalue[$i]).",{$this->_db->Quote($pid)},'0')";
+    						VALUES(".$this->_db->quote($value).",{$this->_db->Quote($pid)},'0')";
         		$this->_db->setQuery($query);
         		$this->_db->query();
     			if (KunenaError::checkDatabaseError()) return;
@@ -421,7 +417,7 @@ class CKunenaPolls {
    /**
 	* Update poll during edit
 	*/
-   function update_poll_edit($polltimetolive,$threadid,$polltitle,$optvalue,$optionsnumbers,$poll_optionsID)
+   function update_poll_edit($polltimetolive,$threadid,$polltitle,$optionsnumbers,$poll_optionsID)
    {
     	$polloptions = $this->get_total_options($threadid);
 
@@ -444,18 +440,16 @@ class CKunenaPolls {
 		// FIXME: This still does not work -- you need to run foreach regradless of conditions below
 		// Now user can either change/delete options OR add new ones. In reality users can do both at the same time.
 		if (($polloptions == $optionsnumbers) || ($optionsnumbers < $polloptions)) {
-   			$i =0;
     		foreach($polldatas as $option) {
-				if ( in_array($option,$poll_optionsID ) ) {
+    			if ( array_key_exists($option,$poll_optionsID ) ) {
 					// FIXME: both ID and value needs to be in the same array
 					// So in the form, you need to have option[$id]
 					$query = "UPDATE #__kunena_polls_options
-    						SET text=".$this->_db->quote($optvalue[$i])."
+    						SET text=".$this->_db->quote($poll_optionsID[$option])."
     						WHERE id={$this->_db->Quote($option)}";
     				$this->_db->setQuery($query);
     				$this->_db->query();
     				if (KunenaError::checkDatabaseError()) return;
-    				$i++;
 				} else {
 					// The poll option doesn't exist, so remove it
 					$query = "DELETE FROM #__kunena_polls_options
@@ -493,14 +487,14 @@ class CKunenaPolls {
     		}
     	} elseif( $optionsnumbers > $polloptions) {
 			// Just create the missing options
-    		$sizeof = sizeof($optvalue);
-			for ($i=$polloptions; $i < $sizeof ;$i++) {
-				$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
-								VALUES(".$this->_db->quote($optvalue[$i]).",{$this->_db->Quote($threadid)},'0')";
-        		$this->_db->setQuery($query);
-          		$this->_db->query();
-          	    if (KunenaError::checkDatabaseError()) return;
-
+    		foreach($poll_optionsID as $key=>$value) {
+				if ( preg_match('`newoption`',$key) && !empty($value)) {
+					$query = "INSERT INTO #__kunena_polls_options (text,pollid,votes)
+								VALUES(".$this->_db->quote($value).",{$this->_db->Quote($this->id)},'0')";
+        			$this->_db->setQuery($query);
+          			$this->_db->query();
+          	    	if (KunenaError::checkDatabaseError()) return;
+				}
 			}
 		}
    }

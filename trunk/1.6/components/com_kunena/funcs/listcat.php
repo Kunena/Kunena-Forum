@@ -243,6 +243,7 @@ class CKunenaListcat {
 		}
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
+		kimport('user');
 		KunenaUser::loadUsers($userlist);
 	}
 

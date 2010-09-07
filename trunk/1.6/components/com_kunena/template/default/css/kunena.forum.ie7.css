@@ -1,4 +1,5 @@
-﻿﻿@charset "UTF-8";
+﻿@charset "utf-8";
+
 /**
 * @version $Id$
 * Kunena Component
@@ -58,6 +59,7 @@
 #Kunena td.kbuttonbar-left { width: 81%; }
 #Kunena div.keditavatar tr td.kcol-first label { white-space: nowrap; }
 #Kunena div.keditavatar tr td.kcol-mid td.kuadesc span { float:left; }
+#Kunena div.kmsgtext-article,
 #Kunena div.kmsgtext-quote,
 #Kunena div.kmsgtext-hide,
 #Kunena div.kmsgtext-confidential { overflow: hidden; }

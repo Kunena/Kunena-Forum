@@ -1691,6 +1691,7 @@ PX		EM			PCT			PT
 	margin: 2px 0px;
 }
 
+#Kunena div.kmsgtext-article,
 #Kunena div.kmsgtext-quote,
 #Kunena div.kmsgtext-hide,
 #Kunena div.kmsgtext-confidential {
@@ -1701,6 +1702,10 @@ PX		EM			PCT			PT
 	font-family: Arial, Helvetica, sans-serif;
 	font-style: italic;
 	background: #F2F1EE;
+}
+
+#Kunena div.kmsgtext-article {
+	background: #FFFFFF;
 }
 
 #Kunena div.kmsgtext-hide {

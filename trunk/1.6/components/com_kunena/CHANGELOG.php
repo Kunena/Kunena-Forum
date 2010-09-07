@@ -35,6 +35,9 @@ Kunena 1.6.0-RC3
 
 7-september-2010 fxstein
 + [#22197] Display Joomla 1.5 JArchive error on failed extraction
++ [#19064] Dedicated css styling for [article] bbcode
+^ [#19064] Display Intro Text with Read More for [article] bbcode
+# [#19064] Proper error handling for invalid articles
 
 7-september-2010 Matias
 # [#22300] Fatal error: Class 'KunenaUser' not found in CKunenaListcat->loadCategories()

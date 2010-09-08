@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+8-september-2010 Matias
++ [#22323] Migration from K1.5: Use default database collation using $db->getCollation() in all tables
+# [#22324] Conflicting SQL declarations during import from K1.5 (utf8 vs latin1)
+
 8-september-2010 fxstein
 + [#19288] Create index.html in upload and thumbnail directories
 

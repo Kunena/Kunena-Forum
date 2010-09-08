@@ -89,7 +89,9 @@ abstract class CKunenaConfigBase {
 			}
 		}
 
-		$this->_db->setQuery ( "CREATE TABLE " . $this->GetConfigTableName () . " (" . implode ( ', ', $fields ) . ", PRIMARY KEY (`id`) ) DEFAULT CHARSET=utf8" );
+		$collation = $this->_db->getCollation ();
+		if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
+		$this->_db->setQuery ( "CREATE TABLE {$this->GetConfigTableName ()} (" . implode ( ', ', $fields ) . ", PRIMARY KEY (`id`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation}" );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return;

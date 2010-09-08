@@ -1167,10 +1167,15 @@ class KunenaModelInstall extends JModel {
 
 		// Make identical copy from the table with new name
 		$create = array_pop($this->db->getTableCreate($this->db->getPrefix () . $oldtable));
+		$collation = $this->db->getCollation ();
+		if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
 		if (!$create) return;
-		$create .= ' DEFAULT CHARSET=utf8';
-		$sql = preg_replace('/'.$this->db->getPrefix () . $oldtable.'/', $this->db->getPrefix () . $newtable, $create);
-		$this->db->setQuery ( $sql );
+		$create = preg_replace('/(DEFAULT )?CHARACTER SET [\w\d]+/', '', $create);
+		$create = preg_replace('/(DEFAULT )?CHARSET=[\w\d]+/', '', $create);
+		$create = preg_replace('/COLLATE [\w\d_]+/', '', $create);
+		$create .= " DEFAULT CHARACTER SET utf8 COLLATE {$collation}";
+		$query = preg_replace('/'.$this->db->getPrefix () . $oldtable.'/', $this->db->getPrefix () . $newtable, $create);
+		$this->db->setQuery ( $query );
 		$this->db->query ();
 		if ($this->db->getErrorNum ())
 			throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
@@ -1202,6 +1207,8 @@ class KunenaModelInstall extends JModel {
 		$tables = $this->listTables ( 'kunena_' );
 		if (isset ( $tables ['kunena_version'] ))
 			return; // Nothing to migrate
+		$collation = $this->db->getCollation ();
+		if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
 		$query = "CREATE TABLE IF NOT EXISTS `".$this->db->getPrefix()."kunena_version` (
 		`id` int(11) NOT NULL AUTO_INCREMENT,
 		`version` varchar(20) NOT NULL,
@@ -1211,7 +1218,7 @@ class KunenaModelInstall extends JModel {
 		`versionname` varchar(40) DEFAULT NULL,
 		`state` varchar(32) NOT NULL,
 		PRIMARY KEY (`id`)
-		) DEFAULT CHARSET=utf8;";
+		) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
 		$this->db->setQuery($query);
 		$this->db->query();
 		if ($this->db->getErrorNum ())

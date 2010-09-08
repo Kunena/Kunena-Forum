@@ -481,7 +481,9 @@ class KunenaModelSchema extends JModel
 						$sqlpart = $this->getSchemaSQLField($field);
 						if (!empty($sqlpart)) $fields[] = '	'.$sqlpart;
 					}
-					$str .= implode(",\n", $fields) . ' ) DEFAULT CHARSET=utf8;';
+					$collation = $this->db->getCollation ();
+					if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
+					$str .= implode(",\n", $fields) . " ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
 					break;
 				default:
 					echo("Kunena Installer: Unknown action $tablename.$action on xml file<br />");

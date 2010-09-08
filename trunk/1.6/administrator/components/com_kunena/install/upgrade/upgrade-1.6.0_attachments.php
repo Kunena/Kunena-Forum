@@ -38,6 +38,8 @@ function kunena_upgrade_160_attachments($parent) {
 	if ($parent->db->getErrorNum ())
 		throw new KunenaInstallerException ( $parent->db->getErrorMsg (), $parent->db->getErrorNum () );
 
+	$collation = $parent->db->getCollation ();
+	if (!strstr($collation, 'utf8')) $collation = 'utf8_general_ci';
 	$query = "CREATE TABLE IF NOT EXISTS `#__kunena_attachments` (
 				`id` int(11) NOT NULL auto_increment,
 				`mesid` int(11) NOT NULL default '0',
@@ -51,7 +53,7 @@ function kunena_upgrade_160_attachments($parent) {
 					KEY `mesid` (`mesid`),
 					KEY `userid` (`userid`),
 					KEY `hash` (`hash`),
-					KEY `filename` (`filename`) ) DEFAULT CHARSET=utf8;";
+					KEY `filename` (`filename`) ) DEFAULT CHARACTER SET utf8 COLLATE {$collation};";
 	$parent->db->setQuery ( $query );
 	$parent->db->query ();
 	if ($parent->db->getErrorNum ())

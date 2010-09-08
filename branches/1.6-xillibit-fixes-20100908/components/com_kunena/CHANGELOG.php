@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+8-September-2010 Xillibit
+# [#22331] JomSocial activity link always to first page
+# [#22333] Check that the user has filled a password with at least 5 characters
+
 8-september-2010 Matias
 + [#22323] Migration from K1.5: Use default database collation using $db->getCollation() in all tables
 # [#22324] Conflicting SQL declarations during import from K1.5 (utf8 vs latin1)

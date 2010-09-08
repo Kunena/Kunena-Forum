@@ -70,7 +70,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			//activity stream - reply post
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
-			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
+			$JSPostLink = CKunenaLink::GetMessageURL ( $message->get ( 'id' ), $message->get ( 'catid' ), 0, true );
 
 			$kunena_emoticons = smile::getEmoticons ( 1 );
 			$content = $message->get ( 'message' );

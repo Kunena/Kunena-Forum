@@ -313,7 +313,7 @@ class CKunenaAjaxHelper {
 
 		// Request coming form valid user, moderator or admin...
 
-		// First remove files from filsystem - check fro thumbs and raw in case this is an image
+		// First remove files from filsystem - check for thumbs and raw in case this is an image
 		if (file_exists(JPATH_ROOT.$attachment->folder.$attachment->filename))
 			JFile::delete (JPATH_ROOT.$attachment->folder.$attachment->filename);
 		if (file_exists(JPATH_ROOT.$attachment->folder.'/raw/'.$attachment->filename))

@@ -181,6 +181,7 @@ class CKunenaUpload {
 				return false;
 			}
 		}
+		CKunenaFolder::makeSafe($uploadPath);
 
 		$this->fileName = CKunenaFile::makeSafe ( JRequest::getVar ( $input.'_name', '' ) );
 		$this->fileSize = 0;

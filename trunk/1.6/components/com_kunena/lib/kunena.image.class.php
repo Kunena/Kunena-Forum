@@ -636,6 +636,8 @@ class CKunenaImageHelper
 			}
 		}
 
+		CKunenaFolder::makeSafe($newpath);
+
 		if ($imageinfo->width > $maxwidth || $imageinfo->height > $maxheight) {
 			$image = new CKunenaImage($file);
 			if ($image->getError()) {

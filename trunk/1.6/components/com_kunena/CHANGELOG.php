@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+8-september-2010 fxstein
++ [#19288] Create index.html in upload and thumbnail directories
+
 7-september-2010 fxstein
 + [#22197] Display Joomla 1.5 JArchive error on failed extraction
 + [#19064] Dedicated css styling for [article] bbcode

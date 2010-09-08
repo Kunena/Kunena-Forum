@@ -157,10 +157,17 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
 
 // Redirect profile (menu item) to the right component
 if ($func == 'profile' && !$do && empty($_POST)) {
-	$profileIntegration = KunenaFactory::getProfile();
-	if (!($profileIntegration instanceof KunenaProfileKunena)) {
-		$url = CKunenaLink::GetProfileURL($kunena_my->id, false);
-		if ($url) $kunena_app->redirect($url);
+	$redirect = 1;
+	if (isset($active)) {
+		$params = new JParameter($active->params);
+		$redirect = $params->get('integration');
+	}
+	if ($redirect) {
+		$profileIntegration = KunenaFactory::getProfile();
+		if (!($profileIntegration instanceof KunenaProfileKunena)) {
+			$url = CKunenaLink::GetProfileURL($kunena_my->id, false);
+			if ($url) $kunena_app->redirect($url);
+		}
 	}
 }
 

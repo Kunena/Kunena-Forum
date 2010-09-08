@@ -190,11 +190,12 @@ abstract class KunenaRoute {
 		jimport('joomla.html.parameter');
 		$params = new JParameter($item->params);
 		$func = isset($item->query['func']) ? $item->query['func'] : '';
-		if ($params->get('catids')) {
+		$catids = $params->get('catids');
+		if (empty ( $query ['catid'] )) return;
+		if (!is_array($catids)) {
 			$catids = explode(',', $params->get('catids'));
-			if (empty ( $query ['catid'] )) return;
-			if (!in_array($query ['catid'], $catids)) return;
 		}
+		if (!in_array(0, $catids) && !in_array($query ['catid'], $catids)) return;
 		return 0;
 	}
 

@@ -36,6 +36,10 @@ Kunena 1.6.0-RC3
 8-september-2010 Matias
 + [#22323] Migration from K1.5: Use default database collation using $db->getCollation() in all tables
 # [#22324] Conflicting SQL declarations during import from K1.5 (utf8 vs latin1)
+# [#22336] Menu: Allow multiple categores in entry page
+^ [#22336] Minimum required Joomla is 1.5.20 (no more routing workarounds for multi-categories)
+# [#22337] Menu: Add option integration=yes/no to profile menu items to allow direct access to Kunena profile
+# [#19064] PHP Fatal error: Class 'ContentHelperRoute' not found in article BBCode
 
 8-september-2010 fxstein
 + [#19288] Create index.html in upload and thumbnail directories

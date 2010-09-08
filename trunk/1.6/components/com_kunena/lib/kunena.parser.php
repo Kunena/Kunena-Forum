@@ -687,6 +687,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 							if(!empty($article->introtext))
 							{
+								require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 								$article->text .= '<a href="'.
 													JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
 													'" class="readon">'.JText::sprintf('Read more...').'</a>';

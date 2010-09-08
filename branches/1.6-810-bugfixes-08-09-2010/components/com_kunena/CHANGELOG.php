@@ -36,6 +36,8 @@ Kunena 1.6.0-RC3
 8-september-2010 810
 # [#19288] Update dutch translation (nl-NL)
 # [#19288] Can't hide the "Edited Mark Up"
+# [#19288] Update dutch translation (nl-NL) Part2
+# [#19288] Menu-Templates string fixed
 
 7-september-2010 fxstein
 + [#22197] Display Joomla 1.5 JArchive error on failed extraction

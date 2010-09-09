@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die();
 
 require_once(dirname(__FILE__).DS.'kunena.php');
 
-class TableKunenaSession extends TableKunena
+class TableKunenaSession extends KunenaTable
 {
 	var $userid = 0;
 	var $allowed = 'na';
@@ -33,5 +33,3 @@ class TableKunenaSession extends TableKunena
 		return parent::load($oid);
 	}
 }
-
-?>

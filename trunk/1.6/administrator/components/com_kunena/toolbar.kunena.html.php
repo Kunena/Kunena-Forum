@@ -51,8 +51,6 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::cancel();
         JToolBarHelper::spacer();
-        JToolBarHelper::unpublish('removemoderator');
-        JToolBarHelper::spacer();
 
     }
 

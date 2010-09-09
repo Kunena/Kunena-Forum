@@ -12,7 +12,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-abstract class TableKunena extends JTable {
+abstract class KunenaTable extends JTable {
 	protected $_exists = false;
 
 	function exists($exists = null) {
@@ -44,5 +44,3 @@ abstract class TableKunena extends JTable {
 		}
 	}
 }
-
-?>

@@ -18,7 +18,8 @@ require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
  * Kunena Category Table
  * Provides access to the #__kunena_category table
  */
-class TableKunenaCategory extends JTable {
+class TableKunenaCategory extends KunenaTable
+{
 	var $id = null;
 	var $parent = null;
 	var $name = null;

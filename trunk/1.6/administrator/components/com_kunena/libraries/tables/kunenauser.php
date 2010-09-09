@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).DS.'kunena.php');
 * Kunena User Table
 * Provides access to the #__kunena_users table
 */
-class TableKunenaUser extends TableKunena
+class TableKunenaUser extends KunenaTable
 {
 
 	/**

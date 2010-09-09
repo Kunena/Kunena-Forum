@@ -39,6 +39,18 @@ Kunena 1.6.0-RC3
 ^ [#15886] Merged revisions 3451-3461 from /branches/1.6-810-bugfixes-08-09-2010
 # [#22344] New Topic: Category selection defaults on section in Chrome
 # [#22345] Video BBcode does not honour height parameter
++ [#22348] Add KunenaCategory class and use it in Category Manager
+# [#22348] Administrator: Fix broken check out logic in Category Manager
+# [#22348] Administrator: Add missing token checks in Category Manager
+# [#22348] Administrator: Improve error handling in Category Manager
+# [#22348] Administrator: Delete categories: only delete messages if category was really deleted
+# [#22348] Administrator: Make all icons in Category Manager clickable
+# [#22348] Administrator: Edit category: remove Unpublish icon
+# [#22278] Administrator: User type need to follow translation in Category Manager (part 2)
+# [#19255] Administrator: Fix XHTML validation issues: non-escaped links
+# [#19255] Administrator: Fix XHTML validation issues: img tags missing alt, termination
+# [#19255] Administrator: Fix XHTML validation issues: input tags not terminated + other issues
+# [#19255] Administrator: Fix XHTML validation issues: form tags have invalid method POST
 
 8-september-2010 810
 # [#19288] Update dutch translation (nl-NL)

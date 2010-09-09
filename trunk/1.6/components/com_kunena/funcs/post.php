@@ -271,7 +271,7 @@ class CKunenaPost {
 
 			$options = array ();
 			if (empty ( $this->msg_cat->allow_anonymous ))
-				$this->selectcatlist = CKunenaTools::forumSelectList ( 'postcatid', $this->catid, $options, '' );
+				$this->selectcatlist = CKunenaTools::KSelectList ( 'postcatid', $options, '', false, 'postcatid', $this->catid );
 		}
 		$this->authorName = $this->getAuthorName ();
 		$this->emoid = 0;

@@ -37,6 +37,8 @@ Kunena 1.6.0-RC3
 ^ [#19255] Update example template to have all the fixes/changes from default template
 # [#22343] Use topic icons, smileys, ranks and moved icon from current template
 ^ [#15886] Merged revisions 3451-3461 from /branches/1.6-810-bugfixes-08-09-2010
+# [#22344] New Topic: Category selection defaults on section in Chrome
+# [#22345] Video BBcode does not honour height parameter
 
 8-september-2010 810
 # [#19288] Update dutch translation (nl-NL)

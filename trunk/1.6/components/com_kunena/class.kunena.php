@@ -447,7 +447,11 @@ class CKunenaTools {
 		$kunena_db = &JFactory::getDBO ();
 		$list = JJ_categoryArray ();
 
+		$preoptions = count($options);
 		foreach ( $list as $item ) {
+			if (!$preoptions && !$selected && ($sections || !$item->section)) {
+				$selected = $item->id;
+			}
 			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename, 'value', 'text', !$sections && $item->section);
 		}
 

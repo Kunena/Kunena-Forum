@@ -731,13 +731,13 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 				// --- config start ------------
 
-				$vid_minwidth = 425;
-				$vid_minheight = 344; // min. display size
+				$vid_minwidth = 200;
+				$vid_minheight = 44; // min. display size
 
 				//$vid_maxwidth = 640; $vid_maxheight = 480; // max. display size
 
 				$vid_maxwidth = ( int ) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
-				$vid_maxheight = 480; // max. display size
+				$vid_maxheight = 720; // max. display size
 
 				$vid_sizemax = 100; // max. display zoom in percent
 

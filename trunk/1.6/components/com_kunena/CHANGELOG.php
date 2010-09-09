@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+9-September-2010 Matias
+^ [#19255] Update example template to have all the fixes/changes from default template
+# [#22343] Use topic icons, smileys, ranks and moved icon from current template
+
 8-september-2010 Matias
 + [#22323] Migration from K1.5: Use default database collation using $db->getCollation() in all tables
 # [#22324] Conflicting SQL declarations during import from K1.5 (utf8 vs latin1)

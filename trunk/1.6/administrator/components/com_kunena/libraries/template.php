@@ -67,15 +67,16 @@ class KunenaTemplate extends JObject
 		$this->getTopicIconPath(0);
 	}
 
-	public function getPath() {
+	public function getPath($default = false) {
+		if ($default) return "template/default";
 		return "template/{$this->name}";
 	}
 
 	public function getSmileyPath($filename='') {
 		if (!isset($this->smileyPath[$filename])) {
-			$path = "template/{$this->name}/images/emoticons/{$filename}";
-			if (($filename && !is_file(KPATH_SITE . $path)) || !is_dir(KPATH_SITE . $path)) {
-				$path = "template/default/images/emoticons/{$filename}";
+			$path = "{$this->getPath()}/images/emoticons/{$filename}";
+			if (($filename && !is_file(KPATH_SITE .DS. $path)) || !is_dir(KPATH_SITE .DS. $path)) {
+				$path = "{$this->getPath(true)}/images/emoticons/{$filename}";
 			}
 			$this->smileyPath[$filename] = $path;
 		}
@@ -84,9 +85,9 @@ class KunenaTemplate extends JObject
 
 	public function getRankPath($filename='') {
 		if (!isset($this->rankPath[$filename])) {
-			$path = "template/{$this->name}/images/ranks/{$filename}";
-			if (($filename && !is_file(KPATH_SITE . $path)) || !is_dir(KPATH_SITE . $path)) {
-				$path = "template/default/images/ranks/{$filename}";
+			$path = "{$this->getPath()}/images/ranks/{$filename}";
+			if (($filename && !is_file(KPATH_SITE .DS. $path)) || !is_dir(KPATH_SITE .DS. $path)) {
+				$path = "{$this->getPath(true)}/images/ranks/{$filename}";
 			}
 			$this->rankPath[$filename] = $path;
 		}
@@ -96,23 +97,30 @@ class KunenaTemplate extends JObject
 	public function getImagePath($image, $url = true) {
 		$path = $this->getPath();
 		if (!is_file(KPATH_SITE . "/{$path}/images/{$image}")) {
-			$path = 'template/default';
+			$path = $this->getPath(true);
 		}
 		$base = '';
 		if ($url) $base = KURL_SITE;
-		return $base."{$path}/images/{$image}";
+		return "{$base}{$path}/images/{$image}";
 	}
 
 	public function getTopicIconPath($index, $url = false) {
 		if (empty($this->topicIcons)) {
-			$path = $this->getPath();
-			if (!file_exists ( KPATH_SITE . "/{$path}/icons.php" )) {
-				$path = 'template/default';
+			$curpath = $this->getPath();
+			$defpath = $this->getPath(true);
+
+			$path = $curpath;
+			if (!is_file ( KPATH_SITE . "/{$path}/icons.php" )) {
+				$path = $defpath;
 			}
 			$topic_emoticons = array();
 			include KPATH_SITE . "/{$path}/icons.php";
 			foreach ($topic_emoticons as $id=>$icon) {
-				$this->topicIcons[$id] = "{$path}/images/icons/{$icon}";
+				if (is_file( KPATH_SITE . "/{$curpath}/images/icons/{$icon}" )) {
+					$this->topicIcons[$id] = "{$curpath}/images/icons/{$icon}";
+				} elseif (is_file( KPATH_SITE . "/{$defpath}/images/icons/{$icon}" )) {
+					$this->topicIcons[$id] = "{$defpath}/images/icons/{$icon}";
+				}
 			}
 		}
 		$base = '';
@@ -121,12 +129,18 @@ class KunenaTemplate extends JObject
 	}
 
 	public function getMovedIconPath($url = false) {
-		$path = $this->getPath();
-		$topiciconmoved =  "/{$path}/images/icons/topic-arrow.png";
+		static $moved = false;
+		if ($moved === false) {
+			$path = $this->getPath();
+			if (!is_file(KPATH_SITE . "/{$path}/images/icons/topic-arrow.png")) {
+				$path = $this->getPath(true);
+			}
+			$moved =  "/{$path}/images/icons/topic-arrow.png";
+		}
 
 		$base = '';
 		if ($url) $base = KURL_SITE;
-		return $base.$topiciconmoved;
+		return $base.$moved;
 	}
 
 	public function getTopicIcon($topic ) {

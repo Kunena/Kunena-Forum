@@ -51,6 +51,8 @@ Kunena 1.6.0-RC3
 # [#19255] Administrator: Fix XHTML validation issues: img tags missing alt, termination
 # [#19255] Administrator: Fix XHTML validation issues: input tags not terminated + other issues
 # [#19255] Administrator: Fix XHTML validation issues: form tags have invalid method POST
+# [#19255] Administrator: Fix XHTML validation issues in User Manager
+# [#19255] Administrator: Make User Manager to more similar to Category Manager, fix some bugs
 
 8-september-2010 810
 # [#19288] Update dutch translation (nl-NL)

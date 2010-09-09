@@ -169,13 +169,11 @@ switch ($task) {
 		break;
 
 	case "publish" :
-	case "cat_publish_0" :
 		setForumVariable($cid, 'published', 1);
 
 		break;
 
 	case "unpublish" :
-	case "cat_publish_1" :
 		setForumVariable($cid, 'published', 0);
 
 		break;
@@ -241,45 +239,45 @@ switch ($task) {
 		break;
 
 	case "logout" :
-		logout ( $option, $uid );
+		logout ( $option, $cid );
 
 		break;
 
 	case "deleteuser" :
-		deleteUser ( $option, $uid );
+		deleteUser ( $option, $cid );
 
 		break;
 
 	case "userprofile" :
-		editUserProfile ( $option, $uid );
+		editUserProfile ( $option, $cid );
 
 		break;
 
 	case "userblock" :
-		userban ( $option, $uid, 1 );
+		userban ( $option, $cid, 1 );
 
 		break;
 
 	case "userunblock" :
-		userban ( $option, $uid, 1 );
+		userban ( $option, $cid, 1 );
 
 		break;
 
 	case "userban" :
-		userban ($option, $uid, 0 );
+		userban ($option, $cid, 0 );
 		break;
 
 	case "userunban" :
-		userban ( $option, $uid, 0 );
+		userban ( $option, $cid, 0 );
 		break;
 
 	case "trashusermessages" :
-		trashUserMessages ( $option, $uid );
+		trashUserMessages ( $option, $cid );
 
 		break;
 
 	case "moveusermessages" :
-		moveUserMessages ( $option, $uid );
+		moveUserMessages ( $option, $cid );
 
 		break;
 
@@ -1881,19 +1879,34 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 //   User Profile functions
 //===============================
 function showProfiles($kunena_db, $option, $order) {
-	$kunena_app = & JFactory::getApplication ();
-	$kunena_db = &JFactory::getDBO ();
-	//$limit = intval(JRequest::getVar( 'limit', 10));
-	//$limitstart = intval(JRequest::getVar( 'limitstart', 0));
+	$kunena_app = JFactory::getApplication ();
+	$kunena_db = JFactory::getDBO ();
+
+	$filter_order = $kunena_app->getUserStateFromRequest( $option.'user_filter_order', 'filter_order', 'id', 'cmd' );
+	$filter_order_Dir = $kunena_app->getUserStateFromRequest( $option.'user_filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
+	if ($filter_order_Dir != 'asc') $filter_order_Dir = 'desc';
 	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
-	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
+	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.user_limitstart", 'limitstart', 0, 'int' );
 
-	$search = $kunena_app->getUserStateFromRequest ( "{$option}.search", 'search', '', 'string' );
-	$search = $kunena_db->getEscaped ( JString::trim ( JString::strtolower ( $search ) ) );
+	$search = $kunena_app->getUserStateFromRequest( $option.'user_search', 'search', '', 'string' );
+
+	$order = '';
+	if ($filter_order == 'id') {
+		$order = ' ORDER BY u.id '. $filter_order_Dir;
+	} else if ($filter_order == 'username') {
+		$order = ' ORDER BY u.username '. $filter_order_Dir ;
+	} else if ($filter_order == 'name') {
+		$order = ' ORDER BY u.name '. $filter_order_Dir ;
+	} else if ($filter_order == 'moderator') {
+		$order = ' ORDER BY ku.moderator '. $filter_order_Dir ;
+	}
+
 	$where = array ();
-
 	if (isset ( $search ) && $search != "") {
-		$where [] = "(u.username LIKE '%$search%' OR u.email LIKE '%$search%' OR u.name LIKE '%$search%')";
+		$searchstr = $kunena_db->getEscaped ( JString::trim ( JString::strtolower ( $search ) ) );
+		$whereid = '';
+		if (intval($searchstr)>0) $whereid = 'OR u.id='.intval($searchstr);
+		$where [] = "(u.username LIKE '%$searchstr%' OR u.email LIKE '%$searchstr%' OR u.name LIKE '%$searchstr%' $whereid)";
 	}
 	$where = count ($where) ? implode ( ' AND ', $where ) : '1';
 
@@ -1901,39 +1914,31 @@ function showProfiles($kunena_db, $option, $order) {
 		INNER JOIN #__users AS u ON ku.userid=u.id
 		WHERE {$where}");
 	$total = $kunena_db->loadResult ();
-	if (KunenaError::checkDatabaseError()) return;
+	KunenaError::checkDatabaseError();
 
 	if ($limitstart >= $total)
 		$limitstart = 0;
 	if ($limit == 0 || $limit > 100)
 		$limit = 100;
 
-	if ($order == 1) {
-		$order_by = 'ku.moderator DESC';
-	} else if ($order == 2) {
-		$order_by = 'u.name ASC';
-	} else if ($order == 3) {
-	} else if ($order < 1) {
-		$order_by = 'u.username ASC';
-	} else {
-		$order_by = 'ku.userid ASC';
-	}
-
-	$kunena_db->setQuery ( "SELECT u.id
+	$kunena_db->setQuery ( "SELECT u.id, u.username, u.name, ku.moderator
 		FROM #__kunena_users AS ku
 		INNER JOIN #__users AS u ON ku.userid=u.id
 		WHERE {$where}
-		GROUP BY u.id
-		ORDER BY {$order_by}", $limitstart, $limit );
+		{$order}", $limitstart, $limit );
 
-	$profileList = $kunena_db->loadResultArray ();
+	$users = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
 
-	$countPL = count ( $profileList );
+	// table ordering
+	$lists['order_Dir']	= $filter_order_Dir;
+	$lists['order']		= $filter_order;
+
+	$lists['search']= $search;
 
 	jimport ( 'joomla.html.pagination' );
-	$pageNavSP = new JPagination ( $total, $limitstart, $limit );
-	html_Kunena::showProfiles ( $option, $profileList, $countPL, $pageNavSP, $order, $search );
+	$pageNav = new JPagination ( $total, $limitstart, $limit );
+	html_Kunena::showProfiles ( $option, $users, $pageNav, $order, $lists );
 }
 
 function editUserProfile($option, $uid) {

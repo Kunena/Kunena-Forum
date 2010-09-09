@@ -424,7 +424,8 @@ class CKunenaImage
 			if ($trnprt_indx >= 0) {
 
 				// Get the original image's transparent color's RGB values
-				$trnprt_color = imagecolorsforindex ( $this->_handle, $trnprt_indx );
+				// FIXME: Warning: imagecolorsforindex() [function.imagecolorsforindex]: Color index 255 out of range
+				$trnprt_color = @imagecolorsforindex ( $this->_handle, $trnprt_indx );
 
 				// Allocate the same color in the new image resource
 				$trnprt_indx = imagecolorallocate ( $handle, $trnprt_color ['red'], $trnprt_color ['green'], $trnprt_color ['blue'] );

@@ -36,6 +36,12 @@ Kunena 1.6.0-RC3
 9-September-2010 Matias
 ^ [#19255] Update example template to have all the fixes/changes from default template
 # [#22343] Use topic icons, smileys, ranks and moved icon from current template
+^ [#15886] Merged revisions 3451-3461 from /branches/1.6-810-bugfixes-08-09-2010
+
+8-september-2010 810
+# [#19288] Update dutch translation (nl-NL)
+# [#19288] Can't hide the "Edited Mark Up"
+# [#19288] Menu: Template Manager link is pointing to main page
 
 8-september-2010 Matias
 + [#22323] Migration from K1.5: Use default database collation using $db->getCollation() in all tables

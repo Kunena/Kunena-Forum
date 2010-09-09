@@ -4,21 +4,21 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Dutch</name>
 	<tag>nl-NL</tag>
-	<creationDate>unknown</creationDate>
-	<version>unknown</version>
-	<build>unknown</build>
-	<author>unknown</author>
-	<authorEmail>unknown</authorEmail>
-	<authorUrl>unknown</authorUrl>
-	<copyright>(C) 2010 unknown</copyright>
+	<creationDate>2010-09-08</creationDate>
+	<version>1.6-RC3</version>
+	<build>3400</build>
+	<author>Jelle Kok</author>
+	<authorEmail>schumacher1986@hotmail.com</authorEmail>
+	<authorUrl>http://www.newf1.nl</authorUrl>
+	<copyright>(C) 2010 Kunena</copyright>
 	<license>GNU/GPL</license>
-	<description>Dutch language file for Kunena Forum Component</description>
+	<description>Nederlandse taalbestand voor Kunena Forum Component. Met dank aan de volgende vertalers: Jelle Kok (810), John (John)</description>
 
 	<administration>
 		<files folder="admin">
 			<filename>nl-NL.com_kunena.ini</filename>
 			<filename>nl-NL.com_kunena.install.ini</filename>
-			<!-- filename>nl-NL.com_kunena.menu.ini</filename -->
+			<filename>nl-NL.com_kunena.menu.ini</filename>
 		</files>
 	</administration>
 
@@ -26,7 +26,7 @@
 		<files folder="site">
 			<filename>nl-NL.com_kunena.ini</filename>
 			<filename>nl-NL.com_kunena.tpl_default.ini</filename>
-			<!-- filename>nl-NL.com_kunena.tpl_example.ini</filename -->
+			<filename>nl-NL.com_kunena.tpl_example.ini</filename>
 		</files>
 	</site>
 </install>

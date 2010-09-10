@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+10-September-2010 Matias
+# [#19255] Administrator: Uniform look for category, user, template, smiley, rank and trash manager
+# [#19255] Administrator: Fix many XHTML validation issues in various pages
+
 9-September-2010 Matias
 ^ [#19255] Update example template to have all the fixes/changes from default template
 # [#22343] Use topic icons, smileys, ranks and moved icon from current template

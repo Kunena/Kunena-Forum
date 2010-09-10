@@ -9,10 +9,10 @@ $datem = new JDate(date("Y-m-d 00:00:01"));
 $datee = new JDate(date("Y-m-d 23:59:59"));?>
 <table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 	<caption><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></caption>
-	<col class="col1">
-	<col class="col2">
-	<col class="col1">
-	<col class="col2">
+	<col class="col1" />
+	<col class="col2" />
+	<col class="col1" />
+	<col class="col2" />
 	<thead>
 	<tr>
 		<th><?php echo JText::_('COM_KUNENA_STATISTIC');?></th>
@@ -67,9 +67,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 	<td width="49%" valign="top">
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 		<caption><?php echo JText::_('COM_KUNENA_STATS_TOP_POSTERS'); ?></caption>
-		<col class="col1">
-		<col class="col2">
-		<col class="col2">
+		<col class="col1" />
+		<col class="col2" />
+		<col class="col2" />
 		<thead>
 			<tr>
 			<th><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
@@ -90,10 +90,13 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			?>
 			<tr>
 			<td><?php echo $KUNENA_poster->username;?> </td>
-			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
 			<td ><?php echo $KUNENA_poster->posts;?></td>
 			</tr>
 			<?php
+				}
+				if (empty($KUNENA_top_posters)) {
+					echo '<tr><td colspan="3">---</td></tr>';
 				}
 				?>
 		</tbody>
@@ -103,9 +106,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 	<td width="49%" valign="top">
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 		<caption><?php echo  JText::_('COM_KUNENA_STATS_POPULAR_PROFILE'); ?></caption>
-		<col class="col1">
-		<col class="col2">
-		<col class="col2">
+		<col class="col1" />
+		<col class="col2" />
+		<col class="col2" />
 		<thead>
 			<tr>
 			<th><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
@@ -124,12 +127,15 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			?>
 			<tr>
 			<td><?php echo $fb_profile->username; ?></td>
-			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
 			<td ><?php echo $fb_profile->uhits;?></td>
 			</tr>
 			<?php
 				}
-			?>
+				if (empty($fb_top_profiles)) {
+					echo '<tr><td colspan="3">---</td></tr>';
+				}
+				?>
 		</tbody>
 		</table>
 	</td>
@@ -142,9 +148,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 	<td width="49%" valign="top">
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 		<caption><?php echo JText::_('COM_KUNENA_STATS_TOP_GOT_THANKYOU'); ?></caption>
-		<col class="col1">
-		<col class="col2">
-		<col class="col2">
+		<col class="col1" />
+		<col class="col2" />
+		<col class="col2" />
 		<thead>
 			<tr>
 			<th width="32%"><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
@@ -165,10 +171,13 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			?>
 			<tr>
 			<td><?php echo $KUNENA_thankyou->username;?> </td>
-			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
 			<td ><?php echo $KUNENA_thankyou->countid;?></td>
 			</tr>
 			<?php
+				}
+				if (empty($KUNENA_top_thankyous)) {
+					echo '<tr><td colspan="3">---</td></tr>';
 				}
 				?>
 		</tbody>
@@ -178,9 +187,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 	<td width="49%" valign="top">
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 		<caption><?php echo  JText::_('COM_KUNENA_STATS_TOP_SAID_THANKYOU'); ?></caption>
-		<col class="col1">
-		<col class="col2">
-		<col class="col2">
+		<col class="col1" />
+		<col class="col2" />
+		<col class="col2" />
 		<thead>
 			<tr>
 			<th width="32%"><?php echo JText::_('COM_KUNENA_USRL_USERNAME');?></th>
@@ -201,12 +210,15 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			?>
 			<tr>
 			<td><?php echo $KUNENA_said_thankyou->username;?> </td>
-			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>"> </td>
+			<td ><img style="margin-bottom:1px" src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" height="15" width="<?php echo $barwidth;?>" /> </td>
 			<td ><?php echo $KUNENA_said_thankyou->countid;?></td>
 			</tr>
 			<?php
 				}
-			?>
+				if (empty($KUNENA_top_said_thankyous)) {
+					echo '<tr><td colspan="3">---</td></tr>';
+				}
+				?>
 		</tbody>
 		</table>
 	</td>
@@ -219,9 +231,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 		<!-- Begin : Top popular topics -->
 		<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 			<caption><?php echo JText::_('COM_KUNENA_STATS_POPULAR_TOPICS'); ?></caption>
-			<col class="col1">
-			<col class="col2">
-			<col class="col2">
+			<col class="col1" />
+			<col class="col2" />
+			<col class="col2" />
 			<thead>
 			<tr>
 				<th><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
@@ -239,14 +251,17 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 					else {
 						$barwidth = round(($KUNENA_post->hits * 100) / $KUNENA_top_posts[0]->hits);
 					}
-					$link = KUNENA_LIVEURL.'&func=view&id='.$KUNENA_post->id.'&catid='.$KUNENA_post->catid;
+					$link = KUNENA_LIVEURL.'&amp;func=view&amp;id='.$KUNENA_post->id.'&amp;catid='.$KUNENA_post->catid;
 				?>
 			<tr>
 				<td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
-				<td ><img src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
+				<td ><img src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>" /> </td>
 				<td ><?php echo $KUNENA_post->hits;?></td>
 			</tr>
-			<?php } ?>
+			<?php }
+				if (empty($KUNENA_top_posts)) {
+					echo '<tr><td colspan="3">---</td></tr>';
+				} ?>
 			</tbody>
 		</table>
 		<!-- Finish : Top popular topics -->
@@ -256,9 +271,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			<!-- Begin: Top Thank you topics -->
 			<table cellspacing="1"  border="0" width="100%" class="kadmin-stat">
 			<caption><?php echo JText::_('COM_KUNENA_STATS_THANKYOU_TOPICS'); ?></caption>
-			<col class="col1">
-			<col class="col2">
-			<col class="col2">
+			<col class="col1" />
+			<col class="col2" />
+			<col class="col2" />
 			<thead>
 			<tr>
 				<th width="32%"><?php echo JText::_('COM_KUNENA_USERPROFILE_TOPICS');?></th>
@@ -276,14 +291,18 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 					else {
 						$barwidth = round(($KUNENA_post->countid * 100) / $KUNENA_top_posts[0]->countid);
 					}
-					$link = KUNENA_LIVEURL.'&func=view&id='.$KUNENA_post->postid.'&catid='.$KUNENA_post->catid;
+					$link = KUNENA_LIVEURL.'&amp;func=view&amp;id='.$KUNENA_post->postid.'&amp;catid='.$KUNENA_post->catid;
 				?>
 			<tr>
 				<td ><a href="<?php echo $link;?>"><?php echo $KUNENA_post->subject;?></a> </td>
-				<td ><img src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>"> </td>
+				<td ><img src="<?php echo KUNENA_DIRECTURL.'template/default/images/bar.png'; ?>" alt="" style="margin-bottom:1px" height="15" width="<?php echo $barwidth;?>" /> </td>
 				<td ><?php echo $KUNENA_post->countid;?></td>
 			</tr>
-			<?php } ?>
+			<?php }
+				if (empty($KUNENA_top_posts)) {
+					echo '<tr><td colspan="3">---</td></tr>';
+				}
+			?>
 			</tbody>
 		</table>
 		<!-- Fnish : Top Thank you topics  -->

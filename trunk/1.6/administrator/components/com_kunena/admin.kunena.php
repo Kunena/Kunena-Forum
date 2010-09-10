@@ -2943,7 +2943,7 @@ function showtrashview($option) {
 	$order = JRequest::getVar ( 'order', '' );
 	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
 	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
-	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE hold=2 AND hold=3" );
+	$kunena_db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE hold=2" );
 	$total = $kunena_db->loadResult ();
 	if (KunenaError::checkDatabaseError()) return;
 	if ($limitstart >= $total)

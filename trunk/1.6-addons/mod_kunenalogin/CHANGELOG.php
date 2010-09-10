@@ -28,6 +28,9 @@ Legend:
 
 KunenaLogin 1.6.0-RC2
 
+10-September-2010 Xillibit
+^ [#22073] Update language because some stings are presents two times
+
 31-Aug-2010 fxstein
 ^ [#22073] Updated build files for RC2 release
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+10-September-2010 Xillibit
+# [#22377] Sort items in userlist when integrated with third components doesn't come back to Kunena userlist
+
 8-September-2010 Xillibit
 # [#22331] JomSocial activity link always to first page
 # [#22333] Check that the user has filled a password with at least 5 characters

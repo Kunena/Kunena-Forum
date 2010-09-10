@@ -225,6 +225,10 @@ class CKunenaLink {
 		return $profile->getUserListURL ( $action, $xhtml );
 	}
 
+	function GetUserlistURLNoIntegration($xhtml = true) {
+		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=userlist', $xhtml );
+	}
+
 	function GetModerateUserLink($userid, $name = null, $title ='', $rel = 'nofollow', $class = '') {
 		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&func=moderateuser&userid=' . $userid, $name, $title, $rel, $class );
 	}

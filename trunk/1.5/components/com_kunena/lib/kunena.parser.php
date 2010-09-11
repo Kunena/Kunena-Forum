@@ -360,12 +360,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
                 	static $file_ext = null;
 	              	$matches = null;
 
+	              	// Perform basic filename validation before checking extension
+	              	if (preg_match('/[\?\&\#\=]/', $between)) return TAGPARSER_RET_NOTHING;
+
                 	if (empty($file_ext)) {
     	            	$params = &JComponentHelper::getParams( 'com_media' );
         	        	$file_ext = explode(',', $params->get('upload_extensions'));
                 	}
+
             	    preg_match('/\.([\w\d]+)$/', $between, $matches);
-                	if (!in_array(strtolower($matches[1]), $file_ext)) break;
+                	if (!in_array(strtolower($matches[1]), $file_ext)) return TAGPARSER_RET_NOTHING;
 
                 	$tempstr = kunena_htmlspecialchars($between, ENT_QUOTES);
                 	if ($kunena_my->id==0 && $fbConfig->showimgforguest) {

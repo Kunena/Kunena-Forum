@@ -31,6 +31,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.5.13
+
+11-Sep-2010 fxstein
+* [#17636] Check img tags for valid file name
+^ [#20106] Updated version info to 1.5.13
+
 Kunena 1.5.12
 
 18-Jun-2010 Matias

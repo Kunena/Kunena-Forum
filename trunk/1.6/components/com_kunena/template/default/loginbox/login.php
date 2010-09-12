@@ -57,16 +57,16 @@ $login = CKunenaLogin::getloginFields();
 						</span>
 					</div>
 					<div class="klink-block">
-						<span class="kprofilebox-link">
+						<span class="kprofilebox-pass">
 							<?php echo CKunenaLogin::getLostPasswordLink (); ?>
 						</span>
-						<span class="kprofilebox-link">
+						<span class="kprofilebox-user">
 							<?php echo CKunenaLogin::getLostUserLink ();?>
 						</span>
 						<?php
 						$registration = CKunenaLogin::getRegisterLink ();
 						if ($registration) : ?>
-						<span class="kprofilebox-link">
+						<span class="kprofilebox-register">
 							<?php echo $registration ?>
 						</span>
 						<?php endif; ?>

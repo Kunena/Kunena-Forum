@@ -8,6 +8,9 @@
 * @link http://www.kunena.com
 **/
 
+// Dont allow direct linking
+defined( '_JEXEC' ) or die();
+
 // Load new API
 require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
 

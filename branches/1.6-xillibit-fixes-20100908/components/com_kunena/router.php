@@ -10,6 +10,9 @@
  *
  **/
 
+// Dont allow direct linking
+defined( '_JEXEC' ) or die();
+
 require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
 kimport('error');
 

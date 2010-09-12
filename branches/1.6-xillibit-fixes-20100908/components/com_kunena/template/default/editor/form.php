@@ -19,6 +19,9 @@
  * @author TSMF & Jan de Graaff
  **/
 
+// Dont allow direct linking
+defined( '_JEXEC' ) or die();
+
 global $topic_emoticons;
 
 require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');

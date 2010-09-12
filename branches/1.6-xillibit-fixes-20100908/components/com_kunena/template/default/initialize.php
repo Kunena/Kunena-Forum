@@ -9,6 +9,9 @@
 * @link http://www.kunena.com
 **/
 
+// Dont allow direct linking
+defined( '_JEXEC' ) or die();
+
 $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
 $this->params = $template->params;

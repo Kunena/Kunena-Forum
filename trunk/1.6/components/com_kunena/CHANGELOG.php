@@ -32,6 +32,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.0-RC3
+12-September-2010 Severdia
++ [#19356] Added IDs to table rows on new topic page
 
 10-September-2010 Matias
 # [#19255] Administrator: Uniform look for category, user, template, smiley, rank and trash manager

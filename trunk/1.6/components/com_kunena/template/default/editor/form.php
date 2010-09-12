@@ -58,13 +58,13 @@ $this->k=0;
 <table class="kblocktable<?php echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $this->escape($msg_cat->class_sfx) : ''?>" id="kpostmessage">
 	<tbody id="kpost-message">
 		<?php if (isset($this->selectcatlist)): ?>
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
+		<tr id="kpost-category" class="krow<?php echo 1 + $this->k^=1 ?>">
 			<td class="kcol-first"><strong><?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY')?></strong></td>
 			<td class="kcol-mid"><?php echo $this->selectcatlist?></td>
 		</tr>
 		<?php endif; ?>
 
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check_name"
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check-name"
 		<?php if ($this->my->id && ((!$this->allow_anonymous && $this->catid != 0) || !$this->cat_default_allow) ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
@@ -74,7 +74,7 @@ $this->k=0;
 			</td>
 		</tr>
 
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous_check" <?php if (!$this->allow_anonymous && $this->catid != 0 || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check" <?php if (!$this->allow_anonymous && $this->catid != 0 || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong>
 			</td>
@@ -91,7 +91,7 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
+		<tr id="kpost-subject" class="krow<?php echo 1 + $this->k^=1 ?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_SUBJECT'); ?></strong>
 			</td>
@@ -102,7 +102,7 @@ $this->k=0;
 		</tr>
 
 		<?php if (($this->allow_topic_icons && $this->config->topicicons) || ($this->catid == 0 && $this->config->topicicons)) : ?>
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>">
+		<tr id="kpost-topicicons" class="krow<?php echo 1 + $this->k^=1 ?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></strong>
 			</td>
@@ -128,7 +128,7 @@ $this->k=0;
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 			?>
-		<tr class="krow<?php echo 1 + $this->k^=1;?>">
+		<tr id="kpost-attachments" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS') ?></strong>
 			</td>
@@ -154,7 +154,7 @@ $this->k=0;
 		<?php endif; ?>
 
 		<?php if (!empty($this->cansubscribe)) : ?>
-		<tr class="krow<?php echo 1 + $this->k^=1;?>">
+		<tr id="kpost-subscribe" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></strong>
 			</td>
@@ -172,7 +172,7 @@ $this->k=0;
 		<?php
 		//Begin captcha
 		if ($this->hasCaptcha()) : ?>
-		<tr class="krow<?php echo 1 + $this->k^=1;?>">
+		<tr id="kpost-captcha" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_CAPDESC'); ?></strong>
 			</td>
@@ -183,7 +183,7 @@ $this->k=0;
 		<?php endif;
 		// Finish captcha
 		?>
-		<tr id="kpost-buttons-tr" class="krow1">
+		<tr id="kpost-buttons" class="krow1">
 			<td id="kpost-buttons" colspan="2">
 				<input type="submit" name="ksubmit" class="kbutton"
 				value="<?php echo (' ' . JText::_('COM_KUNENA_GEN_CONTINUE') . ' ');?>"

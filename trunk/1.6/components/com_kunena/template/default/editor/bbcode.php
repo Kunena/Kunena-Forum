@@ -17,7 +17,7 @@ require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll =& CKunenaPolls::getInstance();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
-<tr class="krow<?php echo 1 + $this->k^=1;?>">
+<tr id="kpost-toolbar" class="krow<?php echo 1 + $this->k^=1;?>">
 	<td class="kcol-first kcol-editor-label">
 		<strong><?php echo JText::_('COM_KUNENA_BOARDCODE');?></strong></td>
 	<td class="kcol-last kcol-editor-field">
@@ -257,7 +257,7 @@ $kunena_config = KunenaFactory::getConfig ();
 	</td>
 </tr>
 
-<tr class="krow<?php echo 1 + $this->k^=1;?>">
+<tr id="kpost-message" class="krow<?php echo 1 + $this->k^=1;?>">
 	<td class="kcol-first kcol-editor-label"><strong><?php
 		echo (JText::_('COM_KUNENA_MESSAGE')) ;
 	// TODO: Replace Enlarge and Shrink with icons

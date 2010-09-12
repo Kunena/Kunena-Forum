@@ -52,10 +52,10 @@ function list_users()
     $total_results = $kunena_db->loadResult();
 
     // Search total
-    $query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid";
+    $query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__fb_users AS fu ON u.id=fu.userid WHERE block =0";
 
     if ($search != "") {
-        $query .= " WHERE (u.name LIKE '%$search%' OR u.username LIKE '%$search%')";
+        $query .= " AND (u.name LIKE '%{$kunena_db->quote($search)}%' OR u.username LIKE '%{$kunena_db->quote($search)}%')";
     }
 
     $kunena_db->setQuery($query);
@@ -73,7 +73,7 @@ function list_users()
 
     if ($search != "")
     {
-        $query .= " AND (name LIKE '%$search%' OR username LIKE '%$search%') AND u.id NOT IN (62)";
+        $query .= " AND (name LIKE '%{$kunena_db->quote($search)}%' OR username LIKE '%{$kunena_db->quote($search)}%') AND u.id NOT IN (62)";
         $query_ext .= "&amp;search=" . $search;
     } else {
 		$query .= " AND u.id NOT IN (62)";

@@ -33,9 +33,16 @@ Legend:
 
 Kunena 1.5.13
 
+12-Sep-2010 Matias
+# [#19288] Do not show blocked users in userlist
+* [#19288] Make userlist search safe
+
 11-Sep-2010 fxstein
 * [#17636] Check img tags for valid file name
 ^ [#20106] Updated version info to 1.5.13
+
+21-Jun-2010 810
+# [#19288] Fix avatar id conflict: null = current user, 0 = visitor
 
 Kunena 1.5.12
 

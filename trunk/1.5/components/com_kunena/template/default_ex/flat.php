@@ -395,13 +395,13 @@ if (count($messages[0]) > 0)
   		if ($fbConfig->avatar_src == "jomsocial" && $leaf->userid)
 		{
 			// Get CUser object
-			$jsuser =& CFactory::getUser($last_reply[$leaf->id]->userid);
+			$jsuser =& CFactory::getUser((int)$last_reply[$leaf->id]->userid);
 		    $useravatar = '<img class="fb_list_avatar" src="' . $jsuser->getThumbAvatar() . '" alt=" " />';
 		   	echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
 		}
 		else if ($fbConfig->avatar_src == "cb")
 		{
-			$useravatar = $kunenaProfile->showAvatar($last_reply[$leaf->id]->userid, 'fb_list_avatar');
+			$useravatar = $kunenaProfile->showAvatar((int)$last_reply[$leaf->id]->userid, 'fb_list_avatar');
   		    echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, $useravatar);
 		}
 		else if ($fbConfig->avatar_src == "aup") // integration AlphaUserPoints
@@ -412,7 +412,7 @@ if (count($messages[0]) > 0)
 				echo AlphaUserPointsHelper::getAupAvatar( $last_reply[$leaf->id]->userid, $showlink, 40, 40 );
 			} // end integration AlphaUserPoints
 		} else {
-		  	$javatar =  $last_reply[$leaf->id]->avatar;
+		  	$javatar =  (int)$last_reply[$leaf->id]->avatar;
 		   	if ($javatar!='') {
 				echo CKunenaLink::GetProfileLink($fbConfig, $last_reply[$leaf->id]->userid, '<img class="fb_list_avatar" src="'.(!file_exists(KUNENA_PATH_UPLOADED .DS. 'avatars/s_' . $javatar)?KUNENA_LIVEUPLOADEDPATH.'/avatars/'.$javatar:KUNENA_LIVEUPLOADEDPATH.'/avatars/s_'.$javatar) .'" alt="" />');
 	        }  else {

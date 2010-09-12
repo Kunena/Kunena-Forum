@@ -35,6 +35,7 @@ Kunena 1.6.0-RC3
 
 12-September-2010 Xillibit
 # [#22367] Absolute file path disclosure
+# [#22254] Get Uddeim exact version from xml file instead of API
 
 10-September-2010 Xillibit
 # [#22377] Sort items in userlist when integrated with third components doesn't come back to Kunena userlist

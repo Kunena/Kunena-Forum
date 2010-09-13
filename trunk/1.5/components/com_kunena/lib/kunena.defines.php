@@ -8,6 +8,9 @@
 * @link http://www.kunena.com
 **/
 
+// Dont allow direct linking
+defined( '_JEXEC' ) or die('Restricted access');
+
 // Version information
 define ('KUNENA_VERSION', '@kunenaversion@');
 define ('KUNENA_VERSION_DATE', '@kunenaversiondate@');

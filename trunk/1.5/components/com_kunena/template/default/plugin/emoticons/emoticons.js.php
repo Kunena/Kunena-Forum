@@ -1,3 +1,8 @@
+<?php
+// Dont allow direct linking
+defined( '_JEXEC' ) or die('Restricted access');
+?>
+
 <script language = "JavaScript" type = "text/javascript">
 //<![CDATA[
 
@@ -29,7 +34,7 @@ function replaceText(text, textarea)
 		}
 		textarea.scrollTop = scrollPos;
 	}
-	
+
 	// Just put it on the end.
 	else
 	{

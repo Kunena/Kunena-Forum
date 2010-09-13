@@ -31,6 +31,10 @@
 //these Icons, so creating them now will render your Icon Set to
 //be upwards compatible with future releases of Simpleboard!
 //-----------------------------------------------------------------*/
+
+// Dont allow direct linking
+defined( '_JEXEC' ) or die('Restricted access');
+
 $fbIcons = array ();
 
 $fbIcons['delete'] = 'delete.gif';

@@ -10,6 +10,9 @@
 *
 **/
 
+// Dont allow direct linking
+defined( '_JEXEC' ) or die('Restricted access');
+
 @error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 require_once (JPATH_ROOT  .DS. 'components' .DS. 'com_kunena' .DS. 'lib' .DS. 'kunena.defines.php');

@@ -1,4 +1,7 @@
 <?php
+// Dont allow direct linking
+defined( '_JEXEC' ) or die('Restricted access');
+
 // generate  5 digit random number
 $rand = rand(10000, 99999);
 
@@ -19,30 +22,30 @@ $image = imagecreate(60, 30);
 
 // use white as the background image
 $color1 = rand(0, 9);
-///$bgColor = imagecolorallocate ($image, 255, 255, 255); 
+///$bgColor = imagecolorallocate ($image, 255, 255, 255);
 $bgColor = imagecolorallocate ($image, 255, 255, $color1);
 
 // the text color is black
-$textColor = imagecolorallocate ($image, 0, 0, 0); 
+$textColor = imagecolorallocate ($image, 0, 0, 0);
 
 // write the random number
-imagestring ($image, 5, 5, 8,  $rand, $textColor); 
-	
-// send several headers to make sure the image is not cached	
+imagestring ($image, 5, 5, 8,  $rand, $textColor);
+
+// send several headers to make sure the image is not cached
 // taken directly from the PHP Manual
-	
-// Date in the past 
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 
 
-// always modified 
-header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); 
+// Date in the past
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 
-// HTTP/1.1 
-header("Cache-Control: no-store, no-cache, must-revalidate"); 
-header("Cache-Control: post-check=0, pre-check=0", false); 
+// always modified
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 
-// HTTP/1.0 
-header("Pragma: no-cache"); 	
+// HTTP/1.1
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Cache-Control: post-check=0, pre-check=0", false);
+
+// HTTP/1.0
+header("Pragma: no-cache");
 
 
 // send the content type header so the image is displayed properly

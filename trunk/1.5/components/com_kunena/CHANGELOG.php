@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.5.13
 
+13-Sep-2010 Xillibit
+* [#22422] Absolute file path disclosure
+
 12-Sep-2010 Matias
 # [#19288] Do not show blocked users in userlist
 * [#19288] Make userlist search safe

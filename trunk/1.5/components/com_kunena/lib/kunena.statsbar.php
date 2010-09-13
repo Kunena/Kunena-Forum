@@ -19,6 +19,9 @@
 * @author TSMF & Jan de Graaff
 **/
 
+// Dont allow direct linking
+defined( '_JEXEC' ) or die('Restricted access');
+
 // Graph Generator for PHP
 // http://szewo.com/php/graph
 

@@ -850,7 +850,7 @@ function JJ_categoryArray($admin=0) {
     // first pass - collect children
     foreach ($items as $v) {
         $pt = $v->parent;
-        $list = @$children[$pt] ? $children[$pt] : array ();
+        $list = isset($children[$pt]) ? $children[$pt] : array ();
         array_push($list, $v);
         $children[$pt] = $list;
         }
@@ -862,7 +862,7 @@ function JJ_categoryArray($admin=0) {
 
 function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=0, $type=1 ) {
 
-    if (@$children[$id] && $level <= $maxlevel) {
+    if (isset($children[$id]) && $level <= $maxlevel) {
         foreach ($children[$id] as $v) {
             $id = $v->id;
             if ( $type ) {
@@ -881,7 +881,7 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
             $pt = $v->parent;
             $list[$id] = $v;
             $list[$id]->treename = $indent . $txt;
-            $list[$id]->children = count( @$children[$id] );
+            $list[$id]->children = !empty($children[$id]) ? count( $children[$id] ) : 0;
             $list[$id]->section = ($v->parent==0);
 
             $list = fbTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );

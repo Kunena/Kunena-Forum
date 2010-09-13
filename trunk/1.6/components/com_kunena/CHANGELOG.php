@@ -32,6 +32,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.0-RC3
+
+13-September-2010 Matias
+# [#22402] Do not enable Kunena System plugin in the backend
+# [#22402] Add error handler to Kunena debug mode -- display all errors into the page regardless of user settings
+# [#22119] Fix some hidden PHP Notices silenced by @
+
 12-September-2010 Severdia
 + [#19356] Added IDs to table rows on new topic page
 ^ [#19356] Minor class change to login links

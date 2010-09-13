@@ -30,11 +30,16 @@ class KunenaApp {
 
 	function __construct() {
 		ob_start();
-		kimport('error');
+		
+		// Display time it took to create the entire page in the footer
+		jimport( 'joomla.error.profiler' );
+		$__kstarttime = JProfiler::getmicrotime();
 
-// Display time it took to create the entire page in the footer
-jimport( 'joomla.error.profiler' );
-$__kstarttime = JProfiler::getmicrotime();
+		kimport('error');
+		$kunena_config = KunenaFactory::getConfig ();
+		if ($kunena_config->debug) {
+			KunenaError::initialize();
+		}
 
 $lang = JFactory::getLanguage();
 if (!$lang->load('com_kunena', JPATH_SITE, null, true)) {
@@ -138,12 +143,6 @@ if (isset ( $_POST ['func'] ) && $func == "showcat") {
 
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
-$kunena_config = KunenaFactory::getConfig ();
-if ($kunena_config->debug) {
-	@ini_set('display_errors', 1);
-	@error_reporting(E_ALL);
-	$kunena_db->debug(1);
-}
 
 global $lang, $topic_emoticons;
 

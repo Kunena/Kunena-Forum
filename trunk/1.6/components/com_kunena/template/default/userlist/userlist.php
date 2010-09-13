@@ -52,7 +52,7 @@ function validate() {
 	<div class="kcontainer" id="searchuser_tbody">
 		<div class="kbody">
 			<div class="search-user">
-				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit="return validate()">
+				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>" onsubmit="return validate()">
 					<input id="kusersearch" type="text" name="search" class="inputbox"
 						value="<?php echo $this->escape($this->search); ?>" onblur="if(this.value=='') this.value='<?php echo $this->escape($this->search); ?>';" onfocus="if(this.value=='<?php echo $this->escape($this->search); ?>') this.value='';" />
 					<?php // FIXME: fixed image css sprite ?>
@@ -73,7 +73,7 @@ function validate() {
 	</div>
 	<div class="kcontainer" id="userlist-tbody">
 		<div class="kbody">
-				<form action="<?php echo CKunenaLink::GetUserlistURL(); ?>" method="post" name="adminForm">
+				<form action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>" method="post" name="adminForm">
 					<table>
 						<tr class="ksth userlist">
 							<th class="frst"> #
@@ -198,7 +198,7 @@ function validate() {
 					<input type="hidden" name="filter_order" value="<?php echo intval($this->order); ?>" />
 					<input type="hidden" name="filter_order_Dir" value="<?php echo intval($this->order_dir); ?>" />
 				</form>
-				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURL(); ?>" onsubmit="return false;">
+				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURLNoIntegration(); ?>" onsubmit="return false;">
 					<table class="kblocktable" id="kuserlist-bottom">
 						<tr>
 							<td>

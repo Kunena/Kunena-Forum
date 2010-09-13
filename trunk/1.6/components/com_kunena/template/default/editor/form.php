@@ -18,6 +18,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @author TSMF & Jan de Graaff
  **/
+defined( '_JEXEC' ) or die();
 
 global $topic_emoticons;
 

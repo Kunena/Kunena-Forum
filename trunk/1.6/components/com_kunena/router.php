@@ -9,6 +9,7 @@
  * @link http://www.kunena.com
  *
  **/
+defined( '_JEXEC' ) or die();
 
 require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
 kimport('error');

@@ -37,10 +37,20 @@ Kunena 1.6.0-RC3
 # [#22402] Do not enable Kunena System plugin in the backend
 # [#22402] Add error handler to Kunena debug mode -- display all errors into the page regardless of user settings
 # [#22119] Fix some hidden PHP Notices silenced by @
+^ [#15886] Merged revisions 3458-3475 from /branches/1.6-xillibit-fixes-20100908
+
+12-September-2010 Xillibit
+* [#22367] Absolute file path disclosure
+# [#22254] Get Uddeim exact version from xml file instead of API
 
 12-September-2010 Severdia
 + [#19356] Added IDs to table rows on new topic page
 ^ [#19356] Minor class change to login links
+
+10-September-2010 Xillibit
+# [#22377] Sort items in userlist when integrated with third components doesn't come back to Kunena userlist
+# [#22370] HTML incorrect tags : <br> <br/> <br />
+# [#22368] Typo in en-GB admin language
 
 10-September-2010 Matias
 # [#19255] Administrator: Uniform look for category, user, template, smiley, rank and trash manager
@@ -66,6 +76,9 @@ Kunena 1.6.0-RC3
 # [#19255] Administrator: Fix XHTML validation issues: form tags have invalid method POST
 # [#19255] Administrator: Fix XHTML validation issues in User Manager
 # [#19255] Administrator: Make User Manager to more similar to Category Manager, fix some bugs
+
+8-September-2010 Xillibit
+# [#22333] Check that the user has filled a password with at least 5 characters
 
 8-september-2010 810
 # [#19288] Update dutch translation (nl-NL)

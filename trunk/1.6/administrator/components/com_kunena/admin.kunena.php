@@ -3285,7 +3285,7 @@ function generateSystemReport () {
 		$xml_aup = JFactory::getXMLparser('Simple');
 		$xml_aup->loadFile(JPATH_ADMINISTRATOR.'/components/com_alphauserpoints/alphauserpoints.xml');
 		$version = $xml_aup->document->version[0];
-		$aup = '[u]AlphaUserPoints:[/u] Enabled (Version : '.$version->data().')';
+		$aup = '[u]AlphaUserPoints:[/u] Installed (Version : '.$version->data().')';
 	} else {
 		$aup = '[u]AlphaUserPoints:[/u] Disabled or not installed';
 	}
@@ -3294,7 +3294,7 @@ function generateSystemReport () {
 		$xml_cb = JFactory::getXMLparser('Simple');
 		$xml_cb->loadFile(JPATH_ADMINISTRATOR.'/components/com_comprofiler/comprofilej.xml');
 		$version = $xml_cb->document->version[0];
-		$cb = '[u]CommunityBuilder:[/u] Enabled (Version : '.$version->data().')';
+		$cb = '[u]CommunityBuilder:[/u] Installed (Version : '.$version->data().')';
 	} else {
 		$cb = '[u]CommunityBuilder:[/u] Disabled or not installed';
 	}
@@ -3303,19 +3303,16 @@ function generateSystemReport () {
 		$xml_jomsocial = JFactory::getXMLparser('Simple');
 		$xml_jomsocial->loadFile(JPATH_ADMINISTRATOR.'/components/com_community/community.xml');
 		$version = $xml_jomsocial->document->version[0];
-		$jomsocial = '[u]Jomsocial:[/u] Enabled (Version : '.$version->data().')';
+		$jomsocial = '[u]Jomsocial:[/u] Installed (Version : '.$version->data().')';
 	} else {
 		$jomsocial = '[u]Jomsocial:[/u] Disabled or not installed';
 	}
 
 	if ( JComponentHelper::isEnabled('uddeim') && JFile::exists(JPATH_SITE.'/components/com_uddeim/uddeim.php') ) {
-		if ( JFile::exists(JPATH_SITE.'/components/com_uddeim/uddeim.api.php') ) {
-			require_once(JPATH_SITE.'/components/com_uddeim/uddeim.api.php');
-			$uddeImAPI = new uddeIMAPI();
-			$uddeim = '[u]UddeIm:[/u] Enabled (Version : '.$uddeImAPI->version().')';
-		} else {
-			$uddeim = '[u]UddeIm:[/u] Enabled (Version : UddeIm API not present)';
-		}
+		$xml_uddeim = JFactory::getXMLparser('Simple');
+		$xml_uddeim->loadFile(JPATH_ADMINISTRATOR.'/components/com_uddeim/uddeim.j15.xml');
+		$version = $xml_uddeim->document->version[0];
+		$uddeim = '[u]UddeIm:[/u] Installed (Version : '.$version->data().')';
 	} else {
 		$uddeim = '[u]UddeIm:[/u] Disabled or not installed';
 	}

@@ -7,6 +7,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 **/
+defined( '_JEXEC' ) or die();
 
 // Load new API
 require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');

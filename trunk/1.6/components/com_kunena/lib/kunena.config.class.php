@@ -272,7 +272,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	// New 1.0.5RC2 config variables
 	var $highlightcode = 0;
 	// New 1.6 rss config vars
-	var $rss_type = 'thread';
+	var $rss_type = 'topic';
 	var $rss_timelimit = 'month';
 	var $rss_limit = 100;
 	var $rss_included_categories = '';

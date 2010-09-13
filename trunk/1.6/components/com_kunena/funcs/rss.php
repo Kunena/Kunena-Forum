@@ -167,7 +167,7 @@ class CKunenaRSSView extends CKunenaRSS {
 				$tmp = array();
 
 				switch ($type) {
-					case 'thread':
+					case 'topic':
 						$tmp['title']		= $data->subject;
 						$tmp['text']		= $data->message;
 						$tmp['date']		= $data->time;
@@ -185,7 +185,7 @@ class CKunenaRSSView extends CKunenaRSS {
 						break;
 					case 'recent':
 					default:
-						$tmp['title']		= $data->subject;
+						$tmp['title']		= $data->lastpost_subject;
 						$tmp['text']		= $data->lastpost_message;
 						$tmp['date']		= $data->lastpost_time;
 						$tmp['email']		= $data->lastpost_email;

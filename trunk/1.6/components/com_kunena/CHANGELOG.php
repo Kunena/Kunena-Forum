@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+13-September-2010 LittleJohn
+# [#19399] RSS feeds: change logic to be closer to K1.5
+
 13-September-2010 Matias
 # [#22402] Do not enable Kunena System plugin in the backend
 # [#22402] Add error handler to Kunena debug mode -- display all errors into the page regardless of user settings

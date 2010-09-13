@@ -36,7 +36,7 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 	 * Options for rss feed
 	 * Will be loaded from kunena config options on init.
 	 * Should contain:
-	 * 		type			string		Can be 'thread', 'post' or 'recent'. Defines the feed content type
+	 * 		type			string		Can be 'topic', 'post' or 'recent'. Defines the feed content type
 	 * 		specification	string		Can be: 'atom1.0' 'rss0.91', 'rss1.0', 'rss2.0'. Defines the template used for content.
 	 * 		allow_html		bool		Can be: true, false. Convert bbcode and allow html in output.
 	 * 		author_format	string		Can be: 'name', 'email'. Defines which format to present in feed
@@ -194,8 +194,8 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 		$func = '';
 
 		switch ($this->getOption('type')) {
-			case 'thread':
-				$func = 'getThreads';
+			case 'topic':
+				$func = 'getTopics';
 				break;
 			case 'post':
 				$func = 'getPosts';
@@ -386,7 +386,7 @@ abstract class CKunenaRSSDatasource {
 
 
 	/**
-	 * Get newest threads with the lastest posting as array, ordered by threads creation time.
+	 * Get newest topics with the lastest posting as array, ordered by topics creation time.
 	 * Input array (options) is verified before query is run.
 	 *
 	 * @access protected
@@ -394,7 +394,7 @@ abstract class CKunenaRSSDatasource {
 	 * @uses self::getQueryResult()
 	 * @return array
 	 */
-	public function getThreads() {
+	public function getTopics() {
 		// New threads (ordered by threads)
 		$options = $this->getVerifiedQueryOptions();
 
@@ -415,7 +415,7 @@ abstract class CKunenaRSSDatasource {
 	/**
 	 * Get newest postings as array, ordered by the creation time.
 	 * Input array (options) is verified before query is run.
-	 * Note: Output array might be different from getThreads and getRecentActivity.
+	 * Note: Output array might be different from getTopics and getRecentActivity.
 	 *
 	 * @access protected
 	 * @uses self::getVerifiedQueryOptions()

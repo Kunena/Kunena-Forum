@@ -837,7 +837,12 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 				'youku' => array ('flash', 480, 400, 0, 0, 'http://player.youku.com/player.php/sid/%vcode%/v.swf', '\/v_show\/id_c.00(.*)\.html', '' ),
 				'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%&rel=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
-				'_default' => array ($vid ["type"], 480, 360, 0, 25, $between, '', '' ) );
+
+// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
+//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $between, '', '' )
+//
+ 				);
+
 				list ( $vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2 ) = (isset ( $vid_providers [$vid ["type"]] )) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
 
 				unset ( $vid_providers );

@@ -38,6 +38,8 @@ Kunena 1.6.0-RC3
 # [#19399] Regression on RSS class Fatal error: Call to undefined method CKunenaRSSView::()
 ^ [#22151] Typo in browse browseUploaded() in backend
 # [#22446] Super Administrator can't upload image
+# [#22377] Wrong query in userlist which prevent to sort items
+# [#19288] Update french translation (fr-FR)
 
 14-September-2010 fxstein
 # [#19288] Re-enable missing keep alive in post screen

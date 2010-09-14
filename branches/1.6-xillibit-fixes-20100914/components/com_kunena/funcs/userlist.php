@@ -34,7 +34,7 @@ class CKunenaUserlist {
 		$filter_order = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order', 'filter_order', 'registerDate', 'cmd' );
 		$filter_order_dir = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order_dir', 'filter_order_Dir', 'asc', 'word' );
 		$order = JRequest::getVar ( 'order', '' );
-		$orderby = " ORDER BY {$this->db->quote($filter_order)} {$this->db->quote($filter_order_dir)}";
+		$orderby = ' ORDER BY '.$filter_order.' '.$filter_order_dir;
 
 		// Total
 		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );

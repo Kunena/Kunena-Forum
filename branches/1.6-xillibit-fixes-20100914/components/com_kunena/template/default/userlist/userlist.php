@@ -198,7 +198,7 @@ function validate() {
 					<input type="hidden" name="filter_order" value="<?php echo intval($this->order); ?>" />
 					<input type="hidden" name="filter_order_Dir" value="<?php echo intval($this->order_dir); ?>" />
 				</form>
-				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistURLNoIntegration(); ?>" onsubmit="return false;">
+				<form name="usrlform" method="post" action="<?php echo CKunenaLink::GetUserlistPostURL(); ?>" onsubmit="return false;">
 					<table class="kblocktable" id="kuserlist-bottom">
 						<tr>
 							<td>

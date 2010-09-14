@@ -191,22 +191,22 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 	 * @return objectlist
 	 */
 	protected function getData() {
-		$func = '';
+		$datas = '';
 
 		switch ($this->getOption('type')) {
-			case 'topic':
-				$func = 'getTopics';
+			case 'thread':
+				$datas = $this->getTopics();
 				break;
 			case 'post':
-				$func = 'getPosts';
+				$datas = $this->getPosts();
 				break;
 			case 'recent':
-				$func = 'getRecentActivity';
+				$datas = $this->getRecentActivity();
 				break;
 			default:
 		}
 
-		return $this->$func();
+		return $datas;
 	}
 }
 

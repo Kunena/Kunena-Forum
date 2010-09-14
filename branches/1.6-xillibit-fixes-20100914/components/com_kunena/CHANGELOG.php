@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+14-September-2010 Xillibit
+# [#22377] Fix regression Fatal Error: Call to undefined method CKunenaLink::GetUserlistURLNoIntegration()
+# [#19399] Regression on RSS class Fatal error: Call to undefined method CKunenaRSSView::()
+
 14-September-2010 fxstein
 # [#19288] Re-enable missing keep alive in post screen
 * [#22367] Disable embedded flash files

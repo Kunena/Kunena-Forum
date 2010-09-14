@@ -788,7 +788,10 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				'current' => array ('flash', 400, 400, 0, 0, 'http://current.com/e/%vcode%', '\/items\/(\d*)', array (array (6, 'wmode', 'transparent' ) ) ),
 				'dailymotion' => array ('flash', 420, 331, 0, 0, 'http://www.dailymotion.com/swf/%vcode%', '\/video\/([a-zA-Z0-9]*)', '' ),
 				'downloadfestival' => array ('flash', 450, 358, 0, 0, 'http://www.downloadfestival.tv/mofo/video/player/playerb003External.swf?rid=%vcode%', '\/watch\/([\d]*)', '' ),
-				'flashvars' => array ('flash', 480, 360, 0, 0, $between, '', array (array (6, 'flashvars', $vid ["param"] ) ) ),
+
+// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
+//				'flashvars' => array ('flash', 480, 360, 0, 0, $between, '', array (array (6, 'flashvars', $vid ["param"] ) ) ),
+//
 				'fliptrack' => array ('flash', 402, 302, 0, 0, 'http://www.fliptrack.com/v/%vcode%', '\/watch\/([\w\-]*)', '' ),
 				'fliqz' => array ('flash', 450, 392, 0, 0, 'http://content.fliqz.com/components/2d39cfef9385473c89939c2a5a7064f5.swf', 'vid=([\w]*)', array (array (6, 'flashvars', 'file=%vcode%&' ), array (6, 'wmode', 'transparent' ), array (6, 'bgcolor', '#000000' ) ) ),
 				'gametrailers' => array ('flash', 480, 392, 0, 0, 'http://www.gametrailers.com/remote_wrap.php?mid=%vcode%', '\/(\d*).html', '' ),

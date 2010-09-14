@@ -28,6 +28,9 @@ $kunena_poll->call_javascript_form();
 include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
+//keep session alive while editing
+JHTML::_('behavior.keepalive');
+
 $document = JFactory::getDocument ();
 $document->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";

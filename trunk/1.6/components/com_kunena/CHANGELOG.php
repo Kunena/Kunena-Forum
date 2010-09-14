@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+14-September-2010 fxstein
+# [#19288] Re-enable missing keep alive in post screen
+
 13-September-2010 LittleJohn
 # [#19399] RSS feeds: change logic to be closer to K1.5
 

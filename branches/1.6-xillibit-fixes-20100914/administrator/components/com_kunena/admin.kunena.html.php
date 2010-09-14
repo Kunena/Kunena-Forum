@@ -2651,7 +2651,7 @@ function textCounter(field, target) {
 					</td>
 					</tr>
 					<tr>
-					<td style="text-align: center">';
+					<td style="text-align: center">
 					<br />
 					<strong><?php echo JText::_('COM_KUNENA_A_IMGB_NAME') ?>: </strong>
 					<?php echo kescape(CKunenaTools::shortenFileName($filename, 10, 15)) ?>

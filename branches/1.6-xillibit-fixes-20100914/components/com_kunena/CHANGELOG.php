@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+15-September-2010 Xillibit
+# [#22463] No need to verify your password when changing profile info
+
 14-September-2010 Xillibit
 # [#22377] Fix regression Fatal Error: Call to undefined method CKunenaLink::GetUserlistURLNoIntegration()
 # [#19399] Regression on RSS class Fatal error: Call to undefined method CKunenaRSSView::()

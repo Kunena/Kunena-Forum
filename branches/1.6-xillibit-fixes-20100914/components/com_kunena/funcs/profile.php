@@ -426,13 +426,15 @@ class CKunenaProfile {
 		$err_return = CKunenaLink::GetMyProfileURL($this->user->get('id'), 'edit', false);
 
 		// do a password safety check
-		if(strlen($post['password']) < '5' && strlen($post['password2']) < '5' ) { // so that "0" can be used as password e.g.
-			if($post['password'] != $post['password2']) {
-				$msg	= JText::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH');
+		if ( !empty($post['password']) && !empty($post['password2']) ) {
+			if(strlen($post['password']) < '5' && strlen($post['password2']) < '5' ) { // so that "0" can be used as password e.g.
+				if($post['password'] != $post['password2']) {
+					$msg	= JText::_('COM_KUNENA_PROFILE_PASSWORD_MISMATCH');
+					$this->_app->redirect ( $err_return, $msg, 'error' );
+				}
+				$msg	= JText::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM');
 				$this->_app->redirect ( $err_return, $msg, 'error' );
 			}
-			$msg	= JText::_('COM_KUNENA_PROFILE_PASSWORD_NOT_MINIMUM');
-			$this->_app->redirect ( $err_return, $msg, 'error' );
 		}
 
 		$username = $this->user->get('username');

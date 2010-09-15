@@ -10,6 +10,8 @@
  */
 defined ( '_JEXEC' ) or die ( '' );
 
+require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/api.php');
+
 // Kunena detection and version check
 $minKunenaVersion = '1.6.0-RC2';
 if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
@@ -24,7 +26,7 @@ $app = JFactory::getApplication ();
 $app->registerEvent ( 'onSearch', 'plgSearchKunena' );
 $app->registerEvent ( 'onSearchAreas', 'plgSearchKunenaAreas' );
 
-JPlugin::loadLanguage ( 'plg_search_kunena', JPATH_ADMINISTRATOR );
+JPlugin::loadLanguage ( 'plg_search_kunenasearch', JPATH_ADMINISTRATOR );
 
 //Then define a function to return an array of search areas.
 function &plgSearchKunenaAreas() {
@@ -49,7 +51,7 @@ function plgSearchKunena($text, $phrase = '', $ordering = '', $areas = null) {
 		}
 	}
 
-	$plugin = JPluginHelper::getPlugin ( 'search', 'kunena' );
+	$plugin = JPluginHelper::getPlugin ( 'search', 'kunenasearch' );
 	$pluginParams = new JParameter ( $plugin->params );
 
 	//And define the parameters. For example like this..
@@ -124,10 +126,10 @@ function plgSearchKunena($text, $phrase = '', $ordering = '', $areas = null) {
 
 	$ksession = KunenaFactory::getSession(true);
 	$query = "SELECT m.id, m.subject AS title, m.catid, m.thread, m.name, m.time AS created, t.mesid, t.message AS text, m.ordering, mm.hits, c.name AS section, 1 AS browsernav
-		FROM #__fb_messages_text AS t
-		INNER JOIN #__fb_messages AS m ON m.id=t.mesid
-		INNER JOIN #__fb_messages AS mm ON mm.id=m.thread
-		INNER JOIN #__fb_categories AS c ON m.catid = c.id
+		FROM #__kunena_messages_text AS t
+		INNER JOIN #__kunena_messages AS m ON m.id=t.mesid
+		INNER JOIN #__kunena_messages AS mm ON mm.id=m.thread
+		INNER JOIN #__kunena_categories AS c ON m.catid = c.id
 		WHERE {$where} AND m.moved=0 AND m.hold=0 AND mm.hold=0 AND mm.catid IN ({$ksession->allowed}) GROUP BY m.thread ORDER BY {$order}";
 
 	//Set query

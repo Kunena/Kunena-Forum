@@ -28,6 +28,10 @@ Legend:
 
 KunenaSearch 1.6.0-RC2
 
+15-September-2010 Xillibit
+# [#20138] Rename some things into kunenasearch to load language files correctly
+# [#20138] Rename tables in search query from _fb_* int _kunena_*
+
 31-Aug-2010 fxstein
 ^ [#20138] Updated build files for RC2 release
 

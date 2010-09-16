@@ -36,6 +36,8 @@ Kunena 1.6.0-RC3
 16-September-2010 Matias
 ^ [#15886] Merged revisions 3487-3497 from /branches/1.6-xillibit-fixes-20100914
 # [#19345] Update all *bird button sets (missing icon), added graybird
+^ [#16390] Updated fi-FI (thanks Mortti), ru-RU (ZARKOS), tr-TR (Tolga)
++ [#16390] Added hu-HU (thanks pedrohsi), lt-LT (ZYLKIN), vi-VN (lmt-net)
 
 15-September-2010 Xillibit
 # [#22463] No need to verify your password when changing profile info

@@ -33,10 +33,13 @@ Legend:
 
 KunenaImporter 1.6.0-RC2
 
+16-September-2010 Matias
++ [#20178] Added ru-RU (thanks ZARGOS)
+
 6-September-2010 Matias
 # [#20178] User mapping: Misc fixes and optimizations
 # [#20178] User mapping: Update all user information when user gets mapped manually (no need to re-run importer)
-# [#20178] User mapping: Map user by manually entering id
+# [#20178] User mapping: Map user by manually entering id, unmap by 0
 
 4-September-2010 Matias
 # [#20178] User mapping: Greatly improve performance by making own task from basic user mapping

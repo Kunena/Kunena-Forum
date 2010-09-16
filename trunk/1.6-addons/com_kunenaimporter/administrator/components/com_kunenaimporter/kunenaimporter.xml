@@ -18,6 +18,7 @@
 	<administration>
 		<languages folder="languages">
 			<language tag="en-GB">en-GB.com_kunenaimporter.ini</language>
+			<language tag="ru-RU">ru-RU.com_kunenaimporter.ini</language>
 		</languages>
 		<menu view="default">Kunena Forum Importer</menu>
 		<files folder="admin">

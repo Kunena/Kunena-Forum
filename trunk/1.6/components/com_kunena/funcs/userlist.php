@@ -33,8 +33,8 @@ class CKunenaUserlist {
 
 		$filter_order = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order', 'filter_order', 'registerDate', 'cmd' );
 		$filter_order_dir = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order_dir', 'filter_order_Dir', 'asc', 'word' );
-		$order = JRequest::getVar ( 'order', '' );
-		$orderby = " ORDER BY {$this->db->quote($filter_order)} {$this->db->quote($filter_order_dir)}";
+		$direction = ($filter_order_dir == 'asc' ? 'ASC' : 'DESC');
+		$orderby = " ORDER BY {$this->db->nameQuote($filter_order)} {$direction}";
 
 		// Total
 		$this->db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );
@@ -42,7 +42,7 @@ class CKunenaUserlist {
 		KunenaError::checkDatabaseError();
 
 		// Search total
-		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE (block=0 OR activation='')";
+		$query = "SELECT COUNT(*) FROM #__users AS u INNER JOIN #__kunena_users AS fu ON u.id=fu.userid WHERE (u.block=0 OR u.activation='')";
 		if ($this->search != "") {
 			if (!JRequest::checkToken()) {
 				$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );

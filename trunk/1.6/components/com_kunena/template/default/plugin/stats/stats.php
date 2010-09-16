@@ -99,7 +99,7 @@ $k = 0;
 					<tr class = "ksth" >
 						<th class="kname"> <?php echo JText::_('COM_KUNENA_GEN_SUBJECT') ;?></th>
 						<th class="kbar">&nbsp;</th>
-						<th class="knr"></th>
+						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_HITS') ;?></th>
 					</tr>
 					<?php
 					foreach ($this->toptitles as $toptitle) :
@@ -118,7 +118,7 @@ $k = 0;
 							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
 						</td>
 						<td class="kcol-last">
-							<?php echo intval($toptitle->hits); ?> <?php echo JText::_('COM_KUNENA_USRL_HITS') ;?>
+							<?php echo intval($toptitle->hits); ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>
@@ -144,7 +144,7 @@ $k = 0;
 					<tr  class = "ksth" >
 						<th class="kname"> <?php echo JText::_('COM_KUNENA_POLL_STATS_NAME');?></th>
 						<th class="kbar">&nbsp;  </th>
-						<th class="knr"></th>
+						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_VOTES') ;?></th>
 					</tr>
 					<?php
 						foreach($this->toppolls as $toppoll) :
@@ -163,7 +163,7 @@ $k = 0;
 							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="kcol-last">
-							<?php echo intval($toppoll->total); ?> <?php echo JText::_('COM_KUNENA_USRL_VOTES') ;?>
+							<?php echo intval($toppoll->total); ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>
@@ -189,7 +189,7 @@ $k = 0;
 					<tr class = "ksth" >
 						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_USERNAME') ;?></th>
 						<th class="kbar">&nbsp;</th>
-						<th class="knr"></th>
+						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_POSTS') ;?></th>
 					</tr>
 					<?php
 						foreach ($this->topposters as $poster) :
@@ -208,7 +208,7 @@ $k = 0;
 							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%" />
 						</td>
 						<td class="kcol-last">
-							<?php echo intval($poster->posts); ?> <?php echo JText::_('COM_KUNENA_USRL_POSTS') ;?>
+							<?php echo intval($poster->posts); ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>
@@ -234,7 +234,7 @@ $k = 0;
 					<tr class = "ksth ks">
 						<th class="kname"> <?php echo JText::_('COM_KUNENA_USRL_USERNAME') ;?></th>
 						<th class="kbar">&nbsp;</th>
-						<th class="knr"></th>
+						<th class="kname"><?php echo JText::_('COM_KUNENA_USRL_HITS') ;?></th>
 					</tr>
 					<?php
 						foreach ($this->topprofiles as $topprofile) :
@@ -253,7 +253,7 @@ $k = 0;
 							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="kcol-last">
-							<?php echo intval($topprofile->hits); ?> <?php echo JText::_('COM_KUNENA_USRL_HITS') ;?>
+							<?php echo intval($topprofile->hits); ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>
@@ -279,7 +279,7 @@ $k = 0;
 					<tr class = "ksth ks" >
 						<th class="kname"> <?php echo JText::_('COM_KUNENA_USRL_USERNAME') ;?></th>
 						<th class="kbar">&nbsp;</th>
-						<th class="knr"></th>
+						<th class="kname"><?php echo JText::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED') ;?></th>
 					</tr>
 					<?php
 						foreach ($this->topuserthanks as $topthanks) :
@@ -298,7 +298,7 @@ $k = 0;
 							<img class = "kstats-bar" src = "<?php echo KUNENA_TMPLTMAINIMGURL.'images/bar.png';?>" alt = "" height = "10" width = "<?php echo intval($barwidth);?>%"/>
 						</td>
 						<td class="kcol-last">
-							<?php echo intval($topthanks->receivedthanks); ?> <?php echo JText::_('COM_KUNENA_STAT_THANKS_YOU_RECEIVED') ;?>
+							<?php echo intval($topthanks->receivedthanks); ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

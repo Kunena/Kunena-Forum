@@ -68,7 +68,7 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 		}
 
 		// Load global parameters from config (data specific)
-		$this->setQueryOption('timelimit',		(int) $this->config->rss_timelimit);
+		$this->setQueryOption('timelimit',		strtotime('-1 '.$this->config->rss_timelimit, JFactory::getDate()->toUnix()));
 		$this->setQueryOption('limit',			(int) $this->config->rss_limit);
 		$this->setQueryOption('excl_cat',		explode(',', strtolower($this->config->rss_excluded_categories)));
 		$this->setQueryOption('incl_cat',		explode(',', strtolower($this->config->rss_included_categories)));
@@ -191,19 +191,16 @@ class CKunenaRSS extends CKunenaRSSDatasource {
 	 * @return objectlist
 	 */
 	protected function getData() {
-		$func = '';
-
 		switch ($this->getOption('type')) {
 			case 'topic':
 				$func = 'getTopics';
 				break;
-			case 'post':
-				$func = 'getPosts';
-				break;
 			case 'recent':
 				$func = 'getRecentActivity';
 				break;
+			case 'post':
 			default:
+				$func = 'getPosts';
 		}
 
 		return $this->$func();
@@ -360,14 +357,7 @@ abstract class CKunenaRSSDatasource {
 		// Limit query by date (if 0 then disable limiter)
 		{
 			if (isset($options['timelimit'])) {
-				$tmp = (int) $options['timelimit'];
-				if ($tmp >= 0) {
-					$verified['timelimit'] = $tmp;
-				}
-				//$querytime =
-			}
-			if ($verified['timelimit'] > 0) {
-				$verified['timelimit'] = (time() - ($verified['timelimit'] * 3600));
+				$verified['timelimit'] = (int) $options['timelimit'];
 			}
 			unset($options['timelimit']);
 		}

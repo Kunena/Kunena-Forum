@@ -28,6 +28,9 @@ Legend:
 
 KunenaLogin 1.6.0-RC2
 
+16-September-2010 Matias
++ [#20178] Added fi-FI (thanks Mortti), hu-HU (pedrohsi), pl-PL (Colly), ru-RU (ZARKOS)
+
 10-September-2010 Xillibit
 ^ [#22073] Update language because some stings are presents two times
 

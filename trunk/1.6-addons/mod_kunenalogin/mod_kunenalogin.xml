@@ -18,8 +18,12 @@
 		<filename>index.html</filename>
 		<folder>tmpl</folder>
 	</files>
-	<languages>
-		<language tag="en-GB">languages/en-GB.mod_kunenalogin.ini</language>
+	<languages folder="languages">
+		<language tag="en-GB">en-GB.mod_kunenalogin.ini</language>
+		<language tag="fi-FI">fi-FI.mod_kunenalogin.ini</language>
+		<language tag="hu-HU">hu-HU.mod_kunenalogin.ini</language>
+		<language tag="pl-PL">pl-PL.mod_kunenalogin.ini</language>
+		<language tag="ru-RU">ru-RU.mod_kunenalogin.ini</language>
 	</languages>
 	<params>
 		<param name="template" type="list" default="vertical"

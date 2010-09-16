@@ -31,7 +31,10 @@ Legend:
 KunenaLatest 1.6.0-RC2
 
 16-September-2010 Matias
-+ [#20178] Added fi-FI (thanks Mortti), hu-HU (thanks pedrohsi), ru-RU (ZARKOS)
++ [#20081] Added fi-FI (thanks Mortti), hu-HU (thanks pedrohsi), ru-RU (ZARKOS)
+# [#20081] Default new indicator cannot be translated, use ! instead
+# [#20081] Category List allowed to be displayed: title for all/none
+# [#20081] Default value for display type
 
 30-Aug-2010 fxstein
 # [#20081] Use JString:substr to be UTF8 aware

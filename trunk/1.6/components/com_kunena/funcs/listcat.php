@@ -43,7 +43,7 @@ class CKunenaListcat {
 			$where = "parent='0' AND";
 		}
 		$this->categories = array ();
-		$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE {$where} published='1' AND id IN ({$catlist}) ORDER BY ordering" );
+		$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE {$where} published='1' AND id IN ({$catlist}) ORDER BY ordering, name" );
 		$this->categories [0] = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
@@ -97,7 +97,7 @@ class CKunenaListcat {
 			LEFT JOIN #__kunena_messages AS m ON c.id_last_msg=m.id
 			LEFT JOIN #__kunena_messages AS t ON m.thread=t.id
 			LEFT JOIN #__users AS u ON u.id=m.userid
-			WHERE c.parent IN ({$catlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY ordering";
+			WHERE c.parent IN ({$catlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY ordering, name";
 		$this->db->setQuery ( $query );
 		$allsubcats = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
@@ -170,7 +170,7 @@ class CKunenaListcat {
 
 			$query = "SELECT id, name, description, parent, numTopics, numPosts, {$subquery}
 			FROM #__kunena_categories AS c
-			WHERE c.parent IN ({$subcatlist}) AND c.published='1' ORDER BY ordering";
+			WHERE c.parent IN ({$subcatlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY ordering, name";
 			$this->db->setQuery ($query);
 			$childforums = $this->db->loadObjectList ();
 			KunenaError::checkDatabaseError();

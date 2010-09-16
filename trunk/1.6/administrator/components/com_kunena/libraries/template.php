@@ -114,6 +114,7 @@ class KunenaTemplate extends JObject
 				$path = $defpath;
 			}
 			$topic_emoticons = array();
+			$this->topicIcons[0] = "/{$defpath}/images/icons/topic-default.gif";
 			include KPATH_SITE . "/{$path}/icons.php";
 			foreach ($topic_emoticons as $id=>$icon) {
 				if (is_file( KPATH_SITE . "/{$curpath}/images/icons/{$icon}" )) {

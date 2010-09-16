@@ -38,6 +38,7 @@ Kunena 1.6.0-RC3
 # [#19345] Update all *bird button sets (missing icon), added graybird
 ^ [#16390] Updated fi-FI (thanks Mortti), ru-RU (ZARKOS), tr-TR (Tolga)
 + [#16390] Added hu-HU (thanks pedrohsi), lt-LT (ZYLKIN), vi-VN (lmt-net)
+# [#22473] Kunena Menu missing in userlist, announcements etc..
 
 15-September-2010 Xillibit
 # [#22463] No need to verify your password when changing profile info

@@ -191,12 +191,13 @@ abstract class KunenaRoute {
 		$params = new JParameter($item->params);
 		$func = isset($item->query['func']) ? $item->query['func'] : '';
 		$catids = $params->get('catids');
-		if (empty ( $query ['catid'] )) return;
+		if (empty ( $query ['catid'] )) return 0;
 		if (!is_array($catids)) {
 			$catids = explode(',', $params->get('catids'));
 		}
-		if (!in_array(0, $catids) && !in_array($query ['catid'], $catids)) return;
-		return 0;
+		if (empty ( $catids ) || in_array(0, $catids)) return 0;
+		if (in_array($query ['catid'], $catids)) return 0;
+		return;
 	}
 
 	protected static function isMatch($item, $query) {

@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC2
 
+16-September-2010 Xillibit
++ [#20081] Added fr-FR translation
+
 16-September-2010 Matias
 + [#20081] Added fi-FI (thanks Mortti), hu-HU (thanks pedrohsi), ru-RU (ZARKOS)
 # [#20081] Default new indicator cannot be translated, use ! instead

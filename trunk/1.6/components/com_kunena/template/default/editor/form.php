@@ -34,6 +34,8 @@ JHTML::_('behavior.keepalive');
 $document = JFactory::getDocument ();
 $document->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";
+var kunena_attachment_add = "'.JText::_('COM_KUNENA_EDITOR_ADD_FILE').'";
+var kunena_attachment_del = "'.JText::_('COM_KUNENA_GEN_REMOVE_FILE').'";
 // ]]>');
 $this->setTitle ( $this->escape($this->title) );
 
@@ -140,13 +142,10 @@ $this->k=0;
 				<div id="kattachment-id" class="kattachment">
 					<span class="kattachment-id-container"></span>
 
-					<input class="kfile-input-textbox" type="text" readonly="readonly" />
-					<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes); ?>" >
-						<input type="button" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ADD_FILE'); ?>" class="kfile-input-button kbutton" />
-						<input id="kupload" class="kfile-input hidden" name="kattachment" type="file" />
+					<div class="kfile-fileblock hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes); ?>" >
+						<input id="kupload" class="kfile-input" name="kattachment" type="file" />
 					</div>
-					<a href="#" class="kattachment-remove kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_GEN_REMOVE_FILE'); ?></a>
-					<a href="#" class="kattachment-insert kbutton" style="display: none"><?php echo  JText::_('COM_KUNENA_EDITOR_INSERT'); ?></a>
+					<div class="kfile-insert" style="display: none"><input type="button" class="kattachment-insert kbutton" value="<?php echo  JText::_('COM_KUNENA_EDITOR_ATTACHMENT_INSERT'); ?>" /></div>
 				</div>
 
 				<?php

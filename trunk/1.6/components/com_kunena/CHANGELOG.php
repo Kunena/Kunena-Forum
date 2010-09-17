@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+17-September-2010 Matias
+# [#19288] IE7 fix for quick reply (thanks 810)
+# [#19288] IE7/Opera fix for attachments
+
 16-September-2010 fxstein
 # [#19288] IE7 fixes for preview and attachments
 

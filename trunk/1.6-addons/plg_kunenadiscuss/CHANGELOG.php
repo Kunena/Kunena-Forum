@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC2
 
+17-September-2010 Xillibit
++ [#20084] Added fr-FR translation
+
 01-Sep-2010 @quila
 # [#20084] fixed page number from the article is creeping up
 
@@ -55,6 +58,7 @@ Kunena Discuss Plugin 1.6.0-RC2
 # [#20084] Fix category mapping issues
 # [#20084] Fix allow and deny list handling
 
+>>>>>>> .r3515
 29-Aug-2010 Xillibit
 # [#20084] Put db->quote() on some values in queries to avoid issues
 

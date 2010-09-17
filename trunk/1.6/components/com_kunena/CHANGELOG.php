@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+16-September-2010 fxstein
+# [#19288] IE7 fixes for preview and attachments
+
 16-September-2010 Matias
 ^ [#15886] Merged revisions 3487-3497 from /branches/1.6-xillibit-fixes-20100914
 # [#19345] Update all *bird button sets (missing icon), added graybird

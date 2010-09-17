@@ -137,8 +137,8 @@ $this->k=0;
 				<strong><?php echo JText::_('COM_KUNENA_EDITOR_ATTACHMENTS') ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<div id="kattachment" class="kattachment">
-					<span class="kattachment-id"></span>
+				<div id="kattachment-id" class="kattachment">
+					<span class="kattachment-id-container"></span>
 
 					<input class="kfile-input-textbox" type="text" readonly="readonly" />
 					<div class="kfile-hide hasTip" title="<?php echo JText::_('COM_KUNENA_FILE_EXTENSIONS_ALLOWED')?>::<?php echo $this->escape($this->config->imagetypes); ?>,<?php echo $this->escape($this->config->filetypes); ?>" >

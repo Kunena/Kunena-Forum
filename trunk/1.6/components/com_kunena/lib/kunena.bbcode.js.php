@@ -29,9 +29,9 @@ function kPreviewHelper()
 	if (_previewActive == true){
 		previewRequest = new Request.JSON({url: "<?php echo CKunenaLink::GetJsonURL('preview');?>",
 				  							onSuccess: function(response){
-			message = $("kbbcode-preview");
-			if (message) {
-				message.set("html", response.preview);
+			var __message = $("kbbcode-preview");
+			if (__message) {
+				__message.set("html", response.preview);
 			}
 			}}).post({body: $("kbbcode-message").get("value")
 		});

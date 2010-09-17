@@ -563,16 +563,14 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				}
 				$attachments = &$this->parent->attachments;
 				$attachment = null;
-				if (empty($between)) {
-					$attachment = array_shift ( $attachments );
-				} else if ((string) intval ( $between ) == $between) {
-					$attid = intval ( $between );
-					if (isset ( $attachments [$attid] )) {
-						$attachment = $attachments [$attid];
-						unset ( $attachments [$attid] );
-					} else if (isset ( $this->parent->inline_attachments [$attid] )) {
-						$attachment = $this->parent->inline_attachments [$attid];
+				if (!empty($tag->options ['default'])) {
+					$attobj = CKunenaAttachments::getInstance();
+					$attachment = $attobj->getAttachment($tag->options ["default"]);
+					if (is_object($attachment)) {
+						unset ( $attachments [$attachment->id] );
 					}
+				} else if (empty($between)) {
+					$attachment = array_shift ( $attachments );
 				} else {
 					foreach ($attachments as $att) {
 						if ($att->filename == $between) {
@@ -581,12 +579,12 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							break;
 						}
 					}
-					if (!$attachment && !empty($this->parent->inline_attachments)) {
-						foreach ($this->parent->inline_attachments as $att) {
-							if ($att->filename == $between) {
-								$attachment = $att;
-								break;
-							}
+				}
+				if (!$attachment && !empty($this->parent->inline_attachments)) {
+					foreach ($this->parent->inline_attachments as $att) {
+						if ($att->filename == $between) {
+							$attachment = $att;
+							break;
 						}
 					}
 				}

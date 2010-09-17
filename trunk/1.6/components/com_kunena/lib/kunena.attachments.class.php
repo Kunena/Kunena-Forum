@@ -13,9 +13,10 @@
 defined ( '_JEXEC' ) or die ();
 
 class CKunenaAttachments {
-	protected $_db;
-	protected $_my;
-	protected $_session;
+	protected $_db = null;
+	protected $_my = null;
+	protected $_session = null;
+	protected $_instances = array();
 
 	function __construct() {
 		$this->_db = &JFactory::getDBO ();
@@ -100,23 +101,32 @@ class CKunenaAttachments {
 		return (stripos ( $mime, 'image/' ) !== false);
 	}
 
+	function getAttachment($id) {
+		if (isset($this->_instances[$id])) return $this->_instances[$id];
+
+		$query = "SELECT * FROM #__kunena_attachments WHERE id={$id}";
+		$this->_db->setQuery ( $query );
+		$attachments = $this->_db->loadObjectList ('id');
+		KunenaError::checkDatabaseError();
+		if (!$attachments) return null;
+		$this->_get($attachments);
+
+		if (isset($this->_instances[$id])) return $this->_instances[$id];
+	}
+
 	function get($mesids) {
-		$ret = array();
-		if (empty($mesids)) return $ret;
+		if (empty($mesids)) return array();
 		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ($mesids) ORDER BY id";
 		$this->_db->setQuery ( $query );
 		$attachments = $this->_db->loadObjectList ('id');
-		if (KunenaError::checkDatabaseError()) return $ret;
+		KunenaError::checkDatabaseError();
+		if (!$attachments) return array();
+		return $this->_get($attachments);
+	}
+
+	function _get($attachments) {
+		$ret = array();
 		foreach ($attachments as $attachment) {
-			// Check if file has been pre-processed
-			if (is_null ( $attachment->hash )) {
-				// This attachment has not been processed.
-				// It migth be a legacy file, or the settings might have been reset.
-				// Force recalculation ...
-
-				// TODO: Perform image re-prosessing
-			}
-
 			// combine all images into one type
 			$attachment->shorttype = $this->isImage($attachment->filetype) ? 'image' : $attachment->filetype;
 			$attachment->shortname = CKunenaTools::shortenFileName($attachment->filename);
@@ -160,6 +170,7 @@ class CKunenaAttachments {
 					$attachment->size = 0;
 				}
 			}
+			$this->_instances[$attachment->id] = $attachment;
 			$ret [$attachment->mesid] [$attachment->id] = $attachment;
 		}
 		return $ret;

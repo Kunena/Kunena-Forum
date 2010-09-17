@@ -30,6 +30,9 @@ Legend:
 
 KunenaStats 1.6.0-RC2
 
+17-September-2010 Xillibit
++ [#20095] Added fr-FR translation
+
 31-Aug-2010 fxstein
 ^ [#20095] Updated build files for RC2 release
 

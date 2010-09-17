@@ -20,8 +20,9 @@
 		<folder>tmpl</folder>
 	</files>
 
-	<languages>
+	<languages folder="languages">
 		<language tag="en-GB">en-GB.mod_kunenastats.ini</language>
+		<language tag="fr-FR">fr-FR.mod_kunenastats.ini</language>
 	</languages>
 
 	<params>

@@ -13,8 +13,9 @@
 	<isapplication>true</isapplication>
 	<isbrowseable>true</isbrowseable>
 	<description>PLG_COMMUNITY_KUNENAMENU_DESC</description>
-	<languages>
+	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_community_kunenamenu.ini</language>
+		<language tag="fr-FR">fr-FR.plg_community_kunenamenu.ini</language>
 	</languages>
 	<files>
 		<file plugin="kunenamenu">kunenamenu.php</file>

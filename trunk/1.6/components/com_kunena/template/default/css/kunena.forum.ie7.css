@@ -68,3 +68,5 @@
 #Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover { padding: 8px 6px 0px;}
 #Kunena div.kmsgbody div.kmsgtext { overflow:hidden; }
 #Kunena #ktop { overflow:hidden; }
+#Kunena .kfile-insert { display:inline; zoom:1; }
+#Kunena .kfile-fileblock { display:inline; zoom:1; }

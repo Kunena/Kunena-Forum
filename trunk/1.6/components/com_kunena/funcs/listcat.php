@@ -201,6 +201,8 @@ class CKunenaListcat {
 							$childforum->htmlCategoryIcon = CKunenaTools::showIcon ( 'knotloginforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 						}
 					}
+				} else {
+					$childforum->htmlCategoryIcon = '';
 				}
 				$this->childforums [$childforum->parent] [] = $childforum;
 			}

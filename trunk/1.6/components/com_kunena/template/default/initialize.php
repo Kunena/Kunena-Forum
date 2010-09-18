@@ -36,7 +36,7 @@ if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
 }
 $cssurl = JURI::base() . "components/com_kunena/template/default/css";
 ?>
-<!--[if IE 7]>
+<!--[if lte IE 7]>
 <link rel="stylesheet" href="<?php echo $cssurl; ?>/kunena.forum.ie7.css" type="text/css" />
 <![endif]-->
 <?php

@@ -37,6 +37,7 @@ Kunena 1.6.0-RC3
 # [#19288] IE7 fix for quick reply (thanks 810)
 # [#19288] Fix broken language files (xx-XX.com_kunena_tpl_example.ini)
 # [#22490] Fix broken attachments in quotes
+# [#19288] Fix many layout issues in IE6 making it usable
 
 16-September-2010 fxstein
 # [#19288] IE7 fixes for preview and attachments

@@ -832,10 +832,10 @@ window.addEvent('domready', function(){
 		el.addEvent('click', function(e){
 			//prevent to load the page when click is detected on a button
 			e.stop();
-			var kreply = this.get('id');
+			var kreply = el.getProperty('id');
 			var kstate = $(kreply+'_form').getStyle('display');
 			$$('.kreply-form').setStyle('display', 'none');
-			if (kstate == 'none') $(kreply+'_form').setStyle('display', 'block');
+			if (kstate == 'none') $(kreply+'_form').removeProperty('style');
 		});
 	});
 	

@@ -2476,6 +2476,7 @@ BBCODE BUTTONS
 	cursor:pointer;
 }
 #Kunena .kattachment .hasTip {
+	display: inline;
 }
 
 #Kunena .kattachment .kbutton {
@@ -2512,37 +2513,20 @@ Multi file upload for bbcode editor
 
 #kfilename {}
 
+#Kunena .kfile-input-textbox {/* float: left; */ display: inline-block; }
+
 #kupload {}
 
-#Kunena .kfile-fileblock {
-	display: inline-block;
-	vertical-align: middle;
-	cursor:pointer;
-}
-#Kunena .kfile-input-textbox {
-	background: #ffffff;
-}
-#Kunena .kfile-input-button {
-}
-#Kunena .kfile-input {
+#Kunena .kfile-hide {
 	position: relative; 
+	width: 100px; 
+	height: 23px; 
+	overflow: hidden;
 }
-#Kunena .kfile-insert {
-	display: inline-block;
-	padding: 0 0 2px 0;
-}
-#Kunena .kattachment-remove,
-#Kunena .kattachment-insert,
 #Kunena .kfile-input-button,
-#Kunena .kattachment-remove:hover,
-#Kunena .kattachment-insert:hover,
 #Kunena .kfile-input-button:hover,
-#Kunena .kattachment-remove:focus,
-#Kunena .kattachment-insert:focus,
 #Kunena .kfile-input-button:focus {
-	display: inline;
 	top: 0px;
-	margin: 1px !important;
 	background: #F2F1EE none repeat scroll 0 0;
 	font-size: .833em !important;
 	border: 1px solid #999999;
@@ -2550,15 +2534,38 @@ Multi file upload for bbcode editor
 	padding: 3px 6px;
 	cursor:pointer;
 }
-#Kunena .kattachment-remove:hover,
-#Kunena .kattachment-insert:hover,
 #Kunena .kfile-input-button:hover,
-#Kunena .kattachment-remove:focus,
-#Kunena .kattachment-insert:focus,
 #Kunena .kfile-input-button:focus {
 	background: #609FBF none repeat scroll 0 0;
 	border: 1px solid #5388B4;
 	color: #FFFFFF;
+}
+#Kunena .kattachment-remove,
+#Kunena .kattachment-insert {
+	background: #F2F1EE none repeat scroll 0 0;
+	font-size: .917em !important;
+	border: 1px solid #999999;
+	color: #000000;
+	padding: 3px 6px;
+}
+#Kunena .kattachment-remove:hover,
+#Kunena .kattachment-insert:hover {
+	color: #FFFFFF;
+	font-size:0.917em !important;
+	padding: 3px 6px;
+}
+#Kunena .kattachment-insert {
+	margin-left: 20px;
+}
+#Kunena .kfile-input {
+	font-size: 23px; 
+	position: absolute; 
+	right: 0px; 
+	top: -10px;
+	/* CSS3 standard */
+	opacity: 0;
+	/* For IE */
+	filter:alpha(opacity=0);
 }
 #Kunena #kbbcode-filelist {
 	padding: 0;

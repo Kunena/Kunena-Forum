@@ -559,59 +559,21 @@ function newAttachment() {
 	__kattachment.setStyle('display', 'none');
 	__kattachment.getElement('input').setProperty('value', '');
 	
-	var __kid = __kattachment.retrieve('nextid',1);
-	__kattachment.store('nextid',__kid+1);
-	var __kfile = __kattachment.clone().inject(__kattachment,'before').set('id','kattachment'+__kid).removeProperty('style');
-	__kfile.getElement('span.kattachment-id-container').set('text', __kid+'. ');
-	var __ktextbox = new Element('input', {
-		'class': 'kfile-input-textbox',
-		'type': 'text',
-		'readonly': 'readonly',
-		'styles': {
-			'position': 'relative'
-		}
-	});
-	var __kbutton = new Element('input', {
-		'class': 'kfile-input-button kbutton',
-		'type': 'button',
-		'value': kunena_attachment_del,
-		'styles': {
-			'position': 'relative'
-		}
-	});
-	var __kfancy = Browser.Engine.trident || Browser.Engine.gecko || Browser.Engine.webkit;
-	__kbutton.inject(__kfile.getElement('.kfile-input'),'before');
-	var __kwidth = Math.max(__kbutton.getSize().x, __kbutton.set('value', kunena_attachment_add).getSize().x);
-	__kbutton.setStyle('width', __kwidth + 'px');
-	var __kheight = Math.max(__ktextbox.getSize().y,__kbutton.getSize().y)+4;
-	__ktextbox.setStyle('width', (290 - __kwidth) + 'px').inject(__kbutton,'before');
-	if (__kfancy) {
-		__kfile.getElement('.kfile-input').setStyle('top', -__kheight + 'px').setStyle('opacity', '0').setStyle('filter','alpha(opacity=0)').setStyle('visibility', 'visible').setStyle('font-size', '40px');
-		__kfile.getElement('.kfile-fileblock').setStyle('width','300px').setStyle('height',__kheight +'px').setStyle('overflow','hidden');
-		__kfile.getElement('.kfile-insert').setStyle('height',__kheight +'px');
-	} else {
-		__kfile.getElement('.kfile-input').setStyle('width', '300px');
-		__ktextbox.setStyle('display', 'none');
-		__kbutton.setStyle('display', 'none');
-	}
-	var __kinput = __kfile.getElement('input.kfile-input').set('name', 'kattachment'+__kid).removeProperty('onchange');
-	__kinput.addEvent('change', function() {
+	var __id = __kattachment.retrieve('nextid',1);
+	__kattachment.store('nextid',__id+1);
+	var __file = __kattachment.clone().inject(__kattachment,'before').set('id','kattachment'+__id).removeProperty('style');
+	__file.getElement('span.kattachment-id-container').set('text', __id+'. ');
+	var input = __file.getElement('input.kfile-input').set('name', 'kattachment'+__id).removeProperty('onchange');
+	input.addEvent('change', function() {
 		this.removeEvents('change');
-		__kfile.getElement('.kfile-input').setStyle('left', '-2000px');
-		var __kfilename = this.get('value'); //.replace(/^(.*\\)*/i, '');
-		__kfile.getElement('input.kfile-input-textbox').set('value', __kfilename);
-		if (!__kfancy) {
-			__kfile.getElement('.kfile-input').setStyle('position', 'absolute');
-			__ktextbox.setStyle('display', 'inline');
-			__kbutton.setStyle('display', 'inline');
-		}
-		__kbutton.set('value', kunena_attachment_del).addEvent('click', function() {
-			__kfile.fireEvent('onmouseout').dispose(); return false; 
-		} );
-		__kfile.getElement('.kfile-insert').removeProperty('style').getElement('.kattachment-insert').addEvent('click', function() {
-			kbbcode.insert('\n[attachment:'+ __kid +']'+ __kfilename +'[/attachment]\n', 'after', true); 
-			return false; 
-		} );
+		var __filename = this.get('value');
+		this.addEvent('change', function() {
+			__file.getElement('input.kfile-input-textbox').set('value', __filename);
+		});
+		__file.getElement('input.kfile-input-textbox').set('value', __filename);
+		
+		__file.getElement('.kattachment-insert').removeProperty('style').addEvent('click', function() {kbbcode.insert('\n[attachment:'+ __id +']'+ __filename +'[/attachment]\n', 'after', true); return false; } );
+		__file.getElement('.kattachment-remove').removeProperty('style').addEvent('click', function() {__file.dispose(); return false; } );
 		newAttachment();
 	});
 }

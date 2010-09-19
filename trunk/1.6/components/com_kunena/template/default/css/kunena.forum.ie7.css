@@ -64,8 +64,8 @@
 #Kunena div.kmsgtext-hide,
 #Kunena div.kmsgtext-confidential { overflow: hidden; }
 #Kunena input.kbutton { filter:chroma(color=#000000); border:none; color: #111111 !important; border: 1px solid #999999;}
-#Kunena .kattachment-remove,#Kunena .kattachment-insert { padding: 8px 6px 0px;}
-#Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover { padding: 8px 6px 0px;}
+#Kunena .kattachment-remove,#Kunena .kattachment-insert { bottom:4px;}
+#Kunena .kattachment-remove:hover,#Kunena .kattachment-insert:hover { bottom:4px;}
 #Kunena div.kmsgbody div.kmsgtext { overflow:hidden; }
 #Kunena #ktop { overflow:hidden; }
 #Kunena .kfile-input {top: 7px;}

@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+19-September-2010 810
+# [#19288] some IE7 css fixes
+# [#19288] Message title and time fix on profile left
+^ [#16390] Updated nl-NL
+
 18-September-2010 Matias
 # [#19251] SQL optimizations for large forums when getting topics from only some categories
 # [#22506] Prevent Kunena session from being shorter than Joomla session

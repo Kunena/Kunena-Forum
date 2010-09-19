@@ -90,15 +90,16 @@ if ($this->params->get('avatarPosition') == 'top') : ?>
 <?php elseif ($this->params->get('avatarPosition') == 'left') : ?>
 
 <div class="kmsg-header kmsg-header-left">
-	<h2><span class="kmsgdate kmsgdate-left" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
+	<h2>
+		<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-left">
+			<?php echo $this->subjectHtml ?>
+		</span>
+		<span class="kmsgdate kmsgdate-left" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover') ?>">
 			<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat') ?>
 		</span>
 		<span class="kmsg-id-left">
 			<a name="<?php echo intval($this->id) ?>"></a>
 			<?php echo $this->numLink ?>
-		</span>
-		<span class="kmsgtitle<?php echo $this->escape($this->msgsuffix) ?> kmsg-title-left">
-			<?php echo $this->subjectHtml ?>
 		</span>
 	</h2>
 </div>

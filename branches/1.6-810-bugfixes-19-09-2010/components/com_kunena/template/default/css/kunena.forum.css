@@ -1455,7 +1455,7 @@ PX		EM			PCT			PT
 	padding-left: 10px;
 }
 #Kunena div.kmsg-header-left span.kmsgdate-left {
-	float: left;
+	float: none;
 	padding: 0;
 	padding-bottom: 5px;
 }

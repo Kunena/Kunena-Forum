@@ -130,7 +130,7 @@ class CKunenaWhoIsOnline {
 	}
 
 	protected function _deleteUsersOnline () {
-		$past = $this->now->toUnix() - $this->config->fbsessiontimeout;
+		$past = $this->now->toUnix() - max(intval(JFactory::getConfig()->getValue( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->fbsessiontimeout));
 		$this->db->setQuery("DELETE FROM #__kunena_whoisonline WHERE time < {$this->db->Quote($past)}");
 		$this->db->query();
 		KunenaError::checkDatabaseError();

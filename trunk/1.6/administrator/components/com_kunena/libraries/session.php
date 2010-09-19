@@ -173,10 +173,9 @@ class KunenaSession extends JObject
 
 	function isNewSession()
 	{
-		$kunena_config = KunenaFactory::getConfig ();
-
 		// perform session timeout check
-		$this->_sessiontimeout = ($this->currvisit + $kunena_config->fbsessiontimeout < CKunenaTimeformat::internalTime());
+		$lifetime = max(intval(JFactory::getConfig()->getValue( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->fbsessiontimeout));
+		$this->_sessiontimeout = ($this->currvisit + $lifetime < CKunenaTimeformat::internalTime());
 		return $this->_sessiontimeout;
 	}
 

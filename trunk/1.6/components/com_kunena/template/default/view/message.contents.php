@@ -28,10 +28,10 @@ defined ( '_JEXEC' ) or die ();
 		<input type="hidden" name="action" value="post" />
 		<?php echo JHTML::_( 'form.token' ) ?>
 		<?php if ($this->allow_anonymous): ?>
-		<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->myname) ?>" /><br />
-		<input type="checkbox" id="kanonymous" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />
+		<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->myname) ?>" /><br />
+		<input type="checkbox" id="kanonymous<?php echo intval($this->id) ?>" name="anonymous" value="1" class="kinputbox postinput" <?php if ($this->anonymous) echo 'checked="checked"'; ?> /> <label for="kanonymous<?php echo intval($this->id) ?>"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC') ?></label><br />
 		<?php else: ?>
-		<input type="hidden" name="authorname"  value="<?php echo $this->escape($this->myname) ?>" />
+		<input type="hidden" name="authorname" value="<?php echo $this->escape($this->myname) ?>" />
 		<?php endif; ?>
 		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->resubject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />

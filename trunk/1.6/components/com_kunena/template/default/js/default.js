@@ -771,71 +771,34 @@ function kRequestGetTopics(el)
 	});
 }
 
+function kunenaSelectUsernameView(kobj, kuser) {
+	var kform = kobj.getParent('form');
+	if (kobj.get('checked')) {
+		kform.getElement('input[name=authorname]').removeProperty('disabled').setStyle('display','inline').set('value',kunena_anonymous_name);
+	} else {
+		kform.getElement('input[name=authorname]').set('disabled', 'disabled').setStyle('display','none').set('value',kuser);
+	}
+}
+
 //----------------- New Mootools based behaviors ----------------------
 
 window.addEvent('domready', function(){	
-	//for hide or show polls if category is allowed
-	if($('postcatid') != undefined) {
-		$('postcatid').getElements('option').each( function( catid ) {
-			catid.addEvent('click', function(e) {
-				//call a json query to check if the catid selected is allowed for polls
-				var url = kunena_ajax_url_poll;
-				var request = new Request.JSON({
-						url: url,
-						onComplete: function(jsonObj) {
-							if (jsonObj.allowed_polls != null && jsonObj.allowed_polls.indexOf(catid.value) >= 0) {
-								$('kpoll-hide-not-allowed').removeProperty('style');
-								$('kbbcode-separator5').removeProperty('style');
-								$('kbbcode-poll-button').removeProperty('style');
-								$('kpoll-not-allowed').set('text', ' ');
-							} else {								
-								$('kbbcode-separator5').setStyle('display','none');
-								$('kbbcode-poll-button').setStyle('display','none');
-								$('kpoll-hide-not-allowed').setStyle('display','none');
-								if (jsonObj.allowed_polls != null) $('kpoll-not-allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
-								else if (jsonObj.error) $('kpoll-not-allowed').set('text', jsonObj.error);
-								else $('kpoll-not-allowed').set('text', 'Unknown error!');
-							}
-						},
-						onFailure: function(){
-							$('kpoll-hide-not-allowed').setStyle('display','none');
-							$('kpoll-not-allowed').set('text', 'Cannot contact server!');
-						}
-				}).send();				
-			})
-		});
-	}
-	
-	// to select if anynomous option is allowed on new topic tab
-	if($('postcatid') != undefined) {
-		$('postcatid').getElements('option').each( function( catid ) {
-			catid.addEvent('click', function(e) {
-				var url = kunena_anonymous_check_url;
-				var request = new Request.JSON({
-					url: url,
-					onComplete: function(jsonObj) {
-						if (jsonObj.allowed_anonymous != null && jsonObj.allowed_anonymous.indexOf(catid.value) >= 0) {
-							$('kanynomous_check').removeProperty('style');	
-							$('kanynomous_check_name').removeProperty('style');
-						} else {
-							$('kanynomous_check').setStyle('display','none');
-							$('kanynomous_check_name').setStyle('display','none');
-						}
-					}
-				}).send();
-			})
-		});
-	}
-	
 	/* Quick reply */
 	$$('.kqreply').each(function(el){
 		el.addEvent('click', function(e){
 			//prevent to load the page when click is detected on a button
 			e.stop();
-			var kreply = el.getProperty('id');
+			var kreply = this.get('id');
 			var kstate = $(kreply+'_form').getStyle('display');
 			$$('.kreply-form').setStyle('display', 'none');
-			if (kstate == 'none') $(kreply+'_form').removeProperty('style');
+			$(kreply+'_form').setStyle('display', 'block');
+			if ($(kreply+'_form').getElement('input[name=anonymous]')) {
+				var kuser = $(kreply+'_form').getElement('input[name=authorname]').get('value');
+				kunenaSelectUsernameView($(kreply+'_form').getElement('input[name=anonymous]'), kuser);
+				$(kreply+'_form').getElement('input[name=anonymous]').addEvent('click', function(e) {
+					kunenaSelectUsernameView(this, kuser);
+				});
+			}
 		});
 	});
 	

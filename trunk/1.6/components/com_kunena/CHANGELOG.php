@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+18-September-2010 Matias
+# [#19251] SQL optimizations for large forums when getting topics from only some categories
+# [#22506] Prevent Kunena session from being shorter than Joomla session
+# [#22507] Fix bug in anonymous posting where anonymous posting option/username was not shown
+# [#22507] Add some JavaScript to make anonymous posting more logical
+
 18-September-2010 fxstein
 # [#19288] Duplicate string in english language file
 

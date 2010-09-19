@@ -155,6 +155,9 @@
 			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `modified_time` DATETIME NULL;</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `catid`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `parent`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `catid_parent` ( `catid`, `parent` );</query>
 		</version>
 	</upgrade>
 </comupgrade>

@@ -467,7 +467,7 @@ class CKunenaPosting {
 		// Mark topic unread for others
 
 		// First take care of old sessions to make our job easier and faster
-		$lasttime = $this->get ( 'time' ) - $this->_config->fbsessiontimeout - 60;
+		$lasttime = $this->get ( 'time' ) - max(intval(JFactory::getConfig()->getValue( 'config.lifetime' ))*60, intval(KunenaFactory::getConfig ()->fbsessiontimeout)) - 60;
 		$query = "UPDATE #__kunena_sessions SET readtopics='0' WHERE currvisit<{$this->_db->quote($lasttime)}";
 		$this->_db->setQuery ( $query );
 		$this->_db->query ();

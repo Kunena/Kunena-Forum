@@ -83,6 +83,7 @@ class CKunenaPost {
 			if ($this->do != 'domovepostnow' && $this->do != 'domergepostnow' && $this->do != 'dosplit') {
 				$this->catid = $this->msg_cat->catid;
 			}
+			$this->cat_default_allow = $this->msg_cat->allow_anonymous;
 		} else if ($this->catid) {
 			// Check that category exists and fill some information for later use
 			$this->_db->setQuery ( "SELECT 0 AS id, 0 AS thread, id AS catid, name AS catname, parent AS catparent, pub_access, locked, locked AS catlocked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls FROM #__kunena_categories WHERE id={$this->_db->Quote($this->catid)}" );
@@ -92,9 +93,12 @@ class CKunenaPost {
 				echo JText::_ ( 'COM_KUNENA_NO_ACCESS' );
 				return false;
 			}
+			$this->cat_default_allow = $this->msg_cat->allow_anonymous;
 		} else {
 			//get default category
-			$this->_db->setQuery ( "SELECT allow_anonymous FROM `#__kunena_categories` WHERE `parent`>0 AND id IN ({$this->_session->allowed}) ORDER BY ordering, name LIMIT 1" );
+			$this->_db->setQuery ( "SELECT c.allow_anonymous FROM `#__kunena_categories` AS c
+				INNER JOIN `#__kunena_categories` AS p ON c.parent=p.id AND p.parent=0
+				WHERE c.id IN ({$this->_session->allowed}) ORDER BY p.ordering, p.name, c.ordering, c.name LIMIT 1" );
 			$this->cat_default_allow = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}
@@ -270,14 +274,13 @@ class CKunenaPost {
 			$this->parent = 0;
 
 			$options = array ();
-			if (empty ( $this->msg_cat->allow_anonymous ))
-				$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->catid );
+			$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->catid );
 		}
 		$this->authorName = $this->getAuthorName ();
 		$this->emoid = 0;
 		$this->action = 'post';
 
-		$this->allow_anonymous = ! empty ( $this->msg_cat->allow_anonymous ) && $this->my->id;
+		$this->allow_anonymous = $this->cat_default_allow && $this->my->id;
 		$this->anonymous = ($this->allow_anonymous && ! empty ( $this->msg_cat->post_anonymous ));
 		$this->allow_name_change = 0;
 		if (! $this->my->id || $this->config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {

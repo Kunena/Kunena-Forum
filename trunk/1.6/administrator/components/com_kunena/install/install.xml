@@ -264,14 +264,13 @@
     <field name="modified_reason" type="tinytext" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
     <key name="thread" columns="thread"/>
-    <key name="parent" columns="parent"/>
-    <key name="catid" columns="catid"/>
     <key name="ip" columns="ip"/>
     <key name="userid" columns="userid"/>
     <key name="time" columns="time"/>
     <key name="locked" columns="locked"/>
     <key name="hold_time" columns="hold,time"/>
     <key name="parent_hits" columns="parent,hits"/>
+    <key name="catid_parent" columns="catid,parent"/>
   </table>
   <table name="kunena_messages_text">
     <field primary_key="yes" name="mesid" type="int(11)" null="0" default="0"/>

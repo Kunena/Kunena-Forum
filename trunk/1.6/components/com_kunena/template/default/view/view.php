@@ -11,6 +11,11 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
+
+$document = JFactory::getDocument ();
+$document->addScriptDeclaration('// <![CDATA[
+var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
+// ]]>');
 ?>
 <div><?php $this->displayPathway(); ?></div>
 

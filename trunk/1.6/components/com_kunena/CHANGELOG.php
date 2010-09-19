@@ -37,13 +37,13 @@ Kunena 1.6.0-RC3
 # [#22510] Rewrite RSS to use CKunenaLatest for better performance
 # [#22510] Enable caching in RSS, make it configurable
 ^ [#22510] RSS: Support also 'not in' categorie
-^ [#16390] Updated fi-FI (thanks Mortti), ru-RU (ZARKOS), th-TH (drlovecat), es-ES (Alakentu)
-+ [#16390] Added zh-CN and zh-TW (thanks baijianpeng)
 
 19-September-2010 Matias
 ^ [#22510] RSS: Add CKunenaLatest::getLatestTopics() and allow time limit / custom category selection in post/topics
 ^ [#22510] RSS: Use always visitor session (predictable results, works with caching)
 # [#22510] Hide RSS icon when category is not public
+^ [#16390] Updated fi-FI (thanks Mortti), ru-RU (ZARKOS), th-TH (drlovecat), es-ES (Alakentu)
++ [#16390] Added zh-CN and zh-TW (thanks baijianpeng)
 
 19-September-2010 810
 # [#19288] some IE7 css fixes

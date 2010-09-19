@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+18-September-2010 fxstein
+# [#19288] Duplicate string in english language file
+
 17-September-2010 Matias
 # [#19288] IE7 fix for quick reply (thanks 810)
 # [#19288] Fix broken language files (xx-XX.com_kunena_tpl_example.ini)

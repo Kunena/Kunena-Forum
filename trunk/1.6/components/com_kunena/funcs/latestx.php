@@ -242,7 +242,7 @@ class CKunenaLatestX {
 				break;
 			default:
 				$latestcats = $this->_getCategoriesWhere();
-				$wheretime = ($this->querytime ? " AND t.time>{$this->db->Quote($this->querytime)}" : '');
+				$wheretime = ($this->querytime ? " AND m.time>{$this->db->Quote($this->querytime)}" : '');
 				break;
 		}
 		if (isset($user)) $where[] = "m.userid='{$this->user->id}'";
@@ -453,7 +453,7 @@ class CKunenaLatestX {
 
 		$this->order = "time DESC";
 		$query = "SELECT id FROM #__kunena_messages AS m
-			AND m.hold IN ({$this->hold}) AND m.moved='0' AND m.catid IN ({$this->session->allowed}) {$latestcats} {$wheretime}
+			WHERE m.hold IN ({$this->hold}) AND m.moved='0' AND m.catid IN ({$this->session->allowed}) {$latestcats} {$wheretime}
 			ORDER BY {$this->order}";
 		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
 		$this->threadids = $this->db->loadResultArray ();

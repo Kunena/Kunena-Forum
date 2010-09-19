@@ -30,12 +30,12 @@ class KunenaSession extends JObject
 		$this->load($identifier);
 	}
 
-	static public function getInstance( $update=false )
+	static public function getInstance( $update=false, $userid = null )
 	{
 		if (!self::$_instance) {
 			$my = JFactory::getUser();
 			$db = JFactory::getDBO();
-			self::$_instance = new KunenaSession($my->id);
+			self::$_instance = new KunenaSession($userid !== null ? $userid : $my->id);
 			if ($update) self::$_instance->updateSessionInfo();
 		}
 		return self::$_instance;

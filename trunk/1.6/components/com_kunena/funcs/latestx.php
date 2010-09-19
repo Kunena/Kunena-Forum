@@ -222,6 +222,8 @@ class CKunenaLatestX {
 
 		$myhold = explode(',', $this->hold);
 		$hold = $this->hold;
+		$latestcats = '';
+		$wheretime = '';
 		switch ($type) {
 			case 'unapproved':
 				if (!in_array(1, $myhold)) {
@@ -239,6 +241,8 @@ class CKunenaLatestX {
 				$user = 1;
 				break;
 			default:
+				$latestcats = $this->_getCategoriesWhere();
+				$wheretime = ($this->querytime ? " AND t.time>{$this->db->Quote($this->querytime)}" : '');
 				break;
 		}
 		if (isset($user)) $where[] = "m.userid='{$this->user->id}'";
@@ -251,7 +255,7 @@ class CKunenaLatestX {
 
 		$query = "SELECT COUNT(*) FROM #__kunena_messages AS m
 		INNER JOIN #__kunena_messages AS mm ON m.thread = mm.id
-		WHERE {$where}";
+		WHERE {$where} {$latestcats} {$wheretime}";
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$this->total) return;
@@ -259,7 +263,7 @@ class CKunenaLatestX {
 		$query = "SELECT m.thread, m.id
 		FROM #__kunena_messages AS m
 		INNER JOIN #__kunena_messages AS mm ON m.thread = mm.id
-		WHERE {$where}
+		WHERE {$where} {$latestcats} {$wheretime}
 		ORDER BY m.time DESC";
 
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
@@ -413,10 +417,7 @@ class CKunenaLatestX {
 		$this->_getMyLatest();
 	}
 
-	function getLatest() {
-		if (isset($this->total)) return;
-		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
-		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+	protected function _getCategoriesWhere() {
 		$catlist = array ();
 		// need this becuse with kunena latest module when there is only one item selected in the list, it isn't saved in array
 		if(!is_array($this->latestcategory)) $this->latestcategory = array($this->latestcategory);
@@ -432,11 +433,47 @@ class CKunenaLatestX {
 				$latestcats = ' AND m.catid NOT IN ('.$catlist.') ';
 			}
 		}
+		return $latestcats;
+	}
+	function getLatestTopics() {
+		if (isset($this->total)) return;
+		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
+		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+
+		$latestcats = $this->_getCategoriesWhere();
+		$wheretime = ($this->querytime ? " AND m.time>{$this->db->Quote($this->querytime)}" : '');
+
+		$query = "SELECT COUNT(m.thread) FROM #__kunena_messages AS m
+			WHERE m.hold IN ({$this->hold}) AND m.moved=0 AND m.catid IN ({$this->session->allowed}) {$latestcats} {$wheretime}";
+
+		$this->db->setQuery ( $query );
+		$this->total = ( int ) $this->db->loadResult ();
+		if (KunenaError::checkDatabaseError() || !$this->total) return;
+		$offset = ($this->page - 1) * $this->threads_per_page;
+
+		$this->order = "time DESC";
+		$query = "SELECT id FROM #__kunena_messages AS m
+			AND m.hold IN ({$this->hold}) AND m.moved='0' AND m.catid IN ({$this->session->allowed}) {$latestcats} {$wheretime}
+			ORDER BY {$this->order}";
+		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
+		$this->threadids = $this->db->loadResultArray ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		$this->_common();
+	}
+
+	function getLatest() {
+		if (isset($this->total)) return;
+		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
+		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+
+		$latestcats = $this->_getCategoriesWhere();
+		$wheretime = ($this->querytime ? " AND t.time>{$this->db->Quote($this->querytime)}" : '');
 
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__kunena_messages AS t
 			INNER JOIN #__kunena_messages AS m ON m.id=t.thread
-		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
-		AND t.time > {$this->db->Quote($this->querytime)} AND t.hold IN ({$this->hold}) AND t.moved=0 AND t.catid IN ({$this->session->allowed})" . $latestcats; // if categories are limited apply filter
+			WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
+			AND t.hold IN ({$this->hold}) AND t.moved=0 AND t.catid IN ({$this->session->allowed}) {$latestcats} {$wheretime}";
 
 
 		$this->db->setQuery ( $query );
@@ -448,10 +485,9 @@ class CKunenaLatestX {
 		$query = "SELECT m.id, MAX(t.id) AS lastid FROM #__kunena_messages AS t
 			INNER JOIN #__kunena_messages AS m ON m.id=t.thread
 			WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
-			AND t.time > {$this->db->Quote($this->querytime)} AND t.hold IN ({$this->hold}) AND t.moved='0' AND t.catid IN ({$this->session->allowed}) {$latestcats}
+			AND t.hold IN ({$this->hold}) AND t.moved='0' AND t.catid IN ({$this->session->allowed}) {$latestcats} {$wheretime}
 			GROUP BY t.thread
-			ORDER BY {$this->order}
-		";
+			ORDER BY {$this->order}";
 		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
 		$this->threadids = $this->db->loadResultArray ();
 		if (KunenaError::checkDatabaseError()) return;

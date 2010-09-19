@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+18-September-2010 Matias
+^ [#22510] RSS: Add CKunenaLatest::getLatestTopics() and allow time limit / custom category selection in post/topics
+^ [#22510] RSS: Use always visitor session (predictable results, works with caching)
+
 19-September-2010 810
 # [#19288] some IE7 css fixes
 # [#19288] Message title and time fix on profile left

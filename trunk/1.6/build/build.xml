@@ -245,6 +245,8 @@
 		<language tag="th-TH" />
 		<language tag="tr-TR" />
 		<language tag="vi-VN" />
+		<language tag="zh-CN" />
+		<language tag="zh-TW" />
 		<archive destfile="${build_dir}/archive/admin" basedir="${tmp_dir}/${kunena.backend}" />
 		<archive destfile="${build_dir}/archive/site" basedir="${tmp_dir}/${kunena.frontend}" />
 		<archive destfile="${build_dir}/archive/media" basedir="${tmp_dir}/${kunena.media}" />

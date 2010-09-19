@@ -4,10 +4,10 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Russian</name>
 	<tag>ru-RU</tag>
-	<creationDate>unknown</creationDate>
-	<version>unknown</version>
-	<build>unknown</build>
-	<author>unknown</author>
+	<creationDate>2010-09-18</creationDate>
+	<version>1.6.0-RC3</version>
+	<build>3509</build>
+	<author>ZARKOS</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>
 	<copyright>(C) 2010 unknown</copyright>

@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Finnish (Suomi)</name>
 	<tag>fi-FI</tag>
-	<creationDate>2010-09-11</creationDate>
+	<creationDate>2010-09-19</creationDate>
 	<version>1.6.0-RC3</version>
-	<build>3462</build>
+	<build>3529</build>
 	<author>Sami Haaranen</author>
 	<authorEmail>mortti@joomlaportal.fi</authorEmail>
 	<authorUrl>www.joomlaportal.fi</authorUrl>

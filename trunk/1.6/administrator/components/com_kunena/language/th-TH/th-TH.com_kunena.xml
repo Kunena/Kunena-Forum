@@ -4,10 +4,10 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Thai</name>
 	<tag>th-TH</tag>
-	<creationDate>unknown</creationDate>
-	<version>unknown</version>
+	<creationDate>2010-09-16</creationDate>
+	<version>1.6.0-RC2</version>
 	<build>unknown</build>
-	<author>unknown</author>
+	<author>drlovecat</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>
 	<copyright>(C) 2010 unknown</copyright>

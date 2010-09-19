@@ -1792,6 +1792,11 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 							<td align="left" valign="top" width="25%"><?php echo $lists ['rss_old_titles']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_OLD_TITLES_DESC') ?></td>
 						</tr>
+						<tr align="center" valign="middle">
+							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_A_RSS_CACHE') ?></td>
+							<td align="left" valign="top" width="25%"><?php echo $lists ['rss_cache']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RSS_CACHE_DESC') ?></td>
+						</tr>
 					</table>
 				</fieldset>
 				</dd>

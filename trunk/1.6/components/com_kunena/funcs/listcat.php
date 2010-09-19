@@ -166,11 +166,11 @@ class CKunenaListcat {
 		if (count ( $subcats )) {
 			$subcatlist = implode ( ',', $subcats );
 			if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__kunena_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>{$this->db->Quote($this->prevCheck)} AND m.thread NOT IN ({$readlist})) AS new";
-			else $subquery = " 0 AS new";
+			else $subquery = "0 AS new";
 
-			$query = "SELECT id, name, description, parent, numTopics, numPosts, {$subquery}
+			$query = "SELECT c.id, c.name, c.description, c.parent, c.numTopics, c.numPosts, {$subquery}
 			FROM #__kunena_categories AS c
-			WHERE c.parent IN ({$subcatlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY ordering, name";
+			WHERE c.parent IN ({$subcatlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY c.ordering, c.name";
 			$this->db->setQuery ($query);
 			$childforums = $this->db->loadObjectList ();
 			KunenaError::checkDatabaseError();

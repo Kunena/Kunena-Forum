@@ -30,7 +30,7 @@ class KunenaApp {
 
 	function __construct() {
 		ob_start();
-		
+
 		// Display time it took to create the entire page in the footer
 		jimport( 'joomla.error.profiler' );
 		$__kstarttime = JProfiler::getmicrotime();
@@ -718,11 +718,19 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 	// RSS
 	if ($kunena_config->enablerss) {
-		echo '<div class="krss-block">';
-		$rss_params = ((int) $catid > 0 ? '&amp;catid=' . (int) $catid : '');
-		$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
-		echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
-		echo '</div>';
+		if ($catid>0) {
+			kimport('category');
+			$category = KunenaCategory::getInstance($catid);
+			if ($category->pub_access == 0 && $category->parent) $rss_params = '&amp;catid=' . (int) $catid;
+		} else {
+			$rss_params = '';
+		}
+		if (isset($rss_params)) {
+			echo '<div class="krss-block">';
+			$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
+			echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
+			echo '</div>';
+		}
 	}
 	$template = KunenaFactory::getTemplate();
 	$this->params = $template->params;

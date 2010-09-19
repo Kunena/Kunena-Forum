@@ -1475,6 +1475,19 @@ function showConfig($option) {
 
 		// ------
 
+		$rss_cache = array ();
+
+		$rss_cache [] = JHTML::_ ( 'select.option', '0', '0' );		// disable
+		$rss_cache [] = JHTML::_ ( 'select.option', '60', '1' );
+		$rss_cache [] = JHTML::_ ( 'select.option', '300', '5' );
+		$rss_cache [] = JHTML::_ ( 'select.option', '900', '15' );
+		$rss_cache [] = JHTML::_ ( 'select.option', '1800', '30' );
+		$rss_cache [] = JHTML::_ ( 'select.option', '3600', '60' );
+
+		$lists ['rss_cache'] = JHTML::_ ( 'select.genericlist', $rss_cache, 'cfg_rss_cache', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rss_cache );
+
+		// ------
+
 		// build the html select list - (moved enablerss here, to keep all rss-related features together)
 		$lists ['enablerss'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerss );
 	}

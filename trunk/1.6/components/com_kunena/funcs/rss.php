@@ -11,70 +11,48 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-require_once (KUNENA_PATH_LIB . DS . 'kunena.rss.class.php');
+require_once (KPATH_SITE .'/lib/kunena.rss.class.php');
 
-
-class CKunenaRSSView extends CKunenaRSS {
+class CKunenaRSSView {
+	protected	$app;
+	protected	$config;
 
 
 	/**
-	 * Dummy constructor
-	 *
 	 * @access public
 	 * @return void
 	 */
-	public function __construct($catid = 0) {
-		kimport('html.parser');
-		parent::__construct();
+	public function __construct( $catid = 0 ) {
+		$this->app					= JFactory::getApplication();
+		$this->config				= KunenaFactory::getConfig();
 
+		// Important!
+		if (!$this->config->enablerss) {
+			die();
+		}
+
+		// Load global options from config
+		$this->type					= strtolower($this->config->rss_type);
+		$this->specification		= strtolower(str_replace('rss', '', $this->config->rss_specification));
+		$this->allow_html 			= (bool) $this->config->rss_allow_html;
+		$this->author_format	 	= strtolower($this->config->rss_author_format);
+		$this->author_in_title		= strtolower($this->config->rss_author_in_title);
+		$this->word_count 			= (int) $this->config->rss_word_count;
+		$this->old_titles 			= (bool) $this->config->rss_old_titles;
+		$this->caching				= (int) $this->config->rss_cache;
+		//$this->caching				= 0;
+
+		// Queryoptions which will be verified by CKunenaRSSData later
+		$this->timelimit			= $this->config->rss_timelimit;
+		$this->limit				= $this->config->rss_limit;
+		$this->incl_cat				= $this->config->rss_included_categories;	// for global feeds
+		$this->excl_cat				= $this->config->rss_excluded_categories;
+
+		// Is this feed for a specific category?
 		if ((int) $catid > 0) {
-			$this->setCategory($catid);
+			// Override categories wanted
+			$this->incl_cat = array( (int) $catid );
 		}
-	}
-
-
-	/**
-	 * Dummy destructor
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function __destruct() {
-		parent::__destruct();
-	}
-
-
-	/**
-	 * Set a wanted category for feed content
-	 *
-	 * @param int $catid Id on category wanted in feed
-	 * @return bool
-	 */
-	public function setCategory($catid = 0) {
-		$excl_cat	= $this->getQueryOption('excl_cat');
-		$catid		= (int) $catid;
-
-		if ($catid > 0) {
-			$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id = {$this->db->Quote($catid)} ORDER BY ordering LIMIT 1" );
-			$category = $this->db->loadObject();
-			if (KunenaError::checkDatabaseError()) {
-				// internal error
-			} else if ($category->published != 1) {
-				// forbidden
-			} else if (in_array($catid, $excl_cat)) {
-				// forbidden
-			} else {
-				$this->setQueryOption('incl_cat', array((int) $catid));
-
-				$title = $this->getLabel('name') .' - '. $category->name;
-				$this->setLabel('title', $title);
-				$this->setLabel('image_title', $title);	// to fix stupid validation error
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 
@@ -83,41 +61,54 @@ class CKunenaRSSView extends CKunenaRSS {
 	 * Header and mime is automaticly set.
 	 *
 	 * @access public
+	 * @uses JCache
+	 * @see JFactory::getCache()
+	 * @see CKunenaRSSData::fetch()
 	 * @see self::buildFeed()
 	 * @return void
-	 * @todo Implement feed caching. Maybe FeedCreator can do this automaticly?
 	 */
 	public function display() {
-		$type					= $this->getOption('type');
-		$html					= $this->getOption('allow_html');
-		$spec					= $this->getOption('specification');
-		$author					= $this->getOption('author_format');
-		$author_in_title		= $this->getOption('author_in_title');
-		$words					= $this->getOption('word_count');
-		$old_titles				= $this->getOption('old_titles');
-		$data					= $this->getData();
-		$feed					= $this->buildFeed($data, $type, $html, $author, $author_in_title, $words, $old_titles);
+		$cache = &JFactory::getCache( 'com_kunena_rss' );
 
-		// On the fly
-		$feed->outputFeed($spec);
+		if ( $this->caching ) {
+			$cache->setCaching( 1 );
+			$cache->setLifeTime( $this->caching );
+		}
 
-		// Notes from feedcreator examples:
-		//$feed->useCached();	// use cached version if age < 1 hour
-		//$html = $feed->createFeed($spec);
+		// Fetch data
+		$data = $cache->call( array( 'CKunenaRSSData', 'fetch' ), $this->type, $this->incl_cat, $this->excl_cat, $this->limit, $this->timelimit );
+		//$data = CKunenaRSSData::fetch($this->type, $this->incl_cat, $this->excl_cat, $this->limit, $this->timelimit);
+
+		// Build and display feed
+		$feed = $this->buildFeed( $data );
+
+		// On the fly feedcreation
+		$feed->outputFeed( $this->specification );
+		//$html = $feed->createFeed( $this->specification );
 	}
 
+
 	/**
+	 * Pulls together data and options and outputs the build feed.
+	 * Header and mime is automaticly set.
 	 *
-	 * @param unknown_type $items
-	 * @param unknown_type $type
-	 * @param unknown_type $render_html
-	 * @param unknown_type $author_format
-	 * @param unknown_type $message_words
+	 * @access public
+	 * @param array $items
+	 * @return obj FeedCreator
 	 */
-	private function buildFeed($items = array(), $type, $render_html, $author_format, $author_in_title, $message_words, $old_titles) {
-		// Get the options and values we'll need
+	private function buildFeed( $items = array() ) {
+
+		// Get the path options and values we'll need
 		$uri		= JURI::getInstance(JURI::base());
 		$uribase	= $uri->toString(array('scheme', 'host', 'port'));
+
+		// Various labels needed
+		$title			= kunena_htmlspecialchars($this->app->getCfg('sitename')) .' - Forum';
+		$description	= 'Kunena Site Syndication';
+		$link			= JURI::root();
+		$generator		= 'Kunena ' . Kunena::version();
+		$rss_url		= $uribase . $_SERVER["REQUEST_URI"];
+		$rss_icon		= KUNENA_URLICONSPATH . 'rss.png';
 
 		// Make sure Joomla's FeedCreator is included
 		jimport('bitfolge.feedcreator');
@@ -125,159 +116,135 @@ class CKunenaRSSView extends CKunenaRSS {
 		$feed = new UniversalFeedCreator();
 
 		// Set generel labels and info for the feed
-		{
-			$feed->link				= $this->getLabel('link');
-			$feed->description		= $this->getLabel('description');
-			$feed->title			= $this->getLabel('title');
-			$feed->pubDate			= $this->getLabel('pubDate');
-			$feed->lastBuildDate	= $this->getLabel('lastBuildDate');
-			$feed->generator		= $this->getLabel('generator');
+		$feed->link				= $link;
+		$feed->description		= $description;
+		$feed->title			= $title;
+		$feed->generator		= $generator;
+		$feed->syndicationURL	= $rss_url;
+		$feed->encoding			= 'UTF-8';
+		$feed->pubDate			= date('r');
+		$feed->lastBuildDate	= date('r');
+		$feed->xslStyleSheet	= '';	// needed, else errors from feedcreator shows
+		$feed->cssStyleSheet	= '';	// needed, else errors from feedcreator shows
 
-			$feed->encoding			= 'UTF-8';
-			$feed->syndicationURL	= $uribase . $_SERVER["REQUEST_URI"];
-			$feed->xslStyleSheet	= '';	// needed, else errors from feedcreator shows
-			$feed->cssStyleSheet	= '';	// needed, else errors from feedcreator shows
+		// Create image for feed
+		$image = new FeedImage();
+		$image->title			= $title;
+		$image->url				= $rss_icon;
+		$image->link			= $link;
+		$image->description		= $description;
 
-			// Create image for feed
-			$image = new FeedImage();
-			$image->title			= $this->getLabel('image_title');
-			$image->url				= $this->getLabel('image_url');
-			$image->link			= $this->getLabel('image_link');
-			$image->description		= $this->getLabel('image_description');
-
-			$feed->image = $image;
-		}
+		$feed->image = $image;
 
 		// Build items for feed
-		{
-			foreach ($items as $data) {
-				$item = new FeedItem();
+		foreach ($items as $data) {
+			$item = new FeedItem();
 
-				// Build unique direct linking url for each item (htmlspecialchars_decode because FeedCreator uses htmlspecialchars on input)
-				$url = htmlspecialchars_decode(CKunenaLink::GetThreadPageURL(
-					'view',
-					$data->catid,
-					$data->thread,
-					ceil($data->thread_count / $this->config->messages_per_page),
-					$this->config->messages_per_page,
-					$data->lastpost_id
-				));
+			// Build unique direct linking url for each item (htmlspecialchars_decode because FeedCreator uses htmlspecialchars on input)
+			$url = htmlspecialchars_decode(CKunenaLink::GetThreadPageURL(
+				'view',
+				$data->catid,
+				$data->thread,
+				1,
+				$this->config->messages_per_page,
+				$data->id
+			));
 
-				// Extract the data, we want to present and store it in $tmp
-				$tmp = array();
+			// Extract the data, we want to present and store it in $tmp
+			$tmp = array();
 
-				switch ($type) {
-					case 'topic':
-						$tmp['title']		= $data->subject;
-						$tmp['text']		= $data->message;
-						$tmp['date']		= $data->time;
-						$tmp['email']		= $data->email;
-						$tmp['name']		= $data->name;
-						$tmp['cat_name']	= $data->category_name;
-						break;
-					case 'post':
-						$tmp['title']		= $data->lastpost_subject;
-						$tmp['text']		= $data->lastpost_message;
-						$tmp['date']		= $data->lastpost_time;
-						$tmp['email']		= $data->lastpost_email;
-						$tmp['name']		= $data->lastpost_name;
-						$tmp['cat_name']	= $data->category_name;
-						break;
-					case 'recent':
-					default:
-						$tmp['title']		= $data->lastpost_subject;
-						$tmp['text']		= $data->lastpost_message;
-						$tmp['date']		= $data->lastpost_time;
-						$tmp['email']		= $data->lastpost_email;
-						$tmp['name']		= $data->lastpost_name;
-						$tmp['cat_name']	= $data->category_name;
-				}
+			$tmp['title']		= $data->subject;
+			$tmp['text']		= $data->message;
+			$tmp['date']		= $data->time;
+			$tmp['email']		= $data->email;
+			$tmp['name']		= $data->name;
+			$tmp['cat_name']	= $data->catname;
 
-				// Guid is used by aggregators to uniquely identify each item
-				$tmp['guid']	= $uribase . $url;
+			// Guid is used by aggregators to uniquely identify each item
+			$tmp['guid']		= $uribase . $url;
 
-				// Link and source is always the same
-				$tmp['link']	= $uribase . $url;
-				$tmp['source']	= $uribase . $url;
+			// Link and source is always the same
+			$tmp['link']		= $uribase . $url;
+			$tmp['source']		= $uribase . $url;
 
-				// Determine title format
-				if ($old_titles) {
-					$tmp['title'] = JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $tmp['title'];
-				}
-
-				// Determine author format
-				switch ($author_format) {
-					case 'both':
-						$tmp['author'] = $tmp['email'] .' ('. $tmp['name'] .')';
-						break;
-					case 'email':
-						$tmp['author'] = $tmp['email'];
-						break;
-					case 'name':
-					default:
-						$tmp['author'] = $tmp['name'];
-				}
-
-				// Do we want author in item titles?
-				if ($author_in_title) {
-					 $tmp['title'] .= ' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $tmp['name'];
-				}
-
-				// Limit number of words
-				if ($message_words) {
-					$Newmessage = '';
-					$t_newString = explode(" ", $tmp['text']);
-					foreach ($t_newString as $key => $word) {
-						if ($key < $message_words) {
-							$Newmessage .= $word.' ';
-						}
-					}
-
-					// Append userfriendly '...' string
-					if (strlen($tmp['text']) != strlen($Newmessage)) {
-						$Newmessage .= ' ...';
-					}
-
-					$tmp['text'] = $Newmessage;
-				}
-
-				if ($render_html) {
-					// Not nessecary to convert specialchars or use parsetext.
-					// ParseBBCode does it for us
-					$tmp['text'] = KunenaParser::parseBBCode($tmp['text']);
-				}
-				else {
-					// Not nessecary to convert specialchars.
-					// FeedCreator does it for us
-					$tmp['text'] = KunenaParser::parseText($tmp['text']);
-				}
-
-
-				// Assign values to feed item
-				$item->title		= $tmp['title'];
-				$item->link			= $tmp['link'];
-				$item->description	= $tmp['text'];
-				$item->date			= $tmp['date'];
-				$item->source		= $tmp['source'];
-				$item->author		= $tmp['author'];
-				$item->category		= $tmp['cat_name'];
-				$item->guid			= $tmp['guid'];
-
-
-				// Optional
-				//$item->descriptionTruncSize		= 500;		// behaves strangely
-				//$item->descriptionHtmlSyndicated	= false;	// doesnt work
-
-				// Optional (enclosure)
-				//$item->enclosure = new EnclosureItem();		// Not tried
-				//$item->enclosure->url		= 'http://http://www.dailyphp.net/media/voice.mp3';
-				//$item->enclosure->length	= "950230";
-				//$item->enclosure->type	= 'audio/x-mpeg';
-
-				// Finally add item to feed
-				$feed->addItem($item);
+			// Determine title format
+			if ($this->old_titles) {
+				$tmp['title'] = JText::_('COM_KUNENA_GEN_SUBJECT') .': '. $tmp['title'];
 			}
+
+			// Determine author format
+			switch ($this->author_format) {
+				case 'both':
+					$tmp['author'] = $tmp['email'] .' ('. $tmp['name'] .')';
+					break;
+				case 'email':
+					$tmp['author'] = $tmp['email'];
+					break;
+				case 'name':
+				default:
+					$tmp['author'] = $tmp['name'];
+			}
+
+			// Do we want author in item titles?
+			if ($this->author_in_title) {
+				 $tmp['title'] .= ' - '. JText::_('COM_KUNENA_GEN_BY') .': '. $tmp['name'];
+			}
+
+			// Limit number of words
+			if ($this->word_count) {
+				$Newmessage = '';
+				$t_newString = explode(" ", $tmp['text']);
+				foreach ($t_newString as $key => $word) {
+					if ($key < $this->word_count) {
+						$Newmessage .= $word .' ';
+					}
+				}
+
+				// Append userfriendly '...' string
+				if (strlen($tmp['text']) != strlen($Newmessage)) {
+					$Newmessage .= ' ...';
+				}
+
+				$tmp['text'] = $Newmessage;
+			}
+
+			if ($this->allow_html) {
+				// Not nessecary to convert specialchars or use parsetext.
+				// ParseBBCode does it for us
+				$tmp['text'] = KunenaParser::parseBBCode($tmp['text']);
+			}
+			else {
+				// Not nessecary to convert specialchars.
+				// FeedCreator does it for us
+				$tmp['text'] = KunenaParser::parseText($tmp['text']);
+			}
+
+
+			// Assign values to feed item
+			$item->title		= $tmp['title'];
+			$item->link			= $tmp['link'];
+			$item->description	= $tmp['text'];
+			$item->date			= $tmp['date'];
+			$item->source		= $tmp['source'];
+			$item->author		= $tmp['author'];
+			$item->category		= $tmp['cat_name'];
+			$item->guid			= $tmp['guid'];
+
+
+			// Optional
+			//$item->descriptionTruncSize		= 500;		// behaves strangely
+			//$item->descriptionHtmlSyndicated	= false;	// doesnt work
+
+			// Optional (enclosure)
+			//$item->enclosure = new EnclosureItem();		// Not tried
+			//$item->enclosure->url		= 'http://http://www.dailyphp.net/media/voice.mp3';
+			//$item->enclosure->length	= "950230";
+			//$item->enclosure->type	= 'audio/x-mpeg';
+
+			// Finally add item to feed
+			$feed->addItem($item);
 		}
+
 
 		return $feed;
 	}

@@ -283,6 +283,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $rss_author_in_title = 1;
 	var $rss_word_count = '0';
 	var $rss_old_titles = 1;
+	var $rss_cache = 900;
 	var $fbdefaultpage = 'recent';
 	// New 1.0.8 config variables
 	var $default_sort = 'asc'; // 'desc' for latest post first

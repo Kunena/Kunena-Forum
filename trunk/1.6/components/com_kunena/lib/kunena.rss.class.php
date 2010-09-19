@@ -51,9 +51,15 @@ class CKunenaRSSData {
 		$model = new CKunenaLatestX ( '', 0 );
 
 		$model->threads_per_page	= $options['limit'];
+		$model->querytime			= CKunenaTimeformat::internalTime() - $options['timelimit'];
 		$model->latestcategory		= $options['incl_cat'];
 		$model->latestcategory_in	= 1;
-		$model->querytime			= CKunenaTimeformat::internalTime() - $options['timelimit'];
+			
+		if (count($options['incl_cat']) == 0) {
+			// If incl_cat is empty everything will be included by CKunenalatestX, therefore we need to specific which categories NOT to load
+			$model->latestcategory		= $options['excl_cat'];
+			$model->latestcategory_in	= 0;
+		}
 
 		$result = array ();
 		$threadmode = false;

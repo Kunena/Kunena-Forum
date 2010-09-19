@@ -36,6 +36,7 @@ Kunena 1.6.0-RC3
 19-September-2010 810
 ^ [#19288] some IE7 css fixes
 ^ [#19288] Message title and time fix on profile left
+^ [#16390] Updated nl-NL
 
 17-September-2010 Matias
 # [#19288] IE7 fix for quick reply (thanks 810)

@@ -54,54 +54,32 @@ class CKunenaRSSData {
 		$model->querytime			= CKunenaTimeformat::internalTime() - $options['timelimit'];
 		$model->latestcategory		= $options['incl_cat'];
 		$model->latestcategory_in	= 1;
-			
+
 		if (count($options['incl_cat']) == 0) {
 			// If incl_cat is empty everything will be included by CKunenalatestX, therefore we need to specific which categories NOT to load
 			$model->latestcategory		= $options['excl_cat'];
 			$model->latestcategory_in	= 0;
 		}
 
-		$result = array ();
-		$threadmode = false;
-
 		switch ( $options['type'] ) {
 			case 'topic':
 				$model->getLatestTopics();
-				$threadmode = true;
+				$result = $model->threads;
 				break;
 			case 'recent':
 				$model->getLatest();
-				$threadmode = true;
+				$result = $model->lastreply;
+				foreach ($result as $message) {
+					$message->subject = $model->threads[$message->thread]->subject;
+				}
 				break;
 			case 'post':
 			default:
 				$model->getLatestPosts();
+				$result = $model->customreply;
 		}
 
-		if ( $threadmode == true ) {
-			// for thread mode we merge the thread data with the latestreply data
-			// we want to keep the subject from the thread, but userinfo and lastest post info
-			// from the lastest posts array - by doing so we can leverage a single template for
-			// thread and message mode
-			$result = $model->threads;
-
-			foreach ($result as $message) {
-				$message->id = $model->lastreply[$message->thread]->id;
-				$message->message = $model->lastreply[$message->thread]->message;
-				$message->userid = $model->lastreply[$message->thread]->userid;
-				$message->name = $model->lastreply[$message->thread]->name;
-				$message->lasttime = $model->lastreply[$message->thread]->lasttime;
-			}
-		}
-		else {
-			$result = $model->customreply;
-		}
-
-		if ( empty( $result ) ) {
-			$result = array();
-		}
-
-		return $result;
+		return (array) $result;
 	}
 
 

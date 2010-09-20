@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+20-September-2010 Matias
+# [#22510] Show the right information in RSS feeds (post, first in topic, last in topic)
+# [#16390] Fix wrong encoding in zh-CN and zh-TW (thanks baijianpeng)
+
 19-September-2010 LittleJohn
 # [#22510] Rewrite RSS to use CKunenaLatest for better performance
 # [#22510] Enable caching in RSS, make it configurable

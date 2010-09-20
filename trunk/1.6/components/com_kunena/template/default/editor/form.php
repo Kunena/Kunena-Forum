@@ -51,7 +51,6 @@ $this->k=0;
 	<input type="hidden" name="id" value="<?php echo intval($this->id) ?>" />
 	<?php if (! empty ( $this->kunena_editmode )) : ?>
 	<input type="hidden" name="do" value="editpostnow" />
-	<input type="hidden" name="authorname" value="<?php echo $this->authorName ?>" />
 	<?php endif; ?>
 	<?php echo JHTML::_( 'form.token' ); ?>
 

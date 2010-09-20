@@ -381,7 +381,7 @@ class CKunenaPost {
 		if ($this->isIPBanned())
 			return false;
 
-		$fields ['name'] = JRequest::getString ( 'authorname', $this->getAuthorName () );
+		$fields ['name'] = JRequest::getString ( 'authorname', $this->msg_cat->name );
 		$fields ['email'] = JRequest::getString ( 'email', null );
 		$fields ['subject'] = JRequest::getVar ( 'subject', null, 'POST', 'string', JREQUEST_ALLOWRAW );
 		$fields ['message'] = JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW );

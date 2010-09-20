@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0-RC3
 
+20-September-2010 fxstein
+# [#19288] Preserve original authorname on post edits
+
 20-September-2010 Matias
 # [#22510] Show the right information in RSS feeds (post, first in topic, last in topic)
 # [#16390] Fix wrong encoding in zh-CN and zh-TW (thanks baijianpeng)

@@ -123,9 +123,7 @@ class KunenaModelSchema extends JModel
 	{
 		if ($this->sql == null) {
 			$diff = $this->getDiffSchema();
-			//echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
 			$this->sql = $this->getSchemaSQL($diff);
-			//echo "<pre>",print_r($this->sql),"</pre>";
 		}
 		return $this->sql;
 	}
@@ -135,9 +133,7 @@ class KunenaModelSchema extends JModel
 		if ($this->sql == null) {
 			$from = $this->createSchema();
 			$diff = $this->getDiffSchema($from);
-			//echo "<pre>",htmlentities($diff->saveXML()),"</pre>";
 			$this->sql = $this->getSchemaSQL($diff);
-			//echo "<pre>",print_r($this->sql),"</pre>";
 		}
 		return $this->sql;
 	}

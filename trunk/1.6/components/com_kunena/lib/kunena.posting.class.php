@@ -771,7 +771,6 @@ class CKunenaPosting {
 	protected function checkTopicEmoticon($field, $value) {
 		$template = KunenaFactory::getTemplate();
 		if (! isset ( $template->topicIcons [$value] )) {
-			print_r($template->topicIcons); die();
 			return $this->setError ( $field, JText::_ ( 'COM_KUNENA_POST_FIELD_TOPICEMOTICON_INVALID' ) );
 		}
 		return true;

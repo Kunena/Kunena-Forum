@@ -14,37 +14,41 @@ PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING Kunena @kunenaversion@!
 Introduction
 ============
 
-The Kunena Team is excited to announce the release of Kunena 1.6, Release Candidate 1. This is the first RC release and
-is stable enough to be used on live production websites in limited usage (primarily for testing) as long as minor issues
-are tolerated during the time before it becomes a final release.
-Since the first beta release of Kunena 1.6, the Kunena team has been focused on fixing a great number of bugs, CSS 
-fixes, IE7 compatibility issues and adding translations for more languages.
-Kunena 1.6 marks a major milestone for the Kunena project. A long list of open source contributors have committed over 
-2000 changes and have helped make Kunena the leading forum solution for Joomla 1.5 & 1.6. A long list of new features in
-addition with various optimizations and code restructuring have resulted in the most advanced Kunena version to date.
-We continue to put a big emphasis on usability and easy of installation. As such the installer has been further enhanced
-to allow for multiple install and upgrade options. It performs its steps incrementally to avoid timeouts on slower 
-hosts. It automatically performs actions as e.g. taking the forum offline during the install and re-enables it after 
-completing the install.
+The Kunena Team is excited to announce the release of Kunena 1.6, Release Candidate 3. This is the third and final RC 
+release for Kunena 1.6 and is stable enough to be used on live production websites in limited usage (primarily for 
+testing) as long as minor issues are tolerated during the time before it becomes a final release.
+Since the second release candidate of Kunena 1.6, the Kunena team has been focused on fixing over 100 bugs and issues 
+including CSS fixes, IE7 and IE8 compatibility, usability issues, API issues, html validation issues, new modules and 
+plug-ins and updating languages translations.
+Kunena 1.6 marks a major milestone for the Kunena Project. A long list of open source contributors have committed over 
+2500 changes and have helped make Kunena the leading forum solution for both Joomla 1.5 and 1.6. A long list of new 
+features in addition to various optimizations and code restructuring have resulted in the most advanced version of 
+Kunena to date.
+We continue to put a big emphasis on usability and ease of installation. Therefore, the installer has been further 
+enhanced to allow for multiple installation and upgrade options. It performs incremental steps to avoid timeouts on 
+slower hosts. It automatically performs actions such as taking the forum offline during the installation or upgrade and 
+re-enables it after completing the install.
 Kunena now supports Joomla 1.6 style languages files that are backward compatible with Joomla 1.5. Multiple languages 
-are included in the base install packages and more will be available and can be installed separately. Kunena 1.6 also 
-support multiple languages to be installed on a single system and together with Joomla allows users to select their 
-preferred language.
-Templates have now been separated from underlying code and allow for version independent template development. Templates 
-can embed various options that can be set via the included template manager (e.g. Avatar position left-right-top-bottom 
-in the new default template - Blue Eagle).
-The Kunena Team is fully committed to Joomla 1.6 and beyond and various modules have been developed to lay the ground 
-work for future releases of Joomla.
+are included in the base install packages and more will be available soon. They can also be installed separately. 
+Kunena 1.6 also support multiple languages to be installed on a single system and, together with Joomla, allows users to 
+select their preferred language.
+Templates have now been separated from the underlying code, which allows for version-independent template development. 
+Templates can embed various options that can be set via the included template manager (e.g. avatar position on left, 
+right, top, or bottom in the new default template, Blue Eagle).
+The Kunena Team is fully committed to Joomla 1.6 and beyond and a number of modules have been developed to lay the 
+groundwork for future releases of Joomla.
 
 What is New?
 ============
 
 The new features in Kunena 1.6 include:
+---------------------------------------
 
 Improved Language Support:
 --------------------------
-Included languages: Catalan, Dutch, Finnish, French, German, Italian, Macedonian, Russian, Serbian, Spanish, Yugoslavian 
-(more to come)
+
+Included languages: Catalan, Dutch, Finnish, French, German, Greek, Italian, Macedonian, Polish, Russian, Serbian, 
+Spanish, Thai, Turkish, Yugoslavian, new in RC3: Chinese, Lithuanian, Hungarian, Taiwanese, Vietnamese (more to come)
 Uses standard Joomla 1.6 language files (backwards compatible with Joomla 1.5.x)
 Added support for installable language packs (using the Joomla Installer)
 
@@ -58,17 +62,20 @@ Added support for icon sets allows different button and icon variations
 
 New Integrated Polls Feature:
 -----------------------------
+Allow forum members to setup and participate in polls
 Category specific: enable the feature from Category Manager
 Global settings to modify the poll behavior
 Migrate data from the Kunena 1.5 poll hack
 
 Improved Topic and Post Moderation:
 -----------------------------------
-Ability to restore and purge deleted posts with Trash Manager (backend)
+Ability to restore and purge deleted posts within the Trash Manager (backend)
 Unapproved or deleted topics and posts can be seen in many views
 Delete, restore and approve posts while reading topic
 Simplified move, merge and split
 Move current or newer posts into another category or (new) topic
+Ability to move or delete all posts of a particular user (supports better spam management)
+User profile access for moderators even if integrated with jomSocial, CB or others
 
 New User Moderation Features:
 -----------------------------
@@ -90,11 +97,14 @@ anonymous)
 Google Maps integration - display basic maps inside of posts
 New BBCode tags like [article], [attachment], [confidential], [map], [table] and others
 Enhanced BBCode [quote] with reference to user and post
+Selectable date/time format display options for all time displays and independent for tooltips (relative "ago" vs 
+absolute)
 
 Usability Improvements:
 -----------------------
 Improved RSS features
 Color coded categories
+Color coded usernames
 Code highlighting with Geshi
 Many improvements in administrator backend interface
 
@@ -128,37 +138,61 @@ Now uses #__kunena prefixed tables instead of #__fb
 Use /media/kunena instead of /images/fbfiles for avatars and new attachments
 Latest version checking
 Basic Joomla 1.6 support
-
 Remember that you can test Kunena 1.6 with Joomla 1.6, but the support is not yet complete. For example, the Kunena menu 
 will not be generated and there are some features, that do not work yet in Joomla 1.6. Kunena 1.6 will be ready for 
 Joomla 1.6 once a final version is released.
 
-Joomla 1.5.19 Minimum Required (Mootools 1.2.x)
-===============================================
+System Requirements
+===================
 
-Kunena 1.6 no longer uses jQuery and requires MooTools 1.2+. With the release of Joomla 1.5.19, the Mootools 1.2.4 
-system plug-in is now included with Joomla 1.5. The MooTools plug-in that was included in previous development versions 
-of Kunena is no longer needed. Going forward, Joomla 1.6 will include MooTools 1.2.4 and Kunena is already compatible 
-with this version.
+Joomla 1.5.20 Minimum Version Required (Mootools 1.2.x)
+-------------------------------------------------------
+Kunena 1.6 no longer uses jQuery and requires MooTools 1.2+. Since the release of Joomla 1.5.20, the Mootools 1.2.4 
+system plug-in is now included with Joomla 1.5 and this Joomla! contains various fixes on router mecanism. The MooTools 
+plug-in that was included in previous development versions of Kunena is no longer needed. Going forward, Joomla 1.6 will 
+include MooTools 1.2.4 and Kunena is already compatible with this version.
+
+PHP 5.2.3
+---------
+Kunena 1.6 requires PHP 5.2.3 or higher. We have also tested it on PHP 5.3.1. In general we currently recommend PHP 
+5.2.x due to its maturity.
+
+MySQL 5.0.0
+-----------
+Kunena in general and especially version 1.6 rely on advanced SQL features introduced in MySQL 5.0.x. MySQL 4.x is no 
+longer support even though Joomla 1.5 itself can be run on certain versions of MySQL 4.x. The main difference is the 
+amount of database workload generated by a forum component compared to the basic CMS functionality.
+
+Third party components requirements
+-----------------------------------
+If you want running with Kunena 1.6, Jomsocial, Community Builer, UddeIm or Alpha User Points, you need to have the 
+following versions of these components to avoid any issues :
+
+Jomsocial 1.6.x
+Community Builer 1.2.3
+UddeIm 2.1
+Alpha User Points 1.5.11
 
 Downloading Kunena
 ==================
 
-Find the latest package files here: View Packages
+Find the latest package files here: http://joomlacode.org/gf/project/kunena/frs/
+
 We use the power of JoomlaCode as our main repository for the public SVN. We encourage all users and open source 
 developers to help develop fixes, features and enhancements to the existing code base. If you are interested in 
 contributing, please provide a patch or enhanced branch and we will be happy to consider it for inclusion in the main 
 code branch (quality and feature completeness permitting).
+Find the SVN source code repository here: http://joomlacode.org/gf/project/kunena/scmsvn/
 
-Find the SVN source code repository here: View SVN
-The only official Kunena distributions are available from the links above or directly at www.kunena.com. There are 
-currently no officially supported alternative download mirrors supported and users are encouraged to visit 
+The only official Kunena distributions are available from the links above or directly at http://www.kunena.com. There 
+are currently no officially supported alternative download mirrors supported and users are encouraged to visit 
 www.kunena.com for the latest version of all available Kunena packages.
 
 Compatibility with Third-party Kunena Templates
 ===============================================
 
-Templates designed for Kunena 1.5.x will NOT work on Kunena 1.6 due to major changes in the code and structure.
+Templates designed for Kunena 1.5.x will not work with Kunena 1.6 due to major changes in the code and structure.
+
 All the logic has been removed from the template to make it much easier for template designers to create Kunena 
 templates.
 Check out the short guide on how to quickly customize a Kunena 1.6 template in just a few minutes: 
@@ -168,8 +202,9 @@ More tutorials and instructions will be available on the final release of Kunena
 Compatibility with Third-party Kunena Modules
 =============================================
 
-Kunena 1.6 is NOT compatible with modules or plug-ins designed for previous versions and we recommend you uninstall all 
+Kunena 1.6 is not compatible with modules or plug-ins designed for previous versions and we recommend you uninstall all 
 Kunena 1.5 extensions before installing or upgrading.
+
 Kunena 1.6 now provides an updated API for easily creating modules or plug-ins. The Kunena team has created a few new 
 plug-ins and modules which leverage the new API and can be used with Kunena 1.6. These extensions can be found in the 
 Kunena Extension Directory: http://www.kunena.com/ked
@@ -177,8 +212,8 @@ Kunena Extension Directory: http://www.kunena.com/ked
 Installing or Upgrading Kunena
 ==============================
 
-Be sure your setup matches the minimum Technical Requirements or the install/upgrade process will fail. If it fails, 
-your data will be left untouched.
+Be sure your setup meets or exceeds the minimum Technical Requirements or the install/upgrade process will fail. If it 
+fails, your data will be left untouched.
 To install Kunena, make sure you read our Installation Instructions before beginning. To upgrade Kunena from previous 
 versions (including FireBoard), make sure you read the Upgrade Instructions.
 The Kunena installer now handles both installs and upgrades of existing installations without the need for user 
@@ -191,21 +226,27 @@ upgrade without a full backup.
 Credits
 =======
 
-In alphabetical order:
-DTP2 - Kunena contributor
-fxstein - Kunena developer and admin of www.starVmax.com
-LDA - Kunena moderator
-Littlejohn - Kunena developer
-Matias - Kunena developer
-Rich - Kunena moderator
-severdia - Kunena developer, Joomla Leadership Team Member, and admin of PlayShakespeare.com
-sozzled - Kunena moderator
-xillibit - Kunena developer
-810 - Kunena contributor
-@quila - Kunena contributor
-Special thanks go to Beat and the CB Testing team, JoniJnm for significant contributions to Kunena. In addition many 
-members of www.Kunena.com have contributed and helped make this a more stable and bug-free version. Our thanks go out to 
-all contributors of Kunena. Greetings from the global Kunena forum team!
+An open source project like Kunena requires the dedication and investment of personal time from various contributors. 
+This version of Kunena Forum has been made possible by the following contributors:
+
+fxstein Kunena developer and admin of http://www.starVmax.com/forum/
+Matias Kunena developer
+severdia Kunena developer
+xillibit Kunena developer
+@quila Kunena contributor
+810 Kunena contributor
+alakentu Kunena moderator
+LDA Kunena contributor
+Rich Kunena moderator
+sozzled Kunena moderator
+
+Special thanks go to Beat and the CB Testing team, Cerberus, DTP2, LittleJohn and JoniJnm for significant contributions 
+to Kunena. In addition many members of http://www.Kunena.com have contributed and helped make this a more stable and 
+bugfree version. Our thanks go out to all contributors of Kunena!
+
+Language credits
+English translation was made by Kunena Team with many suggestions and corrections from our community. We also like to 
+give special thanks to all our translators, who have worked hard to localise Kunena to their own languages.
 
 ONLINE README
 =============

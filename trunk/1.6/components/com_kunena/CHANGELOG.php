@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.0-RC3
 
 20-September-2010 fxstein
+# [#22196] Updated ReadMe.TXT
 # [#19288] Preserve original authorname on post edits
 
 20-September-2010 Matias

@@ -77,7 +77,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 					<!-- /Views -->
 				</td>
 				<td class="kcol-mid">
-					<?php echo smile::smileReplace($mes->message, 0, $this->config->disemoticons, smile::getEmoticons("")); ?>
+					<?php echo KunenaParser::parseBBCode(); ?>
 				</td>
 				<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
 				<td class="kcol-mid ktopicmoderation">

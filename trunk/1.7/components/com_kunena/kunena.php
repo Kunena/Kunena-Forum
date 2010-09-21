@@ -151,8 +151,7 @@ require_once (JPATH_COMPONENT . DS . 'class.kunena.php');
 
 // Central Location for all internal links
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.link.class.php');
-
-require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
+kimport('html.parser');
 
 // Redirect profile (menu item) to the right component
 if ($func == 'profile' && !$do && empty($_POST)) {

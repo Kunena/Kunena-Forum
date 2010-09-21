@@ -48,6 +48,12 @@ Kunena 1.7.0-DEV
 # [#22540] Do better cleanup job when deleting category (attachments still missing)
 ^ [#22538] Change session handling to support external access control
 ^ [#22542] Administrator: Cleanup category manager code
++ [#22543] Use NBBC (v1.4.5) BBCode parser instead of our old custom parser
++ [#22543] BBCode: add basic smiley support (only default template for now)
++ [#22543] BBCode: add support for our own bbcodes
+^ [#22543] BBCode: convert all old code to use KunenaParser/KunenaBBCode classes
+- [#22543] Remove old BBCode parser (lib/kunena.parser*.php, lib/kunena.smile.class.php)
+^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
 Kunena 1.6.0
 

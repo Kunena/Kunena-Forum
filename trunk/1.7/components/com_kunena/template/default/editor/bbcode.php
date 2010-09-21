@@ -238,7 +238,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		<tr>
 			<td class="kpostbuttons">
 			<div id="smilie"><?php
-			$emoticons = smile::getEmoticons(0, 1);
+			$emoticons = KunenaParser::getEmoticons(0, 1);
 			foreach ( $emoticons as $emo_code=>$emo_url ) {
 				echo '<img class="btnImage" src="' . $emo_url . '" border="0" alt="' . $emo_code . ' " title="' . $emo_code . ' " onclick="kbbcode.insert(\''. $emo_code .' \', \'after\', true);" style="cursor:pointer"/> ';
 			}

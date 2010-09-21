@@ -854,7 +854,7 @@ class CKunenaPosting {
 			}
 			// clean up the message for review
 			$authorname = $this->get ( 'name' );
-			$message = smile::purify ( $this->get ( 'message' ) );
+			$message = KunenaParser::plainBBCode ( $this->get ( 'message' ) );
 			$subject = $this->get ( 'subject' );
 
 			$mailsender = JMailHelper::cleanAddress ( $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );

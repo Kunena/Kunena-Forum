@@ -15,6 +15,32 @@ defined( '_JEXEC' ) or die('Restricted access');
 abstract class KunenaParser {
 	static $emoticons = null;
 
+	function getEmoticons($grayscale, $emoticonbar = 0) {
+		$kunena_db = &JFactory::getDBO ();
+		$grayscale == 1 ? $column = "greylocation" : $column = "location";
+		$sql = "SELECT code, `$column` FROM #__kunena_smileys";
+
+		if ($emoticonbar == 1)
+			$sql .= " WHERE emoticonbar='1'";
+
+		$kunena_db->setQuery ( $sql );
+		$smilies = $kunena_db->loadObjectList ();
+		KunenaError::checkDatabaseError();
+
+		$smileyArray = array ();
+		foreach ( $smilies as $smiley ) { // We load all smileys in array, so we can sort them
+			$iconurl = JURI::Root() . CKunenaTools::getTemplateImage("emoticons/{$smiley->$column}");
+			$smileyArray [$smiley->code] = '' . $iconurl; // This makes sure that for example :pinch: gets translated before :p
+		}
+
+		if ($emoticonbar == 0) { // don't sort when it's only for use in the emoticonbar
+			array_multisort ( array_keys ( $smileyArray ), SORT_DESC, $smileyArray );
+			reset ( $smileyArray );
+		}
+
+		return $smileyArray;
+	}
+
 	function JSText($txt) {
 		$txt = JText::_($txt);
 		$txt = preg_replace('`\'`','\\\\\'', $txt);
@@ -23,6 +49,7 @@ abstract class KunenaParser {
 
 	function parseText($txt) {
 		if (!$txt) return;
+
 		$txt = self::escape ( $txt );
 		$txt = self::prepareContent ( $txt );
 		return $txt;
@@ -30,24 +57,37 @@ abstract class KunenaParser {
 
 	function parseBBCode($txt, $parent=null) {
 		if (!$txt) return;
-		if (!self::$emoticons) self::$emoticons = smile::getEmoticons ( 0 );
 
-		$config = KunenaFactory::getConfig ();
-		$txt = smile::smileReplace ( $txt, 0, $config->disemoticons, self::$emoticons, $parent );
-		$txt = nl2br ( $txt );
-		$txt = str_replace ( "__KTAB__", "&#009;", $txt ); // For [code]
-		$txt = str_replace ( "__KRN__", "\n", $txt ); // For [code]
+		kimport('html.bbcode');
+		$bbcode = KunenaBBcode::getInstance();
+		$bbcode->parent = $parent;
+		$bbcode->SetLimit(0);
+		$bbcode->SetPlainMode(false);
+		$txt = $bbcode->Parse($txt);
+		$txt = self::prepareContent ( $txt );
+		return $txt;
+	}
+
+	function plainBBCode($txt, $len=0) {
+		if (!$txt) return;
+
+		kimport('html.bbcode');
+		$bbcode = KunenaBBCode::getInstance();
+		$bbcode->SetLimit($len);
+		$bbcode->SetPlainMode(true);
+		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
 
 	function stripBBCode($txt, $len=0) {
 		if (!$txt) return;
-		if (!self::$emoticons) self::$emoticons = smile::getEmoticons ( 0 );
 
-		$txt = smile::purify ( $txt );
-		if ($len) $txt = JString::substr ( $txt, 0, $len );
-		$txt = self::escape ( $txt );
+		kimport('html.bbcode');
+		$bbcode = KunenaBBCode::getInstance();
+		$bbcode->SetLimit($len);
+		$bbcode->SetPlainMode(true);
+		$txt = strip_tags($bbcode->Parse($txt));
 		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}

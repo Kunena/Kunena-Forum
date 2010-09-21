@@ -277,7 +277,6 @@ class CKunenaView {
 	public $goto = null;
 
 	function __construct($func, $catid, $id, $limitstart=0, $limit=0) {
-		require_once(KUNENA_PATH_LIB . DS . 'kunena.smile.class.php');
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 
 		$this->db = JFactory::getDBO ();
@@ -393,7 +392,6 @@ class CKunenaView {
 		if (KunenaError::checkDatabaseError()) return;
 
 		// START
-		$this->emoticons = smile::getEmoticons ( 0 );
 		$this->prevCheck = $this->session->lasttime;
 		$this->read_topics = explode ( ',', $this->session->readtopics );
 
@@ -493,7 +491,6 @@ class CKunenaView {
 		// Create Meta Description form the content of the first message
 		// better for search results display but NOT for search ranking!
 		$metaDesc = KunenaParser::stripBBCode($this->first_message->message);
-		$metaDesc = strip_tags($metaDesc); // Now remove all tags
 		$metaDesc = preg_replace('/\s+/', ' ', $metaDesc); // remove newlines
 		$metaDesc = preg_replace('/^[^\w0-9]+/', '', $metaDesc); // remove characters at the beginning that are not letters or numbers
 		$metaDesc = trim($metaDesc); // Remove trailing spaces and beginning
@@ -607,7 +604,7 @@ class CKunenaView {
 			$this->thread_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderatethread', $this->catid, $this->id, CKunenaTools::showButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE_TOPIC') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE') );
 		}
 
-		$this->headerdesc = nl2br ( smile::smileReplace ( $this->catinfo->headerdesc, 0, $this->config->disemoticons, $this->emoticons ) );
+		$this->headerdesc = KunenaParser::parseBBCode ( $this->catinfo->headerdesc );
 
 		$tabclass = array ("row1", "row2" );
 

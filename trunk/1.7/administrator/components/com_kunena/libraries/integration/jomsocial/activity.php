@@ -35,10 +35,9 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
-			$kunena_emoticons = smile::getEmoticons ( 1 );
+			kimport('html.parser');
 			$content = $message->get ( 'message' );
-			$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-			$content = nl2br ( $content );
+			$content = KunenaParser::plainBBCode($content);
 
 			$act = new stdClass ();
 			$act->cmd = 'wall.write';
@@ -72,10 +71,9 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
-			$kunena_emoticons = smile::getEmoticons ( 1 );
+			kimport('html.parser');
 			$content = $message->get ( 'message' );
-			$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-			$content = nl2br ( $content );
+			$content = KunenaParser::plainBBCode($content);
 
 			$act = new stdClass ();
 			$act->cmd = 'wall.write';

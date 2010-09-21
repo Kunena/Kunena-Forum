@@ -31,6 +31,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.7.0-DEV
+
+21-September-2010 Matias
+^ [#22534] Create new trunk for K1.7
+^ [#22534] Update version info to K1.7.0-DEV
+^ [#22534] Update SQL upgrade script for K1.7
+
 Kunena 1.6.0
 
 20-September-2010 fxstein

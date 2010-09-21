@@ -154,10 +154,12 @@
 			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `created_time` DATETIME NOT NULL;</query>
 			<query>ALTER TABLE `#__kunena_users_banned` MODIFY `modified_time` DATETIME NULL;</query>
 		</version>
-		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		<version version="1.6.0-RC3" versiondate="2010-09-20" build="3539" versionname="Jadili">
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `catid`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `parent`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `catid_parent` ( `catid`, `parent` );</query>
+		</version>
+		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 		</version>
 	</upgrade>
 </comupgrade>

@@ -35,19 +35,12 @@ class plgSystemKunena extends JPlugin {
 		parent::__construct ( $subject, $config );
 	}
 
-	/*
 	function onAfterStoreUser($user, $isnew, $succes, $msg) {
 		//Don't continue if the user wasn't stored succesfully
 		if (! $succes) {
 			return false;
 		}
-		if (! $isnew) {
-			return true;
-		}
-		// Set the db function
-		$db = JFactory::getDBO ();
-		$db->setQuery ( "INSERT INTO #__kunena_users (userid) VALUES ('" . intval($user ['id']) . "')" );
-		$db->query ();
+		$user = KunenaFactory::getUser(intval($user ['id']));
+		$user->save();
 	}
-	*/
 }

@@ -203,24 +203,22 @@ class KunenaSession extends JObject
 		// check to see if we need to refresh the allowed forums cache
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$this->allowed or $this->allowed == 'na' or $this->isNewSession()) {
-			$allow_forums = CKunenaTools::getAllowedForums($this->userid);
-
-			if (!$allow_forums)
+			$acl = KunenaFactory::getAccessControl();
+			$this->allowedcats = array_keys($acl->getAllowedCategories($this->userid));
+			$this->allowed = implode(',', $this->allowedcats);
+			if (!$this->allowed)
 			{
-				$allow_forums = '0';
+				$this->allowed = '0';
 			}
-
-			$this->allowed = $allow_forums;
+		} else if (!$this->allowedcats) {
+			$this->allowedcats = explode(',', $this->allowed);
 		}
 	}
 
 	function canRead($catid) {
 		if ($this->allowedcats === null) {
 			$this->updateAllowedForums();
-			$this->allowedcats = ($this->allowed) ? explode ( ',', $this->allowed ) : array ();
 		}
 		return in_array ( $catid, $this->allowedcats );
 	}
 }
-
-?>

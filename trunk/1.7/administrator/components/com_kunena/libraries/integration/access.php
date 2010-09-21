@@ -14,11 +14,16 @@
 defined ( '_JEXEC' ) or die ( '' );
 
 kimport ( 'integration.integration' );
+kimport ( 'error' );
 
 abstract class KunenaAccess {
 	public $priority = 0;
 
 	protected static $instance = false;
+	protected $adminsByCatid = false;
+	protected $adminsByUserid = false;
+	protected $moderatorsByCatid = false;
+	protected $moderatorsByUserid = false;
 
 	abstract public function __construct();
 
@@ -29,10 +34,107 @@ abstract class KunenaAccess {
 				$integration = $config->integration_access;
 			self::$instance = KunenaIntegration::initialize ( 'access', $integration );
 		}
+
 		return self::$instance;
 	}
 
-	function getAllowedHold($user, $catid, $string=true) {
+	public function clearCache() {
+		$this->adminsByCatid = false;
+		$this->adminsByUserid = false;
+		$this->moderatorsByCatid = false;
+		$this->moderatorsByUserid = false;
+
+		$db = JFactory::getDBO ();
+		$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
+		$db->query ();
+		KunenaError::checkDatabaseError();
+	}
+
+	public function getAdmins($catid = 0) {
+		if ($this->adminsByCatid === false) {
+			$this->loadAdmins();
+		}
+		return !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
+	}
+
+	public function getModerators($catid = 0) {
+		if ($this->moderatorsByCatid === false) {
+			$this->loadModerators();
+		}
+		return !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
+	}
+
+	public function isAdmin($userid = null, $catid = 0) {
+		$userid = $this->getUserid($userid);
+		if ($userid === false) return false;
+
+		// Visitors cannot be administrators
+		if ($userid == 0) return false;
+
+		if ($this->adminsByUserid === false) {
+			$this->loadAdmins();
+		}
+
+		if (!empty($this->adminsByUserid[$userid][0])) return true;
+		if (!empty($this->adminsByUserid[$userid][$catid])) return true;
+
+		return false;
+	}
+
+	public function isModerator($userid = null, $catid = 0) {
+		$userid = $this->getUserid($userid);
+		if ($userid === false) return false;
+
+		// Visitors cannot be moderators
+		if ($userid == 0) return false;
+
+		// Administrators are always moderators
+		if ($this->isAdmin($userid, $catid)) return true;
+
+		if ($this->moderatorsByUserid === false) {
+			$this->loadModerators();
+		}
+
+		if (isset($this->moderatorsByUserid[$userid])) {
+			// Is user a global moderator?
+			if (!empty($this->moderatorsByUserid[$userid][0])) return true;
+			// Were we looking only for global moderator?
+			if (!is_numeric($catid)) return false;
+			// Is user moderator in any category?
+			if ($catid == 0) return true;
+			// Is user moderator in the category?
+			if (!empty($this->moderatorsByUserid[$userid][$catid])) return true;
+		}
+		return false;
+	}
+
+	public function getAllowedCategories($userid = null, $rule = 'read') {
+		$allowed = array();
+		$userid = $this->getUserid($userid);
+		if ($userid === false) return $allowed;
+		switch ($rule) {
+			case 'read':
+			case 'post':
+			case 'reply':
+			case 'edit':
+				$allowed = $this->loadAllowedCategories($userid);
+			case 'moderate':
+				// Moderators have read/post/reply/edit permissions
+				if ($this->moderatorsByUserid === false) {
+					$this->loadModerators();
+				}
+				if (isset($this->moderatorsByUserid[$userid])) $allowed += $this->moderatorsByUserid[$userid];
+			case 'admin':
+				// Administrators have moderation permissions
+				if ($this->adminsByUserid === false) {
+					$this->loadAdmins();
+				}
+				if (isset($this->adminsByUserid[$userid])) $allowed += $this->adminsByUserid[$userid];
+		}
+		return $allowed;
+	}
+
+	public function getAllowedHold($user, $catid, $string=true) {
 		// hold = 0: normal
 		// hold = 1: unapproved
 		// hold = 2: deleted
@@ -52,8 +154,16 @@ abstract class KunenaAccess {
 		return $hold;
 	}
 
-	abstract function isAdmin($uid = null, $catid = 0);
-	abstract function isModerator($uid = null, $catid = 0);
-	abstract function getAllowedCategories($userid);
+	protected function getUserid($userid) {
+		$user = KunenaFactory::getUser($userid);
+		if ($user instanceof KunenaUser) {
+			return $user->userid;
+		}
+		return false;
+	}
+
+	abstract protected function loadAdmins();
+	abstract protected function loadModerators();
+	abstract protected function loadAllowedCategories($userid);
 	abstract function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0');
 }

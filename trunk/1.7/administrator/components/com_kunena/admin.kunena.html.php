@@ -357,7 +357,10 @@ table.kadmin-stat caption {
 //			END TEMPLATE MANAGER
 //******************************************/
 
-function showAdministration($rows, $children, $pageNav, $option, $lists) {
+//*****************************************/
+//			CATEGORY MANAGER
+//******************************************/
+function categoryManager($rows, $children, $pageNav, $option, $lists) {
 ?>
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
 	<form action="index.php" method="post" name="adminForm">
@@ -487,7 +490,7 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 <?php
 }
 
-function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option, $kunena_config) {
+function editCategory(&$row, $categoryList, $moderatorList, $lists, $accessLists, $option, $kunena_config) {
 ?>
         <script language="javascript" type="text/javascript">
             function submitbutton(pressbutton)

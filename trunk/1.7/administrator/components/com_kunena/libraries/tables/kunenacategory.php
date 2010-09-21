@@ -28,6 +28,8 @@ class TableKunenaCategory extends KunenaTable
 	var $alert_admin = null;
 	var $moderated = null;
 	var $moderators = null;
+	var $accesstype = null;
+	var $access = null;
 	var $pub_access = null;
 	var $pub_recurse = null;
 	var $admin_access = null;

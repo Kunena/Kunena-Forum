@@ -37,6 +37,17 @@ Kunena 1.7.0-DEV
 ^ [#22534] Create new trunk for K1.7
 ^ [#22534] Update version info to K1.7.0-DEV
 ^ [#22534] Update SQL upgrade script for K1.7
+# [#22536] Insert user into kunena_users table during registration
+# [#22537] Reset Kunena session cache when user is saved in Joomla
++ [#22538] Add support for external access control in categories
++ [#22539] Load moderators and administrators by using access control integration
++ [#22539] Add basic support for category administrators
+# [#22539] Fix undefined variable in KunenaCategory::getInstance(null)
+# [#22539] Add permission checks for saving, deleting, etc categories
++ [#22541] Add JomSocial groups support (ACL)
+# [#22540] Do better cleanup job when deleting category (attachments still missing)
+^ [#22538] Change session handling to support external access control
+^ [#22542] Administrator: Cleanup category manager code
 
 Kunena 1.6.0
 

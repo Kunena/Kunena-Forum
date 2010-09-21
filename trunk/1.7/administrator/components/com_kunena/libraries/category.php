@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+kimport ('error');
+
 /**
  * Kunena Category Class
  */
@@ -30,7 +32,6 @@ class KunenaCategory extends JObject {
 	public function __construct($identifier = 0) {
 		// Always load the category -- if category does not exist: fill empty data
 		$this->_db = JFactory::getDBO ();
-		$this->_app = JFactory::getApplication ();
 		$this->load ( $identifier );
 	}
 
@@ -47,9 +48,8 @@ class KunenaCategory extends JObject {
 
 		if ($identifier instanceof KunenaCategory) {
 			return $identifier;
-		} else if (is_numeric ( $identifier )) {
-			$id = intval ( $identifier );
 		}
+		$id = intval ( $identifier );
 		if ($id < 1)
 			return new $c ();
 
@@ -64,21 +64,22 @@ class KunenaCategory extends JObject {
 		return $this->_exists;
 	}
 
-	static public function loadCategories($ids = false) {
-		// Now that we have all users to cache, dedup the list
-		if (! empty ($ids) ) {
-			JArrayHelper::toInteger($ids);
-			$ids = array_unique($ids);
-			$idlist = implode ( ',', $ids );
+	static public function getCategoriesByAccess($access, $accesstype = 'joomla') {
+		if (is_array ($access) ) {
+			JArrayHelper::toInteger($access);
+			$access = array_unique($access);
+			$idlist = implode ( ',', $access );
+		} elseif (intval($access) > 0) {
+			$idlist = intval($access);
 		}
 
 		$c = __CLASS__;
 		$db = JFactory::getDBO ();
-		$query = "SELECT c.* FROM #__kunena_categories AS c";
+		$query = "SELECT c.* FROM #__kunena_categories AS c WHERE accesstype={$db->quote($accesstype)}";
 		if (isset($idlist))
-			$query .= " WHERE id IN ({$idlist})";
+			$query .= " AND c.access IN ({$idlist})";
 		$db->setQuery ( $query );
-		$results = $db->loadAssocList ();
+		$results = (array) $db->loadAssocList ();
 		KunenaError::checkDatabaseError ();
 
 		$list = array ();
@@ -90,6 +91,114 @@ class KunenaCategory extends JObject {
 		}
 
 		return $list;
+	}
+
+	static public function getCategories($ids = false) {
+		if (is_array ($ids) ) {
+			JArrayHelper::toInteger($ids);
+			$ids = array_unique($ids);
+			$idlist = implode ( ',', $ids );
+		} elseif (intval($ids) > 0) {
+			$idlist = intval($ids);
+		}
+
+		$c = __CLASS__;
+		$db = JFactory::getDBO ();
+		$query = "SELECT c.* FROM #__kunena_categories AS c";
+		if (isset($idlist))
+			$query .= " WHERE c.id IN ({$idlist})";
+		$db->setQuery ( $query );
+		$results = (array) $db->loadAssocList ();
+		KunenaError::checkDatabaseError ();
+
+		$list = array ();
+		foreach ( $results as $category ) {
+			$instance = new $c ();
+			$instance->bind ( $category, true );
+			self::$_instances [$instance->id] = $instance;
+			$list [$instance->id] = $instance;
+		}
+
+		return $list;
+	}
+
+	/**
+	 * Get userids, who can administrate this category
+	 **/
+	public function getAdmins($includeGlobal = true) {
+		$access = KunenaFactory::getAccessControl();
+		$userlist = array();
+		if (!empty($this->catid)) $userlist = $access->getAdmins($this->catid);
+		if ($includeGlobal) $userlist += $access->getAdmins();
+		return $userlist;
+	}
+
+	/**
+	 * Get userids, who can moderate this category
+	 **/
+	public function getModerators($includeGlobal = true) {
+		$access = KunenaFactory::getAccessControl();
+		$userlist = array();
+		if (!empty($this->catid)) $userlist = $access->getModerators($this->catid);
+		if ($includeGlobal) $userlist += $access->getModerators();
+		return $userlist;
+	}
+
+	/**
+	 * Change user moderator status
+	 **/
+	public function setModerator($user, $status = 1) {
+		// Do not allow this action if current user isn't admin in this category
+		if (!KunenaFactory::getUser()->isAdmin($this->id)) {
+			$this->setError ( JText::sprintf('COM_KUNENA_ERROR_NOT_CATEGORY_ADMIN', $this->name) );
+			return false;
+		}
+
+		// Check if category exists
+		if (!$this->exists()) return false;
+
+		// Check if user exists
+		$user = KunenaFactory::getUser($user);
+		if (!($user instanceof KunenaUser) || !$user->exists()) {
+			return false;
+		}
+
+		$catids = $user->getAllowedCategories('moderate');
+
+		// Do not touch global moderators
+		if (!empty($catids[0])) {
+			return true;
+		}
+
+		// If the user state remains the same, do nothing
+		if (empty($catids[$this->catid]) == $status) {
+			return true;
+		}
+
+		$db = JFactory::getDBO ();
+		if ($status == 1) {
+			$query = "INSERT INTO #__kunena_moderation (catid, userid) VALUES  ({$db->quote($this->id)}, {$db->quote($user->userid)})";
+			$db->setQuery ( $query );
+			$db->query ();
+			// Finally set user to be a moderator
+			if (!KunenaError::checkDatabaseError () && $user->moderator == 0) {
+				$user->moderator = 1;
+				$user->save();
+			}
+		} else {
+			$query = "DELETE FROM #__kunena_moderation WHERE catid={$db->Quote($this->id)} AND userid={$db->Quote($user->userid)}";
+			$db->setQuery ( $query );
+			$db->query ();
+			unset($catids[$this->id]);
+			// Finally check if user looses his moderator status
+			if (!KunenaError::checkDatabaseError () && empty($catids)) {
+				$user->moderator = 0;
+				$user->save();
+			}
+		}
+
+		$access = KunenaFactory::getAccessControl();
+		$access->clearCache();
 	}
 
 	/**
@@ -118,9 +227,9 @@ class KunenaCategory extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
-	protected function bind($data, $exists = false) {
+	public function bind($data, $exists = null) {
 		$this->setProperties ( $data );
-		$this->_exists = $exists;
+		if ($exists !== null) $this->_exists = $exists;
 	}
 
 	/**
@@ -152,6 +261,13 @@ class KunenaCategory extends JObject {
 	 * @since 1.6
 	 */
 	public function save($updateOnly = false) {
+		// Do not allow this action if current user isn't admin in this category
+		// FIXME:
+		if ($this->exists() && !KunenaFactory::getUser()->isAdmin($this->id)) {
+			$this->setError ( JText::sprintf('COM_KUNENA_ERROR_NOT_CATEGORY_ADMIN', $this->name) );
+			return false;
+		}
+
 		// Create the user table object
 		$table = &$this->getTable ();
 		$table->bind ( $this->getProperties () );
@@ -167,7 +283,7 @@ class KunenaCategory extends JObject {
 		$isnew = ! $this->_exists;
 
 		// If we aren't allowed to create new users return
-		if (! $this->id || ($isnew && $updateOnly)) {
+		if ($isnew && $updateOnly) {
 			return true;
 		}
 
@@ -175,8 +291,12 @@ class KunenaCategory extends JObject {
 		if (! $result = $table->store ()) {
 			$this->setError ( $table->getError () );
 		}
+		$table->reorder ();
 
-		// Set the id for the KunenaUser object in case we created a new user.
+		$access = KunenaFactory::getAccessControl();
+		$access->clearCache();
+
+		// Set the id for the KunenaUser object in case we created a new category.
 		if ($result && $isnew) {
 			$this->load ( $table->get ( 'id' ) );
 			self::$_instances [$table->get ( 'id' )] = $this;
@@ -193,8 +313,15 @@ class KunenaCategory extends JObject {
 	 * @since 1.6
 	 */
 	public function delete() {
-		if (!$this->id)
+		// Do not allow this action if current user isn't admin in this category
+		if (!KunenaFactory::getUser()->isAdmin($this->id)) {
+			$this->setError ( JText::sprintf('COM_KUNENA_ERROR_NOT_CATEGORY_ADMIN', $this->name) );
 			return false;
+		}
+
+		if (!$this->exists()) {
+			return true;
+		}
 
 		// Create the user table object
 		$table = &$this->getTable ();
@@ -204,6 +331,42 @@ class KunenaCategory extends JObject {
 			$this->setError ( $table->getError () );
 		}
 		$this->_exists = false;
+
+		$access = KunenaFactory::getAccessControl();
+		$access->clearCache();
+
+		$db = JFactory::getDBO ();
+		// Delete moderators
+		$queries[] = "DELETE FROM #__kunena_moderation WHERE catid={$db->quote($this->id)}";
+		// Delete favorites
+		$queries[] = "DELETE f FROM jos_kunena_favorites AS f LEFT JOIN jos_kunena_messages AS m ON m.id=f.thread WHERE m.catid={$db->quote($this->id)}";
+		// Delete subscriptions
+		$queries[] = "DELETE s FROM jos_kunena_subscriptions AS s LEFT JOIN jos_kunena_messages AS m ON m.id=s.thread WHERE m.catid={$db->quote($this->id)}";
+		// Delete category subscriptions
+		$queries[] = "DELETE FROM jos_kunena_subscriptions_categories WHERE catid={$db->quote($this->id)}";
+		// Delete thank yous
+		$queries[] = "DELETE t FROM jos_kunena_thankyou AS t LEFT JOIN jos_kunena_messages AS m ON m.id=t.postid WHERE m.catid={$db->quote($this->id)}";
+		// Delete poll users
+		$queries[] = "DELETE p FROM jos_kunena_polls_users AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
+		// Delete poll options
+		$queries[] = "DELETE p FROM jos_kunena_polls_options AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
+		// Delete polls
+		$queries[] = "DELETE p FROM jos_kunena_polls AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.threadid WHERE m.catid={$db->quote($this->id)}";
+		// Delete messages
+		$queries[] = "DELETE m, t FROM jos_kunena_messages AS m INNER JOIN jos_kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
+		// TODO: delete attachments
+
+		foreach ($queries as $query) {
+			$db->setQuery($query);
+			$db->query();
+			KunenaError::checkDatabaseError ();
+		}
+
+		// TODO: remove dependency
+		require_once KPATH_SITE.'/class.kunena.php';
+		CKunenaTools::reCountUserPosts();
+		CKunenaTools::reCountBoards();
+
 		return $result;
 	}
 
@@ -216,8 +379,13 @@ class KunenaCategory extends JObject {
 	 * @since 1.6
 	 */
 	public function checkout($who) {
-		if (!$this->_exists)
+		if (!KunenaFactory::getUser()->isAdmin($this->id)) {
+			$this->setError ( JText::sprintf('COM_KUNENA_ERROR_NOT_CATEGORY_ADMIN', $this->name) );
 			return true;
+		}
+
+		if (!$this->_exists)
+			return false;
 
 		// Create the user table object
 		$table = &$this->getTable ();
@@ -239,6 +407,11 @@ class KunenaCategory extends JObject {
 	 * @since 1.6
 	 */
 	public function checkin() {
+		if (!KunenaFactory::getUser()->isAdmin($this->id)) {
+			$this->setError ( JText::sprintf('COM_KUNENA_ERROR_NOT_CATEGORY_ADMIN', $this->name) );
+			return false;
+		}
+
 		if (!$this->_exists)
 			return true;
 

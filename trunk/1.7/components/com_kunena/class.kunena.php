@@ -498,11 +498,6 @@ class CKunenaTools {
 		return $acl->getSubscribers($catid, $thread, $subscriptions, $moderators, $admins, $excludeList);
 	}
 
-	function getAllowedForums($uid) {
-		$acl = KunenaFactory::getAccessControl();
-		return $acl->getAllowedCategories($uid);
-	}
-
 	function KDeletePosts() {
 		$kunena_app = JFactory::getApplication ();
 

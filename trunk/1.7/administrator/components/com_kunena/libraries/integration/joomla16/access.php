@@ -14,94 +14,56 @@
 defined( '_JEXEC' ) or die('');
 
 class KunenaAccessJoomla16 extends KunenaAccess {
-	protected static $admins = false;
-	protected static $moderators = false;
-
 	function __construct() {
 		if (!is_dir(JPATH_LIBRARIES.'/joomla/access'))
 			return;
 		$this->priority = 25;
 	}
 
-	function loadAdmins() {
-		if (self::$admins === false) {
-			self::$admins = array();
-			jimport('joomla.access.access');
-			$rules = JAccess::getAssetRules('com_kunena', true);
-			$data = $rules->getData();
-			$data = $data['core.admin']->getData();
-			foreach ($data as $groupid=>$access) {
-				if ($access) {
-					self::$admins = array_unique(array_merge(self::$admins, JAccess::getUsersByGroup($groupid, true)));
-				}
+	protected function loadAdmins() {
+		$this->adminsByCatid = array ();
+		$this->adminsByUserid = array ();
+		jimport ( 'joomla.access.access' );
+		$rules = JAccess::getAssetRules ( 'com_kunena', true );
+		$data = $rules->getData ();
+		$data = $data ['core.admin']->getData ();
+		$list = array ();
+		foreach ( $data as $groupid => $access ) {
+			if ($access) {
+				$list = array_merge ( $list, JAccess::getUsersByGroup ( $groupid, true ) );
 			}
 		}
-	}
-
-	function loadModerators() {
-		if (self::$moderators === false) {
-			self::$moderators = array();
-			$db = JFactory::getDBO();
-			$db->setQuery ("SELECT u.id AS uid, m.catid FROM #__users AS u"
-				." LEFT JOIN #__kunena_users AS p ON u.id=p.userid"
-				." LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid"
-				." LEFT JOIN #__kunena_categories AS c ON m.catid=c.id"
-				." WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
-			$list = $db->loadObjectList();
-			if (KunenaError::checkDatabaseError()) return;
-			foreach ($list as $item) self::$moderators[$item->uid][] = $item->catid;
+		$list = array_unique ( $list );
+		foreach ( $list as $item ) {
+			$userid = intval ( $item );
+			$this->adminsByCatid [0] [$userid] = $userid;
+			$this->adminsByUserid [$userid] [0] = 0;
 		}
 	}
 
-	function isAdmin($uid = null, $catid=0) {
-		if ($uid === null){
-			$my = JFactory::getUser();
-			$uid = $my->id;
+	protected function loadModerators() {
+		$this->moderatorsByCatid = array ();
+		$this->moderatorsByUserid = array ();
+		$db = JFactory::getDBO ();
+		$query = "SELECT u.id AS userid, m.catid
+				FROM #__users AS u
+				INNER JOIN #__kunena_users AS ku ON u.id=ku.userid
+				LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid
+				LEFT JOIN #__kunena_categories AS c ON m.catid=c.id
+				WHERE u.block='0' AND ku.moderator='1' AND (m.catid IS NULL OR c.moderated='1')";
+		$db->setQuery ( $query );
+		$list = $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError ())
+			return;
+		foreach ( $list as $item ) {
+			$userid = intval ( $item->userid );
+			$catid = intval ( $item->catid );
+			$this->moderatorsByUserid [$userid] [$catid] = $catid;
+			$this->moderatorsByCatid [$catid] [$userid] = $userid;
 		}
-		if ($uid instanceof JUser) {
-			$uid = $uid->id;
-		}
-		// Visitors cannot be admins
-		if (!is_numeric($uid) || $uid == 0) return false;
-
-		self::loadAdmins();
-
-		if (in_array($uid, self::$admins)) return true;
-		return false;
 	}
 
-	function isModerator($uid=null, $catid=0) {
-		static $instances = null;
-
-		if ($uid === null){
-			$my = JFactory::getUser();
-			$uid = $my->id;
-		}
-		if ($uid instanceof JUser) {
-			$uid = $uid->id;
-		}
-		// Visitors cannot be moderators
-		if (!is_numeric($uid) || $uid == 0) return false;
-
-		// Administrators have always moderator permissions
-		self::loadAdmins();
-		if (in_array($uid, self::$admins)) return true;
-
-		self::loadModerators();
-		if (isset(self::$moderators[$uid])) {
-			// Is user a global moderator?
-			if (in_array(null, self::$moderators[$uid], true)) return true;
-			// Were we looking only for global moderator?
-			if (!is_numeric($catid)) return false;
-			// Is user moderator in any category?
-			if (!$catid && count(self::$moderators[$uid])) return true;
-			// Is user moderator in the category?
-			if ($catid && in_array($catid, self::$moderators[$uid])) return true;
-		}
-		return false;
-	}
-
-	function getAllowedCategories($userid) {
+	function loadAllowedCategories($userid) {
 		$db = JFactory::getDBO ();
 		$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
 				FROM #__kunena_categories c
@@ -122,10 +84,10 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 				|| (self::isModerator($userid, $row->id))
 				|| ( $pub_access )
 				|| ( $admin_access )) {
-				$catlist[] = $row->id;
+				$catlist[$row->id] = $row->id;
 			}
 		}
-		return implode(',', $catlist);
+		return $catlist;
 	}
 
 	function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
@@ -135,22 +97,35 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 			return array();
 
 		// Make sure that category exists and fetch access info
-		$db = &JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__kunena_categories WHERE id={$catid}";
 		$db->setQuery ($query);
 		$access = $db->loadObject ();
 		if (KunenaError::checkDatabaseError() || !$access) return array();
 
-		if ($admins) {
-			self::loadAdmins();
-			$adminlist = implode(',', self::$admins);
-			if (!$adminlist) $adminlist = 0;
+		$modlist = array();
+		$adminlist = array();
+		if ($moderators) {
+			if ($this->moderatorsByCatid === false) {
+				$this->loadModerators();
+			}
+			if (!empty($this->moderatorsByCatid[0])) $modlist = $this->moderatorsByCatid[0];
+			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
 		}
+		if ($admins) {
+			if ($this->adminsByCatid === false) {
+				$this->loadAdmins();
+			}
+			if (!empty($this->adminsByCatid[0])) $adminlist = $this->adminsByCatid[0];
+			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
+		}
+		$modlist = !empty($modlist) ? implode(',', array_keys($modlist)) : '-1';
+		$adminlist = !empty($adminlist) ? implode(',', array_keys($adminlist)) : '-1';
 
 		$groups = '';
 		if ($subscriptions) {
 			// Get all allowed Joomla groups to make sure that subscription is valid
-			$kunena_acl = &JFactory::getACL ();
+			$kunena_acl = JFactory::getACL ();
 			$public = array ();
 			$admin = array ();
 			if ($access->pub_access > 0) {
@@ -186,20 +161,17 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
 					IF( (s.thread IS NOT NULL) OR (sc.catid IS NOT NULL), 1, 0 ) AS subscription,
-					IF( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid}), 1, 0 ) AS moderator,
+					IF( u.id IN ({$modlist}), 1, 0 ) AS moderator,
 					IF( u.id IN ({$adminlist}), 1, 0 ) AS admin
 					FROM #__users AS u
-					LEFT JOIN #__kunena_users AS p ON u.id=p.userid
-					LEFT JOIN #__kunena_categories AS c ON c.id={$catid}
-					LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid AND m.catid=c.id
 					LEFT JOIN #__kunena_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}
-					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=c.id";
+					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid={$catid}";
 
 		$where = array ();
 		if ($subscriptions)
 			$where [] = " ( ( (s.thread IS NOT NULL) OR (sc.catid IS NOT NULL) )" . ($groups ? " AND {$groups}" : '') . " ) ";
 		if ($moderators)
-			$where [] = " ( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid} ) ) ";
+			$where [] = " ( u.id IN ({$modlist}) ) ";
 		if ($admins)
 			$where [] = " ( u.id IN ({$adminlist}) ) ";
 

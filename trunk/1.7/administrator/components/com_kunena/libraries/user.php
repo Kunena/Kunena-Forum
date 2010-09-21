@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+kimport('error');
+
 /**
 
  * Kunena Users Table Class
@@ -223,6 +225,9 @@ class KunenaUser extends JObject {
 			$this->setError ( $table->getError () );
 		}
 
+		$access = KunenaFactory::getAccessControl();
+		$access->clearCache();
+
 		// Set the id for the KunenaUser object in case we created a new user.
 		if ($result && $isnew) {
 			$this->load ( $table->get ( 'userid' ) );
@@ -240,13 +245,17 @@ class KunenaUser extends JObject {
 	 * @since 1.6
 	 */
 	function delete() {
-		// Create the user table object
+		// Delete user table object
 		$table = &$this->getTable ();
 
 		$result = $table->delete ( $this->userid );
 		if (! $result) {
 			$this->setError ( $table->getError () );
 		}
+
+		$access = KunenaFactory::getAccessControl();
+		$access->clearCache();
+
 		return $result;
 
 	}
@@ -292,9 +301,14 @@ class KunenaUser extends JObject {
 		return $online;
 	}
 
-	public function isAdmin() {
+	public function getAllowedCategories($rule = 'read') {
 		$acl = KunenaFactory::getAccessControl ();
-		return $acl->isAdmin ( $this->userid );
+		return $acl->getAllowedCategories ( $this->userid, $rule );
+	}
+
+	public function isAdmin($catid = 0) {
+		$acl = KunenaFactory::getAccessControl ();
+		return $acl->isAdmin ( $this->userid, $catid );
 	}
 
 	public function isModerator($catid = 0) {

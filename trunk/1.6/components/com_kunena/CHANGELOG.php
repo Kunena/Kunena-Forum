@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+21-September-2010 Severdia
++ [#22547] Added after save & delete events for JX Finder search integration (courtesy of the infamous Mr. Landry)
+
 21-September-2010 Matias
 ^ [#22534] Update SQL upgrade script for K1.6.0
 

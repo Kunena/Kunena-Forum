@@ -503,7 +503,16 @@ class CKunenaPosting {
 		}
 		if ($errcount)
 			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
+			
+		// Get the event dispatcher
+		$dispatcher	= JDispatcher::getInstance();
 
+		// Load the JXFinder plug-in group
+		JPluginHelper::importPlugin('finder');
+		
+		// Fire after post save event
+		$dispatcher->trigger('onAfterSaveKunenaPost', array($id));
+		
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		if ($this->parent->thread == 0) {
@@ -575,7 +584,16 @@ class CKunenaPosting {
 				return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
 		}
 		$this->set ( 'id', $id = $this->parent->id );
+		
+		// Get the event dispatcher
+		$dispatcher	= JDispatcher::getInstance();
 
+		// Load the JXFinder plug-in group
+		JPluginHelper::importPlugin('finder');
+		
+		// Fire after post save event
+		$dispatcher->trigger('onAfterSaveKunenaPost', array($id));
+		
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterEdit($this);
@@ -616,6 +634,16 @@ class CKunenaPosting {
 
 		$this->set ( 'id', $this->parent->id );
 
+		// Get the event dispatcher
+		$dispatcher	= JDispatcher::getInstance();
+
+		// Load the JXFinder plug-in group
+		JPluginHelper::importPlugin('finder');
+		
+		// Fire after post save event
+		$dispatcher->trigger('onDeleteKunenaPost', array(array($mesid)));
+		
+		
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterDelete($this);

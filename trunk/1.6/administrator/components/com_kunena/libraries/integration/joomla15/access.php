@@ -69,8 +69,6 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 	}
 
 	function isModerator($uid=null, $catid=0) {
-		$catid = (int)$catid;
-
 		$my = JFactory::getUser();
 		if ($uid === null || (is_numeric($uid) && $uid == $my->id)){
 			$uid = $my;
@@ -89,7 +87,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 			// Is user a global moderator?
 			if (in_array(null, self::$moderators[$uid], true)) return true;
 			// Were we looking only for global moderator?
-			if (!is_numeric($catid)) return false;
+			if ($catid === null || $catid === false) return false;
 			// Is user moderator in any category?
 			if (!$catid && count(self::$moderators[$uid])) return true;
 			// Is user moderator in the category?

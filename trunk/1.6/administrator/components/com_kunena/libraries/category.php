@@ -134,19 +134,17 @@ class KunenaCategory extends JObject {
 			if (KunenaError::checkDatabaseError()) return;
 
 			// Use excatly the same query as in access control - just to be safe
-			$query = "SELECT u.id AS uid, m.catid FROM #__users AS u
+			$query = "SELECT COUNT(*) FROM #__users AS u
 				INNER JOIN #__kunena_users AS p ON u.id=p.userid
 				LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid
 				LEFT JOIN #__kunena_categories AS c ON m.catid=c.id
-				WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')";
+				WHERE u.id={$db->quote($user->userid)} AND u.block='0' AND p.moderator='1' AND c.moderated='1'";
 			$db->setQuery ( $query );
-			$list = $db->loadObjectList();
+			$catids = $db->loadResult();
 			if (KunenaError::checkDatabaseError()) return;
-			$moderators = array();
-			foreach ($list as $item) $moderators[$item->uid][] = $item->catid;
 
 			// Finally check if user looses his moderator status
-			if (isset($moderators[$user->userid][null])) {
+			if (!$catids) {
 				$user->moderator = 0;
 				$user->save();
 			}

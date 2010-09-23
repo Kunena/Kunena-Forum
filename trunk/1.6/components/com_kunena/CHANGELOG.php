@@ -36,6 +36,7 @@ Kunena 1.6.0
 23-September-2010 Matias
 # [#22579] Fix fatal error in CommunityBuilder integration (backend)
 ^ [#22579] Improve KunenaCategory class for GroupJive integration
+# [#22579] Fix bug in global moderator detection
 
 21-September-2010 Severdia
 + [#22547] Added after save & delete events for JX Finder search integration (courtesy of the infamous Mr. Landry)

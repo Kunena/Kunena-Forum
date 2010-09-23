@@ -483,7 +483,7 @@ class CKunenaPost {
 				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
 			}
 		} else {
-			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE') );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_MESSAGE_SUCCESS_DELETE') );
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}

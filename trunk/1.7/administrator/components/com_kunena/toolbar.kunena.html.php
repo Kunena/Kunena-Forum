@@ -26,34 +26,6 @@ defined( '_JEXEC' ) or die();
 // ################################################################
 class CKunenaToolbar
 {
-    function _ADMIN()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::publish();
-        JToolBarHelper::spacer();
-        JToolBarHelper::unpublish();
-        JToolBarHelper::spacer();
-        JToolBarHelper::addNew('new');
-        JToolBarHelper::spacer();
-        JToolBarHelper::editList();
-        JToolBarHelper::spacer();
-        JToolBarHelper::deleteList();
-        JToolBarHelper::spacer();
-
-    }
-
-    function _EDIT()
-    {
-
-        JToolBarHelper::spacer();
-        JToolBarHelper::save();
-        JToolBarHelper::spacer();
-        JToolBarHelper::cancel();
-        JToolBarHelper::spacer();
-
-    }
-
     function _NEWMOD_MENU()
     {
 

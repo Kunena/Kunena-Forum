@@ -33,6 +33,15 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+23-September-2010 Matias
+# [#22571] Fix KunenaUser::loadUsers() to return only requested users
+
+22-September-2010 Matias
++ [#22569] Administrator: Create basic MVC structure
++ [#22569] Administrator: Implement Category Manager in MVC
+- [#22570] Administrator: Remove old Category Manager code
+- [#22570] Remove old CKunenaVersion class, use KunenaVersion everywhere
+
 21-September-2010 Matias
 ^ [#22534] Create new trunk for K1.7
 ^ [#22534] Update version info to K1.7.0-DEV

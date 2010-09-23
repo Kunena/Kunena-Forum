@@ -30,13 +30,6 @@ $task = JRequest::getCmd( 'task' );
 
 switch ($task)
 {
-    case "new":
-    case "edit":
-    case "edit2":
-        CKunenaToolbar::_EDIT();
-
-        break;
-
     case "cancel":
         CKunenaToolbar::DEFAULT_MENU();
 
@@ -82,11 +75,6 @@ switch ($task)
 
     case "syncusers":
         CKunenaToolbar::_SYNCUSERS_MENU();
-
-        break;
-
-    case "showAdministration":
-        CKunenaToolbar::_ADMIN();
 
         break;
 
@@ -139,7 +127,7 @@ switch ($task)
         CKunenaToolbar::_SYSTEMREPORT_MENU();
 
         break;
-        
+
 	case "showTemplates":
         CKunenaToolbar::_SHOWTEMPLATES_MENU();
 
@@ -149,12 +137,12 @@ switch ($task)
         CKunenaToolbar::_EDITKTEMPLATE_MENU();
 
         break;
-		
+
 	case "chooseCSSTemplate":
         CKunenaToolbar::_CHOOSECSS_MENU();
 
         break;
-		
+
 	case "editTemplateCSS":
         CKunenaToolbar::_EDITCSS_MENU();
 

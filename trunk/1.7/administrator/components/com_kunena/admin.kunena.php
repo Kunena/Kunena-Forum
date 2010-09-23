@@ -18,45 +18,52 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @author TSMF & Jan de Graaff
  **/
-
 defined( '_JEXEC' ) or die();
 
-JToolBarHelper::title('&nbsp;', 'kunena.png');
+require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php');
 
 $view = JRequest::getCmd ( 'view' );
 $task = JRequest::getCmd ( 'task' );
 
-require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php');
-kimport('error');
-
-$kunena_app = & JFactory::getApplication ();
-
 require_once(KPATH_ADMIN.'/install/version.php');
-$kn_version = new KunenaVersion();
-if ($view == 'install') {
-	require_once (KPATH_ADMIN . '/install/controller.php');
-	$controller = new KunenaControllerInstall();
+$kversion = new KunenaVersion();
+if ($view != 'install' && !$kversion->checkVersion()) {
+	$app = JFactory::getApplication ();
+	$app->redirect(JURI::root().'administrator/index.php?option=com_kunena&view=install');
+}
+
+if ($view) {
+	if ($view == 'install') {
+		require_once (KPATH_ADMIN . '/install/controller.php');
+		$controller = new KunenaControllerInstall();
+	} else {
+		require_once (KPATH_ADMIN . '/controllers/controller.php');
+		$controller = KunenaController::getInstance();
+	}
 	$controller->execute( $task );
 	$controller->redirect();
 	return;
 }
 
-if (!$kn_version->checkVersion() && $task!='schema' && $task!='schemadiff') {
-	$kunena_app->redirect(JURI::root().'administrator/index.php?option=com_kunena&view=install');
-}
+// ************************************************************
+//							OLD CODE
+// ************************************************************
 
+JToolBarHelper::title('&nbsp;', 'kunena.png');
+
+kimport('error');
+$kunena_app = JFactory::getApplication ();
 require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
+if (!$lang->load('com_kunena.install',JPATH_ADMINISTRATOR)) {
+	$lang->load('com_kunena.install',KPATH_ADMIN);
+}
 if (!$lang->load('com_kunena',JPATH_SITE)) {
 	$lang->load('com_kunena',KPATH_SITE);
 }
 if (!$lang->load('com_kunena',JPATH_ADMINISTRATOR, null, true)) {
 	$lang->load('com_kunena',KPATH_ADMIN);
 }
-
-// Now that we have the global defines we can use shortcut defines
-require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
-require_once (KUNENA_PATH_LIB . DS . 'kunena.version.php');
 
 $kunena_config = KunenaFactory::getConfig ();
 $kunena_db = JFactory::getDBO ();
@@ -95,108 +102,6 @@ $option = JRequest::getCmd ( 'option' );
 $redirect = JURI::base () . "index.php?option=com_kunena&task=showAdministration";
 
 switch ($task) {
-	case "new" :
-		editCategory ( 0, $option );
-
-		break;
-
-	case "edit" :
-		editCategory ( $cid0, $option );
-
-		break;
-
-	case "edit2" :
-		editCategory ( $uid [0], $option );
-
-		break;
-
-	case "save" :
-		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
-		saveCategory ( $post, $redirect );
-
-		break;
-
-	case "cancel" :
-		$id = JRequest::getInt('id', 0);
-		cancelCategory ( $id, $redirect );
-
-		break;
-
-	case 'cat_lock_0' :
-		setCategories($cid, 'locked', 1, $redirect);
-
-		break;
-
-	case 'cat_lock_1' :
-		setCategories($cid, 'locked', 0, $redirect);
-
-		break;
-
-	case 'cat_moderate_0' :
-		setCategories($cid, 'moderated', 1, $redirect);
-
-		break;
-
-	case 'cat_moderate_1' :
-		setCategories($cid, 'moderated', 0, $redirect);
-
-		break;
-
-	case 'cat_review_0' :
-		setCategories($cid, 'review', 1, $redirect);
-
-		break;
-
-	case 'cat_review_1' :
-		setCategories($cid, 'review', 0, $redirect);
-
-		break;
-
-	case 'cat_allow_anonymous_0' :
-		setCategories($cid, 'allow_anonymous', 1, $redirect);
-
-		break;
-
-	case 'cat_allow_anonymous_1' :
-		setCategories($cid, 'allow_anonymous', 0, $redirect);
-
-		break;
-
-	case 'cat_allow_polls_0' :
-		setCategories($cid, 'allow_polls', 1, $redirect);
-
-		break;
-
-	case 'cat_allow_polls_1' :
-		setCategories($cid, 'allow_polls', 0, $redirect);
-
-		break;
-
-	case "publish" :
-		setCategories($cid, 'published', 1, $redirect);
-
-		break;
-
-	case "unpublish" :
-		setCategories($cid, 'published', 0, $redirect);
-
-		break;
-
-	case "remove" :
-		deleteCategories ( $cid, $redirect );
-
-		break;
-
-	case "orderup" :
-		orderCategoryUpDown ( $cid0, - 1, $redirect );
-
-		break;
-
-	case "orderdown" :
-		orderCategoryUpDown ( $cid0, 1, $redirect );
-
-		break;
-
 	case "showconfig" :
 		showConfig ( $option );
 
@@ -345,18 +250,6 @@ switch ($task) {
 
 	case "deleteFile" :
 		deleteAttachment ( JRequest::getInt ( 'id', 0 ), JURI::base () . "index.php?option=$option&task=browseFiles", 'COM_KUNENA_FILEDELETED' );
-
-		break;
-
-	case "showAdministration" :
-		categoryManager ( $option );
-
-		break;
-
-	case "saveorder" :
-		$order = JRequest::getVar( 'order', array (), 'post', 'array' );
-		$redirect = JURI::base () . "index.php?option=com_kunena&task=" . JRequest::getCmd( 'return', '', 'post' );
-		orderCategories($cid, $order, $redirect);
 
 		break;
 
@@ -553,11 +446,11 @@ switch ($task) {
 		break;
 }
 
-$kn_version_warning = $kn_version->getVersionWarning('COM_KUNENA_VERSION_INSTALLED');
+$kn_version_warning = $kversion->getVersionWarning('COM_KUNENA_VERSION_INSTALLED');
 if (! empty ( $kn_version_warning )) {
 	$kunena_app->enqueueMessage ( $kn_version_warning, 'notice' );
 }
-if (!$kn_version->checkVersion()) {
+if (!$kversion->checkVersion()) {
 	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE'), Kunena::version() ), 'notice' );
 	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_UPGRADE_WARN') );
 	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE_AGAIN'), Kunena::version() ) );
@@ -964,389 +857,6 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		jimport('joomla.client.helper');
 		JClientHelper::setCredentialsFromRequest('ftp');
 		$kunena_app->redirect( JURI::base () . 'index.php?option='.$option);
-}
-
-//###########################################
-//			CATEGORY MANAGER
-//###########################################
-
-function categoryManager($option) {
-	$kunena_app = JFactory::getApplication ();
-	$kunena_db = JFactory::getDBO ();
-	$kunena_acl = JFactory::getACL ();
-
-	$filter_order = $kunena_app->getUserStateFromRequest( $option.'filter_order', 'filter_order', 'ordering', 'cmd' );
-	$filter_order_Dir = $kunena_app->getUserStateFromRequest( $option.'filter_order_Dir', 'filter_order_Dir', 'asc', 'word' );
-	if ($filter_order_Dir != 'asc') $filter_order_Dir = 'desc';
-	$limit = $kunena_app->getUserStateFromRequest ( "global.list.limit", 'limit', $kunena_app->getCfg ( 'list_limit' ), 'int' );
-	$limitstart = $kunena_app->getUserStateFromRequest ( "{$option}.limitstart", 'limitstart', 0, 'int' );
-	$levellimit = $kunena_app->getUserStateFromRequest ( "{$option}.limit", 'levellimit', 10, 'int' );
-
-	$search = $kunena_app->getUserStateFromRequest( $option.'search', 'search', '', 'string' );
-	$search = JString::strtolower( $search );
-
-	$order = '';
-
-	if ($filter_order == 'ordering') {
-		$order = ' ORDER BY a.ordering '. $filter_order_Dir;
-	} else if ($filter_order == 'name') {
-		$order = ' ORDER BY a.name '. $filter_order_Dir ;
-	} else if ($filter_order == 'id') {
-		$order = ' ORDER BY a.id '. $filter_order_Dir ;
-	}
-
-	$where = '';
-
-	if ($search) {
-		$where .= ' WHERE LOWER( a.name ) LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false ). ' OR LOWER( a.id ) LIKE '.$kunena_db->Quote( '%'.$kunena_db->getEscaped( $search, true ).'%', false );
-	}
-
-	jimport ( 'joomla.version' );
-	$jversion = new JVersion ();
-	if ($jversion->RELEASE == 1.5) {
-		// Joomla 1.5
-		 $query= "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, g.id AS group_id, h.name AS admingroup
-			FROM #__kunena_categories AS a
-			LEFT JOIN #__users AS u ON u.id = a.checked_out
-			LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
-			LEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access
-			".$where
-		 	.$order;
-	} else {
-		// Joomla 1.6
-		$query = "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.title AS groupname, h.title AS admingroup
-			FROM #__kunena_categories AS a
-			LEFT JOIN #__users AS u ON u.id = a.checked_out
-			LEFT JOIN #__usergroups AS g ON g.id = a.pub_access
-			LEFT JOIN #__usergroups AS h ON h.id = a.admin_access
-			".$where
-			.$order;
-	}
-	$kunena_db->setQuery($query);
-	$rows = $kunena_db->loadObjectList ('id');
-	KunenaError::checkDatabaseError();
-
-	// establish the hierarchy of the categories
-	$children = array (0 => array());
-
-	// first pass - collect children
-	foreach ( $rows as $v ) {
-		$list = array();
-		$vv = $v;
-		while ($vv->parent>0 && isset($rows[$vv->parent]) && !in_array($vv->parent, $list)) {
-			$list[] = $vv->id;
-			$vv = $rows[$vv->parent];
-		}
-		if ($vv->parent) {
-			$v->parent = -1;
-			$v->published = 0;
-
-			if ( empty($search))
-			$v->name = JText::_('COM_KUNENA_CATEGORY_ORPHAN').' : '.$v->name;
-		}
-		if ($v->pub_access == 0) {
-			$v->groupname = JText::_('COM_KUNENA_EVERYBODY');
-		} else if ($v->pub_access == - 1) {
-			$v->groupname = JText::_('COM_KUNENA_ALLREGISTERED');
-		} else if ($v->pub_access == 1) {
-			$v->groupname = JText::_('COM_KUNENA_NOBODY');
-		} else {
-			$v->groupname = JText::_( $v->groupname );
-		}
-		$v->admingroup = JText::_( $v->admingroup );
-		if ($v->checked_out && !JTable::isCheckedOut(0, intval($v->checked_out))) {
-			$v->checked_out = 0;
-			$v->editor = '';
-		}
-		$children [$v->parent][] = $v;
-		$v->location = count ( $children [$v->parent] )-1;
-	}
-
-	if (isset($children [-1])) {
-		$children [0] = array_merge($children [-1], $children [0]);
-		if ( empty($search))
-		$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_CATEGORY_ORPHAN_DESC'), 'notice' );
-	}
-
-	// second pass - get an indent list of the items
-	$list = fbTreeRecurse ( 0, '', array (), $children, max ( 0, $levellimit - 1 ) );
-	$total = count ( $list );
-	if ($limitstart >= $total)
-		$limitstart = 0;
-
-	jimport ( 'joomla.html.pagination' );
-	$pageNav = new JPagination ( $total, $limitstart, $limit );
-
-	$levellist = JHTML::_ ( 'select.integerList', 1, 20, 1, 'levellimit', 'size="1" onchange="document.adminForm.submit();"', $levellimit );
-	// slice out elements based on limits
-	$list = array_slice ( $list, $pageNav->limitstart, $pageNav->limit );
-	/**
-	 *@end
-	 */
-
-	// table ordering
-	$lists['order_Dir']	= $filter_order_Dir;
-	$lists['order']		= $filter_order;
-
-	$lists['search']= $search;
-
-	html_Kunena::categoryManager ( $list, $children, $pageNav, $option, $lists );
-}
-
-function editCategory($id, $option) {
-	$kunena_app = JFactory::getApplication ();
-	$kunena_my = JFactory::getUser ();
-	kimport('category');
-	$category = KunenaCategory::getInstance ( $id );
-	if ($category->isCheckedOut($kunena_my->id)) {
-		$kunena_app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_CHECKED_OUT', kescape($category->name)), 'notice' );
-		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showAdministration" );
-	}
-
-	$kunena_db = JFactory::getDBO ();
-	$kunena_acl = JFactory::getACL ();
-	$kunena_config = KunenaFactory::getConfig ();
-
-	if ($category->exists()) {
-		$category->checkout ( $kunena_my->id );
-	} else {
-		// New category is by default child of the first section -- this will help new users to do it right
-		$kunena_db->setQuery ( "SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent='0' AND id!='$category->id' ORDER BY ordering" );
-		$sections = $kunena_db->loadObjectList ();
-		KunenaError::checkDatabaseError();
-		$category->parent = empty($sections) ? 0 : $sections[0]->id;
-		$category->published = 0;
-		$category->ordering = 9999;
-		$category->pub_recurse = 1;
-		$category->admin_recurse = 1;
-		$category->pub_access = 0;
-		$category->moderated = 1;
-	}
-
-	$catList = array();
-	$catList[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_TOPLEVEL'));
-	$categoryList = CKunenaTools::KSelectList('parent', $catList, 'class="inputbox"', true, 'parent', $category->parent);
-
-	// make a standard yes/no list
-	$yesno = array ();
-	$yesno [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_ANN_NO') );
-	$yesno [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_ANN_YES') );
-	//Create all kinds of Lists
-	$lists = array ();
-	$accessLists = array ();
-	//create custom group levels to include into the public group selectList
-	$pub_groups = array ();
-	$adm_groups = array ();
-	$pub_groups [] = JHTML::_ ( 'select.option', 1, JText::_('COM_KUNENA_NOBODY') );
-	$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_EVERYBODY') );
-	$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_('COM_KUNENA_ALLREGISTERED') );
-	jimport ( 'joomla.version' );
-	$jversion = new JVersion ();
-	if ($jversion->RELEASE == 1.5) {
-		// FIXME: not implemented in J1.6
-		$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, 'Registered', true ) );
-		// create admin groups array for use in selectList:
-		$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, 'Public Backend', true ) );
-	}
-	// Anonymous posts default
-	$post_anonymous = array ();
-	$post_anonymous [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG') );
-	$post_anonymous [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO') );
-
-	//create the access control list
-	$accessLists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $category->pub_access );
-	$accessLists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $category->admin_access );
-	$lists ['pub_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse );
-	$lists ['admin_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->admin_recurse );
-	$lists ['forumLocked'] = JHTML::_ ( 'select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked );
-	$lists ['forumModerated'] = JHTML::_ ( 'select.genericlist', $yesno, 'moderated', 'class="inputbox" size="1"', 'value', 'text', $category->moderated );
-	$lists ['forumReview'] = JHTML::_ ( 'select.genericlist', $yesno, 'review', 'class="inputbox" size="1"', 'value', 'text', $category->review );
-	$lists ['allow_polls'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_polls', 'class="inputbox" size="1"', 'value', 'text', $category->allow_polls );
-	$lists ['allow_anonymous'] = JHTML::_ ( 'select.genericlist', $yesno, 'allow_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->allow_anonymous );
-	$lists ['post_anonymous'] = JHTML::_ ( 'select.genericlist', $post_anonymous, 'post_anonymous', 'class="inputbox" size="1"', 'value', 'text', $category->post_anonymous );
-	//get a list of moderators, if forum/category is moderated
-	$moderatorList = array ();
-
-	if ($category->moderated == 1 && $category->exists()) {
-		$kunena_db->setQuery ( "SELECT * FROM #__kunena_moderation AS a INNER JOIN #__users as u ON a.userid=u.id where a.catid=$category->id" );
-		$moderatorList = $kunena_db->loadObjectList ();
-		KunenaError::checkDatabaseError();
-	}
-
-	html_Kunena::editCategory ( $category, $categoryList, $moderatorList, $lists, $accessLists, $option, $kunena_config );
-}
-
-function cancelCategory($id, $redirect) {
-	$app = JFactory::getApplication ();
-	if (!JRequest::checkToken()) {
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-		$app->redirect ( $redirect );
-	}
-
-	kimport('category');
-	$my = JFactory::getUser ();
-	$category = KunenaCategory::getInstance ( $id );
-	if (!$category->isCheckedOut($my->id)) {
-		$category->checkin ();
-	} else {
-		$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_CHECKED_OUT', kescape($category->name)), 'notice' );
-	}
-	$app->redirect ( $redirect );
-}
-
-function saveCategory($post, $redirect) {
-	$app = JFactory::getApplication ();
-	if (!JRequest::checkToken()) {
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-		$app->redirect ( $redirect );
-	}
-
-	$success = false;
-
-	kimport('category');
-	$my = JFactory::getUser ();
-	$category = KunenaCategory::getInstance ( intval($post['id']) );
-	if (!$category->isCheckedOut($my->id)) {
-		$category->bind( $post );
-		$success = $category->save();
-		if (!$success) {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', kescape($category->getError())), 'notice' );
-		}
-	} else {
-		$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_CHECKED_OUT', kescape($category->name)), 'notice' );
-	}
-
-	if ($success) {
-		$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_SAVED', kescape($category->name)) );
-	}
-	$app->redirect ( $redirect );
-}
-
-function setCategories($cid, $variable, $value, $redirect) {
-	$app = JFactory::getApplication ();
-	if (!JRequest::checkToken()) {
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-		$app->redirect ( $redirect );
-	}
-	if (empty ( $cid )) {
-		$app->enqueueMessage ( JText::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice' );
-		$app->redirect ( $redirect );
-	}
-
-	$count = 0;
-
-	kimport('category');
-	$my = JFactory::getUser ();
-	$categories = KunenaCategory::getCategories($cid);
-	foreach ($categories as $category) {
-		if ($category->get($variable) == $value) continue;
-		if (!$category->isCheckedOut($my->id)) {
-			$category->set($variable, $value);
-			if ($category->save()) {
-				$count++;
-				$name = $category->name;
-			} else {
-				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', kescape($category->getError())), 'notice' );
-			}
-		} else {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_CHECKED_OUT', kescape($category->name)), 'notice' );
-		}
-	}
-
-	if ($count == 1)
-		$app->redirect ( $redirect, JText::sprintf('COM_KUNENA_A_CATEGORY_SAVED', kescape($name)) );
-	if ($count > 1)
-		$app->redirect ( $redirect, JText::sprintf('COM_KUNENA_A_CATEGORIES_SAVED', $count) );
-}
-
-function deleteCategories($cid, $redirect) {
-	$app = JFactory::getApplication ();
-	if (!JRequest::checkToken()) {
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-		$app->redirect ( $redirect );
-	}
-	if (empty ( $cid )) {
-		$app->enqueueMessage ( JText::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice' );
-		$app->redirect ( $redirect );
-	}
-
-	$count = 0;
-
-	kimport('category');
-	$my = JFactory::getUser ();
-	$categories = KunenaCategory::getCategories($cid);
-	foreach ($categories as $category) {
-		if (!$category->isCheckedOut($my->id)) {
-			if ($category->delete()) {
-				$count++;
-				$name = $category->name;
-			} else {
-				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_DELETE_FAILED', kescape($category->getError())), 'notice' );
-			}
-		} else {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_CHECKED_OUT', kescape($category->name)), 'notice' );
-		}
-	}
-
-	if ($count == 1)
-		$app->redirect ( $redirect, JText::sprintf('COM_KUNENA_A_CATEGORY_DELETED', kescape($name)) );
-	if ($count > 1)
-		$app->redirect ( $redirect, JText::sprintf('COM_KUNENA_A_CATEGORIES_DELETED', $count) );
-}
-
-function orderCategories($cid, $order, $redirect) {
-	$app = JFactory::getApplication ();
-	if (!JRequest::checkToken()) {
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-		$app->redirect ( $redirect );
-	}
-	if (empty ( $cid )) {
-		$app->enqueueMessage ( JText::_('COM_KUNENA_A_NO_CATEGORIES_SELECTED'), 'notice' );
-		$app->redirect ( $redirect );
-	}
-
-	$success = false;
-
-	kimport('category');
-	$my = JFactory::getUser ();
-	$categories = KunenaCategory::getCategories($cid);
-	foreach ($categories as $category) {
-		if (!isset($order[$category->id]) || $category->get('ordering') == $order[$category->id]) continue;
-		if (!$category->isCheckedOut($my->id)) {
-			$category->set('ordering', $order[$category->id]);
-			$success = $category->save();
-			if (!$success) {
-				$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_SAVE_FAILED', kescape($category->getError())), 'notice' );
-			}
-		} else {
-			$app->enqueueMessage ( JText::sprintf('COM_KUNENA_A_CATEGORY_CHECKED_OUT', kescape($category->name)), 'notice' );
-		}
-	}
-
-	if ($success) {
-		$app->enqueueMessage ( JText::sprintf('COM_KUNENA_NEW_ORDERING_SAVED') );
-	}
-	$app->redirect( $redirect );
-}
-
-function orderCategoryUpDown($id, $direction, $redirect) {
-	$app = JFactory::getApplication ();
-	if (!JRequest::checkToken()) {
-		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-		$app->redirect ( $redirect );
-	}
-
-	$db = JFactory::getDBO ();
-	kimport('tables.kunenacategory');
-	$row = new TableKunenaCategory ( $db );
-	$row->load ( $id );
-
-	// Ensure that we have the right ordering
-	$where = 'parent=' . $db->quote ( $row->parent );
-	$row->reorder ( $where );
-	$row->move ( $direction, $where );
-
-	$app->redirect ( $redirect );
 }
 
 //===============================
@@ -3123,7 +2633,6 @@ function generateSystemReport () {
 	$maxExecTime = ini_get('max_execution_time');
 	$maxExecMem = ini_get('memory_limit');
 	$fileuploads = ini_get('upload_max_filesize');
-	$kunenaVersionInfo = CKunenaVersion::versionArray ();
 
 	//get all the config settings for Kunena
 	$kunena_db->setQuery ( "SHOW TABLES LIKE '" . $kunena_db->getPrefix () ."kunena_config'" );
@@ -3300,8 +2809,8 @@ function generateSystemReport () {
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
-	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.Kunena::version().' | [u]Build:[/u] '
+	    .Kunena::versionBuild().' | [u]Version name:[/u] '.Kunena::versionName().' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
 
     return $report;
 }

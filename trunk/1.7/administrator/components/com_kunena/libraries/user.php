@@ -85,33 +85,37 @@ class KunenaUser extends JObject {
 	}
 
 	static public function loadUsers($userids = array()) {
+		static $loaded = false;
 
-//FB::log($userids, 'Need to preload uerlist for avatars');
-
-		// Before we do anything to cache the users, check if we should add active users
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-		$who = CKunenaWhoIsOnline::GetInstance();
-
-		$users = $who->getActiveUsersList();
-		foreach($users as $user){
-			$userids[intval($user->id)] = intval($user->id);
+		// Make sure that userids are unique and that indexes are correct
+		$e_userids = array();
+		foreach($userids as $userid){
+			$e_userids[intval($userid)] = intval($userid);
 		}
+		$userids = $e_userids;
 
-		// Also get latest user and add to the list
-		require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-		$kunena_stats = CKunenaStats::getInstance ( );
-		$kunena_stats->loadLastUser();
-		$userids[intval($kunena_stats->lastestmemberid)] = intval($kunena_stats->lastestmemberid);
+		if (!$loaded) {
+			// Before we do anything to cache the users, check if we should add active users
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			$who = CKunenaWhoIsOnline::GetInstance();
+			$users = $who->getActiveUsersList();
+			foreach($users as $user){
+				$e_userids[intval($user->id)] = intval($user->id);
+			}
 
-		// Now that we have all users to cache, dedup the list
-		unset($userids[0]);
-		$userids = array_unique($userids);
-		JArrayHelper::toInteger($userids);
-
-		$userlist = implode ( ',', $userids );
-
-		if (empty ( $userlist ))
+			// Also get latest user and add to the list
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+			$kunena_stats = CKunenaStats::getInstance ( );
+			$kunena_stats->loadLastUser();
+			$e_userids[intval($kunena_stats->lastestmemberid)] = intval($kunena_stats->lastestmemberid);
+			$loaded = true;
+		}
+		unset($e_userids[0]);
+		$e_userids = array_diff_key($e_userids, self::$_instances);
+		if (empty ( $e_userids ))
 			return array ();
+
+		$userlist = implode ( ',', $e_userids );
 
 		$c = __CLASS__;
 		$db = JFactory::getDBO ();
@@ -128,7 +132,7 @@ class KunenaUser extends JObject {
 			$instance = new $c ();
 			$instance->bind ( $user, true );
 			self::$_instances [$instance->userid] = $instance;
-			$list [$instance->userid] = $instance;
+			if (in_array($instance->userid, $userids)) $list [$instance->userid] = $instance;
 		}
 
 		// Finally call integration preload as well

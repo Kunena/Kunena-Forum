@@ -21,7 +21,6 @@ class KunenaVersion
 	 */
 	public function __construct()
 	{
-		$this->db = JFactory::getDBO();
 	}
 
 	/**
@@ -77,9 +76,10 @@ class KunenaVersion
 		if ($prefix)
 		{
 			// FIXME:
-			$this->db->debug(0);
-			$this->db->setQuery("SELECT * FROM ".$this->db->nameQuote($this->db->getPrefix().$prefix.'version')." ORDER BY `id` DESC", 0, 1);
-			$version = $this->db->loadObject();
+			$db = JFactory::getDBO();
+			$db->debug(0);
+			$db->setQuery("SELECT * FROM ".$db->nameQuote($db->getPrefix().$prefix.'version')." ORDER BY `id` DESC", 0, 1);
+			$version = $db->loadObject();
 		}
 		if (!isset($version) || !is_object($version) || !isset($version->state))
 		{
@@ -97,7 +97,7 @@ class KunenaVersion
 	*
 	* @return string "Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname]"
 	*/
-	function getVersionHTML()
+	static function getVersionHTML()
 	{
 		return 'Kunena '.Kunena::version().' | '.Kunena::versionDate().' | '.Kunena::versionBuild().' [ '.Kunena::versionName().' ]';
 	}
@@ -107,7 +107,7 @@ class KunenaVersion
 	*
 	* @return string "© 2008-2010 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
-	function getCopyrightHTML()
+	static function getCopyrightHTML()
 	{
 		return ': &copy; 2008-2010 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.com" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_TEAM').'</a>  | '.JText::_('COM_KUNENA_VERSION_LICENSE')
@@ -118,12 +118,11 @@ class KunenaVersion
 	/**
 	* Retrieve installed Kunena version, copyright and license as string.
 	*
-	* @return string "Installed version: Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] |
-	*		© 2008-2010 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
+	* @return string "Kunena X.Y.Z | YYYY-MM-DD | BUILDNUMBER [versionname] | © 2008-2010 Copyright: Kunena Team. All rights reserved. | License: GNU General Public License"
 	*/
-	function getLongVersionHTML()
+	static function getLongVersionHTML()
 	{
-		return JText::_('COM_KUNENA_VERSION_INSTALLED').': '.$this->version().' | '.$this->copyright();
+		return self::getVersionHTML() . ' | ' . self::getCopyrightHTML();
 	}
 
 }

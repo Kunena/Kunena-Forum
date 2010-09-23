@@ -612,7 +612,10 @@ Selectors.Pseudo.selected = function(){
 };
 
 function kInsertVideo1() {
-	var videosize = $('kvideosize').get('value') ? ' size='+$('kvideosize').get('value') : '';
+	var videosize = $('kvideosize').get('value');
+	if ( videosize == '') {
+		videosize = '100';
+	}
 	var videowidth = $('kvideowidth').get('value');
 	if ( videowidth == '') {
 		videowidth = '425';
@@ -621,8 +624,12 @@ function kInsertVideo1() {
 	if ( videoheigth == '') {
 		videoheigth = '344';
 	}
+	var provider = $('kvideoprovider').get('value');
+	if ( provider == '') {
+		provider = '';
+	}
 	var videoid = $('kvideoid').get('value');
-	kbbcode.replaceSelection('[video size='+videosize+' width='+videowidth+' height='+videoheigth+' type='+$('kvideoprovider').retrieve('videoprov')+']'+videoid+'[/video]', false);
+	kbbcode.replaceSelection('[video size='+videosize+' width='+videowidth+' height='+videoheigth+' type='+provider+']'+videoid+'[/video]', false);
 	kToggleOrSwap("kbbcode-video-options");
 }
 

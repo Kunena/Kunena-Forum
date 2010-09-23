@@ -1305,42 +1305,6 @@ function deleteForum($cid = null, $option) {
 		}
 	}
 
-	// FIXME: bad code
-	if (! empty ( $catid )) {
-		$cids = implode ( $catid );
-		$kunena_db = JFactory::getDBO ();
-		$kunena_db->setQuery ( "SELECT id, parent FROM #__kunena_messages where catid in ($cids)" );
-		$mesList = $kunena_db->loadObjectList ();
-		if (KunenaError::checkDatabaseError ())
-			return;
-
-		if (count ( $mesList ) > 0) {
-			foreach ( $mesList as $ml ) {
-				$kunena_db->setQuery ( "DELETE FROM #__kunena_messages WHERE id = $ml->id" );
-				$kunena_db->query ();
-				if (KunenaError::checkDatabaseError ())
-					return;
-
-				$kunena_db->setQuery ( "DELETE FROM #__kunena_messages_text WHERE mesid=$ml->id" );
-				$kunena_db->query ();
-				if (KunenaError::checkDatabaseError ())
-					return;
-
-				//and clear up all subscriptions as well
-				if ($ml->parent == 0) { //this was a topic message to which could have been subscribed
-					$kunena_db->setQuery ( "DELETE FROM #__kunena_subscriptions WHERE thread=$ml->id" );
-					$kunena_db->query ();
-					if (KunenaError::checkDatabaseError ())
-						return;
-				}
-			}
-		}
-	}
-
-	$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
-	$kunena_db->query ();
-	KunenaError::checkDatabaseError();
-
 	$kunena_app->redirect ( $redirect );
 }
 

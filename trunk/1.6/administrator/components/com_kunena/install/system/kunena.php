@@ -13,11 +13,6 @@ defined ( '_JEXEC' ) or die ();
 class plgSystemKunena extends JPlugin {
 
 	function __construct(& $subject, $config) {
-		// Do not load plugin in administration
-		if (JFactory::getApplication()->isAdmin()) {
-			return false;
-		}
-
 		jimport ( 'joomla.application.component.helper' );
 		// Check if Kunena component is installed/enabled
 		if (! JComponentHelper::isEnabled ( 'com_kunena', true )) {

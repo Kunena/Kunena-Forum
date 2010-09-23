@@ -93,6 +93,71 @@ class KunenaCategory extends JObject {
 	}
 
 	/**
+	 * Change user moderator status
+	 **/
+	public function setModerator($user, $status = 1) {
+		// Check if category exists
+		if (!$this->exists()) return false;
+
+		// Check if user exists
+		$user = KunenaFactory::getUser($user);
+		if (!($user instanceof KunenaUser) || !$user->exists()) {
+			return false;
+		}
+
+		// Do not touch global moderators
+		if ($user->isModerator(null)) {
+			return true;
+		}
+
+		// If the user state remains the same, do nothing
+		if ($user->isModerator($this->id) == $status) {
+			return true;
+		}
+
+		$db = JFactory::getDBO ();
+		if ($status == 1) {
+			$query = "INSERT INTO #__kunena_moderation (catid, userid) VALUES  ({$db->quote($this->id)}, {$db->quote($user->userid)})";
+			$db->setQuery ( $query );
+			$db->query ();
+			if (KunenaError::checkDatabaseError ()) return;
+
+			// Finally set user to be a moderator
+			if ($user->moderator == 0) {
+				$user->moderator = 1;
+				$user->save();
+			}
+		} else {
+			$query = "DELETE FROM #__kunena_moderation WHERE catid={$db->Quote($this->id)} AND userid={$db->Quote($user->userid)}";
+			$db->setQuery ( $query );
+			$db->query ();
+			if (KunenaError::checkDatabaseError()) return;
+
+			// Use excatly the same query as in access control - just to be safe
+			$query = "SELECT u.id AS uid, m.catid FROM #__users AS u
+				INNER JOIN #__kunena_users AS p ON u.id=p.userid
+				LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid
+				LEFT JOIN #__kunena_categories AS c ON m.catid=c.id
+				WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')";
+			$db->setQuery ( $query );
+			$list = $db->loadObjectList();
+			if (KunenaError::checkDatabaseError()) return;
+			$moderators = array();
+			foreach ($list as $item) $moderators[$item->uid][] = $item->catid;
+
+			// Finally check if user looses his moderator status
+			if (isset($moderators[$user->userid][null])) {
+				$user->moderator = 0;
+				$user->save();
+			}
+		}
+
+		$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na' WHERE userid={$db->quote($user->userid)}" );
+		$db->query ();
+		KunenaError::checkDatabaseError();
+	}
+
+	/**
 	 * Method to get the category table object
 	 *
 	 * This function uses a static variable to store the table name of the user table to
@@ -193,8 +258,9 @@ class KunenaCategory extends JObject {
 	 * @since 1.6
 	 */
 	public function delete() {
-		if (!$this->id)
-			return false;
+		if (!$this->exists()) {
+			return true;
+		}
 
 		// Create the user table object
 		$table = &$this->getTable ();
@@ -204,9 +270,43 @@ class KunenaCategory extends JObject {
 			$this->setError ( $table->getError () );
 		}
 		$this->_exists = false;
+
+		$db = JFactory::getDBO ();
+		// Clear sessions
+		$queries[] = "UPDATE #__kunena_sessions SET allowed='na'";
+		// Delete moderators
+		$queries[] = "DELETE FROM #__kunena_moderation WHERE catid={$db->quote($this->id)}";
+		// Delete favorites
+		$queries[] = "DELETE f FROM jos_kunena_favorites AS f LEFT JOIN jos_kunena_messages AS m ON m.id=f.thread WHERE m.catid={$db->quote($this->id)}";
+		// Delete subscriptions
+		$queries[] = "DELETE s FROM jos_kunena_subscriptions AS s LEFT JOIN jos_kunena_messages AS m ON m.id=s.thread WHERE m.catid={$db->quote($this->id)}";
+		// Delete category subscriptions
+		$queries[] = "DELETE FROM jos_kunena_subscriptions_categories WHERE catid={$db->quote($this->id)}";
+		// Delete thank yous
+		$queries[] = "DELETE t FROM jos_kunena_thankyou AS t LEFT JOIN jos_kunena_messages AS m ON m.id=t.postid WHERE m.catid={$db->quote($this->id)}";
+		// Delete poll users
+		$queries[] = "DELETE p FROM jos_kunena_polls_users AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
+		// Delete poll options
+		$queries[] = "DELETE p FROM jos_kunena_polls_options AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
+		// Delete polls
+		$queries[] = "DELETE p FROM jos_kunena_polls AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.threadid WHERE m.catid={$db->quote($this->id)}";
+		// Delete messages
+		$queries[] = "DELETE m, t FROM jos_kunena_messages AS m INNER JOIN jos_kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
+		// TODO: delete attachments
+
+		foreach ($queries as $query) {
+			$db->setQuery($query);
+			$db->query();
+			KunenaError::checkDatabaseError ();
+		}
+
+		// TODO: remove dependency
+		require_once KPATH_SITE.'/class.kunena.php';
+		CKunenaTools::reCountUserPosts();
+		CKunenaTools::reCountBoards();
+
 		return $result;
 	}
-
 	/**
 	 * Method to check out the KunenaCategory object
 	 *

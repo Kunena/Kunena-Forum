@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0
 
+23-September-2010
+# [#22578] Fix Notice: Undefined index: _default in kunena.parser.php on line 844
+# [#19288] Fix typo in admin replace px by kB in maximum file size
+
 21-September-2010 Severdia
 + [#22547] Added after save & delete events for JX Finder search integration (courtesy of the infamous Mr. Landry)
 

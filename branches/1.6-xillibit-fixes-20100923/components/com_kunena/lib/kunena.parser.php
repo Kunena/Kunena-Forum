@@ -841,6 +841,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 //
  				);
 
+ 				$vid_providers ["_default"] = '';
 				list ( $vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2 ) = (isset ( $vid_providers [$vid ["type"]] )) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
 
 				unset ( $vid_providers );

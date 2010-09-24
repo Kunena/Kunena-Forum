@@ -33,6 +33,16 @@ Legend:
 
 Kunena 1.6.0
 
+24-September-2010 810
+# [#19288] Long words in topics breaks listcat layout (fixed profile)
+# [#19288] Long words in topics breaks listcat layout (fixed message)
+# [#19288] Fix hyperlink @ mail
+
+23-September-2010 810
+# [#19288] Issue when video provider is null and size
+# [#19288] Long words in topics breaks listcat layout
+# [#19288] Preview doesn't render xml in code tags
+
 24-September-2010 Matias
 # [#22119] Fix PHP Notice: Undefined variable in KunenaCategory
 # [#22119] Fix PHP Error: KunenaError not included in KunenaCategory & Table

@@ -80,12 +80,14 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				}
 			?>
 				<div class="ktopic-title-cover">
+				<?php $message->subject = substr($message->subject,0,30); ?>
 					<?php echo CKunenaLink::GetThreadLink ( 'view', intval($message->catid), intval($message->id), KunenaParser::parseText ($message->subject), KunenaParser::stripBBCode ($message->message), 'follow', 'ktopic-title km' ) ?>
 				</div>
 				<div style="display:none"><?php echo KunenaParser::parseBBCode ($message->message);?></div>
 			</td>
 
 			<td class="kcol-mid ktopictittle">
+			<?php $firstpost->subject = substr($firstpost->subject,0,20); ?>
 				<?php echo CKunenaLink::GetThreadLink ( 'view', intval($firstpost->catid), intval($firstpost->id), KunenaParser::parseText ($firstpost->subject), KunenaParser::stripBBCode ($firstpost->message), 'follow', 'ktopic-title km' ) ?>
 				<?php
 				if ($message->favcount ) {

@@ -68,7 +68,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 		$text = preg_replace ( '/(?<!S)((http(s?):\/\/)|(www\.[a-zA-Z0-9-_]+\.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/u', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text );
 
 		// match name@address
-		$text = preg_replace ( '/(?<!S)([a-zA-Z0-9_.\-]+\@[a-zA-Z][a-zA-Z0-9_.\-]+[a-zA-Z]{2,6})/u', '<a href="mailto:$1">$1</a>', $text );
+		$text = preg_replace ( '/(?<!S)([a-zA-Z0-9_.\-]+\@{1}[A-Za-z0-9\.|-|_]*[.]{1}[a-z]{2,5})/u', '<a href="mailto:$1">$1</a>', $text );
 
 		return substr ( $text, 1, - 1 );
 	}

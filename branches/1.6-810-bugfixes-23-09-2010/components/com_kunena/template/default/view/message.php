@@ -12,6 +12,7 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+$this->subjectHtml = substr($this->subjectHtml,0,90);
 //TODO: Split this file
 if ($this->params->get('avatarPosition') == 'top') : ?>
 

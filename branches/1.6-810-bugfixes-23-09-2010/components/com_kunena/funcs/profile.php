@@ -218,7 +218,7 @@ class CKunenaProfile {
 
 	function displayUserPosts()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestxprofile.php');
 		$obj = new CKunenaLatestX('userposts', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -237,7 +237,7 @@ class CKunenaProfile {
 
 	function displayGotThankYou()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestxprofile.php');
 		$obj = new CKunenaLatestX('gotthankyouposts',0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -247,7 +247,7 @@ class CKunenaProfile {
 
 	function displaySaidThankYou()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestxprofile.php');
 		$obj = new CKunenaLatestX('saidthankyouposts',0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -256,7 +256,7 @@ class CKunenaProfile {
 	}
 	function displayOwnTopics()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestxprofile.php');
 		$obj = new CKunenaLatestX('owntopics', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -267,7 +267,7 @@ class CKunenaProfile {
 
 	function displayUserTopics()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestxprofile.php');
 		$obj = new CKunenaLatestX('usertopics', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -278,7 +278,7 @@ class CKunenaProfile {
 
 	function displayFavorites()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestxprofile.php');
 		$obj = new CKunenaLatestX('favorites', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -289,7 +289,7 @@ class CKunenaProfile {
 
 	function displaySubscriptions()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestxprofile.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;
@@ -300,7 +300,7 @@ class CKunenaProfile {
 
 	function displayCategoriesSubscriptions()
 	{
-		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
+		require_once (KUNENA_PATH_FUNCS . DS . 'latestxprofile.php');
 		$obj = new CKunenaLatestX('catsSubscriptions', 0);
 		$obj->user = $this->user;
 		$obj->embedded = 1;

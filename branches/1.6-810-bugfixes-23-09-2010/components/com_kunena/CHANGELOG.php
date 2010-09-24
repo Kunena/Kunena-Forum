@@ -32,12 +32,13 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.0
+24-September-2010 810
+# [#19288] Long words in topics breaks listcat layout (fixed profile)
 
 23-September-2010 810
 # [#19288] Issue when video provider is null and size
 # [#19288] Long words in topics breaks listcat layout
 # [#19288] Preview doesn't render xml in code tags
-
 
 21-September-2010 Severdia
 + [#22547] Added after save & delete events for JX Finder search integration (courtesy of the infamous Mr. Landry)

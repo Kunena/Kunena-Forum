@@ -36,6 +36,7 @@ Kunena 1.6.0
 24-September-2010 Matias
 # [#22119] Fix PHP Notice: Undefined variable in KunenaCategory
 # [#22119] Fix PHP Error: KunenaError not included in KunenaCategory & Table
+# [#22579] KunenaCategory: Fix saving new category
 
 24-September-2010 fxstein
 ^ [#19064] Finalize tableau bbcode

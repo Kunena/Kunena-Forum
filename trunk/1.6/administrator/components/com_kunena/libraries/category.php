@@ -231,7 +231,7 @@ class KunenaCategory extends JObject {
 		$isnew = ! $this->_exists;
 
 		// If we aren't allowed to create new users return
-		if (! $this->id || ($isnew && $updateOnly)) {
+		if ($isnew && $updateOnly) {
 			return true;
 		}
 
@@ -239,8 +239,14 @@ class KunenaCategory extends JObject {
 		if (! $result = $table->store ()) {
 			$this->setError ( $table->getError () );
 		}
+		$table->reorder ();
 
-		// Set the id for the KunenaUser object in case we created a new user.
+		$db = JFactory::getDBO ();
+		$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
+		$db->query ();
+		KunenaError::checkDatabaseError();
+
+		// Set the id for the KunenaUser object in case we created a new category.
 		if ($result && $isnew) {
 			$this->load ( $table->get ( 'id' ) );
 			self::$_instances [$table->get ( 'id' )] = $this;

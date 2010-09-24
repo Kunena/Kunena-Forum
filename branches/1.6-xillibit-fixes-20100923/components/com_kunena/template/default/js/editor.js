@@ -636,7 +636,7 @@ function kunenaSelectUsername(obj, kuser) {
 	if (obj.get('checked')) {
 		$('kauthorname').set('value',kunena_anonymous_name).removeProperty('disabled');
 		$('kanynomous-check-name').removeProperty('style');
-	} else {
+	} else if(kanncheck != 'none') {
 		$('kanynomous-check-name').setStyle('display','none');
 		$('kauthorname').set('value',kuser).set('disabled', 'disabled');
 	}
@@ -677,11 +677,12 @@ window.addEvent('domready', function(){
 	}
 
 	if($('kauthorname') != undefined) {
+		var kannonymouscheck = $('kanynomous-check').getStyle('display');
 		var kuser = $('kauthorname').get('value');
 		var kbutton = $('kanonymous');
-		kunenaSelectUsername(kbutton, kuser);
+		kunenaSelectUsername(kbutton, kannonymouscheck, kuser);
 		kbutton.addEvent('click', function(e) {
-			kunenaSelectUsername(this, kuser);
+			kunenaSelectUsername(this,'', kuser);
 		});
 	}
 	//	to select if anynomous option is allowed on new topic tab
@@ -698,7 +699,7 @@ window.addEvent('domready', function(){
 						$('kanynomous-check').setStyle('display','none');
 						kbutton.removeProperty('checked');
 					}
-					kunenaSelectUsername(kbutton,kuser);
+					kunenaSelectUsername(kbutton, '',kuser);
 				}
 				}).send();
 			})

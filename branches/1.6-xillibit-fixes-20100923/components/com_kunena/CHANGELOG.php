@@ -33,7 +33,10 @@ Legend:
 
 Kunena 1.6.0
 
-23-September-2010
+24-September-2010 Xillibit
+# [#22507] Fix issue the field is not showed when the user is guest, so it can't post anything
+
+23-September-2010 Xillibit
 # [#22578] Fix Notice: Undefined index: _default in kunena.parser.php on line 844
 # [#19288] Fix typo in admin replace px by kB in maximum file size
 # [#22581] Fix typo in template.xml in button iconsetname

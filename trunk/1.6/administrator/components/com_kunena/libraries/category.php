@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+kimport ('error');
+
 /**
  * Kunena Category Class
  */
@@ -47,9 +49,8 @@ class KunenaCategory extends JObject {
 
 		if ($identifier instanceof KunenaCategory) {
 			return $identifier;
-		} else if (is_numeric ( $identifier )) {
-			$id = intval ( $identifier );
 		}
+		$id = intval ( $identifier );
 		if ($id < 1)
 			return new $c ();
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+24-September-2010 fxstein
+^ [#19064] Finalize tableau bbcode
+
 23-September-2010 Matias
 # [#22579] Fix fatal error in CommunityBuilder integration (backend)
 ^ [#22579] Improve KunenaCategory class for GroupJive integration

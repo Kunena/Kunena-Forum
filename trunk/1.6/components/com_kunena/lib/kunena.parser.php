@@ -977,25 +977,30 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_NOTHING;
 
 				break;
-//			case 'tableau' :
-//				if ($between) {
-//					$task->autolink_disable --;  // continue autolink conversion
-//
-//					$map_maxwidth = (int) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
-//					$map_maxheight = (int) ($kunena_config->rteheight); // max. display size
-//
-//						$tag_new = '<a href="http://maps.google.com/?q='.$between.'" rel="nofollow" target="_blank">'.$between.'</a>';
-//					$tag_new = '<script type="text/javascript" src="http://public.tableausoftware.com/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="604" height="969" style="display:none;"><param name="name" value="WorldCup/WorldCupWinningPercentages" /><param name="toolbar" value="yes" /></object><noscript>World Cup Winning Percentages <br /><a href="#"><img alt="World Cup Winning Percentages " src="http://public.tableausoftware.com/static/images/WorldCup-WorldCupWinningPercentages_rss.png" height="100%" /></a></noscript><div style="width:604px;height:22px;padding:0px 10px 0px 0px; color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;"><div style="float:right; padding-right:8px;"><a href="http://www.tableausoftware.com/public?ref=http://public.tableausoftware.com/views/WorldCup/WorldCupWinningPercentages" target="_blank">Powered by Tableau</a></div></div>';
-//
-// <script type="text/javascript" src="http://public.tableausoftware.com/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="604" height="969" style="display:none;"><param name="name" value="WorldCup/WorldCupWinningPercentages" /><param name="toolbar" value="yes" /></object><noscript>World Cup Winning Percentages <br /><a href="#"><img alt="World Cup Winning Percentages " src="http://public.tableausoftware.com/static/images/WorldCup-WorldCupWinningPercentages_rss.png" height="100%" /></a></noscript><div style="width:604px;height:22px;padding:0px 10px 0px 0px; color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;"><div style="float:right; padding-right:8px;"><a href="http://www.tableausoftware.com/public?ref=http://public.tableausoftware.com/views/WorldCup/WorldCupWinningPercentages" target="_blank">Powered by Tableau</a></div></div>
-// http://public.tableausoftware.com/views/WorldCup/WorldCupWinningPercentages?:embed=y&:toolbar=yes
-//
-//
-//					return TAGPARSER_RET_REPLACED;
-//				}
-//				return TAGPARSER_RET_NOTHING;
-//
-//				break;
+			case 'tableau' :
+				if ($between) {
+					$task->autolink_disable --;  // continue autolink conversion
+
+					$viz_maxwidth = (int) (($kunena_config->rtewidth * 9) / 10); // Max 90% of text width
+					$viz_maxheight = (isset ( $tag->options ["height"] ) && is_numeric($tag->options ["height"])) ? (int) $tag->options ["height"] : (int) $kunena_config->rteheight;
+
+					//$url_data = parse_url ( $between );
+					if(preg_match ('/(https?:\/\/.*?)\/(?:.*\/)*(.*\/.*)\?.*:toolbar=(yes|no)/', $between, $matches)){
+						$tableauserver = $matches[1];
+						$vizualization = $matches[2];
+						$toolbar = $matches[3];
+
+						$tag_new = '<script type="text/javascript" src="'.$tableauserver.
+									'/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="'.$viz_maxwidth.
+									'" height="'.$viz_maxheight.'" style="display:none;"><param name="name" value="'.$vizualization.
+									'" /><param name="toolbar" value="'.$toolbar.'" /></object>';
+					}
+
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
 
 			case 'hide' :
 				if ($between) {

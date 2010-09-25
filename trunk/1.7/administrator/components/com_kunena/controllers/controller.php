@@ -21,19 +21,10 @@ jimport ( 'joomla.application.component.helper' );
  * @since		1.6
  */
 class KunenaController extends JController {
+	var $_escape = 'htmlspecialchars';
+
 	function __construct() {
 		parent::__construct ();
-
-		$lang = JFactory::getLanguage();
-		if (!$lang->load('com_kunena.install',JPATH_ADMINISTRATOR)) {
-			$lang->load('com_kunena.install',KPATH_ADMIN);
-		}
-		if (!$lang->load('com_kunena',JPATH_SITE)) {
-			$lang->load('com_kunena',KPATH_SITE);
-		}
-		if (!$lang->load('com_kunena',JPATH_ADMINISTRATOR, null, true)) {
-			$lang->load('com_kunena',KPATH_ADMIN);
-		}
 	}
 
 	/**
@@ -50,12 +41,18 @@ class KunenaController extends JController {
 		}
 
 		$lang = JFactory::getLanguage();
-		if (!$lang->load('com_kunena_base',JPATH_ADMINISTRATOR)) {
-			$lang->load('com_kunena_base',KPATH_ADMIN);
+		if (Kunena::isSVN()) {
+			$lang->load('com_kunena',KPATH_ADMIN);
+			$lang->load('com_kunena',KPATH_SITE);
+			$lang->load('com_kunena.install',KPATH_ADMIN);
+		} else {
+			$lang->load('com_kunena',JPATH_ADMINISTRATOR);
+			$lang->load('com_kunena',JPATH_SITE);
+			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 		}
 
-		$view = strtolower ( JRequest::getCmd ( 'view', 'categories' ) );
-		$path = KPATH_ADMIN . DS . 'controllers' . DS . $view . '.php';
+		$view = strtolower ( JRequest::getCmd ( 'view', 'none' ) );
+		$path = JPATH_COMPONENT . DS . 'controllers' . DS . $view . '.php';
 
 		// If the controller file path exists, include it ... else die with a 500 error.
 		if (file_exists ( $path )) {
@@ -82,19 +79,22 @@ class KunenaController extends JController {
 	 * @since	1.6
 	 */
 	public function display() {
-		// Version warning
-		$version = new KunenaVersion();
-		$version_warning = $version->getVersionWarning('COM_KUNENA_VERSION_INSTALLED');
-		if (! empty ( $version_warning )) {
-			$app = JFactory::getApplication ();
-			$app->enqueueMessage ( $version_warning, 'notice' );
+		$app = JFactory::getApplication();
+		if ($app->isAdmin()) {
+			// Version warning
+			require_once KPATH_ADMIN . '/install/version.php';
+			$version = new KunenaVersion();
+			$version_warning = $version->getVersionWarning('COM_KUNENA_VERSION_INSTALLED');
+			if (! empty ( $version_warning )) {
+				$app->enqueueMessage ( $version_warning, 'notice' );
+			}
 		}
 
 		// Get the document object.
 		$document = JFactory::getDocument ();
 
 		// Set the default view name and format from the Request.
-		$vName = JRequest::getWord ( 'view', 'categories' );
+		$vName = JRequest::getWord ( 'view', 'none' );
 		$lName = JRequest::getWord ( 'layout', 'default' );
 		$vFormat = $document->getType ();
 
@@ -119,11 +119,30 @@ class KunenaController extends JController {
 
 			// Render the view.
 			$view->display ();
-
-			// Display Toolbar. View must have setToolBar method
-			if (method_exists ( $view, 'setToolBar' )) {
-				$view->setToolBar ();
-			}
 		}
+	}
+
+	/**
+	 * Escapes a value for output in a view script.
+	 *
+	 * If escaping mechanism is one of htmlspecialchars or htmlentities.
+	 *
+	 * @param  mixed $var The output to escape.
+	 * @return mixed The escaped value.
+	 */
+	function escape($var) {
+		if (in_array ( $this->_escape, array ('htmlspecialchars', 'htmlentities' ) )) {
+			return call_user_func ( $this->_escape, $var, ENT_COMPAT, 'UTF-8' );
+		}
+		return call_user_func ( $this->_escape, $var );
+	}
+
+	/**
+	 * Sets the _escape() callback.
+	 *
+	 * @param mixed $spec The callback for _escape() to use.
+	 */
+	function setEscape($spec) {
+		$this->_escape = $spec;
 	}
 }

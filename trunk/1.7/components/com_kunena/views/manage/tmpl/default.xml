@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="Index">
+		<message>Manage Categories</message>
+	</layout>
+	<state>
+		<name>Kunena Forum: Manage Categories</name>
+		<description>Category Manager</description>
+		<url addpath="/administrator/components/com_kunena/elements">
+			<param name="catid" type="kunenacategories" default="0" sections="1" none="" label="Category ID" />
+		</url>
+	</state>
+</metadata>

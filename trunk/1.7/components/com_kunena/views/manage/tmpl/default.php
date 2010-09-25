@@ -10,12 +10,12 @@
  */
 defined('_JEXEC') or die;
 
+JHTML::_ ( 'behavior.mootools' );
 $document = JFactory::getDocument();
 $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
+$document->addScript ( JURI::base().'/includes/js/joomla.javascript.js' );
 ?>
-<div id="kadmin">
-	<div class="kadmin-left"><?php include KPATH_ADMIN.'/views/common/tmpl/menu.php'; ?></div>
-	<div class="kadmin-right">
+<div id="Kunena">
 	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN'); ?></div>
 		<form action="index.php" method="post" name="adminForm">
 			<table class="kadmin-sort">
@@ -34,7 +34,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 						<th align="center" width="5">#</th>
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->categories ); ?>);" /></th>
 						<th class="title"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->{'list.direction'}, $this->state->{'list.ordering'} ); ?></th>
-						<th><small><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'catid', $this->state->{'list.direction'}, $this->state->{'list.ordering'} ); ?></small></th>
+						<th><small><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'id', $this->state->{'list.direction'}, $this->state->{'list.ordering'} ); ?></small></th>
 						<th width="100" class="center nowrap"><small>
 							<?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', $this->state->{'list.direction'}, $this->state->{'list.ordering'} ); ?>
 							<?php echo JHTML::_('grid.order',  $this->categories ); ?></small>
@@ -132,7 +132,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		</table>
 
 		<input type="hidden" name="option" value="com_kunena" />
-		<input type="hidden" name="view" value="categories" />
+		<input type="hidden" name="view" value="manage" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->{'list.ordering'} ) ?>" />
 		<input type="hidden" name="filter_order_Dir" value="<?php echo intval ( $this->state->{'list.direction'} ) ?>" />
@@ -140,8 +140,4 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
-	</div>
-	<div class="kadmin-footer">
-		<?php echo KunenaVersion::getLongVersionHTML (); ?>
-	</div>
 </div>

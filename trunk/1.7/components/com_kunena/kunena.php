@@ -23,6 +23,20 @@
 
 defined( '_JEXEC' ) or die();
 
+require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php');
+
+$view = JRequest::getCmd ( 'view' );
+if ($view == 'manage') {
+	$task = JRequest::getCmd ( 'task' );
+	require_once (KPATH_ADMIN . '/controllers/controller.php');
+	$controller = KunenaController::getInstance();
+	$controller->execute( $task );
+	$controller->redirect();
+	return;
+}
+
+// ***********************************************************************
+
 // Kunena wide defines
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.defines.php');
 

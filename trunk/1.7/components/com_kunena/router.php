@@ -19,7 +19,9 @@ class KunenaRouter {
 	static $msgidcache = array ();
 
 	// List of reserved functions (if category name is one of these, use always catid)
-	static $functions = array ('who', 'announcement', 'poll', 'polls', 'stats', 'myprofile', 'userprofile', 'fbprofile',
+	static $functions = array ('manage',
+
+		'who', 'announcement', 'poll', 'polls', 'stats', 'myprofile', 'userprofile', 'fbprofile',
 		'profile', 'moderateuser', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'rules', 'report',
 		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'userposts', 'unapproved',
 		'deleted', 'search', 'advsearch', 'markthisread', 'subscribecat', 'unsubscribecat', 'karma',
@@ -29,7 +31,7 @@ class KunenaRouter {
 		if (self::$catidcache !== null)
 			return; // Already loaded
 
-		$db = & JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 
 		$query = 'SELECT id, name, parent FROM #__kunena_categories WHERE published=1';
 		$db->setQuery ( $query );
@@ -71,11 +73,11 @@ class KunenaRouter {
 	 *
 	 * All SEF URLs are formatted like this:
 	 *
-	 * http://site.com/menuitem/1-category-name/10-subject/[func]/[do]/[param1]-value1/[param2]-value2?param3=value3&param4=value4
+	 * http://site.com/menuitem/1-category-name/10-subject/[view]/[do]/[param1]-value1/[param2]-value2?param3=value3&param4=value4
 	 *
 	 * - If catid exists, category will always be in the first segment
 	 * - If there is no catid, second segment for message will not be used (param-value: id-10)
-	 * - [func] and [do] are the only parameters without value
+	 * - [view] and [do] are the only parameters without value
 	 * - all other segments (task, id, userid, page, sel) are using param-value format
 	 *
 	 * NOTE! Only major variables are using SEF segments
@@ -103,14 +105,15 @@ class KunenaRouter {
 						unset ( $query [$var] );
 					}
 				}
-				if (isset ( $query ['view'] )) {
-					$query ['func'] = $query ['view'];
-					unset ($query ['view']);
+				// Convert legacy functions to views
+				if (isset ( $query ['func'] )) {
+					$query ['view'] = $query ['func'];
+					unset ($query ['func']);
 				}
 			}
 		}
 
-		$db = & JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		jimport ( 'joomla.filter.output' );
 
 		// We may have catid also in the menu item
@@ -160,11 +163,11 @@ class KunenaRouter {
 			unset ( $query ['id'] );
 		}
 
-		if (isset ( $query ['func'] )) {
-			if ($query ['func'] != 'showcat' && $query ['func'] != 'view' && ! ($query ['func'] == 'listcat' && $catfound)) {
-				$segments [] = $query ['func'];
+		if (isset ( $query ['view'] )) {
+			if ($query ['view'] != 'showcat' && $query ['view'] != 'view' && ! ($query ['view'] == 'listcat' && $catfound)) {
+				$segments [] = $query ['view'];
 			}
-			unset ( $query ['func'] );
+			unset ( $query ['view'] );
 		}
 
 		if (isset ( $query ['do'] )) {
@@ -183,8 +186,8 @@ class KunenaRouter {
 	}
 
 	function ParseRoute($segments) {
-		$funcitems = array (array ('func' => 'showcat', 'var' => 'catid' ), array ('func' => 'view', 'var' => 'id' ) );
-		$doitems = array ('func', 'do' );
+		$funcitems = array (array ('view' => 'showcat', 'var' => 'catid' ), array ('view' => 'view', 'var' => 'id' ) );
+		$doitems = array ('view', 'do' );
 		$counter = 0;
 		$funcpos = $dopos = 0;
 		$vars = array ();
@@ -198,13 +201,14 @@ class KunenaRouter {
 		// Fill data from the menu item
 		$menuquery = isset ( $active->query ) ? $active->query : array ();
 		foreach ( $menuquery as $var => $value ) {
-			if ($var == 'view') {
-				$var = 'func';
+			if ($var == 'func') {
+				// Convert legacy functions to views
+				$var = 'view';
 			}
 			$vars [$var] = $value;
 		}
-		if (isset ( $vars ['func']) && $vars ['func'] == 'entrypage') {
-			unset ( $vars ['func'] );
+		if (isset ( $vars ['view']) && $vars ['view'] == 'entrypage') {
+			unset ( $vars ['view'] );
 		}
 
 		while ( ($segment = array_shift ( $segments )) !== null ) {
@@ -239,33 +243,33 @@ class KunenaRouter {
 					continue;
 				}
 			} else if ($value === null) {
-				// Variable must be either func or do
+				// Variable must be either view or do
 				$value = $var;
 				if (in_array ( $var, self::$functions )) {
-					$var = 'func';
-				} else if (isset($vars ['func']) && !isset($vars ['do'])) {
+					$var = 'view';
+				} else if (isset($vars ['view']) && !isset($vars ['do'])) {
 					$var = 'do';
 				} else {
 					// Unknown parameter: continue
-					if (isset($vars ['func'])) continue;
-					// Oops: unknown function or non-existing category
-					$var = 'func';
+					if (isset($vars ['view'])) continue;
+					// Oops: unknown view or non-existing category
+					$var = 'view';
 				}
 			}
 			$vars [$var] = $value;
 			$counter++;
 		}
 
-		if (isset($vars['catid']) && (!isset($vars ['func']) || $vars ['func'] == 'listcat')) {
-			// If we have catid, function cannot be listcat
-			$vars ['func'] = 'showcat';
+		if (isset($vars['catid']) && (!isset($vars ['view']) || $vars ['view'] == 'listcat')) {
+			// If we have catid, view cannot be listcat
+			$vars ['view'] = 'showcat';
 		}
-		if (isset($vars['id']) && $vars ['func'] == 'showcat') {
-			// If we have id, function cannot be showcat
-			$vars ['func'] = 'view';
+		if (isset($vars['id']) && $vars ['view'] == 'showcat') {
+			// If we have id, view cannot be showcat
+			$vars ['view'] = 'view';
 		}
 		// Check if we should use listcat instead of showcat
-		if (isset ( $vars ['func'] ) && $vars ['func'] == 'showcat') {
+		if (isset ( $vars ['view'] ) && $vars ['view'] == 'showcat') {
 			if (empty ( $vars ['catid'] )) {
 				$parent = 0;
 			} else {
@@ -276,7 +280,7 @@ class KunenaRouter {
 				KunenaError::checkDatabaseError();
 			}
 			if (! $parent)
-				$vars ['func'] = 'listcat';
+				$vars ['view'] = 'listcat';
 		}
 		return $vars;
 	}

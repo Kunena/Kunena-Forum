@@ -33,8 +33,17 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+24-September-2010 Matias
+^ [#22569] Make KunenaRoute to work also in administration
+# [#22569] KunenaControllerCategories: Use KunenaRoute::_() to make SEF URLs to work
+# [#22569] KunenaAccess: In backend every logged in user has global admin rights
+
 23-September-2010 Matias
 # [#22571] Fix KunenaUser::loadUsers() to return only requested users
+^ [#22569] Make KunenaController to work both in frontend and backend
+^ [#22569] KunenaRoute: Use views internally (not funcs like K1.6)
+^ [#22569] KunenaControllerCategories: Make it to work also in frontend (derived class KunenaControllerManage)
++ [#22569] KunenaControllerCategories: Add check if user has administrator rights for the category before taking action
 
 22-September-2010 Matias
 + [#22569] Administrator: Create basic MVC structure

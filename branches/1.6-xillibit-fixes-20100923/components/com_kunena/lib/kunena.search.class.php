@@ -338,8 +338,9 @@ class CKunenaSearch {
 				$result [$cur] = $cur;
 				if (array_key_exists ( $cur, $allow_list ))
 					foreach ( $allow_list [$cur] as $forum )
-						if (! in_array ( $forum, $catids ))
+						if (! in_array ( $forum, $catids ) && $childforums ) {
 							array_push ( $catids, $forum );
+						}
 				$cur = array_pop ( $catids );
 			} while ( $cur );
 			$search_forums = implode ( ",", $result );

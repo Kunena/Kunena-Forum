@@ -35,6 +35,7 @@ Kunena 1.6.0
 
 26-September-2010 Xillibit
 + [#22600] Add button to generate a pdf of topic (need specific button for it)
+# [#22601] Kunena Search "Also search in child forums" set no has no effects
 
 24-September-2010 Xillibit
 # [#22507] Fix issue the field is not showed when the user is guest, so it can't post anything

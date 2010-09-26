@@ -235,7 +235,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$kunena_app->close ();
 	}
 
-	if ($func == 'fb_pdf' || $func == 'pdf') {
+	if ($func == 'kunena_pdf' || $func == 'pdf') {
 		include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
 		$kunena_app->close ();
 	}

@@ -23,7 +23,7 @@ class KunenaRouter {
 		'profile', 'moderateuser', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'rules', 'report',
 		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'userposts', 'unapproved',
 		'deleted', 'search', 'advsearch', 'markthisread', 'subscribecat', 'unsubscribecat', 'karma',
-		'bulkactions', 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'fb_pdf', 'article', 'entrypage', 'thankyou' );
+		'bulkactions', 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'kunena_pdf', 'article', 'entrypage', 'thankyou' );
 
 	function loadCategories() {
 		if (self::$catidcache !== null)

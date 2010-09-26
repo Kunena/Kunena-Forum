@@ -67,7 +67,7 @@
 
 
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id: kunena_posts.xml 337 2010-09-08 04:33:26Z rseverdia $ -->
+<!-- $Id$ -->
 <install version="1.5" type="plugin" group="finder" method="upgrade">
 	<name>Finder - Kunena Posts</name>
 	<group>finder</group>

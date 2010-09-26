@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: CHANGELOG.php 3516 2010-09-17 18:30:19Z xillibit $
+ * @version $Id$
  * Kunena Discuss Plugin
  * @package Kunena Discuss
  *

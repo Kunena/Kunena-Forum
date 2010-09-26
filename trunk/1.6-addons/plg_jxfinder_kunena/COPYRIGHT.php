@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: COPYRIGHT.php 3159 2010-08-04 11:02:48Z mahagr $
+ * @version $Id$
  * Kunena Discuss Plugin
  * @package Kunena Discuss
  *

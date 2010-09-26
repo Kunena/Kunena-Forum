@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunenadiscuss.php 3374 2010-08-31 19:01:18Z fxstein $
+ * @version $Id$
  * JXtended Finder Kunena  Plugin
  * @package Kunena Discuss
  *

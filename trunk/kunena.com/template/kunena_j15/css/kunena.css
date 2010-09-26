@@ -101,7 +101,7 @@ div.breadcrumbs .sep {padding:0 5px;}
 .banneritem_text {margin-bottom:10px;}
 #modlgn_username, #modlgn_passwd {border:1px solid #ccc;padding:3px;}
 .pagination span, .pagination a {margin-right:5px;}
-#colmask ul li {list-style:circle;}
+#colmask ul li {list-style:none;}
 #colmask ul ul {margin-top:0;}
 #colmask ul ul li {list-style:square;}
 .colpad h2.contentheading {padding-right:65px;}
@@ -112,7 +112,7 @@ span.attention {display:block;margin:15px 0;padding:8px 10px 8px 10px;background
 /* Modules */
 .module {padding:1px;}
 .module-title {font-size:110%;font-weight:bold;margin:0;padding:7px 15px 5px;}
-.module-body {padding:10px 15px 25px;}
+.module-body {padding:5px 5px 5px;}
 .color1 .module-title {background:url(../images/kunena.png) 0 -204px repeat-x;border-bottom:1px solid #ddd;color:#777;}
 .color1 .module-body {border-top:1px solid #fff;}
 .color2 .module-title {background:url(../images/kunena.png) 0 -136px repeat-x;border-bottom:1px solid #c3d9e1;color:#50646d;}
@@ -227,4 +227,31 @@ padding-top:10px;
 }
 #system-debug div {
 font-size:11px;
+}
+.vmiddle { vertical-align:middle;}
+
+/* Tooltips */
+.tool-tip {
+	float: left;
+	background: #ffc;
+	border: 1px solid #D4D5AA;
+	padding: 5px;
+	max-width: 200px;
+	z-index: 50;
+}
+
+.tool-title {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	font-weight: bold;
+	margin-top: -15px;
+	padding-top: 15px;
+	padding-bottom: 5px;
+	background: url(../images/selector-arrow.png) no-repeat;
+}
+
+.tool-text {
+	font-size: 100%;
+	margin: 0;
 }

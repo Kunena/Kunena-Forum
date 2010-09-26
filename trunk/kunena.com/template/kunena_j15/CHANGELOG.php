@@ -34,6 +34,11 @@ Legend:
 
 Kunena Site Template based on Rocket Theme Afterburner
 
+25-September-2010 fxstein
+^ [#19707] Change module padding to enable 728x90 in site header
+^ [#19707] Incorporate change made on kunena.com
++ [#19707] Added tooltip css
+
 5-July-2010 fxstein
 + [#19707] Added missing build files and updated builder config
 + [#19707] Add svn:kewords:id to all files

@@ -47,6 +47,7 @@ class plgCommunityMyKunena extends CApplications {
 		$items = array();
 		$user = CFactory::getRequestUser ();
 		if ($user->id) {
+			KunenaFactory::getSession ( true );
 			require_once KPATH_SITE . '/funcs/latestx.php';
 			$obj = new CKunenaLatestX('userposts', 0);
 			$obj->user = JFactory::getUser($user->id);

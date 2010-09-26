@@ -28,6 +28,9 @@ Legend:
 
 MyKunena 1.6.0-RC2
 
+26-September-2010 Xillibit
+# [#19002] Fix session not instantiated when leverage methods for CKunenalatestX
+
 17-September-2010 Xillibit
 + [#19002] Added fr-FR translation
 

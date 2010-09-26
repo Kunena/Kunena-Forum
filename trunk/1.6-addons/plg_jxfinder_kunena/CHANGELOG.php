@@ -1,8 +1,8 @@
 <?php
 /**
  * @version $Id$
- * Kunena Discuss Plugin
- * @package Kunena Discuss
+ * Kunena JxFinder Plugin
+ * @package Kunena JxFInder Plugin
  *
  * @Copyright (C) 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -17,7 +17,7 @@ die( '' );
 Changelog
 ------------
 This is a non-exhaustive (but still near complete) changelog for
-the Kunena Discuss Plugin, including beta and release candidate versions.
+the Kunena jxFinder Plugin, including beta and release candidate versions.
 Legend:
 
 * -> Security Fix

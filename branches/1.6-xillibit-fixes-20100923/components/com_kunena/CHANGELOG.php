@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+27-September-2010 Xillibit
+# [#22612] id_last_msg isn't saving the info when topic is under review.
+
 26-September-2010 Xillibit
 + [#22600] Add button to generate a pdf of topic (need specific button for it)
 # [#22601] Kunena Search "Also search in child forums" set no has no effects

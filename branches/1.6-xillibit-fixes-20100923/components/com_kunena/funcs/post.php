@@ -812,10 +812,16 @@ class CKunenaPost {
 		if ($this->isIPBanned())
 			return false;
 
-		$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_FAIL' );
-		$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE id={$this->_db->Quote($this->id)}" );
-		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
-			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' );
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
+		$message = new CKunenaPosting();
+		$message->action($this->id);
+		if ($message->canApprove()) {
+			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_FAIL' );
+			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE id={$this->_db->Quote($this->id)}" );
+			if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
+				$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' );
+			}
+			CKunenaTools::modifyCategoryStats($this->id, $this->msg_cat->parent, $this->msg_cat->time,$this->msg_cat->catid);
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ), $success_msg );
 	}

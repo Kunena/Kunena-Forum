@@ -44,7 +44,7 @@ class fbpdfwrapper {
 	function addObject($v1, $v2) {}
 	function ezSetDy($v1) {}
 	function ezText($text, $size) {
-		$this->_text .= '<font size='. ($size-11) .'>' . str_replace("\n", '<br/>', $text) . '</font><br/>';
+		$this->_text .= '<font size='. ($size-11) .'>' . str_replace("\n", '<br />', $text) . '</font><br />';
 	}
 	function ezStream() {
 		$options = array('margin-header' => 5, 'margin-footer' => 10, 'margin-top' => 20,

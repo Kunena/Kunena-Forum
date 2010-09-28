@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.0
 
+28-September-2010 Xillibit
+# [#19288] Update fr-FR translation (thanks lavsteph)
+# [#22370] HTML incorrect tags : <br> <br /> <br /> in languages files newly updated (Part 2)
+
 27-September-2010 Xillibit
 # [#22612] id_last_msg isn't saving the info when topic is under review.
 
@@ -150,7 +154,7 @@ Kunena 1.6.0-RC3
 
 10-September-2010 Xillibit
 # [#22377] Sort items in userlist when integrated with third components doesn't come back to Kunena userlist
-# [#22370] HTML incorrect tags : <br> <br/> <br />
+# [#22370] HTML incorrect tags : <br> <br /> <br />
 # [#22368] Typo in en-GB admin language
 
 10-September-2010 Matias

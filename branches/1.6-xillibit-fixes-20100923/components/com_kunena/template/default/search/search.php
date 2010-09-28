@@ -17,7 +17,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 ?>
 <div class="kblock ksearchresult">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="ksearchresult"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="ksearchresult"></a></span>
 		<h2>
 			<span>
 				<?php echo JText::_('COM_KUNENA_SEARCH_RESULTS'); ?>

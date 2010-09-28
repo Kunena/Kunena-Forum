@@ -36,6 +36,7 @@ Kunena 1.6.0
 28-September-2010 Xillibit
 # [#19288] Update fr-FR translation (thanks lavsteph)
 # [#22370] HTML incorrect tags : <br> <br /> <br /> in languages files newly updated (Part 2)
+# [#22627] Iimprove accessibility for visually impaired users for collaspse/expand buttons
 
 27-September-2010 Xillibit
 # [#22612] id_last_msg isn't saving the info when topic is under review.

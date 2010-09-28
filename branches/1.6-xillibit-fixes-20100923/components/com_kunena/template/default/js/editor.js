@@ -636,10 +636,10 @@ function kunenaSelectUsername(obj, kuser) {
 	if (obj.get('checked')) {
 		$('kauthorname').set('value',kunena_anonymous_name).removeProperty('disabled');
 		$('kanynomous-check-name').removeProperty('style');
-	} else if(kanncheck != 'none') {
+	}/* else if(kanncheck != 'none') {
 		$('kanynomous-check-name').setStyle('display','none');
 		$('kauthorname').set('value',kuser).set('disabled', 'disabled');
-	}
+	}*/
 }
 
 window.addEvent('domready', function(){	

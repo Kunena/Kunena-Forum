@@ -26,7 +26,7 @@ if ( $this->changevote ) {
 </div>
 <div class="kblock kpollvote">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kpolls_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>"  rel="kpolls_tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ( $dataspollresult[0]->title ); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpolls_tbody">

@@ -959,6 +959,7 @@ window.addEvent('domready', function(){
 		// Auto-hide if the cookie is set.
 		if (KCookie.get('hide_'+link.getProperty('rel'))) {
 			link.removeClass('close').addClass('open');
+			link.set('title',kunena_toggler_open);
 			document.id(link.getProperty('rel')).setStyle('display', 'none');
 		}
 		
@@ -966,11 +967,13 @@ window.addEvent('domready', function(){
 		link.addEvent('click', function(){
 			if (this.hasClass('close')) {
 				this.removeClass('close').addClass('open');
+				link.set('title',kunena_toggler_open);
 				document.id(this.getProperty('rel')).setStyle('display', 'none');
 				KCookie.set('hide_'+this.getProperty('rel'), true);
 			}
 			else {
 				this.removeClass('open').addClass('close');
+				link.set('title',kunena_toggler_close);
 				document.id(this.getProperty('rel')).setStyle('display', '');
 				KCookie.set('hide_'+this.getProperty('rel'), false);
 			}

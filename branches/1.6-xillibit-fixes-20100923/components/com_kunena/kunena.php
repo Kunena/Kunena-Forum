@@ -144,6 +144,12 @@ if (isset ( $_POST ['func'] ) && $func == "showcat") {
 $kunena_my = &JFactory::getUser ();
 $kunena_db = &JFactory::getDBO ();
 
+$document = JFactory::getDocument();
+$document->addScriptDeclaration('// <![CDATA[
+var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
+var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
+// ]]>');
+
 global $lang, $topic_emoticons;
 
 // Class structure should be used after this and all the common task should be moved to this class

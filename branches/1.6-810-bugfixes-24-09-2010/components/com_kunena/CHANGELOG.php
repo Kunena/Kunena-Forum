@@ -35,6 +35,7 @@ Kunena 1.6.0
 
 29-September-2010 810
 ^ [#19288] Update dutch language
++ [#19288] Add full screen + hd button youtube
 
 24-September-2010 810
 # [#19288] Long words in topics breaks listcat layout (fixed profile)

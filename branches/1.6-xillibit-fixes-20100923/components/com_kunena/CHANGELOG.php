@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+29-September-2010 Xillibit
+# [#22636] Wrong error message when upload images/files aren't allowed for register user
+
 28-September-2010 Xillibit
 # [#19288] Update fr-FR translation (thanks lavsteph)
 # [#22370] HTML incorrect tags : <br> <br /> <br /> in languages files newly updated (Part 2)

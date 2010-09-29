@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+29-September-2010 810
+^ [#19288] Update dutch language
+
 24-September-2010 810
 # [#19288] Long words in topics breaks listcat layout (fixed profile)
 # [#19288] Long words in topics breaks listcat layout (fixed message)

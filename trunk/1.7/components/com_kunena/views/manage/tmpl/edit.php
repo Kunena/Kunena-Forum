@@ -78,11 +78,23 @@ function submitbutton(pressbutton)
 						<?php if (!$this->category->id || $this->category->parent): ?>
 						<tr>
 							<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
- 							<td><?php echo $this->options ['forumLocked']; ?></td>
+							<td><?php echo $this->options ['forumLocked']; ?></td>
 							<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if ($this->me->isAdmin()) : ?>
+						<?php if ($this->category->accesstype != 'none') : ?>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE'); ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($this->category->accesstype)); ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE_DESC'); ?></td>
+						</tr>
+						<tr>
+							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS'); ?></td>
+							<td valign="top"><?php echo $this->category->access; ?></td>
+							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS_DESC'); ?></td>
+						</tr>
+						<?php endif; ?>
+						<?php if ($this->me->isAdmin() && $this->category->accesstype == 'none') : ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
 							<td valign="top"><?php echo $this->options ['pub_access']; ?></td>
@@ -129,7 +141,7 @@ function submitbutton(pressbutton)
 					</table>
 				</fieldset>
 
-				<?php if ($this->me->isAdmin($this->category->parent) && (!$this->category->id || $this->category->parent)) : ?>
+				<?php if ($this->me->isAdmin() && (!$this->category->id || $this->category->parent)) : ?>
 
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>

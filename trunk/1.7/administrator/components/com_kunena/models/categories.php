@@ -110,7 +110,9 @@ class KunenaModelCategories extends JModel {
 				$category->up = $me->isAdmin($category->parent) && reset($siblings) != $category->id;
 				$category->down = $me->isAdmin($category->parent) && end($siblings) != $category->id;
 				$category->reorder = $me->isAdmin($category->parent);
-				if ($category->pub_access == 0) {
+				if ($category->accesstype != 'none') {
+					$category->pub_group = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($category->accesstype));
+				} else if ($category->pub_access == 0) {
 					$category->pub_group = JText::_ ( 'COM_KUNENA_EVERYBODY' );
 				} else if ($category->pub_access == - 1) {
 					$category->pub_group = JText::_ ( 'COM_KUNENA_ALLREGISTERED' );
@@ -120,7 +122,12 @@ class KunenaModelCategories extends JModel {
 					// FIXME: Add Joomla 1.6 support
 					$category->pub_group = JText::_ ( $acl->get_group_name($category->pub_access));
 				}
-				$category->admin_group = JText::_ ( $acl->get_group_name($category->admin_access ));
+				if ($category->accesstype != 'none') {
+					$category->admin_group = '';
+				} else {
+					$category->admin_group = JText::_ ( $acl->get_group_name($category->admin_access ));
+
+				}
 				if ($me->isAdmin($category->id) && $category->isCheckedOut(0)) {
 					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
 				} else {

@@ -52,6 +52,7 @@ Kunena 1.7.0-DEV
 + [#22541] Category Manager: Display access type and access level group
 # [#22541] Do not use Joomla access control if using another accesstype
 # [#22541] Set all JomSocial group admins as category admins, not category moderators
++ [#22652] Add NoixACL multi group support
 
 24-September-2010 Matias
 ^ [#22569] Make KunenaRoute to work also in administration

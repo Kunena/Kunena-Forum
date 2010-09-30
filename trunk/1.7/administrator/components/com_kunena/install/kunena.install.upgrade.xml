@@ -161,7 +161,7 @@
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` 
-				ADD `accesstype` varchar(20) NOT NULL default 'joomla' AFTER `moderators`,
+				ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderators`,
 				ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
 				ADD KEY `category_access` (accesstype,access);</query>
 		</version>

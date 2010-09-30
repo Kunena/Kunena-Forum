@@ -48,6 +48,10 @@ function submitbutton(pressbutton)
 				<legend><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></legend>
 				<table class="kadmin-adminform">
 					<tr>
+						<td><?php echo JText::_('COM_KUNENA_A_STATE'); ?></td>
+						<td><?php echo $this->options ['published']; ?></td>
+					</tr>
+					<tr>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_PARENT'); ?></td>
 						<td><?php echo $this->options ['categories']; ?><br /><br /><?php echo JText::_('COM_KUNENA_PARENTDESC'); ?></td>
 					</tr>
@@ -75,11 +79,6 @@ function submitbutton(pressbutton)
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
 					<table class="kadmin-adminform">
-						<tr>
-							<td><?php echo JText::_('COM_KUNENA_A_STATE'); ?></td>
-							<td><?php echo $this->options ['published']; ?></td>
-							<td><?php echo JText::_('COM_KUNENA_A_STATE_DESC'); ?></td>
-						</tr>
 						<?php if ($this->category->accesstype != 'none') : ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE'); ?></td>

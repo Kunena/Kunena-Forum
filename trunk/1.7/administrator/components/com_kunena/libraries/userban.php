@@ -161,7 +161,8 @@ class KunenaUserBan extends JObject
 		$list = array();
 		foreach ($results as $ban) {
 			$instance = new $c();
-			$instance->bind($ban, true);
+			$instance->bind($ban);
+			$instance->_exists = true;
 			self::storeInstance($instance);
 			$list[] = $instance;
 		}
@@ -183,7 +184,8 @@ class KunenaUserBan extends JObject
 		$list = array();
 		foreach ($results as $ban) {
 			$instance = new $c();
-			$instance->bind($ban, true);
+			$instance->bind($ban);
+			$instance->_exists = true;
 			self::storeInstance($instance);
 			$list[] = $instance;
 		}
@@ -221,12 +223,11 @@ class KunenaUserBan extends JObject
 		return JTable::getInstance($tabletype['name'], $tabletype['prefix']);
 	}
 
-	protected function bind($data, $exists=false)
+	protected function bind($data)
 	{
 		$this->setProperties($data);
 		$this->comments = !empty($this->comments) ? json_decode($this->comments) : array();
 		$this->params = !empty($this->params) ? json_decode($this->params) : array();
-		$this->_exists = $exists;
 	}
 
 	/**
@@ -245,7 +246,8 @@ class KunenaUserBan extends JObject
 		// Load the KunenaTableUser object based on the user id
 		$exists = $table->load($id);
 
-		$this->bind($table->getProperties(), $exists);
+		$this->bind($table->getProperties());
+		$this->_exists = $exists;
 		return $exists;
 	}
 
@@ -265,7 +267,8 @@ class KunenaUserBan extends JObject
 
 		// Load the KunenaTableUser object based on the user id
 		$exists = $table->loadByUserid($userid, $mode);
-		$this->bind($table->getProperties(), $exists);
+		$this->bind($table->getProperties());
+		$this->_exists = $exists;
 		return $exists;
 	}
 
@@ -285,7 +288,8 @@ class KunenaUserBan extends JObject
 
 		// Load the KunenaTableUser object based on the user id
 		$exists = $table->loadByIP($ip, $mode);
-		$this->bind($table->getProperties(), $exists);
+		$this->bind($table->getProperties());
+		$this->_exists = $exists;
 		return $exists;
 	}
 

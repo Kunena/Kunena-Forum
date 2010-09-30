@@ -22,7 +22,7 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 				<tr>
 					<td class="left" width="90%">
 						<?php echo JText::_( 'Filter' ); ?>:
-						<input type="text" name="search" id="search" value="<?php echo $this->escape ( $this->state->{'list.search'} );?>" class="text_area" onchange="document.adminForm.submit();" />
+						<input type="text" name="search" id="search" value="<?php echo $this->escape ( $this->state->get('list.search') );?>" class="text_area" onchange="document.adminForm.submit();" />
 						<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
 						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
 					</td>
@@ -33,10 +33,10 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					<tr>
 						<th align="center" width="5">#</th>
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->categories ); ?>);" /></th>
-						<th class="title"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->{'list.direction'}, $this->state->{'list.ordering'} ); ?></th>
-						<th><small><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'catid', $this->state->{'list.direction'}, $this->state->{'list.ordering'} ); ?></small></th>
+						<th class="title"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+						<th><small><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'catid', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
 						<th width="100" class="center nowrap"><small>
-							<?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', $this->state->{'list.direction'}, $this->state->{'list.ordering'} ); ?>
+							<?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
 							<?php echo JHTML::_('grid.order',  $this->categories ); ?></small>
 						</th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
@@ -72,10 +72,10 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			<tr <?php echo 'class = "row' . $k . '"';?>>
 				<td class="right"><?php echo $i + $this->navigation->limitstart + 1; ?></td>
 				<td><?php echo JHTML::_('grid.id', $i, intval($category->id)) ?></td>
-				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo $category->treename; ?></a></td>
+				<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo str_repeat  ( '...', $category->level  ).' '.$category->name; ?> </a></td>
 				<td class="center"><?php echo intval($category->id); ?></td>
 
-				<?php if (! $category->category): ?>
+				<?php if ($category->section): ?>
 
 				<td class="right nowrap">
 					<span><?php echo $this->navigation->orderUpIcon ( $i, $category->up, 'orderup', 'Move Up', 1 ); ?></span>
@@ -120,8 +120,8 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 				<?php endif; ?>
 
 				<td class="center"><?php echo JHTML::_('grid.published', $category, $i) ?></td>
-				<td width="" align="center"><?php echo $this->escape ( $category->groupname ); ?></td>
-				<td width="" align="center"><?php echo $this->escape ( $category->admingroup ); ?></td>
+				<td width="" align="center"><?php echo $this->escape ( $category->pub_group ); ?></td>
+				<td width="" align="center"><?php echo $this->escape ( $category->admin_group ); ?></td>
 				<td width="15%" align="center"><?php echo $this->escape ( $category->editor ); ?></td>
 			</tr>
 				<?php
@@ -134,8 +134,8 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 		<input type="hidden" name="option" value="com_kunena" />
 		<input type="hidden" name="view" value="categories" />
 		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->{'list.ordering'} ) ?>" />
-		<input type="hidden" name="filter_order_Dir" value="<?php echo intval ( $this->state->{'list.direction'} ) ?>" />
+		<input type="hidden" name="filter_order" value="<?php echo intval ( $this->state->get('list.ordering') ) ?>" />
+		<input type="hidden" name="filter_order_Dir" value="<?php echo $this->escape ($this->state->get('list.direction')) ?>" />
 		<input type="hidden" name="limitstart" value="<?php echo intval ( $this->navigation->limitstart ) ?>" />
 		<input type="hidden" name="boxchecked" value="0" />
 		<?php echo JHTML::_( 'form.token' ); ?>

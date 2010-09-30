@@ -130,7 +130,8 @@ class KunenaUser extends JObject {
 		$list = array ();
 		foreach ( $results as $user ) {
 			$instance = new $c ();
-			$instance->bind ( $user, true );
+			$instance->bind ( $user );
+			$instance->_exists = true;
 			self::$_instances [$instance->userid] = $instance;
 			if (in_array($instance->userid, $userids)) $list [$instance->userid] = $instance;
 		}
@@ -169,9 +170,9 @@ class KunenaUser extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
-	protected function bind($data, $exists = false) {
+	public function bind($data, $ignore = array()) {
+		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
-		$this->_exists = $exists;
 	}
 
 	/**

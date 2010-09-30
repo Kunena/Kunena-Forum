@@ -79,6 +79,7 @@ abstract class KunenaAccess {
 			$this->loadAdmins();
 		}
 
+		if (!is_numeric($catid)) return !empty($this->adminsByUserid[$userid]);
 		if (!empty($this->adminsByUserid[$userid][0])) return true;
 		if (!empty($this->adminsByUserid[$userid][$catid])) return true;
 

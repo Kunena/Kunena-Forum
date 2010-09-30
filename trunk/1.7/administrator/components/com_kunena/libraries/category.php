@@ -19,7 +19,9 @@ kimport ('error');
  */
 class KunenaCategory extends JObject {
 	// Global for every instance
-	protected static $_instances = array ();
+	protected static $_instances = false;
+	protected static $_tree = array ();
+	protected static $_names = array ();
 
 	protected $_exists = false;
 	protected $_db = null;
@@ -44,6 +46,10 @@ class KunenaCategory extends JObject {
 	 * @since	1.6
 	 */
 	static public function getInstance($identifier = null, $reset = false) {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+
 		$c = __CLASS__;
 
 		if ($identifier instanceof KunenaCategory) {
@@ -65,6 +71,10 @@ class KunenaCategory extends JObject {
 	}
 
 	static public function getCategoriesByAccess($access, $accesstype = 'joomla') {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+
 		if (is_array ($access) ) {
 			JArrayHelper::toInteger($access);
 			$access = array_unique($access);
@@ -85,7 +95,8 @@ class KunenaCategory extends JObject {
 		$list = array ();
 		foreach ( $results as $category ) {
 			$instance = new $c ();
-			$instance->bind ( $category, true );
+			$instance->bind ( $category );
+			$instance->_exists = true;
 			self::$_instances [$instance->id] = $instance;
 			$list [$instance->id] = $instance;
 		}
@@ -93,33 +104,165 @@ class KunenaCategory extends JObject {
 		return $list;
 	}
 
-	static public function getCategories($ids = false) {
-		if (is_array ($ids) ) {
-			JArrayHelper::toInteger($ids);
-			$ids = array_unique($ids);
-			$idlist = implode ( ',', $ids );
-		} elseif (intval($ids) > 0) {
-			$idlist = intval($ids);
-		}
-
+	static protected function loadCategories() {
 		$c = __CLASS__;
 		$db = JFactory::getDBO ();
-		$query = "SELECT c.* FROM #__kunena_categories AS c";
-		if (isset($idlist))
-			$query .= " WHERE c.id IN ({$idlist})";
+		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery ( $query );
 		$results = (array) $db->loadAssocList ();
 		KunenaError::checkDatabaseError ();
 
-		$list = array ();
+		self::$_instances = array();
 		foreach ( $results as $category ) {
 			$instance = new $c ();
-			$instance->bind ( $category, true );
+			$instance->bind ( $category );
+			$instance->_exists = true;
 			self::$_instances [$instance->id] = $instance;
-			$list [$instance->id] = $instance;
+
+			if (!isset(self::$_tree [$instance->id])) {
+				self::$_tree [$instance->id] = array();
+			}
+			self::$_tree [$instance->parent][$instance->id] = &self::$_tree [$instance->id];
+			self::$_names [$instance->id] = $instance->name;
+		}
+		unset ($results);
+
+		// TODO: remove this by adding level and section into table
+		$heap = array(0);
+		while (($parent = array_shift($heap)) !== null) {
+			foreach (self::$_tree [$parent] as $id=>$children) {
+				if (!empty($children)) array_push($heap, $id);
+				self::$_instances [$id]->level = $parent ? self::$_instances [$parent]->level+1 : 0;
+				self::$_instances [$id]->section = !self::$_instances [$id]->level;
+			}
+		}
+	}
+
+	static public function getCategories($ids = false) {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+
+		if ($ids === false) {
+			return self::$_instances;
+		} elseif (is_array ($ids) ) {
+			$ids = array_unique($ids);
+		} else {
+			$ids = array($ids);
+		}
+
+		$list = array ();
+		foreach ( $ids as $id ) {
+			if (isset(self::$_instances [$id]) && self::$_instances [$id]->authorize()) {
+				$list [$id] = self::$_instances [$id];
+			}
 		}
 
 		return $list;
+	}
+
+	static public function compareByNameAsc($a, $b) {
+		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b])) return 0;
+		return JString::strcasecmp(self::$_instances[$a]->name, self::$_instances[$b]->name);
+	}
+
+	static public function compareByNameDesc($a, $b) {
+		if (!isset(self::$_instances[$a]) || !isset(self::$_instances[$b])) return 0;
+		return JString::strcasecmp(self::$_instances[$b]->name, self::$_instances[$a]->name);
+	}
+
+	public function getParent() {
+		if (!isset(self::$_instances [$this->parent])) {
+			$c = __CLASS__;
+			$instance = new $c();
+			$instance->name = JText::_ ( 'COM_KUNENA_TOPLEVEL' );
+			$instance->_exists = true;
+			return $instance;
+		}
+		return self::$_instances [$this->parent];
+	}
+
+	static public function getParents($id = 0, $levels = 10, $params = array()) {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
+		$action = isset($params['action']) ? (string) $params['action'] : 'read';
+
+		if (!isset(self::$_instances [$id]) || !self::$_instances [$id]->authorize($action)) return array();
+		$list = array ();
+		$parent = self::$_instances [$id]->parent;
+		while ($parent && $levels--) {
+			if (!isset(self::$_instances [$parent])) return array();
+			if (!$unpublished && !self::$_instances [$parent]->published) return array();
+			array_unshift($list, self::$_instances [$parent]);
+
+			$parent = self::$_instances [$parent]->parent;
+		}
+		return $list;
+	}
+
+	static public function getChildren($parent = 0, $levels = 0, $params = array()) {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+		if (!isset(self::$_tree[$parent])) return array();
+
+		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
+		$direction = isset($params['direction']) ? (int) $params['direction'] : 1;
+		$search = isset($params['search']) ? (string) $params['search'] : '';
+		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
+		$action = isset($params['action']) ? (string) $params['action'] : 'read';
+		$selected = isset($params['selected']) ? (int) $params['selected'] : 0;
+
+		$cats = self::$_tree[$parent];
+		switch ($ordering) {
+			case 'catid':
+				if ($direction > 0) ksort($cats);
+				else krsort($cats);
+				break;
+			case 'name':
+				if ($direction > 0) uksort($cats, array('KunenaCategory', 'compareByNameAsc'));
+				else uksort($cats, array('KunenaCategory', 'compareByNameDesc'));
+				break;
+			case 'ordering':
+			default:
+				if ($direction < 0) $cats = array_reverse ($cats, true);
+		}
+
+		$list = array ();
+		foreach ( $cats as $id=>$children ) {
+			if (!isset(self::$_instances [$id])) continue;
+			if (!$unpublished && !self::$_instances [$id]->published) continue;
+			if ($id == $selected) continue;
+			$clist = array();
+			if ($levels && !empty($children)) {
+				$clist = self::getChildren($id, $levels-1, $params);
+			}
+			if (empty($clist) && !self::$_instances [$id]->authorize($action)) continue;
+			if (!empty($clist) || !$search || intval($search) == $id || JString::stristr(self::$_instances[$id]->name, (string) $search)) {
+				$list [$id] = self::$_instances [$id];
+				$list += $clist;
+			}
+		}
+		return $list;
+	}
+
+	static public function getCategoryTree($parent = 0) {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+		if ($parent === false) {
+			return self::$_tree;
+		}
+		return isset(self::$_tree[$parent]) ? self::$_tree[$parent] : array();
+	}
+
+	public function authorize($action='read', $userid=null) {
+		if ($action == 'none') return true;
+		$access = KunenaFactory::getAccessControl();
+		$catids = $access->getAllowedCategories($userid, $action);
+		return !empty($catids[0]) || !empty($catids[$this->id]);
 	}
 
 	/**
@@ -227,9 +370,9 @@ class KunenaCategory extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
-	public function bind($data, $exists = null) {
+	public function bind($data, $ignore = array()) {
+		$data = array_diff_key($data, array_flip($ignore));
 		$this->setProperties ( $data );
-		if ($exists !== null) $this->_exists = $exists;
 	}
 
 	/**

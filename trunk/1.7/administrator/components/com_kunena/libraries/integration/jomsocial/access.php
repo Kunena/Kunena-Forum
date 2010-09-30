@@ -33,7 +33,7 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		$db = JFactory::getDBO();
 		$query	= "SELECT g.ownerid AS userid, c.id AS catid FROM #__kunena_categories AS c
 			INNER JOIN #__community_groups AS g ON c.accesstype='jomsocial' AND c.access=g.id
-			WHERE c.published=1";
+			WHERE g.published=1";
 		$db->setQuery( $query );
 		$list = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError ())

@@ -9,9 +9,6 @@
  * @link http://www.kunena.com
  */
 defined('_JEXEC') or die;
-
-$document = JFactory::getDocument();
-$document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.css' );
 ?>
 <script language="javascript" type="text/javascript">
 function submitbutton(pressbutton)
@@ -30,10 +27,18 @@ function submitbutton(pressbutton)
 	}
 }
 </script>
-<div id="Kunena">
-	<div class="kadmin-functitle icon-adminforum"><?php echo JText::_('COM_KUNENA_ADMIN') ?></div>
-		<form action="index.php?option=com_kunena" method="post" name="adminForm">
+<div class="kblock kmanage">
+	<div class="kheader">
+		<h2><?php echo $this->header; ?></h2>
+	</div>
 
+	<div class="kcontainer">
+		<div class="kbody">
+		<form action="index.php?option=com_kunena" method="post" name="adminForm">
+		<div class="kbuttons">
+			<button onclick="javascript: submitbutton('save')"><?php echo JText::_( 'Save' ); ?></button>
+			<button onclick="javascript: submitbutton('cancel')"><?php echo JText::_( 'Cancel' ); ?></button>
+		</div>
 		<?php jimport('joomla.html.pane');
 		$myTabs = JPane::getInstance('tabs', array('startOffset'=>0)); ?>
 		<dl class="tabs" id="pane">
@@ -48,7 +53,7 @@ function submitbutton(pressbutton)
 					</tr>
 					<tr>
 						<td><?php echo JText::_('COM_KUNENA_NAMEADD'); ?></td>
-						<td><input class="inputbox" type="text" name="name" size="80" value="<?php echo $this->escape ( $this->category->name ); ?>" /></td>
+						<td><input class="inputbox" type="text" name="name" size="60" value="<?php echo $this->escape ( $this->category->name ); ?>" /></td>
 					</tr>
 					<tr>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_DESCRIPTIONADD'); ?></td>
@@ -77,6 +82,7 @@ function submitbutton(pressbutton)
 							<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 						</tr>
 						<?php endif; ?>
+						<?php if ($this->me->isAdmin()) : ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
 							<td valign="top"><?php echo $this->options ['pub_access']; ?></td>
@@ -97,6 +103,7 @@ function submitbutton(pressbutton)
 							<td valign="top"><?php echo $this->options ['admin_recurse']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1DESC'); ?></td>
 						</tr>
+						<?php endif; ?>
 						<?php if (!$this->category->id || $this->category->parent): ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
@@ -122,7 +129,7 @@ function submitbutton(pressbutton)
 					</table>
 				</fieldset>
 
-				<?php if (!$this->category->id || $this->category->parent): ?>
+				<?php if ($this->me->isAdmin($this->category->parent) && (!$this->category->id || $this->category->parent)) : ?>
 
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDISPINFO'); ?></legend>
@@ -134,6 +141,10 @@ function submitbutton(pressbutton)
 						</tr>
 					</table>
 				</fieldset>
+
+				<?php endif; ?>
+				<?php if (!$this->category->id || $this->category->parent) : ?>
+
 				</dd>
 				<dt><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></dt>
 				<dd>
@@ -149,7 +160,7 @@ function submitbutton(pressbutton)
 
 					<?php if ($this->category->moderated) : ?>
 
-					<div class="kadmin-funcsubtitle"><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></div>
+					<h3><?php echo JText::_('COM_KUNENA_MODSASSIGNED'); ?></h3>
 
 					<table class="adminlist">
 						<thead>
@@ -197,4 +208,6 @@ function submitbutton(pressbutton)
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id); ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
+		</div>
+	</div>
 </div>

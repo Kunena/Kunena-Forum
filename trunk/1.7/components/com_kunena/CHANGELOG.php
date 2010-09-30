@@ -33,6 +33,23 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+30-September-2010 Matias
+# [#22570] Major cleanup in CKunenaLink class
+# [#22541] Fix TableKunenaCategory::load()
+# [#22541] KunenaCategory: Always load all categories and create category tree
++ [#22541] Add KunenaCategory::getParent(), KunenaCategory::getParents(), KunenaCategory::getChildren()
++ [#22569] Create KunenaViewCommon, include it into other views
+^ [#22569] KunenaModelCategories: use new API functions
++ [#22569] Create JHTML::_('kunena.categorylist') for category selection lists
+^ [#22569] Use JHTML('kunena.categorylist') in JElementKunenaCategories
+# [#22541] Minor fix in KunenaAccessJomSocial::loadAdmins() to show unpublished categories
+# [#22541] Add support for "is user admin anywhere" in KunenaAccess::isAdmin()
++ [#22541] Category Manager: Add access control
+# [#22541] Category Manager: Allow user to save only valid fields (depending on his permissions)
++ [#22541] Category Manager: Allow category administrator to create new subcategories
++ [#22541] Category Manager: Allow user to pick parent for new category
++ [#22541] Category Manager templates: Major improvements, support new features
+
 24-September-2010 Matias
 ^ [#22569] Make KunenaRoute to work also in administration
 # [#22569] KunenaControllerCategories: Use KunenaRoute::_() to make SEF URLs to work

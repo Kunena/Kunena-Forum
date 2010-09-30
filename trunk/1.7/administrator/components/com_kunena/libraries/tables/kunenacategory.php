@@ -56,6 +56,47 @@ class TableKunenaCategory extends KunenaTable
 		parent::__construct ( '#__kunena_categories', 'id', $db );
 	}
 
+	function load($id = null)
+	{
+		$this->_exists = false;
+		$k = $this->_tbl_key;
+		// Get the id to load.
+		if ($id !== null) {
+			$this->$k = $id;
+		}
+
+		// Reset the table.
+		$this->reset();
+
+		// Check for a valid id to load.
+		if ($this->$k === null || intval($this->$k) < 1) {
+			$this->$k = 0;
+			return false;
+		}
+
+		// Load the user data.
+		$query = "SELECT * FROM #__kunena_categories WHERE id = {$this->$k}";
+		$this->_db->setQuery($query);
+		$data = $this->_db->loadAssoc();
+
+		// Check for an error message.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+
+		if(!$data)
+		{
+			$this->$k = 0;
+			return false;
+		}
+		$this->_exists = true;
+
+		// Bind the data to the table.
+		$this->bind($data);
+		return $this->_exists;
+	}
+
 	// check for potential problems
 	function check() {
 		if ($this->parent) {

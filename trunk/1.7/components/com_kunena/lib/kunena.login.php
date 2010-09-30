@@ -81,6 +81,15 @@ class CKunenaLogin {
 		if (!$url) return '';
 		return CKunenaLink::GetHrefLink($url, JText::_('COM_KUNENA_PROFILEBOX_FORGOT_USERNAME'));
 	}
+
+	function display() {
+		kimport('template');
+		if (!JFactory::getUser()->id) {
+			KunenaTemplate::loadTemplate('loginbox/login.php');
+		} else {
+			KunenaTemplate::loadTemplate('loginbox/logout.php');
+		}
+	}
 }
 
 ?>

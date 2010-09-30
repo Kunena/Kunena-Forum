@@ -22,6 +22,7 @@ jimport ( 'joomla.application.component.model' );
 class KunenaModelCategories extends JModel {
 	protected $__state_set = false;
 	protected $_items = false;
+	protected $_items_order = false;
 	protected $_object = false;
 
 	/**
@@ -54,8 +55,16 @@ class KunenaModelCategories extends JModel {
 		$value = $app->getUserStateFromRequest ( "com_kunena.categories.list.levels", 'levellimit', 10, 'int' );
 		$this->setState ( 'list.levels', $value );
 
-		$value = JRequest::getInt ( 'catid', 0 );
-		$this->setState ( 'item.id', $value );
+		$catid = JRequest::getInt ( 'catid', 0 );
+		$layout = JRequest::getWord ( 'layout', 'edit' );
+		if ($layout == 'edit') {
+			$parent = 0;
+		} else {
+			$parent = $catid;
+			$catid = 0;
+		}
+		$this->setState ( 'item.id', $catid );
+		$this->setState ( 'item.parent', $parent );
 	}
 
 	/**
@@ -76,111 +85,64 @@ class KunenaModelCategories extends JModel {
 
 	public function getItems() {
 		if ( $this->_items === false ) {
-			kimport ( 'error' );
-			require_once KPATH_SITE . '/class.kunena.php';
-
-			$db = JFactory::getDBO ();
-
-			$direction = $this->getState ( 'list.direction' );
-			switch ($this->getState ( 'list.ordering' )) {
-				case 'id' :
-					$order = ' ORDER BY a.id ' . $direction;
-					break;
-				case 'name' :
-					$order = ' ORDER BY a.name ' . $direction;
-					break;
-				case 'ordering' :
-				default :
-					$order = ' ORDER BY a.ordering ' . $direction;
-			}
-
-			$where = '';
-			$search = $this->getState ( 'list.search' );
-			if ($search) {
-				$where .= ' WHERE LOWER( a.name ) LIKE ' . $db->Quote ( '%' . $db->getEscaped ( $search, true ) . '%', false ) . ' OR LOWER( a.id ) LIKE ' . $db->Quote ( '%' . $db->getEscaped ( $search, true ) . '%', false );
-			}
-
-			jimport ( 'joomla.version' );
-			$jversion = new JVersion ();
-			if ($jversion->RELEASE == 1.5) {
-				// Joomla 1.5
-				$query = "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.name AS groupname, g.id AS group_id, h.name AS admingroup
-			FROM #__kunena_categories AS a
-			LEFT JOIN #__users AS u ON u.id = a.checked_out
-			LEFT JOIN #__core_acl_aro_groups AS g ON g.id = a.pub_access
-			LEFT JOIN #__core_acl_aro_groups AS h ON h.id = a.admin_access
-			" . $where . $order;
-			} else {
-				// Joomla 1.6
-				$query = "SELECT a.*, a.parent>0 AS category, u.name AS editor, g.title AS groupname, h.title AS admingroup
-			FROM #__kunena_categories AS a
-			LEFT JOIN #__users AS u ON u.id = a.checked_out
-			LEFT JOIN #__usergroups AS g ON g.id = a.pub_access
-			LEFT JOIN #__usergroups AS h ON h.id = a.admin_access
-			" . $where . $order;
-			}
-			$db->setQuery ( $query );
-			$rows = $db->loadObjectList ( 'id' );
-			KunenaError::checkDatabaseError ();
-
-			// establish the hierarchy of the categories
-			$children = array (0 => array () );
-
-			// first pass - collect children
-			foreach ( $rows as $v ) {
-				$list = array ();
-				$vv = $v;
-				while ( $vv->parent > 0 && isset ( $rows [$vv->parent] ) && ! in_array ( $vv->parent, $list ) ) {
-					$list [] = $vv->id;
-					$vv = $rows [$vv->parent];
+			$me = KunenaFactory::getUser();
+			kimport('category');
+			$params = array (
+				'ordering'=>$this->getState ( 'list.ordering' ),
+				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
+				'search'=>$this->getState ( 'list.search' ),
+				'unpublished'=>1,
+				'action'=>'admin');
+			$categories = KunenaCategory::getChildren(0, $this->getState ( 'list.levels' ), $params);
+			$this->setState ( 'list.total', count($categories) );
+			$this->_items = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
+			$acl = JFactory::getACL ();
+			$admin = 0;
+			$this->_items_order = array();
+			foreach ($this->_items as $category) {
+				$siblings = array_keys(KunenaCategory::getCategoryTree($category->parent));
+				if (empty($siblings)) {
+					// FIXME: deal with orphaned categories
+					$orphans = true;
+					$category->parent = 0;
+					$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
 				}
-				if ($vv->parent) {
-					$v->parent = - 1;
-					$v->published = 0;
-
-					if (empty ( $search ))
-						$v->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $v->name;
-				}
-				if ($v->pub_access == 0) {
-					$v->groupname = JText::_ ( 'COM_KUNENA_EVERYBODY' );
-				} else if ($v->pub_access == - 1) {
-					$v->groupname = JText::_ ( 'COM_KUNENA_ALLREGISTERED' );
-				} else if ($v->pub_access == 1) {
-					$v->groupname = JText::_ ( 'COM_KUNENA_NOBODY' );
+				$category->up = $me->isAdmin($category->parent) && reset($siblings) != $category->id;
+				$category->down = $me->isAdmin($category->parent) && end($siblings) != $category->id;
+				$category->reorder = $me->isAdmin($category->parent);
+				if ($category->pub_access == 0) {
+					$category->pub_group = JText::_ ( 'COM_KUNENA_EVERYBODY' );
+				} else if ($category->pub_access == - 1) {
+					$category->pub_group = JText::_ ( 'COM_KUNENA_ALLREGISTERED' );
+				} else if ($category->pub_access == 1) {
+					$category->pub_group = JText::_ ( 'COM_KUNENA_NOBODY' );
 				} else {
-					$v->groupname = JText::_ ( $v->groupname );
+					// FIXME: Add Joomla 1.6 support
+					$category->pub_group = JText::_ ( $acl->get_group_name($category->pub_access));
 				}
-				$v->admingroup = JText::_ ( $v->admingroup );
-				if ($v->checked_out && ! JTable::isCheckedOut ( 0, intval ( $v->checked_out ) )) {
-					$v->checked_out = 0;
-					$v->editor = '';
+				$category->admin_group = JText::_ ( $acl->get_group_name($category->admin_access ));
+				if ($me->isAdmin($category->id) && $category->isCheckedOut(0)) {
+					$category->editor = KunenaFactory::getUser($category->checked_out)->getName();
+				} else {
+					$category->checked_out = 0;
+					$category->editor = '';
 				}
-				$children [$v->parent] [] = $v;
-				$v->location = count ( $children [$v->parent] ) - 1;
-				$v->up = ($v->location > 0);
-				$v->down = 0;
-				if ($v->location) $children[$v->parent][$v->location-1]->down = 1;
+				$admin += $me->isAdmin($category->id);
 			}
-
-			if (isset ( $children [- 1] )) {
-				$children [0] = array_merge ( $children [- 1], $children [0] );
-				if (empty ( $search )) {
-					$app = JFactory::getApplication ();
-					$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN_DESC' ), 'notice' );
-				}
-			}
-
-			// second pass - get an indent list of the items
-			$levellimit = $this->getState ( 'list.levels' );
-			$list = fbTreeRecurse ( 0, '', array (), $children, max ( 0, $levellimit - 1 ) );
-			$this->setState ( 'list.total', count($list) );
-
-			$levellist = JHTML::_ ( 'select.integerList', 1, 20, 1, 'levellimit', 'size="1" onchange="document.adminForm.submit();"', $levellimit );
-			// slice out elements based on limits
-			$this->_items = array_slice ( $list, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
+			$this->setState ( 'list.count.admin', $admin );
 		}
-
+		if (isset($orphans)) {
+			$app = JFactory::getApplication ();
+			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN_DESC' ), 'notice' );
+		}
 		return $this->_items;
+	}
+
+	public function getItemsForOrder() {
+		if ( $this->_items === false ) {
+			$this->GetItems();
+		}
+		return $this->_items_order;
 	}
 
 	public function getNavigation() {
@@ -190,22 +152,27 @@ class KunenaModelCategories extends JModel {
 	}
 
 	public function getItem() {
+		$parent = $this->getState ( 'item.parent' );
+		$catid = $this->getState ( 'item.id' );
+		$me = KunenaFactory::getUser();
+		if (!$me->isAdmin(null) && !$me->isAdmin($catid)) {
+			return false;
+		}
 		if ($this->_object === false) {
 			require_once KPATH_SITE . '/class.kunena.php';
 			$app = JFactory::getApplication ();
-			$my = JFactory::getUser ();
 			kimport ( 'category' );
-			$category = KunenaCategory::getInstance ( $this->getState ( 'item.id' ) );
+			$category = KunenaCategory::getInstance ( $catid );
 			if ($category->exists ()) {
-				if (!$category->isCheckedOut ( $my->id ))
-					$category->checkout ( $my->id );
+				if (!$category->isCheckedOut ( $me->userid ))
+					$category->checkout ( $me->userid );
 			} else {
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = JFactory::getDBO ();
 				$db->setQuery ( "SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent='0' AND id!='$category->id' ORDER BY ordering" );
 				$sections = $db->loadObjectList ();
 				KunenaError::checkDatabaseError ();
-				$category->parent = empty ( $sections ) ? 0 : $sections [0]->id;
+				$category->parent = $parent;
 				$category->published = 0;
 				$category->ordering = 9999;
 				$category->pub_recurse = 1;
@@ -220,6 +187,7 @@ class KunenaModelCategories extends JModel {
 
 	public function getOptions() {
 		$category = $this->getItem();
+		if (!$category) return false;
 
 		$catList = array ();
 		$catList [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_TOPLEVEL' ) );
@@ -250,8 +218,19 @@ class KunenaModelCategories extends JModel {
 		$post_anonymous [] = JHTML::_ ( 'select.option', '0', JText::_ ( 'COM_KUNENA_CATEGORY_ANONYMOUS_X_REG' ) );
 		$post_anonymous [] = JHTML::_ ( 'select.option', '1', JText::_ ( 'COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO' ) );
 
+		$cat_params = array ();
+		$cat_params['ordering'] = 'ordering';
+		$cat_params['toplevel'] = 1;
+		$cat_params['sections'] = 1;
+		$cat_params['direction'] = 1;
+		$cat_params['unpublished'] = 1;
+		$cat_params['catid'] = $category->id;
+		$cat_params['action'] = 'admin';
+
 		$lists = array ();
-		$lists ['categories'] = CKunenaTools::KSelectList ( 'parent', $catList, 'class="inputbox"', true, 'parent', $category->parent );
+		//require_once KPATH_SITE.'/class.kunena.php';
+		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
+		$lists ['categories'] = JHTML::_('kunena.categorylist', 'parent', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent);
 		$lists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $category->pub_access );
 		$lists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $category->admin_access );
 		$lists ['pub_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse );
@@ -266,8 +245,10 @@ class KunenaModelCategories extends JModel {
 	}
 
 	function getModerators() {
-		kimport('user');
 		$category = $this->getItem();
+		if (!$category) return false;
+
+		kimport('user');
 		$moderators = KunenaUser::loadUsers($category->getModerators(false));
 		return $moderators;
 	}

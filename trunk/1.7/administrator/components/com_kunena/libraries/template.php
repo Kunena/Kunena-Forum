@@ -72,6 +72,14 @@ class KunenaTemplate extends JObject
 		return "template/{$this->name}";
 	}
 
+	public function getFile($file) {
+		$path = $this->getPath();
+		if (!is_file(KPATH_SITE . "/{$path}/{$file}")) {
+			$path = $this->getPath(true);
+		}
+		return KUNENA_COMPONENT_RELPATH."/{$path}/{$file}";
+	}
+
 	public function getSmileyPath($filename='') {
 		if (!isset($this->smileyPath[$filename])) {
 			$path = "{$this->getPath()}/images/emoticons/{$filename}";
@@ -163,6 +171,14 @@ class KunenaTemplate extends JObject
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
+	}
+
+	static public function loadTemplate($file) {
+		$path = self::getInstance()->getPath();
+		if (!is_file(KPATH_SITE . "/{$path}/{$file}")) {
+			$path = self::getInstance()->getPath(true);
+		}
+		include KPATH_SITE . "/{$path}/{$file}";
 	}
 
 	/**

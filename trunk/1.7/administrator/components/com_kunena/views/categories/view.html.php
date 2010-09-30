@@ -17,6 +17,8 @@ jimport ( 'joomla.application.component.view' );
  */
 class KunenaViewCategories extends JView {
 	function display() {
+		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		if ($this->state->get('item.id')) $this->setLayout ('edit');
 		switch ($this->getLayout ()) {
 			case 'new' :
 			case 'edit' :
@@ -32,14 +34,12 @@ class KunenaViewCategories extends JView {
 	}
 
 	function displayEdit() {
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		$this->assignRef ( 'category', $this->get ( 'Item' ) );
 		$this->assignRef ( 'options', $this->get ( 'Options' ) );
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 	}
 
 	function displayDefault() {
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		$this->assignRef ( 'categories', $this->get ( 'Items' ) );
 		$this->assignRef ( 'navigation', $this->get ( 'Navigation' ) );
 	}

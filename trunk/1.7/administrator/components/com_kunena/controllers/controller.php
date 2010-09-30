@@ -40,6 +40,10 @@ class KunenaController extends JController {
 			return $instance;
 		}
 
+		// Display time it took to create the entire page in the footer
+		jimport( 'joomla.error.profiler' );
+		$starttime = JProfiler::getmicrotime();
+
 		$lang = JFactory::getLanguage();
 		if (Kunena::isSVN()) {
 			$lang->load('com_kunena',KPATH_ADMIN);
@@ -65,6 +69,7 @@ class KunenaController extends JController {
 		$class = 'KunenaController' . ucfirst ( $view );
 		if (class_exists ( $class )) {
 			$instance = new $class ();
+			$instance->starttime = $starttime;
 		} else {
 			JError::raiseError ( 500, JText::sprintf ( 'COM_KUNENA_INVALID_CONTROLLER_CLASS', $class ) );
 		}
@@ -100,6 +105,12 @@ class KunenaController extends JController {
 
 		$view = $this->getView ( $vName, $vFormat, '', array ('base_path' => $this->_basePath ) );
 		if ($view) {
+			if ($app->isSite()) {
+				$common = $this->getView ( 'common', $vFormat, '', array ('base_path' => $this->_basePath ) );
+				$common->starttime = $this->starttime;
+				$view->common = $common;
+			}
+
 			// Do any specific processing for the view.
 			switch ($vName) {
 				default :

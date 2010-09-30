@@ -31,9 +31,9 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		$this->adminsByUserid = $this->joomlaAccess->adminsByUserid;
 
 		$db = JFactory::getDBO();
-		$query	= "SELECT g.ownerid AS userid, c.id AS catid FROM #__kunena_categories AS c
-			INNER JOIN #__community_groups AS g ON c.accesstype='jomsocial' AND c.access=g.id
-			WHERE g.published=1";
+		$query	= "SELECT g.memberid AS userid, c.id AS catid FROM #__kunena_categories AS c
+			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
+			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote( COMMUNITY_GROUP_ADMIN )}";
 		$db->setQuery( $query );
 		$list = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError ())
@@ -51,22 +51,6 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		$this->joomlaAccess->loadModerators();
 		$this->moderatorsByCatid = $this->joomlaAccess->moderatorsByCatid;
 		$this->moderatorsByUserid = $this->joomlaAccess->moderatorsByUserid;
-
-		$db = JFactory::getDBO();
-		$query	= "SELECT g.memberid AS userid, c.id AS catid FROM #__kunena_categories AS c
-			INNER JOIN #__community_groups_members AS g ON c.accesstype='jomsocial' AND c.access=g.groupid
-			WHERE c.published=1 AND g.approved=1 AND g.permissions={$db->Quote( COMMUNITY_GROUP_ADMIN )}";
-		$db->setQuery( $query );
-		$list = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError ())
-			return;
-
-		foreach ( $list as $item ) {
-			$userid = intval ( $item->userid );
-			$catid = intval ( $item->catid );
-			$this->moderatorsByUserid [$userid] [$catid] = 1;
-			$this->moderatorsByCatid [$catid] [$userid] = 1;
-		}
 	}
 
 	function loadAllowedCategories($userid) {

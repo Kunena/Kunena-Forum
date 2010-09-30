@@ -200,6 +200,11 @@ class KunenaModelCategories extends JModel {
 		$catList [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_TOPLEVEL' ) );
 
 		// make a standard yes/no list
+		$published = array ();
+		$published [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_PUBLISHED' ) );
+		$published [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_UNPUBLISHED' ) );
+
+		// make a standard yes/no list
 		$yesno = array ();
 		$yesno [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_ANN_NO' ) );
 		$yesno [] = JHTML::_ ( 'select.option', 1, JText::_ ( 'COM_KUNENA_ANN_YES' ) );
@@ -238,6 +243,7 @@ class KunenaModelCategories extends JModel {
 		//require_once KPATH_SITE.'/class.kunena.php';
 		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
 		$lists ['categories'] = JHTML::_('kunena.categorylist', 'parent', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent);
+		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
 		$lists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $category->pub_access );
 		$lists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $category->admin_access );
 		$lists ['pub_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse );

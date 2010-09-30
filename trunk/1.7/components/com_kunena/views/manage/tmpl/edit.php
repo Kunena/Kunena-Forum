@@ -75,13 +75,11 @@ function submitbutton(pressbutton)
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
 					<table class="kadmin-adminform">
-						<?php if (!$this->category->id || $this->category->parent): ?>
 						<tr>
-							<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
-							<td><?php echo $this->options ['forumLocked']; ?></td>
-							<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_STATE'); ?></td>
+							<td><?php echo $this->options ['published']; ?></td>
+							<td><?php echo JText::_('COM_KUNENA_A_STATE_DESC'); ?></td>
 						</tr>
-						<?php endif; ?>
 						<?php if ($this->category->accesstype != 'none') : ?>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESSTYPE'); ?></td>
@@ -117,6 +115,11 @@ function submitbutton(pressbutton)
 						</tr>
 						<?php endif; ?>
 						<?php if (!$this->category->id || $this->category->parent): ?>
+						<tr>
+							<td><?php echo JText::_('COM_KUNENA_LOCKED1'); ?></td>
+							<td><?php echo $this->options ['forumLocked']; ?></td>
+							<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
+						</tr>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>
 							<td valign="top"><?php echo $this->options ['forumReview']; ?></td>

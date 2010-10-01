@@ -68,7 +68,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 		$text = preg_replace ( '/(?<!S)((http(s?):\/\/)|(www\.[a-zA-Z0-9-_]+\.))+([a-zA-Z0-9\/*+-_?&;:%=.,#]+)/u', '<a href="http$3://$4$5" target="_blank" rel="nofollow">$4$5</a>', $text );
 
 		// match name@address
-		$text = preg_replace ( '/(?<!S)([a-zA-Z0-9_.\-]+\@[a-zA-Z][a-zA-Z0-9_.\-]+[a-zA-Z]{2,6})/u', '<a href="mailto:$1">$1</a>', $text );
+		$text = preg_replace ( '/(?<!S)([a-zA-Z0-9_.\-]+\@{1}[a-zA-Z0-9\.|-|_]*[.]{1}[a-z]{2,5})/u', '<a href="mailto:$1">$1</a>', $text );
 
 		return substr ( $text, 1, - 1 );
 	}
@@ -834,7 +834,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				'web.de' => array ('flash', 425, 367, 0, 0, 'http://video.web.de/movie/%vcode%', '\/watch\/(\d*)', '' ),
 				'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 				'youku' => array ('flash', 480, 400, 0, 0, 'http://player.youku.com/player.php/sid/%vcode%/v.swf', '\/v_show\/id_c.00(.*)\.html', '' ),
-				'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%&rel=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
+				'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 // Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 //				'_default' => array ($vid ["type"], 480, 360, 0, 25, $between, '', '' )

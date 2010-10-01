@@ -21,9 +21,11 @@ abstract class KunenaParser {
 		return $txt;
 	}
 
-	function parseText($txt) {
+	function parseText($txt, $len=0) {
 		if (!$txt) return;
+		if ($len && JString::strlen($txt) > $len) $txt = JString::substr ( $txt, 0, $len ) . ' ...';
 		$txt = self::escape ( $txt );
+		$txt = preg_replace('/(\S{30})/u', '\1&#8203;', $txt);
 		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}
@@ -46,7 +48,7 @@ abstract class KunenaParser {
 		if (!self::$emoticons) self::$emoticons = smile::getEmoticons ( 0 );
 
 		$txt = smile::purify ( $txt );
-		if ($len) $txt = JString::substr ( $txt, 0, $len );
+		if ($len && JString::strlen($txt) > $len) $txt = JString::substr ( $txt, 0, $len ) . '...';
 		$txt = self::escape ( $txt );
 		$txt = self::prepareContent ( $txt );
 		return $txt;

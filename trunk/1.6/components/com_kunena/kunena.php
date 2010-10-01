@@ -333,7 +333,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$document->addStyleDeclaration('
 			div.highlight pre {
 				width: '.(($kunena_config->rtewidth * 9) / 10).'px;
-				max-height: '.$kunena_config->rteheight.'px
 			}
 		');
 	}

@@ -33,6 +33,18 @@ Legend:
 
 Kunena 1.6.0
 
+01-October-2010 Matias
+# [#19288] Fix long words in all topics by adding zero width spaces
+^ [#15886] Merged revisions 3575-3599 from /branches/1.6-810-bugfixes-24-09-2010
+
+29-September-2010 810
+^ [#19288] Update dutch language
++ [#19288] Add full screen + hd button youtube
+
+24-September-2010 810
+# [#19288] Long words in topics breaks listcat layout (fixed message)
+# [#19288] Fix hyperlink @ mail
+
 24-September-2010 Matias
 # [#22119] Fix PHP Notice: Undefined variable in KunenaCategory
 # [#22119] Fix PHP Error: KunenaError not included in KunenaCategory & Table
@@ -40,6 +52,11 @@ Kunena 1.6.0
 
 24-September-2010 fxstein
 ^ [#19064] Finalize tableau bbcode
+
+23-September-2010 810
+# [#19288] Issue when video provider is null and size
+# [#19288] Long words in topics breaks listcat layout
+# [#19288] Preview doesn't render xml in code tags
 
 23-September-2010 Matias
 # [#22579] Fix fatal error in CommunityBuilder integration (backend)

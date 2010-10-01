@@ -36,10 +36,34 @@ Kunena 1.6.0
 01-October-2010 Matias
 # [#19288] Fix long words in all topics by adding zero width spaces
 ^ [#15886] Merged revisions 3575-3599 from /branches/1.6-810-bugfixes-24-09-2010
+^ [#15886] Merged revisions 3562-3606 from /branches/1.6-xillibit-fixes-20100923
+
+1-October-2010 Xillibit
+# [#22601] Kunena Search "Also search in child forums" set no has no effects (Part 2)
+# [#22578] Fix Notice: Undefined index: _default in kunena.parser.php on line 844 (Part 2)
++ [#22600] Add button to generate a pdf of topic (Part 2)
+# [#22507] Fix issue the field is not showed when the user is guest, so it can't post anything (Part 2)
+
+29-September-2010 Xillibit
+# [#22636] Wrong error message when upload images/files aren't allowed for register user
 
 29-September-2010 810
 ^ [#19288] Update dutch language
 + [#19288] Add full screen + hd button youtube
+
+28-September-2010 Xillibit
+# [#19288] Update fr-FR translation (thanks lavsteph)
+# [#22370] HTML incorrect tags : <br> <br /> <br /> in languages files newly updated (Part 2)
+
+27-September-2010 Xillibit
+# [#22612] id_last_msg isn't saving the info when topic is under review.
+
+26-September-2010 Xillibit
++ [#22600] Add button to generate a pdf of topic (need specific button for it)
+# [#22601] Kunena Search "Also search in child forums" set no has no effect
+
+24-September-2010 Xillibit
+# [#22507] Fix issue the field is not showed when the user is guest, so it can't post anything
 
 24-September-2010 810
 # [#19288] Long words in topics breaks listcat layout (fixed message)
@@ -52,6 +76,11 @@ Kunena 1.6.0
 
 24-September-2010 fxstein
 ^ [#19064] Finalize tableau bbcode
+
+23-September-2010 Xillibit
+# [#22578] Fix Notice: Undefined index: _default in kunena.parser.php on line 844
+# [#19288] Fix typo in admin replace px by kB in maximum file size
+# [#22581] Fix typo in template.xml in button iconsetname
 
 23-September-2010 810
 # [#19288] Issue when video provider is null and size

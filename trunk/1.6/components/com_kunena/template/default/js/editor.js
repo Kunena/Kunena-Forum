@@ -652,7 +652,7 @@ function kunenaSelectUsername(obj, kuser) {
 window.addEvent('domready', function(){	
 
 	//	for hide or show polls if category is allowed
-	if($('postcatid') != undefined) {
+	if(typeof ($('postcatid') ) != 'undefined') {
 		$('postcatid').getElements('option').each( function( catid ) {
 			catid.addEvent('click', function(e) {
 				//call a json query to check if the catid selected is allowed for polls
@@ -683,7 +683,7 @@ window.addEvent('domready', function(){
 		});
 	}
 
-	if($('kauthorname') != undefined) {
+	if(typeof (kunena_anonymous_check_url) != 'undefined' && typeof ($('kauthorname')) != 'undefined') {
 		var kuser = $('kauthorname').get('value');
 		var kbutton = $('kanonymous');
 		kunenaSelectUsername(kbutton, kuser);
@@ -692,7 +692,7 @@ window.addEvent('domready', function(){
 		});
 	}
 	//	to select if anynomous option is allowed on new topic tab
-	if($('postcatid') != undefined) {
+	if(typeof (kunena_anonymous_check_url) != 'undefined' && typeof ($('postcatid')) != 'undefined') {
 		$('postcatid').getElements('option').each( function( catid ) {
 			catid.addEvent('click', function(e) {
 				var url = kunena_anonymous_check_url;

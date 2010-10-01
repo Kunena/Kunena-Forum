@@ -290,8 +290,8 @@ class CKunenaUpload {
 			$imglist = implode(', ',$this->validImageExts);
 			$filelist = implode(', ',$this->validFileExts);
 			if ($imglist && $filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION', $imglist, $filelist ));
-			else if ($imglist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_IMAGE', $imglist ));
-			else if ($filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', $filelist ));
+			else if ($imglist && !$filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_FILE', $this->_config->filetypes ));
+			else if (!$imglist && $filelist) $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_EXTENSION_IMAGE', $this->_config->imagetypes ));
 			else $this->Fail(JText::sprintf ( 'COM_KUNENA_UPLOAD_ERROR_NOT_ALLOWED', $filelist ));
 			return false;
 		}

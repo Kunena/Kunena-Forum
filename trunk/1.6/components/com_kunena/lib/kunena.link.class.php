@@ -70,8 +70,8 @@ class CKunenaLink {
 		return KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=rss' . $params, $xhtml );
 	}
 
-	function GetPDFLink($catid, $id, $name, $rel = 'nofollow', $title = '') {
-		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&id=' . $id . '&catid=' . $catid . '&func=fb_pdf', $name, $title, $rel );
+	function GetPDFLink($catid, $id, $name, $rel = 'nofollow', $class = '', $title = '') {
+		return CKunenaLink::GetSefHrefLink ( KUNENA_LIVEURLREL . '&id=' . $id . '&catid=' . $catid . '&func=pdf', $name, $title, $rel, $class );
 	}
 
 	function GetCategoryLink($func, $catid, $catname, $rel = 'follow', $class = '', $title = '') {

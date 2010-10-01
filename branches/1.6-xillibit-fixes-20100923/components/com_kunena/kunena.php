@@ -722,8 +722,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// Bottom Module
 	CKunenaTools::showModulePosition( 'kunena_bottom' );
 
-	// RSS
-	if ($kunena_config->enablerss) {
+	// PDF and RSS
+	if ($kunena_config->enablerss || $kunena_config->enablepdf) {
 		if ($catid>0) {
 			kimport('category');
 			$category = KunenaCategory::getInstance($catid);
@@ -733,11 +733,18 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		}
 		if (isset($rss_params)) {
 			echo '<div class="krss-block">';
-			$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
-			echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
-			echo '</div>';
+			if ($kunena_config->enablepdf && $func == 'view') {
+				echo CKunenaLink::GetPDFLink($catid, $id, CKunenaTools::showIcon ( 'kpdf', JText::_('COM_KUNENA_BUTTON_GENERATEPDF_TOPIC') ), 'nofollow', '', JText::_('COM_KUNENA_BUTTON_GENERATEPDF_TOPIC_LONG'));
+			}
+			if ($kunena_config->enablerss) {
+				$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
+				echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
+				echo '</div>';
+			}
 		}
 	}
+
+
 	$template = KunenaFactory::getTemplate();
 	$this->params = $template->params;
 	// Credits

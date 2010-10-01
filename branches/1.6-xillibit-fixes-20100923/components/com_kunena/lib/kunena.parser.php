@@ -841,8 +841,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 //
  				);
 
- 				$vid_providers ["_default"] = '';
-				list ( $vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2 ) = (isset ( $vid_providers [$vid ["type"]] )) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
+ 				if (isset ( $vid_providers [$vid ["type"]] )) {
+					list ( $vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2 ) = (isset ( $vid_providers [$vid ["type"]] )) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
+ 				} else {
+					return TAGPARSER_RET_NOTHING;
+				}
 
 				unset ( $vid_providers );
 				if (! empty ( $vid_auto )) {

@@ -32,7 +32,6 @@ defined ( '_JEXEC' ) or die ();
 			<?php echo $this->thread_sticky ?>
 			<?php echo $this->thread_move ?>
 			<?php echo $this->thread_lock ?>
-			<?php echo $this->thread_pdf ?>
 			</div>
 		<?php endif ?>
 		</td>

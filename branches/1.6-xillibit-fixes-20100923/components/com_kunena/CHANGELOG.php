@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.0
 
+1-October-2010 Xillibit
+# [#22601] Kunena Search "Also search in child forums" set no has no effects (Part 2)
+# [#22578] Fix Notice: Undefined index: _default in kunena.parser.php on line 844 (Part 2)
++ [#22600] Add button to generate a pdf of topic (Part 2)
+# [#22507] Fix issue the field is not showed when the user is guest, so it can't post anything (Part 2)
+
 29-September-2010 Xillibit
 # [#22636] Wrong error message when upload images/files aren't allowed for register user
 

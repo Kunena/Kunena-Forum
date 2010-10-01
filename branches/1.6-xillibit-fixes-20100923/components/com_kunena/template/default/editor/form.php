@@ -32,10 +32,12 @@ JHTML::_('behavior.tooltip');
 JHTML::_('behavior.keepalive');
 
 $document = JFactory::getDocument ();
-$document->addScriptDeclaration('// <![CDATA[
-var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";
-var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
-// ]]>');
+if ($this->my->id != 0) {
+	$document->addScriptDeclaration('// <![CDATA[
+		var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";
+		var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
+	// ]]>');
+ }
 $this->setTitle ( $this->escape($this->title) );
 
 $this->k=0;

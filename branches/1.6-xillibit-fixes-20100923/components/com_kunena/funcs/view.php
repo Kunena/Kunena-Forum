@@ -273,7 +273,6 @@ class CKunenaView {
 	public $thread_delete = null;
 	public $thread_move = null;
 	public $thread_merge = null;
-	public $thread_pdf = null;
 	public $pagination = null;
 	public $goto = null;
 
@@ -586,10 +585,6 @@ class CKunenaView {
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
 			//this user is allowed to post a new topic
 			$this->thread_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
-		}
-
-		if ($this->config->enablepdf) {
-			$this->thread_pdf = CKunenaLink::GetPDFLink($this->catid, $this->id, CKunenaTools::showButton ( 'pdf', JText::_('COM_KUNENA_BUTTON_GENERATEPDF_TOPIC') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_GENERATEPDF_TOPIC_LONG'));
 		}
 
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {

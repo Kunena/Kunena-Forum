@@ -70,8 +70,8 @@ class KunenaAccessNoixACL extends KunenaAccess {
 			$gid = 0;
 		}
 
-		$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
-				FROM #__kunena_categories c
+		$query = "SELECT id, accesstype, access, pub_access, pub_recurse, admin_access, admin_recurse
+				FROM #__kunena_categories
 				WHERE published='1' AND (accesstype='none' OR accesstype='joomla' OR accesstype='noixacl')";
 		$db->setQuery ( $query );
 		$rows = $db->loadObjectList ();

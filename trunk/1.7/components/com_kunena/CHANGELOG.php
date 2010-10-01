@@ -37,6 +37,7 @@ Kunena 1.7.0-DEV
 + [#22660] Add support for JXtended Access Control
 + [#22661] Add support for Joomla 1.5/1.6 Access Levels (admin part incomplete)
 + [#22652] Add support for NoixACL Access Levels
+# [#22652] Fix Notice: Undefined property in KunenaAccessNoixACL
 
 30-September-2010 Matias
 # [#22570] Major cleanup in CKunenaLink class

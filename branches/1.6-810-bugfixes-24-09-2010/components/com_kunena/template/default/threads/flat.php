@@ -92,9 +92,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 
 			<td class="kcol-mid kcol-ktopictitle">
-			<?php $leaf->subject = substr($leaf->subject,0,60); ?>
+			<?php
+				$ksubject = $leaf->subject;
+				$ksubjectnew = wordwrap($ksubject, 100, "\n", true);
+			?>
 				<?php if ($leaf->attachments) echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
-				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($leaf->catid), intval($leaf->id), KunenaParser::parseText ($leaf->subject), KunenaParser::stripBBCode ( $leaf->message, 500), 'follow', 'ktopic-title km' ); ?>
+				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($leaf->catid), intval($leaf->id), KunenaParser::parseText ($ksubjectnew), KunenaParser::stripBBCode ( $leaf->message, 500), 'follow', 'ktopic-title km' ); ?>
 				<?php
 				if ($leaf->favcount ) {
 					if ($leaf->myfavorite) {

@@ -13,11 +13,13 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
-class KunenaAccessJoomla15 extends KunenaAccess {
+class KunenaAccessJXtended extends KunenaAccess {
 	function __construct() {
-		if (is_dir(JPATH_LIBRARIES.'/joomla/access'))
+		if (!function_exists('jximport'))
 			return null;
-		$this->priority = 25;
+		$this->priority = 40;
+		jximport('jxtended.acl.acl');
+		$this->jxacl = new JxAcl();
 	}
 
 	protected function loadAdmins() {
@@ -59,23 +61,17 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 	}
 
 	protected function loadAllowedCategories($userid) {
-		$acl = JFactory::getACL ();
 		$db = JFactory::getDBO ();
-		$user = JFactory::getUser();
-
-		if ($userid != 0) {
-			$aro_group = $acl->getAroGroup ( $userid );
-			$gid = $aro_group->id;
-		} else {
-			$gid = 0;
-		}
-
 		$query = "SELECT c.id, c.accesstype, c.access, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
 				FROM #__kunena_categories c
-				WHERE published='1' AND (accesstype='none' OR accesstype='joomla')";
+				WHERE published='1' AND (accesstype='none' OR accesstype='joomla' OR accesstype='jxaccess')";
 		$db->setQuery ( $query );
 		$rows = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return array();
+
+		$user = JFactory::getUser();
+		$usergroups = $this->jxacl->acl_get_groups('users', $userid);
+
 		$catlist = array();
 		foreach ( $rows as $row ) {
 			if (self::isModerator($userid, $row->id)) {
@@ -85,20 +81,21 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 					$catlist[$row->id] = 1;
 			} elseif (($row->pub_access == 0)
 				or ($row->pub_access == - 1 && $userid > 0)
-				or ($row->pub_access > 0 && self::_has_rights ( $acl, $gid, $row->pub_access, $row->pub_recurse ))
-				or ($row->admin_access > 0 && self::_has_rights ( $acl, $gid, $row->admin_access, $row->admin_recurse ))) {
+				or ($row->pub_access > 0 && self::_has_rights ( $usergroups, $row->pub_access, $row->pub_recurse ))
+				or ($row->admin_access > 0 && self::_has_rights ( $usergroups, $row->admin_access, $row->admin_recurse ))) {
 				$catlist[$row->id] = 1;
 			}
 		}
 		return $catlist;
 	}
 
-	protected function _has_rights(&$acl, $gid, $access, $recurse) {
-		if ($gid == $access)
+	protected function _has_rights($usergroups, $groupid, $recurse) {
+		if (in_array($groupid, $usergroups))
 			return 1;
 		if ($recurse) {
-			$childs = $acl->get_group_children ( $access, 'ARO', 'RECURSE' );
-			return (is_array ( $childs ) and in_array ( $gid, $childs ));
+			$acl = JFactory::getACL ();
+			$childs = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
+			if (array_intersect($childs, $usergroups)) return 1;
 		}
 		return 0;
 	}

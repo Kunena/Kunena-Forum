@@ -65,26 +65,37 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 
 	function loadAllowedCategories($userid) {
 		$db = JFactory::getDBO ();
+		$user = JFactory::getUser();
+		$groups = implode(',', $user->authorisedLevels());
+
 		$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
 				FROM #__kunena_categories c
-				WHERE published='1' AND accesstype='none'";
+				WHERE published='1' AND (accesstype='none' OR accesstype='joomla')";
 		$db->setQuery ( $query );
 		$rows = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return array();
 
+		$accesslevels = (array) $user->authorisedLevels();
 		$groups_r = JAccess::getGroupsByUser($userid, true);
 		$groups = JAccess::getGroupsByUser($userid, false);
+
 		$catlist = array();
 		foreach ( $rows as $row ) {
-			$pub_access = (($row->pub_recurse && in_array($row->pub_access, $groups_r)) || in_array($row->pub_access, $groups));
-			$admin_access = (($row->admin_recurse && in_array($row->admin_access, $groups_r)) || in_array($row->admin_access, $groups));
+			if (self::isModerator($userid, $row->id)) {
+				$catlist[$row->id] = 1;
+			} elseif ($row->accesstype == 'joomla') {
+				if ( in_array($row->access, $accesslevels) )
+					$catlist[$row->id] = 1;
+			} else {
+				$pub_access = (($row->pub_recurse && in_array($row->pub_access, $groups_r)) || in_array($row->pub_access, $groups));
+				$admin_access = (($row->admin_recurse && in_array($row->admin_access, $groups_r)) || in_array($row->admin_access, $groups));
 
-			if (($row->pub_access == 0)
-				|| ($row->pub_access == - 1 && $userid > 0)
-				|| (self::isModerator($userid, $row->id))
-				|| ( $pub_access )
-				|| ( $admin_access )) {
-				$catlist[$row->id] = $row->id;
+				if (($row->pub_access == 0)
+					|| ($row->pub_access == - 1 && $userid > 0)
+					|| ( $pub_access )
+					|| ( $admin_access )) {
+					$catlist[$row->id] = 1;
+				}
 			}
 		}
 		return $catlist;

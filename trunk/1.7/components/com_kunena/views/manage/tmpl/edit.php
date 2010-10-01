@@ -87,7 +87,7 @@ function submitbutton(pressbutton)
 						</tr>
 						<tr>
 							<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS'); ?></td>
-							<td valign="top"><?php echo $this->category->access; ?></td>
+							<td valign="top"><?php echo $this->options ['access']; ?></td>
 							<td valign="top"><?php echo JText::_('COM_KUNENA_A_ACCESS_DESC'); ?></td>
 						</tr>
 						<?php endif; ?>

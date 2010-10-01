@@ -61,6 +61,7 @@ class KunenaAccessNoixACL extends KunenaAccess {
 	protected function loadAllowedCategories($userid) {
 		$acl = JFactory::getACL ();
 		$db = JFactory::getDBO ();
+		$user = JFactory::getUser();
 
 		if ($userid != 0) {
 			$aro_group = $acl->getAroGroup ( $userid );
@@ -71,39 +72,55 @@ class KunenaAccessNoixACL extends KunenaAccess {
 
 		$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
 				FROM #__kunena_categories c
-				WHERE published='1' AND accesstype='none'";
+				WHERE published='1' AND (accesstype='none' OR accesstype='joomla' OR accesstype='noixacl')";
 		$db->setQuery ( $query );
 		$rows = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return array();
 
-		//get NoixACL multigroups if user have those
+		//get NoixACL multigroups for current user
 		$query = "SELECT g.id
 		FROM #__core_acl_aro_groups AS g
 		INNER JOIN #__noixacl_multigroups AS m
 		WHERE g.id = m.id_group AND m.id_user = {$db->quote($userid)}";
 		$db->setQuery( $query );
 		$multigroups = (array) $db->loadResultArray();
+		$multigroups[] = $user->gid;
+		if (KunenaError::checkDatabaseError()) return array();
+
+		//get NoixACL access levels for all user groups
+		$groups = implode(',', $multigroups);
+		$query = "SELECT l.id_levels
+		FROM #__noixacl_groups_level AS l
+		WHERE l.id_group IN ($groups)";
+		$db->setQuery( $query );
+		$levels = array_unique(explode(',', implode(',', (array) $db->loadResultArray())));
 		if (KunenaError::checkDatabaseError()) return array();
 
 		$catlist = array();
 		foreach ( $rows as $row ) {
-			if (($row->pub_access == 0)
+			if (self::isModerator($userid, $row->id)) {
+				$catlist[$row->id] = 1;
+			} elseif ($row->accesstype == 'joomla') {
+				if ( $row->access <= $user->get('aid') )
+					$catlist[$row->id] = 1;
+			} elseif ($row->accesstype == 'noixacl') {
+				if ( in_array($row->access, $levels) )
+					$catlist[$row->id] = 1;
+			} elseif (($row->pub_access == 0)
 				or ($row->pub_access == - 1 && $userid > 0)
-				or (self::isModerator($userid, $row->id))
-				or ($row->pub_access > 0 && self::_has_rights ( $acl, $gid, $row->pub_access, $row->pub_recurse, $multigroups ))
-				or ($row->admin_access > 0 && self::_has_rights ( $acl, $gid, $row->admin_access, $row->admin_recurse, $multigroups ))) {
+				or ($row->pub_access > 0 && self::_has_rights ( $acl, $multigroups, $row->pub_access, $row->pub_recurse ))
+				or ($row->admin_access > 0 && self::_has_rights ( $acl, $multigroups, $row->admin_access, $row->admin_recurse ))) {
 				$catlist[$row->id] = 1;
 			}
 		}
 		return $catlist;
 	}
 
-	protected function _has_rights(&$acl, $gid, $access, $recurse, $multigroups) {
-		if ($gid == $access || in_array($access, $multigroups))
+	protected function _has_rights(&$acl, $multigroups, $access, $recurse) {
+		if (in_array($access, $multigroups))
 			return 1;
 		if ($recurse) {
 			$childs = (array) $acl->get_group_children ( $access, 'ARO', 'RECURSE' );
-			if (in_array ( $gid, $childs )) return 1;
 			if (array_intersect($childs, $multigroups)) return 1;
 		}
 		return 0;

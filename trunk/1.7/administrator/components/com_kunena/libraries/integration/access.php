@@ -50,6 +50,12 @@ abstract class KunenaAccess {
 		KunenaError::checkDatabaseError();
 	}
 
+	public function getAccessLevelsList($category) {
+		if ($category->accesstype == 'joomla')
+			return JHTML::_('list.accesslevel', $category);
+		return $category->access;
+	}
+
 	public function getAdmins($catid = 0) {
 		if ($this->adminsByCatid === false) {
 			$this->loadAdmins();

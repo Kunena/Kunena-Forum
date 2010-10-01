@@ -242,6 +242,7 @@ class KunenaModelCategories extends JModel {
 		$lists = array ();
 		//require_once KPATH_SITE.'/class.kunena.php';
 		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
+		$lists ['access'] = KunenaFactory::getAccessControl()->getAccessLevelsList($category);
 		$lists ['categories'] = JHTML::_('kunena.categorylist', 'parent', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent);
 		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
 		$lists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $category->pub_access );

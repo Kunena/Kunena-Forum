@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+1-October-2010 Matias
++ [#22660] Add support for JXtended Access Control
++ [#22661] Add support for Joomla 1.5/1.6 Access Levels (admin part incomplete)
++ [#22652] Add support for NoixACL Access Levels
+
 30-September-2010 Matias
 # [#22570] Major cleanup in CKunenaLink class
 # [#22541] Fix TableKunenaCategory::load()
@@ -52,7 +57,7 @@ Kunena 1.7.0-DEV
 + [#22541] Category Manager: Display access type and access level group
 # [#22541] Do not use Joomla access control if using another accesstype
 # [#22541] Set all JomSocial group admins as category admins, not category moderators
-+ [#22652] Add NoixACL multi group support
++ [#22652] Add support for NoixACL Access Control
 
 24-September-2010 Matias
 ^ [#22569] Make KunenaRoute to work also in administration

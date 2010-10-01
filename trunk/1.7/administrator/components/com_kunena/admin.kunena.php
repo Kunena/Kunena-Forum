@@ -55,14 +55,14 @@ kimport('error');
 $kunena_app = JFactory::getApplication ();
 require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
-if (!$lang->load('com_kunena.install',JPATH_ADMINISTRATOR)) {
-	$lang->load('com_kunena.install',KPATH_ADMIN);
-}
-if (!$lang->load('com_kunena',JPATH_SITE)) {
-	$lang->load('com_kunena',KPATH_SITE);
-}
-if (!$lang->load('com_kunena',JPATH_ADMINISTRATOR, null, true)) {
+if (Kunena::isSVN()) {
 	$lang->load('com_kunena',KPATH_ADMIN);
+	$lang->load('com_kunena',KPATH_SITE);
+	$lang->load('com_kunena.install',KPATH_ADMIN);
+} else {
+	$lang->load('com_kunena',JPATH_ADMINISTRATOR);
+	$lang->load('com_kunena',JPATH_SITE);
+	$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 }
 
 $kunena_config = KunenaFactory::getConfig ();

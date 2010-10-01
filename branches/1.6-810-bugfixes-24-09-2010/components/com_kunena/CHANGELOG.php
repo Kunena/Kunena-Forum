@@ -35,6 +35,7 @@ Kunena 1.6.0
 
 01-oktober-2010 810
 # [#19288] Long words in topics breaks listcat layout (recent)
+# [#19288] Banned can't be changed in ranks manager, new option config-ranks
 
 29-September-2010 810
 ^ [#19288] Update dutch language

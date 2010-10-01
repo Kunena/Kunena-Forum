@@ -383,14 +383,8 @@ class KunenaUser extends JObject {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_BANNED' );
 			$rank->rank_special = 1;
-			$rank->rank_image = 'rankbanned.gif';
+			$rank->rank_image =  $config->bannimage;
 			jimport ( 'joomla.filesystem.file' );
-			foreach ( self::$_ranks as $cur ) {
-				if ($cur->rank_special == 1 && JFile::stripExt ( $cur->rank_image ) == 'rankbanned') {
-					$rank = $cur;
-					break;
-				}
-			}
 		} else if ($this->rank != 0 && isset ( self::$_ranks [$this->rank] )) {
 			$rank = self::$_ranks [$this->rank];
 		} else if ($this->rank == 0 && $this->isAdmin ()) {

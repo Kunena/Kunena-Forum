@@ -351,6 +351,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	//New for 1.6: allow only secure image extensions (jpg/gif/png) in IMG tag
 	var $bbcode_img_secure = 'text';
 	var $listcat_show_moderators = 1;
+	var $bannimage = 'rankbanned.gif';
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

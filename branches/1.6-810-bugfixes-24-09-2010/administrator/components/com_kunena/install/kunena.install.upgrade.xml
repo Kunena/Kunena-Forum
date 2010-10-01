@@ -158,6 +158,7 @@
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `catid`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` DROP INDEX `parent`;</query>
 			<query mode="silenterror">ALTER TABLE `#__kunena_messages` ADD INDEX `catid_parent` ( `catid`, `parent` );</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_config` ADD `bannimage` text NOT NULL AFTER `listcat_show_moderators`;</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 		</version>

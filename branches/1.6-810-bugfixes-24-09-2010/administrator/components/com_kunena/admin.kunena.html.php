@@ -1555,6 +1555,15 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_RANKINGIMAGES_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BANNIMAGE') ?>
+						</td>
+						<td align="left" valign="top"><input type="text" name="cfg_bannimage" size="20"
+							value="<?php echo kescape($kunena_config->bannimage);	?>" />
+						</td>
+                        <td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_BANNIMAGE_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			</dd>

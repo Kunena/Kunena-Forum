@@ -696,6 +696,10 @@ class CKunenaTools {
 		$modules = JModuleHelper::getModules ( $position );
 		foreach ( $modules as $module ) {
 			if ($module->module == 'mod_mainmenu') {
+				$app = JFactory::getApplication();
+
+				$menu = JSite::getMenu ();
+				$active = $menu->getActive();
 				$basemenu = KunenaRoute::getMenu ();
 				if ($basemenu) {
 					$module = clone $module;
@@ -703,6 +707,19 @@ class CKunenaTools {
 					$search = array ('/menutype=(.*)(\s)/', '/startLevel=(.*)(\s)/', '/endLevel=(.*)(\s)/' );
 					$replace = array ("menutype={$basemenu->menutype}\\2", 'startLevel=' . ($basemenu->sublevel + 1) . '\2', 'endLevel=' . ($basemenu->sublevel + 2) . '\2' );
 					$module->params = preg_replace ( $search, $replace, $module->params );
+
+					if (KunenaFactory::getUser()->isAdmin() && $active) {
+						if (empty($basemenu->query['view']) || $basemenu->query['view'] != 'entrypage') {
+							// TODO: translate
+							$app->enqueueMessage("Kunena Notice: Menu item /{$active->route} (Itemid={$active->id}) should have <em>Kunena Forum</em>: <em>Entry Page</em> as its ancestor.", 'notice');
+						} elseif ($active->menutype != $basemenu->menutype) {
+							// TODO: translate
+							$app->enqueueMessage("Kunena Notice: Menu item /{$active->route} (Itemid={$active->id}) does not have Kunena Menu.", 'notice');
+						}
+					}
+				} elseif (KunenaFactory::getUser()->isAdmin() && $active) {
+					// TODO: translate
+					$app->enqueueMessage("Kunena Notice: You do not have default Kunena Menu.", 'notice');
 				}
 			}
 			echo JModuleHelper::renderModule ( $module, $options );

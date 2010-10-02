@@ -207,6 +207,8 @@ class KunenaRouter {
 			unset ( $vars ['func'] );
 		}
 
+		// Fix bug in Joomla 1.5.20 when using /components/kunena instead /component/kunena
+		if (!$active && $segments[0] == 'kunena') array_shift ( $segments );
 		while ( ($segment = array_shift ( $segments )) !== null ) {
 			$seg = explode ( ':', $segment );
 			$var = array_shift ( $seg );

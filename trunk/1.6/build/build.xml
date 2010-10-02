@@ -226,6 +226,7 @@
 
 	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
+		<language tag="ar-AA" />
 		<language tag="ca-ES" />
 		<language tag="de-DE" />
 		<language tag="el-GR" />
@@ -239,6 +240,7 @@
 		<language tag="mk-MK" />
 		<language tag="nl-NL" />
 		<language tag="pl-PL" />
+		<language tag="pt-BR" />
 		<language tag="ru-RU" />
 		<language tag="sr-RS" />
 		<language tag="sr-YU" />

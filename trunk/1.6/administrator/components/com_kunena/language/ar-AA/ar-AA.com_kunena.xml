@@ -2,8 +2,8 @@
 <!-- $Id$ -->
 <!DOCTYPE install>
 <install type="language" version="1.5" client="both" method="upgrade">
-	<name>Kunena Forum - Greek</name>
-	<tag>el-GR</tag>
+	<name>Kunena Forum - Arabic</name>
+	<tag>ar-AA</tag>
 	<creationDate>unknown</creationDate>
 	<version>unknown</version>
 	<build>unknown</build>
@@ -12,21 +12,21 @@
 	<authorUrl>unknown</authorUrl>
 	<copyright>(C) 2010 unknown</copyright>
 	<license>GNU/GPL</license>
-	<description>Greek language file for Kunena Forum Component</description>
+	<description>Arabic language file for Kunena Forum Component</description>
 
 	<administration>
 		<files folder="admin">
-			<filename>el-GR.com_kunena.ini</filename>
-			<filename>el-GR.com_kunena.install.ini</filename>
-			<filename>el-GR.com_kunena.menu.ini</filename>
+			<filename>ar-AA.com_kunena.ini</filename>
+			<filename>ar-AA.com_kunena.install.ini</filename>
+			<filename>ar-AA.com_kunena.menu.ini</filename>
 		</files>
 	</administration>
 
 	<site>
 		<files folder="site">
-			<filename>el-GR.com_kunena.ini</filename>
-			<filename>el-GR.com_kunena.tpl_default.ini</filename>
-			<filename>el-GR.com_kunena.tpl_example.ini</filename>
+			<filename>ar-AA.com_kunena.ini</filename>
+			<filename>ar-AA.com_kunena.tpl_default.ini</filename>
+			<filename>ar-AA.com_kunena.tpl_example.ini</filename>
 		</files>
 	</site>
 </install>

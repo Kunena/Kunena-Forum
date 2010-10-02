@@ -47,8 +47,10 @@ abstract class KunenaRoute {
 		if (!$uri) {
 			$link = self::current(true);
 			$link->delVar ( 'Itemid' );
-		}
-		else {
+		} else if (is_numeric($uri)) {
+			$item = self::$menu[intval($uri)];
+			return JRoute::_($item->link."&Itemid={$item->id}");
+		} else {
 			$link = new JURI ( (string)$uri );
 		}
 		$query = $link->getQuery ( true );
@@ -100,12 +102,12 @@ abstract class KunenaRoute {
 	}
 
 	protected static function buildMenuTree() {
+		$menus = JSite::getMenu ();
+		$active = $menus->getActive ();
+		self::$active = is_object($active) ? $active->id : 0;
 		if (self::$menu === null) {
-			$my = JFactory::getUser ();
-			$menus = JSite::getMenu ();
 			self::$menu = $menus->getMenu ();
-			$active = $menus->getActive ();
-			self::$active = is_object($active) ? $active->id : 0;
+			$my = JFactory::getUser ();
 			foreach ( self::$menu as $item ) {
 				if (! is_object ( $item ))
 					continue;

@@ -246,6 +246,8 @@ class KunenaModelInstall extends JModel {
 		$installer = new JInstaller ( );
 		if ($installer->install ( $dest )) {
 			$success = true;
+		} else {
+			$success = -1;
 		}
 		JFolder::delete($dest);
 		if ($name) $this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_LANGUAGE', $name), $success);

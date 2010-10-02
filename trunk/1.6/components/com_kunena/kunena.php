@@ -55,6 +55,7 @@ if(JDEBUG){
 
 $func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
 JRequest::setVar ( 'func', $func );
+$format = JRequest::getCmd ( 'format', 'html' );
 
 require_once(KUNENA_PATH . DS . 'router.php');
 if ($func && !in_array($func, KunenaRouter::$functions)) {
@@ -62,34 +63,71 @@ if ($func && !in_array($func, KunenaRouter::$functions)) {
 	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
 }
 
+$kunena_app = JFactory::getApplication ();
+
 if (empty($_POST)) {
+	$me = KunenaFactory::getUser();
+
 	// Set active menuitem so that Kunena menu shows up
 	$menu = JSite::getMenu ();
 	$active = $menu->getActive ();
 
-	// Legacy menu item support (get best match from Kunena Menu)
+	// Legacy menu item and Itemid=0 support with redirect and notice message
 	if (empty($active->query ['view'])) {
-		$menu->setActive ( KunenaRoute::getItemID () );
-		$active = $menu->getActive ();
+		$new = $menu->getItem (KunenaRoute::getItemID ());
+		if ($new) {
+			if ($me->isAdmin() && $format == 'html') {
+				// Show notices to administrator if something is wrong
+				if ($active) {
+					if ($active->route == $new->route) {
+						// TODO: translate
+						$kunena_app->enqueueMessage("Kunena Notice: Oops. You have conflicting menu items in /{$active->route} (same path to Itemid {$active->id} and {$new->id}).", 'notice');
+					} else {
+						// TODO: translate
+						$kunena_app->enqueueMessage("Kunena Notice: Legacy menu item in /{$active->route} (Itemid={$active->id}). Redirected to /{$new->route} (Itemid={$new->id}).", 'notice');
+					}
+				} else {
+					// TODO: translate
+					$kunena_app->enqueueMessage("Kunena Notice: No menu item assigned. Redirected to /{$new->route} (Itemid={$new->id}).", 'notice');
+				}
+			}
+			if (!$active || $active->route != $new->route) {
+				// Redirect to same page, but with different Itemid
+				$kunena_app->redirect (KunenaRoute::_(null, false));
+			}
+		}
 	}
-
-	// If we are currently in entry page, we need to show and highlight default menu item
-	if (! $func || $func == 'entrypage') {
-		$defaultitem = 0;
+	if ($me->isAdmin() && !$active && $format == 'html') {
+		// TODO: translate
+		$kunena_app->enqueueMessage('Kunena Notice: No menu item assigned. Please check <em>Kunena Menu</em>.', 'notice');
+	} elseif ($func == 'entrypage') {
+		// If we are currently in entry page, we need to show and highlight default menu item
 		if (!empty ( $active->query ['defaultmenu'] )) {
 			$defaultitem = $active->query ['defaultmenu'];
-		}
-		$menu->setActive ( KunenaRoute::getItemID ( $defaultitem ) );
-		$active = $menu->getActive ();
-		if (is_object ( $active )) {
-			foreach ( $active->query as $var => $value ) {
-				if ($var == 'view')
-					$var = 'func';
-				if ($var == 'func' && $value == 'entrypage')
-					$value = $func;
-				JRequest::setVar ( $var, $value );
+			if ($defaultitem > 0) {
+				$oldbasemenu = KunenaRoute::getCurrentMenu ();
+				$menu->setActive ( $defaultitem );
+				$newbasemenu = KunenaRoute::getCurrentMenu ();
+				$active = $menu->getActive ();
+				if ($me->isAdmin() && (empty($active->component) || $active->component != 'com_kunena') && $format == 'html') {
+					// TODO: translate
+					$kunena_app->enqueueMessage('Kunena Notice: Entry Page: Default Menu Item is not pointing to Kunena.', 'notice');
+				}
+				if (!$newbasemenu || $oldbasemenu->id != $newbasemenu->id) {
+					// Follow Default Menu Item if it's not in the same menu
+					$kunena_app->redirect (KunenaRoute::_($defaultitem, false));
+				}
+				if (is_object ( $active )) {
+					foreach ( $active->query as $var => $value ) {
+						if ($var == 'view')
+							$var = 'func';
+						if ($var == 'func' && $value == 'entrypage')
+							$value = $func;
+						JRequest::setVar ( $var, $value );
+					}
+					$func = JRequest::getCmd ( 'func' );
+				}
 			}
-			$func = JRequest::getCmd ( 'func' );
 		}
 	}
 }
@@ -126,8 +164,6 @@ $thread = JRequest::getInt ( 'thread', 0 );
 $topic_emoticon = JRequest::getVar ( 'topic_emoticon', '' );
 $userid = JRequest::getInt ( 'userid', 0 );
 $no_html = JRequest::getBool ( 'no_html', 0 );
-
-$kunena_app = JFactory::getApplication ();
 
 // If JFirePHP is installed and enabled, leave a trace of the Kunena startup
 if(JDEBUG == 1 && defined('JFIREPHP')){

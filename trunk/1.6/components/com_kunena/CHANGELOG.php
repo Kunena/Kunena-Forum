@@ -33,7 +33,16 @@ Legend:
 
 Kunena 1.6.0
 
-01-October-2010 Matias
+2-October-2010 Matias
+# [#22674] Installer: Do not fail if language is broken
+^ [#16390] Updated fi-FI (thanks Mortti), de-DE (rich), el-GR (valandis), es-ES (Alakentu), th-TH (drlovecat), tr-TR (cumla)
++ [#16390] Added ar-AA (thanks Omar), pt-BR (thanks rgponce)
+# [#20071] Router: Workaround for Joomla bug when SEF URL /components/kunena is used
+# [#20071] Routing: Redirect to Kunena menu if Itemid=0 or using legacy menu item (silently fixes missing menu)
+# [#20071] Routing: Add numerous notices to help administrator to find potential issues in his menu
+# [#20071] Routing: If Default Menu Item in Entry Page points somewhere else, redirect
+
+1-October-2010 Matias
 # [#19288] Fix long words in all topics by adding zero width spaces
 ^ [#15886] Merged revisions 3575-3599 from /branches/1.6-810-bugfixes-24-09-2010
 ^ [#15886] Merged revisions 3562-3606 from /branches/1.6-xillibit-fixes-20100923

@@ -18,12 +18,8 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-// ################################################################
-// MOS Intruder Alerts
 defined( '_JEXEC' ) or die();
 
-
-// ################################################################
 require_once( JApplicationHelper::getPath( 'toolbar_html' ) );
 
 $task = JRequest::getCmd( 'task' );
@@ -139,7 +135,7 @@ switch ($task)
         CKunenaToolbar::_SYSTEMREPORT_MENU();
 
         break;
-        
+
 	case "showTemplates":
         CKunenaToolbar::_SHOWTEMPLATES_MENU();
 
@@ -149,12 +145,12 @@ switch ($task)
         CKunenaToolbar::_EDITKTEMPLATE_MENU();
 
         break;
-		
+
 	case "chooseCSSTemplate":
         CKunenaToolbar::_CHOOSECSS_MENU();
 
         break;
-		
+
 	case "editTemplateCSS":
         CKunenaToolbar::_EDITCSS_MENU();
 

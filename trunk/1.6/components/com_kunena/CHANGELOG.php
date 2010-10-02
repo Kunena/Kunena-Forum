@@ -41,6 +41,10 @@ Kunena 1.6.0
 # [#20071] Routing: Redirect to Kunena menu if Itemid=0 or using legacy menu item (silently fixes missing menu)
 # [#20071] Routing: Add numerous notices to help administrator to find potential issues in his menu
 # [#20071] Routing: If Default Menu Item in Entry Page points somewhere else, redirect
+^ [#15886] Merged revision 3614 from /branches/1.6-810-bugfixes-24-09-2010
+
+2-October-2010 810
+^ [#19288] Update dutch language Final
 
 1-October-2010 Matias
 # [#19288] Fix long words in all topics by adding zero width spaces

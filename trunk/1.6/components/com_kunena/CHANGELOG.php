@@ -43,6 +43,7 @@ Kunena 1.6.0
 # [#20071] Routing: If Default Menu Item in Entry Page points somewhere else, redirect
 ^ [#15886] Merged revision 3614 from /branches/1.6-810-bugfixes-24-09-2010
 ^ [#15886] Merged revisions 3610-3612 from /branches/1.6-xillibit-fixes-20101002
+# [#19288] Fix missing translation: COM_KUNENA_BUTTON_GENERATEPDF_TOPIC
 
 2-October-2010 Xillibit
 # [#19288] Fix regression in javascript $('postcatid') is null

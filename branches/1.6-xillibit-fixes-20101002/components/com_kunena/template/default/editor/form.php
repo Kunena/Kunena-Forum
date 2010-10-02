@@ -82,7 +82,7 @@ $this->k=0;
 		</tr>
 
 		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check-name"
-		<?php if ($this->my->id && ((!$this->allow_anonymous && $this->catid != 0) || !$this->cat_default_allow) ): ?>style="display:none;"<?php endif; ?>>
+		<?php if ( $this->my->id && !$this->config->changename && !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 			</td>

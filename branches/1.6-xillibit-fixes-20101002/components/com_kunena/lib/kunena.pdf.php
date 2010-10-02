@@ -185,6 +185,7 @@ function filterHTML(&$string)
     $string = str_replace('{mosimage}', '', $string);
     $string = str_replace('{mospagebreak}', '', $string);
     // bbcode
+	$string = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $string );
     $string = preg_replace('/\[(.*?)\]/si', "", $string);
     $string = decodeHTML($string);
 }

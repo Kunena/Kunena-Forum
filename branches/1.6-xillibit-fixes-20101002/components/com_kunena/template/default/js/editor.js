@@ -683,7 +683,7 @@ window.addEvent('domready', function(){
 		});
 	}
 
-	if(typeof (kunena_anonymous_check_url) != 'undefined' && typeof ($('kauthorname')) != 'undefined') {
+	if(typeof (kunena_anonymous_check_url) != 'undefined' && $('kauthorname') != undefined) {
 		var kuser = $('kauthorname').get('value');
 		var kbutton = $('kanonymous');
 		kunenaSelectUsername(kbutton, kuser);

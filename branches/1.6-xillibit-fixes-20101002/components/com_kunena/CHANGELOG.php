@@ -35,6 +35,8 @@ Kunena 1.6.0
 
 02-October-2010 Xillibit
 # [#19288] Fix regression in javascript $('postcatid') is null
+* [#19288] Remove confidential information from pdf
+# [#22507] Show filed name is nickname change is allowed
 
 01-October-2010 Matias
 # [#19288] Fix long words in all topics by adding zero width spaces

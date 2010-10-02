@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+02-October-2010 Xillibit
+# [#19288] Fix regression in javascript $('postcatid') is null
+
 01-October-2010 Matias
 # [#19288] Fix long words in all topics by adding zero width spaces
 ^ [#15886] Merged revisions 3575-3599 from /branches/1.6-810-bugfixes-24-09-2010

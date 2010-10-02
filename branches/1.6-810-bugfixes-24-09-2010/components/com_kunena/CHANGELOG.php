@@ -35,6 +35,7 @@ Kunena 1.6.0
 
 02-oktober-2010 810
 ^ [#19288] Update dutch language Final
+^ [#19288] Update missing string en-gb
 
 01-oktober-2010 810
 # [#19288] Long words in topics breaks listcat layout (recent)

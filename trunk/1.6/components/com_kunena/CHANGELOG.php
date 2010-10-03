@@ -41,6 +41,10 @@ Kunena 1.6.0
 ^ [#16390] Updated ca-ES (Neon26), es-ES (Alakentu)
 # [#22687] Menu: Support rounded corners in Opera 10 and Chrome 5
 # [#22687] Greatly improve credits page
+^ [#15886] Merged revision 3622 from /branches/1.6-xillibit-fixes-20101002
+
+3-October-2010 Xillibit
+# [#19288] Render smilies and bbcode into pdf, but remove map, ebay and video
 
 2-October-2010 Matias
 # [#22674] Installer: Do not fail if language is broken

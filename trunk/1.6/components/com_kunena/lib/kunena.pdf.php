@@ -186,14 +186,16 @@ function filterHTML(&$string)
     $string = str_replace('{mospagebreak}', '', $string);
     // bbcode
 	$string = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $string );
-    $string = preg_replace('/\[(.*?)\]/si', "", $string);
+	$string = preg_replace ( '/\[ebay\](.*?)\[\/ebay\]/s', '', $string );
+	$string = preg_replace ( '/\[map\](.*?)\[\/map\]/s', '', $string );
+    $string = preg_replace('/\[video(.*?)\](.*?)\[\/video\]/s', "", $string);
     $string = decodeHTML($string);
 }
 
 function decodeHTML($string)
 {
-    $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
-    $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
+	require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/html/parser.php');
+	$string = KunenaParser::parseBBCode($string);
     return $string;
 }
 

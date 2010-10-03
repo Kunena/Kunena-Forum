@@ -35,6 +35,7 @@ Kunena 1.6.0
 
 03-October-2010 Xillibit
 # [#19288] Render smilies and bbcode into pdf, but remove map, ebay and video
+# [#22600] Render in pdf only the actual page to avoid maximum time execution exceeded
 
 02-October-2010 Xillibit
 # [#19288] Fix regression in javascript $('postcatid') is null

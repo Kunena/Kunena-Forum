@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+03-October-2010 Xillibit
+# [#19288] Render smilies and bbcode into pdf, but remove map, ebay and video
+
 02-October-2010 Xillibit
 # [#19288] Fix regression in javascript $('postcatid') is null
 * [#19288] Remove confidential information from pdf

@@ -69,6 +69,9 @@ function dofreePDF()
 
     $catid = JRequest::getInt('catid', 0);
 	$id = JRequest::getInt('id', 0);
+	$limit = JRequest::getInt ( 'limit', 0 );
+	$limitstart = JRequest::getInt ( 'limitstart', 0 );
+	if ($limit < 1) $limit = $kunena_config->messages_per_page-1;
 
 	require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
     $kunena_session = KunenaFactory::getSession(true);
@@ -138,7 +141,8 @@ function dofreePDF()
         	$pdf->ezText($txt3, 10);
         	$pdf->ezText("\n============================================================================\n\n", 8);
         	//now let's try to see if there's more...
-        	$kunena_db->setQuery("SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.catid={$kunena_db->Quote($catid)} AND a.thread={$kunena_db->Quote($threadid)} AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC");
+        	$query = "SELECT a.*, b.* FROM #__kunena_messages AS a, #__kunena_messages_text AS b WHERE a.catid={$kunena_db->Quote($catid)} AND a.thread={$kunena_db->Quote($threadid)} AND a.id=b.mesid AND a.parent!='0' ORDER BY a.time ASC";
+        	$kunena_db->setQuery($query, $limitstart, $limit);
         	$replies = $kunena_db->loadObjectList();
             if (KunenaError::checkDatabaseError()) return;
 

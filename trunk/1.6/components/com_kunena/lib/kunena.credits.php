@@ -78,7 +78,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				?>
 			</div>
 			<!-- Version Info -->
-			<div class="kfooter"><?php echo JText::_('COM_KUNENA_COPYRIGHT');?> &copy; 2008, 2009, 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo JText::_('COM_KUNENA_LICENSE');?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
+			<div class="kfooter"><?php echo JText::_('COM_KUNENA_COPYRIGHT');?> &copy; 2008 - 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo JText::_('COM_KUNENA_LICENSE');?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
 			<!-- /Version Info -->
 		</div>
 	</div>

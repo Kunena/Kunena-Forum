@@ -40,7 +40,7 @@ Kunena 1.6.0
 # [#22684] Do not enable 'System - Mootools Upgrade' during installation
 ^ [#16390] Updated ca-ES (Neon26), es-ES (Alakentu)
 # [#22687] Menu: Support rounded corners in Opera 10 and Chrome 5
-# [#22687] Greatly improve credits page
+# [#22687] Greatly improved credits page (thanks Sven)
 ^ [#15886] Merged revision 3622 from /branches/1.6-xillibit-fixes-20101002
 
 3-October-2010 Xillibit

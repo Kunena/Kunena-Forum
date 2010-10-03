@@ -2791,6 +2791,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena .kcredits-intro {
 	margin:5px;
 	padding:15px 30px;
+	text-align:left;
 	border: 1px solid #BFC3C6;
 	border-radius: 15px;
 	-moz-border-radius: 15px;
@@ -2804,6 +2805,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	list-style-type:circle;
 	margin:0 10px;
 	padding:0;
+	text-align:left;
 	background: transparent none;
 	border-radius: 15px;
 	-moz-border-radius: 15px;

@@ -25,6 +25,7 @@ $introtext = CKunenaTools::getRulesHelpDatas($kunena_config->rules_cid);
 		<div class="kbody">
 			<div class="khelprulescontent">
 				<?php echo $introtext; ?>
+				<BR>
 			</div>
 		</div>
 	</div>

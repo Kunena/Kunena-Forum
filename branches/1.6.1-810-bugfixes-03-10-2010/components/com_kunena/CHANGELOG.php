@@ -35,6 +35,7 @@ Kunena 1.6.0
 
 3-October-2010 810
 ^ [#19288] Announcement hyperlink box title
+^ [#19288] Adding <BR> on help/rules page
 
 3-October-2010 Matias
 # [#22684] Load Mootools 1.2 manually if 'System - Mootools Upgrade' or 'System - Mootools 1.2' plugin is not enabled in Joomla 1.5

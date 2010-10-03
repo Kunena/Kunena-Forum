@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.0
 
+3-October-2010 Matias
+# [#22684] Load Mootools 1.2 manually if 'System - Mootools Upgrade' or 'System - Mootools 1.2' plugin is not enabled in Joomla 1.5
+# [#22684] Detect and show noticifation to administrators if 'System - Mootools Upgrade' isn't installed into Joomla 1.5
+# [#22684] Detect and show noticifation to administrators if a plugin is loading Mootools 1.1 or custom version of JHTMLBehavior
+# [#22684] Do not enable 'System - Mootools Upgrade' during installation
+
 2-October-2010 Matias
 # [#22674] Installer: Do not fail if language is broken
 ^ [#16390] Updated fi-FI (thanks Mortti), de-DE (rich), el-GR (valandis), es-ES (Alakentu), th-TH (drlovecat), tr-TR (cumla)

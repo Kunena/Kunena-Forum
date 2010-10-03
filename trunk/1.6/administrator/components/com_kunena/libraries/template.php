@@ -67,6 +67,33 @@ class KunenaTemplate extends JObject
 		$this->getTopicIconPath(0);
 	}
 
+	public function loadMootools() {
+		$me = KunenaFactory::getUser();
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == 1.5) {
+			jimport ( 'joomla.plugin.helper' );
+			$mootools12 = JPluginHelper::isEnabled ( 'system', 'mtupgrade' ) || JPluginHelper::isEnabled ( 'system', 'mootools12' );
+			if (! $mootools12) {
+				$app = JFactory::getApplication ();
+				if (!class_exists ( 'JHTMLBehavior' )) {
+					if (is_dir ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' )) {
+						JHTML::addIncludePath ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' );
+					} elseif ($me->isAdmin()) {
+						// TODO: translate
+						$app->enqueueMessage ( 'Kunena: You do not have <em>System - Mootools Upgrade</em> plugin.', 'notice' );
+						$app->enqueueMessage ( 'Many features, including Quick Reply and BBCode editor may be broken.', 'notice' );
+					}
+				} elseif ($me->isAdmin()) {
+					// TODO: translate
+					$app->enqueueMessage ( 'Kunena: You have a plugin that uses Mootools 1.1 or custom version of JHTMLBehavior.', 'notice' );
+					$app->enqueueMessage ( 'Many features, including Quick Reply and BBCode editor may be broken.', 'notice' );
+					$app->enqueueMessage ( 'Please enable <em>System - Mootools Upgrade</em> plugin.', 'notice' );
+				}
+			}
+		}
+		JHTML::_ ( 'behavior.mootools' );
+	}
+
 	public function getPath($default = false) {
 		if ($default) return "template/default";
 		return "template/{$this->name}";

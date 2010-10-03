@@ -38,6 +38,7 @@ Kunena 1.6.0
 # [#22684] Detect and show noticifation to administrators if 'System - Mootools Upgrade' isn't installed into Joomla 1.5
 # [#22684] Detect and show noticifation to administrators if a plugin is loading Mootools 1.1 or custom version of JHTMLBehavior
 # [#22684] Do not enable 'System - Mootools Upgrade' during installation
+^ [#16390] Updated ca-ES (Neon26), es-ES (Alakentu)
 
 2-October-2010 Matias
 # [#22674] Installer: Do not fail if language is broken

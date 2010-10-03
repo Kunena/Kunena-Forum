@@ -16,6 +16,27 @@
 
 defined( '_JEXEC' ) or die();
 
+//TODO: move out of here
+$styles = <<<EOF
+#Kunena .kcreditslist{
+	border: 1px solid #BFC3C6;
+	margin: 0 15px 15px;
+	border-radius: 0 0 15px 15px;
+	-moz-border-radius: 0 0 15px 15px;
+	-webkit-border-radius: 0 0 15px 15px;
+}
+#Kunena .kcreditlistname{
+	clear: both;
+	margin: 0 15px;
+	padding: 7px 10px 0 10px;
+	background: #5388B4;
+	border-radius: 15px 15px 0 0;
+	-moz-border-radius: 15px 15px 0 0;
+	-webkit-border-radius: 15px 15px 0 0;
+}
+EOF;
+$document = JFactory::getDocument();
+$document->addStyleDeclaration($styles);
 $kunena_config = KunenaFactory::getConfig ();
 ?>
 <div class="kblock kcredits">
@@ -24,70 +45,44 @@ $kunena_config = KunenaFactory::getConfig ();
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-          <table class = "kblocktable" id ="kforumcredits">
-            <tbody>
-              <tr>
-                <td class = "kcreditsdesc"><table>
-                    <tr valign="top">
-                      <td width="170"><img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena"  align="left" hspace="5" vspace="5"/></td>
-                      <td class="kcredits-kintro"><div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div></td>
-                    </tr>
-                    <tr valign="top">
-                      <td colspan="2" style="padding: 20px 20px 0;"><ul  class="kteam">
-                          <li class="kteammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a> <?php echo JText::sprintf('COM_KUNENA_CREDITS_DEVELOPER_SPECIAL', 'Yamaha Star VMax' ); ?> <a href="http://www.starVmax.com/forum/" target='_blank' rel='follow'>www.starVmax.com/forum/</a></li>
-                          <li class="kteammember"><a href="http://www.herppi.net" target='_blank' rel='follow'>Matias</a> <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=114" target='_blank' rel='follow'>severdia</a> <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=1288" target='_blank' rel='follow'>xillibit</a> <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=447" target='_blank' rel='follow'>@quila</a> <?php echo JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR'); ?></li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=634" target='_blank' rel='follow'>810</a> <?php echo JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR'); ?></li>
-                        </ul></td>
-                    </tr>
-                    <tr valign="top">
-                      <td colspan="2" style="padding: 20px 20px 0;"><ul  class="kteam">
-                      	  <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=684" target='_blank' rel='follow'>alakentu</a> <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2171" target='_blank' rel='follow'>LDA</a> <?php echo JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR'); ?></li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2198" target='_blank' rel='follow'>Rich</a> <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
-                          <li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=997" target='_blank' rel='follow'>sozzled</a> <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
-                        </ul></td>
-                    </tr>
-                    <tr valign="top">
-                      <td colspan="2" ><div class="kcredits-more"><?php echo JText::sprintf('COM_KUNENA_CREDITS_THANKS_PART_LONG', 'Beat', 'Cerberus', 'DTP2', 'LittleJohn', 'JoniJnm', '<a href="http://www.kunena.com" target="_blank" rel="follow">www.Kunena.com</a>'); ?>
-                          <?php echo JText::_('COM_KUNENA_CREDITS_THANKS'); ?>
-                          </div></td>
-                    </tr>
-                    <tr valign="top">
-                    	<td colspan="2" style="padding-left:20px;padding-right:20px;"><div class="kcredits-language">
-                    	 <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?>
-						<br />
-                    	<br />
-                    	<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?>
-                    	</div></td>
-                    </tr>
-                    <tr valign="top">
-                    	<td colspan="2"><div  class="kcredits-more">
-                          <?php
-                $catid = (int)$catid;
-
-                // Add a link to go back to the latest category we where viewing...
-                echo '<div>'. JText::_('COM_KUNENA_CREDITS_GO_BACK') . ' ' . CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_USER_RETURN_B'), $rel='nofollow') . '<div>';
-                ?>
-                        </div></td>
-
-                    </tr>
-                  </table>
-
-				<!-- Version Info -->
-				<div class="kfooter"><?php echo JText::_('COM_KUNENA_COPYRIGHT');?> &copy; 2008, 2009, 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo JText::_('COM_KUNENA_LICENSE');?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
-				<!-- /Version Info -->
-
-                  </td>
-              </tr>
-            </tbody>
-          </table>
+			<div class="kcreditsheader">
+				<img src="<?php echo KUNENA_DIRECTURL . '/template/default/images/kunena.logo.png';?>" alt="Kunena" align="left" hspace="5" vspace="5"/>
+				<div class="kcredits-intro"><?php echo JText::_('COM_KUNENA_CREDITS_INTRO_TEXT'); ?></div>
+			</div>
+			<div class="kcredits-language">
+				<ul class="kteam">
+					<li class="kteammember"><a href="http://www.starVmax.com" target='_blank' rel='follow'>fxstein</a>: <?php echo JText::sprintf('COM_KUNENA_CREDITS_DEVELOPER_SPECIAL', 'Yamaha Star VMax' ); ?> <a href="http://www.starVmax.com/forum/" target='_blank' rel='follow'>www.starVmax.com/forum/</a></li>
+					<li class="kteammember"><a href="http://www.herppi.net" target='_blank' rel='follow'>Matias</a>: <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
+					<li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=114" target='_blank' rel='follow'>severdia</a>: <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
+					<li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=1288" target='_blank' rel='follow'>xillibit</a>: <?php echo JText::_('COM_KUNENA_CREDITS_DEVELOPER'); ?></li>
+					<li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=447" target='_blank' rel='follow'>@quila</a>: <?php echo JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR'); ?></li>
+					<li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=634" target='_blank' rel='follow'>810</a>: <?php echo JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR'); ?></li>
+					<li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2171" target='_blank' rel='follow'>LDA</a>: <?php echo JText::_('COM_KUNENA_CREDITS_CONTRIBUTOR'); ?></li>
+					<li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=684" target='_blank' rel='follow'>Alakentu</a>: <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
+					<li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=2198" target='_blank' rel='follow'>Rich</a>: <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
+					<li class="kteammember"><a href="http://www.kunena.com/community/profile?userid=997" target='_blank' rel='follow'>sozzled</a>: <?php echo JText::_('COM_KUNENA_CREDITS_MODERATOR'); ?></li>
+				</ul>
+			</div>
+			<div class="kcredits-more">
+				<?php echo JText::sprintf('COM_KUNENA_CREDITS_THANKS_PART_LONG', 'Beat', 'Cerberus', 'DTP2', 'LittleJohn', 'JoniJnm', '<a href="http://www.kunena.com" target="_blank" rel="follow">www.Kunena.com</a>'); ?>
+				<?php echo JText::_('COM_KUNENA_CREDITS_THANKS'); ?>
+			</div>
+			<div class="kcredits-language">
+				<?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE'); ?> <?php echo JText::_('COM_KUNENA_CREDITS_LANGUAGE_THANKS'); ?>
+			</div>
+			<div class="kcredits-more">
+				<?php $catid = (int)$catid;
+				// Add a link to go back to the latest category we where viewing...
+				echo '<div>'. JText::_('COM_KUNENA_CREDITS_GO_BACK') . ' ' .
+				CKunenaLink::GetCategoryLink('showcat', $catid, JText::_('COM_KUNENA_USER_RETURN_B'), $rel='nofollow') . '</div>';
+				?>
+			</div>
+			<!-- Version Info -->
+			<div class="kfooter"><?php echo JText::_('COM_KUNENA_COPYRIGHT');?> &copy; 2008, 2009, 2010 <a href = "http://www.Kunena.com" target = "_blank">Kunena</a>, <?php echo JText::_('COM_KUNENA_LICENSE');?>: <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">GNU GPL</a></div>
+			<!-- /Version Info -->
 		</div>
 	</div>
 </div>
-
 <!-- Begin: Forum Jump -->
 <div class="kblock">
 	<div class="kheader">

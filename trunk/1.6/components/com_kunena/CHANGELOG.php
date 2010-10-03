@@ -39,6 +39,8 @@ Kunena 1.6.0
 # [#22684] Detect and show noticifation to administrators if a plugin is loading Mootools 1.1 or custom version of JHTMLBehavior
 # [#22684] Do not enable 'System - Mootools Upgrade' during installation
 ^ [#16390] Updated ca-ES (Neon26), es-ES (Alakentu)
+# [#22687] Menu: Support rounded corners in Opera 10 and Chrome 5
+# [#22687] Greatly improve credits page
 
 2-October-2010 Matias
 # [#22674] Installer: Do not fail if language is broken

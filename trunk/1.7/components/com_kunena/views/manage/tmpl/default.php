@@ -23,9 +23,9 @@ $this->document->addScript ( 'includes/js/joomla.javascript.js' );
 	<table class="kadmin-sort">
 		<tr>
 			<td class="kleft">
-				<?php echo JText::_( 'Filter' ); ?>:
+				<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
 				<input type="text" name="search" value="<?php echo $this->escape ( $this->state->get('list.search') );?>" class="text_area" onchange="document.adminForm.submit();" />
-				<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
+				<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
 				<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 			</td>
 			<td class="kright">

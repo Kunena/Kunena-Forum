@@ -42,5 +42,30 @@ class plgSystemKunena extends JPlugin {
 		}
 		$user = KunenaFactory::getUser(intval($user ['id']));
 		$user->save();
+
+		/*
+		// See: http://www.kunena.com/forum/159-k-16-common-questions/63438-category-subscriptions-default-subscribed#63554
+		// TODO: Subscribe user to every category if he is new and Kunena is configured to do so
+		if ($isnew) {
+			$subscribedCategories = '1,2,3,4,5,6,7,8,9,10';
+			$db = Jfactory::getDBO();
+			$query = "INSERT INTO #__kunena_subscriptions_categories (catid, userid)
+				SELECT c.id, {$user->id} AS userid
+				FROM #__kunena_categories AS c
+				LEFT JOIN #__kunena_subscriptions_categories AS s ON c.id=s.catid AND s.userid={$user->id}
+				WHERE c.parent>0 AND c.id IN ({$subscribedCategories}) AND s.userid IS NULL";
+			$db->setQuery ( $query );
+			$db->query ();
+			KunenaError::checkDatabaseError();
+
+			// Here's also query to subscribe all users (including blocked) to all existing cats:
+			$query = "INSERT INTO #__kunena_subscriptions_categories (catid, userid)
+				SELECT c.id, u.id AS userid
+				FROM #__users AS u
+				JOIN #__kunena_categories AS c ON c.parent>0
+				LEFT JOIN #__kunena_subscriptions_categories AS s ON u.id=s.userid
+				WHERE c.id IN ({$subscribedCategories}) AND s.userid IS NULL";
+		}
+		*/
 	}
 }

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+3-October-2010 Matias
++ [#22695] Feature: Automatically subcribe new users to categories x,y,z (just SQL logic how to do it)
+
 1-October-2010 Matias
 + [#22660] Add support for JXtended Access Control
 + [#22661] Add support for Joomla 1.5/1.6 Access Levels (admin part incomplete)

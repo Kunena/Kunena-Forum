@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.0
 
+3-October-2010 fxstein
+^ [#22524] Updated README.txt
+
 3-October-2010 Matias
 # [#22684] Load Mootools 1.2 manually if 'System - Mootools Upgrade' or 'System - Mootools 1.2' plugin is not enabled in Joomla 1.5
 # [#22684] Detect and show noticifation to administrators if 'System - Mootools Upgrade' isn't installed into Joomla 1.5

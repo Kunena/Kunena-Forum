@@ -14,10 +14,10 @@ PLEASE READ THIS ENTIRE FILE BEFORE INSTALLING Kunena @kunenaversion@!
 Introduction
 ============
 
-The Kunena Team is excited to announce the release of Kunena 1.6, Release Candidate 3. This is the third and final RC 
-release for Kunena 1.6 and is stable enough to be used on live production websites in limited usage (primarily for 
-testing) as long as minor issues are tolerated during the time before it becomes a final release.
-Since the second release candidate of Kunena 1.6, the Kunena team has been focused on fixing over 100 bugs and issues 
+The Kunena Team is excited to announce the release of Kunena 1.6.0 stable. This is the final release for Kunena 1.6 and 
+is stable enough to be used on live production websites. We encourage all users of prior Kunena releases to upgrade to 
+1.6 (backup and testing are strongly recommended!).
+Since the third release candidate of Kunena 1.6, the Kunena team has been focused on fixing over 100 bugs and issues 
 including CSS fixes, IE7 and IE8 compatibility, usability issues, API issues, html validation issues, new modules and 
 plug-ins and updating languages translations.
 Kunena 1.6 marks a major milestone for the Kunena Project. A long list of open source contributors have committed over 
@@ -30,7 +30,7 @@ slower hosts. It automatically performs actions such as taking the forum offline
 re-enables it after completing the install.
 Kunena now supports Joomla 1.6 style languages files that are backward compatible with Joomla 1.5. Multiple languages 
 are included in the base install packages and more will be available soon. They can also be installed separately. 
-Kunena 1.6 also support multiple languages to be installed on a single system and, together with Joomla, allows users to 
+Kunena 1.6 also support multiple languages to be installed on a single system and, together with Joomla, allows users to
 select their preferred language.
 Templates have now been separated from the underlying code, which allows for version-independent template development. 
 Templates can embed various options that can be set via the included template manager (e.g. avatar position on left, 
@@ -46,9 +46,9 @@ The new features in Kunena 1.6 include:
 
 Improved Language Support:
 --------------------------
-
-Included languages: Catalan, Dutch, Finnish, French, German, Greek, Italian, Macedonian, Polish, Russian, Serbian, 
-Spanish, Thai, Turkish, Yugoslavian, new in RC3: Chinese, Lithuanian, Hungarian, Taiwanese, Vietnamese (more to come)
+Included languages: Catalan, Chinese, Dutch, Finnish, French, German, Greek, Hungarian, Italian, Lithuanian, Macedonian, 
+Polish, Russian, Serbian, Spanish, Taiwanese, Thai, Turkish, Vietnamese, Yugoslavian, new in Kunena 1.6.0: Arabic, 
+Brazilian Portuguese (more to come)
 Uses standard Joomla 1.6 language files (backwards compatible with Joomla 1.5.x)
 Added support for installable language packs (using the Joomla Installer)
 
@@ -95,7 +95,7 @@ Users can delete their own messages (configurable by time)
 Anonymous Tipping: allow users to post topics in a defined category completely anonymously (no IP, no tracking, totally 
 anonymous)
 Google Maps integration - display basic maps inside of posts
-New BBCode tags like [article], [attachment], [confidential], [map], [table] and others
+New BBCode tags like [article], [attachment], [confidential], [map], [table], [tableau] and others
 Enhanced BBCode [quote] with reference to user and post
 Selectable date/time format display options for all time displays and independent for tooltips (relative "ago" vs 
 absolute)
@@ -110,8 +110,7 @@ Many improvements in administrator backend interface
 
 Integration with Other Components:
 ----------------------------------
-New integration system that allows easy integration of avatars, profiles and user lists. login and registration, private 
-messaging, activity notifications and basic access control
+New integration system that allows easy integration of avatars, profiles and user lists. login and registration, private messaging, activity notifications and basic access control
 Integrations included: AlphaUserPoints, Community Builder, JomSocial and UddeIM
 New Router and Menu System
 Uses Joomla menus to navigate the Kunena component

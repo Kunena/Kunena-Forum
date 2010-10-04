@@ -13,30 +13,8 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.bestofjoomla.com
 **/
-
 defined( '_JEXEC' ) or die();
 
-//TODO: move out of here
-$styles = <<<EOF
-#Kunena .kcreditslist{
-	border: 1px solid #BFC3C6;
-	margin: 0 15px 15px;
-	border-radius: 0 0 15px 15px;
-	-moz-border-radius: 0 0 15px 15px;
-	-webkit-border-radius: 0 0 15px 15px;
-}
-#Kunena .kcreditlistname{
-	clear: both;
-	margin: 0 15px;
-	padding: 7px 10px 0 10px;
-	background: #5388B4;
-	border-radius: 15px 15px 0 0;
-	-moz-border-radius: 15px 15px 0 0;
-	-webkit-border-radius: 15px 15px 0 0;
-}
-EOF;
-$document = JFactory::getDocument();
-$document->addStyleDeclaration($styles);
 $kunena_config = KunenaFactory::getConfig ();
 ?>
 <div class="kblock kcredits">

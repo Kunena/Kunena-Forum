@@ -31,6 +31,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.1-DEV
+
+4-October-2010 Matias
+^ [#22690] Update version info to K1.6.1-DEV (Timu = team in Swahili)
+
 Kunena 1.6.0
 
 3-October-2010 fxstein

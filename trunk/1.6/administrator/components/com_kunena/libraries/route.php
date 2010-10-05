@@ -191,7 +191,6 @@ abstract class KunenaRoute {
 	protected static function checkEntryPage($item, $query) {
 		jimport('joomla.html.parameter');
 		$params = new JParameter($item->params);
-		$func = isset($item->query['func']) ? $item->query['func'] : '';
 		$catids = $params->get('catids');
 		if (empty ( $query ['catid'] )) return 0;
 		if (!is_array($catids)) {
@@ -208,18 +207,10 @@ abstract class KunenaRoute {
 		if (!empty($item->query['catid'])) {
 			$catid = true;
 		}
-		if (isset($item->query['view'])) {
-			if (!isset($item->query['func'])) $item->query['func'] = $item->query['view'];
-			unset ($item->query['view']);
-		}
-		if (isset($query['view'])) {
-			if (!isset($query['func'])) $query['func'] = $query['view'];
-			unset ($query['view']);
-		}
-		if (isset($item->query['func']) && $item->query['func'] == 'entrypage') return self::checkEntryPage($item, $query);
+		if (isset($item->query['view']) && $item->query['view'] == 'entrypage') return self::checkEntryPage($item, $query);
 		foreach ( $item->query as $var => $value ) {
 			if (!isset ( $query [$var] ) || $value != $query [$var]) {
-				if ($catid && $var=='func') continue;
+				if ($catid && $var=='view') continue;
 				if ($var=='catid' && empty($value)) continue;
 				return false;
 			} else {
@@ -255,6 +246,10 @@ abstract class KunenaRoute {
 		if (isset ( $query ['Itemid'] )) {
 			//echo "FIXED {$query['Itemid']} ";
 			return $query ['Itemid'];
+		}
+		if (isset ($query ['func']) ) {
+			$query['view'] = $query ['func'];
+			unset($query ['func']);
 		}
 
 		self::buildMenuTree();

@@ -33,6 +33,14 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+5-October-2010 Matias
+^ [#22713] Improve routing: Change notification messages to debug only, use better descriptions
+^ [#22713] Improve routing: Use views instead of funcs in the router to simplify logic
+# [#22713] Improve routing: Better support for Kunena 1.5 menu items
+# [#22713] Improve routing: Add support for Entry Page 'aliases' when real menu aliases do not work
+# [#22713] Improve routing: Better missing menu detection
+# [#22713] Improve routing: Detect loops when redirecting to right page
+
 4-October-2010 Matias
 ^ [#22690] Update version info to K1.6.1-DEV (Timu = team in Swahili)
 

@@ -65,57 +65,65 @@ if ($func && !in_array($func, KunenaRouter::$functions)) {
 
 $kunena_app = JFactory::getApplication ();
 
-if (empty($_POST)) {
+if (empty($_POST) && $format == 'html') {
 	$me = KunenaFactory::getUser();
-
-	// Set active menuitem so that Kunena menu shows up
 	$menu = JSite::getMenu ();
 	$active = $menu->getActive ();
 
-	// Legacy menu item and Itemid=0 support with redirect and notice message
+	// Legacy menu item and Itemid=0 support with redirect and notice
 	if (empty($active->query ['view'])) {
 		$new = $menu->getItem (KunenaRoute::getItemID ());
 		if ($new) {
-			if ($me->isAdmin() && $format == 'html') {
-				// Show notices to administrator if something is wrong
-				if ($active) {
-					if ($active->route == $new->route) {
-						// TODO: translate
-						$kunena_app->enqueueMessage("Kunena Notice: Oops. You have conflicting menu items in /{$active->route} (same path to Itemid {$active->id} and {$new->id}).", 'notice');
-					} else {
-						// TODO: translate
-						$kunena_app->enqueueMessage("Kunena Notice: Legacy menu item in /{$active->route} (Itemid={$active->id}). Redirected to /{$new->route} (Itemid={$new->id}).", 'notice');
-					}
+			if ($active) {
+				if ($active->route == $new->route) {
+					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_CONFLICT', $active->route, $active->id, $new->id), 'menu');
+					$menu->setActive ( $new->id );
+					$active = $new;
 				} else {
-					// TODO: translate
-					$kunena_app->enqueueMessage("Kunena Notice: No menu item assigned. Redirected to /{$new->route} (Itemid={$new->id}).", 'notice');
+					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_LEGACY', $active->route, $active->id, $new->route, $new->id), 'menu');
+					$kunena_app->redirect (KunenaRoute::_(null, false));
 				}
-			}
-			if (!$active || $active->route != $new->route) {
-				// Redirect to same page, but with different Itemid
+			} else {
+				KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NO_ITEM_REDIRECT', $new->route, $new->id));
 				$kunena_app->redirect (KunenaRoute::_(null, false));
 			}
+		} elseif (!$active) {
+			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NO_ITEM'));
 		}
 	}
-	if ($me->isAdmin() && !$active && $format == 'html') {
-		// TODO: translate
-		$kunena_app->enqueueMessage('Kunena Notice: No menu item assigned. Please check <em>Kunena Menu</em>.', 'notice');
-	} elseif ($func == 'entrypage') {
+	if (!$func || $func == 'entrypage') {
 		// If we are currently in entry page, we need to show and highlight default menu item
 		if (!empty ( $active->query ['defaultmenu'] )) {
 			$defaultitem = $active->query ['defaultmenu'];
 			if ($defaultitem > 0) {
-				$oldbasemenu = KunenaRoute::getCurrentMenu ();
-				$menu->setActive ( $defaultitem );
-				$newbasemenu = KunenaRoute::getCurrentMenu ();
-				$active = $menu->getActive ();
-				if ($me->isAdmin() && (empty($active->component) || $active->component != 'com_kunena') && $format == 'html') {
-					// TODO: translate
-					$kunena_app->enqueueMessage('Kunena Notice: Entry Page: Default Menu Item is not pointing to Kunena.', 'notice');
-				}
-				if (!$newbasemenu || $oldbasemenu->id != $newbasemenu->id) {
-					// Follow Default Menu Item if it's not in the same menu
-					$kunena_app->redirect (KunenaRoute::_($defaultitem, false));
+				$newitem = $menu->getItem ($defaultitem);
+				if (!$newitem) {
+					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
+				} elseif (empty($newitem->component) || $newitem->component != 'com_kunena') {
+					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
+				} elseif ($active->route == $newitem->route) {
+					// Special case: we are using Entry Page instead of menu alias and we have identical menu alias
+					if ($active->id != $newitem->id) {
+						$defaultitem = !empty ( $newitem->query ['defaultmenu'] ) ? $newitem->query ['defaultmenu'] : $newitem->id;
+						$newitem2 = $menu->getItem ($defaultitem);
+						if (empty($newitem2->component) || $newitem2->component != 'com_kunena') {
+							$defaultitem = $newitem->id;
+						}
+						if ($defaultitem) {
+							$menu->setActive ( $defaultitem );
+							$active = $menu->getActive ();
+						}
+					}
+				} else {
+					$oldlocation = KunenaRoute::getCurrentMenu ();
+					$menu->setActive ( $defaultitem );
+					$active = $menu->getActive ();
+
+					$newlocation = KunenaRoute::getCurrentMenu ();
+					if (!$oldlocation || $oldlocation->id != $newlocation->id) {
+						// Follow Default Menu Item if it's not in the same menu
+						$kunena_app->redirect (KunenaRoute::_($defaultitem, false));
+					}
 				}
 				if (is_object ( $active )) {
 					foreach ( $active->query as $var => $value ) {
@@ -193,7 +201,7 @@ require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.smile.class.php');
 // Redirect profile (menu item) to the right component
 if ($func == 'profile' && !$do && empty($_POST)) {
 	$redirect = 1;
-	if (isset($active)) {
+	if (!empty($active)) {
 		$params = new JParameter($active->params);
 		$redirect = $params->get('integration');
 	}

@@ -23,6 +23,22 @@ class KunenaError {
 		register_shutdown_function('kunenaShutdownHandler');
 	}
 
+	function error($msg, $where='default') {
+		$config = KunenaFactory::getConfig();
+		if ($config->debug) {
+			$app = JFactory::getApplication();
+			$app->enqueueMessage(JText::sprintf('COM_KUNENA_ERROR_'.strtoupper($where), $msg), 'error');
+		}
+	}
+
+	function warning($msg, $where='default') {
+		$config = KunenaFactory::getConfig();
+		if ($config->debug) {
+			$app = JFactory::getApplication();
+			$app->enqueueMessage(JText::sprintf('COM_KUNENA_WARNING_'.strtoupper($where), $msg), 'notice');
+		}
+	}
+
 	function checkDatabaseError() {
 		$db = JFactory::getDBO();
 		if ($db->getErrorNum ()) {

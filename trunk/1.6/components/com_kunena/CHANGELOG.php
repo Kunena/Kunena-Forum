@@ -34,6 +34,8 @@ Legend:
 Kunena 1.6.1-DEV
 
 5-October-2010 fxstein
+^ [#22716] New default colors for the template manager backend settings
+^ [#22716] Additional color changes
 + [#22716] Initial skeleton of new Skinner template
 
 5-October-2010 Matias

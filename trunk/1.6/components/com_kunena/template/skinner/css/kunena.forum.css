@@ -1770,7 +1770,7 @@ PX		EM			PCT			PT
 ----------------------------------------*/
 
 #Kunena td.kprofile-right {
-	background: #EFF0F4;
+	/*background: #EFF0F4;*/
 	vertical-align: top;
 	width: 170px;
 	min-width: 170px;
@@ -1799,7 +1799,7 @@ PX		EM			PCT			PT
 ----------------------------------------*/
 
 #Kunena td.kprofile-left {
-	background: #EFF0F4;
+	/*background: #EFF0F4;*/
 	vertical-align: top;
 	width: 170px;
 	min-width: 170px;
@@ -2698,7 +2698,7 @@ label.kpoll-term-lbl {
 	margin: -1px 0 5px 0;
 	/*border: 1px solid rgba(BF,C3,C6,1);*/
 	/*color: #000000;*/
-	background: #F2F1EE;
+	/*background: #F2F1EE;*/
 }
 #Kunena .kforum-pathway-bottom img {
 	vertical-align:text-bottom;
@@ -3065,7 +3065,7 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 #Kunena div.kavatar-lg { 
 	width: 200px; 
 	height: 200px; 
-	background-color: #FFF; 
+	/*background-color: #FFF;*/ 
 /*	border: 1px solid #999999;*/ 
 	display: table-cell;
 	vertical-align:middle;
@@ -3220,14 +3220,14 @@ div#kprofile-stats ul li span.krank-admin {
 	border-right: 1px solid rgba(BF,C3,C6,1);
 	border-top: 1px solid rgba(BF,C3,C6,1);*/
 	margin-left: 3px;
-	background: #f0f0f0;
-	color: #666;
+	/*background: #f0f0f0;
+	color: #666;*/
 }
 #Kunena dl.tabs dt.open {
-	background: #F9F9F9;
+	/*background: #F9F9F9;*/
 	/*border-bottom: 1px solid rgba(BF,C3,C6,1);*/
 	z-index: 100;
-	color: #000;
+	/*color: #000;*/
 }
 #Kunena div.current {
 	clear: both;
@@ -3240,8 +3240,8 @@ div#kprofile-stats ul li span.krank-admin {
 	margin: 0;
 }
 #Kunena dt.kprofile-modbtn {
-	background-color:#999999 !important;
-	color: #FFF !important;
+	/*background-color:#999999 !important;
+	color: #FFF !important;*/
 }
 #Kunena dd.kprofile-modtools ul {
 	margin:0;
@@ -3274,10 +3274,10 @@ div#kprofile-stats ul li span.krank-admin {
 #Kunena span#kprofilebox-status {
 	font-weight:bold;
 	display:block;
-	color: #fff;
+	/*color: #fff;*/
 	height: 14px; 
 	width: 15px;
-	background-color: #5388B4;
+	/*background-color: #5388B4;*/
 }
 #Kunena #kprofilebox-toggle {
 	display:block;

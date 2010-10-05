@@ -32,7 +32,7 @@ if ($this->config->showwhoisonline)
 
 <div class="kblock kwhoisonline">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kwhoisonline"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kwhoisonline"></a></span>
 		<h2><span><?php
 				//FIXME: remove link to who.php page
 				$who_online = JText::_('COM_KUNENA_WHO_WHOIS_ONLINE');

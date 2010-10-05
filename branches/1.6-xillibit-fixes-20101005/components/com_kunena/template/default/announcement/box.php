@@ -11,11 +11,12 @@
 
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
+$document=JFactory::getDocument();
 ?>
 <!-- ANNOUNCEMENTS BOX -->
 <div class="kblock kannouncement">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close" rel="kannouncement"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kannouncement"></a></span>
 		<h2><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, KunenaParser::parseText($this->announcement->title), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">

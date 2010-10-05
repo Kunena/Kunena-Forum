@@ -34,7 +34,7 @@ if ($this->showgenstats > 0)
 	?>
 <div class="kblock kfrontstats">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kfrontstats-tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kfrontstats-tbody"></a></span>
 		<h2><span><?php echo CKunenaLink::GetStatsLink($kunena_config->board_title.' '.JText::_('COM_KUNENA_STAT_FORUMSTATS'), ''); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kfrontstats-tbody">

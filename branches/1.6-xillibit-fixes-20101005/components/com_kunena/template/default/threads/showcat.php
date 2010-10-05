@@ -29,7 +29,7 @@ defined ( '_JEXEC' ) or die ();
 <?php if ($this->objCatInfo->headerdesc) : ?>
 <div class="kblock">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="frontstats_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="frontstats_tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_FORUM_HEADER'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="frontstats_tbody">

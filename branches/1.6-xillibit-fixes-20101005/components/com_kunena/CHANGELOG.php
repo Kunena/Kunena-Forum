@@ -37,6 +37,7 @@ Kunena 1.6.1-DEV
 # [#22627] Iimprove accessibility for visually impaired users for collaspse/expand buttons
 # [#22583] Same successfull message when you delete a topic or a message
 # [#22715] Welcome mat text need to be updated
+# [#22706] Administrator: Fatal error in Report Configuration Settings
 
 4-October-2010 Matias
 ^ [#22690] Update version info to K1.6.1-DEV (Timu = team in Swahili)

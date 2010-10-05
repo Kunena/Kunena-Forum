@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+5-October-2010 fxstein
++ [#22716] Initial skeleton of new Skinner template
+
 5-October-2010 Matias
 ^ [#22713] Improve routing: Change notification messages to debug only, use better descriptions
 ^ [#22713] Improve routing: Use views instead of funcs in the router to simplify logic

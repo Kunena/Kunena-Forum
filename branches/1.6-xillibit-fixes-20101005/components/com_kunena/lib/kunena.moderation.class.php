@@ -197,7 +197,7 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_THREAD :
 				// Move entire Thread
-				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
+				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} {$subjectupdatesql} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
 
 				// Create ghost thread if requested
 				if ($GhostThread == true) {

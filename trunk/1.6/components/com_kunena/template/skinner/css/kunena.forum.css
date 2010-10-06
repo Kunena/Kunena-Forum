@@ -558,6 +558,7 @@ PX		EM			PCT			PT
 	-moz-border-radius-topleft: 5px;
 	-webkit-border-radius-topright: 5px;
 	-webkit-border-radius-topleft: 5px;
+	background-color: rgba(00,00,00,0.05)
 }
 
 #Kunena #ktab a span {

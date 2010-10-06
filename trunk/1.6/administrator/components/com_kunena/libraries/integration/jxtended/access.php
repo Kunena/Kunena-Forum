@@ -124,12 +124,13 @@ class KunenaAccessJXtended extends KunenaAccess {
 		return implode(',', $catlist);
 	}
 
-	protected function _has_rights(&$acl, $gid, $access, $recurse) {
-		if ($gid == $access)
+	protected function _has_rights($usergroups, $groupid, $recurse) {
+		if (in_array($groupid, $usergroups))
 			return 1;
 		if ($recurse) {
-			$childs = $acl->get_group_children ( $access, 'ARO', 'RECURSE' );
-			return (is_array ( $childs ) and in_array ( $gid, $childs ));
+			$acl = JFactory::getACL ();
+			$childs = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
+			if (array_intersect($childs, $usergroups)) return 1;
 		}
 		return 0;
 	}

@@ -36,6 +36,7 @@ Kunena 1.6.1-DEV
 6-October-2010 Xillibit
 # [#22731] Update message subject on all replies when you split a topic
 # [#22696] Disable disabled bbcode tags (spoiler, video, ebay)
+# [#22688] Anonymous moderation: Profile link to own profile
 
 5-October-2010 Xillibit
 # [#22627] Iimprove accessibility for visually impaired users for collaspse/expand buttons

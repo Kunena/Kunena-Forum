@@ -45,9 +45,13 @@ kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';
 		<div class="kmessage-msgtext"><?php echo KunenaParser::stripBBCode ($this->message->message, 300) ?></div>
 	</div>
 	<div>
-		<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER'); ?>:
+		<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER');
+		if ( $this->message->userid != 0){ ?>:
 		<strong><?php echo CKunenaLink::GetModerateUserLink( intval($this->message->userid),
 		$this->escape($this->message->name).' ('.intval($this->message->userid).')' ); ?></strong>
+		<?php }else{ ?>:
+		<strong><?php echo JText::_('COM_KUNENA_USERNAME_ANONYMOUS'); ?></strong>
+		<?php } ?>
 	</div>
 	<?php if ($this->threadmsg->replies) : ?>
 	<ul>

@@ -98,7 +98,7 @@ class KunenaAccessJXtended extends KunenaAccess {
 		return false;
 	}
 
-	protected function getAllowedCategories($userid) {
+	function getAllowedCategories($userid) {
 		$db = JFactory::getDBO ();
 		$query = "SELECT id, pub_access, pub_recurse, admin_access, admin_recurse
 				FROM #__kunena_categories

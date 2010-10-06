@@ -96,7 +96,7 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		return false;
 	}
 
-	protected function getAllowedCategories($userid) {
+	function getAllowedCategories($userid) {
 		$acl = JFactory::getACL ();
 		$db = JFactory::getDBO ();
 		$user = JFactory::getUser();

@@ -42,3 +42,7 @@ class uddeIMAPI {}
 
 // Joomla 1.6
 class JAccess {}
+
+// JXtended
+function jximport() {}
+class JxAcl {};

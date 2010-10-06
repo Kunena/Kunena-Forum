@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+6-October-2010 Matias
+# [#22733] Installer: Fix fatal error if PHP <5.2
++ [#22694] Add support for JXtended Access Control
++ [#22693] Add support for NoixACL Access Control
+
 5-October-2010 fxstein
 ^ [#22716] New default colors for the template manager backend settings
 ^ [#22716] Additional color changes

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+7-October-2010 Matias
+# [#22694] Improve JXtended detection to fix potential white page
+
 6-October-2010 Matias
 # [#22733] Installer: Fix fatal error if PHP <5.2
 + [#22694] Add support for JXtended Access Control

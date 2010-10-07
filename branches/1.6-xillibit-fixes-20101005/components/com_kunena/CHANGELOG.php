@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+7-October-2010 Xillibit
+# [#22703] Send email to subscribers when moderator approves post
+
 6-October-2010 Xillibit
 # [#22731] Update message subject on all replies when you split a topic
 # [#22696] Disable disabled bbcode tags (spoiler, video, ebay)

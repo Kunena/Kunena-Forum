@@ -1,0 +1,26 @@
+/**
+ * @version $Id$
+ * KunenaSearch Module
+ * 
+ * @package	Kunena Search
+ * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ */
+
+form#ksearchform { white-space: nowrap; }
+
+fieldset.kfieldset-search { 
+	border:0 none !important;
+	margin:0 !important;
+	padding:0 !important;
+	background-color: transparent !important;
+}
+
+legend.klegend-search, 
+fieldset.kfieldset-search .ksearchlabel { 
+	display:none; 
+	text-indent: -9999em;
+	margin:0 !important;
+	padding:0 !important;
+}

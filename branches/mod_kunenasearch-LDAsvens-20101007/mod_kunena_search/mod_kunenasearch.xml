@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.20" method="upgrade">
+	<name>Kunena Search</name>
+	<author>www.Kunena.com</author>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<copyright>(C)2010 Kunena Project. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>ron@kunena.com</authorEmail>
+	<authorUrl>http://www.kunena.com</authorUrl>
+	<version>1.0.1</version>
+	<description>MOD_KUNENASEARCH_DESC</description>
+	<files>
+		<filename module="mod_kunenasearch">mod_kunenasearch.php</filename>
+		<filename module="mod_kunenasearch">helper.php</filename>
+		<filename module="mod_kunenasearch">kunenasearch.css</filename>
+		<filename module="mod_kunenasearch">index.html</filename>
+		<folder>tmpl</folder>
+	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.mod_kunenasearch.ini</language>
+		<language tag="de-DE">de-DE/de-DE.mod_kunenasearch.ini</language>
+	</languages>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+		<param name="ksearch_width" type="text" default="20" label="MOD_KUNENASEARCH_WIDTH" description="MOD_KUNENASEARCH_WIDTH_DESC" />
+		<param name="ksearch_txt" type="text" default="" label="MOD_KUNENASEARCH_TEXT" description="MOD_KUNENASEARCH_TEXT_DESC" />
+		<param name="ksearch_button" type="radio" default="" label="MOD_KUNENASEARCH_BUTTON" description="MOD_KUNENASEARCH_BUTTON_DESC">
+			<option value="">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="ksearch_button_pos" type="list" default="right" label="MOD_KUNENASEARCH_BUTTON_POS" description="MOD_KUNENASEARCH_BUTTON_POS_DESC">
+			<option value="right">Right</option>
+			<option value="bottom">Bottom</option>
+		</param>
+		<param name="ksearch_button_txt" type="text" default="" label="MOD_KUNENASEARCH_BUTTONTEXT" description="MOD_KUNENASEARCH_BUTTONTEXT_DESC" />
+	</params>
+	<params group="advanced">
+		<param name="cache" type="list" default="1" label="Caching" description="Select whether to cache the content of this module">
+			<option value="1">Use global</option>
+			<option value="0">No caching</option>
+		</param>
+		<param name="cache_time" type="text" default="900" label="Cache Time" description="The time before the module is recached" />
+	</params>
+</install>

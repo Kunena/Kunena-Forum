@@ -152,7 +152,7 @@ class KunenaAccessJXtended extends KunenaAccess {
 			}
 			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
 			if ($arogroups)
-				$arogroups = "u.gid IN ({$arogroups})";
+				$arogroups = "g.group_id IN ({$arogroups})";
 		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
@@ -160,8 +160,11 @@ class KunenaAccessJXtended extends KunenaAccess {
 					IF( u.id IN ({$modlist}), 1, 0 ) AS moderator,
 					IF( u.id IN ({$adminlist}), 1, 0 ) AS admin
 					FROM #__users AS u
+					LEFT JOIN #__core_acl_aro AS a ON u.id=a.value AND section_value='users'
+					LEFT JOIN #__core_acl_groups_aro_map AS g ON g.aro_id=a.id
 					LEFT JOIN #__kunena_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}
-					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid={$catid}";
+					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid={$catid}
+					GROUP BY u.id";
 
 		$where = array ();
 		if ($subscriptions)

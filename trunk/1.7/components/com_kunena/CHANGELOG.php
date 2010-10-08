@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+6-October-2010 Matias
+# [#22660] Add subscriptions support for JXtended and NoixACL groups
+
 3-October-2010 Matias
 + [#22695] Feature: Automatically subcribe new users to categories x,y,z (just SQL logic how to do it)
 

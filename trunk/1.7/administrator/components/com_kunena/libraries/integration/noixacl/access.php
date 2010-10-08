@@ -178,7 +178,7 @@ class KunenaAccessNoixACL extends KunenaAccess {
 			}
 			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
 			if ($arogroups)
-				$arogroups = "u.gid IN ({$arogroups})";
+				$arogroups = "(u.gid IN ({$arogroups}) OR g.id_group IN ({$arogroups}))";
 		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
@@ -186,8 +186,10 @@ class KunenaAccessNoixACL extends KunenaAccess {
 					IF( u.id IN ({$modlist}), 1, 0 ) AS moderator,
 					IF( u.id IN ({$adminlist}), 1, 0 ) AS admin
 					FROM #__users AS u
+					LEFT JOIN #__noixacl_multigroups AS g ON g.id_user=u.id
 					LEFT JOIN #__kunena_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}
-					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid={$catid}";
+					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid={$catid}
+					GROUP BY u.id";
 
 		$where = array ();
 		if ($subscriptions)

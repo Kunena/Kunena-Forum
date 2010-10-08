@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.20" method="upgrade">
+	<name>Kunena INI maker</name>
+	<author>www.Kunena.com</author>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<copyright>(C)2010 Kunena Project. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>sven@schultschik.de</authorEmail>
+	<authorUrl>http://www.kunena.com</authorUrl>
+	<version>0.0.0</version>
+	<description>MOD_KUNENAINIMAKER_DESC</description>
+	<files>
+		<filename>com_kunenainimaker.php</filename>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<languages folder="language">
+	</languages>
+	<params>
+	</params>
+</install>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE metadata>
 <metadata>
-	<layout title="Rules / Help">
-		<message>Show rules / help</message>
+	<layout title="COM_KUNENA_MENU_RULEHELP">
+		<message>COM_KUNENA_MENU_RULEHELP_DESC</message>
 	</layout>
 	<state>
-		<name>Kunena Forum: Rules or Help Page</name>
-		<description>Show rules / help</description>
+		<name>COM_KUNENA_MENU_KFRULEHELP</name>
+		<description>COM_KUNENA_MENU_RULEHELP_DESC</description>
 		<url>
 			<param name="do" type="list" default="rules" label="Select View">
 				<option value="rules">Rules Page</option>

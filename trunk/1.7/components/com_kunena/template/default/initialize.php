@@ -13,9 +13,9 @@ defined( '_JEXEC' ) or die();
 $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
 $this->params = $template->params;
+
 // Template requires Mootools 1.2 framework
-// On systems running < J1.5.19 this requires the mootools12 system plugin
-JHTML::_ ( 'behavior.mootools' );
+$template->loadMootools();
 
 // We load smoothbox library
 CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox-min.js' );

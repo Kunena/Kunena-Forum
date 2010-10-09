@@ -17,8 +17,9 @@ class KunenaAccessJXtended extends KunenaAccess {
 	function __construct() {
 		if (!function_exists('jximport'))
 			return null;
+		if (!jximport('jxtended.acl.acl'))
+			return null;
 		$this->priority = 40;
-		jximport('jxtended.acl.acl');
 		$this->jxacl = new JxAcl();
 	}
 

@@ -246,6 +246,8 @@ class KunenaModelInstall extends JModel {
 		$installer = new JInstaller ( );
 		if ($installer->install ( $dest )) {
 			$success = true;
+		} else {
+			$success = -1;
 		}
 		JFolder::delete($dest);
 		if ($name) $this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_LANGUAGE', $name), $success);
@@ -392,19 +394,6 @@ class KunenaModelInstall extends JModel {
 
 		$this->installSystemPlugin();
 
-		jimport ( 'joomla.version' );
-		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.5) {
-			jimport('joomla.plugin.helper');
-			if (!JPluginHelper::isEnabled('system', 'mtupgrade')) {
-				$query = "UPDATE #__plugins SET published='1' WHERE element='mtupgrade'";
-				$this->db->setQuery ( $query );
-				$this->db->query ();
-				if ($this->db->getErrorNum ())
-					throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
-				$this->addStatus ( JText::_('COM_KUNENA_INSTALL_MOOTOOLS12'), true);
-			}
-		}
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );
 	}

@@ -203,6 +203,14 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				'content' => BBCODE_PROHIBIT
 			),
 
+			'tableau' => array(
+				'mode' => BBCODE_MODE_LIBRARY,
+				'method' => 'DoTableau',
+				'class' => 'block',
+				'allow_in' => array('listitem', 'block', 'columns'),
+				'content' => BBCODE_PROHIBIT
+			),
+
 			'video' => array(
 				'mode' => BBCODE_MODE_LIBRARY,
 				'method' => 'DoVideo',
@@ -903,6 +911,34 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		}
 	}
 
+	function doTableau($bbcode, $action, $name, $default, $params, $content) {
+		if ($action == BBCODE_CHECK) {
+			$bbcode->autolink_disable = 1;
+			return true;
+		}
+
+		$bbcode->autolink_disable = 0;
+		if (!$content)
+			return;
+
+		$config = KunenaFactory::getConfig();
+
+		$viz_maxwidth = (int) (($config->rtewidth * 9) / 10); // Max 90% of text width
+		$viz_maxheight = (isset ( $params ["height"] ) && is_numeric($params ["height"])) ? (int) $params ["height"] : (int) $config->rteheight;
+
+		//$url_data = parse_url ( $between );
+		if(preg_match ('/(https?:\/\/.*?)\/(?:.*\/)*(.*\/.*)\?.*:toolbar=(yes|no)/', $content, $matches)){
+			$tableauserver = $matches[1];
+			$vizualization = $matches[2];
+			$toolbar = $matches[3];
+
+			return '<script type="text/javascript" src="'.$tableauserver.
+					'/javascripts/api/viz_v1.js"></script><object class="tableauViz" width="'.$viz_maxwidth.
+					'" height="'.$viz_maxheight.'" style="display:none;"><param name="name" value="'.$vizualization.
+					'" /><param name="toolbar" value="'.$toolbar.'" /></object>';
+		}
+	}
+
 	function DoVideo($bbcode, $action, $name, $default, $params, $content) {
 		if ($action == BBCODE_CHECK)
 			return true;
@@ -1062,14 +1098,18 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		'youku' => array ('flash', 480, 400, 0, 0, 'http://player.youku.com/player.php/sid/%vcode%/v.swf', '\/v_show\/id_c.00(.*)\.html', '' ),
 
-		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%&rel=1', '\/watch\?v=([\w\-]*)', array (array (6, 'wmode', 'transparent' ) ) ) )
+		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 
 		// Cannot allow public flash objects as it opens up a whole set of vulnerabilities through hacked flash files
 		//				'_default' => array ($vid ["type"], 480, 360, 0, 25, $content, '', '' )
 		//
-		;
+		);
 
-		list ( $vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2 ) = (isset ( $vid_providers [$vid ["type"]] )) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
+		if (isset ( $vid_providers [$vid ["type"]] )) {
+			list ( $vid_type, $vid_width, $vid_height, $vid_addx, $vid_addy, $vid_source, $vid_match, $vid_par2 ) = (isset ( $vid_providers [$vid ["type"]] )) ? $vid_providers [$vid ["type"]] : $vid_providers ["_default"];
+		} else {
+			return;
+		}
 
 		unset ( $vid_providers );
 		if (! empty ( $vid_auto )) {

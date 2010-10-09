@@ -51,8 +51,10 @@ abstract class KunenaRoute {
 		if (!$uri) {
 			$link = self::current(true);
 			$link->delVar ( 'Itemid' );
-		}
-		else {
+		} else if (is_numeric($uri)) {
+			$item = self::$menu[intval($uri)];
+			return JRoute::_($item->link."&Itemid={$item->id}");
+		} else {
 			$link = new JURI ( (string)$uri );
 		}
 
@@ -107,12 +109,12 @@ abstract class KunenaRoute {
 	}
 
 	protected static function buildMenuTree() {
+		$menus = JSite::getMenu ();
+		$active = $menus->getActive ();
+		self::$active = is_object($active) ? $active->id : 0;
 		if (self::$menu === null) {
-			$my = JFactory::getUser ();
-			$menus = JSite::getMenu ();
 			self::$menu = $menus->getMenu ();
-			$active = $menus->getActive ();
-			self::$active = is_object($active) ? $active->id : 0;
+			$my = JFactory::getUser ();
 			foreach ( self::$menu as $item ) {
 				if (! is_object ( $item ))
 					continue;
@@ -212,14 +214,6 @@ abstract class KunenaRoute {
 		if (!empty($item->query['catid'])) {
 			$catid = true;
 		}
-		if (isset($item->query['func'])) {
-			if (!isset($item->query['view'])) $item->query['view'] = $item->query['func'];
-			unset ($item->query['func']);
-		}
-		if (isset($query['func'])) {
-			if (!isset($query['view'])) $query['view'] = $query['func'];
-			unset ($query['func']);
-		}
 		if (isset($item->query['view']) && $item->query['view'] == 'entrypage') return self::checkEntryPage($item, $query);
 		foreach ( $item->query as $var => $value ) {
 			if (!isset ( $query [$var] ) || $value != $query [$var]) {
@@ -259,6 +253,10 @@ abstract class KunenaRoute {
 		if (isset ( $query ['Itemid'] )) {
 			//echo "FIXED {$query['Itemid']} ";
 			return $query ['Itemid'];
+		}
+		if (isset ($query ['func']) ) {
+			$query['view'] = $query ['func'];
+			unset($query ['func']);
 		}
 
 		self::buildMenuTree();

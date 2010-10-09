@@ -32,10 +32,12 @@ JHTML::_('behavior.tooltip');
 JHTML::_('behavior.keepalive');
 
 $document = JFactory::getDocument ();
-$document->addScriptDeclaration('// <![CDATA[
-var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";
-var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
-// ]]>');
+if ($this->my->id) {
+	$document->addScriptDeclaration('// <![CDATA[
+		var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";
+		var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
+	// ]]>');
+ }
 $this->setTitle ( $this->escape($this->title) );
 
 $this->k=0;
@@ -80,7 +82,7 @@ $this->k=0;
 		</tr>
 
 		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check-name"
-		<?php if ($this->my->id && ((!$this->allow_anonymous && $this->catid != 0) || !$this->cat_default_allow) ): ?>style="display:none;"<?php endif; ?>>
+		<?php if ( $this->my->id && !$this->config->changename && !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 			</td>

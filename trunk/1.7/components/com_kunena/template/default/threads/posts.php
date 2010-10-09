@@ -80,13 +80,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				}
 			?>
 				<div class="ktopic-title-cover">
-					<?php echo CKunenaLink::GetThreadLink ( 'view', intval($message->catid), intval($message->id), KunenaParser::parseText ($message->subject), KunenaParser::stripBBCode ($message->message), 'follow', 'ktopic-title km' ) ?>
+					<?php echo CKunenaLink::GetThreadLink ( 'view', intval($message->catid), intval($message->id), KunenaParser::parseText ($message->subject, 30), KunenaParser::stripBBCode ($message->message), 'follow', 'ktopic-title km' ) ?>
 				</div>
 				<div style="display:none"><?php echo KunenaParser::parseBBCode ($message->message);?></div>
 			</td>
 
 			<td class="kcol-mid ktopictittle">
-				<?php echo CKunenaLink::GetThreadLink ( 'view', intval($firstpost->catid), intval($firstpost->id), KunenaParser::parseText ($firstpost->subject), KunenaParser::stripBBCode ($firstpost->message), 'follow', 'ktopic-title km' ) ?>
+				<?php echo CKunenaLink::GetThreadLink ( 'view', intval($firstpost->catid), intval($firstpost->id), KunenaParser::parseText ($firstpost->subject, 20), KunenaParser::stripBBCode ($firstpost->message), 'follow', 'ktopic-title km' ) ?>
 				<?php
 				if ($message->favcount ) {
 					if ($message->myfavorite) {

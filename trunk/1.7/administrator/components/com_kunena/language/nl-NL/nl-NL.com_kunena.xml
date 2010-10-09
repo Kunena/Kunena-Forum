@@ -4,16 +4,15 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Dutch</name>
 	<tag>nl-NL</tag>
-	<creationDate>2010-09-19</creationDate>
-	<version>1.6-RC3</version>
+	<creationDate>2010-10-02</creationDate>
+	<version>1.6</version>
 	<build>????</build>
 	<author>Jelle Kok</author>
 	<authorEmail>info@newf1.nl</authorEmail>
 	<authorUrl>http://www.newf1.nl</authorUrl>
 	<copyright>(C) 2010 Kunena</copyright>
 	<license>GNU/GPL</license>
-	<description>Nederlandse taalbestand voor Kunena Forum Component. Met dank aan de volgende vertalers: Jelle Kok (810), John (John) en DTP2.nl (DTP2)</description>
-
+	<description>Nederlands taalbestand voor Kunena Forum Component. Met dank aan de volgende vertalers: Jelle Kok (810), John (John), DTP2.nl (DTP2) en het taalteam van DutchJoomla!</description>
 	<administration>
 		<files folder="admin">
 			<filename>nl-NL.com_kunena.ini</filename>

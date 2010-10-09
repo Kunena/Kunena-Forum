@@ -1180,7 +1180,7 @@ table.kadmin-stat caption {
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_FILESIZE') ?></td>
 						<td align="left" valign="top"><input type="text" name="cfg_filesize" class="ksm-field "
 							value="<?php echo kescape($kunena_config->filesize);
-						?>" /> px</td>
+						?>" /> <?php echo JText::_('COM_KUNENA_A_FILESIZE_KB') ?></td>
 						<td align="left" valign="top">
 							<?php echo JText::sprintf('COM_KUNENA_A_FILESIZE_DESC',
 														ini_get('post_max_size'), ini_get('upload_max_filesize'),

@@ -691,13 +691,22 @@ class CKunenaTools {
 		$modules = JModuleHelper::getModules ( $position );
 		foreach ( $modules as $module ) {
 			if ($module->module == 'mod_mainmenu') {
-				$basemenu = KunenaRoute::getMenu ();
+				$app = JFactory::getApplication();
+
+				$menu = JSite::getMenu ();
+				$active = $menu->getActive();
+				$basemenu = KunenaRoute::getCurrentMenu ();
 				if ($basemenu) {
 					$module = clone $module;
 					// FIXME: J1.5 only
 					$search = array ('/menutype=(.*)(\s)/', '/startLevel=(.*)(\s)/', '/endLevel=(.*)(\s)/' );
 					$replace = array ("menutype={$basemenu->menutype}\\2", 'startLevel=' . ($basemenu->sublevel + 1) . '\2', 'endLevel=' . ($basemenu->sublevel + 2) . '\2' );
 					$module->params = preg_replace ( $search, $replace, $module->params );
+				} else {
+					if ($active)
+						KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_NOMENU_ITEMID', $active->route, $active->id), 'nomenu');
+					else
+						KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_NOMENU_COMPONENT'), 'nomenu');
 				}
 			}
 			echo JModuleHelper::renderModule ( $module, $options );

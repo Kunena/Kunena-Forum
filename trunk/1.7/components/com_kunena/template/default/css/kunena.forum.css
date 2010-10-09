@@ -575,10 +575,9 @@ PX		EM			PCT			PT
 	border: 0;
 	display: block;
 	float: left;
-	-moz-border-radius-topright: 5px;
-	-moz-border-radius-topleft: 5px;
-	-webkit-border-radius-topright: 5px;
-	-webkit-border-radius-topleft: 5px;
+	border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	-webkit-border-radius: 5px 5px 0 0;
 }
 
 #Kunena #ktab a span {
@@ -2790,29 +2789,45 @@ HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 	text-align:center;
 }
 #Kunena .kcredits-intro {
-	padding: 10px 0 10px 0;
+	margin:5px;
+	padding:15px 30px;
+	text-align:left;
+	border: 1px solid #BFC3C6;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 }
 #Kunena .kteam {
 	margin: 0;
 	padding: 0;
-	border-top: 1px solid #BFC3C6;
 }
 #Kunena .kteammember {
-	padding: 7px 10px 7px 10px;
-	border-bottom: 1px solid #BFC3C6;
-	list-style: inside;
-	list-style-type:none;
-	margin: 0;
+	list-style-type:circle;
+	margin:0 10px;
+	padding:0;
+	text-align:left;
 	background: transparent none;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 }
 #Kunena .kcredits-more {
-	padding: 10px 0 10px 20px;
+	background: #F2F1EE;
+	padding: 10px 20px;
+	margin: 15px;
+	border: 1px solid #BFC3C6;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 }
 
 #Kunena .kcredits-language {
-	padding: 10px 0 10px 20px;
-	border-top: 1px solid #BFC3C6;
-	border-bottom: 1px solid #BFC3C6;
+	padding: 10px 20px;
+	border: 1px solid #BFC3C6;
+	margin: 15px;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
 }
 
 #Kunena .kstatsicon {
@@ -3588,6 +3603,12 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	width: 24px;
 	height: 24px;
 	margin: 5px 5px 0 -29px;
+}
+#Kunena span.kpdf {
+	background: url("../images/icons/pdf.png") no-repeat left center;
+	width: 24px;
+	height: 24px;
+	margin: 5px 33px 0 -29px;
 }
 #Kunena div.krss-block {
 	float: right;

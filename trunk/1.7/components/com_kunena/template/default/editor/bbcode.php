@@ -190,7 +190,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			<?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_PROVIDER');
 			?> <select id="kvideoprovider"
-				name="kvid_code1" class="kbutton"
+				name="provider" class="kbutton"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo KunenaParser::JSText('COM_KUNENA_EDITOR_HELPLINE_VIDEOPROVIDER');
 				?>')">

@@ -54,6 +54,7 @@ class Com_KunenaInstallerScript {
 	}
 
 	function postflight($type, $parent) {
-		$parent->getParent()->set('redirect_url', JURI::base () . 'index.php?option=com_kunena&view=install');
+		$installer = $parent->getParent();
+		$installer->set('redirect_url', JURI::base () . 'index.php?option=com_kunena&view=install');
 	}
 }

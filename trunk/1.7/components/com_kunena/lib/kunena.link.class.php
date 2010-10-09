@@ -71,6 +71,14 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=rss{$params}", $xhtml );
 	}
 
+	function GetPDFLink($catid, $limit, $limitstart, $id, $name, $rel = 'nofollow', $class = '', $title = '') {
+		$strlimit = '';
+		$strlimitstart = '';
+		if ( !empty($limit) ) $strlimit = "&limit={$limit}";
+		if ( !empty($limitstart) ) $strlimitstart = "&limitstart={$limitstart}";
+		return CKunenaLink::GetSefHrefLink ( "index.php?option=com_kunena&func=pdf&catid={$catid}&id={$id}{$strlimitstart}{$strlimit}", $name, $title, $rel, $class );
+	}
+
 	function GetCategoryLink($view, $catid, $catname, $rel = 'follow', $class = '', $title = '') {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&catid={$catid}", $catname, $title, $rel, $class );
 	}

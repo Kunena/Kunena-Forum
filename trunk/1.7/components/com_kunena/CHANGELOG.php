@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+8-October-2010 Matias
+^ [#22786] Merge revisions 3542-3663 from trunk/1.6
+
 6-October-2010 Matias
 # [#22660] Add subscriptions support for JXtended and NoixACL groups
 
@@ -107,7 +110,135 @@ Kunena 1.7.0-DEV
 - [#22543] Remove old BBCode parser (lib/kunena.parser*.php, lib/kunena.smile.class.php)
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
+Kunena 1.6.1-DEV
+
+7-October-2010 Matias
+# [#22694] Improve JXtended detection to fix potential white page
+
+6-October-2010 Matias
+# [#22733] Installer: Fix fatal error if PHP <5.2
++ [#22694] Add support for JXtended Access Control
++ [#22693] Add support for NoixACL Access Control
+
+5-October-2010 fxstein
+^ [#22716] New default colors for the template manager backend settings
+^ [#22716] Additional color changes
++ [#22716] Initial skeleton of new Skinner template
+
+5-October-2010 Matias
+^ [#22713] Improve routing: Change notification messages to debug only, use better descriptions
+^ [#22713] Improve routing: Use views instead of funcs in the router to simplify logic
+# [#22713] Improve routing: Better support for Kunena 1.5 menu items
+# [#22713] Improve routing: Add support for Entry Page 'aliases' when real menu aliases do not work
+# [#22713] Improve routing: Better missing menu detection
+# [#22713] Improve routing: Detect loops when redirecting to right page
+
+4-October-2010 Matias
+^ [#22690] Update version info to K1.6.1-DEV (Timu = team in Swahili)
+
 Kunena 1.6.0
+
+3-October-2010 fxstein
+^ [#22524] Updated README.txt
+
+3-October-2010 Matias
+# [#22684] Load Mootools 1.2 manually if 'System - Mootools Upgrade' or 'System - Mootools 1.2' plugin is not enabled in Joomla 1.5
+# [#22684] Detect and show noticifation to administrators if 'System - Mootools Upgrade' isn't installed into Joomla 1.5
+# [#22684] Detect and show noticifation to administrators if a plugin is loading Mootools 1.1 or custom version of JHTMLBehavior
+# [#22684] Do not enable 'System - Mootools Upgrade' during installation
+^ [#16390] Updated ca-ES (Neon26), es-ES (Alakentu)
+# [#22687] Menu: Support rounded corners in Opera 10 and Chrome 5
+# [#22687] Greatly improved credits page (thanks Sven)
+^ [#15886] Merged revisions 3622-3627 from /branches/1.6-xillibit-fixes-20101002
+
+3-October-2010 Xillibit
+# [#19288] Render smilies and bbcode into pdf, but remove map, ebay and video
+# [#22600] Render in pdf only the actual page to avoid maximum time execution exceeded
+
+2-October-2010 Matias
+# [#22674] Installer: Do not fail if language is broken
+^ [#16390] Updated fi-FI (thanks Mortti), de-DE (rich), el-GR (valandis), es-ES (Alakentu), th-TH (drlovecat), tr-TR (cumla)
++ [#16390] Added ar-AA (thanks Omar), pt-BR (thanks rgponce)
+# [#20071] Router: Workaround for Joomla bug when SEF URL /components/kunena is used
+# [#20071] Routing: Redirect to Kunena menu if Itemid=0 or using legacy menu item (silently fixes missing menu)
+# [#20071] Routing: Add numerous notices to help administrator to find potential issues in his menu
+# [#20071] Routing: If Default Menu Item in Entry Page points somewhere else, redirect
+^ [#15886] Merged revision 3614 from /branches/1.6-810-bugfixes-24-09-2010
+^ [#15886] Merged revisions 3610-3612 from /branches/1.6-xillibit-fixes-20101002
+# [#19288] Fix missing translation: COM_KUNENA_BUTTON_GENERATEPDF_TOPIC
+
+2-October-2010 Xillibit
+# [#19288] Fix regression in javascript $('postcatid') is null
+* [#19288] Remove confidential information from pdf
+# [#22507] Show filled name is nickname change is allowed
+
+2-October-2010 810
+^ [#19288] Update dutch language Final
+
+1-October-2010 Matias
+# [#19288] Fix long words in all topics by adding zero width spaces
+^ [#15886] Merged revisions 3575-3599 from /branches/1.6-810-bugfixes-24-09-2010
+^ [#15886] Merged revisions 3562-3606 from /branches/1.6-xillibit-fixes-20100923
+
+1-October-2010 Xillibit
+# [#22601] Kunena Search "Also search in child forums" set no has no effects (Part 2)
+# [#22578] Fix Notice: Undefined index: _default in kunena.parser.php on line 844 (Part 2)
++ [#22600] Add button to generate a pdf of topic (Part 2)
+# [#22507] Fix issue the field is not showed when the user is guest, so it can't post anything (Part 2)
+
+29-September-2010 Xillibit
+# [#22636] Wrong error message when upload images/files aren't allowed for register user
+
+29-September-2010 810
+^ [#19288] Update dutch language
++ [#19288] Add full screen + hd button youtube
+
+28-September-2010 Xillibit
+# [#19288] Update fr-FR translation (thanks lavsteph)
+# [#22370] HTML incorrect tags : <br> <br /> <br /> in languages files newly updated (Part 2)
+
+27-September-2010 Xillibit
+# [#22612] id_last_msg isn't saving the info when topic is under review.
+
+26-September-2010 Xillibit
++ [#22600] Add button to generate a pdf of topic (need specific button for it)
+# [#22601] Kunena Search "Also search in child forums" set no has no effect
+
+24-September-2010 Xillibit
+# [#22507] Fix issue the field is not showed when the user is guest, so it can't post anything
+
+24-September-2010 810
+# [#19288] Long words in topics breaks listcat layout (fixed message)
+# [#19288] Fix hyperlink @ mail
+
+24-September-2010 Matias
+# [#22119] Fix PHP Notice: Undefined variable in KunenaCategory
+# [#22119] Fix PHP Error: KunenaError not included in KunenaCategory & Table
+# [#22579] KunenaCategory: Fix saving new category
+
+24-September-2010 fxstein
+^ [#19064] Finalize tableau bbcode
+
+23-September-2010 Xillibit
+# [#22578] Fix Notice: Undefined index: _default in kunena.parser.php on line 844
+# [#19288] Fix typo in admin replace px by kB in maximum file size
+# [#22581] Fix typo in template.xml in button iconsetname
+
+23-September-2010 810
+# [#19288] Issue when video provider is null and size
+# [#19288] Long words in topics breaks listcat layout
+# [#19288] Preview doesn't render xml in code tags
+
+23-September-2010 Matias
+# [#22579] Fix fatal error in CommunityBuilder integration (backend)
+^ [#22579] Improve KunenaCategory class for GroupJive integration
+# [#22579] Fix bug in global moderator detection
+
+21-September-2010 Severdia
++ [#22547] Added after save & delete events for JX Finder search integration (courtesy of the infamous Mr. Landry)
+
+21-September-2010 Matias
+^ [#22534] Update SQL upgrade script for K1.6.0
 
 20-September-2010 fxstein
 # [#22524] Update version info to K1.6.0 stable!

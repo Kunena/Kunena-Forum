@@ -18,12 +18,8 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @author TSMF & Jan de Graaff
 **/
-// ################################################################
-// MOS Intruder Alerts
 defined( '_JEXEC' ) or die();
 
-
-// ################################################################
 require_once( JApplicationHelper::getPath( 'toolbar_html' ) );
 
 $task = JRequest::getCmd( 'task' );

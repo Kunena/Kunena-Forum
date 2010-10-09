@@ -69,6 +69,7 @@ if(JDEBUG){
 
 $func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
 JRequest::setVar ( 'func', $func );
+$format = JRequest::getCmd ( 'format', 'html' );
 
 require_once(KUNENA_PATH . DS . 'router.php');
 if ($func && !in_array($func, KunenaRouter::$functions)) {
@@ -76,34 +77,79 @@ if ($func && !in_array($func, KunenaRouter::$functions)) {
 	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
 }
 
-if (empty($_POST)) {
-	// Set active menuitem so that Kunena menu shows up
+$kunena_app = JFactory::getApplication ();
+
+if (empty($_POST) && $format == 'html') {
+	$me = KunenaFactory::getUser();
 	$menu = JSite::getMenu ();
 	$active = $menu->getActive ();
 
-	// Legacy menu item support (get best match from Kunena Menu)
+	// Legacy menu item and Itemid=0 support with redirect and notice
 	if (empty($active->query ['view'])) {
-		$menu->setActive ( KunenaRoute::getItemID () );
-		$active = $menu->getActive ();
+		$new = $menu->getItem (KunenaRoute::getItemID ());
+		if ($new) {
+			if ($active) {
+				if ($active->route == $new->route) {
+					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_CONFLICT', $active->route, $active->id, $new->id), 'menu');
+					$menu->setActive ( $new->id );
+					$active = $new;
+				} else {
+					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_LEGACY', $active->route, $active->id, $new->route, $new->id), 'menu');
+					$kunena_app->redirect (KunenaRoute::_(null, false));
+				}
+			} else {
+				KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NO_ITEM_REDIRECT', $new->route, $new->id));
+				$kunena_app->redirect (KunenaRoute::_(null, false));
+			}
+		} elseif (!$active) {
+			KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NO_ITEM'));
+		}
 	}
-
-	// If we are currently in entry page, we need to show and highlight default menu item
-	if (! $func || $func == 'entrypage') {
-		$defaultitem = 0;
+	if (!$func || $func == 'entrypage') {
+		// If we are currently in entry page, we need to show and highlight default menu item
 		if (!empty ( $active->query ['defaultmenu'] )) {
 			$defaultitem = $active->query ['defaultmenu'];
-		}
-		$menu->setActive ( KunenaRoute::getItemID ( $defaultitem ) );
-		$active = $menu->getActive ();
-		if (is_object ( $active )) {
-			foreach ( $active->query as $var => $value ) {
-				if ($var == 'view')
-					$var = 'func';
-				if ($var == 'func' && $value == 'entrypage')
-					$value = $func;
-				JRequest::setVar ( $var, $value );
+			if ($defaultitem > 0) {
+				$newitem = $menu->getItem ($defaultitem);
+				if (!$newitem) {
+					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_EXISTS'), 'menu');
+				} elseif (empty($newitem->component) || $newitem->component != 'com_kunena') {
+					KunenaError::warning(JText::sprintf('COM_KUNENA_WARNING_MENU_NOT_KUNENA'), 'menu');
+				} elseif ($active->route == $newitem->route) {
+					// Special case: we are using Entry Page instead of menu alias and we have identical menu alias
+					if ($active->id != $newitem->id) {
+						$defaultitem = !empty ( $newitem->query ['defaultmenu'] ) ? $newitem->query ['defaultmenu'] : $newitem->id;
+						$newitem2 = $menu->getItem ($defaultitem);
+						if (empty($newitem2->component) || $newitem2->component != 'com_kunena') {
+							$defaultitem = $newitem->id;
+						}
+						if ($defaultitem) {
+							$menu->setActive ( $defaultitem );
+							$active = $menu->getActive ();
+						}
+					}
+				} else {
+					$oldlocation = KunenaRoute::getCurrentMenu ();
+					$menu->setActive ( $defaultitem );
+					$active = $menu->getActive ();
+
+					$newlocation = KunenaRoute::getCurrentMenu ();
+					if (!$oldlocation || $oldlocation->id != $newlocation->id) {
+						// Follow Default Menu Item if it's not in the same menu
+						$kunena_app->redirect (KunenaRoute::_($defaultitem, false));
+					}
+				}
+				if (is_object ( $active )) {
+					foreach ( $active->query as $var => $value ) {
+						if ($var == 'view')
+							$var = 'func';
+						if ($var == 'func' && $value == 'entrypage')
+							$value = $func;
+						JRequest::setVar ( $var, $value );
+					}
+					$func = JRequest::getCmd ( 'func' );
+				}
 			}
-			$func = JRequest::getCmd ( 'func' );
 		}
 	}
 }
@@ -141,8 +187,6 @@ $topic_emoticon = JRequest::getVar ( 'topic_emoticon', '' );
 $userid = JRequest::getInt ( 'userid', 0 );
 $no_html = JRequest::getBool ( 'no_html', 0 );
 
-$kunena_app = JFactory::getApplication ();
-
 // If JFirePHP is installed and enabled, leave a trace of the Kunena startup
 if(JDEBUG == 1 && defined('JFIREPHP')){
 	// FB::trace("Kunena Startup");
@@ -170,7 +214,7 @@ kimport('html.parser');
 // Redirect profile (menu item) to the right component
 if ($func == 'profile' && !$do && empty($_POST)) {
 	$redirect = 1;
-	if (isset($active)) {
+	if (!empty($active)) {
 		$params = new JParameter($active->params);
 		$redirect = $params->get('integration');
 	}
@@ -346,7 +390,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$document->addStyleDeclaration('
 			div.highlight pre {
 				width: '.(($kunena_config->rtewidth * 9) / 10).'px;
-				max-height: '.$kunena_config->rteheight.'px
 			}
 		');
 	}
@@ -729,8 +772,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// Bottom Module
 	CKunenaTools::showModulePosition( 'kunena_bottom' );
 
-	// RSS
-	if ($kunena_config->enablerss) {
+	// PDF and RSS
+	if ($kunena_config->enablerss || $kunena_config->enablepdf) {
 		if ($catid>0) {
 			kimport('category');
 			$category = KunenaCategory::getInstance($catid);
@@ -738,13 +781,20 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		} else {
 			$rss_params = '';
 		}
-		if (isset($rss_params)) {
+		if (isset($rss_params) || $kunena_config->enablepdf) {
 			echo '<div class="krss-block">';
-			$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
-			echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
+			if ($kunena_config->enablepdf && $func == 'view') {
+				// FIXME: add better translation:
+				echo CKunenaLink::GetPDFLink($catid, $limit, $limitstart, $id, CKunenaTools::showIcon ( 'kpdf', JText::_('PDF') ), 'nofollow', '', JText::_('PDF'));
+			}
+			if ($kunena_config->enablerss && isset($rss_params)) {
+				$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
+				echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
+			}
 			echo '</div>';
 		}
 	}
+
 	$template = KunenaFactory::getTemplate();
 	$this->params = $template->params;
 	// Credits

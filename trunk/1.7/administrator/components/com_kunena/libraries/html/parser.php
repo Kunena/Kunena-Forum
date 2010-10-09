@@ -47,10 +47,12 @@ abstract class KunenaParser {
 		return $txt;
 	}
 
-	function parseText($txt) {
+	function parseText($txt, $len=0) {
 		if (!$txt) return;
 
+		if ($len && JString::strlen($txt) > $len) $txt = JString::substr ( $txt, 0, $len ) . ' ...';
 		$txt = self::escape ( $txt );
+		$txt = preg_replace('/(\S{30})/u', '\1&#8203;', $txt);
 		$txt = self::prepareContent ( $txt );
 		return $txt;
 	}

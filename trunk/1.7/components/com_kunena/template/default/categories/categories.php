@@ -133,7 +133,7 @@ foreach ( $this->categories [0] as $section ) :
 			<!-- /Avatar -->
 			<?php endif; ?>
 			<div class="klatest-subject ks">
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($category->catid), intval($category->thread), intval($category->page), intval($this->config->messages_per_page), KunenaParser::parseText($category->subject), intval($category->id_last_msg) );?>
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($category->catid), intval($category->thread), intval($category->page), intval($this->config->messages_per_page), KunenaParser::parseText($category->subject, 30), intval($category->id_last_msg) );?>
 			</div>
 
 			<div class="klatest-subject-by ks">

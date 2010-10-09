@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+9-October-2010 Matias
++ [#22792] New tables: #__kunena_user_categories, #__kunena_user_read, #__kunena_user_topics
+
 9-October-2010 fxstein
 + [#22792] New Topics table design
 

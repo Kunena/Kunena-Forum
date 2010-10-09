@@ -279,7 +279,7 @@
 		<field name="last_post_guest_name" type="tinytext" null="1" />
 		<field name="params" type="text" null="0" />
 		<key name="PRIMARY" unique="1" columns="id" />
-		<key name="catid" columns="catid" />
+		<key name="category_id" columns="category_id" />
 		<key name="locked" columns="locked" />
 		<key name="hold" columns="hold" />
 		<key name="hits" columns="hits" />
@@ -417,6 +417,40 @@
 		<key name="postid" unique="1" columns="postid,userid" />
 		<key name="userid" columns="userid" />
 		<key name="targetuserid" columns="targetuserid" />
+	</table>
+	<table name="kunena_user_categories">
+		<field primary_key="yes" name="user_id" type="int(11)" null="0" />
+		<field primary_key="yes" name="category_id" type="int(11)" null="0" />
+		<field name="allreadtime" type="datetime" null="1" />
+		<field name="subscribed" type="tinyint(4)" null="0" default="0" />
+		<field name="params" type="text" null="0" />
+		<key name="PRIMARY" unique="1" columns="user_id,category_id" />
+		<key name="category_id" columns="category_id" />
+	</table>
+	<table name="kunena_user_read">
+		<field primary_key="yes" name="user_id" type="int(11)" null="0" />
+		<field primary_key="yes" name="topic_id" type="int(11)" null="0" />
+		<field name="category_id" type="int(11)" null="0" />
+		<field name="message_id" type="int(11)" null="0" />
+		<field name="time" type="timestamp" null="0"
+			extra="on update CURRENT_TIMESTAMP" />
+		<key name="user_topic_id" unique="1" columns="user_id,topic_id" />
+		<key name="category_user_id" columns="category_id,user_id" />
+	</table>
+	<table name="kunena_user_topics">
+		<field primary_key="yes" name="user_id" type="int(11)" null="0"
+			default="0" />
+		<field primary_key="yes" name="topic_id" type="int(11)" null="0"
+			default="0" />
+		<field name="posts" type="mediumint(8)" null="0" default="0" />
+		<field name="favorite" type="tinyint(4)" null="0" default="0" />
+		<field name="subscribed" type="tinyint(4)" null="0" default="0" />
+		<field name="params" type="text" null="0" />
+		<key name="user_topic_id" unique="1" columns="user_id,topic_id" />
+		<key name="topic_id" columns="topic_id" />
+		<key name="posts" columns="posts" />
+		<key name="favorite" columns="favorite" />
+		<key name="subscribed" columns="subscribed" />
 	</table>
 	<table name="kunena_users">
 		<field primary_key="yes" name="userid" type="int(11)" null="0"

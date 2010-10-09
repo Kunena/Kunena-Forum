@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+9-October-2010 fxstein
++ [#22792] New Topics table design
+
 8-October-2010 Matias
 ^ [#22786] Merge revisions 3542-3663 from trunk/1.6
 

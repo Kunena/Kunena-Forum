@@ -245,6 +245,40 @@
     <field name="title" type="varchar(255)" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
+  <table name="kunena_topics">
+    <field name="id" type="int(11)" null="0" extra="auto_increment"/>
+    <field name="category_id" type="int(11)" null="0" default="0"/>
+    <field name="subject" type="tinytext" null="1"/>
+    <field name="icon_id" type="int(11)" null="0" default="0"/>
+    <field name="locked" type="tinyint(4)" null="0" default="0"/>
+    <field name="hold" type="tinyint(4)" null="0" default="0"/>
+    <field name="ordering" type="int(11)" null="0" default="0"/>
+    <field name="posts" type="int(11)" null="0" default="0"/>
+    <field name="hits" type="int(11)" null="0" default="0"/>
+    <field name="attachments" type="int(11)" null="0" default="0"/>
+    <field name="poll_id" type="int(11)" null="0" default="0"/>
+    <field name="moved_id" type="int(11)" null="0" default="0"/>
+    <field name="first_post_id" type="int(11)" null="0" default="0"/>
+    <field name="first_post_time" type="int(11)" null="0" default="0"/>
+    <field name="first_post_userid" type="int(11)" null="0" default="0"/>
+    <field name="first_post_message" type="text" null="1"/>
+    <field name="first_post_guest_name" type="tinytext" null="1"/>
+    <field name="last_post_id" type="int(11)" null="0" default="0"/>
+    <field name="last_post_time" type="int(11)" null="0" default="0"/>
+    <field name="last_post_userid" type="int(11)" null="0" default="0"/>
+    <field name="last_post_message" type="text" null="1"/>
+    <field name="last_post_guest_name" type="tinytext" null="1"/>
+    <field name="params" type="text" null="0"/>
+    <key name="PRIMARY" unique="1" columns="id"/>
+    <key name="catid" columns="catid"/>
+    <key name="locked" columns="locked"/>
+    <key name="hold" columns="hold"/>
+    <key name="hits" columns="hits"/>
+    <key name="first_post_userid" columns="first_post_userid"/>
+    <key name="last_post_userid" columns="last_post_userid"/>
+    <key name="first_post_time" columns="first_post_time"/>
+    <key name="last_post_time" columns="last_post_time"/>
+  </table>
   <table name="kunena_messages">
     <field primary_key="yes" name="id" type="int(11)" null="0" extra="auto_increment"/>
     <field name="parent" type="int(11)" null="1" default="0"/>

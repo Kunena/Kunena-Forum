@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.1-DEV
+09-October-2010 svens (LDA)
+# [#22779] menuconfiguration rules don't schow the parameter created help view
+
 8-October-2010 svens (LDA)
 # [#22774] Welcome box: avatar doesn't have link pointing to profile
 # [#22074] Untranslated/hardcoded language strings

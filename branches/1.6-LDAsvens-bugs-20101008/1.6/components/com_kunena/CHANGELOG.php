@@ -32,8 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.1-DEV
+
 09-October-2010 svens (LDA)
 # [#22779] menuconfiguration rules don't schow the parameter created help view
+# [#22773] Menu: Profile doesn't obey integration option
 
 8-October-2010 svens (LDA)
 # [#22774] Welcome box: avatar doesn't have link pointing to profile

@@ -33,13 +33,30 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+9-October-2010 Matias
+^ [#15886] Merged revisions 3642-3664 from /branches/1.6-xillibit-fixes-20101005
+
+7-October-2010 Xillibit
+# [#22703] Send email to subscribers when moderator approves post
+
 7-October-2010 Matias
 # [#22694] Improve JXtended detection to fix potential white page
+
+6-October-2010 Xillibit
+# [#22731] Update message subject on all replies when you split a topic
+# [#22696] Disable disabled bbcode tags (spoiler, video, ebay)
+# [#22688] Anonymous moderation: Profile link to own profile
 
 6-October-2010 Matias
 # [#22733] Installer: Fix fatal error if PHP <5.2
 + [#22694] Add support for JXtended Access Control
 + [#22693] Add support for NoixACL Access Control
+
+5-October-2010 Xillibit
+# [#22627] Iimprove accessibility for visually impaired users for collaspse/expand buttons
+# [#22583] Same successfull message when you delete a topic or a message
+# [#22715] Welcome mat text need to be updated
+# [#22706] Administrator: Fatal error in Report Configuration Settings
 
 5-October-2010 fxstein
 ^ [#22716] New default colors for the template manager backend settings

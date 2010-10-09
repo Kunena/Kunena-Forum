@@ -42,7 +42,7 @@ $userlist1 = CKunenaLink::GetUserlistLink('', intval($this->totalmembers));
 <?php if($kunena_config->showgenstats): ?>
 <div class="kblock kgenstats">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kgenstats_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kgenstats_tbody"></a></span>
 		<h2><span><?php echo $kunena_config->board_title; ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kgenstats_tbody">
@@ -89,7 +89,7 @@ $k = 0;
 <?php if($this->showpopsubjectstats) : ?>
 <div class="kblock kpopsubjstats">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kpopsubstats-tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopsubstats-tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popsubjectcount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_KGSG'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpopsubstats-tbody">
@@ -134,7 +134,7 @@ $k = 0;
 <?php if($this->showpoppollstats): ?>
 <div class="kblock kpoppollstats">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kpoppollstats_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpoppollstats_tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->poppollscount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_POLLS_KGSG'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpoppollstats_tbody">
@@ -179,7 +179,7 @@ $k = 0;
 <?php if($this->showpopuserstats): ?>
 <div class="kblock kpopuserstats">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kpopusermsgstats_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopusermsgstats_tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popusercount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_TMSG'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpopusermsgstats_tbody">
@@ -224,7 +224,7 @@ $k = 0;
 <?php if($this->showpopuserstats): ?>
 <div class="kblock kpopprofilestats">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kpopuserhitstats_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopuserhitstats_tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popusercount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR'); ?> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_GSG'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpopuserhitstats_tbody">
@@ -269,7 +269,7 @@ $k = 0;
 <?php if($this->showpopthankyoustats): ?>
 <div class="kblock kpopthanksstats">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kpopthankyou_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopthankyou_tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_STAT_TOP'); ?> <strong><?php echo $kunena_config->popthankscount; ?></strong> <?php echo JText::_('COM_KUNENA_STAT_POPULAR_USER_THANKS_YOU'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpopthankyou_tbody">

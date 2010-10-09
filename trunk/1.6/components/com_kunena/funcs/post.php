@@ -560,7 +560,7 @@ class CKunenaPost {
 		if (! $delete) {
 			$message = $kunena_mod->getErrorMessage ();
 		} else {
-			$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' );
+			$message = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' );
 		}
 
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
@@ -820,8 +820,17 @@ class CKunenaPost {
 			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE id={$this->_db->Quote($this->id)}" );
 			if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' );
+				$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread={$this->_db->Quote($this->msg_cat->thread)}" );
+				$result = $this->_db->loadObject ();
+				KunenaError::checkDatabaseError();
+				$threadPages = ceil ( $result->totalmessages / $this->config->messages_per_page );
+				//construct a useable URL (for plaintext - so no &amp; encoding!)
+				jimport ( 'joomla.environment.uri' );
+				$uri = & JURI::getInstance ( JURI::base () );
+				$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->msg_cat->thread, $threadPages, $this->config->messages_per_page, $this->id ) );
+				$message->emailToSubscribers($LastPostUrl, $this->config->allowsubscriptions, $this->config->mailmod, $this->config->mailadmin);
+				CKunenaTools::modifyCategoryStats($this->id, $this->msg_cat->parent, $this->msg_cat->time,$this->msg_cat->catid);
 			}
-			CKunenaTools::modifyCategoryStats($this->id, $this->msg_cat->parent, $this->msg_cat->time,$this->msg_cat->catid);
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ), $success_msg );
 	}

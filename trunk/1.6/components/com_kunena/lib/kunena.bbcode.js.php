@@ -403,12 +403,14 @@ $('kbbcode-message').addEvent('change', function(){
 	bindAttachments();
 	newAttachment();
 	//This is need to retrieve the video provider selected by the user in the dropdownlist
-	$('kvideoprovider').addEvent('change', function() {
-		var sel = $$('#kvideoprovider option:selected');
-		sel.each(function(el) {
-			$('kvideoprovider').store('videoprov',el.value);
+	if ($('kvideoprovider') != undefined) {
+		$('kvideoprovider').addEvent('change', function() {
+			var sel = $$('#kvideoprovider option:selected');
+			sel.each(function(el) {
+				$('kvideoprovider').store('videoprov',el.value);
+			});
 		});
-	});
+	}
 
 	// Fianlly apply some screwy IE7 and IE8 fixes to the html...
 	IEcompatibility();

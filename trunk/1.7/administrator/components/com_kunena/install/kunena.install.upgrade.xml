@@ -166,6 +166,29 @@
 				ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderators`,
 				ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
 				ADD KEY `category_access` (accesstype,access);</query>
+			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, posts)
+				SELECT userid AS user_id, thread AS topic_id, COUNT(userid) AS posts
+				FROM #__kunena_messages
+				WHERE userid>0 AND hold=0
+				GROUP BY user_id, topic_id
+				ON DUPLICATE KEY UPDATE posts=VALUES(posts);</query>
+			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, favorite)
+				SELECT userid AS user_id, thread AS topic_id, 1 AS favorite
+				FROM #__kunena_favorites
+				WHERE userid>0
+				ON DUPLICATE KEY UPDATE favorite=VALUES(favorite);</query>
+			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, subscribed)
+				SELECT userid AS user_id, thread AS topic_id, 1 AS subscribed
+				FROM #__kunena_subscriptions
+				WHERE userid>0
+				ON DUPLICATE KEY UPDATE subscribed=VALUES(subscribed);</query>
+			<query>INSERT INTO #__kunena_user_categories (user_id, category_id, subscribed)
+				SELECT userid AS user_id, catid AS category_id, 1 AS subscribed
+				FROM #__kunena_subscriptions_categories
+				WHERE userid>0
+				ON DUPLICATE KEY UPDATE subscribed=VALUES(subscribed);</query>
+			<query>UPDATE #__kunena_user_categories AS c INNER JOIN #__kunena_sessions AS s ON c.user_id=s.userid 
+				SET c.allreadtime=FROM_UNIXTIME(s.lasttime);</query>
 		</version>
 	</upgrade>
 </comupgrade>

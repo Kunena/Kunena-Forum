@@ -77,7 +77,7 @@ function plgSearchKunena($text, $phrase = '', $ordering = '', $areas = null) {
 		case 'exact' :
 			$text = $db->Quote ( '%' . $db->getEscaped ( $text, true ) . '%', false );
 			$wheres2 = array ();
-			$wheres2 [] = 'm.subject LIKE ' . $text . ' AND t.message LIKE ' . $text;
+			$wheres2 [] = 'm.subject LIKE ' . $text . ' OR t.message LIKE ' . $text;
 			$where = '(' . implode ( ') OR (', $wheres2 ) . ')';
 			break;
 
@@ -92,7 +92,7 @@ function plgSearchKunena($text, $phrase = '', $ordering = '', $areas = null) {
 			foreach ( $words as $word ) {
 				$word = $db->Quote ( '%' . $db->getEscaped ( $word, true ) . '%', false );
 				$wheres2 = array ();
-				$wheres2 [] = 'm.subject LIKE ' . $word . ' AND t.message LIKE ' . $word;
+				$wheres2 [] = 'm.subject LIKE ' . $word . ' OR t.message LIKE ' . $word;
 				$wheres [] = implode ( ' OR ', $wheres2 );
 			}
 			$where = '(' . implode ( ($phrase == 'all' ? ') AND (' : ') OR ('), $wheres ) . ')';

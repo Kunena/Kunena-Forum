@@ -28,6 +28,9 @@ Legend:
 
 KunenaSearch 1.6.0-RC2
 
+10-October-2010 Xillibit
+# [#20138] The search results in Kunena are always empty even if the search strings exists
+
 17-September-2010 Xillibit
 + [#20138] Added fr-FR translation
 

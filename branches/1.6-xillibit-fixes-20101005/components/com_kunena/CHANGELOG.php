@@ -35,7 +35,8 @@ Kunena 1.6.1-DEV
 
 10-October-2010 Xillibit
 # [#22766] Guests appearing on the who's online stats when the access to the forum is registered and above
-+ [#22799] AUP integration adds points on thnak you
++ [#22799] AUP integration adds points on thank you
+# [#22772] Forum statistics: Warning: Invalid argument supplied for foreach()
 
 8-October-2010 Xillibit
 # [#21992] Bug when moving a post to a different category and leaving a shadow

@@ -16,6 +16,7 @@
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_community_mykunena.ini</language>
 		<language tag="fr-FR">fr-FR.plg_community_mykunena.ini</language>
+		<language tag="ru-RU">ru-RU.plg_community_mykunena.ini</language>
 	</languages>
 	<files>
 		<file plugin="mykunena">mykunena.php</file>

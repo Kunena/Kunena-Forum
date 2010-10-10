@@ -86,7 +86,7 @@ $k = 0;
 ?>
 
 <!-- B: Pop Subject -->
-<?php if($this->showpopsubjectstats) : ?>
+<?php if($this->showpopsubjectstats && !empty($this->toptitles)) : ?>
 <div class="kblock kpopsubjstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopsubstats-tbody"></a></span>
@@ -131,7 +131,7 @@ $k = 0;
 <!-- F: Pop Subject -->
 
 <!-- B: Pop Poll -->
-<?php if($this->showpoppollstats): ?>
+<?php if($this->showpoppollstats && !empty($this->toppolls)): ?>
 <div class="kblock kpoppollstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpoppollstats_tbody"></a></span>
@@ -176,7 +176,7 @@ $k = 0;
 <!-- F: Pop Polls -->
 
 <!-- B: User Messages -->
-<?php if($this->showpopuserstats): ?>
+<?php if($this->showpopuserstats && !empty($this->topposters)): ?>
 <div class="kblock kpopuserstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopusermsgstats_tbody"></a></span>
@@ -221,7 +221,7 @@ $k = 0;
 <!-- F: User Messages -->
 
 <!-- B: Pop User  -->
-<?php if($this->showpopuserstats): ?>
+<?php if($this->showpopuserstats && !empty($this->topprofiles)): ?>
 <div class="kblock kpopprofilestats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopuserhitstats_tbody"></a></span>
@@ -266,7 +266,7 @@ $k = 0;
 <!-- F: User User -->
 
 <!-- B: Pop Thank you  -->
-<?php if($this->showpopthankyoustats): ?>
+<?php if($this->showpopthankyoustats && !empty($this->topuserthanks)): ?>
 <div class="kblock kpopthanksstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpopthankyou_tbody"></a></span>

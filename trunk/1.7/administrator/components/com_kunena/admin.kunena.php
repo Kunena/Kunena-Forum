@@ -1478,12 +1478,12 @@ function editUserProfile($option, $uid) {
 	$selectOrder = JHTML::_ ( 'select.genericlist', $yesnoOrder, 'neworder', 'class="inputbox" size="2"', 'value', 'text', $ordering );
 
 	//get all subscriptions for this user
-	$kunena_db->setQuery ( "select thread from #__kunena_subscriptions where userid=$uid[0]" );
+	$kunena_db->setQuery ( "SELECT topic_id AS thread FROM #__kunena_user_topics WHERE user_id=$uid[0] AND subscribed=1" );
 	$subslist = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
 
 	//get all moderation category ids for this user
-	$kunena_db->setQuery ( "select catid from #__kunena_moderation where userid=" . $uid [0] );
+	$kunena_db->setQuery ( "SELECT catid FROM #__kunena_moderation WHERE userid=" . $uid [0] );
 	$modCatList = $kunena_db->loadResultArray ();
 	if (KunenaError::checkDatabaseError()) return;
 	if ($moderator && empty($modCatList)) $modCatList[] = 0;
@@ -1784,12 +1784,7 @@ function doprune($kunena_db, $option) {
 	if (!empty($threadlist)) {
 		$threadlist = implode(',', $threadlist);
 		//clean all subscriptions to these deleted threads
-		$kunena_db->setQuery ( "DELETE FROM #__kunena_subscriptions WHERE thread IN ({$threadlist})" );
-		$kunena_db->query ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		//clean all favorites to these deleted threads
-		$kunena_db->setQuery ( "DELETE FROM #__kunena_favorites WHERE thread IN ({$threadlist})" );
+		$kunena_db->setQuery ( "DELETE FROM #__kunena_user_topics WHERE topic_id IN ({$threadlist})" );
 		$kunena_db->query ();
 		if (KunenaError::checkDatabaseError()) return;
 	}

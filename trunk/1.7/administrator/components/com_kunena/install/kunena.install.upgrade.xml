@@ -166,28 +166,35 @@
 				ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderators`,
 				ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
 				ADD KEY `category_access` (accesstype,access);</query>
-			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, posts)
-				SELECT userid AS user_id, thread AS topic_id, COUNT(userid) AS posts
-				FROM #__kunena_messages
-				WHERE userid>0 AND hold=0
+			<query mode="silenterror">ALTER TABLE `#__kunena_user_topics` 
+				ADD `category_id` int(11) NOT NULL AFTER `topic_id`;</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_user_topics`
+				ADD `last_post_id` int(11) NOT NULL default '0' AFTER `posts`,
+				ADD `owner` tinyint(4) NOT NULL default '0' AFTER `last_post_id`,
+				ADD KEY `owner` (owner);</query>
+			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
+				SELECT userid AS user_id, thread AS topic_id, catid AS category_id, COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
+				FROM #__kunena_messages WHERE userid>0 AND moved=0 AND hold=0
 				GROUP BY user_id, topic_id
-				ON DUPLICATE KEY UPDATE posts=VALUES(posts);</query>
-			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, favorite)
-				SELECT userid AS user_id, thread AS topic_id, 1 AS favorite
-				FROM #__kunena_favorites
-				WHERE userid>0
-				ON DUPLICATE KEY UPDATE favorite=VALUES(favorite);</query>
-			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, subscribed)
-				SELECT userid AS user_id, thread AS topic_id, 1 AS subscribed
-				FROM #__kunena_subscriptions
-				WHERE userid>0
-				ON DUPLICATE KEY UPDATE subscribed=VALUES(subscribed);</query>
+				ON DUPLICATE KEY UPDATE category_id=VALUES(category_id), posts=VALUES(posts), last_post_id=VALUES(last_post_id), owner=VALUES(owner);</query>
+			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, favorite)
+				SELECT f.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS favorite
+				FROM #__kunena_favorites AS f
+				INNER JOIN #__kunena_messages AS m ON m.id=f.thread
+				WHERE f.userid>0
+				ON DUPLICATE KEY UPDATE favorite=1;</query>
+			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, subscribed)
+				SELECT s.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS subscribed
+				FROM #__kunena_subscriptions AS s
+				INNER JOIN #__kunena_messages AS m ON m.id=s.thread
+				WHERE s.userid>0
+				ON DUPLICATE KEY UPDATE subscribed=1;</query>
 			<query>INSERT INTO #__kunena_user_categories (user_id, category_id, subscribed)
 				SELECT userid AS user_id, catid AS category_id, 1 AS subscribed
 				FROM #__kunena_subscriptions_categories
 				WHERE userid>0
 				ON DUPLICATE KEY UPDATE subscribed=VALUES(subscribed);</query>
-			<query>UPDATE #__kunena_user_categories AS c INNER JOIN #__kunena_sessions AS s ON c.user_id=s.userid 
+			<query>UPDATE #__kunena_user_categories AS c INNER JOIN #__kunena_sessions AS s ON c.user_id=s.userid
 				SET c.allreadtime=FROM_UNIXTIME(s.lasttime);</query>
 		</version>
 	</upgrade>

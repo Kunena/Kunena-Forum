@@ -33,9 +33,19 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+10-October-2010 Matias
++ [#22792] Add category_id, last_post_id and owner into #__kunena_user_topics and migrate data from old tables
+^ [#22792] Fill subscription and favorite information into #__kunena_user_categories and #__kunena_user_topics
+^ [#22792] Update subscription code in administration, KunenaAccess*, KunenaUserAPI, CKunenaLatestX, CKunenaPost, CKunenaShowcat, CKunenaView
+^ [#22792] Update favorite code in KunenaUserAPI, CKunenaLatestX, CKunenaPost, CKunenaShowcat, CKunenaView
+- [#22792] Remove category subscription code from KunenaUserAPI
+^ [#22792] Simplify logic in CKunenaLatestX::_getMyLatest(): use new #__kunena_user_topics table
+^ [#22792] Update #__kunena_user_topics table when posting a new message (not in hold)
+# [#22570] Fix regression in CKunenaLink class (broken links)
+
 9-October-2010 Matias
 + [#22792] New tables: #__kunena_user_categories, #__kunena_user_read, #__kunena_user_topics
-+ [#22792] Migrate data from old tables to #__kunena_user_categories and #__kunena_user_topic
++ [#22792] Migrate data from old tables to #__kunena_user_categories and #__kunena_user_topics
 
 9-October-2010 fxstein
 + [#22792] New Topics table design

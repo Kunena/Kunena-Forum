@@ -52,7 +52,7 @@ class CKunenaLink {
 	}
 
 	function GetKunenaLink($name, $rel = 'follow') {
-		return self::GetSefHrefLink ( self::GetKunenaURL(), $name, '', $rel );
+		return self::GetHrefLink ( self::GetKunenaURL(), $name, '', $rel );
 	}
 
 	function GetKunenaURL($xhtml = true) {
@@ -64,7 +64,7 @@ class CKunenaLink {
 	}
 
 	function GetRSSLink($name, $rel = 'follow', $params = '') {
-		return self::GetSefHrefLink ( self::GetRSSURL($params), $name, '', $rel, '', '', 'target="_blank"' );
+		return self::GetHrefLink ( self::GetRSSURL($params), $name, '', $rel, '', '', 'target="_blank"' );
 	}
 
 	function GetRSSURL($params = '', $xhtml = true) {
@@ -121,7 +121,7 @@ class CKunenaLink {
 	}
 
 	function GetThreadPageLink($view, $catid, $id, $page, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
-		return self::GetSefHrefLink ( self::GetThreadPageURL($view, $catid, $id, $page, $limit), $name, '', $rel, $class, $anker );
+		return self::GetHrefLink ( self::GetThreadPageURL($view, $catid, $id, $page, $limit), $name, '', $rel, $class, $anker );
 	}
 
 	function GetThreadPageURL($view, $catid, $id, $page, $limit = '', $anker = '', $xhtml = true) {
@@ -276,7 +276,7 @@ class CKunenaLink {
 	}
 
 	function GetSearchLink($view, $searchword, $limitstart, $limit, $name, $params = '', $rel = 'nofollow') {
-		return self::GetSefHrefLink ( self::GetSearchURL($view, $searchword, $limitstart, $limit, $params), $name, '', $rel );
+		return self::GetHrefLink ( self::GetSearchURL($view, $searchword, $limitstart, $limit, $params), $name, '', $rel );
 	}
 
 	function GetSearchURL($view, $searchword='', $limitstart=0, $limit=0, $params = '') {
@@ -295,7 +295,7 @@ class CKunenaLink {
 		$idstring = '';
 		if ($id)
 			$idstring .= "&id=$id";
-		return self::GetSefHrefLink ( self::GetAnnouncementURL($do, $id), $name, $title, $rel );
+		return self::GetHrefLink ( self::GetAnnouncementURL($do, $id), $name, $title, $rel );
 	}
 
 	function GetAnnouncementURL($do, $id = NULL, $xhtml = true) {
@@ -333,7 +333,7 @@ class CKunenaLink {
 	}
 
 	function GetStatsLink($name, $class = '', $rel = 'follow') {
-		return self::GetSefHrefLink ( self::GetStatsURL(), $name, '', $rel, $class );
+		return self::GetHrefLink ( self::GetStatsURL(), $name, '', $rel, $class );
 	}
 
 	function GetStatsURL() {

@@ -514,7 +514,7 @@ class CKunenaView {
 		//Perform subscriptions check only once
 		$fb_cansubscribe = 0;
 		if ($this->config->allowsubscriptions && $this->my->id) {
-			$this->db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid={$this->db->Quote($this->my->id)} AND thread={$this->db->Quote($this->thread)}" );
+			$this->db->setQuery ( "SELECT topic_id FROM #__kunena_user_topics WHERE user_id={$this->db->Quote($this->my->id)} AND topic_id={$this->db->Quote($this->thread)} AND subscribed=1" );
 			$fb_subscribed = $this->db->loadResult ();
 			KunenaError::checkDatabaseError();
 
@@ -524,7 +524,7 @@ class CKunenaView {
 		}
 		//Perform favorites check only once
 		$fb_canfavorite = 0;
-		$this->db->setQuery ( "SELECT MAX(userid={$this->db->Quote($this->my->id)}) AS favorited, COUNT(*) AS totalfavorited FROM #__kunena_favorites WHERE thread={$this->db->Quote($this->thread)}" );
+		$this->db->setQuery ( "SELECT MAX(user_id={$this->db->Quote($this->my->id)}) AS favorited, COUNT(*) AS totalfavorited FROM #__kunena_user_topics WHERE topic_id={$this->db->Quote($this->thread)} AND favorite=1" );
 		list ( $this->favorited, $this->totalfavorited ) = $this->db->loadRow ();
 		KunenaError::checkDatabaseError();
 		if ($this->config->allowfavorites && $this->my->id) {

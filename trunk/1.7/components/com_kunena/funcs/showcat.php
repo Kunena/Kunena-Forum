@@ -45,10 +45,10 @@ class CKunenaShowcat {
 		$this->app = & JFactory::getApplication ();
 
 		//Get the category information
-		$query = "SELECT c.*, s.catid AS subscribeid
+		$query = "SELECT c.*, s.subscribed AS subscribeid
 				FROM #__kunena_categories AS c
-				LEFT JOIN #__kunena_subscriptions_categories AS s ON c.id = s.catid
-				AND s.userid = '{$this->my->id}'
+				LEFT JOIN #__kunena_user_categories AS s ON c.id = s.category_id
+				AND s.user_id = '{$this->my->id}'
 				WHERE c.id={$this->db->Quote($this->catid)}";
 
 		$this->db->setQuery ( $query );
@@ -91,15 +91,16 @@ class CKunenaShowcat {
 		$this->threads = array ();
 		$this->highlight = 0;
 		$routerlist = array ();
+		// FIXME: improve performance
 		if (count ( $threadids ) > 0) {
 			$query = "SELECT a.*, j.id AS userid, t.message AS message, l.myfavorite, l.favcount, l.attachments,
 							l.msgcount, l.lastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 	FROM (
-		SELECT m.thread, MAX(f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
+		SELECT m.thread, MAX(f.user_id IS NOT null AND f.user_id='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.user_id) AS favcount, COUNT(a.mesid) AS attachments,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
 		FROM #__kunena_messages AS m";
-			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = m.thread";
-			else $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = 0";
+			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__kunena_user_topics AS f ON f.topic_id = m.thread AND favorite=1";
+			else $query .= " LEFT JOIN #__kunena_user_topics AS f ON f.topic_id = 0";
 			$query .= "
 		LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.thread
 		WHERE m.hold IN ({$hold}) AND m.thread IN ({$idstr})
@@ -151,9 +152,7 @@ class CKunenaShowcat {
 		//Perform subscriptions check
 		$kunena_cansubscribecat = 0;
 		if ($this->config->allowsubscriptions && ("" != $this->my->id || 0 != $this->my->id)) {
-			if ($this->objCatInfo->subscribeid == '') {
-				$kunena_cansubscribecat = 1;
-			}
+			$kunena_cansubscribecat = !$this->objCatInfo->subscribeid;
 		}
 
 		//meta description and keywords

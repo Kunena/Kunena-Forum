@@ -447,17 +447,24 @@ class CKunenaPosting {
 				return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
 		}
 
-		//update the user posts count
-		$userid = ( int ) $this->get ( 'userid' );
-		if ($userid) {
+		if (! $this->get ( 'hold' )) {
+			//update the user posts count
+			$userid = ( int ) $this->get ( 'userid' );
 			$query = "UPDATE #__kunena_users SET posts=posts+1 WHERE userid={$this->_db->quote($userid)}";
 			$this->_db->setQuery ( $query );
 			$this->_db->query ();
+			$dberror = $this->checkDatabaseError ();
 
-		}
+			$owner = !$this->get ( 'parent' ) ? 1 : 0;
+			$query = "INSERT INTO #__kunena_user_topics (user_id,topic_id,category_id,posts,last_post_id,owner)
+				VALUES ({$this->_db->quote($userid)},{$this->_db->quote($this->get ('thread'))},
+					{$this->_db->quote($this->get ('catid'))},1,{$this->_db->quote($this->get ('id'))},{$this->_db->quote($owner)})
+				ON DUPLICATE KEY UPDATE category_id={$this->_db->quote($this->get ('catid'))}, posts=posts+1, last_post_id={$this->_db->quote($this->get ('id'))};";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			$dberror = $this->checkDatabaseError ();
 
-		// now increase the #s in categories only case approved
-		if (! $this->get ( 'hold' )) {
+			// now increase the #s in categories only case approved
 			CKunenaTools::modifyCategoryStats ( $id, $this->get ( 'parent' ), $this->get ( 'time' ), $this->get ( 'catid' ) );
 		}
 
@@ -503,16 +510,16 @@ class CKunenaPosting {
 		}
 		if ($errcount)
 			return $this->setError ( '-post-', JText::_ ( 'COM_KUNENA_POST_ERROR_SESSIONS' ) );
-			
+
 		// Get the event dispatcher
 		$dispatcher	= JDispatcher::getInstance();
 
 		// Load the JXFinder plug-in group
 		JPluginHelper::importPlugin('finder');
-		
+
 		// Fire after post save event
 		$dispatcher->trigger('onAfterSaveKunenaPost', array($id));
-		
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		if ($this->parent->thread == 0) {
@@ -584,16 +591,16 @@ class CKunenaPosting {
 				return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
 		}
 		$this->set ( 'id', $id = $this->parent->id );
-		
+
 		// Get the event dispatcher
 		$dispatcher	= JDispatcher::getInstance();
 
 		// Load the JXFinder plug-in group
 		JPluginHelper::importPlugin('finder');
-		
+
 		// Fire after post save event
 		$dispatcher->trigger('onAfterSaveKunenaPost', array($id));
-		
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterEdit($this);
@@ -639,11 +646,10 @@ class CKunenaPosting {
 
 		// Load the JXFinder plug-in group
 		JPluginHelper::importPlugin('finder');
-		
+
 		// Fire after post save event
 		$dispatcher->trigger('onDeleteKunenaPost', array(array($mesid)));
-		
-		
+
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
 		$activity->onAfterDelete($this);

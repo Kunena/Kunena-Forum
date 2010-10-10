@@ -216,17 +216,19 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$this->_session->updateAllowedForums();
 		$allowed = $this->_session->allowed;
 
-		// Only subscribe if allowed and not already subscribed
-		$query = "SELECT id FROM #__kunena_messages AS m LEFT JOIN #__kunena_subscriptions AS s ON m.thread=s.thread
-			WHERE m.id IN ($threads) AND m.parent=0 AND m.catid IN ($allowed) AND m.hold=0 AND m.moved=0 AND s.thread IS NULL";
+		// Only subscribe if topic exists etc..
+		$query = "SELECT thread, catid FROM #__kunena_messages
+			WHERE id IN ($threads) AND parent=0 AND catid IN ($allowed) AND hold=0 AND moved=0";
 		$this->_db->setQuery ($query);
-		$threads = $this->_db->loadResultArray();
+		$threads = $this->_db->loadObjectList();
 		if (KunenaError::checkDatabaseError() || empty($threads)) return;
 
 		foreach ($threads as $thread) {
-			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
+			$subquery[] = "(".(int)$userid.",".(int)$thread->thread.",".(int)$thread->catid.",1)";
 		}
-		$query = "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES " . implode(',', $subquery);
+		$values = implode(',', $subquery);
+		$query = "INSERT INTO #__kunena_user_topics (user_id,topic_id,category_id,subscribed) VALUES {$values}
+					ON DUPLICATE KEY UPDATE subscribed=1;";
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return;
@@ -240,55 +242,10 @@ class KunenaUserAPI implements iKunenaUserAPI {
 			$threadlist = $this->parseParam($threads);
 			if (!is_array($threadlist) || empty($threadlist)) return;
 			$threads = implode(',', $threadlist);
-			$where = ' AND thread IN('.$threads.')';
+			$where = " AND topic_id IN({$threads})";
 		}
 
-		$query = "DELETE FROM #__kunena_subscriptions WHERE userid=".(int)$userid . $where;
-		$this->_db->setQuery ($query);
-		$this->_db->query ();
-		if (KunenaError::checkDatabaseError()) return;
-		return $this->_db->getAffectedRows ();
-	}
-	public function subscribeCategories($userid, $catids) {
-		// TODO: NOT TESTED!!
-		if ((int)$userid<1 || $userid != $this->_my->id) return;
-		$catlist = $this->parseParam($catids);
-		if (!is_array($catlist) || empty($catlist)) return;
-		$catids = implode(',', $catlist);
-
-		$this->_session->updateAllowedForums();
-		$allowed = $this->_session->allowed;
-
-		// Only subscribe if allowed and not already subscribed
-		$query = "SELECT id FROM #__kunena_categories AS c LEFT JOIN #__kunena_subscriptions_categories AS s ON c.id=s.catid
-			WHERE c.id IN ($catids) AND c.id IN ($allowed) AND s.catid IS NULL";
-		$this->_db->setQuery ($query);
-		echo $query;
-		$catids = $this->_db->loadResultArray();
-		if (KunenaError::checkDatabaseError() || empty($catids)) return;
-
-		foreach ($catids as $thread) {
-			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
-		}
-		$query = "INSERT INTO #__kunena_subscriptions_categories (catid,userid) VALUES " . implode(',', $subquery);
-		$this->_db->setQuery ($query);
-		$this->_db->query ();
-		if (KunenaError::checkDatabaseError()) return;
-		return $this->_db->getAffectedRows ();
-	}
-	public function unsubscribeCategories($userid, $catids = false) {
-		// TODO: NOT TESTED!!
-		if ((int)$userid<1 || $userid != $this->_my->id) return;
-		if ($catids === true) {
-			$where = '';
-		} else {
-			$catlist = $this->parseParam($catids);
-			if (!is_array($catlist) || empty($catlist)) return;
-			$catids = implode(',', $catlist);
-			$where = ' AND catid IN('.$catids.')';
-		}
-
-		$query = "DELETE FROM #__kunena_subscriptions_categories WHERE userid=".(int)$userid . $where;
+		$query = "UPDATE #__kunena_user_topics SET subscribed=0 WHERE user_id=".(int)$userid . $where;
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return;
@@ -303,22 +260,23 @@ class KunenaUserAPI implements iKunenaUserAPI {
 		$this->_session->updateAllowedForums();
 		$allowed = $this->_session->allowed;
 
-		// Only favorite if allowed and not already favorited
-		$query = "SELECT id FROM #__kunena_messages AS m LEFT JOIN #__kunena_favorites AS f ON m.thread=f.thread
-			WHERE m.id IN ($threads) AND m.parent=0 AND m.catid IN ($allowed) AND m.hold=0 AND m.moved=0 AND f.thread IS NULL";
+		// Only favorite if topic exists etc..
+		$query = "SELECT thread, catid FROM #__kunena_messages
+			WHERE id IN ($threads) AND parent=0 AND catid IN ($allowed) AND hold=0 AND moved=0";
 		$this->_db->setQuery ($query);
-		$threads = $this->_db->loadResultArray();
+		$threads = $this->_db->loadObjectList();
 		if (KunenaError::checkDatabaseError() || empty($threads)) return;
 
 		foreach ($threads as $thread) {
-			$subquery[] = "(".(int)$thread.",".(int)$userid.")";
+			$subquery[] = "(".(int)$userid.",".(int)$thread->thread.",".(int)$thread->catid.",1)";
 		}
-		$query = "INSERT INTO #__kunena_favorites (thread,userid) VALUES " . implode(',', $subquery);
+		$values = implode(',', $subquery);
+		$query = "INSERT INTO #__kunena_user_topics (user_id,topic_id,category_id,favorite) VALUES {$values}
+					ON DUPLICATE KEY UPDATE favorite=1;";
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return;
 		return $this->_db->getAffectedRows ();
-
 	}
 	public function unfavoriteThreads($userid, $threads = false) {
 		if ((int)$userid<1 || $userid != $this->_my->id) return;
@@ -328,10 +286,10 @@ class KunenaUserAPI implements iKunenaUserAPI {
 			$threadlist = $this->parseParam($threads);
 			if (!is_array($threadlist) || empty($threadlist)) return;
 			$threads = implode(',', $threadlist);
-			$where = ' AND thread IN('.$threads.')';
+			$where = " AND topic_id IN({$threads})";
 		}
 
-		$query = "DELETE FROM #__kunena_favorites WHERE userid=".(int)$userid . $where;
+		$query = "UPDATE #__kunena_user_topics SET favorite=0 WHERE user_id=".(int)$userid . $where;
 		$this->_db->setQuery ($query);
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return;

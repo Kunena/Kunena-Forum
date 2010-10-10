@@ -106,15 +106,16 @@ class CKunenaLatestX {
 			if (empty($this->loadids)) $loadstr = '';
 			else $loadstr = 'OR a.id IN ('.implode ( ",", $this->loadids ).')';
 
+			// FIXME: improve performance
 			$query = "SELECT a.*, j.id AS userid, t.message, l.myfavorite, l.favcount, l.threadhits, l.lasttime, l.threadattachments, COUNT(aa.id) AS attachments,
 				l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.name AS catname, c.class_sfx
 			FROM (
-				SELECT m.thread, MAX(m.hits) AS threadhits, MAX(f.userid IS NOT null AND f.userid={$this->db->Quote($this->my->id)}) AS myfavorite, COUNT(DISTINCT f.userid) AS favcount,
+				SELECT m.thread, MAX(m.hits) AS threadhits, MAX(f.user_id IS NOT null AND f.user_id={$this->db->Quote($this->my->id)}) AS myfavorite, COUNT(DISTINCT f.user_id) AS favcount,
 					COUNT(DISTINCT a.id) AS threadattachments, COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->db->Quote($this->user->id)}, m.id, NULL)) AS mycount,
 					MAX(m.id) AS lastid, MAX(IF(m.userid={$this->db->Quote($this->user->id)}, m.id, 0)) AS mylastid, MAX(m.time) AS lasttime
 				FROM #__kunena_messages AS m";
-				if ($this->config->allowfavorites) $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = m.thread";
-				else $query .= " LEFT JOIN #__kunena_favorites AS f ON f.thread = 0";
+				if ($this->config->allowfavorites) $query .= " LEFT JOIN #__kunena_user_topics AS f ON f.topic_id = m.thread AND favorite=1";
+				else $query .= " LEFT JOIN #__kunena_user_topics AS f ON f.topic_id = 0";
 				$query .= "
 				LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.id
 				WHERE m.hold IN ({$this->hold}) AND m.moved='0' AND m.thread IN ({$idstr})
@@ -176,21 +177,18 @@ class CKunenaLatestX {
 
 	protected function _getMyLatest($posts = true, $fav = true, $sub = false) {
 		$subquery = array();
-		if (!$posts && !$fav && !$sub) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
-			FROM #__kunena_messages
-			WHERE userid='{$this->user->id}' AND parent='0' AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})";
-		if ($posts) $subquery[] = "SELECT thread, 0 AS fav, 0 AS sub
-			FROM #__kunena_messages
-			WHERE userid={$this->db->Quote($this->user->id)} AND moved='0' AND hold IN ({$this->hold}) AND catid IN ({$this->session->allowed})
-			GROUP BY thread";
-		if ($fav) $subquery[] = "SELECT thread, 1 AS fav, 0 AS sub FROM #__kunena_favorites WHERE userid={$this->db->Quote($this->user->id)}";
-		if ($sub) $subquery[] = "SELECT thread, 0 AS fav, 1 AS sub FROM #__kunena_subscriptions WHERE userid={$this->db->Quote($this->user->id)}";
-		if (empty($subquery)) return;
-		$subqueries = implode("\n	UNION ALL \n", $subquery);
-
-		$query = "SELECT COUNT(DISTINCT m.thread) FROM ({$subqueries}) AS t
-		INNER JOIN #__kunena_messages AS m ON m.thread=t.thread
-		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})";
+		if (!$posts && !$fav && !$sub) {
+			$where = 't.owner=1';
+		} else {
+			// Find user topics
+			if ($posts) $where[] = 't.posts>0';
+			if ($fav) $where[] = 't.favorite=1';
+			if ($sub) $where[] = 't.subscribed=1';
+			$where = implode(' OR ',$where);
+		}
+		$query = "SELECT COUNT(*) FROM #__kunena_user_topics AS t
+		INNER JOIN #__kunena_messages AS m ON m.id=t.topic_id
+		WHERE t.user_id={$this->db->Quote($this->user->id)} AND ({$where}) AND m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})";
 
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
@@ -200,11 +198,11 @@ class CKunenaLatestX {
 		else if ($this->func == 'usertopics') $this->order = "mylastid DESC";
 		else $this->order = "lastid DESC";
 
-		$query = "SELECT m.thread, MAX(m.id) AS lastid, MAX(IF(m.userid={$this->db->Quote($this->user->id)}, m.id, 0)) AS mylastid, MAX(t.fav) AS myfavorite, MAX(t.sub) AS mysubscribe
-		FROM ({$subqueries}) AS t
-		INNER JOIN #__kunena_messages AS m ON m.thread=t.thread
-		WHERE m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
-		GROUP BY m.thread
+		$query = "SELECT m.thread, MAX(m.id) AS lastid, t.last_post_id AS mylastid, t.favorite AS myfavorite, t.subscribed AS mysubscribe
+		FROM #__kunena_user_topics AS t
+		INNER JOIN #__kunena_messages AS m ON m.thread=t.topic_id
+		WHERE t.user_id={$this->db->Quote($this->user->id)} AND ({$where}) AND m.moved='0' AND m.hold IN ({$this->hold}) AND m.catid IN ({$this->session->allowed})
+		GROUP BY t.topic_id
 		ORDER BY {$this->order}";
 
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
@@ -310,8 +308,8 @@ class CKunenaLatestX {
 
 		$uname = $this->config->username ? 'name' : 'username';
 
-		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_subscriptions_categories AS t
-		INNER JOIN #__kunena_categories AS c ON c.id=t.catid WHERE t.userid={$this->db->Quote($this->user->id)}";
+		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_user_categories AS uc
+		INNER JOIN #__kunena_categories AS c ON c.id=uc.category_id WHERE uc.user_id={$this->db->Quote($this->user->id)}";
 
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
@@ -321,13 +319,13 @@ class CKunenaLatestX {
 
 		$query = "SELECT j.id AS userid, j.{$uname} AS uname, cat.*, cat.id AS catid, cat.name AS catname,
 			0 AS fav, 1 AS sub, msg.thread, msg.id AS msgid, msg.subject,msg.time, COUNT(mmm.id) AS msgcount
-		FROM #__kunena_subscriptions_categories AS t
-		INNER JOIN #__kunena_categories AS cat ON cat.id=t.catid
+		FROM #__kunena_user_categories AS uc
+		INNER JOIN #__kunena_categories AS cat ON cat.id=uc.category_id
 		LEFT JOIN #__kunena_messages AS msg ON cat.id_last_msg=msg.id
 		LEFT JOIN #__kunena_messages AS mmm ON msg.thread=mmm.thread AND mmm.hold=0
-		LEFT JOIN #__users AS j ON j.id = t.userid
-		WHERE t.userid={$this->db->Quote($this->user->id)}
-		GROUP BY t.catid
+		LEFT JOIN #__users AS j ON j.id = uc.user_id
+		WHERE uc.user_id={$this->db->Quote($this->user->id)} AND subscribed=1
+		GROUP BY uc.category_id
 		ORDER BY ordering";
 		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
 		$this->categories = $this->db->loadObjectList ();

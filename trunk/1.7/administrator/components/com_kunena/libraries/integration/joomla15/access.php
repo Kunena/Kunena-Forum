@@ -159,16 +159,16 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
-					IF( (s.thread IS NOT NULL) OR (sc.catid IS NOT NULL), 1, 0 ) AS subscription,
+					IF( (ut.subscribed=1) OR (uc.subscribed=1), 1, 0 ) AS subscription,
 					IF( u.id IN ({$modlist}), 1, 0 ) AS moderator,
 					IF( u.id IN ({$adminlist}), 1, 0 ) AS admin
 					FROM #__users AS u
-					LEFT JOIN #__kunena_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}
-					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid={$catid}";
+					LEFT JOIN #__kunena_user_topics AS ut ON u.id=ut.user_id AND ut.topic_id={$thread}
+					LEFT JOIN #__kunena_user_categories AS uc ON u.id=uc.user_id AND uc.category_id={$catid}";
 
 		$where = array ();
 		if ($subscriptions)
-			$where [] = " ( ( (s.thread IS NOT NULL) OR (sc.catid IS NOT NULL) )" . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
+			$where [] = " ( ( ut.subscribed=1 OR uc.subscribed=1 )" . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
 		if ($moderators)
 			$where [] = " ( u.id IN ({$modlist}) ) ";
 		if ($admins)

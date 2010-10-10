@@ -592,7 +592,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$success_msg = '';
 
 			if ( $catid && $kunena_my->id ) {
-				$query = "INSERT INTO #__kunena_subscriptions_categories (catid, userid) VALUES ('$catid','$kunena_my->id')";
+				$query = "INSERT INTO #__kunena_user_categories (user_id,category_id,subscribed) VALUES ('$kunena_my->id','$catid',1)
+					ON DUPLICATE KEY UPDATE subscribed=1;";
 				$kunena_db->setQuery ( $query );
 
 				if (@$kunena_db->query () && $kunena_db->getAffectedRows () == 1) {
@@ -615,7 +616,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			}
 			$success_msg = '';
 			if ($catid && $kunena_my->id ) {
-				$query = "DELETE FROM #__kunena_subscriptions_categories WHERE catid=$catid AND userid=$kunena_my->id";
+				$query = "UPDATE #__kunena_user_categories SET subscribed=0 WHERE user_id={$kunena_my->id} AND category_id={$catid};";
 				$kunena_db->setQuery ( $query );
 
 				if ($kunena_db->query () && $kunena_db->getAffectedRows () == 1) {

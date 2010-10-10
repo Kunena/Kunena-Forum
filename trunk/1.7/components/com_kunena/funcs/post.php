@@ -220,7 +220,8 @@ class CKunenaPost {
 
 		//now try adding any new subscriptions if asked for by the poster
 		if ($subscribeMe == 1) {
-			$this->_db->setQuery ( "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES ({$this->_db->Quote($thread)},{$this->_db->Quote($this->my->id)})" );
+			$query = "INSERT INTO #__kunena_user_topics (user_id,topic_id,category_id,subscribed) VALUES ({$this->_db->Quote($this->my->id)},{$this->_db->Quote($thread)},{$this->_db->Quote($this->catid)},1)
+					ON DUPLICATE KEY UPDATE subscribed=1;";
 
 			if (@$this->_db->query ()) {
 				$redirectmsg .= JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) . '<br />';
@@ -292,7 +293,7 @@ class CKunenaPost {
 		if ($this->my->id && $this->config->allowsubscriptions == 1) {
 			$this->cansubscribe = 1;
 			if ($this->msg_cat && $this->msg_cat->thread) {
-				$this->_db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid={$this->_db->Quote($this->my->id)} AND thread={$this->_db->Quote($this->msg_cat->thread)}" );
+				$this->_db->setQuery ( "SELECT thread FROM #__kunena_user_topics WHERE user_id={$this->_db->Quote($this->my->id)} AND topic_id={$this->_db->Quote($this->msg_cat->thread)} AND subscribed=1" );
 				$subscribed = $this->_db->loadResult ();
 				if (KunenaError::checkDatabaseError() || $subscribed) {
 					$this->cansubscribe = 0;
@@ -654,12 +655,13 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id='{$this->id}'" );
-		if ($this->id && $this->my->id && $this->_db->query ()) {
-			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "INSERT INTO #__kunena_subscriptions (thread,userid) VALUES ({$this->_db->Quote($thread)},{$this->_db->Quote($this->my->id)})" );
-
-			if (@$this->_db->query () && $this->_db->getAffectedRows () == 1) {
+		$this->_db->setQuery ( "SELECT thread,catid FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
+		$thread = $this->_db->loadObject ();
+		if ($this->my->id && $thread) {
+			$query = "INSERT INTO #__kunena_user_topics (user_id,topic_id,category_id,subscribed) VALUES ({$this->_db->Quote($this->my->id)},{$this->_db->Quote($thread->thread)},{$this->_db->Quote($thread->catid)},1)
+					ON DUPLICATE KEY UPDATE subscribed=1;";
+			$this->_db->setQuery($query);
+			if ($this->_db->query () && $this->_db->getAffectedRows ()) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
 			}
 		}
@@ -672,12 +674,12 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
-		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
-		if ($this->id && $this->my->id && $this->_db->query ()) {
-			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "DELETE FROM #__kunena_subscriptions WHERE thread={$this->_db->Quote($thread)} AND userid={$this->_db->Quote($this->my->id)}" );
-
-			if ($this->_db->query () && $this->_db->getAffectedRows () == 1) {
+		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
+		$thread = $this->_db->loadResult ();
+		if ($this->my->id && $thread) {
+			$query = "UPDATE #__kunena_user_topics SET subscribed=0 WHERE user_id={$this->_db->Quote($this->my->id)} AND topic_id={$this->_db->Quote($thread)};";
+			$this->_db->setQuery($query);
+			if ($this->_db->query () && $this->_db->getAffectedRows ()) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
 			}
 		}
@@ -690,12 +692,13 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
-		if ($this->id && $this->my->id && $this->_db->query ()) {
-			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "INSERT INTO #__kunena_favorites (thread,userid) VALUES ({$this->_db->Quote($thread)},{$this->_db->Quote($this->my->id)})" );
-
-			if (@$this->_db->query () && $this->_db->getAffectedRows () == 1) {
+		$this->_db->setQuery ( "SELECT thread,catid FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
+		$thread = $this->_db->loadObject ();
+		if ($this->my->id && $thread) {
+			$query = "INSERT INTO #__kunena_user_topics (user_id,topic_id,category_id,favorite) VALUES ({$this->_db->Quote($this->my->id)},{$this->_db->Quote($thread->thread)},{$this->_db->Quote($thread->catid)},1)
+					ON DUPLICATE KEY UPDATE favorite=1;";
+			$this->_db->setQuery($query);
+			if ($this->_db->query () && $this->_db->getAffectedRows ()) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
 			}
 		}
@@ -708,12 +711,12 @@ class CKunenaPost {
 		if (!$this->load())
 			return false;
 		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
-		$this->_db->setQuery ( "SELECT MAX(thread) AS thread FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
-		if ($this->id && $this->my->id && $this->_db->query ()) {
-			$thread = $this->_db->loadResult ();
-			$this->_db->setQuery ( "DELETE FROM #__kunena_favorites WHERE thread={$this->_db->Quote($thread)} AND userid={$this->_db->Quote($this->my->id)}" );
-
-			if ($this->_db->query () && $this->_db->getAffectedRows () == 1) {
+		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
+		$thread = $this->_db->loadResult ();
+		if ($this->my->id && $thread) {
+			$query = "UPDATE #__kunena_user_topics SET favorite=0 WHERE user_id={$this->_db->Quote($this->my->id)} AND topic_id={$this->_db->Quote($thread)};";
+			$this->_db->setQuery($query);
+			if ($this->_db->query () && $this->_db->getAffectedRows ()) {
 				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
 			}
 		}

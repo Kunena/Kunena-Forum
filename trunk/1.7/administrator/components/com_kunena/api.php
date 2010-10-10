@@ -166,27 +166,6 @@ interface iKunenaUserAPI {
 	 */
 	public function unsubscribeThreads($userid, $threads = false);
 	/**
-	 * Subscribe to Categories
-	 *
-	 * subscribeCategories( $userid, 1 );
-	 * subscribeCategories( $userid, array(1,2,3) );
-	 *
-	 * @param int $userid Only current user is accepted
-	 * @param mixed $catid Category or array of categories
-	 */
-	public function subscribeCategories($userid, $catids);
-	/**
-	 * Unsubscribe from Categories
-	 *
-	 * unsubscribeCategories( $userid, true ); // All
-	 * unsubscribeCategories( $userid, 1 );
-	 * unsubscribeCategories( $userid, array(1,2,3) );
-	 *
-	 * @param int $userid Only current user is accepted
-	 * @param mixed $catid true, category or array of categories
-	 */
-	public function unsubscribeCategories($userid, $catids = false);
-	/**
 	 * Favorite Threads
 	 *
 	 * favoriteThreads( $userid, 1 );

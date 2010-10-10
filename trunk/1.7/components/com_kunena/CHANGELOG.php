@@ -42,6 +42,7 @@ Kunena 1.7.0-DEV
 ^ [#22792] Simplify logic in CKunenaLatestX::_getMyLatest(): use new #__kunena_user_topics table
 ^ [#22792] Update #__kunena_user_topics table when posting a new message (not in hold)
 # [#22570] Fix regression in CKunenaLink class (broken links)
+^ [#22792] Migrate information into #__kunena_topics table during installation/upgrade
 
 9-October-2010 Matias
 + [#22792] New tables: #__kunena_user_categories, #__kunena_user_read, #__kunena_user_topics

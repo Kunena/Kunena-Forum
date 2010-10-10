@@ -196,6 +196,36 @@
 				ON DUPLICATE KEY UPDATE subscribed=VALUES(subscribed);</query>
 			<query>UPDATE #__kunena_user_categories AS c INNER JOIN #__kunena_sessions AS s ON c.user_id=s.userid
 				SET c.allreadtime=FROM_UNIXTIME(s.lasttime);</query>
+			<query>
+				INSERT IGNORE INTO `#__kunena_topics`
+					(id, category_id, subject, icon_id, locked, hold, ordering, posts, hits, attachments, poll_id, moved_id, first_post_id, last_post_id)
+					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, count(a.id) as posts, sum(a.hits) as hits, 
+						t.attachments as attachments, p.id AS poll_id, 0 as moved_id, min(b.id) as first_post_id, max(b.id) as last_post_id
+					FROM #__kunena_messages AS a
+					JOIN #__kunena_messages AS b ON b.thread = a.id
+					LEFT OUTER JOIN (
+						SELECT m.thread, count(*) as attachments
+						FROM #__kunena_messages AS m
+						JOIN #__kunena_attachments AS n ON m.id = n.mesid
+						GROUP BY 1
+						) AS t on t.thread = a.id
+					LEFT JOIN #__kunena_polls AS p ON p.threadid=a.id
+					WHERE a.parent = 0 AND a.moved = 0
+					GROUP BY a.id
+			</query>
+			<query>
+				UPDATE `#__kunena_topics` AS t, `#__kunena_messages` AS a, `#__kunena_messages_text` AS at, `#__kunena_messages` AS b, `#__kunena_messages_text` AS bt
+					SET t.first_post_time = a.time, 
+						t.first_post_userid = a.userid,
+						t.first_post_message = at.message,
+						t.first_post_guest_name = IF(a.userid>0,null,a.name),
+						t.last_post_time = b.time, 
+						t.last_post_userid = b.userid,
+						t.last_post_message = bt.message,
+						t.last_post_guest_name = IF(b.userid>0,null,b.name)
+					WHERE t.first_post_id = a.id AND t.last_post_id = b.id AND t.first_post_id = at.mesid AND t.last_post_id = bt.mesid
+			</query>
+				
 		</version>
 	</upgrade>
 </comupgrade>

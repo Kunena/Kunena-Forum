@@ -2,6 +2,6 @@
 <!DOCTYPE metadata>
 <metadata>
 	<view title="Category">
-		<message>Show individual category</message>
+		<message>COM_KUNENA_MENU_CATEGORY_DESC</message>
 	</view>
 </metadata>

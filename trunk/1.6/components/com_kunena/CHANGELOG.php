@@ -36,9 +36,19 @@ Kunena 1.6.1-DEV
 10-October-2010 Matias
 # [#22800] Fix KunenaCategory->delete() when user uses custom database prefix
 # [#22693] [#22694] Fix bug in NoixACL and JXtended integration when sending subscriptions
+^ [#15886] Merged revisions 3668-3680 from /branches/1.6-LDAsvens-bugs-20101008
+
+9-October-2010 svens (LDA)
+# [#22779] menuconfiguration rules don't schow the parameter created help view
+# [#22773] Menu: Profile doesn't obey integration option
 
 9-October-2010 Matias
 ^ [#15886] Merged revisions 3642-3664 from /branches/1.6-xillibit-fixes-20101005
+
+8-October-2010 svens (LDA)
+# [#22774] Welcome box: avatar doesn't have link pointing to profile
+# [#22074] Untranslated/hardcoded language strings
+# [#22779] menuconfiguration rules don't schow the parameter renaming view/articel to view/rules
 
 7-October-2010 Xillibit
 # [#22703] Send email to subscribers when moderator approves post

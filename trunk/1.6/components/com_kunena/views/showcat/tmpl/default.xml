@@ -2,13 +2,13 @@
 <!DOCTYPE metadata>
 <metadata>
 	<layout title="Category">
-		<message>Category</message>
+		<message>COM_KUNENA_MENU_CATEGORY_DESC</message>
 	</layout>
 	<state>
-		<name>Kunena Forum: Category</name>
-		<description>Show individual category</description>
+		<name>COM_KUNENA_MENU_KFCATEGORY</name>
+		<description>COM_KUNENA_MENU_CATEGORY_DESC</description>
 		<url addpath="/administrator/components/com_kunena/elements">
-			<param name="catid" type="kunenacategories" default="0" sections="0" none="None" label="Category ID" />
+			<param name="catid" type="kunenacategories" default="0" sections="0" none="None" label="COM_KUNENA_MENU_CATID" />
 		</url>
 	</state>
 </metadata>

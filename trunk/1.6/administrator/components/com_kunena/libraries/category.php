@@ -282,21 +282,21 @@ class KunenaCategory extends JObject {
 		// Delete moderators
 		$queries[] = "DELETE FROM #__kunena_moderation WHERE catid={$db->quote($this->id)}";
 		// Delete favorites
-		$queries[] = "DELETE f FROM jos_kunena_favorites AS f LEFT JOIN jos_kunena_messages AS m ON m.id=f.thread WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE f FROM #__kunena_favorites AS f LEFT JOIN #__kunena_messages AS m ON m.id=f.thread WHERE m.catid={$db->quote($this->id)}";
 		// Delete subscriptions
-		$queries[] = "DELETE s FROM jos_kunena_subscriptions AS s LEFT JOIN jos_kunena_messages AS m ON m.id=s.thread WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE s FROM #__kunena_subscriptions AS s LEFT JOIN #__kunena_messages AS m ON m.id=s.thread WHERE m.catid={$db->quote($this->id)}";
 		// Delete category subscriptions
-		$queries[] = "DELETE FROM jos_kunena_subscriptions_categories WHERE catid={$db->quote($this->id)}";
+		$queries[] = "DELETE FROM #__kunena_subscriptions_categories WHERE catid={$db->quote($this->id)}";
 		// Delete thank yous
-		$queries[] = "DELETE t FROM jos_kunena_thankyou AS t LEFT JOIN jos_kunena_messages AS m ON m.id=t.postid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE t FROM #__kunena_thankyou AS t LEFT JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.catid={$db->quote($this->id)}";
 		// Delete poll users
-		$queries[] = "DELETE p FROM jos_kunena_polls_users AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE p FROM #__kunena_polls_users AS p LEFT JOIN #__kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
 		// Delete poll options
-		$queries[] = "DELETE p FROM jos_kunena_polls_options AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE p FROM #__kunena_polls_options AS p LEFT JOIN #__kunena_messages AS m ON m.id=p.pollid WHERE m.catid={$db->quote($this->id)}";
 		// Delete polls
-		$queries[] = "DELETE p FROM jos_kunena_polls AS p LEFT JOIN jos_kunena_messages AS m ON m.id=p.threadid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE p FROM #__kunena_polls AS p LEFT JOIN #__kunena_messages AS m ON m.id=p.threadid WHERE m.catid={$db->quote($this->id)}";
 		// Delete messages
-		$queries[] = "DELETE m, t FROM jos_kunena_messages AS m INNER JOIN jos_kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
+		$queries[] = "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.catid={$db->quote($this->id)}";
 		// TODO: delete attachments
 
 		foreach ($queries as $query) {

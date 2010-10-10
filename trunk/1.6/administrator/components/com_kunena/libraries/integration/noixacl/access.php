@@ -195,8 +195,7 @@ class KunenaAccessNoixACL extends KunenaAccess {
 					LEFT JOIN #__kunena_categories AS c ON c.id={$catid}
 					LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid
 					LEFT JOIN #__kunena_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}
-					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=c.id
-					GROUP BY u.id";
+					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=c.id";
 
 		$where = array ();
 		if ($subscriptions)

@@ -17,6 +17,7 @@
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_search_kunenasearch.ini</language>
 		<language tag="fr-FR">fr-FR.plg_search_kunenasearch.ini</language>
+		<language tag="ru-RU">ru-RU.plg_search_kunenasearch.ini</language>
 	</languages>
 
 	<params>

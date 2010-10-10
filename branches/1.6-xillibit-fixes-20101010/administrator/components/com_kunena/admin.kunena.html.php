@@ -955,30 +955,12 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_LINK') ?>
-						</td>
-								<td align="left" valign="top"><input type="text" name="cfg_rules_link"
-							value="<?php echo kescape($kunena_config->rules_link);
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_LINK_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_help_cid"
 							value="<?php echo kescape($kunena_config->help_cid);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_LINK') ?>
-						</td>
-								<td align="left" valign="top"><input type="text" name="cfg_help_link"
-							value="<?php echo kescape($kunena_config->help_link);
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_LINK_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -1041,6 +1023,15 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPCIICONS_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ENABLELIGHTBOX') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['lightbox'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ENABLELIGHTBOX_DESC') ?>
 						</td>
 					</tr>
 				</table>

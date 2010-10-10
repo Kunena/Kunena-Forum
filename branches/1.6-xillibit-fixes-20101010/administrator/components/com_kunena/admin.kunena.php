@@ -1640,6 +1640,8 @@ function showConfig($option) {
 
 	$lists ['listcat_show_moderators'] = JHTML::_('select.genericlist', $yesno, 'cfg_listcat_show_moderators', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->listcat_show_moderators);
 
+	$lists ['lightbox'] = JHTML::_('select.genericlist', $yesno, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->lightbox);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

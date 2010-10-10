@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+10-October-2010 Xillibit
+# [#22805] Some language files issues in skinner
+# [#22801] Add configuration setting to disable lightbox
+
 10-October-2010 Matias
 # [#22800] Fix KunenaCategory->delete() when user uses custom database prefix
 # [#22693] [#22694] Fix bug in NoixACL and JXtended integration when sending subscriptions

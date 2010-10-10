@@ -495,7 +495,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 					// Need to check if we are nested inside a URL code
 					$fileurl = kunena_htmlspecialchars ( $fileurl, ENT_QUOTES );
-					if ($task->autolink_disable == 0) {
+					if ($task->autolink_disable == 0 && $kunena_config->lightbox) {
 						// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
 						$tag_new = '<a title="" rel="lightbox" href="'.$fileurl.'"><img src="'.$fileurl.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '').' alt="" /></a>';
 					} else {

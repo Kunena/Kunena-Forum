@@ -34,6 +34,9 @@ Legend:
 
 Kunena Site Template based on Rocket Theme Afterburner
 
+10-October-2010 severdia
+# [#19707] Fixed lots of spacing issues, general cleanup, removed old inline styles, cleaned up download page, search page
+
 25-September-2010 fxstein
 ^ [#19707] Change module padding to enable 728x90 in site header
 ^ [#19707] Incorporate change made on kunena.com

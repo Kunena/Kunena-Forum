@@ -33,6 +33,12 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+10-October-2010 Xillibit
+# [#22766] Guests appearing on the who's online stats when the access to the forum is registered and above
+
+8-October-2010 Xillibit
+# [#21992] Bug when moving a post to a different category and leaving a shadow
+
 7-October-2010 Xillibit
 # [#22703] Send email to subscribers when moderator approves post
 

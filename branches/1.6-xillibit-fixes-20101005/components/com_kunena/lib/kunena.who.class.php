@@ -90,8 +90,12 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getTotalGuestUsers () {
-		$count = KunenaUser::getOnlineCount();
-		return $count['guest'];
+		if ( !$this->config->regonly ) {
+			$count = KunenaUser::getOnlineCount();
+			return $count['guest'];
+		} else {
+			return 0;
+		}
 	}
 
 	public function getTitleWho ($totaluser,$totalguests) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: vertical.php 3313 2010-08-26 16:27:58Z fxstein $
+ * @version $Id$
  * Kunenalogin Module
  * @package Kunena login
  *

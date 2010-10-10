@@ -43,6 +43,9 @@ Kunena 1.7.0-DEV
 ^ [#22792] Update #__kunena_user_topics table when posting a new message (not in hold)
 # [#22570] Fix regression in CKunenaLink class (broken links)
 ^ [#22792] Migrate information into #__kunena_topics table during installation/upgrade
+^ [#22792] Convert KunenaTemplate::getTopicIcon() to use #__kunena_topics
+^ [#22792] CKunenaLatestX: change all topic functions to use the new tables
+^ [#22792] Template: change threads/latestx.php and threads/flat.php to use new, simpler fields
 
 9-October-2010 Matias
 + [#22792] New tables: #__kunena_user_categories, #__kunena_user_read, #__kunena_user_topics

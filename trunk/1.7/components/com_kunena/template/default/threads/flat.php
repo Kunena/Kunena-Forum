@@ -45,17 +45,20 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	<?php
 	$k = 0;
 	$counter = 0;
-	if (!count ( $this->threads ) && !$this->hasSubCats) { ?>
+	if (!count ( $this->topics ) && !$this->hasSubCats) { ?>
 		<tr class="krow2">
 			<td class="kcol-first">
 				<?php echo $this->func=='showcat' ? JText::_('COM_KUNENA_VIEW_NO_POSTS') : JText::_('COM_KUNENA_NO_POSTS') ?>
 			</td>
 		</tr>
 	<?php
-	} else foreach ( $this->threads as $leaf ) {
-		if ($leaf->moved == 1) $leaf->topic_emoticon = 3;
-		$curMessageNo = $leaf->msgcount - ($leaf->unread ? $leaf->unread - 1 : 0);
-		$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
+	} else foreach ( $this->topics as $leaf ) {
+		kimport('category');
+		$category = KunenaCategory::getInstance($leaf->category_id);
+
+		if ($leaf->moved_id) $leaf->topic_emoticon = 3;
+		$curMessageNo = $leaf->posts - ($leaf->unread ? $leaf->unread - 1 : 0);
+		$threadPages = ceil ( $leaf->posts / $this->config->messages_per_page );
 		$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
 
 		if ($this->highlight && $counter == $this->highlight) {
@@ -70,12 +73,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	?>
 
 		<tr class="k<?php echo $this->tabclass [$k^=1];
-		if ($leaf->ordering != 0 || ($leaf->myfavorite && $this->func == 'mylatest')) {
+		if ($leaf->ordering != 0 || ($leaf->favorite && $this->func == 'mylatest')) {
 			echo '-stickymsg';
 		}
 		if ($leaf->class_sfx) {
 			echo ' k' . $this->tabclass [$k^1];
-			if ($leaf->ordering != 0 || ($leaf->myfavorite && $this->func == 'mylatest')) {
+			if ($leaf->ordering != 0 || ($leaf->favorite && $this->func == 'mylatest')) {
 				echo '-stickymsg';
 			}
 			echo $this->escape($leaf->class_sfx);
@@ -84,28 +87,24 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		else if ($leaf->hold) echo ' kdeleted';
 		?>">
 			<td class="kcol-first kcol-ktopicreplies">
-				<strong> <?php echo CKunenaTools::formatLargeNumber ( $leaf->msgcount-1 ); ?> </strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
+				<strong> <?php echo CKunenaTools::formatLargeNumber ( $leaf->posts-1 ); ?> </strong><?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
 			</td>
 
 			<td class="kcol-mid kcol-ktopicicon">
-				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), CKunenaTools::topicIcon($leaf), intval($leaf->lastread) ) ?>
+				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), CKunenaTools::topicIcon($leaf), intval($leaf->lastread) ) ?>
 			</td>
 
 			<td class="kcol-mid kcol-ktopictitle">
 				<?php if ($leaf->attachments) echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
-				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($leaf->catid), intval($leaf->id), KunenaParser::parseText ($leaf->subject), KunenaParser::stripBBCode ( $leaf->message, 500), 'follow', 'ktopic-title km' ); ?>
+				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($leaf->category_id), intval($leaf->id), KunenaParser::parseText ($leaf->subject), KunenaParser::stripBBCode ( $leaf->first_post_message, 500), 'follow', 'ktopic-title km' ); ?>
 				<?php
-				if ($leaf->favcount ) {
-					if ($leaf->myfavorite) {
-						echo CKunenaTools::showIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
-					} else {
-						echo CKunenaTools::showIcon ( 'kfavoritestar-grey', JText::_('COM_KUNENA_FAVORITE') );
-					}
+				if ($leaf->favorite) {
+					echo CKunenaTools::showIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
 				}
 				?>
 				<?php
 				if ($leaf->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), '<sup dir="ltr" class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($leaf->lastread) );
+					echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), '<sup dir="ltr" class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($leaf->lastread) );
 				}
 				if ($leaf->locked != 0) {
 					echo CKunenaTools::showIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
@@ -113,15 +112,15 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				?>
 				</div>
 
-				<?php if ($leaf->msgcount > $this->config->messages_per_page) : ?>
+				<?php if ($leaf->posts > $this->config->messages_per_page) : ?>
 				<ul class="kpagination">
 					<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
-					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->id), 1, intval($this->config->messages_per_page), 1 ) ?></li>
+					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), 1, intval($this->config->messages_per_page), 1 ) ?></li>
 					<?php if ($threadPages > 3) : $startPage = $threadPages - 2; ?>
 					<li class="more">...</li>
 					<?php else: $startPage = 2; endif;
 					for($hopPage = $startPage; $hopPage <= $threadPages; $hopPage ++) : ?>
-					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $hopPage, intval($this->config->messages_per_page), $hopPage ) ?></li>
+					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $hopPage, intval($this->config->messages_per_page), $hopPage ) ?></li>
 					<?php endfor; ?>
 				</ul>
 				<?php endif; ?>
@@ -130,17 +129,17 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- By -->
 					<?php if ($this->func != 'showcat') : ?>
 					<!-- Category -->
-					<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($leaf->catid), $this->escape( $leaf->catname) ) ?></span>
+					<span class="ktopic-category"> <?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->escape( $category->name) ) ?></span>
 					<!-- /Category -->
 					<span class="divider fltlft">|</span>
 					<?php endif; ?>
-					<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat_hover'); ?>">
+					<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($leaf->first_post_time, 'config_post_dateformat_hover'); ?>">
 						<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') ?>
-						<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');?>&nbsp;
+						<?php echo CKunenaTimeformat::showDate($leaf->first_post_time, 'config_post_dateformat');?>&nbsp;
 					</span>
 
-					<?php if ($leaf->name) : ?>
-					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->name) ); ?></span>
+					<?php if ($leaf->first_post_userid) : //TODO: was name ?>
+					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->first_post_userid), $this->escape($leaf->first_post_guest_name) ); ?></span>
 					<?php endif; ?>
 					<!-- /By -->
 				</div>
@@ -154,7 +153,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<?php if ($this->showposts):?>
 			<td class="kcol-mid kmycount">
 				<!-- Posts -->
-				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( intval($leaf->mycount) ); ?></span>
+				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( intval($leaf->myposts) ); ?></span>
 				<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_MY_POSTS'); ?> </span>
 				<!-- /Posts -->
 			</td>
@@ -168,11 +167,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- Avatar -->
 					<?php
 					if ($this->config->avataroncat > 0) :
-						$profile = KunenaFactory::getUser(intval($this->lastreply [$leaf->thread]->userid));
+						$profile = KunenaFactory::getUser(intval($leaf->last_post_userid));
 						$useravatar = $profile->getAvatarLink('klist-avatar', 'list');
 						if ($useravatar) :
 					?>
-					<span class="ktopic-latest-post-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($this->lastreply [$leaf->thread]->userid), $useravatar ) ?></span>
+					<span class="ktopic-latest-post-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($leaf->last_post_userid), $useravatar ) ?></span>
 					<?php
 						endif;
 					endif;
@@ -181,23 +180,24 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- Latest Post -->
 					<span class="ktopic-latest-post">
 					<?php
-					if ($leaf->moved) :
+					if ($leaf->moved_id) :
 						echo JText::_('COM_KUNENA_MOVED');
 					elseif ($this->topic_ordering == 'ASC') :
-						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $threadPages, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($this->lastreply [$leaf->thread]->id) );
+						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $threadPages, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->last_post_id) );
 					else :
-						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), 1, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($this->lastreply [$leaf->thread]->id) );
+						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), 1, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->last_post_id) );
 					endif;
 
-					if ($leaf->name)
-						echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($this->lastreply [$leaf->thread]->userid), $this->escape($this->lastreply [$leaf->thread]->name), '', 'nofollow' );
+					//TODO: was name
+					if ($leaf->last_post_userid)
+						echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->last_post_userid), $this->escape($leaf->last_post_guest_name), '', 'nofollow' );
 					?>
 					</span>
 					<!-- /Latest Post -->
 					<br />
 					<!-- Latest Post Date -->
-					<span class="ktopic-date" title="<?php echo CKunenaTimeformat::showDate($this->lastreply [$leaf->thread]->time, 'config_post_dateformat_hover'); ?>">
-						<?php echo CKunenaTimeformat::showDate($this->lastreply [$leaf->thread]->time, 'config_post_dateformat'); ?>
+					<span class="ktopic-date" title="<?php echo CKunenaTimeformat::showDate($leaf->last_post_time, 'config_post_dateformat_hover'); ?>">
+						<?php echo CKunenaTimeformat::showDate($leaf->last_post_time, 'config_post_dateformat'); ?>
 					</span>
 					<!-- /Latest Post Date -->
 				</div>

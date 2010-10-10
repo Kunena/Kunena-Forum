@@ -182,15 +182,15 @@ class KunenaTemplate extends JObject
 	public function getTopicIcon($topic ) {
 		$config = KunenaFactory::getConfig ();
 		if ($config->topicicons) {
-			if ( $topic->moved == 0 ) $iconurl = $this->getTopicIconPath($topic->topic_emoticon, true);
+			if ( $topic->moved_id == 0 ) $iconurl = $this->getTopicIconPath($topic->topic_emoticon, true);
 			else $iconurl = $this->getMovedIconPath(true);
 		} else {
 			$icon = 'normal';
-			if ($topic->msgcount < 2) $icon = 'unanswered';
+			if ($topic->posts < 2) $icon = 'unanswered';
 			if ($topic->ordering) $icon = 'sticky';
 			//if ($topic->myfavorite) $icon = 'favorite';
 			if ($topic->locked) $icon = 'locked';
-			if ($topic->moved) $icon = 'moved';
+			if ($topic->moved_id) $icon = 'moved';
 			if ($topic->hold == 1) $icon = 'unapproved';
 			if ($topic->hold == 2) $icon = 'deleted';
 			if ($topic->unread) $icon .= '_new';

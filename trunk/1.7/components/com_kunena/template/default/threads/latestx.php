@@ -68,7 +68,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 
 <?php
 //pagination 1
-if (count ( $this->messages ) > 0) :
+if (count ( $this->topics ) > 0) :
 	echo '<td class="klist-pages-all">';
 	$maxpages = 5 - 2; // odd number here (# - 2)
 	echo $pagination = $this->getPagination ( $this->func, $this->show_list_time, $this->page, $this->totalpages, $maxpages );
@@ -80,7 +80,7 @@ endif;
 <!-- F: List Actions -->
 
 <?php
-if (count ( $this->threads ) > 0) :
+if (count ( $this->topics ) > 0) :
 	$this->displayItems ();
 ?>
 
@@ -95,7 +95,7 @@ if (count ( $this->threads ) > 0) :
 		</td>
 			<?php
 				//pagination 1
-				if (count ( $this->messages ) > 0) :
+				if (count ( $this->topics ) > 0) :
 					echo '<td class="klist-pages-all">';
 					echo $pagination;
 					echo '</td>';

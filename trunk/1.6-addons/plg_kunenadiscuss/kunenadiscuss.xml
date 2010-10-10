@@ -18,6 +18,8 @@
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_content_kunenadiscuss.ini</language>
 		<language tag="fr-FR">fr-FR.plg_content_kunenadiscuss.ini</language>
+		<language tag="fr-FR">hu-HU.plg_content_kunenadiscuss.ini</language>
+		<language tag="fr-FR">ru-RU.plg_content_kunenadiscuss.ini</language>
 	</languages>
 	<params>
 		<param name="limit" type="text" default="25" label="PLG_KUNENADISCUSS_LIMIT" description="PLG_KUNENADISCUSS_LIMIT_DESC" />
@@ -53,10 +55,10 @@
 			<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
 		</param>		
 		<param name="topic_owner" type="text" default="" label="PLG_KUNENADISCUSS_TOPIC_OWNER" description="PLG_KUNENADISCUSS_TOPIC_OWNER_DESC" />
-		<param name="category_mapping" type="text" default="" label="PLG_KUNENADISCUSS_CATEGORY_MAPPING" description="PLG_KUNENADISCUSS_CATEGORY_MAPPING_DESC" />			
+		<param name="category_mapping" type="text" default="" label="PLG_KUNENADISCUSS_CATEGORY_MAPPING" description="PLG_KUNENADISCUSS_CATEGORY_MAPPING_DESC" />
 		<param name="default_category" type="text" default="" label="PLG_KUNENADISCUSS_DEFAULT_CATEGORY" description="PLG_KUNENADISCUSS_DEFAULT_CATEGORY_DESC" />
 		<param name="allow_categories" type="text" default="" label="PLG_KUNENADISCUSS_ALLOW_CATEGORIES" description="PLG_KUNENADISCUSS_ALLOW_CATEGORIES_DESC" />
-		<param name="deny_categories" type="text" default="" label="PLG_KUNENADISCUSS_DENY_CATEGORIES" description="PLG_KUNENADISCUSS_DENY_CATEGORIES_DESC" />			
+		<param name="deny_categories" type="text" default="" label="PLG_KUNENADISCUSS_DENY_CATEGORIES" description="PLG_KUNENADISCUSS_DENY_CATEGORIES_DESC" />
 		<param name="show_debug" type="radio" default="0" label="PLG_KUNENADISCUSS_SHOW_DEBUG" description="PLG_KUNENADISCUSS_SHOW_DEBUG_DESC">
 			<option value="0">PLG_KUNENADISCUSS_OPTION_NO</option>
 			<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>

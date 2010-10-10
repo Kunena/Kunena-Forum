@@ -31,6 +31,8 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC2
 
++ [#20084] Added ru-RU (thanks ZARKOS) and hu-HU translation
+
 17-September-2010 Xillibit
 + [#20084] Added fr-FR translation
 

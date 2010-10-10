@@ -38,6 +38,7 @@ Kunena 1.6.1-DEV
 # [#22693] [#22694] Fix bug in NoixACL and JXtended integration when sending subscriptions
 ^ [#15886] Merged revisions 3668-3680 from /branches/1.6-LDAsvens-bugs-20101008
 ^ [#15886] Merged revisions 3681-3684 from /branches/1.6-xillibit-fixes-20101005
+# [#22718] All moderators show up as global moderators (coloration)
 
 10-October-2010 Xillibit
 # [#22766] Guests appearing on the who's online stats when the access to the forum is registered and above

@@ -204,7 +204,7 @@ class CKunenaLink {
 			$uclass = 'kwho-guest';
 		} else if (CKunenaTools::isAdmin ( $userid )) {
 			$uclass = 'kwho-admin';
-		} else if (CKunenaTools::isModerator ( $userid, true )) {
+		} else if (CKunenaTools::isModerator ( $userid, false )) {
 			$uclass = 'kwho-globalmoderator';
 		} else if (CKunenaTools::isModerator ( $userid )) {
 			$uclass = 'kwho-moderator';

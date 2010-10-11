@@ -30,7 +30,7 @@ document.addEvent('domready', function() {
 ?>
 <div class="kblock kadvsearch">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler <?php echo $advsearch_class; ?>" title="<?php echo $advsearch_title ?>" rel="advsearch"></a></span>
+		<span class="ktoggler"><a class="ktoggler <?php echo $advsearch_class; ?>" title="<?php echo $advsearch_title ?>" alt="<?php echo $advsearch_title ?>" rel="advsearch"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_SEARCH_ADVSEARCH'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
@@ -73,7 +73,7 @@ document.addEvent('domready', function() {
 			<tr>
 				<th colspan="2">
 					<div class="kheader">
-						<span class="ktoggler" id="search_opt_status"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="advsearch_options"></a></span>
+						<span class="ktoggler" id="search_opt_status"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" alt="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="advsearch_options"></a></span>
 						<h2><span><?php echo JText::_('COM_KUNENA_SEARCH_OPTIONS'); ?></span></h2>
 					</div>
 				</th>

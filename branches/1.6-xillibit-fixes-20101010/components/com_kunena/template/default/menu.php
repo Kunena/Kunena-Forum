@@ -22,6 +22,6 @@ defined ( '_JEXEC' ) or die ();
 		</div>
 		<!-- /Kunena Module Position: kunena_menu -->
 	<?php endif; ?>
-	<span class="ktoggler fltrt"><a class="ktoggler close" rel="kprofilebox"></a></span>
+	<span class="ktoggler fltrt"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" alt="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kprofilebox"></a></span>
 </div>
 <!-- /Kunena Menu -->

@@ -46,7 +46,7 @@ function validate() {
 ?>
 <div class="kblock">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="searchuser_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" alt="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="searchuser_tbody"></a></span>
 		<h2><span><?php printf(JText::_('COM_KUNENA_USRL_REGISTERED_USERS'), $this->app->getCfg('sitename'), intval($this->total));?></span></h2>
 								</div>
 	<div class="kcontainer" id="searchuser_tbody">
@@ -68,7 +68,7 @@ function validate() {
 </div>
 <div class="kblock">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="userlist-tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" alt="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="userlist-tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_USRL_USERLIST'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="userlist-tbody">

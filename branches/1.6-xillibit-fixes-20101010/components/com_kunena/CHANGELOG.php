@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+11-October-2010 Xillibit
+# [#22627] Missing alt on collapse/expand buttons
+# [#22627] Some updates on fr-FR translation
+
 10-October-2010 Xillibit
 # [#22805] Some language files issues in skinner
 # [#22801] Add configuration setting to disable lightbox

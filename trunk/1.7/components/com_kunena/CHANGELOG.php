@@ -34,6 +34,7 @@ Legend:
 Kunena 1.7.0-DEV
 
 10-October-2010 fxstein
+^ [#22792] Begin refactoring showcat
 # [#22792] Fix topic icon logic
 
 10-October-2010 Matias

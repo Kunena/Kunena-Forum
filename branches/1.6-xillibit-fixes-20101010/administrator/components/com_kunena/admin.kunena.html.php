@@ -2289,7 +2289,7 @@ function newModerator($option, $id, $moderators, &$modIDs, $forumName, &$userLis
 		<?php
 }
 
-function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $useriplist) {
+function editUserProfile($option, $user, $subslist, $subscatslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $useriplist) {
 				$kunena_config = KunenaFactory::getConfig ();
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
@@ -2419,7 +2419,45 @@ function textCounter(field, target) {
 				<input type="hidden" name="boxchecked" value="1" />
 			</fieldset>
 		</dd>
+<dt><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></dt>
+			<dd>
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></legend>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<tr>
+						<th colspan="2" class="title"><?php
+						echo JText::_('COM_KUNENA_SUBFOR');
+						?> <?php
+						echo $username;
+						?>
+						</th>
+					</tr>
+					<?php
+					$enum = 1; //reset value
+					$k = 0; //value for alternating rows
 
+					if (!empty($subscatslist)) {
+						foreach($subscatslist as $subscats) { //get all category details for each subscription
+							$kunena_db->setQuery ( "select cat.name AS catname, cat.id, msg.subject, msg.id, msg.catid, msg.name AS username from #__kunena_categories AS cat INNER JOIN #__kunena_messages AS msg ON cat.id=msg.catid where cat.id='$subscats->catid' GROUP BY cat.id" );
+							$catdetail = $kunena_db->loadObjectList ();
+							if (KunenaError::checkDatabaseError()) break;
+
+							foreach ( $catdetail as $cat ) {
+								$k = 1 - $k;
+								echo "<tr class=\"row$k\">";
+								echo "  <td width=\"30\">$enum</td>";
+								echo "  <td><strong>" . kescape ( $cat->catname ) ."</strong>" . JText::_('COM_KUNENA_LAST_MESSAGE') . "<em>".kescape ( $cat->subject )."</em>". JText::_('COM_KUNENA_BY') . "<em>".kescape ( $cat->username )."</em></td>";
+								echo "</tr>";
+								$enum ++;
+							}
+						}
+					} else {
+						echo "<tr><td class=\"message\">" . JText::_('COM_KUNENA_NOCATSUBS') . "</td></tr>";
+					}
+					?>
+				</table>
+			</fieldset>
+			</dd>
 <dt><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>

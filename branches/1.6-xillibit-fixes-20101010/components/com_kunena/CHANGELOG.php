@@ -36,6 +36,7 @@ Kunena 1.6.1-DEV
 11-October-2010 Xillibit
 # [#22627] Missing alt on collapse/expand buttons
 # [#22627] Some updates on fr-FR translation
++ [#22821] Display categories subscriptions in kunena user manager
 
 10-October-2010 Xillibit
 # [#22805] Some language files issues in skinner

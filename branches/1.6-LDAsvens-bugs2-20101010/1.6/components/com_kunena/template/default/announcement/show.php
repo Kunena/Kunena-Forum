@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die();
 
 $document=JFactory::getDocument();
-$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->escape($this->config->board_title));
+$document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->config->board_title);
 //FIXME: announcement show only 5 ann. in table
 ?>
 <div class="kblock">

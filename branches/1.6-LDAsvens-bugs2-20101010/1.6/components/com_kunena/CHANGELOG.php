@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.1-DEV
+11-October-2010 svens (LDA)
+# [#22810] Some escape issue in title
+
 10-October-2010 svens (LDA)
 + [#22780] Jomsocial User Points for Thankyou and wall notice
 

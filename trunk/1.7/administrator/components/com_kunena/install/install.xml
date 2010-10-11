@@ -32,9 +32,9 @@
 	<table name="kunena_categories">
 		<field primary_key="yes" name="id" type="int(11)" null="0"
 			extra="auto_increment" />
-		<field name="parent" type="int(11)" null="1" default="0" />
+		<field name="parent_id" type="int(11)" null="1" default="0" />
 		<field name="name" type="tinytext" null="1" />
-		<field name="cat_emoticon" type="tinyint(4)" null="0" default="0" />
+		<field name="category_icon_id" type="tinyint(4)" null="0" default="0" />
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
 		<field name="alert_admin" type="tinyint(4)" null="0" default="0" />
 		<field name="moderated" type="tinyint(4)" null="0" default="1" />
@@ -46,7 +46,6 @@
 		<field name="admin_access" type="tinyint(4)" null="1" default="0" />
 		<field name="admin_recurse" type="tinyint(4)" null="1" default="1" />
 		<field name="ordering" type="tinyint(4)" null="0" default="0" />
-		<field name="future2" type="int(11)" null="1" default="0" />
 		<field name="published" type="tinyint(4)" null="0" default="0" />
 		<field name="checked_out" type="tinyint(4)" null="0" default="0" />
 		<field name="checked_out_time" type="datetime" null="0"
@@ -60,15 +59,20 @@
 		<field name="headerdesc" type="text" null="0" />
 		<field name="class_sfx" type="varchar(20)" null="0" />
 		<field name="allow_polls" type="tinyint(4)" null="0" default="0" />
-		<field name="id_last_msg" type="int(10)" null="0" default="0" />
 		<field name="numTopics" type="mediumint(8)" null="0" default="0" />
 		<field name="numPosts" type="mediumint(8)" null="0" default="0" />
-		<field name="time_last_msg" type="int(11)" null="1" />
+		<field name="last_post_id" type="int(11)" null="0" default="0" />
+		<field name="last_post_time" type="int(11)" null="0" default="0" />
+		<field name="last_post_userid" type="int(11)" null="0" default="0" />
+		<field name="last_post_message" type="text" null="1" />
+		<field name="last_post_guest_name" type="tinytext" null="1" />
+		<field name="params" type="text" null="0" />
+		
 		<key name="PRIMARY" unique="1" columns="id" />
 		<key name="parent" columns="parent" />
 		<key name="category_access" columns="accesstype,access" />
 		<key name="published_pubaccess_id" columns="published,pub_access,id" />
-		<key name="msg_id" columns="id_last_msg" />
+		<key name="last_post_id" columns="last_post_id" />
 	</table>
 	<table name="kunena_config">
 		<field primary_key="yes" name="id" type="int(11)" null="0"

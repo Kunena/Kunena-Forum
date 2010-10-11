@@ -78,51 +78,17 @@ class CKunenaShowcat {
 		KunenaError::checkDatabaseError();
 		$this->totalpages = ceil ( $this->total / $threads_per_page );
 
-//		$query = "SELECT t.id, MAX(m.id) AS lastid FROM #__kunena_messages AS t
-//	INNER JOIN #__kunena_messages AS m ON t.id = m.thread
-//	WHERE t.parent='0' AND t.hold IN ({$hold}) AND t.catid={$this->db->Quote($this->catid)} AND m.hold IN ({$hold}) AND m.catid={$this->db->Quote($this->catid)}
-//	GROUP BY m.thread ORDER BY t.ordering DESC, lastid DESC";
-//		$this->db->setQuery ( $query, $offset, $threads_per_page );
-//		$threadids = $this->db->loadResultArray ();
-//		KunenaError::checkDatabaseError();
-//		$idstr = implode ( ",", $threadids );
-
-		$this->messages = array ();
-		$this->threads = array ();
+		$this->topics = array ();
 		$this->highlight = 0;
 		$routerlist = array ();
 
 		if ($this->total > 0) {
-//			$query = "SELECT a.*, j.id AS userid, t.message AS message, l.myfavorite, l.favcount, l.attachments,
-//							l.msgcount, l.lastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
-//	FROM (
-//		SELECT m.thread, MAX(f.user_id IS NOT null AND f.user_id='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.user_id) AS favcount, COUNT(a.mesid) AS attachments,
-//			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime
-//		FROM #__kunena_messages AS m";
-//			if ($this->config->allowfavorites) $query .= " LEFT JOIN #__kunena_user_topics AS f ON f.topic_id = m.thread AND favorite=1";
-//			else $query .= " LEFT JOIN #__kunena_user_topics AS f ON f.topic_id = 0";
-//			$query .= "
-//		LEFT JOIN #__kunena_attachments AS a ON a.mesid = m.thread
-//		WHERE m.hold IN ({$hold}) AND m.thread IN ({$idstr})
-//		GROUP BY thread
-//	) AS l
-//	INNER JOIN #__kunena_messages AS a ON a.thread = l.thread
-//	INNER JOIN #__kunena_messages_text AS t ON a.thread = t.mesid
-//	LEFT JOIN #__users AS j ON j.id = a.userid
-//	LEFT JOIN #__kunena_users AS u ON u.userid = j.id
-//	LEFT JOIN #__kunena_categories AS c ON c.id = a.catid
-//	WHERE (a.parent='0' OR a.id=l.lastid)
-//	ORDER BY ordering DESC, lastid DESC";
-
-			$query = "SELECT t.*, 0 as myfavorite, 0 as favcount, 0 as attachments, u2.avatar,
-							c.name AS catname, c.class_sfx
-						FROM #__kunena_topics AS t
-						LEFT JOIN #__kunena_users AS u ON u.userid = t.first_post_userid
-						LEFT JOIN #__kunena_users AS u2 ON u2.userid = t.last_post_userid
-						LEFT JOIN #__kunena_categories AS c ON c.id = t.category_id
-						/*LEFT JOIN #__kunena_attachments AS a ON a.mesid = t.id*/
-						WHERE t.category_id={$this->db->Quote($this->catid)} AND t.hold IN ({$hold})
-						ORDER BY t.ordering DESC, t.last_post_id DESC
+			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
+				FROM #__kunena_topics AS tt
+				LEFT JOIN #__kunena_user_topics AS ut ON ut.topic_id=tt.id AND ut.user_id={$this->db->Quote($this->my->id)}
+				LEFT JOIN #__kunena_categories AS c ON c.id = tt.category_id
+				WHERE tt.category_id={$this->db->Quote($this->catid)} AND tt.hold IN ({$hold})
+				ORDER BY tt.ordering DESC, tt.last_post_id DESC
 			";
 
 			$this->db->setQuery ( $query, $offset, $threads_per_page );
@@ -133,33 +99,29 @@ class CKunenaShowcat {
 			$userlist = array();
 
 			foreach ( $this->topics as $topic ) {
-// Logic no longer needed for topics table design - every message we have is a topic - should actually rename that...
-//				if ($message->parent == 0) {
-//					$this->threads [$message->thread] = $message;
-//					$routerlist [$message->id] = $message->subject;
-//					if ($message->ordering) $this->highlight++;
-//				}
-//				if ($message->id == $message->lastid) {
-//					$this->lastreply [$message->thread] = $message;
-//				}
+				$routerlist [$topic->id] = $topic->subject;
+				if ($topic->ordering) $this->highlight++;
 				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
 				$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
-				//$userlist[intval($message->modified_by)] = intval($message->modified_by);
 			}
 			require_once (KUNENA_PATH . DS . 'router.php');
 			KunenaRouter::loadMessages ( $routerlist );
 
 			if ($this->config->shownew && $this->my->id) {
-// Need to convert to topics table design
-//				$readlist = $this->session->readtopics;
-//				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages " . "WHERE hold IN ({$hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$this->db->Quote($this->prevCheck)} GROUP BY thread" );
-//				$msgidlist = $this->db->loadObjectList ();
-//				KunenaError::checkDatabaseError();
-//
-//				foreach ( $msgidlist as $msgid ) {
-//					$this->messages[$msgid->thread]->lastread = $msgid->lastread;
-//					$this->messages[$msgid->thread]->unread = $msgid->unread;
-//				}
+				// TODO: Need to convert to topics table design
+				$idstr = implode ( ",", array_keys($this->topics) );
+				$readlist = $this->session->readtopics;
+				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread
+					FROM #__kunena_messages
+					WHERE hold IN ({$hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$this->db->Quote($this->prevCheck)}
+					GROUP BY thread" );
+				$msgidlist = $this->db->loadObjectList ();
+				KunenaError::checkDatabaseError();
+
+				foreach ( $msgidlist as $msgid ) {
+					$this->messages[$msgid->thread]->lastread = $msgid->lastread;
+					$this->messages[$msgid->thread]->unread = $msgid->unread;
+				}
 			}
 		}
 

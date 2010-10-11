@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+11-October-2010 Matias
+^ [#22792] CKunenaShowcat: use the new tables, simplify logic, fix template
+
 10-October-2010 fxstein
 ^ [#22792] Begin refactoring showcat
 # [#22792] Fix topic icon logic

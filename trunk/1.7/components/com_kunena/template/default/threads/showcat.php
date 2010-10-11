@@ -66,7 +66,7 @@ defined ( '_JEXEC' ) or die ();
 		<td class="klist-pages-all">
 			<?php
 			// pagination 1
-			if (count ( $this->messages ) > 0) {
+			if (count ( $this->topics ) > 0) {
 				$maxpages = 9 - 2; // odd number here (# - 2)
 				echo $pagination = $this->getPagination ( $this->catid, $this->page, $this->totalpages, $maxpages );
 			}
@@ -102,7 +102,7 @@ defined ( '_JEXEC' ) or die ();
 		<td class="klist-pages-all">
 			<?php
 			// pagination 2
-			if (count ( $this->messages ) > 0) {
+			if (count ( $this->topics ) > 0) {
 				echo $pagination;
 			}
 			?>

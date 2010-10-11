@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+10-October-2010 fxstein
+# [#22792] Fix topic icon logic
+
 10-October-2010 Matias
 + [#22792] Add category_id, last_post_id and owner into #__kunena_user_topics and migrate data from old tables
 ^ [#22792] Fill subscription and favorite information into #__kunena_user_categories and #__kunena_user_topics

@@ -182,7 +182,18 @@ class KunenaTemplate extends JObject
 	public function getTopicIcon($topic ) {
 		$config = KunenaFactory::getConfig ();
 		if ($config->topicicons) {
-			if ( $topic->moved_id == 0 ) $iconurl = $this->getTopicIconPath($topic->topic_emoticon, true);
+
+// TODO: Remove for production builds
+//			if(defined('JFIREPHP')){
+//				static $first=0;
+//
+//				if($first == 0){
+//					FB::log($topic, 'Topic');
+//					$first++;
+//				}
+//			}
+
+			if ( $topic->moved_id == 0 ) $iconurl = $this->getTopicIconPath($topic->icon_id, true);
 			else $iconurl = $this->getMovedIconPath(true);
 		} else {
 			$icon = 'normal';

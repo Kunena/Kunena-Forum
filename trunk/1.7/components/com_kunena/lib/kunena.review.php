@@ -29,7 +29,6 @@ class CKunenaReview {
 		$this->uri = JURI::getInstance ();
 		$this->document = JFactory::getDocument ();
 		$this->catid = intval($catid);
-		$this->tabclass = array ("row1", "row2" );
 		$this->MessagesToApprove = $this->GetApprovedMessageList ();
 		$this->do = JRequest::getCmd ( 'do', '' );
 		$this->header = JText::_ ( 'COM_KUNENA_MESSAGE_ADMINISTRATION' );

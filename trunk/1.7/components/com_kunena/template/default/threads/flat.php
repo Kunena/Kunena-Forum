@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+$tabclass = array ("row1", "row2" );
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
@@ -41,11 +42,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	<div class="kcontainer">
 		<div class="kbody">
 <form action="index.php" method="post" name="kBulkActionForm">
-<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
+<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?>" id="kflattable">
 	<?php
 	$k = 0;
 	$counter = 0;
-	if (!count ( $this->topics ) && !$this->hasSubCats) { ?>
+	if (!count ( $this->topics ) && !$this->subcategories) { ?>
 		<tr class="krow2">
 			<td class="kcol-first">
 				<?php echo $this->func=='showcat' ? JText::_('COM_KUNENA_VIEW_NO_POSTS') : JText::_('COM_KUNENA_NO_POSTS') ?>
@@ -72,12 +73,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		$counter ++;
 	?>
 
-		<tr class="k<?php echo $this->tabclass [$k^=1];
+		<tr class="k<?php echo $tabclass [$k^=1];
 		if ($leaf->ordering != 0 || ($leaf->favorite && $this->func == 'mylatest')) {
 			echo '-stickymsg';
 		}
 		if ($leaf->class_sfx) {
-			echo ' k' . $this->tabclass [$k^1];
+			echo ' k' . $tabclass [$k^1];
 			if ($leaf->ordering != 0 || ($leaf->favorite && $this->func == 'mylatest')) {
 				echo '-stickymsg';
 			}

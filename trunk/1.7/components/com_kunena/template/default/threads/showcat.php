@@ -26,7 +26,7 @@ defined ( '_JEXEC' ) or die ();
 <!-- / Pathway -->
 
 <?php $this->displaySubCategories () ?>
-<?php if ($this->objCatInfo->headerdesc) : ?>
+<?php if ($this->category->headerdesc) : ?>
 <div class="kblock">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close"  rel="frontstats_tbody"></a></span>

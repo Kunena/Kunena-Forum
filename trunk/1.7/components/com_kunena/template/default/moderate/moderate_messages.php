@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+$tabclass = array ("row1", "row2" );
 $Breturn = $this->uri->toString ( array ('path', 'query', 'fragment' ) );
 $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 ?>
@@ -34,7 +35,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 	<div class="kcontainer">
 		<div class="kbody">
 			<form action="index.php" method="post" name="kApproveMessagesForm">
-			<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
+			<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?>" id="kflattable">
 			<?php if (!count ( $this->MessagesToApprove )) { ?>
 		<tr class="krow2">
 			<td class="kcol-first">
@@ -44,7 +45,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 	<?php } else {
 		$k = 0;
 		foreach ( $this->MessagesToApprove as $mes ) { ?>
-			<tr class="k<?php echo $this->tabclass [$k^=1];?>" >
+			<tr class="k<?php echo $tabclass [$k^=1];?>" >
 				<td class="kcol-mid kcol-ktopicicon">
 				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($mes->catid), intval($mes->id), '1', intval($this->config->messages_per_page), CKunenaTools::topicIcon($mes), '' ) ?>
 				</td>

@@ -35,6 +35,8 @@ Kunena 1.7.0-DEV
 
 11-October-2010 Matias
 ^ [#22792] CKunenaShowcat: use the new tables, simplify logic, fix template
+^ [#22792] CKunenaLatestX: Cleanup code, improve topics, usertopics and categories code
+^ [#22792] Templates: change variable naming after changes made in classes
 
 10-October-2010 fxstein
 ^ [#22792] Begin refactoring showcat

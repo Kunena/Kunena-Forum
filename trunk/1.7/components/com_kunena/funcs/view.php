@@ -396,7 +396,6 @@ class CKunenaView {
 		$this->read_topics = explode ( ',', $this->session->readtopics );
 
 		$showedEdit = 0;
-		$this->kunena_forum_locked = $this->catinfo->locked;
 
 		//check if topic is locked
 		$this->topicLocked = $this->first_message->locked;
@@ -579,7 +578,7 @@ class CKunenaView {
 		// FINISH: FAVORITES
 
 
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->category->locked) {
 			//this user is allowed to post a new topic
 			$this->thread_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
 		}

@@ -20,7 +20,7 @@ defined( '_JEXEC' ) or die();
 		<div class="kbody">
 <table
 	class="<?php
-	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '';
+	echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '';
 	?>" id="kflattable">
 	<tbody>
 		<tr class="krow2">

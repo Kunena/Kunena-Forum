@@ -11,6 +11,7 @@
 
 defined ( '_JEXEC' ) or die ();
 
+$tabclass = array ("row1", "row2" );
 if (empty ( $this->q ) && empty ( $this->quser )) {
 	return;
 }
@@ -46,7 +47,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 						</thead>
 						<tbody>
 							<?php $k = 0; if ($this->total == 0 && $this->int_kunena_errornr) : ?>
-							<tr class="k<?php echo $this->tabclass [$k] ?>" >
+							<tr class="k<?php echo $tabclass [$k] ?>" >
 								<td>
 									<?php echo $this->escape($this->str_kunena_errormsg) ?>
 								</td>

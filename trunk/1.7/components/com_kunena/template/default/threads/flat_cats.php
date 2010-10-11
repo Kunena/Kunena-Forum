@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+$tabclass = array ("row1", "row2" );
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
@@ -34,7 +35,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-		<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?>" id="kflattable">
+		<table class="kblocktable" id="kflattable">
 		<?php if (!count ( $this->categories ) ) { ?>
 		<tr class="krow2">
 			<td class="kcol-first">
@@ -44,17 +45,18 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 		} else
 			$k = 0;
-			foreach ( $this->categories as $leaf ) : ?>
-		<tr class="k<?php echo $this->tabclass [$k^=1] ?>">
+			foreach ( $this->categories as $category ) :
+			?>
+		<tr class="k<?php echo $tabclass [$k^=1] ?>">
 			<td class="kcol-mid kcol-ktopictitle">
 				<div class="ktopic-title-cover">
-				<?php echo CKunenaLink::GetCategoryPageLink('showcat', intval($leaf->catid), 1, $this->escape($leaf->catname), 'follow', 'ktopic-title km' ) ?>
+				<?php echo CKunenaLink::GetCategoryPageLink('showcat', intval($category->id), 1, $this->escape($category->name), 'follow', 'ktopic-title km' ) ?>
 				</div>
 			</td>
 
 			<td class="kcol-mid kcol-ktopicviews">
 				<!-- Views -->
-				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->numTopics );?></span>
+				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( ( int ) $category->numTopics );?></span>
 				<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_DISCUSSIONS'); ?> </span>
 				<!-- /Views -->
 			</td>
@@ -62,7 +64,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<?php if ($this->showposts):?>
 			<td class="kcol-mid kmycount">
 				<!-- Posts -->
-				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( ( int ) $leaf->numPosts ); ?></span>
+				<span class="ktopic-views-number"><?php echo CKunenaTools::formatLargeNumber ( ( int ) $category->numPosts ); ?></span>
 				<span class="ktopic-views"> <?php echo JText::_('COM_KUNENA_MY_POSTS'); ?> </span>
 				<!-- /Posts -->
 			</td>
@@ -72,11 +74,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				<div class="klatest-post-info">
 					<!-- Avatar -->
 					<?php if ($this->config->avataroncat > 0) :
-					$profile = KunenaFactory::getUser((int)$leaf->userid);
+					$profile = KunenaFactory::getUser((int)$category->last_post_userid);
 					$useravatar = $profile->getAvatarLink('klist-avatar', 'list');
 					if ($useravatar) :
 					?>
-						<span class="ktopic-latest-post-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($leaf->userid), $useravatar ); ?></span>
+						<span class="ktopic-latest-post-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($category->last_post_userid), $useravatar ); ?></span>
 					<?php endif; ?>
 					<?php endif; ?>
 					<!-- /Avatar -->
@@ -84,26 +86,26 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<span class="ktopic-latest-post">
 						<?php
 						if ($this->topic_ordering == 'ASC') {
-							$threadPages = ceil ( $leaf->msgcount / $this->config->messages_per_page );
-							echo JText::_('COM_KUNENA_GEN_LAST_POST').': '.CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), $threadPages, intval($this->config->messages_per_page), KunenaParser::parseText ($leaf->subject), intval($leaf->msgid) );
+							$threadPages = ceil ( $category->msgcount / $this->config->messages_per_page );
+							echo JText::_('COM_KUNENA_GEN_LAST_POST').': '.CKunenaLink::GetThreadPageLink ( 'view', intval($category->id), intval($category->last_topic), $threadPages, intval($this->config->messages_per_page), KunenaParser::parseText ($category->last_topic_subject), intval($category->last_post_id) );
 						} else {
-							echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->catid), intval($leaf->thread), 1, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->msgid) );
+							echo CKunenaLink::GetThreadPageLink ( 'view', intval($category->id), intval($category->last_topic_id), 1, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($category->last_post_id) );
 						}
-						if ($leaf->uname) echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->uname), '', 'nofollow' );
+						echo ' ' . JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($category->last_post_userid), null, '', 'nofollow' );
 						?>
 					</span>
 					<!-- /Latest Post -->
 					<br />
 					<!-- Latest Post Date -->
-					<span class="ktopic-date" title="<?php echo CKunenaTimeformat::showDate($this->lastreply [$leaf->thread]->time, 'config_post_dateformat_hover'); ?>">
-						<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat'); ?>
+					<span class="ktopic-date" title="<?php echo CKunenaTimeformat::showDate($category->last_post_time, 'config_post_dateformat_hover'); ?>">
+						<?php echo CKunenaTimeformat::showDate($category->last_post_time, 'config_post_dateformat'); ?>
 					</span>
 					<!-- /Latest Post Date -->
 				</div>
 			</td>
 
 			<td class="kcol-mid">
-				<?php echo CKunenaLink::GetCategoryActionLink ( 'unsubscribecat', $leaf->catid, JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY'), 'nofollow', '', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG'), '&userid='.$this->my->id ); ?>
+				<?php echo CKunenaLink::GetCategoryActionLink ( 'unsubscribecat', $category->id, JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY'), 'nofollow', '', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG'), '&userid='.$this->my->id ); ?>
 			</td>
 
 		</tr>

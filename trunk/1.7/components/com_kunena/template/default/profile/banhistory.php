@@ -19,7 +19,7 @@ $j=count($this->banhistory);
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-			<table class="<?php echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : ''; ?> kblock-ban">
+			<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''; ?> kblock-ban">
 				<thead>
 					<tr class="ksth">
 						<th class="kid"> # </th>

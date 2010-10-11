@@ -22,6 +22,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+$tabclass = array ("row1", "row2" );
 // url of current page that user will be returned to after bulk operation
 $kuri = JURI::getInstance ();
 $Breturn = $kuri->toString ( array ('path', 'query', 'fragment' ) );
@@ -36,7 +37,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<div class="kbody">
 <table
 	class="<?php
-	echo isset ( $this->objCatInfo->class_sfx ) ? ' kblocktable' . $this->escape($this->objCatInfo->class_sfx) : '';
+	echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '';
 	?>">
 		<?php
 		$k = 0;
@@ -51,12 +52,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				$lastreply = $this->lastreply[$message->thread];
 				$firstpost = $this->threads[$message->thread];
 		?>
-		<tr class="k<?php echo $this->tabclass [$k^=1];
+		<tr class="k<?php echo $tabclass [$k^=1];
 		if ($firstpost->ordering != 0) {
 			echo '-stickymsg';
 		}
 		if ($firstpost->class_sfx) {
-			echo ' k' . $this->tabclass [$k^1];
+			echo ' k' . $tabclass [$k^1];
 			if ($firstpost->ordering != 0) {
 				echo '-stickymsg';
 			}

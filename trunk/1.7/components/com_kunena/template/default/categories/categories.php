@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+$tabclass = array ("row1", "row2" );
 foreach ( $this->categories [0] as $section ) :
 	$htmlClassBlockTable = !empty ( $section->class_sfx ) ? ' kblocktable' . $this->escape($section->class_sfx) : '';
 	$htmlClassTitleCover = !empty ( $section->class_sfx ) ? ' ktitle-cover' . $this->escape($section->class_sfx) : '';
@@ -43,7 +44,7 @@ foreach ( $this->categories [0] as $section ) :
 		$k = 0;
 		foreach ( $this->categories [$section->id] as $category ) {
 	?>
-		<tr class="k<?php echo $this->tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($this->tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
+		<tr class="k<?php echo $tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
 			id="kcat<?php echo intval($category->id) ?>">
 			<td class="kcol-first kcol-category-icon">
 				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $category->htmlCategoryIcon ) ?>

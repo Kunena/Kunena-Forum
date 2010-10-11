@@ -367,8 +367,6 @@ class CKunenaSearch {
 			$this->advsearch_hide = 0;
 		}
 
-		$this->tabclass = array ("row1", "row2" );
-
 		//category select list
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );

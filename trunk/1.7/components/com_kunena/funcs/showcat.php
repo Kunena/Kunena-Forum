@@ -16,72 +16,54 @@ class CKunenaShowcat {
 	public $embedded = null;
 	public $actionDropdown = array();
 
+	public $category = null;
+	public $subcategories = null;
+
 	function __construct($catid, $page=0) {
 		kimport('html.parser');
+		kimport('category');
+
 		$this->func = 'showcat';
-		$this->catid = $catid;
-		$this->page = $page;
-		$this->hasSubCats = '';
+		$this->catid = intval($catid);
+		$this->page = intval($page);
+
+		$this->category = KunenaCategory::getInstance($this->catid);
+		if (! $this->category->exists())
+			return;
+		if (! $this->category->authorize('read'))
+			return;
+
+		$this->allow = 1;
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
 
+		$this->app = JFactory::getApplication ();
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
 		$this->myprofile = KunenaFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
 		$this->config = KunenaFactory::getConfig ();
 
-		if (! $this->catid)
-			return;
-		if (! $this->session->canRead ( $this->catid ))
-			return;
-
-		$this->allow = 1;
-
-		$this->tabclass = array ("row1", "row2" );
 		$this->prevCheck = $this->session->lasttime;
-
-		$this->app = & JFactory::getApplication ();
-
-		//Get the category information
-		$query = "SELECT c.*, s.subscribed AS subscribeid
-				FROM #__kunena_categories AS c
-				LEFT JOIN #__kunena_user_categories AS s ON c.id = s.category_id
-				AND s.user_id = '{$this->my->id}'
-				WHERE c.id={$this->db->Quote($this->catid)}";
-
-		$this->db->setQuery ( $query );
-		$this->objCatInfo = $this->db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
-		//Get the Category's parent category name for breadcrumb
-		$this->db->setQuery ( "SELECT name, id FROM #__kunena_categories WHERE id={$this->db->Quote($this->objCatInfo->parent)}" );
-		$objCatParentInfo = $this->db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		//check if this forum is locked
-		$this->kunena_forum_locked = $this->objCatInfo->locked;
-		//check if this forum is subject to review
-		$this->kunena_forum_reviewed = $this->objCatInfo->review;
-
-		$threads_per_page = $this->config->threads_per_page;
 
 		$access = KunenaFactory::getAccessControl();
 		$hold = $access->getAllowedHold($this->myprofile, $this->catid);
 
-		/*//////////////// Start selecting messages, prepare them for threading, etc... /////////////////*/
-		$this->page = $this->page < 1 ? 1 : $this->page;
-		$offset = ($this->page - 1) * $threads_per_page;
-		$row_count = $this->page * $threads_per_page;
+		// Get topic count
 		$this->db->setQuery ( "SELECT COUNT(*) FROM #__kunena_topics WHERE category_id={$this->db->Quote($this->catid)} AND hold IN ({$hold})" );
 		$this->total = ( int ) $this->db->loadResult ();
 		KunenaError::checkDatabaseError();
-		$this->totalpages = ceil ( $this->total / $threads_per_page );
+
+		$this->page = $this->page < 1 ? 1 : $this->page;
+		$limit = $this->config->threads_per_page;
+		$limitstart = ($this->page - 1) * $limit;
+		$this->totalpages = ceil ( $this->total / $limit );
 
 		$this->topics = array ();
 		$this->highlight = 0;
-		$routerlist = array ();
 
+		// Get list of topics
 		if ($this->total > 0) {
 			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
 				FROM #__kunena_topics AS tt
@@ -91,13 +73,13 @@ class CKunenaShowcat {
 				ORDER BY tt.ordering DESC, tt.last_post_id DESC
 			";
 
-			$this->db->setQuery ( $query, $offset, $threads_per_page );
+			$this->db->setQuery ( $query, $limitstart, $limit );
 			$this->topics = $this->db->loadObjectList ('id');
 			KunenaError::checkDatabaseError();
 
 			// collect user ids for avatar prefetch when integrated
 			$userlist = array();
-
+			$routerlist = array ();
 			foreach ( $this->topics as $topic ) {
 				$routerlist [$topic->id] = $topic->subject;
 				if ($topic->ordering) $this->highlight++;
@@ -125,46 +107,10 @@ class CKunenaShowcat {
 			}
 		}
 
-		//Perform subscriptions check
-		$kunena_cansubscribecat = 0;
-		if ($this->config->allowsubscriptions && ("" != $this->my->id || 0 != $this->my->id)) {
-			$kunena_cansubscribecat = !$this->objCatInfo->subscribeid;
-		}
-
-		//meta description and keywords
-		$metaKeys = kunena_htmlspecialchars ( JText::_('COM_KUNENA_CATEGORIES') . ", {$objCatParentInfo->name}, {$this->objCatInfo->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
-		$metaDesc = kunena_htmlspecialchars ( "{$objCatParentInfo->name} ({$this->page}/{$this->totalpages}) - {$this->objCatInfo->name} - {$this->config->board_title}" );
-
-		$document = & JFactory::getDocument ();
-		$cur = $document->get ( 'description' );
-		$metaDesc = $cur . '. ' . $metaDesc;
-		$document = & JFactory::getDocument ();
-		$document->setMetadata ( 'keywords', $metaKeys );
-		$document->setDescription ( $metaDesc );
-
-		$this->headerdesc = $this->objCatInfo->headerdesc;
-
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->kunena_forum_locked) {
-			//this user is allowed to post a new topic:
-			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
-		}
-		if ($this->my->id != 0 && $this->total) {
-			$this->forum_markread = CKunenaLink::GetCategoryActionLink ( 'markthisread', $this->catid, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
-		}
-
-		// Thread Subscription
-		if ($kunena_cansubscribecat == 1) {
-			// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
-			// for top and bottom navigation
-			$this->thread_subscribecat = CKunenaLink::GetCategoryActionLink ( 'subscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
-		}
-
-		if ($this->my->id != 0 && $this->config->allowsubscriptions && $kunena_cansubscribecat == 0) {
-			// this user is allowed to unsubscribe
-			$this->thread_subscribecat = CKunenaLink::GetCategoryActionLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
-		}
-		//get the Moderator list for display
-		$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m INNER JOIN #__users AS u ON u.id=m.userid WHERE m.catid={$this->db->Quote($this->catid)} AND u.block=0" );
+		// Get list of moderators
+		$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m
+			INNER JOIN #__users AS u ON u.id=m.userid
+			WHERE m.catid={$this->db->Quote($this->catid)} AND u.block=0" );
 		$this->modslist = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
 		foreach ($this->modslist as $mod) {
@@ -173,6 +119,42 @@ class CKunenaShowcat {
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
 		if ( !empty($userlist) ) KunenaUser::loadUsers($userlist);
+
+		//meta description and keywords
+		$document = JFactory::getDocument ();
+		$parentCategory = $this->category->getParent();
+		$metaKeys = kunena_htmlspecialchars ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
+		$metaDesc = $document->get ( 'description' ) . '. ' . kunena_htmlspecialchars ( "{$parentCategory->name} ({$this->page}/{$this->totalpages}) - {$this->category->name} - {$this->config->board_title}" );
+		$document->setMetadata ( 'keywords', $metaKeys );
+		$document->setDescription ( $metaDesc );
+
+		$this->headerdesc = $this->category->headerdesc;
+
+		// Is user allowed to post new topic?
+		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || !$this->category->locked) {
+			$this->forum_new = CKunenaLink::GetPostNewTopicLink ( $this->catid, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
+		}
+
+		// Is user allowed to mark forums as read?
+		if ($this->my->id && $this->total) {
+			$this->forum_markread = CKunenaLink::GetCategoryActionLink ( 'markthisread', $this->catid, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
+		}
+
+		// Is user allowed to subscribe category?
+		if ($this->my->id && $this->config->allowsubscriptions) {
+			$query = "SELECT subscribed
+				FROM #__kunena_user_categories
+				WHERE user_id={$this->db->Quote($this->my->id)} AND category_id={$this->db->Quote($this->catid)}";
+			$this->db->setQuery ( $query );
+			$subscribed = $this->db->loadResult ();
+			if (KunenaError::checkDatabaseError()) return;
+
+			if (!$subscribed) {
+				$this->thread_subscribecat = CKunenaLink::GetCategoryActionLink ( 'subscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_CATEGORY_LONG') );
+			} else {
+				$this->thread_subscribecat = CKunenaLink::GetCategoryActionLink ( 'unsubscribecat', $this->catid, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_CATEGORY_LONG') );
+			}
+		}
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
 		$this->showposts = 0;
@@ -219,12 +201,12 @@ class CKunenaShowcat {
 		$obj->loadCategories();
 		if (!empty($obj->categories [$this->catid])) {
 			$obj->displayCategories();
-			$this->hasSubCats = '1';
+			$this->subcategories = true;
 		}
 	}
 
 	function displayFlat() {
-		$this->header = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->escape( $this->objCatInfo->name );
+		$this->header = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->escape( $this->category->name );
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
 			$this->actionMove = true;
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));

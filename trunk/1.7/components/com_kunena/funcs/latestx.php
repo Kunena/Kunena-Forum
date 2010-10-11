@@ -20,14 +20,20 @@ class CKunenaLatestX {
 	public $actionDropdown = array();
 	public $actionMove = false;
 
+	public $category = null;
+	public $subcategories = null;
+
 	function __construct($func, $page = 0) {
+		kimport ('category');
+
 		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
-		$this->hasSubCats = '';
 		$this->mode = 'threads';
 		$this->header = '';
 
+		$this->app = JFactory::getApplication ();
 		$this->db = JFactory::getDBO ();
+		$this->document = JFactory::getDocument ();
 		$this->user = $this->my = JFactory::getUser ();
 		$this->myprofile = KunenaFactory::getUser ();
 		$this->session = KunenaFactory::getSession ();
@@ -35,14 +41,12 @@ class CKunenaLatestX {
 
 		$this->latestcategory = explode ( ',', $this->config->latestcategory );
 		$this->latestcategory_in = $this->config->latestcategory_in;
+
 		$this->page = $page < 1 ? 1 : $page;
-		$this->threads_per_page = $this->config->threads_per_page;
-		$this->offset = ($this->page - 1) * $this->threads_per_page;
+		$this->limit = $this->config->threads_per_page;
+		$this->limitstart = ($this->page - 1) * $this->limit;
 
 		$this->prevCheck = $this->session->lasttime;
-
-		$this->app = & JFactory::getApplication ();
-		$this->document = & JFactory::getDocument ();
 
 		$this->show_list_time = JRequest::getInt ( 'sel', 720 );
 
@@ -54,15 +58,13 @@ class CKunenaLatestX {
 		$this->allow = 1;
 		$this->highlight = 0;
 
-		$this->tabclass = array ("row1", "row2" );
-
 		if (! $this->my->id && $this->show_list_time == 0) {
 			$this->show_list_time = "720";
 		}
 
 		//start the latest x
 		if ($this->show_list_time == 0) {
-			$this->querytime = ($this->prevCheck - $this->config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
+			$this->querytime = $this->prevCheck - $this->config->fbsessiontimeout;
 		} else {
 			//Time translation
 			$back_time = $this->show_list_time * 3600; //hours*(mins*secs)
@@ -96,7 +98,7 @@ class CKunenaLatestX {
 	}
 
 	protected function _common() {
-		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
+		$this->totalpages = ceil ( $this->total / $this->limit );
 
 		if (!empty ( $this->threadids ) ) {
 			$idstr = implode ( ",", $this->threadids );
@@ -110,7 +112,9 @@ class CKunenaLatestX {
 			$this->db->setQuery ( $query );
 			$this->topics = $this->db->loadObjectList ('id');
 			KunenaError::checkDatabaseError();
-			// collect user ids for avatar prefetch when integrated
+		}
+		if (!empty($this->topics)) {
+			// Collect user ids for avatar prefetch, topics for the router
 			$routerlist = array();
 			$userlist = array();
 			foreach ( $this->topics as $topic ) {
@@ -129,8 +133,10 @@ class CKunenaLatestX {
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
 			KunenaUser::loadUsers($userlist);
 
+			// Get unread messages from all topics
 			if ($this->config->shownew && $this->my->id) {
 				$readlist = $this->session->readtopics;
+				$idstr = implode ( ",", array_keys($this->topics) );
 				$this->db->setQuery ( "SELECT thread, MIN(id) AS lastread, SUM(1) AS unread FROM #__kunena_messages
 				WHERE hold IN ({$this->hold}) AND moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$this->db->Quote($this->prevCheck)}
 				GROUP BY thread" );
@@ -146,8 +152,55 @@ class CKunenaLatestX {
 		}
 	}
 
-	protected function _getMyLatest($posts = true, $fav = true, $sub = false) {
-		$subquery = array();
+	protected function _getCategoriesWhere() {
+		$catlist = array ();
+		// need this becuse with kunena latest module when there is only one item selected in the list, it isn't saved in array
+		if(!is_array($this->latestcategory)) $this->latestcategory = array($this->latestcategory);
+		foreach ( $this->latestcategory as $catnum ) {
+			$catlist [] = ( int ) $catnum;
+		}
+		$latestcats = '';
+		if ( !empty($catlist) && !in_array(0, $catlist)) {
+			$catlist = implode ( ',', $catlist );
+			if ( $this->latestcategory_in == '1' ) {
+				$latestcats = ' AND tt.category_id IN ('.$catlist.') ';
+			} else {
+				$latestcats = ' AND tt.category_id NOT IN ('.$catlist.') ';
+			}
+		}
+		return $latestcats;
+	}
+
+	protected function _getLatestTopics($lastpost = true, $where = '') {
+		if (!$lastpost) {
+			$xpost = 'tt.first_post';
+		} else {
+			$xpost = 'tt.last_post';
+		}
+		$latestcats = $this->_getCategoriesWhere();
+		$wheretime = ($this->querytime ? " AND {$xpost}_time>{$this->db->Quote($this->querytime)}" : '');
+		$where = "tt.hold IN ({$this->hold}) AND tt.moved_id=0 AND tt.category_id IN ({$this->session->allowed}) {$latestcats} {$wheretime} {$where}";
+		$this->order = "{$xpost}_time DESC";
+
+		// Get total count
+		$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt WHERE {$where}";
+		$this->db->setQuery ( $query );
+		$this->total = ( int ) $this->db->loadResult ();
+		if (KunenaError::checkDatabaseError() || !$this->total) return;
+
+		$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
+			FROM #__kunena_topics AS tt
+			LEFT JOIN #__kunena_user_topics AS ut ON tt.id=ut.topic_id AND ut.user_id={$this->db->Quote($this->my->id)}
+			WHERE {$where} ORDER BY {$this->order}";
+		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
+		$this->topics = $this->db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		$this->_common();
+	}
+
+	protected function _getMyLatestTopics($posts = true, $fav = true, $sub = false) {
+		// Set where
 		if (!$posts && !$fav && !$sub) {
 			$where = 'ut.owner=1';
 		} else {
@@ -157,27 +210,34 @@ class CKunenaLatestX {
 			if ($sub) $where[] = 'ut.subscribed=1';
 			$where = implode(' OR ',$where);
 		}
-		$query = "SELECT COUNT(*) FROM #__kunena_user_topics AS ut
-		INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id
-		WHERE ut.user_id={$this->db->Quote($this->user->id)} AND ({$where}) AND tt.moved_id='0' AND tt.hold IN ({$this->hold}) AND tt.category_id IN ({$this->session->allowed})";
+		$where = "ut.user_id={$this->db->Quote($this->user->id)} AND ({$where}) AND tt.moved_id='0'
+			AND tt.hold IN ({$this->hold}) AND tt.category_id IN ({$this->session->allowed})";
 
+		// Set order by
+		switch ($this->func) {
+			case 'mylatest':
+				$this->order = "ut.favorite DESC, tt.last_post_time DESC";
+				break;
+			case 'usertopics':
+				$this->order = "ut.last_post_time DESC";
+				break;
+			default:
+				$this->order = "tt.last_post_time DESC";
+		}
+
+		// Get total count
+		$query = "SELECT COUNT(*) FROM #__kunena_user_topics AS ut INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id WHERE {$where}";
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$this->total) return;
 
-		if ($this->func == 'mylatest') $this->order = "ut.favorite DESC, tt.last_post_time DESC";
-		else if ($this->func == 'usertopics') $this->order = "ut.last_post_time DESC";
-		else $this->order = "tt.last_post_time DESC";
-
-		$query = "SELECT tt.id, tt.last_post_id, ut.last_post_id AS my_last_post_id, ut.favorite, ut.subscribed
-		FROM #__kunena_user_topics AS ut
-		INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id
-		WHERE ut.user_id={$this->db->Quote($this->user->id)} AND ({$where}) AND tt.moved_id='0' AND tt.hold IN ({$this->hold}) AND tt.category_id IN ({$this->session->allowed})
-		GROUP BY ut.topic_id
-		ORDER BY {$this->order}";
-
-		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
-		$this->threadids = $this->db->loadResultArray ();
+		// Get topics
+		$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
+			FROM #__kunena_user_topics AS ut
+			INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id
+			WHERE {$where} ORDER BY {$this->order}";
+		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
+		$this->topics = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
 		$this->_common();
@@ -233,7 +293,7 @@ class CKunenaLatestX {
 		WHERE {$where} {$latestcats} {$wheretime}
 		ORDER BY m.time DESC";
 
-		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
+		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
 		$idlist = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
@@ -252,7 +312,7 @@ class CKunenaLatestX {
 		kimport('thankyou');
 
 		$this->total = 10;//$limit default is on 10 TODO make adjustable
-		$this->threads_per_page = 10;
+		$this->limit = 10;
 
 		$idlist = KunenaThankYou::getThankYouPosts($this->user->id, $saidgot);
 
@@ -273,33 +333,20 @@ class CKunenaLatestX {
 		$this->_common();
 	}
 
-	function _getSubCategories() {
+	function _getCategorySubscriptions() {
 		$this->categories = array();
 		if (isset($this->total)) return;
 
 		$uname = $this->config->username ? 'name' : 'username';
 
-		$query = "SELECT COUNT(DISTINCT c.id) FROM #__kunena_user_categories AS uc
-		INNER JOIN #__kunena_categories AS c ON c.id=uc.category_id WHERE uc.user_id={$this->db->Quote($this->user->id)}";
-
+		$query = "SELECT COUNT(*) FROM #__kunena_user_categories WHERE user_id={$this->db->Quote($this->user->id)} AND subscribed=1";
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$this->total) return;
 
-		$this->totalpages = ceil ( $this->total / $this->threads_per_page );
-
-		$query = "SELECT j.id AS userid, j.{$uname} AS uname, cat.*, cat.id AS catid, cat.name AS catname,
-			0 AS fav, 1 AS sub, msg.thread, msg.id AS msgid, msg.subject,msg.time, COUNT(mmm.id) AS msgcount
-		FROM #__kunena_user_categories AS uc
-		INNER JOIN #__kunena_categories AS cat ON cat.id=uc.category_id
-		LEFT JOIN #__kunena_messages AS msg ON cat.id_last_msg=msg.id
-		LEFT JOIN #__kunena_messages AS mmm ON msg.thread=mmm.thread AND mmm.hold=0
-		LEFT JOIN #__users AS j ON j.id = uc.user_id
-		WHERE uc.user_id={$this->db->Quote($this->user->id)} AND subscribed=1
-		GROUP BY uc.category_id
-		ORDER BY ordering";
-		$this->db->setQuery ( $query, $this->offset, $this->threads_per_page );
-		$this->categories = $this->db->loadObjectList ();
+		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$this->db->Quote($this->user->id)} AND subscribed=1";
+		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
+		$this->categories = KunenaCategory::getCategories($this->db->loadResultArray ());
 		if (KunenaError::checkDatabaseError()) return;
 	}
 
@@ -340,7 +387,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_OWNTOPICS');
-		$this->_getMyLatest(false, false, false);
+		$this->_getMyLatestTopics(false, false, false);
 	}
 
 	function getUserTopics() {
@@ -348,7 +395,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_USERTOPICS');
-		$this->_getMyLatest(true, false, false);
+		$this->_getMyLatestTopics(true, false, false);
 	}
 
 	function getFavorites() {
@@ -357,7 +404,7 @@ class CKunenaLatestX {
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_FAVORITES');
 		$this->actionDropdown[] = JHTML::_('select.option', 'bulkFavorite', JText::_('COM_KUNENA_DELETE_FAVORITE'));
-		$this->_getMyLatest(false, true, false);
+		$this->_getMyLatestTopics(false, true, false);
 	}
 
 	function getSubscriptions() {
@@ -366,7 +413,7 @@ class CKunenaLatestX {
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
 		$this->actionDropdown[] = JHTML::_('select.option', 'bulkSub', JText::_('COM_KUNENA_DELETE_SUBSCRIPTION'));
-		$this->_getMyLatest(false, false, true);
+		$this->_getMyLatestTopics(false, false, true);
 	}
 
 	function getCategoriesSubscriptions() {
@@ -374,111 +421,37 @@ class CKunenaLatestX {
 		$this->columns--;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
-		$this->_getSubCategories();
+		$this->_getCategorySubscriptions();
 	}
 
 	function getmyLatest() {
 		if (isset($this->total)) return;
 		$this->header = JText::_('COM_KUNENA_MENU_MYLATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_MY_DISCUSSIONS');
-		$this->_getMyLatest();
+		$this->_getMyLatestTopics();
 	}
 
-	protected function _getCategoriesWhere() {
-		$catlist = array ();
-		// need this becuse with kunena latest module when there is only one item selected in the list, it isn't saved in array
-		if(!is_array($this->latestcategory)) $this->latestcategory = array($this->latestcategory);
-		foreach ( $this->latestcategory as $catnum ) {
-			$catlist [] = ( int ) $catnum;
-		}
-		$latestcats = '';
-		if ( !empty($catlist) && !in_array(0, $catlist)) {
-			$catlist = implode ( ',', $catlist );
-			if ( $this->latestcategory_in == '1' ) {
-				$latestcats = ' AND tt.category_id IN ('.$catlist.') ';
-			} else {
-				$latestcats = ' AND tt.category_id NOT IN ('.$catlist.') ';
-			}
-		}
-		return $latestcats;
-	}
 	function getLatestTopics() {
 		if (isset($this->total)) return;
 		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
-
-		$latestcats = $this->_getCategoriesWhere();
-		$wheretime = ($this->querytime ? " AND tt.first_post_time>{$this->db->Quote($this->querytime)}" : '');
-
-		$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt
-			WHERE tt.hold IN ({$this->hold}) AND tt.moved_id=0 AND tt.category_id IN ({$this->session->allowed}) {$latestcats} {$wheretime}";
-
-		$this->db->setQuery ( $query );
-		$this->total = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError() || !$this->total) return;
-		$offset = ($this->page - 1) * $this->threads_per_page;
-
-		$this->order = "tt.first_post_time DESC";
-		$query = "SELECT id FROM #__kunena_topics AS tt
-			WHERE tt.hold IN ({$this->hold}) AND tt.moved_id='0' AND tt.category_id IN ({$this->session->allowed}) {$latestcats} {$wheretime}
-			ORDER BY {$this->order}";
-		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
-		$this->threadids = $this->db->loadResultArray ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$this->_common();
+		$this->_getLatestTopics(false);
 	}
 
 	function getLatest() {
 		if (isset($this->total)) return;
 		$this->header =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
-
-		$latestcats = $this->_getCategoriesWhere();
-		$wheretime = ($this->querytime ? " AND tt.last_post_time>{$this->db->Quote($this->querytime)}" : '');
-
-		$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt
-			WHERE tt.moved_id='0' AND tt.hold IN ({$this->hold}) AND tt.category_id IN ({$this->session->allowed}) {$latestcats} {$wheretime}";
-
-		$this->db->setQuery ( $query );
-		$this->total = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError() || !$this->total) return;
-		$offset = ($this->page - 1) * $this->threads_per_page;
-
-		$this->order = "tt.last_post_time DESC";
-		$query = "SELECT tt.id
-			FROM #__kunena_topics AS tt
-			WHERE tt.moved_id='0' AND tt.hold IN ({$this->hold}) AND tt.category_id IN ({$this->session->allowed})
-			{$latestcats} {$wheretime}
-			ORDER BY {$this->order}";
-		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
-		$this->threadids = $this->db->loadResultArray ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$this->_common();
+		$this->_getLatestTopics();
 	}
 
 	function getNoReplies() {
 		if (isset($this->total)) return;
 		$this->header =  JText::_('COM_KUNENA_MENU_NOREPLIES_DESC');
 		$this->title = JText::_('COM_KUNENA_NO_REPLIES');
-		$query = "SELECT COUNT(*) FROM #__kunena_topics as tt WHERE tt.posts = 1";
-
-		$this->db->setQuery ( $query );
-		$this->total = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError() || !$this->total) return;
-		$offset = ($this->page - 1) * $this->threads_per_page;
-
-		$this->order = "tt.last_post_time DESC";
-		$query = "SELECT id FROM #__kunena_topics as tt
-			WHERE tt.moved_id='0' AND tt.hold IN ({$this->hold}) AND tt.category_id IN ({$this->session->allowed}) AND tt.posts = 1
-			ORDER BY {$this->order}";
-
-		$this->db->setQuery ( $query, $offset, $this->threads_per_page );
-		$this->threadids = $this->db->loadResultArray ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$this->_common();
+		$this->querytime = 0;
+		$this->latestcategory = array(0);
+		$this->_getLatestTopics(true, 'AND tt.posts=1');
 	}
 
 	function displayPathway() {
@@ -501,6 +474,7 @@ class CKunenaLatestX {
 	}
 
 	function displayItems() {
+		if (empty ( $this->topics )) return;
 		if ($this->mode == 'threads') $this->displayFlat();
 		else $this->displayPosts();
 	}
@@ -628,10 +602,9 @@ class CKunenaLatestX {
 		//meta description and keywords
 		$metaKeys = $this->header . kunena_htmlspecialchars ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
 		$metaDesc = $this->header . kunena_htmlspecialchars ( " ({$this->page}/{$this->totalpages}) - {$this->config->board_title}" );
+		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 
-		$cur = $this->document->get ( 'description' );
-		$metaDesc = $cur . '. ' . $metaDesc;
-		$this->document = & JFactory::getDocument ();
+		$this->document = JFactory::getDocument ();
 		$this->document->setMetadata ( 'robots', 'noindex, follow' );
 		$this->document->setMetadata ( 'keywords', $metaKeys );
 		$this->document->setDescription ( $metaDesc );

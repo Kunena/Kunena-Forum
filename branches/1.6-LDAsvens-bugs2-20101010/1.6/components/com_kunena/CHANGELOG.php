@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.1-DEV
+12-October-2010 svens (LDA)
+# [#22827] Check old folder/file to delete on upgrade Part 1
+
 11-October-2010 svens (LDA)
 # [#22810] Some escape issue in title
 

@@ -213,7 +213,6 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $allowavatar = 1; // DEPRECATED, needed in installer
 	var $allowavatarupload = 1;
 	var $allowavatargallery = 1;
-	var $imageprocessor = 'gd2';
 	var $avatarquality = 65;
 	var $avatarsize = 2048;
 	var $allowimageupload = 0;

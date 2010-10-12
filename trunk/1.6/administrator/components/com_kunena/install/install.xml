@@ -114,7 +114,6 @@
     <field name="allowavatar" type="int(11)" null="1"/>
     <field name="allowavatarupload" type="int(11)" null="1"/>
     <field name="allowavatargallery" type="int(11)" null="1"/>
-    <field name="imageprocessor" type="text" null="1"/>
     <field name="avatarquality" type="int(11)" null="1"/>
     <field name="avatarsize" type="int(11)" null="1"/>
     <field name="allowimageupload" type="int(11)" null="1"/>

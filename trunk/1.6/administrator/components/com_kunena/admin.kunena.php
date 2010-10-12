@@ -47,11 +47,11 @@ if (!$kn_version->checkVersion() && $task!='schema' && $task!='schemadiff') {
 
 require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
-if (!$lang->load('com_kunena',JPATH_SITE)) {
-	$lang->load('com_kunena',KPATH_SITE);
-}
-if (!$lang->load('com_kunena',JPATH_ADMINISTRATOR, null, true)) {
+if (Kunena::isSVN()) {
 	$lang->load('com_kunena',KPATH_ADMIN);
+	$lang->load('com_kunena',KPATH_SITE);
+} else {
+	$lang->load('com_kunena',JPATH_SITE);
 }
 
 // Now that we have the global defines we can use shortcut defines
@@ -1456,35 +1456,6 @@ function showConfig($option) {
 		$lists ['enablerss'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerss );
 	}
 
-	// source of avatar picture
-	$avlist = array ();
-	$avlist [] = JHTML::_ ( 'select.option', 'fb', JText::_('COM_KUNENA_KUNENA') );
-	$avlist [] = JHTML::_ ( 'select.option', 'cb', JText::_('COM_KUNENA_CB') );
-	$avlist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_('COM_KUNENA_JOMSOCIAL') );
-	$avlist [] = JHTML::_ ( 'select.option', 'aup', JText::_('COM_KUNENA_AUP_ALPHAUSERPOINTS') ); // INTEGRATION ALPHAUSERPOINTS
-	// build the html select list
-	$lists ['avatar_src'] = JHTML::_ ( 'select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src );
-
-	// private messaging system to use
-	$pmlist = array ();
-	$pmlist [] = JHTML::_ ( 'select.option', 'no', JText::_('COM_KUNENA_A_NO') );
-	$pmlist [] = JHTML::_ ( 'select.option', 'cb', JText::_('COM_KUNENA_CB') );
-	$pmlist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_('COM_KUNENA_JOMSOCIAL') );
-	$pmlist [] = JHTML::_ ( 'select.option', 'uddeim', JText::_('COM_KUNENA_UDDEIM') );
-
-	$lists ['pm_component'] = JHTML::_ ( 'select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pm_component );
-
-	//redundant    $lists['pm_component'] = JHTML::_('select.genericlist',$pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pm_component);
-	// Profile select
-	$prflist = array ();
-	$prflist [] = JHTML::_ ( 'select.option', 'fb', JText::_('COM_KUNENA_KUNENA') );
-	$prflist [] = JHTML::_ ( 'select.option', 'cb', JText::_('COM_KUNENA_CB') );
-	$prflist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_('COM_KUNENA_JOMSOCIAL') );
-	$prflist [] = JHTML::_ ( 'select.option', 'aup', JText::_('COM_KUNENA_AUP_ALPHAUSERPOINTS') ); // INTEGRATION ALPHAUSERPOINTS
-
-
-	$lists ['fb_profile'] = JHTML::_ ( 'select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->fb_profile );
-
 	// build the html select list
 	// make a standard yes/no list
 	$yesno = array ();
@@ -1516,13 +1487,6 @@ function showConfig($option) {
 	$lists ['changename'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_changename', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->changename );
 	$lists ['allowavatarupload'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatarupload );
 	$lists ['allowavatargallery'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatargallery );
-	$lists ['avatar_src'] = JHTML::_ ( 'select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src );
-
-	$ip_opt [] = JHTML::_ ( 'select.option', 'gd2', 'GD2' );
-	$ip_opt [] = JHTML::_ ( 'select.option', 'gd1', 'GD1' );
-	$ip_opt [] = JHTML::_ ( 'select.option', 'none', JText::_('COM_KUNENA_IMAGE_PROCESSOR_NONE') );
-
-	$lists ['imageprocessor'] = JHTML::_ ( 'select.genericlist', $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $kunena_config->imageprocessor );
 	$lists ['showstats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showstats );
 	$lists ['showranking'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showranking );
 	$lists ['rankimages'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rankimages );

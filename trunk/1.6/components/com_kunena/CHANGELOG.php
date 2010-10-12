@@ -36,6 +36,9 @@ Kunena 1.6.1-DEV
 12-October-2010 Matias
 ^ [#15886] Merged revisions 3700-3712 from /branches/1.6-xillibit-fixes-20101010
 ^ [#15886] Merged revisions 3697-3709 from /branches/1.6-LDAsvens-bugs2-20101010
+- [#22842] Cleanup deprecated code: Administration has integration options which haven't been used since K1.5
+- [#22842] Remove deprecated configuration option: imageprocessor
+^ [#22842] Move all new language strings into the end of the ini files
 
 12-October-2010 svens (LDA)
 # [#22827] Check old folder/file to delete on upgrade Part 1

@@ -1328,24 +1328,6 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_IMAGE_PROCESSOR') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $lists ['imageprocessor'];
-						?>
-						</td>
-						<td align="left" valign="top"><?php 				$fb_gd = intval ( KUNENA_gdVersion () );
-						if ($fb_gd > 0) {
-							$fbmsg = JText::_('COM_KUNENA_GD_INSTALLED') . $fb_gd;
-						} elseif ($fb_gd == - 1) {
-							$fbmsg = JText::_('COM_KUNENA_GD_NO_VERSION');
-						} else {
-							$fbmsg = JText::_('COM_KUNENA_GD_NOT_INSTALLED') . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
-						}
-								echo $fbmsg;
-								?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVSIZE') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_avatarsize" class="ksm-field"
 							value="<?php echo kescape($kunena_config->avatarsize);

@@ -38,7 +38,7 @@ abstract class KunenaActivity
 
 	public function onAfterPost($message) {}
 	public function onAfterReply($message) {}
-	public function onAfterThankyou($thankyoutargetid, $username) {}
+	public function onAfterThankyou($thankyoutargetid, $username, $message) {}
 	public function onAfterEdit($message) {}
 	public function onAfterDelete($message) {}
 	public function onAfterUndelete($message) {}

@@ -38,7 +38,7 @@ if ($this->my->id) {
 		var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	// ]]>');
  }
-$this->setTitle ( $this->escape($this->title) );
+$this->setTitle ( $this->title );
 
 $this->k=0;
 ?>

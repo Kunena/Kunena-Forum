@@ -35,10 +35,20 @@ Kunena 1.6.1-DEV
 
 12-October-2010 Matias
 ^ [#15886] Merged revisions 3700-3712 from /branches/1.6-xillibit-fixes-20101010
+^ [#15886] Merged revisions 3697-3709 from /branches/1.6-LDAsvens-bugs2-20101010
+
+12-October-2010 svens (LDA)
+# [#22827] Check old folder/file to delete on upgrade Part 1
+
+11-October-2010 svens (LDA)
+# [#22810] Some escape issue in title
 
 11-October-2010 Xillibit
 # [#22627] Some updates on fr-FR translation
 + [#22821] Display categories subscriptions in kunena user manager
+
+10-October-2010 svens (LDA)
++ [#22780] Jomsocial User Points for Thankyou and wall notice
 
 10-October-2010 Xillibit
 # [#22805] Some language files issues in skinner
@@ -62,6 +72,9 @@ Kunena 1.6.1-DEV
 
 9-October-2010 Matias
 ^ [#15886] Merged revisions 3642-3664 from /branches/1.6-xillibit-fixes-20101005
+
+8-October-2010 svens (LDA)
+# [#22774] Welcome box: avatar doesn't have link pointing to profile
 
 8-October-2010 Xillibit
 # [#21992] Bug when moving a post to a different category and leaving a shadow

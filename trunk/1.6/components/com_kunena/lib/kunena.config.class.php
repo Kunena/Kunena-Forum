@@ -253,10 +253,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $usernamechange = 0;
 	var $rules_infb = 1; // retired in 1.6 controlled via joommla menu
 	var $rules_cid = 1;
-	var $rules_link = 'http://www.kunena.com/';
 	var $help_infb = 1; // retired in 1.6 controlled via joommla menu
 	var $help_cid = 1;
-	var $help_link = 'http://www.kunena.com/';
 	// New 1.0.5 config variables
 	// bbcode options
 	var $showspoilertag = 1;
@@ -351,6 +349,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	//New for 1.6: allow only secure image extensions (jpg/gif/png) in IMG tag
 	var $bbcode_img_secure = 'text';
 	var $listcat_show_moderators = 1;
+	//New for 1.6.1: allow the user to disable lightbox
+	var $lightbox = 1;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

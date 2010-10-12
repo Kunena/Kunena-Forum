@@ -33,6 +33,17 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+12-October-2010 Matias
+^ [#15886] Merged revisions 3700-3712 from /branches/1.6-xillibit-fixes-20101010
+
+11-October-2010 Xillibit
+# [#22627] Some updates on fr-FR translation
++ [#22821] Display categories subscriptions in kunena user manager
+
+10-October-2010 Xillibit
+# [#22805] Some language files issues in skinner
+# [#22801] Add configuration setting to disable lightbox
+
 10-October-2010 Matias
 # [#22800] Fix KunenaCategory->delete() when user uses custom database prefix
 # [#22693] [#22694] Fix bug in NoixACL and JXtended integration when sending subscriptions

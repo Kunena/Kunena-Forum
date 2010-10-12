@@ -1640,6 +1640,8 @@ function showConfig($option) {
 
 	$lists ['listcat_show_moderators'] = JHTML::_('select.genericlist', $yesno, 'cfg_listcat_show_moderators', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->listcat_show_moderators);
 
+	$lists ['lightbox'] = JHTML::_('select.genericlist', $yesno, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->lightbox);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
@@ -1972,6 +1974,11 @@ function editUserProfile($option, $uid) {
 	$subslist = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
 
+	//get all categories subscriptions for this user
+	$kunena_db->setQuery ( "select catid from #__kunena_subscriptions_categories where userid=$uid[0]" );
+	$subscatslist = $kunena_db->loadObjectList ();
+	if (KunenaError::checkDatabaseError()) return;
+
 	//get all moderation category ids for this user
 	$kunena_db->setQuery ( "select catid from #__kunena_moderation where userid=" . $uid [0] );
 	$modCatList = $kunena_db->loadResultArray ();
@@ -1999,7 +2006,7 @@ function editUserProfile($option, $uid) {
 		$useridslist[$item->ip][] = $item;
 	}
 
-	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $useridslist );
+	html_Kunena::editUserProfile ( $option, $user, $subslist, $subscatslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $useridslist );
 }
 
 function saveUserProfile($option) {

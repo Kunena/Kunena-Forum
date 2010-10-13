@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+13-October-2010 fxstein
++ [#22849] Add new module position kunena_section_1 through kunena_section_n
+
 12-October-2010 Matias
 ^ [#15886] Merged revisions 3700-3712 from /branches/1.6-xillibit-fixes-20101010
 ^ [#15886] Merged revisions 3697-3709 from /branches/1.6-LDAsvens-bugs2-20101010

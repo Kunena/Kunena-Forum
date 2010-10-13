@@ -7,21 +7,13 @@
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
- *
- * Based on FireBoard Component
- * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.bestofjoomla.com
- *
- * Based on Joomlaboard Component
- * @copyright (C) 2000 - 2004 TSMF / Jan de Graaff / All Rights Reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @author TSMF & Jan de Graaff
  **/
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+$mmm=0;
 foreach ( $this->categories [0] as $section ) :
+	$mmm++;
 	$htmlClassBlockTable = !empty ( $section->class_sfx ) ? ' kblocktable' . $this->escape($section->class_sfx) : '';
 	$htmlClassTitleCover = !empty ( $section->class_sfx ) ? ' ktitle-cover' . $this->escape($section->class_sfx) : '';
 ?>
@@ -155,4 +147,16 @@ foreach ( $this->categories [0] as $section ) :
 </div>
 </div>
 <!-- F: List Cat -->
+<!-- Begin: Category Module Position -->
+<?php
+// TODO: Remove from production version
+//if(JDEBUG == 1){
+//	if(defined('JFIREPHP')){
+//		FB::log($mmm, 'Section Count');
+//	}
+//}
+?>
+
+	<?php CKunenaTools::showModulePosition('kunena_section_' . $mmm) ?>
+<!-- Finish: Category Module Position -->
 <?php endforeach; ?>

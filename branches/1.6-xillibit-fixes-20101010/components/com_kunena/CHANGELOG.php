@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+13-October-2010 Xillibit
+# [#22706] Show in configuration report the default joomla and details on joomla menu items
+
 11-October-2010 Xillibit
 # [#22627] Missing alt on collapse/expand buttons
 # [#22627] Some updates on fr-FR translation

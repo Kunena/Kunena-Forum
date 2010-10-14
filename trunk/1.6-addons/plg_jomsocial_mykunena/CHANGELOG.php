@@ -28,6 +28,9 @@ Legend:
 
 MyKunena 1.6.0-RC2
 
+13-October-2010
+# [#19002] Missing translations for two strings
+
 10-October-2010 Matias
 + [#19002] Added ru-RU translation (thanks ZARKOS)
 

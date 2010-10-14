@@ -153,10 +153,8 @@
     <field name="usernamechange" type="int(11)" null="1"/>
     <field name="rules_infb" type="int(11)" null="1"/>
     <field name="rules_cid" type="int(11)" null="1"/>
-    <field name="rules_link" type="text" null="1"/>
     <field name="help_infb" type="int(11)" null="1"/>
     <field name="help_cid" type="int(11)" null="1"/>
-    <field name="help_link" type="text" null="1"/>
     <field name="showspoilertag" type="int(11)" null="1"/>
     <field name="showvideotag" type="int(11)" null="1"/>
     <field name="showebaytag" type="int(11)" null="1"/>
@@ -176,12 +174,12 @@
     <field name="rss_specification" type="text" null="1"/>
     <field name="rss_allow_html" type="int(11)" null="1"/>
     <field name="rss_author_format" type="text" null="1"/>
+    <field name="rss_author_in_title" type="int(11)" null="1"/>
     <field name="rss_word_count" type="text" null="1"/>
     <field name="rss_old_titles" type="int(11)" null="1"/>
+    <field name="rss_cache" type="int(11)" null="1"/>
     <field name="fbdefaultpage" type="text" null="1"/>
     <field name="default_sort" type="text" null="1"/>
-    <field name="alphauserpoints" type="int(11)" null="1"/>
-    <field name="alphauserpointsrules" type="int(11)" null="1"/>
     <field name="alphauserpointsnumchars" type="int(11)" null="1"/>
     <field name="sef" type="int(11)" null="1"/>
     <field name="sefcats" type="int(11)" null="1"/>
@@ -225,9 +223,12 @@
     <field name="showbannedreason" type="int(11)" null="1"/>
     <field name="version_check" type="int(11)" null="1"/>
     <field name="showthankyou" type="int(11)" null="1"/>
-    <field name="showpopthankysoustats" type="int(11)" null="1"/>
+    <field name="showpopthankyoustats" type="int(11)" null="1"/>
     <field name="popthankscount" type="int(11)" null="1"/>
     <field name="mod_see_deleted" type="int(11)" null="1"/>
+    <field name="bbcode_img_secure" type="text" null="1"/>
+    <field name="listcat_show_moderators" type="int(11)" null="1"/>
+    <field name="lightbox" type="int(11)" null="1"/>
     <key name="PRIMARY" unique="1" columns="id"/>
   </table>
   <table name="kunena_favorites">

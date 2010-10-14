@@ -1680,6 +1680,12 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT') ?></td>
+							<td align="left" valign="top"><input type="text" name="cfg_activity_limit" class="ksm-field"
+								value="<?php echo kescape($kunena_config->activity_limit);?>" /></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT_DESC') ?></td>
+						</tr>
+						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS') ?></td>
 							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_access']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS_DESC') ?></td>

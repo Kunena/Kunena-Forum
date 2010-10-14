@@ -35,10 +35,22 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
-			$kunena_emoticons = smile::getEmoticons ( 1 );
+			$kunena_emoticons = smile::getEmoticons ( 0 ); // use colored emoticons for the activity stream
+
 			$content = $message->get ( 'message' );
+
+			// limit activity stream output if limit is set
+			if ($this->_config->activity_limit > 0){
+				$content = JString::substr($content, 0, $this->_config->activity_limit);
+			}
+
 			$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
 			$content = nl2br ( $content );
+
+			// Add readmore link
+			$content .= '<br /><a href="'.
+					CKunenaLink::GetMessageURL($message->get ( 'id' )).
+					'" class="small profile-newsfeed-item-action">'.JText::sprintf('Read more...').'</a>';
 
 			$act = new stdClass ();
 			$act->cmd = 'wall.write';
@@ -72,10 +84,22 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
-			$kunena_emoticons = smile::getEmoticons ( 1 );
+			$kunena_emoticons = smile::getEmoticons ( 0 );
+
 			$content = $message->get ( 'message' );
+
+			// limit activity stream output if limit is set
+			if ($this->_config->activity_limit > 0){
+				$content = JString::substr($content, 0, $this->_config->activity_limit);
+			}
+
 			$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
 			$content = nl2br ( $content );
+
+			// Add readmore link
+			$content .= '<br /><a href="'.
+					CKunenaLink::GetMessageURL($message->get ( 'id' )).
+					'" class="small profile-newsfeed-item-action">'.JText::sprintf('Read more...').'</a>';
 
 			$act = new stdClass ();
 			$act->cmd = 'wall.write';
@@ -97,11 +121,11 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			CActivityStream::add ( $act );
 		}
 	}
-	
+
 	public function onAfterThankyou($thankyoutargetid, $username , $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
 		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou' );
-		
+
 		// Check for permisions of the current category - activity only if public or registered
 		if (! empty ( $message->parent ) && ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1)) {
 			//activity stream - reply post

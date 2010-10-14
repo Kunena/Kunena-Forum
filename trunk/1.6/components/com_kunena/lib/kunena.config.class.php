@@ -348,8 +348,10 @@ class CKunenaConfig extends CKunenaConfigBase {
 	//New for 1.6: allow only secure image extensions (jpg/gif/png) in IMG tag
 	var $bbcode_img_secure = 'text';
 	var $listcat_show_moderators = 1;
-	//New for 1.6.1: allow the user to disable lightbox
+	//New for 1.6.1: allow the admin to disable lightbox
 	var $lightbox = 1;
+	//New for 1.6.1: allow the admin to limit the length of the activity stream
+	var $activity_limit = 0;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

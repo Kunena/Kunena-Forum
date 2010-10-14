@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+14-Octover-2010 fxstein
++ [#22864] Limit jomSocial activity stream content with new setting + Read More link
+
 14-October-2010 Matias
 # [#22863] Subscriptions query gets slow if there are a lot of users (even if there are few subscriptions)
 ^ [#22842] Cleanup install.xml file on deprecated configuraiton options, add missing options

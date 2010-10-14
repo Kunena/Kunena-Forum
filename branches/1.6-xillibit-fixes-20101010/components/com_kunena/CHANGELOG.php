@@ -35,6 +35,7 @@ Kunena 1.6.1-DEV
 
 14-October-2010 Xillibit
 # [#22869] Bug which does not allow user to delete his own posts
+# [#22829] Mate sure that menu aliases are in lower case and contain only allowed letters
 
 13-October-2010 Xillibit
 # [#22706] Show in configuration report the default joomla and details on joomla menu items

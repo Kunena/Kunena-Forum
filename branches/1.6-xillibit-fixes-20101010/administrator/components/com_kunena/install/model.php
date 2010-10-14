@@ -1258,17 +1258,19 @@ class KunenaModelInstall extends JModel {
 	 * and if not, adds a forum link in the mainmenu.
 	 */
 	function createMenu($update = true) {
-		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=entrypage', 'access'=>0, 'params'=>'\r\ncatids=0');
+		jimport( 'joomla.utilities.string' );
+		
+		$menu = array('name'=>JText::_ ( 'COM_KUNENA_MENU_FORUM' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_FORUM_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=entrypage', 'access'=>0, 'params'=>'\r\ncatids=0');
 		$submenu = array(
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=listcat', 'access'=>0, 'default'=>'categories', 'params'=>'\r\ncatid=0'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=latest', 'access'=>0, 'default'=>'recent', 'params'=>'\r\ndo=latest'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=post&do=new', 'access'=>1, 'params'=>'\r\ncatid=0\r\ndo=new'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=latest&do=noreplies', 'access'=>1, 'params'=>'\r\ndo=noreplies'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=latest&do=mylatest', 'access'=>1, 'default'=>'my' , 'params'=>'\r\ndo=mylatest'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=profile', 'access'=>1, 'params'=>'\r\nintegration=1'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=rules', 'access'=>0, 'params'=>'\r\ndo=rules'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=help', 'access'=>0, 'params'=>'\r\ndo=help'),
-			array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' ), 'link'=>'index.php?option=com_kunena&view=search', 'access'=>0),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_INDEX' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_INDEX_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=listcat', 'access'=>0, 'default'=>'categories', 'params'=>'\r\ncatid=0'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RECENT' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RECENT_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=latest', 'access'=>0, 'default'=>'recent', 'params'=>'\r\ndo=latest'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NEWTOPIC_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=post&do=new', 'access'=>1, 'params'=>'\r\ncatid=0\r\ndo=new'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_NOREPLIES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_NOREPLIES_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=latest&do=noreplies', 'access'=>1, 'params'=>'\r\ndo=noreplies'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_MYLATEST' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_MYLATEST_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=latest&do=mylatest', 'access'=>1, 'default'=>'my' , 'params'=>'\r\ndo=mylatest'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_PROFILE' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_PROFILE_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=profile', 'access'=>1, 'params'=>'\r\nintegration=1'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_RULES' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_RULES_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=rules', 'access'=>0, 'params'=>'\r\ndo=rules'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_HELP' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_HELP_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=help', 'access'=>0, 'params'=>'\r\ndo=help'),
+			array('name'=>JText::_ ( 'COM_KUNENA_MENU_SEARCH' ), 'alias'=>JString::strtolower(JText::_ ( 'COM_KUNENA_MENU_SEARCH_ALIAS' )), 'link'=>'index.php?option=com_kunena&view=search', 'access'=>0),
 		);
 
 		jimport ( 'joomla.version' );
@@ -1340,15 +1342,17 @@ class KunenaModelInstall extends JModel {
 		// Submenu (shown in Kunena)
 		$defaultmenu = 0;
 		foreach ($submenu as $ordering=>$menuitem) {
-			$ordering++;
+			$ordering++;			
 			$query = "SELECT id FROM `#__menu` WHERE `link`={$this->db->quote($menuitem['link'])} AND `menutype`='kunenamenu';";
 			$this->db->setQuery ( $query );
 			$id = ( int ) $this->db->loadResult ();
 			if ($this->db->getErrorNum ())
 				throw new KunenaInstallerException ( $this->db->getErrorMsg (), $this->db->getErrorNum () );
 			if (! $id || $update) {
+				if (!empty($menuitem['params'])) $params = $menuitem['params'];
+				else $params = '';
 				$query = "REPLACE INTO `#__menu` (`id`, `menutype`, `name`, `alias`, `link`, `type`, `published`, `parent`, `componentid`, `sublevel`, `ordering`, `checked_out`, `checked_out_time`, `pollid`, `browserNav`, `access`, `utaccess`, `params`, `lft`, `rgt`, `home`) VALUES
-								($id, 'kunenamenu', {$this->db->quote($menuitem['name'])}, {$this->db->quote($menuitem['alias'])}, {$this->db->quote($menuitem['link'])},'component', 1, $parentid, $componentid, 1, $ordering, 0, '0000-00-00 00:00:00', 0, 0, {$menuitem['access']}, 0, 'menu_image=-1{$menuitem['params']}\r\n\r\n', 0, 0, 0);";
+								($id, 'kunenamenu', {$this->db->quote($menuitem['name'])}, {$this->db->quote($menuitem['alias'])}, {$this->db->quote($menuitem['link'])},'component', 1, $parentid, $componentid, 1, $ordering, 0, '0000-00-00 00:00:00', 0, 0, {$menuitem['access']}, 0, 'menu_image=-1{$params}\r\n\r\n', 0, 0, 0);";
 				$this->db->setQuery ( $query );
 				$this->db->query ();
 				if ($this->db->getErrorNum ())

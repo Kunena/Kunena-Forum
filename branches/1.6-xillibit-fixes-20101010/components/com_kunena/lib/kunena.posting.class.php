@@ -223,7 +223,7 @@ class CKunenaPosting {
 			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 		}
 		// Post cannot be marked as deleted
-		if ($this->parent->hold <= 1) {
+		if ($this->parent->hold >= 1) {
 			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ALREADY_DELETED' ) );
 		}
 

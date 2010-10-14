@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+14-October-2010 Xillibit
+# [#22869] Bug which does not allow user to delete his own posts
+
 13-October-2010 Xillibit
 # [#22706] Show in configuration report the default joomla and details on joomla menu items
 # [#22805] File name incorrect in xml for en-GB.com_kunena.tpl_skinner.ini

@@ -16,6 +16,7 @@ defined( '_JEXEC' ) or die('');
 class KunenaAccessJXtended extends KunenaAccess {
 	protected static $admins = false;
 	protected static $moderators = false;
+	protected static $catmoderators = false;
 
 	function __construct() {
 		if (!function_exists('jximport'))
@@ -41,6 +42,7 @@ class KunenaAccessJXtended extends KunenaAccess {
 	function loadModerators() {
 		if (self::$moderators === false) {
 			self::$moderators = array();
+			self::$catmoderators = array();
 			$db = JFactory::getDBO();
 			$db->setQuery ("SELECT u.id AS uid, m.catid FROM #__users AS u"
 				." INNER JOIN #__kunena_users AS p ON u.id=p.userid"
@@ -49,7 +51,10 @@ class KunenaAccessJXtended extends KunenaAccess {
 				." WHERE u.block='0' AND p.moderator='1' AND (m.catid IS NULL OR c.moderated='1')");
 			$list = $db->loadObjectList();
 			if (KunenaError::checkDatabaseError()) return;
-			foreach ($list as $item) self::$moderators[$item->uid][] = $item->catid;
+			foreach ($list as $item) {
+				self::$moderators[$item->uid][] = $item->catid;
+				self::$catmoderators[intval($item->catid)][] = $item->uid;
+			}
 		}
 	}
 
@@ -136,6 +141,29 @@ class KunenaAccessJXtended extends KunenaAccess {
 		return 0;
 	}
 
+	protected function _get_groups($groupid, $recurse) {
+		$groups = array();
+		if ($groupid > 0) {
+			if ($recurse) {
+				$acl = JFactory::getACL ();
+				$groups = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
+			}
+			$groups [] = $groupid;
+		}
+		return $groups;
+	}
+
+	protected function _get_subscribers($catid, $thread) {
+		$db = JFactory::getDBO ();
+		$query ="SELECT userid FROM #__kunena_subscriptions WHERE thread={$thread}
+				UNION
+				SELECT userid FROM #__kunena_subscriptions_categories WHERE catid={$catid}";
+		$db->setQuery ($query);
+		$userids = $db->loadResultArray();
+		KunenaError::checkDatabaseError();
+		return $userids;
+	}
+
 	function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
 		$catid = intval ( $catid );
 		$thread = intval ( $thread );
@@ -143,55 +171,59 @@ class KunenaAccessJXtended extends KunenaAccess {
 			return array();
 
 		// Make sure that category exists and fetch access info
-		$db = &JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__kunena_categories WHERE id={$catid}";
 		$db->setQuery ($query);
 		$access = $db->loadObject ();
 		if (KunenaError::checkDatabaseError() || !$access) return array();
 
 		$arogroups = '';
+		$sub_ids = -1;
+		$mod_ids = -1;
+		$adm_ids = -1;
+
 		if ($subscriptions) {
 			// Get all allowed Joomla groups to make sure that subscription is valid
-			$kunena_acl = &JFactory::getACL ();
-			$public = array ();
-			$admin = array ();
+			$kunena_acl = JFactory::getACL ();
+			$public = $this->_get_groups($access->pub_access, $access->pub_recurse);
+			$admin = array();
 			if ($access->pub_access > 0) {
-				if ($access->pub_recurse) {
-					$public = $kunena_acl->get_group_children ( $access->pub_access, 'ARO', 'RECURSE' );
-				}
-				$public [] = $access->pub_access;
-			}
-			if ($access->pub_access > 0 && $access->admin_access > 0) {
-				if ($access->admin_recurse) {
-					$admin = $kunena_acl->get_group_children ( $access->admin_access, 'ARO', 'RECURSE' );
-				}
-				$admin [] = $access->admin_access;
+				$admin = $this->_get_groups($access->admin_access, $access->admin_recurse);
 			}
 			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
 			if ($arogroups)
 				$arogroups = "g.group_id IN ({$arogroups})";
+			$sub_ids = implode( ',', $this->_get_subscribers($catid, $thread) );
+			if (!$sub_ids) $sub_ids = -1;
+		}
+		if ($moderators) {
+			self::loadModerators();
+			if (!isset(self::$catmoderators[$catid])) self::$catmoderators[$catid] = array();
+			if (!isset(self::$catmoderators[0])) self::$catmoderators[0] = array();
+			$mod_ids = implode ( ',', array_unique ( array_merge ( self::$catmoderators[$catid], self::$catmoderators[0] ) ) );
+			if (!$mod_ids) $mod_ids = -1;
+		}
+		if ($admins) {
+			self::loadAdmins();
+			$adm_ids = implode( ',', self::$admins );
+			if (!$adm_ids) $adm_ids = -1;
 		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
-					IF( (s.thread IS NOT NULL) OR (sc.catid IS NOT NULL), 1, 0 ) AS subscription,
-					IF( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid}), 1, 0 ) AS moderator,
-					IF( u.gid IN (24, 25), 1, 0 ) AS admin
+					IF( u.id IN ($sub_ids), 1, 0 ) AS subscription,
+					IF( u.id IN ($mod_ids), 1, 0 ) AS moderator,
+					IF( u.id IN ($adm_ids), 1, 0 ) AS admin
 					FROM #__users AS u
-					LEFT JOIN #__kunena_users AS p ON u.id=p.userid
-					LEFT JOIN #__core_acl_aro AS a ON u.id=a.value AND section_value='users'
-					LEFT JOIN #__core_acl_groups_aro_map AS g ON g.aro_id=a.id
-					LEFT JOIN #__kunena_categories AS c ON c.id={$catid}
-					LEFT JOIN #__kunena_moderation AS m ON u.id=m.userid
-					LEFT JOIN #__kunena_subscriptions AS s ON u.id=s.userid AND s.thread={$thread}
-					LEFT JOIN #__kunena_subscriptions_categories AS sc ON u.id=sc.userid AND sc.catid=c.id";
+					INNER JOIN #__core_acl_aro AS a ON u.id=a.value AND section_value='users'
+					INNER JOIN #__core_acl_groups_aro_map AS g ON g.aro_id=a.id";
 
 		$where = array ();
 		if ($subscriptions)
-			$where [] = " ( ( (s.thread IS NOT NULL) OR (sc.catid IS NOT NULL) )" . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
+			$where [] = " ( u.id IN ($sub_ids)" . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
 		if ($moderators)
-			$where [] = " ( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid} ) ) ";
+			$where [] = " ( u.id IN ($mod_ids) ) ";
 		if ($admins)
-			$where [] = " ( u.gid IN (24, 25) ) ";
+			$where [] = " ( u.id IN ($adm_ids) ) ";
 
 		$subsList = array ();
 		if (count ($where)) {
@@ -201,6 +233,8 @@ class KunenaAccessJXtended extends KunenaAccess {
 			$subsList = $db->loadObjectList ();
 			if (KunenaError::checkDatabaseError()) return array();
 		}
+
+		unset($sub_ids, $mod_ids, $adm_ids);
 		return $subsList;
 	}
 }

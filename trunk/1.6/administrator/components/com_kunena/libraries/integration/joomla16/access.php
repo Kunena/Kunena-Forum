@@ -184,6 +184,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 				$groups = "u.gid IN ({$groups})";
 		}
 
+		// FIXME
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
 					IF( (s.thread IS NOT NULL) OR (sc.catid IS NOT NULL), 1, 0 ) AS subscription,
 					IF( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid}), 1, 0 ) AS moderator,

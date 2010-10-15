@@ -628,7 +628,7 @@ PX		EM			PCT			PT
 	border:none;
 }
 #ktab ul.menu li#current.active a {
-	background-color:#5388B4;
+	/* Do not specify background color: template parameter */
 }
 	
 #Kunena option {

@@ -206,7 +206,6 @@ PX		EM			PCT			PT
 }
 #Kunena .kblock div.kheader {
 	border-bottom:2px solid #D9D9D9;
-	background: #5388B4;
 	color: #FFFFFF;
 	padding:0 10px 0 10px;
 }
@@ -507,7 +506,6 @@ PX		EM			PCT			PT
 	color: #000000;
 	margin: 0;
 	border-style: solid;
-	border-color: #5388B4;
 	border-top-width: 0;
 	border-right-width: 0;
 	border-bottom-width: 3px;
@@ -516,7 +514,6 @@ PX		EM			PCT			PT
 }
 
 #Kunena #ktop span.ktoggler {
-	background: #5388B4;
 	margin:-16px 0;
 	padding:1px 1px 0;
 }
@@ -593,7 +590,6 @@ PX		EM			PCT			PT
 #Kunena #ktab a:hover,
 #Kunena #ktab li.Kunena-item-active a	{
 	background-position: right bottom;
-	background-color: #5388B4;
 }
 
 #Kunena #ktab a:hover span,

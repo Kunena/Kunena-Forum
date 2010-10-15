@@ -112,6 +112,7 @@ class smile {
 	}
 
 	function purify($text) {
+
 		$text = preg_replace ( "'<script[^>]*>.*?</script>'si", "", $text );
 		$text = preg_replace ( '/<a\s+.*?href="([^"]+)"[^>]*>([^<]+)<\/a>/is', '\2 (\1)', $text );
 		$text = preg_replace ( '/<!--.+?-->/', '', $text );
@@ -200,6 +201,7 @@ class smile {
 
 		$text = preg_replace ( '#/n#s', ' ', $text );
 		$text = strip_tags ( $text );
+
 		return (trim($text));
 	} //purify
 }

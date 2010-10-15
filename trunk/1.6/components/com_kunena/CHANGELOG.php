@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+15-October-2010 fxstein
+# [#22880] Fix forum header color through template parameters - make menu use the same color
+
 14-Octover-2010 fxstein
 + [#22864] Limit jomSocial activity stream content with new setting + Read More link
 

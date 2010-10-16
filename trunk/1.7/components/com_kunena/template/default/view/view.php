@@ -20,7 +20,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <div><?php $this->displayPathway(); ?></div>
 
 <?php if ($this->headerdesc) : ?>
-	<div id="kforum-head" class="<?php echo isset ( $this->catinfo->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->catinfo->class_sfx) : '' ?>">
+	<div id="kforum-head" class="<?php echo isset ( $this->category->class_sfx ) ? ' kforum-headerdesc' . $this->escape($this->category->class_sfx) : '' ?>">
 		<?php echo $this->headerdesc ?>
 	</div>
 <?php endif ?>

@@ -277,6 +277,7 @@ class CKunenaView {
 	public $goto = null;
 
 	function __construct($func, $catid, $id, $limitstart=0, $limit=0) {
+		kimport('category');
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 
 		$this->db = JFactory::getDBO ();
@@ -382,14 +383,7 @@ class CKunenaView {
 			$this->redirect = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->thread, $replyPage, $this->config->messages_per_page, $this->first_message->id, false );
 		}
 
-		//Get the category name for breadcrumb
-		$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE id={$this->db->Quote($this->catid)}" );
-		$this->catinfo = $this->db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
-		//Get Parent's cat.name for breadcrumb
-		$this->db->setQuery ( "SELECT id, name FROM #__kunena_categories WHERE id={$this->db->Quote($this->catinfo->parent)}" );
-		$objCatParentInfo = $this->db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
+		$this->category = KunenaCategory::getInstance($this->catid);
 
 		// START
 		$this->prevCheck = $this->session->lasttime;
@@ -401,7 +395,7 @@ class CKunenaView {
 		$this->topicLocked = $this->first_message->locked;
 		if (! $this->topicLocked) {
 			//topic not locked; check if forum is locked
-			$this->topicLocked = $this->catinfo->locked;
+			$this->topicLocked = $this->category->locked;
 		}
 		$this->topicSticky = $this->first_message->ordering;
 
@@ -485,7 +479,8 @@ class CKunenaView {
 		$this->pagination = $this->getPagination ( $this->catid, $this->thread, $page, $totalpages, $maxpages );
 
 		//meta description and keywords
-		$metaKeys = kunena_htmlspecialchars ( "{$this->first_message->subject}, {$objCatParentInfo->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
+		$category_parent = KunenaCategory::getInstance($this->category->parent);
+		$metaKeys = kunena_htmlspecialchars ( "{$this->first_message->subject}, {$category_parent->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
 
 		// Create Meta Description form the content of the first message
 		// better for search results display but NOT for search ranking!
@@ -603,7 +598,7 @@ class CKunenaView {
 			$this->thread_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderatethread', $this->catid, $this->id, CKunenaTools::showButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE_TOPIC') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE') );
 		}
 
-		$this->headerdesc = KunenaParser::parseBBCode ( $this->catinfo->headerdesc );
+		$this->headerdesc = KunenaParser::parseBBCode ( $this->category->headerdesc );
 
 		$tabclass = array ("row1", "row2" );
 
@@ -613,8 +608,8 @@ class CKunenaView {
 		else $this->replynum = $this->limitstart;
 
 		$this->myname = $this->config->username ? $this->my->username : $this->my->name;
-		$this->allow_anonymous = !empty($this->catinfo->allow_anonymous) && $this->my->id;
-		$this->anonymous = ($this->allow_anonymous && !empty($this->catinfo->post_anonymous));
+		$this->allow_anonymous = !empty($this->category->allow_anonymous) && $this->my->id;
+		$this->anonymous = ($this->allow_anonymous && !empty($this->category->post_anonymous));
 	}
 
 	function displayPathway() {
@@ -623,7 +618,7 @@ class CKunenaView {
 
 	function displayPoll() {
 		if ($this->config->pollenabled == "1" && $this->first_message->poll_id) {
-			if ( $this->catinfo->allow_polls ) {
+			if ( $this->category->allow_polls ) {
 				require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
   				$kunena_polls =& CKunenaPolls::getInstance();
   				$kunena_polls->showPollbox();

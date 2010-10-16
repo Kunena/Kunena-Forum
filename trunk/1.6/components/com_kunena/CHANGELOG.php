@@ -40,6 +40,7 @@ Kunena 1.6.1-DEV
 # [#22871] JomSocial Activity Stream: actor is user, who gives the points
 # [#22713] Improve routing: If there is no menu, redirect to Kunena Menu
 # [#22713] Improve routing: If in Kunena menu and default menu has simple menuitem to Kunena, highlight it
+# [#22713] Improve routing: Router didn't remove extra &func=xxx parameter, giving results like /forum/recent/latest
 
 15-October-2010 Matias
 + [#22694] Add support for ArtOfUser ACL without needing JXtended library

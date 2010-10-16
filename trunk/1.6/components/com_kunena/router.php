@@ -96,6 +96,10 @@ class KunenaRouter {
 			$menu = JSite::getMenu ();
 			$menuitem = $menu->getItem ( $query ['Itemid'] );
 			if ($menuitem) {
+				if (isset ( $query ['func'] )) {
+					$query ['view'] = $query ['func'];
+				}
+				unset ($query ['func']);
 				foreach ( $menuitem->query as $var => $value ) {
 					if ($var == 'Itemid' || $var == 'option')
 						continue;
@@ -105,8 +109,8 @@ class KunenaRouter {
 				}
 				if (isset ( $query ['view'] )) {
 					$query ['func'] = $query ['view'];
-					unset ($query ['view']);
 				}
+				unset ($query ['view']);
 			}
 		}
 

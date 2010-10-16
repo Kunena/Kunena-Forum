@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+16-October-2010 Matias
+# [#22898] Activity Stream integration: attachments do not show up in the stream
+
 15-October-2010 Matias
 + [#22694] Add support for ArtOfUser ACL without needing JXtended library
 + [#22694] Add class JDatabaseQuery, imported by kimport('joomla.database.databasequery')

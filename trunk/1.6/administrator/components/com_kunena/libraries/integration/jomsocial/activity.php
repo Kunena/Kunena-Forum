@@ -124,24 +124,19 @@ class KunenaActivityJomSocial extends KunenaActivity {
 
 	public function onAfterThankyou($thankyoutargetid, $username , $message) {
 		CFactory::load ( 'libraries', 'userpoints' );
-		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou' );
+		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $thankyoutargetid );
 
 		// Check for permisions of the current category - activity only if public or registered
-		if (! empty ( $message->parent ) && ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1)) {
+		if ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1) {
 			//activity stream - reply post
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
 			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
 
-			$kunena_emoticons = smile::getEmoticons ( 1 );
-			$content = $message->get ( 'message' );
-			$content = smile::smileReplace ( $content, 0, $this->_config->disemoticons, $kunena_emoticons );
-			$content = nl2br ( $content );
-
 			$act = new stdClass ();
 			$act->cmd = 'wall.write';
-			$act->actor = $message->get ( 'userid' );
-			$act->target = 0; // no target
+			$act->actor = JFactory::getUser()->id;
+			$act->target = $thankyoutargetid;
 			$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_( 'COM_KUNENA_JS_ACTIVITYSTREAM_THANKYOU' ).' <a href="' . $JSPostLink . '">' . $message->get ( 'subject' ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
 			$act->content = NULL;
 			$act->app = 'wall';

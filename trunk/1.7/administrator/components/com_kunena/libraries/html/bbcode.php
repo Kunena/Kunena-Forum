@@ -1354,7 +1354,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		$fileurl = $bbcode->HTMLEncode ( $fileurl );
 
 		// Need to check if we are nested inside a URL code
-		if ($bbcode->autolink_disable == 0) {
+		if ($bbcode->autolink_disable == 0 && $config->lightbox) {
 			return '<a title="" rel="lightbox" href="' . $fileurl . '"><img src="' . $fileurl . '"' . $width . ' alt="" /></a>';
 		}
 		return "<img src=\"{$fileurl}\" {$width} alt=\"\" />";

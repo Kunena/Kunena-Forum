@@ -45,4 +45,5 @@ class JAccess {}
 
 // JXtended
 function jximport() {}
+function juimport() {}
 class JxAcl {};

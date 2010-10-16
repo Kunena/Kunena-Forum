@@ -223,7 +223,7 @@ class CKunenaPosting {
 			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 		}
 		// Post cannot be marked as deleted
-		if ($this->parent->hold <= 1) {
+		if ($this->parent->hold >= 1) {
 			return $this->setError ( $action, JText::_ ( 'COM_KUNENA_POST_ALREADY_DELETED' ) );
 		}
 
@@ -468,6 +468,21 @@ class CKunenaPosting {
 			CKunenaTools::modifyCategoryStats ( $id, $this->get ( 'parent' ), $this->get ( 'time' ), $this->get ( 'catid' ) );
 		}
 
+		// Add attachments if there are any
+		// TODO: find better way
+		if ($this->getOption ( 'attachments' )) {
+			require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
+			$attachments = CKunenaAttachments::getInstance ();
+			$message = $this->get ( 'message' );
+			$fileinfos = $attachments->multiupload ( $id, $message );
+			foreach ( $fileinfos as $fileinfo ) {
+				if (! $fileinfo ['status'])
+					$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo ['name'] ) . ': ' . $fileinfo ['error'], 'error' );
+			}
+			$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($message)} WHERE mesid={$this->_db->Quote($id)}" );
+			$this->_db->query ();
+		}
+
 		// Mark topic read for me
 		CKunenaTools::markTopicRead ( $this->get ( 'thread'), $this->_my->id );
 
@@ -591,6 +606,34 @@ class CKunenaPosting {
 				return $this->setError ( '-edit-', JText::_ ( 'COM_KUNENA_POST_ERROR_SAVE' ) );
 		}
 		$this->set ( 'id', $id = $this->parent->id );
+
+		// Add/delete attachments if there are any changes
+		// TODO: find better way
+		if ($this->getOption ( 'attachments' )) {
+			require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
+			$attachments = CKunenaAttachments::getInstance ();
+			$message = $this->get ( 'message' );
+
+			// Delete attachments which weren't checked (= not listed in here)
+			jimport ( 'joomla.utilities.arrayhelper' );
+			$attachkeeplist = JRequest::getVar ( 'attach-id', array (0 ), 'post', 'array' );
+			JArrayHelper::toInteger ( $attachkeeplist, array (0 ) );
+			$attachkeeplist = implode ( ',', $attachkeeplist );
+			$query = "SELECT id FROM #__kunena_attachments WHERE mesid={$this->_db->Quote($id)} AND id NOT IN ({$attachkeeplist})";
+			$this->_db->setQuery ( $query );
+			$attachmentlist = $this->_db->loadResultArray ();
+			if (! KunenaError::checkDatabaseError ()) {
+				$attachments->deleteAttachment ( $attachmentlist );
+			}
+
+			$fileinfos = $attachments->multiupload ( $id, $message );
+			foreach ( $fileinfos as $fileinfo ) {
+				if (! $fileinfo ['status'])
+					$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo ['name'] ) . ': ' . $fileinfo ['error'], 'error' );
+			}
+			$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($message)} WHERE mesid={$this->_db->Quote($id)}" );
+			$this->_db->query ();
+		}
 
 		// Get the event dispatcher
 		$dispatcher	= JDispatcher::getInstance();

@@ -140,6 +140,7 @@ class CKunenaPost {
 		$fields ['message'] = JRequest::getVar ( 'message', null, 'POST', 'string', JREQUEST_ALLOWRAW );
 		$fields ['topic_emoticon'] = JRequest::getInt ( 'topic_emoticon', null );
 
+		$options ['attachments'] = 1;
 		$options ['anonymous'] = JRequest::getInt ( 'anonymous', 0 );
 		$contentURL = JRequest::getVar ( 'contentURL', '' );
 
@@ -198,19 +199,6 @@ class CKunenaPost {
 		jimport ( 'joomla.environment.uri' );
 		$uri = & JURI::getInstance ( JURI::base () );
 		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, $threadPages, $this->config->messages_per_page, $id ) );
-
-		//Update the attachments table if an image has been attached
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
-		$attachments = CKunenaAttachments::getInstance ();
-		//$attachments->assign ( $id );
-		$fileinfos = $attachments->multiupload ( $id, $fields ['message'] );
-		foreach ( $fileinfos as $fileinfo ) {
-			if (! $fileinfo ['status'])
-				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo ['name'] ) . ': ' . $fileinfo ['error'], 'error' );
-		}
-		// TODO: find better way to do this:
-		$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$this->_db->Quote($id)}" );
-		$this->_db->query ();
 
 		$message->emailToSubscribers($LastPostUrl, $this->config->allowsubscriptions && ! $holdPost, $this->config->mailmod || $holdPost, $this->config->mailadmin || $holdPost);
 
@@ -389,6 +377,7 @@ class CKunenaPost {
 		$fields ['topic_emoticon'] = JRequest::getInt ( 'topic_emoticon', null );
 		$fields ['modified_reason'] = JRequest::getString ( 'modified_reason', null );
 
+		$options ['attachments'] = 1;
 		$options ['anonymous'] = JRequest::getInt ( 'anonymous', 0 );
 
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
@@ -431,32 +420,6 @@ class CKunenaPost {
 				}
 			}
 		}
-
-		//Update the attachments table if an file has been attached
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
-		$attachments = CKunenaAttachments::getInstance ();
-
-		// Delete attachments which weren't checked (= not listed in here)
-		jimport('joomla.utilities.arrayhelper');
-		$attachkeeplist = JRequest::getVar('attach-id',array ( 0 ), 'post', 'array');
-		JArrayHelper::toInteger($attachkeeplist, array ( 0 ));
-		$attachkeeplist = implode(',', $attachkeeplist);
-		$query = "SELECT id FROM #__kunena_attachments WHERE mesid={$this->_db->Quote($this->id)} AND id NOT IN ({$attachkeeplist})";
-		$this->_db->setQuery ( $query );
-		$attachmentlist = $this->_db->loadResultArray ();
-		if (!KunenaError::checkDatabaseError()) {
-			$attachments->deleteAttachment($attachmentlist);
-		}
-
-		//$attachments->assign ( $this->id );
-		$fileinfos = $attachments->multiupload ( $this->id, $fields ['message'] );
-		foreach ( $fileinfos as $fileinfo ) {
-			if (! $fileinfo ['status'])
-				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_UPLOAD_FAILED', $fileinfo ['name'] ) . ': ' . $fileinfo ['error'], 'error' );
-		}
-		// TODO: find better way to do this (not again!):
-		$this->_db->setQuery ( "UPDATE #__kunena_messages_text SET message={$this->_db->quote($fields ['message'])} WHERE mesid={$this->_db->Quote($this->id)}" );
-		$this->_db->query ();
 
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
 		if ($this->msg_cat->review && !CKunenaTools::isModerator($this->my->id,$this->catid)) {

@@ -146,6 +146,62 @@ Kunena 1.7.0-DEV
 
 Kunena 1.6.1-DEV
 
+16-October-2010 Matias
+# [#22898] Activity Stream integration: attachments do not show up in the stream
+^ [#15886] Merged revisions 3718-3725 from /branches/1.6-xillibit-fixes-20101010
+# [#22871] JomSocial Activity Stream: thankyou gives points to wrong user
+# [#22871] JomSocial Activity Stream: actor is user, who gives the points
+
+15-October-2010 Matias
++ [#22694] Add support for ArtOfUser ACL without needing JXtended library
++ [#22694] Add class JDatabaseQuery, imported by kimport('joomla.database.databasequery')
+
+15-October-2010 fxstein
+# [#22880] Fix forum header color through template parameters - make menu use the same color
+
+14-October-2010 Xillibit
+# [#22869] Bug which does not allow user to delete his own posts
+# [#22829] Make sure that menu aliases are in lower case
+
+14-Octover-2010 fxstein
++ [#22864] Limit jomSocial activity stream content with new setting + Read More link
+
+14-October-2010 Matias
+# [#22863] Subscriptions query gets slow if there are a lot of users (even if there are few subscriptions)
+^ [#22842] Cleanup install.xml file on deprecated configuration options, add missing options
+# [#22866] AUP integration: link to userlist doesn't have menu item assigned to it (thanks Bernard)
+
+13-October-2010 Xillibit
+# [#22706] Show in configuration report the default joomla and details on joomla menu items
+# [#22805] File name incorrect in xml for en-GB.com_kunena.tpl_skinner.ini
+
+13-October-2010 fxstein
++ [#22849] Add new module position kunena_section_1 through kunena_section_n
+
+12-October-2010 Matias
+^ [#15886] Merged revisions 3700-3712 from /branches/1.6-xillibit-fixes-20101010
+^ [#15886] Merged revisions 3697-3709 from /branches/1.6-LDAsvens-bugs2-20101010
+- [#22842] Cleanup deprecated code: Administration has integration options which haven't been used since K1.5
+- [#22842] Remove deprecated configuration option: imageprocessor
+^ [#22842] Move all new language strings into the end of the ini files
+
+12-October-2010 svens (LDA)
+# [#22827] Check old folder/file to delete on upgrade Part 1
+
+11-October-2010 svens (LDA)
+# [#22810] Some escape issue in title
+
+11-October-2010 Xillibit
+# [#22627] Some updates on fr-FR translation
++ [#22821] Display categories subscriptions in kunena user manager
+
+10-October-2010 svens (LDA)
++ [#22780] Jomsocial User Points for Thankyou and wall notice
+
+10-October-2010 Xillibit
+# [#22805] Some language files issues in skinner
+# [#22801] Add configuration setting to disable lightbox
+
 10-October-2010 Matias
 # [#22800] Fix KunenaCategory->delete() when user uses custom database prefix
 # [#22693] [#22694] Fix bug in NoixACL and JXtended integration when sending subscriptions
@@ -164,6 +220,9 @@ Kunena 1.6.1-DEV
 
 9-October-2010 Matias
 ^ [#15886] Merged revisions 3642-3664 from /branches/1.6-xillibit-fixes-20101005
+
+8-October-2010 svens (LDA)
+# [#22774] Welcome box: avatar doesn't have link pointing to profile
 
 8-October-2010 Xillibit
 # [#21992] Bug when moving a post to a different category and leaving a shadow

@@ -24,7 +24,7 @@ defined( '_JEXEC' ) or die();
 
 $kunena_config = KunenaFactory::getConfig ();
 $document = JFactory::getDocument();
-$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $this->escape($kunena_config->board_title));
+$document->setTitle(JText::_('COM_KUNENA_STAT_FORUMSTATS') . ' - ' . $kunena_config->board_title);
 
 if($kunena_config->showstats):
 
@@ -43,7 +43,7 @@ $userlist1 = CKunenaLink::GetUserlistLink('', intval($this->totalmembers));
 <div class="kblock kgenstats">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kgenstats_tbody"></a></span>
-		<h2><span><?php echo $kunena_config->board_title; ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span></h2>
+		<h2><span><?php echo $this->escape($kunena_config->board_title); ?> <?php echo JText::_('COM_KUNENA_STAT_FORUMSTATS'); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kgenstats_tbody">
 		<div class="kbody">

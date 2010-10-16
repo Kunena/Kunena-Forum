@@ -44,6 +44,11 @@ $mediaurl = JURI::base() . "components/com_kunena/template/default/media";
 $styles = <<<EOF
 	/* Kunena Custom CSS */
 	#Kunena div.kheader { background: {$this->params->get('forumHeadercolor', '#5388B4')} }
+	#Kunena #ktop { border-color: {$this->params->get('forumHeadercolor', '#5388B4')} }
+	#Kunena #ktop span.ktoggler { background: {$this->params->get('forumHeadercolor', '#5388B4')} }
+	#Kunena #ktab a:hover,
+	#Kunena #ktab li.Kunena-item-active a	{ background-color: {$this->params->get('forumHeadercolor', '#5388B4')} }
+	#ktab ul.menu li#current.active a { background-color: {$this->params->get('forumHeadercolor', '#5388B4')} }
 	#Kunena div.kannouncement div.kheader { background: {$this->params->get('announcementHeadercolor', '#5388B4')} }
 	#Kunena div#kannouncement .kanndesc { background: {$this->params->get('announcementBoxbgcolor', '#ffffff')} }
 	#Kunena div.kfrontstats div.kheader { background: {$this->params->get('frontstatsHeadercolor', '#5388B4')} }

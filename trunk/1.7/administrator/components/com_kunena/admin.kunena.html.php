@@ -612,30 +612,12 @@ table.kadmin-stat caption {
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_LINK') ?>
-						</td>
-								<td align="left" valign="top"><input type="text" name="cfg_rules_link"
-							value="<?php echo kescape($kunena_config->rules_link);
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_RULESPAGE_LINK_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID') ?>
 						</td>
 								<td align="left" valign="top"><input type="text" name="cfg_help_cid"
 							value="<?php echo kescape($kunena_config->help_cid);
 						?>" /></td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_CID_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_LINK') ?>
-						</td>
-								<td align="left" valign="top"><input type="text" name="cfg_help_link"
-							value="<?php echo kescape($kunena_config->help_link);
-						?>" /></td>
-								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_HELPPAGE_LINK_DESC') ?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -698,6 +680,15 @@ table.kadmin-stat caption {
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_TOPCIICONS_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ENABLELIGHTBOX') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['lightbox'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_ENABLELIGHTBOX_DESC') ?>
 						</td>
 					</tr>
 				</table>
@@ -991,24 +982,6 @@ table.kadmin-stat caption {
 						?>
 						</td>
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_AVATARGALLERY_DESC') ?>
-						</td>
-					</tr>
-					<tr align="center" valign="middle">
-						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_IMAGE_PROCESSOR') ?>
-						</td>
-								<td align="left" valign="top"><?php echo $lists ['imageprocessor'];
-						?>
-						</td>
-						<td align="left" valign="top"><?php 				$fb_gd = intval ( KUNENA_gdVersion () );
-						if ($fb_gd > 0) {
-							$fbmsg = JText::_('COM_KUNENA_GD_INSTALLED') . $fb_gd;
-						} elseif ($fb_gd == - 1) {
-							$fbmsg = JText::_('COM_KUNENA_GD_NO_VERSION');
-						} else {
-							$fbmsg = JText::_('COM_KUNENA_GD_NOT_INSTALLED') . '<a href="http://www.php.net/gd" target="_blank">http://www.php.net/gd</a>';
-						}
-								echo $fbmsg;
-								?>
 						</td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -1362,6 +1335,12 @@ table.kadmin-stat caption {
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY') ?></td>
 							<td align="left" valign="top" width="25%"><?php echo $lists ['integration_activity']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_DESC') ?></td>
+						</tr>
+						<tr align="center" valign="middle">
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT') ?></td>
+							<td align="left" valign="top"><input type="text" name="cfg_activity_limit" class="ksm-field"
+								value="<?php echo kescape($kunena_config->activity_limit);?>" /></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACTIVITY_LIMIT_DESC') ?></td>
 						</tr>
 						<tr align="center" valign="middle">
 							<td align="left" valign="top" width="25%"><?php echo JText::_('COM_KUNENA_INTEGRATION_ACCESS') ?></td>
@@ -1955,7 +1934,7 @@ function newModerator($option, $id, $moderators, &$modIDs, $forumName, &$userLis
 		<?php
 }
 
-function editUserProfile($option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $useriplist) {
+function editUserProfile($option, $user, $subslist, $subscatslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid, $modCats, $useriplist) {
 				$kunena_config = KunenaFactory::getConfig ();
 				$kunena_db = &JFactory::getDBO ();
 				//fill the variables needed later
@@ -2085,7 +2064,45 @@ function textCounter(field, target) {
 				<input type="hidden" name="boxchecked" value="1" />
 			</fieldset>
 		</dd>
+<dt><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></dt>
+			<dd>
+			<fieldset>
+				<legend><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></legend>
+				<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
+					<tr>
+						<th colspan="2" class="title"><?php
+						echo JText::_('COM_KUNENA_SUBFOR');
+						?> <?php
+						echo $username;
+						?>
+						</th>
+					</tr>
+					<?php
+					$enum = 1; //reset value
+					$k = 0; //value for alternating rows
 
+					if (!empty($subscatslist)) {
+						foreach($subscatslist as $subscats) { //get all category details for each subscription
+							$kunena_db->setQuery ( "select cat.name AS catname, cat.id, msg.subject, msg.id, msg.catid, msg.name AS username from #__kunena_categories AS cat INNER JOIN #__kunena_messages AS msg ON cat.id=msg.catid where cat.id='$subscats->catid' GROUP BY cat.id" );
+							$catdetail = $kunena_db->loadObjectList ();
+							if (KunenaError::checkDatabaseError()) break;
+
+							foreach ( $catdetail as $cat ) {
+								$k = 1 - $k;
+								echo "<tr class=\"row$k\">";
+								echo "  <td width=\"30\">$enum</td>";
+								echo "  <td><strong>" . kescape ( $cat->catname ) ."</strong>" . JText::_('COM_KUNENA_LAST_MESSAGE') . "<em>".kescape ( $cat->subject )."</em>". JText::_('COM_KUNENA_BY') . "<em>".kescape ( $cat->username )."</em></td>";
+								echo "</tr>";
+								$enum ++;
+							}
+						}
+					} else {
+						echo "<tr><td class=\"message\">" . JText::_('COM_KUNENA_NOCATSUBS') . "</td></tr>";
+					}
+					?>
+				</table>
+			</fieldset>
+			</dd>
 <dt><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>

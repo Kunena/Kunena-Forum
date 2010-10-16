@@ -60,7 +60,6 @@ if (Kunena::isSVN()) {
 	$lang->load('com_kunena',KPATH_SITE);
 	$lang->load('com_kunena.install',KPATH_ADMIN);
 } else {
-	$lang->load('com_kunena',JPATH_ADMINISTRATOR);
 	$lang->load('com_kunena',JPATH_SITE);
 	$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 }
@@ -966,35 +965,6 @@ function showConfig($option) {
 		$lists ['enablerss'] = JHTML::_ ( 'select.genericlist', $rss_yesno, 'cfg_enablerss', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->enablerss );
 	}
 
-	// source of avatar picture
-	$avlist = array ();
-	$avlist [] = JHTML::_ ( 'select.option', 'fb', JText::_('COM_KUNENA_KUNENA') );
-	$avlist [] = JHTML::_ ( 'select.option', 'cb', JText::_('COM_KUNENA_CB') );
-	$avlist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_('COM_KUNENA_JOMSOCIAL') );
-	$avlist [] = JHTML::_ ( 'select.option', 'aup', JText::_('COM_KUNENA_AUP_ALPHAUSERPOINTS') ); // INTEGRATION ALPHAUSERPOINTS
-	// build the html select list
-	$lists ['avatar_src'] = JHTML::_ ( 'select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src );
-
-	// private messaging system to use
-	$pmlist = array ();
-	$pmlist [] = JHTML::_ ( 'select.option', 'no', JText::_('COM_KUNENA_A_NO') );
-	$pmlist [] = JHTML::_ ( 'select.option', 'cb', JText::_('COM_KUNENA_CB') );
-	$pmlist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_('COM_KUNENA_JOMSOCIAL') );
-	$pmlist [] = JHTML::_ ( 'select.option', 'uddeim', JText::_('COM_KUNENA_UDDEIM') );
-
-	$lists ['pm_component'] = JHTML::_ ( 'select.genericlist', $pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pm_component );
-
-	//redundant    $lists['pm_component'] = JHTML::_('select.genericlist',$pmlist, 'cfg_pm_component', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->pm_component);
-	// Profile select
-	$prflist = array ();
-	$prflist [] = JHTML::_ ( 'select.option', 'fb', JText::_('COM_KUNENA_KUNENA') );
-	$prflist [] = JHTML::_ ( 'select.option', 'cb', JText::_('COM_KUNENA_CB') );
-	$prflist [] = JHTML::_ ( 'select.option', 'jomsocial', JText::_('COM_KUNENA_JOMSOCIAL') );
-	$prflist [] = JHTML::_ ( 'select.option', 'aup', JText::_('COM_KUNENA_AUP_ALPHAUSERPOINTS') ); // INTEGRATION ALPHAUSERPOINTS
-
-
-	$lists ['fb_profile'] = JHTML::_ ( 'select.genericlist', $prflist, 'cfg_fb_profile', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->fb_profile );
-
 	// build the html select list
 	// make a standard yes/no list
 	$yesno = array ();
@@ -1026,13 +996,6 @@ function showConfig($option) {
 	$lists ['changename'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_changename', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->changename );
 	$lists ['allowavatarupload'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowavatarupload', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatarupload );
 	$lists ['allowavatargallery'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_allowavatargallery', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->allowavatargallery );
-	$lists ['avatar_src'] = JHTML::_ ( 'select.genericlist', $avlist, 'cfg_avatar_src', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->avatar_src );
-
-	$ip_opt [] = JHTML::_ ( 'select.option', 'gd2', 'GD2' );
-	$ip_opt [] = JHTML::_ ( 'select.option', 'gd1', 'GD1' );
-	$ip_opt [] = JHTML::_ ( 'select.option', 'none', JText::_('COM_KUNENA_IMAGE_PROCESSOR_NONE') );
-
-	$lists ['imageprocessor'] = JHTML::_ ( 'select.genericlist', $ip_opt, 'cfg_imageprocessor', 'class="inputbox"', 'value', 'text', $kunena_config->imageprocessor );
 	$lists ['showstats'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showstats', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showstats );
 	$lists ['showranking'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showranking', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showranking );
 	$lists ['rankimages'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_rankimages', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->rankimages );
@@ -1149,6 +1112,8 @@ function showConfig($option) {
 	$lists ['bbcode_img_secure'] = JHTML::_('select.genericlist', $listBbcodeImgSecure, 'cfg_bbcode_img_secure', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->bbcode_img_secure);
 
 	$lists ['listcat_show_moderators'] = JHTML::_('select.genericlist', $yesno, 'cfg_listcat_show_moderators', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->listcat_show_moderators);
+
+	$lists ['lightbox'] = JHTML::_('select.genericlist', $yesno, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->lightbox);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
@@ -1482,6 +1447,11 @@ function editUserProfile($option, $uid) {
 	$subslist = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
 
+	//get all categories subscriptions for this user
+	$kunena_db->setQuery ( "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$uid[0]}" );
+	$subscatslist = $kunena_db->loadObjectList ();
+	if (KunenaError::checkDatabaseError()) return;
+
 	//get all moderation category ids for this user
 	$kunena_db->setQuery ( "SELECT catid FROM #__kunena_moderation WHERE userid=" . $uid [0] );
 	$modCatList = $kunena_db->loadResultArray ();
@@ -1509,7 +1479,7 @@ function editUserProfile($option, $uid) {
 		$useridslist[$item->ip][] = $item;
 	}
 
-	html_Kunena::editUserProfile ( $option, $user, $subslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $useridslist );
+	html_Kunena::editUserProfile ( $option, $user, $subslist, $subscatslist, $selectRank, $selectPref, $selectMod, $selectOrder, $uid [0], $modCats, $useridslist );
 }
 
 function saveUserProfile($option) {
@@ -2569,8 +2539,9 @@ function showSystemReport ( $option ) {
 
 function generateSystemReport () {
 	$kunena_config = KunenaFactory::getConfig ();
-	$kunena_app = & JFactory::getApplication ();
-	$kunena_db = &JFactory::getDBO ();
+	$kunena_app = JFactory::getApplication ();
+	$kunena_db = JFactory::getDBO ();
+	$JTemplate = JFactory::getTemplate();
 	$JVersion = new JVersion();
 	$jversion = $JVersion->PRODUCT .' '. $JVersion->RELEASE .'.'. $JVersion->DEV_LEVEL .' '. $JVersion->DEV_STATUS.' [ '.$JVersion->CODENAME .' ] '. $JVersion->RELDATE;
 
@@ -2650,8 +2621,33 @@ function generateSystemReport () {
 	} else {
 		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 	}
-
-
+	
+	// Get Joomla! frontend assigned template
+	$query = ' SELECT template '
+				.' FROM #__templates_menu '
+				.' WHERE client_id = 0 AND menuid = 0 ';
+	$kunena_db->setQuery($query);
+	$jdefaultemplate = $kunena_db->loadResult();
+	
+	$xml_tmpl = JFactory::getXMLparser('Simple');	
+	$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate.'/templateDetails.xml');
+	$templatecreationdate= $xml_tmpl->document->creationDate[0];	
+	$templateauthor= $xml_tmpl->document->author[0];	
+	$templateversion = $xml_tmpl->document->version[0];	
+	
+	// Get Kunena menu items
+	$query = ' SELECT id, menutype, name, alias, link, parent '
+				.' FROM #__menu '
+				.' WHERE menutype = '.$kunena_db->Quote('kunenamenu').' ORDER BY id ASC';
+	$kunena_db->setQuery($query);
+	$kmenustype = $kunena_db->loadObjectlist();
+	
+	$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
+	foreach($kmenustype as $item) {
+		$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
+	}
+	$menudisplaytable .='[/table]';
+	
 	//test on each table if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';
@@ -2693,15 +2689,16 @@ function generateSystemReport () {
 	jimport('joomla.filesystem.file');
 
 	if ( JPluginHelper::isEnabled('system', 'mtupgrade') ) 	$mtupgrade = '[u]System - Mootools Upgrade:[/u] Enabled';
-	else $mtupgrade = '[u]System - Mootools Upgrade:[/u] [color=#FF0000]Disabled[/color]';
+	else $mtupgrade = '[u]System - Mootools Upgrade:[/u] Disabled';
 
-	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] [color=#FF0000]Enabled[/color]';
+	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] Enabled';
 	else $plg_mt = '[u]System - Mootools12:[/u] Disabled';
 
 	$plg_jfirephp = checkThirdPartyVersion('jfirephp', 'jfirephp', 'JFirePHP', 'plugins/system', 'system', 0, 0, 1);
 	$plg_ksearch = checkThirdPartyVersion('kunenasearch', 'kunenasearch', 'Kunena Search', 'plugins/search', 'search', 0, 0, 1);
 	$plg_kdiscuss = checkThirdPartyVersion('kunenadiscuss', 'kunenadiscuss', 'Kunena Discuss', 'plugins/content', 'content', 0, 0, 1);
 	$plg_kjomsocialmenu = checkThirdPartyVersion('kunenamenu', 'kunenamenu', 'My Kunena Forum Menu', 'plugins/community', 'community', 0, 0, 1);
+	$plg_kjomsocialmykunena = checkThirdPartyVersion('mykunena', 'mykunena', 'My Kunena Forum Posts', 'plugins/community', 'community', 0, 0, 1);
 	$mod_kunenalatest = checkThirdPartyVersion('mod_kunenalatest', 'mod_kunenalatest', 'Kunena Latest', 'modules/mod_kunenalatest', null, 0, 1, 0);
 	$mod_kunenastats = checkThirdPartyVersion('mod_kunenastats', 'mod_kunenastats', 'Kunena Stats', 'modules/mod_kunenastats', null, 0, 1, 0);
 	$mod_kunenalogin = checkThirdPartyVersion('mod_kunenalogin', 'mod_kunenalogin', 'Kunena Login', 'modules/mod_kunenalogin', null, 0, 1, 0);
@@ -2716,8 +2713,8 @@ function generateSystemReport () {
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.Kunena::version().' | [u]Build:[/u] '
-	    .Kunena::versionBuild().' | [u]Version name:[/u] '.Kunena::versionName().' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$menudisplaytable.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jdefaultemplate.' | [u]author:[/u] '.$templateauthor->data().' | [u]version:[/u] '.$templateversion->data().' | [u]creationdate:[/u] '.$templatecreationdate->data().' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.Kunena::version().' | [u]Build:[/u] '
+	    .Kunena::versionBuild().' | [u]Version name:[/u] '.Kunena::versionName().' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
 
     return $report;
 }

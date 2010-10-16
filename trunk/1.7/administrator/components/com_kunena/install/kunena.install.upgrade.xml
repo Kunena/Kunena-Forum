@@ -161,6 +161,9 @@
 		</version>
 		<version version="1.6.0" versiondate="2010-10-03" build="3620" versionname="Spika">
 		</version>
+		<version version="1.6.1" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+			<phpfile name="upgrade-1.6.1_delfiles"></phpfile>
+		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 			<query mode="silenterror">ALTER TABLE `#__kunena_categories` 
 				ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderators`,

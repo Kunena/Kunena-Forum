@@ -20,7 +20,7 @@ defined( '_JEXEC' ) or die();
 $document=& JFactory::getDocument();
 $option=JRequest::getCmd ( 'option' );
 
-$document->setTitle(JText::_('COM_KUNENA_USRL_USERLIST') . ' - ' . $this->escape($this->config->board_title));
+$document->setTitle(JText::_('COM_KUNENA_USRL_USERLIST') . ' - ' . $this->config->board_title);
 
 $document->addScriptDeclaration( "// <![CDATA[
 function tableOrdering( order, dir, task ) {

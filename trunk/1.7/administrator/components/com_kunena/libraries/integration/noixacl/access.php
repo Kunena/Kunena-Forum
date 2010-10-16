@@ -126,6 +126,29 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		return 0;
 	}
 
+	protected function _get_groups($groupid, $recurse) {
+		$groups = array();
+		if ($groupid > 0) {
+			if ($recurse) {
+				$acl = JFactory::getACL ();
+				$groups = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
+			}
+			$groups [] = $groupid;
+		}
+		return $groups;
+	}
+
+	protected function _get_subscribers($catid, $thread) {
+		$db = JFactory::getDBO ();
+		$query ="SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$thread}
+				UNION
+				SELECT user_id FROM #__kunena_user_categories WHERE category_id={$catid}";
+		$db->setQuery ($query);
+		$userids = $db->loadResultArray();
+		KunenaError::checkDatabaseError();
+		return $userids;
+	}
+
 	function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
 		$catid = intval ( $catid );
 		$thread = intval ( $thread );
@@ -139,14 +162,31 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		$access = $db->loadObject ();
 		if (KunenaError::checkDatabaseError() || !$access) return array();
 
-		$modlist = array();
-		$adminlist = array();
+		$subslist = -1;
+		$modlist = -1;
+		$adminlist = -1;
+		$arogroups = '';
+		if ($subscriptions) {
+			// Get all allowed Joomla groups to make sure that subscription is valid
+			$kunena_acl = JFactory::getACL ();
+			$public = $this->_get_groups($access->pub_access, $access->pub_recurse);
+			$admin = array();
+			if ($access->pub_access > 0) {
+				$admin = $this->_get_groups($access->admin_access, $access->admin_recurse);
+			}
+			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
+			if ($arogroups)
+				$arogroups = "(u.gid IN ({$arogroups}) OR g.id_group IN ({$arogroups}))";
+			$subslist = $this->_get_subscribers($catid, $thread);
+			$subslist = !empty($subslist) ? implode(',', array_keys($subslist)) : '-1';
+		}
 		if ($moderators) {
 			if ($this->moderatorsByCatid === false) {
 				$this->loadModerators();
 			}
 			if (!empty($this->moderatorsByCatid[0])) $modlist = $this->moderatorsByCatid[0];
 			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
+			$modlist = !empty($modlist) ? implode(',', array_keys($modlist)) : '-1';
 		}
 		if ($admins) {
 			if ($this->adminsByCatid === false) {
@@ -154,45 +194,19 @@ class KunenaAccessNoixACL extends KunenaAccess {
 			}
 			if (!empty($this->adminsByCatid[0])) $adminlist = $this->adminsByCatid[0];
 			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
-		}
-		$modlist = !empty($modlist) ? implode(',', array_keys($modlist)) : '-1';
-		$adminlist = !empty($adminlist) ? implode(',', array_keys($adminlist)) : '-1';
-
-		$arogroups = '';
-		if ($subscriptions) {
-			// Get all allowed Joomla groups to make sure that subscription is valid
-			$kunena_acl = &JFactory::getACL ();
-			$public = array ();
-			$admin = array ();
-			if ($access->pub_access > 0) {
-				if ($access->pub_recurse) {
-					$public = $kunena_acl->get_group_children ( $access->pub_access, 'ARO', 'RECURSE' );
-				}
-				$public [] = $access->pub_access;
-			}
-			if ($access->pub_access > 0 && $access->admin_access > 0) {
-				if ($access->admin_recurse) {
-					$admin = $kunena_acl->get_group_children ( $access->admin_access, 'ARO', 'RECURSE' );
-				}
-				$admin [] = $access->admin_access;
-			}
-			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
-			if ($arogroups)
-				$arogroups = "(u.gid IN ({$arogroups}) OR g.id_group IN ({$arogroups}))";
+			$adminlist = !empty($adminlist) ? implode(',', array_keys($adminlist)) : '-1';
 		}
 
 		$querysel = "SELECT u.id, u.name, u.username, u.email,
-					IF( (ut.subscribed=1) OR (uc.subscribed=1), 1, 0 ) AS subscription,
+					IF( u.id IN ({$subslist}), 1, 0 ) AS subscription,
 					IF( u.id IN ({$modlist}), 1, 0 ) AS moderator,
 					IF( u.id IN ({$adminlist}), 1, 0 ) AS admin
 					FROM #__users AS u
-					LEFT JOIN #__noixacl_multigroups AS g ON g.id_user=u.id
-					LEFT JOIN #__kunena_user_topics AS ut ON u.id=ut.user_id AND ut.topic_id={$thread}
-					LEFT JOIN #__kunena_user_categories AS uc ON u.id=uc.user_id AND uc.category_id={$catid}";
+					LEFT JOIN #__noixacl_multigroups AS g ON g.id_user=u.id";
 
 		$where = array ();
 		if ($subscriptions)
-			$where [] = " ( ( ut.subscribed=1 OR uc.subscribed=1 )" . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
+			$where [] = " ( u.id IN ({$subslist}) ) " . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
 		if ($moderators)
 			$where [] = " ( u.id IN ({$modlist}) ) ";
 		if ($admins)
@@ -206,6 +220,8 @@ class KunenaAccessNoixACL extends KunenaAccess {
 			$subsList = $db->loadObjectList ();
 			if (KunenaError::checkDatabaseError()) return array();
 		}
+
+		unset($subslist, $modlist, $adminlist);
 		return $subsList;
 	}
 }

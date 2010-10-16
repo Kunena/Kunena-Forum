@@ -37,7 +37,12 @@ class KunenaActivityJomSocial extends KunenaActivity {
 
 			kimport('html.parser');
 			$content = $message->get ( 'message' );
-			$content = KunenaParser::plainBBCode($content);
+			$content = KunenaParser::plainBBCode($content, $this->_config->activity_limit);
+
+			// Add readmore link
+			$content .= '<br /><a href="'.
+					CKunenaLink::GetMessageURL($message->get ( 'id' )).
+					'" class="small profile-newsfeed-item-action">'.JText::sprintf('Read more...').'</a>';
 
 			$act = new stdClass ();
 			$act->cmd = 'wall.write';
@@ -73,7 +78,12 @@ class KunenaActivityJomSocial extends KunenaActivity {
 
 			kimport('html.parser');
 			$content = $message->get ( 'message' );
-			$content = KunenaParser::plainBBCode($content);
+			$content = KunenaParser::plainBBCode($content, $this->_config->activity_limit);
+
+			// Add readmore link
+			$content .= '<br /><a href="'.
+					CKunenaLink::GetMessageURL($message->get ( 'id' )).
+					'" class="small profile-newsfeed-item-action">'.JText::sprintf('Read more...').'</a>';
 
 			$act = new stdClass ();
 			$act->cmd = 'wall.write';
@@ -81,6 +91,38 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			$act->target = 0; // no target
 			$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG1' ) . ' <a href="' . $JSPostLink . '">' . $message->get ( 'subject' ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
 			$act->content = $content;
+			$act->app = 'wall';
+			$act->cid = 0;
+
+			// jomsocial 0 = public, 20 = registered members
+			if ($message->parent->pub_access == 0) {
+				$act->access = 0;
+			} else {
+				$act->access = 20;
+			}
+
+			CFactory::load ( 'libraries', 'activities' );
+			CActivityStream::add ( $act );
+		}
+	}
+
+	public function onAfterThankyou($thankyoutargetid, $username , $message) {
+		CFactory::load ( 'libraries', 'userpoints' );
+		CUserPoints::assignPoint ( 'com_kunena.thread.thankyou', $thankyoutargetid );
+
+		// Check for permisions of the current category - activity only if public or registered
+		if ($message->parent->pub_access == 0 || $message->parent->pub_access == - 1) {
+			//activity stream - reply post
+			require_once KPATH_SITE.'/lib/kunena.link.class.php';
+			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
+			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
+
+			$act = new stdClass ();
+			$act->cmd = 'wall.write';
+			$act->actor = JFactory::getUser()->id;
+			$act->target = $thankyoutargetid;
+			$act->title = JText::_ ( '{single}{actor}{/single}{multiple}{actors}{/multiple} ' . JText::_( 'COM_KUNENA_JS_ACTIVITYSTREAM_THANKYOU' ).' <a href="' . $JSPostLink . '">' . $message->get ( 'subject' ) . '</a> ' . JText::_ ( 'COM_KUNENA_JS_ACTIVITYSTREAM_REPLY_MSG2' ) );
+			$act->content = NULL;
 			$act->app = 'wall';
 			$act->cid = 0;
 

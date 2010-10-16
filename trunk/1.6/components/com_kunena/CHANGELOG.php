@@ -35,6 +35,7 @@ Kunena 1.6.1-DEV
 
 16-October-2010 Matias
 # [#22898] Activity Stream integration: attachments do not show up in the stream
+^ [#15886] Merged revisions 3718-3725 from /branches/1.6-xillibit-fixes-20101010
 
 15-October-2010 Matias
 + [#22694] Add support for ArtOfUser ACL without needing JXtended library
@@ -43,6 +44,10 @@ Kunena 1.6.1-DEV
 15-October-2010 fxstein
 # [#22880] Fix forum header color through template parameters - make menu use the same color
 
+14-October-2010 Xillibit
+# [#22869] Bug which does not allow user to delete his own posts
+# [#22829] Make sure that menu aliases are in lower case
+
 14-Octover-2010 fxstein
 + [#22864] Limit jomSocial activity stream content with new setting + Read More link
 
@@ -50,6 +55,10 @@ Kunena 1.6.1-DEV
 # [#22863] Subscriptions query gets slow if there are a lot of users (even if there are few subscriptions)
 ^ [#22842] Cleanup install.xml file on deprecated configuration options, add missing options
 # [#22866] AUP integration: link to userlist doesn't have menu item assigned to it (thanks Bernard)
+
+13-October-2010 Xillibit
+# [#22706] Show in configuration report the default joomla and details on joomla menu items
+# [#22805] File name incorrect in xml for en-GB.com_kunena.tpl_skinner.ini
 
 13-October-2010 fxstein
 + [#22849] Add new module position kunena_section_1 through kunena_section_n

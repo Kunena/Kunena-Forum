@@ -32,7 +32,7 @@ $PMlink = $private->getInboxLink($PMCount ? JText::sprintf('COM_KUNENA_PMS_INBOX
 		<tr class="krow1">
 			<?php if ($avatar) : ?>
 			<td class="kprofilebox-left">
-				<?php echo $avatar; ?>
+				<?php echo CKunenaLink::GetProfileLink ( intval($this->user->id), $avatar ); ?>
 			</td>
 			<?php endif; ?>
 			<td class="kprofileboxcnt">

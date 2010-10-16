@@ -2698,105 +2698,17 @@ function generateSystemReport () {
 	if ( JPluginHelper::isEnabled('system', 'mootools12') ) $plg_mt = '[u]System - Mootools12:[/u] [color=#FF0000]Enabled[/color]';
 	else $plg_mt = '[u]System - Mootools12:[/u] Disabled';
 
-	if ( JPluginHelper::isEnabled('system', 'jfirephp') && JFile::exists(JPATH_SITE.'/plugins/system/jfirephp.php') ) {
-		$xml_jfireftp = JFactory::getXMLparser('Simple');
-		$xml_jfireftp->loadFile(JPATH_SITE.'/plugins/system/jfirephp.xml');
-		$version = $xml_jfireftp->document->version[0];
-		$plg_jfirephp = '[u]JFirePHP:[/u] Enabled (Version : '.$version->data().')';
-	} else {
-		$plg_jfirephp = '[u]JFirePHP:[/u] Disabled or not installed';
-	}
-
-	if ( JPluginHelper::isEnabled('kunena', 'search') && JFile::exists(JPATH_SITE.'/plugins/search/kunenasearch.php') ) {
-		$xml_ksearch = JFactory::getXMLparser('Simple');
-		$xml_ksearch->loadFile(JPATH_SITE.'/plugins/search/kunenasearch.xml');
-		$version = $xml_ksearch->document->version[0];
-		$plg_ksearch_version = $version->data();
-		$plg_ksearch = '[u]Kunena Search:[/u] Enabled (Version : '.$version->data().')';
-	} else {
-		$plg_ksearch = '[u]Kunena Search:[/u] Disabled or not installed';
-	}
-
-	if ( JPluginHelper::isEnabled('content', 'kunenadiscuss') && JFile::exists(JPATH_SITE.'/plugins/content/kunenadiscuss.php') ) {
-		$xml_kdiscuss = JFactory::getXMLparser('Simple');
-		$xml_kdiscuss->loadFile(JPATH_SITE.'/plugins/content/kunenadiscuss.xml');
-		$version = $xml_kdiscuss->document->version[0];
-		$plg_kdiscuss = '[u]Kunena Discuss:[/u] Enabled (Version : '.$version->data().')';
-	} else {
-		$plg_kdiscuss = '[u]Kunena Discuss:[/u] Disabled or not installed';
-	}
-
-	if ( JPluginHelper::isEnabled('community', 'kunenamenu ') && JFile::exists(JPATH_SITE.'/plugins/community/kunenamenu.php') ) {
-		$xml_kunenamenu = JFactory::getXMLparser('Simple');
-		$xml_kunenamenu->loadFile(JPATH_SITE.'/plugins/community/kunenamenu.xml');
-		$version = $xml_kunenamenu->document->version[0];
-		$plg_kjomsocialmenu = '[u]My Kunena Forum Menu:[/u] Enabled (Version : '.$version->data().')';
-	} else {
-		$plg_kjomsocialmenu = '[u]My Kunena Forum Menu:[/u] Disabled or not installed';
-	}
-
-	if ( JModuleHelper::isEnabled('mod_kunenalatest') && JFile::exists(JPATH_SITE.'/modules/mod_kunenalatest/mod_kunenalatest.php') ) {
-		$xml_klatest = JFactory::getXMLparser('Simple');
-		$xml_klatest->loadFile(JPATH_SITE.'/modules/mod_kunenalatest/mod_kunenalatest.xml');
-		$version = $xml_klatest->document->version[0];
-		$mod_kunenalatest = '[u]Kunena Latest:[/u] Enabled (Version : '.$version->data().')';
-	} else {
-		$mod_kunenalatest = '[u]Kunena Latest:[/u] Disabled or not installed';
-	}
-
-	if ( JModuleHelper::isEnabled('mod_kunenastats') && JFile::exists(JPATH_SITE.'/modules/mod_kunenastats/mod_kunenastats.php') ) {
-		$xml_kstats = JFactory::getXMLparser('Simple');
-		$xml_kstats->loadFile(JPATH_SITE.'/modules/mod_kunenastats/mod_kunenastats.xml');
-		$version = $xml_kstats->document->version[0];
-		$mod_kunenastats = '[u]Kunena Stats:[/u] Enabled (Version : '.$version->data().')';
-	} else {
-		$mod_kunenastats = '[u]Kunena Stats:[/u] Disabled or not installed';
-	}
-
-	if ( JModuleHelper::isEnabled('mod_kunenalogin') && JFile::exists(JPATH_SITE.'/modules/mod_kunenalogin/mod_kunenalogin.php') ) {
-	 	$xml_klogin = JFactory::getXMLparser('Simple');
-		$xml_klogin->loadFile(JPATH_SITE.'/modules/mod_kunenalogin/mod_kunenalogin.xml');
-		$version = $xml_klogin->document->version[0];
-		$mod_kunenalogin = '[u]Kunena Login:[/u] Enabled (Version : '.$version->data().')';
-	} else {
-		$mod_kunenalogin = '[u]Kunena Login:[/u] Disabled or not installed';
-	}
-
-	if ( JComponentHelper::isEnabled('AlphaUserPoints') && JFile::exists(JPATH_SITE.'/components/com_alphauserpoints/alphauserpoints.php') ) {
-		$xml_aup = JFactory::getXMLparser('Simple');
-		$xml_aup->loadFile(JPATH_ADMINISTRATOR.'/components/com_alphauserpoints/alphauserpoints.xml');
-		$version = $xml_aup->document->version[0];
-		$aup = '[u]AlphaUserPoints:[/u] Installed (Version : '.$version->data().')';
-	} else {
-		$aup = '[u]AlphaUserPoints:[/u] Disabled or not installed';
-	}
-
-	if ( JComponentHelper::isEnabled('comprofiler') && JFile::exists(JPATH_SITE.'/components/com_comprofiler/comprofiler.php') ) {
-		$xml_cb = JFactory::getXMLparser('Simple');
-		$xml_cb->loadFile(JPATH_ADMINISTRATOR.'/components/com_comprofiler/comprofilej.xml');
-		$version = $xml_cb->document->version[0];
-		$cb = '[u]CommunityBuilder:[/u] Installed (Version : '.$version->data().')';
-	} else {
-		$cb = '[u]CommunityBuilder:[/u] Disabled or not installed';
-	}
-
-	if ( JComponentHelper::isEnabled('Community') && JFile::exists(JPATH_SITE.'/components/com_community/community.php') ) {
-		$xml_jomsocial = JFactory::getXMLparser('Simple');
-		$xml_jomsocial->loadFile(JPATH_ADMINISTRATOR.'/components/com_community/community.xml');
-		$version = $xml_jomsocial->document->version[0];
-		$jomsocial = '[u]Jomsocial:[/u] Installed (Version : '.$version->data().')';
-	} else {
-		$jomsocial = '[u]Jomsocial:[/u] Disabled or not installed';
-	}
-
-	if ( JComponentHelper::isEnabled('uddeim') && JFile::exists(JPATH_SITE.'/components/com_uddeim/uddeim.php') ) {
-		$xml_uddeim = JFactory::getXMLparser('Simple');
-		$xml_uddeim->loadFile(JPATH_ADMINISTRATOR.'/components/com_uddeim/uddeim.j15.xml');
-		$version = $xml_uddeim->document->version[0];
-		$uddeim = '[u]UddeIm:[/u] Installed (Version : '.$version->data().')';
-	} else {
-		$uddeim = '[u]UddeIm:[/u] Disabled or not installed';
-	}
+	$plg_jfirephp = checkThirdPartyVersion('jfirephp', 'jfirephp', 'JFirePHP', 'plugins/system', 'system', 0, 0, 1);
+	$plg_ksearch = checkThirdPartyVersion('kunenasearch', 'kunenasearch', 'Kunena Search', 'plugins/search', 'search', 0, 0, 1);
+	$plg_kdiscuss = checkThirdPartyVersion('kunenadiscuss', 'kunenadiscuss', 'Kunena Discuss', 'plugins/content', 'content', 0, 0, 1);
+	$plg_kjomsocialmenu = checkThirdPartyVersion('kunenamenu', 'kunenamenu', 'My Kunena Forum Menu', 'plugins/community', 'community', 0, 0, 1);
+	$mod_kunenalatest = checkThirdPartyVersion('mod_kunenalatest', 'mod_kunenalatest', 'Kunena Latest', 'modules/mod_kunenalatest', null, 0, 1, 0);
+	$mod_kunenastats = checkThirdPartyVersion('mod_kunenastats', 'mod_kunenastats', 'Kunena Stats', 'modules/mod_kunenastats', null, 0, 1, 0);
+	$mod_kunenalogin = checkThirdPartyVersion('mod_kunenalogin', 'mod_kunenalogin', 'Kunena Login', 'modules/mod_kunenalogin', null, 0, 1, 0);
+	$aup = checkThirdPartyVersion('alphauserpoints', 'alphauserpoints', 'AlphaUserPoints', 'components/com_alphauserpoints', null, 1, 0, 0);
+	$cb = checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
+	$jomsocial = checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
+	$uddeim = checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
 
     $report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
@@ -2808,6 +2720,52 @@ function generateSystemReport () {
 	    .Kunena::versionBuild().' | [u]Version name:[/u] '.Kunena::versionName().' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
 
     return $report;
+}
+
+function checkThirdPartyVersion($namephp, $namexml, $namedetailled, $path, $plggroup=null, $components=0, $module=0, $plugin=0) {
+	if ($components) {
+		if ( JComponentHelper::isEnabled($namephp) && JFile::exists(JPATH_SITE.'/'.$path.'/'.$namephp.'.php') ) {
+			if ( JFile::exists(JPATH_ADMINISTRATOR.'/'.$path.'/'.$namexml.'.xml') ) {
+				$xml_com = JFactory::getXMLparser('Simple');
+				$xml_com->loadFile(JPATH_ADMINISTRATOR.'/'.$path.'/'.$namexml.'.xml');
+				$com_version = $xml_com->document->version[0];
+				$com_version = '[u]'.$namedetailled.':[/u] Installed (Version : '.$com_version->data().')';
+			} else {
+				$com_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+			}
+		} else {
+			$com_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+		}
+		return $com_version;
+	} elseif ($module) {
+		if ( JModuleHelper::isEnabled($namephp) && JFile::exists(JPATH_SITE.'/'.$path.'/'.$namephp.'.php') ) {
+			if ( JFile::exists(JPATH_SITE.'/'.$path.'/'.$namexml.'.xml') ) {
+				$xml_mod = JFactory::getXMLparser('Simple');
+				$xml_mod->loadFile(JPATH_SITE.'/'.$path.'/'.$namexml.'.xml');
+				$mod_version = $xml_mod->document->version[0];
+				$mod_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$mod_version->data().')';
+			} else {
+				$mod_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+			}
+		} else {
+			$mod_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+		}
+		return $mod_version;
+	} elseif ($plugin) {
+		if ( JPluginHelper::isEnabled($plggroup, $namephp) && JFile::exists(JPATH_SITE.'/'.$path.'/'.$namephp.'.php') ) {
+			if ( JFile::exists(JPATH_SITE.'/'.$path.'/'.$namexml.'.xml') ) {
+				$xml_plg = JFactory::getXMLparser('Simple');
+				$xml_plg->loadFile(JPATH_SITE.'/'.$path.'/'.$namexml.'.xml');
+				$plg_version = $xml_plg->document->version[0];
+				$plg_version = '[u]'.$namedetailled.':[/u] Enabled (Version : '.$plg_version->data().')';
+			}	else {
+				$plg_version = '[u]'.$namedetailled.':[/u] The file doesn\'t exist '.$namexml.'.xml !';
+			}
+		} else {
+			$plg_version = '[u]'.$namedetailled.':[/u] Disabled or not installed';
+		}
+		return $plg_version;
+	}
 }
 
 //===============================

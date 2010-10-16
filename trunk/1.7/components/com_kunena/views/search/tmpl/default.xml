@@ -2,10 +2,10 @@
 <!DOCTYPE metadata>
 <metadata>
 	<layout title="Search">
-		<message>Search</message>
+		<message>COM_KUNENA_MENU_SEARCH_DESC</message>
 	</layout>
 	<state>
-		<name>Kunena Forum: Search</name>
-		<description>Search</description>
+		<name>COM_KUNENA_MENU_KFSEARCH</name>
+		<description>COM_KUNENA_MENU_SEARCH_DESC</description>
 	</state>
 </metadata>

@@ -34,6 +34,9 @@ Legend:
 Kunena 1.7.0-DEV
 
 11-October-2010 Matias
+^ [#22786] Merge revisions 3663-3700 from trunk/1.6
+
+11-October-2010 Matias
 ^ [#22792] CKunenaShowcat: use the new tables, simplify logic, fix template
 ^ [#22792] CKunenaLatestX: Cleanup code, improve topics, usertopics and categories code
 ^ [#22792] Templates: change variable naming after changes made in classes
@@ -143,13 +146,54 @@ Kunena 1.7.0-DEV
 
 Kunena 1.6.1-DEV
 
+10-October-2010 Matias
+# [#22800] Fix KunenaCategory->delete() when user uses custom database prefix
+# [#22693] [#22694] Fix bug in NoixACL and JXtended integration when sending subscriptions
+^ [#15886] Merged revisions 3668-3680 from /branches/1.6-LDAsvens-bugs-20101008
+^ [#15886] Merged revisions 3681-3684 from /branches/1.6-xillibit-fixes-20101005
+# [#22718] All moderators show up as global moderators (coloration)
+
+10-October-2010 Xillibit
+# [#22766] Guests appearing on the who's online stats when the access to the forum is registered and above
++ [#22799] AUP integration adds points on thank you
+# [#22772] Forum statistics: Warning: Invalid argument supplied for foreach()
+
+9-October-2010 svens (LDA)
+# [#22779] menuconfiguration rules don't schow the parameter created help view
+# [#22773] Menu: Profile doesn't obey integration option
+
+9-October-2010 Matias
+^ [#15886] Merged revisions 3642-3664 from /branches/1.6-xillibit-fixes-20101005
+
+8-October-2010 Xillibit
+# [#21992] Bug when moving a post to a different category and leaving a shadow
+
+8-October-2010 svens (LDA)
+# [#22774] Welcome box: avatar doesn't have link pointing to profile
+# [#22074] Untranslated/hardcoded language strings
+# [#22779] menuconfiguration rules don't schow the parameter renaming view/articel to view/rules
+
+7-October-2010 Xillibit
+# [#22703] Send email to subscribers when moderator approves post
+
 7-October-2010 Matias
 # [#22694] Improve JXtended detection to fix potential white page
+
+6-October-2010 Xillibit
+# [#22731] Update message subject on all replies when you split a topic
+# [#22696] Disable disabled bbcode tags (spoiler, video, ebay)
+# [#22688] Anonymous moderation: Profile link to own profile
 
 6-October-2010 Matias
 # [#22733] Installer: Fix fatal error if PHP <5.2
 + [#22694] Add support for JXtended Access Control
 + [#22693] Add support for NoixACL Access Control
+
+5-October-2010 Xillibit
+# [#22627] Iimprove accessibility for visually impaired users for collaspse/expand buttons
+# [#22583] Same successfull message when you delete a topic or a message
+# [#22715] Welcome mat text need to be updated
+# [#22706] Administrator: Fatal error in Report Configuration Settings
 
 5-October-2010 fxstein
 ^ [#22716] New default colors for the template manager backend settings

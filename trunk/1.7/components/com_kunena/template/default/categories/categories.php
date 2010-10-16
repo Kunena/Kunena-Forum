@@ -28,7 +28,7 @@ foreach ( $this->categories [0] as $section ) :
 ?>
 <div class="kblock kcategories-<?php echo intval($section->id) ?>">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="catid_<?php echo intval($section->id) ?>"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="catid_<?php echo intval($section->id) ?>"></a></span>
 		<h2><span><?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($section->id), $this->escape($section->name), 'follow' ); ?></span></h2>
 		<?php if (!empty($section->description)) : ?>
 		<div class="ktitle-desc km">

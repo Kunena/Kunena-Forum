@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="COM_KUNENA_MENU_RULE">
+		<message>COM_KUNENA_MENU_RULE_DESC</message>
+	</layout>
+	<state>
+		<name>COM_KUNENA_MENU_KFRULE</name>
+		<description>COM_KUNENA_MENU_RULE_DESC</description>
+		<url>
+			<param name="do" type="hidden" default="rules" />
+		</url>
+	</state>
+</metadata>

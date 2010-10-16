@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE metadata>
 <metadata>
-	<layout title="Recent Topics">
-		<message>Show recent topics</message>
+	<layout title="COM_KUNENA_MENU_RECENT">
+		<message>COM_KUNENA_MENU_RECENT_DESC</message>
 	</layout>
 	<state>
-		<name>Kunena Forum: Recent Topics</name>
-		<description>Show recent topics</description>
+		<name>COM_KUNENA_MENU_KFRECENT</name>
+		<description>COM_KUNENA_MENU_RECENT_DESC</description>
 		<url>
-			<param name="do" type="list" default="latest" label="Select View">
-				<option value="latest">Recent Topics</option>
-				<option value="mylatest">My Topics</option>
-				<option value="noreplies">No Replies</option>
-				<option value="subscriptions">My subscriptions</option>
-				<option value="favorites">My Favorites</option>
-				<option value="userposts">My Posts</option>
-				<option value="unapproved">Unapproved Posts</option>
-				<option value="deleted">Deleted Posts</option>
+			<param name="do" type="list" default="latest" label="COM_KUNENA_MENU_SELECTEDVIEW">
+				<option value="latest">COM_KUNENA_MENU_RECENT</option>
+				<option value="mylatest">COM_KUNENA_MENU_MYLATEST</option>
+				<option value="noreplies">COM_KUNENA_MENU_NOREPLIES</option>
+				<option value="subscriptions">COM_KUNENA_MENU_MYSUBSCRIPTIONS</option>
+				<option value="favorites">COM_KUNENA_MENU_MYFAVORITES</option>
+				<option value="userposts">COM_KUNENA_MENU_MYPOSTS</option>
+				<option value="unapproved">COM_KUNENA_MENU_UNAPPROVEDPOSTS</option>
+				<option value="deleted">COM_KUNENA_MENU_DELETEDPOSTS</option>
 			</param>
 		</url>
 	</state>

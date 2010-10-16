@@ -88,7 +88,7 @@ class CKunenaModeration {
 			return false;
 		}
 
-		$query = "SELECT `id`, `catid`, `parent`, `thread`, `subject` FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)}";
+		$query = "SELECT `id`, `catid`, `parent`, `name`, `userid`, `thread`, `subject` FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)}";
 		$this->_db->setQuery ( $query );
 		$currentMessage = $this->_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return false;
@@ -197,7 +197,7 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_THREAD :
 				// Move entire Thread
-				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
+				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} {$subjectupdatesql} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
 
 				// Create ghost thread if requested
 				if ($GhostThread == true) {
@@ -482,7 +482,7 @@ class CKunenaModeration {
 		// @Oliver: I'd like to get rid of it and add it while rendering..
 		$myname = $this->_config->username ? $this->_my->username : $this->_my->name;
 
-		$sql = "INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',{$this->_db->Quote($currentMessage->subject)},{$this->_db->Quote($lastTimestamp)},{$this->_db->Quote($currentMessage->catid)},'1', {$this->_db->Quote($this->_my->id)}, " . $this->_db->Quote ( $myname ) . ")";
+		$sql = "INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',{$this->_db->Quote($currentMessage->subject)},{$this->_db->Quote($lastTimestamp)},{$this->_db->Quote($currentMessage->catid)},'1', {$this->_db->Quote($currentMessage->userid)}, " . $this->_db->Quote ( $currentMessage->name ) . ")";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return false;

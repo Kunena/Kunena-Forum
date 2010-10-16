@@ -75,6 +75,9 @@ class CKunenaThankyou {
 		if (KunenaThankYou::storeThankYou ( $this->pid, $this->my->id, $this->targetuserid ) !== true)
 			KunenaError::checkDatabaseError ();
 
+		$activityIntegration = KunenaFactory::getActivityIntegration();
+		$activityIntegration->onAfterThankyou($this->targetuserid, $this->my->username);
+
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_SUCCESS' ) );
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid, 0, false ) );
 	}

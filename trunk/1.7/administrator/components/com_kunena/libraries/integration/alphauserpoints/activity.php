@@ -44,6 +44,12 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		}
 	}
 
+	public function onAfterThankyou($thankyoutargetid, $username) {
+		$info = (JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . $username);
+		$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $thankyoutargetid );
+		if ( $aupid )  AlphaUserPointsHelper::newpoints('plgaup_thankyou', $aupid, '', $info);
+	}
+
 	function escape($var) {
 		return htmlspecialchars ( $var, ENT_COMPAT, 'UTF-8' );
 	}

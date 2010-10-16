@@ -29,7 +29,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 ?>
 <div class="kblock kpollbox">
 	<div class="kheader">
-		<span class="ktoggler"><a class="ktoggler close"  rel="kpolls_tbody"></a></span>
+		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpolls_tbody"></a></span>
 		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ($dataspollresult[0]->title); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpolls_tbody">
@@ -142,21 +142,21 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 							<?php elseif (!$this->config->pollallowvoteone) : ?>
 							<tr class="krow2">
 								<td colspan="4">
-								
+
 									<a href = "<?php echo CKunenaLink::GetPollURL('vote', $this->id, $this->catid);?>">
 										<?php echo JText::_('COM_KUNENA_POLL_BUTTON_VOTE'); ?>
 									</a>
-									
+
 								</td>
 							</tr>
 							<?php else : ?>
 							<tr class="krow2">
 								<td colspan="4">
-									
+
 										<a href = <?php echo CKunenaLink::GetPollURL('changevote', $this->id, $this->catid); ?>>
 											<?php echo JText::_('COM_KUNENA_POLL_BUTTON_CHANGEVOTE'); ?>
 										</a>
-									
+
 								</td>
 							</tr>
 							<?php endif; ?>

@@ -164,6 +164,7 @@ $kunena_config = KunenaFactory::getConfig ();
 					</div>
 			<?php }
 			}
+			if ($kunena_config->showvideotag) {
 			?>
 
 			<div id="kbbcode-video-options" style="display: none;"><?php
@@ -234,7 +235,9 @@ $kunena_config = KunenaFactory::getConfig ();
 			</div>
 			</td>
 		</tr>
-		<?php if (!$this->config->disemoticons) : ?>
+		<?php
+		}
+		if (!$this->config->disemoticons) : ?>
 		<tr>
 			<td class="kpostbuttons">
 			<div id="smilie"><?php

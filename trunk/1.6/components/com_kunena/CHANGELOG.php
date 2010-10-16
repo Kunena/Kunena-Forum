@@ -38,6 +38,8 @@ Kunena 1.6.1-DEV
 ^ [#15886] Merged revisions 3718-3725 from /branches/1.6-xillibit-fixes-20101010
 # [#22871] JomSocial Activity Stream: thankyou gives points to wrong user
 # [#22871] JomSocial Activity Stream: actor is user, who gives the points
+# [#22713] Improve routing: If there is no menu, redirect to Kunena Menu
+# [#22713] Improve routing: If in Kunena menu and default menu has simple menuitem to Kunena, highlight it
 
 15-October-2010 Matias
 + [#22694] Add support for ArtOfUser ACL without needing JXtended library

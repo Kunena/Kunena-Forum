@@ -60,6 +60,35 @@ abstract class KunenaRoute {
 		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml, $ssl );
 	}
 
+	public static function getDefault() {
+		self::buildMenuTree();
+
+		$menus = JSite::getMenu ();
+		$default = $menus->getDefault();
+		$active = $menus->getActive();
+
+		// By default keep active itemid
+		$Itemid = $active;
+		if ($default && $active && $active->menutype == 'kunenamenu') {
+			// Get all Kunena items from default menu
+			$items = self::getMenuItems($default->menutype);
+			foreach ($items as $link=>$id) {
+				$item = self::$menu[$id];
+				if ($link != $id) {
+					if ($item->menutype == 'kunenamenu') {
+						// If we have link to Kunena Menu, keep using active itemid
+						return self::$menu[self::$active];
+					} else {
+						// We ignore links to other menus
+						continue;
+					}
+				}
+				$Itemid = $id;
+			}
+		}
+		return self::$menu[$Itemid];
+	}
+
 	public static function getCurrentMenu() {
 		self::buildMenuTree();
 

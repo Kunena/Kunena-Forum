@@ -138,6 +138,9 @@ if (empty($_POST) && $format == 'html') {
 			}
 		}
 	}
+	if (!KunenaRoute::getCurrentMenu () && $active->id != KunenaRoute::getItemid()) {
+		$kunena_app->redirect (KunenaRoute::_(null, false));
+	}
 }
 
 global $message;
@@ -810,6 +813,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 <?php
 $integration = KunenaFactory::getProfile();
 $integration->close();
+
+if (empty($_POST) && $format == 'html') {
+	$default = KunenaRoute::getDefault();
+	if ($default) $menu->setActive($default->id);
+}
 
 } // end of online
 

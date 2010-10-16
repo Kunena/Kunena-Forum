@@ -19,12 +19,14 @@ class KunenaAccessJXtended extends KunenaAccess {
 	protected static $catmoderators = false;
 
 	function __construct() {
-		if (!function_exists('jximport'))
+		$loader = JPATH_ADMINISTRATOR . '/components/com_artofuser/libraries/loader.php';
+		if (is_file($loader)) {
+			require_once $loader;
+		}
+		if (!function_exists('juimport') || !function_exists('jximport'))
 			return null;
-		if (!jximport('jxtended.acl.acl'))
-			return null;
+
 		$this->priority = 40;
-		$this->jxacl = new JxAcl();
 	}
 
 	function loadAdmins() {
@@ -114,7 +116,7 @@ class KunenaAccessJXtended extends KunenaAccess {
 		if (KunenaError::checkDatabaseError()) return array();
 
 		$user = JFactory::getUser();
-		$usergroups = $this->jxacl->acl_get_groups('users', $userid);
+		$usergroups = $this->acl_get_groups('users', $userid);
 
 		$catlist = array();
 		foreach ( $rows as $row ) {
@@ -236,5 +238,78 @@ class KunenaAccessJXtended extends KunenaAccess {
 
 		unset($sub_ids, $mod_ids, $adm_ids);
 		return $subsList;
+	}
+
+	/**
+	 * JXtended: Grabs all groups mapped to an ARO.
+	 *
+	 * A root group value can be specified for looking at sub-tree
+	 * (results include the root group)
+	 *
+	 * @param	string	The section value or the ARO or AXO
+	 * @param	string	The value of the ARO or AXO
+	 * @param	integer	The value of the group to start at (optional)
+	 * @param	string	The type of group, either ARO or AXO (optional)
+	 */
+	protected function acl_get_groups($sectionValue, $value, $rootGroupValue=NULL, $type='ARO')
+	{
+		// @todo More advanced caching to span session
+		static $cache = null;
+
+		$db		= JFactory::getDbo();
+		$type	= strtolower($type);
+
+		if ($type != 'aro' && $type != 'axo') {
+			// @todo Throw an expection
+			return array();
+		}
+		if (($sectionValue === '' || $sectionValue === null) && ($value === '' || $value === null)) {
+			return array();
+		}
+
+		// Simple cache
+		if ($cache == null) {
+			$cache = array();
+		}
+
+		// Generate unique cache id.
+		$cacheId = 'acl_get_groups_'.$sectionValue.'-'.$value.'-'.$rootGroupValue.'-'.$type;
+
+		if (!isset($cache[$cacheId]))
+		{
+			if (!class_exists('JDatabaseQuery')) {
+				kimport('joomla.database.databasequery');
+			}
+
+			$query = new JDatabaseQuery();
+
+			// Make sure we get the groups
+			$query->select('DISTINCT g2.id');
+			$query->from('#__core_acl_'.$type.' AS o');
+			$query->join('INNER', '#__core_acl_groups_'.$type.'_map AS gm ON gm.'. $type .'_id=o.id');
+			$query->join('INNER', '#__core_acl_'.$type.'_groups AS g1 ON g1.id = gm.group_id');
+
+			$query->where('(o.section_value='. $db->quote($sectionValue) .' AND o.value='. $db->quote($value) .')');
+
+			/*
+			 * If root group value is specified, we have to narrow this query down
+			 * to just groups deeper in the tree then what is specified.
+			 * This essentially creates a virtual "subtree" and ignores all outside groups.
+			 * Useful for sites like sourceforge where you may seperate groups by "project".
+			 */
+			if ( $rootGroupValue != '') {
+				$query->join('INNER', '#__core_acl_'.$type.'_groups AS g3 ON g3.value='. $db->quote($rootGroupValue));
+				$query->join('INNER', '#__core_acl_'.$type.'_groups AS g2 ON ((g2.lft BETWEEN g3.lft AND g1.lft) AND (g2.rgt BETWEEN g1.rgt AND g3.rgt))');
+			}
+			else {
+				$query->join('INNER', '#__core_acl_'.$type.'_groups AS g2 ON (g2.lft <= g1.lft AND g2.rgt >= g1.rgt)');
+			}
+
+			$db->setQuery($query);
+			//echo $db->getQuery();
+			$cache[$cacheId] = $db->loadResultArray();
+		}
+
+		return $cache[$cacheId];
 	}
 }

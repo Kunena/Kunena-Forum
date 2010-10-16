@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+15-October-2010 Matias
++ [#22694] Add support for ArtOfUser ACL without needing JXtended library
++ [#22694] Add class JDatabaseQuery, imported by kimport('joomla.database.databasequery')
+
 15-October-2010 fxstein
 # [#22880] Fix forum header color through template parameters - make menu use the same color
 

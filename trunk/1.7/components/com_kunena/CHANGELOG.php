@@ -33,8 +33,10 @@ Legend:
 
 Kunena 1.7.0-DEV
 
-11-October-2010 Matias
-^ [#22786] Merge revisions 3663-3700 from trunk/1.6
+16-October-2010 Matias
+^ [#22786] Merge revisions 3663-3733 from trunk/1.6
+^ [#22792] CKunenaLatestX: Convert latest posts to use new tables
+^ [#22792] Template: change threads/posts.php to use new, simpler fields
 
 11-October-2010 Matias
 ^ [#22792] CKunenaShowcat: use the new tables, simplify logic, fix template

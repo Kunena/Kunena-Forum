@@ -42,73 +42,67 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		<?php
 		$k = 0;
 		$counter = 0;
-		if (!count ( $this->customreply )) { ?>
+		if (!count ( $this->messages )) { ?>
 		<tr class="krow2">
 			<td class="kcol-first kcol-ktopicicon"><?php echo $this->func=='showcat' ? JText::_('COM_KUNENA_VIEW_NO_POSTS') : JText::_('COM_KUNENA_NO_POSTS') ?></td>
 		</tr>
 		<?php
 		} else
-			foreach ( $this->customreply as $message ) {
-				$lastreply = $this->lastreply[$message->thread];
-				$firstpost = $this->threads[$message->thread];
+			foreach ( $this->messages as $message ) {
+				$topic = $this->topics[$message->thread];
+				$category = KunenaCategory::getInstance($topic->category_id);
 		?>
 		<tr class="k<?php echo $tabclass [$k^=1];
-		if ($firstpost->ordering != 0) {
+		if ($topic->ordering != 0) {
 			echo '-stickymsg';
 		}
-		if ($firstpost->class_sfx) {
+		if (!empty($this->category->class_sfx)) {
 			echo ' k' . $tabclass [$k^1];
-			if ($firstpost->ordering != 0) {
+			if ($topic->ordering != 0) {
 				echo '-stickymsg';
 			}
-			echo $this->escape($firstpost->class_sfx);
+			echo $this->escape($this->category->class_sfx);
 		}
 		if ($message->hold == 1) echo ' kunapproved';
 		else if ($message->hold) echo ' kdeleted';
 		?>">
 			<td class="kcol-first kcol-ktopicicon">
-				<?php echo CKunenaTools::topicIcon($message) ?>
+				<?php echo CKunenaTools::topicIcon($topic) ?>
 			</td>
 
 			<td class="kcol-mid ktopictittle">
 			<?php
-				$curMessageNo = $message->msgcount - ($message->unread ? $message->unread - 1 : 0);
-				$threadPages = ceil ( $message->msgcount / $this->config->messages_per_page );
+				$curMessageNo = $topic->posts - ($topic->unread ? $topic->unread - 1 : 0);
+				$threadPages = ceil ( $topic->posts / $this->config->messages_per_page );
 				$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
 
-				if ($message->attachments) {
+				/*if ($message->attachments) {
 					echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
-				}
+				}*/
 			?>
 				<div class="ktopic-title-cover">
-					<?php echo CKunenaLink::GetThreadLink ( 'view', intval($message->catid), intval($message->id), KunenaParser::parseText ($message->subject, 30), KunenaParser::stripBBCode ($message->message), 'follow', 'ktopic-title km' ) ?>
+					<?php echo CKunenaLink::GetThreadLink ( 'view', intval($topic->category_id), intval($topic->id), KunenaParser::parseText ($message->subject, 30), KunenaParser::stripBBCode ($message->message), 'follow', 'ktopic-title km' ) ?>
 				</div>
 				<div style="display:none"><?php echo KunenaParser::parseBBCode ($message->message);?></div>
 			</td>
 
 			<td class="kcol-mid ktopictittle">
-				<?php echo CKunenaLink::GetThreadLink ( 'view', intval($firstpost->catid), intval($firstpost->id), KunenaParser::parseText ($firstpost->subject, 20), KunenaParser::stripBBCode ($firstpost->message), 'follow', 'ktopic-title km' ) ?>
-				<?php
-				if ($message->favcount ) {
-					if ($message->myfavorite) {
+				<?php echo CKunenaLink::GetThreadLink ( 'view', intval($topic->category_id), intval($topic->first_post_id), KunenaParser::parseText ($topic->subject, 20), KunenaParser::stripBBCode ($topic->first_post_message), 'follow', 'ktopic-title km' ) ?>
+				<?php if ($topic->favorite) {
 						echo CKunenaTools::showIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
-					} else {
-						echo CKunenaTools::showIcon ( 'kfavoritestar-grey', JText::_('COM_KUNENA_FAVORITE') );
-					}
-				}
-				?>
+				} ?>
 				<?php
-				if ($message->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', intval($message->catid), intval($message->id), $unreadPage, intval($this->config->messages_per_page), '<sup class="knewchar">&nbsp;(' . intval($message->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($message->lastread) );
+				if ($topic->unread) {
+					echo CKunenaLink::GetThreadPageLink ( 'view', intval($topic->category_id), intval($topic->id), $unreadPage, intval($this->config->messages_per_page), '<sup class="knewchar">&nbsp;(' . intval($topic->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($topic->lastread) );
 				}
-				if ($message->locked != 0) {
+				if ($topic->locked != 0) {
 					echo CKunenaTools::showIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
 				}
 				?>
 				<div class="ks">
 					<!-- Category -->
 					<span class="ktopic-category">
-						<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($message->catid), $this->escape( $message->catname ) ) ?>
+						<?php echo JText::_('COM_KUNENA_CATEGORY') . ' ' . CKunenaLink::GetCategoryLink ( 'showcat', intval($topic->category_id), $this->escape( $category->name ) ) ?>
 					</span>
 					<!-- /Category -->
 				</div>
@@ -117,7 +111,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				<div class="klatest-post-info">
 					<!--  Sticky   -->
 					<?php
-					if ($this->messages[$message->id]->ordering != 0) :
+					if ($topic->ordering != 0) :
 						echo CKunenaTools::showIcon ( 'ktopicsticky', JText::_('COM_KUNENA_GEN_ISSTICKY') );
 					endif
 					?>
@@ -125,12 +119,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					<!-- Avatar -->
 					<?php
 					if ($this->config->avataroncat > 0) :
-						$profile = KunenaFactory::getUser((int)$this->messages[$message->id]->userid);
+						$profile = KunenaFactory::getUser((int)$message->userid);
 						$useravatar = $profile->getAvatarLink('klist-avatar', 'list');
 						if ($useravatar) :
 					?>
 					<span class="ktopic-latest-post-avatar">
-					<?php echo CKunenaLink::GetProfileLink ( intval($this->messages[$message->id]->userid), $useravatar ) ?>
+					<?php echo CKunenaLink::GetProfileLink ( intval($message->userid), $useravatar ) ?>
 					</span>
 					<?php
 						endif;
@@ -142,7 +136,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 						<?php echo JText::_('COM_KUNENA_POSTED_AT') . ' ' . CKunenaTimeformat::showDate($message->time, 'config_post_dateformat'); ?>&nbsp;
 					</span>
 
-					<?php if ($message->name) : ?>
+					<?php if ($message->userid) : ?>
 					<br />
 					<span class="ktopic-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($message->userid), $this->escape($message->name) ); ?></span>
 					<?php endif; ?>

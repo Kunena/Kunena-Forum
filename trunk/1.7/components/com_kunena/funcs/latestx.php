@@ -273,38 +273,35 @@ class CKunenaLatestX {
 				break;
 		}
 		if (isset($user)) $where[] = "m.userid='{$this->user->id}'";
-		$where[] = "mm.moved='0'";
 		$where[] = "m.moved='0'";
-		$where[] = "mm.hold IN ({$this->hold})";
 		$where[] = "m.hold IN ({$hold})";
-		$where[] = "mm.catid IN ({$this->session->allowed})";
+		$where[] = "tt.hold IN ({$this->hold})";
+		$where[] = "tt.category_id IN ({$this->session->allowed})";
 		$where = implode(' AND ', $where);
 
 		$query = "SELECT COUNT(*) FROM #__kunena_messages AS m
-		INNER JOIN #__kunena_messages AS mm ON m.thread = mm.id
+		INNER JOIN #__kunena_topics AS tt ON m.thread = tt.id
 		WHERE {$where} {$latestcats} {$wheretime}";
 		$this->db->setQuery ( $query );
 		$this->total = ( int ) $this->db->loadResult ();
 		if (KunenaError::checkDatabaseError() || !$this->total) return;
 
-		$query = "SELECT m.thread, m.id
+		$query = "SELECT m.*, t.message
 		FROM #__kunena_messages AS m
-		INNER JOIN #__kunena_messages AS mm ON m.thread = mm.id
+		INNER JOIN #__kunena_messages_text AS t ON m.id = t.mesid
+		INNER JOIN #__kunena_topics AS tt ON m.thread = tt.id
 		WHERE {$where} {$latestcats} {$wheretime}
 		ORDER BY m.time DESC";
 
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
-		$idlist = $this->db->loadObjectList ();
+		$this->messages = $this->db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return;
 
 		$this->threadids = array();
-		$this->loadids = array();
-		foreach ( $idlist as $item ) {
-			$this->threadids[$item->thread] = $item->thread;
-			$this->loadids[$item->id] = $item->id;
+		foreach ( $this->messages as $message ) {
+			$this->threadids[$message->thread] = $message->thread;
 		}
 
-		$this->order = 'field(a.id,'.implode ( ",", $this->loadids ).')';
 		$this->_common();
 	}
 
@@ -315,13 +312,25 @@ class CKunenaLatestX {
 		$this->limit = 10;
 
 		$idlist = KunenaThankYou::getThankYouPosts($this->user->id, $saidgot);
-
 		$this->threadids = array();
 		$this->loadids = array();
-		foreach( $idlist as $item){
-			$this->threadids[$item->thread] = $item->thread;
-			$this->loadids[$item->id] = $item->id;
+		foreach( $idlist as $message){
+			$this->threadids[$message->thread] = $message->thread;
+			$this->loadids[$message->id] = $message->id;
 		}
+		$idlist = implode(',', $this->loadids);
+		if (empty($idlist)) $idlist = '-1';
+
+		$query = "SELECT m.*, t.message
+		FROM #__kunena_messages AS m
+		INNER JOIN #__kunena_messages_text AS t ON m.id = t.mesid
+		INNER JOIN #__kunena_topics AS tt ON m.thread = tt.id
+		WHERE m.id IN ({$idlist})
+		ORDER BY m.time DESC";
+
+		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
+		$this->messages = $this->db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return;
 
 		if($saidgot == 'got') {
 			$this->header = $this->title = JText::_('COM_KUNENA_THANKYOU_GOT');
@@ -329,7 +338,6 @@ class CKunenaLatestX {
 			$this->header = $this->title = JText::_('COM_KUNENA_THANKYOU_SAID');
 		}
 
-		$this->order = 'field(a.id,'.implode ( ",", $this->loadids ).')';
 		$this->_common();
 	}
 

@@ -71,8 +71,17 @@ if ($this->config->showwhoisonline)
 				</div>
 				<div>
 					<?php
+					$usersOnline = 0;
+					$usersHidden = 0;
+					foreach($users as $user) {
+						if ( $user->showOnline > 0 ) $usersOnline++;
+						else $usersHidden++;
+					}					
 					foreach ($users as $user) {
-						if ( $user->showOnline > 0 ) echo CKunenaLink::GetProfileLink ( intval($user->id) ) .' &nbsp;';
+						if ( $user->showOnline > 0 ) {
+							if ( $usersOnline > 1 ) echo CKunenaLink::GetProfileLink ( intval($user->id) ) .', &nbsp;';
+						 	else echo CKunenaLink::GetProfileLink ( intval($user->id) ) .' &nbsp;';							 
+						}
 					}
 					if (CKunenaTools::isModerator($this->my->id)) : ?>
 						<br />
@@ -80,7 +89,10 @@ if ($this->config->showwhoisonline)
 						<br />
 						<?php
 						foreach ($users as $user) {
-							if ( $user->showOnline == 0 ) echo CKunenaLink::GetProfileLink ( intval($user->id) ) . ' &nbsp;';
+							if ( $user->showOnline == 0 ) {
+								if ( $usersHidden > 1 ) echo CKunenaLink::GetProfileLink ( intval($user->id) ) . ', &nbsp;';
+								else echo CKunenaLink::GetProfileLink ( intval($user->id) ) . ' &nbsp;';
+							}							
 						}
 					endif;
 					?>

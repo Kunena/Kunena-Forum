@@ -35,6 +35,8 @@ Kunena 1.6.1-DEV
 
 17-October-2010 Xillibit
 # [#22919] Some update on latestx class to make working correctly the module klatest
+^ [#22907] Add commas after each user name in Who Is Online box
+* [#22920] Remove confidential information from RSS feed
 
 16-October-2010 Matias
 # [#22898] Activity Stream integration: attachments do not show up in the stream

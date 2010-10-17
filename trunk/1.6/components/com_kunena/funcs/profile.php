@@ -418,8 +418,15 @@ class CKunenaProfile {
 		$post = JRequest::get( 'post' );
 		$post['password']	= JRequest::getVar('password', '', 'post', 'string', JREQUEST_ALLOWRAW);
 		$post['password2']	= JRequest::getVar('password2', '', 'post', 'string', JREQUEST_ALLOWRAW);
+		if (empty($post['password']) || empty($post['password2'])) {
+			unset($post['password'], $post['password2']);
+		}
 		if ($this->config->usernamechange) $post['username']	= JRequest::getVar('username', '', 'post', 'username');
 		else $ignore[] = 'username';
+		foreach ($ignore as $field) {
+			if (isset($post[$field]))
+				unset($post[$field]);
+		}
 
 		// get the redirect
 		$return = CKunenaLink::GetMyProfileURL($this->user->get('id'), '', false);
@@ -440,13 +447,15 @@ class CKunenaProfile {
 		$username = $this->user->get('username');
 
 		// Bind the form fields to the user table
-		if (!$user->bind($post, $ignore)) {
-			$this->_app->redirect ( $err_return, $this->_db->getErrorMsg(), 'error' );
+		if (!$user->bind($post)) {
+			$this->_app->enqueueMessage ( $user->getError(), 'error' );
+			return false;
 		}
 
-		// Store the web link table to the database
+		// Store user to the database
 		if (!$user->save(true)) {
-			$this->_app->redirect ( $err_return, $this->user->getError(), 'error' );
+			$this->_app->enqueueMessage ( $user->getError(), 'error' );
+			return false;
 		}
 
 		$session = JFactory::getSession();

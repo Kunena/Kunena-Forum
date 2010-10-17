@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+17-October-2010 Matias
+# [#22838] Saving profile doesn't work in latest Google Chrome / IE9 (autocomplete issue)
+
 16-October-2010 Matias
 # [#22898] Activity Stream integration: attachments do not show up in the stream
 ^ [#15886] Merged revisions 3718-3725 from /branches/1.6-xillibit-fixes-20101010

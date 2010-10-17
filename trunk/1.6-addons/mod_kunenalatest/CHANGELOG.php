@@ -32,6 +32,7 @@ KunenaLatest 1.6.0-RC2
 
 17-October-2010 Xillibit
 # [#20081] Missing string for default undread indicator
+# [#20081] Some functions doesn't go to the right page
 
 16-September-2010 Xillibit
 + [#20081] Added fr-FR translation

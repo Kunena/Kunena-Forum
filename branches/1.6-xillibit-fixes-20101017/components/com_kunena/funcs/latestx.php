@@ -622,6 +622,7 @@ class CKunenaLatestX {
 	}
 
 	function getPagination($func, $sel, $page, $totalpages, $maxpages) {
+		if ( $func == 'latestmessages' || $func == 'latestposts' )	$func = 'latest&do='.$func;	
 		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
 		$endpage = $startpage + $maxpages;
 		if ($endpage > $totalpages) {
@@ -667,13 +668,16 @@ class CKunenaLatestX {
 			return;
 		}
 		if ($this->func == 'mylatest') $this->getMyLatest();
+		else if ($this->func == 'latestposts') $this->getLatestPosts();
+		else if ($this->func == 'latesttopics') $this->getLatestTopics();
 		else if ($this->func == 'noreplies') $this->getNoReplies();
 		else if ($this->func == 'subscriptions') $this->getSubscriptions();
 		else if ($this->func == 'catsubscriptions') $this->getCategoriesSubscriptions();
 		else if ($this->func == 'favorites') $this->getFavorites();
 		else if ($this->func == 'userposts') $this->getUserPosts();
+		else if ($this->func == 'owntopics') $this->getOwnTopics();
 		else if ($this->func == 'saidthankyouposts') $this->getSaidThankYouPosts();
-		else if ($this->func == 'gotthankyouposts') $this->getUserPosts();
+		else if ($this->func == 'gotthankyouposts') $this->getGotThankYouPosts();
 		else if ($this->func == 'unapproved') $this->getUnapprovedPosts();
 		else if ($this->func == 'deleted') $this->getDeletedPosts();
 		else $this->getLatest();

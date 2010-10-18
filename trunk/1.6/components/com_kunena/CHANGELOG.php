@@ -36,6 +36,8 @@ Kunena 1.6.1-DEV
 18-October-2010 Matias
 # [#22713] Improve routing: Simplify KunenaRoute::getDefault()
 # [#22713] Improve routing: Add support for default values to get rid fields with default values in URI
+# [#22713] Improve routing (No Menu): Do not redirect into another location, if there's nowhere to go
+# [#22713] Improve routing: remove &view field also when there's no Itemid
 
 17-October-2010 fxstein
 # [#22713] Fix bug in route.php with illegal array index

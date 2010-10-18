@@ -130,19 +130,20 @@ class KunenaRouter {
 		$segments = array ();
 
 		$kconfig = KunenaFactory::getConfig ();
-		if (! $kconfig->sef)
+		if (! $kconfig->sef) {
 			return $segments;
+		}
+
+		if (isset ( $query ['func'] )) {
+			$query ['view'] = $query ['func'];
+		}
+		unset ($query ['func']);
 
 		if (isset ( $query ['Itemid'] ) && $query ['Itemid'] > 0) {
 			// If we have Itemid, make sure that we remove identical parameters
 			$menu = JSite::getMenu ();
 			$menuitem = $menu->getItem ( $query ['Itemid'] );
 			if ($menuitem) {
-				if (isset ( $query ['func'] )) {
-					$query ['view'] = $query ['func'];
-				}
-				unset ($query ['func']);
-
 				// Remove variables with default values from URI
 				if (!isset($query ['view'])) $defaults = array();
 				else $defaults = self::$functions[$query ['view']];
@@ -159,12 +160,13 @@ class KunenaRouter {
 						unset ( $query [$var] );
 					}
 				}
-				if (isset ( $query ['view'] )) {
-					$query ['func'] = $query ['view'];
-				}
-				unset ($query ['view']);
 			}
 		}
+
+		if (isset ( $query ['view'] )) {
+			$query ['func'] = $query ['view'];
+		}
+		unset ($query ['view']);
 
 		$db = & JFactory::getDBO ();
 		jimport ( 'joomla.filter.output' );

@@ -138,7 +138,8 @@ if (empty($_POST) && $format == 'html') {
 			}
 		}
 	}
-	if (!KunenaRoute::getCurrentMenu () && $active->id != KunenaRoute::getItemid()) {
+	$newItemid = KunenaRoute::getItemid();
+	if ($active && $newItemid && !KunenaRoute::getCurrentMenu () && $active->id != $newItemid) {
 		$kunena_app->redirect (KunenaRoute::_(null, false));
 	}
 }

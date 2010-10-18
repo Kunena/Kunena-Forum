@@ -147,7 +147,7 @@ class KunenaRouter {
 				if (!isset($query ['view'])) $defaults = array();
 				else $defaults = self::$functions[$query ['view']];
 				foreach ( $defaults as $var => $value ) {
-					if (isset ( $query [$var] ) && $value == $query [$var] ) {
+					if (!isset ( $menuitem->query [$var] ) && isset ( $query [$var] ) && $value == $query [$var] ) {
 						unset ( $query [$var] );
 					}
 				}

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+18-October-2010 Severdia
+# [#22934] Fixed spelling errors in English language files (minor cleanup, no keys changed)
+
 18-October-2010 Matias
 # [#22713] Improve routing: Simplify KunenaRoute::getDefault()
 # [#22713] Improve routing: Add support for default values to get rid fields with default values in URI

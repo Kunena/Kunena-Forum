@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+17-October-2010 fxstein
+# [#22713] Fix bug in route.php with illegal array index
+
 17-October-2010 Matias
 # [#22838] Saving profile doesn't work in latest Google Chrome / IE9 (autocomplete issue)
 

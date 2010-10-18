@@ -86,7 +86,15 @@ abstract class KunenaRoute {
 				$Itemid = $id;
 			}
 		}
-		return self::$menu[$Itemid];
+
+//if(JDEBUG == 1){
+//	if(defined('JFIREPHP')){
+//		FB::log(self::$menu, 'Route - Menu');
+//		FB::log($Itemid, 'Route - Itemid');
+//	}
+//}
+
+		return self::$menu[$Itemid->id];
 	}
 
 	public static function getCurrentMenu() {

@@ -19,6 +19,7 @@ class KunenaRouter {
 	static $msgidcache = array ();
 
 	// List of reserved functions (if category name is one of these, use always catid)
+	// Contains array of default variable=>value pairs, which can be removed from URI
 	static $functions = array (
 		'who'=>array(),
 		'announcement'=>array(),
@@ -27,7 +28,6 @@ class KunenaRouter {
 		'stats'=>array(),
 		'myprofile'=>array(),
 		'userprofile'=>array(),
-		'fbprofile'=>array(),
 		'profile'=>array(),
 		'moderateuser'=>array(),
 		'userlist'=>array(),
@@ -39,14 +39,7 @@ class KunenaRouter {
 		'review'=>array(),
 		'rules'=>array(),
 		'report'=>array(),
-		'latest'=>array('do' => 'latest'),
-		'mylatest'=>array(),
-		'noreplies'=>array(),
-		'subscriptions'=>array(),
-		'favorites'=>array(),
-		'userposts'=>array(),
-		'unapproved'=>array(),
-		'deleted'=>array(),
+		'latest'=>array('do' => 'latest', 'page' => '1'),
 		'search'=>array(),
 		'advsearch'=>array(),
 		'markthisread'=>array(),
@@ -59,10 +52,20 @@ class KunenaRouter {
 		'json'=>array(),
 		'rss'=>array(),
 		'pdf'=>array(),
+		'entrypage'=>array(),
+		'thankyou'=>array(),
+		// Deprecated functions:
+		'fbprofile'=>array(),
+		'mylatest'=>array(),
+		'noreplies'=>array(),
+		'subscriptions'=>array(),
+		'favorites'=>array(),
+		'userposts'=>array(),
+		'unapproved'=>array(),
+		'deleted'=>array(),
 		'fb_pdf'=>array(),
 		'article'=>array(),
-		'entrypage'=>array(),
-		'thankyou'=>array() );
+	);
 
 	function loadCategories() {
 		if (self::$catidcache !== null)
@@ -139,15 +142,21 @@ class KunenaRouter {
 					$query ['view'] = $query ['func'];
 				}
 				unset ($query ['func']);
+
+				// Remove variables with default values from URI
 				if (!isset($query ['view'])) $defaults = array();
 				else $defaults = self::$functions[$query ['view']];
+				foreach ( $defaults as $var => $value ) {
+					if (isset ( $query [$var] ) && $value == $query [$var] ) {
+						unset ( $query [$var] );
+					}
+				}
+				// Remove variables that are the same as in menu item from URI
 				foreach ( $menuitem->query as $var => $value ) {
 					if ($var == 'Itemid' || $var == 'option')
 						continue;
-					if (isset ( $query [$var] ) ) {
-						if ($value == $query [$var] || isset($defaults[$var]) && $defaults[$var] == $query [$var] ) {
-							unset ( $query [$var] );
-						}
+					if (isset ( $query [$var] ) && $value == $query [$var] ) {
+						unset ( $query [$var] );
 					}
 				}
 				if (isset ( $query ['view'] )) {

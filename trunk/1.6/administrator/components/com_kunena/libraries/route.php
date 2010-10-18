@@ -68,7 +68,7 @@ abstract class KunenaRoute {
 		$active = $menus->getActive();
 
 		// By default keep active itemid
-		$Itemid = $active;
+		$current = $active;
 		if ($default && $active && $active->menutype == 'kunenamenu') {
 			// Get all Kunena items from default menu
 			$items = self::getMenuItems($default->menutype);
@@ -77,13 +77,13 @@ abstract class KunenaRoute {
 				if ($link != $id) {
 					if ($item->menutype == 'kunenamenu') {
 						// If we have link to Kunena Menu, keep using active itemid
-						return self::$menu[self::$active];
+						return $active;
 					} else {
 						// We ignore links to other menus
 						continue;
 					}
 				}
-				$Itemid = $id;
+				$current = $item;
 			}
 		}
 
@@ -94,7 +94,7 @@ abstract class KunenaRoute {
 //	}
 //}
 
-		return self::$menu[$Itemid->id];
+		return $current;
 	}
 
 	public static function getCurrentMenu() {

@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+18-October-2010 Matias
+# [#22713] Improve routing: Simplify KunenaRoute::getDefault()
+# [#22713] Improve routing: Add support for default values to get rid fields with default values in URI
+
 17-October-2010 fxstein
 # [#22713] Fix bug in route.php with illegal array index
 

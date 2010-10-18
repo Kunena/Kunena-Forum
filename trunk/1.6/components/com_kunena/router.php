@@ -19,11 +19,50 @@ class KunenaRouter {
 	static $msgidcache = array ();
 
 	// List of reserved functions (if category name is one of these, use always catid)
-	static $functions = array ('who', 'announcement', 'poll', 'polls', 'stats', 'myprofile', 'userprofile', 'fbprofile',
-		'profile', 'moderateuser', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'rules', 'report',
-		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'userposts', 'unapproved',
-		'deleted', 'search', 'advsearch', 'markthisread', 'subscribecat', 'unsubscribecat', 'karma',
-		'bulkactions', 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'fb_pdf', 'article', 'entrypage', 'thankyou' );
+	static $functions = array (
+		'who'=>array(),
+		'announcement'=>array(),
+		'poll'=>array(),
+		'polls'=>array(),
+		'stats'=>array(),
+		'myprofile'=>array(),
+		'userprofile'=>array(),
+		'fbprofile'=>array(),
+		'profile'=>array(),
+		'moderateuser'=>array(),
+		'userlist'=>array(),
+		'post'=>array(),
+		'view'=>array(),
+		'help'=>array(),
+		'showcat'=>array(),
+		'listcat'=>array(),
+		'review'=>array(),
+		'rules'=>array(),
+		'report'=>array(),
+		'latest'=>array('do' => 'latest'),
+		'mylatest'=>array(),
+		'noreplies'=>array(),
+		'subscriptions'=>array(),
+		'favorites'=>array(),
+		'userposts'=>array(),
+		'unapproved'=>array(),
+		'deleted'=>array(),
+		'search'=>array(),
+		'advsearch'=>array(),
+		'markthisread'=>array(),
+		'subscribecat'=>array(),
+		'unsubscribecat'=>array(),
+		'karma'=>array(),
+		'bulkactions'=>array(),
+		'templatechooser'=>array(),
+		'credits'=>array(),
+		'json'=>array(),
+		'rss'=>array(),
+		'pdf'=>array(),
+		'fb_pdf'=>array(),
+		'article'=>array(),
+		'entrypage'=>array(),
+		'thankyou'=>array() );
 
 	function loadCategories() {
 		if (self::$catidcache !== null)
@@ -100,11 +139,15 @@ class KunenaRouter {
 					$query ['view'] = $query ['func'];
 				}
 				unset ($query ['func']);
+				if (!isset($query ['view'])) $defaults = array();
+				else $defaults = self::$functions[$query ['view']];
 				foreach ( $menuitem->query as $var => $value ) {
 					if ($var == 'Itemid' || $var == 'option')
 						continue;
-					if (isset ( $query [$var] ) && $value == $query [$var]) {
-						unset ( $query [$var] );
+					if (isset ( $query [$var] ) ) {
+						if ($value == $query [$var] || isset($defaults[$var]) && $defaults[$var] == $query [$var] ) {
+							unset ( $query [$var] );
+						}
 					}
 				}
 				if (isset ( $query ['view'] )) {
@@ -133,7 +176,7 @@ class KunenaRouter {
 				if (empty ( $suf ))
 					// If translated category name is empty, use catid: 123
 					$segments [] = $query ['catid'];
-				else if ($kconfig->sefcats && ! in_array ( $suf, self::$functions )) {
+				else if ($kconfig->sefcats && ! isset ( self::$functions[$suf] )) {
 					// We want to remove catid: check that there are no conflicts between names
 					if (self::isCategoryConflict($catid, $suf)) {
 						$segments [] = $query ['catid'] . '-' . $suf;
@@ -219,7 +262,7 @@ class KunenaRouter {
 			$value = array_shift ( $seg );
 
 			// If SEF categories are allowed we need to translate category name to catid
-			if ($kconfig->sefcats && $counter == 0 && ($value !== null || ! in_array ( $var, self::$functions ))) {
+			if ($kconfig->sefcats && $counter == 0 && ($value !== null || ! isset ( self::$functions[$var] ))) {
 				self::loadCategories ();
 				$catname = strtr ( $segment, ':', '-' );
 				foreach ( self::$catidcache as $cat ) {
@@ -247,7 +290,7 @@ class KunenaRouter {
 			} else if ($value === null) {
 				// Variable must be either func or do
 				$value = $var;
-				if (in_array ( $var, self::$functions )) {
+				if (isset ( self::$functions[$var] )) {
 					$var = 'func';
 				} else if (isset($vars ['func']) && !isset($vars ['do'])) {
 					$var = 'do';

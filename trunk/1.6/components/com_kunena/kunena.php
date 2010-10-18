@@ -58,7 +58,7 @@ JRequest::setVar ( 'func', $func );
 $format = JRequest::getCmd ( 'format', 'html' );
 
 require_once(KUNENA_PATH . DS . 'router.php');
-if ($func && !in_array($func, KunenaRouter::$functions)) {
+if ($func && !isset(KunenaRouter::$functions[$func])) {
 	// If func is not legal, raise joomla error
 	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
 }

@@ -32,6 +32,7 @@ Legend:
 Kunena Discuss Plugin 1.6.0-RC3
 
 18-October-2010 fxstein
+^ [#20084] Minimum Kunena verison number increased to 1.6.0
 # [#20084] Fixed install file for new languages
 
 10-October-2010 Matias
@@ -66,7 +67,6 @@ Kunena Discuss Plugin 1.6.0-RC2
 # [#20084] Fix category mapping issues
 # [#20084] Fix allow and deny list handling
 
->>>>>>> .r3515
 29-Aug-2010 Xillibit
 # [#20084] Put db->quote() on some values in queries to avoid issues
 

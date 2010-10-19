@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install version="1.5" type="plugin" group="content" method="upgrade">
 	<name>Content - Kunena Discuss</name>
-	<version>1.6.0-RC2</version>
+	<version>1.6.0-RC3</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
@@ -18,8 +18,8 @@
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_content_kunenadiscuss.ini</language>
 		<language tag="fr-FR">fr-FR.plg_content_kunenadiscuss.ini</language>
-		<language tag="fr-FR">hu-HU.plg_content_kunenadiscuss.ini</language>
-		<language tag="fr-FR">ru-RU.plg_content_kunenadiscuss.ini</language>
+		<language tag="hu-HU">hu-HU.plg_content_kunenadiscuss.ini</language>
+		<language tag="ru-RU">ru-RU.plg_content_kunenadiscuss.ini</language>
 	</languages>
 	<params>
 		<param name="limit" type="text" default="25" label="PLG_KUNENADISCUSS_LIMIT" description="PLG_KUNENADISCUSS_LIMIT_DESC" />

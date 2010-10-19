@@ -29,12 +29,18 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Discuss Plugin 1.6.0-RC2
+Kunena Discuss Plugin 1.6.0-RC3
 
+18-October-2010 fxstein
+# [#20084] Fixed install file for new languages
+
+10-October-2010 Matias
 + [#20084] Added ru-RU (thanks ZARKOS) and hu-HU translation
 
 17-September-2010 Xillibit
 + [#20084] Added fr-FR translation
+
+Kunena Discuss Plugin 1.6.0-RC2
 
 01-Sep-2010 @quila
 # [#20084] fixed page number from the article is creeping up

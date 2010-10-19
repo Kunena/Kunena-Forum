@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+19-October-2010 fxstein
+^ [#16390] Updated it-IT: Fixed incorrect date/time format
+
 18-October-2010 Severdia
 # [#22934] Fixed spelling errors in English language files (minor cleanup, no keys changed)
 

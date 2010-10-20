@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+20-October-2010 810
+# [#22627] Many updates on nl-NL translation
+
 19-October-2010 fxstein
 ^ [#16390] Updated it-IT: Fixed incorrect date/time format
 

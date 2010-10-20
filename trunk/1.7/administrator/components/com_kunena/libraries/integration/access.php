@@ -120,6 +120,7 @@ abstract class KunenaAccess {
 	}
 
 	public function getAllowedCategories($userid = null, $rule = 'read') {
+		static $read = false;
 		$allowed = array();
 		$userid = $this->getUserid($userid);
 		if ($userid === false) return $allowed;
@@ -128,7 +129,10 @@ abstract class KunenaAccess {
 			case 'post':
 			case 'reply':
 			case 'edit':
-				$allowed = $this->loadAllowedCategories($userid);
+				if ($read === false) {
+					$read = $this->loadAllowedCategories($userid);
+				}
+				$allowed = $read;
 			case 'moderate':
 				// Moderators have read/post/reply/edit permissions
 				if ($this->moderatorsByUserid === false) {
@@ -152,14 +156,14 @@ abstract class KunenaAccess {
 		$user = KunenaFactory::getUser($user);
 		$config = KunenaFactory::getConfig ();
 
-		$hold [] = 0;
+		$hold [0] = 0;
 		if ($this->isModerator ( $user->userid, $catid )) {
-			$hold [] = 1;
+			$hold [1] = 1;
 		}
 		if ($this->isAdmin ( $user->userid, $catid )
 			|| ($config->mod_see_deleted && $this->isModerator( $user->userid, $catid ))) {
-			$hold [] = 2;
-			$hold [] = 3;
+			$hold [2] = 2;
+			$hold [3] = 3;
 	}
 		if ($string) $hold = implode ( ',', $hold );
 		return $hold;

@@ -254,7 +254,9 @@ switch ($task) {
 
 	case 'recount' :
 		CKunenaTools::reCountUserPosts ();
-		CKunenaTools::reCountBoards ();
+
+		kimport('categories');
+		KunenaCategory::recount ();
 		// Also reset the name info stored with messages
 		//CKunenaTools::updateNameInfo();
 		$kunena_app->redirect ( JURI::base () . 'index.php?option=com_kunena', JText::_('COM_KUNENA_RECOUNTFORUMS_DONE') );
@@ -2517,7 +2519,8 @@ function trashrestore($option, $cid) {
 			if (KunenaError::checkDatabaseError()) return;
 
 			CKunenaTools::reCountUserPosts ();
-			CKunenaTools::reCountBoards ();
+			kimport('categories');
+			KunenaCategory::recount ();
 		}
 	}
 
@@ -2621,33 +2624,33 @@ function generateSystemReport () {
 	} else {
 		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 	}
-	
+
 	// Get Joomla! frontend assigned template
 	$query = ' SELECT template '
 				.' FROM #__templates_menu '
 				.' WHERE client_id = 0 AND menuid = 0 ';
 	$kunena_db->setQuery($query);
 	$jdefaultemplate = $kunena_db->loadResult();
-	
-	$xml_tmpl = JFactory::getXMLparser('Simple');	
+
+	$xml_tmpl = JFactory::getXMLparser('Simple');
 	$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate.'/templateDetails.xml');
-	$templatecreationdate= $xml_tmpl->document->creationDate[0];	
-	$templateauthor= $xml_tmpl->document->author[0];	
-	$templateversion = $xml_tmpl->document->version[0];	
-	
+	$templatecreationdate= $xml_tmpl->document->creationDate[0];
+	$templateauthor= $xml_tmpl->document->author[0];
+	$templateversion = $xml_tmpl->document->version[0];
+
 	// Get Kunena menu items
 	$query = ' SELECT id, menutype, name, alias, link, parent '
 				.' FROM #__menu '
 				.' WHERE menutype = '.$kunena_db->Quote('kunenamenu').' ORDER BY id ASC';
 	$kunena_db->setQuery($query);
 	$kmenustype = $kunena_db->loadObjectlist();
-	
+
 	$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
 	foreach($kmenustype as $item) {
 		$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
 	}
 	$menudisplaytable .='[/table]';
-	
+
 	//test on each table if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';

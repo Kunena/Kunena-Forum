@@ -119,21 +119,29 @@ class CKunenaStats {
 
 	public function loadTotalTopics() {
 		if ($this->totaltitles === null) {
-			$this->_db->setQuery ( "SELECT SUM(numTopics) AS titles, SUM(numPosts) AS msgs FROM #__kunena_categories WHERE parent='0' AND published=1" );
-			$totaltmp = $this->_db->loadObject ();
-			KunenaError::checkDatabaseError();
-			$this->totaltitles = ! empty ( $totaltmp->titles ) ? $totaltmp->titles : 0;
-			$this->totalmsgs = ! empty ( $totaltmp->msgs ) ? $totaltmp->msgs + $this->totaltitles : $this->totaltitles;
+			$this->totaltitles = 0;
+			$this->totalmsgs = 0;
+			kimport('category');
+			$categories = KunenaCategory::getCategories();
+			foreach ($categories as $category) {
+				$this->totaltitles += $category->numTopics;
+				$this->totalmsgs += $category->numPosts;
+			}
 		}
 	}
 
 	public function loadTotalCategories() {
 		if ($this->totalsections === null) {
-			$this->_db->setQuery ( "SELECT SUM(parent='0') AS totalcats, SUM(parent>'0') AS totalsections FROM #__kunena_categories WHERE published=1" );
-			$totaltmp = $this->_db->loadObject ();
-			KunenaError::checkDatabaseError();
-			$this->totalsections = ! empty ( $totaltmp->totalsections ) ? $totaltmp->totalsections : 0;
-			$this->totalcats = ! empty ( $totaltmp->totalcats ) ? $totaltmp->totalcats : 0;
+			$this->totalsections = 0;
+			$this->totalcats = 0;
+			kimport('category');
+			$categories = KunenaCategory::getCategories();
+			foreach ($categories as $category) {
+				if ($category->parent_id == 0)
+					$this->totalsections ++;
+				else
+					$this->totalcats ++;
+			}
 		}
 	}
 

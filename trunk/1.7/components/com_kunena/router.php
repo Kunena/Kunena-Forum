@@ -31,12 +31,8 @@ class KunenaRouter {
 		if (self::$catidcache !== null)
 			return; // Already loaded
 
-		$db = JFactory::getDBO ();
-
-		$query = 'SELECT id, name, parent FROM #__kunena_categories WHERE published=1';
-		$db->setQuery ( $query );
-		self::$catidcache = $db->loadAssocList ( 'id' );
-		if (KunenaError::checkDatabaseError()) return;
+		kimport('category');
+		self::$catidcache = KunenaCategory::getCategories();
 	}
 
 	/**
@@ -50,8 +46,8 @@ class KunenaRouter {
 	}
 
 	function isCategoryConflict($catid, $catname) {
-		foreach (self::$catidcache as $cat) {
-			if ($cat ['id'] != $catid && $catname == self::stringURLSafe ( $cat ['name'] ) ) return true;
+		foreach (self::$catidcache as $id=>$category) {
+			if ($category->id != $catid && $catname == self::stringURLSafe ( $category->name ) ) return true;
 		}
 		return false;
 	}
@@ -127,7 +123,7 @@ class KunenaRouter {
 				if (self::$catidcache === null)
 					self::loadCategories ();
 				if (isset ( self::$catidcache [$catid] )) {
-					$suf = self::stringURLSafe ( self::$catidcache [$catid] ['name'] );
+					$suf = self::stringURLSafe ( self::$catidcache [$catid]->name );
 				}
 				if (empty ( $suf ))
 					// If translated category name is empty, use catid: 123
@@ -222,9 +218,9 @@ class KunenaRouter {
 			if ($kconfig->sefcats && $counter == 0 && ($value !== null || ! in_array ( $var, self::$functions ))) {
 				self::loadCategories ();
 				$catname = strtr ( $segment, ':', '-' );
-				foreach ( self::$catidcache as $cat ) {
-					if ($catname == self::filterOutput ( $cat ['name'] ) || $catname == JFilterOutput::stringURLSafe ( $cat ['name'] )) {
-						$var = $cat ['id'];
+				foreach ( self::$catidcache as $category ) {
+					if ($catname == self::filterOutput ( $category->name ) || $catname == JFilterOutput::stringURLSafe ( $category->name )) {
+						$var = $category->id;
 						break;
 					}
 				}
@@ -275,11 +271,8 @@ class KunenaRouter {
 			if (empty ( $vars ['catid'] )) {
 				$parent = 0;
 			} else {
-				$db = JFactory::getDBO ();
-				$quesql = 'SELECT parent FROM #__kunena_categories WHERE id=' . ( int ) $vars ['catid'];
-				$db->setQuery ( $quesql );
-				$parent = $db->loadResult ();
-				KunenaError::checkDatabaseError();
+				self::loadCategories ();
+				$parent = isset(self::$catidcache[$vars ['catid']]) ? self::$catidcache[$vars ['catid']]->parent_id : 0;
 			}
 			if (! $parent)
 				$vars ['view'] = 'listcat';

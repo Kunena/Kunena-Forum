@@ -25,6 +25,7 @@ class CKunenaLatestX {
 
 	function __construct($func, $page = 0) {
 		kimport ('category');
+		kimport ('topic');
 
 		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
@@ -172,74 +173,43 @@ class CKunenaLatestX {
 	}
 
 	protected function _getLatestTopics($lastpost = true, $where = '') {
-		if (!$lastpost) {
-			$xpost = 'tt.first_post';
-		} else {
-			$xpost = 'tt.last_post';
-		}
-		$latestcats = $this->_getCategoriesWhere();
-		$wheretime = ($this->querytime ? " AND {$xpost}_time>{$this->db->Quote($this->querytime)}" : '');
-		$where = "tt.hold IN ({$this->hold}) AND tt.moved_id=0 AND tt.category_id IN ({$this->session->allowed}) {$latestcats} {$wheretime} {$where}";
-		$this->order = "{$xpost}_time DESC";
+		$params = array(
+			'reverse'=>!$this->latestcategory_in,
+			'orderby'=>$lastpost ? 'tt.last_post_time DESC' : 'tt.first_post_time DESC',
+			'starttime'=>$this->querytime,
+			'hold'=>$this->hold,
+			'where'=>$where);
 
-		// Get total count
-		$query = "SELECT COUNT(*) FROM #__kunena_topics AS tt WHERE {$where}";
-		$this->db->setQuery ( $query );
-		$this->total = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError() || !$this->total) return;
-
-		$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
-			FROM #__kunena_topics AS tt
-			LEFT JOIN #__kunena_user_topics AS ut ON tt.id=ut.topic_id AND ut.user_id={$this->db->Quote($this->my->id)}
-			WHERE {$where} ORDER BY {$this->order}";
-		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
-		$this->topics = $this->db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
+		list ($this->total, $this->topics) = KunenaTopic::getLatestTopics($this->latestcategory, $this->limitstart, $this->limit, $params);
 		$this->_common();
 	}
 
 	protected function _getMyLatestTopics($posts = true, $fav = true, $sub = false) {
-		// Set where
-		if (!$posts && !$fav && !$sub) {
-			$where = 'ut.owner=1';
-		} else {
-			// Find user topics
-			if ($posts) $where[] = 'ut.posts>0';
-			if ($fav) $where[] = 'ut.favorite=1';
-			if ($sub) $where[] = 'ut.subscribed=1';
-			$where = implode(' OR ',$where);
-		}
-		$where = "ut.user_id={$this->db->Quote($this->user->id)} AND ({$where}) AND tt.moved_id='0'
-			AND tt.hold IN ({$this->hold}) AND tt.category_id IN ({$this->session->allowed})";
-
 		// Set order by
 		switch ($this->func) {
 			case 'mylatest':
-				$this->order = "ut.favorite DESC, tt.last_post_time DESC";
+				$orderby = "ut.favorite DESC, tt.last_post_time DESC";
 				break;
 			case 'usertopics':
-				$this->order = "ut.last_post_time DESC";
+				$orderby = "ut.last_post_time DESC";
 				break;
 			default:
-				$this->order = "tt.last_post_time DESC";
+				$orderby = "tt.last_post_time DESC";
 		}
+		// Set where
 
-		// Get total count
-		$query = "SELECT COUNT(*) FROM #__kunena_user_topics AS ut INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id WHERE {$where}";
-		$this->db->setQuery ( $query );
-		$this->total = ( int ) $this->db->loadResult ();
-		if (KunenaError::checkDatabaseError() || !$this->total) return;
+		$params = array(
+			'reverse'=>0,
+			'orderby'=>$orderby,
+			'hold'=>$this->hold,
+			'user'=>$this->user->id,
+			'started'=>(!$posts && !$fav && !$sub),
+			'posted'=>$posts,
+			'favorited'=>$fav,
+			'subscribed'=>$sub
+		);
 
-		// Get topics
-		$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
-			FROM #__kunena_user_topics AS ut
-			INNER JOIN #__kunena_topics AS tt ON tt.id=ut.topic_id
-			WHERE {$where} ORDER BY {$this->order}";
-		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
-		$this->topics = $this->db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
+		list ($this->total, $this->topics) = KunenaTopic::getLatestTopics(false, $this->limitstart, $this->limit, $params);
 		$this->_common();
 	}
 

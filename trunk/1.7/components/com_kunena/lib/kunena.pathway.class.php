@@ -50,15 +50,6 @@ class CkunenaPathway {
 		return $kunena_topic_title;
 	}
 
-	public function getCatsDetails($catids) {
-		$query = "SELECT * FROM #__kunena_categories WHERE id={$this->_db->Quote($catids)} AND published='1'";
-		$this->_db->setQuery ( $query );
-		$results = $this->_db->loadObject ();
-		KunenaError::checkDatabaseError();
-
-		return $results;
-	}
-
 	public function getTotalViewing($sfunc) {
 		$users = $this->_getOnlineUsers($sfunc);
 

@@ -29,7 +29,7 @@ $this->displayPathway ();
 <div class="klist-markallcatsread kcontainer">
 	<div class="ksectionbody">
 		<div class="fltlft">
-			<?php if ($this->my->id != 0) : ?>
+			<?php if ($this->me->userid) : ?>
 			<form action="<?php echo KUNENA_LIVEURLREL; ?>" name="markAllForumsRead" method="post">
 				<input type="hidden" name="markaction" value="allread" />
 				<input type="submit" class="kbutton button ks" value="<?php echo JText::_('COM_KUNENA_GEN_MARK_ALL_FORUMS_READ'); ?>" />

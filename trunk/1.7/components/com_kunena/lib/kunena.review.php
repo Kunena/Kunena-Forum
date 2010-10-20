@@ -64,7 +64,19 @@ class CKunenaReview {
 			if (KunenaError::checkDatabaseError ())
 				return;
 
-			CKunenaTools::modifyCategoryStats($message->get('id'), $message->get('parent'), $message->get('time'), $message->get('catid'));
+			// Update category stats
+			$category = KunenaCategory::getInstance($message->get ( 'catid' ));
+			if (!$message->get ( 'parent' )) $category->numTopics++;
+			$category->numPosts++;
+			$category->last_topic_id = $message->get ( 'thread' );
+			$category->last_topic_subject = $message->get ( 'subject' );
+			$category->last_post_id = $message->get ( 'id' );
+			$category->last_post_time = $message->get ( 'time' );
+			$category->last_post_userid = $message->get ( 'userid' );
+			$category->last_post_message = $message->get ( 'message' );
+			$category->last_post_guest_name = $message->get ( 'name' );
+			$category->save();
+
 			$message->emailToSubscribers(null, $this->config->allowsubscriptions, false, false);
 			$success++;
 		} //end foreach
@@ -103,10 +115,13 @@ class CKunenaReview {
 		if ($this->_moderatorProtection ())
 			return false;
 
+		$me = KunenaFactory::getUser();
+		$allowed = $me->getAllowedCategories('moderate');
+
 		$queryCatid = '';
 		if ( $this->catid > 0 ) $queryCatid = " AND catid='{$this->catid}'";
-		// FIXME: only show unapproved messages from categories where user has moderator rights
-		$this->_db->setQuery ( "SELECT m.*, t.message,cat.name AS catname FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid LEFT JOIN #__kunena_categories AS cat ON cat.id=m.catid WHERE hold='1' " . $queryCatid . " ORDER BY id ASC" );
+		else $queryCatid = " AND catid IN ({$allowed})";
+		$this->_db->setQuery ( "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE hold='1' " . $queryCatid . " ORDER BY id ASC" );
 		$MesNeedReview = $this->_db->loadObjectList ();
 		if (KunenaError::checkDatabaseError ())
 			return;

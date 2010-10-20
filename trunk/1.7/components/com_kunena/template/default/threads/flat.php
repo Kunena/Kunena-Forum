@@ -60,7 +60,6 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		if ($leaf->moved_id) $leaf->topic_emoticon = 3;
 		$curMessageNo = $leaf->posts - ($leaf->unread ? $leaf->unread - 1 : 0);
 		$threadPages = ceil ( $leaf->posts / $this->config->messages_per_page );
-		$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
 
 		if ($this->highlight && $counter == $this->highlight) {
 			$k = 0;
@@ -92,7 +91,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 
 			<td class="kcol-mid kcol-ktopicicon">
-				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), CKunenaTools::topicIcon($leaf), intval($leaf->lastread) ) ?>
+				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $curMessageNo, intval($this->config->messages_per_page), CKunenaTools::topicIcon($leaf), intval($leaf->lastread) ) ?>
 			</td>
 
 			<td class="kcol-mid kcol-ktopictitle">
@@ -105,7 +104,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				?>
 				<?php
 				if ($leaf->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $unreadPage, intval($this->config->messages_per_page), '<sup dir="ltr" class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($leaf->lastread) );
+					echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $curMessageNo, intval($this->config->messages_per_page), '<sup dir="ltr" class="knewchar">(' . intval($leaf->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($leaf->lastread) );
 				}
 				if ($leaf->locked != 0) {
 					echo CKunenaTools::showIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );
@@ -116,12 +115,12 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				<?php if ($leaf->posts > $this->config->messages_per_page) : ?>
 				<ul class="kpagination">
 					<li class="page"><?php echo JText::_('COM_KUNENA_PAGE') ?></li>
-					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), 1, intval($this->config->messages_per_page), 1 ) ?></li>
-					<?php if ($threadPages > 3) : $startPage = $threadPages - 2; ?>
+					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), 0, intval($this->config->messages_per_page), 1 ) ?></li>
+					<?php if ($threadPages > 3) : $startPage = $threadPages - 3; ?>
 					<li class="more">...</li>
-					<?php else: $startPage = 2; endif;
-					for($hopPage = $startPage; $hopPage <= $threadPages; $hopPage ++) : ?>
-					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $hopPage, intval($this->config->messages_per_page), $hopPage ) ?></li>
+					<?php else: $startPage = 1; endif;
+					for($hopPage = $startPage; $hopPage < $threadPages; $hopPage ++) : ?>
+					<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $hopPage*$this->config->messages_per_page, intval($this->config->messages_per_page), $hopPage+1 ) ?></li>
 					<?php endfor; ?>
 				</ul>
 				<?php endif; ?>
@@ -184,9 +183,9 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					if ($leaf->moved_id) :
 						echo JText::_('COM_KUNENA_MOVED');
 					elseif ($this->topic_ordering == 'ASC') :
-						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $threadPages, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->last_post_id) );
+						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), $threadPages*$this->config->messages_per_page, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->last_post_id) );
 					else :
-						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), 1, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->last_post_id) );
+						echo CKunenaLink::GetThreadPageLink ( 'view', intval($leaf->category_id), intval($leaf->id), 0, intval($this->config->messages_per_page), JText::_('COM_KUNENA_GEN_LAST_POST'), intval($leaf->last_post_id) );
 					endif;
 
 					//TODO: was name

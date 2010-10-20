@@ -83,36 +83,41 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 			} elseif ($row->accesstype == 'joomla') {
 				if ( $row->access <= $user->get('aid') )
 					$catlist[$row->id] = 1;
-			} elseif (($row->pub_access == 0)
-				or ($row->pub_access == - 1 && $userid > 0)
-				or ($row->pub_access > 0 && self::_has_rights ( $acl, $gid, $row->pub_access, $row->pub_recurse ))
-				or ($row->admin_access > 0 && self::_has_rights ( $acl, $gid, $row->admin_access, $row->admin_recurse ))) {
+			} elseif ($row->pub_access == 0 ||
+				($userid > 0 && (
+				($row->pub_access == - 1)
+				|| ($row->pub_access > 0 && self::_has_rights ( $gid, $row->pub_access, $row->pub_recurse ))
+				|| ($row->admin_access > 0 && self::_has_rights ( $gid, $row->admin_access, $row->admin_recurse ))))) {
 				$catlist[$row->id] = 1;
 			}
 		}
 		return $catlist;
 	}
 
-	protected function _has_rights(&$acl, $gid, $access, $recurse) {
-		if ($gid == $access)
+	protected function _has_rights($usergroup, $groupid, $recurse) {
+		if ($usergroup == $groupid)
 			return 1;
-		if ($recurse) {
-			$childs = $acl->get_group_children ( $access, 'ARO', 'RECURSE' );
-			return (is_array ( $childs ) and in_array ( $gid, $childs ));
+		if ($usergroup && $recurse) {
+			$childs = $this->_get_groups($groupid, $recurse);
+			if (in_array ( $usergroup, $childs ));
+				return 1;
 		}
 		return 0;
 	}
 
 	protected function _get_groups($groupid, $recurse) {
-		$groups = array();
-		if ($groupid > 0) {
-			if ($recurse) {
-				$acl = JFactory::getACL ();
-				$groups = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
-			}
-			$groups [] = $groupid;
+		static $groups = array();
+
+		if (isset ($groups[$groupid]))
+			return $groups[$groupid];
+
+		if ($groupid > 0 && $recurse) {
+			$acl = JFactory::getACL ();
+			$groups[$groupid] = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
+			$groups[$groupid][] = $groupid;
+			return $groups[$groupid];
 		}
-		return $groups;
+		return array($groupid);
 	}
 
 	protected function _get_subscribers($catid, $thread) {

@@ -378,9 +378,7 @@ class CKunenaView {
 			$replyCount = $this->db->loadResult ();
 			if (KunenaError::checkDatabaseError()) return;
 
-			$replyPage = $replyCount > $this->config->messages_per_page ? ceil ( $replyCount / $this->config->messages_per_page ) : 1;
-
-			$this->redirect = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->thread, $replyPage, $this->config->messages_per_page, $this->first_message->id, false );
+			$this->redirect = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->thread, $replyCount, $this->config->messages_per_page, $this->first_message->id, false );
 		}
 
 		$this->category = KunenaCategory::getInstance($this->catid);
@@ -415,8 +413,7 @@ class CKunenaView {
 
 		// If page does not exist, redirect to the last page
 		if ($this->total_messages <= $this->limitstart) {
-			$page = ceil ( $this->total_messages / $this->limit );
-			$this->redirect = CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $page, $this->limit, '', false);
+			$this->redirect = CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $this->total_messages, $this->limit, '', false);
 		}
 
 		if ($this->myprofile->ordering != '0') {
@@ -479,7 +476,7 @@ class CKunenaView {
 		$this->pagination = $this->getPagination ( $this->catid, $this->thread, $page, $totalpages, $maxpages );
 
 		//meta description and keywords
-		$category_parent = KunenaCategory::getInstance($this->category->parent);
+		$category_parent = KunenaCategory::getInstance($this->category->parent_id);
 		$metaKeys = kunena_htmlspecialchars ( "{$this->first_message->subject}, {$category_parent->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
 
 		// Create Meta Description form the content of the first message
@@ -661,7 +658,7 @@ class CKunenaView {
 		if ($startpage > 1) {
 			if ($endpage < $totalpages)
 				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, 1, $this->config->messages_per_page, 1, '', $rel = 'follow' ) . '</li>';
+			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, 0, $this->config->messages_per_page, 1, '', $rel = 'follow' ) . '</li>';
 			if ($startpage > 2) {
 				$output .= '<li class="more">...</li>';
 			}
@@ -671,7 +668,7 @@ class CKunenaView {
 			if ($page == $i) {
 				$output .= '<li class="active">' . $i . '</li>';
 			} else {
-				$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $i, $this->config->messages_per_page, $i, '', $rel = 'follow' ) . '</li>';
+				$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, ($i-1)*$this->config->messages_per_page, $this->config->messages_per_page, $i, '', $rel = 'follow' ) . '</li>';
 			}
 		}
 
@@ -680,7 +677,7 @@ class CKunenaView {
 				$output .= '<li class="more">...</li>';
 			}
 
-			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, $totalpages, $this->config->messages_per_page, $totalpages, '', $rel = 'follow' ) . '</li>';
+			$output .= '<li>' . CKunenaLink::GetThreadPageLink ( 'view', $catid, $threadid, ($totalpages-1)*$this->config->messages_per_page, $this->config->messages_per_page, $totalpages, '', $rel = 'follow' ) . '</li>';
 		}
 
 		$output .= '</ul>';

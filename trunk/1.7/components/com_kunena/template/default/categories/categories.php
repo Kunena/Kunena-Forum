@@ -38,7 +38,7 @@ foreach ( $this->categories [0] as $section ) :
 		<tr class="k<?php echo $tabclass [$k ^= 1], isset ( $category->class_sfx ) ? ' k' . $this->escape($tabclass [$k]) . $this->escape($category->class_sfx) : '' ?>"
 			id="kcat<?php echo intval($category->id) ?>">
 			<td class="kcol-first kcol-category-icon">
-				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $category->htmlCategoryIcon ) ?>
+				<?php echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->getCategoryIcon($category->id) ) ?>
 			</td>
 
 			<td class="kcol-mid kcol-kcattitle">
@@ -46,8 +46,8 @@ foreach ( $this->categories [0] as $section ) :
 			<?php
 				// Show new posts, locked, review
 				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($category->id), $this->escape($category->name ) );
-				if ($category->new) {
-					echo '<sup class="knewchar">(' . intval($category->new) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
+				if (!empty($this->new[$category->id])) {
+					echo '<sup class="knewchar">(' . intval($this->new[$category->id]) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ")</sup>";
 				}
 				if ($category->locked) {
 					echo CKunenaTools::showIcon ( 'kforumlocked', JText::_('COM_KUNENA_GEN_LOCKED_FORUM') );
@@ -63,29 +63,29 @@ foreach ( $this->categories [0] as $section ) :
 		<?php endif; ?>
 		<?php
 			// Display subcategories
-			if (! empty ( $this->childforums [$category->id] )) :
+			if (! empty ( $this->categories [$category->id] )) :
 		?>
 			<div class="kthead-child">
 			<div class="kcc-table">
-			<?php foreach ( $this->childforums [$category->id] as $childforum ) : ?>
+			<?php foreach ( $this->categories [$category->id] as $childforum ) : ?>
 			<div class="kcc-subcat km">
 			<?php
-				echo $childforum->htmlCategoryIcon;
+				echo $this->getCategoryIcon($childforum->id, true);
 				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($childforum->id), $this->escape($childforum->name), '','', KunenaParser::stripBBCode ( $childforum->description ) );
-				echo '<span class="kchildcount ks">(' . $this->escape($childforum->numTopics) . "/" . $this->escape($childforum->numPosts) . ')</span>';
+				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getPosts() . ')</span>';
 			?>
 			</div>
 			<?php endforeach; ?>
 			</div>
 			</div>
 		<?php endif; ?>
-		<?php if (! empty ( $this->modlist [$category->id] )) : ?>
+		<?php if (! empty ( $category->moderators )) : ?>
 			<div class="kthead-moderators ks">
 		<?php
 				// get the Moderator list for display
 				$modslist = array();
-				foreach ( $this->modlist [$category->id] as $mod ) {
-					$modslist[] = CKunenaLink::GetProfileLink ( intval($mod->userid) );
+				foreach ( $category->moderators as $modid ) {
+					$modslist[] = CKunenaLink::GetProfileLink ( intval($modid) );
 				}
 				echo JText::_('COM_KUNENA_GEN_MODERATORS') . ': ' . implode(', ', $modslist);
 		?>
@@ -100,39 +100,40 @@ foreach ( $this->categories [0] as $section ) :
 
 			<td class="kcol-mid kcol-kcattopics">
 				<!-- Number of Topics -->
-				<span class="kcat-topics-number"><?php echo CKunenaTools::formatLargeNumber ( intval($category->numTopics) ) ?></span>
+				<span class="kcat-topics-number"><?php echo CKunenaTools::formatLargeNumber ( $category->getTopics() ) ?></span>
 				<span class="kcat-topics"><?php echo JText::_('COM_KUNENA_GEN_TOPICS');?></span>
 				<!-- /Number of Topics -->
 			</td>
 
 			<td class="kcol-mid kcol-kcatreplies">
 			<!-- Number of Replies -->
-			<span class="kcat-replies-number"><?php echo CKunenaTools::formatLargeNumber ( intval($category->numPosts) ) ?></span>
+			<span class="kcat-replies-number"><?php echo CKunenaTools::formatLargeNumber ( $category->getPosts() ) ?></span>
 			<span class="kcat-replies"><?php echo JText::_('COM_KUNENA_GEN_REPLIES');?> </span>
 			<!-- /Number of Replies -->
 			</td>
 
-			<?php if ($category->numTopics != 0) { ?>
+			<?php $last = $category->getLastPosted();
+			if ($last->last_topic_id) { ?>
 			<td class="kcol-mid kcol-kcatlastpost">
 			<?php if ($this->config->avataroncat > 0) : ?>
 			<!-- Avatar -->
 			<?php
-				$profile = KunenaFactory::getUser((int)$category->userid);
+				$profile = KunenaFactory::getUser((int)$last->last_post_userid);
 				$useravatar = $profile->getAvatarLink('klist-avatar', 'list');
 				if ($useravatar) : ?>
-					<span class="klatest-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($category->userid), $useravatar ); ?></span>
+					<span class="klatest-avatar"> <?php echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $useravatar ); ?></span>
 				<?php endif; ?>
 			<!-- /Avatar -->
 			<?php endif; ?>
 			<div class="klatest-subject ks">
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($category->catid), intval($category->thread), intval($category->page), intval($this->config->messages_per_page), KunenaParser::parseText($category->subject, 30), intval($category->id_last_msg) );?>
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->_last_post_location), intval($this->config->messages_per_page), KunenaParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
 			</div>
 
 			<div class="klatest-subject-by ks">
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
-					echo CKunenaLink::GetProfileLink ( intval($category->userid), $this->escape($category->mname) );
-					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $category->time_last_msg, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $category->time_last_msg, 'config_post_dateformat' ) . '</span>';
+					echo CKunenaLink::GetProfileLink ( intval($last->last_post_userid), $this->escape($last->last_post_guest_name) );
+					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $last->last_post_time, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $last->last_post_time, 'config_post_dateformat' ) . '</span>';
 					?>
 			</div>
 			</td>

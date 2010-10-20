@@ -34,11 +34,9 @@
 			extra="auto_increment" />
 		<field name="parent_id" type="int(11)" null="1" default="0" />
 		<field name="name" type="tinytext" null="1" />
-		<field name="category_icon_id" type="tinyint(4)" null="0" default="0" />
+		<field name="icon_id" type="tinyint(4)" null="0" default="0" />
 		<field name="locked" type="tinyint(4)" null="0" default="0" />
-		<field name="alert_admin" type="tinyint(4)" null="0" default="0" />
 		<field name="moderated" type="tinyint(4)" null="0" default="1" />
-		<field name="moderators" type="varchar(15)" null="1" />
 		<field name="accesstype" type="varchar(20)" null="0" default="none" />
 		<field name="access" type="int(11)" null="0" default="0" />
 		<field name="pub_access" type="tinyint(4)" null="1" default="1" />
@@ -61,18 +59,20 @@
 		<field name="allow_polls" type="tinyint(4)" null="0" default="0" />
 		<field name="numTopics" type="mediumint(8)" null="0" default="0" />
 		<field name="numPosts" type="mediumint(8)" null="0" default="0" />
+		<field name="last_topic_id" type="int(11)" null="0" default="0" />
+		<field name="last_topic_subject" type="tinytext" null="1" />
+		<field name="last_topic_posts" type="int(11)" null="0" default="0" />
 		<field name="last_post_id" type="int(11)" null="0" default="0" />
 		<field name="last_post_time" type="int(11)" null="0" default="0" />
 		<field name="last_post_userid" type="int(11)" null="0" default="0" />
 		<field name="last_post_message" type="text" null="1" />
 		<field name="last_post_guest_name" type="tinytext" null="1" />
 		<field name="params" type="text" null="0" />
-		
+
 		<key name="PRIMARY" unique="1" columns="id" />
-		<key name="parent" columns="parent" />
+		<key name="parent_id" columns="parent_id" />
 		<key name="category_access" columns="accesstype,access" />
 		<key name="published_pubaccess_id" columns="published,pub_access,id" />
-		<key name="last_post_id" columns="last_post_id" />
 	</table>
 	<table name="kunena_config">
 		<field primary_key="yes" name="id" type="int(11)" null="0"
@@ -127,7 +127,6 @@
 		<field name="allowavatar" type="int(11)" null="1" />
 		<field name="allowavatarupload" type="int(11)" null="1" />
 		<field name="allowavatargallery" type="int(11)" null="1" />
-		<field name="imageprocessor" type="text" null="1" />
 		<field name="avatarquality" type="int(11)" null="1" />
 		<field name="avatarsize" type="int(11)" null="1" />
 		<field name="allowimageupload" type="int(11)" null="1" />
@@ -167,10 +166,8 @@
 		<field name="usernamechange" type="int(11)" null="1" />
 		<field name="rules_infb" type="int(11)" null="1" />
 		<field name="rules_cid" type="int(11)" null="1" />
-		<field name="rules_link" type="text" null="1" />
 		<field name="help_infb" type="int(11)" null="1" />
 		<field name="help_cid" type="int(11)" null="1" />
-		<field name="help_link" type="text" null="1" />
 		<field name="showspoilertag" type="int(11)" null="1" />
 		<field name="showvideotag" type="int(11)" null="1" />
 		<field name="showebaytag" type="int(11)" null="1" />
@@ -190,12 +187,12 @@
 		<field name="rss_specification" type="text" null="1" />
 		<field name="rss_allow_html" type="int(11)" null="1" />
 		<field name="rss_author_format" type="text" null="1" />
+		<field name="rss_author_in_title" type="int(11)" null="1" />
 		<field name="rss_word_count" type="text" null="1" />
 		<field name="rss_old_titles" type="int(11)" null="1" />
+		<field name="rss_cache" type="int(11)" null="1" />
 		<field name="fbdefaultpage" type="text" null="1" />
 		<field name="default_sort" type="text" null="1" />
-		<field name="alphauserpoints" type="int(11)" null="1" />
-		<field name="alphauserpointsrules" type="int(11)" null="1" />
 		<field name="alphauserpointsnumchars" type="int(11)" null="1" />
 		<field name="sef" type="int(11)" null="1" />
 		<field name="sefcats" type="int(11)" null="1" />
@@ -239,9 +236,13 @@
 		<field name="showbannedreason" type="int(11)" null="1" />
 		<field name="version_check" type="int(11)" null="1" />
 		<field name="showthankyou" type="int(11)" null="1" />
-		<field name="showpopthankysoustats" type="int(11)" null="1" />
+		<field name="showpopthankyoustats" type="int(11)" null="1" />
 		<field name="popthankscount" type="int(11)" null="1" />
 		<field name="mod_see_deleted" type="int(11)" null="1" />
+		<field name="bbcode_img_secure" type="text" null="1" />
+		<field name="listcat_show_moderators" type="int(11)" null="1" />
+		<field name="lightbox" type="int(11)" null="1" />
+		<field name="activity_limit" type="int(11)" null="1" />
 		<key name="PRIMARY" unique="1" columns="id" />
 	</table>
 	<table name="kunena_favorites">

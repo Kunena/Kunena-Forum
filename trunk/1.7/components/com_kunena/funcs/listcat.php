@@ -13,43 +13,36 @@ defined ( '_JEXEC' ) or die ();
 
 class CKunenaListcat {
 	public $allow = 0;
+	public $new = array();
+	public $categories = array();
 
 	private $_loaded = false;
 
 	function __construct($catid) {
+		kimport('category');
 		kimport('html.parser');
-		$this->catid = $catid;
 
-		$this->db = JFactory::getDBO ();
-		$this->my = JFactory::getUser ();
-		$this->session = KunenaFactory::getSession ();
+		$this->catid = intval($catid);
+		$this->me = KunenaFactory::getUser ();
 		$this->config = KunenaFactory::getConfig ();
 
-		if ($this->catid && ! $this->session->canRead ( $this->catid ))
-			return;
+		if ($catid) {
+			$this->categories[0] = KunenaCategory::getCategories($catid);
+			if (empty($this->categories[0]))
+				return;
+		} else {
+			$this->categories[0] = KunenaCategory::getChildren();
+		}
 
 		$this->allow = 1;
 
-		$this->prevCheck = $this->session->lasttime;
-
-		$kunena_app = JFactory::getApplication ();
-
-		// Start getting the categories
-		if ($this->catid) {
-			$catlist = $this->catid;
-			$where = "";
-		} else {
-			$catlist = $this->session->allowed;
-			$where = "parent='0' AND";
-		}
-		$this->categories = array ();
-		$this->db->setQuery ( "SELECT * FROM #__kunena_categories WHERE {$where} published='1' AND id IN ({$catlist}) ORDER BY ordering, name" );
-		$this->categories [0] = $this->db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
+		$template = KunenaFactory::getTemplate();
+		$this->params = $template->params;
 
 		//meta description and keywords
+		$app = JFactory::getApplication ();
 		$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
-		$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $kunena_app->getCfg ( 'sitename' ));
+		$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . $app->getCfg ( 'sitename' ));
 
 		$document = JFactory::getDocument ();
 		$cur = $document->get ( 'description' );
@@ -57,9 +50,96 @@ class CKunenaListcat {
 		$document = JFactory::getDocument ();
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
+	}
 
-		$template = KunenaFactory::getTemplate();
-		$this->params = $template->params;
+	function loadCategories() {
+		if ($this->_loaded) return;
+		$this->_loaded = true;
+		$allsubcats = KunenaCategory::getChildren(array_keys($this->categories [0]), 1);
+		if (empty ( $allsubcats ))
+			return;
+
+		if ($this->config->shownew && $this->me->userid) {
+			$this->new = KunenaCategory::getNewTopics(array_keys($allsubcats));
+		}
+
+		$modcats = array ();
+		$topiclist = array ();
+		$lastpostlist = array ();
+		$userlist = array();
+
+		foreach ( $allsubcats as $subcat ) {
+			if (isset ( $this->categories [0] [$subcat->parent_id] )) {
+
+				$last = $subcat->getLastPosted ();
+				if ($last->last_topic_id) {
+					// collect user ids for avatar prefetch when integrated
+					$userlist [(int)$last->last_post_userid] = (int)$last->last_post_userid;
+					$topiclist [(int)$last->last_topic_id] = $last->last_topic_subject;
+					$lastpostlist [(int)$subcat->id] = (int)$last->last_post_id;
+					$last->_last_post_location = $last->last_topic_posts;
+				}
+
+				if ($this->config->listcat_show_moderators) {
+					$subcat->moderators = $subcat->getModerators ( false );
+					$userlist += $subcat->moderators;
+				}
+
+				if ($this->me->isModerator ( $subcat->id ))
+					$modcats [] = $subcat->id;
+			}
+			$this->categories [$subcat->parent_id] [] = $subcat;
+		}
+
+		if ($this->me->ordering != '0') {
+			$topic_ordering = $this->me->ordering == '1' ? true : false;
+		} else {
+			$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
+		}
+
+		$this->pending = array ();
+		if (count ( $modcats )) {
+			$catlist = implode ( ',', $modcats );
+			$db = JFactory::getDBO ();
+			$db->setQuery ( "SELECT catid, COUNT(*) AS count
+				FROM #__kunena_messages
+				WHERE catid IN ({$catlist}) AND hold='1'
+				GROUP BY catid" );
+			$pending = $db->loadAssocList ();
+			KunenaError::checkDatabaseError();
+			foreach ( $pending as $item ) {
+				if ($item ['count'])
+					$this->pending [$item ['catid']] = $item ['count'];
+			}
+		}
+		// Fix last post position when user can see unapproved or deleted posts
+		if (!$topic_ordering && $this->me->isModerator()) {
+			$access = KunenaFactory::getAccessControl();
+			$list = implode ( ',', $lastpostlist );
+			$db = JFactory::getDBO ();
+			$db->setQuery ( "SELECT mm.catid, mm.thread, SUM(mm.hold=1) AS unapproved, SUM(mm.hold IN (2,3)) AS deleted
+				FROM #__kunena_messages AS m
+				INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
+				WHERE m.id IN ({$list}) AND mm.hold>0 AND mm.id<m.id
+				GROUP BY m.thread" );
+			$holdtopics = $db->loadObjectList ();
+			KunenaError::checkDatabaseError();
+			foreach ( $holdtopics as $topic ) {
+				$hold = $access->getAllowedHold($this->me->userid, $topic->catid, false);
+				$category = KunenaCategory::getInstance($topic->catid);
+				if (isset($hold[1]))
+					$category->_last_post_location += $topic->unapproved;
+				if (isset($hold[2]) || isset($hold[3]))
+					$category->_last_post_location += $topic->deleted;
+			}
+		}
+
+		require_once (KUNENA_PATH . DS . 'router.php');
+		KunenaRouter::loadMessages ( $topiclist );
+
+		// Prefetch all users/avatars to avoid user by user queries during template iterations
+		kimport('user');
+		KunenaUser::loadUsers($userlist);
 	}
 
 	/**
@@ -76,175 +156,58 @@ class CKunenaListcat {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
-	function loadCategories() {
-		if ($this->_loaded) return;
-		$this->_loaded = true;
-		$catids = array ();
-		foreach ( $this->categories [0] as $cat )
-			$catids [] = $cat->id;
-		if (empty ( $catids ))
-			return;
-		$catlist = implode ( ',', $catids );
-		$readlist = $this->session->readtopics;
-
-		if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__kunena_messages AS mmm WHERE c.id=mmm.catid AND mmm.hold='0' AND mmm.time>{$this->db->Quote($this->prevCheck)} AND mmm.thread NOT IN ({$readlist})) AS new";
-		else $subquery = " 0 AS new";
-
-		// TODO: optimize this query (just combined many queries into one)
-		$query = "SELECT c.*, m.id AS mesid, m.thread, m.catid, t.subject AS topicsubject, m.subject, m.name AS mname, u.id AS userid, u.username, u.name AS uname,
-			(SELECT COUNT(*) FROM #__kunena_messages AS mm WHERE m.thread=mm.thread) AS msgcount, {$subquery}
-			FROM #__kunena_categories AS c
-			LEFT JOIN #__kunena_messages AS m ON c.id_last_msg=m.id
-			LEFT JOIN #__kunena_messages AS t ON m.thread=t.id
-			LEFT JOIN #__users AS u ON u.id=m.userid
-			WHERE c.parent IN ({$catlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY ordering, name";
-		$this->db->setQuery ( $query );
-		$allsubcats = $this->db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$subcats = array ();
-		$routerlist = array ();
-		$userlist = array();
-
-		$myprofile = KunenaFactory::getUser ();
-		if ($myprofile->ordering != '0') {
-			$topic_ordering = $myprofile->ordering == '1' ? true : false;
-		} else {
-			$topic_ordering = $this->config->default_sort == 'asc' ? false : true;
-		}
-
-		foreach ( $allsubcats as $i => $subcat ) {
-			if ($subcat->mesid)
-				$routerlist [$subcat->thread] = $subcat->subject;
-
-			if($topic_ordering) $subcat->page = 1;
-			else $subcat->page = ceil ( $subcat->msgcount / $this->config->messages_per_page );
-
-			if ($this->config->shownew && $this->my->id != 0) {
-				if ($subcat->new) {
+	public function getCategoryIcon($catid, $thumb = false) {
+		if (! $thumb) {
+			if ($this->config->shownew && $this->me->userid != 0) {
+				if (! empty ( $this->new [$catid] )) {
 					// Check Unread    Cat Images
-					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_on.gif" )) {
-						$allsubcats [$i]->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_on.gif" )) {
+						return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 					} else {
-						$allsubcats [$i]->htmlCategoryIcon = CKunenaTools::showIcon ( 'kunreadforum', JText::_('COM_KUNENA_GEN_FORUM_NEWPOST') );
+						return CKunenaTools::showIcon ( 'kunreadforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 					}
 				} else {
 					// Check Read Cat Images
-					if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_off.gif" )) {
-						$allsubcats [$i]->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
+					if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_off.gif" )) {
+						return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
 					} else {
-						$allsubcats [$i]->htmlCategoryIcon = CKunenaTools::showIcon ( 'kreadforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
+						return CKunenaTools::showIcon ( 'kreadforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 					}
 				}
 			} else {
-				if (is_file ( KUNENA_ABSCATIMAGESPATH . $subcat->id . "_notlogin.gif" )) {
-					$allsubcats [$i]->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $subcat->id . "_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+				if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_notlogin.gif" )) {
+					return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
-					$allsubcats [$i]->htmlCategoryIcon = CKunenaTools::showIcon ( 'knotloginforum', JText::_('COM_KUNENA_GEN_FORUM_NOTNEW') );
+					return CKunenaTools::showIcon ( 'knotloginforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}
 			}
-
-			// collect user ids for avatar prefetch when integrated
-			$userlist[intval($subcat->userid)] = intval($subcat->userid);
-		}
-
-		require_once (KUNENA_PATH . DS . 'router.php');
-		KunenaRouter::loadMessages ( $routerlist );
-
-		$modcats = array ();
-		foreach ( $allsubcats as $subcat ) {
-			$this->categories [$subcat->parent] [] = $subcat;
-			$subcats [] = $subcat->id;
-			if ($subcat->moderated)
-				$modcats [] = $subcat->id;
-		}
-
-		// Get the childforums
-		$this->childforums = array ();
-		if (count ( $subcats )) {
-			$subcatlist = implode ( ',', $subcats );
-			if ($this->config->shownew && $this->my->id) $subquery = " (SELECT COUNT(DISTINCT thread) FROM #__kunena_messages AS m WHERE c.id=m.catid AND m.hold='0' AND m.time>{$this->db->Quote($this->prevCheck)} AND m.thread NOT IN ({$readlist})) AS new";
-			else $subquery = "0 AS new";
-
-			$query = "SELECT c.id, c.name, c.description, c.parent, c.numTopics, c.numPosts, {$subquery}
-			FROM #__kunena_categories AS c
-			WHERE c.parent IN ({$subcatlist}) AND c.published='1' AND c.id IN({$this->session->allowed}) ORDER BY c.ordering, c.name";
-			$this->db->setQuery ($query);
-			$childforums = $this->db->loadObjectList ();
-			KunenaError::checkDatabaseError();
-			foreach ( $childforums as $i => $childforum ) {
-				//Begin: parent read unread iconset
-				if ($this->config->showchildcaticon) {
-					if ($this->config->shownew && $this->my->id != 0) {
-						if ($childforum->new) {
-							// Check Unread    Cat Images
-							if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_on_childsmall.gif" )) {
-								$childforum->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-							} else {
-								$childforum->htmlCategoryIcon = CKunenaTools::showIcon ( 'kunreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
-							}
-						} else {
-							// Check Read Cat Images
-							if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_off_childsmall.gif" )) {
-								$childforum->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-							} else {
-								$childforum->htmlCategoryIcon = CKunenaTools::showIcon ( 'kreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
-							}
-						}
+		} elseif ($this->config->showchildcaticon) {
+			if ($this->config->shownew && $this->me->userid != 0) {
+				if (! empty ( $this->new [$catid] )) {
+					// Check Unread    Cat Images
+					if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_on_childsmall.gif" )) {
+						return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 					} else {
-						// Not Login Cat Images
-						if (is_file ( KUNENA_ABSCATIMAGESPATH . $childforum->id . "_notlogin_childsmall.gif" )) {
-							$childforum->htmlCategoryIcon = "<img src=\"" . KUNENA_URLCATIMAGES . $childforum->id . "_notlogin_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
-						} else {
-							$childforum->htmlCategoryIcon = CKunenaTools::showIcon ( 'knotloginforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
-						}
+						return CKunenaTools::showIcon ( 'kunreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 					}
 				} else {
-					$childforum->htmlCategoryIcon = '';
-				}
-				$this->childforums [$childforum->parent] [] = $childforum;
-			}
-		}
-
-		$this->modlist = array ();
-		$this->pending = array ();
-		if (count ( $modcats )) {
-			if ($this->config->listcat_show_moderators) {
-				$modcatlist = implode ( ',', $modcats );
-				$this->db->setQuery ( "SELECT * FROM #__kunena_moderation AS m
-					INNER JOIN #__users AS u ON u.id=m.userid
-					WHERE m.catid IN ({$modcatlist}) AND u.block=0" );
-				$modlist = $this->db->loadObjectList ();
-				KunenaError::checkDatabaseError();
-				foreach ( $modlist as $mod ) {
-					$this->modlist [$mod->catid] [] = $mod;
-					$userlist[intval($mod->userid)] = intval($mod->userid);
-				}
-			}
-			if (CKunenaTools::isModerator ( $this->my->id )) {
-				foreach ( $modcats as $i => $catid ) {
-					if (! CKunenaTools::isModerator ( $this->my->id, $catid ))
-						unset ( $modcats [$i] );
-				}
-				if (count ( $modcats )) {
-					$modcatlist = implode ( ',', $modcats );
-					$this->db->setQuery ( "SELECT catid, COUNT(*) AS count
-					FROM #__kunena_messages
-					WHERE catid IN ($modcatlist) AND hold='1'
-					GROUP BY catid" );
-					$pending = $this->db->loadAssocList ();
-					KunenaError::checkDatabaseError();
-					foreach ( $pending as $i ) {
-						if ($i ['count'])
-							$this->pending [$i ['catid']] = $i ['count'];
+					// Check Read Cat Images
+					if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_off_childsmall.gif" )) {
+						return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					} else {
+						return CKunenaTools::showIcon ( 'kreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 					}
 				}
+			} else {
+				// Not Login Cat Images
+				if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_notlogin_childsmall.gif" )) {
+					return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_notlogin_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+				} else {
+					return CKunenaTools::showIcon ( 'knotloginforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
+				}
 			}
 		}
-
-		// Prefetch all users/avatars to avoid user by user queries during template iterations
-		kimport('user');
-		KunenaUser::loadUsers($userlist);
+		return '';
 	}
 
 	function displayPathway() {
@@ -282,7 +245,7 @@ class CKunenaListcat {
 	function displayWhoIsOnline() {
 		if ($this->config->showwhoisonline > 0) {
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			$online =& CKunenaWhoIsOnline::getInstance();
+			$online = CKunenaWhoIsOnline::getInstance();
 			$online->displayWhoIsOnline();
 		}
 	}
@@ -328,8 +291,8 @@ class CKunenaListcat {
 	}
 
 	function displayInfoMessage($header, $contents) {
-			$header = JText::_('COM_KUNENA_FORUM_INFORMATION');
-			$contents = JText::_('COM_KUNENA_LISTCAT_NO_CATS');
+		$header = JText::_('COM_KUNENA_FORUM_INFORMATION');
+		$contents = JText::_('COM_KUNENA_LISTCAT_NO_CATS');
 		CKunenaTools::loadTemplate('/categories/infomessage.php');
 	}
 

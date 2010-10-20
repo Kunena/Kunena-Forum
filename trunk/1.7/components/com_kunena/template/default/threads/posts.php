@@ -73,8 +73,6 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			<td class="kcol-mid ktopictittle">
 			<?php
 				$curMessageNo = $topic->posts - ($topic->unread ? $topic->unread - 1 : 0);
-				$threadPages = ceil ( $topic->posts / $this->config->messages_per_page );
-				$unreadPage = ceil ( $curMessageNo / $this->config->messages_per_page );
 
 				/*if ($message->attachments) {
 					echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') );
@@ -93,7 +91,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				} ?>
 				<?php
 				if ($topic->unread) {
-					echo CKunenaLink::GetThreadPageLink ( 'view', intval($topic->category_id), intval($topic->id), $unreadPage, intval($this->config->messages_per_page), '<sup class="knewchar">&nbsp;(' . intval($topic->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($topic->lastread) );
+					echo CKunenaLink::GetThreadPageLink ( 'view', intval($topic->category_id), intval($topic->id), $curMessageNo, intval($this->config->messages_per_page), '<sup class="knewchar">&nbsp;(' . intval($topic->unread) . ' ' . JText::_('COM_KUNENA_A_GEN_NEWCHAR') . ')</sup>', intval($topic->lastread) );
 				}
 				if ($topic->locked != 0) {
 					echo CKunenaTools::showIcon ( 'ktopiclocked', JText::_('COM_KUNENA_GEN_LOCKED_TOPIC') );

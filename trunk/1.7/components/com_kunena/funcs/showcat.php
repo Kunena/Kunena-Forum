@@ -22,6 +22,7 @@ class CKunenaShowcat {
 	function __construct($catid, $page=0) {
 		kimport('html.parser');
 		kimport('category');
+		kimport('topic');
 
 		$this->func = 'showcat';
 		$this->catid = intval($catid);
@@ -50,33 +51,19 @@ class CKunenaShowcat {
 		$access = KunenaFactory::getAccessControl();
 		$hold = $access->getAllowedHold($this->myprofile, $this->catid);
 
-		// Get topic count
-		$this->db->setQuery ( "SELECT COUNT(*) FROM #__kunena_topics WHERE category_id={$this->db->Quote($this->catid)} AND hold IN ({$hold})" );
-		$this->total = ( int ) $this->db->loadResult ();
-		KunenaError::checkDatabaseError();
-
 		$this->page = $this->page < 1 ? 1 : $this->page;
 		$limit = $this->config->threads_per_page;
 		$limitstart = ($this->page - 1) * $limit;
+
+		$params = array(
+			'orderby'=>'tt.ordering DESC, tt.last_post_time DESC',
+			'hold'=>$hold);
+
+		list ($this->total, $this->topics) = KunenaTopic::getLatestTopics($this->catid, $limitstart, $limit, $params);
 		$this->totalpages = ceil ( $this->total / $limit );
 
-		$this->topics = array ();
 		$this->highlight = 0;
-
-		// Get list of topics
 		if ($this->total > 0) {
-			$query = "SELECT tt.*, ut.posts AS myposts, ut.last_post_id AS my_last_post_id, ut.favorite, tt.last_post_id AS lastread, 0 AS unread
-				FROM #__kunena_topics AS tt
-				LEFT JOIN #__kunena_user_topics AS ut ON ut.topic_id=tt.id AND ut.user_id={$this->db->Quote($this->my->id)}
-				LEFT JOIN #__kunena_categories AS c ON c.id = tt.category_id
-				WHERE tt.category_id={$this->db->Quote($this->catid)} AND tt.hold IN ({$hold})
-				ORDER BY tt.ordering DESC, tt.last_post_id DESC
-			";
-
-			$this->db->setQuery ( $query, $limitstart, $limit );
-			$this->topics = $this->db->loadObjectList ('id');
-			KunenaError::checkDatabaseError();
-
 			// collect user ids for avatar prefetch when integrated
 			$userlist = array();
 			$routerlist = array ();

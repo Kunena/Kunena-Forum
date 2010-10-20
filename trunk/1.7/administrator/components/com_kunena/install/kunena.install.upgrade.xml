@@ -165,70 +165,77 @@
 			<phpfile name="upgrade-1.6.1_delfiles"></phpfile>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
-			<query mode="silenterror">ALTER TABLE `#__kunena_categories` 
-				ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderators`,
-				ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
-				ADD KEY `category_access` (accesstype,access);</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_user_topics` 
-				ADD `category_id` int(11) NOT NULL AFTER `topic_id`;</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_user_topics`
-				ADD `last_post_id` int(11) NOT NULL default '0' AFTER `posts`,
-				ADD `owner` tinyint(4) NOT NULL default '0' AFTER `last_post_id`,
-				ADD KEY `owner` (owner);</query>
-			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
-				SELECT userid AS user_id, thread AS topic_id, catid AS category_id, COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
-				FROM #__kunena_messages WHERE userid>0 AND moved=0 AND hold=0
-				GROUP BY user_id, topic_id
-				ON DUPLICATE KEY UPDATE category_id=VALUES(category_id), posts=VALUES(posts), last_post_id=VALUES(last_post_id), owner=VALUES(owner);</query>
-			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, favorite)
-				SELECT f.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS favorite
-				FROM #__kunena_favorites AS f
-				INNER JOIN #__kunena_messages AS m ON m.id=f.thread
-				WHERE f.userid>0
-				ON DUPLICATE KEY UPDATE favorite=1;</query>
-			<query>INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, subscribed)
-				SELECT s.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS subscribed
-				FROM #__kunena_subscriptions AS s
-				INNER JOIN #__kunena_messages AS m ON m.id=s.thread
-				WHERE s.userid>0
-				ON DUPLICATE KEY UPDATE subscribed=1;</query>
-			<query>INSERT INTO #__kunena_user_categories (user_id, category_id, subscribed)
-				SELECT userid AS user_id, catid AS category_id, 1 AS subscribed
-				FROM #__kunena_subscriptions_categories
-				WHERE userid>0
-				ON DUPLICATE KEY UPDATE subscribed=VALUES(subscribed);</query>
-			<query>UPDATE #__kunena_user_categories AS c INNER JOIN #__kunena_sessions AS s ON c.user_id=s.userid
-				SET c.allreadtime=FROM_UNIXTIME(s.lasttime);</query>
+			<query mode="silenterror">
+				ALTER TABLE `#__kunena_categories` 
+					DROP `alert_admin`,
+					DROP `moderators`,
+					DROP `future2`,
+					DROP `id_last_msg`,
+					DROP `time_last_msg`,
+					DROP INDEX `parent`,
+					DROP INDEX `msg_id`;
+			</query>
+			<query mode="silenterror">
+				ALTER TABLE `#__kunena_categories` 
+					CHANGE `parent` `parent_id` INT( 11 ) NULL DEFAULT '0',
+					CHANGE `cat_emoticon` `icon_id` TINYINT( 4 ) NOT NULL DEFAULT '0',
+					ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderated`,
+					ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
+					ADD `last_topic_id` int(11) NOT NULL default '0' AFTER `numPosts`,
+					ADD `last_topic_subject` tinytext NULL AFTER `last_topic_id`,
+					ADD `last_topic_posts` int(11) NOT NULL default '0' AFTER `last_topic_subject`,
+					ADD `last_post_id` int(11) NOT NULL default '0' AFTER `last_topic_posts`,
+					ADD `last_post_time` int(11) NOT NULL default '0' AFTER `last_post_id`,
+					ADD `last_post_userid` int(11) NOT NULL default '0' AFTER `last_post_time`,
+					ADD `last_post_message` text NULL AFTER `last_post_userid`,
+					ADD `last_post_guest_name` tinytext NULL AFTER `last_post_message`,
+					ADD `params` text NOT NULL AFTER `last_post_guest_name`,
+					ADD KEY `parent_id` (parent_id),
+					ADD KEY `category_access` (accesstype,access);
+			</query>
+			<query>
+				INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
+					SELECT userid AS user_id, thread AS topic_id, catid AS category_id, COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
+					FROM #__kunena_messages WHERE userid>0 AND moved=0 AND hold=0
+					GROUP BY user_id, topic_id
+					ON DUPLICATE KEY UPDATE category_id=VALUES(category_id), posts=VALUES(posts), last_post_id=VALUES(last_post_id), owner=VALUES(owner);
+			</query>
+			<query>
+				INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, favorite)
+					SELECT f.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS favorite
+					FROM #__kunena_favorites AS f
+					INNER JOIN #__kunena_messages AS m ON m.id=f.thread
+					WHERE f.userid>0
+					ON DUPLICATE KEY UPDATE favorite=1;
+			</query>
+			<query>
+				INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, subscribed)
+					SELECT s.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS subscribed
+					FROM #__kunena_subscriptions AS s
+					INNER JOIN #__kunena_messages AS m ON m.id=s.thread
+					WHERE s.userid>0
+					ON DUPLICATE KEY UPDATE subscribed=1;
+			</query>
+			<query>
+				INSERT INTO #__kunena_user_categories (user_id, category_id, subscribed)
+					SELECT userid AS user_id, catid AS category_id, 1 AS subscribed
+					FROM #__kunena_subscriptions_categories
+					WHERE userid>0
+					ON DUPLICATE KEY UPDATE subscribed=VALUES(subscribed);
+			</query>
+			<query>
+				UPDATE #__kunena_user_categories AS c INNER JOIN #__kunena_sessions AS s ON c.user_id=s.userid
+					SET c.allreadtime=FROM_UNIXTIME(s.lasttime);
+			</query>
 			<query>
 				INSERT IGNORE INTO `#__kunena_topics`
-					(id, category_id, subject, icon_id, locked, hold, ordering, posts, hits, attachments, poll_id, moved_id, first_post_id, last_post_id)
-					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, count(a.id) as posts, sum(a.hits) as hits, 
-						t.attachments as attachments, p.id AS poll_id, 0 as moved_id, min(b.id) as first_post_id, max(b.id) as last_post_id
+					(id, category_id, subject, icon_id, locked, hold, ordering, hits, poll_id, moved_id)
+					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, a.hits, p.id AS poll_id, 0 as moved_id
 					FROM #__kunena_messages AS a
-					JOIN #__kunena_messages AS b ON b.thread = a.id
-					LEFT OUTER JOIN (
-						SELECT m.thread, count(*) as attachments
-						FROM #__kunena_messages AS m
-						JOIN #__kunena_attachments AS n ON m.id = n.mesid
-						GROUP BY 1
-						) AS t on t.thread = a.id
 					LEFT JOIN #__kunena_polls AS p ON p.threadid=a.id
 					WHERE a.parent = 0 AND a.moved = 0
 					GROUP BY a.id
 			</query>
-			<query>
-				UPDATE `#__kunena_topics` AS t, `#__kunena_messages` AS a, `#__kunena_messages_text` AS at, `#__kunena_messages` AS b, `#__kunena_messages_text` AS bt
-					SET t.first_post_time = a.time, 
-						t.first_post_userid = a.userid,
-						t.first_post_message = at.message,
-						t.first_post_guest_name = IF(a.userid>0,null,a.name),
-						t.last_post_time = b.time, 
-						t.last_post_userid = b.userid,
-						t.last_post_message = bt.message,
-						t.last_post_guest_name = IF(b.userid>0,null,b.name)
-					WHERE t.first_post_id = a.id AND t.last_post_id = b.id AND t.first_post_id = at.mesid AND t.last_post_id = bt.mesid
-			</query>
-				
 		</version>
 	</upgrade>
 </comupgrade>

@@ -58,13 +58,13 @@ class KunenaModelCategories extends JModel {
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$layout = JRequest::getWord ( 'layout', 'edit' );
 		if ($layout == 'edit') {
-			$parent = 0;
+			$parent_id = 0;
 		} else {
-			$parent = $catid;
+			$parent_id = $catid;
 			$catid = 0;
 		}
 		$this->setState ( 'item.id', $catid );
-		$this->setState ( 'item.parent', $parent );
+		$this->setState ( 'item.parent_id', $parent_id );
 	}
 
 	/**
@@ -100,16 +100,16 @@ class KunenaModelCategories extends JModel {
 			$admin = 0;
 			$this->_items_order = array();
 			foreach ($this->_items as $category) {
-				$siblings = array_keys(KunenaCategory::getCategoryTree($category->parent));
+				$siblings = array_keys(KunenaCategory::getCategoryTree($category->parent_id));
 				if (empty($siblings)) {
 					// FIXME: deal with orphaned categories
 					$orphans = true;
-					$category->parent = 0;
+					$category->parent_id = 0;
 					$category->name = JText::_ ( 'COM_KUNENA_CATEGORY_ORPHAN' ) . ' : ' . $category->name;
 				}
-				$category->up = $me->isAdmin($category->parent) && reset($siblings) != $category->id;
-				$category->down = $me->isAdmin($category->parent) && end($siblings) != $category->id;
-				$category->reorder = $me->isAdmin($category->parent);
+				$category->up = $me->isAdmin($category->parent_id) && reset($siblings) != $category->id;
+				$category->down = $me->isAdmin($category->parent_id) && end($siblings) != $category->id;
+				$category->reorder = $me->isAdmin($category->parent_id);
 				if ($category->accesstype != 'none') {
 					$category->pub_group = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($category->accesstype));
 				} else if ($category->pub_access == 0) {
@@ -159,7 +159,7 @@ class KunenaModelCategories extends JModel {
 	}
 
 	public function getItem() {
-		$parent = $this->getState ( 'item.parent' );
+		$parent_id = $this->getState ( 'item.parent_id' );
 		$catid = $this->getState ( 'item.id' );
 		$me = KunenaFactory::getUser();
 		if (!$me->isAdmin(null) && !$me->isAdmin($catid)) {
@@ -176,10 +176,10 @@ class KunenaModelCategories extends JModel {
 			} else {
 				// New category is by default child of the first section -- this will help new users to do it right
 				$db = JFactory::getDBO ();
-				$db->setQuery ( "SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent='0' AND id!='$category->id' ORDER BY ordering" );
+				$db->setQuery ( "SELECT a.id, a.name FROM #__kunena_categories AS a WHERE parent_id='0' AND id!='$category->id' ORDER BY ordering" );
 				$sections = $db->loadObjectList ();
 				KunenaError::checkDatabaseError ();
-				$category->parent = $parent;
+				$category->parent_id = $parent_id;
 				$category->published = 0;
 				$category->ordering = 9999;
 				$category->pub_recurse = 1;
@@ -243,7 +243,7 @@ class KunenaModelCategories extends JModel {
 		//require_once KPATH_SITE.'/class.kunena.php';
 		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
 		$lists ['access'] = KunenaFactory::getAccessControl()->getAccessLevelsList($category);
-		$lists ['categories'] = JHTML::_('kunena.categorylist', 'parent', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent);
+		$lists ['categories'] = JHTML::_('kunena.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
 		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
 		$lists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $category->pub_access );
 		$lists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $category->admin_access );

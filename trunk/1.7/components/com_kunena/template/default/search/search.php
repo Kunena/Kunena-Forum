@@ -61,7 +61,7 @@ if (empty ( $this->q ) && empty ( $this->quser )) {
 									<div class="kmsgbody">
 										<div class="kmsgtitle kresult-title">
 											<span class="kmsgtitle">
-												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($result->catid), intval($result->id), NULL, NULL, $result->htmlsubject, intval($result->id) )?>
+												<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($result->catid), intval($result->id), 0, NULL, $result->htmlsubject, intval($result->id) )?>
 											</span>
 										</div>
 										<div class="kmsgtext resultmsg">

@@ -458,10 +458,13 @@ class KunenaModelInstall extends JModel {
 		// TODO: remove dependence
 		require_once (KPATH_ADMIN . '/api.php');
 		kimport('factory');
-		require_once (KPATH_SITE . '/class.kunena.php');
 
 		$this->createMenu(false);
-		CKunenaTools::reCountBoards();
+
+		kimport('topic');
+		KunenaTopic::recount();
+		kimport('category');
+		KunenaCategory::recount();
 
 		jimport ( 'joomla.filesystem.file' );
 		foreach ($entryfiles as $fileparts) {

@@ -120,16 +120,16 @@ class CKunenaLink {
 		return self::GetSefHrefLink ( "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}", $threadname, $title, $rel, $class );
 	}
 
-	function GetThreadPageLink($view, $catid, $id, $page, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
-		return self::GetHrefLink ( self::GetThreadPageURL($view, $catid, $id, $page, $limit), $name, '', $rel, $class, $anker );
+	function GetThreadPageLink($view, $catid, $id, $limitstart, $limit, $name, $anker = '', $rel = 'follow', $class = '') {
+		return self::GetHrefLink ( self::GetThreadPageURL($view, $catid, $id, $limitstart, $limit), $name, '', $rel, $class, $anker );
 	}
 
-	function GetThreadPageURL($view, $catid, $id, $page, $limit = '', $anker = '', $xhtml = true) {
-		$limitstart = (($page - 1) * $limit);
-		if ($page == 1 || ! is_numeric ( $page ) || ! is_numeric ( $limit )) {
-			// page 1 is identical to a link to the top of the thread
+	function GetThreadPageURL($view, $catid, $id, $limitstart, $limit = '', $anker = '', $xhtml = true) {
+		if ($limit < 1) $limit = KunenaFactory::getConfig()->messages_per_page;
+		if (!$limitstart) {
 			$pageURL = "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}";
 		} else {
+			$limitstart -= $limitstart % $limit;
 			$pageURL = "index.php?option=com_kunena&view={$view}&catid={$catid}&id={$id}&limitstart={$limitstart}&limit={$limit}";
 		}
 		return KunenaRoute::_ ( $pageURL, $xhtml ) . ($anker ? ('#' . $anker) : '');
@@ -377,7 +377,7 @@ class CKunenaLink {
 		else $threadPages = ceil ( $result->totalmessages / $limit );
 
 		// Finally build output block
-		return self::GetThreadPageURL ( 'view', $result->catid, $result->thread, $threadPages, $limit, $result->latest_id, $xhtml );
+		return self::GetThreadPageURL ( 'view', $result->catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
 	}
 
 	function GetMessageURL($pid, $catid=0, $limit = 0, $xhtml = true) {
@@ -403,7 +403,7 @@ class CKunenaLink {
 		if (KunenaError::checkDatabaseError()) return;
 		if (! is_object ( $result ))
 			return KunenaRoute::_ ( "index.php?option=com_kunena&view=showcat&catid={$result->catid}", $xhtml );
-		return self::GetThreadPageURL ( 'view', $result->catid, $result->thread, ceil ( $result->totalmessages / $limit ), $limit, $result->latest_id, $xhtml );
+		return self::GetThreadPageURL ( 'view', $result->catid, $result->thread, $result->totalmessages, $limit, $result->latest_id, $xhtml );
 	}
 
 	function GetAutoRedirectHTML($url, $timeout) {

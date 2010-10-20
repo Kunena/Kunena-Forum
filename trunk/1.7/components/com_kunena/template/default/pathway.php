@@ -32,28 +32,23 @@ $id = JRequest::getInt ( 'id', 0 );
 <!-- Pathway -->
 <?php
 	// FIXME: move most of the code out of the template
-	$catids = intval ( $catid );
+	kimport('category');
 	$jr_path_menu = array ();
 	$fr_title_name = JText::_('COM_KUNENA_CATEGORIES');
 
-	while ( $catids > 0 ) {
-		$results = $pathway->getCatsDetails($catids);
-		if (! $results)
-			break;
+	$parents = KunenaCategory::getParents($catid);
+	$parents[] = KunenaCategory::getInstance($catid);
+	$parents = array_reverse($parents);
+	foreach ( $parents as $parent ) {
+		$fr_name = $this->escape( JString::trim ( $parent->name ) );
+		$sname = CKunenaLink::GetCategoryLink ( 'showcat', $parent->id, $fr_name );
 
-		$parent_id = $results->parent;
-		$fr_name = $this->escape( JString::trim ( $results->name ) );
-		$sname = CKunenaLink::GetCategoryLink ( 'showcat', $catids, $fr_name );
-
-		if ($catid == $catids && $func != "view") {
+		if ($catid == $parent->id && $func != "view") {
 			$fr_title_name = $fr_name;
 			$jr_path_menu [] = $fr_name;
 		} else {
 			$jr_path_menu [] = $sname;
 		}
-
-		// next looping
-		$catids = $parent_id;
 	}
 
 	//reverse the array

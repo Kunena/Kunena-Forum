@@ -145,7 +145,7 @@ class CKunenaRSSView {
 				'view',
 				$data->catid,
 				$data->thread,
-				1,
+				0,
 				$this->config->messages_per_page,
 				$data->id
 			));

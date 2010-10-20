@@ -25,6 +25,10 @@ class KunenaCategory extends JObject {
 
 	protected $_exists = false;
 	protected $_db = null;
+	protected $_topics = false;
+	protected $_posts = false;
+	protected $_lastid = false;
+
 
 	/**
 	 * Constructor
@@ -70,38 +74,59 @@ class KunenaCategory extends JObject {
 		return $this->_exists;
 	}
 
-	static public function getCategoriesByAccess($access, $accesstype = 'joomla') {
-		if (self::$_instances === false) {
-			self::loadCategories();
-		}
+	public function getTopics() {
+		$this->buildInfo();
+		return $this->_topics;
+	}
 
-		if (is_array ($access) ) {
-			JArrayHelper::toInteger($access);
-			$access = array_unique($access);
-			$idlist = implode ( ',', $access );
-		} elseif (intval($access) > 0) {
-			$idlist = intval($access);
-		}
+	public function getPosts() {
+		$this->buildInfo();
+		return $this->_posts;
+	}
 
-		$c = __CLASS__;
+	public function getLastPosted() {
+		$this->buildInfo();
+		return self::$_instances [$this->_lastid ];
+	}
+
+	static public function getNewTopics($catids) {
+		$session = KunenaFactory::getSession ();
+		$readlist = $session->readtopics;
+		$prevCheck = $session->lasttime;
+
+		$catlist = implode(',', $catids);
 		$db = JFactory::getDBO ();
-		$query = "SELECT c.* FROM #__kunena_categories AS c WHERE accesstype={$db->quote($accesstype)}";
-		if (isset($idlist))
-			$query .= " AND c.access IN ({$idlist})";
+		$query = "SELECT category_id, COUNT(*) AS new
+			FROM #__kunena_topics
+			WHERE category_id IN ($catlist) AND hold='0' AND last_post_time>{$db->Quote($prevCheck)} AND id NOT IN ({$readlist})
+			GROUP BY category_id";
 		$db->setQuery ( $query );
-		$results = (array) $db->loadAssocList ();
-		KunenaError::checkDatabaseError ();
-
-		$list = array ();
-		foreach ( $results as $category ) {
-			$instance = new $c ();
-			$instance->bind ( $category );
-			$instance->_exists = true;
-			self::$_instances [$instance->id] = $instance;
-			$list [$instance->id] = $instance;
+		$newlist = $db->loadObjectList ('category_id');
+		if (KunenaError::checkDatabaseError()) return;
+		$new = array();
+		foreach ($catids AS $id) {
+			if (isset($newlist[$id]))
+				$new[$id] = $newlist[$id]->new;
+			else
+				$new[$id] = 0;
 		}
+		return $new;
+	}
 
-		return $list;
+	protected function buildInfo() {
+		if ($this->_topics !== false)
+			return;
+		$this->_topics = $this->numTopics;
+		$this->_posts = $this->numPosts;
+		$this->_lastid = $this->id;
+		$categories = self::getChildren($this->id);
+		foreach ($categories as $category) {
+			$category->buildInfo();
+			$this->_topics += $category->numTopics;
+			$this->_posts += $category->numPosts;
+			if (self::$_instances [$this->_lastid]->last_post_time < $category->last_post_time)
+				$this->_lastid = $category->id;
+		}
 	}
 
 	static protected function loadCategories() {
@@ -117,13 +142,13 @@ class KunenaCategory extends JObject {
 			$instance = new $c ();
 			$instance->bind ( $category );
 			$instance->_exists = true;
-			self::$_instances [$instance->id] = $instance;
+			self::$_instances [(int)$instance->id] = $instance;
 
-			if (!isset(self::$_tree [$instance->id])) {
-				self::$_tree [$instance->id] = array();
+			if (!isset(self::$_tree [(int)$instance->id])) {
+				self::$_tree [(int)$instance->id] = array();
 			}
-			self::$_tree [$instance->parent][$instance->id] = &self::$_tree [$instance->id];
-			self::$_names [$instance->id] = $instance->name;
+			self::$_tree [(int)$instance->parent_id][(int)$instance->id] = &self::$_tree [(int)$instance->id];
+			self::$_names [(int)$instance->id] = $instance->name;
 		}
 		unset ($results);
 
@@ -138,7 +163,7 @@ class KunenaCategory extends JObject {
 		}
 	}
 
-	static public function getCategories($ids = false) {
+	static public function getCategories($ids = false, $reverse = false) {
 		if (self::$_instances === false) {
 			self::loadCategories();
 		}
@@ -148,13 +173,21 @@ class KunenaCategory extends JObject {
 		} elseif (is_array ($ids) ) {
 			$ids = array_unique($ids);
 		} else {
-			$ids = array($ids);
+			$ids = array(intval($ids));
 		}
 
 		$list = array ();
-		foreach ( $ids as $id ) {
-			if (isset(self::$_instances [$id]) && self::$_instances [$id]->authorize()) {
-				$list [$id] = self::$_instances [$id];
+		if (!$reverse) {
+			foreach ( $ids as $id ) {
+				if (isset(self::$_instances [$id]) && self::$_instances [$id]->authorize()) {
+					$list [$id] = self::$_instances [$id];
+				}
+			}
+		} else {
+			foreach ( self::$_instances as $category ) {
+				if (!in_array($category->id, $ids) && $category->authorize()) {
+					$list [$category->id] = $category;
+				}
 			}
 		}
 
@@ -172,14 +205,14 @@ class KunenaCategory extends JObject {
 	}
 
 	public function getParent() {
-		if (!isset(self::$_instances [$this->parent])) {
+		if (!isset(self::$_instances [$this->parent_id])) {
 			$c = __CLASS__;
 			$instance = new $c();
 			$instance->name = JText::_ ( 'COM_KUNENA_TOPLEVEL' );
 			$instance->_exists = true;
 			return $instance;
 		}
-		return self::$_instances [$this->parent];
+		return self::$_instances [$this->parent_id];
 	}
 
 	static public function getParents($id = 0, $levels = 10, $params = array()) {
@@ -191,22 +224,21 @@ class KunenaCategory extends JObject {
 
 		if (!isset(self::$_instances [$id]) || !self::$_instances [$id]->authorize($action)) return array();
 		$list = array ();
-		$parent = self::$_instances [$id]->parent;
+		$parent = self::$_instances [$id]->parent_id;
 		while ($parent && $levels--) {
 			if (!isset(self::$_instances [$parent])) return array();
 			if (!$unpublished && !self::$_instances [$parent]->published) return array();
 			array_unshift($list, self::$_instances [$parent]);
 
-			$parent = self::$_instances [$parent]->parent;
+			$parent = self::$_instances [$parent]->parent_id;
 		}
 		return $list;
 	}
 
-	static public function getChildren($parent = 0, $levels = 0, $params = array()) {
+	static public function getChildren($parents = 0, $levels = 0, $params = array()) {
 		if (self::$_instances === false) {
 			self::loadCategories();
 		}
-		if (!isset(self::$_tree[$parent])) return array();
 
 		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
 		$direction = isset($params['direction']) ? (int) $params['direction'] : 1;
@@ -215,34 +247,50 @@ class KunenaCategory extends JObject {
 		$action = isset($params['action']) ? (string) $params['action'] : 'read';
 		$selected = isset($params['selected']) ? (int) $params['selected'] : 0;
 
-		$cats = self::$_tree[$parent];
-		switch ($ordering) {
-			case 'catid':
-				if ($direction > 0) ksort($cats);
-				else krsort($cats);
-				break;
-			case 'name':
-				if ($direction > 0) uksort($cats, array('KunenaCategory', 'compareByNameAsc'));
-				else uksort($cats, array('KunenaCategory', 'compareByNameDesc'));
-				break;
-			case 'ordering':
-			default:
-				if ($direction < 0) $cats = array_reverse ($cats, true);
-		}
+		if (!is_array($parents))
+			$parents = array($parents);
 
 		$list = array ();
-		foreach ( $cats as $id=>$children ) {
-			if (!isset(self::$_instances [$id])) continue;
-			if (!$unpublished && !self::$_instances [$id]->published) continue;
-			if ($id == $selected) continue;
-			$clist = array();
-			if ($levels && !empty($children)) {
-				$clist = self::getChildren($id, $levels-1, $params);
+		foreach ( $parents as $parent ) {
+			if (! isset ( self::$_tree [$parent] ))
+				continue;
+			$cats = self::$_tree [$parent];
+			switch ($ordering) {
+				case 'catid' :
+					if ($direction > 0)
+						ksort ( $cats );
+					else
+						krsort ( $cats );
+					break;
+				case 'name' :
+					if ($direction > 0)
+						uksort ( $cats, array ('KunenaCategory', 'compareByNameAsc' ) );
+					else
+						uksort ( $cats, array ('KunenaCategory', 'compareByNameDesc' ) );
+					break;
+				case 'ordering' :
+				default :
+					if ($direction < 0)
+						$cats = array_reverse ( $cats, true );
 			}
-			if (empty($clist) && !self::$_instances [$id]->authorize($action)) continue;
-			if (!empty($clist) || !$search || intval($search) == $id || JString::stristr(self::$_instances[$id]->name, (string) $search)) {
-				$list [$id] = self::$_instances [$id];
-				$list += $clist;
+
+			foreach ( $cats as $id => $children ) {
+				if (! isset ( self::$_instances [$id] ))
+					continue;
+				if (! $unpublished && ! self::$_instances [$id]->published)
+					continue;
+				if ($id == $selected)
+					continue;
+				$clist = array ();
+				if ($levels && ! empty ( $children )) {
+					$clist = self::getChildren ( $id, $levels - 1, $params );
+				}
+				if (empty ( $clist ) && ! self::$_instances [$id]->authorize ( $action ))
+					continue;
+				if (! empty ( $clist ) || ! $search || intval ( $search ) == $id || JString::stristr ( self::$_instances [$id]->name, ( string ) $search )) {
+					$list [$id] = self::$_instances [$id];
+					$list += $clist;
+				}
 			}
 		}
 		return $list;
@@ -282,8 +330,11 @@ class KunenaCategory extends JObject {
 	public function getModerators($includeGlobal = true) {
 		$access = KunenaFactory::getAccessControl();
 		$userlist = array();
-		if (!empty($this->catid)) $userlist = $access->getModerators($this->catid);
+		if (!empty($this->id)) $userlist = $access->getModerators($this->id);
 		if ($includeGlobal) $userlist += $access->getModerators();
+		foreach ($userlist as $userid => $val) {
+			$userlist[$userid] = $userid;
+		}
 		return $userlist;
 	}
 
@@ -508,7 +559,7 @@ class KunenaCategory extends JObject {
 		// TODO: remove dependency
 		require_once KPATH_SITE.'/class.kunena.php';
 		CKunenaTools::reCountUserPosts();
-		CKunenaTools::reCountBoards();
+		self::recount();
 
 		return $result;
 	}
@@ -588,4 +639,41 @@ class KunenaCategory extends JObject {
 		$result = $table->isCheckedOut($with);
 		return $result;
 	}
+
+	static function recount() {
+		$db = JFactory::getDBO ();
+
+		$db->setQuery ( "UPDATE #__kunena_categories
+			SET numTopics=0, numPosts=0, last_topic_id=0, last_topic_subject='', last_post_id=0, last_post_time=0,
+			last_post_userid=0, last_post_message='', last_post_guest_name=''");
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return;
+
+		// Update category post count
+		$db->setQuery ( "INSERT INTO #__kunena_categories (id, numTopics, numPosts, last_topic_id)
+			SELECT c.id, COUNT(*) AS numTopics, SUM(tt.posts) AS numPosts, MAX(tt.id) AS last_topic_id
+			FROM #__kunena_topics as tt
+			INNER JOIN #__kunena_categories AS c ON c.id=tt.category_id
+			WHERE tt.hold=0 AND tt.moved_id=0
+			GROUP BY tt.category_id
+			ON DUPLICATE KEY UPDATE numTopics=VALUES(numTopics), numPosts=VALUES(numPosts), last_topic_id=VALUES(last_topic_id)" );
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return;
+
+		// Update last post info
+		$db->setQuery ( "UPDATE #__kunena_categories AS c, #__kunena_topics AS t
+			SET c.last_topic_subject = t.subject,
+				c.last_post_id = t.last_post_id,
+				c.last_post_time = t.last_post_time,
+				c.last_post_userid = t.last_post_userid,
+				c.last_post_message = t.last_post_message,
+				c.last_post_guest_name = t.last_post_guest_name
+			WHERE c.last_topic_id = t.id");
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return;
+	}
+
 }

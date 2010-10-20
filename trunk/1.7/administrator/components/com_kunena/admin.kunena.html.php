@@ -2083,7 +2083,7 @@ function textCounter(field, target) {
 
 					if (!empty($subscatslist)) {
 						foreach($subscatslist as $subscats) { //get all category details for each subscription
-							$kunena_db->setQuery ( "select cat.name AS catname, cat.id, msg.subject, msg.id, msg.catid, msg.name AS username from #__kunena_categories AS cat INNER JOIN #__kunena_messages AS msg ON cat.id=msg.catid where cat.id='$subscats->catid' GROUP BY cat.id" );
+							$kunena_db->setQuery ( "select cat.name AS catname, cat.id, msg.subject, msg.id, msg.catid, msg.name AS username from #__kunena_categories AS cat INNER JOIN #__kunena_messages AS msg ON cat.id=msg.catid where cat.id='$subscats->category_id' GROUP BY cat.id" );
 							$catdetail = $kunena_db->loadObjectList ();
 							if (KunenaError::checkDatabaseError()) break;
 

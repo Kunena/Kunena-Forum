@@ -33,7 +33,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			//activity stream  - new post
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
-			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
+			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 0 );
 
 			kimport('html.parser');
 			$content = $message->get ( 'message' );
@@ -74,7 +74,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			//activity stream - reply post
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
-			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
+			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 0 );
 
 			kimport('html.parser');
 			$content = $message->get ( 'message' );
@@ -115,7 +115,7 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			//activity stream - reply post
 			require_once KPATH_SITE.'/lib/kunena.link.class.php';
 			require_once KPATH_SITE.'/lib/kunena.smile.class.php';
-			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 1 );
+			$JSPostLink = CKunenaLink::GetThreadPageURL ( 'view', $message->get ( 'catid' ), $message->get ( 'thread' ), 0 );
 
 			$act = new stdClass ();
 			$act->cmd = 'wall.write';

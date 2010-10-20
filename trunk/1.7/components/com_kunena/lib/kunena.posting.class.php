@@ -52,7 +52,7 @@ class CKunenaPosting {
 		if ($mesid) {
 			// Check that message and category exists and fetch some information for later use
 			$query = "SELECT m.*, mm.hold AS topichold, mm.locked AS topiclocked, c.locked AS catlocked, t.message,
-					c.name AS catname, c.parent AS catparent, c.pub_access,
+					c.name AS catname, c.parent_id AS catparent, c.pub_access,
 					c.review, c.class_sfx, p.id AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
 				FROM #__kunena_messages AS m
@@ -78,7 +78,7 @@ class CKunenaPosting {
 		if ($catid) {
 			// Check that category exists and fill some information for later use
 			$query = "SELECT m.*, 0 AS topichold, 0 AS topiclocked, c.locked AS catlocked, '' AS message,
-					c.id AS catid, c.name AS catname, c.parent AS catparent, c.pub_access,
+					c.id AS catid, c.name AS catname, c.parent_id AS catparent, c.pub_access,
 					c.review, c.class_sfx, 0 AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
 				FROM #__kunena_categories AS c
@@ -464,8 +464,18 @@ class CKunenaPosting {
 			$this->_db->query ();
 			$dberror = $this->checkDatabaseError ();
 
-			// now increase the #s in categories only case approved
-			CKunenaTools::modifyCategoryStats ( $id, $this->get ( 'parent' ), $this->get ( 'time' ), $this->get ( 'catid' ) );
+			// Update category stats
+			$category = KunenaCategory::getInstance($this->get ( 'catid' ));
+			if (!$this->get ( 'parent' )) $category->numTopics++;
+			$category->numPosts++;
+			$category->last_topic_id = $this->get ( 'thread' );
+			$category->last_topic_subject = $this->get ( 'subject' );
+			$category->last_post_id = $this->get ( 'id' );
+			$category->last_post_time = $this->get ( 'time' );
+			$category->last_post_userid = $this->get ( 'userid' );
+			$category->last_post_message = $this->get ( 'message' );
+			$category->last_post_guest_name = $this->get ( 'name' );
+			$category->save();
 		}
 
 		// Add attachments if there are any
@@ -680,7 +690,8 @@ class CKunenaPosting {
 			return $this->setError ( '-delete-', JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE' ) );
 
 		// Last but not least update forum stats
-		CKunenaTools::reCountBoards();
+		kimport('categories');
+		KunenaCategory::recount ();
 
 		$this->set ( 'id', $this->parent->id );
 
@@ -716,7 +727,8 @@ class CKunenaPosting {
 			return $this->setError ( '-undelete-', JText::_ ( 'COM_KUNENA_POST_ERROR_UNDELETE' ) );
 
 		// Last but not least update forum stats
-		CKunenaTools::reCountBoards();
+		kimport('categories');
+		KunenaCategory::recount ();
 
 		$this->set ( 'id', $this->parent->id );
 

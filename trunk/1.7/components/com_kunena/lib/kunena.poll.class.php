@@ -582,7 +582,7 @@ class CKunenaPolls {
 				}
 
 				$this->_app->enqueueMessage ( $message );
-				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, '', false) );
+				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 0, $this->config->messages_per_page, '', false) );
 				break;
 			case 'pollchangevote' :
 				$result = $this->save_changevote($id,$this->my->id,$vote);
@@ -594,7 +594,7 @@ class CKunenaPolls {
 				}
 
 				$this->_app->enqueueMessage ( $message );
-				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 1, $this->config->messages_per_page, '', false) );
+				$this->_app->redirect ( CKunenaLink::GetThreadPageURL('view', $catid, $id, 0, $this->config->messages_per_page, '', false) );
 				break;
 		}
 	}

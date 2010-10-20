@@ -22,13 +22,11 @@ kimport ('error');
 class TableKunenaCategory extends KunenaTable
 {
 	var $id = null;
-	var $parent = null;
+	var $parent_id = null;
 	var $name = null;
-	var $cat_emoticon = null;
+	var $icon_id = null;
 	var $locked = null;
-	var $alert_admin = null;
 	var $moderated = null;
-	var $moderators = null;
 	var $accesstype = null;
 	var $access = null;
 	var $pub_access = null;
@@ -36,7 +34,6 @@ class TableKunenaCategory extends KunenaTable
 	var $admin_access = null;
 	var $admin_recurse = null;
 	var $ordering = null;
-	var $future2 = null;
 	var $published = null;
 	var $checked_out = null;
 	var $checked_out_time = null;
@@ -48,10 +45,17 @@ class TableKunenaCategory extends KunenaTable
 	var $headerdesc = null;
 	var $class_sfx = null;
 	var $allow_polls = null;
-	var $id_last_msg = null;
 	var $numTopics = null;
 	var $numPosts = null;
-	var $time_last_msg = null;
+	var $last_topic_id = null;
+	var $last_topic_subject = null;
+	var $last_topic_posts = null;
+	var $last_post_id = null;
+	var $last_post_time = null;
+	var $last_post_userid = null;
+	var $last_post_message = null;
+	var $last_post_guest_name = null;
+	var $params = null;
 
 	function __construct($db) {
 		parent::__construct ( '#__kunena_categories', 'id', $db );
@@ -114,7 +118,7 @@ class TableKunenaCategory extends KunenaTable
 	function isChild($id) {
 		// FIXME: when we have category cache, replace this code
 		if ($id > 0) {
-			$query = "SELECT id, parent FROM #__kunena_categories";
+			$query = "SELECT id, parent_id FROM #__kunena_categories";
 			$this->_db->setQuery ( $query );
 			$list = $this->_db->loadObjectList ( 'id' );
 			if (KunenaError::checkDatabaseError ())

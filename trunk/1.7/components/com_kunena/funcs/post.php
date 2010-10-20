@@ -61,7 +61,7 @@ class CKunenaPost {
 		if ($this->id) {
 			// Check that message and category exists and fill some information for later use
 			$query = "SELECT m.*, (mm.locked OR c.locked) AS locked, c.locked AS catlocked, t.message,
-					c.name AS catname, c.parent AS catparent, c.pub_access,
+					c.name AS catname, c.parent_id AS catparent, c.pub_access,
 					c.review, c.class_sfx, p.id AS poll_id, c.allow_anonymous,
 					c.post_anonymous, c.allow_polls
 				FROM #__kunena_messages AS m
@@ -86,7 +86,9 @@ class CKunenaPost {
 			$this->cat_default_allow = $this->msg_cat->allow_anonymous;
 		} else if ($this->catid) {
 			// Check that category exists and fill some information for later use
-			$this->_db->setQuery ( "SELECT 0 AS id, 0 AS thread, id AS catid, name AS catname, parent AS catparent, pub_access, locked, locked AS catlocked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls FROM #__kunena_categories WHERE id={$this->_db->Quote($this->catid)}" );
+			$this->_db->setQuery ( "SELECT 0 AS id, 0 AS thread, id AS catid, name AS catname, parent_id AS catparent, pub_access, locked, locked AS catlocked, review, class_sfx, allow_anonymous, post_anonymous, allow_polls
+				FROM #__kunena_categories
+				WHERE id={$this->_db->Quote($this->catid)}" );
 			$this->msg_cat = $this->_db->loadObject ();
 			if (! $this->msg_cat) {
 				KunenaError::checkDatabaseError();
@@ -97,7 +99,7 @@ class CKunenaPost {
 		} else {
 			//get default category
 			$this->_db->setQuery ( "SELECT c.allow_anonymous FROM `#__kunena_categories` AS c
-				INNER JOIN `#__kunena_categories` AS p ON c.parent=p.id AND p.parent=0
+				INNER JOIN `#__kunena_categories` AS p ON c.parent_id=p.id AND p.parent_id=0
 				WHERE c.id IN ({$this->_session->allowed}) ORDER BY p.ordering, p.name, c.ordering, c.name LIMIT 1" );
 			$this->cat_default_allow = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
@@ -191,14 +193,13 @@ class CKunenaPost {
 		}
 
 		// TODO: replace this with better solution
-		$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread={$this->_db->Quote($thread)}" );
-		$result = $this->_db->loadObject ();
+		$this->_db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE thread={$this->_db->Quote($thread)}" );
+		$limitstart = $this->_db->loadResult ();
 		KunenaError::checkDatabaseError();
-		$threadPages = ceil ( $result->totalmessages / $this->config->messages_per_page );
 		//construct a useable URL (for plaintext - so no &amp; encoding!)
 		jimport ( 'joomla.environment.uri' );
 		$uri = & JURI::getInstance ( JURI::base () );
-		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, $threadPages, $this->config->messages_per_page, $id ) );
+		$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $thread, $limitstart, $this->config->messages_per_page, $id ) );
 
 		$message->emailToSubscribers($LastPostUrl, $this->config->allowsubscriptions && ! $holdPost, $this->config->mailmod || $holdPost, $this->config->mailadmin || $holdPost);
 
@@ -786,16 +787,28 @@ class CKunenaPost {
 			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE id={$this->_db->Quote($this->id)}" );
 			if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
 				$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_APPROVE_SUCCESS' );
-				$this->_db->setQuery ( "SELECT COUNT(*) AS totalmessages FROM #__kunena_messages WHERE thread={$this->_db->Quote($this->msg_cat->thread)}" );
-				$result = $this->_db->loadObject ();
+				$this->_db->setQuery ( "SELECT COUNT(*) FROM #__kunena_messages WHERE thread={$this->_db->Quote($this->msg_cat->thread)}" );
+				$limitstart = $this->_db->loadResult ();
 				KunenaError::checkDatabaseError();
-				$threadPages = ceil ( $result->totalmessages / $this->config->messages_per_page );
 				//construct a useable URL (for plaintext - so no &amp; encoding!)
 				jimport ( 'joomla.environment.uri' );
 				$uri = & JURI::getInstance ( JURI::base () );
-				$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->msg_cat->thread, $threadPages, $this->config->messages_per_page, $this->id ) );
+				$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->msg_cat->thread, $limitstart, $this->config->messages_per_page, $this->id ) );
+
+				// Update category stats
+				$category = KunenaCategory::getInstance($this->msg_cat->catid);
+				if (!$this->msg_cat->parent) $category->numTopics++;
+				$category->numPosts++;
+				$category->last_topic_id = $this->msg_cat->thread;
+				$category->last_topic_subject = $this->msg_cat->subject;
+				$category->last_post_id = $this->msg_cat->id;
+				$category->last_post_time = $this->msg_cat->time;
+				$category->last_post_userid = $this->msg_cat->userid;
+				$category->last_post_message = $this->msg_cat->message;
+				$category->last_post_guest_name = $this->msg_cat->name;
+				$category->save();
+
 				$message->emailToSubscribers($LastPostUrl, $this->config->allowsubscriptions, $this->config->mailmod, $this->config->mailadmin);
-				CKunenaTools::modifyCategoryStats($this->id, $this->msg_cat->parent, $this->msg_cat->time,$this->msg_cat->catid);
 			}
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ), $success_msg );

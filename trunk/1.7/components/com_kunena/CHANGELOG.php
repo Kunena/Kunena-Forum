@@ -33,6 +33,29 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+19-October-2010 Matias
+^ [#22792] Optimize access control to save some repeating queries by local caching
++ [#22792] Simplify logic in saving numPosts and numTopics to be local for each category
++ [#22792] New functions in KunenaCategory: getTopics(), getPosts(), getLastPosted() to get calculated values
++ [#22792] New function KunenaCategory::getNewTopics($catids) to get total count of updated topics
++ [#22792] KunenaCategory::getCategories(): add support to get reverse list (not in) of categories
++ [#22792] New function KunenaTopic::getLatestTopics() to contain logic from CKunenaLatest, CKunenaShowcat
++ [#22792] New functions in KunenaTopic: authorize(), save(), delete(), recount()
+
+18-October-2010 Matias
+^ [#22792] Update code to use new fields in #kunena_categories, move queries into KunenaCategory class
++ [#22792] New function KunenaCategory::recount(), use it instead of CKunenaTools::reCountBoards()
++ [#22792] New classes KunenaTopic, TableKunenaTopics
++ [#22792] New function KunenaTopic::getTopics() to fetch list of topics (with internal cache)
+^ [#22792] Simplify logic in CKunenaListcat (use new class)
+- [#22570] Remove many deprecated functions from class.kunena.php
+
+17-October-2010 Matias
++ [#22792] Add last_topic_id, last_topic_subject, last_topic_posts into #__kunena_categories (URL generation)
+- [#22792] Remove alert_admin, moderators and rename parent in #__kunena_categories
+# [#22792] Fix bug in KunenaCategories::getModerators()
+^ [#22792] Simplify some misc functions
+
 16-October-2010 Matias
 ^ [#22786] Merge revisions 3663-3733 from trunk/1.6
 ^ [#22792] CKunenaLatestX: Convert latest posts to use new tables

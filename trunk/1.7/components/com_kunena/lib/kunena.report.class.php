@@ -41,19 +41,19 @@ class CKunenaReport {
 		jimport ( 'joomla.mail.helper' );
 
 		if ($this->config->reportmsg == 0) {
-			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, NULL, NULL, $this->id, false ) );
+			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
 			return false;
 		}
 
 		if (! $this->config->email || ! JMailHelper::isEmailAddress ( $this->config->email )) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'error' );
-			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, NULL, NULL, $this->id, false ) );
+			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
 			return false;
 		}
 
 		if ($this->my->id == 0) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_FORUM_UNAUTHORIZIED2' ), 'error' );
-			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, NULL, NULL, $this->id, false ) );
+			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
 			return false;
 		}
 
@@ -74,7 +74,7 @@ class CKunenaReport {
 			return false;
 
 		if (! JRequest::checkToken ()) {
-			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, NULL, NULL, $this->id, false ), COM_KUNENA_ERROR_TOKEN, 'error' );
+			$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ), COM_KUNENA_ERROR_TOKEN, 'error' );
 			return false;
 		}
 
@@ -103,7 +103,7 @@ class CKunenaReport {
 
 				jimport ( 'joomla.environment.uri' );
 				$uri = & JURI::getInstance ( JURI::base () );
-				$msglink = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $row->catid, $row->id, NULL, NULL, $row->id ) );
+				$msglink = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $row->catid, $row->id, 0, NULL, $row->id ) );
 
 				$message = "" . JText::_ ( 'COM_KUNENA_REPORT_RSENDER' ) . " " . $this->_getSenderName ();
 				$message .= "\n";
@@ -156,7 +156,7 @@ class CKunenaReport {
 		}
 
 		$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_REPORT_SUCCESS' ) );
-		$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, NULL, NULL, $this->id, false ) );
+		$this->app->redirect ( CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->id, 0, NULL, $this->id, false ) );
 	}
 
 	public function showForm() {

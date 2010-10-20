@@ -98,10 +98,7 @@ class KunenaUser extends JObject {
 			// Before we do anything to cache the users, check if we should add active users
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
 			$who = CKunenaWhoIsOnline::GetInstance();
-			$users = $who->getActiveUsersList();
-			foreach($users as $user){
-				$e_userids[intval($user->id)] = intval($user->id);
-			}
+			$e_userids = $who->getActiveUsersList();
 
 			// Also get latest user and add to the list
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');

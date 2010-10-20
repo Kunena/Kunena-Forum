@@ -134,30 +134,6 @@ define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 // url catimages path
 define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$kunena_config->catimagepath}/"); // Kunena category images direct url
 
-function kunena_check_image_type($type) {
-    switch (strtolower($type))
-    {
-        case 'jpeg':
-        case 'pjpeg':
-        case 'jpg':
-            return '.jpg';
-
-            break;
-
-        case 'gif':
-            return '.gif';
-
-            break;
-
-        case 'png':
-            return '.png';
-
-            break;
-    }
-
-    return false;
-    }
-
 kimport('html.parser');
 
 class CKunenaTools {
@@ -189,27 +165,6 @@ class CKunenaTools {
 		echo $html;
 	}
 
-	// TODO: deprecated
-	function parseText($txt) {
-		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
-		kimport('html.parser');
-		return KunenaParser::parseText($txt);
-	}
-
-	// TODO: deprecated
-	function parseBBCode($txt) {
-		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
-		kimport('html.parser');
-		return KunenaParser::parseBBCode($txt);
-	}
-
-	// TODO: deprecated
-	function stripBBCode($txt, $len=0) {
-		user_error(__CLASS__.'::'.__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
-		kimport('html.parser');
-		return KunenaParser::stripBBCode($txt, $len);
-	}
-
 	function reCountUserPosts() {
     	$kunena_db = &JFactory::getDBO();
 
@@ -230,70 +185,6 @@ class CKunenaTools {
         KunenaError::checkDatabaseError();
     }
 
-    function reCountBoardsRecursion(&$array, $current)
-    {
-    	foreach ($array[$current]->children as $child)
-    	{
-    		if (!$array[$child]->published) continue;
-    		if (!empty($array[$child]->children)) CKunenaTools::reCountBoardsRecursion($array, $child);
-    		$array[$current]->numTopics += $array[$child]->numTopics;
-    		$array[$current]->numPosts += $array[$child]->numPosts;
-    		if (isset($array[$current]->id) && $array[$child]->id_last_msg > $array[$current]->id_last_msg)
-    		{
-    			$array[$current]->id_last_msg = $array[$child]->id_last_msg;
-    			$array[$current]->time_last_msg = $array[$child]->time_last_msg;
-    		}
-    	}
-    }
-
-    function reCountBoards()
-    {
-        $kunena_db = &JFactory::getDBO();
-
-        // Reset category counts as next query ignores empty categories
-        $kunena_db->setQuery("UPDATE #__kunena_categories SET numTopics=0, numPosts=0");
-        $kunena_db->query();
-        if (KunenaError::checkDatabaseError()) return;
-
-        // Update category post count
-        $kunena_db->setQuery("INSERT INTO #__kunena_categories (id, numTopics, numPosts, id_last_msg, time_last_msg)"
-        	." SELECT c.id, SUM( m.parent=0 ), SUM( m.parent>0 ), MAX( m.id ), MAX( m.time )"
-        	." FROM #__kunena_messages as m"
-        	." INNER JOIN #__kunena_categories AS c ON c.id=m.catid"
-        	." WHERE m.catid>0 AND m.hold=0"
-        	." GROUP BY catid "
-        	." ON DUPLICATE KEY UPDATE numTopics=VALUES(numTopics), numPosts=VALUES(numPosts), id_last_msg=VALUES(id_last_msg), time_last_msg=VALUES(time_last_msg)");
-    	$kunena_db->query();
-    	if (KunenaError::checkDatabaseError()) return;
-
-    	// Load categories to be counted
-        $kunena_db->setQuery("SELECT id, parent, published, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories");
-        $cats = $kunena_db->loadObjectList('id');
-        if (KunenaError::checkDatabaseError()) return;
-
-        foreach ($cats as $c)
-        {
-            if (isset($cats[$c->parent])) $cats[$c->parent]->children[] = $c->id;
-            else $cats[0]->children[] = $c->id;
-        }
-
-        if (!empty($cats)) CKunenaTools::reCountBoardsRecursion($cats, 0);
-
-        // now back to db
-        foreach ($cats as $c)
-        {
-        	if (!isset($c->id)) continue;
-            $kunena_db->setQuery("UPDATE #__kunena_categories SET"
-            	."  numTopics=" . intval($c->numTopics)
-            	.", numPosts=" . intval($c->numPosts)
-            	.", id_last_msg=" . intval($c->id_last_msg)
-            	.", time_last_msg=" . intval($c->time_last_msg)
-            	." WHERE id=" . intval($c->id));
-            $kunena_db->query();
-            if (KunenaError::checkDatabaseError()) return;
-        }
-    }
-
     function updateNameInfo()
     {
         $kunena_db = &JFactory::getDBO();
@@ -309,101 +200,6 @@ class CKunenaTools {
         KunenaError::checkDatabaseError();
         return $kunena_db->getAffectedRows();
     }
-
-    function modifyCategoryStats($msg_id, $msg_parent, $msg_time, $msg_cat) {
-        $kunena_db = &JFactory::getDBO();
-        $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories ORDER BY id ASC");
-        $cats = $kunena_db->loadObjectList();
-        if (KunenaError::checkDatabaseError()) return;
-
-        foreach ($cats as $c) {
-            $ctg[$c->id] = $c;
-            }
-
-        while ($msg_cat) {
-            // traverse parental from orig msg_cat
-            if ($msg_parent == 0) {
-                $ctg[$msg_cat]->numTopics++;
-                }
-            else {
-                $ctg[$msg_cat]->numPosts++;
-                }
-
-            $ctg[$msg_cat]->id_last_msg = $msg_id;
-            $ctg[$msg_cat]->time_last_msg = $msg_time;
-
-            // store to db (only changed)
-            $kunena_db->setQuery(
-                "UPDATE `#__kunena_categories`"
-                ." SET `time_last_msg`='" . $ctg[$msg_cat]->time_last_msg . "'"
-                .",`id_last_msg`='" . $ctg[$msg_cat]->id_last_msg . "'"
-                .",`numTopics`='" . $ctg[$msg_cat]->numTopics . "'"
-                .",`numPosts`='" . $ctg[$msg_cat]->numPosts . "'"
-                ." WHERE (`id`='" . $ctg[$msg_cat]->id . "') ");
-            $kunena_db->query();
-            if (KunenaError::checkDatabaseError()) return;
-
-            // parent
-            $msg_cat = $ctg[$msg_cat]->parent;
-        }
-    }
-
-    // FIXME: broken function, bad implementation
-    function decreaseCategoryStats($msg_id, $msg_cat) {
-        //topic : 1 , message = 0
-        $kunena_db = &JFactory::getDBO();
-        $kunena_db->setQuery("SELECT id, parent, numTopics, numPosts, id_last_msg, time_last_msg FROM #__kunena_categories ORDER BY id ASC");
-        $cats = $kunena_db->loadObjectList();
-        if (KunenaError::checkDatabaseError()) return;
-
-        foreach ($cats as $c) {
-            $ctg[$c->id] = $c;
-            }
-
-        $kunena_db->setQuery("SELECT id FROM #__kunena_messages WHERE id={$kunena_db->Quote($msg_id)} OR thread={$kunena_db->Quote($msg_id)}");
-
-        $msg_ids = $kunena_db->loadResultArray();
-        if (KunenaError::checkDatabaseError()) return;
-
-        $cntTopics = 0;
-        $cntPosts = 0;
-
-        if (count($msg_ids) > 0) {
-            foreach ($msg_ids as $msg) {
-                if ($msg == $msg_id) {
-                    $cntTopics = 1;
-                    }
-                else {
-                    $cntPosts++;
-                    }
-                }
-            }
-
-        while ($msg_cat)
-        {
-            $kunena_db->setQuery("SELECT id, time FROM #__kunena_messages WHERE catid={$kunena_db->Quote($msg_cat)} AND (thread!={$kunena_db->Quote($msg_id)} AND id!={$kunena_db->Quote($msg_id)}) ORDER BY time DESC LIMIT 1;");
-            $lastMsgInCat = $kunena_db->loadObject();
-            if (KunenaError::checkDatabaseError()) return;
-
-            $ctg[$msg_cat]->numTopics = (int) ($ctg[$msg_cat]->numTopics - $cntTopics);
-            $ctg[$msg_cat]->numPosts = (int) ($ctg[$msg_cat]->numPosts - $cntPosts);
-
-            $ctg[$msg_cat]->id_last_msg = $lastMsgInCat->id;
-            $ctg[$msg_cat]->time_last_msg = $lastMsgInCat->time;
-
-            $msg_cat = $ctg[$msg_cat]->parent;
-		}
-
-        // now back to db
-        foreach ($ctg as $cc)
-        {
-            $kunena_db->setQuery("UPDATE `#__kunena_categories` SET `time_last_msg`='" . $cc->time_last_msg . "',`id_last_msg`='" . $cc->id_last_msg . "',`numTopics`='" . $cc->numTopics . "',`numPosts`='" . $cc->numPosts . "' WHERE `id`='" . $cc->id . "' ");
-            $kunena_db->query();
-            if (KunenaError::checkDatabaseError()) return;
-            }
-
-        return;
-        }
 
 	function markTopicRead($thread, $userid) {
 		$thread = intval ( $thread );
@@ -430,34 +226,32 @@ class CKunenaTools {
 	}
 
 	function forumSelectList($name, $catid=0, $options=array(), $attr='', $sections=false) {
-		$kunena_db = &JFactory::getDBO ();
-		$list = JJ_categoryArray ();
+		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
 
-		foreach ( $list as $item ) {
-			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename, 'value', 'text', !$sections && $item->section);
-		}
-
-		if (is_array($catid)) $catids = 'catids[]';
-		else $catids = 'catid';
-		$parent = JHTML::_ ( 'select.genericlist', $options, $catids, $attr, 'value', 'text', $catid, $name );
-		return $parent;
+		$cat_params = array ();
+		$cat_params['ordering'] = 'ordering';
+		$cat_params['toplevel'] = 0;
+		$cat_params['sections'] = $sections;
+		$cat_params['direction'] = 1;
+		$cat_params['unpublished'] = 0;
+		$cat_params['catid'] = $catid;
+		$cat_params['action'] = 'read';
+		return JHTML::_('kunena.categorylist', $name, $catid, $options, $cat_params, $attr, 'value', 'text', $catid);
 	}
 
 	function KSelectList($name, $options=array(), $attr='', $sections=false, $id='', $selected=0) {
-		$kunena_db = &JFactory::getDBO ();
-		$list = JJ_categoryArray ();
+		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
 
-		$preoptions = count($options);
-		foreach ( $list as $item ) {
-			if (!$preoptions && !$selected && ($sections || !$item->section)) {
-				$selected = $item->id;
-			}
-			$options [] = JHTML::_ ( 'select.option', $item->id, $item->treename, 'value', 'text', !$sections && $item->section);
-		}
-
+		$cat_params = array ();
+		$cat_params['ordering'] = 'ordering';
+		$cat_params['toplevel'] = 1;
+		$cat_params['sections'] = $sections;
+		$cat_params['direction'] = 1;
+		$cat_params['unpublished'] = 0;
+		$cat_params['catid'] = 0;
+		$cat_params['action'] = 'read';
 		if (!$id) $id = $name;
-		$catsList = JHTML::_ ( 'select.genericlist', $options, $name, $attr, 'value', 'text', $selected, $id );
-		return $catsList;
+		return JHTML::_('kunena.categorylist', $name, 0, $options, $cat_params, $attr, 'value', 'text', $selected, $id);
 	}
 
 	function showBulkActionCats($disabled = 1) {
@@ -627,7 +421,8 @@ class CKunenaTools {
 				}
 
 				// Last but not least update forum stats
-				CKunenaTools::reCountBoards();
+				kimport('categories');
+				KunenaCategory::recount ();
 
 				// Activity integration
 				$activity = KunenaFactory::getActivityIntegration();
@@ -830,160 +625,6 @@ class CKunenaTools {
 
     } // end of class
 
-function JJ_categoryArray($admin=0) {
-    $kunena_db = &JFactory::getDBO();
-    $app = JFactory::getApplication();
-
-    // get a list of the menu items
-	$query = "SELECT * FROM #__kunena_categories";
-	if($app->isSite()) {
-		$kunena_session =& KunenaFactory::getSession();
-		if ($kunena_session && $kunena_session->allowed != 'na') {
-			$query .= " WHERE id IN ($kunena_session->allowed)";
-		} else {
-			$query .= " WHERE pub_access='0' AND published='1'";
-		}
-	}
-    $query .= " ORDER BY ordering, name";
-    $kunena_db->setQuery($query);
-    $items = $kunena_db->loadObjectList();
-    KunenaError::checkDatabaseError();
-    // establish the hierarchy of the menu
-    $children = array ();
-
-    // first pass - collect children
-    foreach ($items as $v) {
-        $pt = $v->parent;
-        $list = isset($children[$pt]) ? $children[$pt] : array ();
-        array_push($list, $v);
-        $children[$pt] = $list;
-        }
-
-    // second pass - get an indent list of the items
-    $array = fbTreeRecurse(0, '', array (), $children, 10, 0, 1);
-    return $array;
-    }
-
-function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=0, $type=1 ) {
-
-    if (isset($children[$id]) && $level <= $maxlevel) {
-        foreach ($children[$id] as $v) {
-            $id = $v->id;
-            if ( $type ) {
-                $pre     = '&nbsp;';
-                $spacer = '...';
-            } else {
-                $pre     = '- ';
-                $spacer = '&nbsp;&nbsp;';
-            }
-
-            if ( $v->parent == 0 ) {
-                $txt     = kunena_htmlspecialchars($v->name);
-            } else {
-                $txt     = $pre . kunena_htmlspecialchars($v->name);
-            }
-            $pt = $v->parent;
-            $list[$id] = $v;
-            $list[$id]->treename = $indent . $txt;
-            $list[$id]->children = !empty($children[$id]) ? count( $children[$id] ) : 0;
-            $list[$id]->section = ($v->parent==0);
-
-            $list = fbTreeRecurse( $id, $indent . $spacer, $list, $children, $maxlevel, $level+1, $type );
-        }
-    }
-    return $list;
-}
-
-//
-//Begin Smilies mod
-//
-function generate_smilies() {
-    $kunena_db = &JFactory::getDBO();
-    $kunena_emoticons_rowset = array ();
-
-    $inline_columns = 4;
-    $inline_rows = 5;
-
-    $kunena_db->setQuery("SELECT code, location, emoticonbar FROM #__kunena_smileys ORDER BY id");
-        $set = $kunena_db->loadAssocList();
-        KunenaError::checkDatabaseError();
-
-        $num_smilies = 0;
-        $num_iconbar = 0;
-
-        foreach ($set as $smilies) {
-            $key_exists = false;
-
-            foreach ($kunena_emoticons_rowset as $check) //checks if the smiley (location) already exists with another code
-            {
-                if ($check['location'] == $smilies['location']) {
-                    $key_exists = true;
-                    }
-                }
-
-            if ($key_exists == false) {
-                $kunena_emoticons_rowset[] = array
-                (
-                    'code' => $smilies['code'],
-                    'location' => $smilies['location'],
-                    'emoticonbar' => $smilies['emoticonbar']
-                );
-                }
-
-            if ($smilies['emoticonbar'] == 1) {
-                $num_iconbar++;
-                }
-            }
-
-        $num_smilies = count($kunena_emoticons_rowset);
-
-        if ($num_smilies) {
-            $smilies_count = min(20, $num_smilies);
-            $smilies_split_row = $inline_columns - 1;
-
-            $s_colspan = 0;
-            $row = 0;
-            $col = 0;
-            reset ($kunena_emoticons_rowset);
-
-            $cur = 0;
-
-            foreach ($kunena_emoticons_rowset as $data) {
-                if ($data['emoticonbar'] == 1) {
-                    $cur++;
-
-                    if (!($cur > $inline_rows * $inline_columns)) {
-                        if (!$col) {
-                            echo '<tr align="center" valign="middle">' . "\n";
-                            }
-
-                        echo '<td onclick="bbfontstyle(\' '
-                                 . $data['code'] . ' \',\'\')" style="cursor:pointer"><img class="btnImage" src="' . KUNENA_URLEMOTIONSPATH . $data['location'] . '" border="0" alt="' . $data['code'] . ' " title="' . $data['code'] . ' " /></td>' . "\n";
-
-                        $s_colspan = max($s_colspan, $col + 1);
-
-                        if ($col == $smilies_split_row) {
-                            $col = 0;
-                            $row++;
-                            echo "</tr>\n";
-                            }
-                        elseif ($cur == $num_iconbar && $s_colspan !== 0) {
-                            echo "<td colspan=\"" . $s_colspan . "\"></td></tr>";
-                            }
-                        else {
-                            $col++;
-                            }
-                        }
-                    }
-                }
-
-            if ($num_smilies > $inline_rows * $inline_columns) {
-                echo "<tr><td class=\"moresmilies\" colspan=\"" . $inline_columns . "\" onclick=\"javascript:dE('smilie');\" style=\"cursor:pointer\"><b>" . JText::_('COM_KUNENA_EMOTICONS_MORE_SMILIES') . "</b></td></tr>";
-                }
-            }
-        return $kunena_emoticons_rowset;
-    }
-
 function KGetArrayInts($name) {
     $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
 
@@ -1019,39 +660,3 @@ function KGetArrayReverseInts($name) {
 function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset='UTF-8') {
 	return htmlspecialchars($string, $quote_style, $charset);
 }
-
-// TODO: deprecated
-function html_entity_decode_utf8($string)
-{
-    static $trans_tbl = NULL;
-
-    user_error(__FUNCTION__.'(): Deprecated', E_USER_NOTICE);
-
-    // replace numeric entities
-    $string = preg_replace('~&#x([0-9a-f]+);~ei', 'code2utf(hexdec("\\1"))', $string);
-    $string = preg_replace('~&#([0-9]+);~e', 'code2utf(\\1)', $string);
-
-    // replace literal entities
-    if (!isset($trans_tbl))
-    {
-        $trans_tbl = array();
-
-        foreach (get_html_translation_table(HTML_ENTITIES) as $val=>$key)
-            $trans_tbl[$key] = utf8_encode($val);
-    }
-
-    return strtr($string, $trans_tbl);
-}
-
-// Returns the utf string corresponding to the unicode value (from php.net, courtesy - romans@void.lv)
-// TODO: deprecated
-function code2utf($num)
-{
-	if ($num < 128) return chr($num);
-    if ($num < 2048) return chr(($num >> 6) + 192) . chr(($num & 63) + 128);
-    if ($num < 65536) return chr(($num >> 12) + 224) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
-    if ($num < 2097152) return chr(($num >> 18) + 240) . chr((($num >> 12) & 63) + 128) . chr((($num >> 6) & 63) + 128) . chr(($num & 63) + 128);
-    return '';
-}
-
-?>

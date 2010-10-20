@@ -50,6 +50,7 @@ class KunenaApp {
 		$__kstarttime = JProfiler::getmicrotime();
 
 		kimport('error');
+		kimport('category');
 		$kunena_config = KunenaFactory::getConfig ();
 		if ($kunena_config->debug) {
 			KunenaError::initialize();
@@ -404,9 +405,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	//the only thing we can do with it is 'listcat' and nothing else
 	if ($func == "showcat") {
 		if ($catid != 0) {
-			$kunena_db->setQuery ( "SELECT parent FROM #__kunena_categories WHERE id='{$catid}'" );
-			$catParent = intval($kunena_db->loadResult ());
-			if (KunenaError::checkDatabaseError()) return;
+			$category = KunenaCategory::getInstance($catid);
+			$catParent = $category->getParent()->id;
 		}
 		if ($catid == 0 || $catParent == 0) {
 			$kunena_app->redirect ( CKunenaLink::GetCategoryURL('listcat',$catid, false) );
@@ -782,9 +782,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// PDF and RSS
 	if ($kunena_config->enablerss || $kunena_config->enablepdf) {
 		if ($catid>0) {
-			kimport('category');
 			$category = KunenaCategory::getInstance($catid);
-			if ($category->pub_access == 0 && $category->parent) $rss_params = '&amp;catid=' . (int) $catid;
+			if ($category->pub_access == 0 && $category->parent_id) $rss_params = '&amp;catid=' . (int) $catid;
 		} else {
 			$rss_params = '';
 		}

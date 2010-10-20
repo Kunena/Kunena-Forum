@@ -106,38 +106,42 @@ class KunenaAccessNoixACL extends KunenaAccess {
 			} elseif ($row->accesstype == 'noixacl') {
 				if ( in_array($row->access, $levels) )
 					$catlist[$row->id] = 1;
-			} elseif (($row->pub_access == 0)
-				or ($row->pub_access == - 1 && $userid > 0)
-				or ($row->pub_access > 0 && self::_has_rights ( $acl, $multigroups, $row->pub_access, $row->pub_recurse ))
-				or ($row->admin_access > 0 && self::_has_rights ( $acl, $multigroups, $row->admin_access, $row->admin_recurse ))) {
+			} elseif ($row->pub_access == 0 ||
+				($userid > 0 && (
+				($row->pub_access == - 1)
+				|| ($row->pub_access > 0 && self::_has_rights ( $multigroups, $row->pub_access, $row->pub_recurse ))
+				|| ($row->admin_access > 0 && self::_has_rights ( $multigroups, $row->admin_access, $row->admin_recurse ))))) {
 				$catlist[$row->id] = 1;
 			}
 		}
 		return $catlist;
 	}
 
-	protected function _has_rights(&$acl, $multigroups, $access, $recurse) {
-		if (in_array($access, $multigroups))
+	protected function _has_rights($usergroups, $groupid, $recurse) {
+		if (in_array($groupid, $usergroups))
 			return 1;
-		if ($recurse) {
-			$childs = (array) $acl->get_group_children ( $access, 'ARO', 'RECURSE' );
-			if (array_intersect($childs, $multigroups)) return 1;
+		if ($usergroups && $recurse) {
+			$childs = $this->_get_groups($groupid, $recurse);
+			if (array_intersect($childs, $usergroups))
+				return 1;
 		}
 		return 0;
 	}
 
 	protected function _get_groups($groupid, $recurse) {
-		$groups = array();
-		if ($groupid > 0) {
-			if ($recurse) {
-				$acl = JFactory::getACL ();
-				$groups = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
-			}
-			$groups [] = $groupid;
-		}
-		return $groups;
-	}
+		static $groups = array();
 
+		if (isset ($groups[$groupid]))
+			return $groups[$groupid];
+
+		if ($groupid > 0 && $recurse) {
+			$acl = JFactory::getACL ();
+			$groups[$groupid] = $acl->get_group_children ( $groupid, 'ARO', 'RECURSE' );
+			$groups[$groupid][] = $groupid;
+			return $groups[$groupid];
+		}
+		return array($groupid);
+	}
 	protected function _get_subscribers($catid, $thread) {
 		$db = JFactory::getDBO ();
 		$query ="SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$thread}

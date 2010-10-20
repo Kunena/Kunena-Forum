@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+20-October-2010 Xillibit
+# [#22950] Hide preview buttons for guest users
+^ [#16390] Change "Mark all forums read" into "Mark all topics read"
+^ [#16390] Fix some typos in french translations (fr-FR) (thanks lavsteph)
+
 17-October-2010 Xillibit
 # [#22919] Some update on latestx class to make working correctly the module klatest
 ^ [#22907] Add commas after each user name in Who Is Online box

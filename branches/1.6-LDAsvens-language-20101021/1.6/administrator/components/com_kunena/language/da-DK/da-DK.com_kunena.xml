@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id$ -->
+<install version="1.5" client="both" type="language" method="upgrade">
+   <name>Dansk (Danish)</name>
+   <tag>da-DK</tag>
+   <version>1.6</version>
+   <creationDate>2010-09-12</creationDate>
+   <author>Martiinkolle</author>
+   <authorEmail>martin@kollerups.dk</authorEmail>
+   <authorUrl>www.joomla.dk</authorUrl>
+   <copyright></copyright>
+   <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+   <description>Dansk sprogfil til Kunena  1.6</description>
+   <administration>
+      <files folder="admin">
+         <filename>da-DK.com_kunena.ini</filename>
+		 <filename>da-DK.com_kunena.install.ini</filename>
+      </files>
+   </administration>
+   <site>
+      <files folder="site">
+         <filename>da-DK.com_kunena.ini</filename>
+		 <filename>da-DK.com_kunena.tpl_default.ini</filename>
+		 <filename>da-DK.com_kunena.tpl_example.ini</filename>
+      </files>
+   </site>
+   <params/>
+</install>

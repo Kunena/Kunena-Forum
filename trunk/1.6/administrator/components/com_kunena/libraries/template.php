@@ -80,14 +80,14 @@ class KunenaTemplate extends JObject
 						JHTML::addIncludePath ( JPATH_PLUGINS . DS . 'system' . DS . 'mtupgrade' );
 					} elseif ($me->isAdmin()) {
 						// TODO: translate
-						$app->enqueueMessage ( 'Kunena: You do not have <em>System - Mootools Upgrade</em> plugin.', 'notice' );
-						$app->enqueueMessage ( 'Many features, including Quick Reply and BBCode editor may be broken.', 'notice' );
+						$app->enqueueMessage ( 'Kunena: You do not have the <em>System - MooTools Upgrade</em> plug-in.', 'notice' );
+						$app->enqueueMessage ( 'Many features, including Quick Reply and the BBCode editor, may be broken.', 'notice' );
 					}
 				} elseif ($me->isAdmin()) {
 					// TODO: translate
-					$app->enqueueMessage ( 'Kunena: You have a plugin that uses Mootools 1.1 or custom version of JHTMLBehavior.', 'notice' );
-					$app->enqueueMessage ( 'Many features, including Quick Reply and BBCode editor may be broken.', 'notice' );
-					$app->enqueueMessage ( 'Please enable <em>System - Mootools Upgrade</em> plugin.', 'notice' );
+					$app->enqueueMessage ( 'Kunena: You have a plug-in that uses MooTools 1.1 or a custom version of JHTMLBehavior.', 'notice' );
+					$app->enqueueMessage ( 'Many features, including Quick Reply and the BBCode editor, may be broken.', 'notice' );
+					$app->enqueueMessage ( 'Please enable the <em>System - MooTools Upgrade</em> plug-in.', 'notice' );
 				}
 			}
 		}

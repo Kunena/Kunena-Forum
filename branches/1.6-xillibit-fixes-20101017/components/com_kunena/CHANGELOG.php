@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+21-October-2010 Xillibit
++ [#22971] AUP integration adds points on delete message
+# [#22972] Issue metadesc isn't cuted with function which support uft8
+
 20-October-2010 Xillibit
 # [#22950] Hide preview buttons for guest users
 ^ [#16390] Change "Mark all forums read" into "Mark all topics read"

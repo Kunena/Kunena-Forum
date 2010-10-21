@@ -688,7 +688,7 @@ class CKunenaPosting {
 
 		// Activity integration
 		$activity = KunenaFactory::getActivityIntegration();
-		$activity->onAfterDelete($this);
+		$activity->onAfterDelete($this, $this->_my->id);
 
 		return empty ( $this->errors );
 	}

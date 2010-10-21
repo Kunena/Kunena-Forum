@@ -43,6 +43,11 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 			AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
 		}
 	}
+	
+	public function onAfterDelete($message, $userid) {
+		$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $userid );
+		if ( $aupid )  AlphaUserPointsHelper::newpoints( 'plgaup_delete_post', $aupid);		
+	}
 
 	public function onAfterThankyou($thankyoutargetid, $username) {
 		$info = (JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . $username);

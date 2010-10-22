@@ -30,6 +30,8 @@ if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
 } else if (file_exists ( KUNENA_ABSTMPLTPATH .DS. 'css' .DS. 'kunena.forum.css' )){
 	// Load css from the current template
 	CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
+	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.skinner.css' );
+
 } else {
 	// Load css from default template
 	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.forum-min.css' );
@@ -42,7 +44,7 @@ $cssurl = JURI::base() . "components/com_kunena/template/default/css";
 <?php
 $mediaurl = JURI::base() . "components/com_kunena/template/default/media";
 $styles = <<<EOF
-	/* Kunena Custom CSS */
+	/* Kunena Custom CSS 
 	#Kunena div.kheader { background: {$this->params->get('forumHeadercolor', '#5388B4')} }
 	#Kunena #ktop { border-color: {$this->params->get('forumHeadercolor', '#5388B4')} }
 	#Kunena #ktop span.ktoggler { background: {$this->params->get('forumHeadercolor', '#5388B4')} }
@@ -56,7 +58,7 @@ $styles = <<<EOF
 	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$this->params->get('profileIconset', 'default')}/default.png"); }
 	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$this->params->get('buttonIconset', 'default')}/default.png"); }
 	#Kunena #kbbcode-toolbar li a,#Kunena #kattachments a { background-image:url("{$mediaurl}/iconsets/editor/{$this->params->get('editorIconset', 'default')}/default.png"); }
-	/* End of Kunena Custom CSS */
+	 End of Kunena Custom CSS */
 EOF;
 
 $document->addStyleDeclaration($styles);

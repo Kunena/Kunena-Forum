@@ -38,7 +38,6 @@ Kunena 1.6.1-DEV
 + [#22979] Added Skinner override in default template CSS folder (needs to be hooked up in params)
 + [#22977] Added markup for color coding of write status (needs the conditional reworked to work)
 
-
 19-October-2010 fxstein
 ^ [#16390] Updated it-IT: Fixed incorrect date/time format
 

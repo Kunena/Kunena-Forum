@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC3
 
+22-October-2010 Xillibit
++ [#20084] Added el-GR translation (thanks mijalis)
+
 18-October-2010 fxstein
 ^ [#20084] Minimum Kunena verison number increased to 1.6.0
 # [#20084] Fixed install file for new languages

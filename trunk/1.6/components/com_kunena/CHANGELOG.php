@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+22-October-2010 Severdia
++ [#22979] Added Skinner parameter in default template
+
 21-October-2010 Severdia
 # [#22979] Removed duplicate property in CSS
 + [#22979] Added Skinner override in default template CSS folder (needs to be hooked up in params)

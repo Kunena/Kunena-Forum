@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+23-October-2010 Xillibit
+# [#22971] Use new namming convention for aup plg and use differents if an old AUP verison is installed
+
 21-October-2010 Xillibit
 + [#22971] AUP integration adds points on delete message
 # [#22972] Issue metadesc isn't cuted with function which support uft8

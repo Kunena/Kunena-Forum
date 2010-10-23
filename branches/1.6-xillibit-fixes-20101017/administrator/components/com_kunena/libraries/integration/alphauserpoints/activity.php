@@ -24,11 +24,16 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		$this->priority = 50;
 		$this->_config = KunenaFactory::getConfig ();
 	}
+	
+	private function _getAUPversion(){
+		return AlphaUserPointsHelper::getAupVersion();
+	}
 
 	public function onAfterPost($message) {
 		require_once KPATH_SITE.'/lib/kunena.link.class.php';
 		$datareference = '<a href="' . CKunenaLink::GetMessageURL ( $message->get ( 'id' ), $message->get ( 'catid' ) ) . '">' . $message->get ( 'subject' ) . '</a>';
-		AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $message->get ( 'id' ), $datareference );
+		if ( $this->_getAUPversion() < '1.5.12' ) AlphaUserPointsHelper::newpoints ( 'plgaup_newtopic_kunena', '', $message->get ( 'id' ), $datareference );
+		elseif ( $this->_getAUPversion() >= '1.5.12' ) AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_create', '', $message->get ( 'id' ), $datareference );
 	}
 
 	public function onAfterReply($message) {
@@ -37,22 +42,30 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		if ($this->_config->alphauserpointsnumchars > 0) {
 			// use if limit chars for a response
 			if (JString::strlen ( $message->get ( 'message' ) ) > $this->_config->alphauserpointsnumchars) {
-				AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
+				if ( $this->_getAUPversion() < '1.5.12' ) AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
+				elseif ( $this->_getAUPversion() >= '1.5.12' ) AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', '', $message->get ( 'id' ), $datareference );
 			}
 		} else {
-			AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
+			if ( $this->_getAUPversion() < '1.5.12' ) AlphaUserPointsHelper::newpoints ( 'plgaup_reply_kunena', '', $message->get ( 'id' ), $datareference );
+			elseif ( $this->_getAUPversion() >= '1.5.12' ) AlphaUserPointsHelper::newpoints ( 'plgaup_kunena_topic_reply', '', $message->get ( 'id' ), $datareference );
 		}
 	}
 	
 	public function onAfterDelete($message, $userid) {
 		$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $userid );
-		if ( $aupid )  AlphaUserPointsHelper::newpoints( 'plgaup_delete_post', $aupid);		
+		if ( $aupid ) {
+			if ( $this->_getAUPversion() < '1.5.12' ) AlphaUserPointsHelper::newpoints( 'plgaup_delete_post_kunena', $aupid);
+			elseif ( $this->_getAUPversion() >= '1.5.12' ) AlphaUserPointsHelper::newpoints( 'plgaup_kunena_message_delete', $aupid);		
+		}		
 	}
 
 	public function onAfterThankyou($thankyoutargetid, $username) {
 		$info = (JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . $username);
 		$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $thankyoutargetid );
-		if ( $aupid )  AlphaUserPointsHelper::newpoints('plgaup_thankyou', $aupid, '', $info);
+		if ( $aupid ) {
+			if ( $this->_getAUPversion() < '1.5.12' ) AlphaUserPointsHelper::newpoints('plgaup_thankyou_kunena', $aupid, '', $info);
+			elseif ( $this->_getAUPversion() >= '1.5.12' ) AlphaUserPointsHelper::newpoints('plgaup_kunena_message_thankyou', $aupid, '', $info);
+		}  
 	}
 
 	function escape($var) {

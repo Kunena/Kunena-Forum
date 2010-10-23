@@ -33,7 +33,10 @@ Legend:
 
 Kunena 1.6.1-DEV
 
-22-October-2010 Severdia
+23-October-2010 fxstein
++ [#22979] Merge Skinner into default template
+
+23-October-2010 Severdia
 ^ [#22979] First clean up pass on skinner CSS file
 
 23-October-2010 Matias

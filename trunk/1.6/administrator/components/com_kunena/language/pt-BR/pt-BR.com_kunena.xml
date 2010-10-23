@@ -27,7 +27,6 @@
 			<filename>pt-BR.com_kunena.ini</filename>
 			<filename>pt-BR.com_kunena.tpl_default.ini</filename>
 			<filename>pt-BR.com_kunena.tpl_example.ini</filename>
-			<filename>pt-BR.com_kunena.tpl_skinner.ini</filename>
 		</files>
 	</site>
 </install>

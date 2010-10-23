@@ -37,10 +37,11 @@
 		<param name="frontstatsHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_FRONTSTATS_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 		<param name="whoisonlineHeadercolor" type="text" default="" label="COM_KUNENA_TEMPLATE_WHOISONLINE_HEADER_BACKGROUND" description="COM_KUNENA_TEMPLATE_HEADER_BACKGROUND_COLOR_DESC" />
 		
-		<param name="skinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
-	        <option value="0">COM_KUNENA_OFF</option>
-       		<option value="1">COM_KUNENA_ON</option>
+		<param name="enableSkinner" type="radio" default="0" label="COM_KUNENA_TEMPLATE_SKINNER" description="COM_KUNENA_TEMPLATE_SKINNER_DESC">
+			<option value="0">COM_KUNENA_NO</option>
+			<option value="1">COM_KUNENA_YES</option>
 		</param>
+
 		<param name="templatebyText" type="hidden" default="" />
 		<param name="templatebyName" type="hidden" default="" />
 		<param name="templatebyLink" type="hidden" default="" />

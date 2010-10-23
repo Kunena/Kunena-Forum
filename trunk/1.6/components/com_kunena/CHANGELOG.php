@@ -34,6 +34,7 @@ Legend:
 Kunena 1.6.1-DEV
 
 23-October-2010 fxstein
+^ [#22979] Default template version and settings updated
 + [#22979] Merge Skinner into default template
 
 23-October-2010 Severdia

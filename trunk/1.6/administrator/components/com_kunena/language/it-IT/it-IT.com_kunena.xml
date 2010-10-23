@@ -4,10 +4,10 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Italian</name>
 	<tag>it-IT</tag>
-	<creationDate>unknown</creationDate>
+	<creationDate>19-10-2010</creationDate>
 	<version>unknown</version>
 	<build>unknown</build>
-	<author>unknown</author>
+	<author>Francesco De Giorgio - ohifra</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>
 	<copyright>(C) 2010 unknown</copyright>
@@ -16,9 +16,9 @@
 
 	<administration>
 		<files folder="admin">
-			<!-- filename>it-IT.com_kunena.ini</filename -->
-			<!-- filename>it-IT.com_kunena.install.ini</filename -->
-			<!-- filename>it-IT.com_kunena.menu.ini</filename -->
+			<filename>it-IT.com_kunena.ini</filename>
+			<filename>it-IT.com_kunena.install.ini</filename>
+			<filename>it-IT.com_kunena.menu.ini</filename>
 		</files>
 	</administration>
 

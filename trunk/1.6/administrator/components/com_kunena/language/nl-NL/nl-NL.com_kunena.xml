@@ -4,7 +4,7 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Dutch</name>
 	<tag>nl-NL</tag>
-	<creationDate>2010-10-02</creationDate>
+	<creationDate>2010-10-21</creationDate>
 	<version>1.6</version>
 	<build>????</build>
 	<author>Jelle Kok</author>
@@ -26,6 +26,7 @@
 			<filename>nl-NL.com_kunena.ini</filename>
 			<filename>nl-NL.com_kunena.tpl_default.ini</filename>
 			<filename>nl-NL.com_kunena.tpl_example.ini</filename>
+			<filename>nl-NL.com_kunena.tpl_skinner.ini</filename>
 		</files>
 	</site>
 </install>

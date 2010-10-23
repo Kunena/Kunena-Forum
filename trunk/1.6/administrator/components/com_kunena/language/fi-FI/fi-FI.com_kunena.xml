@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Finnish (Suomi)</name>
 	<tag>fi-FI</tag>
-	<creationDate>2010-10-04</creationDate>
-	<version>1.6.0</version>
-	<build>3620</build>
+	<creationDate>2010-10-23</creationDate>
+	<version>1.6.1-DEV</version>
+	<build>3724</build>
 	<author>Sami Haaranen</author>
 	<authorEmail>mortti@joomlaportal.fi</authorEmail>
 	<authorUrl>www.joomlaportal.fi</authorUrl>
@@ -27,6 +27,7 @@
 			<filename>fi-FI.com_kunena.ini</filename>
 			<filename>fi-FI.com_kunena.tpl_default.ini</filename>
 			<filename>fi-FI.com_kunena.tpl_example.ini</filename>
+			<filename>fi-FI.com_kunena.tpl_skinner.ini</filename>
 		</files>
 	</site>
 </install>

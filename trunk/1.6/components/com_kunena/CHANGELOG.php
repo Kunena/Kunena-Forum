@@ -35,11 +35,20 @@ Kunena 1.6.1-DEV
 
 23-October-2010 Matias
 ^ [#15886] Merged revisions 3741-3760 from /branches/1.6-xillibit-fixes-20101017
-^ [#15886] Merged revisions 3761-3765 from /branches/1.6-LDAsvens-language-20101021
+^ [#15886] Merged revisions 3761-3772 from /branches/1.6-LDAsvens-language-20101021
 ^ [#15886] Merged revision 3757 from /branches/1.6.1-810-bugfixes-19-10-2010
+
+23-October-2010 svens (LDA)
+^ [#22975] Updated fi-FI (thanks Mortti), it-IT (thanks ohifra and scherman83)
+# [#22975] Fix da-DK language comments from # to ;
++ [#22975] Add new languages to build.xml
 
 22-October-2010 Severdia
 + [#22979] Added Skinner parameter in default template
+
+21-October-2010 svens (LDA)
+^ [#22975] Updated tr-TR (thanks Tolga), th-TH (drlovecat), hu-HU (pedrohsi) , es-ES (Neon26), ca-ES  (Neon26), fi-FI (Mortti)
++ [#22975] added pt-PT (thanks Aurélio Vieira and Mickael Cavaco), nb-NO (Joomla! i Norge), ja-JP (Masato Sato)
 
 21-October-2010 Xillibit
 + [#22971] AUP integration adds points on delete message
@@ -54,8 +63,8 @@ Kunena 1.6.1-DEV
 # [#22627] Many updates on nl-NL translation
 
 20-October-2010 svens (LDA)
-^ [#22975] Updated de-DE, it-IT, pt-BR, tr-TR, th-TH, hu-HU, es-ES, ca-ES, fi-FI
-+ [#22975] added pt-PT, nb-NO, ja-JP, da-DK, pt-PT, sv-SE
+^ [#22975] Updated de-DE, it-IT, pt-BR
++ [#22975] added da-DK, pt-PT, sv-SE
 
 20-October-2010 Xillibit
 # [#22950] Hide preview buttons for guest users

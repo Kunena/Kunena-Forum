@@ -33,9 +33,17 @@ Legend:
 
 Kunena 1.6.1-DEV
 
-20-October-2010 svens (LDA)
-^ [#22975] Updated tr-TR, th-TH, hu-HU, es-ES, ca-ES, fi-FI
-+ [#22975] added pt-PT, nb-NO, ja-JP
+23-October-2010 svens (LDA)
+^ [#22975] updated fi-FI (thanks Mortti)
+^ [#22975] updated nl-NL (thanks 810)
+# [#22975] tr-TR xml
+^ [#22975] updated it-IT (thanks ohifra and scherman83)
+# [#22975] da-DK # to ;
++ [#22975] add new language to build.xml
+
+21-October-2010 svens (LDA)
+^ [#22975] Updated tr-TR (thanks Tolga), th-TH (thanks drlovecat), hu-HU (thanks pedrohsi) , es-ES (thanks Neon26), ca-ES  (thanks Neon26), fi-FI  (thanks Mortti)
++ [#22975] added pt-PT (thanks Aurélio Vieira and Mickael Cavaco), nb-NO (thanks Joomla! i Norge), ja-JP (thanks Masato Sato)
 
 20-October-2010 svens (LDA)
 ^ [#22975] Updated de-DE, it-IT, pt-BR, tr-TR

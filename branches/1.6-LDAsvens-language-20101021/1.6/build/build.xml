@@ -228,6 +228,7 @@
 		<mkdir dir="${build_dir}/archive" />
 		<language tag="ar-AA" />
 		<language tag="ca-ES" />
+		<language tag="da-DK" />
 		<language tag="de-DE" />
 		<language tag="el-GR" />
 		<language tag="en-GB" />
@@ -236,14 +237,18 @@
 		<language tag="fr-FR" />
 		<language tag="hu-HU" />
 		<language tag="it-IT" />
+		<language tag="ja-JP" />
 		<language tag="lt-LT" />
 		<language tag="mk-MK" />
+		<language tag="nb-NO" />
 		<language tag="nl-NL" />
 		<language tag="pl-PL" />
 		<language tag="pt-BR" />
+		<language tag="pt-PT" />
 		<language tag="ru-RU" />
 		<language tag="sr-RS" />
 		<language tag="sr-YU" />
+		<language tag="sv-SE" />
 		<language tag="th-TH" />
 		<language tag="tr-TR" />
 		<language tag="vi-VN" />

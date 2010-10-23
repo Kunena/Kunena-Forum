@@ -505,7 +505,7 @@ class CKunenaView {
 
 		// limit to 185 characters - google will cut off at ~150
 		if (strlen($metaDesc) > 185){
-			$metaDesc = rtrim(substr($metaDesc, 0, 182)).'...';
+			$metaDesc = rtrim(JString::substr($metaDesc, 0, 182)).'...';
 		}
 
 		$metaDesc = htmlspecialchars($metaDesc);

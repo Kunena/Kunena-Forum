@@ -33,13 +33,25 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+23-October-2010 Matias
+^ [#15886] Merged revisions 3741-3760 from /branches/1.6-xillibit-fixes-20101017
+
 22-October-2010 Severdia
 + [#22979] Added Skinner parameter in default template
+
+21-October-2010 Xillibit
++ [#22971] AUP integration adds points on delete message
+# [#22972] Issue metadesc isn't cut with function which support uft8
 
 21-October-2010 Severdia
 # [#22979] Removed duplicate property in CSS
 + [#22979] Added Skinner override in default template CSS folder (needs to be hooked up in params)
 + [#22977] Added markup for color coding of write status (needs the conditional reworked to work)
+
+20-October-2010 Xillibit
+# [#22950] Hide preview buttons for guest users
+^ [#16390] Change "Mark all forums read" into "Mark all categories read"
+^ [#16390] Fix some typos in french translations (fr-FR) (thanks lavsteph)
 
 19-October-2010 fxstein
 ^ [#16390] Updated it-IT: Fixed incorrect date/time format
@@ -52,6 +64,11 @@ Kunena 1.6.1-DEV
 # [#22713] Improve routing: Add support for default values to get rid fields with default values in URI
 # [#22713] Improve routing (No Menu): Do not redirect into another location, if there's nowhere to go
 # [#22713] Improve routing: remove &view field also when there's no Itemid
+
+17-October-2010 Xillibit
+# [#22919] Some update on latestx class to make working correctly the module klatest
+^ [#22907] Add commas after each user name in Who Is Online box
+* [#22920] Remove confidential information from RSS feed
 
 17-October-2010 fxstein
 # [#22713] Fix bug in route.php with illegal array index

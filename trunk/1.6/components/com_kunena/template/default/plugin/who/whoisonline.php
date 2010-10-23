@@ -71,19 +71,22 @@ if ($this->config->showwhoisonline)
 				</div>
 				<div>
 					<?php
+					$onlineList = array();
+					$hiddenList = array();
 					foreach ($users as $user) {
-						if ( $user->showOnline > 0 ) echo CKunenaLink::GetProfileLink ( intval($user->id) ) .' &nbsp;';
+						if ( $user->showOnline > 0 ) {
+							$onlineList[] = CKunenaLink::GetProfileLink ( intval($user->id) );
+						} else {
+							$hiddenList[] = CKunenaLink::GetProfileLink ( intval($user->id) );
+						}
 					}
-					if (CKunenaTools::isModerator($this->my->id)) : ?>
+					echo implode (', &nbsp;', $onlineList);
+					if (!empty($hiddenList) && CKunenaTools::isModerator($this->my->id)) : ?>
 						<br />
 						<span class="khidden-ktitle ks"><?php echo JText::_('COM_KUNENA_HIDDEN_USERS'); ?>: </span>
 						<br />
-						<?php
-						foreach ($users as $user) {
-							if ( $user->showOnline == 0 ) echo CKunenaLink::GetProfileLink ( intval($user->id) ) . ' &nbsp;';
-						}
-					endif;
-					?>
+						<?php echo implode (', &nbsp;', $hiddenList); ?>
+					<?php endif; ?>
 				</div>
 				<div class="kwholegend ks">
 					<span><?php echo JText::_('COM_KUNENA_LEGEND'); ?> :: </span>&nbsp;

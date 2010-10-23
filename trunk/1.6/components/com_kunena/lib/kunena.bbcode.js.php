@@ -352,6 +352,7 @@ kbbcode.addFunction('Module', function() {
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator6'});
 
+<?php if ($this->my->id != 0) { ?>
 kbbcode.addFunction('PreviewBottom', function() {
 	kToggleOrSwapPreview("kbbcode-preview-bottom");
 }, {'id': 'kbbcode-previewbottom-button',
@@ -368,6 +369,8 @@ kbbcode.addFunction('PreviewRight', function() {
 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator7'});
+
+<?php } ?>
 
 kbbcode.addFunction('Help', function() {
 	window.open('http://docs.kunena.com/index.php/bbcode');

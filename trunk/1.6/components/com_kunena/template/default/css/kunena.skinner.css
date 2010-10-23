@@ -18,7 +18,7 @@
 * 
 /* --------------------------------------------------------
 
-	This is the Skinner override file for the default 
+	This is the skinner override file for the default 
 	Kunena template. Activating Skinner in the template
 	parameters will load this file and make it adopt
 	the colors of the main site template.
@@ -30,20 +30,16 @@
 #Kunena th,
 #Kunena div,
 #Kunena p,
-#Kunena span {
+#Kunena span,
+#Kunena .knewchar,
+#Kunena #ktab a span {
 	font-family: inherit;
-}
-#Kunena .divider {
-	color: inherit;
-	/*color:#999999;*/
 }
 #Kunena a:link,
 #Kunena a:visited,
 #Kunena a:active {color: inherit !important;}
 #Kunena a:hover {color: inherit !important;text-decoration: underline;}
-#Kunena .knewchar {
-	font-family: inherit;
-}
+
 #Kunena a.kicon-button:hover {text-decoration: none;}
 
 #Kunena table.kmsg {
@@ -59,144 +55,89 @@
 #Kunena .kblock div.kheader {
 	border-bottom:2px solid rgba(0, 0, 0, 0.2);
 	color: inherit;
-	/* border-bottom:2px solid #D9D9D9;
-	color: #FFFFFF; */
-}
-#Kunena div.kblock div.ktitle h1,
-#Kunena div.kblock div.ktitle h2 {
-	color: inherit;
-	/* color: #FFFFFF; */ 
 }
 #Kunena div.kblock div.kbody {
 	background: transparent;
 	border-color: rgba(0, 0, 0, 0.2);
-	/* border-color:#BFC3C6; */
 }
 #Kunena div.kblock div.khelprulescontent,
-#Kunena div.kblock div.kfheadercontent {
-	/*border: 1px solid #BFC3C6;
-	background: #FFFFFF;
-	color: #000000;*/
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	background-color: rgba(0, 0, 0, 0.01);
-	color: inherit;
-}
-#Kunena div.kblock div.khelprulesjump {	
-	/* border: 1px solid #BFC3C6;
-	background: #FFFFFF;
-	color: #000000; */
+#Kunena div.kblock div.kfheadercontent,
+#Kunena div.kblock div.khelprulesjump {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background-color: rgba(0, 0, 0, 0.01);
 	color: inherit;
 }
 #Kunena div.kblock div.kactions {
-	/* background: #737373;
-	color:#FFFFFF; */
 	background: transparent;
 	color: inherit;
 }
-#Kunena div.kblock div.kactions a {
-	/* color:#FFFFFF; */
-	color: inherit;
-}
 #Kunena tr.krow1 td {
-	/* background: #F2F1EE; */
 	background-color: rgba(44, 44, 44, 0.1);
 }
 #Kunena tr.krow2 td {
 	background-color: rgba(44, 44, 44, 0.05);
-	/* background: #FFFFFF; */
 }
 #Kunena tr.ksth {
-	/* background: #737373;
-	color: #fff; 
-	font-family: Arial, Helvetica, sans-serif;
-	*/
 	color: inherit;
 	font-family: inherit;
 	background: transparent;
 }
 #Kunena .klatest-avatar,
 #Kunena .ktopic-latest-post-avatar {
-	/* border: 1px solid #BFC3C6; */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 }
 #Kunena td.kcol-first {
 	border-left: none;
-	/* border-bottom: 1px solid #BFC3C6; */
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+#Kunena td.kcol-last,
 #Kunena td.kcol-mid {
-	/* border-left: 1px solid #BFC3C6;
-	border-bottom: 1px solid #BFC3C6; */
-	border-left: 1px solid rgba(0, 0, 0, 0.1);
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-#Kunena td.kcol-last {
-	/* border-left: 1px solid #BFC3C6;
-	border-bottom: 1px solid #BFC3C6; */
 	border-left: 1px solid rgba(0, 0, 0, 0.1);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 #Kunena #ktop {
-	/* color: #000000; */
 	color: inherit;
 	border-color: rgba(0, 0, 0, 0.2);
 }
 #Kunena #ktab a {
-	/* background-color: #737373; */
 	background-color: rgba(0,0,0,0.15)
 }
 #Kunena #ktab a:hover {
 	background-color: rgba(0,0,0,0.25)
 }
 #Kunena #ktab a span {
-	/* font-family: Arial, Helvetica, sans-serif; */
-	font-family: inherit;
-}
-#Kunena #ktab a span {
-	/* font-family: Arial, Helvetica, sans-serif;
-	color: #FFFFFF; */
 	font-family: inherit;
 	color: inherit;
 }
+#Kunena .divider,
+#Kunena div.kblock div.ktitle h1,
+#Kunena div.kblock div.ktitle h2,
+#Kunena div.kblock div.kactions a,
 #Kunena #ktab a:hover span,
 #Kunena #ktab li.Kunena-item-active a span	{
-	/* color: #FFFFFF; */
 	color: inherit;
 }
 #Kunena select,
 #Kunena select:focus,
 #Kunena select:hover {
-	/* border: 1px solid #999999;
-	color: #000000; */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	color: inherit;
 }
 #Kunena option {
 	background-color: rgba(0, 0, 0, 0.01);
-	background: none repeat scroll 0 0;
-	/* background: #FFFFFF none repeat scroll 0 0;
-	color: #000000; */
+	background: none;
 	color: inherit;
 }
-
 #Kunena .button,
 #Kunena .kbutton {
 	border: 1px solid rgba(0, 0, 0, 0.2);
-	/* border: 1px solid #999999;
-	background: #F2F1EE none repeat scroll 0 0;
-	color: #000000; */
 	color: inherit;
 	background-color: rgba(0, 0, 0, 0.05);
 }
-
 #Kunena .kbutton-back {
-	/* color: #000000; */
 	color: inherit;
 }
 #Kunena input.kinput {
-	/* border: 1px solid #999999; */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 }
 #Kunena .kbutton:hover,
@@ -204,389 +145,178 @@
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	color: inherit;
 	background-color: rgba(0, 0, 0, 0.15);
-	/* border: 1px solid #5388B4;
-	background: #609FBF none repeat scroll 0 0;
-	color: #FFFFFF; */
 }
+#Kunena .klist-actions-bottom,
 #Kunena .klist-actions {
 	background-color: rgba(0, 0, 0, 0.01);
 	border: 1px solid rgba(0, 0, 0, 0.2);
-	/*
-	background-color: #FFFFFF;
-	color: #000000;
-	border: 1px solid #BFC3C6;
-	*/
-	color: inherit;
-}
-#Kunena .klist-actions-bottom {
-	background-color: rgba(0, 0, 0, 0.01);
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	/*
-	background-color: #FFFFFF;
-	color: #000000;
-	border: 1px solid #BFC3C6;
-	*/
 	color: inherit;
 }
 #Kunena .klist-pages {
 	border-left: 1px solid rgba(0, 0, 0, 0.2);
-	/* 
-	border-left: 1px solid #BFC3C6; 
-	font-family: Arial, Helvetica, sans-serif;
-	*/
 	color: #666666;
 	font-family: inherit;
 }
-#Kunena .klist-times {
-	border-left: 1px solid rgba(0, 0, 0, 0.2);
-	/* border-left: 1px solid #BFC3C6; */
-}
+#Kunena .klist-times
 #Kunena .klist-actions-forum {
 	border-left: 1px solid rgba(0, 0, 0, 0.2);
-	/* border-left: 1px solid #BFC3C6; */
 }
 #Kunena .klist-pages-all {
 	border-left: 1px solid rgba(0, 0, 0, 0.2);
-	/*
-	border-left: 1px solid #BFC3C6;
-	font-family: Arial, Helvetica, sans-serif;
-	*/
 	font-family: inherit;
 }
+#Kunena .klist-jump-all,
 #Kunena .klist-times-all {
 	border-left: 1px solid rgba(0, 0, 0, 0.2);
-	/* border-left: 1px solid #BFC3C6; */
 }
-
-#Kunena .klist-jump-all {
-	border-left: 1px solid rgba(0, 0, 0, 0.2);
-	/* border-left: 1px solid #BFC3C6; */
-}
-#Kunena .klist-top {
-	background-color: rgba(0, 0, 0, 0.01);
-	background: none;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	/* background: #FFFFFF none;
-	border: 1px solid #BFC3C6; */
-}
-
+#Kunena .klist-top,
 #Kunena .klist-bottom {
 	background-color: rgba(0, 0, 0, 0.01);
-	background:none repeat scroll 0 0;
+	background:none;
 	border:1px solid rgba(0, 0, 0, 0.2);
-	/*
-	background:none repeat scroll 0 0 #FFFFFF;
-	border:1px solid #BFC3C6;
-	*/
 }
 #Kunena .klist-markallcatsread {
-	/*
-	border: 1px solid #BFC3C6;
-	background: #FFFFFF;
-	*/
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background-color: rgba(0, 0, 0, 0.01);
 }
 #Kunena .klist-categories {
 	border-left: 1px solid rgba(0, 0, 0, 0.2);
-	/* border-left: 1px solid #BFC3C6; */
 }
 #Kunena .kpagination a {
 	border:solid 1px rgba(0, 0, 0, 0.2);
-	/* border:solid 1px #5388B4;
-	background: #ffffff;
-	*/
 }
 #Kunena .kpagination .active {
-	/* border:solid 1px #5388B4;
-	background:#5388B4;
-	color:#FFFFFF; */
 	border:solid 1px rgba(0, 0, 0, 0.2);
 	background:rgba(0,0,0,.1);
 	color: inherit;
-}
-#Kunena .kpagination a:link,
-#Kunena .kpagination a:visited {
-	/* color:#5388B4;  Need to convert this color? */
 }
 #Kunena .kpagination .active:hover,
 #Kunena .kpagination a:hover {
 	border:solid 1px rgba(0, 0, 0, 0.25);
 	background:rgba(0,0,0,.2);
-	/* border:solid 1px #5388B4; */
-	/*  color: #ffffff; Need to convert this color? */
-	/*  background: #609FBF; Need to convert this color? */
 }
 #Kunena div.ktopic-title-cover ul.kpagination a {
 	border:solid 1px rgba(0, 0, 0, 0.2); 
 	background: rgba(0, 0, 0, 0.2);
-	/*
-	border:solid 1px #bcbcbc;
-	background: #ffffff;
-	*/
 }
 #Kunena div.ktopic-title-cover ul.kpagination a:hover{
 	border:solid 1px rgba(0, 0, 0, 0.2);
 	color: rgba(0, 0, 0, 0.2);
 	background: rgba(0, 0, 0, 0.25);
-	/* border:solid 1px #5388B4;
-	color: #ffffff;
-	background: #609FBF; */
 }
-#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton {
-	background: transparent;
-	/* background-color: #fff; */
-}
+#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton,
 #Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:hover {
-	/* background-color: #609FBF; */
 	background: transparent;
 }
 #Kunena div#kforum-head {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	border-left:  1px solid rgba(0, 0, 0, 0.2);
 	border-right: 1px solid rgba(0, 0, 0, 0.2);
-	/* border-left: 1px solid #BFC3C6;
-	border-right: 1px solid #BFC3C6;
-	border-bottom: 1px solid #BFC3C6; */
 }
 #Kunena div#kmoderatorslist div.kbody {
-	/* border:1px solid #CCCCCC; */
 	border: 0 none;
 }
 #Kunena div#kmoderatorslist div.kbody {
 	border: 0 none;
-	/* background: #FFFFFF; 
-	border:1px solid #CCCCCC;
-	*/
 	background-color: rgba(0, 0, 0, 0.01);
 }
 #Kunena fieldset {
 	background-color: rgba(255, 255, 255, .3);
 	background-image: none;
-	/* border:1px solid #CCCCCC; */
 }
 #Kunena div#ksearchresult div.kresult-title {
-	/* border-bottom: 1px solid #DDDDDD; */
 	border-bottom: 0 none;
 }
 #Kunena div#ksearchresult div.resultcat {
 	border-top: 0 none;
-	/* border-top: 1px dotted #BFC3C6; */
-}
-#Kunena ul.kprofilebox-link li {
-	/* background: url("../images/icons/arrow.png") no-repeat left !important;*/
-	background: url("../../default/images/icons/arrow.png") no-repeat left !important;
-}
-#Kunena .kprofilebox-left {
-	/* border-right: 1px solid #BFC3C6;
-	background: #EEEEEE; */
-	background: transparent;
-	border-right: 0 none;
 }
 #Kunena .kprofilebox-right {
-	/* border-left: 1px solid #BFC3C6; */
 	border-left: 0 none;
 }
 #Kunena div.kpbox {
-	/* border-bottom: 1px solid #BFC3C6; */
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 #Kunena table.kblocktable {
-	/* border-style: solid;
-	border-color: #BFC3C6;
-	border-width: 0px 0px 0px 0px;
-	*/
 	border: 0 none;
-}
-
-#Kunena h1,
-#Kunena h2 {
-	/* color: #FFFFFF; */
-	color: inherit;
-}
-#Kunena h2 a {
-	/* color: #FFFFFF !important; */
-	color: inherit;
 }
 #Kunena h1 a:link,
 #Kunena h1 a:active,
-#Kunena h1 a:visited {
-	/* color: #FFFFFF; */
+#Kunena h1 a:visited,
+#Kunena h1,
+#Kunena h2,
+#Kunena h2 a,
+#Kunena span.kchildcount,
+#Kunena div.kcc-childcat-title {
 	color: inherit;
 }
 #Kunena h2 span.kheadbtn a {
-	/* border: 1px solid #fff;
-	background-color: #609FBF; */
 	background: transparent;
 	border: 0 none;
 }
 #Kunena h2 span.kheadbtn:hover a {
-	/* border: 1px solid #609FBF;
-	background-color: #FFF;
-	color: #5388B4 !important;
-	*/
 	background: transparent;
 	border: 0 none;
 	color: inherit;
 }
-#Kunena div.kfavorite {
-	/* background: url("../images/icons/favoritestar.png") no-repeat left top; */
-	background: url("../../default/images/icons/favoritestar.png") no-repeat left top;
-}
 #Kunena .ktitle,
-#Kunena a.ktitle {
-	/* font-family: Arial, Helvetica, sans-serif; */
+#Kunena a.ktitle,
+#Kunena span.kmsgdate {
 	font-family: inherit;
 	color: inherit;
 }
+#Kunena div.kthead-title a,
 #Kunena .ktitle a {
-	/* font-family: Arial, Helvetica, sans-serif; */
-	font-family: inherit;
-}
-#Kunena div.kthead-title a {
-	/* font-family: Lucida Grande, Lucida, Arial, Helvetica, sans-serif; */
 	font-family: inherit;
 }
 #Kunena div.kthead-child {
-	/* border-top: 1px dotted #DDD5BF; */
 	border-top: 1px dotted rgba(0,0,0,0.2);
 }
-
-#Kunena div.kcc-childcat-title {
-	/* color: #666666; */
-	color: inherit;
-}
-#Kunena span.kchildcount {
-	/* color: #999999; */
-	color: inherit;
-}
-#Kunena img.catavatar {
-	/* border: 1px solid #BFC3C6; */
-	border: 0 none;
-}
 #Kunena .kcontenttablespacer {
-	/* border-left: 0px;
-	border-right: 0px;
-	border-bottom: 1px solid #BFC3C6; */
 	border: 0 none;
 	border-bottom:1px solid rgba(0, 0, 0, 0.1);
 }
 #Kunena .krow1-stickymsg {
-	/* background: #FFFFCC; */
-	background: rgba(FF,FF,CC,0.3);
+	background: rgba(255,255,204,0.1);
 }
 #Kunena .krow2-stickymsg {
-	background: rgba(FF,FF,CC,0.3);
-	/* background: #FFFFCC; */
+	background: rgba(255,255,204,0.2);
 }
 #Kunena div.kmsg-header {
-	/* border-bottom:2px solid #D9D9D9;
-	background: #5388B4;
-	color: #FFFFFF; */
 	border-bottom:1px solid rgba(0, 0, 0, 0.1);
 	background: transparent;
 	color: inherit;
 }
 #Kunena div.kmsg-header h2 {
-	/* background-color: #737373; */
 	background: transparent;
 }
-#Kunena span.kavatar img {
-	/* border: 1px solid #BFC3C6; */
-	border: 0 none;
-}
-#Kunena span.kmsgtitle,
-#Kunena span.kmsgtitle-new {
-	/* background: url("../images/msgtitleicon.gif") no-repeat left center; */
-	background: url("../../default/images/msgtitleicon.gif") no-repeat left center;
-}
-#Kunena span.kmsgtitle-new {
-	/* background: url("../images/msgtitlenew.gif") no-repeat left center; */
-	background: url("../../default/images/msgtitlenew.gif") no-repeat left center;
-}
-#Kunena span.kmsgdate {
-	/* color: #FFFFFF;
-	font-family: Arial, Helvetica, sans-serif;
-	*/
-	color: inherit;
-	font-family: inherit;
-}
-#Kunena div.kmsgattach {
-	background:#F8F7EF none repeat scroll 0 0; /* Need to adjust this? */
-	/* border:1px dotted #BFC3C6; */
-	border: 0 none;
-}
-#Kunena ul.kfile-attach li {
-	/* background:url("../images/icons/attachment.png") no-repeat; */
-	background:url("../../default/images/icons/attachment.png") no-repeat;
-}
-#Kunena div.kmsgtext pre,
-#Kunena div.kmsgtext code {
-	/* border-left: 5px solid #F4A94F;
-	border-right: 1px solid #BFC3C6;
-	border-top: 1px solid #BFC3C6;
-	border-bottom: 1px solid #BFC3C6; */
-	border: 0 none;
-}
 #Kunena div.kmessage-editmarkup-cover {;
-	/* border-bottom: 1px dotted #BFC3C6; */
 	border-bottom: 0 none;
 }
-#Kunena span.kmessage-editmarkup {
-	/* border-left: 1px dotted #BFC3C6;
-	border-right: 1px dotted #BFC3C6;
-	border-top: 1px dotted #BFC3C6;
-	*/
+#Kunena img.catavatar,
+#Kunena span.kavatar img,
+#Kunena div.kmsgattach,
+#Kunena div.kmsgtext pre,
+#Kunena div.kmsgtext code,
+#Kunena span.kmessage-editmarkup
+#Kunena .kreply-form,
+#Kunena span.kmessage-informmarkup,
+#Kunena div.kmsgtext-article,
+#Kunena div.kmsgtext-quote,
+#Kunena div.kmsgtext-hide,
+#Kunena div.kmsgtext-confidential,
+#Kunena .kreply-form {
 	border: 0 none;
 }
-#Kunena span.kmessage-informmarkup {
-	/* border-left: 1px dotted #BFC3C6;
-	border-right: 1px dotted #BFC3C6;
-	border-top: 1px dotted #BFC3C6;
-	*/
-	border: 0 none;
-}
-#Kunena div.kmsgsignature {
-	/* border-top:1px dotted #BFC3C6; */
+#Kunena div.kmsgsignature,
+#Kunena div.kmessage-thankyou {
 	border-top: 0 none;
 }
-#Kunena div.kmessage-thankyou{
-	/* border-top: 1px dotted #BFC3C6; */
-	border-top: 0 none;
-}
-#Kunena .kreply-form {
-	/* border: 1px solid #BFC3C6; */
-	border: 0 none;		
-}
-#Kunena .kreply-form {
-	/* border: 1px solid #BFC3C6; */	
-	border: 0 none;			
-}
-
 #Kunena .kreply-form .inputbox {
-	/* border: 1px solid #999999;
-	background: #FFFFFF;
-	color: #000000;
-	*/
 	background-color: rgba(0, 0, 0, 0.01);
 	border: 0 none;
 	color: inherit;
 }
-#Kunena div.kmsgtext-article,
-#Kunena div.kmsgtext-quote,
-#Kunena div.kmsgtext-hide,
-#Kunena div.kmsgtext-confidential {
-	/* border: 1px dotted #BFC3C6; */
-	border: 0 none;
-}
-#Kunena .kreply-form {
-	/* border: 1px solid #BFC3C6; */
-	border: 0 none;	
-}
-
 #Kunena .kreply-form .inputbox {
-	/* border: 1px solid #999999;
-	background: #FFFFFF; */
 	background-color: rgba(0, 0, 0, 0.01);
 	border: 0 none;
 }
@@ -594,443 +324,131 @@
 #Kunena div.kmsgtext-quote,
 #Kunena div.kmsgtext-hide,
 #Kunena div.kmsgtext-confidential {
-	/* 
-	border: 1px dotted #BFC3C6;
-	font-family: Arial, Helvetica, sans-serif;
-	*/
 	border: 0 none;
 	font-family: inherit;
 }
 #Kunena div.kmsgtext-article {
 	background-color: rgba(0, 0, 0, 0.01);
-	/* background: #FFFFFF; */
-}
-#Kunena div.khide {
-	background: #F2F1EE url("../../default/images/bullet-tips.gif") no-repeat scroll 5px center;
-	/* background: #F2F1EE url("../images/bullet-tips.gif") no-repeat scroll 5px center;
-	border: 1px dotted #F2CAB7;
-	*/
 }
 #Kunena td.kprofile-right {
 	background: transparent;
 	border: 0 none;
-	/*
-	background: #EFF0F4;
-	border-bottom: 1px solid #BFC3C6;
-	border-left: 1px solid #DDDDDD;
-	*/
 }
-#Kunena td.kbuttonbar-right {
+#Kunena td.kbuttonbar-right,
+#Kunena td.kbuttonbar-top,
+#Kunena td.kbuttonbar-left {
 	border-bottom: 0 none;
-	/* border-bottom: 1px solid #BFC3C6; */
 }
 #Kunena td.kprofile-left {
 	border-bottom: 0 none;
 	border-right: 0 none;
-	/* border-bottom: 1px solid #BFC3C6;
-	border-right: 1px solid #DDDDDD;
-	*/
-}
-#Kunena td.kbuttonbar-left {
-	border-bottom: 0 none;
-	/* border-bottom: 1px solid #BFC3C6; */
-}
-#Kunena span.kkarma-minus {
-	background: url("../../default/media/iconsets/profile/default/default.png") no-repeat 0px -294px;
-	/* background: url("../media/iconsets/profile/default/default.png") no-repeat 0px -294px; */
-}
-
-#Kunena span.kkarma-plus {
-	background: url("../../default/media/iconsets/profile/default/default.png") no-repeat 0px -313px;
-	/* background: url("../media/iconsets/profile/default/default.png") no-repeat 0px -313px; */
-}
-#Kunena span.kpost-online-status-yes {
-	background: url("../../default/images/icons/online.gif") no-repeat; 
-	/* background: url("../images/icons/online.gif") no-repeat; */
-}
-#Kunena span.kpost-online-status-no {
-	background: url("../../default/images/icons/offline.gif") no-repeat; 
-	/* background: url("../images/icons/offline.gif") no-repeat; */
-}
-
-#Kunena li.kpost-online-status-top-yes {
-	background: url("../../default/images/icons/online.gif") no-repeat; 
-	/* background: url("../images/icons/online.gif") no-repeat;  */
-}
-#Kunena li.kpost-online-status-top-no {	
-	background: url("../../default/images/icons/offline.gif") no-repeat; 
-	/* background: url("../images/icons/offline.gif") no-repeat; */
 }
 #Kunena td.kprofile-top {
-	/* background: #EFF0F4;
-	border-bottom: 1px solid #DDDDDD; */
 	border-bottom: 0 none;
 	background: transparent;
-}
-#Kunena td.kbuttonbar-top {
-	/* border-bottom: 1px solid #BFC3C6; */
-	border-bottom: 0 none;
 }
 #Kunena td.kprofile-bottom {
 	vertical-align: bottom;
 	padding: 5px;
-	/* background: #EFF0F4;
-	border-bottom: 1px solid #BFC3C6;
-	border-top: 1px solid #DDDDDD;
-	*/
 	border-bottom: 0 none;
 	border-top: 0 none;
 	background: transparent;
 }
-#Kunena #kpost-message .postinput {
-	background-color: rgba(0, 0, 0, 0.01); 
-	/* background: #FFFFFF; 
-	color: #000000;
-	border: 1px solid #BFC3C6;
-	*/
-	border: 0 none;
-	color: inherit
-}
+#Kunena #kpost-message .postinput,
 #Kunena #kpost-message .postinput:hover,
-#Kunena #kpost-message .postinput:focus	{
+#Kunena #kpost-message .postinput:focus,
+#Kunena #kpostmessage tr.krow2 td.kcol-ktopicicons td	{
 	background-color: rgba(0, 0, 0, 0.01);
-	border: 0 none;
-	color: inherit
-	/* background: #FFFFFF;
-	color: #000000;
-	border: 1px solid #BFC3C6; */
-}
-#Kunena #kpostmessage tr.krow2 td.kcol-ktopicicons td {
-	background-color: rgba(0, 0, 0, 0.01);
-	/* background: #FFFFFF;
-	color: #000000;
-	border: 1px solid #BFC3C6; */
 	border: 0 none;
 	color: inherit
 }
 #Kunena #kpostmessage tr.krow1 .kpostbuttonset td.kposthint	{
 	background: #FFFFCC;
-	/* border: 1px solid #DDD5BF; */
-	border: 0 none;
-}
-
-#Kunena .kpostbuttonset {
-	border: 0 none;
-	/* border: 1px solid #BFC3C6 */
-}
-
-#Kunena tr.krow1 .kpostbuttons {
-	/* border: 1px solid #BFC3C6; */
-	border: 0 none;
-}
-
-#Kunena table#kpostmessage .ktxtarea {
-	border: 0 none;
-	/* border: 1px solid #BFC3C6; */
-}
-#Kunena #kbbcode-preview {
-	/*	border: 1px solid #BFC3C6; */
 	border: 0 none;
 }
 #Kunena #kpostmessage tr.krow1 .kpostbuttonset td,
 #Kunena #kpostmessage tr.krow2 .kpostbuttonset td	{
-	/* border-bottom: 1px solid #BFC3C6; */
 	border-bottom: 0 none;
 }
-#Kunena #kpost-result div {
-	/* border: 1px solid #999; */
-	border: 0 none;
-}
-#Kunena div#kcolor-palette,
-#Kunena div#link,
-#Kunena div#image,
-#Kunena div#video {
-	/* border-bottom: 1px solid #BFC3C6; */
-	border: 0 none;
-}
-#Kunena .kicon-button {
-	/* font-family: Arial, Helvetica, sans-serif;
-	background-image: url("../media/iconsets/buttons/default/default.png");
-	*/
-	background-image: url("../../default/media/iconsets/buttons/default/default.png");
-	font-family: inherit;
-}
-
-#Kunena a.kbuttongoto span.top {
-	background: url("../../default/images/icons/top_arrow.gif") no-repeat left top;
-	/* background: url("../images/icons/top_arrow.gif") no-repeat left top; */
-}
-
-#Kunena a.kbuttongoto span.bottom {
-	background: url("../../default/images/icons/bottom_arrow.gif") no-repeat left top;
-	/* background: url("../images/icons/bottom_arrow.gif") no-repeat left top; */
-}
-#Kunena form.kform-report input,
-#Kunena form.kform-report textarea {
-	/* border:1px solid #BFC3C6; */
-	border: 0 none;
-}
 #Kunena .kattachment .kbutton {
-	/* color: #000000; */
 	color: inherit
-}
-#Kunena #kbbcode-toolbar li a,
-#Kunena #kattachments a {
-	background-image:url("../../default/media/iconsets/editor/default/default.png");
-	/* background-image:url("../media/iconsets/editor/default/default.png"); */
 }
 #Kunena .kfile-input-button,
 #Kunena .kfile-input-button:hover,
-#Kunena .kfile-input-button:focus {
-	/* border: 1px solid #999999;
-	color: #000000; */
-	color: inherit;
-	border: 0 none;
-}
-#Kunena .kfile-input-button:hover,
-#Kunena .kfile-input-button:focus {
-	/* border: 1px solid #5388B4; */
-	border: 0 none;
-}
+#Kunena .kfile-input-button:focus,
 #Kunena .kattachment-remove,
-#Kunena .kattachment-insert {
-	/* border: 1px solid #999999;
-	color: #000000; */
+#Kunena .kattachment-insert  {
 	color: inherit;
 	border: 0 none;
 }
 #kpoll-form-vote fieldset {
 	background-color: rgba(0, 0, 0, 0.01);
-	/* background-color:#FFFFFF; */
 }
 #Kunena .kforum-pathway {
-/*	border-left: 1px solid #BFC3C6;
-	border-right: 1px solid #BFC3C6;
-	color: #000000;
-	background: #F2F1EE; */
 	color: inherit;
 	border-left: 0 none;
 	border-right: 0 none;
 	background: transparent;
 }
-#Kunena .kforum-pathway-bottom {
-	/* border: 1px solid #BFC3C6;
-	color: #000000;
-	background: #F2F1EE; */
-	color: inherit;
-	border: 0 none;
-	background: transparent;
-}
-#Kunena .path-element-first {
-	/* background: url("../images/pathway_start.gif") no-repeat left center; */
-	background: url("../../default/images/pathway_start.gif") no-repeat left center;
-}
-#Kunena .kforum-pathway .path-element,
-#Kunena .kforum-pathway-bottom .path-element	{
-	background: url("../../default/images/icons/arrow.png") no-repeat left center;
-	/* background: url("../images/icons/arrow.png") no-repeat left center; */
-}
-
-#Kunena .kforum-pathway .path-element-last,
-#Kunena .kforum-pathway-bottom .path-element-last {
-	background: url("../../default/images/pathway_finallink.gif") no-repeat left center;
-	/* background: url("../images/pathway_finallink.gif") no-repeat left center; */
-}
+#Kunena .kforum-pathway-bottom,
 #Kunena .kforum-headerdesc {
-	/* border: 1px solid #BFC3C6;
-	color: #000000;
-	background: #FFF; */
 	color: inherit;
 	border: 0 none;
 	background: transparent;
 }
 #Kunena td.kuadesc,
-#Kunena td.kcreditsdesc	{
-	/* background: #FFFFFF;
-	color: #000000; */
+#Kunena td.kcreditsdesc,
+#Kunena span#kprofilebox-status	{
 	color: inherit;
 	background: transparent;
 }
-#Kunena .kcredits-intro {
-	/* border: 1px solid #BFC3C6; */
+#Kunena .kpostbuttonset,
+#Kunena tr.krow1 .kpostbuttons,
+#Kunena table#kpostmessage .ktxtarea,
+#Kunena #kbbcode-preview,
+#Kunena #kpost-result div,
+#Kunena div#kcolor-palette,
+#Kunena div#link,
+#Kunena div#image,
+#Kunena div#video,
+#Kunena form.kform-report input,
+#Kunena form.kform-report textarea,
+#Kunena .kfile-input-button:hover,
+#Kunena .kfile-input-button:focus,
+#Kunena .kcredits-intro,
+#Kunena .kcredits-language,
+#Kunena .kwholegend,
+#Kunena .kwhoonline,
+#Kunena div.kmoderate-message,
+#Kunena div.current,
+#Kunena #kprofilebox-toggle,
+#Kunena #kpost-message .invalid,
+#lbImage {
 	border: 0 none;
-}
-#Kunena .kcredits-language {
-	border: 0 none;
-	/* border: 1px solid #BFC3C6; */
-}
-#Kunena .kstatsicon {
-	background: url("../../default/images/icons/stats.png") no-repeat center top;
-	/* background: url("../images/icons/stats.png") no-repeat center top; */
-}
-#Kunena .kwhoicon {
-	background: url("../../default/images/icons/who_is_online.png") no-repeat center top;
-	/* background: url("../images/icons/who_is_online.png") no-repeat center top; */
-}
-#Kunena .kwholegend {
-	/* border-top: 1px dotted #CCCCCC; */
-	border: 0 none;
-}
-
-#Kunena .kwhoonline {
-	/* border-top: 1px dotted #CCCCCC; */
-	border: 0 none;
-}
-#Kunena div.kmoderate-message {
-	/* border:1px solid #CCCCCC; */
-	border: 0 none;
-}
-#Kunena .kicon-profile { 
-	/* background-image: url("../media/iconsets/profile/default/default.png"); */
-	background-image: url("../../default/media/iconsets/profile/default/default.png");
 }
 #Kunena div.kavatar-lg { 
-	/* background-color: #FFF; 
-	border: 1px solid #999999;  */
 	border: 0 none;
 	background: transparent;
-}
-#Kunena div#kprofile-stats ul li span.konline-status-yes {
-	background: url("../../default/images/icons/online.gif") no-repeat;
-	/*
-	background: url("../images/icons/online.gif") no-repeat; */
-}
-#Kunena div#kprofile-stats ul li span.konline-status-no {
-	background: url("../../default/images/icons/offline.gif") no-repeat; 
-	/* background: url("../images/icons/offline.gif") no-repeat; */
-}	
-div#kprofile-stats ul li span.krank-admin {
-	background: url("../../default/images/ranks/rankadmin.gif") no-repeat; 
-	/* background: url("../images/ranks/rankadmin.gif") no-repeat;  */
 }
 #Kunena div.clrline {
-	/* border-top: 1px solid #BFC3C6;  */
 	border-top: 0 none;
 }
-#Kunena div.kprofile-rightcol2 ul li span.email {
-	/* background: url("../images/icons/email.png") no-repeat; */
-	background: url("../../default/images/icons/email.png") no-repeat;
-}
-#Kunena dl.tabs dt {
-	/* border-left: 1px solid #BFC3C6;
-	border-right: 1px solid #BFC3C6;
-	border-top: 1px solid #BFC3C6;
-	background: #f0f0f0;
-	color: #666;
-	*/
-	border: 0 none;
-	background: transparent;
-	color: inherit;
-}
+#Kunena dl.tabs dt,
 #Kunena dl.tabs dt.open {
-	/* background: #F9F9F9;
-	border-bottom: 1px solid #F9F9F9;
-	color: #000;
-	*/
-	border-bottom: 0 none;
+	border: 0 none;
 	background: transparent;
 	color: inherit;
-}
-#Kunena div.current {
-	/* border: 1px solid #BFC3C6; */
-	border: 0 none;
 }
 #Kunena dt.kprofile-modbtn {
-	/* background-color:#999999 !important;
-	color: #FFF !important; */
 	background: transparent !important;
 	color: inherit;
 }
-#Kunena span#kprofilebox-status {
-	/* color: #fff;
-	background-color: #5388B4;
-	*/
-	background: transparent;
-	color: inherit;
-}
-#Kunena #kprofilebox-toggle {
-	/* border: 1px solid #fff; */
-	border: 0 none;
-}
-#Kunena a.close {
-	background: url("../../default/images/shrink.gif") no-repeat; 
-	/*
-	background: url("../images/shrink.gif") no-repeat; 
-	*/
-	background-color: rgba(0, 0, 0, 0.25);
-}
+#Kunena a.close,
 #Kunena a.open {
-	background: url("../../default/images/expand.gif") no-repeat; 
-	/*
-	background: url("../images/expand.gif") no-repeat; 
-	*/
 	background-color: rgba(0, 0, 0, 0.25);
 }
-ul.autocompleter-choices {
-	/* border:					1px solid #7c7c7c;
-	border-left-color:		#c3c3c3;
-	border-right-color:		#c3c3c3;
-	border-bottom-color:	#ddd;
-	font-family:			Verdana, Geneva, Arial, Helvetica, sans-serif;
-	*/
+ul.autocompleter-choices,
+#lbBottom  {
 	border: 0 none;
 	font-family: inherit;
-}
-#Kunena #kpost-message .invalid { 
-	/* border: 1px solid red !important; */
-	border: 0 none;
-}
-#lbImage {
-	/* border: 10px solid #fff; */
-	border: 0 none;
-}
-#lbBottom {
-	/*
-	font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
-	border: 10px solid #fff;
-	*/
-	border: 0 none;
-	font-family: inherit;
-}
-#Kunena span.ktopicattach {
-	background: url("../../default/images/icons/attachment.png") no-repeat left center;
-}
-#Kunena span.kfavoritestar {
-	background: url("../../default/images/icons/favoritestar.png") no-repeat left center;
-}
-#Kunena span.kfavoritestar-grey {
-	background: url("../../default/images/icons/favoritestar-grey.png") no-repeat left center;
-}
-#Kunena span.ktopiclocked,
-#Kunena span.kforumlocked {
-	background: url("../../default/images/icons/lock_sm.png") no-repeat left center;
-}
-#Kunena span.ktopicsticky {
-	background: url("../../default/images/icons/tsticky.png") no-repeat left center;
-}
-#Kunena span.kforumbottom {
-	background: url("../../default/images/icons/bottom_arrow.gif") no-repeat left center;
-}
-#Kunena span.kforumtop {
-	background: url("../../default/images/icons/top_arrow.gif") no-repeat left center;
-}
-#Kunena span.krss {
-	background: url("../../default/images/icons/rss.png") no-repeat left center;
-}
-#Kunena span.kforummoderated {
-	background: url("../../default/images/icons/tmoder.gif") no-repeat left center;
-}
-#Kunena span.kreadforum,
-#Kunena span.knotloginforum {
-	background: url("../../default/images/icons/folder_nonew.png") no-repeat left center;
-}
-#Kunena span.kunreadforum {
-	background: url("../../default/images/icons/folder.png") no-repeat left center;
-}
-#Kunena span.kreadforum-sm,
-#Kunena span.knotloginforum-sm {
-	background: url("../../default/images/icons/folder_nonew_sm.png") no-repeat left center;
-}
-#Kunena span.kunreadforum-sm {
-	background: url("../../default/images/icons/folder_sm.png") no-repeat left center;
 }

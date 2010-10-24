@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC2
 
+24-October-2010 Xillibit
+# [#20081] Little change for default unread indicator
+
 17-October-2010 Xillibit
 # [#20081] Missing string for default undread indicator
 # [#20081] Some functions doesn't go to the right page

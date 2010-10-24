@@ -41,7 +41,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 			}
 			echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0', $this->params->get ( 'messagelength' ) ), 'follow' );
 			if ($item->unread) {
-				echo '<sup class="knewchar">(' . $this->params->get ( 'unreadindicator' ) . ")</sup>";
+				echo '<sup class="knewchar">(' . JText::_($this->params->get ( 'unreadindicator' )) . ")</sup>";
 			}
 			if ($this->params->get ( 'sh_favorite' )) {
 				if ($item->favcount) {

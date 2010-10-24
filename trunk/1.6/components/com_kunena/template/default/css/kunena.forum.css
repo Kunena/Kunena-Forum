@@ -2696,10 +2696,9 @@ label.kpoll-term-lbl {
 	font-weight: normal;
 	height: 18px;
 	line-height: 18px;
-	padding-left: 22px;
 	background: url("../images/pathway_start.gif") no-repeat left center;
 	display: inline;
-	padding-right: 3px;
+	padding: 1px 3px 1px 22px;
 }
 
 #Kunena .path-element-first a:link,
@@ -2733,8 +2732,7 @@ label.kpoll-term-lbl {
 	height: 18px;
 	line-height: 18px;
 	background: url("../images/pathway_finallink.gif") no-repeat left center;
-	padding-left: 37px;
-	padding-right: 5px;
+	padding: 1px 5px 1px 37px;
 }
 
 #Kunena .path-element-users {

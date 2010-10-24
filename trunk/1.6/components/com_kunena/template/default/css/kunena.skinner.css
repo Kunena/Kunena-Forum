@@ -37,7 +37,7 @@
 }
 #Kunena a:link,
 #Kunena a:visited,
-#Kunena a:active {color: inherit !important;}
+#Kunena a:active {color: inherit;}
 #Kunena a:hover {color: inherit !important;text-decoration: underline;}
 
 #Kunena a.kicon-button:hover {text-decoration: none;}
@@ -73,9 +73,13 @@
 }
 #Kunena tr.krow1 td {
 	background-color: rgba(44, 44, 44, 0.1);
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 #Kunena tr.krow2 td {
 	background-color: rgba(44, 44, 44, 0.05);
+}
+#Kunena .klist-actions-forum {
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
 }
 #Kunena tr.ksth {
 	color: inherit;
@@ -117,11 +121,13 @@
 #Kunena #ktab li.Kunena-item-active a span	{
 	color: inherit;
 }
+#Kunena textarea,
 #Kunena select,
 #Kunena select:focus,
 #Kunena select:hover {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	color: inherit;
+	background-color: inherit;
 }
 #Kunena option {
 	background-color: rgba(0, 0, 0, 0.01);
@@ -221,8 +227,13 @@
 	background-color: rgba(0, 0, 0, 0.01);
 }
 #Kunena fieldset {
-	background-color: rgba(255, 255, 255, .3);
+	background-color: rgba(255, 255, 255, .05);
+	border: 1px solid rgba(255, 255, 255, .1);
 	background-image: none;
+}
+#Kunena input#keywords, #Kunena input#kusername,#Kunena input {
+	background-color: inherit;
+	color: inherit;
 }
 #Kunena div#ksearchresult div.kresult-title {
 	border-bottom: 0 none;
@@ -247,7 +258,7 @@
 #Kunena h2 a,
 #Kunena span.kchildcount,
 #Kunena div.kcc-childcat-title {
-	color: inherit;
+	color: inherit !important;
 }
 #Kunena h2 span.kheadbtn a {
 	background: transparent;
@@ -362,9 +373,12 @@
 	border: 0 none;
 	color: inherit
 }
-#Kunena #kpostmessage tr.krow1 .kpostbuttonset td.kposthint	{
-	background: #FFFFCC;
-	border: 0 none;
+#Kunena #kpostmessage tr.krow1 .kpostbuttonset td.kposthint {
+	background: rgba(255, 255, 255, 0.2);
+	border:0 none;
+}
+#Kunena table#kpostmessage .kposthint .kinputbox {
+	background: transparent;
 }
 #Kunena #kpostmessage tr.krow1 .kpostbuttonset td,
 #Kunena #kpostmessage tr.krow2 .kpostbuttonset td	{

@@ -39,6 +39,7 @@ Kunena 1.6.1-DEV
 
 23-October-2010 Severdia
 ^ [#22979] First clean up pass on skinner CSS file
+^ [#22979] Clean up aliasing on all emoticons and topic icons, skinner fixes
 
 23-October-2010 Matias
 ^ [#15886] Merged revisions 3741-3760 from /branches/1.6-xillibit-fixes-20101017

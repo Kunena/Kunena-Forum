@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+24-October-2010 Matias
+^ [#22979] Split default css into styling and coloration files to enable more than one color style
+
 24-October-2010 fxstein
 ^ [#22979] Adjustable and inhertited link coloration
 

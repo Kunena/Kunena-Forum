@@ -71,6 +71,22 @@ if ($forumHeader) {
 	#Kunena #ktab a:hover,
 	#Kunena #ktab li.Kunena-item-active a	{ background-color: {$forumHeader} }
 	#ktab ul.menu li#current.active a { background-color: {$forumHeader} }
+	#Kunena a:link,
+	#Kunena a:visited,
+	#Kunena a:active {color: {$forumHeader};}
+	#Kunena a:focus {outline: none;}
+	#Kunena a:hover {color: #FF0000;}
+EOF;
+}
+
+$forumLink = $this->params->get('forumLinkcolor', $skinner ? '' : '#5388B4');
+
+if ($forumLink) {
+	$styles .= <<<EOF
+	#Kunena a:link,
+	#Kunena a:visited,
+	#Kunena a:active {color: {$forumLink};}
+	#Kunena a:focus {outline: none;}
 EOF;
 }
 

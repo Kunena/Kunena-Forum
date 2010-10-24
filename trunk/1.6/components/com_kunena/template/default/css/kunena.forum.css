@@ -112,11 +112,6 @@ PX		EM			PCT			PT
 	text-decoration: none;
 	font-weight: normal;
 }
-#Kunena a:link,
-#Kunena a:visited,
-#Kunena a:active {color: #5388B4;}
-#Kunena a:focus {outline: none;}
-#Kunena a:hover {color: #FF0000;}
 
 #Kunena .overflow {
 	display: table;

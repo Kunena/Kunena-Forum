@@ -35,10 +35,6 @@
 #Kunena #ktab a span {
 	font-family: inherit;
 }
-#Kunena a:link,
-#Kunena a:visited,
-#Kunena a:active {color: inherit;}
-#Kunena a:hover {color: inherit !important;text-decoration: underline;}
 
 #Kunena a.kicon-button:hover {text-decoration: none;}
 

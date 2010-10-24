@@ -28,6 +28,9 @@ Legend:
 
 KunenaSearch 1.6.0-RC2
 
+24-October-2010 Xillibit
+# [#20138] Rename ru-RU.plg_search_kunena.ini into ru-RU.plg_search_kunenasearch.ini
+
 10-October-2010 Matias
 + [#20084] Added ru-RU translation (thanks ZARKOS)
 

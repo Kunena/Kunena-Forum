@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+25-October-2010 Matias
+# [#23015] If open_basedir exludes /tmp, PHP warning is shown
+
 24-October-2010 Matias
 ^ [#22979] Split default css into styling and coloration files to enable more than one color style
 

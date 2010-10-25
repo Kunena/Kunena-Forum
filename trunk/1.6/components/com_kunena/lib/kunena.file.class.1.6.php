@@ -30,7 +30,7 @@ class CKunenaPath extends JPath
 		$jtp = JPATH_SITE.DS.'tmp';
 
 		// Try to find a writable directory
-		$tmpdir = is_writable('/tmp') ? '/tmp' : false;
+		$tmpdir = @is_writable('/tmp') ? '/tmp' : false;
 //		$tmpdir = (!$tmpdir && is_writable($ssp)) ? $ssp : false;
 		$tmpdir = (!$tmpdir && is_writable($jtp)) ? $jtp : false;
 

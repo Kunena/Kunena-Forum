@@ -704,6 +704,115 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_NOTHING;
 
 				break;
+			case 'articlelink' :
+				if ($between) {
+					$articleid = (int)$between;
+
+					// FIXME: works only in J1.5
+					$kunena_db = JFactory::getDBO();
+					$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
+						s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access
+						FROM #__content AS a
+						LEFT JOIN #__categories AS cc ON cc.id = a.catid
+						LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = "content"
+						LEFT JOIN #__users AS u ON u.id = a.created_by
+						WHERE a.id='.$kunena_db->quote($articleid);
+
+					$kunena_db->setQuery($query);
+					$article = $kunena_db->loadObject();
+					// get database error
+
+					if($article){
+						$user	= & JFactory::getUser();
+
+						// Are the section and category published?
+						if ((!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
+							$tag_new .= JText::_("Article cannot be shown");
+						} else if ((($article->cat_access > $user->get('aid', 0)) && $article->catid)
+							|| (($article->sec_access > $user->get('aid', 0)) && $article->sectionid)
+							|| ($article->access > $user->get('aid', 0))) {
+							$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
+						} else {
+							require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
+							$article->link = '<a href="'.
+													JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
+													'">'.KunenaParser::escape($article->title).'</a>'; // maybe add an escape on title
+							
+
+							$tag_new = $article->link;
+						}
+					} else {
+						$tag_new = JText::_("Article cannot be shown");
+					}
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
+				case 'articlecontentlink' :
+				if ($between) {
+					$articleid = (int)$between;
+
+					// FIXME: works only in J1.5
+					$kunena_db = JFactory::getDBO();
+					$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
+						s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access
+						FROM #__content AS a
+						LEFT JOIN #__categories AS cc ON cc.id = a.catid
+						LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = "content"
+						LEFT JOIN #__users AS u ON u.id = a.created_by
+						WHERE a.id='.$kunena_db->quote($articleid);
+
+					$kunena_db->setQuery($query);
+					$article = $kunena_db->loadObject();
+
+					
+
+					if($article){
+						$user	= & JFactory::getUser();
+
+						// Are the section and category published?
+						if ((!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
+							$tag_new .= JText::_("Article cannot be shown");
+						} else if ((($article->cat_access > $user->get('aid', 0)) && $article->catid)
+							|| (($article->sec_access > $user->get('aid', 0)) && $article->sectionid)
+							|| ($article->access > $user->get('aid', 0))) {
+							$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
+						} else {
+							$kunena_app = JFactory::getApplication();
+							$dispatcher	= JDispatcher::getInstance();
+							$params = clone($kunena_app->getParams('com_content'));
+							$aparams = new JParameter($article->attribs);
+							$params->merge($aparams);
+
+							if(!empty($article->introtext))
+							{
+								$article->text = $article->introtext;
+							} else {
+								$article->text = $article->fulltext;
+							}
+
+							JPluginHelper::importPlugin('content');
+							$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
+							
+							require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
+							$tag_new = '<a href="'.
+													JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
+													'">'.KunenaParser::escape($article->title).'</a>';
+							$tag_new .= '<div class="kmsgtext-article">';
+							$tag_new .= $article->text;
+						}
+					} else {
+						$tag_new .= JText::_("Article cannot be shown");
+					}
+					// End of div wrapper for article
+					$tag_new .= '</div>';
+
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
 			case 'list' :
 				$type = isset($tag->options['type']) ? $tag->options['type'] : '';
 				$type = ($type == 'decimal' ? 'ol' : 'ul');

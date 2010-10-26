@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+26-October-2010 Xillibit
++ [#20084] Make the possibility to set a specific for a new topic (when using kdiscuss) and new bbcode [articlelink] and [articlecontentlink]
+
 23-October-2010 Xillibit
 # [#22971] Use new namming convention for aup plg and use differents if an old AUP verison is installed
 

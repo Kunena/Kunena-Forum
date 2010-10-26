@@ -281,7 +281,7 @@ class CKunenaPosting {
 		// Load all options and fields
 		$this->loadOptions ( $options );
 		$this->setOption ( 'action', 'post' );
-		$this->setOption ( 'allowed', array ('name', 'email', 'subject', 'message', 'topic_emoticon' ) );
+		$this->setOption ( 'allowed', array ('name', 'email', 'time', 'subject', 'message', 'topic_emoticon' ) );
 		$this->setOption ( 'required', array ('subject', 'message' ) );
 
 		$this->loadFields ( $fields );
@@ -374,14 +374,15 @@ class CKunenaPosting {
 				$this->set ( 'name', $this->_myuser->getName() );
 			if (! $this->get ( 'email' ))
 				$this->set ( 'email', $this->_my->email );
+			if (! $this->get ( 'time' ))
+				$this->set ( 'time', CKunenaTimeformat::internalTime () );			 
 		}
 
 		// Fill thread/post related information
 		$this->set ( 'parent', $this->parent->id );
 		$this->set ( 'thread', $this->parent->thread );
 		$this->set ( 'catid', $this->parent->catid );
-		$this->set ( 'time', CKunenaTimeformat::internalTime () );
-
+		
 		// On reviewed forum, require approval if user is not a moderator
 		$this->set ( 'hold', CKunenaTools::isModerator ( $this->_my, $this->parent->catid ) ? 0 : ( int ) $this->parent->review );
 
@@ -909,7 +910,7 @@ class CKunenaPosting {
 	public function emailToSubscribers($LastPostUrl = false, $mailsubs = false, $mailmods = false, $mailadmins = false) {
 		if ($LastPostUrl === false) {
 			$LastPostUrl = CKunenaLink::GetMessageURL($this->get ( 'id' ), $this->get ( 'catid' ), 0, false);
-		}
+		}		
 		//get all subscribers, moderators and admins who will get the email
 		$emailToList = CKunenaTools::getEMailToList ( $this->get ( 'catid' ), $this->get ( 'thread' ), $mailsubs, $mailmods, $mailadmins, $this->_my->id );
 

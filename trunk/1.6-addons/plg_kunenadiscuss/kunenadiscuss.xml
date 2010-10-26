@@ -38,6 +38,16 @@
 			<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option> 
 			<option value="2">PLG_KUNENADISCUSS_OPTION_REPLIES</option> 
 		</param> 
+		<param name="creation_discussion_topic" type="radio" default="0" label="PLG_KUNENADISCUSS_CREATE_DISCUSSION_TOPIC" description="PLG_KUNENADISCUSS_CREATE_DISCUSSION_TOPIC_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_AUTOMATICALLY</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_ONFIRST_COMMENT</option>
+			<!--<option value="2">PLG_KUNENADISCUSS_OPTION_FOR_ALL_ATICLES_AFTER_GIVED_DATE</option>-->
+		</param>
+		<param name="content_first_message_discussion" type="radio" default="0" label="PLG_KUNENADISCUSS_CONTENT_FIRST_MESSAGE_DISCUSSION" description="PLG_KUNENADISCUSS_CONTENT_FIRST_MESSAGE_DISCUSSION_DESC"> 
+			<option value="0">PLG_KUNENADISCUSS_OPTION_WHOLE_ARTICLE</option> 
+			<option value="1">PLG_KUNENADISCUSS_OPTION_SIMPLE_LINK</option> 
+			<option value="2">PLG_KUNENADISCUSS_OPTION_BOTH_OF_ABOVE</option> 
+		</param> 		
 		<param name="show_other_pages" type="radio" default="2" label="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES" description="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES_DESC">
 			<option value="0">PLG_KUNENADISCUSS_OPTION_NOTHING</option>
 			<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option>

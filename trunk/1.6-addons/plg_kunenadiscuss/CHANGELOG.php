@@ -32,6 +32,10 @@ Legend:
 Kunena Discuss Plugin 1.6.0-RC3
 
 22-October-2010 Xillibit
+# [#20084] Set article creation date for first message of article discussion in kunena
++ [#20084] New configuration settings to define when the topic discussion will be created and how to diplay the first message content
+
+22-October-2010 Xillibit
 + [#20084] Added el-GR translation (thanks mijalis)
 
 18-October-2010 fxstein

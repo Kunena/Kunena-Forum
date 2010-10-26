@@ -253,9 +253,18 @@ class plgContentKunenaDiscuss extends JPlugin {
 		if (! $result && $thread) {
 			$this->createReference ( $row, $thread );
 			$this->debug ( "showPlugin: First hit to Custom Topic, created cross reference to topic {$thread}" );
-		} else if (! $result) {
+		} else if (! $result && $this->params->get('creation_discussion_topic')=='0') {
 			$thread = $this->createTopic ( $row, $catid, $subject );
 			$this->debug ( "showPlugin: First hit, created new topic {$thread} into forum" );
+		} else if (! $result && $this->params->get('creation_discussion_topic')=='1') {
+			if (JRequest::getInt ( 'kdiscussContentId', 0, 'POST' ) == $row->id) {
+			 	$thread = $this->createTopic ( $row, $catid, $subject );				
+			 	//need to create relpy
+			 	if ($this->canPost ( $thread ) && $botShowForm){ 
+          			$this->debug ( "showPlugin: Reply topic!" );
+			     	$quickPost = $this->replyTopic ( $row, $catid, $thread, $subject );
+			 	}
+			}
 		} else {
 			$thread = $result->thread_id;
 			$this->debug ( "showPlugin: Topic {$thread} exists in the forum" );
@@ -277,11 +286,27 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// ************************************************************************
 		// Process the QuickPost form
 
+		
+		$quickPost = $this->processQuickForm($thread,$this->_my->id,$row,$catid,$subject);
+		
+		// This will be used all the way through to tell users how many posts are in the forum.
+		$this->debug ( "showPlugin: Rendering discussion" );
+		$content = $this->showTopic ( $catid, $thread );
 
+		if ($formLocation) {
+			$content = '<div class="kunenadiscuss">' . $content . '<br />' . $quickPost . '</div>';
+		} else {
+			$content = '<div class="kunenadiscuss">' . $quickPost . "<br />" . $content . '</div>';
+		}
+
+		return $content;
+	}
+	
+	function processQuickForm($thread,$myid,$row,$catid,$subject) {
 		$quickPost = '';
 		$canPost = $this->canPost ( $thread );
 		if ($botShowForm) {
-			if (! $canPost && ! $this->_my->id) {
+			if (! $canPost && ! $myid) {
 				$this->debug ( "showPlugin: Public posting is not permitted, show login instead" );
 				$login = KunenaFactory::getLogin ();
 				$loginlink = $login->getLoginURL ();
@@ -301,20 +326,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 				$quickPost .= JText::_ ( 'PLG_KUNENADISCUSS_NO_PERMISSION_TO_POST' );
 			}
 		}
-
-		// This will be used all the way through to tell users how many posts are in the forum.
-		$this->debug ( "showPlugin: Rendering discussion" );
-		$content = $this->showTopic ( $catid, $thread );
-
-		if ($formLocation) {
-			$content = '<div class="kunenadiscuss">' . $content . '<br />' . $quickPost . '</div>';
-		} else {
-			$content = '<div class="kunenadiscuss">' . $quickPost . "<br />" . $content . '</div>';
-		}
-
-		return $content;
-	}
-
+	}	
+	
 	/******************************************************************************
 	 * Output
 	 *****************************************************************************/
@@ -365,7 +378,13 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		$options = array();
 		$fields ['subject'] = $subject;
-		$fields ['message'] = "[article]{$row->id}[/article]";
+		if ( $this->params->get('creation_discussion_topic') == '0' )  $fields ['message'] = "[article]{$row->id}[/article]";
+		elseif ( $this->params->get('creation_discussion_topic') == '1' ) $fields ['message'] = "[articlelink]{$row->id}[/articlelink]";
+		elseif ( $this->params->get('creation_discussion_topic') == '2' ) $fields ['message'] = "[articlecontentlink]{$row->id}[/articlecontentlink]";
+		$datearticle = explode(' ', $row->created);
+		$date1 = explode(':',$datearticle[1]); 
+    	$date2 = explode('-',$datearticle[0]); 
+		$fields ['time'] = mktime($date1[0], $date1[1], $date1[2], $date2[2], $date2[1], $date2[0]);
 		$success = $message->post ( $catid, $fields, $options );
 
 		if ($success) {
@@ -384,8 +403,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// Keep a cross reference of Threads we create through this plugin
 		$this->createReference ( $row, $newMessageId );
 
-		// TODO: Handle User subscrtiptions and Moderator notifications.
-		// $message->emailToSubscribers('index.php');
+		// Handle User subscrtiptions and Moderator notifications.
+		// TODO: need to get lastposturl with the right way
+		$message->emailToSubscribers(false, $this->config->allowsubscriptions && ! $message->get ( 'hold' ), $this->config->mailmod || $message->get ( 'hold' ), $this->config->mailadmin || $message->get ( 'hold' ));
 
 
 		// We'll need to know about the new Thread id later...
@@ -422,8 +442,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 			return false;
 		}
 
-		// TODO: Handle User subscrtiptions and Moderator notifications.
-		// $message->emailToSubscribers('index.php');
+		// Handle User subscrtiptions and Moderator notifications.
+		// TODO: need to get lastposturl with the right way
+		$message->emailToSubscribers(false, $this->config->allowsubscriptions && ! $message->get ( 'hold' ), $this->config->mailmod || $message->get ( 'hold' ), $this->config->mailadmin || $message->get ( 'hold' ));
 
 		if ($message->get ( 'hold' )) {
 			$result = JText::_ ( 'PLG_KUNENADISCUSS_PENDING_MODERATOR_APPROVAL' );

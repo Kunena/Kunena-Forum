@@ -86,7 +86,7 @@ class KunenaViewManage extends JView {
 	}
 
 	function addStyleSheet($filename) {
-		if (!KunenaFactory::getConfig ()->debug && !Kunena::isSvn()) {
+		if (!KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.css$/u', '-min.css', $filename );
 		}
@@ -96,7 +96,7 @@ class KunenaViewManage extends JView {
 	}
 
 	function addScript($filename) {
-		if (!KunenaFactory::getConfig ()->debug && !Kunena::isSvn()) {
+		if (!KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}

@@ -53,7 +53,7 @@ $document->setTitle(JText::_('COM_KUNENA_ANN_ANNOUNCEMENTS') . ' - ' . $this->co
 			<td class="kcol-first kcol-annid"><?php echo intval($ann->id); ?></td>
 			<td class="kcol-mid kcol-anndate"><?php echo CKunenaTimeformat::showDate($ann->created, 'date_today'); ?></td>
 			<td class="kcol-mid kcol-anntitle">
-				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', intval($ann->id), KunenaParser::parseText ($ann->title), KunenaParser::parseText ($ann->title), 'follow'); ?></div>
+				<div class="overflow"><?php echo CKunenaLink::GetAnnouncementLink('read', intval($ann->id), KunenaHtmlParser::parseText ($ann->title), KunenaHtmlParser::parseText ($ann->title), 'follow'); ?></div>
 			</td>
 			<?php if ($this->canEdit): ?>
 			<td class="kcol-mid kcol-annpublish">

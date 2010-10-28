@@ -17,8 +17,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-require_once (JPATH_ROOT . DS . 'administrator/components/com_kunena/libraries/api.php');
-kimport ( 'error' );
+kimport ( 'kunena.error' );
 
 abstract class CKunenaConfigBase {
 	public function __construct() {

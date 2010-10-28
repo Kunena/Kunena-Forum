@@ -45,7 +45,7 @@ class KunenaController extends JController {
 		$starttime = JProfiler::getmicrotime();
 
 		$lang = JFactory::getLanguage();
-		if (Kunena::isSVN()) {
+		if (KunenaForum::isSVN()) {
 			$lang->load('com_kunena',KPATH_ADMIN);
 			$lang->load('com_kunena',KPATH_SITE);
 			$lang->load('com_kunena.install',KPATH_ADMIN);

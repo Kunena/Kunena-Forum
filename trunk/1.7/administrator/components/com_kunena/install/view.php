@@ -76,7 +76,7 @@ class KunenaViewInstall extends JView
 	function setToolBar()
 	{
 		// Set the titlebar text
-		JToolBarHelper::title('<span>'.Kunena::version().'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );
+		JToolBarHelper::title('<span>'.KunenaForum::version().'</span> '. JText::_( 'COM_KUNENA_INSTALLER' ), 'kunena.png' );
 
 	}
 
@@ -108,7 +108,7 @@ class KunenaViewInstall extends JView
 		echo '<textarea cols="80" rows="50">';
 		echo $this->escape ( $schema->getSchema ()->saveXML () );
 		echo '</textarea>';
-		if (Kunena::isSvn()) {
+		if (KunenaForum::isSvn()) {
 			echo '<textarea cols="80" rows="20">';
 			foreach ( $create as $item ) {
 				echo $this->escape($item ['sql']) . "\n\n";
@@ -125,7 +125,7 @@ class KunenaViewInstall extends JView
 		echo '<textarea cols="80" rows="20">';
 		echo $this->escape ( $diff->saveXML () );
 		echo '</textarea>';
-		if (Kunena::isSvn()) {
+		if (KunenaForum::isSvn()) {
 			echo '<textarea cols="80" rows="20">';
 			foreach ( $sql as $item ) {
 				echo $this->escape($item ['sql']) . "\n\n";

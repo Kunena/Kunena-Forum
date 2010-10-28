@@ -35,7 +35,7 @@ class CKunenaModeration {
 	protected $_config = null;
 
 	protected function __construct($db, $config) {
-		kimport('category');
+		kimport('kunena.forum.category.helper');
 		$this->_db = $db;
 		$this->_my = &JFactory::getUser ();
 		$this->_session = KunenaFactory::getSession ();
@@ -107,7 +107,7 @@ class CKunenaModeration {
 		}
 
 		// Check that thread can't be move into a section
-		$category = KunenaCategory::getInstance($TargetCatID);
+		$category = KunenaForumCategoryHelper::get($TargetCatID);
 		if ( $category->parent_id == '0' ) {
 			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION');
 			return false;
@@ -231,8 +231,8 @@ class CKunenaModeration {
 		$this->_Log ( 'Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode );
 
 		// Last but not least update forum stats
-		kimport('categories');
-		KunenaCategory::recount ();
+		kimport('kunena.forum.category.helper');
+		KunenaForumCategoryHelper::recount ();
 
 		return true;
 	}
@@ -386,8 +386,8 @@ class CKunenaModeration {
 		$this->_Log ( 'Delete', $MessageID, 0, '', 0, $mode );
 
 		// Last but not least update forum stats
-		kimport('categories');
-		KunenaCategory::recount ();
+		kimport('kunena.forum.category.helper');
+		KunenaForumCategoryHelper::recount ();
 
 		return true;
 	}

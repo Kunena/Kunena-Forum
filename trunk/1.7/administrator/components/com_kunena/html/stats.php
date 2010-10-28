@@ -48,9 +48,9 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 	</tr>
 	<tr>
 		<td><?php echo JText::_('COM_KUNENA_STATS_TOTAL_THANKYOU'); ?></td>
-		<td><strong><?php echo KunenaThankYou::getTotalThankYou();?></strong></td>
+		<td><strong><?php echo KunenaForumMessageThankYou::getTotalThankYou();?></strong></td>
 		<td><?php echo JText::_('COM_KUNENA_STATS_TODAY_THANKYOU'); ?> </td>
-		<td><strong><?php echo KunenaThankYou::getTotalThankYou($datem->toMySQL(),$datee->toMySQL()) ;?></strong></td>
+		<td><strong><?php echo KunenaForumMessageThankYou::getTotalThankYou($datem->toMySQL(),$datee->toMySQL()) ;?></strong></td>
 	</tr>
 	<tr>
 		<td><?php echo JText::_('COM_KUNENA_STATS_TODAY_TOPICS'); ?></td>
@@ -165,7 +165,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 		</thead>
 		<tbody>
 			<?php
-				$KUNENA_top_thankyous=KunenaThankYou::getMostThankYou();
+				$KUNENA_top_thankyous=KunenaForumMessageThankYou::getMostThankYou();
 				foreach ($KUNENA_top_thankyous as $KUNENA_thankyou) {
 					if ($KUNENA_thankyou->countid == $KUNENA_top_thankyous[0]->countid) {
 						$barwidth = 100;
@@ -204,7 +204,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 		</thead>
 		<tbody>
 			<?php
-		$KUNENA_top_said_thankyous=KunenaThankYou::getMostThankYou('said');
+		$KUNENA_top_said_thankyous=KunenaForumMessageThankYou::getMostThankYou('said');
 				foreach ($KUNENA_top_said_thankyous as $KUNENA_said_thankyou) {
 					if ($KUNENA_said_thankyou->countid == $KUNENA_top_said_thankyous[0]->countid) {
 						$barwidth = 100;
@@ -288,7 +288,7 @@ $datee = new JDate(date("Y-m-d 23:59:59"));?>
 			</thead>
 			<tbody>
 			<?php
-				$KUNENA_top_posts=KunenaThankYou::getTopThankYouTopics();
+				$KUNENA_top_posts=KunenaForumMessageThankYou::getTopThankYouTopics();
 				foreach ($KUNENA_top_posts as $KUNENA_post) {
 					if ($KUNENA_post->countid == $KUNENA_top_posts[0]->countid) {
 						$barwidth = 100;

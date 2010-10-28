@@ -1,7 +1,7 @@
 <?php
 /**
  * @version $Id$
- * Kunena Component - Thank You class
+ * Kunena Component - KunenaForumMessageThankYou Class
  * @package Kunena
  *
  * @Copyright (C) 2010 www.kunena.com All rights reserved
@@ -13,10 +13,9 @@
 defined ( '_JEXEC' ) or die ();
 
 /**
- * Kunena Thank You
- *
+ * Kunena Forum Message Thank You Class
  */
-class KunenaThankYou extends JObject {
+class KunenaForumMessageThankYou extends JObject {
 	/**
 	 * Constructor
 	 *

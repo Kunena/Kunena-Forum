@@ -53,7 +53,7 @@ $k = 0;
 						<td class="kmessage-left khistorymsg">
 							<div class="kmsgbody">
 								<div class="kmsgtext">
-									<?php echo KunenaParser::parseBBCode( $mes->message ) ?>
+									<?php echo KunenaHtmlParser::parseBBCode( $mes->message ) ?>
 								</div>
 							</div>
 							<?php if ( !empty($this->attachmentslist[$mes->id]) ) $this->displayAttachments($this->attachmentslist[$mes->id]); ?>

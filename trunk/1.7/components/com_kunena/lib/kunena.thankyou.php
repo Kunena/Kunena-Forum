@@ -28,7 +28,7 @@ class CKunenaThankyou {
 		$this->_db = &JFactory::getDBO();
 		$this->_app =& JFactory::getApplication();
 
-		kimport('thankyou');
+		kimport('kunena.forum.message.thankyou');
 	}
 
 	/**
@@ -64,7 +64,7 @@ class CKunenaThankyou {
 			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid, 0, false ) );
 			return;
 		}
-		$saidit = KunenaThankYou::checkIfThankYouAllready ( $this->pid, $this->my->id );
+		$saidit = KunenaForumMessageThankYou::checkIfThankYouAllready ( $this->pid, $this->my->id );
 		if (! empty ( $saidit )) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_ALLREADY' ) );
 			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid, 0, false ) );
@@ -72,7 +72,7 @@ class CKunenaThankyou {
 		}
 
 		//Perform the insert
-		if (KunenaThankYou::storeThankYou ( $this->pid, $this->my->id, $this->targetuserid ) !== true)
+		if (KunenaForumMessageThankYou::storeThankYou ( $this->pid, $this->my->id, $this->targetuserid ) !== true)
 			KunenaError::checkDatabaseError ();
 
 		$activityIntegration = KunenaFactory::getActivityIntegration();
@@ -92,7 +92,7 @@ class CKunenaThankyou {
 		if($this->config->showthankyou){
 			$named='';
 			if(!$this->config->username) $named = 'name';
-			$res = KunenaThankYou::getThankYouUsers($pid,$named);
+			$res = KunenaForumMessageThankYou::getThankYouUsers($pid,$named);
 
 			if( KunenaError::checkDatabaseError() ) return false;
 

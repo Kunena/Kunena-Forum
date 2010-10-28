@@ -13,7 +13,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ( '' );
 
-kimport ( 'integration.integration' );
+require_once KPATH_ADMIN . '/libraries/integration/integration.php';
 
 abstract class KunenaAvatar {
 	public $priority = 0;
@@ -63,13 +63,13 @@ abstract class KunenaAvatar {
 		$avatar = $this->getURL($user, $size->x, $size->y);
 		if (!$avatar) return;
 		if ($class) $class=' class="'.$class.'"';
-		
+
 		// Why in the world do you need to have CSS here????
 		$link = '<img'.$class.' src="'.$avatar.'" alt="" style="max-width: '.$size->x.'px; max-height: '.$size->y.'px" />';
-		
+
 		// Correcting that...but leaving that line above just in case...
 		//$link = '<img'.$class.' src="'.$avatar.'" alt="User Avatar" />';
-		
+
 		return $link;
 	}
 }

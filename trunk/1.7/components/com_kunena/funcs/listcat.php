@@ -19,19 +19,19 @@ class CKunenaListcat {
 	private $_loaded = false;
 
 	function __construct($catid) {
-		kimport('category');
-		kimport('html.parser');
+		kimport('kunena.forum.category.helper');
+		kimport('kunena.html.parser');
 
 		$this->catid = intval($catid);
 		$this->me = KunenaFactory::getUser ();
 		$this->config = KunenaFactory::getConfig ();
 
 		if ($catid) {
-			$this->categories[0] = KunenaCategory::getCategories($catid);
+			$this->categories[0] = KunenaForumCategoryHelper::getCategories($catid);
 			if (empty($this->categories[0]))
 				return;
 		} else {
-			$this->categories[0] = KunenaCategory::getChildren();
+			$this->categories[0] = KunenaForumCategoryHelper::getChildren();
 		}
 
 		$this->allow = 1;
@@ -55,12 +55,12 @@ class CKunenaListcat {
 	function loadCategories() {
 		if ($this->_loaded) return;
 		$this->_loaded = true;
-		$allsubcats = KunenaCategory::getChildren(array_keys($this->categories [0]), 1);
+		$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($this->categories [0]), 1);
 		if (empty ( $allsubcats ))
 			return;
 
 		if ($this->config->shownew && $this->me->userid) {
-			$this->new = KunenaCategory::getNewTopics(array_keys($allsubcats));
+			$this->new = KunenaForumCategoryHelper::getNewTopics(array_keys($allsubcats));
 		}
 
 		$modcats = array ();
@@ -126,7 +126,7 @@ class CKunenaListcat {
 			KunenaError::checkDatabaseError();
 			foreach ( $holdtopics as $topic ) {
 				$hold = $access->getAllowedHold($this->me->userid, $topic->catid, false);
-				$category = KunenaCategory::getInstance($topic->catid);
+				$category = KunenaForumCategoryHelper::get($topic->catid);
 				if (isset($hold[1]))
 					$category->_last_post_location += $topic->unapproved;
 				if (isset($hold[2]) || isset($hold[3]))
@@ -138,7 +138,7 @@ class CKunenaListcat {
 		KunenaRouter::loadMessages ( $topiclist );
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
-		kimport('user');
+		kimport('kunena.user');
 		KunenaUser::loadUsers($userlist);
 	}
 

@@ -35,7 +35,7 @@ defined ( '_JEXEC' ) or die ();
 	<div class="kcontainer" id="frontstats_tbody">
 		<div class="kbody">
 			<div class="kfheadercontent">
-				<?php echo KunenaParser::parseBBCode ( $this->headerdesc ); ?>
+				<?php echo KunenaHtmlParser::parseBBCode ( $this->headerdesc ); ?>
 			</div>
 		</div>
 	</div>

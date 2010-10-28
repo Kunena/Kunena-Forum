@@ -1,25 +1,23 @@
 <?php
 /**
  * @version $Id$
- * Kunena Component - CKunenaUser class
+ * Kunena Component - TableKunenaCategories class
  * @package Kunena
  *
  * @Copyright (C) 2010 www.kunena.com All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
-
-// Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
 require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
-kimport ('error');
+kimport ('kunena.error');
 
 /**
- * Kunena Category Table
- * Provides access to the #__kunena_category table
+ * Kunena Categories
+ * Provides access to the #__kunena_categories table
  */
-class TableKunenaCategory extends KunenaTable
+class TableKunenaCategories extends KunenaTable
 {
 	var $id = null;
 	var $parent_id = null;

@@ -60,7 +60,7 @@ class CKunenaViewMessage {
 	public $inline_attachments = array();
 
 	function __construct($parent, $message) {
-		kimport('html.parser');
+		kimport('kunena.html.parser');
 		$this->replynum = $parent->replynum;
 		$this->replycnt = $parent->total_messages;
 		$this->mmm = $parent->mmm;
@@ -139,8 +139,8 @@ class CKunenaViewMessage {
 
 		$subject = $message->subject;
 		$this->resubject = JString::strtolower ( JString::substr ( $subject, 0, JString::strlen ( JText::_('COM_KUNENA_POST_RE') ) ) ) == JString::strtolower ( JText::_('COM_KUNENA_POST_RE') ) ? $subject : JText::_('COM_KUNENA_POST_RE') . ' ' . $subject;
-		$this->subjectHtml = KunenaParser::parseText ( $subject );
-		$this->messageHtml = KunenaParser::parseBBCode ( $message->message, $this );
+		$this->subjectHtml = KunenaHtmlParser::parseText ( $subject );
+		$this->messageHtml = KunenaHtmlParser::parseBBCode ( $message->message, $this );
 
 		//Show admins the IP address of the user:
 		if ($message->ip && (CKunenaTools::isAdmin () || (CKunenaTools::isModerator ( $this->my->id, $this->catid ) && !$this->config->hide_ip))) {
@@ -192,7 +192,7 @@ class CKunenaViewMessage {
 
 		$this->profilelink = $this->profile->profileIcon('profile');
 		$this->personaltext = $this->profile->personalText;
-		$this->signatureHtml = KunenaParser::parseBBCode ($this->profile->signature);
+		$this->signatureHtml = KunenaHtmlParser::parseBBCode ($this->profile->signature);
 
 		//Thankyou info and buttons
 		if ($this->config->showthankyou && $this->profile->userid) {
@@ -277,7 +277,7 @@ class CKunenaView {
 	public $goto = null;
 
 	function __construct($func, $catid, $id, $limitstart=0, $limit=0) {
-		kimport('category');
+		kimport('kunena.forum.category.helper');
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 
 		$this->db = JFactory::getDBO ();
@@ -381,7 +381,7 @@ class CKunenaView {
 			$this->redirect = CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->thread, $replyCount, $this->config->messages_per_page, $this->first_message->id, false );
 		}
 
-		$this->category = KunenaCategory::getInstance($this->catid);
+		$this->category = KunenaForumCategoryHelper::get($this->catid);
 
 		// START
 		$this->prevCheck = $this->session->lasttime;
@@ -389,13 +389,18 @@ class CKunenaView {
 
 		$showedEdit = 0;
 
+		kimport('kunena.forum.topic.helper');
+		$topic = KunenaForumTopicHelper::get($this->thread);
+		$usertopic = $topic->getUserTopic();
+		$this->favorited = $usertopic->favorite;
+
 		//check if topic is locked
-		$this->topicLocked = $this->first_message->locked;
+		$this->topicLocked = $topic->locked;
 		if (! $this->topicLocked) {
 			//topic not locked; check if forum is locked
 			$this->topicLocked = $this->category->locked;
 		}
-		$this->topicSticky = $this->first_message->ordering;
+		$this->topicSticky = $topic->ordering;
 
 		CKunenaTools::markTopicRead ( $this->thread, $this->my->id );
 
@@ -476,12 +481,12 @@ class CKunenaView {
 		$this->pagination = $this->getPagination ( $this->catid, $this->thread, $page, $totalpages, $maxpages );
 
 		//meta description and keywords
-		$category_parent = KunenaCategory::getInstance($this->category->parent_id);
+		$category_parent = KunenaForumCategoryHelper::get($this->category->parent_id);
 		$metaKeys = kunena_htmlspecialchars ( "{$this->first_message->subject}, {$category_parent->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
 
 		// Create Meta Description form the content of the first message
 		// better for search results display but NOT for search ranking!
-		$metaDesc = KunenaParser::stripBBCode($this->first_message->message);
+		$metaDesc = KunenaHtmlParser::stripBBCode($this->first_message->message);
 		$metaDesc = preg_replace('/\s+/', ' ', $metaDesc); // remove newlines
 		$metaDesc = preg_replace('/^[^\w0-9]+/', '', $metaDesc); // remove characters at the beginning that are not letters or numbers
 		$metaDesc = trim($metaDesc); // Remove trailing spaces and beginning
@@ -504,24 +509,13 @@ class CKunenaView {
 
 		//Perform subscriptions check only once
 		$fb_cansubscribe = 0;
-		if ($this->config->allowsubscriptions && $this->my->id) {
-			$this->db->setQuery ( "SELECT topic_id FROM #__kunena_user_topics WHERE user_id={$this->db->Quote($this->my->id)} AND topic_id={$this->db->Quote($this->thread)} AND subscribed=1" );
-			$fb_subscribed = $this->db->loadResult ();
-			KunenaError::checkDatabaseError();
-
-			if ($fb_subscribed == "") {
-				$fb_cansubscribe = 1;
-			}
+		if ($this->config->allowsubscriptions && $this->my->id && !$usertopic->subscribed) {
+			$fb_cansubscribe = 1;
 		}
 		//Perform favorites check only once
 		$fb_canfavorite = 0;
-		$this->db->setQuery ( "SELECT MAX(user_id={$this->db->Quote($this->my->id)}) AS favorited, COUNT(*) AS totalfavorited FROM #__kunena_user_topics WHERE topic_id={$this->db->Quote($this->thread)} AND favorite=1" );
-		list ( $this->favorited, $this->totalfavorited ) = $this->db->loadRow ();
-		KunenaError::checkDatabaseError();
-		if ($this->config->allowfavorites && $this->my->id) {
-			if (! $this->favorited) {
-				$fb_canfavorite = 1;
-			}
+		if ($this->config->allowfavorites && $this->my->id && !$usertopic->favorite) {
+			$fb_canfavorite = 1;
 		}
 
 		//get the Moderator list for display
@@ -595,7 +589,7 @@ class CKunenaView {
 			$this->thread_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderatethread', $this->catid, $this->id, CKunenaTools::showButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE_TOPIC') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE') );
 		}
 
-		$this->headerdesc = KunenaParser::parseBBCode ( $this->category->headerdesc );
+		$this->headerdesc = KunenaHtmlParser::parseBBCode ( $this->category->headerdesc );
 
 		$tabclass = array ("row1", "row2" );
 

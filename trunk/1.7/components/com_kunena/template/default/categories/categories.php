@@ -23,7 +23,7 @@ foreach ( $this->categories [0] as $section ) :
 		<h2><span><?php echo CKunenaLink::GetCategoryLink ( 'listcat', intval($section->id), $this->escape($section->name), 'follow' ); ?></span></h2>
 		<?php if (!empty($section->description)) : ?>
 		<div class="ktitle-desc km">
-			<?php echo KunenaParser::parseBBCode ( $section->description ); ?>
+			<?php echo KunenaHtmlParser::parseBBCode ( $section->description ); ?>
 		</div>
 		<?php endif; ?>
 	</div>
@@ -59,7 +59,7 @@ foreach ( $this->categories [0] as $section ) :
 			</div>
 
 		<?php if (!empty($category->description)) : ?>
-			<div class="kthead-desc km"><?php echo KunenaParser::parseBBCode ($category->description) ?> </div>
+			<div class="kthead-desc km"><?php echo KunenaHtmlParser::parseBBCode ($category->description) ?> </div>
 		<?php endif; ?>
 		<?php
 			// Display subcategories
@@ -71,7 +71,7 @@ foreach ( $this->categories [0] as $section ) :
 			<div class="kcc-subcat km">
 			<?php
 				echo $this->getCategoryIcon($childforum->id, true);
-				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($childforum->id), $this->escape($childforum->name), '','', KunenaParser::stripBBCode ( $childforum->description ) );
+				echo CKunenaLink::GetCategoryLink ( 'showcat', intval($childforum->id), $this->escape($childforum->name), '','', KunenaHtmlParser::stripBBCode ( $childforum->description ) );
 				echo '<span class="kchildcount ks">(' . $childforum->getTopics() . "/" . $childforum->getPosts() . ')</span>';
 			?>
 			</div>
@@ -126,7 +126,7 @@ foreach ( $this->categories [0] as $section ) :
 			<!-- /Avatar -->
 			<?php endif; ?>
 			<div class="klatest-subject ks">
-				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->_last_post_location), intval($this->config->messages_per_page), KunenaParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
+				<?php echo JText::_('COM_KUNENA_GEN_LAST_POST') . ': '. CKunenaLink::GetThreadPageLink ( 'view', intval($last->id), intval($last->last_topic_id), intval($last->_last_post_location), intval($this->config->messages_per_page), KunenaHtmlParser::parseText($last->last_topic_subject, 30), intval($last->last_post_id) );?>
 			</div>
 
 			<div class="klatest-subject-by ks">

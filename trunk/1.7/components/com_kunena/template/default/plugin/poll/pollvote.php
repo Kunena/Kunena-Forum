@@ -27,7 +27,7 @@ if ( $this->changevote ) {
 <div class="kblock kpollvote">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpolls_tbody"></a></span>
-		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ( $dataspollresult[0]->title ); ?></span></h2>
+		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText ( $dataspollresult[0]->title ); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpolls_tbody">
 		<div class="kbody">
@@ -45,16 +45,16 @@ if ( $this->changevote ) {
 										if($result->id == $id_last_vote) : ?>
 									<li>
 										<input class="kpoll-boxvote" type="radio" name="kpollradio" id="radio_name<?php echo $i ?>"
-											value="<?php echo intval($result->id) ?>" checked="checked" /><?php echo KunenaParser::parseText ( $result->text ) ?></li>
+											value="<?php echo intval($result->id) ?>" checked="checked" /><?php echo KunenaHtmlParser::parseText ( $result->text ) ?></li>
 										<?php else : ?>
 									<li>
 										<input class="kpoll-boxvote" type="radio" name="kpollradio" id="radio_name<?php echo $i ?>"
-											value="<?php echo intval($result->id) ?>" /><?php echo KunenaParser::parseText ( $result->text ) ?></li>
+											value="<?php echo intval($result->id) ?>" /><?php echo KunenaHtmlParser::parseText ( $result->text ) ?></li>
 										<?php endif;
 									else : ?>
 									<li>
 										<input class="kpoll-boxvote" type="radio" name="kpollradio" id="radio_name<?php echo $i ?>"
-											value="<?php echo intval($result->id) ?>" /><?php echo KunenaParser::parseText ( $result->text ) ?></li>
+											value="<?php echo intval($result->id) ?>" /><?php echo KunenaHtmlParser::parseText ( $result->text ) ?></li>
 									<?php endif;
 								endforeach;
 								?>

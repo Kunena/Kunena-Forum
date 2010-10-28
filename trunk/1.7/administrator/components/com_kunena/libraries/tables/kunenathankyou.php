@@ -8,15 +8,13 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
-
-// Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
 require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
 
 /**
- * Kunena User Table
- * Provides access to the #__kunena_users_banlist table
+ * Kunena Thank You
+ * Provides access to the #__kunena_thankyou table
  */
 class TableKunenaThankYou extends JTable {
 

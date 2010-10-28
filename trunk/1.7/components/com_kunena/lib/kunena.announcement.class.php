@@ -124,9 +124,9 @@ class CKunenaAnnouncement {
 
 		// TODO: deprecated
 		$this->id = $announcement->id;
-		$this->title = KunenaParser::parseText ( $announcement->title );
-		$this->sdescription = KunenaParser::parseBBCode ( $announcement->sdescription );
-		$this->description = KunenaParser::parseBBCode ( $announcement->description );
+		$this->title = KunenaHtmlParser::parseText ( $announcement->title );
+		$this->sdescription = KunenaHtmlParser::parseBBCode ( $announcement->sdescription );
+		$this->description = KunenaHtmlParser::parseBBCode ( $announcement->description );
 		$this->created = $announcement->created;
 		$this->published = $announcement->published;
 		$this->showdate = $announcement->showdate;

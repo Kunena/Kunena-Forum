@@ -50,7 +50,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 				<?php echo CKunenaLink::GetThreadPageLink ( 'view', intval($mes->catid), intval($mes->id), 0, intval($this->config->messages_per_page), CKunenaTools::topicIcon($mes), '' ) ?>
 				</td>
 				<td class="kcol-mid kcol-ktopictitle">
-				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($mes->catid), intval($mes->id), KunenaParser::parseText ($mes->subject), KunenaParser::stripBBCode ( $mes->message, 500), 'follow', 'ktopic-title km' ); ?>
+				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($mes->catid), intval($mes->id), KunenaHtmlParser::parseText ($mes->subject), KunenaHtmlParser::stripBBCode ( $mes->message, 500), 'follow', 'ktopic-title km' ); ?>
 
 				</div>
 
@@ -78,7 +78,7 @@ $this->app->setUserState( "com_kunena.ReviewURL", JRoute::_( $Breturn ) );
 					<!-- /Views -->
 				</td>
 				<td class="kcol-mid">
-					<?php echo KunenaParser::parseBBCode(); ?>
+					<?php echo KunenaHtmlParser::parseBBCode(); ?>
 				</td>
 				<?php if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) : ?>
 				<td class="kcol-mid ktopicmoderation">

@@ -12,8 +12,10 @@ defined( '_JEXEC' ) or die();
 
 jimport('joomla.html.html.select');
 
-abstract class JHTMLKunena {
+abstract class JHTMLKunenaForum {
 	function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {
+		kimport('kunena.forum.category.helper');
+
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
 		$sections = isset($params['sections']) ? (bool) $params['sections'] : 0;
 		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
@@ -24,7 +26,6 @@ abstract class JHTMLKunena {
 		$catid = isset($params['catid']) ? (int) $params['catid'] : 0;
 
 		$me = KunenaFactory::getUser();
-		kimport('category');
 		$params = array ();
 		$params['ordering'] = $ordering;
 		$params['direction'] = $direction;
@@ -32,11 +33,11 @@ abstract class JHTMLKunena {
 		$params['action'] = $action;
 		$params['selected'] = $catid;
 		if ($catid) {
-			if (!KunenaCategory::getInstance($catid)->getParent()->authorize($action))
-				$categories = KunenaCategory::getParents($catid, $levels, $params);
+			if (!KunenaForumCategoryHelper::get($catid)->getParent()->authorise($action))
+				$categories = KunenaForumCategoryHelper::getParents($catid, $levels, $params);
 		}
 		if (!isset($categories)) {
-			$categories = KunenaCategory::getChildren($parent, $levels, $params);
+			$categories = KunenaForumCategoryHelper::getChildren($parent, $levels, $params);
 		}
 
 		if (!is_array($options)) {
@@ -55,7 +56,7 @@ abstract class JHTMLKunena {
 			$selected[] = 0;
 		}
 		foreach ( $categories as $category ) {
-			$hide = !$category->authorize ($action) || (! $sections && $category->section);
+			$hide = !$category->authorise ($action) || (! $sections && $category->section);
 			if ($empty && empty($selected) && !$hide) {
 				$selected[] = $category->id;
 			}

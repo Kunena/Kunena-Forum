@@ -14,7 +14,7 @@ defined( '_JEXEC' ) or die();
 require_once JPATH_ADMINISTRATOR . '/components/com_kunena/api.php';
 
 $lang = JFactory::getLanguage();
-if (Kunena::isSVN()) {
+if (KunenaForum::isSVN()) {
 	$lang->load('com_kunena.install',KPATH_ADMIN);
 } else {
 	$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);

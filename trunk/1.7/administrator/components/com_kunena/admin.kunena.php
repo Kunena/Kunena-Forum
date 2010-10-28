@@ -51,11 +51,11 @@ if ($view) {
 
 JToolBarHelper::title('&nbsp;', 'kunena.png');
 
-kimport('error');
+kimport('kunena.error');
 $kunena_app = JFactory::getApplication ();
 require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
-if (Kunena::isSVN()) {
+if (KunenaForum::isSVN()) {
 	$lang->load('com_kunena',KPATH_ADMIN);
 	$lang->load('com_kunena',KPATH_SITE);
 	$lang->load('com_kunena.install',KPATH_ADMIN);
@@ -69,7 +69,7 @@ $kunena_db = JFactory::getDBO ();
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (KUNENA_PATH . DS . 'class.kunena.php');
-require_once (KUNENA_PATH_ADMIN . DS . 'admin.kunena.html.php');
+require_once (KPATH_ADMIN . '/admin.kunena.html.php');
 
 $cid = JRequest::getVar ( 'cid', array () );
 
@@ -255,8 +255,8 @@ switch ($task) {
 	case 'recount' :
 		CKunenaTools::reCountUserPosts ();
 
-		kimport('categories');
-		KunenaCategory::recount ();
+		kimport('kunena.forum.category.helper');
+		KunenaForumCategoryHelper::recount ();
 		// Also reset the name info stored with messages
 		//CKunenaTools::updateNameInfo();
 		$kunena_app->redirect ( JURI::base () . 'index.php?option=com_kunena', JText::_('COM_KUNENA_RECOUNTFORUMS_DONE') );
@@ -423,14 +423,11 @@ switch ($task) {
 	case "createmenu" :
 		$lang = JFactory::getLanguage();
 		// Start by loading English strings and override them by current locale
-		if (Kunena::isSVN()) {
+		if (KunenaForum::isSVN()) {
 			$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
-		} else {
-			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
-		}
-		if (Kunena::isSVN()) {
 			$lang->load('com_kunena.install',KPATH_ADMIN);
 		} else {
+			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
 			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 		}
 
@@ -452,9 +449,9 @@ if (! empty ( $kn_version_warning )) {
 	$kunena_app->enqueueMessage ( $kn_version_warning, 'notice' );
 }
 if (!$kversion->checkVersion()) {
-	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE'), Kunena::version() ), 'notice' );
+	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE'), KunenaForum::version() ), 'notice' );
 	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_UPGRADE_WARN') );
-	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE_AGAIN'), Kunena::version() ) );
+	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE_AGAIN'), KunenaForum::version() ) );
 	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_SUPPORT') . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
 }
 
@@ -1070,7 +1067,7 @@ function showConfig($option) {
 	// New for 1.6 -> Thank you button
 	$lists ['showthankyou'] = JHTML::_ ( 'select.genericlist', $yesno, 'cfg_showthankyou', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->showthankyou );
 
-	kimport('integration.integration');
+	kimport('kunena.integration');
 	$lists['integration_access'] = KunenaIntegration::getConfigOptions('access');
 	$lists['integration_activity'] = KunenaIntegration::getConfigOptions('activity');
 	$lists['integration_avatar'] = KunenaIntegration::getConfigOptions('avatar');
@@ -1318,8 +1315,7 @@ function addModerator($option, $id, $cid = null, $publish = 1) {
 		}
 	}
 
-	kimport('tables.kunenacategory');
-	$row = new TableKunenaCategory ( $kunena_db );
+	$row = new TableKunenaCategories ( $kunena_db );
 	$row->checkin ( $id );
 
 	$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
@@ -1654,7 +1650,7 @@ function userban($option, $userid, $block = 0) {
 		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=showprofiles" );
 	}
 
-	kimport ( 'userban' );
+	kimport ( 'kunena.user.ban' );
 	$userid = array_shift($userid);
 	$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
 	if (! $ban->id) {
@@ -2519,8 +2515,8 @@ function trashrestore($option, $cid) {
 			if (KunenaError::checkDatabaseError()) return;
 
 			CKunenaTools::reCountUserPosts ();
-			kimport('categories');
-			KunenaCategory::recount ();
+			kimport('kunena.forum.category.helper');
+			KunenaForumCategoryHelper::recount ();
 		}
 	}
 
@@ -2716,8 +2712,8 @@ function generateSystemReport () {
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$menudisplaytable.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jdefaultemplate.' | [u]author:[/u] '.$templateauthor->data().' | [u]version:[/u] '.$templateversion->data().' | [u]creationdate:[/u] '.$templatecreationdate->data().' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.Kunena::version().' | [u]Build:[/u] '
-	    .Kunena::versionBuild().' | [u]Version name:[/u] '.Kunena::versionName().' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$menudisplaytable.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jdefaultemplate.' | [u]author:[/u] '.$templateauthor->data().' | [u]version:[/u] '.$templateversion->data().' | [u]creationdate:[/u] '.$templatecreationdate->data().' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.KunenaForum::version().' | [u]Build:[/u] '
+	    .KunenaForum::versionBuild().' | [u]Version name:[/u] '.KunenaForum::versionName().' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
 
     return $report;
 }
@@ -2773,7 +2769,7 @@ function checkThirdPartyVersion($namephp, $namexml, $namedetailled, $path, $plgg
 //===============================
 
 function showStats() {
-	kimport ( 'thankyou' );
+	kimport ( 'kunena.forum.thankyou' );
 	include_once( KPATH_ADMIN . '/html/stats.php' );
 }
 
@@ -2885,8 +2881,8 @@ function checkLatestVersion() {
 	$latestVersion = getLatestKunenaVersion();
 
 	if ( $latestVersion['connect'] ) {
-		if ( version_compare($latestVersion['latest_version'], Kunena::version(), '<=') ) {
-			$needUpgrade = JText::sprintf('COM_KUNENA_COM_A_CHECK_VERSION_CORRECT', Kunena::version());
+		if ( version_compare($latestVersion['latest_version'], KunenaForum::version(), '<=') ) {
+			$needUpgrade = JText::sprintf('COM_KUNENA_COM_A_CHECK_VERSION_CORRECT', KunenaForum::version());
 		} else {
 			$needUpgrade = JText::sprintf('COM_KUNENA_COM_A_CHECK_VERSION_NEED_UPGRADE',$latestVersion['latest_version'],$latestVersion['released']);
 		}

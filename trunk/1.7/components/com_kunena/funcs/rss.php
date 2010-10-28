@@ -106,7 +106,7 @@ class CKunenaRSSView {
 		$title			= kunena_htmlspecialchars($this->app->getCfg('sitename')) .' - Forum';
 		$description	= 'Kunena Site Syndication';
 		$link			= JURI::root();
-		$generator		= 'Kunena ' . Kunena::version();
+		$generator		= 'Kunena ' . KunenaForum::version();
 		$rss_url		= $uribase . $_SERVER["REQUEST_URI"];
 		$rss_icon		= KUNENA_URLICONSPATH . 'rss.png';
 
@@ -211,12 +211,12 @@ class CKunenaRSSView {
 			if ($this->allow_html) {
 				// Not nessecary to convert specialchars or use parsetext.
 				// ParseBBCode does it for us
-				$tmp['text'] = KunenaParser::parseBBCode($tmp['text']);
+				$tmp['text'] = KunenaHtmlParser::parseBBCode($tmp['text']);
 			}
 			else {
 				// Not nessecary to convert specialchars.
 				// FeedCreator does it for us
-				$tmp['text'] = KunenaParser::parseText($tmp['text']);
+				$tmp['text'] = KunenaHtmlParser::parseText($tmp['text']);
 			}
 
 

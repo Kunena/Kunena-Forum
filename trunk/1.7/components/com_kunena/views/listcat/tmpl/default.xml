@@ -8,7 +8,7 @@
 		<name>COM_KUNENA_MENU_KFINDEX</name>
 		<description>COM_KUNENA_MENU_INDEX_DESC</description>
 		<url addpath="/administrator/components/com_kunena/elements">
-			<param name="catid" type="kunenacategories" default="0" sections="1" none="" label="COM_KUNENA_MENU_PARENTCAT" />
+			<param name="catid" type="kunenacategorylist" default="0" sections="1" none="" label="COM_KUNENA_MENU_PARENTCAT" />
 		</url>
 	</state>
 </metadata>

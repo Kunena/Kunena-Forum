@@ -10,6 +10,8 @@
  **/
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+kimport('kunena.forum.message.helper');
+kimport('kunena.forum.topic.helper');
 
 class CKunenaPost {
 	public $allow = 0;
@@ -234,9 +236,27 @@ class CKunenaPost {
 	protected function reply($do) {
 		if (!$this->load())
 			return false;
-		if ($this->lockProtection ())
-			return false;
 		if ($this->floodProtection ())
+			return false;
+
+		if ($this->id) {
+			$parent = KunenaForumMessageHelper::get($this->id);
+			if (!$parent->authorise('reply')) {
+				$this->_app->enqueueMessage ( $parent->getError(), 'notice' );
+				return false;
+			}
+			list ($topic, $message) = $parent->newReply($do == 'quote');
+		} else {
+			$category = KunenaForumCategoryHelper::get($this->catid);
+			if (!$category->authorise('topic.create')) {
+				$this->_app->enqueueMessage ( $category->getError(), 'notice' );
+				return false;
+			}
+			list ($topic, $message) = $category->newTopic();
+		}
+
+		return;
+		if ($this->lockProtection ())
 			return false;
 		if ($this->isUserBanned() )
 			return false;
@@ -432,23 +452,12 @@ class CKunenaPost {
 	protected function delete() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
 
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
-		$message = new CKunenaPosting ( );
-		$success = $message->delete ( $this->id );
-
-		// Handle errors
-		if (! $success) {
-			$errors = $message->getErrors ();
-			foreach ( $errors as $field => $error ) {
-				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
-			}
+		$message = KunenaForumMessageHelper::get($this->id);
+		if ($message->authorise('delete') && $message->publish(KunenaForumMessage::DELETED)) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ) );
 		} else {
-			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE') );
+			$this->_app->enqueueMessage ( $message->getError(), 'notice' );
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
@@ -456,23 +465,12 @@ class CKunenaPost {
 	protected function undelete() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
 
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
-		$message = new CKunenaPosting ( );
-		$success = $message->undelete ( $this->id );
-
-		// Handle errors
-		if (! $success) {
-			$errors = $message->getErrors ();
-			foreach ( $errors as $field => $error ) {
-				$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
-			}
+		$message = KunenaForumMessageHelper::get($this->id);
+		if ($message->authorise('undelete') && $message->publish(KunenaForumMessage::PUBLISHED)) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' ) );
 		} else {
-			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE') );
+			$this->_app->enqueueMessage ( $message->getError(), 'notice' );
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
@@ -480,26 +478,13 @@ class CKunenaPost {
 	protected function permdelete() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		// FIXME: we need better permission control
-		if ($this->moderatorProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
 
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$delete = $kunena_mod->deleteMessagePerminantly ( $this->id, true );
-		if (! $delete) {
-			$this->_app->enqueueMessage( $kunena_mod->getErrorMessage ());
+		$message = KunenaForumMessageHelper::get($this->id);
+		if ($message->authorise('permdelete') && $message->delete()) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ) );
 		} else {
-			$this->_app->enqueueMessage( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ));
+			$this->_app->enqueueMessage ( $message->getError(), 'notice' );
 		}
-
 		if ($this->parent)
 			$this->redirectBack ();
 		else
@@ -509,26 +494,14 @@ class CKunenaPost {
 	protected function deletethread() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
 
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$delete = $kunena_mod->deleteThread ( $this->id );
-		if (! $delete) {
-			$message = $kunena_mod->getErrorMessage ();
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if ($topic->authorise('delete') && $topic->publish(KunenaForumTopic::DELETED)) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' ) );
 		} else {
-			$message = JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' );
+			$this->_app->enqueueMessage ( $topic->getError(), 'notice' );
 		}
-
-		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ), $message );
+		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ) );
 	}
 
 	protected function moderate($modchoices='',$modthread = false) {
@@ -616,18 +589,12 @@ class CKunenaPost {
 	protected function subscribe() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread,catid FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
-		$thread = $this->_db->loadObject ();
-		if ($this->my->id && $thread) {
-			$query = "INSERT INTO #__kunena_user_topics (user_id,topic_id,category_id,subscribed) VALUES ({$this->_db->Quote($this->my->id)},{$this->_db->Quote($thread->thread)},{$this->_db->Quote($thread->catid)},1)
-					ON DUPLICATE KEY UPDATE subscribed=1;";
-			$this->_db->setQuery($query);
-			if ($this->_db->query () && $this->_db->getAffectedRows ()) {
-				$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
-			}
+
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if ($topic->authorise('read') && $topic->subscribe(1)) {
+			$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
+		} else {
+			$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' );
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
@@ -635,17 +602,12 @@ class CKunenaPost {
 	protected function unsubscribe() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
-		$thread = $this->_db->loadResult ();
-		if ($this->my->id && $thread) {
-			$query = "UPDATE #__kunena_user_topics SET subscribed=0 WHERE user_id={$this->_db->Quote($this->my->id)} AND topic_id={$this->_db->Quote($thread)};";
-			$this->_db->setQuery($query);
-			if ($this->_db->query () && $this->_db->getAffectedRows ()) {
-				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
-			}
+
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if ($topic->authorise('read') && $topic->subscribe(0)) {
+			$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
+		} else {
+			$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
@@ -653,18 +615,12 @@ class CKunenaPost {
 	protected function favorite() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread,catid FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
-		$thread = $this->_db->loadObject ();
-		if ($this->my->id && $thread) {
-			$query = "INSERT INTO #__kunena_user_topics (user_id,topic_id,category_id,favorite) VALUES ({$this->_db->Quote($this->my->id)},{$this->_db->Quote($thread->thread)},{$this->_db->Quote($thread->catid)},1)
-					ON DUPLICATE KEY UPDATE favorite=1;";
-			$this->_db->setQuery($query);
-			if ($this->_db->query () && $this->_db->getAffectedRows ()) {
-				$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
-			}
+
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if ($topic->authorise('read') && $topic->favorite(1)) {
+			$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
+		} else {
+			$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
@@ -672,17 +628,12 @@ class CKunenaPost {
 	protected function unfavorite() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
-		$this->_db->setQuery ( "SELECT thread FROM #__kunena_messages WHERE id={$this->_db->Quote($this->id)}" );
-		$thread = $this->_db->loadResult ();
-		if ($this->my->id && $thread) {
-			$query = "UPDATE #__kunena_user_topics SET favorite=0 WHERE user_id={$this->_db->Quote($this->my->id)} AND topic_id={$this->_db->Quote($thread)};";
-			$this->_db->setQuery($query);
-			if ($this->_db->query () && $this->_db->getAffectedRows ()) {
-				$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
-			}
+
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if ($topic->authorise('read') && $topic->favorite(0)) {
+			$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
+		} else {
+			$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
 		}
 		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
 	}
@@ -690,81 +641,61 @@ class CKunenaPost {
 	protected function sticky() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
 
-		$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' );
-		$this->_db->setQuery ( "update #__kunena_messages set ordering=1 where id={$this->_db->Quote($this->id)}" );
-		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_SET' );
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if (!$topic->authorise('sticky')) {
+			$this->_app->enqueueMessage ( $topic->getError(), 'notice' );
+		} elseif ($topic->sticky(1)) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_SET' ) );
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_SET' ) );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ) );
 	}
 
 	protected function unsticky() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
 
-		$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' );
-		$this->_db->setQuery ( "update #__kunena_messages set ordering=0 where id={$this->_db->Quote($this->id)}" );
-		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' );
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if (!$topic->authorise('sticky')) {
+			$this->_app->enqueueMessage ( $topic->getError(), 'notice' );
+		} elseif ($topic->sticky(0)) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_UNSET' ) );
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_STICKY_NOT_UNSET' ) );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ) );
 	}
 
 	protected function lock() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
 
-		$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' );
-		$this->_db->setQuery ( "update #__kunena_messages set locked=1 where id={$this->_db->Quote($this->id)}" );
-		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_SET' );
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if (!$topic->authorise('lock')) {
+			$this->_app->enqueueMessage ( $topic->getError(), 'notice' );
+		} elseif ($topic->lock(1)) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_SET' ) );
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_SET' ) );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ) );
 	}
 
 	protected function unlock() {
 		if ($this->tokenProtection ('get'))
 			return false;
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
 
-		$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' );
-		$this->_db->setQuery ( "update #__kunena_messages set locked=0 where id={$this->_db->Quote($this->id)}" );
-		if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' );
+		$topic = KunenaForumTopicHelper::get($this->id);
+		if (!$topic->authorise('lock')) {
+			$this->_app->enqueueMessage ( $topic->getError(), 'notice' );
+		} elseif ($topic->lock(0)) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_UNSET' ) );
+		} else {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_LOCK_NOT_UNSET' ) );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ) );
 	}
 
 	protected function approve() {
@@ -779,10 +710,8 @@ class CKunenaPost {
 		if ($this->isIPBanned())
 			return false;
 
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.posting.class.php');
-		$message = new CKunenaPosting();
-		$message->action($this->id);
-		if ($message->canApprove()) {
+		$message = KunenaForumMessageHelper::get($this->id);
+		if ($message->authorise('approve')) {
 			$success_msg = JText::_ ( 'COM_KUNENA_MODERATE_1APPROVE_FAIL' );
 			$this->_db->setQuery ( "UPDATE #__kunena_messages SET hold=0 WHERE id={$this->_db->Quote($this->id)}" );
 			if ($this->id && $this->_db->query () && $this->_db->getAffectedRows () == 1) {
@@ -796,7 +725,7 @@ class CKunenaPost {
 				$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . str_replace ( '&amp;', '&', CKunenaLink::GetThreadPageURL ( 'view', $this->catid, $this->msg_cat->thread, $limitstart, $this->config->messages_per_page, $this->id ) );
 
 				// Update category stats
-				$category = KunenaCategory::getInstance($this->msg_cat->catid);
+				$category = KunenaForumCategoryHelper::get($this->msg_cat->catid);
 				if (!$this->msg_cat->parent) $category->numTopics++;
 				$category->numPosts++;
 				$category->last_topic_id = $this->msg_cat->thread;
@@ -901,7 +830,7 @@ class CKunenaPost {
 		$profile = KunenaFactory::getUser();
 		$banned = $profile->isBanned();
 		if ($banned) {
-			kimport('userban');
+			kimport('kunena.user.ban');
 			$banned = KunenaUserBan::getInstanceByUserid($profile->userid, true);
 			if (!$banned->isLifetime()) {
 				require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
@@ -910,28 +839,6 @@ class CKunenaPost {
 				return true;
 			} else {
 				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_USER_BANNED_NOACCESS' ), 'error' );
-				$this->redirectBack();
-				return true;
-			}
-		}
-		return false;
-	}
-
-	protected function isIPBanned() {
-		// Disabled for now..
-		return false;
-
-		kimport('userban');
-		$banned = KunenaUserBan::getInstanceByIP($_SERVER['REMOTE_ADDR']);
-
-		if ( $banned ) {
-			if (!$banned->isLifetime()) {
-				require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
-				$this->_app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_POST_ERROR_IP_BANNED_NOACCESS_EXPIRY', CKunenaTimeformat::showDate( $banned->expiration) ), 'error' );
-				$this->redirectBack();
-				return true;
-			} else {
-				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_ERROR_IP_BANNED_NOACCESS' ), 'error' );
 				$this->redirectBack();
 				return true;
 			}

@@ -12,7 +12,7 @@
 defined( '_JEXEC' ) or die();
 
 require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
-kimport('error');
+kimport('kunena.error');
 
 class KunenaRouter {
 	static $catidcache = null;
@@ -31,8 +31,8 @@ class KunenaRouter {
 		if (self::$catidcache !== null)
 			return; // Already loaded
 
-		kimport('category');
-		self::$catidcache = KunenaCategory::getCategories();
+		kimport('kunena.forum.category.helper');
+		self::$catidcache = KunenaForumCategoryHelper::getCategories();
 	}
 
 	/**

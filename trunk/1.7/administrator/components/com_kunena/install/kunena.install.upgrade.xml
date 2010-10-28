@@ -194,13 +194,12 @@
 					ADD KEY `category_access` (accesstype,access);
 			</query>
 			<query>
-				INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
+				INSERT IGNORE INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)
 					SELECT userid AS user_id, thread AS topic_id, catid AS category_id, COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
 					FROM #__kunena_messages WHERE userid>0 AND moved=0 AND hold=0
-					GROUP BY user_id, topic_id
-					ON DUPLICATE KEY UPDATE category_id=VALUES(category_id), posts=VALUES(posts), last_post_id=VALUES(last_post_id), owner=VALUES(owner);
+					GROUP BY user_id, topic_id;
 			</query>
-			<query>
+			<query mode="silenterror">
 				INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, favorite)
 					SELECT f.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS favorite
 					FROM #__kunena_favorites AS f
@@ -208,7 +207,7 @@
 					WHERE f.userid>0
 					ON DUPLICATE KEY UPDATE favorite=1;
 			</query>
-			<query>
+			<query mode="silenterror">
 				INSERT INTO #__kunena_user_topics (user_id, topic_id, category_id, subscribed)
 					SELECT s.userid AS user_id, m.thread AS topic_id, m.catid AS category_id, 1 AS subscribed
 					FROM #__kunena_subscriptions AS s
@@ -216,7 +215,7 @@
 					WHERE s.userid>0
 					ON DUPLICATE KEY UPDATE subscribed=1;
 			</query>
-			<query>
+			<query mode="silenterror">
 				INSERT INTO #__kunena_user_categories (user_id, category_id, subscribed)
 					SELECT userid AS user_id, catid AS category_id, 1 AS subscribed
 					FROM #__kunena_subscriptions_categories
@@ -236,6 +235,13 @@
 					WHERE a.parent = 0 AND a.moved = 0
 					GROUP BY a.id
 			</query>
+			<query>DROP TABLE IF EXISTS `jos_kunena_favorites`</query>
+			<query>DROP TABLE IF EXISTS `jos_kunena_attachments_bak` </query>
+			<query>DROP TABLE IF EXISTS `jos_kunena_groups`</query>
+			<query>DROP TABLE IF EXISTS `jos_kunena_favorites`</query>
+			<query>DROP TABLE IF EXISTS `jos_kunena_groups`</query>
+			<query>DROP TABLE IF EXISTS `jos_kunena_subscriptions`</query>
+			<query>DROP TABLE IF EXISTS `jos_kunena_subscriptions_categories`</query>
 		</version>
 	</upgrade>
 </comupgrade>

@@ -384,9 +384,9 @@ class CKunenaSearch {
 		$searchlist = $this->get_searchstrings ();
 		foreach ( $this->results as $i => $result ) {
 			// Clean up subject
-			$ressubject = KunenaParser::parseText ($result->subject);
+			$ressubject = KunenaHtmlParser::parseText ($result->subject);
 			// Strip smiles and bbcode out of search results; they look ugly
-			$resmessage = KunenaParser::parseBBCode ($result->message);
+			$resmessage = KunenaHtmlParser::parseBBCode ($result->message);
 
 			foreach ( $searchlist as $searchword ) {
 				if (empty ( $searchword ))

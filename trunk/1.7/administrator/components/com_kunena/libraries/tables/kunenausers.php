@@ -1,24 +1,22 @@
 <?php
 /**
 * @version $Id$
-* Kunena Component - CKunenaUser class
+* Kunena Component - TableKunenaUsers class
 * @package Kunena
 *
 * @Copyright (C) 2010 www.kunena.com All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 **/
-
-// Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-require_once(dirname(__FILE__).DS.'kunena.php');
+require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
 
 /**
-* Kunena User Table
+* Kunena Users Table
 * Provides access to the #__kunena_users table
 */
-class TableKunenaUser extends KunenaTable
+class TableKunenaUsers extends KunenaTable
 {
 
 	/**

@@ -206,7 +206,7 @@ class CKunenaAjaxHelper {
 
 		require_once(JPATH_ROOT  .DS . '/libraries/joomla/document/html/html.php');
 
-		$msgbody = KunenaParser::parseBBCode( $data );
+		$msgbody = KunenaHtmlParser::parseBBCode( $data );
 		$result ['preview'] = $msgbody;
 
 		return $result;

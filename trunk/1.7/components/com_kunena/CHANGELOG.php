@@ -33,6 +33,53 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+28-October-2010 Matias
+^ [#22792] Move static functions of KunenaForumCategory into KunenaForumCategoryHelper
+^ [#22792] Move static functions of KunenaForumMessage into KunenaForumMessageHelper
+^ [#22792] Move static functions of KunenaForumTopic into KunenaForumTopicHelper
+^ [#22792] Move static functions of KunenaForumTopicUser into KunenaForumTopicUserHelper
++ [#22792] Create new class KunenaForum to replace Kunena
+- [#22570] Remove deprecated library/api.php and more
+^ [#22792] Rename JElementKunenaCategories to JElementKunenaCategoryList
+^ [#22792] Rename JHTMLKunena to JHTMLKunenaForum
+
+26-October-2010 Matias
+^ [#22792] Change kimport() to autoload classes, not to include them right away
+^ [#22792] Change kimport() to require 'kunena.' prefix
+^ [#22792] Relocate KunenaBBCode to new location
+^ [#22792] Relocate KunenaUser to new location
+^ [#22792] Relocate KunenaUserBan to new location
+^ [#22792] Rename KunenaParser to KunenaHtmlParser
+^ [#22792] Rename all TableKunena classes to plural form
+^ [#22792] Rename KunenaCategory to KunenaForumCategory
+^ [#22792] Rename KunenaMessage to KunenaForumMessage
+^ [#22792] Rename KunenaThankYou to KunenaForumThankYou
+^ [#22792] Rename KunenaTopic to KunenaForumTopic
+^ [#22792] Rename KunenaUserTopic to KunenaForumTopicUser
+
+25-October-2010 Matias
++ [#22792] Much improved authorise functions
++ [#22792] Use new classes when posting new topic, replying to a topic
+^ [#22570] Remove deprecated authorization code from CKunenaPosting class, use new classes
+^ [#22570] Use new authorization when reviewing unapproved posts
+
+22-October-2010 Matias
++ [#22792] Use new classes when favorite, subscribe, sticky, lock..
+- [#22570] Remove unused code to check banned IP addresses
++ [#22792] Use new classes in func=view on favorite/subscribe
+
+21-October-2010 Matias
++ [#22792] Improve base TableKunena class to support multiple field primary keys
++ [#22792] KunenaTopic: add functions to favorite(), subscribe(), sticky(), lock(), getUserTopic()..
++ [#22792] KunenaMessage: add new functions to newReply(), delete()
++ [#22792] KunenaUserTopic: add function to recount()
+
+20-October-2010 Matias
+- [#22570] Remove deprecated database tables during installation/upgrade
+- [#22570] Remove unused code from api.php
++ [#22792] New TableKunenaMessages, KunenaMessage classes
++ [#22792] New TableKunenaUserTopics, KunenaUserTopic classes
+
 19-October-2010 Matias
 ^ [#22792] Optimize access control to save some repeating queries by local caching
 + [#22792] Simplify logic in saving numPosts and numTopics to be local for each category

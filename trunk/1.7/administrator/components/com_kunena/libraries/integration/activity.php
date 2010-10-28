@@ -13,7 +13,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
-kimport ( 'integration.integration' );
+require_once KPATH_ADMIN . '/libraries/integration/integration.php';
+kimport ( 'kunena.integration.integration' );
 
 abstract class KunenaActivity
 {

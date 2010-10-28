@@ -245,20 +245,6 @@
 		<field name="activity_limit" type="int(11)" null="1" />
 		<key name="PRIMARY" unique="1" columns="id" />
 	</table>
-	<table name="kunena_favorites">
-		<field primary_key="yes" name="thread" type="int(11)" null="0"
-			default="0" />
-		<field primary_key="yes" name="userid" type="int(11)" null="0"
-			default="0" />
-		<key name="thread" unique="1" columns="thread,userid" />
-		<key name="userid" columns="userid" />
-	</table>
-	<table name="kunena_groups">
-		<field primary_key="yes" name="id" type="int(4)" null="0"
-			extra="auto_increment" />
-		<field name="title" type="varchar(255)" null="1" />
-		<key name="PRIMARY" unique="1" columns="id" />
-	</table>
 	<table name="kunena_topics">
 		<field name="id" type="int(11)" null="0" extra="auto_increment" />
 		<field name="category_id" type="int(11)" null="0" default="0" />
@@ -395,24 +381,6 @@
 		<field name="greylocation" type="varchar(60)" null="0" default="" />
 		<field name="emoticonbar" type="tinyint(4)" null="0" default="0" />
 		<key name="PRIMARY" unique="1" columns="id" />
-	</table>
-	<table name="kunena_subscriptions">
-		<field primary_key="yes" name="thread" type="int(11)" null="0"
-			default="0" />
-		<field primary_key="yes" name="userid" type="int(11)" null="0"
-			default="0" />
-		<field name="future1" type="int(11)" null="1" default="0" />
-		<key name="thread" unique="1" columns="thread,userid" />
-		<key name="userid" columns="userid" />
-	</table>
-	<table name="kunena_subscriptions_categories">
-		<field primary_key="yes" name="catid" type="int(11)" null="0"
-			default="0" />
-		<field primary_key="yes" name="userid" type="int(11)" null="0"
-			default="0" />
-		<field name="future1" type="int(11)" null="1" default="0" />
-		<key name="thread" unique="1" columns="catid,userid" />
-		<key name="userid" columns="userid" />
 	</table>
 	<table name="kunena_thankyou">
 		<field primary_key="yes" name="postid" type="int(11)" null="0" />

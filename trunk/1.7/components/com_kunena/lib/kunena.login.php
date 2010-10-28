@@ -83,7 +83,7 @@ class CKunenaLogin {
 	}
 
 	function display() {
-		kimport('template');
+		kimport('kunena.template');
 		if (!JFactory::getUser()->id) {
 			KunenaTemplate::loadTemplate('loginbox/login.php');
 		} else {

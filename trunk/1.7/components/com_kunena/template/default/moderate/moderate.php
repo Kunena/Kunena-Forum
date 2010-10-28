@@ -42,7 +42,7 @@ kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';
 		<?php echo JText::_('COM_KUNENA_POSTED_AT')?> <?php echo CKunenaTimeformat::showDate($this->message->time, 'config_post_dateformat'); ?></span>
 		<span class="kmessage-by"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($this->message->userid), $this->escape($this->message->name) ); ?></span></div>
 		<div class="kmessage-avatar"><?php echo $this->user->getAvatarLink('', 'list'); ?></div>
-		<div class="kmessage-msgtext"><?php echo KunenaParser::stripBBCode ($this->message->message, 300) ?></div>
+		<div class="kmessage-msgtext"><?php echo KunenaHtmlParser::stripBBCode ($this->message->message, 300) ?></div>
 	</div>
 	<div>
 		<?php echo JText::_('COM_KUNENA_MODERATE_THIS_USER');

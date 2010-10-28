@@ -24,8 +24,8 @@ class CKunenaLatestX {
 	public $subcategories = null;
 
 	function __construct($func, $page = 0) {
-		kimport ('category');
-		kimport ('topic');
+		kimport ('kunena.forum.category.helper');
+		kimport ('kunena.forum.topic.helper');
 
 		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
@@ -180,7 +180,7 @@ class CKunenaLatestX {
 			'hold'=>$this->hold,
 			'where'=>$where);
 
-		list ($this->total, $this->topics) = KunenaTopic::getLatestTopics($this->latestcategory, $this->limitstart, $this->limit, $params);
+		list ($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($this->latestcategory, $this->limitstart, $this->limit, $params);
 		$this->_common();
 	}
 
@@ -209,7 +209,7 @@ class CKunenaLatestX {
 			'subscribed'=>$sub
 		);
 
-		list ($this->total, $this->topics) = KunenaTopic::getLatestTopics(false, $this->limitstart, $this->limit, $params);
+		list ($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics(false, $this->limitstart, $this->limit, $params);
 		$this->_common();
 	}
 
@@ -276,12 +276,12 @@ class CKunenaLatestX {
 	}
 
 	function _getThankYouPosts($saidgot){
-		kimport('thankyou');
+		kimport('kunena.forum.message.thankyou');
 
 		$this->total = 10;//$limit default is on 10 TODO make adjustable
 		$this->limit = 10;
 
-		$idlist = KunenaThankYou::getThankYouPosts($this->user->id, $saidgot);
+		$idlist = KunenaForumMessageThankYou::getThankYouPosts($this->user->id, $saidgot);
 		$this->threadids = array();
 		$this->loadids = array();
 		foreach( $idlist as $message){
@@ -324,7 +324,7 @@ class CKunenaLatestX {
 
 		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$this->db->Quote($this->user->id)} AND subscribed=1";
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
-		$this->categories = KunenaCategory::getCategories($this->db->loadResultArray ());
+		$this->categories = KunenaForumCategoryHelper::getCategories($this->db->loadResultArray ());
 		if (KunenaError::checkDatabaseError()) return;
 	}
 

@@ -46,7 +46,7 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 
 		<?php if ($this->personaltext) : ?>
 		<li class="kpost-personal">
-			<?php echo KunenaParser::parseText($this->personaltext) ?>
+			<?php echo KunenaHtmlParser::parseText($this->personaltext) ?>
 		</li>
 		<?php endif ?>
 		<?php if ($this->userposts) : ?>

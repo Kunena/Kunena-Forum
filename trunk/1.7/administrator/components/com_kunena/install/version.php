@@ -32,25 +32,25 @@ class KunenaVersion
 	 */
 	public function getVersionWarning($msg='COM_KUNENA_VERSION_WARNING')
 	{
-		if (strpos(Kunena::version(), 'SVN') !== false) {
+		if (strpos(KunenaForum::version(), 'SVN') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_SVN');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_SVN_WARNING');
-		} else if (strpos(Kunena::version(), 'RC') !== false) {
+		} else if (strpos(KunenaForum::version(), 'RC') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_RC');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_RC_WARNING');
-		} else if (strpos(Kunena::version(), 'BETA') !== false) {
+		} else if (strpos(KunenaForum::version(), 'BETA') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_BETA');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_BETA_WARNING');
-		} else if (strpos(Kunena::version(), 'ALPHA') !== false) {
+		} else if (strpos(KunenaForum::version(), 'ALPHA') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_ALPHA');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_ALPHA_WARNING');
-		} else if (strpos(Kunena::version(), 'DEV') !== false) {
+		} else if (strpos(KunenaForum::version(), 'DEV') !== false) {
 			$kn_version_type = JText::_('COM_KUNENA_VERSION_DEV');
 			$kn_version_warning = JText::_('COM_KUNENA_VERSION_DEV_WARNING');
 		}
 		if (!empty($kn_version_warning))
 		{
-			return JText::sprintf($msg, Kunena::version(), $kn_version_type).' '.$kn_version_warning;
+			return JText::sprintf($msg, KunenaForum::version(), $kn_version_type).' '.$kn_version_warning;
 		}
 		return '';
 	}
@@ -59,8 +59,8 @@ class KunenaVersion
 		$version = $this->getDBVersion();
 		if (!isset($version->version)) return false;
 		if ($version->state) return false;
-		if ($version->version != Kunena::version()) return false;
-		if ($version->build != Kunena::versionBuild()) return false;
+		if ($version->version != KunenaForum::version()) return false;
+		if ($version->build != KunenaForum::versionBuild()) return false;
 		return true;
 	}
 
@@ -87,7 +87,7 @@ class KunenaVersion
 		}
 		else if (!empty($version->state))
 		{
-			if ($version->version != Kunena::version() || $version->build != Kunena::versionBuild()) $version->state = '';
+			if ($version->version != KunenaForum::version() || $version->build != KunenaForum::versionBuild()) $version->state = '';
 		}
 		return $version;
 	}
@@ -99,7 +99,7 @@ class KunenaVersion
 	*/
 	static function getVersionHTML()
 	{
-		return 'Kunena '.Kunena::version().' | '.Kunena::versionDate().' | '.Kunena::versionBuild().' [ '.Kunena::versionName().' ]';
+		return 'Kunena '.KunenaForum::version().' | '.KunenaForum::versionDate().' | '.KunenaForum::versionBuild().' [ '.KunenaForum::versionName().' ]';
 	}
 
 	/**

@@ -20,18 +20,18 @@ class CKunenaShowcat {
 	public $subcategories = null;
 
 	function __construct($catid, $page=0) {
-		kimport('html.parser');
-		kimport('category');
-		kimport('topic');
+		kimport('kunena.html.parser');
+		kimport('kunena.forum.category.helper');
+		kimport('kunena.forum.topic.helper');
 
 		$this->func = 'showcat';
 		$this->catid = intval($catid);
 		$this->page = intval($page);
 
-		$this->category = KunenaCategory::getInstance($this->catid);
+		$this->category = KunenaForumCategoryHelper::get($this->catid);
 		if (! $this->category->exists())
 			return;
-		if (! $this->category->authorize('read'))
+		if (! $this->category->authorise('read'))
 			return;
 
 		$this->allow = 1;
@@ -59,7 +59,7 @@ class CKunenaShowcat {
 			'orderby'=>'tt.ordering DESC, tt.last_post_time DESC',
 			'hold'=>$hold);
 
-		list ($this->total, $this->topics) = KunenaTopic::getLatestTopics($this->catid, $limitstart, $limit, $params);
+		list ($this->total, $this->topics) = KunenaForumTopicHelper::getLatestTopics($this->catid, $limitstart, $limit, $params);
 		$this->totalpages = ceil ( $this->total / $limit );
 
 		$this->highlight = 0;

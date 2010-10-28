@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.model' );
+kimport('kunena.forum.category.helper');
 
 /**
  * Categories Model for Kunena
@@ -86,21 +87,20 @@ class KunenaModelCategories extends JModel {
 	public function getItems() {
 		if ( $this->_items === false ) {
 			$me = KunenaFactory::getUser();
-			kimport('category');
 			$params = array (
 				'ordering'=>$this->getState ( 'list.ordering' ),
 				'direction'=>$this->getState ( 'list.direction' ) == 'asc' ? 1 : -1,
 				'search'=>$this->getState ( 'list.search' ),
 				'unpublished'=>1,
 				'action'=>'admin');
-			$categories = KunenaCategory::getChildren(0, $this->getState ( 'list.levels' ), $params);
+			$categories = KunenaForumCategoryHelper::getChildren(0, $this->getState ( 'list.levels' ), $params);
 			$this->setState ( 'list.total', count($categories) );
 			$this->_items = array_slice ( $categories, $this->getState ( 'list.start' ), $this->getState ( 'list.limit' ) );
 			$acl = JFactory::getACL ();
 			$admin = 0;
 			$this->_items_order = array();
 			foreach ($this->_items as $category) {
-				$siblings = array_keys(KunenaCategory::getCategoryTree($category->parent_id));
+				$siblings = array_keys(KunenaForumCategoryHelper::getCategoryTree($category->parent_id));
 				if (empty($siblings)) {
 					// FIXME: deal with orphaned categories
 					$orphans = true;
@@ -168,8 +168,7 @@ class KunenaModelCategories extends JModel {
 		if ($this->_object === false) {
 			require_once KPATH_SITE . '/class.kunena.php';
 			$app = JFactory::getApplication ();
-			kimport ( 'category' );
-			$category = KunenaCategory::getInstance ( $catid );
+			$category = KunenaForumCategoryHelper::get ( $catid );
 			if ($category->exists ()) {
 				if (!$category->isCheckedOut ( $me->userid ))
 					$category->checkout ( $me->userid );
@@ -240,10 +239,8 @@ class KunenaModelCategories extends JModel {
 		$cat_params['action'] = 'admin';
 
 		$lists = array ();
-		//require_once KPATH_SITE.'/class.kunena.php';
-		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
 		$lists ['access'] = KunenaFactory::getAccessControl()->getAccessLevelsList($category);
-		$lists ['categories'] = JHTML::_('kunena.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
+		$lists ['categories'] = JHTML::_('kunenaforum.categorylist', 'parent_id', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', $category->parent_id);
 		$lists ['published'] = JHTML::_ ( 'select.genericlist', $published, 'published', 'class="inputbox"', 'value', 'text', $category->published );
 		$lists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $category->pub_access );
 		$lists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $category->admin_access );
@@ -262,7 +259,7 @@ class KunenaModelCategories extends JModel {
 		$category = $this->getItem();
 		if (!$category) return false;
 
-		kimport('user');
+		kimport('kunena.user');
 		$moderators = KunenaUser::loadUsers($category->getModerators(false));
 		return $moderators;
 	}

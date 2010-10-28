@@ -54,8 +54,8 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		</tr>
 	<?php
 	} else foreach ( $this->topics as $leaf ) {
-		kimport('category');
-		$category = KunenaCategory::getInstance($leaf->category_id);
+		kimport('kunena.forum.category.helper');
+		$category = KunenaForumCategoryHelper::get($leaf->category_id);
 
 		if ($leaf->moved_id) $leaf->topic_emoticon = 3;
 		$curMessageNo = $leaf->posts - ($leaf->unread ? $leaf->unread - 1 : 0);
@@ -96,7 +96,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 
 			<td class="kcol-mid kcol-ktopictitle">
 				<?php if ($leaf->attachments) echo CKunenaTools::showIcon ( 'ktopicattach', JText::_('COM_KUNENA_ATTACH') ); ?>
-				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($leaf->category_id), intval($leaf->id), KunenaParser::parseText ($leaf->subject), KunenaParser::stripBBCode ( $leaf->first_post_message, 500), 'follow', 'ktopic-title km' ); ?>
+				<div class="ktopic-title-cover"><?php echo CKunenaLink::GetThreadLink ( 'view', intval($leaf->category_id), intval($leaf->id), KunenaHtmlParser::parseText ($leaf->subject), KunenaHtmlParser::stripBBCode ( $leaf->first_post_message, 500), 'follow', 'ktopic-title km' ); ?>
 				<?php
 				if ($leaf->favorite) {
 					echo CKunenaTools::showIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );

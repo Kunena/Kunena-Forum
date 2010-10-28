@@ -37,7 +37,7 @@ abstract class KunenaFactory {
 	 */
 	public static function getTemplate($name = null)
 	{
-		kimport('template');
+		kimport('kunena.template');
 		return KunenaTemplate::getInstance($name);
 	}
 
@@ -51,7 +51,7 @@ abstract class KunenaFactory {
 	 * @return object KunenaUser
 	 */
 	static public function getUser($id = null, $reload = false) {
-		kimport('user');
+		kimport('kunena.user');
 		return KunenaUser::getInstance($id, $reload);
 	}
 
@@ -65,7 +65,7 @@ abstract class KunenaFactory {
 	 */
 	public static function getSession($update = false)
 	{
-		kimport('session');
+		kimport('kunena.session');
 		if (!is_object(KunenaFactory::$session)) {
 			KunenaFactory::$session = KunenaSession::getInstance($update);
 		}
@@ -81,7 +81,7 @@ abstract class KunenaFactory {
 	 */
 	public static function getLogin()
 	{
-		kimport('integration.login');
+		require_once KPATH_ADMIN . '/libraries/integration/login.php';
 		return KunenaLogin::getInstance();
 	}
 
@@ -94,7 +94,7 @@ abstract class KunenaFactory {
 	 */
 	public static function getAvatarIntegration()
 	{
-		kimport('integration.avatar');
+		require_once KPATH_ADMIN . '/libraries/integration/avatar.php';
 		return KunenaAvatar::getInstance();
 	}
 
@@ -107,7 +107,7 @@ abstract class KunenaFactory {
 	 */
 	public static function getPrivateMessaging()
 	{
-		kimport('integration.private');
+		require_once KPATH_ADMIN . '/libraries/integration/private.php';
 		return KunenaPrivate::getInstance();
 	}
 
@@ -120,7 +120,7 @@ abstract class KunenaFactory {
 	 */
 	public static function getActivityIntegration()
 	{
-		kimport('integration.activity');
+		require_once KPATH_ADMIN . '/libraries/integration/activity.php';
 		return KunenaActivity::getInstance();
 	}
 
@@ -133,7 +133,7 @@ abstract class KunenaFactory {
 	 */
 	public static function getProfile()
 	{
-		kimport('integration.profile');
+		require_once KPATH_ADMIN . '/libraries/integration/profile.php';
 		return KunenaProfile::getInstance();
 	}
 
@@ -146,7 +146,7 @@ abstract class KunenaFactory {
 	 */
 	public static function getAccessControl()
 	{
-		kimport('integration.access');
+		require_once KPATH_ADMIN . '/libraries/integration/access.php';
 		return KunenaAccess::getInstance();
 	}
 

@@ -199,7 +199,7 @@ function filterHTML(&$string)
 function decodeHTML($string)
 {
 	require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/libraries/html/parser.php');
-	$string = KunenaParser::parseBBCode($string);
+	$string = KunenaHtmlParser::parseBBCode($string);
     return $string;
 }
 

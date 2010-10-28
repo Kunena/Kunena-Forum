@@ -1,20 +1,22 @@
 <?php
 /**
 * @version $Id$
-* Kunena Component
+* Kunena Component - TableKunenaSessions class
 * @package Kunena
 *
 * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
-*
 **/
-// Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-require_once(dirname(__FILE__).DS.'kunena.php');
+require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
 
-class TableKunenaSession extends KunenaTable
+/**
+ * Kunena Sessions
+ * Provides access to the #__kunena_sessions table
+ */
+class TableKunenaSessions extends KunenaTable
 {
 	var $userid = 0;
 	var $allowed = 'na';

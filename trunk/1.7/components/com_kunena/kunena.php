@@ -49,8 +49,8 @@ class KunenaApp {
 		jimport( 'joomla.error.profiler' );
 		$__kstarttime = JProfiler::getmicrotime();
 
-		kimport('error');
-		kimport('category');
+		kimport('kunena.error');
+		kimport('kunena.forum.category.helper');
 		$kunena_config = KunenaFactory::getConfig ();
 		if ($kunena_config->debug) {
 			KunenaError::initialize();
@@ -216,7 +216,7 @@ require_once (JPATH_COMPONENT . DS . 'class.kunena.php');
 
 // Central Location for all internal links
 require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.link.class.php');
-kimport('html.parser');
+kimport('kunena.html.parser');
 
 // Redirect profile (menu item) to the right component
 if ($func == 'profile' && !$do && empty($_POST)) {
@@ -334,11 +334,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	jimport('joomla.template.template');
 
 	// Kunena Current Template Icons Pack
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/icons.php' )) {
-		include (KUNENA_ABSTMPLTPATH . '/icons.php');
-	} else {
-		include (KUNENA_PATH_TEMPLATE_DEFAULT . DS . 'icons.php');
-	}
+	$template = KunenaFactory::getTemplate();
+	include (JPATH_ROOT.'/'.$template->getFile('icons.php'));
 
 	if(JDEBUG){
 		$__profiler->mark('Session Start');
@@ -405,7 +402,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	//the only thing we can do with it is 'listcat' and nothing else
 	if ($func == "showcat") {
 		if ($catid != 0) {
-			$category = KunenaCategory::getInstance($catid);
+			$category = KunenaForumCategoryHelper::get($catid);
 			$catParent = $category->getParent()->id;
 		}
 		if ($catid == 0 || $catParent == 0) {
@@ -666,10 +663,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 						$kunena_app->redirect ( CKunenaLink::GetProfileURL($kunena_my->id, false) );
 					}
-					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
-					$KunenaUserAPI = new KunenaUserAPI();
-					$cb = KGetArrayReverseInts ( "cb" );
-					$result = $KunenaUserAPI->unfavoriteThreads($kunena_my->id, $cb);
+					$catids = JRequest::getVar('cb', array ( 0 ), 'post', 'array');
+					$result = KunenaForumCategoryHelper::favorite($catids, 0);
 
 					if ( $result ) {
 						$message = JText::_('COM_KUNENA_USER_UNFAVORITE_YES');
@@ -685,10 +680,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
 						$kunena_app->redirect ( CKunenaLink::GetProfileURL($kunena_my->id, false) );
 					}
-					require_once(JPATH_ROOT.DS.'administrator/components/com_kunena/libraries/api.php');
-					$KunenaUserAPI = new KunenaUserAPI();
-					$cb = KGetArrayReverseInts ( "cb" );
-					$result = $KunenaUserAPI->unsubscribeThreads($kunena_my->id, $cb);
+					$catids = JRequest::getVar('cb', array ( 0 ), 'post', 'array');
+					$result = KunenaForumCategoryHelper::subscribe($catids, 0);
 
 					if ( $result ) {
 						$message = JText::_('COM_KUNENA_USER_UNSUBSCRIBE_YES');
@@ -782,7 +775,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// PDF and RSS
 	if ($kunena_config->enablerss || $kunena_config->enablepdf) {
 		if ($catid>0) {
-			$category = KunenaCategory::getInstance($catid);
+			$category = KunenaForumCategoryHelper::get($catid);
 			if ($category->pub_access == 0 && $category->parent_id) $rss_params = '&amp;catid=' . (int) $catid;
 		} else {
 			$rss_params = '';

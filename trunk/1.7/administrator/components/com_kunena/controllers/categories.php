@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.controller' );
+kimport ( 'kunena.forum.category.helper' );
 
 /**
  * Kunena Categories Controller
@@ -127,16 +128,15 @@ class KunenaControllerCategories extends KunenaController {
 		$post = JRequest::get('post', JREQUEST_ALLOWRAW);
 		$success = false;
 
-		kimport ( 'category' );
 		$me = KunenaFactory::getUser ();
-		$category = KunenaCategory::getInstance ( intval ( $post ['catid'] ) );
+		$category = KunenaForumCategoryHelper::get ( intval ( $post ['catid'] ) );
 
-		if ($category->exists() && !$me->isAdmin ( $category->id )) {
+		if ($category->exists() && !$category->authorise ( 'admin' )) {
 			// Category exists and user is not admin in category
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
 		} elseif (!$category->exists() && !$me->isAdmin ( intval ( $post ['parent'] ) )) {
 			// Category doesn't exist and user is not admin in parent, parent=0 needs global admin rights
-			$parent = KunenaCategory::getInstance ( intval ( $post ['parent'] ) );
+			$parent = KunenaForumCategoryHelper::get ( intval ( $post ['parent'] ) );
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $parent->name ) ), 'notice' );
 		} elseif (! $category->isCheckedOut ( $me->userid )) {
 			// Nobody can change id or statistics
@@ -151,7 +151,7 @@ class KunenaControllerCategories extends KunenaController {
 				$access = array('accesstype', 'access', 'pub_access', 'pub_recurse', 'admin_access', 'admin_recurse', 'class_sfx');
 				if (!$category->exists() || intval ($post ['parent']) != $category->parent) {
 					// If category didn't exist or is moved, copy access and class_sfx from parent
-					$parent = KunenaCategory::getInstance (intval ( $post ['parent']));
+					$parent = KunenaForumCategoryHelper::get (intval ( $post ['parent']));
 					$category->bind(array_intersect_key($parent->getProperties(), array_flip($access)));
 				}
 				$ignore = array_merge($ignore, $access);
@@ -188,12 +188,11 @@ class KunenaControllerCategories extends KunenaController {
 			$app->redirect ( KunenaRoute::_($this->baseurl, false) );
 		}
 
-		kimport ( 'category' );
 		$count = 0;
 		$me = KunenaFactory::getUser ();
-		$categories = KunenaCategory::getCategories ( $cid );
+		$categories = KunenaForumCategoryHelper::getCategories ( $cid );
 		foreach ( $categories as $category ) {
-			if (!$me->isAdmin ( $category->id )) {
+			if (!$category->authorise ( 'admin' )) {
 				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
 			} elseif (! $category->isCheckedOut ( $me->userid )) {
 				if ($category->delete ()) {
@@ -222,10 +221,9 @@ class KunenaControllerCategories extends KunenaController {
 
 		$id = JRequest::getInt('catid', 0);
 
-		kimport ( 'category' );
 		$me = KunenaFactory::getUser ();
-		$category = KunenaCategory::getInstance ( $id );
-		if ($category->exists() && !$me->isAdmin ( $category->id )) {
+		$category = KunenaForumCategoryHelper::get ( $id );
+		if (!$category->authorise ( 'admin' )) {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
 		} elseif (! $category->isCheckedOut ( $me->userid )) {
 			$category->checkin ();
@@ -252,13 +250,12 @@ class KunenaControllerCategories extends KunenaController {
 
 		$success = false;
 
-		kimport ( 'category' );
 		$me = KunenaFactory::getUser ();
-		$categories = KunenaCategory::getCategories ( $cid );
+		$categories = KunenaForumCategoryHelper::getCategories ( $cid );
 		foreach ( $categories as $category ) {
 			if (! isset ( $order [$category->id] ) || $category->get ( 'ordering' ) == $order [$category->id])
 				continue;
-			if (!$me->isAdmin ( $category->parent )) {
+			if (!$category->parent()->authorise ( 'admin' )) {
 				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->getParent()->name ) ), 'notice' );
 			} elseif (! $category->isCheckedOut ( $me->userid )) {
 				$category->set ( 'ordering', $order [$category->id] );
@@ -298,10 +295,9 @@ class KunenaControllerCategories extends KunenaController {
 			return;
 		}
 
-		kimport ( 'category' );
 		$me = KunenaFactory::getUser ();
-		$category = KunenaCategory::getInstance ( $id );
-		if (!$me->isAdmin($category->parent)) {
+		$category = KunenaForumCategoryHelper::get ( $id );
+		if (!$category->parent()->authorise ( 'admin' )) {
 			$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->getParent()->name ) ), 'notice' );
 			return;
 		}
@@ -311,8 +307,7 @@ class KunenaControllerCategories extends KunenaController {
 		}
 
 		$db = JFactory::getDBO ();
-		kimport ( 'tables.kunenacategory' );
-		$row = new TableKunenaCategory ( $db );
+		$row = new TableKunenaCategories ( $db );
 		$row->load ( $id );
 
 		// Ensure that we have the right ordering
@@ -334,13 +329,12 @@ class KunenaControllerCategories extends KunenaController {
 
 		$count = 0;
 
-		kimport ( 'category' );
 		$me = KunenaFactory::getUser ();
-		$categories = KunenaCategory::getCategories ( $cid );
+		$categories = KunenaForumCategoryHelper::getCategories ( $cid );
 		foreach ( $categories as $category ) {
 			if ($category->get ( $variable ) == $value)
 				continue;
-			if (!$me->isAdmin ( $category->id )) {
+			if (!$category->authorise ( 'admin' )) {
 				$app->enqueueMessage ( JText::sprintf ( 'COM_KUNENA_A_CATEGORY_NO_ADMIN', $this->escape ( $category->name ) ), 'notice' );
 			} elseif (! $category->isCheckedOut ( $me->userid )) {
 				$category->set ( $variable, $value );

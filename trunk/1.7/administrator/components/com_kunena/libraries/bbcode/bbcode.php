@@ -1,7 +1,7 @@
 <?php
 /**
  * @version $Id$
- * Kunena Component - Kunena Factory
+ * Kunena Component - KunenaBBCode Class
  * @package Kunena
  *
  * @Copyright (C) 2009-2010 www.kunena.com All rights reserved
@@ -10,14 +10,14 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ( 'html.bbcode.nbbc' );
+require_once KPATH_ADMIN . '/libraries/bbcode/nbbc/nbbc.php';
 
 /**
- * The Kunena bbcode parser
+ * Kunena BBCode Class
  *
  * @package		Kunena
  * @subpackage	com_kunena
- * @version		1.0
+ * @version		1.7
  */
 class KunenaBBCode extends BBCode {
 	public $autolink_disable = false;
@@ -43,7 +43,7 @@ class KunenaBBCode extends BBCode {
 	 *
 	 * @param
 	 * @return	void
-	 * @since	1.0
+	 * @since	1.7
 	 */
 	public function &getInstance() {
 		static $instance = false;
@@ -770,7 +770,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 						position: results[0].geometry.location
 					});
 				} else {
-					var contentString = '<p><strong>".KunenaParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';
+					var contentString = '<p><strong>".KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NO_GEOCODE')." <i>$content</i></strong></p>';
 					var infowindow$mapid = new google.maps.InfoWindow({ content: contentString });
 						infowindow$mapid.open($mapid);
 				}
@@ -781,7 +781,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		// ]]>"
 		);
 
-		return '<div id="'.$mapid.'" class="kgooglemap">'.KunenaParser::JSText('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE').'</div>';
+		return '<div id="'.$mapid.'" class="kgooglemap">'.KunenaHtmlParser::JSText('COM_KUNENA_GOOGLE_MAP_NOT_VISIBLE').'</div>';
 	}
 
 	function DoEbay($bbcode, $action, $name, $default, $params, $content) {

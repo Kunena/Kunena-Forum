@@ -54,7 +54,7 @@ class KunenaSession extends JObject
 	 * @return	object	The session table object
 	 * @since	1.5
 	 */
-	function getTable($type = 'KunenaSession', $prefix = 'Table')
+	function getTable($type = 'KunenaSessions', $prefix = 'Table')
 	{
 		static $tabletype = null;
 

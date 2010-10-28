@@ -8,7 +8,7 @@
 		<name>COM_KUNENA_MENU_KFNEWTOPIC</name>
 		<description>COM_KUNENA_MENU_NEWTOPIC_DESC</description>
 		<url addpath="/administrator/components/com_kunena/elements">
-			<param name="catid" type="kunenacategories" default="0" sections="0" none="Any" label="COM_KUNENA_MENU_CATID" />
+			<param name="catid" type="kunenacategorylist" default="0" sections="0" none="Any" label="COM_KUNENA_MENU_CATID" />
 			<param name="do" type="hidden" default="new" />
 		</url>
 	</state>

@@ -50,7 +50,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 		} else
 			foreach ( $this->messages as $message ) {
 				$topic = $this->topics[$message->thread];
-				$category = KunenaCategory::getInstance($topic->category_id);
+				$category = KunenaForumCategoryHelper::get($topic->category_id);
 		?>
 		<tr class="k<?php echo $tabclass [$k^=1];
 		if ($topic->ordering != 0) {
@@ -79,13 +79,13 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				}*/
 			?>
 				<div class="ktopic-title-cover">
-					<?php echo CKunenaLink::GetThreadLink ( 'view', intval($topic->category_id), intval($topic->id), KunenaParser::parseText ($message->subject, 30), KunenaParser::stripBBCode ($message->message), 'follow', 'ktopic-title km' ) ?>
+					<?php echo CKunenaLink::GetThreadLink ( 'view', intval($topic->category_id), intval($topic->id), KunenaHtmlParser::parseText ($message->subject, 30), KunenaHtmlParser::stripBBCode ($message->message), 'follow', 'ktopic-title km' ) ?>
 				</div>
-				<div style="display:none"><?php echo KunenaParser::parseBBCode ($message->message);?></div>
+				<div style="display:none"><?php echo KunenaHtmlParser::parseBBCode ($message->message);?></div>
 			</td>
 
 			<td class="kcol-mid ktopictittle">
-				<?php echo CKunenaLink::GetThreadLink ( 'view', intval($topic->category_id), intval($topic->first_post_id), KunenaParser::parseText ($topic->subject, 20), KunenaParser::stripBBCode ($topic->first_post_message), 'follow', 'ktopic-title km' ) ?>
+				<?php echo CKunenaLink::GetThreadLink ( 'view', intval($topic->category_id), intval($topic->first_post_id), KunenaHtmlParser::parseText ($topic->subject, 20), KunenaHtmlParser::stripBBCode ($topic->first_post_message), 'follow', 'ktopic-title km' ) ?>
 				<?php if ($topic->favorite) {
 						echo CKunenaTools::showIcon ( 'kfavoritestar', JText::_('COM_KUNENA_FAVORITE') );
 				} ?>

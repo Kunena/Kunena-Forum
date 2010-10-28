@@ -379,7 +379,7 @@ class KunenaModelInstall extends JModel {
 		if (isset($files[$task])) {
 			$file = $files[$task];
 			if (file_exists ( $path . DS . $file['name'] . $ext )) {
-				$this->extract ( $path, $file['name'] . $ext, $file['dest'], Kunena::isSVN() );
+				$this->extract ( $path, $file['name'] . $ext, $file['dest'], KunenaForum::isSVN() );
 			}
 			$this->setTask($task+1);
 		} else {
@@ -457,14 +457,14 @@ class KunenaModelInstall extends JModel {
 
 		// TODO: remove dependence
 		require_once (KPATH_ADMIN . '/api.php');
-		kimport('factory');
+		kimport('kunena.factory');
 
 		$this->createMenu(false);
 
-		kimport('topic');
-		KunenaTopic::recount();
-		kimport('category');
-		KunenaCategory::recount();
+		kimport('kunena.forum.topic.helper');
+		KunenaForumTopicHelper::recount();
+		kimport('kunena.forum.category.helper');
+		KunenaForumCategoryHelper::recount();
 
 		jimport ( 'joomla.filesystem.file' );
 		foreach ($entryfiles as $fileparts) {
@@ -523,7 +523,7 @@ class KunenaModelInstall extends JModel {
 
 	function migrateConfig() {
 		require_once KPATH_ADMIN.'/api.php';
-		kimport('factory');
+		kimport('kunena.factory');
 		$config = KunenaFactory::getConfig();
 		$version = $this->getVersion();
 		if (version_compare ( $version->version, '1.0.4', "<=" ) ) {
@@ -619,7 +619,6 @@ class KunenaModelInstall extends JModel {
 	}
 /*
 	public function upgradeDatabase() {
-		kimport ( 'models.schema', 'admin' );
 		$schema = new KunenaModelSchema ();
 		$results = $schema->updateSchema ();
 		foreach ( $results as $i => $r )
@@ -1062,7 +1061,7 @@ class KunenaModelInstall extends JModel {
 
 	protected function insertVersion($state = 'beginInstall') {
 		// Insert data from the new version
-		$this->insertVersionData ( Kunena::version(), Kunena::versionDate(), Kunena::versionBuild(), Kunena::versionName(), $state );
+		$this->insertVersionData ( KunenaForum::version(), KunenaForum::versionDate(), KunenaForum::versionBuild(), KunenaForum::versionName(), $state );
 	}
 
 	protected function updateVersionState($state) {
@@ -1075,7 +1074,7 @@ class KunenaModelInstall extends JModel {
 
 	function getActionText($version, $type='', $action=null) {
 		static $search = array ('#COMPONENT_OLD#','#VERSION_OLD#','#BUILD_OLD#','#VERSION#','#BUILD#');
-		$replace = array ($version->component, $version->version, $version->build, Kunena::version(), Kunena::versionBuild());
+		$replace = array ($version->component, $version->version, $version->build, KunenaForum::version(), KunenaForum::versionBuild());
 		if (!$action) $action = $version->action;
 		$str = '';
 		if ($type == 'hint' || $type == 'warn') {
@@ -1091,13 +1090,13 @@ class KunenaModelInstall extends JModel {
 			$this->_action = 'INSTALL';
 		else if ($version->prefix != 'kunena_')
 			$this->_action = 'MIGRATE';
-		else if (version_compare ( strtolower(Kunena::version()), strtolower($version->version), '>' ))
+		else if (version_compare ( strtolower(KunenaForum::version()), strtolower($version->version), '>' ))
 			$this->_action = 'UPGRADE';
-		else if (version_compare ( strtolower(Kunena::version()), strtolower($version->version), '<' ))
+		else if (version_compare ( strtolower(KunenaForum::version()), strtolower($version->version), '<' ))
 			$this->_action = 'DOWNGRADE';
-		else if (Kunena::versionBuild() && Kunena::versionBuild() > $version->build)
+		else if (KunenaForum::versionBuild() && KunenaForum::versionBuild() > $version->build)
 			$this->_action = 'UP_BUILD';
-		else if (Kunena::versionBuild() && Kunena::versionBuild() < $version->build)
+		else if (KunenaForum::versionBuild() && KunenaForum::versionBuild() < $version->build)
 			$this->_action = 'DOWN_BUILD';
 		else
 			$this->_action = 'REINSTALL';
@@ -1339,7 +1338,7 @@ class KunenaModelInstall extends JModel {
 			$parentid = ( int ) $this->_db->insertId ();
 		}
 
-		kimport ('factory');
+		kimport ('kunena.factory');
 		$config = KunenaFactory::getConfig();
 
 		// Submenu (shown in Kunena)

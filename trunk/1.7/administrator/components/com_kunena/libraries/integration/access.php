@@ -13,8 +13,8 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ( '' );
 
-kimport ( 'integration.integration' );
-kimport ( 'error' );
+require_once KPATH_ADMIN . '/libraries/integration/integration.php';
+kimport ( 'kunena.error' );
 
 abstract class KunenaAccess {
 	public $priority = 0;
@@ -133,6 +133,7 @@ abstract class KunenaAccess {
 					$read = $this->loadAllowedCategories($userid);
 				}
 				$allowed = $read;
+				break;
 			case 'moderate':
 				// Moderators have read/post/reply/edit permissions
 				if ($this->moderatorsByUserid === false) {

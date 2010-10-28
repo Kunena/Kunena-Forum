@@ -11,6 +11,7 @@
  */
 //Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
+kimport('kunena.forum.message.helper');
 
 class CKunenaReview {
 	protected $_db;
@@ -49,13 +50,9 @@ class CKunenaReview {
 		foreach ( $array as $id => $value ) {
 			if (!$value) continue;
 
-			$message = new CKunenaPosting ( );
-			$message->action($id);
-			if (!$message->canApprove()) {
-				$errors = $message->getErrors ();
-				foreach ( $errors as $field => $error ) {
-					$this->_app->enqueueMessage ( $field . ': ' . $error, 'error' );
-				}
+			$message = KunenaForumMessageHelper::get($id);
+			if (!$message->authorise('approve')) {
+				$this->_app->enqueueMessage ( $message->getError(), 'error' );
 				continue;
 			}
 
@@ -65,7 +62,7 @@ class CKunenaReview {
 				return;
 
 			// Update category stats
-			$category = KunenaCategory::getInstance($message->get ( 'catid' ));
+			$category = KunenaForumCategoryHelper::get($message->get ( 'catid' ));
 			if (!$message->get ( 'parent' )) $category->numTopics++;
 			$category->numPosts++;
 			$category->last_topic_id = $message->get ( 'thread' );

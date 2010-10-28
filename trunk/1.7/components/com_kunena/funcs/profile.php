@@ -19,7 +19,7 @@ class CKunenaProfile {
 	public $allow = false;
 
 	function __construct($userid, $do='') {
-		kimport('html.parser');
+		kimport('kunena.html.parser');
 		require_once(KPATH_SITE.'/lib/kunena.timeformat.class.php');
 		$this->_db = JFactory::getDBO ();
 		$this->_app = JFactory::getApplication ();
@@ -91,7 +91,7 @@ class CKunenaProfile {
 		$avatar = KunenaFactory::getAvatarIntegration();
 		$this->editavatar = is_a($avatar, 'KunenaAvatarKunena') ? true : false;
 
-		kimport('userban');
+		kimport('kunena.user.ban');
 		$this->banInfo = KunenaUserBan::getInstanceByUserid($userid, true);
 		$this->canBan = $this->banInfo->canBan();
 		if ( $this->config->showbannedreason ) $this->banReason = $this->banInfo->reason_public;
@@ -201,12 +201,7 @@ class CKunenaProfile {
 			$this->gallery = '';
 		}
 		$path = KUNENA_PATH_AVATAR_UPLOADED .'/gallery';
-		if (is_dir($path)) {
-			$this->galleryurl = KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery';
-		} else {
-			$path = KUNENA_PATH_UPLOADED_LEGACY . '/avatars/gallery';
-			$this->galleryurl = KUNENA_LIVEUPLOADEDPATH_LEGACY . '/avatars/gallery';
-		}
+		$this->galleryurl = KUNENA_LIVEUPLOADEDPATH . '/avatars/gallery';
 		$this->galleries = $this->getAvatarGalleries($path, 'gallery');
 		$this->galleryimg = $this->getAvatarGallery($path . '/' . $this->gallery);
 		CKunenaTools::loadTemplate('/profile/editavatar.php');
@@ -328,13 +323,13 @@ class CKunenaProfile {
 	}
 
 	function getBannedUsers() {
-		kimport('userban');
+		kimport('kunena.user.ban');
 		$banned = KunenaUserBan::getBannedUsers();
 		return $banned;
 	}
 
 	function getBanHistory() {
-		kimport('userban');
+		kimport('kunena.user.ban');
 		$user_history = KunenaUserBan::getUserHistory($this->profile->userid);
 		return $user_history;
 	}
@@ -609,7 +604,7 @@ class CKunenaProfile {
 			return false;
 		}
 
-		kimport ( 'userban' );
+		kimport ( 'kunena.user.ban' );
 		$ban = KunenaUserBan::getInstanceByUserid ( $userid, true );
 		if (! $ban->id) {
 			$ban->ban ( $userid, $ip, $block, $expiration, $reason_private, $reason_public, $comment );

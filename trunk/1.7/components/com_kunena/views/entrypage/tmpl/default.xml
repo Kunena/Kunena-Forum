@@ -11,7 +11,7 @@
 			<param name="defaultmenu" type="menuitem" default="0" state="1" label="COM_KUNENA_MENU_DEFAULTITEM" />
 		</url>
 		<params addpath="/administrator/components/com_kunena/elements">
-			<param name="catids" type="kunenacategories" default="0" multiple="1" size="8" sections="1" none="All Categories" label="COM_KUNENA_MENU_ALLOWEDCAT" />
+			<param name="catids" type="kunenacategorylist" default="0" multiple="1" size="8" sections="1" none="All Categories" label="COM_KUNENA_MENU_ALLOWEDCAT" />
 		</params>
 		
 	</state>

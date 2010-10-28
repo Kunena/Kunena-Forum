@@ -27,7 +27,7 @@ class KunenaControllerInstall extends JController {
 	public function __construct() {
 		$lang = JFactory::getLanguage();
 		// Start by loading English strings and override them by current locale
-		if (Kunena::isSVN()) {
+		if (KunenaForum::isSVN()) {
 			$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
 			$lang->load('com_kunena.install',KPATH_ADMIN);
 		} else {
@@ -154,7 +154,7 @@ class KunenaControllerInstall extends JController {
 		$this->model->deleteMenu();
 		$app = JFactory::getApplication();
 		$app->enqueueMessage(JText::_('COM_KUNENA_INSTALL_REMOVED'));
-		if (!Kunena::isSvn()) {
+		if (!KunenaForum::isSvn()) {
 			jimport('joomla.filesystem.folder');
 			JFolder::delete(KPATH_MEDIA);
 			jimport('joomla.installer.installer');

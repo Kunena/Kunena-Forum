@@ -32,12 +32,12 @@ $id = JRequest::getInt ( 'id', 0 );
 <!-- Pathway -->
 <?php
 	// FIXME: move most of the code out of the template
-	kimport('category');
+	kimport('kunena.forum.category.helper');
 	$jr_path_menu = array ();
 	$fr_title_name = JText::_('COM_KUNENA_CATEGORIES');
 
-	$parents = KunenaCategory::getParents($catid);
-	$parents[] = KunenaCategory::getInstance($catid);
+	$parents = KunenaForumCategoryHelper::getParents($catid);
+	$parents[] = KunenaForumCategoryHelper::get($catid);
 	$parents = array_reverse($parents);
 	foreach ( $parents as $parent ) {
 		$fr_name = $this->escape( JString::trim ( $parent->name ) );

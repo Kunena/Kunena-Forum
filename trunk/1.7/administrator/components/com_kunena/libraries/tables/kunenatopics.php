@@ -13,7 +13,7 @@ defined ( '_JEXEC' ) or die ();
 require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
 
 /**
- * Kunena Topics Table Class
+ * Kunena Topics
  * Provides access to the #__kunena_topics table
  */
 class TableKunenaTopics extends KunenaTable

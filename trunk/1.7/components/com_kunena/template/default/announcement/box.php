@@ -16,7 +16,7 @@ defined( '_JEXEC' ) or die();
 <div class="kblock kannouncement">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kannouncement"></a></span>
-		<h2><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, KunenaParser::parseText($this->announcement->title), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></h2>
+		<h2><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, KunenaHtmlParser::parseText($this->announcement->title), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?></h2>
 	</div>
 	<div class="kcontainer" id="kannouncement">
 		<?php if ($this->canEdit) : ?>
@@ -34,7 +34,7 @@ defined( '_JEXEC' ) or die();
 				<?php endif; ?>
 				<?php if (!empty($this->announcement->sdescription)) : ?>
 					<div class="anndesc">
-						<?php echo KunenaParser::parseBBCode($this->announcement->sdescription); ?>
+						<?php echo KunenaHtmlParser::parseBBCode($this->announcement->sdescription); ?>
 						<?php if (!empty($this->announcement->description)) : ?>
 						...<br /><?php echo CKunenaLink::GetAnnouncementLink( 'read', $this->id, JText::_('COM_KUNENA_ANN_READMORE'), JText::_('COM_KUNENA_ANN_READMORE'),'follow'); ?>
 						<?php endif; ?>

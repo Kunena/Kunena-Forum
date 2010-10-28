@@ -12,7 +12,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
-kimport('error');
+kimport('kunena.error');
 
 /**
 
@@ -154,7 +154,7 @@ class KunenaUser extends JObject {
 	 * @return	object	The user table object
 	 * @since	1.6
 	 */
-	function getTable($type = 'KunenaUser', $prefix = 'Table') {
+	function getTable($type = 'KunenaUsers', $prefix = 'Table') {
 		static $tabletype = null;
 
 		//Set a custom table type is defined
@@ -264,7 +264,6 @@ class KunenaUser extends JObject {
 
 	public static function getOnlineUsers() {
 		if (self::$_online === null) {
-			kimport ( 'error' );
 			$db = JFactory::getDBO ();
 			$query = "SELECT s.userid, s.time
 				FROM #__session AS s
@@ -382,7 +381,6 @@ class KunenaUser extends JObject {
 		if (! $config->showranking)
 			return;
 		if (self::$_ranks === null) {
-			kimport ( 'error' );
 			$this->_db->setQuery ( "SELECT * FROM #__kunena_ranks" );
 			self::$_ranks = $this->_db->loadObjectList ( 'rank_id' );
 			KunenaError::checkDatabaseError ();

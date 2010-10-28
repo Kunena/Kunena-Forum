@@ -14,7 +14,7 @@
 defined ( '_JEXEC' ) or die ();
 
 function kunena_upgrade_161_delfiles($parent) {
-	if (Kunena::isSVN()) return;
+	if (KunenaForum::isSVN()) return;
 
 	//Import filesystem libraries.
 	jimport ( 'joomla.filesystem.folder' );

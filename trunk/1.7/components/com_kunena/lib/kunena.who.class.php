@@ -170,8 +170,8 @@ class CKunenaWhoIsOnline {
 		$online = $this->_getOnlineUsers();
 
 		if ( $func == 'showcat') {
-			$category = KunenaCategory::getInstance($catid);
-    		$what = JText::_('COM_KUNENA_WHO_VIEW_SHOWCAT').' '.KunenaCategory::getInstance($catid)->name;
+			$category = KunenaForumCategoryHelper::get($catid);
+    		$what = JText::_('COM_KUNENA_WHO_VIEW_SHOWCAT').' '.KunenaForumCategoryHelper::get($catid)->name;
     		KunenaError::checkDatabaseError();
 		} else if ($func == 'listcat') {
     		$what = JText::_('COM_KUNENA_WHO_VIEW_LISCAT');

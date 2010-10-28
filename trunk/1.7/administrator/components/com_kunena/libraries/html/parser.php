@@ -12,7 +12,9 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
-abstract class KunenaParser {
+kimport('kunena.bbcode');
+
+abstract class KunenaHtmlParser {
 	static $emoticons = null;
 
 	function getEmoticons($grayscale, $emoticonbar = 0) {
@@ -60,7 +62,6 @@ abstract class KunenaParser {
 	function parseBBCode($txt, $parent=null) {
 		if (!$txt) return;
 
-		kimport('html.bbcode');
 		$bbcode = KunenaBBcode::getInstance();
 		$bbcode->parent = $parent;
 		$bbcode->SetLimit(0);
@@ -73,7 +74,6 @@ abstract class KunenaParser {
 	function plainBBCode($txt, $len=0) {
 		if (!$txt) return;
 
-		kimport('html.bbcode');
 		$bbcode = KunenaBBCode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
@@ -85,7 +85,6 @@ abstract class KunenaParser {
 	function stripBBCode($txt, $len=0) {
 		if (!$txt) return;
 
-		kimport('html.bbcode');
 		$bbcode = KunenaBBCode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);

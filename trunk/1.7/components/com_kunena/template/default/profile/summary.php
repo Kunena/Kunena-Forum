@@ -59,7 +59,7 @@ if ($this->my->id == $this->user->id) {
 										?>
 								<li><?php echo $PMlink; ?></li>
 								<?php  } ?>
-								<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo KunenaParser::parseText($this->personalText); ?></li><?php } ?>
+								<?php if( !empty($this->personalText) ) { ?><li><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_ABOUTME'); ?>:</strong> <?php echo KunenaHtmlParser::parseText($this->personalText); ?></li><?php } ?>
 							</ul>
 							</div>
 						</div>

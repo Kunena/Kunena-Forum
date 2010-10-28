@@ -79,7 +79,7 @@ abstract class KunenaIntegration extends JObject {
 		foreach ( $folders as $integration ) {
 			$file = "$dir/$integration/$name.php";
 			if (is_file ( $file )) {
-				kimport("integration.$name");
+				kimport("kunena.integration.$name");
 				$obj = self::_initialize ( $name, $integration );
 				$priority = 0;
 				if ($obj)

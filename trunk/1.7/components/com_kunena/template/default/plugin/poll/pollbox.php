@@ -30,7 +30,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 <div class="kblock kpollbox">
 	<div class="kheader">
 		<span class="ktoggler"><a class="ktoggler close" title="<?php echo JText::_('COM_KUNENA_TOGGLER_COLLAPSE') ?>" rel="kpolls_tbody"></a></span>
-		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaParser::parseText ($dataspollresult[0]->title); ?></span></h2>
+		<h2><span><?php echo JText::_('COM_KUNENA_POLL_NAME'); ?> <?php echo KunenaHtmlParser::parseText ($dataspollresult[0]->title); ?></span></h2>
 	</div>
 	<div class="kcontainer" id="kpolls_tbody">
 		<div class="kbody">
@@ -43,7 +43,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								<?php foreach ($dataspollresult as $row) :
 								?>
 								<tr class="krow<?php echo ($i^=1)+1;?>">
-									<td class="kpoll-option"><?php echo KunenaParser::parseText ( $row->text ); ?></td>
+									<td class="kpoll-option"><?php echo KunenaHtmlParser::parseText ( $row->text ); ?></td>
 									<td class="kpoll-bar"><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo (intval($row->votes*25)/5); } else { echo "0"; }?>" alt=""/></td>
 									<td class="kpoll-number"><?php if(isset($row->votes) && ($row->votes > 0)) { echo intval($row->votes); } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
 									<td class="kpoll-percent"><?php if($row->votes != '0' && $nbvoters != '0' ) { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td>
@@ -96,7 +96,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 									<?php foreach ($dataspollresult as $i=>$option) : ?>
 									<li>
 										<input class="kpoll-boxvote" type="radio" name="kpollradio" id="radio_name<?php echo intval($i) ?>" value="<?php echo intval($option->id) ?>" />
-										<?php echo KunenaParser::parseText ($option->text ) ?>
+										<?php echo KunenaHtmlParser::parseText ($option->text ) ?>
 									</li>
 									<?php endforeach; ?>
 								</ul>
@@ -117,7 +117,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 						<table>
 							<?php foreach ( $dataspollresult as $row ) : ?>
 							<tr class="krow<?php echo ($i^=1)+1;?>">
-								<td class="kcol-option"><?php echo KunenaParser::parseText ($row->text); ?></td>
+								<td class="kcol-option"><?php echo KunenaHtmlParser::parseText ($row->text); ?></td>
 								<td class="kcol-bar"><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/bar.png"; ?>" height = "10" width = "<?php echo isset($row->votes) ? ($row->votes*25)/5 : "0"; ?>" /></td>
 								<td class="kcol-number"><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
 								<td class="kcol-percent"><?php if($row->votes != "0" && $nbvoters != '0') { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td>

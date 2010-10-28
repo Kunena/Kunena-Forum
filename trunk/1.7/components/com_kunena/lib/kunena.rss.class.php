@@ -16,8 +16,8 @@ require_once (KPATH_SITE .'/lib/kunena.image.class.php');
 require_once (KPATH_SITE .'/lib/kunena.timeformat.class.php');
 require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 
-kimport('html.parser');
-kimport('session');
+kimport('kunena.html.parser');
+kimport('kunena.session');
 
 class CKunenaRSSData {
 	/**

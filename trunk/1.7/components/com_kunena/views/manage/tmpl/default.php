@@ -79,7 +79,7 @@ $this->document->addScript ( 'includes/js/joomla.javascript.js' );
 	?>
 		<tr <?php echo 'class = "row' . $k . '"';?>>
 			<td class="kright"><?php echo $j + $this->navigation->limitstart + 1; ?></td>
-			<?php if (!$category->authorize('admin')): ?>
+			<?php if (!$category->authorise('admin')): ?>
 
 			<td></td>
 			<td><?php echo str_repeat  ( '...', $category->level  ).' '.$this->escape($category->name); ?></td>
@@ -93,7 +93,7 @@ $this->document->addScript ( 'includes/js/joomla.javascript.js' );
 
 			<td class="kcenter"><?php echo intval($category->id); ?></td>
 
-			<?php if (!$category->authorize('admin')): ?>
+			<?php if (!$category->authorise('admin')): ?>
 
 			<td colspan="6"></td>
 
@@ -143,7 +143,7 @@ $this->document->addScript ( 'includes/js/joomla.javascript.js' );
 
 			<?php endif; ?>
 
-			<?php if (!$category->authorize('admin')): ?>
+			<?php if (!$category->authorise('admin')): ?>
 			<td></td>
 			<td></td>
 			<td></td>

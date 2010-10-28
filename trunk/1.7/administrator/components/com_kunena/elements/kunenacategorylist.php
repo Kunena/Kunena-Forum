@@ -1,8 +1,8 @@
 <?php
 /**
  * @version $Id$
- * KunenaLatest Module
- * @package Kunena latest
+ * Kunena Component - JElementKunenaCategoryList Class
+ * @package Kunena
  *
  * @Copyright (C) 2010 www.kunena.com All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -14,8 +14,8 @@ require_once JPATH_ADMINISTRATOR.'/components/com_kunena/api.php';
 
 JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
 
-class JElementKunenaCategories extends JElement {
-	var $_name = 'KunenaCategories';
+class JElementKunenaCategoryList extends JElement {
+	var $_name = 'KunenaCategoryList';
 
 	function fetchElement($name, $value, &$node, $control_name) {
 		$none = $node->attributes ( 'none' );
@@ -41,6 +41,6 @@ class JElementKunenaCategories extends JElement {
 			$ctrl .= '[]';
 		}
 
-		return JHTML::_('kunena.categorylist', $ctrl, 0, $options, $node->attributes(), $attribs, 'value', 'text', $value);
+		return JHTML::_('kunenaforum.categorylist', $ctrl, 0, $options, $node->attributes(), $attribs, 'value', 'text', $value);
 	}
 }

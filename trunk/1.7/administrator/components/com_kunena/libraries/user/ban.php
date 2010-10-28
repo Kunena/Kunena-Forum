@@ -209,7 +209,7 @@ class KunenaUserBan extends JObject
 	 * @return	object	The user table object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'KunenaUserBan', $prefix = 'Table')
+	public function getTable($type = 'KunenaUserBans', $prefix = 'Table')
 	{
 		static $tabletype = null;
 

@@ -79,8 +79,8 @@ class KunenaViewCommon extends JView {
 		$catid = 0;
 		if (KunenaFactory::getConfig ()->enablerss) {
 			if ($catid > 0) {
-				kimport ( 'category' );
-				$category = KunenaCategory::getInstance ( $catid );
+				kimport ( 'kunena.forum.category.helper' );
+				$category = KunenaForumCategoryHelper::get ( $catid );
 				if ($category->pub_access == 0 && $category->parent)
 					$rss_params = '&catid=' . ( int ) $catid;
 			} else {
@@ -153,7 +153,7 @@ class KunenaViewCommon extends JView {
 	}
 
 	function addStyleSheet($filename) {
-		if (!KunenaFactory::getConfig ()->debug && !Kunena::isSvn()) {
+		if (!KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.css$/u', '-min.css', $filename );
 		}
@@ -163,7 +163,7 @@ class KunenaViewCommon extends JView {
 	}
 
 	function addScript($filename) {
-		if (!KunenaFactory::getConfig ()->debug && !Kunena::isSvn()) {
+		if (!KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
 		}

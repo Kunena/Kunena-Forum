@@ -23,7 +23,7 @@ jimport('joomla.utilities.string');
 define('KUNENA_JLIVEURL', JURI::root());
 
 require_once (KPATH_SITE . '/lib/kunena.defines.php');
-kimport('error');
+kimport('kunena.error');
 
 $kunena_app =& JFactory::getApplication();
 $document =& JFactory::getDocument();
@@ -134,13 +134,12 @@ define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 // url catimages path
 define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$kunena_config->catimagepath}/"); // Kunena category images direct url
 
-kimport('html.parser');
+kimport('kunena.html.parser');
 
 class CKunenaTools {
     var $id = null;
 
 	function checkDatabaseError() {
-		kimport('error');
 		return KunenaError::checkDatabaseError();
 	}
 
@@ -226,8 +225,6 @@ class CKunenaTools {
 	}
 
 	function forumSelectList($name, $catid=0, $options=array(), $attr='', $sections=false) {
-		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
-
 		$cat_params = array ();
 		$cat_params['ordering'] = 'ordering';
 		$cat_params['toplevel'] = 0;
@@ -236,12 +233,10 @@ class CKunenaTools {
 		$cat_params['unpublished'] = 0;
 		$cat_params['catid'] = $catid;
 		$cat_params['action'] = 'read';
-		return JHTML::_('kunena.categorylist', $name, $catid, $options, $cat_params, $attr, 'value', 'text', $catid);
+		return JHTML::_('kunenaforum.categorylist', $name, $catid, $options, $cat_params, $attr, 'value', 'text', $catid);
 	}
 
 	function KSelectList($name, $options=array(), $attr='', $sections=false, $id='', $selected=0) {
-		JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');
-
 		$cat_params = array ();
 		$cat_params['ordering'] = 'ordering';
 		$cat_params['toplevel'] = 1;
@@ -251,7 +246,7 @@ class CKunenaTools {
 		$cat_params['catid'] = 0;
 		$cat_params['action'] = 'read';
 		if (!$id) $id = $name;
-		return JHTML::_('kunena.categorylist', $name, 0, $options, $cat_params, $attr, 'value', 'text', $selected, $id);
+		return JHTML::_('kunenaforum.categorylist', $name, 0, $options, $cat_params, $attr, 'value', 'text', $selected, $id);
 	}
 
 	function showBulkActionCats($disabled = 1) {
@@ -421,8 +416,8 @@ class CKunenaTools {
 				}
 
 				// Last but not least update forum stats
-				kimport('categories');
-				KunenaCategory::recount ();
+				kimport('kunena.forum.category.helper');
+				KunenaForumCategoryHelper::recount ();
 
 				// Activity integration
 				$activity = KunenaFactory::getActivityIntegration();
@@ -530,22 +525,11 @@ class CKunenaTools {
 		 * @param string 	$template	Custom path to template (relative to Joomla)
 		 */
 		function loadTemplate($relpath, $once=false, $template=null) {
+			$template = KunenaFactory::getTemplate($template);
 			if ($once){
-				if ($template && file_exists ( JPATH_ROOT.$template.$relpath )) {
-					require_once (JPATH_ROOT.$template.$relpath);
-				} else if (file_exists ( KUNENA_ABSTMPLTPATH.$relpath )) {
-					require_once (KUNENA_ABSTMPLTPATH.$relpath);
-				} else {
-					require_once (KUNENA_PATH_TEMPLATE_DEFAULT.$relpath);
-				}
+				require_once (JPATH_ROOT.'/'.$template->getFile($relpath));
 			} else {
-				if ($template && file_exists ( JPATH_ROOT.$template.$relpath )) {
-					require (JPATH_ROOT.$template.$relpath);
-				} else if (file_exists ( KUNENA_ABSTMPLTPATH.$relpath )) {
-					require (KUNENA_ABSTMPLTPATH.$relpath);
-				} else {
-					require (KUNENA_PATH_TEMPLATE_DEFAULT.$relpath);
-				}
+				require (JPATH_ROOT.'/'.$template->getFile($relpath));
 			}
 		}
 
@@ -598,7 +582,7 @@ class CKunenaTools {
 			$document = & JFactory::getDocument ();
 			$kunena_config = KunenaFactory::getConfig ();
 
-			if ($kunena_config->debug || Kunena::isSvn()) {
+			if ($kunena_config->debug || KunenaForum::isSvn()) {
 				// If we are in debug more, make sure we load the unpacked css
 				$filename = preg_replace ( '/\-min\./u', '.', $filename );
 			}
@@ -615,7 +599,7 @@ class CKunenaTools {
 			$document = & JFactory::getDocument ();
 			$kunena_config = KunenaFactory::getConfig ();
 
-			if ($kunena_config->debug || Kunena::isSvn()) {
+			if ($kunena_config->debug || KunenaForum::isSvn()) {
 				// If we are in debug more, make sure we load the unpacked css
 				$filename = preg_replace ( '/\-min\./u', '.', $filename );
 			}
@@ -631,22 +615,6 @@ function KGetArrayInts($name) {
     $items = array();
     foreach ($array as $item=>$value) {
         if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
-    }
-    $array = $items;
-
-    if (!is_array($array)) {
-        $array = array ( 0 );
-    }
-
-    return $array;
-}
-
-function KGetArrayReverseInts($name) {
-    $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
-
-    $items = array();
-    foreach ($array as $item=>$value) {
-        if ((int)$item && (int)$item>0) $items[(int)$item] = (int)$item;
     }
     $array = $items;
 

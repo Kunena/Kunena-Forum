@@ -16,7 +16,7 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-kimport ('route');
+kimport ('kunena.route');
 
 class CKunenaLink {
 	//
@@ -172,7 +172,7 @@ class CKunenaLink {
 	function GetMyProfileURL($userid = 0, $task = '', $xhtml = true, $extra = '') {
 		if (!$task) {
 			// Workaround for menu redirect: be more verbose
-			kimport('integration.integration');
+			kimport('kunena.integration.integration');
 			$profileIntegration = KunenaIntegration::detectIntegration('profile', true);
 			if ($profileIntegration != 'kunena') $task='summary';
 		}
@@ -348,7 +348,7 @@ class CKunenaLink {
 	}
 
 	function GetLatestPageAutoRedirectURL($pid, $limit = 0, $catid = 0, $xhtml = false) {
-		kimport ('error');
+		kimport ('kunena.error');
 		$config = KunenaFactory::getConfig ();
 		$myprofile = KunenaFactory::getUser ();
 		if ($myprofile->ordering != '0') {
@@ -381,7 +381,7 @@ class CKunenaLink {
 	}
 
 	function GetMessageURL($pid, $catid=0, $limit = 0, $xhtml = true) {
-		kimport ('error');
+		kimport ('kunena.error');
 		$config = KunenaFactory::getConfig ();
 		$myprofile = KunenaFactory::getUser ();
 		if ($myprofile->ordering != '0') {

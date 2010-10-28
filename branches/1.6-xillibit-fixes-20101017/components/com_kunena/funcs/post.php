@@ -881,7 +881,7 @@ class CKunenaPost {
 		return false;
 	}
 
-	protected function isUserBanned() {
+	public function isUserBanned() {
 		$profile = KunenaFactory::getUser();
 		$banned = $profile->isBanned();
 		if ($banned) {

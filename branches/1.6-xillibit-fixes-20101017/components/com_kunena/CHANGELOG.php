@@ -36,6 +36,7 @@ Kunena 1.6.1-DEV
 28-October-2010 Xillibit
 ^ [#20084] Change how to works the [article] bbcode whichgh supports now some parameters (link, full, intro)
 # [#20084] Fix Fatal error: Call to protected method CKunenaPost::isUserBanned() from context 'plgContentKunenaDiscuss' in kunenadiscuss.php on line 604
+# [#20084] Fix some wrongs visiblity for methods in post.php to be allowed to use theses methods in kdiscuss
 
 26-October-2010 Xillibit
 + [#20084] Make the possibility to set a specific for a new topic (when using kdiscuss) and new bbcode [articlelink] and [articlecontentlink]

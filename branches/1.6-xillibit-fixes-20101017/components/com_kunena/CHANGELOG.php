@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+28-October-2010 Xillibit
+^ [#20084] Change how to works the [article] bbcode whichgh supports now some parameters (link, full, intro)
+
 26-October-2010 Xillibit
 + [#20084] Make the possibility to set a specific for a new topic (when using kdiscuss) and new bbcode [articlelink] and [articlecontentlink]
 

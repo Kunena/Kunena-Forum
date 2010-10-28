@@ -49,7 +49,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// Load language files
 		$this->loadLanguage ( '', JPATH_ADMINISTRATOR );
-		// load Kunena main language file so we can leverage langaueg strings from it
+		// load Kunena main language file so we can leverage language strings from it
 		KunenaFactory::loadLanguage();
 
 		// Create discussbot table if doesn't exist
@@ -66,6 +66,19 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$this->_db->query ();
 			CKunenaTools::checkDatabaseError ();
 			$this->debug ( "Created #__kunenadiscuss cross reference table." );
+
+			// Migrate data from old discussbot if it exists
+			$query = "SHOW TABLES LIKE '{$this->_db->getPrefix()}fb_discussbot'";
+			$this->_db->setQuery ( $query );
+			if ($this->_db->loadResult ()) {
+				$query = "REPLACE INTO `#__kunenadiscuss`
+					SELECT `content_id` , `thread_id`
+					FROM `#__fb_discussbot`";
+				$this->_db->setQuery ( $query );
+				$this->_db->query ();
+				CKunenaTools::checkDatabaseError ();
+				$this->debug ( "Migrated old data." );
+			}
 		}
 
 		$this->debug ( "Constructor called in " . $this->_app->scope );
@@ -211,9 +224,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 		}
 
 		$subject = $row->title;
+		$published = JFactory::getDate(isset($row->publish_up) ? $row->publish_up : 'now')->toUnix();
+		$now = JFactory::getDate()->toUnix();
 
 		// Find cross reference and the real topic
-		$query = "SELECT d.content_id, d.thread_id, m.id AS mesid, t.thread
+		$query = "SELECT d.content_id, d.thread_id, m.id AS mesid, t.thread, t.time
 			FROM #__kunenadiscuss AS d
 			LEFT JOIN #__kunena_messages AS m ON d.thread_id = m.id
 			LEFT JOIN #__kunena_messages AS t ON t.id = m.thread
@@ -251,26 +266,60 @@ class plgContentKunenaDiscuss extends JPlugin {
 			}
 		}
 		if (! $result && $thread) {
+			// Find the real topic
+			$query = "SELECT {$this->_db->quote($row->id)} AS content_id, t.id AS thread_id, m.id AS mesid, t.thread, t.time
+				FROM #__kunena_messages AS m
+				LEFT JOIN #__kunena_messages AS t ON t.id = m.thread
+				WHERE m.id = {$this->_db->quote($thread)}";
+			$this->_db->setQuery ( $query );
+			$result = $this->_db->loadObject ();
+			CKunenaTools::checkDatabaseError ();
+
 			$this->createReference ( $row, $thread );
 			$this->debug ( "showPlugin: First hit to Custom Topic, created cross reference to topic {$thread}" );
-		} else if (! $result && $this->params->get('creation_discussion_topic')=='0') {
-			$thread = $this->createTopic ( $row, $catid, $subject );
-			$this->debug ( "showPlugin: First hit, created new topic {$thread} into forum" );
-		} else if (! $result && $this->params->get('creation_discussion_topic')=='1') {
-			if (JRequest::getInt ( 'kdiscussContentId', 0, 'POST' ) == $row->id) {
-			 	$thread = $this->createTopic ( $row, $catid, $subject );				
-			 	//need to create relpy
-			 	if ($this->canPost ( $thread ) && $botShowForm){ 
-          			$this->debug ( "showPlugin: Reply topic!" );
-			     	$quickPost = $this->replyTopic ( $row, $catid, $thread, $subject );
-			 	}
+		} else if (! $result) {
+			$thread = 0;
+			$create = $this->params->get ( 'create', 0 );
+			$createTime = $this->params->get ( 'create_time', 0 )*604800; // Weeks in seconds
+			if ($createTime && $published+$createTime < $now) {
+				$this->debug ( "showPlugin: Topic creation time expired, cannot start new discussion anymore" );
+				return '';
+			}
+			if ($create) {
+				$thread = $this->createTopic ( $row, $catid, $subject );
+				$this->debug ( "showPlugin: First hit, created new topic {$thread} into forum" );
 			}
 		} else {
 			$thread = $result->thread_id;
 			$this->debug ( "showPlugin: Topic {$thread} exists in the forum" );
 		}
 
-		if ($linkOnly) {
+		// Do we allow answers into the topic?
+		$closeTime = $this->params->get ( 'close_time', 0 ) * 604800; // Weeks in seconds or 0
+		if ($closeTime) {
+			$this->debug ( "showPlugin: Check if topic is closed" );
+			if ($result) {
+				$closeReason = $this->params->get ( 'close_reason', 0 );
+				if ($closeReason) {
+					// Close topic by last post time
+					$query = "SELECT MAX(time)
+						FROM #__kunena_messages
+						WHERE thread = {$this->_db->quote($result->thread)}";
+					$this->_db->setQuery ( $query );
+					$closeTime = $this->_db->loadResult () + $closeTime;
+					CKunenaTools::checkDatabaseError ();
+					$this->debug ( "showPlugin: Close time by last post" );
+				} else {
+					// Close topic by cration time
+					$closeTime = $result->time + $closeTime;
+					$this->debug ( "showPlugin: Close time by topic creation" );
+				}
+			} else {
+				$closeTime = $now;
+			}
+		}
+
+		if ($thread && $linkOnly) {
 			$this->debug ( "showPlugin: Displaying only link to the topic" );
 
 			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread={$this->_db->quote($thread)}";
@@ -286,9 +335,17 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// ************************************************************************
 		// Process the QuickPost form
 
-		
-		$quickPost = $this->processQuickForm($thread,$this->_my->id,$row,$catid,$subject);
-		
+		$quickPost = '';
+		if ($botShowForm && (!$closeTime || $closeTime >= $now)) {
+			$canPost = $this->canPost ( $catid, $thread );
+			if ($canPost && JRequest::getInt ( 'kdiscussContentId', 0, 'POST' ) == $row->id) {
+				$this->debug ( "showPlugin: Reply topic!" );
+				$quickPost .= $this->replyTopic ( $row, $catid, $thread, $subject );
+			} else {
+				$quickPost .= $this->showForm ( $row, $catid, $thread, $subject );
+			}
+		}
+
 		// This will be used all the way through to tell users how many posts are in the forum.
 		$this->debug ( "showPlugin: Rendering discussion" );
 		$content = $this->showTopic ( $catid, $thread );
@@ -301,38 +358,14 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		return $content;
 	}
-	
-	function processQuickForm($thread,$myid,$row,$catid,$subject) {
-		$quickPost = '';
-		$canPost = $this->canPost ( $thread );
-		if ($botShowForm) {
-			if (! $canPost && ! $myid) {
-				$this->debug ( "showPlugin: Public posting is not permitted, show login instead" );
-				$login = KunenaFactory::getLogin ();
-				$loginlink = $login->getLoginURL ();
-				$registerlink = $login->getRegistrationURL ();
-				$quickPost = JText::sprintf ( 'PLG_KUNENADISCUSS_LOGIN_OR_REGISTER', '"' . $loginlink . '"', '"' . $registerlink . '"' );
-			} else if ($canPost) {
-				$this->debug ( "showPlugin: You can discuss this item" );
-				if (JRequest::getInt ( 'kdiscussContentId', 0, 'POST' ) == $row->id) {
-					$this->debug ( "showPlugin: Reply topic!" );
-					$quickPost .= $this->replyTopic ( $row, $catid, $thread, $subject );
-				} else {
-					$this->debug ( "showPlugin: Rendering form" );
-					$quickPost .= $this->showForm ( $row );
-				}
-			} else {
-				$this->debug ( "showPlugin: Unfortunately you cannot discuss this item" );
-				$quickPost .= JText::_ ( 'PLG_KUNENADISCUSS_NO_PERMISSION_TO_POST' );
-			}
-		}
-	}	
-	
+
 	/******************************************************************************
 	 * Output
 	 *****************************************************************************/
 
 	function showTopic($catid, $thread) {
+		if (!$thread) return;
+
 		// Limits the number of posts
 		$limit = $this->params->get ( 'limit', 25 );
 		// Show the first X posts, versus the last X posts
@@ -348,11 +381,25 @@ class plgContentKunenaDiscuss extends JPlugin {
 		return $str;
 	}
 
-	function showForm($row) {
+	function showForm($row, $catid, $thread, $subject ) {
+		$canPost = $this->canPost ( $catid, $thread );
+		if (! $canPost) {
+			if (! $this->_my->id) {
+				$this->debug ( "showForm: Public posting is not permitted, show login instead" );
+				$login = KunenaFactory::getLogin ();
+				$loginlink = $login->getLoginURL ();
+				$registerlink = $login->getRegistrationURL ();
+				$this->msg = JText::sprintf ( 'PLG_KUNENADISCUSS_LOGIN_OR_REGISTER', '"' . $loginlink . '"', '"' . $registerlink . '"' );
+			} else {
+				$this->debug ( "showForm: Unfortunately you cannot discuss this item" );
+				$this->msg = JText::_ ( 'PLG_KUNENADISCUSS_NO_PERMISSION_TO_POST' );
+			}
+		}
 		$myprofile = KunenaFactory::getUser();
 		$this->open = $this->params->get ( 'quickpost_open', false );
 		$this->name = $myprofile->getName();
 		ob_start ();
+		$this->debug ( "showForm: Rendering form" );
 		include (JPATH_ROOT . '/plugins/content/kunenadiscuss/form.php');
 		$str = ob_get_contents ();
 		ob_end_clean ();
@@ -378,13 +425,20 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		$options = array();
 		$fields ['subject'] = $subject;
-		if ( $this->params->get('creation_discussion_topic') == '0' )  $fields ['message'] = "[article]{$row->id}[/article]";
-		elseif ( $this->params->get('creation_discussion_topic') == '1' ) $fields ['message'] = "[articlelink]{$row->id}[/articlelink]";
-		elseif ( $this->params->get('creation_discussion_topic') == '2' ) $fields ['message'] = "[articlecontentlink]{$row->id}[/articlecontentlink]";
-		$datearticle = explode(' ', $row->created);
-		$date1 = explode(':',$datearticle[1]); 
-    	$date2 = explode('-',$datearticle[0]); 
-		$fields ['time'] = mktime($date1[0], $date1[1], $date1[2], $date2[2], $date2[1], $date2[0]);
+		switch ($this->params->get('bbcode')) {
+			case 'full':
+				$fields ['message'] = "[article=full]{$row->id}[/article]";
+				break;
+			case 'intro':
+				$fields ['message'] = "[article=intro]{$row->id}[/article]";
+				break;
+			case 'link':
+				$fields ['message'] = "[article=link]{$row->id}[/article]";
+				break;
+			default:
+				$fields ['message'] = "[article]{$row->id}[/article]";
+		}
+		$fields ['time'] = JFactory::getDate(isset($row->publish_up) ? $row->publish_up : 'now')->toUnix();
 		$success = $message->post ( $catid, $fields, $options );
 
 		if ($success) {
@@ -403,18 +457,19 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// Keep a cross reference of Threads we create through this plugin
 		$this->createReference ( $row, $newMessageId );
 
-		// Handle User subscrtiptions and Moderator notifications.
-		// TODO: need to get lastposturl with the right way
-		$message->emailToSubscribers(false, $this->config->allowsubscriptions && ! $message->get ( 'hold' ), $this->config->mailmod || $message->get ( 'hold' ), $this->config->mailadmin || $message->get ( 'hold' ));
-
-
 		// We'll need to know about the new Thread id later...
 		$this->debug ( __FUNCTION__ . "() end" );
 		return $newMessageId;
 	}
 
 	function replyTopic($row, $catid, $thread, $subject) {
-		// TODO: handle captcha, token, flood
+		if (JRequest::checkToken () == false) {
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+			return false;
+		}
+		$this->isBanned();
+		$this->verifyCaptcha();
+		$this->checkFlood();
 
 		require_once (KPATH_SITE . '/lib/kunena.posting.class.php');
 
@@ -442,11 +497,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 			return false;
 		}
 
-		// Handle User subscrtiptions and Moderator notifications.
-		// TODO: need to get lastposturl with the right way
-		$message->emailToSubscribers(false, $this->config->allowsubscriptions && ! $message->get ( 'hold' ), $this->config->mailmod || $message->get ( 'hold' ), $this->config->mailadmin || $message->get ( 'hold' ));
+		$config = KunenaFactory::getConfig();
+		$holdPost = $message->get ( 'hold' );
+		$message->emailToSubscribers(false, $config->allowsubscriptions && ! $holdPost, $config->mailmod || $holdPost, $config->mailadmin || $holdPost);
 
-		if ($message->get ( 'hold' )) {
+		if ($holdPost) {
 			$result = JText::_ ( 'PLG_KUNENADISCUSS_PENDING_MODERATOR_APPROVAL' );
 		} else {
 			$result = JText::_ ( 'PLG_KUNENADISCUSS_MESSAGE_POSTED' );
@@ -532,9 +587,37 @@ class plgContentKunenaDiscuss extends JPlugin {
 		return $default;
 	}
 
-	function canPost($thread) {
+	function canPost($catid, $thread) {
 		require_once (KPATH_SITE . '/lib/kunena.posting.class.php');
 		$message = new CKunenaPosting ( );
-		return $message->reply ( $thread );
+		if ($thread) {
+			return $message->reply ( $thread );
+		} else {
+			return $message->post ( $catid );
+		}
+	}
+
+	function isBanned() {
+		require_once(KPATH_SITE . '/funcs/post.php');
+		$post = new CKunenaPost();
+		return $post->isUserBanned();
+	}
+
+	function checkFlood() {
+		require_once(KPATH_SITE . '/funcs/post.php');
+		$post = new CKunenaPost();
+		return $post->floodProtection();
+	}
+
+	function displayCaptcha() {
+		require_once(KPATH_SITE . '/funcs/post.php');
+		$post = new CKunenaPost();
+		$post->displayCaptcha();
+	}
+
+	function verifyCaptcha() {
+		require_once(KPATH_SITE . '/funcs/post.php');
+		$post = new CKunenaPost();
+		return $post->verifyCaptcha();
 	}
 }

@@ -12,6 +12,9 @@ defined( '_JEXEC' ) or die ( '' );
 ?>
 <div id="kdiscuss-quick-post<?php echo $row->id ?>" class="kdiscuss-form">
 <div class="kdiscuss-title"><?php echo JText::_('PLG_KUNENADISCUSS_DISCUSS') ?></div>
+<?php if (isset($this->msg)) : ?>
+	<?php echo $this->msg; ?>
+<?php else: ?>
 <form method="post" name="postform">
 	<table>
 		<tr>
@@ -37,7 +40,7 @@ defined( '_JEXEC' ) or die ( '' );
 		<?php if ($this->config->captcha && !$this->_my->id) : ?>
 		<tr>
 			<td><span class="kdiscuss-quick-post-label"><?php echo JText::_('PLG_KUNENADISCUSS_CAPTCHA') ?></span></td>
-			<td>CAPTCHA IMAGE</td>
+			<td><?php $this->displayCaptcha(); ?></td>
 		</tr>
 		<?php endif; ?>
 		<tr>
@@ -48,6 +51,8 @@ defined( '_JEXEC' ) or die ( '' );
 	</tr>
 </table>
 <input type="hidden" name="kdiscussContentId" value="<?php echo $row->id ?>" />
+<?php echo JHTML::_( 'form.token' ); ?>
 </form>
+<?php endif; ?>
 </div>
 

@@ -38,16 +38,6 @@
 			<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option> 
 			<option value="2">PLG_KUNENADISCUSS_OPTION_REPLIES</option> 
 		</param> 
-		<param name="creation_discussion_topic" type="radio" default="0" label="PLG_KUNENADISCUSS_CREATE_DISCUSSION_TOPIC" description="PLG_KUNENADISCUSS_CREATE_DISCUSSION_TOPIC_DESC">
-			<option value="0">PLG_KUNENADISCUSS_OPTION_AUTOMATICALLY</option>
-			<option value="1">PLG_KUNENADISCUSS_OPTION_ONFIRST_COMMENT</option>
-			<!--<option value="2">PLG_KUNENADISCUSS_OPTION_FOR_ALL_ATICLES_AFTER_GIVED_DATE</option>-->
-		</param>
-		<param name="content_first_message_discussion" type="radio" default="0" label="PLG_KUNENADISCUSS_CONTENT_FIRST_MESSAGE_DISCUSSION" description="PLG_KUNENADISCUSS_CONTENT_FIRST_MESSAGE_DISCUSSION_DESC"> 
-			<option value="0">PLG_KUNENADISCUSS_OPTION_WHOLE_ARTICLE</option> 
-			<option value="1">PLG_KUNENADISCUSS_OPTION_SIMPLE_LINK</option> 
-			<option value="2">PLG_KUNENADISCUSS_OPTION_BOTH_OF_ABOVE</option> 
-		</param> 		
 		<param name="show_other_pages" type="radio" default="2" label="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES" description="PLG_KUNENADISCUSS_SHOW_OTHER_PAGES_DESC">
 			<option value="0">PLG_KUNENADISCUSS_OPTION_NOTHING</option>
 			<option value="1">PLG_KUNENADISCUSS_OPTION_LINK</option>
@@ -65,6 +55,40 @@
 			<option value="0">PLG_KUNENADISCUSS_OPTION_NO</option>
 			<option value="1">PLG_KUNENADISCUSS_OPTION_YES</option>
 		</param>		
+		<param name="create" type="radio" default="0" label="PLG_KUNENADISCUSS_CREATE" description="PLG_KUNENADISCUSS_CREATE_DESC">
+			<option value="1">PLG_KUNENADISCUSS_OPTION_CREATE_VISIT</option>
+			<option value="0">PLG_KUNENADISCUSS_OPTION_CREATE_REPLY</option>
+		</param>
+		<param name="create_time" type="list" default="1" label="PLG_KUNENADISCUSS_CREATE_TIME" description="PLG_KUNENADISCUSS_CREATE_TIME_DESC">
+			<option value="1">PLG_KUNENADISCUSS_OPTION_1WEEKS</option>
+			<option value="2">PLG_KUNENADISCUSS_OPTION_2WEEKS</option>
+			<option value="4">PLG_KUNENADISCUSS_OPTION_4WEEKS</option>
+			<option value="8">PLG_KUNENADISCUSS_OPTION_8WEEKS</option>
+			<option value="13">PLG_KUNENADISCUSS_OPTION_13WEEKS</option>
+			<option value="26">PLG_KUNENADISCUSS_OPTION_26WEEKS</option>
+			<option value="52">PLG_KUNENADISCUSS_OPTION_52WEEKS</option>
+			<option value="0">PLG_KUNENADISCUSS_OPTION_FOREVER</option>
+		</param>
+		<param name="close_time" type="list" default="0" label="PLG_KUNENADISCUSS_CLOSE_TIME" description="PLG_KUNENADISCUSS_CLOSE_TIME_DESC">
+			<option value="1">PLG_KUNENADISCUSS_OPTION_1WEEKS</option>
+			<option value="2">PLG_KUNENADISCUSS_OPTION_2WEEKS</option>
+			<option value="4">PLG_KUNENADISCUSS_OPTION_4WEEKS</option>
+			<option value="8">PLG_KUNENADISCUSS_OPTION_8WEEKS</option>
+			<option value="13">PLG_KUNENADISCUSS_OPTION_13WEEKS</option>
+			<option value="26">PLG_KUNENADISCUSS_OPTION_26WEEKS</option>
+			<option value="52">PLG_KUNENADISCUSS_OPTION_52WEEKS</option>
+			<option value="0">PLG_KUNENADISCUSS_OPTION_FOREVER</option>
+		</param>
+		<param name="close_reason" type="radio" default="0" label="PLG_KUNENADISCUSS_CLOSE_REASON" description="PLG_KUNENADISCUSS_CLOSE_REASON_DESC">
+			<option value="0">PLG_KUNENADISCUSS_OPTION_TOPIC_CREATION</option>
+			<option value="1">PLG_KUNENADISCUSS_OPTION_LAST_POST</option>
+		</param>
+		<param name="bbcode" type="radio" default="default" label="PLG_KUNENADISCUSS_BBCODE" description="PLG_KUNENADISCUSS_BBCODE_DESC"> 
+			<option value="default">PLG_KUNENADISCUSS_OPTION_BBCODE_DEFAULT</option>
+			<option value="full">PLG_KUNENADISCUSS_OPTION_BBCODE_FULL</option>
+			<option value="intro">PLG_KUNENADISCUSS_OPTION_BBCODE_INTRO</option>
+			<option value="link">PLG_KUNENADISCUSS_OPTION_BBCODE_LINK</option>
+		</param> 		
 		<param name="topic_owner" type="text" default="" label="PLG_KUNENADISCUSS_TOPIC_OWNER" description="PLG_KUNENADISCUSS_TOPIC_OWNER_DESC" />
 		<param name="category_mapping" type="text" default="" label="PLG_KUNENADISCUSS_CATEGORY_MAPPING" description="PLG_KUNENADISCUSS_CATEGORY_MAPPING_DESC" />
 		<param name="default_category" type="text" default="" label="PLG_KUNENADISCUSS_DEFAULT_CATEGORY" description="PLG_KUNENADISCUSS_DEFAULT_CATEGORY_DESC" />

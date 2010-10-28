@@ -31,6 +31,18 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC3
 
+27-October-2010 Matias
++ [#20084] Migrate existing data from old discussbots
++ [#20084] Add option to create topic on first reply
++ [#20084] Add option to restrict topic creation only to new articles (by publish date)
++ [#20084] Add option to prevent answers on old topics (by creation / last post)
++ [#20084] Add CAPTCHA support
+* [#20084] Add Token protection
++ [#20084] Add check for banned users
++ [#20084] Add check for flood
++ [#20084] Send subscriptions
++ [#20084] Add possibility to change contents of the first message
+
 22-October-2010 Xillibit
 # [#20084] Set article creation date for first message of article discussion in kunena
 + [#20084] New configuration settings to define when the topic discussion will be created and how to diplay the first message content

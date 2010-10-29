@@ -236,13 +236,10 @@ table.kadmin-stat caption {
 				<legend><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMETERS' ); ?></legend>
 				<table class="admintable">
 				<tr>
-					<td colspan="2" class="key" style="text-align:left; padding: 10px;">
+					<td colspan="2" class="key" style="text-align:left; padding: 10px">
 						<?php $templatefile = KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
 							echo is_writable($templatefile) ? JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $templatefile):JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $templatefile);
 						?>
-						<!--  The follwing two lines needs to be added to the above conditional.  -->
-						<span class="kwriteable"></span>
-						<span class="kunwriteable"></span>
 					</td>
 				</tr>
 				<tr>
@@ -251,7 +248,7 @@ table.kadmin-stat caption {
 							if (!is_null($params)) {
 								echo $params->render();
 							} else {
-								echo '<em>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</em>'; }
+								echo '<i>' . JText :: _('COM_KUNENA_A_TEMPLATE_MANAGER_NO_PARAMETERS') . '</i>'; }
 						?>
 					</td>
 				</tr>
@@ -758,6 +755,13 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						?>
 						</td>
 						<td align="left" valign="top"><img src="<?php echo JURI::root (); ?>/images/M_images/pdf_button.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_PDF_DESC') ?></td>
+					</tr>
+                    <tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_PINNED') ?></td>
+								<td align="left" valign="top"><?php echo $lists ['enablepinned'];
+						?>
+						</td>
+								<td align="left" valign="top"> <?php echo JText::_('COM_KUNENA_A_PINNED_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?>

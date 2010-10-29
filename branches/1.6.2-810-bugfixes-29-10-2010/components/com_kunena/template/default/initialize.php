@@ -14,6 +14,9 @@ $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
 $this->params = $template->params;
 
+// Load Ie9 Pinning
+include_once (KPATH_SITE . '/template/default/ie9pinned.php');
+
 // Template requires Mootools 1.2 framework
 $template->loadMootools();
 

@@ -171,6 +171,7 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $enablerss = 1;
 	var $enablepdf = 1;
 	var $threads_per_page = 20;
+	var $enablepinned = 1;
 	var $messages_per_page = 6;
 	var $messages_per_page_search = 15;
 	var $showhistory = 1;

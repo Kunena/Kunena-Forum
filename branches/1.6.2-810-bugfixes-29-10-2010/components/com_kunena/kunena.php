@@ -788,7 +788,12 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 				$document->addCustomTag ( '<link rel="alternate" type="application/rss+xml" title="' . JText::_('COM_KUNENA_LISTCAT_RSS') . '" href="' . CKunenaLink::GetRSSURL($rss_params) . '" />' );
 				echo CKunenaLink::GetRSSLink ( CKunenaTools::showIcon ( 'krss', JText::_('COM_KUNENA_LISTCAT_RSS') ), 'follow', $rss_params );
 			}
-			echo '</div>';
+			if ($kunena_config->enablepinned && ereg('MSIE 9',$_SERVER['HTTP_USER_AGENT'])){
+			echo '<a onclick="window.external.msAddSiteMode();" href="#" > <img src="' . KUNENA_URLICONSPATH . 'kunena.png" />';
+				}
+			else {
+					}
+			 echo '</div>';
 		}
 	}
 
@@ -807,7 +812,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	$__ktime = JProfiler::getmicrotime() - $__kstarttime;
 ?>
 	<div class="kfooter">
-		<span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').'&nbsp;'.sprintf('%0.2f', $__ktime).'&nbsp;'.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span>
+   	<span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').'&nbsp;'.sprintf('%0.2f', $__ktime).'&nbsp;'.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span>
 	</div>
 </div>
 <!-- closes Kunena div -->

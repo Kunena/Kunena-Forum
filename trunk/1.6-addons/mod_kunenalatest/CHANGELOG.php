@@ -28,7 +28,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaLatest 1.6.0-RC2
+KunenaLatest 1.6.0-RC3
+
+29-October-2010 Xillibit
+^ [#20081] Updated finish language file fi-FI (thanks Mortti)
+^ [#20081] Change version to RC3
+# [#20081] When you use model=latestposts the time is the same for all messages
 
 24-October-2010 Xillibit
 # [#20081] Little change for default unread indicator
@@ -45,6 +50,8 @@ KunenaLatest 1.6.0-RC2
 # [#20081] Default new indicator cannot be translated, use ! instead
 # [#20081] Category List allowed to be displayed: title for all/none
 # [#20081] Default value for display type
+
+KunenaLatest 1.6.0-RC2
 
 30-Aug-2010 fxstein
 # [#20081] Use JString:substr to be UTF8 aware

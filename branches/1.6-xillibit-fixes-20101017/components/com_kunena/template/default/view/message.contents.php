@@ -35,6 +35,15 @@ defined ( '_JEXEC' ) or die ();
 		<?php endif; ?>
 		<input type="text" name="subject" size="35" class="inputbox" maxlength="<?php echo intval($this->config->maxsubject); ?>" value="<?php echo  $this->escape($this->resubject) ?>" /><br />
 		<textarea class="inputbox" name="message" rows="6" cols="60"></textarea><br />
+		<?php if ($this->my->id && $this->config->allowsubscriptions == 1 && $this->cansubscribe) : ?>
+			<?php if ($this->config->subscriptionschecked == 1) : ?>
+				<input type="checkbox" name="subscribeMe" value="1" checked="checked" />
+				<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
+				<?php else : ?>
+				<input type="checkbox" name="subscribeMe" value="1" />
+				<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
+			<?php endif; ?><br />
+		<?php endif; ?>
 		<input type="submit" class="kbutton kreply-submit" name="submit" value="<?php echo JText::_('COM_KUNENA_GEN_CONTINUE') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_SUBMIT'));?>" />
 		<input type="reset" class="kbutton kreply-cancel" name="cancel" value="<?php echo JText::_('COM_KUNENA_CANCEL') ?>" title="<?php echo (JText::_('COM_KUNENA_EDITOR_HELPLINE_CANCEL'));?>" />
 		<small><?php echo JText::_('COM_KUNENA_QMESSAGE_NOTE') ?></small>

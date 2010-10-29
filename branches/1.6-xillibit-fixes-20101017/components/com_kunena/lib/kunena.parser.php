@@ -639,7 +639,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 //				break;
 			case 'article' :
 				if ($between) {
-					$param = $tag->options ['default'];
+					$param = '';
+					if ( !empty($tag->options ['default']) ) $param = $tag->options ['default'];
 					$articleid = (int)$between;					
 					
 					// FIXME: works only in J1.5
@@ -702,8 +703,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 								} else {
 									$tag_new = $link_title;
 								}								
-							} elseif ($param == 'link' || empty($param)) {
-								echo 'link or empty';
+							} elseif ($param == 'link' || empty($param)) {								
 								if ( empty($param) ) {
 									if(!empty($article->introtext))	{
 										$article->text = $article->introtext;
@@ -716,8 +716,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 								
 								if ( $param != 'link' ) {
 									$tag_new .= $article->text;
-									$tag_new .= $link_readmore;
-								 	$tag_new .= '</div>';									
+									$tag_new .= '</div>';
+									$tag_new .= $link_readmore;									
 								} else {
 									$tag_new = $link_title;
 								}					

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+29-October-2010 810
++ [#18267] New feature: Pinning for Internet Explorer 9
+
 25-October-2010 Matias
 # [#23015] If open_basedir exludes /tmp, PHP warning is shown
 

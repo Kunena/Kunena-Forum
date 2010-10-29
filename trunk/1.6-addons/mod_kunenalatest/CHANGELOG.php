@@ -34,6 +34,8 @@ KunenaLatest 1.6.0-RC3
 ^ [#20081] Updated finish language file fi-FI (thanks Mortti)
 ^ [#20081] Change version to RC3
 # [#20081] When you use model=latestposts the time is the same for all messages
+^ [#20081] Update in all language files the string description to display RC3
+# [#20081] When you use model=latestposts the time is the same for all messages (Part 2 : typo)
 
 24-October-2010 Xillibit
 # [#20081] Little change for default unread indicator

@@ -40,6 +40,7 @@ class modKunenaLatest {
 		$this->params = $params;
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $params );
+		$this->topic_ordering = modKunenaLatestHelper::getTopicsOrdering($this->myprofile, $this->kunena_config); 
 
 		require (JModuleHelper::getLayoutPath ( 'mod_kunenalatest' ));
 	}
@@ -136,4 +137,13 @@ class modKunenaLatestHelper {
 		$avatarlink = $kunena_user->getAvatarLink ( '', $params->get ( 'avatarwidth' ), $params->get ( 'avatarheight' ) );
 		return CKunenaLink::GetProfileLink ( $userid, $avatarlink, $username );
 	}
+	
+	function getTopicsOrdering($myprofile, $kunena_config) {
+    	if ($myprofile->ordering != '0') {
+			$topic_ordering = $myprofile->ordering == '1' ? 'DESC' : 'ASC';
+		} else {
+			$topic_ordering =  $kunena_config->default_sort == 'asc' ? 'ASC' : 'DESC'; // Just to make sure only valid options make it
+		}
+		return $topic_ordering;
+  	}
 }

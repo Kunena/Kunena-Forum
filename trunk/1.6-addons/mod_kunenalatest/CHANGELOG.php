@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC3
 
+30-October-2010 Xillibit
+# [#20081] When you choose latestposts or latestmessages the post link open the message at the right page
+
 29-October-2010 Xillibit
 ^ [#20081] Updated finish language file fi-FI (thanks Mortti)
 ^ [#20081] Change version to RC3

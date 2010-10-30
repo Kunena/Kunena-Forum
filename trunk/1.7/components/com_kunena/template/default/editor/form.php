@@ -48,10 +48,10 @@ $this->k=0;
 	method="post" name="postform" enctype="multipart/form-data" onsubmit="return myValidate(this);">
 	<input type="hidden" name="action" value="<?php echo $this->action ?>" />
 	<?php if (!isset($this->selectcatlist)) : ?>
-	<input type="hidden" name="catid" value="<?php echo intval($this->catid) ?>" />
+	<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
 	<?php endif; ?>
-	<input type="hidden" name="id" value="<?php echo intval($this->id) ?>" />
-	<?php if (! empty ( $this->kunena_editmode )) : ?>
+	<input type="hidden" name="id" value="<?php echo intval($this->message->id) ?>" />
+	<?php if ($this->message->exists()) : ?>
 	<input type="hidden" name="do" value="editpostnow" />
 	<?php endif; ?>
 	<?php echo JHTML::_( 'form.token' ); ?>
@@ -62,7 +62,7 @@ $this->k=0;
 	</div>
 	<div class="kcontainer">
 		<div class="kbody">
-<table class="kblocktable<?php echo isset ( $msg_cat->class_sfx ) ? ' kblocktable' . $this->escape($msg_cat->class_sfx) : ''?>" id="kpostmessage">
+<table class="kblocktable<?php echo !empty ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : ''?>" id="kpostmessage">
 	<tbody id="kpost-message">
 		<?php if (isset($this->selectcatlist)): ?>
 		<tr id="kpost-category" class="krow<?php echo 1 + $this->k^=1 ?>">
@@ -71,30 +71,32 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check" <?php if ((!$this->allow_anonymous && $this->catid != 0) || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
+		<?php if ($this->message->userid) : ?>
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check" <?php if (!$this->category->allow_anonymous): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->anonymous) echo 'checked="checked"'; ?> />
+				<input type="checkbox" id="kanonymous" name="anonymous" value="1" <?php if ($this->category->post_anonymous) echo 'checked="checked"'; ?> />
 				<label for="kanonymous"><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS_DESC'); ?></label>
 			</td>
 		</tr>
+		<?php endif; ?>
 
 		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check-name"
-		<?php if ( $this->my->id && !$this->config->changename && !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
+		<?php if ( $this->my->id && !$this->config->changename && !$this->category->allow_anonymous ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_NAME'); ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput required" maxlength="35" value="<?php echo $this->escape($this->authorName);?>" <?php echo !$this->allow_name_change ? 'disabled="disabled" ' : ''; ?> />
+				<input type="text" id="kauthorname" name="authorname" size="35" class="kinputbox postinput required" maxlength="35" value="<?php echo $this->escape($this->message->name);?>" />
 			</td>
 		</tr>
 
 		<?php if ($this->config->askemail && !$this->my->id) : ?>
 		<tr class = "krow<?php echo 1+ $this->k^=1 ?>">
 			<td class = "kcol-first"><strong><?php echo JText::_('COM_KUNENA_GEN_EMAIL');?></strong></td>
-			<td class="kcol-mid"><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo !empty($this->email) ? $this->escape($this->email) : '' ?>" /></td>
+			<td class="kcol-mid"><input type="text" id="email" name="email"  size="35" class="kinputbox postinput required validate-email" maxlength="35" value="<?php echo !empty($this->message->email) ? $this->escape($this->message->email) : '' ?>" /></td>
 		</tr>
 		<?php endif; ?>
 
@@ -104,11 +106,11 @@ $this->k=0;
 			</td>
 
 			<td class="kcol-mid"><input type="text" class="kinputbox postinput required" name="subject" id="subject" size="35"
-				maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->resubject); ?>" />
+				maxlength="<?php echo $this->escape($this->config->maxsubject); ?>" value="<?php echo $this->escape($this->message->subject); ?>" />
 			</td>
 		</tr>
 
-		<?php if (($this->allow_topic_icons && $this->config->topicicons) || ($this->catid == 0 && $this->config->topicicons)) : ?>
+		<?php if ($this->message->parent==0 && $this->config->topicicons) : ?>
 		<tr id="kpost-topicicons" class="krow<?php echo 1 + $this->k^=1 ?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_GEN_TOPIC_ICON'); ?></strong>
@@ -116,7 +118,7 @@ $this->k=0;
 
 			<td class="kcol-mid">
 				<?php foreach ($topic_emoticons as $emoid=>$emoimg): ?>
-				<input type="radio" name="topic_emoticon" value="<?php echo intval($emoid); ?>" <?php echo $this->emoid == $emoid ? ' checked="checked" ':'' ?> />
+				<input type="radio" name="topic_emoticon" value="<?php echo intval($emoid); ?>" <?php echo $this->topic->icon_id == $emoid ? ' checked="checked" ':'' ?> />
 				<img src="<?php echo $this->escape(JURI::Root() . CKunenaTools::getTemplateImage("icons/{$emoimg}"));?>" alt="" border="0" />
 				<?php endforeach; ?>
 			</td>
@@ -131,7 +133,7 @@ $this->k=0;
 		<?php
 		if ($this->config->allowfileupload || ($this->config->allowfileregupload && $this->my->id != 0)
 			|| ($this->config->allowimageupload || ($this->config->allowimageregupload && $this->my->id != 0)
-			|| CKunenaTools::isModerator ( $this->my->id, $this->catid ))) :
+			|| CKunenaTools::isModerator ( $this->my->id, $this->message->catid ))) :
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/gears_init.js' );
 			//$this->document->addScript ( KUNENA_DIRECTURL . 'js/plupload/plupload.full.min.js' );
 			?>
@@ -160,19 +162,14 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<?php if (!empty($this->cansubscribe)) : ?>
+		<?php if ($this->canSubscribe()) : ?>
 		<tr id="kpost-subscribe" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_POST_SUBSCRIBE'); ?></strong>
 			</td>
 			<td class="kcol-mid">
-				<?php if ($this->config->subscriptionschecked == 1) : ?>
-				<input type="checkbox" name="subscribeMe" value="1" checked="checked" />
+				<input type="checkbox" name="subscribeMe" value="1" <?php if ($this->config->subscriptionschecked == 1) echo 'checked="checked"' ?> />
 				<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
-				<?php else : ?>
-				<input type="checkbox" name="subscribeMe" value="1" />
-				<i><?php echo JText::_('COM_KUNENA_POST_NOTIFIED'); ?></i>
-				<?php endif; ?>
 			</td>
 		</tr>
 		<?php endif; ?>
@@ -216,9 +213,9 @@ $this->k=0;
 </div>
 </div>
 <?php
-if (!$this->authorName) {
+if (!$this->message->name) {
 	echo '<script type="text/javascript">document.postform.authorname.focus();</script>';
-} else if (!$this->resubject) {
+} else if (!$this->topic->subject) {
 	echo '<script type="text/javascript">document.postform.subject.focus();</script>';
 } else {
 	echo '<script type="text/javascript">document.postform.message.focus();</script>';

@@ -43,6 +43,11 @@ class TableKunenaMessages extends KunenaTable
 		parent::__construct ( '#__kunena_messages', 'id', $db );
 	}
 
+	function reset() {
+		parent::reset();
+		$this->message = null;
+	}
+
 	function load($id = null)
 	{
 		$this->_exists = false;
@@ -62,7 +67,7 @@ class TableKunenaMessages extends KunenaTable
 		}
 
 		// Load the user data.
-		$query = "SELECT * FROM #__kunena_messages WHERE id = {$this->$k}";
+		$query = "SELECT m.*, t.message FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.id = {$this->$k}";
 		$this->_db->setQuery($query);
 		$data = $this->_db->loadAssoc();
 

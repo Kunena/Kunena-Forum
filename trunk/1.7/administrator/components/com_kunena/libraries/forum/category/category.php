@@ -77,7 +77,7 @@ class KunenaForumCategory extends JObject {
 		$user = KunenaUser::getInstance($user);
 		$topic = new KunenaForumTopic();
 		$message = new KunenaForumMessage();
-		$topic->category_id = $message->catid = $this->catid;
+		$topic->category_id = $message->catid = $this->id;
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
 		return array($topic, $message);
@@ -533,7 +533,7 @@ class KunenaForumCategory extends JObject {
 	}
 	protected function authoriseGuestWrite($user) {
 		// Check if user is guest and they can create or reply topics
-		if ($user->id == 0 && !KunenaFactory::getConfig()->pubwrite) {
+		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
 			return false;
 		}
@@ -542,7 +542,7 @@ class KunenaForumCategory extends JObject {
 	}
 	protected function authoriseNotSection($user) {
 		// Check if category is not a section
-		if (!$this->parent) {
+		if (!$this->parent_id) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_IS_SECTION' ) );
 			return false;
 		}

@@ -59,6 +59,7 @@ class KunenaForumMessage extends JObject {
 		$message->catid = $topic->category_id;
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
+		$message->subject = $this->subject;
 		if ($quote) {
 			$text = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $this->message );
 			$message->message = "[quote=\"{$this->name}\" post={$this->id}]" .  $text . "[/quote]";

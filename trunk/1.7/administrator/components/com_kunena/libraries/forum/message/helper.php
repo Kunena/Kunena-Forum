@@ -30,7 +30,7 @@ class KunenaForumMessageHelper {
 	 * @return	KunenaForumMessage		The message object.
 	 * @since	1.7
 	 */
-	static public function getInstance($identifier = null, $reload = false) {
+	static public function get($identifier = null, $reload = false) {
 		if ($identifier instanceof KunenaForumMessage) {
 			return $identifier;
 		}

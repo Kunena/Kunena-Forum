@@ -35,6 +35,10 @@ Kunena 1.7.0-DEV
 
 30-October-2010 Matias
 # [#22792] Fix installer to work with the new files
+# [#22792] Do not use kimport() with integration classes (doesn't work)
+^ [#22792] Convert post.php newtopic(), reply() and edit() to use new classes
+^ [#22792] Convert form to use new objects (category, topic, message)
+# [#22792] Many minor bugfixes
 
 28-October-2010 Matias
 ^ [#22792] Move static functions of KunenaForumCategory into KunenaForumCategoryHelper

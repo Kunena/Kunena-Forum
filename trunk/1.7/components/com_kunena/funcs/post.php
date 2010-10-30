@@ -45,7 +45,6 @@ class CKunenaPost {
 		$this->allow = 1;
 
 		$this->cat_default_allow = null;
-		$this->allow_topic_icons = null;
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
@@ -105,11 +104,6 @@ class CKunenaPost {
 				WHERE c.id IN ({$this->_session->allowed}) ORDER BY p.ordering, p.name, c.ordering, c.name LIMIT 1" );
 			$this->cat_default_allow = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
-		}
-
-		// Special check to verify if topic icons are allowed when do new post and when catid is true
-		if ( isset($this->msg_cat->id)) {
-			if ($this->msg_cat->id == 0) $this->allow_topic_icons = 1;
 		}
 
 		// Check if anonymous user needs to log in
@@ -229,158 +223,6 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $id, $this->catid, 0, false ), $redirectmsg );
 	}
 
-	protected function newtopic($do) {
-		$this->reply($do);
-	}
-
-	protected function reply($do) {
-		if (!$this->load())
-			return false;
-		if ($this->floodProtection ())
-			return false;
-
-		if ($this->id) {
-			$parent = KunenaForumMessageHelper::get($this->id);
-			if (!$parent->authorise('reply')) {
-				$this->_app->enqueueMessage ( $parent->getError(), 'notice' );
-				return false;
-			}
-			list ($topic, $message) = $parent->newReply($do == 'quote');
-		} else {
-			$category = KunenaForumCategoryHelper::get($this->catid);
-			if (!$category->authorise('topic.create')) {
-				$this->_app->enqueueMessage ( $category->getError(), 'notice' );
-				return false;
-			}
-			list ($topic, $message) = $category->newTopic();
-		}
-
-		return;
-		if ($this->lockProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
-
-		$this->kunena_editmode = 0;
-
-		$message = $this->msg_cat;
-		if ($this->catid && $this->msg_cat->id > 0) {
-			if ($do == 'quote') {
-				// FIXME: do better than this
-				$mestext = preg_replace('/\[confidential\](.*?)\[\/confidential\]/su', '', $message->message );
-				$this->message_text .= "[quote=\"{$message->name}\" post={$message->id}]" .  $mestext . "[/quote]";
-			} else {
-				$this->message_text = '';
-			}
-			$reprefix = JString::substr ( $message->subject, 0, JString::strlen ( JText::_ ( 'COM_KUNENA_POST_RE' ) ) ) != JText::_ ( 'COM_KUNENA_POST_RE' ) ? JText::_ ( 'COM_KUNENA_POST_RE' ) . ' ' : '';
-			$this->subject = $message->subject;
-			$this->resubject = $reprefix . $this->subject;
-			$this->parent = $message->parent;
-		} else {
-			$this->message_text = '';
-			$this->resubject = '';
-			$this->parent = 0;
-
-			$options = array ();
-			$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->catid );
-		}
-		$this->authorName = $this->getAuthorName ();
-		$this->emoid = 0;
-		$this->action = 'post';
-
-		$this->allow_anonymous = $this->cat_default_allow && $this->my->id;
-		$this->anonymous = ($this->allow_anonymous && ! empty ( $this->msg_cat->post_anonymous ));
-		$this->allow_name_change = 0;
-		if (! $this->my->id || $this->config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-			$this->allow_name_change = 1;
-		}
-
-		// check if this user is already subscribed to this topic but only if subscriptions are allowed
-		$this->cansubscribe = 0;
-		if ($this->my->id && $this->config->allowsubscriptions == 1) {
-			$this->cansubscribe = 1;
-			if ($this->msg_cat && $this->msg_cat->thread) {
-				$this->_db->setQuery ( "SELECT thread FROM #__kunena_user_topics WHERE user_id={$this->_db->Quote($this->my->id)} AND topic_id={$this->_db->Quote($this->msg_cat->thread)} AND subscribed=1" );
-				$subscribed = $this->_db->loadResult ();
-				if (KunenaError::checkDatabaseError() || $subscribed) {
-					$this->cansubscribe = 0;
-				}
-			}
-		}
-
-		if ($this->id)
-			$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->subject;
-		else
-			$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
-
-		CKunenaTools::loadTemplate ( '/editor/form.php' );
-	}
-
-	protected function edit() {
-		if (!$this->load())
-			return false;
-		if ($this->lockProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
-
-		$message = $this->msg_cat;
-		if ($message->parent==0) $this->allow_topic_icons = 1;
-
-		$allowEdit = 0;
-		if (CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-			// Moderator can edit any message
-			$allowEdit = 1;
-		} else if ($this->my->id && $this->my->id == $message->userid) {
-			$allowEdit = CKunenaTools::editTimeCheck ( $message->modified_time, $message->time );
-		}
-
-		if ($allowEdit == 1) {
-			// Load attachments
-			require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
-			$attachments = CKunenaAttachments::getInstance ();
-			$this->attachments = array_pop($attachments->get($message->id));
-
-			$this->kunena_editmode = 1;
-
-			$this->message_text = $message->message;
-			$this->resubject = $message->subject;
-			$this->authorName = $message->name;
-			$this->email = $message->email;
-			$this->id = $message->id;
-			$this->catid = $message->catid;
-			$this->parent = $message->parent;
-			$this->emoid = $message->topic_emoticon;
-			$this->action = 'edit';
-
-			//save the options for query after and load the text options, the number options is for create the fields in the form after
-			if ($message->poll_id) {
-				$this->polldatasedit = $this->poll->get_poll_data ( $this->id );
-				if ($this->kunena_editmode) {
-					$this->polloptionstotal = count ( $this->polldatasedit );
-				}
-			}
-
-			$this->allow_anonymous = ! empty ( $this->msg_cat->allow_anonymous ) && $message->userid;
-			$this->anonymous = 0;
-			$this->allow_name_change = 0;
-			if (! $this->my->id || $this->config->changename || ! empty ( $this->msg_cat->allow_anonymous ) || CKunenaTools::isModerator ( $this->my->id, $this->catid )) {
-				$this->allow_name_change = 1;
-			}
-			if (!$this->allow_name_change && $message->userid == $this->my->id) $this->authorName = $this->getAuthorName ();
-
-			$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->resubject;
-
-			CKunenaTools::loadTemplate ( '/editor/form.php' );
-		} else {
-			$this->_app->redirect ( CKunenaLink::GetKunenaURL ( false ), JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
-		}
-	}
-
 	protected function editpostnow() {
 		if ($this->tokenProtection ())
 			return false;
@@ -449,12 +291,74 @@ class CKunenaPost {
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}
 
+	protected function newtopic($do) {
+		$this->category = KunenaForumCategoryHelper::get($this->catid);
+		if (!$this->category->authorise('topic.create')) {
+			$this->_app->enqueueMessage ( $this->category->getError(), 'notice' );
+			return false;
+		}
+		list ($this->topic, $this->message) = $this->category->newTopic();
+		$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
+		$this->action = 'post';
+
+		$options = array ();
+		$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->category->id );
+
+		CKunenaTools::loadTemplate ( '/editor/form.php' );
+	}
+
+	protected function reply($do) {
+		$parent = KunenaForumMessageHelper::get($this->id);
+		if (!$parent->authorise('reply')) {
+			$this->_app->enqueueMessage ( $parent->getError(), 'notice' );
+			return false;
+		}
+		list ($this->topic, $this->message) = $parent->newReply($do == 'quote');
+		$this->category = $this->topic->getCategory();
+		$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
+		$this->action = 'post';
+
+		CKunenaTools::loadTemplate ( '/editor/form.php' );
+	}
+
+	protected function edit() {
+		$this->message = KunenaForumMessageHelper::get($this->id);
+		if (!$this->message->authorise('edit')) {
+			$this->_app->enqueueMessage ( $this->message->getError(), 'notice' );
+			return false;
+		}
+		$this->topic = $this->message->getTopic();
+		$this->category = $this->topic->getCategory();
+		$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
+		$this->action = 'edit';
+
+		// Load attachments
+		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+		$attachments = CKunenaAttachments::getInstance ();
+		$this->attachments = array_pop($attachments->get($this->message->id));
+
+		//save the options for query after and load the text options, the number options is for create the fields in the form after
+		if ($this->topic->poll_id) {
+			$this->polldatasedit = $this->poll->get_poll_data ( $this->topic->id );
+			$this->polloptionstotal = count ( $this->polldatasedit );
+		}
+
+		CKunenaTools::loadTemplate ( '/editor/form.php' );
+	}
+
+	function canSubscribe() {
+		if (!$this->my->id || !$this->config->allowsubscriptions)
+			return false;
+		$usertopic = $this->topic->getUserTopic();
+		return !$usertopic->subscribed;
+	}
+
 	protected function delete() {
 		if ($this->tokenProtection ('get'))
 			return false;
 
 		$message = KunenaForumMessageHelper::get($this->id);
-		if ($message->authorise('delete') && $message->publish(KunenaForumMessage::DELETED)) {
+		if ($message->authorise('delete') && $message->publish(KunenaForum::DELETED)) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_DELETE' ) );
 		} else {
 			$this->_app->enqueueMessage ( $message->getError(), 'notice' );
@@ -467,7 +371,7 @@ class CKunenaPost {
 			return false;
 
 		$message = KunenaForumMessageHelper::get($this->id);
-		if ($message->authorise('undelete') && $message->publish(KunenaForumMessage::PUBLISHED)) {
+		if ($message->authorise('undelete') && $message->publish(KunenaForum::PUBLISHED)) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' ) );
 		} else {
 			$this->_app->enqueueMessage ( $message->getError(), 'notice' );
@@ -496,7 +400,7 @@ class CKunenaPost {
 			return false;
 
 		$topic = KunenaForumTopicHelper::get($this->id);
-		if ($topic->authorise('delete') && $topic->publish(KunenaForumTopic::DELETED)) {
+		if ($topic->authorise('delete') && $topic->publish(KunenaForum::DELETED)) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' ) );
 		} else {
 			$this->_app->enqueueMessage ( $topic->getError(), 'notice' );
@@ -756,7 +660,7 @@ class CKunenaPost {
 		//get all the messages for this thread
 		$query = "SELECT m.*, t.* FROM #__kunena_messages AS m
 			LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid
-			WHERE thread='{$this->msg_cat->thread}' AND hold='0'
+			WHERE thread='{$this->message->thread}' AND hold='0'
 			ORDER BY time DESC";
 		$this->_db->setQuery ( $query, 0, $this->config->historylimit );
 		$this->messages = $this->_db->loadObjectList ();
@@ -773,8 +677,6 @@ class CKunenaPost {
 		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance ();
 		$this->attachmentslist = $attachments->get($mesids);
-
-		$this->subject = $this->msg_cat->subject;
 
 		CKunenaTools::loadTemplate ( '/editor/history.php' );
 	}

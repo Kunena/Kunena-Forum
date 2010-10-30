@@ -76,10 +76,11 @@ abstract class KunenaIntegration extends JObject {
 		$dir = dirname ( __FILE__ );
 		$folders = JFolder::folders ( $dir );
 		$list = array ();
+		require_once "$dir/$name.php";
 		foreach ( $folders as $integration ) {
 			$file = "$dir/$integration/$name.php";
 			if (is_file ( $file )) {
-				kimport("kunena.integration.$name");
+				require_once $file;
 				$obj = self::_initialize ( $name, $integration );
 				$priority = 0;
 				if ($obj)

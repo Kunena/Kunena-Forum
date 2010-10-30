@@ -93,13 +93,13 @@ $kunena_config = KunenaFactory::getConfig ();
 			<?php
 			//Check if the poll is allowed
 			if ($kunena_config->pollenabled) {
-				if ( empty($this->msg_cat->allow_polls) ) $this->msg_cat->allow_polls = '';
-				$display_poll = $kunena_poll->get_poll_allowed($this->id, $this->parent, $this->kunena_editmode, $this->msg_cat->allow_polls);
+				if ( empty($this->category->allow_polls) ) $this->category->allow_polls = '';
+				$display_poll = $kunena_poll->get_poll_allowed($this->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls);
 				if (!isset($this->polldatasedit[0]->polltimetolive)) {
 					$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				}
-				$kunena_poll->call_js_poll_edit($this->kunena_editmode, $this->id);
-				$html_poll_edit = $kunena_poll->get_input_poll($this->kunena_editmode, $this->id, $this->polldatasedit);
+				$kunena_poll->call_js_poll_edit($this->message->exists(), $this->id);
+				$html_poll_edit = $kunena_poll->get_input_poll($this->message->exists(), $this->id, $this->polldatasedit);
 				JHTML::_('behavior.calendar');
 			?>
 			<span id="kpoll-not-allowed"><?php if(!$display_poll) { echo JText::_('COM_KUNENA_POLL_CATS_NOT_ALLOWED'); } ?></span>
@@ -271,13 +271,13 @@ $kunena_config = KunenaFactory::getConfig ();
 		style="cursor: pointer"><?php echo JText::_('COM_KUNENA_EDITOR_SHRINK'); ?></span></td>
 
 	<td class="kcol-last kcol-editor-field">
-		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50"><?php echo $this->escape($this->message_text); ?></textarea>
+		<textarea class="ktxtarea required" name="message" id="kbbcode-message" rows="10" cols="50"><?php echo $this->escape($this->message->message); ?></textarea>
 		<?php
 		// Add an empty div for the preview.The class name will be set by js depending on horizontal or vertical split
 		?>
 		<!-- Hidden preview placeholder -->
 		<div id="kbbcode-preview" style="display: none;"></div>
-		<?php if ($this->kunena_editmode) : ?>
+		<?php if ($this->message->exists()) : ?>
 		<div class="clr"> </div>
 		<fieldset>
 			<legend><?php echo (JText::_('COM_KUNENA_EDITING_REASON')) ?></legend>

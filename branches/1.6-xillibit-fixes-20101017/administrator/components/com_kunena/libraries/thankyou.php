@@ -102,8 +102,8 @@ class KunenaThankYou extends JObject {
 		return $table->getUsers ( $pid, $named );
 	}
 
-	public function getThankYouPosts($userid, $saidgot) {
+	public function getThankYouPosts($userid, $saidgot, $limit = 10) {
 		$table = self::getTable ();
-		return $table->getPosts ( $userid, $saidgot );
+		return $table->getPosts ( $userid, $saidgot, $limit );
 	}
 }

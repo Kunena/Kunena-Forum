@@ -33,6 +33,17 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+30-October-2010 Matias
+^ [#15886] Merged revisions 3784-3802 from /branches/1.6-LDAsvens-language-20101021
+
+30-October-2010 svens (LDA)
+^ [#22975] update de-DE (thanks rich)
+^ [#22975] update nb-NO (thanks rued, Roar and Bjørn)
+
+26-October-2010 svens (LDA)
+^ [#22975] update ru-RU (thanks ZARKOS)
+^ [#22975] update de-DE (thanks rich)
+
 25-October-2010 Matias
 # [#23015] If open_basedir exludes /tmp, PHP warning is shown
 

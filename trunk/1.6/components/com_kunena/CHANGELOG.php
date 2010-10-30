@@ -35,10 +35,27 @@ Kunena 1.6.1-DEV
 
 30-October-2010 Matias
 ^ [#15886] Merged revisions 3784-3802 from /branches/1.6-LDAsvens-language-20101021
+^ [#15886] Merged revisions 3769-3801 from /branches/1.6-xillibit-fixes-20101017
+
+30-October-2010 Xillibit
+# [#22971] Check now that the rules are enabled in AUP before adding points (thanks Bernard)
+# [#22919] Make working the limit on thank you in latestx, to show the correct number of messages in latest module
 
 30-October-2010 svens (LDA)
 ^ [#22975] update de-DE (thanks rich)
 ^ [#22975] update nb-NO (thanks rued, Roar and Bjørn)
+
+29-October-2010 Xillibit
+# [#20084] Fix undefined variable on parser.php line 642 and wrong location of link readmore when there is not params used
++ [#23060] Add the possibility to choose if you want suscribe to a topic in quick reply
+
+28-October-2010 Xillibit
+^ [#20084] Change how to works the [article] bbcode which supports now some parameters (link, full, intro)
+# [#20084] Fix Fatal error: Call to protected method CKunenaPost::isUserBanned() from context 'plgContentKunenaDiscuss' in kunenadiscuss.php on line 604
+# [#20084] Fix some wrongs visiblity for methods in post.php to be allowed to use these methods in kdiscuss
+
+26-October-2010 Xillibit
++ [#20084] Make the possibility to set a specific for a new topic (when using kdiscuss) and new bbcode [articlelink] and [articlecontentlink]
 
 26-October-2010 svens (LDA)
 ^ [#22975] update ru-RU (thanks ZARKOS)
@@ -52,6 +69,9 @@ Kunena 1.6.1-DEV
 
 24-October-2010 fxstein
 ^ [#22979] Adjustable and inhertited link coloration
+
+23-October-2010 Xillibit
+# [#22971] Use new namming convention for aup plg and use differents if an old AUP verison is installed
 
 23-October-2010 fxstein
 ^ [#22979] Default template version and settings updated

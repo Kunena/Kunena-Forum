@@ -285,9 +285,9 @@ class CKunenaLatestX {
 		kimport('thankyou');
 
 		$this->total = 10;//$limit default is on 10 TODO make adjustable
-		$this->threads_per_page = 10;
+		if (empty($this->threads_per_page)) $this->threads_per_page = 10;
 
-		$idlist = KunenaThankYou::getThankYouPosts($this->user->id, $saidgot);
+		$idlist = KunenaThankYou::getThankYouPosts($this->user->id, $saidgot, $this->threads_per_page);
 
 		$this->threadids = array();
 		$this->loadids = array();

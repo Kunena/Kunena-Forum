@@ -55,6 +55,7 @@ class CKunenaViewMessage {
 	public $signature = null;
 	public $usermedals = null;
 	public $thankyoubutton = null;
+	public $cansubscribe = null;
 
 	public $attachments = array();
 	public $inline_attachments = array();
@@ -77,6 +78,8 @@ class CKunenaViewMessage {
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
+
+		$this->cansubscribe = $parent->cansubscribe;
 	}
 
 	function displayActions() {
@@ -515,16 +518,17 @@ class CKunenaView {
 		$document->setDescription ( $metaDesc );
 
 		//Perform subscriptions check only once
-		$fb_cansubscribe = 0;
+		$this->cansubscribe = 0;
 		if ($this->config->allowsubscriptions && $this->my->id) {
 			$this->db->setQuery ( "SELECT thread FROM #__kunena_subscriptions WHERE userid={$this->db->Quote($this->my->id)} AND thread={$this->db->Quote($this->thread)}" );
 			$fb_subscribed = $this->db->loadResult ();
 			KunenaError::checkDatabaseError();
 
 			if ($fb_subscribed == "") {
-				$fb_cansubscribe = 1;
+				$this->cansubscribe = 1;
 			}
 		}
+
 		//Perform favorites check only once
 		$fb_canfavorite = 0;
 		$this->db->setQuery ( "SELECT MAX(userid={$this->db->Quote($this->my->id)}) AS favorited, COUNT(*) AS totalfavorited FROM #__kunena_favorites WHERE thread={$this->db->Quote($this->thread)}" );
@@ -557,13 +561,13 @@ class CKunenaView {
 		}
 
 		// Thread Subscription
-		if ($fb_cansubscribe == 1) {
+		if ($this->cansubscribe == 1) {
 			// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
 			$this->thread_subscribe = CKunenaLink::GetTopicPostLink ( 'subscribe', $this->catid, $this->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_TOPIC') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_TOPIC_LONG') );
 		}
 
-		if ($this->my->id != 0 && $this->config->allowsubscriptions && $fb_cansubscribe == 0) {
+		if ($this->my->id != 0 && $this->config->allowsubscriptions && $this->cansubscribe == 0) {
 			// this user is allowed to unsubscribe
 			$this->thread_subscribe = CKunenaLink::GetTopicPostLink ( 'unsubscribe', $this->catid, $this->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_TOPIC') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_TOPIC_LONG') );
 		}

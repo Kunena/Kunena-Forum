@@ -639,6 +639,8 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 //				break;
 			case 'article' :
 				if ($between) {
+					$param = '';
+					if ( !empty($tag->options ['default']) ) $param = $tag->options ['default'];
 					$articleid = (int)$between;
 
 					// FIXME: works only in J1.5
@@ -654,18 +656,22 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					$kunena_db->setQuery($query);
 					$article = $kunena_db->loadObject();
 
-					$tag_new = '<div class="kmsgtext-article">';
+					$tag_start = '<div class="kmsgtext-article">';
 
 					if($article){
 						$user	= & JFactory::getUser();
 
 						// Are the section and category published?
 						if ((!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
+							$tag_new = $tag_start;
 							$tag_new .= JText::_("Article cannot be shown");
+							$tag_new .= '</div>';
 						} else if ((($article->cat_access > $user->get('aid', 0)) && $article->catid)
 							|| (($article->sec_access > $user->get('aid', 0)) && $article->sectionid)
 							|| ($article->access > $user->get('aid', 0))) {
+							$tag_new = $tag_start;
 							$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
+							$tag_new .= '</div>';
 						} else {
 							$kunena_app = JFactory::getApplication();
 							$dispatcher	= JDispatcher::getInstance();
@@ -673,32 +679,56 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							$aparams = new JParameter($article->attribs);
 							$params->merge($aparams);
 
-							if(!empty($article->introtext))
-							{
-								$article->text = $article->introtext;
-							} else {
-								$article->text = $article->fulltext;
-							}
-
 							JPluginHelper::importPlugin('content');
 							$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
-
-							if(!empty($article->introtext))
-							{
-								require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
-								$article->text .= '<a href="'.
-													JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
+							require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
+							$link_readmore = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
 													'" class="readon">'.JText::sprintf('Read more...').'</a>';
-							}
+							$link_title = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
+													'" class="readon">'.$article->title.'</a>';
 
-							$tag_new .= $article->text;
+							if ($param == 'intro') {
+								if ( !empty($article->introtext) ) {
+									$tag_new = $tag_start;
+									$tag_new .= $article->introtext;
+									$tag_new .= '</div>';
+								} else {
+									$tag_new = $link_title;
+								}
+							} elseif ($param == 'full') {
+								if ( !empty($article->fulltext) ) {
+									$tag_new = $tag_start;
+									$tag_new .= $article->fulltext;
+									$tag_new .= '</div>';
+								} else {
+									$tag_new = $link_title;
+								}
+							} elseif ($param == 'link' || empty($param)) {
+								if ( empty($param) ) {
+									if(!empty($article->introtext))	{
+										$article->text = $article->introtext;
+									} else {
+										$article->text = $article->fulltext;
+									}
+								}
+								
+								$tag_new = $tag_start;
+								
+								if ( $param != 'link' ) {
+									$tag_new .= $article->text;
+									$tag_new .= '</div>';
+									$tag_new .= $link_readmore;
+								} else {
+									$tag_new = $link_title;
+								}
+							}
 						}
 					} else {
+						$tag_new = $tag_start;
 						$tag_new .= JText::_("Article cannot be shown");
+						// End of div wrapper for article
+						$tag_new .= '</div>';
 					}
-					// End of div wrapper for article
-					$tag_new .= '</div>';
-
 					return TAGPARSER_RET_REPLACED;
 				}
 				return TAGPARSER_RET_NOTHING;

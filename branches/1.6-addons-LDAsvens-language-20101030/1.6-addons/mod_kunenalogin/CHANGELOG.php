@@ -28,6 +28,9 @@ Legend:
 
 KunenaLogin 1.6.0-RC2
 
+30-October-2010 svens LDA
+^ [#22975] update ru-RU (thanks ZARKOS)
+
 17-September-2010
 + [#20178] Added fr-FR translation
 

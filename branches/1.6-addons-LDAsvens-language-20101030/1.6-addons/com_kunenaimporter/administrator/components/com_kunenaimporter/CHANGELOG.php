@@ -33,6 +33,9 @@ Legend:
 
 KunenaImporter 1.6.0-RC2
 
+30-October-2010 svens LDA
+^ [#22975] update ru-RU (thanks ZARKOS)
+
 16-September-2010 Matias
 + [#20178] Added ru-RU (thanks ZARGOS)
 

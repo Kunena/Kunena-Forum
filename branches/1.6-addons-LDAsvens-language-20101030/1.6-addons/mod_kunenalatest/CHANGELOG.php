@@ -30,6 +30,10 @@ Legend:
 
 KunenaLatest 1.6.0-RC3
 
+30-October-2010 svens LDA
++ [#22975] added nb-NO (thanks rued)
+^ [#22975] update ru-RU (thanks ZARKOS)
+
 29-October-2010 Xillibit
 ^ [#20081] Updated finish language file fi-FI (thanks Mortti)
 ^ [#20081] Change version to RC3

@@ -29,6 +29,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaStats 1.6.0-RC2
+30-October-2010 svens LDA
+^ [#22975] update ru-RU (thanks ZARKOS)
 
 10-October-2010 Matias
 + [#20095] Added ru-RU translation (thanks ZARKOS)

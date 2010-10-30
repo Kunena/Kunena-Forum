@@ -30,6 +30,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena Discuss Plugin 1.6.0-RC3
+30-October-2010 svens LDA
+^ [#22975] update ru-RU (thanks ZARKOS)
 
 30-October-2010 Xillibit
 ^ [#20084] When the kunena reference isn't yet created and the quick form is disabled the user will informed that there is no reference

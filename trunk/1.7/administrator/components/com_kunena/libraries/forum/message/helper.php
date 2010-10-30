@@ -10,6 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+kimport ('kunena.error');
 kimport ('kunena.forum.message');
 
 /**

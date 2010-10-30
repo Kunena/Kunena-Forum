@@ -8,7 +8,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
-
 defined( '_JEXEC' ) or die();
 if (defined ( 'KUNENA_LOADED' ))
 	return;
@@ -21,7 +20,7 @@ define ( 'KUNENA_NAME', substr ( KUNENA_COMPONENT_NAME, 4 ) );
 define ( 'KUNENA_COMPONENT_LOCATION', basename ( dirname ( dirname ( __FILE__ ) ) ) );
 
 // Component paths
-define ( 'KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . DS . KUNENA_COMPONENT_NAME );
+define ( 'KPATH_COMPONENT_RELATIVE', KUNENA_COMPONENT_LOCATION . '/' . KUNENA_COMPONENT_NAME );
 define ( 'KPATH_SITE', JPATH_ROOT . DS . KPATH_COMPONENT_RELATIVE );
 define ( 'KPATH_ADMIN', JPATH_ADMINISTRATOR . DS . KPATH_COMPONENT_RELATIVE );
 define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
@@ -35,17 +34,51 @@ define ( 'KPATH_MEDIA', JPATH_ROOT . DS . 'media' . DS . KUNENA_NAME );
  */
 function kimport($path)
 {
-	//return JLoader::import($path, KPATH_ADMIN.'/libraries');
-	require_once(KPATH_ADMIN.'/libraries/'.str_replace( '.', '/', $path).'.php');
+	static $paths = array();
+	if (isset($paths[$path])) return true;
+
+	$res = false;
+	if (substr($path, 0, 7) == 'kunena.') {
+		$file = KPATH_ADMIN . '/libraries/' . str_replace( '.', '/', substr($path, 7));
+		if (is_dir($file)) {
+			$parts = explode( '/', $file );
+			$file .= '/'.array_pop( $parts );
+		}
+		$file .= '.php';
+		if (file_exists($file)) {
+			$class = str_replace( '.', '', $path);
+			JLoader::register($class, $file);
+			$paths[$path] = 1;
+			$res = true;
+		}
+	} else {
+		$res = JLoader::import($path, dirname(__FILE__).'/libraries');
+	}
+	return $res;
 }
 
 // Version information
-class Kunena {
+class KunenaForum {
+	private function __construct() {}
+
 	public static function isSvn() {
 		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
 			return true;
 		}
 		return false;
+	}
+
+	public static function isCompatible($version, $build=false) {
+		if (version_compare($version, '1.7.0-DEV', '<')) {
+			return false;
+		}
+		if (version_compare($version, self::version(), '>')) {
+			return false;
+		}
+		if ($build && $build < self::versionBuild()) {
+			return false;
+		}
+		return true;
 	}
 
 	public static function version() {
@@ -62,6 +95,15 @@ class Kunena {
 
 	public static function versionBuild() {
 		return '@kunenaversionbuild@';
+	}
+
+	public static function getVersionInfo() {
+		$version = new stdClass();
+		$version->version = self::version();
+		$version->date = self::versionDate();
+		$version->name = self::versionName();
+		$version->build = self::versionBuild();
+		return $version;
 	}
 
 	public static function enabled() {

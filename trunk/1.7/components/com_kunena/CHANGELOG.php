@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+30-October-2010 Matias
+# [#22792] Fix installer to work with the new files
+
 28-October-2010 Matias
 ^ [#22792] Move static functions of KunenaForumCategory into KunenaForumCategoryHelper
 ^ [#22792] Move static functions of KunenaForumMessage into KunenaForumMessageHelper

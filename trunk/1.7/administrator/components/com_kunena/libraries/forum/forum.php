@@ -4,7 +4,7 @@
  * Kunena Component - KunenaForum Class
  * @package Kunena
  *
- * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+ * @Copyright (C) 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
@@ -86,29 +86,21 @@ class KunenaForum {
 		if (!JComponentHelper::isEnabled ( 'com_kunena', true )) {
 			return false;
 		}
-		$config = self::getConfig();
+		$config = KunenaFactory::getConfig ();
 		return !$config->board_offline;
-	}
-
-	public static function getConfig() {
-		require_once (KPATH_SITE . DS . 'lib' . DS . "kunena.config.class.php");
-		return KunenaFactory::getConfig ();
 	}
 
 	// Internal functions
 
 	protected static function buildVersion() {
-		if (self::$version === false) {
-			if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
-				$changelog = file_get_contents ( KPATH_SITE . '/CHANGELOG.php', NULL, NULL, 0, 1000 );
-				preg_match ( '|\$Id\: CHANGELOG.php (\d+) (\S+) (\S+) (\S+) \$|', $changelog, $svn );
-				preg_match ( '|~~\s+Kunena\s(\d+\.\d+.\d+\S*)|', $changelog, $version );
-			}
-			self::$version = ('@kunenaversion@' == '@' . 'kunenaversion' . '@') ? strtoupper ( $version [1] . '-SVN' ) : strtoupper ( '@kunenaversion@' );
-			self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? $svn [2] : '@kunenaversiondate@';
-			self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
-			self::$version_build = ('@kunenaversionbuild@' == '@' . 'kunenaversionbuild' . '@') ? $svn [1] : '@kunenaversionbuild@';
+		if ('@kunenaversion@' == '@' . 'kunenaversion' . '@') {
+			$changelog = file_get_contents ( KPATH_SITE . '/CHANGELOG.php', NULL, NULL, 0, 1000 );
+			preg_match ( '|\$Id\: CHANGELOG.php (\d+) (\S+) (\S+) (\S+) \$|', $changelog, $svn );
+			preg_match ( '|~~\s+Kunena\s(\d+\.\d+.\d+\S*)|', $changelog, $version );
 		}
-		return self::$version;
+		self::$version = ('@kunenaversion@' == '@' . 'kunenaversion' . '@') ? strtoupper ( $version [1] . '-SVN' ) : strtoupper ( '@kunenaversion@' );
+		self::$version_date = ('@kunenaversiondate@' == '@' . 'kunenaversiondate' . '@') ? $svn [2] : '@kunenaversiondate@';
+		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
+		self::$version_build = ('@kunenaversionbuild@' == '@' . 'kunenaversionbuild' . '@') ? $svn [1] : '@kunenaversionbuild@';
 	}
 }

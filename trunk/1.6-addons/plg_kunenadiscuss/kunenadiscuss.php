@@ -28,7 +28,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// Kunena detection and version check
 		$minKunenaVersion = '1.6.0';
-		if (!class_exists('Kunena') || Kunena::versionBuild() < 3638) {
+		if (!class_exists('Kunena') || Kunena::versionBuild() < 3730) {
 			return null;
 		}
 		// Kunena online check
@@ -237,7 +237,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		$result = $this->_db->loadObject ();
 		CKunenaTools::checkDatabaseError ();
 
-		if ($result) {
+		if ( is_object($result) ) {
 			if ($thread && $thread != $result->mesid) {
 				// Custom Topic is not the same as cross reference, additional check needed
 				$query = "SELECT t.thread
@@ -265,7 +265,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 				$result = null;
 			}
 		}
-		if (! $result && $thread) {
+		if ( !is_object($result) && $thread) {
 			// Find the real topic
 			$query = "SELECT {$this->_db->quote($row->id)} AS content_id, t.id AS thread_id, m.id AS mesid, t.thread, t.time
 				FROM #__kunena_messages AS m
@@ -274,10 +274,14 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$this->_db->setQuery ( $query );
 			$result = $this->_db->loadObject ();
 			CKunenaTools::checkDatabaseError ();
-
-			$this->createReference ( $row, $thread );
-			$this->debug ( "showPlugin: First hit to Custom Topic, created cross reference to topic {$thread}" );
-		} else if (! $result) {
+			
+			if ( !is_object($result) ) {
+				$this->createReference ( $row, $thread );
+				$this->debug ( "showPlugin: First hit to Custom Topic, created cross reference to topic {$thread}" );
+			} else {
+				$this->debug ( "showPlugin: First hit to Custom Topic, cross reference not created to topic {$thread} because it exist already" );
+			}
+		} else if (! is_object($result) ) {
 			$thread = 0;
 			$create = $this->params->get ( 'create', 0 );
 			$createTime = $this->params->get ( 'create_time', 0 )*604800; // Weeks in seconds
@@ -318,7 +322,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 				$closeTime = $now;
 			}
 		}
-
+		
+		$link_topic = ''; 
 		if ($thread && $linkOnly) {
 			$this->debug ( "showPlugin: Displaying only link to the topic" );
 
@@ -330,7 +335,19 @@ class plgContentKunenaDiscuss extends JPlugin {
 			require_once (KPATH_SITE . '/lib/kunena.link.class.php');
 			$content = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
 			return $content;
-		}
+		} elseif ( $thread && !$botShowForm ) {
+     		 $this->debug ( "showPlugin: Displaying link to the topic because the form is disabled" );
+
+			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread={$this->_db->quote($thread)}";
+			$this->_db->setQuery ( $sql );
+			$postCount = $this->_db->loadResult ();
+			CKunenaTools::checkDatabaseError ();
+			$linktitle = JText::sprintf ( 'PLG_KUNENADISCUSS_DISCUSS_ON_FORUMS', $postCount );
+			require_once (KPATH_SITE . '/lib/kunena.link.class.php');
+			$link_topic = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );			
+    	} elseif ( !$thread && !$botShowForm ) {      		
+      		$link_topic = JText::_('PLG_KUNENADISCUSS_NEW_TOPIC_NOT_CREATED');
+    	}
 
 		// ************************************************************************
 		// Process the QuickPost form
@@ -348,7 +365,12 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// This will be used all the way through to tell users how many posts are in the forum.
 		$this->debug ( "showPlugin: Rendering discussion" );
-		$content = $this->showTopic ( $catid, $thread );
+		if ($link_topic) { 
+      		$content = $link_topic;		
+		  	$content .= $this->showTopic ( $catid, $thread, $link_topic );
+		} else {
+      		$content = $this->showTopic ( $catid, $thread, $link_topic );
+    	}
 
 		if ($formLocation) {
 			$content = '<div class="kunenadiscuss">' . $content . '<br />' . $quickPost . '</div>';
@@ -499,6 +521,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		$config = KunenaFactory::getConfig();
 		$holdPost = $message->get ( 'hold' );
+		require_once (KPATH_SITE . '/lib/kunena.link.class.php');
 		$message->emailToSubscribers(false, $config->allowsubscriptions && ! $holdPost, $config->mailmod || $holdPost, $config->mailadmin || $holdPost);
 
 		if ($holdPost) {

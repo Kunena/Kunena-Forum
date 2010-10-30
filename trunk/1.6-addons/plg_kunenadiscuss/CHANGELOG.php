@@ -31,6 +31,13 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC3
 
+30-October-2010 Xillibit
+^ [#20084] When the kunena reference isn't yet created and the quick form is disabled the user will informed that there is no reference
+# [#20084] Fix undefined variable on link_topic
+# [#20084] Put is_object to check the things are right an object and not others things
+# [#20084] Fix Fatal error: Class 'CKunenaLink' not found in /lib/kunena.posting.class.php on line 912
+^ [#20084] Some languages updated because a new strings has been added
+
 27-October-2010 Matias
 + [#20084] Migrate existing data from old discussbots
 + [#20084] Add option to create topic on first reply

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install>
+<install type="module" version="1.5.0" method="upgrade">
+	<name>Kunena Statistics</name>
+	<author>Kunena Team</author>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
+	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
+	<license>GNU/GPL</license>
+	<authorEmail>florian@kunena.com</authorEmail>
+	<authorUrl>www.kunena.com</authorUrl>
+	<version>1.6.0-RC3</version>
+	<description>MOD_KUNENASTATS_DESCRIPTION</description>
+
+	<files>
+		<filename module="mod_kunenastats">mod_kunenastats.php</filename>
+		<filename>index.html</filename>
+		<filename>CHANGELOG.php</filename>
+		<filename>class.php</filename>
+		<folder>tmpl</folder>
+	</files>
+
+	<languages folder="languages">
+		<language tag="en-GB">en-GB.mod_kunenastats.ini</language>
+		<language tag="fr-FR">fr-FR.mod_kunenastats.ini</language>
+		<language tag="ru-RU">ru-RU.mod_kunenastats.ini</language>
+	</languages>
+
+	<params>
+		<param name="type" type="list" default="general" label="MOD_KUNENASTATS_PARAMSTATSTYPE" description="MOD_KUNENASTATS_PARAMSTATSTYPE_DESC">
+			<option value="general">MOD_KUNENASTATS_GENERALSTATS</option>
+			<option value="topics">MOD_KUNENASTATS_TOPTOPICS</option>
+			<option value="posters">MOD_KUNENASTATS_TOPPOSTERS</option>
+			<option value="profiles">MOD_KUNENASTATS_TOPPROFILES</option>
+			<option value="polls">MOD_KUNENASTATS_TOPPOLLS</option>
+			<option value="thanks">MOD_KUNENASTATS_TOPTHANKS</option>
+		</param>
+		<param name="items" type="text" default="5" label="MOD_KUNENASTATS_PARAMNBITEMS" description="MOD_KUNENASTATS_PARAMNBITEMS_DESC" />	
+		<param name="titlelength" type="text" default="50" label="MOD_KUNENASTATS_PARAM_TITLELENGTH" description="MOD_KUNENASTATS_PARAM_TITLELENGTH_DESC" />
+		<param name="sh_statslink" type="radio" default="0" label="MOD_KUNENASTATS_PARAMSHOWSTATSLINK" description="MOD_KUNENASTATS_PARAMSHOWSTATSLINK_DESC">
+			<option value="0">MOD_KUNENASTATS_PARAM_VALUE_NO</option>
+			<option value="1">MOD_KUNENASTATS_PARAM_VALUE_YES</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="moduleclass_sfx" type="text" default="" label="MOD_KUNENASTATS_PARAM_MODULECLASSSUFFIX" description="MOD_KUNENASTATS_PARAMMODULECLASSSUFFIX_DESC" />
+	</params>
+</install>

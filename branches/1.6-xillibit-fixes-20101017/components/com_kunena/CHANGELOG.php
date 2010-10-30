@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+30-October-2010 Xillibit
+# [#22971] Check now that the rules are enable in AUP before adding points (thanks Bernard)
+
 29-October-2010 Xillibit
 # [#20084] Fix undefined variable on parser.php line 642 and wrong location of link readmore when there is not params used
 + [#23060] Add the possibility to choose if you want suscribe to a topic in quick reply

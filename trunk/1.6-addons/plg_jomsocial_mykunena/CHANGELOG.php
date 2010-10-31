@@ -27,6 +27,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 MyKunena 1.6.0-RC2
+30-October-2010 svens LDA
+^ [#22975] update ru-RU (thanks ZARKOS)
 
 13-October-2010
 # [#19002] Missing translations for two strings

@@ -33,6 +33,9 @@ Legend:
 
 KunenaImporter 1.6.0-RC2
 
+30-October-2010 svens LDA
+^ [#22975] update ru-RU (thanks ZARKOS)
+
 30-October-2010 fxstein
 ^ [#20178] Project Cleanup - All validation warnings and errors fixed
 

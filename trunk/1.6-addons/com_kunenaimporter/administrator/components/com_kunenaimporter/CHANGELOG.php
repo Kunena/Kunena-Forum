@@ -33,6 +33,9 @@ Legend:
 
 KunenaImporter 1.6.0-RC2
 
+30-October-2010 fxstein
+^ [#20178] Project Cleanup - All validation warnings and errors fixed
+
 16-September-2010 Matias
 + [#20178] Added ru-RU (thanks ZARGOS)
 

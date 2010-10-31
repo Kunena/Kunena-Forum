@@ -256,7 +256,7 @@ class KunenaimporterModelExport_ccBoard extends KunenaimporterModelExport {
 		$result = $this->getExportData ( $query, $start, $limit );
 		foreach ( $result as $key => $item ) {
 			$row = & $result [$key];
-			$row->userid = sustr ( $row->userid, 0, 2 );
+			$row->userid = substr ( $row->userid, 0, 2 );
 		}
 		return $result;
 	}

@@ -144,7 +144,9 @@ class CKunenaTableCategories extends CKunenaTable {
 		if ($ret) {
 			// we must reset fbSession (allowed), when forum record was changed
 			$this->_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
-			$this->_db->query () or trigger_dberror ( "Unable to update sessions." );
+			// FIXME: Need to check and validate query error codes
+			$this->_db->query ();
+			
 		}
 		return $ret;
 	}

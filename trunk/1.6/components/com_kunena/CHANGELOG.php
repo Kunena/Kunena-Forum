@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+31-October-2010 Matias
+# [#20084] KunenaDiscuss: Fix message ordering to obey configuration
+
 30-October-2010 Matias
 ^ [#15886] Merged revisions 3784-3802 from /branches/1.6-LDAsvens-language-20101021
 ^ [#15886] Merged revisions 3769-3801 from /branches/1.6-xillibit-fixes-20101017

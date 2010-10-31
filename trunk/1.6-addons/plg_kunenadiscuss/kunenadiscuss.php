@@ -274,7 +274,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$this->_db->setQuery ( $query );
 			$result = $this->_db->loadObject ();
 			CKunenaTools::checkDatabaseError ();
-			
+
 			if ( !is_object($result) ) {
 				$this->createReference ( $row, $thread );
 				$this->debug ( "showPlugin: First hit to Custom Topic, created cross reference to topic {$thread}" );
@@ -322,8 +322,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 				$closeTime = $now;
 			}
 		}
-		
-		$link_topic = ''; 
+
+		$link_topic = '';
 		if ($thread && $linkOnly) {
 			$this->debug ( "showPlugin: Displaying only link to the topic" );
 
@@ -344,8 +344,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 			CKunenaTools::checkDatabaseError ();
 			$linktitle = JText::sprintf ( 'PLG_KUNENADISCUSS_DISCUSS_ON_FORUMS', $postCount );
 			require_once (KPATH_SITE . '/lib/kunena.link.class.php');
-			$link_topic = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );			
-    	} elseif ( !$thread && !$botShowForm ) {      		
+			$link_topic = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
+    	} elseif ( !$thread && !$botShowForm ) {
       		$link_topic = JText::_('PLG_KUNENADISCUSS_NEW_TOPIC_NOT_CREATED');
     	}
 
@@ -365,8 +365,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// This will be used all the way through to tell users how many posts are in the forum.
 		$this->debug ( "showPlugin: Rendering discussion" );
-		if ($link_topic) { 
-      		$content = $link_topic;		
+		if ($link_topic) {
+      		$content = $link_topic;
 		  	$content .= $this->showTopic ( $catid, $thread, $link_topic );
 		} else {
       		$content = $this->showTopic ( $catid, $thread, $link_topic );
@@ -391,11 +391,12 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// Limits the number of posts
 		$limit = $this->params->get ( 'limit', 25 );
 		// Show the first X posts, versus the last X posts
-		$botFirstPosts = $this->params->get ( 'ordering', 1 );
+		$ordering = $this->params->get ( 'ordering', 1 );
 
 		require_once (KPATH_SITE . '/funcs/view.php');
 		$thread = new CKunenaView ( 'view', $catid, $thread, 1, $limit );
 		$thread->setTemplate ( '/plugins/content/kunenadiscuss' );
+		$thread->ordering = $ordering ? 'ASC' : 'DESC';
 		ob_start ();
 		$thread->display ();
 		$str = ob_get_contents ();

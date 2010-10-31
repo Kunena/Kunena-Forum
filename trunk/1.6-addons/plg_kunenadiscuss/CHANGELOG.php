@@ -30,6 +30,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena Discuss Plugin 1.6.0-RC3
+
+31-October-2010 Matias
+# [#20084] Fix message ordering to obey configuration
+
 30-October-2010 svens LDA
 ^ [#22975] update ru-RU (thanks ZARKOS)
 

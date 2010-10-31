@@ -41,8 +41,7 @@ if (is_array ( $this->klistpost ) && !$this->kunena_config->board_offline) {
 				}
 			}
 			if ($item->ordering) {
-					echo '<img src="' . JURI::root () . 'modules/mod_kunenalatest/tmpl/sticky.png" alt="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" />';
-				}
+				echo '<img src="' . JURI::root () . 'modules/mod_kunenalatest/tmpl/sticky.png" alt="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" title="' . JText::_ ( 'MOD_KUNENALATEST_STICKY_TOPIC' ) . '" />';
 			}
 			if ( $this->params->get ( 'choosemodel' ) != 'latestposts' && $this->params->get ( 'choosemodel' ) != 'latesttopics'  ):
 				echo CKunenaLink::GetThreadLink ( 'view', $item->catid, $item->id, JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) ), JString::substr ( htmlspecialchars ( KunenaParser::stripBBCode($item->message) ), '0', $this->params->get ( 'messagelength' ) ), 'follow' );

@@ -29,6 +29,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaStats 1.6.0-RC2
+
+31-October-2010 Xillibit
+# [#20095] Profile links in topthanks doesn't put you to the right user
+
 30-October-2010 svens LDA
 ^ [#22975] update ru-RU (thanks ZARKOS)
 

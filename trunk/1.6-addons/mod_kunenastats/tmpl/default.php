@@ -75,7 +75,7 @@ $i=0;
 	<?php elseif ( $this->type == 'thanks' ) : ?>
 		<?php foreach ( $this->stats as $stat) : ?>
 		<tr class="krow<?php echo ($i^=1)+1;?>">
-			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->userid, JString::substr ( htmlspecialchars ($stat->username), '0', $this->params->get ( 'titlelength' ) )); ?></td>
+			<td class="kcol-first"><?php echo CKunenaLink::GetProfileLink($stat->id, JString::substr ( htmlspecialchars ($stat->username), '0', $this->params->get ( 'titlelength' ) )); ?></td>
 			<td class="kcol-last"><span class="kstats-hits-bg"><span class="kstats-hits" style="width:<?php echo $this->getBarWidth($stat->receivedthanks);?>%;"><?php echo CKunenaTools::formatLargeNumber($stat->receivedthanks, 3);?></span></span></td>
 		</tr>
 		<?php endforeach; ?>

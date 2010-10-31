@@ -67,7 +67,7 @@
 			<option value="13">PLG_KUNENADISCUSS_OPTION_13WEEKS</option>
 			<option value="26">PLG_KUNENADISCUSS_OPTION_26WEEKS</option>
 			<option value="52">PLG_KUNENADISCUSS_OPTION_52WEEKS</option>
-			<option value="0">PLG_KUNENADISCUSS_OPTION_FOREVER</option>
+			<option value="0">PLG_KUNENADISCUSS_OPTION_UNLIMITED</option>
 		</param>
 		<param name="close_time" type="list" default="0" label="PLG_KUNENADISCUSS_CLOSE_TIME" description="PLG_KUNENADISCUSS_CLOSE_TIME_DESC">
 			<option value="1">PLG_KUNENADISCUSS_OPTION_1WEEKS</option>
@@ -77,7 +77,7 @@
 			<option value="13">PLG_KUNENADISCUSS_OPTION_13WEEKS</option>
 			<option value="26">PLG_KUNENADISCUSS_OPTION_26WEEKS</option>
 			<option value="52">PLG_KUNENADISCUSS_OPTION_52WEEKS</option>
-			<option value="0">PLG_KUNENADISCUSS_OPTION_FOREVER</option>
+			<option value="0">PLG_KUNENADISCUSS_OPTION_UNLIMITED</option>
 		</param>
 		<param name="close_reason" type="radio" default="0" label="PLG_KUNENADISCUSS_CLOSE_REASON" description="PLG_KUNENADISCUSS_CLOSE_REASON_DESC">
 			<option value="0">PLG_KUNENADISCUSS_OPTION_TOPIC_CREATION</option>

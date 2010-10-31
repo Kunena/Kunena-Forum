@@ -37,6 +37,7 @@ Kunena Discuss Plugin 1.6.0-RC3
 + [#20081] Topic and Read More links added
 ^ [#20081] Language string updated to reflect 1.6.0-RC3
 # [#20081] Undefined variables warnings fixed
+^ [#20081] Language string changed: Forever to Unlimited
 
 30-October-2010 Xillibit
 ^ [#20084] When the kunena reference isn't yet created and the quick form is disabled the user will informed that there is no reference

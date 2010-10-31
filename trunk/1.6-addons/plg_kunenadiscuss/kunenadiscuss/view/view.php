@@ -12,10 +12,10 @@ defined( '_JEXEC' ) or die ( '' );
 
 $msg = $this->messages[0];
 ?>
-<div class="kdiscuss-title"><?php echo CKunenaLink::GetThreadLink ( 'view', $msg->catid, $msg->thread, JText::_('PLG_KUNENADISCUSS_POSTS')) ?></div>
+<div class="kdiscuss-title"><?php echo CKunenaLink::GetThreadLink ( 'view', $msg->catid, $msg->thread, JText::_('PLG_KUNENADISCUSS_POSTS'), 'follow') ?></div>
 <?php
 foreach ( $this->messages as $message ) {
 	$this->displayMessage($message);
 }
 ?>
-<div class="kdiscuss-more"><?php echo CKunenaLink::GetThreadLink ( 'view', $msg->catid, $msg->thread, JText::_('COM_KUNENA_ANN_READMORE')) ?></div>
+<div class="kdiscuss-more"><?php echo CKunenaLink::GetThreadLink ( 'view', $msg->catid, $msg->thread, JText::_('COM_KUNENA_ANN_READMORE'), 'follow') ?></div>

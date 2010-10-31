@@ -27,7 +27,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Kunena search module 1.0.1
+Kunena search module 1.6.0
+31-October-2010 svens (LDA)
++ [#23084] mod_kunenasearch add build
 
 07-Okt-2010 svens (LDA)
 ^ [#22753]renamed from kunena_search to kunenasearch

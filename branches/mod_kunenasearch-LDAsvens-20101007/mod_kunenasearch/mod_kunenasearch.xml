@@ -8,7 +8,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>ron@kunena.com</authorEmail>
 	<authorUrl>http://www.kunena.com</authorUrl>
-	<version>1.0.1</version>
+	<version>1.6.0</version>
 	<description>MOD_KUNENASEARCH_DESC</description>
 	<files>
 		<filename module="mod_kunenasearch">mod_kunenasearch.php</filename>

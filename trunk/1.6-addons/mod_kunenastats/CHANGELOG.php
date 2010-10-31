@@ -28,10 +28,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-KunenaStats 1.6.0-RC2
+KunenaStats 1.6.0-RC3
 
 31-October-2010 Xillibit
 # [#20095] Profile links in topthanks doesn't put you to the right user
+^ [#20095] Update version info to 1.6.0RC3
 
 30-October-2010 svens LDA
 ^ [#22975] update ru-RU (thanks ZARKOS)
@@ -41,6 +42,8 @@ KunenaStats 1.6.0-RC2
 
 17-September-2010 Xillibit
 + [#20095] Added fr-FR translation
+
+KunenaStats 1.6.0-RC2
 
 31-Aug-2010 fxstein
 ^ [#20095] Updated build files for RC2 release

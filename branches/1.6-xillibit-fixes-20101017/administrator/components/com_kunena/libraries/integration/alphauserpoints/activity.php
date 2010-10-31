@@ -24,7 +24,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 		$this->priority = 50;
 		$this->_config = KunenaFactory::getConfig ();
 	}
-	
+
 	private function _getAUPversion(){
 		return AlphaUserPointsHelper::getAupVersion();
 	}
@@ -46,7 +46,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 			} else {
 				return;
 			}
-		} 
+		}
 	}
 
 	public function onAfterReply($message) {
@@ -69,7 +69,7 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 					} else {
 						return;
 					}
-				} 
+				}
 			}
 		} else {
 			if ( $this->_getAUPversion() < '1.5.12' ) {
@@ -86,12 +86,12 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 				} else {
 					return;
 				}
-			} 
-		}		
+			}
+		}
 	}
-	
-	public function onAfterDelete($message, $userid) {
-		$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $userid );
+
+	public function onAfterDelete($message) {
+		$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $message->parent->userid );
 		if ( $aupid ) {
 			if ( $this->_getAUPversion() < '1.5.12' ) {
 				$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( 'plgaup_delete_post_kunena' );
@@ -106,34 +106,34 @@ class KunenaActivityAlphaUserPoints extends KunenaActivity {
 					AlphaUserPointsHelper::newpoints( 'plgaup_kunena_message_delete', $aupid);
 				} else {
 					return;
-				}	
-			} 				
-		}		
+				}
+			}
+		}
 	}
 
-	public function onAfterThankyou($thankyoutargetid, $username) {
-		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . $username);
-		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_ACTOR_INFO' ) ); 
+	public function onAfterThankyou($thankyoutargetid, $username, $message) {
+		$infoTargetUser = (JText::_ ( 'COM_KUNENA_THANKYOU_GOT' ).': ' . $username);
+		$infoRootUser = ( JText::_ ( 'COM_KUNENA_THANKYOU_SAID' ).': ' . $message->parent->name );
 		$aupid = AlphaUserPointsHelper::getAnyUserReferreID( $thankyoutargetid );
-			
+
 		if ( $this->_getAUPversion() < '1.5.12' ) {
-			$ruleName = 'plgaup_thankyou_kunena';	
+			$ruleName = 'plgaup_thankyou_kunena';
 			$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( $ruleName );
-			$usertargetpoints = intval($ruleEnabled[0]->content_items); 
+			$usertargetpoints = intval($ruleEnabled[0]->content_items);
 		} elseif ( $this->_getAUPversion() >= '1.5.12' ) {
 			$ruleName = 'plgaup_kunena_message_thankyou';
-			$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( $ruleName );	
-			$usertargetpoints = intval($ruleEnabled[0]->content_items); 
+			$ruleEnabled = AlphaUserPointsHelper::checkRuleEnabled( $ruleName );
+			$usertargetpoints = intval($ruleEnabled[0]->content_items);
 		} else {
-			return;	
+			return;
 		}
-				
-		if ( $aupid && $usertargetpoints && $ruleEnabled ) {			
+
+		if ( $aupid && $usertargetpoints && $ruleEnabled ) {
 			// for target user
 			AlphaUserPointsHelper::newpoints($ruleName , $aupid, '', $infoTargetUser, $usertargetpoints);
 			// for who has gived the thank you
-			AlphaUserPointsHelper::newpoints($ruleName , '', '', $infoRootUser );				
-		}				
+			AlphaUserPointsHelper::newpoints($ruleName , '', '', $infoRootUser );
+		}
 	}
 
 	function escape($var) {

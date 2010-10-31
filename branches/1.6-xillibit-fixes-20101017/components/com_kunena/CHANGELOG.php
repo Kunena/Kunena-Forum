@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+31-October-2010 Xillibit
+# [#22971] Fix issue which prevent to add points on delete and strings on thank you are wrong
+
 30-October-2010 Xillibit
 # [#22971] Check now that the rules are enabled in AUP before adding points (thanks Bernard)
 # [#22919] Make working the limit on thank you in latestx, to show the correct number of messages in latest module

@@ -21,6 +21,7 @@ class modKunenaLatest {
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/libraries/html/parser.php');
 		$this->kunena_config = KunenaFactory::getConfig ();
+		$this->myprofile = KunenaFactory::getUser ();
 
 		// load Kunena main language file so we can leverage langaueg strings from it
 		KunenaFactory::loadLanguage();
@@ -40,7 +41,7 @@ class modKunenaLatest {
 		$this->params = $params;
 		$this->ktemplate = KunenaFactory::getTemplate();
 		$this->klistpost = modKunenaLatestHelper::getKunenaLatestList ( $params );
-		$this->topic_ordering = modKunenaLatestHelper::getTopicsOrdering($this->myprofile, $this->kunena_config); 
+		$this->topic_ordering = modKunenaLatestHelper::getTopicsOrdering($this->myprofile, $this->kunena_config);
 
 		require (JModuleHelper::getLayoutPath ( 'mod_kunenalatest' ));
 	}
@@ -137,7 +138,7 @@ class modKunenaLatestHelper {
 		$avatarlink = $kunena_user->getAvatarLink ( '', $params->get ( 'avatarwidth' ), $params->get ( 'avatarheight' ) );
 		return CKunenaLink::GetProfileLink ( $userid, $avatarlink, $username );
 	}
-	
+
 	function getTopicsOrdering($myprofile, $kunena_config) {
     	if ($myprofile->ordering != '0') {
 			$topic_ordering = $myprofile->ordering == '1' ? 'DESC' : 'ASC';

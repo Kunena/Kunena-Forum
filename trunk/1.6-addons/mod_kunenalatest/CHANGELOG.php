@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC3
 
+31-October-2010 Xillibit
+# [#20081] Fix undefined variable $myprofile in class.php line 43
+
 30-October-2010 svens LDA
 + [#22975] added nb-NO (thanks rued)
 ^ [#22975] update ru-RU (thanks ZARKOS)

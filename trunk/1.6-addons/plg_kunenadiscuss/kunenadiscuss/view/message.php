@@ -20,7 +20,7 @@ defined( '_JEXEC' ) or die ( '' );
 		<?php echo JText::_ ( 'PLG_KUNENADISCUSS_BY' ) . ' ' . CKunenaLink::GetProfileLink ( $this->profile->userid, $this->escape($this->username) ) ?>
 	</span>
 	<span class="kdiscuss-id">
-	<?php echo CKunenaLink::GetThreadPageLink ( 'view', $this->catid, $this->thread, 1, $this->kunena_config->messages_per_page, '#'.$this->id, $this->id)?>
+	<?php echo CKunenaLink::GetThreadPageLink ( 'view', $this->catid, $this->thread, 1, $this->kunena_config->messages_per_page, '...', $this->id)?>
 	</span>
 </div>
 <div class="kdiscuss-reply-body">

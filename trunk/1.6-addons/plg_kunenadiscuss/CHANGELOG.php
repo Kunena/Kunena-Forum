@@ -36,6 +36,7 @@ Kunena Discuss Plugin 1.6.0-RC3
 + [#20081] Display subject as part of replies
 + [#20081] Add border around discussions to separate from article
 ^ [#20081] Change language string when quick reply is disabled
+^ [#20081] Reflect 1.6.1 min requirement in plugin description
 
 31-October-2010 Matias
 # [#20084] Fix message ordering to obey configuration

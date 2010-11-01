@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC3
 
+31-October-2010 fxstein
+# [#20084] Fix message ordering (reverse)
+
 31-October-2010 Matias
 # [#20084] Fix message ordering to obey configuration
 

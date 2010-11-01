@@ -28,7 +28,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		// Kunena detection and version check
 		$minKunenaVersion = '1.6.0';
-		if (!class_exists('Kunena') || Kunena::versionBuild() < 3730) {
+		if (!class_exists('Kunena') || Kunena::versionBuild() < 3741) {
+// FIXME: Add Warning for incorrect Kunena version			
+			
 			return null;
 		}
 		// Kunena online check
@@ -396,9 +398,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 		require_once (KPATH_SITE . '/funcs/view.php');
 		$thread = new CKunenaView ( 'view', $catid, $thread, 1, $limit );
 		$thread->setTemplate ( '/plugins/content/kunenadiscuss' );
-		$thread->ordering = $ordering ? 'ASC' : 'DESC';
+		$thread->ordering = $ordering ? 'DESC' : 'ASC';
+				
 		ob_start ();
 		$thread->display ();
+				
 		$str = ob_get_contents ();
 		ob_end_clean ();
 		return $str;

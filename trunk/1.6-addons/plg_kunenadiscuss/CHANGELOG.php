@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.0-RC3
 
+1-November-2010 Matias
+# [#20084] Do not show unapproved/deleted messages
+
 31-October-2010 fxstein
 # [#20084] Fix message ordering (reverse)
 + [#20081] Display subject as part of replies

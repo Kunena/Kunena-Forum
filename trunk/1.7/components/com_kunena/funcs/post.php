@@ -346,6 +346,54 @@ class CKunenaPost {
 		CKunenaTools::loadTemplate ( '/editor/form.php' );
 	}
 
+	protected function moderate($modtopic = false) {
+		if ($modtopic) {
+			$this->topic = KunenaForumTopicHelper::get($this->id);
+			if (!$this->topic->authorise('move')) {
+				$this->_app->enqueueMessage ( $this->topic->getError(), 'notice' );
+			}
+		} else {
+			$this->message = KunenaForumMessageHelper::get($this->id);
+			if (!$this->message->authorise('move')) {
+				$this->_app->enqueueMessage ( $this->message->getError(), 'notice' );
+			}
+			$this->topic = $this->message->getTopic();
+		}
+		$this->category = $this->topic->getCategory();
+
+		$options =array ();
+		if ($modtopic) {
+			$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
+		} else {
+			$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
+		}
+		$options [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
+		$params = array(
+			'orderby'=>'tt.last_post_time DESC',
+			'where'=>" AND tt.id != {$this->_db->Quote($this->topic->id)} ");
+		list ($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->catid, 0, 30, $params);
+		foreach ( $topics as $cur ) {
+			$options [] = JHTML::_ ( 'select.option', $cur->id, kunena_htmlspecialchars ( $cur->subject ) );
+		}
+		$this->messagelist = JHTML::_ ( 'select.genericlist', $options, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_targettopic' );
+
+		$options=array();
+		$this->categorylist = CKunenaTools::KSelectList ( 'targetcat', $options, 'class="inputbox kmove_selectbox"', false, 'kmod_categories', $this->catid );
+		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
+
+		// Get thread and reply count from current message:
+		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM #__kunena_messages AS m
+			INNER JOIN #__kunena_messages AS t ON m.thread=t.id
+			LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
+			WHERE m.id={$this->_db->Quote($this->id)}
+			GROUP BY m.thread";
+		$this->_db->setQuery ( $query, 0, 1 );
+		$this->threadmsg = $this->_db->loadObject ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		CKunenaTools::loadTemplate ( '/moderate/moderate.php' );
+	}
+
 	function canSubscribe() {
 		if (!$this->my->id || !$this->config->allowsubscriptions)
 			return false;
@@ -406,57 +454,6 @@ class CKunenaPost {
 			$this->_app->enqueueMessage ( $topic->getError(), 'notice' );
 		}
 		$this->_app->redirect ( CKunenaLink::GetCategoryURL ( 'showcat', $this->catid, false ) );
-	}
-
-	protected function moderate($modchoices='',$modthread = false) {
-		if (!$this->load())
-			return false;
-		if ($this->moderatorProtection ())
-			return false;
-		if ($this->isUserBanned() )
-			return false;
-		if ($this->isIPBanned())
-			return false;
-
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-
-		$this->moderateTopic = $modthread;
-		$this->moderateMultiplesChoices = $modchoices;
-
-		// Get list of latest messages:
-		$query = "SELECT id,subject FROM #__kunena_messages WHERE catid={$this->_db->Quote($this->catid)} AND parent=0 AND hold=0 AND moved=0 AND thread!={$this->_db->Quote($this->msg_cat->thread)} ORDER BY id DESC";
-		$this->_db->setQuery ( $query, 0, 30 );
-		$messagesList = $this->_db->loadObjectlist ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		// Get thread and reply count from current message:
-		$query = "SELECT t.id,t.subject,COUNT(mm.id) AS replies FROM #__kunena_messages AS m
-			INNER JOIN #__kunena_messages AS t ON m.thread=t.id
-			LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
-			WHERE m.id={$this->_db->Quote($this->id)}
-			GROUP BY m.thread";
-		$this->_db->setQuery ( $query, 0, 1 );
-		$this->threadmsg = $this->_db->loadObject ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		$messages =array ();
-		if ($this->moderateTopic) {
-			$messages [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
-		} else {
-			$messages [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
-		}
-		$messages [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
-		foreach ( $messagesList as $mes ) {
-			$messages [] = JHTML::_ ( 'select.option', $mes->id, kunena_htmlspecialchars ( $mes->subject ) );
-		}
-		$this->messagelist = JHTML::_ ( 'select.genericlist', $messages, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_targettopic' );
-
-		$options=array();
-		$this->categorylist = CKunenaTools::KSelectList ( 'targetcat', $options, 'class="inputbox kmove_selectbox"', false, 'kmod_categories', $this->catid );
-		$this->message = $this->msg_cat;
-		$this->user = KunenaFactory::getUser($this->msg_cat->userid);
-
-		CKunenaTools::loadTemplate ( '/moderate/moderate.php' );
 	}
 
 	protected function domoderate() {
@@ -813,31 +810,11 @@ class CKunenaPost {
 				break;
 
 			case 'moderate' :
-				$this->moderate ();
+				$this->moderate (false);
 				break;
 
 			case 'moderatethread' :
-				$this->moderate ('',true);
-				break;
-
-			case 'merge' :
-				$this->moderate ('modmergemessage',false);
-				break;
-
-			case 'move' :
-				$this->moderate ('modmovemessage',false);
-				break;
-
-			case 'split' :
-				$this->moderate ('modsplitmultpost',false);
-				break;
-
-			case 'movetopic' :
-				$this->moderate ('modmovetopic',true);
-				break;
-
-			case 'mergetopic' :
-				$this->moderate ('modmergetopic',true);
+				$this->moderate (true);
 				break;
 
 			case 'domoderate' :

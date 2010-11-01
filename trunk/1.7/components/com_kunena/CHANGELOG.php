@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+31-October-2010 Matias
+^ [#22792] Convert post.php moderate() to use new classes
+
 30-October-2010 Matias
 # [#22792] Fix installer to work with the new files
 # [#22792] Do not use kimport() with integration classes (doesn't work)

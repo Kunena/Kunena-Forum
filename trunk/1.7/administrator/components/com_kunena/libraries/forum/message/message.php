@@ -90,6 +90,7 @@ class KunenaForumMessage extends JObject {
 			'read'=>array('Read'),
 			'reply'=>array('Read','NotHold'),
 			'edit'=>array('Read','Own','EditTime'),
+			'move'=>array('Read'),
 			'approve'=>array('Read'),
 			'delete'=>array('Read','Own','EditTime'),
 			'undelete'=>array('Read'),

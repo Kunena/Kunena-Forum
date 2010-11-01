@@ -16,7 +16,7 @@ kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';
 ?>
 <div class="kblock">
 	<div class="kheader">
-		<h2><span><?php echo $this->moderateTopic ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></span></h2>
+		<h2><span><?php echo !isset($this->message) ? JText::_('COM_KUNENA_TITLE_MODERATE_TOPIC') : JText::_('COM_KUNENA_TITLE_MODERATE_MESSAGE'); ?></span></h2>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody" id="kmod-container">
@@ -26,15 +26,15 @@ kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';
 
 	<div>
 		<?php echo JText::_('COM_KUNENA_GEN_TOPIC'); ?>:
-		<strong><?php echo $this->escape( $this->threadmsg->subject ); ?></strong>
+		<strong><?php echo $this->escape( $this->topic->subject ); ?></strong>
 	</div>
 	<div>
 		<?php echo JText::_('COM_KUNENA_POST_IN_CATEGORY'); ?>:
-		<strong><?php echo $this->escape( $this->message->catname ) ?></strong>
+		<strong><?php echo $this->escape( $this->category->name ) ?></strong>
 	</div>
 
 	<br />
-	<?php if (!$this->moderateTopic) : ?>
+	<?php if (isset($this->message)) : ?>
 	<div><?php echo JText::_('COM_KUNENA_MODERATION_TITLE_SELECTED'); ?>:</div>
 	<div class="kmoderate-message">
 		<h4><?php echo $this->escape( $this->message->subject ); ?></h4>
@@ -78,9 +78,9 @@ kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';
 
 	<div id="kmod_subject">
 		<?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
-		<input type="text" name="subject" value="<?php echo $this->escape( $this->message->subject ); ?>" />
+		<input type="text" name="subject" value="<?php echo $this->escape( !isset($this->message) ? $this->topic->subject : $this->message->subject ); ?>" />
 	</div>
-<?php if ($this->moderateTopic) : ?>
+<?php if (!isset($this->message)) : ?>
 	<div>
 		<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="shadow" value="1" />
 		<?php echo JText::_ ( 'COM_KUNENA_MODERATION_TOPIC_SHADOW' ); ?>

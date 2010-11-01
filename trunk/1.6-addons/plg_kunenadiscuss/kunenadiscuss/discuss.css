@@ -9,6 +9,11 @@
  * @link http://www.kunena.com
  **/
 
+.kunenadiscuss {
+	border:1px solid #f4f4f4;
+	padding:0 5px 5px;
+}
+
 .kdiscuss-reply-header {
 	padding:5px;
 	font-size: 1em;

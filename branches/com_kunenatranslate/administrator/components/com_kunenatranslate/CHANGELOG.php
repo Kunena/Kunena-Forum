@@ -1,9 +1,9 @@
 <?php
 /**
  * @version $Id$
- * KunenaINIMaker Component
+ * Kunena Translate Component
  * 
- * @package	Kunena INImaker
+ * @package	Kunena Translate
  * @Copyright (C) 2010 www.kunena.com All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
@@ -29,6 +29,9 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 01-November-2010 svens (LDA)
++ [#23087] models/label
++ [#23087] tables/kunenatranslateshema
++ [#23087] add install.kunenatranslate.sql including sheme and translation table
 ^ [#23086] renamed kunenainimaker to kunenatranslate
 
 02-Okt-2010 svens (LDA)

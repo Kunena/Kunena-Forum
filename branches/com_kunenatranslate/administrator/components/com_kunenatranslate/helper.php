@@ -1,9 +1,9 @@
 <?php
 /**
  * @version $Id$
- * KunenaINIMaker Component
+ * Kunena Translate Component
  * 
- * @package	Kunena INImaker
+ * @package	Kunena Translate
  * @Copyright (C) 2010 www.kunena.com All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com

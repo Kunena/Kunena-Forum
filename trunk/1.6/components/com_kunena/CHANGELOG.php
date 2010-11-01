@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+1-November-2010 Matias
+# [#20084] KunenaDiscuss: Do not show unapproved/deleted messages
+
 31-October-2010 fxstein
 + [#22849] Add new module position kunena_topic_1 through kunena_topic_n
 ^ [#15886] Merged revision 3828 from /branches/1.6-xillibit-fixes-20101017

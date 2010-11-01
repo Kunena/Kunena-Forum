@@ -310,6 +310,8 @@ class CKunenaView {
 		} else {
 			$this->ordering = $this->config->default_sort == 'asc' ? 'ASC' : 'DESC'; // Just to make sure only valid options make it
 		}
+		$access = KunenaFactory::getAccessControl();
+		$this->hold = $access->getAllowedHold($this->myprofile, $this->catid);
 	}
 
 	function setTemplate($path) {
@@ -337,8 +339,7 @@ class CKunenaView {
 		}
 		$this->allow = 1;
 
-		$access = KunenaFactory::getAccessControl();
-		$where[] = "a.hold IN ({$access->getAllowedHold($this->myprofile, $this->catid)})";
+		$where[] = "a.hold IN ({$this->hold})";
 		$where = implode(' AND ',$where);
 
 		$query = "SELECT a.*, b.*, p.id AS poll_id, modified.name AS modified_name, modified.username AS modified_username
@@ -454,7 +455,7 @@ class CKunenaView {
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
 		$posts = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
-		
+
 		// First collect the message ids of the first message and all replies
 		$messageids = array();
 		$this->messages = array ();

@@ -13,7 +13,7 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-class CompKunenainimakerHelper
+class CompKunenaTranslateHelper
 {
 	var $x = 0;
 	var $files;

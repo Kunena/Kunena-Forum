@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component" version="1.5.20" method="upgrade">
-	<name>Kunena INI maker</name>
+	<name>Kunena Translate</name>
 	<author>www.Kunena.com</author>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<copyright>(C)2010 Kunena Project. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<authorEmail>sven@schultschik.de</authorEmail>
+	<authorEmail>sven@kunena.com</authorEmail>
 	<authorUrl>http://www.kunena.com</authorUrl>
 	<version>0.0.0</version>
-	<description>MOD_KUNENAINIMAKER_DESC</description>
+	<description>MOD_KUNENATRANSLATE_DESC</description>
 	<files>
-		<filename>com_kunenainimaker.php</filename>
+		<filename>com_kunenatranslate.php</filename>
 		<filename>helper.php</filename>
 		<filename>index.html</filename>
 	</files>

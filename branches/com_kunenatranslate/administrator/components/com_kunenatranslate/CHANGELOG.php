@@ -28,6 +28,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+01-November-2010 svens (LDA)
+^ [#23086] renamed kunenainimaker to kunenatranslate
+
 02-Okt-2010 svens (LDA)
 + CompareArray()
 

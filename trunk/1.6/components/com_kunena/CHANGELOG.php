@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+31-October-2010 fxstein
++ [#22849] Add new module position kunena_topic_1 through kunena_topic_n
+
 31-October-2010 Matias
 # [#20084] KunenaDiscuss: Fix message ordering to obey configuration
 

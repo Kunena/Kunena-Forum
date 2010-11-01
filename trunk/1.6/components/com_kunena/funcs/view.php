@@ -454,7 +454,7 @@ class CKunenaView {
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
 		$posts = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
-
+		
 		// First collect the message ids of the first message and all replies
 		$messageids = array();
 		$this->messages = array ();

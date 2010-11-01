@@ -156,6 +156,9 @@ Pink forum dark:			#ffd0ff 		RGB: 255/208/255
 	border-left-color: #BFC3C6;
 	border-bottom-color: #BFC3C6;
 }
+#Kunena td.ktopicmodule {
+	border-bottom-color: #BFC3C6;
+}
 
 /* COLOR ADMINISTRATOR AND MODERATOR
 ----------------------------------------------------------------------------------------------- */

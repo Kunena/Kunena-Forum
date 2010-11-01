@@ -402,6 +402,9 @@ PX		EM			PCT			PT
 	padding: 4px 8px;
 	vertical-align: middle;
 }
+#Kunena td.ktopicmodule {
+	border-bottom: 1px solid;
+}
 #Kunena td.ktopicmoderation {
 	width: 1%;
 	vertical-align: middle;

@@ -213,7 +213,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 			<?php endif; ?>
 		</tr>
-
+		<tr>
+			<td class="ktopicmodule" colspan="<?php echo intval($this->columns) ?>">
+				<?php CKunenaTools::showModulePosition('kunena_topic_' . $counter) ?>
+			</td>
+		</tr>
 		<?php } ?>
 		<?php  if ( count($this->actionDropdown) > 1 || $this->embedded ) : ?>
 		<!-- Bulk Actions -->

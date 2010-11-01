@@ -96,6 +96,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 	// *** event prepare content ***
 	function onPrepareContent(&$article, &$params, $limitstart) {
+		global $kunena_in_event;
+		$kunena_in_event = true;
 		$customTopics = $this->params->get ( 'custom_topics', 1 );
 
 		$articleCategory = (isset ( $article->catid ) ? $article->catid : 0);
@@ -192,6 +194,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		if ($kunenaCategory || $kunenaTopic) {
 			self::$botDisplay [$article->id] = $this->showPlugin ( $kunenaCategory, $kunenaTopic, $article, $show == 1 );
 		}
+		$kunena_in_event = false;
 		return true;
 	}
 

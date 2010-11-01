@@ -33,6 +33,7 @@ Kunena Discuss Plugin 1.6.0-RC3
 
 1-November-2010 Matias
 # [#20084] Do not show unapproved/deleted messages
+# [#20084] In descending ordering show also newest message in the topic, ignore always first post
 
 31-October-2010 fxstein
 # [#20084] Fix message ordering (reverse)

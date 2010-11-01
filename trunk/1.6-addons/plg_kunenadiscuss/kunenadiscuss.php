@@ -393,10 +393,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// Limits the number of posts
 		$limit = $this->params->get ( 'limit', 25 );
 		// Show the first X posts, versus the last X posts
-		$ordering = $this->params->get ( 'ordering', 1 );
+		$ordering = $this->params->get ( 'ordering', 1 ); // 0=ASC, 1=DESC
+		$first = (int)!$ordering;
 
 		require_once (KPATH_SITE . '/funcs/view.php');
-		$thread = new CKunenaView ( 'view', $catid, $thread, 1, $limit );
+		$thread = new CKunenaView ( 'view', $catid, $thread, $first, $limit+$first );
 		$thread->setTemplate ( '/plugins/content/kunenadiscuss' );
 		$thread->ordering = $ordering ? 'DESC' : 'ASC';
 		$thread->hold = 0;

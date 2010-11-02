@@ -909,7 +909,9 @@ class CKunenaPosting {
 
 	public function emailToSubscribers($LastPostUrl = false, $mailsubs = false, $mailmods = false, $mailadmins = false) {
 		if ($LastPostUrl === false) {
-			$LastPostUrl = CKunenaLink::GetMessageURL($this->get ( 'id' ), $this->get ( 'catid' ), 0, false);
+			jimport ( 'joomla.environment.uri' );
+			$uri = JURI::getInstance ( JURI::base () );
+			$LastPostUrl = $uri->toString ( array ('scheme', 'host', 'port' ) ) . CKunenaLink::GetMessageURL($this->get ( 'id' ), $this->get ( 'catid' ), 0, false);
 		}
 		//get all subscribers, moderators and admins who will get the email
 		$emailToList = CKunenaTools::getEMailToList ( $this->get ( 'catid' ), $this->get ( 'thread' ), $mailsubs, $mailmods, $mailadmins, $this->_my->id );

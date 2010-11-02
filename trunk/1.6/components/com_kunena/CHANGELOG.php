@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+2-November-2010 Matias
+# [#20084] KunenaDiscuss: Fix incomplete URL in subscription email
+
 1-November-2010 Matias
 # [#20084] KunenaDiscuss: Do not show unapproved/deleted messages
 # [#20084] KunenaDiscuss: Fix white page when article gets rendered inside event

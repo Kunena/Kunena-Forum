@@ -32,6 +32,12 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.1-DEV
+03-Nov-2010 svens (LDA)
+^ [#22975] update de-DE (thanks rich)
+
+31-October-2010 svens (LDA)
+^ [#22975] update ca-ES (thanks garrotix)
+
 30-October-2010 svens (LDA)
 ^ [#22975] update de-DE (thanks rich)
 ^ [#22975] update nb-NO (thanks rued, Roar and Bjørn)

@@ -44,6 +44,8 @@
 }
 .kdiscuss-avatar {
 	float:left;
+	width: 48px;
+	margin-right: 15px;
 }
 .kdiscuss-avatar img {
 	padding:10px 15px 10px 0px;

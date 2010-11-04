@@ -27,6 +27,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLogin 1.6.0-RC2
+04-Nov-2010 svens(LDA)
++ [#22975] add de-DE (thanks rich)
 
 30-October-2010 svens LDA
 ^ [#22975] update ru-RU (thanks ZARKOS)

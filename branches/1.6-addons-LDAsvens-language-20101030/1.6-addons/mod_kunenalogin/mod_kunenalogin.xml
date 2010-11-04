@@ -19,6 +19,7 @@
 		<folder>tmpl</folder>
 	</files>
 	<languages folder="languages">
+		<language tag="de-DE">de-DE.mod_kunenalogin.ini</language>
 		<language tag="en-GB">en-GB.mod_kunenalogin.ini</language>
 		<language tag="fi-FI">fi-FI.mod_kunenalogin.ini</language>
 		<language tag="fr-FR">fr-FR.mod_kunenalogin.ini</language>

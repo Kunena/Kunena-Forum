@@ -6,7 +6,7 @@
 *
 * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 **/
 
 // Never use this file in any code - it is only here to provide declarations for external functions

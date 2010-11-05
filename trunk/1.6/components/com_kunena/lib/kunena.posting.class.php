@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
@@ -960,7 +960,7 @@ class CKunenaPosting {
 				$msg .= "\n\n";
 				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
 				$msg .= "\n\n\n\n";
-				$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+				$msg .= "** Powered by Kunena! - http://www.kunena.org **";
 				$msg = JMailHelper::cleanBody ( $msg );
 
 				JUtility::sendMail ( $this->_config->email, $mailsender, $emailTo->email, $mailsubject, $msg );

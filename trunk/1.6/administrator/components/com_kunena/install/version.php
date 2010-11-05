@@ -5,7 +5,7 @@
  * @subpackage	com_kunena
  * @copyright	Copyright (C) 2008 - 2009 Kunena Team. All rights reserved.
  * @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
- * @link		http://www.kunena.com
+ * @link		http://www.kunena.org
  */
 
 //
@@ -109,7 +109,7 @@ class KunenaVersion
 	*/
 	function getCopyrightHTML()
 	{
-		return ': &copy; 2008-2010 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.com" target = "_blank">'
+		return ': &copy; 2008-2010 '.JText::_('COM_KUNENA_VERSION_COPYRIGHT').': <a href = "http://www.kunena.org" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_TEAM').'</a>  | '.JText::_('COM_KUNENA_VERSION_LICENSE')
 			.': <a href = "http://www.gnu.org/copyleft/gpl.html" target = "_blank">'
 			.JText::_('COM_KUNENA_VERSION_GPL').'</a>';

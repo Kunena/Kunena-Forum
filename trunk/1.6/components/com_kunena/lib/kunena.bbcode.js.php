@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 
 defined( '_JEXEC' ) or die();
@@ -373,7 +373,7 @@ kbbcode.addFunction('#', function() {
 <?php } ?>
 
 kbbcode.addFunction('Help', function() {
-	window.open('http://docs.kunena.com/index.php/bbcode');
+	window.open('http://docs.kunena.org/index.php/bbcode');
 }, {'id': 'kbbcode-help-button',
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_HELP');?>',
 	'alt': '<?php echo JText::_('COM_KUNENA_EDITOR_HELPLINE_HELP');?>',

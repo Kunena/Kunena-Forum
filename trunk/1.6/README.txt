@@ -4,7 +4,7 @@
 * @package Kunena
 * @Copyright (C) 2008-2010 Kunena All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 **/
 
 Kunena README
@@ -183,9 +183,9 @@ contributing, please provide a patch or enhanced branch and we will be happy to 
 code branch (quality and feature completeness permitting).
 Find the SVN source code repository here: http://joomlacode.org/gf/project/kunena/scmsvn/
 
-The only official Kunena distributions are available from the links above or directly at http://www.kunena.com. There 
+The only official Kunena distributions are available from the links above or directly at http://www.kunena.org. There 
 are currently no officially supported alternative download mirrors supported and users are encouraged to visit 
-www.kunena.com for the latest version of all available Kunena packages.
+www.kunena.org for the latest version of all available Kunena packages.
 
 Compatibility with Third-party Kunena Templates
 ===============================================
@@ -195,7 +195,7 @@ Templates designed for Kunena 1.5.x will not work with Kunena 1.6 due to major c
 All the logic has been removed from the template to make it much easier for template designers to create Kunena 
 templates.
 Check out the short guide on how to quickly customize a Kunena 1.6 template in just a few minutes: 
-http://www.kunena.com/forum/159-common-questions/53519-the-5-minute-quick-and-dirty-kunena-16-template
+http://www.kunena.org/forum/159-common-questions/53519-the-5-minute-quick-and-dirty-kunena-16-template
 More tutorials and instructions will be available on the final release of Kunena 1.6.
 
 Compatibility with Third-party Kunena Modules
@@ -206,7 +206,7 @@ Kunena 1.5 extensions before installing or upgrading.
 
 Kunena 1.6 now provides an updated API for easily creating modules or plug-ins. The Kunena team has created a few new 
 plug-ins and modules which leverage the new API and can be used with Kunena 1.6. These extensions can be found in the 
-Kunena Extension Directory: http://www.kunena.com/ked
+Kunena Extension Directory: http://www.kunena.org/ked
 
 Installing or Upgrading Kunena
 ==============================
@@ -240,7 +240,7 @@ Rich Kunena moderator
 sozzled Kunena moderator
 
 Special thanks go to Beat and the CB Testing team, Cerberus, DTP2, LittleJohn and JoniJnm for significant contributions 
-to Kunena. In addition many members of http://www.Kunena.com have contributed and helped make this a more stable and 
+to Kunena. In addition many members of http://www.kunena.org have contributed and helped make this a more stable and 
 bugfree version. Our thanks go out to all contributors of Kunena!
 
 Language credits
@@ -252,7 +252,7 @@ ONLINE README
 
 For details about this release and how to install or upgrade to it please see:
 
-http://docs.kunena.com/index.php/Kunena_@kunenaversion@_Read_Me
+http://docs.kunena.org/index.php/Kunena_@kunenaversion@_Read_Me
 
 END OF README
 =============

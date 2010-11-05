@@ -9,8 +9,8 @@
 	<build>3705</build>
 	<author>Sven Schultschik (LDA) / Richard Binder (rich)</author>
         <lector>Jan Erik Zassenhaus (Team jgerman)</lector>
-	<authorEmail>kunena@kunena.com</authorEmail>
-	<authorUrl>http://www.Kunena.com</authorUrl>
+	<authorEmail>kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>(C) 2008 - 2010 Kunena Team All rights reserved</copyright>
 	<license>GNU/GPL</license>
 	<description>German language file for Kunena Forum Component</description>

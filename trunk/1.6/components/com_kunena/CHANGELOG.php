@@ -4,9 +4,9 @@
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2010 www.kunena.com All rights reserved
+* @Copyright (C) 2008 - 2010 www.kunena.org All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 **/
 
 // no direct access
@@ -32,6 +32,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.1-DEV
+
+5-November-2010 Matias
+^ [#23138] Change all copyright and credits information to kunena.org
 
 2-November-2010 Matias
 # [#20084] KunenaDiscuss: Fix incomplete URL in subscription email

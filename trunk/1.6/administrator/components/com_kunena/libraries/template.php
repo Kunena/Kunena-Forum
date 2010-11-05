@@ -4,9 +4,9 @@
 * Kunena Component - KunenaTemplate class
 * @package Kunena
 *
-* @Copyright (C) 2010 www.kunena.com All rights reserved
+* @Copyright (C) 2010 www.kunena.org All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 **/
 
 // Dont allow direct linking

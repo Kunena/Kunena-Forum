@@ -9,7 +9,7 @@
   @copyright	Copyright (C) 2008 - 2010 Kunena Team. All rights reserved.
   				portions (C) 2007 MjazTools. All rights reserved.
   @license		GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
-  @link			http://www.kunena.com
+  @link			http://www.kunena.org
   
   The following parameters can be defined inside the Eclipse build task as Arguments. They
   allow the build file to be platform independent as not path information resides within

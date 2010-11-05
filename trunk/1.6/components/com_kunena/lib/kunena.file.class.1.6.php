@@ -5,7 +5,7 @@
  * @package Kunena
  * @Copyright (C) 2010 Kunena All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 
 defined( '_JEXEC' ) or die();

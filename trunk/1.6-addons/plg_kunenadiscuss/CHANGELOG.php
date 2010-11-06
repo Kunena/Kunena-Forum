@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 
 // no direct access
@@ -30,6 +30,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena Discuss Plugin 1.6.0-RC3
+
+6-November-2010 fxstein
+^ [#20084] Change all references of kunena.com to kunena.org
 
 3-November-2010 Severdia
 # [#20084] Fixed float bug in IE

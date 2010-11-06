@@ -7,7 +7,7 @@
   @copyright    Copyright (c) 2008 - 2010 Kunena Team 
   				portions 2007 MjazTools. All rights reserved.
   @license      GNU/GPL
-  @link         http://www.kunena.com
+  @link         http://www.kunena.org
   
   The following parameter need to be defined inside the Eclipse build task as Arguments. They
   allow the build file to be platform independent as not path information resides within

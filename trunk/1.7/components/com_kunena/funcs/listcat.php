@@ -21,6 +21,7 @@ class CKunenaListcat {
 	function __construct($catid) {
 		kimport('kunena.forum.category.helper');
 		kimport('kunena.html.parser');
+		kimport('kunena.user.helper');
 
 		$this->catid = intval($catid);
 		$this->me = KunenaFactory::getUser ();
@@ -138,8 +139,7 @@ class CKunenaListcat {
 		KunenaRouter::loadMessages ( $topiclist );
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
-		kimport('kunena.user');
-		KunenaUser::loadUsers($userlist);
+		KunenaUserHelper::loadUsers($userlist);
 	}
 
 	/**

@@ -132,7 +132,7 @@ class TableKunenaCategories extends KunenaTable
 					$this->setError ( get_class ( $this ) . JText::_ ( 'COM_KUNENA_FORUM_UNKNOWN_ERR' ) );
 					return 0;
 				}
-				$id = $list [$id]->parent;
+				$id = $list [$id]->parent_id;
 				if ($id != 0 and $id == $this->id)
 					return 1;
 			}
@@ -145,6 +145,7 @@ class TableKunenaCategories extends KunenaTable
 		$ret = parent::store ( $updateNulls );
 
 		if ($ret) {
+			// FIXME: used also on category information update!!
 			// we must reset session, when forum record was changed
 			$this->_db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
 			$this->_db->query ();

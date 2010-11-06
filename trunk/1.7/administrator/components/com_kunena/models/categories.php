@@ -259,8 +259,8 @@ class KunenaModelCategories extends JModel {
 		$category = $this->getItem();
 		if (!$category) return false;
 
-		kimport('kunena.user');
-		$moderators = KunenaUser::loadUsers($category->getModerators(false));
+		kimport('kunena.user.helper');
+		$moderators = KunenaUserHelper::loadUsers($category->getModerators(false));
 		return $moderators;
 	}
 

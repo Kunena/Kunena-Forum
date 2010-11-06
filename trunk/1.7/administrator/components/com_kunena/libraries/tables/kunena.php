@@ -31,7 +31,7 @@ abstract class KunenaTable extends JTable {
 				$keyValue = $this->$keyName;
 
 				// If empty primary key there's is no need to load anything
-				if(empty($keyValue)) return true;
+				if(empty($keyValue)) return false;
 				$keys = array($keyName => $keyValue);
 			} else {
 				$keys = array();
@@ -40,7 +40,7 @@ abstract class KunenaTable extends JTable {
 					$keys = array($keyName => $keyValue);
 
 					// If null primary key there's is no need to load anything
-					if($keyValue === null) return true;
+					if($keyValue === null) return false;
 				}
 			}
 		} elseif (!is_array($keys)) {
@@ -106,10 +106,9 @@ abstract class KunenaTable extends JTable {
 		if (! $ret) {
 			$this->setError ( get_class ( $this ) . '::store failed - ' . $this->_db->getErrorMsg () );
 			return false;
-		} else {
-			$this->_exists = true;
-			return true;
 		}
+		$this->_exists = true;
+		return true;
 	}
 
 	protected function insertObject()
@@ -133,7 +132,8 @@ abstract class KunenaTable extends JTable {
 		}
 		$id = $this->_db->insertid();
 		if ($this->_tbl_key && !is_array($this->_tbl_key) && $id) {
-			$this->$this->_tbl_key = $id;
+			$k = $this->_tbl_key;
+			$this->$k = $id;
 		}
 		return true;
 	}

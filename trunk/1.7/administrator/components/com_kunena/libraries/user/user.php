@@ -1,31 +1,24 @@
 <?php
 /**
  * @version $Id$
- * Kunena Component - KunenaUser class
+ * Kunena Component - KunenaUser Class
  * @package Kunena
  *
  * @Copyright (C) 2010 www.kunena.com All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  **/
-
-// Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
 kimport('kunena.error');
+kimport('kunena.user.helper');
 
 /**
-
- * Kunena Users Table Class
-
- * Provides access to the #__kunena_users table
-
+ * Kunena User Class
  */
 class KunenaUser extends JObject {
 	// Global for every instance
-	protected static $_instances = array ();
 	protected static $_ranks = null;
-	protected static $_online = null;
 
 	protected $_exists = false;
 	protected $_db = null;
@@ -52,93 +45,14 @@ class KunenaUser extends JObject {
 	 * @return	JUser			The User object.
 	 * @since	1.6
 	 */
-	static public function getInstance($identifier = null, $reset = false) {
-		$c = __CLASS__;
-
-		if ($identifier instanceof KunenaUser) {
-			return $identifier;
-		}
-		if ($identifier === null || $identifier === false) {
-			$identifier = JFactory::getUser ();
-		}
-		// Find the user id
-		if ($identifier instanceof JUser) {
-			$id = intval ( $identifier->id );
-		} else if (is_numeric ( $identifier )) {
-			$id = intval ( $identifier );
-		} else {
-			jimport ( 'joomla.user.helper' );
-			$id = intval ( JUserHelper::getUserId ( ( string ) $identifier ) );
-		}
-		if ($id < 1)
-			return new $c ();
-
-		if (! $reset && empty ( self::$_instances [$id] )) {
-			self::$_instances [$id] = new $c ( $id );
-		}
-
-		return self::$_instances [$id];
+	static public function getInstance($identifier = null, $reload = false) {
+		return KunenaUserHelper::get($identifier, $reload);
 	}
 
-	function exists() {
-		return $this->_exists;
-	}
-
-	static public function loadUsers($userids = array()) {
-		static $loaded = false;
-
-		// Make sure that userids are unique and that indexes are correct
-		$e_userids = array();
-		foreach($userids as $userid){
-			$e_userids[intval($userid)] = intval($userid);
-		}
-		$userids = $e_userids;
-
-		if (!$loaded) {
-			// Before we do anything to cache the users, check if we should add active users
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			$who = CKunenaWhoIsOnline::GetInstance();
-			$e_userids = $who->getActiveUsersList();
-
-			// Also get latest user and add to the list
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-			$kunena_stats = CKunenaStats::getInstance ( );
-			$kunena_stats->loadLastUser();
-			$e_userids[intval($kunena_stats->lastestmemberid)] = intval($kunena_stats->lastestmemberid);
-			$loaded = true;
-		}
-		unset($e_userids[0]);
-		$e_userids = array_diff_key($e_userids, self::$_instances);
-		if (empty ( $e_userids ))
-			return array ();
-
-		$userlist = implode ( ',', $e_userids );
-
-		$c = __CLASS__;
-		$db = JFactory::getDBO ();
-		$query = "SELECT u.name, u.username, u.block as blocked, ku.*
-			FROM #__users AS u
-			LEFT JOIN #__kunena_users AS ku ON u.id = ku.userid
-			WHERE u.id IN ({$userlist})";
-		$db->setQuery ( $query );
-		$results = $db->loadAssocList ();
-		KunenaError::checkDatabaseError ();
-
-		$list = array ();
-		foreach ( $results as $user ) {
-			$instance = new $c ();
-			$instance->bind ( $user );
-			$instance->_exists = true;
-			self::$_instances [$instance->userid] = $instance;
-			if (in_array($instance->userid, $userids)) $list [$instance->userid] = $instance;
-		}
-
-		// Finally call integration preload as well
-		// Preload avatars if configured
-		$avatars = KunenaFactory::getAvatarIntegration();
-		$avatars->load($userids);
-
-		return $list;
+	public function exists($exists = null) {
+		$return = $this->_exists;
+		if ($exists !== null) $this->_exists = $exists;
+		return $return;
 	}
 
 	/**
@@ -233,7 +147,7 @@ class KunenaUser extends JObject {
 		// Set the id for the KunenaUser object in case we created a new user.
 		if ($result && $isnew) {
 			$this->load ( $table->get ( 'userid' ) );
-			self::$_instances [$table->get ( 'id' )] = $this;
+			//self::$_instances [$table->get ( 'id' )] = $this;
 		}
 
 		return $result;
@@ -262,41 +176,11 @@ class KunenaUser extends JObject {
 
 	}
 
-	public static function getOnlineUsers() {
-		if (self::$_online === null) {
-			$db = JFactory::getDBO ();
-			$query = "SELECT s.userid, s.time
-				FROM #__session AS s
-				INNER JOIN #__kunena_users AS k ON k.userid=s.userid
-				WHERE s.client_id=0
-				GROUP BY s.userid
-				ORDER BY s.time DESC";
-
-			$db->setQuery($query);
-			self::$_online = $db->loadObjectList('userid');
-			KunenaError::checkDatabaseError();
-		}
-		return self::$_online;
-	}
-
-	public static function getOnlineCount () {
-		// TODO: make stats configurable by freely defined timeout (15 min, 30 min, Joomla session, all...)
-		static $count = null;
-		if ($count === null) {
-			require_once JPATH_ROOT.'/modules/mod_whosonline/helper.php';
-			$count = modWhosonlineHelper::getOnlineCount();
-		}
-		return $count;
-	}
-
 	public function isOnline($yesno = false) {
 		$online = false;
 		$myprofile = KunenaFactory::getUser ();
 		if (intval($this->userid) > 0 && ($this->showOnline || $myprofile->isModerator ())) {
-			if (self::$_online === null) {
-				self::getOnlineUsers();
-			}
-			$online = isset(self::$_online [$this->userid]) ? (self::$_online [$this->userid]->time > $this->_session_timeout) : false;
+			$online = KunenaUserHelper::isOnline($this->userid);
 		}
 		if ($yesno) return $online ? 'yes' : 'no';
 		return $online;

@@ -64,7 +64,7 @@ class KunenaForumMessageHelper {
 			if (isset($results[$id])) {
 				$instance = new KunenaForumMessage ();
 				$instance->bind ( $results[$id] );
-				$instance->_exists = true;
+				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			} else {
 				self::$_instances [$id] = null;
@@ -73,7 +73,7 @@ class KunenaForumMessageHelper {
 		unset ($results);
 	}
 
-	static public function getMessages($ids = false) {
+	static public function getMessages($ids = false, $authorise='read') {
 		if ($ids === false) {
 			return self::$_instances;
 		} elseif (is_array ($ids) ) {
@@ -85,7 +85,7 @@ class KunenaForumMessageHelper {
 
 		$list = array ();
 		foreach ( $ids as $id ) {
-			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise()) {
+			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise, null, true)) {
 				$list [$id] = self::$_instances [$id];
 			}
 		}

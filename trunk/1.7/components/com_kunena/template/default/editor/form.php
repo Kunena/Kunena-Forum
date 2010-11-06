@@ -50,9 +50,11 @@ $this->k=0;
 	<?php if (!isset($this->selectcatlist)) : ?>
 	<input type="hidden" name="catid" value="<?php echo intval($this->message->catid) ?>" />
 	<?php endif; ?>
-	<input type="hidden" name="id" value="<?php echo intval($this->message->id) ?>" />
 	<?php if ($this->message->exists()) : ?>
+	<input type="hidden" name="id" value="<?php echo intval($this->message->id) ?>" />
 	<input type="hidden" name="do" value="editpostnow" />
+	<?php else: ?>
+	<input type="hidden" name="id" value="<?php echo intval($this->message->parent) ?>" />
 	<?php endif; ?>
 	<?php echo JHTML::_( 'form.token' ); ?>
 

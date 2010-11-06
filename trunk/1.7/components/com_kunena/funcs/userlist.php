@@ -21,6 +21,8 @@ class CKunenaUserlist {
 	public $allow = false;
 
 	function __construct() {
+		kimport ('kunena.user.helper');
+
 		$this->app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->db = JFactory::getDBO ();
@@ -80,7 +82,7 @@ class CKunenaUserlist {
 			$userlist[intval($user->userid)] = intval($user->userid);
 		}
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
-		KunenaUser::loadUsers($userlist);
+		KunenaUserHelper::loadUsers($userlist);
 
 		// table ordering
 		$this->order_dir = $filter_order_dir;

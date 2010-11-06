@@ -278,6 +278,8 @@ class CKunenaView {
 
 	function __construct($func, $catid, $id, $limitstart=0, $limit=0) {
 		kimport('kunena.forum.category.helper');
+		kimport ('kunena.user.helper');
+
 		require_once(KUNENA_PATH_LIB . DS . 'kunena.link.class.php');
 
 		$this->db = JFactory::getDBO ();
@@ -530,7 +532,7 @@ class CKunenaView {
 		}
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
-		KunenaUser::loadUsers($userlist);
+		KunenaUserHelper::loadUsers($userlist);
 
 		//data ready display now
 		if (CKunenaTools::isModerator ( $this->my->id, $this->catid ) || ($this->topicLocked == 0)) {

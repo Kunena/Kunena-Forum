@@ -23,6 +23,8 @@ kimport ('kunena.forum.message.helper');
 class KunenaForumTopic extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
+	protected $_hold = 1;
+	protected $_posts = 0;
 
 	/**
 	 * Constructor
@@ -47,8 +49,10 @@ class KunenaForumTopic extends JObject {
 		return KunenaForumTopicHelper::get($identifier, $reset);
 	}
 
-	public function exists() {
-		return $this->_exists;
+	function exists($exists = null) {
+		$return = $this->_exists;
+		if ($exists !== null) $this->_exists = $exists;
+		return $return;
 	}
 
 	public function subscribe($value=1, $user=null) {
@@ -88,7 +92,7 @@ class KunenaForumTopic extends JObject {
 		return KunenaForumCategoryHelper::get($this->category_id);
 	}
 
-	public function authorise($action='read', $user=null) {
+	public function authorise($action='read', $user=null, $silent=false) {
 		static $actions  = array(
 			'none'=>array(),
 			'read'=>array('Read'),
@@ -110,22 +114,25 @@ class KunenaForumTopic extends JObject {
 			'post.delete'=>array('Read','Unlocked','Own'),
 			'post.undelete'=>array('Read'),
 			'post.permdelete'=>array('Read'),
+			'post.attachment.read'=>array('Read'),
+			'post.attachment.create'=>array('Read','Unlocked','Own'),
+			'post.attachment.delete'=>array('Read','Unlocked','Own'),
 		);
 		$user = KunenaUser::getInstance($user);
 		if (!isset($actions[$action])) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_LIB_TOPIC_NO_ACTION' ) );
 			return false;
 		}
 		$category = $this->getCategory();
-		$auth = $category->authorise('topic.'.$action, $user);
+		$auth = $category->authorise('topic.'.$action, $user, $silent);
 		if (!$auth) {
-			$this->setError ( $category->getError() );
+			if (!$silent) $this->setError ( $category->getError() );
 			return false;
 		}
 		foreach ($actions[$action] as $function) {
 			$authFunction = 'authorise'.$function;
 			if (! method_exists($this, $authFunction) || ! $this->$authFunction($user)) {
-				$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+				if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 				return false;
 			}
 		}
@@ -158,8 +165,8 @@ class KunenaForumTopic extends JObject {
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
 	}
 
-	public function bind($data, $ignore = array()) {
-		$data = array_diff_key($data, array_flip($ignore));
+	public function bind($data, $allow = array()) {
+		if (!empty($allow)) $data = array_intersect_key($data, array_flip($allow));
 		$this->setProperties ( $data );
 	}
 
@@ -173,13 +180,15 @@ class KunenaForumTopic extends JObject {
 	 */
 	public function load($id) {
 		// Create the table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
 		$this->_exists = $table->load ( $id );
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
+		$this->_hold = $this->hold === null ? 1 : $this->hold;
+		$this->_posts = (int)$this->posts;
 		return $this->_exists;
 	}
 
@@ -192,8 +201,22 @@ class KunenaForumTopic extends JObject {
 	 * @since 1.6
 	 */
 	public function save($updateOnly = false) {
+		//are we creating a new topic
+		$isnew = ! $this->_exists;
+
+		// If we aren't allowed to create new topic return
+		if (!$this->id) {
+			$this->setError ( JText::_('COM_KUNENA_LIB_TOPIC_ERROR_NO_ID') );
+			return false;
+		}
+		// If we aren't allowed to create new topic return
+		if ($isnew && $updateOnly) {
+			$this->setError ( JText::_('COM_KUNENA_LIB_TOPIC_ERROR_UPDATE_ONLY') );
+			return false;
+		}
+
 		// Create the topics table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 
@@ -203,13 +226,8 @@ class KunenaForumTopic extends JObject {
 			return false;
 		}
 
-		//are we creating a new topic
-		$isnew = ! $this->_exists;
-
-		// If we aren't allowed to create new topic return
-		if ($isnew && $updateOnly) {
-			return true;
-		}
+		$topicDelta = $this->delta();
+		$postDelta = $this->posts-$this->_posts;
 
 		//Store the topic data in the database
 		if (! $result = $table->store ()) {
@@ -218,8 +236,12 @@ class KunenaForumTopic extends JObject {
 
 		// Set the id for the KunenaForumTopic object in case we created a new topic.
 		if ($result && $isnew) {
-			$this->load ( $table->get ( 'id' ) );
-			self::$_instances [$table->get ( 'id' )] = $this;
+			$this->load ( $this->id );
+		}
+
+		$category = $this->getCategory();
+		if (! $category->update($this, $topicDelta, $postDelta)) {
+			$this->setError ( $category->getError () );
 		}
 
 		return $result;
@@ -280,16 +302,20 @@ class KunenaForumTopic extends JObject {
 	public function update($message=null, $postdelta=0) {
 		// Update post count
 		$this->posts += $postdelta;
+		if (!$this->exists()) {
+			if (!$message) return false;
+			$this->id = $message->id;
+		}
 		if ($message && $message->exists() && $message->hold == KunenaForum::PUBLISHED ) {
 			// If message exists, we may need to update cache
-			if (!$this->first_post_time || $this->first_post_time > $message->time) {
+			if (!$this->first_post_time || $this->first_post_time >= $message->time) {
 				$this->first_post_id = $message->id;
 				$this->first_post_time = $message->time;
 				$this->first_post_userid = $message->userid;
 				$this->first_post_message = $message->message;
 				$this->first_post_guest_name = $message->name;
 			}
-			if ($this->last_post_time < $message->time) {
+			if ($this->last_post_time <= $message->time) {
 				$this->last_post_id = $message->id;
 				$this->last_post_time = $message->time;
 				$this->last_post_userid = $message->userid;
@@ -350,7 +376,7 @@ class KunenaForumTopic extends JObject {
 		if ($this->first_post_id) {
 			$this->hold = KunenaForum::PUBLISHED;
 		}
-		$this->save();
+		return $this->save();
 	}
 
 	// Internal functions
@@ -412,5 +438,16 @@ class KunenaForumTopic extends JObject {
 			return false;
 		}
 		return true;
+	}
+
+	protected function delta() {
+		if (!$this->hold && $this->_hold) {
+			// Create or publish topic
+			return 1;
+		} elseif ($this->hold && !$this->_hold) {
+			// Delete or unpublish topic
+			return -1;
+		}
+		return 0;
 	}
 }

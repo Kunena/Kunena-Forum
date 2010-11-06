@@ -70,7 +70,7 @@ class KunenaForumCategory extends JObject {
 		return KunenaForumCategoryHelper::get($this->_lastid);
 	}
 
-	public function newTopic($user=null) {
+	public function newTopic($fields=array(), $user=null) {
 		kimport ('kunena.forum.topic');
 		kimport ('kunena.forum.message');
 
@@ -78,8 +78,13 @@ class KunenaForumCategory extends JObject {
 		$topic = new KunenaForumTopic();
 		$message = new KunenaForumMessage();
 		$topic->category_id = $message->catid = $this->id;
+		$topic->bind($fields, array ('subject'));
+		$message->setTopic($topic);
 		$message->name = $user->getName('');
 		$message->userid = $user->userid;
+		$message->ip = $_SERVER ["REMOTE_ADDR"];
+		$message->hold = $this->review ? (int)!$this->authorise ('moderate', $user, true) : 0;
+		$message->bind($fields, array ('name', 'email', 'subject', 'message'));
 		return array($topic, $message);
 	}
 
@@ -92,7 +97,7 @@ class KunenaForumCategory extends JObject {
 		return $parent;
 	}
 
-	public function authorise($action='read', $user=null) {
+	public function authorise($action='read', $user=null, $silent=false) {
 		static $actions  = array(
 			'none'=>array(),
 			'read'=>array('Read'),
@@ -117,16 +122,20 @@ class KunenaForumCategory extends JObject {
 			'topic.post.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.post.undelete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.post.permdelete'=>array('Read', 'NotBanned', 'Admin'),
+			'topic.post.attachment.read'=>array('Read'),
+			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked'),
+			'topic.post.attachment.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 		);
 		$user = KunenaUser::getInstance($user);
 		if (!isset($actions[$action])) {
-			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+			echo $action;die();
+			if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_NO_ACTION' ) );
 			return false;
 		}
 		foreach ($actions[$action] as $function) {
 			$authFunction = 'authorise'.$function;
 			if (! method_exists($this, $authFunction) || ! $this->$authFunction($user)) {
-				$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+				if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 				return false;
 			}
 		}
@@ -256,7 +265,7 @@ class KunenaForumCategory extends JObject {
 	 */
 	public function load($id) {
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		// Load the KunenaTableCategories object based on the id
 		$this->_exists = $table->load ( $id );
@@ -276,7 +285,7 @@ class KunenaForumCategory extends JObject {
 	 */
 	public function save($updateOnly = false) {
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 
@@ -406,7 +415,7 @@ class KunenaForumCategory extends JObject {
 			return true;
 
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 		$result = $table->checkin();
@@ -429,7 +438,7 @@ class KunenaForumCategory extends JObject {
 			return false;
 
 		// Create the user table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 		$result = $table->isCheckedOut($with);
@@ -445,6 +454,7 @@ class KunenaForumCategory extends JObject {
 			// If topic exists and has new post, we need to update cache
 			if ($this->last_post_time < $topic->last_post_time) {
 				$this->last_topic_id = $topic->id;
+				$this->last_topic_posts = $topic->posts;
 				$this->last_topic_subject = $topic->subject;
 				$this->last_post_id = $topic->last_post_id;
 				$this->last_post_time = $topic->last_post_time;
@@ -462,6 +472,7 @@ class KunenaForumCategory extends JObject {
 
 			if ($topic) {
 				$this->last_topic_id = $topic->id;
+				$this->last_topic_posts = $topic->posts;
 				$this->last_topic_subject = $topic->subject;
 				$this->last_post_id = $topic->last_post_id;
 				$this->last_post_time = $topic->last_post_time;
@@ -472,6 +483,7 @@ class KunenaForumCategory extends JObject {
 				$this->numTopics = 0;
 				$this->numPosts = 0;
 				$this->last_topic_id = 0;
+				$this->last_topic_posts = 0;
 				$this->last_topic_subject = '';
 				$this->last_post_id = 0;
 				$this->last_post_time = 0;
@@ -480,7 +492,7 @@ class KunenaForumCategory extends JObject {
 				$this->last_post_guest_name = '';
 			}
 		}
-		$this->save();
+		return $this->save();
 	}
 
 	// Internal functions

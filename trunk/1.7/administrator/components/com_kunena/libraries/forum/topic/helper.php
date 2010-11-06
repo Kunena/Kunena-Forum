@@ -85,7 +85,7 @@ class KunenaForumTopicHelper {
 
 		$list = array ();
 		foreach ( $ids as $id ) {
-			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise)) {
+			if (!empty(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise, null, true)) {
 				$list [$id] = self::$_instances [$id];
 			}
 		}

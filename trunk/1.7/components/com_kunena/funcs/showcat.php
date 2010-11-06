@@ -23,6 +23,7 @@ class CKunenaShowcat {
 		kimport('kunena.html.parser');
 		kimport('kunena.forum.category.helper');
 		kimport('kunena.forum.topic.helper');
+		kimport('kunena.user.helper');
 
 		$this->func = 'showcat';
 		$this->catid = intval($catid);
@@ -105,7 +106,7 @@ class CKunenaShowcat {
 		}
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
-		if ( !empty($userlist) ) KunenaUser::loadUsers($userlist);
+		if ( !empty($userlist) ) KunenaUserHelper::loadUsers($userlist);
 
 		//meta description and keywords
 		$document = JFactory::getDocument ();

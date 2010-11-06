@@ -22,6 +22,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
+kimport('kunena.user.helper');
+
 class CKunenaWhoIsOnline {
 	public $db = null;
 	public $my = null;
@@ -85,13 +87,13 @@ class CKunenaWhoIsOnline {
 	}
 
 	public function getTotalRegistredUsers () {
-		$count = KunenaUser::getOnlineCount();
+		$count = KunenaUserHelper::getOnlineCount();
 		return $count['user'];
 	}
 
 	public function getTotalGuestUsers () {
 		if ( !$this->config->regonly ) {
-			$count = KunenaUser::getOnlineCount();
+			$count = KunenaUserHelper::getOnlineCount();
 			return $count['guest'];
 		}
 		return 0;

@@ -76,7 +76,7 @@ class KunenaForumCategoryHelper {
 		return $new;
 	}
 
-	static public function getCategories($ids = false, $reverse = false) {
+	static public function getCategories($ids = false, $reverse = false, $authorise='read') {
 		if (self::$_instances === false) {
 			self::loadCategories();
 		}
@@ -92,13 +92,13 @@ class KunenaForumCategoryHelper {
 		$list = array ();
 		if (!$reverse) {
 			foreach ( $ids as $id ) {
-				if (isset(self::$_instances [$id]) && self::$_instances [$id]->authorise()) {
+				if (isset(self::$_instances [$id]) && self::$_instances [$id]->authorise($authorise, null, true)) {
 					$list [$id] = self::$_instances [$id];
 				}
 			}
 		} else {
 			foreach ( self::$_instances as $category ) {
-				if (!in_array($category->id, $ids) && $category->authorise()) {
+				if (!in_array($category->id, $ids) && $category->authorise($authorise, null, true)) {
 					$list [$category->id] = $category;
 				}
 			}
@@ -114,7 +114,7 @@ class KunenaForumCategoryHelper {
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
 		$action = isset($params['action']) ? (string) $params['action'] : 'read';
 
-		if (!isset(self::$_instances [$id]) || !self::$_instances [$id]->authorise($action)) return array();
+		if (!isset(self::$_instances [$id]) || !self::$_instances [$id]->authorise($action, null, true)) return array();
 		$list = array ();
 		$parent = self::$_instances [$id]->parent_id;
 		while ($parent && $levels--) {
@@ -177,7 +177,7 @@ class KunenaForumCategoryHelper {
 				if ($levels && ! empty ( $children )) {
 					$clist = self::getChildren ( $id, $levels - 1, $params );
 				}
-				if (empty ( $clist ) && ! self::$_instances [$id]->authorise ( $action ))
+				if (empty ( $clist ) && ! self::$_instances [$id]->authorise ( $action, null, true ))
 					continue;
 				if (! empty ( $clist ) || ! $search || intval ( $search ) == $id || JString::stristr ( self::$_instances [$id]->name, ( string ) $search )) {
 					$list [$id] = self::$_instances [$id];

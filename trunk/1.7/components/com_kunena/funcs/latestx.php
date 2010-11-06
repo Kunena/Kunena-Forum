@@ -26,6 +26,7 @@ class CKunenaLatestX {
 	function __construct($func, $page = 0) {
 		kimport ('kunena.forum.category.helper');
 		kimport ('kunena.forum.topic.helper');
+		kimport ('kunena.user.helper');
 
 		$this->func = JString::strtolower ($func );
 		$this->catid = 0;
@@ -132,7 +133,7 @@ class CKunenaLatestX {
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
-			KunenaUser::loadUsers($userlist);
+			KunenaUserHelper::loadUsers($userlist);
 
 			// Get unread messages from all topics
 			if ($this->config->shownew && $this->my->id) {

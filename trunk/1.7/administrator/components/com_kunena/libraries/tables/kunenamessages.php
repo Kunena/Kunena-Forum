@@ -14,7 +14,7 @@ require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
 
 /**
  * Kunena Messages
- * Provides access to the #__kunena_topics table
+ * Provides access to the #__kunena_messages table
  */
 class TableKunenaMessages extends KunenaTable
 {
@@ -38,6 +38,7 @@ class TableKunenaMessages extends KunenaTable
 	var $modified_time = null;
 	var $modified_reason = null;
 	var $params = null;
+	var $message = null;
 
 	function __construct($db) {
 		parent::__construct ( '#__kunena_messages', 'id', $db );
@@ -87,5 +88,30 @@ class TableKunenaMessages extends KunenaTable
 		// Bind the data to the table.
 		$this->bind($data);
 		return $this->_exists;
+	}
+
+	function store() {
+		$k = $this->_tbl_key;
+		$update = $this->_exists;
+		$message = $this->message;
+		unset($this->message);
+		if (!parent::store())
+			return false;
+		$this->message = $message;
+
+		if ($update) {
+			$query = "UPDATE #__kunena_messages_text SET message={$this->_db->quote($this->message)} WHERE mesid = {$this->$k}";
+		} else {
+			$query = "INSERT INTO #__kunena_messages_text (mesid, message) VALUES ({$this->$k}, {$this->_db->quote($this->message)})";
+		}
+		$this->_db->setQuery($query);
+		$this->_db->query();
+
+		// Check for an error message.
+		if ($this->_db->getErrorNum()) {
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+		return true;
 	}
 }

@@ -35,8 +35,10 @@ class KunenaForumTopicUser extends JObject {
 		return KunenaForumTopicUserHelper::get($id, $user, $reload);
 	}
 
-	public function exists() {
-		return $this->_exists;
+	function exists($exists = null) {
+		$return = $this->_exists;
+		if ($exists !== null) $this->_exists = $exists;
+		return $return;
 	}
 
 	/**

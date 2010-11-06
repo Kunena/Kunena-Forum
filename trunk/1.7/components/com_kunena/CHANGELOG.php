@@ -33,6 +33,49 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+5-November-2010 Matias
+# [#22792] Fill missing topic posts count field on KunenaForumCategory::update()
+# [#22792] KunenaForumCategory/Topic/MessageHelper: add authorisation parameter
+# [#22792] Cache KunenaForumMessage::getTopic(), add setTopic() to handle new topics
++ [#22792] Cascade changes in message to topic and category
+# [#22792] Topic should have same id as its first message (fixes old logic)
+# [#22792] Fix some bugs in TableKunenaMessages, TableKunenaCategories
+# [#22792] Make new topic to work
+^ [#22792] Some code cleanup, fixes in CKunenaPost
+
+4-November-2010 Matias
+# [#22792] Silent authorization (suspend errors) when loading objects
+# [#22792] Fix bug in KunenaTable::insertObject()
+# [#22792] Fix message id in the form to be parent on new reply
++ [#22792] Add function KunenaForumMessage::makeAnonymous()
+# [#22792] Fix some bugs in KunenaForumMessage::authorise()
+# [#22792] Fix some bugs in KunenaForumMessage/Topic::bind()
+^ [#22792] Split KunenaForumMessage::edit() not to save message
+^ [#22792] Change also topic in CKunenaPost::doedit()
+
+3-November-2010 Matias
++ [#22792] Add function KunenaForumMessageAttachment::deleteFile()
++ [#22792] Make delete attachment to work with the new code
++ [#22792] Fill fields in KunenaForumCategory::newTopic()
++ [#22792] Fill fields in KunenaForumMessage::newReply()
+^ [#22792] Make CKunenaPost::post() to use new code
+
+2-November-2010 Matias
++ [#22792] Add function KunenaForumMessage::check() and verify that data is correct
++ [#22792] Add function KunenaForumMessageAttachment::upload()
++ [#22792] Add function KunenaForumMessageAttachmentHelper::getById()
++ [#22792] Add function KunenaForumMessageAttachmentHelper::getByMessage()
+# [#22792] KunenaTable::load() should fail if load fails ($this->_exists = return value)
++ [#22792] Make upload attachment to work with the new code
+
+1-November-2010 Matias
+^ [#22792] Move static functions of KunenaUser into KunenaUserHelper
++ [#22792] Add function KunenaForumMessage::edit()
+^ [#22792] Convert CKunenaPost::doedit() to use new class
+# [#22792] Fix KunenaForumMessage/Topic/TopicUser::exists()
++ [#22792] Add class TableKunenaAttachments
++ [#22792] Add new classes: KunenaForumMessageAttachment & KunenaForumMessageAttachmentHelper
+
 31-October-2010 Matias
 ^ [#22792] Convert post.php moderate() to use new classes
 

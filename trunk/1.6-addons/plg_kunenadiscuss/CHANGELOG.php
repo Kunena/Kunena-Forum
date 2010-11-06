@@ -29,10 +29,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Discuss Plugin 1.6.0-RC3
+Kunena Discuss Plugin 1.6.1
 
 6-November-2010 fxstein
 ^ [#20084] Change all references of kunena.com to kunena.org
+^ [#20084] Update version info to 1.6.1
 
 3-November-2010 Severdia
 # [#20084] Fixed float bug in IE

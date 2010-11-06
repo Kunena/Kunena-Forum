@@ -27,7 +27,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			return null;
 
 		// Kunena detection and version check
-		$minKunenaVersion = '1.6.0';
+		$minKunenaVersion = '1.6.1';
 		if (!class_exists('Kunena') || Kunena::versionBuild() < 3839) {
 // FIXME: Add Warning for incorrect Kunena version
 

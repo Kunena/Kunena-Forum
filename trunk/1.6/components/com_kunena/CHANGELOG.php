@@ -33,7 +33,7 @@ Legend:
 
 Kunena 1.6.1-DEV
 
-5-November-2010 Matias
+5-November-2010 fxstein
 ^ [#23138] Change all copyright and credits information to kunena.org
 
 2-November-2010 Matias

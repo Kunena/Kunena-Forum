@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- $Id: avatars.xml 30 2008-11-11 02:50:35Z eddieajau $ -->
-<config>
-	<params>
-		<param name="example" type="text" default="" label="JX Example" description="JX Example Desc" />
-	</params>
-</config>

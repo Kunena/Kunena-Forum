@@ -4,14 +4,14 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Finnish (Suomi)</name>
 	<tag>fi-FI</tag>
-	<creationDate>2010-10-23</creationDate>
+	<creationDate>2010-11-01</creationDate>
 	<version>1.6.1-DEV</version>
-	<build>3724</build>
+	<build>3850</build>
 	<author>Sami Haaranen</author>
 	<authorEmail>mortti@joomlaportal.fi</authorEmail>
 	<authorUrl>www.joomlaportal.fi</authorUrl>
 	<copyright>(C) 2010 Sami Haaranen</copyright>
-	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<license>GNU/GPL</license>
 	<description>Suomenkielinen käännös Kunena Forum lisäosaan</description>
 
 	<administration>
@@ -27,7 +27,6 @@
 			<filename>fi-FI.com_kunena.ini</filename>
 			<filename>fi-FI.com_kunena.tpl_default.ini</filename>
 			<filename>fi-FI.com_kunena.tpl_example.ini</filename>
-			<filename>fi-FI.com_kunena.tpl_skinner.ini</filename>
 		</files>
 	</site>
 </install>

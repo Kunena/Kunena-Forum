@@ -33,8 +33,18 @@ Legend:
 
 Kunena 1.6.1-DEV
 
+6-November-2010 fxstein
+^ [#15886] Merged revisions 3761-3851 from branches/1.6-LDAsvens-language-20101021
+
 5-November-2010 fxstein
 ^ [#23138] Change all copyright and credits information to kunena.org
+
+4-Nov-2010 svens(LDA)
+^ [#22975] update ru-RU (thanks ZARKOS)
+^ [#22975] updated fi-FI (thanks Mortti)
+
+3-Nov-2010 svens (LDA)
+^ [#22975] update de-DE (thanks rich)
 
 2-November-2010 Matias
 # [#20084] KunenaDiscuss: Fix incomplete URL in subscription email
@@ -46,6 +56,9 @@ Kunena 1.6.1-DEV
 31-October-2010 fxstein
 + [#22849] Add new module position kunena_topic_1 through kunena_topic_n
 ^ [#15886] Merged revision 3828 from /branches/1.6-xillibit-fixes-20101017
+
+31-October-2010 svens (LDA)
+^ [#22975] update ca-ES (thanks garrotix)
 
 31-October-2010 Xillibit
 # [#22971] Fix issue which prevent to add points on delete and strings on thank you are wrong

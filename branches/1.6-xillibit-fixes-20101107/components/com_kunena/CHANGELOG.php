@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 7-November-2010 Xillibit
 ^ [#23154] Move in an another screen the button move user messages in kunena user manager
+^ [#23155] Change Mark all categories read and remove word forum which are inappropriate
 
 6-November-2010 fxstein
 ^ [#23152] Update version info

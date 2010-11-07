@@ -36,6 +36,7 @@ Kunena 1.6.1
 6-November-2010 fxstein
 ^ [#15886] Merged revisions 3761-3851 from branches/1.6-LDAsvens-language-20101021
 ^ [#22690] Update version info for 1.6.1 release
+^ [#22690] Update README.txt for 1.6.1 release
 
 5-November-2010 fxstein
 ^ [#23138] Change all copyright and credits information to kunena.org

@@ -2058,6 +2058,10 @@ function moveUserMessages ( $option, $uid ){
 	$kunena_db = &JFactory::getDBO ();
 	$return = JRequest::getCmd( 'return', 'edituserprofile', 'post' );
 
+	$userid = implode(',', $uid);
+	$kunena_db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );
+	$userids = $kunena_db->loadObjectList ();
+
 	$kunena_db->setQuery ( "SELECT id,parent,name FROM #__kunena_categories" );
 	$catsList = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
@@ -2071,7 +2075,7 @@ function moveUserMessages ( $option, $uid ){
 	}
 	$lists = JHTML::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
 
-	html_Kunena::moveUserMessages ( $option, $return, $uid, $lists );
+	html_Kunena::moveUserMessages ( $option, $return, $uid, $lists, $userids );
 }
 
 function moveUserMessagesNow ( $option, $cid ) {
@@ -3118,33 +3122,33 @@ function generateSystemReport () {
 	} else {
 		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 	}
-	
+
 	// Get Joomla! frontend assigned template
 	$query = ' SELECT template '
 				.' FROM #__templates_menu '
 				.' WHERE client_id = 0 AND menuid = 0 ';
 	$kunena_db->setQuery($query);
 	$jdefaultemplate = $kunena_db->loadResult();
-	
-	$xml_tmpl = JFactory::getXMLparser('Simple');	
+
+	$xml_tmpl = JFactory::getXMLparser('Simple');
 	$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate.'/templateDetails.xml');
-	$templatecreationdate= $xml_tmpl->document->creationDate[0];	
-	$templateauthor= $xml_tmpl->document->author[0];	
-	$templateversion = $xml_tmpl->document->version[0];	
-	
+	$templatecreationdate= $xml_tmpl->document->creationDate[0];
+	$templateauthor= $xml_tmpl->document->author[0];
+	$templateversion = $xml_tmpl->document->version[0];
+
 	// Get Kunena menu items
 	$query = ' SELECT id, menutype, name, alias, link, parent '
 				.' FROM #__menu '
 				.' WHERE menutype = '.$kunena_db->Quote('kunenamenu').' ORDER BY id ASC';
 	$kunena_db->setQuery($query);
 	$kmenustype = $kunena_db->loadObjectlist();
-	
+
 	$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
 	foreach($kmenustype as $item) {
 		$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
 	}
 	$menudisplaytable .='[/table]';
-	
+
 	//test on each table if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';

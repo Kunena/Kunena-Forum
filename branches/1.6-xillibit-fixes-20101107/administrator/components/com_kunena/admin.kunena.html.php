@@ -2534,20 +2534,39 @@ function textCounter(field, target) {
 </form>
 	<?php
 		}
-		function moveUserMessages ( $option, $return, $uid, $lists ) {
+		function moveUserMessages ( $option, $return, $uid, $lists, $userids ) {
 	?>
 			<div class="kadmin-functitle icon-profiles"><?php echo JText::_('COM_KUNENA_A_MOVE_USERMESSAGES'); ?></div>
-			<form action="index.php" method="post" name="adminForm">
-	<?php
-			echo $lists;
-	?>
-			<input type="hidden" name="boxchecked" value="1" />
-			<input type="hidden" name="return" value="<?php echo $return;?>" />
-			<input type="hidden" name="task" value="" />
-			<input type="hidden" name="option" value="<?php echo $option; ?>" />
-			<input type="hidden" name="uid" value="<?php echo $uid[0]; ?>" />
-			<?php echo JHTML::_( 'form.token' ); ?>
-			</form>
+			<table class="adminform">
+				<tbody>
+					<tr>
+						<td>
+						<strong><?php echo JText::_('COM_KUNENA_CATEGORY_TARGET'); ?></strong>
+						<form action="index.php" method="post" name="adminForm">
+						<?php
+							echo $lists;
+						?>
+						<input type="hidden" name="boxchecked" value="1" />
+						<input type="hidden" name="return" value="<?php echo $return;?>" />
+						<input type="hidden" name="task" value="" />
+						<input type="hidden" name="option" value="<?php echo $option; ?>" />
+						<input type="hidden" name="uid[]" value="<?php echo implode(',',$uid); ?>" />
+						<?php echo JHTML::_( 'form.token' ); ?>
+						</form>
+						</td>
+						<td><strong><?php echo JText::_('COM_KUNENA_MOVEUSERMESSAGES_USERS_CURRENT'); ?></strong>
+						<ol>
+						<?php
+						foreach($userids as $id){
+							echo '<li>'.$id->username.' ('.JText::_('COM_KUNENA_TRASH_AUTHOR_USERID').' '.$id->id.')</li> ';
+						}
+
+						?>
+						</ol>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 	<?php
 		}
 		//**************************

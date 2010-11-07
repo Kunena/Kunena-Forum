@@ -462,7 +462,7 @@ switch ($task) {
 		break;
 
 	case "editKTemplate" :
-		editKTemplate ();
+		editKTemplate ( $option );
 
 		break;
 
@@ -768,7 +768,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		html_Kunena::showTemplates($rows, $page, $option);
 	}
 
-	function editKTemplate()
+	function editKTemplate($option)
 	{
 		jimport('joomla.filesystem.path');
 		$kunena_db	= & JFactory::getDBO();

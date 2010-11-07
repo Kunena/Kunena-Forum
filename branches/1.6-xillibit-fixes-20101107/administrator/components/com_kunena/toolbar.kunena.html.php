@@ -281,9 +281,7 @@ class CKunenaToolbar
         JToolBarHelper::spacer();
         JToolBarHelper::custom('chooseCSSTemplate', 'css.png','css_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS'), false, false );
         JToolBarHelper::spacer();
-        JToolBarHelper::cancel('cancelTemplate');
-		JToolBarHelper::spacer();
-        JToolBarHelper::back();
+        JToolBarHelper::cancel('showTemplates');
         JToolBarHelper::spacer();
     }
 
@@ -293,9 +291,7 @@ class CKunenaToolbar
         JToolBarHelper::custom('editTemplateCSS', 'css.png', 'css_f2.png', JText::_('COM_KUNENA_A_TEMPLATE_MANAGER_EDITCSS'));
         JToolBarHelper::spacer();
 		JToolBarHelper::spacer();
-        JToolBarHelper::cancel('cancelTemplate');
-		JToolBarHelper::spacer();
-        JToolBarHelper::back();
+        JToolBarHelper::cancel('showTemplates');
 		JToolBarHelper::spacer();
     }
 
@@ -305,9 +301,7 @@ class CKunenaToolbar
         JToolBarHelper::save('saveTemplateCSS');
         JToolBarHelper::spacer();
 		JToolBarHelper::spacer();
-        JToolBarHelper::cancel('cancelTemplate');
-		JToolBarHelper::spacer();
-        JToolBarHelper::back();
+        JToolBarHelper::cancel('chooseCSSTemplate');
 		JToolBarHelper::spacer();
     }
 }

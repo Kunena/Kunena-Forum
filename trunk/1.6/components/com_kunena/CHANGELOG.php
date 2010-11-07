@@ -31,6 +31,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.2-DEV
+
+6-November-2010 fxstein
+^ [#23152] Update version info
+
 Kunena 1.6.1
 
 6-November-2010 fxstein

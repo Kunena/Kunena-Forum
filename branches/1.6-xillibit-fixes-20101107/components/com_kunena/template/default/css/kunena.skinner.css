@@ -1,0 +1,467 @@
+@charset "utf-8";
+
+/**
+* @version $Id: kunena.forum.css 3728 2010-10-15 20:16:32Z fxstein $
+* Kunena Component
+* @package Kunena
+*
+* @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
+*
+* Based on FireBoard Component
+* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.bestofjoomla.com
+* 
+**/ 
+* 
+/* --------------------------------------------------------
+
+	This is the skinner override file for the default 
+	Kunena template. Activating Skinner in the template
+	parameters will load this file and make it adopt
+	the colors of the main site template.
+
+----------------------------------------------------------*/
+	
+#Kunena td,
+#Kunena table,
+#Kunena th,
+#Kunena div,
+#Kunena p,
+#Kunena span,
+#Kunena .knewchar,
+#Kunena #ktab a span {
+	font-family: inherit;
+}
+
+#Kunena a.kicon-button:hover {text-decoration: none;}
+
+#Kunena table.kmsg {
+	border-bottom:1px solid rgba(0, 0, 0, 0.1);
+}
+#Kunena div.kblock {
+	border-bottom:4px solid rgba(0, 0, 0, 0.2);
+	border-top:1px solid rgba(0, 0, 0, 0.2);
+	border-left:1px solid rgba(0, 0, 0, 0.2);
+	border-right:1px solid rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.01);
+}
+#Kunena .kblock div.kheader {
+	border-bottom:2px solid rgba(0, 0, 0, 0.2);
+	color: inherit;
+}
+#Kunena div.kblock div.kbody {
+	background: transparent;
+	border-color: rgba(0, 0, 0, 0.2);
+}
+#Kunena div.kblock div.khelprulescontent,
+#Kunena div.kblock div.kfheadercontent,
+#Kunena div.kblock div.khelprulesjump {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.01);
+	color: inherit;
+}
+#Kunena div.kblock div.kactions {
+	background: transparent;
+	color: inherit;
+}
+#Kunena tr.krow1 td {
+	background-color: rgba(44, 44, 44, 0.1);
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena tr.krow2 td {
+	background-color: rgba(44, 44, 44, 0.05);
+}
+#Kunena .klist-actions-forum {
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena tr.ksth {
+	color: inherit;
+	font-family: inherit;
+	background: transparent;
+}
+#Kunena .klatest-avatar,
+#Kunena .ktopic-latest-post-avatar {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena td.kcol-first {
+	border-left: none;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+#Kunena td.kcol-last,
+#Kunena td.kcol-mid {
+	border-left: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+#Kunena td.ktopicmodule {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+#Kunena #ktop {
+	color: inherit;
+	border-color: rgba(0, 0, 0, 0.2);
+}
+#Kunena #ktab a {
+	background-color: rgba(0,0,0,0.15)
+}
+#Kunena #ktab a:hover {
+	background-color: rgba(0,0,0,0.25)
+}
+#Kunena #ktab a span {
+	font-family: inherit;
+	color: inherit;
+}
+#Kunena .divider,
+#Kunena div.kblock div.ktitle h1,
+#Kunena div.kblock div.ktitle h2,
+#Kunena div.kblock div.kactions a,
+#Kunena #ktab a:hover span,
+#Kunena #ktab li.Kunena-item-active a span	{
+	color: inherit;
+}
+#Kunena textarea,
+#Kunena select,
+#Kunena select:focus,
+#Kunena select:hover {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	color: inherit;
+	background-color: inherit;
+}
+#Kunena option {
+	background-color: rgba(0, 0, 0, 0.01);
+	background: none;
+	color: inherit;
+}
+#Kunena .button,
+#Kunena .kbutton {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	color: inherit;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+#Kunena .kbutton-back {
+	color: inherit;
+}
+#Kunena input.kinput {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .kbutton:hover,
+#Kunena .kbutton:focus {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	color: inherit;
+	background-color: rgba(0, 0, 0, 0.15);
+}
+#Kunena .klist-actions-bottom,
+#Kunena .klist-actions {
+	background-color: rgba(0, 0, 0, 0.01);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	color: inherit;
+}
+#Kunena .klist-pages {
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+	color: #666666;
+	font-family: inherit;
+}
+#Kunena .klist-times
+#Kunena .klist-actions-forum {
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .klist-pages-all {
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+	font-family: inherit;
+}
+#Kunena .klist-jump-all,
+#Kunena .klist-times-all {
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .klist-top,
+#Kunena .klist-bottom {
+	background-color: rgba(0, 0, 0, 0.01);
+	background:none;
+	border:1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .klist-markallcatsread {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.01);
+}
+#Kunena .klist-categories {
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena .kpagination a {
+	border:solid 1px rgba(0, 0, 0, 0.2);
+}
+#Kunena .kpagination .active {
+	border:solid 1px rgba(0, 0, 0, 0.2);
+	background:rgba(0,0,0,.1);
+	color: inherit;
+}
+#Kunena .kpagination .active:hover,
+#Kunena .kpagination a:hover {
+	border:solid 1px rgba(0, 0, 0, 0.25);
+	background:rgba(0,0,0,.2);
+}
+#Kunena div.ktopic-title-cover ul.kpagination a {
+	border:solid 1px rgba(0, 0, 0, 0.2); 
+	background: rgba(0, 0, 0, 0.2);
+}
+#Kunena div.ktopic-title-cover ul.kpagination a:hover{
+	border:solid 1px rgba(0, 0, 0, 0.2);
+	color: rgba(0, 0, 0, 0.2);
+	background: rgba(0, 0, 0, 0.25);
+}
+#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton,
+#Kunena td.kprofileboxcnt ul.kprofilebox-welcome li input.kbutton:hover {
+	background: transparent;
+}
+#Kunena div#kforum-head {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	border-left:  1px solid rgba(0, 0, 0, 0.2);
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena div#kmoderatorslist div.kbody {
+	border: 0 none;
+}
+#Kunena div#kmoderatorslist div.kbody {
+	border: 0 none;
+	background-color: rgba(0, 0, 0, 0.01);
+}
+#Kunena fieldset {
+	background-color: rgba(255, 255, 255, .05);
+	border: 1px solid rgba(255, 255, 255, .1);
+	background-image: none;
+}
+#Kunena input#keywords, #Kunena input#kusername,#Kunena input {
+	background-color: inherit;
+	color: inherit;
+}
+#Kunena div#ksearchresult div.kresult-title {
+	border-bottom: 0 none;
+}
+#Kunena div#ksearchresult div.resultcat {
+	border-top: 0 none;
+}
+#Kunena .kprofilebox-right {
+	border-left: 0 none;
+}
+#Kunena div.kpbox {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+#Kunena table.kblocktable {
+	border: 0 none;
+}
+#Kunena h1 a:link,
+#Kunena h1 a:active,
+#Kunena h1 a:visited,
+#Kunena h1,
+#Kunena h2,
+#Kunena h2 a,
+#Kunena span.kchildcount,
+#Kunena div.kcc-childcat-title {
+	color: inherit !important;
+}
+#Kunena h2 span.kheadbtn a {
+	background: transparent;
+	border: 0 none;
+}
+#Kunena h2 span.kheadbtn:hover a {
+	background: transparent;
+	border: 0 none;
+	color: inherit;
+}
+#Kunena .ktitle,
+#Kunena a.ktitle,
+#Kunena span.kmsgdate {
+	font-family: inherit;
+	color: inherit;
+}
+#Kunena div.kthead-title a,
+#Kunena .ktitle a {
+	font-family: inherit;
+}
+#Kunena div.kthead-child {
+	border-top: 1px dotted rgba(0,0,0,0.2);
+}
+#Kunena .kcontenttablespacer {
+	border: 0 none;
+	border-bottom:1px solid rgba(0, 0, 0, 0.1);
+}
+#Kunena .krow1-stickymsg {
+	background: rgba(255,255,204,0.1);
+}
+#Kunena .krow2-stickymsg {
+	background: rgba(255,255,204,0.2);
+}
+#Kunena div.kmsg-header {
+	border-bottom:1px solid rgba(0, 0, 0, 0.1);
+	background: transparent;
+	color: inherit;
+}
+#Kunena div.kmsg-header h2 {
+	background: transparent;
+}
+#Kunena div.kmessage-editmarkup-cover {;
+	border-bottom: 0 none;
+}
+#Kunena img.catavatar,
+#Kunena span.kavatar img,
+#Kunena div.kmsgattach,
+#Kunena div.kmsgtext pre,
+#Kunena div.kmsgtext code,
+#Kunena span.kmessage-editmarkup
+#Kunena .kreply-form,
+#Kunena span.kmessage-informmarkup,
+#Kunena div.kmsgtext-article,
+#Kunena div.kmsgtext-quote,
+#Kunena div.kmsgtext-hide,
+#Kunena div.kmsgtext-confidential,
+#Kunena .kreply-form {
+	border: 0 none;
+}
+#Kunena div.kmsgsignature,
+#Kunena div.kmessage-thankyou {
+	border-top: 0 none;
+}
+#Kunena .kreply-form .inputbox {
+	background-color: rgba(0, 0, 0, 0.01);
+	border: 0 none;
+	color: inherit;
+}
+#Kunena .kreply-form .inputbox {
+	background-color: rgba(0, 0, 0, 0.01);
+	border: 0 none;
+}
+#Kunena div.kmsgtext-article,
+#Kunena div.kmsgtext-quote,
+#Kunena div.kmsgtext-hide,
+#Kunena div.kmsgtext-confidential {
+	border: 0 none;
+	font-family: inherit;
+}
+#Kunena div.kmsgtext-article {
+	background-color: rgba(0, 0, 0, 0.01);
+}
+#Kunena td.kprofile-right {
+	background: transparent;
+	border: 0 none;
+}
+#Kunena td.kbuttonbar-right,
+#Kunena td.kbuttonbar-top,
+#Kunena td.kbuttonbar-left {
+	border-bottom: 0 none;
+}
+#Kunena td.kprofile-left {
+	border-bottom: 0 none;
+	border-right: 0 none;
+}
+#Kunena td.kprofile-top {
+	border-bottom: 0 none;
+	background: transparent;
+}
+#Kunena td.kprofile-bottom {
+	vertical-align: bottom;
+	padding: 5px;
+	border-bottom: 0 none;
+	border-top: 0 none;
+	background: transparent;
+}
+#Kunena #kpost-message .postinput,
+#Kunena #kpost-message .postinput:hover,
+#Kunena #kpost-message .postinput:focus,
+#Kunena #kpostmessage tr.krow2 td.kcol-ktopicicons td	{
+	background-color: rgba(0, 0, 0, 0.01);
+	border: 0 none;
+	color: inherit
+}
+#Kunena #kpostmessage tr.krow1 .kpostbuttonset td.kposthint {
+	background: rgba(255, 255, 255, 0.2);
+	border:0 none;
+}
+#Kunena table#kpostmessage .kposthint .kinputbox {
+	background: transparent;
+}
+#Kunena #kpostmessage tr.krow1 .kpostbuttonset td,
+#Kunena #kpostmessage tr.krow2 .kpostbuttonset td	{
+	border-bottom: 0 none;
+}
+#Kunena .kattachment .kbutton {
+	color: inherit
+}
+#Kunena .kfile-input-button,
+#Kunena .kfile-input-button:hover,
+#Kunena .kfile-input-button:focus,
+#Kunena .kattachment-remove,
+#Kunena .kattachment-insert  {
+	color: inherit;
+	border: 0 none;
+}
+#kpoll-form-vote fieldset {
+	background-color: rgba(0, 0, 0, 0.01);
+}
+#Kunena .kforum-pathway {
+	color: inherit;
+	border-left: 0 none;
+	border-right: 0 none;
+	background: transparent;
+}
+#Kunena .kforum-pathway-bottom,
+#Kunena .kforum-headerdesc {
+	color: inherit;
+	border: 0 none;
+	background: transparent;
+}
+#Kunena td.kuadesc,
+#Kunena td.kcreditsdesc,
+#Kunena span#kprofilebox-status	{
+	color: inherit;
+	background: transparent;
+}
+#Kunena .kpostbuttonset,
+#Kunena tr.krow1 .kpostbuttons,
+#Kunena table#kpostmessage .ktxtarea,
+#Kunena #kbbcode-preview,
+#Kunena #kpost-result div,
+#Kunena div#kcolor-palette,
+#Kunena div#link,
+#Kunena div#image,
+#Kunena div#video,
+#Kunena form.kform-report input,
+#Kunena form.kform-report textarea,
+#Kunena .kfile-input-button:hover,
+#Kunena .kfile-input-button:focus,
+#Kunena .kcredits-intro,
+#Kunena .kcredits-language,
+#Kunena .kwholegend,
+#Kunena .kwhoonline,
+#Kunena div.kmoderate-message,
+#Kunena div.current,
+#Kunena #kprofilebox-toggle,
+#Kunena #kpost-message .invalid,
+#lbImage {
+	border: 0 none;
+}
+#Kunena div.kavatar-lg { 
+	border: 0 none;
+	background: transparent;
+}
+#Kunena div.clrline {
+	border-top: 0 none;
+}
+#Kunena dl.tabs dt,
+#Kunena dl.tabs dt.open {
+	border: 0 none;
+	background: transparent;
+	color: inherit;
+}
+#Kunena dt.kprofile-modbtn {
+	background: transparent !important;
+	color: inherit;
+}
+#Kunena a.close,
+#Kunena a.open {
+	background-color: rgba(0, 0, 0, 0.25);
+}
+ul.autocompleter-choices,
+#lbBottom  {
+	border: 0 none;
+	font-family: inherit;
+}

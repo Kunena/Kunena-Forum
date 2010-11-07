@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id$ -->
+<!DOCTYPE install>
+<install type="language" version="1.5" client="site" method="upgrade">
+	<name>Kunena - Lithuanian (Lietuvių)</name>
+	<tag>lt-LT</tag>
+	<creationDate>2010-09-02</creationDate>
+	<version>1.6.0-RC2</version>
+	<build>unknown</build>
+	<author>ZYLKIN</author>
+	<authorEmail></authorEmail>
+	<authorUrl>www.MobiJava.lt</authorUrl>
+	<copyright>Vertimui galioja GNU GPL Viešoji licencija</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>
+		<![CDATA[
+	    <div style="background-color: #ddeebe; padding: 8px 20px 8px 20px; color:#08532f;	border-top: 1px solid #08532f ;	border-bottom: 1px solid #08532f;">
+		
+		<p>
+		<img style="margin: 0px 20px 0px 0px; border: 0px none #000000; float: left;" alt="" src="http://www.joomla123.lt/images/stories/page_images/Logos/vertimai/
+		kunena.png" />
+			<span style="font-size: 14pt;">
+			
+			Lietuvių kalbos paketas forumo komponentui Kunena v1.6.0 RC2, ver.1.0
+			
+			</span><br />
+
+			<span style="font-size: 9pt;">Lietuviškas vertimas buvo padarytas nuo ZYLKIN specialiai <a target="_blank" href="http://www.joomla123.lt">Joomla123.lt</a> bendruomenei.</span>
+			<span style="font-size: 8pt;">Jei norite prisijungti prie vertimų komandos arba pastebėjote vertimo klaidų, <a target="_blank" href="http://www.joomla123.lt/parasyk-mums">susisiekite su mumis</a>.</span><br />
+		</p>
+		<div style="clear:both;"></div>
+		</div>
+		<br />
+		 <div style="background-color: #ddeebe; padding: 8px 20px 8px 20px; color:#08532f;	border-top: 1px dashed #08532f ; border-bottom: 1px dashed #08532f;">
+		  <span style="font-size: 10pt;">Išversta:</span><br /><br />
+		  <img style="margin: 0px 4px 0px 0px; vertical-align: middle;" alt="lng_frontend" src="http://www.joomla123.lt/images/stories/page_images/translation_icons/lng_frontend.png" width="17" height="17" />išorinė sąsaja (front-end)<br /><br />
+		  <img style="margin: 0px 4px 0px 0px; vertical-align: middle;" alt="lng_ini" src="http://www.joomla123.lt/images/stories/page_images/translation_icons/lng_ini.png" width="17" height="17" />Saugus vertimas. Naudojami tik INI failai.<br /><br />
+		</div>
+		]]>
+	</description>
+	
+	<administration>
+		<files folder="admin">
+			<!-- filename>lt-LT.com_kunena.ini</filename -->
+			<!-- filename>lt-LT.com_kunena.install.ini</filename -->
+			<!-- filename>lt-LT.com_kunena.menu.ini</filename -->
+		</files>
+	</administration>
+
+	<site>
+		<files folder="site">
+			<filename>lt-LT.com_kunena.ini</filename>
+			<!-- filename>lt-LT.com_kunena.tpl_default.ini</filename -->
+			<!-- filename>lt-LT.com_kunena.tpl_example.ini</filename -->
+		</files>
+	</site>
+</install>

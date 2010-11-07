@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 6-November-2010 fxstein
 ^ [#23152] Update version info
+- [#22805] Remove remaining skinner ini files and references from some languages
 
 Kunena 1.6.1
 

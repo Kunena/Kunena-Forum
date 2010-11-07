@@ -34,6 +34,9 @@ Legend:
 
 Kunena Site Template based on Rocket Theme Afterburner
 
+7-November-2010 severdia
+# [#19707] Hack to hide module titles on KED 
+
 10-October-2010 severdia
 # [#19707] Fixed lots of spacing issues, general cleanup, removed old inline styles, cleaned up download page, search page
 

@@ -320,5 +320,9 @@ p.clr { clear: both;}
 .number-block2,
 .number-block3 { margin-left: 10px; font-size: 12px;}
 
+/* Hack to hide module titles on KED */
+div.module-banad h3 { display: none; }
+div.banneritem-banad {margin: 20px 0;}
+
 
 

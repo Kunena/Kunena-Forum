@@ -8,7 +8,7 @@
 
 CREATE TABLE `#__kunenatranslate_label` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(30) NOT NULL,
+  `label` varchar(80) NOT NULL,
   `client` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `label` (`label`)

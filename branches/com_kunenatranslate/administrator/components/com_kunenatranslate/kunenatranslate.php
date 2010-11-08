@@ -13,8 +13,45 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-require_once (dirname(__FILE__).DS.'helper.php');
+require_once (dirname(__FILE__).DS.'controller.php');
+
+// Require specific controller if requested
+$controller = JRequest::getWord('controller');
+
+$view = JRequest::getWord('view');
+switch ($view){
+	case 'update':
+		JSubMenuHelper::addEntry(JText::_('Back'), 'index.php?option=com_kunenatranslate');
+		JSubMenuHelper::addEntry(JText::_('Search for new'), 'index.php?option=com_kunenatranslate&view=update', true);
+		break;
+	default:
+		JSubMenuHelper::addEntry(JText::_('Labels'), 'index.php?option=com_kunenatranslate', true);
+		JSubMenuHelper::addEntry(JText::_('Update Labels'), 'index.php?option=com_kunenatranslate&view=update');
+		JSubMenuHelper::addEntry(JText::_('Translation'), 'index.php?option=com_kunenatranslate&view=translation');
+}
+
+if($controller) {
+	$path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
+	if (file_exists($path)) {
+		require_once $path;
+	} else {
+		$controller = '';
+	}
+}
+
+// Create the controller
+$classname	= 'KunenaTranslateController'.$controller;
+$controller	= new $classname( );
+
+$task = JRequest::getCmd('task', null);
+// Perform the Request task
+$controller->execute($task);
+// Redirect if set by the controller
+$controller->redirect();
+
+/*
 //-----------------preparation---------------------
+require_once (dirname(__FILE__).DS.'helper.php');
 $helper		= new CompKunenaTranslateHelper();
 
 
@@ -116,5 +153,6 @@ JToolBarHelper::title( JText::_( 'Kunena INI Maker' ), 'generic.png' );
 	</tbody>
 </table>
 </form>
-<?php endif; ?>
+<?php endif;
 
+*/

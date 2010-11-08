@@ -28,6 +28,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+08-November-2010 svens(LDA)
++ [#23087] compare with existing labels and add new ones
+
 01-November-2010 svens (LDA)
 + [#23087] models/label
 + [#23087] tables/kunenatranslateshema

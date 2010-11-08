@@ -13,7 +13,7 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-class CompKunenaTranslateHelper
+class KunenaTranslateHelper
 {
 	var $x = 0;
 	var $files;
@@ -46,7 +46,7 @@ class CompKunenaTranslateHelper
      * @param $fulllist array of all files
      * @return $fulllist array
      */
-    static public function killfolder($folderl, $fulllist){
+    static public function killfolder($folderl, &$fulllist){
     	$isArray	= is_array($folderl);
     	if (!$isArray) $folderl = array($folderl);
     	foreach ($fulllist as $k=>$fulll){
@@ -54,7 +54,7 @@ class CompKunenaTranslateHelper
     			if (strpos($fulll, $folder) !== false) unset($fulllist[$k]);
     		}
     	}
-    	return $fulllist;
+    	return true;
     }
     
     /*
@@ -98,6 +98,7 @@ class CompKunenaTranslateHelper
      */
     static public function readINIfile($file){
     	$comments= array();
+    	$res = NULL;
     	if(file_exists($file)){
     		$fres	= file($file, FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
     		if($fres){
@@ -143,6 +144,7 @@ class CompKunenaTranslateHelper
      * @return $res array with all language strings
      */
     public function readphpxml($php='',$xmlf=''){
+    	$lines = '';
     	//Pattern to find the translateable string
 		$pattern =  "/JText::_[[:space:]]*\(\s*\'(.*)\'\s*\)|JText::_[[:space:]]*\(\s*\"(.*)\"\s*\)".
 		            "|JText::sprintf[[:space:]]*\(\s*\"(.*)\"|JText::sprintf[[:space:]]*\(\s*\'(.*)\'".
@@ -219,6 +221,42 @@ class CompKunenaTranslateHelper
 		$res['newfile']	= $newfile;
 		$res['new']		= $phpxml;
 		$res['old']		= $ini2;
+		return $res;
+	}
+	
+/*
+	 * Compare the DB with the found languagestrings
+	 * show which are new, which are old
+	 * @param array db
+	 * @param array php/xml
+	 * @return array of new and old strings
+	 */
+	static public function getCompared($dbase,$phpxml){
+		$res = array( 
+		//				'old' => array(),
+						'new' => array(),
+		//				'inDB'=>$dbase
+		);
+		// TODO find better way to do the compare
+		//look if there are new strings in php/xml
+		foreach ($phpxml as $pk=>$vk){
+			foreach ($dbase as $dk=>$v){
+				$dkey = array_keys($phpxml[$pk],$v->label);
+				foreach ($dkey as $vkey){
+					unset($phpxml[$pk][$vkey]);
+				}
+				//look if there are old strings in teh ini file
+				/*foreach ($vk as $vkk){
+					if( $vkk == $v->label ) $res['old'][] = $v;
+				}*/
+			}	
+		}
+		foreach ($phpxml as $v){
+			foreach ($v as $value) {
+				$res['new'][] = $value;
+			}
+		}
+		//$res['new']		= $phpxml;
 		return $res;
 	}
 	

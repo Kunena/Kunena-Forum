@@ -8,9 +8,10 @@
 
 CREATE TABLE `#__kunenatranslate_label` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sheme` varchar(30) NOT NULL,
+  `label` varchar(30) NOT NULL,
+  `client` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `sheme` (`sheme`)
+  UNIQUE KEY `label` (`label`)
 )
 
 CREATE TABLE `#__kunenatranslate_translation` (
@@ -18,5 +19,5 @@ CREATE TABLE `#__kunenatranslate_translation` (
   `lang` varchar(5) NOT NULL,
   `translation` text NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY `shemeid` (`labelid`,`lang`)
+  UNIQUE KEY `labelid` (`labelid`,`lang`)
 )

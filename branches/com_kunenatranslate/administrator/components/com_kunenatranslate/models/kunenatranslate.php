@@ -13,14 +13,6 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-class TableKunenaTranslate extends JTable
-{
-	/** Primary Key
-	 * @var int
-	 */
-	var $id = null;
+class KunenaTranslateModelKunenaTranslate extends JModel {
 	
-	function __construct(& $db){
-		parent::__construct('#__kunenatranslate_label', 'id', $db);
-	}
 }

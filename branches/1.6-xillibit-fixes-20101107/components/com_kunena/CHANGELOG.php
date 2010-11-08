@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+8-November-2010 Xillibit
+# [#23001] CSS lightbox issue under chrome 7, use now mediaboxadvanced tested under IE8, Firefox, Google chrome
+
 7-November-2010 Xillibit
 ^ [#23154] Move in an another screen the button move user messages in kunena user manager
 ^ [#23155] Change Mark all categories read and remove word forum which are inappropriate

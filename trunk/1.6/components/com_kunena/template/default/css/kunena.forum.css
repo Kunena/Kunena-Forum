@@ -1431,10 +1431,12 @@ PX		EM			PCT			PT
 	max-width:100%;
 	max-height: 800px;
 }
+#Kunena div.kmsgbody div.kmsgtext ul > li {
+	list-style-type:disc;
+}
 #Kunena div.kmsgattach {
 	overflow: hidden;
 	padding: 8px;
-	/*margin-top: 120px;*/
 	margin-top: 8px;
 	background:none;
 	border:1px dotted;

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+9-November-2010 Severdia
+# [#22979] Fixed display of bullets
+
 6-November-2010 fxstein
 ^ [#23152] Update version info
 - [#22805] Remove remaining skinner ini files and references from some languages
@@ -47,7 +50,7 @@ Kunena 1.6.1
 5-November-2010 fxstein
 ^ [#23138] Change all copyright and credits information to kunena.org
 
-4-Nov-2010 svens(LDA)
+4-Nov-2010 svens (LDA)
 ^ [#22975] update ru-RU (thanks ZARKOS)
 ^ [#22975] updated fi-FI (thanks Mortti)
 

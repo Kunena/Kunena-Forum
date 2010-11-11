@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+11-November-2010 Xillibit
+# [#23224] Don´t show karma in horizontal profile
+
 8-November-2010 Xillibit
 # [#23001] CSS lightbox issue under chrome 7, use now mediaboxadvanced tested under IE8, Firefox, Google chrome
 

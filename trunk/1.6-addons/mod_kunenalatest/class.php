@@ -60,6 +60,7 @@ class modKunenaLatestHelper {
 		$model->threads_per_page = $params->get ( 'nbpost' );
 		$model->latestcategory = $params->get ( 'category_id' );
 		$model->latestcategory_in = $params->get ( 'sh_category_id_in' );
+		$model->show_list_time = $params->get ( 'show_list_time' );
 
 		$result = array ();
 		$threadmode = true;

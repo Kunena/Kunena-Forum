@@ -30,6 +30,9 @@ Legend:
 
 KunenaLatest 1.6.0-RC3
 
+11-November-2010 Xillibit
++ [#20081] Set the time since which to show the last topics
+
 31-October-2010 Xillibit
 # [#20081] Fix undefined variable $myprofile in class.php line 43
 

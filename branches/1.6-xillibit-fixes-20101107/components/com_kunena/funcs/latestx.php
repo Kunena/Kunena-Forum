@@ -49,7 +49,7 @@ class CKunenaLatestX {
 		$this->app = & JFactory::getApplication ();
 		$this->document = & JFactory::getDocument ();
 
-		$this->show_list_time = JRequest::getInt ( 'sel', 720 );
+		$this->show_list_time = JRequest::getInt ( 'sel', $this->config->show_list_time );
 
 		// My latest is only available to users
 		if (! $this->user->id && $func == "mylatest") {
@@ -62,16 +62,7 @@ class CKunenaLatestX {
 		$this->tabclass = array ("row1", "row2" );
 
 		if (! $this->my->id && $this->show_list_time == 0) {
-			$this->show_list_time = "720";
-		}
-
-		//start the latest x
-		if ($this->show_list_time == 0) {
-			$this->querytime = ($this->prevCheck - $this->config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
-		} else {
-			//Time translation
-			$back_time = $this->show_list_time * 3600; //hours*(mins*secs)
-			$this->querytime = time () - $back_time;
+			$this->show_list_time = $this->config->show_list_time;
 		}
 
 		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
@@ -242,7 +233,7 @@ class CKunenaLatestX {
 				break;
 			default:
 				$latestcats = $this->_getCategoriesWhere();
-				$wheretime = ($this->querytime ? " AND m.time>{$this->db->Quote($this->querytime)}" : '');
+				$wheretime = ($this->_getShowListTime() ? " AND m.time>{$this->db->Quote($this->_getShowListTime())}" : '');
 				break;
 		}
 		if (isset($user)) $where[] = "m.userid='{$this->user->id}'";
@@ -441,7 +432,7 @@ class CKunenaLatestX {
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 
 		$latestcats = $this->_getCategoriesWhere();
-		$wheretime = ($this->querytime ? " AND m.time>{$this->db->Quote($this->querytime)}" : '');
+		$wheretime = ($this->_getShowListTime() ? " AND m.time>{$this->db->Quote($this->_getShowListTime())}" : '');
 
 		$query = "SELECT COUNT(m.thread) FROM #__kunena_messages AS m
 			WHERE m.hold IN ({$this->hold}) AND m.moved=0 AND m.catid IN ({$this->session->allowed}) {$latestcats} {$wheretime}";
@@ -468,7 +459,7 @@ class CKunenaLatestX {
 		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
 
 		$latestcats = $this->_getCategoriesWhere();
-		$wheretime = ($this->querytime ? " AND t.time>{$this->db->Quote($this->querytime)}" : '');
+		$wheretime = ($this->_getShowListTime() ? " AND t.time>{$this->db->Quote($this->_getShowListTime())}" : '');
 
 		$query = "Select COUNT(DISTINCT t.thread) FROM #__kunena_messages AS t
 			INNER JOIN #__kunena_messages AS m ON m.id=t.thread
@@ -537,6 +528,18 @@ class CKunenaLatestX {
 
 		$this->_common();
 	}
+
+	protected function _getShowListTime() {
+		if ($this->show_list_time == 0) {
+			$sincetime = ($this->prevCheck - $this->config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
+		} else {
+			//Time translation
+			$back_time = $this->show_list_time * 3600; //hours*(mins*secs)
+			$sincetime = time () - $back_time;
+		}
+
+		return $sincetime;
+  	}
 
 	function displayPathway() {
 		CKunenaTools::loadTemplate('/pathway.php');

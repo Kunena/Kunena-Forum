@@ -907,5 +907,12 @@ window.addEvent('domready', function(){
 				KCookie.set('hide_'+this.getProperty('rel'), false);
 			}
 		});
-	});	
+	});
+	
+	// Set autocompleter to off
+	if($('kpassword') != undefined && $('kpassword2') != undefined){
+		$('kpassword').setProperty('autocompleter', 'off');
+		$('kpassword2').setProperty('autocompleter', 'off');
+	}
+	
 });

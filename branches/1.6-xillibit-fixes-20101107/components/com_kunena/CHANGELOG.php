@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+12-November-2010 Xillibit
+# [#23286] Add autocomplete off on password fields in profile
+
 11-November-2010 Xillibit
 # [#23224] Don´t show karma in horizontal profile
 + [#23250] Configuration setting to set since which time to show topics in latestx class and works too independently wth Klatest module

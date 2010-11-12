@@ -29,6 +29,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLatest 1.6.0-RC3
+12-Nov-2010 svens(LDA)
++ [#23293] add de-DE (thanks rich)
+
 04-Nov-2010 svens(LDA)
 ^ [#22975] update ru-RU (thanks ZARKOS)
 

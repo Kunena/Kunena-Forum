@@ -16,6 +16,7 @@
 		<folder>kunenadiscuss</folder>
 	</files>
 	<languages folder="languages">
+		<language tag="de-DE">de-DE.plg_content_kunenadiscuss.ini</language>
 		<language tag="en-GB">en-GB.plg_content_kunenadiscuss.ini</language>
 		<language tag="el-GR">el-GR.plg_content_kunenadiscuss.ini</language>
 		<language tag="fr-FR">fr-FR.plg_content_kunenadiscuss.ini</language>

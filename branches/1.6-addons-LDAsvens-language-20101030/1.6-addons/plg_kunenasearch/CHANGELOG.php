@@ -27,6 +27,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaSearch 1.6.0-RC2
+12-Nov-2010 svens(LDA)
++ [#23293] add de-DE (thanks rich)
++ [#23293] added missing xml entry for nb-NO
+
 30-October-2010 svens LDA
 + [#22975] add nb-NO (thanks rued)
 

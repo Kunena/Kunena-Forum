@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+12-November-2010 svens(LDA)
+^ [#23293] updated lt-LT (thanks Zylkin, Andrius Balsevičius)
+
 9-November-2010 Severdia
 # [#22979] Fixed display of bullets
 

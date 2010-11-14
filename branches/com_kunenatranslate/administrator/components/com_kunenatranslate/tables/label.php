@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id:  $
+ * @version $Id$
  * Kunena Translate Component
  * 
  * @package	Kunena Translate
@@ -13,7 +13,7 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
-class TableKunenaTranslate extends JTable
+class TableLabel extends JTable
 {
 	/** Primary Key
 	 * @var int
@@ -24,13 +24,45 @@ class TableKunenaTranslate extends JTable
 		parent::__construct('#__kunenatranslate_label', 'id', $db);
 	}
 	
-	function loadLabels(){
+	function loadLabels($id=null,$edit=false){
 		$db = $this->getDBO();
-		
-		$query = 'SELECT * FROM '. $this->_tbl;
+		$where = null;
+		if(!empty($id) && is_array($id)){
+			$n = count($id);
+			$where = ' WHERE ';
+			foreach ($id as $k=>$v){
+				$where .= 'id='.$v;
+				if($n>1 && $n-1>$k) $where .= ' OR ';
+			}
+		}elseif (!empty($id) && is_int($id)){
+			$where = ' WHERE id='.$id;
+		}
+		$query = 'SELECT * 
+				FROM '. $this->_tbl
+				.$where;
 		$db->setQuery($query);
 		
 		$result = $db->loadObjectlist();
+		if ($result) {
+			return $result;
+		}
+		else
+		{
+			$this->setError( $db->getErrorMsg() );
+			return false;
+		}
+	}
+	
+	function loadLabelsTrans(){
+		$db = $this->getDBO();
+		
+		$query = 'SELECT l.id, l.label, l.client , t.lang
+					FROM '.$this->_tbl.' as l
+					LEFT JOIN #__kunenatranslate_translation as t
+					ON l.id=t.labelid
+					GROUP BY l.label';
+		$db->setQuery($query);
+		$result = $db->loadObjectList();
 		if ($result) {
 			return $result;
 		}

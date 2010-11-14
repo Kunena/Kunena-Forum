@@ -14,6 +14,7 @@
 	<install>
 		<sql>
 			<file charset="uft8" driver="mysql">install.kunenatranslate.sql</file>
+			<file charset="uft8" driver="mysqli">install.kunenatranslate.sql</file>
 		</sql>
 	</install>
 	<administration>
@@ -21,6 +22,11 @@
 		<files>
 			<filename>kunenatranslate.php</filename>
 			<filename>helper.php</filename>
+			<filename>controller.php</filename>
+			<filename>CHANGELOG.php</filename>
+			<folder>controllers</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
 		</files>
 		<languages folder="language">
 		</languages>

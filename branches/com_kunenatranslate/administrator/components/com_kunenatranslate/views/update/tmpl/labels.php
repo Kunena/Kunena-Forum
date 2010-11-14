@@ -34,6 +34,7 @@ JToolBarHelper::save();?>
 <input type="hidden" name="option" value="com_kunenatranslate" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="boxchecked" value="0" />
+<input type="hidden" name="controller" value="update" />
 <input type="hidden" name="labels" value="<?php echo implode(";",$this->labels['new']); ?>" />
 <input type="hidden" name="client" value="<?php echo $this->client; ?>" />
 <?php echo JHTML::_( 'form.token' ); ?>

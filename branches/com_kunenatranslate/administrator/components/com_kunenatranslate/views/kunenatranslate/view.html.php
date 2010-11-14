@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunenatranslate.php 3832 2010-11-01 01:32:24Z svens $
+ * @version $Id$
  * KunenaINIMaker Component
  * 
  * @package	Kunena INImaker
@@ -19,10 +19,18 @@ class KunenaTranslateViewKunenaTranslate extends JView
 {
 	function display($tpl = null){
 		JToolBarHelper::title( JText::_( 'Kunena Translate' ), 'generic.png' );
-		$labels = $this->get('Labels');
+		if($this->getLayout() == 'form'){			
+			$labels = $this->get('Edit');
+			$languages = JLanguage::getKnownLanguages();
+			$this->assignRef('languages', array_keys($languages));
+fb($languages);
+		}else{
+			$labels = $this->get('Labels');
+		}
 		$this->assignRef('labels',$labels);
 		
-		fb($this);
+		fb($labels);
+		//($this);
 		parent::display($tpl);
 	}
 }

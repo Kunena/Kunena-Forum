@@ -12,6 +12,7 @@ JToolBarHelper::custom('update', 'save.png', '', JText::_('Update Labels'), fals
 </table>
 <input type="hidden" name="layout" value="labels" />
 <input type="hidden" name="view" value="update" />
+<input type="hidden" name="controller" value="update" />
 <input type="hidden" name="option" value="com_kunenatranslate" />
 <input type="hidden" name="task" value="" />
 </form>

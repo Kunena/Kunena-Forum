@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunenatranslate.php 3832 2010-11-01 01:32:24Z svens $
+ * @version $Id$
  * KunenaINIMaker Component
  * 
  * @package	Kunena INImaker

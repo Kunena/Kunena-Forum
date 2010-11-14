@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id:  $
+ * @version $Id$
  * Kunena Translate Component
  * 
  * @package	Kunena Translate
@@ -45,24 +45,18 @@ class KunenaTranslateModelUpdate extends JModel{
 		$xmllist	= $helper->getfiles($helper->files, 'xml');
 		$langstrings = $helper->readphpxml($phplist,$xmllist);
 		$labels = $this->_loadLabels();
-		
 		$res = $helper->getCompared($labels,$langstrings);
-		
-		//fb($helper);
-		//fb($res['langstrings']);
-		//fb($this);
-		
 		return $res;
 	}
 	
 	function _loadLabels(){
-		$row =& $this->getTable('KunenaTranslate');
+		$row =& $this->getTable('Label');
 		$res = $row->loadLabels();
 		return $res;
 	}
 	
 	function store($new, $client, $tablename){
-		$table =& $this->getTable('KunenaTranslate');
+		$table =& $this->getTable('Label');
 		$res = $table->store($new, $client, $tablename);
 		
 		return $res;

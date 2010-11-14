@@ -28,6 +28,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14-November-2010 svens(LDA)
++ [#23317] add edit method (part 1)
+
 08-November-2010 svens(LDA)
 + [#23087] compare with existing labels and add new ones
 

@@ -58,7 +58,7 @@ class CKunenaModeration {
 		$this->_errormsg = '';
 	}
 
-	protected function _Move($MessageID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE, $GhostThread = false) {
+	protected function _Move($MessageID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE, $GhostThread = false, $changesubject = false) {
 		// Private move function
 		// $mode
 		// KN_MOVE_MESSAGE ... move current message only
@@ -170,7 +170,9 @@ class CKunenaModeration {
 			$TargetParentID = $currentMessage->parent ? $currentMessage->parent : $TargetMessageID;
 		}
 		// partial logic to update target subject if specified
-		$subjectupdatesql = !empty($TargetSubject) ? ",`subject`={$this->_db->quote($TargetSubject)}" : "";
+		$subjectupdatesql = !empty($TargetSubject) || ( $mode = 'KN_MOVE_THREAD' && $changesubject ) ? ",`subject`={$this->_db->quote($TargetSubject)}" : "";
+		if($mode = 'KN_MOVE_THREAD' && $changesubject) $subjectupdatesqlreplies = ",`subject`={$this->_db->quote($TargetSubject)}";
+		else $subjectupdatesqlreplies = "";
 
 		$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)}, `parent`={$this->_db->Quote($TargetParentID)} {$subjectupdatesql} WHERE `id`={$this->_db->Quote($MessageID)}";
 		$this->_db->setQuery ( $sql );
@@ -197,7 +199,7 @@ class CKunenaModeration {
 				break;
 			case KN_MOVE_THREAD :
 				// Move entire Thread
-				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} {$subjectupdatesql} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
+				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} {$subjectupdatesqlreplies} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
 
 				// Create ghost thread if requested
 				if ($GhostThread == true) {
@@ -399,8 +401,8 @@ class CKunenaModeration {
 	// Public interface
 
 
-	public function move($ThreadID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE, $GhostThread = false) {
-		return $this->_Move ( $ThreadID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode, $GhostThread );
+	public function move($ThreadID, $TargetCatID, $TargetSubject = '', $TargetMessageID = 0, $mode = KN_MOVE_MESSAGE, $GhostThread = false, $changesubject = false) {
+		return $this->_Move ( $ThreadID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode, $GhostThread, $changesubject );
 	}
 
 	public function moveThread($ThreadID, $TargetCatID, $GhostThread = false) {

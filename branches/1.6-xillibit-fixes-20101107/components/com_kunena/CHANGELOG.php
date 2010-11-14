@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+14-November-2010 Xillibit
+# [#23182] Total users doesn't match up
+# [#23311] When a topic is moved all the subject replies are identical to the parent message
+
 12-November-2010 Xillibit
 # [#23286] Add autocomplete off on password fields in profile
 

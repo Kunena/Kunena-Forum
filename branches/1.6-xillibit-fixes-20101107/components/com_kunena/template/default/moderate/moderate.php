@@ -80,6 +80,11 @@ kunena_url_ajax= '".CKunenaLink::GetJsonURL()."';
 		<?php echo JText::_ ( 'COM_KUNENA_MODERATION_TITLE_DEST_SUBJECT' ); ?>:
 		<input type="text" name="subject" value="<?php echo $this->escape( $this->message->subject ); ?>" />
 	</div>
+
+	<div>
+		<input type="checkbox" name="changesubject" value="1" />
+		<?php echo JText::_ ( 'COM_KUNENA_MODERATION_CHANGE_SUBJECT_ON_REPLIES' ); ?>
+	</div>
 <?php if ($this->moderateTopic) : ?>
 	<div>
 		<input type="checkbox" <?php if ($this->config->boxghostmessage): ?> checked="checked" <?php endif; ?> name="shadow" value="1" />

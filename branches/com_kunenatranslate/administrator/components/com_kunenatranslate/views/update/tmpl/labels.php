@@ -1,5 +1,16 @@
-<?php defined('_JEXEC') or die('Restricted access'); 
-JToolBarHelper::save();?>
+<?php 
+/**
+ * @version $Id$
+ * Kunena Translate Component
+ * 
+ * @package	Kunena Translate
+ * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link http://www.kunena.com
+ */
+defined('_JEXEC') or die('Restricted access'); 
+JToolBarHelper::save();
+JToolBarHelper::cancel();?>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 <table class="adminlist">

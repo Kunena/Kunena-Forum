@@ -16,9 +16,17 @@ defined('_JEXEC') or die('Restricted access');
 class TableLabel extends JTable
 {
 	/** Primary Key
-	 * @var int
+	 * @var int 
 	 */
 	var $id = null;
+	/** unique key label
+	 * @var label
+	 */
+	var $label = null;
+	/** client
+	 * @var client
+	 */
+	var $client = null;
 	
 	function __construct(& $db){
 		parent::__construct('#__kunenatranslate_label', 'id', $db);

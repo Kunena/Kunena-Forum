@@ -18,18 +18,6 @@ require_once (dirname(__FILE__).DS.'controller.php');
 // Require specific controller if requested
 $controller = JRequest::getWord('controller');
 
-$view = JRequest::getWord('view');
-switch ($view){
-	case 'update':
-		JSubMenuHelper::addEntry(JText::_('Back'), 'index.php?option=com_kunenatranslate');
-		JSubMenuHelper::addEntry(JText::_('Search for new'), 'index.php?option=com_kunenatranslate&view=update', true);
-		break;
-	default:
-		JSubMenuHelper::addEntry(JText::_('Labels'), 'index.php?option=com_kunenatranslate', true);
-		JSubMenuHelper::addEntry(JText::_('Update Labels'), 'index.php?option=com_kunenatranslate&view=update');
-		JSubMenuHelper::addEntry(JText::_('Translation'), 'index.php?option=com_kunenatranslate&view=translation');
-}
-
 if($controller) {
 	$path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
 	if (file_exists($path)) {

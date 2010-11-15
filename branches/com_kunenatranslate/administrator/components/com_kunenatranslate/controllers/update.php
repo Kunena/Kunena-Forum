@@ -20,8 +20,13 @@ class KunenaTranslateControllerUpdate extends KunenaTranslateController
 	function __construct($config = array()){
 		parent::__construct($config);
 		
-		$this->registerTask( 'update', 'display');
-		
+	}
+	
+	function update(){
+		JRequest::setVar('layout','labels');
+		JRequest::setVar('view', 'update');
+		//JRequest::setVar('task','update');
+		parent::display();
 	}
 	
 	function save(){

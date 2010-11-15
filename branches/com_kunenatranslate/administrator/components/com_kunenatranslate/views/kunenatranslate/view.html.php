@@ -23,14 +23,12 @@ class KunenaTranslateViewKunenaTranslate extends JView
 			$labels = $this->get('Edit');
 			$languages = JLanguage::getKnownLanguages();
 			$this->assignRef('languages', array_keys($languages));
-fb($languages);
+
 		}else{
 			$labels = $this->get('Labels');
 		}
 		$this->assignRef('labels',$labels);
-		
-		fb($labels);
-		//($this);
+
 		parent::display($tpl);
 	}
 }

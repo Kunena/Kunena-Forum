@@ -28,6 +28,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+15-November-2010 svens(LDA)
++ [#23317] add edit method (part 2)
+
 14-November-2010 svens(LDA)
 + [#23317] add edit method (part 1)
 

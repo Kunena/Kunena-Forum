@@ -15,14 +15,29 @@ defined('_JEXEC') or die('Restricted access');
 
 class TableTranslation extends JTable
 {
+	/** unique key
+	 * @var labelid
+	 */
 	var $labelid = null;
+	/** Language
+	 * @var lang
+	 */
+	var $lang = null;
+	/** translation
+	 * @var translation 
+	 */
+	var $translation = null;
+	/** time
+	 * @var time
+	 */
+	var $time = null;
 	
 	function __construct(& $db){
 		parent::__construct('#__kunenatranslate_translation', 'labelid', $db);
 	}
 	
 	function loadTranslations($id=null){
-		$db = $this->getDBO();
+		$db =& $this->getDBO();
 		$where = null;
 		if(!empty($id) && is_array($id)){
 			$n = count($id);
@@ -48,5 +63,37 @@ class TableTranslation extends JTable
 			$this->setError( $db->getErrorMsg() );
 			return false;
 		}
+	}
+	
+	function store($data){
+		$db = &$this->getDBO();
+		$isin = false;
+		foreach ($data as $kl=>$value) {
+			foreach ($value as $k=>$val) {
+				if(isset($val['insert']) && !empty($val['insert'])){
+					if(!isset($insert)) $insert = "INSERT INTO {$this->_tbl} (labelid,lang,translation) VALUES ";
+					if($isin == true) $insert .= " , "; 
+					$insert .= "({$k},'{$kl}','{$val['insert']}')";
+					$isin = true;
+				}elseif(isset($val['update']) && !empty($val['update'])){ 
+					$update = "UPDATE {$this->_tbl} SET translation='{$val['update']}', time=''
+								WHERE labelid={$k}
+								AND lang='{$kl}'";
+					$db->setQuery($update);
+					if(!$db->query()){
+						$this->setError($this->_db->getErrorMsg());
+						return false;
+					};
+				}
+			};
+		}
+		if(isset($insert)){
+			$db->setQuery($insert);
+			if(!$db->query()){
+				$this->setError($this->_db->getErrorMsg());
+				return false;
+			};
+		}
+		return true;
 	}
 }

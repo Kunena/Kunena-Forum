@@ -21,10 +21,25 @@ class KunenaTranslateController extends JController
 		parent::__construct($config);
 	}
 	
-	function edit(){
-		JRequest::setVar('layout','form');
+	function update(){
+		JRequest::setVar('view','update');
 		parent::display();
 	}
 	
+	function edit(){
+		JRequest::setVar('layout','form');
+		JRequest::setVar('task', 'edit');
+		parent::display();
+	}
+	
+	function save(){
+		$model = $this->getModel();
+		if($model->store())
+			$msg = 'Labels saved';
+		else 
+			$msg = 'Label saving failed';
+		$link = 'index.php?option=com_kunenatranslate';
+		$this->setRedirect($link,$msg);
+	}
 	
 }

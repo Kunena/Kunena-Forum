@@ -32,6 +32,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.2-DEV
+12-November-2010 svens(LDA)
+^ [#23293] updated es-ES (thanks Alakentu)
 
 12-November-2010 svens(LDA)
 ^ [#23293] updated lt-LT (thanks Zylkin, Andrius Balsevičius)

@@ -65,6 +65,13 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 		</li>
 		<?php endif ?>
 		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
+		<?php if ( $this->userkarma ) : ?>
+		<li class="kpost-karma">
+			<span class="kmsgkarma">
+				<?php echo $this->userkarma ?>
+			</span>
+		</li>
+		<?php endif ?>
 		<?php if ( $this->usermedals ) : ?>
 			<li class="kpost-usermedals">
 			<?php foreach ( $this->usermedals as $medal ) : ?>

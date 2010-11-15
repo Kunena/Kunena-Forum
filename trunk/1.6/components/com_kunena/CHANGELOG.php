@@ -35,13 +35,33 @@ Kunena 1.6.2-DEV
 
 15-November-2010 Matias
 ^ [#15886] Merged revisions 3892-3899 from /branches/1.6-LDAsvens-language-20101112
+^ [#15886] Merged revisions 3879-3896 from /branches/1.6-xillibit-fixes-20101107
+
+14-November-2010 Xillibit
+# [#23182] Total users doesn't match up
+# [#23311] When a topic is moved all the subject replies are identical to the parent message
+
+12-November-2010 Xillibit
+# [#23286] Add autocomplete off on password fields in profile
 
 12-November-2010 svens(LDA)
 ^ [#23293] updated es-ES (thanks Alakentu)
 ^ [#23293] updated lt-LT (thanks Zylkin, Andrius Balsevičius)
 
+11-November-2010 Xillibit
+# [#23224] Don´t show karma in horizontal profile
++ [#23250] Configuration setting to set since which time to show topics in latestx class and works too independently wth Klatest module
+
 9-November-2010 Severdia
 # [#22979] Fixed display of bullets
+
+8-November-2010 Xillibit
+# [#23001] CSS lightbox issue under chrome 7, use now mediaboxadvanced tested under IE8, Firefox, Google chrome
+
+7-November-2010 Xillibit
+^ [#23154] Move in an another screen the button move user messages in kunena user manager
+^ [#23155] Change Mark all categories read and remove word forum which are inappropriate
+^ [#23157] Cancel button in kunena template manager go back to control panel
 
 6-November-2010 fxstein
 ^ [#23152] Update version info

@@ -50,7 +50,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				<label for="password"><?php echo JText::_( 'COM_KUNENA_PASS' ); ?></label>
 			</td>
 					<td class="kcol-mid">
-				<input class="inputbox validate-password" type="password" id="password" name="password" value="" size="40" />
+				<input class="inputbox validate-password" type="password" id="kpassword" name="password" value="" size="40" />
 			</td>
 		</tr>
 		<tr class="krow2">
@@ -58,7 +58,7 @@ $kunena_config = KunenaFactory::getConfig ();
 				<label for="password2"><?php echo JText::_( 'COM_KUNENA_VPASS' ); ?></label>
 			</td>
 					<td class="kcol-mid">
-				<input class="inputbox validate-passverify" type="password" id="password2" name="password2" value="" size="40" />
+				<input class="inputbox validate-passverify" type="password" id="kpassword2" name="password2" value="" size="40" />
 			</td>
 		</tr>
 	<?php endif; ?>

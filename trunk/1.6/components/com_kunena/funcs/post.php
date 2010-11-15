@@ -600,9 +600,10 @@ class CKunenaPost {
 		$targetId = JRequest::getInt ( 'targetid', 0 );
 		if (!$targetId) $targetId = JRequest::getInt ( 'targettopic', 0 );
 		$shadow = JRequest::getInt ( 'shadow', 0 );
+		$changesubject = JRequest::getInt ( 'changesubject', 0 );
 
 		$moderation = CKunenaModeration::getInstance ();
-		$success = $moderation->move($this->id, $targetCat, $targetSubject, $targetId, $mode, $shadow);
+		$success = $moderation->move($this->id, $targetCat, $targetSubject, $targetId, $mode, $shadow, $changesubject);
 		if (! $success) {
 			$this->_app->enqueueMessage( $moderation->getErrorMessage () );
 		} else {

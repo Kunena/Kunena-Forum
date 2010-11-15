@@ -1040,30 +1040,6 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	background-color: #FFDDDD !important;
 }
 
-/* SLIMBOX */
-
-#lbOverlay {
-	background-color: #000;
-}
-
-#lbCenter, #lbBottomContainer {
-	background-color: #fff;
-}
-
-.lbLoading {
-	background-color: #fff;
-}
-
-#lbImage {
-	border-color: #fff;
-}
-
-#lbBottom {
-	font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
-	color: #666;
-	border-color: #fff;
-}
-
 /* SHOW ICONS 
 ----------------------------------------------------------------------------------------------- */
 

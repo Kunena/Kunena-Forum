@@ -462,7 +462,7 @@ switch ($task) {
 		break;
 
 	case "editKTemplate" :
-		editKTemplate ();
+		editKTemplate ( $option );
 
 		break;
 
@@ -768,7 +768,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		html_Kunena::showTemplates($rows, $page, $option);
 	}
 
-	function editKTemplate()
+	function editKTemplate($option)
 	{
 		jimport('joomla.filesystem.path');
 		$kunena_db	= & JFactory::getDBO();
@@ -1606,6 +1606,18 @@ function showConfig($option) {
 
 	$lists ['lightbox'] = JHTML::_('select.genericlist', $yesno, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->lightbox);
 
+	$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
+	$timesel[] = JHTML::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
+	$timesel[] = JHTML::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));
+	$timesel[] = JHTML::_('select.option', 12, JText::_('COM_KUNENA_SHOW_12_HOURS'));
+	$timesel[] = JHTML::_('select.option', 24, JText::_('COM_KUNENA_SHOW_24_HOURS'));
+	$timesel[] = JHTML::_('select.option', 48, JText::_('COM_KUNENA_SHOW_48_HOURS'));
+	$timesel[] = JHTML::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
+	$timesel[] = JHTML::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
+	$timesel[] = JHTML::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
+	// build the html select list
+	$lists ['show_list_time'] = JHTML::_('select.genericlist', $timesel, 'cfg_show_list_time', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->show_list_time);
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
@@ -2058,6 +2070,10 @@ function moveUserMessages ( $option, $uid ){
 	$kunena_db = &JFactory::getDBO ();
 	$return = JRequest::getCmd( 'return', 'edituserprofile', 'post' );
 
+	$userid = implode(',', $uid);
+	$kunena_db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );
+	$userids = $kunena_db->loadObjectList ();
+
 	$kunena_db->setQuery ( "SELECT id,parent,name FROM #__kunena_categories" );
 	$catsList = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
@@ -2071,7 +2087,7 @@ function moveUserMessages ( $option, $uid ){
 	}
 	$lists = JHTML::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
 
-	html_Kunena::moveUserMessages ( $option, $return, $uid, $lists );
+	html_Kunena::moveUserMessages ( $option, $return, $uid, $lists, $userids );
 }
 
 function moveUserMessagesNow ( $option, $cid ) {
@@ -3118,33 +3134,33 @@ function generateSystemReport () {
 	} else {
 		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 	}
-	
+
 	// Get Joomla! frontend assigned template
 	$query = ' SELECT template '
 				.' FROM #__templates_menu '
 				.' WHERE client_id = 0 AND menuid = 0 ';
 	$kunena_db->setQuery($query);
 	$jdefaultemplate = $kunena_db->loadResult();
-	
-	$xml_tmpl = JFactory::getXMLparser('Simple');	
+
+	$xml_tmpl = JFactory::getXMLparser('Simple');
 	$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate.'/templateDetails.xml');
-	$templatecreationdate= $xml_tmpl->document->creationDate[0];	
-	$templateauthor= $xml_tmpl->document->author[0];	
-	$templateversion = $xml_tmpl->document->version[0];	
-	
+	$templatecreationdate= $xml_tmpl->document->creationDate[0];
+	$templateauthor= $xml_tmpl->document->author[0];
+	$templateversion = $xml_tmpl->document->version[0];
+
 	// Get Kunena menu items
 	$query = ' SELECT id, menutype, name, alias, link, parent '
 				.' FROM #__menu '
 				.' WHERE menutype = '.$kunena_db->Quote('kunenamenu').' ORDER BY id ASC';
 	$kunena_db->setQuery($query);
 	$kmenustype = $kunena_db->loadObjectlist();
-	
+
 	$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
 	foreach($kmenustype as $item) {
 		$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
 	}
 	$menudisplaytable .='[/table]';
-	
+
 	//test on each table if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
 	$collation = '';

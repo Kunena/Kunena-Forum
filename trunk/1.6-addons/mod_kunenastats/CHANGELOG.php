@@ -34,6 +34,9 @@ KunenaStats 1.6.0-RC3
 # [#20095] Profile links in topthanks doesn't put you to the right user
 ^ [#20095] Update version info to 1.6.0RC3
 
+12-Nov-2010 svens(LDA)
++ [#23293] add de-DE (thanks rich)
+
 30-October-2010 svens LDA
 ^ [#22975] update ru-RU (thanks ZARKOS)
 

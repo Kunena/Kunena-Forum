@@ -38,6 +38,12 @@ Kunena Discuss Plugin 1.6.1
 3-November-2010 Severdia
 # [#20084] Fixed float bug in IE
 
+12-November-2010 svens(LDA)
++ [#23293] add de-DE (thanks rich)
+
+04-November-2010 svens(LDA)
+^ [#22975] update ru-RU (thanks ZARKOS)
+
 1-November-2010 Matias
 # [#20084] Do not show unapproved/deleted messages
 # [#20084] In descending ordering show also newest message in the topic, ignore always first post

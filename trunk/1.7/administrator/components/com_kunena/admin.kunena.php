@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  *
  * Based on FireBoard Component
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -452,7 +452,7 @@ if (!$kversion->checkVersion()) {
 	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE'), KunenaForum::version() ), 'notice' );
 	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_UPGRADE_WARN') );
 	$kunena_app->enqueueMessage ( sprintf ( JText::_('COM_KUNENA_ERROR_UPGRADE_AGAIN'), KunenaForum::version() ) );
-	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_SUPPORT') . ' <a href="http://www.kunena.com">www.kunena.com</a>' );
+	$kunena_app->enqueueMessage ( JText::_('COM_KUNENA_ERROR_INCOMPLETE_SUPPORT') . ' <a href="http://www.kunena.org">www.kunena.org</a>' );
 }
 
 // Detect errors in CB integration
@@ -2784,7 +2784,7 @@ function showStats() {
 function getLatestKunenaVersion() {
 	$kunena_app = & JFactory::getApplication ();
 
-	$url = 'http://update.kunena.com/kunena_update.xml';
+	$url = 'http://update.kunena.org/kunena_update.xml';
 	$data = '';
 	$check = array();
 	$check['connect'] = 0;
@@ -2813,11 +2813,11 @@ function getLatestKunenaVersion() {
 			$errstr = '';
 
 			//timeout handling: 5s for the socket and 5s for the stream = 10s
-			$fsock = @fsockopen("update.kunena.com", 80, $errno, $errstr, 5);
+			$fsock = @fsockopen("update.kunena.org", 80, $errno, $errstr, 5);
 
 			if ($fsock) {
 				@fputs($fsock, "GET /kunena_update.xml HTTP/1.1\r\n");
-				@fputs($fsock, "HOST: update.kunena.com\r\n");
+				@fputs($fsock, "HOST: update.kunena.org\r\n");
 				@fputs($fsock, "Connection: close\r\n\r\n");
 
 				//force stream timeout...

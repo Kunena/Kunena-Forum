@@ -5,7 +5,7 @@
  * @package Kunena
  * @Copyright (C) 2010 Kunena All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 
 defined( '_JEXEC' ) or die();
@@ -30,7 +30,7 @@ class CKunenaPath extends JPath
 		$jtp = JPATH_SITE.DS.'tmp';
 
 		// Try to find a writable directory
-		$tmpdir = is_writable('/tmp') ? '/tmp' : false;
+		$tmpdir = @is_writable('/tmp') ? '/tmp' : false;
 //		$tmpdir = (!$tmpdir && is_writable($ssp)) ? $ssp : false;
 		$tmpdir = (!$tmpdir && is_writable($jtp)) ? $jtp : false;
 

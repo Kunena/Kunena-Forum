@@ -272,3 +272,6 @@ table.kadmin-stat .col1 {
 table.kadmin-stat .col2 {
 	background-color: #FBFBFB;
 }
+
+span.kwriteable { color: green; }
+span.kunwriteable { color: red; }

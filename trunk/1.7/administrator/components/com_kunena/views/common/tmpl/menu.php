@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  */
 defined('_JEXEC') or die;
 ?>
@@ -26,5 +26,5 @@ defined('_JEXEC') or die;
 	<a class="kadmin-mainmenu icon-trash-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showtrashview"><?php echo JText::_('COM_KUNENA_TRASH_VIEW'); ?></a>
 	<a class="kadmin-mainmenu icon-stats-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showstats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS'); ?></a>
 	<a class="kadmin-mainmenu icon-systemreport-sm" href="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=showsystemreport"><?php echo JText::_('COM_KUNENA_REPORT_SYSTEM'); ?></a>
-	<a class="kadmin-mainmenu icon-support-sm" href="http://www.kunena.com" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
+	<a class="kadmin-mainmenu icon-support-sm" href="http://www.kunena.org" target="_blank"><?php echo JText::_('COM_KUNENA_C_SUPPORT'); ?></a>
 </div>

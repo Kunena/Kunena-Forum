@@ -8,8 +8,8 @@
 	<version>@kunenaversion@</version>
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
-	<authorEmail>kunena@kunena.com</authorEmail>
-	<authorUrl>http://www.Kunena.com</authorUrl>
+	<authorEmail>kunena@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
 	<copyright>(C) 2008 - 2010 Kunena Team All rights reserved</copyright>
 	<license>GNU/GPL</license>
 	<description>English language file for Kunena Forum Component</description>
@@ -27,7 +27,6 @@
 			<filename>en-GB.com_kunena.ini</filename>
 			<filename>en-GB.com_kunena.tpl_default.ini</filename>
 			<filename>en-GB.com_kunena.tpl_example.ini</filename>
-			<filename>en-GB.com_kunena.tpl_skinner.ini</filename>
 		</files>
 	</site>
 </install>

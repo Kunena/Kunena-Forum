@@ -6,7 +6,7 @@
 *
 * @Copyright (C) 2010 Kunena Team All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 **/
 defined( '_JEXEC' ) or die();
 
@@ -24,12 +24,24 @@ CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox-min.js' );
 // New Kunena JS for default template
 $template->addScript ( 'js/default-min.js' );
 
+$skinner = $this->params->get('enableSkinner', 0);
+
 if (file_exists ( JPATH_ROOT .DS. "templates" .DS. $app->getTemplate() .DS. 'css' .DS. 'kunena.forum.css' )) {
 	// Load css from Joomla template
 	CKunenaTools::addStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.forum-min.css' );
+	if ($skinner && file_exists ( JPATH_ROOT. "templates/".$app->getTemplate().'css/kunena.skinner.css' )){
+		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.skinner-min.css' );
+	} elseif (!$skinner && file_exists ( JPATH_ROOT. "templates/".$app->getTemplate().'css/kunena.default.css' )) {
+		CKunenaTools::addStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.default-min.css' );
+	}
 } else {
 	// Load css from default template
 	$template->addStyleSheet ( 'css/kunena.forum-min.css' );
+	if ($skinner) {
+		$template->addStyleSheet ( 'css/kunena.skinner-min.css' );
+	} else {
+		$template->addStyleSheet ( 'css/kunena.default-min.css' );
+	}
 }
 $cssurl = JURI::base() . "components/com_kunena/template/default/css";
 ?>
@@ -38,18 +50,73 @@ $cssurl = JURI::base() . "components/com_kunena/template/default/css";
 <![endif]-->
 <?php
 $mediaurl = JURI::base() . "components/com_kunena/template/default/media";
+
 $styles = <<<EOF
 	/* Kunena Custom CSS */
-	#Kunena div.kheader { background: {$this->params->get('forumHeadercolor', '#5388B4')} }
-	#Kunena #ktop { border-color: {$this->params->get('forumHeadercolor', '#5388B4')} }
-	#Kunena #ktop span.ktoggler { background: {$this->params->get('forumHeadercolor', '#5388B4')} }
+EOF;
+
+$forumHeader = $this->params->get('forumHeadercolor', $skinner ? '' : '#5388B4');
+
+if ($forumHeader) {
+	$styles .= <<<EOF
+	#Kunena div.kheader { background: {$forumHeader} }
+	#Kunena #ktop { border-color: {$forumHeader} }
+	#Kunena #ktop span.ktoggler { background: {$forumHeader} }
 	#Kunena #ktab a:hover,
-	#Kunena #ktab li.Kunena-item-active a	{ background-color: {$this->params->get('forumHeadercolor', '#5388B4')} }
-	#ktab ul.menu li#current.active a { background-color: {$this->params->get('forumHeadercolor', '#5388B4')} }
-	#Kunena div.kannouncement div.kheader { background: {$this->params->get('announcementHeadercolor', '#5388B4')} }
-	#Kunena div#kannouncement .kanndesc { background: {$this->params->get('announcementBoxbgcolor', '#ffffff')} }
-	#Kunena div.kfrontstats div.kheader { background: {$this->params->get('frontstatsHeadercolor', '#5388B4')} }
-	#Kunena div.kwhoisonline div.kheader { background: {$this->params->get('whoisonlineHeadercolor', '#5388B4')} }
+	#Kunena #ktab li.Kunena-item-active a	{ background-color: {$forumHeader} }
+	#ktab ul.menu li#current.active a { background-color: {$forumHeader} }
+	#Kunena a:link,
+	#Kunena a:visited,
+	#Kunena a:active {color: {$forumHeader};}
+	#Kunena a:focus {outline: none;}
+	#Kunena a:hover {color: #FF0000;}
+EOF;
+}
+
+$forumLink = $this->params->get('forumLinkcolor', $skinner ? '' : '#5388B4');
+
+if ($forumLink) {
+	$styles .= <<<EOF
+	#Kunena a:link,
+	#Kunena a:visited,
+	#Kunena a:active {color: {$forumLink};}
+	#Kunena a:focus {outline: none;}
+EOF;
+}
+
+$announcementHeader = $this->params->get('announcementHeadercolor', $skinner ? '' : '#5388B4');
+
+if ($announcementHeader) {
+	$styles .= <<<EOF
+	#Kunena div.kannouncement div.kheader { background: {$announcementHeader} }
+EOF;
+}
+
+$announcementBox = $this->params->get('announcementBoxbgcolor', $skinner ? '' : '#FFFFFF');
+
+if ($announcementBox) {
+	$styles .= <<<EOF
+	#Kunena div#kannouncement .kanndesc { background: {$announcementBox} }
+EOF;
+}
+
+$frontStatsHeader = $this->params->get('frontstatsHeadercolor', $skinner ? '' : '#5388B4');
+
+if ($frontStatsHeader) {
+	$styles .= <<<EOF
+	#Kunena div.kfrontstats div.kheader { background: {$frontStatsHeader} }
+EOF;
+}
+
+$onlineHeader = $this->params->get('whoisonlineHeadercolor', $skinner ? '' : '#5388B4');
+
+if ($onlineHeader) {
+	$styles .= <<<EOF
+	#Kunena div.kwhoisonline div.kheader { background: {$onlineHeader} }
+EOF;
+}
+
+$styles .= <<<EOF
 	#Kunena .kicon-profile { background-image: url("{$mediaurl}/iconsets/profile/{$this->params->get('profileIconset', 'default')}/default.png"); }
 	#Kunena .kicon-button { background-image: url("{$mediaurl}/iconsets/buttons/{$this->params->get('buttonIconset', 'default')}/default.png"); }
 	#Kunena #kbbcode-toolbar li a,#Kunena #kattachments a { background-image:url("{$mediaurl}/iconsets/editor/{$this->params->get('editorIconset', 'default')}/default.png"); }

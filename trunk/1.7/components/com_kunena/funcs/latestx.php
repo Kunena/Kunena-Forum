@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  *
  **/
 defined ( '_JEXEC' ) or die ();
@@ -280,9 +280,9 @@ class CKunenaLatestX {
 		kimport('kunena.forum.message.thankyou');
 
 		$this->total = 10;//$limit default is on 10 TODO make adjustable
-		$this->limit = 10;
+		if (empty($this->limit)) $this->limit = 10;
 
-		$idlist = KunenaForumMessageThankYou::getThankYouPosts($this->user->id, $saidgot);
+		$idlist = KunenaForumMessageThankYou::getThankYouPosts($this->user->id, $saidgot, $this->limit);
 		$this->threadids = array();
 		$this->loadids = array();
 		foreach( $idlist as $message){
@@ -468,7 +468,7 @@ class CKunenaLatestX {
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
-			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
 		}
 		if ($this->myprofile->ordering != '0') {
 			$this->topic_ordering = $this->myprofile->ordering == '1' ? 'DESC' : 'ASC';
@@ -518,6 +518,7 @@ class CKunenaLatestX {
 	}
 
 	function getPagination($func, $sel, $page, $totalpages, $maxpages) {
+		if ( $func != 'latest' ) $func = 'latest&do='.$func;
 		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
 		$endpage = $startpage + $maxpages;
 		if ($endpage > $totalpages) {
@@ -563,13 +564,16 @@ class CKunenaLatestX {
 			return;
 		}
 		if ($this->func == 'mylatest') $this->getMyLatest();
+		else if ($this->func == 'latestposts') $this->getLatestPosts();
+		else if ($this->func == 'latesttopics') $this->getLatestTopics();
 		else if ($this->func == 'noreplies') $this->getNoReplies();
 		else if ($this->func == 'subscriptions') $this->getSubscriptions();
 		else if ($this->func == 'catsubscriptions') $this->getCategoriesSubscriptions();
 		else if ($this->func == 'favorites') $this->getFavorites();
 		else if ($this->func == 'userposts') $this->getUserPosts();
+		else if ($this->func == 'owntopics') $this->getOwnTopics();
 		else if ($this->func == 'saidthankyouposts') $this->getSaidThankYouPosts();
-		else if ($this->func == 'gotthankyouposts') $this->getUserPosts();
+		else if ($this->func == 'gotthankyouposts') $this->getGotThankYouPosts();
 		else if ($this->func == 'unapproved') $this->getUnapprovedPosts();
 		else if ($this->func == 'deleted') $this->getDeletedPosts();
 		else $this->getLatest();

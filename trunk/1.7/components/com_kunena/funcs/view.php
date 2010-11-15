@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  *
  **/
 defined ( '_JEXEC' ) or die ();
@@ -55,6 +55,7 @@ class CKunenaViewMessage {
 	public $signature = null;
 	public $usermedals = null;
 	public $thankyoubutton = null;
+	public $cansubscribe = null;
 
 	public $attachments = array();
 	public $inline_attachments = array();
@@ -77,6 +78,8 @@ class CKunenaViewMessage {
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
+
+		$this->cansubscribe = $parent->cansubscribe;
 	}
 
 	function displayActions() {
@@ -302,6 +305,14 @@ class CKunenaView {
 
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
+
+		if ($this->myprofile->ordering != '0') {
+			$this->ordering = $this->myprofile->ordering == '1' ? 'DESC' : 'ASC';
+		} else {
+			$this->ordering = $this->config->default_sort == 'asc' ? 'ASC' : 'DESC'; // Just to make sure only valid options make it
+		}
+		$access = KunenaFactory::getAccessControl();
+		$this->hold = $access->getAllowedHold($this->myprofile, $this->catid);
 	}
 
 	function setTemplate($path) {
@@ -329,8 +340,7 @@ class CKunenaView {
 		}
 		$this->allow = 1;
 
-		$access = KunenaFactory::getAccessControl();
-		$where[] = "a.hold IN ({$access->getAllowedHold($this->myprofile, $this->catid)})";
+		$where[] = "a.hold IN ({$this->hold})";
 		$where = implode(' AND ',$where);
 
 		$query = "SELECT a.*, b.*, p.id AS poll_id, modified.name AS modified_name, modified.username AS modified_username
@@ -422,16 +432,11 @@ class CKunenaView {
 			$this->redirect = CKunenaLink::GetThreadPageURL('view', $this->catid, $this->id, $this->total_messages, $this->limit, '', false);
 		}
 
-		if ($this->myprofile->ordering != '0') {
-			$ordering = $this->myprofile->ordering == '1' ? 'DESC' : 'ASC';
-		} else {
-			$ordering = $this->config->default_sort == 'asc' ? 'ASC' : 'DESC'; // Just to make sure only valid options make it
-		}
 		$maxpages = 9 - 2; // odd number here (show - 2)
 		$totalpages = ceil ( $this->total_messages / $this->limit );
 		$page = floor ( $this->limitstart / $this->limit ) + 1;
 		$firstpage = 1;
-		if ($ordering == 'desc')
+		if ($this->ordering == 'desc')
 			$firstpage = $totalpages;
 
 		// Get replies of current thread
@@ -440,7 +445,7 @@ class CKunenaView {
 					LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid
 					LEFT JOIN #__users AS modified ON a.modified_by = modified.id
 					WHERE a.thread={$this->db->Quote($this->thread)} AND {$where}
-					ORDER BY id {$ordering}";
+					ORDER BY id {$this->ordering}";
 		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
 		$posts = $this->db->loadObjectList ();
 		KunenaError::checkDatabaseError();
@@ -499,7 +504,7 @@ class CKunenaView {
 
 		// limit to 185 characters - google will cut off at ~150
 		if (strlen($metaDesc) > 185){
-			$metaDesc = rtrim(substr($metaDesc, 0, 182)).'...';
+			$metaDesc = rtrim(JString::substr($metaDesc, 0, 182)).'...';
 		}
 
 		$metaDesc = htmlspecialchars($metaDesc);
@@ -509,10 +514,11 @@ class CKunenaView {
 		$document->setDescription ( $metaDesc );
 
 		//Perform subscriptions check only once
-		$fb_cansubscribe = 0;
+		$this->cansubscribe = 0;
 		if ($this->config->allowsubscriptions && $this->my->id && !$usertopic->subscribed) {
-			$fb_cansubscribe = 1;
+			$this->cansubscribe = 1;
 		}
+
 		//Perform favorites check only once
 		$fb_canfavorite = 0;
 		if ($this->config->allowfavorites && $this->my->id && !$usertopic->favorite) {
@@ -540,13 +546,13 @@ class CKunenaView {
 		}
 
 		// Thread Subscription
-		if ($fb_cansubscribe == 1) {
+		if ($this->cansubscribe == 1) {
 			// this user is allowed to subscribe - check performed further up to eliminate duplicate checks
 			// for top and bottom navigation
 			$this->thread_subscribe = CKunenaLink::GetTopicPostLink ( 'subscribe', $this->catid, $this->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_TOPIC') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_SUBSCRIBE_TOPIC_LONG') );
 		}
 
-		if ($this->my->id != 0 && $this->config->allowsubscriptions && $fb_cansubscribe == 0) {
+		if ($this->my->id != 0 && $this->config->allowsubscriptions && $this->cansubscribe == 0) {
 			// this user is allowed to unsubscribe
 			$this->thread_subscribe = CKunenaLink::GetTopicPostLink ( 'unsubscribe', $this->catid, $this->id, CKunenaTools::showButton ( 'subscribe', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_TOPIC') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_UNSUBSCRIBE_TOPIC_LONG') );
 		}
@@ -595,7 +601,7 @@ class CKunenaView {
 		$tabclass = array ("row1", "row2" );
 
 		$this->mmm = 0;
-		$this->replydir = $ordering == 'DESC' ? -1 : 1;
+		$this->replydir = $this->ordering == 'DESC' ? -1 : 1;
 		if ($this->replydir<0) $this->replynum = $this->total_messages - $this->limitstart + 1;
 		else $this->replynum = $this->limitstart;
 

@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  *
  * Based on FireBoard Component
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -213,7 +213,11 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 			</td>
 			<?php endif; ?>
 		</tr>
-
+		<tr>
+			<td class="ktopicmodule" colspan="<?php echo intval($this->columns) ?>">
+				<?php CKunenaTools::showModulePosition('kunena_topic_' . $counter) ?>
+			</td>
+		</tr>
 		<?php } ?>
 		<?php  if ( count($this->actionDropdown) > 1 || $this->embedded ) : ?>
 		<!-- Bulk Actions -->

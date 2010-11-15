@@ -4,9 +4,9 @@
  * Kunena Component - KunenaForumMessage Class
  * @package Kunena
  *
- * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @Copyright (C) 2010 www.kunena.org All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
@@ -150,7 +150,7 @@ class KunenaForumMessage extends JObject {
 				$msg .= "\n\n";
 				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
 				$msg .= "\n\n\n\n";
-				$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+				$msg .= "** Powered by Kunena! - http://www.kunena.org **";
 				$msg = JMailHelper::cleanBody ( $msg );
 
 				JUtility::sendMail ( $config->email, $mailsender, $emailTo->email, $mailsubject, $msg );

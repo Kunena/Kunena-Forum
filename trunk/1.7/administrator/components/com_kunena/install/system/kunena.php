@@ -4,9 +4,9 @@
  * Kunena System Plugin
  * @package Kunena
  *
- * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @Copyright (C) 2010 www.kunena.org All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
@@ -39,7 +39,7 @@ class plgSystemKunena extends JPlugin {
 		$user->save();
 
 		/*
-		// See: http://www.kunena.com/forum/159-k-16-common-questions/63438-category-subscriptions-default-subscribed#63554
+		// See: http://www.kunena.org/forum/159-k-16-common-questions/63438-category-subscriptions-default-subscribed#63554
 		// TODO: Subscribe user to every category if he is new and Kunena is configured to do so
 		if ($isnew) {
 			$subscribedCategories = '1,2,3,4,5,6,7,8,9,10';

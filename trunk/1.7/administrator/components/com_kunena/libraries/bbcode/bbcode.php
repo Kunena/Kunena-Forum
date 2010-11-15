@@ -4,9 +4,9 @@
  * Kunena Component - KunenaBBCode Class
  * @package Kunena
  *
- * @Copyright (C) 2009-2010 www.kunena.com All rights reserved
+ * @Copyright (C) 2009-2010 www.kunena.org All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 defined ( '_JEXEC' ) or die ();
 
@@ -820,6 +820,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		$db->setQuery ( $query );
 		$article = $db->loadObject ();
 
+		$html = $link = '';
 		// If article exists: are the section and category published?
 		if ($article && (!$article->catid || $article->cat_pub) && (!$article->sectionid || $article->sec_pub)) {
 			$user = JFactory::getUser ();
@@ -827,32 +828,46 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 			if ((($article->cat_access > $user->get ( 'aid', 0 )) && $article->catid) || (($article->sec_access > $user->get ( 'aid', 0 )) && $article->sectionid) || ($article->access > $user->get ( 'aid', 0 ))) {
 				$html = JText::_ ( "This message contains an article, but you do not have permissions to see it." );
 			} else {
-				$app = JFactory::getApplication ();
-				$dispatcher = JDispatcher::getInstance ();
-				$params = clone ($app->getParams ( 'com_content' ));
-				$aparams = new JParameter ( $article->attribs );
-				$params->merge ( $aparams );
-
-				if (! empty ( $article->introtext )) {
-					$article->text = $article->introtext;
-				} else {
-					$article->text = $article->fulltext;
+				global $kunena_in_event;
+				if (!empty($kunena_in_event)) {
+					$app = JFactory::getApplication();
+					$dispatcher = JDispatcher::getInstance();
+					$params = clone($app->getParams('com_content'));
+					$aparams = new JParameter($article->attribs);
+					$params->merge($aparams);
+					JPluginHelper::importPlugin('content');
+					$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
 				}
+				require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
+				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
 
-				JPluginHelper::importPlugin ( 'content' );
-				$results = $dispatcher->trigger ( 'onPrepareContent', array (& $article, & $params, 0 ) );
-
-				if (! empty ( $article->introtext )) {
-					require_once (JPATH_ROOT . '/components/com_content/helpers/route.php');
-					$article->text .= '<a href="' . JRoute::_ ( ContentHelperRoute::getArticleRoute ( $article->id, $article->catid, $article->sectionid ) ) . '" class="readon">' . JText::sprintf ( 'Read more...' ) . '</a>';
+				// TODO: make configurable
+				if (!$default) $default = 'intro';
+				switch ($default) {
+					case 'full':
+						if ( !empty($article->fulltext) ) {
+							$html = $article->fulltext;
+							$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read article...').'</a>';
+							break;
+						}
+						// continue to intro
+					case 'intro':
+						if ( !empty($article->introtext) ) {
+							$html = $article->introtext;
+							$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read more...').'</a>';
+							break;
+						}
+						// continue to link
+					case 'link':
+					default:
+						$link = '<a href="'.$url.'" class="readon">'.$article->title.'</a>';
+						break;
 				}
-
-				$html = $article->text;
 			}
 		} else {
 			$html = JText::_ ( "Article cannot be shown" );
 		}
-		return '<div class="kmsgtext-article">' . $html . '</div>';
+		return '<div class="kmsgtext-article">' . $html . '</div>' . $link;
 	}
 
 	function DoQuote($bbcode, $action, $name, $default, $params, $content) {

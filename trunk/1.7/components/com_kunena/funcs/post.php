@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  **/
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
@@ -645,7 +645,7 @@ class CKunenaPost {
 		return false;
 	}
 
-	protected function floodProtection() {
+	public function floodProtection() {
 		// Flood protection
 		$ip = $_SERVER ["REMOTE_ADDR"];
 
@@ -767,13 +767,13 @@ class CKunenaPost {
 		$this->document->setTitle ( $title . ' - ' . $this->config->board_title );
 	}
 
-	function hasCaptcha() {
+	public function hasCaptcha() {
 		if ($this->config->captcha == 1 && $this->my->id < 1)
 			return true;
 		return false;
 	}
 
-	function displayCaptcha() {
+	public function displayCaptcha() {
 		if (! $this->hasCaptcha ())
 			return;
 
@@ -804,7 +804,7 @@ class CKunenaPost {
 		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
-	function verifyCaptcha() {
+	public function verifyCaptcha() {
 		if (! $this->hasCaptcha ())
 			return;
 

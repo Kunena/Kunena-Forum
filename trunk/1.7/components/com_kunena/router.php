@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  *
  **/
 defined( '_JEXEC' ) or die();
@@ -19,13 +19,54 @@ class KunenaRouter {
 	static $msgidcache = array ();
 
 	// List of reserved functions (if category name is one of these, use always catid)
-	static $functions = array ('manage',
-
-		'who', 'announcement', 'poll', 'polls', 'stats', 'myprofile', 'userprofile', 'fbprofile',
-		'profile', 'moderateuser', 'userlist', 'post', 'view', 'help', 'showcat', 'listcat', 'review', 'rules', 'report',
-		'latest', 'mylatest', 'noreplies', 'subscriptions', 'favorites', 'userposts', 'unapproved',
-		'deleted', 'search', 'advsearch', 'markthisread', 'subscribecat', 'unsubscribecat', 'karma',
-		'bulkactions', 'templatechooser', 'credits', 'json', 'rss', 'pdf', 'fb_pdf', 'article', 'entrypage', 'thankyou' );
+	// Contains array of default variable=>value pairs, which can be removed from URI
+	static $functions = array (
+		'manage'=>array(),
+		'who'=>array(),
+		'announcement'=>array(),
+		'poll'=>array(),
+		'polls'=>array(),
+		'stats'=>array(),
+		'myprofile'=>array(),
+		'userprofile'=>array(),
+		'profile'=>array(),
+		'moderateuser'=>array(),
+		'userlist'=>array(),
+		'post'=>array(),
+		'view'=>array(),
+		'help'=>array(),
+		'showcat'=>array(),
+		'listcat'=>array(),
+		'review'=>array(),
+		'rules'=>array(),
+		'report'=>array(),
+		'latest'=>array('do' => 'latest', 'page' => '1'),
+		'search'=>array(),
+		'advsearch'=>array(),
+		'markthisread'=>array(),
+		'subscribecat'=>array(),
+		'unsubscribecat'=>array(),
+		'karma'=>array(),
+		'bulkactions'=>array(),
+		'templatechooser'=>array(),
+		'credits'=>array(),
+		'json'=>array(),
+		'rss'=>array(),
+		'pdf'=>array(),
+		'entrypage'=>array(),
+		'thankyou'=>array(),
+		// Deprecated functions:
+		'fbprofile'=>array(),
+		'mylatest'=>array(),
+		'noreplies'=>array(),
+		'subscriptions'=>array(),
+		'favorites'=>array(),
+		'userposts'=>array(),
+		'unapproved'=>array(),
+		'deleted'=>array(),
+		'fb_pdf'=>array(),
+		'article'=>array(),
+	);
 
 	function loadCategories() {
 		if (self::$catidcache !== null)
@@ -86,25 +127,36 @@ class KunenaRouter {
 		$segments = array ();
 
 		$kconfig = KunenaFactory::getConfig ();
-		if (! $kconfig->sef)
+		if (! $kconfig->sef) {
 			return $segments;
+		}
+
+		// Convert legacy functions to views
+		if (isset ( $query ['func'] )) {
+			$query ['view'] = $query ['func'];
+		}
+		unset ($query ['func']);
 
 		if (isset ( $query ['Itemid'] ) && $query ['Itemid'] > 0) {
 			// If we have Itemid, make sure that we remove identical parameters
 			$menu = JSite::getMenu ();
 			$menuitem = $menu->getItem ( $query ['Itemid'] );
 			if ($menuitem) {
-				foreach ( $menuitem->query as $var => $value ) {
-					if ($var == 'Itemid' || $var == 'option')
-						continue;
-					if (isset ( $query [$var] ) && $value == $query [$var]) {
+				// Remove variables with default values from URI
+				if (!isset($query ['view'])) $defaults = array();
+				else $defaults = self::$functions[$query ['view']];
+				foreach ( $defaults as $var => $value ) {
+					if (!isset ( $menuitem->query [$var] ) && isset ( $query [$var] ) && $value == $query [$var] ) {
 						unset ( $query [$var] );
 					}
 				}
-				// Convert legacy functions to views
-				if (isset ( $query ['func'] )) {
-					$query ['view'] = $query ['func'];
-					unset ($query ['func']);
+				// Remove variables that are the same as in menu item from URI
+				foreach ( $menuitem->query as $var => $value ) {
+					if ($var == 'Itemid' || $var == 'option')
+						continue;
+					if (isset ( $query [$var] ) && $value == $query [$var] ) {
+						unset ( $query [$var] );
+					}
 				}
 			}
 		}
@@ -128,7 +180,7 @@ class KunenaRouter {
 				if (empty ( $suf ))
 					// If translated category name is empty, use catid: 123
 					$segments [] = $query ['catid'];
-				else if ($kconfig->sefcats && ! in_array ( $suf, self::$functions )) {
+				else if ($kconfig->sefcats && ! isset ( self::$functions[$suf] )) {
 					// We want to remove catid: check that there are no conflicts between names
 					if (self::isCategoryConflict($catid, $suf)) {
 						$segments [] = $query ['catid'] . '-' . $suf;
@@ -215,7 +267,7 @@ class KunenaRouter {
 			$value = array_shift ( $seg );
 
 			// If SEF categories are allowed we need to translate category name to catid
-			if ($kconfig->sefcats && $counter == 0 && ($value !== null || ! in_array ( $var, self::$functions ))) {
+			if ($kconfig->sefcats && $counter == 0 && ($value !== null || ! isset ( self::$functions[$var] ))) {
 				self::loadCategories ();
 				$catname = strtr ( $segment, ':', '-' );
 				foreach ( self::$catidcache as $category ) {
@@ -243,7 +295,7 @@ class KunenaRouter {
 			} else if ($value === null) {
 				// Variable must be either view or do
 				$value = $var;
-				if (in_array ( $var, self::$functions )) {
+				if (isset ( self::$functions[$var] )) {
 					$var = 'view';
 				} else if (isset($vars ['view']) && !isset($vars ['do'])) {
 					$var = 'do';

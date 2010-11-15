@@ -4,9 +4,9 @@
 * Kunena Component
 * @package Kunena
 *
-* @Copyright (C) 2008 - 2010 www.kunena.com All rights reserved
+* @Copyright (C) 2008 - 2010 www.kunena.org All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 **/
 
 // no direct access
@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.7.0-DEV
+
+15-November-2010 Matias
+^ [#22786] Merge revisions 3733-3900 from trunk/1.6
+^ [#22786] Change all occurences of kunena.com to kunena.org
 
 13-November-2010 Matias
 # [#22792] Prevent upgrade from making 2 copies of the same topic
@@ -323,13 +327,169 @@ Kunena 1.7.0-DEV
 - [#22543] Remove old BBCode parser (lib/kunena.parser*.php, lib/kunena.smile.class.php)
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
-Kunena 1.6.1-DEV
+Kunena 1.6.2-DEV
+
+9-November-2010 Severdia
+# [#22979] Fixed display of bullets
+
+6-November-2010 fxstein
+^ [#23152] Update version info
+- [#22805] Remove remaining skinner ini files and references from some languages
+
+Kunena 1.6.1
+
+6-November-2010 fxstein
+^ [#15886] Merged revisions 3761-3851 from branches/1.6-LDAsvens-language-20101021
+^ [#22690] Update version info for 1.6.1 release
+^ [#22690] Update README.txt for 1.6.1 release
+
+5-November-2010 fxstein
+^ [#23138] Change all copyright and credits information to kunena.org
+
+4-Nov-2010 svens (LDA)
+^ [#22975] update ru-RU (thanks ZARKOS)
+^ [#22975] updated fi-FI (thanks Mortti)
+
+3-Nov-2010 svens (LDA)
+^ [#22975] update de-DE (thanks rich)
+
+2-November-2010 Matias
+# [#20084] KunenaDiscuss: Fix incomplete URL in subscription email
+
+1-November-2010 Matias
+# [#20084] KunenaDiscuss: Do not show unapproved/deleted messages
+# [#20084] KunenaDiscuss: Fix white page when article gets rendered inside event
+
+31-October-2010 fxstein
++ [#22849] Add new module position kunena_topic_1 through kunena_topic_n
+^ [#15886] Merged revision 3828 from /branches/1.6-xillibit-fixes-20101017
+
+31-October-2010 svens (LDA)
+^ [#22975] update ca-ES (thanks garrotix)
+
+31-October-2010 Xillibit
+# [#22971] Fix issue which prevent to add points on delete and strings on thank you are wrong
+
+31-October-2010 Matias
+# [#20084] KunenaDiscuss: Fix message ordering to obey configuration
+
+30-October-2010 Matias
+^ [#15886] Merged revisions 3784-3802 from /branches/1.6-LDAsvens-language-20101021
+^ [#15886] Merged revisions 3769-3801 from /branches/1.6-xillibit-fixes-20101017
+
+30-October-2010 Xillibit
+# [#22971] Check now that the rules are enabled in AUP before adding points (thanks Bernard)
+# [#22919] Make working the limit on thank you in latestx, to show the correct number of messages in latest module
+
+30-October-2010 svens (LDA)
+^ [#22975] update de-DE (thanks rich)
+^ [#22975] update nb-NO (thanks rued, Roar and Bjørn)
+
+29-October-2010 Xillibit
+# [#20084] Fix undefined variable on parser.php line 642 and wrong location of link readmore when there is not params used
++ [#23060] Add the possibility to choose if you want suscribe to a topic in quick reply
+
+28-October-2010 Xillibit
+^ [#20084] Change how to works the [article] bbcode which supports now some parameters (link, full, intro)
+# [#20084] Fix Fatal error: Call to protected method CKunenaPost::isUserBanned() from context 'plgContentKunenaDiscuss' in kunenadiscuss.php on line 604
+# [#20084] Fix some wrongs visiblity for methods in post.php to be allowed to use these methods in kdiscuss
+
+26-October-2010 Xillibit
++ [#20084] Make the possibility to set a specific for a new topic (when using kdiscuss) and new bbcode [articlelink] and [articlecontentlink]
+
+26-October-2010 svens (LDA)
+^ [#22975] update ru-RU (thanks ZARKOS)
+^ [#22975] update de-DE (thanks rich)
+
+25-October-2010 Matias
+# [#23015] If open_basedir exludes /tmp, PHP warning is shown
+
+24-October-2010 Matias
+^ [#22979] Split default css into styling and coloration files to enable more than one color style
+
+24-October-2010 fxstein
+^ [#22979] Adjustable and inhertited link coloration
+
+23-October-2010 Xillibit
+# [#22971] Use new namming convention for aup plg and use differents if an old AUP verison is installed
+
+23-October-2010 fxstein
+^ [#22979] Default template version and settings updated
++ [#22979] Merge Skinner into default template
+
+23-October-2010 Severdia
+^ [#22979] First clean up pass on skinner CSS file
+^ [#22979] Clean up aliasing on all emoticons and topic icons, skinner fixes
+
+23-October-2010 Matias
+^ [#15886] Merged revisions 3741-3760 from /branches/1.6-xillibit-fixes-20101017
+^ [#15886] Merged revisions 3761-3772 from /branches/1.6-LDAsvens-language-20101021
+^ [#15886] Merged revision 3757 from /branches/1.6.1-810-bugfixes-19-10-2010
+
+23-October-2010 svens (LDA)
+^ [#22975] Updated fi-FI (thanks Mortti), it-IT (thanks ohifra and scherman83)
+# [#22975] Fix da-DK language comments from # to ;
++ [#22975] Add new languages to build.xml
+
+22-October-2010 Severdia
++ [#22979] Added Skinner parameter in default template
+
+21-October-2010 svens (LDA)
+^ [#22975] Updated tr-TR (thanks Tolga), th-TH (drlovecat), hu-HU (pedrohsi) , es-ES (Neon26), ca-ES  (Neon26), fi-FI (Mortti)
++ [#22975] added pt-PT (thanks Aurélio Vieira and Mickael Cavaco), nb-NO (Joomla! i Norge), ja-JP (Masato Sato)
+
+21-October-2010 Xillibit
++ [#22971] AUP integration adds points on delete message
+# [#22972] Issue metadesc isn't cut with function which support uft8
+
+21-October-2010 Severdia
+# [#22979] Removed duplicate property in CSS
++ [#22979] Added Skinner override in default template CSS folder (needs to be hooked up in params)
++ [#22977] Added markup for color coding of write status (needs the conditional reworked to work)
+
+20-October-2010 810
+# [#22627] Many updates on nl-NL translation
+
+20-October-2010 svens (LDA)
+^ [#22975] Updated de-DE, it-IT, pt-BR
++ [#22975] added da-DK, pt-PT, sv-SE
+
+20-October-2010 Xillibit
+# [#22950] Hide preview buttons for guest users
+^ [#16390] Change "Mark all forums read" into "Mark all categories read"
+^ [#16390] Fix some typos in french translations (fr-FR) (thanks lavsteph)
+
+19-October-2010 fxstein
+^ [#16390] Updated it-IT: Fixed incorrect date/time format
+
+18-October-2010 Severdia
+# [#22934] Fixed spelling errors in English language files (minor cleanup, no keys changed)
+
+18-October-2010 Matias
+# [#22713] Improve routing: Simplify KunenaRoute::getDefault()
+# [#22713] Improve routing: Add support for default values to get rid fields with default values in URI
+# [#22713] Improve routing (No Menu): Do not redirect into another location, if there's nowhere to go
+# [#22713] Improve routing: remove &view field also when there's no Itemid
+
+17-October-2010 Xillibit
+# [#22919] Some update on latestx class to make working correctly the module klatest
+^ [#22907] Add commas after each user name in Who Is Online box
+* [#22920] Remove confidential information from RSS feed
+
+17-October-2010 fxstein
+# [#22713] Fix bug in route.php with illegal array index
+
+17-October-2010 Matias
+# [#22838] Saving profile doesn't work in latest Google Chrome / IE9 (autocomplete issue)
 
 16-October-2010 Matias
 # [#22898] Activity Stream integration: attachments do not show up in the stream
 ^ [#15886] Merged revisions 3718-3725 from /branches/1.6-xillibit-fixes-20101010
 # [#22871] JomSocial Activity Stream: thankyou gives points to wrong user
 # [#22871] JomSocial Activity Stream: actor is user, who gives the points
+# [#22713] Improve routing: If there is no menu, redirect to Kunena Menu
+# [#22713] Improve routing: If in Kunena menu and default menu has simple menuitem to Kunena, highlight it
+# [#22713] Improve routing: Router didn't remove extra &func=xxx parameter, giving results like /forum/recent/latest
 
 15-October-2010 Matias
 + [#22694] Add support for ArtOfUser ACL without needing JXtended library

@@ -6,7 +6,7 @@
  *
  * @Copyright (C) 2008 - 2010 Kunena Team All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  *
  * Based on FireBoard Component
  * @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
@@ -73,7 +73,7 @@ JRequest::setVar ( 'func', $func );
 $format = JRequest::getCmd ( 'format', 'html' );
 
 require_once(KUNENA_PATH . DS . 'router.php');
-if ($func && !in_array($func, KunenaRouter::$functions)) {
+if ($func && !isset(KunenaRouter::$functions[$func])) {
 	// If func is not legal, raise joomla error
 	return JError::raiseError( 500, 'Kunena function "' . $func . '" not found' );
 }
@@ -152,6 +152,10 @@ if (empty($_POST) && $format == 'html') {
 				}
 			}
 		}
+	}
+	$newItemid = KunenaRoute::getItemid();
+	if ($active && $newItemid && !KunenaRoute::getCurrentMenu () && $active->id != $newItemid) {
+		$kunena_app->redirect (KunenaRoute::_(null, false));
 	}
 }
 
@@ -843,6 +847,11 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 <?php
 $integration = KunenaFactory::getProfile();
 $integration->close();
+
+if (empty($_POST) && $format == 'html') {
+	$default = KunenaRoute::getDefault();
+	if ($default) $menu->setActive($default->id);
+}
 
 } // end of online
 

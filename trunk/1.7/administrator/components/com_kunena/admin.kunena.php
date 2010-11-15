@@ -362,7 +362,7 @@ switch ($task) {
 		break;
 
 	case "editKTemplate" :
-		editKTemplate ();
+		editKTemplate ( $option );
 
 		break;
 
@@ -665,7 +665,7 @@ function parseXMLTemplateFile($templateBaseDir, $templateDir)
 		html_Kunena::showTemplates($rows, $page, $option);
 	}
 
-	function editKTemplate()
+	function editKTemplate($option)
 	{
 		jimport('joomla.filesystem.path');
 		$kunena_db	= & JFactory::getDBO();
@@ -1113,6 +1113,18 @@ function showConfig($option) {
 	$lists ['listcat_show_moderators'] = JHTML::_('select.genericlist', $yesno, 'cfg_listcat_show_moderators', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->listcat_show_moderators);
 
 	$lists ['lightbox'] = JHTML::_('select.genericlist', $yesno, 'cfg_lightbox', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->lightbox);
+
+	$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
+	$timesel[] = JHTML::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
+	$timesel[] = JHTML::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));
+	$timesel[] = JHTML::_('select.option', 12, JText::_('COM_KUNENA_SHOW_12_HOURS'));
+	$timesel[] = JHTML::_('select.option', 24, JText::_('COM_KUNENA_SHOW_24_HOURS'));
+	$timesel[] = JHTML::_('select.option', 48, JText::_('COM_KUNENA_SHOW_48_HOURS'));
+	$timesel[] = JHTML::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
+	$timesel[] = JHTML::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
+	$timesel[] = JHTML::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
+	// build the html select list
+	$lists ['show_list_time'] = JHTML::_('select.genericlist', $timesel, 'cfg_show_list_time', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->show_list_time);
 
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
@@ -1565,6 +1577,10 @@ function moveUserMessages ( $option, $uid ){
 	$kunena_db = &JFactory::getDBO ();
 	$return = JRequest::getCmd( 'return', 'edituserprofile', 'post' );
 
+	$userid = implode(',', $uid);
+	$kunena_db->setQuery ( "SELECT id,username FROM #__users WHERE id IN(".$userid.")" );
+	$userids = $kunena_db->loadObjectList ();
+
 	$kunena_db->setQuery ( "SELECT id,parent,name FROM #__kunena_categories" );
 	$catsList = $kunena_db->loadObjectList ();
 	if (KunenaError::checkDatabaseError()) return;
@@ -1578,7 +1594,7 @@ function moveUserMessages ( $option, $uid ){
 	}
 	$lists = JHTML::_('select.genericlist', $category, 'cid[]', 'class="inputbox" multiple="multiple" size="5"', 'value', 'text');
 
-	html_Kunena::moveUserMessages ( $option, $return, $uid, $lists );
+	html_Kunena::moveUserMessages ( $option, $return, $uid, $lists, $userids );
 }
 
 function moveUserMessagesNow ( $option, $cid ) {

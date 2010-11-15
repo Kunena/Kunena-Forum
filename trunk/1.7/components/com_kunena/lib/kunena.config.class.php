@@ -351,6 +351,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	var $lightbox = 1;
 	//New for 1.6.1: allow the admin to limit the length of the activity stream
 	var $activity_limit = 0;
+	//New for 1.6.2: choose the time since which to show the topics
+	var $show_list_time = 720;
 
 	public function __construct($userinfo = null) {
 		parent::__construct ();

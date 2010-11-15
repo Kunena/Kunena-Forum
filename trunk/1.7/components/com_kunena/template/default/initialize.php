@@ -18,8 +18,9 @@ $this->params = $template->params;
 // Template requires Mootools 1.2 framework
 $template->loadMootools();
 
-// We load smoothbox library
-CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox-min.js' );
+// We load mediaxboxadvanced library
+CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'js/mediaboxadvanced/css/mediaboxAdv.css');
+CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/mediaboxadvanced/js/mediaboxAdv.js' );
 
 // New Kunena JS for default template
 $template->addScript ( 'js/default-min.js' );

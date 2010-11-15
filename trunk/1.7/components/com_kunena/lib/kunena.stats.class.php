@@ -92,7 +92,7 @@ class CKunenaStats {
 
 	public function loadTotalMembers() {
 		if ($this->totalmembers === null) {
-			$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 OR activation=''" );
+			$this->_db->setQuery ( "SELECT COUNT(*) FROM #__users WHERE block=0 AND activation=''" );
 			$this->totalmembers = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
 		}

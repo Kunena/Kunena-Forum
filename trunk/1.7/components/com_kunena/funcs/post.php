@@ -419,7 +419,8 @@ class CKunenaPost {
 			$mode = JRequest::getVar ( 'mode', KN_MOVE_MESSAGE );
 			$subject = JRequest::getString ( 'subject', '' );
 			$shadow = JRequest::getInt ( 'shadow', 0 );
-
+			$changesubject = JRequest::getInt ( 'changesubject', 0 );
+			
 			switch ($mode) {
 				case KN_MOVE_THREAD:
 					$ids = false;
@@ -434,6 +435,7 @@ class CKunenaPost {
 			}
 			$topic = $message->getTopic();
 			if ($subject) $topic->subject = $subject;
+			// TODO: change subject from every message
 			$success = $topic->move ( $target, $ids );
 			// TODO: make shadow post
 		}

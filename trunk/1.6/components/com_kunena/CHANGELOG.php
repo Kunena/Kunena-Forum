@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+15-November-2010 Matias
+^ [#15886] Merged revisions 3892-3899 from /branches/1.6-LDAsvens-language-20101112
+
+12-November-2010 svens(LDA)
+^ [#23293] updated es-ES (thanks Alakentu)
+^ [#23293] updated lt-LT (thanks Zylkin, Andrius Balsevičius)
+
 9-November-2010 Severdia
 # [#22979] Fixed display of bullets
 

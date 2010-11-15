@@ -242,8 +242,7 @@ class CKunenaViewMessage {
 			}
 		}
 		else if ($this->config->useredit && $this->my->id && $this->my->id == $this->profile->userid) {
-			//Now, if the viewer==author and the viewer is allowed to edit his/her own post then offer an 'edit' link
-			if ($message->hold != 2 && CKunenaTools::editTimeCheck($message->modified_time, $message->time)) {
+			if ($message->authorise('edit')) {
 				$this->message_edit = CKunenaLink::GetTopicPostReplyLink ( 'edit', $this->catid, $this->id, CKunenaTools::showButton ( 'edit', JText::_('COM_KUNENA_BUTTON_EDIT') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_EDIT_LONG') );
 				if ( $this->config->userdeletetmessage == '1' ) {
 					if ($this->replynum == $this->replycnt) $this->message_delete = CKunenaLink::GetTopicPostLink ( 'delete', $this->catid, $this->id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_LONG') );
@@ -484,7 +483,7 @@ class CKunenaView {
 
 		//meta description and keywords
 		$category_parent = KunenaForumCategoryHelper::get($this->category->parent_id);
-		$metaKeys = kunena_htmlspecialchars ( "{$this->first_message->subject}, {$category_parent->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
+		$metaKeys = $this->escape ( "{$this->first_message->subject}, {$category_parent->name}, {$this->config->board_title}, " . JText::_('COM_KUNENA_GEN_FORUM') . ', ' . $this->app->getCfg ( 'sitename' ) );
 
 		// Create Meta Description form the content of the first message
 		// better for search results display but NOT for search ranking!

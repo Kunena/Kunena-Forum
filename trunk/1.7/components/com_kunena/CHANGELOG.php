@@ -33,6 +33,59 @@ Legend:
 
 Kunena 1.7.0-DEV
 
+13-November-2010 Matias
+# [#22792] Prevent upgrade from making 2 copies of the same topic
+# [#22792] Simplify deleted topic to have first message as hold=3 to remove some extra logic
+- [#22570] Remove a few constants from class.kunena.php
+- [#22570] Remove a few functions/dependencies from class.kunena.php
+# [#22792] KunenaForumMessage: fimplify new topic logic to have less dependencies
+^ [#22792] Start using KunenaTemplate::addScript(), KunenaTemplate::addStyleSheet()
+
+12-November-2010 Matias
+# [#22792] KunenaForumTopic::move(): some fixes and recount stats
+^ [#22792] Convert CKunenaReview class to use new library
+^ [#22792] Convert CKunenaSearch class to use KunenaForumCategory class
+^ [#22792] Convert CKunenaThankyou class to use new library
+# [#22792] KunenaForumCategory: remove some dependencies to class.kunena.php
+# [#22792] KunenaForumTopic: remove some dependencies to class.kunena.php
+
+11-November-2010 Matias
+- [#22570] Remove deprecated CKunenaPosting class
+# [#22792] KunenaForumCategoryHelper::getChildren(): accept objects as well as Ids
+# [#22792] KunenaForumMessageAttachmentHelper: limit amount of deleted attachments
++ [#22792] Implement KunenaForumTopic::move() to move topics and messages in it
+^ [#22792] CKunenaPost::domoderate() use new classes
+^ [#22792] Move bulk actions functions from CKunenaTools class into kunena.php and greatly simplify logic
+
+10-November-2010 Matias
++ [#22792] KunenaForumMessage::update() move topic/category logic into right classes
++ [#22792] KunenaForumTopic::update() handle also user related info
+# [#22792] Fix a bug that prevents KunenaForumTopicUser::load() from working
++ [#22792] Implement KunenaForumTopicUser::update()
++ [#22792] Implement KunenaForumTopic::recount()
++ [#22792] Implement KunenaUserHelper::recount()
++ [#22792] KunenaForumTopicHelper::recount(): mark all empty topics as deleted
++ [#22792] KunenaForumTopic::publish(): handle also messages and recount stats
++ [#22792] Add cleanup function to KunenaForumMessageAttachmentHelper (orphan attachments)
+
+9-November-2010 Matias
+^ [#22792] Re-implement KunenaForumMessage::authoriseEditTime()
+^ [#22792] Implement KunenaForumMessage::authoriseDelete()
++ [#22792] KunenaForumMessage::check(): add flood detection
++ [#22792] KunenaForumMessage::check(): add already posted detection
++ [#22792] KunenaForumMessage: cascade changes into topic, usertopic, category
+# [#22792] Fix a bug that prevents TableKunenaCategories::check() from working
+
+8-November-2010 Matias
+# [#22792] KunenaForumMessage: improve topic logic to work better with new topics
++ [#22792] KunenaForumMessage: update topic when attachments count changes
+# [#22792] KunenaForumMessage: delete attachments when message gets deleted
++ [#22792] Implement KunenaForumTopic::markNew()
++ [#22792] KunenaForumTopic::authorise(): allow user to see his own topic before it gets approved
+
+6-November-2010 Matias
++ [#22792] Implement KunenaForumMessage::sendNotification()
+
 5-November-2010 Matias
 # [#22792] Fill missing topic posts count field on KunenaForumCategory::update()
 # [#22792] KunenaForumCategory/Topic/MessageHelper: add authorisation parameter

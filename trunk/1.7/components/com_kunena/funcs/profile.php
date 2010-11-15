@@ -81,7 +81,7 @@ class CKunenaProfile {
 				$this->gender = JText::_('COM_KUNENA_MYPROFILE_GENDER_UNKNOWN');
 		}
 		if ($this->profile->location)
-			$this->locationlink = '<a href="http://maps.google.com?q='.kunena_htmlspecialchars($this->profile->location).'" target="_blank">'.kunena_htmlspecialchars($this->profile->location).'</a>';
+			$this->locationlink = '<a href="http://maps.google.com?q='.$this->escape($this->profile->location).'" target="_blank">'.$this->escape($this->profile->location).'</a>';
 		else
 			$this->locationlink = JText::_('COM_KUNENA_LOCATION_UNKNOWN');
 

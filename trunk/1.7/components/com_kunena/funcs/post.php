@@ -321,7 +321,7 @@ class CKunenaPost {
 			'where'=>" AND tt.id != {$this->_db->Quote($this->topic->id)} ");
 		list ($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->catid, 0, 30, $params);
 		foreach ( $topics as $cur ) {
-			$options [] = JHTML::_ ( 'select.option', $cur->id, kunena_htmlspecialchars ( $cur->subject ) );
+			$options [] = JHTML::_ ( 'select.option', $cur->id, $this->escape ( $cur->subject ) );
 		}
 		$this->messagelist = JHTML::_ ( 'select.genericlist', $options, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_targettopic' );
 
@@ -410,27 +410,40 @@ class CKunenaPost {
 		if ($this->tokenProtection ())
 			return false;
 
+		$success = false;
 		$message = KunenaForumMessageHelper::get ( $this->id );
-		if ($message->authorise ( 'move' )) {
-			require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-
+		$targetId = JRequest::getInt ( 'targetid', 0 );
+		if ($targetId) $target = KunenaForumMessageHelper::get($targetId);
+		else $target = KunenaForumCategoryHelper::get(JRequest::getInt ( 'targetcat', 0 ));
+		if ($message->authorise ( 'move' ) && $target->authorise ( 'read' )) {
 			$mode = JRequest::getVar ( 'mode', KN_MOVE_MESSAGE );
-			$targetSubject = JRequest::getString ( 'subject', '' );
-			$targetCat = JRequest::getInt ( 'targetcat', 0 );
-			$targetId = JRequest::getInt ( 'targetid', 0 );
-			if (! $targetId)
-				$targetId = JRequest::getInt ( 'targettopic', 0 );
+			$subject = JRequest::getString ( 'subject', '' );
 			$shadow = JRequest::getInt ( 'shadow', 0 );
 
-			$moderation = CKunenaModeration::getInstance ();
-			$success = $moderation->move ( $this->id, $targetCat, $targetSubject, $targetId, $mode, $shadow );
-			if (! $success) {
-				$this->_app->enqueueMessage ( $moderation->getErrorMessage (), 'notice' );
-			} else {
-				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
+			switch ($mode) {
+				case KN_MOVE_THREAD:
+					$ids = false;
+					break;
+				case KN_MOVE_NEWER:
+					$ids = new JDate($message->time);
+					break;
+				case KN_MOVE_MESSAGE:
+				default:
+					$ids = $message->id;
+					break;
 			}
+			$topic = $message->getTopic();
+			if ($subject) $topic->subject = $subject;
+			$success = $topic->move ( $target, $ids );
+			// TODO: make shadow post
+		}
+		if (!$success) {
+			$error = $message->getError();
+			if (!$error) $error = $target->getError();
+			if (!$error) $error = $topic->getError();
+			$this->_app->enqueueMessage ( $error, 'notice' );
 		} else {
-			$this->_app->enqueueMessage ( $message->getError (), 'notice' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' ) );
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
 	}

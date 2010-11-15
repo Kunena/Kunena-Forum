@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ('kunena.user');
+kimport ('kunena.forum.topic.helper');
 kimport ('kunena.forum.topic.user.helper');
 
 /**
@@ -33,6 +34,10 @@ class KunenaForumTopicUser extends JObject {
 
 	static public function getInstance($id = null, $user = null, $reload = false) {
 		return KunenaForumTopicUserHelper::get($id, $user, $reload);
+	}
+
+	public function getTopic() {
+		return KunenaForumTopicHelper::get($this->topic_id);
 	}
 
 	function exists($exists = null) {
@@ -82,12 +87,12 @@ class KunenaForumTopicUser extends JObject {
 	 */
 	public function load($id = null, $user = null) {
 		if ($id === null) {
-			$id = $this->id;
+			$id = $this->topic_id;
 		}
 		$user = KunenaUser::getInstance($user);
 
 		// Create the table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		// Load the KunenaTable object based on id
 		$this->_exists = $table->load ( array($user->userid, $id) );
@@ -107,7 +112,7 @@ class KunenaForumTopicUser extends JObject {
 	 */
 	public function save($updateOnly = false) {
 		// Create the topics table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 
@@ -133,7 +138,6 @@ class KunenaForumTopicUser extends JObject {
 		// Fill up KunenaForumTopicUser object in case we created a new topic.
 		if ($result && $isnew) {
 			$this->load ();
-			self::$_instances [$this->user_id][$this->topic_id] = $this;
 		}
 
 		return $result;
@@ -152,7 +156,7 @@ class KunenaForumTopicUser extends JObject {
 		}
 
 		// Create the table object
-		$table = &$this->getTable ();
+		$table = $this->getTable ();
 
 		$result = $table->delete ( $this->id );
 		if (! $result) {
@@ -163,7 +167,26 @@ class KunenaForumTopicUser extends JObject {
 		return $result;
 	}
 
-	function update() {
-
+	function update($message=null, $postDelta=0) {
+		$this->posts += $postDelta;
+		$this->category_id = $this->getTopic()->category_id;
+		if ($message && !$message->hold && $message->thread == $this->topic_id) {
+			if ($message->parent == 0) {
+				$this->owner = 1;
+			}
+			if ($this->last_post_id < $message->id) {
+				$this->last_post_id = $message->id;
+			}
+		} elseif (!$message || (($message->hold || $message->thread != $this->topic_id ) && $this->last_post_id == $message->id)) {
+			$query ="SELECT COUNT(*) AS posts, MAX(id) AS last_post_id, MAX(IF(parent=0,1,0)) AS owner
+					FROM #__kunena_messages WHERE userid={$this->_db->quote($this->user_id)} AND thread={$this->_db->quote($this->topic_id)} AND moved=0 AND hold=0
+					GROUP BY userid, thread";
+			$this->_db->setQuery($query, 0, 1);
+			$info = $this->_db->loadObject ();
+			if (KunenaError::checkDatabaseError ())
+				return;
+			$this->bind($info);
+		}
+		return $this->save();
 	}
 }

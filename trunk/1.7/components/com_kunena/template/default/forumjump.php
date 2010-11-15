@@ -10,9 +10,11 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+$this->catid = isset($this->catid) ? intval($this->catid) : 0;
 $options = array ();
 $options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
-$lists ['parent'] = CKunenaTools::forumSelectList ( 'forumjump', isset($this->catid) ? intval($this->catid) : 0, $options, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', true );
+$cat_params = array ('sections'=>1, 'catid'=>0);
+$lists ['parent'] = JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid);
 ?>
 <form id="jumpto" name="jumpto" method="post" target="_self" action="<?php echo CKunenaLink::GetKunenaURL ();?>">
 	<span class="kright">

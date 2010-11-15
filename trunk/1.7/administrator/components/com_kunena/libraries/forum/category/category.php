@@ -12,6 +12,7 @@ defined ( '_JEXEC' ) or die ();
 
 kimport ('kunena.error');
 kimport ('kunena.user');
+kimport ('kunena.user.helper');
 kimport ('kunena.user.ban');
 kimport ('kunena.forum.category.helper');
 
@@ -371,9 +372,7 @@ class KunenaForumCategory extends JObject {
 			KunenaError::checkDatabaseError ();
 		}
 
-		// TODO: remove dependency
-		require_once KPATH_SITE.'/class.kunena.php';
-		CKunenaTools::reCountUserPosts();
+		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount();
 
 		return $result;

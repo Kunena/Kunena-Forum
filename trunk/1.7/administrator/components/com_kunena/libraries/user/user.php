@@ -369,7 +369,7 @@ class KunenaUser extends JObject {
 				break;
 			case 'location' :
 				if ($this->location)
-					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . kunena_htmlspecialchars ( $this->location ) . '"></span>';
+					return '<span class="kicon-profile kicon-profile-location" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_LOCATION' ) . ': ' . $this->escape ( $this->location ) . '"></span>';
 				break;
 			case 'website' :
 				$url = 'http://' . $this->websiteurl;
@@ -378,7 +378,7 @@ class KunenaUser extends JObject {
 				else
 					$websitename = $this->websitename;
 				if ($this->websiteurl)
-					return '<a href="' . kunena_htmlspecialchars ( $url ) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . kunena_htmlspecialchars ( $websitename ) . '"></span></a>';
+					return '<a href="' . $this->escape ( $url ) . '" target="_blank"><span class="kicon-profile kicon-profile-website" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_WEBSITE' ) . ': ' . $this->escape ( $websitename ) . '"></span></a>';
 				break;
 			case 'private' :
 				$pms = KunenaFactory::getPrivateMessaging ();
@@ -408,11 +408,11 @@ class KunenaUser extends JObject {
 			return;
 		$title = $social [$name] ['title'];
 		$item = $social [$name] ['name'];
-		$value = kunena_htmlspecialchars ( $this->$item );
+		$value = $this->escape ( $this->$item );
 		$url = strtr ( $social [$name] ['url'], array ('##VALUE##' => $value ) );
 		if ($social [$name] ['nourl'] == '0') {
 			if (! empty ( $this->$item ))
-				return '<a href="' . kunena_htmlspecialchars ( $url ) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
+				return '<a href="' . $this->escape ( $url ) . '" class="kTip" target="_blank" title="' . $title . ': ' . $value . '"><span class="kicon-profile kicon-profile-' . $name . '"></span></a>';
 		} else {
 			if (! empty ( $this->$item ))
 				return '<span class="kicon-profile kicon-profile-' . $name . ' kTip" title="' . $title . ': ' . $value . '"></span>';
@@ -421,5 +421,10 @@ class KunenaUser extends JObject {
 			return '<span class="kicon-profile kicon-profile-' . $name . '-off"></span>';
 		else
 			return '';
+	}
+
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 }

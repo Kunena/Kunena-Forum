@@ -579,8 +579,8 @@ class CKunenaLatestX {
 		}
 
 		//meta description and keywords
-		$metaKeys = $this->header . kunena_htmlspecialchars ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
-		$metaDesc = $this->header . kunena_htmlspecialchars ( " ({$this->page}/{$this->totalpages}) - {$this->config->board_title}" );
+		$metaKeys = $this->header . $this->escape ( ", {$this->config->board_title}, " ) . $this->app->getCfg ( 'sitename' );
+		$metaDesc = $this->header . $this->escape ( " ({$this->page}/{$this->totalpages}) - {$this->config->board_title}" );
 		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
 
 		$this->document = JFactory::getDocument ();

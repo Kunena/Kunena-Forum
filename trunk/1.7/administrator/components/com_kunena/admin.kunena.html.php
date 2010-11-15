@@ -1705,7 +1705,7 @@ table.kadmin-stat caption {
 			function showCss($file, $option) {
 				$f = fopen ( $file, "r" );
 				$content = fread ( $f, filesize ( $file ) );
-				$content = kunena_htmlspecialchars ( $content );
+				$content = kescape ( $content );
 		?>
 		<div class="kadmin-functitle icon-editcss"><?php echo JText::_('COM_KUNENA_CSSEDITOR'); ?></div>
 		<form action="index.php?" method="post" name="adminForm" class="adminForm" id="adminForm">

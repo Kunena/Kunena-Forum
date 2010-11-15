@@ -476,7 +476,8 @@ window.addEvent('domready', function() {
 $script = ob_get_contents();
 ob_end_clean();
 
-CKunenaTools::addScript(KUNENA_DIRECTURL . 'template/default/js/editor-min.js');
+$template = KunenaTemplate::getInstance();
+$template->addScript('js/editor-min.js');
 $document->addScriptDeclaration( "// <![CDATA[
 {$script}
 // ]]>");

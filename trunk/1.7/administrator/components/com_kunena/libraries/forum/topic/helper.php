@@ -159,15 +159,24 @@ class KunenaForumTopicHelper {
 		return array($total, $topics);
 	}
 
-	static function recount() {
+	static function recount($ids=false) {
 		$db = JFactory::getDBO ();
 
+		if (is_array($ids)) {
+			$threads = 'm.thread IN ('.implode(',', $ids).')';
+		} elseif ((int)$ids) {
+			$threads = 'm.thread='.(int)$ids;
+		} else {
+			$threads = '';
+		}
+		$where = '';
+		if ($threads) $where = "AND {$threads}";
 		// Recount total posts, total attachments
 		$query ="UPDATE jos_kunena_topics AS tt
 			INNER JOIN (SELECT m.thread, COUNT(DISTINCT m.id) AS posts, COUNT(a.id) as attachments
 				FROM jos_kunena_messages AS m
 				LEFT JOIN jos_kunena_attachments AS a ON m.id=a.mesid
-				WHERE m.hold=0
+				WHERE m.hold=0 {$where}
 				GROUP BY m.thread) AS t ON t.thread=tt.id
 			SET tt.posts=t.posts,
 				tt.attachments=t.attachments";
@@ -176,6 +185,7 @@ class KunenaForumTopicHelper {
 		if (KunenaError::checkDatabaseError ())
 			return;
 
+		if ($threads) $where = "WHERE {$threads}";
 		// Update first post information (by time)
 		$query ="UPDATE #__kunena_topics AS tt
 			INNER JOIN (SELECT thread, MIN(time) AS time FROM #__kunena_messages WHERE hold=0 GROUP BY thread) AS l ON tt.id=l.thread
@@ -185,7 +195,7 @@ class KunenaForumTopicHelper {
 				tt.first_post_time = m.time,
 				tt.first_post_userid = m.userid,
 				tt.first_post_message = t.message,
-				tt.first_post_guest_name = IF(m.userid>0,null,m.name)";
+				tt.first_post_guest_name = IF(m.userid>0,null,m.name) {$where}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
@@ -200,11 +210,32 @@ class KunenaForumTopicHelper {
 				tt.last_post_time = m.time,
 				tt.last_post_userid = m.userid,
 				tt.last_post_message = t.message,
-				tt.last_post_guest_name = IF(m.userid>0,null,m.name)";
+				tt.last_post_guest_name = IF(m.userid>0,null,m.name) {$where}";
 		$db->setQuery($query);
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return;
+
+		// Mark all empty topics as deleted
+		$query ="UPDATE jos_kunena_topics
+			SET hold = 2,
+				attachments = 0,
+				first_post_id = 0,
+				first_post_time = 0,
+				first_post_userid = 0,
+				first_post_message = '',
+				first_post_guest_name = '',
+				last_post_id = 0,
+				last_post_time = 0,
+				last_post_userid = 0,
+				last_post_message = '',
+				last_post_guest_name = '',
+				WHERE posts=0 AND hold=0 AND moved_id=0";
+		$db->setQuery($query);
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return;
+
 	}
 
 	// Internal functions

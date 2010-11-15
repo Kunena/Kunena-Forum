@@ -21,6 +21,7 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
+kimport('kunena.forum.category.helper');
 DEFINE ( 'KUNENA_URL_LIST_SEPARATOR', ' ' );
 
 class CKunenaSearch {
@@ -100,7 +101,10 @@ class CKunenaSearch {
 			$this->limit = $this->limit = $this->config->messages_per_page_search;
 
 		if (isset ( $_POST ['q'] ) || isset ( $_POST ['searchword'] )) {
-			$this->params ['catids'] = implode ( ',', JRequest::getVar ( 'catids', array (0), 'post', 'array' ) );
+			$this->params ['catids'] = JRequest::getVar ( 'catids', array (0), 'post', 'array' );
+			if (in_array(0, $this->params ['catids']))
+				$this->params ['catids'] = array(0);
+			$this->params ['catids'] = implode (',', $this->params ['catids'] );
 			$url = CKunenaLink::GetSearchURL ( $this->func, $q, $this->limitstart, $this->limit, $this->getUrlParams () );
 			header ( "HTTP/1.1 303 See Other" );
 			header ( "Location: " . htmlspecialchars_decode ( $url ) );
@@ -309,45 +313,15 @@ class CKunenaSearch {
 		return $url_params;
 	}
 	function get_search_forums($catids, $childforums = 1) {
-		/* get allowed forums */
-		$allowed_string = '';
-		if ($this->session->allowed && $this->session->allowed != 'na') {
-			$allowed_string = "id IN ({$this->session->allowed})";
-		} else {
-			$allowed_string = "published='1' AND pub_access='0'";
-		}
-		$this->db->setQuery ( "SELECT id, parent FROM #__kunena_categories WHERE {$allowed_string}" );
-		$allowed_forums = $this->db->loadAssocList ( 'id' );
-		if (KunenaError::checkDatabaseError()) return array();
-
-		$allow_list = array ();
-		foreach ( $allowed_forums as $forum ) {
-			// Children list: parent => array(child1, child2, ...)
-			$allow_list [$forum ['parent']] [] = $forum ['id'];
-		}
-
 		$catids = explode ( ',', $catids );
-		$result = array ();
-		if (count ( $catids ) > 0 && ! in_array ( 0, $catids )) {
-			// Algorithm:
-			// Start with selected categories and pop them from the catlist one by one
-			// Every popped item in the catlist will be added into result list
-			// For every category: push all its children into the catlist
-			$cur = array_pop ( $catids );
-			do {
-				$result [$cur] = $cur;
-				if ($childforums && array_key_exists ( $cur, $allow_list ))
-					foreach ( $allow_list [$cur] as $forum )
-						if (! in_array ( $forum, $catids ) ) {
-							array_push ( $catids, $forum );
-						}
-				$cur = array_pop ( $catids );
-			} while ( $cur );
-			$search_forums = implode ( ",", $result );
-		} else {
-			$search_forums = implode ( ",", array_keys ( $allowed_forums ) );
+		if (in_array(0, $catids)) {
+			return implode ( ",", array_keys(KunenaForumCategoryHelper::getCategories()));
 		}
-		return $search_forums;
+		$categories = KunenaForumCategoryHelper::getCategories($catids);
+		if ($childforums) {
+			$categories += KunenaForumCategoryHelper::getChildren($categories, 100);
+		}
+		return implode ( ",", array_keys($categories) );
 	}
 
 	/**
@@ -370,7 +344,10 @@ class CKunenaSearch {
 		//category select list
 		$options = array ();
 		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_SEARCH_SEARCHIN_ALLCATS') );
-		$this->categorylist = CKunenaTools::forumSelectList ( 'searchlist', explode ( ',', $this->params ['catids'] ), $options, 'class="inputbox" size="8" multiple="multiple"', true );
+
+		$cat_params = array ('sections'=>true);
+		$selected = explode ( ',', $this->params ['catids'] );
+		$this->categorylist = JHTML::_('kunenaforum.categorylist', 'catids[]', 0, $options, $cat_params, 'class="inputbox" size="8" multiple="multiple"', 'value', 'text', $selected);
 
 		CKunenaTools::loadTemplate('/search/advsearch.php');
 

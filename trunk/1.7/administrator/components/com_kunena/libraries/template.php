@@ -94,6 +94,28 @@ class KunenaTemplate extends JObject
 		JHTML::_ ( 'behavior.mootools' );
 	}
 
+	/**
+	 * Wrapper to addStyleSheet
+	 */
+	function addStyleSheet($filename) {
+		if (KunenaFactory::getConfig ()->debug || KunenaForum::isSvn ()) {
+			// If we are in debug more, make sure we load the unpacked css
+			$filename = preg_replace ( '/\-min\./u', '.', $filename );
+		}
+		return JFactory::getDocument ()->addStyleSheet ( JURI::root(true).$this->getFile($filename) );
+	}
+
+	/**
+	 * Wrapper to addScript
+	 */
+	function addScript($filename) {
+		if (KunenaFactory::getConfig ()->debug || KunenaForum::isSvn ()) {
+			// If we are in debug more, make sure we load the unpacked css
+			$filename = preg_replace ( '/\-min\./u', '.', $filename );
+		}
+		return JFactory::getDocument ()->addScript ( JURI::root(true).$this->getFile($filename) );
+	}
+
 	public function getPath($default = false) {
 		if ($default) return "template/default";
 		return "template/{$this->name}";

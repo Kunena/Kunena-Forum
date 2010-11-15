@@ -222,7 +222,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 				<?php if ($this->embedded) echo CKunenaLink::GetShowLatestLink(JText::_('COM_KUNENA_MORE'), $this->func , 'follow'); ?>
 				<?php if (count($this->actionDropdown) > 1) : ?>
 				<?php echo JHTML::_('select.genericlist', $this->actionDropdown, 'do', 'class="inputbox" size="1"', 'value', 'text', 0, 'kBulkChooseActions'); ?>
-				<?php if ($this->actionMove) CKunenaTools::showBulkActionCats (); ?>
+				<?php if ($this->actionMove) :
+					$options = array (JHTML::_ ( 'select.option', '0', "&nbsp;" ));
+					echo JHTML::_('kunenaforum.categorylist', 'bulkactions', 0, $options, array(), 'class="inputbox fbs" size="1" disabled="disabled"', 'value', 'text', 0);
+					endif;?>
 				<input type="submit" name="kBulkActionsGo" class="kbutton" value="<?php echo JText::_('COM_KUNENA_GO') ?>" />
 				<?php endif; ?>
 			</td>

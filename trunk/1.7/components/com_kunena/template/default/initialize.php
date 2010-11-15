@@ -10,6 +10,7 @@
 **/
 defined( '_JEXEC' ) or die();
 
+$app = JFactory::getApplication();
 $document = JFactory::getDocument();
 $template = KunenaFactory::getTemplate();
 $this->params = $template->params;
@@ -21,18 +22,14 @@ $template->loadMootools();
 CKunenaTools::addScript( KUNENA_DIRECTURL . 'js/slimbox/slimbox-min.js' );
 
 // New Kunena JS for default template
-// TODO: Need to check if selected template has an override
-CKunenaTools::addScript ( KUNENA_DIRECTURL . 'template/default/js/default-min.js' );
+$template->addScript ( 'js/default-min.js' );
 
-if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum.css' )) {
+if (file_exists ( JPATH_ROOT .DS. "templates" .DS. $app->getTemplate() .DS. 'css' .DS. 'kunena.forum.css' )) {
 	// Load css from Joomla template
-	CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . 'css/kunena.forum-min.css' );
-} else if (file_exists ( KUNENA_ABSTMPLTPATH .DS. 'css' .DS. 'kunena.forum.css' )){
-	// Load css from the current template
-	CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
+	CKunenaTools::addStyleSheet ( JURI::root(true). "templates/".$app->getTemplate().'css/kunena.forum-min.css' );
 } else {
 	// Load css from default template
-	CKunenaTools::addStyleSheet ( KUNENA_DIRECTURL . 'template/default/css/kunena.forum-min.css' );
+	$template->addStyleSheet ( 'css/kunena.forum-min.css' );
 }
 $cssurl = JURI::base() . "components/com_kunena/template/default/css";
 ?>

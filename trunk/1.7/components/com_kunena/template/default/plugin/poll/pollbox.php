@@ -44,7 +44,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								?>
 								<tr class="krow<?php echo ($i^=1)+1;?>">
 									<td class="kpoll-option"><?php echo KunenaHtmlParser::parseText ( $row->text ); ?></td>
-									<td class="kpoll-bar"><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo (intval($row->votes*25)/5); } else { echo "0"; }?>" alt=""/></td>
+									<td class="kpoll-bar"><img class = "jr-forum-stat-bar" src = "<?php echo JURI::root()."components/com_kunena/template/default/images/bar.png"; ?>" height = "10" width = "<?php if(isset($row->votes)) { echo (intval($row->votes*25)/5); } else { echo "0"; }?>" alt=""/></td>
 									<td class="kpoll-number"><?php if(isset($row->votes) && ($row->votes > 0)) { echo intval($row->votes); } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
 									<td class="kpoll-percent"><?php if($row->votes != '0' && $nbvoters != '0' ) { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td>
 								</tr>
@@ -118,7 +118,7 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 							<?php foreach ( $dataspollresult as $row ) : ?>
 							<tr class="krow<?php echo ($i^=1)+1;?>">
 								<td class="kcol-option"><?php echo KunenaHtmlParser::parseText ($row->text); ?></td>
-								<td class="kcol-bar"><img class = "jr-forum-stat-bar" src = "<?php echo KUNENA_JLIVEURL."components/com_kunena/template/default/images/bar.png"; ?>" height = "10" width = "<?php echo isset($row->votes) ? ($row->votes*25)/5 : "0"; ?>" /></td>
+								<td class="kcol-bar"><img class = "jr-forum-stat-bar" src = "<?php echo JURI::root()."components/com_kunena/template/default/images/bar.png"; ?>" height = "10" width = "<?php echo isset($row->votes) ? ($row->votes*25)/5 : "0"; ?>" /></td>
 								<td class="kcol-number"><?php if(isset($row->votes) && ($row->votes > 0)) { echo $row->votes; } else { echo JText::_('COM_KUNENA_POLL_NO_VOTE'); } ?></td>
 								<td class="kcol-percent"><?php if($row->votes != "0" && $nbvoters != '0') { echo round(($row->votes*100)/$nbvoters,1)."%"; } else { echo "0%"; } ?></td>
 							</tr>

@@ -90,6 +90,29 @@ class KunenaForumMessageAttachmentHelper {
 		return $list;
 	}
 
+	static public function cleanup() {
+		$db = JFactory::getDBO ();
+		// Find up to 50 orphan attachments and delete them
+		$query = "SELECT * FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
+		$db->setQuery ( $query, 0, 50 );
+		$results = (array) $db->loadAssocList ('id');
+		if (KunenaError::checkDatabaseError ()) return false;
+		foreach ($results as $result) {
+			$instance = new KunenaForumMessageAttachment ();
+			$instance->bind ( $result );
+			$instance->exists(false);
+			unset ($instance);
+		}
+		$ids = implode(',', array_keys($results));
+		unset ($results);
+		$query = "DELETE FROM #__kunena_attachments WHERE id IN ($ids)";
+		$db->setQuery ( $query );
+		$db->query ();
+		return KunenaError::checkDatabaseError ();
+	}
+
+	// Internal functions
+
 	static protected function loadById($ids) {
 		foreach ($ids as $i=>$id) {
 			if (isset(self::$_instances [$id]))

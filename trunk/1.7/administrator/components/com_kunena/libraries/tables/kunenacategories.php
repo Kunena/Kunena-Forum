@@ -102,10 +102,10 @@ class TableKunenaCategories extends KunenaTable
 
 	// check for potential problems
 	function check() {
-		if ($this->parent) {
-			if ($this->id == $this->parent) :
+		if ($this->parent_id) {
+			if ($this->id == $this->parent_id) :
 				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_SAME_ERR' ) );
-			 elseif ($this->isChild ( $this->parent )) :
+			 elseif ($this->isChild ( $this->parent_id )) :
 				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_OWNCHILD_ERR' ) );
 			endif;
 		}

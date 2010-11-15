@@ -144,6 +144,9 @@ class KunenaForumCategoryHelper {
 
 		$list = array ();
 		foreach ( $parents as $parent ) {
+			if ($parent instanceof KunenaForumCategory) {
+				$parent = $parent->id;
+			}
 			if (! isset ( self::$_tree [$parent] ))
 				continue;
 			$cats = self::$_tree [$parent];

@@ -253,9 +253,9 @@ switch ($task) {
 		break;
 
 	case 'recount' :
-		CKunenaTools::reCountUserPosts ();
-
+		kimport('kunena.user.helper');
 		kimport('kunena.forum.category.helper');
+		KunenaUserHelper::recount();
 		KunenaForumCategoryHelper::recount ();
 		// Also reset the name info stored with messages
 		//CKunenaTools::updateNameInfo();
@@ -2367,7 +2367,7 @@ function editRank($option, $id) {
 				continue;
 			}
 
-			$filename_list .= '<option value="' . kunena_htmlspecialchars ( $img ) . '"' . $selected . '>' . $img . '</option>';
+			$filename_list .= '<option value="' . kescape ( $img ) . '"' . $selected . '>' . $img . '</option>';
 		}
 	}
 
@@ -2514,8 +2514,9 @@ function trashrestore($option, $cid) {
 			$kunena_db->query ();
 			if (KunenaError::checkDatabaseError()) return;
 
-			CKunenaTools::reCountUserPosts ();
+			kimport('kunena.user.helper');
 			kimport('kunena.forum.category.helper');
+			KunenaUserHelper::recount();
 			KunenaForumCategoryHelper::recount ();
 		}
 	}

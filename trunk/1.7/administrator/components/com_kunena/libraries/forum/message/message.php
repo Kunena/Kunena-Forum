@@ -30,6 +30,7 @@ class KunenaForumMessage extends JObject {
 	protected $_attachments_del = array();
 	protected $_topic = null;
 	protected $_hold = 1;
+	protected $_thread = 0;
 
 	/**
 	 * Constructor
@@ -85,8 +86,76 @@ class KunenaForumMessage extends JObject {
 	}
 
 	public function sendNotification($url=null) {
-		// TODO: if hold=>1, always send message to moderators and never to subscribers
-		// TODO: if hold=>0, always send message to subscribers
+		if ($this->hold == 0) {
+			$mailsubs = 0;
+			// TODO: check configuration
+			$mailmods = 1;
+			$mailadmins = 1;
+		} else {
+			$mailsubs = 1;
+			// TODO: check configuration
+			$mailmods = 0;
+			$mailadmins = 0;
+		}
+
+		if ($url === false) {
+			$url = CKunenaLink::GetMessageURL($this->id, $this->catid, 0, false);
+		}
+		//get all subscribers, moderators and admins who will get the email
+		$me = KunenaUserHelper::get();
+		$acl = KunenaFactory::getAccessControl();
+		$emailToList = $acl->getSubscribers($this->catid, $this->thread, $mailsubs, $mailmods, $mailadmins, $me->userid);
+
+		$config = KunenaFactory::getConfig();
+		$category = $this->getCategory();
+		if (count ( $emailToList )) {
+			jimport('joomla.mail.helper');
+			if (! $config->email || ! JMailHelper::isEmailAddress ( $config->email )) {
+				$this->setError ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ) );
+				return false;
+			} else if ($_SERVER ["REMOTE_ADDR"] == '127.0.0.1') {
+				$this->setError ( JText::_ ( 'COM_KUNENA_EMAIL_DISABLED' ) );
+				return false;
+			}
+			// clean up the message for review
+			$message = KunenaHtmlParser::plainBBCode ( $this->message );
+
+			$mailsender = JMailHelper::cleanAddress ( $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );
+			$mailsubject = JMailHelper::cleanSubject ( "[" . $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "] " . $this->subject . " (" . $category->name . ")" );
+
+			foreach ( $emailToList as $emailTo ) {
+				if (! $emailTo->email || ! JMailHelper::isEmailAddress ( $emailTo->email ))
+					continue;
+
+				if ($emailTo->subscription) {
+					$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION1' );
+					$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION2' );
+				} else {
+					$msg1 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD1' );
+					$msg2 = JText::_ ( 'COM_KUNENA_POST_EMAIL_MOD2' );
+				}
+
+				$msg = "$emailTo->name,\n\n";
+				$msg .= $msg1 . " " . $config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . "\n\n";
+				$msg .= JText::_ ( 'COM_KUNENA_MESSAGE_SUBJECT' ) . ": " . $this->subject . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_GEN_FORUM' ) . ": " . $category->name . "\n";
+				$msg .= JText::_ ( 'COM_KUNENA_VIEW_POSTED' ) . ": " . $this->name . "\n\n";
+				$msg .= $msg2 . "\n";
+				$msg .= "URL: $url\n\n";
+				if ($config->mailfull) {
+					$msg .= JText::_ ( 'COM_KUNENA_GEN_MESSAGE' ) . ":\n-----\n";
+					$msg .= $message;
+					$msg .= "\n-----";
+				}
+				$msg .= "\n\n";
+				$msg .= JText::_ ( 'COM_KUNENA_POST_EMAIL_NOTIFICATION3' ) . "\n";
+				$msg .= "\n\n\n\n";
+				$msg .= "** Powered by Kunena! - http://www.Kunena.com **";
+				$msg = JMailHelper::cleanBody ( $msg );
+
+				JUtility::sendMail ( $config->email, $mailsender, $emailTo->email, $mailsubject, $msg );
+			}
+		}
 	}
 
 	public function publish($value=KunenaForum::PUBLISHED) {
@@ -99,14 +168,19 @@ class KunenaForumMessage extends JObject {
 	}
 
 	public function getTopic() {
-		if (!$this->_topic) {
-			$this->_topic = KunenaForumTopicHelper::get($this->thread);
+		if ($this->_topic) {
+			return $this->_topic;
 		}
-		return $this->_topic;
+		return KunenaForumTopicHelper::get($this->thread);
 	}
 
 	public function setTopic($topic) {
 		$this->_topic = $topic;
+		if ($topic->id) $this->thread = $topic->id;
+	}
+
+	public function getUserTopic($user=null) {
+		return $this->getTopic()->getUserTopic($user);
 	}
 
 	public function getCategory() {
@@ -120,7 +194,7 @@ class KunenaForumMessage extends JObject {
 			'edit'=>array('Read','Own','EditTime'),
 			'move'=>array('Read'),
 			'approve'=>array('Read'),
-			'delete'=>array('Read','Own','EditTime'),
+			'delete'=>array('Read','Own','EditTime', 'Delete'),
 			'undelete'=>array('Read'),
 			'permdelete'=>array('Read'),
 			'attachment.read'=>array('Read'),
@@ -213,16 +287,19 @@ class KunenaForumMessage extends JObject {
 			if (!$attachment->save()) {
 				$this->setError ( $attachment->getError() );
 			}
-			// Fix attachments names inside message
+			// Update attachments count and fix attachment name inside message
 			if ($attachment->exists()) {
+				$this->getTopic()->attachments++;
 				$this->message = preg_replace('/\[attachment\:'.$tmpid.'\].*?\[\/attachment\]/u', "[attachment={$attachment->id}]{$attachment->filename}[/attachment]", $this->message);
 			}
 		}
-		// Delete removed attachments and update message text
+		// Delete removed attachments and update attachments count and message text
 		$attachments = $this->getAttachments(array_keys($this->_attachments_del));
 		foreach ($attachments as $attachment) {
 			if (!$attachment->delete()) {
 				$this->setError ( $attachment->getError() );
+			} else {
+				$this->getTopic()->attachments--;
 			}
 			$this->message = preg_replace('/\[attachment\='.$attachment->id.'\].*?\[\/attachment\]/u', '', $this->message);
 			$this->message = preg_replace('/\[attachment\]'.$attachment->filename.'\[\/attachment\]/u', '', $this->message);
@@ -280,6 +357,7 @@ class KunenaForumMessage extends JObject {
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
 		$this->_hold = $this->hold === null ? 1 : $this->hold;
+		$this->_thread = $this->thread;
 		return $this->_exists;
 	}
 
@@ -305,45 +383,42 @@ class KunenaForumMessage extends JObject {
 			return false;
 		}
 
-		$postDelta = $this->postDelta();
-
 		// Create the messages table object
 		$table = $this->getTable ();
 		$table->bind ( $this->getProperties () );
 		$table->exists ( $this->_exists );
 
-		// Check and store the object.
+		// Check the object.
 		if (! $table->check ()) {
 			$this->setError ( $table->getError () );
 			return false;
 		}
 
-		// In case we are creating new message, we need to save and load it first
-		if ($isnew) {
-			if (!$table->store ()) {
+		// Store the message data in the database
+		if (!$table->store ()) {
+			$this->setError ( $table->getError () );
+			return false;
+		}
+		$this->id = $table->get ( 'id' );
+		if (!$this->thread) {
+			// Update missing topic information into database
+			$this->thread = $this->id;
+			$table->bind ( $this->getProperties () );
+			if (! $result = $table->store ()) {
 				$this->setError ( $table->getError () );
 				return false;
 			}
-			$this->load ( $table->get ( 'id' ) );
 		}
-
-		// Update topic
-		$topic = $this->getTopic();
-		if (! $topic->update($this, $postDelta)) {
-			$this->setError ( $topic->getError () );
-		}
-
-		$this->thread = $topic->id;
 
 		// Update attachments and message text (allowed to fail)
 		$this->updateAttachments();
 
-		// Store the message data in the database
-		$table->bind ( $this->getProperties () );
-		if (! $result = $table->store ()) {
-			$this->setError ( $table->getError () );
-		}
+		// Cascade changes to other tables
+		$this->update();
 
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('finder');
+		$dispatcher->trigger('onAfterSaveKunenaPost', array($this->id));
 		return $result;
 	}
 
@@ -370,21 +445,21 @@ class KunenaForumMessage extends JObject {
 		$this->_exists = false;
 		$this->hold = 1;
 
+		$attachments = $this->getAttachments();
+		foreach ($attachments as $attachment) {
+			if (!$attachment->delete()) {
+				$this->setError ( $attachment->getError() );
+			}
+		}
+
 		$db = JFactory::getDBO ();
-		// Delete attacments
-		require_once KPATH_SITE.'/lib/kunean.attachments.class.php';
-		CKunenaAttachments::deleteMessage($this->id);
 		// Delete thank yous
 		$queries[] = "DELETE FROM #__kunena_thankyou WHERE postid={$db->quote($this->id)}";
 		// Delete message
 		$queries[] = "DELETE FROM #__kunena_messages_text WHERE mesid={$db->quote($this->id)}";
 
-		if ($this->_hold == 0) {
-			$queries[] = "UPDATE #__kunena_users SET posts=posts-1 WHERE userid={$db->quote($this->userid)}";
-			$queries[] = "UPDATE #__kunena_user_topics SET posts=posts-1 WHERE user_id={$db->quote($this->userid)} AND topic_id={$db->quote($this->thread)}";
-			$this->getTopic()->update($this, -1);
-			// TODO: event missing
-		}
+		// Cascade changes into other tables
+		$this->update();
 
 		foreach ($queries as $query) {
 			$db->setQuery($query);
@@ -396,6 +471,41 @@ class KunenaForumMessage extends JObject {
 	}
 
 	// Internal functions
+
+	protected function update() {
+		// If post was published and then moved, we need to update old topic
+		if (!$this->_hold && $this->_thread && $this->_thread != $this->thread) {
+			$topic = KunenaForumTopicHelper::get($this->_thread);
+			if (! $topic->update($this, -1)) {
+				$this->setError ( $topic->getError () );
+			}
+		}
+
+		$postDelta = $this->delta(true);
+		// Update topic
+		$topic = $this->getTopic();
+		if (! $topic->update($this, $postDelta)) {
+			$this->setError ( $topic->getError () );
+		}
+
+		// Activity integration
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('finder');
+		$activity = KunenaFactory::getActivityIntegration();
+		if ($postDelta < 0) {
+			$dispatcher->trigger('onDeleteKunenaPost', array(array($this->id)));
+			$activity->onAfterDelete($this);
+		} elseif ($postDelta > 0) {
+			if ($this->parent == 0) {
+				$me = KunenaUser::getInstance();
+				CKunenaTools::markTopicRead ( $topic->id, $me->userid );
+				$activity->onAfterPost($this);
+			} else {
+				$topic->markNew();
+				$activity->onAfterReply($this);
+			}
+		}
+	}
 
 	protected function authoriseRead($user) {
 		// Check that user has the right to see the post (user can see his own unapproved posts)
@@ -426,18 +536,50 @@ class KunenaForumMessage extends JObject {
 		}
 		return true;
 	}
+
+	/**
+	 * This function check the edit time for the author of the author
+	 * of the post and return if the user is allwoed or not to edit
+	 * her post
+	 *
+	 * @param timestamp $messagemodifiedtime	Time when the message has been edited
+	 * @param timestamp $messagetime			Actual message time
+	 */
 	protected function authoriseEditTime($user) {
 		// Do not perform rest of the checks to moderators and admins
 		if ($user->isModerator($this->catid)) {
 			return true;
 		}
 		// User is only allowed to edit post within time specified in the configuration
-		if (! CKunenaTools::editTimeCheck ( $this->modified_time, $this->time )) {
+		$config = KunenaFactory::getConfig ();
+		if (intval($config->useredit) != 1) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+			return false;
+		}
+		if (intval($config->useredittime) == 0) {
+			return true;
+		} else {
+			//Check whether edit is in time
+			$modtime = $this->modified_time;
+			if (! $modtime) {
+				$modtime = $this->time;
+			}
+			if ($modtime + intval($config->useredittime)< CKunenaTimeformat::internalTime ()) {
+				$this->setError ( JText::_ ( 'COM_KUNENA_POST_EDIT_NOT_ALLOWED' ) );
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected function authoriseDelete($user) {
+		if (!$user->isModerator($this->catid) && $this->getTopic()->last_post_id != $this->id) {
+			$this->setError (JText::_ ( 'COM_KUNENA_POST_ERROR_DELETE_REPLY_AFTER' ) );
 			return false;
 		}
 		return true;
 	}
+
 
 	protected function check() {
 		$author = KunenaUserHelper::get($this->userid);
@@ -497,15 +639,50 @@ class KunenaForumMessage extends JObject {
 				$this->modified_time = JFactory::getDate()->toUnix();
 			}
 		}
+
+		// Flood protection
+		$config = KunenaFactory::getConfig();
+		if ($config->floodprotection && ! $this->getCategory()->authorise('moderate') ) {
+			$this->_db->setQuery ( "SELECT MAX(time) FROM #__kunena_messages WHERE ip={$this->_db->quote($this->ip)}" );
+			$lastPostTime = $this->_db->loadResult ();
+			if ($this->_db->getErrorNum()) {
+				$this->setError ( $this->_db->getErrorMsg() );
+				return false;
+			}
+			if ($lastPostTime + $config->floodprotection > JFactory::getDate()->toUnix()) {
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_ERROR_MESSAGE_FLOOD', $config->floodprotection ) );
+				return false;
+			}
+		}
+
+		if (!$this->exists()) {
+			// Ignore identical messages (posted within 5 minutes)
+			$duplicatetimewindow = JFactory::getDate ()->toUnix() - 5 * 60;
+			$this->_db->setQuery ( "SELECT m.id FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid
+				WHERE m.userid={$this->_db->quote($this->userid)}
+				AND m.ip={$this->_db->quote($this->ip)}
+				AND t.message={$this->_db->quote($this->message)}
+				AND m.time>={$this->_db->quote($duplicatetimewindow)}" );
+			$id = $this->_db->loadResult ();
+			if ($this->_db->getErrorNum()) {
+				$this->setError ( $this->_db->getErrorMsg() );
+				return false;
+			}
+			if ($id) {
+				$this->setError ( JText::_ ( 'COM_KUNENA_POST_DUPLICATE_IGNORED' ) );
+				return false;
+			}
+		}
+
 		return true;
 	}
 
-	protected function postDelta() {
-		if (!$this->hold && $this->_hold) {
-			// Create or publish message
+	protected function delta() {
+		if (!$this->hold && ($this->_hold || $this->thread != $this->_thread)) {
+			// Publish message or move it into new topic
 			return 1;
-		} elseif ($this->hold && !$this->_hold) {
-			// Delete or unpublish message
+		} elseif (!$this->_hold && $this->hold) {
+			// Unpublish message
 			return -1;
 		}
 		return 0;

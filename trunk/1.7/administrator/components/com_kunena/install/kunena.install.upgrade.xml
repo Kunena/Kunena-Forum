@@ -227,17 +227,18 @@
 					SET c.allreadtime=FROM_UNIXTIME(s.lasttime);
 			</query>
 			<query>
+				UPDATE #__kunena_messages SET hold=3 WHERE parent=0 AND hold=2;
+			</query>
+			<query>
 				INSERT IGNORE INTO `#__kunena_topics`
 					(id, category_id, subject, icon_id, locked, hold, ordering, hits, poll_id, moved_id)
 					SELECT a.id, a.catid, a.subject, a.topic_emoticon, a.locked, a.hold, a.ordering, a.hits, p.id AS poll_id, 0 as moved_id
 					FROM #__kunena_messages AS a
 					LEFT JOIN #__kunena_polls AS p ON p.threadid=a.id
-					WHERE a.parent = 0 AND a.moved = 0
+					WHERE a.parent = 0 AND a.moved = 0 AND a.id=a.thread
 					GROUP BY a.id
 			</query>
-			<query>DROP TABLE IF EXISTS `jos_kunena_favorites`</query>
 			<query>DROP TABLE IF EXISTS `jos_kunena_attachments_bak` </query>
-			<query>DROP TABLE IF EXISTS `jos_kunena_groups`</query>
 			<query>DROP TABLE IF EXISTS `jos_kunena_favorites`</query>
 			<query>DROP TABLE IF EXISTS `jos_kunena_groups`</query>
 			<query>DROP TABLE IF EXISTS `jos_kunena_subscriptions`</query>

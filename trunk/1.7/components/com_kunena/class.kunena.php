@@ -19,46 +19,21 @@ defined( '_JEXEC' ) or die();
 
 jimport('joomla.utilities.string');
 
-// Joomla absolute path
-define('KUNENA_JLIVEURL', JURI::root());
-
 require_once (KPATH_SITE . '/lib/kunena.defines.php');
 kimport('kunena.error');
 
-$kunena_app =& JFactory::getApplication();
-$document =& JFactory::getDocument();
+$kunena_app = JFactory::getApplication();
 $kunena_config = KunenaFactory::getConfig ();
-$kunena_db = &JFactory::getDBO();
-$kunena_my = &JFactory::getUser();
-
-// Joomla template dir
-define('KUNENA_JTEMPLATEPATH', KUNENA_ROOT_PATH .DS. "templates".DS . $kunena_app->getTemplate());
-define('KUNENA_JTEMPLATEURL', KUNENA_JLIVEURL. "templates/".$kunena_app->getTemplate());
-
-/*       _\|/_
-         (o o)
- +----oOO-{_}-OOo--------------------------------+
- | Now we have the components Itemids everywhere |
- | Please use these constants where ever needed  |
- +----------------------------------------------*/
 
 // Kunena live url
-define('KUNENA_LIVEURL', KUNENA_JLIVEURL . 'index.php?option=com_kunena');
+define('KUNENA_LIVEURL', JURI::root() . 'index.php?option=com_kunena');
 define('KUNENA_LIVEURLREL', 'index.php?option=com_kunena');
 
 // Kunena souces absolute path
-define('KUNENA_DIRECTURL', KUNENA_JLIVEURL . 'components/com_kunena/');
-
-if (!defined("KUNENA_JCSSURL")) {
-    $current_stylesheet = $kunena_app->getTemplate();
-    if (KunenaError::checkDatabaseError()) return;
-    define('KUNENA_JCSSURL', KUNENA_JLIVEURL . 'templates/' . $current_stylesheet . '/css/template_css.css');
-}
+define('KUNENA_DIRECTURL', JURI::root() . 'components/com_kunena/');
 
 // Kunena uploaded files directory
-define('KUNENA_LIVEUPLOADEDPATH_LEGACY', KUNENA_JLIVEURL . 'images/fbfiles');
-define('KUNENA_LIVEUPLOADEDPATH', KUNENA_JLIVEURL . 'media/kunena');
-
+define('KUNENA_LIVEUPLOADEDPATH', JURI::root() . 'media/kunena');
 
 // now continue with other paths
 
@@ -102,9 +77,6 @@ define('KUNENA_ABSTMPLTMAINIMGPATH', KUNENA_PATH_TEMPLATE .DS. $fb_cur_img_templ
 
 define('KUNENA_ABSIMAGESPATH', KUNENA_ABSTMPLTMAINIMGPATH .DS. 'images/');
 
-// absolute icons path
-define('KUNENA_ABSICONSPATH', KUNENA_ABSIMAGESPATH . 'icons/');
-
 // absolute emoicons path
 define('KUNENA_ABSEMOTIONSPATH', KUNENA_ABSIMAGESPATH . 'emoticons/');
 
@@ -131,17 +103,10 @@ define('KUNENA_URLEMOTIONSPATH', KUNENA_URLIMAGESPATH . 'emoticons/');
 // url ranks path
 define('KUNENA_URLRANKSPATH', KUNENA_URLIMAGESPATH . 'ranks/');
 
-// url catimages path
-define('KUNENA_URLCATIMAGES', KUNENA_LIVEUPLOADEDPATH ."/{$kunena_config->catimagepath}/"); // Kunena category images direct url
-
 kimport('kunena.html.parser');
 
 class CKunenaTools {
     var $id = null;
-
-	function checkDatabaseError() {
-		return KunenaError::checkDatabaseError();
-	}
 
 	function showButton($name, $text) {
 		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
@@ -164,40 +129,20 @@ class CKunenaTools {
 		echo $html;
 	}
 
-	function reCountUserPosts() {
-    	$kunena_db = &JFactory::getDBO();
-
-        // Reset category counts as next query ignores users which have written no messages
-        $kunena_db->setQuery("UPDATE #__kunena_users SET posts=0");
-        $kunena_db->query();
-        if (KunenaError::checkDatabaseError()) return;
-
-          	// Update user post count (ignore unpublished categories and hidden messages)
-    	$kunena_db->setQuery("INSERT INTO #__kunena_users (userid, posts)"
-    		." SELECT m.userid, COUNT(m.userid) "
-    		." FROM #__kunena_messages AS m"
-    		." INNER JOIN #__kunena_users AS u ON u.userid = m.userid"
-    		." WHERE m.hold=0 and m.catid IN (SELECT id FROM #__kunena_categories WHERE published=1)"
-    		." GROUP BY m.userid"
-    		." ON DUPLICATE KEY UPDATE posts=VALUES(posts)");
-    	$kunena_db->query();
-        KunenaError::checkDatabaseError();
-    }
-
     function updateNameInfo()
     {
-        $kunena_db = &JFactory::getDBO();
-        $kunena_config = KunenaFactory::getConfig ();
+        $db = &JFactory::getDBO();
+        $config = KunenaFactory::getConfig ();
 
-        $fb_queryName = $kunena_config->username ? "username" : "name";
+        $fb_queryName = $config->username ? "username" : "name";
 
 	    $query = "UPDATE #__kunena_messages AS m, #__users AS u
 	    			SET m.name = u.$fb_queryName
 					WHERE m.userid = u.id";
-        $kunena_db->setQuery($query);
-        $kunena_db->query();
+        $db->setQuery($query);
+        $db->query();
         KunenaError::checkDatabaseError();
-        return $kunena_db->getAffectedRows();
+        return $db->getAffectedRows();
     }
 
 	function markTopicRead($thread, $userid) {
@@ -206,7 +151,7 @@ class CKunenaTools {
 		if (! $userid || ! $thread)
 			return;
 
-		$kunena_db = &JFactory::getDBO ();
+		$db = JFactory::getDBO ();
 		$kunena_session = KunenaFactory::getSession ();
 
 		$readTopics = explode ( ',', $kunena_session->readtopics );
@@ -218,22 +163,10 @@ class CKunenaTools {
 		}
 
 		if ($readTopics) {
-			$kunena_db->setQuery ( "UPDATE #__kunena_sessions SET readtopics={$kunena_db->Quote($readTopics)} WHERE userid={$kunena_db->Quote($userid)}" );
-			$kunena_db->query ();
+			$db->setQuery ( "UPDATE #__kunena_sessions SET readtopics={$db->Quote($readTopics)} WHERE userid={$db->Quote($userid)}" );
+			$db->query ();
 			KunenaError::checkDatabaseError();
 		}
-	}
-
-	function forumSelectList($name, $catid=0, $options=array(), $attr='', $sections=false) {
-		$cat_params = array ();
-		$cat_params['ordering'] = 'ordering';
-		$cat_params['toplevel'] = 0;
-		$cat_params['sections'] = $sections;
-		$cat_params['direction'] = 1;
-		$cat_params['unpublished'] = 0;
-		$cat_params['catid'] = $catid;
-		$cat_params['action'] = 'read';
-		return JHTML::_('kunenaforum.categorylist', $name, $catid, $options, $cat_params, $attr, 'value', 'text', $catid);
 	}
 
 	function KSelectList($name, $options=array(), $attr='', $sections=false, $id='', $selected=0) {
@@ -248,17 +181,6 @@ class CKunenaTools {
 		if (!$id) $id = $name;
 		return JHTML::_('kunenaforum.categorylist', $name, 0, $options, $cat_params, $attr, 'value', 'text', $selected, $id);
 	}
-
-	function showBulkActionCats($disabled = 1) {
-        $kunena_db = &JFactory::getDBO();
-
-        $options = array ();
-        $options[] = JHTML::_('select.option', '0', "&nbsp;");
-        $attr = 'class="inputbox fbs" size="1"' . ($disabled ? ' disabled="disabled" ' : "");
-        $lists['parent'] = CKunenaTools::forumSelectList('bulkactions', 0, $options, $attr);
-
-        echo $lists['parent'];
-        }
 
 	// TODO: deprecated
 	function getTemplateImage($image) {
@@ -280,152 +202,6 @@ class CKunenaTools {
 	function isModerator($uid=null, $catid=0) {
 		$acl = KunenaFactory::getAccessControl();
 		return $acl->isModerator($uid, $catid);
-	}
-
-	function getEMailToList($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
-		$acl = KunenaFactory::getAccessControl();
-		return $acl->getSubscribers($catid, $thread, $subscriptions, $moderators, $admins, $excludeList);
-	}
-
-	function KDeletePosts() {
-		$kunena_app = JFactory::getApplication ();
-
-		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
-		if (!JRequest::checkToken()) {
-			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$kunena_app->redirect ( $backUrl );
-		}
-
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$items = KGetArrayInts ( "cb" );
-
-		// start iterating here
-		$message = '';
-		foreach ( $items as $id => $value ) {
-			$delete = $kunena_mod->deleteThread ( $id, $DeleteAttachments = false );
-			if (! $delete) {
-				$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' );
-			}
-
-		} //end foreach
-
-		$kunena_app->redirect ( $backUrl, $message );
-	}
-
-	function KMovePosts($catid) {
-		$catid = ( int ) $catid;
-
-		$kunena_app = JFactory::getApplication ();
-
-		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
-		if (!JRequest::checkToken()) {
-			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$kunena_app->redirect ( $backUrl );
-		}
-
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$items = KGetArrayInts ( "cb" );
-
-		$message = '';
-		// start iterating here
-		foreach ( $items as $id => $value ) {
-			$move = $kunena_mod->moveThread ( $id, $catid, $DeleteAttachments = false );
-			if (! $move) {
-				$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
-			} else {
-				$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
-			}
-		} //end foreach
-
-		$kunena_app->redirect ( $backUrl, $message );
-	}
-
-	function KDeletePerm() {
-		$kunena_app = JFactory::getApplication ();
-		$kunena_db = JFactory::getDBO ();
-
-		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
-		if (!JRequest::checkToken()) {
-			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$kunena_app->redirect ( $backUrl );
-		}
-
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$items = KGetArrayInts ( "cb" );
-
-		// start iterating here
-		foreach ( $items as $id => $value ) {
-			$query = "SELECT `hold` FROM #__kunena_messages WHERE `thread`={$kunena_db->quote($id)};";
-			$kunena_db->setQuery ( $query );
-			$messagesHold = $kunena_db->loadObjectList ();
-			KunenaError::checkDatabaseError();
-
-			foreach ( $messagesHold as $messageHold ) {
-				if ($messageHold->hold == 2) {
-					$delete = $kunena_mod->deleteThreadPerminantly ( $id, true );
-					if (! $delete) {
-						$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
-					} else {
-						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' ) );
-					}
-				}
-			}
-
-		} //end foreach
-
-		$kunena_app->redirect ( $backUrl );
-	}
-
-	function KUndelete() {
-		$kunena_app = JFactory::getApplication ();
-		$kunena_db = JFactory::getDBO ();
-
-		$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
-		if (!JRequest::checkToken()) {
-			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-			$kunena_app->redirect ( $backUrl );
-		}
-
-		require_once (KUNENA_PATH_LIB . '/kunena.moderation.class.php');
-		$kunena_mod = CKunenaModeration::getInstance ();
-
-		$items = KGetArrayInts ( "cb" );
-
-		// start iterating here
-		foreach ( $items as $id => $value  ) {
-			// Need to get hold value to check if the message is right deleted
-			$query = "SELECT MAX(IF(`hold`=2 OR `hold`=3, 1, 0)) FROM #__kunena_messages WHERE `thread`={$kunena_db->quote($id)} GROUP BY `thread`;";
-			$kunena_db->setQuery ( $query );
-			$messageHold = $kunena_db->loadResult ();
-			KunenaError::checkDatabaseError();
-
-			if ($messageHold) {
-				$delete = $kunena_mod->UndeleteThread ( $id, true );
-				if (! $delete) {
-					$kunena_app->enqueueMessage ( $kunena_mod->getErrorMessage (), 'notice' );
-				} else {
-					$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' ) );
-				}
-
-				// Last but not least update forum stats
-				kimport('kunena.forum.category.helper');
-				KunenaForumCategoryHelper::recount ();
-
-				// Activity integration
-				$activity = KunenaFactory::getActivityIntegration();
-				$activity->onAfterUndelete($this);
-			}
-		} //end foreach
-
-		$kunena_app->redirect ( $backUrl );
 	}
 
 		/**
@@ -503,17 +279,6 @@ class CKunenaTools {
 		}
 	}
 
-	function displayLoginBox() {
-		require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
-		$type = CKunenaLogin::getType ();
-		if ($type == 'login') {
-			CKunenaTools::loadTemplate('/loginbox/login.php');
-		} else {
-			CKunenaTools::loadTemplate('/loginbox/logout.php');
-		}
-	}
-
-
 		/**
 		 * This function loads the appropriate template file
 		 * It checks if the selected template contains an override
@@ -534,39 +299,14 @@ class CKunenaTools {
 		}
 
 		/**
-		 * This function check the edit time for the author of the author
-		 * of the post and return if the user is allwoed or not to edit
-		 * her post
-		 *
-		 * @param timestamp $messagemodifiedtime	Time when the message has been edited
-		 * @param timestamp $messagetime			Actual message time
-		 */
-		function editTimeCheck ($messagemodifiedtime, $messagetime) {
-			$kunena_config = KunenaFactory::getConfig ();
-			if (intval($kunena_config->useredit) != 1) return false;
-			if (intval($kunena_config->useredittime) == 0) {
-					return true;
-			} else {
-				//Check whether edit is in time
-				$modtime = $messagemodifiedtime;
-				if (! $modtime) {
-					$modtime = $messagetime;
-				}
-				if ($modtime + intval($kunena_config->useredittime) >= CKunenaTimeformat::internalTime ()) {
-					return true;
-				}
-			}
-		}
-
-		/**
 		 * This function load datas for rules or help page
 		 *
 		 */
 		function getRulesHelpDatas($id) {
-			$kunena_db = &JFactory::getDBO ();
+			$db = JFactory::getDBO ();
 
-			$kunena_db->setQuery ( "SELECT introtext, id FROM #__content WHERE id={$kunena_db->Quote($id)}" );
-			$introtext = $kunena_db->loadResult ();
+			$db->setQuery ( "SELECT introtext, id FROM #__content WHERE id={$db->Quote($id)}" );
+			$introtext = $db->loadResult ();
 			KunenaError::checkDatabaseError();
 
 			return $introtext;
@@ -579,10 +319,10 @@ class CKunenaTools {
 		 */
 		function addStyleSheet($filename) {
 
-			$document = & JFactory::getDocument ();
-			$kunena_config = KunenaFactory::getConfig ();
+			$document = JFactory::getDocument ();
+			$config = KunenaFactory::getConfig ();
 
-			if ($kunena_config->debug || KunenaForum::isSvn()) {
+			if ($config->debug || KunenaForum::isSvn()) {
 				// If we are in debug more, make sure we load the unpacked css
 				$filename = preg_replace ( '/\-min\./u', '.', $filename );
 			}
@@ -596,10 +336,10 @@ class CKunenaTools {
 		 */
 		function addScript($filename) {
 
-			$document = & JFactory::getDocument ();
-			$kunena_config = KunenaFactory::getConfig ();
+			$document = JFactory::getDocument ();
+			$config = KunenaFactory::getConfig ();
 
-			if ($kunena_config->debug || KunenaForum::isSvn()) {
+			if ($config->debug || KunenaForum::isSvn()) {
 				// If we are in debug more, make sure we load the unpacked css
 				$filename = preg_replace ( '/\-min\./u', '.', $filename );
 			}
@@ -608,23 +348,3 @@ class CKunenaTools {
 		}
 
     } // end of class
-
-function KGetArrayInts($name) {
-    $array = JRequest::getVar($name, array ( 0 ), 'post', 'array');
-
-    $items = array();
-    foreach ($array as $item=>$value) {
-        if ((int)$item && (int)$item>0) $items[(int)$item] = 1;
-    }
-    $array = $items;
-
-    if (!is_array($array)) {
-        $array = array ( 0 );
-    }
-
-    return $array;
-}
-
-function kunena_htmlspecialchars($string, $quote_style=ENT_COMPAT, $charset='UTF-8') {
-	return htmlspecialchars($string, $quote_style, $charset);
-}

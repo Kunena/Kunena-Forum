@@ -111,8 +111,8 @@ class CKunenaShowcat {
 		//meta description and keywords
 		$document = JFactory::getDocument ();
 		$parentCategory = $this->category->getParent();
-		$metaKeys = kunena_htmlspecialchars ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
-		$metaDesc = $document->get ( 'description' ) . '. ' . kunena_htmlspecialchars ( "{$parentCategory->name} ({$this->page}/{$this->totalpages}) - {$this->category->name} - {$this->config->board_title}" );
+		$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . $this->app->getCfg ( 'sitename' ) );
+		$metaDesc = $document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} ({$this->page}/{$this->totalpages}) - {$this->category->name} - {$this->config->board_title}" );
 		$document->setMetadata ( 'keywords', $metaKeys );
 		$document->setDescription ( $metaDesc );
 

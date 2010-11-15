@@ -11,6 +11,8 @@
 
 defined( '_JEXEC' ) or die();
 
+kimport('kunena.forum.message.helper');
+
 class CKunenaThankyou {
 
 	/**
@@ -50,14 +52,12 @@ class CKunenaThankyou {
 			$this->_app->enqueueMessage(JText::_('COM_KUNENA_THANKYOU_DISABLED'));
 			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid, 0, false ) );
 		}
-		require_once(KPATH_SITE.'/lib/kunena.posting.class.php');
-		$post = new CKunenaPosting();
-		if (!$post->action($this->pid)) {
-			$errors = $post->getErrors();
-			$this->_app->enqueueMessage(reset($post->getErrors()));
+		$post = KunenaForumMessageHelper::get($this->pid);
+		if (!$post->authorise('thankyou')) {
+			$this->_app->enqueueMessage($post->getError());
 			$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->pid, $this->catid, 0, false ) );
 		}
-		$this->targetuserid = $post->get('userid');
+		$this->targetuserid = $post->userid;
 		//Check if the user already said thank you to this post
 		if ($this->my->id == $this->targetuserid) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_THANKYOU_NOT_YOURSELF' ) );

@@ -55,6 +55,10 @@ class CKunenaRSSView {
 		}
 	}
 
+	function escape($var)
+	{
+		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
+	}
 
 	/**
 	 * Pulls together data and options and outputs the build feed.
@@ -103,7 +107,7 @@ class CKunenaRSSView {
 		$uribase	= $uri->toString(array('scheme', 'host', 'port'));
 
 		// Various labels needed
-		$title			= kunena_htmlspecialchars($this->app->getCfg('sitename')) .' - Forum';
+		$title			= $this->escape($this->app->getCfg('sitename')) .' - Forum';
 		$description	= 'Kunena Site Syndication';
 		$link			= JURI::root();
 		$generator		= 'Kunena ' . KunenaForum::version();

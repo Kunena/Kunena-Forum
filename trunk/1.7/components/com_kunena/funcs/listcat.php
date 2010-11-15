@@ -157,26 +157,27 @@ class CKunenaListcat {
 	}
 
 	public function getCategoryIcon($catid, $thumb = false) {
+		$config = KunenaFactory::getConfig();
 		if (! $thumb) {
 			if ($this->config->shownew && $this->me->userid != 0) {
 				if (! empty ( $this->new [$catid] )) {
 					// Check Unread    Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_on.gif" )) {
-						return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+						return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $catid . "_on.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 					} else {
 						return CKunenaTools::showIcon ( 'kunreadforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 					}
 				} else {
 					// Check Read Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_off.gif" )) {
-						return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
+						return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $catid . "_off.gif\" border=\"0\" class='kforum-cat-image' alt=\" \"  />";
 					} else {
 						return CKunenaTools::showIcon ( 'kreadforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 					}
 				}
 			} else {
 				if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_notlogin.gif" )) {
-					return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $catid . "_notlogin.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
 					return CKunenaTools::showIcon ( 'knotloginforum', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}
@@ -186,14 +187,14 @@ class CKunenaListcat {
 				if (! empty ( $this->new [$catid] )) {
 					// Check Unread    Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_on_childsmall.gif" )) {
-						return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+						return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $catid . "_on_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 					} else {
 						return CKunenaTools::showIcon ( 'kunreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NEWPOST' ) );
 					}
 				} else {
 					// Check Read Cat Images
 					if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_off_childsmall.gif" )) {
-						return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+						return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $catid . "_off_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 					} else {
 						return CKunenaTools::showIcon ( 'kreadforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 					}
@@ -201,7 +202,7 @@ class CKunenaListcat {
 			} else {
 				// Not Login Cat Images
 				if (is_file ( KUNENA_ABSCATIMAGESPATH . $catid . "_notlogin_childsmall.gif" )) {
-					return "<img src=\"" . KUNENA_URLCATIMAGES . $catid . "_notlogin_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
+					return "<img src=\"" . KUNENA_LIVEUPLOADEDPATH ."/{$config->catimagepath}/" . $catid . "_notlogin_childsmall.gif\" border=\"0\" class='kforum-cat-image' alt=\" \" />";
 				} else {
 					return CKunenaTools::showIcon ( 'knotloginforum-sm', JText::_ ( 'COM_KUNENA_GEN_FORUM_NOTNEW' ) );
 				}

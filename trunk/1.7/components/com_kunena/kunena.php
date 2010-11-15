@@ -273,16 +273,16 @@ if ($func == "json") {
 	$kunena_app->close ();
 }
 
+if (file_exists ( KUNENA_ABSTMPLTPATH . '/initialize.php' )) {
+	require_once ( KUNENA_ABSTMPLTPATH . '/initialize.php' );
+} else {
+	require_once (KPATH_SITE . '/template/default/initialize.php');
+}
 if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// if the board is offline
 	echo $kunena_config->offline_message;
 } else if ($kunena_config->regonly && ! $kunena_my->id) {
 	// if we only allow registered users
-	if (file_exists ( KUNENA_JTEMPLATEPATH .DS. 'css' .DS. 'kunena.forum-min.css' )) {
-		CKunenaTools::addStyleSheet ( KUNENA_JTEMPLATEURL . '/css/kunena.forum-min.css' );
-	} else {
-		CKunenaTools::addStyleSheet ( KUNENA_TMPLTCSSURL );
-	}
 	echo '<div id="Kunena">';
 	CKunenaTools::loadTemplate('/login.php');
 	echo '</div>';
@@ -317,12 +317,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	include_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.timeformat.class.php');
 
 	$document = & JFactory::getDocument ();
-
-	if (file_exists ( KUNENA_ABSTMPLTPATH . '/initialize.php' )) {
-		require_once ( KUNENA_ABSTMPLTPATH . '/initialize.php' );
-	} else {
-		require_once (KPATH_SITE . '/template/default/initialize.php');
-	}
 
 	// Insert WhoIsOnlineDatas
 	require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
@@ -424,7 +418,15 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	}
 
 	CKunenaTools::loadTemplate('/menu.php');
-	CKunenaTools::displayLoginBox();
+
+	// Display login box
+	require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
+	$type = CKunenaLogin::getType ();
+	if ($type == 'login') {
+		CKunenaTools::loadTemplate('/loginbox/login.php');
+	} else {
+		CKunenaTools::loadTemplate('/loginbox/logout.php');
+	}
 
  	if(JDEBUG){
 		$__profiler->mark('Profilebox End');
@@ -648,57 +650,82 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			break;
 
 		case 'bulkactions' :
+			kimport('kunena.forum.topic.helper');
+			$backUrl = $kunena_app->getUserState ( "com_kunena.ActionBulk" );
+			if (!JRequest::checkToken()) {
+				$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+				$kunena_app->redirect ( $backUrl );
+			}
+			$topics = KunenaForumTopicHelper::getTopics(JRequest::getVar('cb', array ( 0 ), 'post', 'array'));
+			$message = '';
 			switch ($do) {
 				case "bulkDel" :
-					CKunenaTools::KDeletePosts ( );
+					foreach ( $topics as $topic ) {
+						if ($topic->authorise('delete') && $topic->publish(KunenaForum::TOPIC_DELETED)) {
+							$message = JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' );
+						} else {
+							$kunena_app->enqueueMessage ( $topic->getError (), 'notice' );
+						}
+					}
+					break;
 
+				case "bulkDelPerm" :
+					foreach ( $topics as $topic ) {
+						if ($topic->authorise('permdelete') && $topic->delete()) {
+							$message = JText::_ ( 'COM_KUNENA_BULKMSG_DELETED' );
+						} else {
+							$kunena_app->enqueueMessage ( $topic->getError (), 'notice' );
+						}
+					}
+					break;
+
+				case "bulkRestore" :
+					foreach ( $topics as $topic ) {
+						if ($topic->authorise('undelete') && $topic->publish(KunenaForum::PUBLISHED)) {
+							$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_UNDELETE' );
+						} else {
+							$kunena_app->enqueueMessage ( $topic->getError (), 'notice' );
+						}
+					}
 					break;
 
 				case "bulkMove" :
-					CKunenaTools::KMovePosts ( $catid );
+					kimport('kunena.forum.category.helper');
+					$target = KunenaForumCategoryHelper::get($catid);
+					if (!$target->authorise('read')) {
+						$kunena_app->enqueueMessage ( $target->getError(), 'error' );
+						$kunena_app->redirect ( $backUrl );
+					}
+					foreach ( $topics as $topic ) {
+						if ($topic->authorise('move') && $topic->move($target)) {
+							$message = JText::_ ( 'COM_KUNENA_POST_SUCCESS_MOVE' );
+						} else {
+							$kunena_app->enqueueMessage ( $topic->getError (), 'notice' );
+						}
+					}
 					break;
 
 				case "bulkFavorite" :
-					if (!JRequest::checkToken()) {
-						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-						$kunena_app->redirect ( CKunenaLink::GetProfileURL($kunena_my->id, false) );
-					}
-					$catids = JRequest::getVar('cb', array ( 0 ), 'post', 'array');
-					$result = KunenaForumCategoryHelper::favorite($catids, 0);
-
+					// Unfavorite topics
+					$result = KunenaForumTopicHelper::favorite(array_keys($topics), 0);
 					if ( $result ) {
 						$message = JText::_('COM_KUNENA_USER_UNFAVORITE_YES');
 					} else {
 						$message = JText::_('COM_KUNENA_POST_UNFAVORITED_TOPIC');
 					}
-
-					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id, false),$message);
 					break;
 
 				case "bulkSub" :
-					if (!JRequest::checkToken()) {
-						$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-						$kunena_app->redirect ( CKunenaLink::GetProfileURL($kunena_my->id, false) );
-					}
-					$catids = JRequest::getVar('cb', array ( 0 ), 'post', 'array');
-					$result = KunenaForumCategoryHelper::subscribe($catids, 0);
-
+					// Unsubscribe topics
+					$result = KunenaForumCategoryHelper::subscribe(array_keys($topics), 0);
 					if ( $result ) {
 						$message = JText::_('COM_KUNENA_USER_UNSUBSCRIBE_YES');
 					} else {
 						$message = JText::_('COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC');
 					}
-
-					$kunena_app->redirect(CKunenaLink::GetProfileURL($kunena_my->id, false),$message);
-					break;
-				case "bulkDelPerm" :
-					CKunenaTools::KDeletePerm ( );
-					break;
-
-				case "bulkRestore" :
-					CKunenaTools::KUndelete ( );
 					break;
 			}
+			$kunena_app->redirect($backUrl, $message);
 
 			break;
 

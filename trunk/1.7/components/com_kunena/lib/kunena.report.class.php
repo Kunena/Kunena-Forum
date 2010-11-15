@@ -121,7 +121,8 @@ class CKunenaReport {
 				$message .= "\n\n\n\n** Powered by Kunena! - http://www.Kunena.com **";
 				$message = strtr ( $message, array ('&#32;' => '' ) );
 
-				$emailToList = CKunenaTools::getEMailToList ( $row->catid, $row->thread, false, true, true, $this->my->id );
+				$acl = KunenaFactory::getAccessControl();
+				$emailToList = $acl->getSubscribers($row->catid, $row->thread, false, true, true, $this->my->id);
 
 				if ($type == '0') {
 					// send by mail

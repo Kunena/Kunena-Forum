@@ -22,6 +22,7 @@ class KunenaForum {
 	const PUBLISHED = 0;
 	const UNAPPROVED = 1;
 	const DELETED = 2;
+	const TOPIC_DELETED = 3;
 
 	private function __construct() {}
 

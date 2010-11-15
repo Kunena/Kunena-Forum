@@ -151,4 +151,25 @@ class KunenaUserHelper {
 		if ($yesno) return $online ? 'yes' : 'no';
 		return $online;
 	}
+
+	function recount() {
+		$db = JFactory::getDBO ();
+
+		// Reset category counts as next query ignores users which have written no messages
+		$db->setQuery ( "UPDATE #__kunena_users SET posts=0" );
+		$db->query ();
+		if (KunenaError::checkDatabaseError ())
+			return;
+
+		// Update user post count (ignore unpublished categories and hidden messages)
+		$db->setQuery ( "INSERT INTO #__kunena_users (userid, posts)
+			SELECT m.userid, COUNT(m.userid)
+			FROM #__kunena_messages AS m
+			INNER JOIN #__kunena_users AS u ON u.userid = m.userid
+			WHERE m.hold=0 AND m.moved=0 AND m.catid IN (SELECT id FROM #__kunena_categories WHERE published=1)
+			GROUP BY m.userid
+			ON DUPLICATE KEY UPDATE posts=VALUES(posts)" );
+		$db->query ();
+		KunenaError::checkDatabaseError ();
+	}
 }

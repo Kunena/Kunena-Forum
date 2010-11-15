@@ -34,7 +34,7 @@ class KunenaForum {
 	}
 
 	public static function isCompatible($version, $build=false) {
-		if (version_compare($version, '1.7.0-DEV', '<')) {
+		if (version_compare($version, '2.0.0-DEV', '<')) {
 			return false;
 		}
 		if (version_compare($version, self::version(), '>')) {

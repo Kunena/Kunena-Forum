@@ -3,7 +3,7 @@
 <!DOCTYPE install>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>Kunena</name>
-	<version>1.7.0-DEV</version>
+	<version>2.0.0-DEV</version>
 	<versionname>Spika</versionname>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>

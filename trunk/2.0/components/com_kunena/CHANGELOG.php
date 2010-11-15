@@ -31,11 +31,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.7.0-DEV
+Kunena 2.0.0-DEV
 
 15-November-2010 Matias
 ^ [#22786] Merge revisions 3733-3903 from trunk/1.6
 ^ [#22786] Change all occurences of kunena.com to kunena.org
+^ [#22534] Update version info to K2.0.0-DEV
 
 13-November-2010 Matias
 # [#22792] Prevent upgrade from making 2 copies of the same topic

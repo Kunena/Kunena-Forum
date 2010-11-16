@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 jimport ( 'joomla.application.component.view' );
+kimport ( 'kunena.forum.category.helper' );
 
 /**
  * About view for Kunena backend
@@ -30,6 +31,7 @@ class KunenaViewManage extends JView {
 		}
 
 		$this->addStyleSheet ( 'css/kunena.forum.css' );
+		$this->addStyleSheet ( 'css/kunena.skinner.css' );
 		$this->addStyleSheet ( 'css/kunena.manage.css' );
 		echo '<div id="Kunena">';
 		$this->displayCommon('menu');
@@ -60,7 +62,7 @@ class KunenaViewManage extends JView {
 	}
 
 	function displayDefault() {
-		$admin = KunenaFactory::getUser()->getAllowedCategories('admin');
+		$admin = KunenaForumCategoryHelper::getCategories(false, false, 'admin');
 		if (empty($admin)) {
 			$this->setError(JText::_('COM_KUNENA_NO_ACCESS'));
 		}

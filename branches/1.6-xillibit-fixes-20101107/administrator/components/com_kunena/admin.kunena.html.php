@@ -519,7 +519,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 		<?php jimport('joomla.html.pane');
 		$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0)); ?>
 	<dl class="tabs" id="pane">
-	<dt><?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?></dt>
+	<dt title="<?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?>"><?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?></dt>
 	<dd>
 	<fieldset>
 			<legend><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></legend>
@@ -547,7 +547,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 			</table>
 		</fieldset>
 		</dd>
-		<dt><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?>"><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></dt>
 		<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
@@ -617,7 +617,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?>"><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>
@@ -694,7 +694,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 
 		<dl class="tabs" id="pane">
 
-		<dt><?php echo JText::_('COM_KUNENA_A_BASICS') ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_BASICS') ?>"><?php echo JText::_('COM_KUNENA_A_BASICS') ?></dt>
 		<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
@@ -801,7 +801,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_FRONTEND') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_FRONTEND') ?>"><?php echo JText::_('COM_KUNENA_A_FRONTEND') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_LOOKS') ?></legend>
@@ -1082,7 +1082,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 			</fieldset>
 			</dd>
 
-			<dt><?php echo JText::_('COM_KUNENA_A_USERS') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_USERS') ?>"><?php echo JText::_('COM_KUNENA_A_USERS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
@@ -1213,7 +1213,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_SECURITY') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_SECURITY') ?>"><?php echo JText::_('COM_KUNENA_A_SECURITY') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_SECURITY_SETTINGS') ?></legend>
@@ -1317,7 +1317,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_AVATARS') ?>"><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATAR_SETTINGS') ?></legend>
@@ -1356,7 +1356,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_UPLOADS') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_UPLOADS') ?>"><?php echo JText::_('COM_KUNENA_A_UPLOADS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_IMAGE') ?></legend>
@@ -1518,7 +1518,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_RANKING') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_RANKING') ?>"><?php echo JText::_('COM_KUNENA_A_RANKING') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_RANKING_SETTINGS') ?></legend>
@@ -1543,7 +1543,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_BBCODE') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_BBCODE') ?>"><?php echo JText::_('COM_KUNENA_A_BBCODE') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_BBCODE_SETTINGS') ?></legend>
@@ -1661,7 +1661,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?>"><?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?></dt>
 			<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_INTEGRATION_TITLE') ?></legend>
@@ -1717,7 +1717,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 					</table>
 				</fieldset>
 				</dd>
-				<dt><?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?></dt>
+				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?></dt>
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_RSS_SETTINGS') ?></legend>
@@ -1791,7 +1791,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 					</table>
 				</fieldset>
 				</dd>
-				<dt><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?></dt>
+				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?></dt>
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
@@ -2310,7 +2310,7 @@ function editUserProfile($option, $user, $subslist, $subscatslist, $selectRank, 
 			?>
 		<dl class="tabs" id="pane">
 
-		<dt><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?>"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></dt>
 		<dd>
 		<fieldset>
 		<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
@@ -2361,7 +2361,7 @@ function textCounter(field, target) {
 	</table>
 </fieldset>
 </dd>
-<dt><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
+<dt title="<?php echo JText::_('COM_KUNENA_A_AVATARS') ?>"><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></legend>
@@ -2393,7 +2393,7 @@ function textCounter(field, target) {
 	</fieldset>
 </dd>
 
-<dt><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></dt>
+<dt title="<?php echo JText::_('COM_KUNENA_MOD_NEW') ?>"><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></dt>
 		<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></legend>
@@ -2419,7 +2419,7 @@ function textCounter(field, target) {
 				<input type="hidden" name="boxchecked" value="1" />
 			</fieldset>
 		</dd>
-<dt><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></dt>
+<dt title="<?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></legend>
@@ -2458,7 +2458,7 @@ function textCounter(field, target) {
 				</table>
 			</fieldset>
 			</dd>
-<dt><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
+<dt title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
@@ -2498,7 +2498,7 @@ function textCounter(field, target) {
 				</table>
 			</fieldset>
 		</dd>
-<dt><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></dt>
+<dt title="<?php echo JText::_('COM_KUNENA_TRASH_IP') ?>"><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></legend>
@@ -2750,7 +2750,7 @@ function textCounter(field, target) {
 			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			?>
 		<dl class="tabs" id="pane">
-		<dt><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?>"><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></dt>
 		<dd>
 		<form action="index.php" method="post" name="adminForm">
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
@@ -2820,7 +2820,7 @@ function textCounter(field, target) {
 			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</dd>
-		<dt><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?>"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></dt>
 		<dd>
 		<form action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=uploadsmilies" id="uploadForm" method="post" enctype="multipart/form-data" >
 		<div style="padding:10px;">
@@ -3052,7 +3052,7 @@ function textCounter(field, target) {
 			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</dd>
-		<dt><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?>"><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></dt>
 		<dd>
 		<form action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=uploadranks" id="uploadForm" method="post" enctype="multipart/form-data" >
 		<div style="padding:10px;">

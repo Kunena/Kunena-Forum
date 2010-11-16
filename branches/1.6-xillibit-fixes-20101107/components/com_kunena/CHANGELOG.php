@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+16-November-2010 Xillibit
+# [#23332] Improve accessibility for visually-impaired users - user edit profile tabs
+
 14-November-2010 Xillibit
 # [#23182] Total users doesn't match up
 # [#23311] When a topic is moved all the subject replies are identical to the parent message

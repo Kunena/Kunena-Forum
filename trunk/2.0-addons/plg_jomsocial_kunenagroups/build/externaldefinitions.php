@@ -15,3 +15,4 @@ die();
 // dummy definitions of external classes and functions to avoid zend studio warnings and errors
 
 class CApplications {}
+class CFormElement {}

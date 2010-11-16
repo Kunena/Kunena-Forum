@@ -28,8 +28,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena Groups 1.7.0-DEV
+Kunena Groups 2.0.0-DEV
 
+16-November-2010 Matias
+^ [#22541] Update code to work with Kunena 2.0
+^ [#22541] Update plugin version to 2.0.0-DEV
+
+15-September-2010 Matias
 + [#22541] Initial version of JomSocial plugin for Kunena Groups integration
 
 -->

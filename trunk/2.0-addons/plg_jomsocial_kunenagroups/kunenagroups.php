@@ -28,14 +28,18 @@ class plgCommunityKunenaGroups extends CApplications {
 
 	protected static function kunenaOnline() {
 		// Kunena detection and version check
-		$minKunenaVersion = '1.7.0-DEV';
-		if (! class_exists ( 'Kunena' ) || version_compare(Kunena::version (), $minKunenaVersion, '<') ) {
+		$minKunenaVersion = '2.0.0-DEV-SVN';
+		if (! class_exists ( 'KunenaForum' ) || ! KunenaForum::isCompatible ($minKunenaVersion) ) {
+			JFactory::getApplication()->enqueueMessage(JText::sprintf('PLG_COMMUNITY_KUNENAGROUPS_KUNENA_NOT_INSTALLED', $minKunenaVersion),'notice');
 			return false;
 		}
 		// Kunena online check
-		if (! Kunena::enabled ()) {
+		if (! KunenaForum::enabled ()) {
+			JFactory::getApplication()->enqueueMessage(JText::_('PLG_COMMUNITY_KUNENAGROUPS_KUNENA_OFFLINE'),'notice');
 			return false;
 		}
+		kimport ('kunena.forum.category.helper');
+		kimport ('kunena.forum.category');
 		return true;
 	}
 
@@ -46,9 +50,8 @@ class plgCommunityKunenaGroups extends CApplications {
 		$catid = self::getForumCategory($group->categoryid);
 		if (!$catid) return;
 
-		kimport ('category');
-		$category = new KunenaCategory();
-		$category->set('parent', $catid);
+		$category = new KunenaForumCategory();
+		$category->set('parent_id', $catid);
 		$category->set('name', $group->name);
 		$category->set('description', $group->description);
 		$category->set('headerdesc', $group->description);
@@ -70,8 +73,7 @@ class plgCommunityKunenaGroups extends CApplications {
 	function onGroupDisable( $group ) {
 		if (! self::kunenaOnline ()) return;
 
-		kimport ('category');
-		$categories = KunenaCategory::getCategoriesByAccess($group->id, 'jomsocial');
+		$categories = KunenaForumCategoryHelper::getCategoriesByAccess($group->id, 'jomsocial');
 		foreach ($categories as $category) {
 			$category->set('published', 0);
 			$category->set('accesschk', md5('jomsocial'.$group->id));
@@ -85,8 +87,7 @@ class plgCommunityKunenaGroups extends CApplications {
 	function onAfterGroupDelete( $group ) {
 		if (! self::kunenaOnline ()) return;
 
-		kimport ('category');
-		$categories = KunenaCategory::getCategoriesByAccess($group->id, 'jomsocial');
+		$categories = KunenaForumCategoryHelper::getCategoriesByAccess($group->id, 'jomsocial');
 		foreach ($categories as $category) {
 			$category->set('accesschk', md5('jomsocial'.$group->id));
 			$success = $category->delete();
@@ -116,8 +117,8 @@ class plgCommunityKunenaGroups extends CApplications {
 		$access = KunenaFactory::getAccessControl();
 		$access->clearCache();
 	}
-	function onFormDisplay( $formName )
-	{
+	function onFormDisplay( $formName ) {
+		if (! self::kunenaOnline ()) return;
 		$fields = array();
 		if( $formName == 'jsform-groups-forms' || $formName == 'jsform-groups-form' ) {
 			$groupid = JRequest::getInt('groupid', 0);
@@ -128,8 +129,7 @@ class plgCommunityKunenaGroups extends CApplications {
 				$group = JTable::getInstance('Group','CTable');
 				$group->load( $groupid );
 
-				kimport ('category');
-				$categories = KunenaCategory::getCategoriesByAccess( $group->id, 'jomsocial' );
+				$categories = KunenaForumCategoryHelper::getCategoriesByAccess( $group->id, 'jomsocial' );
 				foreach ($categories as $category) {
 					$forum = $forum || $category->published;
 				}
@@ -157,10 +157,9 @@ class plgCommunityKunenaGroups extends CApplications {
 			$group = JTable::getInstance('Group','CTable');
 			$group->load( $groupid );
 
-			kimport ('category');
 			$parent = self::getForumCategory($group->categoryid);
 			$published = (JRequest::getInt('kunenaforum', 0) == 0 && $group->published);
-			$categories = KunenaCategory::getCategoriesByAccess($group->id, 'jomsocial');
+			$categories = KunenaForumCategoryHelper::getCategoriesByAccess($group->id, 'jomsocial');
 			foreach ($categories as $category) {
 				if ($category->parent == $parent) {
 					$category->set('name', $group->name);

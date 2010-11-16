@@ -48,7 +48,7 @@ class plgCommunityKunenaGroups extends CApplications {
 		if (JRequest::getInt('kunenaforum', 0) < 0) return;
 
 		$catid = self::getForumCategory($group->categoryid);
-		if (!$catid) return;
+		if ($catid === false) return;
 
 		$category = new KunenaForumCategory();
 		$category->set('parent_id', $catid);
@@ -142,6 +142,9 @@ class plgCommunityKunenaGroups extends CApplications {
 				<div><input type="radio" name="kunenaforum" id="kunenaforum-members" value="0" '. ($forum ? 'checked="checked"' : '') . ' />
 				<label for="kunenaforum-members" class="label lblradio">'. JText::_('PLG_COMMUNITY_KUNENAGROUPS_FORUMS_ALLOW').'</label></div>
 				<div class="small">'. JText::_('PLG_COMMUNITY_KUNENAGROUPS_FORUMS_NOTE').'</div>';
+			if ($forum) {
+				$element->html .= '<div><a href="'.KunenaRoute::_('index.php?option=com_kunena&view=manage').'">'.JText::_('PLG_COMMUNITY_KUNENAGROUPS_FORUMS_MANAGE').'</a></div>';
+			}
 			$element->position = 'after';
 			$fields[] = $element;
 		}

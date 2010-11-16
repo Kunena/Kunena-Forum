@@ -35,6 +35,7 @@ Kunena 2.0.0-DEV
 
 16-November-2010 Matias
 # [#22792] Fix a bug which causes installation to fail
+# [#22541] Fix some bugs to make JomSocial groups integration to work again
 
 15-November-2010 Matias
 ^ [#22786] Merge revisions 3733-3903 from trunk/1.6

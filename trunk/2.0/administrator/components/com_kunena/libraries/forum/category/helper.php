@@ -76,6 +76,29 @@ class KunenaForumCategoryHelper {
 		return $new;
 	}
 
+	static public function getCategoriesByAccess($groupids = false, $accesstype='joomla') {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+
+		if ($groupids === false) {
+			return self::$_instances;
+		} elseif (is_array ($groupids) ) {
+			$groupids = array_unique($groupids);
+		} else {
+			$groupids = array(intval($groupids));
+		}
+
+		$list = array ();
+		foreach ( self::$_instances as $instance ) {
+			if ($instance->accesstype == $accesstype && ($groupids===false || in_array($instance->access, $groupids))) {
+				$list [$instance->id] = $instance;
+			}
+		}
+
+		return $list;
+	}
+
 	static public function getCategories($ids = false, $reverse = false, $authorise='read') {
 		if (self::$_instances === false) {
 			self::loadCategories();

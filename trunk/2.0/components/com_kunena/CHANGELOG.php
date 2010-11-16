@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+16-November-2010 Matias
+# [#22792] Fix a bug which causes installation to fail
+
 15-November-2010 Matias
 ^ [#22786] Merge revisions 3733-3903 from trunk/1.6
 ^ [#22786] Change all occurences of kunena.com to kunena.org

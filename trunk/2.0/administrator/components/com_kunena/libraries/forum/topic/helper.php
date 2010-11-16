@@ -229,7 +229,7 @@ class KunenaForumTopicHelper {
 				last_post_time = 0,
 				last_post_userid = 0,
 				last_post_message = '',
-				last_post_guest_name = '',
+				last_post_guest_name = ''
 				WHERE posts=0 AND hold=0 AND moved_id=0";
 		$db->setQuery($query);
 		$db->query ();

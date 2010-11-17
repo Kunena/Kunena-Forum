@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+16-November-2010 Severdia
+# [#22979] Fixed spacing between pagination in forum listing
+
 15-November-2010 Matias
 ^ [#15886] Merged revisions 3892-3899 from /branches/1.6-LDAsvens-language-20101112
 ^ [#15886] Merged revisions 3879-3896 from /branches/1.6-xillibit-fixes-20101107

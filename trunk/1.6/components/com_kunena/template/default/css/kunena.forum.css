@@ -875,6 +875,9 @@ PX		EM			PCT			PT
 #Kunena div.ktopic-title-cover ul.kpagination a:hover{
 	border:solid 1px;
 }
+#Kunena #kflattable ul.kpagination li {
+	margin-right: 5px;
+}
 
 #Kunena span.ktopic-posted-time {
 	display: block;

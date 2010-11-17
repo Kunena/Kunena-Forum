@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+17-November-2010 Xillibit
+^ [#23322] Need to extend Report Config with 3rd part SEF info
+
 16-November-2010 Xillibit
 # [#23332] Improve accessibility for visually-impaired users - user edit profile tabs
 

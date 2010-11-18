@@ -3149,15 +3149,15 @@ function generateSystemReport () {
 	$templateversion = $xml_tmpl->document->version[0];
 
 	// Get Kunena menu items
-	$query = ' SELECT id, menutype, name, alias, link, parent '
-				.' FROM #__menu '
-				.' WHERE menutype = '.$kunena_db->Quote('kunenamenu').' ORDER BY id ASC';
+	$query = "SELECT id, menutype, name, alias, link, parent "
+				." FROM #__menu "
+				." WHERE menutype = {$kunena_db->Quote('kunenamenu')} OR name='forum' ORDER BY id ASC";
 	$kunena_db->setQuery($query);
 	$kmenustype = $kunena_db->loadObjectlist();
 
-	$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
+	$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
 	foreach($kmenustype as $item) {
-		$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
+		$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
 	}
 	$menudisplaytable .='[/table]';
 

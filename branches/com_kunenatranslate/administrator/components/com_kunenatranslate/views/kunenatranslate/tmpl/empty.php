@@ -27,39 +27,33 @@ JToolBarHelper::cancel();?>
 					<?php echo $v; ?>
 				</th>
 			<?php endforeach;?>
+			<th class="title">
+				Client
+			</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(empty($this->labels)){
-			require_once ( dirname(__FILE__).DS.'empty.php');
-		} 
-		$k = 0;
-fb($this->labels);
-		foreach ($this->labels as $i=>$v):?>
-			<tr class="row<?php echo $k;?>">
-				<td><?php echo $i+1; ?></td>
-				<td><?php echo $v->label; ?></td>
-				<?php foreach ($this->languages as $val):
-					$fvalue = '';
-					$name = 'insert';
-					foreach ($v->lang as $value){
-						if($value->lang == $val)
-							$fvalue = $value->translation;
-							$name = 'update';
-						}?>
-					<td>
-						<input type="text" name="<?php echo $val.'['.$v->id.']['.$name.']';?>"
-						value="<?php echo $fvalue; ?>" />
-					</td>
-				<?php endforeach;?>
-			</tr>
-			<?php $k = 1- $k;
-			endforeach;?>
+		<tr class="row0">
+			<td>1</td>
+			<td>
+				<input type="text" name="label" />
+			</td>
+			<?php foreach ($this->languages as $val):
+				?><td>
+					<input type="text" name="<?php echo $val.'[][insert]';?>" />
+				</td>
+			<?php endforeach;?>
+			<td>
+				<?php echo $this->client; ?>
+			</td>
+		</tr>
 	</tbody>
 </table>
 
 <input type="hidden" name="option" value="com_kunenatranslate" />
+<input type="hidden" name="add" value="add" />
 <input type="hidden" name="task" value="" />
 <input type="hidden" name="knownlanguages" value="<?php echo implode(',',$this->languages);?>" />
 <?php echo JHTML::_( 'form.token' ); ?>
 </form>
+

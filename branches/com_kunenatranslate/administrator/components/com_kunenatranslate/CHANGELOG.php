@@ -28,6 +28,10 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+19-November-2010 svens(LDA)
++ [#23412] delete function
++ [#23329] NEW method
+
 15-November-2010 svens(LDA)
 + [#23317] add edit method (part 2)
 

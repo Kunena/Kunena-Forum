@@ -65,14 +65,31 @@ class TableTranslation extends JTable
 		}
 	}
 	
-	function store($data){
+	function store($data, $label= null, $client= null){
 		$db = &$this->getDBO();
+		if($label){
+			$query = "SELECT id FROM #__kunenatranslate_label WHERE label='{$label}'";
+			$db->setQuery($query);
+			$res = $db->loadAssoc();
+			if(!empty($res)){
+				$this->setError('Label already exist');
+				return false;
+			}
+			$query = "INSERT INTO #__kunenatranslate_label (label, client)
+					VALUES ('{$label}','{$client}')";
+			$db->setQuery($query);
+			if(!$db->query()){
+				$this->setError($this->_db->getErrorMsg());
+				return false;
+			}
+		}
 		$isin = false;
 		foreach ($data as $kl=>$value) {
 			foreach ($value as $k=>$val) {
 				if(isset($val['insert']) && !empty($val['insert'])){
 					if(!isset($insert)) $insert = "INSERT INTO {$this->_tbl} (labelid,lang,translation) VALUES ";
 					if($isin == true) $insert .= " , "; 
+					if($k == 0) $k = $db->insertid();
 					$insert .= "({$k},'{$kl}','{$val['insert']}')";
 					$isin = true;
 				}elseif(isset($val['update']) && !empty($val['update'])){ 

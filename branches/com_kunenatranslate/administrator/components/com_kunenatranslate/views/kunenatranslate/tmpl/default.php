@@ -11,7 +11,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 JToolBarHelper::editListX();
-JToolBarHelper::custom('update', 'update', '', 'Search New Labels', false, true );?>
+JToolBarHelper::custom('update', 'update', '', 'Search New Labels', false, true );
+JToolBarHelper::addNew('add','New Label');
+JToolBarHelper::deleteList();?>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm">
 <table class="adminlist">

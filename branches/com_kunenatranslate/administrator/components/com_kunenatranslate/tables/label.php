@@ -102,4 +102,21 @@ class TableLabel extends JTable
 			return true;
 		} 
 	}
+	
+	function delete($id=array()){
+		$db = $this->getDBO();
+		foreach ($id as $v) {
+			$query = "DELETE {$this->_tbl} , #__kunenatranslate_translation 
+					FROM {$this->_tbl}, #__kunenatranslate_translation
+					WHERE {$this->_tbl}.{$this->_tbl_key}={$v}
+					AND #__kunenatranslate_translation.labelid={$v}";
+			$db->setQuery($query);
+			if(!$db->query()){
+				$this->setError($db->getErrorMsg());
+				return false;
+			}else{
+				return true;
+			} 
+		}
+	}
 }

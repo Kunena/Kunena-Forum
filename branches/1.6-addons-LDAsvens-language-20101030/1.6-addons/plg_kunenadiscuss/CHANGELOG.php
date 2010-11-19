@@ -30,6 +30,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena Discuss Plugin 1.6.0-RC3
+19-November-2010 svens(LDA)
++ [#23293] add es-ES (thanks Alakakentu)
+
 12-Nov-2010 svens(LDA)
 + [#23293] add de-DE (thanks rich)
 

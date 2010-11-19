@@ -23,6 +23,7 @@
 	<languages folder="languages">
 		<language tag="de-DE">de-DE.mod_kunenastats.ini</language>
 		<language tag="en-GB">en-GB.mod_kunenastats.ini</language>
+		<language tag="es-ES">es-ES.mod_kunenastats.ini</language>
 		<language tag="fr-FR">fr-FR.mod_kunenastats.ini</language>
 		<language tag="ru-RU">ru-RU.mod_kunenastats.ini</language>
 	</languages>

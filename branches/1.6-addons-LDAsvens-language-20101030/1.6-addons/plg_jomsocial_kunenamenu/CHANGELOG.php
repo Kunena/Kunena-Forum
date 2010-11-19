@@ -28,6 +28,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 JomsocialKunenaMenu 1.6.0-RC2
+19-November-2010 svens(LDA)
++ [#23293] add es-ES (thanks Alakakentu)
 
 10-October-2010 Matias
 + [#19002] Added ru-RU translation (thanks ZARKOS)

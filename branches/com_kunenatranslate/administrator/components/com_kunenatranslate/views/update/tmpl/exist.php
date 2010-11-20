@@ -1,6 +1,6 @@
 <?php 
 /**
- * @version $Id$
+ * @version $Id: default.php 3906 2010-11-15 20:21:24Z svens $
  * Kunena Translate Component
  * 
  * @package	Kunena Translate
@@ -11,21 +11,22 @@
 defined('_JEXEC') or die('Restricted access'); 
 JToolBarHelper::save('import', 'Import');
 JToolBarHelper::cancel();
+fb($this->exist);
 ?>
 <form action="index.php" method="post" name="adminForm">
 <table class="adminlist">
 	<tbody>
 		<tr>
 			<td><?php echo JText::_('Client'); ?></td>
-			<td><?php echo $this->client; ?></td>
+			<td><?php  ?></td>
 		</tr>
 		<tr>
 			<td><?php echo JText::_('Language'); ?></td>
-			<td><?php echo $this->lang; ?></td>
+			<td><?php   ?></td>
 		</tr>
 		<tr>
 			<td><?php echo JText::_('add missing labels'); ?></td>
-			<td><?php echo JHTMLSelect::booleanlist('addmissinglabel'); ?></td>
+			<td><?php   ?></td>
 		</tr>
 	</tbody>
 </table>

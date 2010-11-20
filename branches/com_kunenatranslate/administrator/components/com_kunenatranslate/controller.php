@@ -36,6 +36,11 @@ class KunenaTranslateController extends JController
 		parent::display();
 	}
 	
+	function importview(){
+		JRequest::setVar('view','import');
+		parent::display();
+	}
+	
 	function remove(){
 		$model = $this->getModel();
 		if($model->delete())
@@ -55,5 +60,4 @@ class KunenaTranslateController extends JController
 		$link = 'index.php?option=com_kunenatranslate';
 		$this->setRedirect($link,$msg);
 	}
-	
 }

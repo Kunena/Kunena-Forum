@@ -28,6 +28,9 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20-November-2010 svens(LDA)
++ [#23330] import function (part 1)
+
 19-November-2010 svens(LDA)
 + [#23412] delete function
 + [#23329] NEW method

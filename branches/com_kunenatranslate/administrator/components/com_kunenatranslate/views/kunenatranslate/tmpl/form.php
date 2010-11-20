@@ -9,6 +9,7 @@
  * @link http://www.kunena.com
  */
 defined('_JEXEC') or die('Restricted access');
+JToolBarHelper::title( JText::_( 'Kunena Translate' ).': <small><small>'.JText::_('Edit').'</small></small>', 'generic.png' );
 JToolBarHelper::save(); 
 JToolBarHelper::cancel();?>
 

@@ -36,22 +36,28 @@ class TableTranslation extends JTable
 		parent::__construct('#__kunenatranslate_translation', 'labelid', $db);
 	}
 	
-	function loadTranslations($id=null){
+	function loadTranslations($id=null,$lang=null){
 		$db =& $this->getDBO();
 		$where = null;
 		if(!empty($id) && is_array($id)){
 			$n = count($id);
 			$where = ' WHERE ';
 			foreach ($id as $k=>$v){
-				$where .= 'labelid='.$v;
+				$where .= 'a.labelid='.$v;
 				if($n>1 && $k<$n-1) $where .= ' OR ';
 			}
 		}elseif (!empty($id) && is_int($id)){
-			$where = ' WHERE labelid='.$id;
+			$where = ' WHERE a.labelid='.$id;
+		}elseif (!empty($lang) && is_string($lang)){
+			if(!empty($where)) $where .= ' AND ';
+			else $where = ' WHERE ';
+			$where .= " a.lang='{$lang}'";
 		}
-		$query = 'SELECT *  
-				FROM '. $this->_tbl
-				.$where;
+		$query = "SELECT a.*, b.label   
+				FROM {$this->_tbl} AS a
+				LEFT JOIN #__kunenatranslate_label AS b
+				ON a.labelid=b.id  
+				{$where}";
 		$db->setQuery($query);
 		
 		$result = $db->loadObjectlist();
@@ -67,7 +73,7 @@ class TableTranslation extends JTable
 	
 	function store($data, $label= null, $client= null){
 		$db = &$this->getDBO();
-		if($label){
+		if(!empty($label)){
 			$query = "SELECT id FROM #__kunenatranslate_label WHERE label='{$label}'";
 			$db->setQuery($query);
 			$res = $db->loadAssoc();
@@ -90,10 +96,10 @@ class TableTranslation extends JTable
 					if(!isset($insert)) $insert = "INSERT INTO {$this->_tbl} (labelid,lang,translation) VALUES ";
 					if($isin == true) $insert .= " , "; 
 					if($k == 0) $k = $db->insertid();
-					$insert .= "({$k},'{$kl}','{$val['insert']}')";
+					$insert .= "({$k},'{$kl}','{$db->getEscaped($val['insert'])}')";
 					$isin = true;
 				}elseif(isset($val['update']) && !empty($val['update'])){ 
-					$update = "UPDATE {$this->_tbl} SET translation='{$val['update']}', time=''
+					$update = "UPDATE {$this->_tbl} SET translation='{$db->getEscaped($val['update'])}', time=''
 								WHERE labelid={$k}
 								AND lang='{$kl}'";
 					$db->setQuery($update);

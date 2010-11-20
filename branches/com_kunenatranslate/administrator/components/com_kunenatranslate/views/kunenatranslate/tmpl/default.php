@@ -9,10 +9,10 @@
  * @link http://www.kunena.com
  */
 defined('_JEXEC') or die('Restricted access');
-
-JToolBarHelper::editListX();
-JToolBarHelper::custom('update', 'update', '', 'Search New Labels', false, true );
 JToolBarHelper::addNew('add','New Label');
+JToolBarHelper::custom('update', 'update', '', 'Search New Labels', false, true );
+JToolBarHelper::custom('importview', 'import', '', 'Import .ini', false, true);
+JToolBarHelper::editListX();
 JToolBarHelper::deleteList();?>
 
 <form action="index.php" method="post" name="adminForm" id="adminForm">

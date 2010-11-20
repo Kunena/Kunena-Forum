@@ -32,7 +32,7 @@ class TableLabel extends JTable
 		parent::__construct('#__kunenatranslate_label', 'id', $db);
 	}
 	
-	function loadLabels($id=null,$edit=false){
+	function loadLabels($id=null){
 		$db = $this->getDBO();
 		$where = null;
 		if(!empty($id) && is_array($id)){
@@ -81,7 +81,7 @@ class TableLabel extends JTable
 		}
 	}
 	
-	function store($data, $client, $table){
+	function store($data, $client){
 		$db = $this->getDBO();
 		$cdata = count($data);
 		$values = '';
@@ -91,8 +91,7 @@ class TableLabel extends JTable
 				if ($cdata != $k+1) $values .= ",";
 			}
 		}
-		
-		$query = "INSERT INTO #__kunenatranslate_{$table} ( id, label, client )
+		$query = "INSERT INTO {$this->_tbl} ( id, label, client )
 				VALUES {$values}";
 		$db->setQuery( $query );
 		if(!$db->query()){

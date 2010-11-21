@@ -1,9 +1,9 @@
 <?php
 /**
  * @version $Id$
- * Kunena Translate Component
+ * KunenaINIMaker Component
  * 
- * @package	Kunena Translate
+ * @package	Kunena INImaker
  * @Copyright (C) 2010 www.kunena.com All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
@@ -15,32 +15,28 @@ defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.application.component.view');
 
-class KunenaTranslateViewImport extends JView
+class KunenaTranslateViewUpdate extends JView
 {
 	function display($tpl = null){
-		JToolBarHelper::title( JText::_( 'Kunena Translate' ).': 
-			<small><small>'.JText::_('Import .ini').'</small></small>', 'generic.png' );
-		if($this->getLayout()== 'exist'){
-			$exist = JRequest::getVar('exist', array());
-			$this->assignRef('exist', $exist);
-		}else{
-			$client		= array(
-						array('text'=>'Frontend','value'=>'frontend'), 
-						array('text'=>'Backend', 'value'=>'backend'),
-						array('text'=>'Install', 'value'=>'install'),
-						array('text'=>'Template', 'value'=>'template')
-						);
-			$client		= JHTML::_('select.genericlist', $client, 'client','', 'value','text');
-			$lang		= JLanguage::getKnownLanguages();
-			foreach ($lang as $v) {
-				$langs[] = array('text'=>$v['tag'], 'value'=>$v['tag']);
-			}
-			$lang		= JHTML::_('select.genericlist', $langs, 'language', '', 'value', 'text');
-	fb($langs);
-						
-			$this->assignRef('client', $client);
-			$this->assignRef('lang',$lang);
+		JToolBarHelper::title( JText::_( 'Kunena Translate' ), 'generic.png' );
+		
+		$client		= array(
+					array('text'=>'Frontend','value'=>'frontend'), 
+					array('text'=>'Backend', 'value'=>'backend'),
+					array('text'=>'Install', 'value'=>'install'),
+					array('text'=>'Template', 'value'=>'template')
+					);
+		
+		if($this->getLayout() == 'labels'){
+			$labels =& $this->get('Update');
+			$client = JRequest::getWord('client');
+			//fb($client);
+			$this->assignRef('labels',$labels);
+			//fb($labels);
 		}
+		$this->assignRef('client', $client);
+
+		fb($this);
 		parent::display($tpl);
 	}
 }

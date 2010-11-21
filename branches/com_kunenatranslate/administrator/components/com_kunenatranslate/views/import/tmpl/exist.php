@@ -1,6 +1,6 @@
 <?php 
 /**
- * @version $Id: default.php 3906 2010-11-15 20:21:24Z svens $
+ * @version $Id$
  * Kunena Translate Component
  * 
  * @package	Kunena Translate

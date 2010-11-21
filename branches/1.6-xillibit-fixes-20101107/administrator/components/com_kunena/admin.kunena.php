@@ -1617,7 +1617,13 @@ function showConfig($option) {
 	$timesel[] = JHTML::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
 	// build the html select list
 	$lists ['show_list_time'] = JHTML::_('select.genericlist', $timesel, 'cfg_show_list_time', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->show_list_time);
-
+	
+	$sessiontimetype[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_SESSION_TYPE_ALL'));
+	$sessiontimetype[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_SESSION_TYPE_VALID'));
+	$sessiontimetype[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_SHOW_SESSION_TYPE_TIME'));
+	
+	$lists ['show_session_type'] = JHTML::_('select.genericlist', $sessiontimetype, 'cfg_show_session_type', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->show_session_type);
+	
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 

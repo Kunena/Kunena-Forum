@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 21-November-2010 Xillibit
 # [#23251] When moving a topic with polls in another topics need to handle polls (fix regression)
++ [#22704] Add configuration option to show online users by minutes or session time
 
 18-November-2010 Xillibit
 ^ [#23321] Need to extend Report Config with menu info

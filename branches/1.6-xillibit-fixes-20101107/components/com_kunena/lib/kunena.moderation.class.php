@@ -198,7 +198,12 @@ class CKunenaModeration {
 						$this->_Move ( $newParentID, $currentMessage->catid, '', 0, KN_MOVE_NEWER );
 					}
 					
-					$this->_handlePolls($currentMessage, $targetMessage);
+					// Create ghost thread if requested
+					if ($GhostThread == true) { 
+						$this->createGhostThread($MessageID,$currentMessage);
+					}
+					
+					if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
 				}
 
 				break;
@@ -211,21 +216,21 @@ class CKunenaModeration {
 					$this->createGhostThread($MessageID,$currentMessage);
 				}
 				
-				$this->_handlePolls($currentMessage, $targetMessage);
+				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
 
 				break;
 			case KN_MOVE_NEWER :
 				// Move message and all newer messages of thread
 				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `id`>{$this->_db->Quote($MessageID)}";
 				
-				$this->_handlePolls($currentMessage, $targetMessage);
+				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
 				
 				break;
 			case KN_MOVE_REPLIES :
 				// Move message and all replies and quotes - 1 level deep for now
 				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `parent`={$this->_db->Quote($MessageID)}";
 				
-				$this->_handlePolls($currentMessage, $targetMessage);
+				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
 				
 				break;
 			default :

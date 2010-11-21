@@ -23,10 +23,11 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 	}
 	
 	function import(){
+		// Check for request forgeries
+		JRequest::checkToken() or jexit( 'Invalid Token' );
+		
 		$model = $this->getModel('import');
-		fb($model);
 		$res = $model->getImport();
-		fb($res);
 		$msg = 'Import success';
 		if($res == false){
 			$msg = 'Import failed';
@@ -40,5 +41,24 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 		}else{
 			$this->setRedirect('index.php?option=com_kunenatranslate&view=import' , $msg);
 		}
+	}
+	
+	function update(){
+		// Check for request forgeries
+		JRequest::checkToken() or jexit( 'Invalid Token' );
+		
+		$cid	= JRequest::getVar('cid');
+		if(!empty($cid)){
+			$model = $this->getModel('import');
+			if($model->update()){
+				$msg = JText::_('Override sucess');
+			}else{
+				$msg = JText::_('Override failed');
+			}
+		}else{
+			$msg = JText::_('No override choosed');
+		}
+		$link = 'index.php?option=com_kunenatranslate&view=import';
+		$this->setRedirect($link,$msg);
 	}
 }

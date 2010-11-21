@@ -107,7 +107,7 @@ class KunenaTranslateHelper
     					$comments[$k]	= $v;
     				}else{
     					list($key,$value) 	= explode('=',$v,2);
-    					$res['nocomments'][$key]	= $value;
+    					$res['nocomments'][$key]	= trim($value, "\"");
     				}
     			}
     			$res['comments']			= $comments;
@@ -278,5 +278,21 @@ class KunenaTranslateHelper
 			}
 		}
 		return $res;
+	}
+	
+	static public function getClientList($htmllist=false){
+		$client		= array(
+					array('text'=>'Backend', 'value'=>'backend'),
+					array('text'=>'Install', 'value'=>'install'),
+					array('text'=>'Backend Menu', 'value'=>'backendmenu'),
+					array('text'=>'Frontend','value'=>'frontend'),
+					array('text'=>'Default Template', 'value'=>'tpl_default'),
+					array('text'=>'Example Template', 'value'=>'tpl_example'),
+					array('text'=>'Skinner Template', 'value'=>'tpl_skinner'), 
+					);
+		if($htmllist){
+			$client = JHTML::_('select.genericlist', $client, 'client','', 'value','text');
+		}
+		return $client;
 	}
 }

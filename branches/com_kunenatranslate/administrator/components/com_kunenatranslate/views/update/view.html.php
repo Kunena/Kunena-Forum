@@ -18,25 +18,19 @@ jimport('joomla.application.component.view');
 class KunenaTranslateViewUpdate extends JView
 {
 	function display($tpl = null){
-		JToolBarHelper::title( JText::_( 'Kunena Translate' ), 'generic.png' );
+		JToolBarHelper::title( JText::_( 'Kunena Translate' ).': <small><small>'.
+			JText::_('Update Labels').'</small></small>', 'generic.png' );
 		
-		$client		= array(
-					array('text'=>'Frontend','value'=>'frontend'), 
-					array('text'=>'Backend', 'value'=>'backend'),
-					array('text'=>'Install', 'value'=>'install'),
-					array('text'=>'Template', 'value'=>'template')
-					);
+		require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
+		$client = KunenaTranslateHelper::getClientList(true);
 		
 		if($this->getLayout() == 'labels'){
 			$labels =& $this->get('Update');
 			$client = JRequest::getWord('client');
-			//fb($client);
 			$this->assignRef('labels',$labels);
-			//fb($labels);
 		}
 		$this->assignRef('client', $client);
 
-		fb($this);
 		parent::display($tpl);
 	}
 }

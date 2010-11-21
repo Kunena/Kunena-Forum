@@ -21,27 +21,46 @@ class KunenaTranslateModelUpdate extends JModel{
 		
 		$this->client	= JRequest::getWord('client');
 		switch ($this->client){
-				case 'frontend':
-					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena';
-					$kill		= array('language' , 'svn', 'template');
-					break;
 				case 'backend':
 					$dir		= JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena';
-					$kill		= array('install', 'language', 'images', 'media', 'svn');
-					break;
+					$kill		= array('archive', 'images', 'install', 'language',  'media', 'svn', 'kunena.xml');
+					$temp		= false;
+					break;	
 				case 'install':
 					$dir		= JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' .DS. 'install';
 					$kill		= array('media', 'svn');
+					$temp		= false;
 					break;
-				case 'template':
+				case 'backendmenu':
+					$dir		= JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' .DS. 'kunena.xml';
+					$kill		= array();
+					$temp		= false;
+					break;
+				case 'frontend':
+					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena';
+					$kill		= array('language' , 'svn', 'template');
+					$temp		= false;
+					break;
+				case 'tpl_default':
 					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena' .DS. 'template' .DS. 'default';
 					$kill		= array('language' , 'svn', 'images', 'css', 'media');
+					$temp		= true;
+					break;
+				case 'tpl_example':
+					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena' .DS. 'template' .DS. 'example';
+					$kill		= array('language' , 'svn', 'images', 'css', 'media');
+					$temp		= true;
+					break;
+				case 'tpl_skinenr':
+					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena' .DS. 'template' .DS. 'skinner';
+					$kill		= array('language' , 'svn', 'images', 'css', 'media');
+					$temp		= true;
 					break;
 			}
 		$helper->scan_dir($dir);
 		$helper->killfolder($kill,&$helper->files);
-		if($this->client != 'template') $phplist	= $helper->getfiles($helper->files);
-		else $phplist = '';
+		$phplist = '';
+		$phplist	= $helper->getfiles($helper->files);
 		$xmllist	= $helper->getfiles($helper->files, 'xml');
 		$langstrings = $helper->readphpxml($phplist,$xmllist);
 		$labels = $this->_loadLabels();

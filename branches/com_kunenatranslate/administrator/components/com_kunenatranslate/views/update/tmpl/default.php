@@ -17,7 +17,7 @@ JToolBarHelper::cancel();
 	<tbody>
 		<tr>
 			<td>Client</td>
-			<td><?php echo JHTML::_('select.genericlist', $this->client, 'client','', 'value','text')?></td>
+			<td><?php echo $this->client;?></td>
 		</tr>
 	</tbody>
 </table>

@@ -28,6 +28,10 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+21-November-2010 svens(LDA)
++ [#23330] import function (part 2)
+# [#23423] correct ini position
+
 20-November-2010 svens(LDA)
 + [#23330] import function (part 1)
 

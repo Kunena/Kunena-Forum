@@ -80,7 +80,7 @@ class KunenaTranslateModelImport extends JModel{
 		
 		//give existing translation back, if they exist
 		if(isset($exist))	return $exist;
-		fb($exist);
+
 		
 		return true;
 	}
@@ -129,5 +129,24 @@ class KunenaTranslateModelImport extends JModel{
 		$res = $table->store($new, $client);
 		
 		return $res;
+	}
+	
+	function update(){
+		$lang	= JRequest::getWord('language');
+		$up		= JRequest::getVar('new');
+		$cid	= JRequest::getVar('cid');
+		if(!empty($up) && !empty($cid)){
+			foreach ($cid as $v){
+				$trans[$lang][$v]['update'] = $up[$v];
+			}
+			$table = $this->getTable('Translation');
+			if(!$table->store($trans)){
+				JError::raiseWarning('','Saving Translations failed');
+				return false;
+			}
+		}else{
+			JError::raiseNotice('', JText::_('Nothing to override'));
+		}
+		return true;		
 	}
 }

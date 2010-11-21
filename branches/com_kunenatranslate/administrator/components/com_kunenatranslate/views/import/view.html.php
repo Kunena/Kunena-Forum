@@ -24,22 +24,15 @@ class KunenaTranslateViewImport extends JView
 			$exist = JRequest::getVar('exist', array());
 			$this->assignRef('exist', $exist);
 		}else{
-			$client		= array(
-						array('text'=>'Frontend','value'=>'frontend'), 
-						array('text'=>'Backend', 'value'=>'backend'),
-						array('text'=>'Install', 'value'=>'install'),
-						array('text'=>'Template', 'value'=>'template')
-						);
-			$client		= JHTML::_('select.genericlist', $client, 'client','', 'value','text');
+			require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
+			$client = KunenaTranslateHelper::getClientList(true);
 			$lang		= JLanguage::getKnownLanguages();
 			foreach ($lang as $v) {
 				$langs[] = array('text'=>$v['tag'], 'value'=>$v['tag']);
 			}
 			$lang		= JHTML::_('select.genericlist', $langs, 'language', '', 'value', 'text');
-	fb($langs);
-						
-			$this->assignRef('client', $client);
 			$this->assignRef('lang',$lang);
+			$this->assignRef('client', $client);
 		}
 		parent::display($tpl);
 	}

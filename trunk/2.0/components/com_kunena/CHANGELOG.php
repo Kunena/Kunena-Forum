@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+22-November-2010 Xillibit
+# [#23456] Issue during installation which fails because datamodel changes on kunena_categories
+
 22-November-2010 Matias
 # [#23443] Fix regression: CSS paths are wrong in Windows
 # [#23443] Fix regression: internal error in profile / approve pages

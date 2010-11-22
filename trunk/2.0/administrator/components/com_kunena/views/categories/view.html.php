@@ -10,12 +10,12 @@
  */
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.view' );
+kimport ( 'kunena.view' );
 
 /**
  * About view for Kunena backend
  */
-class KunenaViewCategories extends JView {
+class KunenaViewCategories extends KunenaView {
 	function display() {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		if ($this->state->get('item.id')) $this->setLayout ('edit');

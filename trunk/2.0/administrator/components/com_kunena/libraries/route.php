@@ -11,14 +11,15 @@
 
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ( '' );
+jimport ( 'joomla.environment.uri' );
 
 abstract class KunenaRoute {
-	static $kunenaroot = false;
-	static $active = false;
-	static $childlist = array();
+	static $childlist = false;
 	static $subtree = array();
 	static $parent = array();
 	static $menu = null;
+	static $uris = array();
+	static $urisSave = false;
 
 	public static function current($class = false) {
 		$link = JURI::getInstance('index.php?'.http_build_query(JRequest::get( 'get' )));
@@ -27,7 +28,6 @@ abstract class KunenaRoute {
 	}
 
 	public static function getItemID($uri = null) {
-		jimport ( 'joomla.environment.uri' );
 		if (!$uri) {
 			$link = self::current(true);
 			$link->delVar ( 'Itemid' );
@@ -46,12 +46,32 @@ abstract class KunenaRoute {
 		return $itemid;
 	}
 
+	public static function cacheLoad() {
+		$user = KunenaFactory::getUser();
+		$cache = JFactory::getCache('_system', 'output');
+		$data = $cache->get($user->userid, 'com_kunena.route');
+		if ($data === false) return;
+		list(self::$subtree, self::$uris) = $data;
+	}
+
+	public static function cacheStore() {
+		if (!self::$urisSave) return;
+		$user = KunenaFactory::getUser();
+		$cache = JFactory::getCache('_system', 'output');
+		$cache->store(array(self::$subtree, self::$uris), $user->userid, 'com_kunena.route');
+	}
+
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
-		jimport ( 'joomla.environment.uri' );
+		$menu = self::getCurrentMenu();
+		$key = ($menu ? $menu->id : 0) .'-'.(int)$xhtml.(int)$ssl.$uri;
+		if (isset(self::$uris[$key])) {
+			return self::$uris[$key];
+		}
 		if (!$uri) {
 			$link = self::current(true);
 			$link->delVar ( 'Itemid' );
 		} else if (is_numeric($uri)) {
+			self::buildMenuTree();
 			$item = self::$menu[intval($uri)];
 			return JRoute::_($item->link."&Itemid={$item->id}");
 		} else {
@@ -64,7 +84,9 @@ abstract class KunenaRoute {
 			$link->setVar ( 'Itemid', $Itemid );
 		}
 
-		return JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml, $ssl );
+		self::$uris[$key] = JRoute::_ ( 'index.php?' . $link->getQuery (), $xhtml, $ssl );
+		self::$urisSave = true;
+		return self::$uris[$key];
 	}
 
 	public static function getDefault() {
@@ -93,14 +115,6 @@ abstract class KunenaRoute {
 				$current = $item;
 			}
 		}
-
-//if(JDEBUG == 1){
-//	if(defined('JFIREPHP')){
-//		FB::log(self::$menu, 'Route - Menu');
-//		FB::log($Itemid, 'Route - Itemid');
-//	}
-//}
-
 		return $current;
 	}
 
@@ -108,9 +122,10 @@ abstract class KunenaRoute {
 		self::buildMenuTree();
 
 		$Itemid = 0;
-		if (self::$active) {
+		$active = self::getActive();
+		if ($active) {
 			// Find Kunena entry page from current menu
-			$root = self::getKunenaRoot(self::$active);
+			$root = self::getKunenaRoot($active);
 			$list = self::getSubMenus($root);
 			if (count($list) > 1) {
 				// Current root contains Kunena menu
@@ -146,28 +161,37 @@ abstract class KunenaRoute {
 	}
 
 	protected static function buildMenuTree() {
-		$menus = JSite::getMenu ();
-		$active = $menus->getActive ();
-		self::$active = is_object($active) ? $active->id : 0;
 		if (self::$menu === null) {
-			self::$menu = $menus->getMenu ();
-			$my = JFactory::getUser ();
-			foreach ( self::$menu as $item ) {
-				if (! is_object ( $item ))
-					continue;
-				// FIXME: Joomla 1.5 only!
-				if (!empty($item->published) && (!isset ( $item->access ) || $item->access <= $my->aid)) {
+			self::$menu = JSite::getMenu ()->getMenu ();
+
+			$cache = JFactory::getCache('_system', 'output');
+			self::$childlist = unserialize($cache->get('childlist', 'com_kunena.route'));
+			if (self::$childlist === false) {
+				foreach ( self::$menu as $item ) {
+					if (! is_object ( $item ))
+						continue;
 					self::$childlist[$item->menutype][$item->parent][$item->id] = $item->id;
 				}
+				$cache->store(serialize(self::$childlist), 'childlist', 'com_kunena.route');
 			}
 		}
+	}
+
+	protected static function getActive() {
+		static $active = false;
+		if ($active === false) {
+			$active = JSite::getMenu ()->getActive ();
+		}
+		return $active;
 	}
 
 	protected static function getMenuItems($menutype) {
 		if (!isset(self::$subtree[$menutype])) {
 			self::$subtree[$menutype] = array();
+			$menus = JSite::getMenu ();
 			$todo = isset(self::$childlist[$menutype][0]) ? self::$childlist[$menutype][0] : array();
 			while (($id = array_shift($todo)) !== null) {
+				if (!$menus->authorize($id)) continue;
 				$item = self::$menu[$id];
 				if ($item->type == 'component' && $item->component == 'com_kunena') {
 					self::$subtree[$menutype][$id] = $id;
@@ -184,11 +208,11 @@ abstract class KunenaRoute {
 			}
 		}
 		return self::$subtree[$menutype];
-
 	}
 
-	protected static function getKunenaRoot($Itemid) {
-		if (!$Itemid) return 0;
+	protected static function getKunenaRoot($active) {
+		if (!$active) return 0;
+		$Itemid = $active->id;
 		if (!isset(self::$parent[$Itemid])) {
 			self::$parent[$Itemid] = 0;
 			$current = $Itemid;
@@ -208,11 +232,12 @@ abstract class KunenaRoute {
 	protected static function getSubMenus($Itemid) {
 		if (!isset(self::$subtree[$Itemid])) {
 			self::$subtree[$Itemid] = array();
+			$menus = JSite::getMenu ();
 			$menutype = '';
 			if ( isset(self::$menu[$Itemid]->menutype) ) $menutype = self::$menu[$Itemid]->menutype;
 			$todo = array(intval($Itemid));
 			while (($id = array_shift($todo)) !== null) {
-				if ( isset( self::$menu[$id] ) ) {
+				if ( isset( self::$menu[$id]) && $menus->authorize($id) ) {
 					$item = self::$menu[$id];
 					if ($item->type == 'component' && $item->component == 'com_kunena') {
 						self::$subtree[$Itemid][$id] = $id;
@@ -301,8 +326,9 @@ abstract class KunenaRoute {
 		$Itemid = 0;
 		// Search current tree
 
-		if (self::$active) {
-			$root = self::getKunenaRoot(self::$active);
+		$active = self::getActive();
+		if ($active) {
+			$root = self::getKunenaRoot($active);
 			$list = self::getSubMenus($root);
 			if (count($list) > 1) {
 				$Itemid = self::findItemID($list, $query);

@@ -44,18 +44,22 @@ class KunenaController extends JController {
 		jimport( 'joomla.error.profiler' );
 		$starttime = JProfiler::getmicrotime();
 
+		$app = JFactory::getApplication();
 		$lang = JFactory::getLanguage();
+		// FIXME: loading languages in Joomla is SLOW (30ms)!
 		if (KunenaForum::isSVN()) {
-			$lang->load('com_kunena',KPATH_ADMIN);
 			$lang->load('com_kunena',KPATH_SITE);
-			$lang->load('com_kunena.install',KPATH_ADMIN);
-		} else {
+			if ($app->isAdmin()) {
+				$lang->load('com_kunena',KPATH_ADMIN);
+				$lang->load('com_kunena.install',KPATH_ADMIN);
+			}
+		} elseif ($app->isAdmin()) {
 			$lang->load('com_kunena',JPATH_ADMINISTRATOR);
 			$lang->load('com_kunena',JPATH_SITE);
 			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 		}
 
-		$view = strtolower ( JRequest::getCmd ( 'view', 'none' ) );
+		$view = strtolower ( JRequest::getWord ( 'view', 'none' ) );
 		$path = JPATH_COMPONENT . DS . 'controllers' . DS . $view . '.php';
 
 		// If the controller file path exists, include it ... else die with a 500 error.

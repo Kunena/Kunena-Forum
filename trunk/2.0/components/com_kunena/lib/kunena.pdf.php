@@ -101,7 +101,7 @@ function dofreePDF()
 
 		if (empty($row)) { //if the messages doesn't exist don't need to continue
         	echo '<br /><br /><div align="center">' . JText::_('COM_KUNENA_PDF_NOT_GENERATED_MESSAGE_DELETED') . '</div><br /><br />';
-        	echo CKunenaLink::GetAutoRedirectHTML ( KunenaRoute::_ ( KUNENA_LIVEURLREL . '&func=showcat&catid=' . $catid ), 3500 );
+        	echo CKunenaLink::GetAutoRedirectHTML ( KunenaRoute::_ ( 'index.php?option=com_kunena&func=showcat&catid=' . $catid ), 3500 );
     	} else {
         	$mes_text = $row[0]->message;
     	    filterHTML($mes_text);

@@ -36,7 +36,7 @@ defined ( '_JEXEC' ) or die ();
 					<li class="kms"><strong><?php echo JText::_('COM_KUNENA_MYPROFILE_LASTVISITDATE'); ?>:</strong> <span title="<?php echo CKunenaTimeformat::showDate($this->me->lastvisitDate, 'ago', 'utc'); ?>"><?php echo CKunenaTimeformat::showDate($this->me->lastvisitDate, 'date_today', 'utc'); ?></span></li>
 					<?php if ($this->logout) : ?>
 					<li>
-					<form action="<?php echo KUNENA_LIVEURLREL ?>" method="post" name="login">
+					<form action="<?php echo 'index.php?option=com_kunena' ?>" method="post" name="login">
 						<input type="submit" name="submit" class="kbutton" value="<?php echo JText::_('COM_KUNENA_PROFILEBOX_LOGOUT'); ?>" />
 						<input type="hidden" name="option" value="<?php echo $this->logout['option']; ?>" />
 						<?php if (!empty($this->logout['view'])) : ?>

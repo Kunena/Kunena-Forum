@@ -10,13 +10,13 @@
  */
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.view' );
+kimport ( 'kunena.view' );
 kimport ( 'kunena.forum.category.helper' );
 
 /**
  * About view for Kunena backend
  */
-class KunenaViewManage extends JView {
+class KunenaViewManage extends KunenaView {
 	function display() {
 		$this->assignRef ( 'state', $this->get ( 'State' ) );
 		if ($this->state->get('item.id')) $this->setLayout ('edit');
@@ -71,43 +71,5 @@ class KunenaViewManage extends JView {
 		$header = JText::_('COM_KUNENA_ADMIN');
 		$this->assign ( 'header', $header );
 		$this->setTitle ( $header );
-	}
-
-	function displayNoAccess($errors = array()) {
-		$output = '';
-		foreach ($errors as $error) $output .= "<div>{$error}</div>";
-		$this->common->setLayout ( 'default' );
-		$this->common->assign ( 'header', JText::_('COM_KUNENA_ACCESS_DENIED'));
-		$this->common->assign ( 'body', $output);
-		$this->common->display();
-	}
-
-	function displayCommon($layout) {
-		$this->common->setLayout ( $layout );
-		$this->common->display();
-	}
-
-	function addStyleSheet($filename) {
-		if (!KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
-			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\.css$/u', '-min.css', $filename );
-		}
-		$document = JFactory::getDocument ();
-		$template = KunenaFactory::getTemplate();
-		return $document->addStyleSheet ( $template->getFile($filename) );
-	}
-
-	function addScript($filename) {
-		if (!KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
-			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
-		}
-		$document = JFactory::getDocument ();
-		$template = KunenaFactory::getTemplate();
-		return $document->addScript ( $template->getFile($filename) );
-	}
-
-	function setTitle($title) {
-		$this->document->setTitle ( $this->document->getTitle() .' :: '. strip_tags($title) );
 	}
 }

@@ -46,10 +46,7 @@ class KunenaUserHelper {
 			jimport ( 'joomla.user.helper' );
 			$id = intval ( JUserHelper::getUserId ( ( string ) $identifier ) );
 		}
-		if ($id < 1)
-			return new KunenaUser ();
-
-		if (! $reload && empty ( self::$_instances [$id] )) {
+		if ($reload || empty ( self::$_instances [$id] )) {
 			self::$_instances [$id] = new KunenaUser ( $id );
 		}
 
@@ -70,7 +67,7 @@ class KunenaUserHelper {
 			// Before we do anything to cache the users, check if we should add active users
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
 			$who = CKunenaWhoIsOnline::GetInstance();
-			$e_userids = $who->getActiveUsersList();
+			$e_userids += $who->getActiveUsersList();
 
 			// Also get latest user and add to the list
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');

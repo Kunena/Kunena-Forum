@@ -80,7 +80,7 @@ class CKunenaWhoIsOnline {
 			ORDER BY username ASC";
 
     	$this->db->setQuery($query);
-    	$users = $this->db->loadObjectList();
+    	$users = $this->db->loadObjectList('userid');
     	KunenaError::checkDatabaseError();
 
     	return $users;
@@ -128,7 +128,7 @@ class CKunenaWhoIsOnline {
 			GROUP BY s.userid
 			ORDER BY w.time DESC";
         $this->db->setQuery($query);
-        $users = $this->db->loadObjectList();
+        $users = $this->db->loadObjectList('id');
         KunenaError::checkDatabaseError();
 
         return $users;

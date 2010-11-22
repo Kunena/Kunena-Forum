@@ -45,7 +45,7 @@ class KunenaForumCategoryHelper {
 		if ($id < 1)
 			return new KunenaForumCategory ();
 
-		if (! $reload && empty ( self::$_instances [$id] )) {
+		if ($reload || empty ( self::$_instances [$id] )) {
 			self::$_instances [$id] = new KunenaForumCategory ( $id );
 		}
 
@@ -258,11 +258,21 @@ class KunenaForumCategoryHelper {
 		$db->query ();
 		if (KunenaError::checkDatabaseError ())
 			return;
+
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache->clean('categories');
 	}
 
 	// Internal functions:
 
 	static protected function loadCategories() {
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$data = $cache->get('instances', 'com_kunena.categories');
+		if ($data !== false) {
+			list(self::$_instances, self::$_tree, self::$_names) = unserialize($data);
+			return;
+		}
+
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_categories ORDER BY ordering, name";
 		$db->setQuery ( $query );
@@ -293,6 +303,7 @@ class KunenaForumCategoryHelper {
 				self::$_instances [$id]->section = !self::$_instances [$id]->level;
 			}
 		}
+		$cache->store(serialize(array(self::$_instances, self::$_tree, self::$_names)), 'instances', 'com_kunena.categories');
 	}
 
 	static public function compareByNameAsc($a, $b) {

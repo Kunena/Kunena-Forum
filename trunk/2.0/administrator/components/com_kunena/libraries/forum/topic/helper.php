@@ -127,6 +127,7 @@ class KunenaForumTopicHelper {
 		if (!empty($params['subscriped'])) $whereuser[] = 'ut.subscribed=1';
 
 		$catlist = implode(',', array_keys(KunenaForumCategoryHelper::getCategories($categories, $reverse)));
+		if (!$catlist) return array(0, array());
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (".implode(' OR ',$whereuser).')' : '');

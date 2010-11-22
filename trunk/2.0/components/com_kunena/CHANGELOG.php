@@ -33,7 +33,42 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+21-November-2010 Matias
++ [#23442] Optimize for speed: KunenaUser::getAllowedCategories() should store results into session
+# [#23442] Fix a bug in KunenaUserHelper::loadUsers() where not all users were loaded
++ [#23442] Optimize for speed: KunenaUserHelper::get() for guest didn't have an instance
+
+20-November-2010 Matias
++ [#23442] Optimize for speed: Loading languages file is slow -- avoid it when possible
++ [#23442] Optimize for speed: KunenaForumCategory::authorise() should avoid running the same code over and over again
++ [#23442] Optimize for speed: KunenaUser::getType() should avoid running the same code over and over again
++ [#23442] Optimize for speed: KunenaRoute::_() cache all URLs
+# [#23444] Fix a bug in KunenaRoute which prevents menu from working in Joomla 1.6
++ [#23442] Optimize for speed: CKunenaLink::GetProfileLink()
+^ [#23442] KunenaRoute: Store global menu tree instead of users to be able to cache it globally
+
+19-November-2010 Matias
++ [#23442] Optimize for speed: KunenaViewCommon: add caching to announcements
++ [#23442] Optimize for speed: KunenaViewCommon: add caching to forum jump
++ [#23442] Optimize for speed: KunenaViewCommon: add caching to pathway
++ [#23442] Optimize for speed: KunenaViewCommon: add caching to who is online
++ [#23442] Optimize for speed: KunenaViewCommon: add caching to stats
++ [#23442] Optimize for speed: KunenaViewCommon: add caching to menu
++ [#23442] Optimize for speed: KunenaViewCommon: add caching to login box
+
+17-November-2010 Matias
++ [#22569] Add new classes KunenaModelCategories, KunenaControllerCategories, KunenaViewCategories
++ [#22569] New class KunenaView to have all general functions we need
+^ [#22569] Make initialize.php to work inside the new view
++ [#22569] Add forumjump into common view
+^ [#22569] Move legacy code out of kunena.php into kunena.legacy.php
+
 16-November-2010 Matias
+# [#23443] Fix regression in PDF, Categories, login, logout
+# [#23443] Fix regression in KunenaForumCategoryHelper::get()
+# [#22569] Fix a bug in KunenaForumTopicHelper::getLatestTopics() when there are no visible categories
+# [#23443] Fix regression in CKunenaLatestX class which prevents it from working (SQL error)
+# [#22569] Fix a bug in CKunenaLatestX::getNoReplies() should show all topics, not just 1 month
 # [#22792] Fix a bug which causes installation to fail
 # [#22541] Fix some bugs to make JomSocial groups integration to work again
 

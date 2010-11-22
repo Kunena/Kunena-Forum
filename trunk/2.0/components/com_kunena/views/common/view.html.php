@@ -10,35 +10,113 @@
  */
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.view' );
+kimport ( 'kunena.view' );
+jimport( 'joomla.cache.handler.output' );
 
 /**
- * About view for Kunena backend
+ * Common view
  */
-class KunenaViewCommon extends JView {
+class KunenaViewCommon extends KunenaView {
+	public $catid = 0;
+
 	function display($tpl = null) {
-		switch ($this->getLayout ()) {
-			case 'loginbox' :
-				$this->displayLoginBox();
-				break;
-			case 'footer' :
-				$this->displayFooter();
-				break;
-			case 'default' :
-				$this->displayDefault();
-				break;
+		$this->config = KunenaFactory::getConfig();
+		$displayFunction = 'display'.ucfirst($this->getLayout ());
+		if (! method_exists($this, $displayFunction) || ! $this->$displayFunction($tpl)) {
+			return;
 		}
+	}
+
+	function displayAnnouncement() {
+		if ($this->config->showannouncement > 0) {
+			$cache = JFactory::getCache('com_kunena', 'output');
+			if ($cache->start(0, 'com_kunena.view.common.announcement')) return;
+			// FIXME: refactor code
+			require_once(KUNENA_PATH .DS. 'class.kunena.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
+			$ann = new CKunenaAnnouncement();
+			$ann->getAnnouncement();
+			$ann->displayBox();
+			$cache->end();
+		} else echo ' ';
+	}
+
+	function displayForumJump($tpl = null) {
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$user = KunenaFactory::getUser ();
+		// TODO: we can improve this (not by user)
+		if ($cache->start("{$user->userid}.{$this->catid}", 'com_kunena.view.common.forumjump')) return;
+
+		$options = array ();
+		$options [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_FORUM_TOP') );
+		$cat_params = array ('sections'=>1, 'catid'=>0);
+		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid));
+
 		parent::display ($tpl);
+		$cache->end();
 	}
 
-	function displayDefault() {
+	function displayPathway() {
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$user = KunenaFactory::getUser ();
+		// TODO: just testing
+		if ($cache->start("{$this->catid}", 'com_kunena.view.common.pathway')) return;
+
+		// FIXME: refactor code
+		require_once(KUNENA_PATH .DS. 'class.kunena.php');
+		require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+		CKunenaTools::loadTemplate('/pathway.php');
+		$cache->end();
 	}
 
-	function displayLoginBox() {
+	function displayWhosonline($tpl = null) {
+		if (KunenaFactory::getConfig()->showwhoisonline > 0) {
+			$cache = JFactory::getCache('com_kunena', 'output');
+			if ($cache->start(0, 'com_kunena.view.common.whosonline')) return;
+			// FIXME: refactor code
+			require_once(KUNENA_PATH .DS. 'class.kunena.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
+			$online = CKunenaWhoIsOnline::getInstance();
+			$online->displayWhoIsOnline();
+			$cache->end();
+		} else echo " ";
+	}
+
+	function displayStats($tpl = null) {
+		if (KunenaFactory::getConfig()->showstats > 0) {
+			$cache = JFactory::getCache('com_kunena', 'output');
+			if ($cache->start(0, 'com_kunena.view.common.stats')) return;
+			// FIXME: refactor code
+			require_once(KUNENA_PATH .DS. 'class.kunena.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
+			$kunena_stats = CKunenaStats::getInstance ( );
+			$kunena_stats->showFrontStats ();
+			$cache->end();
+		} else echo " ";
+	}
+
+	function displayMenu($tpl = null) {
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$menu = KunenaRoute::getMenu ();
+		$key = $menu ? "{$menu->id}.{$menu->name}" : '0';
+		if ($cache->start($key, 'com_kunena.view.common.menu')) return;
+		parent::display ($tpl);
+		$cache->end();
+	}
+
+	function displayLoginBox($tpl = null) {
+		$my = JFactory::getUser ();
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$token = JUtility::getToken();
+		if ($cache->start("{$my->id}.$token", 'com_kunena.view.common.loginbox')) return;
+
+		$this->assign ( 'me', KunenaFactory::getUser ());
+
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		require_once KPATH_SITE . '/lib/kunena.timeformat.class.php';
-		$my = JFactory::getUser ();
-		$this->assign ( 'me', KunenaFactory::getUser ());
 
 		$uri = JFactory::getURI ();
 		$this->assign ( 'return',  base64_encode ( $uri->toString ( array ('path', 'query', 'fragment' ) ) ) );
@@ -72,9 +150,11 @@ class KunenaViewCommon extends JView {
 			}
 
 		}
+		parent::display ($tpl);
+		$cache->end();
 	}
 
-	function displayFooter() {
+	function displayFooter($tpl = null) {
 		require_once KPATH_SITE . '/lib/kunena.link.class.php';
 		$catid = 0;
 		if (KunenaFactory::getConfig ()->enablerss) {
@@ -98,77 +178,6 @@ class KunenaViewCommon extends JView {
 			$credits .= ' :: <a href ="'. $template->params->get('templatebyLink').'" rel="follow">' . $template->params->get('templatebyText') .' '. $template->params->get('templatebyName') .'</a>';
 		}
 		$this->assign ( 'credits', $credits );
-	}
-
-	function getModulePosition($position) {
-		$html = '';
-		if (JDocumentHTML::countModules ( $position )) {
-			$document = &JFactory::getDocument ();
-			$renderer = $document->loadRenderer ( 'modules' );
-			$options = array ('style' => 'xhtml' );
-			$html .= '<div class="'.$position.'">';
-			$html .= $renderer->render ( $position, $options, null );
-			$html .= '</div>';
-		}
-		echo $html;
-	}
-
-	function getButton($name, $text) {
-		return '<span class="'.$name.'"><span>'.$text.'</span></span>';
-	}
-
-	function getIcon($name, $title='') {
-		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
-	}
-
-	function getTime() {
-		$time = JProfiler::getmicrotime() - $this->starttime;
-		return sprintf('%0.3f', $time);
-	}
-
-	function isMenu() {
-		return JDocumentHTML::countModules ( 'kunena_menu' );
-	}
-
-	function getMenu() {
-		jimport ( 'joomla.application.module.helper' );
-		$position = "kunena_menu";
-		$options = array ('style' => 'xhtml' );
-		$modules = JModuleHelper::getModules ( $position );
-		$html = '';
-		foreach ( $modules as $module ) {
-			if ($module->module == 'mod_mainmenu') {
-				$basemenu = KunenaRoute::getMenu ();
-				if ($basemenu) {
-					$module = clone $module;
-					// FIXME: J1.5 only
-					$search = array ('/menutype=(.*)(\s)/', '/startLevel=(.*)(\s)/', '/endLevel=(.*)(\s)/' );
-					$replace = array ("menutype={$basemenu->menutype}\\2", 'startLevel=' . ($basemenu->sublevel + 1) . '\2', 'endLevel=' . ($basemenu->sublevel + 2) . '\2' );
-					$module->params = preg_replace ( $search, $replace, $module->params );
-				}
-			}
-			$html .= JModuleHelper::renderModule ( $module, $options );
-		}
-		return $html;
-	}
-
-	function addStyleSheet($filename) {
-		if (!KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
-			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\.css$/u', '-min.css', $filename );
-		}
-		$document = JFactory::getDocument ();
-		$template = KunenaFactory::getTemplate();
-		return $document->addStyleSheet ( $template->getFile($filename) );
-	}
-
-	function addScript($filename) {
-		if (!KunenaFactory::getConfig ()->debug && !KunenaForum::isSvn()) {
-			// If we are in debug more, make sure we load the unpacked css
-			$filename = preg_replace ( '/\.js$/u', '-min.js', $filename );
-		}
-		$document = JFactory::getDocument ();
-		$template = KunenaFactory::getTemplate();
-		return $document->addScript ( $template->getFile($filename) );
+		parent::display ($tpl);
 	}
 }

@@ -99,6 +99,16 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function authorise($action='read', $user=null, $silent=false) {
+		$user = KunenaUser::getInstance($user);
+		// Avoid running same code many times during the same request
+		if (isset($this->_authcache[$user->userid][$action])) {
+			if ($this->_authcache[$user->userid][$action]) {
+				if (!$silent)
+					$this->setError ( $this->_authcache[$user->userid][$action] );
+				return false;
+			}
+			return true;
+		}
 		static $actions  = array(
 			'none'=>array(),
 			'read'=>array('Read'),
@@ -127,19 +137,20 @@ class KunenaForumCategory extends JObject {
 			'topic.post.attachment.create'=>array('Read', 'GuestWrite', 'NotBanned', 'Unlocked'),
 			'topic.post.attachment.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 		);
-		$user = KunenaUser::getInstance($user);
 		if (!isset($actions[$action])) {
-			echo $action;die();
-			if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_LIB_CATEGORY_NO_ACTION' ) );
+			$this->_authcache[$user->userid][$action] = JText::_ ( 'COM_KUNENA_LIB_CATEGORY_NO_ACTION' );
+			if (!$silent) $this->setError ( $this->_authcache[$user->userid][$action] );
 			return false;
 		}
 		foreach ($actions[$action] as $function) {
 			$authFunction = 'authorise'.$function;
 			if (! method_exists($this, $authFunction) || ! $this->$authFunction($user)) {
-				if (!$silent) $this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
+				$this->_authcache[$user->userid][$action] = JText::_ ( 'COM_KUNENA_NO_ACCESS' );
+				if (!$silent) $this->setError ( $this->_authcache[$user->userid][$action] );
 				return false;
 			}
 		}
+		$this->_authcache[$user->userid][$action] = null;
 		return true;
 	}
 
@@ -313,6 +324,9 @@ class KunenaForumCategory extends JObject {
 		$access = KunenaFactory::getAccessControl();
 		$access->clearCache();
 
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache->clean('categories');
+
 		// Set the id for the KunenaUser object in case we created a new category.
 		if ($result && $isnew) {
 			$this->load ( $table->get ( 'id' ) );
@@ -399,6 +413,9 @@ class KunenaForumCategory extends JObject {
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
 
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache->clean('categories');
+
 		return $result;
 	}
 
@@ -421,6 +438,9 @@ class KunenaForumCategory extends JObject {
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );
+
+		$cache = JFactory::getCache('com_kunena', 'output');
+		$cache->clean('categories');
 
 		return $result;
 	}
@@ -518,12 +538,9 @@ class KunenaForumCategory extends JObject {
 			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			return false;
 		}
-		if (!isset($this->_authcache[$user->userid])) {
-			$access = KunenaFactory::getAccessControl();
-			$catids = $access->getAllowedCategories($user);
-			$this->_authcache[$user->userid] = !empty($catids[0]) || !empty($catids[$this->id]);
-		}
-		if (!$this->_authcache[$user->userid]) {
+		$catids = $user->getAllowedCategories();
+		$allow = !empty($catids[0]) || !empty($catids[$this->id]);
+		if (!$allow) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			return false;
 		}
@@ -563,7 +580,7 @@ class KunenaForumCategory extends JObject {
 	}
 	protected function authoriseUnlocked($user) {
 		// Check that category is not locked or that user is a moderator
-		if ($this->locked && !$user->isModerator($this->id)) {
+		if ($this->locked && (!$user->userid || !$user->isModerator($this->id))) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_CATEGORY_LOCKED' ) );
 			return false;
 		}
@@ -571,7 +588,7 @@ class KunenaForumCategory extends JObject {
 	}
 	protected function authoriseModerate($user) {
 		// Check that user is moderator
-		if (!$user->isModerator($this->id)) {
+		if (!$user->userid || !$user->isModerator($this->id)) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_NOT_MODERATOR' ) );
 			return false;
 		}
@@ -579,7 +596,7 @@ class KunenaForumCategory extends JObject {
 	}
 	protected function authoriseAdmin($user) {
 		// Check that user is admin
-		if (!$user->isAdmin($this->id)) {
+		if (!$user->userid || !$user->isAdmin($this->id)) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_MODERATION_ERROR_NOT_ADMIN' ) );
 			return false;
 		}

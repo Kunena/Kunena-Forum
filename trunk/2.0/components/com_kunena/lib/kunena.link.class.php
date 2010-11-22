@@ -183,31 +183,21 @@ class CKunenaLink {
 		return KunenaRoute::_ ( "index.php?option=com_kunena&view=profile{$userid}{$task}{$extra}", $xhtml );
 	}
 
-	function GetProfileLink($userid, $name = null, $title ='', $rel = 'nofollow', $class = '') {
-		$profile = KunenaFactory::getUser($userid);
+	function GetProfileLink($user, $name = null, $title ='', $rel = 'nofollow', $class = '') {
+		$user = KunenaFactory::getUser($user);
 		If (!$name) {
-			$name = htmlspecialchars($profile->getName(), ENT_COMPAT, 'UTF-8');
+			$name = htmlspecialchars($user->getName(), ENT_COMPAT, 'UTF-8');
 		}
-		if ($userid == 0) {
-			$uclass = 'kwho-guest';
-		} else if ($profile->isAdmin ()) {
-			$uclass = 'kwho-admin';
-		} else if ($profile->isModerator ( null )) {
-			$uclass = 'kwho-globalmoderator';
-		} else if ($profile->isModerator ()) {
-			$uclass = 'kwho-moderator';
-		} else {
-			$uclass = 'kwho-user';
-		}
-		if ($userid > 0) {
-			$link = self::GetProfileURL ( $userid );
-			if (! empty ( $link ))
-				return self::GetHrefLink ( $link, $name, $title, $rel, $uclass );
-		}
-		return "<span class=\"{$uclass}\">{$name}</span>";
+		$uclass = "kwho-{$user->getType(0,true)}";
+		$link = self::GetProfileURL ( $user->userid );
+		if (! empty ( $link ))
+			return self::GetHrefLink ( $link, $name, $title, $rel, $uclass );
+		else
+			return "<span class=\"{$uclass}\">{$name}</span>";
 	}
 
 	function GetProfileURL($userid, $xhtml = true) {
+		if (!$userid) return;
 		$profile = KunenaFactory::getProfile ();
 		return $profile->getProfileURL ( $userid, '', $xhtml );
 	}

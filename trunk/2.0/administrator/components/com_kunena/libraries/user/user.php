@@ -12,6 +12,8 @@ defined ( '_JEXEC' ) or die ();
 
 kimport('kunena.error');
 kimport('kunena.user.helper');
+jimport ( 'joomla.utilities.date' );
+jimport ( 'joomla.filesystem.file' );
 
 /**
  * Kunena User Class
@@ -19,6 +21,8 @@ kimport('kunena.user.helper');
 class KunenaUser extends JObject {
 	// Global for every instance
 	protected static $_ranks = null;
+	protected $_type = false;
+	protected $_allowed = array();
 
 	protected $_exists = false;
 	protected $_db = null;
@@ -187,8 +191,27 @@ class KunenaUser extends JObject {
 	}
 
 	public function getAllowedCategories($rule = 'read') {
-		$acl = KunenaFactory::getAccessControl ();
-		return $acl->getAllowedCategories ( $this->userid, $rule );
+		if (!isset($this->_allowed[$rule])) {
+			$key = "com_kunena.user{$this->userid}.{$rule}";
+			if ($this->userid) {
+				$app = JFactory::getApplication();
+				$allowed = $app->getUserState($key);
+			} else {
+				$cache = JFactory::getCache('com_kunena', 'output');
+				$allowed = $cache->get($key, 'com_kunena');
+			}
+			if (!$allowed) {
+				$acl = KunenaFactory::getAccessControl ();
+				$allowed = $acl->getAllowedCategories ( $this->userid, $rule );
+				if ($this->userid) {
+					$app->setUserState($key, $allowed);
+				} else {
+					$cache->store($allowed, $key, 'com_kunena');
+				}
+			}
+			$this->_allowed[$rule] = $allowed;
+		}
+		return $this->_allowed[$rule];
 	}
 
 	public function isAdmin($catid = 0) {
@@ -207,7 +230,6 @@ class KunenaUser extends JObject {
 		if ($this->blocked || $this->banned == $this->_db->getNullDate ())
 			return true;
 
-		jimport ( 'joomla.utilities.date' );
 		$ban = new JDate ( $this->banned );
 		$now = new JDate ();
 		return ($ban->toUnix () > $now->toUnix ());
@@ -238,19 +260,23 @@ class KunenaUser extends JObject {
 		return $avatars->getURL ( $this, $sizex, $sizey );
 	}
 
-	public function getType($catid = 0) {
-		if ($this->userid == 0) {
-			$type = JText::_ ( 'COM_KUNENA_VIEW_VISITOR' );
-		} elseif ($this->isBanned ()) {
-			$type = JText::_ ( 'COM_KUNENA_VIEW_BANNED' );
-		} elseif ($this->isAdmin ()) {
-			$type = JText::_ ( 'COM_KUNENA_VIEW_ADMIN' );
-		} elseif ($this->isModerator ( $catid )) {
-			$type = JText::_ ( 'COM_KUNENA_VIEW_MODERATOR' );
-		} else {
-			$type = JText::_ ( 'COM_KUNENA_VIEW_USER' );
+	public function getType($catid = 0, $code=false) {
+		if (!$this->_type) {
+			if ($this->userid == 0) {
+				$this->_type = $code ? 'guest' : JText::_ ( 'COM_KUNENA_VIEW_VISITOR' );
+			} elseif ($this->isBanned ()) {
+				$this->_type = $code ? 'banned' : JText::_ ( 'COM_KUNENA_VIEW_BANNED' );
+			} elseif ($this->isAdmin ()) {
+				$this->_type = $code ? 'admin' : JText::_ ( 'COM_KUNENA_VIEW_ADMIN' );
+			} elseif ($this->isModerator ( null )) {
+				$this->_type = $code ? 'globalmoderator' : JText::_ ( 'COM_KUNENA_VIEW_GLOBAL_MODERATOR' );
+			} elseif ($this->isModerator ( $catid )) {
+				$this->_type = $code ? 'moderator' : JText::_ ( 'COM_KUNENA_VIEW_MODERATOR' );
+			} else {
+				$this->_type = $code ? 'user' : JText::_ ( 'COM_KUNENA_VIEW_USER' );
+			}
 		}
-		return $type;
+		return $this->_type;
 	}
 	public function getRank($catid = 0, $type = false) {
 		// Default rank
@@ -282,7 +308,6 @@ class KunenaUser extends JObject {
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_BANNED' );
 			$rank->rank_special = 1;
 			$rank->rank_image = 'rankbanned.gif';
-			jimport ( 'joomla.filesystem.file' );
 			foreach ( self::$_ranks as $cur ) {
 				if ($cur->rank_special == 1 && JFile::stripExt ( $cur->rank_image ) == 'rankbanned') {
 					$rank = $cur;
@@ -296,7 +321,6 @@ class KunenaUser extends JObject {
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_ADMINISTRATOR' );
 			$rank->rank_special = 1;
 			$rank->rank_image = 'rankadmin.gif';
-			jimport ( 'joomla.filesystem.file' );
 			foreach ( self::$_ranks as $cur ) {
 				if ($cur->rank_special == 1 && JFile::stripExt ( $cur->rank_image ) == 'rankadmin') {
 					$rank = $cur;
@@ -308,7 +332,6 @@ class KunenaUser extends JObject {
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_MODERATOR' );
 			$rank->rank_special = 1;
 			$rank->rank_image = 'rankmod.gif';
-			jimport ( 'joomla.filesystem.file' );
 			foreach ( self::$_ranks as $cur ) {
 				if ($cur->rank_special == 1 && JFile::stripExt ( $cur->rank_image ) == 'rankadmin') {
 					$rank = $cur;
@@ -362,7 +385,6 @@ class KunenaUser extends JObject {
 				break;
 			case 'birthdate' :
 				if ($this->birthdate)
-					jimport('joomla.utilities.date');
 					$date = new JDate ( $this->birthdate, 0 );
 					if ($date->toFormat('%Y')<1902) break;
 					return '<span class="kicon-profile kicon-profile-birthdate" title="' . JText::_ ( 'COM_KUNENA_MYPROFILE_BIRTHDATE' ) . ': ' . CKunenaTimeformat::showDate ( $this->birthdate, 'date', 'utc', 0 ) . '"></span>';

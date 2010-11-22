@@ -42,6 +42,9 @@ class CKunenaLatestX {
 		$this->config = KunenaFactory::getConfig ();
 
 		$this->latestcategory = explode ( ',', $this->config->latestcategory );
+		if (in_array(0, $this->latestcategory)) {
+			$this->latestcategory = false;
+		}
 		$this->latestcategory_in = $this->config->latestcategory_in;
 
 		$this->page = $page < 1 ? 1 : $page;
@@ -323,6 +326,7 @@ class CKunenaLatestX {
 	function getUserPosts() {
 		if (isset($this->total)) return;
 		$this->header = $this->title = JText::_('COM_KUNENA_USERPOSTS');
+		$this->latestcategory = false;
 		$this->_getPosts('user');
 	}
 
@@ -333,22 +337,26 @@ class CKunenaLatestX {
 	}
 
 	function getGotThankYouPosts() {
+		$this->latestcategory = false;
 		$this->_getThankYouPosts('got');
 	}
 
 	function getSaidThankYouPosts(){
+		$this->latestcategory = false;
 		$this->_getThankYouPosts('said');
 	}
 
 	function getUnapprovedPosts() {
 		if (isset($this->total)) return;
 		$this->header = $this->title = JText::_('COM_KUNENA_UNAPPROVEDPOSTS');
+		$this->latestcategory = false;
 		$this->_getPosts('unapproved');
 	}
 
 	function getDeletedPosts() {
 		if (isset($this->total)) return;
 		$this->header = $this->title = JText::_('COM_KUNENA_DELETEDPOSTS');
+		$this->latestcategory = false;
 		$this->_getPosts('deleted');
 	}
 
@@ -357,6 +365,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_OWNTOPICS');
+		$this->latestcategory = false;
 		$this->_getMyLatestTopics(false, false, false);
 	}
 
@@ -365,6 +374,7 @@ class CKunenaLatestX {
 		$this->columns++;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_USERTOPICS');
+		$this->latestcategory = false;
 		$this->_getMyLatestTopics(true, false, false);
 	}
 
@@ -374,6 +384,7 @@ class CKunenaLatestX {
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_FAVORITES');
 		$this->actionDropdown[] = JHTML::_('select.option', 'bulkFavorite', JText::_('COM_KUNENA_DELETE_FAVORITE'));
+		$this->latestcategory = false;
 		$this->_getMyLatestTopics(false, true, false);
 	}
 
@@ -383,6 +394,7 @@ class CKunenaLatestX {
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_SUBSCRIPTIONS');
 		$this->actionDropdown[] = JHTML::_('select.option', 'bulkSub', JText::_('COM_KUNENA_DELETE_SUBSCRIPTION'));
+		$this->latestcategory = false;
 		$this->_getMyLatestTopics(false, false, true);
 	}
 
@@ -391,6 +403,7 @@ class CKunenaLatestX {
 		$this->columns--;
 		$this->showposts = 1;
 		$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+		$this->latestcategory = false;
 		$this->_getCategorySubscriptions();
 	}
 
@@ -398,6 +411,7 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->header = JText::_('COM_KUNENA_MENU_MYLATEST_DESC');
 		$this->title = JText::_('COM_KUNENA_MY_DISCUSSIONS');
+		$this->latestcategory = false;
 		$this->_getMyLatestTopics();
 	}
 
@@ -419,12 +433,13 @@ class CKunenaLatestX {
 		if (isset($this->total)) return;
 		$this->header =  JText::_('COM_KUNENA_MENU_NOREPLIES_DESC');
 		$this->title = JText::_('COM_KUNENA_NO_REPLIES');
-		$this->querytime = 0;
-		$this->latestcategory = array(0);
+		$this->show_list_time = false;
+		$this->latestcategory = false;
 		$this->_getLatestTopics(true, 'AND tt.posts=1');
 	}
 
 	protected function _getShowListTime() {
+		if ($this->show_list_time === false) return 0;
 		if ($this->show_list_time == 0) {
 			$sincetime = ($this->prevCheck - $this->config->fbsessiontimeout); //move 30 minutes back to compensate for expired sessions
 		} else {

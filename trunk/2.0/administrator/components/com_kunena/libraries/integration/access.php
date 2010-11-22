@@ -15,6 +15,7 @@ defined ( '_JEXEC' ) or die ( '' );
 
 require_once KPATH_ADMIN . '/libraries/integration/integration.php';
 kimport ( 'kunena.error' );
+kimport ( 'joomla.database.databasequery' );
 
 abstract class KunenaAccess {
 	public $priority = 0;
@@ -181,5 +182,68 @@ abstract class KunenaAccess {
 	abstract protected function loadAdmins();
 	abstract protected function loadModerators();
 	abstract protected function loadAllowedCategories($userid);
-	abstract function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0');
+	abstract protected function _get_subscribers($catid, $thread);
+
+	function getSubscribers($catid, $topic, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
+		$thread = intval ( $topic );
+		if (! KunenaForumCategoryHelper::get($catid) || ! KunenaForumTopicHelper::get($topic))
+			return array();
+
+		if ($subscriptions) {
+			$subslist = $this->_get_subscribers($catid, $topic);
+		}
+		if ($moderators) {
+			if ($this->moderatorsByCatid === false) {
+				$this->loadModerators();
+			}
+			if (!empty($this->moderatorsByCatid[0])) $modlist = $this->moderatorsByCatid[0];
+			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
+		}
+		if ($admins) {
+			if ($this->adminsByCatid === false) {
+				$this->loadAdmins();
+			}
+			if (!empty($this->adminsByCatid[0])) $adminlist = $this->adminsByCatid[0];
+			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
+		}
+
+		$query = new JDatabaseQuery();
+		$query->select('u.id, u.name, u.username, u.email');
+		$query->from('FROM #__users AS u');
+		$query->where("u.block=0");
+		$userlist = array();
+		if (!empty($subslist)) {
+			$userlist = $subslist;
+			$subslist = implode(',', array_keys($subslist));
+			$query->select("IF( u.id IN ({$subslist}), 1, 0 ) AS subscription");
+		} else {
+			$query->select("0 AS subscription");
+		}
+		if (!empty($modlist)) {
+			$userlist += $modlist;
+			$modlist = implode(',', array_keys($modlist));
+			$query->select("IF( u.id IN ({$modlist}), 1, 0 ) AS moderator");
+		} else {
+			$query->select("0 AS moderator");
+		}
+		if (!empty($adminlist)) {
+			$userlist += $adminlist;
+			$adminlist = implode(',', array_keys($adminlist));
+			$query->select("IF( u.id IN ({$adminlist}), 1, 0 ) AS admin");
+		} else {
+			$query->select("0 AS admin");
+		}
+		$userlist = array_diff_key($userlist, $excludeList);
+		if (!empty($userlist)) {
+			$userlist = implode(',', array_keys($userlist));
+			$query->where("u.id IN ({$userlist})");
+			$db = JFactory::getDBO();
+			$db->setQuery ( $query );
+			$subsList = $db->loadObjectList ();
+			if (KunenaError::checkDatabaseError()) return array();
+		}
+
+		unset($subslist, $modlist, $adminlist, $userlist);
+		return $subsList;
+	}
 }

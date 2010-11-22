@@ -145,7 +145,7 @@ class CKunenaAttachments {
 					$img = '<img title="' . $this->escape ( $attachment->filename ) . '" ' . $imgsize . ' src="' . JURI::ROOT () . $thumb . '" alt="' . $this->escape ( $attachment->filename ) . '" />';
 					$attachment->thumblink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $img, $this->escape ( $attachment->filename ), ($this->_config->lightbox)? 'lightbox[thumb' . intval ( $attachment->mesid ). ']':'' );
 					$img = '<img title="' . $this->escape ( $attachment->filename ) . '" src="' . JURI::ROOT () . $this->escape ( $attachment->folder ) . '/' . $this->escape ( $attachment->filename ) . '" alt="' . $this->escape ( $attachment->filename ) . '" />';
-					$attachment->imagelink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $img, $this->escape ( $attachment->filename ), ($this->_config->lightbox)?'lightbox[imagelink' . intval ( $attachment->messid ) .']':'' );
+					$attachment->imagelink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $img, $this->escape ( $attachment->filename ), ($this->_config->lightbox)?'lightbox[imagelink' . intval ( $attachment->mesid ) .']':'' );
 					$attachment->textLink = CKunenaLink::GetAttachmentLink ( $this->escape ( $attachment->folder ), $this->escape ( $attachment->filename ), $this->escape ( $attachment->shortname ), $this->escape ( $attachment->filename ), ($this->_config->lightbox)?'lightbox[simple' . $attachment->mesid . ']' . ' nofollow':' nofollow' ) . ' (' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . 'KB)';
 					break;
 				default :

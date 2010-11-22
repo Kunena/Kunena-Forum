@@ -64,19 +64,39 @@ class CKunenaRSSData {
 		switch ( $options['type'] ) {
 			case 'topic':
 				$model->getLatestTopics();
-				$result = $model->threads;
+				$result = $model->topics;
+				foreach ($result as $topic) {
+					$topic->current_post_id = $topic->first_post_id;
+					$topic->current_post_message = $topic->first_post_message;
+					$topic->current_post_time = $topic->first_post_time;
+					$topic->current_post_username = KunenaFactory::getUser($topic->first_post_userid)->getName($topic->first_post_guest_name);
+					// FIXME: email
+					$topic->current_post_email = 'TODO: EMAIL';
+				}
 				break;
 			case 'recent':
 				$model->getLatest();
-				$result = $model->lastreply;
-				foreach ($result as $message) {
-					$message->subject = $model->threads[$message->thread]->subject;
+				$result = $model->topics;
+				foreach ($result as $topic) {
+					$topic->current_post_id = $topic->last_post_id;
+					$topic->current_post_message = $topic->last_post_message;
+					$topic->current_post_time = $topic->last_post_time;
+					$topic->current_post_username = KunenaFactory::getUser($topic->last_post_userid)->getName($topic->last_post_guest_name);
+					// FIXME: email
+					$topic->current_post_email = 'TODO: EMAIL';
 				}
 				break;
 			case 'post':
 			default:
 				$model->getLatestPosts();
-				$result = $model->customreply;
+				$result = $model->topics;
+				foreach ($model->messages as $message) {
+					$result[$message->thread]->current_post_id = $message->id;
+					$result[$message->thread]->current_post_message = $message->message;
+					$result[$message->thread]->current_post_time = $message->time;
+					$result[$message->thread]->current_post_username = KunenaFactory::getUser($message->userid)->getName($message->name);
+					$result[$message->thread]->current_post_email = $message->email;
+				}
 		}
 
 		return (array) $result;

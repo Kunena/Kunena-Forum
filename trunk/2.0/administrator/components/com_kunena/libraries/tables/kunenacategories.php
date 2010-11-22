@@ -33,6 +33,7 @@ class TableKunenaCategories extends KunenaTable
 	var $admin_recurse = null;
 	var $ordering = null;
 	var $published = null;
+	var $channels = null;
 	var $checked_out = null;
 	var $checked_out_time = null;
 	var $review = null;

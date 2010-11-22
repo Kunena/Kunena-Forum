@@ -142,90 +142,42 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		}
 		return array($groupid);
 	}
+
 	protected function _get_subscribers($catid, $thread) {
 		$db = JFactory::getDBO ();
-		$query ="SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$thread}
-				UNION
-				SELECT user_id FROM #__kunena_user_categories WHERE category_id={$catid}";
-		$db->setQuery ($query);
-		$userids = $db->loadResultArray();
+
+		$tquery = new JDatabaseQuery();
+		$tquery->select('u.id, 1 AS topic');
+		$tquery->from('#__kunena_user_topics AS s');
+		$tquery->join('INNER', '#__users AS u ON s.user_id=u.id');
+		$tquery->where("s.topic_id={$db->quote($thread)}");
+
+		$cquery = new JDatabaseQuery();
+		$cquery->select('u.id, 0 AS topic');
+		$cquery->from('#__kunena_user_categories AS s');
+		$cquery->join('INNER', '#__users AS u ON s.user_id=u.id');
+		$cquery->where("s.topic_id={$db->quote($thread)}");
+
+		// Get all allowed Joomla groups to make sure that subscription is valid
+		$public = $this->_get_groups($access->pub_access, $access->pub_recurse);
+		$admin = array();
+		if ($access->pub_access > 0) {
+			$admin = $this->_get_groups($access->admin_access, $access->admin_recurse);
+		}
+		$groups = array_unique ( array_merge ( $public, $admin ) );
+		if ($groups) {
+			$groups = implode ( ',', $groups );
+
+			$tquery->join('LEFT', "#__noixacl_multigroups AS g ON g.id_user=u.id");
+			$tquery->where("(u.gid IN ({$groups}) OR g.id_group IN ({$groups}))");
+
+			$cquery->join('LEFT', "#__noixacl_multigroups AS g ON g.id_user=u.id");
+			$cquery->where("(u.gid IN ({$groups}) OR g.id_group IN ({$groups}))");
+		}
+
+		$db->setQuery ("{$tquery} UNION {$cquery}");
+		$userids = $db->loadObjectList('id');
 		KunenaError::checkDatabaseError();
 		return $userids;
-	}
-
-	function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
-		$catid = intval ( $catid );
-		$thread = intval ( $thread );
-		if (! $catid || ! $thread)
-			return array();
-
-		// Make sure that category exists and fetch access info
-		$db = JFactory::getDBO ();
-		$query = "SELECT pub_access, pub_recurse, admin_access, admin_recurse FROM #__kunena_categories WHERE id={$catid}";
-		$db->setQuery ($query);
-		$access = $db->loadObject ();
-		if (KunenaError::checkDatabaseError() || !$access) return array();
-
-		$subslist = -1;
-		$modlist = -1;
-		$adminlist = -1;
-		$arogroups = '';
-		if ($subscriptions) {
-			// Get all allowed Joomla groups to make sure that subscription is valid
-			$kunena_acl = JFactory::getACL ();
-			$public = $this->_get_groups($access->pub_access, $access->pub_recurse);
-			$admin = array();
-			if ($access->pub_access > 0) {
-				$admin = $this->_get_groups($access->admin_access, $access->admin_recurse);
-			}
-			$arogroups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
-			if ($arogroups)
-				$arogroups = "(u.gid IN ({$arogroups}) OR g.id_group IN ({$arogroups}))";
-			$subslist = $this->_get_subscribers($catid, $thread);
-			$subslist = !empty($subslist) ? implode(',', array_keys($subslist)) : '-1';
-		}
-		if ($moderators) {
-			if ($this->moderatorsByCatid === false) {
-				$this->loadModerators();
-			}
-			if (!empty($this->moderatorsByCatid[0])) $modlist = $this->moderatorsByCatid[0];
-			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
-			$modlist = !empty($modlist) ? implode(',', array_keys($modlist)) : '-1';
-		}
-		if ($admins) {
-			if ($this->adminsByCatid === false) {
-				$this->loadAdmins();
-			}
-			if (!empty($this->adminsByCatid[0])) $adminlist = $this->adminsByCatid[0];
-			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
-			$adminlist = !empty($adminlist) ? implode(',', array_keys($adminlist)) : '-1';
-		}
-
-		$querysel = "SELECT u.id, u.name, u.username, u.email,
-					IF( u.id IN ({$subslist}), 1, 0 ) AS subscription,
-					IF( u.id IN ({$modlist}), 1, 0 ) AS moderator,
-					IF( u.id IN ({$adminlist}), 1, 0 ) AS admin
-					FROM #__users AS u
-					LEFT JOIN #__noixacl_multigroups AS g ON g.id_user=u.id";
-
-		$where = array ();
-		if ($subscriptions)
-			$where [] = " ( u.id IN ({$subslist}) ) " . ($arogroups ? " AND {$arogroups}" : '') . " ) ";
-		if ($moderators)
-			$where [] = " ( u.id IN ({$modlist}) ) ";
-		if ($admins)
-			$where [] = " ( u.id IN ({$adminlist}) ) ";
-
-		$subsList = array ();
-		if (count ($where)) {
-			$where = " AND (" . implode ( ' OR ', $where ) . ")";
-			$query = $querysel . " WHERE u.block=0 AND u.id NOT IN ($excludeList) $where GROUP BY u.id";
-			$db->setQuery ( $query );
-			$subsList = $db->loadObjectList ();
-			if (KunenaError::checkDatabaseError()) return array();
-		}
-
-		unset($subslist, $modlist, $adminlist);
-		return $subsList;
 	}
 }

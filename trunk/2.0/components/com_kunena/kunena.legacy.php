@@ -261,10 +261,13 @@ if ($func == "json") {
 	$kunena_app->close ();
 }
 
-if (file_exists ( KUNENA_ABSTMPLTPATH . '/initialize.php' )) {
-	require_once ( KUNENA_ABSTMPLTPATH . '/initialize.php' );
-} else {
-	require_once (KPATH_SITE . '/template/default/initialize.php');
+$format = JRequest::getCmd ( 'format', 'html' );
+if ($func != 'rss' && $func != 'fb_pdf' && $func != 'pdf' && $format == 'html') {
+	if (file_exists ( KUNENA_ABSTMPLTPATH . '/initialize.php' )) {
+		require_once ( KUNENA_ABSTMPLTPATH . '/initialize.php' );
+	} else {
+		require_once (KPATH_SITE . '/template/default/initialize.php');
+	}
 }
 if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// if the board is offline
@@ -292,7 +295,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$kunena_app->close ();
 	}
 
-	$format = JRequest::getCmd ( 'format', 'html' );
 	if ($format != 'html') {
 		echo "Kunena: Unsupported output format {$format}, please use only format=html or .html";
 		$kunena_app->close ();

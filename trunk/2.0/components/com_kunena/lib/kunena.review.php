@@ -78,7 +78,7 @@ class CKunenaReview {
 
 	protected function GetApprovedMessageList() {
 		$me = KunenaFactory::getUser();
-		$allowed = $me->getAllowedCategories('moderate');
+		$allowed = implode(',', $me->getAllowedCategories('moderate'));
 
 		$queryCatid = '';
 		$db = JFactory::getDBO ();

@@ -102,7 +102,7 @@ class KunenaTemplate extends JObject
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\-min\./u', '.', $filename );
 		}
-		return JFactory::getDocument ()->addStyleSheet ( JURI::root(true).$this->getFile($filename) );
+		return JFactory::getDocument ()->addStyleSheet ( JURI::root(true).'/'.$this->getFile($filename) );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class KunenaTemplate extends JObject
 			// If we are in debug more, make sure we load the unpacked css
 			$filename = preg_replace ( '/\-min\./u', '.', $filename );
 		}
-		return JFactory::getDocument ()->addScript ( JURI::root(true).$this->getFile($filename) );
+		return JFactory::getDocument ()->addScript ( JURI::root(true).'/'.$this->getFile($filename) );
 	}
 
 	public function getPath($default = false) {
@@ -126,7 +126,7 @@ class KunenaTemplate extends JObject
 		if (!is_file(KPATH_SITE . "/{$path}/{$file}")) {
 			$path = $this->getPath(true);
 		}
-		return KUNENA_COMPONENT_RELPATH."/{$path}/{$file}";
+		return KPATH_COMPONENT_RELATIVE."/{$path}/{$file}";
 	}
 
 	public function getSmileyPath($filename='') {

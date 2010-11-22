@@ -48,9 +48,9 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 		return $allowed;
 	}
 
-	function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
+	protected function _get_subscribers($catid, $thread) {
 		$this->joomlaAccess->moderatorsByCatid = $this->moderatorsByCatid;
 		$this->joomlaAccess->moderatorsByUserid = $this->moderatorsByUserid;
-		return $this->joomlaAccess->getSubscribers($catid, $thread, $subscriptions, $moderators, $admins, $excludeList);
+		return $this->joomlaAccess->_get_subscribers($catid, $thread);
 	}
 }

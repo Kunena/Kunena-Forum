@@ -343,10 +343,9 @@ class CKunenaView {
 		$where[] = "a.hold IN ({$this->hold})";
 		$where = implode(' AND ',$where);
 
-		$query = "SELECT a.*, b.*, p.id AS poll_id, modified.name AS modified_name, modified.username AS modified_username
+		$query = "SELECT a.*, b.*, p.id AS poll_id
 			FROM #__kunena_messages AS a
 			LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid
-			LEFT JOIN #__users AS modified ON a.modified_by = modified.id
 			LEFT JOIN #__kunena_polls AS p ON a.id=p.threadid
 			WHERE a.id={$this->db->Quote($this->id)} AND {$where}";
 		$this->db->setQuery ( $query );
@@ -439,28 +438,16 @@ class CKunenaView {
 		if ($this->ordering == 'desc')
 			$firstpage = $totalpages;
 
-		// Get replies of current thread
-		$query = "SELECT a.*, b.*, modified.name AS modified_name, modified.username AS modified_username
-					FROM #__kunena_messages AS a
-					LEFT JOIN #__kunena_messages_text AS b ON a.id=b.mesid
-					LEFT JOIN #__users AS modified ON a.modified_by = modified.id
-					WHERE a.thread={$this->db->Quote($this->thread)} AND {$where}
-					ORDER BY id {$this->ordering}";
-		$this->db->setQuery ( $query, $this->limitstart, $this->limit );
-		$posts = $this->db->loadObjectList ();
-		KunenaError::checkDatabaseError();
+		$this->messages = KunenaForumMessageHelper::getMessagesByTopic($this->thread, $this->limitstart, $this->limit, $this->ordering, $this->hold);
 
 		// First collect the message ids of the first message and all replies
 		$messageids = array();
-		$this->messages = array ();
 		$userlist = array();
-		foreach($posts AS $message){
+		foreach($this->messages AS $message){
 			$messageids[] = $message->id;
-			$this->messages [] = $message;
 			$userlist[intval($message->userid)] = intval($message->userid);
 			$userlist[intval($message->modified_by)] = intval($message->modified_by);
 		}
-		unset ( $posts );
 
 		// create a list of ids we can use for our sql
 		$idstr = @join ( ",", $messageids );

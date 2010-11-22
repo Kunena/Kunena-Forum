@@ -147,11 +147,11 @@ class CKunenaRSSView {
 			// Build unique direct linking url for each item (htmlspecialchars_decode because FeedCreator uses htmlspecialchars on input)
 			$url = htmlspecialchars_decode(CKunenaLink::GetThreadPageURL(
 				'view',
-				$data->catid,
-				$data->thread,
+				$data->category_id,
+				$data->id,
 				0,
 				$this->config->messages_per_page,
-				$data->id
+				$data->current_post_id
 			));
 
 			// Extract the data, we want to present and store it in $tmp
@@ -159,12 +159,12 @@ class CKunenaRSSView {
 
 			$tmp['title']		= $data->subject;
 			// Remove confidential information from message
-			$data->message = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $data->message );
-			$tmp['text']		= $data->message;
-			$tmp['date']		= $data->time;
-			$tmp['email']		= $data->email;
-			$tmp['name']		= $data->name;
-			$tmp['cat_name']	= $data->catname;
+			$data->current_post_message = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $data->current_post_message );
+			$tmp['text']		= $data->current_post_message;
+			$tmp['date']		= $data->current_post_time;
+			$tmp['email']		= $data->current_post_email;
+			$tmp['name']		= $data->current_post_username;
+			$tmp['cat_name']	= KunenaForumCategoryHelper::get($data->category_id)->name;
 
 			// Guid is used by aggregators to uniquely identify each item
 			$tmp['guid']		= $uribase . $url;

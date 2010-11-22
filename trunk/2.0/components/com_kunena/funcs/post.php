@@ -240,17 +240,23 @@ class CKunenaPost {
 	// Show forms
 
 	protected function newtopic($do) {
+		$cat_params = array ();
+		$cat_params['ordering'] = 'ordering';
+		$cat_params['toplevel'] = 0;
+		$cat_params['sections'] = 0;
+		$cat_params['direction'] = 1;
+		$cat_params['action'] = 'topic.create';
+
+		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', 0);
+
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
-		if (!$this->category->authorise('topic.create')) {
+		if (!$this->selectcatlist || ($this->catid && !$this->category->authorise('topic.create'))) {
 			$this->_app->enqueueMessage ( $this->category->getError(), 'notice' );
 			return false;
 		}
 		list ($this->topic, $this->message) = $this->category->newTopic();
 		$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
 		$this->action = 'post';
-
-		$options = array ();
-		$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->category->id );
 
 		CKunenaTools::loadTemplate ( '/editor/form.php' );
 	}
@@ -420,7 +426,7 @@ class CKunenaPost {
 			$subject = JRequest::getString ( 'subject', '' );
 			$shadow = JRequest::getInt ( 'shadow', 0 );
 			$changesubject = JRequest::getInt ( 'changesubject', 0 );
-			
+
 			switch ($mode) {
 				case KN_MOVE_THREAD:
 					$ids = false;

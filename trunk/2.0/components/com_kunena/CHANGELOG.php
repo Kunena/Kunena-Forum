@@ -33,6 +33,16 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+22-November-2010 Matias
+# [#23443] Fix regression: CSS paths are wrong in Windows
+# [#23443] Fix regression: internal error in profile / approve pages
+# [#23443] Fix regression: RSS feed is not working after schema changes
+# [#23443] Fix regression: extra characters in RSS and PDF outputs
+^ [#22569] Move getSubscribers() into KunenaAccess base class, have only integration specific logic in KunenaAccessXXX::_get_subscribers()
+^ [#23442] Improve queries in KunenaAccess, KunenaAccessJXtended and KunenaAccessNoixACL when getting subscribers
+# [#23443] Fix regression: Fix white page inside topic (view)
+# [#23443] Fix regression: Cannot post from New Topic menu item
+
 21-November-2010 Matias
 + [#23442] Optimize for speed: KunenaUser::getAllowedCategories() should store results into session
 # [#23442] Fix a bug in KunenaUserHelper::loadUsers() where not all users were loaded

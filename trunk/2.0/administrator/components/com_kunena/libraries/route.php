@@ -62,6 +62,9 @@ abstract class KunenaRoute {
 	}
 
 	public static function _($uri = null, $xhtml = true, $ssl=0) {
+		if (JFactory::getApplication()->isAdmin()) {
+			return JRoute::_($uri, $xhtml, $ssl);
+		}
 		$menu = self::getCurrentMenu();
 		$key = ($menu ? $menu->id : 0) .'-'.(int)$xhtml.(int)$ssl.$uri;
 		if (isset(self::$uris[$key])) {
@@ -92,7 +95,8 @@ abstract class KunenaRoute {
 	public static function getDefault() {
 		self::buildMenuTree();
 
-		$menus = JSite::getMenu ();
+		$app = JFactory::getApplication();
+		$menus = $app->getMenu ();
 		$default = $menus->getDefault();
 		$active = $menus->getActive();
 
@@ -162,7 +166,8 @@ abstract class KunenaRoute {
 
 	protected static function buildMenuTree() {
 		if (self::$menu === null) {
-			self::$menu = JSite::getMenu ()->getMenu ();
+			$app = JFactory::getApplication();
+			self::$menu = $app->getMenu ()->getMenu ();
 
 			$cache = JFactory::getCache('_system', 'output');
 			self::$childlist = unserialize($cache->get('childlist', 'com_kunena.route'));
@@ -180,7 +185,9 @@ abstract class KunenaRoute {
 	protected static function getActive() {
 		static $active = false;
 		if ($active === false) {
-			$active = JSite::getMenu ()->getActive ();
+			$app = JFactory::getApplication();
+			$menus = $app->getMenu ();
+			$active = $menus->getActive ();
 		}
 		return $active;
 	}
@@ -188,7 +195,8 @@ abstract class KunenaRoute {
 	protected static function getMenuItems($menutype) {
 		if (!isset(self::$subtree[$menutype])) {
 			self::$subtree[$menutype] = array();
-			$menus = JSite::getMenu ();
+			$app = JFactory::getApplication();
+			$menus = $app->getMenu ();
 			$todo = isset(self::$childlist[$menutype][0]) ? self::$childlist[$menutype][0] : array();
 			while (($id = array_shift($todo)) !== null) {
 				if (!$menus->authorize($id)) continue;
@@ -232,7 +240,8 @@ abstract class KunenaRoute {
 	protected static function getSubMenus($Itemid) {
 		if (!isset(self::$subtree[$Itemid])) {
 			self::$subtree[$Itemid] = array();
-			$menus = JSite::getMenu ();
+			$app = JFactory::getApplication();
+			$menus = $app->getMenu ();
 			$menutype = '';
 			if ( isset(self::$menu[$Itemid]->menutype) ) $menutype = self::$menu[$Itemid]->menutype;
 			$todo = array(intval($Itemid));

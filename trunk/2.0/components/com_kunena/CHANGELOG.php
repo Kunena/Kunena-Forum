@@ -37,6 +37,13 @@ Kunena 2.0.0-DEV
 # [#23443] Fix regression: Replace all fixed jos_ database prefixes
 # [#22792] Replace references to old tables with new ones when deleting category
 + [#23466] Feature: Category Channels (only logic inside listcat, showcat)
+# [#23443] Fix regression: routing doesn't work in administration
+# [#23443] Administration: Fix pruning
+# [#23443] Fix internal error in KunenaForumMessageAttachmentHelper::cleanup()
+# [#23443] Make results from KunenaForumTopicHelper::getLatestTopics() to be topic objects
+# [#23443] Fix bug in KunenaForumTopicHelper::loadTopics()
+# [#23443] Create fast mode into KunenaForumTopic::delete() with no global recount
+# [#23443] KunenaError::checkDatabaseError() should show MySQL error in administration
 
 22-November-2010 Xillibit
 # [#23456] Issue during installation which fails because datamodel changes on kunena_categories

@@ -159,9 +159,17 @@ class KunenaForumTopicHelper {
 				LEFT JOIN #__kunena_user_topics AS ut ON tt.id=ut.topic_id AND ut.user_id={$db->Quote($user->userid)}
 				WHERE {$where} ORDER BY {$orderby}";
 		$db->setQuery ( $query, $limitstart, $limit );
-		$topics = ( array ) $db->loadObjectList ('id');
+		$results = (array) $db->loadAssocList ('id');
 		if (KunenaError::checkDatabaseError()) return array(0, array());
 
+		foreach ( $results as $id=>$result ) {
+			$instance = new KunenaForumTopic ();
+			$instance->bind ( $result );
+			$instance->exists(true);
+			self::$_instances [$id] = $instance;
+			$topics[$id] = $instance;
+		}
+		unset ($results);
 		return array($total, $topics);
 	}
 
@@ -265,7 +273,7 @@ class KunenaForumTopicHelper {
 			if (isset($results[$id])) {
 				$instance = new KunenaForumTopic ();
 				$instance->bind ( $results[$id] );
-				$instance->_exists = true;
+				$instance->exists(true);
 				self::$_instances [$id] = $instance;
 			} else {
 				self::$_instances [$id] = null;

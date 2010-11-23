@@ -18,6 +18,7 @@ kimport ('kunena.forum.category.helper');
 kimport ('kunena.forum.topic.helper');
 kimport ('kunena.forum.topic.user.helper');
 kimport ('kunena.forum.message.helper');
+kimport ('kunena.forum.message.attachment.helper');
 
 /**
  * Kunena Forum Topic Class
@@ -382,7 +383,7 @@ class KunenaForumTopic extends JObject {
 	 * @return	boolean	True on success
 	 * @since 1.6
 	 */
-	public function delete() {
+	public function delete($recount = true) {
 		if (!$this->exists()) {
 			return true;
 		}
@@ -418,10 +419,11 @@ class KunenaForumTopic extends JObject {
 			KunenaError::checkDatabaseError ();
 		}
 
-		KunenaUserHelper::recount();
-		KunenaForumCategoryHelper::recount();
-
-		KunenaForumMessageAttachmentHelper::cleanup();
+		if ($recount) {
+			KunenaUserHelper::recount();
+			KunenaForumCategoryHelper::recount();
+			KunenaForumMessageAttachmentHelper::cleanup();
+		}
 		return $result;
 	}
 

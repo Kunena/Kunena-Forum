@@ -93,10 +93,11 @@ class KunenaForumMessageAttachmentHelper {
 	static public function cleanup() {
 		$db = JFactory::getDBO ();
 		// Find up to 50 orphan attachments and delete them
-		$query = "SELECT * FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
+		$query = "SELECT a.* FROM #__kunena_attachments AS a LEFT JOIN #__kunena_messages AS m ON a.mesid=m.id WHERE m.id IS NULL";
 		$db->setQuery ( $query, 0, 50 );
 		$results = (array) $db->loadAssocList ('id');
 		if (KunenaError::checkDatabaseError ()) return false;
+		if (empty($results)) return;
 		foreach ($results as $result) {
 			$instance = new KunenaForumMessageAttachment ();
 			$instance->bind ( $result );

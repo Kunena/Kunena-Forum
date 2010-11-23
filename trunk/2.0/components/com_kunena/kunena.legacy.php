@@ -66,7 +66,7 @@ $kunena_app = JFactory::getApplication ();
 
 if (empty($_POST) && $format == 'html') {
 	$me = KunenaFactory::getUser();
-	$menu = JSite::getMenu ();
+	$menu = $kunena_app->getMenu ();
 	$active = $menu->getActive ();
 
 	// Legacy menu item and Itemid=0 support with redirect and notice

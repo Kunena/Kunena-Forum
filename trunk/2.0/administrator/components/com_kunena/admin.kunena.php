@@ -52,6 +52,10 @@ if ($view) {
 JToolBarHelper::title('&nbsp;', 'kunena.png');
 
 kimport('kunena.error');
+kimport('kunena.user.helper');
+kimport('kunena.forum.category.helper');
+kimport('kunena.forum.topic.helper');
+kimport('kunena.forum.message.attachment.helper');
 $kunena_app = JFactory::getApplication ();
 require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
@@ -1704,75 +1708,54 @@ function userban($option, $userid, $block = 0) {
 // Prune Forum functions
 //===============================
 function pruneforum($kunena_db, $option) {
-	$forums_list = array ();
-	//get forum list; locked forums are excluded from pruning
-	$kunena_db->setQuery ( "SELECT a.id as value, a.name as text" . "\nFROM #__kunena_categories AS a" . "\nWHERE a.parent != '0'" . "\nAND a.locked != '1'" . "\nORDER BY parent, ordering" );
-	//get all subscriptions for this user
-	$forums_list = $kunena_db->loadObjectList ();
-	if (KunenaError::checkDatabaseError()) return;
-	$forumList ['forum'] = JHTML::_ ( 'select.genericlist', $forums_list, 'prune_forum', 'class="inputbox" size="4"', 'value', 'text', '' );
-	html_Kunena::pruneforum ( $option, $forumList );
+	$cat_params = array ();
+	$cat_params['ordering'] = 'ordering';
+	$cat_params['toplevel'] = 0;
+	$cat_params['sections'] = 0;
+	$cat_params['direction'] = 1;
+	$cat_params['unpublished'] = 1;
+	$cat_params['action'] = 'admin';
+
+	$lists = array ();
+	$lists ['forum'] = JHTML::_('kunenaforum.categorylist', 'prune_forum', 0, null, $cat_params, 'class="inputbox"', 'value', 'text');
+	html_Kunena::pruneforum ( $option, $lists );
 }
 
 function doprune($kunena_db, $option) {
-	require_once (KUNENA_PATH_LIB.'/kunena.timeformat.class.php');
-	$kunena_app = & JFactory::getApplication ();
+	$app = JFactory::getApplication ();
 	if (!JRequest::checkToken()) {
-		$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
-		$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum" );
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_ERROR_TOKEN' ), 'error' );
+		$app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum" );
+		return;
+	}
+	$category = KunenaForumCategoryHelper::get(JRequest::getInt ( 'prune_forum', 0 ));
+	if (!$category->authorise('admin')) {
+		$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_CHOOSEFORUMTOPRUNE' ), 'error' );
+		$app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum" );
 		return;
 	}
 
-	$catid = JRequest::getInt ( 'prune_forum', - 1 );
-	$deleted = 0;
-
-	if ($catid == - 1) {
-		echo "<script> alert('" . JText::_('COM_KUNENA_CHOOSEFORUMTOPRUNE') . "'); window.history.go(-1); </script>\n";
-		$kunena_app->close ();
-	}
-
 	// Convert days to seconds for timestamp functions...
-	$prune_days = intval ( JRequest::getVar ( 'prune_days', 36500 ) );
-	$prune_date = CKunenaTimeformat::internalTime () - ($prune_days * 86400);
+	$prune_days = JRequest::getInt ( 'prune_days', 36500 );
+	$prune_date = JFactory::getDate()->toUnix() - ($prune_days * 86400);
 
-	//get the thread list for this forum
-	$kunena_db->setQuery ( "SELECT t.thread, MAX(m.time) AS lasttime
-		FROM #__kunena_messages AS m
-		LEFT JOIN #__kunena_messages AS t ON m.thread=t.thread AND t.parent=0
-		WHERE m.catid={$catid} AND t.ordering = 0
-		GROUP BY thread
-		HAVING lasttime < {$prune_date}" );
-	$threadlist = $kunena_db->loadResultArray ();
-	if (KunenaError::checkDatabaseError()) return;
+	// TODO: add option to either delete or perm delete topics
 
-	require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
-	foreach ( $threadlist as $thread ) {
-		//get the id's for all posts belonging to this thread
-		$kunena_db->setQuery ( "SELECT id FROM #__kunena_messages WHERE thread={$thread}" );
-		$idlist = $kunena_db->loadResultArray ();
-		if (KunenaError::checkDatabaseError()) return;
-
-		if (count ( $idlist ) > 0) {
-			//prune all messages belonging to the thread
-			$deleted += count ($idlist);
-			$idlist = implode(',', $idlist);
-			$attachments = CKunenaAttachments::getInstance();
-			$attachments->deleteMessage($idlist);
-
-			$kunena_db->setQuery ( "DELETE m, t FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON m.id=t.mesid WHERE m.thread={$thread}" );
-			$kunena_db->query ();
-			if (KunenaError::checkDatabaseError()) return;
-		}
-		unset ($idlist);
+	// Get up to 100 oldest topics to be deleted
+	$params = array(
+		'orderby'=>'tt.last_post_time ASC',
+		'where'=>"AND tt.last_post_time<{$prune_date} AND ordering=0",
+	);
+	list($count, $topics) = KunenaForumTopicHelper::getLatestTopics($category->id, 0, 100, $params);
+	$deleted = 0;
+	foreach ( $topics as $topic ) {
+		$deleted++;
+		$topic->delete(false);
 	}
-	if (!empty($threadlist)) {
-		$threadlist = implode(',', $threadlist);
-		//clean all subscriptions to these deleted threads
-		$kunena_db->setQuery ( "DELETE FROM #__kunena_user_topics WHERE topic_id IN ({$threadlist})" );
-		$kunena_db->query ();
-		if (KunenaError::checkDatabaseError()) return;
-	}
-	$kunena_app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum", "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . $deleted . " " . JText::_('COM_KUNENA_PRUNETHREADS') );
+	KunenaUserHelper::recount();
+	KunenaForumCategoryHelper::recount();
+	KunenaForumMessageAttachmentHelper::cleanup();
+	$app->redirect ( JURI::base () . "index.php?option=$option&task=pruneforum", "" . JText::_('COM_KUNENA_FORUMPRUNEDFOR') . " " . $prune_days . " " . JText::_('COM_KUNENA_PRUNEDAYS') . "; " . JText::_('COM_KUNENA_PRUNEDELETED') . " {$deleted}/{$count} " . JText::_('COM_KUNENA_PRUNETHREADS') );
 }
 
 //===============================

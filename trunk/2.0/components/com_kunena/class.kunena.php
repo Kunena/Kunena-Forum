@@ -259,7 +259,7 @@ class CKunenaTools {
 			if ($module->module == 'mod_mainmenu') {
 				$app = JFactory::getApplication();
 
-				$menu = JSite::getMenu ();
+				$menu = $app->getMenu ();
 				$active = $menu->getActive();
 				$basemenu = KunenaRoute::getCurrentMenu ();
 				if ($basemenu) {

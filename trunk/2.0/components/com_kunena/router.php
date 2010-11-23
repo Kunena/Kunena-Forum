@@ -139,7 +139,8 @@ class KunenaRouter {
 
 		if (isset ( $query ['Itemid'] ) && $query ['Itemid'] > 0) {
 			// If we have Itemid, make sure that we remove identical parameters
-			$menu = JSite::getMenu ();
+			$app = JFactory::getApplication();
+			$menu = $app->getMenu ();
 			$menuitem = $menu->getItem ( $query ['Itemid'] );
 			if ($menuitem) {
 				// Remove variables with default values from URI
@@ -243,7 +244,8 @@ class KunenaRouter {
 		$kconfig =  KunenaFactory::getConfig ();
 
 		// Get current menu item
-		$menu = JSite::getMenu ();
+		$app = JFactory::getApplication();
+		$menu = $app->getMenu ();
 		$active = $menu->getActive ();
 
 		// Fill data from the menu item

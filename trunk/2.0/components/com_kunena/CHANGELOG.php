@@ -33,6 +33,11 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+23-November-2010 Matias
+# [#23443] Fix regression: Replace all fixed jos_ database prefixes
+# [#22792] Replace references to old tables with new ones when deleting category
++ [#23466] Feature: Category Channels (only logic inside listcat, showcat)
+
 22-November-2010 Xillibit
 # [#23456] Issue during installation which fails because datamodel changes on kunena_categories
 

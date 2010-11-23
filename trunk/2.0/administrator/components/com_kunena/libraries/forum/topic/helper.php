@@ -126,8 +126,13 @@ class KunenaForumTopicHelper {
 		if (!empty($params['favorited'])) $whereuser[] = 'ut.favorite=1';
 		if (!empty($params['subscriped'])) $whereuser[] = 'ut.subscribed=1';
 
-		$catlist = implode(',', array_keys(KunenaForumCategoryHelper::getCategories($categories, $reverse)));
-		if (!$catlist) return array(0, array());
+		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse);
+		$catlist = array();
+		foreach ($categories as $category) {
+			$catlist += $category->getChannels();
+		}
+		if (empty($catlist)) return array(0, array());
+		$catlist = implode(',', array_keys($catlist));
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (".implode(' OR ',$whereuser).')' : '');
@@ -173,10 +178,10 @@ class KunenaForumTopicHelper {
 		$where = '';
 		if ($threads) $where = "AND {$threads}";
 		// Recount total posts, total attachments
-		$query ="UPDATE jos_kunena_topics AS tt
+		$query ="UPDATE #__kunena_topics AS tt
 			INNER JOIN (SELECT m.thread, COUNT(DISTINCT m.id) AS posts, COUNT(a.id) as attachments
-				FROM jos_kunena_messages AS m
-				LEFT JOIN jos_kunena_attachments AS a ON m.id=a.mesid
+				FROM #__kunena_messages AS m
+				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
 				WHERE m.hold=0 {$where}
 				GROUP BY m.thread) AS t ON t.thread=tt.id
 			SET tt.posts=t.posts,
@@ -218,7 +223,7 @@ class KunenaForumTopicHelper {
 			return;
 
 		// Mark all empty topics as deleted
-		$query ="UPDATE jos_kunena_topics
+		$query ="UPDATE #__kunena_topics
 			SET hold = 2,
 				attachments = 0,
 				first_post_id = 0,

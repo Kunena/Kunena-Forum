@@ -22,6 +22,7 @@ kimport ('kunena.forum.category.helper');
 class KunenaForumCategory extends JObject {
 	protected $_exists = false;
 	protected $_db = null;
+	protected $_channels = false;
 	protected $_topics = false;
 	protected $_posts = false;
 	protected $_lastid = false;
@@ -69,6 +70,18 @@ class KunenaForumCategory extends JObject {
 	public function getLastPosted() {
 		$this->buildInfo();
 		return KunenaForumCategoryHelper::get($this->_lastid);
+	}
+
+	public function getChannels() {
+		if ($this->_channels === false) {
+			$ids = explode(',', $this->channels);
+			if (in_array(0, $ids) || in_array('THIS', $ids)) $ids[] = $this->id;
+			$this->_channels = KunenaForumCategoryHelper::getCategories($ids);
+			if (in_array('CHILDREN', $ids)) {
+				$this->_channels += KunenaForumCategoryHelper::getChildren($this->id);
+			}
+		}
+		return $this->_channels;
 	}
 
 	public function newTopic($fields=array(), $user=null) {
@@ -362,12 +375,12 @@ class KunenaForumCategory extends JObject {
 		$db = JFactory::getDBO ();
 		// Delete moderators
 		$queries[] = "DELETE FROM #__kunena_moderation WHERE catid={$db->quote($this->id)}";
-		// Delete favorites
-		$queries[] = "DELETE f FROM #__kunena_favorites AS f LEFT JOIN #__kunena_messages AS m ON m.id=f.thread WHERE m.catid={$db->quote($this->id)}";
-		// Delete subscriptions
-		$queries[] = "DELETE s FROM #__kunena_subscriptions AS s LEFT JOIN #__kunena_messages AS m ON m.id=s.thread WHERE m.catid={$db->quote($this->id)}";
-		// Delete category subscriptions
-		$queries[] = "DELETE FROM #__kunena_subscriptions_categories WHERE catid={$db->quote($this->id)}";
+		// Delete user topics
+		$queries[] = "DELETE FROM #__kunena_user_topics WHERE category_id={$db->quote($this->id)}";
+		// Delete user categories
+		$queries[] = "DELETE FROM #__kunena_user_categories WHERE category_id={$db->quote($this->id)}";
+		// Delete user read
+		$queries[] = "DELETE FROM #__kunena_user_read WHERE category_id={$db->quote($this->id)}";
 		// Delete thank yous
 		$queries[] = "DELETE t FROM #__kunena_thankyou AS t LEFT JOIN #__kunena_messages AS m ON m.id=t.postid WHERE m.catid={$db->quote($this->id)}";
 		// Delete poll users
@@ -519,10 +532,11 @@ class KunenaForumCategory extends JObject {
 	protected function buildInfo() {
 		if ($this->_topics !== false)
 			return;
-		$this->_topics = $this->numTopics;
-		$this->_posts = $this->numPosts;
-		$this->_lastid = $this->id;
-		$categories = KunenaForumCategoryHelper::getChildren($this->id);
+		$this->_topics = 0;
+		$this->_posts = 0;
+		$this->_lastid = 0;
+		$categories = $this->getChannels();
+		$categories += KunenaForumCategoryHelper::getChildren($this->id);
 		foreach ($categories as $category) {
 			$category->buildInfo();
 			$this->_topics += $category->numTopics;

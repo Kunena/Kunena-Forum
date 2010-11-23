@@ -238,11 +238,12 @@
 					WHERE a.parent = 0 AND a.moved = 0 AND a.id=a.thread
 					GROUP BY a.id
 			</query>
-			<query>DROP TABLE IF EXISTS `jos_kunena_attachments_bak` </query>
-			<query>DROP TABLE IF EXISTS `jos_kunena_favorites`</query>
-			<query>DROP TABLE IF EXISTS `jos_kunena_groups`</query>
-			<query>DROP TABLE IF EXISTS `jos_kunena_subscriptions`</query>
-			<query>DROP TABLE IF EXISTS `jos_kunena_subscriptions_categories`</query>
+			<query>DROP TABLE IF EXISTS `#__kunena_attachments_bak` </query>
+			<query>DROP TABLE IF EXISTS `#__kunena_favorites`</query>
+			<query>DROP TABLE IF EXISTS `#__kunena_groups`</query>
+			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions`</query>
+			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions_categories`</query>
+			<query>ALTER TABLE `#__kunena_categories` ADD `channels` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `published`</query>
 		</version>
 	</upgrade>
 </comupgrade>

@@ -525,8 +525,8 @@ class KunenaForumTopic extends JObject {
 	public function recount() {
 		// Recount total posts, total attachments
 		$query ="SELECT COUNT(DISTINCT m.id) AS posts, COUNT(a.id) AS attachments
-				FROM jos_kunena_messages AS m
-				LEFT JOIN jos_kunena_attachments AS a ON m.id=a.mesid
+				FROM #__kunena_messages AS m
+				LEFT JOIN #__kunena_attachments AS a ON m.id=a.mesid
 				WHERE m.hold=0 AND m.thread={$this->_db->quote($this->id)}
 				GROUP BY m.thread";
 		$this->_db->setQuery($query);

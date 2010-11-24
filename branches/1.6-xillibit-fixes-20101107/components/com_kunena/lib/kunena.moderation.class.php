@@ -187,6 +187,7 @@ class CKunenaModeration {
 			case KN_MOVE_MESSAGE : // Move Single message only
 				// If we are moving the first message of a thread only - make the second post the new thread header
 				if ( $currentMessage->parent == 0 ) {
+					if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
 					// We are about to pull the thread starter from the original thread.
 					// Need to promote the second post of the original thread as the new starter.
 					$sqlnewparent = "SELECT `id` FROM #__kunena_messages WHERE `id`!={$this->_db->Quote($MessageID)} AND `thread`={$this->_db->Quote($currentMessage->thread)} ORDER BY `id` ASC";
@@ -202,8 +203,6 @@ class CKunenaModeration {
 					if ($GhostThread == true) { 
 						$this->createGhostThread($MessageID,$currentMessage);
 					}
-					
-					if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
 				}
 
 				break;
@@ -543,15 +542,9 @@ class CKunenaModeration {
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError()) return false;
 		} else if ( $currentMessage->poll && $targetMessage->poll ) {
-			$sqlpoll = "UPDATE #__kunena_polls SET `threadid`='0' WHERE `id`={$this->_db->Quote($currentMessage->poll)}";
-			$this->_db->setQuery ( $sqlpoll );
-			$this->_db->query ();
-			if (KunenaError::checkDatabaseError()) return false;
-			$sqlpoll = "UPDATE #__kunena_polls_options SET `pollid`='0' WHERE `pollid`={$this->_db->Quote($currentMessage->thread)}";
-			$this->_db->setQuery ( $sqlpoll );
-			$this->_db->query ();
-			if (KunenaError::checkDatabaseError()) return false;
-    }
+			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL');
+			return false;
+    	}
 	}
 
 	public function getUserIPs ($UserID) {

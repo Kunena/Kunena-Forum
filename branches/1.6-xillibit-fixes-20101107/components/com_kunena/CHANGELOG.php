@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+24-November-2010 Xillibit
+# [#23251] Prevent to move a topic with a poll into another topic with a poll and display an error message
+
 21-November-2010 Xillibit
 # [#23251] When moving a topic with polls in another topics need to handle polls (fix regression)
 + [#22704] Add configuration option to show online users by minutes or session time

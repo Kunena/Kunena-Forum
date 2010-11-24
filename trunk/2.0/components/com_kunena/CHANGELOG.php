@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+24-November-2010 Matias
+# [#23443] Give error message when user doesn't have permissions to start a new topic
+
 23-November-2010 Matias
 # [#23443] Fix regression: Replace all fixed jos_ database prefixes
 # [#22792] Replace references to old tables with new ones when deleting category

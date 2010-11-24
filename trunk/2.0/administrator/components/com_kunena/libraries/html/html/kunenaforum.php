@@ -10,12 +10,11 @@
 **/
 defined( '_JEXEC' ) or die();
 
-jimport('joomla.html.html.select');
+jimport('joomla.html.html');
+kimport('kunena.forum.category.helper');
 
 abstract class JHTMLKunenaForum {
 	function categorylist($name, $parent, $options = array(), $params = array(), $attribs = null, $key = 'value', $text = 'text', $selected = array(), $idtag = false, $translate = false) {
-		kimport('kunena.forum.category.helper');
-
 		$unpublished = isset($params['unpublished']) ? (bool) $params['unpublished'] : 0;
 		$sections = isset($params['sections']) ? (bool) $params['sections'] : 0;
 		$ordering = isset($params['ordering']) ? (string) $params['ordering'] : 'ordering';
@@ -74,9 +73,12 @@ abstract class JHTMLKunenaForum {
 		$id = str_replace ( '[', '', $id );
 		$id = str_replace ( ']', '', $id );
 
-		$html = '<select name="' . $name . '" id="' . $id . '" ' . $attribs . '>';
-		$html .= JHTMLSelect::Options ( $options, $key, $text, $selected, $translate );
-		$html .= '</select>';
+		$html = '';
+		if (!empty($options)) {
+			$html .= '<select name="' . $name . '" id="' . $id . '" ' . $attribs . '>';
+			$html .= JHTML::_ ( 'select.options', $options, $key, $text, $selected, $translate );
+			$html .= '</select>';
+		}
 
 		return $html;
 	}

@@ -251,7 +251,8 @@ class CKunenaPost {
 
 		$this->category = KunenaForumCategoryHelper::get($this->catid);
 		if (!$this->selectcatlist || ($this->catid && !$this->category->authorise('topic.create'))) {
-			$this->_app->enqueueMessage ( $this->category->getError(), 'notice' );
+			$msg = JText::sprintf ( 'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->category->getError());
+			$this->_app->enqueueMessage ( $msg, 'notice' );
 			return false;
 		}
 		list ($this->topic, $this->message) = $this->category->newTopic();

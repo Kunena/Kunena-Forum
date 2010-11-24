@@ -88,7 +88,10 @@ class CKunenaModeration {
 			return false;
 		}
 
-		$query = "SELECT `id`, `catid`, `parent`, `name`, `userid`, `thread`, `subject` FROM #__kunena_messages WHERE `id`={$this->_db->Quote($MessageID)}";
+		$query = "SELECT m.id, m.catid, m.parent, m.name, m.userid, m.thread, m.subject , p.id AS poll				 
+				FROM #__kunena_messages AS m
+				LEFT JOIN #__kunena_polls AS p ON p.threadid=m.thread
+				WHERE m.id={$this->_db->Quote($MessageID)}";
 		$this->_db->setQuery ( $query );
 		$currentMessage = $this->_db->loadObject ();
 		if (KunenaError::checkDatabaseError()) return false;
@@ -129,7 +132,7 @@ class CKunenaModeration {
 
 		if ($TargetMessageID != 0) {
 			// Check that target message actually exists
-			$this->_db->setQuery ( "SELECT `id`, `catid`, `parent`, `thread`, `subject` FROM #__kunena_messages WHERE `id`={$this->_db->Quote($TargetMessageID)}" );
+			$this->_db->setQuery ( "SELECT m.id, m.catid, m.parent, m.thread, m.subject, p.id AS poll FROM #__kunena_messages AS m LEFT JOIN #__kunena_polls AS p ON p.threadid=m.thread WHERE m.id={$this->_db->Quote($TargetMessageID)}" );
 			$targetMessage = $this->_db->loadObject ();
 			if (KunenaError::checkDatabaseError()) return false;
 
@@ -194,6 +197,13 @@ class CKunenaModeration {
 					if ( $newParentID ) {
 						$this->_Move ( $newParentID, $currentMessage->catid, '', 0, KN_MOVE_NEWER );
 					}
+					
+					// Create ghost thread if requested
+					if ($GhostThread == true) { 
+						$this->createGhostThread($MessageID,$currentMessage);
+					}
+					
+					if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
 				}
 
 				break;
@@ -205,17 +215,23 @@ class CKunenaModeration {
 				if ($GhostThread == true) {
 					$this->createGhostThread($MessageID,$currentMessage);
 				}
+				
+				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
 
 				break;
 			case KN_MOVE_NEWER :
 				// Move message and all newer messages of thread
 				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `id`>{$this->_db->Quote($MessageID)}";
-
+				
+				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
+				
 				break;
 			case KN_MOVE_REPLIES :
 				// Move message and all replies and quotes - 1 level deep for now
 				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `parent`={$this->_db->Quote($MessageID)}";
-
+				
+				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
+				
 				break;
 			default :
 				// Unsupported mode - Error!
@@ -312,26 +328,30 @@ class CKunenaModeration {
 				$ThreadDatas = $this->_db->loadObjectList ();
 				if (KunenaError::checkDatabaseError()) return false;
 
-				// TODO: remove foreach and use collective queries instead
+				$userid = array();
+				$messid = array();
+				
 				if ( is_array( $ThreadDatas ) ) {
 					foreach ( $ThreadDatas as $mes ) {
-						$sql2 = "DELETE FROM #__kunena_messages_text WHERE `mesid`={$this->_db->Quote($mes->id)};";
-						$this->_db->setQuery ($sql2);
-						$this->_db->query ();
-						if (KunenaError::checkDatabaseError()) return false;
+						$userid[] = $mes->userid;
+					 	$messid[] = $mes->id;
 
 						// Delete all attachments in this thread
 						if ($DeleteAttachments) {
 							$this->deleteAttachments($mes->id);
 						}
-
-						// Need to update number of posts of each users in this thread
-						if ( $mes->userid > 0) {
-							$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid`={$this->_db->Quote($mes->userid)}; ";
-							$this->_db->setQuery ($query);
-							$this->_db->query ();
-							if (KunenaError::checkDatabaseError()) return false;
-						}
+					}
+					$sql2 = "DELETE FROM #__kunena_messages_text WHERE `mesid` IN ({$this->_db->Quote(implode(',',$messid))});";
+					$this->_db->setQuery ($sql2);
+					$this->_db->query ();
+					if (KunenaError::checkDatabaseError()) return false;
+					
+					// Need to update number of posts of each users in this thread
+					if ( $mes->userid > 0) {
+						$query = "UPDATE #__kunena_users SET posts=posts-1 WHERE `userid` IN ({$this->_db->Quote(implode(',',$userid))}); ";
+						$this->_db->setQuery ($query);
+						$this->_db->query ();
+						if (KunenaError::checkDatabaseError()) return false;
 					}
 				}
 				$sql = "DELETE FROM #__kunena_messages WHERE `thread`={$this->_db->Quote($currentMessage->thread)};";
@@ -510,6 +530,28 @@ class CKunenaModeration {
 
 	public function createGhostThread($MessageID,$currentMessage) {
 		return $this->_createGhostThread($MessageID,$currentMessage);
+	}
+	
+	protected function _handlePolls($currentMessage, $targetMessage) {
+		if ( $currentMessage->poll && !$targetMessage->poll ) {
+			$sqlpoll = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($targetMessage->thread)} WHERE `id`={$this->_db->Quote($currentMessage->poll)}";
+			$this->_db->setQuery ( $sqlpoll );
+			$this->_db->query ();
+			if (KunenaError::checkDatabaseError()) return false;
+			$sqlpoll = "UPDATE #__kunena_polls_options SET `pollid`={$this->_db->Quote($targetMessage->thread)} WHERE `pollid`={$this->_db->Quote($currentMessage->thread)}";
+			$this->_db->setQuery ( $sqlpoll );
+			$this->_db->query ();
+			if (KunenaError::checkDatabaseError()) return false;
+		} else if ( $currentMessage->poll && $targetMessage->poll ) {
+			$sqlpoll = "UPDATE #__kunena_polls SET `threadid`='0' WHERE `id`={$this->_db->Quote($currentMessage->poll)}";
+			$this->_db->setQuery ( $sqlpoll );
+			$this->_db->query ();
+			if (KunenaError::checkDatabaseError()) return false;
+			$sqlpoll = "UPDATE #__kunena_polls_options SET `pollid`='0' WHERE `pollid`={$this->_db->Quote($currentMessage->thread)}";
+			$this->_db->setQuery ( $sqlpoll );
+			$this->_db->query ();
+			if (KunenaError::checkDatabaseError()) return false;
+    }
 	}
 
 	public function getUserIPs ($UserID) {

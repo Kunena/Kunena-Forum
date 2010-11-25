@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 25-November-2010 Xillibit
 # [#23326] Bug when moving a post to a different category and leaving a shadow
+^ [#23293] Update and fix some typos in fr-FR language translation (thanks lavsteph)
 
 24-November-2010 Xillibit
 # [#23251] Prevent to move a topic with a poll into another topic with a poll and display an error message

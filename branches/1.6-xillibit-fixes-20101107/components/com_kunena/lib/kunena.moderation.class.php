@@ -503,7 +503,7 @@ class CKunenaModeration {
 		// @Oliver: I'd like to get rid of it and add it while rendering..
 		$myname = $this->_config->username ? $this->_my->username : $this->_my->name;
 
-		$sql = "INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',{$this->_db->Quote($currentMessage->subject)},{$this->_db->Quote($lastTimestamp)},{$this->_db->Quote($currentMessage->catid)},'1', {$this->_db->Quote($currentMessage->userid)}, " . $this->_db->Quote ( $currentMessage->name ) . ")";
+		$sql = "INSERT INTO #__kunena_messages (`parent`, `subject`, `time`, `catid`, `moved`, `userid`, `name`) VALUES ('0',{$this->_db->Quote($currentMessage->subject)},{$this->_db->Quote($lastTimestamp)},{$this->_db->Quote($currentMessage->catid)},'1', {$this->_db->Quote($this->_my->id)}, " . $this->_db->Quote ( $this->_my->username ) . ")";
 		$this->_db->setQuery ( $sql );
 		$this->_db->query ();
 		if (KunenaError::checkDatabaseError()) return false;

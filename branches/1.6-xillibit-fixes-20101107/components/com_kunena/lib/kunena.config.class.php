@@ -357,6 +357,8 @@ class CKunenaConfig extends CKunenaConfigBase {
 	//New for 1.6.2: configuration option to show online users by minutes or session time
 	var $show_session_type = 0;
 	var $show_session_starttime = 0;
+	// New for 1.6.2: configuration option to set all users or only registred users to see userlist
+	var $userlist_allowed = 0;
 	
 	public function __construct($userinfo = null) {
 		parent::__construct ();

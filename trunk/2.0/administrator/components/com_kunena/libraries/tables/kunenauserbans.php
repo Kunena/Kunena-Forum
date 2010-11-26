@@ -11,6 +11,7 @@
 defined( '_JEXEC' ) or die();
 
 require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
+kimport ('kunena.user.helper');
 
 /**
 * Kunena User Bans
@@ -113,12 +114,13 @@ class TableKunenaUserBans extends JTable
 	}
 
 	public function check() {
-		if (!$this->userid && !$this->ip) {
-			// TODO: error
-			return false;
+		if (!$this->ip) {
+			$user = KunenaUserHelper::get($this->userid);
+			if (!$user->exists()) {
+				$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERBANS_ERROR_NO_USER', $user->userid ) );
+			}
 		}
-
-		return true;
+		return ($this->getError () == '');
 	}
 
 	public function bind($data, $ignore=array()) {

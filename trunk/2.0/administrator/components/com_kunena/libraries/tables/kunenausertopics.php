@@ -11,6 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
+kimport('kunena.user.helper');
+kimport('kunena.forum.topic.helper');
 
 /**
  * Kunena User Topics Table
@@ -33,13 +35,16 @@ class TableKunenaUserTopics extends KunenaTable
 	}
 
 	function check() {
-		kimport('kunena.user');
-		kimport('kunena.forum.topic.helper');
-		$user = KunenaUser::getInstance($this->user_id);
+		$user = KunenaUserHelper::get($this->user_id);
 		$topic = KunenaForumTopicHelper::get($this->topic_id);
-		if (!$user->exists()) return false;
-		if (!$topic->exists()) return false;
-		$this->category_id = $topic->category_id;
-		return true;
+		if (!$user->exists()) {
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_NO_USER', $user->userid ) );
+		}
+		if (!$topic->exists()) {
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_USERTOPICS_ERROR_NO_TOPIC', $topic->id ) );
+		} else {
+			$this->category_id = $topic->category_id;
+		}
+		return ($this->getError () == '');
 	}
 }

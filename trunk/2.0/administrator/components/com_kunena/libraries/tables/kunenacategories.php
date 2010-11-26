@@ -103,12 +103,16 @@ class TableKunenaCategories extends KunenaTable
 
 	// check for potential problems
 	function check() {
-		if ($this->parent_id) {
-			if ($this->id == $this->parent_id) :
+		if ($this->id && $this->parent_id) {
+			if ($this->id == $this->parent_id) {
 				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_SAME_ERR' ) );
-			 elseif ($this->isChild ( $this->parent_id )) :
+			} elseif ($this->isChild ( $this->parent_id )) {
 				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_OWNCHILD_ERR' ) );
-			endif;
+			}
+		}
+		$this->name = trim($this->name);
+		if (!$this->name) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME' ) );
 		}
 		return ($this->getError () == '');
 	}

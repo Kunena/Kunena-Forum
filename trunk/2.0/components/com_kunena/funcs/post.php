@@ -124,6 +124,11 @@ class CKunenaPost {
 			if ( !empty($optvalue) ) $this->poll->save_new_poll ( $polltimetolive, $polltitle, $topic->id, $optvalue );
 		}
 
+		// Update Tags
+		$globalTags = JRequest::getString ( 'tags', null );
+		$userTags = JRequest::getString ( 'mytags', null );
+		$this->updateTags($message->thread, $globalTags, $userTags);
+
 		$message->sendNotification();
 
 		//now try adding any new subscriptions if asked for by the poster
@@ -229,12 +234,27 @@ class CKunenaPost {
 			}
 		}
 
+		// Update Tags
+		$globalTags = JRequest::getString ( 'tags', null );
+		$userTags = JRequest::getString ( 'mytags', null );
+		$this->updateTags($message->thread, $globalTags, $userTags);
+
 		$category = $message->getCategory();
 		$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUCCESS_EDIT' ) );
 		if ($category->review && !$category->isModerator()) {
 			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_GEN_MODERATED' ) );
 		}
 		$this->_app->redirect ( CKunenaLink::GetMessageURL ( $this->id, $this->catid, 0, false ) );
+	}
+
+	public function updateTags($topic, $globalTags, $userTags) {
+		$topic = KunenaForumTopicHelper::get($topic);
+		if ($userTags !== false) {
+			$topic->setKeywords($userTags, $this->me->userid);
+		}
+		if ($globalTags !== false) {
+			$topic->setKeywords($globalTags, false);
+		}
 	}
 
 	// Show forms

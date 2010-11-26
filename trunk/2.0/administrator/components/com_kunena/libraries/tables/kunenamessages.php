@@ -90,6 +90,27 @@ class TableKunenaMessages extends KunenaTable
 		return $this->_exists;
 	}
 
+	function check() {
+		$this->subject = trim($this->subject);
+		if (!$this->subject) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_SUBJECT' ) );
+		}
+		$this->message = trim($this->message);
+		if (!$this->message) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_MESSAGES_ERROR_NO_MESSAGE' ) );
+		}
+		// Do not allow no posting date or dates from the future
+		$now = JFactory::getDate()->toUnix();
+		if (!$this->time || $this->time > $now) {
+			$this->time = $now;
+		}
+		if ($this->modified_time > $now) {
+			$this->modified_time = $now;
+		}
+		$this->modified_reason = trim($this->modified_reason);
+		return ($this->getError () == '');
+	}
+
 	function store() {
 		$k = $this->_tbl_key;
 		$update = $this->_exists;

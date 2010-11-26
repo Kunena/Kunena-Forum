@@ -196,14 +196,16 @@ abstract class KunenaAccess {
 			if ($this->moderatorsByCatid === false) {
 				$this->loadModerators();
 			}
-			if (!empty($this->moderatorsByCatid[0])) $modlist = $this->moderatorsByCatid[0];
+			$modlist = array();
+			if (!empty($this->moderatorsByCatid[0])) $modlist += $this->moderatorsByCatid[0];
 			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
 		}
 		if ($admins) {
 			if ($this->adminsByCatid === false) {
 				$this->loadAdmins();
 			}
-			if (!empty($this->adminsByCatid[0])) $adminlist = $this->adminsByCatid[0];
+			$adminlist = array();
+			if (!empty($this->adminsByCatid[0])) $adminlist += $this->adminsByCatid[0];
 			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
 		}
 

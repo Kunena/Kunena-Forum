@@ -11,6 +11,8 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
+kimport ('kunena.user.helper');
+kimport ('kunena.forum.message.helper');
 
 /**
  * Kunena Attachments Table
@@ -32,32 +34,28 @@ class TableKunenaAttachments extends KunenaTable
 	}
 
 	function check() {
-		$user = KunenaUser::getInstance($this->userid);
+		$user = KunenaUserHelper::get($this->userid);
 		$message = KunenaForumMessageHelper::get($this->mesid);
 		if (!$user->exists()) {
 			// FIXME: add language strings:
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_USER'));
-			return false;
 		}
 		if (!$message->exists()) {
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_MESSAGE'));
-			return false;
 		}
 		if (!$this->folder) {
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_FOLDER'));
-			return false;
 		}
 		if (!$this->filename) {
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_NO_FILENAME'));
-			return false;
 		}
 		$file = JPATH_ROOT . "/{$this->folder}/{$this->filename}";
 		if (!file_exists($file)) {
 			$this->setError(JText::_('COM_KUNENA_LIB_TABLE_ATTACHMENTS_ERROR_FILE_MISSING'));
-			return false;
+		} else {
+			if (!$this->hash) $this->hash = md5_file ( $file );
+			if (!$this->size) $this->size = filesize ( $file );
 		}
-		if (!$this->hash) $this->hash = md5_file ( $file );
-		if (!$this->size) $this->size = filesize ( $file );
-		return true;
+		return ($this->getError () == '');
 	}
 }

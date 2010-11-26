@@ -274,8 +274,15 @@ class TableKunenaUsers extends KunenaTable
 		parent::reset();
 		$fields = array('name', 'username', 'blocked', 'lastvisitDate');
 		foreach ($fields as $field) {
-			$this->$field = '';
+			$this->$field = null;
 		}
+	}
+
+	function check() {
+		if (!$this->userid || !JFactory::getUser($this->userid)) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_USERS_ERROR_NO_USER' ) );
+		}
+		return ($this->getError () == '');
 	}
 
 	public function bind($data, $ignore=array()) {

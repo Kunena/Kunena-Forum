@@ -243,7 +243,7 @@
 			<query>DROP TABLE IF EXISTS `#__kunena_groups`</query>
 			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions`</query>
 			<query>DROP TABLE IF EXISTS `#__kunena_subscriptions_categories`</query>
-			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `channels` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `published`</query>
+			<query mode="silenterror">ALTER TABLE `#__kunena_categories` ADD `channels` TEXT NULL DEFAULT NULL AFTER `published`</query>
 		</version>
 	</upgrade>
 </comupgrade>

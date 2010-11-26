@@ -246,6 +246,25 @@
 		<field name="activity_limit" type="int(11)" null="1" />
 		<key name="PRIMARY" unique="1" columns="id" />
 	</table>
+	<table name="kunena_keywords">
+		<field primary_key="yes" name="id" type="int(11)" null="0"
+			extra="auto_increment" />
+		<field name="name" type="varchar(40)" null="0" />
+		<field name="public_count" type="int(11)" null="0" />
+		<field name="total_count" type="int(11)" null="0" />
+		<key name="PRIMARY" unique="1" columns="id" />
+		<key name="name" unique="1" columns="name" />
+		<key name="public_count" columns="public_count" />
+		<key name="total_count" columns="total_count" />
+	</table>
+	<table name="kunena_keywords_map">
+		<field name="keyword_id" type="int(11)" null="0" />
+		<field name="user_id" type="int(11)" null="0" />
+		<field name="topic_id" type="int(11)" null="0" />
+		<key name="keyword_user_topic" unique="1" columns="keyword_id,user_id,topic_id" />
+		<key name="user_id" columns="user_id" />
+		<key name="topic_user" columns="topic_id,user_id" />
+	</table>
 	<table name="kunena_topics">
 		<field name="id" type="int(11)" null="0" extra="auto_increment" />
 		<field name="category_id" type="int(11)" null="0" default="0" />

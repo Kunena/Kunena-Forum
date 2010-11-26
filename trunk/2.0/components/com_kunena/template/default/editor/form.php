@@ -164,6 +164,30 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
+		<tr id="kpost-tags" class="krow<?php echo 1 + $this->k^=1;?>">
+			<td class="kcol-first">
+				<strong><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS') ?></strong>
+			</td>
+			<td class="kcol-mid">
+				<?php if (CKunenaTools::isModerator ( $this->my->id, $this->message->catid ) ) : ?>
+				<input type="text" class="kinputbox postinput" name="tags" id="tags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>" />
+				<?php else : ?>
+				<?php echo $this->escape($this->topic->getKeywords(false, ', ')); ?>
+				<?php endif; ?>
+			</td>
+		</tr>
+
+		<?php if ($this->my->id) : ?>
+		<tr id="kpost-tags" class="krow<?php echo 1 + $this->k^=1;?>">
+			<td class="kcol-first">
+				<strong><?php echo JText::_('COM_KUNENA_EDITOR_TOPIC_TAGS_OWN') ?></strong>
+			</td>
+			<td class="kcol-mid">
+				<input type="text" class="kinputbox postinput" name="mytags" id="mytags" size="35" maxlength="100" value="<?php echo $this->escape($this->topic->getKeywords($this->my->id, ', ')); ?>" />
+			</td>
+		</tr>
+		<?php endif; ?>
+
 		<?php if ($this->canSubscribe()) : ?>
 		<tr id="kpost-subscribe" class="krow<?php echo 1 + $this->k^=1;?>">
 			<td class="kcol-first">

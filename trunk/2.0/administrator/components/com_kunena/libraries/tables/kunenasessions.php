@@ -11,6 +11,7 @@
 defined( '_JEXEC' ) or die();
 
 require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
+kimport('kunena.user.helper');
 
 /**
  * Kunena Sessions
@@ -33,5 +34,13 @@ class TableKunenaSessions extends KunenaTable
 	function load($oid = null) {
 		if (!$oid) return false;
 		return parent::load($oid);
+	}
+
+	function check() {
+		$user = KunenaUserHelper::get($this->userid);
+		if (!$user->exists()) {
+			$this->setError ( JText::sprintf ( 'COM_KUNENA_LIB_TABLE_SESSIONS_ERROR_NO_USER', $user->userid ) );
+		}
+		return ($this->getError () == '');
 	}
 }

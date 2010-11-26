@@ -33,8 +33,30 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+26-November-2010 Matias
+# [#23443] Fix regression: Fatal error when sending email and user is not global admin/moderator
++ [#23507] Add functions into KunenaKeywordHelper to clean up input (string/array) keywords
+# [#23507] Fix some bugs in KunenaKeyword
+^ [#23507] Improve functions in KunenaKeyword(Helper) to be more general and powerful
++ [#23507] Add keywords/tags into post/edit form, add logic to update them
+
+25-November-2010 Matias
+# [#22792] TableKunenaAttachments class: Improve check()
+# [#22792] TableKunenaCategories class: Improve check() to trim and check category name
+# [#22792] TableKunenaKeywords class: Improve check() to trim and check keyword name
+# [#22792] TableKunenaMessages class: Improve check() to prevent many illegal values
+# [#22792] TableKunenaSessions class: Improve check() to verify that user exists
+# [#22792] TableKunenaTopics class: Improve check() to make sure that category exists and subject is not empty
+# [#22792] TableKunenaUserBans class: Improve check() to verify that user exists
+# [#22792] TableKunenaUsers class: Improve check() to verify that user exists in Joomla
+# [#22792] TableKunenaUserTopics class: Improve check() to verify that user and topic exists
++ [#23507] Add functions into KunenaKeyword/Topic(Helper) to get/set keywords
+
 24-November-2010 Matias
 # [#23443] Give error message when user doesn't have permissions to start a new topic
++ [#23507] Feature: Keywords / Tags: create #__kunena_keywords, #__kunena_keywords_map during installation
++ [#23507] Feature: Keywords / Tags: add TableKunenaKeywords class
++ [#23507] Feature: Keywords / Tags: add KunenaKeywords+Helper class
 
 23-November-2010 Matias
 # [#23443] Fix regression: Replace all fixed jos_ database prefixes

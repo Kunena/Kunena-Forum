@@ -19,6 +19,7 @@ kimport ('kunena.forum.topic.helper');
 kimport ('kunena.forum.topic.user.helper');
 kimport ('kunena.forum.message.helper');
 kimport ('kunena.forum.message.attachment.helper');
+kimport ('kunena.keyword.helper');
 
 /**
  * Kunena Forum Topic Class
@@ -78,6 +79,37 @@ class KunenaForumTopic extends JObject {
 	public function lock($value=1) {
 		$this->locked = (int)$value;
 		return $this->save();
+	}
+
+	public function getKeywords($user=null, $glue=false) {
+		if ($user !== false) {
+			$user = KunenaUserHelper::get($user);
+			// Guests or non-existing cannot have personal keywords
+			if (!$user->exists())
+				return $glue ? '' : array();
+			$user = $user->userid;
+		}
+		$user = (int) $user;
+		if (!isset($this->_keywords[$user])) {
+			$this->_keywords[$user] = KunenaKeywordHelper::getByTopics($this->id, $user);
+		}
+		return $glue ? implode($glue, array_keys($this->_keywords[$user])) : $this->_keywords[$user];
+	}
+
+	public function setKeywords($keywords, $user=null, $glue=null) {
+		if ($user !== false) {
+			$user = KunenaUserHelper::get($user);
+			// Guests or non-existing cannot have personal keywords
+			if (!$user->exists())
+				return false;
+			$user = $user->userid;
+		}
+		$user = (int) $user;
+		$keywords = KunenaKeywordHelper::setTopicKeywords($keywords, $this->id, $user);
+		if ($keywords === false)
+			return false;
+		$this->_keywords[$user] = $keywords;
+		return true;
 	}
 
 	public function publish($value=KunenaForum::PUBLISHED) {

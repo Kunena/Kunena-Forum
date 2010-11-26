@@ -11,7 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 require_once (dirname ( __FILE__ ) . DS . 'kunena.php');
-
+kimport('kunena.forum.category.helper');
 /**
  * Kunena Topics
  * Provides access to the #__kunena_topics table
@@ -86,4 +86,19 @@ class TableKunenaTopics extends KunenaTable
 		$this->bind($data);
 		return $this->_exists;
 	}
+
+	function check() {
+		$category = KunenaForumCategoryHelper::get($this->category_id);
+		if (!$category->exists()) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_TOPICS_ERROR_NO_CATEGORY' ) );
+		} else {
+			$this->category_id = $category->id;
+		}
+		$this->subject = trim($this->subject);
+		if (!$this->subject) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TOPICS_ERROR_NO_SUBJECT' ) );
+		}
+		return ($this->getError () == '');
+	}
+
 }

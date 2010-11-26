@@ -100,6 +100,13 @@ class KunenaForumTopicHelper {
 		return KunenaForumTopicUserHelper::getTopics($ids, $user);
 	}
 
+	static public function getKeywords($ids=false, $user=false) {
+		if ($ids === false) {
+			$ids = array_keys(self::$_instances);
+		}
+		return KunenaForumTopicKeywordHelper::getTopicKeywords($ids, $user);
+	}
+
 	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array()) {
 		$db = JFactory::getDBO ();
 		if ($limit < 1) $limit = KunenaFactory::getConfig ()->threads_per_page;

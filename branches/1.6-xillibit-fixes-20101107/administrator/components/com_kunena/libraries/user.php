@@ -273,7 +273,7 @@ class KunenaUser extends JObject {
 		static $count = null;
 		if ($count === null) {
 			$kunena_config = KunenaFactory::getConfig ();
-			$joomla_config = new JConfig();
+			$kunena_app = JFactory::getApplication ();
 			$db = JFactory::getDBO ();
 			
 			$result      = array();
@@ -283,7 +283,8 @@ class KunenaUser extends JObject {
 			// need to calcute the time less the time selected by user, user
 			$querytime = '';
 			if ( $kunena_config->show_session_starttime != 0 ) {
-				$querytime = 'AND time > '.CKunenaTimeformat::internalTime() - $kunena_config->show_session_starttime;
+				$time = CKunenaTimeformat::internalTime() - $kunena_config->show_session_starttime;
+				$querytime = 'AND time > '.$time;
 			}
 			
 			$query = 'SELECT guest, time, usertype, client_id' .
@@ -294,12 +295,12 @@ class KunenaUser extends JObject {
 			KunenaError::checkDatabaseError();
 			
 			// need to calculate the joomla session lifetime in timestamp, to check if the sessions haven't expired
-			$j_session_lifetime = CKunenaTimeformat::internalTime() - ( $joomla_config->lifetime * 60 );
+			$j_session_lifetime = CKunenaTimeformat::internalTime() - ( $kunena_app->getCfg('lifetime') * 60 );
 			
 			if (count($sessions)) {
 		    	foreach ($sessions as $session) {
 		    		// we check that the session hasn't expired
-		    		if ( $kunena_config->show_session_type == 0 || ($session->time > $j_session_lifetime && $kunena_config->show_session_type == 1 ) ) {
+		    		if ( $kunena_config->show_session_type == 0 || $kunena_config->show_session_type == 2 || ($session->time > $j_session_lifetime && $kunena_config->show_session_type == 1 ) ) {
 			    		// if guest increase guest count by 1
 						if ($session->guest == 1 && !$session->usertype) {
 				   	 		$guest_array ++;

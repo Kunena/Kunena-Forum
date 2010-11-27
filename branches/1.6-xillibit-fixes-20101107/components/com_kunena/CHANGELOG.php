@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+26-November-2010 Xillibit
+# [#22704] Fix regression which prevent to display guests or members registred
+
 25-November-2010 Xillibit
 # [#23326] Bug when moving a post to a different category and leaving a shadow
 ^ [#23293] Update and fix some typos in fr-FR language translation (thanks lavsteph)

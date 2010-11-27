@@ -515,7 +515,7 @@ PX		EM			PCT			PT
 
 #Kunena #ktab a span {
 	display: block;
-	padding: 0 1.1em;
+	padding: 0 10px;
 	font-size: 1em; 
 	line-height: 2.3em;
 	text-indent: 0;

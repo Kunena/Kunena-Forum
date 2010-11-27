@@ -33,6 +33,7 @@ Legend:
 
 27-Nov-2010 810
 # [#23528] Set none to profiles and user list
+# [#23529] "This file is hidden for" message when guests cannot view attachments
 
 Kunena 1.6.1-DEV
 

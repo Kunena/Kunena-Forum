@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+26-November-2010 Matias
+# [#23564] Fix error: You are not allowed to change your name!
+
 24-November-2010 Matias
 ^ [#15886] Merged revisions 3896-3930 from /branches/1.6-xillibit-fixes-20101107
 

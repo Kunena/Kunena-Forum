@@ -404,7 +404,7 @@ class KunenaForumMessage extends JObject {
 			// Update missing topic information into database
 			$this->thread = $this->id;
 			$table->bind ( $this->getProperties () );
-			if (! $result = $table->store ()) {
+			if (! $table->store ()) {
 				$this->setError ( $table->getError () );
 				return false;
 			}
@@ -419,7 +419,7 @@ class KunenaForumMessage extends JObject {
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('finder');
 		$dispatcher->trigger('onAfterSaveKunenaPost', array($this->id));
-		return $result;
+		return true;
 	}
 
 	/**

@@ -33,6 +33,10 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+29-November-2010 Matias
+# [#23443] Fix regression: Saving message fails
+# [#23443] Fix regression: Saving keyword fails
+
 26-November-2010 Matias
 # [#23443] Fix regression: Fatal error when sending email and user is not global admin/moderator
 + [#23507] Add functions into KunenaKeywordHelper to clean up input (string/array) keywords

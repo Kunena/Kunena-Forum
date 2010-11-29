@@ -43,27 +43,29 @@ class KunenaKeyword extends JObject {
 	}
 
 	public function addTopic($topic_id, $user_id) {
-		// FIXME:
-		if (!$this->id) die();
-		$query = "INSERT INTO #__kunena_keywords (keyword_id, user_id, topic_id) VALUES ({$this->id}, {$topic_id}, {$user_id})";
+		if (!$user_id) $this->public_count++;
+		$this->total_count++;
+		if (!$this->save()) {
+			return false;
+		}
+		$query = "INSERT INTO #__kunena_keywords_map (keyword_id, user_id, topic_id) VALUES ({$this->id}, {$user_id}, {$topic_id})";
 		$this->_db->setQuery($query);
 		$this->_db->query();
 		KunenaError::checkDatabaseError ();
-		if (!$user_id) $this->global_count++;
-		$this->total_count++;
-		return $this->save();
+		return true;
 	}
 
 	public function delTopic($topic_id, $user_id) {
-		// FIXME:
-		if (!$this->id) die();
-		$query = "DELETE FROM #__kunena_keywords WHERE keyword_id={$this->id} AND topic_id={$topic_id} AND user_id={$user_id}";
+		if (!$user_id) $this->public_count--;
+		$this->total_count--;
+		if (!$this->save()) {
+			return false;
+		}
+		$query = "DELETE FROM #__kunena_keywords_map WHERE keyword_id={$this->id} AND topic_id={$topic_id} AND user_id={$user_id}";
 		$this->_db->setQuery($query);
 		$this->_db->query();
 		KunenaError::checkDatabaseError ();
-		if (!$user_id) $this->global_count--;
-		$this->total_count--;
-		return $this->save();
+		return true;
 	}
 
 	public function exists($exists = null) {
@@ -96,6 +98,26 @@ class KunenaKeyword extends JObject {
 
 		// Create the user table object
 		return JTable::getInstance ( $tabletype ['name'], $tabletype ['prefix'] );
+	}
+
+	/**
+	 * Method to load a KunenaKeyword object by id
+	 *
+	 * @access	public
+	 * @param	mixed	$id The keyword id to be loaded
+	 * @return	boolean			True on success
+	 * @since 1.6
+	 */
+	public function load($id) {
+		// Create the table object
+		$table = $this->getTable ();
+
+		// Load the KunenaTable object based on id
+		$this->_exists = $table->load ( $id );
+
+		// Assuming all is well at this point lets bind the data
+		$this->setProperties ( $table->getProperties () );
+		return $this->_exists;
 	}
 
 	public function bind($data, $allow = array()) {
@@ -132,7 +154,7 @@ class KunenaKeyword extends JObject {
 
 		// Set the id for the KunenaKeyword object in case we created a new topic.
 		if ($result && $isnew) {
-			$this->load ( $this->id );
+			$this->load ( $table->id );
 		}
 
 		return $result;

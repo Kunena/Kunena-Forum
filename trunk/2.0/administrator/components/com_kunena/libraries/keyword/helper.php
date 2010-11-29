@@ -128,7 +128,7 @@ class KunenaKeywordHelper {
 		$keywords = self::cleanKeywords($keywords, $glue);
 		self::loadKeywords($keywords);
 
-		// FIXME: on new topic, topic_id=0!!!
+		$keywords = array_flip($keywords);
 		$dellist = array_diff_key ( $oldkeywords, $keywords );
 		$addlist = array_diff_key ( $keywords, $oldkeywords );
 		foreach ($dellist as $keyword=>$i) {

@@ -36,6 +36,8 @@ Kunena 1.6.2-DEV
 29-November-2010 Matias
 ^ [#15886] Merged revisions 3945-3948 from /branches/1.6.2-810-bugfixes-29-10-2010
 ^ [#15886] Merged revisions 3939-3945 from /branches/1.6-xillibit-fixes-20101107
+# [#23567] Show confidential information also for the author of the message
+# [#19693] Searches with - ' " return no results
 
 27-November-2010 810
 # [#23528] Set none to profiles and user list

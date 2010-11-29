@@ -1054,7 +1054,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				break;
 			case 'confidential' :
 				if ($between) {
-					if (CKunenaTools::isModerator($kunena_my->id)) {
+					if (($kunena_my->id && $this->parent && $this->parent->msg->userid == $kunena_my->id) || CKunenaTools::isModerator($kunena_my->id)) {
 						// Display but highlight the fact that it is hidden from everyone except admins and mods
 						$tag_new = '<b>' . JText::_('COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT') . '</b><div class="kmsgtext-confidential">' . $between . '</div>';
 					}

@@ -110,7 +110,7 @@ class CKunenaSearch {
 		if ($q == JText::_('COM_KUNENA_GEN_SEARCH_BOX'))
 			$q = '';
 		$this->q = $q;
-		$arr_searchwords = preg_split('/[\s,]*"([^"]+)"[\s,]*|[\s,]+/u', $q, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+		$arr_searchwords = preg_split('/[\s,]*\'([^\']+)\'[\s,]*|[\s,]*"([^"]+)"[\s,]*|[\s,]+/u', $q, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 		$do_search = FALSE;
 		$this->arr_kunena_searchstrings = array ();
 		foreach ( $arr_searchwords as $q ) {

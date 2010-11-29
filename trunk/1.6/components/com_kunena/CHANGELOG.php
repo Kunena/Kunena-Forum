@@ -33,6 +33,14 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+29-November-2010 Matias
+^ [#15886] Merged revisions 3945-3948 from /branches/1.6.2-810-bugfixes-29-10-2010
+
+27-November-2010 810
+# [#23528] Set none to profiles and user list
+# [#23529] "This file is hidden for" message when guests cannot view attachments
+# [#22795] The tab text is truncated under IE 8.0
+
 26-November-2010 Matias
 # [#23564] Fix error: You are not allowed to change your name!
 

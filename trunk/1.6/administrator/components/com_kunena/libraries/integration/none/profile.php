@@ -16,7 +16,7 @@ defined( '_JEXEC' ) or die('');
 class KunenaProfileNone extends KunenaProfile
 {
 	public function __construct() {
-		$this->priority = 0;
+		$this->priority = 5;
 	}
 
 	public function getUserListURL($action='', $xhtml = true) {}

@@ -33,6 +33,9 @@ Legend:
 
 KunenaImporter 1.6.0-RC2
 
+29-November-2010 Xillibit
+# [#20178] Fixes some issues with ccBoard importer
+
 30-October-2010 svens LDA
 ^ [#22975] update ru-RU (thanks ZARKOS)
 

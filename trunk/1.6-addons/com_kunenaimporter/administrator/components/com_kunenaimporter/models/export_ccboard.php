@@ -78,9 +78,7 @@ class KunenaimporterModelExport_ccBoard extends KunenaimporterModelExport {
 
 	function &exportCategories($start = 0, $limit = 0) {
 		// Import the categories
-		$query = "SELECT cat_name AS name, ordering FROM #__ccb_category UNION
-    SELECT forum_name AS name, forum_desc AS description, cat_id AS parent, topic_count AS numTopics, post_count AS numPosts, last_post_user, last_post_time AS time_last_msg, last_post_id AS id_last_msg, published, locked, ordering, moderated, review
-		 FROM #__ccb_forums";
+		$query = "SELECT cccategory.cat_name AS name, cccategory.ordering, ccforums.forum_name AS name, ccforums.forum_desc AS description, ccforums.cat_id AS parent, ccforums.topic_count AS numTopics, ccforums.post_count AS numPosts, ccforums.last_post_user, ccforums.last_post_time AS time_last_msg, ccforums.last_post_id AS id_last_msg, ccforums.published, ccforums.locked, ccforums.ordering, ccforums.moderated, ccforums.review FROM #__ccb_category AS cccategory LEFT JOIN #__ccb_forums AS ccforums ON cccategory.id=ccforums.cat_id";
 		$result = $this->getExportData ( $query, $start, $limit );
 		foreach ( $result as $key => $item ) {
 			$row = & $result [$key];
@@ -252,7 +250,7 @@ class KunenaimporterModelExport_ccBoard extends KunenaimporterModelExport {
 	}
 
 	function &exportAttachments($start = 0, $limit = 0) {
-		$query = "SELECT post_id AS mesid, ccb_name AS userid filesize AS size, real_name AS filename, mimetype AS filetype FROM #__ccb_attachments";
+		$query = "SELECT post_id AS mesid, ccb_name AS userid, filesize AS size, real_name AS filename, mimetype AS filetype FROM #__ccb_attachments";
 		$result = $this->getExportData ( $query, $start, $limit );
 		foreach ( $result as $key => $item ) {
 			$row = & $result [$key];
@@ -284,7 +282,9 @@ class KunenaimporterModelExport_ccBoard extends KunenaimporterModelExport {
 		$query = "SELECT rank_title,rank_min,rank_special,rank_image FROM #__ccb_ranks";
 		$result = $this->getExportData ( $query, $start, $limit );
 		foreach ( $result as $rank ) {
-			JFile::copy ( JPATH_BASE . 'components/com_ccboard/assets/ranks/' . $rank->rank_image, JPATH_BASE . 'components/com_kunena/template/default/images/ranks' );
+		  if ( JFile::exists(JPATH_BASE . 'components/com_ccboard/assets/ranks/' . $rank->rank_image) ) {
+        JFile::copy ( JPATH_BASE . 'components/com_ccboard/assets/ranks/' . $rank->rank_image, JPATH_BASE . 'components/com_kunena/template/default/images/ranks' );
+      }			
 		}
 
 		return $result;
@@ -297,8 +297,8 @@ class KunenaimporterModelExport_ccBoard extends KunenaimporterModelExport {
 	}
 
 	function &exportMessages($start = 0, $limit = 0) {
-		$query = "SELECT id, topic_id AS thread, forum_id AS catid, post_subject AS subject, post_text AS message, post_user AS userid, post_time AS time, ip, hold, modified_by, modified_time, modified_reason, post_username AS name FROM #__ccb_posts UNION
-		SELECT id,forum_id,post_subject,reply_count,hits,post_time,post_user,last_post_time,last_post_id,last_post_user,start_post_id,topic_type,locked,topic_email,hold,topic_emoticon,post_username,last_post_username,topic_favourite FROM #__ccb_topics";
+		$query = "SELECT ccposts.id, ccposts.topic_id AS thread, ccposts.forum_id AS catid, ccposts.post_subject AS subject, ccposts.post_text AS message, ccposts.post_user AS userid, ccposts.post_time AS time, ccposts.ip, ccposts.hold, ccposts.modified_by, ccposts.modified_time, ccposts.modified_reason, ccposts.post_username AS name, cctopics.id,cctopics.forum_id,cctopics.post_subject,cctopics.reply_count,cctopics.hits,cctopics.post_time,cctopics.post_user,cctopics.last_post_time,cctopics.last_post_id,cctopics.last_post_user,cctopics.start_post_id,cctopics.topic_type,cctopics.locked,cctopics.topic_email,cctopics.hold,cctopics.topic_emoticon,cctopics.post_username,cctopics.last_post_username,cctopics.topic_favourite FROM #__ccb_posts AS ccposts
+		 LEFT JOIN #__ccb_topics AS cctopics ON ccposts.topic_id=cctopics.id";
 		$result = $this->getExportData ( $query, $start, $limit );
 
 		return $result;

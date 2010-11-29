@@ -24,12 +24,15 @@ class CKunenaUserlist {
 		$this->app = JFactory::getApplication ();
 		$this->config = KunenaFactory::getConfig ();
 		$this->db = JFactory::getDBO ();
+		$this->my = JFactory::getUser ();
 
 		$this->search = JRequest::getVar ( 'search', '' );
 		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
 		$this->limit = JRequest::getInt ( 'limit', (int)$this->config->userlist_rows );
 
 		jimport ( 'joomla.html.pagination' );
+		
+		if( !$this->isAllowed() ) return false;
 
 		$filter_order = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order', 'filter_order', 'registerDate', 'cmd' );
 		$filter_order_dir = $this->app->getUserStateFromRequest ( 'kunena.userlist.filter_order_dir', 'filter_order_Dir', 'asc', 'word' );
@@ -123,6 +126,16 @@ class CKunenaUserlist {
 		if ($this->config->enableforumjump) {
 			CKunenaTools::loadTemplate('/forumjump.php');
 		}
+	}
+	
+	function isAllowed() {
+		if ($this->config->userlist_allowed == 1 && $this->my->id == 0 ) {
+			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERLIST_NOT_ALLOWED' ), 'error' );
+			$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+			$this->app->redirect ( $httpReferer );
+			return false;
+		}
+		return true;
 	}
 
 	function display() {

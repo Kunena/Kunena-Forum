@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 29-November-2010 Matias
 ^ [#15886] Merged revisions 3945-3948 from /branches/1.6.2-810-bugfixes-29-10-2010
+^ [#15886] Merged revisions 3939-3945 from /branches/1.6-xillibit-fixes-20101107
 
 27-November-2010 810
 # [#23528] Set none to profiles and user list
@@ -43,6 +44,18 @@ Kunena 1.6.2-DEV
 
 26-November-2010 Matias
 # [#23564] Fix error: You are not allowed to change your name!
+
+26-November-2010 Xillibit
+# [#22704] Fix regression which prevent to display guests or members
+
+25-November-2010 Xillibit
+# [#23326] Bug when moving a post to a different category and leaving a shadow
+^ [#23293] Update and fix some typos in fr-FR language translation (thanks lavsteph)
++ [#23453] Add configuration setting to restrict userlist to registred user only
+
+24-November-2010 Xillibit
+# [#23251] Prevent to move a topic with a poll into another topic with a poll and display an error message
+# [#23483] Find a way to avoid warning when the poll has been deleted or has disappeared
 
 24-November-2010 Matias
 ^ [#15886] Merged revisions 3896-3930 from /branches/1.6-xillibit-fixes-20101107

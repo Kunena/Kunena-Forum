@@ -14,6 +14,7 @@ defined( '_JEXEC' ) or die();
 // FIXME: AJAX Javascript does not work, it needs different logic
 //$this->call_javascript_vote();
 $dataspollresult = $this->get_poll_data($this->id);
+if (empty($dataspollresult)) return;
 //To show the number total of votes for the poll
 $nbvoters = $this->get_number_total_voters($this->id);
 //To show the usernames of the users which have voted for this poll
@@ -83,9 +84,8 @@ if (!isset($dataspollusers[0]->userid) && !isset($dataspollusers[0]->pollid)) {
 								</tr>
 								<?php endif; ?>
 						</table>
-						<?php //FIXME: compare dates, not strings ?>
 						<?php
-						} elseif ((strftime("%Y-%m-%d %H:%M:%S",time()) <= $dataspollresult[0]->polltimetolive)
+						} elseif (JFactory::getDate()->toUnix() <= $dataspollresult[0]->polltimetolive
 							|| $dataspollresult[0]->polltimetolive == "0000-00-00 00:00:00") {
 						?>
 						<div id="kpoll-text-help"></div>

@@ -55,9 +55,9 @@ class KunenaKeywordHelper {
 	static public function cleanKeywords($keywords, $glue=null) {
 		if (is_string($keywords)) {
 			// By default accept strings like this: keyword, "My tag", many different tags
-			if ($glue === null) $glue = '[\s,]*"\s*([^"]+)\s*"[\s,]*|[\s,]+';
+			if ($glue === null) $glue = '[\s,]*"([^"]+)"[\s,]*|[\s,]+';
 			if ($glue) {
-				$keywords = preg_split('/'.$glue.'/u', $keywords, 0, PREG_SPLIT_NO_EMPTY);
+				$keywords = preg_split('/'.$glue.'/u', $keywords, 0, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 			} else {
 				$keywords = array($keywords);
 			}

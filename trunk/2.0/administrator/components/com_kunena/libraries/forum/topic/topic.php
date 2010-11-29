@@ -92,8 +92,17 @@ class KunenaForumTopic extends JObject {
 		$user = (int) $user;
 		if (!isset($this->_keywords[$user])) {
 			$this->_keywords[$user] = KunenaKeywordHelper::getByTopics($this->id, $user);
+			ksort($this->_keywords[$user]);
 		}
-		return $glue ? implode($glue, array_keys($this->_keywords[$user])) : $this->_keywords[$user];
+		if ($glue) {
+			$keywords = array_keys($this->_keywords[$user]);
+			foreach ($keywords as &$keyword) {
+				if (strpos($keyword, ' ') !== false)
+					$keyword = '"'.$keyword.'"';
+			}
+			return implode($glue, $keywords);
+		}
+		return $this->_keywords[$user];
 	}
 
 	public function setKeywords($keywords, $user=null, $glue=null) {

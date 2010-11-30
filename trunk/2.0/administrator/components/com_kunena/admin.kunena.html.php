@@ -216,13 +216,10 @@ table.kadmin-stat caption {
 				<legend><?php echo JText::_( 'COM_KUNENA_A_TEMPLATE_MANAGER_PARAMETERS' ); ?></legend>
 				<table class="admintable">
 				<tr>
-					<td colspan="2" class="key" style="text-align:left; padding: 10px;">
+					<td colspan="2" class="key" style="text-align:left; padding: 10px">
 						<?php $templatefile = KUNENA_PATH_TEMPLATE.DS.$template.DS.'params.ini';
 							echo is_writable($templatefile) ? JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSWRITABLE', $templatefile):JText::sprintf('COM_KUNENA_A_TEMPLATE_MANAGER_PARAMSUNWRITABLE', $templatefile);
 						?>
-						<!--  The follwing two lines needs to be added to the above conditional.  -->
-						<span class="kwriteable"></span>
-						<span class="kunwriteable"></span>
 					</td>
 				</tr>
 				<tr>
@@ -351,7 +348,7 @@ table.kadmin-stat caption {
 
 		<dl class="tabs" id="pane">
 
-		<dt><?php echo JText::_('COM_KUNENA_A_BASICS') ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_BASICS') ?>"><?php echo JText::_('COM_KUNENA_A_BASICS') ?></dt>
 		<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
@@ -458,7 +455,7 @@ table.kadmin-stat caption {
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_FRONTEND') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_FRONTEND') ?>"><?php echo JText::_('COM_KUNENA_A_FRONTEND') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_LOOKS') ?></legend>
@@ -703,6 +700,25 @@ table.kadmin-stat caption {
 								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_SHOW_TOPICS_FROM_LAST_TIME_DESC') ?>
 						</td>
 					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_TYPE') ?>
+						</td>
+								<td align="left" valign="top"><?php echo $lists ['show_session_type'];
+						?>
+						</td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_TYPE_DESC') ?>
+						</td>
+					</tr>
+					<tr align="center" valign="middle">
+						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_USER_SESSIONS_START_TIME') ?>
+						</td>
+								<td align="left" valign="top"><input type="text"
+							name="cfg_show_session_starttime"
+							value="<?php echo kescape($kunena_config->show_session_starttime);
+						?>" /></td>
+								<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_COM_A_SESSIONS_START_TIME_DESC') ?>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset>
@@ -739,7 +755,7 @@ table.kadmin-stat caption {
 			</fieldset>
 			</dd>
 
-			<dt><?php echo JText::_('COM_KUNENA_A_USERS') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_USERS') ?>"><?php echo JText::_('COM_KUNENA_A_USERS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_USER_RELATED') ?></legend>
@@ -870,7 +886,7 @@ table.kadmin-stat caption {
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_SECURITY') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_SECURITY') ?>"><?php echo JText::_('COM_KUNENA_A_SECURITY') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_SECURITY_SETTINGS') ?></legend>
@@ -974,7 +990,7 @@ table.kadmin-stat caption {
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_AVATARS') ?>"><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATAR_SETTINGS') ?></legend>
@@ -1013,7 +1029,7 @@ table.kadmin-stat caption {
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_UPLOADS') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_UPLOADS') ?>"><?php echo JText::_('COM_KUNENA_A_UPLOADS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_IMAGE') ?></legend>
@@ -1175,7 +1191,7 @@ table.kadmin-stat caption {
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_RANKING') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_RANKING') ?>"><?php echo JText::_('COM_KUNENA_A_RANKING') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_RANKING_SETTINGS') ?></legend>
@@ -1200,7 +1216,7 @@ table.kadmin-stat caption {
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_BBCODE') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_BBCODE') ?>"><?php echo JText::_('COM_KUNENA_A_BBCODE') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_BBCODE_SETTINGS') ?></legend>
@@ -1318,7 +1334,7 @@ table.kadmin-stat caption {
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?>"><?php echo JText::_('COM_KUNENA_A_INTEGRATION') ?></dt>
 			<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_INTEGRATION_TITLE') ?></legend>
@@ -1374,7 +1390,7 @@ table.kadmin-stat caption {
 					</table>
 				</fieldset>
 				</dd>
-				<dt><?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?></dt>
+				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_RSS') ?></dt>
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_RSS_SETTINGS') ?></legend>
@@ -1448,7 +1464,7 @@ table.kadmin-stat caption {
 					</table>
 				</fieldset>
 				</dd>
-				<dt><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?></dt>
+				<dt title="<?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?>"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_PLUGINS') ?></dt>
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST') ?></legend>
@@ -1514,6 +1530,11 @@ table.kadmin-stat caption {
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS') ?></td>
 							<td align="left" valign="top"><?php echo $lists ['userlist_userhits']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_HITS_DESC') ?></td>
+						</tr>
+						<tr align="center" valign="middle">
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED') ?></td>
+							<td align="left" valign="top"><?php echo $lists ['userlist_allowed']; ?></td>
+							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_ALLOWED_DESC') ?></td>
 						</tr>
 					</table>
 				</fieldset>
@@ -1967,7 +1988,7 @@ function editUserProfile($option, $user, $subslist, $subscatslist, $selectRank, 
 			?>
 		<dl class="tabs" id="pane">
 
-		<dt><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?>"><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></dt>
 		<dd>
 		<fieldset>
 		<legend><?php echo JText::_('COM_KUNENA_A_BASIC_SETTINGS') ?></legend>
@@ -2018,7 +2039,7 @@ function textCounter(field, target) {
 	</table>
 </fieldset>
 </dd>
-<dt><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
+<dt title="<?php echo JText::_('COM_KUNENA_A_AVATARS') ?>"><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_A_AVATARS') ?></legend>
@@ -2050,7 +2071,7 @@ function textCounter(field, target) {
 	</fieldset>
 </dd>
 
-<dt><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></dt>
+	<dt title="<?php echo JText::_('COM_KUNENA_MOD_NEW') ?>"><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></dt>
 		<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_MOD_NEW') ?></legend>
@@ -2076,7 +2097,7 @@ function textCounter(field, target) {
 				<input type="hidden" name="boxchecked" value="1" />
 			</fieldset>
 		</dd>
-<dt><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_CATEGORIES_SUBSCRIPTIONS') ?></legend>
@@ -2115,7 +2136,7 @@ function textCounter(field, target) {
 				</table>
 			</fieldset>
 			</dd>
-<dt><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS') ?></legend>
@@ -2155,7 +2176,7 @@ function textCounter(field, target) {
 				</table>
 			</fieldset>
 		</dd>
-<dt><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_TRASH_IP') ?>"><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></dt>
 			<dd>
 			<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_TRASH_IP') ?></legend>
@@ -2407,7 +2428,7 @@ function textCounter(field, target) {
 			$myTabs = &JPane::getInstance('tabs', array('startOffset'=>0));
 			?>
 		<dl class="tabs" id="pane">
-		<dt><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?>"><?php echo JText::_('COM_KUNENA_A_EMOTICONS'); ?></dt>
 		<dd>
 		<form action="index.php" method="post" name="adminForm">
 			<table class="adminlist" border="0" cellspacing="0" cellpadding="3" width="100%">
@@ -2477,7 +2498,7 @@ function textCounter(field, target) {
 			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</dd>
-		<dt><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?>"><?php echo JText::_('COM_KUNENA_A_EMOTICONS_UPLOAD'); ?></dt>
 		<dd>
 		<form action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=uploadsmilies" id="uploadForm" method="post" enctype="multipart/form-data" >
 		<div style="padding:10px;">
@@ -2709,7 +2730,7 @@ function textCounter(field, target) {
 			<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		</dd>
-		<dt><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?>"><?php echo JText::_('COM_KUNENA_A_RANKS_UPLOAD'); ?></dt>
 		<dd>
 		<form action="<?php echo JURI::base(); ?>index.php?option=com_kunena&amp;task=uploadranks" id="uploadForm" method="post" enctype="multipart/form-data" >
 		<div style="padding:10px;">

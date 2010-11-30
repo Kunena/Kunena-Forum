@@ -21,6 +21,9 @@ class KunenaProfileKunena extends KunenaProfile
 
 	public function getUserListURL($action='', $xhtml = true)
 	{
+		$config = KunenaFactory::getConfig ();
+		$my = JFactory::getUser();
+		if ( $config->userlist_allowed == 1 && $my->id == 0  ) return false;
 		return KunenaRoute::_('index.php?option=com_kunena&func=userlist'.$action, $xhtml);
 	}
 

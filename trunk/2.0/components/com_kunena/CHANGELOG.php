@@ -33,6 +33,9 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+30-November-2010 Matias
+^ [#22786] Merge revisions 3903-3955 from trunk/1.6
+
 29-November-2010 Matias
 # [#23443] Fix regression: Saving message fails
 # [#23443] Fix regression: Saving keyword fails
@@ -425,6 +428,53 @@ Kunena 2.0.0-DEV
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
 Kunena 1.6.2-DEV
+
+29-November-2010 Matias
+^ [#15886] Merged revisions 3945-3948 from /branches/1.6.2-810-bugfixes-29-10-2010
+^ [#15886] Merged revisions 3939-3945 from /branches/1.6-xillibit-fixes-20101107
+# [#23567] Show confidential information also for the author of the message
+# [#19693] Searches with - ' " return no results
+
+27-November-2010 810
+# [#23528] Set none to profiles and user list
+# [#23529] "This file is hidden for" message when guests cannot view attachments
+# [#22795] The tab text is truncated under IE 8.0
+
+26-November-2010 Matias
+# [#23564] Fix error: You are not allowed to change your name!
+
+26-November-2010 Xillibit
+# [#22704] Fix regression which prevent to display guests or members
+
+25-November-2010 Xillibit
+# [#23326] Bug when moving a post to a different category and leaving a shadow
+^ [#23293] Update and fix some typos in fr-FR language translation (thanks lavsteph)
++ [#23453] Add configuration setting to restrict userlist to registred user only
+
+24-November-2010 Xillibit
+# [#23251] Prevent to move a topic with a poll into another topic with a poll and display an error message
+# [#23483] Find a way to avoid warning when the poll has been deleted or has disappeared
+
+24-November-2010 Matias
+^ [#15886] Merged revisions 3896-3930 from /branches/1.6-xillibit-fixes-20101107
+
+21-November-2010 Xillibit
+# [#23251] When moving a topic with polls in another topics need to handle polls (fix regression)
++ [#22704] Add configuration option to show online users by minutes or session time
+# [#23394] BBcode form editor issues
+
+18-November-2010 Xillibit
+^ [#23321] Need to extend Report Config with menu info
+# [#23251] When moving a topic with polls in another topics need to handle polls
+
+17-November-2010 Xillibit
+^ [#23322] Need to extend Report Config with 3rd part SEF info
+
+16-November-2010 Xillibit
+# [#23332] Improve accessibility for visually-impaired users - user edit profile tabs
+
+16-November-2010 Severdia
+# [#22979] Fixed spacing between pagination in forum listing
 
 15-November-2010 Matias
 ^ [#15886] Merged revisions 3892-3899 from /branches/1.6-LDAsvens-language-20101112

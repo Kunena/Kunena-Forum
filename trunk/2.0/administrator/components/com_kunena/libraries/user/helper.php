@@ -126,14 +126,56 @@ class KunenaUserHelper {
 		return self::$_online;
 	}
 
-	public static function getOnlineCount () {
-		// TODO: make stats configurable by freely defined timeout (15 min, 30 min, Joomla session, all...)
+	public static function getOnlineCount() {
 		static $count = null;
 		if ($count === null) {
-			require_once JPATH_ROOT.'/modules/mod_whosonline/helper.php';
-			$count = modWhosonlineHelper::getOnlineCount();
+			$kunena_config = KunenaFactory::getConfig ();
+			$kunena_app = JFactory::getApplication ();
+			$db = JFactory::getDBO ();
+
+			$result = array ();
+			$user_array = 0;
+			$guest_array = 0;
+
+			// need to calcute the time less the time selected by user, user
+			$querytime = '';
+			if ( $kunena_config->show_session_starttime != 0 ) {
+				$time = CKunenaTimeformat::internalTime() - $kunena_config->show_session_starttime;
+				$querytime = 'AND time > '.$time;
+			}
+
+			$query = 'SELECT guest, time, usertype, client_id
+				FROM #__session
+				WHERE client_id = 0 ' . $querytime;
+			$db->setQuery ( $query );
+			$sessions = $db->loadObjectList ();
+			KunenaError::checkDatabaseError ();
+
+			// need to calculate the joomla session lifetime in timestamp, to check if the sessions haven't expired
+			$j_session_lifetime = CKunenaTimeformat::internalTime() - ( $kunena_app->getCfg('lifetime') * 60 );
+
+			if (count($sessions)) {
+				foreach ($sessions as $session) {
+					// we check that the session hasn't expired
+					if ( $kunena_config->show_session_type == 0 || $kunena_config->show_session_type == 2 || ($session->time > $j_session_lifetime && $kunena_config->show_session_type == 1 ) ) {
+						// if guest increase guest count by 1
+						if ($session->guest == 1 && !$session->usertype) {
+							$guest_array ++;
+						}
+						// if member increase member count by 1
+						if ($session->guest == 0) {
+							$user_array ++;
+						}
+					}
+				}
+			}
+
+			$result ['user'] = $user_array;
+			$result ['guest'] = $guest_array;
 		}
-		return $count;
+		//require_once JPATH_ROOT.'/modules/mod_whosonline/helper.php';
+		//$count = modWhosonlineHelper::getOnlineCount();
+		return $result;
 	}
 
 	public static function isOnline($user, $yesno = false) {

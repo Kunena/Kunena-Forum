@@ -310,7 +310,7 @@ class KunenaForumTopic extends JObject {
 
 		} elseif ($target instanceof KunenaForumTopic) {
 			if ($target->id == $this->id) {
-				$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->thread);
+				$this->setError(JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->id));
 				return false;
 			}
 			$topic = $target;
@@ -318,7 +318,7 @@ class KunenaForumTopic extends JObject {
 
 		} elseif ($target instanceof KunenaForumMessage) {
 			if ($target->thread == $this->id) {
-				$this->_errormsg = JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->thread);
+				$this->setError(JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->id));
 				return false;
 			}
 			$topic = $target->getTopic();
@@ -338,7 +338,19 @@ class KunenaForumTopic extends JObject {
 			return false;
 
 		}
-
+		if ( $this->poll_id && $this->id != $topic->id ) {
+			if ( $topic->poll_id ) {
+				$this->setError(JText::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL'));
+				return false;
+			}
+			$query = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($topic->id)} WHERE `threadid`={$this->_db->Quote($this->id)}";
+			$this->_db->setQuery ( $query );
+			$this->_db->query ();
+			if ($this->_db->getErrorNum () ) {
+				$this->setError($this->_db->getError());
+				return false;
+			}
+		}
 		$query = new JDatabaseQuery();
 		$query->update('#__kunena_messages')->set("catid={$topic->category_id}")->set("thread={$topic->id}")->where("thread={$this->id}");
 		if ($ids === false) {

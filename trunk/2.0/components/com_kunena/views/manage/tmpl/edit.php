@@ -42,7 +42,7 @@ function submitbutton(pressbutton)
 		<?php jimport('joomla.html.pane');
 		$myTabs = JPane::getInstance('tabs', array('startOffset'=>0)); ?>
 		<dl class="tabs" id="pane">
-		<dt><?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?></dt>
+		<dt title="<?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?>"><?php echo JText::_('COM_KUNENA_CATEGORY_INFO'); ?></dt>
 		<dd>
 		<fieldset>
 				<legend><?php echo JText::_('COM_KUNENA_BASICSFORUMINFO'); ?></legend>
@@ -74,7 +74,7 @@ function submitbutton(pressbutton)
 				</table>
 			</fieldset>
 			</dd>
-			<dt><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></dt>
+			<dt title="<?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?>"><?php echo JText::_('COM_KUNENA_ADVANCEDDESC'); ?></dt>
 			<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_ADVANCEDDESCINFO'); ?></legend>
@@ -160,7 +160,7 @@ function submitbutton(pressbutton)
 				<?php if (!$this->category->id || $this->category->parent) : ?>
 
 				</dd>
-				<dt><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></dt>
+				<dt title="<?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?>"><?php echo JText::_('COM_KUNENA_MODNEWDESC'); ?></dt>
 				<dd>
 				<fieldset>
 					<legend><?php echo JText::_('COM_KUNENA_MODHEADER'); ?></legend>

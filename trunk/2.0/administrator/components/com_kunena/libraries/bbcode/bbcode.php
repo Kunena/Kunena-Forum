@@ -724,7 +724,8 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		if ($action == BBCODE_CHECK)
 			return true;
 
-		if (KunenaFactory::getUser ()->isModerator ()) {
+		$me = KunenaFactory::getUser ();
+		if ((!empty($bbcode->parent->msg->userid) && $bbcode->parent->msg->userid == $me->userid) || CKunenaTools::isModerator($me->userid)) {
 			// Display but highlight the fact that it is hidden from everyone except admins and mods
 			return '<b>' . JText::_ ( 'COM_KUNENA_BBCODE_CONFIDENTIAL_TEXT' ) . '</b><div class="kmsgtext-confidential">' . $content . '</div>';
 		}
@@ -1111,7 +1112,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		'wideo.fr' => array ('flash', 400, 368, 0, 0, 'http://www.wideo.fr/p/fr/%vcode%.html', '\/([\w-]*).html', array (array (6, 'wmode', 'transparent' ) ) ),
 
-		'youku' => array ('flash', 480, 400, 0, 0, 'http://player.youku.com/player.php/sid/%vcode%/v.swf', '\/v_show\/id_c.00(.*)\.html', '' ),
+		'youku' => array ('flash', 480, 400, 0, 0, 'http://player.youku.com/player.php/sid/%vcode%/v.swf', '\/v_show\/id_(.*)\.html', '' ),
 
 		'youtube' => array ('flash', 425, 355, 0, 0, 'http://www.youtube.com/v/%vcode%?fs=1&hd=0&rel=1', '\/watch\?v=([\w\-]*)' , array (array (6, 'wmode', 'transparent' ) ) ),
 

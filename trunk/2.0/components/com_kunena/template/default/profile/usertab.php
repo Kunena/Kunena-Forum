@@ -52,17 +52,17 @@ JHTML::_('behavior.tooltip');
 <div id="kprofile-tabs">
 	<dl class="tabs">
 		<?php if (CKunenaTools::isModerator($this->my->id)): ?>
-		<dt class="open"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></dt>
+		<dt class="open" title="<?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?>"><?php echo JText::_('COM_KUNENA_MESSAGE_ADMINISTRATION'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayReviewPosts(); ?>
 		</dd>
 		<?php endif; ?>
-		<dt class="open"><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?></dt>
+		<dt class="open" title="<?php echo JText::_('COM_KUNENA_USERPOSTS'); ?>"><?php echo JText::_('COM_KUNENA_USERPOSTS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayUserPosts(); ?>
 		</dd>
 		<?php if($this->config->showthankyou && $this->my->id != 0) : ?>
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?></dt>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_THANK_YOU'); ?>"><?php echo JText::_('COM_KUNENA_THANK_YOU'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayGotThankYou(); ?>
 			<?php $this->displaySaidThankYou(); ?>
@@ -70,43 +70,43 @@ JHTML::_('behavior.tooltip');
 		<?php endif; ?>
 		<?php if ($this->my->id == $this->user->id): ?>
 		<!--
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?></dt>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?>"><?php echo JText::_('COM_KUNENA_OWNTOPICS'); ?></dt>
 		<dd style="display: none;">
 			<?php //$this->displayOwnTopics(); ?>
 		</dd>
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_USERTOPICS'); ?></dt>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_USERTOPICS'); ?>"><?php echo JText::_('COM_KUNENA_USERTOPICS'); ?></dt>
 		<dd style="display: none;">
 			<?php //$this->displayUserTopics(); ?>
 		</dd>
 		-->
 		<?php if ($this->config->allowsubscriptions) :?>
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?>"><?php echo JText::_('COM_KUNENA_SUBSCRIPTIONS'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayCategoriesSubscriptions(); ?>
 			<?php $this->displaySubscriptions(); ?>
 		</dd>
 		<?php endif; ?>
 		<?php if ($this->config->allowfavorites) : ?>
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_FAVORITES'); ?>"><?php echo JText::_('COM_KUNENA_FAVORITES'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayFavorites(); ?>
 		</dd>
 		<?php endif; ?>
 		<?php endif;?>
 		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id == $this->profile->userid ): ?>
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></dt>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?>"><?php echo JText::_('COM_KUNENA_BAN_BANMANAGER'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayBanManager(); ?>
 		</dd>
 		<?php endif;?>
 		<?php if (CKunenaTools::isModerator($this->my->id) && $this->my->id != $this->user->id):?>
-		<dt class="closed"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></dt>
+		<dt class="closed" title="<?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?>"><?php echo JText::_('COM_KUNENA_BAN_BANHISTORY'); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayBanHistory(); ?>
 		</dd>
 		<?php endif;?>
 		<?php if ($this->canBan) : ?>
-		<dt class="closed"><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></dt>
+		<dt class="closed" title="<?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?>"><?php echo $this->banInfo->id ? JText::_('COM_KUNENA_BAN_EDIT') : JText::_('COM_KUNENA_BAN_NEW' ); ?></dt>
 		<dd style="display: none;">
 			<?php $this->displayBanUser(); ?>
 	</dd>

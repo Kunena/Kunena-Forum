@@ -205,7 +205,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			</select> <?php
 			echo JText::_('COM_KUNENA_EDITOR_VIDEO_ID');
 			?><input id="kvideoid"
-				name="videoid" type="text" size="11" maxlength="11"
+				name="videoid" type="text" size="11" maxlength="14"
 				onmouseover="javascript:$('helpbox').set('value', '<?php
 				echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_VIDEOID');
 				?>')" />

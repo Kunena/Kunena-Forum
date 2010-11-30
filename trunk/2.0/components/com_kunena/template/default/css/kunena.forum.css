@@ -518,7 +518,7 @@ PX		EM			PCT			PT
 
 #Kunena #ktab a span {
 	display: block;
-	padding: 0 1.1em;
+	padding: 0 10px;
 	font-size: 1em; 
 	line-height: 2.3em;
 	text-indent: 0;
@@ -874,6 +874,9 @@ PX		EM			PCT			PT
 }
 #Kunena div.ktopic-title-cover ul.kpagination a:hover{
 	border:solid 1px;
+}
+#Kunena #kflattable ul.kpagination li {
+	margin-right: 5px;
 }
 
 #Kunena span.ktopic-posted-time {
@@ -1454,7 +1457,7 @@ PX		EM			PCT			PT
 	background:url("../images/icons/attachment.png") no-repeat;
 	height: 32px;
 	line-height: 32px;
-	width: 200px;
+	width: auto;
 	float: left;
 }
 #Kunena ul.kfile-attach li span {

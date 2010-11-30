@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+30-November-2010 Xillibit
+# [#23251] Fix issues which don't display message that the topic can't be moved and fix a little issue
+
 29-November-2010 Matias
 ^ [#15886] Merged revisions 3945-3948 from /branches/1.6.2-810-bugfixes-29-10-2010
 ^ [#15886] Merged revisions 3939-3945 from /branches/1.6-xillibit-fixes-20101107

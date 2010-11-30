@@ -176,84 +176,87 @@ class CKunenaModeration {
 		$subjectupdatesql = !empty($TargetSubject) || ( $mode == 'KN_MOVE_THREAD' && $changesubject ) ? ",`subject`={$this->_db->quote($TargetSubject)}" : "";
 		if($mode == 'KN_MOVE_THREAD' && $changesubject) $subjectupdatesqlreplies = ",`subject`={$this->_db->quote($TargetSubject)}";
 		else $subjectupdatesqlreplies = "";
-
-		$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)}, `parent`={$this->_db->Quote($TargetParentID)} {$subjectupdatesql} WHERE `id`={$this->_db->Quote($MessageID)}";
-		$this->_db->setQuery ( $sql );
-		$this->_db->query ();
-		if (KunenaError::checkDatabaseError()) return false;
-
-		// Assemble move logic based on $mode
-		switch ($mode) {
-			case KN_MOVE_MESSAGE : // Move Single message only
-				// If we are moving the first message of a thread only - make the second post the new thread header
-				if ( $currentMessage->parent == 0 ) {
-					if ( !empty($currentMessage) && !empty($targetMessage) )
-						$this->_handlePolls($currentMessage, $targetMessage);
-					// We are about to pull the thread starter from the original thread.
-					// Need to promote the second post of the original thread as the new starter.
-					$sqlnewparent = "SELECT `id` FROM #__kunena_messages WHERE `id`!={$this->_db->Quote($MessageID)} AND `thread`={$this->_db->Quote($currentMessage->thread)} ORDER BY `id` ASC";
-					$this->_db->setQuery ( $sqlnewparent, 0, 1 );
-					$newParentID = $this->_db->loadResult ();
-					if (KunenaError::checkDatabaseError()) return false;
-
-					if ( $newParentID ) {
-						$this->_Move ( $newParentID, $currentMessage->catid, '', 0, KN_MOVE_NEWER );
-					}
-					
-					// Create ghost thread if requested
-					if ($GhostThread == true) { 
-						$this->createGhostThread($MessageID,$currentMessage);
-					}
-				}
-
-				break;
-			case KN_MOVE_THREAD :
-				// Move entire Thread
-				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} {$subjectupdatesqlreplies} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
-
-				// Create ghost thread if requested
-				if ($GhostThread == true) {
-					$this->createGhostThread($MessageID,$currentMessage);
-				}
-				
-				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
-
-				break;
-			case KN_MOVE_NEWER :
-				// Move message and all newer messages of thread
-				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `id`>{$this->_db->Quote($MessageID)}";
-				
-				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
-				
-				break;
-			case KN_MOVE_REPLIES :
-				// Move message and all replies and quotes - 1 level deep for now
-				$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `parent`={$this->_db->Quote($MessageID)}";
-				
-				if ( !empty($currentMessage) && !empty($targetMessage) )	$this->_handlePolls($currentMessage, $targetMessage);
-				
-				break;
-			default :
-				// Unsupported mode - Error!
-				$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_UNSUPPORTED_MODE');
-
-				return false;
+		
+		if ( !empty($currentMessage) && !empty($targetMessage) ) {
+			$success = $this->_handlePolls($currentMessage, $targetMessage);
 		}
-
-		// Execute move
-		if (isset($sql)) {
+		
+		if ( $success ) {
+		
+			$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)}, `parent`={$this->_db->Quote($TargetParentID)} {$subjectupdatesql} WHERE `id`={$this->_db->Quote($MessageID)}";
 			$this->_db->setQuery ( $sql );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError()) return false;
+
+			// Assemble move logic based on $mode
+			switch ($mode) {
+				case KN_MOVE_MESSAGE : // Move Single message only
+					// If we are moving the first message of a thread only - make the second post the new thread header
+					if ( $currentMessage->parent == 0 ) {
+						// We are about to pull the thread starter from the original thread.
+						// Need to promote the second post of the original thread as the new starter.
+						$sqlnewparent = "SELECT `id` FROM #__kunena_messages WHERE `id`!={$this->_db->Quote($MessageID)} AND `thread`={$this->_db->Quote($currentMessage->thread)} ORDER BY `id` ASC";
+						$this->_db->setQuery ( $sqlnewparent, 0, 1 );
+						$newParentID = $this->_db->loadResult ();
+						if (KunenaError::checkDatabaseError()) return false;
+
+						if ( $newParentID ) {
+							$this->_Move ( $newParentID, $currentMessage->catid, '', 0, KN_MOVE_NEWER );
+						}
+					
+						// Create ghost thread if requested
+						if ($GhostThread == true) { 
+							$this->createGhostThread($MessageID,$currentMessage);
+						}
+					}
+
+				break;
+				case KN_MOVE_THREAD :
+					// Move entire Thread
+					$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} {$subjectupdatesqlreplies} WHERE `thread`={$this->_db->Quote($currentMessage->thread)}";
+
+					// Create ghost thread if requested
+					if ($GhostThread == true) {
+						$this->createGhostThread($MessageID,$currentMessage);
+					}
+
+					break;
+				case KN_MOVE_NEWER :
+					// Move message and all newer messages of thread
+					$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `id`>{$this->_db->Quote($MessageID)}";
+				
+					break;
+				case KN_MOVE_REPLIES :
+					// Move message and all replies and quotes - 1 level deep for now
+					$sql = "UPDATE #__kunena_messages SET `catid`={$this->_db->Quote($TargetCatID)}, `thread`={$this->_db->Quote($TargetThreadID)} WHERE `thread`={$this->_db->Quote($currentMessage->thread)} AND `parent`={$this->_db->Quote($MessageID)}";
+				
+					break;
+				default :
+					// Unsupported mode - Error!
+					$this->_errormsg = JText::_('COM_KUNENA_MODERATION_ERROR_UNSUPPORTED_MODE');
+
+					return false;
+			}
+
+			// Execute move
+			if (isset($sql)) {
+				$this->_db->setQuery ( $sql );
+				$this->_db->query ();
+				if (KunenaError::checkDatabaseError()) return false;
+			}
+
+			// When done log the action
+			$this->_Log ( 'Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode );
+
+			// Last but not least update forum stats
+			CKunenaTools::reCountBoards ();
+
+			return true;
+		
+		} else {
+			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL');
+			return false;
 		}
-
-		// When done log the action
-		$this->_Log ( 'Move', $MessageID, $TargetCatID, $TargetSubject, $TargetMessageID, $mode );
-
-		// Last but not least update forum stats
-		CKunenaTools::reCountBoards ();
-
-		return true;
 	}
 
 	protected function _Delete($MessageID, $DeleteAttachments = false, $mode = KN_DEL_MESSAGE) {
@@ -533,18 +536,29 @@ class CKunenaModeration {
 	}
 	
 	protected function _handlePolls($currentMessage, $targetMessage) {
-		if ( $currentMessage->poll && !$targetMessage->poll ) {
+  		if ( $currentMessage->poll && !$targetMessage->poll ) {
+			$sql = "SELECT `id` FROM #__kunena_polls_options WHERE pollid={$this->_db->Quote($currentMessage->thread)}";
+			$this->_db->setQuery ( $sql );
+			$pollOptionsId = $this->_db->loadObjectList ();
+			if (KunenaError::checkDatabaseError()) return false;
+		
+			$pollOptionsIds = array();
+			if (is_array($pollOptionsId)) {
+			   foreach( $pollOptionsId as $option ) {			      
+            $pollOptionsIds[] = $option->id;
+        }
+      }	
+			
 			$sqlpoll = "UPDATE #__kunena_polls SET `threadid`={$this->_db->Quote($targetMessage->thread)} WHERE `id`={$this->_db->Quote($currentMessage->poll)}";
 			$this->_db->setQuery ( $sqlpoll );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError()) return false;
-			$sqlpoll = "UPDATE #__kunena_polls_options SET `pollid`={$this->_db->Quote($targetMessage->thread)} WHERE `pollid`={$this->_db->Quote($currentMessage->thread)}";
+			$sqlpoll = "UPDATE #__kunena_polls_options SET `pollid`={$this->_db->Quote($targetMessage->thread)} WHERE `id` IN (".implode(',',$pollOptionsIds).")";
 			$this->_db->setQuery ( $sqlpoll );
 			$this->_db->query ();
 			if (KunenaError::checkDatabaseError()) return false;
 		} else if ( $currentMessage->poll && $targetMessage->poll ) {
-			$this->_errormsg = JText::_('COM_KUNENA_MODERATION_CANNOT_MOVE_TOPIC_WITH_POLL_INTO_ANOTHER_WITH_POLL');
-			return false;
+		  return false;
 		}
 	}
 

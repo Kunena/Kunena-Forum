@@ -38,6 +38,7 @@ Kunena 2.0.0-DEV
 # [#23443] Fix regression: Saving keyword fails
 # [#23507] Fix a bug where quoted keywords were ignored
 # [#23507] Order keywords alphabetically, add double quotes to many word keywords
+# [#23443] Load missing language strings in view=manage
 
 26-November-2010 Matias
 # [#23443] Fix regression: Fatal error when sending email and user is not global admin/moderator

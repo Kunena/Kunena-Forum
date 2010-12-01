@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+01-December-2010 Xillibit
+# [#23609] Spoiler does not operate in message preview (New Topic)
+^ [#23293] Update some strings in english language file
+
 30-November-2010 Xillibit
 # [#23251] Fix issues which don't display message that the topic can't be moved and fix a little issue
 

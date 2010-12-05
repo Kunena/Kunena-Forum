@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+05-December-2010 Xillibit
+# [#23625] emo Jomsocial activity stream, show hidden text to everyone 
+
 01-December-2010 Xillibit
 # [#23609] Spoiler does not operate in message preview (New Topic)
 ^ [#23293] Update some strings in english language file

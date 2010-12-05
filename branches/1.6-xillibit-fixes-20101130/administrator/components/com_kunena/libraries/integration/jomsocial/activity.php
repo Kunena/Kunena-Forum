@@ -38,7 +38,11 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			$kunena_emoticons = smile::getEmoticons ( 0 ); // use colored emoticons for the activity stream
 
 			$content = $message->get ( 'message' );
-
+			
+			// Strip content not allowed for guests
+			$content = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $content );
+			$content = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $content );
+			
 			// limit activity stream output if limit is set
 			if ($this->_config->activity_limit > 0){
 				$content = JString::substr($content, 0, $this->_config->activity_limit);
@@ -87,6 +91,10 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			$kunena_emoticons = smile::getEmoticons ( 0 );
 
 			$content = $message->get ( 'message' );
+			
+			// Strip content not allowed for guests
+			$content = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $content );
+			$content = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $content );
 
 			// limit activity stream output if limit is set
 			if ($this->_config->activity_limit > 0){

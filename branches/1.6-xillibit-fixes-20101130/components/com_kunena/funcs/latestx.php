@@ -233,6 +233,7 @@ class CKunenaLatestX {
 				break;
 			default:
 				$latestcats = $this->_getCategoriesWhere();
+				$this->mode = 'latestposts';
 				$wheretime = ($this->_getShowListTime() ? " AND m.time>{$this->db->Quote($this->_getShowListTime())}" : '');
 				break;
 		}
@@ -335,7 +336,8 @@ class CKunenaLatestX {
 
 	function getLatestPosts() {
 		if (isset($this->total)) return;
-		$this->header = $this->title = JText::_('COM_KUNENA_LATESTPOSTS');
+		$this->header = JText::_('COM_KUNENA_LATESTPOSTS');
+		$this->title = JText::_('COM_KUNENA_MY_DISCUSSIONS'); 
 		$this->_getPosts('latest');
 	}
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+06-December-2010 Xillibit
+^ [#23293] Update some strings in english language file
+
 05-December-2010 Xillibit
 # [#23625] emo Jomsocial activity stream, show hidden text to everyone 
 

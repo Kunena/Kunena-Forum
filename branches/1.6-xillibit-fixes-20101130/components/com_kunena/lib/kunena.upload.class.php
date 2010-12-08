@@ -360,6 +360,7 @@ class CKunenaUpload {
 			}
 		}
 		$this->fileName = $newFileName;
+		$this->fileName = preg_replace('/[[:space:]]/', '',$this->fileName);
 
 		// All the processing is complete - now we need to move the file(s) into the final location
 		@chmod($this->fileTemp, 0644);

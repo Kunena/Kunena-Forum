@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+08-December-2010 Xillibit
+# [#23482] Strip space in attachments filename because broke the lightbox
+
 06-December-2010 Xillibit
 ^ [#23293] Update some strings in english language file
 

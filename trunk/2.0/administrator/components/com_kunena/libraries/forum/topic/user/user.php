@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: topic.php 3759 2010-10-20 13:48:28Z mahagr $
+ * @version $Id$
  * Kunena Component - KunenaForumTopicUser Class
  * @package Kunena
  *
@@ -27,9 +27,17 @@ class KunenaForumTopicUser extends JObject {
 	 * @access	protected
 	 */
 	public function __construct($id = 0, $user = null) {
-		// Always load user topic -- if topic does not exist: fill empty data
+		// Always fill empty data
 		$this->_db = JFactory::getDBO ();
-		$this->load ( $id, $user );
+
+		// Create the table object
+		$table = $this->getTable ();
+
+		// Lets bind the data
+		$this->setProperties ( $table->getProperties () );
+		$this->_exists = false;
+		$this->id = $id;
+		$this->user_id = KunenaUser::getInstance($user)->userid;
 	}
 
 	static public function getInstance($id = null, $user = null, $reload = false) {

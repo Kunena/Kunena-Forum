@@ -146,35 +146,18 @@ if (empty($_POST) && $format == 'html') {
 global $message;
 global $kunena_this_cat;
 
-// Get all the variables we need and strip them in case
-
+// Get all the variables
 $action = JRequest::getCmd ( 'action', '' );
 $catid = JRequest::getInt ( 'catid', 0 );
-$contentURL = JRequest::getVar ( 'contentURL', '' );
 $do = JRequest::getCmd ( 'do', '' );
 $task = JRequest::getCmd ( 'task', '' );
-$email = JRequest::getVar ( 'email', '' );
-$favoriteMe = JRequest::getVar ( 'favoriteMe', '' );
-$fb_authorname = JRequest::getVar ( 'fb_authorname', '' );
-$fb_thread = JRequest::getInt ( 'fb_thread', 0 );
 $id = JRequest::getInt ( 'id', 0 );
+$userid = JRequest::getInt ( 'userid', 0 );
 $limit = JRequest::getInt ( 'limit', 0 );
 $limitstart = JRequest::getInt ( 'limitstart', 0 );
 $markaction = JRequest::getVar ( 'markaction', '' );
 $message = JRequest::getVar ( 'message', '' );
 $page = JRequest::getInt ( 'page', 0 );
-$parentid = JRequest::getInt ( 'parentid', 0 );
-$pid = JRequest::getInt ( 'pid', 0 );
-$replyto = JRequest::getInt ( 'replyto', 0 );
-$resubject = JRequest::getVar ( 'resubject', '' );
-$rowid = JRequest::getInt ( 'rowid', 0 );
-$rowItemid = JRequest::getInt ( 'rowItemid', 0 );
-$subject = JRequest::getVar ( 'subject', '' );
-$subscribeMe = JRequest::getVar ( 'subscribeMe', '' );
-$thread = JRequest::getInt ( 'thread', 0 );
-$topic_emoticon = JRequest::getVar ( 'topic_emoticon', '' );
-$userid = JRequest::getInt ( 'userid', 0 );
-$no_html = JRequest::getBool ( 'no_html', 0 );
 
 // If JFirePHP is installed and enabled, leave a trace of the Kunena startup
 if(JDEBUG == 1 && defined('JFIREPHP')){
@@ -188,8 +171,8 @@ if (isset ( $_POST ['func'] ) && $func == "showcat") {
 	$kunena_app->close ();
 }
 
-$kunena_my = &JFactory::getUser ();
-$kunena_db = &JFactory::getDBO ();
+$kunena_my = JFactory::getUser ();
+$kunena_db = JFactory::getDBO ();
 
 $document = JFactory::getDocument();
 $document->addScriptDeclaration('// <![CDATA[
@@ -197,7 +180,7 @@ var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
 var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 // ]]>');
 
-global $lang, $topic_emoticons;
+global $topic_emoticons;
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (JPATH_COMPONENT . DS . 'class.kunena.php');
@@ -233,9 +216,6 @@ if ($func == "json") {
 	require_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.ajax.helper.php');
 
 	$ajaxHelper = &CKunenaAjaxHelper::getInstance();
-
-	// Get the document object.
-	$document =& JFactory::getDocument();
 
 	// Set the MIME type for JSON output.
 	$document->setMimeEncoding( 'application/json' );
@@ -306,12 +286,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	//time format
 	include_once (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.timeformat.class.php');
 
-	$document = & JFactory::getDocument ();
-
 	// Insert WhoIsOnlineDatas
 	require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
 
-	$who =& CKunenaWhoIsOnline::getInstance();
+	$who = CKunenaWhoIsOnline::getInstance();
 	$who->insertOnlineDatas ();
 
 	// include required libraries
@@ -374,7 +352,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
      +----------------------------------------------*/
 
 	if ($kunena_config->highlightcode) {
-		$document =& JFactory::getDocument();
 		$document->addStyleDeclaration('
 			div.highlight pre {
 				width: '.(($kunena_config->rtewidth * 9) / 10).'px;
@@ -434,7 +411,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	switch ($func) {
 		case 'who' :
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			$online =& CKunenaWhoIsOnline::getInstance();
+			$online = CKunenaWhoIsOnline::getInstance();
 			$online->displayWho();
 
 			break;
@@ -448,14 +425,14 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
         case 'poll':
   			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-  			$kunena_polls =& CKunenaPolls::getInstance();
+  			$kunena_polls = CKunenaPolls::getInstance();
   			$kunena_polls->display();
 
             break;
 
 		case 'polls':
 			require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
-			$kunena_polls =& CKunenaPolls::getInstance();
+			$kunena_polls = CKunenaPolls::getInstance();
 			$kunena_polls->polldo();
 
 			break;

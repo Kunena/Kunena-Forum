@@ -45,15 +45,15 @@ class KunenaViewManage extends KunenaView {
 		$this->addStyleSheet ( 'css/kunena.manage.css' );
 
 		echo '<div id="Kunena">';
-		$this->displayCommon('menu');
-		$this->displayCommon('loginbox');
+		$this->common->display('menu');
+		$this->common->display('loginbox');
 		$errors = $this->getErrors();
 		if ($errors) {
 			$this->displayNoAccess($errors);
 		} else {
 			parent::display ();
 		}
-		$this->displayCommon('footer');
+		$this->common->display('footer');
 		echo '</div>';
 	}
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="COM_KUNENA_MENU_TOPICS_SEARCH">
+		<message>COM_KUNENA_MENU_TOPICS_SEARCH_DESC</message>
+	</layout>
+	<state>
+		<name>COM_KUNENA_MENU_TOPICS_SEARCH_LONG</name>
+		<description>COM_KUNENA_MENU_TOPICS_SEARCH_DESC_LONG</description>
+	</state>
+</metadata>

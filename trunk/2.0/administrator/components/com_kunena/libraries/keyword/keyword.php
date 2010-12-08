@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: topic.php 3935 2010-11-23 14:43:08Z mahagr $
+ * @version $Id$
  * Kunena Component - KunenaKeyword Class
  * @package Kunena
  *

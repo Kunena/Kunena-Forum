@@ -10,7 +10,7 @@
  */
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.controller' );
+kimport ( 'kunena.controller' );
 kimport ( 'kunena.forum.category.helper' );
 
 /**
@@ -21,14 +21,4 @@ kimport ( 'kunena.forum.category.helper' );
  * @since		2.0
  */
 class KunenaControllerCategories extends KunenaController {
-	protected $baseurl = null;
-
-	public function __construct($config = array()) {
-		parent::__construct ( $config );
-		$this->baseurl = 'index.php?option=com_kunena&view=categories';
-	}
-
-	public function allread() {
-
-	}
 }

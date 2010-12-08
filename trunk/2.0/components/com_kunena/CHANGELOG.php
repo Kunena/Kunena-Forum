@@ -33,6 +33,58 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+8-December-2010 Matias
+^ [#21818] Update keywords:ID on all source files
+
+7-December-2010 Matias
+^ [#22569] Copy logic from CKunenaView class into KunenaModelTopic
+^ [#22569] Copy logic from CKunenaView class into KunenaViewTopic
+^ [#22569] Copy view templates into views/topic/tmpl, modify them to work with view
++ [#22569] Add authorisation to subscriptions, favorites
+# [#23443] Fix KunenaForumTopicUserHelper::loadTopics()
+# [#23443] Fix KunenaForumTopicUser::__construct()
+^ [#22569] Cleanup new template files
+- [#22570] Remove some deprecated code
++ [#22569] Add logic to convert legacy funcs into new views (listcat, showcat, latest, view)
++ [#22569] Initialize error handler in new views
+# [#22569] Save session and online information in new views
+
+6-December-2010 Matias
+# [#23443] Fix regression in pathway, CKunenaWhoIsOnline::insertOnlineDatas() showing no users
+^ [#22569] Copy logic from CKunenaLatestx class into KunenaModelTopics (Recent Topics only)
+^ [#22569] Copy logic from CKunenaLatestx class into KunenaViewTopics (Recent Topics only)
+^ [#22569] Copy latestx templates into views/topics/tmpl, modify them to work with view
+
+4-December-2010 Matias
+^ [#22569] Copy logic from CKunenaShowcat class into KunenaModelCategory
+^ [#22569] Copy logic from CKunenaShowcat class into KunenaViewCategory
+^ [#22569] Copy showcat templates into views/category/tmpl, modify them to work with view
+
+3-December-2010 Matias
+^ [#22569] Move KunenaController into libraries, add some generic functions
++ [#22569] Add new class KunenaModel into libraries, use J1.6 model
++ [#22569] Add empty controllers for category, home, statistics, topic, topics, user, users
++ [#22569] Add empty models for category, home, statistics, topic, topics, user, users
++ [#22569] Add empty views for category, home, statistics, topic, topics, user, users
++ [#22569] Add empty layout for categories: manage
++ [#22569] Add empty layouts for category: default, create, edit, moderate
++ [#22569] Add empty layout for home: default
++ [#22569] Add empty layouts for statistics: default, whosonline
++ [#22569] Add empty layouts for topic: default, create, edit, move, reply
++ [#22569] Add empty layouts for topics: default, search
++ [#22569] Add empty layouts for user: default, edit, moderate
++ [#22569] Add empty layouts for users: default, search
+^ [#22569] Hide deprecated views from menu manager
++ [#22569] KunenaView class: add support for loading embedded views
+
+1-December-2010 Matias
++ [#22569] Add new function KunenaForumMessage::markRead()
+^ [#22569] Start using KunenaForumMessage::markRead()
+# [#23443] Fix some bugs in KunenaForumTopicHelper class
++ [#22569] Add new function KunenaForumTopicHelper::fetchNewStatus()
+# [#23443] Fix KunenaTable::load() for multi-keys
+# [#23443] Fix bug for moderators in CKunenaListcat::loadCategories() when there are no topics
+
 30-November-2010 Matias
 ^ [#22786] Merge revisions 3903-3955 from trunk/1.6
 

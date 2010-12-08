@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: api.php 3251 2010-08-21 08:07:08Z mahagr $
+ * @version		$Id$
  * Kunena Component
  * @package Kunena
  *

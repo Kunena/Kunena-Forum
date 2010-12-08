@@ -412,7 +412,7 @@ class CKunenaView {
 		}
 		$this->topicSticky = $topic->ordering;
 
-		CKunenaTools::markTopicRead ( $this->thread, $this->my->id );
+		$topic->markRead ();
 
 		//update the hits counter for this topic & exclude the owner
 		if ($this->my->id == 0 || $this->first_message->userid != $this->my->id) {

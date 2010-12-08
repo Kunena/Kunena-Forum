@@ -145,30 +145,6 @@ class CKunenaTools {
         return $db->getAffectedRows();
     }
 
-	function markTopicRead($thread, $userid) {
-		$thread = intval ( $thread );
-		$userid = intval ( $userid );
-		if (! $userid || ! $thread)
-			return;
-
-		$db = JFactory::getDBO ();
-		$kunena_session = KunenaFactory::getSession ();
-
-		$readTopics = explode ( ',', $kunena_session->readtopics );
-		if (! in_array ( $thread, $readTopics )) {
-			$readTopics[] = $thread;
-			$readTopics = implode ( ',', $readTopics );
-		} else {
-			$readTopics = false; // do not update session
-		}
-
-		if ($readTopics) {
-			$db->setQuery ( "UPDATE #__kunena_sessions SET readtopics={$db->Quote($readTopics)} WHERE userid={$db->Quote($userid)}" );
-			$db->query ();
-			KunenaError::checkDatabaseError();
-		}
-	}
-
 	function KSelectList($name, $options=array(), $attr='', $sections=false, $id='', $selected=0) {
 		$cat_params = array ();
 		$cat_params['ordering'] = 'ordering';

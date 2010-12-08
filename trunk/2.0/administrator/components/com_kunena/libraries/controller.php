@@ -133,7 +133,7 @@ class KunenaController extends JController {
 			$view->assignRef ( 'document', $document );
 
 			// Render the view.
-			$view->display ();
+			$view->displayAll ();
 		}
 	}
 

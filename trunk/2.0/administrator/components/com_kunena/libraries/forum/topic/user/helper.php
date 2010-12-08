@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: topic.php 3759 2010-10-20 13:48:28Z mahagr $
+ * @version $Id$
  * Kunena Component - KunenaForumTopicUserHelper Class
  * @package Kunena
  *
@@ -56,7 +56,7 @@ class KunenaForumTopicUserHelper {
 		} else {
 			$ids = array($ids);
 		}
-		self::loadTopics($ids);
+		self::loadTopics($ids, $user);
 
 		$list = array ();
 		foreach ( $ids as $id ) {
@@ -109,8 +109,7 @@ class KunenaForumTopicUserHelper {
 		if (empty($ids))
 			return;
 
-		$idlist = implode($ids);
-		$c = __CLASS__;
+		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_user_topics WHERE user_id={$db->quote($user->userid)} AND topic_id IN ({$idlist})";
 		$db->setQuery ( $query );
@@ -119,9 +118,9 @@ class KunenaForumTopicUserHelper {
 
 		foreach ( $ids as $id ) {
 			if (isset($results[$id])) {
-				$instance = new $c ();
+				$instance = new KunenaForumTopicUser ();
 				$instance->bind ( $results[$id] );
-				$instance->_exists = true;
+				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = $instance;
 			} else {
 				self::$_instances [$user->userid][$id] = null;

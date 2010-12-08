@@ -150,11 +150,33 @@ class KunenaForumTopic extends JObject {
 		return KunenaForumCategoryHelper::get($this->category_id);
 	}
 
+	function markRead($user = null) {
+		$user = KunenaUserHelper::get($user);
+		if (! $user->exists())
+			return;
+
+		$db = JFactory::getDBO ();
+		$kunena_session = KunenaFactory::getSession ();
+
+		$readTopics = explode ( ',', $kunena_session->readtopics );
+		if (! in_array ( $this->id, $readTopics )) {
+			$readTopics[] = $this->id;
+			$readTopics = implode ( ',', $readTopics );
+		} else {
+			$readTopics = false; // do not update session
+		}
+
+		if ($readTopics) {
+			$db->setQuery ( "UPDATE #__kunena_sessions SET readtopics={$db->Quote($readTopics)} WHERE userid={$db->Quote($user->userid)}" );
+			$db->query ();
+			KunenaError::checkDatabaseError();
+		}
+	}
+
 	// TODO: this code needs to be removed after new indication handling is in its place
 	function markNew() {
-		// Mark topic read for me
-		$me = KunenaUser::getInstance();
-		CKunenaTools::markTopicRead ( $this->id, $me->userid );
+		// Mark topic read for current user
+		$this->markRead ();
 
 		// Mark topic unread for others
 
@@ -215,6 +237,8 @@ class KunenaForumTopic extends JObject {
 			'delete'=>array('Read','Unlocked','Own'),
 			'undelete'=>array('Read'),
 			'permdelete'=>array('Read'),
+			'favorite'=>array('Read'),
+			'subscribe'=>array('Read'),
 			'sticky'=>array('Read'),
 			'lock'=>array('Read'),
 			'post.read'=>array('Read'),

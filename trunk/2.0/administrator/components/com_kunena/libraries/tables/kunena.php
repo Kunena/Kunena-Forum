@@ -37,7 +37,7 @@ abstract class KunenaTable extends JTable {
 				$keys = array();
 				foreach ($this->_tbl_key as $keyName) {
 					$keyValue = $this->$keyName;
-					$keys = array($keyName => $keyValue);
+					$keys[$keyName] = $keyValue;
 
 					// If null primary key there's is no need to load anything
 					if($keyValue === null) return false;

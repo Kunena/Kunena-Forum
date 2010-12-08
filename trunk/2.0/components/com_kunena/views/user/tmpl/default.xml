@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE metadata>
+<metadata>
+	<layout title="COM_KUNENA_MENU_USER_DEFAULT">
+		<message>COM_KUNENA_MENU_USER_DEFAULT_DESC</message>
+	</layout>
+	<state>
+		<name>COM_KUNENA_MENU_USER_DEFAULT_LONG</name>
+		<description>COM_KUNENA_MENU_USER_DEFAULT_DESC</description>
+		<params>
+			<param name="integration" type="radio" default="1" label="COM_KUNENA_MENU_INTEGRATION" description="COM_KUNENA_MENU_INTEGRATION_DESC">
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+			</param>
+		</params>
+	</state>
+</metadata>

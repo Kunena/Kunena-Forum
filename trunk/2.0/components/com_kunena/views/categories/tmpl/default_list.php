@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: categories.php 3901 2010-11-15 14:14:02Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

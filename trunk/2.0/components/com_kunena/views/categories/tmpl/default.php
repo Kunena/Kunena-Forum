@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: listcat.php 3901 2010-11-15 14:14:02Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -10,9 +10,9 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-$this->displayCommon ('announcement');
+$this->common->display ('announcement');
 $this->getModulePosition ( 'kunena_announcement' );
-$this->displayCommon ('pathway');
+$this->common->display ('pathway');
 ?>
 
 <div class="klist-markallcatsread kcontainer">
@@ -27,7 +27,7 @@ $this->displayCommon ('pathway');
 			<?php endif; ?>
 		</div>
 		<div class="fltrt">
-			<?php $this->displayCommon ('forumjump'); ?>
+			<?php $this->common->display ('forumjump'); ?>
 		</div>
 	</div>
 </div>
@@ -40,6 +40,6 @@ if (count ( $this->categories )) {
 } else {
 	//$this->displayInfoMessage ();
 }
-$this->displayCommon('whosonline');
-$this->displayCommon('stats');
+$this->common->display('whosonline');
+$this->common->display('stats');
 ?>

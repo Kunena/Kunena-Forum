@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: message.php 3759 2010-10-20 13:48:28Z mahagr $
+ * @version $Id$
  * Kunena Component - KunenaForumMessage Class
  * @package Kunena
  *
@@ -498,7 +498,7 @@ class KunenaForumMessage extends JObject {
 		} elseif ($postDelta > 0) {
 			if ($this->parent == 0) {
 				$me = KunenaUser::getInstance();
-				CKunenaTools::markTopicRead ( $topic->id, $me->userid );
+				$topic->markRead();
 				$activity->onAfterPost($this);
 			} else {
 				$topic->markNew();

@@ -162,7 +162,7 @@ class CKunenaWhoIsOnline {
 	public function insertOnlineDatas () {
 		$id = JRequest::getInt('id');
 		$catid = JRequest::getInt('catid');
-		$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
+		$func = JString::strtolower ( JRequest::getCmd ( 'view', 'listcat' ) );
 		$task = JRequest::getCmd('task');
 		$do = JRequest::getCmd('do');
 

@@ -10,49 +10,24 @@
  */
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.model' );
-kimport('kunena.forum.category.helper');
+kimport ( 'kunena.model' );
+kimport ( 'kunena.forum.category.helper' );
 
 /**
  * Categories Model for Kunena
  *
  * @package		Kunena
  * @subpackage	com_kunena
- * @since		1.6
+ * @since		2.0
  */
-class KunenaModelCategories extends JModel {
-	protected $__state_set = false;
+class KunenaModelCategories extends KunenaModel {
 	protected $_items = false;
-	protected $_items_order = false;
-	protected $_object = false;
 
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * @return	void
-	 * @since	1.6
-	 */
 	protected function populateState() {
 		$app = JFactory::getApplication ();
 
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$this->setState ( 'item.id', $catid );
-	}
-
-	/**
-	 * Overridden method to get model state variables.
-	 *
-	 * @param	string	Optional parameter name.
-	 * @param	mixed	Optional default value.
-	 * @return	mixed	The property where specified, the state object where omitted.
-	 * @since	1.6
-	 */
-	public function getState($property = null) {
-		if (! $this->__state_set) {
-			$this->populateState ();
-			$this->__state_set = true;
-		}
-		return parent::getState ( $property );
 	}
 
 	public function getItems() {

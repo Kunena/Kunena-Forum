@@ -51,6 +51,10 @@ class KunenaForumCategory extends JObject {
 		return KunenaForumCategoryHelper::get($identifier, $reload);
 	}
 
+	public function getChildren() {
+		return KunenaForumCategoryHelper::getChildren($this->id);
+	}
+
 	function exists($exists = null) {
 		$return = $this->_exists;
 		if ($exists !== null) $this->_exists = $exists;
@@ -125,6 +129,7 @@ class KunenaForumCategory extends JObject {
 		static $actions  = array(
 			'none'=>array(),
 			'read'=>array('Read'),
+			'subscribe'=>array('Read', 'Subscribe', 'NotBanned', 'NotSection'),
 			'moderate'=>array('Read', 'NotBanned', 'Moderate'),
 			'admin'=>array('Read', 'NotBanned', 'Admin'),
 			'topic.read'=>array('Read'),
@@ -136,6 +141,8 @@ class KunenaForumCategory extends JObject {
 			'topic.delete'=>array('Read', 'NotBanned', 'Unlocked'),
 			'topic.undelete'=>array('Read', 'NotBanned', 'Moderate'),
 			'topic.permdelete'=>array('Read', 'NotBanned', 'Admin'),
+			'topic.favorite'=>array('Read','NotBanned', 'Favorite'),
+			'topic.subscribe'=>array('Read','NotBanned', 'Subscribe'),
 			'topic.sticky'=>array('Read','NotBanned', 'Moderate'),
 			'topic.lock'=>array('Read','NotBanned', 'Moderate'),
 			'topic.post.read'=>array('Read'),
@@ -578,6 +585,26 @@ class KunenaForumCategory extends JObject {
 	protected function authoriseGuestWrite($user) {
 		// Check if user is guest and they can create or reply topics
 		if ($user->userid == 0 && !KunenaFactory::getConfig()->pubwrite) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
+			return false;
+		}
+
+		return true;
+	}
+	protected function authoriseSubscribe($user) {
+		// Check if user is guest and they can create or reply topics
+		if ($user->userid == 0 || !KunenaFactory::getConfig()->allowsubscriptions) {
+			// FIXME:
+			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
+			return false;
+		}
+
+		return true;
+	}
+	protected function authoriseFavorite($user) {
+		// Check if user is guest and they can create or reply topics
+		if ($user->userid == 0 || !KunenaFactory::getConfig()->allowfavorites) {
+			// FIXME:
 			$this->setError ( JText::_ ( 'COM_KUNENA_POST_ERROR_ANONYMOUS_FORBITTEN' ) );
 			return false;
 		}

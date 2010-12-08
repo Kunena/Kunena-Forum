@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 3901 2010-11-15 14:14:02Z mahagr $
+ * @version		$Id$
  * Kunena Component
  * @package Kunena
  *
@@ -16,36 +16,16 @@ kimport ( 'kunena.view' );
  * Categories View
  */
 class KunenaViewCategories extends KunenaView {
-	function display() {
-		$this->assignRef ( 'state', $this->get ( 'State' ) );
+	function displayDefault($tpl = null) {
 		$this->assignRef ( 'categories', $this->get ( 'Items' ) );
-		switch ($this->getLayout ()) {
-			case 'default' :
-				$this->displayDefault ();
-				break;
-		}
-
-		require_once KPATH_SITE . '/class.kunena.php';
-		require_once KPATH_SITE . '/lib/kunena.link.class.php';
-		require_once KPATH_SITE . '/lib/kunena.timeformat.class.php';
-		$template = KunenaFactory::getTemplate();
-		$template->loadTemplate('initialize.php');
-		echo '<div id="Kunena">';
-		$this->displayCommon('menu');
-		$this->displayCommon('loginbox');
+		$this->me = KunenaFactory::getUser();
+		$this->config = KunenaFactory::getConfig();
 		$errors = $this->getErrors();
 		if ($errors) {
 			$this->displayNoAccess($errors);
 		} else {
-			parent::display (null,true);
+			$this->display ($tpl);
 		}
-		$this->displayCommon('footer');
-		echo '</div>';
-	}
-
-	function displayDefault() {
-		$this->me = KunenaFactory::getUser();
-		$this->config = KunenaFactory::getConfig();
 	}
 
 	public function getCategoryIcon($catid, $thumb = false) {

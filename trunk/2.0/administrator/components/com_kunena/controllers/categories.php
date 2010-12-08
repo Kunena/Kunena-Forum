@@ -10,7 +10,7 @@
  */
 defined ( '_JEXEC' ) or die ();
 
-jimport ( 'joomla.application.component.controller' );
+kimport ( 'kunena.controller' );
 kimport ( 'kunena.forum.category.helper' );
 
 /**

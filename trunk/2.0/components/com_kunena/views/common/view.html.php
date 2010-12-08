@@ -19,16 +19,20 @@ jimport( 'joomla.cache.handler.output' );
 class KunenaViewCommon extends KunenaView {
 	public $catid = 0;
 
-	function display($tpl = null) {
-		$this->config = KunenaFactory::getConfig();
-		$displayFunction = 'display'.ucfirst($this->getLayout ());
-		if (! method_exists($this, $displayFunction) || ! $this->$displayFunction($tpl)) {
-			return;
-		}
+	function display($layout = null, $tpl = null) {
+		return $this->displayLayout($layout, $tpl);
 	}
 
-	function displayAnnouncement() {
-		if ($this->config->showannouncement > 0) {
+	function displayDefault($tpl = null) {
+		$result = $this->loadTemplate($tpl);
+		if (JError::isError($result)) {
+			return $result;
+		}
+		echo $result;
+	}
+
+	function displayAnnouncement($tpl = null) {
+		if (KunenaFactory::getConfig()->showannouncement > 0) {
 			$cache = JFactory::getCache('com_kunena', 'output');
 			if ($cache->start(0, 'com_kunena.view.common.announcement')) return;
 			// FIXME: refactor code
@@ -53,11 +57,15 @@ class KunenaViewCommon extends KunenaView {
 		$cat_params = array ('sections'=>1, 'catid'=>0);
 		$this->assignRef ( 'categorylist', JHTML::_('kunenaforum.categorylist', 'catid', 0, $options, $cat_params, 'class="inputbox fbs" size="1" onchange = "this.form.submit()"', 'value', 'text', $this->catid));
 
-		parent::display ($tpl);
+		$result = $this->loadTemplate($tpl);
+		if (JError::isError($result)) {
+			return $result;
+		}
+		echo $result;
 		$cache->end();
 	}
 
-	function displayPathway() {
+	function displayPathway($tpl = null) {
 		$cache = JFactory::getCache('com_kunena', 'output');
 		$user = KunenaFactory::getUser ();
 		// TODO: just testing
@@ -66,6 +74,7 @@ class KunenaViewCommon extends KunenaView {
 		// FIXME: refactor code
 		require_once(KUNENA_PATH .DS. 'class.kunena.php');
 		require_once(KUNENA_PATH_LIB .DS. 'kunena.link.class.php');
+		$this->config = KunenaFactory::getConfig();
 		CKunenaTools::loadTemplate('/pathway.php');
 		$cache->end();
 	}
@@ -103,7 +112,11 @@ class KunenaViewCommon extends KunenaView {
 		$menu = KunenaRoute::getMenu ();
 		$key = $menu ? "{$menu->id}.{$menu->name}" : '0';
 		if ($cache->start($key, 'com_kunena.view.common.menu')) return;
-		parent::display ($tpl);
+		$result = $this->loadTemplate($tpl);
+		if (JError::isError($result)) {
+			return $result;
+		}
+		echo $result;
 		$cache->end();
 	}
 
@@ -150,7 +163,11 @@ class KunenaViewCommon extends KunenaView {
 			}
 
 		}
-		parent::display ($tpl);
+		$result = $this->loadTemplate($tpl);
+		if (JError::isError($result)) {
+			return $result;
+		}
+		echo $result;
 		$cache->end();
 	}
 
@@ -178,6 +195,10 @@ class KunenaViewCommon extends KunenaView {
 			$credits .= ' :: <a href ="'. $template->params->get('templatebyLink').'" rel="follow">' . $template->params->get('templatebyText') .' '. $template->params->get('templatebyName') .'</a>';
 		}
 		$this->assign ( 'credits', $credits );
-		parent::display ($tpl);
+		$result = $this->loadTemplate($tpl);
+		if (JError::isError($result)) {
+			return $result;
+		}
+		echo $result;
 	}
 }

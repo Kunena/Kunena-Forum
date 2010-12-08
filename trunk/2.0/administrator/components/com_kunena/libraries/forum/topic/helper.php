@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: topic.php 3759 2010-10-20 13:48:28Z mahagr $
+ * @version $Id$
  * Kunena Component - KunenaForumTopicHelper Class
  * @package Kunena
  *
@@ -104,7 +104,7 @@ class KunenaForumTopicHelper {
 		if ($ids === false) {
 			$ids = array_keys(self::$_instances);
 		}
-		return KunenaForumTopicKeywordHelper::getTopicKeywords($ids, $user);
+		return KunenaKeywordHelper::getTopicKeywords($ids, $user);
 	}
 
 	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array()) {
@@ -169,6 +169,7 @@ class KunenaForumTopicHelper {
 		$results = (array) $db->loadAssocList ('id');
 		if (KunenaError::checkDatabaseError()) return array(0, array());
 
+		$topics = array();
 		foreach ( $results as $id=>$result ) {
 			$instance = new KunenaForumTopic ();
 			$instance->bind ( $result );
@@ -257,6 +258,35 @@ class KunenaForumTopicHelper {
 		if (KunenaError::checkDatabaseError ())
 			return;
 
+	}
+
+	static public function fetchNewStatus($topics, $user = null) {
+		if (empty($topics))
+			return array();
+
+		// TODO: Need to convert to topics table design
+		$user = KunenaUserHelper::get($user);
+		if ($user->userid) {
+			$idstr = implode ( ",", array_keys ( $topics ) );
+			$readlist = KunenaFactory::getSession ()->readtopics;
+			$prevCheck = KunenaFactory::getSession ()->lasttime;
+			$db = JFactory::getDBO ();
+			$db->setQuery ( "SELECT thread AS id, MIN(id) AS lastread, SUM(1) AS unread
+					FROM #__kunena_messages
+					WHERE moved='0' AND thread NOT IN ({$readlist}) AND thread IN ({$idstr}) AND time>{$db->Quote($prevCheck)}
+					GROUP BY thread" );
+			$topiclist = $db->loadObjectList ('id');
+			KunenaError::checkDatabaseError ();
+		}
+		foreach ( $topics as $topic ) {
+			if (!isset($topiclist[$topic->id])) {
+				$topic->lastread = 0;
+				$topic->unread = 0;
+			} else {
+				$topic->lastread = $topiclist[$topic->id]->lastread;
+				$topic->unread = $topiclist[$topic->id]->unread;
+			}
+		}
 	}
 
 	// Internal functions

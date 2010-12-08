@@ -117,11 +117,12 @@ class CKunenaListcat {
 		if (!$topic_ordering && $this->me->isModerator()) {
 			$access = KunenaFactory::getAccessControl();
 			$list = implode ( ',', $lastpostlist );
+			if (!$list) $list = 0;
 			$db = JFactory::getDBO ();
 			$db->setQuery ( "SELECT mm.catid, mm.thread, SUM(mm.hold=1) AS unapproved, SUM(mm.hold IN (2,3)) AS deleted
 				FROM #__kunena_messages AS m
 				INNER JOIN #__kunena_messages AS mm ON m.thread=mm.thread
-				WHERE m.id IN ({$list}) AND mm.hold>0 AND mm.id<m.id
+				WHERE m.id IN ({$list}) AND mm.hold>0 AND mm.id < m.id
 				GROUP BY m.thread" );
 			$holdtopics = $db->loadObjectList ();
 			KunenaError::checkDatabaseError();

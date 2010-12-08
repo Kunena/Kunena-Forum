@@ -25,7 +25,7 @@ defined( '_JEXEC' ) or die();
 require_once(KUNENA_PATH_LIB .DS. 'kunena.pathway.class.php');
 $pathway = new CKunenaPathway();
 
-$func = JString::strtolower ( JRequest::getCmd ( 'func', 'listcat' ) );
+$func = JString::strtolower ( JRequest::getCmd ( 'view', 'listcat' ) );
 $catid = JRequest::getInt ( 'catid', 0 );
 $id = JRequest::getInt ( 'id', 0 );
 ?>

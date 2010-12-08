@@ -16,6 +16,55 @@ jimport ( 'joomla.application.component.view' );
  * Kunena View Class
  */
 class KunenaView extends JView {
+	function displayAll() {
+		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		require_once KPATH_SITE . '/class.kunena.php';
+		require_once KPATH_SITE . '/lib/kunena.link.class.php';
+		require_once KPATH_SITE . '/lib/kunena.timeformat.class.php';
+		$template = KunenaFactory::getTemplate();
+		$template->loadTemplate('initialize.php');
+		echo '<div id="Kunena">';
+		$this->common->display('menu');
+		$this->common->display('loginbox');
+		$this->displayLayout ();
+		$this->common->display('footer');
+		echo '</div>';
+	}
+
+	function displayLayout($layout=null, $tpl = null) {
+		if ($layout) $this->setLayout ($layout);
+		$this->assignRef ( 'state', $this->get ( 'State' ) );
+		$layoutFunction = 'display'.ucfirst($this->getLayout ());
+		if (method_exists($this, $layoutFunction)) {
+			return $this->$layoutFunction ($tpl);
+		} else {
+			return $this->display($tpl);
+		}
+	}
+
+	public function displayView($vName, $lName='default', $tName=null) {
+		$vpath = KPATH_SITE . '/views/'.$vName.'/view.html.php';
+		$mpath = KPATH_SITE . '/models/'.$vName.'.php';
+		if (!is_file($vpath) || !is_file($mpath)) return;
+		require_once $vpath;
+		require_once $mpath;
+
+		$view = "KunenaView{$vName}";
+		$view = new $view ( array ('base_path' => $this->_basePath ) );
+		$view->common = $this->common;
+
+		// Push the model into the view (as default).
+		$model = "KunenaModel{$vName}";
+		$model = new $model ();
+		$view->setModel ( $model, true );
+
+		// Push document object into the view.
+		$view->assignRef ( 'document', $this->document );
+
+		// Render the view.
+		$view->displayLayout ($lName, $tName);
+	}
+
 	function getModulePosition($position) {
 		$html = '';
 		if (JDocumentHTML::countModules ( $position )) {
@@ -34,6 +83,11 @@ class KunenaView extends JView {
 
 	function getIcon($name, $title='') {
 		return '<span class="kicon '.$name.'" title="'.$title.'"></span>';
+	}
+
+	function topicIcon($topic) {
+		$template = KunenaFactory::getTemplate ();
+		return $template->getTopicIcon($topic);
 	}
 
 	function getTime() {
@@ -93,11 +147,6 @@ class KunenaView extends JView {
 		$this->common->setLayout ( 'default' );
 		$this->common->assign ( 'header', JText::_('COM_KUNENA_ACCESS_DENIED'));
 		$this->common->assign ( 'body', $output);
-		$this->common->display();
-	}
-
-	function displayCommon($layout) {
-		$this->common->setLayout ( $layout );
 		$this->common->display();
 	}
 

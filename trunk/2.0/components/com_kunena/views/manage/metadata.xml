@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE metadata>
 <metadata>
-	<view title="Manage">
+	<view hidden="true" title="Manage">
 		<message>Manage Categories</message>
 	</view>
 </metadata>

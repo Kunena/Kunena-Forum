@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+10-December-2010 Xillibit
+# [#23716] Kunena report configuration settings cause blank page when is putting in [code][/code]
+^ [#23293] Update some strings in english language file and french too
+
 08-December-2010 Xillibit
 # [#23482] Strip space in attachments filename because broke the lightbox
 

@@ -32,6 +32,10 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.2-DEV
+11-December-2010 svens(LDA)
++ [#23293] added id-ID Bahasa Indonesia (thanks Daniel)
+^ [#23293] update de-DE (thanks rich)
+
 23-November-2010 svens(LDA)
 ^ [#23293] updated it-IT (thanks onishima and ohifra)
 

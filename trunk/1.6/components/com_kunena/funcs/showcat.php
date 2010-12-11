@@ -93,7 +93,7 @@ class CKunenaShowcat {
 		$routerlist = array ();
 		if (count ( $threadids ) > 0) {
 			$query = "SELECT a.*, j.id AS userid, t.message AS message, l.myfavorite, l.favcount, l.attachments,
-							l.msgcount, l.lastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
+							l.msgcount, l.lastid, l.lastid AS lastread, 0 AS unread, j.username, j.name AS uname, u.avatar, c.id AS catid, c.name AS catname, c.class_sfx
 	FROM (
 		SELECT m.thread, MAX(f.userid='{$this->my->id}') AS myfavorite, COUNT(DISTINCT f.userid) AS favcount, COUNT(a.mesid) AS attachments,
 			COUNT(DISTINCT m.id) AS msgcount, MAX(m.id) AS lastid, MAX(m.time) AS lasttime

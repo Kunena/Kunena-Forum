@@ -33,6 +33,33 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+11-December-2010 Matias
+^ [#15886] Merged revisions 3960-3970 from /branches/1.6-xillibit-fixes-20101130
+
+11-December-2010 Xillibit
+# [#23724] Userlist show all show nothing
+# [#23726] Usernames Showing Instead of Full Name
+
+10-December-2010 Xillibit
+# [#23716] Kunena report configuration settings cause blank page when is putting in [code][/code]
+^ [#23293] Update some strings in english language file and french too
+
+08-December-2010 Xillibit
+# [#23482] Strip space in attachments filename because broke the lightbox
+
+06-December-2010 Xillibit
+^ [#23293] Update some strings in english language file
+
+05-December-2010 Xillibit
+# [#23625] emo Jomsocial activity stream, show hidden text to everyone
+
+01-December-2010 Xillibit
+# [#23609] Spoiler does not operate in message preview (New Topic)
+^ [#23293] Update some strings in english language file
+
+30-November-2010 Xillibit
+# [#23251] Fix issues which don't display message that the topic can't be moved and fix a little issue
+
 29-November-2010 Matias
 ^ [#15886] Merged revisions 3945-3948 from /branches/1.6.2-810-bugfixes-29-10-2010
 ^ [#15886] Merged revisions 3939-3945 from /branches/1.6-xillibit-fixes-20101107

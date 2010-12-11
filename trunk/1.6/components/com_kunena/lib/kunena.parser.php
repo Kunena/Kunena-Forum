@@ -343,6 +343,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				case 'code':
 					$kunena_config = KunenaFactory::getConfig();
 					if ($kunena_config->highlightcode) {
+						$between = preg_replace ( '/\[table\](.*?)\[\/table\]/s', '', $between );
 						if (substr(JVERSION, 0, 3) == 1.5) {
 							$path = JPATH_ROOT.'/libraries/geshi';
 							jimport('geshi.geshi');

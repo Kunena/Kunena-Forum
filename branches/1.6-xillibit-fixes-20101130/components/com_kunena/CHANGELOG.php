@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+11-December-2010 Xillibit
+# [#23724] Userlist show all show nothing
+# [#23726] Usernames Showing Instead of Full Name
+
 10-December-2010 Xillibit
 # [#23716] Kunena report configuration settings cause blank page when is putting in [code][/code]
 ^ [#23293] Update some strings in english language file and french too

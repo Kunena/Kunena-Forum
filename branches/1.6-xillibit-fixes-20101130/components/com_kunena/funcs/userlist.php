@@ -28,7 +28,7 @@ class CKunenaUserlist {
 
 		$this->search = JRequest::getVar ( 'search', '' );
 		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
-		$this->limit = JRequest::getInt ( 'limit', (int)$this->config->userlist_rows );
+		$this->limit = $querylimit = JRequest::getInt ( 'limit', (int)$this->config->userlist_rows );
 
 		jimport ( 'joomla.html.pagination' );
 		
@@ -62,6 +62,9 @@ class CKunenaUserlist {
 			$this->limitstart = 0;
 		}
 
+		// this is need to show something when the user choose all, but we need to limit even the 'all' with a number	
+ 		if ( $this->limit == 0 ) $querylimit = '150';
+		
 		// Select query
 		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE (block=0 OR activation!='')";
 		$this->searchuri = "";
@@ -72,7 +75,7 @@ class CKunenaUserlist {
 			$query .= " AND u.id NOT IN (62)";
 		}
 		$query .= $orderby;
-		$query .= " LIMIT $this->limitstart, $this->limit";
+		$query .= " LIMIT $this->limitstart, $querylimit";
 
 		$this->db->setQuery ( $query );
 		$this->users = $this->db->loadObjectList ();

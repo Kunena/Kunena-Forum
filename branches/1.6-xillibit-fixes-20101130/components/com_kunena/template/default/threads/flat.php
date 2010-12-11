@@ -140,7 +140,7 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 					</span>
 
 					<?php if ($leaf->name) : ?>
-					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->name) ); ?></span>
+					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($this->config->username ? $leaf->username:$leaf->uname) ); ?></span>
 					<?php endif; ?>
 					<!-- /By -->
 				</div>

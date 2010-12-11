@@ -100,7 +100,7 @@ class CKunenaLatestX {
 			else $loadstr = 'OR a.id IN ('.implode ( ",", $this->loadids ).')';
 
 			$query = "SELECT a.*, j.id AS userid, t.message, l.myfavorite, l.favcount, l.threadhits, l.lasttime, l.threadattachments, COUNT(aa.id) AS attachments,
-				l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, c.name AS catname, c.class_sfx
+				l.msgcount, l.mycount, l.lastid, l.mylastid, l.lastid AS lastread, 0 AS unread, u.avatar, j.username, j.name AS uname, c.name AS catname, c.class_sfx
 			FROM (
 				SELECT m.thread, MAX(m.hits) AS threadhits, MAX(f.userid IS NOT null AND f.userid={$this->db->Quote($this->my->id)}) AS myfavorite, COUNT(DISTINCT f.userid) AS favcount,
 					COUNT(DISTINCT a.id) AS threadattachments, COUNT(DISTINCT m.id) AS msgcount, COUNT(DISTINCT IF(m.userid={$this->db->Quote($this->user->id)}, m.id, NULL)) AS mycount,

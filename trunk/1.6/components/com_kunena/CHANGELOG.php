@@ -35,6 +35,11 @@ Kunena 1.6.2-DEV
 
 11-December-2010 Matias
 ^ [#15886] Merged revisions 3960-3970 from /branches/1.6-xillibit-fixes-20101130
+^ [#15886] Merged revisions 3921-3968 from /branches/1.6-LDAsvens-language-20101112
+
+11-December-2010 svens(LDA)
++ [#23293] added id-ID Bahasa Indonesia (thanks Daniel)
+^ [#23293] update de-DE (thanks rich)
 
 11-December-2010 Xillibit
 # [#23724] Userlist show all show nothing
@@ -89,10 +94,16 @@ Kunena 1.6.2-DEV
 24-November-2010 Matias
 ^ [#15886] Merged revisions 3896-3930 from /branches/1.6-xillibit-fixes-20101107
 
+23-November-2010 svens(LDA)
+^ [#23293] updated it-IT (thanks onishima and ohifra)
+
 21-November-2010 Xillibit
 # [#23251] When moving a topic with polls in another topics need to handle polls (fix regression)
 + [#22704] Add configuration option to show online users by minutes or session time
 # [#23394] BBcode form editor issues
+
+19-November-2010 svens(LDA)
+^ [#23293] updated mk-MK (thanks Baze)
 
 18-November-2010 Xillibit
 ^ [#23321] Need to extend Report Config with menu info

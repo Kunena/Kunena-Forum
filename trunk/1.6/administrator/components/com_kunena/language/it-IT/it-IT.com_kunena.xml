@@ -4,12 +4,12 @@
 <install type="language" version="1.5" client="both" method="upgrade">
 	<name>Kunena Forum - Italian</name>
 	<tag>it-IT</tag>
-	<creationDate>19-10-2010</creationDate>
-	<version>unknown</version>
-	<build>unknown</build>
-	<author>Francesco De Giorgio - ohifra</author>
-	<authorEmail>unknown</authorEmail>
-	<authorUrl>unknown</authorUrl>
+	<creationDate>22-11-2010</creationDate>
+	<version>1.0</version>
+	<build>1.0</build>
+	<author>detlef, ohifra, onishima</author>
+	<authorEmail>francescodegiorgio81@gmail.com</authorEmail>
+	<authorUrl>http://www.iibunicz.com/</authorUrl>
 	<copyright>(C) 2010 unknown</copyright>
 	<license>GNU/GPL</license>
 	<description>Italian language file for Kunena Forum Component</description>

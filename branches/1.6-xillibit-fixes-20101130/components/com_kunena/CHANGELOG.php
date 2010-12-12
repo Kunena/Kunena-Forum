@@ -35,8 +35,9 @@ Kunena 1.6.2-DEV
 
 12-December-2010 Xillibit
 # [#23251] Prevent to move a topic with a poll into another topic with a poll and display an error message (fix regression)
-# [#23732] Can't a poll on new topic tab button untill the user has choosed a right section
+# [#23732] Can't add poll on new topic tab button untill the user has choosed a right section
 # [#23625] Change spoiler behaviour in Jomsocial activty stream and rss, remove [hide][/hide] from rss feed
+# [#23732] Can't add poll on new topic tab button untill the user has choosed a right section (Part 2)
 
 11-December-2010 Xillibit
 # [#23724] Userlist show all show nothing

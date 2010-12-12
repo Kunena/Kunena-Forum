@@ -177,6 +177,7 @@ class CKunenaModeration {
 		if($mode == 'KN_MOVE_THREAD' && $changesubject) $subjectupdatesqlreplies = ",`subject`={$this->_db->quote($TargetSubject)}";
 		else $subjectupdatesqlreplies = "";
 		
+		$success = 1;
 		if ( !empty($currentMessage) && !empty($targetMessage) ) {
 			$success = $this->_handlePolls($currentMessage, $targetMessage);
 		}
@@ -544,7 +545,7 @@ class CKunenaModeration {
 		
 			$pollOptionsIds = array();
 			if (is_array($pollOptionsId)) {
-			   foreach( $pollOptionsId as $option ) {
+			   foreach( $pollOptionsId as $option ) {			      
             $pollOptionsIds[] = $option->id;
         }
       }	

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+12-December-2010 Severdia
+# [#23251] Added fix from Xillibit for broken ability to move posts.
+
 11-December-2010 Matias
 ^ [#15886] Merged revisions 3960-3970 from /branches/1.6-xillibit-fixes-20101130
 ^ [#15886] Merged revisions 3921-3968 from /branches/1.6-LDAsvens-language-20101112

@@ -42,6 +42,8 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			// Strip content not allowed for guests
 			$content = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $content );
 			$content = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $content );
+			$content = preg_replace ( '/\[spoiler\]/s', '[spoilerlight]', $content );
+			$content = preg_replace ( '/\[\/spoiler\]/s', '[/spoilerlight]', $content );
 			
 			// limit activity stream output if limit is set
 			if ($this->_config->activity_limit > 0){
@@ -95,6 +97,8 @@ class KunenaActivityJomSocial extends KunenaActivity {
 			// Strip content not allowed for guests
 			$content = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $content );
 			$content = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $content );
+			$content = preg_replace ( '/\[spoiler\]/s', '[spoilerlight]', $content );
+			$content = preg_replace ( '/\[\/spoiler\]/s', '[/spoilerlight]', $content );
 
 			// limit activity stream output if limit is set
 			if ($this->_config->activity_limit > 0){

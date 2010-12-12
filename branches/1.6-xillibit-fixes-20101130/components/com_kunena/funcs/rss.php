@@ -156,6 +156,10 @@ class CKunenaRSSView {
 			$tmp['title']		= $data->subject;
 			// Remove confidential information from message
 			$data->message = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $data->message );
+			$data->message = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $data->message );
+			$data->message = preg_replace ( '/\[spoiler\]/s', '[spoilerlight]', $data->message );
+			$data->message = preg_replace ( '/\[\/spoiler\]/s', '[/spoilerlight]', $data->message );
+			
 			$tmp['text']		= $data->message;
 			$tmp['date']		= $data->time;
 			$tmp['email']		= $data->email;

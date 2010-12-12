@@ -1084,6 +1084,16 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				return TAGPARSER_RET_NOTHING;
 
 				break;
+			case 'spoilerlight' :
+				if ($between) {
+
+					$tag_new = '<span title="'.$between.'"><strong>' .  JText::_('COM_KUNENA_EDITOR_SPOILER') . '</strong></span>';
+
+					return TAGPARSER_RET_REPLACED;
+				}
+				return TAGPARSER_RET_NOTHING;
+
+				break;
 
 			default :
 				break;

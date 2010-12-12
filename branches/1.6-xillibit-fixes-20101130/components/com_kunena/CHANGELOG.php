@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+12-December-2010 Xillibit
+# [#23251] Prevent to move a topic with a poll into another topic with a poll and display an error message (fix regression)
+# [#23732] Can't a poll on new topic tab button untill the user has choosed a right section
+
 11-December-2010 Xillibit
 # [#23724] Userlist show all show nothing
 # [#23726] Usernames Showing Instead of Full Name

@@ -260,7 +260,11 @@ class CKunenaPost {
 			$this->message_text = '';
 			$this->resubject = '';
 			$this->parent = 0;
-
+			
+			$this->_db->setQuery ( "SELECT allow_polls FROM #__kunena_categories WHERE parent!=0 LIMIT 1" );
+			$this->pollcatid = $this->_db->loadResult ();
+			KunenaError::checkDatabaseError();
+			
 			$options = array ();
 			$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->catid );
 		}

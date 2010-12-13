@@ -561,6 +561,7 @@ class CKunenaModeration {
 		} else if ( $currentMessage->poll && $targetMessage->poll ) {
 		  return false;
 		}
+		return true;
 	}
 
 	public function getUserIPs ($UserID) {

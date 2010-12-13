@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 13-December-2010 Xillibit
 # [#23251] When you merge topics even if there is no polls, the topics are not merged
+# [#23180] CB avatars aren't displayed in kunena user manager
 
 12-December-2010 Xillibit
 # [#23251] Prevent to move a topic with a poll into another topic with a poll and display an error message (fix regression)

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+14-December-2010 Severdia
+# [#23251] Added fix from Jelle for broken ability to move posts (to fix Florian's previous fix)
+
 13-December-2010 fxstein
 # [#23767] Add ksource=kunena into com_content events triggered by Kunena to prevent recursion
 - [#23767] Remove global variable: kunena_in_event - requires new release of discuss plugin

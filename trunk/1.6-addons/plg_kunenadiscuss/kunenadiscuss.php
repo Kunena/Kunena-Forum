@@ -100,8 +100,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 	function onPrepareContent(&$article, &$params, $limitstart) {
 
 		// Only proceed if this event is not originated by Kunena itself or we run the danger of an event recursion
-		
-		$ksource = $params->get( 'ksource', '');
+		$_params = JParameter($params);
+		$ksource = $_params->get( 'ksource', '');
 		
 		if ($ksource != 'kunena' ){
 			

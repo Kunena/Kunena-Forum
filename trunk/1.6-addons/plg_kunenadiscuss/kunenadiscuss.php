@@ -14,7 +14,7 @@ jimport ( 'joomla.plugin.plugin' );
 
 class plgContentKunenaDiscuss extends JPlugin {
 	// Associative array to hold results of the plugin
-	static $botDisplay = array ();
+	static $plgDisplay = array ();
 	static $includedCss = false;
 
 	// *** initialization ***
@@ -55,8 +55,8 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// load Kunena main language file so we can leverage language strings from it
 		KunenaFactory::loadLanguage();
 
-		// Create discussbot table if doesn't exist
-		$query = "SHOW TABLES LIKE '{$this->_db->getPrefix()}kunenadiscuss'";
+		// Create plugin table if doesn't exist
+		$query = "SHOW TABLES LIKE '#__kunenadiscuss'";
 		$this->_db->setQuery ( $query );
 		if (!$this->_db->loadResult ()) {
 			CKunenaTools::checkDatabaseError ();
@@ -69,9 +69,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$this->_db->query ();
 			CKunenaTools::checkDatabaseError ();
 			$this->debug ( "Created #__kunenadiscuss cross reference table." );
-
-			// Migrate data from old discussbot if it exists
-			$query = "SHOW TABLES LIKE '{$this->_db->getPrefix()}fb_discussbot'";
+			
+			// Migrate data from old FireBoard discussbot if it exists
+			$query = "SHOW TABLES LIKE '#__fb_discussbot'";
 			$this->_db->setQuery ( $query );
 			if ($this->_db->loadResult ()) {
 				$query = "REPLACE INTO `#__kunenadiscuss`
@@ -143,7 +143,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			} else {
 				$show = $this->params->get ( 'show_other_pages', 2 );
 			}
-			if (! $show || isset ( self::$botDisplay [$article->id] )) {
+			if (! $show || isset ( self::$plgDisplay [$article->id] )) {
 				$this->debug ( "onPrepareContent: Configured to show nothing" );
 				if (isset ( $article->text ))
 					$article->text = preg_replace ( $regex, '', $article->text );
@@ -198,7 +198,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			}
 	
 			if ($kunenaCategory || $kunenaTopic) {
-				self::$botDisplay [$article->id] = $this->showPlugin ( $kunenaCategory, $kunenaTopic, $article, $show == 1 );
+				self::$plgDisplay [$article->id] = $this->showPlugin ( $kunenaCategory, $kunenaTopic, $article, $show == 1 );
 			}
 		} // end of $ksource!='kunena' check
 		
@@ -210,9 +210,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 		if (empty ( $article->id ))
 			return '';
 
-		if (isset ( self::$botDisplay [$article->id] )) {
+		if (isset ( self::$plgDisplay [$article->id] )) {
 			$this->debug ( "onAfterDisplayContent: Returning content for article {$article->id}" );
-			return self::$botDisplay [$article->id];
+			return self::$plgDisplay [$article->id];
 		} else {
 			return '';
 		}
@@ -223,12 +223,12 @@ class plgContentKunenaDiscuss extends JPlugin {
 	 *
 	 *****************************************************************************/
 	function showPlugin($catid, $thread, &$row, $linkOnly) {
-		// Show a simple form to allow posting to forum from the bot
-		$botShowForm = $this->params->get ( 'form', 1 );
+		// Show a simple form to allow posting to forum from the plugin
+		$plgShowForm = $this->params->get ( 'form', 1 );
 		// Default is to put QuickPost at the very bottom.
 		$formLocation = $this->params->get ( 'form_location', 0 );
 
-		// Don't repeat the CSS for each instance of this bot in a page!
+		// Don't repeat the CSS for each instance of this plugin in a page!
 		if (! self::$includedCss) {
 			$doc = JFactory::getDocument ();
 			$doc->addStyleSheet ( KUNENA_JLIVEURL . 'plugins/content/kunenadiscuss/discuss.css' );
@@ -347,7 +347,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			require_once (KPATH_SITE . '/lib/kunena.link.class.php');
 			$content = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
 			return $content;
-		} elseif ( $thread && !$botShowForm ) {
+		} elseif ( $thread && !$plgShowForm ) {
      		 $this->debug ( "showPlugin: Displaying link to the topic because the form is disabled" );
 
 			$sql = "SELECT count(*) FROM #__kunena_messages WHERE hold=0 AND parent!=0 AND thread={$this->_db->quote($thread)}";
@@ -357,7 +357,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			$linktitle = JText::sprintf ( 'PLG_KUNENADISCUSS_DISCUSS_ON_FORUMS', $postCount );
 			require_once (KPATH_SITE . '/lib/kunena.link.class.php');
 			$link_topic = CKunenaLink::GetThreadLink ( 'view', $catid, $thread, $linktitle, $linktitle );
-    	} elseif ( !$thread && !$botShowForm ) {
+    	} elseif ( !$thread && !$plgShowForm ) {
       		$link_topic = JText::_('PLG_KUNENADISCUSS_NEW_TOPIC_NOT_CREATED');
     	}
 
@@ -365,7 +365,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 		// Process the QuickPost form
 
 		$quickPost = '';
-		if ($botShowForm && (!$closeTime || $closeTime >= $now)) {
+		if ($plgShowForm && (!$closeTime || $closeTime >= $now)) {
 			$canPost = $this->canPost ( $catid, $thread );
 			if ($canPost && JRequest::getInt ( 'kdiscussContentId', 0, 'POST' ) == $row->id) {
 				$this->debug ( "showPlugin: Reply topic!" );
@@ -589,9 +589,9 @@ class plgContentKunenaDiscuss extends JPlugin {
 			if ($key > 0)
 				$categoryMap [$key] = $value;
 		}
-		// Limit bot to the following content catgeories
+		// Limit plugin to the following content catgeories
 		$allowCategories = explode ( ',', $this->params->get ( 'allow_categories', '' ) );
-		// Exclude the bot from the following categories
+		// Exclude the plugin from the following categories
 		$denyCategories = explode ( ',', $this->params->get ( 'deny_categories', '' ) );
 
 		if (! is_numeric ( $catid ) || intval ( $catid ) == 0) {

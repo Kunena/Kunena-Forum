@@ -27,10 +27,11 @@ class plgContentKunenaDiscuss extends JPlugin {
 			return null;
 
 		// Kunena detection and version check
-		$minKunenaVersion = '1.6.1';
-		if (!class_exists('Kunena') || Kunena::versionBuild() < 3839) {
-// FIXME: Add Warning for incorrect Kunena version
+		$minKunenaVersion = '1.6.2';
+		if (!class_exists('Kunena') || Kunena::versionBuild() < 3867) {
 
+			$this->_app->enqueueMessage(JText::sprintf ( 'PLG_KUNENADISCUSS_DEPENDENCY_FAIL', $minKunenaVersion ) );
+			
 			return null;
 		}
 		// Kunena online check
@@ -96,105 +97,111 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 	// *** event prepare content ***
 	function onPrepareContent(&$article, &$params, $limitstart) {
-		global $kunena_in_event;
-		$kunena_in_event = true;
-		$customTopics = $this->params->get ( 'custom_topics', 1 );
 
-		$articleCategory = (isset ( $article->catid ) ? $article->catid : 0);
-		$isStaticContent = ! $articleCategory;
-		if ($isStaticContent) {
-			$kunenaCategory = false;
-		} else {
-			$kunenaCategory = $this->getForumCategory ( $articleCategory );
-			if (! $kunenaCategory ) {
-				if ( ! $customTopics)
-					return true;
-				else
-					$this->debug ( "onPrepareContent: Allowing only Custom Topics" );
-			}
-		}
-		$kunenaTopic = false;
-
-		$regex = '/{kunena_discuss:(\d+?)}/s';
-
-		if (JRequest::getVar ( 'tmpl', '' ) == 'component' || JRequest::getBool ( 'print' ) || JRequest::getVar ( 'format', 'html' ) != 'html' || (isset ( $article->state ) && ! $article->state) || empty ( $article->id ) || $this->_app->scope == 'com_kunena') {
-			$this->debug ( "onPrepareContent: Not allowed - removing tags." );
-			if (isset ( $article->text ))
-				$article->text = preg_replace ( $regex, '', $article->text );
-			if (isset ( $article->introtext ))
-				$article->introtext = preg_replace ( $regex, '', $article->introtext );
-			if (isset ( $article->fulltext ))
-				$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
-			return true;
-		}
-
-		$isFrontPage = JRequest::getVar ( 'view' ) == 'frontpage';
-		$isBlogPage = JRequest::getVar ( 'layout' ) == 'blog';
-		if ($isBlogPage) {
-			$show = $this->params->get ( 'show_blog_page', 2 );
-		} else if ($isFrontPage) {
-			$show = $this->params->get ( 'show_front_page', 2 );
-		} else {
-			$show = $this->params->get ( 'show_other_pages', 2 );
-		}
-		if (! $show || isset ( self::$botDisplay [$article->id] )) {
-			$this->debug ( "onPrepareContent: Configured to show nothing" );
-			if (isset ( $article->text ))
-				$article->text = preg_replace ( $regex, '', $article->text );
-			if (isset ( $article->introtext ))
-				$article->introtext = preg_replace ( $regex, '', $article->introtext );
-			if (isset ( $article->fulltext ))
-				$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
-			return true;
-		}
-
-		$this->debug ( "onPrepareContent: Article {$article->id}" );
-
-		if (! $customTopics) {
-			$this->debug ( "onPrepareContent: Custom Topics disabled" );
-		} else {
-			// Get fulltext from frontpage articles (tag can be inside fulltext)
-			if ($isFrontPage) {
-				$query = "SELECT `fulltext` FROM #__content WHERE id ={$this->_db->quote($article->id)}";
-				$this->_db->setQuery ( $query );
-				$fulltext = $this->_db->loadResult ();
-				CKunenaTools::checkDatabaseError ();
-				$text = $article->introtext . ' ' . $fulltext;
+		// Only proceed if this event is not originated by Kunena itself or we run the danger of an event recursion
+		
+		$ksource = $params->get( 'ksource', '');
+		
+		if ($ksource != 'kunena' ){
+			
+			$customTopics = $this->params->get ( 'custom_topics', 1 );
+	
+			$articleCategory = (isset ( $article->catid ) ? $article->catid : 0);
+			$isStaticContent = ! $articleCategory;
+			if ($isStaticContent) {
+				$kunenaCategory = false;
 			} else {
-				if (isset ( $article->text )) {
-					$text = $article->text;
-				} else {
-					if (isset ( $article->introtext )) {
-						$text [] = $article->introtext;
-					}
-					if (isset ( $article->fulltext )) {
-						$text [] = $article->fulltext;
-					}
-					$text = implode ( "\n\n", $text );
+				$kunenaCategory = $this->getForumCategory ( $articleCategory );
+				if (! $kunenaCategory ) {
+					if ( ! $customTopics)
+						return true;
+					else
+						$this->debug ( "onPrepareContent: Allowing only Custom Topics" );
 				}
 			}
-
-			$matches = array ();
-			if (preg_match ( $regex, $text, $matches )) {
-				$kunenaTopic = intval ( $matches [1] );
+			$kunenaTopic = false;
+	
+			$regex = '/{kunena_discuss:(\d+?)}/s';
+	
+			if (JRequest::getVar ( 'tmpl', '' ) == 'component' || JRequest::getBool ( 'print' ) || JRequest::getVar ( 'format', 'html' ) != 'html' || (isset ( $article->state ) && ! $article->state) || empty ( $article->id ) || $this->_app->scope == 'com_kunena') {
+				$this->debug ( "onPrepareContent: Not allowed - removing tags." );
 				if (isset ( $article->text ))
-					$article->text = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->text, 1 );
+					$article->text = preg_replace ( $regex, '', $article->text );
 				if (isset ( $article->introtext ))
-					$article->introtext = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->introtext, 1 );
+					$article->introtext = preg_replace ( $regex, '', $article->introtext );
 				if (isset ( $article->fulltext ))
-					$article->fulltext = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->fulltext, 1 );
-				if ($kunenaTopic == 0) {
-					$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Discussion of this article has been disabled." );
-					return true;
-				}
+					$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
+				return true;
 			}
-			$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Custom Topic " . ($kunenaTopic ? "{$kunenaTopic} found." : "not found.") );
-		}
-
-		if ($kunenaCategory || $kunenaTopic) {
-			self::$botDisplay [$article->id] = $this->showPlugin ( $kunenaCategory, $kunenaTopic, $article, $show == 1 );
-		}
-		$kunena_in_event = false;
+	
+			$isFrontPage = JRequest::getVar ( 'view' ) == 'frontpage';
+			$isBlogPage = JRequest::getVar ( 'layout' ) == 'blog';
+			if ($isBlogPage) {
+				$show = $this->params->get ( 'show_blog_page', 2 );
+			} else if ($isFrontPage) {
+				$show = $this->params->get ( 'show_front_page', 2 );
+			} else {
+				$show = $this->params->get ( 'show_other_pages', 2 );
+			}
+			if (! $show || isset ( self::$botDisplay [$article->id] )) {
+				$this->debug ( "onPrepareContent: Configured to show nothing" );
+				if (isset ( $article->text ))
+					$article->text = preg_replace ( $regex, '', $article->text );
+				if (isset ( $article->introtext ))
+					$article->introtext = preg_replace ( $regex, '', $article->introtext );
+				if (isset ( $article->fulltext ))
+					$article->fulltext = preg_replace ( $regex, '', $article->fulltext );
+				return true;
+			}
+	
+			$this->debug ( "onPrepareContent: Article {$article->id}" );
+	
+			if (! $customTopics) {
+				$this->debug ( "onPrepareContent: Custom Topics disabled" );
+			} else {
+				// Get fulltext from frontpage articles (tag can be inside fulltext)
+				if ($isFrontPage) {
+					$query = "SELECT `fulltext` FROM #__content WHERE id ={$this->_db->quote($article->id)}";
+					$this->_db->setQuery ( $query );
+					$fulltext = $this->_db->loadResult ();
+					CKunenaTools::checkDatabaseError ();
+					$text = $article->introtext . ' ' . $fulltext;
+				} else {
+					if (isset ( $article->text )) {
+						$text = $article->text;
+					} else {
+						if (isset ( $article->introtext )) {
+							$text [] = $article->introtext;
+						}
+						if (isset ( $article->fulltext )) {
+							$text [] = $article->fulltext;
+						}
+						$text = implode ( "\n\n", $text );
+					}
+				}
+	
+				$matches = array ();
+				if (preg_match ( $regex, $text, $matches )) {
+					$kunenaTopic = intval ( $matches [1] );
+					if (isset ( $article->text ))
+						$article->text = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->text, 1 );
+					if (isset ( $article->introtext ))
+						$article->introtext = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->introtext, 1 );
+					if (isset ( $article->fulltext ))
+						$article->fulltext = preg_replace ( "/{kunena_discuss:$kunenaTopic}/", '', $article->fulltext, 1 );
+					if ($kunenaTopic == 0) {
+						$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Discussion of this article has been disabled." );
+						return true;
+					}
+				}
+				$this->debug ( "onPrepareContent: Searched for {kunena_discuss:#}: Custom Topic " . ($kunenaTopic ? "{$kunenaTopic} found." : "not found.") );
+			}
+	
+			if ($kunenaCategory || $kunenaTopic) {
+				self::$botDisplay [$article->id] = $this->showPlugin ( $kunenaCategory, $kunenaTopic, $article, $show == 1 );
+			}
+		} // end of $ksource!='kunena' check
+		
 		return true;
 	}
 

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+14-December-2010 Xillibit
+# [#23760] when you select cb in integration: Profiles and User List, userlist don't work anymore
+
 13-December-2010 Xillibit
 # [#23251] When you merge topics even if there is no polls, the topics are not merged
 # [#23180] CB avatars aren't displayed in kunena user manager

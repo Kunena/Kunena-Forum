@@ -62,13 +62,19 @@ class KunenaForumTopic extends JObject {
 	public function subscribe($value=1, $user=null) {
 		$usertopic = $this->getUserTopic($user);
 		$usertopic->subscribed = (int)$value;
-		return $usertopic->save();
+		if (!$usertopic->save()) {
+			$this->setError($usertopic->getError());
+		}
+		return !$this->getError();
 	}
 
 	public function favorite($value=1, $user=null) {
 		$usertopic = $this->getUserTopic($user);
 		$usertopic->favorite = (int)$value;
-		return $usertopic->save();
+		if (!$usertopic->save()) {
+			$this->setError($usertopic->getError());
+		}
+		return !$this->getError();
 	}
 
 	public function sticky($value=1) {
@@ -126,7 +132,7 @@ class KunenaForumTopic extends JObject {
 		elseif ($value>1) $value = 3;
 		$this->hold = (int)$value;
 		$query = new JDatabaseQuery();
-		$query->update('#__kunena_messages')->set("hold={$topic->hold}")->where("thread={$this->id}");
+		$query->update('#__kunena_messages')->set("hold={$this->hold}")->where("thread={$this->id}");
 		if (!$this->hold)
 			$query->where("hold>=2");
 		if ($this->hold > 1)
@@ -142,12 +148,22 @@ class KunenaForumTopic extends JObject {
 
 	public function getUserTopic($user=null) {
 		$usertopic = KunenaForumTopicUserHelper::get($this->id, $user);
-		$usertopic->category_id = $this->category_id;
 		return $usertopic;
 	}
 
 	public function getCategory() {
 		return KunenaForumCategoryHelper::get($this->category_id);
+	}
+
+	public function newPosts() {
+		static $readtopics = false;
+
+		$session = KunenaFactory::getSession ();
+		if (!$session->userid)
+			return false;
+		if ($readtopics === false)
+			$readtopics = explode(',', $session->readtopics);
+		return $this->last_post_time > $session->lasttime && !in_array($this->id, $readtopics);
 	}
 
 	function markRead($user = null) {

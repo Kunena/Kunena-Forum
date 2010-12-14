@@ -61,6 +61,17 @@ class KunenaForumMessage extends JObject {
 		return $return;
 	}
 
+	public function isNew() {
+		static $readtopics = false;
+
+		$session = KunenaFactory::getSession ();
+		if (!$session->userid)
+			return false;
+		if ($readtopics === false)
+			$readtopics = explode(',', $session->readtopics);
+		return $this->time > $session->lasttime && !in_array($this->thread, $readtopics);
+	}
+
 	public function newReply($fields=array(), $user=null) {
 		$user = KunenaUserHelper::get($user);
 		$topic = $this->getTopic();

@@ -26,7 +26,9 @@ class KunenaForumTopicUser extends JObject {
 	 *
 	 * @access	protected
 	 */
-	public function __construct($id = 0, $user = null) {
+	public function __construct($topic = 0, $user = null) {
+		$topic = KunenaForumTopicHelper::get($topic);
+		
 		// Always fill empty data
 		$this->_db = JFactory::getDBO ();
 
@@ -36,7 +38,9 @@ class KunenaForumTopicUser extends JObject {
 		// Lets bind the data
 		$this->setProperties ( $table->getProperties () );
 		$this->_exists = false;
-		$this->id = $id;
+		$this->topic_id = $topic->id;
+		$this->category_id = $topic->category_id;
+
 		$this->user_id = KunenaUser::getInstance($user)->userid;
 	}
 

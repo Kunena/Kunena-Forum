@@ -31,20 +31,21 @@ class KunenaForumTopicUserHelper {
 	 * @return	KunenaForumTopicUser		The user topic object.
 	 * @since	1.7
 	 */
-	static public function get($id = null, $user = null, $reload = false) {
-		$user = KunenaUser::getInstance($user);
-		if ($id instanceof KunenaForumTopicUser) {
-			return $id;
+	static public function get($topic = null, $user = null, $reload = false) {
+		if ($topic instanceof KunenaForumTopic) {
+			$topic = $topic->id;
 		}
-		$id = intval ( $id );
-		if ($id < 1)
+		$topic = intval ( $topic );
+		$user = KunenaUser::getInstance($user);
+
+		if ($topic < 1)
 			return new KunenaForumTopicUser (0, $user);
 
-		if ($reload || empty ( self::$_instances [$user->userid][$id] )) {
-			self::$_instances [$user->userid][$id] = new KunenaForumTopicUser ( $id, $user );
+		if ($reload || empty ( self::$_instances [$user->userid][$topic] )) {
+			self::$_instances [$user->userid][$topic] = array_pop(KunenaForumTopicUserHelper::getTopics ( $topic, $user ));
 		}
 
-		return self::$_instances [$user->userid][$id];
+		return self::$_instances [$user->userid][$topic];
 	}
 
 	static public function getTopics($ids = false, $user=null) {
@@ -123,7 +124,7 @@ class KunenaForumTopicUserHelper {
 				$instance->exists(true);
 				self::$_instances [$user->userid][$id] = $instance;
 			} else {
-				self::$_instances [$user->userid][$id] = null;
+				self::$_instances [$user->userid][$id] = new KunenaForumTopicUser ($id, $user->userid);
 			}
 		}
 		unset ($results);

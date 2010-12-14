@@ -486,6 +486,8 @@ class KunenaForumCategory extends JObject {
 
 	public function update($topic, $topicdelta=0, $postdelta=0) {
 		if ($topic->moved_id) return;
+
+		$update = false;
 		// Update topic and post count
 		$this->numTopics += $topicdelta;
 		$this->numPosts += $postdelta;
@@ -500,6 +502,7 @@ class KunenaForumCategory extends JObject {
 				$this->last_post_userid = $topic->last_post_userid;
 				$this->last_post_message = $topic->last_post_message;
 				$this->last_post_guest_name = $topic->last_post_guest_name;
+				$update = true;
 			}
 		} elseif ($this->last_topic_id == $topic->id) {
 			// If topic got deleted and was cached, we need to find last post
@@ -518,6 +521,7 @@ class KunenaForumCategory extends JObject {
 				$this->last_post_userid = $topic->last_post_userid;
 				$this->last_post_message = $topic->last_post_message;
 				$this->last_post_guest_name = $topic->last_post_guest_name;
+				$update = true;
 			} else {
 				$this->numTopics = 0;
 				$this->numPosts = 0;
@@ -529,8 +533,11 @@ class KunenaForumCategory extends JObject {
 				$this->last_post_userid = 0;
 				$this->last_post_message = '';
 				$this->last_post_guest_name = '';
+				$update = true;
 			}
 		}
+		if (!$update) return true;
+
 		return $this->save();
 	}
 

@@ -10,43 +10,43 @@
  **/
 defined ( '_JEXEC' ) or die ();
 ?>
-<!-- B: Thread Actions -->
+<!-- B: Topic Actions -->
 <table class="klist-actions">
 	<tr>
 		<td class="klist-actions-goto">
 			<?php echo $this->goto ?>
 		</td>
 		<td class="klist-actions-forum">
-		<?php if ($this->thread_reply || $this->thread_subscribe || $this->thread_favorite ) : ?>
+		<?php if ($this->topic_reply || $this->topic_subscribe || $this->topic_favorite ) : ?>
 			<div class="kmessage-buttons-row">
-			<?php echo $this->thread_reply ?>
-			<?php echo $this->thread_subscribe ?>
-			<?php echo $this->thread_favorite ?>
+			<?php echo $this->topic_reply ?>
+			<?php echo $this->topic_subscribe ?>
+			<?php echo $this->topic_favorite ?>
 			</div>
 		<?php endif ?>
-		<?php if ($this->thread_delete || $this->thread_sticky || $this->thread_lock) : ?>
+		<?php if ($this->topic_delete || $this->topic_sticky || $this->topic_lock) : ?>
 			<div class="kmessage-buttons-row">
-			<?php echo $this->thread_delete ?>
-			<?php echo $this->thread_sticky ?>
-			<?php echo $this->thread_lock ?>
+			<?php echo $this->topic_delete ?>
+			<?php echo $this->topic_sticky ?>
+			<?php echo $this->topic_lock ?>
 			</div>
 		<?php endif ?>
 		</td>
 
 		<td class="klist-actions-forum">
-		<?php if (isset ( $this->thread_new )) : ?>
+		<?php if (isset ( $this->topic_new )) : ?>
 			<div class="kmessage-buttons-row">
-			<?php echo $this->thread_new; ?>
+			<?php echo $this->topic_new; ?>
 			</div>
 		<?php endif ?>
-		<?php if (isset ( $this->thread_moderate )) : ?>
+		<?php if (isset ( $this->topic_moderate )) : ?>
 			<div class="kmessage-buttons-row">
-			<?php echo $this->thread_moderate; ?>
+			<?php echo $this->topic_moderate; ?>
 			</div>
 		<?php endif ?>
-		<?php if (isset ( $this->thread_merge )) : ?>
+		<?php if (isset ( $this->topic_merge )) : ?>
 			<div class="kmessage-buttons-row">
-				<?php echo $this->thread_merge; ?>
+				<?php echo $this->topic_merge; ?>
 			</div>
 		<?php endif ?>
 		</td>
@@ -56,4 +56,4 @@ defined ( '_JEXEC' ) or die ();
 		</td>
 	</tr>
 </table>
-<!-- F: Thread Actions -->
+<!-- F: Topic Actions -->

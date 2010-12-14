@@ -87,15 +87,10 @@ class KunenaModelCategory extends KunenaModel {
 			if ($this->total > 0) {
 				// collect user ids for avatar prefetch when integrated
 				$userlist = array();
-				$routerlist = array ();
 				foreach ( $this->topics as $topic ) {
-					$routerlist [$topic->id] = $topic->subject;
-					if ($topic->ordering) $this->highlight++;
 					$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
 					$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
 				}
-				require_once KPATH_SITE . '/router.php';
-				KunenaRouter::loadMessages ( $routerlist );
 
 				// Prefetch all users/avatars to avoid user by user queries during template iterations
 				if ( !empty($userlist) ) KunenaUserHelper::loadUsers($userlist);
@@ -117,6 +112,8 @@ class KunenaModelCategory extends KunenaModel {
 	}
 
 	public function getModerators() {
-		return $this->getCategory()->getModerators(false);
+		$moderators = $this->getCategory()->getModerators(false);
+		if ( !empty($moderators) ) KunenaUserHelper::loadUsers($moderators);
+		return $moderators;
 	}
 }

@@ -469,27 +469,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case 'view' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'view.php');
-			$page = new CKunenaView($func, $catid, $id, $limitstart, $limit);
-			$page->display(true);
-
-			break;
-
-		case 'showcat' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'showcat.php');
-			$page = new CKunenaShowcat($catid, $page);
-			$page->display();
-
-			break;
-
-		case 'listcat' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
-			$page = new CKunenaListcat($catid);
-			$page->display();
-
-			break;
-
 		case 'review' :
 			require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
 			$review = new CKunenaReview($catid);
@@ -748,13 +727,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 		case 'credits' :
 			include (JPATH_COMPONENT . DS . 'lib' . DS . 'kunena.credits.php');
-
-			break;
-
-		default :
-			require_once (KUNENA_PATH_FUNCS . DS . 'listcat.php');
-			$page = new CKunenaListcat($catid);
-			$page->display();
 
 			break;
 	}

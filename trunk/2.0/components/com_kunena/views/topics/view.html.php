@@ -26,6 +26,7 @@ class KunenaViewTopics extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 
 		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
+		$this->actionMove = false;
 		if (CKunenaTools::isModerator ( $this->me->userid )) {
 			$this->actionMove = true;
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
@@ -52,7 +53,44 @@ class KunenaViewTopics extends KunenaView {
 		$this->display($tpl);
 	}
 
-		function displayPathway() {
+	function displayUser($tpl = null) {
+		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
+		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
+		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+		$this->me = KunenaFactory::getUser();
+		$this->config = KunenaFactory::getConfig();
+
+		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
+		$this->actionMove = false;
+		if (CKunenaTools::isModerator ( $this->me->userid )) {
+			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		}
+
+		//meta description and keywords
+		$limit = $this->state->get('list.limit');
+		$page = intval($this->state->get('list.start')/$limit)+1;
+		$total = intval($this->total/$limit)+1;
+		$pagesTxt = "{$page}/{$total}";
+		$app = JFactory::getApplication();
+		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
+		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+
+		$this->document->setMetadata ( 'robots', 'noindex, follow' );
+		$this->document->setMetadata ( 'keywords', $metaKeys );
+		$this->document->setDescription ( $metaDesc );
+		$this->document->setTitle ( "{$this->title} ({$pagesTxt}) - {$this->config->board_title}" );
+
+		$this->display($tpl);
+	}
+
+	function displayPathway() {
 		CKunenaTools::loadTemplate('/pathway.php');
 	}
 

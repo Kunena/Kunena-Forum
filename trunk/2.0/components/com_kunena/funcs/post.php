@@ -483,11 +483,11 @@ class CKunenaPost {
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->subscribe(1)) {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_SUBSCRIBED_TOPIC' ) );
 		} else {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_SUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ) );
 	}
 
 	protected function unsubscribe() {
@@ -496,11 +496,11 @@ class CKunenaPost {
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->subscribe(0)) {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_UNSUBSCRIBED_TOPIC' ) );
 		} else {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNSUBSCRIBED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ) );
 	}
 
 	protected function favorite() {
@@ -509,11 +509,11 @@ class CKunenaPost {
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->favorite(1)) {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_FAVORITED_TOPIC' ) );
 		} else {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_FAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ) );
 	}
 
 	protected function unfavorite() {
@@ -522,11 +522,11 @@ class CKunenaPost {
 
 		$topic = KunenaForumTopicHelper::get($this->id);
 		if ($topic->authorise('read') && $topic->favorite(0)) {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_UNFAVORITED_TOPIC' ) );
 		} else {
-			$success_msg = JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' );
+			$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_POST_NO_UNFAVORITED_TOPIC' ) .' '. $topic->getError(), 'notice' );
 		}
-		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ), $success_msg );
+		$this->_app->redirect ( CKunenaLink::GetLatestPageAutoRedirectURL ( $this->id, $this->config->messages_per_page ) );
 	}
 
 	protected function sticky() {

@@ -24,78 +24,13 @@ class CKunenaLatestX {
 	public $subcategories = null;
 
 	function __construct($func, $page = 0) {
-		kimport ('kunena.forum.category.helper');
-		kimport ('kunena.forum.topic.helper');
-		kimport ('kunena.user.helper');
-
-		$this->func = JString::strtolower ($func );
-		$this->catid = 0;
-		$this->mode = 'threads';
-		$this->header = '';
-
-		$this->app = JFactory::getApplication ();
-		$this->db = JFactory::getDBO ();
-		$this->document = JFactory::getDocument ();
-		$this->user = $this->my = JFactory::getUser ();
-		$this->myprofile = KunenaFactory::getUser ();
-		$this->session = KunenaFactory::getSession ();
-		$this->config = KunenaFactory::getConfig ();
-
-		$this->latestcategory = explode ( ',', $this->config->latestcategory );
-		if (in_array(0, $this->latestcategory)) {
-			$this->latestcategory = false;
-		}
-		$this->latestcategory_in = $this->config->latestcategory_in;
-
-		$this->page = $page < 1 ? 1 : $page;
-		$this->limit = $this->config->threads_per_page;
-		$this->limitstart = ($this->page - 1) * $this->limit;
-
-		$this->prevCheck = $this->session->lasttime;
-
-		$this->show_list_time = JRequest::getInt ( 'sel', $this->config->show_list_time );
-
 		// My latest is only available to users
 		if (! $this->user->id && $func == "mylatest") {
 			return;
 		}
-
-		$this->allow = 1;
-		$this->highlight = 0;
-
-		if (! $this->my->id && $this->show_list_time == 0) {
-			$this->show_list_time = $this->config->show_list_time;
-		}
-
-		$this->columns = CKunenaTools::isModerator ( $this->my->id, $this->catid ) ? 6 : 5;
-		$this->showposts = 0;
-
-		$access = KunenaFactory::getAccessControl();
-		$this->hold = $access->getAllowedHold($this->myprofile, $this->catid);
-
-		$template = KunenaFactory::getTemplate();
-		$this->params = $template->params;
-
-		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
-	}
-
-	/**
-	* Escapes a value for output in a view script.
-	*
-	* If escaping mechanism is one of htmlspecialchars or htmlentities, uses
-	* {@link $_encoding} setting.
-	*
-	* @param  mixed $var The output to escape.
-	* @return mixed The escaped value.
-	*/
-	function escape($var)
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
 	}
 
 	protected function _common() {
-		$this->totalpages = ceil ( $this->total / $this->limit );
-
 		if (!empty ( $this->threadids ) ) {
 			$idstr = implode ( ",", $this->threadids );
 
@@ -111,19 +46,11 @@ class CKunenaLatestX {
 		}
 		if (!empty($this->topics)) {
 			// Collect user ids for avatar prefetch, topics for the router
-			$routerlist = array();
 			$userlist = array();
 			foreach ( $this->topics as $topic ) {
-				$routerlist [$topic->id] = $topic->subject;
 				if ($this->func == 'mylatest' && $topic->favorite) $this->highlight++;
 				$userlist[intval($topic->first_post_userid)] = intval($topic->first_post_userid);
 				$userlist[intval($topic->last_post_userid)] = intval($topic->last_post_userid);
-			}
-
-			// Load threads to Kunena router to avoid extra SQL queries
-			if (!empty($routerlist)) {
-				include_once (KUNENA_PATH . DS . 'router.php');
-				KunenaRouter::loadMessages ( $routerlist );
 			}
 
 			// Prefetch all users/avatars to avoid user by user queries during template iterations
@@ -451,25 +378,6 @@ class CKunenaLatestX {
 		return $sincetime;
   	}
 
-	function displayPathway() {
-		CKunenaTools::loadTemplate('/pathway.php');
-	}
-
-	function displayAnnouncement() {
-		if ($this->config->showannouncement > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.announcement.class.php');
-			$ann = new CKunenaAnnouncement();
-			$ann->getAnnouncement();
-			$ann->displayBox();
-		}
-	}
-
-	function displayForumJump() {
-		if ($this->config->enableforumjump) {
-			CKunenaTools::loadTemplate('/forumjump.php');
-		}
-	}
-
 	function displayItems() {
 		if (empty ( $this->topics )) return;
 		if ($this->mode == 'threads') $this->displayFlat();
@@ -517,63 +425,6 @@ class CKunenaLatestX {
 			return;
 		}
 		CKunenaTools::loadTemplate('/threads/posts.php');
-	}
-
-	function displayStats() {
-		if ($this->config->showstats > 0) {
-			require_once(KUNENA_PATH_LIB .DS. 'kunena.stats.class.php');
-			$kunena_stats = CKunenaStats::getInstance ( );
-			$kunena_stats->showFrontStats ();
-		}
-	}
-
-	function displayWhoIsOnline() {
-		if ($this->config->showwhoisonline > 0) {
-			require_once (KUNENA_PATH_LIB .DS. 'kunena.who.class.php');
-			$online =& CKunenaWhoIsOnline::getInstance();
-			$online->displayWhoIsOnline();
-		}
-	}
-
-	function getPagination($func, $sel, $page, $totalpages, $maxpages) {
-		if ( $func != 'latest' ) $func = 'latest&do='.$func;
-		$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
-		$endpage = $startpage + $maxpages;
-		if ($endpage > $totalpages) {
-			$startpage = ($totalpages - $maxpages) < 1 ? 1 : $totalpages - $maxpages;
-			$endpage = $totalpages;
-		}
-
-		$output = '<ul class="kpagination">';
-		$output .= '<li class="page">' . JText::_('COM_KUNENA_PAGE') . '</li>';
-
-		if (($startpage) > 1) {
-			if ($endpage < $totalpages)
-				$endpage --;
-			$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, 1, 'follow', '', $sel ) . '</li>';
-			if (($startpage) > 2) {
-				$output .= '<li class="more">...</li>';
-			}
-		}
-
-		for($i = $startpage; $i <= $endpage && $i <= $totalpages; $i ++) {
-			if ($page == $i) {
-				$output .= '<li class="active">' . $i . '</li>';
-			} else {
-				$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, $i, 'follow', '', $sel ) . '</li>';
-			}
-		}
-
-		if ($endpage < $totalpages) {
-			if ($endpage < $totalpages - 1) {
-				$output .= '<li class="more">...</li>';
-			}
-
-			$output .= '<li>' . CKunenaLink::GetLatestPageLink ( $func, $totalpages, 'follow', '', $sel ) . '</li>';
-		}
-
-		$output .= '</ul>';
-		return $output;
 	}
 
 	function display() {

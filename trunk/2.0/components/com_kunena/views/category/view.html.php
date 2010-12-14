@@ -38,6 +38,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->headerText = $this->title = JText::_('COM_KUNENA_THREADS_IN_FORUM').': '. $this->category->name;
 		if ($this->category->authorise ( 'moderate' )) {
 			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
 			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
@@ -58,6 +59,7 @@ class KunenaViewCategory extends KunenaView {
 
 		// Is user allowed to subscribe category?
 		if ($this->category->authorise ( 'subscribe', null, true )) {
+			// FIXME: add into library:
 			$db = JFactory::getDBO();
 			$query = "SELECT subscribed
 				FROM #__kunena_user_categories
@@ -77,6 +79,16 @@ class KunenaViewCategory extends KunenaView {
 		if ($errors) {
 			$this->displayNoAccess($errors);
 		} else {
+			//meta description and keywords
+			$page = intval ( $this->state->get('list.start') / $this->state->get('list.limit') ) + 1;
+			$pages = intval ( $this->category->getTopics() / $this->state->get('list.limit') ) + 1;
+
+			$parentCategory = $this->category->getParent();
+			$metaKeys = $this->escape ( JText::_('COM_KUNENA_CATEGORIES') . ", {$parentCategory->name}, {$this->category->name}, {$this->config->board_title}, " . JFactory::getApplication()->getCfg ( 'sitename' ) );
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $this->escape ( "{$parentCategory->name} ({$page}/{$pages}) - {$this->category->name} - {$this->config->board_title}" );
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+
 			parent::display ();
 		}
 	}

@@ -71,7 +71,12 @@ class KunenaForumMessageAttachmentHelper {
 		if ($ids === false) {
 			return self::$_instances;
 		} elseif (is_array ($ids) ) {
-			$ids = array_unique($ids);
+			$ids2 = array();
+			foreach ($ids as $id) {
+				if ($id instanceof KunenaForumMessage) $id = $id->id;
+				$ids2[(int)$id] = (int)$id;
+			}
+			$ids = $ids2;
 		} else {
 			$ids = array($ids);
 		}
@@ -79,6 +84,7 @@ class KunenaForumMessageAttachmentHelper {
 
 		$list = array ();
 		foreach ( $ids as $id ) {
+
 			if (!empty(self::$_messages [$id])) {
 				foreach (self::$_messages [$id] as $instance) {
 					if ($instance->authorise($authorise, null, true)) {
@@ -122,7 +128,7 @@ class KunenaForumMessageAttachmentHelper {
 		if (empty($ids))
 			return;
 
-		$idlist = implode($ids);
+		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_attachments WHERE id IN ({$idlist})";
 		$db->setQuery ( $query );
@@ -151,7 +157,7 @@ class KunenaForumMessageAttachmentHelper {
 		if (empty($ids))
 			return;
 
-		$idlist = implode($ids);
+		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_attachments WHERE mesid IN ({$idlist})";
 		$db->setQuery ( $query );

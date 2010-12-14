@@ -29,10 +29,13 @@ class KunenaPrivateUddeIM extends KunenaPrivate
 
 	protected function getURL($userid)
 	{
-		$itemid = 0;
-		if (method_exists($this->uddeim, 'getItemid')) $itemid = $this->uddeim->getItemid();
-		if ($itemid) $itemid = '&Itemid='.(int)$itemid;
-		else $itemid = '';
+		static $itemid = false;
+		if ($itemid === false) {
+			$itemid = 0;
+			if (method_exists($this->uddeim, 'getItemid')) $itemid = $this->uddeim->getItemid();
+			if ($itemid) $itemid = '&Itemid='.(int)$itemid;
+			else $itemid = '';
+		}
 		return JRoute::_('index.php?option=com_uddeim&task=new&recip='.(int)$userid.$itemid);
 	}
 

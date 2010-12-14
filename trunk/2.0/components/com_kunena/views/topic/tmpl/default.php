@@ -27,7 +27,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 <?php
 	$this->displayPoll();
 	CKunenaTools::showModulePosition( 'kunena_poll' );
-	$this->displayThreadActions(0);
+	$this->displayTopicActions(0);
 ?>
 
 <div class="kblock">
@@ -36,12 +36,10 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<?php if ($this->usertopic->favorite) : ?><div class="kfavorite"></div><?php endif ?>
 	</div>
 	<div class="kcontainer">
-		<div class="kbody">
-			<?php foreach ( $this->messages as $message ) $this->displayMessage($message) ?>
-		</div>
+		<div class="kbody"><?php $this->displayMessages() ?></div>
 	</div>
 </div>
-<?php $this->displayThreadActions(1); ?>
+<?php $this->displayTopicActions(1); ?>
 
 <div class = "kforum-pathway-bottom">
 	<?php echo $this->kunena_pathway1; ?>
@@ -52,13 +50,13 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 		<div class="kmoderatorslist-jump fltrt">
 				<?php $this->displayForumJump (); ?>
 		</div>
-		<?php if (!empty ( $this->modslist ) ) : ?>
+		<?php if (!empty ( $this->moderators ) ) : ?>
 		<div class="klist-moderators">
 				<?php
 				echo '' . JText::_('COM_KUNENA_GEN_MODERATORS') . ": ";
 				$modlinks = array();
-				foreach ( $this->modslist as $mod ) {
-					$modlinks[] = CKunenaLink::GetProfileLink ( intval($mod->userid) );
+				foreach ( $this->moderators as $userid ) {
+					$modlinks[] = CKunenaLink::GetProfileLink ( $userid );
 				}
 				echo implode(', ', $modlinks);
 				?>

@@ -33,6 +33,48 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+14-December-2010 Matias
++ [#22792] Show error message if favorite, subscribe fails
+# [#23443] Fix regression where favorite, subscribe and publish topic doesn't work
++ [#22569] Create user layout for topics view
++ [#22569] Add modes into topics view user layout (default, posted, started, favorites, subscriptions)
+
+13-December-2010 Matias
++ [#22569] Add missing logic into KunenaModelTopic
++ [#22569] Add missing metadata/keywords code into topic view
+# [#23443] Fix regression in categories model showing warning where there are no visible categories
+# [#23442] Optimize for speed: Load moderators all by once instead of individually
++ [#22792] Improve routing: no need to load message subjects into router - use our libraries instead
++ [#22569] Add modes into topics view (topics, sticky, locked, noreplies, unapproved, deleted, replies)
++ [#22569] Add new menu parameters for topics view (categories, time selection)
+
+12-December-2010 Matias
++ [#22569] Add some missing features into new views
+- [#22570] Remove deprecated code: funcs/listcat.php, template/categories/*
+- [#22570] Remove deprecated code: funcs/showcat.php, template/threads/showcat.php
+- [#22570] Remove deprecated code: funcs/view.php, template/view/*
+
+11-December-2010 Matias
+^ [#22569] Continue copying view templates into views/topic/tmpl, modify them to work with view
+# [#23466] Feature: Category Channels: Add support into topic view, add missing redirect logic
+^ [#22569] Improve topic templates by moving html into more logical places
+^ [#23442] Optimize for speed: better logic for user profiles to avoid running the same code many times
++ [#22569] Mark topic read when user sees it, increase hit count
++ [#22569] Add missing metadata/keywords code into categories view
++ [#22569] Add missing metadata/keywords code into category view
++ [#22569] Add missing metadata/keywords code into topic view
+
+10-December-2010 Matias
+# [#23442] Optimize for speed: "SEO Settings / Do Not Use Category IDs" in inefficient
+# [#23442] Optimize for speed: getItemid in UddeIM integration should cache Itemid
+# [#23442] Optimize for speed: do not save category if it doesn't change on topic save
+# [#23443] Fix regression with wrong session information for new users and guests
+# [#23443] Fix loading attachments by ids
++ [#22792] Accept KunenaForumMessage objects in KunenaForumMessageAttachmentHelper::getByMessage()
++ [#22792] Add function KunenaForumMessage::isNew()
+# [#23466] Feature: Category Channels: category view should use current category in the links
++ [#22792] Add better authorisation into categories view
+
 8-December-2010 Matias
 ^ [#21818] Update keywords:ID on all source files
 

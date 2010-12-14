@@ -9,44 +9,47 @@
  * @link http://www.kunena.org
  *
  **/
-
-// Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
-
-if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 ?>
 	<ul class="kpost-profile">
 		<li class="kpost-username">
-			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->username) ); ?>
+			<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->escape($this->message->name) ); ?>
 		</li>
-		<?php if ($this->usertype) : ?>
+		<?php if (!empty($this->usertype)) : ?>
 		<li class="kpost-usertype">
 			<span class = "kmsgusertype">( <?php echo $this->escape($this->usertype) ?> )</span>
 		</li>
 		<?php endif ?>
-		<?php if ($this->avatar) : ?>
+		<?php $avatar = $this->profile->getAvatarLink ('kavatar', 'post'); if ($avatar) : ?>
 		<li class="kpost-avatar">
-		<?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $this->avatar ); ?>
+			<span class="kavatar"><?php echo CKunenaLink::GetProfileLink ( intval($this->profile->userid), $avatar ); ?></span>
 		</li>
 		<?php endif; ?>
+
 		<?php if ($this->profile->userid): ?>
 
-		<li><span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>"><span class="online-<?php echo $this->profile->isOnline(true) ?>"><span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span></span></span></li>
+		<li>
+			<span class="kicon-button kbuttononline-<?php echo $this->profile->isOnline(true) ?>">
+				<span class="online-<?php echo $this->profile->isOnline(true) ?>">
+					<span><?php echo $this->profile->isOnline() ? JText::_('COM_KUNENA_ONLINE') : JText::_('COM_KUNENA_OFFLINE'); ?></span>
+				</span>
+			</span>
+		</li>
 
-		<?php if ($this->userranktitle) : ?>
+		<?php if (!empty($this->userranktitle)) : ?>
 		<li class="kpost-userrank">
 			<?php echo $this->escape($this->userranktitle) ?>
 		</li>
 		<?php endif ?>
-		<?php if ($this->userrankimage) : ?>
+		<?php if (!empty($this->userrankimage)) : ?>
 		<li class="kpost-userrank-img">
 			<?php echo $this->userrankimage ?>
 		</li>
 		<?php endif ?>
 
-		<?php if ($this->personaltext) : ?>
+		<?php if (!empty($this->personalText)) : ?>
 		<li class="kpost-personal">
-			<?php echo KunenaHtmlParser::parseText($this->personaltext) ?>
+			<?php echo $this->personalText ?>
 		</li>
 		<?php endif ?>
 		<?php if ($this->userposts) : ?>
@@ -62,7 +65,7 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 			</span>
 		</li>
 		<?php endif ?>
-		<?php if ( $this->usermedals ) : ?>
+		<?php if ( !empty($this->usermedals) ) : ?>
 			<li class="kpost-usermedals">
 			<?php foreach ( $this->usermedals as $medal ) : ?>
 				<?php echo $medal; ?>
@@ -78,5 +81,6 @@ if (!isset($this->showUnusedSocial)) $this->showUnusedSocial = false;
 			<?php echo $this->profile->profileIcon('private'); ?>
 			<?php echo $this->profile->profileIcon('email'); ?>
 		</li>
+
 		<?php endif ?>
 </ul>

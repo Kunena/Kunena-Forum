@@ -24,10 +24,10 @@ class KunenaSession extends JObject
 
 	function __construct($identifier)
 	{
-		// New user gets a month of unread messages
-		$this->lasttime = CKunenaTimeformat::internalTime() - 3600*24*30;
-		$this->currvisit = CKunenaTimeformat::internalTime();
 		$this->load($identifier);
+		// New user gets a month of unread messages
+		if (!$this->lasttime ) $this->lasttime = CKunenaTimeformat::internalTime() - 3600*24*30;
+		if (!$this->currvisit ) $this->currvisit = CKunenaTimeformat::internalTime();
 	}
 
 	static public function getInstance( $update=false, $userid = null )

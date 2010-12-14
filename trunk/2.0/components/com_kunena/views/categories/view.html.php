@@ -17,13 +17,26 @@ kimport ( 'kunena.view' );
  */
 class KunenaViewCategories extends KunenaView {
 	function displayDefault($tpl = null) {
-		$this->assignRef ( 'categories', $this->get ( 'Items' ) );
+		$this->assignRef ( 'category', $this->get ( 'Category' ) );
+		if ($this->category->id && !$this->get ( 'Category')->authorise('read')) {
+			$this->setError($this->categories->getError());
+		}
+		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
 		$this->me = KunenaFactory::getUser();
 		$this->config = KunenaFactory::getConfig();
+
 		$errors = $this->getErrors();
 		if ($errors) {
 			$this->displayNoAccess($errors);
 		} else {
+			// meta description and keywords
+			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
+			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+
 			$this->display ($tpl);
 		}
 	}

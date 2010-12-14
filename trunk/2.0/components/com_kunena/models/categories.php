@@ -30,8 +30,13 @@ class KunenaModelCategories extends KunenaModel {
 		$this->setState ( 'item.id', $catid );
 	}
 
-	public function getItems() {
+	public function getCategory() {
+		return KunenaForumCategoryHelper::get($this->getState ( 'item.id' ));
+	}
+
+	public function getCategories() {
 		if ( $this->_items === false ) {
+			$this->_items = array();
 			$this->me = KunenaFactory::getUser();
 			$this->config = KunenaFactory::getConfig();
 			$catid = $this->getState ( 'item.id' );
@@ -39,21 +44,20 @@ class KunenaModelCategories extends KunenaModel {
 			if ($catid) {
 				$this->categories[0] = KunenaForumCategoryHelper::getCategories($catid);
 				if (empty($this->categories[0]))
-					return;
+					return array();
 			} else {
 				$this->categories[0] = KunenaForumCategoryHelper::getChildren();
 			}
 
-			$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($this->categories [0]), 1);
+		$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($this->categories [0]), 1);
 		if (empty ( $allsubcats ))
-			return;
+			return array();
 
 		if ($this->config->shownew && $this->me->userid) {
 			$this->new = KunenaForumCategoryHelper::getNewTopics(array_keys($allsubcats));
 		}
 
 		$modcats = array ();
-		$topiclist = array ();
 		$lastpostlist = array ();
 		$userlist = array();
 
@@ -64,7 +68,6 @@ class KunenaModelCategories extends KunenaModel {
 				if ($last->last_topic_id) {
 					// collect user ids for avatar prefetch when integrated
 					$userlist [(int)$last->last_post_userid] = (int)$last->last_post_userid;
-					$topiclist [(int)$last->last_topic_id] = $last->last_topic_subject;
 					$lastpostlist [(int)$subcat->id] = (int)$last->last_post_id;
 					$last->_last_post_location = $last->last_topic_posts;
 				}
@@ -102,7 +105,7 @@ class KunenaModelCategories extends KunenaModel {
 			}
 		}
 		// Fix last post position when user can see unapproved or deleted posts
-		if (!$topic_ordering && $this->me->userid && $this->me->isModerator()) {
+		if ($lastpostlist && !$topic_ordering && $this->me->userid && $this->me->isModerator()) {
 			$access = KunenaFactory::getAccessControl();
 			$list = implode ( ',', $lastpostlist );
 			$db = JFactory::getDBO ();
@@ -122,9 +125,6 @@ class KunenaModelCategories extends KunenaModel {
 					$category->_last_post_location += $topic->deleted;
 			}
 		}
-
-		require_once (KUNENA_PATH . DS . 'router.php');
-		KunenaRouter::loadMessages ( $topiclist );
 
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
 		KunenaUserHelper::loadUsers($userlist);

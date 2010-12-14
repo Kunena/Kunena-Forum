@@ -43,7 +43,7 @@ $id = JRequest::getInt ( 'id', 0 );
 		$fr_name = $this->escape( JString::trim ( $parent->name ) );
 		$sname = CKunenaLink::GetCategoryLink ( 'showcat', $parent->id, $fr_name );
 
-		if ($catid == $parent->id && $func != "view") {
+		if ($catid == $parent->id && ($func != "view" && $func!="topic")) {
 			$fr_title_name = $fr_name;
 			$jr_path_menu [] = $fr_name;
 		} else {
@@ -56,8 +56,8 @@ $id = JRequest::getInt ( 'id', 0 );
 
 	//attach topic name
 	$this->kunena_topic_title = '';
-	if ($func == "view" and $id) {
-		$this->kunena_topic_title = $pathway->getMessagesTitles($id);
+	if ($func == "view" || $func=="topic" && $id) {
+		$this->kunena_topic_title = KunenaForumTopicHelper::get($id)->subject;
 		$jr_path_menu [] = $this->escape($this->kunena_topic_title);
 	}
 

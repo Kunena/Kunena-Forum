@@ -13,10 +13,11 @@ defined( '_JEXEC' ) or die();
 
 require_once (JPATH_ADMINISTRATOR . '/components/com_kunena/api.php');
 kimport('kunena.error');
+kimport('kunena.forum.category.helper');
+kimport('kunena.forum.topic.helper');
 
 class KunenaRouter {
 	static $catidcache = null;
-	static $msgidcache = array ();
 
 	// List of reserved functions (if category name is one of these, use always catid)
 	// Contains array of default variable=>value pairs, which can be removed from URI
@@ -72,25 +73,16 @@ class KunenaRouter {
 		if (self::$catidcache !== null)
 			return; // Already loaded
 
-		kimport('kunena.forum.category.helper');
-		self::$catidcache = KunenaForumCategoryHelper::getCategories();
-	}
-
-	/**
-	 * Preloads messages, saves SQL queries
-	 *
-	 * @param $msgs Messages in form of array ('1'=>'subject', ...))
-	 */
-	function loadMessages($msglist) {
-		if (!is_array($msglist)) return;
-		self::$msgidcache = self::$msgidcache + $msglist;
+		$categories = KunenaForumCategoryHelper::getCategories();
+		self::$catidcache = array();
+		foreach ($categories as $id=>$category) {
+			self::$catidcache[$id] = self::stringURLSafe ( $category->name );
+		}
 	}
 
 	function isCategoryConflict($catid, $catname) {
-		foreach (self::$catidcache as $id=>$category) {
-			if ($category->id != $catid && $catname == self::stringURLSafe ( $category->name ) ) return true;
-		}
-		return false;
+		$keys = array_keys(self::$catidcache, $catname);
+		return count($keys) > 1;
 	}
 
 	function filterOutput($str) {
@@ -176,7 +168,7 @@ class KunenaRouter {
 				if (self::$catidcache === null)
 					self::loadCategories ();
 				if (isset ( self::$catidcache [$catid] )) {
-					$suf = self::stringURLSafe ( self::$catidcache [$catid]->name );
+					$suf = self::$catidcache [$catid];
 				}
 				if (empty ( $suf ))
 					// If translated category name is empty, use catid: 123
@@ -198,13 +190,7 @@ class KunenaRouter {
 
 		if ($catfound && isset ( $query ['id'] )) {
 			$id = $query ['id'];
-			if (! isset ( self::$msgidcache [$id] )) {
-				$quesql = 'SELECT subject, id FROM #__kunena_messages WHERE id=' . ( int ) $id;
-				$db->setQuery ( $quesql );
-				self::$msgidcache [$id] = $db->loadResult ();
-				if (KunenaError::checkDatabaseError()) return;
-			}
-			$suf = self::stringURLSafe ( self::$msgidcache [$id] );
+			$suf = self::stringURLSafe ( KunenaForumTopicHelper::get($id)->subject );
 			if (empty ( $suf ))
 				$segments [] = $query ['id'];
 			else
@@ -269,10 +255,11 @@ class KunenaRouter {
 			$value = array_shift ( $seg );
 
 			// If SEF categories are allowed we need to translate category name to catid
-			if ($kconfig->sefcats && $counter == 0 && ($value !== null || ! isset ( self::$functions[$var] ))) {
-				self::loadCategories ();
+			if ($kconfig->sefcats && $counter == 0 && ! is_numeric ( $var ) && ($value !== null || ! isset ( self::$functions[$var] ))) {
 				$catname = strtr ( $segment, ':', '-' );
-				foreach ( self::$catidcache as $category ) {
+
+				$categories = KunenaForumCategoryHelper::getCategories();
+				foreach ( $categories as $category ) {
 					if ($catname == self::filterOutput ( $category->name ) || $catname == JFilterOutput::stringURLSafe ( $category->name )) {
 						$var = $category->id;
 						break;
@@ -325,8 +312,7 @@ class KunenaRouter {
 			if (empty ( $vars ['catid'] )) {
 				$parent = 0;
 			} else {
-				self::loadCategories ();
-				$parent = isset(self::$catidcache[$vars ['catid']]) ? self::$catidcache[$vars ['catid']]->parent_id : 0;
+				$parent = KunenaForumCategoryHelper::get($vars ['catid'])->parent_id;
 			}
 			if (! $parent)
 				$vars ['view'] = 'listcat';

@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.2
 
+14-December-2010 Xillibit
+^ [#20084] Update french language file
+
 13-December-2010 fxstein
 + [#20084] Proper error message if Kunena version is too old
 ^ [#20084] Update version info to 1.6.2

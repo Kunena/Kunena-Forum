@@ -37,6 +37,7 @@ Kunena Discuss Plugin 1.6.2
 + [#20084] Check if onPrepareContent event has been originated from within Kunena to avoid event recursion
 ^ [#20084] Updated table creation and migration code
 ^ [#20084] Rename legacy bot variables and comments to plugin
+^ [#20084] de-DE (German) language updated
 
 6-November-2010 fxstein
 ^ [#20084] Change all references of kunena.com to kunena.org

@@ -674,16 +674,17 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
 							$tag_new .= '</div>';
 						} else {
-							global $kunena_in_event;
-							if (!empty($kunena_in_event)) {
-								$kunena_app = JFactory::getApplication();
-								$dispatcher	= JDispatcher::getInstance();
-								$params = clone($kunena_app->getParams('com_content'));
-								$aparams = new JParameter($article->attribs);
-								$params->merge($aparams);
-								JPluginHelper::importPlugin('content');
-								$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
-							}
+							$kunena_app = JFactory::getApplication();
+							$dispatcher	= JDispatcher::getInstance();
+							$params = clone($kunena_app->getParams('com_content'));
+							$aparams = new JParameter($article->attribs);
+							$params->merge($aparams);
+							// Identify the source of the event to be Kunena itself
+							// this is important to avoid recursive event behaviour with our own plugins
+							$params->set('ksource', 'kunena');
+							JPluginHelper::importPlugin('content');
+							$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
+
 							require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
 							$link_readmore = '<a href="'.JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid)).
 													'" class="readon">'.JText::sprintf('Read more...').'</a>';

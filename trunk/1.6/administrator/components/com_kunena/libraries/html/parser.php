@@ -63,6 +63,8 @@ abstract class KunenaParser {
 			$row = new stdClass();
 			$row->text =& $content;
 			$params = new JParameter( '' );
+			$params->set('ksource', 'kunena');
+			
 			$dispatcher	= JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
 			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));

@@ -26,11 +26,14 @@ class plgContentKunenaDiscuss extends JPlugin {
 		if (! $this->enabled ())
 			return null;
 
+		// Load language files
+		$this->loadLanguage ( '', JPATH_ADMINISTRATOR );
+			
 		// Kunena detection and version check
 		$minKunenaVersion = '1.6.2';
 		if (!class_exists('Kunena') || Kunena::versionBuild() < 3867) {
 
-			$this->_app->enqueueMessage(JText::sprintf ( 'PLG_KUNENADISCUSS_DEPENDENCY_FAIL', $minKunenaVersion ) );
+			$this->_app->enqueueMessage( JText::sprintf ( 'PLG_KUNENADISCUSS_DEPENDENCY_FAIL', $minKunenaVersion ) );
 			
 			return null;
 		}
@@ -50,8 +53,6 @@ class plgContentKunenaDiscuss extends JPlugin {
 
 		$this->config = KunenaFactory::getConfig ();
 
-		// Load language files
-		$this->loadLanguage ( '', JPATH_ADMINISTRATOR );
 		// load Kunena main language file so we can leverage language strings from it
 		KunenaFactory::loadLanguage();
 

@@ -38,6 +38,7 @@ Kunena Discuss Plugin 1.6.2
 ^ [#20084] Updated table creation and migration code
 ^ [#20084] Rename legacy bot variables and comments to plugin
 ^ [#20084] de-DE (German) language updated
+^ [#20084] Move up loading on language files to enable error messages
 
 6-November-2010 fxstein
 ^ [#20084] Change all references of kunena.com to kunena.org

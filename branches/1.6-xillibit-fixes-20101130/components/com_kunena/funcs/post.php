@@ -261,37 +261,35 @@ class CKunenaPost {
 			$this->resubject = '';
 			$this->parent = 0;
 			
-			$this->_db->setQuery ( "SELECT allow_anonymous FROM #__kunena_categories WHERE parent!=0 LIMIT 1" );
-			$this->catidanonymous = $this->_db->loadResult ();
+			$this->_db->setQuery ( "SELECT id,post_anonymous FROM #__kunena_categories WHERE parent!=0 AND allow_anonymous='1'" );
+			$anynomouscatid = $this->_db->loadObjectList ();
 			KunenaError::checkDatabaseError();
 			
-			$this->_db->setQuery ( "SELECT id FROM #__kunena_categories WHERE parent!=0 AND allow_anonymous='1'" );
-			$anynomouscatid = $this->_db->loadResultArray ();
-			KunenaError::checkDatabaseError();
-			
-			if ( sizeof($anynomouscatid) == 1 ) {
-				$anynomouscatid = implode(',',$anynomouscatid);	
-				$this->document->addScriptDeclaration('anonymouscategoriesid = "'.$anynomouscatid.'";');
-			} else {	
-				$anynomouscatid = implode(',',$anynomouscatid);	
-				$this->document->addScriptDeclaration('anonymouscategoriesid = new Array('.$anynomouscatid.');');
+			$arrayanynomouscatid = array();
+			foreach( $anynomouscatid as $item ) {
+				$arrayanynomouscatid[] = '"'.$item->id.'":1';
 			}
+
+			$arrayanynomousbox = array();
+			foreach( $anynomouscatid as $item ) {
+				$arrayanynomousbox[] = '"'.$item->id.'":'.$item->post_anonymous;
+      		}
 			
-			$this->_db->setQuery ( "SELECT allow_polls FROM #__kunena_categories WHERE parent!=0 LIMIT 1" );
-			$this->pollcatid = $this->_db->loadResult ();
-			KunenaError::checkDatabaseError();
-			
+			$arrayanynomouscatid = implode(',',$arrayanynomouscatid);	
+			$arrayanynomousbox = implode(',',$arrayanynomousbox);
+			$this->document->addScriptDeclaration('var anonymouscategoriesid = {'.$arrayanynomouscatid.'}; var arrayanynomousbox={'.$arrayanynomousbox.'}');
+
 			$this->_db->setQuery ( "SELECT id FROM #__kunena_categories WHERE parent!=0 AND allow_polls='1'" );
 			$pollcatid = $this->_db->loadResultArray ();
 			KunenaError::checkDatabaseError();
 			
-			if ( sizeof($pollcatid) == 1 ) {
-				$pollcatid = implode(',',$pollcatid);	
-				$this->document->addScriptDeclaration('pollcategoriesid = "'.$pollcatid.'";');
-			} else {
-				$pollcatid = implode(',',$pollcatid);	
-				$this->document->addScriptDeclaration('pollcategoriesid = new Array('.$pollcatid.');');
+			$arraypollcatid = array();
+			foreach( $pollcatid as $id ) {
+				$arraypollcatid[] = '"'.$id.'":1';
 			}
+			
+			$arraypollcatid = implode(',',$arraypollcatid);	
+			$this->document->addScriptDeclaration('var pollcategoriesid = {'.$arraypollcatid.'};');	
 			
 			$options = array ();
 			$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->catid );

@@ -25,7 +25,8 @@ global $topic_emoticons;
 require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll = CKunenaPolls::getInstance();
 $kunena_poll->call_javascript_form();
-include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
+include_once (KUNENA_PATH_LIB . '/kunena.bbcode.js.php');
+include_once (KUNENA_PATH_LIB . '/kunena.special.js.php');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 //keep session alive while editing
@@ -34,7 +35,6 @@ JHTML::_('behavior.keepalive');
 $document = JFactory::getDocument ();
 if ($this->my->id) {
 	$document->addScriptDeclaration('// <![CDATA[
-		var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";
 		var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	// ]]>');
  }
@@ -74,7 +74,7 @@ $this->k=0;
 		</tr>
 		<?php endif; ?>
 
-		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check" <?php if ((!$this->allow_anonymous && $this->catid != 0) || !$this->cat_default_allow || !$this->catidanonymous ): ?>style="display:none;"<?php endif; ?>>
+		<tr class="krow<?php echo 1 + $this->k^=1 ?>" id="kanynomous-check" <?php if ((!$this->allow_anonymous && $this->catid != 0) || !$this->cat_default_allow ): ?>style="display:none;"<?php endif; ?>>
 			<td class="kcol-first">
 				<strong><?php echo JText::_('COM_KUNENA_POST_AS_ANONYMOUS'); ?></strong>
 			</td>

@@ -32,6 +32,7 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 15-Dec-2010 810
 # [#23320] Auto Blending Feature (skinner) Color Bug
+# [#23293] add/update languages Dutch
 
 27-Nov-2010 810
 # [#23528] Set none to profiles and user list

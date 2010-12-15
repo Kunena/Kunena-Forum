@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.2
 
+14-December-2010 fxstein
+# [#20084] Fix missing language strings due to loading them too early, before parent constructor gets called
+
 14-December-2010 Xillibit
 ^ [#20084] Update french language file
 

@@ -27,7 +27,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			return null;
 
 		// Load language files
-		$this->loadLanguage ( '', JPATH_ADMINISTRATOR );
+		$this->loadLanguage ( 'plg_content_kunenadiscuss', JPATH_ADMINISTRATOR );
 			
 		// Kunena detection and version check
 		$minKunenaVersion = '1.6.2';

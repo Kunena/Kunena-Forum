@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.2
 
+14-December-2010 Severdia
+^ [#20084] Cleaned up English language file. Now it's real English. :)
+
 14-December-2010 fxstein
 # [#20084] Fix missing language strings due to loading them too early, before parent constructor gets called
 

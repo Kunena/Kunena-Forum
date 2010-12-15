@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+15-December-2010 Xillibit
+^ [#23798] Remove ajax for show poll icon and anonymous field on new topic button tab
+
 14-December-2010 Xillibit
 # [#23760] when you select cb in integration: Profiles and User List, userlist don't work anymore
 

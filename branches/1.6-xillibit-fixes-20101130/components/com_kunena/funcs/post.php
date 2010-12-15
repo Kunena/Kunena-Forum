@@ -261,9 +261,37 @@ class CKunenaPost {
 			$this->resubject = '';
 			$this->parent = 0;
 			
+			$this->_db->setQuery ( "SELECT allow_anonymous FROM #__kunena_categories WHERE parent!=0 LIMIT 1" );
+			$this->catidanonymous = $this->_db->loadResult ();
+			KunenaError::checkDatabaseError();
+			
+			$this->_db->setQuery ( "SELECT id FROM #__kunena_categories WHERE parent!=0 AND allow_anonymous='1'" );
+			$anynomouscatid = $this->_db->loadResultArray ();
+			KunenaError::checkDatabaseError();
+			
+			if ( sizeof($anynomouscatid) == 1 ) {
+				$anynomouscatid = implode(',',$anynomouscatid);	
+				$this->document->addScriptDeclaration('anonymouscategoriesid = "'.$anynomouscatid.'";');
+			} else {	
+				$anynomouscatid = implode(',',$anynomouscatid);	
+				$this->document->addScriptDeclaration('anonymouscategoriesid = new Array('.$anynomouscatid.');');
+			}
+			
 			$this->_db->setQuery ( "SELECT allow_polls FROM #__kunena_categories WHERE parent!=0 LIMIT 1" );
 			$this->pollcatid = $this->_db->loadResult ();
 			KunenaError::checkDatabaseError();
+			
+			$this->_db->setQuery ( "SELECT id FROM #__kunena_categories WHERE parent!=0 AND allow_polls='1'" );
+			$pollcatid = $this->_db->loadResultArray ();
+			KunenaError::checkDatabaseError();
+			
+			if ( sizeof($pollcatid) == 1 ) {
+				$pollcatid = implode(',',$pollcatid);	
+				$this->document->addScriptDeclaration('pollcategoriesid = "'.$pollcatid.'";');
+			} else {
+				$pollcatid = implode(',',$pollcatid);	
+				$this->document->addScriptDeclaration('pollcategoriesid = new Array('.$pollcatid.');');
+			}
 			
 			$options = array ();
 			$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->catid );

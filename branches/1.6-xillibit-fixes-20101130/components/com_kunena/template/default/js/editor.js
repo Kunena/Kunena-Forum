@@ -655,30 +655,20 @@ window.addEvent('domready', function(){
 	if($('postcatid') != undefined) {
 		$('postcatid').getElements('option').each( function( catid ) {
 			catid.addEvent('click', function(e) {
-				//call a json query to check if the catid selected is allowed for polls
-				var url = kunena_ajax_url_poll;
-				var request = new Request.JSON({
-					url: url,
-					onComplete: function(jsonObj) {
-					if (jsonObj.allowed_polls != null && jsonObj.allowed_polls.indexOf(catid.value) >= 0) {
+				var allowed = 0;
+				for (i=0; i < pollcategoriesid.length;i++) {
+					if ( pollcategoriesid[i] == catid.value ) {
+						var allowed = 1;
 						$('kpoll-hide-not-allowed').removeProperty('style');
 						$('kbbcode-separator5').removeProperty('style');
 						$('kbbcode-poll-button').removeProperty('style');
 						$('kpoll-not-allowed').set('text', ' ');
-					} else {								
+					} else if ( pollcategoriesid[i] != catid.value && allowed != 1 ) {
 						$('kbbcode-separator5').setStyle('display','none');
 						$('kbbcode-poll-button').setStyle('display','none');
 						$('kpoll-hide-not-allowed').setStyle('display','none');
-						if (jsonObj.allowed_polls != null) $('kpoll-not-allowed').set('text', KUNENA_POLL_CATS_NOT_ALLOWED);
-						else if (jsonObj.error) $('kpoll-not-allowed').set('text', jsonObj.error);
-						else $('kpoll-not-allowed').set('text', 'Unknown error!');
 					}
-				},
-				onFailure: function(){
-					$('kpoll-hide-not-allowed').setStyle('display','none');
-					$('kpoll-not-allowed').set('text', 'Cannot contact server!');
 				}
-				}).send();
 			})
 		});
 	}
@@ -695,19 +685,17 @@ window.addEvent('domready', function(){
 	if(typeof (kunena_anonymous_check_url) != 'undefined' && $('postcatid') != undefined) {
 		$('postcatid').getElements('option').each( function( catid ) {
 			catid.addEvent('click', function(e) {
-				var url = kunena_anonymous_check_url;
-				var request = new Request.JSON({
-					url: url,
-					onComplete: function(jsonObj) {
-					if (jsonObj.allowed_anonymous != null && jsonObj.allowed_anonymous.indexOf(catid.value) >= 0) {
-						$('kanynomous-check').removeProperty('style');	
-					} else {
+				var allowed = 0;
+				for (i=0; i < anonymouscategoriesid.length;i++) {
+					if ( anonymouscategoriesid[i] == catid.value ) {
+						var allowed = 1;
+						$('kanynomous-check').removeProperty('style'); 
+					} else if ( anonymouscategoriesid[i] != catid.value && allowed != 1) {
 						$('kanynomous-check').setStyle('display','none');
-						kbutton.removeProperty('checked');
+						kbutton.removeProperty('checked');								
 					}
-					kunenaSelectUsername(kbutton,kuser);
 				}
-				}).send();
+				kunenaSelectUsername(kbutton,kuser);
 			})
 		});
 	}

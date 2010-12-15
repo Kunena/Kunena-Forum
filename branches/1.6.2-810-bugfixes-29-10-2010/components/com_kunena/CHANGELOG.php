@@ -30,6 +30,8 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+15-Dec-2010 810
+# [#23320] Auto Blending Feature (skinner) Color Bug
 
 27-Nov-2010 810
 # [#23528] Set none to profiles and user list

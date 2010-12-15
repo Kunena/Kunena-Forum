@@ -485,11 +485,6 @@ class KunenaUser extends JObject {
 		}
 		return $rank;
 	}
-	
-	public function getClientId() {
-    	$kunena_app = JFactory::getApplication ();
-    	return $kunena_app->getClientId ();    
-  	}
 
 	public function profileIcon($name) {
 		switch ($name) {

@@ -295,7 +295,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					if (substr ( $tempstr, 0, 7 ) !== 'mailto:') {
 						$tempstr = 'mailto:' . $tempstr;
 					}
-					$tns = "<a href='" . kunena_htmlspecialchars ( $tempstr, ENT_QUOTES ) . "'>";
+					$tns = '<a href="' . kunena_htmlspecialchars ( $tempstr, ENT_QUOTES ) . '">';
 					$tne = '</a>';
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -309,7 +309,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					if (substr ( $tempstr, 0, 4 ) == 'www.') {
 						$tempstr = 'http://' . $tempstr;
 					}
-					$tns = "<a href='" . kunena_htmlspecialchars ( $tempstr, ENT_QUOTES ) . "' rel=\"nofollow\" target=\"_blank\">";
+					$tns = '<a href="' . kunena_htmlspecialchars ( $tempstr, ENT_QUOTES ) . '" rel="nofollow" target="_blank">';
 					$tne = '</a>';
 					return TAGPARSER_RET_REPLACED;
 				}
@@ -422,7 +422,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				} else {
 					$tempstr = 'mailto:' . $tempstr;
 				}
-				$tag_new = "<a href='" . $tempstr . "'>" . $between . '</a>';
+				$tag_new = '<a href="' . $tempstr . '">' . $between . '</a>';
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'url' :
@@ -430,7 +430,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 				if (! preg_match ( "`^(https?://)`", $tempstr )) {
 					$tempstr = 'http://' . $tempstr;
 				}
-				$tag_new = "<a href='" . $tempstr . "' rel=\"nofollow\" target=\"_blank\">" . $between . '</a>';
+				$tag_new = '<a href="' . $tempstr .'" rel="nofollow" target="_blank">' . $between . '</a>';
 				return TAGPARSER_RET_REPLACED;
 				break;
 			case 'img' :
@@ -459,7 +459,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 								}
 
 								$fileurl = kunena_htmlspecialchars ( $fileurl, ENT_QUOTES  );
-								$tag_new = "<a href='" . $fileurl . "' rel=\"nofollow\" target=\"_blank\">" . $fileurl . '</a>';
+								$tag_new = '<a href="' . $fileurl . '" rel="nofollow" target="_blank">' . $fileurl . '</a>';
 								return TAGPARSER_RET_REPLACED;
 							} else {
 								$tag_new = kunena_htmlspecialchars ( $fileurl, ENT_QUOTES  );
@@ -501,7 +501,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$tag_new = '<a title="" rel="lightbox[gallery]" href="'.$fileurl.'"><img src="'.$fileurl.'"'.($imgtagsize ? ' width="'.$imgtagsize.'"' : '').' alt="" /></a>';
 					} else {
 						// This part: <div style=\"table-layout:fixed; display:table;\"> ... </div> compliments of IE8
-						$tag_new = "<img src='" . $fileurl . ($imgtagsize ? "' width='" . $imgtagsize : '') . "' alt='' />";
+						$tag_new = '<img src="' . $fileurl . ($imgtagsize ? '" width="' . $imgtagsize : '') . '" alt="" />';
 					}
 
 					return TAGPARSER_RET_REPLACED;
@@ -547,9 +547,9 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							$fileurl = KURL_MEDIA . $filepath;
 							$filesize = isset($tag->options ["size"]) ? $tag->options ["size"] : filesize(KPATH_MEDIA . '/' . $filepath);
 
-							$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_('COM_KUNENA_FILEATTACH') . "</h4>";
-							$tag_new .= JText::_('COM_KUNENA_FILENAME'). " <a href='" . $fileurl . "' target=\"_blank\" rel=\"nofollow\">" . kunena_htmlspecialchars ( $filename ) . "</a><br />";
-							$tag_new .= JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( $filesize ) . "</div>";
+							$tag_new = '<div class="kmsgattach"><h4>' . JText::_('COM_KUNENA_FILEATTACH') . '</h4>';
+							$tag_new .= JText::_('COM_KUNENA_FILENAME'). ' <a href="' . $fileurl . '" target="_blank" rel="nofollow">' . kunena_htmlspecialchars ( $filename ) . '</a><br />';
+							$tag_new .= JText::_('COM_KUNENA_FILESIZE') . ' ' . kunena_htmlspecialchars ( $filesize ) . '</div>';
 						}
 					}
 					return TAGPARSER_RET_REPLACED;
@@ -598,7 +598,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$this->parent->inline_attachments[$attachment->id] = $attachment;
 						$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
 						if (empty($attachment->imagelink)) {
-							$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' .number_format(intval($attachment->size)/1024,0,'',',').' KB'. "</div>";
+							$tag_new = '<div class="kmsgattach"><h4>' . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . '</h4>' . JText::_ ( 'COM_KUNENA_FILENAME' ) . ' <a href="' . $link . '" target="_blank" rel="nofollow">' . $attachment->filename . '</a><br />' . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' .number_format(intval($attachment->size)/1024,0,'',',').' KB'. '</div>';
 						} else {
 							$tag_new = "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
 						}

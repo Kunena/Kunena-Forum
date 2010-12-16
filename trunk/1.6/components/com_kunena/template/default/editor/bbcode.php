@@ -94,7 +94,7 @@ $kunena_config = KunenaFactory::getConfig ();
 			//Check if the poll is allowed
 			if ($kunena_config->pollenabled) {
 				if ( empty($this->msg_cat->allow_polls) ) $this->msg_cat->allow_polls = '';
-				$display_poll = $kunena_poll->get_poll_allowed($this->id, $this->parent, $this->kunena_editmode, $this->msg_cat->allow_polls);
+				$display_poll = $kunena_poll->get_poll_allowed($this->id, $this->parent, $this->kunena_editmode, $this->msg_cat->allow_polls, $this->config);
 				if (!isset($this->polldatasedit[0]->polltimetolive)) {
 					$this->polldatasedit[0]->polltimetolive = '0000-00-00 00:00:00';
 				}

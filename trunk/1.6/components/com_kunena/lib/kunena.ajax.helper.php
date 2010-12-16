@@ -71,11 +71,6 @@ class CKunenaAjaxHelper {
 					$response = $this->_getPreview ( $body );
 
 					break;
-				case 'pollcatsallowed' :
-
-					$response = $this->_getPollsCatsAllowed ();
-
-					break;
 				case 'pollvote' :
 					$vote	= JRequest::getInt('kpollradio', '');
 					$id = JRequest::getInt ( 'kpoll-id', 0 );
@@ -96,11 +91,6 @@ class CKunenaAjaxHelper {
 					}
 
 					$response = $this->_changePollVote ($vote, $id, $this->_my->id);
-
-					break;
-				case 'anynomousallowed' :
-
-					$response = $this->_anynomousAllowed ();
 
 					break;
 				case 'uploadfile' :
@@ -211,25 +201,7 @@ class CKunenaAjaxHelper {
 
 		return $result;
 	}
-
-	protected function _getPollsCatsAllowed () {
-		$result = array ();
-
-		$query = "SELECT id
-							FROM #__kunena_categories
-							WHERE allow_polls=1;";
-		$this->_db->setQuery ( $query );
-		$allow_polls = $this->_db->loadResultArray ();
-		if ($this->_db->getErrorNum ()) {
-			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
-		} else {
-			$result['status'] = '1';
-			$result['allowed_polls'] = $allow_polls;
-		}
-
-		return $result;
-	}
-
+	
 	protected function _addPollVote ($value_choosed, $id, $userid) {
 		$result = array ();
 
@@ -250,31 +222,11 @@ class CKunenaAjaxHelper {
 		return $result;
 	}
 
-	protected function _anynomousAllowed () {
-		$result = array ();
-
-		$query = "SELECT id
-							FROM #__kunena_categories
-							WHERE allow_anonymous=1;";
-		$this->_db->setQuery ( $query );
-		$allow_anonymous = $this->_db->loadResultArray ();
-		if ($this->_db->getErrorNum ()) {
-			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
-		} else {
-			$result['status'] = '1';
-			$result['allowed_anonymous'] = $allow_anonymous;
-		}
-
-		return $result;
-	}
-
 	protected function _uploadFile ($do) {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.attachments.class.php');
 		$attachments = CKunenaAttachments::getInstance();
 		return $attachments->upload();
 	}
-
-
 
 	protected function _removeAttachment($data) {
 		$result = array ();

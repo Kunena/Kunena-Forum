@@ -124,18 +124,21 @@ class CKunenaPolls {
 	/**
 	* Get if the poll is allowed to be displayed
 	*/
-	function get_poll_allowed($id, $parent=0, $kunena_editmode, $allow_cat=0) {
-		$poll_allowed = '';
-		if ( $allow_cat ) {
-			if ( $kunena_editmode ) {
-				if ( $parent == '0' ) $poll_allowed = '1';
+	function get_poll_allowed($id, $parent=0, $kunena_editmode, $allow_cat=0, $config) {
+		if ( $config->pollenabled ) {
+			$poll_allowed = '';
+			if ( $allow_cat ) {
+				if ( $kunena_editmode ) {
+					if ( $parent == '0' ) $poll_allowed = '1';
+				} else {
+					if ( $id == '0' ) $poll_allowed = '1';
+				}
 			} else {
 				if ( $id == '0' ) $poll_allowed = '1';
 			}
-		} else {
-			if ( $id == '0' ) $poll_allowed = '1';
+			return $poll_allowed;
 		}
-		return $poll_allowed;
+		return false;
 	}
 
    /**

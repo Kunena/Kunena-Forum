@@ -260,7 +260,37 @@ class CKunenaPost {
 			$this->message_text = '';
 			$this->resubject = '';
 			$this->parent = 0;
+			
+			$this->_db->setQuery ( "SELECT id,post_anonymous FROM #__kunena_categories WHERE parent!=0 AND allow_anonymous='1'" );
+			$anynomouscatid = $this->_db->loadObjectList ();
+			KunenaError::checkDatabaseError();
+			
+			$arrayanynomouscatid = array();
+			foreach( $anynomouscatid as $item ) {
+				$arrayanynomouscatid[] = '"'.$item->id.'":1';
+			}
 
+			$arrayanynomousbox = array();
+			foreach( $anynomouscatid as $item ) {
+				$arrayanynomousbox[] = '"'.$item->id.'":'.$item->post_anonymous;
+      		}
+			
+			$arrayanynomouscatid = implode(',',$arrayanynomouscatid);	
+			$arrayanynomousbox = implode(',',$arrayanynomousbox);
+			$this->document->addScriptDeclaration('var anonymouscategoriesid = {'.$arrayanynomouscatid.'}; var arrayanynomousbox={'.$arrayanynomousbox.'}');
+
+			$this->_db->setQuery ( "SELECT id FROM #__kunena_categories WHERE parent!=0 AND allow_polls='1'" );
+			$pollcatid = $this->_db->loadResultArray ();
+			KunenaError::checkDatabaseError();
+			
+			$arraypollcatid = array();
+			foreach( $pollcatid as $id ) {
+				$arraypollcatid[] = '"'.$id.'":1';
+			}
+			
+			$arraypollcatid = implode(',',$arraypollcatid);	
+			$this->document->addScriptDeclaration('var pollcategoriesid = {'.$arraypollcatid.'};');	
+			
 			$options = array ();
 			$this->selectcatlist = CKunenaTools::KSelectList ( 'catid', $options, '', false, 'postcatid', $this->catid );
 		}

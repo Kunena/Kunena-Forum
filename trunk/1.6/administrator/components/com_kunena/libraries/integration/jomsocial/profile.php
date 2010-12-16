@@ -26,6 +26,9 @@ class KunenaProfileJomSocial extends KunenaProfile
 
 	public function getUserListURL($action='', $xhtml = true)
 	{
+		$kunena_config = KunenaFactory::getConfig ();
+		$my = JFactory::getUser();
+		if ( $kunena_config->userlist_allowed == 1 && $my->id == 0  ) return false;
 		return CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
 	}
 

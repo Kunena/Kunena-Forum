@@ -415,7 +415,7 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 		<tr <?php echo 'class = "row' . $k . '"';?>>
 			<td class="right"><?php echo $i + $pageNav->limitstart + 1; ?></td>
 			<td><?php echo JHTML::_('grid.id', $i, $row->id) ?></td>
-			<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo kescape($row->treename); ?></a></td>
+			<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo $row->treename; ?></a></td>
 			<td class="center"><?php echo kescape($row->id); ?></td>
 
 			<?php if (! $row->category): ?>
@@ -523,7 +523,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="kadmin-adminform">
 				<tr>
 					<td width="200" valign="top"><?php echo JText::_('COM_KUNENA_PARENT'); ?></td>
-					<td><?php echo kescape($categoryList); ?><br /><br /><?php echo JText::_('COM_KUNENA_PARENTDESC'); ?></td>
+					<td><?php echo $categoryList; ?><br /><br /><?php echo JText::_('COM_KUNENA_PARENTDESC'); ?></td>
 				</tr>
 				<tr>
 					<td width="200"><?php echo JText::_('COM_KUNENA_NAMEADD'); ?></td>

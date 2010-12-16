@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+16-December-2010 810
+# [#23826] Category Manager backend &nbsp
+
 16-December-2010 Matias
 * [#23813] Administration: Prevent possible XSS attacks
 

@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 16-December-2010 Xillibit
 # [#23798] Remove ajax for show poll icon and anonymous field on new topic button tab (Part 3)
+^ [#23821] Replace some select list in advanced search by JHTML things
 
 16-December-2010 Matias
 * [#23813] Administration: Prevent possible XSS attacks

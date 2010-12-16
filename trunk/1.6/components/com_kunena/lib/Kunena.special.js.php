@@ -41,14 +41,14 @@ window.addEvent('domready', function(){
 
 	function kunenaCheckAnonymousAllowed(catid) {
 		if ( anonymouscategoriesid[catid] != undefined ) {
-			$('kanynomous-check').removeProperty('style'); 
+			$('kanynomous-check').removeProperty('style');
 		} else {
 			$('kanynomous-check').setStyle('display','none');
 			kbutton.removeProperty('checked');
 		}
-					
+
 		if ( arrayanynomousbox[catid] ) {
-			$('kanonymous').set('checked','checked'); 
+			$('kanonymous').set('checked','checked');
 		}
 		kunenaSelectUsername(kbutton,kuser);
 	}
@@ -77,7 +77,7 @@ window.addEvent('domready', function(){
 			})
 		});
 	}
-	
+
 	window.onload=kunenaCheckPollallowed($('postcatid').getSelected().get("value"));
 	window.onload=kunenaCheckAnonymousAllowed($('postcatid').getSelected().get("value"));
 });
@@ -86,6 +86,7 @@ window.addEvent('domready', function(){
 $script = ob_get_contents();
 ob_end_clean();
 
+$document = JFactory::getDocument();
 $document->addScriptDeclaration( "// <![CDATA[
 {$script}
 // ]]>");

@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+16-December-2010 Matias
+* [#23813] Administration: Prevent possible XSS attacks
+
 15-December-2010 fxstein
 ^ [#15886] Merged revisions 3995-3996 from /branches/1.6.2-810-bugfixes-29-10-2010
 ^ [#15886] Merged revisions 3973-3997 from /branches/1.6-xillibit-fixes-20101130

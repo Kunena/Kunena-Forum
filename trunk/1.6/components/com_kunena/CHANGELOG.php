@@ -33,6 +33,13 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+15-December-2010 fxstein
+^ [#15886] Merged revisions 3995-3996 from /branches/1.6.2-810-bugfixes-29-10-2010
+
+15-December-2010 810
+# [#23320] Auto Blending Feature (skinner) Color Bug
+# [#23293] add/update languages Dutch
+
 14-December-2010 Severdia
 # [#23251] Added fix from Jelle for broken ability to move posts (to fix Florian's previous fix)
 

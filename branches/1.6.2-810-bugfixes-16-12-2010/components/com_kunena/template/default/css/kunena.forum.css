@@ -403,7 +403,7 @@ PX		EM			PCT			PT
 	vertical-align: middle;
 }
 #Kunena td.ktopicmodule {
-	border-bottom: 1px solid;
+	background-color:#f2f1ee;
 }
 #Kunena td.ktopicmoderation {
 	width: 1%;

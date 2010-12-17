@@ -2587,7 +2587,6 @@ FORUM HEADER DESCRIPTION
 HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 -------------------------------------------------------------------- */
 #Kunena div.kannouncement h2 {
-	display:table;
 	table-layout:fixed;
 	word-wrap:break-word;
 }

@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 16-December-2010 810
 ^ [#23293] add/update languages Dutch
+^ [#23854] Hyperlink announcement
 
 16-December-2010 810
 # [#23826] Category Manager backend &nbsp

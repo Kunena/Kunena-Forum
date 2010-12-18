@@ -114,7 +114,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 
 		$query = "SELECT c.id, c.pub_access, c.pub_recurse, c.admin_access, c.admin_recurse
 				FROM #__kunena_categories c
-				WHERE published='1'";
+				WHERE published='1' AND accesstype='none'";
 		$db->setQuery ( $query );
 		$rows = $db->loadObjectList ();
 		if (KunenaError::checkDatabaseError()) return array();

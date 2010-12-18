@@ -247,7 +247,7 @@ class TableKunenaUser extends KunenaTable
 		}
 
 		// Load the user data.
-		$query = "SELECT u.name, u.username, u.block as blocked, ku.*
+		$query = "SELECT u.name, u.username, u.block as blocked, u.lastvisitDate, ku.*
 			FROM #__users AS u
 			LEFT JOIN {$this->_tbl} AS ku ON u.id = ku.userid
 			WHERE u.id = {$this->$k}";
@@ -274,7 +274,7 @@ class TableKunenaUser extends KunenaTable
 
 	public function reset(){
 		parent::reset();
-		$fields = array('name', 'username', 'blocked');
+		$fields = array('name', 'username', 'blocked', 'lastvisitDate');
 		foreach ($fields as $field) {
 			$this->$field = '';
 		}
@@ -282,7 +282,7 @@ class TableKunenaUser extends KunenaTable
 
 	public function bind($data, $ignore=array()) {
 		parent::bind($data, $ignore);
-		$fields = array('name', 'username', 'blocked');
+		$fields = array('name', 'username', 'blocked', 'lastvisitDate');
 		foreach ($fields as $field) {
 			if (isset($data[$field]) && !in_array($field, $ignore)) $this->$field = $data[$field];
 		}

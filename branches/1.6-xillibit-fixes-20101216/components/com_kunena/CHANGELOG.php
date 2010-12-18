@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+18-December-2010 Xillibit
+# [#23859] Fix from K2.0 - Do not use Joomla access control if using another accesstype
+# [#23861] Fix from K2.0 - Add subscriptions support for JXtended and NoixACL groups
+# [#23860] Fix from K2.0 - Fix saving user first time (no lastvisitDate in the table)
+
 16-December-2010 Xillibit
 # [#23798] Remove ajax for show poll icon and anonymous field on new topic button tab (Part 3)
 ^ [#23821] Replace some select list in advanced search by JHTML things

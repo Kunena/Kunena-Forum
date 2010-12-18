@@ -37,6 +37,15 @@ Kunena 1.6.2-DEV
 + [#23863] Add support for language installation for j1.6
 ^ [#23863] Install language files during SVN install
 ^ [#23863] Remove special SVN language file handling
+^ [#15886] Merged revisions 4005-4023 from /branches/1.6-xillibit-fixes-20101216
+
+18-December-2010 Xillibit
+^ [#23863] Add support for language installation for j1.6
+
+16-December-2010 Xillibit
+# [#23798] Remove ajax for show poll icon and anonymous field on new topic button tab (Part 3)
+^ [#23821] Replace some select list in advanced search by JHTML things
+^ [#23828] Save changed poll vote function use JDate instead of now() from mysql
 
 16-December-2010 Matias
 * [#23813] Administration: Prevent possible XSS attacks

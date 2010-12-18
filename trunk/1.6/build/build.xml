@@ -228,15 +228,15 @@
 
 	<target name="copy" depends="minify">
 		<mkdir dir="${build_dir}/archive" />
-		<!--language tag="ar-AA" />
+		<language tag="ar-AA" />
 		<language tag="ca-ES" />
 		<language tag="da-DK" />
 		<language tag="de-DE" />
-		<language tag="el-GR" /-->
+		<language tag="el-GR" />
 		<language tag="en-GB" />
-		<!--language tag="es-ES" /-->
+		<language tag="es-ES" />
 		<language tag="fi-FI" />
-		<!--language tag="fr-FR" />
+		<language tag="fr-FR" />
 		<language tag="hu-HU" />
 		<language tag="id-ID" />
 		<language tag="it-IT" />
@@ -256,7 +256,7 @@
 		<language tag="tr-TR" />
 		<language tag="vi-VN" />
 		<language tag="zh-CN" />
-		<language tag="zh-TW" /-->
+		<language tag="zh-TW" />
 		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/${kunena.backend}" />
 		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/${kunena.frontend}" />
 		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/${kunena.media}" />

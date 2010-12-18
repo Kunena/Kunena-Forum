@@ -389,6 +389,7 @@ class CKunenaPolls {
    		$threadid = intval ( $threadid );
    		$userid   = intval ( $userid );
    		$vote     = intval ( $vote );
+   		$now      = JFactory::getDate();
 
 		$pollusers = $this->get_data_poll_users($userid,$threadid);
 		$data = array();
@@ -403,8 +404,7 @@ class CKunenaPolls {
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
 
-        	// TODO: We need to check if NOW() is always in UTC (if Joomla sets MySQL timezone)
-        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$this->_db->Quote($vote)}, lasttime=now() WHERE pollid={$this->_db->Quote($threadid)} AND userid={$this->_db->Quote($userid)};";
+        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$this->_db->Quote($vote)}, lasttime={$this->_db->Quote($now->toMySQL())} WHERE pollid={$this->_db->Quote($threadid)} AND userid={$this->_db->Quote($userid)};";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;

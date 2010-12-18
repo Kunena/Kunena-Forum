@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="administrator" method="upgrade">
+<install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Vietnamese</name>
 	<tag>vi-VN</tag>
 	<creationDate>unknown</creationDate>
@@ -15,8 +15,8 @@
 	<description>Vietnamese language file for Kunena Forum Component</description>
 
 	<files>
-		<!-- filename>vi-VN.com_kunena.ini</filename -->
-		<!-- filename>vi-VN.com_kunena.install.ini</filename -->
-		<!-- filename>vi-VN.com_kunena.menu.ini</filename -->
+		<filename>vi-VN.com_kunena.ini</filename>
+		<!-- filename>vi-VN.com_kunena.tpl_default.ini</filename -->
+		<!-- filename>vi-VN.com_kunena.tpl_example.ini</filename -->
 	</files>
 </install>

@@ -40,7 +40,7 @@ window.addEvent('domready', function(){
 	}
 
 	function kunenaCheckAnonymousAllowed(catid) {
-		if ( anonymouscategoriesid[catid] != undefined ) {
+		if ( arrayanynomousbox[catid] != undefined ) {
 			$('kanynomous-check').removeProperty('style');
 		} else {
 			$('kanynomous-check').setStyle('display','none');

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="administrator" method="upgrade">
+<install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Polish</name>
 	<tag>pl-PL</tag>
 	<creationdate>12 Sierpień 2010</creationdate>
@@ -24,7 +24,7 @@ W oparciu o tłumaczenie wersji 1.5 wykonanej przez 'Sogo' i Stefana 'zwiastuna'
 
 	<files>
 		<filename>pl-PL.com_kunena.ini</filename>
-		<filename>pl-PL.com_kunena.install.ini</filename>
-		<!-- filename>pl-pL.com_kunena.menu.ini</filename -->
+		<!-- filename>pl-pL.com_kunena.tpl_default.ini</filename -->
+		<!-- filename>pl-pL.com_kunena.tpl_example.ini</filename -->
 	</files>
 </install>

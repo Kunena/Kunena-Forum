@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="administrator" method="upgrade">
+<install type="language" version="1.5" client="site" method="upgrade">
 	<name>Lithuanian</name>
 	<tag>lt-LT</tag>
 	<version>1.6.1</version>
@@ -37,10 +37,9 @@
 				</div>
 				]]>
 	</description>
-	
 	<files>
-		<!-- filename>lt-LT.com_kunena.ini</filename -->
-		<!-- filename>lt-LT.com_kunena.install.ini</filename -->
-		<!-- filename>lt-LT.com_kunena.menu.ini</filename -->
+		<filename>lt-LT.com_kunena.ini</filename>
+		<filename>lt-LT.com_kunena.tpl_default.ini</filename>
+		<filename>lt-LT.com_kunena.tpl_example.ini</filename>
 	</files>
 </install>

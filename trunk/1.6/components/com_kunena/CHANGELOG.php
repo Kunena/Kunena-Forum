@@ -33,6 +33,11 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+18-December-2010 Matias
++ [#23863] Add support for language installation for j1.6
+^ [#23863] Install language files during SVN install
+^ [#23863] Remove special SVN language file handling
+
 16-December-2010 Matias
 * [#23813] Administration: Prevent possible XSS attacks
 

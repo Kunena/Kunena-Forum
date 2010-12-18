@@ -47,12 +47,7 @@ if (!$kn_version->checkVersion() && $task!='schema' && $task!='schemadiff') {
 
 require_once(KPATH_SITE.'/lib/kunena.defines.php');
 $lang = JFactory::getLanguage();
-if (Kunena::isSVN()) {
-	$lang->load('com_kunena',KPATH_ADMIN);
-	$lang->load('com_kunena',KPATH_SITE);
-} else {
-	$lang->load('com_kunena',JPATH_SITE);
-}
+$lang->load('com_kunena',JPATH_SITE);
 
 // Now that we have the global defines we can use shortcut defines
 require_once (KUNENA_PATH_LIB . DS . 'kunena.config.class.php');
@@ -523,16 +518,8 @@ switch ($task) {
 	case "createmenu" :
 		$lang = JFactory::getLanguage();
 		// Start by loading English strings and override them by current locale
-		if (Kunena::isSVN()) {
-			$lang->load('com_kunena.install',KPATH_ADMIN, 'en-GB');
-		} else {
-			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
-		}
-		if (Kunena::isSVN()) {
-			$lang->load('com_kunena.install',KPATH_ADMIN);
-		} else {
-			$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
-		}
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR, 'en-GB');
+		$lang->load('com_kunena.install',JPATH_ADMINISTRATOR);
 
 		require_once(KPATH_ADMIN . '/install/model.php');
 		$installer = new KunenaModelInstall();
@@ -1617,17 +1604,17 @@ function showConfig($option) {
 	$timesel[] = JHTML::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
 	// build the html select list
 	$lists ['show_list_time'] = JHTML::_('select.genericlist', $timesel, 'cfg_show_list_time', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->show_list_time);
-	
+
 	$sessiontimetype[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_SESSION_TYPE_ALL'));
 	$sessiontimetype[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_SESSION_TYPE_VALID'));
 	$sessiontimetype[] = JHTML::_('select.option', 2, JText::_('COM_KUNENA_SHOW_SESSION_TYPE_TIME'));
-	
+
 	$lists ['show_session_type'] = JHTML::_('select.genericlist', $sessiontimetype, 'cfg_show_session_type', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->show_session_type);
-	
+
 	$userlist_allowed[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_ALL'));
 	$userlist_allowed[] = JHTML::_('select.option', 1, JText::_('COM_KUNENA_SHOW_USERLIST_TYPE_REGISTRED'));
 	$lists ['userlist_allowed'] = JHTML::_('select.genericlist', $userlist_allowed, 'cfg_userlist_allowed', 'class="inputbox" size="1"', 'value', 'text', $kunena_config->userlist_allowed);
-	
+
 	html_Kunena::showConfig($kunena_config, $lists, $option);
 }
 
@@ -3229,11 +3216,11 @@ function generateSystemReport () {
 	$cb = checkThirdPartyVersion('comprofiler', 'comprofilej' , 'CommunityBuilder', 'components/com_comprofiler', null, 1, 0, 0);
 	$jomsocial = checkThirdPartyVersion('community', 'community', 'Jomsocial', 'components/com_community', null, 1, 0, 0);
 	$uddeim = checkThirdPartyVersion('uddeim', 'uddeim.j15', 'UddeIm', 'components/com_uddeim', null, 1, 0, 0);
-	
+
 	$sh404sef = checkThirdPartyVersion('sh404sef', 'sh404sef', 'sh404sef', 'components/com_sh404sef', null, 1, 0, 0);
 	$joomsef = checkThirdPartyVersion('joomsef', 'sef', 'ARTIO JoomSEF', 'components/com_sef', null, 1, 0, 0);
 	$acesef = checkThirdPartyVersion('acesef', 'acesef', 'AceSEF', 'components/com_acesef', null, 1, 0, 0);
-	
+
     $report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'

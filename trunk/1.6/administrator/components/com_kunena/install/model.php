@@ -232,25 +232,43 @@ class KunenaModelInstall extends JModel {
 		}
 		if ($success && !$silent)
 			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_EXTRACT_STATUS', $filename), $success, $text );
+
+		return $success;
 	}
 
 	function installLanguage($tag, $name = '') {
 		jimport('joomla.installer.installer');
-		$success = false;
-		$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
-		$file = "language.{$tag}".file_get_contents("{$path}/fileformat");
-		$dest = JPATH_ROOT."/tmp/kinstall_lang.{$tag}";
+		$exists = false;
+		$success = true;
+		$destinations = array(
+			'site'=>JPATH_ROOT . '/components/com_kunena',
+			'admin'=>JPATH_ADMINISTRATOR . '/components/com_kunena'
+		);
 
-		if (!file_exists("$path/$file")) return false;
-		$this->extract ( $path, $file, $dest, true );
-		$installer = new JInstaller ( );
-		if ($installer->install ( $dest )) {
-			$success = true;
-		} else {
-			$success = -1;
+		foreach ($destinations as $key=>$dest) {
+			if ($success != true) continue;
+			$installdir = "{$dest}/language/{$tag}";
+			// If we are installing Kunena from archive, we need to unzip language file
+			if (!Kunena::isSVN()) {
+				$path = JPATH_ADMINISTRATOR . '/components/com_kunena/archive';
+				$file = "{$tag}.com_kunena-{$key}".file_get_contents("{$path}/fileformat");
+
+				if (file_exists("$path/$file")) {
+					$success = $this->extract ( $path, $file, $installdir, true );
+				}
+			}
+			// Install language from dest/language/xx-XX
+			if ($success == true && is_dir($installdir)) {
+				$exists = true;
+				$installer = new JInstaller ( );
+				if ($installer->install ( $installdir )) {
+					$success = true;
+				} else {
+					$success = -1;
+				}
+			}
 		}
-		JFolder::delete($dest);
-		if ($name) $this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_LANGUAGE', $name), $success);
+		if ($exists && $name) $this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_LANGUAGE', $name), $success);
 		return $success;
 	}
 
@@ -371,9 +389,9 @@ class KunenaModelInstall extends JModel {
 		$path = JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'archive';
 		$ext = file_get_contents("{$path}/fileformat");
 		static $files = array(
-			array('name'=>'admin', 'dest'=>KPATH_ADMIN),
-			array('name'=>'site', 'dest'=>KPATH_SITE),
-			array('name'=>'media', 'dest'=>KPATH_MEDIA)
+			array('name'=>'com_kunena-admin', 'dest'=>KPATH_ADMIN),
+			array('name'=>'com_kunena-site', 'dest'=>KPATH_SITE),
+			array('name'=>'com_kunena-media', 'dest'=>KPATH_MEDIA)
 		);
 		$task = $this->getTask();
 		if (isset($files[$task])) {
@@ -448,12 +466,7 @@ class KunenaModelInstall extends JModel {
 		);
 
 		$lang = JFactory::getLanguage();
-		if (!$lang->load('com_kunena',JPATH_SITE)) {
-			$lang->load('com_kunena',KPATH_SITE);
-		}
-		if (!$lang->load('com_kunena',JPATH_ADMINISTRATOR)) {
-			$lang->load('com_kunena',KPATH_ADMIN);
-		}
+		$lang->load('com_kunena',JPATH_SITE);
 
 		// TODO: remove dependence
 		require_once (KPATH_ADMIN . '/api.php');
@@ -472,6 +485,13 @@ class KunenaModelInstall extends JModel {
 				$success = JFile::move("{$path}/{$filename}.new.{$ext}", "{$path}/{$filename}.{$ext}");
 				if (!$success) $this->addStatus ( JText::_('COM_KUNENA_INSTALL_RENAMING_FAIL')." {$filename}.new.{$ext}", false, '' );
 			}
+		}
+
+		// Cleanup directory structure
+		if (!Kunena::isSVN()) {
+			JFolder::delete(KPATH_ADMIN . '/archive');
+			JFolder::delete(KPATH_ADMIN . '/language');
+			JFolder::delete(KPATH_SITE . '/language');
 		}
 
 		if (! $this->getError ()) {

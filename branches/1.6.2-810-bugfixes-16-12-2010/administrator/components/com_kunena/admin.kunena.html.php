@@ -1476,7 +1476,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagequality" class="ksm-field"
 							value="<?php echo kescape($kunena_config->imagequality);
-						?>" /> px</td>
+						?>" /> %</td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY_DESC') ?></td>
 					</tr>
 				</table>
@@ -2604,9 +2604,6 @@ function textCounter(field, target) {
 	<form action="index.php" method="post" name="adminForm">
 		<table class="adminform" cellpadding="4" cellspacing="0" border="0" width="100%">
 			<tr>
-				<th width="100%" colspan="2">&nbsp;</th>
-			</tr>
-			<tr>
 				<td colspan="2"><?php echo JText::_('COM_KUNENA_A_PRUNE_DESC') ?></td>
 			</tr>
 			<tr>
@@ -2615,7 +2612,7 @@ function textCounter(field, target) {
 			</tr>
 			<tr>
 				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
-				<td><input type="text" name="prune_days" value="30" /><?php echo JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
+				<td><input type="text" name="prune_days" value="30" /><?php echo "&nbsp;". JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
 			</tr>
 		</table>
 		<input type="hidden" name="task" value="" />

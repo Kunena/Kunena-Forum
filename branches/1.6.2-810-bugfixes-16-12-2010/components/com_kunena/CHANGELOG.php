@@ -36,6 +36,7 @@ Kunena 1.6.2-DEV
 18-December-2010 810
 ^ [#23875] Minor html fixes backend
 ^ [#23875] Minor html fixes backend (part2)
+^ [#23875] Minor html fixes backend (part3)
 
 16-December-2010 810
 ^ [#23293] add/update languages Dutch

@@ -53,7 +53,7 @@ class CKunenaPath extends JPath
 
 class CKunenaFolder extends JFolder
 {
-	public function makeSafe($folder) {
+	static function createIndex($folder) {
 		// Make sure we have an index.html file in the current folder
 		if (!CKunenaFile::exists($folder.DS.'index.html')) {
 			CKunenaFile::write($folder.DS.'index.html','<html><body></body></html>');

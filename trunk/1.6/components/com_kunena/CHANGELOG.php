@@ -38,6 +38,7 @@ Kunena 1.6.2-DEV
 ^ [#23863] Install language files during SVN install
 ^ [#23863] Remove special SVN language file handling
 ^ [#15886] Merged revisions 4005-4025 from /branches/1.6-xillibit-fixes-20101216
+# [#23872] Rename CKunenaFolder::makeSafe() as it conflicts with Joomla 1.6
 
 18-December-2010 Xillibit
 ^ [#23863] Add support for language installation for j1.6

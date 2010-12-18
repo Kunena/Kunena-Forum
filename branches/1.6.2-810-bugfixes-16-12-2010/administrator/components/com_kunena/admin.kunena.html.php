@@ -397,7 +397,7 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 				<tr>
 					<td colspan="14">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>
@@ -2086,7 +2086,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 		<form action="index.php?" method="post" name="adminForm" class="adminForm" id="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr>
-					<th colspan="4"><?php echo JText::_('COM_KUNENA_PATH'); ?> <?php echo kescape($file); ?></th>
+					<th colspan="4"><?php echo JText::_('COM_KUNENA_PATH'). kescape($file); ?></th>
 				</tr>
 				<tr>
 					<td><textarea cols="100" rows="20" name="csscontent"><?php echo kescape($content); ?></textarea></td>
@@ -2139,7 +2139,7 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 				<tr>
 					<td colspan="14">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>
@@ -2223,7 +2223,7 @@ function newModerator($option, $id, $moderators, &$modIDs, $forumName, &$userLis
 	<form action="index.php" method="post" name="adminForm">
 		<table cellpadding="4" class="adminheading" cellspacing="0" border="0" width="100%">
 			<tr>
-				<th width="100%" class="user"><?php echo JText::_('COM_KUNENA_ADDMOD'); ?> <?php echo kescape($forumName); ?>
+				<th width="100%" class="user"><?php echo JText::_('COM_KUNENA_ADDMOD'). kescape($forumName); ?>
 				</th>
 				<td><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?></td>
 				<td><?php echo $pageNav->getLimitBox (); ?></td>
@@ -2289,7 +2289,7 @@ function newModerator($option, $id, $moderators, &$modIDs, $forumName, &$userLis
 			<tr>
 				<td class="kadmin-paging" colspan="6">
 					<div class="pagination">
-						<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+						<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 						<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 					</div>
@@ -2402,8 +2402,7 @@ function textCounter(field, target) {
 				?>
 
 				<td><?php if ($editavatar) {
-					?>
-				<?php } else {
+					 } else {
 					echo "<td>&nbsp;</td>";
 				}
 				?></td>
@@ -2447,7 +2446,6 @@ function textCounter(field, target) {
 					<tr>
 						<th colspan="2" class="title"><?php
 						echo JText::_('COM_KUNENA_SUBFOR');
-						?> <?php
 						echo kescape($username);
 						?>
 						</th>
@@ -2786,7 +2784,7 @@ function textCounter(field, target) {
 				<tr>
 					<td colspan="14">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>
@@ -3006,7 +3004,7 @@ function textCounter(field, target) {
 				<tr>
 					<td colspan="6">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>
@@ -3272,7 +3270,7 @@ function showtrashview($option, $trashitems, $pageNav, $lists) {
 				<tr>
 					<td colspan="9">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>

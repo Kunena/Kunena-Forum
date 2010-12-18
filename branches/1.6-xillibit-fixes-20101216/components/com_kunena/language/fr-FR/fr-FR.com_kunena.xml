@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
+<!-- $Id: fr-FR.com_kunena.xml 3776 2010-10-23 18:03:22Z fxstein $ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="administrator" method="upgrade">
+<install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - French</name>
 	<tag>fr-FR</tag>
 	<creationDate>unknown</creationDate>
@@ -14,11 +14,11 @@
 	<license>GNU/GPL</license>
 	<description>French language file for Kunena Forum Component</description>
 
-	<administration>
+	<site>
 		<files>
 			<filename>fr-FR.com_kunena.ini</filename>
-			<filename>fr-FR.com_kunena.install.ini</filename>
-			<filename>fr-FR.com_kunena.menu.ini</filename>
+			<filename>fr-FR.com_kunena.tpl_default.ini</filename>
+			<filename>fr-FR.com_kunena.tpl_example.ini</filename>
 		</files>
-	</administration>
+	</site>
 </install>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
+<!-- $Id: mk-MK.com_kunena.xml 3446 2010-09-07 16:51:35Z mahagr $ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="both" method="upgrade">
+<install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Macedonian</name>
 	<tag>mk-MK</tag>
 	<creationDate>unknown</creationDate>
@@ -14,16 +14,8 @@
 	<license>GNU/GPL</license>
 	<description>Macedonian language file for Kunena Forum Component</description>
 
-	<administration>
-		<files folder="admin">
-			<!-- filename>mk-MK.com_kunena.ini</filename -->
-			<!-- filename>mk-MK.com_kunena.install.ini</filename -->
-			<!-- filename>mk-MK.com_kunena.menu.ini</filename -->
-		</files>
-	</administration>
-
 	<site>
-		<files folder="site">
+		<files>
 			<filename>mk-MK.com_kunena.ini</filename>
 			<!-- filename>mk-MK.com_kunena.tpl_default.ini</filename -->
 			<!-- filename>mk-MK.com_kunena.tpl_example.ini</filename -->

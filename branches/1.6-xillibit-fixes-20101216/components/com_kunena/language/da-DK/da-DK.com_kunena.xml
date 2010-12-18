@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id$ -->
+<!-- $Id: da-DK.com_kunena.xml 3770 2010-10-23 15:43:12Z mahagr $ -->
 <!DOCTYPE install>
-<install version="1.5" client="administrator" type="language" method="upgrade">
+<install version="1.5" client="site" type="language" method="upgrade">
    <name>Dansk (Danish)</name>
    <tag>da-DK</tag>
    <version>1.6</version>
@@ -12,10 +12,12 @@
    <copyright></copyright>
    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
    <description>Dansk sprogfil til Kunena  1.6</description>
-   <administration>
+   
+   <site>
       <files>
          <filename>da-DK.com_kunena.ini</filename>
-		 <filename>da-DK.com_kunena.install.ini</filename>
+		 <filename>da-DK.com_kunena.tpl_default.ini</filename>
+		 <filename>da-DK.com_kunena.tpl_example.ini</filename>
       </files>
-   </administration>
+   </site>
 </install>

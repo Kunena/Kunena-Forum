@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
+<!-- $Id: hu-HU.com_kunena.xml 3770 2010-10-23 15:43:12Z mahagr $ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="administrator" method="upgrade">
+<install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Hungarian</name>
 	<tag>hu-HU</tag>
 	<creationDate>2010-10-09</creationDate>
@@ -14,11 +14,11 @@
 	<license>GNU/GPL</license>
 	<description>Hungarian language file for Kunena Forum Component.</description>
 
-	<administration>
+	<site>
 		<files>
 			<filename>hu-HU.com_kunena.ini</filename>
-			<filename>hu-HU.com_kunena.install.ini</filename>
-			<filename>hu-HU.com_kunena.menu.ini</filename>
+			<filename>hu-HU.com_kunena.tpl_default.ini</filename>
+			<filename>hu-HU.com_kunena.tpl_example.ini</filename>
 		</files>
-	</administration>
+	</site>
 </install>

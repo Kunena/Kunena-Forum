@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id$ -->
+<!-- $Id: el-GR.com_kunena.xml 3770 2010-10-23 15:43:12Z mahagr $ -->
 <!DOCTYPE install>
-<install type="language" version="1.5.0" client="administrator" method="upgrade">
+<install type="language" version="1.5.0" client="site" method="upgrade">
 	<name>Kunena Forum (Greek)</name>
 	<tag>el-GR</tag>
 	<version>1.6 RC</version>
@@ -35,11 +35,11 @@
 			</table>
 			</div>]]>
 	</description>
-	<administration>
+	<site>
 		<files>
 			<filename>el-GR.com_kunena.ini</filename>
-			<filename>el-GR.com_kunena.install.ini</filename>
-			<filename>el-GR.com_kunena.menu.ini</filename>
+			<filename>el-GR.com_kunena.tpl_default.ini</filename>
+			<filename>el-GR.com_kunena.tpl_example.ini</filename>
 		</files>
-	</administration>
+	</site>
 </install>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$ -->
+<!-- $Id: vi-VN.com_kunena.xml 3531 2010-09-19 20:08:03Z mahagr $ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="both" method="upgrade">
+<install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Vietnamese</name>
 	<tag>vi-VN</tag>
 	<creationDate>unknown</creationDate>
@@ -14,16 +14,8 @@
 	<license>GNU/GPL</license>
 	<description>Vietnamese language file for Kunena Forum Component</description>
 
-	<administration>
-		<files folder="admin">
-			<!-- filename>vi-VN.com_kunena.ini</filename -->
-			<!-- filename>vi-VN.com_kunena.install.ini</filename -->
-			<!-- filename>vi-VN.com_kunena.menu.ini</filename -->
-		</files>
-	</administration>
-
 	<site>
-		<files folder="site">
+		<files>
 			<filename>vi-VN.com_kunena.ini</filename>
 			<!-- filename>vi-VN.com_kunena.tpl_default.ini</filename -->
 			<!-- filename>vi-VN.com_kunena.tpl_example.ini</filename -->

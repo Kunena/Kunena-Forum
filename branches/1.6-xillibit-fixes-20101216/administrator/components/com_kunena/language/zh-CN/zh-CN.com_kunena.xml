@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="both" method="upgrade">
+<install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Chinese</name>
 	<tag>zh-CN</tag>
 	<creationDate>unknown</creationDate>
@@ -15,18 +15,10 @@
 	<description>Chinese language file for Kunena Forum Component</description>
 
 	<administration>
-		<files folder="admin">
+		<files>
 			<filename>zh-CN.com_kunena.ini</filename>
 			<filename>zh-CN.com_kunena.install.ini</filename>
 			<filename>zh-CN.com_kunena.menu.ini</filename>
 		</files>
 	</administration>
-
-	<site>
-		<files folder="site">
-			<filename>zh-CN.com_kunena.ini</filename>
-			<filename>zh-CN.com_kunena.tpl_default.ini</filename>
-			<filename>zh-CN.com_kunena.tpl_example.ini</filename>
-		</files>
-	</site>
 </install>

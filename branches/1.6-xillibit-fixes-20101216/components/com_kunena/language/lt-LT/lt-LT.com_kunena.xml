@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- $Id$ -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: lt-LT.com_kunena.xml 3902 2010-11-15 14:54:01Z mahagr $ -->
 <!DOCTYPE install>
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Lithuanian</name>
@@ -37,7 +37,7 @@
 				</div>
 				]]>
 	</description>
-    <files folder="site">
+    <files>
       <filename>lt-LT.com_kunena.ini</filename>
 	  <filename>lt-LT.com_kunena.tpl_default.ini</filename>
 	  <filename>lt-LT.com_kunena.tpl_example.ini</filename>

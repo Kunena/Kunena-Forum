@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+18-December-2010 810
+^ [#23875] Minor html fixes backend
+
 16-December-2010 810
 ^ [#23293] add/update languages Dutch
 ^ [#23854] Hyperlink announcement

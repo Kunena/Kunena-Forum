@@ -397,7 +397,7 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 				<tr>
 					<td colspan="14">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>
@@ -1476,7 +1476,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY') ?></td>
 								<td align="left" valign="top"><input type="text" name="cfg_imagequality" class="ksm-field"
 							value="<?php echo kescape($kunena_config->imagequality);
-						?>" /> px</td>
+						?>" /> %</td>
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_A_IMGQUALITY_DESC') ?></td>
 					</tr>
 				</table>
@@ -2086,7 +2086,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 		<form action="index.php?" method="post" name="adminForm" class="adminForm" id="adminForm">
 			<table cellpadding="4" cellspacing="0" border="0" width="100%" class="adminform">
 				<tr>
-					<th colspan="4"><?php echo JText::_('COM_KUNENA_PATH'); ?> <?php echo kescape($file); ?></th>
+					<th colspan="4"><?php echo JText::_('COM_KUNENA_PATH'). kescape($file); ?></th>
 				</tr>
 				<tr>
 					<td><textarea cols="100" rows="20" name="csscontent"><?php echo kescape($content); ?></textarea></td>
@@ -2139,7 +2139,7 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 				<tr>
 					<td colspan="14">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>
@@ -2223,7 +2223,7 @@ function newModerator($option, $id, $moderators, &$modIDs, $forumName, &$userLis
 	<form action="index.php" method="post" name="adminForm">
 		<table cellpadding="4" class="adminheading" cellspacing="0" border="0" width="100%">
 			<tr>
-				<th width="100%" class="user"><?php echo JText::_('COM_KUNENA_ADDMOD'); ?> <?php echo kescape($forumName); ?>
+				<th width="100%" class="user"><?php echo JText::_('COM_KUNENA_ADDMOD'). kescape($forumName); ?>
 				</th>
 				<td><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?></td>
 				<td><?php echo $pageNav->getLimitBox (); ?></td>
@@ -2289,7 +2289,7 @@ function newModerator($option, $id, $moderators, &$modIDs, $forumName, &$userLis
 			<tr>
 				<td class="kadmin-paging" colspan="6">
 					<div class="pagination">
-						<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+						<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 						<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 					</div>
@@ -2402,8 +2402,7 @@ function textCounter(field, target) {
 				?>
 
 				<td><?php if ($editavatar) {
-					?>
-				<?php } else {
+					 } else {
 					echo "<td>&nbsp;</td>";
 				}
 				?></td>
@@ -2447,7 +2446,6 @@ function textCounter(field, target) {
 					<tr>
 						<th colspan="2" class="title"><?php
 						echo JText::_('COM_KUNENA_SUBFOR');
-						?> <?php
 						echo kescape($username);
 						?>
 						</th>
@@ -2466,7 +2464,7 @@ function textCounter(field, target) {
 								$k = 1 - $k;
 								echo "<tr class=\"row$k\">";
 								echo "  <td width=\"30\">$enum</td>";
-								echo "  <td><strong>" . kescape ( $cat->catname ) ."</strong>" . JText::_('COM_KUNENA_LAST_MESSAGE') . "<em>".kescape ( $cat->subject )."</em>". JText::_('COM_KUNENA_BY') . "<em>".kescape ( $cat->username )."</em></td>";
+								echo " <td><strong>" . kescape ( $cat->catname ) ."</strong>" ." &nbsp;". JText::_('COM_KUNENA_LAST_MESSAGE'). "<em>".kescape ( $cat->subject )."</em>" ." &nbsp;". JText::_('COM_KUNENA_BY') ." &nbsp;". "<em>".kescape ( $cat->username )."</em></td>";
 								echo "</tr>";
 								$enum ++;
 							}
@@ -2486,7 +2484,6 @@ function textCounter(field, target) {
 					<tr>
 						<th colspan="2" class="title"><?php
 						echo JText::_('COM_KUNENA_SUBFOR');
-						?> <?php
 						echo kescape($username);
 						?>
 						</th>
@@ -2506,7 +2503,7 @@ function textCounter(field, target) {
 								$k = 1 - $k;
 								echo "<tr class=\"row$k\">";
 								echo "  <td width=\"30\">$enum</td>";
-								echo "  <td><strong>" . kescape ( $sub->subject ) ."</strong>" . JText::_('COM_KUNENA_BY') . "<em>".kescape ( $sub->name )."</em></td>";
+								echo " <td><strong>" . kescape ( $sub->subject ) ."</strong>" ." &nbsp;". JText::_('COM_KUNENA_BY' ) ." &nbsp;". "<em>".kescape ( $sub->name )."</em></td>";
 								echo "</tr>";
 								$enum ++;
 							}
@@ -2607,9 +2604,6 @@ function textCounter(field, target) {
 	<form action="index.php" method="post" name="adminForm">
 		<table class="adminform" cellpadding="4" cellspacing="0" border="0" width="100%">
 			<tr>
-				<th width="100%" colspan="2">&nbsp;</th>
-			</tr>
-			<tr>
 				<td colspan="2"><?php echo JText::_('COM_KUNENA_A_PRUNE_DESC') ?></td>
 			</tr>
 			<tr>
@@ -2618,7 +2612,7 @@ function textCounter(field, target) {
 			</tr>
 			<tr>
 				<td width="20%"><?php echo JText::_('COM_KUNENA_A_PRUNE_NOPOSTS') ?></td>
-				<td><input type="text" name="prune_days" value="30" /><?php echo JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
+				<td><input type="text" name="prune_days" value="30" /><?php echo "&nbsp;". JText::_('COM_KUNENA_A_PRUNE_DAYS') ?></td>
 			</tr>
 		</table>
 		<input type="hidden" name="task" value="" />
@@ -2787,7 +2781,7 @@ function textCounter(field, target) {
 				<tr>
 					<td colspan="14">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>
@@ -3007,7 +3001,7 @@ function textCounter(field, target) {
 				<tr>
 					<td colspan="6">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>
@@ -3273,7 +3267,7 @@ function showtrashview($option, $trashitems, $pageNav, $lists) {
 				<tr>
 					<td colspan="9">
 						<div class="pagination">
-							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'); ?> <?php echo $pageNav->getLimitBox (); ?></div>
+							<div class="limit"><?php echo JText::_('COM_KUNENA_A_DISPLAY'). $pageNav->getLimitBox (); ?></div>
 							<?php echo $pageNav->getPagesLinks (); ?>
 							<div class="limit"><?php echo $pageNav->getResultsCounter (); ?></div>
 						</div>

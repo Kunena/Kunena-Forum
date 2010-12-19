@@ -75,7 +75,7 @@ if ($forumHeader) {
 	#Kunena #ktop span.ktoggler { background: {$forumHeader} }
 	#Kunena #ktab a:hover,
 	#Kunena #ktab li.Kunena-item-active a	{ background-color: {$forumHeader} }
-	#ktab ul.menu li#current.active a { background-color: {$forumHeader} }
+	#Kunena #ktab ul.menu li.active a { background-color: {$forumHeader} }
 	#Kunena a:link,
 	#Kunena a:visited,
 	#Kunena a:active {color: {$forumHeader};}

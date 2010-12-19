@@ -33,12 +33,20 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+19-December.2010 Matias
+# [#23884] Add basic Joomla 1.6 support for menu items: latest, listcat, post, profile, showcat
+
 18-December-2010 Matias
 + [#23863] Add support for language installation for j1.6
 ^ [#23863] Install language files during SVN install
 ^ [#23863] Remove special SVN language file handling
 ^ [#15886] Merged revisions 4005-4025 from /branches/1.6-xillibit-fixes-20101216
 # [#23872] Rename CKunenaFolder::makeSafe() as it conflicts with Joomla 1.6
+# [#23884] Support Joomla 1.6 in KunenaRoute class
+# [#23884] Add Joomla 1.6 translations: en-GB.com_kunena.sys.ini
+# [#23884] Fix menu highlight in Joomla 1.6
+# [#23884] Add basic Joomla 1.6 support for menu items: entrypage, help, rules, search
+# [#23798] Fix wrong case in filename: Kunena.special.js.php
 
 18-December-2010 Xillibit
 ^ [#23863] Add support for language installation for j1.6

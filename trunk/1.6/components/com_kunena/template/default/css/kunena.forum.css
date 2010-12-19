@@ -562,7 +562,7 @@ PX		EM			PCT			PT
 	padding: 0;
 	border:none;
 }
-#ktab ul.menu li#current.active a {
+#Kunena #ktab ul.menu li.active a {
 	/* Do not specify background color: template parameter */
 }
 	

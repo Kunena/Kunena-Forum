@@ -148,9 +148,12 @@ abstract class KunenaRoute {
 			foreach ( self::$menu as $item ) {
 				if (! is_object ( $item ))
 					continue;
-				// FIXME: Joomla 1.5 only!
-				if (!empty($item->published) && (!isset ( $item->access ) || $item->access <= $my->aid)) {
-					self::$childlist[$item->menutype][$item->parent][$item->id] = $item->id;
+				// Support both J1.6 and J1.5
+				$authorise = isset($item->parent_id) ? $menus->authorise($item->id) : !empty($item->published) && (!isset ( $item->access ) || $item->access <= $my->aid);
+				$parent = isset($item->parent_id) ? $item->parent_id : $item->parent;
+
+				if ($authorise) {
+					self::$childlist[$item->menutype][$parent][$item->id] = $item->id;
 				}
 			}
 		}
@@ -191,7 +194,7 @@ abstract class KunenaRoute {
 					self::$parent[$Itemid] = $current;
 					if (isset($item->query['view']) && $item->query['view'] == 'entrypage') break;
 				}
-				// Support J1.6 and J1.5
+				// Support both J1.6 and J1.5
 				$current = isset($item->parent_id) ? $item->parent_id : $item->parent;
 			}
 		}

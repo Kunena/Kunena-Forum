@@ -35,6 +35,7 @@ Kunena 1.6.2-DEV
 
 19-December-2010 Xillibit
 + [#23892] Show in report configuration settings the Kunena template details
+# [#23798] On reply postcatid is undefined in javascript
 
 18-December-2010 Xillibit
 # [#23859] Fix from K2.0 - Do not use Joomla access control if using another accesstype

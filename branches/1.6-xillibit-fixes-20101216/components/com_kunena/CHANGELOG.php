@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+19-December-2010 Xillibit
++ [#23892] Show in report configuration settings the Kunena template details
+
 18-December-2010 Xillibit
 # [#23859] Fix from K2.0 - Do not use Joomla access control if using another accesstype
 # [#23861] Fix from K2.0 - Add subscriptions support for JXtended and NoixACL groups

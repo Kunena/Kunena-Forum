@@ -35,6 +35,8 @@ Kunena 1.6.2-DEV
 
 19-December.2010 Matias
 # [#23884] Add basic Joomla 1.6 support for menu items: latest, listcat, post, profile, showcat
+# [#23826] Fix regression in Category Manager: escaped too much
+# [#23885] Restore support for old templates from K1.6.1
 
 18-December-2010 Matias
 + [#23863] Add support for language installation for j1.6

@@ -71,6 +71,12 @@ class CKunenaAjaxHelper {
 					$response = $this->_getPreview ( $body );
 
 					break;
+				case 'pollcatsallowed' :
+					// TODO: deprecated
+					
+					$response = $this->_getPollsCatsAllowed ();
+
+					break;
 				case 'pollvote' :
 					$vote	= JRequest::getInt('kpollradio', '');
 					$id = JRequest::getInt ( 'kpoll-id', 0 );
@@ -91,6 +97,12 @@ class CKunenaAjaxHelper {
 					}
 
 					$response = $this->_changePollVote ($vote, $id, $this->_my->id);
+
+					break;
+				case 'anynomousallowed' :
+					// TODO: deprecated
+				
+					$response = $this->_anynomousAllowed ();
 
 					break;
 				case 'uploadfile' :
@@ -201,7 +213,26 @@ class CKunenaAjaxHelper {
 
 		return $result;
 	}
-	
+
+	// TODO: deprecated
+	protected function _getPollsCatsAllowed () {
+		$result = array ();
+
+		$query = "SELECT id
+							FROM #__kunena_categories
+							WHERE allow_polls=1;";
+		$this->_db->setQuery ( $query );
+		$allow_polls = $this->_db->loadResultArray ();
+		if ($this->_db->getErrorNum ()) {
+			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
+		} else {
+			$result['status'] = '1';
+			$result['allowed_polls'] = $allow_polls;
+		}
+
+		return $result;
+	}
+
 	protected function _addPollVote ($value_choosed, $id, $userid) {
 		$result = array ();
 
@@ -218,6 +249,25 @@ class CKunenaAjaxHelper {
 		require_once (KUNENA_PATH_LIB .DS. 'kunena.poll.class.php');
 		$kunena_polls =& CKunenaPolls::getInstance();
 		$result = $kunena_polls->save_changevote($id,$userid,$value_choosed);
+
+		return $result;
+	}
+
+	// TODO: deprecated
+	protected function _anynomousAllowed () {
+		$result = array ();
+
+		$query = "SELECT id
+							FROM #__kunena_categories
+							WHERE allow_anonymous=1;";
+		$this->_db->setQuery ( $query );
+		$allow_anonymous = $this->_db->loadResultArray ();
+		if ($this->_db->getErrorNum ()) {
+			$result = array( 'status' => '-1', 'error' => KunenaError::getDatabaseError() );
+		} else {
+			$result['status'] = '1';
+			$result['allowed_anonymous'] = $allow_anonymous;
+		}
 
 		return $result;
 	}

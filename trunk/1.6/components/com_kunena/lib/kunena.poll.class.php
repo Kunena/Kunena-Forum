@@ -124,7 +124,8 @@ class CKunenaPolls {
 	/**
 	* Get if the poll is allowed to be displayed
 	*/
-	function get_poll_allowed($id, $parent=0, $kunena_editmode, $allow_cat=0, $config) {
+	function get_poll_allowed($id, $parent=0, $kunena_editmode, $allow_cat=0) {
+		$config = KunenaFactory::getConfig ();
 		if ( $config->pollenabled ) {
 			$poll_allowed = '';
 			if ( $allow_cat ) {

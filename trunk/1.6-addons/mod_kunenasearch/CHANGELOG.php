@@ -33,6 +33,7 @@ KunenaSearch 1.6.0-RC2
 20-December-2010 Xillibit
 + [#22592] Add build directory with files, changelog and readme files
 ^ [#22592] Missing build directory with files
++ [#22592] Put all language strings into the file en-GB.mod_kunenasearch.ini
 
 20-December-2010 Severdia
 ^ [#23899] Update search module naming

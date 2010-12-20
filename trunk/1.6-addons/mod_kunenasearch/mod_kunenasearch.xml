@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
-<install type="module" version="1.0.0">
+<install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Search</name>
-	<author>Kunena Project</author>
+	<author>Kunena Team</author>
 	<creationDate>September 2010</creationDate>
-	<copyright>(C)2010-2011 Kunena Project. All rights reserved.</copyright>
+	<copyright>(C)2010-2011 Kunena Team. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>admin@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
-	<version>1.0.0</version>
+	<version>1.0.0-RC2</version>
 	<description>This module will display a search box for Kunena. Add it to the kunena_profilebox position.</description>
 	<files>
-		<filename module="mod_kunena_search">mod_kunena_search.php</filename>
-		<filename module="mod_kunena_search">helper.php</filename>
-		<filename module="mod_kunena_search">kunena_search.css</filename>
-		<filename module="mod_kunena_search">index.html</filename>
+		<filename module="mod_kunenasearch">mod_kunenasearch.php</filename>
+		<filename module="mod_kunenasearch">helper.php</filename>
+		<filename module="mod_kunenasearch">kunena_search.css</filename>
+		<filename module="mod_kunenasearch">index.html</filename>
 		<folder>tmpl</folder>
 	</files>
 	<params>

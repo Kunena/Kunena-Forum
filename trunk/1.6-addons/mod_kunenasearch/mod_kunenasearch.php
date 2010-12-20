@@ -19,4 +19,4 @@ $ksearch_maxlength		 = $ksearch-width > 20 ? $ksearch-width : 20;
 $ksearch_txt			 = $params->get('ksearch_txt', JText::_('Search...'));
 $moduleclass_sfx 		 = $params->get('moduleclass_sfx', '');
 
-require(JModuleHelper::getLayoutPath('mod_kunena_search'));
+require(JModuleHelper::getLayoutPath('mod_kunenasearch'));

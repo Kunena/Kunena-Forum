@@ -1,12 +1,12 @@
 <?php
 /**
 * @version $Id$
-* KunenaLatest Module
+* Kunena Latest Module
 * @package Kunena latest
 *
-* @Copyright (C) 2010 www.kunena.com All rights reserved
+* @Copyright (C)2010-2011 www.kunena.org. All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 */
 
 // no direct access

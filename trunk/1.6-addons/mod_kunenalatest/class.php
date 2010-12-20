@@ -1,12 +1,12 @@
 <?php
 /**
  * @version $Id$
- * KunenaLatest Module
+ * Kunena Latest Module
  * @package Kunena latest
  *
- * @Copyright (C) 2010 www.kunena.com All rights reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+* @Copyright (C)2010-2011 www.kunena.org. All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
  */
 
 // no direct access
@@ -28,7 +28,7 @@ class modKunenaLatest {
 
 		$this->document = JFactory::getDocument ();
 		if ($cssadded == false) {
-			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/klatest.css' );
+			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/css/klatest.css' );
 			$cssadded = true;
 		}
 

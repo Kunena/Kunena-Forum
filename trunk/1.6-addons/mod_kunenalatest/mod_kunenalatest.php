@@ -4,9 +4,9 @@
  * KunenaLatest Module
  * @package Kunena Latest
  *
- * @Copyright (C) 2010 www.kunena.com All rights reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+* @Copyright (C)2010-2011 www.kunena.org. All rights reserved
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
+* @link http://www.kunena.org
  **/
 
 // no direct access

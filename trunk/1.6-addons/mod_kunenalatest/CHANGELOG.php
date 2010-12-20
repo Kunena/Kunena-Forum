@@ -4,9 +4,9 @@
 * KunenaLatest Module
 * @package Kunena latest
 *
-* @Copyright (C) 2010 www.kunena.com All rights reserved
+* @Copyright (C)2010-2011 www.kunena.org. All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 */
 
 // no direct access
@@ -28,7 +28,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+19-December-2010 Severdia
+# [#23900] Cleaned up English, updated copyright dates and URLs
+^ [#23900] Changed admin UI, grouped elements better
+^ [#23900] Added CSS and images folder, minified CSS file
+
 KunenaLatest 1.6.0-RC3
+
 12-Nov-2010 svens(LDA)
 + [#23293] add de-DE (thanks rich)
 
@@ -183,6 +189,7 @@ KunenaLatest 1.6.0-RC1
 19-May-2010 Xillibit
 # [#20081] Set configuration setting to choose between categories in or not in
 # [#20081] Fix issue after changes which doesn't take care of categories selected
+
 
 18-May-2010 Xillibit
 # [#20081] Leverage directly the CKunenaLatestX instead to have a copy of the class

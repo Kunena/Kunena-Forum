@@ -1,10 +1,10 @@
 /**
 * @version $Id$
-* KunenaLatest Module
-* @package Kunena latest
-* @Copyright (C) 2008-2009 Kunena All rights reserved
+* Kunena Latest Module
+* @package Kunena Latest
+* @Copyright (C) 2008-2011 Kunena. All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 **/
 
 Kunena Latest Module README

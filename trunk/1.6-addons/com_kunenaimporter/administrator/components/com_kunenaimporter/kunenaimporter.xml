@@ -6,9 +6,9 @@
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
-	<authorEmail>Kunena@Kunena.com</authorEmail>
-	<authorUrl>http://www.Kunena.com</authorUrl>
-	<copyright>www.Kunena.com</copyright>
+	<authorEmail>admin@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>www.kunena.org</copyright>
 	<license>GNU/GPL</license>
 	<description>Imports external forum data (phpBB3, SMF2) into Kunena Forum.</description>
 

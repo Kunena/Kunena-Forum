@@ -5,10 +5,10 @@
 	<version>1.6.0-RC2</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
-	<author>www.Kunena.com</author>
-	<authorEmail>info@templatekunena.com</authorEmail>
-	<authorUrl>http://www.kunena.com</authorUrl>
-	<copyright>(c) 2010 Kunena Team, All rights reserved</copyright>
+	<author>www.kunena.org</author>
+	<authorEmail>admin@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
+	<copyright>(c)2010-2011 Kunena Team. All rights reserved</copyright>
 	<license>GNU/GPL</license>
 	<description>MOD_KUNENALOGIN_DESCRIPTION</description>
 	<files>

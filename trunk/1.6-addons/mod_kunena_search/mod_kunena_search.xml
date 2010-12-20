@@ -4,10 +4,10 @@
 	<name>Kunena Search</name>
 	<author>Kunena Project</author>
 	<creationDate>September 2010</creationDate>
-	<copyright>(C)2010 Kunena Project. All rights reserved.</copyright>
+	<copyright>(C)2010-2011 Kunena Project. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<authorEmail>ron@kunena.com</authorEmail>
-	<authorUrl>http://www.kunena.com</authorUrl>
+	<authorEmail>admin@kunena.org</authorEmail>
+	<authorUrl>http://www.kunena.org</authorUrl>
 	<version>1.0.0</version>
 	<description>This module will display a search box for Kunena. Add it to the kunena_profilebox position.</description>
 	<files>

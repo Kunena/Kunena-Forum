@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+20-December-2010 Xillibit
+^ [#23293] Added french translation fr-FR.com_kunena.sys.ini
+
 19-December-2010 Xillibit
 + [#23892] Show in report configuration settings the Kunena template details
 # [#23798] On reply postcatid is undefined in javascript

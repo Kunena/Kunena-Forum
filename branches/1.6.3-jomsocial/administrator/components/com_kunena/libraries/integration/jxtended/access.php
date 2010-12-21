@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: access.php 4050 2010-12-21 17:59:50Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -27,7 +27,8 @@ class KunenaAccessJXtended extends KunenaAccess {
 
 	protected function loadAdmins() {
 		$db = JFactory::getDBO ();
-		$query = "SELECT u.id AS userid, 0 AS catid FROM #__users AS u
+		$query = "SELECT u.id AS userid, 0 AS catid
+			FROM #__users AS u
 			WHERE u.block='0' AND u.usertype IN ('Administrator', 'Super Administrator')";
 		$db->setQuery ( $query );
 		$list = (array) $db->loadObjectList ();
@@ -52,6 +53,7 @@ class KunenaAccessJXtended extends KunenaAccess {
 	protected function loadAllowedCategories($user) {
 		$user = JFactory::getUser($user);
 
+		// Get all Joomla user groups for current user
 		$usergroups = $this->acl_get_groups('users', $user->id);
 
 		$categories = KunenaCategory::loadCategories();
@@ -63,8 +65,9 @@ class KunenaAccessJXtended extends KunenaAccess {
 			}
 			// Check against Joomla access level
 			elseif ($category->accesstype == 'joomla') {
-				if ( $category->access <= $user->get('aid') )
+				if ( $category->access <= $user->get('aid') ) {
 					$catlist[$category->id] = $category->id;
+				}
 			}
 			// Check against Joomla user group
 			elseif ($category->accesstype == 'none') {
@@ -111,7 +114,7 @@ class KunenaAccessJXtended extends KunenaAccess {
 		}
 
 		$db->setQuery ($query);
-		$userids = (array) $db->loadObjectList('id');
+		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();
 	}
 

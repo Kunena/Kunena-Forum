@@ -38,6 +38,8 @@ Kunena 1.6.3-DEV
 # [#23920] Fix a few bugs which broke up ACL
 # [#23920] Fix a bug making too many dummy queries when instantiating categories
 + [#23920] Administration: Display JomSocial group in category list, hide group info from edit
++ [#23920] Make Joomla 1.5 ACL integration to use phpgacl making it to work with a few ACL components
+# [#23920] Fix a bug where ACL groups were not shown at all
 
 20-December-2010 Matias
 ^ [#23152] Update version info to 1.6.3 (Chama = group, society)

@@ -556,7 +556,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 					</tr>
 					<?php endif; ?>
-					<?php if (!$row->accesstype == 'none'): ?>
+					<?php if ($row->accesstype == 'none'): ?>
 					<tr>
 						<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
 						<td valign="top"><?php echo $accessLists ['pub_access']; ?></td>

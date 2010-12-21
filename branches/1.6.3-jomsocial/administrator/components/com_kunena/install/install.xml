@@ -36,6 +36,8 @@
     <field name="alert_admin" type="tinyint(4)" null="0" default="0"/>
     <field name="moderated" type="tinyint(4)" null="0" default="1"/>
     <field name="moderators" type="varchar(15)" null="1"/>
+    <field name="accesstype" type="varchar(20)" null="0" default="none" />
+    <field name="access" type="int(11)" null="0" default="0" />
     <field name="pub_access" type="tinyint(4)" null="1" default="1"/>
     <field name="pub_recurse" type="tinyint(4)" null="1" default="1"/>
     <field name="admin_access" type="tinyint(4)" null="1" default="0"/>

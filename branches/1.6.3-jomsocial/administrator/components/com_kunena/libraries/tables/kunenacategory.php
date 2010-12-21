@@ -29,6 +29,8 @@ class TableKunenaCategory extends KunenaTable
 	var $alert_admin = null;
 	var $moderated = null;
 	var $moderators = null;
+	var $accesstype = null;
+	var $access = null;
 	var $pub_access = null;
 	var $pub_recurse = null;
 	var $admin_access = null;
@@ -57,12 +59,16 @@ class TableKunenaCategory extends KunenaTable
 
 	// check for potential problems
 	function check() {
-		if ($this->parent) {
-			if ($this->id == $this->parent) :
+		if ($this->id && $this->parent) {
+			if ($this->id == $this->parent) {
 				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_SAME_ERR' ) );
-			 elseif ($this->isChild ( $this->parent )) :
+			} elseif ($this->isChild ( $this->parent )) {
 				$this->setError ( JText::_ ( 'COM_KUNENA_FORUM_OWNCHILD_ERR' ) );
-			endif;
+			}
+		}
+		$this->name = trim($this->name);
+		if (!$this->name) {
+			$this->setError ( JText::_ ( 'COM_KUNENA_LIB_TABLE_CATEGORIES_ERROR_NO_NAME' ) );
 		}
 		return ($this->getError () == '');
 	}

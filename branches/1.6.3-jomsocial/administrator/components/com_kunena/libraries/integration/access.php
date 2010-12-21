@@ -13,12 +13,19 @@
 // Dont allow direct linking
 defined ( '_JEXEC' ) or die ( '' );
 
-kimport ( 'integration.integration' );
+require_once KPATH_ADMIN . '/libraries/integration/integration.php';
+kimport ( 'error' );
+kimport ( 'category' );
+kimport ( 'joomla.database.databasequery' );
 
 abstract class KunenaAccess {
 	public $priority = 0;
 
 	protected static $instance = false;
+	protected $adminsByCatid = false;
+	protected $adminsByUserid = false;
+	protected $moderatorsByCatid = false;
+	protected $moderatorsByUserid = false;
 
 	abstract public function __construct();
 
@@ -29,31 +36,241 @@ abstract class KunenaAccess {
 				$integration = $config->integration_access;
 			self::$instance = KunenaIntegration::initialize ( 'access', $integration );
 		}
+
 		return self::$instance;
 	}
 
-	function getAllowedHold($user, $catid, $string=true) {
+	public function clearCache() {
+		$this->adminsByCatid = false;
+		$this->adminsByUserid = false;
+		$this->moderatorsByCatid = false;
+		$this->moderatorsByUserid = false;
+
+		$db = JFactory::getDBO ();
+		$db->setQuery ( "UPDATE #__kunena_sessions SET allowed='na'" );
+		$db->query ();
+		KunenaError::checkDatabaseError();
+	}
+
+	public function getAccessLevelsList($category) {
+		if ($category->accesstype == 'joomla')
+			return JHTML::_('list.accesslevel', $category);
+		return $category->access;
+	}
+
+	public function getAdmins($catid = 0) {
+		if ($this->adminsByCatid === false) {
+			$this->loadAdmins();
+		}
+		return !empty($this->adminsByCatid[$catid]) ? $this->adminsByCatid[$catid] : array();
+	}
+
+	public function getModerators($catid = 0) {
+		if ($this->moderatorsByCatid === false) {
+			$this->loadModerators();
+		}
+		return !empty($this->moderatorsByCatid[$catid]) ? $this->moderatorsByCatid[$catid] : array();
+	}
+
+	public function isAdmin($user = null, $catid = 0) {
+		$user = KunenaFactory::getUser($user);
+
+		// Visitors cannot be administrators
+		if (!$user->exists()) return false;
+
+		// In backend every logged in user has global admin rights (for now)
+		if (JFactory::getApplication()->isAdmin())
+			return true;
+
+		// Load administrators list
+		if ($this->adminsByUserid === false) {
+			$this->loadAdmins();
+		}
+
+		// If $catid is not numeric: Is user administrator in ANY category?
+		if (!is_numeric($catid)) return !empty($this->adminsByUserid[$user->userid]);
+
+		// Is user a global administrator?
+		if (!empty($this->adminsByUserid[$user->userid][0])) return true;
+		// Is user a category administrator?
+		if (!empty($this->adminsByUserid[$user->userid][$catid])) return true;
+
+		return false;
+	}
+
+	public function isModerator($user = null, $catid = 0) {
+		$user = KunenaFactory::getUser($user);
+
+		// Visitors cannot be moderators
+		if (!$user->exists()) return false;
+
+		// Administrators are always moderators
+		if ($this->isAdmin($user, $catid)) return true;
+
+		// Load moderators list
+		if ($this->moderatorsByUserid === false) {
+			$this->loadModerators();
+		}
+
+		if (isset($this->moderatorsByUserid[$user->userid])) {
+			// Is user a global moderator?
+			if (!empty($this->moderatorsByUserid[$user->userid][0])) return true;
+			// Were we looking only for global moderator?
+			if (!is_numeric($catid)) return false;
+			// Is user moderator in ANY category?
+			if ($catid == 0) return true;
+			// Is user a category moderator?
+			if (!empty($this->moderatorsByUserid[$user->userid][$catid])) return true;
+		}
+		return false;
+	}
+
+	public function getAllowedCategories($user = null, $rule = 'read') {
+		static $read = false;
+
+		$user = KunenaFactory::getUser($user);
+
+		$allowed = array();
+		switch ($rule) {
+			case 'read':
+			case 'post':
+			case 'reply':
+			case 'edit':
+				if ($read === false) {
+					$read = $this->loadAllowedCategories($user->userid);
+				}
+				$allowed = $read;
+				break;
+			case 'moderate':
+				if ($this->moderatorsByUserid === false) {
+					$this->loadModerators();
+				}
+				if (isset($this->moderatorsByUserid[$user->userid])) $allowed += $this->moderatorsByUserid[$user->userid];
+				// Continue: Administrators have also moderation permissions
+				case 'admin':
+				if ($this->adminsByUserid === false) {
+					$this->loadAdmins();
+				}
+				if (isset($this->adminsByUserid[$user->userid])) $allowed += $this->adminsByUserid[$user->userid];
+		}
+		return $allowed;
+	}
+
+	public function getAllowedHold($user, $catid, $string=true) {
 		// hold = 0: normal
 		// hold = 1: unapproved
 		// hold = 2: deleted
 		$user = KunenaFactory::getUser($user);
 		$config = KunenaFactory::getConfig ();
 
-		$hold [] = 0;
+		$hold [0] = 0;
 		if ($this->isModerator ( $user->userid, $catid )) {
-			$hold [] = 1;
+			$hold [1] = 1;
 		}
 		if ($this->isAdmin ( $user->userid, $catid )
 			|| ($config->mod_see_deleted && $this->isModerator( $user->userid, $catid ))) {
-			$hold [] = 2;
-			$hold [] = 3;
+			$hold [2] = 2;
+			$hold [3] = 3;
 	}
 		if ($string) $hold = implode ( ',', $hold );
 		return $hold;
 	}
 
-	abstract function isAdmin($uid = null, $catid = 0);
-	abstract function isModerator($uid = null, $catid = 0);
-	abstract function getAllowedCategories($userid);
-	abstract function getSubscribers($catid, $thread, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0');
+	function getSubscribers($catid, $topicid, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
+		if ($subscriptions) {
+			$subslist = $this->loadSubscribers($catid, $topicid);
+		}
+		if ($moderators) {
+			if ($this->moderatorsByCatid === false) {
+				$this->loadModerators();
+			}
+			$modlist = array();
+			if (!empty($this->moderatorsByCatid[0])) $modlist += $this->moderatorsByCatid[0];
+			if (!empty($this->moderatorsByCatid[$catid])) $modlist += $this->moderatorsByCatid[$catid];
+		}
+		if ($admins) {
+			if ($this->adminsByCatid === false) {
+				$this->loadAdmins();
+			}
+			$adminlist = array();
+			if (!empty($this->adminsByCatid[0])) $adminlist += $this->adminsByCatid[0];
+			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
+		}
+
+		$query = new JDatabaseQuery();
+		$query->select('u.id, u.name, u.username, u.email');
+		$query->from('FROM #__users AS u');
+		$query->where("u.block=0");
+		$userlist = array();
+		if (!empty($subslist)) {
+			$userlist = $subslist;
+			$subslist = implode(',', array_keys($subslist));
+			$query->select("IF( u.id IN ({$subslist}), 1, 0 ) AS subscription");
+		} else {
+			$query->select("0 AS subscription");
+		}
+		if (!empty($modlist)) {
+			$userlist += $modlist;
+			$modlist = implode(',', array_keys($modlist));
+			$query->select("IF( u.id IN ({$modlist}), 1, 0 ) AS moderator");
+		} else {
+			$query->select("0 AS moderator");
+		}
+		if (!empty($adminlist)) {
+			$userlist += $adminlist;
+			$adminlist = implode(',', array_keys($adminlist));
+			$query->select("IF( u.id IN ({$adminlist}), 1, 0 ) AS admin");
+		} else {
+			$query->select("0 AS admin");
+		}
+		$userlist = array_diff_key($userlist, $excludeList);
+		if (!empty($userlist)) {
+			$userlist = implode(',', array_keys($userlist));
+			$query->where("u.id IN ({$userlist})");
+			$db = JFactory::getDBO();
+			$db->setQuery ( $query );
+			$subsList = $db->loadObjectList ();
+			if (KunenaError::checkDatabaseError()) return array();
+		}
+
+		unset($subslist, $modlist, $adminlist, $userlist);
+		return $subsList;
+	}
+
+	protected function loadAdmins($list = array()) {
+		foreach ( $list as $item ) {
+			$userid = intval ( $item->userid );
+			$catid = intval ( $item->catid );
+			$this->adminsByUserid [$userid] [$catid] = 1;
+			$this->adminsByCatid [$catid] [$userid] = 1;
+		}
+		return $list;
+	}
+
+	protected function loadModerators($list = array()) {
+		foreach ( $list as $item ) {
+			$userid = intval ( $item->userid );
+			$catid = intval ( $item->catid );
+			$this->moderatorsByUserid [$userid] [$catid] = 1;
+			$this->moderatorsByCatid [$catid] [$userid] = 1;
+		}
+		return $list;
+	}
+
+	protected function &loadSubscribers($catid, $topicid) {
+		$category = KunenaCategory::getInstance($catid);
+		$db = JFactory::getDBO ();
+		$query ="SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topicid}
+				UNION
+				SELECT user_id FROM #__kunena_user_topics WHERE category_id={$catid}";
+		$db->setQuery ($query);
+		$userids = (array) $db->loadResultArray();
+		KunenaError::checkDatabaseError();
+		if (!empty($userids)) $this->checkSubscribers($category, $userids);
+		$userids = (array) array_combine ($userids, $userids);
+		return $userids;
+	}
+
+	abstract protected function checkSubscribers($topic, &$userids);
+	abstract protected function loadAllowedCategories($userid);
 }

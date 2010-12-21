@@ -203,7 +203,7 @@ class KunenaSession extends JObject
 		// check to see if we need to refresh the allowed forums cache
 		// get all accessaible forums if needed (eg on forum modification, new session)
 		if (!$this->allowed or $this->allowed == 'na' or $this->isNewSession()) {
-			$allow_forums = CKunenaTools::getAllowedForums($this->userid);
+			$allow_forums = implode(',', CKunenaTools::getAllowedForums($this->userid));
 
 			if (!$allow_forums)
 			{

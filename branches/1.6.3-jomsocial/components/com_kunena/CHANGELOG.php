@@ -31,9 +31,29 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.3-DEV
+
+21-December-2010 Matias
+^ [#23920] Cleanup all KunenaAccess classes
+# [#23920] Fix a few bugs which broke up ACL
+# [#23920] Fix a bug making too many dummy queries when instantiating categories
+
+20-December-2010 Matias
+^ [#23152] Update version info to 1.6.3 (Chama = group, society)
++ [#23920] Move some functions/functionality from derived classes into KunenaAccess
++ [#23920] Separate Kunena logic from ACL in KunenaAccess::getSubscribers()
++ [#23920] Add KunenaCategory::getCategoriesByAccess()
+^ [#23920] Change session handling to accept new version of access classes
+^ [#23920] Simplify structure in KunenaAccessXXX::loadAllowedCategories() functions
++ [#23920] Add CommunityBuilder triggers: loadAdmins, loadModerators, checkSubscribers
+
+19-December-2010 Matias
++ [#23920] Add JomSocial groups support: Create new fields into tables
++ [#23920] Backport KunenaAccess classes from Kunena 2.0
+
 Kunena 1.6.2-DEV
 
-19-December.2010 Matias
+19-December-2010 Matias
 # [#23884] Add basic Joomla 1.6 support for menu items: latest, listcat, post, profile, showcat
 # [#23826] Fix regression in Category Manager: escaped too much
 # [#23885] Restore support for old templates from K1.6.1

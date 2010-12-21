@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+21-December-2010 svens(LDA)
+^ [#23293] update ru-RU (thanks Zarkos)
+^ [#23293] update fi-FI (thanks Mortti)
+
 19-December.2010 Matias
 # [#23884] Add basic Joomla 1.6 support for menu items: latest, listcat, post, profile, showcat
 # [#23826] Fix regression in Category Manager: escaped too much

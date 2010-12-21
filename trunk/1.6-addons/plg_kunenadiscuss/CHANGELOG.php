@@ -4,7 +4,7 @@
  * Kunena Discuss Plugin
  * @package Kunena Discuss
  *
- * @Copyright (C) 2010 Kunena Team All rights reserved
+ * @Copyright (C) 2010 Kunena Team. All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/

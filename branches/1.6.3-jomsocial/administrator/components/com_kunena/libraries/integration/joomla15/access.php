@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: access.php 4050 2010-12-21 17:59:50Z mahagr $
  * Kunena Component
  * @package Kunena
  *
@@ -91,7 +91,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 		$query->select('u.id');
 		$query->from('#__users AS u');
 		$query->where("u.block=0");
-		$query->where("u.id IN ($userlist)");
+		$query->where("u.id IN ({$userlist})");
 
 		if ($category->accesstype == 'joomla') {
 			// Check against Joomla access level

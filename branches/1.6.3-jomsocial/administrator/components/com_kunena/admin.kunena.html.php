@@ -556,6 +556,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						<td><?php echo JText::_('COM_KUNENA_LOCKEDDESC'); ?></td>
 					</tr>
 					<?php endif; ?>
+					<?php if (!$row->accesstype == 'none'): ?>
 					<tr>
 						<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_PUBACC'); ?></td>
 						<td valign="top"><?php echo $accessLists ['pub_access']; ?></td>
@@ -576,6 +577,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						<td valign="top"><?php echo $lists ['admin_recurse']; ?></td>
 						<td valign="top"><?php echo JText::_('COM_KUNENA_CGROUPS1DESC'); ?></td>
 					</tr>
+					<?php endif; ?>
 					<?php if (!$row->id || $row->parent): ?>
 					<tr>
 						<td class="nowrap" valign="top"><?php echo JText::_('COM_KUNENA_REV'); ?></td>

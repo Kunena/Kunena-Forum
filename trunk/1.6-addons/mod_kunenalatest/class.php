@@ -28,7 +28,7 @@ class modKunenaLatest {
 
 		$this->document = JFactory::getDocument ();
 		if ($cssadded == false) {
-			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/css/klatest.css' );
+			$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenalatest/tmpl/css/kunenalatest.css' );
 			$cssadded = true;
 		}
 

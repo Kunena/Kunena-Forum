@@ -28,6 +28,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+21-December-2010 Severdia
+^ [#23900] Made file naming and folder structure consistent among Kunena modules
+# [#23900] Made CSS class names consistent with prefix
+
 19-December-2010 Severdia
 # [#23900] Cleaned up English, updated copyright dates and URLs
 ^ [#23900] Changed admin UI, grouped elements better

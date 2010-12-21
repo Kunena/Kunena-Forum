@@ -1,114 +1,98 @@
-/**
- * @version $Id$
- * Kunenalogin Module
- * @package Kunena login
- *
- * @Copyright (C) 2010 www.kunena.com All rights reserved
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
- */
+@charset "UTF-8";
 
 /*					VERTICAL STYLE
 ----------------------------------------------------------*/
-.Klogin-vert li a {
+
+.klogin-vert li a {
 	text-decoration: none;
 	line-height: 1.5em;
 }
-
-.Klogin-vert ul.loginlink li {
+.klogin-vert ul.klogin-loginlink li {
 	margin: 0;
 	padding: 0 0 0 10px;
 	background: transparent url(../images/arrow.png) no-repeat left center;
 	text-decoration: none;
 	list-style: none !important;
 }
-
-.Klogin-vert ul.logoutlink li {
+.klogin-vert ul.klogin-logoutlink li {
 	margin: 0;
 	padding: 0 0 0 10px;
 	background: transparent url(../images/arrow.png) no-repeat left center;
 	list-style: none !important;
 }
-
-.Klogin-vert div.links {
+.klogin-vert div.klogin-links {
 	text-align: center;
 }
-
-.Klogin-vert div.avatar {
+.klogin-vert div.klogin-avatar {
 	text-align: center !important;
 	padding: 5px;
 }
-.Klogin-vert div.k_lastvisit ul,
-.Klogin-vert ul.logoutlink {
+.klogin-vert div.klogin-lastvisit ul,
+.klogin-vert ul.klogin-logoutlink {
 	padding: 0;
 	margin: 10px 0;
 }
-.Klogin-vert div.k_lastvisit li {
+.klogin-vert div.klogin-lastvisit li {
 	background: none;
 	list-style: none !important;
 }
-.Klogin-vert div.k_lastvisit {
+.klogin-vert div.klogin-lastvisit {
 	text-align: center;
 }
-.Klogin-vert span.k_lasttext {
+.klogin-vert span.klogin-lasttext {
 	font-weight: bold;
 }
-.Klogin-vert span.k_lastdate {
+.klogin-vert span.klogin-lastdate {
 	clear: both;
 }
-.Klogin-vert div.k_hiname {
+.klogin-vert div.klogin-hiname {
 	text-align: center;
 }
 
 /*					HORIZONTAL STYLE
 ----------------------------------------------------------*/
-.Klogin-horiz {
+.klogin-horiz {
 	display: block;
-	/*overflow:hidden;*/
 	padding:0;
 }
-
-.Klogin-horiz li a {
+.klogin-horiz li a {
 	text-decoration: none;
 	line-height: 1.3em;
 }
-
-.Klogin-horiz div.k_lastvisit {
+.klogin-horiz div.klogin-lastvisit {
 	text-align: center;
 }
-
-.Klogin-horiz ul.greeting,.Klogin-horiz ul.logoutlink {
+.klogin-horiz ul.klogin-greeting,
+.klogin-horiz ul.klogin-logoutlink {
 	float: left;
 	display: inline;
 	padding: 0 !important;
 	margin: 0 !important;
 }
-
-.Klogin-horiz ul.logoutform li {
+.klogin-horiz ul.klogin-logoutform li {
 	padding: 0;
 	margin: 0;
 }
-
-.Klogin-horiz ul.logoutform input.modlgn_username,.Klogin-horiz ul.logoutform input.modlgn_passwd {
+.klogin-horiz ul.klogin-logoutform input.klogin-username,
+.klogin-horiz ul.klogin-logoutform input.klogin-passwd {
 	width: 100px;
 	padding: 0;
 	margin: 0;
 }
-
-.Klogin-horiz ul {
+.klogin-horiz ul {
 	padding: 0 !important;
 	margin: 0 !important;
 	float:left;
 }
-.Klogin-horiz div.middle li {
+.klogin-horiz div.klogin-middle li {
 	background: none;
 	margin-right:10px;
 	text-align:left;
 }
-.Klogin-horiz div.middle li.logout-button {
+.klogin-horiz div.klogin-middle li.klogin-logout-button {
 	padding-top:10px;
 }
-.Klogin-horiz ul li {
+.klogin-horiz ul li {
 	margin: 0;
 	padding-left: 10px !important;
 	background: transparent url(../images/arrow.png) no-repeat left center;
@@ -116,79 +100,62 @@
 	list-style: none !important;
 	float:none !important;
 }
-.Klogin-horiz ul.logoutfield li {
+.klogin-horiz ul.klogin-logoutfield li {
 	padding-left: 0px !important;
 	background: none !important;
 }
-.Klogin-horiz ul.logoutfield li.klogout-pwd {
+.klogin-horiz ul.klogin-logoutfield li.klogin-klogout-pwd {
 	padding: 5px 0 0 0;
 }
-.Klogin-horiz ul.logoutfield li.klogout-uname {
+.klogin-horiz ul.klogin-logoutfield li.klogin-klogout-uname {
 	padding: 0 5px 0 0;
 }
-.Klogin-horiz ul.logoutfield input.button {
+.klogin-horiz ul.klogin-logoutfield input.kbutton {
 	margin: 0 5px;
 }
-
-.Klogin-horiz ul.logoutlink li.forgotpass,.Klogin-horiz ul.logoutlink li.forgotname,.Klogin-horiz ul.logoutlink li.register {
-	/*display: inline;*/
+.klogin-horiz ul.klogin-logoutlink li.klogin-forgotpass,
+.klogin-horiz ul.klogin-logoutlink li.klogin-forgotname,
+.klogin-horiz ul.klogin-logoutlink li.klogin-register {
 	margin: 0;
 	padding: 0 0 0 10px !important;
 	background: transparent url(../images/arrow.png) no-repeat left center;
 	list-style: none !important;
 }
-
-.Klogin-horiz div.avatar,
-.Klogin-horiz div.middle {
+.klogin-horiz div.klogin-avatar,
+.klogin-horiz div.klogin-middle {
 	background: transparent;
 	float: left;
 	margin-right: 0px;
 	padding: 1px;
 }
-
-.Klogin-horiz div.info {
+.klogin-horiz div.klogin-info {
 	background: transparent;
 	float: left;
 	margin-right: 0px;
 	text-align: left;
 	padding: 1px;
 }
-
-.Klogin-horiz div.k_avatar_right {
+.klogin-horiz div.klogin-avatar-right {
 	background: transparent;
 	float: right;
 	margin-right: 15px;
 	text-align: center;
 	padding: 1px;
 }
-
-.Klogin-horiz ul.greeting li {
+.klogin-horiz ul.klogin-greeting li {
 	background: none;
 	list-style-image: none !important;
 	list-style-type: none;
 }
-
-.Klogin-horiz img {
+.klogin-horiz img {
 	margin: 0 10px 0;
 }
-.Klogin-horiz div.links {
+.klogin-horiz div.klogin-links {
 	float: left;
 }
-.Klogin-horiz span.k_lasttext {
+.klogin-horiz span.klogin-lasttext {
 	font-weight: bold;
 }
-.Klogin-horiz span.k_lastdate {
+.klogin-horiz span.klogin-lastdate {
 	font-weight: normal;
-}
-
-/*					FLAT STYLE
-----------------------------------------------------------*/
-#Klogin-flat .login-button {
-	padding: 5px;
-	display: inline;
-	text-align: left;
-}
-
-#Klogin-flat span.login-username {
-	display: block;
 }

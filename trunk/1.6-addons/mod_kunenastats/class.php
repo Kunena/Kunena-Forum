@@ -36,7 +36,7 @@ class ModuleKunenaStats {
 		$this->stats = $this->getStats ();
 		require JModuleHelper::getLayoutPath ( 'mod_kunenastats' );
 		$this->document = JFactory::getDocument ();
-		$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenastats/tmpl/mod_kunenastats.css' );
+		$this->document->addStyleSheet ( JURI::root () . 'modules/mod_kunenastats/tmpl/css/kunenastats.css' );
 	}
 
 	function getBarWidth($count) {

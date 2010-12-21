@@ -1,38 +1,37 @@
 <?php
 /**
 * @version $Id$
-* KunenaStats Module
+* Kunena Stats Module
 * @package Kunena Stats
 *
-* @Copyright (C) 2010 www.kunena.com All rights reserved
+* @Copyright (C)2010-2011 Kunena Team. All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 */
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 $i=0;
 
-
 //JString::substr ( htmlspecialchars ( $item->subject ), '0', $this->params->get ( 'titlelength' ) )
 
 ?>
-<div class="mod-kunenastats mod-kunenastats<?php echo $this->params->get( 'moduleclass_sfx' ) ?>">
+<div class="kstats-module kstats-module<?php echo $this->params->get( 'moduleclass_sfx' ) ?>">
 	<?php if ( $this->type == 'general' ) : ?>
-	<ul>
-		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALUSERS'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getToTalMembers(), 4); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_LATESTMEMBER'); ?> <b><?php echo CKunenaLink::GetProfileLink($this->api->getLastestMemberid(), JString::substr ( htmlspecialchars ($this->api->getLastestMember()), '0', $this->params->get ( 'titlelength' ) ) ); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALPOSTS'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTotalMessages(), 3); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALTOPICS'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTotalTitles(), 3); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALSECTIONS'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTotalSections(), 3); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALCATEGORIES'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTotalCats(), 3); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_TODAYOPEN'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTodayOpen(), 3); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_YESTERDAYOPEN'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getYesterdayOpen(), 3); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_TODAYTOTANSW'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getTodayAnswer(), 3); ?></b></li>
-		<li><?php echo JText::_('MOD_KUNENASTATS_YESTERDAYTOTANSW'); ?> <b><?php echo CKunenaTools::formatLargeNumber($this->api->getYesterdayAnswer(), 3); ?></b></li>
+	<ul class="kstats-items">
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALUSERS'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getToTalMembers(), 4); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_LATESTMEMBER'); ?> <?php echo CKunenaLink::GetProfileLink($this->api->getLastestMemberid(), JString::substr ( htmlspecialchars ($this->api->getLastestMember()), '0', $this->params->get ( 'titlelength' ) ) ); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALPOSTS'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getTotalMessages(), 3); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALTOPICS'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getTotalTitles(), 3); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALSECTIONS'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getTotalSections(), 3); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TOTALCATEGORIES'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getTotalCats(), 3); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TODAYOPEN'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getTodayOpen(), 3); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_YESTERDAYOPEN'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getYesterdayOpen(), 3); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_TODAYTOTANSW'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getTodayAnswer(), 3); ?></li>
+		<li><?php echo JText::_('MOD_KUNENASTATS_YESTERDAYTOTANSW'); ?> <?php echo CKunenaTools::formatLargeNumber($this->api->getYesterdayAnswer(), 3); ?></li>
 	</ul>
 	<?php else : ?>
-	<table>
+	<table class="kstats-table">
 		<tr>
 			<th><?php echo $this->titleHeader ?></th>
 			<th><?php echo $this->valueHeader ?></th>

@@ -20,7 +20,7 @@ class ModKunenaLogin {
 		require_once (KUNENA_PATH_LIB . DS . 'kunena.timeformat.class.php');
 		$this->params = $params;
 
-		// load Kunena main language file so we can leverage langaueg strings from it
+		// load Kunena main language file so we can leverage language strings from it
 		KunenaFactory::loadLanguage();
 	}
 
@@ -68,7 +68,7 @@ class ModKunenaLogin {
 		$live_path = JURI::base ( true ) . '/';
 
 		// add CSS stylesheet
-		$document->addStyleSheet ( $live_path . "modules/$name/tmpl/css/$name.css", "text/css" );
+		$document->addStyleSheet ( $live_path . "modules/mod_kunenalatest/tmpl/css/kunenalatest.css", "text/css" );
 	}
 
 	function kunenaAvatar($userid) {

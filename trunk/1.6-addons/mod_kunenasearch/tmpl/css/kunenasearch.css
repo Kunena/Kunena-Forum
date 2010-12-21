@@ -1,16 +1,16 @@
-/* Kunena Search CSS*/
+@charset "UTF-8";
 
-form#ksearchform { white-space: nowrap; }
+form#ksearch-form { white-space: nowrap; }
 
-fieldset.kfieldset-search { 
+fieldset.ksearch-fieldset { 
 	border:0 none !important;
 	margin:0 !important;
 	padding:0 !important;
 	background-color: transparent !important;
 }
 
-legend.klegend-search, 
-fieldset.kfieldset-search .ksearchlabel { 
+legend.ksearch-legend, 
+fieldset.ksearch-fieldset .ksearch-label { 
 	display:none; 
 	text-indent: -9999em;
 	margin:0 !important;

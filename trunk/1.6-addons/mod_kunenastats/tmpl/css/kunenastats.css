@@ -1,54 +1,55 @@
 @charset "UTF-8";
 /**
 * @version $Id$
-* KunenaStats Module
+* Kunena Stats Module
 * @package Kunena stats
 *
-* @Copyright (C) 2010 Kunena Team All rights reserved
+* @(C) 2011 Kunena Team. All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.com
 *
 **/
-div.mod-kunenastats ul {
+div.kstats-module ul {
 	margin: 0;
 	padding:0;
 }
-div.mod-kunenastats ul li {
-	background: url("arrow.png") no-repeat left center;
+div.kstats-module ul li {
+	background: url("../images/arrow.png") no-repeat left center;
 	padding-left: 10px;
 	list-style: none !important;
 }
-div.mod-kunenastats ul li b {
+div.kstats-module ul.kstats-items li {
+	font-weight: bold;
 	float: right;
 }
-div.mod-kunenastats table {
+div.kstats-module table {
 	width: 100%;
 }
-div.mod-kunenastats table th {
+div.kstats-module table th {
 	background: #D4DEE3;
 	padding: 4px 8px;
 	text-align:left;
 }
-div.mod-kunenastats td.kcol-first {
+div.kstats-module td.kcol-first {
 	width: 70%;
 }
-div.mod-kunenastats tr.krow1 td {
+div.kstats-module tr.krow1 td {
 	background: #EEEEEE;
 	padding: 4px 8px;
 }
-div.mod-kunenastats tr.krow2 td {
+div.kstats-module tr.krow2 td {
 	padding: 4px 8px;
 	background: #E7E7E7;
 }
-div.mod-kunenastats div.kstats-all {
+div.kstats-module div.kstats-all {
 	padding: 4px 8px;
 }
-div.mod-kunenastats  img.jr-forum-stat-bar {
+div.kstats-module img.jr-forum-stat-bar {
 	min-width:15px;
 	min-height: 12px;
 }
-div.mod-kunenastats span.kstats-hits {
-	background: url("bar.png") repeat-x left center;
+div.kstats-module span.kstats-hits {
+	background: url("../images/bar.png") repeat-x left center;
 	color: #FFFFFF;
 	font-size:.9em;
 	display:block;
@@ -56,8 +57,8 @@ div.mod-kunenastats span.kstats-hits {
 	min-width:15px;
 	padding:0 0 0 1px;
 }
-div.mod-kunenastats span.kstats-hits-bg {
-	background: url("bar_bg.png") repeat-x left center;
+div.kstats-module span.kstats-hits-bg {
+	background: url("../images/bar_bg.png") repeat-x left center;
 	color: #FFFFFF;
 	font-size:.9em;
 	display:block;

@@ -1,24 +1,23 @@
 <?php
 /**
  * @version $Id$
- * Kunenalogin Module
- * @package Kunena login
+ * @package Kunena Login
  *
- * @Copyright (C) 2010 www.kunena.com All rights reserved
+ * @Copyright (C) 2010-2011 Kunena Team. All rights reserved
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
- * @link http://www.kunena.com
+ * @link http://www.kunena.org
  */
 defined('_JEXEC') or die();
 ?>
-<div class="Klogin-vert">
+<div class="klogin-vert">
 	<?php if($this->type == 'logout') : ?>
 		<form action="index.php" method="post" name="login">
 		<?php if ($this->params->get('greeting')) : ?>
-			<div class="k_hiname">
+			<div class="klogin-hiname">
 			<?php echo JText::sprintf('MOD_KUNENALOGIN_HINAME','<strong>'.CKunenaLink::GetProfileLink ( $this->my->id, $this->user->getName()).'</strong>' ); ?>
 			</div>
 		<?php endif; ?>
-	<div class="avatar">
+	<div class="klogin-avatar">
 		<?php if ($this->params->get('showav')) :
 			$avatar =  $this->kunenaAvatar( $this->my->id ) ;
 			echo $avatar;
@@ -26,11 +25,11 @@ defined('_JEXEC') or die();
 	</div>
 	<div>
 	<?php if ($this->params->get('lastlog')) : ?>
-	<div class="k_lastvisit">
+	<div class="klogin-lastvisit">
 		<ul>
 			<li class="kms">
-				<span class="k_lasttext"><?php echo JText::_('MOD_KUNENALOGIN_LASTVISIT'); ?></span>
-				<span class="k_lastdate" title="<?php echo CKunenaTimeformat::showDate($this->my->lastvisitDate, 'date_today', 'utc'); ?>">
+				<span class="klogin-lasttext"><?php echo JText::_('MOD_KUNENALOGIN_LASTVISIT'); ?></span>
+				<span class="klogin-lastdate" title="<?php echo CKunenaTimeformat::showDate($this->my->lastvisitDate, 'date_today', 'utc'); ?>">
 					<?php echo CKunenaTimeformat::showDate($this->my->lastvisitDate, 'ago', 'utc'); ?>
 				</span>
 			</li>
@@ -38,23 +37,23 @@ defined('_JEXEC') or die();
 	</div>
 	<?php endif; ?>
 	</div>
-	<div class="links">
-		<input type="submit" name="Submit" class="button" value="<?php echo JText::_('MOD_KUNENALOGIN_BUTTON_LOGOUT'); ?>" /></div>
+	<div class="klogin-links">
+		<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_('MOD_KUNENALOGIN_BUTTON_LOGOUT'); ?>" /></div>
 		<div>
-			<ul class="loginlink">
+			<ul class="klogin-loginlink">
 			<?php	if ($this->params->get('showmessage')) : ?>
 				<?php if ($this->PMlink) : ?>
-				<li class="mypm"><?php echo $this->PMlink; ?></li>
+				<li class="klogin-mypm"><?php echo $this->PMlink; ?></li>
 				<?php endif ?>
 			<?php endif; ?>
 			<?php if ($this->params->get('showprofile')) : ?>
-				<li class="myprofile"><?php echo CKunenaLink::GetProfileLink ( $this->my->id, JText::_ ( 'MOD_KUNENALOGIN_MYPROFILE' ) ); ?></li>
+				<li class="klogin-myprofile"><?php echo CKunenaLink::GetProfileLink ( $this->my->id, JText::_ ( 'MOD_KUNENALOGIN_MYPROFILE' ) ); ?></li>
 			<?php endif; ?>
 			<?php if ($this->params->get('showmyposts')) : ?>
-				<li class="mypost"><?php echo CKunenaLink::GetShowMyLatestLink ( JText::_ ( 'MOD_KUNENALOGIN_MYPOSTS' ) ); ?></li>
+				<li class="klogin-mypost"><?php echo CKunenaLink::GetShowMyLatestLink ( JText::_ ( 'MOD_KUNENALOGIN_MYPOSTS' ) ); ?></li>
 			<?php endif; ?>
 			<?php if ($this->params->get('showrecent')) : ?>
-				<li class="recent"><?php echo CKunenaLink::GetShowLatestLink ( JText::_ ( 'MOD_KUNENALOGIN_RECENT' ) ); ?></li>
+				<li class="klogin-recent"><?php echo CKunenaLink::GetShowLatestLink ( JText::_ ( 'MOD_KUNENALOGIN_RECENT' ) ); ?></li>
 			<?php endif; ?>
 			</ul>
 		</div>
@@ -69,32 +68,32 @@ defined('_JEXEC') or die();
 
 <?php else : ?>
 
-<form action="index.php" method="post" name="login" class="form-login" >
+<form action="index.php" method="post" name="login" class="klogin-form-login" >
 	<?php echo $this->params->get('pretext'); ?>
 	<fieldset class="input">
-	<p class="form-login-username">
-		<label for="modlgn_username"><?php echo JText::_('MOD_KUNENALOGIN_USERNAME') ?></label>
-		<input class="modlgn_username" type="text" name="<?php echo $this->login['field_username']; ?>" class="inputbox" alt="username" size="18" />
+	<p class="klogin-form-login-username">
+		<label for="klogin-username"><?php echo JText::_('MOD_KUNENALOGIN_USERNAME') ?></label>
+		<input class="klogin-username" type="text" name="<?php echo $this->login['field_username']; ?>" class="kinputbox" alt="username" size="18" />
 	</p>
-	<p class="form-login-password">
-		<label for="modlgn_passwd"><?php echo JText::_('MOD_KUNENALOGIN_PASSWORD') ?></label>
-		<input class="modlgn_passwd" type="password" name="<?php echo $this->login['field_password']; ?>" class="inputbox" size="18" alt="password" />
+	<p class="klogin-form-login-password">
+		<label for="klogin-passwd"><?php echo JText::_('MOD_KUNENALOGIN_PASSWORD') ?></label>
+		<input class="klogin-passwd" type="password" name="<?php echo $this->login['field_password']; ?>" class="kinputbox" size="18" alt="password" />
 	</p>
 	<?php if(JPluginHelper::isEnabled('system', 'remember')) : ?>
-	<p class="form-login-remember"><label for="modlgn_remember">
-	<input class="modlgn_remember" type="checkbox" name="remember" value="yes" alt="<?php echo JText::_('MOD_KUNENALOGIN_REMEMBER_ME') ?>" />
+	<p class="klogin-form-login-remember"><label for="klogin-remember">
+	<input class="klogin-remember" type="checkbox" name="remember" value="yes" alt="<?php echo JText::_('MOD_KUNENALOGIN_REMEMBER_ME') ?>" />
 		<?php echo JText::_('MOD_KUNENALOGIN_REMEMBER_ME') ?></label>
 	</p>
 	<?php endif; ?>
-	<input type="submit" name="Submit" class="button" value="<?php echo JText::_('MOD_KUNENALOGIN_BUTTON_LOGIN') ?>" />
+	<input type="submit" name="Submit" class="kbutton" value="<?php echo JText::_('MOD_KUNENALOGIN_BUTTON_LOGIN') ?>" />
 	</fieldset>
-	<ul class="logoutlink">
-		<li class="forgotpass"><?php echo CKunenaLogin::getLostPasswordLink (); ?></li>
-		<li class="forgotname"><?php echo CKunenaLogin::getLostUserLink ();?></li>
+	<ul class="klogin-logoutlink">
+		<li class="klogin-forgotpass"><?php echo CKunenaLogin::getLostPasswordLink (); ?></li>
+		<li class="klogin-forgotname"><?php echo CKunenaLogin::getLostUserLink ();?></li>
 		<?php
 		$registration = CKunenaLogin::getRegisterLink ();
 		if ($registration) : ?>
-		<li class="register"><?php echo $registration ?></li>
+		<li class="klogin-register"><?php echo $registration ?></li>
 		<?php endif; ?>
 	</ul>
 	<?php echo $this->params->get('posttext'); ?>

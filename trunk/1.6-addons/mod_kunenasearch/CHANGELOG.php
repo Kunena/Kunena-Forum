@@ -28,6 +28,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+21-December-2010 Severdia
+^ [#23900] Made file naming and folder structure consistent among Kunena modules
+# [#23900] Made CSS class names consistent with prefix
+
 KunenaSearch 1.6.0-RC2
 
 20-December-2010 Xillibit

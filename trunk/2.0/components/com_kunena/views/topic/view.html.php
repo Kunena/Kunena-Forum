@@ -78,6 +78,8 @@ class KunenaViewTopic extends KunenaView {
 		$this->topic->hits++;
 		$this->topic->save();
 
+		$this->keywords = $this->topic->getKeywords(false, ', ');
+
 		$this->buttons();
 
 		//meta description and keywords

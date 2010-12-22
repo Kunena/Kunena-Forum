@@ -15,6 +15,7 @@ kimport ('kunena.user');
 kimport ('kunena.forum.category.helper');
 kimport ('kunena.forum.topic');
 kimport ('kunena.forum.topic.user.helper');
+kimport ('kunena.keyword.helper');
 
 /**
  * Kunena Forum Topic Helper Class
@@ -104,7 +105,7 @@ class KunenaForumTopicHelper {
 		if ($ids === false) {
 			$ids = array_keys(self::$_instances);
 		}
-		return KunenaKeywordHelper::getTopicKeywords($ids, $user);
+		return KunenaKeywordHelper::getByTopics($ids, $user);
 	}
 
 	static public function getLatestTopics($categories=false, $limitstart=0, $limit=0, $params=array()) {
@@ -126,13 +127,6 @@ class KunenaForumTopicHelper {
 			$post_time_field = 'tt.last_post_time';
 		}
 
-		$whereuser = array();
-		if (!empty($params['started'])) $whereuser[] = 'ut.owner=1';
-		if (!empty($params['replied'])) $whereuser[] = '(ut.owner=0 AND ut.posts>0)';
-		if (!empty($params['posted'])) $whereuser[] = 'ut.posts>0';
-		if (!empty($params['favorited'])) $whereuser[] = 'ut.favorite=1';
-		if (!empty($params['subscriped'])) $whereuser[] = 'ut.subscribed=1';
-
 		$categories = KunenaForumCategoryHelper::getCategories($categories, $reverse);
 		$catlist = array();
 		foreach ($categories as $category) {
@@ -140,6 +134,28 @@ class KunenaForumTopicHelper {
 		}
 		if (empty($catlist)) return array(0, array());
 		$catlist = implode(',', array_keys($catlist));
+
+		$whereuser = array();
+		if (!empty($params['started'])) $whereuser[] = 'ut.owner=1';
+		if (!empty($params['replied'])) $whereuser[] = '(ut.owner=0 AND ut.posts>0)';
+		if (!empty($params['posted'])) $whereuser[] = 'ut.posts>0';
+		if (!empty($params['favorited'])) $whereuser[] = 'ut.favorite=1';
+		if (!empty($params['subscriped'])) $whereuser[] = 'ut.subscribed=1';
+
+		$kwids = array();
+		if (!empty($params['keywords'])) {
+			$keywords = KunenaKeywordHelper::getByKeywords($params['keywords']);
+			foreach ($keywords as $keyword) {
+				$kwids[] = $keyword->$id;
+			}
+			$kwids = implode(',', $kwids);
+		}
+		//TODO: add support for keywords (example:)
+		/* SELECT tt.*, COUNT(*) AS score FROM #__kunena_keywords_map AS km
+		INNER JOIN #__kunena_topics` AS tt ON km.topic_id=tt.id
+		WHERE km.keyword_id IN (1,2) AND km.user_id IN (0,62)
+		GROUP BY topic_id
+		ORDER BY score DESC, tt.last_post_time DESC */
 
 		$wheretime = ($starttime ? " AND {$post_time_field}>{$db->Quote($starttime)}" : '');
 		$whereuser = ($whereuser ? " AND ut.user_id={$db->Quote($user->userid)} AND (".implode(' OR ',$whereuser).')' : '');
@@ -299,7 +315,7 @@ class KunenaForumTopicHelper {
 		if (empty($ids))
 			return;
 
-		$idlist = implode($ids);
+		$idlist = implode(',', $ids);
 		$db = JFactory::getDBO ();
 		$query = "SELECT * FROM #__kunena_topics WHERE id IN ({$idlist})";
 		$db->setQuery ( $query );

@@ -33,6 +33,30 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+17-December-2010 Matias
++ [#22569] Add function KunenaForum::display() to display any Kunena view
++ [#22569] KunenaModel: add basic support for loading views from our library
++ [#22569] KunenaController: add support for Home Page
++ [#22569] KunenaRoute: add support for Home Page
++ [#22569] Add KunenaControllerHome class to handle display of Home Page (showing another menu item)
++ [#22569] KunenaController: do not allow pages without active menu item
+
+16-December-2010 Matias
+# [#23507] Fix a bug in KunenaForumTopicHelper::getKeywords()
+# [#23443] Fix a bug KunenaForumTopicHelper::loadTopics() returning empty array() when there are more than 1 topic to get
+- [#22570] Remove deprecated code from funcs/latestx.php, disable message tabs from profile
+- [#22570] Remove deprecated template files: threads/flat.php, latestx.php, posts.php
+
+15-December-2010 Matias
++ [#22569] Add function KunenaViewTopics::getPosts()
++ [#22569] Topics View: add posts layout
+# [#22569] Fix a bug where KunenaForumCategory::getCategories(false) returns all categories instead of authorised
+# [#22569] KunenaViewTopics::getUserTopics(): by default show also subscriptions, not just favorites and own posts
+# [#22569] KunenaViewTopics: better handling for user topics (current user)
+# [#22569] KunenaViewTopics: fix unapproved and deleted topics lists
++ [#23507] Add code for keywords support into KunenaForumTopicHelper::getLatestTopics()
++ [#23507] Show tags/keywords in category/topic/topics views
+
 14-December-2010 Matias
 + [#22792] Show error message if favorite, subscribe fails
 # [#23443] Fix regression where favorite, subscribe and publish topic doesn't work

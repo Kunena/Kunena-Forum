@@ -63,6 +63,13 @@ class KunenaModel extends JModel {
 		return $this->state->set($property, $value);
 	}
 
+	public function initialize($params)
+	{
+		$this->embedded = true;
+		$this->params = $params;
+	}
+
+
 	/**
 	 * Method to auto-populate the model state (from Joomla 1.6)
 	 *

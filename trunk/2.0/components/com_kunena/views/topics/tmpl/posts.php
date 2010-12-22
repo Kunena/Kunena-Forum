@@ -23,9 +23,27 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
 		</td>
 
+		<td class="klist-times-all">
+			<form id="timeselect" name="timeselect" method="post" target="_self" action="<?php echo $this->escape(JURI::getInstance()->toString());?>">
+			<?php
+			// make the select list for time selection
+			$timesel[] = JHTML::_('select.option', 0, JText::_('COM_KUNENA_SHOW_LASTVISIT'));
+			$timesel[] = JHTML::_('select.option', 4, JText::_('COM_KUNENA_SHOW_4_HOURS'));
+			$timesel[] = JHTML::_('select.option', 8, JText::_('COM_KUNENA_SHOW_8_HOURS'));
+			$timesel[] = JHTML::_('select.option', 12, JText::_('COM_KUNENA_SHOW_12_HOURS'));
+			$timesel[] = JHTML::_('select.option', 24, JText::_('COM_KUNENA_SHOW_24_HOURS'));
+			$timesel[] = JHTML::_('select.option', 48, JText::_('COM_KUNENA_SHOW_48_HOURS'));
+			$timesel[] = JHTML::_('select.option', 168, JText::_('COM_KUNENA_SHOW_WEEK'));
+			$timesel[] = JHTML::_('select.option', 720, JText::_('COM_KUNENA_SHOW_MONTH'));
+			$timesel[] = JHTML::_('select.option', 8760, JText::_('COM_KUNENA_SHOW_YEAR'));
+			echo JHTML::_('select.genericlist', $timesel, 'sel', 'class="inputboxusl" onchange="this.form.submit()" size="1"', 'value', 'text', $this->state->get('list.time'));
+			?>
+			</form>
+		</td>
+
 		<td class="klist-jump-all"><?php $this->displayForumJump () ?></td>
 
-<?php if (!empty( $this->topics )) : ?>
+<?php if (!empty( $this->messages )) : ?>
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 'latest', 3 ); ?></td>
 <?php endif; ?>
 	</tr>
@@ -44,8 +62,8 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			<form action="index.php" method="post" name="kBulkActionForm">
 				<table class="kblocktable<?php echo $this->escape($this->category->class_sfx); ?>" id="kflattable">
 
-					<?php if (empty ( $this->topics ) && empty ( $this->subcategories )) : ?>
-					<tr class="krow2"><td class="kcol-first"><?php echo JText::_('COM_KUNENA_VIEW_NO_POSTS') ?></td></tr>
+					<?php if (empty ( $this->messages ) && empty ( $this->subcategories )) : ?>
+					<tr class="krow2"><td class="kcol-first"><?php echo JText::_('COM_KUNENA_NO_POSTS') ?></td></tr>
 
 					<?php else : ?>
 						<?php $this->displayRows (); ?>
@@ -84,7 +102,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			<strong><?php echo intval($this->total) ?></strong>
 			<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
 		</td>
-<?php if (count ( $this->topics ) > 0) : ?>
+<?php if (count ( $this->messages ) > 0) : ?>
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 'latest', 3 ); ?></td>
 <?php endif; ?>
 	</tr>

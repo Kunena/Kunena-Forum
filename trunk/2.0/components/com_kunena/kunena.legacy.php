@@ -52,7 +52,7 @@ if(JDEBUG){
 	$__profiler->mark('Start');
 }
 
-$func = JString::strtolower ( JRequest::getCmd ( 'func', JRequest::getCmd ( 'view', '' )) );
+$func = JString::strtolower ( JRequest::getCmd ( 'view', '' ) );
 JRequest::setVar ( 'func', $func );
 $format = JRequest::getCmd ( 'format', 'html' );
 
@@ -126,13 +126,11 @@ if (empty($_POST) && $format == 'html') {
 				}
 				if (is_object ( $active )) {
 					foreach ( $active->query as $var => $value ) {
-						if ($var == 'view')
-							$var = 'func';
-						if ($var == 'func' && $value == 'entrypage')
+						if ($var == 'view' && $value == 'entrypage')
 							$value = $func;
 						JRequest::setVar ( $var, $value );
 					}
-					$func = JRequest::getCmd ( 'func' );
+					$func = JRequest::getCmd ( 'view' );
 				}
 			}
 		}
@@ -142,6 +140,115 @@ if (empty($_POST) && $format == 'html') {
 		$kunena_app->redirect (KunenaRoute::_(null, false));
 	}
 }
+
+// Convert legacy urls into new ones
+$view = JRequest::getWord ( 'view', JRequest::getWord ( 'func') );
+$layout = JRequest::getWord ( 'layout', 'default' );
+$config = KunenaFactory::getConfig ();
+$redirect = false;
+switch ($view) {
+	case 'listcat':
+		$redirect = true;
+		$view = 'categories';
+		break;
+	case 'showcat':
+		$redirect = true;
+		$view = 'category';
+		break;
+	case 'latest' :
+	case 'mylatest' :
+	case 'noreplies' :
+	case 'subscriptions' :
+	case 'favorites' :
+	case 'userposts' :
+	case 'unapproved' :
+	case 'deleted' :
+		$redirect = true;
+		$mode = JRequest::getWord ( 'do' );
+		JRequest::setVar ( 'do' );
+		if (!$mode) $mode = $view;
+		$view = 'topics';
+		switch ($mode) {
+			case 'latest':
+				$layout = 'default';
+				$mode = 'replies';
+				break;
+			case 'unapproved':
+				$layout = 'default';
+				$mode = 'unapproved';
+				break;
+			case 'deleted':
+				$layout = 'default';
+				$mode = 'deleted';
+				break;
+			case 'noreplies':
+				$layout = 'default';
+				$mode = 'noreplies';
+				break;
+			case 'latesttopics':
+				$layout = 'default';
+				$mode = 'topics';
+				break;
+			case 'mylatest':
+				$layout = 'user';
+				$mode = 'default';
+				break;
+			case 'subscriptions':
+				$layout = 'user';
+				$mode = 'subscriptions';
+				break;
+			case 'favorites':
+				$layout = 'user';
+				$mode = 'favorites';
+				break;
+			case 'owntopics':
+				$layout = 'user';
+				$mode = 'started';
+				break;
+			case 'userposts':
+				JRequest::setVar ( 'userid', '0' );
+				// continue
+			case 'latestposts':
+				$layout = 'posts';
+				$mode = 'recent';
+				break;
+			case 'saidthankyouposts':
+				$layout = 'posts';
+				$mode = 'mythanks';
+				break;
+			case 'gotthankyouposts':
+				$layout = 'posts';
+				$mode = 'thankyou';
+				break;
+			case 'catsubscriptions':
+				$layout = 'category';
+				break;
+			default:
+				$layout = 'default';
+				$mode = 'default';
+		}
+		$page = JRequest::getInt ( 'page', 0 );
+		JRequest::setVar ( 'page');
+		//if (!$page) break;
+		$page = $page < 1 ? 1 : $page;
+		$limit = $config->threads_per_page;
+		$limitstart = ($page - 1) * $limit;
+		JRequest::setVar ( 'mode', $mode );
+		JRequest::setVar ( 'limit', $limit );
+		JRequest::setVar ( 'limitstart', $limitstart );
+		break;
+	case 'view':
+		$redirect = true;
+		$view = 'topic';
+		break;
+}
+if ($redirect) {
+	JRequest::setVar ( 'func' );
+	JRequest::setVar ( 'view', $view );
+	JRequest::setVar ( 'layout', $layout );
+	$kunena_app->redirect (KunenaRoute::_(null, false));
+}
+
 
 global $message;
 global $kunena_this_cat;

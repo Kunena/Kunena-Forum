@@ -648,7 +648,7 @@ class KunenaForumTopic extends JObject {
 	}
 	protected function authoriseRead($user) {
 		// Check that user can read topic
-		if (!$this->_exists) {
+		if (!$this->exists()) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			return false;
 		}

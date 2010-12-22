@@ -96,6 +96,7 @@ class KunenaModelCategory extends KunenaModel {
 				if ( !empty($userlist) ) KunenaUserHelper::loadUsers($userlist);
 
 				KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
+				KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
 				if ($config->shownew) {
 					KunenaForumTopicHelper::fetchNewStatus($this->topics);
 				}

@@ -213,6 +213,10 @@ class CKunenaProfile {
 
 	function displayUserPosts()
 	{
+		//KunenaForum::display('topics', 'default');
+		//FIXME
+		return;
+
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('userposts', 0);
 		$obj->user = $this->user;
@@ -232,6 +236,9 @@ class CKunenaProfile {
 
 	function displayGotThankYou()
 	{
+		//FIXME
+		return;
+
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('gotthankyouposts',0);
 		$obj->user = $this->user;
@@ -242,6 +249,9 @@ class CKunenaProfile {
 
 	function displaySaidThankYou()
 	{
+		//FIXME
+		return;
+
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('saidthankyouposts',0);
 		$obj->user = $this->user;
@@ -251,6 +261,9 @@ class CKunenaProfile {
 	}
 	function displayOwnTopics()
 	{
+		//FIXME
+		return;
+
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('owntopics', 0);
 		$obj->user = $this->user;
@@ -262,6 +275,9 @@ class CKunenaProfile {
 
 	function displayUserTopics()
 	{
+		//FIXME
+		return;
+
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('usertopics', 0);
 		$obj->user = $this->user;
@@ -273,6 +289,9 @@ class CKunenaProfile {
 
 	function displayFavorites()
 	{
+		//FIXME
+		return;
+
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('favorites', 0);
 		$obj->user = $this->user;
@@ -284,6 +303,9 @@ class CKunenaProfile {
 
 	function displaySubscriptions()
 	{
+		//FIXME
+		return;
+
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('subscriptions', 0);
 		$obj->user = $this->user;
@@ -295,6 +317,9 @@ class CKunenaProfile {
 
 	function displayCategoriesSubscriptions()
 	{
+		//FIXME
+		return;
+
 		require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
 		$obj = new CKunenaLatestX('catsSubscriptions', 0);
 		$obj->user = $this->user;

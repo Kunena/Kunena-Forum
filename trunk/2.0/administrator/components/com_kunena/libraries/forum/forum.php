@@ -104,4 +104,41 @@ class KunenaForum {
 		self::$version_name = ('@kunenaversionname@' == '@' . 'kunenaversionname' . '@') ? 'SVN Revision' : '@kunenaversionname@';
 		self::$version_build = ('@kunenaversionbuild@' == '@' . 'kunenaversionbuild' . '@') ? $svn [1] : '@kunenaversionbuild@';
 	}
+
+	public function display($viewName, $layout='default', $template=null, $params = array()) {
+		$viewName = preg_replace( '/[^A-Z0-9_]/i', '', $viewName );
+		$view = "KunenaView{$viewName}";
+		$model = "KunenaModel{$viewName}";
+
+		// Load classes
+		if ( !class_exists( 'KunenaViewCommon' ) ) {
+			$vpath = KPATH_SITE . '/views/common/view.html.php';
+			if (!is_file($vpath)) return;
+			require_once $vpath;
+		}
+		if ( !class_exists( $view ) ) {
+			$vpath = KPATH_SITE . '/views/'.$viewName.'/view.html.php';
+			if (!is_file($vpath)) return;
+			require_once $vpath;
+		}
+		if ( !class_exists( $model ) ) {
+			$mpath = KPATH_SITE . '/models/'.$viewName.'.php';
+			if (!is_file($mpath)) return;
+			require_once $mpath;
+		}
+
+		$view = new $view ( array ('base_path' => KPATH_SITE ) );
+		$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
+
+		// Push the model into the view (as default).
+		$model = new $model ();
+		$model->initialize($params);
+		$view->setModel ( $model, true );
+
+		// Push document object into the view.
+		$view->assignRef ( 'document', JFactory::getDocument() );
+
+		// Render the view.
+		$view->displayLayout ($layout, $template);
+	}
 }

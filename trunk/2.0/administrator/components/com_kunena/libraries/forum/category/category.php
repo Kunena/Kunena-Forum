@@ -562,7 +562,7 @@ class KunenaForumCategory extends JObject {
 
 	protected function authoriseRead($user) {
 		// Checks if user can read category
-		if (!$this->_exists) {
+		if (!$this->exists()) {
 			$this->setError ( JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			return false;
 		}

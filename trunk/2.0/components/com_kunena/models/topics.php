@@ -24,7 +24,8 @@ kimport('kunena.user.helper');
  */
 class KunenaModelTopics extends KunenaModel {
 	protected $topics = false;
-	protected $items = false;
+	protected $messages = false;
+	protected $total = 0;
 
 	protected function populateState() {
 		$app = JFactory::getApplication ();
@@ -34,11 +35,20 @@ class KunenaModelTopics extends KunenaModel {
 		$layout = JRequest::getCmd ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 
-		$this->setState ( 'user', KunenaFactory::getUser(JRequest::getInt ( 'user', null ))->userid );
+		$userid = JRequest::getInt ( 'userid', -1 );
+		if ($userid == 0) {
+			$userid = KunenaFactory::getUser()->userid;
+		} elseif($userid > 0) {
+			$userid = KunenaFactory::getUser($userid)->userid;
+		} else {
+			$userid = 0;
+		}
+		$this->setState ( 'user', $userid );
 		$this->setState ( 'list.mode', JRequest::getCmd ( 'mode', 'latest' ) );
 
-		$latestcategory = $params->get('topics_categories', explode ( ',', $config->latestcategory ));
-		if (in_array(0, $latestcategory)) {
+		$latestcategory = $params->get('topics_categories', $config->latestcategory );
+		if (!is_array($latestcategory)) $latestcategory = explode ( ',', $latestcategory );
+		if (empty($latestcategory) || in_array(0, $latestcategory)) {
 			$latestcategory = false;
 		}
 		$this->setState ( 'list.categories', $latestcategory );
@@ -127,14 +137,22 @@ class KunenaModelTopics extends KunenaModel {
 				$where = 'AND tt.posts=1';
 				break;
 			case 'unapproved' :
-				// FIXME:
-				$hold = 1;
-				$where = 'AND tt.hold=1';
+				$allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.approve');
+				if (empty($allowed)) {
+					return array(0, array());
+				}
+				$allowed = implode(',', array_keys($allowed));
+				$hold = '1';
+				$where = "AND tt.category_id IN ({$allowed})";
 				break;
 			case 'deleted' :
-				// FIXME:
-				$hold = 3;
-				$where = 'AND tt.hold>1';
+				$allowed = KunenaForumCategoryHelper::getCategories(false, false, 'topic.undelete');
+				if (empty($allowed)) {
+					return array(0, array());
+				}
+				$allowed = implode(',', array_keys($allowed));
+				$hold = '2';
+				$where = "AND tt.category_id IN ({$allowed})";
 				break;
 			case 'replies' :
 			default :
@@ -161,7 +179,7 @@ class KunenaModelTopics extends KunenaModel {
 		$latestcategory_in = $this->getState ( 'list.categories.in' );
 
 		$started = false;
-		$posted = false;
+		$posts = false;
 		$favorites = false;
 		$subscriptions = false;
 		// Set order by
@@ -169,7 +187,7 @@ class KunenaModelTopics extends KunenaModel {
 		switch ($this->getState ( 'list.mode' )) {
 			case 'posted' :
 				$posts = true;
-				$orderby = "ut.last_post_time DESC";
+				$orderby = "ut.last_post_id DESC";
 				break;
 			case 'started' :
 				$started = true;
@@ -183,6 +201,7 @@ class KunenaModelTopics extends KunenaModel {
 			default :
 				$posts = true;
 				$favorites = true;
+				$subscriptions = true;
 				$orderby = "ut.favorite DESC, tt.last_post_time DESC";
 				break;
 		}
@@ -201,6 +220,96 @@ class KunenaModelTopics extends KunenaModel {
 		$this->_common ();
 	}
 
+	protected function getPosts() {
+		$this->topics = array();
+		$this->count = 0;
+		kimport ('joomla.database.databasequery');
+
+		$userid = $this->getState ( 'user' );
+		$start = $this->getState ( 'list.start' );
+		$limit = $this->getState ( 'list.limit' );
+		$db = JFactory::getDBO();
+
+		$cquery = new JDatabaseQuery();
+		$cquery->select('COUNT(*)')
+			->from('#__kunena_messages AS m')
+			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
+			->where('m.moved=0'); // TODO: remove column
+
+		$rquery = new JDatabaseQuery();
+		$rquery->select('m.*, t.message')
+			->from('#__kunena_messages AS m')
+			->innerJoin('#__kunena_messages_text AS t ON m.id = t.mesid')
+			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
+			->where('m.moved=0') // TODO: remove column
+			->order('m.time DESC');
+
+		$authorise = 'read';
+		$hold = 'm.hold=0'; // AND tt.hold=0';
+		$userfield = 'm.userid';
+		switch ($this->getState ( 'list.mode' )) {
+			case 'unapproved':
+				$authorise = 'approve';
+				$hold = "m.hold=1 AND tt.hold<=1";
+				break;
+			case 'deleted':
+				$authorise = 'undelete';
+				$hold = "m.hold>=2";
+				break;
+			case 'mythanks':
+				$userfield = 'th.userid';
+				$cquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
+				$rquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
+				break;
+			case 'thankyou':
+				$userfield = 'th.targetuserid';
+				$cquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
+				$rquery->innerJoin('#__kunena_thankyou AS th ON m.id = th.postid');
+				break;
+			case 'recent':
+			default:
+		}
+		$allowed = KunenaForumCategoryHelper::getCategories($this->getState ( 'list.categories' ), ! $this->getState ( 'list.categories.in' ), 'topic.'.$authorise);
+		if (empty($allowed)) {
+			return;
+		}
+		$allowed = implode(',', array_keys($allowed));
+		$cquery->where("tt.category_id IN ({$allowed})");
+		$rquery->where("tt.category_id IN ({$allowed})");
+		$cquery->where($hold);
+		$rquery->where($hold);
+		if ($userid) {
+			$cquery->where("{$userfield}={$db->Quote($userid)}");
+			$rquery->where("{$userfield}={$db->Quote($userid)}");
+		}
+		$time = $this->getState ( 'list.time' );
+		if ($time == 0) {
+			$time = KunenaFactory::getSession ()->lasttime;
+		} elseif ($time > 0) {
+			$time = JFactory::getDate ()->toUnix () - ($time * 3600);
+		}
+		// Negative time means no time
+		if ($time > 0) {
+			$cquery->where("m.time>{$db->Quote($time)}");
+			$rquery->where("m.time>{$db->Quote($time)}");
+		}
+
+		$db->setQuery ( $cquery );
+		$this->total = ( int ) $db->loadResult ();
+		if (KunenaError::checkDatabaseError() || !$this->total) return;
+
+		$db->setQuery ( $rquery, $start, $limit );
+		$this->messages = $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError()) return;
+
+		$topicids = array();
+		foreach ( $this->messages as $message ) {
+			$topicids[$message->thread] = $message->thread;
+		}
+		$this->topics = KunenaForumTopicHelper::getTopics ( $topicids, $authorise );
+		$this->_common();
+	}
+
 	protected function _common() {
 		if ($this->total > 0) {
 			$config = KunenaFactory::getConfig ();
@@ -216,14 +325,22 @@ class KunenaModelTopics extends KunenaModel {
 			if ( !empty($userlist) ) KunenaUserHelper::loadUsers($userlist);
 
 			KunenaForumTopicHelper::getUserTopics(array_keys($this->topics));
+			KunenaForumTopicHelper::getKeywords(array_keys($this->topics));
 			if ($config->shownew) {
 				KunenaForumTopicHelper::fetchNewStatus($this->topics);
 			}
 		}
 	}
 
+	public function getMessages() {
+		if ($this->topics === false) {
+			$this->getPosts();
+		}
+		return $this->messages;
+	}
+
 	public function getTotal() {
-		if ($this->total === false) {
+		if ($this->topics === false) {
 			$this->getTopics();
 		}
 		return $this->total;

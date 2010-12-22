@@ -70,6 +70,12 @@ defined( '_JEXEC' ) or die();
 			<?php endfor; ?>
 		</ul>
 		<?php endif; ?>
+
+		<?php if (!empty($this->keywords)) : ?>
+		<div class="ktopic-keywords">
+			<?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?>
+		</div>
+		<?php endif; ?>
 	</td>
 
 	<td class="kcol-mid kcol-ktopicviews">

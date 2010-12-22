@@ -36,7 +36,7 @@ class KunenaController extends JController {
 	public static function getInstance() {
 		static $instance = null;
 
-		if (! empty ( $instance )) {
+		if (! empty ( $instance ) && !isset($instance->home)) {
 			return $instance;
 		}
 
@@ -49,10 +49,10 @@ class KunenaController extends JController {
 		// FIXME: loading languages in Joomla is SLOW (30ms)!
 		if (KunenaForum::isSVN()) {
 			$lang->load('com_kunena',KPATH_SITE);
-			if ($app->isAdmin()) {
+			//if ($app->isAdmin()) {
 				$lang->load('com_kunena',KPATH_ADMIN);
 				$lang->load('com_kunena.install',KPATH_ADMIN);
-			}
+			//}
 		} elseif ($app->isAdmin()) {
 			$lang->load('com_kunena',JPATH_ADMINISTRATOR);
 			$lang->load('com_kunena',JPATH_SITE);
@@ -96,6 +96,11 @@ class KunenaController extends JController {
 			$version_warning = $version->getVersionWarning('COM_KUNENA_VERSION_INSTALLED');
 			if (! empty ( $version_warning )) {
 				$app->enqueueMessage ( $version_warning, 'notice' );
+			}
+		} else {
+			if (!$app->getMenu ()->getActive ()) {
+				// FIXME:
+				JError::raiseError ( 500, JText::_ ( 'COM_KUNENA_NO_ACCESS' ) );
 			}
 		}
 
@@ -159,5 +164,15 @@ class KunenaController extends JController {
 	 */
 	function setEscape($spec) {
 		$this->_escape = $spec;
+	}
+
+	function getRedirect() {
+		return $this->_redirect;
+	}
+	function getMessage() {
+		return $this->_message;
+	}
+	function getMessageType() {
+		return $this->_messageType;
 	}
 }

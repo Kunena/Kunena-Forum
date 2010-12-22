@@ -115,7 +115,7 @@ class KunenaViewCategory extends KunenaView {
 	function displaySubCategories() {
 		$children = $this->category->getChildren();
 		if (!empty($children)) {
-			$this->displayView('categories', 'default', 'list');
+			KunenaForum::display('categories', 'default', 'list');
 			$this->subcategories = true;
 		}
 	}
@@ -125,6 +125,7 @@ class KunenaViewCategory extends KunenaView {
 		$this->position = 0;
 		foreach ( $this->topics as $this->topic ) {
 			$this->position++;
+			$this->keywords = $this->topic->getKeywords(false, ', ');
 			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
 			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 			$this->pages = ceil ( $this->topic->posts / $this->config->messages_per_page );

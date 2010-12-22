@@ -228,7 +228,7 @@ abstract class KunenaRoute {
 				$item = self::$menu[$current];
 				if ($item->type == 'component' && $item->component == 'com_kunena') {
 					self::$parent[$Itemid] = $current;
-					if (isset($item->query['view']) && $item->query['view'] == 'entrypage') break;
+					if (isset($item->query['view']) && ($item->query['view'] == 'home' || $item->query['view'] == 'entrypage')) break;
 				}
 				// Support J1.6 and J1.5
 				$current = isset($item->parent_id) ? $item->parent_id : $item->parent;
@@ -266,7 +266,7 @@ abstract class KunenaRoute {
 		return self::$subtree[$Itemid];
 	}
 
-	protected static function checkEntryPage($item, $query) {
+	protected static function checkHomePage($item, $query) {
 		jimport('joomla.html.parameter');
 		$params = new JParameter($item->params);
 		$catids = $params->get('catids');
@@ -285,7 +285,7 @@ abstract class KunenaRoute {
 		if (!empty($item->query['catid'])) {
 			$catid = true;
 		}
-		if (isset($item->query['view']) && $item->query['view'] == 'entrypage') return self::checkEntryPage($item, $query);
+		if (isset($item->query['view']) && ($item->query['view'] == 'home' || $item->query['view'] == 'entrypage')) return self::checkHomePage($item, $query);
 		foreach ( $item->query as $var => $value ) {
 			if (!isset ( $query [$var] ) || $value != $query [$var]) {
 				if ($catid && $var=='view') continue;

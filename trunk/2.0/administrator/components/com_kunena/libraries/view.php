@@ -42,29 +42,6 @@ class KunenaView extends JView {
 		}
 	}
 
-	public function displayView($vName, $lName='default', $tName=null) {
-		$vpath = KPATH_SITE . '/views/'.$vName.'/view.html.php';
-		$mpath = KPATH_SITE . '/models/'.$vName.'.php';
-		if (!is_file($vpath) || !is_file($mpath)) return;
-		require_once $vpath;
-		require_once $mpath;
-
-		$view = "KunenaView{$vName}";
-		$view = new $view ( array ('base_path' => $this->_basePath ) );
-		$view->common = $this->common;
-
-		// Push the model into the view (as default).
-		$model = "KunenaModel{$vName}";
-		$model = new $model ();
-		$view->setModel ( $model, true );
-
-		// Push document object into the view.
-		$view->assignRef ( 'document', $this->document );
-
-		// Render the view.
-		$view->displayLayout ($lName, $tName);
-	}
-
 	function getModulePosition($position) {
 		$html = '';
 		if (JDocumentHTML::countModules ( $position )) {

@@ -34,6 +34,7 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->topic->subject) ?></span></h2>
 		<?php if ($this->usertopic->favorite) : ?><div class="kfavorite"></div><?php endif ?>
+		<?php if (!empty($this->keywords)) : ?><div class="kkeywords"><?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?></div><?php endif ?>
 	</div>
 	<div class="kcontainer">
 		<div class="kbody"><?php $this->displayMessages() ?></div>

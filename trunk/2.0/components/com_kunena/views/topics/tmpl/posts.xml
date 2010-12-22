@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE metadata>
 <metadata>
-	<layout title="COM_KUNENA_MENU_TOPICS_MYRECENT">
-		<message>COM_KUNENA_MENU_TOPICS_MYRECENT_DESC</message>
+	<layout title="COM_KUNENA_MENU_TOPICS_POSTS">
+		<message>COM_KUNENA_MENU_TOPICS_POSTS_DESC</message>
 	</layout>
 	<state>
-		<name>COM_KUNENA_MENU_TOPICS_MYRECENT_LONG</name>
-		<description>COM_KUNENA_MENU_TOPICS_MYRECENT_DESC_LONG</description>
+		<name>COM_KUNENA_MENU_TOPICS_POSTS_LONG</name>
+		<description>COM_KUNENA_MENU_TOPICS_POSTS_DESC_LONG</description>
 		<url>
-			<param name="mode" type="list" default="default" label="COM_KUNENA_MENU_SELECTEDVIEW">
-				<option value="default">COM_KUNENA_MENU_MYLATEST</option>
-				<option value="posted">COM_KUNENA_MENU_POSTED</option>
-				<option value="started">COM_KUNENA_MENU_STARTED</option>
-				<option value="subscriptions">COM_KUNENA_MENU_MYSUBSCRIPTIONS</option>
-				<option value="favorites">COM_KUNENA_MENU_MYFAVORITES</option>
+			<param name="mode" type="list" default="recent" label="COM_KUNENA_MENU_SELECTEDVIEW">
+				<option value="recent">COM_KUNENA_MENU_RECENT_POSTS</option>
+				<option value="thankyou">COM_KUNENA_MENU_THANKYOU_POSTS</option>
+				<option value="mythanks">COM_KUNENA_MENU_MYTHANKS_POSTS</option>
+				<option value="unapproved">COM_KUNENA_MENU_UNAPROVED_POSTS</option>
+				<option value="deleted">COM_KUNENA_MENU_DELETED_POSTS</option>
 			</param>
+			<param name="userid" type="text" default="" label="COM_KUNENA_MENU_USER"/>
 		</url>
 		<params addpath="/administrator/components/com_kunena/elements">
+			<param name="header" type="text" default="" label="COM_KUNENA_MENU_HEADER"/>
 			<param name="topics_catselection" type="radio" default="0" label="COM_KUNENA_COM_A_LATESTCATEGORY_IN" description="COM_KUNENA_COM_A_LATESTCATEGORY_IN_DESC">
 				<option value="1">COM_KUNENA_COM_A_LATESTCATEGORY_IN_SHOW</option>
 				<option value="0">COM_KUNENA_COM_A_LATESTCATEGORY_IN_HIDE</option>

@@ -17,6 +17,7 @@ kimport ( 'kunena.view' );
  */
 class KunenaViewTopics extends KunenaView {
 	function displayDefault($tpl = null) {
+		$this->layout = 'default';
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
@@ -54,6 +55,46 @@ class KunenaViewTopics extends KunenaView {
 	}
 
 	function displayUser($tpl = null) {
+		$this->layout = 'user';
+		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
+		$this->assignRef ( 'total', $this->get ( 'Total' ) );
+		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
+		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
+		$this->title = JText::_('COM_KUNENA_ALL_DISCUSSIONS');
+		$this->me = KunenaFactory::getUser();
+		$this->config = KunenaFactory::getConfig();
+
+		$this->actionDropdown[] = JHTML::_('select.option', '', '&nbsp;');
+		$this->actionMove = false;
+		if (CKunenaTools::isModerator ( $this->me->userid )) {
+			$this->actionMove = true;
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDel', JText::_('COM_KUNENA_DELETE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkMove', JText::_('COM_KUNENA_MOVE_SELECTED'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkDelPerm', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG'));
+			$this->actionDropdown[] = JHTML::_('select.option', 'bulkRestore', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG'));
+		}
+
+		//meta description and keywords
+		$limit = $this->state->get('list.limit');
+		$page = intval($this->state->get('list.start')/$limit)+1;
+		$total = intval($this->total/$limit)+1;
+		$pagesTxt = "{$page}/{$total}";
+		$app = JFactory::getApplication();
+		$metaKeys = $this->headerText . $this->escape ( ", {$this->config->board_title}, " ) . $app->getCfg ( 'sitename' );
+		$metaDesc = $this->headerText . $this->escape ( " ({$pagesTxt}) - {$this->config->board_title}" );
+		$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+
+		$this->document->setMetadata ( 'robots', 'noindex, follow' );
+		$this->document->setMetadata ( 'keywords', $metaKeys );
+		$this->document->setDescription ( $metaDesc );
+		$this->document->setTitle ( "{$this->title} ({$pagesTxt}) - {$this->config->board_title}" );
+
+		$this->display($tpl);
+	}
+
+	function displayPosts($tpl = null) {
+		$this->layout = 'posts';
+		$this->assignRef ( 'messages', $this->get ( 'Messages' ) );
 		$this->assignRef ( 'topics', $this->get ( 'Topics' ) );
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 		$this->assignRef ( 'topic_ordering', $this->get ( 'MessageOrdering' ) );
@@ -112,16 +153,25 @@ class KunenaViewTopics extends KunenaView {
 	function displaySubCategories() {
 		$children = $this->category->getChildren();
 		if (!empty($children)) {
-			$this->displayView('categories', 'default', 'list');
+			KunenaForum::display('categories', 'default', 'list');
 			$this->subcategories = true;
 		}
 	}
 
 	function displayRows() {
+		if ($this->layout == 'posts') {
+			$this->displayPostRows();
+		} else {
+			$this->displayTopicRows();
+		}
+	}
+
+	function displayTopicRows() {
 		$lasttopic = NULL;
 		$this->position = 0;
 		foreach ( $this->topics as $this->topic ) {
 			$this->position++;
+			$this->keywords = $this->topic->getKeywords(false, ', ');
 			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
 			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
 			$this->pages = ceil ( $this->topic->posts / $this->config->messages_per_page );
@@ -136,6 +186,27 @@ class KunenaViewTopics extends KunenaView {
 			}
 			echo $this->loadTemplate('row');
 			$lasttopic = $this->topic;
+		}
+	}
+
+	function displayPostRows() {
+		$lasttopic = NULL;
+		$this->position = 0;
+		foreach ( $this->messages as $this->message ) {
+			if (!isset($this->topics[$this->message->thread])) {
+				// TODO: INTERNAL ERROR
+				return;
+			}
+			$this->topic = $this->topics[$this->message->thread];
+			$this->position++;
+			$this->module = $this->getModulePosition('kunena_topic_' . $this->position);
+			$this->message_position = $this->topic->posts - ($this->topic->unread ? $this->topic->unread - 1 : 0);
+			$this->pages = ceil ( $this->topic->posts / $this->config->messages_per_page );
+			if ($this->config->avataroncat) {
+				$this->topic->avatar = KunenaFactory::getUser($this->message->userid)->getAvatarLink('klist-avatar', 'list');
+			}
+			$this->spacing = 0;
+			echo $this->loadTemplate('row');
 		}
 	}
 

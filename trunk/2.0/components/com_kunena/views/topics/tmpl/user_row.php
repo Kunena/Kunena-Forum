@@ -53,9 +53,11 @@ defined( '_JEXEC' ) or die();
 			<span class="divider fltlft">|</span>
 			<?php endif; ?>
 			<span class="ktopic-posted-time" title="<?php echo CKunenaTimeformat::showDate($this->topic->first_post_time, 'config_post_dateformat_hover'); ?>">
-				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . CKunenaTimeformat::showDate($this->topic->first_post_time, 'config_post_dateformat');?>
+				<?php echo JText::_('COM_KUNENA_TOPIC_STARTED_ON') . ' ' . CKunenaTimeformat::showDate($this->topic->first_post_time, 'config_post_dateformat'); ?>
 			</span>
-			<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->topic->first_post_userid, $this->escape($this->topic->first_post_guest_name) ); ?></span>
+			<span class="ktopic-by ks">
+				<?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( $this->topic->first_post_userid, $this->escape($this->topic->first_post_guest_name) ); ?>
+			</span>
 		</div>
 
 		<?php if ($this->topic->posts > $this->config->messages_per_page) : ?>
@@ -69,6 +71,12 @@ defined( '_JEXEC' ) or die();
 			<li><?php echo CKunenaLink::GetThreadPageLink ( 'view', $this->topic->category_id, $this->topic->id, $hopPage*$this->config->messages_per_page, intval($this->config->messages_per_page), $hopPage+1 ) ?></li>
 			<?php endfor; ?>
 		</ul>
+		<?php endif; ?>
+
+		<?php if (!empty($this->keywords)) : ?>
+		<div class="ktopic-keywords">
+			<?php echo JText::sprintf('COM_KUNENA_TOPIC_TAGS', $this->escape($this->keywords)) ?>
+		</div>
 		<?php endif; ?>
 	</td>
 

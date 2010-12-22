@@ -4,9 +4,9 @@
 * Kunena Stats Module
 * @package Kunena stats
 *
-* @(C) 2011 Kunena Team. All rights reserved
+* @(C) 2010-2011 Kunena Team. All rights reserved
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.kunena.com
+* @link http://www.kunena.org
 *
 **/
 div.kstats-module ul {
@@ -19,8 +19,8 @@ div.kstats-module ul li {
 	list-style: none !important;
 }
 div.kstats-module ul.kstats-items li {
-	font-weight: bold;
-	float: right;
+	/* font-weight: bold;
+	float: right; */
 }
 div.kstats-module table {
 	width: 100%;

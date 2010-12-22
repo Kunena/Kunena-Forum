@@ -30,6 +30,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena Discuss Plugin 1.6.0-RC3
+22-December-2010 svens(LDA)
+^ [#23293] update ru-RU (thanks Zarkos)
+
 11-December-2010 svens(LDA)
 ^ [#23293] update de-DE (thanks rich)
 

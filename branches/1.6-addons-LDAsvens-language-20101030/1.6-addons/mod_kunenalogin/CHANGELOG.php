@@ -27,6 +27,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaLogin 1.6.0-RC2
+22-December-2010 svens(LDA)
+^ [#23293] updated fi-FI (thanks Mortti)
+
 12-Nov-2010 svens(LDA)
 ^ [#23293] updated de-DE (thanks rich)
 

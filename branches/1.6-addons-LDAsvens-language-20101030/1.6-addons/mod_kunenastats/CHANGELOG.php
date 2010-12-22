@@ -29,6 +29,9 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 KunenaStats 1.6.0-RC2
+22-December-2010 svens(LDA)
++ [#23293] add fi-FI (thanks Mortti)
+
 19-November-2010 svens(LDA)
 + [#23293] add es-ES (thanks Alakakentu)
 

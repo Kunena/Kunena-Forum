@@ -21,24 +21,17 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 	}
 
 	protected function loadAdmins() {
-		$this->adminsByCatid = array ();
-		$this->adminsByUserid = array ();
 		$db = JFactory::getDBO ();
-		$query = "SELECT u.id FROM #__users AS u
+		$query = "SELECT u.id AS userid, 0 AS catid
+			FROM #__users AS u
 			WHERE u.block='0' AND u.usertype IN ('Administrator', 'Super Administrator')";
 		$db->setQuery ( $query );
-		$list = $db->loadResultArray ();
+		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-		foreach ( $list as $item ) {
-			$userid = intval ( $item );
-			$this->adminsByCatid [0] [$userid] = 1;
-			$this->adminsByUserid [$userid] [0] = 1;
-		}
+		return parent::loadAdmins($list);
 	}
 
 	protected function loadModerators() {
-		$this->moderatorsByCatid = array ();
-		$this->moderatorsByUserid = array ();
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.id AS userid, m.catid
 				FROM #__users AS u
@@ -47,51 +40,81 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 				LEFT JOIN #__kunena_categories AS c ON m.catid=c.id
 				WHERE u.block='0' AND ku.moderator='1' AND (m.catid IS NULL OR c.moderated='1')";
 		$db->setQuery ( $query );
-		$list = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError ())
-			return;
-		foreach ( $list as $item ) {
-			$userid = intval ( $item->userid );
-			$catid = intval ( $item->catid );
-			$this->moderatorsByUserid [$userid] [$catid] = 1;
-			$this->moderatorsByCatid [$catid] [$userid] = 1;
-		}
+		$list = (array) $db->loadObjectList ();
+		KunenaError::checkDatabaseError ();
+		return parent::loadModerators($list);
 	}
 
-	protected function loadAllowedCategories($userid) {
-		$acl = JFactory::getACL ();
-		$db = JFactory::getDBO ();
-		$user = JFactory::getUser();
+	protected function loadAllowedCategories($user) {
+		$user = JFactory::getUser($user);
 
-		if ($userid != 0) {
-			$aro_group = $acl->getAroGroup ( $userid );
-			$gid = $aro_group->id;
+		if ($user->id != 0) {
+			$acl = JFactory::getACL ();
+			$gid = $acl->getAroGroup ( $user->id )->id;
 		} else {
 			$gid = 0;
 		}
 
-		$query = "SELECT id, accesstype, access, pub_access, pub_recurse, admin_access, admin_recurse
-				FROM #__kunena_categories
-				WHERE published='1' AND (accesstype='none' OR accesstype='joomla')";
-		$db->setQuery ( $query );
-		$rows = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return array();
+		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 		$catlist = array();
-		foreach ( $rows as $row ) {
-			if (self::isModerator($userid, $row->id)) {
-				$catlist[$row->id] = 1;
-			} elseif ($row->accesstype == 'joomla') {
-				if ( $row->access <= $user->get('aid') )
-					$catlist[$row->id] = 1;
-			} elseif ($row->pub_access == 0 ||
-				($userid > 0 && (
-				($row->pub_access == - 1)
-				|| ($row->pub_access > 0 && self::_has_rights ( $gid, $row->pub_access, $row->pub_recurse ))
-				|| ($row->admin_access > 0 && self::_has_rights ( $gid, $row->admin_access, $row->admin_recurse ))))) {
-				$catlist[$row->id] = 1;
+		foreach ( $categories as $category ) {
+			// Check if user is a moderator
+			if (self::isModerator($user->id, $category->id)) {
+				$catlist[$category->id] = $category->id;
+			}
+			// Check against Joomla access level
+			if ($category->accesstype == 'joomla') {
+				if ( $category->access <= $user->get('aid') ) {
+					$catlist[$category->id] = $category->id;
+				}
+			}
+			// Check against Joomla user group
+			if ($category->accesstype == 'none') {
+				if (self::isModerator($user->id, $category->id)) {
+					$catlist[$category->id] = $category->id;
+				} elseif ($category->pub_access == 0 ||
+					($user->id > 0 && (
+					($category->pub_access == - 1)
+					|| ($category->pub_access > 0 && self::_has_rights ( $gid, $category->pub_access, $category->pub_recurse ))
+					|| ($category->admin_access > 0 && self::_has_rights ( $gid, $category->admin_access, $category->admin_recurse ))))) {
+					$catlist[$category->id] = $category->id;
+				}
 			}
 		}
 		return $catlist;
+	}
+
+	protected function checkSubscribers($topic, &$userids) {
+		$userlist = implode(',', $userids);
+
+		$db = JFactory::getDBO ();
+		$query = new JDatabaseQuery();
+		$query->select('u.id');
+		$query->from('#__users AS u');
+		$query->where("u.block=0");
+		$query->where("u.id IN ($userlist)");
+
+		$category = $topic->getCategory();
+		if ($category->accesstype == 'joomla') {
+			// Check against Joomla access level
+			if ( $category->access > 1 ) {
+				// Special users = not in registered group
+				$query->where("u.gid!=18");
+			}
+		} elseif ($category->accesstype == 'none') {
+			// Check against Joomla user groups
+			$public = $this->_get_groups($category->pub_access, $category->pub_recurse);
+			$admin = $category->pub_access > 0 ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
+			$groups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
+			if ($groups)
+				$query->where("u.gid IN ({$groups})");
+		} else {
+			return array();
+		}
+
+		$db->setQuery ($query);
+		$userids = (array) $db->loadResultArray();
+		KunenaError::checkDatabaseError();
 	}
 
 	protected function _has_rights($usergroup, $groupid, $recurse) {
@@ -118,33 +141,5 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 			return $groups[$groupid];
 		}
 		return array($groupid);
-	}
-
-	protected function _get_subscribers($catid, $thread) {
-		// Get all allowed Joomla groups to make sure that subscription is valid
-		$kunena_acl = JFactory::getACL ();
-		$public = $this->_get_groups($access->pub_access, $access->pub_recurse);
-		$admin = array();
-		if ($access->pub_access > 0) {
-			$admin = $this->_get_groups($access->admin_access, $access->admin_recurse);
-		}
-		$groups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
-		if ($groups)
-			$groups = "AND u.gid IN ({$groups})";
-
-		$db = JFactory::getDBO ();
-		$query ="SELECT u.id, 1 AS topic
-					FROM #__kunena_user_topics AS s
-					INNER JOIN #__users AS u ON s.user_id=u.id
-					WHERE s.topic_id={$thread} {$groups}
-				UNION
-				SELECT u.id, 0 AS topic
-					FROM #__kunena_user_categories AS s
-					INNER JOIN #__users AS u ON s.user_id=u.id
-					WHERE s.category_id={$catid} {$groups}";
-		$db->setQuery ($query);
-		$userids = $db->loadObjectList('id');
-		KunenaError::checkDatabaseError();
-		return $userids;
 	}
 }

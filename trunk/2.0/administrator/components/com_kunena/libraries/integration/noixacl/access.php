@@ -21,24 +21,16 @@ class KunenaAccessNoixACL extends KunenaAccess {
 	}
 
 	protected function loadAdmins() {
-		$this->adminsByCatid = array ();
-		$this->adminsByUserid = array ();
 		$db = JFactory::getDBO ();
-		$query = "SELECT u.id FROM #__users AS u
+		$query = "SELECT u.id AS userid, 0 AS catid FROM #__users AS u
 			WHERE u.block='0' AND u.usertype IN ('Administrator', 'Super Administrator')";
 		$db->setQuery ( $query );
-		$list = $db->loadResultArray ();
+		$list = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
-		foreach ( $list as $item ) {
-			$userid = intval ( $item );
-			$this->adminsByCatid [0] [$userid] = 1;
-			$this->adminsByUserid [$userid] [0] = 1;
-		}
+		return parent::loadAdmins($list);
 	}
 
 	protected function loadModerators() {
-		$this->moderatorsByCatid = array ();
-		$this->moderatorsByUserid = array ();
 		$db = JFactory::getDBO ();
 		$query = "SELECT u.id AS userid, m.catid
 				FROM #__users AS u
@@ -47,15 +39,9 @@ class KunenaAccessNoixACL extends KunenaAccess {
 				LEFT JOIN #__kunena_categories AS c ON m.catid=c.id
 				WHERE u.block='0' AND ku.moderator='1' AND (m.catid IS NULL OR c.moderated='1')";
 		$db->setQuery ( $query );
-		$list = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError ())
-			return;
-		foreach ( $list as $item ) {
-			$userid = intval ( $item->userid );
-			$catid = intval ( $item->catid );
-			$this->moderatorsByUserid [$userid] [$catid] = 1;
-			$this->moderatorsByCatid [$catid] [$userid] = 1;
-		}
+		$list = (array) $db->loadObjectList ();
+		KunenaError::checkDatabaseError ();
+		return parent::loadModerators($list);
 	}
 
 	protected function loadAllowedCategories($userid) {
@@ -143,41 +129,38 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		return array($groupid);
 	}
 
-	protected function _get_subscribers($catid, $thread) {
+	protected function checkSubscribers($topic, &$userids) {
+		$userlist = implode(',', $userids);
+
 		$db = JFactory::getDBO ();
+		$query = new JDatabaseQuery();
+		$query->select('u.id');
+		$query->from('#__users AS u');
+		$query->where("u.block=0");
+		$query->where("u.id IN ({$userlist})");
 
-		$tquery = new JDatabaseQuery();
-		$tquery->select('u.id, 1 AS topic');
-		$tquery->from('#__kunena_user_topics AS s');
-		$tquery->join('INNER', '#__users AS u ON s.user_id=u.id');
-		$tquery->where("s.topic_id={$db->quote($thread)}");
-
-		$cquery = new JDatabaseQuery();
-		$cquery->select('u.id, 0 AS topic');
-		$cquery->from('#__kunena_user_categories AS s');
-		$cquery->join('INNER', '#__users AS u ON s.user_id=u.id');
-		$cquery->where("s.topic_id={$db->quote($thread)}");
-
-		// Get all allowed Joomla groups to make sure that subscription is valid
-		$public = $this->_get_groups($access->pub_access, $access->pub_recurse);
-		$admin = array();
-		if ($access->pub_access > 0) {
-			$admin = $this->_get_groups($access->admin_access, $access->admin_recurse);
-		}
-		$groups = array_unique ( array_merge ( $public, $admin ) );
-		if ($groups) {
-			$groups = implode ( ',', $groups );
-
-			$tquery->join('LEFT', "#__noixacl_multigroups AS g ON g.id_user=u.id");
-			$tquery->where("(u.gid IN ({$groups}) OR g.id_group IN ({$groups}))");
-
-			$cquery->join('LEFT', "#__noixacl_multigroups AS g ON g.id_user=u.id");
-			$cquery->where("(u.gid IN ({$groups}) OR g.id_group IN ({$groups}))");
+		$category = $topic->getCategory();
+		if ($category->accesstype == 'joomla') {
+			// Check against Joomla access level
+			if ( $category->access > 1 ) {
+				// Special users = not in registered group
+				$query->where("u.gid!=18");
+			}
+		} elseif ($category->accesstype == 'none') {
+			// Check against Joomla user groups
+			$public = $this->_get_groups($category->pub_access, $category->pub_recurse);
+			$admin = $category->pub_access > 0 ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
+			$groups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
+			if ($groups) {
+				$query->join('LEFT', "#__noixacl_multigroups AS g ON g.id_user=u.id");
+				$query->where("(u.gid IN ({$groups}) OR g.id_group IN ({$groups}))");
+			}
+		} else {
+			return array();
 		}
 
-		$db->setQuery ("{$tquery} UNION {$cquery}");
-		$userids = $db->loadObjectList('id');
+		$db->setQuery ($query);
+		$userids = (array) $db->loadObjectList('id');
 		KunenaError::checkDatabaseError();
-		return $userids;
 	}
 }

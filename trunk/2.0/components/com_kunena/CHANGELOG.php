@@ -33,6 +33,13 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+19-December-2010 Matias
+^ [#22541] Cleanup all KunenaAccess classes
+^ [#22541] Rename KunenaAccessXXX::_get_subscribers() to XXX::checkSubscribers()
+^ [#22541] Move some logic from derived classes into KunenaAccess::loadAdmins() and KunenaAccess::loadModerators()
+^ [#22541] Separate Kunena and Joomla/Component logic in ACL
+- [#22541] Disable Joomla 1.6 ACL for now
+
 17-December-2010 Matias
 + [#22569] Add function KunenaForum::display() to display any Kunena view
 + [#22569] KunenaModel: add basic support for loading views from our library

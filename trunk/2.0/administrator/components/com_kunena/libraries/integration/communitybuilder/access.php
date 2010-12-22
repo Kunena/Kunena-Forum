@@ -25,32 +25,31 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 		$this->priority = 50;
 	}
 
-	function loadAdmins() {
-		$this->joomlaAccess->loadAdmins();
-		$this->adminsByCatid = $this->joomlaAccess->adminsByCatid;
-		$this->adminsByUserid = $this->joomlaAccess->adminsByUserid;
-		$params = array ('byCatid'=>&$this->adminsByCatid, 'byUserid'=>&$this->adminsByUserid);
+	protected function loadAdmins() {
+		$list = $this->joomlaAccess->loadAdmins();
+		$params = array ('list'=>&$list);
 		$this->integration->trigger ( 'getAdmins', $params );
+		return parent::loadAdmins($list);
 	}
 
-	function loadModerators() {
-		$this->joomlaAccess->loadModerators();
-		$this->moderatorsByCatid = $this->joomlaAccess->moderatorsByCatid;
-		$this->moderatorsByUserid = $this->joomlaAccess->moderatorsByUserid;
-		$params = array ('byCatid'=>&$this->moderatorsByCatid, 'byUserid'=>&$this->moderatorsByUserid);
+	protected function loadModerators() {
+		$list = $this->joomlaAccess->loadModerators();
+		$params = array ('list'=>&$list);
 		$this->integration->trigger ( 'getModerators', $params );
+		return parent::loadModerators($list);
 	}
 
-	function loadAllowedCategories($userid) {
+	protected function loadAllowedCategories($userid) {
 		$allowed = $this->joomlaAccess->getAllowedCategories($userid);
 		$params = array ('userid'=>$userid, 'rules'=>array('read'=>&$allowed) );
 		$this->integration->trigger ( 'getCategoryAccessRules', $params );
 		return $allowed;
 	}
 
-	protected function _get_subscribers($catid, $thread) {
-		$this->joomlaAccess->moderatorsByCatid = $this->moderatorsByCatid;
-		$this->joomlaAccess->moderatorsByUserid = $this->moderatorsByUserid;
-		return $this->joomlaAccess->_get_subscribers($catid, $thread);
+	protected function checkSubscribers($topic, &$userids) {
+		$category = $topic->getCategory();
+		if ($category->accesstype != 'communitybuilder') {
+			$this->joomlaAccess->checkSubscribers($topic, $userids);
+		}
 	}
 }

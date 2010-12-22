@@ -13,7 +13,7 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
-class KunenaAccessJoomla16 extends KunenaAccess {
+/*class KunenaAccessJoomla16 extends KunenaAccess {
 	function __construct() {
 		if (!is_dir(JPATH_LIBRARIES.'/joomla/access'))
 			return;
@@ -152,3 +152,4 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		return $userids;
 	}
 }
+*/

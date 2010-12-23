@@ -31,6 +31,9 @@ Legend:
 
 Kunena Discuss Plugin 1.6.2
 
+22-December-2010 Severdia
+# [#20084] More English language file cleanup and CSS issues.
+
 14-December-2010 Severdia
 ^ [#20084] Cleaned up English language file. Now it's real English. :)
 

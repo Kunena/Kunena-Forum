@@ -1,10 +1,10 @@
 <?php
 /**
  * @version $Id$
- * Kunena Discuss Plugin
+ * Kunena Discuss Plug-in
  * @package Kunena Discuss
  *
- * @Copyright (C) 2010 Kunena Team All rights reserved
+ * @Copyright (C) 2010-2011 Kunena Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
@@ -16,11 +16,7 @@ $msgurl=CKunenaLink::GetMessageURL ( $this->id );
 	<a name="<?php echo intval($this->id) ?>" id="id<?php echo intval($this->id) ?>" > </a>
 	<div class="kdiscuss-reply-header">
 		<span class="kdiscuss-date" title="<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat_hover'); ?>">
-			<?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat'); ?>
-		</span>
-		<span class="kdiscuss-subject" title="<?php echo $this->msg->subject; ?>">
-			<a href="<?php echo $msgurl; ?>" title="<?php echo $this->msg->subject; ?>">
-			<?php echo $this->msg->subject; ?></a>
+			<?php echo JText::_ ( 'PLG_KUNENADISCUSS_POSTED' )?> <?php echo CKunenaTimeformat::showDate($this->msg->time, 'config_post_dateformat'); ?>
 		</span>
 		<span class="kdiscuss-username">
 			<?php echo JText::_ ( 'PLG_KUNENADISCUSS_BY' ) . ' ' . CKunenaLink::GetProfileLink ( $this->profile->userid, $this->escape($this->username) ) ?>
@@ -41,3 +37,6 @@ $msgurl=CKunenaLink::GetMessageURL ( $this->id );
 		</div>
 	</div>
 </div>
+
+
+

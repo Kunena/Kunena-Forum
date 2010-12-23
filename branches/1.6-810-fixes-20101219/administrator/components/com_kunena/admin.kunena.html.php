@@ -408,8 +408,8 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 		$k = 0;
 		$i = 0;
 		$n = count($rows);
-		$img_yes = '<img src="images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
-		$img_no = '<img src="images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
+		$img_yes = '<img src="components/com_kunena/images/tick.png" alt="'.JText::_('COM_KUNENA_A_YES').'" />';
+		$img_no = '<img src="components/com_kunena/images/publish_x.png" alt="'.JText::_('COM_KUNENA_A_NO').'" />';
 		foreach($rows as $row) {
 	?>
 		<tr <?php echo 'class = "row' . $k . '"';?>>
@@ -746,7 +746,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						</td>
 								<td align="left" valign="top"><img
 							src="<?php echo JURI::root ();
-						?>/images/M_images/livemarks.png"
+						?>administrator/components/com_kunena/images/livemarks.png"
 							alt="" /> <?php echo JText::_('COM_KUNENA_A_RSS_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
@@ -754,7 +754,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 								<td align="left" valign="top"><?php echo $lists ['enablepdf'];
 						?>
 						</td>
-						<td align="left" valign="top"><img src="<?php echo JURI::root (); ?>/images/M_images/pdf_button.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_PDF_DESC') ?></td>
+						<td align="left" valign="top"><img src="<?php echo JURI::root (); ?>administrator/components/com_kunena/images/pdf_button.png" alt="" /> <?php echo JText::_('COM_KUNENA_A_PDF_DESC') ?></td>
 					</tr>
 					<tr align="center" valign="middle">
 						<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_DEBUG_MODE') ?>
@@ -2154,7 +2154,7 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 					foreach($users as $user) {
 						$kunena_user = KunenaFactory::getUser($user->id);
 						$k = 1 - $k;
-						$userLogged = $kunena_user->isOnline() ? '<img src="images/tick.png" width="16" height="16" border="0" alt="" />': '';
+						$userLogged = $kunena_user->isOnline() ? '<img src="components/com_kunena/images/tick.png" width="16" height="16" border="0" alt="" />': '';
 						$userEnabled = $kunena_user->isBlocked() ? 'publish_x.png' : 'tick.png';
 						$altUserEnabled = $kunena_user->isBlocked() ? JText::_( 'Blocked' ) : JText::_( 'Enabled' );
 						$userBlockTask =  $kunena_user->isBlocked() ? 'userunblock' : 'userblock';

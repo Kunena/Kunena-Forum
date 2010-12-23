@@ -7,6 +7,13 @@
 
 @CHARSET "UTF-8";
 
+/** Joomla 1.6 backend fix **/ 
+DIV#element-box,
+DIV.m {
+	background-color:#FFF !important;
+}
+/** end Joomla 1.6 backend fix **/
+
 div.header {
 	padding-left:148px !important;
 }

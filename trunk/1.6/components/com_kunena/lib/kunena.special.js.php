@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: kunena.bbcode.js.php 3975 2010-12-12 15:20:17Z xillibit $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *

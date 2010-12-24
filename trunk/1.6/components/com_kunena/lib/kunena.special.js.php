@@ -77,9 +77,11 @@ window.addEvent('domready', function(){
 			})
 		});
 	}
-
-	window.onload=kunenaCheckPollallowed($('postcatid').getSelected().get("value"));
-	window.onload=kunenaCheckAnonymousAllowed($('postcatid').getSelected().get("value"));
+	
+	if($('postcatid') != undefined) {
+		window.onload=kunenaCheckPollallowed($('postcatid').getSelected().get("value"));
+		window.onload=kunenaCheckAnonymousAllowed($('postcatid').getSelected().get("value"));
+	}
 });
 
 <?php

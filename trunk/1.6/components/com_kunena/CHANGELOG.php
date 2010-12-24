@@ -36,6 +36,7 @@ Kunena 1.6.2-DEV
 24-December-2010 fxstein
 ^ [#15886] Merged revisions 4036-4063 from /branches/1.6-810-fixes-20101219
 ^ [#15886] Merged revisions 4052-4056 from /branches/1.6-LDAsvens-language-20101221
+^ [#15886] Merged revisions 4005-4043 from /branches/1.6-xillibit-fixes-20101216
 
 24-December-2010 810
 ^ [#23875] Minor html fixes backend (Joomla 1.6 Part 2)
@@ -47,10 +48,17 @@ Kunena 1.6.2-DEV
 ^ [#23293] update ru-RU (thanks Zarkos)
 ^ [#23293] update fi-FI (thanks Mortti)
 
+20-December-2010 Xillibit
+^ [#23293] Added french translation fr-FR.com_kunena.sys.ini
+
 19-December.2010 Matias
 # [#23884] Add basic Joomla 1.6 support for menu items: latest, listcat, post, profile, showcat
 # [#23826] Fix regression in Category Manager: escaped too much
 # [#23885] Restore support for old templates from K1.6.1
+
+19-December-2010 Xillibit
++ [#23892] Show in report configuration settings the Kunena template details
+# [#23798] On reply postcatid is undefined in javascript
 
 18-December-2010 Matias
 + [#23863] Add support for language installation for j1.6

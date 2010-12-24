@@ -14,9 +14,12 @@
 	<license>GNU/GPL</license>
 	<description>French language file for Kunena Forum Component</description>
 
-	<files>
-		<filename>fr-FR.com_kunena.ini</filename>
-		<filename>fr-FR.com_kunena.install.ini</filename>
-		<filename>fr-FR.com_kunena.menu.ini</filename>
-	</files>
+	<administration>
+		<files>
+			<filename>fr-FR.com_kunena.ini</filename>
+			<filename>fr-FR.com_kunena.install.ini</filename>
+			<filename>fr-FR.com_kunena.menu.ini</filename>
+			<filename>fr-FR.com_kunena.sys.ini</filename>
+		</files>
+	</administration>
 </install>

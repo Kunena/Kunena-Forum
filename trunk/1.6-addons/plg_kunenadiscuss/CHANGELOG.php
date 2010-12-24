@@ -31,8 +31,14 @@ Legend:
 
 Kunena Discuss Plugin 1.6.2
 
+24-December-2010 fxstein
+^ [#20084] Merged revisions 3803-4058 from /branches/1.6-addons-LDAsvens-language-20101030
+
 22-December-2010 Severdia
 # [#20084] More English language file cleanup and CSS issues.
+
+22-December-2010 svens(LDA)
+^ [#23293] update ru-RU (thanks Zarkos)
 
 14-December-2010 Severdia
 ^ [#20084] Cleaned up English language file. Now it's real English. :)
@@ -52,18 +58,24 @@ Kunena Discuss Plugin 1.6.2
 ^ [#20084] de-DE (German) language updated
 ^ [#20084] Move up loading on language files to enable error messages
 
-6-November-2010 fxstein
-^ [#20084] Change all references of kunena.com to kunena.org
-^ [#20084] Update version info to 1.6.1
+11-December-2010 svens(LDA)
+^ [#23293] update de-DE (thanks rich)
 
-3-November-2010 Severdia
-# [#20084] Fixed float bug in IE
+19-November-2010 svens(LDA)
++ [#23293] add es-ES (thanks Alakakentu)
 
 12-November-2010 svens(LDA)
 + [#23293] add de-DE (thanks rich)
 
+6-November-2010 fxstein
+^ [#20084] Change all references of kunena.com to kunena.org
+^ [#20084] Update version info to 1.6.1
+
 04-November-2010 svens(LDA)
 ^ [#22975] update ru-RU (thanks ZARKOS)
+
+3-November-2010 Severdia
+# [#20084] Fixed float bug in IE
 
 1-November-2010 Matias
 # [#20084] Do not show unapproved/deleted messages

@@ -28,15 +28,24 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaStats 1.6.2
+
+24-December-2010 fxstein
+^ [#20095] Merged revisions 3803-4058 from /branches/1.6-addons-LDAsvens-language-20101030
+
 21-December-2010 Severdia
 ^ [#23900] Made file naming and folder structure consistent among Kunena modules
 # [#23900] Made CSS class names consistent with prefix
 
-KunenaStats 1.6.0-RC3
-
 31-October-2010 Xillibit
 # [#20095] Profile links in topthanks doesn't put you to the right user
 ^ [#20095] Update version info to 1.6.0RC3
+
+22-December-2010 svens(LDA)
++ [#23293] add fi-FI (thanks Mortti)
+
+19-November-2010 svens(LDA)
++ [#23293] add es-ES (thanks Alakakentu)
 
 12-Nov-2010 svens(LDA)
 + [#23293] add de-DE (thanks rich)

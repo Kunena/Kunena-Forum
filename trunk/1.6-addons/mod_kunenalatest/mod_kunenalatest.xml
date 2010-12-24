@@ -22,6 +22,7 @@
 	<languages folder="languages">
 		<language tag="de-DE">de-DE.mod_kunenalatest.ini</language>
 		<language tag="en-GB">en-GB.mod_kunenalatest.ini</language>
+		<language tag="es-ES">es-ES.mod_kunenalatest.ini</language>
 		<language tag="fi-FI">fi-FI.mod_kunenalatest.ini</language>
 		<language tag="fr-FR">fr-FR.mod_kunenalatest.ini</language>
 		<language tag="hu-HU">hu-HU.mod_kunenalatest.ini</language>

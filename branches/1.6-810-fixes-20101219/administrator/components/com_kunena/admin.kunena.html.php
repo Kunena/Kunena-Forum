@@ -415,7 +415,7 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 		<tr <?php echo 'class = "row' . $k . '"';?>>
 			<td class="right"><?php echo $i + $pageNav->limitstart + 1; ?></td>
 			<td><?php echo JHTML::_('grid.id', $i, $row->id) ?></td>
-			<td class="left" width="70%"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo $row->treename; ?></a></td>
+			<td class="left"><a href="#edit" onclick="return listItemTask('cb<?php echo $i ?>','edit')"><?php echo $row->treename; ?></a></td>
 			<td class="center"><?php echo kescape($row->id); ?></td>
 
 			<?php if (! $row->category): ?>

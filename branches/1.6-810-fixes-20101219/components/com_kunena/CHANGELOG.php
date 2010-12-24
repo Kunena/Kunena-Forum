@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+24-December-2010 810
+^ [#23875] Minor html fixes backend (Joomla 1.6 Part 2)
+
 23-December-2010 810
 ^ [#23875] Minor html fixes backend (Joomla 1.6)
 

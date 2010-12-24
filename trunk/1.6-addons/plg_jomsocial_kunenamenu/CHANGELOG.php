@@ -27,7 +27,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-JomsocialKunenaMenu 1.6.0-RC2
+JomsocialKunenaMenu 1.6.2
+
+24-December-2010 fxstein
+^ [#19002] Merged revisions 3803-4058 from /branches/1.6-addons-LDAsvens-language-20101030
+
+19-November-2010 svens(LDA)
++ [#23293] add es-ES (thanks Alakakentu)
 
 10-October-2010 Matias
 + [#19002] Added ru-RU translation (thanks ZARKOS)

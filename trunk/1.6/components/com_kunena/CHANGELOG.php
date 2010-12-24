@@ -35,12 +35,17 @@ Kunena 1.6.2-DEV
 
 24-December-2010 fxstein
 ^ [#15886] Merged revisions 4036-4063 from /branches/1.6-810-fixes-20101219
+^ [#15886] Merged revisions 4052-4056 from /branches/1.6-LDAsvens-language-20101221
 
 24-December-2010 810
 ^ [#23875] Minor html fixes backend (Joomla 1.6 Part 2)
 
 23-December-2010 810
 ^ [#23875] Minor html fixes backend (Joomla 1.6)
+
+21-December-2010 svens(LDA)
+^ [#23293] update ru-RU (thanks Zarkos)
+^ [#23293] update fi-FI (thanks Mortti)
 
 19-December.2010 Matias
 # [#23884] Add basic Joomla 1.6 support for menu items: latest, listcat, post, profile, showcat

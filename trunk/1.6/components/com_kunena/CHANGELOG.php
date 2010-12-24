@@ -33,6 +33,15 @@ Legend:
 
 Kunena 1.6.2-DEV
 
+24-December-2010 fxstein
+^ [#15886] Merged revisions 4036-4063 from /branches/1.6-810-fixes-20101219
+
+24-December-2010 810
+^ [#23875] Minor html fixes backend (Joomla 1.6 Part 2)
+
+23-December-2010 810
+^ [#23875] Minor html fixes backend (Joomla 1.6)
+
 19-December.2010 Matias
 # [#23884] Add basic Joomla 1.6 support for menu items: latest, listcat, post, profile, showcat
 # [#23826] Fix regression in Category Manager: escaped too much
@@ -53,6 +62,11 @@ Kunena 1.6.2-DEV
 18-December-2010 Xillibit
 ^ [#23863] Add support for language installation for j1.6
 
+18-December-2010 810
+^ [#23875] Minor html fixes backend
+^ [#23875] Minor html fixes backend (part2)
+^ [#23875] Minor html fixes backend (part3)
+
 16-December-2010 Xillibit
 # [#23798] Remove ajax for show poll icon and anonymous field on new topic button tab (Part 3)
 ^ [#23821] Replace some select list in advanced search by JHTML things
@@ -60,6 +74,11 @@ Kunena 1.6.2-DEV
 
 16-December-2010 Matias
 * [#23813] Administration: Prevent possible XSS attacks
+
+16-December-2010 810
+^ [#23293] add/update languages Dutch
+^ [#23854] Hyperlink announcement
+^ [#23829] Double lines in flat.php because off ktopicmodule
 
 15-December-2010 fxstein
 ^ [#15886] Merged revisions 3995-3996 from /branches/1.6.2-810-bugfixes-29-10-2010

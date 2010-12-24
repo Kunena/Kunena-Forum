@@ -7,6 +7,20 @@
 
 @CHARSET "UTF-8";
 
+/** Joomla 1.6 backend fix **/ 
+DIV#element-box,
+DIV.m {
+	background-color:#FFF !important;
+}
+.jgrid SPAN.state {
+width:20px;
+height:13px;
+text-align:center;
+float:left;
+background-repeat:no-repeat !important;
+}
+/** end Joomla 1.6 backend fix **/
+
 div.header {
 	padding-left:148px !important;
 }

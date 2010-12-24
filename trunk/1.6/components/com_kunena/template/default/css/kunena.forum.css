@@ -403,7 +403,6 @@ PX		EM			PCT			PT
 	vertical-align: middle;
 }
 #Kunena td.ktopicmodule {
-	border-bottom: 1px solid;
 }
 #Kunena td.ktopicmoderation {
 	width: 1%;
@@ -2587,7 +2586,6 @@ FORUM HEADER DESCRIPTION
 HELP, RULES, UPLOAD AVATAR, ANNOUNCEMENT
 -------------------------------------------------------------------- */
 #Kunena div.kannouncement h2 {
-	display:table;
 	table-layout:fixed;
 	word-wrap:break-word;
 }

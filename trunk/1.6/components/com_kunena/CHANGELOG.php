@@ -38,6 +38,7 @@ Kunena 1.6.2
 ^ [#23152] Update automatic version info for all languages
 # [#23152] Added missing index.html files to various languages
 ^ [#23152] Update automatic version info for default template
++ [#23152] Add Update version expansion to builder for default templates
 
 24-December-2010 fxstein
 ^ [#15886] Merged revisions 4036-4063 from /branches/1.6-810-fixes-20101219

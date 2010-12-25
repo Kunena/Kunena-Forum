@@ -2,8 +2,9 @@
 <!DOCTYPE install>
 <kinstall type="kunena-template" version="1.6">
 	<name>Example Template</name>
-	<version>1.6.0</version>
-	<creationDate>2010-07-04</creationDate>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
 	<authorEmail>team@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>

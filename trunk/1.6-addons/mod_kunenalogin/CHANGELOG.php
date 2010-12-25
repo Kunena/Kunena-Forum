@@ -30,6 +30,9 @@ KunenaLogin 1.6.2
 
 25-December-2010 fxstein
 ^ [#22073] Update version info to 1.6.2 stable
+^ [#22073] Replace hard coded version info in language files with auto expansion
++ [#22073] Add version info auto expansion to builder
+^ [#22073] Update min Kunena version requirements to Kunena 1.6.2
 
 24-December-2010 fxstein
 ^ [#22073] Merged revisions 3803-4058 from /branches/1.6-addons-LDAsvens-language-20101030

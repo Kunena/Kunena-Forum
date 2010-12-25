@@ -32,6 +32,9 @@ KunenaSearch 1.6.2
 
 25-December-2010 fxstein
 ^ [#22592] Update version info to 1.6.2 stable
++ [#22592] Add version info to module description
++ [#23293] Add version info auto expansion to builder
++ [#23293] Add min Kunena version requirements (1.6.2)
 
 21-December-2010 Severdia
 ^ [#23900] Made file naming and folder structure consistent among Kunena modules

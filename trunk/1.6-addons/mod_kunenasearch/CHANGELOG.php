@@ -28,6 +28,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaSearch 1.6.2
+
+25-December-2010 fxstein
+^ [#22592] Update version info to 1.6.2 stable
+
 21-December-2010 Severdia
 ^ [#23900] Made file naming and folder structure consistent among Kunena modules
 # [#23900] Made CSS class names consistent with prefix

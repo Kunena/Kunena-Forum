@@ -2,12 +2,12 @@
 <!DOCTYPE install>
 <install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Search</name>
-	<version>1.0.0-RC2</version>
+	<version>1.6.2</version>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
 	<authorEmail>admin@kunena.org</authorEmail>
 	<authorUrl>http://www.kunena.org</authorUrl>
-	<creationDate>@kunenaversiondate@</creationDate>
-	<build>@kunenaversionbuild@</build>
 	<copyright>(C)2010-2011 Kunena Team. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>MOD_KUNENASEARCH_DESCRIPTION</description>

@@ -28,6 +28,9 @@ Legend:
 
 KunenaLogin 1.6.2
 
+25-December-2010 fxstein
+^ [#22073] Update version info to 1.6.2 stable
+
 24-December-2010 fxstein
 ^ [#22073] Merged revisions 3803-4058 from /branches/1.6-addons-LDAsvens-language-20101030
 

@@ -31,7 +31,7 @@ class plgContentKunenaDiscuss extends JPlugin {
 			
 		// Kunena detection and version check
 		$minKunenaVersion = '1.6.2';
-		if (!class_exists('Kunena') || Kunena::versionBuild() < 3867) {
+		if (!class_exists('Kunena') || Kunena::versionBuild() < 3892) {
 
 			$this->_app->enqueueMessage( JText::sprintf ( 'PLG_KUNENADISCUSS_DEPENDENCY_FAIL', $minKunenaVersion ) );
 			

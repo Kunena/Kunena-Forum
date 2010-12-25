@@ -3,13 +3,13 @@
 <install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Statistics</name>
 	<author>Kunena Team</author>
+	<version>1.6.2</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<copyright>(c)2010-2011 Kunena Team. All rights reserved</copyright>
 	<license>GNU/GPL</license>
 	<authorEmail>admin@kunena.org</authorEmail>
 	<authorUrl>www.kunena.org</authorUrl>
-	<version>1.6.0-RC3</version>
 	<description>MOD_KUNENASTATS_DESCRIPTION</description>
 
 	<files>

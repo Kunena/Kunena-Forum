@@ -3,13 +3,13 @@
 <install version="1.5" type="plugin" group="search" method="upgrade">
 	<name>Search - Kunena</name>
 	<author>Kunena Team</author>
+	<version>1.6.2</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<copyright>(c)2010-2011 Kunena Team. All rights reserved.</copyright>
 	<authorEmail>admin@kunena.org</authorEmail>
 	<authorUrl>www.kunena.org</authorUrl>
 	<license>GNU/GPL</license>
-	<version>1.6.0-RC2</version>
 	<description>PLG_KUNENASEARCH_DESCRIPTION</description>
 	<files>
 		<filename plugin="kunenasearch">kunenasearch.php</filename>

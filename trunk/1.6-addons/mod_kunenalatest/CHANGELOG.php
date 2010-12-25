@@ -32,6 +32,7 @@ KunenaLatest 1.6.2
 
 25-December-2010 fxstein
 ^ [#23293] Update version info to 1.6.2 stable
+^ [#23293] Replace hard coded version info in language files with auto expansion
 
 24-December-2010 fxstein
 ^ [#23293] Merged revisions 3803-4058 from /branches/1.6-addons-LDAsvens-language-20101030

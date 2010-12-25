@@ -13,8 +13,8 @@ defined ( '_JEXEC' ) or die ( '' );
 require_once(JPATH_ADMINISTRATOR.'/components/com_kunena/api.php');
 
 // Kunena detection and version check
-$minKunenaVersion = '1.6.0-RC2';
-if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3251) {
+$minKunenaVersion = '1.6.2';
+if (! class_exists ( 'Kunena' ) || Kunena::versionBuild () < 3892) {
 	return;
 }
 // Kunena online check

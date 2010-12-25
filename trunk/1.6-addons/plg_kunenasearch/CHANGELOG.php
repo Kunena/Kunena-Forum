@@ -30,6 +30,9 @@ KunenaSearch 1.6.2
 
 25-December-2010 fxstein
 ^ [#20138] Updated version info 1.6.2 stable
+^ [#23293] Add version info to language files with auto expansion
++ [#23293] Add version info auto expansion to builder
+^ [#23293] Update min Kunena version requirements to Kunena 1.6.2
 
 12-Nov-2010 svens(LDA)
 + [#23293] add de-DE (thanks rich)

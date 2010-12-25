@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Italian</name>
 	<tag>it-IT</tag>
-	<creationDate>22-11-2010</creationDate>
-	<version>1.0</version>
-	<build>1.0</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>detlef, ohifra, onishima</author>
 	<authorEmail>francescodegiorgio81@gmail.com</authorEmail>
 	<authorUrl>http://www.iibunicz.com/</authorUrl>

@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - German</name>
 	<tag>de-DE</tag>
-	<creationDate>2010-10-25</creationDate>
-	<version>1.6.1</version>
-	<build>3705</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Sven Schultschik (LDA) / Richard Binder (rich)</author>
 	<lector>Jan Erik Zassenhaus (Team jgerman)</lector>
 	<authorEmail>kunena@kunena.org</authorEmail>

@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Dutch</name>
 	<tag>nl-NL</tag>
-	<creationDate>2010-10-21</creationDate>
-	<version>1.6</version>
-	<build>????</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Jelle Kok</author>
 	<authorEmail>info@newf1.nl</authorEmail>
 	<authorUrl>http://www.newf1.nl</authorUrl>

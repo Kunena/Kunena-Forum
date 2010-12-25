@@ -4,9 +4,9 @@
 <install type="language" version="1.6" client="site" method="upgrade">
 	<name>Kunena Forum - Indonesia</name>
 	<tag>id-ID</tag>
-	<creationDate>2010-11-02</creationDate>
-	<version>1.6.1</version>
-	<build>unknown</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Daniel</author>
 	<authorEmail>daniells@ymail.com</authorEmail>
 	<authorUrl>unknown</authorUrl>

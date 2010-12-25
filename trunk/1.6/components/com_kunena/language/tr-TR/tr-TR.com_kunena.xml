@@ -4,8 +4,9 @@
 <install type="language" version="1.5.4" client="site" method="upgrade">
 	<name>Turkish(Turkiye)</name>
 	<tag>tr-TR</tag>
-	<version>4.0</version>
-	<creationdate>Agustos 2010</creationdate>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Tolga</author>
 	<authoremail>cumla@windowslive.com</authoremail>
 	<authorurl>http://www.cumla.org</authorurl>

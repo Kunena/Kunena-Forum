@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
         <name>Kunena Forum - Catalan</name>
         <tag>ca-ES</tag>
-        <creationDate>2010-09-17</creationDate>
-        <version>1.6.0-RC3</version>
-        <build>3482</build>
+		<creationDate>@kunenaversiondate@</creationDate>
+		<version>@kunenaversion@</version>
+		<build>@kunenaversionbuild@</build>
         <author>Neon26</author>
         <authorEmail>admin@josportal.com</authorEmail>
         <authorUrl>www.josportal.com</authorUrl>

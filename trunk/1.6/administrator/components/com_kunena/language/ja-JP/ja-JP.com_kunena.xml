@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Japanese</name>
 	<tag>ja-JP</tag>
-	<creationDate>2010-10-08</creationDate>
-	<version>1.6.0</version>
-	<build>3620</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Masato Sato</author>
 	<authorEmail>webmaster@joomlaway.net</authorEmail> 
 	<authorUrl>http://www.joomlaway.net/</authorUrl> 

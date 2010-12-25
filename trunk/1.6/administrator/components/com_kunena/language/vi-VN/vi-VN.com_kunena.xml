@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Vietnamese</name>
 	<tag>vi-VN</tag>
-	<creationDate>unknown</creationDate>
-	<version>unknown</version>
-	<build>unknown</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>lmt-net</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>

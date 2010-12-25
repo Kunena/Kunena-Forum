@@ -4,8 +4,9 @@
 <install type="language" version="1.5.0" client="site" method="upgrade">
 	<name>Kunena Forum (Greek)</name>
 	<tag>el-GR</tag>
-	<version>1.6 RC</version>
-	<creationDate>04.09.2010</creationDate>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Chrysovalantis Mochlas - Val Web Design</author>
 	<authorEmail>valandis@valandis.de</authorEmail>
 	<authorUrl>http://www.valandis.de</authorUrl>

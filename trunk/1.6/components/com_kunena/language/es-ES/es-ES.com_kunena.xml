@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Spanish</name>
 	<tag>es-ES</tag>
-	<creationDate>2010-11-06</creationDate>
-	<version>1.6.1</version>
-	<build>3858</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Kunena Spanish Team</author>
 	<authorEmail>kunenaspanish@kunenaspanish.com</authorEmail>
 	<authorUrl>http://www.KunenaSpanish.com</authorUrl>

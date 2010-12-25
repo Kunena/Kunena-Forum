@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Norwegian</name>
 	<tag>nb-NO</tag>
-	<creationDate>29-11-2010</creationDate>
-	<version>1.6.1</version>
-	<build>3788</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Joomla! i Norge</author>
 	<authorEmail>oversettelser@joomlainorge.no</authorEmail>
 	<authorUrl>www.joomlainorge.no</authorUrl>

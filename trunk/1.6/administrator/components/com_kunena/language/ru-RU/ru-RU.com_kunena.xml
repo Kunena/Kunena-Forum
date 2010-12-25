@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Russian</name>
 	<tag>ru-RU</tag>
-	<creationDate>2010-x-x</creationDate>
-	<version>1.6.1</version>
-	<build>xxxx</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>ZARKOS</author>
 	<authorEmail>zarkos@joomlaruclub.ru</authorEmail>
 	<authorUrl>http://www.joomlaruclub.ru</authorUrl>

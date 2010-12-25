@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Chinese</name>
 	<tag>zh-TW</tag>
-	<creationDate>unknown</creationDate>
-	<version>unknown</version>
-	<build>unknown</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>baijianpeng</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>http://www.joomlagate.com</authorUrl>

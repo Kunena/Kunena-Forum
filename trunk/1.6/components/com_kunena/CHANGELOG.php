@@ -31,7 +31,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Kunena 1.6.2-DEV
+Kunena 1.6.2
+
+25-December-2010 fxstein
+^ [#23152] Update version info to 1.6.2 stable (Team)
+^ [#23152] Update automatic version info for all languages
+# [#23152] Added missing index.html files to various languages
+^ [#23152] Update automatic version info for default template
 
 24-December-2010 fxstein
 ^ [#15886] Merged revisions 4036-4063 from /branches/1.6-810-fixes-20101219

@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Polish</name>
 	<tag>pl-PL</tag>
-	<creationdate>12 Sierpień 2010</creationdate>
-	<version>1.6-RC1</version>
-	<build>unknown</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>JoomlAdmin - www.joomladmin.pl</author>
 	<authoremail>andrzej@joomladmin.pl</authoremail>
 	<authorurl>www.joomladmin.pl</authorurl>

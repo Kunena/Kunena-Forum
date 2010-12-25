@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Fórum Kunena - Português de Portugal</name>
 	<tag>pt-PT</tag>
-	<creationDate>2010-10-04</creationDate>
-	<version>1.6.0</version>
-	<build>3620</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Aurélio Vieira and Mickael Cavaco - www.lph2o.com</author>
 	<authorEmail>webmaster@lph2o.com</authorEmail>
 	<authorUrl>http://www.lph2o.com</authorUrl>

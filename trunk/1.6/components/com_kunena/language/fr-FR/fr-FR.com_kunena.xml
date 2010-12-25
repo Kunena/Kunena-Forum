@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - French</name>
 	<tag>fr-FR</tag>
-	<creationDate>unknown</creationDate>
-	<version>unknown</version>
-	<build>unknown</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>unknown</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>

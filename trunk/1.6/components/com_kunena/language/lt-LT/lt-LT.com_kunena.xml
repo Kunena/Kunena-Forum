@@ -4,8 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Lithuanian</name>
 	<tag>lt-LT</tag>
-	<version>1.6.1</version>
-	<creationDate>2010-11-08</creationDate>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>ZYLKIN, Andrius Balsevičius</author>
 	<authorEmail>joomla123lt@gmail.com</authorEmail>
 	<authorUrl>www.MobiJava.lt,www.joomla123.lt</authorUrl>

@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Kunena Forum - Swedish</name>
 	<tag>sv-SE</tag>
-	<creationDate>---</creationDate>
-	<version>1.6.0</version>
-	<build>3620</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Jorgen Sjoholm</author>
 	<authorEmail>jorgen.sjoholm@resurspoolen.se</authorEmail>
 	<authorUrl>----</authorUrl>

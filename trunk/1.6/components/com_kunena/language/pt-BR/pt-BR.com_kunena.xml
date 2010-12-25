@@ -4,9 +4,9 @@
 <install type="language" version="1.5" client="site" method="upgrade">
 	<name>Fórum Kunena - Português do Brasil</name>
 	<tag>pt-BR</tag>
-	<creationDate>2010-10-12</creationDate>
-	<version>1.6.1</version>
-	<build>3714</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Knight Rider - www.soquadrinhos.com</author>
 	<authorEmail>rgponce@gmail.com</authorEmail>
 	<authorUrl>http://www.soquadrinhos.com</authorUrl>

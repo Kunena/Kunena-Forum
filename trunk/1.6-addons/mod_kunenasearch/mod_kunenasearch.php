@@ -23,12 +23,15 @@ if (!Kunena::enabled()) {
 // Include the syndicate functions only once
 require_once( dirname(__FILE__).DS.'helper.php' );
 
-$ksearch_button			 = $params->get('ksearch_button', '');
-$ksearch_button_pos		 = $params->get('ksearch_button_pos', 'right');
-$ksearch_button_txt	 	 = $params->get('ksearch_button_txt', JText::_('Search'));
-$ksearch_width			 = intval($params->get('ksearch_width', 20));
-$ksearch_maxlength		 = $ksearch_width > 20 ? $ksearch_width : 20;
-$ksearch_txt			 = $params->get('ksearch_txt', JText::_('Search...'));
-$moduleclass_sfx 		 = $params->get('moduleclass_sfx', '');
+// prevent IDE warnings
+$params = ( object ) $params;
+
+$this->ksearch_button			= $params->get('ksearch_button', '');
+$this->ksearch_button_pos		= $params->get('ksearch_button_pos', 'right');
+$this->ksearch_button_txt	 	= $params->get('ksearch_button_txt', JText::_('Search'));
+$this->ksearch_width			= intval($params->get('ksearch_width', 20));
+$this->ksearch_maxlength		= $this->ksearch_width > 20 ? $this->ksearch_width : 20;
+$this->ksearch_txt			 	= $params->get('ksearch_txt', JText::_('Search...'));
+$this->ksearch_moduleclass_sfx 	= $params->get('moduleclass_sfx', '');
 
 require(JModuleHelper::getLayoutPath('mod_kunenasearch'));

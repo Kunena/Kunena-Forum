@@ -37,6 +37,7 @@ KunenaSearch 1.6.2
 + [#23293] Add min Kunena version requirements (1.6.2)
 # [#23293] JURI::root() instead of ::Root
 # [#23293] $ksearch_width instead of $ksearch-width
+# [#23293] Fixed all code warnings
 
 21-December-2010 Severdia
 ^ [#23900] Made file naming and folder structure consistent among Kunena modules

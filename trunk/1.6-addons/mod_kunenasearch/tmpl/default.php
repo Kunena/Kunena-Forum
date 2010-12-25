@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 $doc = JFactory::getDocument();
-$doc->addStyleSheet( JURI::Root().'modules/mod_kunenasearch/tmpl/css/kunenasearch.css' );
+$doc->addStyleSheet( JURI::root().'modules/mod_kunenasearch/tmpl/css/kunenasearch.css' );
 ?>
 
 <form action="<?php echo CKunenaLink::GetSearchURL('advsearch'); ?>" method="post" id="ksearch-form" name="adminForm">

@@ -20,11 +20,13 @@
 	<administration>
 		<menu>Kunena Translate</menu>
 		<files>
-			<filename>kunenatranslate.php</filename>
-			<filename>helper.php</filename>
-			<filename>controller.php</filename>
 			<filename>CHANGELOG.php</filename>
+			<filename>controller.php</filename>
+			<filename>dummy.ini</filename>
+			<filename>helper.php</filename>
+			<filename>kunenatranslate.php</filename>
 			<folder>controllers</folder>
+			<folder>models</folder>
 			<folder>tables</folder>
 			<folder>views</folder>
 		</files>

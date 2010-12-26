@@ -18,8 +18,13 @@ jimport('joomla.application.component.view');
 class KunenaTranslateViewImport extends JView
 {
 	function display($tpl = null){
+		if(JRequest::getVar('task') == 'importview'){
+			$text = JText::_('Import');
+		}else{
+			$text = JText::_('Export');
+		}
 		JToolBarHelper::title( JText::_( 'Kunena Translate' ).': 
-			<small><small>'.JText::_('Import .ini').'</small></small>', 'generic.png' );
+			<small><small>'.$text.'</small></small>', 'generic.png' );
 		if($this->getLayout()== 'exist'){
 			$exist = JRequest::getVar('exist', array());
 			$this->assignRef('exist', $exist);

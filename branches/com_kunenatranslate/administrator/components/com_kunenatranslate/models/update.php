@@ -15,6 +15,12 @@ defined('_JEXEC') or die('Restricted access');
 
 class KunenaTranslateModelUpdate extends JModel{
 	
+	function __construct($config){
+		parent::__construct($config);
+		$cid = JRequest::getVar('cid', array(0) );
+		$this->_id = $cid;
+	}
+	
 	function getUpdate(){
 		require_once (dirname(__FILE__).DS.'..'.DS.'helper.php');
 		$helper = new KunenaTranslateHelper();
@@ -51,7 +57,7 @@ class KunenaTranslateModelUpdate extends JModel{
 					$kill		= array('language' , 'svn', 'images', 'css', 'media');
 					$temp		= true;
 					break;
-				case 'tpl_skinenr':
+				case 'tpl_skinner':
 					$dir		= JPATH_SITE . DS . 'components' . DS . 'com_kunena' .DS. 'template' .DS. 'skinner';
 					$kill		= array('language' , 'svn', 'images', 'css', 'media');
 					$temp		= true;
@@ -64,20 +70,25 @@ class KunenaTranslateModelUpdate extends JModel{
 		$xmllist	= $helper->getfiles($helper->files, 'xml');
 		$langstrings = $helper->readphpxml($phplist,$xmllist);
 		$labels = $this->_loadLabels();
-		$res = $helper->getCompared($labels,$langstrings);
+		$res = $helper->getCompared($labels,$langstrings, JRequest::getVar('task') );
 		return $res;
 	}
 	
-	function _loadLabels(){
+	private function _loadLabels(){
 		$row =& $this->getTable('Label');
-		$res = $row->loadLabels();
+		$res = $row->loadLabels(null, $this->client);
 		return $res;
 	}
 	
-	function store($new, $client, $tablename){
+	function store($new, $client){
 		$table =& $this->getTable('Label');
-		$res = $table->store($new, $client, $tablename);
-		
+		$res = $table->store($new, $client);
+		return $res;
+	}
+	
+	function remove(){
+		$table =& $this->getTable('Label');
+		$res = $table->delete( $this->_id );
 		return $res;
 	}
 }

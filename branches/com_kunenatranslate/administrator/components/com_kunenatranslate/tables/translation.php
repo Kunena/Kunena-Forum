@@ -36,7 +36,7 @@ class TableTranslation extends JTable
 		parent::__construct('#__kunenatranslate_translation', 'labelid', $db);
 	}
 	
-	function loadTranslations($id=null,$lang=null){
+	function loadTranslations($id=null,$lang=null, $client=null){
 		$db =& $this->getDBO();
 		$where = null;
 		if(!empty($id) && is_array($id)){
@@ -48,12 +48,18 @@ class TableTranslation extends JTable
 			}
 		}elseif (!empty($id) && is_int($id)){
 			$where = ' WHERE a.labelid='.$id;
-		}elseif (!empty($lang) && is_string($lang)){
+		}
+		if (!empty($lang) && is_string($lang)){
 			if(!empty($where)) $where .= ' AND ';
 			else $where = ' WHERE ';
 			$where .= " a.lang='{$lang}'";
 		}
-		$query = "SELECT a.*, b.label   
+		if (!empty($client) && is_string($client)){
+			if(!empty($where)) $where .= ' AND ';
+			else $where = ' WHERE ';
+			$where .= " b.client='{$client}'";
+		}
+		$query = "SELECT a.*, b.label
 				FROM {$this->_tbl} AS a
 				LEFT JOIN #__kunenatranslate_label AS b
 				ON a.labelid=b.id  

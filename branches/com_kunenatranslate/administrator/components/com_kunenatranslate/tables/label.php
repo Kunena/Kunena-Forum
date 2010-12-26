@@ -32,7 +32,7 @@ class TableLabel extends JTable
 		parent::__construct('#__kunenatranslate_label', 'id', $db);
 	}
 	
-	function loadLabels($id=null){
+	function loadLabels($id=null, $client=null){
 		$db = $this->getDBO();
 		$where = null;
 		if(!empty($id) && is_array($id)){
@@ -44,6 +44,10 @@ class TableLabel extends JTable
 			}
 		}elseif (!empty($id) && is_int($id)){
 			$where = ' WHERE id='.$id;
+		}elseif (!empty($client) && is_string($client)){
+			if(empty($where)) $where = " WHERE ";
+			else $where .= " AND ";
+			$where .= " client='{$client}'";
 		}
 		$query = 'SELECT * 
 				FROM '. $this->_tbl

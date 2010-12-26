@@ -231,32 +231,46 @@ class KunenaTranslateHelper
 	 * @param array php/xml
 	 * @return array of new and old strings
 	 */
-	static public function getCompared($dbase,$phpxml){
+	static public function getCompared($dbase,$phpxml,$task){
 		$res = array( 
-		//				'old' => array(),
-						'new' => array(),
-		//				'inDB'=>$dbase
+						'old' => array(),
+						'new' => array()
 		);
+		$px = $phpxml;
+//fb($dbase);
+//fb($px);
 		// TODO find better way to do the compare
 		//look if there are new strings in php/xml
-		foreach ($phpxml as $pk=>$vk){
-			foreach ($dbase as $dk=>$v){
-				$dkey = array_keys($phpxml[$pk],$v->label);
-				foreach ($dkey as $vkey){
-					unset($phpxml[$pk][$vkey]);
+		if($task == 'update'){
+			foreach ($phpxml as $pk=>$vk){
+				foreach ($dbase as $dk=>$v){
+					$dkey = array_keys($phpxml[$pk],$v->label);
+					foreach ($dkey as $vkey){
+						unset($phpxml[$pk][$vkey]);
+					}
+				}	
+			}
+			foreach ($phpxml as $v){
+				foreach ($v as $value) {
+					$res['new'][] = $value;
 				}
-				//look if there are old strings in teh ini file
-				/*foreach ($vk as $vkk){
-					if( $vkk == $v->label ) $res['old'][] = $v;
-				}*/
-			}	
-		}
-		foreach ($phpxml as $v){
-			foreach ($v as $value) {
-				$res['new'][] = $value;
+			}
+		}//look if there are old strings in teh ini file
+		elseif($task == 'old' && $dbase!=false){
+			foreach ($dbase as $dk=>$dv){
+				foreach ($px as $pv) {
+					if(is_array($pv)){
+						foreach ($pv as $ppv) {
+							if($dv->label == $ppv)
+								unset($dbase[$dk]);
+						}
+					}
+				}
+			}
+			foreach ($dbase as $value) {
+				$res['old'][$value->id] = $value->label;
 			}
 		}
-		//$res['new']		= $phpxml;
 		return $res;
 	}
 	

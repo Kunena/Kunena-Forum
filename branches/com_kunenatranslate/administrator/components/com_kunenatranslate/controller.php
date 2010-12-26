@@ -19,9 +19,16 @@ class KunenaTranslateController extends JController
 {
 	function __construct($config = array()){
 		parent::__construct($config);
+		
+		$this->registerTask('exportview', 'importview');
 	}
 	
 	function update(){
+		JRequest::setVar('view','update');
+		parent::display();
+	}
+	
+	function old(){
 		JRequest::setVar('view','update');
 		parent::display();
 	}
@@ -42,6 +49,7 @@ class KunenaTranslateController extends JController
 	}
 	
 	function remove(){
+		//TODO Token
 		$model = $this->getModel();
 		if($model->delete())
 			$msg = 'Labels deleted';
@@ -52,6 +60,7 @@ class KunenaTranslateController extends JController
 	}
 	
 	function save(){
+		//TODO TOKEN
 		$model = $this->getModel();
 		if($model->store())
 			$msg = 'Labels saved';

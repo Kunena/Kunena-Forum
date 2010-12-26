@@ -8,8 +8,11 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  */
-defined('_JEXEC') or die('Restricted access'); 
-JToolBarHelper::save('import', 'Import');
+defined('_JEXEC') or die('Restricted access');
+if(JRequest::getVar('task') == 'importview') 
+	JToolBarHelper::save('import', 'Import');
+else
+	JToolBarHelper::save('export', 'Export');
 JToolBarHelper::cancel();
 ?>
 <form action="index.php" method="post" name="adminForm">
@@ -23,10 +26,12 @@ JToolBarHelper::cancel();
 			<td><?php echo JText::_('Language'); ?></td>
 			<td><?php echo $this->lang; ?></td>
 		</tr>
+		<?php if(JRequest::getVar('task') == 'importview'):?>
 		<tr>
 			<td><?php echo JText::_('add missing labels'); ?></td>
 			<td><?php echo JHTMLSelect::booleanlist('addmissinglabel'); ?></td>
 		</tr>
+		<?php endif; ?>
 	</tbody>
 </table>
 <input type="hidden" name="controller" value="import" />

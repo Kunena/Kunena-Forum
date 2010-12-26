@@ -19,7 +19,19 @@ class KunenaTranslateModelImport extends JModel{
 		$lang = JRequest::getVar('language');
 		$client = JRequest::getVar('client');
 		//read ini file
-		$ini = $this->_loadIni($client, $lang);
+		$inifile = $this->_getPathIni($client, $lang);
+		jimport('joomla.filesystem.file');
+		if(!JFile::exists($inifile)){
+			JError::raiseWarning('', 'File '.$inifile.' not exist');
+			return false;
+		}
+		//read the ini file
+		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
+		$ini = KunenaTranslateHelper::readINIfile($inifile);
+		if(!$ini){
+			JError::raiseWarning('', 'Failed reading: '.$inifile);
+			return false;
+		}
 		//get the labels from DB
 		$labels = $this->_loadLabels();
 		//look for labels that are missing in DB
@@ -85,13 +97,13 @@ class KunenaTranslateModelImport extends JModel{
 		return true;
 	}
 	
-	function _loadIni($client,$lang){
+	function _getPathIni($client,$lang){
 		switch ($client){
 				case 'frontend':
-					$inifile	= JPATH_BASE .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.ini';
+					$inifile	= JPATH_SITE .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.ini';
 					break;
 				case 'template':
-					$inifile	= JPATH_BASE .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.tpl_default.ini';
+					$inifile	= JPATH_SITE .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.tpl_default.ini';
 					break;
 				case 'backend':
 					$inifile	= JPATH_ADMINISTRATOR .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.ini';
@@ -103,19 +115,7 @@ class KunenaTranslateModelImport extends JModel{
 					$inifile	= JPATH_ADMINISTRATOR .DS. 'language' .DS. $lang .DS. $lang.'.com_kunena.menu.ini';
 					break;
 		}
-		jimport('joomla.filesystem.file');
-		if(!JFile::exists($inifile)){
-			JError::raiseWarning('', 'File '.$inifile.' not exist');
-			return false;
-		}
-		//read the ini file
-		require_once (JPATH_COMPONENT_ADMINISTRATOR.DS.'helper.php');
-		$ini = KunenaTranslateHelper::readINIfile($inifile);
-		if(!$ini){
-			JError::raiseWarning('', 'Failed reading: '.$inifile);
-			return false;
-		}
-		return $ini;
+		return $inifile;
 	}
 	
 	function _loadLabels(){
@@ -148,5 +148,44 @@ class KunenaTranslateModelImport extends JModel{
 			JError::raiseNotice('', JText::_('Nothing to override'));
 		}
 		return true;		
+	}
+	
+	function export(){
+		$client = JRequest::getWord('client', 'backend');
+		$lang = JRequest::getVar('language', 'en-GB');
+		$ini = $this->_getPathIni($client, $lang);
+		jimport('joomla.filesystem.file');
+		if(JFile::exists($ini)){
+			if(!JFile::copy($ini, $ini.'.bak')){
+				//JFile will throw an error
+				return false;
+			}
+			if(!JFile::delete($ini)){
+				//JFile will throw an error
+				return false;
+			}
+		}
+		$path = JPATH_COMPONENT_ADMINISTRATOR.DS.'dummy.ini'; 
+		if(!JFile::copy($path, $ini)){
+			//JFile will throw an error
+			return false;
+		}
+		//get the data from DB
+		$table = $this->getTable('Translation');
+		$trans = $table->loadTranslations('',$lang, $client);
+		if(empty($trans)){
+			JError::raiseWarning('', JText::_('No translations found in DB'));
+			return false;
+		}
+		$cont = '';
+		foreach ($trans as $value) {
+			$cont .= "{$value->label}=\"{$value->translation}\"\n";
+		}
+		if(!JFile::write( $ini, $cont)){
+			JError::raiseWarning(21, 'JFile::write: '.JText::_('Unable to write file') . ": '$ini'");
+			return false;
+		}
+		
+		return true;
 	}
 }

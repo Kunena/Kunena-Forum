@@ -8,8 +8,11 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.com
  */
-defined('_JEXEC') or die('Restricted access'); 
-JToolBarHelper::custom('update', 'save.png', '', JText::_('Update Labels'), false);
+defined('_JEXEC') or die('Restricted access');
+if( JRequest::getVar('task') == 'old')
+	JToolBarHelper::custom('old', 'save.png', '', JText::_('Find outdated') , false);
+else
+	JToolBarHelper::custom('update', 'save.png', '', JText::_('Update Labels') , false);
 JToolBarHelper::cancel();
 ?>
 <form action="index.php" method="post" name="adminForm">

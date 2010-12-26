@@ -11,7 +11,9 @@
 defined('_JEXEC') or die('Restricted access');
 JToolBarHelper::addNew('add','New Label');
 JToolBarHelper::custom('update', 'update', '', 'Search New Labels', false, true );
-JToolBarHelper::custom('importview', 'import', '', 'Import .ini', false, true);
+JToolBarHelper::custom('old', 'old', '', 'Search outdated Labels', false, true);
+JToolBarHelper::custom('importview', 'import', '', 'Import', false, true);
+JToolBarHelper::custom('exportview', 'export', '', 'Export', false, true);
 JToolBarHelper::editListX();
 JToolBarHelper::deleteList();?>
 
@@ -44,10 +46,12 @@ JToolBarHelper::deleteList();?>
 		foreach ($this->labels as $i=>$v):
 			$link = '<a href="index.php?option=com_kunenatranslate&task=edit&layout=form&cid[]='.$v->id.'" >'.$v->label.'</a>';
 			$lang = '';
-			$n = count($v->lang);
-			foreach ($v->lang as $ii=>$val){
-				$lang .= $val->lang;
-				if($n>1 && $n-1>$ii) $lang .= ', ';  
+			if(!empty($v->lang)){
+				$n = count($v->lang);
+				foreach ($v->lang as $ii=>$val){
+					$lang .= $val->lang;
+					if($n>1 && $n-1>$ii) $lang .= ', ';  
+				}
 			}
 			?>
 			<tr class="row<?php echo $k;?>">

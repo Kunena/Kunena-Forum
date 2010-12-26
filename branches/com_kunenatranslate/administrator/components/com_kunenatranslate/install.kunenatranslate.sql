@@ -11,8 +11,9 @@ CREATE TABLE `#__kunenatranslate_label` (
   `label` varchar(80) NOT NULL,
   `client` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `label` (`label`)
-)
+  UNIQUE KEY `label` (`label`),
+  KEY `client` (`client`)
+);
 
 CREATE TABLE `#__kunenatranslate_translation` (
   `labelid` int(11) NOT NULL,
@@ -20,4 +21,4 @@ CREATE TABLE `#__kunenatranslate_translation` (
   `translation` text NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY `labelid` (`labelid`,`lang`)
-)
+);

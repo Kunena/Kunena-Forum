@@ -43,6 +43,20 @@ class KunenaTranslateControllerImport extends KunenaTranslateController
 		}
 	}
 	
+	function export(){
+		// Check for request forgeries
+		JRequest::checkToken() or jexit( 'Invalid Token' );
+		
+		$model = $this->getModel('import');
+		if(!$model->export()){
+			$msg = 'Export failed';
+			$this->setRedirect('index.php?option=com_kunenatranslate&view=import&task=exportview' , $msg);			
+		}else{
+			$msg = 'Export success';
+			$this->setRedirect('index.php?option=com_kunenatranslate&view=import&task=exportview' , $msg);
+		}
+	}
+	
 	function update(){
 		// Check for request forgeries
 		JRequest::checkToken() or jexit( 'Invalid Token' );

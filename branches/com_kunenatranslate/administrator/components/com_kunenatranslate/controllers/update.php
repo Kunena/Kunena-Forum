@@ -20,12 +20,12 @@ class KunenaTranslateControllerUpdate extends KunenaTranslateController
 	function __construct($config = array()){
 		parent::__construct($config);
 		
+		$this->registerTask('old', 'update');
 	}
 	
 	function update(){
 		JRequest::setVar('layout','labels');
 		JRequest::setVar('view', 'update');
-		//JRequest::setVar('task','update');
 		parent::display();
 	}
 	
@@ -51,11 +51,24 @@ class KunenaTranslateControllerUpdate extends KunenaTranslateController
 		//get the model
 		$model = $this->getModel('update');
 		//store to database
-		$res = $model->store($new, $client, 'label');
+		$res = $model->store($new, $client);
 		if ($res == true)
 			$msg = JText::_('Success');
 		else
 			$msg = Jtext::_('Fail');
 		$this->setRedirect('index.php?option=com_kunenatranslate&view=update', $msg);
+	}
+	
+	function remove(){
+		// Check for request forgeries
+		JRequest::checkToken() or jexit( 'Invalid Token' );
+		$model = $this->getModel('update');
+		$res = $model->remove();
+		if ($res == true)
+			$msg = JText::_('Success DELETE');
+		else
+			$msg = Jtext::_('Fail DELETE');
+		$this->setRedirect('index.php?option=com_kunenatranslate&view=update&task=old', $msg);
+		
 	}
 }

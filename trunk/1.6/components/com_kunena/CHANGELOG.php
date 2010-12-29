@@ -32,6 +32,8 @@ Legend:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Kunena 1.6.2
+29-December-2010 Severdia
+# [#22979] Small CSS tweaks on spacing for subcategories.
 
 25-December-2010 fxstein
 ^ [#23152] Update version info to 1.6.2 stable (Team)

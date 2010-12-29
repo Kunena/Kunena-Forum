@@ -1262,6 +1262,7 @@ PX		EM			PCT			PT
 	margin-right: 6px;
 	display: inline;
 	font-size: 0.833em;
+	line-height: 17px;
 }
 
 #Kunena div.klatest-subject,
@@ -1273,10 +1274,12 @@ PX		EM			PCT			PT
 	float: left;
 	display: inline-block;
 	vertical-align: top;
+	padding-top: 2px;
 }
 
 #Kunena div.kcc-subcat a {
 	font-size: .917em;
+	vertical-align: bottom;
 }
 
 /* SHOW CATEGORY 
@@ -3258,11 +3261,15 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 	background: url("../images/icons/folder_nonew_sm.png") no-repeat left center;
 	width: 12px;
 	height: 12px;
+	margin-right: 3px;
+    vertical-align: middle;
 }
 #Kunena span.kunreadforum-sm {
 	background: url("../images/icons/folder_sm.png") no-repeat left center;
 	width: 12px;
 	height: 12px;
+	margin-right: 3px;
+    vertical-align: middle;
 }
 .kgooglemap {
 	width: 100%;

@@ -3290,13 +3290,11 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 #drag_cont {
 	background-color: #ccc;  
 	height: 1500px;
-	cursor: move;
 	position: relative;
 }
 
 
 #drag_me_handle {
-	height: 100%;
 	background-color: #666;
 
 }
@@ -3304,4 +3302,5 @@ ul.autocompleter-choices li.kautocompleter-selected span.kautocompleter-queried 
 #drag_me_handle span {
 	display: block;
 	padding: 5px;
+	cursor: move;
 }

@@ -34,6 +34,7 @@ Kunena 1.6.3
 
 30-December-2010 810
 + [#24033] Drag and drop support (delete thread)
+^ [#24033] Drag and drop support (delete thread) part 2
 
 Kunena 1.6.2
 

@@ -28,6 +28,13 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaSearch 1.6.3-DEV
+
+30-December-2010 Xillibit
+^ [#22592] Update version info to 1.6.3-DEV
++ [#23293] Add french translation for the module
+^ [#22592] Put a new class into the class.php file instead of put the things directly in mod_kunenasearch.php
+
 KunenaSearch 1.6.2
 
 25-December-2010 fxstein

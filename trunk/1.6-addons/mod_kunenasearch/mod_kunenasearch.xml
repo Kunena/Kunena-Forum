@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install type="module" version="1.5.0" method="upgrade">
 	<name>Kunena Search</name>
-	<version>1.6.2</version>
+	<version>1.6.3-DEV</version>
 	<creationDate>@kunenaversiondate@</creationDate>
 	<build>@kunenaversionbuild@</build>
 	<author>Kunena Team</author>
@@ -14,13 +14,14 @@
 	
 	<files>
 		<filename module="mod_kunenasearch">mod_kunenasearch.php</filename>
-		<filename>helper.php</filename>		
+		<filename>class.php</filename>		
 		<filename>index.html</filename>
 		<folder>tmpl</folder>
 	</files>
 	
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.mod_kunenasearch.ini</language>
+		<language tag="fr-FR">fr-FR.mod_kunenasearch.ini</language>
 	</languages>
 	
 	<params>

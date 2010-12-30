@@ -30,6 +30,10 @@ Legend:
 ! -> Note
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Kunena 1.6.3
+
+30-December-2010 810
++ [#24033] Drag and drop support (delete thread)
 
 Kunena 1.6.2
 

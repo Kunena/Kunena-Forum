@@ -16,6 +16,7 @@ $document = JFactory::getDocument ();
 $document->addScriptDeclaration('// <![CDATA[
 var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 // ]]>');
+include_once (KUNENA_PATH . DS . 'template/default/view/thread.kunenadrag.php');
 ?>
 <div><?php $this->displayPathway(); ?></div>
 
@@ -30,13 +31,12 @@ var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	CKunenaTools::showModulePosition( 'kunena_poll' );
 	$this->displayThreadActions(0);
 ?>
-
-<div class="kblock">
-	<div class="kheader">
+<div class="kblock" id="drag_cont">
+	<div id="drag_me">
+            <div class="kheader" id="drag_me_handle">
 		<h2><span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->kunena_topic_title) ?></span></h2>
 		<?php if ($this->favorited) : ?><div class="kfavorite"></div><?php endif ?>
 	</div>
-	<div class="kcontainer">
 		<div class="kbody">
 			<?php foreach ( $this->messages as $message ) $this->displayMessage($message) ?>
 		</div>

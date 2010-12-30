@@ -53,7 +53,14 @@ defined ( '_JEXEC' ) or die ();
 			</div>
 		<?php endif ?>
 		</td>
-
+        <?php if (CKunenaTools::isModerator($this->my->id)) : ?>
+		<td class="klist-actions-forum klist-delete">
+        <div id="drop_here" class="draggable">
+        </div>
+        <div id="drop_in_droppable" >
+		</div>
+        </td>
+        <?php endif; ?>
 		<td class="klist-pages-all">
 			<?php echo $this->pagination; ?>
 		</td>

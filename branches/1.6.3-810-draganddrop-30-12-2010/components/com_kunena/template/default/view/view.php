@@ -32,7 +32,7 @@ include_once (KUNENA_PATH . DS . 'template/default/view/thread.kunenadrag.php');
 	$this->displayThreadActions(0);
 ?>
 <div class="kblock" id="drag_cont">
-	<div id="drag_me">
+	<div style="position: relative;" id="drag_me">
             <div class="kheader" id="drag_me_handle">
 		<h2><span><?php echo JText::_('COM_KUNENA_TOPIC') ?> <?php echo $this->escape($this->kunena_topic_title) ?></span></h2>
 		<?php if ($this->favorited) : ?><div class="kfavorite"></div><?php endif ?>

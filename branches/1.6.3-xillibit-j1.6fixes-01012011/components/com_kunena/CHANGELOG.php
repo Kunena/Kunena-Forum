@@ -35,6 +35,8 @@ Kunena 1.6.3-DEV
 
 01-January-2011 Xillibit
 ^ [#23293] Update xml language file for fr-FR because doesn't work and fixes issues in fr-FR and en-GB
+# [#24062] Fix issue under J! 1.6 Fatal error: Cannot access protected property TableKunenaCategory::$_db in admin.kunena.php on line 1331 
+# [#24063] Fix issue under J! 1.6 Fatal Error: Call to undefined method JSite::addCustomHeadTag() in kunena.parser.php on line 1074
 
 Kunena 1.6.2
 

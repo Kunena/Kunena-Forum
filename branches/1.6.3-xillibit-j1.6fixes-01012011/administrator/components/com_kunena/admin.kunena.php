@@ -1328,7 +1328,7 @@ function orderForumUpDown($uid, $inc, $option) {
 	$row->load ( $uid );
 
 	// Ensure that we have the right ordering
-	$where = $row->_db->nameQuote ( 'parent' ) . '=' . $row->_db->quote ( $row->parent );
+	$where = $kunena_db->nameQuote ( 'parent' ) . '=' . $kunena_db->quote ( $row->parent );
 	$row->reorder ( $where );
 	$row->load ( $uid );
 	$row->move ( $inc, $where );

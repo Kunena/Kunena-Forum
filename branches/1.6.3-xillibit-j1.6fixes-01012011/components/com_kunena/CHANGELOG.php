@@ -31,6 +31,11 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.3-DEV
+
+01-January-2011 Xillibit
+^ [#23293] Update xml language file for fr-FR because doesn't work and fixes issues in fr-FR and en-GB
+
 Kunena 1.6.2
 
 29-December-2010 fxstein

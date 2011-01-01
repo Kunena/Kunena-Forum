@@ -41,6 +41,7 @@ Kunena 1.6.3-DEV
 # [#24065] SQL Error when post new topic or reply under J! 1.6
 # [#24066] Credit has a space when the variable $this->params->get('templatebyName') is empty (thanks gonzaunit)
 # [#24071] Poll expired setting doesn't work in form and calendar doesn't open in J! 1.6
+^ [#23293] Little update on fr-FR and en-GB to don't have issue with languages
 
 Kunena 1.6.2
 

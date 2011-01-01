@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="library" version="1.6.0">
+  <name>Bitfoldge</name>
+  <libraryname>bitfoldge</libraryname>
+  <version>1.7.3</version>
+  <creationDate>January 2011</creationDate>
+  <files>
+    <file>feedcreator.php</file>
+    <file>index.html</file>
+  </files>
+</install>

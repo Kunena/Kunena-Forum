@@ -81,6 +81,7 @@ class KunenaModelInstall extends JModel {
 			array ('step' => 'Extract', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_EXTRACT') ),
 			array ('step' => 'Language', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_LANGUAGES') ),
 			array ('step' => 'Plugins', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_PLUGINS') ),
+			array ('step' => 'Library', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_LIBRARY') ),
 			array ('step' => 'Database', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_DATABASE') ),
 			array ('step' => 'Finish', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_FINISH') ),
 			array ('step' => '', 'menu' => JText::_('COM_KUNENA_INSTALL_STEP_COMPLETE') ) );
@@ -334,6 +335,18 @@ class KunenaModelInstall extends JModel {
 		}
 		$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_PLUGIN_STATUS', 'System - Kunena'), $success);
 	}
+	
+	function installLibrary() {	
+		$query = "SELECT * FROM #__extensions WHERE name='Bitfoldge'";
+		$this->db->setQuery ( $query );
+		$library = $this->db->loadObject ();
+	 	if ( empty($library->name) && !$library->enabled ) {
+			jimport('joomla.installer.installer');
+			$installer = new JInstaller ( );
+			$success = $installer->install ( KPATH_ADMIN . '/install/bitfoldge' );
+			$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_LIBRARY_STATUS', 'Bitfoldge(feedcreator)'), $success);
+	 	}
+	}
 
 	public function stepPrepare() {
 		$results = array ();
@@ -412,6 +425,17 @@ class KunenaModelInstall extends JModel {
 
 		$this->installSystemPlugin();
 
+		if (! $this->getError ())
+			$this->setStep ( $this->getStep()+1 );
+	}
+	
+	public function stepLibrary() {
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE == 1.6) { 
+			$this->installLibrary();
+		}
+		
 		if (! $this->getError ())
 			$this->setStep ( $this->getStep()+1 );
 	}

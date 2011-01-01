@@ -97,7 +97,10 @@ class CKunenaRSSView {
 	 * @return obj FeedCreator
 	 */
 	private function buildFeed( $items = array() ) {
-
+		// Get Joomla! version
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		
 		// Get the path options and values we'll need
 		$uri		= JURI::getInstance(JURI::base());
 		$uribase	= $uri->toString(array('scheme', 'host', 'port'));
@@ -109,9 +112,13 @@ class CKunenaRSSView {
 		$generator		= 'Kunena ' . Kunena::version();
 		$rss_url		= $uribase . $_SERVER["REQUEST_URI"];
 		$rss_icon		= KUNENA_URLICONSPATH . 'rss.png';
-
+		
 		// Make sure Joomla's FeedCreator is included
-		jimport('bitfolge.feedcreator');
+		if ($jversion->RELEASE == 1.5) {
+			jimport('bitfolge.feedcreator');
+		} elseif($jversion->RELEASE == 1.6) {
+			require_once(JPATH_SITE.'/libraries/bitfoldge/feedcreator.php');
+		}
 
 		$feed = new UniversalFeedCreator();
 

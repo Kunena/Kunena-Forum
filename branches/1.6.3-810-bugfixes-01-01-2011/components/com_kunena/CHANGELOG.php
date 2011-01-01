@@ -31,6 +31,9 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Kunena 1.6.3
+^ [#23875] Minor html fixes backend (same icons J1.5 & j1.6)
+
 Kunena 1.6.2
 
 29-December-2010 fxstein

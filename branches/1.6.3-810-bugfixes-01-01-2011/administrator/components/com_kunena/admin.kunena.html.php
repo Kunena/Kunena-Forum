@@ -462,7 +462,14 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 
 			<?php endif; ?>
 
-			<td class="center"><?php echo JHTML::_('grid.published', $row, $i) ?></td>
+			<td class="center">
+          <?php  if ($row->published == "1") {
+ echo "<a href=\"javascript: void(0);\" onClick=\"return listItemTask('cb$i','unpublish')\"><img src=\"components/com_kunena/images/tick.png\" border=\"0\" /></a>";
+ } else {
+ echo "<a href=\"javascript: void(0);\" onClick=\"return listItemTask('cb$i','publish')\"><img src=\"components/com_kunena/images/publish_x.png\" border=\"0\" /></a>";
+ }
+ ?>
+</td>
 			<td width="" align="center"><?php echo kescape($row->groupname); ?></td>
 			<td width="" align="center"><?php echo kescape($row->admingroup); ?></td>
 			<td width="15%" align="center"><?php echo kescape($row->editor); ?></td>
@@ -656,7 +663,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 						<td><?php echo kescape($ml->name); ?></td>
 						<td><?php echo kescape($ml->username); ?></td>
 						<td><?php echo kescape($ml->email); ?></td>
-						<td align="center"><img src="images/tick.png" alt="" /></td>
+						<td align="center"><img src="components/com_kunena/images/tick.png" alt="" /></td>
 					</tr>
 						<?php 	$i ++;
 						endforeach;
@@ -1849,6 +1856,7 @@ function editForum(&$row, $categoryList, $moderatorList, $lists, $accessLists, $
 							<td align="left" valign="top"><?php echo $lists ['userlist_karma']; ?></td>
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_KARMA_DESC') ?></td>
 						</tr>
+
 						<tr align="center" valign="middle">
 							<td align="left" valign="top"><?php echo JText::_('COM_KUNENA_ADMIN_CONFIG_USERLIST_EMAIL') ?></td>
 							<td align="left" valign="top"><?php echo $lists ['userlist_email']; ?></td>
@@ -2155,10 +2163,10 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 						$kunena_user = KunenaFactory::getUser($user->id);
 						$k = 1 - $k;
 						$userLogged = $kunena_user->isOnline() ? '<img src="components/com_kunena/images/tick.png" width="16" height="16" border="0" alt="" />': '';
-						$userEnabled = $kunena_user->isBlocked() ? 'publish_x.png' : 'tick.png';
+						$userEnabled = $kunena_user->isBlocked() ? '../components/com_kunena/images/publish_x.png' : '../components/com_kunena/images/tick.png';
 						$altUserEnabled = $kunena_user->isBlocked() ? JText::_( 'Blocked' ) : JText::_( 'Enabled' );
 						$userBlockTask =  $kunena_user->isBlocked() ? 'userunblock' : 'userblock';
-						$userbanned = $kunena_user->isBanned() ? 'tick.png' : 'publish_x.png';
+						$userbanned = $kunena_user->isBanned() ? '../components/com_kunena/images/tick.png' : '../components/com_kunena/images/publish_x.png';
 						$userBannedTask = $kunena_user->isBanned() ? 'userunban' : 'userban';
 						$altUserBanned = $kunena_user->isBanned() ? JText::_( 'Banned' ) : JText::_( 'Not banned' );
 					?>

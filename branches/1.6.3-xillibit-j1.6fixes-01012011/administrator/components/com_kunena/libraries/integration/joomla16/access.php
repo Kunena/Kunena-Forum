@@ -141,7 +141,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 		$access = $db->loadObject ();
 		if (KunenaError::checkDatabaseError() || !$access) return array();
 
-		if ($admins) {
+		if (!$admins) {
 			self::loadAdmins();
 			$adminlist = implode(',', self::$admins);
 			if (!$adminlist) $adminlist = 0;

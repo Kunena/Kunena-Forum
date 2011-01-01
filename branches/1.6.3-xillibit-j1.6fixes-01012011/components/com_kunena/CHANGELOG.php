@@ -38,6 +38,7 @@ Kunena 1.6.3-DEV
 # [#24062] Fix issue under J! 1.6 Fatal error: Cannot access protected property TableKunenaCategory::$_db in admin.kunena.php on line 1331 
 # [#24063] Fix issue under J! 1.6 Fatal Error: Call to undefined method JSite::addCustomHeadTag() in kunena.parser.php on line 1074
 # [#24064] Report kunena configuration settings is broken under J! 1.6
+# [#24065] SQL Error when post new topic or reply under J! 1.6
 
 Kunena 1.6.2
 

@@ -148,7 +148,7 @@ class CKunenaPolls {
    function call_javascript_vote()
    {
     	CKunenaTools::addScript(KUNENA_DIRECTURL . 'template/default/plugin/poll/js/kunena.poll.ajax-min.js');
-		JApplication::addCustomHeadTag('
+		$this->document->addCustomTag('
       <script type="text/javascript">
 	   <!--
 	   var KUNENA_POLL_SAVE_ALERT_OK = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK').'";

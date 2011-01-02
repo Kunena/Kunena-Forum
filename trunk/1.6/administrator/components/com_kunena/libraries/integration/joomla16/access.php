@@ -201,7 +201,7 @@ class KunenaAccessJoomla16 extends KunenaAccess {
 			$where [] = " ( ( (s.thread IS NOT NULL) OR (sc.catid IS NOT NULL) )" . ($groups ? " AND {$groups}" : '') . " ) ";
 		if ($moderators)
 			$where [] = " ( c.moderated=1 AND p.moderator=1 AND ( m.catid IS NULL OR m.catid={$catid} ) ) ";
-		if ($admins)
+		if (!empty($adminlist))
 			$where [] = " ( u.id IN ({$adminlist}) ) ";
 
 		$subsList = array ();

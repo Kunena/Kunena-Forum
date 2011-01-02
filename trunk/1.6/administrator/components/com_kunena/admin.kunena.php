@@ -1328,7 +1328,7 @@ function orderForumUpDown($uid, $inc, $option) {
 	$row->load ( $uid );
 
 	// Ensure that we have the right ordering
-	$where = $row->_db->nameQuote ( 'parent' ) . '=' . $row->_db->quote ( $row->parent );
+	$where = $kunena_db->nameQuote ( 'parent' ) . '=' . $kunena_db->quote ( $row->parent );
 	$row->reorder ( $where );
 	$row->load ( $uid );
 	$row->move ( $inc, $where );
@@ -3050,7 +3050,6 @@ function generateSystemReport () {
 	$kunena_config = KunenaFactory::getConfig ();
 	$kunena_app = JFactory::getApplication ();
 	$kunena_db = JFactory::getDBO ();
-	$JTemplate = JFactory::getTemplate();
 	$JVersion = new JVersion();
 	$jversion = $JVersion->PRODUCT .' '. $JVersion->RELEASE .'.'. $JVersion->DEV_LEVEL .' '. $JVersion->DEV_STATUS.' [ '.$JVersion->CODENAME .' ] '. $JVersion->RELDATE;
 
@@ -3132,35 +3131,73 @@ function generateSystemReport () {
 		$kconfigsettings = 'Your configuration settings aren\'t yet recorded in the database';
 	}
 
-	// Get Joomla! frontend assigned template
-	$query = ' SELECT template '
+	if ($JVersion->RELEASE == 1.5) {
+		// Get Joomla! frontend assigned template for Joomla! 1.5
+		$query = ' SELECT template '
 				.' FROM #__templates_menu '
 				.' WHERE client_id = 0 AND menuid = 0 ';
-	$kunena_db->setQuery($query);
-	$jdefaultemplate = $kunena_db->loadResult();
-
-	$xml_tmpl = JFactory::getXMLparser('Simple');
-	$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate.'/templateDetails.xml');
-	$templatecreationdate= $xml_tmpl->document->creationDate[0];
-	$templateauthor= $xml_tmpl->document->author[0];
-	$templateversion = $xml_tmpl->document->version[0];
+		$kunena_db->setQuery($query);
+		$jdefaultemplate = $kunena_db->loadResult();
+	 
+		$jdefaultemplatename = $jdefaultemplate;
+	 
+		$xml_tmpl = JFactory::getXMLparser('Simple');
+		$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate.'/templateDetails.xml');
+		$templatecreationdate= $xml_tmpl->document->creationDate[0];
+		$templateauthor= $xml_tmpl->document->author[0];
+		$templateversion = $xml_tmpl->document->version[0];
+	
+		// Get Kunena menu items
+		$query = "SELECT id, menutype, name, alias, link, parent "
+				." FROM #__menu "
+				." WHERE menutype = {$kunena_db->Quote('kunenamenu')} OR name='forum' ORDER BY id ASC";
+		$kunena_db->setQuery($query);
+		$kmenustype = $kunena_db->loadObjectlist();
+	
+		$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
+		foreach($kmenustype as $item) {
+			$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
+		}
+	} else {
+		// Get Joomla! frontend assigned template for Joomla! 1.6
+		$query = " SELECT template,title "
+				." FROM #__template_styles "
+				." WHERE client_id = '0' AND home = '1'";
+		$kunena_db->setQuery($query);
+		$jdefaultemplate = $kunena_db->loadObject();	 
+	 
+		$jdefaultemplatename = $jdefaultemplate->template;
+		 
+		$xml_tmpl = JFactory::getXMLparser('Simple');
+		$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate->template.'/templateDetails.xml');
+		$templatecreationdate= $xml_tmpl->document->creationDate[0];
+		$templateauthor= $xml_tmpl->document->author[0];
+		$templateversion = $xml_tmpl->document->version[0];
+	
+		// Get Kunena menu items
+		$query = "SELECT id "
+				." FROM #__menu "
+				." WHERE type='component' AND title ='Kunena Forum' ORDER BY id ASC";
+		$kunena_db->setQuery($query);
+		$kmenuparentid = $kunena_db->loadResult();
+	
+		$query = "SELECT id, menutype, title, alias, link, path "
+				." FROM #__menu "
+				." WHERE parent_id={$kunena_db->Quote($kmenuparentid)} AND type='component' OR title='Kunena Forum' OR title='Kunena' ORDER BY id ASC";
+		$kunena_db->setQuery($query);
+		$kmenustype = $kunena_db->loadObjectlist();	
+	
+		$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
+		foreach($kmenustype as $item) {
+			$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->path.'[/td][/tr] ';
+		}
+	}
+	
+	$menudisplaytable .='[/table]';
 	
 	// Get Kunena default template
 	$ktemplate = KunenaFactory::getTemplate();
 	$ktempaltedetails = $ktemplate->getTemplateDetails();
-
-	// Get Kunena menu items
-	$query = "SELECT id, menutype, name, alias, link, parent "
-				." FROM #__menu "
-				." WHERE menutype = {$kunena_db->Quote('kunenamenu')} OR name='forum' ORDER BY id ASC";
-	$kunena_db->setQuery($query);
-	$kmenustype = $kunena_db->loadObjectlist();
-
-	$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
-	foreach($kmenustype as $item) {
-		$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
-	}
-	$menudisplaytable .='[/table]';
 
 	//test on each table if the collation is on utf8
 	$tableslist = $kunena_db->getTableList();
@@ -3200,7 +3237,6 @@ function generateSystemReport () {
 	jimport( 'joomla.plugin.helper' );
 	jimport( 'joomla.application.module.helper' );
 	jimport( 'joomla.application.component.helper' );
-	jimport('joomla.filesystem.file');
 
 	if ( JPluginHelper::isEnabled('system', 'mtupgrade') ) 	$mtupgrade = '[u]System - Mootools Upgrade:[/u] Enabled';
 	else $mtupgrade = '[u]System - Mootools Upgrade:[/u] Disabled';
@@ -3231,14 +3267,16 @@ function generateSystemReport () {
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$menudisplaytable.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jdefaultemplate.' | [u]author:[/u] '.$templateauthor->data().' | [u]version:[/u] '.$templateversion->data().' | [u]creationdate:[/u] '.$templatecreationdate->data().' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$menudisplaytable.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jdefaultemplatename.' | [u]author:[/u] '.$templateauthor->data().' | [u]version:[/u] '.$templateversion->data().' | [u]creationdate:[/u] '.$templatecreationdate->data().' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
 	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Third-party SEF components:[/b] '.$sh404sef.' | '.$joomsef.' | '.$acesef.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
 
     return $report;
 }
 
 function checkThirdPartyVersion($namephp, $namexml, $namedetailled, $path, $plggroup=null, $components=0, $module=0, $plugin=0) {
+	jimport('joomla.filesystem.file');
 	if ($components) {
+		jimport( 'joomla.application.component.helper' );
 		if ( JComponentHelper::isEnabled($namephp) && JFile::exists(JPATH_SITE.'/'.$path.'/'.$namephp.'.php') ) {
 			if ( JFile::exists(JPATH_ADMINISTRATOR.'/'.$path.'/'.$namexml.'.xml') ) {
 				$xml_com = JFactory::getXMLparser('Simple');

@@ -364,10 +364,10 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 		<table class="kadmin-sort">
 			<tr>
 				<td class="left" width="90%">
-					<?php echo JText::_( 'Filter' ); ?>:
+					<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
 					<input type="text" name="search" id="search" value="<?php echo kescape($lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
-					<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
-					<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+					<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
+					<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 				</td>
 			</tr>
 		</table>
@@ -376,10 +376,10 @@ function showAdministration($rows, $children, $pageNav, $option, $lists) {
 				<tr>
 					<th align="center" width="5">#</th>
 					<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $rows ); ?>);" /></th>
-					<th class="title"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $lists['order_Dir'], $lists['order'] ); ?></th>
-					<th><small><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'id', $lists['order_Dir'], $lists['order'] ); ?></small></th>
+					<th class="title"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORY', 'name', $lists['order_Dir'], $lists['order'] ); ?></th>
+					<th><small><?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATID', 'id', $lists['order_Dir'], $lists['order'] ); ?></small></th>
 					<th width="100" class="center nowrap"><small>
-						<?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', $lists['order_Dir'], $lists['order'] ); ?>
+						<?php echo JHTML::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $lists['order_Dir'], $lists['order'] ); ?>
 						<?php echo JHTML::_('grid.order',  $rows ); ?></small>
 					</th>
 					<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>
@@ -2108,10 +2108,10 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 		<table class="kadmin-sort">
 			<tr>
 				<td class="left" width="90%">
-					<?php echo JText::_( 'Filter' ); ?>:
+					<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
 					<input type="text" name="search" id="search" value="<?php echo kescape($lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
-					<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
-					<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+					<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
+					<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 				</td>
 			</tr>
 		</table>
@@ -2121,9 +2121,9 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 					<th align="center" width="5">#</th>
 					<th align="center" width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $users ); ?>);" /></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_AVATAR'); ?></th>
-					<th class="title" align="center"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_ANN_ID'), 'id', $lists['order_Dir'], $lists['order'] ); ?></th>
-					<th align="left"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_USRL_NAME'), 'username', $lists['order_Dir'], $lists['order'] ); ?></th>
-					<th align="left"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_USRL_REALNAME'), 'name', $lists['order_Dir'], $lists['order'] ); ?></th>
+					<th class="title" align="center"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_ANN_ID', 'id', $lists['order_Dir'], $lists['order'] ); ?></th>
+					<th align="left"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_USRL_NAME', 'username', $lists['order_Dir'], $lists['order'] ); ?></th>
+					<th align="left"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_USRL_REALNAME', 'name', $lists['order_Dir'], $lists['order'] ); ?></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_LOGGEDIN'); ?></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_ENABLED'); ?></th>
 					<th align="center"><?php echo JText::_('COM_KUNENA_USRL_BANNED'); ?></th>
@@ -2131,7 +2131,7 @@ function showProfiles($option, &$users, $pageNav, $order, $lists) {
 					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_EMAIL'); ?></th>
 					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_USERGROUP'); ?></th>
 */ ?>
-					<th align="left"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_VIEW_MODERATOR'), 'moderator', $lists['order_Dir'], $lists['order'] ); ?></th>
+					<th align="left"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_VIEW_MODERATOR', 'moderator', $lists['order_Dir'], $lists['order'] ); ?></th>
 					<th align="left"><?php echo JText::_('COM_KUNENA_GEN_SIGNATURE'); ?></th>
 				</tr>
 			</thead>
@@ -3225,10 +3225,10 @@ function showtrashview($option, $trashitems, $pageNav, $lists) {
 			<table class="kadmin-sort">
 				<tr>
 					<td class="left" width="90%">
-						<?php echo JText::_( 'Filter' ); ?>:
+						<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
 						<input type="text" name="search" id="search" value="<?php echo kescape($lists['search']);?>" class="text_area" onchange="document.adminForm.submit();" />
-						<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
-						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+						<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
+						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 					</td>
 				</tr>
 			</table>
@@ -3241,25 +3241,25 @@ function showtrashview($option, $trashitems, $pageNav, $lists) {
 					echo count ( $trashitems );
 					?>);" /></th>
 					<th width="5" align="left"><?php
-					echo  JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_ID'), 'id', $lists['order_Dir'], $lists['order']);
+					echo  JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_ID', 'id', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_TITLE'), 'subject', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_TITLE', 'subject', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_CATEGORY'), 'cats_name', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_CATEGORY', 'cats_name', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_IP'), 'ip', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_IP', 'ip', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR_USERID'), 'userid', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR_USERID', 'userid', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_AUTHOR'), 'username', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_AUTHOR', 'username', $lists['order_Dir'], $lists['order']);
 					?></th>
 					<th align="left" ><?php
-					echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_TRASH_DATE'), 'time', $lists['order_Dir'], $lists['order']);
+					echo JHTML::_( 'grid.sort', 'COM_KUNENA_TRASH_DATE', 'time', $lists['order_Dir'], $lists['order']);
 					?></th>
 				</tr>
 			</thead>

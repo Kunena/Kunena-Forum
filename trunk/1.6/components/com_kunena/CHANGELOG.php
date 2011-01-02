@@ -36,9 +36,20 @@ Kunena 1.6.3
 2-January-2011 Matias
 # [#24080] Kunena Discuss: Fatal error when sending subscription emails
 # [#24077] Joomla! version check in integration is slightly broken
+^ [#15886] Merged revisions 4127-4135 from /branches/1.6.3-xillibit-j1.6fixes-01012011
 
 2-January-2011 fxstein
 ^ [#24074] Update version info to 1.6.3-DEV
+
+01-January-2011 Xillibit
+^ [#23293] Update xml language file for fr-FR because doesn't work and fixes issues in fr-FR and en-GB
+# [#24062] Fix issue under J! 1.6 Fatal error: Cannot access protected property TableKunenaCategory::$_db in admin.kunena.php on line 1331
+# [#24063] Fix issue under J! 1.6 Fatal Error: Call to undefined method JSite::addCustomHeadTag() in kunena.parser.php on line 1074
+# [#24064] Report kunena configuration settings is broken under J! 1.6
+# [#24065] SQL Error when post new topic or reply under J! 1.6
+# [#24066] Credit has a space when the variable $this->params->get('templatebyName') is empty (thanks gonzaunit)
+# [#24071] Poll expired setting doesn't work in form and calendar doesn't open in J! 1.6
+^ [#23293] Little update on fr-FR and en-GB to don't have issue with languages
 
 Kunena 1.6.2
 

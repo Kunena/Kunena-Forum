@@ -88,39 +88,39 @@ function validate() {
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_name) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_NAME'), 'name', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_NAME', 'name', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_username) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERNAME'), 'username', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_USERNAME', 'username', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_posts) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_POSTS'), 'posts', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_POSTS', 'posts', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_karma) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_KARMA'), 'karma', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_KARMA', 'karma', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_email) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_EMAIL'), 'email', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_EMAIL', 'email', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_usertype) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_USERTYPE'), 'usertype', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_USERTYPE', 'usertype', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_joindate) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_JOIN_DATE'), 'registerDate', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_JOIN_DATE', 'registerDate', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_lastvisitdate) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_LAST_LOGIN'), 'lastvisitDate', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_LAST_LOGIN', 'lastvisitDate', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 
 							<?php if ($this->config->userlist_userhits) : ?>
-							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', JText::_('COM_KUNENA_USRL_HITS'), 'uhits', $this->order_dir, $this->order); ?></th>
+							<th class="usersortable"><?php echo JHTML::_( 'grid.sort', 'COM_KUNENA_USRL_HITS', 'uhits', $this->order_dir, $this->order); ?></th>
 							<?php endif; ?>
 						</tr>
 

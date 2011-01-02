@@ -19,7 +19,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 	protected static $catmoderators = false;
 
 	function __construct() {
-		if (is_dir(JPATH_LIBRARIES.'/joomla/access'))
+		if ($jversion->RELEASE != '1.5')
 			return null;
 		$this->priority = 25;
 	}

@@ -275,7 +275,7 @@ class KunenaModelInstall extends JModel {
 	function publishPlugin($folder, $name, $enable = 1) {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.5) {
+		if ($jversion->RELEASE == '1.5') {
 			$query = "UPDATE #__plugins SET published='{$enable}' WHERE folder='{$folder}' AND element='{$name}'";
 		} else {
 			$query = "UPDATE #__extensions SET enabled='{$enable}' WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
@@ -312,7 +312,7 @@ class KunenaModelInstall extends JModel {
 	function uninstallPlugin($folder, $name) {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.5) {
+		if ($jversion->RELEASE == '1.5') {
 			$query = "SELECT id FROM #__plugins WHERE folder='{$folder}' AND element='{$name}'";
 		} else {
 			$query = "SELECT id FROM #__extensions WHERE type='plugin' AND folder='{$folder}' AND element='{$name}'";
@@ -1295,7 +1295,7 @@ class KunenaModelInstall extends JModel {
 
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.6)
+		if ($jversion->RELEASE == '1.6')
 			return;
 
 		// First we need to get the componentid of the install Kunena component
@@ -1443,7 +1443,7 @@ class KunenaModelInstall extends JModel {
 	function deleteMenu() {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
-		if ($jversion->RELEASE == 1.5) {
+		if ($jversion->RELEASE == '1.5') {
 			$this->DeleteMenuJ15();
 		} else {
 			$this->DeleteMenuJ16();
@@ -1506,7 +1506,7 @@ class KunenaModelInstall extends JModel {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		$error = '';
-		if ($jversion->RELEASE == 1.5) {
+		if ($jversion->RELEASE == '1.5') {
 			// Unfortunately Joomla 1.5 needs this rather ugly hack to get the error message
 			$ext = JFile::getExt(strtolower($archive));
 			$adapter = null;

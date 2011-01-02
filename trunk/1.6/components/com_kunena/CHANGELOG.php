@@ -37,6 +37,9 @@ Kunena 1.6.3
 # [#24080] Kunena Discuss: Fatal error when sending subscription emails
 # [#24077] Joomla! version check in integration is slightly broken
 ^ [#15886] Merged revisions 4127-4135 from /branches/1.6.3-xillibit-j1.6fixes-01012011
+# [#24078] Joomla 1.6: Categories are not displayed in select lists
+# [#24084] Joomla 1.6: Kunena menu items are missing select for categories
+# [#24093] Joomla 1.6: Usergroups cannot be assigned into categories
 
 2-January-2011 fxstein
 ^ [#24074] Update version info to 1.6.3-DEV

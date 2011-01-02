@@ -17,8 +17,8 @@
 	<!-- Joomla 1.6 Support -->
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
-		<fieldset name="request" addpath="/administrator/components/com_kunena/elements">
-			<!-- field name="catid" type="kunenacategories" default="0" sections="0" none="None" label="COM_KUNENA_MENU_CATID" /-->
+		<fieldset name="request" addfieldpath="/administrator/components/com_kunena/fields">
+			<field name="catid" type="kunenacategories" default="0" sections="0" none="None" label="COM_KUNENA_MENU_CATID" />
 		</fieldset>
 	</fields>
 </metadata>

@@ -37,15 +37,15 @@
 		</fieldset>
 	</fields>
 	<!-- Add fields to the parameters object for the layout. -->
-	<fields name="params" addfieldpath="/administrator/components/com_kunena/elements">
+	<fields name="params" addfieldpath="/administrator/components/com_kunena/fields">
 		<!-- Basic options. -->
 		<fieldset name="basic"
 			label="COM_KUNENA_ATTRIBS_MAIN_SETTINGS_LABEL">
-		<!-- field name="catids"
+		<field name="catids"
 			type="kunenacategories"
 			label="COM_KUNENA_MENU_ALLOWEDCAT"
 			description="COM_KUNENA_MENU_ALLOWEDCAT_DESC"
-			default="0" multiple="1" size="8" sections="1" none="All Categories" /-->
+			default="0" multiple="1" size="8" sections="1" none="All Categories" />
 		</fieldset>
 	</fields>
 </metadata>

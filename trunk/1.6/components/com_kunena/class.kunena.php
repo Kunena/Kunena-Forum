@@ -874,7 +874,11 @@ function fbTreeRecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=
     if (isset($children[$id]) && $level <= $maxlevel) {
         foreach ($children[$id] as $v) {
             $id = $v->id;
-            if ( $type ) {
+            $jversion = new JVersion ();
+			if ($jversion->RELEASE == '1.6') {
+				$pre     = '- ';
+				$spacer = '- ';
+			} elseif ( $type ) {
                 $pre     = '&nbsp;';
                 $spacer = '...';
             } else {

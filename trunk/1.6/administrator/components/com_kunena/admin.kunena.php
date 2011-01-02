@@ -1121,27 +1121,29 @@ function editForum($id, $option) {
 	$lists = array ();
 	$accessLists = array ();
 	//create custom group levels to include into the public group selectList
-	$pub_groups = array ();
-	$adm_groups = array ();
-	$pub_groups [] = JHTML::_ ( 'select.option', 1, JText::_('COM_KUNENA_NOBODY') );
-	$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_EVERYBODY') );
-	$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_('COM_KUNENA_ALLREGISTERED') );
 	jimport ( 'joomla.version' );
 	$jversion = new JVersion ();
 	if ($jversion->RELEASE == 1.5) {
-		// FIXME: not implemented in J1.6
+		$pub_groups = array ();
+		$adm_groups = array ();
+		$pub_groups [] = JHTML::_ ( 'select.option', 1, JText::_('COM_KUNENA_NOBODY') );
+		$pub_groups [] = JHTML::_ ( 'select.option', 0, JText::_('COM_KUNENA_EVERYBODY') );
+		$pub_groups [] = JHTML::_ ( 'select.option', - 1, JText::_('COM_KUNENA_ALLREGISTERED') );
 		$pub_groups = array_merge ( $pub_groups, $kunena_acl->get_group_children_tree ( null, 'Registered', true ) );
-		// create admin groups array for use in selectList:
 		$adm_groups = array_merge ( $adm_groups, $kunena_acl->get_group_children_tree ( null, 'Public Backend', true ) );
+		// Create the access control lists for Joomla 1.5
+		$accessLists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $category->pub_access );
+		$accessLists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $category->admin_access );
+	} else {
+		// Create the access control lists for Joomla 1.6
+		$accessLists ['pub_access'] = JHTML::_ ( 'access.usergroup', 'pub_access', $category->pub_access, 'class="inputbox" size="4"', false);
+		$accessLists ['admin_access'] = JHTML::_ ( 'access.usergroup', 'pub_access', $category->admin_access, 'class="inputbox" size="4"', false);
 	}
 	// Anonymous posts default
 	$post_anonymous = array ();
 	$post_anonymous [] = JHTML::_ ( 'select.option', '0', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_REG') );
 	$post_anonymous [] = JHTML::_ ( 'select.option', '1', JText::_('COM_KUNENA_CATEGORY_ANONYMOUS_X_ANO') );
 
-	//create the access control list
-	$accessLists ['pub_access'] = JHTML::_ ( 'select.genericlist', $pub_groups, 'pub_access', 'class="inputbox" size="4"', 'value', 'text', $category->pub_access );
-	$accessLists ['admin_access'] = JHTML::_ ( 'select.genericlist', $adm_groups, 'admin_access', 'class="inputbox" size="4"', 'value', 'text', $category->admin_access );
 	$lists ['pub_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'pub_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->pub_recurse );
 	$lists ['admin_recurse'] = JHTML::_ ( 'select.genericlist', $yesno, 'admin_recurse', 'class="inputbox" size="1"', 'value', 'text', $category->admin_recurse );
 	$lists ['forumLocked'] = JHTML::_ ( 'select.genericlist', $yesno, 'locked', 'class="inputbox" size="1"', 'value', 'text', $category->locked );
@@ -3138,22 +3140,22 @@ function generateSystemReport () {
 				.' WHERE client_id = 0 AND menuid = 0 ';
 		$kunena_db->setQuery($query);
 		$jdefaultemplate = $kunena_db->loadResult();
-	 
+
 		$jdefaultemplatename = $jdefaultemplate;
-	 
+
 		$xml_tmpl = JFactory::getXMLparser('Simple');
 		$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate.'/templateDetails.xml');
 		$templatecreationdate= $xml_tmpl->document->creationDate[0];
 		$templateauthor= $xml_tmpl->document->author[0];
 		$templateversion = $xml_tmpl->document->version[0];
-	
+
 		// Get Kunena menu items
 		$query = "SELECT id, menutype, name, alias, link, parent "
 				." FROM #__menu "
 				." WHERE menutype = {$kunena_db->Quote('kunenamenu')} OR name='forum' ORDER BY id ASC";
 		$kunena_db->setQuery($query);
 		$kmenustype = $kunena_db->loadObjectlist();
-	
+
 		$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] ParentID [/u][/td][/tr] ';
 		foreach($kmenustype as $item) {
 			$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->name.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->parent.'[/td][/tr] ';
@@ -3164,37 +3166,37 @@ function generateSystemReport () {
 				." FROM #__template_styles "
 				." WHERE client_id = '0' AND home = '1'";
 		$kunena_db->setQuery($query);
-		$jdefaultemplate = $kunena_db->loadObject();	 
-	 
+		$jdefaultemplate = $kunena_db->loadObject();
+
 		$jdefaultemplatename = $jdefaultemplate->template;
-		 
+
 		$xml_tmpl = JFactory::getXMLparser('Simple');
 		$xml_tmpl->loadFile(JPATH_SITE.'/templates/'.$jdefaultemplate->template.'/templateDetails.xml');
 		$templatecreationdate= $xml_tmpl->document->creationDate[0];
 		$templateauthor= $xml_tmpl->document->author[0];
 		$templateversion = $xml_tmpl->document->version[0];
-	
+
 		// Get Kunena menu items
 		$query = "SELECT id "
 				." FROM #__menu "
 				." WHERE type='component' AND title ='Kunena Forum' ORDER BY id ASC";
 		$kunena_db->setQuery($query);
 		$kmenuparentid = $kunena_db->loadResult();
-	
+
 		$query = "SELECT id, menutype, title, alias, link, path "
 				." FROM #__menu "
 				." WHERE parent_id={$kunena_db->Quote($kmenuparentid)} AND type='component' OR title='Kunena Forum' OR title='Kunena' ORDER BY id ASC";
 		$kunena_db->setQuery($query);
-		$kmenustype = $kunena_db->loadObjectlist();	
-	
+		$kmenustype = $kunena_db->loadObjectlist();
+
 		$menudisplaytable = '[table][tr][td][u] ID [/u][/td][td][u] Name [/u][/td][td][u] Alias [/u][/td][td][u] Menutype [/u][/td][td][u] Link [/u][/td][td][u] Path [/u][/td][/tr] ';
 		foreach($kmenustype as $item) {
 			$menudisplaytable .= '[tr][td]'.$item->id.' [/td][td] '.$item->title.' [/td][td] '.$item->alias.' [/td][td] '.$item->menutype.' [/td][td] '.$item->link.' [/td][td] '.$item->path.'[/td][/tr] ';
 		}
 	}
-	
+
 	$menudisplaytable .='[/table]';
-	
+
 	// Get Kunena default template
 	$ktemplate = KunenaFactory::getTemplate();
 	$ktempaltedetails = $ktemplate->getTemplateDetails();

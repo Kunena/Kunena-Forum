@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3-DEV
 
+2-January-2011 Matias
+# [#24088] Installer: Add a few new breakpoints into database migration/upgrade process
+
 21-December-2010 Matias
 ^ [#23920] Cleanup all KunenaAccess classes
 # [#23920] Fix a few bugs which broke up ACL

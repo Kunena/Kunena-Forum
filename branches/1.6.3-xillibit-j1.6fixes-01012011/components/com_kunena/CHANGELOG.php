@@ -37,6 +37,7 @@ Kunena 1.6.3-DEV
 # [#24064] Doesn't check if component is enabled, because don't seem to work
 # [#24073] Use Joomla! JDocumentFeed to generate RSS feed instead of Joomla! deprecated library
 # [#24081] Remove bbcode attachment and code from JS activity stream
+# [#24075] PDF generation is broken under J! 1.6
 
 01-January-2011 Xillibit
 ^ [#23293] Update xml language file for fr-FR because doesn't work and fixes issues in fr-FR and en-GB

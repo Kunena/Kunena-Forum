@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+2-January-2011 Matias
+# [#24080] Kunena Discuss: Fatal error when sending subscription emails
+
 2-January-2011 fxstein
 ^ [#24074] Update version info to 1.6.3-DEV
 

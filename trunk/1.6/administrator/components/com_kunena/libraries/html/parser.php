@@ -12,6 +12,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die('Restricted access');
 
+require_once(KPATH_SITE.'/lib/kunena.smile.class.php');
+
 abstract class KunenaParser {
 	static $emoticons = null;
 
@@ -64,7 +66,7 @@ abstract class KunenaParser {
 			$row->text =& $content;
 			$params = new JParameter( '' );
 			$params->set('ksource', 'kunena');
-			
+
 			$dispatcher	= JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
 			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));

@@ -918,6 +918,7 @@ class CKunenaPosting {
 
 		if (count ( $emailToList )) {
 			jimport('joomla.mail.helper');
+			kimport('html.parser');
 			if (! $this->_config->email || ! JMailHelper::isEmailAddress ( $this->_config->email )) {
 				$this->_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_EMAIL_INVALID' ), 'notice' );
 				return false;
@@ -927,7 +928,7 @@ class CKunenaPosting {
 			}
 			// clean up the message for review
 			$authorname = $this->get ( 'name' );
-			$message = smile::purify ( $this->get ( 'message' ) );
+			$message = KunenaParser::stripBBCode ( $this->get ( 'message' ) );
 			$subject = $this->get ( 'subject' );
 
 			$mailsender = JMailHelper::cleanAddress ( $this->_config->board_title . " " . JText::_ ( 'COM_KUNENA_GEN_FORUM' ) );

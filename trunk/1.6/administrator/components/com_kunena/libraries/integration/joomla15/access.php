@@ -19,6 +19,7 @@ class KunenaAccessJoomla15 extends KunenaAccess {
 	protected static $catmoderators = false;
 
 	function __construct() {
+		$jversion = new JVersion ();
 		if ($jversion->RELEASE != '1.5')
 			return null;
 		$this->priority = 25;

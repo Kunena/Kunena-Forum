@@ -3276,8 +3276,7 @@ function generateSystemReport () {
 function checkThirdPartyVersion($namephp, $namexml, $namedetailled, $path, $plggroup=null, $components=0, $module=0, $plugin=0) {
 	jimport('joomla.filesystem.file');
 	if ($components) {
-		jimport( 'joomla.application.component.helper' );
-		if ( JComponentHelper::isEnabled($namephp) && JFile::exists(JPATH_SITE.'/'.$path.'/'.$namephp.'.php') ) {
+		if ( JFile::exists(JPATH_SITE.'/'.$path.'/'.$namephp.'.php') ) {
 			if ( JFile::exists(JPATH_ADMINISTRATOR.'/'.$path.'/'.$namexml.'.xml') ) {
 				$xml_com = JFactory::getXMLparser('Simple');
 				$xml_com->loadFile(JPATH_ADMINISTRATOR.'/'.$path.'/'.$namexml.'.xml');

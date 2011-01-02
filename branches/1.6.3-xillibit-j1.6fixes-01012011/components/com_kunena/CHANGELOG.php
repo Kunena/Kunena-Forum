@@ -33,6 +33,10 @@ Legend:
 
 Kunena 1.6.3-DEV
 
+02-January-2011 Xillibit
+# [#24064] Doesn't check if component is enabled, because don't seem to work
+# [#24073] Use Joomla! JDocumentFeed to generate RSS feed instead of Joomla! deprecated library
+
 01-January-2011 Xillibit
 ^ [#23293] Update xml language file for fr-FR because doesn't work and fixes issues in fr-FR and en-GB
 # [#24062] Fix issue under J! 1.6 Fatal error: Cannot access protected property TableKunenaCategory::$_db in admin.kunena.php on line 1331 

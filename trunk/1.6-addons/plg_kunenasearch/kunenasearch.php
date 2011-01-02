@@ -26,6 +26,9 @@ $app = JFactory::getApplication ();
 $app->registerEvent ( 'onSearch', 'plgSearchKunena' );
 $app->registerEvent ( 'onSearchAreas', 'plgSearchKunenaAreas' );
 
+// load Kunena main language file so we can leverage language strings from it
+KunenaFactory::loadLanguage();
+
 JPlugin::loadLanguage ( 'plg_search_kunenasearch', JPATH_ADMINISTRATOR );
 
 //Then define a function to return an array of search areas.

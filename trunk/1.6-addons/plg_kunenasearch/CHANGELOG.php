@@ -26,6 +26,12 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+KunenaSearch 1.6.3
+
+2-January-2011 fxstein
+^ [#20138] Updated version info 1.6.3-DEV
++ [#23293] Load Kunena language files during init
+
 KunenaSearch 1.6.2
 
 25-December-2010 fxstein

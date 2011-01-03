@@ -157,24 +157,30 @@ class CKunenaProfile {
 	function displayEditUser() {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
-		// FIXME: not implemented in J1.6
-		if ($jversion->RELEASE == 1.6) {
-			echo 'Not implemented in J1.6!';
-			return;
-		}
+
 		$this->user = JFactory::getUser();
 
 		// check to see if Frontend User Params have been enabled
 		$usersConfig = JComponentHelper::getParams( 'com_users' );
 		$check = $usersConfig->get('frontend_userparams');
 
-		if ($check == 1 || $check == NULL)
-		{
+		if ($check == 1 || $check == NULL) {
 			if($this->user->authorize( 'com_user', 'edit' )) {
-				$lang = JFactory::getLanguage();
-				$lang->load('com_user', JPATH_SITE);
-				$params = $this->user->getParameters(true);
-				$this->userparams = $params->renderToArray();
+				if ($jversion->RELEASE == '1.5') {
+					$lang = JFactory::getLanguage();
+					$lang->load('com_user', JPATH_SITE);
+					$params = $this->user->getParameters(true);
+					$this->userparams = $params->renderToArray();
+				} elseif ($jversion->RELEASE == '1.6') {
+					// load language doesn't work, the labels doesn't have the translation
+					$lang = JFactory::getLanguage();
+					$lang->load('com_user', JPATH_SITE);
+
+					jimport( 'joomla.form.form' );
+      				$form = JForm::getInstance('juserprofilesettings', JPATH_ADMINISTRATOR.'/components/com_users/models/forms/user.xml');
+					// this get only the fields for user settings (template, editor, language...)
+      				$this->userparams = $form->getFieldset('settings');
+				}
 			}
 		}
 		CKunenaTools::loadTemplate('/profile/edituser.php');

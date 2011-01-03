@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3-DEV
 
+03-January-2011 Xillibit
+# [#24076] Profile user settings is doesn't supported under J!1.6
+
 02-January-2011 Xillibit
 # [#24064] Doesn't check if component is enabled, because don't seem to work
 # [#24073] Use Joomla! JDocumentFeed to generate RSS feed instead of Joomla! deprecated library

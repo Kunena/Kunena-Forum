@@ -11,6 +11,8 @@
  **/
 defined( '_JEXEC' ) or die();
 $kunena_config = KunenaFactory::getConfig ();
+jimport ( 'joomla.version' );
+$jversion = new JVersion ();
 ?>
 <div class="kblock kedituser">
 	<div class="kheader">
@@ -79,10 +81,14 @@ $kunena_config = KunenaFactory::getConfig ();
 					<?php $i=0; foreach ($this->userparams as $userparam): ?>
 					<tr class="krow<?php echo ($i^=1)+1;?>">
 						<td class="kcol-first">
-							<label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>"><?php echo $userparam[0] ?></label>
+							<?php if ($jversion->RELEASE == '1.5') { ?><label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>"><?php echo $userparam[0] ?></label>
+							<?php } elseif ( $jversion->RELEASE == '1.6') { echo $userparam->label; ?>
+							<?php } ?> 
 						</td>
 						<td class="kcol-mid">
-							<?php echo $userparam[1] ?>
+							<?php if ($jversion->RELEASE == '1.5') {  echo $userparam[1]; } ?>
+							<?php } elseif ( $jversion->RELEASE == '1.6') { echo $userparam->input; ?>
+							<?php } ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

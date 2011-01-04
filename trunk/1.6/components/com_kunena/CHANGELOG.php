@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+4-January-2011 Matias
+# [#24083] Joomla 1.6: generate Kunena Menu during installation
+
 3-January-2011 Matias
 # [#24076] Profile user settings doesn't work in J!1.6 (part 2)
 ^ [#15886] Merged revisions 4141-4147 from /branches/1.6.3-xillibit-j1.6fixes-01012011

@@ -37,10 +37,16 @@ Kunena 1.6.3
 # [#24083] Joomla 1.6: generate Kunena Menu during installation
 ^ [#15886] Merged revisions 4049-4142 from /branches/1.6.3-jomsocial
 # [#24129] Fix conflicts with JXtended
+^ [#15886] Merged revisions 4149-4153 from /branches/1.6.3-xillibit-j1.6fixes-01012011
 
 3-January-2011 Matias
 # [#24076] Profile user settings doesn't work in J!1.6 (part 2)
 ^ [#15886] Merged revisions 4141-4147 from /branches/1.6.3-xillibit-j1.6fixes-01012011
+
+04-January-2011 Xillibit
+# [#24064] Put some code in kunena report configuration into functions to be more readable
+# [#24094] Joomla 1.6: Article BBCode doesn't work
+# [#24094] Joomla 1.6: Article BBCode doesn't work (Part 2)
 
 03-January-2011 Xillibit
 # [#24076] Profile user settings doesn't work in J!1.6

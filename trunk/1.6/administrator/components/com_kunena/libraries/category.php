@@ -65,6 +65,29 @@ class KunenaCategory extends JObject {
 		return $this->_exists;
 	}
 
+	static public function getCategoriesByAccess($groupids = false, $accesstype='joomla') {
+		if (self::$_instances === false) {
+			self::loadCategories();
+		}
+
+		if ($groupids === false) {
+			// Continue
+		} elseif (is_array ($groupids) ) {
+			$groupids = array_unique($groupids);
+		} else {
+			$groupids = array(intval($groupids));
+		}
+
+		$list = array ();
+		foreach ( self::$_instances as $instance ) {
+			if ($instance->accesstype == $accesstype && ($groupids===false || in_array($instance->access, $groupids))) {
+				$list [$instance->id] = $instance;
+			}
+		}
+
+		return $list;
+	}
+
 	static public function loadCategories($ids = false) {
 		// Now that we have all users to cache, dedup the list
 		if (! empty ($ids) ) {
@@ -200,7 +223,7 @@ class KunenaCategory extends JObject {
 		$table = &$this->getTable ();
 
 		// Load the KunenaTableUser object based on the user id
-		$this->_exists = $table->load ( $id );
+		if ($id) $this->_exists = $table->load ( $id );
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );

@@ -14,7 +14,7 @@ defined('JPATH_BASE') or die;
  * @subpackage	Database
  * @since		1.6
  */
-class JDatabaseQueryElement
+class KDatabaseQueryElement
 {
 	/**
 	 * @var		string	The name of the element.
@@ -41,7 +41,7 @@ class JDatabaseQueryElement
 	 * @param	mixed	$elements	String or array.
 	 * @param	string	$glue		The glue for elements.
 	 *
-	 * @return	JDatabaseQueryElement
+	 * @return	KDatabaseQueryElement
 	 * @since	1.6
 	 */
 	public function __construct($name, $elements, $glue = ',')
@@ -90,7 +90,7 @@ class JDatabaseQueryElement
  * @subpackage	Database
  * @since		1.6
  */
-class JDatabaseQuery
+class KDatabaseQuery
 {
 	/**
 	 * @var		string	The query type.
@@ -247,7 +247,7 @@ class JDatabaseQuery
 	/**
 	 * @param	mixed	$columns	A string or an array of field names.
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function select($columns)
@@ -255,7 +255,7 @@ class JDatabaseQuery
 		$this->_type = 'select';
 
 		if (is_null($this->_select)) {
-			$this->_select = new JDatabaseQueryElement('SELECT', $columns);
+			$this->_select = new KDatabaseQueryElement('SELECT', $columns);
 		}
 		else {
 			$this->_select->append($columns);
@@ -267,13 +267,13 @@ class JDatabaseQuery
 	/**
 	 * @param	string	$table	The name of the table to delete from.
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function delete($table = null)
 	{
 		$this->_type	= 'delete';
-		$this->_delete	= new JDatabaseQueryElement('DELETE', null);
+		$this->_delete	= new KDatabaseQueryElement('DELETE', null);
 
 		if (!empty($table)) {
 			$this->from($table);
@@ -285,13 +285,13 @@ class JDatabaseQuery
 	/**
 	 * @param	mixed	$tables	A string or array of table names.
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function insert($tables)
 	{
 		$this->_type	= 'insert';
-		$this->_insert	= new JDatabaseQueryElement('INSERT INTO', $tables);
+		$this->_insert	= new KDatabaseQueryElement('INSERT INTO', $tables);
 
 		return $this;
 	}
@@ -299,13 +299,13 @@ class JDatabaseQuery
 	/**
 	 * @param	mixed	$tables	A string or array of table names.
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function update($tables)
 	{
 		$this->_type = 'update';
-		$this->_update = new JDatabaseQueryElement('UPDATE', $tables);
+		$this->_update = new KDatabaseQueryElement('UPDATE', $tables);
 
 		return $this;
 	}
@@ -313,13 +313,13 @@ class JDatabaseQuery
 	/**
 	 * @param	mixed	A string or array of table names.
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function from($tables)
 	{
 		if (is_null($this->_from)) {
-			$this->_from = new JDatabaseQueryElement('FROM', $tables);
+			$this->_from = new KDatabaseQueryElement('FROM', $tables);
 		}
 		else {
 			$this->_from->append($tables);
@@ -332,7 +332,7 @@ class JDatabaseQuery
 	 * @param	string	$type
 	 * @param	string	$conditions
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function join($type, $conditions)
@@ -340,7 +340,7 @@ class JDatabaseQuery
 		if (is_null($this->_join)) {
 			$this->_join = array();
 		}
-		$this->_join[] = new JDatabaseQueryElement(strtoupper($type) . ' JOIN', $conditions);
+		$this->_join[] = new KDatabaseQueryElement(strtoupper($type) . ' JOIN', $conditions);
 
 		return $this;
 	}
@@ -348,7 +348,7 @@ class JDatabaseQuery
 	/**
 	 * @param	string	$conditions
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function innerJoin($conditions)
@@ -361,7 +361,7 @@ class JDatabaseQuery
 	/**
 	 * @param	string	$conditions
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function outerJoin($conditions)
@@ -374,7 +374,7 @@ class JDatabaseQuery
 	/**
 	 * @param	string	$conditions
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function leftJoin($conditions)
@@ -387,7 +387,7 @@ class JDatabaseQuery
 	/**
 	 * @param	string	$conditions
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function rightJoin($conditions)
@@ -401,14 +401,14 @@ class JDatabaseQuery
 	 * @param	mixed	$conditions	A string or array of conditions.
 	 * @param	string	$glue
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function set($conditions, $glue=',')
 	{
 		if (is_null($this->_set)) {
 			$glue = strtoupper($glue);
-			$this->_set = new JDatabaseQueryElement('SET', $conditions, "\n\t$glue ");
+			$this->_set = new KDatabaseQueryElement('SET', $conditions, "\n\t$glue ");
 		}
 		else {
 			$this->_set->append($conditions);
@@ -421,14 +421,14 @@ class JDatabaseQuery
 	 * @param	mixed	$conditions	A string or array of where conditions.
 	 * @param	string	$glue
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function where($conditions, $glue='AND')
 	{
 		if (is_null($this->_where)) {
 			$glue = strtoupper($glue);
-			$this->_where = new JDatabaseQueryElement('WHERE', $conditions, " $glue ");
+			$this->_where = new KDatabaseQueryElement('WHERE', $conditions, " $glue ");
 		}
 		else {
 			$this->_where->append($conditions);
@@ -440,13 +440,13 @@ class JDatabaseQuery
 	/**
 	 * @param	mixed	$columns	A string or array of ordering columns.
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function group($columns)
 	{
 		if (is_null($this->_group)) {
-			$this->_group = new JDatabaseQueryElement('GROUP BY', $columns);
+			$this->_group = new KDatabaseQueryElement('GROUP BY', $columns);
 		}
 		else {
 			$this->_group->append($columns);
@@ -459,14 +459,14 @@ class JDatabaseQuery
 	 * @param	mixed	$conditions	A string or array of columns.
 	 * @param	string	$glue
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function having($conditions, $glue='AND')
 	{
 		if (is_null($this->_having)) {
 			$glue = strtoupper($glue);
-			$this->_having = new JDatabaseQueryElement('HAVING', $conditions, " $glue ");
+			$this->_having = new KDatabaseQueryElement('HAVING', $conditions, " $glue ");
 		}
 		else {
 			$this->_having->append($conditions);
@@ -478,19 +478,30 @@ class JDatabaseQuery
 	/**
 	 * @param	mixed	$columns	A string or array of ordering columns.
 	 *
-	 * @return	JDatabaseQuery	Returns this object to allow chaining.
+	 * @return	KDatabaseQuery	Returns this object to allow chaining.
 	 * @since	1.6
 	 */
 	public function order($columns)
 	{
 		if (is_null($this->_order)) {
-			$this->_order = new JDatabaseQueryElement('ORDER BY', $columns);
+			$this->_order = new KDatabaseQueryElement('ORDER BY', $columns);
 		}
 		else {
 			$this->_order->append($columns);
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Legacy function to return a string representation of the query element.
+	 *
+	 * @return	string	The query element.
+	 * @since	1.0
+	 */
+	public function toString()
+	{
+		return (string) $this;
 	}
 
 	/**

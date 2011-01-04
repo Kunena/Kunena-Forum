@@ -35,6 +35,8 @@ Kunena 1.6.3
 
 4-January-2011 Matias
 # [#24083] Joomla 1.6: generate Kunena Menu during installation
+^ [#15886] Merged revisions 4049-4142 from /branches/1.6.3-jomsocial
+# [#24129] Fix conflicts with JXtended
 
 3-January-2011 Matias
 # [#24076] Profile user settings doesn't work in J!1.6 (part 2)
@@ -56,6 +58,7 @@ Kunena 1.6.3
 # [#24078] Joomla 1.6: Categories are not displayed in select lists
 # [#24084] Joomla 1.6: Kunena menu items are missing select for categories
 # [#24093] Joomla 1.6: Usergroups cannot be assigned into categories
+# [#24088] Installer: Add a few new breakpoints into database migration/upgrade process
 
 2-January-2011 fxstein
 ^ [#24074] Update version info to 1.6.3-DEV
@@ -69,6 +72,27 @@ Kunena 1.6.3
 # [#24066] Credit has a space when the variable $this->params->get('templatebyName') is empty (thanks gonzaunit)
 # [#24071] Poll expired setting doesn't work in form and calendar doesn't open in J! 1.6
 ^ [#23293] Little update on fr-FR and en-GB to don't have issue with languages
+
+21-December-2010 Matias
+^ [#23920] Cleanup all KunenaAccess classes
+# [#23920] Fix a few bugs which broke up ACL
+# [#23920] Fix a bug making too many dummy queries when instantiating categories
++ [#23920] Administration: Display JomSocial group in category list, hide group info from edit
++ [#23920] Make Joomla 1.5 ACL integration to use phpgacl making it to work with a few ACL components
+# [#23920] Fix a bug where ACL groups were not shown at all
+
+20-December-2010 Matias
+^ [#23152] Update version info to 1.6.3 (Chama = group, society)
++ [#23920] Move some functions/functionality from derived classes into KunenaAccess
++ [#23920] Separate Kunena logic from ACL in KunenaAccess::getSubscribers()
++ [#23920] Add KunenaCategory::getCategoriesByAccess()
+^ [#23920] Change session handling to accept new version of access classes
+^ [#23920] Simplify structure in KunenaAccessXXX::loadAllowedCategories() functions
++ [#23920] Add CommunityBuilder triggers: loadAdmins, loadModerators, checkSubscribers
+
+19-December-2010 Matias
++ [#23920] Add JomSocial groups support: Create new fields into tables
++ [#23920] Backport KunenaAccess classes from Kunena 2.0
 
 Kunena 1.6.2
 

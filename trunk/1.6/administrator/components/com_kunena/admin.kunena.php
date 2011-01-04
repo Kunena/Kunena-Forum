@@ -1027,7 +1027,9 @@ function showAdministration($option) {
 			if ( empty($search))
 			$v->name = JText::_('COM_KUNENA_CATEGORY_ORPHAN').' : '.$v->name;
 		}
-		if ($v->pub_access == 0) {
+		if ($v->accesstype != 'none') {
+			$v->groupname = JText::_('COM_KUNENA_INTEGRATION_'.strtoupper($v->accesstype));
+		} else if ($v->pub_access == 0) {
 			$v->groupname = JText::_('COM_KUNENA_EVERYBODY');
 		} else if ($v->pub_access == - 1) {
 			$v->groupname = JText::_('COM_KUNENA_ALLREGISTERED');
@@ -1036,7 +1038,11 @@ function showAdministration($option) {
 		} else {
 			$v->groupname = JText::_( $v->groupname );
 		}
-		$v->admingroup = JText::_( $v->admingroup );
+		if ($v->accesstype != 'none') {
+			$v->admingroup = $v->access;
+		} else {
+			$v->admingroup = JText::_( $v->admingroup );
+		}
 		if ($v->checked_out && !JTable::isCheckedOut(0, intval($v->checked_out))) {
 			$v->checked_out = 0;
 			$v->editor = '';

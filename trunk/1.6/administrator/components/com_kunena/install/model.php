@@ -186,6 +186,7 @@ class KunenaModelInstall extends JModel {
 		if ($id === null) {
 			$status [] = array ('step' => $step, 'task'=>$task, 'success' => $result, 'msg' => $msg );
 		} else {
+			unset($status [$id]);
 			$status [$id] = array ('step' => $step, 'task'=>$task, 'success' => $result, 'msg' => $msg );
 		}
 		$this->setState ( 'status', $status );
@@ -507,38 +508,82 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function migrateDatabase() {
-		$results = array ();
 		$version = $this->getVersion();
 		if (! empty ( $version->prefix )) {
-
 			// Migrate all tables from old installation
-			$tables = $this->listTables ( $version->prefix );
-			foreach ( $tables as $oldtable ) {
-				$newtable = preg_replace ( '/^' . $version->prefix . '/', 'kunena_', $oldtable );
-				$results [] = $this->migrateTable ( $version->prefix, $oldtable, $newtable );
+
+			$app = JFactory::getApplication ();
+			$state = $app->getUserState ( 'com_kunena.install.dbstate', null );
+
+			// First run: find tables that potentially need migration
+			if ($state === null) {
+				$state = $this->listTables ( $version->prefix );
 			}
-			foreach ( $results as $i => $r )
-				if ($r)
-					$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], true );
+
+			// Handle only first table in the list
+			$oldtable = array_shift($state);
+			if ($oldtable) {
+				$newtable = preg_replace ( '/^' . $version->prefix . '/', 'kunena_', $oldtable );
+				$result = $this->migrateTable ( $version->prefix, $oldtable, $newtable );
+				if ($result) {
+					$this->addStatus ( ucfirst($result ['action']) . ' ' . $result ['name'], true );
+				}
+				// Save user state with remaining tables
+				$app->setUserState ( 'com_kunena.install.dbstate', $state );
+
+				// Database migration continues
+				return false;
+			} else {
+				// Reset user state
+				$this->updateVersionState ( 'installDatabase' );
+				$app->setUserState ( 'com_kunena.install.dbstate', null );
+			}
 		}
-		$this->updateVersionState ( 'upgradeDatabase' );
+		// Database migration complete
 		return true;
 	}
 
 	public function installDatabase() {
-		require_once KPATH_ADMIN.'/install/schema.php';
-		$schema = new KunenaModelSchema();
-		$create = $schema->getCreateSQL();
-		$tables = $this->listTables ( 'kunena_', true );
-		$results = array();
-		foreach ( $create as $table=>$query ) {
-			if (!isset($tables[$table])) {
-				$results[] = $schema->updateSchemaTable($table);
-			}
+		static $schema = null;
+		static $create = null;
+		static $tables = null;
+		if ($schema === null) {
+			// Run only once: get table creation SQL and existing tables
+			require_once KPATH_ADMIN.'/install/schema.php';
+			$schema = new KunenaModelSchema();
+			$create = $schema->getCreateSQL();
+			$tables = $this->listTables ( 'kunena_', true );
 		}
-		foreach ( $results as $i => $r )
-			if ($r)
-				$this->addStatus ( ucfirst($r ['action']) . ' ' . $r ['name'], $r ['success'] );
+
+		$app = JFactory::getApplication ();
+		$state = $app->getUserState ( 'com_kunena.install.dbstate', null );
+
+		// First run: get all tables
+		if ($state === null) {
+			$state = array_keys($create);
+		}
+
+		// Handle only first table in the list
+		$table = array_shift($state);
+		if ($table) {
+			$query = $create[$table];
+			if (!isset($tables[$table])) {
+				$result = $schema->updateSchemaTable($table);
+				if ($result) {
+					$this->addStatus ( ucfirst($result ['action']) . ' ' . $result ['name'], $result ['success'] );
+				}
+			}
+			// Save user state with remaining tables
+			$app->setUserState ( 'com_kunena.install.dbstate', $state );
+
+			// Database install continues
+			return false;
+		} else {
+			// Reset user state
+			$this->updateVersionState ( 'upgradeDatabase' );
+			$app->setUserState ( 'com_kunena.install.dbstate', null );
+		}
+		// Database install complete
 		return true;
 	}
 
@@ -569,18 +614,44 @@ class KunenaModelInstall extends JModel {
 	}
 
 	public function upgradeDatabase() {
-		$results [] = $this->migrateConfig();
+		static $xml = null;
 
-		$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
+		// If there's no version installed, there's nothing to do
 		$curversion = $this->getVersion();
 		if (!$curversion->component) return true;
 
+		if ($xml === null) {
+			// Run only once: Get migration SQL from our XML file
+			$xml = simplexml_load_file(KPATH_ADMIN.'/install/kunena.install.upgrade.xml');
+		}
+
+		$app = JFactory::getApplication ();
+		$state = $app->getUserState ( 'com_kunena.install.dbstate', null );
+
+		// First run: initialize state and migrate configuration
+		if ($state === null) {
+			$state = array();
+
+			// Migrate configuration from FB <1.0.5, otherwise update it
+			$this->migrateConfig();
+		}
+
 		// Allow queries to fail
 		$this->db->debug(0);
+
 		$results = array();
 		foreach ($xml->upgrade[0] as $version) {
+			// If we have already upgraded to this version, continue to the next one
+			$vernum = (string) $version['version'];
+			if (!empty($state[$vernum]))
+				continue;
+
+			// Update state
+			$state[$vernum] = 1;
+
 			if ($version['version'] == '@'.'kunenaversion'.'@') {
 				$svn = 1;
+				$vernum = Kunena::version();
 			}
 			if(isset($svn) ||
 					($version['versiondate'] > $curversion->versiondate) ||
@@ -588,13 +659,24 @@ class KunenaModelInstall extends JModel {
 					(version_compare(strtolower($version['version']), strtolower($curversion->version), '==') &&
 					$version['build'] > $curversion->build)) {
 				foreach ($version as $action) {
-					$results [] = $this->processUpgradeXMLNode($action);
+					$result = $this->processUpgradeXMLNode($action);
+					if ($result) $this->addStatus ( $result ['action'] . ' ' . $result ['name'], $result ['success'] );
 				}
+
+				$this->addStatus ( JText::sprintf('COM_KUNENA_INSTALL_VERSION_UPGRADED',$vernum), true, '', 'upgrade' );
+
+				// Save user state with remaining tables
+				$app->setUserState ( 'com_kunena.install.dbstate', $state );
+
+				// Database install continues
+				return false;
 			}
 		}
-		foreach ( $results as $i => $r )
-			if ($r)
-				$this->addStatus ( $r ['action'] . ' ' . $r ['name'], $r ['success'] );
+		// Reset user state
+		$this->updateVersionState ( 'InstallSampleData' );
+		$app->setUserState ( 'com_kunena.install.dbstate', null );
+
+		// Database install complete
 		return true;
 	}
 

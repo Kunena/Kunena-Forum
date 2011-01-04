@@ -652,6 +652,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 					$user			= JFactory::getUser();
 					
 					$articlecandisplayed = 0;
+					$tag_start = '<div class="kmsgtext-article">';
 					
 					if ($jversion->RELEASE == '1.5') {
 						$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
@@ -678,6 +679,11 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							} else {
 								$articlecandisplayed = 1;
 							}
+						} else {
+							$tag_new = $tag_start;
+							$tag_new .= JText::_("Article cannot be shown");
+							// End of div wrapper for article
+							$tag_new .= '</div>';
 						}
 					} elseif ($jversion->RELEASE == '1.6') {						
 						$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, cc.published AS cat_pub, cc.access AS cat_access
@@ -689,24 +695,35 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 						$article = $kunena_db->loadObject();
 						
 						if ( $article ) {
+							// Get credentials to check if the user has right to see the article
+							$app = JFactory::getApplication('site');
+							$params = $app->getParams();
+							$registry = new JRegistry;
+							$registry->loadJSON($article->attribs);
+							$article->params = clone $params;
+							$article->params->merge($registry);
+				
+							$groups = $user->getAuthorisedViewLevels();
+							
 							if (!$article->cat_pub && $article->catid) {
 								$tag_new = $tag_start;
 								$tag_new .= JText::_("Article cannot be shown");
 								$tag_new .= '</div>';
-							/* FIX ME : i don't know by what i need to replace it to work with Joomla! 1.6
-							} else if ((($article->cat_access > $user->get('aid', 0)) && $article->catid)							
-							|| ($article->access > $user->get('aid', 0))) {
+							
+							} else if ( !in_array($article->access, $groups) ) {
 								$tag_new = $tag_start;
 								$tag_new .= JText::_("This message contains an article, but you do not have permissions to see it.");
 								$tag_new .= '</div>';
-							*/
 							} else {
 								$articlecandisplayed = 1;
 							}
+						} else {
+							$tag_new = $tag_start;
+							$tag_new .= JText::_("Article cannot be shown");
+							// End of div wrapper for article
+							$tag_new .= '</div>';
 						}
 					}
-					
-					$tag_start = '<div class="kmsgtext-article">';
 
 					if ( $articlecandisplayed ) {
 						$params = clone($kunena_app->getParams('com_content'));
@@ -767,11 +784,6 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 							}
 						}
 						
-					} else {
-						$tag_new = $tag_start;
-						$tag_new .= JText::_("Article cannot be shown");
-						// End of div wrapper for article
-						$tag_new .= '</div>';
 					}
 					return TAGPARSER_RET_REPLACED;
 				}

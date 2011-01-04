@@ -33,6 +33,19 @@ Legend:
 
 Kunena 1.6.3
 
+3-January-2011 Matias
+# [#24076] Profile user settings doesn't work in J!1.6 (part 2)
+^ [#15886] Merged revisions 4141-4147 from /branches/1.6.3-xillibit-j1.6fixes-01012011
+
+03-January-2011 Xillibit
+# [#24076] Profile user settings doesn't work in J!1.6
+
+02-January-2011 Xillibit
+# [#24064] Joomla 1.6: Don't check if component is enabled, because it doesn't seem to work
+# [#24073] Joomla 1.6: Use Joomla! JDocumentFeed to generate RSS feed instead of Joomla! deprecated library
+# [#24081] Remove bbcode attachment and code from JS activity stream
+# [#24075] PDF generation is broken under J! 1.6
+
 2-January-2011 Matias
 # [#24080] Kunena Discuss: Fatal error when sending subscription emails
 # [#24077] Joomla! version check in integration is slightly broken

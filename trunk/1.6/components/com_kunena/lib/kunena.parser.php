@@ -656,6 +656,7 @@ class KunenaBBCodeInterpreter extends BBCodeInterpreter {
 
 					$kunena_db->setQuery($query);
 					$article = $kunena_db->loadObject();
+					KunenaError::checkDatabaseError();
 
 					$tag_start = '<div class="kmsgtext-article">';
 

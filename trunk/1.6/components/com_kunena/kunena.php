@@ -285,8 +285,16 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	}
 
 	if ($func == 'fb_pdf' || $func == 'pdf') {
-		include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
-		$kunena_app->close ();
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		
+		if ($jversion->RELEASE != '1.6') {
+			include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
+			$kunena_app->close ();
+		} else {
+			$kunena_app->redirect($httpReferer);
+		}
 	}
 
 	$format = JRequest::getCmd ( 'format', 'html' );
@@ -774,8 +782,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$rss_params = '';
 		}
 		if (isset($rss_params) || $kunena_config->enablepdf) {
+			jimport ( 'joomla.version' );
+			$jversion = new JVersion ();
 			echo '<div class="krss-block">';
-			if ($kunena_config->enablepdf && $func == 'view') {
+			if ($kunena_config->enablepdf && $func == 'view' && $jversion->RELEASE != '1.6') {
 				// FIXME: add better translation:
 				echo CKunenaLink::GetPDFLink($catid, $limit, $limitstart, $id, CKunenaTools::showIcon ( 'kpdf', JText::_('PDF') ), 'nofollow', '', JText::_('PDF'));
 			}

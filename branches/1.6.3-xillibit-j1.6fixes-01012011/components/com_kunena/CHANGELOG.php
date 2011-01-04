@@ -35,6 +35,7 @@ Kunena 1.6.3-DEV
 
 04-January-2011 Xillibit
 # [#24064] Put some code in kunena report configuration into functions to be more readable
+# [#24094] Joomla 1.6: Article BBCode doesn't work
 
 03-January-2011 Xillibit
 # [#24076] Profile user settings is doesn't supported under J!1.6

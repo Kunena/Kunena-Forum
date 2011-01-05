@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+5-January-2011 Matias
+# [#24147] Show user defined title from menu Item (Parameters (System) > Page Title)
+
 4-January-2011 Matias
 # [#24083] Joomla 1.6: generate Kunena Menu during installation
 ^ [#15886] Merged revisions 4049-4142 from /branches/1.6.3-jomsocial

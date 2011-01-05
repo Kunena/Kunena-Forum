@@ -288,7 +288,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
 		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
-		
+
 		if ($jversion->RELEASE != '1.6') {
 			include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
 			$kunena_app->close ();
@@ -819,6 +819,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 <?php
 $integration = KunenaFactory::getProfile();
 $integration->close();
+
+$params = JComponentHelper::getParams( 'com_kunena' );
+if ($params->get( 'show_page_title' )) $document->setTitle ( $params->get( 'page_title' ) );
 
 if (empty($_POST) && $format == 'html') {
 	$default = KunenaRoute::getDefault();

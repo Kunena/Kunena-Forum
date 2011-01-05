@@ -260,9 +260,9 @@ abstract class KunenaAccess {
 	protected function &loadSubscribers($catid, $topicid) {
 		$category = KunenaCategory::getInstance($catid);
 		$db = JFactory::getDBO ();
-		$query ="SELECT user_id FROM #__kunena_user_topics WHERE topic_id={$topicid}
+		$query ="SELECT userid AS user_id FROM #__kunena_subscriptions WHERE thread={$topicid}
 				UNION
-				SELECT user_id FROM #__kunena_user_topics WHERE category_id={$catid}";
+				SELECT userid AS user_id FROM #__kunena_subscriptions_categories WHERE catid={$catid}";
 		$db->setQuery ($query);
 		$userids = (array) $db->loadResultArray();
 		KunenaError::checkDatabaseError();

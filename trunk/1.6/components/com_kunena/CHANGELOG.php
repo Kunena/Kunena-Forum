@@ -38,6 +38,7 @@ Kunena 1.6.3
 ^ [#15886] Merged revisions 4049-4142 from /branches/1.6.3-jomsocial
 # [#24129] Fix conflicts with JXtended
 ^ [#15886] Merged revisions 4149-4153 from /branches/1.6.3-xillibit-j1.6fixes-01012011
+# [#23920] Fix Kunena Internal Error when posting (subscriptions)
 
 3-January-2011 Matias
 # [#24076] Profile user settings doesn't work in J!1.6 (part 2)

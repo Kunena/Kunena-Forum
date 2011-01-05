@@ -131,7 +131,11 @@ foreach ( $this->categories [0] as $section ) :
 			<div class="klatest-subject-by ks">
 			<?php
 					echo JText::_('COM_KUNENA_BY') . ' ';
-					echo CKunenaLink::GetProfileLink ( intval($category->userid), $this->escape($this->config->username ? $category->username:$category->uname) );
+					if (!empty($category->userid)) {
+						echo CKunenaLink::GetProfileLink ( intval($category->userid), $this->escape($this->config->username ? $category->username:$category->uname) );
+					} else {
+						echo CKunenaLink::GetProfileLink ( intval($category->userid), $this->escape($category->mname) );
+					}
 					echo '<br /><span class="nowrap" title="' . CKunenaTimeformat::showDate ( $category->time_last_msg, 'config_post_dateformat_hover' ) . '">' . CKunenaTimeformat::showDate ( $category->time_last_msg, 'config_post_dateformat' ) . '</span>';
 					?>
 			</div>

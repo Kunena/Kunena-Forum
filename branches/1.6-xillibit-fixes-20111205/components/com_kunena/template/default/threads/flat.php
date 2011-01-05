@@ -139,8 +139,10 @@ $this->app->setUserState( "com_kunena.ActionBulk", JRoute::_( $Breturn ) );
 						<?php echo CKunenaTimeformat::showDate($leaf->time, 'config_post_dateformat');?>&nbsp;
 					</span>
 
-					<?php if ($leaf->name) : ?>
+					<?php if ($leaf->name && $leaf->userid) : ?>
 					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($this->config->username ? $leaf->username:$leaf->uname) ); ?></span>
+					<?php else : ?>
+					<span class="ktopic-by ks"><?php echo JText::_('COM_KUNENA_GEN_BY') . ' ' . CKunenaLink::GetProfileLink ( intval($leaf->userid), $this->escape($leaf->name) ); ?></span>
 					<?php endif; ?>
 					<!-- /By -->
 				</div>

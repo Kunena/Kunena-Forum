@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+05-January-2011 Xillibit
+# [#24064] Fix some undefined variables in kunena report configuration
+
 4-January-2011 Matias
 # [#24083] Joomla 1.6: generate Kunena Menu during installation
 ^ [#15886] Merged revisions 4049-4142 from /branches/1.6.3-jomsocial

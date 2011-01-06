@@ -134,8 +134,6 @@ class CKunenaUserlist {
 	function isAllowed() {
 		if ($this->config->userlist_allowed == 1 && $this->my->id == 0 ) {
 			$this->app->enqueueMessage ( JText::_ ( 'COM_KUNENA_USERLIST_NOT_ALLOWED' ), 'error' );
-			$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
-			$this->app->redirect ( $httpReferer );
 			return false;
 		}
 		return true;

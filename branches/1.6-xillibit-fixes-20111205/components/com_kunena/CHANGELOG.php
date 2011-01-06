@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+6-January-2011 Xillibit
+# [#24149] Redirect loop in userlist and update translation
+
 05-January-2011 Xillibit
 # [#24064] Fix some undefined variables in kunena report configuration
 # [#24156] Error message on start of installation on archive which is not here
@@ -45,14 +48,14 @@ Kunena 1.6.3
 ^ [#15886] Merged revisions 4149-4153 from /branches/1.6.3-xillibit-j1.6fixes-01012011
 # [#23920] Fix Kunena Internal Error when posting (subscriptions)
 
-3-January-2011 Matias
-# [#24076] Profile user settings doesn't work in J!1.6 (part 2)
-^ [#15886] Merged revisions 4141-4147 from /branches/1.6.3-xillibit-j1.6fixes-01012011
-
 04-January-2011 Xillibit
 # [#24064] Put some code in kunena report configuration into functions to be more readable
 # [#24094] Joomla 1.6: Article BBCode doesn't work
 # [#24094] Joomla 1.6: Article BBCode doesn't work (Part 2)
+
+3-January-2011 Matias
+# [#24076] Profile user settings doesn't work in J!1.6 (part 2)
+^ [#15886] Merged revisions 4141-4147 from /branches/1.6.3-xillibit-j1.6fixes-01012011
 
 03-January-2011 Xillibit
 # [#24076] Profile user settings doesn't work in J!1.6

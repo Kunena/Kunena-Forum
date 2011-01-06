@@ -292,8 +292,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		if ($jversion->RELEASE != '1.6') {
 			include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
 			$kunena_app->close ();
-		} else {
-			$kunena_app->redirect($httpReferer);
 		}
 	}
 

@@ -33,14 +33,23 @@ class CKunenaProfile {
 		else {
 			$this->user = JFactory::getUser( $userid );
 		}
-		if ($this->user->id == 0) return;
-		$this->allow = true;
+		if ($this->user->id == 0) {
+			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
+			return;
+		}
 
 		$integration = KunenaFactory::getProfile();
 		$activityIntegration = KunenaFactory::getActivityIntegration();
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
-
+		
+		if (get_class($integration) == 'KunenaProfileNone') {      
+			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
+			return;
+		}
+		
+		$this->allow = true;
+		
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
 		if ($this->profile->posts === null) {
 			$this->profile->save();

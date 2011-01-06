@@ -431,6 +431,9 @@ class CKunenaProfile {
 	// Mostly copied from Joomla 1.5
 	protected function saveUser()
 	{
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+
 		$user = $this->user; //new JUser ( $this->user->get('id') );
 
 		// we don't want users to edit certain fields so we will ignore them
@@ -448,6 +451,18 @@ class CKunenaProfile {
 		foreach ($ignore as $field) {
 			if (isset($post[$field]))
 				unset($post[$field]);
+		}
+		
+		if ( $jversion->RELEASE == '1.6' ) { 
+			jimport('joomla.user.helper');
+			$result = JUserHelper::getUserGroups($user->id);
+			
+			$groups = array();
+			foreach ( $result as $key => $value ) {
+				$groups[]= $key;
+			}
+
+			$post['groups'] = $groups;
 		}
 
 		// get the redirect

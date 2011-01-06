@@ -35,6 +35,7 @@ Kunena 1.6.3
 
 6-January-2011 Xillibit
 # [#24149] Redirect loop in userlist and update translation
+# [#24170] When save user profile under J! 1.6 the user is not assigned to any group
 
 05-January-2011 Xillibit
 # [#24064] Fix some undefined variables in kunena report configuration

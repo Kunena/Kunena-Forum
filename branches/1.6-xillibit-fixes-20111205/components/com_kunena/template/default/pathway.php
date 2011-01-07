@@ -72,7 +72,7 @@ $id = JRequest::getInt ( 'id', 0 );
 	$jr_forum_count = count ( $jr_path_menu );
 
 	$fireinfo = '';
-	$firepath = '<div class="path-element-first">' . CKunenaLink::GetKunenaLink ( $this->escape( $this->config->board_title ) ) . '</div>';
+	$firepath = '<div class="path-element-first">' . CKunenaLink::GetCategoryListLink ( $this->escape( $this->config->board_title ) ) . '</div>';
 	$firelast = '';
 
 	for($i = 0; $i < $jr_forum_count; $i ++) {

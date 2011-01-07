@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+7-January-2011 Xillibit
+# [#23704] First item in breadcrumbs links to entrypage, not top-level index
+
 6-January-2011 Xillibit
 # [#24149] Redirect loop in userlist and update translation
 # [#24170] When save user profile under J! 1.6 the user is not assigned to any group

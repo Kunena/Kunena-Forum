@@ -9,12 +9,14 @@
  * @link http://www.kunena.org
  *
  **/
-//
-// Dont allow direct linking
-defined( '_JEXEC' ) or die('');
+defined( '_JEXEC' ) or die();
 
 class KunenaAccessNoixACL extends KunenaAccess {
 	function __construct() {
+		$jversion = new JVersion ();
+		if ($jversion->RELEASE != '1.5')
+			return null;
+
 		if (!is_file(JPATH_ADMINISTRATOR.'/components/com_noixacl/noixacl.php'))
 			return null;
 		$this->priority = 40;
@@ -44,36 +46,29 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		return parent::loadModerators($list);
 	}
 
-	protected function loadAllowedCategories($userid) {
-		$acl = JFactory::getACL ();
+	protected function loadAllowedCategories($user) {
+		$user = JFactory::getUser($user);
 		$db = JFactory::getDBO ();
-		$user = JFactory::getUser();
 
-		if ($userid != 0) {
-			$aro_group = $acl->getAroGroup ( $userid );
-			$gid = $aro_group->id;
+		// Get Joomla group for current user
+		if ($user->id != 0) {
+			$acl = JFactory::getACL ();
+			$gid = $acl->getAroGroup ( $user->id )->id;
 		} else {
 			$gid = 0;
 		}
 
-		$query = "SELECT id, accesstype, access, pub_access, pub_recurse, admin_access, admin_recurse
-				FROM #__kunena_categories
-				WHERE published='1' AND (accesstype='none' OR accesstype='joomla' OR accesstype='noixacl')";
-		$db->setQuery ( $query );
-		$rows = $db->loadObjectList ();
-		if (KunenaError::checkDatabaseError()) return array();
-
-		//get NoixACL multigroups for current user
+		// Get NoixACL multigroups for current user
 		$query = "SELECT g.id
 		FROM #__core_acl_aro_groups AS g
 		INNER JOIN #__noixacl_multigroups AS m
-		WHERE g.id = m.id_group AND m.id_user = {$db->quote($userid)}";
+		WHERE g.id = m.id_group AND m.id_user = {$db->quote($user->id)}";
 		$db->setQuery( $query );
 		$multigroups = (array) $db->loadResultArray();
 		$multigroups[] = $user->gid;
 		if (KunenaError::checkDatabaseError()) return array();
 
-		//get NoixACL access levels for all user groups
+		// Get NoixACL access levels for all user groups
 		$groups = implode(',', $multigroups);
 		$query = "SELECT l.id_levels
 		FROM #__noixacl_groups_level AS l
@@ -82,25 +77,73 @@ class KunenaAccessNoixACL extends KunenaAccess {
 		$levels = array_unique(explode(',', implode(',', (array) $db->loadResultArray())));
 		if (KunenaError::checkDatabaseError()) return array();
 
+		$categories = KunenaForumCategoryHelper::getCategories(false, false, 'none');
 		$catlist = array();
-		foreach ( $rows as $row ) {
-			if (self::isModerator($userid, $row->id)) {
-				$catlist[$row->id] = 1;
-			} elseif ($row->accesstype == 'joomla') {
-				if ( $row->access <= $user->get('aid') )
-					$catlist[$row->id] = 1;
-			} elseif ($row->accesstype == 'noixacl') {
-				if ( in_array($row->access, $levels) )
-					$catlist[$row->id] = 1;
-			} elseif ($row->pub_access == 0 ||
-				($userid > 0 && (
-				($row->pub_access == - 1)
-				|| ($row->pub_access > 0 && self::_has_rights ( $multigroups, $row->pub_access, $row->pub_recurse ))
-				|| ($row->admin_access > 0 && self::_has_rights ( $multigroups, $row->admin_access, $row->admin_recurse ))))) {
-				$catlist[$row->id] = 1;
+		foreach ( $categories as $category ) {
+			// Check if user is a moderator
+			if (self::isModerator($user->id, $category->id)) {
+				$catlist[$category->id] = $category->id;
+			}
+			// Check against Joomla access level
+			elseif ($category->accesstype == 'joomla') {
+				if ( $category->access <= $user->get('aid') )
+					$catlist[$category->id] = $category->id;
+			}
+			// Check against NoixACL access level
+			elseif ($category->accesstype == 'noixacl') {
+				if ( in_array($category->access, $levels) )
+					$catlist[$category->id] = $category->id;
+			}
+			// Check against Joomla user group
+			elseif ($category->accesstype == 'none') {
+				if ($category->pub_access == 0 ||
+					($user->id > 0 && (
+					($category->pub_access == - 1)
+					|| ($category->pub_access > 0 && self::_has_rights ( $multigroups, $category->pub_access, $category->pub_recurse ))
+					|| ($category->admin_access > 0 && self::_has_rights ( $multigroups, $category->admin_access, $category->admin_recurse ))))) {
+					$catlist[$category->id] = $category->id;
+				}
 			}
 		}
 		return $catlist;
+	}
+
+	protected function checkSubscribers($topic, &$userids) {
+		$category = $topic->getCategory();
+		if (empty($userids))
+			return $userids;
+
+		$userlist = implode(',', $userids);
+
+		$db = JFactory::getDBO ();
+		$query = new KunenaDatabaseQuery();
+		$query->select('u.id');
+		$query->from('#__users AS u');
+		$query->where("u.block=0");
+		$query->where("u.id IN ({$userlist})");
+
+		if ($category->accesstype == 'joomla') {
+			// Check against Joomla access level
+			if ( $category->access > 1 ) {
+				// Special users = not in registered group
+				$query->where("u.gid!=18");
+			}
+		} elseif ($category->accesstype == 'none') {
+			// Check against Joomla user groups
+			$public = $this->_get_groups($category->pub_access, $category->pub_recurse);
+			$admin = $category->pub_access > 0 ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
+			$groups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
+			if ($groups) {
+				$query->join('LEFT', "#__noixacl_multigroups AS g ON g.id_user=u.id");
+				$query->where("(u.gid IN ({$groups}) OR g.id_group IN ({$groups}))");
+			}
+		} else {
+			return array();
+		}
+
+		$db->setQuery ($query);
+		$userids = (array) $db->loadObjectList('id');
+		KunenaError::checkDatabaseError();
 	}
 
 	protected function _has_rights($usergroups, $groupid, $recurse) {
@@ -127,40 +170,5 @@ class KunenaAccessNoixACL extends KunenaAccess {
 			return $groups[$groupid];
 		}
 		return array($groupid);
-	}
-
-	protected function checkSubscribers($topic, &$userids) {
-		$userlist = implode(',', $userids);
-
-		$db = JFactory::getDBO ();
-		$query = new JDatabaseQuery();
-		$query->select('u.id');
-		$query->from('#__users AS u');
-		$query->where("u.block=0");
-		$query->where("u.id IN ({$userlist})");
-
-		$category = $topic->getCategory();
-		if ($category->accesstype == 'joomla') {
-			// Check against Joomla access level
-			if ( $category->access > 1 ) {
-				// Special users = not in registered group
-				$query->where("u.gid!=18");
-			}
-		} elseif ($category->accesstype == 'none') {
-			// Check against Joomla user groups
-			$public = $this->_get_groups($category->pub_access, $category->pub_recurse);
-			$admin = $category->pub_access > 0 ? $this->_get_groups($category->admin_access, $category->admin_recurse) : array();
-			$groups = implode ( ',', array_unique ( array_merge ( $public, $admin ) ) );
-			if ($groups) {
-				$query->join('LEFT', "#__noixacl_multigroups AS g ON g.id_user=u.id");
-				$query->where("(u.gid IN ({$groups}) OR g.id_group IN ({$groups}))");
-			}
-		} else {
-			return array();
-		}
-
-		$db->setQuery ($query);
-		$userids = (array) $db->loadObjectList('id');
-		KunenaError::checkDatabaseError();
 	}
 }

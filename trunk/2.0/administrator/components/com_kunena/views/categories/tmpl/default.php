@@ -21,10 +21,10 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 			<table class="kadmin-sort">
 				<tr>
 					<td class="left" width="90%">
-						<?php echo JText::_( 'Filter' ); ?>:
+						<?php echo JText::_( 'COM_KUNENA_FILTER' ); ?>:
 						<input type="text" name="search" id="search" value="<?php echo $this->escape ( $this->state->get('list.search') );?>" class="text_area" onchange="document.adminForm.submit();" />
-						<button onclick="this.form.submit();"><?php echo JText::_( 'Go' ); ?></button>
-						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'Reset' ); ?></button>
+						<button onclick="this.form.submit();"><?php echo JText::_( 'COM_KUNENA_GO' ); ?></button>
+						<button onclick="document.getElementById('search').value='';this.form.submit();"><?php echo JText::_( 'COM_KUNENA_RESET' ); ?></button>
 					</td>
 				</tr>
 			</table>
@@ -33,10 +33,10 @@ $document->addStyleSheet ( JURI::base().'components/com_kunena/media/css/admin.c
 					<tr>
 						<th align="center" width="5">#</th>
 						<th width="5"><input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count ( $this->categories ); ?>);" /></th>
-						<th class="title"><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATEGORY'), 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
-						<th><small><?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_CATID'), 'catid', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
+						<th class="title"><?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATEGORY', 'name', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></th>
+						<th><small><?php echo JHTML::_('grid.sort', 'COM_KUNENA_CATID', 'catid', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?></small></th>
 						<th width="100" class="center nowrap"><small>
-							<?php echo JHTML::_('grid.sort', JText::_('COM_KUNENA_REORDER'), 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
+							<?php echo JHTML::_('grid.sort', 'COM_KUNENA_REORDER', 'ordering', $this->state->get('list.direction'), $this->state->get('list.ordering') ); ?>
 							<?php echo JHTML::_('grid.order',  $this->categories ); ?></small>
 						</th>
 						<th class="center"><small><?php echo JText::_('COM_KUNENA_LOCKED'); ?></small></th>

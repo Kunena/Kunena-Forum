@@ -12,7 +12,7 @@
 defined ( '_JEXEC' ) or die ();
 
 if (!class_exists('JDatabaseQuery'))
-	kimport('joomla.database.databasequery');
+	kimport('kunena.databasequery');
 
 abstract class KunenaTable extends JTable {
 	protected $_exists = false;

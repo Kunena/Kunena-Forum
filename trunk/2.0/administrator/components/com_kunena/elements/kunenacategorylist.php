@@ -10,6 +10,9 @@
  */
 defined ( '_JEXEC' ) or die ( '' );
 
+jimport('joomla.html.html');
+jimport('joomla.html.parameter.element');
+
 require_once JPATH_ADMINISTRATOR.'/components/com_kunena/api.php';
 
 JHTML::addIncludePath(KPATH_ADMIN . '/libraries/html/html');

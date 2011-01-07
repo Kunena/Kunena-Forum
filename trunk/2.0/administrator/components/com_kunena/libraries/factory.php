@@ -8,9 +8,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
-
-// Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
 
 abstract class KunenaFactory {
 	static $session = null;
@@ -162,9 +160,7 @@ abstract class KunenaFactory {
 
 		if ($lang == null or $reload == true) {
 			$lang = JFactory::getLanguage();
-			if (!$lang->load($file, JPATH_SITE, null, true)) {
-				$lang->load($file, KPATH_SITE, null, $reload);
-			}
+			$lang->load($file, JPATH_SITE, null, $reload);
 		}
 	}
 }

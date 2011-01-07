@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="site" method="upgrade">
+<install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Lithuanian</name>
-    <tag>lt-LT</tag>
-    <version>1.6.1</version>
-    <creationDate>2010-11-08</creationDate>
-    <author>ZYLKIN, Andrius Balsevičius</author>
-    <authorEmail>joomla123lt@gmail.com</authorEmail>
-    <authorUrl>www.MobiJava.lt,www.joomla123.lt</authorUrl>
-    <copyright>Vertimui galioja GNU GPL Viešoji licencija</copyright>
-    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <description>
+	<tag>lt-LT</tag>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
+	<author>ZYLKIN, Andrius Balsevičius</author>
+	<authorEmail>joomla123lt@gmail.com</authorEmail>
+	<authorUrl>www.MobiJava.lt,www.joomla123.lt</authorUrl>
+	<copyright>Vertimui galioja GNU GPL Viešoji licencija</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>
 			<![CDATA[
 				<div style="background-color: #ddeebe; padding: 8px 20px 8px 20px; color:#08532f;	border-top: 1px solid #08532f ;	border-bottom: 1px solid #08532f;">
 				
@@ -37,9 +38,10 @@
 				</div>
 				]]>
 	</description>
-    <files folder="site">
-      <filename>lt-LT.com_kunena.ini</filename>
-	  <filename>lt-LT.com_kunena.tpl_default.ini</filename>
-	  <filename>lt-LT.com_kunena.tpl_example.ini</filename>
-    </files>
+	
+	<files>
+		<!-- filename>lt-LT.com_kunena.ini</filename -->
+		<!-- filename>lt-LT.com_kunena.install.ini</filename -->
+		<!-- filename>lt-LT.com_kunena.menu.ini</filename -->
+	</files>
 </install>

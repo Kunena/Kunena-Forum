@@ -223,7 +223,7 @@ class KunenaModelTopics extends KunenaModel {
 	protected function getPosts() {
 		$this->topics = array();
 		$this->count = 0;
-		kimport ('joomla.database.databasequery');
+		kimport ('kunena.databasequery');
 
 		$userid = $this->getState ( 'user' );
 		$start = $this->getState ( 'list.start' );

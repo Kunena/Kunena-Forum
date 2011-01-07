@@ -101,44 +101,22 @@ document.addEvent('domready', function() {
 					<fieldset class="fieldset" id="search-posts-date">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_FIND_POSTS'); ?>
-							<?php //TODO: Use JHTML ?>
 						</legend>
-						<select class="ks" name="searchdate">
-							<option value="lastvisit"<?php if ($this->params['searchdate']=="lastvisit") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_LASTVISIT'); ?></option>
-							<option value="1"<?php if ($this->params['searchdate']==1) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_YESTERDAY'); ?></option>
-							<option value="7"<?php if ($this->params['searchdate']==7) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_WEEK'); ?></option>
-							<option value="14"<?php if ($this->params['searchdate']==14) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_2WEEKS'); ?></option>
-							<option value="30"<?php if ($this->params['searchdate']==30) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_MONTH'); ?></option>
-							<option value="90"<?php if ($this->params['searchdate']==90) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_3MONTHS'); ?></option>
-							<option value="180"<?php if ($this->params['searchdate']==180) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_6MONTHS'); ?></option>
-							<option value="365"<?php if ($this->params['searchdate']==365) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_YEAR'); ?></option>
-							<option value="all"<?php if ($this->params['searchdate']=="all") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_ANY'); ?></option>
-						</select>
-						<select class="ks" name="beforeafter">
-							<option value="after"<?php if ($this->params['beforeafter']=="after") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_NEWER'); ?></option>
-							<option value="before"<?php if ($this->params['beforeafter']=="before") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_DATE_OLDER'); ?></option>
-						</select>
+						<?php
+						echo $this->searchdatelist;
+						
+						echo $this->beforeafterlist;
+						?>
 					</fieldset>
 
 					<fieldset class="fieldset" id="search-posts-sort">
 						<legend>
 							<?php echo JText::_('COM_KUNENA_SEARCH_SORTBY'); ?>
 						</legend>
-						<select class="ks" name="sortby">
-							<option value="title"<?php if ($this->params['sortby']=="title") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_TITLE'); ?></option>
-<?php /*
-							<option value="replycount"<?php if ($this->params['sortby']=="replycount") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_POSTS'); ?></option>
-*/ ?>
-							<option value="views"<?php if ($this->params['sortby']=="views") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_VIEWS'); ?></option>
-<?php /*
-							<option value="threadstart"<?php if ($this->params['sortby']=="threadstart") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_START'); ?></option>
-*/ ?>
-							<option value="lastpost"<?php if ($this->params['sortby']=="lastpost") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_POST'); ?></option>
-<?php /*
-							<option value="postusername"<?php if ($this->params['sortby']=="postusername") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_USER'); ?></option>
-*/ ?>
-							<option value="forum"<?php if ($this->params['sortby']=="forum") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_FORUM'); ?></option>
-						</select>
+						<?php 
+						echo $this->sortbylist;
+						
+						?>
 						<select class="ks" name="order">
 							<option value="inc"<?php if ($this->params['order']=="inc") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_INC'); ?></option>
 							<option value="dec"<?php if ($this->params['order']=="dec") echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_SORTBY_DEC'); ?></option>
@@ -150,12 +128,11 @@ document.addEvent('domready', function() {
 							<?php echo JText::_('COM_KUNENA_SEARCH_START'); ?>
 						</legend>
 						<input class="ks input" type="text" name="limitstart" value="<?php echo $this->limitstart; ?>" size="5" />
-						<select class="ks" name="limit">
-							<option value="5"<?php if ($this->limit==5) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_LIMIT5'); ?></option>
-							<option value="10"<?php if ($this->limit==10) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_LIMIT10'); ?></option>
-							<option value="15"<?php if ($this->limit==15) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_LIMIT15'); ?></option>
-							<option value="20"<?php if ($this->limit==20) echo $this->selected;?>><?php echo JText::_('COM_KUNENA_SEARCH_LIMIT20'); ?></option>
-						</select>
+						<?php 
+						
+						echo $this->limitlist;
+						
+						?>
 					</fieldset>
 				</td>
 				<td class="kcol-mid">

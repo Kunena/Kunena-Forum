@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="both" method="upgrade">
+<install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Arabic</name>
 	<tag>ar-AA</tag>
-	<creationDate>unknown</creationDate>
-	<version>unknown</version>
-	<build>unknown</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>unknown</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>
@@ -14,19 +14,9 @@
 	<license>GNU/GPL</license>
 	<description>Arabic language file for Kunena Forum Component</description>
 
-	<administration>
-		<files folder="admin">
-			<filename>ar-AA.com_kunena.ini</filename>
-			<filename>ar-AA.com_kunena.install.ini</filename>
-			<filename>ar-AA.com_kunena.menu.ini</filename>
-		</files>
-	</administration>
-
-	<site>
-		<files folder="site">
-			<filename>ar-AA.com_kunena.ini</filename>
-			<filename>ar-AA.com_kunena.tpl_default.ini</filename>
-			<filename>ar-AA.com_kunena.tpl_example.ini</filename>
-		</files>
-	</site>
+	<files>
+		<filename>ar-AA.com_kunena.ini</filename>
+		<filename>ar-AA.com_kunena.install.ini</filename>
+		<filename>ar-AA.com_kunena.menu.ini</filename>
+	</files>
 </install>

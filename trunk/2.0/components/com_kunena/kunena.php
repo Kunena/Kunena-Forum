@@ -13,12 +13,6 @@ defined ( '_JEXEC' ) or die ();
 // Initialize Kunena (if Kunena System Plugin isn't enabled)
 require_once (JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_kunena' . DS . 'api.php');
 
-// Make sure that language gets loaded also if we are using SVN
-if (KunenaForum::isSVN()) {
-	$lang = JFactory::getLanguage();
-	$lang->load('com_kunena',KPATH_SITE);
-}
-
 $view = JRequest::getWord ( 'view' );
 
 // Load view if it exists

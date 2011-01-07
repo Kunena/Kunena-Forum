@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="both" method="upgrade">
+<install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Fórum Kunena - Português do Brasil</name>
 	<tag>pt-BR</tag>
-	<creationDate>2010-10-12</creationDate>
-	<version>1.6.1</version>
-	<build>3714</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>Knight Rider - www.soquadrinhos.com</author>
 	<authorEmail>rgponce@gmail.com</authorEmail>
 	<authorUrl>http://www.soquadrinhos.com</authorUrl>
@@ -14,19 +14,9 @@
 	<license>GNU/GPL</license>
 	<description>Português do Brasil para o fórum Kunena</description>
 
-	<administration>
-		<files folder="admin">
-			<filename>pt-BR.com_kunena.ini</filename>
-			<filename>pt-BR.com_kunena.install.ini</filename>
-			<filename>pt-BR.com_kunena.menu.ini</filename>
-		</files>
-	</administration>
-
-	<site>
-		<files folder="site">
-			<filename>pt-BR.com_kunena.ini</filename>
-			<filename>pt-BR.com_kunena.tpl_default.ini</filename>
-			<filename>pt-BR.com_kunena.tpl_example.ini</filename>
-		</files>
-	</site>
+	<files>
+		<filename>pt-BR.com_kunena.ini</filename>
+		<filename>pt-BR.com_kunena.install.ini</filename>
+		<filename>pt-BR.com_kunena.menu.ini</filename>
+	</files>
 </install>

@@ -139,6 +139,8 @@
 		<move file="${tmp_dir}/${kunena.frontend}/CHANGELOG.php" todir="${build_dir}" overwrite="true" filtering="false" />
 		<move file="${tmp_dir}/README.txt" todir="${build_dir}" overwrite="true" filtering="true" />
 		<copy file="${project_dir}/${kunena.backend}/libraries/forum/forum.php" todir="${tmp_dir}/${kunena.backend}/libraries/forum" overwrite="true" filtering="true" />
+		<copy file="${project_dir}/${kunena.frontend}/template/default/template.xml" todir="${tmp_dir}/${kunena.frontend}/template/default" overwrite="true" filtering="true" />		
+		<copy file="${project_dir}/${kunena.frontend}/template/example/template.xml" todir="${tmp_dir}/${kunena.frontend}/template/example" overwrite="true" filtering="true" />		
 
 		<!-- Move files needed by the installer -->
 		<move file="${tmp_dir}/${kunena.backend}/install/entrypoints/api.php" todir="${build_dir}" overwrite="true" filtering="true" />
@@ -173,18 +175,20 @@
 	<macrodef name="language">
 		<attribute name="tag" default="en-GB"/>
 		<sequential>
-			<copy file="${project_dir}/${kunena.backend}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}" overwrite="true" filtering="true" />
+			<copy file="${project_dir}/${kunena.backend}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/admin" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/admin" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.backend}">
 					<include name="**/@{tag}.*.ini"/>
 				</fileset>
 			</copy>
+			<copy file="${project_dir}/${kunena.frontend}/language/@{tag}/@{tag}.com_kunena.xml" todir="${tmp_dir}/languages/@{tag}/site" overwrite="true" filtering="true" />
 			<copy todir="${tmp_dir}/languages/@{tag}/site" flatten="yes" includeEmptyDirs="no" overwrite="true">
 				<fileset dir="${project_dir}/${kunena.frontend}">
 					<include name="**/@{tag}.*.ini"/>
 				</fileset>
 			</copy>
-			<archive destfile="${build_dir}/archive/language.@{tag}" basedir="${tmp_dir}/languages/@{tag}"/>
+			<archive destfile="${build_dir}/archive/@{tag}.com_kunena-admin" basedir="${tmp_dir}/languages/@{tag}/admin"/>
+			<archive destfile="${build_dir}/archive/@{tag}.com_kunena-site" basedir="${tmp_dir}/languages/@{tag}/site"/>
 		</sequential>
 	</macrodef>
 
@@ -235,6 +239,7 @@
 		<language tag="fi-FI" />
 		<language tag="fr-FR" />
 		<language tag="hu-HU" />
+		<language tag="id-ID" />
 		<language tag="it-IT" />
 		<language tag="ja-JP" />
 		<language tag="lt-LT" />
@@ -253,9 +258,9 @@
 		<language tag="vi-VN" />
 		<language tag="zh-CN" />
 		<language tag="zh-TW" />
-		<archive destfile="${build_dir}/archive/admin" basedir="${tmp_dir}/${kunena.backend}" />
-		<archive destfile="${build_dir}/archive/site" basedir="${tmp_dir}/${kunena.frontend}" />
-		<archive destfile="${build_dir}/archive/media" basedir="${tmp_dir}/${kunena.media}" />
+		<archive destfile="${build_dir}/archive/com_kunena-admin" basedir="${tmp_dir}/${kunena.backend}" />
+		<archive destfile="${build_dir}/archive/com_kunena-site" basedir="${tmp_dir}/${kunena.frontend}" />
+		<archive destfile="${build_dir}/archive/com_kunena-media" basedir="${tmp_dir}/${kunena.media}" />
 		<archive destfile="${str.destfile}" basedir="${build_dir}" />
 	</target>
 

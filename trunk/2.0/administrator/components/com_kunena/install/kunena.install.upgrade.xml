@@ -161,8 +161,16 @@
 		</version>
 		<version version="1.6.0" versiondate="2010-10-03" build="3620" versionname="Spika">
 		</version>
-		<version version="1.6.1" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+		<version version="1.6.1" versiondate="2010-11-06" build="3858" versionname="Timu">
 			<phpfile name="upgrade-1.6.1_delfiles"></phpfile>
+		</version>
+		<version version="1.6.3" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
+			<query mode="silenterror">
+				ALTER TABLE `#__kunena_categories` 
+					ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderators`,
+					ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
+					ADD KEY `category_access` (accesstype,access);
+			</query>
 		</version>
 		<version version="@kunenaversion@" versiondate="@kunenaversiondate@" build="@kunenaversionbuild@" versionname="@kunenaversionname@">
 			<query mode="silenterror">
@@ -179,8 +187,6 @@
 				ALTER TABLE `#__kunena_categories` 
 					CHANGE `parent` `parent_id` INT( 11 ) NULL DEFAULT '0',
 					CHANGE `cat_emoticon` `icon_id` TINYINT( 4 ) NOT NULL DEFAULT '0',
-					ADD `accesstype` varchar(20) NOT NULL default 'none' AFTER `moderated`,
-					ADD `access` int(11) NOT NULL default '0' AFTER `accesstype`,
 					ADD `last_topic_id` int(11) NOT NULL default '0' AFTER `numPosts`,
 					ADD `last_topic_subject` tinytext NULL AFTER `last_topic_id`,
 					ADD `last_topic_posts` int(11) NOT NULL default '0' AFTER `last_topic_subject`,
@@ -190,8 +196,7 @@
 					ADD `last_post_message` text NULL AFTER `last_post_userid`,
 					ADD `last_post_guest_name` tinytext NULL AFTER `last_post_message`,
 					ADD `params` text NOT NULL AFTER `last_post_guest_name`,
-					ADD KEY `parent_id` (parent_id),
-					ADD KEY `category_access` (accesstype,access);
+					ADD KEY `parent_id` (parent_id);
 			</query>
 			<query>
 				INSERT IGNORE INTO #__kunena_user_topics (user_id, topic_id, category_id, posts, last_post_id, owner)

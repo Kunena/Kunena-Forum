@@ -25,7 +25,8 @@ global $topic_emoticons;
 require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
 $kunena_poll = CKunenaPolls::getInstance();
 $kunena_poll->call_javascript_form();
-include_once (KUNENA_PATH_LIB . DS . 'kunena.bbcode.js.php');
+include_once (KUNENA_PATH_LIB . '/kunena.bbcode.js.php');
+include_once (KUNENA_PATH_LIB . '/kunena.special.js.php');
 JHTML::_('behavior.formvalidation');
 JHTML::_('behavior.tooltip');
 //keep session alive while editing
@@ -34,10 +35,12 @@ JHTML::_('behavior.keepalive');
 $document = JFactory::getDocument ();
 if ($this->my->id) {
 	$document->addScriptDeclaration('// <![CDATA[
-		var kunena_anonymous_check_url = "'.CKunenaLink::GetJsonURL('anynomousallowed').'";
 		var kunena_anonymous_name = "'.JText::_('COM_KUNENA_USERNAME_ANONYMOUS').'";
 	// ]]>');
  }
+ $document->addScriptDeclaration('// <![CDATA[
+ function kShowDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . KUNENA_JLIVEURL . '/components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}
+ // ]]>');
 $this->setTitle ( $this->title );
 
 $this->k=0;

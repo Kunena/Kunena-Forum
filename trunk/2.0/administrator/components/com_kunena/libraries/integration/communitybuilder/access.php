@@ -9,8 +9,6 @@
  * @link http://www.kunena.org
  *
  **/
-//
-// Dont allow direct linking
 defined( '_JEXEC' ) or die('');
 
 class KunenaAccessCommunityBuilder extends KunenaAccess {
@@ -27,28 +25,35 @@ class KunenaAccessCommunityBuilder extends KunenaAccess {
 
 	protected function loadAdmins() {
 		$list = $this->joomlaAccess->loadAdmins();
+		// TODO: add support into CB
 		$params = array ('list'=>&$list);
-		$this->integration->trigger ( 'getAdmins', $params );
+		$this->integration->trigger ( 'loadAdmins', $params );
 		return parent::loadAdmins($list);
 	}
 
 	protected function loadModerators() {
 		$list = $this->joomlaAccess->loadModerators();
+		// TODO: add support into CB
 		$params = array ('list'=>&$list);
-		$this->integration->trigger ( 'getModerators', $params );
+		$this->integration->trigger ( 'loadModerators', $params );
 		return parent::loadModerators($list);
 	}
 
 	protected function loadAllowedCategories($userid) {
 		$allowed = $this->joomlaAccess->getAllowedCategories($userid);
-		$params = array ('userid'=>$userid, 'rules'=>array('read'=>&$allowed) );
-		$this->integration->trigger ( 'getCategoryAccessRules', $params );
-		return $allowed;
+		$allowed = implode(',', $allowed);
+		$params = array ($userid, &$allowed);
+		$this->integration->trigger ( 'getAllowedForumsRead', $params );
+		return explode(',', $allowed);
 	}
 
 	protected function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
-		if ($category->accesstype != 'communitybuilder') {
+		if ($category->accesstype == 'communitybuilder') {
+			// TODO: add support into CB
+			$params = array ($category, &$userids);
+			$this->integration->trigger ( 'checkSubscribers', $params );
+		} else {
 			$this->joomlaAccess->checkSubscribers($topic, $userids);
 		}
 	}

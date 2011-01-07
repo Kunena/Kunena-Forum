@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="both" method="upgrade">
-        <name>Kunena Forum - Spanish</name>
-        <tag>es-ES</tag>
-        <creationDate>2010-11-06</creationDate>
-        <version>1.6.1</version>
-        <build>3858</build>
-        <author>Kunena Spanish Team</author>
-        <authorEmail>kunenaspanish@kunenaspanish.com</authorEmail>
-        <authorUrl>http://www.KunenaSpanish.com</authorUrl>
-        <copyright>(C) 2008 - 2010 Kunena Spanish Team All rights reserved</copyright>
-        <license>GNU/GPL</license>
-        <description>Spanish language file for Kunena Forum Component</description>
+<install type="language" version="1.5" client="administrator" method="upgrade">
+	<name>Kunena Forum - Spanish</name>
+	<tag>es-ES</tag>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
+	<author>Kunena Spanish Team</author>
+	<authorEmail>kunenaspanish@kunenaspanish.com</authorEmail>
+	<authorUrl>http://www.KunenaSpanish.com</authorUrl>
+	<copyright>(C) 2008 - 2010 Kunena Spanish Team All rights reserved</copyright>
+	<license>GNU/GPL</license>
+	<description>Spanish language file for Kunena Forum Component</description>
 
-        <administration>
-                <files folder="admin">
-                        <filename>es-ES.com_kunena.ini</filename>
-                        <filename>es-ES.com_kunena.install.ini</filename>
-                        <filename>es-ES.com_kunena.menu.ini</filename>
-                </files>
-        </administration>
-
-        <site>
-                <files folder="site">
-                        <filename>es-ES.com_kunena.ini</filename>
-                        <filename>es-ES.com_kunena.tpl_default.ini</filename>
-                        <filename>es-ES.com_kunena.tpl_example.ini</filename>
-                </files>
-        </site>
+	<files>
+		<filename>es-ES.com_kunena.ini</filename>
+		<filename>es-ES.com_kunena.install.ini</filename>
+		<filename>es-ES.com_kunena.menu.ini</filename>
+	</files>
 </install>

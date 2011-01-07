@@ -9,9 +9,7 @@
  * @link http://www.kunena.org
  *
  **/
-//
-// Dont allow direct linking
-defined( '_JEXEC' ) or die('');
+defined( '_JEXEC' ) or die();
 
 class KunenaAccessJomSocial extends KunenaAccess {
 	protected $joomlaAccess = null;
@@ -26,7 +24,11 @@ class KunenaAccessJomSocial extends KunenaAccess {
 	}
 
 	protected function loadAdmins() {
-		$list = $this->joomlaAccess->loadAdmins();
+		return parent::loadAdmins($this->joomlaAccess->loadAdmins());
+	}
+
+	protected function loadModerators() {
+		$list = $this->joomlaAccess->loadModerators();
 
 		$db = JFactory::getDBO();
 		$query	= "SELECT g.memberid AS userid, c.id AS catid
@@ -37,11 +39,7 @@ class KunenaAccessJomSocial extends KunenaAccess {
 		$jslist = (array) $db->loadObjectList ();
 		KunenaError::checkDatabaseError ();
 
-		return parent::loadAdmins(array_merge($list, $jslist));
-	}
-
-	protected function loadModerators() {
-		return parent::loadModerators($this->joomlaAccess->loadModerators());
+		return parent::loadModerators(array_merge($list, $jslist));
 	}
 
 	protected function loadAllowedCategories($userid) {
@@ -63,6 +61,7 @@ class KunenaAccessJomSocial extends KunenaAccess {
 
 	protected function checkSubscribers($topic, &$userids) {
 		$category = $topic->getCategory();
+		// TODO: check if user should get email or not
 		if ($category->accesstype != 'jomsocial') {
 			$this->joomlaAccess->checkSubscribers($topic, $userids);
 		}

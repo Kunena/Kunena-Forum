@@ -21,6 +21,9 @@ class KunenaProfileAlphaUserPoints extends KunenaProfile {
 	}
 
 	public function getUserListURL($action = '', $xhtml = true) {
+		$config = KunenaFactory::getConfig ();
+		$my = JFactory::getUser();
+		if ( $config->userlist_allowed == 1 && $my->id == 0  ) return false;
 		if (method_exists ( 'AlphaUserPointsHelper', 'getAupUsersURL' ))
 			return AlphaUserPointsHelper::getAupUsersURL ();
 		else {

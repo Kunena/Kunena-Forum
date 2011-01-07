@@ -17,14 +17,15 @@ class CKunenaRSSView {
 	protected	$app;
 	protected	$config;
 
-
 	/**
 	 * @access public
 	 * @return void
 	 */
 	public function __construct( $catid = 0 ) {
-		$this->app					= JFactory::getApplication();
-		$this->config				= KunenaFactory::getConfig();
+		$this->app		= JFactory::getApplication();
+		$this->config	= KunenaFactory::getConfig();
+		$this->document = JFactory::getDocument();
+		$this->uri		= JURI::getInstance(JURI::base());
 
 		// Important!
 		if (!$this->config->enablerss) {
@@ -55,10 +56,6 @@ class CKunenaRSSView {
 		}
 	}
 
-	function escape($var)
-	{
-		return htmlspecialchars($var, ENT_COMPAT, 'UTF-8');
-	}
 
 	/**
 	 * Pulls together data and options and outputs the build feed.
@@ -72,7 +69,7 @@ class CKunenaRSSView {
 	 * @return void
 	 */
 	public function display() {
-		$cache = &JFactory::getCache( 'com_kunena_rss' );
+		$cache = JFactory::getCache( 'com_kunena_rss' );
 
 		if ( $this->caching ) {
 			$cache->setCaching( 1 );
@@ -81,14 +78,31 @@ class CKunenaRSSView {
 
 		// Fetch data
 		$data = $cache->call( array( 'CKunenaRSSData', 'fetch' ), $this->type, $this->incl_cat, $this->excl_cat, $this->limit, $this->timelimit );
-		//$data = CKunenaRSSData::fetch($this->type, $this->incl_cat, $this->excl_cat, $this->limit, $this->timelimit);
 
-		// Build and display feed
-		$feed = $this->buildFeed( $data );
+		// Set datas document header
+		$this->document = $this->document->getInstance('feed');
+		$this->document->setTitle($this->app->getCfg('sitename') .' - Forum');
+		$this->document->setDescription('Kunena Site Syndication');
+		$this->document->setGenerator('Kunena ' . KunenaForum::version());
 
-		// On the fly feedcreation
-		$feed->outputFeed( $this->specification );
-		//$html = $feed->createFeed( $this->specification );
+		// Image link for feed
+		$link			= JURI::root();
+		$rss_url		= $this->uri->toString(array('scheme', 'host', 'port')) . $_SERVER["REQUEST_URI"];
+		$rss_icon		= KUNENA_URLICONSPATH . 'rss.png';
+
+		// Create image for feed
+		$image = new JFeedImage();
+		$image->title			= $this->document->getTitle();
+		$image->url				= $rss_icon;
+		$image->link			= $link;
+		$image->description		= $this->document->getDescription();
+
+		$this->document->image = $image;
+
+		$this->buildFeed( $data );
+
+		// Render the feed
+		echo $this->document->render();
 	}
 
 
@@ -96,53 +110,13 @@ class CKunenaRSSView {
 	 * Pulls together data and options and outputs the build feed.
 	 * Header and mime is automaticly set.
 	 *
-	 * @access public
+	 * @access private
 	 * @param array $items
-	 * @return obj FeedCreator
 	 */
 	private function buildFeed( $items = array() ) {
-
-		// Get the path options and values we'll need
-		$uri		= JURI::getInstance(JURI::base());
-		$uribase	= $uri->toString(array('scheme', 'host', 'port'));
-
-		// Various labels needed
-		$title			= $this->escape($this->app->getCfg('sitename')) .' - Forum';
-		$description	= 'Kunena Site Syndication';
-		$link			= JURI::root();
-		$generator		= 'Kunena ' . KunenaForum::version();
-		$rss_url		= $uribase . $_SERVER["REQUEST_URI"];
-		$rss_icon		= KUNENA_URLICONSPATH . 'rss.png';
-
-		// Make sure Joomla's FeedCreator is included
-		jimport('bitfolge.feedcreator');
-
-		$feed = new UniversalFeedCreator();
-
-		// Set generel labels and info for the feed
-		$feed->link				= $link;
-		$feed->description		= $description;
-		$feed->title			= $title;
-		$feed->generator		= $generator;
-		$feed->syndicationURL	= $rss_url;
-		$feed->encoding			= 'UTF-8';
-		$feed->pubDate			= date('r');
-		$feed->lastBuildDate	= date('r');
-		$feed->xslStyleSheet	= '';	// needed, else errors from feedcreator shows
-		$feed->cssStyleSheet	= '';	// needed, else errors from feedcreator shows
-
-		// Create image for feed
-		$image = new FeedImage();
-		$image->title			= $title;
-		$image->url				= $rss_icon;
-		$image->link			= $link;
-		$image->description		= $description;
-
-		$feed->image = $image;
-
 		// Build items for feed
 		foreach ($items as $data) {
-			$item = new FeedItem();
+			$item = new JFeedItem();
 
 			// Build unique direct linking url for each item (htmlspecialchars_decode because FeedCreator uses htmlspecialchars on input)
 			$url = htmlspecialchars_decode(CKunenaLink::GetThreadPageURL(
@@ -160,6 +134,11 @@ class CKunenaRSSView {
 			$tmp['title']		= $data->subject;
 			// Remove confidential information from message
 			$data->current_post_message = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $data->current_post_message );
+			$data->current_post_message = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $data->current_post_message );
+			$data->current_post_message = preg_replace ( '/\[spoiler\]/s', '[spoilerlight]', $data->current_post_message );
+			$data->current_post_message = preg_replace ( '/\[\/spoiler\]/s', '[/spoilerlight]', $data->current_post_message );
+			$data->current_post_message = preg_replace ( '/\[code\](.*?)\[\/code]/s', '', $data->current_post_message );
+
 			$tmp['text']		= $data->current_post_message;
 			$tmp['date']		= $data->current_post_time;
 			$tmp['email']		= $data->current_post_email;
@@ -167,11 +146,11 @@ class CKunenaRSSView {
 			$tmp['cat_name']	= KunenaForumCategoryHelper::get($data->category_id)->name;
 
 			// Guid is used by aggregators to uniquely identify each item
-			$tmp['guid']		= $uribase . $url;
+			$tmp['guid']		= $this->uri->toString(array('scheme', 'host', 'port')) . $url;
 
 			// Link and source is always the same
-			$tmp['link']		= $uribase . $url;
-			$tmp['source']		= $uribase . $url;
+			$tmp['link']		= $this->uri->toString(array('scheme', 'host', 'port')) . $url;
+			$tmp['source']		= $this->uri->toString(array('scheme', 'host', 'port')) . $url;
 
 			// Determine title format
 			if ($this->old_titles) {
@@ -225,7 +204,6 @@ class CKunenaRSSView {
 				$tmp['text'] = KunenaHtmlParser::parseText($tmp['text']);
 			}
 
-
 			// Assign values to feed item
 			$item->title		= $tmp['title'];
 			$item->link			= $tmp['link'];
@@ -236,23 +214,9 @@ class CKunenaRSSView {
 			$item->category		= $tmp['cat_name'];
 			$item->guid			= $tmp['guid'];
 
-
-			// Optional
-			//$item->descriptionTruncSize		= 500;		// behaves strangely
-			//$item->descriptionHtmlSyndicated	= false;	// doesnt work
-
-			// Optional (enclosure)
-			//$item->enclosure = new EnclosureItem();		// Not tried
-			//$item->enclosure->url		= 'http://http://www.dailyphp.net/media/voice.mp3';
-			//$item->enclosure->length	= "950230";
-			//$item->enclosure->type	= 'audio/x-mpeg';
-
 			// Finally add item to feed
-			$feed->addItem($item);
+			$this->document->addItem($item);
 		}
-
-
-		return $feed;
 	}
 }
 

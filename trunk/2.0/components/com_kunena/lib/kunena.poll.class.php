@@ -125,17 +125,21 @@ class CKunenaPolls {
 	* Get if the poll is allowed to be displayed
 	*/
 	function get_poll_allowed($id, $parent=0, $kunena_editmode, $allow_cat=0) {
-		$poll_allowed = '';
-		if ( $allow_cat ) {
-			if ( $kunena_editmode ) {
-				if ( $parent == '0' ) $poll_allowed = '1';
+		$config = KunenaFactory::getConfig ();
+		if ( $config->pollenabled ) {
+			$poll_allowed = '';
+			if ( $allow_cat ) {
+				if ( $kunena_editmode ) {
+					if ( $parent == '0' ) $poll_allowed = '1';
+				} else {
+					if ( $id == '0' ) $poll_allowed = '1';
+				}
 			} else {
 				if ( $id == '0' ) $poll_allowed = '1';
 			}
-		} else {
-			if ( $id == '0' ) $poll_allowed = '1';
+			return $poll_allowed;
 		}
-		return $poll_allowed;
+		return false;
 	}
 
    /**
@@ -145,7 +149,7 @@ class CKunenaPolls {
    {
     	$template = KunenaTemplate::getInstance();
 		$template->addScript('plugin/poll/js/kunena.poll.ajax-min.js');
-		JApplication::addCustomHeadTag('
+		$this->document->addCustomTag('
       <script type="text/javascript">
 	   <!--
 	   var KUNENA_POLL_SAVE_ALERT_OK = "'.JText::_('COM_KUNENA_POLL_SAVE_ALERT_OK').'";
@@ -388,6 +392,7 @@ class CKunenaPolls {
    		$threadid = intval ( $threadid );
    		$userid   = intval ( $userid );
    		$vote     = intval ( $vote );
+   		$now      = JFactory::getDate();
 
 		$pollusers = $this->get_data_poll_users($userid,$threadid);
 		$data = array();
@@ -402,8 +407,7 @@ class CKunenaPolls {
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;
 
-        	// TODO: We need to check if NOW() is always in UTC (if Joomla sets MySQL timezone)
-        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$this->_db->Quote($vote)}, lasttime=now() WHERE pollid={$this->_db->Quote($threadid)} AND userid={$this->_db->Quote($userid)};";
+        	$query = "UPDATE #__kunena_polls_users SET votes=votes+1, lastvote={$this->_db->Quote($vote)}, lasttime={$this->_db->Quote($now->toMySQL())} WHERE pollid={$this->_db->Quote($threadid)} AND userid={$this->_db->Quote($userid)};";
         	$this->_db->setQuery($query);
         	$this->_db->query();
         	if (KunenaError::checkDatabaseError()) return;

@@ -10,7 +10,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-kimport ('joomla.database.databasequery');
+kimport ('kunena.databasequery');
 kimport ('kunena.error');
 kimport ('kunena.user');
 kimport ('kunena.user.helper');

@@ -377,7 +377,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$kunena_app->close ();
 	}
 
-	if ($func == 'fb_pdf' || $func == 'pdf') {
+	jimport ( 'joomla.version' );
+	$jversion = new JVersion ();
+	if (($func == 'fb_pdf' || $func == 'pdf') && $jversion->RELEASE != '1.6') {
 		include (JPATH_COMPONENT.DS.'lib'.DS.'kunena.pdf.php');
 		$kunena_app->close ();
 	}
@@ -854,8 +856,10 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			$rss_params = '';
 		}
 		if (isset($rss_params) || $kunena_config->enablepdf) {
+			jimport ( 'joomla.version' );
+			$jversion = new JVersion ();
 			echo '<div class="krss-block">';
-			if ($kunena_config->enablepdf && $func == 'view') {
+			if ($kunena_config->enablepdf && $func == 'view' && $jversion->RELEASE != '1.6') {
 				// FIXME: add better translation:
 				echo CKunenaLink::GetPDFLink($catid, $limit, $limitstart, $id, CKunenaTools::showIcon ( 'kpdf', JText::_('PDF') ), 'nofollow', '', JText::_('PDF'));
 			}
@@ -872,7 +876,7 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// Credits
 	echo '<div class="kcredits kms"> ' . CKunenaLink::GetTeamCreditsLink ( $catid, JText::_('COM_KUNENA_POWEREDBY') ) . ' ' . CKunenaLink::GetCreditsLink ();
 	if ($this->params->get('templatebyText') !=''):
-	echo ' :: <a href ="'. $this->params->get('templatebyLink').'" rel="follow">' . $this->params->get('templatebyText') .' '. $this->params->get('templatebyName') .'</a>';
+	echo ' :: <a href ="'. $this->params->get('templatebyLink').'" rel="follow">' . $this->params->get('templatebyText') .' '. $this->params->get('templatebyName') ? $this->params->get('templatebyName') : '' .'</a>';
 	endif;
 	echo '</div>';
 

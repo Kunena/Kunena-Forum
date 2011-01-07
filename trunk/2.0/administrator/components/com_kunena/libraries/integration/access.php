@@ -9,15 +9,13 @@
  * @link http://www.kunena.org
  *
  **/
-//
-// Dont allow direct linking
-defined ( '_JEXEC' ) or die ( '' );
+defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_ADMIN . '/libraries/integration/integration.php';
 kimport ( 'kunena.error' );
 kimport ( 'kunena.forum.category.helper' );
 kimport ( 'kunena.forum.topic.helper' );
-kimport ( 'joomla.database.databasequery' );
+kimport ( 'kunena.databasequery' );
 
 abstract class KunenaAccess {
 	public $priority = 0;
@@ -202,7 +200,7 @@ abstract class KunenaAccess {
 			if (!empty($this->adminsByCatid[$catid])) $adminlist += $this->adminsByCatid[$catid];
 		}
 
-		$query = new JDatabaseQuery();
+		$query = new KunenaDatabaseQuery();
 		$query->select('u.id, u.name, u.username, u.email');
 		$query->from('FROM #__users AS u');
 		$query->where("u.block=0");
@@ -246,8 +244,8 @@ abstract class KunenaAccess {
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
 			$catid = intval ( $item->catid );
-			$this->adminsByUserid [$userid] [$catid] = $catid;
-			$this->adminsByCatid [$catid] [$userid] = $userid;
+			$this->adminsByUserid [$userid] [$catid] = 1;
+			$this->adminsByCatid [$catid] [$userid] = 1;
 		}
 		return $list;
 	}
@@ -256,8 +254,8 @@ abstract class KunenaAccess {
 		foreach ( $list as $item ) {
 			$userid = intval ( $item->userid );
 			$catid = intval ( $item->catid );
-			$this->moderatorsByUserid [$userid] [$catid] = $catid;
-			$this->moderatorsByCatid [$catid] [$userid] = $userid;
+			$this->moderatorsByUserid [$userid] [$catid] = 1;
+			$this->moderatorsByCatid [$catid] [$userid] = 1;
 		}
 		return $list;
 	}

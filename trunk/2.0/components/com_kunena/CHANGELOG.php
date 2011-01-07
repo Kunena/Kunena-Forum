@@ -33,6 +33,12 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+7-January-2010 Matias
+^ [#22786] Merge revisions 3955-4155 from trunk/1.6 (part 2)
+
+5-January-2010 Matias
+^ [#22786] Merge revisions 3955-4155 from trunk/1.6
+
 19-December-2010 Matias
 ^ [#22541] Cleanup all KunenaAccess classes
 ^ [#22541] Rename KunenaAccessXXX::_get_subscribers() to XXX::checkSubscribers()
@@ -552,7 +558,218 @@ Kunena 2.0.0-DEV
 - [#22543] Remove old BBCode parser (lib/kunena.parser*.php, lib/kunena.smile.class.php)
 ^ [#22543] Move KunenaGoogleMaps class into new BBCode tag class
 
-Kunena 1.6.2-DEV
+Kunena 1.6.3
+
+4-January-2011 Matias
+# [#24083] Joomla 1.6: generate Kunena Menu during installation
+^ [#15886] Merged revisions 4049-4142 from /branches/1.6.3-jomsocial
+# [#24129] Fix conflicts with JXtended
+^ [#15886] Merged revisions 4149-4153 from /branches/1.6.3-xillibit-j1.6fixes-01012011
+# [#23920] Fix Kunena Internal Error when posting (subscriptions)
+
+3-January-2011 Matias
+# [#24076] Profile user settings doesn't work in J!1.6 (part 2)
+^ [#15886] Merged revisions 4141-4147 from /branches/1.6.3-xillibit-j1.6fixes-01012011
+
+04-January-2011 Xillibit
+# [#24064] Put some code in kunena report configuration into functions to be more readable
+# [#24094] Joomla 1.6: Article BBCode doesn't work
+
+03-January-2011 Xillibit
+# [#24076] Profile user settings doesn't work in J!1.6
+
+02-January-2011 Xillibit
+# [#24064] Joomla 1.6: Don't check if component is enabled, because it doesn't seem to work
+# [#24073] Joomla 1.6: Use Joomla! JDocumentFeed to generate RSS feed instead of Joomla! deprecated library
+# [#24081] Remove bbcode attachment and code from JS activity stream
+# [#24075] PDF generation is broken under J! 1.6
+
+2-January-2011 Matias
+# [#24080] Kunena Discuss: Fatal error when sending subscription emails
+# [#24077] Joomla! version check in integration is slightly broken
+^ [#15886] Merged revisions 4127-4135 from /branches/1.6.3-xillibit-j1.6fixes-01012011
+# [#24078] Joomla 1.6: Categories are not displayed in select lists
+# [#24084] Joomla 1.6: Kunena menu items are missing select for categories
+# [#24093] Joomla 1.6: Usergroups cannot be assigned into categories
+# [#24088] Installer: Add a few new breakpoints into database migration/upgrade process
+
+2-January-2011 fxstein
+^ [#24074] Update version info to 1.6.3-DEV
+
+01-January-2011 Xillibit
+^ [#23293] Update xml language file for fr-FR because doesn't work and fixes issues in fr-FR and en-GB
+# [#24062] Fix issue under J! 1.6 Fatal error: Cannot access protected property TableKunenaCategory::$_db in admin.kunena.php on line 1331
+# [#24063] Fix issue under J! 1.6 Fatal Error: Call to undefined method JSite::addCustomHeadTag() in kunena.parser.php on line 1074
+# [#24064] Report kunena configuration settings is broken under J! 1.6
+# [#24065] SQL Error when post new topic or reply under J! 1.6
+# [#24066] Credit has a space when the variable $this->params->get('templatebyName') is empty (thanks gonzaunit)
+# [#24071] Poll expired setting doesn't work in form and calendar doesn't open in J! 1.6
+^ [#23293] Little update on fr-FR and en-GB to don't have issue with languages
+
+21-December-2010 Matias
+^ [#23920] Cleanup all KunenaAccess classes
+# [#23920] Fix a few bugs which broke up ACL
+# [#23920] Fix a bug making too many dummy queries when instantiating categories
++ [#23920] Administration: Display JomSocial group in category list, hide group info from edit
++ [#23920] Make Joomla 1.5 ACL integration to use phpgacl making it to work with a few ACL components
+# [#23920] Fix a bug where ACL groups were not shown at all
+
+20-December-2010 Matias
+^ [#23152] Update version info to 1.6.3 (Chama = group, society)
++ [#23920] Move some functions/functionality from derived classes into KunenaAccess
++ [#23920] Separate Kunena logic from ACL in KunenaAccess::getSubscribers()
++ [#23920] Add KunenaCategory::getCategoriesByAccess()
+^ [#23920] Change session handling to accept new version of access classes
+^ [#23920] Simplify structure in KunenaAccessXXX::loadAllowedCategories() functions
++ [#23920] Add CommunityBuilder triggers: loadAdmins, loadModerators, checkSubscribers
+
+19-December-2010 Matias
++ [#23920] Add JomSocial groups support: Create new fields into tables
++ [#23920] Backport KunenaAccess classes from Kunena 2.0
+
+Kunena 1.6.2
+
+29-December-2010 fxstein
+^ [#23152] Update ReadMe for 1.6.2 Release
+
+29-December-2010 Severdia
+# [#22979] Small CSS tweaks on spacing for subcategories.
+
+25-December-2010 fxstein
+^ [#23152] Update version info to 1.6.2 stable (Team)
+^ [#23152] Update automatic version info for all languages
+# [#23152] Added missing index.html files to various languages
+^ [#23152] Update automatic version info for default template
++ [#23152] Add Update version expansion to builder for default templates
+
+24-December-2010 fxstein
+^ [#15886] Merged revisions 4036-4063 from /branches/1.6-810-fixes-20101219
+^ [#15886] Merged revisions 4052-4056 from /branches/1.6-LDAsvens-language-20101221
+^ [#15886] Merged revisions 4005-4043 from /branches/1.6-xillibit-fixes-20101216
+
+24-December-2010 810
+^ [#23875] Minor html fixes backend (Joomla 1.6 Part 2)
+
+23-December-2010 810
+^ [#23875] Minor html fixes backend (Joomla 1.6)
+
+21-December-2010 svens(LDA)
+^ [#23293] update ru-RU (thanks Zarkos)
+^ [#23293] update fi-FI (thanks Mortti)
+
+20-December-2010 Xillibit
+^ [#23293] Added french translation fr-FR.com_kunena.sys.ini
+
+19-December.2010 Matias
+# [#23884] Add basic Joomla 1.6 support for menu items: latest, listcat, post, profile, showcat
+# [#23826] Fix regression in Category Manager: escaped too much
+# [#23885] Restore support for old templates from K1.6.1
+
+19-December-2010 Xillibit
++ [#23892] Show in report configuration settings the Kunena template details
+# [#23798] On reply postcatid is undefined in javascript
+
+18-December-2010 Matias
++ [#23863] Add support for language installation for j1.6
+^ [#23863] Install language files during SVN install
+^ [#23863] Remove special SVN language file handling
+^ [#15886] Merged revisions 4005-4025 from /branches/1.6-xillibit-fixes-20101216
+# [#23872] Rename CKunenaFolder::makeSafe() as it conflicts with Joomla 1.6
+# [#23884] Support Joomla 1.6 in KunenaRoute class
+# [#23884] Add Joomla 1.6 translations: en-GB.com_kunena.sys.ini
+# [#23884] Fix menu highlight in Joomla 1.6
+# [#23884] Add basic Joomla 1.6 support for menu items: entrypage, help, rules, search
+# [#23798] Fix wrong case in filename: Kunena.special.js.php
+
+18-December-2010 Xillibit
+^ [#23863] Add support for language installation for j1.6
+
+18-December-2010 810
+^ [#23875] Minor html fixes backend
+^ [#23875] Minor html fixes backend (part2)
+^ [#23875] Minor html fixes backend (part3)
+
+16-December-2010 Xillibit
+# [#23798] Remove ajax for show poll icon and anonymous field on new topic button tab (Part 3)
+^ [#23821] Replace some select list in advanced search by JHTML things
+^ [#23828] Save changed poll vote function use JDate instead of now() from mysql
+
+16-December-2010 Matias
+* [#23813] Administration: Prevent possible XSS attacks
+
+16-December-2010 810
+^ [#23293] add/update languages Dutch
+^ [#23854] Hyperlink announcement
+^ [#23829] Double lines in flat.php because off ktopicmodule
+
+15-December-2010 fxstein
+^ [#15886] Merged revisions 3995-3996 from /branches/1.6.2-810-bugfixes-29-10-2010
+^ [#15886] Merged revisions 3973-3997 from /branches/1.6-xillibit-fixes-20101130
+
+15-December-2010 Xillibit
+^ [#23798] Remove ajax for show poll icon and anonymous field on new topic button tab
+# [#23180] Don't need a function to get the client_id in KunenaUser
+# [#23763] Change single quoted HREFs in URLs generated by BBcode
+# [#23798] Remove ajax for show poll icon and anonymous field on new topic button tab (Part 2)
+
+15-December-2010 810
+# [#23320] Auto Blending Feature (skinner) Color Bug
+# [#23293] add/update languages Dutch
+
+14-December-2010 Xillibit
+# [#23760] when you select cb in integration: Profiles and User List, userlist don't work anymore
+
+14-December-2010 Severdia
+# [#23251] Added fix from Jelle for broken ability to move posts (to fix Florian's previous fix)
+
+13-December-2010 Xillibit
+# [#23251] When you merge topics even if there is no polls, the topics are not merged
+# [#23180] CB avatars aren't displayed in kunena user manager
+
+13-December-2010 fxstein
+# [#23767] Add ksource=kunena into com_content events triggered by Kunena to prevent recursion
+- [#23767] Remove global variable: kunena_in_event - requires new release of discuss plugin
+
+12-December-2010 Severdia
+# [#23251] Added fix from Xillibit for broken ability to move posts.
+
+12-December-2010 Xillibit
+# [#23251] Prevent to move a topic with a poll into another topic with a poll and display an error message (fix regression)
+# [#23732] Can't add poll on new topic tab button untill the user has choosed a right section
+# [#23625] Change spoiler behaviour in Jomsocial activty stream and rss, remove [hide][/hide] from rss feed
+# [#23732] Can't add poll on new topic tab button untill the user has choosed a right section (Part 2)
+
+11-December-2010 Matias
+^ [#15886] Merged revisions 3960-3970 from /branches/1.6-xillibit-fixes-20101130
+^ [#15886] Merged revisions 3921-3968 from /branches/1.6-LDAsvens-language-20101112
+
+11-December-2010 svens(LDA)
++ [#23293] added id-ID Bahasa Indonesia (thanks Daniel)
+^ [#23293] update de-DE (thanks rich)
+
+11-December-2010 Xillibit
+# [#23724] Userlist show all show nothing
+# [#23726] Usernames Showing Instead of Full Name
+
+10-December-2010 Xillibit
+# [#23716] Kunena report configuration settings cause blank page when is putting in [code][/code]
+^ [#23293] Update some strings in english language file and french too
+
+08-December-2010 Xillibit
+# [#23482] Strip space in attachments filename because broke the lightbox
+
+06-December-2010 Xillibit
+^ [#23293] Update some strings in english language file
+
+05-December-2010 Xillibit
+# [#23625] emo Jomsocial activity stream, show hidden text to everyone
+
+01-December-2010 Xillibit
+# [#23609] Spoiler does not operate in message preview (New Topic)
+^ [#23293] Update some strings in english language file
+
+30-November-2010 Xillibit
+# [#23251] Fix issues which don't display message that the topic can't be moved and fix a little issue
 
 29-November-2010 Matias
 ^ [#15886] Merged revisions 3945-3948 from /branches/1.6.2-810-bugfixes-29-10-2010
@@ -583,10 +800,16 @@ Kunena 1.6.2-DEV
 24-November-2010 Matias
 ^ [#15886] Merged revisions 3896-3930 from /branches/1.6-xillibit-fixes-20101107
 
+23-November-2010 svens(LDA)
+^ [#23293] updated it-IT (thanks onishima and ohifra)
+
 21-November-2010 Xillibit
 # [#23251] When moving a topic with polls in another topics need to handle polls (fix regression)
 + [#22704] Add configuration option to show online users by minutes or session time
 # [#23394] BBcode form editor issues
+
+19-November-2010 svens(LDA)
+^ [#23293] updated mk-MK (thanks Baze)
 
 18-November-2010 Xillibit
 ^ [#23321] Need to extend Report Config with menu info

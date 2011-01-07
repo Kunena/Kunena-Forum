@@ -282,7 +282,7 @@ kbbcode.addFunction('Gallery', function() {
 ?>
 <?php if (!isset($this->category->allow_polls)) $this->category->allow_polls = ''; //display only the poll icon in the first message of the thread
 
-$poll_allowed = $kunena_poll->get_poll_allowed($this->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls);
+$poll_allowed = $kunena_poll->get_poll_allowed($this->id, $this->message->parent, $this->message->exists(), $this->category->allow_polls, $this->config);
 
 if( $poll_allowed ){ ?>
 
@@ -290,7 +290,7 @@ kbbcode.addFunction('Poll', function() {
 	kToggleOrSwap("kbbcode-poll-options");
 }, {'id': 'kbbcode-poll-button',
 <?php
-if ($this->category->allow_polls == '0' || empty($this->category->allow_polls)) {
+if (empty($this->category->allow_polls)) {
 	echo '\'style\':\'display: none;\',';
 } ?>
 	'title': '<?php echo JText::_('COM_KUNENA_EDITOR_POLL');?>',
@@ -300,7 +300,7 @@ if ($this->category->allow_polls == '0' || empty($this->category->allow_polls)) 
 kbbcode.addFunction('#', function() {
 }, {'id': 'kbbcode-separator5'
 <?php
-if ($this->category->allow_polls == '0' || empty($this->category->allow_polls)) {
+if (empty($this->category->allow_polls)) {
 	echo ',\'style\':\'display: none;\'';
 } ?>
 });

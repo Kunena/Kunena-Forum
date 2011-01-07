@@ -12,6 +12,9 @@ defined ( '_JEXEC' ) or die ();
 
 require_once KPATH_ADMIN . '/libraries/bbcode/nbbc/nbbc.php';
 
+// TODO: add possibility to hide contents from these tags:
+// [hide], [confidential], [spoiler], [attachment], [code]
+
 /**
  * Kunena BBCode Class
  *
@@ -699,8 +702,23 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 		static $spoilerid = 0;
 		if (empty ( $spoilerid )) {
 			// Only need the script for the first spoiler we find
-			$app = JFactory::getApplication ();
-			$app->addCustomHeadTag ( '<script language = "JavaScript" type = "text/javascript">' . 'function kShowDetail(srcElement) {' . 'var targetID, srcElement, targetElement, imgElementID, imgElement;' . 'targetID = srcElement.id + "_details";' . 'imgElementID = srcElement.id + "_img";' . 'targetElement = document.getElementById(targetID);' . 'imgElement = document.getElementById(imgElementID);' . 'if (targetElement.style.display == "none") {' . 'targetElement.style.display = "";' . 'imgElement.src = "' . JURI::root() . 'components/com_kunena/template/default/images/emoticons/w00t.png";' . '} else {' . 'targetElement.style.display = "none";' . 'imgElement.src = "' . JURI::root() . 'components/com_kunena/template/default/images/emoticons/pinch.png";' . '}}	</script>' );
+			$document = JFactory::getDocument();
+			$document->addCustomTag (
+			'<script language = "JavaScript" type = "text/javascript">
+			function kShowDetail(srcElement) {
+				var targetID, srcElement, targetElement, imgElementID, imgElement;
+				targetID = srcElement.id + "_details";
+				imgElementID = srcElement.id + "_img";
+				targetElement = document.getElementById(targetID);
+				imgElement = document.getElementById(imgElementID);
+				if (targetElement.style.display == "none") {
+					targetElement.style.display = "";
+					imgElement.src = "' . JURI::root() . 'components/com_kunena/template/default/images/emoticons/w00t.png";
+				} else {
+					targetElement.style.display = "none";
+					imgElement.src = "' . JURI::root() . 'components/com_kunena/template/default/images/emoticons/pinch.png";
+				}
+			} </script>' );
 		}
 		$spoilerid ++;
 		$randomid = 'spoiler_' . rand ();
@@ -808,65 +826,103 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 
 		$articleid = intval($content);
 
-		// FIXME: works only in J1.5
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		$user = JFactory::getUser ();
 		$db = JFactory::getDBO ();
-		$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
-						s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access
-						FROM #__content AS a
-						LEFT JOIN #__categories AS cc ON cc.id = a.catid
-						LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = "content"
-						LEFT JOIN #__users AS u ON u.id = a.created_by
-						WHERE a.id=' . $db->quote ( $articleid );
+		$site = JFactory::getApplication('site');
+		if ($jversion->RELEASE == '1.5') {
+			$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category, s.title AS section,
+				s.published AS sec_pub, cc.published AS cat_pub, s.access AS sec_access, cc.access AS cat_access
+				FROM #__content AS a
+				LEFT JOIN #__categories AS cc ON cc.id = a.catid
+				LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = "content"
+				LEFT JOIN #__users AS u ON u.id = a.created_by
+				WHERE a.id=' . $db->quote ( $articleid );
 
-		$db->setQuery ( $query );
-		$article = $db->loadObject ();
+			$db->setQuery ( $query );
+			$article = $db->loadObject ();
+			if ($article) {
+				// Get credentials to check if the user has right to see the article
+				$params = clone($site->getParams('com_content'));
+				$aparams = new JParameter($article->attribs);
+				$params->merge($aparams);
 
-		$html = $link = '';
-		// If article exists: are the section and category published?
-		if ($article && (!$article->catid || $article->cat_pub) && (!$article->sectionid || $article->sec_pub)) {
-			$user = JFactory::getUser ();
-
-			if ((($article->cat_access > $user->get ( 'aid', 0 )) && $article->catid) || (($article->sec_access > $user->get ( 'aid', 0 )) && $article->sectionid) || ($article->access > $user->get ( 'aid', 0 ))) {
-				$html = JText::_ ( "This message contains an article, but you do not have permissions to see it." );
-			} else {
-				global $kunena_in_event;
-				if (!empty($kunena_in_event)) {
-					$app = JFactory::getApplication();
-					$dispatcher = JDispatcher::getInstance();
-					$params = clone($app->getParams('com_content'));
-					$aparams = new JParameter($article->attribs);
-					$params->merge($aparams);
-					JPluginHelper::importPlugin('content');
-					$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
-				}
-				require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
-				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
-
-				// TODO: make configurable
-				if (!$default) $default = 'intro';
-				switch ($default) {
-					case 'full':
-						if ( !empty($article->fulltext) ) {
-							$html = $article->fulltext;
-							$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read article...').'</a>';
-							break;
-						}
-						// continue to intro
-					case 'intro':
-						if ( !empty($article->introtext) ) {
-							$html = $article->introtext;
-							$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read more...').'</a>';
-							break;
-						}
-						// continue to link
-					case 'link':
-					default:
-						$link = '<a href="'.$url.'" class="readon">'.$article->title.'</a>';
-						break;
+				if (($article->catid && $article->cat_access > $user->get('aid', 0))
+					|| ($article->sectionid && $article->sec_access > $user->get('aid', 0))
+					|| ($article->access > $user->get('aid', 0))) {
+					$denied = true;
 				}
 			}
 		} else {
+			$query = 'SELECT a.*, u.name AS author, u.usertype, cc.title AS category,
+				0 AS sec_pub, 0 AS sectionid, cc.published AS cat_pub, cc.access AS cat_access
+				FROM #__content AS a
+				LEFT JOIN #__categories AS cc ON cc.id = a.catid
+				LEFT JOIN #__users AS u ON u.id = a.created_by
+				WHERE a.id='.$db->quote($articleid);
+			$db->setQuery($query);
+			$article = $db->loadObject();
+			if ($article) {
+				// Get credentials to check if the user has right to see the article
+				$params = $site->getParams('com_content');
+				$registry = new JRegistry();
+				$registry->loadJSON($article->attribs);
+				$article->params = clone $params;
+				$article->params->merge($registry);
+				$params = $article->params;
+
+				$viewlevels = $user->getAuthorisedViewLevels();
+				if ( !in_array($article->access, $viewlevels) ) {
+					$denied = true;
+				}
+			}
+		}
+
+		$html = $link = '';
+		if (!$article || (!$article->cat_pub && $article->catid) || (!$article->sec_pub && $article->sectionid)) {
+			// FIXME: translation
 			$html = JText::_ ( "Article cannot be shown" );
+		} elseif (!empty($denied)) {
+			// FIXME: translation
+			$html = JText::_("This message contains an article, but you do not have permissions to see it.");
+		} else {
+			// Identify the source of the event to be Kunena itself
+			// this is important to avoid recursive event behaviour with our own plugins
+			$params->set('ksource', 'kunena');
+			JPluginHelper::importPlugin('content');
+			$dispatcher = JDispatcher::getInstance();
+			$results = $dispatcher->trigger('onPrepareContent', array (& $article, & $params, 0));
+
+			require_once (JPATH_ROOT.'/components/com_content/helpers/route.php');
+			if ($jversion->RELEASE == '1.5') {
+				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->sectionid));
+			} else {
+				$url = JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid));
+			}
+
+			// TODO: make configurable
+			if (!$default) $default = 'intro';
+			switch ($default) {
+				case 'full':
+					if ( !empty($article->fulltext) ) {
+						$html = $article->fulltext;
+						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read article...').'</a>';
+						break;
+					}
+					// continue to intro
+				case 'intro':
+					if ( !empty($article->introtext) ) {
+						$html = $article->introtext;
+						$link = '<a href="'.$url.'" class="readon">'.JText::sprintf('Read more...').'</a>';
+						break;
+					}
+					// continue to link
+				case 'link':
+				default:
+					$link = '<a href="'.$url.'" class="readon">'.$article->title.'</a>';
+					break;
+			}
 		}
 		return '<div class="kmsgtext-article">' . $html . '</div>' . $link;
 	}
@@ -1270,7 +1326,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				$bbcode->parent->inline_attachments [$attachment->id] = $attachment;
 				$link = JURI::base () . "{$attachment->folder}/{$attachment->filename}";
 				if (empty ( $attachment->imagelink )) {
-					return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $link . "' target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
+					return "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>" . JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $link . "\" target=\"_blank\" rel=\"nofollow\">" . $attachment->filename . "</a><br />" . JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . number_format ( intval ( $attachment->size ) / 1024, 0, '', ',' ) . ' KB' . "</div>";
 				} else {
 					return "<div class=\"kmsgimage\">{$attachment->imagelink}</div>";
 				}
@@ -1314,7 +1370,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 				$filesize = isset ( $params ["size"] ) ? $params ["size"] : filesize ( KPATH_MEDIA . '/' . $filepath );
 
 				$tag_new = "<div class=\"kmsgattach\"><h4>" . JText::_ ( 'COM_KUNENA_FILEATTACH' ) . "</h4>";
-				$tag_new .= JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href='" . $bbcode->HTMLEncode ( $fileurl ) . "' target=\"_blank\" rel=\"nofollow\">" . $bbcode->HTMLEncode ( $filename ) . "</a><br />";
+				$tag_new .= JText::_ ( 'COM_KUNENA_FILENAME' ) . " <a href=\"" . $bbcode->HTMLEncode ( $fileurl ) . "\" target=\"_blank\" rel=\"nofollow\">" . $bbcode->HTMLEncode ( $filename ) . "</a><br />";
 				$tag_new .= JText::_ ( 'COM_KUNENA_FILESIZE' ) . ' ' . $bbcode->HTMLEncode ( $filesize ) . "</div>";
 				return $tag_new;
 			}
@@ -1339,7 +1395,7 @@ class KunenaBBCodeLibrary extends BBCodeLibrary {
 					if (! preg_match ( "`^(https?://)`", $fileurl )) {
 						$fileurl = 'http://' . $fileurl;
 					}
-					return "<a href='" . $fileurl . "' rel=\"nofollow\" target=\"_blank\">" . $fileurl . '</a>';
+					return "<a href=\"" . $fileurl . "\" rel=\"nofollow\" target=\"_blank\">" . $fileurl . '</a>';
 				} else {
 					return $fileurl;
 				}

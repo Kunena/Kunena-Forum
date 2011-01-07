@@ -8,9 +8,8 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
+defined ( '_JEXEC' ) or die ();
 
-// Dont allow direct linking
-defined ( '_JEXEC' ) or die ( '' );
 jimport ( 'joomla.environment.uri' );
 
 abstract class KunenaRoute {
@@ -172,10 +171,18 @@ abstract class KunenaRoute {
 			$cache = JFactory::getCache('_system', 'output');
 			self::$childlist = unserialize($cache->get('childlist', 'com_kunena.route'));
 			if (self::$childlist === false) {
+				$my = JFactory::getUser ();
+				$menus = $app->getMenu ();
 				foreach ( self::$menu as $item ) {
 					if (! is_object ( $item ))
 						continue;
-					self::$childlist[$item->menutype][$item->parent][$item->id] = $item->id;
+					// Support both J1.6 and J1.5
+					$authorise = isset($item->parent_id) ? $menus->authorise($item->id) : !empty($item->published) && (!isset ( $item->access ) || $item->access <= $my->aid);
+					$parent = isset($item->parent_id) ? $item->parent_id : $item->parent;
+
+					if ($authorise) {
+						self::$childlist[$item->menutype][$parent][$item->id] = $item->id;
+					}
 				}
 				$cache->store(serialize(self::$childlist), 'childlist', 'com_kunena.route');
 			}
@@ -230,7 +237,7 @@ abstract class KunenaRoute {
 					self::$parent[$Itemid] = $current;
 					if (isset($item->query['view']) && ($item->query['view'] == 'home' || $item->query['view'] == 'entrypage')) break;
 				}
-				// Support J1.6 and J1.5
+				// Support both J1.6 and J1.5
 				$current = isset($item->parent_id) ? $item->parent_id : $item->parent;
 			}
 		}

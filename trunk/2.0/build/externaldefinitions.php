@@ -40,8 +40,8 @@ class Cezpdf {}
 // UddeIM
 class uddeIMAPI {}
 
-// Joomla 1.6
-class JAccess {}
+// Joomla 1.5
+class MenusModelMenutype {}
 
 // JXtended
 function jximport() {}

@@ -181,7 +181,7 @@ class CKunenaUpload {
 				return false;
 			}
 		}
-		CKunenaFolder::makeSafe($uploadPath);
+		CKunenaFolder::createIndex($uploadPath);
 
 		$this->fileName = CKunenaFile::makeSafe ( JRequest::getVar ( $input.'_name', '' ) );
 		$this->fileSize = 0;
@@ -360,6 +360,7 @@ class CKunenaUpload {
 			}
 		}
 		$this->fileName = $newFileName;
+		$this->fileName = preg_replace('/[[:space:]]/', '',$this->fileName);
 
 		// All the processing is complete - now we need to move the file(s) into the final location
 		@chmod($this->fileTemp, 0644);

@@ -300,7 +300,7 @@ class KunenaForumCategory extends JObject {
 		$table = $this->getTable ();
 
 		// Load the KunenaTableCategories object based on the id
-		$this->_exists = $table->load ( $id );
+		if ($id) $this->_exists = $table->load ( $id );
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties ( $table->getProperties () );

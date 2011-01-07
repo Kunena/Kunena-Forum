@@ -59,7 +59,7 @@ abstract class JHTMLKunenaForum {
 			if ($empty && empty($selected) && !$hide) {
 				$selected[] = $category->id;
 			}
-			$options [] = JHTML::_ ( 'select.option', $category->id, str_repeat  ( '...', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $hide );
+			$options [] = JHTML::_ ( 'select.option', $category->id, str_repeat  ( '- ', $category->level+$toplevel  ).' '.$category->name, 'value', 'text', $hide );
 		}
 
 		reset ( $options );

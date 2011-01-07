@@ -67,7 +67,7 @@ $kunena_config = KunenaFactory::getConfig ();
 		</div>
 	</div>
 </div>
-<?php if(!empty($this->userparams)) : ?>
+<?php if(!empty($this->userparameters)) : ?>
 <div class="kblock kedituser">
 	<div class="kheader">
 		<h2><span><?php echo JText::_('COM_KUNENA_GLOBAL_SETTINGS'); ?></span></h2>
@@ -76,13 +76,13 @@ $kunena_config = KunenaFactory::getConfig ();
 		<div class="kbody">
 			<table class="<?php echo isset ( $this->category->class_sfx ) ? ' kblocktable' . $this->escape($this->category->class_sfx) : '' ?>" id="kflattable">
 				<tbody class="kmyprofile_params">
-					<?php $i=0; foreach ($this->userparams as $userparam): ?>
+					<?php $i=0; foreach ($this->userparameters as $userparam): ?>
 					<tr class="krow<?php echo ($i^=1)+1;?>">
 						<td class="kcol-first">
-							<label for="params<?php echo $userparam[5] ?>" title="<?php echo $userparam[2] ?>"><?php echo $userparam[0] ?></label>
+							<?php echo $userparam->label ?>
 						</td>
 						<td class="kcol-mid">
-							<?php echo $userparam[1] ?>
+							<?php echo $userparam->input ?>
 						</td>
 					</tr>
 					<?php endforeach; ?>

@@ -267,6 +267,23 @@ class CKunenaPost {
 		$cat_params['direction'] = 1;
 		$cat_params['action'] = 'topic.create';
 
+		$categories = KunenaForumCategoryHelper::getCategories();
+		$arrayanynomousbox = array();
+		$arraypollcatid = array();
+		foreach ($categories as $category) {
+			if ($category->parent_id && $category->allow_anonymous) {
+				$arrayanynomousbox[] = '"'.$category->id.'":'.$item->post_anonymous;
+			}
+			if ($category->parent_id && $category->allow_polls) {
+				$arraypollcatid[] = '"'.$category->id.'":1';
+			}
+		}
+		$arrayanynomousbox = implode(',',$arrayanynomousbox);
+		$arraypollcatid = implode(',',$arraypollcatid);
+
+		$this->document->addScriptDeclaration('var arrayanynomousbox={'.$arrayanynomousbox.'}');
+		$this->document->addScriptDeclaration('var pollcategoriesid = {'.$arraypollcatid.'};');
+
 		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', 0);
 
 		$this->category = KunenaForumCategoryHelper::get($this->catid);

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
 <!DOCTYPE install>
-<install type="language" version="1.5" client="both" method="upgrade">
+<install type="language" version="1.5" client="administrator" method="upgrade">
 	<name>Kunena Forum - Serbian</name>
 	<tag>sr-YU</tag>
-	<creationDate>unknown</creationDate>
-	<version>unknown</version>
-	<build>unknown</build>
+	<creationDate>@kunenaversiondate@</creationDate>
+	<version>@kunenaversion@</version>
+	<build>@kunenaversionbuild@</build>
 	<author>unknown</author>
 	<authorEmail>unknown</authorEmail>
 	<authorUrl>unknown</authorUrl>
@@ -14,19 +14,9 @@
 	<license>GNU/GPL</license>
 	<description>Serbian language file for Kunena Forum Component</description>
 
-	<administration>
-		<files folder="admin">
-			<filename>sr-YU.com_kunena.ini</filename>
-			<filename>sr-YU.com_kunena.install.ini</filename>
-			<!-- filename>sr-YU.com_kunena.menu.ini</filename -->
-		</files>
-	</administration>
-
-	<site>
-		<files folder="site">
-			<filename>sr-YU.com_kunena.ini</filename>
-			<filename>sr-YU.com_kunena.tpl_default.ini</filename>
-			<!-- filename>sr-YU.com_kunena.tpl_example.ini</filename -->
-		</files>
-	</site>
+	<files>
+		<filename>sr-YU.com_kunena.ini</filename>
+		<filename>sr-YU.com_kunena.install.ini</filename>
+		<!-- filename>sr-YU.com_kunena.menu.ini</filename -->
+	</files>
 </install>

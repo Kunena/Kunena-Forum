@@ -9,9 +9,7 @@
  * @link http://www.kunena.org
  *
  **/
-//
-// Dont allow direct linking
-defined( '_JEXEC' ) or die('');
+defined( '_JEXEC' ) or die();
 
 class KunenaProfileJomSocial extends KunenaProfile
 {
@@ -26,6 +24,9 @@ class KunenaProfileJomSocial extends KunenaProfile
 
 	public function getUserListURL($action='', $xhtml = true)
 	{
+		$config = KunenaFactory::getConfig ();
+		$my = JFactory::getUser();
+		if ( $config->userlist_allowed == 1 && $my->id == 0  ) return false;
 		return CRoute::_('index.php?option=com_community&view=search&task=browse', $xhtml);
 	}
 

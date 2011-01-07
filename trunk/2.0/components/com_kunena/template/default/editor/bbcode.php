@@ -120,12 +120,7 @@ $kunena_config = KunenaFactory::getConfig ();
 					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_REMPOLLOPTION'); ?>')" alt="<?php echo JText::_('COM_KUNENA_POLL_REMOVE_POLL_OPTION'); ?>" />
 
 				<label class="kpoll-term-lbl" for="kpoll-time-to-live"><?php echo JText::_('COM_KUNENA_POLL_TIME_TO_LIVE'); ?></label>
-				<input class="inputbox" type="text" maxlength="15"
-					name="kpoll-time-to-live" id="kpoll-time-to-live"
-					value="<?php echo $this->escape($this->polldatasedit[0]->polltimetolive); ?>" /> <img
-					src="templates/system/images/calendar.png" alt="Calendar"
-					onclick="showCalendar('kpoll-time-to-live','%Y-%m-%d');"
-					onmouseover="javascript:$('helpbox').set('value', '<?php echo KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN'); ?>')" />
+				<?php echo JHTML::_('calendar', $this->escape($this->polldatasedit[0]->polltimetolive), 'poll_time_to_live', 'kpoll-time-to-live', '%Y-%m-%d',array('onmouseover'=>'javascript:$(\'helpbox\').set(\'value\', \''.KunenaHtmlParser::JSText('COM_KUNENA_EDITOR_HELPLINE_POLLLIFESPAN').'\')')); ?> 
 
 			</div>
 			<?php

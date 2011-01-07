@@ -8,9 +8,8 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
-
-// Dont allow direct linking
 defined( '_JEXEC' ) or die();
+
 jimport('joomla.html.parameter');
 
 class KunenaParameter extends JParameter {
@@ -52,6 +51,7 @@ class KunenaTemplate extends JObject
 			$name = 'default';
 			$xml = KPATH_SITE . "/template/{$name}/template.xml";
 		}
+		$this->xml_path = $xml;
 		$ini = KPATH_SITE . "/template/{$name}/params.ini";
 		$content = '';
 		if (is_readable( $ini ) ) {
@@ -231,6 +231,19 @@ class KunenaTemplate extends JObject
 		}
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
+	}
+	
+	public function getTemplateDetails() {
+		$templatedetails = new stdClass();
+		$xml_tmpl = JFactory::getXMLparser('Simple');
+		$xml_tmpl->loadFile($this->xml_path);
+	
+		$templatedetails->creationDate = $xml_tmpl->document->creationDate[0]->data();
+		$templatedetails->author = $xml_tmpl->document->author[0]->data();
+		$templatedetails->version = $xml_tmpl->document->version[0]->data();
+		$templatedetails->name = $xml_tmpl->document->name[0]->data();
+		
+		return $templatedetails;
 	}
 
 	static public function loadTemplate($file) {

@@ -8,9 +8,7 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 * @link http://www.kunena.org
 **/
-
-// Dont allow direct linking
-defined( '_JEXEC' ) or die('Restricted access');
+defined( '_JEXEC' ) or die();
 
 kimport('kunena.bbcode');
 
@@ -74,6 +72,15 @@ abstract class KunenaHtmlParser {
 	function plainBBCode($txt, $len=0) {
 		if (!$txt) return;
 
+		// Strip content not allowed for guests
+		// TODO: do this in a better way inside BBCode parser..
+		$txt = preg_replace ( '/\[hide\](.*?)\[\/hide\]/s', '', $txt );
+		$txt = preg_replace ( '/\[confidential\](.*?)\[\/confidential\]/s', '', $txt );
+		$txt = preg_replace ( '/\[spoiler\]/s', '[spoilerlight]', $txt );
+		$txt = preg_replace ( '/\[\/spoiler\]/s', '[/spoilerlight]', $txt );
+		$txt = preg_replace ( '/\[attachment(.*?)\](.*?)\[\/attachment\]/s', '', $txt );
+		$txt = preg_replace ( '/\[code\](.*?)\[\/code]/s', '', $txt );
+
 		$bbcode = KunenaBBCode::getInstance();
 		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(true);
@@ -97,11 +104,12 @@ abstract class KunenaHtmlParser {
 	{
 		$config = KunenaFactory::getConfig();
 
-		if ($config->jmambot)
-		{
+		if ($config->jmambot) {
 			$row = new stdClass();
 			$row->text =& $content;
 			$params = new JParameter( '' );
+			$params->set('ksource', 'kunena');
+
 			$dispatcher	= JDispatcher::getInstance();
 			JPluginHelper::importPlugin('content');
 			$results = $dispatcher->trigger('onPrepareContent', array (&$row, &$params, 0));

@@ -157,24 +157,37 @@ class CKunenaProfile {
 	function displayEditUser() {
 		jimport ( 'joomla.version' );
 		$jversion = new JVersion ();
-		// FIXME: not implemented in J1.6
-		if ($jversion->RELEASE == 1.6) {
-			echo 'Not implemented in J1.6!';
-			return;
-		}
+
 		$this->user = JFactory::getUser();
 
 		// check to see if Frontend User Params have been enabled
 		$usersConfig = JComponentHelper::getParams( 'com_users' );
 		$check = $usersConfig->get('frontend_userparams');
 
-		if ($check == 1 || $check == NULL)
-		{
+		if ($check == 1 || $check == NULL) {
 			if($this->user->authorize( 'com_user', 'edit' )) {
-				$lang = JFactory::getLanguage();
-				$lang->load('com_user', JPATH_SITE);
-				$params = $this->user->getParameters(true);
-				$this->userparams = $params->renderToArray();
+				if ($jversion->RELEASE == '1.5') {
+					$lang = JFactory::getLanguage();
+					$lang->load('com_user', JPATH_SITE);
+					$params = $this->user->getParameters(true);
+					// Legacy template support:
+					$this->userparams = $params->renderToArray();
+					$i=0;
+					// New templates use this:
+					foreach ($this->userparams as $userparam) {
+						$this->userparameters[$i]->input = $userparam[1];
+						$this->userparameters[$i]->label = '<label for="params'.$userparam[5].'" title="'.$userparam[2].'">'.$userparam[0].'</label>';
+						$i++;
+					}
+				} elseif ($jversion->RELEASE == '1.6') {
+					$lang = JFactory::getLanguage();
+					$lang->load('com_users', JPATH_ADMINISTRATOR);
+
+					jimport( 'joomla.form.form' );
+					$form = JForm::getInstance('juserprofilesettings', JPATH_ADMINISTRATOR.'/components/com_users/models/forms/user.xml');
+					// this get only the fields for user settings (template, editor, language...)
+					$this->userparameters = $form->getFieldset('settings');
+				}
 			}
 		}
 		CKunenaTools::loadTemplate('/profile/edituser.php');

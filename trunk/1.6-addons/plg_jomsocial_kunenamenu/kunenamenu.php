@@ -48,10 +48,11 @@ class plgCommunityKunenaMenu extends CApplications {
 		}
 		//adding new 'tab' 'Forum Settings' to JomSocial toolbar
 		$toolbar->addGroup ( 'KUNENAMENU', JText::_ ( 'PLG_COMMUNITY_KUNENANENU_FORUM' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile' ) );
-		$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_EDITPROFILE', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_EDITPROFILE' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile&task=edit' ) );
-		$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_PROFILE', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_PROFILE' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile' ) );
-		$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_POSTS', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_POSTS' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=userposts' ) );
-		$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_SUBSCRIBES', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_SUBSCRIBTIONS' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=subscriptions' ) );
-		$toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_FAVORITES', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_FAVORITES' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=favorites' ) );
+		if ( $this->params->get('sh_editprofile') ) $toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_EDITPROFILE', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_EDITPROFILE' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile&task=edit' ) );
+		if ( $this->params->get('sh_myprofile') ) $toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_PROFILE', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_PROFILE' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=myprofile' ) );
+		if ( $this->params->get('sh_myposts') ) $toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_POSTS', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_POSTS' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=userposts' ) );
+		if ( $this->params->get('sh_mysubscriptions') ) $toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_SUBSCRIBES', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_SUBSCRIBTIONS' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=subscriptions' ) );
+		if ( $this->params->get('sh_myfavorites') ) $toolbar->addItem ( 'KUNENAMENU', 'KUNENAMENU_FAVORITES', JText::_ ( 'PLG_COMMUNITY_KUNENAMENU_FAVORITES' ), KunenaRoute::_ ( 'index.php?option=com_kunena&func=latest&do=favorites' ) );
+		
 	}
 }

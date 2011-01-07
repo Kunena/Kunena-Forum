@@ -27,6 +27,10 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+JomsocialKunenaMenu 1.6.3-DEV
+^ [#19002] Update version to 1.6.3-DEV
++ [#22905] JomSocial: Kunena Forum Menu plug-in - show/hide items
+
 JomsocialKunenaMenu 1.6.2
 
 24-December-2010 fxstein

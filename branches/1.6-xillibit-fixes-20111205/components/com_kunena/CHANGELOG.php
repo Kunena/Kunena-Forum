@@ -35,6 +35,7 @@ Kunena 1.6.3
 
 7-January-2011 Xillibit
 # [#23704] First item in breadcrumbs links to entrypage, not top-level index
+# [#23801] bug in aup activity integration which show subject for users which are not right to see it
 
 6-January-2011 Xillibit
 # [#24149] Redirect loop in userlist and update translation

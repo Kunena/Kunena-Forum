@@ -2659,16 +2659,16 @@ function generateSystemReport () {
 	$joomsef = checkThirdPartyVersion('joomsef', 'sef', 'ARTIO JoomSEF', 'components/com_sef', null, 1, 0, 0);
 	$acesef = checkThirdPartyVersion('acesef', 'acesef', 'AceSEF', 'components/com_acesef', null, 1, 0, 0);
 
-    $report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
+	$report = '[confidential][b]Joomla! version:[/b] '.$jversion.' [b]Platform:[/b] '.$_SERVER['SERVER_SOFTWARE'].' ('
 	    .$_SERVER['SERVER_NAME'].') [b]PHP version:[/b] '.phpversion().' | '.$safe_mode.' | '.$register_globals.' | '.$mbstring
 	    .' | '.$gd_support.' | [b]MySQL version:[/b] '.$kunena_db->getVersion().'[/confidential][quote][b]Database collation check:[/b] '.$collation.'
 		[/quote][quote][b]Legacy mode:[/b] '.$jconfig_legacy.' | [b]Joomla! SEF:[/b] '.$jconfig_sef.' | [b]Joomla! SEF rewrite:[/b] '
 	    .$jconfig_sef_rewrite.' | [b]FTP layer:[/b] '.$jconfig_ftp.' |[confidential][b]Mailer:[/b] '.$kunena_app->getCfg('mailer' ).' | [b]Mail from:[/b] '.$kunena_app->getCfg('mailfrom' ).' | [b]From name:[/b] '.$kunena_app->getCfg('fromname' ).' | [b]SMTP Secure:[/b] '.$kunena_app->getCfg('smtpsecure' ).' | [b]SMTP Port:[/b] '.$kunena_app->getCfg('smtpport' ).' | [b]SMTP User:[/b] '.$jconfig_smtpuser.' | [b]SMTP Host:[/b] '.$kunena_app->getCfg('smtphost' ).' [/confidential] [b]htaccess:[/b] '.$htaccess
 	    .' | [b]PHP environment:[/b] [u]Max execution time:[/u] '.$maxExecTime.' seconds | [u]Max execution memory:[/u] '
-	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$menudisplaytable.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$jdefaultemplatename.' | [u]author:[/u] '.$templateauthor->data().' | [u]version:[/u] '.$templateversion->data().' | [u]creationdate:[/u] '.$templatecreationdate->data().' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
+	    .$maxExecMem.' | [u]Max file upload:[/u] '.$fileuploads.' [/quote][confidential][b]Kunena menu details[/b]:[spoiler] '.$joomlamenudetails.'[/spoiler][/confidential][quote][b]Joomla default template details :[/b] '.$templatedetails->name.' | [u]author:[/u] '.$templatedetails->author.' | [u]version:[/u] '.$templatedetails->version.' | [u]creationdate:[/u] '.$templatedetails->creationdate.' [/quote][quote][b]Kunena default template details :[/b] '.$ktempaltedetails->name.' | [u]author:[/u] '.$ktempaltedetails->author.' | [u]version:[/u] '.$ktempaltedetails->version.' | [u]creationdate:[/u] '.$ktempaltedetails->creationDate.' [/quote][quote] [b]Kunena version detailled:[/b] [u]Installed version:[/u] '.$kunenaVersionInfo->version.' | [u]Build:[/u] '
 	    .$kunenaVersionInfo->build.' | [u]Version name:[/u] '.$kunenaVersionInfo->name.' | [u]Kunena detailled configuration:[/u] [spoiler] '.$kconfigsettings.'[/spoiler][/quote][quote][b]Third-party components:[/b] '.$aup.' | '.$cb.' | '.$jomsocial.' | '.$uddeim.' [/quote][quote][b]Third-party SEF components:[/b] '.$sh404sef.' | '.$joomsef.' | '.$acesef.' [/quote][quote][b]Plugins:[/b] '.$plg_mt.' | '.$mtupgrade.' | '.$plg_jfirephp.' | '.$plg_kdiscuss.' | '.$plg_ksearch.' | '.$plg_kjomsocialmenu.' | '.$plg_kjomsocialmykunena.' [/quote][quote][b]Modules:[/b] '.$mod_kunenalatest.' | '.$mod_kunenastats.' | '.$mod_kunenalogin.'[/quote]';
-
-    return $report;
+	
+	return $report;
 }
 
 function getJoomlaTemplate($jversion) {
@@ -2718,7 +2718,7 @@ function getJoomlaTemplate($jversion) {
 }
 
 function getJoomlaMenuDetails($jversion) {
-  $kunena_db = JFactory::getDBO ();
+	$kunena_db = JFactory::getDBO ();
 	if ($jversion->RELEASE == '1.5') {
 			// Get Kunena menu items
 		$query = "SELECT id, menutype, name, alias, link, parent "

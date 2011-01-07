@@ -34,7 +34,7 @@ Legend:
 Kunena 2.0.0-DEV
 
 7-January-2010 Matias
-^ [#22786] Merge revisions 3955-4155 from trunk/1.6 (part 2)
+^ [#22786] Merge revisions 3955-4165 from trunk/1.6 (part 2)
 
 5-January-2010 Matias
 ^ [#22786] Merge revisions 3955-4155 from trunk/1.6
@@ -560,6 +560,23 @@ Kunena 2.0.0-DEV
 
 Kunena 1.6.3
 
+Kunena 1.6.3
+
+7-January-2011 Matias
+^ [#15886] Merged revisions 4157-4162 from /branches/1.6-xillibit-fixes-20111205
+
+6-January-2011 Xillibit
+# [#24149] Redirect loop in userlist and update translation
+# [#24170] When save user profile under J! 1.6 the user is not assigned to any group
+
+5-January-2011 Xillibit
+# [#24064] Fix some undefined variables in kunena report configuration
+# [#24156] Error message on start of installation on archive which is not here
+# [#24155] When posting as anonymous, no username is displayed in listcat and showcat
+
+5-January-2011 Matias
+# [#24147] Show user defined title from menu Item (Parameters (System) > Page Title)
+
 4-January-2011 Matias
 # [#24083] Joomla 1.6: generate Kunena Menu during installation
 ^ [#15886] Merged revisions 4049-4142 from /branches/1.6.3-jomsocial
@@ -567,18 +584,18 @@ Kunena 1.6.3
 ^ [#15886] Merged revisions 4149-4153 from /branches/1.6.3-xillibit-j1.6fixes-01012011
 # [#23920] Fix Kunena Internal Error when posting (subscriptions)
 
+4-January-2011 Xillibit
+# [#24064] Put some code in kunena report configuration into functions to be more readable
+# [#24094] Joomla 1.6: Article BBCode doesn't work
+
 3-January-2011 Matias
 # [#24076] Profile user settings doesn't work in J!1.6 (part 2)
 ^ [#15886] Merged revisions 4141-4147 from /branches/1.6.3-xillibit-j1.6fixes-01012011
 
-04-January-2011 Xillibit
-# [#24064] Put some code in kunena report configuration into functions to be more readable
-# [#24094] Joomla 1.6: Article BBCode doesn't work
-
-03-January-2011 Xillibit
+3-January-2011 Xillibit
 # [#24076] Profile user settings doesn't work in J!1.6
 
-02-January-2011 Xillibit
+2-January-2011 Xillibit
 # [#24064] Joomla 1.6: Don't check if component is enabled, because it doesn't seem to work
 # [#24073] Joomla 1.6: Use Joomla! JDocumentFeed to generate RSS feed instead of Joomla! deprecated library
 # [#24081] Remove bbcode attachment and code from JS activity stream

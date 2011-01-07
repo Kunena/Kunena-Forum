@@ -33,14 +33,23 @@ class CKunenaProfile {
 		else {
 			$this->user = JFactory::getUser( $userid );
 		}
-		if ($this->user->id == 0) return;
-		$this->allow = true;
+		if ($this->user->id == 0) {
+			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILEPAGE_NOT_ALLOWED_FOR_GUESTS'), 'notice' );
+			return;
+		}
 
 		$integration = KunenaFactory::getProfile();
 		$activityIntegration = KunenaFactory::getActivityIntegration();
 		$template = KunenaFactory::getTemplate();
 		$this->params = $template->params;
-
+		
+		if (get_class($integration) == 'KunenaProfileNone') {
+			$this->_app->enqueueMessage ( JText::_('COM_KUNENA_PROFILE_DISABLED'), 'notice' );
+			return;
+		}
+		
+		$this->allow = true;
+		
 		$this->profile = KunenaFactory::getUser ( $this->user->id );
 		if ($this->profile->posts === null) {
 			$this->profile->save();
@@ -442,6 +451,9 @@ class CKunenaProfile {
 	// Mostly copied from Joomla 1.5
 	protected function saveUser()
 	{
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+
 		$user = $this->user; //new JUser ( $this->user->get('id') );
 
 		// we don't want users to edit certain fields so we will ignore them
@@ -459,6 +471,18 @@ class CKunenaProfile {
 		foreach ($ignore as $field) {
 			if (isset($post[$field]))
 				unset($post[$field]);
+		}
+		
+		if ( $jversion->RELEASE == '1.6' ) { 
+			jimport('joomla.user.helper');
+			$result = JUserHelper::getUserGroups($user->id);
+			
+			$groups = array();
+			foreach ( $result as $key => $value ) {
+				$groups[]= $key;
+			}
+
+			$post['groups'] = $groups;
 		}
 
 		// get the redirect

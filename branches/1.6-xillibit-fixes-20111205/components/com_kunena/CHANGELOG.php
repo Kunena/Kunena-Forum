@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+8-January-2011 Xillibit
+# [#24230] Mark all forum read fails under J! 1.6
+
 7-January-2011 Xillibit
 # [#23704] First item in breadcrumbs links to entrypage, not top-level index
 # [#23801] bug in aup activity integration which show subject for users which are not right to see it

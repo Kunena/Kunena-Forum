@@ -23,6 +23,7 @@ class KunenaRouter {
 	static $functions = array (
 		'who'=>array(),
 		'announcement'=>array(),
+		'category'=>array(),
 		'poll'=>array(),
 		'polls'=>array(),
 		'stats'=>array(),

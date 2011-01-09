@@ -35,6 +35,8 @@ Kunena 1.6.3
 
 9-January-2011 Xillibit
 # [#24239] When guest posting, the field name isn't displayed and it's empty, so the form can't validate
+* [#24073] Remove Kunena version put in RSS feed header
+^ [#24073] When RSS feed is disabled show error 404 instead of a die()
 
 8-January-2011 Xillibit
 # [#24230] Mark all forum read fails under J! 1.6

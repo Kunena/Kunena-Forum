@@ -25,7 +25,10 @@ class CKunenaUserlist {
 		$this->config = KunenaFactory::getConfig ();
 		$this->db = JFactory::getDBO ();
 		$this->my = JFactory::getUser ();
-
+		
+		jimport ( 'joomla.version' );
+		$jversion = new JVersion ();
+		
 		$this->search = JRequest::getVar ( 'search', '' );
 		$this->limitstart = JRequest::getInt ( 'limitstart', 0 );
 		$this->limit = $querylimit = JRequest::getInt ( 'limit', (int)$this->config->userlist_rows );
@@ -69,10 +72,18 @@ class CKunenaUserlist {
 		$query = "SELECT u.id, u.name, u.username, u.usertype, u.email, u.registerDate, u.lastvisitDate, fu.userid, fu.showOnline, fu.group_id, fu.posts, fu.karma, fu.uhits " . " FROM #__users AS u INNER JOIN #__kunena_users AS fu ON fu.userid = u.id WHERE (block=0 OR activation!='')";
 		$this->searchuri = "";
 		if ($this->search != "") {
-			$query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN (62)";
+			if($jversion->RELEASE == '1.5') {
+			 $query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN (62)";
+			} elseif ( $jversion->RELEASE == '1.6' ) {
+				$query .= " AND (name LIKE '%{$this->db->getEscaped($this->search)}%' OR username LIKE '%{$this->db->getEscaped($this->search)}%') AND u.id NOT IN (42)";
+			}
 			$this->searchuri .= "&search=" . $this->search;
 		} else {
-			$query .= " AND u.id NOT IN (62)";
+			if ($jversion->RELEASE == '1.5') {
+				$query .= " AND u.id NOT IN (62)";
+			} elseif ( $jversion->RELEASE == '1.6' ) {
+				$query .= " AND u.id NOT IN (42)";
+			}
 		}
 		$query .= $orderby;
 		$query .= " LIMIT $this->limitstart, $querylimit";

@@ -35,6 +35,7 @@ Kunena 1.6.3
 
 10-January-2011 Xillibit
 # [#24272] When you want edit an anouncement unpublished, the forms is empty
+# [#24277] Kunena userlist under J! 1.6 grab super admin with userid=62 instead of 42
 
 9-January-2011 Xillibit
 # [#24239] When guest posting, the field name isn't displayed and it's empty, so the form can't validate

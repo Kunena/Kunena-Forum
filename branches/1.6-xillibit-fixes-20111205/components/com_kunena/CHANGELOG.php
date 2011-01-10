@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+10-January-2011 Xillibit
+# [#24272] When you want edit an anouncement unpublished, the forms is empty
+
 9-January-2011 Xillibit
 # [#24239] When guest posting, the field name isn't displayed and it's empty, so the form can't validate
 * [#24073] Remove Kunena version put in RSS feed header

@@ -31,6 +31,9 @@ Legend:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+11-jan-2011 810
+# [#24306] Max width bug image link
+
 Kunena 1.6.3
 ^ [#23875] Minor html fixes backend (same icons J1.5 & j1.6)
 

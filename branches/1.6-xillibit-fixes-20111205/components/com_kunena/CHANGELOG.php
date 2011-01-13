@@ -33,6 +33,9 @@ Legend:
 
 Kunena 1.6.3
 
+13-January-2011 Xillibit
+# [#24367] Kunena report function shows form even if id is empty
+
 10-January-2011 Xillibit
 # [#24272] When you want edit an anouncement unpublished, the forms is empty
 # [#24277] Kunena userlist under J! 1.6 grab super admin with userid=62 instead of 42

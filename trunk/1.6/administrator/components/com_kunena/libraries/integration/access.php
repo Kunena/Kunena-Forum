@@ -199,7 +199,7 @@ abstract class KunenaAccess {
 
 		$query = new KDatabaseQuery();
 		$query->select('u.id, u.name, u.username, u.email');
-		$query->from('FROM #__users AS u');
+		$query->from('#__users AS u');
 		$query->where("u.block=0");
 		$userlist = array();
 		if (!empty($subslist)) {

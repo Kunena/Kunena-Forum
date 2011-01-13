@@ -40,6 +40,7 @@ Kunena 1.6.3
 # [#24357] Change rank detection code to check category administrators (used in ACL integration)
 # [#24358] Fix broken Moderator rank detection
 # [#24359] Router: Undefined index 'func' in ParseRoute
+# [#23920] Fix another Kunena Internal Error when posting (subscriptions)
 
 7-January-2011 Matias
 ^ [#15886] Merged revisions 4157-4162 from /branches/1.6-xillibit-fixes-20111205

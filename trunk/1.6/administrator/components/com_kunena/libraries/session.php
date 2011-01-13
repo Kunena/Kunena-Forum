@@ -12,9 +12,8 @@
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
 
-require_once (KUNENA_PATH .DS. "class.kunena.php");
-require_once (KUNENA_PATH_LIB .DS. "kunena.config.class.php");
-require_once (KUNENA_PATH_LIB .DS. "kunena.timeformat.class.php");
+require_once (KPATH_SITE . "/class.kunena.php");
+require_once (KPATH_SITE. "/lib/kunena.timeformat.class.php");
 
 class KunenaSession extends JObject
 {

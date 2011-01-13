@@ -320,7 +320,7 @@ class KunenaRouter {
 			// If we have catid, function cannot be listcat
 			$vars ['func'] = 'showcat';
 		}
-		if (isset($vars['id']) && $vars ['func'] == 'showcat') {
+		if (isset($vars['id']) && isset ( $vars ['func'] ) && $vars ['func'] == 'showcat') {
 			// If we have id, function cannot be showcat
 			$vars ['func'] = 'view';
 		}

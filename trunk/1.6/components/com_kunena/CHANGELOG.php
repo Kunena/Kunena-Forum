@@ -33,6 +33,14 @@ Legend:
 
 Kunena 1.6.3
 
+13-January-2011 Matias
+# [#23920] Fix a bug when getting subscribers if string gets passed instead of an array
+# [#24357] CommunityBuilder integration: Fix white pages in CommunityBuilder backend
+# [#24357] CommunityBuilder integration: Fix broken sidebar modes in Community Builder Forum Plugin
+# [#24357] Change rank detection code to check category administrators (used in ACL integration)
+# [#24358] Fix broken Moderator rank detection
+# [#24359] Router: Undefined index 'func' in ParseRoute
+
 7-January-2011 Matias
 ^ [#15886] Merged revisions 4157-4162 from /branches/1.6-xillibit-fixes-20111205
 

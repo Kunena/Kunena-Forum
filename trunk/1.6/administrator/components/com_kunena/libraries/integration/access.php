@@ -176,7 +176,7 @@ abstract class KunenaAccess {
 		return $hold;
 	}
 
-	function getSubscribers($catid, $topicid, $subscriptions = false, $moderators = false, $admins = false, $excludeList = '0') {
+	function getSubscribers($catid, $topicid, $subscriptions = false, $moderators = false, $admins = false, $excludeList = array(0)) {
 		if ($subscriptions) {
 			$subslist = $this->loadSubscribers($catid, $topicid);
 		}
@@ -223,18 +223,20 @@ abstract class KunenaAccess {
 		} else {
 			$query->select("0 AS admin");
 		}
+		if (!is_array($excludeList)) $excludeList = explode(',', $excludeList);
 		$userlist = array_diff_key($userlist, $excludeList);
+		$userids = array();
 		if (!empty($userlist)) {
 			$userlist = implode(',', array_keys($userlist));
 			$query->where("u.id IN ({$userlist})");
 			$db = JFactory::getDBO();
 			$db->setQuery ( $query );
-			$subsList = $db->loadObjectList ();
-			if (KunenaError::checkDatabaseError()) return array();
+			$userids = (array) $db->loadObjectList ();
+			KunenaError::checkDatabaseError();
 		}
 
 		unset($subslist, $modlist, $adminlist, $userlist);
-		return $subsList;
+		return $userids;
 	}
 
 	protected function loadAdmins($list = array()) {

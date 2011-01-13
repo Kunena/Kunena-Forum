@@ -296,7 +296,7 @@ class KunenaUser extends JObject {
 
 			// need to calculate the joomla session lifetime in timestamp, to check if the sessions haven't expired
 			$j_session_lifetime = CKunenaTimeformat::internalTime() - ( $kunena_app->getCfg('lifetime') * 60 );
-			
+
 			if (count($sessions)) {
 				foreach ($sessions as $session) {
 					// we check that the session hasn't expired
@@ -332,14 +332,14 @@ class KunenaUser extends JObject {
 		return $online;
 	}
 
-	public function isAdmin() {
+	public function isAdmin($catid = 0) {
 		$acl = KunenaFactory::getAccessControl ();
-		return $acl->isAdmin ( $this->userid );
+		return $acl->isAdmin ( $this, $catid );
 	}
 
 	public function isModerator($catid = 0) {
 		$acl = KunenaFactory::getAccessControl ();
-		return $acl->isModerator ( $this->userid, $catid );
+		return $acl->isModerator ( $this, $catid );
 	}
 
 	public function isBanned() {
@@ -433,7 +433,7 @@ class KunenaUser extends JObject {
 			}
 		} else if ($this->rank != 0 && isset ( self::$_ranks [$this->rank] )) {
 			$rank = self::$_ranks [$this->rank];
-		} else if ($this->rank == 0 && $this->isAdmin ()) {
+		} else if ($this->rank == 0 && $this->isAdmin ( $catid )) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_ADMINISTRATOR' );
 			$rank->rank_special = 1;
@@ -452,7 +452,7 @@ class KunenaUser extends JObject {
 			$rank->rank_image = 'rankmod.gif';
 			jimport ( 'joomla.filesystem.file' );
 			foreach ( self::$_ranks as $cur ) {
-				if ($cur->rank_special == 1 && JFile::stripExt ( $cur->rank_image ) == 'rankadmin') {
+				if ($cur->rank_special == 1 && JFile::stripExt ( $cur->rank_image ) == 'rankmod') {
 					$rank = $cur;
 					break;
 				}

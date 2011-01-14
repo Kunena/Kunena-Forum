@@ -41,6 +41,7 @@ Kunena 2.0.0-DEV
 # [#22792] KunenaForumMessage::save() fails to update topic and category stats
 # [#22792] KunenaForumTopic::save() returns false even if it succeeds
 # [#23443] Fix broken file cache in KunenaRoute class
+- [#22570] Remove deprecated views (entrypage, latest, listcat, post, profile, showcat)
 
 13-January-2010 Matias
 # [#22792] KunenaForumTopic::update() fails to update usertopics information

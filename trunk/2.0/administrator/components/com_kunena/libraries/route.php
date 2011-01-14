@@ -50,14 +50,15 @@ abstract class KunenaRoute {
 		$cache = JFactory::getCache('_system', 'output');
 		$data = $cache->get($user->userid, 'com_kunena.route');
 		if ($data === false) return;
-		list(self::$subtree, self::$uris) = $data;
+		list(self::$subtree, self::$uris) = unserialize($data);
 	}
 
 	public static function cacheStore() {
 		if (!self::$urisSave) return;
 		$user = KunenaFactory::getUser();
+		$data = array(self::$subtree, self::$uris);
 		$cache = JFactory::getCache('_system', 'output');
-		$cache->store(array(self::$subtree, self::$uris), $user->userid, 'com_kunena.route');
+		$cache->store(serialize($data), $user->userid, 'com_kunena.route');
 	}
 
 	public static function _($uri = null, $xhtml = true, $ssl=0) {

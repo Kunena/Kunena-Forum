@@ -161,7 +161,7 @@ class KunenaTemplate extends JObject
 		return "{$base}{$path}/images/{$image}";
 	}
 
-	public function getTopicIconPath($index, $url = false) {
+	public function getTopicIcons() {
 		if (empty($this->topicIcons)) {
 			$curpath = $this->getPath();
 			$defpath = $this->getPath(true);
@@ -180,6 +180,13 @@ class KunenaTemplate extends JObject
 					$this->topicIcons[$id] = "{$defpath}/images/icons/{$icon}";
 				}
 			}
+		}
+		return $this->topicIcons;
+	}
+
+	public function getTopicIconPath($index, $url = false) {
+		if (empty($this->topicIcons)) {
+			$this->getTopicIcons();
 		}
 		$base = '';
 		if ($url) $base = KURL_SITE;
@@ -232,17 +239,17 @@ class KunenaTemplate extends JObject
 		$html = '<img src="'.$iconurl.'" alt="emo" />';
 		return $html;
 	}
-	
+
 	public function getTemplateDetails() {
 		$templatedetails = new stdClass();
 		$xml_tmpl = JFactory::getXMLparser('Simple');
 		$xml_tmpl->loadFile($this->xml_path);
-	
+
 		$templatedetails->creationDate = $xml_tmpl->document->creationDate[0]->data();
 		$templatedetails->author = $xml_tmpl->document->author[0]->data();
 		$templatedetails->version = $xml_tmpl->document->version[0]->data();
 		$templatedetails->name = $xml_tmpl->document->name[0]->data();
-		
+
 		return $templatedetails;
 	}
 

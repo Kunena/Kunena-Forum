@@ -33,6 +33,65 @@ Legend:
 
 Kunena 2.0.0-DEV
 
+14-January-2010 Matias
+^ [#22569] Rewrite KunenaControllerTopic::move()
+# [#22792] Fix KunenaForumTopic::move() to move topic into another category with category updates
+# [#22792] KunenaForumTopic::move(): accept both array and string in $ids parameter
+# [#22792] Fix 3 bugs in KunenaForumCategory::update()
+# [#22792] KunenaForumMessage::save() fails to update topic and category stats
+# [#22792] KunenaForumTopic::save() returns false even if it succeeds
+
+13-January-2010 Matias
+# [#22792] KunenaForumTopic::update() fails to update usertopics information
+# [#22792] KunenaForum::display() does not work with common layouts
++ [#22569] Continue moving posting logic into MVC (adapting code, fixing bugs)
+
+12-January-2010 Matias
+^ [#22569] Copy all tasks and helper functions from CKunenaPost class into KunenaControllerTopic
+^ [#22569] Copy editor/topic moderation templates into views/topic/tmpl, modify them to work with view
++ [#22792] New function KunenaTemplate::getTopicIcons() for the editor
++ [#22569] Redirect old post view into &view=topic&..., enqueue error message on old forms
+- [#22570] Remove deprecated code: funcs/post.php, template/default/editor, template/default/moderate
+
+11-January-2010 Matias
+^ [#22569] Copy logic from CKunenaProfile class into KunenaViewUser
+^ [#22569] Copy all tasks and helper functions from CKunenaProfile class into KunenaControllerUser
+^ [#22569] Copy profile templates into views/user/tmpl, modify them to work with view
++ [#22792] Add function KunenaForumCategoryHelper::getSubscriptions()
++ [#22792] KunenaModelCategories::getCategories(): add support for subscriptions
++ [#22569] Add new layout Categories / User (for category subscriptions), copy flat_cats.php into tmpl
+# [#22792] KunenaUser::getRank(): Use admin rank also for category administrators, not just global ones
+# [#22792] KunenaUser::getRank(): Fix moderator rank image detection
++ [#22569] Redirect old profile view into &view=user
+- [#22570] Remove deprecated code: funcs/profile.php, template/default/profile
+- [#22570] Remove deprecated code: funcs/latestx.php, template/default/threads
+
+10-January-2010 Matias
+^ [#22569] Use new KunenaForum::display('common', 'loginbox/menu') instead of calling old templates
+- [#22570] Remove deprecated code: lib/kunena.login.php
+- [#22570] Remove deprecated code: template/*/language
+- [#22570] Remove deprecated code: template/default/loginbox, emplate/default/menu.php
+
+9-January-2010 Matias
+# [#22569] KunenaController::display(): load common view and extra content only in html
+# [#22569] Update login/logout form to use the new user view in CommunityBuilder integration
++ [#22569] Implement RSS feeds in topics/view.feed.php
++ [#22569] Redirect old RSS view into &view=topics&format=feed
+- [#22570] Remove deprecated code: funcs/rss.php, lib/kunena.rss.php
+^ [#22569] Copy logic from CKunenaUserlist class into KunenaModelUsers
+^ [#22569] Copy logic from CKunenaUserlist class into KunenaViewUsers
+^ [#22569] Copy userlist templates into views/users/tmpl, modify them to work with view
++ [#22569] Redirect old userlist view into &view=users
+- [#22570] Remove deprecated code: funcs/userlist.php, template/default/userlist
+
+8-January-2010 Matias
++ [#22569] Add length limit into KunenaHtmlParser::parseBBCode()
+# [#23443] Fix regression after merge: white page because of activity integration
+# [#23443] Fix regression after merge: Rename rest of the JDatabaseQuery calls
+# [#22569] KunenaForumTopic::markNew() was using thread instead of id
++ [#23444] Add Joomla 1.6 support into new views (default.xml files)
+# [#23443] Fix undefined variables in category view
+
 7-January-2010 Matias
 ^ [#22786] Merge revisions 3955-4165 from trunk/1.6 (part 2)
 

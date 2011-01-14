@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id: listcat.php 3901 2010-11-15 14:14:02Z mahagr $
+ * @version $Id$
  * Kunena Component
  * @package Kunena
  *
@@ -10,4 +10,32 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
+$this->document->addScriptDeclaration ( "// <![CDATA[
+window.addEvent('domready', function(){ $$('dl.tabs').each(function(tabs){ new KunenaTabs(tabs); }); });
+// ]]>" );
 ?>
+
+<div class="kblock k-profile">
+	<div class="kheader">
+		<h2><span class="k-name"><?php echo JText::_('COM_KUNENA_USER_PROFILE'); ?> <?php echo $this->escape($this->name); ?></span>
+		<?php if (!empty($this->editlink)) echo '<span class="kheadbtn kright">'.$this->editlink.'</span>';?></h2>
+	</div>
+	<div class="kcontainer">
+		<div class="kbody">
+			<table class = "kblocktable" id ="kprofile">
+				<tr>
+					<td class = "kcol-first kcol-left">
+						<div id="kprofile-leftcol">
+							<?php $this->displaySummary(); ?>
+						</div>
+					</td>
+					<td class="kcol-mid kcol-right">
+						<div id="kprofile-rightcol">
+							<?php $this->displayTab(); ?>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

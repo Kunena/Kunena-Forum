@@ -121,20 +121,21 @@ class KunenaForum {
 			if (!is_file($vpath)) return;
 			require_once $vpath;
 		}
-		if ( !class_exists( $model ) ) {
+		if ( $viewName != 'common' && !class_exists( $model ) ) {
 			$mpath = KPATH_SITE . '/models/'.$viewName.'.php';
 			if (!is_file($mpath)) return;
 			require_once $mpath;
 		}
 
 		$view = new $view ( array ('base_path' => KPATH_SITE ) );
-		$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
+		if ($viewName != 'common') {
+			// Push the model into the view (as default).
+			$model = new $model ();
+			$model->initialize($params);
+			$view->setModel ( $model, true );
 
-		// Push the model into the view (as default).
-		$model = new $model ();
-		$model->initialize($params);
-		$view->setModel ( $model, true );
-
+			$view->common = new KunenaViewCommon ( array ('base_path' => KPATH_SITE ) );
+		}
 		// Push document object into the view.
 		$view->assignRef ( 'document', JFactory::getDocument() );
 

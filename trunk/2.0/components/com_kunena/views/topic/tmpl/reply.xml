@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE metadata>
 <metadata>
-	<layout title="COM_KUNENA_MENU_TOPIC_REPLY">
+	<layout hidden="true" title="COM_KUNENA_MENU_TOPIC_REPLY">
 		<message>COM_KUNENA_MENU_TOPIC_REPLY_DESC</message>
 	</layout>
 	<state>

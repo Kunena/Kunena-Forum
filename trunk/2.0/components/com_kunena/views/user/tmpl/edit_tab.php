@@ -34,8 +34,8 @@ defined( '_JEXEC' ) or die();
 		</dd>
 	</dl>
 	<input type="hidden" name="option" value="com_kunena" />
-	<input type="hidden" name="func" value="profile" />
-	<input type="hidden" name="do" value="save" />
+	<input type="hidden" name="view" value="user" />
+	<input type="hidden" name="task" value="save" />
 	<?php echo JHTML::_( 'form.token' ); ?>
 	<div class="kbutton-container">
 		<button class="kbutton ks validate" type="submit"><?php echo JText::_('COM_KUNENA_GEN_SAVE'); ?></button>

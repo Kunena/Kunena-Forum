@@ -131,7 +131,7 @@ class KunenaForumTopic extends JObject {
 		if ($value<0) $value = 0;
 		elseif ($value>1) $value = 3;
 		$this->hold = (int)$value;
-		$query = new JDatabaseQuery();
+		$query = new KunenaDatabaseQuery();
 		$query->update('#__kunena_messages')->set("hold={$this->hold}")->where("thread={$this->id}");
 		if (!$this->hold)
 			$query->where("hold>=2");
@@ -208,7 +208,7 @@ class KunenaForumTopic extends JObject {
 		}
 
 		// Then look at users who have read the thread
-		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics LIKE '%{$this->thread}%' AND userid!={$this->_db->quote($this->userid)}";
+		$query = "SELECT userid, readtopics FROM #__kunena_sessions WHERE readtopics LIKE '%{$this->id}%' AND userid!={$this->_db->quote($this->userid)}";
 		$this->_db->setQuery ( $query );
 		$sessions = $this->_db->loadObjectList ();
 		$dberror = KunenaError::checkDatabaseError ();
@@ -222,7 +222,7 @@ class KunenaForumTopic extends JObject {
 		foreach ( $sessions as $session ) {
 			$readtopics = $session->readtopics;
 			$rt = explode ( ",", $readtopics );
-			$key = array_search ( $this->thread, $rt );
+			$key = array_search ( $this->id, $rt );
 			if ($key !== false) {
 				unset ( $rt [$key] );
 				$readtopics = implode ( ",", $rt );
@@ -356,19 +356,12 @@ class KunenaForumTopic extends JObject {
 			$topic = $target;
 			$this->moved_id = $target->id;
 
-		} elseif ($target instanceof KunenaForumMessage) {
-			if ($target->thread == $this->id) {
-				$this->setError(JText::sprintf('COM_KUNENA_MODERATION_ERROR_SAME_TARGET_THREAD', $this->id, $this->id));
-				return false;
-			}
-			$topic = $target->getTopic();
-			$this->moved_id = $topic->id;
-
 		} elseif ($target instanceof KunenaForumCategory) {
 			if ( $target->parent_id == 0 ) {
 				$this->setError(JText::_('COM_KUNENA_MODERATION_ERROR_NOT_MOVE_SECTION'));
 				return false;
 			}
+			$oldCategory = $this->getCategory();
 			$topic = $this;
 			$this->moved_id = 0;
 			$this->category_id = $target->id;
@@ -391,7 +384,7 @@ class KunenaForumTopic extends JObject {
 				return false;
 			}
 		}
-		$query = new JDatabaseQuery();
+		$query = new KunenaDatabaseQuery();
 		$query->update('#__kunena_messages')->set("catid={$topic->category_id}")->set("thread={$topic->id}")->where("thread={$this->id}");
 		if ($ids === false) {
 			// Move the whole topic
@@ -400,18 +393,28 @@ class KunenaForumTopic extends JObject {
 			$query->where("time>{$ids->toUnix()}");
 		} else {
 			// Move individual messages
-			$ids = implode(',', $ids);
+			if (is_array($ids)) $ids = implode(',', $ids);
 			$query->where("id IN ({$ids})");
 		}
-		$this->_db->query($query);
+		$this->_db->setQuery ( $query );
+		$this->_db->query();
 		if ($this->_db->getErrorNum () ) {
 			$this->setError($this->_db->getError());
 			return false;
 		}
 		if ($topic->id != $this->id) {
+			// Moving topic into another topic
 			$this->recount();
 			$topic->recount();
+		} else {
+			// Moving topic into another category
+			$this->save();
+			// Remove topic from the old category
+			$oldCategory->update($this, -1, -$this->posts);
+			// Add topic into the new category
+			$target->update($this, 1, $this->posts);
 		}
+		return true;
 	}
 
 	/**
@@ -452,13 +455,14 @@ class KunenaForumTopic extends JObject {
 		$postDelta = $this->posts-$this->_posts;
 
 		//Store the topic data in the database
-		if (! $result = $table->store ()) {
+		if (! $table->store ()) {
 			$this->setError ( $table->getError () );
+			return false;
 		}
 
 		// Set the id for the KunenaForumTopic object in case we created a new topic.
-		if ($result && $isnew) {
-			$this->load ( $this->id );
+		if ($isnew) {
+			$this->load ( $table->id );
 		}
 
 		$category = $this->getCategory();
@@ -466,7 +470,7 @@ class KunenaForumTopic extends JObject {
 			$this->setError ( $category->getError () );
 		}
 
-		return $result;
+		return true;
 	}
 
 	/**
@@ -600,6 +604,10 @@ class KunenaForumTopic extends JObject {
 			$this->hold = KunenaForum::PUBLISHED;
 		}
 
+		if(!$this->save()) {
+			return false;
+		}
+
 		if ($message && $message->userid) {
 			// Update post count from user
 			$user = KunenaFactory::getUser($message->userid);
@@ -614,7 +622,7 @@ class KunenaForumTopic extends JObject {
 			}
 		}
 
-		return $this->save();
+		return true;
 	}
 
 	public function recount() {

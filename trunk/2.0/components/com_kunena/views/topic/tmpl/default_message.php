@@ -36,10 +36,12 @@ defined ( '_JEXEC' ) or die ();
 <?php endif; ?>
 <?php if ( $this->topic->authorise('reply') ) : ?>
 <div id="kreply<?php echo intval($this->message->id) ?>_form" class="kreply-form" style="display: none">
-	<form action="<?php echo CKunenaLink::GetPostURL(); ?>" method="post" name="postform" enctype="multipart/form-data">
+	<form action="<?php echo JURI::root(true) ?>" method="post" name="postform" enctype="multipart/form-data">
+		<input type="hidden" name="option" value="com_kunena" />
+		<input type="hidden" name="view" value="topic" />
+		<input type="hidden" name="task" value="post" />
 		<input type="hidden" name="parentid" value="<?php echo intval($this->message->id) ?>" />
 		<input type="hidden" name="catid" value="<?php echo intval($this->category->id) ?>" />
-		<input type="hidden" name="action" value="post" />
 		<?php echo JHTML::_( 'form.token' ) ?>
 		<?php if (KunenaFactory::getUser()->exists() && $this->category->allow_anonymous): ?>
 		<input type="text" name="authorname" size="35" class="kinputbox postinput" maxlength="35" value="<?php echo $this->escape($this->profile->getName()) ?>" /><br />

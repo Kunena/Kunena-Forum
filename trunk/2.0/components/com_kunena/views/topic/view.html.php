@@ -109,6 +109,164 @@ class KunenaViewTopic extends KunenaView {
 		$this->display($tpl);
 	}
 
+	protected function DisplayCreate($tpl = null) {
+		$this->setLayout('edit');
+		$this->catid = $this->state->get('item.catid');
+		$this->id = $this->state->get('item.id');
+		$this->my = JFactory::getUser();
+		$this->config = KunenaFactory::getConfig();
+
+		$categories = KunenaForumCategoryHelper::getCategories();
+		$arrayanynomousbox = array();
+		$arraypollcatid = array();
+		foreach ($categories as $category) {
+			if ($category->parent_id && $category->allow_anonymous) {
+				$arrayanynomousbox[] = '"'.$category->id.'":'.$item->post_anonymous;
+			}
+			if ($category->parent_id && $category->allow_polls) {
+				$arraypollcatid[] = '"'.$category->id.'":1';
+			}
+		}
+		$arrayanynomousbox = implode(',',$arrayanynomousbox);
+		$arraypollcatid = implode(',',$arraypollcatid);
+		$this->document->addScriptDeclaration('var arrayanynomousbox={'.$arrayanynomousbox.'}');
+		$this->document->addScriptDeclaration('var pollcategoriesid = {'.$arraypollcatid.'};');
+
+		$cat_params = array ();
+		$cat_params['ordering'] = 'ordering';
+		$cat_params['toplevel'] = 0;
+		$cat_params['sections'] = 0;
+		$cat_params['direction'] = 1;
+		$cat_params['action'] = 'topic.create';
+
+		$this->selectcatlist = JHTML::_('kunenaforum.categorylist', 'catid', 0, null, $cat_params, 'class="inputbox"', 'value', 'text', 0);
+
+		$this->category = KunenaForumCategoryHelper::get($this->catid);
+		if (!$this->selectcatlist || ($this->catid && !$this->category->authorise('topic.create'))) {
+			$msg = JText::sprintf ( 'COM_KUNENA_POST_NEW_TOPIC_NO_PERMISSIONS', $this->category->getError());
+			$app = JFactory::getApplication();
+			$app->enqueueMessage ( $msg, 'notice' );
+			return false;
+		}
+		list ($this->topic, $this->message) = $this->category->newTopic();
+		$this->title = JText::_ ( 'COM_KUNENA_POST_NEW_TOPIC' );
+		$this->action = 'post';
+
+		$this->display($tpl);
+	}
+
+	protected function DisplayReply($tpl = null) {
+		$this->setLayout('edit');
+		$this->catid = $this->state->get('item.catid');
+		$this->id = $this->state->get('item.id');
+		$this->my = JFactory::getUser();
+		$this->config = KunenaFactory::getConfig();
+
+		$parent = KunenaForumMessageHelper::get($this->id);
+		if (!$parent->authorise('reply')) {
+			$app = JFactory::getApplication();
+			$app->enqueueMessage ( $parent->getError(), 'notice' );
+			return false;
+		}
+		$quote = JRequest::getBool ( 'quote', false );
+		list ($this->topic, $this->message) = $parent->newReply($quote);
+		$this->category = $this->topic->getCategory();
+		$this->title = JText::_ ( 'COM_KUNENA_POST_REPLY_TOPIC' ) . ' ' . $this->topic->subject;
+		$this->action = 'post';
+
+		$this->display($tpl);
+	}
+
+	protected function displayEdit($tpl = null) {
+		$this->catid = $this->state->get('item.catid');
+		$this->id = $this->state->get('item.id');
+		$this->my = JFactory::getUser();
+		$this->config = KunenaFactory::getConfig();
+
+		$this->message = KunenaForumMessageHelper::get($this->id);
+		if (!$this->message->authorise('edit')) {
+			$app = JFactory::getApplication();
+			$app->enqueueMessage ( $this->message->getError(), 'notice' );
+			return false;
+		}
+		$this->topic = $this->message->getTopic();
+		$this->category = $this->topic->getCategory();
+		$this->title = JText::_ ( 'COM_KUNENA_POST_EDIT' ) . ' ' . $this->topic->subject;
+		$this->action = 'edit';
+
+		// Load attachments
+		require_once(KUNENA_PATH_LIB.DS.'kunena.attachments.class.php');
+		$attachments = CKunenaAttachments::getInstance ();
+		$this->attachments = array_pop($attachments->get($this->message->id));
+
+		//save the options for query after and load the text options, the number options is for create the fields in the form after
+		if ($this->topic->poll_id) {
+			$this->polldatasedit = $this->poll->get_poll_data ( $this->topic->id );
+			$this->polloptionstotal = count ( $this->polldatasedit );
+		}
+
+		$this->display($tpl);
+	}
+
+	protected function displayMove($tpl = null) {
+		$this->mesid = JRequest::getInt('mesid', 0);
+		$this->id = $this->state->get('item.id');
+		$this->catid = $this->state->get('item.catid');
+		$this->config = KunenaFactory::getConfig();
+		$app = JFactory::getApplication();
+
+		if (!$this->mesid) {
+			$this->topic = KunenaForumTopicHelper::get($this->id);
+			if (!$this->topic->authorise('move')) {
+				$app->enqueueMessage ( $this->topic->getError(), 'notice' );
+				return;
+			}
+		} else {
+			$this->message = KunenaForumMessageHelper::get($this->mesid);
+			if (!$this->message->authorise('move')) {
+				$app->enqueueMessage ( $this->message->getError(), 'notice' );
+				return;
+			}
+			$this->topic = $this->message->getTopic();
+		}
+		$this->category = $this->topic->getCategory();
+
+		$options =array ();
+		if (!$this->mesid) {
+			$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_MOVE_TOPIC' ) );
+		} else {
+			$options [] = JHTML::_ ( 'select.option', 0, JText::_ ( 'COM_KUNENA_MODERATION_CREATE_TOPIC' ) );
+		}
+		$options [] = JHTML::_ ( 'select.option', -1, JText::_ ( 'COM_KUNENA_MODERATION_ENTER_TOPIC' ) );
+
+		$db = JFactory::getDBO();
+		$params = array(
+			'orderby'=>'tt.last_post_time DESC',
+			'where'=>" AND tt.id != {$db->Quote($this->topic->id)} ");
+		list ($total, $topics) = KunenaForumTopicHelper::getLatestTopics($this->catid, 0, 30, $params);
+		foreach ( $topics as $cur ) {
+			$options [] = JHTML::_ ( 'select.option', $cur->id, $this->escape ( $cur->subject ) );
+		}
+		$this->topiclist = JHTML::_ ( 'select.genericlist', $options, 'targettopic', 'class="inputbox"', 'value', 'text', 0, 'kmod_topics' );
+
+		$options=array();
+		$this->categorylist = CKunenaTools::KSelectList ( 'targetcategory', $options, 'class="inputbox kmove_selectbox"', false, 'kmod_categories', $this->catid );
+		if (isset($this->message)) $this->user = KunenaFactory::getUser($this->message->userid);
+
+		if ($this->mesid) {
+			// Get thread and reply count from current message:
+			$query = "SELECT COUNT(mm.id) AS replies FROM #__kunena_messages AS m
+				INNER JOIN #__kunena_messages AS t ON m.thread=t.id
+				LEFT JOIN #__kunena_messages AS mm ON mm.thread=m.thread AND mm.id > m.id
+				WHERE m.id={$db->Quote($this->mesid)}";
+			$db->setQuery ( $query, 0, 1 );
+			$this->replies = $db->loadResult ();
+			if (KunenaError::checkDatabaseError()) return;
+		}
+
+		$this->display($tpl);
+	}
+
 	function buttons() {
 		$catid = $this->state->get('item.catid');
 		$id = $this->state->get('item.id');
@@ -156,7 +314,7 @@ class KunenaViewTopic extends KunenaView {
 			} else {
 				$this->topic_lock = CKunenaLink::GetTopicPostLink ( 'unlock', $catid, $id, CKunenaTools::showButton ( 'lock', JText::_('COM_KUNENA_BUTTON_UNLOCK_TOPIC') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNLOCK_TOPIC_LONG') );
 			}
-			$this->topic_delete = CKunenaLink::GetTopicPostLink ( 'deletethread', $catid, $id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE_TOPIC') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_TOPIC_LONG') );
+			$this->topic_delete = CKunenaLink::GetTopicPostLink ( 'delete', $catid, $id, CKunenaTools::showButton ( 'delete', JText::_('COM_KUNENA_BUTTON_DELETE_TOPIC') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_DELETE_TOPIC_LONG') );
 			$this->topic_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderatethread', $catid, $id, CKunenaTools::showButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE_TOPIC') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE') );
 		}
 	}
@@ -373,5 +531,95 @@ class KunenaViewTopic extends KunenaView {
 
 		$output .= '</ul>';
 		return $output;
+	}
+
+	// Helper functions
+
+
+	function hasThreadHistory() {
+		if (! $this->config->showhistory || $this->id == 0)
+			return false;
+		return true;
+	}
+
+	function displayThreadHistory() {
+		if (! $this->config->showhistory || $this->id == 0)
+			return;
+
+		$db = JFactory::getDBO();
+		//get all the messages for this thread
+		$query = "SELECT m.*, t.* FROM #__kunena_messages AS m
+			LEFT JOIN #__kunena_messages_text AS t ON m.id=t.mesid
+			WHERE thread='{$this->message->thread}' AND hold='0'
+			ORDER BY time DESC";
+		$db->setQuery ( $query, 0, $this->config->historylimit );
+		$this->messages = $db->loadObjectList ();
+		if (KunenaError::checkDatabaseError ())
+			return;
+
+		$this->replycount = count ( $this->messages );
+
+		//get attachments
+		$mesids = array ();
+		foreach ( $this->messages as $mes ) {
+			$mesids [] = $mes->id;
+		}
+		$mesids = implode ( ',', $mesids );
+		require_once (KUNENA_PATH_LIB . DS . 'kunena.attachments.class.php');
+		$attachments = CKunenaAttachments::getInstance ();
+		$this->attachmentslist = $attachments->get ( $mesids );
+
+		echo $this->loadTemplate ( 'history' );
+	}
+
+	public function hasCaptcha() {
+		if ($this->config->captcha == 1 && $this->my->id < 1)
+			return true;
+		return false;
+	}
+
+	public function displayCaptcha() {
+		if (! $this->hasCaptcha ())
+			return;
+
+		$dispatcher = JDispatcher::getInstance ();
+		$results = $dispatcher->trigger ( 'onCaptchaRequired', array ('kunena.post' ) );
+
+		if (! JPluginHelper::isEnabled ( 'system', 'captcha' ) || ! $results [0]) {
+			echo JText::_ ( 'COM_KUNENA_CAPTCHA_NOT_CONFIGURED' );
+			return;
+		}
+
+		if ($results [0]) {
+			$dispatcher->trigger ( 'onCaptchaView', array ('kunena.post', 0, '', '<br />' ) );
+		}
+	}
+
+	function redirectBack() {
+		$httpReferer = JRequest::getVar ( 'HTTP_REFERER', JURI::base ( true ), 'server' );
+		$app = JFactory::getApplication();
+		$app->redirect ( $httpReferer );
+	}
+
+	public function getNumLink($mesid, $replycnt) {
+		if ($this->config->ordering_system == 'replyid') {
+			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $replycnt );
+		} else {
+			$this->numLink = CKunenaLink::GetSamePageAnkerLink ( $mesid, '#' . $mesid );
+		}
+
+		return $this->numLink;
+	}
+
+	function displayAttachments($attachments) {
+		$this->attachments = $attachments;
+		CKunenaTools::loadTemplate ( '/view/message.attachments.php' );
+	}
+
+	function canSubscribe() {
+		if (! $this->my->id || ! $this->config->allowsubscriptions)
+			return false;
+		$usertopic = $this->topic->getUserTopic ();
+		return ! $usertopic->subscribed;
 	}
 }

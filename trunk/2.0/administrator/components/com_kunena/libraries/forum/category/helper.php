@@ -11,6 +11,7 @@
 defined ( '_JEXEC' ) or die ();
 
 kimport ('kunena.error');
+kimport ('kunena.user');
 kimport ('kunena.forum.category');
 
 /**
@@ -50,6 +51,16 @@ class KunenaForumCategoryHelper {
 		}
 
 		return self::$_instances [$id];
+	}
+
+	static public function getSubscriptions($user = null) {
+		$user = KunenaUserHelper::get($user);
+		$db = JFactory::getDBO ();
+		$query = "SELECT category_id FROM #__kunena_user_categories WHERE user_id={$db->Quote($user->userid)} AND subscribed=1";
+		$db->setQuery ( $query );
+		$subscribed = (array) $db->loadResultArray ();
+		if (KunenaError::checkDatabaseError()) return;
+		return KunenaForumCategoryHelper::getCategories($subscribed);
 	}
 
 	static public function getNewTopics($catids) {

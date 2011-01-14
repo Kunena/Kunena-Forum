@@ -172,7 +172,7 @@ class CKunenaLink {
 	function GetMyProfileURL($userid = 0, $task = '', $xhtml = true, $extra = '') {
 		if (!$task) {
 			// Workaround for menu redirect: be more verbose
-			kimport('kunena.integration.integration');
+			kimport('kunena.integration');
 			$profileIntegration = KunenaIntegration::detectIntegration('profile', true);
 			if ($profileIntegration != 'kunena') $task='summary';
 		}
@@ -245,9 +245,9 @@ class CKunenaLink {
 	}
 
 	// Get actions: favorite, subscribe, delete, approve etc
-	function GetTopicPostLink($do, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
+	function GetTopicPostLink($task, $catid, $id, $name, $rel = 'nofollow', $class = '', $title = '', $attr = '') {
 		$token = '&'.JUtility::getToken().'=1';
-		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=post&do={$do}&catid={$catid}&id={$id}{$token}", $name, $title, $rel, $class, '', $attr );
+		return self::GetSefHrefLink ( "index.php?option=com_kunena&view=topic&task={$task}&catid={$catid}&id={$id}{$token}", $name, $title, $rel, $class, '', $attr );
 	}
 
 	// Post actions: post, edit, moderate etc

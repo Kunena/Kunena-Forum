@@ -230,13 +230,13 @@ class KunenaModelTopics extends KunenaModel {
 		$limit = $this->getState ( 'list.limit' );
 		$db = JFactory::getDBO();
 
-		$cquery = new JDatabaseQuery();
+		$cquery = new KunenaDatabaseQuery();
 		$cquery->select('COUNT(*)')
 			->from('#__kunena_messages AS m')
 			->innerJoin('#__kunena_topics AS tt ON m.thread = tt.id')
 			->where('m.moved=0'); // TODO: remove column
 
-		$rquery = new JDatabaseQuery();
+		$rquery = new KunenaDatabaseQuery();
 		$rquery->select('m.*, t.message')
 			->from('#__kunena_messages AS m')
 			->innerJoin('#__kunena_messages_text AS t ON m.id = t.mesid')

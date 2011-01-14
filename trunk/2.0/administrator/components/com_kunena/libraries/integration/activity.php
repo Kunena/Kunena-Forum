@@ -14,7 +14,6 @@
 defined( '_JEXEC' ) or die('');
 
 require_once KPATH_ADMIN . '/libraries/integration/integration.php';
-kimport ( 'kunena.integration.integration' );
 
 abstract class KunenaActivity
 {

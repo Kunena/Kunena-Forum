@@ -114,7 +114,7 @@ class KunenaController extends JController {
 
 		$view = $this->getView ( $vName, $vFormat, '', array ('base_path' => $this->_basePath ) );
 		if ($view) {
-			if ($app->isSite()) {
+			if ($app->isSite() && $vFormat=='html') {
 				$common = $this->getView ( 'common', $vFormat, '', array ('base_path' => $this->_basePath ) );
 				$common->starttime = $this->starttime;
 				$view->common = $common;
@@ -138,7 +138,11 @@ class KunenaController extends JController {
 			$view->assignRef ( 'document', $document );
 
 			// Render the view.
-			$view->displayAll ();
+			if ($vFormat=='html') {
+				$view->displayAll ();
+			} else {
+				$view->displayLayout ();
+			}
 		}
 	}
 

@@ -241,6 +241,104 @@ switch ($view) {
 		$redirect = true;
 		$view = 'topic';
 		break;
+	case 'myprofile' :
+	case 'userprofile' :
+	case 'fbprofile' :
+	case 'profile' :
+	case 'moderateuser' :
+		$redirect = true;
+		$view = 'user';
+		$task = JRequest::getCmd ( 'task', '' );
+		if ($task) $kunena_app->enqueueMessage(JText::_('COM_KUNENA_DEPRECATED_ACTION'), 'error');
+		$mode = JRequest::getWord ( 'do' );
+		JRequest::setVar ( 'do' );
+		switch ($mode) {
+			case 'edit':
+				$layout = 'edit';
+				break;
+			default:
+				$layout = 'default';
+				break;
+		}
+		break;
+	case 'userlist':
+		$redirect = true;
+		$view = 'users';
+		break;
+	case 'rss':
+		$redirect = true;
+		$view = 'topics';
+		switch ($layout) {
+			case 'topic':
+				$layout = 'topics';
+				break;
+			case 'recent':
+				$layout = 'default';
+				break;
+			case 'post':
+			default:
+				$layout = 'posts';
+				break;
+		}
+		JRequest::setVar ( 'type', 'rss' );
+		JRequest::setVar ( 'format', 'feed' );
+		// FIXME: handle mapping
+		break;
+	case 'post':
+		$redirect = true;
+		$view = 'topic';
+
+		// Support old &parentid=123 and &replyto=123 variables
+		$id = JRequest::getInt ( 'id', 0 );
+		if (!$id) {
+			$id = JRequest::getInt ( 'parentid', 0 );
+		}
+		if (!$id) {
+			$id = JRequest::getInt ( 'replyto', 0 );
+		}
+		JRequest::setVar ( 'parentid' );
+		JRequest::setVar ( 'replyto' );
+		JRequest::setVar ( 'id', $id );
+
+		$mode = JRequest::getWord ( 'do' );
+		JRequest::setVar ( 'do' );
+		$action = JRequest::getCmd ( 'action', '' );
+		if ($action) {
+			$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
+		} else {
+			switch ($mode) {
+				case 'new' :
+					$layout = 'create';
+					break;
+
+				case 'reply' :
+					$layout = 'reply';
+					break;
+
+				case 'quote' :
+					$layout = 'reply';
+					JRequest::setVar ( 'quote', 1 );
+					break;
+
+				case 'edit' :
+					$layout = 'edit';
+					break;
+
+				case 'moderate' :
+					$layout = 'move';
+					JRequest::setVar ( 'id' );
+					JRequest::setVar ( 'mesid', $id );
+					break;
+
+				case 'moderatethread' :
+					$layout = 'move';
+					break;
+
+				default :
+					$kunena_app->enqueueMessage ( JText::_ ( 'COM_KUNENA_DEPRECATED_ACTION' ), 'error' );
+			}
+		}
+		break;
 }
 if ($redirect) {
 	JRequest::setVar ( 'func' );
@@ -286,8 +384,6 @@ $document->addScriptDeclaration('// <![CDATA[
 var kunena_toggler_close = "'.JText::_('COM_KUNENA_TOGGLER_COLLAPSE').'";
 var kunena_toggler_open = "'.JText::_('COM_KUNENA_TOGGLER_EXPAND').'";
 // ]]>');
-
-global $topic_emoticons;
 
 // Class structure should be used after this and all the common task should be moved to this class
 require_once (JPATH_COMPONENT . DS . 'class.kunena.php');
@@ -349,7 +445,7 @@ if ($func == "json") {
 }
 
 $format = JRequest::getCmd ( 'format', 'html' );
-if ($func != 'rss' && $func != 'fb_pdf' && $func != 'pdf' && $format == 'html') {
+if ($func != 'fb_pdf' && $func != 'pdf' && $format == 'html') {
 	if (file_exists ( KUNENA_ABSTMPLTPATH . '/initialize.php' )) {
 		require_once ( KUNENA_ABSTMPLTPATH . '/initialize.php' );
 	} else {
@@ -367,15 +463,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 } else {
 	// =======================================================================================
 	// Forum is online:
-
-	//intercept the RSS request; we should stop afterwards
-	if ($func == 'rss') {
-		require_once ( JPATH_COMPONENT.DS.'funcs'.DS.'rss.php');
-
-		$feed = new CKunenaRSSView($catid);
-		$feed->display();
-		$kunena_app->close ();
-	}
 
 	jimport ( 'joomla.version' );
 	$jversion = new JVersion ();
@@ -493,16 +580,9 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 		$__profiler->mark('Profilebox Start');
 	}
 
-	CKunenaTools::loadTemplate('/menu.php');
-
 	// Display login box
-	require_once (KUNENA_PATH_LIB . DS . 'kunena.login.php');
-	$type = CKunenaLogin::getType ();
-	if ($type == 'login') {
-		CKunenaTools::loadTemplate('/loginbox/login.php');
-	} else {
-		CKunenaTools::loadTemplate('/loginbox/logout.php');
-	}
+	KunenaForum::display('common', 'menu');
+	KunenaForum::display('common', 'loginbox');
 
  	if(JDEBUG){
 		$__profiler->mark('Profilebox End');
@@ -553,31 +633,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 
 			break;
 
-		case 'myprofile' :
-		case 'userprofile' :
-		case 'fbprofile' :
-		case 'profile' :
-		case 'moderateuser' :
-			require_once ( KUNENA_PATH_FUNCS .DS. 'profile.php');
-			$page = new CKunenaProfile($userid, $task ? $task : $do);
-			$page->display();
-
-			break;
-
-		case 'userlist' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'userlist.php');
-			$page = new CKunenaUserlist();
-			$page->display();
-
-			break;
-
-		case 'post' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'post.php');
-			$page = new CKunenaPost();
-			$page->display();
-
-			break;
-
 		case 'review' :
 			require_once (KUNENA_PATH_LIB . DS . 'kunena.review.php');
 			$review = new CKunenaReview($catid);
@@ -595,21 +650,6 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 			require_once(KUNENA_PATH_LIB .DS. 'kunena.report.class.php');
 			$report = new CKunenaReport();
 			$report->display();
-
-			break;
-
-		case 'latest' :
-		case 'mylatest' :
-		case 'noreplies' :
-		case 'subscriptions' :
-		case 'favorites' :
-		case 'userposts' :
-		case 'unapproved' :
-		case 'deleted' :
-			require_once (KUNENA_PATH_FUNCS . DS . 'latestx.php');
-			if ($do) $func = $do;
-			$page = new CKunenaLatestX($func, $page);
-			$page->display();
 
 			break;
 
@@ -885,9 +925,8 @@ if ($kunena_config->board_offline && ! CKunenaTools::isAdmin ()) {
 	// Show total time it took to create the page
 	$__ktime = JProfiler::getmicrotime() - $__kstarttime;
 ?>
-	<div class="kfooter">
-		<span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').'&nbsp;'.sprintf('%0.3f', $__ktime).'&nbsp;'.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span>
-	</div>
+	<div class="kfooter"><span class="kfooter-time"><?php echo JText::_('COM_KUNENA_FOOTER_TIME_TO_CREATE').'&nbsp;'.sprintf('%0.3f', $__ktime).'&nbsp;'.JText::_('COM_KUNENA_FOOTER_TIME_SECONDS');?></span>
+</div>
 </div>
 <!-- closes Kunena div -->
 <?php

@@ -68,7 +68,7 @@ class KunenaLoginCommunityBuilder extends KunenaLogin {
 			'field_remember'=>'remember',
 			'field_return'=>'return',
 			'option'=>'com_kunena',
-			'view'=>'profile',
+			'view'=>'user',
 			'task'=>'login'
 		);
 	}
@@ -78,7 +78,7 @@ class KunenaLoginCommunityBuilder extends KunenaLogin {
 			'form'=>'login',
 			'field_return'=>'return',
 			'option'=>'com_kunena',
-			'view'=>'profile',
+			'view'=>'user',
 			'task'=>'logout'
 		);
 	}

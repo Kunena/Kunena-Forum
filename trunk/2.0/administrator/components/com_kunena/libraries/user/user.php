@@ -216,12 +216,12 @@ class KunenaUser extends JObject {
 
 	public function isAdmin($catid = 0) {
 		$acl = KunenaFactory::getAccessControl ();
-		return $acl->isAdmin ( $this->userid, $catid );
+		return $acl->isAdmin ( $this, $catid );
 	}
 
 	public function isModerator($catid = 0) {
 		$acl = KunenaFactory::getAccessControl ();
-		return $acl->isModerator ( $this->userid, $catid );
+		return $acl->isModerator ( $this, $catid );
 	}
 
 	public function isBanned() {
@@ -316,7 +316,7 @@ class KunenaUser extends JObject {
 			}
 		} else if ($this->rank != 0 && isset ( self::$_ranks [$this->rank] )) {
 			$rank = self::$_ranks [$this->rank];
-		} else if ($this->rank == 0 && $this->isAdmin ()) {
+		} else if ($this->rank == 0 && $this->isAdmin ( $catid )) {
 			$rank->rank_id = 0;
 			$rank->rank_title = JText::_ ( 'COM_KUNENA_RANK_ADMINISTRATOR' );
 			$rank->rank_special = 1;
@@ -333,7 +333,7 @@ class KunenaUser extends JObject {
 			$rank->rank_special = 1;
 			$rank->rank_image = 'rankmod.gif';
 			foreach ( self::$_ranks as $cur ) {
-				if ($cur->rank_special == 1 && JFile::stripExt ( $cur->rank_image ) == 'rankadmin') {
+				if ($cur->rank_special == 1 && JFile::stripExt ( $cur->rank_image ) == 'rankmod') {
 					$rank = $cur;
 					break;
 				}

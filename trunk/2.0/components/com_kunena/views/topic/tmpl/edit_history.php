@@ -9,8 +9,6 @@
  * @link http://www.kunena.org
  *
  **/
-
-// Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
 $k = 0;

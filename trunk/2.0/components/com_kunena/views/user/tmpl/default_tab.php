@@ -16,7 +16,7 @@ JHTML::_('behavior.tooltip');
 <div id="kprofile-rightcoltop">
 	<div class="kprofile-rightcol2">
 <?php
-	CKunenaTools::loadTemplate('/profile/socialbuttons.php');
+	echo $this->loadTemplate('social');
 ?>
 	</div>
 	<div class="kprofile-rightcol1">

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Id$
+ * @version $Id: access.php 4163 2011-01-07 10:45:09Z mahagr $
  * Kunena Component
  * @package Kunena
  *

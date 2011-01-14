@@ -11,8 +11,7 @@
  **/
 defined ( '_JEXEC' ) or die ();
 
-if (!class_exists('JDatabaseQuery'))
-	kimport('kunena.databasequery');
+kimport('kunena.databasequery');
 
 abstract class KunenaTable extends JTable {
 	protected $_exists = false;
@@ -51,7 +50,7 @@ abstract class KunenaTable extends JTable {
 		if ($reset) $this->reset();
 
 		// Initialise the query.
-		$query	= new JDatabaseQuery();
+		$query	= new KunenaDatabaseQuery();
 		$query->select('*');
 		$query->from($this->_tbl);
 		$fields = array_keys($this->getProperties());

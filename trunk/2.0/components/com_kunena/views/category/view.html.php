@@ -48,11 +48,13 @@ class KunenaViewCategory extends KunenaView {
 		$this->config = KunenaFactory::getConfig();
 
 		// Is user allowed to post new topic?
+		$this->newTopicHtml = '';
 		if ($this->category->authorise ( 'topic.create', null, true )) {
 			$this->newTopicHtml = CKunenaLink::GetPostNewTopicLink ( $this->category->id, CKunenaTools::showButton ( 'newtopic', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC') ), 'nofollow', 'kicon-button kbuttoncomm btn-left', JText::_('COM_KUNENA_BUTTON_NEW_TOPIC_LONG') );
 		}
 
 		// Is user allowed to mark forums as read?
+		$this->markReadHtml = '';
 		if ($this->me->exists() && $this->total) {
 			$this->markReadHtml = CKunenaLink::GetCategoryActionLink ( 'markthisread', $this->category->id, CKunenaTools::showButton ( 'markread', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD') ), 'nofollow', 'kicon-button kbuttonuser btn-left', JText::_('COM_KUNENA_BUTTON_MARKFORUMREAD_LONG') );
 		}

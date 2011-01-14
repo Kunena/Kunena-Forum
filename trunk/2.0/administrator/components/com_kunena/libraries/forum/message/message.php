@@ -410,10 +410,16 @@ class KunenaForumMessage extends JObject {
 			$this->setError ( $table->getError () );
 			return false;
 		}
-		$this->id = $table->get ( 'id' );
+
+		// Load KunenaForumMessage object in case we created a new message.
+		if ($isnew) {
+			$this->load ( $table->id );
+			$this->_hold = 1;
+		}
+
 		if (!$this->thread) {
 			// Update missing topic information into database
-			$this->thread = $this->id;
+			$this->_thread = $this->thread = $this->id;
 			$table->bind ( $this->getProperties () );
 			if (! $table->store ()) {
 				$this->setError ( $table->getError () );

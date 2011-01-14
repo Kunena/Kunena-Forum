@@ -57,12 +57,12 @@ abstract class KunenaHtmlParser {
 		return $txt;
 	}
 
-	function parseBBCode($txt, $parent=null) {
+	function parseBBCode($txt, $parent=null, $len=0) {
 		if (!$txt) return;
 
 		$bbcode = KunenaBBcode::getInstance();
 		$bbcode->parent = $parent;
-		$bbcode->SetLimit(0);
+		$bbcode->SetLimit($len);
 		$bbcode->SetPlainMode(false);
 		$txt = $bbcode->Parse($txt);
 		$txt = self::prepareContent ( $txt );

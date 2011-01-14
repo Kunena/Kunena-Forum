@@ -485,13 +485,16 @@ class KunenaForumCategory extends JObject {
 	}
 
 	public function update($topic, $topicdelta=0, $postdelta=0) {
-		if ($topic->moved_id) return;
+		if ($topic->moved_id) return false;
 
 		$update = false;
-		// Update topic and post count
-		$this->numTopics += $topicdelta;
-		$this->numPosts += $postdelta;
-		if ($topic->exists() && $topic->hold==0 ) {
+		if ($topicdelta || $postdelta) {
+			// Update topic and post count
+			$this->numTopics += (int)$topicdelta;
+			$this->numPosts += (int)$postdelta;
+			$update = true;
+		}
+		if ($topic->exists() && $topic->hold==0 && $topic->category_id == $this->id) {
 			// If topic exists and has new post, we need to update cache
 			if ($this->last_post_time < $topic->last_post_time) {
 				$this->last_topic_id = $topic->id;
@@ -505,9 +508,9 @@ class KunenaForumCategory extends JObject {
 				$update = true;
 			}
 		} elseif ($this->last_topic_id == $topic->id) {
-			// If topic got deleted and was cached, we need to find last post
+			// If last topic got moved or deleted, we need to find last post
 			$db = JFactory::getDBO ();
-			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND modev_id=0 ORDER BY last_post_time DESC";
+			$query = "SELECT * FROM #__kunena_topics WHERE category_id={$db->quote($this->id)} AND hold=0 AND moved_id=0 ORDER BY last_post_time DESC";
 			$db->setQuery ( $query, 0, 1 );
 			$topic = $db->loadObject ();
 			KunenaError::checkDatabaseError ();

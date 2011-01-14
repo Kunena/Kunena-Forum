@@ -28,6 +28,9 @@ class KunenaModelCategories extends KunenaModel {
 
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$this->setState ( 'item.id', $catid );
+
+		$layout = JRequest::getCmd ( 'layout', 'default' );
+		$this->setState ( 'layout', $layout );
 	}
 
 	public function getCategory() {
@@ -40,16 +43,25 @@ class KunenaModelCategories extends KunenaModel {
 			$this->me = KunenaFactory::getUser();
 			$this->config = KunenaFactory::getConfig();
 			$catid = $this->getState ( 'item.id' );
+			$layout = $this->getState ( 'layout' );
+			$flat = false;
 
-			if ($catid) {
-				$this->categories[0] = KunenaForumCategoryHelper::getCategories($catid);
-				if (empty($this->categories[0]))
+			if ($layout == 'user') {
+				$categories[0] = KunenaForumCategoryHelper::getSubscriptions();
+				$flat = true;
+			} elseif ($catid) {
+				$categories[0] = KunenaForumCategoryHelper::getCategories($catid);
+				if (empty($categories[0]))
 					return array();
 			} else {
-				$this->categories[0] = KunenaForumCategoryHelper::getChildren();
+				$categories[0] = KunenaForumCategoryHelper::getChildren();
 			}
 
-		$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($this->categories [0]), 1);
+		if ($flat) {
+			$allsubcats = $categories[0];
+		} else {
+			$allsubcats = KunenaForumCategoryHelper::getChildren(array_keys($categories [0]), 1);
+		}
 		if (empty ( $allsubcats ))
 			return array();
 
@@ -62,7 +74,7 @@ class KunenaModelCategories extends KunenaModel {
 		$userlist = array();
 
 		foreach ( $allsubcats as $subcat ) {
-			if (isset ( $this->categories [0] [$subcat->parent_id] )) {
+			if ($flat || isset ( $categories [0] [$subcat->parent_id] )) {
 
 				$last = $subcat->getLastPosted ();
 				if ($last->last_topic_id) {
@@ -80,7 +92,7 @@ class KunenaModelCategories extends KunenaModel {
 				if ($this->me->isModerator ( $subcat->id ))
 					$modcats [] = $subcat->id;
 			}
-			$this->categories [$subcat->parent_id] [] = $subcat;
+			$categories [$subcat->parent_id] [] = $subcat;
 		}
 
 		if ($this->me->ordering != '0') {
@@ -129,7 +141,11 @@ class KunenaModelCategories extends KunenaModel {
 		// Prefetch all users/avatars to avoid user by user queries during template iterations
 		KunenaUserHelper::loadUsers($userlist);
 
-		$this->_items = $this->categories;
+		if ($flat) {
+			$this->_items = $allsubcats;
+		} else {
+			$this->_items = $categories;
+		}
 		}
 
 		return $this->_items;

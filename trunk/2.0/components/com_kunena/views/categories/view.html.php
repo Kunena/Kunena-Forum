@@ -41,6 +41,30 @@ class KunenaViewCategories extends KunenaView {
 		}
 	}
 
+	function displayUser($tpl = null) {
+		$this->assignRef ( 'categories', $this->get ( 'Categories' ) );
+		$this->me = KunenaFactory::getUser();
+		$this->app = JFactory::getApplication();
+		$this->config = KunenaFactory::getConfig();
+
+		$errors = $this->getErrors();
+		if ($errors) {
+			$this->displayNoAccess($errors);
+		} else {
+			$this->header = $this->title = JText::_('COM_KUNENA_CATEGORY_SUBSCRIPTIONS');
+
+			// meta description and keywords
+			$metaDesc = (JText::_('COM_KUNENA_CATEGORIES') . ' - ' . $this->config->board_title );
+			$metaKeys = (JText::_('COM_KUNENA_CATEGORIES') . ', ' . $this->config->board_title . ', ' . JFactory::getApplication ()->getCfg ( 'sitename' ));
+
+			$metaDesc = $this->document->get ( 'description' ) . '. ' . $metaDesc;
+			$this->document->setMetadata ( 'keywords', $metaKeys );
+			$this->document->setDescription ( $metaDesc );
+
+			$this->display ($tpl);
+		}
+	}
+
 	public function getCategoryIcon($catid, $thumb = false) {
 		if (! $thumb) {
 			if ($this->config->shownew && $this->me->userid != 0) {

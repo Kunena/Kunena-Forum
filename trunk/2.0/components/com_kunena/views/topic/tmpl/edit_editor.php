@@ -8,13 +8,11 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link http://www.kunena.org
  **/
-
-// Dont allow direct linking
 defined ( '_JEXEC' ) or die ();
 
 // Kunena bbcode editor
 require_once (KPATH_SITE . DS . 'lib' .DS. 'kunena.poll.class.php');
-$kunena_poll =& CKunenaPolls::getInstance();
+$kunena_poll = CKunenaPolls::getInstance();
 $kunena_config = KunenaFactory::getConfig ();
 ?>
 <tr id="kpost-toolbar" class="krow<?php echo 1 + $this->k^=1;?>">

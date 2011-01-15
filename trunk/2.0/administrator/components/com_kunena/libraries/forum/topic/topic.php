@@ -550,7 +550,7 @@ class KunenaForumTopic extends JObject {
 			}
 		} else {
 			// If message isn't visible anymore, check if we need to update cache
-			if (!$message || $this->first_post_id == $message->id) {
+			if ($this->posts && (!$message || $this->first_post_id == $message->id)) {
 				// If message got deleted and was cached, we need to find new first post
 				$db = JFactory::getDBO ();
 				$query = "SELECT * FROM #__kunena_messages AS m INNER JOIN #__kunena_messages_text AS t ON t.mesid=m.id
@@ -584,9 +584,9 @@ class KunenaForumTopic extends JObject {
 					$this->last_post_guest_name = $last->name;
 				}
 			}
-			if (isset($first) && !$first) {
+			if (!$this->posts || (isset($first) && !$first)) {
 				// If topic has no visible posts, mark it deleted
-				$this->hold = KunenaForum::DELETED;
+				if (!$this->hold) $this->hold = KunenaForum::TOPIC_DELETED;
 				$this->posts = 0;
 				$this->first_post_id = 0;
 				$this->first_post_time = 0;

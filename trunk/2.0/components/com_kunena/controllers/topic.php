@@ -397,7 +397,7 @@ class KunenaControllerTopic extends KunenaController {
 		}
 
 		$topic = KunenaForumTopicHelper::get($this->id);
-		if ($topic->authorise('delete') && $topic->publish(KunenaForum::DELETED)) {
+		if ($topic->authorise('delete') && $topic->publish(KunenaForum::TOPIC_DELETED)) {
 			$app->enqueueMessage ( JText::_ ( 'COM_KUNENA_TOPIC_SUCCESS_DELETE' ) );
 		} else {
 			$app->enqueueMessage ( $topic->getError(), 'notice' );

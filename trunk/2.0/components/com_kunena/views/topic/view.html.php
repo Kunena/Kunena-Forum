@@ -59,11 +59,11 @@ class KunenaViewTopic extends KunenaView {
 		$this->assignRef ( 'total', $this->get ( 'Total' ) );
 
 		// If page does not exist, redirect to the last page
-		if ($this->total <= $this->state->get('list.start')) {
+/*		if ($this->total <= $this->state->get('list.start')) {
 			$app = JFactory::getApplication();
 			$app->redirect(CKunenaLink::GetThreadPageURL('view', $this->topic->category_id, $this->topic->id, $this->total, $this->state->get('list.start'), '', false));
 		}
-
+*/
 		$this->assignRef ( 'moderators', $this->get ( 'Moderators' ) );
 		$this->assignRef ( 'usertopic',$this->topic->getUserTopic());
 		$this->headerText =  JText::_('COM_KUNENA_MENU_LATEST_DESC');
@@ -432,6 +432,7 @@ class KunenaViewTopic extends KunenaView {
 			}
 		}
 
+		$this->message_quickreply = $this->message_reply = $this->message_quote = '';
 		if ($this->topic->authorise('reply')) {
 			//user is allowed to reply/quote
 			if ($me->userid) {
@@ -448,8 +449,6 @@ class KunenaViewTopic extends KunenaView {
 			}
 		}
 
-		$this->class = 'class="kmsg"';
-
 		//Offer an moderator a few tools
 		$this->message_delete = $this->message_undelete = $this->message_permdelete = $this->message_publish = '';
 		if (CKunenaTools::isModerator ( $me->userid, $this->topic->category_id )) {
@@ -458,10 +457,8 @@ class KunenaViewTopic extends KunenaView {
 			$this->message_moderate = CKunenaLink::GetTopicPostReplyLink ( 'moderate', $this->topic->category_id, $this->message->id, CKunenaTools::showButton ( 'moderate', JText::_('COM_KUNENA_BUTTON_MODERATE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_MODERATE_LONG') );
 			if ($this->message->hold == 1) {
 				$this->message_publish = CKunenaLink::GetTopicPostLink ( 'approve', $this->topic->category_id, $this->message->id, CKunenaTools::showButton ( 'approve', JText::_('COM_KUNENA_BUTTON_APPROVE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_APPROVE_LONG') );
-				$this->class = 'class="kmsg kunapproved"';
 			}
 			if ($this->message->hold == 2 || $this->message->hold == 3) {
-				$this->class = 'class="kmsg kunapproved"';
 				$this->message_undelete = CKunenaLink::GetTopicPostLink ( 'undelete', $this->topic->category_id, $this->message->id, CKunenaTools::showButton ( 'undelete', JText::_('COM_KUNENA_BUTTON_UNDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_UNDELETE_LONG') );
 				$this->message_permdelete = CKunenaLink::GetTopicPostLink ( 'permdelete', $this->topic->category_id, $this->message->id, CKunenaTools::showButton ( 'permdelete', JText::_('COM_KUNENA_BUTTON_PERMDELETE') ), 'nofollow', 'kicon-button kbuttonmod btn-left', JText::_('COM_KUNENA_BUTTON_PERMDELETE_LONG') );
 			} else {
@@ -493,7 +490,13 @@ class KunenaViewTopic extends KunenaView {
 			$this->mmm ++;
 			$this->replynum += $replydir;
 
-			$this->class = 'class="kmsg"';
+			if ($this->message->hold == 0) {
+				$this->class = 'class="kmsg"';
+			} elseif ($this->message->hold == 1) {
+				$this->class = 'class="kmsg kunapproved"';
+			} else if ($this->message->hold == 2 || $this->message->hold == 3) {
+				$this->class = 'class="kmsg kunapproved"';
+			}
 			// Link to individual message
 			if ($this->config->ordering_system == 'replyid') {
 				$this->numLink = CKunenaLink::GetSamePageAnkerLink( $this->message->id, '#' . $this->replynum );

@@ -31,21 +31,23 @@ class KunenaModelCategory extends KunenaModel {
 		$config = KunenaFactory::getConfig ();
 		$me = KunenaUserHelper::get();
 
-		$value = JRequest::getInt ( 'catid', 0 );
-		$this->setState ( 'item.id', $value );
+		$active = $app->getMenu ()->getActive ();
+		$active = $active ? (int) $active->id : 0;
+		$catid = JRequest::getInt ( 'catid', 0 );
+		$this->setState ( 'item.id', $catid );
 
 		// List state information
-		$value = $app->getUserStateFromRequest ( "com_kunena.category.list.limit", 'limit', 0, 'int' );
+		$value = $app->getUserStateFromRequest ( "com_kunena.category{$catid}_list_limit", 'limit', 0, 'int' );
 		if ($value < 1) $value = $config->threads_per_page;
 		$this->setState ( 'list.limit', $value );
 
-		$value = $app->getUserStateFromRequest ( 'com_kunena.category.list.ordering', 'filter_order', 'time', 'cmd' );
+		$value = $app->getUserStateFromRequest ( "com_kunena.category{$catid}_{$active}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
-		$value = JRequest::getInt ( 'limitstart', 0 );
+		$value = $app->getUserStateFromRequest ( "com_kunena.category{$catid}_list_start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$value = $app->getUserStateFromRequest ( 'com_kunena.category.list.direction', 'filter_order_Dir', 'desc', 'word' );
+		$value = $app->getUserStateFromRequest ( "com_kunena.category{$catid}_{$active}_list_direction", 'filter_order_Dir', 'desc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );

@@ -44,15 +44,19 @@ Kunena 2.0.0-DEV
 # [#23443] Administration: Undefined property: KunenaForumCategory::$parent in categories controller
 # [#23443] Administration: Undefined property: KunenaUser::$id in categories view
 + [#22569] Use new views and layouts in the menu (upgrade logic missing)
-# [#22569] Topics view: finer control on state (include itemid + mode)
 # [#22569] Show Topic / Create view in menutiem administration
 # [#22569] Topics view: Add time selection option for "All"
 # [#23443] Redirect from legacy urls (func=xxx) does not work
 # [#23443] Fix regression: Profile next to message broke during merge
 # [#23443] Fix regression: View Topics / User defaults to userid=0 instead of current user
-# [#23443] Fix old URL redirection for RSS feed
 # [#23443] Fix undefined property in KunenaForumTopic::markNew()
 # [#23443] Fix undefined property in RSS feed
+# [#22569] Many models: improve state to save more useful information into session
+# [#23443] Deleted topics are not marked as deleted
+# [#23443] Fix reply counts from deleted topics (was -1)
+# [#23443] Fix redirection loops when clicking on deleted topic
+# [#23443] Fix old URL redirection for rss, latest and showcat
+# [#23443] Fix wrong total page count in topics and category (off by one)
 
 14-January-2010 Matias
 ^ [#22569] Rewrite KunenaControllerTopic::move()

@@ -32,31 +32,32 @@ class KunenaModelTopic extends KunenaModel {
 		$app = JFactory::getApplication ();
 		$me = KunenaUserHelper::get();
 		$config = KunenaFactory::getConfig ();
+		$active = $app->getMenu ()->getActive ();
+		$active = $active ? (int) $active->id : 0;
 		$layout = JRequest::getCmd ( 'layout', 'default' );
 
 		$catid = JRequest::getInt ( 'catid', 0 );
 		$this->setState ( 'item.catid', $catid );
 
-		$value = JRequest::getInt ( 'id', 0 );
-		$this->setState ( 'item.id', $value );
+		$id = JRequest::getInt ( 'id', 0 );
+		$this->setState ( 'item.id', $id );
 
 		$access = KunenaFactory::getAccessControl();
 		$value = $access->getAllowedHold($me, $catid);
 		$this->setState ( 'hold', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.topic.{$layout}.list.limit", 'limit', 0, 'int' );
+		$value = JRequest::getInt ( 'limit', 0 );
 		if ($value < 1) $value = $config->messages_per_page;
 		$this->setState ( 'list.limit', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.topic.{$layout}.list.ordering", 'filter_order', 'time', 'cmd' );
+		$value = $app->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_ordering", 'filter_order', 'time', 'cmd' );
 		//$this->setState ( 'list.ordering', $value );
 
-		//$value = $app->getUserStateFromRequest ( "com_kunena.topic.{$layout}.list.start", 'limitstart', 0, 'int' );
 		$value = JRequest::getInt ( 'limitstart', 0 );
 		if ($value < 0) $value = 0;
 		$this->setState ( 'list.start', $value );
 
-		//$value = $app->getUserStateFromRequest ( "com_kunena.topic.{$layout}.list.direction", 'filter_order_Dir', 'desc', 'word' );
+		//$value = $app->getUserStateFromRequest ( "com_kunena.topic_{$active}_{$layout}_list_direction", 'filter_order_Dir', 'desc', 'word' );
 		if ($me->ordering != '0') {
 			$value = $me->ordering == '1' ? 'desc' : 'asc';
 		} else {
@@ -130,6 +131,11 @@ class KunenaModelTopic extends KunenaModel {
 	}
 
 	public function getTotal() {
+		$hold = $this->getState ( 'hold');
+		if ($hold) {
+			// FIXME:
+			return $this->getTopic()->posts;
+		}
 		return $this->getTopic()->posts;
 	}
 

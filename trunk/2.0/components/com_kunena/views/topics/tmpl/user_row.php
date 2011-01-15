@@ -22,7 +22,7 @@ defined( '_JEXEC' ) or die();
 <tr class="<?php echo $this->getTopicClass('k', 'row') ?>">
 
 	<td class="kcol-first kcol-ktopicreplies">
-		<strong><?php echo CKunenaTools::formatLargeNumber ( $this->topic->posts-1 ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
+		<strong><?php echo CKunenaTools::formatLargeNumber ( max(0,$this->topic->posts-1) ); ?></strong> <?php echo JText::_('COM_KUNENA_GEN_REPLIES') ?>
 	</td>
 
 	<td class="kcol-mid kcol-ktopicicon">

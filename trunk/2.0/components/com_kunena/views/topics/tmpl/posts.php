@@ -43,9 +43,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 
 		<td class="klist-jump-all"><?php $this->displayForumJump () ?></td>
 
-<?php if (!empty( $this->messages )) : ?>
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 'latest', 3 ); ?></td>
-<?php endif; ?>
 	</tr>
 </table>
 <!-- F: List Actions -->
@@ -102,9 +100,7 @@ CKunenaTools::showModulePosition ( 'kunena_announcement' );
 			<strong><?php echo intval($this->total) ?></strong>
 			<?php echo JText::_('COM_KUNENA_DISCUSSIONS')?>
 		</td>
-<?php if (count ( $this->messages ) > 0) : ?>
 		<td class="klist-pages-all"><?php echo $this->getPagination ( 'latest', 3 ); ?></td>
-<?php endif; ?>
 	</tr>
 </table>
 <!-- F: List Actions -->

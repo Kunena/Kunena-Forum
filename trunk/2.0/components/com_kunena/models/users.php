@@ -22,25 +22,26 @@ kimport ( 'kunena.model' );
 class KunenaModelUsers extends KunenaModel {
 	protected function populateState() {
 		$app = JFactory::getApplication ();
+		$active = $app->getMenu ()->getActive ();
+		$active = $active ? (int) $active->id : 0;
 
 		// List state information
-		$value = $app->getUserStateFromRequest ( "com_kunena.users.list.limit", 'limit', 0, 'int' );
+		$value = $app->getUserStateFromRequest ( "com_kunena.users_{$active}_list_limit", 'limit', 0, 'int' );
 		if ($value < 1) $value = 30;
 		$this->setState ( 'list.limit', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.users.list.ordering", 'filter_order', 'id', 'cmd' );
+		$value = $app->getUserStateFromRequest ( "com_kunena.users_{$active}_list_ordering", 'filter_order', 'id', 'cmd' );
 		$this->setState ( 'list.ordering', $value );
 
-		//$value = $app->getUserStateFromRequest ( "com_kunena.users.list.start", 'limitstart', 0, 'int' );
-		$value = JRequest::getInt ( 'limitstart', 0 );
+		$value = $app->getUserStateFromRequest ( "com_kunena.users_{$active}_list_start", 'limitstart', 0, 'int' );
 		$this->setState ( 'list.start', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.users.list.direction", 'filter_order_Dir', 'asc', 'word' );
+		$value = $app->getUserStateFromRequest ( "com_kunena.users_{$active}_list_direction", 'filter_order_Dir', 'asc', 'word' );
 		if ($value != 'asc')
 			$value = 'desc';
 		$this->setState ( 'list.direction', $value );
 
-		$value = $app->getUserStateFromRequest ( "com_kunena.users.list.search", 'search', '' );
+		$value = $app->getUserStateFromRequest ( "com_kunena.users_{$active}_list_search", 'search', '' );
 		if (!empty($value) && $value != JText::_('COM_KUNENA_USRL_SEARCH')) $this->setState ( 'list.search', $value );
 	}
 

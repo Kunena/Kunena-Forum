@@ -180,12 +180,10 @@ class KunenaViewCategory extends KunenaView {
 	}
 
 	function getPagination($maxpages) {
-		if (empty ( $this->topics ))
-			return '';
 		if (empty ( $this->pagination )) {
 			$limit = $this->state->get ( 'list.limit' );
 			$page = floor ( $this->state->get ( 'list.start' ) / $limit ) + 1;
-			$totalpages = floor ( $this->total / $limit ) + 1;
+			$totalpages = max(1, floor ( ($this->total-1) / $limit ) + 1);
 			$startpage = ($page - floor ( $maxpages / 2 ) < 1) ? 1 : $page - floor ( $maxpages / 2 );
 			$endpage = $startpage + $maxpages;
 			if ($endpage > $totalpages) {

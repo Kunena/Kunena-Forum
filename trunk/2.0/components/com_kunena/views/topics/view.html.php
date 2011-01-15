@@ -247,7 +247,7 @@ class KunenaViewTopics extends KunenaView {
 	function getPagination($func, $maxpages) {
 		$limit = $this->state->get ( 'list.limit' );
 		$page = floor ( $this->state->get ( 'list.start' ) / $limit ) + 1;
-		$totalpages = floor ( $this->total / $limit ) + 1;
+		$totalpages = max(1, floor ( ($this->total-1) / $limit ) + 1);
 
 		if ( $func != 'latest' ) $func = 'latest&do='.$func;
 

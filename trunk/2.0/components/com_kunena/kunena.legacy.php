@@ -144,7 +144,7 @@ if (empty($_POST) && $format == 'html') {
 
 // Convert legacy urls into new ones
 $view = JRequest::getWord ( 'view' );
-$layout = JRequest::getWord ( 'layout', 'default' );
+$layout = JRequest::getWord ( 'layout', null );
 $config = KunenaFactory::getConfig ();
 $redirect = false;
 switch ($view) {
@@ -155,6 +155,11 @@ switch ($view) {
 	case 'showcat':
 		$redirect = true;
 		$view = 'category';
+		$page = JRequest::getInt ( 'page', 1 );
+		JRequest::setVar ( 'page' );
+		if ($page > 0) {
+			JRequest::setVar ( 'limitstart', $config->threads_per_page * ($page - 1));
+		}
 		break;
 	case 'latest' :
 	case 'mylatest' :
@@ -165,9 +170,8 @@ switch ($view) {
 	case 'unapproved' :
 	case 'deleted' :
 		$redirect = true;
-		$mode = JRequest::getWord ( 'do' );
+		$mode = JRequest::getWord ( 'do', $view );
 		JRequest::setVar ( 'do' );
-		if (!$mode) $mode = $view;
 		$view = 'topics';
 		switch ($mode) {
 			case 'latest':
@@ -228,15 +232,12 @@ switch ($view) {
 				$layout = 'default';
 				$mode = 'default';
 		}
-		$page = JRequest::getInt ( 'page', 0 );
-		JRequest::setVar ( 'page');
-		//if (!$page) break;
-		$page = $page < 1 ? 1 : $page;
-		$limit = $config->threads_per_page;
-		$limitstart = ($page - 1) * $limit;
+		$page = JRequest::getInt ( 'page', 1 );
+		JRequest::setVar ( 'page' );
+		if ($page > 0) {
+			JRequest::setVar ( 'limitstart', $config->threads_per_page * ($page - 1));
+		}
 		JRequest::setVar ( 'mode', $mode );
-		JRequest::setVar ( 'limit', $limit );
-		JRequest::setVar ( 'limitstart', $limitstart );
 		break;
 	case 'view':
 		$redirect = true;

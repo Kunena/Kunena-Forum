@@ -1,8 +1,9 @@
 <?php
 // Dont allow direct linking
 defined( '_JEXEC' ) or die();
-?>
 
+kimport('kunena.forum.message.thankyou');
+?>
 <div class="kadmin-functitle icon-stats"><?php echo JText::_('COM_KUNENA_STATS_GEN_STATS');?></div>
 <div class="kadmin-statscover">
 

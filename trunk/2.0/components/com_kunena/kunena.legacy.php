@@ -269,21 +269,36 @@ switch ($view) {
 	case 'rss':
 		$redirect = true;
 		$view = 'topics';
-		switch ($layout) {
+		$mode = $kunena_config->rss_type;
+		switch ($mode) {
 			case 'topic':
-				$layout = 'topics';
+				$mode = 'topics';
 				break;
 			case 'recent':
-				$layout = 'default';
+				$mode = 'replies';
 				break;
 			case 'post':
 			default:
-				$layout = 'posts';
+				$mode = 'posts';
 				break;
 		}
+		$limit = $kunena_config->rss_time_limit;
+		switch ($limit) {
+			case 'week':
+				$limit = 168;
+				break;
+			case 'month':
+				$limit = 720;
+				break;
+			case 'year':
+			default:
+				$limit = 8760;
+				break;
+		}
+		JRequest::setVar ( 'mode', $mode );
+		JRequest::setVar ( 'sel', $limit );
 		JRequest::setVar ( 'type', 'rss' );
 		JRequest::setVar ( 'format', 'feed' );
-		// FIXME: handle mapping
 		break;
 	case 'post':
 		$redirect = true;

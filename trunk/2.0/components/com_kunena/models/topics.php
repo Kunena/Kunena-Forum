@@ -36,15 +36,17 @@ class KunenaModelTopics extends KunenaModel {
 		$layout = JRequest::getCmd ( 'layout', 'default' );
 		$this->setState ( 'layout', $layout );
 
-		$userid = JRequest::getInt ( 'userid', -1 );
-		if ($userid < 0) {
-			$userid = KunenaFactory::getUser()->userid;
-		} elseif($userid > 0) {
-			$userid = KunenaFactory::getUser($userid)->userid;
-		} else {
-			$userid = 0;
+		if ($layout == 'user') {
+			$userid = JRequest::getInt ( 'userid', -1 );
+			if ($userid < 0) {
+				$userid = KunenaFactory::getUser()->userid;
+			} elseif($userid > 0) {
+				$userid = KunenaFactory::getUser($userid)->userid;
+			} else {
+				$userid = 0;
+			}
+			$this->setState ( 'user', $userid );
 		}
-		$this->setState ( 'user', $userid );
 		$mode = JRequest::getCmd ( 'mode', 'latest' );
 		$this->setState ( 'list.mode', $mode );
 
